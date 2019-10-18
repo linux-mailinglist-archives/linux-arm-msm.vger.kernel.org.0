@@ -2,114 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 01502DC23F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 12:12:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE4A7DC298
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 12:18:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2633283AbfJRKMr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 06:12:47 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:43986 "EHLO
+        id S2392956AbfJRKSy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 06:18:54 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:59786 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2633218AbfJRKMq (ORCPT
+        with ESMTP id S2387890AbfJRKSx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 06:12:46 -0400
+        Fri, 18 Oct 2019 06:18:53 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id B9D6C61136; Fri, 18 Oct 2019 10:12:45 +0000 (UTC)
+        id 54489616EC; Fri, 18 Oct 2019 10:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571393565;
-        bh=qQyWt4N0PfQUuGUcmF8g2Od8g0wOfG0DWFA70BBTCvo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=CIsGHCGtt4S1ecanP4P6hDIBg+YH8NvjI30y/CUS8vOnTnkcQAZBglme1aes6Xsv3
-         Am4W4oMUe61fHqvjDyGrZ1WmRBcQXNVHOUleW78iuzm/ZHhlUHTgTB6M+TmvXLZnao
-         2JZKrM1zgn4qn2GDMcbmbOLLSYet61oCltoqzYuM=
+        s=default; t=1571393933;
+        bh=dc8FIHayO2ehqmAUD+jZfkLoZDU0aZpmFWbgApGBQp8=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=f+MvB89WY1/OmaCA9DVeYNu+hcXpOsTS44csInzug73rT5woTyageN3AeITyQc4i2
+         ua5MpjT0MznN/8gVyblLBo4xF59bWAhOES4g1L2Bwdq0zJOb60eBQr109Ggiu6aRi+
+         hRYGHNTe3H3H9z+9B7VTgLsDsV35BQy8yeiuiL7E=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2521361019;
-        Fri, 18 Oct 2019 10:12:40 +0000 (UTC)
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 254F9616EA;
+        Fri, 18 Oct 2019 10:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571393565;
-        bh=qQyWt4N0PfQUuGUcmF8g2Od8g0wOfG0DWFA70BBTCvo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=CIsGHCGtt4S1ecanP4P6hDIBg+YH8NvjI30y/CUS8vOnTnkcQAZBglme1aes6Xsv3
-         Am4W4oMUe61fHqvjDyGrZ1WmRBcQXNVHOUleW78iuzm/ZHhlUHTgTB6M+TmvXLZnao
-         2JZKrM1zgn4qn2GDMcbmbOLLSYet61oCltoqzYuM=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2521361019
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-From:   Taniya Das <tdas@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>,
-        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
-Cc:     Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v1 3/3] clk: qcom: clk-rpmh: Add support for RPMHCC for SC7180
-Date:   Fri, 18 Oct 2019 15:39:24 +0530
-Message-Id: <1571393364-32697-4-git-send-email-tdas@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1571393364-32697-1-git-send-email-tdas@codeaurora.org>
-References: <1571393364-32697-1-git-send-email-tdas@codeaurora.org>
+        s=default; t=1571393924;
+        bh=dc8FIHayO2ehqmAUD+jZfkLoZDU0aZpmFWbgApGBQp8=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=XOHfDDqnvjMGoSHzuamUzhoxJapIlNC64JVDRdDePSc+cGhr6s7JSClTrH0hXRbdZ
+         /S35azppgq4FIlM3IkGnraSGrN2vxrptJsPqnaebKU3CxaZ89bEJahmQ95EIlgADyB
+         rIq+UgI8eqBN7hVnDGKPQhplN14w+Uccpqcq/7uQ=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 18 Oct 2019 15:48:43 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Marc Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+        rnayak@codeaurora.org, suzuki.poulose@arm.com,
+        catalin.marinas@arm.com,
+        linux-arm-kernel <linux-arm-kernel-bounces@lists.infradead.org>,
+        linux-kernel@vger.kernel.org, jeremy.linton@arm.com,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        andrew.murray@arm.com, will@kernel.org, Dave.Martin@arm.com,
+        linux-arm-kernel@lists.infradead.org, marc.w.gonzalez@free.fr,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: Relax CPU features sanity checking on heterogeneous architectures
+In-Reply-To: <5da8c868.1c69fb81.ae709.97ff@mx.google.com>
+References: <b3606e76af42f7ecf65b1bfc2a5ed30a@codeaurora.org>
+ <20191011105010.GA29364@lakrids.cambridge.arm.com>
+ <7910f428bd96834c15fb56262f3c10f8@codeaurora.org>
+ <20191011143442.515659f4@why>
+ <ac7599b30461d6a814e4f36d68bba6c2@codeaurora.org>
+ <5da8c868.1c69fb81.ae709.97ff@mx.google.com>
+Message-ID: <c8491f4b91058ef018fb5b3b9ff457cd@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for clock RPMh driver to vote for ARC and VRM managed
-clock resources.
+On 2019-10-18 01:30, Stephen Boyd wrote:
+> Quoting Sai Prakash Ranjan (2019-10-11 06:40:13)
+>> On 2019-10-11 19:04, Marc Zyngier wrote:
+>> > On Fri, 11 Oct 2019 18:47:39 +0530
+>> > Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org> wrote:
+>> >
+>> >> Hi Mark,
+>> >>
+>> >> Thanks a lot for the detailed explanations, I did have a look at all
+>> >> the variations before posting this.
+>> >>
+>> >> On 2019-10-11 16:20, Mark Rutland wrote:
+>> >> > Hi,
+>> >> >
+>> >> > On Fri, Oct 11, 2019 at 11:19:00AM +0530, Sai Prakash Ranjan wrote:
+>> >> >> On latest QCOM SoCs like SM8150 and SC7180 with big.LITTLE arch, below
+>> >> >> warnings are observed during bootup of big cpu cores.
+>> >> >
+>> >> > For reference, which CPUs are in those SoCs?
+>> >> >
+>> >>
+>> >> SM8150 is based on Cortex-A55(little cores) and Cortex-A76(big cores).
+>> >> I'm afraid I cannot give details about SC7180 yet.
+>> >>
+>> >> >> SM8150:
+>> >> >> >> [    0.271177] CPU features: SANITY CHECK: Unexpected variation in
+>> >> >> SYS_ID_AA64PFR0_EL1. Boot CPU: 0x00000011112222, CPU4: >> 0x00000011111112
+>> >> >
+>> >> > The differing fields are EL3, EL2, and EL1: the boot CPU supports
+>> >> > AArch64 and AArch32 at those exception levels, while the secondary only
+>> >> > supports AArch64.
+>> >> >
+>> >> > Do we handle this variation in KVM?
+>> >>
+>> >> We do not support KVM.
+>> >
+>> > Mainline does. You don't get to pick and choose what is supported or
+>> > not.
+>> >
+>> 
+>> Ok thats good.
+>> 
+> 
+> I want KVM on sc7180. How do I get it? Is something going to not work?
 
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
----
- drivers/clk/qcom/clk-rpmh.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+I meant KVM is not supported for downstream android case where we do not 
+have kernel booting from EL2.
+And obviously I am wrong because SC7180 is not for android, so my bad.
+I think Mark R's question about handling KVM variation was for Marc Z 
+not me :p
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index 96a36f6..7301c77 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -391,6 +391,24 @@ static const struct clk_rpmh_desc clk_rpmh_sm8150 = {
- 	.num_clks = ARRAY_SIZE(sm8150_rpmh_clocks),
- };
+As for something not going to work, as Mark said this warning does 
+indicate that 32 bit EL1 guests won't
+be able to run on big CPU cores.
 
-+static struct clk_hw *sc7180_rpmh_clocks[] = {
-+	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
-+	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
-+	[RPMH_LN_BB_CLK2]	= &sdm845_ln_bb_clk2.hw,
-+	[RPMH_LN_BB_CLK2_A]	= &sdm845_ln_bb_clk2_ao.hw,
-+	[RPMH_LN_BB_CLK3]	= &sdm845_ln_bb_clk3.hw,
-+	[RPMH_LN_BB_CLK3_A]	= &sdm845_ln_bb_clk3_ao.hw,
-+	[RPMH_RF_CLK1]		= &sdm845_rf_clk1.hw,
-+	[RPMH_RF_CLK1_A]	= &sdm845_rf_clk1_ao.hw,
-+	[RPMH_RF_CLK2]		= &sdm845_rf_clk2.hw,
-+	[RPMH_RF_CLK2_A]	= &sdm845_rf_clk2_ao.hw,
-+};
-+
-+static const struct clk_rpmh_desc clk_rpmh_sc7180 = {
-+	.clks = sc7180_rpmh_clocks,
-+	.num_clks = ARRAY_SIZE(sc7180_rpmh_clocks),
-+};
-+
- static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
- 					 void *data)
- {
-@@ -471,6 +489,7 @@ static int clk_rpmh_probe(struct platform_device *pdev)
- static const struct of_device_id clk_rpmh_match_table[] = {
- 	{ .compatible = "qcom,sdm845-rpmh-clk", .data = &clk_rpmh_sdm845},
- 	{ .compatible = "qcom,sm8150-rpmh-clk", .data = &clk_rpmh_sm8150},
-+	{ .compatible = "qcom,sc7180-rpmh-clk", .data = &clk_rpmh_sc7180},
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, clk_rpmh_match_table);
---
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-of the Code Aurora Forum, hosted by the  Linux Foundation.
-
+- Sai
