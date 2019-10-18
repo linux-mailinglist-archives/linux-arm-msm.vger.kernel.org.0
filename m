@@ -2,105 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EA3A9DCBF5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 18:53:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7118DCBFE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 18:55:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393254AbfJRQxM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 12:53:12 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:37065 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2409213AbfJRQxL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 12:53:11 -0400
-Received: by mail-pf1-f193.google.com with SMTP id y5so4239715pfo.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2019 09:53:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=NlVpUWWb77Jgx8c6AKiFTKsV64mXcIM59rzR3NbF5X0=;
-        b=l/5bNc1UOgviL8cXU+xAaLQOtmOhi56H7mopre3Lu97/kYO2lo5DMOwuqzo16GPpU7
-         en2sBDgJn/rwquPVBU6NOvsJuW2lX6njpbipp3wFM2DBhFIibFMM7Ji7fEC+5JJ3IyVd
-         xmgPjfeDjfUjmiuPFwMOJKKQPuPQXWocZgmkWMoeUMAGd+Y1IMhD+QsOMDWHzASPJjmn
-         lB5yUIilNr+WEfcrkyxzN7+9VZZe/t2KW0WOBj8DSGeKn0smaVryK+M4jM3Lud2alJ9k
-         WAQharx87X1yFjofhhWaCKeNztbH7vyUakUyu1a+f2UZ/C/+XEK3z2xhCu3JouqnP4le
-         Y57w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NlVpUWWb77Jgx8c6AKiFTKsV64mXcIM59rzR3NbF5X0=;
-        b=E5J5mQtWES0V7N8fFrUXM1FE7nlDSiXQVuoNeGoMIyO+4dFHELeq9P+T6eNHJ7qIx+
-         F8SAcfPoNH7xZN0qFXZ+FDbb9TQnQro+hDOBg0hiQkUQs6M+wzkEbKFnMe/C4DEiZj36
-         R9uH+nhp177I8DMDliul7Mey/fPs2BlUGbLhYWws5FycIR2wTTn/RzMI3o5CIdozdcl/
-         X3biRQ3GUH1ar8gDxPzIE19cdy2ylzmTMRvsVnJOmklfITcEGtpZyxPKRbFcVxHfZOjw
-         Xe9t7SUx1PuKn5AZ1ZMsMM9W7yMC6jNOH+KYKE5knuwsJ9F9/0pn/B1Ac38WzVjskMDY
-         zhaw==
-X-Gm-Message-State: APjAAAXBhgMAvqAfCHUrKm2QNF2MQ8M/AlwQZgiIswtNgjkj94ZSbQZE
-        Lls8C3aokvZ+QuQSSN2PhVrPRQ==
-X-Google-Smtp-Source: APXvYqy4EO909F7HnCUZ2Fmo7UCAUkdG66jUJnEgoxHT/sDHoXa2mMyp6Et3xVZh7h0kG3B3iUDOAg==
-X-Received: by 2002:a17:90a:a00c:: with SMTP id q12mr12481013pjp.102.1571417590960;
-        Fri, 18 Oct 2019 09:53:10 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id k66sm6624950pjb.11.2019.10.18.09.53.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2019 09:53:10 -0700 (PDT)
-Date:   Fri, 18 Oct 2019 09:53:07 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Olof Johansson <olof@lixom.net>,
-        Maxime Ripard <mripard@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Leonard Crestez <leonard.crestez@nxp.com>,
-        Dinh Nguyen <dinguyen@kernel.org>,
-        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Alex Elder <elder@linaro.org>,
-        linux-kernel-owner@vger.kernel.org
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm remoteproc dependencies
-Message-ID: <20191018165307.GD1669@tuxbook-pro>
-References: <20191009001442.15719-1-bjorn.andersson@linaro.org>
- <95a80ff0e89a568d223fab6eb1f9362a@codeaurora.org>
+        id S2408797AbfJRQzy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 12:55:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48416 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2405642AbfJRQzx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Oct 2019 12:55:53 -0400
+Received: from gandalf.local.home (cpe-66-24-58-225.stny.res.rr.com [66.24.58.225])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 56FE620854;
+        Fri, 18 Oct 2019 16:55:52 +0000 (UTC)
+Date:   Fri, 18 Oct 2019 12:55:50 -0400
+From:   Steven Rostedt <rostedt@goodmis.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Georgi Djakov <georgi.djakov@linaro.org>, linux-pm@vger.kernel.org,
+        mingo@redhat.com, vincent.guittot@linaro.org,
+        daidavid1@codeaurora.org, okukatla@codeaurora.org,
+        evgreen@chromium.org, mka@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] interconnect: Add basic tracepoints
+Message-ID: <20191018125550.0ad0eefa@gandalf.local.home>
+In-Reply-To: <20191018164403.GB1669@tuxbook-pro>
+References: <20191018140224.15087-1-georgi.djakov@linaro.org>
+        <20191018164403.GB1669@tuxbook-pro>
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <95a80ff0e89a568d223fab6eb1f9362a@codeaurora.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 18 Oct 03:38 PDT 2019, Sibi Sankar wrote:
+On Fri, 18 Oct 2019 09:44:03 -0700
+Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
 
-> On 2019-10-09 05:44, Bjorn Andersson wrote:
-[..]
-> > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-[..]
-> > @@ -780,6 +783,8 @@ CONFIG_PWM_ROCKCHIP=y
-> >  CONFIG_PWM_SAMSUNG=y
-> >  CONFIG_PWM_SUN4I=m
-> >  CONFIG_PWM_TEGRA=m
-> > +CONFIG_RESET_QCOM_AOSS=y
+> > @@ -449,6 +452,9 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
+> >  
+> >  		/* aggregate requests for this node */
+> >  		aggregate_requests(node);
+> > +
+> > +		trace_icc_set_bw(node, dev_name(path->reqs[i].dev),
+> > +				 avg_bw, peak_bw);  
 > 
-> I should probably fix this ^^
+> When I've been debugging interconnect things I've added a
+> kstrdup_const() of "name" in of_icc_get() and then included that here.
 > 
-
-Please do, afaict this driver should be tristate.
-
-Regards,
-Bjorn
-
-> > +CONFIG_RESET_QCOM_PDC=m
-> >  CONFIG_RESET_TI_SCI=y
-> >  CONFIG_PHY_XGENE=y
-> >  CONFIG_PHY_SUN4I_USB=y
+> I find including the path name quite useful for devices with multiple
+> paths.
 > 
-> -- 
-> -- Sibi Sankar --
-> Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-> a Linux Foundation Collaborative Project.
+> >  	}
+> >  
+> >  	ret = apply_constraints(path);
+> > @@ -461,6 +467,9 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
+> >  			path->reqs[i].avg_bw = old_avg;
+> >  			path->reqs[i].peak_bw = old_peak;
+> >  			aggregate_requests(node);
+> > +
+> > +			trace_icc_set_bw(node, dev_name(path->reqs[i].dev),
+> > +					 old_avg, old_peak);
+> >  		}
+> >  		apply_constraints(path);  
+> 
+> And analog to e.g. the clock traces I would suggest that you trace
+> device, path and "ret" here.
+
+If you are going to switch to device name and path, please just pass in
+the path to the trace point. Then have the TP_fast_assign() do the rest
+of the work.
+
+Thanks!
+
+-- Steve
