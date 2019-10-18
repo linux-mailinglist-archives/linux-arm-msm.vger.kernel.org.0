@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 265BCDBCF0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 07:24:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D977DBCEC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2019 07:24:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2442015AbfJRFYO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Oct 2019 01:24:14 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:36154 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2442009AbfJRFYN (ORCPT
+        id S2442024AbfJRFYP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Oct 2019 01:24:15 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:42304 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2442016AbfJRFYO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Oct 2019 01:24:13 -0400
-Received: by mail-pl1-f194.google.com with SMTP id j11so2283754plk.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 22:24:12 -0700 (PDT)
+        Fri, 18 Oct 2019 01:24:14 -0400
+Received: by mail-pf1-f194.google.com with SMTP id q12so3105234pff.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2019 22:24:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yvdpNgVZVW1ID8m+eY6Fjz43lKaX01Op/76I7ccP//M=;
-        b=nUpMW9IOCBO3b7o+mUbj+BZ/SJeboSTEvqdXBozkFKDFOiB6KkrRWZGxA+dXTVLvnc
-         NbZ+eEP57xv1HtIhnVhA+gr7WYS3+2M2XwG7OQ55FkY5WCFeNKCoDJxDzm3HFrXL9x7X
-         0LCoL+jG3ra1twhebvIy4bOiBLVhvfDuS7ImW1cMdF53D5ou5RBBAqxI3QyLx2OaYkyH
-         31ODpZTkZdbK8X92s2MC2r62YjEeoycIwMpdt0pbniQ/OHHx2+95DFy+DpugK8oKRmXm
-         mwOO5WDUkdtBOc4qctdK9eDW0n6QxbnbANPl+cGYr0NjzX56aJXnW6ixP+iBRmP/EeGL
-         27Lw==
+        bh=A290/OLSMIdz1gm9E9GKn5KBPV2wOKoLOZi6+j+W8B0=;
+        b=IfD36HjGXoGW/VytrSV0TZUsgREKFpfzsFqdazfZT5W9+9uAFfPaereqHTYaqLxqSP
+         vmFfmuKv7WFbkNZP2ssJRHR3sMm2GyNJenRdVZ+L5vmjKAgJGosyzWEyJXRzeZmjPngU
+         5aG4eZJuVoaAPzHfyx9iVKXEDZgmgcNmCGIv/0OnvNnY6HPDo1FPy0bmXaMJjfB95Em2
+         XJ9DDJp7yjOJ8DKUUe6ZYpaNawX+bnZltgVLbJ8o9ueyVv5vmB3Hji1mTAstDOOJHXoP
+         /7GzzhJschEmR5wMZJTzENRhZVT5G98euWMDl50oSmvCQjsBExx2Nk6FNVkbQNwfkHAp
+         TUbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yvdpNgVZVW1ID8m+eY6Fjz43lKaX01Op/76I7ccP//M=;
-        b=V7qcZ2NLOkqABfS1m2MMq/AMqgaPKQuvll52izSjxjEIakN2AgKtZXbrlU7Aqydfc3
-         wplcfceJmeUILoltHVHV8QAl5XKHwbem4t7Gyn6DW6QksMiw5Ayet4CPO0C9vjsA84B3
-         Ee4cuOtXQlBl8ngFmPN8DJlv0dQKoi+cc2rZ9QiuMS02QPDAJrGDATtzmUQkYWnEAI5u
-         J52aN02vqpqZ7/xaMMBazQdJ4SIlpxlgU3Tgv4lOxI3tqLyuJgSzFYBIYqcMwVyvnKiL
-         QXrg+wL5z8L1a8O+hbaCde6vHCkKAhNGVESYj9RO9z9gratzzGVIFc8yhqS4IAoKk6lm
-         gTew==
-X-Gm-Message-State: APjAAAUkr3oZqSrWg5WsGj4NXaJ0ep6x0sO0B1hjuhVAUwPlr0Ls9ARp
-        cXt8hGBHc8+Av9a/0Oc71VL/P7ToQgk=
-X-Google-Smtp-Source: APXvYqwC1onVuDy1d+iHyUXB3LLxKvj824dBaXqO2hYPZD/2/qHNLyvqj3pyRlJuy5HWMKZ2OpfDvw==
-X-Received: by 2002:a17:902:8d89:: with SMTP id v9mr7661064plo.247.1571376252173;
-        Thu, 17 Oct 2019 22:24:12 -0700 (PDT)
+        bh=A290/OLSMIdz1gm9E9GKn5KBPV2wOKoLOZi6+j+W8B0=;
+        b=Iiqp4S6HhaJDHYxmCvALs6urg4NY4DnrkZ5jMWfWJKVfVv88n8G+G18Eh6DlEsNOFB
+         8YZeWJAPEe3BD5q/8XVo7we4sjkrQ+ehrkqZMehQG6rehFeVBwCzusRi9OrUrlXsK0Ho
+         d7GaxtkTrqD86el/LxeCjXYB8KnKmqi+aWSmdsDuNfonciRtA3k5MDvuIzxIoM8u7swC
+         RfCFcwEF1lGE1n/ZtRNJDZFS9cpKy5MkieD7nFbDDMnvS4PlEcodIc8obDsie8SSq8ea
+         GQrN2XmOWV0MVgOthKZ5+jY1A1683wF3kmeE4v9NEHVmtn0sik4Y7WOR5NEp0gBkgsBn
+         lKVw==
+X-Gm-Message-State: APjAAAXn7TstzDZbzqdKMCwylonUXdXmRu7iXV6AZLs1UW/U6h/AhYQA
+        jWWW5ZM+DXgLWXUjETN860XI0w==
+X-Google-Smtp-Source: APXvYqx0ozYSKrJgMxYmOdz9sS6M85YH2jq18jmBXCmjgB4jia0KZ5uXnddL537MflX50Cf7VM8eOA==
+X-Received: by 2002:a63:1904:: with SMTP id z4mr8210286pgl.413.1571376253468;
+        Thu, 17 Oct 2019 22:24:13 -0700 (PDT)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id u11sm2178760pgc.61.2019.10.17.22.24.11
+        by smtp.gmail.com with ESMTPSA id u11sm2178760pgc.61.2019.10.17.22.24.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2019 22:24:11 -0700 (PDT)
+        Thu, 17 Oct 2019 22:24:12 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Marcel Holtmann <marcel@holtmann.org>,
         Johan Hedberg <johan.hedberg@gmail.com>
 Cc:     linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH 3/4] Bluetooth: hci_qca: Use regulator bulk enable/disable
-Date:   Thu, 17 Oct 2019 22:24:03 -0700
-Message-Id: <20191018052405.3693555-4-bjorn.andersson@linaro.org>
+Subject: [PATCH 4/4] Bluetooth: hci_qca: Split qca_power_setup()
+Date:   Thu, 17 Oct 2019 22:24:04 -0700
+Message-Id: <20191018052405.3693555-5-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20191018052405.3693555-1-bjorn.andersson@linaro.org>
 References: <20191018052405.3693555-1-bjorn.andersson@linaro.org>
@@ -64,124 +64,134 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-With the regulator_set_load() and regulator_set_voltage() out of the
-enable/disable code paths the code can now use the standard
-regulator bulk enable/disable API.
-
-By cloning num_vregs into struct qca_power there's no need to lug around
-a reference to the struct qca_vreg_data, which further simplifies
+Split and rename qca_power_setup() in order to simplify each code path
+and to clarify that it is unrelated to qca_power_off() and
 qca_power_setup().
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/bluetooth/hci_qca.c | 55 +++++++++----------------------------
- 1 file changed, 13 insertions(+), 42 deletions(-)
+ drivers/bluetooth/hci_qca.c | 61 ++++++++++++++++++++++---------------
+ 1 file changed, 36 insertions(+), 25 deletions(-)
 
 diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 54aafcc69d06..01f941e9adf3 100644
+index 01f941e9adf3..c591a8ba9d93 100644
 --- a/drivers/bluetooth/hci_qca.c
 +++ b/drivers/bluetooth/hci_qca.c
-@@ -144,8 +144,8 @@ struct qca_vreg_data {
-  */
- struct qca_power {
- 	struct device *dev;
--	const struct qca_vreg_data *vreg_data;
- 	struct regulator_bulk_data *vreg_bulk;
-+	int num_vregs;
- 	bool vregs_on;
+@@ -160,7 +160,8 @@ struct qca_serdev {
+ 	const char *firmware_name;
  };
  
-@@ -1381,63 +1381,34 @@ static int qca_power_off(struct hci_dev *hdev)
- 	return 0;
- }
+-static int qca_power_setup(struct hci_uart *hu, bool on);
++static int qca_regulator_enable(struct qca_serdev *qcadev);
++static void qca_regulator_disable(struct qca_serdev *qcadev);
+ static void qca_power_shutdown(struct hci_uart *hu);
+ static int qca_power_off(struct hci_dev *hdev);
  
--static int qca_enable_regulator(struct qca_vreg vregs,
--				struct regulator *regulator)
--{
--	return regulator_enable(regulator);
--
--}
--
--static void qca_disable_regulator(struct qca_vreg vregs,
--				  struct regulator *regulator)
--{
--	regulator_disable(regulator);
--
--}
--
- static int qca_power_setup(struct hci_uart *hu, bool on)
- {
--	struct qca_vreg *vregs;
- 	struct regulator_bulk_data *vreg_bulk;
- 	struct qca_serdev *qcadev;
--	int i, num_vregs, ret = 0;
-+	int num_vregs;
-+	int ret = 0;
- 
+@@ -516,7 +517,7 @@ static int qca_open(struct hci_uart *hu)
+ 		} else {
+ 			hu->init_speed = qcadev->init_speed;
+ 			hu->oper_speed = qcadev->oper_speed;
+-			ret = qca_power_setup(hu, true);
++			ret = qca_regulator_enable(qcadev);
+ 			if (ret) {
+ 				destroy_workqueue(qca->workqueue);
+ 				kfree_skb(qca->rx_skb);
+@@ -1186,7 +1187,7 @@ static int qca_wcn3990_init(struct hci_uart *hu)
  	qcadev = serdev_device_get_drvdata(hu->serdev);
--	if (!qcadev || !qcadev->bt_power || !qcadev->bt_power->vreg_data ||
--	    !qcadev->bt_power->vreg_bulk)
-+	if (!qcadev || !qcadev->bt_power || !qcadev->bt_power->vreg_bulk)
- 		return -EINVAL;
+ 	if (!qcadev->bt_power->vregs_on) {
+ 		serdev_device_close(hu->serdev);
+-		ret = qca_power_setup(hu, true);
++		ret = qca_regulator_enable(qcadev);
+ 		if (ret)
+ 			return ret;
  
--	vregs = qcadev->bt_power->vreg_data->vregs;
- 	vreg_bulk = qcadev->bt_power->vreg_bulk;
--	num_vregs = qcadev->bt_power->vreg_data->num_vregs;
--	BT_DBG("on: %d", on);
-+	num_vregs = qcadev->bt_power->num_vregs;
-+	BT_DBG("on: %d (%d regulators)", on, num_vregs);
- 	if (on && !qcadev->bt_power->vregs_on) {
--		for (i = 0; i < num_vregs; i++) {
--			ret = qca_enable_regulator(vregs[i],
--						   vreg_bulk[i].consumer);
--			if (ret)
--				break;
--		}
-+		ret = regulator_bulk_enable(num_vregs, vreg_bulk);
-+		if (ret)
-+			return ret;
+@@ -1351,9 +1352,12 @@ static const struct qca_vreg_data qca_soc_data_wcn3998 = {
  
--		if (ret) {
--			BT_ERR("failed to enable regulator:%s", vregs[i].name);
--			/* turn off regulators which are enabled */
--			for (i = i - 1; i >= 0; i--)
--				qca_disable_regulator(vregs[i],
--						      vreg_bulk[i].consumer);
--		} else {
--			qcadev->bt_power->vregs_on = true;
--		}
-+		qcadev->bt_power->vregs_on = true;
- 	} else if (!on && qcadev->bt_power->vregs_on) {
- 		/* turn off regulator in reverse order */
--		i = qcadev->bt_power->vreg_data->num_vregs - 1;
--		for ( ; i >= 0; i--)
--			qca_disable_regulator(vregs[i], vreg_bulk[i].consumer);
-+		regulator_bulk_disable(num_vregs, vreg_bulk);
+ static void qca_power_shutdown(struct hci_uart *hu)
+ {
++	struct qca_serdev *qcadev;
+ 	struct qca_data *qca = hu->priv;
+ 	unsigned long flags;
  
- 		qcadev->bt_power->vregs_on = false;
- 	}
++	qcadev = serdev_device_get_drvdata(hu->serdev);
++
+ 	/* From this point we go into power off state. But serial port is
+ 	 * still open, stop queueing the IBS data and flush all the buffered
+ 	 * data in skb's.
+@@ -1365,7 +1369,7 @@ static void qca_power_shutdown(struct hci_uart *hu)
  
--	return ret;
-+	return 0;
+ 	host_set_baudrate(hu, 2400);
+ 	qca_send_power_pulse(hu, false);
+-	qca_power_setup(hu, false);
++	qca_regulator_disable(qcadev);
  }
  
- static int qca_init_regulators(struct qca_power *qca,
-@@ -1465,6 +1436,7 @@ static int qca_init_regulators(struct qca_power *qca,
- 	}
+ static int qca_power_off(struct hci_dev *hdev)
+@@ -1381,36 +1385,43 @@ static int qca_power_off(struct hci_dev *hdev)
+ 	return 0;
+ }
  
- 	qca->vreg_bulk = bulk;
-+	qca->num_vregs = num_vregs;
+-static int qca_power_setup(struct hci_uart *hu, bool on)
++static int qca_regulator_enable(struct qca_serdev *qcadev)
+ {
+-	struct regulator_bulk_data *vreg_bulk;
+-	struct qca_serdev *qcadev;
+-	int num_vregs;
+-	int ret = 0;
++	struct qca_power *power = qcadev->bt_power;
++	int ret;
+ 
+-	qcadev = serdev_device_get_drvdata(hu->serdev);
+-	if (!qcadev || !qcadev->bt_power || !qcadev->bt_power->vreg_bulk)
+-		return -EINVAL;
++	/* Already enabled */
++	if (power->vregs_on)
++		return 0;
+ 
+-	vreg_bulk = qcadev->bt_power->vreg_bulk;
+-	num_vregs = qcadev->bt_power->num_vregs;
+-	BT_DBG("on: %d (%d regulators)", on, num_vregs);
+-	if (on && !qcadev->bt_power->vregs_on) {
+-		ret = regulator_bulk_enable(num_vregs, vreg_bulk);
+-		if (ret)
+-			return ret;
++	BT_DBG("enabling %d regulators)", power->num_vregs);
+ 
+-		qcadev->bt_power->vregs_on = true;
+-	} else if (!on && qcadev->bt_power->vregs_on) {
+-		/* turn off regulator in reverse order */
+-		regulator_bulk_disable(num_vregs, vreg_bulk);
++	ret = regulator_bulk_enable(power->num_vregs, power->vreg_bulk);
++	if (ret)
++		return ret;
+ 
+-		qcadev->bt_power->vregs_on = false;
+-	}
++	power->vregs_on = true;
  
  	return 0;
  }
-@@ -1493,7 +1465,6 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 			return -ENOMEM;
  
- 		qcadev->bt_power->dev = &serdev->dev;
--		qcadev->bt_power->vreg_data = data;
- 		err = qca_init_regulators(qcadev->bt_power, data->vregs,
- 					  data->num_vregs);
- 		if (err) {
++static void qca_regulator_disable(struct qca_serdev *qcadev)
++{
++	struct qca_power *power;
++
++	if (!qcadev)
++		return;
++
++	power = qcadev->bt_power;
++
++	/* Already disabled? */
++	if (!power->vregs_on)
++		return;
++
++	regulator_bulk_disable(power->num_vregs, power->vreg_bulk);
++	power->vregs_on = false;
++}
++
+ static int qca_init_regulators(struct qca_power *qca,
+ 				const struct qca_vreg *vregs, size_t num_vregs)
+ {
 -- 
 2.23.0
 
