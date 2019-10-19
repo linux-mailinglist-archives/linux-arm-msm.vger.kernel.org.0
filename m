@@ -2,91 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CC230DD8A4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2019 13:38:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 401E4DDAA6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2019 21:19:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725972AbfJSLiE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Oct 2019 07:38:04 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:35398 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725777AbfJSLiE (ORCPT
+        id S1726149AbfJSTTn convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Oct 2019 15:19:43 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:33758 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726101AbfJSTTn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Oct 2019 07:38:04 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 6979560E75; Sat, 19 Oct 2019 11:37:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571485083;
-        bh=qy8qYMqNJcjgq8U59lAtJvh0eQpMrLxktgtMrQWmP9U=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=WQlMgJ16Oz9PuwRz+uqZwT9LhDCH75sxuHB4WUR7GeF8nzR4sWQT49werBjsaLCmN
-         ZhMhx4CXwH9zCbXrXZiBka9nnUEfB6JZ146Npf8pnzr9XXBKRllx3TJuU408sYM0re
-         hdoq+9esK5onQoA4Nyrk424GgB/ALUue6Bw4T3vs=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan@codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4BA5F60E08;
-        Sat, 19 Oct 2019 11:37:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571485067;
-        bh=qy8qYMqNJcjgq8U59lAtJvh0eQpMrLxktgtMrQWmP9U=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Nk5GbAM+SnIm9kMUpVhhxKaoV33+Orl4rrrJ0iWy6X8Sq7MUZHcw5oXYxG5MijU9m
-         q70mxBQ/Wdhh8UukN7qoS5VqB0VLi84zlmHgu0khPqfGAodmn0S5sHAg3r7lFzuVC8
-         mBw8++3LUaPNkq0NOIGLk5QaaUL3198ns+x5+Qpo=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4BA5F60E08
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv2 3/3] dt-bindings: msm: Add LLCC for SC7180
-Date:   Sat, 19 Oct 2019 17:07:13 +0530
-Message-Id: <de1bc7fe1edef4b43a2043fcfb20ec536285d344.1571484439.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <cover.1571484439.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1571484439.git.saiprakash.ranjan@codeaurora.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Sat, 19 Oct 2019 15:19:43 -0400
+Received: from marcel-macbook.fritz.box (p4FEFC197.dip0.t-ipconnect.de [79.239.193.151])
+        by mail.holtmann.org (Postfix) with ESMTPSA id D9D2CCED0E;
+        Sat, 19 Oct 2019 21:28:40 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3594.4.19\))
+Subject: Re: [PATCH] Bluetooth: hci_qca: Add delay for wcn3990 stability
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20191018213354.GC20212@google.com>
+Date:   Sat, 19 Oct 2019 21:19:40 +0200
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        c-hbandi@codeaurora.org, bgodavar@codeaurora.org,
+        linux-bluetooth@vger.kernel.org,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <1E6A718E-ABEA-4B68-9A5A-C34880273550@holtmann.org>
+References: <20191017212955.6266-1-jeffrey.l.hugo@gmail.com>
+ <20191018180339.GQ87296@google.com>
+ <CAOCk7NrN0sjLk3onvZn7+bhs_v3A4H6CHh=XPo_NU2XzUWeEGw@mail.gmail.com>
+ <20191018194039.GB20212@google.com>
+ <CAOCk7NqacfVLzKueTRTFQ6aWbLXFyMQaQNXeXENzLTyMNLSp9w@mail.gmail.com>
+ <20191018213354.GC20212@google.com>
+To:     Matthias Kaehlcke <mka@chromium.org>
+X-Mailer: Apple Mail (2.3594.4.19)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add LLCC compatible for SC7180 SoC.
+Hi Matthias,
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml | 1 +
- 1 file changed, 1 insertion(+)
+>>>>>> On the msm8998 mtp, the response to the baudrate change command is never
+>>>>>> received.  On the Lenovo Miix 630, the response to the baudrate change
+>>>>>> command is corrupted - "Frame reassembly failed (-84)".
+>>>>>> 
+>>>>>> Adding a 50ms delay before re-enabling flow to receive the baudrate change
+>>>>>> command response from the wcn3990 addesses both issues, and allows
+>>>>>> bluetooth to become functional.
+>>>>> 
+>>>>> From my earlier debugging on sdm845 I don't think this is what happens.
+>>>>> The problem is that the wcn3990 sends the response to the baudrate change
+>>>>> command using the new baudrate, while the UART on the SoC still operates
+>>>>> with the prior speed (for details see 2faa3f15fa2f ("Bluetooth: hci_qca:
+>>>>> wcn3990: Drop baudrate change vendor event"))
+>>>>> 
+>>>>> IIRC the 50ms delay causes the HCI core to discard the received data,
+>>>>> which is why the "Frame reassembly failed" message disappears, not
+>>>>> because the response was received. In theory commit 78e8fa2972e5
+>>>>> ("Bluetooth: hci_qca: Deassert RTS while baudrate change command")
+>>>>> should have fixed those messages, do you know if CTS/RTS are connected
+>>>>> on the Bluetooth UART of the Lenovo Miix 630?
+>>>> 
+>>>> I was testing with 5.4-rc1 which contains the indicated RTS fix.
+>>>> 
+>>>> Yes, CTS/RTS are connected on the Lenovo Miix 630.
+>>>> 
+>>>> I added debug statements which indicated that data was received,
+>>>> however it was corrupt, and the packet type did not match what was
+>>>> expected, hence the frame reassembly errors.
+>>> 
+>>> Do you know if any data is received during the delay? In theory that
+>>> shouldn't be the case since RTS is deasserted, just double-checking.
+>> 
+>> I don't think so, but I've run so many tests, I'm not 100% positive.
+>> Let me go double check and get back to you.
+>> 
+>>> 
+>>> What happens if you add a longer delay (e.g. 1s) before/after setting
+>>> the host baudrate?
+>> 
+>> Hmm, not exactly sure.  I will test.
+>> 
+>>> 
+>>>> In response to this patch, Balakrishna pointed me to a bug report
+>>>> which indicated that some of the UART GPIO lines need to have a bias
+>>>> applied to prevent errant data from floating lines -
+>>>> 
+>>>> https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/1391888
+>>> 
+>>> Yeah, that was another source of frame reassembly errors that we were
+>>> seeing on SDM845.
+>>> 
+>>> Balakrishna, please post these kind of replies on-list, so that
+>>> everybody can benefit from possible solutions or contribute to the
+>>> discussion.
+>>> 
+>>>> It turns out this fix was never applied to msm8998.  Applying the fix
+>>>> does cause the the frame reassembly errors to go away, however then
+>>>> the host SoC never receives the baud rate change response (I increased
+>>>> the timeout from 2faa3f15fa2f ("Bluetooth: hci_qca: wcn3990: Drop
+>>>> baudrate change vendor event") to 5 seconds).  As of now, this patch
+>>>> is still required.
+>>> 
+>>> Interesting.
+>>> 
+>>> FTR, this is the full UART pin configuration for cheza (SDM845):
+>>> 
+>>> &qup_uart6_default {
+>>>        /* Change pinmux to all 4 pins since CTS and RTS are connected */
+>>>        pinmux {
+>>>                pins = "gpio45", "gpio46",
+>>>                       "gpio47", "gpio48";
+>>>        };
+>>> 
+>>>        pinconf-cts {
+>>>                /*
+>>>                 * Configure a pull-down on 45 (CTS) to match the pull of
+>>>                 * the Bluetooth module.
+>>>                 */
+>>>                pins = "gpio45";
+>>>                bias-pull-down;
+>>>        };
+>>> 
+>>>        pinconf-rts-tx {
+>>>                /* We'll drive 46 (RTS) and 47 (TX), so no pull */
+>>>                pins = "gpio46", "gpio47";
+>>>                drive-strength = <2>;
+>>>                bias-disable;
+>>>        };
+>>> 
+>>>        pinconf-rx {
+>>>                /*
+>>>                 * Configure a pull-up on 48 (RX). This is needed to avoid
+>>>                 * garbage data when the TX pin of the Bluetooth module is
+>>>                 * in tri-state (module powered off or not driving the
+>>>                 * signal yet).
+>>>                 */
+>>>                pins = "gpio48";
+>>>                bias-pull-up;
+>>>        };
+>>> };
+>>> 
+>>> Does this correspond to what you tried on the Lenovo Miix 630?
+>> 
+>> Which GPIO maps to which pin is different -
+>> 45 - TX
+>> 46 - RX
+>> 47 - CTS
+>> 48 - RFR (RTS)
+>> 
+>> However, accounting for that, yes that corresponds to what I used.
+> 
+> Thanks for re-confirming.
+> 
+>>>> I have no idea why the delay is required, and was hoping that posting
+>>>> this patch would result in someone else providing some missing pieces
+>>>> to determine the real root cause.  I suspect that asserting RTS at the
+>>>> wrong time may cause an issue for the wcn3990, but I have no data nor
+>>>> documentation to support this guess.  I welcome any further insights
+>>>> you may have.
+>>> 
+>>> Unfortunately I don't have a clear suggestion at this point, debugging
+>>> the original problem which lead to 2faa3f15fa2f ("Bluetooth: hci_qca:
+>>> wcn3990: Drop baudrate change vendor event") involved quite some time
+>>> and hooking up a scope/logic analyzer ...
+>>> 
+>>> I also suspect RTS is involved, and potentially the configuration of
+>>> the pulls. It might be interesting to analyze the data that leads to
+>>> the frame assembly error and determine if it is just noise (wrong
+>>> pulls/drive strength?) or received with a non-matching baud-rate.
+>> 
+>> I don't have a scope/logic analyzer, but since I hooked up the
+>> blsp_bam I'm able to see the raw data from the uart before it gets to
+>> the HCI stack or anything.  As a side note, having the bam or not
+>> seemed to have no effect on the issue.
+> 
+> It's not exactly the same though. I suppose with the blsp_bam you only
+> see the actual data when the UART runs at the same speed as it's
+> counterpart. With a logic analyzer you can change the speed after
+> data capture, which might convert apparent garbage into reasonable
+> data.
+> 
+>> Most of the time the data was one byte (zero), some times it was a
+>> string of zero bytes.  Rarely it would be random data.
+> 
+> In terms of data ss there difference between a string of zero bytes
+> and a single zero byte?
+> 
+> From my notes the response (vendor event) to a baudrate change
+> command on the WCN3990 is:
+> 
+> 04 0e 04 01 00 00 00
+> 
+> The tail *might* be the zero(s) you are seeing, and the first part gets
+> lost for some reason?
 
-diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml b/Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml
-index 5ac90d101807..558749065b97 100644
---- a/Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml
-+++ b/Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml
-@@ -21,6 +21,7 @@ description: |
- properties:
-   compatible:
-     enum:
-+      - qcom,sc7180-llcc
-       - qcom,sdm845-llcc
- 
-   reg:
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+you could allow the zero bytes be a valid sequence. See BCM_RECV_NULL for an example on how to include that into the H:4 receive code. Then remove the extra msleep and run btmon to see if you get zero bytes and how many.
+
+Regards
+
+Marcel
 
