@@ -2,120 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 678E0DE1DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 04:06:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89BDBDE1F0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 04:11:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726764AbfJUCG3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Oct 2019 22:06:29 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:36409 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726733AbfJUCG3 (ORCPT
+        id S1726770AbfJUCL1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Oct 2019 22:11:27 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:36736 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726835AbfJUCL1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Oct 2019 22:06:29 -0400
-Received: by mail-pf1-f194.google.com with SMTP id y22so7394779pfr.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2019 19:06:29 -0700 (PDT)
+        Sun, 20 Oct 2019 22:11:27 -0400
+Received: by mail-pf1-f193.google.com with SMTP id y22so7401299pfr.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2019 19:11:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=+yWlFQ3j7MPCBznXsMHQtwJpyH73frvubd7zQPjGqcQ=;
-        b=b6jF/1TCbvWbam16ICWlejQoSAC8+hg+CuxDEnF4riYF5Sq4SSUC+vktJEEOp4GwaL
-         R+MVDsuCHRmEkMhueRjh3U4t/xHsfmYAd5Yomv9TltCGadViASJLNsaikB20jqDJxi8n
-         dWVfgkI6OxuV8SrTlzu1UxF84Waqf0ymzK7EjZVebV+jJvqaIuMIp0TTrl4wcLkRQ1cg
-         JRDHJR3HLRAy4g02+T82IvW12A/CAQAGYnqhqse9BnW+Z7pg+VV47mmjQ77JfilZzDiA
-         +4QoCJLF0pzaHnplp75PudT0JDggsOSIJ3OGCzqSRGkdb8VVyWjD0Hk6gS3A5uCtXRqZ
-         bMQg==
+        bh=F4qHVfnQODELv7H/VIQXzK7KyvLwmXFYgs71Rh/FWg0=;
+        b=U3gY/UH7n1wqSuzGgYuu5JkwQFH1pCsCSEljcjoseCr35KMcdlRjoipRGVUpQFHkEW
+         PQEK52Wqkj8AzStD9au4n2hPtJp/uM3cvnfEQY/XeemzlRySDbpWSGLYhBPmMDxQJ8Uz
+         r2qoIVc8sxvaLfA1ftl3sua/km8qGSTUsJEwTgGS5uUGIGk6dNgXqAB4ZXMR9YUK4y0Q
+         KPuIazb0GlVN+v+zSsnAEy+QlR6kvTerNxE6ytvcoyoP+cxVgH3wZVFVgUD6vVc3bS1W
+         03XMsNsNVrw7K7f5Jtl4Gz9hj+Of8wt96ac/E/WEbE8H2x18GKErauWRGKUngYKJFcoj
+         NiEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+yWlFQ3j7MPCBznXsMHQtwJpyH73frvubd7zQPjGqcQ=;
-        b=sapTn5p8LCVRK+eNBmRl65VIe3d8tB5krOQUnw5KMITAuxBSEHD9QLdXUJscqfMeYD
-         2RE+UFx4sKMLygc5WivRadzZCSch1724sLPWSgPc1bjJUdRo7sWMiK2OcZOperwR4+hY
-         B/nhJ3ovCMKagjrluRRTTKp7CbDp2GfNEsk2+hCnN3tUEYS1Hrdo2F3/eHZybgtcKICd
-         mK8b7NPPiple1nJPsz5svS+zNFmC+h6o4jGhwNM2ZCx5uqlF7gZY96iUrKbcVeOm6yta
-         rqxkARm040pxHTomlgXFQXh9Qopit3ww+lScZxFhbUMwZx2+W7QqtipYXCcqoxNH2S6L
-         jbtA==
-X-Gm-Message-State: APjAAAVebbG5f7xcI7j+dKmnjI6KBxuIvZdedOxxerDW2GWgr/tqrt5M
-        kxYUjmhwC0rki24JUYoDxMfxhg==
-X-Google-Smtp-Source: APXvYqx+O4q4hmJUC+1LMJIMJc8cEyhGSOZvO9jUQMs0EyVIEpjKc4vVl0VNeQL6Dp2g1H3xO8GA+g==
-X-Received: by 2002:a63:b644:: with SMTP id v4mr7468971pgt.249.1571623588138;
-        Sun, 20 Oct 2019 19:06:28 -0700 (PDT)
+        bh=F4qHVfnQODELv7H/VIQXzK7KyvLwmXFYgs71Rh/FWg0=;
+        b=oFdhE5MAjXXijsTOwLnq4HZV7KqYJQMYrI8t9UL6m2DmzZlGPwn9Yt7Itigl6nw6wF
+         uEpcQ+YxiIIFAtbgyCjAiPlDzxWKpPVje7dHa+xAC9jWR1pzjFQkEIXqJZxj0Fa7B6h7
+         5zOmcx9wAT7wVWXUMVDC0uBQUi4nCBERVte5CifehmRJuSIWyqIv+FBPY1cPVMnSkW8D
+         OBb0Gprw0pasxyoBH+m3LWNURrJgAJWajPpQyo6LtkNkYGTxWQwxzUc5DLLDACiuxHMB
+         lF6FTbM8W7+a3+nkDz2e0l666hG45h7EHwYR6JOcDl457CYxb/Ic5Qt53m3EleA+C1an
+         wEXQ==
+X-Gm-Message-State: APjAAAXXYhBchYheMNuL26zZInt6VVxiYC5LNG9Q2Z6Q2FT2uMMZZbGr
+        aX10+6V6lRwTlEZ9w8TmRThCNQ==
+X-Google-Smtp-Source: APXvYqz7/4IVhnW4AAy/RldJyNGvZmiY0N+5+GKQFV+bDo2piRiKUQxCyUhJTIszU6Z7/LnGAklMWQ==
+X-Received: by 2002:a63:f40e:: with SMTP id g14mr11246293pgi.62.1571623886294;
+        Sun, 20 Oct 2019 19:11:26 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id k23sm12553705pgi.49.2019.10.20.19.06.25
+        by smtp.gmail.com with ESMTPSA id m34sm11573538pgb.91.2019.10.20.19.11.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Oct 2019 19:06:26 -0700 (PDT)
-Date:   Sun, 20 Oct 2019 19:06:24 -0700
+        Sun, 20 Oct 2019 19:11:25 -0700 (PDT)
+Date:   Sun, 20 Oct 2019 19:11:23 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Chris Goldsworthy <cgoldswo@codeaurora.org>
-Cc:     robh+dt@kernel.org, devicetree@vger.kernel.org,
-        stable@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] of: reserved_mem: add missing of_node_put() for proper
- ref-counting
-Message-ID: <20191021020624.GE4500@tuxbook-pro>
-References: <1571536644-13840-1-git-send-email-cgoldswo@codeaurora.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: msm8998: Fixup uart3 gpio config for
+ bluetooth
+Message-ID: <20191021021123.GF4500@tuxbook-pro>
+References: <20191019221217.1432-1-jeffrey.l.hugo@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1571536644-13840-1-git-send-email-cgoldswo@codeaurora.org>
+In-Reply-To: <20191019221217.1432-1-jeffrey.l.hugo@gmail.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 19 Oct 18:57 PDT 2019, Chris Goldsworthy wrote:
+On Sat 19 Oct 15:12 PDT 2019, Jeffrey Hugo wrote:
 
-> Commit d698a388146c ("of: reserved-memory: ignore disabled memory-region
-> nodes") added an early return in of_reserved_mem_device_init_by_idx(), but
-> didn't call of_node_put() on a device_node whose ref-count was incremented
-> in the call to of_parse_phandle() preceding the early exit.
+> It turns out that the wcn3990 can float the gpio lines during bootup, etc
+> which will result in the uart core thinking there is incoming data.  This
+> results in the bluetooth stack getting garbage.  By applying a bias to
+> match what wcn3990 would drive, the issue is corrected.
 > 
-> Fixes: d698a388146c ("of: reserved-memory: ignore disabled memory-region nodes")
-> Signed-off-by: Chris Goldsworthy <cgoldswo@codeaurora.org>
-> To: Rob Herring <robh+dt@kernel.org>
-> Cc: devicetree@vger.kernel.org
-> Cc: stable@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-arm-kernel@lists.infradead.org
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> ---
+>  .../boot/dts/qcom/msm8998-clamshell.dtsi      | 31 +++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi     | 31 +++++++++++++++++++
+>  2 files changed, 62 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
+> index ab24d415acc0..7e02cb6c8e07 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
+> @@ -74,6 +74,37 @@
+>  	};
+>  };
+>  
+> +&blsp1_uart3_on {
+> +	/delete-node/ config;
 
-Cc stable@ is used to assist in making sure your patch is backported to
-stable kernels, other than that the purpose Cc here is to indicate that
-specific people have been requested to comment on your patch.
-
-So please skip these from the commit message in the future (for this
-one, wait and see if Rob is willing to trim them as he applies the
-patch).
+So it would make much more sense then to split &blsp1_uart3_on in
+sections defining its pins, than the "logical" config and mux split.
 
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Please send a patch that changes msm8998-pins.dtsi to be:
+
+blsp_uart3_on: blsp1-uart3-on {
+	ctx {
+	};
+
+	rts {
+	};
+
+	rx [
+	};
+
+	tx {
+	};
+};
+
+
+There's no need for the "pinconf" part and for pinctrl states with a
+single pin/group we can simply omit the subnode (as this is now
+possible).
+
+
+Apart from that, I think this looks good!
 
 Regards,
 Bjorn
 
-> ---
->  drivers/of/of_reserved_mem.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
-> index 7989703..6bd610e 100644
-> --- a/drivers/of/of_reserved_mem.c
-> +++ b/drivers/of/of_reserved_mem.c
-> @@ -324,8 +324,10 @@ int of_reserved_mem_device_init_by_idx(struct device *dev,
->  	if (!target)
->  		return -ENODEV;
+> +
+> +	pinconf-cts {
+> +		/*
+> +		 * Configure a pull-down on 47 (CTS) to match the pull
+> +		 * of the Bluetooth module.
+> +		 */
+> +		pins = "gpio47";
+> +		bias-pull-down;
+> +	};
+> +
+> +	pinconf-rts-tx {
+> +		/* We'll drive 48 (RFR) and 45 (TX), so no pull */
+> +		pins = "gpio45", "gpio48";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	pinconf-rx {
+> +		/*
+> +		 * Configure a pull-up on 45 (RX). This is needed to
+> +		 * avoid garbage data when the TX pin of the Bluetooth
+> +		 * module is in tri-state (module powered off or not
+> +		 * driving the signal yet).
+> +		 */
+> +		pins = "gpio45";
+> +		bias-pull-up;
+> +	};
+> +};
+> +
+>  &dsi0 {
+>  	status = "okay";
 >  
-> -	if (!of_device_is_available(target))
-> +	if (!of_device_is_available(target)) {
-> +		of_node_put(target);
->  		return 0;
-> +	}
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+> index 1a1836ed1052..17f51af5e999 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+> @@ -37,6 +37,37 @@
+>  	};
+>  };
 >  
->  	rmem = __find_rmem(target);
->  	of_node_put(target);
+> +&blsp1_uart3_on {
+> +	/delete-node/ config;
+> +
+> +	pinconf-cts {
+> +		/*
+> +		 * Configure a pull-down on 47 (CTS) to match the pull
+> +		 * of the Bluetooth module.
+> +		 */
+> +		pins = "gpio47";
+> +		bias-pull-down;
+> +	};
+> +
+> +	pinconf-rts-tx {
+> +		/* We'll drive 48 (RFR) and 45 (TX), so no pull */
+> +		pins = "gpio45", "gpio48";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	pinconf-rx {
+> +		/*
+> +		 * Configure a pull-up on 45 (RX). This is needed to
+> +		 * avoid garbage data when the TX pin of the Bluetooth
+> +		 * module is in tri-state (module powered off or not
+> +		 * driving the signal yet).
+> +		 */
+> +		pins = "gpio45";
+> +		bias-pull-up;
+> +	};
+> +};
+> +
+>  &blsp2_uart1 {
+>  	status = "okay";
+>  };
 > -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> 2.17.1
 > 
