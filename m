@@ -2,96 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 96136DE74F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 11:00:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB607DE8B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 11:55:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727154AbfJUI74 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Oct 2019 04:59:56 -0400
-Received: from mail-ua1-f68.google.com ([209.85.222.68]:37824 "EHLO
-        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726181AbfJUI74 (ORCPT
+        id S1727919AbfJUJyw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Oct 2019 05:54:52 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:46009 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727986AbfJUJyw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Oct 2019 04:59:56 -0400
-Received: by mail-ua1-f68.google.com with SMTP id w7so3570872uag.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2019 01:59:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GkOKxxpsGK/80WlQWwLBXhyhiD8tMwT8+Cgd/zEVlCY=;
-        b=gkO7kkILMDe7OJ4KFmrFBHJ2ZE1ERHJD1rmFfjWKt4iYJxpHRjQFsR5YmbgdNoGqlQ
-         RdqhZ7g1SOnR99RsgsurMaDeuGuzGcZGnOM6/vbC+m6YDrcDI/s+R8iHEGq/225QMv8S
-         BNZ/5z2RSQfjyt6mFh+ARMFUOGF2p256asXG6RXH0R59A4tV+/MZqC6SY5jO4oihmr9y
-         1eHwV9hExJcsM7prdU8uLUGv5oQHJxgUqafgwkM7tTOBW915Z5QczaoSas68EUPMrsrG
-         gvYdDZ4+MvCf7GPMJbdM09rRUuZAGetP38SPMjYDuyKgnNF4BEXhkJrMAmoTE6trglqn
-         IIkA==
+        Mon, 21 Oct 2019 05:54:52 -0400
+Received: by mail-lj1-f196.google.com with SMTP id q64so12556617ljb.12;
+        Mon, 21 Oct 2019 02:54:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GkOKxxpsGK/80WlQWwLBXhyhiD8tMwT8+Cgd/zEVlCY=;
-        b=B7peGaf/P3ApZF10nJhDEQqcnr8eQs1mbVbVM0Zc96IC+mKQ8I2G1JVTyZWVbp6YHY
-         LLbxyeNSgVsoQohBHkwB93M4kV6XTps+3oJ13yLw4maCxFn0YUXApfaSI/vM+BPCuvis
-         U13wrCrdV37dTm9zh/bLuLgfco4sL6kQk7d+3ExfIVEIxBFwAFf4TLo9rFxX91giZMFY
-         nOM/cSxbX0OHzVIZzUhwsvpkO6g7pLNX21w1g3HMUMN2Qlj9eZbk75CpsYVH9y/FM1MC
-         s05/+EQUwnyOIEUmkjmgq1w3+v37yGGN1xgdNqD30f6aWkpAhAKlprehFQdMV5XOQxmX
-         LlWQ==
-X-Gm-Message-State: APjAAAWiSycQp31k3dJLXfV4RkZ974IK/G8CeYvqxJ6y57QRFJv2l+2P
-        wo4OrRg12m723tZb/j8ZlKMoR6f0NBYlxqFky3xglQ==
-X-Google-Smtp-Source: APXvYqy1skCw5iA/y67UrQPP3MAZhJ04h3rF2rtlEMmZQVVO3ryPl7j+34VyGLMMcpvzuCqueqM59hhRx1AvMlcjFdo=
-X-Received: by 2002:ab0:2015:: with SMTP id v21mr12191265uak.94.1571648394900;
- Mon, 21 Oct 2019 01:59:54 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2ioAE/lCbaDrBdD3/67QZ6qtkIsHP6zYZBRbnhn/xwg=;
+        b=j+p1sKTVDy2L5WN6rZftyUjjFaVETwIaG8orrxsgNdJoAv4FZmcK8HaCIyXoWICoXP
+         YthOYHOMORvqYh4ErQLdcqU/mr5OC7K4SJLXOZlDLVVrTp5A/ienw7kQ0VgFgNIvMS2E
+         Y8aqzv5raB/1QsuJ5PpW9fWd/6zEqrec4hkbbbGO5HlKh3QSRpPvBluk9RaCZOFjFrr6
+         x2lXEUNL3FCmXKQJnbLeOVaFQoAjnx1/aYzg19mAspGlvOSlxho/y9Fy01115ZdqutDr
+         e4qEMQI9Xf/ktHr9GZzrrsXpaWH0xtv90wJUWyZE/Hh2HS5YvX02kqhMW1WDcLaveH59
+         vTGA==
+X-Gm-Message-State: APjAAAWL0D5wtlvFmWsRw/6CFVbaczsPxqr9OuZF59b6lrO8AvgoOW9+
+        rtDl2rtcTdJbTbcXdz1E2nc=
+X-Google-Smtp-Source: APXvYqwrLwkvwRh+ERVZri6+UvM2xfVCKPFTVDTPNLnM2AZOQEhfldYGPge2KvWGIkSk8YD190DGdQ==
+X-Received: by 2002:a2e:81da:: with SMTP id s26mr13975715ljg.192.1571651689431;
+        Mon, 21 Oct 2019 02:54:49 -0700 (PDT)
+Received: from xi.terra (c-51f1e055.07-184-6d6c6d4.bbcust.telenor.se. [85.224.241.81])
+        by smtp.gmail.com with ESMTPSA id c69sm11510092ljf.32.2019.10.21.02.54.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Oct 2019 02:54:48 -0700 (PDT)
+Received: from johan by xi.terra with local (Exim 4.92.2)
+        (envelope-from <johan@kernel.org>)
+        id 1iMUOy-00005x-If; Mon, 21 Oct 2019 11:55:01 +0200
+Date:   Mon, 21 Oct 2019 11:55:00 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     Johan Hovold <johan@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Fabien Dessenne <fabien.dessenne@st.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Harald Freudenberger <freude@linux.ibm.com>,
+        David Airlie <airlied@linux.ie>,
+        Heiko Carstens <heiko.carstens@de.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@de.ibm.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-s390@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Al Viro <viro@zeniv.linux.org.uk>
+Subject: Re: [PATCH 0/4] treewide: fix interrupted release
+Message-ID: <20191021095500.GE24768@localhost>
+References: <20191010131333.23635-1-johan@kernel.org>
+ <20191010135043.GA16989@phenom.ffwll.local>
+ <20191011093633.GD27819@localhost>
+ <20191014084847.GD11828@phenom.ffwll.local>
+ <20191014161326.GO13531@localhost>
+ <20191015140726.GN11828@phenom.ffwll.local>
 MIME-Version: 1.0
-References: <cover.1571387352.git.amit.kucheria@linaro.org>
- <66d8ae593ce7936a5f492d0c6855c1ac225b64ee.1571387352.git.amit.kucheria@linaro.org>
- <20191021080811.GA54219@gmail.com>
-In-Reply-To: <20191021080811.GA54219@gmail.com>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Mon, 21 Oct 2019 14:29:43 +0530
-Message-ID: <CAHLCerOcdnSTppKRm2vi6V8E7vyVWvwDakaQcnXnnDVqKDXmBA@mail.gmail.com>
-Subject: Re: [PATCH v4 4/6] cpufreq: Initialize cpufreq-dt driver earlier
-To:     Ingo Molnar <mingo@kernel.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>, ilina@codeaurora.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Ben Segall <bsegall@google.com>,
-        Dietmar Eggemann <dietmar.eggemann@arm.com>,
-        Ingo Molnar <mingo@redhat.com>,
-        Juri Lelli <juri.lelli@redhat.com>,
-        Mel Gorman <mgorman@suse.de>,
-        Peter Zijlstra <peterz@infradead.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Linux PM list <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191015140726.GN11828@phenom.ffwll.local>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 21, 2019 at 1:38 PM Ingo Molnar <mingo@kernel.org> wrote:
->
->
-> * Amit Kucheria <amit.kucheria@linaro.org> wrote:
->
-> > This allows HW drivers that depend on cpufreq-dt to initialise earlier.
->
-> My obsessive-compulsive in-brain spellchecker noticed that the title says
-> 'initialize' (US spelling), while the comment uses 'initialise' (UK
-> spelling). Just in case this is not some post-Brexit expression of
-> cross-Atlantic friendliness you might want to fix it. :)
+On Tue, Oct 15, 2019 at 04:07:26PM +0200, Daniel Vetter wrote:
+> On Mon, Oct 14, 2019 at 06:13:26PM +0200, Johan Hovold wrote:
+> > On Mon, Oct 14, 2019 at 10:48:47AM +0200, Daniel Vetter wrote:
 
-Naah, its just my confused brain that grew up learning British
-English, then spent enough time in US to pick up some of that too. I
-think it is a form of selective spelling blindness :-)
+> > > Do you have a legit usecase for interruptible sleeps in fops->release?
+> > 
+> > The tty layer depends on this for example when waiting for buffered
+> > writes to complete (something which may never happen when using flow
+> > control).
+> > 
+> > > I'm not even sure killable is legit in there, since it's an fd, not a
+> > > process context ...
+> > 
+> > It will be run in process context in many cases, and for ttys we're good
+> > AFAICT.
+> 
+> Huh, read it a bit, all the ->shutdown callbacks have void return type.
+> But there's indeed interruptible sleeps in there. Doesn't this break
+> userspace that expects that a close() actually flushes the tty?
 
-Will fix.
+This behaviour has been there since "forever" so the problem is rather
+the other way round; changing it now might break user space.
+
+> Imo if you're ->release callbacks feels like it should do a wait to
+> guaranteed something userspace expects, then doing a
+> wait_interruptible/killable feels like a bug. Or alternatively, the wait
+> isn't really needed in the first place.
+
+Posix says that the final tty close should cause any output to be sent.
+And as mentioned before, due to flow control this may never finish. So
+for usability reasons, you want to be able to interrupt that final
+close, while removing the flush completely would break applications
+currently expecting output to be flushed.
+
+Also note that we have an interface for controlling how long to wait for
+data to be sent (typically 30 s by default, but can be set to wait
+forever).
+
+> > > > The return value from release() is ignored by vfs, and adding a splat in
+> > > > __fput() to catch these buggy drivers might be overkill.
+> > > 
+> > > Ime once you have a handful of instances of a broken pattern, creating a
+> > > check for it (under a debug option only ofc) is very much justified.
+> > > Otherwise they just come back to life like the undead, all the time. And
+> > > there's a _lot_ of fops->release callbacks in the kernel.
+> > 
+> > Yeah, you have a point.
+> > 
+> > But take tty again as an example, the close tty operation called from
+> > release() is declared void so there's no propagated return value for vfs
+> > to check.
+> > 
+> > It may even be better to fix up the 100 or so callbacks potentially
+> > returning non-zero and make fops->release void so that the compiler
+> > would help us catch any future bugs and also serve as a hint for
+> > developers that returning errnos from fops->release is probably not
+> > what you want to do.
+> > 
+> > But that's a lot of churn of course.
+> 
+> Hm indeed ->release has int as return type. I guess that's needed for
+> file I/O errno and similar stuff ...
+> 
+> Still void return value doesn't catch funny stuff like doing interruptible
+> waits and occasionally failing if you have a process that likes to use
+> signals and also uses some library somewhere to do something. In graphics
+> we have that, with Xorg loving signals for various things.
+
+Right, but since there arguable are legitimate uses for interruptible
+sleep at release(), I don't see how we can catch that at runtime.
+
+Johan
