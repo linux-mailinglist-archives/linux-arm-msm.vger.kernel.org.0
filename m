@@ -2,66 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E185DE2D4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 05:56:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51C19DE389
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 07:13:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726971AbfJUD4J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Oct 2019 23:56:09 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:41324 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726955AbfJUD4I (ORCPT
+        id S1725843AbfJUFN0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Oct 2019 01:13:26 -0400
+Received: from mail-pf1-f180.google.com ([209.85.210.180]:38002 "EHLO
+        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725769AbfJUFN0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Oct 2019 23:56:08 -0400
-Received: by mail-pg1-f195.google.com with SMTP id t3so6902194pga.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2019 20:56:08 -0700 (PDT)
+        Mon, 21 Oct 2019 01:13:26 -0400
+Received: by mail-pf1-f180.google.com with SMTP id h195so7635593pfe.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2019 22:13:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=DzN6sUwiXsGiG0QstYd2dvfeg6/B1PwWJvQoun4TY3w=;
-        b=x2DVwu8hxWO/tIGOY+mw63ppGx1pqI/eZFZwCc4QdjzK87vadub6fctBWh8VqjgJ/o
-         5fHfeKOKt1y8Mr9FuqAH/YznIJFYx/ZWwodC+oCkaKcP4cdsupYCE9WxRmzyBJ5QHUFM
-         2ZtT/m+nVjlvMsaAiVil0s77A7AIZVNBqseSHcVcNHmJHAKz5ncfbRyiNOoLSA6JFiUs
-         HVh2lk9CcQeEXtZ3y7WLJFeV4S39T7NDxg7u8MDELtVwoAL8r59vKZGSZHf+6fa4+UMl
-         gn95cPMDGSwgS+YKpdVbYpwWIuNSsQON+qVRdu7W0WWDJ+/QD0A5b7I1pDpgyQhFui/c
-         NEwQ==
+        bh=vTvX2ZoO7TzY2BxJZxSJoG0yIQ3DzcVkh48Y2GNXR2M=;
+        b=nlR8/GBlqaQpZhcCEG1KNYmAF8kFV86aPV3heKZ7aty+qbvXhJDQTcDo3Sgsp4NGvT
+         jkWjQeaK6K/tYk8i+Mbe/pK/ib96IDUbaNdjRBTWuBmDEDDcQeO5pq3q9KRVxBKjHQfW
+         VZ5VULsDVbjCgbrIISLnn+WvucIVrtmkmr4IQ/IoEVmQIdHlMt+Ey8JbBMhNLRuxHZwQ
+         kUWlhjJ8nQEV6vUFLGPvGck0mIwGqw+ZZ8ChMrYMNxuH6/k+uMw8tFu5q71Ikc3Zk1fs
+         5KqkfzzIAAQ3S9NXjcJl7/FLDFS7znUizsULiPbYQ8NAf8CcIZu0oPhbLUNp9cLzWvwl
+         rcZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=DzN6sUwiXsGiG0QstYd2dvfeg6/B1PwWJvQoun4TY3w=;
-        b=cs7MRsJfHwLAfJB38EAkpoSM+e/4OPM+DCSHzaMpj+ERBOVO/KRApoPTaKkIOObSG7
-         V7Az6KBmOznkP1UjqnzlmkSG8NTCUg1cex0kH+hJAJdt/zFeKkoLlMjgGJviGOj13FYL
-         fRhvbKP5pHQTdU0jRdJ/Pok91F/0PFb0P8IHBe8y9OVja1jqjcekHE2L6njCMXhB+JQq
-         VqCJY45TXki29rxKcCaT9Do7G743Unx3ZgqAoGNXlYcXPWQU6KJq2PzwDTZ8Cog3Uld2
-         kXEo4SXvAhWb/wGy2BCq1/zQp86101fOSJwrJEP/z6WimQ+JZG+nvTMd1tIazPVg1p5E
-         5Rtw==
-X-Gm-Message-State: APjAAAXVGNWW0wuxNTE7JjHVanC+H5YF5hTT5wIn/3FD/rOgeaDrZlbL
-        Ng6aqNszj+nzbABHFIgKymjWMw==
-X-Google-Smtp-Source: APXvYqz91vILzKwCwMpXw4c4MDum21nEhzA0IzWpvQxk5Xjbqxh2R6MjJYT42v2BMZwkh3wIlyC3CQ==
-X-Received: by 2002:a17:90a:3702:: with SMTP id u2mr26313063pjb.57.1571630167781;
-        Sun, 20 Oct 2019 20:56:07 -0700 (PDT)
+        bh=vTvX2ZoO7TzY2BxJZxSJoG0yIQ3DzcVkh48Y2GNXR2M=;
+        b=azXNTLGd5uEI8dkay1BvG0duhLXaBEA/WHHya+bcu/6JP/J2Q6SFYLriiZdYtF99i6
+         n6KjBoe4398dkGVJ/iMwsUA+GHg+yF8NYeWGO9b99Pt0zQT8wmN/BZZaeFTuwppvrjRE
+         rWo9QZTDJ6WgWmYASjjUKtAyfeLPYAQ4fN+7ZxxXx3WexcqOgNHWqxDek8ch+FEsuBZP
+         E4f6b6jCLiKSAG45urhlV873dmJdDlsSsg+/jWr/LKi4Xz7aE0pmz96iHpviJUu7bEkY
+         xH86bkVOR1WPupZz/qtQOvQmsFCLS2HwA75fAQ061szGxDslkYYz9SlRoYGI4G6TeHH7
+         MyBg==
+X-Gm-Message-State: APjAAAVgySx5hu+Qhru/2cfuCSAnWTkTgnLQM6JWu7NuFlufXQnbkaBh
+        PbdbJa2euVn+5mOCEVuUI9OObQ==
+X-Google-Smtp-Source: APXvYqyy5kW+io7pprvVHWwtLdIyuNVF+sU4eQmX9yUQuw6Xz3npw4kLPeNqS4AseF/48jCFDo2P9w==
+X-Received: by 2002:aa7:9295:: with SMTP id j21mr20462574pfa.87.1571634805702;
+        Sun, 20 Oct 2019 22:13:25 -0700 (PDT)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id o185sm18760540pfg.136.2019.10.20.20.56.06
+        by smtp.gmail.com with ESMTPSA id h68sm15716862pfb.149.2019.10.20.22.13.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Oct 2019 20:56:07 -0700 (PDT)
+        Sun, 20 Oct 2019 22:13:25 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Olof Johansson <olof@lixom.net>,
-        Maxime Ripard <mripard@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Leonard Crestez <leonard.crestez@nxp.com>,
-        Dinh Nguyen <dinguyen@kernel.org>,
-        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] arm64: defconfig: Enable Qualcomm watchdog driver
-Date:   Sun, 20 Oct 2019 20:56:03 -0700
-Message-Id: <20191021035603.4186317-1-bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 00/11] arm64: dts: qcom: msm8996: Introduce IFC6640
+Date:   Sun, 20 Oct 2019 22:13:11 -0700
+Message-Id: <20191021051322.297560-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -70,26 +61,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the driver for the watchdog found in the application processor
-subsystem on most modern Qualcomm platforms.
+Refactor msm8996 and db820c in order to make it follow the structure of newer
+platforms, move db820c specific things to db820c.dtsi and then introduce the
+Informace 6640 Single Board Computer.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+Bjorn Andersson (11):
+  arm64: dts: qcom: db820c: Move non-soc entries out of /soc
+  arm64: dts: qcom: msm8996: Use node references in db820c
+  arm64: dts: qcom: msm8996: Move regulator consumers to db820c
+  arm64: dts: qcom: msm8996: Move regulators to db820c
+  arm64: dts: qcom: db820c: Group root nodes
+  arm64: dts: qcom: db820c: Sort all nodes
+  arm64: dts: qcom: db820c: Remove pin specific files
+  arm64: dts: qcom: msm8996: Pad addresses
+  arm64: dts: qcom: msm8996: Sort all nodes in msm8996.dtsi
+  arm64: dts: qcom: db820c: Use regulator names from schematics
+  arm64: dts: qcom: msm8996: Introduce IFC6640
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 4591bf1303da..f3d95f77fb0d 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -463,6 +463,7 @@ CONFIG_IMX2_WDT=y
- CONFIG_IMX_SC_WDT=m
- CONFIG_MESON_GXBB_WATCHDOG=m
- CONFIG_MESON_WATCHDOG=m
-+CONFIG_QCOM_WDT=m
- CONFIG_RENESAS_WDT=y
- CONFIG_UNIPHIER_WATCHDOG=y
- CONFIG_BCM2835_WDT=y
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ .../boot/dts/qcom/apq8096-db820c-pins.dtsi    |  109 -
+ .../dts/qcom/apq8096-db820c-pmic-pins.dtsi    |   92 -
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi  | 1416 ++++---
+ arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts  |  412 ++
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         | 3505 ++++++++---------
+ 6 files changed, 2982 insertions(+), 2553 deletions(-)
+ delete mode 100644 arch/arm64/boot/dts/qcom/apq8096-db820c-pins.dtsi
+ delete mode 100644 arch/arm64/boot/dts/qcom/apq8096-db820c-pmic-pins.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
+
 -- 
 2.23.0
 
