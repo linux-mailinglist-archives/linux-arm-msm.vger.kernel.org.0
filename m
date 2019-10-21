@@ -2,124 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 01441DE984
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 12:32:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91CE6DE994
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 12:36:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728142AbfJUKb4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Oct 2019 06:31:56 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33956 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728111AbfJUKb4 (ORCPT
+        id S1728193AbfJUKfq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Oct 2019 06:35:46 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:40732 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728188AbfJUKfo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Oct 2019 06:31:56 -0400
-Received: by mail-wr1-f66.google.com with SMTP id t16so8179669wrr.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2019 03:31:53 -0700 (PDT)
+        Mon, 21 Oct 2019 06:35:44 -0400
+Received: by mail-pg1-f194.google.com with SMTP id 15so2200235pgt.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2019 03:35:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fQUvlL0V3Iz6E4Ap+lDL6E5wl3Ji5YJZ7TElhvimK6s=;
-        b=sNQbgSe6MW9Sf188uOBYTA+NasNjY7oDNNSVRg80tBE27c9oTBKOeTOMBhKbIfSnFo
-         9fkgnUIi2Drnm02trdz8ueWMyzH7rb45BJPDAsHxAC/uVs45kb4m9g09Pvcas5OGWFzf
-         DWH9vGPLNAryoDnEviIkDk+cuhXVfHBR3FK+/IkRRLTVbLQ4eRInplmskDLz0elRyE2X
-         tAAQe/vc0QIYP8i8VqLixnry7C+73poCoC+aSEnJYUbKzt+ax6O/itJJr1sCUStytl3u
-         gbMqKpuJQWKu/lh1fykZ1lIpc5ZxKzp1T0h77Op17uH6xYjSi9/TCYQ9yy8bIxKylSQ4
-         Zq0g==
+        h=from:to:cc:subject:date:message-id;
+        bh=v5rSAq2borwkfdHAyZMADzr7MniIhk00515PFzb4hhs=;
+        b=qNCGI/YFahR+e+ynFc4x6ppds1OgEZc/KVjTCu/G9Rfk2zBv6ffdW8NjL3KKoCa7hx
+         nKTV+6WosWRgpFq0H/GVKTHPFTpC23IxGh5uTNTx1gehiLHnfJKbgo9spmNmrWV8KX+i
+         9zKH4p7xyjOjiGjzfkpdXLNW4Qsx8vBlwE6e1du1LTQE8UPQMVt2JM6FLajol4MkkBs7
+         vQv+eCgAuyKxsRWSPxePcELmZOlgF2XB0SpGvF8mdFatArXeHCsIGeOVT2+ppkF65jWJ
+         gmXA2yuygVrS+uvwCWqkMEksJfB2h0Eh1K7OnSBE4Vd6Q83oyifcOzE6PjznoSLJneGF
+         u1dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fQUvlL0V3Iz6E4Ap+lDL6E5wl3Ji5YJZ7TElhvimK6s=;
-        b=K3a9G8FnkV4TaghO86GzWsdkdUrx4M7uez7OmzxDM8stSuHP3vFdKClQTHhKGrRZQ/
-         gajU6NlN3A8cwxn56jj3hb6s3PvvPFsCJz7n02lbnQdhmeD20p2nkpma9cEg6tae392r
-         +is/VpmnOQ4KXvNMLzGb+Rg/VjjWFniLQSFwH3PKMvav7fOAQHpfugPvBgjqOBYR/S2Z
-         RWcHYiUrXqhO3ZDM0pKLEzWTVGcpoFYDht/isu+frPosilZszqerYj9OGY9wbdczFv4L
-         cAHgtD8OqwnGyJZJG4mSFiBqTPZdPH+sXLAUnvQSnlbJbaFivlHDdjfJdS+d6FqoyV7u
-         L1yw==
-X-Gm-Message-State: APjAAAWIZW+tUjIxJJiREIiwGoRb5/733wgXmeweLJGWnnBxH9tK0VNY
-        h0i3L03HgQPxH4KfWmODftYoHWGoKZir5w==
-X-Google-Smtp-Source: APXvYqyy4Oux2tNP8V/BSFAyhpaClSr0k2FeVWZej2dR57qFLk+u7vifjBbJudZPXvQKK+XBBOZNeQ==
-X-Received: by 2002:adf:e702:: with SMTP id c2mr17251611wrm.70.1571653912695;
-        Mon, 21 Oct 2019 03:31:52 -0700 (PDT)
-Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
-        by smtp.gmail.com with ESMTPSA id f143sm27637543wme.40.2019.10.21.03.31.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2019 03:31:52 -0700 (PDT)
-Date:   Mon, 21 Oct 2019 11:31:50 +0100
-From:   Daniel Thompson <daniel.thompson@linaro.org>
-To:     Kiran Gunda <kgunda@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        lee.jones@linaro.org, b.zolnierkie@samsung.com,
-        dri-devel@lists.freedesktop.org, jacek.anaszewski@gmail.com,
-        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org
-Subject: Re: [PATCH V8 6/6] backlight: qcom-wled: Add auto string detection
- logic
-Message-ID: <20191021103150.ta7qalltldofouh4@holly.lan>
-References: <1571402009-8706-1-git-send-email-kgunda@codeaurora.org>
- <1571402009-8706-7-git-send-email-kgunda@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1571402009-8706-7-git-send-email-kgunda@codeaurora.org>
-User-Agent: NeoMutt/20180716
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=v5rSAq2borwkfdHAyZMADzr7MniIhk00515PFzb4hhs=;
+        b=SgwHRFReD6SZT4HHJmXAkIL/Ej0EtJUoc/WK2Y42D+vc9BS+bnMEE/rKZzmbpPcOFC
+         oBvUHgxgsEN1K6KVSggriJvJm5p1/nodHaV+rEaoHHwKmCDl2v/hg+9W5CnieDlCVIzy
+         v1nHXn07DNZkqrC9Lv8f/T368dFFE4rKZmA8hU2ZLQx72bQYQMZSauMzaeB0ku6i+DPk
+         1xMW5WMxVQyh9w4eT/0s0ZdsBKIlQ0GS5GKbPyr45nySsMorEisdPQEtdJSS0M9QBuJf
+         xy6BcBFhC3VjqBOVKUOs25spihwZKdBglmaQLkgvjcLdjbKueifdsZvUaPKlqCic0zSj
+         /agQ==
+X-Gm-Message-State: APjAAAWJxJOdQsER+P0/+jg7rrNu/kzT6+a0WlD0xKx9kjl3nTboMC1F
+        q9yy3WQMSJpn6ygKbT59un5BDw==
+X-Google-Smtp-Source: APXvYqwS1rliMo/RIgidg2INxRP2DpDCXVKjrkCgeOeyh0IAjfJKjPgEHgBuaTYwuYuj33lXEDVIOA==
+X-Received: by 2002:a63:e00e:: with SMTP id e14mr25438983pgh.146.1571654142113;
+        Mon, 21 Oct 2019 03:35:42 -0700 (PDT)
+Received: from localhost ([49.248.62.222])
+        by smtp.gmail.com with ESMTPSA id w65sm16716070pfb.106.2019.10.21.03.35.40
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 21 Oct 2019 03:35:41 -0700 (PDT)
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, edubezval@gmail.com, agross@kernel.org,
+        masneyb@onstation.org, swboyd@chromium.org, julia.lawall@lip6.fr,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: [PATCH v6 00/15] thermal: qcom: tsens: Add interrupt support
+Date:   Mon, 21 Oct 2019 16:05:19 +0530
+Message-Id: <cover.1571652874.git.amit.kucheria@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 18, 2019 at 06:03:29PM +0530, Kiran Gunda wrote:
-> The auto string detection algorithm checks if the current WLED
-> sink configuration is valid. It tries enabling every sink and
-> checks if the OVP fault is observed. Based on this information
-> it detects and enables the valid sink configuration.
-> Auto calibration will be triggered when the OVP fault interrupts
-> are seen frequently thereby it tries to fix the sink configuration.
-> 
-> The auto-detection also kicks in when the connected LED string
-> of the display-backlight malfunctions (because of damage) and
-> requires the damaged string to be turned off to prevent the
-> complete panel and/or board from being damaged.
-> 
-> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> ---
->  drivers/video/backlight/qcom-wled.c | 398 +++++++++++++++++++++++++++++++++++-
->  1 file changed, 392 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-> index 658b1e0..b2e6754 100644
-> --- a/drivers/video/backlight/qcom-wled.c
-> +++ b/drivers/video/backlight/qcom-wled.c
-> @@ -193,7 +216,23 @@ static int wled_module_enable(struct wled *wled, int val)
->  				WLED3_CTRL_REG_MOD_EN,
->  				WLED3_CTRL_REG_MOD_EN_MASK,
->  				val << WLED3_CTRL_REG_MOD_EN_SHIFT);
-> -	return rc;
-> +	if (rc < 0)
-> +		return rc;
-> +
-> +	if (wled->ovp_irq > 0) {
-> +		if (val) {
-> +			/*
-> +			 * Wait for at least 10ms before enabling OVP interrupt
-> +			 * after module enable so that soft start is completed.
-> +			 */
+Daniel, only patch 15 needs to be changed in the tree being submitted
+to linux-next. But here is the entire series for completeness.
 
-Comments should not say what is does (we can read that). It should be
-saying what is weird about the hardware the results in us enabling the
-interrupt in an unusual way.
+Hi Thermal and MSM maintainers,
 
-More like:
+I believe this series is now ready to be merged. The DT bindings and driver
+changes should go through the thermal tree and the changes to the DT files
+themselves should go through the MSM tree. There is no hard ordering
+dependency because we're adding a new property to the driver. It would help
+to soak in linux-next for a few weeks to catch anything on kernelci.org.
 
-"The hardware generates a storm of spurious OVP interrupts during soft
-start operations so defer enabling the IRQ for 10ms to ensure that
-the soft start is complete."
+1-4, 7, 14, 15 => thermal tree
+5, 6, 8-13 => msm tree
 
-Note that I am only guessing that is an spurious interrupt storm that
-caused you to defer the interrupt enable... I don't want to have to
-guess which is why I am asking for a good quality comment!
+Regards,
+Amit
 
+Changes since v5:
+- Julia found a missing put_device() call in the success path of
+  tsens_register() while baking in linux-next. A single line change to
+  allow the error and success path to use the call to put_device(). Thanks
+  Julia and LKP.
 
-Daniel.
+Changes since v4:
+- Change to of-thermal core[1] to force interrupts w/o changing polling-delay DT
+  parameter
+- Corresponding changes to DT files to remove the hunks setting the values
+  to 0
+- Collected reviews and acks
+
+Changes since v3:
+- Fix up the YAML definitions based on Rob's review
+
+Changes since v2:
+- Addressed Stephen's review comment
+- Moved the dt-bindings to yaml (This throws up some new warnings in various QCOM
+devicetrees. I'll send out a separate series to fix them up)
+- Collected reviews and acks
+- Added the dt-bindings to MAINTAINERS
+
+Changes since v1:
+- Collected reviews and acks
+- Addressed Stephen's review comments (hopefully I got them all).
+- Completely removed critical interrupt infrastructure from this series.
+  Will post that separately.
+- Fixed a bug in sign-extension of temperature.
+- Fixed DT bindings to use the name of the interrupt e.g. "uplow" and use
+  platform_get_irq_byname().
+
+Add interrupt support to TSENS. The first 6 patches are general fixes and
+cleanups to the driver before interrupt support is introduced.
+
+[1] https://lore.kernel.org/linux-arm-msm/1b53ef537203e629328285b4597a09e4a586d688.1571181041.git.amit.kucheria@linaro.org/
+
+Amit Kucheria (15):
+  drivers: thermal: tsens: Get rid of id field in tsens_sensor
+  drivers: thermal: tsens: Simplify code flow in tsens_probe
+  drivers: thermal: tsens: Add __func__ identifier to debug statements
+  drivers: thermal: tsens: Add debugfs support
+  arm: dts: msm8974: thermal: Add thermal zones for each sensor
+  arm64: dts: msm8916: thermal: Fixup HW ids for cpu sensors
+  dt-bindings: thermal: tsens: Convert over to a yaml schema
+  arm64: dts: sdm845: thermal: Add interrupt support
+  arm64: dts: msm8996: thermal: Add interrupt support
+  arm64: dts: msm8998: thermal: Add interrupt support
+  arm64: dts: qcs404: thermal: Add interrupt support
+  arm: dts: msm8974: thermal: Add interrupt support
+  arm64: dts: msm8916: thermal: Add interrupt support
+  drivers: thermal: tsens: Create function to return sign-extended
+    temperature
+  drivers: thermal: tsens: Add interrupt support
+
+ .../bindings/thermal/qcom-tsens.txt           |  55 --
+ .../bindings/thermal/qcom-tsens.yaml          | 168 ++++++
+ MAINTAINERS                                   |   1 +
+ arch/arm/boot/dts/qcom-msm8974.dtsi           |  92 +++
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |   6 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |   4 +
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |   6 +-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |   2 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   4 +
+ drivers/thermal/qcom/tsens-8960.c             |   4 +-
+ drivers/thermal/qcom/tsens-common.c           | 529 ++++++++++++++++--
+ drivers/thermal/qcom/tsens-v0_1.c             |  11 +
+ drivers/thermal/qcom/tsens-v1.c               |  29 +
+ drivers/thermal/qcom/tsens-v2.c               |  13 +
+ drivers/thermal/qcom/tsens.c                  |  59 +-
+ drivers/thermal/qcom/tsens.h                  | 286 ++++++++--
+ 16 files changed, 1102 insertions(+), 167 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+ create mode 100644 Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+
+-- 
+2.17.1
+
