@@ -2,64 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 260D2DE3EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 07:39:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C696DE40C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 07:52:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727278AbfJUFix (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Oct 2019 01:38:53 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:34325 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726576AbfJUFiw (ORCPT
+        id S1726977AbfJUFwM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Oct 2019 01:52:12 -0400
+Received: from mail-pf1-f171.google.com ([209.85.210.171]:45258 "EHLO
+        mail-pf1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725975AbfJUFwM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Oct 2019 01:38:52 -0400
-Received: by mail-pf1-f193.google.com with SMTP id b128so7694686pfa.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2019 22:38:52 -0700 (PDT)
+        Mon, 21 Oct 2019 01:52:12 -0400
+Received: by mail-pf1-f171.google.com with SMTP id y72so7675604pfb.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2019 22:52:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=g8TRkov274ARhNaH9+VNBabFekS3pr6baLyjkSjNaFU=;
-        b=jpIe82zQpdG0bCP03T7GBfXFyP2osn7Qq9h8GpauO/kcPXLAlH0ZhlhQCH8Y+geeNp
-         eEIGrBgijhpAxe1LdB8BgQTpWx/DP90CXR/XtopqZsv5vaikEmZm11c2vGsC7az/UNhQ
-         p4Z41WCCS2ZAuEfDDHJVHca3ZBdV4z+yXE63L0ko7C3kC+j/rbL7KBAzj91PzFxJUP+n
-         5yOlU0TmxepgehnGk2yJdEFp1U3sPnfctxrwcVrLCjDYsWv1aFdyulxG0LnRRiquonhw
-         A+hp73VDX5l6mtgg2gp8giegtkZaUmjFdMYTK3bqK5KSF0aWnAGaZl5dO0t0xaVn6BQl
-         k/Rg==
+        bh=tx2RUml+L9AKbZcfuDglxT3Q6cbUe+eBS3onRU57gtM=;
+        b=lVrD0fraI09mw9Q2Y+TROypSbF0YLVdG7ga+a2DXaH1JiNQxDCjRLpkKCRlf8OgSeD
+         QAfl9lRQgSTbFrxhoxYdQbrQQrwF2Su5qoyQvsyRpY5wWq3/Ab9MDJvIiG+anUZFkEio
+         0mcqm8vb40zbgr8kUitUs7nQAAs1DzPZGmhXh2b7A4TWchhfsBrCVPyBM06bVR7FQU6D
+         VBAnwO9m8RDAB7kFIsz0I62LgKz8sadVCA06WMyK0Z73bvv/QR5AsyTcmPbH0z/5itk4
+         kFEJa3mf/ZJGCtq1FORILGpHfqFKGHn+a5oc03k+3gFOFsrgodSGuC8kYH6aL1nTAi2M
+         9uOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=g8TRkov274ARhNaH9+VNBabFekS3pr6baLyjkSjNaFU=;
-        b=Vig4vsP4UZGQUOqT9GMFqq5JNVKmX7eooY8vjlYUgaPjUNnC4cF1j8KZIM1cbKvj+K
-         W/qrAIMu6jkP34ozutQAz2sEeyPJKAooyZHGpQFw5Cj7/qN49nJR/Dtmc8Q7D8EGlhrh
-         ybvchaJDM6gR7aTYJVdCO26wBFvSVmzkR2auMlBbAXFjFynZBa41j5kaKVVpTYTTsktS
-         v/n72Gf9KGrvSP2ejm1X3VD6ncqPS0y0ZMNq48QqsvVevo0yLGlULP+iA79jXJujDUTS
-         +7Zct/9ge8UNFss01yEXXWGSOGhR16+kmdUn5Sf/aVLXcEaHrsnWF3O18Qdk7ciLcQZb
-         Yf3g==
-X-Gm-Message-State: APjAAAWUWV/2vVWU1dTCiJ1yOxJuHMKF/PIeZ4a7Q6mF3rf7tav/h9oV
-        mPlwH9rERLoSfzEFWLoyZpqwAlRxA2M=
-X-Google-Smtp-Source: APXvYqxd+4wvcSgAoLCptEA8knrsjY3c0eyRiB0V8m+Xd+/nBNizGpPFNwt7zcWkPctQ42KLzRHNgg==
-X-Received: by 2002:a17:90a:34c1:: with SMTP id m1mr26358594pjf.89.1571636331593;
-        Sun, 20 Oct 2019 22:38:51 -0700 (PDT)
+        bh=tx2RUml+L9AKbZcfuDglxT3Q6cbUe+eBS3onRU57gtM=;
+        b=iRtG/TGiLRbxcXmXkarvhXlITvf7whgyUNGU7c8t8+TtpSJdxmoSYJ/ZiIHbgd21dl
+         5IvlY3H9nJh2vS/I+XXyE0FoJI0os3cOBBburHBUrAKGBR+UjcvqxApW5IBWCcRK+NPK
+         fC0z0vEYJkp6BpR7PUJJ6Mb0Fy/TXZK66zXCRPl/aM57gKYrpPC27XhyzVvY+lDlCet9
+         8n7teK5xyizp6sKzjL9n1PMlLWb+UqAa9jiwRsdoGWjiygNXJ5/FHO1LFSM2QuvGH44R
+         E74h91hbL8rj0lmzeGQ/2DXuxXqteWa3xVp240pcE95RzU9lbVY/Y30u52NKKO2zSKHY
+         aTjw==
+X-Gm-Message-State: APjAAAXIRmY5WZ5agTYnA1cgwDPyokyOORtbLEohkAuBjlXDhIhYRYg7
+        9fzlE8jm5k01j+2R2+EDaLYaDw==
+X-Google-Smtp-Source: APXvYqywEDFfGCFBGFVpqzGmlMHf6OCuVJQpK1N8VsqVKGoXsBLgJyNQ9kJkOfIEEMNTzwGW33WYOA==
+X-Received: by 2002:a17:90a:bf8d:: with SMTP id d13mr27297609pjs.89.1571637131057;
+        Sun, 20 Oct 2019 22:52:11 -0700 (PDT)
 Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id o15sm13221045pjs.14.2019.10.20.22.38.50
+        by smtp.gmail.com with ESMTPSA id k17sm16355277pgh.30.2019.10.20.22.52.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Oct 2019 22:38:51 -0700 (PDT)
-Date:   Sun, 20 Oct 2019 22:38:48 -0700
+        Sun, 20 Oct 2019 22:52:10 -0700 (PDT)
+Date:   Sun, 20 Oct 2019 22:52:07 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     kholk11@gmail.com
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         ccross@android.com, mark.rutland@arm.com, robh+dt@kernel.org,
         agross@kernel.org, marijns95@gmail.com
-Subject: Re: [PATCH 3/5] arm64: dts: qcom: Add configuration for PM8950 and
- PMI8950 peripherals
-Message-ID: <20191021053848.GI4500@tuxbook-pro>
+Subject: Re: [PATCH 4/5] arm64: dts: qcom: Add MSM8976 SoC support dts files
+Message-ID: <20191021055207.GJ4500@tuxbook-pro>
 References: <20191020150746.64114-1-kholk11@gmail.com>
- <20191020150746.64114-4-kholk11@gmail.com>
+ <20191020150746.64114-5-kholk11@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191020150746.64114-4-kholk11@gmail.com>
+In-Reply-To: <20191020150746.64114-5-kholk11@gmail.com>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -67,327 +66,205 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Sun 20 Oct 08:07 PDT 2019, kholk11@gmail.com wrote:
-
-> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> 
-> The PM(I)8950 feature integrated peripherals like ADC, GPIO
-> controller, MPPs, PON keys and others.
-> Add them to DT files that will be imported on boards having
-> this PMIC combo (or one of them, anyways).
-> 
-> Signed-off-by: Angelo G. Del Regno <kholk11@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/pm8950.dtsi  | 187 ++++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/pmi8950.dtsi |  98 ++++++++++++++
->  2 files changed, 285 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/pm8950.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/pmi8950.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/pm8950.dtsi b/arch/arm64/boot/dts/qcom/pm8950.dtsi
+[..]
+> diff --git a/arch/arm64/boot/dts/qcom/msm8976-pins.dtsi b/arch/arm64/boot/dts/qcom/msm8976-pins.dtsi
 > new file mode 100644
-> index 000000000000..c5041349bfe1
+> index 000000000000..1abeba8b8d18
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pm8950.dtsi
-> @@ -0,0 +1,187 @@
+> +++ b/arch/arm64/boot/dts/qcom/msm8976-pins.dtsi
+> @@ -0,0 +1,2119 @@
 > +// SPDX-License-Identifier: GPL-2.0
-> +// Copyright (c) 2019, AngeloGioacchino Del Regno <kholk11@gmail.com>
+> +/* Copyright (c) 2014-2015, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2016-2019 AngeloGioacchino Del Regno <kholk11@gmail.com>
+> + */
 > +
-> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
-> +#include <dt-bindings/input/linux-event-codes.h>
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
-> +#include <dt-bindings/spmi/spmi.h>
-> +
-> +&spmi_bus {
-> +	pm8950_lsid0: pm8950@0 {
-> +		compatible = "qcom,pm8950", "qcom,spmi-pmic";
-> +		reg = <0x0 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		pm8950_gpios: gpio@c000 {
-> +			compatible = "qcom,pm8950-gpio", "qcom,spmi-gpio";
-> +			reg = <0xc000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupts = <0 0xc0 0 IRQ_TYPE_NONE>,
-> +				<0 0xc1 0 IRQ_TYPE_NONE>,
-> +				<0 0xc3 0 IRQ_TYPE_NONE>,
-> +				<0 0xc4 0 IRQ_TYPE_NONE>,
-> +				<0 0xc5 0 IRQ_TYPE_NONE>,
-> +				<0 0xc6 0 IRQ_TYPE_NONE>,
-> +				<0 0xc7 0 IRQ_TYPE_NONE>;
+> +&tlmm {
+
+Please inline this in msm8974.dtsi, it makes it easier to find nodes
+than when they are sprinkled in various *pins.dtsi files.
+
+
+Note also that a lot of these configs are specific to loire, rather than
+msm8976. So preferably they should be specified there instead of in the
+platform.
+
+> +	cdc_reset_ctrl {
+> +		cdc_reset_line_sus: cdc_reset_sleep {
+> +			mux {
+
+You don't have to split mux and config into subnodes (you don't even
+need the last level subnode anymore)...
+
+> +				pins = "gpio133";
+> +				function = "gpio";
+> +			};
+> +			config {
+> +				pins = "gpio133";
+> +				drive-strength = <16>;
+> +				bias-disable;
+> +				output-low;
+> +			};
 > +		};
+[..]
+> diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+[..]
+> +	firmware {
+> +		scm: scm {
+> +			compatible = "qcom,scm";
+
+Please add a more specific compatible as well.
+
+> +			clocks = <&gcc GCC_CRYPTO_CLK>,
+> +				 <&gcc GCC_CRYPTO_AXI_CLK>,
+> +				 <&gcc GCC_CRYPTO_AHB_CLK>;
+> +			clock-names = "core", "bus", "iface";
+> +			#reset-cells = <1>;
 > +
-> +		pm8950_mpps: mpps@a000 {
-> +			compatible = "qcom,pm8950-mpp", "qcom,spmi-mpp";
-> +			reg = <0xa000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupts = <0 0xa0 0 IRQ_TYPE_NONE>,
-> +				     <0 0xa1 0 IRQ_TYPE_NONE>,
-> +				     <0 0xa2 0 IRQ_TYPE_NONE>,
-> +				     <0 0xa3 0 IRQ_TYPE_NONE>;
+> +			qcom,dload-mode = <&tcsr 0x6100>;
+> +		};
+> +	};
+[..]
+> +	smd {
+> +		compatible = "qcom,smd";
 > +
-> +			/* MPP_2: PA_THERM1 */
-> +			pa_therm {
-> +				pm8950_mpp2_def: pa_therm1_default {
-> +					pins = "mpp2";
-> +					function = "analog";
-> +					input-enable;
-> +					qcom,amux-route =
-> +						<PMIC_MPP_AMUX_ROUTE_CH6>;
+> +		rpm {
+> +			interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+> +			qcom,ipc = <&apcs 8 0>;
+> +			qcom,smd-edge = <15>;
+> +
+> +			rpm_requests {
+> +				compatible = "qcom,rpm-msm8976";
+> +				qcom,smd-channels = "rpm_requests";
+> +
+> +				rpmcc: qcom,rpmcc {
+> +					compatible = "qcom,rpmcc-msm8976";
+> +					#clock-cells = <1>;
+> +				};
+> +
+> +				rpmpd: power-controller {
+> +					compatible = "qcom,msm8976-rpmpd";
+> +					#power-domain-cells = <1>;
+> +					operating-points-v2 = <&rpmpd_opp_table>;
+> +				};
+> +
+> +				smd_rpm_regulators: pm8950-regulators {
+
+We've seen several times before where devices of a specific platform
+comes with different set of pmics, so please omit the pmic configuration
+from msm8976.dtsi, give rpm_requests a label and add these regulators in
+the loire.dtsi
+
+> +					compatible = "qcom,rpm-pm8950-regulators";
+> +
+> +					pm8950_s1: s1 {};
+> +					pm8950_s2: s2 {};
+> +					pm8950_s3: s3 {};
+> +					pm8950_s4: s4 {};
+> +					pm8950_s5: s5 {};
+> +					pm8950_s6: s6 {};
+> +
+> +					pm8950_l1: l1 {};
+> +					pm8950_l2: l2 {};
+> +					pm8950_l3: l3 {};
+> +					pm8950_l4: l4 {};
+> +					pm8950_l5: l5 {};
+> +					pm8950_l6: l6 {};
+> +					pm8950_l7: l7 {};
+> +					pm8950_l8: l8 {};
+> +					pm8950_l9: l9 {};
+> +					pm8950_l10: l10 {};
+> +					pm8950_l11: l11 {};
+> +					pm8950_l12: l12 {};
+> +					pm8950_l13: l13 {};
+> +					pm8950_l14: l14 {};
+> +					pm8950_l15: l15 {};
+> +					pm8950_l16: l16 {};
+> +					pm8950_l17: l17 {};
+> +					pm8950_l18: l18 {};
+> +					pm8950_l19: l19 {};
+> +					pm8950_l20: l20 {};
+> +					pm8950_l21: l21 {};
+> +					pm8950_l22: l22 {};
+> +					pm8950_l23: l23 {};
 > +				};
 > +			};
-> +
-> +			/* MPP_4: QUIET_THERM */
-> +			case_therm {
-> +				pm8950_mpp4_def: case_therm_default {
-> +					pins = "mpp4";
-> +					function = "analog";
-> +					input-enable;
-> +					qcom,amux-route =
-> +						<PMIC_MPP_AMUX_ROUTE_CH8>;
-> +				};
-> +			};
-> +		};
-> +
-> +		pon@800 {
-> +			compatible = "qcom,pm8916-pon";
-> +			reg = <0x0800>;
-> +			mode-bootloader = <0x2>;
-> +			mode-recovery = <0x1>;
-> +
-> +			pwrkey {
-> +				compatible = "qcom,pm8941-pwrkey";
-> +				interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
-> +				debounce = <15625>;
-> +				bias-pull-up;
-> +				linux,code = <KEY_POWER>;
-> +			};
-> +		};
-> +
-> +		pm8950_temp: temp-alarm@2400 {
-> +			compatible = "qcom,spmi-temp-alarm";
-> +			reg = <0x2400>;
-> +			interrupts = <0 0x24 0 IRQ_TYPE_EDGE_RISING>;
-> +			io-channels = <&pm8950_adc VADC_DIE_TEMP>;
-> +			io-channel-names = "thermal";
-> +			#thermal-sensor-cells = <0>;
-> +		};
-> +
-> +		pm8950_adc: adc@3100 {
-> +			compatible = "qcom,spmi-vadc";
-> +			reg = <0x3100>;
-> +			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +			#io-channel-cells = <1>;
-> +
-> +			vcoin {
-> +				label = "vcoin";
-> +				reg = <VADC_VCOIN>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +			vph_pwr {
-> +				label = "vph_pwr";
-> +				reg = <VADC_VSYS>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +			die_temp {
-> +				label = "die_temp";
-> +				reg = <VADC_DIE_TEMP>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +			ref_625mv {
-> +				label = "ref_625mv";
-> +				reg = <VADC_REF_625MV>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +			ref_1250v {
-> +				label = "ref_1250v";
-> +				reg = <VADC_REF_1250MV>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +			ref_buf_625mv {
-> +				label = "ref_buf_625mv";
-> +				reg = <VADC_SPARE1>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +			ref_gnd {
-> +				reg = <VADC_GND_REF>;
-> +			};
-> +			ref_vdd {
-> +				reg = <VADC_VDD_VADC>;
-> +			};
-> +			pa_therm0 {
-> +				label = "pa_therm0";
-> +				reg = <VADC_LR_MUX7_HW_ID>;
-> +				qcom,pre-scaling = <1 1>;
-> +				qcom,ratiometric;
-> +				qcom,hw-settle-time = <200>;
-> +			};
-> +			pa_therm1 {
-> +				label = "pa_therm1";
-> +				reg = <VADC_P_MUX2_1_1>;
-> +				qcom,pre-scaling = <1 1>;
-> +				qcom,ratiometric;
-> +				qcom,hw-settle-time = <200>;
-> +			};
-> +			xo_therm {
-> +				label = "xo_therm";
-> +				reg = <VADC_LR_MUX3_XO_THERM>;
-> +				qcom,pre-scaling = <1 1>;
-> +				qcom,ratiometric;
-> +				qcom,hw-settle-time = <200>;
-> +			};
-> +			xo_therm_buf {
-> +				label = "xo_therm_buf";
-> +				reg = <VADC_LR_MUX3_BUF_XO_THERM>;
-> +				qcom,pre-scaling = <1 1>;
-> +				qcom,ratiometric;
-> +				qcom,hw-settle-time = <200>;
-> +			};
-> +			case_therm {
-> +				label = "case_therm";
-> +				reg = <VADC_P_MUX4_1_1>;
-> +				qcom,pre-scaling = <1 1>;
-> +				qcom,ratiometric;
-> +				qcom,hw-settle-time = <200>;
-> +			};
-> +		};
-> +
-> +		rtc@6000 {
-> +			compatible = "qcom,pm8941-rtc";
-> +			reg = <0x6000>;
-> +			reg-names = "rtc", "alarm";
-> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
 > +		};
 > +	};
 > +
-> +	pm8950_1: pm8950@1 {
-> +		compatible = "qcom,pm8950", "qcom,spmi-pmic";
-> +		reg = <0x1 SPMI_USID>;
+> +	soc: soc {
 > +		#address-cells = <1>;
-> +		#size-cells = <0>;
+> +		#size-cells = <1>;
+> +		ranges = <0 0 0 0xffffffff>;
+> +		compatible = "simple-bus";
 > +
-> +		pm8950_spmi_regulators: regulators {
-> +			compatible = "qcom,pm8950-regulators";
+> +		tcsr_mutex_regs: syscon@1905000 {
+> +			compatible = "syscon";
+> +			reg = <0x1905000 0x20000>;
+
+Please pad the address to 8 digits (to make it easier for me to see if
+things are sorted) and please sort all nodes based on address and then
+by name.
+
 > +		};
-> +	};
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/pmi8950.dtsi b/arch/arm64/boot/dts/qcom/pmi8950.dtsi
-> new file mode 100644
-> index 000000000000..15c3e47bab0c
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pmi8950.dtsi
-> @@ -0,0 +1,98 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +// Copyright (c) 2019, AngeloGioacchino Del Regno <kholk11@gmail.com>
+[..]
+> +		smsm {
+
+Non-mmio nodes should not live under /soc, please move them to /.
+
+> +			compatible = "qcom,smsm";
 > +
-> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +#include <dt-bindings/spmi/spmi.h>
-> +
-> +&spmi_bus {
-> +	pmi8950_lsid0: pmic@2 {
-> +		compatible = "qcom,pmi8950", "qcom,spmi-pmic";
-> +		reg = <0x2 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		pmi8950_adc: adc@3100 {
-> +			compatible = "qcom,spmi-vadc";
-> +			reg = <0x3100>;
-> +			interrupts = <0x2 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
 > +			#address-cells = <1>;
 > +			#size-cells = <0>;
-> +			#io-channel-cells = <1>;
 > +
-> +			usbin {
-> +				label = "usbin";
-> +				reg = <VADC_USBIN>;
-> +				qcom,pre-scaling = <1 4>;
+> +			qcom,ipc-1 = <&apcs 8 12>;
+> +			qcom,ipc-2 = <&apcs 8 9>;
+> +			qcom,ipc-3 = <&apcs 8 18>;
+> +
+> +			apps_smsm: apps@0 {
+> +				reg = <0>;
+> +				#qcom,smem-state-cells = <1>;
 > +			};
-> +			dcin {
-> +				label = "dcin";
-> +				reg = <VADC_DCIN>;
-> +				qcom,pre-scaling = <1 4>;
+> +
+> +			hexagon_smsm: hexagon@1 {
+> +				reg = <1>;
+> +				interrupts = <0 290 IRQ_TYPE_EDGE_RISING>;
+> +
+> +				interrupt-controller;
+> +				#interrupt-cells = <2>;
 > +			};
-> +			vchg_sns {
-> +				label = "vchg_sns";
-> +				reg = <VADC_VCHG_SNS>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +			ref_625mv {
-> +				label = "ref_625mv";
-> +				reg = <VADC_REF_625MV>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +			ref_1250v {
-> +				label = "ref_1250v";
-> +				reg = <VADC_REF_1250MV>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +			ref_gnd {
-> +				reg = <VADC_GND_REF>;
-> +			};
-> +			ref_vdd {
-> +				reg = <VADC_VDD_VADC>;
-> +			};
-> +			chg_temp {
-> +				label = "chg_temp";
-> +				reg = <VADC_SPARE2>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +			usb_dp {
-> +				label = "usb_dp";
-> +				reg = <VADC_USB_DP>;
-> +				qcom,pre-scaling = <1 1>;
-> +			};
-> +			usb_dm {
-> +				label = "usb_dm";
-> +				reg = <VADC_USB_DM>;
-> +				qcom,pre-scaling = <1 1>;
+> +
+> +			wcnss_smsm: wcnss@6 {
+> +				reg = <6>;
+> +				interrupts = <GIC_SPI 144 IRQ_TYPE_EDGE_RISING>;
+> +
+> +				interrupt-controller;
+> +				#interrupt-cells = <2>;
 > +			};
 > +		};
+[..]
 > +
-> +		pmi8950_gpio: gpios@c000 {
+> +		hexagon@4080000 {
 
-Please sort nodes by unit address, then name.
+remoteproc@4080000
 
-Apart from that, this looks good.
+> +			compatible = "qcom,q6v5-pil";
+> +			reg = <0x04080000 0x100>,
+> +			      <0x04020000 0x040>;
+> +
+> +			reg-names = "qdsp6", "rmb";
+> +
+> +			interrupts-extended = <&intc 0 293 1>,
+> +					      <&adsp_smp2p_in 0 0>,
+
+The compatible indicates that this is the modem, but this says "adsp".
+Can you please confirm the Hexagon configuration on this platform?
+
+> +					      <&adsp_smp2p_in 2 0>,
+> +					      <&adsp_smp2p_in 1 0>,
+> +					      <&adsp_smp2p_in 3 0>;
+> +			interrupt-names = "wdog", "fatal", "ready",
+> +					  "handover", "stop-ack";
+> +
 
 Regards,
 Bjorn
-
-> +			compatible = "qcom,pmi8950-gpio", "qcom,spmi-gpio";
-> +			reg = <0xc000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupts = <0 0xc0 0 IRQ_TYPE_NONE>,
-> +				<0 0xc1 0 IRQ_TYPE_NONE>;
-> +		};
-> +
-> +		pmi8950_mpp: mpps@a000 {
-> +			compatible = "qcom,pmi8950-mpp", "qcom,spmi-mpp";
-> +			reg = <0xa000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupts = <0x2 0xa0 0 IRQ_TYPE_NONE>,
-> +				<0x2 0xa1 0 IRQ_TYPE_NONE>,
-> +				<0x2 0xa2 0 IRQ_TYPE_NONE>,
-> +				<0x2 0xa3 0 IRQ_TYPE_NONE>;
-> +		};
-> +	};
-> +
-> +	pmi8950_lsid1: pmic@3 {
-> +		compatible = "qcom,pmi8950", "qcom,spmi-pmic";
-> +		reg = <0x3 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +	};
-> +};
-> -- 
-> 2.21.0
-> 
