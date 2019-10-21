@@ -2,92 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 91F99DE5EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 10:08:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB238DE5F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 10:10:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727110AbfJUIIR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Oct 2019 04:08:17 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36378 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725972AbfJUIIR (ORCPT
+        id S1727239AbfJUIKw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Oct 2019 04:10:52 -0400
+Received: from inca-roads.misterjones.org ([213.251.177.50]:53197 "EHLO
+        inca-roads.misterjones.org" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725972AbfJUIKv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Oct 2019 04:08:17 -0400
-Received: by mail-wr1-f66.google.com with SMTP id w18so12179749wrt.3;
-        Mon, 21 Oct 2019 01:08:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=LqSjagznmreorQh4WjtYpX4/TXXxQLyl2wI57WLhs1A=;
-        b=IEObjFEXPGDUd6z6XzvVnqEHSgIsFRosOJro49cIUoX025/yU3BHzQyoRhB8McUc9g
-         37//D6S9DWMqzE8ubub6JVVlvDb2EYpTMAognN+RYhZj80wSnK2XW9rQPSNZxeVf12vj
-         VvNGfioGWLyc71UCltavgH9wSgQhoKm3zHNAD3/qPlUIxprjqMdpENnHedvx3QYNlHJD
-         okFSUpCIald8gd1We+TxS61p2CywAiqnyC4f9VJNoR/lG7KTOzEzOKN8gMI6wMdPPd0H
-         0rsi6CRQuNxdVSU486VLG5TJvXgjhW3hOE7ZGDlKCqFvY+DdYvb87APeYreYukWHBn6h
-         Y5KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=LqSjagznmreorQh4WjtYpX4/TXXxQLyl2wI57WLhs1A=;
-        b=VszkjsNlOK5pn5XgUTI2BhzNrKYP+btWeYFz147Om2SNM2pRK/vvlBrL+jaz5bV/aj
-         7U/0ySHq/ysWcdBJE5y6LgYb4iDTbgMOt0E17DVFDylxc21f89YOR6lGzqUZW+zr71bu
-         SMfRkds8udcbk5AMxbXIUB/1meQ3tkMJUOcoonS3WVBk8UVAS2jgKKg+ZDKMTQRhgX72
-         rSmwk+hv7eyLGIYmuzC2wT304xmjVmbm28QbABZD5deO5WppCvfQWfuAOUq1BqdqEUZR
-         8f1pDZVuS/LNLGZkgUZ5BKAV5qNtMljFlfB3qA9ZzcZo/hGYQtu8KPdI4/pptJmZqnUp
-         0+UQ==
-X-Gm-Message-State: APjAAAUu8N6sK/s8DkQt4x9XBiWcdjv/xWoVkNB8DK5PvStDTNCzZPVI
-        Hy6mzLPGAV1D43Ezq0b/Ykc=
-X-Google-Smtp-Source: APXvYqzTRUrh18jX3Gno07y4/ixRibHCySgpY4CHIq82WdkkdE6OsHf3FKF6NG3ZbwYGYrzrHZND6A==
-X-Received: by 2002:adf:ee81:: with SMTP id b1mr17098306wro.58.1571645295114;
-        Mon, 21 Oct 2019 01:08:15 -0700 (PDT)
-Received: from gmail.com (54033286.catv.pool.telekom.hu. [84.3.50.134])
-        by smtp.gmail.com with ESMTPSA id u2sm11702169wml.44.2019.10.21.01.08.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2019 01:08:14 -0700 (PDT)
-Date:   Mon, 21 Oct 2019 10:08:11 +0200
-From:   Ingo Molnar <mingo@kernel.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
-        sudeep.holla@arm.com, bjorn.andersson@linaro.org,
-        edubezval@gmail.com, agross@kernel.org, tdas@codeaurora.org,
-        swboyd@chromium.org, ilina@codeaurora.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Ben Segall <bsegall@google.com>,
-        Dietmar Eggemann <dietmar.eggemann@arm.com>,
-        Ingo Molnar <mingo@redhat.com>,
-        Juri Lelli <juri.lelli@redhat.com>,
-        Mel Gorman <mgorman@suse.de>,
-        Peter Zijlstra <peterz@infradead.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v4 4/6] cpufreq: Initialize cpufreq-dt driver earlier
-Message-ID: <20191021080811.GA54219@gmail.com>
-References: <cover.1571387352.git.amit.kucheria@linaro.org>
- <66d8ae593ce7936a5f492d0c6855c1ac225b64ee.1571387352.git.amit.kucheria@linaro.org>
+        Mon, 21 Oct 2019 04:10:51 -0400
+Received: from www-data by cheepnis.misterjones.org with local (Exim 4.80)
+        (envelope-from <maz@kernel.org>)
+        id 1iMSm9-0007tu-RH; Mon, 21 Oct 2019 10:10:49 +0200
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Subject: Re: [PATCH v2 11/13] drivers: irqchip: qcom-pdc: Add irqchip for  sc7180
+X-PHP-Originating-Script: 0:main.inc
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <66d8ae593ce7936a5f492d0c6855c1ac225b64ee.1571387352.git.amit.kucheria@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 21 Oct 2019 09:10:49 +0100
+From:   Marc Zyngier <maz@kernel.org>
+Cc:     <agross@kernel.org>, <robh+dt@kernel.org>,
+        <bjorn.andersson@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>
+In-Reply-To: <20191021065522.24511-12-rnayak@codeaurora.org>
+References: <20191021065522.24511-1-rnayak@codeaurora.org>
+ <20191021065522.24511-12-rnayak@codeaurora.org>
+Message-ID: <18195431666bd42aa31cf4ec1eed2881@www.loen.fr>
+X-Sender: maz@kernel.org
+User-Agent: Roundcube Webmail/0.7.2
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Rcpt-To: rnayak@codeaurora.org, agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, mkshah@codeaurora.org, ilina@codeaurora.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on cheepnis.misterjones.org); SAEximRunCond expanded to false
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2019-10-21 07:55, Rajendra Nayak wrote:
+> From: Maulik Shah <mkshah@codeaurora.org>
+>
+> Add sc7180 pdc irqchip
+>
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> Cc: Lina Iyer <ilina@codeaurora.org>
+> Cc: Marc Zyngier <maz@kernel.org>
+> ---
+> v2: No change
+>
+>  drivers/irqchip/qcom-pdc.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+> index faa7d61b9d6c..954fb599fa9c 100644
+> --- a/drivers/irqchip/qcom-pdc.c
+> +++ b/drivers/irqchip/qcom-pdc.c
+> @@ -310,3 +310,4 @@ static int qcom_pdc_init(struct device_node
+> *node, struct device_node *parent)
+>  }
+>
+>  IRQCHIP_DECLARE(pdc_sdm845, "qcom,sdm845-pdc", qcom_pdc_init);
+> +IRQCHIP_DECLARE(pdc_sc7180, "qcom,sc7180-pdc", qcom_pdc_init);
 
-* Amit Kucheria <amit.kucheria@linaro.org> wrote:
+What I gather from these 3 irq-related patches is that as far as
+the PDC is concerned, SDM845/850 and SC7180 are strictly identical.
 
-> This allows HW drivers that depend on cpufreq-dt to initialise earlier.
+Why the churn?
 
-My obsessive-compulsive in-brain spellchecker noticed that the title says 
-'initialize' (US spelling), while the comment uses 'initialise' (UK 
-spelling). Just in case this is not some post-Brexit expression of 
-cross-Atlantic friendliness you might want to fix it. :)
-
-Thanks,
-
-	Ingo
+         M.
+-- 
+Jazz is not dead. It just smells funny...
