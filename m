@@ -2,135 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AEB7DF310
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 18:26:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57E89DF385
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 18:47:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730041AbfJUQ0P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Oct 2019 12:26:15 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:43328 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729507AbfJUQ0O (ORCPT
+        id S1726289AbfJUQqq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Oct 2019 12:46:46 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.166]:16731 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726276AbfJUQqq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Oct 2019 12:26:14 -0400
-Received: by mail-pf1-f194.google.com with SMTP id a2so8729796pfo.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2019 09:26:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=FeEqDDuvyH1j0FkwnEHXEhJ7z7vVV3mb+til5JuVy4E=;
-        b=L8KbCMIZMxP2/ikOEVCaVOtgQiYYSXPdgW250Tq1STkF49vaQk3R5o7/jn3v5ajZbp
-         ydqA0q4Y7eZeucZjxDPT/99FlOAjOoFBxXR+42r+/Rkiey25D2gehkw0tu3RhUlmCKpG
-         o2oUle2jrjk5Q8f35+5xyrFgxajAkboXJop9KDriQvfZyaTxqY8uY3Bazh4lD8gAnlBZ
-         2yU3WuGv0nljF2MGSgD1AkYO3QrFrbykPlnVsu+7xKD+/7ecDGB35eephrOR/tbVALDD
-         1ImzxUDYILfSZGXq51tA24qE+j5WKw/gYMUVr0JgAIjxRFtWuQSpYxx3WYEg9n5T5D6/
-         UjCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FeEqDDuvyH1j0FkwnEHXEhJ7z7vVV3mb+til5JuVy4E=;
-        b=p7PoO0uFYGuOvfe/H9n0FfiPjPxqqrEkXbwUkxlsTB4QGkgqs8I13TcROROY1WdWW3
-         12iT3rqdR4VhjMPq/aXa73JwEeW9bHZIfeZid5zwpyEltIKE2gaBJQ1N7Gu1ov+nfCmH
-         XD/1Ji9E3eDHoCRXH+/cyvscZ8FBI92D53yUAv8gIt8wADFf36npEt/X65VSs7sXoSuJ
-         82XEhpx/CKQ/zRfj8SIYOyQj9LAgXdyAmRjj6xzcjbfM47+RvqcMlaqy2+v8jNwDHWTM
-         m0nvoMK1zo/1vjdhUDf9+dgkg2664b7jZaapmleuS3rOWxAoyxD15Si20dO4N+ccOUFS
-         iNSQ==
-X-Gm-Message-State: APjAAAUo1VtYOGtt0L85HLzx1iXidOI74IqFWn0th7miGy7UncHRy1FP
-        pUwSb0fbGqiGqih0aTWz6OnL2w==
-X-Google-Smtp-Source: APXvYqy5d6rToN0TKdq5fL7MqUzExsdEL3H+tedaCNY+lPF4cHGJooqBtskg5MACrNiAARL8PJwnqw==
-X-Received: by 2002:a62:b504:: with SMTP id y4mr15005944pfe.40.1571675173480;
-        Mon, 21 Oct 2019 09:26:13 -0700 (PDT)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id x5sm15983429pfi.32.2019.10.21.09.26.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2019 09:26:12 -0700 (PDT)
-Date:   Mon, 21 Oct 2019 09:26:10 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     agross@kernel.org, gregkh@linuxfoundation.org, jslaby@suse.com,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] tty: serial: msm_serial: Fix flow control
-Message-ID: <20191021162610.GC1204@tuxbook-pro>
-References: <20191021154616.25457-1-jeffrey.l.hugo@gmail.com>
+        Mon, 21 Oct 2019 12:46:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1571676403;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=Message-Id:Date:Subject:Cc:To:From:X-RZG-CLASS-ID:X-RZG-AUTH:From:
+        Subject:Sender;
+        bh=f1jboLQF08Nk01XPjPEv1GO0NA6sMlhX/MAZdLwfMS4=;
+        b=MUwZO2pfIwA4cwwgNo0BUlQq/zvxnnrfyWE7jcDnv+C7D125YABxeLa4FAGLQr1g2x
+        NLbIphyq4yOwgN+XfJ+khZbzYgPFF1zr85daYbGkE2gqGi8MovL7oerQwEwXLz/TZ9bK
+        gXY3xtTwJv+4/a3AaSfEetP5a81tqvbS7SASG+MT4tGLqASroMLcqyJTu2rOwiNz0ab5
+        bHvTpoVDOf8QFXQA4oPDYtz5XymfkR4pe/iBzE026wrvSCxZr3uzk0I+Dn36o2qwMzA9
+        pRBKpoHHo1bCfEJ4yw5dXOiK6lPNyMGj3+DBOk2R8jj0Ec4eZkkkbH2WhwM6cpNCcbSh
+        Cu8g==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXQrEOHTIXsMv3qxU1"
+X-RZG-CLASS-ID: mo00
+Received: from localhost.localdomain
+        by smtp.strato.de (RZmta 44.28.1 AUTH)
+        with ESMTPSA id 409989v9LGedQlb
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
+        (Client did not present a certificate);
+        Mon, 21 Oct 2019 18:40:39 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        Hai Li <hali@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikitos.tr@gmail.com>
+Subject: [PATCH] drm/msm/dsi: Implement qcom,dsi-phy-regulator-ldo-mode for 28nm PHY
+Date:   Mon, 21 Oct 2019 18:34:25 +0200
+Message-Id: <20191021163425.83697-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191021154616.25457-1-jeffrey.l.hugo@gmail.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 21 Oct 08:46 PDT 2019, Jeffrey Hugo wrote:
+The DSI PHY regulator supports two regulator modes: LDO and DCDC.
+This mode can be selected using the "qcom,dsi-phy-regulator-ldo-mode"
+device tree property.
 
-> hci_qca interfaces to the wcn3990 via a uart_dm on the msm8998 mtp and
-> Lenovo Miix 630 laptop.  As part of initializing the wcn3990, hci_qca
-> disables flow, configures the uart baudrate, and then reenables flow - at
-> which point an event is expected to be received over the uart from the
-> wcn3990.  It is observed that this event comes after the baudrate change
-> but before hci_qca re-enables flow. This is unexpected, and is a result of
-> msm_reset() being broken.
-> 
-> According to the uart_dm hardware documentation, it is recommended that
-> automatic hardware flow control be enabled by setting RX_RDY_CTL.  Auto
-> hw flow control will manage RFR based on the configured watermark.  When
-> there is space to receive data, the hw will assert RFR.  When the watermark
-> is hit, the hw will de-assert RFR.
-> 
-> The hardware documentation indicates that RFR can me manually managed via
-> CR when RX_RDY_CTL is not set.  SET_RFR asserts RFR, and RESET_RFR
-> de-asserts RFR.
-> 
-> msm_reset() is broken because after resetting the hardware, it
-> unconditionally asserts RFR via SET_RFR.  This enables flow regardless of
-> the current configuration, and would undo a previous flow disable
-> operation.  It should instead de-assert RFR via RESET_RFR to block flow
-> until the hardware is reconfigured.  msm_serial should rely on the client
-> to specify that flow should be enabled, either via mctrl() or the termios
-> structure, and only assert RFR in response to those triggers.
-> 
-> Fixes: 04896a77a97b ("msm_serial: serial driver for MSM7K onboard serial peripheral.")
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+However, at the moment only the 20nm PHY driver actually implements
+that option. Add a check in the 28nm PHY driver to program the
+registers correctly for LDO mode.
 
-Looks good!
+Tested-by: Nikita Travkin <nikitos.tr@gmail.com> # l8150
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+This is needed to make the display work on Longcheer L8150,
+which has recently gained mainline support in:
+https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?id=16e8e8072108426029f0c16dff7fbe77fae3df8f
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+This patch is based on code from the downstream kernel:
+https://source.codeaurora.org/quic/la/kernel/msm-3.10/tree/drivers/video/msm/mdss/msm_mdss_io_8974.c?h=LA.BR.1.2.9.1-02310-8x16.0#n152
 
-> ---
-> 
-> v2:
-> -mask out RX_RDY_CTL in msm_reset() to close a small race window for RFR
-> 
->  drivers/tty/serial/msm_serial.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-> index 3657a24913fc..00964b6e4ac1 100644
-> --- a/drivers/tty/serial/msm_serial.c
-> +++ b/drivers/tty/serial/msm_serial.c
-> @@ -980,6 +980,7 @@ static unsigned int msm_get_mctrl(struct uart_port *port)
->  static void msm_reset(struct uart_port *port)
->  {
->  	struct msm_port *msm_port = UART_TO_MSM(port);
-> +	unsigned int mr;
->  
->  	/* reset everything */
->  	msm_write(port, UART_CR_CMD_RESET_RX, UART_CR);
-> @@ -987,7 +988,10 @@ static void msm_reset(struct uart_port *port)
->  	msm_write(port, UART_CR_CMD_RESET_ERR, UART_CR);
->  	msm_write(port, UART_CR_CMD_RESET_BREAK_INT, UART_CR);
->  	msm_write(port, UART_CR_CMD_RESET_CTS, UART_CR);
-> -	msm_write(port, UART_CR_CMD_SET_RFR, UART_CR);
-> +	msm_write(port, UART_CR_CMD_RESET_RFR, UART_CR);
-> +	mr = msm_read(port, UART_MR1);
-> +	mr &= ~UART_MR1_RX_RDY_CTL;
-> +	msm_write(port, mr, UART_MR1);
->  
->  	/* Disable DM modes */
->  	if (msm_port->is_uartdm)
-> -- 
-> 2.17.1
-> 
+The LDO regulator configuration is taken from msm8916-qrd.dtsi:
+https://source.codeaurora.org/quic/la/kernel/msm-3.10/tree/arch/arm/boot/dts/qcom/msm8916-qrd.dtsi?h=LA.BR.1.2.9.1-02310-8x16.0#n56
+---
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+index b3f678f6c2aa..4579e6de4532 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+@@ -48,6 +48,25 @@ static void dsi_28nm_phy_regulator_ctrl(struct msm_dsi_phy *phy, bool enable)
+ 		return;
+ 	}
+ 
++	if (phy->regulator_ldo_mode) {
++		u32 ldo_ctrl;
++
++		if (phy->cfg->type == MSM_DSI_PHY_28NM_LP)
++			ldo_ctrl = 0x05;
++		else
++			ldo_ctrl = 0x0d;
++
++		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_0, 0x0);
++		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CAL_PWR_CFG, 0);
++		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_5, 0x7);
++		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_3, 0);
++		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_2, 0x1);
++		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_1, 0x1);
++		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_4, 0x20);
++		dsi_phy_write(phy->base + REG_DSI_28nm_PHY_LDO_CNTRL, ldo_ctrl);
++		return;
++	}
++
+ 	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_0, 0x0);
+ 	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CAL_PWR_CFG, 1);
+ 	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_5, 0);
+@@ -56,6 +75,7 @@ static void dsi_28nm_phy_regulator_ctrl(struct msm_dsi_phy *phy, bool enable)
+ 	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_1, 0x9);
+ 	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_0, 0x7);
+ 	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_4, 0x20);
++	dsi_phy_write(phy->base + REG_DSI_28nm_PHY_LDO_CNTRL, 0x00);
+ }
+ 
+ static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
+@@ -77,8 +97,6 @@ static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
+ 
+ 	dsi_28nm_phy_regulator_ctrl(phy, true);
+ 
+-	dsi_phy_write(base + REG_DSI_28nm_PHY_LDO_CNTRL, 0x00);
+-
+ 	dsi_28nm_dphy_set_timing(phy, timing);
+ 
+ 	dsi_phy_write(base + REG_DSI_28nm_PHY_CTRL_1, 0x00);
+-- 
+2.23.0
+
