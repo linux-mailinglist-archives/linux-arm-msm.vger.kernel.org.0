@@ -2,164 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A321DF496
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 19:58:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F2C1DF4CD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 20:07:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726819AbfJUR6j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Oct 2019 13:58:39 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.50]:30941 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726672AbfJUR6j (ORCPT
+        id S1728943AbfJUSFj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Oct 2019 14:05:39 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:35673 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729966AbfJUSFj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Oct 2019 13:58:39 -0400
-X-Greylist: delayed 4673 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Oct 2019 13:58:36 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1571680715;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=7Tt2/ZNQjHF0N5Lrq1Ad+3gwdMvPJoAGmvLCcfodlfQ=;
-        b=kgdXI8kM7dnsvZYxUWeoKUBSw48Myqbhjd1dHyhGcEL97UES3Ezs+tRrxXB6ibULiO
-        AAJaEMS9xVDOD8kSt+Gok35o58SBtuR7aXjxe/ItTB/sq6BhHu9lNspcMobqKC6TIR5B
-        P+AOXzESQZoF09QMXDoaokrNn69wVk1UhazzM47KN2OB6tVoMwVuJ3Cg7nJWxm+y5T6/
-        EQWsjE5iDJocE9cBD36RFDsm0MxgfZB5K7DPyluBz4AOI5nnC/xNqoJzTqCIwy3Bzchh
-        yu4+oDHBZ3MRQO9JbSJ/+CurI/YYqq+CJVX4MgQhKob4kKbNabKHmijrML8mgp1i1qkZ
-        1MtQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u266EZF6ORJDdfTYstM="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 44.28.1 AUTH)
-        with ESMTPSA id 409989v9LHwVR2m
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
-        (Client did not present a certificate);
-        Mon, 21 Oct 2019 19:58:31 +0200 (CEST)
-Date:   Mon, 21 Oct 2019 19:58:18 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Sean Paul <sean@poorly.run>
-Cc:     Rob Clark <robdclark@gmail.com>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Hai Li <hali@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Nikita Travkin <nikitos.tr@gmail.com>
-Subject: Re: [PATCH] drm/msm/dsi: Implement qcom,dsi-phy-regulator-ldo-mode
- for 28nm PHY
-Message-ID: <20191021175727.GA86689@gerhold.net>
-References: <20191021163425.83697-1-stephan@gerhold.net>
- <20191021174719.GC85762@art_vandelay>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191021174719.GC85762@art_vandelay>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+        Mon, 21 Oct 2019 14:05:39 -0400
+Received: by mail-pf1-f195.google.com with SMTP id 205so8905322pfw.2;
+        Mon, 21 Oct 2019 11:05:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=tcCpwL0onfR06sWsqvX6mF6jQdr+eQVyW0yto6K7hG4=;
+        b=JYurzqC/VqEbhO/X3sS6Q14PnepMCPoiZ5ZXdzu6bk5bYu5tB0nwyEFf3Zya4K1jp5
+         RqpNk7QJQQvThq3Utlro5P6uUs2R2uWwYRFPDlFmtgqmboFh9oo1noVBDxfk0vAjNLNC
+         HsIAaGynDWSXQWeBRwtBQQaIJGc8TdmbzmFxNO867q5hrGPNUB6Of6PqbX1etW1fzW3L
+         qojXAc9r70oZX68lQsvFBoS03JHH6WQBaMEl1IoPX2BhpyEX2+Uayv0gUbJc0iwWZkr0
+         LZ4jDN6ChgAt29dhn7RVuetRAsNkEzSlYpgJfIrUpiCIee45Y4mvku80XdPSGOQKArr0
+         w4aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=tcCpwL0onfR06sWsqvX6mF6jQdr+eQVyW0yto6K7hG4=;
+        b=TSjSpA/99peGINwZbh1tIY/Sj0PmUD+sQjRWSIm4ZJmgAT/lCnGOhlvUBDrUFoznus
+         b04EHvmM9aitnOoEIZKP1Bk/Ap2qfD4h0x4XtJfEhfJTVbbPU5FNyIroDgHyqSEm+48j
+         o7y3MqdF5WwDtuXzGxgYXIx5Uuku+3mBkfaYM2jbvl/JPSvKE4uv/eZdHcBrWSNnl9Y8
+         S+KnJs/hcQT7Y18CHTcgQzCHllAIbB9tQ1vlqhTx7/Cf8/m76ZqJeL90fxBxNRJVMPs9
+         WOY5FVb/5PHJC7DydgVrQ+A2XU5qE8qKDuKj194C96xEtl4WuqC2GFaUAv8sZxLdBV77
+         qILw==
+X-Gm-Message-State: APjAAAVAlmPj7qJT1N5PcZF/8bi5hqbptzH5wTonODCUOJt3+gpyBskb
+        rK0KkEsMeFq6UwFSH1Xaizg=
+X-Google-Smtp-Source: APXvYqwShECGrMgtkCZNkbBpxSyUczjEot2rIP9v1Pq9qwXKdamaT6TFjN9i9tI8xzvwNdYjP+hFIA==
+X-Received: by 2002:a62:ae06:: with SMTP id q6mr24352444pff.96.1571681138284;
+        Mon, 21 Oct 2019 11:05:38 -0700 (PDT)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id b4sm13929276pju.16.2019.10.21.11.05.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Oct 2019 11:05:37 -0700 (PDT)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+To:     a.hajda@samsung.com, narmstrong@baylibre.com,
+        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+        jernej.skrabec@siol.net, airlied@linux.ie, daniel@ffwll.ch,
+        bjorn.andersson@linaro.org
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH] drm/bridge: ti-sn65dsi86: Decouple DP output lanes from DSI input lanes
+Date:   Mon, 21 Oct 2019 11:05:32 -0700
+Message-Id: <20191021180532.31210-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 21, 2019 at 01:47:19PM -0400, Sean Paul wrote:
-> On Mon, Oct 21, 2019 at 06:34:25PM +0200, Stephan Gerhold wrote:
-> > The DSI PHY regulator supports two regulator modes: LDO and DCDC.
-> > This mode can be selected using the "qcom,dsi-phy-regulator-ldo-mode"
-> > device tree property.
-> > 
-> > However, at the moment only the 20nm PHY driver actually implements
-> > that option. Add a check in the 28nm PHY driver to program the
-> > registers correctly for LDO mode.
-> > 
-> > Tested-by: Nikita Travkin <nikitos.tr@gmail.com> # l8150
-> > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> > ---
-> > This is needed to make the display work on Longcheer L8150,
-> > which has recently gained mainline support in:
-> > https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?id=16e8e8072108426029f0c16dff7fbe77fae3df8f
-> > 
-> > This patch is based on code from the downstream kernel:
-> > https://source.codeaurora.org/quic/la/kernel/msm-3.10/tree/drivers/video/msm/mdss/msm_mdss_io_8974.c?h=LA.BR.1.2.9.1-02310-8x16.0#n152
-> > 
-> > The LDO regulator configuration is taken from msm8916-qrd.dtsi:
-> > https://source.codeaurora.org/quic/la/kernel/msm-3.10/tree/arch/arm/boot/dts/qcom/msm8916-qrd.dtsi?h=LA.BR.1.2.9.1-02310-8x16.0#n56
-> > ---
-> >  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c | 22 ++++++++++++++++++++--
-> >  1 file changed, 20 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> > index b3f678f6c2aa..4579e6de4532 100644
-> > --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> > +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> > @@ -48,6 +48,25 @@ static void dsi_28nm_phy_regulator_ctrl(struct msm_dsi_phy *phy, bool enable)
-> >  		return;
-> >  	}
-> >  
-> > +	if (phy->regulator_ldo_mode) {
-> > +		u32 ldo_ctrl;
-> > +
-> > +		if (phy->cfg->type == MSM_DSI_PHY_28NM_LP)
-> > +			ldo_ctrl = 0x05;
-> > +		else
-> > +			ldo_ctrl = 0x0d;
-> > +
-> > +		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_0, 0x0);
-> > +		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CAL_PWR_CFG, 0);
-> > +		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_5, 0x7);
-> > +		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_3, 0);
-> > +		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_2, 0x1);
-> > +		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_1, 0x1);
-> > +		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_4, 0x20);
-> > +		dsi_phy_write(phy->base + REG_DSI_28nm_PHY_LDO_CNTRL, ldo_ctrl);
-> > +		return;
-> > +	}
-> 
-> nit: Since this has minimal overlap with DCDC mode, I think it would read better
-> if you split this into 2 functions:
-> dsi_28nm_phy_regulator_enable_dcdc() and dsi_28nm_phy_regulator_enable_ldo()
-> 
-> So regulator_ctrl would look like:
-> 
-> static void dsi_28nm_phy_regulator_ctrl(struct msm_dsi_phy *phy, bool enable)
-> {
-> 	void __iomem *base = phy->reg_base;
-> 
-> 	if (!enable) {
-> 		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CAL_PWR_CFG, 0);
-> 		return;
-> 	}
-> 
-> 	if (phy->regulator_ldo_mode)
->                 dsi_28nm_phy_regulator_enable_ldo()
->         else
->                 dsi_28nm_phy_regulator_enable_dcdc()
-> }
-> 
+Based on work by Bjorn Andersson <bjorn.andersson@linaro.org>
 
-I implemented it similar to dsi_phy_20nm.c [1], which looks like:
+The bridge can be configured to use 1, 2, or 4 DP lanes.  This
+configuration is independent of the input DSI lanes.  Right now, the
+driver assumes that there is 1:1 mapping of input lanes to output lanes
+which is not correct and does not work for manu devices such as the
+Lenovo Miix 630 and Lenovo Yoga C630 laptops.
 
-static void dsi_20nm_phy_regulator_ctrl(struct msm_dsi_phy *phy, bool enable)
-{
-	void __iomem *base = phy->reg_base;
+Instead, configure the DP output lanes based on the connection information
+to the panel, if available.
 
-	if (!enable) {
-		dsi_phy_write(base + REG_DSI_20nm_PHY_REGULATOR_CAL_PWR_CFG, 0);
-		return;
-	}
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+---
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
-	if (phy->regulator_ldo_mode) {
-		dsi_phy_write(phy->base + REG_DSI_20nm_PHY_LDO_CNTRL, 0x1d);
-		return;
-	}
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 43abf01ebd4c..1afdc3d5d541 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -100,6 +100,7 @@ struct ti_sn_bridge {
+ 	struct drm_panel		*panel;
+ 	struct gpio_desc		*enable_gpio;
+ 	struct regulator_bulk_data	supplies[SN_REGULATOR_SUPPLY_NUM];
++	int				dp_lanes;
+ };
+ 
+ static const struct regmap_range ti_sn_bridge_volatile_ranges[] = {
+@@ -444,7 +445,7 @@ static void ti_sn_bridge_set_dsi_dp_rate(struct ti_sn_bridge *pdata)
+ 	regmap_write(pdata->regmap, SN_DSIA_CLK_FREQ_REG, val);
+ 
+ 	/* set DP data rate */
+-	dp_rate_mhz = ((bit_rate_mhz / pdata->dsi->lanes) * DP_CLK_FUDGE_NUM) /
++	dp_rate_mhz = ((bit_rate_mhz / pdata->dp_lanes) * DP_CLK_FUDGE_NUM) /
+ 							DP_CLK_FUDGE_DEN;
+ 	for (i = 0; i < ARRAY_SIZE(ti_sn_bridge_dp_rate_lut) - 1; i++)
+ 		if (ti_sn_bridge_dp_rate_lut[i] > dp_rate_mhz)
+@@ -504,8 +505,8 @@ static void ti_sn_bridge_enable(struct drm_bridge *bridge)
+ 	regmap_update_bits(pdata->regmap, SN_DSI_LANES_REG,
+ 			   CHA_DSI_LANES_MASK, val);
+ 
+-	/* DP lane config */
+-	val = DP_NUM_LANES(pdata->dsi->lanes - 1);
++	/* DP lane config - 4 lanes are encoded with the value "3" */
++	val = DP_NUM_LANES(pdata->dp_lanes == 4 ? 3 : pdata->dp_lanes);
+ 	regmap_update_bits(pdata->regmap, SN_SSC_CONFIG_REG, DP_NUM_LANES_MASK,
+ 			   val);
+ 
+@@ -699,7 +700,10 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
+ 			      const struct i2c_device_id *id)
+ {
+ 	struct ti_sn_bridge *pdata;
+-	int ret;
++	int ret, len;
++	struct device_node *endpoint;
++	struct property *prop;
++
+ 
+ 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
+ 		DRM_ERROR("device doesn't support I2C\n");
+@@ -727,6 +731,21 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
+ 		return ret;
+ 	}
+ 
++	endpoint = of_graph_get_endpoint_by_regs(pdata->dev->of_node, 1, -1);
++	prop = of_find_property(endpoint, "data-lanes", &len);
++	if (!prop) {
++		DRM_DEBUG("failed to find dp lane mapping, using default\n");
++		pdata->dp_lanes = 1;
++	} else {
++		pdata->dp_lanes = len / sizeof(u32);
++		if (pdata->dp_lanes < 1 || pdata->dp_lanes > 4 ||
++		    pdata->dp_lanes == 3) {
++			DRM_ERROR("bad number of dp lanes: %d\n",
++				  pdata->dp_lanes);
++			return -EINVAL;
++		}
++	}
++
+ 	dev_set_drvdata(&client->dev, pdata);
+ 
+ 	pdata->enable_gpio = devm_gpiod_get(pdata->dev, "enable",
+-- 
+2.17.1
 
-	/* non LDO mode */
-	dsi_phy_write(base + REG_DSI_20nm_PHY_REGULATOR_CTRL_1, 0x03);
-	dsi_phy_write(base + REG_DSI_20nm_PHY_REGULATOR_CTRL_2, 0x03);
-	dsi_phy_write(base + REG_DSI_20nm_PHY_REGULATOR_CTRL_3, 0x00);
-	dsi_phy_write(base + REG_DSI_20nm_PHY_REGULATOR_CTRL_4, 0x20);
-	dsi_phy_write(base + REG_DSI_20nm_PHY_REGULATOR_CAL_PWR_CFG, 0x01);
-	dsi_phy_write(phy->base + REG_DSI_20nm_PHY_LDO_CNTRL, 0x00);
-	dsi_phy_write(base + REG_DSI_20nm_PHY_REGULATOR_CTRL_0, 0x03);
-}
-
-I guess it looks better for the 20nm PHY driver since it writes only a
-single register in LDO mode rather than the full regulator
-configuration.
-
-I'll update my patch and send a v2. Thanks for the suggestion!
-
-[1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c#n42
