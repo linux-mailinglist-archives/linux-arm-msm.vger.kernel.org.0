@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D0BBDE391
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 07:13:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E80DDE39F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2019 07:14:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727151AbfJUFNi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Oct 2019 01:13:38 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:46988 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727137AbfJUFNh (ORCPT
+        id S1727176AbfJUFNw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Oct 2019 01:13:52 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:45036 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727181AbfJUFNl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Oct 2019 01:13:37 -0400
-Received: by mail-pl1-f193.google.com with SMTP id q24so6005237plr.13
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2019 22:13:37 -0700 (PDT)
+        Mon, 21 Oct 2019 01:13:41 -0400
+Received: by mail-pg1-f195.google.com with SMTP id e10so7002765pgd.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2019 22:13:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Qzuor+bz/mXJf07v2LRthYyEraVLXhacVjkIIk2IeZE=;
-        b=LQZFUctjPRYCbUtUlKaw/G/Llv4lfiGh9aY74galAxqNDlDXrdKciJZggxi7q6sRPK
-         C1LMGiR/kZ9fp2v6OX41g/tnhDrtZjN3Gu7WpaKYQGGxXiJScCBXejryWVs0AVJw+zT2
-         R5q1FDwlgFfPFbmeV0FkJ9n79ZCj7WPwGaom7qrz/D4iAoAS47A9MFWR+qEt2ffRhli1
-         ndbnLYgTxM9VJ/Mmb+S9nq3U7+6CEto9V4hvxoVlnrDEbu/G0pYCVU0T6jVMxPSrXlZr
-         BYr0DPcKErCfpH8CG4zjLHA51gjNc5sziXcW9BqEIzpxX5QP4b8eB4ko4DMY3FLTAcAb
-         aAPw==
+        bh=jcsWTrEqHmC0K8//XXCKxi9HKF4+9QCm4JwJkdR1HEg=;
+        b=zXd1TdKX/eSJYSajuTTdVwFexvvayqYggOhUBPnWVbl5kE42/+1eNhSWfscsrgD9Pi
+         Pf0LSo/2/55TPc2Y77A7nPotyuP5ehh3ajYqaM40sSZ2jCwhXrg/vCwglkkufeiG86Pp
+         fju+eflgg1LHruo1w6D2naomObl6knTeHgCMK+EDqB6QpQGn0ezAdLCIjhewwQJJJWiy
+         y3qb+F8xctP0L2sVymKSRGdoOxHJ9EUpsSDqoTa7Dbnal3WQUzpJr9yE3KSdeuJmh/dK
+         IO2PHD5saHFtNMX+tR9El8IlYNjSZZW+Xl0ziUtOYjpd74cyRUc/RF/o8OIVBuy7H1tE
+         Durw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Qzuor+bz/mXJf07v2LRthYyEraVLXhacVjkIIk2IeZE=;
-        b=QXomum5jd87GZPiMD0xInTIdbvuaW3377Wu5M5FYZWJEiluJvFsawDDGhqq7OM+eGY
-         sQ8APxrLOUpKcPcgiEjn/NIRZmNeuMn+QEWN9y19dMV+fZ6t9YVJNwp7raKFlAm2gNnG
-         jGqSWSSvcOQWb0NmC/r77nnPjgNPVidBgTNYsq+ZLHtHH8yy4SYlwdN9ZUwPCBcNSOqj
-         a78iAW4nwwyJMRtNYI9x3IT0mWgtr1/Gv4cyx30hesvga9UdYeknXLURC4h/zIRGmHku
-         PodluycByVZTNXs3gSOMdZrLjjR29wREPQ0gBW1f7q+iDP3HPoYz4ZUGZWamvVdPeTe7
-         eRJQ==
-X-Gm-Message-State: APjAAAWX0ps9UPWN/y5Nzge2oAe14JomDWlBHRL0E5eP5J2DX72CEisM
-        nikimicuNuk/QTa9FSBxnxlOTw==
-X-Google-Smtp-Source: APXvYqzdGhzM4ofoT/l0GvlpCPxF4ayTAiSBtOcG1NfJOejYhLahLJflbm+hdZzcP+uXXIx2QGKyrw==
-X-Received: by 2002:a17:902:7d8e:: with SMTP id a14mr22819853plm.260.1571634816597;
-        Sun, 20 Oct 2019 22:13:36 -0700 (PDT)
+        bh=jcsWTrEqHmC0K8//XXCKxi9HKF4+9QCm4JwJkdR1HEg=;
+        b=KofYpHrKg181gihWsS5QY4RCWHLlH9av5oOiKMnzrei34lwlQ8RWTbUK++PoPiWy7d
+         xrHfUHliwRmQ1bh4KrxHfxQaRgUih6UHmW1urFiolfZQP/infWqv8OcTxKxDDGZ5GBiQ
+         On33aHpkNw4yJO73xplFnApMtsEti8QrVHcqv0R91wIOls5yP3ne4/J1y1cS0A5ZgRBd
+         pmYgPSAZQc/qiihMsLR/AdsusGuAR/PjJ6xnmBCpNN5Oyhkb3XDnwTegoXoUZcYWmJxz
+         XjFBpzV5guu8I3lOv6mVBfCcF8b5iEjV0Yuv9xDTy9bQUssxkeBwbsPc6pDe24IqWeKK
+         j6uw==
+X-Gm-Message-State: APjAAAU34dTclaZNH8cixRi2IU/PpWroO5wJoKC+I05MnuKZl1oiCdzW
+        Imo1ByXemKK7wNyMe0cMNzZ0Yw==
+X-Google-Smtp-Source: APXvYqxsHVxNGFl9wU3yP2cSlvIyzC3UWFMa5v5rUxbF02VOyjJeh8Q83Pr06n5OGH3tBvhhEcqLTQ==
+X-Received: by 2002:a63:2348:: with SMTP id u8mr23709813pgm.422.1571634819450;
+        Sun, 20 Oct 2019 22:13:39 -0700 (PDT)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id h68sm15716862pfb.149.2019.10.20.22.13.35
+        by smtp.gmail.com with ESMTPSA id h68sm15716862pfb.149.2019.10.20.22.13.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Oct 2019 22:13:35 -0700 (PDT)
+        Sun, 20 Oct 2019 22:13:38 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 08/11] arm64: dts: qcom: msm8996: Pad addresses
-Date:   Sun, 20 Oct 2019 22:13:19 -0700
-Message-Id: <20191021051322.297560-9-bjorn.andersson@linaro.org>
+Subject: [PATCH 10/11] arm64: dts: qcom: db820c: Use regulator names from schematics
+Date:   Sun, 20 Oct 2019 22:13:21 -0700
+Message-Id: <20191021051322.297560-11-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20191021051322.297560-1-bjorn.andersson@linaro.org>
 References: <20191021051322.297560-1-bjorn.andersson@linaro.org>
@@ -63,423 +63,467 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Pad all addresses in msm8996.dtsi to 8 digits, in order to make it
-easier to ensure ordering when adding new nodes.
+Update the regulator names in db820c.dtsi to use the names from the
+schematics, instead of the made up genric names.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 144 +++++++++++++-------------
- 1 file changed, 72 insertions(+), 72 deletions(-)
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 239 +++++++++++++------
+ 1 file changed, 169 insertions(+), 70 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 48b5981d01b0..6c1a6774396d 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -520,7 +520,7 @@
+diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
+index 6c64deecf950..20d5561cf3e5 100644
+--- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
++++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
+@@ -107,6 +107,26 @@
+ 		pinctrl-0 = <&usb3_vbus_det_gpio>;
+ 	};
  
- 		rpm_msg_ram: memory@68000 {
- 			compatible = "qcom,rpm-msg-ram";
--			reg = <0x68000 0x6000>;
-+			reg = <0x00068000 0x6000>;
++	vph_pwr: vph-pwr-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "vph_pwr";
++		regulator-always-on;
++		regulator-boot-on;
++
++		regulator-min-microvolt = <3700000>;
++		regulator-max-microvolt = <3700000>;
++	};
++
++	vreg_s8a_l3a_input: vreg-s8a-l3a-input {
++		compatible = "regulator-fixed";
++		regulator-name = "vreg_s8a_l3a_input";
++		regulator-always-on;
++		regulator-boot-on;
++
++		regulator-min-microvolt = <0>;
++		regulator-max-microvolt = <0>;
++	};
++
+ 	wlan_en: wlan-en-1-8v {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&wlan_en_gpios>;
+@@ -187,7 +207,7 @@
+ };
+ 
+ &camss {
+-	vdda-supply = <&pm8994_l2>;
++	vdda-supply = <&vreg_l2a_1p25>;
+ };
+ 
+ &hdmi {
+@@ -197,30 +217,30 @@
+ 	pinctrl-0 = <&hdmi_hpd_active &hdmi_ddc_active>;
+ 	pinctrl-1 = <&hdmi_hpd_suspend &hdmi_ddc_suspend>;
+ 
+-	core-vdda-supply = <&pm8994_l12>;
+-	core-vcc-supply = <&pm8994_s4>;
++	core-vdda-supply = <&vreg_l12a_1p8>;
++	core-vcc-supply = <&vreg_s4a_1p8>;
+ };
+ 
+ &hdmi_phy {
+ 	status = "okay";
+ 
+-	vddio-supply = <&pm8994_l12>;
+-	vcca-supply = <&pm8994_l28>;
++	vddio-supply = <&vreg_l12a_1p8>;
++	vcca-supply = <&vreg_l28a_0p925>;
+ 	#phy-cells = <0>;
+ };
+ 
+ &hsusb_phy1 {
+ 	status = "okay";
+ 
+-	vdda-pll-supply = <&pm8994_l12>;
+-	vdda-phy-dpdm-supply = <&pm8994_l24>;
++	vdda-pll-supply = <&vreg_l12a_1p8>;
++	vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
+ };
+ 
+ &hsusb_phy2 {
+ 	status = "okay";
+ 
+-	vdda-pll-supply = <&pm8994_l12>;
+-	vdda-phy-dpdm-supply = <&pm8994_l24>;
++	vdda-pll-supply = <&vreg_l12a_1p8>;
++	vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
+ };
+ 
+ &mdp {
+@@ -493,26 +513,26 @@
+ 	status = "okay";
+ 	perst-gpio = <&msmgpio 35 GPIO_ACTIVE_LOW>;
+ 	vddpe-3v3-supply = <&wlan_en>;
+-	vdda-supply = <&pm8994_l28>;
++	vdda-supply = <&vreg_l28a_0p925>;
+ };
+ 
+ &pcie1 {
+ 	status = "okay";
+ 	perst-gpio = <&msmgpio 130 GPIO_ACTIVE_LOW>;
+-	vdda-supply = <&pm8994_l28>;
++	vdda-supply = <&vreg_l28a_0p925>;
+ };
+ 
+ &pcie2 {
+ 	status = "okay";
+ 	perst-gpio = <&msmgpio 114 GPIO_ACTIVE_LOW>;
+-	vdda-supply = <&pm8994_l28>;
++	vdda-supply = <&vreg_l28a_0p925>;
+ };
+ 
+ &pcie_phy {
+ 	status = "okay";
+ 
+-	vdda-phy-supply = <&pm8994_l28>;
+-	vdda-pll-supply = <&pm8994_l12>;
++	vdda-phy-supply = <&vreg_l28a_0p925>;
++	vdda-pll-supply = <&vreg_l12a_1p8>;
+ };
+ 
+ &pm8994_gpios {
+@@ -656,16 +676,35 @@
+ 	pm8994-regulators {
+ 		compatible = "qcom,rpm-pm8994-regulators";
+ 
+-		vdd_l1-supply = <&pm8994_s3>;
+-		vdd_l2_l26_l28-supply = <&pm8994_s3>;
+-		vdd_l3_l11-supply = <&pm8994_s3>;
+-		vdd_l4_l27_l31-supply = <&pm8994_s3>;
+-		vdd_l5_l7-supply = <&pm8994_s5>;
+-		vdd_l14_l15-supply = <&pm8994_s5>;
+-		vdd_l20_l21-supply = <&pm8994_s5>;
+-		vdd_l25-supply = <&pm8994_s3>;
+-
+-		pm8994_s3: s3 {
++		vdd_s1-supply = <&vph_pwr>;
++		vdd_s2-supply = <&vph_pwr>;
++		vdd_s3-supply = <&vph_pwr>;
++		vdd_s4-supply = <&vph_pwr>;
++		vdd_s5-supply = <&vph_pwr>;
++		vdd_s6-supply = <&vph_pwr>;
++		vdd_s7-supply = <&vph_pwr>;
++		vdd_s8-supply = <&vph_pwr>;
++		vdd_s9-supply = <&vph_pwr>;
++		vdd_s10-supply = <&vph_pwr>;
++		vdd_s11-supply = <&vph_pwr>;
++		vdd_s12-supply = <&vph_pwr>;
++		vdd_l1-supply = <&vreg_s1b_1p025>;
++		vdd_l2_l26_l28-supply = <&vreg_s3a_1p3>;
++		vdd_l3_l11-supply = <&vreg_s8a_l3a_input>;
++		vdd_l4_l27_l31-supply = <&vreg_s3a_1p3>;
++		vdd_l5_l7-supply = <&vreg_s5a_2p15>;
++		vdd_l6_l12_l32-supply = <&vreg_s5a_2p15>;
++		vdd_l8_l16_l30-supply = <&vph_pwr>;
++		vdd_l9_l10_l18_l22-supply = <&vph_pwr_bbyp>;
++		vdd_l13_l19_l23_l24-supply = <&vph_pwr_bbyp>;
++		vdd_l14_l15-supply = <&vreg_s5a_2p15>;
++		vdd_l17_l29-supply = <&vph_pwr_bbyp>;
++		vdd_l20_l21-supply = <&vph_pwr_bbyp>;
++		vdd_l25-supply = <&vreg_s3a_1p3>;
++		vdd_lvs1_2-supply = <&vreg_s4a_1p8>;
++
++		vreg_s3a_1p3: s3 {
++			regulator-name = "vreg_s3a_1p3";
+ 			regulator-min-microvolt = <1300000>;
+ 			regulator-max-microvolt = <1300000>;
+ 		};
+@@ -674,137 +713,197 @@
+ 		 * 1.8v required on LS expansion
+ 		 * for mezzanine boards
+ 		 */
+-		pm8994_s4: s4 {
++		vreg_s4a_1p8: s4 {
++			regulator-name = "vreg_s4a_1p8";
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 			regulator-always-on;
+ 		};
+-		pm8994_s5: s5 {
++		vreg_s5a_2p15: s5 {
++			regulator-name = "vreg_s5a_2p15";
+ 			regulator-min-microvolt = <2150000>;
+ 			regulator-max-microvolt = <2150000>;
+ 		};
+-		pm8994_s7: s7 {
++		vreg_s7a_1p0: s7 {
++			regulator-name = "vreg_s7a_1p0";
+ 			regulator-min-microvolt = <800000>;
+ 			regulator-max-microvolt = <800000>;
  		};
  
- 		rng: rng@83000 {
-@@ -532,28 +532,28 @@
- 
- 		tcsr_mutex_regs: syscon@740000 {
- 			compatible = "syscon";
--			reg = <0x740000 0x20000>;
-+			reg = <0x00740000 0x20000>;
+-		pm8994_l1: l1 {
++		vreg_l1a_1p0: l1 {
++			regulator-name = "vreg_l1a_1p0";
+ 			regulator-min-microvolt = <1000000>;
+ 			regulator-max-microvolt = <1000000>;
  		};
- 
- 		tsens0: thermal-sensor@4a9000 {
- 			compatible = "qcom,msm8996-tsens";
--			reg = <0x4a9000 0x1000>, /* TM */
--			      <0x4a8000 0x1000>; /* SROT */
-+			reg = <0x004a9000 0x1000>, /* TM */
-+			      <0x004a8000 0x1000>; /* SROT */
- 			#qcom,sensors = <13>;
- 			#thermal-sensor-cells = <1>;
+-		pm8994_l2: l2 {
++		vreg_l2a_1p25: l2 {
++			regulator-name = "vreg_l2a_1p25";
+ 			regulator-min-microvolt = <1250000>;
+ 			regulator-max-microvolt = <1250000>;
  		};
- 
- 		tsens1: thermal-sensor@4ad000 {
- 			compatible = "qcom,msm8996-tsens";
--			reg = <0x4ad000 0x1000>, /* TM */
--			      <0x4ac000 0x1000>; /* SROT */
-+			reg = <0x004ad000 0x1000>, /* TM */
-+			      <0x004ac000 0x1000>; /* SROT */
- 			#qcom,sensors = <8>;
- 			#thermal-sensor-cells = <1>;
+-		pm8994_l3: l3 {
++		vreg_l3a_0p875: l3 {
++			regulator-name = "vreg_l3a_0p875";
+ 			regulator-min-microvolt = <850000>;
+ 			regulator-max-microvolt = <850000>;
  		};
- 
- 		tcsr: syscon@7a0000 {
- 			compatible = "qcom,tcsr-msm8996", "syscon";
--			reg = <0x7a0000 0x18000>;
-+			reg = <0x007a0000 0x18000>;
+-		pm8994_l4: l4 {
++		vreg_l4a_1p225: l4 {
++			regulator-name = "vreg_l4a_1p225";
+ 			regulator-min-microvolt = <1225000>;
+ 			regulator-max-microvolt = <1225000>;
  		};
- 
- 		intc: interrupt-controller@9bc0000 {
-@@ -569,7 +569,7 @@
- 
- 		apcs_glb: mailbox@9820000 {
- 			compatible = "qcom,msm8996-apcs-hmss-global";
--			reg = <0x9820000 0x1000>;
-+			reg = <0x09820000 0x1000>;
- 
- 			#mbox-cells = <1>;
+-		pm8994_l6: l6 {
++		vreg_l6a_1p2: l6 {
++			regulator-name = "vreg_l6a_1p2";
+ 			regulator-min-microvolt = <1200000>;
+ 			regulator-max-microvolt = <1200000>;
  		};
-@@ -579,7 +579,7 @@
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
--			reg = <0x300000 0x90000>;
-+			reg = <0x00300000 0x90000>;
+-		pm8994_l8: l8 {
++		vreg_l8a_1p8: l8 {
++			regulator-name = "vreg_l8a_1p8";
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
  		};
- 
- 		stm@3002000 {
-@@ -1052,7 +1052,7 @@
- 
- 		kryocc: clock-controller@6400000 {
- 			compatible = "qcom,apcc-msm8996";
--			reg = <0x6400000 0x90000>;
-+			reg = <0x06400000 0x90000>;
- 			#clock-cells = <1>;
+-		pm8994_l9: l9 {
++		vreg_l9a_1p8: l9 {
++			regulator-name = "vreg_l9a_1p8";
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
  		};
+-		pm8994_l10: l10 {
++		vreg_l10a_1p8: l10 {
++			regulator-name = "vreg_l10a_1p8";
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 		};
+-		pm8994_l11: l11 {
++		vreg_l11a_1p15: l11 {
++			regulator-name = "vreg_l11a_1p15";
+ 			regulator-min-microvolt = <1150000>;
+ 			regulator-max-microvolt = <1150000>;
+ 		};
+-		pm8994_l12: l12 {
++		vreg_l12a_1p8: l12 {
++			regulator-name = "vreg_l12a_1p8";
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 		};
+-		pm8994_l13: l13 {
++		vreg_l13a_2p95: l13 {
++			regulator-name = "vreg_l13a_2p95";
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <2950000>;
+ 		};
+-		pm8994_l14: l14 {
++		vreg_l14a_1p8: l14 {
++			regulator-name = "vreg_l14a_1p8";
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 		};
+-		pm8994_l15: l15 {
++		vreg_l15a_1p8: l15 {
++			regulator-name = "vreg_l15a_1p8";
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 		};
+-		pm8994_l16: l16 {
++		vreg_l16a_2p7: l16 {
++			regulator-name = "vreg_l16a_2p7";
+ 			regulator-min-microvolt = <2700000>;
+ 			regulator-max-microvolt = <2700000>;
+ 		};
+-		pm8994_l17: l17 {
++		vreg_l17a_2p8: l17 {
++			regulator-name = "vreg_l17a_2p8";
+ 			regulator-min-microvolt = <2500000>;
+ 			regulator-max-microvolt = <2500000>;
+ 		};
+-		pm8994_l18: l18 {
++		vreg_l18a_2p85: l18 {
++			regulator-name = "vreg_l18a_2p85";
+ 			regulator-min-microvolt = <2700000>;
+ 			regulator-max-microvolt = <2900000>;
+ 		};
+-		pm8994_l19: l19 {
++		vreg_l19a_2p8: l19 {
++			regulator-name = "vreg_l19a_2p8";
+ 			regulator-min-microvolt = <3000000>;
+ 			regulator-max-microvolt = <3000000>;
+ 		};
+-		pm8994_l20: l20 {
++		vreg_l20a_2p95: l20 {
++			regulator-name = "vreg_l20a_2p95";
+ 			regulator-min-microvolt = <2950000>;
+ 			regulator-max-microvolt = <2950000>;
+ 			regulator-allow-set-load;
+ 		};
+-		pm8994_l21: l21 {
++		vreg_l21a_2p95: l21 {
++			regulator-name = "vreg_l21a_2p95";
+ 			regulator-min-microvolt = <2950000>;
+ 			regulator-max-microvolt = <2950000>;
+ 			regulator-allow-set-load;
+ 			regulator-system-load = <200000>;
+ 		};
+-		pm8994_l22: l22 {
++		vreg_l22a_3p0: l22 {
++			regulator-name = "vreg_l22a_3p0";
+ 			regulator-min-microvolt = <3300000>;
+ 			regulator-max-microvolt = <3300000>;
+ 		};
+-		pm8994_l23: l23 {
++		vreg_l23a_2p8: l23 {
++			regulator-name = "vreg_l23a_2p8";
+ 			regulator-min-microvolt = <2800000>;
+ 			regulator-max-microvolt = <2800000>;
+ 		};
+-		pm8994_l24: l24 {
++		vreg_l24a_3p075: l24 {
++			regulator-name = "vreg_l24a_3p075";
+ 			regulator-min-microvolt = <3075000>;
+ 			regulator-max-microvolt = <3075000>;
+ 		};
+-		pm8994_l25: l25 {
++		vreg_l25a_1p2: l25 {
++			regulator-name = "vreg_l25a_1p2";
+ 			regulator-min-microvolt = <1200000>;
+ 			regulator-max-microvolt = <1200000>;
+ 			regulator-allow-set-load;
+ 		};
+-		pm8994_l27: l27 {
++		vreg_l26a_0p8: l27 {
++			regulator-name = "vreg_l26a_0p8";
+ 			regulator-min-microvolt = <1000000>;
+ 			regulator-max-microvolt = <1000000>;
+ 		};
+-		pm8994_l28: l28 {
++		vreg_l28a_0p925: l28 {
++			regulator-name = "vreg_l28a_0p925";
+ 			regulator-min-microvolt = <925000>;
+ 			regulator-max-microvolt = <925000>;
+ 			regulator-allow-set-load;
+ 		};
+-		pm8994_l29: l29 {
++		vreg_l29a_2p8: l29 {
++			regulator-name = "vreg_l29a_2p8";
+ 			regulator-min-microvolt = <2800000>;
+ 			regulator-max-microvolt = <2800000>;
+ 		};
+-		pm8994_l30: l30 {
++		vreg_l30a_1p8: l30 {
++			regulator-name = "vreg_l30a_1p8";
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 		};
+-		pm8994_l32: l32 {
++		vreg_l32a_1p8: l32 {
++			regulator-name = "vreg_l32a_1p8";
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 		};
++
++		vreg_lvs1a_1p8: lvs1 {
++			regulator-name = "vreg_lvs1a_1p8";
++		};
++
++		vreg_lvs2a_1p8: lvs2 {
++			regulator-name = "vreg_lvs2a_1p8";
++		};
++	};
++
++	pmi8994-regulators {
++		compatible = "qcom,rpm-pmi8994-regulators";
++
++		vdd_s1-supply = <&vph_pwr>;
++		vdd_s2-supply = <&vph_pwr>;
++		vdd_s3-supply = <&vph_pwr>;
++		vdd_bst_byp-supply = <&vph_pwr>;
++
++		vreg_s1b_1p025: s1 {
++			regulator-name = "vreg_s1b_1p025";
++			regulator-min-microvolt = <1025000>;
++			regulator-max-microvolt = <1025000>;
++		};
++
++		vph_pwr_bbyp: bst-byp {
++			regulator-name = "vph_pwr_bbyp";
++			regulator-min-microvolt = <3150000>;
++			regulator-max-microvolt = <3600000>;
++		};
+ 	};
+ };
  
-@@ -1098,7 +1098,7 @@
+@@ -814,8 +913,8 @@
+ 	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
+ 	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
+ 	cd-gpios = <&msmgpio 38 0x1>;
+-	vmmc-supply = <&pm8994_l21>;
+-	vqmmc-supply = <&pm8994_l13>;
++	vmmc-supply = <&vreg_l21a_2p95>;
++	vqmmc-supply = <&vreg_l13a_2p95>;
+ 	status = "okay";
+ };
  
- 		blsp2_uart1: serial@75b0000 {
- 			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
--			reg = <0x75b0000 0x1000>;
-+			reg = <0x075b0000 0x1000>;
- 			interrupts = <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&gcc GCC_BLSP2_UART2_APPS_CLK>,
- 				 <&gcc GCC_BLSP2_AHB_CLK>;
-@@ -1164,7 +1164,7 @@
- 		sdhc2: sdhci@74a4900 {
- 			 status = "disabled";
- 			 compatible = "qcom,sdhci-msm-v4";
--			 reg = <0x74a4900 0x314>, <0x74a4000 0x800>;
-+			 reg = <0x074a4900 0x314>, <0x074a4000 0x800>;
- 			 reg-names = "hc_mem", "core_mem";
+@@ -908,13 +1007,13 @@
+ &ufsphy {
+ 	status = "okay";
  
- 			 interrupts = <0 125 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1249,11 +1249,11 @@
+-	vdda-phy-supply = <&pm8994_l28>;
+-	vdda-pll-supply = <&pm8994_l12>;
++	vdda-phy-supply = <&vreg_l28a_0p925>;
++	vdda-pll-supply = <&vreg_l12a_1p8>;
  
- 		spmi_bus: qcom,spmi@400f000 {
- 			compatible = "qcom,spmi-pmic-arb";
--			reg = <0x400f000 0x1000>,
--			      <0x4400000 0x800000>,
--			      <0x4c00000 0x800000>,
--			      <0x5800000 0x200000>,
--			      <0x400a000 0x002100>;
-+			reg = <0x0400f000 0x1000>,
-+			      <0x04400000 0x800000>,
-+			      <0x04c00000 0x800000>,
-+			      <0x05800000 0x200000>,
-+			      <0x0400a000 0x002100>;
- 			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
- 			interrupt-names = "periph_irq";
- 			interrupts = <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>;
-@@ -1267,7 +1267,7 @@
+ 	vdda-phy-max-microamp = <18380>;
+ 	vdda-pll-max-microamp = <9440>;
  
- 		ufsphy: phy@627000 {
- 			compatible = "qcom,msm8996-ufs-phy-qmp-14nm";
--			reg = <0x627000 0xda8>;
-+			reg = <0x00627000 0xda8>;
- 			reg-names = "phy_mem";
- 			#phy-cells = <0>;
+-	vddp-ref-clk-supply = <&pm8994_l25>;
++	vddp-ref-clk-supply = <&vreg_l25a_1p2>;
+ 	vddp-ref-clk-max-microamp = <100>;
+ 	vddp-ref-clk-always-on;
+ };
+@@ -922,9 +1021,9 @@
+ &ufshc {
+ 	status = "okay";
  
-@@ -1280,7 +1280,7 @@
+-	vcc-supply = <&pm8994_l20>;
+-	vccq-supply = <&pm8994_l25>;
+-	vccq2-supply = <&pm8994_s4>;
++	vcc-supply = <&vreg_l20a_2p95>;
++	vccq-supply = <&vreg_l25a_1p2>;
++	vccq2-supply = <&vreg_s4a_1p8>;
  
- 		ufshc: ufshc@624000 {
- 			compatible = "qcom,ufshc";
--			reg = <0x624000 0x2500>;
-+			reg = <0x00624000 0x2500>;
- 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+ 	vcc-max-microamp = <600000>;
+ 	vccq-max-microamp = <450000>;
+@@ -955,8 +1054,8 @@
+ &usb3phy {
+ 	status = "okay";
  
- 			phys = <&ufsphy>;
-@@ -1339,7 +1339,7 @@
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
--			reg = <0x8c0000 0x40000>;
-+			reg = <0x008c0000 0x40000>;
- 			assigned-clocks = <&mmcc MMPLL9_PLL>,
- 					  <&mmcc MMPLL1_PLL>,
- 					  <&mmcc MMPLL3_PLL>,
-@@ -1354,7 +1354,7 @@
+-	vdda-phy-supply = <&pm8994_l28>;
+-	vdda-pll-supply = <&pm8994_l12>;
++	vdda-phy-supply = <&vreg_l28a_0p925>;
++	vdda-pll-supply = <&vreg_l12a_1p8>;
  
- 		qfprom@74000 {
- 			compatible = "qcom,qfprom";
--			reg = <0x74000 0x8ff>;
-+			reg = <0x00074000 0x8ff>;
- 			#address-cells = <1>;
- 			#size-cells = <1>;
+ };
  
-@@ -1376,7 +1376,7 @@
+@@ -965,9 +1064,9 @@
+ 	clocks = <&div1_mclk>,
+ 		 <&rpmcc RPM_SMD_BB_CLK1>;
  
- 		pcie_phy: phy@34000 {
- 			compatible = "qcom,msm8996-qmp-pcie-phy";
--			reg = <0x34000 0x488>;
-+			reg = <0x00034000 0x488>;
- 			#clock-cells = <1>;
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -1394,9 +1394,9 @@
- 			status = "disabled";
- 
- 			pciephy_0: lane@35000 {
--				reg = <0x035000 0x130>,
--					<0x035200 0x200>,
--					<0x035400 0x1dc>;
-+				reg = <0x00035000 0x130>,
-+				      <0x00035200 0x200>,
-+				      <0x00035400 0x1dc>;
- 				#phy-cells = <0>;
- 
- 				clock-output-names = "pcie_0_pipe_clk_src";
-@@ -1407,9 +1407,9 @@
- 			};
- 
- 			pciephy_1: lane@36000 {
--				reg = <0x036000 0x130>,
--					<0x036200 0x200>,
--					<0x036400 0x1dc>;
-+				reg = <0x00036000 0x130>,
-+				      <0x00036200 0x200>,
-+				      <0x00036400 0x1dc>;
- 				#phy-cells = <0>;
- 
- 				clock-output-names = "pcie_1_pipe_clk_src";
-@@ -1420,9 +1420,9 @@
- 			};
- 
- 			pciephy_2: lane@37000 {
--				reg = <0x037000 0x130>,
--					<0x037200 0x200>,
--					<0x037400 0x1dc>;
-+				reg = <0x00037000 0x130>,
-+				      <0x00037200 0x200>,
-+				      <0x00037400 0x1dc>;
- 				#phy-cells = <0>;
- 
- 				clock-output-names = "pcie_2_pipe_clk_src";
-@@ -1435,7 +1435,7 @@
- 
- 		usb3phy: phy@7410000 {
- 			compatible = "qcom,msm8996-qmp-usb3-phy";
--			reg = <0x7410000 0x1c4>;
-+			reg = <0x07410000 0x1c4>;
- 			#clock-cells = <1>;
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -1452,9 +1452,9 @@
- 			status = "disabled";
- 
- 			ssusb_phy_0: lane@7410200 {
--				reg = <0x7410200 0x200>,
--					<0x7410400 0x130>,
--					<0x7410600 0x1a8>;
-+				reg = <0x07410200 0x200>,
-+				      <0x07410400 0x130>,
-+				      <0x07410600 0x1a8>;
- 				#phy-cells = <0>;
- 
- 				clock-output-names = "usb3_phy_pipe_clk_src";
-@@ -1465,7 +1465,7 @@
- 
- 		hsusb_phy1: phy@7411000 {
- 			compatible = "qcom,msm8996-qusb2-phy";
--			reg = <0x7411000 0x180>;
-+			reg = <0x07411000 0x180>;
- 			#phy-cells = <0>;
- 
- 			clocks = <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-@@ -1479,7 +1479,7 @@
- 
- 		hsusb_phy2: phy@7412000 {
- 			compatible = "qcom,msm8996-qusb2-phy";
--			reg = <0x7412000 0x180>;
-+			reg = <0x07412000 0x180>;
- 			#phy-cells = <0>;
- 
- 			clocks = <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-@@ -1493,7 +1493,7 @@
- 
- 		usb2: usb@76f8800 {
- 			compatible = "qcom,msm8996-dwc3", "qcom,dwc3";
--			reg = <0x76f8800 0x400>;
-+			reg = <0x076f8800 0x400>;
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 			ranges;
-@@ -1513,7 +1513,7 @@
- 
- 			dwc3@7600000 {
- 				compatible = "snps,dwc3";
--				reg = <0x7600000 0xcc00>;
-+				reg = <0x07600000 0xcc00>;
- 				interrupts = <0 138 IRQ_TYPE_LEVEL_HIGH>;
- 				phys = <&hsusb_phy2>;
- 				phy-names = "usb2-phy";
-@@ -1522,7 +1522,7 @@
- 
- 		usb3: usb@6af8800 {
- 			compatible = "qcom,msm8996-dwc3", "qcom,dwc3";
--			reg = <0x6af8800 0x400>;
-+			reg = <0x06af8800 0x400>;
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 			ranges;
-@@ -1543,7 +1543,7 @@
- 
- 			dwc3@6a00000 {
- 				compatible = "snps,dwc3";
--				reg = <0x6a00000 0xcc00>;
-+				reg = <0x06a00000 0xcc00>;
- 				interrupts = <0 131 IRQ_TYPE_LEVEL_HIGH>;
- 				phys = <&hsusb_phy1>, <&ssusb_phy_0>;
- 				phy-names = "usb2-phy", "usb3-phy";
-@@ -1552,7 +1552,7 @@
- 
- 		vfe_smmu: iommu@da0000 {
- 			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
--			reg = <0xda0000 0x10000>;
-+			reg = <0x00da0000 0x10000>;
- 
- 			#global-interrupts = <1>;
- 			interrupts = <GIC_SPI 76 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1568,20 +1568,20 @@
- 
- 		camss: camss@a00000 {
- 			compatible = "qcom,msm8996-camss";
--			reg = <0xa34000 0x1000>,
--				<0xa00030 0x4>,
--				<0xa35000 0x1000>,
--				<0xa00038 0x4>,
--				<0xa36000 0x1000>,
--				<0xa00040 0x4>,
--				<0xa30000 0x100>,
--				<0xa30400 0x100>,
--				<0xa30800 0x100>,
--				<0xa30c00 0x100>,
--				<0xa31000 0x500>,
--				<0xa00020 0x10>,
--				<0xa10000 0x1000>,
--				<0xa14000 0x1000>;
-+			reg = <0x00a34000 0x1000>,
-+			      <0x00a00030 0x4>,
-+			      <0x00a35000 0x1000>,
-+			      <0x00a00038 0x4>,
-+			      <0x00a36000 0x1000>,
-+			      <0x00a00040 0x4>,
-+			      <0x00a30000 0x100>,
-+			      <0x00a30400 0x100>,
-+			      <0x00a30800 0x100>,
-+			      <0x00a30c00 0x100>,
-+			      <0x00a31000 0x500>,
-+			      <0x00a00020 0x10>,
-+			      <0x00a10000 0x1000>,
-+			      <0x00a14000 0x1000>;
- 			reg-names = "csiphy0",
- 				"csiphy0_clk_mux",
- 				"csiphy1",
-@@ -1702,7 +1702,7 @@
- 
- 		adreno_smmu: iommu@b40000 {
- 			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
--			reg = <0xb40000 0x10000>;
-+			reg = <0x00b40000 0x10000>;
- 
- 			#global-interrupts = <1>;
- 			interrupts = <GIC_SPI 334 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1719,7 +1719,7 @@
- 
- 		mdp_smmu: iommu@d00000 {
- 			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
--			reg = <0xd00000 0x10000>;
-+			reg = <0x00d00000 0x10000>;
- 
- 			#global-interrupts = <1>;
- 			interrupts = <GIC_SPI 73 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1735,7 +1735,7 @@
- 
- 		lpass_q6_smmu: iommu@1600000 {
- 			compatible = "qcom,msm8996-smmu-v2", "qcom,smmu-v2";
--			reg = <0x1600000 0x20000>;
-+			reg = <0x01600000 0x20000>;
- 			#iommu-cells = <1>;
- 			power-domains = <&gcc HLOS1_VOTE_LPASS_CORE_GDSC>;
- 
-@@ -1922,7 +1922,7 @@
- 		{
- 			compatible = "qcom,bam-v1.7.0";
- 			qcom,controlled-remotely;
--			reg = <0x9184000 0x32000>;
-+			reg = <0x09184000 0x32000>;
- 			num-channels  = <31>;
- 			interrupts = <0 164 IRQ_TYPE_LEVEL_HIGH>;
- 			#dma-cells = <1>;
-@@ -1932,7 +1932,7 @@
- 
- 		slim_msm: slim@91c0000 {
- 			compatible = "qcom,slim-ngd-v1.5.0";
--			reg = <0x91c0000 0x2C000>;
-+			reg = <0x091c0000 0x2C000>;
- 			reg-names = "ctrl";
- 			interrupts = <0 163 IRQ_TYPE_LEVEL_HIGH>;
- 			dmas =	<&slimbam 3>, <&slimbam 4>,
-@@ -1976,7 +1976,7 @@
- 			compatible = "qcom,adreno-530.2", "qcom,adreno";
- 			#stream-id-cells = <16>;
- 
--			reg = <0xb00000 0x3f000>;
-+			reg = <0x00b00000 0x3f000>;
- 			reg-names = "kgsl_3d0_reg_memory";
- 
- 			interrupts = <0 300 IRQ_TYPE_LEVEL_HIGH>;
-@@ -2050,9 +2050,9 @@
- 		mdss: mdss@900000 {
- 			compatible = "qcom,mdss";
- 
--			reg = <0x900000 0x1000>,
--			      <0x9b0000 0x1040>,
--			      <0x9b8000 0x1040>;
-+			reg = <0x00900000 0x1000>,
-+			      <0x009b0000 0x1040>,
-+			      <0x009b8000 0x1040>;
- 			reg-names = "mdss_phys",
- 				    "vbif_phys",
- 				    "vbif_nrt_phys";
-@@ -2072,7 +2072,7 @@
- 
- 			mdp: mdp@901000 {
- 				compatible = "qcom,mdp5";
--				reg = <0x901000 0x90000>;
-+				reg = <0x00901000 0x90000>;
- 				reg-names = "mdp_phys";
- 
- 				interrupt-parent = <&mdss>;
-@@ -2148,12 +2148,12 @@
- 			hdmi_phy: hdmi-phy@9a0600 {
- 				#phy-cells = <0>;
- 				compatible = "qcom,hdmi-phy-8996";
--				reg = <0x9a0600 0x1c4>,
--				      <0x9a0a00 0x124>,
--				      <0x9a0c00 0x124>,
--				      <0x9a0e00 0x124>,
--				      <0x9a1000 0x124>,
--				      <0x9a1200 0x0c8>;
-+				reg = <0x009a0600 0x1c4>,
-+				      <0x009a0a00 0x124>,
-+				      <0x009a0c00 0x124>,
-+				      <0x009a0e00 0x124>,
-+				      <0x009a1000 0x124>,
-+				      <0x009a1200 0x0c8>;
- 				reg-names = "hdmi_pll",
- 					    "hdmi_tx_l0",
- 					    "hdmi_tx_l1",
+-	vdd-buck-supply = <&pm8994_s4>;
+-	vdd-buck-sido-supply = <&pm8994_s4>;
+-	vdd-tx-supply = <&pm8994_s4>;
+-	vdd-rx-supply = <&pm8994_s4>;
+-	vdd-io-supply = <&pm8994_s4>;
++	vdd-buck-supply = <&vreg_s4a_1p8>;
++	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
++	vdd-tx-supply = <&vreg_s4a_1p8>;
++	vdd-rx-supply = <&vreg_s4a_1p8>;
++	vdd-io-supply = <&vreg_s4a_1p8>;
+ };
 -- 
 2.23.0
 
