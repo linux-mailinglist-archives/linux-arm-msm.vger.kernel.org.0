@@ -2,127 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EF311E0973
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2019 18:44:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5D56E0A48
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2019 19:15:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732771AbfJVQo3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Oct 2019 12:44:29 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:52753 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388773AbfJVQo1 (ORCPT
+        id S1727309AbfJVRPN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Oct 2019 13:15:13 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:41185 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732629AbfJVRPN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Oct 2019 12:44:27 -0400
-Received: by mail-wm1-f65.google.com with SMTP id r19so18110062wmh.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2019 09:44:24 -0700 (PDT)
+        Tue, 22 Oct 2019 13:15:13 -0400
+Received: by mail-pf1-f193.google.com with SMTP id q7so11038349pfh.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2019 10:15:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=b4MQR7kg4xEXyQ6ThJfWdeWd8UUKU56l+z1ZpJFgsO8=;
-        b=AmtLO2NM6cTb+XZhRL3UQAsCMyNRHtLk1l4Z0EqBxd/5AabDEwo/fcSA12+e2EIiWU
-         sBlusVSiymgsH1JVCazx7QK11d6YDEqDGlZecqjYwb6Yb9K+RuqZdpsQpfC2d8ZO/txM
-         YWvFB97MMTx9oPQGuxG6DtmVbPx+71gBBUat35m1J1plIBida6ULSTtQKJ2yMvNCC56v
-         d8fZt7h88kRUzbJJOXvGOcLZSixxSI41g0OOfAWWTlHY8E5v/WJMRQ/NhfJZODRWnzEe
-         OZvrwRzl3wpKn1WrlTZY0MPnu914725aQVBIwaLN2dkKcVWOcOnzo6GqcGwflZsimJ9/
-         R6uA==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=h50Pi9XwOsR13aFlSA2CGe6nBusqUaN9N1zc7oNb4PM=;
+        b=UvzBGgeTgfAtcXP1FB0br1DsNDcrRyYR4jkC+DfnlzDHvFSyW1tI7nCx2yNZmcj2WN
+         OczJvcdDtpV9pZ8kzRoh3ch4+4iF/jJPOST+cLCokov/O1jMpoGeVFWgAYYLKWKJL8Tp
+         KGYXAAITmrRH1HflOWy1TsC5SzYI26+Io0QS4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=b4MQR7kg4xEXyQ6ThJfWdeWd8UUKU56l+z1ZpJFgsO8=;
-        b=Wkd0cBIoF3sUM19s8eXpW+gSZWV92v4sCmxk5mr+6D4x3YecKL1zU1SWWtZ2gcXnMN
-         a1XSmPMKft5c2ITulBWzU94SvCh1/4PWGKG7aKVy1F7f74vspcGpFj/BVGl6sI5LOn90
-         AdcI4hDr2w94RYsJ3UdQMmWE5Gi7MiiBne+Wog5/loEPpmOJqsnFCZrkqAt7v0WYS1VS
-         8yud2lveQVANohVvQW6IvVuEf9KL3fBQohCQlOMseE5MQTzHLXBFiVjLWUZ+yZeBDI5g
-         qEj1JfuKg/Bd6rtodZNiRY6wgnWcc0phMaqzwDoZDb+FkTV9rhqNoQUxWvSkX5H4Jn/a
-         jM0w==
-X-Gm-Message-State: APjAAAXuvj+X+JvELm7L4dyAWueRnqGrLjTplGgYs3S0ieFkSaTgb1Yl
-        u1808AxXrUm8C62xYSbkpqc28QOtIt4=
-X-Google-Smtp-Source: APXvYqzqgvYygL3lYW4mVTiQoAHOovtsSB0sTUf1v0UIK2XibBtbCwzcJj6Ac5YsDNIHnqimRSq5zA==
-X-Received: by 2002:a1c:cc18:: with SMTP id h24mr4064979wmb.40.1571762663499;
-        Tue, 22 Oct 2019 09:44:23 -0700 (PDT)
-Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.googlemail.com with ESMTPSA id l8sm1298514wru.22.2019.10.22.09.44.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Oct 2019 09:44:22 -0700 (PDT)
-Subject: Re: [PATCH][next] thermal: qcom: tsens-v1: fix kfree of a non-pointer
- value
-To:     Amit Kucheria <amit.kucheria@linaro.org>,
-        Colin King <colin.king@canonical.com>
-Cc:     Andy Gross <agross@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        kernel-janitors@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20191022111806.23143-1-colin.king@canonical.com>
- <CAP245DXjVDJ68kmWONmWh4YB=dcVrQ4q1y3bPncDc5=FohY2Vw@mail.gmail.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <10cbe6fb-05b8-3219-cef5-05980559f053@linaro.org>
-Date:   Tue, 22 Oct 2019 17:44:21 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=h50Pi9XwOsR13aFlSA2CGe6nBusqUaN9N1zc7oNb4PM=;
+        b=MxH/5ZJwREh15IuWWupWr02KRmHALI6xixh0tNQJ/L18uU/tMz2Ow7ula57ertFvvW
+         HseA0TxSEUdAbuXyEAjkjzvL9ZzmqbEByMot2X2RRVLmyXglI8SSXZl1O4qftK7NYL2E
+         p5/chCxnSLZVB5rMtp6Z0sZRXRAI5OrtsoUrdXswZQoUjrQp3l3yZCdPaiANRkdOu8fi
+         cFBwMxSorMb73BS4KqUquLQsJTrJEZYK1O6XdlcMOTOrwn3isXBuyeViyqId89yq2tb4
+         KF7XEQtxIPxQtud21Bm3y5DGJpK/U5Bj4yS66OclqYCrdZDacRy6+ZWNl6kxtHe9qGdy
+         j2Dw==
+X-Gm-Message-State: APjAAAWWcys7Bgucrly4VJt6uc33PZCncyaoydV0sPyp89FAJ26yysGI
+        imyLKHHNicidxb1FVtPqkK7Ncg==
+X-Google-Smtp-Source: APXvYqyG0OfMRoG7uYhrblw+12GhEr/VYU+Opf8UClqR725yP7qojPu+4B2BRZRrLrdfm2E1KeELFw==
+X-Received: by 2002:a17:90a:3706:: with SMTP id u6mr6040268pjb.107.1571764510860;
+        Tue, 22 Oct 2019 10:15:10 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id 69sm19915996pgh.47.2019.10.22.10.15.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Oct 2019 10:15:07 -0700 (PDT)
+Date:   Tue, 22 Oct 2019 10:15:05 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        linux-bluetooth-owner@vger.kernel.org, hemantg@codeaurora.org,
+        Harish Bandi <c-hbandi@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH 2/4] Bluetooth: hci_qca: Don't vote for specific voltage
+Message-ID: <20191022171505.GK20212@google.com>
+References: <20191018052405.3693555-1-bjorn.andersson@linaro.org>
+ <20191018052405.3693555-3-bjorn.andersson@linaro.org>
+ <20191018182205.GA20212@google.com>
+ <7f9a4de91f364a5f8ce707c8d8a2344d@codeaurora.org>
+ <5bbd8e5bbd832ecdafc7c2d603f10c6c@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <CAP245DXjVDJ68kmWONmWh4YB=dcVrQ4q1y3bPncDc5=FohY2Vw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5bbd8e5bbd832ecdafc7c2d603f10c6c@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 22/10/2019 14:06, Amit Kucheria wrote:
-> On Tue, Oct 22, 2019 at 4:48 PM Colin King <colin.king@canonical.com> wrote:
->>
->> From: Colin Ian King <colin.king@canonical.com>
->>
->> Currently the kfree of pointer qfprom_cdata is kfreeing an
->> error value that has been cast to a pointer rather than a
->> valid address.  Fix this by removing the kfree.
+On Tue, Oct 22, 2019 at 11:35:43AM +0530, Balakrishna Godavarthi wrote:
+> Hi Matthias, Bjorn andresson,
 > 
-> Hmm, we just added this to other places[1] as a fix for mem leaks
-> using the nvmem api. >
-This patch has nothing to do with the memleak fix.
-> I think we need to fix up the qfprom_read wrapper. Srini?
-
-not sure how we can fix that, as the pointer returned from read is needs 
-to be freed by the caller after its done with it!
-
---srini
-
-
+> On 2019-10-21 12:07, Harish Bandi wrote:
+> > + Bala
+> > 
+> > On 2019-10-18 23:52, Matthias Kaehlcke wrote:
+> > > On Thu, Oct 17, 2019 at 10:24:02PM -0700, Bjorn Andersson wrote:
+> > > > Devices with specific voltage requirements should not request voltage
+> > > > from the driver, but instead rely on the system configuration to
+> > > > define
+> > > > appropriate voltages for each rail.
+> > > > 
+> > > > This ensures that PMIC and board variations are accounted for,
+> > > > something
+> > > > that the 0.1V range in the hci_qca driver currently tries to address.
+> > > > But on the Lenovo Yoga C630 (with wcn3990) vddch0 is 3.1V, which
+> > > > means
+> > > > the driver will fail to set the voltage.
+> > > > 
+> > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > > ---
+> > > >  drivers/bluetooth/hci_qca.c | 26 ++++++++------------------
+> > > >  1 file changed, 8 insertions(+), 18 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/bluetooth/hci_qca.c
+> > > > b/drivers/bluetooth/hci_qca.c
+> > > > index c07c529b0d81..54aafcc69d06 100644
+> > > > --- a/drivers/bluetooth/hci_qca.c
+> > > > +++ b/drivers/bluetooth/hci_qca.c
+> > > > @@ -130,8 +130,6 @@ enum qca_speed_type {
+> > > >   */
+> > > >  struct qca_vreg {
+> > > >  	const char *name;
+> > > > -	unsigned int min_uV;
+> > > > -	unsigned int max_uV;
+> > > >  	unsigned int load_uA;
+> > > >  };
+> > > > 
+> > > > @@ -1332,10 +1330,10 @@ static const struct hci_uart_proto
+> > > > qca_proto = {
+> > > >  static const struct qca_vreg_data qca_soc_data_wcn3990 = {
+> > > >  	.soc_type = QCA_WCN3990,
+> > > >  	.vregs = (struct qca_vreg []) {
+> > > > -		{ "vddio",   1800000, 1900000,  15000  },
+> > > > -		{ "vddxo",   1800000, 1900000,  80000  },
+> > > > -		{ "vddrf",   1300000, 1350000,  300000 },
+> > > > -		{ "vddch0",  3300000, 3400000,  450000 },
+> > > > +		{ "vddio", 15000  },
+> > > > +		{ "vddxo", 80000  },
+> > > > +		{ "vddrf", 300000 },
+> > > > +		{ "vddch0", 450000 },
+> > > >  	},
+> > > >  	.num_vregs = 4,
+> > > >  };
+> > > > @@ -1343,10 +1341,10 @@ static const struct qca_vreg_data
+> > > > qca_soc_data_wcn3990 = {
+> > > >  static const struct qca_vreg_data qca_soc_data_wcn3998 = {
+> > > >  	.soc_type = QCA_WCN3998,
+> > > >  	.vregs = (struct qca_vreg []) {
+> > > > -		{ "vddio",   1800000, 1900000,  10000  },
+> > > > -		{ "vddxo",   1800000, 1900000,  80000  },
+> > > > -		{ "vddrf",   1300000, 1352000,  300000 },
+> > > > -		{ "vddch0",  3300000, 3300000,  450000 },
+> > > > +		{ "vddio", 10000  },
+> > > > +		{ "vddxo", 80000  },
+> > > > +		{ "vddrf", 300000 },
+> > > > +		{ "vddch0", 450000 },
+> > > >  	},
+> > > >  	.num_vregs = 4,
+> > > >  };
+> > > > @@ -1386,13 +1384,6 @@ static int qca_power_off(struct hci_dev *hdev)
+> > > >  static int qca_enable_regulator(struct qca_vreg vregs,
+> > > >  				struct regulator *regulator)
+> > > >  {
+> > > > -	int ret;
+> > > > -
+> > > > -	ret = regulator_set_voltage(regulator, vregs.min_uV,
+> > > > -				    vregs.max_uV);
+> > > > -	if (ret)
+> > > > -		return ret;
+> > > > -
+> > > >  	return regulator_enable(regulator);
+> > > > 
+> > > >  }
+> > > > @@ -1401,7 +1392,6 @@ static void qca_disable_regulator(struct
+> > > > qca_vreg vregs,
+> > > >  				  struct regulator *regulator)
+> > > >  {
+> > > >  	regulator_disable(regulator);
+> > > > -	regulator_set_voltage(regulator, 0, vregs.max_uV);
+> > > > 
+> > > >  }
+> > > 
+> > > This was brought up multiple times during the initial review, but
+> > > wasn't addressed.
+> > > 
+> > > Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 > 
-> [1] https://lore.kernel.org/stable/20191010083616.685532154@linuxfoundation.org/
-
 > 
->> Fixes: 95ededc17e4e ("thermal: qcom: tsens-v1: Add support for MSM8956 and MSM8976")
->> Signed-off-by: Colin Ian King <colin.king@canonical.com>
->> ---
->>   drivers/thermal/qcom/tsens-v1.c | 4 +---
->>   1 file changed, 1 insertion(+), 3 deletions(-)
->>
->> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
->> index 2d1077b64887..bd2ddb684a45 100644
->> --- a/drivers/thermal/qcom/tsens-v1.c
->> +++ b/drivers/thermal/qcom/tsens-v1.c
->> @@ -240,10 +240,8 @@ static int calibrate_8976(struct tsens_priv *priv)
->>          u32 *qfprom_cdata;
->>
->>          qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
->> -       if (IS_ERR(qfprom_cdata)) {
->> -               kfree(qfprom_cdata);
->> +       if (IS_ERR(qfprom_cdata))
->>                  return PTR_ERR(qfprom_cdata);
->> -       }
->>
->>          mode = (qfprom_cdata[4] & MSM8976_CAL_SEL_MASK);
->>          dev_dbg(priv->dev, "calibration mode is %d\n", mode);
->> --
->> 2.20.1
->>
+> yes true PMIC dts regulator should do this.
+> But we have some real time issues observed.
+> 
+> Issue 1:
+> 
+> In PMIC dts node, ASAIK we have three levels of voltages.
+> 
+> 1. Default voltage.
+> 2. Minimum voltage. (mandatory entry)
+> 3. Maximum voltage. (mandatory entry)
+> 
+> Let us assume that the if PMIC regulator dts node supports  defaults voltage
+> to 3.2 Volts and Min  as 3.1 V and max as 3.3V
+> So default operating voltage is 3.1V  when we turn on BT (but according to
+> spec SoC requires min of 3.3V to operate,
+> Might have some functionality failures on end to end testing
+
+The PMIC regulator shouldn't be configured with the entire range of voltages
+it can generate, but with a range of voltages that is suitable for all its
+consumers.
+
+In other words if BT requires a minimum voltage of 3.3V the minimum voltage
+of the regulator should be at least 3.3V.
+
+> Issue 2:
+> 
+> WCN3990 RF is shared with WiFi, so it also try to turn on the regulators.
+> Wifi driver uses the same approach of restricting to min and max voltages in
+> driver.
+> Let us assume we turned ON BT and CH0 is set to 3.1v (as in your case), Wifi
+> is tuned on now, as its request the CH0 to operate at 3.3 Volts, regulator
+> will fail to set this voltage as BT is operating
+> at CH0 3.1v (assuming max voltage is 3.2v)
+> https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/tree/drivers/net/wireless/ath/ath10k/snoc.c#n39
+
+see above
+
+> Issue 3:
+> 
+> By mistake PMIC has low min or default voltage and high max voltages, that
+> is harm for WNC3990.
+> 
+> I would suggest to restrict the min and max voltages in driver, instead of
+> relaying on PMIC to do this.
+> BTW pmic will do this and doing it in our driver is safer.
+
+What if another device switches the regulator on before BT?
+
+Again, what you describe is a misconfiguration of the regulator and should
+be fixed at its root, instead of implementing unreliable 'safeguards' in each
+and every driver using regulators.
