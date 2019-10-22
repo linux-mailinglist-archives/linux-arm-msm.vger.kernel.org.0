@@ -2,122 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B47C2DFD16
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2019 07:25:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B7F6DFD7E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2019 08:05:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729146AbfJVFZ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Oct 2019 01:25:58 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:55166 "EHLO
+        id S1729146AbfJVGFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Oct 2019 02:05:45 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:42800 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727978AbfJVFZ6 (ORCPT
+        with ESMTP id S1725788AbfJVGFp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Oct 2019 01:25:58 -0400
+        Tue, 22 Oct 2019 02:05:45 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 23ECE6079D; Tue, 22 Oct 2019 05:25:57 +0000 (UTC)
+        id 42CFB6079C; Tue, 22 Oct 2019 06:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571721957;
-        bh=YqOfsriP3Msi6tE3Vlaaza/R8BFMWE1uiHYJGZo9I7Y=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=H8BCHoyXcEerYpnS1kns/QKFgQat3ZYvNBBPHLqJ7Jfhdhcg9PRgN3qaOLnKTpEoe
-         KIJtggA9oMH6zQ95sCCDlcZBJDSjmbhfqkr7sFn+Qp3g62wiyrNQrrjDIGM3VJOO7j
-         Z309/Rph2+Qs4KYCodxPea/bp7/AV5SD0HVm5Ufg=
+        s=default; t=1571724344;
+        bh=cY8sxLPZP4vsxpJajBId/YF2IaHEql2Vk2+ldt9E2fU=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=nfEx9uo1O1xSaTXuWcoK6t5ju6WT/+pvadG+v2eS/U3MfhLX13srdYUx/1I37J7WK
+         k5VL4kA4kLjXmvb3dvJMEoAtu7z13VHQYfJzGPsv3KtVXqbbt7VK6Zqo5r+wVJqb/b
+         pFulOVd8CwoUJV/4tIRTEqoHjEVeKapn/0dDPHsM=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.206.13.37] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C3E95606CF;
-        Tue, 22 Oct 2019 05:25:53 +0000 (UTC)
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 2357960614;
+        Tue, 22 Oct 2019 06:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571721956;
-        bh=YqOfsriP3Msi6tE3Vlaaza/R8BFMWE1uiHYJGZo9I7Y=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=nBTBfy3nzdYfzal02sLLopmjDoNEvl+ZlkB2YNaCK+3JEujstFXybb6+zmQlAYaqi
-         Ad6VAVcoYsXcyPcCSA48VBjAwwMiOWYFGqbMMVl5qd4S/qYuG2QsjW953xXJpEktBi
-         dOfF+FWMGwH4LoeKc8rWJ5CH4rlR8Na3BSotEyKI=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C3E95606CF
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH v2 11/13] drivers: irqchip: qcom-pdc: Add irqchip for
- sc7180
-To:     Marc Zyngier <maz@kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Lina Iyer <ilina@codeaurora.org>
-References: <20191021065522.24511-1-rnayak@codeaurora.org>
- <20191021065522.24511-12-rnayak@codeaurora.org>
- <18195431666bd42aa31cf4ec1eed2881@www.loen.fr>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <ecca1dde-6729-2ad0-4a30-b5a6de335198@codeaurora.org>
-Date:   Tue, 22 Oct 2019 10:55:51 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        s=default; t=1571724343;
+        bh=cY8sxLPZP4vsxpJajBId/YF2IaHEql2Vk2+ldt9E2fU=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=fjydRdeXHA1xaIJwtrdGYONDeonhkM77FMoHhORPsVd7Rjra+fBoVB2ieBsewZ5fq
+         z9QJ1V6Nl3lytIgUJJhpQb5W8lzCBNdTOUx+zgdWv/qjmcT5jXZWpwYVdpgTnTlEcq
+         YJxjxuDX40mtlCRkl7T+L3HqCeCkVnBBAhq2+1ig=
 MIME-Version: 1.0
-In-Reply-To: <18195431666bd42aa31cf4ec1eed2881@www.loen.fr>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 22 Oct 2019 11:35:43 +0530
+From:   Balakrishna Godavarthi <bgodavar@codeaurora.org>
+To:     Matthias Kaehlcke <mka@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        linux-bluetooth-owner@vger.kernel.org, hemantg@codeaurora.org,
+        Harish Bandi <c-hbandi@codeaurora.org>
+Subject: Re: [PATCH 2/4] Bluetooth: hci_qca: Don't vote for specific voltage
+In-Reply-To: <7f9a4de91f364a5f8ce707c8d8a2344d@codeaurora.org>
+References: <20191018052405.3693555-1-bjorn.andersson@linaro.org>
+ <20191018052405.3693555-3-bjorn.andersson@linaro.org>
+ <20191018182205.GA20212@google.com>
+ <7f9a4de91f364a5f8ce707c8d8a2344d@codeaurora.org>
+Message-ID: <5bbd8e5bbd832ecdafc7c2d603f10c6c@codeaurora.org>
+X-Sender: bgodavar@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Matthias, Bjorn andresson,
 
-On 10/21/2019 1:40 PM, Marc Zyngier wrote:
-> On 2019-10-21 07:55, Rajendra Nayak wrote:
->> From: Maulik Shah <mkshah@codeaurora.org>
->>
->> Add sc7180 pdc irqchip
->>
->> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->> Cc: Lina Iyer <ilina@codeaurora.org>
->> Cc: Marc Zyngier <maz@kernel.org>
->> ---
->> v2: No change
->>
->>  drivers/irqchip/qcom-pdc.c | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
->> index faa7d61b9d6c..954fb599fa9c 100644
->> --- a/drivers/irqchip/qcom-pdc.c
->> +++ b/drivers/irqchip/qcom-pdc.c
->> @@ -310,3 +310,4 @@ static int qcom_pdc_init(struct device_node
->> *node, struct device_node *parent)
->>  }
->>
->>  IRQCHIP_DECLARE(pdc_sdm845, "qcom,sdm845-pdc", qcom_pdc_init);
->> +IRQCHIP_DECLARE(pdc_sc7180, "qcom,sc7180-pdc", qcom_pdc_init);
->
-> What I gather from these 3 irq-related patches is that as far as
-> the PDC is concerned, SDM845/850 and SC7180 are strictly identical.
->
-> Why the churn?
->
->         M.
+On 2019-10-21 12:07, Harish Bandi wrote:
+> + Bala
+> 
+> On 2019-10-18 23:52, Matthias Kaehlcke wrote:
+>> On Thu, Oct 17, 2019 at 10:24:02PM -0700, Bjorn Andersson wrote:
+>>> Devices with specific voltage requirements should not request voltage
+>>> from the driver, but instead rely on the system configuration to 
+>>> define
+>>> appropriate voltages for each rail.
+>>> 
+>>> This ensures that PMIC and board variations are accounted for, 
+>>> something
+>>> that the 0.1V range in the hci_qca driver currently tries to address.
+>>> But on the Lenovo Yoga C630 (with wcn3990) vddch0 is 3.1V, which 
+>>> means
+>>> the driver will fail to set the voltage.
+>>> 
+>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>> ---
+>>>  drivers/bluetooth/hci_qca.c | 26 ++++++++------------------
+>>>  1 file changed, 8 insertions(+), 18 deletions(-)
+>>> 
+>>> diff --git a/drivers/bluetooth/hci_qca.c 
+>>> b/drivers/bluetooth/hci_qca.c
+>>> index c07c529b0d81..54aafcc69d06 100644
+>>> --- a/drivers/bluetooth/hci_qca.c
+>>> +++ b/drivers/bluetooth/hci_qca.c
+>>> @@ -130,8 +130,6 @@ enum qca_speed_type {
+>>>   */
+>>>  struct qca_vreg {
+>>>  	const char *name;
+>>> -	unsigned int min_uV;
+>>> -	unsigned int max_uV;
+>>>  	unsigned int load_uA;
+>>>  };
+>>> 
+>>> @@ -1332,10 +1330,10 @@ static const struct hci_uart_proto qca_proto 
+>>> = {
+>>>  static const struct qca_vreg_data qca_soc_data_wcn3990 = {
+>>>  	.soc_type = QCA_WCN3990,
+>>>  	.vregs = (struct qca_vreg []) {
+>>> -		{ "vddio",   1800000, 1900000,  15000  },
+>>> -		{ "vddxo",   1800000, 1900000,  80000  },
+>>> -		{ "vddrf",   1300000, 1350000,  300000 },
+>>> -		{ "vddch0",  3300000, 3400000,  450000 },
+>>> +		{ "vddio", 15000  },
+>>> +		{ "vddxo", 80000  },
+>>> +		{ "vddrf", 300000 },
+>>> +		{ "vddch0", 450000 },
+>>>  	},
+>>>  	.num_vregs = 4,
+>>>  };
+>>> @@ -1343,10 +1341,10 @@ static const struct qca_vreg_data 
+>>> qca_soc_data_wcn3990 = {
+>>>  static const struct qca_vreg_data qca_soc_data_wcn3998 = {
+>>>  	.soc_type = QCA_WCN3998,
+>>>  	.vregs = (struct qca_vreg []) {
+>>> -		{ "vddio",   1800000, 1900000,  10000  },
+>>> -		{ "vddxo",   1800000, 1900000,  80000  },
+>>> -		{ "vddrf",   1300000, 1352000,  300000 },
+>>> -		{ "vddch0",  3300000, 3300000,  450000 },
+>>> +		{ "vddio", 10000  },
+>>> +		{ "vddxo", 80000  },
+>>> +		{ "vddrf", 300000 },
+>>> +		{ "vddch0", 450000 },
+>>>  	},
+>>>  	.num_vregs = 4,
+>>>  };
+>>> @@ -1386,13 +1384,6 @@ static int qca_power_off(struct hci_dev *hdev)
+>>>  static int qca_enable_regulator(struct qca_vreg vregs,
+>>>  				struct regulator *regulator)
+>>>  {
+>>> -	int ret;
+>>> -
+>>> -	ret = regulator_set_voltage(regulator, vregs.min_uV,
+>>> -				    vregs.max_uV);
+>>> -	if (ret)
+>>> -		return ret;
+>>> -
+>>>  	return regulator_enable(regulator);
+>>> 
+>>>  }
+>>> @@ -1401,7 +1392,6 @@ static void qca_disable_regulator(struct 
+>>> qca_vreg vregs,
+>>>  				  struct regulator *regulator)
+>>>  {
+>>>  	regulator_disable(regulator);
+>>> -	regulator_set_voltage(regulator, 0, vregs.max_uV);
+>>> 
+>>>  }
+>> 
+>> This was brought up multiple times during the initial review, but
+>> wasn't addressed.
+>> 
+>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 
-Hi Marc,
 
-Different compatible were used to distinguish since interrupt mapping 
-(PDC to GIC) was earlier kept in driver.
+yes true PMIC dts regulator should do this.
+But we have some real time issues observed.
 
-Now since mapping is kept in DTSI, we can continue to use 
-qcom,sdm845-pdc for sc7180.
+Issue 1:
 
-i will submit another patch to make it more generic for all SoCs like 
-"qcom,pdc".
+In PMIC dts node, ASAIK we have three levels of voltages.
 
-Thanks,
+1. Default voltage.
+2. Minimum voltage. (mandatory entry)
+3. Maximum voltage. (mandatory entry)
 
-Maulik
+Let us assume that the if PMIC regulator dts node supports  defaults 
+voltage to 3.2 Volts and Min  as 3.1 V and max as 3.3V
+So default operating voltage is 3.1V  when we turn on BT (but according 
+to spec SoC requires min of 3.3V to operate,
+Might have some functionality failures on end to end testing
 
+Issue 2:
+
+WCN3990 RF is shared with WiFi, so it also try to turn on the 
+regulators. Wifi driver uses the same approach of restricting to min and 
+max voltages in driver.
+Let us assume we turned ON BT and CH0 is set to 3.1v (as in your case), 
+Wifi is tuned on now, as its request the CH0 to operate at 3.3 Volts, 
+regulator will fail to set this voltage as BT is operating
+at CH0 3.1v (assuming max voltage is 3.2v)
+https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/tree/drivers/net/wireless/ath/ath10k/snoc.c#n39
+
+Issue 3:
+
+By mistake PMIC has low min or default voltage and high max voltages, 
+that is harm for WNC3990.
+
+I would suggest to restrict the min and max voltages in driver, instead 
+of relaying on PMIC to do this.
+BTW pmic will do this and doing it in our driver is safer.
+
+Let me know your views on this.
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
-
+Regards
+Balakrishna.
