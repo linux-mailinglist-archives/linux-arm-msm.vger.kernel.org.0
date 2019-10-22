@@ -2,102 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 71246E03F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2019 14:39:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65BA4E041F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2019 14:47:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731218AbfJVMj4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Oct 2019 08:39:56 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:32864 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726978AbfJVMj4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Oct 2019 08:39:56 -0400
-Received: by mail-wr1-f68.google.com with SMTP id s1so9142011wro.0;
-        Tue, 22 Oct 2019 05:39:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IEqiM8atHxIH0UKIQukfFYbPpj8bV/qswpYiJzDBnHM=;
-        b=Yuptn+Xp3pzaviOf1YxWnObsNNLNBlUMB5/hGbYF3C52rbNCi4WDbPc3AhB/Za6yJF
-         a1IsjGOP5g6s2UrUYasbp1X2Eo7KBDE6vA9bmTPf1EuIct5L475O6LV6BynQz90AozVx
-         XSbq6sQd2Ol2yPAWOy8rRYdBh4d/TOgkwe35GEm7DMKLnJTWcEY1t9KIsDstZBWqrnpg
-         J9f8d2jkRCR/+vXXxPfC8iTGQ98sHlOLyoNgXCEFO03/K76nENZDkX+eZdDlCM25vxjJ
-         VhRQNsPh1LqUKaNasvMpJAJ+UiAnNTv62rMisyFtCtrL/XiO5Hpy8txCAG0V4vZa11gg
-         dXqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IEqiM8atHxIH0UKIQukfFYbPpj8bV/qswpYiJzDBnHM=;
-        b=lkw2hroA+QEKZOIpXDfCtCYF2ZPhUf+d/M4m3EgoRCqUX9rKmKbMBvqYPdn/e2j/3h
-         shwHiiKQD/cP4jOZ/8mdgmy7JWjUhpPTDaFefJADS4kB9q3DRVzVaNoaqNyU+MGUypR8
-         fuooqsMsN5NRqSpeOnuqOWmlOz4Vk/pVWgEK+PfFtm2YL/EtfkPsWLq0uZX53n5utPkK
-         64ES9MiCVimGieOWruA0BxsMaanHIGLd5dXtoLBaTL8MbW1A4kbaYF17SSRLAf5R8ZCO
-         hiUWG0O3u0+tZbmfQPnQfrThl7qTHORDu2X5hr/TwTBcH+UoNp/UxKHw9IEC2iyMUUIh
-         kk+g==
-X-Gm-Message-State: APjAAAVgwmHZz+USx9wRcDY8zzb+stq8EunP0nNtE8+dQpkp8GPgnXHB
-        t1cSlaU52/k9q2C74KICAqARmnv3lh0sA/+ReRI=
-X-Google-Smtp-Source: APXvYqzmx0gQXGcCYVFgILHBvA3ZLu3gjr/gPD4qkrCi98W3sz9AeZuH2TREtsOFsdfX9mKCmYxiaees0zzNDltevIs=
-X-Received: by 2002:adf:ecc7:: with SMTP id s7mr3298507wro.305.1571747993646;
- Tue, 22 Oct 2019 05:39:53 -0700 (PDT)
+        id S1730141AbfJVMqb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Oct 2019 08:46:31 -0400
+Received: from mx01-fr.bfs.de ([193.174.231.67]:42016 "EHLO mx01-fr.bfs.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728346AbfJVMqa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 22 Oct 2019 08:46:30 -0400
+Received: from mail-fr.bfs.de (mail-fr.bfs.de [10.177.18.200])
+        by mx01-fr.bfs.de (Postfix) with ESMTPS id 44E982034F;
+        Tue, 22 Oct 2019 14:46:23 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bfs.de; s=dkim201901;
+        t=1571748383; h=from:from:sender:reply-to:reply-to:subject:subject:date:date:
+         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+         content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=c+tRPTlzoCwnRYEOA07Gp6Y8Oc5IPsLLz9/TmlPkbj0=;
+        b=smPhmzCBxR/W6RJDmEX4SMj1A/S87/Jw1gojCqHWa9Xix6yQ+Zr73ne0VqRrrKE7CVBJZA
+        8JirHg+vpZQGKjaLgLrTs14enpO37M9qWxb4rP6531eXqcNTUPq/mWljOQrNp34ftdmfrM
+        UT5eJM3G4uTcbjdm/9PhJ5LMp9bhxX+MhQmIWXkOZmejOitFlYu42pKO8ds7nUwyHtwRBC
+        L0/BE57Fx/Gk0spa3VWah8RzrvfRCt/c2TElbHAwoNOa2bdWdummX3QoBJ9Qs8fZO6+Iht
+        QgJ57yoZbTV9p+H7vKpMUCy6/p14VF3ALrjP912jAGj6X227RnO6Afm2u1l6Kg==
+Received: from [134.92.181.33] (unknown [134.92.181.33])
+        by mail-fr.bfs.de (Postfix) with ESMTPS id A3FDBBEEBD;
+        Tue, 22 Oct 2019 14:46:22 +0200 (CEST)
+Message-ID: <5DAEFA1D.8070508@bfs.de>
+Date:   Tue, 22 Oct 2019 14:46:21 +0200
+From:   walter harms <wharms@bfs.de>
+Reply-To: wharms@bfs.de
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.1.16) Gecko/20101125 SUSE/3.0.11 Thunderbird/3.0.11
 MIME-Version: 1.0
-References: <20191022111806.23143-1-colin.king@canonical.com>
-In-Reply-To: <20191022111806.23143-1-colin.king@canonical.com>
-From:   AngeloGioacchino Del Regno <kholk11@gmail.com>
-Date:   Tue, 22 Oct 2019 14:39:42 +0200
-Message-ID: <CAK7fi1a8CiX=HVqhZSmQJdcjF1X_kdHFDwJhEpYJUcdPTcbMQA@mail.gmail.com>
-Subject: Re: [PATCH][next] thermal: qcom: tsens-v1: fix kfree of a non-pointer value
 To:     Colin King <colin.king@canonical.com>
-Cc:     Amit Kucheria <amit.kucheria@linaro.org>,
+CC:     Amit Kucheria <amit.kucheria@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Zhang Rui <rui.zhang@intel.com>,
         Eduardo Valentin <edubezval@gmail.com>,
         Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-pm@vger.kernel.org, MSM <linux-arm-msm@vger.kernel.org>,
-        kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Stephen Boyd <swboyd@chromium.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH][next] drivers: thermal: tsens: fix potential integer
+ overflow on multiply
+References: <20191022114910.652-1-colin.king@canonical.com>
+In-Reply-To: <20191022114910.652-1-colin.king@canonical.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.10
+Authentication-Results: mx01-fr.bfs.de
+X-Spamd-Result: default: False [-3.10 / 7.00];
+         ARC_NA(0.00)[];
+         HAS_REPLYTO(0.00)[wharms@bfs.de];
+         BAYES_HAM(-3.00)[100.00%];
+         FROM_HAS_DN(0.00)[];
+         TO_DN_SOME(0.00)[];
+         TO_MATCH_ENVRCPT_ALL(0.00)[];
+         FREEMAIL_ENVRCPT(0.00)[gmail.com];
+         MIME_GOOD(-0.10)[text/plain];
+         REPLYTO_ADDR_EQ_FROM(0.00)[];
+         DKIM_SIGNED(0.00)[];
+         RCPT_COUNT_SEVEN(0.00)[11];
+         NEURAL_HAM(-0.00)[-0.999,0];
+         FROM_EQ_ENVFROM(0.00)[];
+         MIME_TRACE(0.00)[0:+];
+         RCVD_COUNT_TWO(0.00)[2];
+         MID_RHS_MATCH_FROM(0.00)[];
+         RCVD_TLS_ALL(0.00)[]
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il giorno mar 22 ott 2019 alle ore 13:18 Colin King
-<colin.king@canonical.com> ha scritto:
->
+
+
+Am 22.10.2019 13:49, schrieb Colin King:
 > From: Colin Ian King <colin.king@canonical.com>
->
-> Currently the kfree of pointer qfprom_cdata is kfreeing an
-> error value that has been cast to a pointer rather than a
-> valid address.  Fix this by removing the kfree.
->
-> Fixes: 95ededc17e4e ("thermal: qcom: tsens-v1: Add support for MSM8956 and MSM8976")
+> 
+> Currently a multiply operation is being performed on two int values
+> and the result is being assigned to a u64, presumably because the
+> end result is expected to be probably larger than an int. However,
+> because the multiply is an int multiply one can get overflow. Avoid
+> the overflow by casting degc to a u64 to force a u64 multiply.
+> 
+> Addresses-Coverity: ("Unintentional integer overflow")
+> Fixes: fbfe1a042cfd ("drivers: thermal: tsens: Add interrupt support")
 > Signed-off-by: Colin Ian King <colin.king@canonical.com>
 > ---
->  drivers/thermal/qcom/tsens-v1.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
->
-> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-> index 2d1077b64887..bd2ddb684a45 100644
-> --- a/drivers/thermal/qcom/tsens-v1.c
-> +++ b/drivers/thermal/qcom/tsens-v1.c
-> @@ -240,10 +240,8 @@ static int calibrate_8976(struct tsens_priv *priv)
->         u32 *qfprom_cdata;
->
->         qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
-> -       if (IS_ERR(qfprom_cdata)) {
-> -               kfree(qfprom_cdata);
-> +       if (IS_ERR(qfprom_cdata))
->                 return PTR_ERR(qfprom_cdata);
-> -       }
->
->         mode = (qfprom_cdata[4] & MSM8976_CAL_SEL_MASK);
->         dev_dbg(priv->dev, "calibration mode is %d\n", mode);
-> --
-> 2.20.1
->
+>  drivers/thermal/qcom/tsens-common.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
+> index 03bf1b8133ea..3d7855106ecd 100644
+> --- a/drivers/thermal/qcom/tsens-common.c
+> +++ b/drivers/thermal/qcom/tsens-common.c
+> @@ -92,7 +92,7 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
+>  
+>  static inline u32 degc_to_code(int degc, const struct tsens_sensor *s)
+>  {
+> -	u64 code = (degc * s->slope + s->offset) / SLOPE_FACTOR;
+> +	u64 code = ((u64)degc * s->slope + s->offset) / SLOPE_FACTOR;
+>  
+looks ok
+just to offer an alternative to avoid the cast;
+	u64 code = degc;
 
-I confirm that was one stupid mistake. I was about to send the same patch, and I
-can confirm that this fix is working. Tested on my Xperia X Compact.
+	code = code * s->slope + s->offset;
+	code/=SLOPE_FACTOR;
 
-Tested-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+ym2c
+re,
+wh
+
+
+>  	pr_debug("%s: raw_code: 0x%llx, degc:%d\n", __func__, code, degc);
+>  	return clamp_val(code, THRESHOLD_MIN_ADC_CODE, THRESHOLD_MAX_ADC_CODE);
