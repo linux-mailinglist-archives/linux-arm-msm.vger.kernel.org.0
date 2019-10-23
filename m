@@ -2,83 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F2DCCE1B32
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2019 14:48:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A374E1CDC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2019 15:39:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405385AbfJWMr4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Oct 2019 08:47:56 -0400
-Received: from onstation.org ([52.200.56.107]:33894 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2405381AbfJWMr4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Oct 2019 08:47:56 -0400
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id F35C83E951;
-        Wed, 23 Oct 2019 12:47:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1571834875;
-        bh=0kqhIdrcdwTaeOk++zBCxLaWbwoAfqHJ5bwvzT6eofE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Ty01jSUZZyZs/E5U7fYrVJsqd7rCW3TaZaBl4f6bW9Imrc+LwyG/rkLvdy1HnEelF
-         yz54byi8l52QHKOb+vJbMLzFSvC5pmQg29NgewohrS2cpj2QCPLe7MwSxSaRhAcH7K
-         8lU1zbQPw4nW+ClZbLkZrp8GCMt2MEyGq6n/hcZU=
-Date:   Wed, 23 Oct 2019 08:47:53 -0400
-From:   Brian Masney <masneyb@onstation.org>
-To:     Georgi Djakov <georgi.djakov@linaro.org>
+        id S2391616AbfJWNjZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Oct 2019 09:39:25 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51423 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390436AbfJWNjZ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Oct 2019 09:39:25 -0400
+Received: by mail-wm1-f67.google.com with SMTP id q70so14122392wme.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2019 06:39:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:openpgp:message-id:date:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=5T/MoSeXRvOkVox5hp0mSxwsnPbBwGiugOsPGPiVrU8=;
+        b=WTeLh8M3lxNhpkfwYwFMHlcPhKIXYRT0p9/eP9nI54LGkFxOxk8DhkIGWl2q4NFVHl
+         2EA7zM0yapmyaIetbOq2dc+BjjnvfxL7amqvYonpgiDt710d/mKF1L9uh5llf2Xh7rkf
+         A/ErZoT5sPtCN32j+1ScJ1VEWQP6Top+BG8t/WSLVuz5qoKI6S3wodXQ23DNW/13PhOS
+         xWu74+92vmUXgvyZQOGWtqJ887kZh+v27wvQBDhdBSXH5s4vmkQNt//dTxba6fU3beq3
+         gkUqqRwzx11uv0fudpX/lrYtz17W3mVa76N7wLtRmXGjUD86E43D8Ji0wkD6ZLiOhUwY
+         YWfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=5T/MoSeXRvOkVox5hp0mSxwsnPbBwGiugOsPGPiVrU8=;
+        b=PKRrPgwWHqa/X+9tqvfbK2WtchR4kVL9tkiu7JQ6twZY+nh68YZJkkT4isbPEOUije
+         rrgJWqkBTlgzURs+IxniycOdUjK7knyTgmFB5GiuV3qLxi4PzHSTZ6EAp0kEcRmUrL+4
+         67Qgbk3Wvx5J1HVIkdydPklom3tlygjFwiLEhFXYHrfI6+oIwc7GzfqQecraauc6DarM
+         TOpTZwn/NE+iGx8dHJwgUf2QdsgmDm4xvVrau0LMSMtumqDAOJWwrthXgiTeEHbbUG1E
+         fZaTLVWOQ58qwcxU8tgA+rXOdx/T8RnbPzGGpdTzhsab11KH0pq1MNYwW6B5xaQOVvj+
+         owlQ==
+X-Gm-Message-State: APjAAAXENlQ/Ws+WkOl34P216Ruf8Y85e1qcnFHqgJjgoV26ujSIqGo5
+        h+5GOhfo6s1/DoR49OpVpgUB0A==
+X-Google-Smtp-Source: APXvYqyuEJaMFICfXNABHTPXz7GkIecaJLIiU1WeYhAN+gYZFSeibrU2kiSo91fXlKup1iWBQ4gD9A==
+X-Received: by 2002:a1c:9c0c:: with SMTP id f12mr7972419wme.133.1571837963549;
+        Wed, 23 Oct 2019 06:39:23 -0700 (PDT)
+Received: from [192.168.27.135] ([37.157.136.206])
+        by smtp.googlemail.com with ESMTPSA id b5sm19095690wmj.18.2019.10.23.06.39.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Oct 2019 06:39:22 -0700 (PDT)
+Subject: Re: [PATCH 5/5] ARM: dts: qcom: msm8974: add interconnect nodes
+To:     Brian Masney <masneyb@onstation.org>
 Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
         mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 5/5] ARM: dts: qcom: msm8974: add interconnect nodes
-Message-ID: <20191023124753.GA14218@onstation.org>
 References: <20191013080804.10231-1-masneyb@onstation.org>
  <20191013080804.10231-6-masneyb@onstation.org>
  <d154b0c6-fc39-bebc-d1b5-cc179fb6055d@linaro.org>
+ <20191023124753.GA14218@onstation.org>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Openpgp: preference=signencrypt
+Message-ID: <c26159f5-e6fe-07f1-51b3-50b72b258846@linaro.org>
+Date:   Wed, 23 Oct 2019 16:39:21 +0300
 MIME-Version: 1.0
+In-Reply-To: <20191023124753.GA14218@onstation.org>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <d154b0c6-fc39-bebc-d1b5-cc179fb6055d@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 23, 2019 at 02:50:19PM +0300, Georgi Djakov wrote:
-> On 13.10.19 г. 11:08 ч., Brian Masney wrote:
-> > Add interconnect nodes that's needed to support bus scaling.
-> > 
-> > Signed-off-by: Brian Masney <masneyb@onstation.org>
-> > ---
-> >  arch/arm/boot/dts/qcom-msm8974.dtsi | 60 +++++++++++++++++++++++++++++
-> >  1 file changed, 60 insertions(+)
-> > 
-> > diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > @@ -1152,6 +1207,11 @@
-> >  				              "core",
-> >  				              "vsync";
-> >  
-> > +				interconnects = <&mmssnoc MNOC_MAS_GRAPHICS_3D &bimc BIMC_SLV_EBI_CH0>,
-> > +				                <&ocmemnoc OCMEM_VNOC_MAS_GFX3D &ocmemnoc OCMEM_SLV_OCMEM>;
+On 23.10.19 г. 15:47 ч., Brian Masney wrote:
+> On Wed, Oct 23, 2019 at 02:50:19PM +0300, Georgi Djakov wrote:
+>> On 13.10.19 г. 11:08 ч., Brian Masney wrote:
+>>> Add interconnect nodes that's needed to support bus scaling.
+>>>
+>>> Signed-off-by: Brian Masney <masneyb@onstation.org>
+>>> ---
+>>>  arch/arm/boot/dts/qcom-msm8974.dtsi | 60 +++++++++++++++++++++++++++++
+>>>  1 file changed, 60 insertions(+)
+>>>
+>>> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+>>> @@ -1152,6 +1207,11 @@
+>>>  				              "core",
+>>>  				              "vsync";
+>>>  
+>>> +				interconnects = <&mmssnoc MNOC_MAS_GRAPHICS_3D &bimc BIMC_SLV_EBI_CH0>,
+>>> +				                <&ocmemnoc OCMEM_VNOC_MAS_GFX3D &ocmemnoc OCMEM_SLV_OCMEM>;
+>>
+>> Who will be the requesting bandwidth to DDR and ocmem? Is it the display or GPU
+>> or both? The above seem like GPU-related interconnects, so maybe these
+>> properties should be in the GPU DT node.
 > 
-> Who will be the requesting bandwidth to DDR and ocmem? Is it the display or GPU
-> or both? The above seem like GPU-related interconnects, so maybe these
-> properties should be in the GPU DT node.
+> The display is what currently requests the interconnect path,
+> specifically mdp5_setup_interconnect() in
+> drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c. The Freedreno GPU bindings
+> currently don't have interconnect support. Maybe this is something that
+> I should add to that driver as well?
 
-The display is what currently requests the interconnect path,
-specifically mdp5_setup_interconnect() in
-drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c. The Freedreno GPU bindings
-currently don't have interconnect support. Maybe this is something that
-I should add to that driver as well?
+The "mdp0-mem" and "mdp1-mem" paths mentioned in the mdp5_kms.c are the two
+interconnects between the display and DDR memory. There is actually a patch [1]
+to add to GPU bindings, but it seems that we missed to pick it up.
 
-> > +				interconnect-names = "mdp0-mem",
-> > +				                     "mdp1-mem";
 > 
-> As the second path is not to DDR, but to ocmem, it might be better to call it
-> something like "gpu-ocmem".
+>>> +				interconnect-names = "mdp0-mem",
+>>> +				                     "mdp1-mem";
+>>
+>> As the second path is not to DDR, but to ocmem, it might be better to call it
+>> something like "gpu-ocmem".
+> 
+> I used what mdp5_kms.c expected.
 
-I used what mdp5_kms.c expected.
+This is for the display and here [2] are some patches for the GPU. Not sure how
+the NoCs are configured on 8974 by default, but if you notice any blue/black
+screens, you may need to request bandwidth for display too.
 
-Brian
+Thanks,
+Georgi
+
+[1]
+https://lore.kernel.org/r/1555703787-10897-1-git-send-email-jcrouse@codeaurora.org
+[2] https://lore.kernel.org/r/20181220173026.3857-1-jcrouse@codeaurora.org
+
