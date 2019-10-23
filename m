@@ -2,615 +2,257 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A0EDE12D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2019 09:08:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD4B5E1349
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2019 09:42:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389848AbfJWHIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Oct 2019 03:08:07 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:53120 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389570AbfJWHIG (ORCPT
+        id S1732481AbfJWHmP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Oct 2019 03:42:15 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:40159 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727574AbfJWHmP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Oct 2019 03:08:06 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 3409D60D6F; Wed, 23 Oct 2019 07:08:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571814485;
-        bh=uhbb9fQIZZVUWVQ9dy7YmNcmCr+lR9StIJ8G/dTrj7A=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=JRjyCJuzD+O0bAY2VMtb5wyEtMs1mPdRSxIDFk+1Tsbo7KDE43Q17bC6F5EUH+bj3
-         n0jTOqOSCjhpk/J2/bnlAe7h1ZO3ve/jnB7ELZifGwLmZaT095cBn2sFDji3mE8JGt
-         9TFCKaR8zYO5Ncr7166IgdKXznMRB8f5wYvn0HNc=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from kgunda-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kgunda@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 166F960D6F;
-        Wed, 23 Oct 2019 07:07:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571814482;
-        bh=uhbb9fQIZZVUWVQ9dy7YmNcmCr+lR9StIJ8G/dTrj7A=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=TQvdpkU5QDEQ6OZCC3jCKT75tFYbZO8Xbqg7sqbR4iXB0EWYy8ZgBqXplK1F3Mf9Q
-         KKSM13sDMvbcXjGrG2XUPak/gijU8OqB9H8RBokLfK3NcAS6HPexZVpC05BWalaJo6
-         sbscb42J9xd7dVjvzMsI1yqwGwJllyD/7/cmVmEY=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 166F960D6F
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=kgunda@codeaurora.org
-From:   Kiran Gunda <kgunda@codeaurora.org>
-To:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        lee.jones@linaro.org, b.zolnierkie@samsung.com,
-        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
-        jacek.anaszewski@gmail.com, pavel@ucw.cz, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-fbdev@vger.kernel.org
-Cc:     Kiran Gunda <kgunda@codeaurora.org>
-Subject: [PATCH V9 6/6] backlight: qcom-wled: Add auto string detection logic
-Date:   Wed, 23 Oct 2019 12:37:03 +0530
-Message-Id: <1571814423-6535-7-git-send-email-kgunda@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1571814423-6535-1-git-send-email-kgunda@codeaurora.org>
-References: <1571814423-6535-1-git-send-email-kgunda@codeaurora.org>
+        Wed, 23 Oct 2019 03:42:15 -0400
+Received: by mail-ed1-f67.google.com with SMTP id p59so6564501edp.7;
+        Wed, 23 Oct 2019 00:42:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=AU7J2BQRMw024ECt6R6ioM/TtE1t9QijD3q41c7WeI8=;
+        b=J0A04rAQ25wa9kb8usBO7oxZNV5Izo77b9WaKzwoCLQFRsZdCaRS+cg6Q6x9kmlfU1
+         xwis1Nx1coQ4CzYU24QAMwcnRQ8I15h6TgHMr7FW4i3+l7qkRuGzR1vwkjnb4fmOsVIs
+         N8Y+cIEcI1r5T6fKoXxFgBXmncFqW18ycTJjyhhMZnEczcz72qkD0eTLJWKJn9ndOB+H
+         FzbbjlTnuKw5+t6BxEvfN1D2sXe+MxaMyoJZp/NbsncB8vBY2tNfjejOuTSuFGPkw293
+         nJRIG+9dTPnTW90XEeS1igrscTvb4XZPuPFwe+JbtMs9becH1uredSDGVmydmA1ITFgT
+         oLjA==
+X-Gm-Message-State: APjAAAVp+/p/G3By1BjgqXzx9oaYAF+RMozMydktyHKSGVPf6KkOvqdU
+        OdInZaFFxxVVVuw9tB1e3S4=
+X-Google-Smtp-Source: APXvYqyIo0zrvOx1lKVcqkD7eMOgL0LqCI6jG9oIM1xe4DZRN0Cttzr0r+JRNnfhx/l37emgBXu7/g==
+X-Received: by 2002:a17:906:1c48:: with SMTP id l8mr16067535ejg.203.1571816531653;
+        Wed, 23 Oct 2019 00:42:11 -0700 (PDT)
+Received: from pi3 ([194.230.155.217])
+        by smtp.googlemail.com with ESMTPSA id v8sm836300edi.49.2019.10.23.00.42.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Oct 2019 00:42:10 -0700 (PDT)
+Date:   Wed, 23 Oct 2019 09:42:06 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, etnaviv@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        bcm-kernel-feedback-list@broadcom.com,
+        linux-rpi-kernel@lists.infradead.org, linux-usb@vger.kernel.org,
+        linux-mediatek@lists.infradead.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: power: Convert Generic Power Domain
+ bindings to json-schema
+Message-ID: <20191023074206.GA10189@pi3>
+References: <20191002160632.11140-1-krzk@kernel.org>
+ <20191011150339.GA16245@bogus>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191011150339.GA16245@bogus>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The auto string detection algorithm checks if the current WLED
-sink configuration is valid. It tries enabling every sink and
-checks if the OVP fault is observed. Based on this information
-it detects and enables the valid sink configuration.
-Auto calibration will be triggered when the OVP fault interrupts
-are seen frequently thereby it tries to fix the sink configuration.
+On Fri, Oct 11, 2019 at 10:03:39AM -0500, Rob Herring wrote:
+> On Wed, Oct 02, 2019 at 06:06:30PM +0200, Krzysztof Kozlowski wrote:
+> > Convert Generic Power Domain bindings to DT schema format using
+> > json-schema.  The consumer bindings are split to separate file.
+> > 
+> > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> > 
+> > ---
+> > 
+> > Changes since v1:
+> > 1. Select all nodes for consumers,
+> > 2. Remove from consumers duplicated properties with dt-schema,
+> > 3. Fix power domain pattern,
+> > 4. Remove unneeded types.
+> > ---
+> >  .../devicetree/bindings/arm/arm,scmi.txt      |   2 +-
+> >  .../devicetree/bindings/arm/arm,scpi.txt      |   2 +-
+> >  .../bindings/arm/freescale/fsl,scu.txt        |   2 +-
+> >  .../bindings/clock/clk-exynos-audss.txt       |   2 +-
+> >  .../bindings/clock/exynos5433-clock.txt       |   4 +-
+> >  .../bindings/clock/renesas,cpg-mssr.txt       |   2 +-
+> >  .../clock/renesas,r8a7778-cpg-clocks.txt      |   2 +-
+> >  .../clock/renesas,r8a7779-cpg-clocks.txt      |   2 +-
+> >  .../clock/renesas,rcar-gen2-cpg-clocks.txt    |   2 +-
+> >  .../bindings/clock/renesas,rz-cpg-clocks.txt  |   2 +-
+> >  .../bindings/clock/ti/davinci/psc.txt         |   2 +-
+> >  .../bindings/display/etnaviv/etnaviv-drm.txt  |   2 +-
+> >  .../devicetree/bindings/display/msm/dpu.txt   |   2 +-
+> >  .../devicetree/bindings/display/msm/mdp5.txt  |   2 +-
+> >  .../devicetree/bindings/dsp/fsl,dsp.yaml      |   2 +-
+> >  .../firmware/nvidia,tegra186-bpmp.txt         |   2 +-
+> >  .../bindings/media/imx7-mipi-csi2.txt         |   3 +-
+> >  .../bindings/media/mediatek-jpeg-decoder.txt  |   3 +-
+> >  .../bindings/media/mediatek-mdp.txt           |   3 +-
+> >  .../bindings/opp/qcom-nvmem-cpufreq.txt       |   2 +-
+> >  .../devicetree/bindings/pci/pci-keystone.txt  |   2 +-
+> >  .../bindings/phy/ti,phy-am654-serdes.txt      |   2 +-
+> >  .../bindings/power/amlogic,meson-gx-pwrc.txt  |   2 +-
+> >  .../devicetree/bindings/power/fsl,imx-gpc.txt |   2 +-
+> >  .../bindings/power/fsl,imx-gpcv2.txt          |   2 +-
+> >  .../power/power-domain-consumers.yaml         | 105 +++++++++
+> >  .../bindings/power/power-domain.yaml          | 134 ++++++++++++
+> >  .../bindings/power/power_domain.txt           | 205 ------------------
+> >  .../devicetree/bindings/power/qcom,rpmpd.txt  |   2 +-
+> >  .../bindings/power/renesas,rcar-sysc.txt      |   2 +-
+> >  .../bindings/power/renesas,sysc-rmobile.txt   |   2 +-
+> >  .../bindings/power/xlnx,zynqmp-genpd.txt      |   2 +-
+> >  .../bindings/soc/bcm/brcm,bcm2835-pm.txt      |   2 +-
+> >  .../bindings/soc/mediatek/scpsys.txt          |   2 +-
+> >  .../bindings/soc/ti/sci-pm-domain.txt         |   2 +-
+> >  .../bindings/usb/nvidia,tegra124-xusb.txt     |   4 +-
+> >  MAINTAINERS                                   |   2 +-
+> >  37 files changed, 278 insertions(+), 241 deletions(-)
+> >  create mode 100644 Documentation/devicetree/bindings/power/power-domain-consumers.yaml
+> >  create mode 100644 Documentation/devicetree/bindings/power/power-domain.yaml
+> >  delete mode 100644 Documentation/devicetree/bindings/power/power_domain.txt
+> 
+> 
+> > diff --git a/Documentation/devicetree/bindings/power/power-domain-consumers.yaml b/Documentation/devicetree/bindings/power/power-domain-consumers.yaml
+> > new file mode 100644
+> > index 000000000000..f65078e1260e
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/power/power-domain-consumers.yaml
+> > @@ -0,0 +1,105 @@
+> > +# SPDX-License-Identifier: GPL-2.0
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/power/power-domain-consumers.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: PM domain consumers
+> > +
+> > +maintainers:
+> > +  - Rafael J. Wysocki <rjw@rjwysocki.net>
+> > +  - Kevin Hilman <khilman@kernel.org>
+> > +  - Ulf Hansson <ulf.hansson@linaro.org>
+> > +
+> > +description: |+
+> > +  See power-domain.yaml
+> > +
+> > +select: true
+> > +
+> > +allOf:
+> > +  - $ref: /schemas/power-domain/power-domain-consumer.yaml
+> 
+> I don't like this split. We should move the contents of this file to the 
+> above file.
+> 
+> I checked the authorship of the relevant lines and they are all except 
+> for a small number of lines from Linaro authors (Viresh and Ulf). I have 
+> permission from Linaro to dual license Linaro authored bindings, so it's 
+> not a problem to move this. I can do that and you can just drop this file.
 
-The auto-detection also kicks in when the connected LED string
-of the display-backlight malfunctions (because of damage) and
-requires the damaged string to be turned off to prevent the
-complete panel and/or board from being damaged.
+Sure, what to do with the references to power-domain consumers part? I
+could leave the text file and do not update the references for
+consumers (like I did in last PWM bindings patch, v4).
 
-Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
----
- drivers/video/backlight/qcom-wled.c | 400 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 394 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-index 658b1e0..33b6007 100644
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -17,19 +17,29 @@
- #define WLED_MAX_STRINGS				4
- 
- #define WLED_DEFAULT_BRIGHTNESS				2048
--
-+#define WLED_SOFT_START_DLY_US				10000
- #define WLED3_SINK_REG_BRIGHT_MAX			0xFFF
- 
- /* WLED3/WLED4 control registers */
-+#define WLED3_CTRL_REG_FAULT_STATUS			0x08
-+#define  WLED3_CTRL_REG_ILIM_FAULT_BIT			BIT(0)
-+#define  WLED3_CTRL_REG_OVP_FAULT_BIT			BIT(1)
-+#define  WLED4_CTRL_REG_SC_FAULT_BIT			BIT(2)
-+
-+#define WLED3_CTRL_REG_INT_RT_STS			0x10
-+#define  WLED3_CTRL_REG_OVP_FAULT_STATUS		BIT(1)
-+
- #define WLED3_CTRL_REG_MOD_EN				0x46
- #define  WLED3_CTRL_REG_MOD_EN_MASK			BIT(7)
- #define  WLED3_CTRL_REG_MOD_EN_SHIFT			7
- 
-+#define WLED3_CTRL_REG_FEEDBACK_CONTROL			0x48
-+
- #define WLED3_CTRL_REG_FREQ				0x4c
- #define  WLED3_CTRL_REG_FREQ_MASK			GENMASK(3, 0)
- 
- #define WLED3_CTRL_REG_OVP				0x4d
--#define  WLED3_CTRL_REG_OVP_MASK				GENMASK(1, 0)
-+#define  WLED3_CTRL_REG_OVP_MASK			GENMASK(1, 0)
- 
- #define WLED3_CTRL_REG_ILIMIT				0x4e
- #define  WLED3_CTRL_REG_ILIMIT_MASK			GENMASK(2, 0)
-@@ -119,6 +129,7 @@ struct wled_config {
- 	bool ext_gen;
- 	bool cabc;
- 	bool external_pfet;
-+	bool auto_detection_enabled;
- };
- 
- struct wled {
-@@ -127,17 +138,22 @@ struct wled {
- 	struct regmap *regmap;
- 	struct mutex lock;	/* Lock to avoid race from thread irq handler */
- 	ktime_t last_short_event;
-+	ktime_t start_ovp_fault_time;
- 	u16 ctrl_addr;
- 	u16 sink_addr;
- 	u16 max_string_count;
-+	u16 auto_detection_ovp_count;
- 	u32 brightness;
- 	u32 max_brightness;
- 	u32 short_count;
-+	u32 auto_detect_count;
- 	bool disabled_by_short;
- 	bool has_short_detect;
- 	int short_irq;
-+	int ovp_irq;
- 
- 	struct wled_config cfg;
-+	struct delayed_work ovp_work;
- 	int (*wled_set_brightness)(struct wled *wled, u16 brightness);
- };
- 
-@@ -182,6 +198,13 @@ static int wled4_set_brightness(struct wled *wled, u16 brightness)
- 	return 0;
- }
- 
-+static void wled_ovp_work(struct work_struct *work)
-+{
-+	struct wled *wled = container_of(work,
-+					 struct wled, ovp_work.work);
-+	enable_irq(wled->ovp_irq);
-+}
-+
- static int wled_module_enable(struct wled *wled, int val)
- {
- 	int rc;
-@@ -193,7 +216,25 @@ static int wled_module_enable(struct wled *wled, int val)
- 				WLED3_CTRL_REG_MOD_EN,
- 				WLED3_CTRL_REG_MOD_EN_MASK,
- 				val << WLED3_CTRL_REG_MOD_EN_SHIFT);
--	return rc;
-+	if (rc < 0)
-+		return rc;
-+
-+	if (wled->ovp_irq > 0) {
-+		if (val) {
-+			/*
-+			 * The hardware generates a storm of spurious OVP
-+			 * interrupts during soft start operations. So defer
-+			 * enabling the IRQ for 10ms to ensure that the
-+			 * soft start is complete.
-+			 */
-+			schedule_delayed_work(&wled->ovp_work, HZ / 100);
-+		} else {
-+			if (!cancel_delayed_work_sync(&wled->ovp_work))
-+				disable_irq(wled->ovp_irq);
-+		}
-+	}
-+
-+	return 0;
- }
- 
- static int wled_sync_toggle(struct wled *wled)
-@@ -300,6 +341,304 @@ static irqreturn_t wled_short_irq_handler(int irq, void *_wled)
- 	return IRQ_HANDLED;
- }
- 
-+#define AUTO_DETECT_BRIGHTNESS		200
-+
-+static void wled_auto_string_detection(struct wled *wled)
-+{
-+	int rc = 0, i;
-+	u32 sink_config = 0, int_sts;
-+	u8 sink_test = 0, sink_valid = 0, val;
-+
-+	/* Read configured sink configuration */
-+	rc = regmap_read(wled->regmap, wled->sink_addr +
-+			 WLED4_SINK_REG_CURR_SINK, &sink_config);
-+	if (rc < 0) {
-+		dev_err(wled->dev, "Failed to read SINK configuration rc=%d\n",
-+			rc);
-+		goto failed_detect;
-+	}
-+
-+	/* Disable the module before starting detection */
-+	rc = regmap_update_bits(wled->regmap,
-+				wled->ctrl_addr + WLED3_CTRL_REG_MOD_EN,
-+				WLED3_CTRL_REG_MOD_EN_MASK, 0);
-+	if (rc < 0) {
-+		dev_err(wled->dev, "Failed to disable WLED module rc=%d\n", rc);
-+		goto failed_detect;
-+	}
-+
-+	/* Set low brightness across all sinks */
-+	rc = wled4_set_brightness(wled, AUTO_DETECT_BRIGHTNESS);
-+	if (rc < 0) {
-+		dev_err(wled->dev, "Failed to set brightness for auto detection rc=%d\n",
-+			rc);
-+		goto failed_detect;
-+	}
-+
-+	if (wled->cfg.cabc) {
-+		for (i = 0; i < wled->cfg.num_strings; i++) {
-+			rc = regmap_update_bits(wled->regmap, wled->sink_addr +
-+						WLED4_SINK_REG_STR_CABC(i),
-+						WLED4_SINK_REG_STR_CABC_MASK,
-+						0);
-+			if (rc < 0)
-+				goto failed_detect;
-+		}
-+	}
-+
-+	/* Disable all sinks */
-+	rc = regmap_write(wled->regmap,
-+			  wled->sink_addr + WLED4_SINK_REG_CURR_SINK, 0);
-+	if (rc < 0) {
-+		dev_err(wled->dev, "Failed to disable all sinks rc=%d\n", rc);
-+		goto failed_detect;
-+	}
-+
-+	/* Iterate through the strings one by one */
-+	for (i = 0; i < wled->cfg.num_strings; i++) {
-+		sink_test = BIT((WLED4_SINK_REG_CURR_SINK_SHFT + i));
-+
-+		/* Enable feedback control */
-+		rc = regmap_write(wled->regmap, wled->ctrl_addr +
-+				  WLED3_CTRL_REG_FEEDBACK_CONTROL, i + 1);
-+		if (rc < 0) {
-+			dev_err(wled->dev, "Failed to enable feedback for SINK %d rc = %d\n",
-+				i + 1, rc);
-+			goto failed_detect;
-+		}
-+
-+		/* Enable the sink */
-+		rc = regmap_write(wled->regmap, wled->sink_addr +
-+				  WLED4_SINK_REG_CURR_SINK, sink_test);
-+		if (rc < 0) {
-+			dev_err(wled->dev, "Failed to configure SINK %d rc=%d\n",
-+				i + 1, rc);
-+			goto failed_detect;
-+		}
-+
-+		/* Enable the module */
-+		rc = regmap_update_bits(wled->regmap, wled->ctrl_addr +
-+					WLED3_CTRL_REG_MOD_EN,
-+					WLED3_CTRL_REG_MOD_EN_MASK,
-+					WLED3_CTRL_REG_MOD_EN_MASK);
-+		if (rc < 0) {
-+			dev_err(wled->dev, "Failed to enable WLED module rc=%d\n",
-+				rc);
-+			goto failed_detect;
-+		}
-+
-+		usleep_range(WLED_SOFT_START_DLY_US,
-+			     WLED_SOFT_START_DLY_US + 1000);
-+
-+		rc = regmap_read(wled->regmap, wled->ctrl_addr +
-+				 WLED3_CTRL_REG_INT_RT_STS, &int_sts);
-+		if (rc < 0) {
-+			dev_err(wled->dev, "Error in reading WLED3_CTRL_INT_RT_STS rc=%d\n",
-+				rc);
-+			goto failed_detect;
-+		}
-+
-+		if (int_sts & WLED3_CTRL_REG_OVP_FAULT_STATUS)
-+			dev_dbg(wled->dev, "WLED OVP fault detected with SINK %d\n",
-+				i + 1);
-+		else
-+			sink_valid |= sink_test;
-+
-+		/* Disable the module */
-+		rc = regmap_update_bits(wled->regmap,
-+					wled->ctrl_addr + WLED3_CTRL_REG_MOD_EN,
-+					WLED3_CTRL_REG_MOD_EN_MASK, 0);
-+		if (rc < 0) {
-+			dev_err(wled->dev, "Failed to disable WLED module rc=%d\n",
-+				rc);
-+			goto failed_detect;
-+		}
-+	}
-+
-+	if (!sink_valid) {
-+		dev_err(wled->dev, "No valid WLED sinks found\n");
-+		wled->disabled_by_short = true;
-+		goto failed_detect;
-+	}
-+
-+	if (sink_valid != sink_config) {
-+		dev_warn(wled->dev, "%x is not a valid sink configuration - using %x instead\n",
-+			 sink_config, sink_valid);
-+		sink_config = sink_valid;
-+	}
-+
-+	/* Write the new sink configuration */
-+	rc = regmap_write(wled->regmap,
-+			  wled->sink_addr + WLED4_SINK_REG_CURR_SINK,
-+			  sink_config);
-+	if (rc < 0) {
-+		dev_err(wled->dev, "Failed to reconfigure the default sink rc=%d\n",
-+			rc);
-+		goto failed_detect;
-+	}
-+
-+	/* Enable valid sinks */
-+	for (i = 0; i < wled->cfg.num_strings; i++) {
-+		if (wled->cfg.cabc) {
-+			rc = regmap_update_bits(wled->regmap, wled->sink_addr +
-+						WLED4_SINK_REG_STR_CABC(i),
-+						WLED4_SINK_REG_STR_CABC_MASK,
-+						WLED4_SINK_REG_STR_CABC_MASK);
-+			if (rc < 0)
-+				goto failed_detect;
-+		}
-+
-+		if (sink_config & BIT(WLED4_SINK_REG_CURR_SINK_SHFT + i))
-+			val = WLED4_SINK_REG_STR_MOD_MASK;
-+		else
-+			val = 0x0; /* Disable modulator_en for unused sink */
-+
-+		rc = regmap_write(wled->regmap, wled->sink_addr +
-+				  WLED4_SINK_REG_STR_MOD_EN(i), val);
-+		if (rc < 0) {
-+			dev_err(wled->dev, "Failed to configure MODULATOR_EN rc=%d\n",
-+				rc);
-+			goto failed_detect;
-+		}
-+	}
-+
-+	/* Restore the feedback setting */
-+	rc = regmap_write(wled->regmap,
-+			  wled->ctrl_addr + WLED3_CTRL_REG_FEEDBACK_CONTROL, 0);
-+	if (rc < 0) {
-+		dev_err(wled->dev, "Failed to restore feedback setting rc=%d\n",
-+			rc);
-+		goto failed_detect;
-+	}
-+
-+	/* Restore brightness */
-+	rc = wled4_set_brightness(wled, wled->brightness);
-+	if (rc < 0) {
-+		dev_err(wled->dev, "Failed to set brightness after auto detection rc=%d\n",
-+			rc);
-+		goto failed_detect;
-+	}
-+
-+	rc = regmap_update_bits(wled->regmap,
-+				wled->ctrl_addr + WLED3_CTRL_REG_MOD_EN,
-+				WLED3_CTRL_REG_MOD_EN_MASK,
-+				WLED3_CTRL_REG_MOD_EN_MASK);
-+	if (rc < 0) {
-+		dev_err(wled->dev, "Failed to enable WLED module rc=%d\n", rc);
-+		goto failed_detect;
-+	}
-+
-+failed_detect:
-+	return;
-+}
-+
-+#define WLED_AUTO_DETECT_OVP_COUNT		5
-+#define WLED_AUTO_DETECT_CNT_DLY_US		USEC_PER_SEC
-+static bool wled_auto_detection_required(struct wled *wled)
-+{
-+	s64 elapsed_time_us;
-+
-+	if (!wled->cfg.auto_detection_enabled)
-+		return false;
-+
-+	/*
-+	 * Check if the OVP fault was an occasional one
-+	 * or if it's firing continuously, the latter qualifies
-+	 * for an auto-detection check.
-+	 */
-+	if (!wled->auto_detection_ovp_count) {
-+		wled->start_ovp_fault_time = ktime_get();
-+		wled->auto_detection_ovp_count++;
-+	} else {
-+		elapsed_time_us = ktime_us_delta(ktime_get(),
-+						 wled->start_ovp_fault_time);
-+		if (elapsed_time_us > WLED_AUTO_DETECT_CNT_DLY_US)
-+			wled->auto_detection_ovp_count = 0;
-+		else
-+			wled->auto_detection_ovp_count++;
-+
-+		if (wled->auto_detection_ovp_count >=
-+				WLED_AUTO_DETECT_OVP_COUNT) {
-+			wled->auto_detection_ovp_count = 0;
-+			return true;
-+		}
-+	}
-+
-+	return false;
-+}
-+
-+static int wled_auto_detection_at_init(struct wled *wled)
-+{
-+	int rc;
-+	u32 fault_status, rt_status;
-+
-+	if (!wled->cfg.auto_detection_enabled)
-+		return 0;
-+
-+	rc = regmap_read(wled->regmap,
-+			 wled->ctrl_addr + WLED3_CTRL_REG_INT_RT_STS,
-+			 &rt_status);
-+	if (rc < 0) {
-+		dev_err(wled->dev, "Failed to read RT status rc=%d\n", rc);
-+		return rc;
-+	}
-+
-+	rc = regmap_read(wled->regmap,
-+			 wled->ctrl_addr + WLED3_CTRL_REG_FAULT_STATUS,
-+			 &fault_status);
-+	if (rc < 0) {
-+		dev_err(wled->dev, "Failed to read fault status rc=%d\n", rc);
-+		return rc;
-+	}
-+
-+	if ((rt_status & WLED3_CTRL_REG_OVP_FAULT_STATUS) ||
-+	    (fault_status & WLED3_CTRL_REG_OVP_FAULT_BIT)) {
-+		mutex_lock(&wled->lock);
-+		wled_auto_string_detection(wled);
-+		mutex_unlock(&wled->lock);
-+	}
-+
-+	return rc;
-+}
-+
-+static irqreturn_t wled_ovp_irq_handler(int irq, void *_wled)
-+{
-+	struct wled *wled = _wled;
-+	int rc;
-+	u32 int_sts, fault_sts;
-+
-+	rc = regmap_read(wled->regmap,
-+			 wled->ctrl_addr + WLED3_CTRL_REG_INT_RT_STS, &int_sts);
-+	if (rc < 0) {
-+		dev_err(wled->dev, "Error in reading WLED3_INT_RT_STS rc=%d\n",
-+			rc);
-+		return IRQ_HANDLED;
-+	}
-+
-+	rc = regmap_read(wled->regmap, wled->ctrl_addr +
-+			 WLED3_CTRL_REG_FAULT_STATUS, &fault_sts);
-+	if (rc < 0) {
-+		dev_err(wled->dev, "Error in reading WLED_FAULT_STATUS rc=%d\n",
-+			rc);
-+		return IRQ_HANDLED;
-+	}
-+
-+	if (fault_sts & (WLED3_CTRL_REG_OVP_FAULT_BIT |
-+		WLED3_CTRL_REG_ILIM_FAULT_BIT))
-+		dev_dbg(wled->dev, "WLED OVP fault detected, int_sts=%x fault_sts= %x\n",
-+			int_sts, fault_sts);
-+
-+	if (fault_sts & WLED3_CTRL_REG_OVP_FAULT_BIT) {
-+		if (wled_auto_detection_required(wled)) {
-+			mutex_lock(&wled->lock);
-+			wled_auto_string_detection(wled);
-+			mutex_unlock(&wled->lock);
-+		}
-+	}
-+
-+	return IRQ_HANDLED;
-+}
-+
- static int wled3_setup(struct wled *wled)
- {
- 	u16 addr;
-@@ -436,8 +775,10 @@ static int wled4_setup(struct wled *wled)
- 		sink_en |= 1 << temp;
- 	}
- 
--	if (sink_cfg == sink_en)
--		return 0;
-+	if (sink_cfg == sink_en) {
-+		rc = wled_auto_detection_at_init(wled);
-+		return rc;
-+	}
- 
- 	rc = regmap_update_bits(wled->regmap,
- 				wled->sink_addr + WLED4_SINK_REG_CURR_SINK,
-@@ -500,7 +841,9 @@ static int wled4_setup(struct wled *wled)
- 		return rc;
- 	}
- 
--	return 0;
-+	rc = wled_auto_detection_at_init(wled);
-+
-+	return rc;
- }
- 
- static const struct wled_config wled4_config_defaults = {
-@@ -511,6 +854,7 @@ static int wled4_setup(struct wled *wled)
- 	.switch_freq = 11,
- 	.cabc = false,
- 	.external_pfet = false,
-+	.auto_detection_enabled = false,
- };
- 
- static const u32 wled3_boost_i_limit_values[] = {
-@@ -677,6 +1021,7 @@ static int wled_configure(struct wled *wled, int version)
- 		{ "qcom,ext-gen", &cfg->ext_gen, },
- 		{ "qcom,cabc", &cfg->cabc, },
- 		{ "qcom,external-pfet", &cfg->external_pfet, },
-+		{ "qcom,auto-string-detection", &cfg->auto_detection_enabled, },
- 	};
- 
- 	prop_addr = of_get_address(dev->of_node, 0, NULL, NULL);
-@@ -797,6 +1142,40 @@ static int wled_configure_short_irq(struct wled *wled,
- 	return rc;
- }
- 
-+static int wled_configure_ovp_irq(struct wled *wled,
-+				  struct platform_device *pdev)
-+{
-+	int rc;
-+	u32 val;
-+
-+	wled->ovp_irq = platform_get_irq_byname(pdev, "ovp");
-+	if (wled->ovp_irq < 0) {
-+		dev_dbg(&pdev->dev, "OVP IRQ not found - disabling automatic string detection\n");
-+		return 0;
-+	}
-+
-+	rc = devm_request_threaded_irq(wled->dev, wled->ovp_irq, NULL,
-+				       wled_ovp_irq_handler, IRQF_ONESHOT,
-+				       "wled_ovp_irq", wled);
-+	if (rc < 0) {
-+		dev_err(wled->dev, "Unable to request ovp_irq (err:%d)\n",
-+			rc);
-+		wled->ovp_irq = 0;
-+		return 0;
-+	}
-+
-+	rc = regmap_read(wled->regmap, wled->ctrl_addr +
-+			 WLED3_CTRL_REG_MOD_EN, &val);
-+	if (rc < 0)
-+		return rc;
-+
-+	/* Keep OVP irq disabled until module is enabled */
-+	if (!(val & WLED3_CTRL_REG_MOD_EN_MASK))
-+		disable_irq(wled->ovp_irq);
-+
-+	return 0;
-+}
-+
- static const struct backlight_ops wled_ops = {
- 	.update_status = wled_update_status,
- };
-@@ -837,6 +1216,7 @@ static int wled_probe(struct platform_device *pdev)
- 
- 	switch (version) {
- 	case 3:
-+		wled->cfg.auto_detection_enabled = false;
- 		rc = wled3_setup(wled);
- 		if (rc) {
- 			dev_err(&pdev->dev, "wled3_setup failed\n");
-@@ -858,10 +1238,16 @@ static int wled_probe(struct platform_device *pdev)
- 		break;
- 	}
- 
-+	INIT_DELAYED_WORK(&wled->ovp_work, wled_ovp_work);
-+
- 	rc = wled_configure_short_irq(wled, pdev);
- 	if (rc < 0)
- 		return rc;
- 
-+	rc = wled_configure_ovp_irq(wled, pdev);
-+	if (rc < 0)
-+		return rc;
-+
- 	val = WLED_DEFAULT_BRIGHTNESS;
- 	of_property_read_u32(pdev->dev.of_node, "default-brightness", &val);
- 
-@@ -880,7 +1266,9 @@ static int wled_remove(struct platform_device *pdev)
- 	struct wled *wled = dev_get_drvdata(&pdev->dev);
- 
- 	mutex_destroy(&wled->lock);
-+	cancel_delayed_work_sync(&wled->ovp_work);
- 	disable_irq(wled->short_irq);
-+	disable_irq(wled->ovp_irq);
- 
- 	return 0;
- }
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
- a Linux Foundation Collaborative Project
+Best regards,
+Krzysztof
 
+> 
+> > +
+> > +properties:
+> > +  required-opps:
+> > +    $ref: /schemas/types.yaml#/definitions/phandle
+> > +    description:
+> > +      This contains phandle to an OPP node in another device's OPP table.
+> > +      It may contain an array of phandles, where each phandle points to an OPP
+> > +      of a different device. It should not contain multiple phandles to the OPP
+> > +      nodes in the same OPP table. This specifies the minimum required OPP
+> > +      of the device(s), whose OPP's phandle is present in this property,
+> > +      for the functioning of the current device at the current OPP (where this
+> > +      property is present).
+> > +
+> > +examples:
+> > +  - |
+> > +    leaky-device@12350000 {
+> > +      compatible = "foo,i-leak-current";
+> > +      reg = <0x12350000 0x1000>;
+> > +      power-domains = <&power 0>;
+> > +      power-domain-names = "io";
+> > +    };
+> > +
+> > +    leaky-device@12351000 {
+> > +      compatible = "foo,i-leak-current";
+> > +      reg = <0x12351000 0x1000>;
+> > +      power-domains = <&power 0>, <&power 1> ;
+> > +      power-domain-names = "io", "clk";
+> > +    };
+> > +
+> > +    // The first example above defines a typical PM domain consumer device, which is
+> > +    // located inside a PM domain with index 0 of a power controller represented by a
+> > +    // node with the label "power".
+> > +    // In the second example the consumer device are partitioned across two PM domains,
+> > +    // the first with index 0 and the second with index 1, of a power controller that
+> > +    // is represented by a node with the label "power".
+> > +
+> > +  - |
+> > +    // Example with  OPP table for domain provider that provides two domains:
+> > +
+> > +    domain0_opp_table: opp-table0 {
+> > +      compatible = "operating-points-v2";
+> > +
+> > +      domain0_opp_0: opp-1000000000 {
+> > +        opp-hz = /bits/ 64 <1000000000>;
+> > +        opp-microvolt = <975000 970000 985000>;
+> > +      };
+> > +      domain0_opp_1: opp-1100000000 {
+> > +        opp-hz = /bits/ 64 <1100000000>;
+> > +        opp-microvolt = <1000000 980000 1010000>;
+> > +      };
+> > +    };
+> > +
+> > +    domain1_opp_table: opp-table1 {
+> > +      compatible = "operating-points-v2";
+> > +
+> > +      domain1_opp_0: opp-1200000000 {
+> > +        opp-hz = /bits/ 64 <1200000000>;
+> > +        opp-microvolt = <975000 970000 985000>;
+> > +      };
+> > +      domain1_opp_1: opp-1300000000 {
+> > +        opp-hz = /bits/ 64 <1300000000>;
+> > +        opp-microvolt = <1000000 980000 1010000>;
+> > +      };
+> > +    };
+> > +
+> > +    power: power-controller@12340000 {
+> > +      compatible = "foo,power-controller";
+> > +      reg = <0x12340000 0x1000>;
+> > +      #power-domain-cells = <1>;
+> > +      operating-points-v2 = <&domain0_opp_table>, <&domain1_opp_table>;
+> > +    };
+> > +
+> > +    leaky-device0@12350000 {
+> > +      compatible = "foo,i-leak-current";
+> > +      reg = <0x12350000 0x1000>;
+> > +      power-domains = <&power 0>;
+> > +      required-opps = <&domain0_opp_0>;
+> > +    };
+> > +
+> > +    leaky-device1@12350000 {
+> > +      compatible = "foo,i-leak-current";
+> > +      reg = <0x12350000 0x1000>;
+> > +      power-domains = <&power 1>;
+> > +      required-opps = <&domain1_opp_1>;
+> > +    };
