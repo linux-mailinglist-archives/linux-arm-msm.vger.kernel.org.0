@@ -2,325 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BD455E354E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2019 16:14:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CBCBE365D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2019 17:18:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730297AbfJXOOL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Oct 2019 10:14:11 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45110 "EHLO mail.kernel.org"
+        id S2403859AbfJXPS6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Oct 2019 11:18:58 -0400
+Received: from foss.arm.com ([217.140.110.172]:54144 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726008AbfJXOOK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Oct 2019 10:14:10 -0400
-Received: from localhost.localdomain (unknown [122.181.210.10])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 399772166E;
-        Thu, 24 Oct 2019 14:14:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1571926449;
-        bh=+oHqz3rmKle2RsB++pQ8L0t3Z5ejbaCBP9QKC2mYU/o=;
-        h=From:To:Cc:Subject:Date:From;
-        b=wCGIoM9vDWhiB3emldzOnjeqyEEXHS+ASfp75OvNpLfVTaQuC4lZGpn9D1bxpBi3C
-         nhe6wBVXhjTmhn2olxuHfOAdUgVMThC6ezRXgto5rpcaBm7IHkOEExPLHiy+AAPD1R
-         Zrhk9jYo73/3s13Wss9Mz2PcGAyGMQkTSC9A47VM=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] clk: qcom: gcc: Add missing clocks in SM8150
-Date:   Thu, 24 Oct 2019 19:43:44 +0530
-Message-Id: <20191024141344.7023-1-vkoul@kernel.org>
-X-Mailer: git-send-email 2.20.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S2403837AbfJXPS6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 24 Oct 2019 11:18:58 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A444131F;
+        Thu, 24 Oct 2019 08:18:42 -0700 (PDT)
+Received: from usa.arm.com (e107155-lin.cambridge.arm.com [10.1.196.42])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id BBFE93F71F;
+        Thu, 24 Oct 2019 08:18:40 -0700 (PDT)
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     ulf.hansson@linaro.org
+Cc:     Lorenzo.Pieralisi@arm.com, bjorn.andersson@linaro.org,
+        daniel.lezcano@linaro.org, ilina@codeaurora.org,
+        khilman@kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        mark.rutland@arm.com, rjw@rjwysocki.net, robh+dt@kernel.org,
+        sboyd@kernel.org, sudeep.holla@arm.com, vincent.guittot@linaro.org
+Subject: [PATCH] cpuidle: psci: Align psci_power_state count with idle state count
+Date:   Thu, 24 Oct 2019 16:18:34 +0100
+Message-Id: <20191024151834.17036-1-sudeep.holla@arm.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20191010113937.15962-2-ulf.hansson@linaro.org>
+References: <20191010113937.15962-2-ulf.hansson@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The initial upstreaming of SM8150 GCC driver missed few clock so add
-them up now.
+Instead of allocating 'n-1' states in psci_power_state to manage 'n'
+idle states which include "ARM WFI" state, it would be simpler to have
+1:1 mapping between psci_power_state and cpuidle driver states.
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+ARM WFI state(i.e. idx == 0) is handled specially in the generic macro
+CPU_PM_CPU_IDLE_ENTER_PARAM and hence state[-1] is not possible. However
+for sake of code readability, it is better to have 1:1 mapping and not
+use [idx - 1] to access psci_power_state corresponding to driver cpuidle
+state for idx.
+
+psci_power_state[0] is default initialised to 0 and is never accessed
+while entering WFI state.
+
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 ---
-Changes in v2:
- - rebase on 5.4-rc1
- - add comments for BRANCH_HALT_SKIP
+ drivers/cpuidle/cpuidle-psci.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
- drivers/clk/qcom/gcc-sm8150.c | 184 ++++++++++++++++++++++++++++++++++
- 1 file changed, 184 insertions(+)
+Hi Ulf, Lorenzo,
 
-diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-index 20877214acff..0334b2be5fca 100644
---- a/drivers/clk/qcom/gcc-sm8150.c
-+++ b/drivers/clk/qcom/gcc-sm8150.c
-@@ -1616,6 +1616,40 @@ static struct clk_branch gcc_gpu_cfg_ahb_clk = {
- 	},
- };
- 
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_gpu_gpll0_clk_src = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x52004,
-+		.enable_mask = BIT(15),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_gpu_gpll0_clk_src",
-+			.parent_hws = (const struct clk_hw *[]){
-+				&gpll0.clkr.hw },
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+/* these are external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_gpu_gpll0_div_clk_src = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x52004,
-+		.enable_mask = BIT(16),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_gpu_gpll0_div_clk_src",
-+			.parent_hws = (const struct clk_hw *[]){
-+				&gcc_gpu_gpll0_clk_src.clkr.hw },
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_gpu_iref_clk = {
- 	.halt_reg = 0x8c010,
- 	.halt_check = BRANCH_HALT,
-@@ -1698,6 +1732,40 @@ static struct clk_branch gcc_npu_cfg_ahb_clk = {
- 	},
- };
- 
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_npu_gpll0_clk_src = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x52004,
-+		.enable_mask = BIT(18),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_npu_gpll0_clk_src",
-+			.parent_hws = (const struct clk_hw *[]){
-+				&gpll0.clkr.hw },
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_npu_gpll0_div_clk_src = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x52004,
-+		.enable_mask = BIT(19),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_npu_gpll0_div_clk_src",
-+			.parent_hws = (const struct clk_hw *[]){
-+				&gcc_npu_gpll0_clk_src.clkr.hw },
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_npu_trig_clk = {
- 	.halt_reg = 0x4d00c,
- 	.halt_check = BRANCH_VOTED,
-@@ -2812,6 +2880,45 @@ static struct clk_branch gcc_ufs_card_phy_aux_hw_ctl_clk = {
- 	},
- };
- 
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_ufs_card_rx_symbol_0_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x7501c,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_card_rx_symbol_0_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_ufs_card_rx_symbol_1_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x750ac,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_card_rx_symbol_1_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_ufs_card_tx_symbol_0_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x75018,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_card_tx_symbol_0_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_ufs_card_unipro_core_clk = {
- 	.halt_reg = 0x75058,
- 	.halt_check = BRANCH_HALT,
-@@ -2992,6 +3099,45 @@ static struct clk_branch gcc_ufs_phy_phy_aux_hw_ctl_clk = {
- 	},
- };
- 
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_ufs_phy_rx_symbol_0_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x7701c,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_phy_rx_symbol_0_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_ufs_phy_rx_symbol_1_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x770ac,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_phy_rx_symbol_1_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_ufs_phy_tx_symbol_0_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x77018,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_ufs_phy_tx_symbol_0_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_ufs_phy_unipro_core_clk = {
- 	.halt_reg = 0x77058,
- 	.halt_check = BRANCH_HALT,
-@@ -3171,6 +3317,19 @@ static struct clk_branch gcc_usb3_prim_phy_com_aux_clk = {
- 	},
- };
- 
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_usb3_prim_phy_pipe_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0xf058,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_usb3_prim_phy_pipe_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_usb3_sec_clkref_clk = {
- 	.halt_reg = 0x8c028,
- 	.halt_check = BRANCH_HALT,
-@@ -3201,6 +3360,19 @@ static struct clk_branch gcc_usb3_sec_phy_aux_clk = {
- 	},
- };
- 
-+/* external clocks so add BRANCH_HALT_SKIP */
-+static struct clk_branch gcc_usb3_sec_phy_pipe_clk = {
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x10058,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_usb3_sec_phy_pipe_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_usb3_sec_phy_com_aux_clk = {
- 	.halt_reg = 0x10054,
- 	.halt_check = BRANCH_HALT,
-@@ -3332,12 +3504,16 @@ static struct clk_regmap *gcc_sm8150_clocks[] = {
- 	[GCC_GP3_CLK] = &gcc_gp3_clk.clkr,
- 	[GCC_GP3_CLK_SRC] = &gcc_gp3_clk_src.clkr,
- 	[GCC_GPU_CFG_AHB_CLK] = &gcc_gpu_cfg_ahb_clk.clkr,
-+	[GCC_GPU_GPLL0_CLK_SRC] = &gcc_gpu_gpll0_clk_src.clkr,
-+	[GCC_GPU_GPLL0_DIV_CLK_SRC] = &gcc_gpu_gpll0_div_clk_src.clkr,
- 	[GCC_GPU_IREF_CLK] = &gcc_gpu_iref_clk.clkr,
- 	[GCC_GPU_MEMNOC_GFX_CLK] = &gcc_gpu_memnoc_gfx_clk.clkr,
- 	[GCC_GPU_SNOC_DVM_GFX_CLK] = &gcc_gpu_snoc_dvm_gfx_clk.clkr,
- 	[GCC_NPU_AT_CLK] = &gcc_npu_at_clk.clkr,
- 	[GCC_NPU_AXI_CLK] = &gcc_npu_axi_clk.clkr,
- 	[GCC_NPU_CFG_AHB_CLK] = &gcc_npu_cfg_ahb_clk.clkr,
-+	[GCC_NPU_GPLL0_CLK_SRC] = &gcc_npu_gpll0_clk_src.clkr,
-+	[GCC_NPU_GPLL0_DIV_CLK_SRC] = &gcc_npu_gpll0_div_clk_src.clkr,
- 	[GCC_NPU_TRIG_CLK] = &gcc_npu_trig_clk.clkr,
- 	[GCC_PCIE0_PHY_REFGEN_CLK] = &gcc_pcie0_phy_refgen_clk.clkr,
- 	[GCC_PCIE1_PHY_REFGEN_CLK] = &gcc_pcie1_phy_refgen_clk.clkr,
-@@ -3442,6 +3618,9 @@ static struct clk_regmap *gcc_sm8150_clocks[] = {
- 	[GCC_UFS_CARD_PHY_AUX_CLK_SRC] = &gcc_ufs_card_phy_aux_clk_src.clkr,
- 	[GCC_UFS_CARD_PHY_AUX_HW_CTL_CLK] =
- 		&gcc_ufs_card_phy_aux_hw_ctl_clk.clkr,
-+	[GCC_UFS_CARD_RX_SYMBOL_0_CLK] = &gcc_ufs_card_rx_symbol_0_clk.clkr,
-+	[GCC_UFS_CARD_RX_SYMBOL_1_CLK] = &gcc_ufs_card_rx_symbol_1_clk.clkr,
-+	[GCC_UFS_CARD_TX_SYMBOL_0_CLK] = &gcc_ufs_card_tx_symbol_0_clk.clkr,
- 	[GCC_UFS_CARD_UNIPRO_CORE_CLK] = &gcc_ufs_card_unipro_core_clk.clkr,
- 	[GCC_UFS_CARD_UNIPRO_CORE_CLK_SRC] =
- 		&gcc_ufs_card_unipro_core_clk_src.clkr,
-@@ -3459,6 +3638,9 @@ static struct clk_regmap *gcc_sm8150_clocks[] = {
- 	[GCC_UFS_PHY_PHY_AUX_CLK] = &gcc_ufs_phy_phy_aux_clk.clkr,
- 	[GCC_UFS_PHY_PHY_AUX_CLK_SRC] = &gcc_ufs_phy_phy_aux_clk_src.clkr,
- 	[GCC_UFS_PHY_PHY_AUX_HW_CTL_CLK] = &gcc_ufs_phy_phy_aux_hw_ctl_clk.clkr,
-+	[GCC_UFS_PHY_RX_SYMBOL_0_CLK] = &gcc_ufs_phy_rx_symbol_0_clk.clkr,
-+	[GCC_UFS_PHY_RX_SYMBOL_1_CLK] = &gcc_ufs_phy_rx_symbol_1_clk.clkr,
-+	[GCC_UFS_PHY_TX_SYMBOL_0_CLK] = &gcc_ufs_phy_tx_symbol_0_clk.clkr,
- 	[GCC_UFS_PHY_UNIPRO_CORE_CLK] = &gcc_ufs_phy_unipro_core_clk.clkr,
- 	[GCC_UFS_PHY_UNIPRO_CORE_CLK_SRC] =
- 		&gcc_ufs_phy_unipro_core_clk_src.clkr,
-@@ -3480,10 +3662,12 @@ static struct clk_regmap *gcc_sm8150_clocks[] = {
- 	[GCC_USB3_PRIM_PHY_AUX_CLK] = &gcc_usb3_prim_phy_aux_clk.clkr,
- 	[GCC_USB3_PRIM_PHY_AUX_CLK_SRC] = &gcc_usb3_prim_phy_aux_clk_src.clkr,
- 	[GCC_USB3_PRIM_PHY_COM_AUX_CLK] = &gcc_usb3_prim_phy_com_aux_clk.clkr,
-+	[GCC_USB3_PRIM_PHY_PIPE_CLK] = &gcc_usb3_prim_phy_pipe_clk.clkr,
- 	[GCC_USB3_SEC_CLKREF_CLK] = &gcc_usb3_sec_clkref_clk.clkr,
- 	[GCC_USB3_SEC_PHY_AUX_CLK] = &gcc_usb3_sec_phy_aux_clk.clkr,
- 	[GCC_USB3_SEC_PHY_AUX_CLK_SRC] = &gcc_usb3_sec_phy_aux_clk_src.clkr,
- 	[GCC_USB3_SEC_PHY_COM_AUX_CLK] = &gcc_usb3_sec_phy_com_aux_clk.clkr,
-+	[GCC_USB3_SEC_PHY_PIPE_CLK] = &gcc_usb3_sec_phy_pipe_clk.clkr,
- 	[GCC_VIDEO_AHB_CLK] = &gcc_video_ahb_clk.clkr,
- 	[GCC_VIDEO_AXI0_CLK] = &gcc_video_axi0_clk.clkr,
- 	[GCC_VIDEO_AXI1_CLK] = &gcc_video_axi1_clk.clkr,
--- 
-2.20.1
+Just to avoid confusion, I thought I will just write this patch as I was
+about to make reference to this in my review.
+
+Regards,
+Sudeep
+
+diff --git a/drivers/cpuidle/cpuidle-psci.c b/drivers/cpuidle/cpuidle-psci.c
+index f3c1a2396f98..361985f52ddd 100644
+--- a/drivers/cpuidle/cpuidle-psci.c
++++ b/drivers/cpuidle/cpuidle-psci.c
+@@ -30,7 +30,7 @@ static int psci_enter_idle_state(struct cpuidle_device *dev,
+ 	u32 *state = __this_cpu_read(psci_power_state);
+
+ 	return CPU_PM_CPU_IDLE_ENTER_PARAM(psci_cpu_suspend_enter,
+-					   idx, state[idx - 1]);
++					   idx, state[idx]);
+ }
+
+ static struct cpuidle_driver psci_idle_driver __initdata = {
+@@ -89,12 +89,14 @@ static int __init psci_dt_cpu_init_idle(struct device_node *cpu_node, int cpu)
+ 	if (!count)
+ 		return -ENODEV;
+
++	count++; /* Add WFI state too */
+ 	psci_states = kcalloc(count, sizeof(*psci_states), GFP_KERNEL);
+ 	if (!psci_states)
+ 		return -ENOMEM;
+
+-	for (i = 0; i < count; i++) {
+-		state_node = of_parse_phandle(cpu_node, "cpu-idle-states", i);
++	for (i = 1; i < count; i++) {
++		state_node = of_parse_phandle(cpu_node, "cpu-idle-states",
++					      i - 1);
+ 		ret = psci_dt_parse_state_node(state_node, &psci_states[i]);
+ 		of_node_put(state_node);
+
+--
+2.17.1
 
