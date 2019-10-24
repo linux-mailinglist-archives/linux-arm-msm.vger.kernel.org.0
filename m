@@ -2,123 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 90984E2827
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2019 04:31:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E6F7E2AC8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2019 09:07:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437004AbfJXCbC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Oct 2019 22:31:02 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:41716 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437045AbfJXCbC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Oct 2019 22:31:02 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id CEBE561068; Thu, 24 Oct 2019 02:31:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571884260;
-        bh=9/HyGx8k6OZA11usgkO3f0IPDOmioYN0Pq3Ym6dXEsA=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=P0sNyB9znt9SvVsporJy7QUt6imvMg2AyomQnEcEV6znvzIAQ3SdBP/Bxl8LwMRLc
-         lR6UJS4DBlo3Htffb1p3pBqWaGrD296ZNDV8TSdBnfpI+G70cblAtANLFgPkhdIWSK
-         OOfxvU8H2kAiQ8QUU07Pr4Ykn5GHtEFCtpa2u8/w=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.79.136.17] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S2436490AbfJXHHb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Oct 2019 03:07:31 -0400
+Received: from onstation.org ([52.200.56.107]:36614 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727635AbfJXHHb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 24 Oct 2019 03:07:31 -0400
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E0C8660FF9;
-        Thu, 24 Oct 2019 02:30:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571884259;
-        bh=9/HyGx8k6OZA11usgkO3f0IPDOmioYN0Pq3Ym6dXEsA=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=jXYYdZMVdiR5wVf0WCY+2dpxl07S0Q1gxKQwuNi3iJMP8ua4C5eZC9OwBG8+FrB5x
-         ps0zlSbu2wCddbnODtiai+33mQl4UkVuGZ2sebiJZIF73DWGBokY8LUuQOf8TblTwH
-         aPjMfpJJZsmVjPVZKL/nSMOgkieEy2oU3P6v4U60=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E0C8660FF9
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v3 05/11] arm64: dts: qcom: sc7180: Add cmd_db reserved
- area
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        Maulik Shah <mkshah@codeaurora.org>,
-        linux-arm-msm-owner@vger.kernel.org
-References: <20191023090219.15603-1-rnayak@codeaurora.org>
- <20191023090219.15603-6-rnayak@codeaurora.org>
- <5bb4acef7f11af9e9c4016743d668f57@codeaurora.org>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <8d361445-d764-1653-76a3-05df25339c0c@codeaurora.org>
-Date:   Thu, 24 Oct 2019 08:00:54 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 9DC693E88C;
+        Thu, 24 Oct 2019 07:07:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1571900850;
+        bh=Dd3LcWl/3IsTamvy8Zm2T8waJpgR0GN+K+t3Gns4Kzw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BljIAdCmSBPQJoMkCdPK9vSnCl/XK2ohuqjyatJrxZfuKtzIGnroppAOkatB8EdHp
+         MXmTBPmWjHgzJWrUFGaQ8AOLWc4/tHMtnCiiNw4dhle3YrpjGysM1ut1pPTiNYlm9z
+         TtvWMxSeW+a6CvejIjQNDcWqlsE8iR9ZfnkaG7kA=
+Date:   Thu, 24 Oct 2019 03:07:30 -0400
+From:   Brian Masney <masneyb@onstation.org>
+To:     Georgi Djakov <georgi.djakov@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 5/5] ARM: dts: qcom: msm8974: add interconnect nodes
+Message-ID: <20191024070730.GA19974@onstation.org>
+References: <20191013080804.10231-1-masneyb@onstation.org>
+ <20191013080804.10231-6-masneyb@onstation.org>
+ <d154b0c6-fc39-bebc-d1b5-cc179fb6055d@linaro.org>
+ <20191023124753.GA14218@onstation.org>
+ <c26159f5-e6fe-07f1-51b3-50b72b258846@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <5bb4acef7f11af9e9c4016743d668f57@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <c26159f5-e6fe-07f1-51b3-50b72b258846@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/23/2019 5:46 PM, Sibi Sankar wrote:
-> On 2019-10-23 14:32, Rajendra Nayak wrote:
->> From: Maulik Shah <mkshah@codeaurora.org>
->>
->> Command_db provides mapping for resource key and address managed
->> by remote processor. Add cmd_db reserved memory area.
->>
->> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->> ---
->>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 12 ++++++++++++
->>  1 file changed, 12 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> index f17684148595..dfa49ef2bce0 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> @@ -32,6 +32,18 @@
->>          };
->>      };
->>
->> +    reserved_memory: reserved-memory {
->> +        #address-cells = <2>;
->> +        #size-cells = <2>;
->> +        ranges;
->> +
->> +        cmd_db: reserved-memory@80820000 {
+On Wed, Oct 23, 2019 at 04:39:21PM +0300, Georgi Djakov wrote:
+> On 23.10.19 г. 15:47 ч., Brian Masney wrote:
+> > On Wed, Oct 23, 2019 at 02:50:19PM +0300, Georgi Djakov wrote:
+> >> On 13.10.19 г. 11:08 ч., Brian Masney wrote:
+> >>> Add interconnect nodes that's needed to support bus scaling.
+> >>>
+> >>> Signed-off-by: Brian Masney <masneyb@onstation.org>
+> >>> ---
+> >>>  arch/arm/boot/dts/qcom-msm8974.dtsi | 60 +++++++++++++++++++++++++++++
+> >>>  1 file changed, 60 insertions(+)
+> >>>
+> >>> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> >>> @@ -1152,6 +1207,11 @@
+> >>>  				              "core",
+> >>>  				              "vsync";
+> >>>  
+> >>> +				interconnects = <&mmssnoc MNOC_MAS_GRAPHICS_3D &bimc BIMC_SLV_EBI_CH0>,
+> >>> +				                <&ocmemnoc OCMEM_VNOC_MAS_GFX3D &ocmemnoc OCMEM_SLV_OCMEM>;
+> >>
+> >> Who will be the requesting bandwidth to DDR and ocmem? Is it the display or GPU
+> >> or both? The above seem like GPU-related interconnects, so maybe these
+> >> properties should be in the GPU DT node.
+> > 
+> > The display is what currently requests the interconnect path,
+> > specifically mdp5_setup_interconnect() in
+> > drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c. The Freedreno GPU bindings
+> > currently don't have interconnect support. Maybe this is something that
+> > I should add to that driver as well?
 > 
-> aop_cmd_db_mem: memory@80820000 {
-> please use ^^ instead
+> The "mdp0-mem" and "mdp1-mem" paths mentioned in the mdp5_kms.c are the two
+> interconnects between the display and DDR memory.
 
-right, I thought I looked up sm8150.dtsi to make sure
-the labeling for various things is consistent, but
-maybe i didn't. Will fix. Thanks.
+OK, I see. Most of the interconnect paths in the downstream MSM 3.4
+sources are configured in device tree using the
+qcom,msm-bus,vectors-KBps property, which is what I was only looking at
+before. The interconnect path for the display is configured directly in
+code (drivers/video/msm/mdss/mdss_mdp.c) to setup a path between
+MSM_BUS_MASTER_MDP_PORT0 and MSM_BUS_SLAVE_EBI_CH0.
 
-> 
->> +            reg = <0x0 0x80820000 0x0 0x20000>;
->> +            compatible = "qcom,cmd-db";
->> +            no-map;
->> +        };
->> +    };
->> +
->>      cpus {
->>          #address-cells = <2>;
->>          #size-cells = <0>;
-> 
+In the upstream kernel, it looks like I'll need to
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+  1) add support for an optional second interconnect path for ocmem to
+     drivers/gpu/drm/msm/adreno/adreno_gpu.c.
+
+  2) add implementations of gpu_get_freq and gpu_get_freq to the
+     adreno_gpu_funcs struct in drivers/gpu/drm/msm/adreno/a3xx_gpu.c.
+
+Brian
