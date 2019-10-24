@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 78367E2B55
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2019 09:48:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CDABE2B57
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2019 09:49:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404822AbfJXHsg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Oct 2019 03:48:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54200 "EHLO mail.kernel.org"
+        id S2408711AbfJXHsm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Oct 2019 03:48:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54272 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2404701AbfJXHsg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Oct 2019 03:48:36 -0400
+        id S2404701AbfJXHsl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 24 Oct 2019 03:48:41 -0400
 Received: from localhost.localdomain (unknown [122.181.210.10])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A30892084C;
-        Thu, 24 Oct 2019 07:48:30 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EA9162166E;
+        Thu, 24 Oct 2019 07:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1571903315;
-        bh=uUZce6/FCDh1pSBIkqEXf1IfLeAbB0U9mXEnQTe/hY4=;
-        h=From:To:Cc:Subject:Date:From;
-        b=V8Hgu+nhJ8AN8PnF3M3BP3eV0vuhUr207/GinigFFb3p1P3Zryq8haGK0RFN7WsnH
-         ncfcm/n3PS62TMFFLSQOOXh3CJ0/BiOwW4DjRfspqwJjA8Jxc2zcbjQ0SOg2q/lLDe
-         0tGKgOCRJ0/7HG7BixB/7Nd+wDpA0T5hV5ibYiLo=
+        s=default; t=1571903320;
+        bh=nEkaVq4FO8CG23Md1bkPeG2m5r7YUzla9UALRzU1j70=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=hO3qkVyVc663w59H6ohgAhIuoxUz6O5Mu7UFR6m9WQZMUjhG5Ng35FepQspy8909y
+         dK8FENawcgQ4xhiGSo5RfkZKSSkwFg67+DRm2TQktjC46Io606SHpXJY0XjGbNVXMZ
+         PnBGd+zGd8+Wpt3nqtQ4VBPye/il8uu8mj2/x4yA=
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Kishon Vijay Abraham I <kishon@ti.com>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -37,11 +37,14 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Stanley Chu <stanley.chu@mediatek.com>,
         Subhash Jadavani <subhashj@codeaurora.org>,
         Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Subject: [PATCH v3 0/3] UFS: Add support for SM8150 UFS
-Date:   Thu, 24 Oct 2019 13:17:59 +0530
-Message-Id: <20191024074802.26526-1-vkoul@kernel.org>
+        Stephen Boyd <swboyd@chromium.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v3 1/3] dt-bindings: ufs: Add sm8150 compatible string
+Date:   Thu, 24 Oct 2019 13:18:00 +0530
+Message-Id: <20191024074802.26526-2-vkoul@kernel.org>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20191024074802.26526-1-vkoul@kernel.org>
+References: <20191024074802.26526-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -49,31 +52,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adds compatible strings for ufs hc and ufs qmp phy found in
-Qualcomm SM8150 SoC. Also update the qmp phy driver with version 4 and
-support for ufs phy.
+Document "qcom,sm8150-ufshc" compatible string for UFS HC found on
+SM8150.
 
-Changes since V2:
- - add review tags received
- - rename registers to QSERDES_V4_COM* and sort them and make these lower
-   hex
- - reuse sdm845_ufs_phy_clk_l as it is same
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Acked-by: Rob Herring <robh@kernel.org>
+---
+ Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes since v1:
- - make the numbers a lower case hex
- - add review tags received
-
-Vinod Koul (3):
-  dt-bindings: ufs: Add sm8150 compatible string
-  dt-bindings: phy-qcom-qmp: Add sm8150 UFS phy compatible string
-  phy: qcom-qmp: Add SM8150 QMP UFS PHY support
-
- .../devicetree/bindings/phy/qcom-qmp-phy.txt  |   7 +-
- .../devicetree/bindings/ufs/ufshcd-pltfrm.txt |   1 +
- drivers/phy/qualcomm/phy-qcom-qmp.c           | 120 ++++++++++++++++++
- drivers/phy/qualcomm/phy-qcom-qmp.h           |  96 ++++++++++++++
- 4 files changed, 223 insertions(+), 1 deletion(-)
-
+diff --git a/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt b/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
+index d78ef63935f9..415ccdd7442d 100644
+--- a/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
++++ b/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
+@@ -13,6 +13,7 @@ Required properties:
+ 			    "qcom,msm8996-ufshc", "qcom,ufshc", "jedec,ufs-2.0"
+ 			    "qcom,msm8998-ufshc", "qcom,ufshc", "jedec,ufs-2.0"
+ 			    "qcom,sdm845-ufshc", "qcom,ufshc", "jedec,ufs-2.0"
++			    "qcom,sm8150-ufshc", "qcom,ufshc", "jedec,ufs-2.0"
+ - interrupts        : <interrupt mapping for UFS host controller IRQ>
+ - reg               : <registers mapping>
+ 
 -- 
 2.20.1
 
