@@ -2,124 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 35698E38F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2019 18:56:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2E0BE38F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2019 18:56:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409959AbfJXQ42 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Oct 2019 12:56:28 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:35796 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2409957AbfJXQ41 (ORCPT
+        id S2409921AbfJXQ4s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Oct 2019 12:56:48 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:34695 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2409957AbfJXQ4s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Oct 2019 12:56:27 -0400
-Received: by mail-vs1-f65.google.com with SMTP id k15so7711524vsp.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2019 09:56:27 -0700 (PDT)
+        Thu, 24 Oct 2019 12:56:48 -0400
+Received: by mail-wr1-f67.google.com with SMTP id t16so21767982wrr.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2019 09:56:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gateworks-com.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=rD0W5k6f2ID7q7g4hwunZTETm45udsFKDrCjL00gegQ=;
-        b=WJ7HqMq2UBUeER1U+qXYYcrUZXUr1aZKzL6BM8wsVvhAnTX2/9EpzTEV0OAwdxKpjT
-         4XxQP2j2BOoOmA7Kcr73hQjR534p1UVbpMP2mgd0A0H4Mnzwkf38ON9qkZ3ug7kUsfNL
-         JsaiuIhqC5hKpiBUnvYGbo0BOQJdcpw9FN9/kgt+ASAQ9WIm5gK9AI6ozSlLcgaUzXsJ
-         AMjX44WEvLZNLvq0f7PIb2uXLvOOpWiQKJZ6dGySm0ueoFN1kQPV0+UoCKMukUzRJJtu
-         IzvNtipgrD59PKNainry4UQAL2N9UFPpfBHcLUz0yY+Ak8UtBiIUXcwn5VHPVxo1zpLy
-         Dt7A==
+        bh=LWnsh1VnfR4T7qI+mFbdH+FaPSq3tYzKSOhcVJg7pFE=;
+        b=TprQQJMSs5c2EL0ZtRmgUgoFteZMc6kk8z8q99t3AMCnEpXsLnu4G28yTZWdF0WKXo
+         AsSMBmk/91zBhpayKuZIuJkBlm3dserOh1K+z62dIVoFAeAsKg+rGv1I60HSmN99HsIP
+         C01PDZELGOOHq9mtM7LDhTxymhHtAY+UnR7GpQVS3waz9aihcgyQQzIz0k4CzgQ/csQ5
+         h7spT8IUuo+YF0ffSlAZS1CXC+VoH3L4/dEqvfZ/rWzaVJuGH4nSNhg/X1NB+xy7ivaZ
+         g7jYMBnHFJwaAWbzYFwXIZuzK2WEK+yLAWNeI/qTQCD/bms90CFHP07zBRErDkc2SugI
+         kzzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=rD0W5k6f2ID7q7g4hwunZTETm45udsFKDrCjL00gegQ=;
-        b=onMnZQPRn6FjKp4aTSMbdYg/WB11IV6aVwiGxV1kjDeEGClvJwek7yVK0ysIZH3uDg
-         FjVdXF3gHRK6vaY1gu0KGxHAZUCxb8ZXrSoL+hKXvbMzhzcsuJOIa2UqMjNeF8U8bd9c
-         fzt6eYBbJyF++zrQCc/NRad09JW8aIs98db70rciqkNzvswBGFxoDRGmczDyzlM9/yYK
-         d7pU1NFeWhy3kboEfex7dBoqAjp2ak5/F/dNx6T9cEm29h4Ful0wgvQHgsCSg9MkqcWN
-         QFOu3ZfAsaSZrvynuYMeZqM2gGtsx4q7Chgu9LaHfkTKZngev/CdhwGzNxutcwqeJVFD
-         KRCg==
-X-Gm-Message-State: APjAAAVNWEClm63dhGxXFmt/OgxkVr1Eqp3YTHW1MeUGHBXiifpIThdU
-        sSfqm590CIMgZA3kZIT/aeWjYdQmTqGRWd5zCzLaQw==
-X-Google-Smtp-Source: APXvYqydNX3XdNyNTLcuW9pCNacVJGVnjYiuRC2HH8+frArbLOyWb8AStR5DMWrrX/BK4AfRo9niEvGq44yPGjL/tnA=
-X-Received: by 2002:a67:ebc2:: with SMTP id y2mr9732656vso.191.1571936186556;
- Thu, 24 Oct 2019 09:56:26 -0700 (PDT)
+        bh=LWnsh1VnfR4T7qI+mFbdH+FaPSq3tYzKSOhcVJg7pFE=;
+        b=dI9JLuWpWPLb2l9vQu2DiInJrI87FRrhEw31eyLp4G/8TnEvZMsL2SgGuCIMikalpQ
+         2vilWBTWH1mIhavPnHvDl+NOtQ6YXqs+XlWLWytXHRi6IG2T+W86JZN/Y1ztleen6UZu
+         gc7wa3ZMP4ckn4KDMMuhLW6Tgmx272TjiZGakoqyFv0H5vy8G7jyKDzoJGGWPQvzAVRX
+         PutDOG2sQhj9t1BihdQT+oQc3IRkjg7hh+NUtbExv8qmGUwrrarvwnkzju0mtBH+qZJY
+         sGgrVBHw/5JlxFqPu8XheZnlqUeY1B1Vj6+z+tf2yf0UBftmFnXGJt150okH7pdWXCHG
+         7vOw==
+X-Gm-Message-State: APjAAAXe3Jn6D+4eQPplqlKM42oYHaP9DXp0swWHTqQVADhGDkP8JAO2
+        y4dWWh5vo6+sZilpbFRueFmgGvNILxC853mpUGsSDg==
+X-Google-Smtp-Source: APXvYqz61t1rsPsZIoz2r/3DSS4dQctwFYskEA1EgxIFmFai2Df9wr1NPInU9NDLzWDpQnQ/tmFt/Js31wfFhnIQmPc=
+X-Received: by 2002:adf:92e7:: with SMTP id 94mr5061277wrn.199.1571936202863;
+ Thu, 24 Oct 2019 09:56:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20191010113937.15962-1-ulf.hansson@linaro.org>
- <20191010113937.15962-12-ulf.hansson@linaro.org> <20191024163515.GD22036@bogus>
-In-Reply-To: <20191024163515.GD22036@bogus>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 24 Oct 2019 18:55:50 +0200
-Message-ID: <CAPDyKFq43XrGLDOVZmOeBTLKG0BBvTji6c0Z+cT8uc6PPyp8YA@mail.gmail.com>
-Subject: Re: [PATCH 11/13] cpuidle: psci: Attach CPU devices to their PM domains
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <20190301192017.39770-1-dianders@chromium.org> <CAJ+vNU0Ma5nG9_ThLO4cdO+=ivf7rmXiHZonF0HY0xx6X3R6Hw@mail.gmail.com>
+ <5dce2964-8761-e7d0-8963-f0f5cb2feb02@arm.com> <CAJ+vNU0Q1-d7YDbAAEMqEcWnniqo6jLdKBbcUTar5=hJ+AC8vQ@mail.gmail.com>
+ <1f6f7eb0-e1dc-d5a8-fb38-44c5bd839894@arm.com> <CAJ+vNU1Nd2p-ot2Qkj6vD9yD6gcYM-vm+snNWyt0ChgSqe4tBg@mail.gmail.com>
+ <5cf9ec03-f6fb-8227-4ec5-62445038f283@arm.com> <CAJ+vNU28LrroW-XC4X2g3bdN171j0ieZenhYE1TrEM8yvKi=cQ@mail.gmail.com>
+ <cb6392ff-fac6-300b-2e04-b34df8c42f28@arm.com> <CAJ+vNU0kDseyqAMKAv+9+aw6wVKjBQcHcGD_8XgCy_KzZTM4Gg@mail.gmail.com>
+ <4824ef05-7f57-9aab-cdbd-34b3f857b32b@arm.com>
+In-Reply-To: <4824ef05-7f57-9aab-cdbd-34b3f857b32b@arm.com>
+From:   Tim Harvey <tharvey@gateworks.com>
+Date:   Thu, 24 Oct 2019 09:56:30 -0700
+Message-ID: <CAJ+vNU0Ls9RpMwZz+kUu=0nE9eSsz7MBPQGqR_U3u=s+Tq_YGw@mail.gmail.com>
+Subject: Re: [PATCH v2] iommu/arm-smmu: Break insecure users by disabling
+ bypass by default
+To:     Robin Murphy <robin.murphy@arm.com>,
+        Jan Glauber <jglauber@cavium.com>,
+        Kulkarni Ganapatrao <Ganapatrao.Kulkarni@cavium.com>,
+        Robert Richter <rrichter@cavium.com>,
+        Aleksey Makarov <aleksey.makarov@cavium.com>,
+        "Goutham, Sunil" <Sunil.Goutham@cavium.com>,
+        David Daney <ddaney@caviumnetworks.com>
+Cc:     Tirumalesh Chalamarla <tchalamarla@caviumnetworks.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will.deacon@arm.com>,
+        linux-arm-msm@vger.kernel.org, evgreen@chromium.org,
+        tfiga@chromium.org, Rob Clark <robdclark@gmail.com>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org,
+        open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 24 Oct 2019 at 18:35, Sudeep Holla <sudeep.holla@arm.com> wrote:
+On Fri, Oct 4, 2019 at 4:27 PM Robin Murphy <robin.murphy@arm.com> wrote:
 >
-> On Thu, Oct 10, 2019 at 01:39:35PM +0200, Ulf Hansson wrote:
-> > In order to enable a CPU to be power managed through its PM domain, let's
-> > try to attach it by calling psci_dt_attach_cpu() during the cpuidle
-> > initialization.
+> On 2019-10-04 9:37 pm, Tim Harvey wrote:
+> > On Fri, Oct 4, 2019 at 11:34 AM Robin Murphy <robin.murphy@arm.com> wrote:
+> >>
+> >> On 04/10/2019 18:13, Tim Harvey wrote:
+> >> [...]
+> >>>>> No difference... still need 'arm-smmu.disable_bypass=n' to boot. Are
+> >>>>> all four iommu-map props above supposed to be the same? Seems to me
+> >>>>> they all point to the same thing which looks wrong.
+> >>>>
+> >>>> Hmm... :/
+> >>>>
+> >>>> Those mappings just set Stream ID == PCI RID (strictly each one should
+> >>>> only need to cover the bus range assigned to that bridge, but it's not
+> >>>> crucial) which is the same thing the driver assumes for the mmu-masters
+> >>>> property, so either that's wrong and never could have worked anyway -
+> >>>> have you tried VFIO on this platform? - or there are other devices also
+> >>>> mastering through the SMMU that aren't described at all. Are you able to
+> >>>> capture a boot log? The SMMU faults do encode information about the
+> >>>> offending ID, and you can typically correlate their appearance
+> >>>> reasonably well with endpoint drivers probing.
+> >>>>
+> >>>
+> >>> Robin,
+> >>>
+> >>> VFIO is enabled in the kernel but I don't know anything about how to
+> >>> test/use it:
+> >>> $ grep VFIO .config
+> >>> CONFIG_KVM_VFIO=y
+> >>> CONFIG_VFIO_IOMMU_TYPE1=y
+> >>> CONFIG_VFIO_VIRQFD=y
+> >>> CONFIG_VFIO=y
+> >>> # CONFIG_VFIO_NOIOMMU is not set
+> >>> CONFIG_VFIO_PCI=y
+> >>> CONFIG_VFIO_PCI_MMAP=y
+> >>> CONFIG_VFIO_PCI_INTX=y
+> >>> # CONFIG_VFIO_PLATFORM is not set
+> >>> # CONFIG_VFIO_MDEV is not set
+> >>
+> >> No worries - since it's a networking-focused SoC I figured there was a
+> >> chance you might be using DPDK or similar userspace drivers with the NIC
+> >> VFs, but I was just casting around for a quick and easy baseline of
+> >> whether the SMMU works at all (another way would be using Qemu to run a
+> >> VM with one or more PCI devices assigned).
+> >>
+> >>> I do have a boot console yet I'm not seeing any smmu faults at all.
+> >>> Perhaps I've mis-diagnosed the issue completely. To be clear when I
+> >>> boot with arm-smmu.disable_bypass=y the serial console appears to not
+> >>> accept input in userspace and with arm-smmu.disable_bypass=n I'm fine.
+> >>> I'm using a buildroot initramfs rootfs for simplicity. The system
+> >>> isn't hung as I originally expected as the LED heartbeat trigger
+> >>> continues blinking... I just can't get console to accept input.
+> >>
+> >> Curiouser and curiouser... I'm inclined to suspect that the interrupt
+> >> configuration might also be messed up, such that the SMMU is blocking
+> >> traffic and jammed up due to pending faults, but you're not getting the
+> >> IRQ delivered to find out. Does this patch help reveal anything?
+> >>
+> >> http://linux-arm.org/git?p=linux-rm.git;a=commitdiff;h=29ac3648b580920692c9b417b2fc606995826517
+> >>
+> >> (untested, but it's a direct port of the one I've used for SMMUv3 to
+> >> diagnose something similar)
 > >
-> > psci_dt_attach_cpu() returns a pointer to the attached struct device, which
-> > later should be used for runtime PM, hence we need to store it somewhere.
-> > Rather than adding yet another per CPU variable, let's create a per CPU
-> > struct to collect the relevant per CPU variables.
-> >
-> > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> > ---
-> >  drivers/cpuidle/cpuidle-psci.c | 23 +++++++++++++++++++----
-> >  1 file changed, 19 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/drivers/cpuidle/cpuidle-psci.c b/drivers/cpuidle/cpuidle-psci.c
-> > index a16467daf99d..1510422c7a53 100644
-> > --- a/drivers/cpuidle/cpuidle-psci.c
-> > +++ b/drivers/cpuidle/cpuidle-psci.c
-> > @@ -23,7 +23,12 @@
-> >  #include "cpuidle-psci.h"
-> >  #include "dt_idle_states.h"
-> >
-> > -static DEFINE_PER_CPU_READ_MOSTLY(u32 *, psci_power_state);
-> > +struct psci_cpuidle_data {
-> > +     u32 *psci_states;
-> > +     struct device *dev;
-> > +};
-> > +
-> > +static DEFINE_PER_CPU_READ_MOSTLY(struct psci_cpuidle_data, psci_cpuidle_data);
-> >  static DEFINE_PER_CPU(u32, domain_state);
-> >
+> > This shows:
 >
-> /me just thinking still: If it make sense to keep psci_states separate
-> and domain_state and only other things needed for RPM/OSI in the
-> structure. I do understand that we modify domain_state and hence
-> we can't use READ_MOSTLY then. Let's see, for now keep it as is, thought
-> I will think out aloud.
+> Yay (ish)!
+>
+> [ and the tangential challenge would be to find out what the real global
+> fault interrupt is, 'cause apparently it's not SPI 68... ]
+>
+> > arm-smmu 830000000000.smmu0: Unexpected global fault, this could be serious
+> > arm-smmu 830000000000.smmu0:     GFSR 0x80000002, GFSYNR0 0x00000002,
+> > GFSYNR1 0x00000140, GFSYNR2 0x00000000
+>
+> If that stream ID were a PCI RID, it would be 01:08.0
+>
+> > arm-smmu 830000000000.smmu0: Unexpected global fault, this could be serious
+> > arm-smmu 830000000000.smmu0:     GFSR 0x80000002, GFSYNR0 0x00000002,
+> > GFSYNR1 0x00000010, GFSYNR2 0x00000000
+>
+> And this guy would be 00:02.0
+>
+> So it seems that either the stream ID mapping is non-trivial (and
+> "mmu-masters" couldn't have worked), or there are secret magic endpoints
+> writing to memory during boot. Either way it probably needs some input
+> from Cavium/Marvell to get straight. In the meantime, unless just
+> disabling and ignoring the SMMU altogether is a viable option, I guess
+> we have to resign to this being one of those "non-good" reasons for
+> needing global bypass :(
+>
+> Robin.
+>
+> (note to self: it would probably be useful if we dump GFAR in these logs
+> too. These are all writes, so it's possible they could be MSI attempts
+> targeting the ITS rather than DMA as such)
 
-I believe we are striving towards the same goal, which likely means to
-separate the non-OSI path vs OSI path, as much as possible. Simply to
-avoid any unnecessary operation being done in the non-OSI path. Right?
+Robin,
 
-However, while I was trying to address that, I realized that it would
-probably introduce even more changes to the series. Therefore, it
-thought it may be better to address these kind of changes on top, as
-improvements.
+Thanks for the help here!
 
-Does it make sense?
+I opened up a support issue with Marvell but have not gotten anything
+from them in the 2 weeks since (horrible support since Marvell
+acquired them) thus I'm adding in some Marvell/Cavium folk active in
+other areas of kernel development as a cry for help as OcteonTX iommu
+is completely broken in mainline and I think this is the cause of
+mainline stability issues I've seen since the 4.14 kernel.
 
-Kind regards
-Uffe
+Marvell/Cavium devs... can you please chime in here regarding iommu
+configuration issues for CN80xx/CN81XX OcteonTX?
+
+Thanks,
+
+Tim
+
+
+Tim
