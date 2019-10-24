@@ -2,120 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BECE8E392D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2019 19:04:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 252E4E3F66
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2019 00:33:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2410062AbfJXREF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Oct 2019 13:04:05 -0400
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:45759 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407806AbfJXREF (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Oct 2019 13:04:05 -0400
-Received: by mail-ua1-f67.google.com with SMTP id j5so7378689uak.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Oct 2019 10:04:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dzIZOdfZOm9/tczR85zTnpbzPA2Dr5D7KrkOTuOLCMQ=;
-        b=pIlGYlwHvtHqaHlxQfDr0+75g9uN4+rdyZh81DemB0rBcak8UrgQ+FyY/pPMLvkjKX
-         baoSN4HgwIIshTRvEC+0DlfgTvd9pFnAoiFvQVRMbeDOmDOlDM5eKZYM67BQSogtCsX0
-         LbrnqE319qj1A0n3q+dKnGM5wG4GztlgYSvivE4nF5ONzddS2i8kEDuv2nEY+yVejdNs
-         42Fu1Lsqo4ex/EIhAH9ZjXXhe+EcWVBQJJik8eGD8lMZOLkqns1yS/zcbys8/wFC+Je6
-         B/FciVafCNEoRUYobQSP8ffCI6kHqESXVDdk50gcw+FbYsOmjKTbwT18Pgq916TWKH8K
-         zzwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dzIZOdfZOm9/tczR85zTnpbzPA2Dr5D7KrkOTuOLCMQ=;
-        b=UgPnFHWVH+7yzeICfzOHonXYd5IzsF0X3WpmdKfXtj2jWDxw59A7dWnHG68nJYIAD8
-         wu46oXoVEQmzw+vu2RONomedsYje93eT1StaBQyoTxyZFQ6AWVwxx4FQBzI2u6Mdz1BK
-         r7aXiJimd7f8I1VqTPpLYsb5YbumuualqKmh65V6jg/JAb4fdR9JgZY6bAhTTTTpSXFi
-         9BmF5LYvqjYJj2Xzqj6Z78OHdq4/m/5cL07MN/shfM09Uz1g3tOaBftJ7GcxAx2Dt2gY
-         EcrVo4+kRiuTNBwZ5HduP78wD7OekbCwz0SJm+rl2zGYsQvs0ZJRjhg57DzmRNyjVhKu
-         RYxg==
-X-Gm-Message-State: APjAAAVopm/bHBA0DEVq6nAwmch1j5pNfMvbY9icKNH0rLZ5IRPByWg7
-        k5up2g0T+AsTbpGUlXHe0LBBEIWyqdSOc5BK8UQL5g==
-X-Google-Smtp-Source: APXvYqzkr6vzJLu1qnQfTtAWGkrgV+rK9emrmymKXieNlDnMIIeTryB5+UQZjsnWebYgfKxZq8M5lsS16aVzuXCyxTE=
-X-Received: by 2002:ab0:5a97:: with SMTP id w23mr9528899uae.129.1571936644649;
- Thu, 24 Oct 2019 10:04:04 -0700 (PDT)
+        id S1731709AbfJXWdR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Oct 2019 18:33:17 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37404 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731152AbfJXWdR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 24 Oct 2019 18:33:17 -0400
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7F45221D71;
+        Thu, 24 Oct 2019 22:33:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1571956396;
+        bh=zv/+Cg7FqzWfk4zoUYYas2gkXufxYiBgGui3pLf7Im0=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=bhedDmGWQVxjj/0LqpYmP4rIMIPZ4nUxgoeLK1IdNfMq7BlRbprrfMVQ//KlzTzQ1
+         JYU5Zx2YujkbWZVeF5x4X0jAZe9sDHIBPMVs7AitGNDIuEvsAOgXQEfdjyrVE1hs1p
+         jz6LMrYnBCKaFNffzUhzsHM7ihKu0plvzWu9zkoc=
+Received: by mail-qt1-f179.google.com with SMTP id m15so380045qtq.2;
+        Thu, 24 Oct 2019 15:33:16 -0700 (PDT)
+X-Gm-Message-State: APjAAAVsUSwMX4zXM24FnGJ3+DiLOr5d8aZWGJ6CYY7ihQ1uhhgM8MvY
+        HMKw9ZLyCTdDVs8h2CJl7ZAEdpbfPMvS/oF9Hw==
+X-Google-Smtp-Source: APXvYqzpZiq+VxT8v6OnoJFomiqo/yUa7OZtDUCbwhGR9BMysDk7zHRDlulknPdgAbB0q10WoWnbr5qfzCNc76cK/Yk=
+X-Received: by 2002:ac8:741a:: with SMTP id p26mr40504qtq.143.1571956395662;
+ Thu, 24 Oct 2019 15:33:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20191010113937.15962-1-ulf.hansson@linaro.org>
- <20191010113937.15962-14-ulf.hansson@linaro.org> <20191024164106.GA24887@bogus>
-In-Reply-To: <20191024164106.GA24887@bogus>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 24 Oct 2019 19:03:28 +0200
-Message-ID: <CAPDyKFoWTqORFGSe0TwMuRh5wUunm2fDu-uHPZR9xRyT6UjmFQ@mail.gmail.com>
-Subject: Re: [PATCH 13/13] arm64: dts: Convert to the hierarchical CPU
- topology layout for MSM8916
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+References: <cover.1571484439.git.saiprakash.ranjan@codeaurora.org>
+ <20191021033220.GG4500@tuxbook-pro> <CAL_JsqLzRRQe8UZCxgXArVNhNry7PgMCthAR2aZNcm6CCEpvDA@mail.gmail.com>
+ <2fbab8bc38be37fba976d34b2f89e720@codeaurora.org>
+In-Reply-To: <2fbab8bc38be37fba976d34b2f89e720@codeaurora.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Thu, 24 Oct 2019 17:33:04 -0500
+X-Gmail-Original-Message-ID: <CAL_Jsq+5p7gQzDfGipNFr1ry-Pc3pDJpcXnAqdX9eo0HLETATQ@mail.gmail.com>
+Message-ID: <CAL_Jsq+5p7gQzDfGipNFr1ry-Pc3pDJpcXnAqdX9eo0HLETATQ@mail.gmail.com>
+Subject: Re: [PATCHv2 0/3] Add LLCC support for SC7180 SoC
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Lina Iyer <lina.iyer@linaro.org>
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm-owner@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-- Andy
-
-On Thu, 24 Oct 2019 at 18:41, Sudeep Holla <sudeep.holla@arm.com> wrote:
+On Thu, Oct 24, 2019 at 6:00 AM Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
 >
-> On Thu, Oct 10, 2019 at 01:39:37PM +0200, Ulf Hansson wrote:
-> > To enable the OS to better support PSCI OS initiated CPU suspend mode,
-> > let's convert from the flattened layout to the hierarchical layout.
-> >
-> > In the hierarchical layout, let's create a power domain provider per CPU
-> > and describe the idle states for each CPU inside the power domain provider
-> > node. To group the CPUs into a cluster, let's add another power domain
-> > provider and make it act as the master domain. Note that, the CPU's idle
-> > states remains compatible with "arm,idle-state", while the cluster's idle
-> > state becomes compatible with "domain-idle-state".
-> >
-> > Cc: Andy Gross <andy.gross@linaro.org>
-> > Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
-> > Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
-> > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/msm8916.dtsi | 57 +++++++++++++++++++++++++--
-> >  1 file changed, 53 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > index 5ea9fb8f2f87..1ece0c763592 100644
-> > --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> > @@ -102,10 +102,11 @@
-> >                       reg = <0x0>;
-> >                       next-level-cache = <&L2_0>;
-> >                       enable-method = "psci";
-> > -                     cpu-idle-states = <&CPU_SLEEP_0>;
-> >                       clocks = <&apcs>;
-> >                       operating-points-v2 = <&cpu_opp_table>;
-> >                       #cooling-cells = <2>;
-> > +                     power-domains = <&CPU_PD0>;
-> > +                     power-domain-names = "psci";
+> Hi Rob,
 >
-> As mentioned in the patch: Do we really need to make power-domain-names
-> compulsory ?
+> On 2019-10-24 01:19, Rob Herring wrote:
+> > On Sun, Oct 20, 2019 at 10:32 PM Bjorn Andersson
+> > <bjorn.andersson@linaro.org> wrote:
+> >>
+> >> On Sat 19 Oct 04:37 PDT 2019, Sai Prakash Ranjan wrote:
+> >>
+> >> > LLCC behaviour is controlled by the configuration data set
+> >> > in the llcc-qcom driver, add the same for SC7180 SoC.
+> >> > Also convert the existing bindings to json-schema and add
+> >> > the compatible for SC7180 SoC.
+> >> >
+> >>
+> >> Thanks for the patches and thanks for the review Stephen. Series
+> >> applied
+> >
+> > And they break dt_binding_check. Please fix.
+> >
+>
+> I did check this and think that the error log from dt_binding_check is
+> not valid because it says cache-level is a required property [1], but
+> there is no such property in LLCC bindings.
 
-Yes, I think that is a good idea. However, let's discuss in the other
-thread instead.
+Then you should point out the issue and not just submit stuff ignoring
+it. It has to be resolved one way or another.
 
-Again, thanks a lot for reviewing!
+If you refer to the DT spec[1], cache-level is required. The schema is
+just enforcing that now. It's keying off the node name of
+'cache-controller'.
 
-Kind regards
-Uffe
+Rob
+
+[1] https://github.com/devicetree-org/devicetree-specification/blob/master/source/devicenodes.rst#multi-level-and-shared-cache-nodes-cpuscpul-cache
