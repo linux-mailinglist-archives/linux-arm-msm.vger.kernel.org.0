@@ -2,142 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CB4A4E2F06
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2019 12:32:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 901DFE2FA8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2019 13:00:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409197AbfJXKbt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Oct 2019 06:31:49 -0400
-Received: from onstation.org ([52.200.56.107]:37250 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2409181AbfJXKbr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Oct 2019 06:31:47 -0400
-Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id AD4D43F25C;
-        Thu, 24 Oct 2019 10:31:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1571913105;
-        bh=TjnLS/ZuPQk+PIhxZ1NDe8tWtJ6hF+FLqMYRIzVX1Hk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=FCeCcZORFMZTRNybTBNym4E1tuYUebZ+1dG3dJWW4yHeEzn4B4Tt/yfB9wK1iPB/S
-         aEcnXVnPfhiRSQKkhrhDuG9mfgxoRcoZSTIdhIy1fMpiDRHs7IUgHSWcqPEYsALnk6
-         PbKh1gKhmXJcs4787uvaFIjCu8x7orEBeHOP/yLc=
-From:   Brian Masney <masneyb@onstation.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        georgi.djakov@linaro.org
-Subject: [PATCH v2 4/4] ARM: dts: qcom: msm8974: add interconnect nodes
-Date:   Thu, 24 Oct 2019 06:31:40 -0400
-Message-Id: <20191024103140.10077-5-masneyb@onstation.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20191024103140.10077-1-masneyb@onstation.org>
-References: <20191024103140.10077-1-masneyb@onstation.org>
+        id S2392769AbfJXLAY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Oct 2019 07:00:24 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:58618 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730032AbfJXLAX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 24 Oct 2019 07:00:23 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 10F6860F6F; Thu, 24 Oct 2019 11:00:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1571914823;
+        bh=lF7VPfa990k56WtZ+Go5dWYnjSW2LrwS9wWkHXP4Fz4=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=Wop/lkRMFXZ5nrTbnlNqKiRR3pM0eIGsKjl5sJfXD6aZfyFUfEkN55fivz7UfYWnD
+         amJ3WW6UZ2zOAYIBDe/GvQ0K2jrmeenXgqBpsx1Ac4dBQaOPqrc3fA82yEciWrNnMY
+         tjNW4MPlE9ScAoKIR4yFYKRZw5OMfTEgbKjQfkWw=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 81C7460F6F;
+        Thu, 24 Oct 2019 11:00:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1571914821;
+        bh=lF7VPfa990k56WtZ+Go5dWYnjSW2LrwS9wWkHXP4Fz4=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=FHXYYpjVhnwjTXVDWJwmM/6h7UrDLlDN593yCL1ElgRD4TwG+aFUs4i5wweheVcsf
+         8vBYWsbmkZs1K9/ang24XNX2vvMfb2OjC9w3kMAFMsxzhFupf+u48MyYjxyTqNexSk
+         5Gyt3BB89Rqn1j+7hYCDaWpefVTsSF02L0TlJWRE=
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 24 Oct 2019 16:30:21 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-kernel@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCHv2 0/3] Add LLCC support for SC7180 SoC
+In-Reply-To: <CAL_JsqLzRRQe8UZCxgXArVNhNry7PgMCthAR2aZNcm6CCEpvDA@mail.gmail.com>
+References: <cover.1571484439.git.saiprakash.ranjan@codeaurora.org>
+ <20191021033220.GG4500@tuxbook-pro>
+ <CAL_JsqLzRRQe8UZCxgXArVNhNry7PgMCthAR2aZNcm6CCEpvDA@mail.gmail.com>
+Message-ID: <2fbab8bc38be37fba976d34b2f89e720@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add interconnect nodes that's needed to support bus scaling.
+Hi Rob,
 
-Signed-off-by: Brian Masney <masneyb@onstation.org>
----
-Changes since v1:
-- sort interconnect nodes by address
-- correct interconnect path for display:
-  MNOC_MAS_MDP_PORT0 -> BIMC_SLV_EBI_CH0
+On 2019-10-24 01:19, Rob Herring wrote:
+> On Sun, Oct 20, 2019 at 10:32 PM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+>> 
+>> On Sat 19 Oct 04:37 PDT 2019, Sai Prakash Ranjan wrote:
+>> 
+>> > LLCC behaviour is controlled by the configuration data set
+>> > in the llcc-qcom driver, add the same for SC7180 SoC.
+>> > Also convert the existing bindings to json-schema and add
+>> > the compatible for SC7180 SoC.
+>> >
+>> 
+>> Thanks for the patches and thanks for the review Stephen. Series 
+>> applied
+> 
+> And they break dt_binding_check. Please fix.
+> 
 
- arch/arm/boot/dts/qcom-msm8974.dtsi | 58 +++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+I did check this and think that the error log from dt_binding_check is 
+not valid because it says cache-level is a required property [1], but 
+there is no such property in LLCC bindings.
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index bdbde5125a56..c893c715f08c 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- /dts-v1/;
- 
-+#include <dt-bindings/interconnect/qcom,msm8974.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/qcom,gcc-msm8974.h>
- #include <dt-bindings/clock/qcom,mmcc-msm8974.h>
-@@ -1106,6 +1107,60 @@
- 			};
- 		};
- 
-+		bimc: interconnect@fc380000 {
-+			reg = <0xfc380000 0x6a000>;
-+			compatible = "qcom,msm8974-bimc";
-+			#interconnect-cells = <1>;
-+			clock-names = "bus", "bus_a";
-+			clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
-+			         <&rpmcc RPM_SMD_BIMC_A_CLK>;
-+		};
-+
-+		snoc: interconnect@fc460000 {
-+			reg = <0xfc460000 0x4000>;
-+			compatible = "qcom,msm8974-snoc";
-+			#interconnect-cells = <1>;
-+			clock-names = "bus", "bus_a";
-+			clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
-+			         <&rpmcc RPM_SMD_SNOC_A_CLK>;
-+		};
-+
-+		pnoc: interconnect@fc468000 {
-+			reg = <0xfc468000 0x4000>;
-+			compatible = "qcom,msm8974-pnoc";
-+			#interconnect-cells = <1>;
-+			clock-names = "bus", "bus_a";
-+			clocks = <&rpmcc RPM_SMD_PNOC_CLK>,
-+			         <&rpmcc RPM_SMD_PNOC_A_CLK>;
-+		};
-+
-+		ocmemnoc: interconnect@fc470000 {
-+			reg = <0xfc470000 0x4000>;
-+			compatible = "qcom,msm8974-ocmemnoc";
-+			#interconnect-cells = <1>;
-+			clock-names = "bus", "bus_a";
-+			clocks = <&rpmcc RPM_SMD_OCMEMGX_CLK>,
-+			         <&rpmcc RPM_SMD_OCMEMGX_A_CLK>;
-+		};
-+
-+		mmssnoc: interconnect@fc478000 {
-+			reg = <0xfc478000 0x4000>;
-+			compatible = "qcom,msm8974-mmssnoc";
-+			#interconnect-cells = <1>;
-+			clock-names = "bus", "bus_a";
-+			clocks = <&mmcc MMSS_S0_AXI_CLK>,
-+			         <&mmcc MMSS_S0_AXI_CLK>;
-+		};
-+
-+		cnoc: interconnect@fc480000 {
-+			reg = <0xfc480000 0x4000>;
-+			compatible = "qcom,msm8974-cnoc";
-+			#interconnect-cells = <1>;
-+			clock-names = "bus", "bus_a";
-+			clocks = <&rpmcc RPM_SMD_CNOC_CLK>,
-+			         <&rpmcc RPM_SMD_CNOC_A_CLK>;
-+		};
-+
- 		mdss: mdss@fd900000 {
- 			status = "disabled";
- 
-@@ -1152,6 +1207,9 @@
- 				              "core",
- 				              "vsync";
- 
-+				interconnects = <&mmssnoc MNOC_MAS_MDP_PORT0 &bimc BIMC_SLV_EBI_CH0>;
-+				interconnect-names = "mdp0-mem";
-+
- 				ports {
- 					#address-cells = <1>;
- 					#size-cells = <0>;
+[1] - http://patchwork.ozlabs.org/patch/1179800/
+
+-Sai
+
 -- 
-2.21.0
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
