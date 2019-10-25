@@ -2,68 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 114B9E4767
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2019 11:34:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2458EE4D2C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2019 15:58:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393215AbfJYJe3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Oct 2019 05:34:29 -0400
-Received: from szxga06-in.huawei.com ([45.249.212.32]:55002 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1730207AbfJYJe3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Oct 2019 05:34:29 -0400
-Received: from DGGEMS412-HUB.china.huawei.com (unknown [172.30.72.59])
-        by Forcepoint Email with ESMTP id 5DC944AADF4BD93F2232;
-        Fri, 25 Oct 2019 17:34:27 +0800 (CST)
-Received: from localhost (10.133.213.239) by DGGEMS412-HUB.china.huawei.com
- (10.3.19.212) with Microsoft SMTP Server id 14.3.439.0; Fri, 25 Oct 2019
- 17:34:17 +0800
-From:   YueHaibing <yuehaibing@huawei.com>
-To:     <agross@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, YueHaibing <yuehaibing@huawei.com>
-Subject: [PATCH -next] clk: qcom: remove unneeded semicolon
-Date:   Fri, 25 Oct 2019 17:33:32 +0800
-Message-ID: <20191025093332.27592-1-yuehaibing@huawei.com>
-X-Mailer: git-send-email 2.10.2.windows.1
+        id S2505515AbfJYN6T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Oct 2019 09:58:19 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53504 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2505505AbfJYN6Q (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 25 Oct 2019 09:58:16 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6D649222C4;
+        Fri, 25 Oct 2019 13:58:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1572011895;
+        bh=AicnZ9XfDMx3XkBE1GCecASN86fDAtFADqghqLPnsv4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=bVpuGDrS+Vt5HVI9bA+RhmHkcPh6/YW8g2/XgJdKJGeSKX8Gkb9EagmQH+h8FWRjS
+         SdABbT3Cfjjipx2hu46V4Jqj/ZPrvVpe79EjBhxX9Jx/yrjimsDRuIICoSl6bu7/yv
+         yjcoqJgrm6Dd5yPYEfbj8vSd1vrjjMAdRWLj+glk=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 4.9 07/20] drm/msm: stop abusing dma_map/unmap for cache
+Date:   Fri, 25 Oct 2019 09:57:47 -0400
+Message-Id: <20191025135801.25739-7-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20191025135801.25739-1-sashal@kernel.org>
+References: <20191025135801.25739-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.133.213.239]
-X-CFilter-Loop: Reflected
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-remove unneeded semicolon.
+From: Rob Clark <robdclark@chromium.org>
 
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+[ Upstream commit 0036bc73ccbe7e600a3468bf8e8879b122252274 ]
+
+Recently splats like this started showing up:
+
+   WARNING: CPU: 4 PID: 251 at drivers/iommu/dma-iommu.c:451 __iommu_dma_unmap+0xb8/0xc0
+   Modules linked in: ath10k_snoc ath10k_core fuse msm ath mac80211 uvcvideo cfg80211 videobuf2_vmalloc videobuf2_memops vide
+   CPU: 4 PID: 251 Comm: kworker/u16:4 Tainted: G        W         5.2.0-rc5-next-20190619+ #2317
+   Hardware name: LENOVO 81JL/LNVNB161216, BIOS 9UCN23WW(V1.06) 10/25/2018
+   Workqueue: msm msm_gem_free_work [msm]
+   pstate: 80c00005 (Nzcv daif +PAN +UAO)
+   pc : __iommu_dma_unmap+0xb8/0xc0
+   lr : __iommu_dma_unmap+0x54/0xc0
+   sp : ffff0000119abce0
+   x29: ffff0000119abce0 x28: 0000000000000000
+   x27: ffff8001f9946648 x26: ffff8001ec271068
+   x25: 0000000000000000 x24: ffff8001ea3580a8
+   x23: ffff8001f95ba010 x22: ffff80018e83ba88
+   x21: ffff8001e548f000 x20: fffffffffffff000
+   x19: 0000000000001000 x18: 00000000c00001fe
+   x17: 0000000000000000 x16: 0000000000000000
+   x15: ffff000015b70068 x14: 0000000000000005
+   x13: 0003142cc1be1768 x12: 0000000000000001
+   x11: ffff8001f6de9100 x10: 0000000000000009
+   x9 : ffff000015b78000 x8 : 0000000000000000
+   x7 : 0000000000000001 x6 : fffffffffffff000
+   x5 : 0000000000000fff x4 : ffff00001065dbc8
+   x3 : 000000000000000d x2 : 0000000000001000
+   x1 : fffffffffffff000 x0 : 0000000000000000
+   Call trace:
+    __iommu_dma_unmap+0xb8/0xc0
+    iommu_dma_unmap_sg+0x98/0xb8
+    put_pages+0x5c/0xf0 [msm]
+    msm_gem_free_work+0x10c/0x150 [msm]
+    process_one_work+0x1e0/0x330
+    worker_thread+0x40/0x438
+    kthread+0x12c/0x130
+    ret_from_fork+0x10/0x18
+   ---[ end trace afc0dc5ab81a06bf ]---
+
+Not quite sure what triggered that, but we really shouldn't be abusing
+dma_{map,unmap}_sg() for cache maint.
+
+Cc: Stephen Boyd <sboyd@kernel.org>
+Tested-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Sean Paul <seanpaul@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20190630124735.27786-1-robdclark@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rcg2.c | 4 ++--
+ drivers/gpu/drm/msm/msm_gem.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index b98b81e..99c4bfa 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -206,7 +206,7 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
- 		break;
- 	default:
- 		return -EINVAL;
--	};
-+	}
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 795660e29b2ce..a472d4d902dde 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -106,7 +106,7 @@ static struct page **get_pages(struct drm_gem_object *obj)
+ 		 * because display controller, GPU, etc. are not coherent:
+ 		 */
+ 		if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
+-			dma_map_sg(dev->dev, msm_obj->sgt->sgl,
++			dma_sync_sg_for_device(dev->dev, msm_obj->sgt->sgl,
+ 					msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
+ 	}
  
- 	if (!f)
- 		return -EINVAL;
-@@ -319,7 +319,7 @@ static int __clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
- 		break;
- 	default:
- 		return -EINVAL;
--	};
-+	}
+@@ -124,7 +124,7 @@ static void put_pages(struct drm_gem_object *obj)
+ 			 * GPU, etc. are not coherent:
+ 			 */
+ 			if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
+-				dma_unmap_sg(obj->dev->dev, msm_obj->sgt->sgl,
++				dma_sync_sg_for_cpu(obj->dev->dev, msm_obj->sgt->sgl,
+ 					     msm_obj->sgt->nents,
+ 					     DMA_BIDIRECTIONAL);
  
- 	if (!f)
- 		return -EINVAL;
 -- 
-2.7.4
-
+2.20.1
 
