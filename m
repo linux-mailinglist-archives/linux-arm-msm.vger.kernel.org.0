@@ -2,191 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AB2BE4DA6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2019 16:02:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 110D2E4E52
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2019 16:06:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403927AbfJYN6U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Oct 2019 09:58:20 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53516 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732654AbfJYN6S (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Oct 2019 09:58:18 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id EFAB7222CD;
-        Fri, 25 Oct 2019 13:58:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1572011896;
-        bh=iBDissv+RAFwCtToVRjoa9uFXuIcswIIMG6AChOrBYg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=jWcwYswdRTKyDUCIkheulVQKAdujauAFH3DEluDyxVaNWsCISfGAZkg/OKfn6j28d
-         rQf/bFcQETsaUXy8TDa5krPKlSWrstQPJOEfpvCnvULZts88tSwcdx8ZAhHN3Sp+LB
-         0FfJxxSH7ErvU27FWqlPOawzO0Vfs4hUlDuUtpkY=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Sean Paul <seanpaul@chromium.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.9 08/20] drm/msm: Use the correct dma_sync calls in msm_gem
-Date:   Fri, 25 Oct 2019 09:57:48 -0400
-Message-Id: <20191025135801.25739-8-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191025135801.25739-1-sashal@kernel.org>
-References: <20191025135801.25739-1-sashal@kernel.org>
+        id S2503000AbfJYOGf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Oct 2019 10:06:35 -0400
+Received: from mail-yb1-f193.google.com ([209.85.219.193]:39709 "EHLO
+        mail-yb1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407355AbfJYOGe (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 25 Oct 2019 10:06:34 -0400
+Received: by mail-yb1-f193.google.com with SMTP id e9so889598ybp.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2019 07:06:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=poorly.run; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=9hV5nwXUEgXhwQ5IosopcGJTF2NHW7/vTGTmNW9G34I=;
+        b=VifDnRc70NasJQuNqZ6GKXuHy+pog7Il9EYThxh46rlyggmTevIjVlWWW3BDI7BX8/
+         wlYX5LkB0paoZC1KPIFgth+U25Pfzy2Dk+RpUyeGJsnhZnPg79LzGQqXe2KkzPXYRghH
+         NqFkRvxXEQKju+Q6MFIb/wZkpDCWXgdNX0WvFHPXl+Hr4DgxgainAF6JcS6oBo3xgcg/
+         vxUQBHZLFuS1+XqP0ChE2d7qlZoP4D5ficQilafhQ6deH/GmdCOz6+L4Zegsbr44ierq
+         DMjOgUz0FWpLxwy3K8HlVU/BmUkx5ZqxIJDa/FJiJPTiMLvUlBUumiRmSBCIcGZa9FGd
+         g7ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=9hV5nwXUEgXhwQ5IosopcGJTF2NHW7/vTGTmNW9G34I=;
+        b=eF9uhKfqYm2T4oLAKXs3LH985k6pqlfqNxow++b3Huk0VnEqQxEWXJt1mtgsK/7Fdc
+         HsAME/PMWwp5MVPYshxy5+srBFYUCsaoHpnD0NqHivMgtWs4flOH+yHxziny/SCody2b
+         6ghzzZSlZ7L33RM6QEw+MUlR3Gjz0uR62XLFAm/biOkxkLc5GV2eNA3NwI5Nmj6yd8xv
+         YvpLoHi0Zau+EyfxHq9oke58AWmEu/g6cf9oDKGnilYYan6HINEmBc98u/n1fWOhh5IJ
+         g6C6eRFk9HZF0EQ3FxuyCtNJd+J/SWJIQHEAiTvg12i/SnCHKUV9w3SSpNnZbJieydNL
+         8oXg==
+X-Gm-Message-State: APjAAAULfrnk9zU4wt0erjnXfD208P/hEJGE5dox31XuScwo8gvNjjhP
+        xjO8oCKWjy0WEwYTyrOTQSn7fA==
+X-Google-Smtp-Source: APXvYqx7fYQnCFaQaxuLFh4DK2xG1DIqcPQZX3c4Cb03ut+f4/rVew1nspg17lq1TCTJePaSNg3xIQ==
+X-Received: by 2002:a25:7611:: with SMTP id r17mr3361276ybc.399.1572012393139;
+        Fri, 25 Oct 2019 07:06:33 -0700 (PDT)
+Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
+        by smtp.gmail.com with ESMTPSA id b201sm710130ywe.2.2019.10.25.07.06.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Oct 2019 07:06:32 -0700 (PDT)
+Date:   Fri, 25 Oct 2019 10:06:32 -0400
+From:   Sean Paul <sean@poorly.run>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Hai Li <hali@codeaurora.org>, David Airlie <airlied@linux.ie>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        Nikita Travkin <nikitos.tr@gmail.com>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [PATCH v2] drm/msm/dsi: Implement qcom,
+ dsi-phy-regulator-ldo-mode for 28nm PHY
+Message-ID: <20191025140632.GH85762@art_vandelay>
+References: <20191023165617.28738-1-stephan@gerhold.net>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191023165617.28738-1-stephan@gerhold.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Wed, Oct 23, 2019 at 06:56:17PM +0200, Stephan Gerhold wrote:
+> The DSI PHY regulator supports two regulator modes: LDO and DCDC.
+> This mode can be selected using the "qcom,dsi-phy-regulator-ldo-mode"
+> device tree property.
+> 
+> However, at the moment only the 20nm PHY driver actually implements
+> that option. Add a check in the 28nm PHY driver to program the
+> registers correctly for LDO mode.
+> 
+> Tested-by: Nikita Travkin <nikitos.tr@gmail.com> # l8150
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 
-[ Upstream commit 3de433c5b38af49a5fc7602721e2ab5d39f1e69c ]
+Thanks for your patch! I've pushed it to msm-next.
 
-[subject was: drm/msm: shake fist angrily at dma-mapping]
+Sean
 
-So, using dma_sync_* for our cache needs works out w/ dma iommu ops, but
-it falls appart with dma direct ops.  The problem is that, depending on
-display generation, we can have either set of dma ops (mdp4 and dpu have
-iommu wired to mdss node, which maps to toplevel drm device, but mdp5
-has iommu wired up to the mdp sub-node within mdss).
+> ---
+> Changes in v2: Move DCDC/LDO code into separate methods
+> v1: https://lore.kernel.org/linux-arm-msm/20191021163425.83697-1-stephan@gerhold.net/
+> 
+> This is needed to make the display work on Longcheer L8150,
+> which has recently gained mainline support in:
+> https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?id=16e8e8072108426029f0c16dff7fbe77fae3df8f
+> 
+> This patch is based on code from the downstream kernel:
+> https://source.codeaurora.org/quic/la/kernel/msm-3.10/tree/drivers/video/msm/mdss/msm_mdss_io_8974.c?h=LA.BR.1.2.9.1-02310-8x16.0#n152
+> 
+> The LDO regulator configuration is taken from msm8916-qrd.dtsi:
+> https://source.codeaurora.org/quic/la/kernel/msm-3.10/tree/arch/arm/boot/dts/qcom/msm8916-qrd.dtsi?h=LA.BR.1.2.9.1-02310-8x16.0#n56
+> ---
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c | 42 +++++++++++++++++-----
+>  1 file changed, 34 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+> index b3f678f6c2aa..b384ea20f359 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+> @@ -39,15 +39,10 @@ static void dsi_28nm_dphy_set_timing(struct msm_dsi_phy *phy,
+>  		DSI_28nm_PHY_TIMING_CTRL_11_TRIG3_CMD(0));
+>  }
+>  
+> -static void dsi_28nm_phy_regulator_ctrl(struct msm_dsi_phy *phy, bool enable)
+> +static void dsi_28nm_phy_regulator_enable_dcdc(struct msm_dsi_phy *phy)
+>  {
+>  	void __iomem *base = phy->reg_base;
+>  
+> -	if (!enable) {
+> -		dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CAL_PWR_CFG, 0);
+> -		return;
+> -	}
+> -
+>  	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_0, 0x0);
+>  	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CAL_PWR_CFG, 1);
+>  	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_5, 0);
+> @@ -56,6 +51,39 @@ static void dsi_28nm_phy_regulator_ctrl(struct msm_dsi_phy *phy, bool enable)
+>  	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_1, 0x9);
+>  	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_0, 0x7);
+>  	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_4, 0x20);
+> +	dsi_phy_write(phy->base + REG_DSI_28nm_PHY_LDO_CNTRL, 0x00);
+> +}
+> +
+> +static void dsi_28nm_phy_regulator_enable_ldo(struct msm_dsi_phy *phy)
+> +{
+> +	void __iomem *base = phy->reg_base;
+> +
+> +	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_0, 0x0);
+> +	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CAL_PWR_CFG, 0);
+> +	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_5, 0x7);
+> +	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_3, 0);
+> +	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_2, 0x1);
+> +	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_1, 0x1);
+> +	dsi_phy_write(base + REG_DSI_28nm_PHY_REGULATOR_CTRL_4, 0x20);
+> +
+> +	if (phy->cfg->type == MSM_DSI_PHY_28NM_LP)
+> +		dsi_phy_write(phy->base + REG_DSI_28nm_PHY_LDO_CNTRL, 0x05);
+> +	else
+> +		dsi_phy_write(phy->base + REG_DSI_28nm_PHY_LDO_CNTRL, 0x0d);
+> +}
+> +
+> +static void dsi_28nm_phy_regulator_ctrl(struct msm_dsi_phy *phy, bool enable)
+> +{
+> +	if (!enable) {
+> +		dsi_phy_write(phy->reg_base +
+> +			      REG_DSI_28nm_PHY_REGULATOR_CAL_PWR_CFG, 0);
+> +		return;
+> +	}
+> +
+> +	if (phy->regulator_ldo_mode)
+> +		dsi_28nm_phy_regulator_enable_ldo(phy);
+> +	else
+> +		dsi_28nm_phy_regulator_enable_dcdc(phy);
+>  }
+>  
+>  static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
+> @@ -77,8 +105,6 @@ static int dsi_28nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
+>  
+>  	dsi_28nm_phy_regulator_ctrl(phy, true);
+>  
+> -	dsi_phy_write(base + REG_DSI_28nm_PHY_LDO_CNTRL, 0x00);
+> -
+>  	dsi_28nm_dphy_set_timing(phy, timing);
+>  
+>  	dsi_phy_write(base + REG_DSI_28nm_PHY_CTRL_1, 0x00);
+> -- 
+> 2.23.0
+> 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
 
-Fixes this splat on mdp5 devices:
-
-   Unable to handle kernel paging request at virtual address ffffffff80000000
-   Mem abort info:
-     ESR = 0x96000144
-     Exception class = DABT (current EL), IL = 32 bits
-     SET = 0, FnV = 0
-     EA = 0, S1PTW = 0
-   Data abort info:
-     ISV = 0, ISS = 0x00000144
-     CM = 1, WnR = 1
-   swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000810e4000
-   [ffffffff80000000] pgd=0000000000000000
-   Internal error: Oops: 96000144 [#1] SMP
-   Modules linked in: btqcomsmd btqca bluetooth cfg80211 ecdh_generic ecc rfkill libarc4 panel_simple msm wcnss_ctrl qrtr_smd drm_kms_helper venus_enc venus_dec videobuf2_dma_sg videobuf2_memops drm venus_core ipv6 qrtr qcom_wcnss_pil v4l2_mem2mem qcom_sysmon videobuf2_v4l2 qmi_helpers videobuf2_common crct10dif_ce mdt_loader qcom_common videodev qcom_glink_smem remoteproc bmc150_accel_i2c bmc150_magn_i2c bmc150_accel_core bmc150_magn snd_soc_lpass_apq8016 snd_soc_msm8916_analog mms114 mc nf_defrag_ipv6 snd_soc_lpass_cpu snd_soc_apq8016_sbc industrialio_triggered_buffer kfifo_buf snd_soc_lpass_platform snd_soc_msm8916_digital drm_panel_orientation_quirks
-   CPU: 2 PID: 33 Comm: kworker/2:1 Not tainted 5.3.0-rc2 #1
-   Hardware name: Samsung Galaxy A5U (EUR) (DT)
-   Workqueue: events deferred_probe_work_func
-   pstate: 80000005 (Nzcv daif -PAN -UAO)
-   pc : __clean_dcache_area_poc+0x20/0x38
-   lr : arch_sync_dma_for_device+0x28/0x30
-   sp : ffff0000115736a0
-   x29: ffff0000115736a0 x28: 0000000000000001
-   x27: ffff800074830800 x26: ffff000011478000
-   x25: 0000000000000000 x24: 0000000000000001
-   x23: ffff000011478a98 x22: ffff800009fd1c10
-   x21: 0000000000000001 x20: ffff800075ad0a00
-   x19: 0000000000000000 x18: ffff0000112b2000
-   x17: 0000000000000000 x16: 0000000000000000
-   x15: 00000000fffffff0 x14: ffff000011455d70
-   x13: 0000000000000000 x12: 0000000000000028
-   x11: 0000000000000001 x10: ffff00001106c000
-   x9 : ffff7e0001d6b380 x8 : 0000000000001000
-   x7 : ffff7e0001d6b380 x6 : ffff7e0001d6b382
-   x5 : 0000000000000000 x4 : 0000000000001000
-   x3 : 000000000000003f x2 : 0000000000000040
-   x1 : ffffffff80001000 x0 : ffffffff80000000
-   Call trace:
-    __clean_dcache_area_poc+0x20/0x38
-    dma_direct_sync_sg_for_device+0xb8/0xe8
-    get_pages+0x22c/0x250 [msm]
-    msm_gem_get_and_pin_iova+0xdc/0x168 [msm]
-    ...
-
-Fixes the combination of two patches:
-
-Fixes: 0036bc73ccbe (drm/msm: stop abusing dma_map/unmap for cache)
-Fixes: 449fa54d6815 (dma-direct: correct the physical addr in dma_direct_sync_sg_for_cpu/device)
-Tested-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-[seanpaul changed subject to something more desriptive]
-Signed-off-by: Sean Paul <seanpaul@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20190730214633.17820-1-robdclark@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/gpu/drm/msm/msm_gem.c | 47 +++++++++++++++++++++++++++++++----
- 1 file changed, 42 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index a472d4d902dde..569e8c45a59aa 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -40,6 +40,46 @@ static bool use_pages(struct drm_gem_object *obj)
- 	return !msm_obj->vram_node;
- }
- 
-+/*
-+ * Cache sync.. this is a bit over-complicated, to fit dma-mapping
-+ * API.  Really GPU cache is out of scope here (handled on cmdstream)
-+ * and all we need to do is invalidate newly allocated pages before
-+ * mapping to CPU as uncached/writecombine.
-+ *
-+ * On top of this, we have the added headache, that depending on
-+ * display generation, the display's iommu may be wired up to either
-+ * the toplevel drm device (mdss), or to the mdp sub-node, meaning
-+ * that here we either have dma-direct or iommu ops.
-+ *
-+ * Let this be a cautionary tail of abstraction gone wrong.
-+ */
-+
-+static void sync_for_device(struct msm_gem_object *msm_obj)
-+{
-+	struct device *dev = msm_obj->base.dev->dev;
-+
-+	if (get_dma_ops(dev)) {
-+		dma_sync_sg_for_device(dev, msm_obj->sgt->sgl,
-+			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-+	} else {
-+		dma_map_sg(dev, msm_obj->sgt->sgl,
-+			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-+	}
-+}
-+
-+static void sync_for_cpu(struct msm_gem_object *msm_obj)
-+{
-+	struct device *dev = msm_obj->base.dev->dev;
-+
-+	if (get_dma_ops(dev)) {
-+		dma_sync_sg_for_cpu(dev, msm_obj->sgt->sgl,
-+			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-+	} else {
-+		dma_unmap_sg(dev, msm_obj->sgt->sgl,
-+			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-+	}
-+}
-+
- /* allocate pages from VRAM carveout, used when no IOMMU: */
- static struct page **get_pages_vram(struct drm_gem_object *obj,
- 		int npages)
-@@ -106,8 +146,7 @@ static struct page **get_pages(struct drm_gem_object *obj)
- 		 * because display controller, GPU, etc. are not coherent:
- 		 */
- 		if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
--			dma_sync_sg_for_device(dev->dev, msm_obj->sgt->sgl,
--					msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-+			sync_for_device(msm_obj);
- 	}
- 
- 	return msm_obj->pages;
-@@ -124,9 +163,7 @@ static void put_pages(struct drm_gem_object *obj)
- 			 * GPU, etc. are not coherent:
- 			 */
- 			if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
--				dma_sync_sg_for_cpu(obj->dev->dev, msm_obj->sgt->sgl,
--					     msm_obj->sgt->nents,
--					     DMA_BIDIRECTIONAL);
-+				sync_for_cpu(msm_obj);
- 
- 			sg_free_table(msm_obj->sgt);
- 			kfree(msm_obj->sgt);
 -- 
-2.20.1
-
+Sean Paul, Software Engineer, Google / Chromium OS
