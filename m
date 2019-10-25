@@ -2,139 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C3F5E44EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2019 09:55:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EE03E45B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2019 10:29:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437346AbfJYHzC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Oct 2019 03:55:02 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:58910 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727275AbfJYHzB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Oct 2019 03:55:01 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 66C8E60ECE; Fri, 25 Oct 2019 07:55:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571990100;
-        bh=U54r6LX0ssw+g8qjLKGHh1Yhi6Sj5o6iNs4ZAFLlmsk=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=PDyWp4DptCJ+c2ap2wzUz4fI0KeRZqy5pI23Xk5JUlPJrP1QjMto/IkhLFCBYatQe
-         w9j1qNCE8sTG1O267wV5k2aanJoSlQU6HvzIQmHDNe9rQ+lH/frXDVib9Vu+vmO2Lj
-         1ouHOhcYxMX8lur/8QIqJ/XkYdMk5DsdOufE5n3g=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 6AE8A60B19;
-        Fri, 25 Oct 2019 07:54:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1571990099;
-        bh=U54r6LX0ssw+g8qjLKGHh1Yhi6Sj5o6iNs4ZAFLlmsk=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=Auk8BWFrXU39kNQrasYkgigZIAjmQlNoLTm9OhiHh7ON9HRrMXwVZ1zo2+kF7gOH7
-         vmyStNYQg1UbT+vi7H36qwXpW0br4wfITh06/G/y9JqQU8CcKvhLcp0cSQ+TPcZRnr
-         AJc8dDV5IDC7u9vk4EFjf92fgq9TpZOBwHpCyQSo=
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 25 Oct 2019 13:24:59 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        id S2405949AbfJYI3D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Oct 2019 04:29:03 -0400
+Received: from foss.arm.com ([217.140.110.172]:36742 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2389290AbfJYI3D (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 25 Oct 2019 04:29:03 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 998A328;
+        Fri, 25 Oct 2019 01:29:02 -0700 (PDT)
+Received: from e121166-lin.cambridge.arm.com (e121166-lin.cambridge.arm.com [10.1.196.255])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CC5DB3F718;
+        Fri, 25 Oct 2019 01:29:00 -0700 (PDT)
+Date:   Fri, 25 Oct 2019 09:28:53 +0100
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCHv2 0/3] Add LLCC support for SC7180 SoC
-In-Reply-To: <CAL_Jsq+5p7gQzDfGipNFr1ry-Pc3pDJpcXnAqdX9eo0HLETATQ@mail.gmail.com>
-References: <cover.1571484439.git.saiprakash.ranjan@codeaurora.org>
- <20191021033220.GG4500@tuxbook-pro>
- <CAL_JsqLzRRQe8UZCxgXArVNhNry7PgMCthAR2aZNcm6CCEpvDA@mail.gmail.com>
- <2fbab8bc38be37fba976d34b2f89e720@codeaurora.org>
- <CAL_Jsq+5p7gQzDfGipNFr1ry-Pc3pDJpcXnAqdX9eo0HLETATQ@mail.gmail.com>
-Message-ID: <81f57dc623fe8705cea52b5cb2612b32@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+        Lina Iyer <ilina@codeaurora.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH 12/13] cpuidle: psci: Manage runtime PM in the idle path
+Message-ID: <20191025082852.GA4867@e121166-lin.cambridge.arm.com>
+References: <20191010113937.15962-1-ulf.hansson@linaro.org>
+ <20191010113937.15962-13-ulf.hansson@linaro.org>
+ <20191024163257.GC22036@bogus>
+ <CAPDyKFpwrfHj-az5x5dW92VAxi887FgWW6GKhfPv_kuj14TDjQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFpwrfHj-az5x5dW92VAxi887FgWW6GKhfPv_kuj14TDjQ@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-10-25 04:03, Rob Herring wrote:
-> On Thu, Oct 24, 2019 at 6:00 AM Sai Prakash Ranjan
-> <saiprakash.ranjan@codeaurora.org> wrote:
->> 
->> Hi Rob,
->> 
->> On 2019-10-24 01:19, Rob Herring wrote:
->> > On Sun, Oct 20, 2019 at 10:32 PM Bjorn Andersson
->> > <bjorn.andersson@linaro.org> wrote:
->> >>
->> >> On Sat 19 Oct 04:37 PDT 2019, Sai Prakash Ranjan wrote:
->> >>
->> >> > LLCC behaviour is controlled by the configuration data set
->> >> > in the llcc-qcom driver, add the same for SC7180 SoC.
->> >> > Also convert the existing bindings to json-schema and add
->> >> > the compatible for SC7180 SoC.
->> >> >
->> >>
->> >> Thanks for the patches and thanks for the review Stephen. Series
->> >> applied
->> >
->> > And they break dt_binding_check. Please fix.
->> >
->> 
->> I did check this and think that the error log from dt_binding_check is
->> not valid because it says cache-level is a required property [1], but
->> there is no such property in LLCC bindings.
+On Thu, Oct 24, 2019 at 07:00:38PM +0200, Ulf Hansson wrote:
+> On Thu, 24 Oct 2019 at 18:33, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> >
+> > On Thu, Oct 10, 2019 at 01:39:36PM +0200, Ulf Hansson wrote:
+> > > In case we have succeeded to attach a CPU to its PM domain, let's deploy
+> > > runtime PM support for the corresponding attached device, to allow the CPU
+> > > to be powered-managed accordingly.
+> > >
+> > > To set the triggering point for when runtime PM reference counting should
+> > > be done, let's store the index of deepest idle state for the CPU in the per
+> > > CPU struct. Then use this index to compare the selected idle state index
+> > > when entering idle, as to understand whether runtime PM reference counting
+> > > is needed or not.
+> > >
+> > > Note that, from the hierarchical point view, there may be good reasons to
+> > > do runtime PM reference counting even on shallower idle states, but at this
+> > > point this isn't supported, mainly due to limitations set by the generic PM
+> > > domain.
+> > >
+> > > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> > > ---
+> > >  drivers/cpuidle/cpuidle-psci.c | 21 +++++++++++++++++++--
+> > >  1 file changed, 19 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/drivers/cpuidle/cpuidle-psci.c b/drivers/cpuidle/cpuidle-psci.c
+> > > index 1510422c7a53..0919b40c1a85 100644
+> > > --- a/drivers/cpuidle/cpuidle-psci.c
+> > > +++ b/drivers/cpuidle/cpuidle-psci.c
+> > > @@ -16,6 +16,7 @@
+> > >  #include <linux/of.h>
+> > >  #include <linux/of_device.h>
+> > >  #include <linux/psci.h>
+> > > +#include <linux/pm_runtime.h>
+> > >  #include <linux/slab.h>
+> > >
+> > >  #include <asm/cpuidle.h>
+> > > @@ -25,6 +26,7 @@
+> > >
+> > >  struct psci_cpuidle_data {
+> > >       u32 *psci_states;
+> > > +     u32 rpm_state_id;
+> > >       struct device *dev;
+> > >  };
+> > >
+> > > @@ -50,14 +52,28 @@ static int psci_enter_idle_state(struct cpuidle_device *dev,
+> > >                               struct cpuidle_driver *drv, int idx)
+> > >  {
+> > >       int ret;
+> > > -     u32 *states = __this_cpu_read(psci_cpuidle_data.psci_states);
+> > > -     u32 state = psci_get_domain_state();
+> > > +     struct psci_cpuidle_data *data = this_cpu_ptr(&psci_cpuidle_data);
+> > > +     u32 *states = data->psci_states;
+> > > +     struct device *pd_dev = data->dev;
+> > > +     bool runtime_pm = (pd_dev && data->rpm_state_id == idx);
+> > > +     u32 state;
+> >
+> > Wonder if we can have separate psci_enter_idle_state for OSI mode so
+> > that all these runtime extra check can be reduced ? It will also make
+> > sure there's no additional latency for PC mode because of OSI.
 > 
-> Then you should point out the issue and not just submit stuff ignoring
-> it. It has to be resolved one way or another.
+> Good idea, that's the plan. See previous answer.
 > 
+> Perhaps if I add a patch on top, implementing your suggestion, would
+> you be happy with that?
 
-I did not ignore it. When I ran the dt-binding check locally, it did not
-error out and just passed on [1] and it was my bad that I did not check
-the entire build logs to see if llcc dt binding check had some warning 
-or
-not. But this is the usual case where most of us don't look at the 
-entire
-build logs to check if there is a warning or not. We notice if there is 
-an
-immediate exit/fail in case of some warning/error. So it would be good 
-if
-we fail the dt-binding check build if there is some warning/error or 
-atleast
-provide some option to strict build to fail on warning, maybe there is 
-already
-a flag to do this?
+Separating idle entry functions was the main idea behind moving PSCI
+CPUidle into drivers/cpuidle, I don't think that's complicated to
+change and given that the series is not queued yet we can make these
+changes in the series itself rather than on top.
 
-After submitting the patch, I noticed this build failure on
-patchwork.ozlabs.org and was waiting for your reply.
-
-[1] https://paste.ubuntu.com/p/jNK8yfVkMG/
-
-> If you refer to the DT spec[1], cache-level is required. The schema is
-> just enforcing that now. It's keying off the node name of
-> 'cache-controller'.
-> 
-
-This is not L2 or L3 cache, this is a system cache (last level cache) 
-shared by
-clients other than just CPU. So I don't know how do we specify 
-cache-level for
-this, let me know if you have some pointers.
-
--Sai
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Thanks,
+Lorenzo
