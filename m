@@ -2,151 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D7C8BE4EAE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2019 16:13:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 46C1AE549D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2019 21:47:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390715AbfJYONn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Oct 2019 10:13:43 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:38194 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727367AbfJYONm (ORCPT
+        id S1727553AbfJYTrd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Oct 2019 15:47:33 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:43397 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727493AbfJYTrd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Oct 2019 10:13:42 -0400
-Received: by mail-vs1-f67.google.com with SMTP id b123so1541735vsb.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2019 07:13:42 -0700 (PDT)
+        Fri, 25 Oct 2019 15:47:33 -0400
+Received: by mail-pg1-f196.google.com with SMTP id l24so2186372pgh.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Oct 2019 12:47:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uN8HSzjVWYgOa/f9HwJLZghBIB5LPa4au9Qp6QOM0oM=;
-        b=bYS+y1MXgMPSuAWl/Pw+O36xYjUIvDi9LmeppA4i16Ap9cInMC5v97zMSThnwOwkjG
-         G2R98nKwmRhuQLaCxO9vrs2HbOTFJZHZpG7DrkUY3bH1pCHq/QbLn8lTKAwuLAgCKShc
-         4ivCigJgcaIc1cTw4U/fd2FuRFK4kkU/nc6vWFttfGBxZtbBCdROsKcqDLrzGKbpvrUs
-         77BYTPAlKpSIq/S808KRqib4oAz/cBtdSKIcr7wgp8/wJsiyzd1lZzk80W3RkhDiLuxF
-         LFZwMV9dUXwKr9wD+9Im/C7HqsbimiepPkPgw5VR/iu5I87i7i4eo83eDqHqOUSvCQPR
-         5bYA==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ATnBH+fO0d5E9Wqzzop3u/f1RSiDw9WOqJk8YOk0Z1k=;
+        b=OYLGm1XBbcR3zvW7QsuaUyvVFB/8ILldOsqj73bWK/5SfxXveRwd2hAtJeeKAr2U97
+         cKmZQZ2JX9MsrOF6zRB6TUaxs4bq4Wb1h7JjBoCGodVfKxxYcAZfnTCjLuHkIZd1VIM5
+         Iaj6OmGmBNPPjVXWoGoNIzA60tQuRhEhkPUhA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uN8HSzjVWYgOa/f9HwJLZghBIB5LPa4au9Qp6QOM0oM=;
-        b=oK2iOWx1NQaopHQEXT2BJvxe2VhL/XaWp7mePQEiixSoSYmG9au42E1X2leMjt8BKz
-         p8F7tJhG1I3wUUXOQfCZcTHb1dNSlSC7owI1+IzzmQkafc+YEXmVs0g0nsukkxJs+nJ5
-         tYEUYjOM5g23DfiKt3jsnunNNgqZHYO2v0cbK86WQOUz4ewwzyb1H68RbwwqQak3XMrI
-         6rPJEJJhN2nDODRBJ9cy3VQVcPv87WaESkw6PEWreNmLBmlzTlOamfa954S1Prg9oZ7I
-         hQzu5B03QWljF/PmkfYez+UmhThfCvB+DqVpBSqY15ur0gjgpTEdg5hCvEhpByYaj24D
-         37fw==
-X-Gm-Message-State: APjAAAV1Z6AQggWnkLIobUpRzKAZviYPtLUmHnvmQnVdEaVT7scEuk11
-        Q4APseHpWpCkYLBVR1c9elbv6g170sunUOOmILKBEA==
-X-Google-Smtp-Source: APXvYqwYv7TgejqODhekRI9dDIIRnGtrb3/+jOe+VBk6FoXTRU0DV374nPjN0wfCLfVDZUOhMqwIhHhSA35PTnmR0zY=
-X-Received: by 2002:a67:7ac5:: with SMTP id v188mr2030243vsc.191.1572012821656;
- Fri, 25 Oct 2019 07:13:41 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ATnBH+fO0d5E9Wqzzop3u/f1RSiDw9WOqJk8YOk0Z1k=;
+        b=tIZoORZOvVBM/P3xadPHDI2Vi94/9vOtqNxXpVYOiNXuwWlUR1wDhaasB4yWoExPPO
+         WuTT8QUg0I7T8RFcNpf3a4PJecvtm35FcM6IhY2GZ2izD6qpUEVJX1SbNTx4BHUf/JYC
+         O3eUFK/49aoGieoP4E9disKXHxeNKhj9rFF/k5mfxeC7rKdz/AQQ2Zwh+OZU53NcYyhR
+         M75z6rh3PGki9v6u4OpHvxvxFTk/SGVIVL4tCEORgpwP465KwJsS0968vefi0CJPYCJ1
+         BwTRUUp4YWQ5ZP0+s52vwgdRTR72dCbtWsSCl4qepbF0XDvAtow/VwUv10FpUWJj9izS
+         H+bQ==
+X-Gm-Message-State: APjAAAV7jJJVUNAdMDPgp5UsVp6Ylhbhu3X5wq+2W5+yv0EL08/bqWmF
+        xp7QUqp3gtKdTTocnXNoUa5Xog==
+X-Google-Smtp-Source: APXvYqwkKVw1bAAQBUi8yqP1MVOYlX5JePdNh+IRgQ/w6eYv3qmLpuUqAW7yQ1Cci4uJUYPWLV5LyA==
+X-Received: by 2002:a63:3003:: with SMTP id w3mr6655849pgw.364.1572032852353;
+        Fri, 25 Oct 2019 12:47:32 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id 16sm3500789pfn.35.2019.10.25.12.47.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Oct 2019 12:47:31 -0700 (PDT)
+Date:   Fri, 25 Oct 2019 12:47:30 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Maulik Shah <mkshah@codeaurora.org>
+Subject: Re: [PATCH v3 11/11] arm64: dts: qcom: sc7180: Add pdc interrupt
+ controller
+Message-ID: <20191025194730.GM20212@google.com>
+References: <20191023090219.15603-1-rnayak@codeaurora.org>
+ <20191023090219.15603-12-rnayak@codeaurora.org>
 MIME-Version: 1.0
-References: <20191010113937.15962-1-ulf.hansson@linaro.org>
- <20191010113937.15962-13-ulf.hansson@linaro.org> <20191024163257.GC22036@bogus>
- <CAPDyKFpwrfHj-az5x5dW92VAxi887FgWW6GKhfPv_kuj14TDjQ@mail.gmail.com> <20191025082852.GA4867@e121166-lin.cambridge.arm.com>
-In-Reply-To: <20191025082852.GA4867@e121166-lin.cambridge.arm.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 25 Oct 2019 16:13:05 +0200
-Message-ID: <CAPDyKFqpSa6kudba-ezt07fDR=0d216KqYOTcW+5QPVa_DMrKA@mail.gmail.com>
-Subject: Re: [PATCH 12/13] cpuidle: psci: Manage runtime PM in the idle path
-To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     Sudeep Holla <sudeep.holla@arm.com>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191023090219.15603-12-rnayak@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 25 Oct 2019 at 10:29, Lorenzo Pieralisi
-<lorenzo.pieralisi@arm.com> wrote:
->
-> On Thu, Oct 24, 2019 at 07:00:38PM +0200, Ulf Hansson wrote:
-> > On Thu, 24 Oct 2019 at 18:33, Sudeep Holla <sudeep.holla@arm.com> wrote:
-> > >
-> > > On Thu, Oct 10, 2019 at 01:39:36PM +0200, Ulf Hansson wrote:
-> > > > In case we have succeeded to attach a CPU to its PM domain, let's deploy
-> > > > runtime PM support for the corresponding attached device, to allow the CPU
-> > > > to be powered-managed accordingly.
-> > > >
-> > > > To set the triggering point for when runtime PM reference counting should
-> > > > be done, let's store the index of deepest idle state for the CPU in the per
-> > > > CPU struct. Then use this index to compare the selected idle state index
-> > > > when entering idle, as to understand whether runtime PM reference counting
-> > > > is needed or not.
-> > > >
-> > > > Note that, from the hierarchical point view, there may be good reasons to
-> > > > do runtime PM reference counting even on shallower idle states, but at this
-> > > > point this isn't supported, mainly due to limitations set by the generic PM
-> > > > domain.
-> > > >
-> > > > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> > > > ---
-> > > >  drivers/cpuidle/cpuidle-psci.c | 21 +++++++++++++++++++--
-> > > >  1 file changed, 19 insertions(+), 2 deletions(-)
-> > > >
-> > > > diff --git a/drivers/cpuidle/cpuidle-psci.c b/drivers/cpuidle/cpuidle-psci.c
-> > > > index 1510422c7a53..0919b40c1a85 100644
-> > > > --- a/drivers/cpuidle/cpuidle-psci.c
-> > > > +++ b/drivers/cpuidle/cpuidle-psci.c
-> > > > @@ -16,6 +16,7 @@
-> > > >  #include <linux/of.h>
-> > > >  #include <linux/of_device.h>
-> > > >  #include <linux/psci.h>
-> > > > +#include <linux/pm_runtime.h>
-> > > >  #include <linux/slab.h>
-> > > >
-> > > >  #include <asm/cpuidle.h>
-> > > > @@ -25,6 +26,7 @@
-> > > >
-> > > >  struct psci_cpuidle_data {
-> > > >       u32 *psci_states;
-> > > > +     u32 rpm_state_id;
-> > > >       struct device *dev;
-> > > >  };
-> > > >
-> > > > @@ -50,14 +52,28 @@ static int psci_enter_idle_state(struct cpuidle_device *dev,
-> > > >                               struct cpuidle_driver *drv, int idx)
-> > > >  {
-> > > >       int ret;
-> > > > -     u32 *states = __this_cpu_read(psci_cpuidle_data.psci_states);
-> > > > -     u32 state = psci_get_domain_state();
-> > > > +     struct psci_cpuidle_data *data = this_cpu_ptr(&psci_cpuidle_data);
-> > > > +     u32 *states = data->psci_states;
-> > > > +     struct device *pd_dev = data->dev;
-> > > > +     bool runtime_pm = (pd_dev && data->rpm_state_id == idx);
-> > > > +     u32 state;
-> > >
-> > > Wonder if we can have separate psci_enter_idle_state for OSI mode so
-> > > that all these runtime extra check can be reduced ? It will also make
-> > > sure there's no additional latency for PC mode because of OSI.
-> >
-> > Good idea, that's the plan. See previous answer.
-> >
-> > Perhaps if I add a patch on top, implementing your suggestion, would
-> > you be happy with that?
->
-> Separating idle entry functions was the main idea behind moving PSCI
-> CPUidle into drivers/cpuidle, I don't think that's complicated to
-> change and given that the series is not queued yet we can make these
-> changes in the series itself rather than on top.
+Hi Rajendra/Maulik,
 
-Okay, no problem. I fold in a patch (or amend existing ones, if that
-is better) into the series that addresses this.
+On Wed, Oct 23, 2019 at 02:32:19PM +0530, Rajendra Nayak wrote:
+> From: Maulik Shah <mkshah@codeaurora.org>
+> 
+> Add pdc interrupt controller for sc7180
+> 
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+> v3:
+> Used the qcom,sdm845-pdc compatible for pdc node
+> 
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index f2981ada578f..07ea393c2b5f 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -184,6 +184,16 @@
+>  			#power-domain-cells = <1>;
+>  		};
+>  
+> +		pdc: interrupt-controller@b220000 {
 
-Thanks for reviewing and enjoy your weekend!
-
-Kind regards
-Uffe
+Aren't the nodes supposed to be ordered by address as for SDM845?
+If so this node should be added after 'qupv3_id_1: geniqup@ac0000',
+not before.
