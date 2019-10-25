@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F412EE4DCD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2019 16:03:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AB2BE4DA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2019 16:02:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395035AbfJYOCn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Oct 2019 10:02:43 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52412 "EHLO mail.kernel.org"
+        id S2403927AbfJYN6U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Oct 2019 09:58:20 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53516 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2505344AbfJYN5e (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Oct 2019 09:57:34 -0400
+        id S1732654AbfJYN6S (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 25 Oct 2019 09:58:18 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 35487222C2;
-        Fri, 25 Oct 2019 13:57:32 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EFAB7222CD;
+        Fri, 25 Oct 2019 13:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1572011853;
-        bh=LjaXfOzXjbGolgL5lavCG74WEHxzKaRoSBWdDKMWtVk=;
+        s=default; t=1572011896;
+        bh=iBDissv+RAFwCtToVRjoa9uFXuIcswIIMG6AChOrBYg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=0ih27qVApl+ccaZv/TklXD0Uk0csf2d1FPpVoTbPLXw6hn4JlGLSHOWjk+L/9ybmS
-         KIfInF3ulY6s6oSKB4l/NndSHqubd3Yb0AVt9OwY+OxIZejYokCEhExL7jOay3CXCN
-         jhOa6erAmybIbAudFHgcnTEe7Fa00w8SWF82s8+8=
+        b=jWcwYswdRTKyDUCIkheulVQKAdujauAFH3DEluDyxVaNWsCISfGAZkg/OKfn6j28d
+         rQf/bFcQETsaUXy8TDa5krPKlSWrstQPJOEfpvCnvULZts88tSwcdx8ZAhHN3Sp+LB
+         0FfJxxSH7ErvU27FWqlPOawzO0Vfs4hUlDuUtpkY=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Rob Clark <robdclark@chromium.org>,
@@ -30,12 +30,12 @@ Cc:     Rob Clark <robdclark@chromium.org>,
         Sean Paul <seanpaul@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.14 11/25] drm/msm: Use the correct dma_sync calls in msm_gem
-Date:   Fri, 25 Oct 2019 09:56:59 -0400
-Message-Id: <20191025135715.25468-11-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 08/20] drm/msm: Use the correct dma_sync calls in msm_gem
+Date:   Fri, 25 Oct 2019 09:57:48 -0400
+Message-Id: <20191025135801.25739-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191025135715.25468-1-sashal@kernel.org>
-References: <20191025135715.25468-1-sashal@kernel.org>
+In-Reply-To: <20191025135801.25739-1-sashal@kernel.org>
+References: <20191025135801.25739-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -116,10 +116,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 42 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 3a91ccd92c473..300c4624aa6c0 100644
+index a472d4d902dde..569e8c45a59aa 100644
 --- a/drivers/gpu/drm/msm/msm_gem.c
 +++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -43,6 +43,46 @@ static bool use_pages(struct drm_gem_object *obj)
+@@ -40,6 +40,46 @@ static bool use_pages(struct drm_gem_object *obj)
  	return !msm_obj->vram_node;
  }
  
@@ -164,9 +164,9 @@ index 3a91ccd92c473..300c4624aa6c0 100644
 +}
 +
  /* allocate pages from VRAM carveout, used when no IOMMU: */
- static struct page **get_pages_vram(struct drm_gem_object *obj, int npages)
- {
-@@ -108,8 +148,7 @@ static struct page **get_pages(struct drm_gem_object *obj)
+ static struct page **get_pages_vram(struct drm_gem_object *obj,
+ 		int npages)
+@@ -106,8 +146,7 @@ static struct page **get_pages(struct drm_gem_object *obj)
  		 * because display controller, GPU, etc. are not coherent:
  		 */
  		if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
@@ -176,7 +176,7 @@ index 3a91ccd92c473..300c4624aa6c0 100644
  	}
  
  	return msm_obj->pages;
-@@ -138,9 +177,7 @@ static void put_pages(struct drm_gem_object *obj)
+@@ -124,9 +163,7 @@ static void put_pages(struct drm_gem_object *obj)
  			 * GPU, etc. are not coherent:
  			 */
  			if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
