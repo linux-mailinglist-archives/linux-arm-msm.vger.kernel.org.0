@@ -2,71 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E18D2E55DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Oct 2019 23:31:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54236E5C46
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Oct 2019 15:29:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725955AbfJYVbk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Oct 2019 17:31:40 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:42771 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725811AbfJYVbj (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Oct 2019 17:31:39 -0400
-Received: by mail-oi1-f195.google.com with SMTP id i185so2542070oif.9;
-        Fri, 25 Oct 2019 14:31:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=GkCrIPby4aIl+m+VPmyhAnO6PjCV+Xrq1KJMKAegWqI=;
-        b=psZnkn5w8MHE3c1T1wyyN5peZtEmQUk975lQV8Uek/rhRALHfXA/AACsNxRu6c+ACo
-         qhwGALcO/XzjseZsgaLdKRGXbtSk30VzhMa3utIiRxZGC2IJE+DntImPgiJyKJGMRz+B
-         nDN627zy+0PexW0z2X0cE3Zj1PxDF9GgdUf7gl92sNnyUwqeBSb1sH8ZncN5fTBYydqN
-         RZ10PAbKzDW4VX7C3zOM2Tt/SrWVOCfhABheYWwx/kDUSJ3BvAFav7BrzldMPfE1ZHZU
-         5vgk+SXWd0q95B5y66QsIIFtTEzp24PrllpzmlQi8oEkD+BHKN8rigV31cZb21MGrcsz
-         m6Og==
-X-Gm-Message-State: APjAAAWxymVMjmyszNgoWvxEJAUTc1L5kcvg9vXHOjTLEHsy0Q9/6btl
-        n1o1KHlu1KVpsZZrPaAAjw==
-X-Google-Smtp-Source: APXvYqz/XgD4tQoCZ5nNSQAsYeC3a+Y49GcWQhGf16miNmKKHKk5cagof0/c9/ZiG/MsIyHkEHRODA==
-X-Received: by 2002:aca:5714:: with SMTP id l20mr4645087oib.175.1572039098759;
-        Fri, 25 Oct 2019 14:31:38 -0700 (PDT)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id w13sm892687oih.54.2019.10.25.14.31.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Oct 2019 14:31:37 -0700 (PDT)
-Date:   Fri, 25 Oct 2019 16:31:37 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v2 12/13] dt-bindings: qcom,pdc: Add compatible for sc7180
-Message-ID: <20191025213137.GA20004@bogus>
-References: <20191021065522.24511-1-rnayak@codeaurora.org>
- <20191021065522.24511-13-rnayak@codeaurora.org>
+        id S1728638AbfJZN32 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Oct 2019 09:29:28 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42190 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728630AbfJZNU2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 26 Oct 2019 09:20:28 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9216B206DD;
+        Sat, 26 Oct 2019 13:20:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1572096027;
+        bh=WuRajSslgg9FwxSUgUQ7vxI+yxTOYwbR9hLen+p2fYo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=NfGfrEbIdy2lyslzfgGSkit19MtbDTQnrGViywK8HQJ6dEl97E1gl6tuYABFgMokM
+         xqUxCwRNLLadtwWo6ZIaHcX0E+tbOA1LlM2/ECSXCzkQM1MlZiUElIb15pg7kJunUG
+         PXLzLQ+Q3UiXZevuCfUaRfYhexj6RtMJt50PVlw0=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Hai Li <hali@codeaurora.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, Sean Paul <seanpaul@chromium.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 4.19 38/59] drm/msm/dsi: Implement reset correctly
+Date:   Sat, 26 Oct 2019 09:18:49 -0400
+Message-Id: <20191026131910.3435-38-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20191026131910.3435-1-sashal@kernel.org>
+References: <20191026131910.3435-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191021065522.24511-13-rnayak@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 21 Oct 2019 12:25:21 +0530, Rajendra Nayak wrote:
-> Add the compatible string for sc7180 SoC from Qualcomm.
-> 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> Cc: Lina Iyer <ilina@codeaurora.org>
-> Cc: Marc Zyngier <maz@kernel.org>
-> ---
-> v2: No change
-> 
->  .../devicetree/bindings/interrupt-controller/qcom,pdc.txt        | 1 +
->  1 file changed, 1 insertion(+)
-> 
+From: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
-Acked-by: Rob Herring <robh@kernel.org>
+[ Upstream commit 78e31c42261779a01bc73472d0f65f15378e9de3 ]
+
+On msm8998, vblank timeouts are observed because the DSI controller is not
+reset properly, which ends up stalling the MDP.  This is because the reset
+logic is not correct per the hardware documentation.
+
+The documentation states that after asserting reset, software should wait
+some time (no indication of how long), or poll the status register until it
+returns 0 before deasserting reset.
+
+wmb() is insufficient for this purpose since it just ensures ordering, not
+timing between writes.  Since asserting and deasserting reset occurs on the
+same register, ordering is already guaranteed by the architecture, making
+the wmb extraneous.
+
+Since we would define a timeout for polling the status register to avoid a
+possible infinite loop, lets just use a static delay of 20 ms, since 16.666
+ms is the time available to process one frame at 60 fps.
+
+Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
+Cc: Hai Li <hali@codeaurora.org>
+Cc: Rob Clark <robdclark@gmail.com>
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Reviewed-by: Sean Paul <sean@poorly.run>
+[seanpaul renamed RESET_DELAY to DSI_RESET_TOGGLE_DELAY_MS]
+Signed-off-by: Sean Paul <seanpaul@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20191011133939.16551-1-jeffrey.l.hugo@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index cc4ea5502d6c3..3b78bca0bb4d4 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -34,6 +34,8 @@
+ #include "dsi_cfg.h"
+ #include "msm_kms.h"
+ 
++#define DSI_RESET_TOGGLE_DELAY_MS 20
++
+ static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
+ {
+ 	u32 ver;
+@@ -994,7 +996,7 @@ static void dsi_sw_reset(struct msm_dsi_host *msm_host)
+ 	wmb(); /* clocks need to be enabled before reset */
+ 
+ 	dsi_write(msm_host, REG_DSI_RESET, 1);
+-	wmb(); /* make sure reset happen */
++	msleep(DSI_RESET_TOGGLE_DELAY_MS); /* make sure reset happen */
+ 	dsi_write(msm_host, REG_DSI_RESET, 0);
+ }
+ 
+@@ -1402,7 +1404,7 @@ static void dsi_sw_reset_restore(struct msm_dsi_host *msm_host)
+ 
+ 	/* dsi controller can only be reset while clocks are running */
+ 	dsi_write(msm_host, REG_DSI_RESET, 1);
+-	wmb();	/* make sure reset happen */
++	msleep(DSI_RESET_TOGGLE_DELAY_MS); /* make sure reset happen */
+ 	dsi_write(msm_host, REG_DSI_RESET, 0);
+ 	wmb();	/* controller out of reset */
+ 	dsi_write(msm_host, REG_DSI_CTRL, data0);
+-- 
+2.20.1
+
