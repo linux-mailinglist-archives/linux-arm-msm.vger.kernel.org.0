@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 35DB9E5B95
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Oct 2019 15:24:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0A8AE5CEF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Oct 2019 15:34:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726825AbfJZNYQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Oct 2019 09:24:16 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45218 "EHLO mail.kernel.org"
+        id S1727526AbfJZNRu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Oct 2019 09:17:50 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39348 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729792AbfJZNX1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Oct 2019 09:23:27 -0400
+        id S1727493AbfJZNRr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 26 Oct 2019 09:17:47 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 585BF2070B;
-        Sat, 26 Oct 2019 13:23:25 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 23A232070B;
+        Sat, 26 Oct 2019 13:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1572096206;
-        bh=3FfHFvlKqbufPIlxQrPOqxE8ndyp//Hc9cm6l61ka98=;
+        s=default; t=1572095866;
+        bh=4Q6Ko7KzkA22US3mKOU7UVZSyYqiqehg/AE2ijSjXi8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=VehVMDUDV3CS4Vr6L8m+u/u+KbMJ/9hHtGX7beDYutiBcxndVhZGvJ2s1GC4/hynU
-         q4L1eaUVEz4Xx2mILvx4b3B8o6Ck2kDbIGOsTdc+Ov/j52u9E5Dknf3Ecqp0sJV/wM
-         1GFFIAKYHMVTMzcIDIrU6hJL6n9UT0cFp6SkF46Y=
+        b=WWkraSSqYjzH88aBDmKSY1+kxVgPUEB32pQiftel9VCQN0bNaTQ8rMBPGqbir9VQm
+         llWBX3E4r7fEy5A+PtYTpJVcjBPyuhMm6gAEbw1ZUKM7569am24mEv03PmPzYONyeh
+         0rZLZQCUwsoh5BQ7an8kKAumjl3WxyJqHbaqtC8U=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
@@ -30,12 +30,12 @@ Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
         Sean Paul <sean@poorly.run>, Sean Paul <seanpaul@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.4 10/17] drm/msm/dsi: Implement reset correctly
-Date:   Sat, 26 Oct 2019 09:22:54 -0400
-Message-Id: <20191026132302.4622-10-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.3 56/99] drm/msm/dsi: Implement reset correctly
+Date:   Sat, 26 Oct 2019 09:15:17 -0400
+Message-Id: <20191026131600.2507-56-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191026132302.4622-1-sashal@kernel.org>
-References: <20191026132302.4622-1-sashal@kernel.org>
+In-Reply-To: <20191026131600.2507-1-sashal@kernel.org>
+References: <20191026131600.2507-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -80,19 +80,19 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 4c49868efcda2..12ddbbb531077 100644
+index 02acb4338721a..a53632e6c8500 100644
 --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
 +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -30,6 +30,8 @@
- #include "dsi.xml.h"
+@@ -26,6 +26,8 @@
  #include "dsi_cfg.h"
+ #include "msm_kms.h"
  
 +#define DSI_RESET_TOGGLE_DELAY_MS 20
 +
  static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
  {
  	u32 ver;
-@@ -764,7 +766,7 @@ static void dsi_sw_reset(struct msm_dsi_host *msm_host)
+@@ -986,7 +988,7 @@ static void dsi_sw_reset(struct msm_dsi_host *msm_host)
  	wmb(); /* clocks need to be enabled before reset */
  
  	dsi_write(msm_host, REG_DSI_RESET, 1);
@@ -101,7 +101,7 @@ index 4c49868efcda2..12ddbbb531077 100644
  	dsi_write(msm_host, REG_DSI_RESET, 0);
  }
  
-@@ -1111,7 +1113,7 @@ static void dsi_sw_reset_restore(struct msm_dsi_host *msm_host)
+@@ -1396,7 +1398,7 @@ static void dsi_sw_reset_restore(struct msm_dsi_host *msm_host)
  
  	/* dsi controller can only be reset while clocks are running */
  	dsi_write(msm_host, REG_DSI_RESET, 1);
