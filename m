@@ -2,114 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C0A8AE5CEF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Oct 2019 15:34:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B444E6038
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Oct 2019 03:21:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727526AbfJZNRu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Oct 2019 09:17:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39348 "EHLO mail.kernel.org"
+        id S1726590AbfJ0CVT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Oct 2019 22:21:19 -0400
+Received: from foss.arm.com ([217.140.110.172]:53494 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727493AbfJZNRr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Oct 2019 09:17:47 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 23A232070B;
-        Sat, 26 Oct 2019 13:17:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1572095866;
-        bh=4Q6Ko7KzkA22US3mKOU7UVZSyYqiqehg/AE2ijSjXi8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=WWkraSSqYjzH88aBDmKSY1+kxVgPUEB32pQiftel9VCQN0bNaTQ8rMBPGqbir9VQm
-         llWBX3E4r7fEy5A+PtYTpJVcjBPyuhMm6gAEbw1ZUKM7569am24mEv03PmPzYONyeh
-         0rZLZQCUwsoh5BQ7an8kKAumjl3WxyJqHbaqtC8U=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Hai Li <hali@codeaurora.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, Sean Paul <seanpaul@chromium.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.3 56/99] drm/msm/dsi: Implement reset correctly
-Date:   Sat, 26 Oct 2019 09:15:17 -0400
-Message-Id: <20191026131600.2507-56-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191026131600.2507-1-sashal@kernel.org>
-References: <20191026131600.2507-1-sashal@kernel.org>
+        id S1726567AbfJ0CVT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 26 Oct 2019 22:21:19 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7A7DE1FB;
+        Sat, 26 Oct 2019 19:21:18 -0700 (PDT)
+Received: from e107533-lin.cambridge.arm.com (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9BA263F6C4;
+        Sat, 26 Oct 2019 19:21:13 -0700 (PDT)
+Date:   Sun, 27 Oct 2019 02:20:56 +0000
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>
+Subject: Re: [PATCH] cpuidle: psci: Align psci_power_state count with idle
+ state count
+Message-ID: <20191027022056.GA18111@e107533-lin.cambridge.arm.com>
+References: <20191010113937.15962-2-ulf.hansson@linaro.org>
+ <20191024151834.17036-1-sudeep.holla@arm.com>
+ <CAPDyKFqOTpwZ_o0Z6hAFDXf9wJM82a_P8fcKkZY-ZfW-d9LFVQ@mail.gmail.com>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFqOTpwZ_o0Z6hAFDXf9wJM82a_P8fcKkZY-ZfW-d9LFVQ@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+On Thu, Oct 24, 2019 at 06:10:09PM +0200, Ulf Hansson wrote:
+> On Thu, 24 Oct 2019 at 17:18, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> >
+> > Instead of allocating 'n-1' states in psci_power_state to manage 'n'
+> > idle states which include "ARM WFI" state, it would be simpler to have
+> > 1:1 mapping between psci_power_state and cpuidle driver states.
+> >
+> > ARM WFI state(i.e. idx == 0) is handled specially in the generic macro
+> > CPU_PM_CPU_IDLE_ENTER_PARAM and hence state[-1] is not possible. However
+> > for sake of code readability, it is better to have 1:1 mapping and not
+> > use [idx - 1] to access psci_power_state corresponding to driver cpuidle
+> > state for idx.
+> >
+> > psci_power_state[0] is default initialised to 0 and is never accessed
+> > while entering WFI state.
+> >
+> > Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+>
+> Reported-by: Ulf Hansson <ulf.hansson@linaro.org>
+> Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+>
+> > ---
+> >  drivers/cpuidle/cpuidle-psci.c | 8 +++++---
+> >  1 file changed, 5 insertions(+), 3 deletions(-)
+> >
+> > Hi Ulf, Lorenzo,
+> >
+> > Just to avoid confusion, I thought I will just write this patch as I was
+> > about to make reference to this in my review.
+>
+> As discussed with Lorenzo, I said I was going to adopt his review
+> comments, which means I already have a patch for this locally.
+>
+> Nevermind this time, but I would appreciate if this kind of
+> bikeshedding can been avoided future wise.
+>
 
-[ Upstream commit 78e31c42261779a01bc73472d0f65f15378e9de3 ]
+That's one of the reason I just wrote the patch as I felt describing it
+it words was difficult compared to patch :). Sorry if you felt this was
+bikeshedding.
 
-On msm8998, vblank timeouts are observed because the DSI controller is not
-reset properly, which ends up stalling the MDP.  This is because the reset
-logic is not correct per the hardware documentation.
-
-The documentation states that after asserting reset, software should wait
-some time (no indication of how long), or poll the status register until it
-returns 0 before deasserting reset.
-
-wmb() is insufficient for this purpose since it just ensures ordering, not
-timing between writes.  Since asserting and deasserting reset occurs on the
-same register, ordering is already guaranteed by the architecture, making
-the wmb extraneous.
-
-Since we would define a timeout for polling the status register to avoid a
-possible infinite loop, lets just use a static delay of 20 ms, since 16.666
-ms is the time available to process one frame at 60 fps.
-
-Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
-Cc: Hai Li <hali@codeaurora.org>
-Cc: Rob Clark <robdclark@gmail.com>
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Reviewed-by: Sean Paul <sean@poorly.run>
-[seanpaul renamed RESET_DELAY to DSI_RESET_TOGGLE_DELAY_MS]
-Signed-off-by: Sean Paul <seanpaul@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20191011133939.16551-1-jeffrey.l.hugo@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 02acb4338721a..a53632e6c8500 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -26,6 +26,8 @@
- #include "dsi_cfg.h"
- #include "msm_kms.h"
- 
-+#define DSI_RESET_TOGGLE_DELAY_MS 20
-+
- static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
- {
- 	u32 ver;
-@@ -986,7 +988,7 @@ static void dsi_sw_reset(struct msm_dsi_host *msm_host)
- 	wmb(); /* clocks need to be enabled before reset */
- 
- 	dsi_write(msm_host, REG_DSI_RESET, 1);
--	wmb(); /* make sure reset happen */
-+	msleep(DSI_RESET_TOGGLE_DELAY_MS); /* make sure reset happen */
- 	dsi_write(msm_host, REG_DSI_RESET, 0);
- }
- 
-@@ -1396,7 +1398,7 @@ static void dsi_sw_reset_restore(struct msm_dsi_host *msm_host)
- 
- 	/* dsi controller can only be reset while clocks are running */
- 	dsi_write(msm_host, REG_DSI_RESET, 1);
--	wmb();	/* make sure reset happen */
-+	msleep(DSI_RESET_TOGGLE_DELAY_MS); /* make sure reset happen */
- 	dsi_write(msm_host, REG_DSI_RESET, 0);
- 	wmb();	/* controller out of reset */
- 	dsi_write(msm_host, REG_DSI_CTRL, data0);
--- 
-2.20.1
-
+--
+Regards,
+Sudeep
