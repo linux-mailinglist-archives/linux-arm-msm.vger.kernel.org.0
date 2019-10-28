@@ -2,177 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 687CFE737C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2019 15:17:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 19B10E73CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2019 15:37:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390021AbfJ1ORq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Oct 2019 10:17:46 -0400
-Received: from mail-il1-f194.google.com ([209.85.166.194]:40913 "EHLO
-        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730033AbfJ1ORq (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Oct 2019 10:17:46 -0400
-Received: by mail-il1-f194.google.com with SMTP id d83so8308625ilk.7;
-        Mon, 28 Oct 2019 07:17:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dyrpC3p6vL18b1O3dLqA/KgcilibjGWnZgSsfyy6puw=;
-        b=i7knxtPbtmf3aegRshvbyPqat9NZGgNvYw9ZueFZpr89A9061oAXpfFiQMQcx/eMI8
-         wFnFrpqTvWp/BVUd9YtJkOFPM1QRobOFKIm6jpxHH+FqbGRkWdZnecyVJoCtDT7aj/B4
-         2L5wqaS4cG5DtyhyE/oSfY+n+y6Gxbw46l66/hc/qbXyjW4FgkGhDvJ+tb3w5Scy6RHs
-         p5dOEzHl/aaT8SNc/0o4hHInX60YvP7lm5SMaXIsc3FP9ogz42MAsm1vPKGv4yEni8zn
-         D67ZqKK5imsvCpSAgdnv5xOUb9TBnmXjYzH6V+d2Uemuoc/nzkMZb3zjFGfH8tQZH+QU
-         tCug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dyrpC3p6vL18b1O3dLqA/KgcilibjGWnZgSsfyy6puw=;
-        b=VujhB107jXp/9pRiW316rfRGOU4hrQpofk8vgC1TfSlATts8ZV5AreUCLgnV3EK6UC
-         i7YfAxoiPcQwebkb/JwzBHbwcWkXmG98xT2c4zxgM8YyuwUYcFgoW1YuwZMjFrhyXV3y
-         NAlT3611rxzd80yLMKcDxRYg8xcziGtSovFt8Vh+AqG32vcExYRfdk5HPzUNYI5tyt2/
-         wnY7Ke6BdDb7zSEcoEXqrcLSAbDdZo+DeWCFg7KwdptIdD88rO3f6OY0tVoyMoDsNhV1
-         pfGM7OFoE3690d++iYmie9K3ZkqzlDuhJr9mYZ6giQv0YScemT8dCnDYYP52hpJnUF+R
-         zruQ==
-X-Gm-Message-State: APjAAAVDn5Q9g+x3EjfIxnbq219GkxvNkBdnjDTt1weAE7jstbgG0M2w
-        HGchNQa317L1zoO/TuwtMoNOJf2ky7CChS2f0B8=
-X-Google-Smtp-Source: APXvYqzHYbHOSKaCMZZO31hIKXhuEOFg1chEObrthPUI9TcC7sp9A2sOKkiHceAldWYi+nqT25hPdcnbdX4dT+oFbbo=
-X-Received: by 2002:a92:17c8:: with SMTP id 69mr21100233ilx.42.1572272264815;
- Mon, 28 Oct 2019 07:17:44 -0700 (PDT)
+        id S2390196AbfJ1OhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Oct 2019 10:37:17 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38244 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726934AbfJ1OhR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Oct 2019 10:37:17 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id B64B7208C0;
+        Mon, 28 Oct 2019 14:37:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1572273435;
+        bh=QLJ4Cj4VSPodXcRky8pTS+gbLyjrVxJZQ3CDH6ARyOM=;
+        h=In-Reply-To:References:Cc:From:Subject:To:Date:From;
+        b=rlagd81iaVSZv9mJE3IZ5lTRVl7B1yTcyqV+DLl/Jfilprtc+skJLFbbOJ+RFCXZX
+         54pRqx7bFY9c1sgnePMByPlbCzEghwJ3T2O8yuEP/DlLKL4/5rJIQYwxYKGhTUeQIA
+         QVoDX7Gr4ShTVIGAMSMg3xH30XalXgzOo/oXiATQ=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20191002011555.36571-1-jeffrey.l.hugo@gmail.com>
- <20191002011640.36624-1-jeffrey.l.hugo@gmail.com> <20191017215023.2BFEC20872@mail.kernel.org>
- <CAOCk7NqgWkt6BwY75eGS2dbJ7GGk3DqH5NC0VLHUq4fc6WuYog@mail.gmail.com>
- <CAOCk7Np_Wn9JZ8JQCiDg1w+xcTVW9fhvtCA-k5ysc2juHZuvUw@mail.gmail.com> <20191027213659.23423205F4@mail.kernel.org>
-In-Reply-To: <20191027213659.23423205F4@mail.kernel.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Mon, 28 Oct 2019 08:17:33 -0600
-Message-ID: <CAOCk7Npk1zdL2Y3nMxYCXeUj5deJKyoJSSbYCw1V+9ZNvxspdw@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] clk: qcom: Add MSM8998 GPU Clock Controller
- (GPUCC) driver
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Andy Gross <agross@kernel.org>,
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20191024141344.7023-1-vkoul@kernel.org>
+References: <20191024141344.7023-1-vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        MSM <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
-        lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+From:   Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH v2] clk: qcom: gcc: Add missing clocks in SM8150
+To:     Vinod Koul <vkoul@kernel.org>
+User-Agent: alot/0.8.1
+Date:   Mon, 28 Oct 2019 07:37:14 -0700
+Message-Id: <20191028143715.B64B7208C0@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Oct 27, 2019 at 3:36 PM Stephen Boyd <sboyd@kernel.org> wrote:
->
-> Quoting Jeffrey Hugo (2019-10-18 14:11:09)
-> > On Thu, Oct 17, 2019 at 5:16 PM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
-> > >
-> > > On Thu, Oct 17, 2019 at 3:50 PM Stephen Boyd <sboyd@kernel.org> wrote:
-> > > >
-> > > > Quoting Jeffrey Hugo (2019-10-01 18:16:40)
-> > > > > +static const struct freq_tbl ftbl_gfx3d_clk_src[] = {
-> > > > > +       F(180000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > > > +       F(257000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > > > +       F(342000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > > > +       F(414000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > > > +       F(515000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > > > +       F(596000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > > > +       F(670000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > > > +       F(710000000, P_GPUPLL0_OUT_EVEN, 2, 0, 0),
-> > > > > +       { }
-> > > >
-> > > > I guess this one doesn't do PLL ping pong? Instead we just reprogram the
-> > > > PLL all the time? Can we have rcg2 clk ops that set the rate on the
-> > > > parent to be exactly twice as much as the incoming frequency? I thought
-> > > > we already had this support in the code. Indeed, it is part of
-> > > > _freq_tbl_determine_rate() in clk-rcg.c, but not yet implemented in the
-> > > > same function name in clk-rcg2.c! Can you implement it? That way we
-> > > > don't need this long frequency table, just this weird one where it looks
-> > > > like:
-> > > >
-> > > >         { .src = P_GPUPLL0_OUT_EVEN, .pre_div = 3 }
-> > > >         { }
-> > > >
-> > > > And then some more logic in the rcg2 ops to allow this possibility for a
-> > > > frequency table when CLK_SET_RATE_PARENT is set.
-> > >
-> > > Does not do PLL ping pong.  I'll look at extending the rcg2 ops like
-> > > you describe.
-> >
-> > Am I missing something?  From what I can tell, what you describe is
-> > not implemented.
-> >
-> > The only in-tree example of a freq_tbl with only a src and a pre_div
-> > defined for rcg ops is for the tv_src clk in mmcc-msm8960 [1]
-> > However, that uses a variant of rcg ops, clk_rcg_bypass_ops, not clk_rcg_ops.
-> >
-> > clk_rcg_bypass_ops has its own determine_rate implementation which
-> > does not utilize _freq_tbl_determine_rate(), and can only do a 1:1
-> > input rate to output ratio (we want a 1:2).
-> >
-> > _freq_tbl_determine_rate() in either rcg_ops or rcg2_ops won't work,
-> > because they both use qcom_find_freq() which doesn't work when your
-> > table doesn't specify any frequencies (f->freq is 0).
->
-> Yes. You have to have some sort of frequency table to tell us what the
-> source and predivider to use.
->
-> > qcom_find_freq() won't iterate through the table, therefore f in
-> > qcom_find_freq() won't be pointing at the end of the table (the null
-> > entry), so when qcom_find_freq decrements f in the return, it actually
-> > goes off the beginning of the array in an array out of bounds
-> > violation.
->
-> Ouch!
->
-> >
-> > Please advise how you would like to proceed.
->
-> Please have a frequency table like
->
->  { .src = SOME_PLL, .div = 4 }
->
->
-> >
-> > I can still extend rcg2_ops to do what you want, but it won't be based
-> > on what rcg_ops is doing.
->
-> Why isn't rcg_ops doing it? The idea is to copy whatever is happening
-> with this snippet in the _freq_tbl_determine_rate() in rcg.c to rcg2.c
+Quoting Vinod Koul (2019-10-24 07:13:44)
+> diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
+> index 20877214acff..0334b2be5fca 100644
+> --- a/drivers/clk/qcom/gcc-sm8150.c
+> +++ b/drivers/clk/qcom/gcc-sm8150.c
+> @@ -1616,6 +1616,40 @@ static struct clk_branch gcc_gpu_cfg_ahb_clk =3D {
+>         },
+>  };
+> =20
+> +/* external clocks so add BRANCH_HALT_SKIP */
 
-That more or less exists in both cases, although rcg2_ops may need a
-bit of additional work.  The problem is that in both cases, before
-this snippet, we've already called qcom_find_freq(), and in both cases
-(rcg_ops and rcg2_ops), f will be an invalid entry and we won't have
-the proper pre_div value.
+Ok. The comment is sort of worthless though. Which clk is external? The
+parent of this clk?
 
->
->         clk_flags = clk_hw_get_flags(hw);
->         p = clk_hw_get_parent_by_index(hw, index);
->         if (clk_flags & CLK_SET_RATE_PARENT) {
->                 rate = rate * f->pre_div;
->
-> We have checked for CLK_SET_RATE_PARENT from the beginning. Maybe it was
-> always broken! If the frequency table pointer can return us the pre div
-> and source then we can do math to ask the parent PLL for something.
->
-> >
-> > I can spin a rcg2_ops variant to do what you want, with a custom
-> > determine_rate, but it doesn't seem like I'll really be saving any
-> > lines of code.  Whatever I eliminate by minimizing the gfx3d
-> > freq_table I will surely be putting into clk-rcg2.c
-> >
-> > Or, I can just drop this idea and keep the freq_tbl as it is.  Seems
-> > like just a one off scenario.
->
-> Please make rcg2 clk ops "do the right thing" when the flag
-> CLK_SET_RATE_PARENT is set and the frequency table is just a
-> source/divider sort of thing. That way we don't have to have different
-> clk ops or even put anything in the frequency table besides the source
-> PLL we want to use and the predivider we want to configure.
->
+And it seems very weird that we need this one to be halt skip because
+the parent isn't external and I don't know why this is marked with
+CLK_SET_RATE_PARENT. Are we going to allow gpll0 to be modified? gpll0
+looks to be a fixed rate PLL or something so probably we don't want the
+branch to allow consumers to change the main PLL frequency and it should
+be turned on before this clk is enabled.
 
-Got it.  Will do.
+> +static struct clk_branch gcc_gpu_gpll0_clk_src =3D {
+> +       .halt_check =3D BRANCH_HALT_SKIP,
+> +       .clkr =3D {
+> +               .enable_reg =3D 0x52004,
+> +               .enable_mask =3D BIT(15),
+> +               .hw.init =3D &(struct clk_init_data){
+> +                       .name =3D "gcc_gpu_gpll0_clk_src",
+> +                       .parent_hws =3D (const struct clk_hw *[]){
+> +                               &gpll0.clkr.hw },
+> +                       .num_parents =3D 1,
+> +                       .flags =3D CLK_SET_RATE_PARENT,
+> +                       .ops =3D &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +/* these are external clocks so add BRANCH_HALT_SKIP */
+> +static struct clk_branch gcc_gpu_gpll0_div_clk_src =3D {
+> +       .halt_check =3D BRANCH_HALT_SKIP,
+> +       .clkr =3D {
+> +               .enable_reg =3D 0x52004,
+> +               .enable_mask =3D BIT(16),
+> +               .hw.init =3D &(struct clk_init_data){
+> +                       .name =3D "gcc_gpu_gpll0_div_clk_src",
+> +                       .parent_hws =3D (const struct clk_hw *[]){
+> +                               &gcc_gpu_gpll0_clk_src.clkr.hw },
+> +                       .num_parents =3D 1,
+> +                       .flags =3D CLK_SET_RATE_PARENT,
+> +                       .ops =3D &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+>  static struct clk_branch gcc_gpu_iref_clk =3D {
+>         .halt_reg =3D 0x8c010,
+>         .halt_check =3D BRANCH_HALT,
+> @@ -1698,6 +1732,40 @@ static struct clk_branch gcc_npu_cfg_ahb_clk =3D {
+>         },
+>  };
+> =20
+> +/* external clocks so add BRANCH_HALT_SKIP */
+> +static struct clk_branch gcc_npu_gpll0_clk_src =3D {
+> +       .halt_check =3D BRANCH_HALT_SKIP,
+> +       .clkr =3D {
+> +               .enable_reg =3D 0x52004,
+> +               .enable_mask =3D BIT(18),
+> +               .hw.init =3D &(struct clk_init_data){
+> +                       .name =3D "gcc_npu_gpll0_clk_src",
+> +                       .parent_hws =3D (const struct clk_hw *[]){
+> +                               &gpll0.clkr.hw },
+> +                       .num_parents =3D 1,
+> +                       .flags =3D CLK_SET_RATE_PARENT,
+> +                       .ops =3D &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +/* external clocks so add BRANCH_HALT_SKIP */
+> +static struct clk_branch gcc_npu_gpll0_div_clk_src =3D {
+> +       .halt_check =3D BRANCH_HALT_SKIP,
+> +       .clkr =3D {
+> +               .enable_reg =3D 0x52004,
+> +               .enable_mask =3D BIT(19),
+> +               .hw.init =3D &(struct clk_init_data){
+> +                       .name =3D "gcc_npu_gpll0_div_clk_src",
+> +                       .parent_hws =3D (const struct clk_hw *[]){
+> +                               &gcc_npu_gpll0_clk_src.clkr.hw },
+> +                       .num_parents =3D 1,
+> +                       .flags =3D CLK_SET_RATE_PARENT,
+> +                       .ops =3D &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+>  static struct clk_branch gcc_npu_trig_clk =3D {
+>         .halt_reg =3D 0x4d00c,
+>         .halt_check =3D BRANCH_VOTED,
+> @@ -2812,6 +2880,45 @@ static struct clk_branch gcc_ufs_card_phy_aux_hw_c=
+tl_clk =3D {
+>         },
+>  };
+> =20
+> +/* external clocks so add BRANCH_HALT_SKIP */
+
+The UFS ones have always been this way. My understanding is that UFS phy
+is the parent clk and it's not one when the driver enables it. I think
+Manu has clarified these and I still hope we can just turn them on by
+default and not model them in clk framework.
+
+> +static struct clk_branch gcc_ufs_card_rx_symbol_0_clk =3D {
+> +       .halt_check =3D BRANCH_HALT_SKIP,
+> +       .clkr =3D {
+> +               .enable_reg =3D 0x7501c,
+> +               .enable_mask =3D BIT(0),
+> +               .hw.init =3D &(struct clk_init_data){
+> +                       .name =3D "gcc_ufs_card_rx_symbol_0_clk",
+> +                       .ops =3D &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+[...]
+> +static struct clk_branch gcc_usb3_sec_phy_pipe_clk =3D {
+
+Same comment for USB as for UFS.
+
+> +       .halt_check =3D BRANCH_HALT_SKIP,
+> +       .clkr =3D {
+> +               .enable_reg =3D 0x10058,
+> +               .enable_mask =3D BIT(0),
+> +               .hw.init =3D &(struct clk_init_data){
+> +                       .name =3D "gcc_usb3_sec_phy_pipe_clk",
+> +                       .ops =3D &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+>  static struct clk_branch gcc_usb3_sec_phy_com_aux_clk =3D {
+>         .halt_reg =3D 0x10054,
+>         .halt_check =3D BRANCH_HALT,
