@@ -2,93 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DC12AE79C6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2019 21:14:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D9545E7A05
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2019 21:23:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732465AbfJ1UOY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Oct 2019 16:14:24 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36886 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726483AbfJ1UOY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Oct 2019 16:14:24 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0BEEA214B2;
-        Mon, 28 Oct 2019 20:14:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1572293663;
-        bh=Irzp1W5cxgylHGtZa8iCKi1q/E+rjetb5lI/l5T8Drw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Q6PwP5zh9YEOcoKYVLj3hUV3LizrHajeIzJYAHGdT6MiK2ebFgVEt818XVYbs7EAF
-         8EW3r2SQXdo6WtupZ3Z0+oBbrXh/jWvmUtb2x9oL3qwVLji9qaV7t/n2WwNbXxwtzX
-         OkCsV9HNGUtJS13sJu/GVpstbP7NcaVWmTmxzVjo=
-Date:   Mon, 28 Oct 2019 20:14:18 +0000
-From:   Will Deacon <will@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Mark Brown <broonie@kernel.org>, Andy Gross <agross@kernel.org>,
+        id S1727823AbfJ1UXx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Oct 2019 16:23:53 -0400
+Received: from heliosphere.sirena.org.uk ([172.104.155.198]:53014 "EHLO
+        heliosphere.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727802AbfJ1UXw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Oct 2019 16:23:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=hM5PVIIqqVq5fwywAG6+qMv33PfDYrlxmKHuPbTQ250=; b=BvxYLSFlN4uSU6TP6JH49MaHF
+        rhVAF/Inqm/8dPGMCCkVFs4bY78XCNPLxHgSlAJ38ziryR9uineNgBGFBFCMmrKP+bZkPcE4CBteh
+        clB4Jz1x70+eO5daDc9K2W0TrI/Tnclr0ZJIEhDMHS7sL57Vo1Mu/sJdoJYa7I1NtFUDM=;
+Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net ([82.37.168.47] helo=ypsilon.sirena.org.uk)
+        by heliosphere.sirena.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <broonie@sirena.co.uk>)
+        id 1iPBYJ-0000aD-FG; Mon, 28 Oct 2019 20:23:47 +0000
+Received: by ypsilon.sirena.org.uk (Postfix, from userid 1000)
+        id 75BFD27403EE; Mon, 28 Oct 2019 20:23:46 +0000 (GMT)
+Date:   Mon, 28 Oct 2019 20:23:46 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Will Deacon <will@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         kernel-build-reports@lists.linaro.org, linux-next@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
         Catalin Marinas <catalin.marinas@arm.com>
 Subject: Re: next/master boot: 257 boots: 8 failed, 237 passed with 8
  offline, 2 untried/unknown, 2 conflicts (next-20191028)
-Message-ID: <20191028201418.GA8317@willie-the-truck>
+Message-ID: <20191028202346.GJ5015@sirena.co.uk>
 References: <5db7032c.1c69fb81.888b0.b521@mx.google.com>
  <20191028174857.GG5015@sirena.co.uk>
  <20191028184019.GR571@minitux>
  <20191028191121.GH5015@sirena.co.uk>
  <20191028200219.GS571@minitux>
+ <20191028201418.GA8317@willie-the-truck>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="MzdA25v054BPvyZa"
 Content-Disposition: inline
-In-Reply-To: <20191028200219.GS571@minitux>
+In-Reply-To: <20191028201418.GA8317@willie-the-truck>
+X-Cookie: The Moral Majority is neither.
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 28, 2019 at 01:02:19PM -0700, Bjorn Andersson wrote:
-> On Mon 28 Oct 12:11 PDT 2019, Mark Brown wrote:
-> 
-> > On Mon, Oct 28, 2019 at 11:40:19AM -0700, Bjorn Andersson wrote:
-> > > On Mon 28 Oct 10:48 PDT 2019, Mark Brown wrote:
-> > > > On Mon, Oct 28, 2019 at 08:03:08AM -0700, kernelci.org bot wrote:
-> > 
-> > > > Today's -next (anf Friday's) fails to boot on db820c:
-> > 
-> > > > >     defconfig:
-> > > > >         gcc-8:
-> > > > >             apq8096-db820c: 1 failed lab
-> > 
-> > > > It looks like it deadlocks somewhere, the last things in the log are a
-> > > > failure to start ufshcd-qcom and then an RCU stall some time later:
-> > 
-> > > db820c has been failing intermittently for a while now, it seems that
-> > > booting with kpti enabled causes something to go wrong. There are
-> > > nothing strange in the kernel logs and ftrace seems to indicate that all
-> > > the CPUs are idling nicely.
-> > 
-> > Oh dear.  Adding Catalin and Will.  Is it definitely KPTI that's
-> > triggering stuff?  It did turn up some bugs on other systems, though
-> > it's a bit strange it's only manifesting in KernelCI...
-> 
-> I did a test recently where I booted my db820c 100 times with kpti=yes
-> and 100 times with kpti=no on the kernel command line, and the result
-> was 90% failure to reach console vs 0%. Going back and looking at the
-> logs for the 10% indicated that the boot CPU was fine, but I had stalls
-> reported on other CPUs.
-> 
-> In an effort to rule out driver bugs I reduced the DT to CPUs, the core
-> clocks, gic, timers and serial driver, and I still saw the problem.
-> 
-> I have not looked at this with jtag and hence do not know what secure
-> world is doing.
 
-Hmm. Is this a recent thing? Neither kpti nor the snapdragon 820 are
-particular new. Might be worth checking that CONFIG_QCOM_FALKOR_ERRATUM_1003
-is enabled and getting patched in at runtime -- we had hardware issues
-during kpti development with this CPU.
+--MzdA25v054BPvyZa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Will
+On Mon, Oct 28, 2019 at 08:14:18PM +0000, Will Deacon wrote:
+
+> Hmm. Is this a recent thing? Neither kpti nor the snapdragon 820 are
+
+It's in mainline, don't seem to have any results from Bjorn's lab for
+stable.
+
+> particular new. Might be worth checking that CONFIG_QCOM_FALKOR_ERRATUM_1003
+> is enabled and getting patched in at runtime -- we had hardware issues
+> during kpti development with this CPU.
+
+It's enabled in defconfig:
+
+	https://storage.kernelci.org/next/master/next-20191028/arm64/defconfig/gcc-8/kernel.config
+
+but I can't see any sign that it's been announced in the boot log:
+
+	https://storage.kernelci.org/next/master/next-20191028/arm64/defconfig/gcc-8/lab-bjorn/boot-apq8096-db820c.html
+
+so that might be it.
+
+--MzdA25v054BPvyZa
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl23TlEACgkQJNaLcl1U
+h9D4YQf/R7oiiKxoyTMcJZqf4+ByFkIfsceWfH/DEWTi6HliacqU29h9sdfiPbKR
+/0ugF+thK7yv3XsVF8Lg0Aq6zXjZal8cQvaB5oB1gPic5T+eSLMgeTYQ/UKWsNgm
+iGUcAtPlCcg0/qiR57niJ7mfsPRTWslow1a9D/f1Ud8APQ8JHCLipD1KsE/Ek8oQ
+SRFWsqkG0BZwZMPlKaQ5Yus+sdu70JJ3e5tS8H+btjgjIhywI2YpFsBcrhRsoHCk
+I5z6bOkVXnKI6p0z3SN+SCKLoONqvYcZHps9b5sGcWPPwmzIv2dY+/YSLlAdnFY3
+5D1Ls44JbkZ8lNO1snUDwI8TrFJXxw==
+=sP0T
+-----END PGP SIGNATURE-----
+
+--MzdA25v054BPvyZa--
