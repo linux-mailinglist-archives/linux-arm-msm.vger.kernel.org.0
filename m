@@ -2,185 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 19B10E73CC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2019 15:37:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C454E7446
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Oct 2019 16:00:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390196AbfJ1OhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Oct 2019 10:37:17 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38244 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726934AbfJ1OhR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Oct 2019 10:37:17 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B64B7208C0;
-        Mon, 28 Oct 2019 14:37:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1572273435;
-        bh=QLJ4Cj4VSPodXcRky8pTS+gbLyjrVxJZQ3CDH6ARyOM=;
-        h=In-Reply-To:References:Cc:From:Subject:To:Date:From;
-        b=rlagd81iaVSZv9mJE3IZ5lTRVl7B1yTcyqV+DLl/Jfilprtc+skJLFbbOJ+RFCXZX
-         54pRqx7bFY9c1sgnePMByPlbCzEghwJ3T2O8yuEP/DlLKL4/5rJIQYwxYKGhTUeQIA
-         QVoDX7Gr4ShTVIGAMSMg3xH30XalXgzOo/oXiATQ=
+        id S1728776AbfJ1PAS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Oct 2019 11:00:18 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:38545 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726945AbfJ1PAS (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Oct 2019 11:00:18 -0400
+Received: by mail-pf1-f195.google.com with SMTP id c13so7049653pfp.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Oct 2019 08:00:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:from:cc:to:subject:user-agent:date;
+        bh=MTTVVCGnYYa+0y7u4ASzLEPiU17XRxSToavC2yaOJYI=;
+        b=IO3JNKK/w9Pw+TBvaaeDL+vHVoIXi3Bca/2/Pih7WoSBuzCqtP7W1mBQLha0Q6fZTH
+         1/tuL7aUzLgbrahGTyKjk+xJ3iScXtIz64qoluta9k/H8Ga6Pe042pgsaOMpEvJoZluh
+         aNPyLeU8NNFBD1X09tKqOe09KVaIfBowwLpg4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:from:cc:to:subject
+         :user-agent:date;
+        bh=MTTVVCGnYYa+0y7u4ASzLEPiU17XRxSToavC2yaOJYI=;
+        b=kuHorzd5Y1rVNbiFXNFFLLmSMsjIX8CEOlZ2eUekL1hg23moE0p2/Bp+90ckooaZV5
+         OLhl1DJV2CxTJwiOww1JSSKu/M8WTWW/WTU+TC/c64lhPnFr7S3X9Ir7ctp0mkPOp6YF
+         BepvXPsxkDLWhdwj9mkkVj7MWSSJDcq8brMKvC4/UtspFLmrLrcDVRlnAPN699vqiPWg
+         oHRBpz6pED7uACDYTdf9fhAkGxGTTbyi8N7Fi5sYn9gsgziuNQXekdC77n1YXb4S9cS3
+         qk5gzTGHm5FLupwk5Zq7T+Ladmv5pFbBoPcvnkk/Xbb8b1alWXIzRGvtnGzDBV5hA+X4
+         RA9g==
+X-Gm-Message-State: APjAAAXGy3p8E5AWHMGHP8vJ5s1JUegpaSwaePWZx6KpYeInY3OR59H4
+        xuRkbbKLmw/dqPhbqCgbTjw6hXcVlmKdA5EJ
+X-Google-Smtp-Source: APXvYqzBoVFd0sHisLrTISIXTJ2g2OheAr8faUVDpE649aEq5i8UVcr2ktpqDSPiVqc2A6BLLgnnWg==
+X-Received: by 2002:a17:90a:304:: with SMTP id 4mr524532pje.128.1572274817037;
+        Mon, 28 Oct 2019 08:00:17 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id r33sm3125806pjb.5.2019.10.28.08.00.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Oct 2019 08:00:16 -0700 (PDT)
+Message-ID: <5db70280.1c69fb81.c9f08.a848@mx.google.com>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20191024141344.7023-1-vkoul@kernel.org>
-References: <20191024141344.7023-1-vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-From:   Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH v2] clk: qcom: gcc: Add missing clocks in SM8150
-To:     Vinod Koul <vkoul@kernel.org>
+In-Reply-To: <c20319ce-77e2-a4ea-5d7a-a84b8858a938@codeaurora.org>
+References: <1570700803-17566-1-git-send-email-akashast@codeaurora.org> <5d9f3f4f.1c69fb81.5120f.b90e@mx.google.com> <a7dabb1d-b6af-acc5-ba4e-923ee5fc6ee3@codeaurora.org> <5da627aa.1c69fb81.e2d51.203d@mx.google.com> <c20319ce-77e2-a4ea-5d7a-a84b8858a938@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        mgautam@codeaurora.org, bjorn.andersson@linaro.org
+To:     Akash Asthana <akashast@codeaurora.org>, gregkh@linuxfoundation.org
+Subject: Re: [PATCH V2 2/2] tty: serial: qcom_geni_serial: Wakeup over UART RX
 User-Agent: alot/0.8.1
-Date:   Mon, 28 Oct 2019 07:37:14 -0700
-Message-Id: <20191028143715.B64B7208C0@mail.kernel.org>
+Date:   Mon, 28 Oct 2019 08:00:15 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Vinod Koul (2019-10-24 07:13:44)
-> diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-> index 20877214acff..0334b2be5fca 100644
-> --- a/drivers/clk/qcom/gcc-sm8150.c
-> +++ b/drivers/clk/qcom/gcc-sm8150.c
-> @@ -1616,6 +1616,40 @@ static struct clk_branch gcc_gpu_cfg_ahb_clk =3D {
->         },
->  };
-> =20
-> +/* external clocks so add BRANCH_HALT_SKIP */
+Quoting Akash Asthana (2019-10-17 04:10:10)
+>=20
+> On 10/16/2019 1:40 AM, Stephen Boyd wrote:
+> > Why can't we make this driver use runtime PM?
+>=20
+> Currently there are no plans to use runtime PM as we are interested in
+> enabling wakeup irq as part of system suspend only.
+>=20
+>=20
 
-Ok. The comment is sort of worthless though. Which clk is external? The
-parent of this clk?
+Does the wakeup irq code require runtime PM? I thought that any wake irq
+attached to a device is armed during system wide suspend and disabled on
+resume. See device_wakeup_arm_wake_irqs() called from
+dpm_suspend_noirq().
 
-And it seems very weird that we need this one to be halt skip because
-the parent isn't external and I don't know why this is marked with
-CLK_SET_RATE_PARENT. Are we going to allow gpll0 to be modified? gpll0
-looks to be a fixed rate PLL or something so probably we don't want the
-branch to allow consumers to change the main PLL frequency and it should
-be turned on before this clk is enabled.
-
-> +static struct clk_branch gcc_gpu_gpll0_clk_src =3D {
-> +       .halt_check =3D BRANCH_HALT_SKIP,
-> +       .clkr =3D {
-> +               .enable_reg =3D 0x52004,
-> +               .enable_mask =3D BIT(15),
-> +               .hw.init =3D &(struct clk_init_data){
-> +                       .name =3D "gcc_gpu_gpll0_clk_src",
-> +                       .parent_hws =3D (const struct clk_hw *[]){
-> +                               &gpll0.clkr.hw },
-> +                       .num_parents =3D 1,
-> +                       .flags =3D CLK_SET_RATE_PARENT,
-> +                       .ops =3D &clk_branch2_ops,
-> +               },
-> +       },
-> +};
-> +
-> +/* these are external clocks so add BRANCH_HALT_SKIP */
-> +static struct clk_branch gcc_gpu_gpll0_div_clk_src =3D {
-> +       .halt_check =3D BRANCH_HALT_SKIP,
-> +       .clkr =3D {
-> +               .enable_reg =3D 0x52004,
-> +               .enable_mask =3D BIT(16),
-> +               .hw.init =3D &(struct clk_init_data){
-> +                       .name =3D "gcc_gpu_gpll0_div_clk_src",
-> +                       .parent_hws =3D (const struct clk_hw *[]){
-> +                               &gcc_gpu_gpll0_clk_src.clkr.hw },
-> +                       .num_parents =3D 1,
-> +                       .flags =3D CLK_SET_RATE_PARENT,
-> +                       .ops =3D &clk_branch2_ops,
-> +               },
-> +       },
-> +};
-> +
->  static struct clk_branch gcc_gpu_iref_clk =3D {
->         .halt_reg =3D 0x8c010,
->         .halt_check =3D BRANCH_HALT,
-> @@ -1698,6 +1732,40 @@ static struct clk_branch gcc_npu_cfg_ahb_clk =3D {
->         },
->  };
-> =20
-> +/* external clocks so add BRANCH_HALT_SKIP */
-> +static struct clk_branch gcc_npu_gpll0_clk_src =3D {
-> +       .halt_check =3D BRANCH_HALT_SKIP,
-> +       .clkr =3D {
-> +               .enable_reg =3D 0x52004,
-> +               .enable_mask =3D BIT(18),
-> +               .hw.init =3D &(struct clk_init_data){
-> +                       .name =3D "gcc_npu_gpll0_clk_src",
-> +                       .parent_hws =3D (const struct clk_hw *[]){
-> +                               &gpll0.clkr.hw },
-> +                       .num_parents =3D 1,
-> +                       .flags =3D CLK_SET_RATE_PARENT,
-> +                       .ops =3D &clk_branch2_ops,
-> +               },
-> +       },
-> +};
-> +
-> +/* external clocks so add BRANCH_HALT_SKIP */
-> +static struct clk_branch gcc_npu_gpll0_div_clk_src =3D {
-> +       .halt_check =3D BRANCH_HALT_SKIP,
-> +       .clkr =3D {
-> +               .enable_reg =3D 0x52004,
-> +               .enable_mask =3D BIT(19),
-> +               .hw.init =3D &(struct clk_init_data){
-> +                       .name =3D "gcc_npu_gpll0_div_clk_src",
-> +                       .parent_hws =3D (const struct clk_hw *[]){
-> +                               &gcc_npu_gpll0_clk_src.clkr.hw },
-> +                       .num_parents =3D 1,
-> +                       .flags =3D CLK_SET_RATE_PARENT,
-> +                       .ops =3D &clk_branch2_ops,
-> +               },
-> +       },
-> +};
-> +
->  static struct clk_branch gcc_npu_trig_clk =3D {
->         .halt_reg =3D 0x4d00c,
->         .halt_check =3D BRANCH_VOTED,
-> @@ -2812,6 +2880,45 @@ static struct clk_branch gcc_ufs_card_phy_aux_hw_c=
-tl_clk =3D {
->         },
->  };
-> =20
-> +/* external clocks so add BRANCH_HALT_SKIP */
-
-The UFS ones have always been this way. My understanding is that UFS phy
-is the parent clk and it's not one when the driver enables it. I think
-Manu has clarified these and I still hope we can just turn them on by
-default and not model them in clk framework.
-
-> +static struct clk_branch gcc_ufs_card_rx_symbol_0_clk =3D {
-> +       .halt_check =3D BRANCH_HALT_SKIP,
-> +       .clkr =3D {
-> +               .enable_reg =3D 0x7501c,
-> +               .enable_mask =3D BIT(0),
-> +               .hw.init =3D &(struct clk_init_data){
-> +                       .name =3D "gcc_ufs_card_rx_symbol_0_clk",
-> +                       .ops =3D &clk_branch2_ops,
-> +               },
-> +       },
-> +};
-[...]
-> +static struct clk_branch gcc_usb3_sec_phy_pipe_clk =3D {
-
-Same comment for USB as for UFS.
-
-> +       .halt_check =3D BRANCH_HALT_SKIP,
-> +       .clkr =3D {
-> +               .enable_reg =3D 0x10058,
-> +               .enable_mask =3D BIT(0),
-> +               .hw.init =3D &(struct clk_init_data){
-> +                       .name =3D "gcc_usb3_sec_phy_pipe_clk",
-> +                       .ops =3D &clk_branch2_ops,
-> +               },
-> +       },
-> +};
-> +
->  static struct clk_branch gcc_usb3_sec_phy_com_aux_clk =3D {
->         .halt_reg =3D 0x10054,
->         .halt_check =3D BRANCH_HALT,
+So why can't we use the common code that manages wakeup irqs for
+devices?
