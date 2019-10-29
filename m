@@ -2,67 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BC8BAE8B8D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2019 16:14:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F4D5E8BC6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2019 16:28:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389859AbfJ2POh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Oct 2019 11:14:37 -0400
-Received: from bombadil.infradead.org ([198.137.202.133]:51776 "EHLO
-        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389855AbfJ2POh (ORCPT
+        id S2390030AbfJ2P2N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Oct 2019 11:28:13 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:35216 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390027AbfJ2P2M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Oct 2019 11:14:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20170209; h=Content-Transfer-Encoding:
-        Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:
-        Subject:Sender:Reply-To:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=7Rjr4pHXM+BVJrcbAfxpIG5e/IL2+7ZuJT+0KbtlpEo=; b=q7CVnA3+mlAz2NGa2MLY13437
-        9+5fWdJGJMEkEN+r9lez797+9scz+v2vv1ZqhSM2SpdN/yAYwMdV9Q35T23vVDkqbj70x1pmn8Y8z
-        xYwnGMr6OFSUuX50v5fVxNdYpDomTsqCkrb/yncWMoKvWEpqa1+p9JvB2KeweUpUb8g4f24CmDa/b
-        gz4owjOBpgE6Ti6X8OHNzuzCQG0wH7nDB5ehBSTxfkRccL8t/mrnuhhEGvenC5LBaw+BRbkatR/Hc
-        bzNoin8xljIMBiKPgLWILRiy+6yqK6urBofytN4ubCuuekFhS2eSEMMV3RE0CaVF6zf7U9W+HwD46
-        B7RPt43wA==;
-Received: from [2601:1c0:6280:3f0:897c:6038:c71d:ecac]
-        by bombadil.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1iPTCe-0004mx-Mv; Tue, 29 Oct 2019 15:14:36 +0000
-Subject: Re: linux-next: Tree for Oct 29 (thermal/qcom/)
-To:     Stephen Rothwell <sfr@canb.auug.org.au>,
-        Linux Next Mailing List <linux-next@vger.kernel.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-References: <20191029180731.2153b90c@canb.auug.org.au>
-From:   Randy Dunlap <rdunlap@infradead.org>
-Message-ID: <1970de9b-e8cc-423a-c4a0-37a6d0357c6e@infradead.org>
-Date:   Tue, 29 Oct 2019 08:14:35 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.1
+        Tue, 29 Oct 2019 11:28:12 -0400
+Received: by mail-oi1-f194.google.com with SMTP id n16so6997764oig.2;
+        Tue, 29 Oct 2019 08:28:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=7+lSX9rGuethOBMhP54PVdLPKRXbrDChQjUhpYAoRrk=;
+        b=L0EGE7gwIjOpYoxNx/Aj3yfOZ0CmJTg3gyV3iuIZyyn+7YoshioniyygeNg4abvINs
+         +bGnzU9NjCRamn7LagnmNOn2HdQiHfbX+zq5uMmdGPoCR9W7i4j8ooKoeZ5+MWfkJud2
+         Kbwu/sr8nO9rc2wOJ312SGYGB3kHds/drs0ao+/hrt8zGxEbxHdBIsLIB693GZqt/5gI
+         sje7LpcNBcA+42BB148MWVBIyKnNOJMPraO30gGPSBJ0WOSGk79bWrqLKxJolh4x6tMk
+         oJUXsjwxobTv618QjoCbsaG8aQ1pfvJt/D7gECBmLdkj0K6UWIDvrqv/SIGBp+Yq8+Hd
+         UJ6g==
+X-Gm-Message-State: APjAAAX04k5CWkxmquvkk4ZYkrGymeeXmTsWFn5Eq9gfGY/iyj58hfIY
+        nPjgOtMsR8J3iVRmBJ3l2w==
+X-Google-Smtp-Source: APXvYqz4gVrjCheiBZWYt4V73gfeXWOkVCTqZRS9xkcWi5yng+jnjQx6eiARsy0dT3T32JZ//wuxgg==
+X-Received: by 2002:aca:4f4f:: with SMTP id d76mr4638649oib.167.1572362891837;
+        Tue, 29 Oct 2019 08:28:11 -0700 (PDT)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id z1sm3037006oih.14.2019.10.29.08.28.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Oct 2019 08:28:10 -0700 (PDT)
+Date:   Tue, 29 Oct 2019 10:28:09 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     kholk11@gmail.com
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        ccross@android.com, mark.rutland@arm.com, robh+dt@kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org, marijns95@gmail.com,
+        kholk11@gmail.com
+Subject: Re: [PATCH 1/5] dt-bindings: iio: spmi-vadc: Add definitions for USB
+ DP/DM VADCs
+Message-ID: <20191029152809.GA17307@bogus>
+References: <20191020150746.64114-1-kholk11@gmail.com>
+ <20191020150746.64114-2-kholk11@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20191029180731.2153b90c@canb.auug.org.au>
-Content-Type: text/plain; charset=windows-1252
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191020150746.64114-2-kholk11@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/29/19 12:07 AM, Stephen Rothwell wrote:
-> Hi all,
+On Sun, 20 Oct 2019 17:07:42 +0200, kholk11@gmail.com wrote:
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 > 
-> Changes since 20191028:
+> Some PMICs, like PMI8950, feature two ADCs, at 0x43 and 0x44,
+> respectively used for USB D+ and USB D- (DP/DM): add the definition
+> for them as VADC_USB_DP and VADC_USB_DM.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> ---
+>  include/dt-bindings/iio/qcom,spmi-vadc.h | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
 
-on i386:
-
-ld: drivers/thermal/qcom/tsens-common.o: in function `tsens_mC_to_hw':
-tsens-common.c:(.text+0x17d): undefined reference to `__udivdi3'
-
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-
--- 
-~Randy
-
+Acked-by: Rob Herring <robh@kernel.org>
