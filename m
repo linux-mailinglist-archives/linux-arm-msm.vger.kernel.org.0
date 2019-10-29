@@ -2,102 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 57A16E8CEC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2019 17:41:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 96439E8CF2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2019 17:43:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390547AbfJ2QlZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Oct 2019 12:41:25 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:43101 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390543AbfJ2QlY (ORCPT
+        id S2390347AbfJ2Qmv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Oct 2019 12:42:51 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:44665 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390363AbfJ2Qmv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Oct 2019 12:41:24 -0400
-Received: by mail-pf1-f194.google.com with SMTP id 3so9955676pfb.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2019 09:41:23 -0700 (PDT)
+        Tue, 29 Oct 2019 12:42:51 -0400
+Received: by mail-pl1-f194.google.com with SMTP id q16so7655675pll.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2019 09:42:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=message-id:mime-version:content-transfer-encoding:in-reply-to
          :references:from:subject:to:cc:user-agent:date;
-        bh=LNxWM58ZrMRqhvJjmqyuwJjKcprn+LP2a5RPcX5BSTQ=;
-        b=Bc/L5ksmmwMT+AV2TqfmTo8usjNX1/zYqzyxZaZ8rElettpFJdxKI9qyzPJ+qM+WN0
-         IbohgiOJ2hj++SJH9te7RKZVz8DTuLaenbmG1sSDyeD/9tWJJkBoAxbJjK/+W0eZ8mMK
-         StMHUCzc7rfK6ie/FdDKRDpgPUf7cyyF7NPso=
+        bh=p5JENRi61p6FfIKLToCEWBnTnw72ln8j+S6FSdAy8fk=;
+        b=J0+nxacpl6SmKgNn1IsGF0PdMApgkS2BdZFpnIiAWq+gfqIYAi47n/cZ6GR8EpgYrF
+         XvJ+I7JP/c0xMTnlUh7c5nkFvpSXkhL+ovXsR8WngY8PHrofQWRe46lItk/fbSGL/uqP
+         tZHoA83mEwyXauv+RY7762k20LhlasI9t4yow=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:mime-version
          :content-transfer-encoding:in-reply-to:references:from:subject:to:cc
          :user-agent:date;
-        bh=LNxWM58ZrMRqhvJjmqyuwJjKcprn+LP2a5RPcX5BSTQ=;
-        b=hIZtI5VtZNNVnChCY5RqyoIGVvcvyVLIPJeqwzT6SrgsoO/Y85Ou8uspu54TV2Z4ZP
-         h5V884TnwQXrpiiGOt1WrjDrPaHZrvtP9rMFr7RTEzzZ7DCM/C77dHEu7OkYDDc+wDdJ
-         VZSpQG9AB+MnrVVDwHrxCtXykZzUE9TTC9pBWtaz2XhoqnjijLwG4mR1HoHGpMvGycnO
-         hsFEAve7ZjEECEl/DN/M+e3A97jBOuRhgyTwi10AnCoMS6vrI/ppvrtvj+XDQf/pHR81
-         CHl23685n+EweaDorI43SyAjbSWuHsZSOOohe2q6aCZBa3MDDwKE999/Fu+RLSKOQAk4
-         jTDg==
-X-Gm-Message-State: APjAAAX6Tz5FeAvXh1hvk0yhn/WpnLpJ+FBYuJ6njtoA2zpTCQt//4o6
-        nTGc4pkrWTvRened5CJMHX6rqw==
-X-Google-Smtp-Source: APXvYqy1MoKp6KuXydX7v5P5VKqYMVnerZ/CHnsraqUoZ+67iYNsXlmTCHa8d28nPUw+lzw6EGcJcQ==
-X-Received: by 2002:a62:58c3:: with SMTP id m186mr28080725pfb.147.1572367282720;
-        Tue, 29 Oct 2019 09:41:22 -0700 (PDT)
+        bh=p5JENRi61p6FfIKLToCEWBnTnw72ln8j+S6FSdAy8fk=;
+        b=VDp7op2qyOtRw4d0KkHBC73pLkaEx9IBDz5EVCfsCz1xftA4YGtyIHqi/lw/2WISKP
+         DghaZPWWcaYtYjuv6Kv/9J4YvyPJOfkrteE1fPYeDBeGDRbLuRpn1acbuyyLs0qVZjYz
+         6oG+8oQCAVa0YNUidknA/Rk+HCOC44dFnn7y8OfJqlJYz+C7GN/GfSeadmFbr90oz0bO
+         rzC4nqBv9T44c5RZ+9sQgHxxim8lckldAPzVfZqgxHZJW75n508eXY5KjNkF6MYlxmIA
+         yOf0hBsgOONUl9HN+F+mjRceBl6Kk6xU0czYMejq6vvYxTe1jM0cebutIL2WSnA23OJB
+         1ysA==
+X-Gm-Message-State: APjAAAWRh8cIgKTYTSNBWWGZKmx5HfYyDUAblu/D49yq9TkNHcQN7Xq9
+        bqoN05EyGppQkwjIugbyAiuXTQ==
+X-Google-Smtp-Source: APXvYqzkCLD5iZZUvrSjFxekz3qpSbYQw3UVBjzRar26W9EodRAAr/ewVcoqj20yXUk1E9l1xrS2lA==
+X-Received: by 2002:a17:902:8ec7:: with SMTP id x7mr5295755plo.88.1572367370834;
+        Tue, 29 Oct 2019 09:42:50 -0700 (PDT)
 Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id y36sm13376512pgk.66.2019.10.29.09.41.21
+        by smtp.gmail.com with ESMTPSA id 65sm13037391pfv.50.2019.10.29.09.42.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Oct 2019 09:41:21 -0700 (PDT)
-Message-ID: <5db86bb1.1c69fb81.dc254.ec0b@mx.google.com>
+        Tue, 29 Oct 2019 09:42:49 -0700 (PDT)
+Message-ID: <5db86c09.1c69fb81.3981b.b748@mx.google.com>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20191023090219.15603-8-rnayak@codeaurora.org>
-References: <20191023090219.15603-1-rnayak@codeaurora.org> <20191023090219.15603-8-rnayak@codeaurora.org>
+In-Reply-To: <20191023090219.15603-4-rnayak@codeaurora.org>
+References: <20191023090219.15603-1-rnayak@codeaurora.org> <20191023090219.15603-4-rnayak@codeaurora.org>
 From:   Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH v3 07/11] arm64: dts: qcom: sc7180: Add SPMI PMIC arbiter device
+Subject: Re: [PATCH v3 03/11] dt-bindings: arm-smmu: update binding for qcom sc7180 SoC
 To:     Rajendra Nayak <rnayak@codeaurora.org>, agross@kernel.org,
         bjorn.andersson@linaro.org, robh+dt@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, mka@chromium.org,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Mark Rutland <mark.rutland@arm.com>
 User-Agent: alot/0.8.1
-Date:   Tue, 29 Oct 2019 09:41:20 -0700
+Date:   Tue, 29 Oct 2019 09:42:49 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rajendra Nayak (2019-10-23 02:02:15)
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/q=
-com/sc7180.dtsi
-> index 04808a07d7da..6584ac6e6c7b 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -224,6 +224,25 @@
->                         };
->                 };
-> =20
-> +               spmi_bus: spmi@c440000 {
-> +                       compatible =3D "qcom,spmi-pmic-arb";
-> +                       reg =3D <0 0xc440000 0 0x1100>,
+Quoting Rajendra Nayak (2019-10-23 02:02:11)
+> Add the soc specific compatible for sc7180 smmu-500
+>=20
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> Cc: Joerg Roedel <joro@8bytes.org>
+> Cc: Mark Rutland <mark.rutland@arm.com>
+> ---
+>  Documentation/devicetree/bindings/iommu/arm,smmu.txt | 1 +
+>  1 file changed, 1 insertion(+)
+>=20
+> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.txt b/Docum=
+entation/devicetree/bindings/iommu/arm,smmu.txt
+> index 3133f3ba7567..347869807cf2 100644
+> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.txt
+> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.txt
+> @@ -30,6 +30,7 @@ conditions.
+>                    Qcom SoCs implementing "arm,mmu-500" must also include,
+>                    as below, SoC-specific compatibles:
+>                    "qcom,sdm845-smmu-500", "arm,mmu-500"
+> +                  "qcom,sc7180-smmu-500", "arm,mmu-500"
 
-Please pad out the registers to 8 numbers. See sdm845.
+Please sort.
 
-> +                             <0 0xc600000 0 0x2000000>,
-> +                             <0 0xe600000 0 0x100000>,
-> +                             <0 0xe700000 0 0xa0000>,
-> +                             <0 0xc40a000 0 0x26000>;
-> +                       reg-names =3D "core", "chnls", "obsrvr", "intr", =
-"cnfg";
-> +                       interrupt-names =3D "periph_irq";
-> +                       interrupts-extended =3D <&pdc 1 IRQ_TYPE_LEVEL_HI=
-GH>;
-
-This is different than sdm845. I guess pdc is working?
-
-> +                       qcom,ee =3D <0>;
-> +                       qcom,channel =3D <0>;
-> +                       #address-cells =3D <1>;
-> +                       #size-cells =3D <1>;
-> +                       interrupt-controller;
-> +                       #interrupt-cells =3D <4>;
-> +                       cell-index =3D <0>;
-> +               };
-> +
