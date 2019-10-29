@@ -2,174 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 33B3AE7E63
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2019 03:05:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AE7AE7FC3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2019 06:34:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729161AbfJ2CEx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Oct 2019 22:04:53 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:44398 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726526AbfJ2CEx (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Oct 2019 22:04:53 -0400
-Received: by mail-ot1-f68.google.com with SMTP id n48so8416741ota.11;
-        Mon, 28 Oct 2019 19:04:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HFyv8biFiEa7dI7+8/hKQK/SKrkibEovMGYz51a6e3Q=;
-        b=PMiab0SYWy7QtcAdn43dh73BY3tnpVkIcwbDaOwCh7kPydf1wRsJuUpQlAIakxRqiX
-         kn3tOrIsY2FcXuC6/h+Rq4tgNsJFibYnsBhEFUqih2CEBzpilllXvVvjFVp4vHEvgAH2
-         RNX1kRdmMGJtUYHNHxsaqsSkkAL+3KzA3gwWYmxpNfOi+z81Uxv7NA4fbMU/w4siHZYU
-         jcqI4ofCAolAGpC4gZ/L50YMpfCFkLmSxFwoUj3ircqPd7Pe1n4RLhX7lZJ2AAWRSZSk
-         z3hTSxjFM9FzQkc7Ive5dkOpBoLjDhKXSAU5qLuZAa5NnqNaeoUwNM1+AX67K/q7zQkt
-         Lijw==
-X-Gm-Message-State: APjAAAWX9D/mIfsckQJH2rFXpc05JwoC4y1i3whItrvq8q2MNZKvY9HB
-        JWu+WJby3v1kGsJ8WBwfZQ==
-X-Google-Smtp-Source: APXvYqz/PKQhwGT0k8RL1Zb/NY7UEotlPlxCE0kRl2Ne5SNWKtblnq+z4dve81EPfyp+V4p8my/E/A==
-X-Received: by 2002:a9d:469d:: with SMTP id z29mr16109164ote.309.1572314692113;
-        Mon, 28 Oct 2019 19:04:52 -0700 (PDT)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id n1sm154935oij.13.2019.10.28.19.04.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2019 19:04:51 -0700 (PDT)
-Date:   Mon, 28 Oct 2019 21:04:50 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette =?iso-8859-1?Q?=A0?= 
-        <mturquette@baylibre.com>, Andy Gross <andy.gross@linaro.org>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v1 1/3] dt-bindings: clock: Add YAML schemas for the QCOM
- RPMHCC clock bindings
-Message-ID: <20191029020450.GA16322@bogus>
-References: <1571393364-32697-1-git-send-email-tdas@codeaurora.org>
- <1571393364-32697-2-git-send-email-tdas@codeaurora.org>
+        id S1729034AbfJ2Fem (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Oct 2019 01:34:42 -0400
+Received: from foss.arm.com ([217.140.110.172]:47628 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728312AbfJ2Fem (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Oct 2019 01:34:42 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 061971F1;
+        Mon, 28 Oct 2019 22:34:41 -0700 (PDT)
+Received: from e107533-lin.cambridge.arm.com (e107533-lin.shanghai.arm.com [10.169.109.76])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3FE2F3F71F;
+        Mon, 28 Oct 2019 22:37:26 -0700 (PDT)
+Date:   Tue, 29 Oct 2019 13:34:24 +0800
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH 10/13] cpuidle: psci: Add a helper to attach a CPU to its
+ PM domain
+Message-ID: <20191029053414.GA4481@e107533-lin.cambridge.arm.com>
+References: <20191010113937.15962-1-ulf.hansson@linaro.org>
+ <20191010113937.15962-11-ulf.hansson@linaro.org>
+ <20191024163117.GB22036@bogus>
+ <CAPDyKFo2Fma1_JMSd39bmQ3X1PV4SmQ0AfEuKyX5KLLe83ycmA@mail.gmail.com>
+ <20191027023023.GC18111@e107533-lin.cambridge.arm.com>
+ <CAPDyKFr1LJ_HP1kcfMh7LE5j7nUT9KzH4vhdCSEE9wg6RfYErQ@mail.gmail.com>
+ <20191028074905.GA27884@e107533-lin.cambridge.arm.com>
+ <CAPDyKFotv0Fu5jXqhv7tCqYb44HaAnOjWnQS0B3nS04sUmTrUg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1571393364-32697-2-git-send-email-tdas@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CAPDyKFotv0Fu5jXqhv7tCqYb44HaAnOjWnQS0B3nS04sUmTrUg@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 18, 2019 at 03:39:22PM +0530, Taniya Das wrote:
-> The RPMHCC clock provider have a bunch of generic properties that
-> are needed in a device tree. Add a YAML schemas for those.
-> 
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
->  .../devicetree/bindings/clock/qcom,rpmh-clk.txt    | 27 ------------
->  .../devicetree/bindings/clock/qcom,rpmhcc.yaml     | 49 ++++++++++++++++++++++
->  2 files changed, 49 insertions(+), 27 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/clock/qcom,rpmh-clk.txt
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmh-clk.txt b/Documentation/devicetree/bindings/clock/qcom,rpmh-clk.txt
-> deleted file mode 100644
-> index 365bbde..0000000
-> --- a/Documentation/devicetree/bindings/clock/qcom,rpmh-clk.txt
-> +++ /dev/null
-> @@ -1,27 +0,0 @@
-> -Qualcomm Technologies, Inc. RPMh Clocks
-> --------------------------------------------------------
-> -
-> -Resource Power Manager Hardened (RPMh) manages shared resources on
-> -some Qualcomm Technologies Inc. SoCs. It accepts clock requests from
-> -other hardware subsystems via RSC to control clocks.
-> -
-> -Required properties :
-> -- compatible : must be one of:
-> -	       "qcom,sdm845-rpmh-clk"
-> -	       "qcom,sm8150-rpmh-clk"
-> -
-> -- #clock-cells : must contain 1
-> -- clocks: a list of phandles and clock-specifier pairs,
-> -	  one for each entry in clock-names.
-> -- clock-names: Parent board clock: "xo".
-> -
-> -Example :
-> -
-> -#include <dt-bindings/clock/qcom,rpmh.h>
-> -
-> -	&apps_rsc {
-> -		rpmhcc: clock-controller {
-> -			compatible = "qcom,sdm845-rpmh-clk";
-> -			#clock-cells = <1>;
-> -		};
-> -	};
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> new file mode 100644
-> index 0000000..326bfd7
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> @@ -0,0 +1,49 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/bindings/clock/qcom,rpmhcc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. RPMh Clocks Bindings
-> +
-> +maintainers:
-> +  - Taniya Das <tdas@codeaurora.org>
-> +
-> +description: |
-> +  Resource Power Manager Hardened (RPMh) manages shared resources on
-> +  some Qualcomm Technologies Inc. SoCs. It accepts clock requests from
-> +  other hardware subsystems via RSC to control clocks.
-> +
-> +properties:
-> +  compatible :
+On Mon, Oct 28, 2019 at 10:45:22AM +0100, Ulf Hansson wrote:
+> + Niklas
+>
+> On Mon, 28 Oct 2019 at 08:49, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> >
+> > On Mon, Oct 28, 2019 at 08:35:55AM +0100, Ulf Hansson wrote:
+> > > On Sun, 27 Oct 2019 at 03:30, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> > > >
+> > > > On Thu, Oct 24, 2019 at 06:47:43PM +0200, Ulf Hansson wrote:
+> > > > > On Thu, 24 Oct 2019 at 18:31, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> > > > > >
+> > > > > > On Thu, Oct 10, 2019 at 01:39:34PM +0200, Ulf Hansson wrote:
+> > > > > > > Introduce a PSCI DT helper function, psci_dt_attach_cpu(), which takes a
+> > > > > > > CPU number as an in-parameter and tries to attach the CPU's struct device
+> > > > > > > to its corresponding PM domain.
+> > > > > > >
+> > > > > > > Let's makes use of dev_pm_domain_attach_by_name(), as it allows us to
+> > > > > > > specify "psci" as the "name" of the PM domain to attach to. Additionally,
+> > > > > > > let's also prepare the attached device to be power managed via runtime PM.
+> > > > > > >
+> > > > > > > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> > > > > > > ---
+> > > > > > >  drivers/cpuidle/cpuidle-psci-domain.c | 21 +++++++++++++++++++++
+> > > > > > >  drivers/cpuidle/cpuidle-psci.h        |  6 ++++++
+> > > > > > >  2 files changed, 27 insertions(+)
+> > > > > > >
+> > > > > > > diff --git a/drivers/cpuidle/cpuidle-psci-domain.c b/drivers/cpuidle/cpuidle-psci-domain.c
+> > > > > > > index 3f5143ccc3e0..7429fd7626a1 100644
+> > > > > > > --- a/drivers/cpuidle/cpuidle-psci-domain.c
+> > > > > > > +++ b/drivers/cpuidle/cpuidle-psci-domain.c
+> > > > > > > @@ -9,9 +9,11 @@
+> > > > > > >
+> > > > > > >  #define pr_fmt(fmt) "CPUidle PSCI: " fmt
+> > > > > > >
+> > > > > > > +#include <linux/cpu.h>
+> > > > > > >  #include <linux/device.h>
+> > > > > > >  #include <linux/kernel.h>
+> > > > > > >  #include <linux/pm_domain.h>
+> > > > > > > +#include <linux/pm_runtime.h>
+> > > > > > >  #include <linux/psci.h>
+> > > > > > >  #include <linux/slab.h>
+> > > > > > >  #include <linux/string.h>
+> > > > > > > @@ -279,3 +281,22 @@ static int __init psci_idle_init_domains(void)
+> > > > > > >       return ret;
+> > > > > > >  }
+> > > > > > >  subsys_initcall(psci_idle_init_domains);
+> > > > > > > +
+> > > > > > > +struct device *psci_dt_attach_cpu(int cpu)
+> > > > > > > +{
+> > > > > > > +     struct device *dev;
+> > > > > > > +
+> > > > > > > +     /* Currently limit the hierarchical topology to be used in OSI mode. */
+> > > > > > > +     if (!psci_has_osi_support())
+> > > > > > > +             return NULL;
+> > > > > > > +
+> > > > > > > +     dev = dev_pm_domain_attach_by_name(get_cpu_device(cpu), "psci");
+> > > > > >
+> > > > > > This clarifies the need for the fixed name. But why not just go by index 0
+> > > > > > as the consumer of these psci power-domains will have only one power domain
+> > > > > > entry. Why do we need this name compulsory ?
+> > > > >
+> > > > > The idea is to be future proof. If I recall correctly, the CPU node on
+> > > > > some QCOM SoCs may also have "CPR" PM domain specified, thus
+> > > > > "multiple" power-domains could be specified.
+> > > > >
+> > > >
+> > > > I am sure we don't want to mx-n-match any power domain provider with
+> > > > psci. And also I expect in these above mentioned cases, there won't be any
+> > > > psci power domains.
+> > > >
+> > > > > In any case, using "psci" doesn't really hurt, right?
+> > > > >
+> > > >
+> > > > Doesn't but I don't see need for one as only one should exist, as mentioned
+> > > > above we don't want mix-n-match with psci ever.
+> > >
+> > > Not sure I get your point, sorry.
+> > >
+> > > The CPU could very well be attached to more than one power-domain. Of
+> > > course not multiple "PSCI power-domains". One could be an PSCI power
+> > > domain and another one could be the QCOM CPR (Core power reduction)
+> > > power domain.
+> > >
+> >
+> > And who controls QCOM CPR ? If it's OSPM, this model is broken.
+> > I mean OSPM can vote, but the control *has* to be in PSCI firmware to
+> > change any CPU power state.
+> >
+> > If it's firmware controlled, then there's no need to explicitly specify
+> > both to OSPM.
+>
+> This is about OPP and CPUFreq, so it has nothing to do with PSCI.
+>
+> >
+> > > Have a look at these binding, there are already upstream, perhaps that
+> > > clarifies this?
+> > > Documentation/devicetree/bindings/opp/qcom-nvmem-cpufreq.txt
+> > >
+> >
+> > OK, I will have a look.
+>
+> Great.
+>
+> I have looped in Niklas Casell, he should be able to answer any more
+> detailed questions in regards to QCOM CPR, if that is needed.
+>
 
-drop space     ^
+So had a look at the DT bindings and standalone it looks fine.
+But when it's mixed like the way you describe: yikes!
 
-> +    enum:
-> +       - qcom,sdm845-rpmh-clk
-> +       - qcom,sm8150-rpmh-clk
+Why does a power(oh wait it's actually performance domain!) is combined
+with a device whose actual power is controlled by only by PSCI/firmware
+is associated along with another power(again actally performance)
+domain.
 
-Wrong indent (1 char too many).
+This whole representation of performance domain as power domain in the
+bindings is a *mess*. If Linux kernel chose to implement it as part
+of genpd, that's fine. But we should have had a separate binding for
+that.
 
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    maxItems: 1
+> In any case, we are discussing whether we should require a
+> power-domain-names set to "psci" for the CPU node - and I don't see
+> how that could hurt. Right?
+>
 
-Can drop this. Implied by items list.
+Honestly I don't like this, but we don't have any choice I think.
+So yes, but you need to update the binding. Hope new platform move
+all these performance domain control part into firmware and have single
+control from kernel unlike the present generation which OPP through
+clock or cpufreq and the voltage/performance comtrol via genpd.
 
-> +    items:
-> +      - const: xo
-> +
-> +  '#clock-cells':
-> +      const: 1
-> +
-> +required:
-> +  - compatible
-> +  - '#clock-cells'
-> +
-> +examples:
-> +  # Example for GCC for SDM845: The below node should be defined inside
-> +  # &apps_rsc node.
-> +  - |
-> +    #include <dt-bindings/clock/qcom,rpmh.h>
-> +    rpmhcc: clock-controller {
-> +      compatible = "qcom,sdm845-rpmh-clk";
-> +      clocks = <&xo_board>;
-> +      clock-names = "xo";
-> +      #clock-cells = <1>;
-> +    };
-> +...
-> --
-> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-> of the Code Aurora Forum, hosted by the  Linux Foundation.
-> 
+--
+Regards,
+Sudeep
