@@ -2,158 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C5F67E8519
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2019 11:07:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C199E8696
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Oct 2019 12:18:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728546AbfJ2KHi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Oct 2019 06:07:38 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:35089 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727578AbfJ2KHi (ORCPT
+        id S1730377AbfJ2LSq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Oct 2019 07:18:46 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:37544 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387698AbfJ2LSi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Oct 2019 06:07:38 -0400
-Received: by mail-vs1-f67.google.com with SMTP id k15so8369677vsp.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2019 03:07:37 -0700 (PDT)
+        Tue, 29 Oct 2019 07:18:38 -0400
+Received: by mail-ed1-f66.google.com with SMTP id e12so10319238edr.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2019 04:18:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bFgI6PCYnFtMrrrLH686v9chJ+VqCMQ+IJTSsyF5Jso=;
-        b=QfHmrtbtvSZb2PU9QiP2EXdWTD9a0Z8oWob6XqKZ2DRKNUXAOUY1MpXwqIOfgqKK1m
-         lahvF0MffJkHVpvmWjp1b1/2fqPhp630BEvlCScMNYQZPMCucMThEOk/2e5m8heewsK+
-         zBUpVohpCP71dwpQxjWmdNnNuLSQQnvaxfeKq1Knc+Di5ZZcnbdyxjBMhIfNTyXgYXdX
-         2UtVR7vWuRVIB1n4zVsRuS6mEXihTLK8KpSqzDLS0z30+HA0F5aCnPYJq3WPPPfNE4VW
-         x3+03LhvX2rrxeyV2hWG3kvj8VnWMmhNArN7KZjQelBRMshEF2vqzNr4NVm6OqH3xYoF
-         2wGQ==
+        h=subject:to:cc:references:from:openpgp:message-id:date:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=J1TIX7KBOhkEDUvUlXCGfzo0ftBx/02dSVP1EsfH5Yg=;
+        b=dRF2HbKHVHZixPbPX+wgFMrl+ava9svy0g4H+AkjUAcPK0/X9wQNgWR7E4xc9rGnJJ
+         Q8w1LWl7IpS143XNVa/X9gi74DroRujwtmaXM3cFuH5xJpUZCw1qvZsSKD7tAQjMToSd
+         CrRqpsnKgB5FGnz+0yeyPaKDMjuXJaiEKX/aR01gm3uVzlZC1/KLX3TXuFM48rvPwYXb
+         QO9rf1WaTR7vBt/wtpuAge1A+VnktpxZ+YwZRiOY89NLKIcam0zRgxniYjThF0njXyuT
+         6FkIPf7LBst1dRg9OY75eSlSy0Cg05guoNJNXlnu6GCVvzD1xWZ6gztSL6b0W6e68lN5
+         vPPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bFgI6PCYnFtMrrrLH686v9chJ+VqCMQ+IJTSsyF5Jso=;
-        b=iat2FIr3JCXxy9zGNHqSPL0qenZqhF+yALnH8UXagoW/AAtSWL8yxoks199qKo3qet
-         SzrXkdWCFN5UUTXxbTsJ2VKcmtaxcAPlUEhvroVSVCqE0lirrxgLWR8KZXxLMMRUTQ2n
-         uowKKqYERM33jGyMdWsXlzoX5Ntq7gWGyMdDWwpEthCr/uGfd8WN/l0rqb2J7Cw0HnuG
-         6rk4O09I3xocYhH60JwEKChXan+gwDnP5vGgORWuVdinoGDSyPmLBwieDpr8Jl1OfkMz
-         MpuJ3KO4WSru7vBMB/H2YBge8e5YN688srY99eYQoAA+kAH9t2vWwA/JCRZT9xJqj/Jx
-         AOfA==
-X-Gm-Message-State: APjAAAV4aj7BzPUNFaEVoAbMjYuk3Bpw0vWw1HBZvbAeYYZXeP9iP1Da
-        uv0x0eBf09An6tSUNVfce4JARjx+9402YnOWlk2I0A==
-X-Google-Smtp-Source: APXvYqwuC7YtDrqAyMP0Dt++et0LL6Jt6fm10tlwW3a00UwUR4bRNzW8Sycwk/sNjACd1n8vo6GUxAJhn9lKZobrjXI=
-X-Received: by 2002:a05:6102:36d:: with SMTP id f13mr1235978vsa.34.1572343656910;
- Tue, 29 Oct 2019 03:07:36 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=J1TIX7KBOhkEDUvUlXCGfzo0ftBx/02dSVP1EsfH5Yg=;
+        b=Irbn34QdP4mh43g3n4iwyt+EkHKbR4Nk1TIhoRDsFU4i8I2KsMn5OZ8RNCPKguBokx
+         NFARm0D8baCAFbpmaOkB+MXXRBkzXrHjJ34VTUrFb58pEfL2u01IiVelNXzwZ+WDS6O8
+         3hCIq9Gz4kJCqaXFkoyYR0L9rBt9Y5nDT+agkXOTIL+LcObT6aB7xvK96hyreC2N4XdK
+         NJNP/tI8QuASVRnh4V+s9vyiK7mU7RlIGP8en8KE9VcCio+l6MBEQ7u8sFOm43D8qVwV
+         9xLiaP4Gdi9Ukp2Q5JQiTxPKT0SZoUTruiVZK18BT/Bi+bXY3revfEbQEXYM87R+/yPl
+         KUcQ==
+X-Gm-Message-State: APjAAAWEXgMm65NFp7M+mxwIhjlVxc+gz39g9OXnQsF18KjjbiyaNhtB
+        ogyi4ICAHc9lnjcu3ojDF6alOA==
+X-Google-Smtp-Source: APXvYqxd0UnsWHkLoXCSeSyxR75r+FTK/wmY+wYx0WxrkEu7pYPLkgW0m0xq0i3miyTwErZqOzkjWw==
+X-Received: by 2002:a50:9930:: with SMTP id k45mr25056228edb.134.1572347917211;
+        Tue, 29 Oct 2019 04:18:37 -0700 (PDT)
+Received: from [192.168.27.135] ([37.157.136.206])
+        by smtp.googlemail.com with ESMTPSA id g9sm420189edv.86.2019.10.29.04.18.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Oct 2019 04:18:36 -0700 (PDT)
+Subject: Re: [PATCH v2 0/4] ARM: qcom: add defconfig items and dts nodes
+To:     Brian Masney <masneyb@onstation.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20191024103140.10077-1-masneyb@onstation.org>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Openpgp: preference=signencrypt
+Message-ID: <49006809-0dde-ba24-4e91-0b210fe45599@linaro.org>
+Date:   Tue, 29 Oct 2019 13:18:35 +0200
 MIME-Version: 1.0
-References: <1571254641-13626-1-git-send-email-thara.gopinath@linaro.org>
- <1571254641-13626-7-git-send-email-thara.gopinath@linaro.org>
- <CAPDyKFqcKfmnNJ7j4Jb+JH739FBcHg5NBD6aR4H_N=zWGwm1ww@mail.gmail.com>
- <5DA88892.5000408@linaro.org> <CAPDyKFpYG7YADb6Xmm=8ug5=5X3d1y+JdkRvrnvtroeV3Yj62Q@mail.gmail.com>
- <5DA89267.30806@linaro.org> <20191029013648.GB27045@bogus>
-In-Reply-To: <20191029013648.GB27045@bogus>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 29 Oct 2019 11:06:59 +0100
-Message-ID: <CAPDyKFpiyvGg0+bXDVCbfr+yW0SOH6DhVgAiav8ZnE8TSF6EHQ@mail.gmail.com>
-Subject: Re: [PATCH v3 6/7] dt-bindings: soc: qcom: Extend RPMh power
- controller binding to describe thermal warming device
-To:     Rob Herring <robh@kernel.org>
-Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, amit.kucheria@verdurent.com,
-        Mark Rutland <mark.rutland@arm.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20191024103140.10077-1-masneyb@onstation.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 29 Oct 2019 at 02:36, Rob Herring <robh@kernel.org> wrote:
->
-> On Thu, Oct 17, 2019 at 12:10:15PM -0400, Thara Gopinath wrote:
-> > On 10/17/2019 11:43 AM, Ulf Hansson wrote:
-> > > On Thu, 17 Oct 2019 at 17:28, Thara Gopinath <thara.gopinath@linaro.org> wrote:
-> > >>
-> > >> Hello Ulf,
-> > >> Thanks for the review!
-> > >>
-> > >> On 10/17/2019 05:04 AM, Ulf Hansson wrote:
-> > >>> On Wed, 16 Oct 2019 at 21:37, Thara Gopinath <thara.gopinath@linaro.org> wrote:
-> > >>>>
-> > >>>> RPMh power controller hosts mx domain that can be used as thermal
-> > >>>> warming device. Add a sub-node to specify this.
-> > >>>>
-> > >>>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-> > >>>> ---
-> > >>>>  Documentation/devicetree/bindings/power/qcom,rpmpd.txt | 10 ++++++++++
-> > >>>>  1 file changed, 10 insertions(+)
-> > >>>>
-> > >>>> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-> > >>>> index eb35b22..fff695d 100644
-> > >>>> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-> > >>>> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-> > >>>> @@ -18,6 +18,16 @@ Required Properties:
-> > >>>>  Refer to <dt-bindings/power/qcom-rpmpd.h> for the level values for
-> > >>>>  various OPPs for different platforms as well as Power domain indexes
-> > >>>>
-> > >>>> += SUBNODES
-> > >>>> +RPMh alsp hosts power domains that can behave as thermal warming device.
-> > >>>> +These are expressed as subnodes of the RPMh. The name of the node is used
-> > >>>> +to identify the power domain and must therefor be "mx".
-> > >>>> +
-> > >>>> +- #cooling-cells:
-> > >>>> +       Usage: optional
-> > >>>> +       Value type: <u32>
-> > >>>> +       Definition: must be 2
-> > >>>> +
-> > >>>
-> > >>> Just wanted to express a minor thought about this. In general we use
-> > >>> subnodes of PM domain providers to represent the topology of PM
-> > >>> domains (subdomains), this is something different, which I guess is
-> > >>> fine.
-> > >>>
-> > >>> I assume the #cooling-cells is here tells us this is not a PM domain
-> > >>> provider, but a "cooling device provider"?
-> > >> Yep.
-> > >>>
-> > >>> Also, I wonder if it would be fine to specify "power-domains" here,
-> > >>> rather than using "name" as I think that is kind of awkward!?
-> > >> Do you mean "power-domain-names" ? I am using this to match against the
-> > >> genpd names defined in the provider driver.
-> > >
-> > > No. If you are using "power-domains" it means that you allow to
-> > > describe the specifier for the provider.
-> > Yep. But won't this look funny in DT ? The provider node will have a sub
-> > node with a power domain referencing to itself Like below: Is this ok ?
-> >
-> > rpmhpd: power-controller {
-> >                                 compatible = "qcom,sdm845-rpmhpd";
-> >                                 #power-domain-cells = <1>;
-> >
-> >                       ...
-> >                       ...
-> >                               mx_cdev: mx {
-> >                                         #cooling-cells = <2>;
-> >                                         power-domains = <&rpmhpd      SDM845_MX>;
-> >                                 };
-> >
->
-> The whole concept here seems all wrong to me. Isn't it what's in the
-> power domain that's the cooling device. A CPU power domain is not a
-> cooling device, the CPU is. Or we wouldn't make a clock a cooling
-> device, but what the clock drives.
+On 24.10.19 г. 13:31 ч., Brian Masney wrote:
+> Here's a small patch series that adds some additional functionality
+> to qcom_defconfig and to qcom-msm8974.dtsi: interconnect, ocmem,
+> and HDMI bridge (defconfig only).
+> 
+> Some high-level changes since v1:
+> - Updated interconnect support. See patch #4 in this series for details.
+> - Dropped ocmem defconfig since that got merged.
+> 
+> Brian Masney (4):
+>   ARM: qcom_defconfig: add msm8974 interconnect support
+>   ARM: qcom_defconfig: add anx78xx HDMI bridge support
+>   ARM: dts: qcom: msm8974: add ocmem node
+>   ARM: dts: qcom: msm8974: add interconnect nodes
+> 
+>  arch/arm/boot/dts/qcom-msm8974.dtsi | 77 +++++++++++++++++++++++++++++
+>  arch/arm/configs/qcom_defconfig     |  4 ++
+>  2 files changed, 81 insertions(+)
 
-Well, I don't think that's entirely correct description either.
-
-As I see it, it's really the actual PM domain (that manages voltages
-for a power island), that needs to stay in full power state and
-increase its voltage level, as to warm up some of the silicon. It's
-not a regular device, but more a characteristics of how the PM domain
-can be used.
-
-Kind regards
-Uffe
+For the series:
+Reviewed-by: Georgi Djakov <georgi.djakov@linaro.org>
