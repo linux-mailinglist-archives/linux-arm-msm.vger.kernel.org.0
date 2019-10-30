@@ -2,241 +2,260 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8837AE9659
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2019 07:18:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 67F5BE96D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2019 07:51:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727046AbfJ3GSO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Oct 2019 02:18:14 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:51222 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726187AbfJ3GSO (ORCPT
+        id S1727447AbfJ3Gvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Oct 2019 02:51:43 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35989 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727641AbfJ3Gvm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Oct 2019 02:18:14 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 030A460E75; Wed, 30 Oct 2019 06:18:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572416293;
-        bh=l+semFXebyaewXhIfR1W+mrDx2SZahl1h5VAmxacW4s=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=lcJUypkmF8a4h7/i+8euAqQ8YkTSzTiUoFg/3gg5t0KnQlled1Aps9WU1qIzU/W5h
-         qnXNV5U60ajAmUhXwU15d7moLDjJN3n/ZSs/yWXBDdJduQa1yFJUcWCxJTcKdxjNYa
-         szt+4peffZt45xmAIdVkH8akmHicu23JEWp1XI80=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id A5C3A60E75;
-        Wed, 30 Oct 2019 06:18:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572416291;
-        bh=l+semFXebyaewXhIfR1W+mrDx2SZahl1h5VAmxacW4s=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=YZkm2TLeB5x/Q4TSCaZ3smqgjJJdA5i2ZXZW3ISVWegNoxMnCsqoQkso9oWWf8hcp
-         bb8gJ6xbmM5rG1pXGc+cj4cv85P9zb1RdwIvTOIwJ4G5rl/opnmRTY6YPaQzidBVvu
-         krGhWi3KHnTup8Z9IChYKNOGET9+oqg7gnafRsEU=
+        Wed, 30 Oct 2019 02:51:42 -0400
+Received: by mail-wr1-f66.google.com with SMTP id w18so969283wrt.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Oct 2019 23:51:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=yn686uGyou8YdPj2afqMy6ILfgVg96dAEC2ecmMx30s=;
+        b=v9J4LHWXdkwDTW1Po5zY2ZJomfGB32z00XvxtzvOvB+77Cq1dQQnN16bfSxC8A3UCR
+         rj+u9dA1jk7csVRPlrQRs3u7ozblbJ0TcV8doPmVNG1TbLQuKGKtLRTa/p2FKdmqi3eY
+         HrtOX3oWAw95ebqhFGgVxeflhD0RDsHOWGWkctksiaOAuJoz4VpXFErTIKujTI6VyxKC
+         jB/RNzPm5i9RE+DsPKSgqZ925QGyHvpxajw0ZR4C+z0PI4rh/7H2D1P+lRxVzRdk1KJU
+         qpthDOkzc92g66xzWpX05uctvD9gzFCb7VbKX5U+wZSKVGCaqAcS02g4U4SvcvuRrBvb
+         BcIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=yn686uGyou8YdPj2afqMy6ILfgVg96dAEC2ecmMx30s=;
+        b=pmEv0HFN99jFWqYHuv4P+fEWBvFjVoKVG4JRLYLPKWyC61knjZ0gojCq9/QLq2r/qS
+         sQG4bbs5qB7208FJ1qqO0wIC/Wob8hXyr/qVT7D8SH4Qnl04OS0ZlHjvY5Zy5VP/CEqO
+         5jyfDlDt4/7iUbBASWZpMrcfRSGrfKK2RCLODdPkZrGa8bIw1dgRxp1e/w0Pvw2PovzJ
+         cRwCejYcID/thsFMTGJNjXqFPzt0Kh4V+sI1Py7agAIulNf/6Xkg6ppEvgQJ7baoU3t8
+         yuBcBVDx0Jk++3RRV01Lb+sOwqml1zUZcT3mFYlvSIM4I2cHw1SEtbHdVLsP7HPWQ0zz
+         xsiA==
+X-Gm-Message-State: APjAAAXhDGkjP41w7AaS9/FtFIlRh6q0fiiNqkA9IlCFtb4PVSZPZgzO
+        zzqE9MwcxkneP/webE3l4OrNWw==
+X-Google-Smtp-Source: APXvYqySw+R/IguJr0LWo+m0T2yfojfvQBkiF2qJYwoh3I1CcnHCv9NCVr/Qgvbb/cAXrFfbxDcWsw==
+X-Received: by 2002:a5d:4d0f:: with SMTP id z15mr22393695wrt.195.1572418298256;
+        Tue, 29 Oct 2019 23:51:38 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:7037:cc11:eb05:9c6a? ([2a01:e34:ed2f:f020:7037:cc11:eb05:9c6a])
+        by smtp.googlemail.com with ESMTPSA id s5sm1158543wmj.37.2019.10.29.23.51.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Oct 2019 23:51:37 -0700 (PDT)
+Subject: Re: [PATCH] of-thermal: Disable polling when interrupt property is
+ found in DT
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        swboyd@chromium.org, Zhang Rui <rui.zhang@intel.com>,
+        Eduardo Valentin <edubezval@gmail.com>
+Cc:     linux-pm@vger.kernel.org
+References: <cover.1571181041.git.amit.kucheria@linaro.org>
+ <1b53ef537203e629328285b4597a09e4a586d688.1571181041.git.amit.kucheria@linaro.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=daniel.lezcano@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <ed9ef9e3-a8c3-90bf-4e71-8959b2ff94d2@linaro.org>
+Date:   Wed, 30 Oct 2019 07:51:36 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 30 Oct 2019 11:48:11 +0530
-From:   Balakrishna Godavarthi <bgodavar@codeaurora.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        linux-arm-msm@vger.kernel.org,
-        linux-bluetooth-owner@vger.kernel.org, hemantg@codeaurora.org,
-        Harish Bandi <c-hbandi@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH 2/4] Bluetooth: hci_qca: Don't vote for specific voltage
-In-Reply-To: <20191022171505.GK20212@google.com>
-References: <20191018052405.3693555-1-bjorn.andersson@linaro.org>
- <20191018052405.3693555-3-bjorn.andersson@linaro.org>
- <20191018182205.GA20212@google.com>
- <7f9a4de91f364a5f8ce707c8d8a2344d@codeaurora.org>
- <5bbd8e5bbd832ecdafc7c2d603f10c6c@codeaurora.org>
- <20191022171505.GK20212@google.com>
-Message-ID: <2ab1d48ef09d779c702cf0342c5094ee@codeaurora.org>
-X-Sender: bgodavar@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+In-Reply-To: <1b53ef537203e629328285b4597a09e4a586d688.1571181041.git.amit.kucheria@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+On 16/10/2019 01:13, Amit Kucheria wrote:
+> Currently, in order to enable interrupt-only mode, one must set
+> polling-delay-passive and polling-delay properties in the DT to 0,
+> otherwise the thermal framework will continue to setup a periodic timers
+> to monitor the thermal zones.
+> 
+> Change the behaviour, so that on DT-based systems, we no longer have to
+> set the properties to zero if we find an 'interrupt' property in the
+> sensor.
+> 
+> Following data shows the number of times
+> thermal_zone_device_set_polling() is invoked with and without this
+> patch. So the patch achieves the same behaviour as setting the delay
+> properties to 0.
+> 
+> Current behaviour (without setting delay properties to 0):
+>   FUNC                              COUNT
+>   thermal_zone_device_update          302
+>   thermal_zone_device_set_pollin     7911
+> 
+> Current behaviour (with delay properties set to 0):
+>   FUNC                              COUNT
+>   thermal_zone_device_update            3
+>   thermal_zone_device_set_pollin        6
+> 
+> With this patch (without setting delay properties to 0):
+>   FUNC                              COUNT
+>   thermal_zone_device_update            3
+>   thermal_zone_device_set_pollin        6
+> 
+> Suggested-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> ---
+>  drivers/thermal/of-thermal.c | 15 +++++++++++++--
+>  1 file changed, 13 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/thermal/of-thermal.c b/drivers/thermal/of-thermal.c
+> index dc5093be553e..79ad587462b1 100644
+> --- a/drivers/thermal/of-thermal.c
+> +++ b/drivers/thermal/of-thermal.c
+> @@ -412,7 +412,8 @@ static struct thermal_zone_device_ops of_thermal_ops = {
+>  static struct thermal_zone_device *
+>  thermal_zone_of_add_sensor(struct device_node *zone,
+>  			   struct device_node *sensor, void *data,
+> -			   const struct thermal_zone_of_device_ops *ops)
+> +			   const struct thermal_zone_of_device_ops *ops,
+> +			   bool force_interrupts)
+>  {
+>  	struct thermal_zone_device *tzd;
+>  	struct __thermal_zone *tz;
+> @@ -433,6 +434,11 @@ thermal_zone_of_add_sensor(struct device_node *zone,
+>  	tzd->ops->get_temp = of_thermal_get_temp;
+>  	tzd->ops->get_trend = of_thermal_get_trend;
+>  
+> +	if (force_interrupts) {
+> +		tz->passive_delay = 0;
+> +		tz->polling_delay = 0;
+> +	}
+> +
+>  	/*
+>  	 * The thermal zone core will calculate the window if they have set the
+>  	 * optional set_trips pointer.
+> @@ -486,6 +492,7 @@ thermal_zone_of_sensor_register(struct device *dev, int sensor_id, void *data,
+>  {
+>  	struct device_node *np, *child, *sensor_np;
+>  	struct thermal_zone_device *tzd = ERR_PTR(-ENODEV);
+> +	bool force_interrupts = false;
+>  
+>  	np = of_find_node_by_name(NULL, "thermal-zones");
+>  	if (!np)
+> @@ -498,6 +505,9 @@ thermal_zone_of_sensor_register(struct device *dev, int sensor_id, void *data,
+>  
+>  	sensor_np = of_node_get(dev->of_node);
+>  
+> +	if (of_find_property(sensor_np, "interrupts", NULL))
+> +		force_interrupts = true;
+> +
 
-On 2019-10-22 22:45, Matthias Kaehlcke wrote:
-> On Tue, Oct 22, 2019 at 11:35:43AM +0530, Balakrishna Godavarthi wrote:
->> Hi Matthias, Bjorn andresson,
->> 
->> On 2019-10-21 12:07, Harish Bandi wrote:
->> > + Bala
->> >
->> > On 2019-10-18 23:52, Matthias Kaehlcke wrote:
->> > > On Thu, Oct 17, 2019 at 10:24:02PM -0700, Bjorn Andersson wrote:
->> > > > Devices with specific voltage requirements should not request voltage
->> > > > from the driver, but instead rely on the system configuration to
->> > > > define
->> > > > appropriate voltages for each rail.
->> > > >
->> > > > This ensures that PMIC and board variations are accounted for,
->> > > > something
->> > > > that the 0.1V range in the hci_qca driver currently tries to address.
->> > > > But on the Lenovo Yoga C630 (with wcn3990) vddch0 is 3.1V, which
->> > > > means
->> > > > the driver will fail to set the voltage.
->> > > >
->> > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> > > > ---
->> > > >  drivers/bluetooth/hci_qca.c | 26 ++++++++------------------
->> > > >  1 file changed, 8 insertions(+), 18 deletions(-)
->> > > >
->> > > > diff --git a/drivers/bluetooth/hci_qca.c
->> > > > b/drivers/bluetooth/hci_qca.c
->> > > > index c07c529b0d81..54aafcc69d06 100644
->> > > > --- a/drivers/bluetooth/hci_qca.c
->> > > > +++ b/drivers/bluetooth/hci_qca.c
->> > > > @@ -130,8 +130,6 @@ enum qca_speed_type {
->> > > >   */
->> > > >  struct qca_vreg {
->> > > >  	const char *name;
->> > > > -	unsigned int min_uV;
->> > > > -	unsigned int max_uV;
->> > > >  	unsigned int load_uA;
->> > > >  };
->> > > >
->> > > > @@ -1332,10 +1330,10 @@ static const struct hci_uart_proto
->> > > > qca_proto = {
->> > > >  static const struct qca_vreg_data qca_soc_data_wcn3990 = {
->> > > >  	.soc_type = QCA_WCN3990,
->> > > >  	.vregs = (struct qca_vreg []) {
->> > > > -		{ "vddio",   1800000, 1900000,  15000  },
->> > > > -		{ "vddxo",   1800000, 1900000,  80000  },
->> > > > -		{ "vddrf",   1300000, 1350000,  300000 },
->> > > > -		{ "vddch0",  3300000, 3400000,  450000 },
->> > > > +		{ "vddio", 15000  },
->> > > > +		{ "vddxo", 80000  },
->> > > > +		{ "vddrf", 300000 },
->> > > > +		{ "vddch0", 450000 },
->> > > >  	},
->> > > >  	.num_vregs = 4,
->> > > >  };
->> > > > @@ -1343,10 +1341,10 @@ static const struct qca_vreg_data
->> > > > qca_soc_data_wcn3990 = {
->> > > >  static const struct qca_vreg_data qca_soc_data_wcn3998 = {
->> > > >  	.soc_type = QCA_WCN3998,
->> > > >  	.vregs = (struct qca_vreg []) {
->> > > > -		{ "vddio",   1800000, 1900000,  10000  },
->> > > > -		{ "vddxo",   1800000, 1900000,  80000  },
->> > > > -		{ "vddrf",   1300000, 1352000,  300000 },
->> > > > -		{ "vddch0",  3300000, 3300000,  450000 },
->> > > > +		{ "vddio", 10000  },
->> > > > +		{ "vddxo", 80000  },
->> > > > +		{ "vddrf", 300000 },
->> > > > +		{ "vddch0", 450000 },
->> > > >  	},
->> > > >  	.num_vregs = 4,
->> > > >  };
->> > > > @@ -1386,13 +1384,6 @@ static int qca_power_off(struct hci_dev *hdev)
->> > > >  static int qca_enable_regulator(struct qca_vreg vregs,
->> > > >  				struct regulator *regulator)
->> > > >  {
->> > > > -	int ret;
->> > > > -
->> > > > -	ret = regulator_set_voltage(regulator, vregs.min_uV,
->> > > > -				    vregs.max_uV);
->> > > > -	if (ret)
->> > > > -		return ret;
->> > > > -
->> > > >  	return regulator_enable(regulator);
->> > > >
->> > > >  }
->> > > > @@ -1401,7 +1392,6 @@ static void qca_disable_regulator(struct
->> > > > qca_vreg vregs,
->> > > >  				  struct regulator *regulator)
->> > > >  {
->> > > >  	regulator_disable(regulator);
->> > > > -	regulator_set_voltage(regulator, 0, vregs.max_uV);
->> > > >
->> > > >  }
->> > >
->> > > This was brought up multiple times during the initial review, but
->> > > wasn't addressed.
->> > >
->> > > Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
->> 
->> 
->> yes true PMIC dts regulator should do this.
->> But we have some real time issues observed.
->> 
->> Issue 1:
->> 
->> In PMIC dts node, ASAIK we have three levels of voltages.
->> 
->> 1. Default voltage.
->> 2. Minimum voltage. (mandatory entry)
->> 3. Maximum voltage. (mandatory entry)
->> 
->> Let us assume that the if PMIC regulator dts node supports  defaults 
->> voltage
->> to 3.2 Volts and Min  as 3.1 V and max as 3.3V
->> So default operating voltage is 3.1V  when we turn on BT (but 
->> according to
->> spec SoC requires min of 3.3V to operate,
->> Might have some functionality failures on end to end testing
-> 
-> The PMIC regulator shouldn't be configured with the entire range of 
-> voltages
-> it can generate, but with a range of voltages that is suitable for all 
-> its
-> consumers.
-> 
-> In other words if BT requires a minimum voltage of 3.3V the minimum 
-> voltage
-> of the regulator should be at least 3.3V.
-> 
->> Issue 2:
->> 
->> WCN3990 RF is shared with WiFi, so it also try to turn on the 
->> regulators.
->> Wifi driver uses the same approach of restricting to min and max 
->> voltages in
->> driver.
->> Let us assume we turned ON BT and CH0 is set to 3.1v (as in your 
->> case), Wifi
->> is tuned on now, as its request the CH0 to operate at 3.3 Volts, 
->> regulator
->> will fail to set this voltage as BT is operating
->> at CH0 3.1v (assuming max voltage is 3.2v)
->> https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/tree/drivers/net/wireless/ath/ath10k/snoc.c#n39
-> 
-> see above
-> 
->> Issue 3:
->> 
->> By mistake PMIC has low min or default voltage and high max voltages, 
->> that
->> is harm for WNC3990.
->> 
->> I would suggest to restrict the min and max voltages in driver, 
->> instead of
->> relaying on PMIC to do this.
->> BTW pmic will do this and doing it in our driver is safer.
-> 
-> What if another device switches the regulator on before BT?
-> 
-> Again, what you describe is a misconfiguration of the regulator and 
-> should
-> be fixed at its root, instead of implementing unreliable 'safeguards' 
-> in each
-> and every driver using regulators.
+This is hackish. It does cover only DT drivers.
 
-Thanks for detail analysis :)
+It would be cleaner to add a specific flag describing the thermal sensor
+driver mode and then in the core code do not start the timers if the
+associated works in interrupt.
+
+Moreover the interrupt mode can be used to activate faster the passive
+delay monitoring after reaching a threshold like the hikey and hikey960.
+So this patch will disable the mitigation on those boards. This is
+another argument to add flags for the thermal sensor mode.
+
+[ ... ]
+
+
 -- 
-Regards
-Balakrishna.
+ <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
+
