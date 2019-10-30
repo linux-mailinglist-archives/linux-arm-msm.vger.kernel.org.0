@@ -2,176 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1648AE9921
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2019 10:28:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 50B8FE999B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2019 11:03:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726255AbfJ3J2A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Oct 2019 05:28:00 -0400
-Received: from mail-vk1-f193.google.com ([209.85.221.193]:43014 "EHLO
-        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726032AbfJ3J2A (ORCPT
+        id S1726046AbfJ3KDI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Oct 2019 06:03:08 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:34025 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726032AbfJ3KDI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Oct 2019 05:28:00 -0400
-Received: by mail-vk1-f193.google.com with SMTP id k19so313222vke.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2019 02:27:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MN5/XA2iWTn3JwsaVPfUNETYKLVHfkkM5TGKnq2qWow=;
-        b=q4vfihaI5SgnZO1mREK0EE92a2TcRqe5YARf2JUxGWe8b3RCSilUTop4ZV/z3M/1Ia
-         weN9ltfEM6u2b4/2t7/tw+Nxzk9cRD14JW13Kz1VeE42C+IfgQ/qD2/hYVUPK3BAQwqG
-         tlqjEzGFBCSsTNQ14MgdrT4ebi23gasDFuGezAvuHNHJVgg3LEBNiT6EXtL0homvbZhl
-         mio1vgHviIVlTCyvDstI8u54o+OZPUxbYIwR8RMJpDrxPfE5AB+uNioto7r5yR/eGy3p
-         WyJYHYunxFfhqU8bWoLWNd6oujzPiq2P6zitBof1M66HTaRyvjAV9LM2oWjqPhZdzTpp
-         LUnw==
+        Wed, 30 Oct 2019 06:03:08 -0400
+Received: by mail-wr1-f67.google.com with SMTP id t16so1581439wrr.1;
+        Wed, 30 Oct 2019 03:03:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MN5/XA2iWTn3JwsaVPfUNETYKLVHfkkM5TGKnq2qWow=;
-        b=DXREmh7nr3A/22wpV7ySpSPS9JV+sRku15kIrERIZl7Kl1P7jULGMlVoISO5q6Rw2S
-         q1QaSFbydavNH3juP7lEQUUykLPNbDBprZ4qaEFNw9J8hN6B/jlIeDxtPmSljoaFlVah
-         1rkhbrzbwSkZlg23c0HHMH/FhRXGYakCGvwSe3PKkaUetadm4RKfuXDsxrdn5u/dRFre
-         8JcQsqZKMmyhGRlyFVn1d944EnIjhhQ8UGuW+O+cQh0kD2FMt6szEdt2KZq8Hs0G+/MZ
-         VLY4p80bS8shpetkhCHT85yQW5P7yYiDjFtmGDOzsE2JEOT+z45xUzK5kPFRyAarC/rD
-         klcw==
-X-Gm-Message-State: APjAAAU2LULT6qCrU1NwdGOQaajCeE2xJtcHBX6p6WetXlew517jS3en
-        OZcNRbJW0X96RQ96mo7QnRWO6kL+WkjsndAZ5RjShA==
-X-Google-Smtp-Source: APXvYqzSHup2gFA5wBykiES6RNVVoT6htSpGRNx96Dg7POOVg6LTuWNWzkXHYGZc5adR+GHSe5AntmF9j9UEzqu7mqI=
-X-Received: by 2002:a1f:b202:: with SMTP id b2mr14227092vkf.59.1572427678476;
- Wed, 30 Oct 2019 02:27:58 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=FMrNiLDlAG4LHDqZ/Yl8QilQGiUU1TiZ+I44MHl2pe8=;
+        b=HNN3Pn/vNFFcDuiCrIDZIAg0jUIX3Ma1J5xZ3pi4cQbbPvRlhWTxNCRZL1BXGTPgBV
+         mZPHjz9jzkrIab3DlA5QEPaVJmy/ml4Tiz+kinEe21oAK4IzLkyNrQqRwGZjY526zI03
+         Z5/XYQ5xvo82fUpG0b99AjLqOdTD5Hy5ATzwdglzhLO2gOMRy7HmXuhcVJ4mJ9T62sQQ
+         IGOs35f/F3IXziTFj002YE8D8BG+FaADlIa+AjvOYNtyG4bUsls0rfgjy5xaOS3Ln+1r
+         GdSeKJfaSlW8NXyZh1Z+dmZ6LV0170yMWq0z9sHwaV8MAjf2aN8k+utW+vHNhwTNZuSc
+         YfSw==
+X-Gm-Message-State: APjAAAXTKukUTE41VU2SDz8W6jg53jemBoHMy4yFizvee+S+yDRsfMh2
+        5OO/oOaso980dlZW7c6YhWU=
+X-Google-Smtp-Source: APXvYqx9yWpySXQAETRsK0lzvhrydwfQ9Qwl8MxBphTqjmTCxz57hjMnqNjhMrjsPw6+qJUa5JnAIA==
+X-Received: by 2002:adf:ec4b:: with SMTP id w11mr1963541wrn.243.1572429785547;
+        Wed, 30 Oct 2019 03:03:05 -0700 (PDT)
+Received: from pi (100.50.158.77.rev.sfr.net. [77.158.50.100])
+        by smtp.gmail.com with ESMTPSA id a11sm1768504wmh.40.2019.10.30.03.03.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Oct 2019 03:03:04 -0700 (PDT)
+Received: from johan by pi with local (Exim 4.92.2)
+        (envelope-from <johan@pi>)
+        id 1iPknS-0002ZQ-F2; Wed, 30 Oct 2019 11:01:46 +0100
+Date:   Wed, 30 Oct 2019 11:01:46 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     David Airlie <airlied@linux.ie>,
+        Heiko Carstens <heiko.carstens@de.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@de.ibm.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-s390@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Johan Hovold <johan@kernel.org>,
+        stable <stable@vger.kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Harald Freudenberger <freude@linux.ibm.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Fabien Dessenne <fabien.dessenne@st.com>
+Subject: Re: [PATCH 1/4] drm/msm: fix memleak on release
+Message-ID: <20191030100146.GC4691@localhost>
+References: <20191010131333.23635-1-johan@kernel.org>
+ <20191010131333.23635-2-johan@kernel.org>
 MIME-Version: 1.0
-References: <1571254641-13626-1-git-send-email-thara.gopinath@linaro.org>
- <1571254641-13626-7-git-send-email-thara.gopinath@linaro.org>
- <CAPDyKFqcKfmnNJ7j4Jb+JH739FBcHg5NBD6aR4H_N=zWGwm1ww@mail.gmail.com>
- <5DA88892.5000408@linaro.org> <CAPDyKFpYG7YADb6Xmm=8ug5=5X3d1y+JdkRvrnvtroeV3Yj62Q@mail.gmail.com>
- <5DA89267.30806@linaro.org> <20191029013648.GB27045@bogus>
- <CAPDyKFpiyvGg0+bXDVCbfr+yW0SOH6DhVgAiav8ZnE8TSF6EHQ@mail.gmail.com> <CAL_Jsq+OoyC5FZxYrX_KN1QLDXRvKuFbH=9pLiELsOtoPixnPA@mail.gmail.com>
-In-Reply-To: <CAL_Jsq+OoyC5FZxYrX_KN1QLDXRvKuFbH=9pLiELsOtoPixnPA@mail.gmail.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 30 Oct 2019 10:27:21 +0100
-Message-ID: <CAPDyKFrZ9uFt8zqncYTQ-SB6s6LqSRHbwo+Eh_zu57kxj_2eMw@mail.gmail.com>
-Subject: Re: [PATCH v3 6/7] dt-bindings: soc: qcom: Extend RPMh power
- controller binding to describe thermal warming device
-To:     Rob Herring <robh@kernel.org>
-Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191010131333.23635-2-johan@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 29 Oct 2019 at 21:16, Rob Herring <robh@kernel.org> wrote:
->
-> On Tue, Oct 29, 2019 at 5:07 AM Ulf Hansson <ulf.hansson@linaro.org> wrote:
-> >
-> > On Tue, 29 Oct 2019 at 02:36, Rob Herring <robh@kernel.org> wrote:
-> > >
-> > > On Thu, Oct 17, 2019 at 12:10:15PM -0400, Thara Gopinath wrote:
-> > > > On 10/17/2019 11:43 AM, Ulf Hansson wrote:
-> > > > > On Thu, 17 Oct 2019 at 17:28, Thara Gopinath <thara.gopinath@linaro.org> wrote:
-> > > > >>
-> > > > >> Hello Ulf,
-> > > > >> Thanks for the review!
-> > > > >>
-> > > > >> On 10/17/2019 05:04 AM, Ulf Hansson wrote:
-> > > > >>> On Wed, 16 Oct 2019 at 21:37, Thara Gopinath <thara.gopinath@linaro.org> wrote:
-> > > > >>>>
-> > > > >>>> RPMh power controller hosts mx domain that can be used as thermal
-> > > > >>>> warming device. Add a sub-node to specify this.
-> > > > >>>>
-> > > > >>>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-> > > > >>>> ---
-> > > > >>>>  Documentation/devicetree/bindings/power/qcom,rpmpd.txt | 10 ++++++++++
-> > > > >>>>  1 file changed, 10 insertions(+)
-> > > > >>>>
-> > > > >>>> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-> > > > >>>> index eb35b22..fff695d 100644
-> > > > >>>> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-> > > > >>>> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
-> > > > >>>> @@ -18,6 +18,16 @@ Required Properties:
-> > > > >>>>  Refer to <dt-bindings/power/qcom-rpmpd.h> for the level values for
-> > > > >>>>  various OPPs for different platforms as well as Power domain indexes
-> > > > >>>>
-> > > > >>>> += SUBNODES
-> > > > >>>> +RPMh alsp hosts power domains that can behave as thermal warming device.
-> > > > >>>> +These are expressed as subnodes of the RPMh. The name of the node is used
-> > > > >>>> +to identify the power domain and must therefor be "mx".
-> > > > >>>> +
-> > > > >>>> +- #cooling-cells:
-> > > > >>>> +       Usage: optional
-> > > > >>>> +       Value type: <u32>
-> > > > >>>> +       Definition: must be 2
-> > > > >>>> +
-> > > > >>>
-> > > > >>> Just wanted to express a minor thought about this. In general we use
-> > > > >>> subnodes of PM domain providers to represent the topology of PM
-> > > > >>> domains (subdomains), this is something different, which I guess is
-> > > > >>> fine.
-> > > > >>>
-> > > > >>> I assume the #cooling-cells is here tells us this is not a PM domain
-> > > > >>> provider, but a "cooling device provider"?
-> > > > >> Yep.
-> > > > >>>
-> > > > >>> Also, I wonder if it would be fine to specify "power-domains" here,
-> > > > >>> rather than using "name" as I think that is kind of awkward!?
-> > > > >> Do you mean "power-domain-names" ? I am using this to match against the
-> > > > >> genpd names defined in the provider driver.
-> > > > >
-> > > > > No. If you are using "power-domains" it means that you allow to
-> > > > > describe the specifier for the provider.
-> > > > Yep. But won't this look funny in DT ? The provider node will have a sub
-> > > > node with a power domain referencing to itself Like below: Is this ok ?
-> > > >
-> > > > rpmhpd: power-controller {
-> > > >                                 compatible = "qcom,sdm845-rpmhpd";
-> > > >                                 #power-domain-cells = <1>;
-> > > >
-> > > >                       ...
-> > > >                       ...
-> > > >                               mx_cdev: mx {
-> > > >                                         #cooling-cells = <2>;
-> > > >                                         power-domains = <&rpmhpd      SDM845_MX>;
-> > > >                                 };
-> > > >
-> > >
-> > > The whole concept here seems all wrong to me. Isn't it what's in the
-> > > power domain that's the cooling device. A CPU power domain is not a
-> > > cooling device, the CPU is. Or we wouldn't make a clock a cooling
-> > > device, but what the clock drives.
-> >
-> > Well, I don't think that's entirely correct description either.
-> >
-> > As I see it, it's really the actual PM domain (that manages voltages
-> > for a power island), that needs to stay in full power state and
-> > increase its voltage level, as to warm up some of the silicon. It's
-> > not a regular device, but more a characteristics of how the PM domain
-> > can be used.
->
-> First I've heard of Si needing warming...
+On Thu, Oct 10, 2019 at 03:13:30PM +0200, Johan Hovold wrote:
+> If a process is interrupted while accessing the "gpu" debugfs file and
+> the drm device struct_mutex is contended, release() could return early
+> and fail to free related resources.
+> 
+> Note that the return value from release() is ignored.
+> 
+> Fixes: 4f776f4511c7 ("drm/msm/gpu: Convert the GPU show function to use the GPU state")
+> Cc: stable <stable@vger.kernel.org>     # 4.18
+> Cc: Jordan Crouse <jcrouse@codeaurora.org>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Signed-off-by: Johan Hovold <johan@kernel.org>
+> ---
 
-I guess people go to cooler places with their devices. :-)
+Rob, Sean,
 
->
-> I think I'd just expect the power domain provider to know which
-> domains to power on then.
+Sending a reminder about this one, which is not yet in linux-next.
 
-Yeah, I agree. This seems reasonable.
+Perhaps Daniel can pick it up otherwise?
 
-Thanks!
+Thanks,
+Johan
 
-Kind regards
-Uffe
+>  drivers/gpu/drm/msm/msm_debugfs.c | 6 +-----
+>  1 file changed, 1 insertion(+), 5 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
+> index 6be879578140..1c74381a4fc9 100644
+> --- a/drivers/gpu/drm/msm/msm_debugfs.c
+> +++ b/drivers/gpu/drm/msm/msm_debugfs.c
+> @@ -47,12 +47,8 @@ static int msm_gpu_release(struct inode *inode, struct file *file)
+>  	struct msm_gpu_show_priv *show_priv = m->private;
+>  	struct msm_drm_private *priv = show_priv->dev->dev_private;
+>  	struct msm_gpu *gpu = priv->gpu;
+> -	int ret;
+> -
+> -	ret = mutex_lock_interruptible(&show_priv->dev->struct_mutex);
+> -	if (ret)
+> -		return ret;
+>  
+> +	mutex_lock(&show_priv->dev->struct_mutex);
+>  	gpu->funcs->gpu_state_put(show_priv->state);
+>  	mutex_unlock(&show_priv->dev->struct_mutex);
