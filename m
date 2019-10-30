@@ -2,189 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 448CBE9D7F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2019 15:27:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C0B6E9DAE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2019 15:37:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726425AbfJ3O1q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Oct 2019 10:27:46 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:38122 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726137AbfJ3O1q (ORCPT
+        id S1726377AbfJ3OhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Oct 2019 10:37:03 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:43166 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726137AbfJ3OhD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Oct 2019 10:27:46 -0400
-Received: by mail-qk1-f193.google.com with SMTP id e2so2913414qkn.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2019 07:27:45 -0700 (PDT)
+        Wed, 30 Oct 2019 10:37:03 -0400
+Received: by mail-pg1-f196.google.com with SMTP id l24so1600143pgh.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2019 07:37:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=0Vz1KDYCDT2nsHaipdZBgphD7z8UkOtZoGz67YhDtMM=;
-        b=JPfoLkqBMtflePcsG2m0PMHTXAiStkOEa8LPn1smF+pru4l/wbDQztqjA/77KBu5b8
-         +4+TM8gotpTQHMlqQgNgVarr6Ksgg2u76AA+c/CPubiyByGEFkoBr5/J+fDLdtW5Xc98
-         x9EB/fmVJdZnaEdGdCSCY8Mp0JtRoMcMRDAofwL/xaDRcV18nSTVhzE0kDrQiLVPuMl8
-         Kyv4XqSMWKENZC3EVFmg9K+7/953SfZyjKmawXRQBMCmgdT/+2UGixJM2HCgx5PBD2PN
-         JB+8SsoBrgiZ8e3NJe7G5Qv6gti7JjjIby6foHIcDiQtgmEUZKDe4iVyT6S4d4l4naPe
-         QkCg==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:from:subject:to:cc:user-agent:date;
+        bh=OnvHWKf31kU5T7G+GRyW8KQ7oVqd5iVGELerKYGud0Q=;
+        b=Elp7O9BUncdP/kE50ELNV29c9NTF1imKvURZMH5sXZIfYxerNFW5ykpzny2RkydmGC
+         BOv+NV204Y2aYpqRFT+f/3TKiNyPH1T5LdYJJ15VZ4XW5D0XZlBfIzsy3T80zkSyl/mf
+         w4xHnpNIIYyzH55a3XtRaOmRlzzLYRj+CyW0k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=0Vz1KDYCDT2nsHaipdZBgphD7z8UkOtZoGz67YhDtMM=;
-        b=Zd/biC8zBCgRpEQhHYaTxAL8HFTBr7j1bLrXG/H59y3A35YobAE57ixmclwSBSh/z5
-         lcqCy01xhtdtQjkaV9+KqQ15/MkCanDrvpV9lAH335QiY60Tyb/UUx28NFLvv0r6MeXg
-         qn5F9S2Qoynkqj80m/3kCAT+UF8MCFIJWL9S6FvGE7kKrZYZSGY/xvdeZzk9Vf1Ezsfu
-         +6zylr7rlWapsJ2PCR5zGE0ckWkIJJ4zvx5f4a2ZMdYn5lo8rBU9jLteYGBe8MvYkN9I
-         +h/OpOrK0fp8gFzyyyUr6BEXwKbBcfBEQFcYnWf5ciJWT/IgjLl+PNShkLtuoJ7oOlpw
-         8JJg==
-X-Gm-Message-State: APjAAAWA1WDkxA2DUyBK/diDs62D1NlNTO2G+v5io8KoVkry2Li3RZ8Y
-        tAHenbCGofrOHJM1PkDEgTMyyA==
-X-Google-Smtp-Source: APXvYqy8cFexzqoRmYs3AGz0CkYOjQU34dt4clEvGmzbKsx0WtTc2MzW3Kg6ruCf0gqi2mYNZ7Ht2w==
-X-Received: by 2002:a37:7943:: with SMTP id u64mr104655qkc.295.1572445665090;
-        Wed, 30 Oct 2019 07:27:45 -0700 (PDT)
-Received: from [192.168.1.169] (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
-        by smtp.gmail.com with ESMTPSA id y33sm300083qta.18.2019.10.30.07.27.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Oct 2019 07:27:44 -0700 (PDT)
-Subject: Re: [PATCH v3 6/7] dt-bindings: soc: qcom: Extend RPMh power
- controller binding to describe thermal warming device
-To:     Rob Herring <robh@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>
-References: <1571254641-13626-1-git-send-email-thara.gopinath@linaro.org>
- <1571254641-13626-7-git-send-email-thara.gopinath@linaro.org>
- <CAPDyKFqcKfmnNJ7j4Jb+JH739FBcHg5NBD6aR4H_N=zWGwm1ww@mail.gmail.com>
- <5DA88892.5000408@linaro.org>
- <CAPDyKFpYG7YADb6Xmm=8ug5=5X3d1y+JdkRvrnvtroeV3Yj62Q@mail.gmail.com>
- <5DA89267.30806@linaro.org> <20191029013648.GB27045@bogus>
- <CAPDyKFpiyvGg0+bXDVCbfr+yW0SOH6DhVgAiav8ZnE8TSF6EHQ@mail.gmail.com>
- <CAL_Jsq+OoyC5FZxYrX_KN1QLDXRvKuFbH=9pLiELsOtoPixnPA@mail.gmail.com>
-Cc:     Eduardo Valentin <edubezval@gmail.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <5DB99DDE.3090308@linaro.org>
-Date:   Wed, 30 Oct 2019 10:27:42 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:from:subject:to:cc
+         :user-agent:date;
+        bh=OnvHWKf31kU5T7G+GRyW8KQ7oVqd5iVGELerKYGud0Q=;
+        b=WPYR4lK5Qt5BWTQ8/sAKtN0YNNDaRdgYMY0Ji+QSALiUyX0t3VtiyH26QjRaUuh7Wc
+         Q3znEFmgcYFpg3ir/RCjSzX6ykruHQ9obUMa6uche9wPGta4v7cOy9C0beWbO6vhru7s
+         0LGh1wrcQB8AQz+mLRpzMz8udPKdMm+3GHpHXp3NiKhRfY+0yqahGRe8jjEb+4JSeRJa
+         BqozE1XQ7rW47xSgeAVls1SbHoaUwDN1EJxRAzOjkLkj1Md8ixP/7PxtHjxiO5fBVzfY
+         Phyj/LH+T4/GsfRMMgbRIGa6eBKK8eMbTcxWPtLfRKPyyv2XiS52Bq37feXAJ06eQOmT
+         PuVQ==
+X-Gm-Message-State: APjAAAWrX6DK4NN/05KvJRGIRhdz/xrauEPTxvLBWWyPpJ2/RfKCBNf7
+        HJUhLMohfL3f4yx0H5Co8GgA7w==
+X-Google-Smtp-Source: APXvYqwAOaDPJE9YX0kurT2C1478bGKudWPZUacz2albpuYXmSsOk433FmVtr64ecIfiXAWfaWF9DQ==
+X-Received: by 2002:aa7:8421:: with SMTP id q1mr34967091pfn.174.1572446222424;
+        Wed, 30 Oct 2019 07:37:02 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id e8sm128023pga.17.2019.10.30.07.37.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Oct 2019 07:37:01 -0700 (PDT)
+Message-ID: <5db9a00d.1c69fb81.c3df6.04eb@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <CAL_Jsq+OoyC5FZxYrX_KN1QLDXRvKuFbH=9pLiELsOtoPixnPA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <78809ef8464c46018f3803454c1165ab@codeaurora.org>
+References: <20191023090219.15603-1-rnayak@codeaurora.org> <20191023090219.15603-8-rnayak@codeaurora.org> <5db86bb1.1c69fb81.dc254.ec0b@mx.google.com> <78809ef8464c46018f3803454c1165ab@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH v3 07/11] arm64: dts: qcom: sc7180: Add SPMI PMIC arbiter device
+To:     kgunda@codeaurora.org
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org
+User-Agent: alot/0.8.1
+Date:   Wed, 30 Oct 2019 07:37:00 -0700
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+Quoting kgunda@codeaurora.org (2019-10-29 23:06:43)
+> On 2019-10-29 22:11, Stephen Boyd wrote:
+> > Quoting Rajendra Nayak (2019-10-23 02:02:15)
+> >> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi=20
+> >> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> >> index 04808a07d7da..6584ac6e6c7b 100644
+> >> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> >> @@ -224,6 +224,25 @@
+> >>                         };
+> >>                 };
+> >>=20
+> >> +               spmi_bus: spmi@c440000 {
+> >> +                       compatible =3D "qcom,spmi-pmic-arb";
+> >> +                       reg =3D <0 0xc440000 0 0x1100>,
+> >=20
+> > Please pad out the registers to 8 numbers. See sdm845.
+> Ok.. Will address it in the next series.
+> >=20
+> >> +                             <0 0xc600000 0 0x2000000>,
+> >> +                             <0 0xe600000 0 0x100000>,
+> >> +                             <0 0xe700000 0 0xa0000>,
+> >> +                             <0 0xc40a000 0 0x26000>;
+> >> +                       reg-names =3D "core", "chnls", "obsrvr", "intr=
+",=20
+> >> "cnfg";
+> >> +                       interrupt-names =3D "periph_irq";
+> >> +                       interrupts-extended =3D <&pdc 1=20
+> >> IRQ_TYPE_LEVEL_HIGH>;
+> >=20
+> > This is different than sdm845. I guess pdc is working?
+> >=20
+> Yes. For SDM845 pdc controller support was not yet added. That's why=20
+> still the GIC interrupt is used.
+> Where as for SC7180 the same is added with=20
+> https://lore.kernel.org/patchwork/patch/1143335/.
+>=20
+> Yes. pdc is working.
 
-Thanks for the review.
+Cool. The patch that adds pdc to the DT should come before this one
+then. In reality, it would be better if it was all squashed down into
+one big commit that just introduces the SoC file and one commit for
+PMICs and then one commit for the idp board. Then we don't have this
+ordering problem.
 
-On 10/29/2019 04:16 PM, Rob Herring wrote:
-> On Tue, Oct 29, 2019 at 5:07 AM Ulf Hansson <ulf.hansson@linaro.org> wrote:
->>
->> On Tue, 29 Oct 2019 at 02:36, Rob Herring <robh@kernel.org> wrote:
->>>
->>> On Thu, Oct 17, 2019 at 12:10:15PM -0400, Thara Gopinath wrote:
->>>> On 10/17/2019 11:43 AM, Ulf Hansson wrote:
->>>>> On Thu, 17 Oct 2019 at 17:28, Thara Gopinath <thara.gopinath@linaro.org> wrote:
->>>>>>
->>>>>> Hello Ulf,
->>>>>> Thanks for the review!
->>>>>>
->>>>>> On 10/17/2019 05:04 AM, Ulf Hansson wrote:
->>>>>>> On Wed, 16 Oct 2019 at 21:37, Thara Gopinath <thara.gopinath@linaro.org> wrote:
->>>>>>>>
->>>>>>>> RPMh power controller hosts mx domain that can be used as thermal
->>>>>>>> warming device. Add a sub-node to specify this.
->>>>>>>>
->>>>>>>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
->>>>>>>> ---
->>>>>>>>  Documentation/devicetree/bindings/power/qcom,rpmpd.txt | 10 ++++++++++
->>>>>>>>  1 file changed, 10 insertions(+)
->>>>>>>>
->>>>>>>> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
->>>>>>>> index eb35b22..fff695d 100644
->>>>>>>> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
->>>>>>>> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
->>>>>>>> @@ -18,6 +18,16 @@ Required Properties:
->>>>>>>>  Refer to <dt-bindings/power/qcom-rpmpd.h> for the level values for
->>>>>>>>  various OPPs for different platforms as well as Power domain indexes
->>>>>>>>
->>>>>>>> += SUBNODES
->>>>>>>> +RPMh alsp hosts power domains that can behave as thermal warming device.
->>>>>>>> +These are expressed as subnodes of the RPMh. The name of the node is used
->>>>>>>> +to identify the power domain and must therefor be "mx".
->>>>>>>> +
->>>>>>>> +- #cooling-cells:
->>>>>>>> +       Usage: optional
->>>>>>>> +       Value type: <u32>
->>>>>>>> +       Definition: must be 2
->>>>>>>> +
->>>>>>>
->>>>>>> Just wanted to express a minor thought about this. In general we use
->>>>>>> subnodes of PM domain providers to represent the topology of PM
->>>>>>> domains (subdomains), this is something different, which I guess is
->>>>>>> fine.
->>>>>>>
->>>>>>> I assume the #cooling-cells is here tells us this is not a PM domain
->>>>>>> provider, but a "cooling device provider"?
->>>>>> Yep.
->>>>>>>
->>>>>>> Also, I wonder if it would be fine to specify "power-domains" here,
->>>>>>> rather than using "name" as I think that is kind of awkward!?
->>>>>> Do you mean "power-domain-names" ? I am using this to match against the
->>>>>> genpd names defined in the provider driver.
->>>>>
->>>>> No. If you are using "power-domains" it means that you allow to
->>>>> describe the specifier for the provider.
->>>> Yep. But won't this look funny in DT ? The provider node will have a sub
->>>> node with a power domain referencing to itself Like below: Is this ok ?
->>>>
->>>> rpmhpd: power-controller {
->>>>                                 compatible = "qcom,sdm845-rpmhpd";
->>>>                                 #power-domain-cells = <1>;
->>>>
->>>>                       ...
->>>>                       ...
->>>>                               mx_cdev: mx {
->>>>                                         #cooling-cells = <2>;
->>>>                                         power-domains = <&rpmhpd      SDM845_MX>;
->>>>                                 };
->>>>
->>>
->>> The whole concept here seems all wrong to me. Isn't it what's in the
->>> power domain that's the cooling device. A CPU power domain is not a
->>> cooling device, the CPU is. Or we wouldn't make a clock a cooling
->>> device, but what the clock drives.
->>
->> Well, I don't think that's entirely correct description either.
->>
->> As I see it, it's really the actual PM domain (that manages voltages
->> for a power island), that needs to stay in full power state and
->> increase its voltage level, as to warm up some of the silicon. It's
->> not a regular device, but more a characteristics of how the PM domain
->> can be used.
-> 
-> First I've heard of Si needing warming...
-Cold regions and non-closing of circuits is what I am told.
-> 
-> I think I'd just expect the power domain provider to know which
-> domains to power on then.
-I will just retain #cooling-cells in the power domain provider and let
-the driver identify the actual power domains.
-
-> 
-> Rob
-> 
-
-
--- 
-Warm Regards
-Thara
