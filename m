@@ -2,208 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D5662E99CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2019 11:16:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04157E9B9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2019 13:38:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726384AbfJ3KQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Oct 2019 06:16:00 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37673 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726046AbfJ3KP7 (ORCPT
+        id S1726664AbfJ3MiK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Oct 2019 08:38:10 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:37552 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726088AbfJ3MiK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Oct 2019 06:15:59 -0400
-Received: by mail-wr1-f68.google.com with SMTP id e11so1614124wrv.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2019 03:15:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bRWjTok3cpmeNtVxH6zc/st7z28BlZWUi3b8mpXF5U0=;
-        b=dIv/d7gJcpOEWC1xWTFw2diyMpxZAL9inhvW98xziJlL8S5flMDpFWV0csaWJaWQ92
-         BluWhytq+fc8o8A6OYpD+dPmPqZ/RkDz+gwLzb6rg3L6DfBajfIvqG4MXsX+nLLvUtoX
-         Qq7uW7o2oFJCa3B55NuhdQHBCUy2z93njyhNj+g/gA88M4LM2iKT83TmZwgs4DkI4y6E
-         mszp4gHs/u7Xkt4g121W4/r2n0cpmNhj0dsEnjaRZ5a22F/08XZbtu2oMfUu0Uba9DDW
-         f7fSczLwYZKyMOv3UeBtHNXg4NMg9MYqVsgPL5eVYLG00x5/vpYa91rBMsO754uf4jji
-         ox6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bRWjTok3cpmeNtVxH6zc/st7z28BlZWUi3b8mpXF5U0=;
-        b=p1yIGzL2EwfCJqNrW63paXLzQ0MIewf1VmpxxfwtLfVZAWHBXPTf2LAIWMzcIgcZ3i
-         GZ1/DNymrSxjZH0NywGWJKIkRp3LvYF40AcP1pGgSlhvdUGZZozLiMIink0OmRjD0MIY
-         6qw6noRPjwCXdtbC69oKhkwGv4kTFOKtSIbHVSrJY2szhEjLu1FwU9qlAay2v1df3ekb
-         Lil39iWZEie449yr2Dw+qVQTtTt7w/twJHQgegxopWKNcpmb279qdKP3SULdOuGsf+G8
-         zKtKFJlc+aHxTO2E0AxJhva7w0yk0VOyfppEc9nnlLWHPAxqau+ilQXX0MkCC+9bdEJR
-         /yMw==
-X-Gm-Message-State: APjAAAUVlSa5v/JKhChyORXqlkRjyq/UEN2F0ShlmvZnNvGMKb1Mpblc
-        0McBN0R8tYCDxCop5x8e24dCIGwHTNzpKw==
-X-Google-Smtp-Source: APXvYqxeF/PukXETq4F5oK9NFZgfPCY5B5NiL2Av5xLntDJ7THjOYuQoCWT2mRaiFzGMcFpuAtTAJA==
-X-Received: by 2002:adf:e942:: with SMTP id m2mr2012593wrn.26.1572430556898;
-        Wed, 30 Oct 2019 03:15:56 -0700 (PDT)
-Received: from localhost.localdomain ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id u7sm4923842wre.59.2019.10.30.03.15.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 30 Oct 2019 03:15:56 -0700 (PDT)
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-To:     robh+dt@kernel.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Georgi Djakov <georgi.djakov@linaro.org>
-Subject: [PATCH] dt-bindings: interconnect: Convert qcom,qcs404 to DT schema
-Date:   Wed, 30 Oct 2019 12:15:55 +0200
-Message-Id: <20191030101555.10955-1-georgi.djakov@linaro.org>
-X-Mailer: git-send-email 2.23.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Wed, 30 Oct 2019 08:38:10 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id B4B546106C; Wed, 30 Oct 2019 12:38:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1572439088;
+        bh=DBmrumYHBj8SE4uwRjnrzfskPulH9RfV3P8m3bSOu9c=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=gx0cugH76qiK7S4sEghOVcvfp6+XUvom9Wr3XHPxpwh3qG1WljvcGztX7Os9UAx56
+         JQjHvIioFoNNKugOoaHlC7ep6Awb+FcVcIij6Hi+qwuKxxdHzhJ1DiEc2K2Uduy3X1
+         gXS7ItuC3Tm38BwvsJttm+lsktnSdjMNfQpkcDos=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: cang@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C066A60FF9;
+        Wed, 30 Oct 2019 12:38:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1572439087;
+        bh=DBmrumYHBj8SE4uwRjnrzfskPulH9RfV3P8m3bSOu9c=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=dJNMGydy3+2bRqoTba3UbKgzlyOGWfcdMzh113l5IF5izs1N+LjSnsVATAjZOpUMl
+         TGSGQ23VbH8KLDGhq7QpBXE271pVObf9YC6lNNx5+uZdo12x3Zu91I2KBEVvBkzcbt
+         jPBHUca4bOwxzDoiovvpKIFcAq/yxyN5ymqDf+Eo=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C066A60FF9
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=cang@codeaurora.org
+From:   Can Guo <cang@codeaurora.org>
+To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        rnayak@codeaurora.org, linux-scsi@vger.kernel.org,
+        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
+        cang@codeaurora.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v1 2/2] scsi: ufs-qcom: Export bus bandwidth voting ops
+Date:   Wed, 30 Oct 2019 05:37:43 -0700
+Message-Id: <1572439064-28785-3-git-send-email-cang@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1572439064-28785-1-git-send-email-cang@codeaurora.org>
+References: <1572439064-28785-1-git-send-email-cang@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the qcom,qcs404 interconnect provider binding to DT schema.
+Export bus bandwidth voting ops so that UFS driver can vote for
+bus bandwidth change through vendor ops.
 
-Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+Signed-off-by: Can Guo <cang@codeaurora.org>
 ---
- .../bindings/interconnect/qcom,qcs404.txt     | 45 -----------
- .../bindings/interconnect/qcom,qcs404.yaml    | 77 +++++++++++++++++++
- 2 files changed, 77 insertions(+), 45 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
- create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcs404.yaml
+ drivers/scsi/ufs/ufs-qcom.c | 53 ++++++++++++++++++++++++++++++---------------
+ 1 file changed, 35 insertions(+), 18 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt b/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
-deleted file mode 100644
-index c07d89812b73..000000000000
---- a/Documentation/devicetree/bindings/interconnect/qcom,qcs404.txt
-+++ /dev/null
-@@ -1,45 +0,0 @@
--Qualcomm QCS404 Network-On-Chip interconnect driver binding
-------------------------------------------------------------
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index a5b7148..0a6fac9 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -38,7 +38,6 @@ enum {
+ 
+ static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
+ 
+-static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote);
+ static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
+ static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
+ 						       u32 clk_cycles);
+@@ -630,7 +629,7 @@ static void ufs_qcom_get_speed_mode(struct ufs_pa_layer_attr *p, char *result)
+ 	}
+ }
+ 
+-static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote)
++static int __ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote)
+ {
+ 	int err = 0;
+ 
+@@ -661,7 +660,7 @@ static int ufs_qcom_update_bus_bw_vote(struct ufs_qcom_host *host)
+ 
+ 	vote = ufs_qcom_get_bus_vote(host, mode);
+ 	if (vote >= 0)
+-		err = ufs_qcom_set_bus_vote(host, vote);
++		err = __ufs_qcom_set_bus_vote(host, vote);
+ 	else
+ 		err = vote;
+ 
+@@ -672,6 +671,35 @@ static int ufs_qcom_update_bus_bw_vote(struct ufs_qcom_host *host)
+ 	return err;
+ }
+ 
++static int ufs_qcom_set_bus_vote(struct ufs_hba *hba, bool on)
++{
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++	int vote, err;
++
++	/*
++	 * In case ufs_qcom_init() is not yet done, simply ignore.
++	 * This ufs_qcom_set_bus_vote() shall be called from
++	 * ufs_qcom_init() after init is done.
++	 */
++	if (!host)
++		return 0;
++
++	if (on) {
++		vote = host->bus_vote.saved_vote;
++		if (vote == host->bus_vote.min_bw_vote)
++			ufs_qcom_update_bus_bw_vote(host);
++	} else {
++		vote = host->bus_vote.min_bw_vote;
++	}
++
++	err = __ufs_qcom_set_bus_vote(host, vote);
++	if (err)
++		dev_err(hba->dev, "%s: set bus vote failed %d\n",
++				__func__, err);
++
++	return err;
++}
++
+ static ssize_t
+ show_ufs_to_mem_max_bus_bw(struct device *dev, struct device_attribute *attr,
+ 			char *buf)
+@@ -748,7 +776,7 @@ static int ufs_qcom_update_bus_bw_vote(struct ufs_qcom_host *host)
+ 	return 0;
+ }
+ 
+-static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote)
++static int ufs_qcom_set_bus_vote(struct ufs_hba *host, bool on)
+ {
+ 	return 0;
+ }
+@@ -986,8 +1014,6 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
+ 				 enum ufs_notify_change_status status)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+-	int err;
+-	int vote = 0;
+ 
+ 	/*
+ 	 * In case ufs_qcom_init() is not yet done, simply ignore.
+@@ -1001,25 +1027,14 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
+ 		/* enable the device ref clock for HS mode*/
+ 		if (ufshcd_is_hs_mode(&hba->pwr_info))
+ 			ufs_qcom_dev_ref_clk_ctrl(host, true);
+-		vote = host->bus_vote.saved_vote;
+-		if (vote == host->bus_vote.min_bw_vote)
+-			ufs_qcom_update_bus_bw_vote(host);
 -
--Required properties :
--- compatible : shall contain only one of the following:
--			"qcom,qcs404-bimc"
--			"qcom,qcs404-pcnoc"
--			"qcom,qcs404-snoc"
--- #interconnect-cells : should contain 1
+ 	} else if (!on && (status == PRE_CHANGE)) {
+ 		if (!ufs_qcom_is_link_active(hba)) {
+ 			/* disable device ref_clk */
+ 			ufs_qcom_dev_ref_clk_ctrl(host, false);
+ 		}
 -
--reg : specifies the physical base address and size of registers
--clocks : list of phandles and specifiers to all interconnect bus clocks
--clock-names : clock names should include both "bus" and "bus_a"
+-		vote = host->bus_vote.min_bw_vote;
+ 	}
+ 
+-	err = ufs_qcom_set_bus_vote(host, vote);
+-	if (err)
+-		dev_err(hba->dev, "%s: set bus vote failed %d\n",
+-				__func__, err);
 -
--Example:
--
--soc {
--	...
--	bimc: interconnect@400000 {
--		reg = <0x00400000 0x80000>;
--		compatible = "qcom,qcs404-bimc";
--		#interconnect-cells = <1>;
--		clock-names = "bus", "bus_a";
--		clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
--			<&rpmcc RPM_SMD_BIMC_A_CLK>;
--	};
--
--	pnoc: interconnect@500000 {
--		reg = <0x00500000 0x15080>;
--		compatible = "qcom,qcs404-pcnoc";
--		#interconnect-cells = <1>;
--		clock-names = "bus", "bus_a";
--		clocks = <&rpmcc RPM_SMD_PNOC_CLK>,
--			<&rpmcc RPM_SMD_PNOC_A_CLK>;
--	};
--
--	snoc: interconnect@580000 {
--		reg = <0x00580000 0x23080>;
--		compatible = "qcom,qcs404-snoc";
--		#interconnect-cells = <1>;
--		clock-names = "bus", "bus_a";
--		clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
--			<&rpmcc RPM_SMD_SNOC_A_CLK>;
--	};
--};
-diff --git a/Documentation/devicetree/bindings/interconnect/qcom,qcs404.yaml b/Documentation/devicetree/bindings/interconnect/qcom,qcs404.yaml
-new file mode 100644
-index 000000000000..8d65c5f80679
---- /dev/null
-+++ b/Documentation/devicetree/bindings/interconnect/qcom,qcs404.yaml
-@@ -0,0 +1,77 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/interconnect/qcom,qcs404.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm QCS404 Network-On-Chip interconnect
-+
-+maintainers:
-+  - Georgi Djakov <georgi.djakov@linaro.org>
-+
-+description: |
-+   The Qualcomm QCS404 interconnect providers support adjusting the
-+   bandwidth requirements between the various NoC fabrics.
-+
-+properties:
-+  reg:
-+    maxItems: 1
-+
-+  compatible:
-+    enum:
-+      - qcom,qcs404-bimc
-+      - qcom,qcs404-pcnoc
-+      - qcom,qcs404-snoc
-+
-+  '#interconnect-cells':
-+    const: 1
-+
-+  clock-names:
-+    items:
-+      - const: bus
-+      - const: bus_a
-+
-+  clocks:
-+    items:
-+      - description: Bus Clock
-+      - description: Bus A Clock
-+
-+required:
-+  - compatible
-+  - reg
-+  - '#interconnect-cells'
-+  - clock-names
-+  - clocks
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+      #include <dt-bindings/clock/qcom,rpmcc.h>
-+
-+      bimc: interconnect@400000 {
-+              reg = <0x00400000 0x80000>;
-+              compatible = "qcom,qcs404-bimc";
-+              #interconnect-cells = <1>;
-+              clock-names = "bus", "bus_a";
-+              clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
-+                       <&rpmcc RPM_SMD_BIMC_A_CLK>;
-+      };
-+
-+      pnoc: interconnect@500000 {
-+             reg = <0x00500000 0x15080>;
-+             compatible = "qcom,qcs404-pcnoc";
-+             #interconnect-cells = <1>;
-+             clock-names = "bus", "bus_a";
-+             clocks = <&rpmcc RPM_SMD_PNOC_CLK>,
-+                      <&rpmcc RPM_SMD_PNOC_A_CLK>;
-+      };
-+
-+      snoc: interconnect@580000 {
-+            reg = <0x00580000 0x23080>;
-+            compatible = "qcom,qcs404-snoc";
-+            #interconnect-cells = <1>;
-+            clock-names = "bus", "bus_a";
-+            clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
-+                     <&rpmcc RPM_SMD_SNOC_A_CLK>;
-+      };
+-	return err;
++	return 0;
+ }
+ 
+ static int
+@@ -1185,6 +1200,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+ 	ufs_qcom_set_caps(hba);
+ 	ufs_qcom_advertise_quirks(hba);
+ 
++	ufs_qcom_set_bus_vote(hba, true);
+ 	ufs_qcom_setup_clocks(hba, true, POST_CHANGE);
+ 
+ 	if (hba->dev->id < MAX_UFS_QCOM_HOSTS)
+@@ -1597,6 +1613,7 @@ static void ufs_qcom_device_reset(struct ufs_hba *hba)
+ 	.suspend		= ufs_qcom_suspend,
+ 	.resume			= ufs_qcom_resume,
+ 	.dbg_register_dump	= ufs_qcom_dump_dbg_regs,
++	.set_bus_vote		= ufs_qcom_set_bus_vote,
+ 	.device_reset		= ufs_qcom_device_reset,
+ };
+ 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
