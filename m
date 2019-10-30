@@ -2,87 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 16771E96FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2019 08:07:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1648AE9921
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2019 10:28:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726871AbfJ3HHX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Oct 2019 03:07:23 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:43926 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726070AbfJ3HHX (ORCPT
+        id S1726255AbfJ3J2A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Oct 2019 05:28:00 -0400
+Received: from mail-vk1-f193.google.com ([209.85.221.193]:43014 "EHLO
+        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726032AbfJ3J2A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Oct 2019 03:07:23 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 25FA660BE6; Wed, 30 Oct 2019 07:07:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572419242;
-        bh=PWRjE6RA4CMfH450ZAFjtGOqrhjym1PHjOFH8oC6DQg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PhpZDYkG+8qO+iK+2i+DV9TE+rW2MN6UbXI6OvhZneMpHxv/SsflZNOHyq+UfknFK
-         FxNo2Pseytgm82ZmBEcABec6pwIFBw0q3+zABlUSBnoeEcCXWV4t5rQk60NICc1yF+
-         Bl57Zw/1tXQq7bWAv8b86q+vwTVYMRRjVvvmymRA=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 603D360F7E;
-        Wed, 30 Oct 2019 07:07:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572419241;
-        bh=PWRjE6RA4CMfH450ZAFjtGOqrhjym1PHjOFH8oC6DQg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=oceSxv5T/D6sd2Fwmh2qJvYKqlA1RKBsQx/UH/7iHufWtkNRk9NP0x8MvIMVELwYt
-         TdVZdbvpZle3ovEq/6DD4ALLFoExxohCAEEkZqoLH8MXKJwvoC1z0+/C00ivEpdyHc
-         Zp6Jl09R0UZ8lvtih7b2fH98q0LihczEk1zxUhz4=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 603D360F7E
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
-        linus.walleij@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-gpio@vger.kernel.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org, mka@chromium.org,
-        swboyd@chromium.org, evgreen@chromium.org, dianders@chromium.org,
-        Maulik Shah <mkshah@codeaurora.org>, devicetree@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: sc7180: Add wakeup parent for TLMM
-Date:   Wed, 30 Oct 2019 12:36:18 +0530
-Message-Id: <1572419178-5750-3-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1572419178-5750-1-git-send-email-mkshah@codeaurora.org>
-References: <1572419178-5750-1-git-send-email-mkshah@codeaurora.org>
+        Wed, 30 Oct 2019 05:28:00 -0400
+Received: by mail-vk1-f193.google.com with SMTP id k19so313222vke.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2019 02:27:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MN5/XA2iWTn3JwsaVPfUNETYKLVHfkkM5TGKnq2qWow=;
+        b=q4vfihaI5SgnZO1mREK0EE92a2TcRqe5YARf2JUxGWe8b3RCSilUTop4ZV/z3M/1Ia
+         weN9ltfEM6u2b4/2t7/tw+Nxzk9cRD14JW13Kz1VeE42C+IfgQ/qD2/hYVUPK3BAQwqG
+         tlqjEzGFBCSsTNQ14MgdrT4ebi23gasDFuGezAvuHNHJVgg3LEBNiT6EXtL0homvbZhl
+         mio1vgHviIVlTCyvDstI8u54o+OZPUxbYIwR8RMJpDrxPfE5AB+uNioto7r5yR/eGy3p
+         WyJYHYunxFfhqU8bWoLWNd6oujzPiq2P6zitBof1M66HTaRyvjAV9LM2oWjqPhZdzTpp
+         LUnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MN5/XA2iWTn3JwsaVPfUNETYKLVHfkkM5TGKnq2qWow=;
+        b=DXREmh7nr3A/22wpV7ySpSPS9JV+sRku15kIrERIZl7Kl1P7jULGMlVoISO5q6Rw2S
+         q1QaSFbydavNH3juP7lEQUUykLPNbDBprZ4qaEFNw9J8hN6B/jlIeDxtPmSljoaFlVah
+         1rkhbrzbwSkZlg23c0HHMH/FhRXGYakCGvwSe3PKkaUetadm4RKfuXDsxrdn5u/dRFre
+         8JcQsqZKMmyhGRlyFVn1d944EnIjhhQ8UGuW+O+cQh0kD2FMt6szEdt2KZq8Hs0G+/MZ
+         VLY4p80bS8shpetkhCHT85yQW5P7yYiDjFtmGDOzsE2JEOT+z45xUzK5kPFRyAarC/rD
+         klcw==
+X-Gm-Message-State: APjAAAU2LULT6qCrU1NwdGOQaajCeE2xJtcHBX6p6WetXlew517jS3en
+        OZcNRbJW0X96RQ96mo7QnRWO6kL+WkjsndAZ5RjShA==
+X-Google-Smtp-Source: APXvYqzSHup2gFA5wBykiES6RNVVoT6htSpGRNx96Dg7POOVg6LTuWNWzkXHYGZc5adR+GHSe5AntmF9j9UEzqu7mqI=
+X-Received: by 2002:a1f:b202:: with SMTP id b2mr14227092vkf.59.1572427678476;
+ Wed, 30 Oct 2019 02:27:58 -0700 (PDT)
+MIME-Version: 1.0
+References: <1571254641-13626-1-git-send-email-thara.gopinath@linaro.org>
+ <1571254641-13626-7-git-send-email-thara.gopinath@linaro.org>
+ <CAPDyKFqcKfmnNJ7j4Jb+JH739FBcHg5NBD6aR4H_N=zWGwm1ww@mail.gmail.com>
+ <5DA88892.5000408@linaro.org> <CAPDyKFpYG7YADb6Xmm=8ug5=5X3d1y+JdkRvrnvtroeV3Yj62Q@mail.gmail.com>
+ <5DA89267.30806@linaro.org> <20191029013648.GB27045@bogus>
+ <CAPDyKFpiyvGg0+bXDVCbfr+yW0SOH6DhVgAiav8ZnE8TSF6EHQ@mail.gmail.com> <CAL_Jsq+OoyC5FZxYrX_KN1QLDXRvKuFbH=9pLiELsOtoPixnPA@mail.gmail.com>
+In-Reply-To: <CAL_Jsq+OoyC5FZxYrX_KN1QLDXRvKuFbH=9pLiELsOtoPixnPA@mail.gmail.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 30 Oct 2019 10:27:21 +0100
+Message-ID: <CAPDyKFrZ9uFt8zqncYTQ-SB6s6LqSRHbwo+Eh_zu57kxj_2eMw@mail.gmail.com>
+Subject: Re: [PATCH v3 6/7] dt-bindings: soc: qcom: Extend RPMh power
+ controller binding to describe thermal warming device
+To:     Rob Herring <robh@kernel.org>
+Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Specify wakeup parent irqchip for sc7180 TLMM.
+On Tue, 29 Oct 2019 at 21:16, Rob Herring <robh@kernel.org> wrote:
+>
+> On Tue, Oct 29, 2019 at 5:07 AM Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> >
+> > On Tue, 29 Oct 2019 at 02:36, Rob Herring <robh@kernel.org> wrote:
+> > >
+> > > On Thu, Oct 17, 2019 at 12:10:15PM -0400, Thara Gopinath wrote:
+> > > > On 10/17/2019 11:43 AM, Ulf Hansson wrote:
+> > > > > On Thu, 17 Oct 2019 at 17:28, Thara Gopinath <thara.gopinath@linaro.org> wrote:
+> > > > >>
+> > > > >> Hello Ulf,
+> > > > >> Thanks for the review!
+> > > > >>
+> > > > >> On 10/17/2019 05:04 AM, Ulf Hansson wrote:
+> > > > >>> On Wed, 16 Oct 2019 at 21:37, Thara Gopinath <thara.gopinath@linaro.org> wrote:
+> > > > >>>>
+> > > > >>>> RPMh power controller hosts mx domain that can be used as thermal
+> > > > >>>> warming device. Add a sub-node to specify this.
+> > > > >>>>
+> > > > >>>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+> > > > >>>> ---
+> > > > >>>>  Documentation/devicetree/bindings/power/qcom,rpmpd.txt | 10 ++++++++++
+> > > > >>>>  1 file changed, 10 insertions(+)
+> > > > >>>>
+> > > > >>>> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
+> > > > >>>> index eb35b22..fff695d 100644
+> > > > >>>> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
+> > > > >>>> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
+> > > > >>>> @@ -18,6 +18,16 @@ Required Properties:
+> > > > >>>>  Refer to <dt-bindings/power/qcom-rpmpd.h> for the level values for
+> > > > >>>>  various OPPs for different platforms as well as Power domain indexes
+> > > > >>>>
+> > > > >>>> += SUBNODES
+> > > > >>>> +RPMh alsp hosts power domains that can behave as thermal warming device.
+> > > > >>>> +These are expressed as subnodes of the RPMh. The name of the node is used
+> > > > >>>> +to identify the power domain and must therefor be "mx".
+> > > > >>>> +
+> > > > >>>> +- #cooling-cells:
+> > > > >>>> +       Usage: optional
+> > > > >>>> +       Value type: <u32>
+> > > > >>>> +       Definition: must be 2
+> > > > >>>> +
+> > > > >>>
+> > > > >>> Just wanted to express a minor thought about this. In general we use
+> > > > >>> subnodes of PM domain providers to represent the topology of PM
+> > > > >>> domains (subdomains), this is something different, which I guess is
+> > > > >>> fine.
+> > > > >>>
+> > > > >>> I assume the #cooling-cells is here tells us this is not a PM domain
+> > > > >>> provider, but a "cooling device provider"?
+> > > > >> Yep.
+> > > > >>>
+> > > > >>> Also, I wonder if it would be fine to specify "power-domains" here,
+> > > > >>> rather than using "name" as I think that is kind of awkward!?
+> > > > >> Do you mean "power-domain-names" ? I am using this to match against the
+> > > > >> genpd names defined in the provider driver.
+> > > > >
+> > > > > No. If you are using "power-domains" it means that you allow to
+> > > > > describe the specifier for the provider.
+> > > > Yep. But won't this look funny in DT ? The provider node will have a sub
+> > > > node with a power domain referencing to itself Like below: Is this ok ?
+> > > >
+> > > > rpmhpd: power-controller {
+> > > >                                 compatible = "qcom,sdm845-rpmhpd";
+> > > >                                 #power-domain-cells = <1>;
+> > > >
+> > > >                       ...
+> > > >                       ...
+> > > >                               mx_cdev: mx {
+> > > >                                         #cooling-cells = <2>;
+> > > >                                         power-domains = <&rpmhpd      SDM845_MX>;
+> > > >                                 };
+> > > >
+> > >
+> > > The whole concept here seems all wrong to me. Isn't it what's in the
+> > > power domain that's the cooling device. A CPU power domain is not a
+> > > cooling device, the CPU is. Or we wouldn't make a clock a cooling
+> > > device, but what the clock drives.
+> >
+> > Well, I don't think that's entirely correct description either.
+> >
+> > As I see it, it's really the actual PM domain (that manages voltages
+> > for a power island), that needs to stay in full power state and
+> > increase its voltage level, as to warm up some of the silicon. It's
+> > not a regular device, but more a characteristics of how the PM domain
+> > can be used.
+>
+> First I've heard of Si needing warming...
 
-Cc: devicetree@vger.kernel.org
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+I guess people go to cooler places with their devices. :-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 69d5e2c..9040eee 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -321,6 +321,7 @@
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
- 			gpio-ranges = <&tlmm 0 0 120>;
-+			wakeup-parent = <&pdc>;
- 
- 			qup_uart2_default: qup-uart2-default {
- 				pinmux {
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+>
+> I think I'd just expect the power domain provider to know which
+> domains to power on then.
 
+Yeah, I agree. This seems reasonable.
+
+Thanks!
+
+Kind regards
+Uffe
