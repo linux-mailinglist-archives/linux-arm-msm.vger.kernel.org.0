@@ -2,98 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A61AEB796
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 19:55:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A7A2EB79F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 19:57:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729312AbfJaSzo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Oct 2019 14:55:44 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:36383 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729252AbfJaSzo (ORCPT
+        id S1729456AbfJaS5X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Oct 2019 14:57:23 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:43307 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729449AbfJaS5W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Oct 2019 14:55:44 -0400
-Received: by mail-pg1-f194.google.com with SMTP id j22so4644771pgh.3;
-        Thu, 31 Oct 2019 11:55:43 -0700 (PDT)
+        Thu, 31 Oct 2019 14:57:22 -0400
+Received: by mail-pg1-f195.google.com with SMTP id l24so4625645pgh.10;
+        Thu, 31 Oct 2019 11:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=V4zHkz97KorGmF5oNhQ1X/YNEyDV1blf18i25yJIMSc=;
-        b=QKUvn9aryQXg9mC1+JzlNx9O0XTKZ0saRgUgv18RXeufnupDvOVoceVRHRxHlp/cxd
-         +yzgdl+GYGgW/4xK1+YYQ9sgb6dnhyIMdTFDXIs2PNjDI2EGLAmsqY/+PmElXaA4aAdG
-         /HR0RZKSYwX3D1/FrogRT6/sDdf3CU8t+wLH687kxgNykN424HqPmBiGvHeA5foOBzvr
-         H3wNd6/p+FTkg3BLsT8iNRSqmjoVnRD82BNv92c2p7zqUVj5YiaeH/S6dA3uNJwQZO/i
-         FcH2Gk71huUJmE5rK10/g0fRtBoNe6cAd29MrwEGTd0tptm0F2eoGAqCBnWo3EiAN/hH
-         iaJg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Hwivt2QaT2reDFA/i4CNRv6b//VFZ+Pr2+rJ26/VMuo=;
+        b=UHZMltmuREk7VrkYOBkMqMXOM6cIfVpk/UfNwK6IdUHWJ17SeOSEl0jXpY27VztQ9u
+         hRsSXK1zA9+s7fvcIa3gR7Nn6DQB/k8KKeuqSms3szB0bksnq4TbHqJc93SHIvg0jO9i
+         fh1PoTE2bOnGK1n/Ci5qzhathMpyLiQTeGp8evC6WElzYWD5TL9A6CSRLUOgNRHo/8az
+         LNh47zI2LvDiArO7MzdWfiq2dn2PfJKB1w0ugHUPHcl3rPKbt7Eae6j4x/2hoOxbkIFe
+         BjOtpnDLvVNy5dN3VzRVdIlcRpsQ19husDGyqo86UIoiiUXOJkePLNK3SUidbJ4CEMU0
+         JWZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=V4zHkz97KorGmF5oNhQ1X/YNEyDV1blf18i25yJIMSc=;
-        b=sWp5t1JkL3zIOG0gSaD9ZdBY0aQZ24NEZ4YEVVYjJmDQ5e9iEIACAiDxkuUV+w0SMo
-         hgonEVB3BBrUr8CB3W5MXvssFqP7VPrxhIxd6NuVMewSDe/2Mniq9OtpSgVVWRWZvrQT
-         jWMwiZVLQfcGplmkCLvJzG9uTMSTK0V29dpoLzR9gFEHFVo64lRbx8dv2AorY7UqOPKb
-         CfJtDkyUR4WPGRQiA6qgu8oykUsqvqriUT1ZA5hWQfasH+g8M5bn7HYcfFJ4+A6Fvpz1
-         wow8FweTy60oZOz4fC1YLIIgy7/HxTZ/GYJ4kXYSreM+SwZBeDKky1KOE1Y3oM0vni9q
-         a6zQ==
-X-Gm-Message-State: APjAAAWEOB/ig2i7A0/yy/RJcoiaj0yS/1Ps82D+lsn5h1OxpwoJq4AR
-        lsM/5eqdU8OSKpkqjhGqXxGRNab/
-X-Google-Smtp-Source: APXvYqzMY0miZHmTefMxF8haeXaq2pUxAMaIIMYFZbsseaQNDBT0MBr9YLBl1nPaa11OKloN6ayu4Q==
-X-Received: by 2002:a17:90b:46cf:: with SMTP id jx15mr461336pjb.19.1572548143385;
-        Thu, 31 Oct 2019 11:55:43 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Hwivt2QaT2reDFA/i4CNRv6b//VFZ+Pr2+rJ26/VMuo=;
+        b=Iwm2DqF1FShT9KlQZFlfYmgmDs4Qxwf/jSOIQVOWUtZVZqK9PLO6hoUNzfsRhbIrXs
+         wFf4cyVRoxNub/lq+N9nGbzEmes8Kr5j/znhAxz4iv5MAjuEJWw8w1qExrFDSypj3Tsx
+         lXYiQzn+DQk6AjfRq3CrUjmflnGARrYM+f0BE3Z/HYlY+c2OUCwWUgjKoRGAq0CaSfjQ
+         EoA0FYfntIsT/jtmp9AzSQU478J92Kp3IwvLuvoi4PeuBWklnrGou7Ud8Pd54GaDd4si
+         hTkbm9Nwckmt25UU/lHSIpaqn9Ebnex9HApUEdEUFIBQvk7u0T8eYrqV05tGY9umwMMD
+         LUcw==
+X-Gm-Message-State: APjAAAUZr4CCcJkLEbDZnmO3ZQmXNKmngJ7PGfj5lYg6WojNvXwTN9oY
+        4W/90t9G3fwfki/0RvMqC3o=
+X-Google-Smtp-Source: APXvYqzIsKzJmoGTaVa035vrBCC4+AFGQUELVMXeGxMZLF1+Tq0c23uxzv1aoAs21UxDHkK7JFT5wA==
+X-Received: by 2002:a63:1b59:: with SMTP id b25mr8435157pgm.267.1572548241313;
+        Thu, 31 Oct 2019 11:57:21 -0700 (PDT)
 Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id b18sm4026025pfi.157.2019.10.31.11.55.42
+        by smtp.gmail.com with ESMTPSA id j186sm3130951pfg.161.2019.10.31.11.57.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Oct 2019 11:55:42 -0700 (PDT)
+        Thu, 31 Oct 2019 11:57:20 -0700 (PDT)
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        marc.w.gonzalez@free.fr, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+To:     bjorn.andersson@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org
+Cc:     agross@kernel.org, marc.w.gonzalez@free.fr,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH v5 0/3] MSM8998 GPUCC Support
-Date:   Thu, 31 Oct 2019 11:55:38 -0700
-Message-Id: <20191031185538.15402-1-jeffrey.l.hugo@gmail.com>
+Subject: [PATCH v5 1/3] clk: qcom: Allow constant ratio freq tables for rcg
+Date:   Thu, 31 Oct 2019 11:57:15 -0700
+Message-Id: <20191031185715.15504-1-jeffrey.l.hugo@gmail.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20191031185538.15402-1-jeffrey.l.hugo@gmail.com>
+References: <20191031185538.15402-1-jeffrey.l.hugo@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Adreno GPU on MSM8998 has its own clock controller, which is a
-dependency for bringing up the GPU.  This series gets the gpucc all in
-place as another step on the road to getting the GPU enabled.
+Some RCGs (the gfx_3d_src_clk in msm8998 for example) are basically just
+some constant ratio from the input across the entire frequency range.  It
+would be great if we could specify the frequency table as a single entry
+constant ratio instead of a long list, ie:
 
-v5:
--drop clk.h
--add missing clk_set_rate_parent flag on gfx3d
--fix compatible
--allow const ratio freq tables
+	{ .src = P_GPUPLL0_OUT_EVEN, .pre_div = 3 },
+        { }
 
-v4:
--rebase onto mmcc series
--remove clk_get from the clock provider
+So, lets support that.
 
-v3:
--drop accepted DT patch
--correct "avoid" typo
--expand comment on why XO is required
+We need to fix a corner case in qcom_find_freq() where if the freq table
+is non-null, but has no frequencies, we end up returning an "entry" before
+the table array, which is bad.  Then, we need ignore the freq from the
+table, and instead base everything on the requested freq.
 
-v2:
--drop dead code
+Suggested-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+---
+ drivers/clk/qcom/clk-rcg2.c | 2 ++
+ drivers/clk/qcom/common.c   | 3 +++
+ 2 files changed, 5 insertions(+)
 
-Jeffrey Hugo (3):
-  clk: qcom: Allow constant ratio freq tables for rcg
-  clk: qcom: Add MSM8998 GPU Clock Controller (GPUCC) driver
-  arm64: dts: qcom: msm8998: Add gpucc node
-
- arch/arm64/boot/dts/qcom/msm8998.dtsi |  14 ++
- drivers/clk/qcom/Kconfig              |   9 +
- drivers/clk/qcom/Makefile             |   1 +
- drivers/clk/qcom/clk-rcg2.c           |   2 +
- drivers/clk/qcom/common.c             |   3 +
- drivers/clk/qcom/gpucc-msm8998.c      | 338 ++++++++++++++++++++++++++
- 6 files changed, 367 insertions(+)
- create mode 100644 drivers/clk/qcom/gpucc-msm8998.c
-
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index b98b81ef43a1..5a89ed88cc27 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -220,6 +220,8 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
+ 	if (clk_flags & CLK_SET_RATE_PARENT) {
+ 		rate = f->freq;
+ 		if (f->pre_div) {
++			if (!rate)
++				rate = req->rate;
+ 			rate /= 2;
+ 			rate *= f->pre_div + 1;
+ 		}
+diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+index 28ddc747d703..f1a32c5fcb8d 100644
+--- a/drivers/clk/qcom/common.c
++++ b/drivers/clk/qcom/common.c
+@@ -29,6 +29,9 @@ struct freq_tbl *qcom_find_freq(const struct freq_tbl *f, unsigned long rate)
+ 	if (!f)
+ 		return NULL;
+ 
++	if(!f->freq)
++		return f;
++
+ 	for (; f->freq; f++)
+ 		if (rate <= f->freq)
+ 			return f;
 -- 
 2.17.1
 
