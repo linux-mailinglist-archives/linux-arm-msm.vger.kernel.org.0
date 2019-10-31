@@ -2,181 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E52C2EB647
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 18:41:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE23FEB6E5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 19:28:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729067AbfJaRlx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Oct 2019 13:41:53 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:35771 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729039AbfJaRlw (ORCPT
+        id S1729220AbfJaS26 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Oct 2019 14:28:58 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:33594 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726602AbfJaS26 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Oct 2019 13:41:52 -0400
-Received: by mail-pg1-f195.google.com with SMTP id c8so4512836pgb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2019 10:41:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=DFxY9HZbAftkc6ZEf7DIO4SCG3jzu7OlqMydfjKW4pU=;
-        b=eWiDdNXjXm7b0tkJhXmJW29hx5jKtPuG/5ga1AQNcM+4BCNwzsLltNphqpnoZJV5h4
-         NlvsSh4M87vrh+o13iwst4Uso0yA3I9BE7bdOzzEAXmzEJ8rxMzhBlm41sjp/vU+9f6u
-         BB/Jm75OaBDHyhpSxf1NtlpsIec7WZaZXaU0A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DFxY9HZbAftkc6ZEf7DIO4SCG3jzu7OlqMydfjKW4pU=;
-        b=CXmH+TVPBABM3JAx/J/dFBpwoDDOw7O5PCuG1GCVEZ4xDfWEkkgbDClUmjW2hYpmp3
-         5vHHksBw5APJy3SUJEuMtN5UIe6a2/ux+PQBV/MfC6QYfE0woe67ViJ8XXxRBAXuMlVM
-         wiBF9HYOmfYXJ/Mxqv3qYgsnYK3yLIIvetp73x3JiKrGOmFt1lshPFuJRWqw3dQlnKmL
-         mXIQAqEMH4PJY8s92h0DyELe/UpZT7wvhRkP9kxEiVFYGHXEtIr0MXd/2e5sx1kxTlnT
-         +zltBIyD4SkytFqOBWOga9atJz5FtQMtVzKHE8bq9q2ASI9odUF4l66L3NUjVoTThU65
-         bwfA==
-X-Gm-Message-State: APjAAAWa2B00riKRAdNHwflre4UDfoocz90QNizLXYfN5KDuf2xOzDwR
-        j7SMcvD2pfCyl0f0g/fEd1d8XQ==
-X-Google-Smtp-Source: APXvYqxaAic0W+0GltNXLrUaUFbKQaUKuojcLcEWtkxF1z781kp35xDw1V+TzemJKEpy0ZBkO/29BA==
-X-Received: by 2002:a17:90a:e90:: with SMTP id 16mr9046788pjx.65.1572543711707;
-        Thu, 31 Oct 2019 10:41:51 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id d14sm5531817pfh.36.2019.10.31.10.41.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Oct 2019 10:41:51 -0700 (PDT)
-Date:   Thu, 31 Oct 2019 10:41:49 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        eykumar Sankaran <jsanka@codeaurora.org>
-Subject: Re: [PATCH v4 5/5] clk: qcom: Add Global Clock controller (GCC)
- driver for SC7180
-Message-ID: <20191031174149.GD27773@google.com>
-References: <20191014102308.27441-1-tdas@codeaurora.org>
- <20191014102308.27441-6-tdas@codeaurora.org>
- <20191029175941.GA27773@google.com>
- <fa17b97d-bfc4-4e9c-78b5-c225e5b38946@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <fa17b97d-bfc4-4e9c-78b5-c225e5b38946@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        Thu, 31 Oct 2019 14:28:58 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 5FCA060A37; Thu, 31 Oct 2019 18:28:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1572546537;
+        bh=S6A2Si/RaS/yk+h2BddahYmgAhOEzg6pGsjlpTqZxRA=;
+        h=From:To:Cc:Subject:Date:From;
+        b=NKYTn0BIAQpG4Rbn/30sSHLARrUhEb59xdwQl8AYANOuuLInfC3ypNJUtMgsApt/Y
+         wohWDNV03E9kFIJ9c9rkfOZNtc4OWe8NWWjor6Ys6QbGJR4K6qn+kH+kuPz4ejbLOk
+         3nRm2oMBJpryNC3IDcp+E2YCFphK1smKIHFt6aXQ=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 40A2B60A23;
+        Thu, 31 Oct 2019 18:28:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1572546536;
+        bh=S6A2Si/RaS/yk+h2BddahYmgAhOEzg6pGsjlpTqZxRA=;
+        h=From:To:Cc:Subject:Date:From;
+        b=gV8XTUJOcv1m0B0ENLyxJe9BVSFTMF9nGog+AZSTQ8DZUp170VLotcKxbMpCb+zyz
+         mPWD4vcxbP6DfLpdiCfVV/51jJHEfHI113Aem/SmZ7c9cUirojbX9o5NDNKMtUN9u7
+         8XfPFEtmgGj/7qpjroBontMtZDm90+j7R6Gv1iC8=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 40A2B60A23
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Georgi Djakov <georgi.djakov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v1 0/2] interconnect: Move qcom interconnect drivers to core_initcall
+Date:   Thu, 31 Oct 2019 12:28:50 -0600
+Message-Id: <1572546532-19248-1-git-send-email-jcrouse@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Taniya,
+Currently all the qcom interconnect drivers initialize at the device_initcall
+level when they are built-in which is a problem since nearly all the frameworks
+and leaf drivers in the SoC depend on interconnect in some fashion. While those
+frameworks and drivers should be properly PROBE_DEFER aware it is in our best
+interest to try not to defer just because we can. Move all the drivers to
+core_initcall when built to increase the chance that they will be available when
+their dependent drivers need them.
 
-On Thu, Oct 31, 2019 at 04:59:26PM +0530, Taniya Das wrote:
-> Hi Matthias,
-> 
-> Thanks for your comments.
-> 
-> On 10/29/2019 11:29 PM, Matthias Kaehlcke wrote:
-> > Hi Taniya,
-> > 
-> > On Mon, Oct 14, 2019 at 03:53:08PM +0530, Taniya Das wrote:
-> > > Add support for the global clock controller found on SC7180
-> > > based devices. This should allow most non-multimedia device
-> > > drivers to probe and control their clocks.
-> > > 
-> > > Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> 
-> > 
-> > v3 also had
-> > 
-> > +	[GCC_DISP_AHB_CLK] = &gcc_disp_ahb_clk.clkr,
-> > 
-> > Removing it makes the dpu_mdss driver unhappy:
-> > 
-> > [    2.999855] dpu_mdss_enable+0x2c/0x58->msm_dss_enable_clk: 'iface' is not available
-> > 
-> > because:
-> > 
-> >          mdss: mdss@ae00000 {
-> >      	        ...
-> > 
-> >   =>             clocks = <&gcc GCC_DISP_AHB_CLK>,
-> >                           <&gcc GCC_DISP_HF_AXI_CLK>,
-> >                           <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> >                  clock-names = "iface", "gcc_bus", "core";
-> > 	};
-> > 
-> 
-> The basic idea as you mentioned below was to move the CRITICAL clocks to
-> probe. The clock provider to return NULL in case the clocks are not
-> registered.
-> This was discussed with Stephen on v3. Thus I submitted the below patch.
-> clk: qcom: common: Return NULL from clk_hw OF provider.
+I also tossed on a quick cleanup patch to remove unneeded module exit code from
+the core file since it is always built in.
 
-I see. My assumption was that the entire clock hierarchy should be registered,
-but Stephen almost certainly knows better :)
+Regards,
+Jordan
 
-> Yes it would throw these warnings, but no functional issue is observed from
-> display. I have tested it on the cheza board.
+Jordan Crouse (2):
+  interconnect: Move interconnect drivers to core_initcall
+  interconnect: Remove unused module exit code from core
 
-The driver considers it an error (uses DEV_ERR to log the message) and doesn't
-handle other clocks when one is found missing. I'm not really famililar with
-the dpu_mdss driver, but I imagine this can have some side effects. Added some
-of the authors/contributors to cc.
+ drivers/interconnect/core.c         |  7 +------
+ drivers/interconnect/qcom/msm8974.c | 14 +++++++++++++-
+ drivers/interconnect/qcom/qcs404.c  | 14 +++++++++++++-
+ drivers/interconnect/qcom/sdm845.c  | 13 ++++++++++++-
+ 4 files changed, 39 insertions(+), 9 deletions(-)
 
-> I guess we could fix the DRM driver to use the "devm_clk_get_optional()"
-> instead?
+-- 
+2.7.4
 
-It would also require a minor rework of the driver, which currently expects
-all specified clocks to be available.
-
-Another option could be to not list the clock in the device tree, then the
-driver won't notice it as missing.
-
-> > More clocks were removed in v4:
-> > 
-> > -       [GCC_CPUSS_GNOC_CLK] = &gcc_cpuss_gnoc_clk.clkr,
-> > -       [GCC_GPU_CFG_AHB_CLK] = &gcc_gpu_cfg_ahb_clk.clkr,
-> > -       [GCC_VIDEO_AHB_CLK] = &gcc_video_ahb_clk.clkr,
-> > 
-> > I guess this part of "remove registering the CRITICAL clocks to clock provider
-> > and leave them always ON from the GCC probe." (change log entry), but are you
-> > sure nobody is going to reference these clocks?
-> > 
-> 
-> Even if they are referenced clk provider would return NULL.
-> 
-> > > +static int gcc_sc7180_probe(struct platform_device *pdev)
-> > > +{
-> > > +	struct regmap *regmap;
-> > > +	int ret;
-> > > +
-> > > +	regmap = qcom_cc_map(pdev, &gcc_sc7180_desc);
-> > > +	if (IS_ERR(regmap))
-> > > +		return PTR_ERR(regmap);
-> > > +
-> > > +	/*
-> > > +	 * Disable the GPLL0 active input to MM blocks, NPU
-> > > +	 * and GPU via MISC registers.
-> > > +	 */
-> > > +	regmap_update_bits(regmap, 0x09ffc, 0x3, 0x3);
-> > > +	regmap_update_bits(regmap, 0x4d110, 0x3, 0x3);
-> > > +	regmap_update_bits(regmap, 0x71028, 0x3, 0x3);
-> > 
-> > In v3 this was:
-> > 
-> > 	regmap_update_bits(regmap, GCC_MMSS_MISC, 0x3, 0x3);
-> > 	regmap_update_bits(regmap, GCC_NPU_MISC, 0x3, 0x3);
-> > 	regmap_update_bits(regmap, GCC_GPU_MISC, 0x3, 0x3);
-> > 
-> > IMO register names seem preferable, why switch to literal addresses
-> > instead?
-> > 
-> 
-> :). These cleanups where done based on the comments I had received during
-> SDM845 review. If Stephen is fine moving them to names, I could submit them
-> in the next patch series.
-
-Ok, thanks
