@@ -2,55 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 38137EB97A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 23:02:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AFB5DEB980
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 23:03:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728572AbfJaWC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Oct 2019 18:02:56 -0400
-Received: from mail-il1-f196.google.com ([209.85.166.196]:43304 "EHLO
+        id S1728917AbfJaWDo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Oct 2019 18:03:44 -0400
+Received: from mail-il1-f196.google.com ([209.85.166.196]:33059 "EHLO
         mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727715AbfJaWCz (ORCPT
+        with ESMTP id S1727715AbfJaWDo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Oct 2019 18:02:55 -0400
-Received: by mail-il1-f196.google.com with SMTP id j2so4726868ilc.10;
-        Thu, 31 Oct 2019 15:02:55 -0700 (PDT)
+        Thu, 31 Oct 2019 18:03:44 -0400
+Received: by mail-il1-f196.google.com with SMTP id s6so6893694iln.0;
+        Thu, 31 Oct 2019 15:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=kcEj0zagT1kdGnm51IepUWol06DL1z1IUNa12dd8Jp4=;
-        b=li15LPx+6k9TbBmNsi4igNQNptExK0rDlvtE6zga52XA1/6JpM1H5iL8Cyv5EckBka
-         rygvNDBf+Xlm7lmmOfW5tECTv9en0bqRJhvPOYv26SBWrdLF2xffJDYa2hwXjoLf/xeW
-         OUQynDulrDqZc5hkFbkbJi7umsIAuUJoFisT2hB5XjKb92+GrofWHPFtBQRMZsiU2Bcg
-         0WSegVaW+AqgTyvgGJyFSnjPite1+L0M9+uBqQgaWa3URv7zJYO9vx5+AryEVndHBsJj
-         Mb82OGQbJK+InTipjZJyyTIRTfh4fhH4vh6qlYEzQPsSTWb2GisNNa/CQR4FOf/7u4ey
-         oLLg==
+        bh=Sb1QxzuAyQh2HIKxWPJ8MqFymBdmLerlZldXam14EWk=;
+        b=D/bB9NxUc/llN+2mf9ZU+YELVGZtW6NUdnpSIS0m0lbUm/IuoTOc+liMu3OOUkg0by
+         /XssxHKuMKavniNF26XZrsBlc1MeX0TV4lNuHaDYykRCy95/QApfIV4AwE3tLMywxgmv
+         WQb6QgUMjGRexK1kN9QhzXdnn/N0deLIDrkenFc+brlm1RpBjAxD1PxcTUKvjE+hgeuz
+         1TEI4GQkizz+q6kJSvRekA/qucm71elvUsUm8A7Saolvc7MQl7WsfV0JIEKfXEZ2IY2s
+         PH7QaHLMP9CIvGU0SW0TrLirWAxJnwsIR8eDpubdRGLpraumtM4ZhVXw1JUMZxScrqwu
+         x/+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=kcEj0zagT1kdGnm51IepUWol06DL1z1IUNa12dd8Jp4=;
-        b=Kyk9iGCbZSyYhxaWOkWKUMFnYp0PEUP9oP5UMrHm0jO6lIxiXZ6f3UIIvVRg5IdEui
-         S5t4pQGd63svG4sVIKWR4BlVE9pbBYHLbJYNnUzjnpFRxo4D33rbn/PYKydTpu65qZU4
-         X4oxMqCowTh2qbrZXfhP3kJ7PCIquYZFGjv6gtigJpg01spNbVdS7cIin8uDVyaExhLV
-         PPiblPOAitOkjoJ9/T/AxnZjN60ZIGPXD/lIV+XiQxJesjOR+XJNYmWs+Z7Z6A1ZWEdw
-         +oAhRw86pn/eYpmIgn1qvHK4/Plv+hjA+dJ2f1G42JTXZjnJde5U6Y/gYe9yqOd1SSFx
-         83rQ==
-X-Gm-Message-State: APjAAAXEpoUX/bBi6J6880rRh9oReVenMC9NsMNYh9jzNhQ/b35qaudk
-        i92tom/Mve2t4ehKHsjlSb7uOCQfccju6QWN3lWdzA==
-X-Google-Smtp-Source: APXvYqyErskCKg+NeuRncOCekaI3GkjEMhqdfrRmscKc1Oz87aqPjneGSPfs7vE8B2GOy+pmRuWVrKlHURiOwcI5JlQ=
-X-Received: by 2002:a92:17c8:: with SMTP id 69mr9020215ilx.42.1572559374831;
- Thu, 31 Oct 2019 15:02:54 -0700 (PDT)
+        bh=Sb1QxzuAyQh2HIKxWPJ8MqFymBdmLerlZldXam14EWk=;
+        b=HGLTBfrzQIdTNUX0T4RYtW2uvRciEKelmV4hTykjDuOPwf5QS7AZz+s+otHXETBCa0
+         0ld60sgE3pCId/Cgx6u7iX4RKXdEkiUUzklTq77qR9eoKMTWzW3Xcjb+5/g3taalIFiB
+         bkWSgOFMPnCb0I02XC8no0R+DpTTQvxBpW3ZVgt29VPcBv76Dqy7cg43LV289EpB1ETG
+         ZwxytAZ0toccjlmW/3VV8TNDtZjB9Svm2Nn3VaJAZ17YnKy+6XpEinSnV2lAmcG6pRCi
+         ytOII7aTqQ2d4uJuCV7bXG3BFYYoeEuOfmJeUf+FrbB4PAVotIh+EPnK2r37Rdqnfp4n
+         bfMA==
+X-Gm-Message-State: APjAAAV1SFqy5/4UH2Kne82xHALINYRVKzQy5CFyDipbiznPpTMOR+WI
+        S/b6dfxtWAGhJut7KxO5moHbY29YuvzHUeQeHiE=
+X-Google-Smtp-Source: APXvYqw/dntoebDeFSNGndsXj4CSjqloFpHTg/ueKUrN5vQkZ5DcJK24HkUfI7B/jHqX+BqQnpcdRGiLNvG6ScF6vc4=
+X-Received: by 2002:a92:1d51:: with SMTP id d78mr9177073ild.166.1572559423698;
+ Thu, 31 Oct 2019 15:03:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20191031184632.2938295-1-bjorn.andersson@linaro.org>
- <20191031184632.2938295-2-bjorn.andersson@linaro.org> <CAOCk7Noq8dvKsWzAfAXRGhmoMG4_tHD0kw8_KVEBvyjm_fGc5A@mail.gmail.com>
- <20191031194347.GO1929@tuxbook-pro>
-In-Reply-To: <20191031194347.GO1929@tuxbook-pro>
+References: <20191031184632.2938295-1-bjorn.andersson@linaro.org> <20191031184632.2938295-3-bjorn.andersson@linaro.org>
+In-Reply-To: <20191031184632.2938295-3-bjorn.andersson@linaro.org>
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Thu, 31 Oct 2019 16:02:43 -0600
-Message-ID: <CAOCk7NoC+BmB7UH=-=g7ufmGUAfrc9JcPxwnVh9ytb9Xuq4FTQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] remoteproc: qcom_q6v5_mss: Don't reassign mpss region
- on shutdown
+Date:   Thu, 31 Oct 2019 16:03:32 -0600
+Message-ID: <CAOCk7No0D2qyg-HFEcy_aog9eYOP2oSBPeVVfDAJ_90RCs=b1A@mail.gmail.com>
+Subject: Re: [PATCH 2/2] remoteproc: qcom_q6v5_mss: Validate each segment
+ during loading
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Ohad Ben-Cohen <ohad@wizery.com>,
         Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>,
@@ -58,41 +56,23 @@ Cc:     Ohad Ben-Cohen <ohad@wizery.com>,
         linux-remoteproc@vger.kernel.org,
         lkml <linux-kernel@vger.kernel.org>,
         Jeffrey Hugo <jhugo@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>, stable@vger.kernel.org
+        Sibi Sankar <sibis@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 31, 2019 at 1:43 PM Bjorn Andersson
+On Thu, Oct 31, 2019 at 12:48 PM Bjorn Andersson
 <bjorn.andersson@linaro.org> wrote:
 >
-> On Thu 31 Oct 12:36 PDT 2019, Jeffrey Hugo wrote:
+> The code used to sync with the MBA after each segment loaded and this is
+> still what's done downstream. So reduce the delta towards downstream by
+> switching to a model where the content is iteratively validated.
 >
-> > On Thu, Oct 31, 2019 at 12:48 PM Bjorn Andersson
-> > <bjorn.andersson@linaro.org> wrote:
-> > >
-> > > Trying to reclaim mpss memory while the mba is not running causes the
-> > > system to crash on devices with security fuses blown, so leave it
-> > > assigned to the remote on shutdown and recover it on a subsequent boot.
-> > >
-> > > Fixes: 6c5a9dc2481b ("remoteproc: qcom: Make secure world call for mem ownership switch")
-> > > Cc: stable@vger.kernel.org
-> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > ---
-> >
-> > Excellent.  This addresses the issue I was seeing with the Lenovo Miix 630
-> >
->
-> Sweet!
->
-> > Reviewed-by: Jeffrey Hugo<jeffrey.l.hugo@gmail.com>
-> > Tested-by: Jeffrey Hugo<jeffrey.l.hugo@gmail.com>
->
-> Thanks!
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-As we talked offline, it appears we both missed the crashdump
-scenario, so please spin a v2 that reclaims the memory just before
-trying to access it in the crashdump scenario.  I'll be happy to
-re-review and re-test.
+Seems to be just fine on the Lenovo Miix 630
+
+Reviewed-by: Jeffrey Hugo<jeffrey.l.hugo@gmail.com>
+Tested-by: Jeffrey Hugo<jeffrey.l.hugo@gmail.com>
