@@ -2,99 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 10E73EABFE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 09:58:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 01AEDEAD7E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 11:35:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726913AbfJaI6t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Oct 2019 04:58:49 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34910 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726858AbfJaI6t (ORCPT
+        id S1727074AbfJaKfN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Oct 2019 06:35:13 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35876 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726864AbfJaKfN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Oct 2019 04:58:49 -0400
-Received: by mail-wr1-f68.google.com with SMTP id l10so5307973wrb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2019 01:58:48 -0700 (PDT)
+        Thu, 31 Oct 2019 06:35:13 -0400
+Received: by mail-wr1-f67.google.com with SMTP id w18so5656827wrt.3;
+        Thu, 31 Oct 2019 03:35:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=mM5JWFj5/j1kMfO0LYYDWqFAXV7BHBUBoAurAtsh+vs=;
-        b=sjxcXNY1tNdgNLsdckLy5C5ghG1YOXnEJggZIwKLSbYHASKZ0ONzEsR8o2/z4bNoP3
-         9Teai83oT5ZDna4z6Nt0jrz+QGFloBaBOr4xleRjnZCXPGaTaASxPAEgS3gkaR4UOUim
-         HgufBrfwRfalglmkFZFdGS+v8blf8XzFfWvbg9zbnzix7ZdBQFQZj8/iK8td64QFmIqn
-         YUWxnRz3USDGpylVcwrFMAUKt2ahxOCdzQnhRrLOxA2Bslx3GIlT//nu0z++uJRYxUWL
-         Lb79ddtanLSnRnJjuVuxNA8I6VQTpjKBrL1O9ccy+PzpYaOgjKdplScT4ZxBNKagFyia
-         PUlQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QJA3BXi0PqgEChZSJiF+hVyIYXKWNRWBiihtLarR1AU=;
+        b=Adpfq5Mpv5oJ46thXytFwIWSHPYYs5LxZ5j+MUHeQBJyCcYsKwSay0URuvZgLp2kiG
+         OpiNY9LtDUUAiMNaGZZtu0fwdGKpKPaJ/zPaX+3xMS1fLEtVN4igHb833n/3/jwOnzwC
+         FrxpP09p1nrA9DCqwGQ3BqbSiZFdQAQzUlLluvWkqzYCKlbxc6GcUkBf/JUNSEien5mi
+         mo939N33rC/lOS+AU6hXzRiY6BK9CJIv7XpxETz9w20anZIQH/E3SQKJOqDmczWObSlV
+         IcIA1JsUlwYUzCaqXcw8hQpKtpkdsE1boK6Oaf5c+GxKmke9KmvzjUp1yfYrjDmMXd3I
+         9llQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=mM5JWFj5/j1kMfO0LYYDWqFAXV7BHBUBoAurAtsh+vs=;
-        b=sQ8EvQf6RQG13JFg68PAiSoIdAphQL2Ss32AnZQGmlC6smkUH0scnwC6w6WOwxGN25
-         XvoUAtOYzEtYrK/kghq/IKsYoV7XcsCug2fQ7aErCoJYazxkExiE2LPRCJiblqS+Z/Ii
-         HAbZ8s/KzhCJSs8K056Jf3sIdvCN6RmlagLr5988Ps8KuCC4vnTp0D4fxmMJOD7Z65k3
-         iC4L26j54GsVw1VGbDm8NIsw9o2C0XR15LR6re2vgKtMHJTBQ1dq/ttd8p9pq0JZxIL3
-         xDI/i6HogbMHfLJlN+6pPTQNoos9eJvLso3kSLRNxYpeD+idEC7Nu8ATzUSn4n5Tu8jR
-         38Gg==
-X-Gm-Message-State: APjAAAW/gek1cjBx/Vz/YSb7raV3A5L/J8pOv+oUPLx73gVMq/VncRGj
-        Pf+Eyp2NYwZneRvNnjkFMIfRxGHMD5Y=
-X-Google-Smtp-Source: APXvYqxdn+1tmOLx8ifp3F1PxxrO/zj4IhisAc9DnkIGdD19EJUgI1oKHtPcrdKzBLR3SbDRmKd/OA==
-X-Received: by 2002:adf:cf11:: with SMTP id o17mr4389080wrj.284.1572512327362;
-        Thu, 31 Oct 2019 01:58:47 -0700 (PDT)
-Received: from dell ([2.31.163.64])
-        by smtp.gmail.com with ESMTPSA id a206sm3494167wmf.15.2019.10.31.01.58.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 Oct 2019 01:58:46 -0700 (PDT)
-Date:   Thu, 31 Oct 2019 08:58:45 +0000
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Kiran Gunda <kgunda@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
-        b.zolnierkie@samsung.com, dri-devel@lists.freedesktop.org,
-        daniel.thompson@linaro.org, jacek.anaszewski@gmail.com,
-        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Dan Murphy <dmurphy@ti.com>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V9 1/6] backlight: qcom-wled: Add new properties for
- PMI8998.
-Message-ID: <20191031085845.GA5700@dell>
-References: <1571814423-6535-1-git-send-email-kgunda@codeaurora.org>
- <1571814423-6535-2-git-send-email-kgunda@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QJA3BXi0PqgEChZSJiF+hVyIYXKWNRWBiihtLarR1AU=;
+        b=Tj/tgUcZHT3mei8daFKuXnflGv8qJbDfPExa2wujQf3LT642Rpg/xaYZ6Uw5zVIPCg
+         t8xe7ndypzMhMc/z6I5xn1904FJdRTy8QoIDv4nTOvLdeCQHU7lrbs7Q5SrjpcHZkOUo
+         20QsPEWnhhEF9ySaK9iGrWIpUQz2zOpQn1U3qu9ryMcXZwSEp8vX8Ik1MdvtFIXXktQe
+         qBRg40GMg0h8CjTrQlG9a6pP1fdkR7npS/WoaSAKaZp6lbUYbW4nvedUNJ2d2et2Smmb
+         Uewflk8DVn++KHw1gDBFS0ogBLvG64m9B3LUV9A0025l1W3IknmNhwlirSU7XxBB3aMf
+         QvnA==
+X-Gm-Message-State: APjAAAWrHpIZMa2aHqtD0kdxxg82/V0uh9eQGQT2zuTItIArXZWrZr6o
+        kt2+Z/35LtK9zRgbjld1uBRCBY+Rqzo=
+X-Google-Smtp-Source: APXvYqzAT6fVYeBRyzu8L8V441c1dXoVdahpxYo991+Ki0fyhX8NoJh1UA+enhQ4CESDAFUDxX4qAA==
+X-Received: by 2002:a5d:51c3:: with SMTP id n3mr4829708wrv.5.1572518111069;
+        Thu, 31 Oct 2019 03:35:11 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
+        by smtp.gmail.com with ESMTPSA id o15sm3414687wrv.76.2019.10.31.03.35.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 31 Oct 2019 03:35:10 -0700 (PDT)
+From:   kholk11@gmail.com
+To:     linux-arm-msm@vger.kernel.org
+Cc:     kholk11@gmail.com, marijns95@gmail.com, bjorn.andersson@linaro.org,
+        agross@kernel.org, linus.walleij@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH 0/4] SPMI GPIOs and MPPs on PM/PMI8950
+Date:   Thu, 31 Oct 2019 11:35:03 +0100
+Message-Id: <20191031103507.30678-1-kholk11@gmail.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1571814423-6535-2-git-send-email-kgunda@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 23 Oct 2019, Kiran Gunda wrote:
+From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-> Update the bindings with the new properties used for
-> PMI8998.
-> 
-> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
-> ---
->  .../bindings/leds/backlight/qcom-wled.txt          | 74 ++++++++++++++++++----
->  1 file changed, 63 insertions(+), 11 deletions(-)
+This patch series enables support for GPIOs and MPPs found on the
+PM8950 and PMI8950 ICs, usually found on boards using the MSM8956,
+MSM8976, MSM8952, MSM8953 (and APQ variants) SoC.
 
-This patch no longer applies.
+These are important to get the PA_THERM, QUIET_THERM MPPs enabled
+on PM8950 for standard thermals (and other board specific ones,
+where applicable) and GPIOs usually used to enable the audio mclk
+path, the wlan sleep clock and sometimes the eLDO for the WCD codec,
+plus other board specific paths, where applicable.
+For example, on the MSM8956 Sony Xperia Loire platform, this also
+includes a GPIO for the USB switch and one for the simple GPIO
+controlled vibrator included in all devices for this series of
+boards.
 
-It looks like you dropped the rename patch.
+This has been tested on Sony Xperia Loire phones, including the
+Xperia X Compact (Kugo) and Xperia X (Suzu).
 
-Please rebase all of the patches in this set on top of a released
-commit and resend.
+AngeloGioacchino Del Regno (4):
+  pinctrl: qcom: spmi-gpio: Add PM/PMI8950 compatibility
+  dt-bindings: pinctrl: qcom-pmic-gpio: Add support for PM/PMI8950
+  pinctrl: qcom: spmi-mpp: Add PM/PMI8950 compatible strings
+  dt-bindings: pinctrl: qcom-pmic-mpp: Add support for PM/PMI8950
+
+ Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 4 ++++
+ Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.txt  | 4 ++++
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c                     | 3 +++
+ drivers/pinctrl/qcom/pinctrl-spmi-mpp.c                      | 2 ++
+ 4 files changed, 13 insertions(+)
 
 -- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+2.21.0
+
