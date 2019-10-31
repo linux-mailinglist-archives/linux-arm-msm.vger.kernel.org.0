@@ -2,115 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A9D2EB252
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 15:17:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E52C2EB647
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 18:41:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727815AbfJaOR0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Oct 2019 10:17:26 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:57924 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726741AbfJaOR0 (ORCPT
+        id S1729067AbfJaRlx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Oct 2019 13:41:53 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:35771 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729039AbfJaRlw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Oct 2019 10:17:26 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 3997960D7E; Thu, 31 Oct 2019 14:17:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572531444;
-        bh=HXC8+viMGhThZbeYm9oP+pwlgdCRQlhDZ1MyTj/DxW8=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=FZRWQGkLGPdum23ncaSGTOawLN0vg/F1e8Gdw6C+VYg+JDWJLx9RrGthwQZKrenkd
-         SDsgYsHz6aVhWbxEPk8/CF+JXDtmQV5bJgh6bBeMrK46t60NIgGGApFhAdSWGc1c3b
-         GVeGq7A/WTHgkdNrGoCF/Im9MFdpWLEnsUHkrczA=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D7DFC60AD7;
-        Thu, 31 Oct 2019 14:17:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572531440;
-        bh=HXC8+viMGhThZbeYm9oP+pwlgdCRQlhDZ1MyTj/DxW8=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=aY/1cPISfdI6fUglVleYhnEX6K5M9+aJKAWCkhd1/bduQSxy1mOEfTyznqbaCNXon
-         fIkBjlJbtUCBvjfS7HlQqRnpImuaMumddmcnfI1wsPLs2K5ERjgVnC+3PiPnaejNRl
-         hUgJf246hqRvwXu2vgryq2RGdYcDESaDxatS1Rw4=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D7DFC60AD7
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v2] arm64: cpufeature: Enable Qualcomm Falkor errata 1009
- for Kryo
-To:     Will Deacon <will@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20191029232738.1483923-1-bjorn.andersson@linaro.org>
- <20191031132914.GD27196@willie-the-truck>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <24673fd9-3c1c-04f6-eb2e-525f8546ebf3@codeaurora.org>
-Date:   Thu, 31 Oct 2019 08:17:18 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        Thu, 31 Oct 2019 13:41:52 -0400
+Received: by mail-pg1-f195.google.com with SMTP id c8so4512836pgb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2019 10:41:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=DFxY9HZbAftkc6ZEf7DIO4SCG3jzu7OlqMydfjKW4pU=;
+        b=eWiDdNXjXm7b0tkJhXmJW29hx5jKtPuG/5ga1AQNcM+4BCNwzsLltNphqpnoZJV5h4
+         NlvsSh4M87vrh+o13iwst4Uso0yA3I9BE7bdOzzEAXmzEJ8rxMzhBlm41sjp/vU+9f6u
+         BB/Jm75OaBDHyhpSxf1NtlpsIec7WZaZXaU0A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=DFxY9HZbAftkc6ZEf7DIO4SCG3jzu7OlqMydfjKW4pU=;
+        b=CXmH+TVPBABM3JAx/J/dFBpwoDDOw7O5PCuG1GCVEZ4xDfWEkkgbDClUmjW2hYpmp3
+         5vHHksBw5APJy3SUJEuMtN5UIe6a2/ux+PQBV/MfC6QYfE0woe67ViJ8XXxRBAXuMlVM
+         wiBF9HYOmfYXJ/Mxqv3qYgsnYK3yLIIvetp73x3JiKrGOmFt1lshPFuJRWqw3dQlnKmL
+         mXIQAqEMH4PJY8s92h0DyELe/UpZT7wvhRkP9kxEiVFYGHXEtIr0MXd/2e5sx1kxTlnT
+         +zltBIyD4SkytFqOBWOga9atJz5FtQMtVzKHE8bq9q2ASI9odUF4l66L3NUjVoTThU65
+         bwfA==
+X-Gm-Message-State: APjAAAWa2B00riKRAdNHwflre4UDfoocz90QNizLXYfN5KDuf2xOzDwR
+        j7SMcvD2pfCyl0f0g/fEd1d8XQ==
+X-Google-Smtp-Source: APXvYqxaAic0W+0GltNXLrUaUFbKQaUKuojcLcEWtkxF1z781kp35xDw1V+TzemJKEpy0ZBkO/29BA==
+X-Received: by 2002:a17:90a:e90:: with SMTP id 16mr9046788pjx.65.1572543711707;
+        Thu, 31 Oct 2019 10:41:51 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id d14sm5531817pfh.36.2019.10.31.10.41.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Oct 2019 10:41:51 -0700 (PDT)
+Date:   Thu, 31 Oct 2019 10:41:49 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        eykumar Sankaran <jsanka@codeaurora.org>
+Subject: Re: [PATCH v4 5/5] clk: qcom: Add Global Clock controller (GCC)
+ driver for SC7180
+Message-ID: <20191031174149.GD27773@google.com>
+References: <20191014102308.27441-1-tdas@codeaurora.org>
+ <20191014102308.27441-6-tdas@codeaurora.org>
+ <20191029175941.GA27773@google.com>
+ <fa17b97d-bfc4-4e9c-78b5-c225e5b38946@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20191031132914.GD27196@willie-the-truck>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <fa17b97d-bfc4-4e9c-78b5-c225e5b38946@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/31/2019 6:29 AM, Will Deacon wrote:
-> [+Jeffrey]
-> 
-> On Tue, Oct 29, 2019 at 04:27:38PM -0700, Bjorn Andersson wrote:
->> The Kryo cores share errata 1009 with Falkor, so add their model
->> definitions and enable it for them as well.
->>
->> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> ---
->>
->> Changes since v1:
->> - Use is_kryo_midr(), rather than listing each individual model.
-> 
-> Cheers, I've queued this up as a fix.
-> 
-> I also updated the E1009 entry in silicon-errata.rst but, in doing so, I
-> noticed that E1041 is listed there which apparently also affects
-> Kry^H^H^HHydra [1].
-> 
-> At which point, maybe we should rename both Kryo and Falkor in the tree
-> so that we consistently refer to Hydra as the underlying micro-architecture.
-> Obviously not something for 5.4, but it would sure help me to understand
-> what's doing on here.
-> 
-> Thoughts?
+Hi Taniya,
 
-Unfortunately, Falkor is also an underlying micro-architecture, it just 
-happens to be strongly related to Hydra so a fair amount of the errata 
-affect both.
-
-I don't want to be difficult.  For ultimate "correctness", Falkor and 
-Hydra should probably be separate, however the Falkor architecture is 
-not widespread and unlikely to have much churn going forward.  So I 
-think if it makes life easier for you, all the Falkor stuff can probably 
-be scrubbed and just merged into Hydra.
-
+On Thu, Oct 31, 2019 at 04:59:26PM +0530, Taniya Das wrote:
+> Hi Matthias,
 > 
-> Will
+> Thanks for your comments.
 > 
-> [1] https://lore.kernel.org/kvmarm/20171115010505.GO11955@codeaurora.org/
+> On 10/29/2019 11:29 PM, Matthias Kaehlcke wrote:
+> > Hi Taniya,
+> > 
+> > On Mon, Oct 14, 2019 at 03:53:08PM +0530, Taniya Das wrote:
+> > > Add support for the global clock controller found on SC7180
+> > > based devices. This should allow most non-multimedia device
+> > > drivers to probe and control their clocks.
+> > > 
+> > > Signed-off-by: Taniya Das <tdas@codeaurora.org>
 > 
+> > 
+> > v3 also had
+> > 
+> > +	[GCC_DISP_AHB_CLK] = &gcc_disp_ahb_clk.clkr,
+> > 
+> > Removing it makes the dpu_mdss driver unhappy:
+> > 
+> > [    2.999855] dpu_mdss_enable+0x2c/0x58->msm_dss_enable_clk: 'iface' is not available
+> > 
+> > because:
+> > 
+> >          mdss: mdss@ae00000 {
+> >      	        ...
+> > 
+> >   =>             clocks = <&gcc GCC_DISP_AHB_CLK>,
+> >                           <&gcc GCC_DISP_HF_AXI_CLK>,
+> >                           <&dispcc DISP_CC_MDSS_MDP_CLK>;
+> >                  clock-names = "iface", "gcc_bus", "core";
+> > 	};
+> > 
+> 
+> The basic idea as you mentioned below was to move the CRITICAL clocks to
+> probe. The clock provider to return NULL in case the clocks are not
+> registered.
+> This was discussed with Stephen on v3. Thus I submitted the below patch.
+> clk: qcom: common: Return NULL from clk_hw OF provider.
 
+I see. My assumption was that the entire clock hierarchy should be registered,
+but Stephen almost certainly knows better :)
 
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+> Yes it would throw these warnings, but no functional issue is observed from
+> display. I have tested it on the cheza board.
+
+The driver considers it an error (uses DEV_ERR to log the message) and doesn't
+handle other clocks when one is found missing. I'm not really famililar with
+the dpu_mdss driver, but I imagine this can have some side effects. Added some
+of the authors/contributors to cc.
+
+> I guess we could fix the DRM driver to use the "devm_clk_get_optional()"
+> instead?
+
+It would also require a minor rework of the driver, which currently expects
+all specified clocks to be available.
+
+Another option could be to not list the clock in the device tree, then the
+driver won't notice it as missing.
+
+> > More clocks were removed in v4:
+> > 
+> > -       [GCC_CPUSS_GNOC_CLK] = &gcc_cpuss_gnoc_clk.clkr,
+> > -       [GCC_GPU_CFG_AHB_CLK] = &gcc_gpu_cfg_ahb_clk.clkr,
+> > -       [GCC_VIDEO_AHB_CLK] = &gcc_video_ahb_clk.clkr,
+> > 
+> > I guess this part of "remove registering the CRITICAL clocks to clock provider
+> > and leave them always ON from the GCC probe." (change log entry), but are you
+> > sure nobody is going to reference these clocks?
+> > 
+> 
+> Even if they are referenced clk provider would return NULL.
+> 
+> > > +static int gcc_sc7180_probe(struct platform_device *pdev)
+> > > +{
+> > > +	struct regmap *regmap;
+> > > +	int ret;
+> > > +
+> > > +	regmap = qcom_cc_map(pdev, &gcc_sc7180_desc);
+> > > +	if (IS_ERR(regmap))
+> > > +		return PTR_ERR(regmap);
+> > > +
+> > > +	/*
+> > > +	 * Disable the GPLL0 active input to MM blocks, NPU
+> > > +	 * and GPU via MISC registers.
+> > > +	 */
+> > > +	regmap_update_bits(regmap, 0x09ffc, 0x3, 0x3);
+> > > +	regmap_update_bits(regmap, 0x4d110, 0x3, 0x3);
+> > > +	regmap_update_bits(regmap, 0x71028, 0x3, 0x3);
+> > 
+> > In v3 this was:
+> > 
+> > 	regmap_update_bits(regmap, GCC_MMSS_MISC, 0x3, 0x3);
+> > 	regmap_update_bits(regmap, GCC_NPU_MISC, 0x3, 0x3);
+> > 	regmap_update_bits(regmap, GCC_GPU_MISC, 0x3, 0x3);
+> > 
+> > IMO register names seem preferable, why switch to literal addresses
+> > instead?
+> > 
+> 
+> :). These cleanups where done based on the comments I had received during
+> SDM845 review. If Stephen is fine moving them to names, I could submit them
+> in the next patch series.
+
+Ok, thanks
