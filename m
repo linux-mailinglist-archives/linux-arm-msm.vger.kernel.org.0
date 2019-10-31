@@ -2,91 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DE82EA46C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Oct 2019 20:50:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 39B05EA94E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 03:42:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726261AbfJ3TuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Oct 2019 15:50:24 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:41951 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726554AbfJ3TuY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Oct 2019 15:50:24 -0400
-Received: by mail-pf1-f195.google.com with SMTP id p26so2324166pfq.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Oct 2019 12:50:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=HQ9FlWq+UvdDEfKTzeyzDf/xB7q4VOki0EmDu2rneyI=;
-        b=WpD0szc9Md9tY2/n0MEWZBMJUxjxDAsnN5nv6bFIaLE3Mfco+mnhKg/9Q3231acaPu
-         JgrrSy8x2aEqZsWMcbT7a63vu8s7c+meiHWRXHNjjoCoeEJOMmjvXKC0U/rfoleoDLxv
-         4ZSTicknUi/kduQca2gQQHhpq9n3Fz0KNstO8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HQ9FlWq+UvdDEfKTzeyzDf/xB7q4VOki0EmDu2rneyI=;
-        b=nHGgoZVtniCQcZVJUavoq650Ir9nDL4v8gAXbekzJIMPredT22OxBnKtcBBbsvd4q1
-         /hmtg6O8HYu9fdfJzXGIUpEKa+nj5pK3cL/i3UkWYJkblK3N73lOYdHrJKtKker1Gy49
-         rdfUX0fVyejDKqTVKLUbhZ7r/f4FF4eMWUkuO3r80nJoJ/KEik1qyaRHxJ4Fc/kAE+kP
-         B6vKper3P1Z8pwWfCrBYrCKc/cesxFVco6e1DSHz/nOgyF+czjurVxeaz6/qB6T5+qPi
-         X03IQ6QjuREmchpRbfH5eesjBkqdokvrZ/fXlFgr9/NwaLMF3fox//lEAtDiRyy5rH7j
-         kW3g==
-X-Gm-Message-State: APjAAAXKhlG7xA1f5N8WIi4gROrLbXyz4jaURUUyn40ajPRVR3gmQuBn
-        IcurOjFYL1bUr55dyiiNJZ9otw==
-X-Google-Smtp-Source: APXvYqz/QWsyM/lJiIGheJ/+yIlYmhs+n/d7akVsIpvcixXB40xL1Dd1YxIGf/82aICZka66QdEzTQ==
-X-Received: by 2002:a17:90a:77c6:: with SMTP id e6mr1213558pjs.93.1572465023464;
-        Wed, 30 Oct 2019 12:50:23 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id k32sm2965175pje.10.2019.10.30.12.50.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Oct 2019 12:50:22 -0700 (PDT)
-Date:   Wed, 30 Oct 2019 12:50:21 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Maulik Shah <mkshah@codeaurora.org>
-Subject: Re: [PATCH v3 11/11] arm64: dts: qcom: sc7180: Add pdc interrupt
- controller
-Message-ID: <20191030195021.GC27773@google.com>
-References: <20191023090219.15603-1-rnayak@codeaurora.org>
- <20191023090219.15603-12-rnayak@codeaurora.org>
- <5db86de0.1c69fb81.9e27d.0f47@mx.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5db86de0.1c69fb81.9e27d.0f47@mx.google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S1726407AbfJaCmL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Oct 2019 22:42:11 -0400
+Received: from mga17.intel.com ([192.55.52.151]:24397 "EHLO mga17.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726353AbfJaCmL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 30 Oct 2019 22:42:11 -0400
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 30 Oct 2019 19:42:10 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.68,249,1569308400"; 
+   d="scan'208";a="375093383"
+Received: from yle-mobl3.ccr.corp.intel.com ([10.255.28.108])
+  by orsmga005.jf.intel.com with ESMTP; 30 Oct 2019 19:42:04 -0700
+Message-ID: <4efc55ad929dbb3432e72b96cb27876efa496242.camel@intel.com>
+Subject: Re: [PATCH v5 0/6] Initialise thermal framework and cpufreq earlier
+ during boot
+From:   Zhang Rui <rui.zhang@intel.com>
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
+        sudeep.holla@arm.com, bjorn.andersson@linaro.org,
+        edubezval@gmail.com, agross@kernel.org, tdas@codeaurora.org,
+        swboyd@chromium.org, ilina@codeaurora.org,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Ben Segall <bsegall@google.com>,
+        Dietmar Eggemann <dietmar.eggemann@arm.com>,
+        Ingo Molnar <mingo@redhat.com>,
+        Juri Lelli <juri.lelli@redhat.com>,
+        Mel Gorman <mgorman@suse.de>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>
+Cc:     linux-clk@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Date:   Thu, 31 Oct 2019 10:42:03 +0800
+In-Reply-To: <cover.1571656014.git.amit.kucheria@linaro.org>
+References: <cover.1571656014.git.amit.kucheria@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 29, 2019 at 09:50:40AM -0700, Stephen Boyd wrote:
-> Quoting Rajendra Nayak (2019-10-23 02:02:19)
-> > From: Maulik Shah <mkshah@codeaurora.org>
-> > 
-> > Add pdc interrupt controller for sc7180
-> > 
-> > Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> > Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> > ---
-> > v3:
-> > Used the qcom,sdm845-pdc compatible for pdc node
+Hi,
+
+Given that all the patches in this series have got the ACK from the
+subsystem maintainers, I suppose we can take all the patches through
+thermal tree, right?
+
+thanks,
+rui
+
+On Mon, 2019-10-21 at 17:45 +0530, Amit Kucheria wrote:
+> Changes since v4:
+> - Collect Acks
+> - Pick the US spelling for 'initialis^Hze' consistently.
 > 
-> Everything else isn't doing the weird old compatible thing. Why not just
-> add the new compatible and update the driver? I guess I'll have to go
-> read the history.
-
-Marc Zyngier complained  on v2 about the churn from adding compatible
-strings for identical components, and I kinda see his point.
-
-I agree that using the 'sdm845' compatible string for sc7180 is odd too.
-Maybe we should introduce SoC independent compatible strings for IP blocks
-that are shared across multiple SoCs? If differentiation is needed SoC
-specific strings can be added.
-
+> Changes since v3:
+> - Init schedutil governor earlier too
+> - Simplified changes to thermal_init() error path
+> - Collects Acks
+> 
+> Changes since v2:
+> - Missed one patch when posting v2. Respinning.
+> 
+> Changes since v1:
+> - Completely get rid of netlink support in the thermal framework.
+> - This changes the early init patch to a single line - change to
+>   core_initcall. Changed authorship of patch since it is nothing like
+> the
+>   original. Lina, let me know if you feel otherwise.
+> - I've tested to make sure that the qcom-cpufreq-hw driver continues
+> to
+>   work correctly as a module so this won't impact Android's GKI
+> plans.
+> - Collected Acks
+> 
+> Device boot needs to be as fast as possible while keeping under the
+> thermal
+> envelope. Now that thermal framework is built-in to the kernel, we
+> can
+> initialize it earlier to enable thermal mitigation during boot.
+> 
+> We also need the cpufreq HW drivers to be initialised earlier to act
+> as the
+> cooling devices. This series only converts over the qcom-hw driver to
+> initialize earlier but can be extended to other platforms as well.
+> 
+> Amit Kucheria (6):
+>   thermal: Remove netlink support
+>   thermal: Initialize thermal subsystem earlier
+>   cpufreq: Initialize the governors in core_initcall
+>   cpufreq: Initialize cpufreq-dt driver earlier
+>   clk: qcom: Initialize clock drivers earlier
+>   cpufreq: qcom-hw: Move driver initialization earlier
+> 
+>  .../driver-api/thermal/sysfs-api.rst          |  26 +----
+>  drivers/clk/qcom/clk-rpmh.c                   |   2 +-
+>  drivers/clk/qcom/gcc-qcs404.c                 |   2 +-
+>  drivers/clk/qcom/gcc-sdm845.c                 |   2 +-
+>  drivers/cpufreq/cpufreq-dt-platdev.c          |   2 +-
+>  drivers/cpufreq/cpufreq_conservative.c        |   2 +-
+>  drivers/cpufreq/cpufreq_ondemand.c            |   2 +-
+>  drivers/cpufreq/cpufreq_performance.c         |   2 +-
+>  drivers/cpufreq/cpufreq_powersave.c           |   2 +-
+>  drivers/cpufreq/cpufreq_userspace.c           |   2 +-
+>  drivers/cpufreq/qcom-cpufreq-hw.c             |   2 +-
+>  drivers/thermal/thermal_core.c                | 103 +---------------
+> --
+>  include/linux/thermal.h                       |  11 --
+>  kernel/sched/cpufreq_schedutil.c              |   2 +-
+>  14 files changed, 19 insertions(+), 143 deletions(-)
+> 
 
