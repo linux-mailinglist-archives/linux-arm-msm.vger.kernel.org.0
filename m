@@ -2,63 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 61335EADC0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 11:44:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE2C8EAE91
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 12:16:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726864AbfJaKoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Oct 2019 06:44:20 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46249 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727265AbfJaKoT (ORCPT
+        id S1726913AbfJaLQx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Oct 2019 07:16:53 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:38853 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726897AbfJaLQw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Oct 2019 06:44:19 -0400
-Received: by mail-wr1-f67.google.com with SMTP id n15so5627908wrw.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Oct 2019 03:44:17 -0700 (PDT)
+        Thu, 31 Oct 2019 07:16:52 -0400
+Received: by mail-wm1-f65.google.com with SMTP id z19so1306629wmk.3;
+        Thu, 31 Oct 2019 04:16:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=M60UiEhUmmNWU8RgBGE4zx++F2XO1/RbSWEAXRbbk3s=;
-        b=JwSm0nQYOhWEqmv0HXC2IrlBHHkn9Cu6PpGseYmcyKW6gSi7AinI9Wgz02hxkSbx73
-         YVJD9yEH0f8/5WXMoUytmMA3CM2NKQkApbVCeW9b7ofsismcBzPZ17pG0+MB/4nSHtzy
-         IJ+xFsZpABlj79nQCwRfWKIpZSvt1u7aRcrwBf3pEXb61ORL/sKkTJa8IatSiVY7JW7L
-         +0cu2PCGC1IyNzOYnSxILsfGl26QK9sqlIHia8qAmG/6a+Ogxu33zaqsk4l3UAtH3LVN
-         b8EHnjlqimMYxNoCQmlX2f8vOzqslJJQsNqhOGDionnMUvUeyoF09t6pyv9J6vqrZ00z
-         t+Eg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+PNsOE4fENaOwhTZnvRCyw50CWL6R5gR5zazjJkSQ7Y=;
+        b=meu+aGMBXztMLuPJljDcgF5XrXgqTSoWhNAe7rIW/BovvNzp17mkiSKP2LQD2qy0eJ
+         UvNxEoignSKWWBR8SvH1HkQa4Y6J4RD8905XNjKFKNLNWUOfDIktmoVAYOyDIldhY0iE
+         RAdWZciZO7bQL+ZLprv+/9koTpBn16jGppJbLiFGayrTQqSx4LkJG4nDxD0Ng1YHbaja
+         kmnpsSgk6fUh9W5Fnk8cAZ6fmvPQbd1xZXwaDja4zWbZZDwMJKSJqtXL7QHA5wW/59Zr
+         E8aGzZ7k/+EPt1JrRILeWEhgwc7+WHsCbiUOxSC9cSiYFHe+NgHBR9xs+OBlEWrFpm6D
+         xSMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=M60UiEhUmmNWU8RgBGE4zx++F2XO1/RbSWEAXRbbk3s=;
-        b=IuCrBVzXdYwsK4v+OgLyCIniAEIcsppcGvNGHxi36JiAEFDz0cUEe4l8NRJckJonet
-         AziwnBDR0VoKWrQ+K7HD4H7On/RRjXnqJeVuRwzg/Lx3d0n4IcOHbXJ4XeWMhTH6H7by
-         JAbleHZMzf940ORErbduzVOkxPZ9FHO5dJEmmSdH7HyRNKZ3TwzwJmjLNKwcuFE3Zvii
-         kIGvIaH/8xAnTB60dLESXG1cFlcbSc+xnh30vyJ7S5ASeeIwaemwfgbHUX1FC9hCv9G6
-         NBhMV36qBJVipG1jlunsEfVB239BoWGgPx/iWt5qPt954VxRDxqAeurwIjXqqMYBm6mT
-         kTtw==
-X-Gm-Message-State: APjAAAUPnzW4bFvQut8zNncm8nXmGOEHX62vql9bayKIjL6QPrCxgPc1
-        GRj0+9U+KqIipAaZGG/L4GQTBx8R7ns=
-X-Google-Smtp-Source: APXvYqwDteIDzKxvuXwHeKYZ+t5RDvepRUcPppCo19Lxh5ISq8LLiUmTvMXp6JXaUJofjvqgCUKe/Q==
-X-Received: by 2002:adf:e903:: with SMTP id f3mr5124513wrm.121.1572518655958;
-        Thu, 31 Oct 2019 03:44:15 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+PNsOE4fENaOwhTZnvRCyw50CWL6R5gR5zazjJkSQ7Y=;
+        b=VxDpFVLABxChNCGwQqNIN7RY/j/p7aYb/RREi+8biPoJbPgaUkQDlVuZVWYCHXmPhT
+         nL5tlZtLAzEeQO3YKY0ix4wsb4irT92gQKebUwN1J6c2fRh8eK8nH6HfVl6Na6Bu2Nnd
+         mIy5WlkJY39Zmnlfj1sF9IG2UKsQrWc59qAclAcIRRYespI39lHdYtkUQKkc9yExWkUN
+         TsxfRGDRxmvRdNGKpGt8Ph3eUBB56bpsxIgWbtLGdTIn72YGsqpYJAJyRPl2bkeKIYje
+         hmIQj6REmeDmWB087McnOjdNpCn9iXEN/lbHVi7Cpd5GVimZ6w8aD7r50c48xdXi+LTC
+         1tkg==
+X-Gm-Message-State: APjAAAVXRJVp3jJ6OrRH6H6lEIcJ0xQHrniayHxHnJWqSyNpzEHiqnRY
+        qAw9e25E7w3TxWuHR472R9mXzaqbJlM=
+X-Google-Smtp-Source: APXvYqzlcyG1MenaxSM7ZLfN5aIk9CUiireojdgdzin/zZ07O/IQhOu+6VBowUajq2vKu/XTbV6rZQ==
+X-Received: by 2002:a1c:c90f:: with SMTP id f15mr4727564wmb.125.1572520609176;
+        Thu, 31 Oct 2019 04:16:49 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([93.51.16.173])
-        by smtp.gmail.com with ESMTPSA id q25sm4141389wra.3.2019.10.31.03.44.14
+        by smtp.gmail.com with ESMTPSA id s17sm3009306wmh.3.2019.10.31.04.16.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 31 Oct 2019 03:44:15 -0700 (PDT)
+        Thu, 31 Oct 2019 04:16:48 -0700 (PDT)
 From:   kholk11@gmail.com
 To:     linux-arm-msm@vger.kernel.org
-Cc:     kholk11@gmail.com, marijns95@gmail.com, robdclark@gmail.com,
-        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        robh+dt@kernel.org, mark.rutland@arm.com, tglx@linutronix.de,
-        jonathan@marek.ca, bjorn.andersson@linaro.org,
-        georgi.djakov@linaro.org, gregkh@linuxfoundation.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v4 7/7] drm/msm/adreno: Add support for Adreno 510 GPU
-Date:   Thu, 31 Oct 2019 11:44:02 +0100
-Message-Id: <20191031104402.31813-8-kholk11@gmail.com>
+Cc:     devicetree@vger.kernel.org, ccross@android.com,
+        mark.rutland@arm.com, robh+dt@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, marijns95@gmail.com, kholk11@gmail.com
+Subject: [PATCH v2 0/5] MSM8976/56 Sony Xperia Loire (X/XCompact) smartphones
+Date:   Thu, 31 Oct 2019 12:16:40 +0100
+Message-Id: <20191031111645.34777-1-kholk11@gmail.com>
 X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20191031104402.31813-1-kholk11@gmail.com>
-References: <20191031104402.31813-1-kholk11@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -68,236 +63,107 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-The Adreno 510 GPU is a stripped version of the Adreno 5xx,
-found in low-end SoCs like 8x56 and 8x76, which has 256K of
-GMEM, with no GPMU nor ZAP.
-Also, since the Adreno 5xx part of this driver seems to be
-developed with high-end Adreno GPUs in mind, and since this
-is a lower end one, add a comment making clear which GPUs
-which support is not implemented yet is not using the GPMU
-related hw init code, so that future developers will not go
-crazy with that.
+Here it all comes together.
 
-By the way, the lower end Adreno GPUs with no GPMU are:
-A505/A506/A510 (usually no ZAP firmware)
-A508/A509/A512 (usually with ZAP firmware)
+This patch series enables support for MSM8976 and MSM8956 with all
+the extra functionality that has been tested and sent upstream and
+also adds support for the Sony Xperia Loire platform, including two
+devices in the Loire project: the Xperia X (Suzu) and the Xperia
+X Compact (Kugo).
 
-Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
----
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c      | 73 +++++++++++++++++-----
- drivers/gpu/drm/msm/adreno/a5xx_power.c    |  7 +++
- drivers/gpu/drm/msm/adreno/adreno_device.c | 15 +++++
- drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 ++
- 4 files changed, 86 insertions(+), 14 deletions(-)
+That's only a subset of what I actually have in my hat.. I didn't
+feel like sending the entire thing because the rest is not perfectly
+clean yet (even if working, and we all know that "works != clean").
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index 7fdc9e2bcaac..b02e2042547f 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -353,6 +353,9 @@ static int a5xx_me_init(struct msm_gpu *gpu)
- 		 * 2D mode 3 draw
- 		 */
- 		OUT_RING(ring, 0x0000000B);
-+	} else if (adreno_is_a510(adreno_gpu)) {
-+		/* Workaround for token and syncs */
-+		OUT_RING(ring, 0x00000001);
- 	} else {
- 		/* No workarounds enabled */
- 		OUT_RING(ring, 0x00000000);
-@@ -568,15 +571,24 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 		0x00100000 + adreno_gpu->gmem - 1);
- 	gpu_write(gpu, REG_A5XX_UCHE_GMEM_RANGE_MAX_HI, 0x00000000);
- 
--	gpu_write(gpu, REG_A5XX_CP_MEQ_THRESHOLDS, 0x40);
--	if (adreno_is_a530(adreno_gpu))
--		gpu_write(gpu, REG_A5XX_CP_MERCIU_SIZE, 0x40);
--	if (adreno_is_a540(adreno_gpu))
--		gpu_write(gpu, REG_A5XX_CP_MERCIU_SIZE, 0x400);
--	gpu_write(gpu, REG_A5XX_CP_ROQ_THRESHOLDS_2, 0x80000060);
--	gpu_write(gpu, REG_A5XX_CP_ROQ_THRESHOLDS_1, 0x40201B16);
--
--	gpu_write(gpu, REG_A5XX_PC_DBG_ECO_CNTL, (0x400 << 11 | 0x300 << 22));
-+	if (adreno_is_a510(adreno_gpu)) {
-+		gpu_write(gpu, REG_A5XX_CP_MEQ_THRESHOLDS, 0x20);
-+		gpu_write(gpu, REG_A5XX_CP_MERCIU_SIZE, 0x20);
-+		gpu_write(gpu, REG_A5XX_CP_ROQ_THRESHOLDS_2, 0x40000030);
-+		gpu_write(gpu, REG_A5XX_CP_ROQ_THRESHOLDS_1, 0x20100D0A);
-+		gpu_write(gpu, REG_A5XX_PC_DBG_ECO_CNTL,
-+			  (0x200 << 11 | 0x200 << 22));
-+	} else {
-+		gpu_write(gpu, REG_A5XX_CP_MEQ_THRESHOLDS, 0x40);
-+		if (adreno_is_a530(adreno_gpu))
-+			gpu_write(gpu, REG_A5XX_CP_MERCIU_SIZE, 0x40);
-+		if (adreno_is_a540(adreno_gpu))
-+			gpu_write(gpu, REG_A5XX_CP_MERCIU_SIZE, 0x400);
-+		gpu_write(gpu, REG_A5XX_CP_ROQ_THRESHOLDS_2, 0x80000060);
-+		gpu_write(gpu, REG_A5XX_CP_ROQ_THRESHOLDS_1, 0x40201B16);
-+		gpu_write(gpu, REG_A5XX_PC_DBG_ECO_CNTL,
-+			  (0x400 << 11 | 0x300 << 22));
-+	}
- 
- 	if (adreno_gpu->info->quirks & ADRENO_QUIRK_TWO_PASS_USE_WFI)
- 		gpu_rmw(gpu, REG_A5XX_PC_DBG_ECO_CNTL, 0, (1 << 8));
-@@ -589,6 +601,19 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 	/* Enable ME/PFP split notification */
- 	gpu_write(gpu, REG_A5XX_RBBM_AHB_CNTL1, 0xA6FFFFFF);
- 
-+	/*
-+	 *  In A5x, CCU can send context_done event of a particular context to
-+	 *  UCHE which ultimately reaches CP even when there is valid
-+	 *  transaction of that context inside CCU. This can let CP to program
-+	 *  config registers, which will make the "valid transaction" inside
-+	 *  CCU to be interpreted differently. This can cause gpu fault. This
-+	 *  bug is fixed in latest A510 revision. To enable this bug fix -
-+	 *  bit[11] of RB_DBG_ECO_CNTL need to be set to 0, default is 1
-+	 *  (disable). For older A510 version this bit is unused.
-+	 */
-+	if (adreno_is_a510(adreno_gpu))
-+		gpu_rmw(gpu, REG_A5XX_RB_DBG_ECO_CNTL, (1 << 11), 0);
-+
- 	/* Enable HWCG */
- 	a5xx_set_hwcg(gpu, true);
- 
-@@ -635,7 +660,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 	/* UCHE */
- 	gpu_write(gpu, REG_A5XX_CP_PROTECT(16), ADRENO_PROTECT_RW(0xE80, 16));
- 
--	if (adreno_is_a530(adreno_gpu))
-+	if (adreno_is_a530(adreno_gpu) || adreno_is_a510(adreno_gpu))
- 		gpu_write(gpu, REG_A5XX_CP_PROTECT(17),
- 			ADRENO_PROTECT_RW(0x10000, 0x8000));
- 
-@@ -679,7 +704,8 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 
- 	a5xx_preempt_hw_init(gpu);
- 
--	a5xx_gpmu_ucode_init(gpu);
-+	if (!adreno_is_a510(adreno_gpu))
-+		a5xx_gpmu_ucode_init(gpu);
- 
- 	ret = a5xx_ucode_init(gpu);
- 	if (ret)
-@@ -712,7 +738,8 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 	}
- 
- 	/*
--	 * Try to load a zap shader into the secure world. If successful
-+	 * If the chip that we are using does support loading one, then
-+	 * try to load a zap shader into the secure world. If successful
- 	 * we can use the CP to switch out of secure mode. If not then we
- 	 * have no resource but to try to switch ourselves out manually. If we
- 	 * guessed wrong then access to the RBBM_SECVID_TRUST_CNTL register will
-@@ -1066,6 +1093,7 @@ static void a5xx_dump(struct msm_gpu *gpu)
- 
- static int a5xx_pm_resume(struct msm_gpu *gpu)
- {
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	int ret;
- 
- 	/* Turn on the core power */
-@@ -1073,6 +1101,15 @@ static int a5xx_pm_resume(struct msm_gpu *gpu)
- 	if (ret)
- 		return ret;
- 
-+	if (adreno_is_a510(adreno_gpu)) {
-+		/* Halt the sp_input_clk at HM level */
-+		gpu_write(gpu, REG_A5XX_RBBM_CLOCK_CNTL, 0x00000055);
-+		a5xx_set_hwcg(gpu, true);
-+		/* Turn on sp_input_clk at HM level */
-+		gpu_rmw(gpu, REG_A5XX_RBBM_CLOCK_CNTL, 0xff, 0);
-+		return 0;
-+	}
-+
- 	/* Turn the RBCCU domain first to limit the chances of voltage droop */
- 	gpu_write(gpu, REG_A5XX_GPMU_RBCCU_POWER_CNTL, 0x778000);
- 
-@@ -1101,9 +1138,17 @@ static int a5xx_pm_resume(struct msm_gpu *gpu)
- 
- static int a5xx_pm_suspend(struct msm_gpu *gpu)
- {
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	u32 mask = 0xf;
-+
-+	/* A510 has 3 XIN ports in VBIF */
-+	if (adreno_is_a510(adreno_gpu))
-+		mask = 0x7;
-+
- 	/* Clear the VBIF pipe before shutting down */
--	gpu_write(gpu, REG_A5XX_VBIF_XIN_HALT_CTRL0, 0xF);
--	spin_until((gpu_read(gpu, REG_A5XX_VBIF_XIN_HALT_CTRL1) & 0xF) == 0xF);
-+	gpu_write(gpu, REG_A5XX_VBIF_XIN_HALT_CTRL0, mask);
-+	spin_until((gpu_read(gpu, REG_A5XX_VBIF_XIN_HALT_CTRL1) &
-+				mask) == mask);
- 
- 	gpu_write(gpu, REG_A5XX_VBIF_XIN_HALT_CTRL0, 0);
- 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_power.c b/drivers/gpu/drm/msm/adreno/a5xx_power.c
-index a3a06db675ba..321a8061fd32 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_power.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_power.c
-@@ -297,6 +297,10 @@ int a5xx_power_init(struct msm_gpu *gpu)
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	int ret;
- 
-+	/* Not all A5xx chips have a GPMU */
-+	if (adreno_is_a510(adreno_gpu))
-+		return 0;
-+
- 	/* Set up the limits management */
- 	if (adreno_is_a530(adreno_gpu))
- 		a530_lm_setup(gpu);
-@@ -326,6 +330,9 @@ void a5xx_gpmu_ucode_init(struct msm_gpu *gpu)
- 	unsigned int *data, *ptr, *cmds;
- 	unsigned int cmds_size;
- 
-+	if (adreno_is_a510(adreno_gpu))
-+		return;
-+
- 	if (a5xx_gpu->gpmu_bo)
- 		return;
- 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 0888e0df660d..fbbdf86504f5 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -114,6 +114,21 @@ static const struct adreno_info gpulist[] = {
- 		.gmem  = (SZ_1M + SZ_512K),
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
- 		.init  = a4xx_gpu_init,
-+	}, {
-+		.rev   = ADRENO_REV(5, 1, 0, ANY_ID),
-+		.revn = 510,
-+		.name = "A510",
-+		.fw = {
-+			[ADRENO_FW_PM4] = "a530_pm4.fw",
-+			[ADRENO_FW_PFP] = "a530_pfp.fw",
-+		},
-+		.gmem = SZ_256K,
-+		/*
-+		 * Increase inactive period to 250 to avoid bouncing
-+		 * the GDSC which appears to make it grumpy
-+		 */
-+		.inactive_period = 250,
-+		.init = a5xx_gpu_init,
- 	}, {
- 		.rev = ADRENO_REV(5, 3, 0, 2),
- 		.revn = 530,
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index d225a8a92e58..e71a7570ef72 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -212,6 +212,11 @@ static inline int adreno_is_a430(struct adreno_gpu *gpu)
-        return gpu->revn == 430;
- }
- 
-+static inline int adreno_is_a510(struct adreno_gpu *gpu)
-+{
-+	return gpu->revn == 510;
-+}
-+
- static inline int adreno_is_a530(struct adreno_gpu *gpu)
- {
- 	return gpu->revn == 530;
+As for my entire local stuff, here I can successfully boot Android 10
+with nice display and 3d on both smartphones.
+
+So, this is composed of:
+- A main device-tree for the MSM8976/56 SoC (*)
+- Standard configuration for the PM/PMI8950 and PM8004, which are
+  found on all (from what I know) MSM8976 and 8956 boards, since
+  that seems to be the recommended hardware configuration from qcom
+- A main device-tree for the Sony Xperia Loire project (**)
+- Device specific device-trees for Loire Kugo and Loire Suzu. (***)
+
+(*) The MSM8956 SoC is a "broken" MSM8976. It has got two *disabled*
+    BIG cores and you can't preventively know which ones are enabled
+    and which ones are not: there you only know that you've got two.
+    So, you can get any combination of disabled cores (relative to
+    cluster 1, it can be 0,1 or 1,2 or 2,3 or 0,3 or 1,3.. etc) on
+    the chip that you own.
+    After many trials on (various) downstream kernels and a number of
+    devices, I have concluded that the only way to get both the enabled
+    big cores up is to actually declare all four and let Linux error
+    out on the disabled cores (and - of course - never use them), mostly
+    because there doesn't seem to be any register that can be read for
+    that purpose... may sound stupid, but ... eh :)
+
+(**) The Sony Xperia Loire platform is composed of 3 devices with their
+     specific region variants, specifically, two MSM8956 smartphones
+     (Suzu, Kugo) and one APQ8056 smart projector (Blanc). All these
+     devices reuse the same base board design, so I thought that it is
+     just better to create a common DT for all of them, hence avoiding
+     a whole lot of code duplication.
+     P.S.: I don't know if I'll ever try to upstream the SmartLoire
+           APQ8056 Xperia Touch projector. I hope to have time to do
+           it as it's a great device and I really want to but, as of
+           now, I can't make any promise about that specific device.
+
+(***) These DTs are now very light, but they will contain some
+      more nodes as I get more components upstreamed. For example, the
+      X Compact (Kugo) smartphone has Type-C through the FUSB301 chip,
+      which resides on i2c, a RGBC-IR sensor and a VL53L0 ToF, while X
+      (Suzu) has just MicroUSB and none of these sensors.
+      These devices also are of a different form factor, so they've got
+      different displays but connected to the same power rails anyway.
+
+
+Changes in v2 (all changes requested by Bjorn):
+- Reordered DT nodes by address and padded them to 8 digits
+- Dropped useless inner subnodes for pinctrl configurations
+- Removed the forgotten useless "qcom,init-voltage" property
+- Moved BLSP2 UART2 node to main DT, declared as disabled
+- Refactored SDC related pinctrl nodes as suggested
+- Deleted msm8976-pins DT, moved stripped-to-the-bone pinctrl
+  in msm8976.dtsi, plus remaining board-specific nodes in the
+  loire board dtsi
+- Removed the split mux/config in pinctrl nodes
+- Added explicit "qcom,scm-msm8976" to the scm node
+- Removed PM8950 regulators configuration skeleton from msm8976.dtsi
+  and moved the entire thing to board specific files (in this
+  case, msm8956-sony-xperia-loire.dtsi)
+- Moved non-mmio nodes from /soc to /
+- Removed the remoteproc/hexagon configuration completely, as it
+  was just a forgotten node from various tests that I did on the
+  platform (sorry guys -- plan is now to enable modem and hexagon
+  in a future patch series)
+- Fixed trailing whitespace issues in xperia-loire DT.
+
+AngeloGioacchino Del Regno (5):
+  dt-bindings: iio: spmi-vadc: Add definitions for USB DP/DM VADCs
+  arm64: dts: pm8004: Add SPMI regulator and add phandles to lsids
+  arm64: dts: qcom: Add configuration for PM8950 and PMI8950 peripherals
+  arm64: dts: qcom: Add MSM8976 SoC support dts files
+  arm64: dts: qcom: Add Sony Xperia (Loire) X and X Compact support
+
+ arch/arm64/boot/dts/qcom/Makefile             |    2 +
+ .../qcom/msm8956-sony-xperia-loire-kugo.dts   |   56 +
+ .../qcom/msm8956-sony-xperia-loire-suzu.dts   |   17 +
+ .../dts/qcom/msm8956-sony-xperia-loire.dtsi   |  744 +++++++
+ arch/arm64/boot/dts/qcom/msm8976.dtsi         | 1705 +++++++++++++++++
+ arch/arm64/boot/dts/qcom/pm8004.dtsi          |   10 +-
+ arch/arm64/boot/dts/qcom/pm8950.dtsi          |  187 ++
+ arch/arm64/boot/dts/qcom/pmi8950.dtsi         |   98 +
+ include/dt-bindings/iio/qcom,spmi-vadc.h      |    3 +
+ 9 files changed, 2820 insertions(+), 2 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire-kugo.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire-suzu.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8976.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/pm8950.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/pmi8950.dtsi
+
 -- 
 2.21.0
 
