@@ -2,166 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 158FCEB82D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 20:58:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2802DEB8F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Oct 2019 22:33:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726985AbfJaT6T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Oct 2019 15:58:19 -0400
-Received: from onstation.org ([52.200.56.107]:60654 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726741AbfJaT6T (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Oct 2019 15:58:19 -0400
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 0726C3E94C;
-        Thu, 31 Oct 2019 19:58:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1572551897;
-        bh=lpAg37b5Vwth+ogtYsoov8MBcpIvTZL2Kf6dlzNRaTo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lyAxphNj+mdKM6qCi9armpKi1a1z4sQuWKvj0HvQsWBa40E4ePsTlpPWGDAgRNoUW
-         w+4svYFMom/hJ6xjuQ7cuKh6wPMgcslVGLdqK6/VX2/bbg0YXgMuWgrtUx+JXoFcgX
-         meS7SUZA2LfJVHB7QJ7dR2Apj2lE5H0yVmDP0jwY=
-Date:   Thu, 31 Oct 2019 15:58:16 -0400
-From:   Brian Masney <masneyb@onstation.org>
-To:     kholk11@gmail.com
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        ccross@android.com, mark.rutland@arm.com, robh+dt@kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org, marijns95@gmail.com,
-        Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: [PATCH v2 3/5] arm64: dts: qcom: Add configuration for PM8950
- and PMI8950 peripherals
-Message-ID: <20191031195816.GA1462@onstation.org>
-References: <20191031111645.34777-1-kholk11@gmail.com>
- <20191031111645.34777-4-kholk11@gmail.com>
+        id S1728356AbfJaVdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Oct 2019 17:33:25 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:44541 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726540AbfJaVdY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 31 Oct 2019 17:33:24 -0400
+Received: by mail-pl1-f194.google.com with SMTP id q16so3301906pll.11;
+        Thu, 31 Oct 2019 14:33:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IVsbwFP8AeKgn5KuqXlWOVRdSf7M1xugTS7jUvEVQtc=;
+        b=oU/f2dvCHCBjQ55JB95SZcIANhYyJ9ITAqAZyUPy+8WCm30d3ew7K9ot3ljlismeG0
+         64ZZ6rY+w87JZZP2/a/NOpuKpPQSzTOlD6tYFFErCKbk2o/d38myrMyLZHkj0eGMRWrK
+         ZO4/0jwX0Y6hEQ1RTWCi/Wj/qeV6Wo9aIp8ZOQwP8c7XCPdeYxXsyETJzw4XyKMBU/lz
+         qM9LlLfdRcPdbBy3/9gWJq9L5Nx5jDZR2yKoRwucfTLbyKtZ15BBcdJfb9rJadDqa8HN
+         cFg/4VEnXCe2aLl7T7z7Yxd+De1QrhbV0OXFW9p/LS6zk0ELprOQr2XP2R2mafFphhso
+         jwwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IVsbwFP8AeKgn5KuqXlWOVRdSf7M1xugTS7jUvEVQtc=;
+        b=NFnW2mhp5adHImTqoqHB2wsTI17mwJsXyaeLl13nAyRBVNRbXrnMac5gk8Qg1nxrKl
+         fskmVyNG5wsG+ihUUJmr0N1NSAYvrgW1IiGdzSgpjQaxObu3OiKEFeZHzR1bcTzx3vMx
+         nBJZWFqUebrMvbn37AiNNhtEZ9K0SmX92uvSUZPjMRWh5Jbo2oqC8uH6k35hyuKCMHUV
+         CypFRnCCKJigmykT49IzTxnRlt0B0/FAMiwYXOnvTFZI4gsyNYqyCj0ld+qKeMI5uy5c
+         Y32j3pslfrjuA8zrBxNRES8DiQt2bEuHoxoJsss2fLRbH+sTzWmpIQl9HSWx3RX1h4Af
+         hq3A==
+X-Gm-Message-State: APjAAAW16FqoAXfPYQDkwInUGEsmcNRXGv8ifv4acnmmQOM8FyRJTA0b
+        Cb0m3rDY0mzPBMBYnkjwF+A=
+X-Google-Smtp-Source: APXvYqzA8b8TES3q8RMzhJpNbYR+VN+AMBJwUdINXVcCiKsaNB6N/jCmLAzvR9lFLICCokguWu+7lg==
+X-Received: by 2002:a17:902:bb84:: with SMTP id m4mr8839423pls.211.1572557603878;
+        Thu, 31 Oct 2019 14:33:23 -0700 (PDT)
+Received: from localhost ([100.118.89.196])
+        by smtp.gmail.com with ESMTPSA id 135sm4038808pgh.89.2019.10.31.14.33.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Oct 2019 14:33:22 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     iommu@lists.linux-foundation.org
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM SMMU DRIVERS),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] iommu/arm-smmu: avoid pathological RPM behaviour for unmaps
+Date:   Thu, 31 Oct 2019 14:31:02 -0700
+Message-Id: <20191031213102.17108-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191031111645.34777-4-kholk11@gmail.com>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for the patches. Good to see the progress!
+From: Rob Clark <robdclark@chromium.org>
 
-On Thu, Oct 31, 2019 at 12:16:43PM +0100, kholk11@gmail.com wrote:
-> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> 
-> The PM(I)8950 feature integrated peripherals like ADC, GPIO
-> controller, MPPs, PON keys and others.
-> Add them to DT files that will be imported on boards having
-> this PMIC combo (or one of them, anyways).
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/pm8950.dtsi  | 187 ++++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/pmi8950.dtsi |  98 ++++++++++++++
->  2 files changed, 285 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/pm8950.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/pmi8950.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/pm8950.dtsi b/arch/arm64/boot/dts/qcom/pm8950.dtsi
-> new file mode 100644
-> index 000000000000..a349a8dd867e
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pm8950.dtsi
-> @@ -0,0 +1,187 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +// Copyright (c) 2019, AngeloGioacchino Del Regno <kholk11@gmail.com>
-> +
-> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
-> +#include <dt-bindings/input/linux-event-codes.h>
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
-> +#include <dt-bindings/spmi/spmi.h>
-> +
-> +&spmi_bus {
-> +	pm8950_lsid0: pm8950@0 {
-> +		compatible = "qcom,pm8950", "qcom,spmi-pmic";
-> +		reg = <0x0 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		pon@800 {
-> +			compatible = "qcom,pm8916-pon";
-> +			reg = <0x0800>;
-> +			mode-bootloader = <0x2>;
-> +			mode-recovery = <0x1>;
-> +
-> +			pwrkey {
-> +				compatible = "qcom,pm8941-pwrkey";
-> +				interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
-> +				debounce = <15625>;
-> +				bias-pull-up;
-> +				linux,code = <KEY_POWER>;
-> +			};
-> +		};
-> +
-> +		pm8950_mpps: mpps@a000 {
-> +			compatible = "qcom,pm8950-mpp", "qcom,spmi-mpp";
-> +			reg = <0xa000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupts = <0 0xa0 0 IRQ_TYPE_NONE>,
-> +				     <0 0xa1 0 IRQ_TYPE_NONE>,
-> +				     <0 0xa2 0 IRQ_TYPE_NONE>,
-> +				     <0 0xa3 0 IRQ_TYPE_NONE>;
-> +
-> +			/* MPP_2: PA_THERM1 */
-> +			pa_therm {
-> +				pm8950_mpp2_def: pa_therm1_default {
-> +					pins = "mpp2";
-> +					function = "analog";
-> +					input-enable;
-> +					qcom,amux-route =
-> +						<PMIC_MPP_AMUX_ROUTE_CH6>;
-> +				};
-> +			};
-> +
-> +			/* MPP_4: QUIET_THERM */
-> +			case_therm {
-> +				pm8950_mpp4_def: case_therm_default {
-> +					pins = "mpp4";
-> +					function = "analog";
-> +					input-enable;
-> +					qcom,amux-route =
-> +						<PMIC_MPP_AMUX_ROUTE_CH8>;
-> +				};
-> +			};
-> +		};
-> +
-> +		pm8950_gpios: gpio@c000 {
-> +			compatible = "qcom,pm8950-gpio", "qcom,spmi-gpio";
-> +			reg = <0xc000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupts = <0 0xc0 0 IRQ_TYPE_NONE>,
-> +				<0 0xc1 0 IRQ_TYPE_NONE>,
-> +				<0 0xc3 0 IRQ_TYPE_NONE>,
-> +				<0 0xc4 0 IRQ_TYPE_NONE>,
-> +				<0 0xc5 0 IRQ_TYPE_NONE>,
-> +				<0 0xc6 0 IRQ_TYPE_NONE>,
-> +				<0 0xc7 0 IRQ_TYPE_NONE>;
-> +		};
+When games, browser, or anything using a lot of GPU buffers exits, there
+can be many hundreds or thousands of buffers to unmap and free.  If the
+GPU is otherwise suspended, this can cause arm-smmu to resume/suspend
+for each buffer, resulting 5-10 seconds worth of reprogramming the
+context bank (arm_smmu_write_context_bank()/arm_smmu_write_s2cr()/etc).
+To the user it would appear that the system just locked up.
 
-Please add gpio-ranges so that gpio-hogging will work properly. See
-commits for pm8941 and spmi-gpio that describes the problem and how
-to fix it:
+A simple solution is to use pm_runtime_put_autosuspend() instead, so we
+don't immediately suspend the SMMU device.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=149a96047237574b756d872007c006acd0cc6687
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cdd3d64d843a2a4c658a182b744bfefbd021d542
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/iommu/arm-smmu.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-Please drop the interrupts property and configure this to be a
-hierarchical IRQ chip. See these two commits for more details:
+diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+index 7c503a6bc585..5abc0d210d90 100644
+--- a/drivers/iommu/arm-smmu.c
++++ b/drivers/iommu/arm-smmu.c
+@@ -122,7 +122,7 @@ static inline int arm_smmu_rpm_get(struct arm_smmu_device *smmu)
+ static inline void arm_smmu_rpm_put(struct arm_smmu_device *smmu)
+ {
+ 	if (pm_runtime_enabled(smmu->dev))
+-		pm_runtime_put(smmu->dev);
++		pm_runtime_put_autosuspend(smmu->dev);
+ }
+ 
+ static struct arm_smmu_domain *to_smmu_domain(struct iommu_domain *dom)
+@@ -1154,6 +1154,20 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+ 	/* Looks ok, so add the device to the domain */
+ 	ret = arm_smmu_domain_add_master(smmu_domain, fwspec);
+ 
++	/*
++	 * Setup an autosuspend delay to avoid bouncing runpm state.
++	 * Otherwise, if a driver for a suspendend consumer device
++	 * unmaps buffers, it will runpm resume/suspend for each one.
++	 *
++	 * For example, when used by a GPU device, when an application
++	 * or game exits, it can trigger unmapping 100s or 1000s of
++	 * buffers.  With a runpm cycle for each buffer, that adds up
++	 * to 5-10sec worth of reprogramming the context bank, while
++	 * the system appears to be locked up to the user.
++	 */
++	pm_runtime_set_autosuspend_delay(smmu->dev, 20);
++	pm_runtime_use_autosuspend(smmu->dev);
++
+ rpm_put:
+ 	arm_smmu_rpm_put(smmu);
+ 	return ret;
+-- 
+2.21.0
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ca69e2d165eb3d060cc9ad70a745e27a2cf4310b
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5f540fb4821a5444350ab3311fff60013d755d8f
-
-There is some kind of mask that you'll need to add to omit 0xc2 that
-Linus Walleij told me about before. I don't have the property handy
-right now, but can look it up later if needed.
-
-Brian
