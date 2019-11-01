@@ -2,92 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BB47EBD09
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2019 06:20:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E99E1EBD50
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2019 06:42:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728291AbfKAFU4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Nov 2019 01:20:56 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:41096 "EHLO
+        id S1727828AbfKAFmk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Nov 2019 01:42:40 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:47434 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727332AbfKAFU4 (ORCPT
+        with ESMTP id S1725280AbfKAFmk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Nov 2019 01:20:56 -0400
+        Fri, 1 Nov 2019 01:42:40 -0400
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 1D49D60134; Fri,  1 Nov 2019 05:20:55 +0000 (UTC)
+        id DE5A160A66; Fri,  1 Nov 2019 05:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572585655;
-        bh=2zp/sfIOvfwFWoRF1xTceSxck6l1sLqfckMf67Y639o=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=oRrkdVYucz38PH7wWx8jyEGX3baZHShsaqsQEdPJJhpbB0hhjM/AwV+eY8PyCSUK5
-         R2dmnrEVJH5Rh9i4OOSGZaCN8UowHCTuMPcq1tiEAw6FMNf79Tfd3SJ/+G5wQzqKhu
-         Qf5mipaZu5A8a0FicOzAbvkNjqxBLYHNRUnsNzZU=
+        s=default; t=1572586959;
+        bh=hfIUvKWAJJGAIiPINob40uFW3VATFr4Hy/OOMnNedZ4=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=QJq/W/+LeemfKfbuQt8carVNB0URGDh3KbVxp+VdHth6cbpLg4YAnp5NwdNlmDGaS
+         HD9E4VwrnJNbYy/qP17K3SeclV+MWLu1Nxbtv1K1qPNQ1qrbJfRLtpgZf5lE38kErP
+         /DJFNVuUlQW5+mlQ/lTxmYn0RmgyFIdAaQ500YcY=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.206.13.37] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7194160A4E;
-        Fri,  1 Nov 2019 05:20:50 +0000 (UTC)
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id D668260A66;
+        Fri,  1 Nov 2019 05:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572585654;
-        bh=2zp/sfIOvfwFWoRF1xTceSxck6l1sLqfckMf67Y639o=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=Oy4FLzxzno59bqhYbqNQQL/yevQmovbChqXZ1f1tZw1urZFSc/QJr3rG1unrbAFrK
-         XNkfDJRFv44HDtYJlioviFfAOAAiBxv8B7/Z9U+omzH9YI3K0dqkmMAWWOL7vFYigv
-         lw9p6srPwjkySEPXky0ed+rr+ZlYm4Dq9UGL0+Hk=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7194160A4E
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add cpuidle low power states
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org,
-        mka@chromium.org, swboyd@chromium.org, evgreen@chromium.org,
-        dianders@chromium.org, devicetree@vger.kernel.org
-References: <1572408318-28681-1-git-send-email-mkshah@codeaurora.org>
- <1572408318-28681-2-git-send-email-mkshah@codeaurora.org>
- <20191030065625.GA14823@e107533-lin.cambridge.arm.com>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <b85519a6-2725-3953-a8c2-e0627f20d4ef@codeaurora.org>
-Date:   Fri, 1 Nov 2019 10:50:47 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        s=default; t=1572586958;
+        bh=hfIUvKWAJJGAIiPINob40uFW3VATFr4Hy/OOMnNedZ4=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=AJl5A1k2zCnHgvYqAvbQ2tw0xbY7UZ487lMyuth0SXCeWAZy1iQ0A/UYUECO0mtq9
+         iL79uI+9ha4SC15D5PMNFY3e0Jy2CVpGZQvyYxUSd31WHzpMILh7xKbf7+8R04AYUN
+         CM2CgEzIe78GA80M9YzJSY2+1xt5ZUInUf3uwmh8=
 MIME-Version: 1.0
-In-Reply-To: <20191030065625.GA14823@e107533-lin.cambridge.arm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Date:   Fri, 01 Nov 2019 11:12:38 +0530
+From:   kgunda@codeaurora.org
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
+        b.zolnierkie@samsung.com, dri-devel@lists.freedesktop.org,
+        daniel.thompson@linaro.org, jacek.anaszewski@gmail.com,
+        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Dan Murphy <dmurphy@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH V9 1/6] backlight: qcom-wled: Add new properties for
+ PMI8998.
+In-Reply-To: <20191031085845.GA5700@dell>
+References: <1571814423-6535-1-git-send-email-kgunda@codeaurora.org>
+ <1571814423-6535-2-git-send-email-kgunda@codeaurora.org>
+ <20191031085845.GA5700@dell>
+Message-ID: <4b5c264b8d4b47c48bc87ca389041a02@codeaurora.org>
+X-Sender: kgunda@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/30/2019 12:26 PM, Sudeep Holla wrote:
-> On Wed, Oct 30, 2019 at 09:35:18AM +0530, Maulik Shah wrote:
->> Add device bindings for cpuidle states for cpu devices.
->>
-> You are not adding bindings, but you are using the existing bindings I
-> believe. Anyways good to see a platform using PC mode for cpuidle/suspend.
-> What platforms does this sc7180 cover ?
->
-> --
-> Regards,
-> Sudeep
-
-Hi Sudeep,
-
-sc7180 supports IDP platform.
-
-Thanks,
-Maulik
-
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
-
+On 2019-10-31 14:28, Lee Jones wrote:
+> On Wed, 23 Oct 2019, Kiran Gunda wrote:
+> 
+>> Update the bindings with the new properties used for
+>> PMI8998.
+>> 
+>> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+>> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Reviewed-by: Rob Herring <robh@kernel.org>
+>> Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
+>> ---
+>>  .../bindings/leds/backlight/qcom-wled.txt          | 74 
+>> ++++++++++++++++++----
+>>  1 file changed, 63 insertions(+), 11 deletions(-)
+> 
+> This patch no longer applies.
+> 
+> It looks like you dropped the rename patch.
+> 
+> Please rebase all of the patches in this set on top of a released
+> commit and resend.
+Sure. I will resend the complete series with the dropped patches.
