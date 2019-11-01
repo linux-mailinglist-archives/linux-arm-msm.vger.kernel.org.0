@@ -2,110 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 94325EBE37
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2019 07:59:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9806AEC0F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2019 11:00:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725787AbfKAG7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Nov 2019 02:59:25 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:32832 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725869AbfKAG7Y (ORCPT
+        id S1728799AbfKAKAp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Nov 2019 06:00:45 -0400
+Received: from youngberry.canonical.com ([91.189.89.112]:53147 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728092AbfKAKAo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Nov 2019 02:59:24 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 3F34160D4C; Fri,  1 Nov 2019 06:59:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572591563;
-        bh=SfMS6ugI/rbxN40RZqNQuk+KKQDvTM9lmtZxl8kl5+A=;
-        h=From:To:Cc:Subject:Date:From;
-        b=fouVRXN9i+GIe+yNFqu7GLWeB+vNlPCkh/VxSs9kWtfnPAsDvQqVoOGWIc3l+3u+e
-         rGoT2OJ/honfGmZurv24PifUyNVwHXvn196gZRXo0IxZ4tWmBpY0TWSm+SHPrLwrL7
-         MSheDSY9otv9EnbhUwX5fdmpH+ZGf36Iur8Ezd0g=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from kgunda-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kgunda@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0403360BF4;
-        Fri,  1 Nov 2019 06:59:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572591559;
-        bh=SfMS6ugI/rbxN40RZqNQuk+KKQDvTM9lmtZxl8kl5+A=;
-        h=From:To:Cc:Subject:Date:From;
-        b=NCChyQLcN0/uqr0XwNlkbiPhqcQXduvY1sPUW1EqChXbIn11T7O9GQajpBD48TxdF
-         KiWtIX0jh8NTe892E9BLe+hpL47tzsca7iAZEIWZ0jGg0LfMQKc1dR9Gu+8yPUu3bM
-         B+xNMdHU8L3O6+N72dKiV63pVb1ndFBcQSu4ycRU=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0403360BF4
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=kgunda@codeaurora.org
-From:   Kiran Gunda <kgunda@codeaurora.org>
-To:     bjorn.andersson@linaro.org, swboyd@chromium.org,
-        rnayak@codeaurora.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     Kiran Gunda <kgunda@codeaurora.org>
-Subject: [PATCH V1] mfd: qcom-spmi-pmic: Add support for pm6150 and pm6150l
-Date:   Fri,  1 Nov 2019 12:29:03 +0530
-Message-Id: <1572591543-15501-1-git-send-email-kgunda@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Fri, 1 Nov 2019 06:00:44 -0400
+Received: from 1.general.cking.uk.vpn ([10.172.193.212] helo=localhost)
+        by youngberry.canonical.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.86_2)
+        (envelope-from <colin.king@canonical.com>)
+        id 1iQTjP-0003cs-VH; Fri, 01 Nov 2019 10:00:36 +0000
+From:   Colin King <colin.king@canonical.com>
+To:     Andy Gross <agross@kernel.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH][next][V2] drivers: thermal: tsens: fix potential integer overflow on multiply
+Date:   Fri,  1 Nov 2019 10:00:35 +0000
+Message-Id: <20191101100035.25502-1-colin.king@canonical.com>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the compatibles and PMIC ids for pm6150 and pm6150l PMICs
-found on SC7180 based platforms.
+From: Colin Ian King <colin.king@canonical.com>
 
-Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+Currently a multiply operation is being performed on two int values
+and the result is being assigned to a u64, presumably because the
+end result is expected to be probably larger than an int. However,
+because the multiply is an int multiply one can get overflow. Avoid
+the overflow by casting degc to a u64 to force a u64 multiply.
+
+Also use div_u64 for the divide as suggested by Daniel Lezcano.
+
+Addresses-Coverity: ("Unintentional integer overflow")
+Fixes: fbfe1a042cfd ("drivers: thermal: tsens: Add interrupt support")
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
 ---
- Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt | 2 ++
- drivers/mfd/qcom-spmi-pmic.c                             | 4 ++++
- 2 files changed, 6 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-index 1437062..b5fc64e 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-+++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-@@ -32,6 +32,8 @@ Required properties:
-                    "qcom,pm8998",
-                    "qcom,pmi8998",
-                    "qcom,pm8005",
-+		   "qcom,pm6150",
-+		   "qcom,pm6150l",
-                    or generalized "qcom,spmi-pmic".
- - reg:             Specifies the SPMI USID slave address for this device.
-                    For more information see:
-diff --git a/drivers/mfd/qcom-spmi-pmic.c b/drivers/mfd/qcom-spmi-pmic.c
-index e8fe705..d916aa8 100644
---- a/drivers/mfd/qcom-spmi-pmic.c
-+++ b/drivers/mfd/qcom-spmi-pmic.c
-@@ -34,6 +34,8 @@
- #define PM8998_SUBTYPE		0x14
- #define PMI8998_SUBTYPE		0x15
- #define PM8005_SUBTYPE		0x18
-+#define PM6150L_SUBTYPE		0x27
-+#define PM6150_SUBTYPE		0x28
+V2: use div_u64 for the divide as suggested by Daniel Lezcano.
+
+---
+ drivers/thermal/qcom/tsens-common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
+index 03bf1b8133ea..c6b551ec7323 100644
+--- a/drivers/thermal/qcom/tsens-common.c
++++ b/drivers/thermal/qcom/tsens-common.c
+@@ -92,7 +92,7 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
  
- static const struct of_device_id pmic_spmi_id_table[] = {
- 	{ .compatible = "qcom,spmi-pmic", .data = (void *)COMMON_SUBTYPE },
-@@ -53,6 +55,8 @@
- 	{ .compatible = "qcom,pm8998",    .data = (void *)PM8998_SUBTYPE },
- 	{ .compatible = "qcom,pmi8998",   .data = (void *)PMI8998_SUBTYPE },
- 	{ .compatible = "qcom,pm8005",    .data = (void *)PM8005_SUBTYPE },
-+	{ .compatible = "qcom,pm6150l",   .data = (void *)PM6150L_SUBTYPE },
-+	{ .compatible = "qcom,pm6150",    .data = (void *)PM6150_SUBTYPE },
- 	{ }
- };
+ static inline u32 degc_to_code(int degc, const struct tsens_sensor *s)
+ {
+-	u64 code = (degc * s->slope + s->offset) / SLOPE_FACTOR;
++	u64 code = div_u64(((u64)degc * s->slope + s->offset), SLOPE_FACTOR);
  
+ 	pr_debug("%s: raw_code: 0x%llx, degc:%d\n", __func__, code, degc);
+ 	return clamp_val(code, THRESHOLD_MIN_ADC_CODE, THRESHOLD_MAX_ADC_CODE);
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
- a Linux Foundation Collaborative Project
+2.20.1
 
