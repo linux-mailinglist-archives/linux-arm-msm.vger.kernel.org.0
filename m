@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F7C5EC358
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2019 14:00:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A2E4EEC361
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2019 14:00:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726734AbfKANAh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Nov 2019 09:00:37 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:43372 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726620AbfKANAg (ORCPT
+        id S1726684AbfKANAl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Nov 2019 09:00:41 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:51694 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726651AbfKANAi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Nov 2019 09:00:36 -0400
-Received: by mail-wr1-f68.google.com with SMTP id n1so9585031wra.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2019 06:00:35 -0700 (PDT)
+        Fri, 1 Nov 2019 09:00:38 -0400
+Received: by mail-wm1-f66.google.com with SMTP id q70so9265486wme.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2019 06:00:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Zgv/LTWdUPNIRDPJwbY82R6L2iDmim3JZRo8TtTz+DY=;
-        b=m2c6kB/LVRJSVWZHgdelDlqhnHhd5gEDgD5WOy08yss+OVxQy2bbNOOeJaFURNoD9b
-         IY4afffJgN/frvFyhGmkcCMoq/UF7Sbh5NnoHOxAEsyVJ6bO68psGKCkJX9N0XRgRlFB
-         JKW77qcnOQpcON/+CJ/eVyh8vtjYQYKpizevs/fyavmUpTrcFfLCi2L3t21CNocpfrDV
-         nsTLEO0Q8YWTVScdy/et75XKbtTSLsjX7dIGEWdmjlf51ZUZYdZNgdOsgOVS99oZ8FvC
-         j1GFB+IvgSxmIgZRtw4qnZPAaR0wfCueJW7nHNaAXt9B3G+5M0WSqI+G2nTMEfjvYRCz
-         nugg==
+        bh=vdqefEnwwSmeWlyY7LqNRP7A0Jfu2xnxdFd7DKez+Eg=;
+        b=bUDJJG+23eqX6KZQoGdk2sEHTjQPmMr4vkBJVUs/pZZ6o0jCph4R8XrVXBu/gFj7wV
+         HMnq/tWuzBWdq03vu+Q4gElsm7hp19gQa5MO1ZQhlJ6B5MHT0myv4Td2qRUAqZ2IB5SN
+         fV5sHTqmRmljG9kEh5StGOdn1iwfPalyjActElCE4kNs1Sq7NLZbV7K3Ckhl56sSmdAX
+         ztUqts+ijvXVUx2Hhgy3p7XMATkLB/i+cyNMJCSVIAv+X/uVDJ4nK/DCrUSTY1QyyPW0
+         iUg++ah7iI3JRO9mKbHDVqRwtVzxXCMBAyQnuhd8fu3mAvVgO9lq5v1n5trX8KOkGukw
+         +waA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Zgv/LTWdUPNIRDPJwbY82R6L2iDmim3JZRo8TtTz+DY=;
-        b=d2TBOfs7jJTAwvYiXDODACtPEHgT5G8XhmcstNlGW5ctvHOHMe80eIrl1RM6nDVudt
-         zaEeTNNmG0kBcq7V78V+w9+hfxyM1jEnF081umKdtckv24DXp9LFesG6YGZqgo2vV/gG
-         vVvnqZYYONWRj7r8AP2OQfKR+X7L5sVs7ud7/smo1az0qbBlswS+dCE4ISQFRQsmr9T8
-         ivDMSuGocZRI88DuMgaDR7hPeV41/DCpLj6ZjUMEZcpc8VuIhy82acvR4YGJ99WvApFw
-         zp2+5u5/5Lo0yPaAhYi6EOAlUI/v8rwpmslMykl6auE8ImmK3U4rGBulslbAf3+Ojufx
-         N7tw==
-X-Gm-Message-State: APjAAAWeHUYeprVuTfiP+OpIeAFHbd4uqin4O5iyR4u/wvQj1q1zoCHH
-        ZEMfq8b5flJnwhVqnqhuhY2auw==
-X-Google-Smtp-Source: APXvYqwVGRprB/tc1woV5aX/nx+Hv/+U5SrzfdXyQ9nfNAQlvzclYFxj361Z1IW2A+ySlxSqPA7lag==
-X-Received: by 2002:adf:e8cf:: with SMTP id k15mr18778wrn.256.1572613234712;
-        Fri, 01 Nov 2019 06:00:34 -0700 (PDT)
+        bh=vdqefEnwwSmeWlyY7LqNRP7A0Jfu2xnxdFd7DKez+Eg=;
+        b=ROcWKS9OO3YdVm5xe/u0adV6EAc9GIye0hS/Cjzr3uZmagYQgCnK5yuPDlVpreCfdH
+         xJG8a5IdBwMtHTu/aFwqzYedfoTzNXqM2Oe482Ik+DLZ7NVE1w/DpPnEP4j+fD0tZxDu
+         OMyPczsfWfhBoTVKIsVWLltB2wi9n8rtFxLnAJkvx5G0Dc8ZGd9RPMgkX8v8HTFnKjLA
+         gv3utpRdbOxA4ZOEUgfYLXzX0p83lQ2rWf0AFbXUS3kBur998kl0RgZJTh3xkP3Lxffc
+         tFvvBbYrNLbOaBxN65aVmIg6CDo8jh8Iqnd0Si0e8mfHc7Ua+rK6ygMpuUdYMx3iBh/x
+         zgow==
+X-Gm-Message-State: APjAAAVO5bynx/boaW/DAkFFaXipJNTuhzQac3eB0WghlJx0drzbw6Zr
+        KHkDaIEz/X6rFZ1GCOy/z5qwHw==
+X-Google-Smtp-Source: APXvYqxvhkfA4en93HsMZXZcrEg4ywjQHlN2xcKmJ6QSfkzisNRc1LTflF1kCytSr7J4643Kq4D8Rg==
+X-Received: by 2002:a05:600c:21c4:: with SMTP id x4mr9758411wmj.172.1572613236108;
+        Fri, 01 Nov 2019 06:00:36 -0700 (PDT)
 Received: from localhost.localdomain ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id x7sm14208476wrg.63.2019.11.01.06.00.33
+        by smtp.googlemail.com with ESMTPSA id x7sm14208476wrg.63.2019.11.01.06.00.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 01 Nov 2019 06:00:34 -0700 (PDT)
+        Fri, 01 Nov 2019 06:00:35 -0700 (PDT)
 From:   Georgi Djakov <georgi.djakov@linaro.org>
 To:     linux-pm@vger.kernel.org, rostedt@goodmis.org, mingo@redhat.com
 Cc:     bjorn.andersson@linaro.org, vincent.guittot@linaro.org,
@@ -52,9 +52,9 @@ Cc:     bjorn.andersson@linaro.org, vincent.guittot@linaro.org,
         evgreen@chromium.org, mka@chromium.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Georgi Djakov <georgi.djakov@linaro.org>
-Subject: [PATCH v2 1/3] interconnect: Move internal structs into a separate file
-Date:   Fri,  1 Nov 2019 15:00:29 +0200
-Message-Id: <20191101130031.27996-2-georgi.djakov@linaro.org>
+Subject: [PATCH v2 2/3] interconnect: Add a name to struct icc_path
+Date:   Fri,  1 Nov 2019 15:00:30 +0200
+Message-Id: <20191101130031.27996-3-georgi.djakov@linaro.org>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20191101130031.27996-1-georgi.djakov@linaro.org>
 References: <20191101130031.27996-1-georgi.djakov@linaro.org>
@@ -65,106 +65,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move the interconnect framework internal structs into a separate file,
-so that it can be included and used by ftrace code. This will allow us
-to expose some more useful information in the traces.
+When debugging interconnect things, it turned out that saving the path
+name and including it in the traces is quite useful, especially for
+devices with multiple paths.
 
+For the path name we use the one specified in DT, or if we use platform
+data, the name is based on the source and destination node names.
+
+Suggested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
 ---
- drivers/interconnect/core.c     | 30 ++-----------------------
- drivers/interconnect/internal.h | 40 +++++++++++++++++++++++++++++++++
- 2 files changed, 42 insertions(+), 28 deletions(-)
- create mode 100644 drivers/interconnect/internal.h
+ drivers/interconnect/core.c     | 18 +++++++++++++++---
+ drivers/interconnect/internal.h |  2 ++
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index 56cc4bacea5b..86ca6245fe6e 100644
+index 86ca6245fe6e..df44ef713db5 100644
 --- a/drivers/interconnect/core.c
 +++ b/drivers/interconnect/core.c
-@@ -19,39 +19,13 @@
- #include <linux/of.h>
- #include <linux/overflow.h>
+@@ -356,9 +356,17 @@ struct icc_path *of_icc_get(struct device *dev, const char *name)
  
-+#include "internal.h"
+ 	mutex_lock(&icc_lock);
+ 	path = path_find(dev, src_node, dst_node);
+-	if (IS_ERR(path))
+-		dev_err(dev, "%s: invalid path=%ld\n", __func__, PTR_ERR(path));
+ 	mutex_unlock(&icc_lock);
++	if (IS_ERR(path)) {
++		dev_err(dev, "%s: invalid path=%ld\n", __func__, PTR_ERR(path));
++		return path;
++	}
 +
- static DEFINE_IDR(icc_idr);
- static LIST_HEAD(icc_providers);
- static DEFINE_MUTEX(icc_lock);
- static struct dentry *icc_debugfs_dir;
++	if (name)
++		path->name = kstrdup(name, GFP_KERNEL);
++	else
++		path->name = kasprintf(GFP_KERNEL, "%s-%s",
++				       src_node->name, dst_node->name);
  
--/**
-- * struct icc_req - constraints that are attached to each node
-- * @req_node: entry in list of requests for the particular @node
-- * @node: the interconnect node to which this constraint applies
-- * @dev: reference to the device that sets the constraints
-- * @tag: path tag (optional)
-- * @avg_bw: an integer describing the average bandwidth in kBps
-- * @peak_bw: an integer describing the peak bandwidth in kBps
-- */
--struct icc_req {
--	struct hlist_node req_node;
--	struct icc_node *node;
--	struct device *dev;
--	u32 tag;
--	u32 avg_bw;
--	u32 peak_bw;
--};
--
--/**
-- * struct icc_path - interconnect path structure
-- * @num_nodes: number of hops (nodes)
-- * @reqs: array of the requests applicable to this path of nodes
-- */
--struct icc_path {
--	size_t num_nodes;
--	struct icc_req reqs[];
--};
--
- static void icc_summary_show_one(struct seq_file *s, struct icc_node *n)
- {
- 	if (!n)
+ 	return path;
+ }
+@@ -481,9 +489,12 @@ struct icc_path *icc_get(struct device *dev, const int src_id, const int dst_id)
+ 		goto out;
+ 
+ 	path = path_find(dev, src, dst);
+-	if (IS_ERR(path))
++	if (IS_ERR(path)) {
+ 		dev_err(dev, "%s: invalid path=%ld\n", __func__, PTR_ERR(path));
++		goto out;
++	}
+ 
++	path->name = kasprintf(GFP_KERNEL, "%s-%s", src->name, dst->name);
+ out:
+ 	mutex_unlock(&icc_lock);
+ 	return path;
+@@ -519,6 +530,7 @@ void icc_put(struct icc_path *path)
+ 	}
+ 	mutex_unlock(&icc_lock);
+ 
++	kfree(path->name);
+ 	kfree(path);
+ }
+ EXPORT_SYMBOL_GPL(icc_put);
 diff --git a/drivers/interconnect/internal.h b/drivers/interconnect/internal.h
-new file mode 100644
-index 000000000000..5853e8faf223
---- /dev/null
+index 5853e8faf223..bf18cb7239df 100644
+--- a/drivers/interconnect/internal.h
 +++ b/drivers/interconnect/internal.h
-@@ -0,0 +1,40 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Interconnect framework internal structs
-+ *
-+ * Copyright (c) 2019, Linaro Ltd.
-+ * Author: Georgi Djakov <georgi.djakov@linaro.org>
-+ */
-+
-+#ifndef __DRIVERS_INTERCONNECT_INTERNAL_H
-+#define __DRIVERS_INTERCONNECT_INTERNAL_H
-+
-+/**
-+ * struct icc_req - constraints that are attached to each node
-+ * @req_node: entry in list of requests for the particular @node
-+ * @node: the interconnect node to which this constraint applies
-+ * @dev: reference to the device that sets the constraints
-+ * @tag: path tag (optional)
-+ * @avg_bw: an integer describing the average bandwidth in kBps
-+ * @peak_bw: an integer describing the peak bandwidth in kBps
-+ */
-+struct icc_req {
-+	struct hlist_node req_node;
-+	struct icc_node *node;
-+	struct device *dev;
-+	u32 tag;
-+	u32 avg_bw;
-+	u32 peak_bw;
-+};
-+
-+/**
-+ * struct icc_path - interconnect path structure
-+ * @num_nodes: number of hops (nodes)
-+ * @reqs: array of the requests applicable to this path of nodes
-+ */
-+struct icc_path {
-+	size_t num_nodes;
-+	struct icc_req reqs[];
-+};
-+
-+#endif
+@@ -29,10 +29,12 @@ struct icc_req {
+ 
+ /**
+  * struct icc_path - interconnect path structure
++ * @name: a string name of the path (useful for ftrace)
+  * @num_nodes: number of hops (nodes)
+  * @reqs: array of the requests applicable to this path of nodes
+  */
+ struct icc_path {
++	const char *name;
+ 	size_t num_nodes;
+ 	struct icc_req reqs[];
+ };
