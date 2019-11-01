@@ -2,214 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C3BD9EC35F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2019 14:00:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DC8CEC611
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2019 16:56:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726932AbfKANAp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Nov 2019 09:00:45 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:35391 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726945AbfKANAm (ORCPT
+        id S1729279AbfKAP4C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Nov 2019 11:56:02 -0400
+Received: from mail-il1-f196.google.com ([209.85.166.196]:37420 "EHLO
+        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728818AbfKAPzt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Nov 2019 09:00:42 -0400
-Received: by mail-wm1-f68.google.com with SMTP id 8so1989865wmo.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2019 06:00:38 -0700 (PDT)
+        Fri, 1 Nov 2019 11:55:49 -0400
+Received: by mail-il1-f196.google.com with SMTP id t9so6804802ils.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2019 08:55:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7ux6o8Ncrgfjd9hT9inKPay1u+1v9WsFB/qk1kBdey4=;
-        b=CTKLIytn7ZTjITu7BzPyvUo9TrjzAxCK7D9g0LWLpfABh3mg3wOEt2dDeKYe3NC5K3
-         NDfD8U9F0Vc9h3bulWoAp8VdhDmNvDasPBFq3y2ENx9dC0ZpxuYi1OWuq+CVrFjetyj4
-         S6oLIS5rxMNIUGK9h1Noo0i1G4NAE8ZC8A/BoJJAl03Umjl8w3RWQCvW6T8tjVeHf7Lw
-         ehGkVwo8laANr6Ilbmt+scU0l40+hY6LQ1vB4++/iaUb+H12OdoRfAQYvYAyi0xEJy6s
-         vst3FbrJ+lD7d21A07SwpYnLXz09JHNbWyXn2spBIGM8C4WApvkB+F43M02X06oT9mZy
-         ojaA==
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=KqYLJklOErTzrVm5Bzbb6HQh9gI4PrbbORQE30GcC5Y=;
+        b=pUJIzGj/MPv1EKc2k3aNehKVojTiwbi36zg1sckIL11PdqXfau1yGsXj1t9CSJeyKL
+         3i/jp/TX/JDBG+iju9GRvxcye9SA9yiSTdccj7/EyUgYmTSSLRFNkcsvQASN37kQDgQc
+         jnResb6aJSg07Bq5suGRVdOqTkrlyY1YMgTmHgQc7tz+apzSU8zlfJ8cqPEt/z1Bd3OE
+         3WNB6qm/Pkg8xI5aHgZ1XzvGw6eZK1PwDo4winMpdBi8I/fqM1G/oYqHCv2wNxwHhj5m
+         N0Nph5NSOfE5c8csPVkAAUkUAiHHdFA9X2wHOboX58ouCDBOqdL9C38hXp5o3eU3+tNB
+         N8dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7ux6o8Ncrgfjd9hT9inKPay1u+1v9WsFB/qk1kBdey4=;
-        b=GFXz1A186NqV3wyW9ltp0er1/7v2tF5l5HY3IzC6NcxXoMaMtt8KkDt92wzjq6Br+x
-         qGROe6MC/n4TLcTpOdwV/q9ZC6Krc/ebcrx+XCSPFnvJ8flDQOopF2a1gkL84pgGcYPi
-         kS7YckBzgQxqdb7EWhrUOSbhwpy/rtvT+v4Hrjzm2ucoPZ1/KTMLGjQyO10UC1fKuQ5D
-         soU9VNb+dhnorlHvaYx1rzFpQ9xiRptDvl5G25vKwJBEKg2nvWusd0yYEjV+m2S0/hcr
-         DhTxhw6mIPyyYSP+ZHAyxLNPD/AR7Dhcwu9mZFMOHoT6NPUE1MEjDbOHPy/gc6ZwA4Qz
-         C0wA==
-X-Gm-Message-State: APjAAAV926SlFT/yi6gF8UE+89gxk7LaeFbp2kXRzUCQHoqPM3AEYCF8
-        ikAj1nNCMMaYZAnLkDStJ/JgxQ==
-X-Google-Smtp-Source: APXvYqzcma1qwrrHm8nBTfaVgmdLBFM2hKith8MUY3GNBuouABkehfdmx4SI9jj3UBnwWNhoH/fJqA==
-X-Received: by 2002:a1c:c90c:: with SMTP id f12mr9719141wmb.97.1572613237769;
-        Fri, 01 Nov 2019 06:00:37 -0700 (PDT)
-Received: from localhost.localdomain ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id x7sm14208476wrg.63.2019.11.01.06.00.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 01 Nov 2019 06:00:36 -0700 (PDT)
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-To:     linux-pm@vger.kernel.org, rostedt@goodmis.org, mingo@redhat.com
-Cc:     bjorn.andersson@linaro.org, vincent.guittot@linaro.org,
-        daidavid1@codeaurora.org, okukatla@codeaurora.org,
-        evgreen@chromium.org, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Georgi Djakov <georgi.djakov@linaro.org>
-Subject: [PATCH v2 3/3] interconnect: Add basic tracepoints
-Date:   Fri,  1 Nov 2019 15:00:31 +0200
-Message-Id: <20191101130031.27996-4-georgi.djakov@linaro.org>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20191101130031.27996-1-georgi.djakov@linaro.org>
-References: <20191101130031.27996-1-georgi.djakov@linaro.org>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=KqYLJklOErTzrVm5Bzbb6HQh9gI4PrbbORQE30GcC5Y=;
+        b=QGSK5VDzaPOvD4FIBWbGhMBRpkNn+aYMWS2bj5BPDRnAr1GjuibxIL+VCt0hgEJCl8
+         UoaBY2frBLxPCYCw6JhGC7Stj0NL6QGOXJdHz9vk3efZv9ZhK4tFutWZ+YhwCxJL768D
+         qSP7PTQn2y4DrFq3XNJMBluN9x7krLbYkXO5YWINc45N9jqP9UJ2bM1AzduwxbF9VDVq
+         8JeaYudzCM8+28xJ3MF5Coc6LaKhOws4vmMMYCI6PjhrfKkRgvwbA21LHp0nbVvyXi0S
+         a97mR+2I9ZzHvEGHIxjuy5IkgMMg437HDmKDRbOtGNxwjkza3TbBYYsgDIN0GUJ7XDdC
+         2bRw==
+X-Gm-Message-State: APjAAAXaHhL6t3SNd93Xr9P2Fkxef3WOyo4EOIldOMKxI05z5rKV9F9W
+        xHyf7Qi1GaOhrupm9VN4LoLQE3z/aPax8DT67g==
+X-Google-Smtp-Source: APXvYqwNtyKjT0pXbrd92BXP7Yur4/d12tLIQphfDkWOJF9bZR6SLYcfNyjCPNgVxkpA0mTQo/BiL8Zaftdd9XRgWqY=
+X-Received: by 2002:a92:1d8d:: with SMTP id g13mr8826976ile.35.1572623748630;
+ Fri, 01 Nov 2019 08:55:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a02:7749:0:0:0:0:0 with HTTP; Fri, 1 Nov 2019 08:55:48 -0700 (PDT)
+Reply-To: moneygram.1820@outlook.fr
+From:   "Mary Coster, I.M.F director-Benin" 
+        <info.zennitbankplcnigerian@gmail.com>
+Date:   Fri, 1 Nov 2019 16:55:48 +0100
+Message-ID: <CABHzvrmPdjgy_vBxQMfJ2YwGwj1RyCvQt1Oy5GJczarHTQb=pg@mail.gmail.com>
+Subject: Contact Money Gram international service-Benin to receive your
+ payment funds US$2.500,000 Million
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The tracepoints can help with understanding the system behavior of a
-given interconnect path when the consumer drivers change their bandwidth
-demands. This might be interesting when we want to monitor the requested
-interconnect bandwidth for each client driver. The paths may share the
-same nodes and this will help to understand "who and when is requesting
-what". All this is useful for subsystem drivers developers and may also
-provide hints when optimizing the power and performance profile of the
-system.
-
-Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
----
- MAINTAINERS                         |  1 +
- drivers/interconnect/core.c         |  7 +++
- include/trace/events/interconnect.h | 81 +++++++++++++++++++++++++++++
- 3 files changed, 89 insertions(+)
- create mode 100644 include/trace/events/interconnect.h
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a69e6db80c79..16f28fa515f2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -8522,6 +8522,7 @@ F:	drivers/interconnect/
- F:	include/dt-bindings/interconnect/
- F:	include/linux/interconnect-provider.h
- F:	include/linux/interconnect.h
-+F:	include/trace/events/interconnect.h
- 
- INVENSENSE MPU-3050 GYROSCOPE DRIVER
- M:	Linus Walleij <linus.walleij@linaro.org>
-diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index df44ef713db5..15e11e22ddf7 100644
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -26,6 +26,9 @@ static LIST_HEAD(icc_providers);
- static DEFINE_MUTEX(icc_lock);
- static struct dentry *icc_debugfs_dir;
- 
-+#define CREATE_TRACE_POINTS
-+#include <trace/events/interconnect.h>
-+
- static void icc_summary_show_one(struct seq_file *s, struct icc_node *n)
- {
- 	if (!n)
-@@ -435,6 +438,8 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
- 
- 		/* aggregate requests for this node */
- 		aggregate_requests(node);
-+
-+		trace_icc_set_bw(path, node, i, avg_bw, peak_bw);
- 	}
- 
- 	ret = apply_constraints(path);
-@@ -453,6 +458,8 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
- 
- 	mutex_unlock(&icc_lock);
- 
-+	trace_icc_set_bw_end(path, ret);
-+
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(icc_set_bw);
-diff --git a/include/trace/events/interconnect.h b/include/trace/events/interconnect.h
-new file mode 100644
-index 000000000000..64b646aa7bd3
---- /dev/null
-+++ b/include/trace/events/interconnect.h
-@@ -0,0 +1,81 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (c) 2019, Linaro Ltd.
-+ * Author: Georgi Djakov <georgi.djakov@linaro.org>
-+ */
-+
-+#if !defined(_TRACE_INTERCONNECT_H) || defined(TRACE_HEADER_MULTI_READ)
-+#define _TRACE_INTERCONNECT_H
-+
-+#include <linux/tracepoint.h>
-+
-+#undef TRACE_SYSTEM
-+#define TRACE_SYSTEM interconnect
-+
-+#include "../../../drivers/interconnect/internal.h"
-+
-+TRACE_EVENT(icc_set_bw,
-+
-+	TP_PROTO(struct icc_path *p, struct icc_node *n, int i,
-+		 u32 avg_bw, u32 peak_bw),
-+
-+	TP_ARGS(p, n, i, avg_bw, peak_bw),
-+
-+	TP_STRUCT__entry(
-+		__string(path_name, p->name)
-+		__string(dev, dev_name(p->reqs[i].dev))
-+		__string(node_name, n->name)
-+		__field(u32, avg_bw)
-+		__field(u32, peak_bw)
-+		__field(u32, node_avg_bw)
-+		__field(u32, node_peak_bw)
-+	),
-+
-+	TP_fast_assign(
-+		__assign_str(path_name, p->name);
-+		__assign_str(dev, dev_name(p->reqs[i].dev));
-+		__assign_str(node_name, n->name);
-+		__entry->avg_bw = avg_bw;
-+		__entry->peak_bw = peak_bw;
-+		__entry->node_avg_bw = n->avg_bw;
-+		__entry->node_peak_bw = n->peak_bw;
-+	),
-+
-+	TP_printk("path=%s dev=%s node=%s avg_bw=%u peak_bw=%u agg_avg=%u agg_peak=%u",
-+		  __get_str(path_name),
-+		  __get_str(dev),
-+		  __get_str(node_name),
-+		  __entry->avg_bw,
-+		  __entry->peak_bw,
-+		  __entry->node_avg_bw,
-+		  __entry->node_peak_bw)
-+);
-+
-+TRACE_EVENT(icc_set_bw_end,
-+
-+	TP_PROTO(struct icc_path *p, int ret),
-+
-+	TP_ARGS(p, ret),
-+
-+	TP_STRUCT__entry(
-+		__string(path_name, p->name)
-+		__string(dev, dev_name(p->reqs[0].dev))
-+		__field(int, ret)
-+	),
-+
-+	TP_fast_assign(
-+		__assign_str(path_name, p->name);
-+		__assign_str(dev, dev_name(p->reqs[0].dev));
-+		__entry->ret = ret;
-+	),
-+
-+	TP_printk("path=%s dev=%s ret=%d",
-+		  __get_str(path_name),
-+		  __get_str(dev),
-+		  __entry->ret)
-+);
-+
-+#endif /* _TRACE_INTERCONNECT_H */
-+
-+/* This part must be outside protection */
-+#include <trace/define_trace.h>
+Attn Dear,Funds Beneficiary.
+Contact Money Gram international service-Benin to receive your payment
+funds US$2.500,000 Million approved this morning through the UN
+payment settlement organization.
+Contact Person, Mr. John Dave.
+Official Director.Money Gram-Benin
+Email: moneygram.1820@outlook.fr
+Telephone +229 62619517
+Once you get intouch with Mr. John Dave, Money Gram Director, send to
+him your address including your phone numbers. He will be sending the
+transfer to you  $5000.00 USD daily until you received your complete
+payment $2.5m from the office.
+Note,I have paid the whole service fees for you but only small money
+you been required to send to this office is $23.00 only via Money Gram
+transfer.
+God bless
+Mary Coster, I.M.F director-Benin
+m.coster@aol.com
