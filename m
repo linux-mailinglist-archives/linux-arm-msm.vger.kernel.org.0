@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E77B8EBC0A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2019 03:44:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 70EDBEBC10
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Nov 2019 03:45:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727382AbfKACol (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Oct 2019 22:44:41 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:39235 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726803AbfKACok (ORCPT
+        id S1729507AbfKACpG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Oct 2019 22:45:06 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:46810 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726803AbfKACpG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Oct 2019 22:44:40 -0400
-Received: by mail-pf1-f193.google.com with SMTP id x28so2749573pfo.6;
-        Thu, 31 Oct 2019 19:44:40 -0700 (PDT)
+        Thu, 31 Oct 2019 22:45:06 -0400
+Received: by mail-pl1-f195.google.com with SMTP id q21so3660314plr.13;
+        Thu, 31 Oct 2019 19:45:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=d0tVrAmrERsoSt+7rvxULMwxjRb7DGBkYT/cGct46m0=;
-        b=h06R/0w/hcnwPbFU8IE7PfPmLBTx2clX4OQlykuSfy+6xmH7Vu5sN85N09Tp3VqKx2
-         BEZtCuRRoGwq7UJncs/qYnJjXn6s2kH+gJoxSP+1HeoKs7jUgG0UL26uVVp0vvoEohkX
-         AusveXNwjuAhRRm822U+jDdKuv/6+uQBu7O81R/Xxt58HZgRVjdYyk/E0xgEJdQ+6hlm
-         MQvO2HjABiBrYwvr/Q9bHBhEW0/sHYJ6P5RzJo+TiuC642i8hOKVw/dy9UFjeHbM1iZS
-         bFU+NA+zkpCfbqfeAOEeBxtOZFqee+0V6rQ+PIdY3lvMCsKkh7dEIwgFJBybuhmvLUUc
-         4UBg==
+        bh=2alu0Zc/ft6aP0mMKc3T9tiyxMrXfO91QDsxper6hEU=;
+        b=ehpdFbf9etA7HW62oqX1LZFKJYoVBbPQJudG07hAzBC8Og6HDH61qiMQ+BoApygcx7
+         k4M4QURpehSj5Bf6xW8xD0TR3ZveBXnF0CrejEW9xdyohY+Ct54ePpe4fTLWuL/PY8EZ
+         51aGcxxyFVTnM9L92Rkx6bUf2y0UWYrA0zztnFrwyy2jOzvAAnHUVAg3/9hXLFeansxV
+         fsHnL82XtkqpyvS8v8eVGOzZzDEg2kAk7xNZbc6VdBkNESHRj2flPiqtfybbwBWpK2+S
+         qESYgQCuX/I6AQZz4wDTI77agsVXerggJem0FahjKdWti7PNUOyWH5CZxkcn+gomZyt/
+         btHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=d0tVrAmrERsoSt+7rvxULMwxjRb7DGBkYT/cGct46m0=;
-        b=BH4XfJ38zTDzki6CHI8LbzOAvngLqohnKAWgruxT0vDSJzc2ab7KOuJUwLtWkwdiyn
-         OJHwi7PmHYUIOEpQCXNS0/QZ/uhlG7hifF5F/e97j/mDZ7cVDP88qwA8oUnhfAkNVMYX
-         /NdOlA9CwJ4Ayx4ECVlxeBF29qZRJ4KsZuwGSdl3Pqc5LlfXsVDGUkGuqXijLdYF35+F
-         4Xy0BCFYON3oHnhIUxzVTBAxOOFAx0tYhRHO/uHQCw+mmk97cZYBVFZvZm291Bl9tg0B
-         M2v+oaFZsQ9pyL6W2JaksJgLpqZwlcZF8fxpnULqw0p9n0+LRpr9ZoF7EF6Kw7aO0d0d
-         eQUA==
-X-Gm-Message-State: APjAAAW7dgvG5TmKKc44txEZqjXvZDtUV8iwGoujmzY69ilicerSPTn6
-        HBjC1Yp+eMeiHz0BV/WGq6k=
-X-Google-Smtp-Source: APXvYqxzmqx4e1CjTuVyZlnM6Qi0Y0wXJWfMb6JdSyDhXZnyks5RMFFWT+7JrmMN9dXkJQ/R5Pyf/A==
-X-Received: by 2002:a62:90:: with SMTP id 138mr10686184pfa.209.1572576280180;
-        Thu, 31 Oct 2019 19:44:40 -0700 (PDT)
+        bh=2alu0Zc/ft6aP0mMKc3T9tiyxMrXfO91QDsxper6hEU=;
+        b=iP2MNpT7P7x57KkYLXFAo6AIcae9uIMVYWOBlr2FwfBJxFha03S5qA1QEDIP2Cu/GW
+         Ay4jKBnHJxON/fhMu+ACO48JbFl/biyfkBCVq40aoR8xS235PT2xrGTwadFYQZ9Ya3TD
+         L4dW4jl3iAiaoGEaXLuraCvYU1Uzn2x1oPlqHitHPg9RWugvvsutCflodA4pgNBiw1/p
+         nFKuZtdT8iRkZLW5BCMFW0eylgvmA8GFoR5RKBVtBtOplgYlimHKl+UtxX1sW9Sy1vl8
+         dYcfCksCD3OJQIhVWYEgL1dgoz3g1Tr8Rzsva8obUOvmmHYsYJBc8JZ/Wq7lf9+5ehxf
+         F0zg==
+X-Gm-Message-State: APjAAAWpyoFZrciEXkv4ydEJ5ynP2c2MwEXLHBNtwbIIre2LWynXGyDu
+        D87poF7hP5K0rtrWpKlh52w=
+X-Google-Smtp-Source: APXvYqwePioh5LZFvobRYjFvfwGYHFfaowQT003aLyNZ6K7yaoHsR9ZUDrhlk3TRnP0FADX8XNgH/Q==
+X-Received: by 2002:a17:902:6f01:: with SMTP id w1mr10214320plk.35.1572576305307;
+        Thu, 31 Oct 2019 19:45:05 -0700 (PDT)
 Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id a29sm6891774pfr.49.2019.10.31.19.44.38
+        by smtp.gmail.com with ESMTPSA id e71sm6641948pgc.91.2019.10.31.19.45.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Oct 2019 19:44:39 -0700 (PDT)
+        Thu, 31 Oct 2019 19:45:04 -0700 (PDT)
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     agross@kernel.org, ohad@wizery.com, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org, mark.rutland@arm.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+To:     agross@kernel.org, ohad@wizery.com, bjorn.andersson@linaro.org
+Cc:     robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH 1/2] dt-bindings: remoteproc: qcom: Add Q6v5 Modem PIL binding for MSM8998
-Date:   Thu, 31 Oct 2019 19:44:35 -0700
-Message-Id: <20191101024435.21975-1-jeffrey.l.hugo@gmail.com>
+Subject: [PATCH 2/2] remoteproc: qcom_q6v5_mss: Add support for MSM8998
+Date:   Thu, 31 Oct 2019 19:45:01 -0700
+Message-Id: <20191101024501.22026-1-jeffrey.l.hugo@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191101024301.21919-1-jeffrey.l.hugo@gmail.com>
 References: <20191101024301.21919-1-jeffrey.l.hugo@gmail.com>
@@ -61,51 +61,119 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add new compatible string for Qualcomm MSM8998 SoCs.
+MSM8998 sits between MSM8996 and SDM845 in terms of functionality needed to
+boot the modem subsystem.  Booting mss allows for servicing the traditional
+cellular usecases along with the wireless usecases such as wifi.
 
 Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 ---
- Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/remoteproc/qcom_q6v5_mss.c | 52 ++++++++++++++++++++++++++----
+ 1 file changed, 46 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt b/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
-index 41ca5df5be5a..c416746f93cf 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
-@@ -12,6 +12,7 @@ on the Qualcomm Hexagon core.
- 		    "qcom,msm8916-mss-pil",
- 		    "qcom,msm8974-mss-pil"
- 		    "qcom,msm8996-mss-pil"
-+		    "qcom,msm8998-mss-pil"
- 		    "qcom,sdm845-mss-pil"
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index bdf1dd00b89b..685182368aa7 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -61,6 +61,7 @@
+ #define QDSP6SS_GFMUX_CTL_REG		0x020
+ #define QDSP6SS_PWR_CTL_REG		0x030
+ #define QDSP6SS_MEM_PWR_CTL		0x0B0
++#define QDSP6V6SS_MEM_PWR_CTL		0x034
+ #define QDSP6SS_STRAP_ACC		0x110
  
- - reg:
-@@ -41,6 +42,7 @@ on the Qualcomm Hexagon core.
- 	qcom,msm8974-mss-pil:
- 		    must be "wdog", "fatal", "ready", "handover", "stop-ack"
- 	qcom,msm8996-mss-pil:
-+	qcom,msm8998-mss-pil:
- 	qcom,sdm845-mss-pil:
- 		    must be "wdog", "fatal", "ready", "handover", "stop-ack",
- 		    "shutdown-ack"
-@@ -70,6 +72,9 @@ on the Qualcomm Hexagon core.
- 	qcom,msm8996-mss-pil:
- 		    must be "iface", "bus", "mem", "xo", "gpll0_mss",
- 		    "snoc_axi", "mnoc_axi", "pnoc", "qdss"
-+	qcom,msm8998-mss-pil:
-+		    must be "iface", "bus", "mem", "xo", "gpll0_mss",
-+		    "snoc_axi", "mnoc_axi", "qdss"
- 	qcom,sdm845-mss-pil:
- 		    must be "iface", "bus", "mem", "xo", "gpll0_mss",
- 		    "snoc_axi", "mnoc_axi", "prng"
-@@ -137,6 +142,7 @@ For the compatible string below the following supplies are required:
- 	qcom,msm8974-mss-pil:
- 		    no power-domain names required
- 	qcom,msm8996-mss-pil:
-+	qcom,msm8998-mss-pil:
- 		    must be "cx", "mx"
- 	qcom,sdm845-mss-pil:
- 		    must be "cx", "mx", "mss", "load_state"
+ /* AXI Halt Register Offsets */
+@@ -196,6 +197,7 @@ enum {
+ 	MSS_MSM8916,
+ 	MSS_MSM8974,
+ 	MSS_MSM8996,
++	MSS_MSM8998,
+ 	MSS_SDM845,
+ };
+ 
+@@ -504,7 +506,10 @@ static int q6v5proc_reset(struct q6v5 *qproc)
+ 		}
+ 
+ 		goto pbl_wait;
+-	} else if (qproc->version == MSS_MSM8996) {
++	} else if (qproc->version == MSS_MSM8996 ||
++		   qproc->version == MSS_MSM8998) {
++		int mem_pwr_ctl;
++
+ 		/* Override the ACC value if required */
+ 		writel(QDSP6SS_ACC_OVERRIDE_VAL,
+ 		       qproc->reg_base + QDSP6SS_STRAP_ACC);
+@@ -549,17 +554,24 @@ static int q6v5proc_reset(struct q6v5 *qproc)
+ 		writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
+ 
+ 		/* Turn on L1, L2, ETB and JU memories 1 at a time */
+-		val = readl(qproc->reg_base + QDSP6SS_MEM_PWR_CTL);
+-		for (i = 19; i >= 0; i--) {
++		if (qproc->version == MSS_MSM8996) {
++			mem_pwr_ctl = QDSP6SS_MEM_PWR_CTL;
++			i = 19;
++		} else {
++			/* MSS_MSM8998 */
++			mem_pwr_ctl = QDSP6V6SS_MEM_PWR_CTL;
++			i = 28;
++		}
++		val = readl(qproc->reg_base + mem_pwr_ctl);
++		for (; i >= 0; i--) {
+ 			val |= BIT(i);
+-			writel(val, qproc->reg_base +
+-						QDSP6SS_MEM_PWR_CTL);
++			writel(val, qproc->reg_base + mem_pwr_ctl);
+ 			/*
+ 			 * Read back value to ensure the write is done then
+ 			 * wait for 1us for both memory peripheral and data
+ 			 * array to turn on.
+ 			 */
+-			val |= readl(qproc->reg_base + QDSP6SS_MEM_PWR_CTL);
++			val |= readl(qproc->reg_base + mem_pwr_ctl);
+ 			udelay(1);
+ 		}
+ 		/* Remove word line clamp */
+@@ -1592,6 +1604,33 @@ static const struct rproc_hexagon_res sdm845_mss = {
+ 	.version = MSS_SDM845,
+ };
+ 
++static const struct rproc_hexagon_res msm8998_mss = {
++	.hexagon_mba_image = "mba.mbn",
++	.proxy_clk_names = (char*[]){
++			"xo",
++			"qdss",
++			"mem",
++			NULL
++	},
++	.active_clk_names = (char*[]){
++			"iface",
++			"bus",
++			"mem",
++			"gpll0_mss",
++			"mnoc_axi",
++			"snoc_axi",
++			NULL
++	},
++	.proxy_pd_names = (char*[]){
++			"cx",
++			"mx",
++			NULL
++	},
++	.need_mem_protection = true,
++	.has_alt_reset = false,
++	.version = MSS_MSM8998,
++};
++
+ static const struct rproc_hexagon_res msm8996_mss = {
+ 	.hexagon_mba_image = "mba.mbn",
+ 	.proxy_supply = (struct qcom_mss_reg_res[]) {
+@@ -1698,6 +1737,7 @@ static const struct of_device_id q6v5_of_match[] = {
+ 	{ .compatible = "qcom,msm8916-mss-pil", .data = &msm8916_mss},
+ 	{ .compatible = "qcom,msm8974-mss-pil", .data = &msm8974_mss},
+ 	{ .compatible = "qcom,msm8996-mss-pil", .data = &msm8996_mss},
++	{ .compatible = "qcom,msm8998-mss-pil", .data = &msm8998_mss},
+ 	{ .compatible = "qcom,sdm845-mss-pil", .data = &sdm845_mss},
+ 	{ },
+ };
 -- 
 2.17.1
 
