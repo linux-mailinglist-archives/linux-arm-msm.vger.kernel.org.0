@@ -2,191 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 01ED3ECC72
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Nov 2019 01:32:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD00AECD38
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Nov 2019 06:04:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728326AbfKBAb4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Nov 2019 20:31:56 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:44412 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727653AbfKBAb4 (ORCPT
+        id S1727950AbfKBFEJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Nov 2019 01:04:09 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:51606 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725842AbfKBFEJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Nov 2019 20:31:56 -0400
-Received: by mail-pf1-f196.google.com with SMTP id q26so8089120pfn.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Nov 2019 17:31:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IzNtFT+Ywg6fAANt4Dbe5JETPNXOEpHrB/MK+SSdmpc=;
-        b=trPLlTjmU0FOKvC+IFGbJIX6Xg3RtTJc6kQWsSfAflR2mK+AOUsDDE+k9iVRLEIVjg
-         nqSWWL17ieUWYq6S4NmnIPOfNZPCVo3nF1/jTaDgNDXgGoeki1QEflduK941OcBgvnXC
-         F6LwbHizOMV4TXEs8EYBiKGixJaJqZ1y2capBCXogKe4RmlVA+h6XN7KA6U+2xMwOZCI
-         PDwbcu+WSAXSRz5Iy+A61/8cY/wKKE4nOl3sRUKKvvujpzwCdFfTp5C6bYgAgsAxvvjJ
-         Pewv6Dh/Sp5MPGtttGIQ/d9dJLWAXWCLl/N2WsUl3ZNHofgZRJ9GmnMzMbk6+nqjji7K
-         HexA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IzNtFT+Ywg6fAANt4Dbe5JETPNXOEpHrB/MK+SSdmpc=;
-        b=gQ0qeOqAFYsiyMvHNwFK530qnBn8YpE9qyohHLvDtFSgWARmLuiZ1K5lCVE8fbij/W
-         /Zm6TeaVDK8L2pQZLS5h2FJUtfsRdJP0E7u58Ugw2hFdbN3rahc8Yi4hmtVs0YT+RH8O
-         jrCO40TbHWkWWBNVF141drCR+fP+M55br0198Cx/VMjpj+VlEb70vF4JVzoaDyPNF8GL
-         nQaVJpHRH/OKbXVYQFA6Z3LLAbCm6WMuZUflVymS817NhLQFYsBB1zKx02Axs5cat+Zj
-         cJ4ezfMxsQ2SPmBQH+XnkRZGOJc0g6hNWsoN15JBPpj+uwWRKGVugpRQpPAKwOD8Akjx
-         pp2Q==
-X-Gm-Message-State: APjAAAVCtR7+JUnq1JEDMYkJjoNhNWT4oBKxUDu4MlniIbYBgwHpxzG2
-        KL6LUVEVNfsAjM6PRnaksWWxafaL90U=
-X-Google-Smtp-Source: APXvYqytbiz95EC/cgJxnFlwqHQtaYez+AuORPX6vKWHXecRxc/A0TOfu4PpQ3ilxIqO+VriFYELqw==
-X-Received: by 2002:a63:e055:: with SMTP id n21mr16303184pgj.411.1572654715530;
-        Fri, 01 Nov 2019 17:31:55 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id v2sm7957522pfm.13.2019.11.01.17.31.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Nov 2019 17:31:54 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: qcom: db845c: Enable PCIe controllers
-Date:   Fri,  1 Nov 2019 17:31:48 -0700
-Message-Id: <20191102003148.4091335-4-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20191102003148.4091335-1-bjorn.andersson@linaro.org>
-References: <20191102003148.4091335-1-bjorn.andersson@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Sat, 2 Nov 2019 01:04:09 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 9B91F615B6; Sat,  2 Nov 2019 05:03:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1572671046;
+        bh=vA5QMfOG8/tSJ0LbkGi4Gjgkhix8FM2eGb2eZp8y9oo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=S1bVWQwjIEhbc8SUn1HFDk36eGDJvEoX34DFokGJ4P6lebQE3GUE9Km0Jif5vFdkD
+         lViQ2du5Vw6Onape0+6SkQM9oXELUo67dWyL1UAW3ekXj243F6ZRTyM9TBrpjoNvwE
+         LAG8q0ANHJWp8aHeWjf67/U8rvt9SO9UsEutzpTw=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: cang@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5B9A56140D;
+        Sat,  2 Nov 2019 05:03:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1572671033;
+        bh=vA5QMfOG8/tSJ0LbkGi4Gjgkhix8FM2eGb2eZp8y9oo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Rf8S+P1FnWvoubzFjdlCeMqlICoSpd8gkxtnFg8Jb986957HLjezv8jSiP4TFe1eQ
+         9xtOhCK1TXAwr7I35yLcJ8qI4GmaYbSSdQ/9nuQ6kr6Hn4UHPbjXa7oY/4AXHJ4Hew
+         jxUOng232KO2EXcoYZ4tH60Uwcdqv0I2PAag622E=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5B9A56140D
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=cang@codeaurora.org
+From:   Can Guo <cang@codeaurora.org>
+To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        rnayak@codeaurora.org, linux-scsi@vger.kernel.org,
+        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
+        cang@codeaurora.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v1 2/6] scsi: ufs-qcom: Add reset control support for host controller
+Date:   Fri,  1 Nov 2019 22:03:32 -0700
+Message-Id: <1572671016-883-3-git-send-email-cang@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1572671016-883-1-git-send-email-cang@codeaurora.org>
+References: <1572671016-883-1-git-send-email-cang@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the two PCIe controllers found on the Dragonboard845c.
+Add reset control for host controller so that host controller can be reset
+as required in its power up sequence.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Can Guo <cang@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 91 ++++++++++++++++++++++
- 1 file changed, 91 insertions(+)
+ drivers/scsi/ufs/ufs-qcom.c | 53 +++++++++++++++++++++++++++++++++++++++++++++
+ drivers/scsi/ufs/ufs-qcom.h |  3 +++
+ 2 files changed, 56 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index f5a85caff1a3..c314b5d55796 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -340,6 +340,39 @@
- 			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>;
- };
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index a5b7148..c69c29a1c 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -246,6 +246,44 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
+ 	mb();
+ }
  
-+&pcie0 {
-+	status = "okay";
-+	perst-gpio = <&tlmm 35 GPIO_ACTIVE_LOW>;
-+	enable-gpio = <&tlmm 134 GPIO_ACTIVE_HIGH>;
++/**
++ * ufs_qcom_host_reset - reset host controller and PHY
++ */
++static int ufs_qcom_host_reset(struct ufs_hba *hba)
++{
++	int ret = 0;
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
 +
-+	vddpe-3v3-supply = <&pcie0_3p3v_dual>;
++	if (!host->core_reset) {
++		dev_warn(hba->dev, "%s: reset control not set\n", __func__);
++		goto out;
++	}
 +
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie0_default_state>;
-+};
++	ret = reset_control_assert(host->core_reset);
++	if (ret) {
++		dev_err(hba->dev, "%s: core_reset assert failed, err = %d\n",
++				 __func__, ret);
++		goto out;
++	}
 +
-+&pcie0_phy {
-+	status = "okay";
++	/*
++	 * The hardware requirement for delay between assert/deassert
++	 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
++	 * ~125us (4/32768). To be on the safe side add 200us delay.
++	 */
++	usleep_range(200, 210);
 +
-+	vdda-phy-supply = <&vreg_l1a_0p875>;
-+	vdda-pll-supply = <&vreg_l26a_1p2>;
-+};
++	ret = reset_control_deassert(host->core_reset);
++	if (ret)
++		dev_err(hba->dev, "%s: core_reset deassert failed, err = %d\n",
++				 __func__, ret);
 +
-+&pcie1 {
-+	status = "okay";
-+	perst-gpio = <&tlmm 102 GPIO_ACTIVE_LOW>;
++	usleep_range(1000, 1100);
 +
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie1_default_state>;
-+};
++out:
++	return ret;
++}
 +
-+&pcie1_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l1a_0p875>;
-+	vdda-pll-supply = <&vreg_l26a_1p2>;
-+};
-+
- &pm8998_gpio {
- 	vol_up_pin_a: vol-up-active {
- 		pins = "gpio6";
-@@ -382,6 +415,31 @@
- };
+ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+@@ -254,6 +292,12 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+ 	bool is_rate_B = (UFS_QCOM_LIMIT_HS_RATE == PA_HS_MODE_B)
+ 							? true : false;
  
- &tlmm {
-+	pcie0_default_state: pcie0-default {
-+		clkreq {
-+			pins = "gpio36";
-+			function = "pci_e0";
-+			bias-pull-up;
-+		};
++	/* Reset UFS Host Controller and PHY */
++	ret = ufs_qcom_host_reset(hba);
++	if (ret)
++		dev_warn(hba->dev, "%s: host reset returned %d\n",
++				  __func__, ret);
 +
-+		reset-n {
-+			pins = "gpio35";
-+			function = "gpio";
-+
-+			drive-strength = <2>;
-+			output-low;
-+			bias-pull-down;
-+		};
-+
-+		wake-n {
-+			pins = "gpio37";
-+			function = "gpio";
-+
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
- 	pcie0_pwren_state: pcie0-pwren {
- 		pins = "gpio90";
- 		function = "gpio";
-@@ -390,6 +448,39 @@
- 		bias-disable;
- 	};
+ 	if (is_rate_B)
+ 		phy_set_mode(phy, PHY_MODE_UFS_HS_B);
  
-+	pcie1_default_state: pcie1-default {
-+		perst-n {
-+			pins = "gpio102";
-+			function = "gpio";
+@@ -1101,6 +1145,15 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+ 	host->hba = hba;
+ 	ufshcd_set_variant(hba, host);
+ 
++	/* Setup the reset control of HCI */
++	host->core_reset = devm_reset_control_get(hba->dev, "rst");
++	if (IS_ERR(host->core_reset)) {
++		err = PTR_ERR(host->core_reset);
++		dev_warn(dev, "Failed to get reset control %d\n", err);
++		host->core_reset = NULL;
++		err = 0;
++	}
 +
-+			drive-strength = <16>;
-+			bias-disable;
-+		};
-+
-+		clkreq {
-+			pins = "gpio103";
-+			function = "pci_e1";
-+			bias-pull-up;
-+		};
-+
-+		wake-n {
-+			pins = "gpio11";
-+			function = "gpio";
-+
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		reset-n {
-+			pins = "gpio75";
-+			function = "gpio";
-+
-+			drive-strength = <16>;
-+			bias-pull-up;
-+			output-high;
-+		};
-+	};
-+
- 	sdc2_default_state: sdc2-default {
- 		clk {
- 			pins = "sdc2_clk";
+ 	/* Fire up the reset controller. Failure here is non-fatal. */
+ 	host->rcdev.of_node = dev->of_node;
+ 	host->rcdev.ops = &ufs_qcom_reset_ops;
+diff --git a/drivers/scsi/ufs/ufs-qcom.h b/drivers/scsi/ufs/ufs-qcom.h
+index d401f17..2d95e7c 100644
+--- a/drivers/scsi/ufs/ufs-qcom.h
++++ b/drivers/scsi/ufs/ufs-qcom.h
+@@ -6,6 +6,7 @@
+ #define UFS_QCOM_H_
+ 
+ #include <linux/reset-controller.h>
++#include <linux/reset.h>
+ 
+ #define MAX_UFS_QCOM_HOSTS	1
+ #define MAX_U32                 (~(u32)0)
+@@ -233,6 +234,8 @@ struct ufs_qcom_host {
+ 	u32 dbg_print_en;
+ 	struct ufs_qcom_testbus testbus;
+ 
++	/* Reset control of HCI */
++	struct reset_control *core_reset;
+ 	struct reset_controller_dev rcdev;
+ 
+ 	struct gpio_desc *device_reset;
 -- 
-2.23.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
