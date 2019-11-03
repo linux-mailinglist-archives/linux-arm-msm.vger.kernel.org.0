@@ -2,70 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 89203ED292
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2019 09:28:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 325DAED5D7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2019 22:22:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726998AbfKCI2H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 Nov 2019 03:28:07 -0500
-Received: from mail.kernel.org ([198.145.29.99]:52014 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726546AbfKCI2H (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 Nov 2019 03:28:07 -0500
-Received: from localhost (unknown [106.206.31.209])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E6958214D8;
-        Sun,  3 Nov 2019 08:28:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1572769686;
-        bh=+fzWTobamhGrK8+G2X8RepZguerf8UBR732qIjN5bOU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=r0yJa2hsvmGGBe6njZasq5fj1OZVbCxOx9AQN5QHXEOOPGLGWT7enDmtk0ghVwh32
-         eCl0FTUZiIKDJUiJ4OcvpblgrYj0gKNLDh9pXYHFwzmkEkZJxtliytpKoapv8fzaza
-         nODSLw/1NEHqlMo7cMjD8T7M2ikbOsZgPuLPkJDM=
-Date:   Sun, 3 Nov 2019 13:57:59 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] arm64: dts: qcom: sdm845: Add PCIe nodes
-Message-ID: <20191103082759.GR2695@vkoul-mobl.Dlink>
-References: <20191102003148.4091335-1-bjorn.andersson@linaro.org>
+        id S1728395AbfKCVWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 Nov 2019 16:22:09 -0500
+Received: from youngberry.canonical.com ([91.189.89.112]:48199 "EHLO
+        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728243AbfKCVWJ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 3 Nov 2019 16:22:09 -0500
+Received: from [82.43.126.140] (helo=localhost)
+        by youngberry.canonical.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.86_2)
+        (envelope-from <colin.king@canonical.com>)
+        id 1iRNK1-0001xz-JH; Sun, 03 Nov 2019 21:22:05 +0000
+From:   Colin King <colin.king@canonical.com>
+To:     Alok Chauhan <alokc@codeaurora.org>,
+        Andy Gross <agross@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] i2c: qcom-geni: fix spelling mistake "unepxected" -> "unexpected"
+Date:   Sun,  3 Nov 2019 21:22:04 +0000
+Message-Id: <20191103212204.13606-1-colin.king@canonical.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191102003148.4091335-1-bjorn.andersson@linaro.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01-11-19, 17:31, Bjorn Andersson wrote:
-> Add PCIe controller and PHY nodes for SDM845 and enable them for the
-> Dragonboard 845c.
+From: Colin Ian King <colin.king@canonical.com>
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+There is a spelling mistake in an error message string, fix it.
 
-> 
-> The two series' that adding the PHY drivers and controller support can be found
-> here:
-> https://lore.kernel.org/linux-arm-msm/20191102001628.4090861-1-bjorn.andersson@linaro.org/T/#m6a892f4d6a8eefdd2c16b29b1cebb0023c69eac0
-> https://lore.kernel.org/linux-arm-msm/20191102002721.4091180-1-bjorn.andersson@linaro.org/T/#m42ca469f4b23d534000a4b45a55d9739edbebdc4
-> 
-> Bjorn Andersson (3):
->   arm64: dts: qcom: sdm845: Add first PCIe controller and PHY
->   arm64: dts: qcom: sdm845: Add second PCIe PHY and controller
->   arm64: dts: qcom: db845c: Enable PCIe controllers
-> 
->  arch/arm64/boot/dts/qcom/sdm845-db845c.dts |  91 +++++++++
->  arch/arm64/boot/dts/qcom/sdm845.dtsi       | 215 +++++++++++++++++++++
->  2 files changed, 306 insertions(+)
-> 
-> -- 
-> 2.23.0
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+---
+ drivers/i2c/busses/i2c-qcom-geni.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 17abf60c94ae..387fb5a83471 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -98,7 +98,7 @@ static const struct geni_i2c_err_log gi2c_log[] = {
+ 	[GP_IRQ0] = {-EIO, "Unknown I2C err GP_IRQ0"},
+ 	[NACK] = {-ENXIO, "NACK: slv unresponsive, check its power/reset-ln"},
+ 	[GP_IRQ2] = {-EIO, "Unknown I2C err GP IRQ2"},
+-	[BUS_PROTO] = {-EPROTO, "Bus proto err, noisy/unepxected start/stop"},
++	[BUS_PROTO] = {-EPROTO, "Bus proto err, noisy/unexpected start/stop"},
+ 	[ARB_LOST] = {-EAGAIN, "Bus arbitration lost, clock line undriveable"},
+ 	[GP_IRQ5] = {-EIO, "Unknown I2C err GP IRQ5"},
+ 	[GENI_OVERRUN] = {-EIO, "Cmd overrun, check GENI cmd-state machine"},
 -- 
-~Vinod
+2.20.1
+
