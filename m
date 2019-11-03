@@ -2,99 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B333ECFD0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Nov 2019 17:54:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 802D3ED27D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Nov 2019 09:13:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726689AbfKBQyj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Nov 2019 12:54:39 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:33025 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726523AbfKBQyj (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Nov 2019 12:54:39 -0400
-Received: by mail-ed1-f68.google.com with SMTP id c4so9860328edl.0;
-        Sat, 02 Nov 2019 09:54:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ghf/p8lPw2FMQrMnoCiCr2PRs7Q4z/vyAzI31fJ4SxI=;
-        b=UFXtrwxgi/6OHKHU5n5I4051h89Jr99VNX4YwB9sQopoN0xVWxEe6LXn3AFXmuiZA0
-         FecbWh1b5CQLXzgPwfEYzc0QPuCtRkF7P/s/YcEke4xP64zSoFZ2DltcWcuXPkuqMU5L
-         XeAEJuQubo9rbMIMckDVkwmevFn+eiCG42hE3fZg1Sq3gU48+enRs11yf0N4Dfz43xlg
-         hokPChWwXFKj6xareYg5l3psm9Qqip8ldDUtPD77XIDMaN6FubmXByFT3DrRjVjHc9mD
-         7Nl4//shNVv1CRnnrw+4VKdIL/Igrn+hTHr7gOOebWEP2/aBGHF8bjkDrKGQCbEcmx1g
-         891g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ghf/p8lPw2FMQrMnoCiCr2PRs7Q4z/vyAzI31fJ4SxI=;
-        b=UCoaN+nI/QvltVhKLbf1+urebN9k0XLuCVmIupl8c2ElVuerr8KQhnt6FXF5WRiZKs
-         rPiKJGztPSs9HkCdMEZ6gO8nITKpIz6DGKYL5W+71XV3eA4rlvnr3HaPeraNnDdAY/9h
-         f9F4wazu9vPijWCp6BYHGbseaRAaxOU/XK/mZjsOyVgIgIr7Y6mADlEul/e9+WY9AG8w
-         6GCUwU3BLU75VU+oXo0X+YaEMStH19+QHHDqeTS32Fj2Jtlsi56Yirmq2VdUbUXncA6E
-         Az1C4ciyiupGW/TdW6TcKtUMY2i9Lm/GhzGhJWEVBgxLRcCTtAf7SejwmticMNJUO/64
-         nqXA==
-X-Gm-Message-State: APjAAAVEbZKsNKM00UPsvUFy0oiXYVtr5tupSveX1HPCjFvDN8+rbrM7
-        STgrEZREFZeEGGXdhZtkET1v73VrhAypVM8tE8M=
-X-Google-Smtp-Source: APXvYqwKzyDPWo4pbqmwhzNvzxZORWkf137KMt0HTWuLLvR5uIHmBfYFxzuC+NHnts84g39RnZsy6AiUHKhlKb9s5hs=
-X-Received: by 2002:a50:fa83:: with SMTP id w3mr4146132edr.272.1572713676998;
- Sat, 02 Nov 2019 09:54:36 -0700 (PDT)
-MIME-Version: 1.0
-References: <20191031104402.31813-1-kholk11@gmail.com> <20191031104402.31813-6-kholk11@gmail.com>
-In-Reply-To: <20191031104402.31813-6-kholk11@gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Sat, 2 Nov 2019 09:54:24 -0700
-Message-ID: <CAF6AEGtXhOeV_7yZ8-px5EjQN9+Cmfgis8JdO3iCWZ2+g0=ukQ@mail.gmail.com>
-Subject: Re: [PATCH v4 5/7] dt-bindings: msm/dsi: Add 28nm PLL for family B compatible
-To:     AngeloGioacchino Del Regno <kholk11@gmail.com>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>, marijns95@gmail.com,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
+        id S1727379AbfKCINT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 Nov 2019 03:13:19 -0500
+Received: from mail.kernel.org ([198.145.29.99]:44980 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727156AbfKCINT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 3 Nov 2019 03:13:19 -0500
+Received: from localhost (unknown [106.206.31.209])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0BB6D2084D;
+        Sun,  3 Nov 2019 08:13:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1572768798;
+        bh=O6Sl/WudcHVmvZ80SOwx1ethvyuH+iLA+GM2fSi1sgs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=lF3rTgqQIDJOKT6EJtQc5fSgYoCY9pcDJe4Yvnr+FYdtchoUmabp904LiWUE7zHPN
+         wZP6mmlwNsnSLUf6xUCyjs8iNqFk62PLkieN84qmkYYs6x6oo3cJBEGFr3WpvUSQ/T
+         apkjijqjwn05w9gKPLjKYiGhXC7iqE91WYVxNAm0=
+Date:   Sun, 3 Nov 2019 13:43:11 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jonathan <jonathan@marek.ca>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 00/11] arm64: dts: qcom: msm8996: Introduce IFC6640
+Message-ID: <20191103081311.GM2695@vkoul-mobl.Dlink>
+References: <20191021051322.297560-1-bjorn.andersson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191021051322.297560-1-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ devicetree list
+On 20-10-19, 22:13, Bjorn Andersson wrote:
+> Refactor msm8996 and db820c in order to make it follow the structure of newer
+> platforms, move db820c specific things to db820c.dtsi and then introduce the
+> Informace 6640 Single Board Computer.
 
-On Thu, Oct 31, 2019 at 3:44 AM <kholk11@gmail.com> wrote:
->
-> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
->
-> On family B SoCs, the 28nm PLL has a different iospace address
-> and that required a new compatible in the driver.
->
-> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> ---
->  Documentation/devicetree/bindings/display/msm/dsi.txt | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt b/Documentation/devicetree/bindings/display/msm/dsi.txt
-> index af95586c898f..d3ba9ee22f38 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dsi.txt
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi.txt
-> @@ -83,6 +83,7 @@ DSI PHY:
->  Required properties:
->  - compatible: Could be the following
->    * "qcom,dsi-phy-28nm-hpm"
-> +  * "qcom,dsi-phy-28nm-hpm-fam-b"
->    * "qcom,dsi-phy-28nm-lp"
->    * "qcom,dsi-phy-20nm"
->    * "qcom,dsi-phy-28nm-8960"
-> --
-> 2.21.0
->
+This has patch 9/11 missing. But rest look good to me.
+
+Acked-by: Vinod Koul <vkoul@kernel.org>
+
+-- 
+~Vinod
