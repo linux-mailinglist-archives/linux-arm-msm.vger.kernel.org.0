@@ -2,151 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AD163EDBC9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 10:41:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9036FEDC95
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 11:32:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727444AbfKDJlb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Nov 2019 04:41:31 -0500
-Received: from metis.ext.pengutronix.de ([85.220.165.71]:48277 "EHLO
-        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726364AbfKDJlb (ORCPT
+        id S1728367AbfKDKcS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Nov 2019 05:32:18 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:53746 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726364AbfKDKcS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Nov 2019 04:41:31 -0500
-Received: from lupine.hi.pengutronix.de ([2001:67c:670:100:3ad5:47ff:feaf:1a17] helo=lupine)
-        by metis.ext.pengutronix.de with esmtp (Exim 4.92)
-        (envelope-from <p.zabel@pengutronix.de>)
-        id 1iRYrU-0001Jf-Ra; Mon, 04 Nov 2019 10:41:24 +0100
-Message-ID: <776ec4265217cc83e9e847ff3c80a52a86390b1b.camel@pengutronix.de>
-Subject: Re: [PATCH v2 2/2] PCI: qcom: Add support for SDM845 PCIe controller
-From:   Philipp Zabel <p.zabel@pengutronix.de>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andrew Murray <andrew.murray@arm.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        Mon, 4 Nov 2019 05:32:18 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 8EC2A60BE6; Mon,  4 Nov 2019 10:32:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1572863537;
+        bh=XEMORj6CAxshiDtzXTqMIOoW7d5P5+yV2qS8l6858TM=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=Ttg4n6ODEEHEjhxaYVCBdGZx1P1/oLQVW9Be0x0LvsoNV76mnkbDGjJfp5pZQHtzp
+         NtVuJP96IuLDYgYJ/Pup4lFFB80iVPScdxpcQU9gxvurpgphyubhzX18XwpKXvjYsY
+         kIZV8q521JtJfPQco47Fsjz9h5RP6XbOfSVAZa6A=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.79.136.17] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0E4D960B72;
+        Mon,  4 Nov 2019 10:32:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1572863537;
+        bh=XEMORj6CAxshiDtzXTqMIOoW7d5P5+yV2qS8l6858TM=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=Ttg4n6ODEEHEjhxaYVCBdGZx1P1/oLQVW9Be0x0LvsoNV76mnkbDGjJfp5pZQHtzp
+         NtVuJP96IuLDYgYJ/Pup4lFFB80iVPScdxpcQU9gxvurpgphyubhzX18XwpKXvjYsY
+         kIZV8q521JtJfPQco47Fsjz9h5RP6XbOfSVAZa6A=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0E4D960B72
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH 1/1] arm64: dts: sc7180: Add qupv3_0 and qupv3_1
+To:     Roja Rani Yarubandi <rojay@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Cc:     mgautam@codeaurora.org, akashast@codeaurora.org,
+        msavaliy@codeaurora.org, sanm@codeaurora.org,
+        skakit@codeaurora.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Date:   Mon, 04 Nov 2019 10:41:23 +0100
-In-Reply-To: <20191102002721.4091180-3-bjorn.andersson@linaro.org>
-References: <20191102002721.4091180-1-bjorn.andersson@linaro.org>
-         <20191102002721.4091180-3-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.30.5-1.1 
+References: <20191031074500.28523-1-rojay@codeaurora.org>
+ <20191031074500.28523-2-rojay@codeaurora.org>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <9a52fee5-7e80-639f-248a-8a563113c470@codeaurora.org>
+Date:   Mon, 4 Nov 2019 16:02:09 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
+In-Reply-To: <20191031074500.28523-2-rojay@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2001:67c:670:100:3ad5:47ff:feaf:1a17
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
 
-On Fri, 2019-11-01 at 17:27 -0700, Bjorn Andersson wrote:
-> The SDM845 has one Gen2 and one Gen3 controller, add support for these.
+
+On 10/31/2019 1:15 PM, Roja Rani Yarubandi wrote:
+> Add QUP SE instances configuration for sc7180.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
 > ---
+>   arch/arm64/boot/dts/qcom/sc7180-idp.dts | 152 +++++-
+>   arch/arm64/boot/dts/qcom/sc7180.dtsi    | 683 +++++++++++++++++++++++-
+>   2 files changed, 828 insertions(+), 7 deletions(-)
 > 
-> Changes since v1:
-> - Style changes requested by Stan
-> - Tested with second PCIe controller as well
-> 
->  drivers/pci/controller/dwc/pcie-qcom.c | 152 +++++++++++++++++++++++++
->  1 file changed, 152 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 7e581748ee9f..35f4980480bb 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -54,6 +54,7 @@
-[...]
-> +static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
-> +{
-> +	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> +	struct dw_pcie *pci = pcie->pci;
-> +	struct device *dev = pci->dev;
-> +	u32 val;
-> +	int ret;
-> +
-> +	ret = regulator_bulk_enable(ARRAY_SIZE(res->supplies), res->supplies);
-> +	if (ret < 0) {
-> +		dev_err(dev, "cannot enable regulators\n");
-> +		return ret;
-> +	}
-> +
-> +	ret = clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
-> +	if (ret < 0)
-> +		goto err_disable_regulators;
-> +
-> +	ret = reset_control_assert(res->pci_reset);
-> +	if (ret < 0) {
-> +		dev_err(dev, "cannot deassert pci reset\n");
-> +		goto err_disable_clocks;
-> +	}
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index e0724ef3317d..189254f5ae95 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> @@ -17,7 +17,8 @@
+>   	compatible = "qcom,sc7180-idp";
+>   
+>   	aliases {
+> -		serial0 = &uart10;
 
-If for any of the above fails, the reset line is left in its default
-state, presumably unasserted. Is there a reason to assert and keep it
-asserted if enabling the clocks fails below?
+I will fix this up in the patch that added this when I respin.
+I seemed to have overlooked the fact that each QUP instance on sc7180
+has only 6 SEs (and not 8)
 
-> +	msleep(20);
-> +
-> +	ret = reset_control_deassert(res->pci_reset);
-> +	if (ret < 0) {
-> +		dev_err(dev, "cannot deassert pci reset\n");
-> +		goto err_assert_resets;
+> +		hsuart0 = &uart3;
+> +		serial0 = &uart8;
 
-Nitpick: this seems superfluous since the reset line was just asserted
-20 ms before. Maybe just:
 
-		goto err_disable_clocks;
-
-> +	}
-> +
-> +	ret = clk_prepare_enable(res->pipe_clk);
-> +	if (ret) {
-> +		dev_err(dev, "cannot prepare/enable pipe clock\n");
-> +		goto err_assert_resets;
-> +	}
-> +
-> +	/* configure PCIe to RC mode */
-> +	writel(DEVICE_TYPE_RC, pcie->parf + PCIE20_PARF_DEVICE_TYPE);
-> +
-> +	/* enable PCIe clocks and resets */
-> +	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
-> +	val &= ~BIT(0);
-> +	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> +
-> +	/* change DBI base address */
-> +	writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
-> +
-> +	/* MAC PHY_POWERDOWN MUX DISABLE  */
-> +	val = readl(pcie->parf + PCIE20_PARF_SYS_CTRL);
-> +	val &= ~BIT(29);
-> +	writel(val, pcie->parf + PCIE20_PARF_SYS_CTRL);
-> +
-> +	val = readl(pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
-> +	val |= BIT(4);
-> +	writel(val, pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
-> +
-> +	if (IS_ENABLED(CONFIG_PCI_MSI)) {
-> +		val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
-> +		val |= BIT(31);
-> +		writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
-> +	}
-> +
-> +	return 0;
-> +err_assert_resets:
-> +	reset_control_assert(res->pci_reset);
-
-So maybe this can just be removed. The reset isn't asserted in deinit
-either.
-
-regards
-Philipp
-
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
