@@ -2,175 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 18597ED8DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 07:15:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4113AED8E4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 07:15:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727444AbfKDGPR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Nov 2019 01:15:17 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:40780 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726018AbfKDGPR (ORCPT
+        id S1728200AbfKDGPh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Nov 2019 01:15:37 -0500
+Received: from mail-ua1-f65.google.com ([209.85.222.65]:44591 "EHLO
+        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728114AbfKDGPg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Nov 2019 01:15:17 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 726CF60BEB; Mon,  4 Nov 2019 06:15:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572848115;
-        bh=IngdpgbVfDPnfZTPd9bwcaDfxGrvP+SmgkF3GE3+okE=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=SnrXjtuZV1HakawUCz7dfRW2G/rxyOpBwXxD9z7FCENFvoAKgSyoHV3bXtdVUt5fm
-         Kg1t4taOvI3GHK/gvyxkGbuY9PCkJqsVu9FtPpLYp5MW/8+5Tr7F//ThaGmYgK/fNZ
-         xr0SM2K5uFkHD8Wb2L/gUvSO/Q/XjYEuCjh4lWus=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.79.136.17] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EC7B260BEB;
-        Mon,  4 Nov 2019 06:15:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572848114;
-        bh=IngdpgbVfDPnfZTPd9bwcaDfxGrvP+SmgkF3GE3+okE=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=KVtOtif7CeG8m0sLowqxVO1SbkUuS035ZNAodXOs5shIVPyE9F5SyWzMmyeFWV/Vs
-         adDFJqiiZiOn4yWNYHAeFGSBuOcC6kURxnQ+QpdP1IqvSoqlG7YufHrU+xl9dgKjxI
-         bMlZACgJxZ+Qcy1V25qlwvdRI5Ot/xlBUxSKZlXQ=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EC7B260BEB
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v3 02/11] arm64: dts: sc7180: Add minimal dts/dtsi files
- for SC7180 soc
-To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        Taniya Das <tdas@codeaurora.org>
-References: <20191023090219.15603-1-rnayak@codeaurora.org>
- <20191023090219.15603-3-rnayak@codeaurora.org>
- <5db86d8c.1c69fb81.7b0b8.e331@mx.google.com>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <410902ad-7b4b-a0ae-d5f1-1dceb88bdc5f@codeaurora.org>
-Date:   Mon, 4 Nov 2019 11:45:09 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        Mon, 4 Nov 2019 01:15:36 -0500
+Received: by mail-ua1-f65.google.com with SMTP id r22so2033074uam.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Nov 2019 22:15:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9yIKhMPMljW03rsGEF8LljWFKxCpgqs32gHznOzRrkU=;
+        b=a5QoL30HvSEZynCl/a1K6RSYVfhOX/6DM8wEnJNPYl1VWwe6nSWllO8JV7myjdbRQh
+         t62rimg+Byea+5mVZX5GD6S/F9W/Y2Or8fhRGZm3AlG2qnfj8NCUmImGAQ7DMv8osiQw
+         EmdxwKKoChB0+/iRdGQJhWzt4ZWTiSTiswywGX8X5pIxsOf+Kib6d6vghyZxugVK8558
+         XKeFOz7xJH9hBzDGiPeaZOuwxfKO6EEOtuv9J044cs+U74fF7fLqm8DP0Hmo5Hnnb7Ei
+         r5bW4eXGuf2lmI7ZBPTTOT2pNPzzPpxL4uw1GHGjA11VzU4JsmwCPfe6MI1tUEYNFcj2
+         vJAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9yIKhMPMljW03rsGEF8LljWFKxCpgqs32gHznOzRrkU=;
+        b=eDUkl6FulGA8ikxh/3HL3AvNJh17NP+LX4sCx+Vj+GiZSVpRO/TJXlgtmssr0oWo7s
+         G5L6iBRmcAOM/p90xvuBDdIVjZ+ImSP1E51vQ46H8qM6pjO/D4spqYF5UIcCxHBaSFMR
+         3Sqwpi5dn5czk2rSoXKla5U/u2MBFWvkR0tzXK+JayofiwexMDoeDNwAk2egSK2XG/ey
+         x8dN+AwIs+J5HhgGJi5Adf/PdPEk+BMYI2sVValtpZ6GEiLKy/+utz0MFZ0Yjv8LbsqS
+         FHYqEJ48oXPtXfmf02hdrxZEu5ZPVSz42NEClgItD/GLJGrDAQKVi1G/tZGxQyCnRRIc
+         ThDg==
+X-Gm-Message-State: APjAAAV5Dbig8HWJt8tvQQqOXnWZpK47m86SIeevOpGoxrbLGDP+tYrG
+        zmHC94L8NUMTKQ45On7vdpEtSUwkQjOgIYSEB0znbQ==
+X-Google-Smtp-Source: APXvYqyYHUY+82qcl4WGZkgldt09N+9qQ36Lo/k74j/vgi+PP8mh49yZ4P0PxZK+XtAddRrpT8QrZOnayNJQbpG8XpU=
+X-Received: by 2002:ab0:1405:: with SMTP id b5mr11166275uae.94.1572848134047;
+ Sun, 03 Nov 2019 22:15:34 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <5db86d8c.1c69fb81.7b0b8.e331@mx.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20191101100035.25502-1-colin.king@canonical.com>
+In-Reply-To: <20191101100035.25502-1-colin.king@canonical.com>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Mon, 4 Nov 2019 11:45:22 +0530
+Message-ID: <CAHLCerPX5WPvVRxfgAQyAguomBaEsCyncJUuOafkY2cMjQmsaQ@mail.gmail.com>
+Subject: Re: [PATCH][next][V2] drivers: thermal: tsens: fix potential integer
+ overflow on multiply
+To:     Colin King <colin.king@canonical.com>
+Cc:     Andy Gross <agross@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        kernel-janitors@vger.kernel.org,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Nov 1, 2019 at 3:30 PM Colin King <colin.king@canonical.com> wrote:
+>
+> From: Colin Ian King <colin.king@canonical.com>
+>
+> Currently a multiply operation is being performed on two int values
+> and the result is being assigned to a u64, presumably because the
+> end result is expected to be probably larger than an int. However,
+> because the multiply is an int multiply one can get overflow. Avoid
+> the overflow by casting degc to a u64 to force a u64 multiply.
+>
+> Also use div_u64 for the divide as suggested by Daniel Lezcano.
+>
+> Addresses-Coverity: ("Unintentional integer overflow")
+> Fixes: fbfe1a042cfd ("drivers: thermal: tsens: Add interrupt support")
+> Signed-off-by: Colin Ian King <colin.king@canonical.com>
 
+Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
 
-On 10/29/2019 10:19 PM, Stephen Boyd wrote:
-> Quoting Rajendra Nayak (2019-10-23 02:02:10)
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> new file mode 100644
->> index 000000000000..084854341ddd
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> @@ -0,0 +1,300 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * SC7180 SoC device tree source
->> + *
->> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
->> + */
->> +
->> +#include <dt-bindings/clock/qcom,gcc-sc7180.h>
->> +#include <dt-bindings/interrupt-controller/arm-gic.h>
->> +
->> +/ {
->> +       interrupt-parent = <&intc>;
->> +
->> +       #address-cells = <2>;
->> +       #size-cells = <2>;
->> +
->> +       chosen { };
->> +
->> +       clocks {
->> +               xo_board: xo-board {
->> +                       compatible = "fixed-clock";
->> +                       clock-frequency = <38400000>;
->> +                       clock-output-names = "xo_board";
-> 
-> Can you drop the output names property? I think we don't care that the
-> name is "xo-board" instead of "xo_board" now.
-
-sure, will do.
-
-> 
->> +                       #clock-cells = <0>;
->> +               };
->> +
->> +               sleep_clk: sleep-clk {
->> +                       compatible = "fixed-clock";
->> +                       clock-frequency = <32764>;
->> +                       clock-output-names = "sleep_clk";
->> +                       #clock-cells = <0>;
->> +               };
->> +       };
->> +
-> [...]
->> +
->> +       soc: soc {
->> +               #address-cells = <2>;
->> +               #size-cells = <2>;
->> +               ranges = <0 0 0 0 0x10 0>;
->> +               dma-ranges = <0 0 0 0  0x10 0>;
-> 
-> Why the extra space here               ^ ?
-
-typo, will fix.
-
-> 
->> +               compatible = "simple-bus";
->> +
->> +               gcc: clock-controller@100000 {
->> +                       compatible = "qcom,gcc-sc7180";
->> +                       reg = <0 0x00100000 0 0x1f0000>;
->> +                       #clock-cells = <1>;
->> +                       #reset-cells = <1>;
->> +                       #power-domain-cells = <1>;
->> +               };
->> +
->> +               qupv3_id_1: geniqup@ac0000 {
->> +                       compatible = "qcom,geni-se-qup";
->> +                       reg = <0 0x00ac0000 0 0x6000>;
->> +                       clock-names = "m-ahb", "s-ahb";
->> +                       clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
->> +                                <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
->> +                       #address-cells = <2>;
->> +                       #size-cells = <2>;
->> +                       ranges;
->> +                       status = "disabled";
->> +
->> +                       uart10: serial@a88000 {
->> +                               compatible = "qcom,geni-debug-uart";
->> +                               reg = <0 0x00a88000 0 0x4000>;
->> +                               clock-names = "se";
->> +                               clocks = <&gcc GCC_QUPV3_WRAP1_S2_CLK>;
->> +                               pinctrl-names = "default";
->> +                               pinctrl-0 = <&qup_uart10_default>;
->> +                               interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
->> +                               status = "disabled";
->> +                       };
-> 
-> Can we not add all the i2c/spi/uart cores here?
-
-I see that these nodes are posted now [1].
-Will pull it in as part of this series so it can be reviewed together.
-
-[1] https://lkml.org/lkml/2019/10/31/63
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+> ---
+>
+> V2: use div_u64 for the divide as suggested by Daniel Lezcano.
+>
+> ---
+>  drivers/thermal/qcom/tsens-common.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
+> index 03bf1b8133ea..c6b551ec7323 100644
+> --- a/drivers/thermal/qcom/tsens-common.c
+> +++ b/drivers/thermal/qcom/tsens-common.c
+> @@ -92,7 +92,7 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
+>
+>  static inline u32 degc_to_code(int degc, const struct tsens_sensor *s)
+>  {
+> -       u64 code = (degc * s->slope + s->offset) / SLOPE_FACTOR;
+> +       u64 code = div_u64(((u64)degc * s->slope + s->offset), SLOPE_FACTOR);
+>
+>         pr_debug("%s: raw_code: 0x%llx, degc:%d\n", __func__, code, degc);
+>         return clamp_val(code, THRESHOLD_MIN_ADC_CODE, THRESHOLD_MAX_ADC_CODE);
+> --
+> 2.20.1
+>
