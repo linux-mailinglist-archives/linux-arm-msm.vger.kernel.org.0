@@ -2,166 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DDFF7ED8F5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 07:27:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E78FED902
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 07:34:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728225AbfKDG1I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Nov 2019 01:27:08 -0500
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:36651 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727904AbfKDG1H (ORCPT
+        id S1726018AbfKDGdy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Nov 2019 01:33:54 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:37867 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728268AbfKDGdy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Nov 2019 01:27:07 -0500
-Received: by mail-vs1-f66.google.com with SMTP id q21so10303606vsg.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Nov 2019 22:27:07 -0800 (PST)
+        Mon, 4 Nov 2019 01:33:54 -0500
+Received: by mail-pl1-f196.google.com with SMTP id p13so7157839pll.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Nov 2019 22:33:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wqmK0R/0iLhz2cS78wooYNkQbrX2EenO+h2mxgeYTQw=;
-        b=TbpmXP1qjXkjZaAV0UBIMkZZtNEYOnWQNio6/Ktez0ZA2Q26UxZCz30s1kcAOTJbEp
-         +R07AyvDuFEPqPlrKD/llfcLdjvIaCu9Wim4Xk94c2LhvmScn6aNUX7cjK/0U3ulbf39
-         8DPBIr6StT/Mb4Lwlege9TnktUdDRFPmOhHQZGWfoCc0WpIumylEqZh6E/iTmrAWrTc5
-         9aijbfTYKUsyWqJmFt1gqTdxrgL+S3PfjXiCfxGk/6/tQtFxC8vvU4/KXR5M6UXlH/5K
-         E2CeCO4dMVz063/A6VFr0uP+FI/xU3r5KYZpHRP86MolUAgdjo/9/5t2WiLh8wlEFq/K
-         pQew==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=0Ass+24tFlqpReyltDSt47RFVZA2qHTtO7ep5Q7UfMI=;
+        b=NCyO1NSRonSyXrYq7apmUVzU98eR5hMXhQVKS0d78bYAR4p/QBl2QXEIfhKwRjt2a3
+         kWrQuROowm5YNAWH0bHCs9aqgzK1Lz0a3F9jPcIrXzw3dqgQXeVvnkInbXbvd8Jgsov5
+         bvXcii/iEu/3GRGbpjw9r0bFOotnqtK25rrJiobHz/HXsuEyzJKszhsRvv0Jf6M07tyi
+         ffW+iNAKXlZz73Gqj4HWvAuk9r9AByYBv+b9lA6Atz8kE3kiVrLGyzzetdQVtzryAgbc
+         26wppNvB/4JxODkCJBFhr79bHSotZEuUYd0D3zSY6Mmbp1gEoAJUOkfvpcif0pHiYVgr
+         S5BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wqmK0R/0iLhz2cS78wooYNkQbrX2EenO+h2mxgeYTQw=;
-        b=UfmSutzgkFn69xY7bOiBenyg9ApP5Xv7DPBkMj9JdwPiobt1JjOmldPfACkKPtxkub
-         nYqITjj89BAzlVsRdts1p98xSPJ9uVt8rEwV0NUCSfcDQajQ6sLnn/RcfKSav3vHgciH
-         CFVCdp/FPH4AWMygcGuohLwcv2we7/taUOWSuSF5gawTz19cLLYUk8+JiEhMR/BrF3nx
-         N25dDM/sTz6VCX+NCGM3/IlsnNG6fNdvQMJuRvKWS4m9yQcF25T9A5JmOBMy1wwF+eKo
-         /ROmHdeTGi4JQt6ZijYtltVE7TbUMSIMIhjpnpRVWLJ68K3FJGA5DqKpxM3GSDikv4qd
-         fZfQ==
-X-Gm-Message-State: APjAAAXO75J0ma9OAkmOYK8lo4mcK5FaxpO03CvtxIFIZiI9/NVsKFAj
-        BBfLkdo2Xu0teakk9hSswL+4IXvkiRqlm7jPQPV38w==
-X-Google-Smtp-Source: APXvYqxm9P3/wRVKysMgfsfmktDKRSe2qMyyOukFvOrEe5wCvLbSQ48XlGOq6djDHAbrCrxZc/nNP4KSzRwv7oNDLhs=
-X-Received: by 2002:a67:edce:: with SMTP id e14mr11995221vsp.182.1572848826271;
- Sun, 03 Nov 2019 22:27:06 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0Ass+24tFlqpReyltDSt47RFVZA2qHTtO7ep5Q7UfMI=;
+        b=LYQzfFa3j6SoGutaWMCGXjHpVzZtDDyheiTYRjf1j/BcaMG1CwBxoJfbNdbmuIQcxt
+         raK3LbAugBn3akQ3Nmsb4FAAEesWcfE6FeYXBCWfoTsrmxH8EhZt6NGfot7FCNU9sIFn
+         VGQckHbk60bPHdKAIU0jno7iChhiINUFvvvojrJ6HujGDPZ7Z2DqEJnUZpjyZgAneLx6
+         dlMbBU3EzA3fUpyfxXN8YKfNtCl+RL6Rb+ZzaXvDy6+npp+tVw8F59HFfzFMV304t0Pa
+         TJ01fwggkGSF6k2PIl0qTbZMy/6QVxgQA37XSWJ07fEYAn2a1n2VCPOSPljLdnBYyFtz
+         ULrQ==
+X-Gm-Message-State: APjAAAVrJHV8ODA3mjXRqMI/Si9Q1VS+fMBQ++4kCKqmXHztGVA8DPDY
+        i52/paYcZ0jweiDeL/YcMg4xGA==
+X-Google-Smtp-Source: APXvYqwnjPAdlM2I7PhZLkjX2zkNcYt4bFQoZaT9Oqa5uNq88dNgTRo6qncVEj1olQQW+5Ccb6RlFw==
+X-Received: by 2002:a17:902:a58c:: with SMTP id az12mr25199923plb.140.1572849231607;
+        Sun, 03 Nov 2019 22:33:51 -0800 (PST)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id 71sm3788185pfx.107.2019.11.03.22.33.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 Nov 2019 22:33:50 -0800 (PST)
+Date:   Sun, 3 Nov 2019 22:33:48 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: Re: [PATCH v3 11/11] arm64: dts: qcom: sc7180: Add pdc interrupt
+ controller
+Message-ID: <20191104063348.GA2464@tuxbook-pro>
+References: <20191023090219.15603-1-rnayak@codeaurora.org>
+ <20191023090219.15603-12-rnayak@codeaurora.org>
+ <5db86de0.1c69fb81.9e27d.0f47@mx.google.com>
+ <20191030195021.GC27773@google.com>
+ <6610d7fe-5a4d-5a43-5c4f-9ae61e7e53ee@codeaurora.org>
 MIME-Version: 1.0
-References: <cover.1571181041.git.amit.kucheria@linaro.org>
- <1b53ef537203e629328285b4597a09e4a586d688.1571181041.git.amit.kucheria@linaro.org>
- <ed9ef9e3-a8c3-90bf-4e71-8959b2ff94d2@linaro.org>
-In-Reply-To: <ed9ef9e3-a8c3-90bf-4e71-8959b2ff94d2@linaro.org>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Mon, 4 Nov 2019 11:56:55 +0530
-Message-ID: <CAHLCerO49=iensdHC=dP-y0Pk_24AYEO53Zw=K5OjtNhmOyUpA@mail.gmail.com>
-Subject: Re: [PATCH] of-thermal: Disable polling when interrupt property is
- found in DT
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Linux PM list <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6610d7fe-5a4d-5a43-5c4f-9ae61e7e53ee@codeaurora.org>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 30, 2019 at 12:21 PM Daniel Lezcano
-<daniel.lezcano@linaro.org> wrote:
->
-> On 16/10/2019 01:13, Amit Kucheria wrote:
-> > Currently, in order to enable interrupt-only mode, one must set
-> > polling-delay-passive and polling-delay properties in the DT to 0,
-> > otherwise the thermal framework will continue to setup a periodic timers
-> > to monitor the thermal zones.
-> >
-> > Change the behaviour, so that on DT-based systems, we no longer have to
-> > set the properties to zero if we find an 'interrupt' property in the
-> > sensor.
-> >
-> > Following data shows the number of times
-> > thermal_zone_device_set_polling() is invoked with and without this
-> > patch. So the patch achieves the same behaviour as setting the delay
-> > properties to 0.
-> >
-> > Current behaviour (without setting delay properties to 0):
-> >   FUNC                              COUNT
-> >   thermal_zone_device_update          302
-> >   thermal_zone_device_set_pollin     7911
-> >
-> > Current behaviour (with delay properties set to 0):
-> >   FUNC                              COUNT
-> >   thermal_zone_device_update            3
-> >   thermal_zone_device_set_pollin        6
-> >
-> > With this patch (without setting delay properties to 0):
-> >   FUNC                              COUNT
-> >   thermal_zone_device_update            3
-> >   thermal_zone_device_set_pollin        6
-> >
-> > Suggested-by: Stephen Boyd <swboyd@chromium.org>
-> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > ---
-> >  drivers/thermal/of-thermal.c | 15 +++++++++++++--
-> >  1 file changed, 13 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/thermal/of-thermal.c b/drivers/thermal/of-thermal.c
-> > index dc5093be553e..79ad587462b1 100644
-> > --- a/drivers/thermal/of-thermal.c
-> > +++ b/drivers/thermal/of-thermal.c
-> > @@ -412,7 +412,8 @@ static struct thermal_zone_device_ops of_thermal_ops = {
-> >  static struct thermal_zone_device *
-> >  thermal_zone_of_add_sensor(struct device_node *zone,
-> >                          struct device_node *sensor, void *data,
-> > -                        const struct thermal_zone_of_device_ops *ops)
-> > +                        const struct thermal_zone_of_device_ops *ops,
-> > +                        bool force_interrupts)
-> >  {
-> >       struct thermal_zone_device *tzd;
-> >       struct __thermal_zone *tz;
-> > @@ -433,6 +434,11 @@ thermal_zone_of_add_sensor(struct device_node *zone,
-> >       tzd->ops->get_temp = of_thermal_get_temp;
-> >       tzd->ops->get_trend = of_thermal_get_trend;
-> >
-> > +     if (force_interrupts) {
-> > +             tz->passive_delay = 0;
-> > +             tz->polling_delay = 0;
-> > +     }
-> > +
-> >       /*
-> >        * The thermal zone core will calculate the window if they have set the
-> >        * optional set_trips pointer.
-> > @@ -486,6 +492,7 @@ thermal_zone_of_sensor_register(struct device *dev, int sensor_id, void *data,
-> >  {
-> >       struct device_node *np, *child, *sensor_np;
-> >       struct thermal_zone_device *tzd = ERR_PTR(-ENODEV);
-> > +     bool force_interrupts = false;
-> >
-> >       np = of_find_node_by_name(NULL, "thermal-zones");
-> >       if (!np)
-> > @@ -498,6 +505,9 @@ thermal_zone_of_sensor_register(struct device *dev, int sensor_id, void *data,
-> >
-> >       sensor_np = of_node_get(dev->of_node);
-> >
-> > +     if (of_find_property(sensor_np, "interrupts", NULL))
-> > +             force_interrupts = true;
-> > +
->
-> This is hackish. It does cover only DT drivers.
+On Sun 03 Nov 22:17 PST 2019, Rajendra Nayak wrote:
 
-OK.
+> 
+> 
+> On 10/31/2019 1:20 AM, Matthias Kaehlcke wrote:
+> > On Tue, Oct 29, 2019 at 09:50:40AM -0700, Stephen Boyd wrote:
+> > > Quoting Rajendra Nayak (2019-10-23 02:02:19)
+> > > > From: Maulik Shah <mkshah@codeaurora.org>
+> > > > 
+> > > > Add pdc interrupt controller for sc7180
+> > > > 
+> > > > Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> > > > Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> > > > ---
+> > > > v3:
+> > > > Used the qcom,sdm845-pdc compatible for pdc node
+> > > 
+> > > Everything else isn't doing the weird old compatible thing. Why not just
+> > > add the new compatible and update the driver? I guess I'll have to go
+> > > read the history.
+> > 
+> > Marc Zyngier complained  on v2 about the churn from adding compatible
+> > strings for identical components, and I kinda see his point.
+> > 
+> > I agree that using the 'sdm845' compatible string for sc7180 is odd too.
+> > Maybe we should introduce SoC independent compatible strings for IP blocks
+> > that are shared across multiple SoCs? If differentiation is needed SoC
+> > specific strings can be added.
+> 
+> Sure, I will perhaps add a qcom,pdc SoC independent compatible to avoid
+> confusion.
+> 
 
-> It would be cleaner to add a specific flag describing the thermal sensor
-> driver mode and then in the core code do not start the timers if the
-> associated works in interrupt.
->
-> Moreover the interrupt mode can be used to activate faster the passive
-> delay monitoring after reaching a threshold like the hikey and hikey960.
-> So this patch will disable the mitigation on those boards. This is
-> another argument to add flags for the thermal sensor mode.
->
+I agree,
 
-So each driver then needs to set this flag at interrupt registration
-time. Or do you want to set that automatically in core code with some
-wrapper function?
+compatible = "qcom,sc7180-pdc", "qcom,pdc";
+
+is the way to go.
+
+Reusing qcom,sdm845-pdc would prevent us from tackling any unforeseen
+issues/variations/erratas with one or the other platform in the future.
 
 Regards,
-Amit
+Bjorn
+
+> 
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
