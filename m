@@ -2,73 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CD78EDB9B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 10:23:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 96272EDBA7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 10:28:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728343AbfKDJW7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Nov 2019 04:22:59 -0500
-Received: from mail.kernel.org ([198.145.29.99]:37720 "EHLO mail.kernel.org"
+        id S1727788AbfKDJ2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Nov 2019 04:28:02 -0500
+Received: from mail.kernel.org ([198.145.29.99]:40436 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728332AbfKDJW7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Nov 2019 04:22:59 -0500
+        id S1727419AbfKDJ2C (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 4 Nov 2019 04:28:02 -0500
 Received: from localhost (unknown [106.201.55.174])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2E30420842;
-        Mon,  4 Nov 2019 09:22:57 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id A0E53222D2;
+        Mon,  4 Nov 2019 09:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1572859379;
-        bh=fDwWHQXokQ6+yeSBLlhubET0rNESSzXyJpE1F6jX8DI=;
+        s=default; t=1572859681;
+        bh=mjpf4qHX+4LtFI3DUZH/vqduTv06o3J1bBEcBr2Htpk=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=sQoqsNrRtMsmT8OLj51A7PYWqpJmqtK9RUp22OzFl6h1iWU9cMvCVKSiefUAzTtgB
-         P1vOVAsdRkqQAjtVOpMnz1tHXJ3SvVSP7yE4UlTHqMYpHtXwPp4QG6pW02UoPZIdyp
-         6/TRC/U+/wQbIJMtPixaB8Lx2EOAyLoRW87UVbK8=
-Date:   Mon, 4 Nov 2019 14:52:52 +0530
+        b=SqRgqM0MKkPCfeT+cjF0A3wpLlpzSvc/pOu/qJdk2In5nKHVkXPDjHShTOEyWE1Jq
+         89bVncd30CMe29c0gCKbZme5E7O21d+RLPyUXABub9M73gMta8P4HmRwvy2MMyZnEa
+         YpEkGZ44myT4Mplb0nMyq1HRPhZmOXhh3dsRs1jY=
+Date:   Mon, 4 Nov 2019 14:57:57 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] phy: qcom: qmp: Add SDM845 QHP PCIe PHY
-Message-ID: <20191104092252.GS2695@vkoul-mobl.Dlink>
-References: <20191102001628.4090861-1-bjorn.andersson@linaro.org>
- <20191102001628.4090861-6-bjorn.andersson@linaro.org>
- <20191103082147.GO2695@vkoul-mobl.Dlink>
- <20191104044703.GQ1929@tuxbook-pro>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 00/11] arm64: dts: qcom: msm8996: Introduce IFC6640
+Message-ID: <20191104092757.GT2695@vkoul-mobl.Dlink>
+References: <20191021051322.297560-1-bjorn.andersson@linaro.org>
+ <20191103081311.GM2695@vkoul-mobl.Dlink>
+ <20191104045507.GA28034@tuxbook-pro>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191104044703.GQ1929@tuxbook-pro>
+In-Reply-To: <20191104045507.GA28034@tuxbook-pro>
 User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03-11-19, 20:47, Bjorn Andersson wrote:
-> On Sun 03 Nov 01:21 PDT 2019, Vinod Koul wrote:
-> > On 01-11-19, 17:16, Bjorn Andersson wrote:
-> [..]
-> > > +/* PCIE GEN3 COM registers */
-> > > +#define PCIE_GEN3_QHP_COM_SYSCLK_EN_SEL			0xdc
-> > 
-> > No QPHY_ tag with these?
+On 03-11-19, 20:55, Bjorn Andersson wrote:
+> On Sun 03 Nov 01:13 PDT 2019, Vinod Koul wrote:
 > 
-> These are the actual register names from the hardware specification, do
-> you foresee any issues with naming them like this?
+> > On 20-10-19, 22:13, Bjorn Andersson wrote:
+> > > Refactor msm8996 and db820c in order to make it follow the structure of newer
+> > > platforms, move db820c specific things to db820c.dtsi and then introduce the
+> > > Informace 6640 Single Board Computer.
+> > 
+> > This has patch 9/11 missing. But rest look good to me.
+> > 
+> 
+> That's really odd, I copy pasted the recipients into all the patches.
+> But I'm unable to find it under linux-arm-msm on lore as well.
 
-It would make them consistent, rest of the registers do have that.
-> 
-> > > +#define PCIE_GEN3_QHP_COM_SSC_EN_CENTER			0x14
-> > 
-> > Can we sort these please!
-> > 
-> 
-> Yes, that sounds reasonable. I'll respin with these sorted by address.
+Yup I can see it there but not on arm-msm. Do you use @linaro smtp to
+send. Gmail is known to drop emails to lists on  vger..
+I use @kernel.org one, havent seen issues on that yet
 
-Great, thanks
+> It's under LKML though, can you please have a look and let me know if I
+> can extend your ack to patch 9/11 as well?
+> 
+> https://lore.kernel.org/lkml/20191021051322.297560-10-bjorn.andersson@linaro.org/
+
+Mostly looks good but the reserve memory doesnt seem sorted by node
+(please recheck) and rest looks good so you can add it to that patch as
+well :)
 
 -- 
 ~Vinod
