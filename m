@@ -2,126 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C7F4EE6A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 18:52:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D1400EE6FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 19:12:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727998AbfKDRwM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Nov 2019 12:52:12 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:43322 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727469AbfKDRwM (ORCPT
+        id S1728377AbfKDSMm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Nov 2019 13:12:42 -0500
+Received: from smtprelay0076.hostedemail.com ([216.40.44.76]:56688 "EHLO
+        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1727998AbfKDSMm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Nov 2019 12:52:12 -0500
-Received: by mail-pl1-f194.google.com with SMTP id a18so6771856plm.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2019 09:52:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:cc:from:subject:to:user-agent:date;
-        bh=3CHrSHD37ZopVTCrhzgKR9E8ooKOmK/8OxMVDS6vwuI=;
-        b=aLtOeSffc2ESdeStgh0gvZWVGC4SVaxngt6L3IAywqqZTvFkn+X676dv17c4L6eGba
-         SnLWjpu0qWDl8sFS8//6SiqVNR9FxZ1NRQCXVSYm1+GH1eGC3imZpqxJJVpp1zDsB/n0
-         qT2qm86muT+AU+DwWe6nV0XwIj9ZbPbZlOtyI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:cc:from:subject:to
-         :user-agent:date;
-        bh=3CHrSHD37ZopVTCrhzgKR9E8ooKOmK/8OxMVDS6vwuI=;
-        b=n4QV+zcGGhZQRX6wpDJfsTKLkinF29qkWSLaGDJKWybT0OcIPsfZRmdGhDTalFRTSJ
-         3NXc2JCA5iB6j6xPX8OYs/0zR8rQSOKZKkHrrT4AHmwGJI3lZkpSpIHlHbiDwM1Eneyr
-         45n4064BwDIhrcP3uAPQNsLrUoGkh9oahdRMIeKJJjm2+e8qoXbpJDLq0D5+iwlU4iXl
-         7K0X2ypUP5gILJjNNsOKAxD+ZKgXN3cPt85mFEgNt9fxaLm4i/ryYS92saMrLSAMdxfd
-         sIOULPLjTqo0/ymbxn81An04YiONTBHmbGbln7odzHze2CLHiyNwQ9+ToX4ccMu/NfQp
-         zj5g==
-X-Gm-Message-State: APjAAAUHhYViL4aLDdPRWMIibOdmmy0rbIH67KWU19OS7+STzBTA3olh
-        zAjEww190cWUQWX4XHhT1rfbcQ==
-X-Google-Smtp-Source: APXvYqxrYy0bhV9BstiDpY6WoRWDrnAIP8w3jFR5/bWWHdykonSQNVFdZDTiO5WNLjo1Bbf3S55xnw==
-X-Received: by 2002:a17:902:16b:: with SMTP id 98mr28484214plb.154.1572889931654;
-        Mon, 04 Nov 2019 09:52:11 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id f2sm14089155pfg.48.2019.11.04.09.52.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2019 09:52:11 -0800 (PST)
-Message-ID: <5dc0654b.1c69fb81.5f215.8c24@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        Mon, 4 Nov 2019 13:12:42 -0500
+X-Greylist: delayed 494 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Nov 2019 13:12:41 EST
+Received: from smtprelay.hostedemail.com (10.5.19.251.rfc1918.com [10.5.19.251])
+        by smtpgrave04.hostedemail.com (Postfix) with ESMTP id 2787218020B00;
+        Mon,  4 Nov 2019 18:04:28 +0000 (UTC)
+Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
+        by smtprelay03.hostedemail.com (Postfix) with ESMTP id 35FEA8384368;
+        Mon,  4 Nov 2019 18:04:26 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,:::::::::::::::::,RULES_HIT:41:355:379:599:973:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1534:1540:1593:1594:1711:1730:1747:1777:1792:2393:2559:2562:2828:3138:3139:3140:3141:3142:3352:3622:3865:3866:3867:3870:3872:3873:3874:4321:4362:4605:5007:6117:6119:9010:10004:10400:10848:11026:11232:11473:11658:11914:12048:12296:12297:12679:12740:12760:12895:13069:13311:13357:13439:14659:14721:21080:21627:30012:30054:30070:30091,0,RBL:47.151.135.224:@perches.com:.lbl8.mailshell.net-62.8.0.100 64.201.201.201,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:fn,MSBL:0,DNSBL:neutral,Custom_rules:0:0:0,LFtime:24,LUA_SUMMARY:none
+X-HE-Tag: hour56_60b9b720d6924
+X-Filterd-Recvd-Size: 1844
+Received: from XPS-9350.home (unknown [47.151.135.224])
+        (Authenticated sender: joe@perches.com)
+        by omf16.hostedemail.com (Postfix) with ESMTPA;
+        Mon,  4 Nov 2019 18:04:24 +0000 (UTC)
+Message-ID: <d3626d96b7fb9e0b1b25159a85d337f8882ceca1.camel@perches.com>
+Subject: Re: [PATCH v5 1/3] clk: qcom: Allow constant ratio freq tables for
+ rcg
+From:   Joe Perches <joe@perches.com>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        bjorn.andersson@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org
+Cc:     agross@kernel.org, marc.w.gonzalez@free.fr,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Date:   Mon, 04 Nov 2019 10:04:14 -0800
+In-Reply-To: <20191031185715.15504-1-jeffrey.l.hugo@gmail.com>
+References: <20191031185538.15402-1-jeffrey.l.hugo@gmail.com>
+         <20191031185715.15504-1-jeffrey.l.hugo@gmail.com>
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.34.1-2 
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1572591543-15501-1-git-send-email-kgunda@codeaurora.org>
-References: <1572591543-15501-1-git-send-email-kgunda@codeaurora.org>
-Cc:     Kiran Gunda <kgunda@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH V1] mfd: qcom-spmi-pmic: Add support for pm6150 and pm6150l
-To:     Andy Gross <agross@kernel.org>,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, rnayak@codeaurora.org
-User-Agent: alot/0.8.1
-Date:   Mon, 04 Nov 2019 09:52:10 -0800
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kiran Gunda (2019-10-31 23:59:03)
-> Add the compatibles and PMIC ids for pm6150 and pm6150l PMICs
-> found on SC7180 based platforms.
->=20
-> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt | 2 ++
->  drivers/mfd/qcom-spmi-pmic.c                             | 4 ++++
->  2 files changed, 6 insertions(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt b/D=
-ocumentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-> index 1437062..b5fc64e 100644
-> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-> @@ -32,6 +32,8 @@ Required properties:
->                     "qcom,pm8998",
->                     "qcom,pmi8998",
->                     "qcom,pm8005",
-> +                  "qcom,pm6150",
-> +                  "qcom,pm6150l",
-
-Please sort on compatible string
-
->                     or generalized "qcom,spmi-pmic".
->  - reg:             Specifies the SPMI USID slave address for this device.
->                     For more information see:
-> diff --git a/drivers/mfd/qcom-spmi-pmic.c b/drivers/mfd/qcom-spmi-pmic.c
-> index e8fe705..d916aa8 100644
-> --- a/drivers/mfd/qcom-spmi-pmic.c
-> +++ b/drivers/mfd/qcom-spmi-pmic.c
-> @@ -34,6 +34,8 @@
->  #define PM8998_SUBTYPE         0x14
->  #define PMI8998_SUBTYPE                0x15
->  #define PM8005_SUBTYPE         0x18
-> +#define PM6150L_SUBTYPE                0x27
-> +#define PM6150_SUBTYPE         0x28
-
-And on macro name here.
-
-> =20
->  static const struct of_device_id pmic_spmi_id_table[] =3D {
->         { .compatible =3D "qcom,spmi-pmic", .data =3D (void *)COMMON_SUBT=
-YPE },
-> @@ -53,6 +55,8 @@
->         { .compatible =3D "qcom,pm8998",    .data =3D (void *)PM8998_SUBT=
-YPE },
->         { .compatible =3D "qcom,pmi8998",   .data =3D (void *)PMI8998_SUB=
-TYPE },
->         { .compatible =3D "qcom,pm8005",    .data =3D (void *)PM8005_SUBT=
-YPE },
-> +       { .compatible =3D "qcom,pm6150l",   .data =3D (void *)PM6150L_SUB=
-TYPE },
-> +       { .compatible =3D "qcom,pm6150",    .data =3D (void *)PM6150_SUBT=
-YPE },
-
-And compatible here.
-
+On Thu, 2019-10-31 at 11:57 -0700, Jeffrey Hugo wrote:
+> Some RCGs (the gfx_3d_src_clk in msm8998 for example) are basically just
+> some constant ratio from the input across the entire frequency range.  It
+> would be great if we could specify the frequency table as a single entry
+> constant ratio instead of a long list, ie:
+> 
+> 	{ .src = P_GPUPLL0_OUT_EVEN, .pre_div = 3 },
 >         { }
+> 
+> So, lets support that.
+[]
+> diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+[]
+> @@ -29,6 +29,9 @@ struct freq_tbl *qcom_find_freq(const struct freq_tbl *f, unsigned long rate)
+>  	if (!f)
+>  		return NULL;
+>  
+> +	if(!f->freq)
+> +		return f;
+> +
+
+trivia:
+
+Space after if before open parenthesis please.
+
+Can you please make sure to style check your
+code with checkpatch before submission?
+
+Thanks.
+
+
