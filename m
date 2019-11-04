@@ -2,103 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E776EEA00
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 21:42:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1904BEEAEB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 22:17:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728409AbfKDUm0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Nov 2019 15:42:26 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:46465 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728377AbfKDUm0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Nov 2019 15:42:26 -0500
-Received: by mail-pg1-f193.google.com with SMTP id f19so12217710pgn.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2019 12:42:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6/9m8wELRRDxWE7OlbiB0B3Q1hTAzR2tNA33WCbLmsw=;
-        b=OdxYxVSVQHvqXu5SKnoyvE3TkGJTpN2Vz+UnWjjn6DRcm3LgmX/pGG5UeLpbYSsuH5
-         sjmJDv0xugSDXNI5icN693KOUFS2fW+0XEnH6GmbSDhGM4UHGaLSBXobpqbr8SmHgOUw
-         a15pVeYOelcGy3ooGUKqHFSgex9wrO8LG4rtKaA+Pq5CGR6HLDkpMXxxkfnMeo//19Ie
-         GUMTOwi5j9JgFxFqlOq0BcYdnAOkq63bdLD9GBo28GZFCaJPE7xoYjB2FGQkjVD1MUv/
-         US6oSbBDXgWvqPoPdDVu0YDBOYPkM1JLN8c0JOKcgBlj1RMm4m9hSGsxyYxSuqydHLlv
-         42Sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6/9m8wELRRDxWE7OlbiB0B3Q1hTAzR2tNA33WCbLmsw=;
-        b=GcwbgIArxzbmHVM4DOykpwEh9EjxEEPRs9FpRXFfNqiNuuyvOAsXyCFVne0xH7WylE
-         3B1oPbScoZRsqAKWpP5MBhfaoVTJDQj1f28O3TvUk3KTVtZtHwJCeFf4ISIaSKFYK/l/
-         5pwgxIqr+1FktWg7iyJW247STua5wikjn9VTn4G+rPCVkrKo+NLZk1hN6SxHuxF9VA5o
-         5J6W/fQ3ZR4SCsfUC+pmaizJp6LTNqpeh0QfcOKEa5irRctIdyjrdxKjG4CaYI7NsLme
-         K78OVXA4ucmBVwJxVj8LHNjsym092u7Q39u3bYLtJwEa8mJW7olmL63FYNA/h/si/vFY
-         e8VQ==
-X-Gm-Message-State: APjAAAXHwUDzjmzNKPIyjrTWM/e42X/CfTuSBnWW70HvD2blyoKfB7Df
-        iYigCLn2utynmD9paUzN4rC3ug==
-X-Google-Smtp-Source: APXvYqxKo9EGtLoPwts9dEnyGmVK3HmiyacvdHbMr4orZaBYx4eTzyEWx4c8n8FjfAnxRZ1deQ1UBw==
-X-Received: by 2002:a63:ec4b:: with SMTP id r11mr31741370pgj.147.1572900143578;
-        Mon, 04 Nov 2019 12:42:23 -0800 (PST)
-Received: from tuxbook-pro (pat_11.qualcomm.com. [192.35.156.11])
-        by smtp.gmail.com with ESMTPSA id n8sm8714053pja.30.2019.11.04.12.42.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2019 12:42:22 -0800 (PST)
-Date:   Mon, 4 Nov 2019 12:42:20 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     kholk11@gmail.com
-Cc:     linux-arm-msm@vger.kernel.org, marijns95@gmail.com,
-        robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, robh+dt@kernel.org, mark.rutland@arm.com,
-        tglx@linutronix.de, jonathan@marek.ca, georgi.djakov@linaro.org,
-        gregkh@linuxfoundation.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v4 5/7] dt-bindings: msm/dsi: Add 28nm PLL for family B
- compatible
-Message-ID: <20191104204220.GB586@tuxbook-pro>
-References: <20191031104402.31813-1-kholk11@gmail.com>
- <20191031104402.31813-6-kholk11@gmail.com>
+        id S1728940AbfKDVQu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Nov 2019 16:16:50 -0500
+Received: from mail.z3ntu.xyz ([128.199.32.197]:34846 "EHLO mail.z3ntu.xyz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728556AbfKDVQu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 4 Nov 2019 16:16:50 -0500
+X-Greylist: delayed 411 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Nov 2019 16:16:48 EST
+Received: from localhost.localdomain (80-110-127-196.cgn.dynamic.surfer.at [80.110.127.196])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 834C3C5B23;
+        Mon,  4 Nov 2019 21:09:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1572901796; bh=X7KfnX/lprvOh4vju0aGg+UDLNblv8w6QZlnFOibC4U=;
+        h=From:To:Cc:Subject:Date;
+        b=c7GMwmxlAq2ZdxtnTqMeUJjRqhH9srvarMl/YqhYZISdTNWu/oHQ0x3uRLe39+Gx3
+         FojDkzFI3LHfSdeHuolB48PCOPHl93x79nVWaxlI+bXRP+FkJw2FCSeNcz80ujQVfN
+         9yA77x/Qn6MAwQxPiYtJeuPrL+pGK7fBiFtutVHY=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Luca Weiss <luca@z3ntu.xyz>, Russell King <linux@armlinux.org.uk>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] ARM: qcom_defconfig: Regenerate
+Date:   Mon,  4 Nov 2019 22:09:40 +0100
+Message-Id: <20191104210943.101393-1-luca@z3ntu.xyz>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191031104402.31813-6-kholk11@gmail.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 31 Oct 03:44 PDT 2019, kholk11@gmail.com wrote:
+Several options were dropped a while ago and the options QCOM_ADSP_PIL
+and QCOM_Q6V5_PIL have been renamed.
 
-> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> 
-> On family B SoCs, the 28nm PLL has a different iospace address
-> and that required a new compatible in the driver.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> ---
->  Documentation/devicetree/bindings/display/msm/dsi.txt | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt b/Documentation/devicetree/bindings/display/msm/dsi.txt
-> index af95586c898f..d3ba9ee22f38 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dsi.txt
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi.txt
-> @@ -83,6 +83,7 @@ DSI PHY:
->  Required properties:
->  - compatible: Could be the following
->    * "qcom,dsi-phy-28nm-hpm"
-> +  * "qcom,dsi-phy-28nm-hpm-fam-b"
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+ arch/arm/configs/qcom_defconfig | 45 ++++++++++++---------------------
+ 1 file changed, 16 insertions(+), 29 deletions(-)
 
-Wouldn't it be preferable to use specific platform numbers here?
+diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
+index 9792dd0aae0c..94d5e1a8c61a 100644
+--- a/arch/arm/configs/qcom_defconfig
++++ b/arch/arm/configs/qcom_defconfig
+@@ -1,6 +1,7 @@
+ CONFIG_SYSVIPC=y
+ CONFIG_NO_HZ=y
+ CONFIG_HIGH_RES_TIMERS=y
++CONFIG_PREEMPT=y
+ CONFIG_IKCONFIG=y
+ CONFIG_IKCONFIG_PROC=y
+ CONFIG_CGROUPS=y
+@@ -11,32 +12,28 @@ CONFIG_EMBEDDED=y
+ # CONFIG_SLUB_DEBUG is not set
+ # CONFIG_COMPAT_BRK is not set
+ CONFIG_PROFILING=y
+-CONFIG_OPROFILE=y
+-CONFIG_KPROBES=y
+-CONFIG_MODULES=y
+-CONFIG_MODULE_UNLOAD=y
+-CONFIG_MODULE_FORCE_UNLOAD=y
+-CONFIG_MODVERSIONS=y
+-CONFIG_PARTITION_ADVANCED=y
+ CONFIG_ARCH_QCOM=y
+ CONFIG_ARCH_MSM8X60=y
+ CONFIG_ARCH_MSM8960=y
+ CONFIG_ARCH_MSM8974=y
+ CONFIG_ARCH_MDM9615=y
+-CONFIG_PCI=y
+-CONFIG_PCI_MSI=y
+-CONFIG_PCIE_QCOM=y
+ CONFIG_SMP=y
+-CONFIG_PREEMPT=y
+ CONFIG_HIGHMEM=y
+-CONFIG_CLEANCACHE=y
+ CONFIG_ARM_APPENDED_DTB=y
+ CONFIG_ARM_ATAG_DTB_COMPAT=y
+ CONFIG_CPU_IDLE=y
+ CONFIG_ARM_CPUIDLE=y
+ CONFIG_VFP=y
+ CONFIG_NEON=y
++CONFIG_OPROFILE=y
++CONFIG_KPROBES=y
++CONFIG_MODULES=y
++CONFIG_MODULE_UNLOAD=y
++CONFIG_MODULE_FORCE_UNLOAD=y
++CONFIG_MODVERSIONS=y
++CONFIG_PARTITION_ADVANCED=y
+ # CONFIG_CORE_DUMP_DEFAULT_ELF_HEADERS is not set
++CONFIG_CLEANCACHE=y
+ CONFIG_CMA=y
+ CONFIG_NET=y
+ CONFIG_PACKET=y
+@@ -47,18 +44,17 @@ CONFIG_IP_MULTIPLE_TABLES=y
+ CONFIG_IP_ROUTE_VERBOSE=y
+ CONFIG_IP_PNP=y
+ CONFIG_IP_PNP_DHCP=y
+-# CONFIG_INET_XFRM_MODE_TRANSPORT is not set
+-# CONFIG_INET_XFRM_MODE_TUNNEL is not set
+-# CONFIG_INET_XFRM_MODE_BEET is not set
+ # CONFIG_IPV6 is not set
+ CONFIG_CFG80211=m
+ CONFIG_MAC80211=m
+ CONFIG_RFKILL=y
++CONFIG_PCI=y
++CONFIG_PCI_MSI=y
++CONFIG_PCIE_QCOM=y
+ CONFIG_DEVTMPFS=y
+ CONFIG_DEVTMPFS_MOUNT=y
+ CONFIG_MTD=y
+ CONFIG_MTD_BLOCK=y
+-CONFIG_MTD_M25P80=y
+ CONFIG_MTD_RAW_NAND=y
+ CONFIG_MTD_NAND_QCOM=y
+ CONFIG_MTD_SPI_NOR=y
+@@ -113,7 +109,6 @@ CONFIG_SERIO_LIBPS2=y
+ CONFIG_SERIAL_MSM=y
+ CONFIG_SERIAL_MSM_CONSOLE=y
+ CONFIG_HW_RANDOM=y
+-CONFIG_I2C=y
+ CONFIG_I2C_CHARDEV=y
+ CONFIG_I2C_QUP=y
+ CONFIG_SPI=y
+@@ -140,7 +135,6 @@ CONFIG_QCOM_TSENS=y
+ CONFIG_MFD_PM8XXX=y
+ CONFIG_MFD_QCOM_RPM=y
+ CONFIG_MFD_SPMI_PMIC=y
+-CONFIG_REGULATOR=y
+ CONFIG_REGULATOR_FIXED_VOLTAGE=y
+ CONFIG_REGULATOR_QCOM_RPM=y
+ CONFIG_REGULATOR_QCOM_SMD_RPM=y
+@@ -149,13 +143,11 @@ CONFIG_MEDIA_SUPPORT=y
+ CONFIG_DRM=y
+ CONFIG_DRM_MSM=m
+ CONFIG_DRM_PANEL_SIMPLE=y
+-CONFIG_FB=y
+-CONFIG_FRAMEBUFFER_CONSOLE=y
+-# CONFIG_LCD_CLASS_DEVICE is not set
+ CONFIG_BACKLIGHT_CLASS_DEVICE=y
+ # CONFIG_BACKLIGHT_GENERIC is not set
+ CONFIG_BACKLIGHT_LM3630A=y
+ CONFIG_BACKLIGHT_LP855X=y
++CONFIG_FRAMEBUFFER_CONSOLE=y
+ CONFIG_SOUND=y
+ CONFIG_SND=y
+ CONFIG_SND_DYNAMIC_MINORS=y
+@@ -169,15 +161,12 @@ CONFIG_USB_ANNOUNCE_NEW_DEVICES=y
+ CONFIG_USB_OTG=y
+ CONFIG_USB_MON=y
+ CONFIG_USB_EHCI_HCD=y
+-CONFIG_USB_EHCI_MSM=y
+ CONFIG_USB_ACM=y
+ CONFIG_USB_CHIPIDEA=y
+ CONFIG_USB_CHIPIDEA_UDC=y
+ CONFIG_USB_CHIPIDEA_HOST=y
+-CONFIG_USB_CHIPIDEA_ULPI=y
+ CONFIG_USB_SERIAL=y
+ CONFIG_USB_HSIC_USB4604=y
+-CONFIG_USB_MSM_OTG=y
+ CONFIG_USB_GADGET=y
+ CONFIG_USB_GADGET_DEBUG_FILES=y
+ CONFIG_USB_GADGET_VBUS_DRAW=500
+@@ -185,7 +174,6 @@ CONFIG_USB_CONFIGFS=y
+ CONFIG_USB_CONFIGFS_NCM=y
+ CONFIG_USB_CONFIGFS_ECM=y
+ CONFIG_USB_CONFIGFS_F_FS=y
+-CONFIG_USB_ULPI_BUS=y
+ CONFIG_USB_ETH=m
+ CONFIG_MMC=y
+ CONFIG_MMC_BLOCK_MINORS=32
+@@ -215,13 +203,13 @@ CONFIG_MSM_LCC_8960=y
+ CONFIG_MDM_LCC_9615=y
+ CONFIG_MSM_MMCC_8960=y
+ CONFIG_MSM_MMCC_8974=y
+-CONFIG_MSM_IOMMU=y
+ CONFIG_HWSPINLOCK=y
+ CONFIG_HWSPINLOCK_QCOM=y
+ CONFIG_MAILBOX=y
++CONFIG_MSM_IOMMU=y
+ CONFIG_REMOTEPROC=y
+-CONFIG_QCOM_ADSP_PIL=y
+-CONFIG_QCOM_Q6V5_PIL=y
++CONFIG_QCOM_Q6V5_MSS=y
++CONFIG_QCOM_Q6V5_PAS=y
+ CONFIG_QCOM_WCNSS_PIL=y
+ CONFIG_RPMSG_CHAR=y
+ CONFIG_RPMSG_QCOM_SMD=y
+@@ -257,7 +245,6 @@ CONFIG_EXT2_FS_XATTR=y
+ CONFIG_EXT3_FS=y
+ CONFIG_FUSE_FS=y
+ CONFIG_VFAT_FS=y
+-CONFIG_TMPFS=y
+ CONFIG_JFFS2_FS=y
+ CONFIG_NFS_FS=y
+ CONFIG_NFS_V3_ACL=y
+-- 
+2.23.0
 
-Regards,
-Bjorn
-
->    * "qcom,dsi-phy-28nm-lp"
->    * "qcom,dsi-phy-20nm"
->    * "qcom,dsi-phy-28nm-8960"
-> -- 
-> 2.21.0
-> 
