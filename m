@@ -2,169 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C5EACEE64B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 18:41:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C7F4EE6A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 18:52:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727469AbfKDRlf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Nov 2019 12:41:35 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:46726 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728392AbfKDRlf (ORCPT
+        id S1727998AbfKDRwM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Nov 2019 12:52:12 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:43322 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727469AbfKDRwM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Nov 2019 12:41:35 -0500
-Received: by mail-pg1-f194.google.com with SMTP id f19so11760787pgn.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2019 09:41:34 -0800 (PST)
+        Mon, 4 Nov 2019 12:52:12 -0500
+Received: by mail-pl1-f194.google.com with SMTP id a18so6771856plm.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2019 09:52:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=lPIDgQKTrSezXBvWSPccLapRG8yo6gcHIljKbjtAJu0=;
-        b=CUu1FmB3LjsCLSEP705SvIqj35uHr2X5ys8TEcTirMe4Xm0h+XWqfzbWLbA/hhtDBw
-         eBlTxyj2xuSt7s0M3YUzkirkkX9V7uBiKPkWbfNsrubIH3WrdU/9DABtq8wDPUrFQXkG
-         7ibo3Z1mBB3nyR9Q4tDPS0IrWjhg5zGf+d0yp+PbZyYuez8PqSX81RKDIMG4OY6FkQ0/
-         ml3xQhwX4iBRmcnHBGtOrWcysVepLJo7C8TxzAl3LFclFOH9MxW3uoDksButKbroYTKP
-         DO6Mo6b1c/qIjgpNcBQx7oTHpiAiZXJf6ppiFLI8Bm25SiQMVIEKLEQE+58JBZg+pY2/
-         YEjw==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:from:subject:to:user-agent:date;
+        bh=3CHrSHD37ZopVTCrhzgKR9E8ooKOmK/8OxMVDS6vwuI=;
+        b=aLtOeSffc2ESdeStgh0gvZWVGC4SVaxngt6L3IAywqqZTvFkn+X676dv17c4L6eGba
+         SnLWjpu0qWDl8sFS8//6SiqVNR9FxZ1NRQCXVSYm1+GH1eGC3imZpqxJJVpp1zDsB/n0
+         qT2qm86muT+AU+DwWe6nV0XwIj9ZbPbZlOtyI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lPIDgQKTrSezXBvWSPccLapRG8yo6gcHIljKbjtAJu0=;
-        b=Ng1eTHPFhfi91LCUQsvT1/FRN93gfTEZzWtJAeAM58rzDPBN1uz4QnBsq3YUXdx4qn
-         /U467Hzwk0cjeGnQbRl21JdkHl9+JF7tChT9e3PzI058HRZTrr60pWehPBxssqvGXxig
-         kWg6xjG/hp7NFQ4WPYTCkMQEG1lYszIS8SHG6Cp7BfG9P49+yjh/CzLH0QZVThwA5BoE
-         5TTCzwr9VqvuA4tzoKxIE/RZV+Dp+jMFQq1PnZBf1q24ZWVvo4zaxQKTegcKvVizlJ41
-         KKUi045qTm6acfwYvXf/W69lx94jcPDIYZMnQn0ZI27JU92mb+YTCcQ87VuRSVD8lYdi
-         Qr0A==
-X-Gm-Message-State: APjAAAWCWVd/f0yQtCQzCDf06RpQ6Ff1mOggHn2VSqCG5hrMGQOuS+e5
-        SftBfWsCtkeq40gzvmVA9SLT2w==
-X-Google-Smtp-Source: APXvYqzzZ+dkZOr3JoygRmb96xE/xUJESRhqGzvY+WG7dsAngzbq/NLr5tF1PTBC6l38feevSQDYnQ==
-X-Received: by 2002:a63:b62:: with SMTP id a34mr11473288pgl.123.1572889293842;
-        Mon, 04 Nov 2019 09:41:33 -0800 (PST)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id v14sm11345300pfm.51.2019.11.04.09.41.32
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:from:subject:to
+         :user-agent:date;
+        bh=3CHrSHD37ZopVTCrhzgKR9E8ooKOmK/8OxMVDS6vwuI=;
+        b=n4QV+zcGGhZQRX6wpDJfsTKLkinF29qkWSLaGDJKWybT0OcIPsfZRmdGhDTalFRTSJ
+         3NXc2JCA5iB6j6xPX8OYs/0zR8rQSOKZKkHrrT4AHmwGJI3lZkpSpIHlHbiDwM1Eneyr
+         45n4064BwDIhrcP3uAPQNsLrUoGkh9oahdRMIeKJJjm2+e8qoXbpJDLq0D5+iwlU4iXl
+         7K0X2ypUP5gILJjNNsOKAxD+ZKgXN3cPt85mFEgNt9fxaLm4i/ryYS92saMrLSAMdxfd
+         sIOULPLjTqo0/ymbxn81An04YiONTBHmbGbln7odzHze2CLHiyNwQ9+ToX4ccMu/NfQp
+         zj5g==
+X-Gm-Message-State: APjAAAUHhYViL4aLDdPRWMIibOdmmy0rbIH67KWU19OS7+STzBTA3olh
+        zAjEww190cWUQWX4XHhT1rfbcQ==
+X-Google-Smtp-Source: APXvYqxrYy0bhV9BstiDpY6WoRWDrnAIP8w3jFR5/bWWHdykonSQNVFdZDTiO5WNLjo1Bbf3S55xnw==
+X-Received: by 2002:a17:902:16b:: with SMTP id 98mr28484214plb.154.1572889931654;
+        Mon, 04 Nov 2019 09:52:11 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id f2sm14089155pfg.48.2019.11.04.09.52.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2019 09:41:33 -0800 (PST)
-Date:   Mon, 4 Nov 2019 09:41:30 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Will Deacon <will@kernel.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCHv7 0/3] QCOM smmu-500 wait-for-safe handling for sdm845
-Message-ID: <20191104174130.GA586@tuxbook-pro>
-References: <cover.1568966170.git.saiprakash.ranjan@codeaurora.org>
- <20191101163136.GC3603@willie-the-truck>
- <af7e9a14ae7512665f0cae32e08c8b06@codeaurora.org>
- <20191101172508.GB3983@willie-the-truck>
- <119d4bcf5989d1aa0686fd674c6a3370@codeaurora.org>
- <20191104051925.GC5299@hector.lan>
- <20191104151506.GB24909@willie-the-truck>
- <20191104162339.GD24909@willie-the-truck>
+        Mon, 04 Nov 2019 09:52:11 -0800 (PST)
+Message-ID: <5dc0654b.1c69fb81.5f215.8c24@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191104162339.GD24909@willie-the-truck>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1572591543-15501-1-git-send-email-kgunda@codeaurora.org>
+References: <1572591543-15501-1-git-send-email-kgunda@codeaurora.org>
+Cc:     Kiran Gunda <kgunda@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH V1] mfd: qcom-spmi-pmic: Add support for pm6150 and pm6150l
+To:     Andy Gross <agross@kernel.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, rnayak@codeaurora.org
+User-Agent: alot/0.8.1
+Date:   Mon, 04 Nov 2019 09:52:10 -0800
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 04 Nov 08:23 PST 2019, Will Deacon wrote:
-
-> On Mon, Nov 04, 2019 at 03:15:06PM +0000, Will Deacon wrote:
-> > On Sun, Nov 03, 2019 at 11:19:25PM -0600, Andy Gross wrote:
-> > > On Fri, Nov 01, 2019 at 11:01:59PM +0530, Sai Prakash Ranjan wrote:
-> > > > >>> What's the plan for getting this merged? I'm not happy taking the
-> > > > >>> firmware
-> > > > >>> bits without Andy's ack, but I also think the SMMU changes should go via
-> > > > >>> the IOMMU tree to avoid conflicts.
-> > > > >>>
-> > > > >>> Andy?
-> > > > >>>
-> > > > >>
-> > > > >>Bjorn maintains QCOM stuff now if I am not wrong and he has already
-> > > > >>reviewed
-> > > > >>the firmware bits. So I'm hoping you could take all these through IOMMU
-> > > > >>tree.
-> > > > >
-> > > > >Oh, I didn't realise that. Is there a MAINTAINERS update someplace? If I
-> > > > >run:
-> > > > >
-> > > > >$ ./scripts/get_maintainer.pl -f drivers/firmware/qcom_scm-64.c
-> > > > >
-> > > > >in linux-next, I get:
-> > > > >
-> > > > >Andy Gross <agross@kernel.org> (maintainer:ARM/QUALCOMM SUPPORT)
-> > > > >linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT)
-> > > > >linux-kernel@vger.kernel.org (open list)
-> > > > >
-> > > > 
-> > > > It hasn't been updated yet then. I will leave it to Bjorn or Andy to comment
-> > > > on this.
-> > > 
-> > > The rumors of my demise have been greatly exaggerated.  All kidding aside, I
-> > > ack'ed both.  Bjorn will indeed be coming on as a co-maintener at some point.
-> > > He has already done a lot of yeomans work in helping me out the past 3 months.
-> > 
-> > Cheers Andy, and I'm pleased to hear that you're still with us! I've queued
-> > this lot for 5.5 and I'll send to Joerg this week.
-> 
-> Bah, in doing so I spotted that the existing code doesn't handle error codes
-> properly because 'a0' is unsigned. I'll queue the patch below at the start
-> of the series.
-> 
-
-Thanks, I've hit this a few times but missed this and assumed it was a
-firmware issue...
-
-In case you haven't published your branch:
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
-> Will
-> 
-> --->8
-> 
-> From a9a1047f08de0eff249fb65e2d5d6f6f8b2a87f0 Mon Sep 17 00:00:00 2001
-> From: Will Deacon <will@kernel.org>
-> Date: Mon, 4 Nov 2019 15:58:15 +0000
-> Subject: [PATCH] firmware: qcom: scm: Ensure 'a0' status code is treated as
->  signed
-> 
-> The 'a0' member of 'struct arm_smccc_res' is declared as 'unsigned long',
-> however the Qualcomm SCM firmware interface driver expects to receive
-> negative error codes via this field, so ensure that it's cast to 'long'
-> before comparing to see if it is less than 0.
-> 
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Will Deacon <will@kernel.org>
+Quoting Kiran Gunda (2019-10-31 23:59:03)
+> Add the compatibles and PMIC ids for pm6150 and pm6150l PMICs
+> found on SC7180 based platforms.
+>=20
+> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
 > ---
->  drivers/firmware/qcom_scm-64.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/firmware/qcom_scm-64.c b/drivers/firmware/qcom_scm-64.c
-> index 91d5ad7cf58b..25e0f60c759a 100644
-> --- a/drivers/firmware/qcom_scm-64.c
-> +++ b/drivers/firmware/qcom_scm-64.c
-> @@ -150,7 +150,7 @@ static int qcom_scm_call(struct device *dev, u32 svc_id, u32 cmd_id,
->  		kfree(args_virt);
->  	}
->  
-> -	if (res->a0 < 0)
-> +	if ((long)res->a0 < 0)
->  		return qcom_scm_remap_error(res->a0);
->  
->  	return 0;
-> -- 
-> 2.24.0.rc1.363.gb1bccd3e3d-goog
-> 
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt | 2 ++
+>  drivers/mfd/qcom-spmi-pmic.c                             | 4 ++++
+>  2 files changed, 6 insertions(+)
+>=20
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt b/D=
+ocumentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> index 1437062..b5fc64e 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> @@ -32,6 +32,8 @@ Required properties:
+>                     "qcom,pm8998",
+>                     "qcom,pmi8998",
+>                     "qcom,pm8005",
+> +                  "qcom,pm6150",
+> +                  "qcom,pm6150l",
+
+Please sort on compatible string
+
+>                     or generalized "qcom,spmi-pmic".
+>  - reg:             Specifies the SPMI USID slave address for this device.
+>                     For more information see:
+> diff --git a/drivers/mfd/qcom-spmi-pmic.c b/drivers/mfd/qcom-spmi-pmic.c
+> index e8fe705..d916aa8 100644
+> --- a/drivers/mfd/qcom-spmi-pmic.c
+> +++ b/drivers/mfd/qcom-spmi-pmic.c
+> @@ -34,6 +34,8 @@
+>  #define PM8998_SUBTYPE         0x14
+>  #define PMI8998_SUBTYPE                0x15
+>  #define PM8005_SUBTYPE         0x18
+> +#define PM6150L_SUBTYPE                0x27
+> +#define PM6150_SUBTYPE         0x28
+
+And on macro name here.
+
+> =20
+>  static const struct of_device_id pmic_spmi_id_table[] =3D {
+>         { .compatible =3D "qcom,spmi-pmic", .data =3D (void *)COMMON_SUBT=
+YPE },
+> @@ -53,6 +55,8 @@
+>         { .compatible =3D "qcom,pm8998",    .data =3D (void *)PM8998_SUBT=
+YPE },
+>         { .compatible =3D "qcom,pmi8998",   .data =3D (void *)PMI8998_SUB=
+TYPE },
+>         { .compatible =3D "qcom,pm8005",    .data =3D (void *)PM8005_SUBT=
+YPE },
+> +       { .compatible =3D "qcom,pm6150l",   .data =3D (void *)PM6150L_SUB=
+TYPE },
+> +       { .compatible =3D "qcom,pm6150",    .data =3D (void *)PM6150_SUBT=
+YPE },
+
+And compatible here.
+
+>         { }
