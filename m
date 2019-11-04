@@ -2,107 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4113AED8E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 07:15:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB2EDED8E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 07:17:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728200AbfKDGPh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Nov 2019 01:15:37 -0500
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:44591 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728114AbfKDGPg (ORCPT
+        id S1728054AbfKDGR0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Nov 2019 01:17:26 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:41384 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726248AbfKDGRZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Nov 2019 01:15:36 -0500
-Received: by mail-ua1-f65.google.com with SMTP id r22so2033074uam.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Nov 2019 22:15:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9yIKhMPMljW03rsGEF8LljWFKxCpgqs32gHznOzRrkU=;
-        b=a5QoL30HvSEZynCl/a1K6RSYVfhOX/6DM8wEnJNPYl1VWwe6nSWllO8JV7myjdbRQh
-         t62rimg+Byea+5mVZX5GD6S/F9W/Y2Or8fhRGZm3AlG2qnfj8NCUmImGAQ7DMv8osiQw
-         EmdxwKKoChB0+/iRdGQJhWzt4ZWTiSTiswywGX8X5pIxsOf+Kib6d6vghyZxugVK8558
-         XKeFOz7xJH9hBzDGiPeaZOuwxfKO6EEOtuv9J044cs+U74fF7fLqm8DP0Hmo5Hnnb7Ei
-         r5bW4eXGuf2lmI7ZBPTTOT2pNPzzPpxL4uw1GHGjA11VzU4JsmwCPfe6MI1tUEYNFcj2
-         vJAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9yIKhMPMljW03rsGEF8LljWFKxCpgqs32gHznOzRrkU=;
-        b=eDUkl6FulGA8ikxh/3HL3AvNJh17NP+LX4sCx+Vj+GiZSVpRO/TJXlgtmssr0oWo7s
-         G5L6iBRmcAOM/p90xvuBDdIVjZ+ImSP1E51vQ46H8qM6pjO/D4spqYF5UIcCxHBaSFMR
-         3Sqwpi5dn5czk2rSoXKla5U/u2MBFWvkR0tzXK+JayofiwexMDoeDNwAk2egSK2XG/ey
-         x8dN+AwIs+J5HhgGJi5Adf/PdPEk+BMYI2sVValtpZ6GEiLKy/+utz0MFZ0Yjv8LbsqS
-         FHYqEJ48oXPtXfmf02hdrxZEu5ZPVSz42NEClgItD/GLJGrDAQKVi1G/tZGxQyCnRRIc
-         ThDg==
-X-Gm-Message-State: APjAAAV5Dbig8HWJt8tvQQqOXnWZpK47m86SIeevOpGoxrbLGDP+tYrG
-        zmHC94L8NUMTKQ45On7vdpEtSUwkQjOgIYSEB0znbQ==
-X-Google-Smtp-Source: APXvYqyYHUY+82qcl4WGZkgldt09N+9qQ36Lo/k74j/vgi+PP8mh49yZ4P0PxZK+XtAddRrpT8QrZOnayNJQbpG8XpU=
-X-Received: by 2002:ab0:1405:: with SMTP id b5mr11166275uae.94.1572848134047;
- Sun, 03 Nov 2019 22:15:34 -0800 (PST)
+        Mon, 4 Nov 2019 01:17:25 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id C70DE60DCE; Mon,  4 Nov 2019 06:17:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1572848244;
+        bh=nGrTxIqNo057qIr0/Dgtiow7HzH0OaO5i5mAeGl6iV4=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=CjrcS9ZVL78WLE79DgT6nyHcTGy5sle5OV7cgjDKyvYpoGzD+qNiwzj17aZbzKdTE
+         6KVpkqTZMqn+XvU2ERq7fbElb7xLJYkXpAtdsGPw0+dyvhMp3J+Zq76NxZc4Lgrdla
+         Lun7PUlOY+8yf2HCHvKFF3BQRjG8gwigpnNrDlkM=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.79.136.17] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4FE8260DA6;
+        Mon,  4 Nov 2019 06:17:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1572848244;
+        bh=nGrTxIqNo057qIr0/Dgtiow7HzH0OaO5i5mAeGl6iV4=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=CjrcS9ZVL78WLE79DgT6nyHcTGy5sle5OV7cgjDKyvYpoGzD+qNiwzj17aZbzKdTE
+         6KVpkqTZMqn+XvU2ERq7fbElb7xLJYkXpAtdsGPw0+dyvhMp3J+Zq76NxZc4Lgrdla
+         Lun7PUlOY+8yf2HCHvKFF3BQRjG8gwigpnNrDlkM=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4FE8260DA6
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH v3 11/11] arm64: dts: qcom: sc7180: Add pdc interrupt
+ controller
+To:     Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Maulik Shah <mkshah@codeaurora.org>
+References: <20191023090219.15603-1-rnayak@codeaurora.org>
+ <20191023090219.15603-12-rnayak@codeaurora.org>
+ <5db86de0.1c69fb81.9e27d.0f47@mx.google.com>
+ <20191030195021.GC27773@google.com>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <6610d7fe-5a4d-5a43-5c4f-9ae61e7e53ee@codeaurora.org>
+Date:   Mon, 4 Nov 2019 11:47:19 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-References: <20191101100035.25502-1-colin.king@canonical.com>
-In-Reply-To: <20191101100035.25502-1-colin.king@canonical.com>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Mon, 4 Nov 2019 11:45:22 +0530
-Message-ID: <CAHLCerPX5WPvVRxfgAQyAguomBaEsCyncJUuOafkY2cMjQmsaQ@mail.gmail.com>
-Subject: Re: [PATCH][next][V2] drivers: thermal: tsens: fix potential integer
- overflow on multiply
-To:     Colin King <colin.king@canonical.com>
-Cc:     Andy Gross <agross@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        kernel-janitors@vger.kernel.org,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20191030195021.GC27773@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 1, 2019 at 3:30 PM Colin King <colin.king@canonical.com> wrote:
->
-> From: Colin Ian King <colin.king@canonical.com>
->
-> Currently a multiply operation is being performed on two int values
-> and the result is being assigned to a u64, presumably because the
-> end result is expected to be probably larger than an int. However,
-> because the multiply is an int multiply one can get overflow. Avoid
-> the overflow by casting degc to a u64 to force a u64 multiply.
->
-> Also use div_u64 for the divide as suggested by Daniel Lezcano.
->
-> Addresses-Coverity: ("Unintentional integer overflow")
-> Fixes: fbfe1a042cfd ("drivers: thermal: tsens: Add interrupt support")
-> Signed-off-by: Colin Ian King <colin.king@canonical.com>
 
-Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
 
-> ---
->
-> V2: use div_u64 for the divide as suggested by Daniel Lezcano.
->
-> ---
->  drivers/thermal/qcom/tsens-common.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
-> index 03bf1b8133ea..c6b551ec7323 100644
-> --- a/drivers/thermal/qcom/tsens-common.c
-> +++ b/drivers/thermal/qcom/tsens-common.c
-> @@ -92,7 +92,7 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
->
->  static inline u32 degc_to_code(int degc, const struct tsens_sensor *s)
->  {
-> -       u64 code = (degc * s->slope + s->offset) / SLOPE_FACTOR;
-> +       u64 code = div_u64(((u64)degc * s->slope + s->offset), SLOPE_FACTOR);
->
->         pr_debug("%s: raw_code: 0x%llx, degc:%d\n", __func__, code, degc);
->         return clamp_val(code, THRESHOLD_MIN_ADC_CODE, THRESHOLD_MAX_ADC_CODE);
-> --
-> 2.20.1
->
+On 10/31/2019 1:20 AM, Matthias Kaehlcke wrote:
+> On Tue, Oct 29, 2019 at 09:50:40AM -0700, Stephen Boyd wrote:
+>> Quoting Rajendra Nayak (2019-10-23 02:02:19)
+>>> From: Maulik Shah <mkshah@codeaurora.org>
+>>>
+>>> Add pdc interrupt controller for sc7180
+>>>
+>>> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+>>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+>>> ---
+>>> v3:
+>>> Used the qcom,sdm845-pdc compatible for pdc node
+>>
+>> Everything else isn't doing the weird old compatible thing. Why not just
+>> add the new compatible and update the driver? I guess I'll have to go
+>> read the history.
+> 
+> Marc Zyngier complained  on v2 about the churn from adding compatible
+> strings for identical components, and I kinda see his point.
+> 
+> I agree that using the 'sdm845' compatible string for sc7180 is odd too.
+> Maybe we should introduce SoC independent compatible strings for IP blocks
+> that are shared across multiple SoCs? If differentiation is needed SoC
+> specific strings can be added.
+
+Sure, I will perhaps add a qcom,pdc SoC independent compatible to avoid
+confusion.
+
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
