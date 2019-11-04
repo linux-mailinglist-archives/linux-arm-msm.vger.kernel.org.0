@@ -2,152 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D3881ED9CD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 08:10:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B0FCCEDB6A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 10:16:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726891AbfKDHKc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Nov 2019 02:10:32 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:44300 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726248AbfKDHKb (ORCPT
+        id S1728223AbfKDJQH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Nov 2019 04:16:07 -0500
+Received: from jabberwock.ucw.cz ([46.255.230.98]:33894 "EHLO
+        jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728121AbfKDJQH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Nov 2019 02:10:31 -0500
-Received: by mail-pg1-f195.google.com with SMTP id f19so1563173pgk.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Nov 2019 23:10:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=t4TV25A1uMzOUpxnPE9T6D69bjxp+CQFn1rWNaSp17E=;
-        b=rvIq103d5QvkQPhePPHFLq0nK/ACbSKZY7eteyZPRm6ZQLdn2P9/L9r/QTnrN6rUNP
-         jm/ua7SGVaxRhSR5Nl9cOL5W9VLF8VkSl68eghceC1CCxqeyfDFNFUNDf85yimIPPvY0
-         o1yfdXK5tO1vLx1FxzcPkmng+u9IkRYuIwq5EzIIzZ68U8SNrPlIZsU7d0qY1AO6zsuI
-         pS1eCuVH8jlep136XfWsjFnO9FVNrx6OLJT5MeeAZHVVLtbzerSB2XgwPwUxJ+miWDfv
-         02MGnva9fIZ+K8PsBCyhgUeisAMN55iFNb1AzWrJ037fxdbVJklLbH3Lgnji2xW2YZRp
-         2V9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=t4TV25A1uMzOUpxnPE9T6D69bjxp+CQFn1rWNaSp17E=;
-        b=Xr2yEOBEi73KmHm6uaUGzyxOlSt70EMbXlBtPUVjf/hoPDr3Z2YVnpflNTOWInrcjf
-         Z5asbnO9df5oi+Wyz8wIl09MLFGTAm/mha6bgt6mFfoyWMh8/G6ErKITIds0BkYT3Brt
-         gTlGgwK9GEKusP5y1nBhPQrFH+dxcQZshmTLfOawMpqp/Vl5aJcAKSkARQWnkLEI3oh2
-         Rb/hea//I93KMZaiegikPVsVmHPJ0RQwCXtrura/TFvYTGxkeAk4WBEtCkcoUaYBIWp1
-         lmMrmG3XfoVx90jW7PZHyPHoXCT1tp6QRwRaT/I/FTC2//QZZAFw31UUe035vEvLM4BW
-         uEuw==
-X-Gm-Message-State: APjAAAUa3snVkSHY+FZPUpmgBNiPUUsRrUiaUWRBJDtt5LxVyD1jWpIy
-        a8sEHx42oXeqQdoAYY4qt2CVtw==
-X-Google-Smtp-Source: APXvYqxHOP7JBpbRrN/9vm7qE7CKnT+oDstfysttIvzcmp2Ai7mrtOlTLr+klYFNg71UF1Ve/+0Xhg==
-X-Received: by 2002:a63:b62:: with SMTP id a34mr8305598pgl.123.1572851430833;
-        Sun, 03 Nov 2019 23:10:30 -0800 (PST)
-Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id l11sm16775340pgr.77.2019.11.03.23.10.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Nov 2019 23:10:30 -0800 (PST)
-Date:   Sun, 3 Nov 2019 23:10:27 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        Mon, 4 Nov 2019 04:16:07 -0500
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+        id 94D8D1C06CD; Mon,  4 Nov 2019 10:09:36 +0100 (CET)
+Date:   Mon, 4 Nov 2019 10:09:36 +0100
+From:   Pavel Machek <pavel@ucw.cz>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     Kiran Gunda <kgunda@codeaurora.org>, bjorn.andersson@linaro.org,
+        jingoohan1@gmail.com, b.zolnierkie@samsung.com,
+        dri-devel@lists.freedesktop.org, daniel.thompson@linaro.org,
+        jacek.anaszewski@gmail.com, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-leds@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: Re: [PATCH v3 11/11] arm64: dts: qcom: sc7180: Add pdc interrupt
- controller
-Message-ID: <20191104071027.GD585@tuxbook-pro>
-References: <20191023090219.15603-1-rnayak@codeaurora.org>
- <20191023090219.15603-12-rnayak@codeaurora.org>
- <5db86de0.1c69fb81.9e27d.0f47@mx.google.com>
- <20191030195021.GC27773@google.com>
- <6610d7fe-5a4d-5a43-5c4f-9ae61e7e53ee@codeaurora.org>
- <20191104063348.GA2464@tuxbook-pro>
- <c214110f-7620-8771-ef83-8a4fb1f8724f@codeaurora.org>
+        Dan Murphy <dmurphy@ti.com>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH V6 2/8] backlight: qcom-wled: restructure the qcom-wled
+ bindings
+Message-ID: <20191104090936.GF12355@duo.ucw.cz>
+References: <1569825553-26039-1-git-send-email-kgunda@codeaurora.org>
+ <1569825553-26039-3-git-send-email-kgunda@codeaurora.org>
+ <20191013121045.GN5653@amd>
+ <20191014063553.GA4545@dell>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="rMWmSaSbD7nr+du9"
 Content-Disposition: inline
-In-Reply-To: <c214110f-7620-8771-ef83-8a4fb1f8724f@codeaurora.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20191014063553.GA4545@dell>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 03 Nov 22:56 PST 2019, Rajendra Nayak wrote:
 
-> 
-> 
-> On 11/4/2019 12:03 PM, Bjorn Andersson wrote:
-> > On Sun 03 Nov 22:17 PST 2019, Rajendra Nayak wrote:
-> > 
-> > > 
-> > > 
-> > > On 10/31/2019 1:20 AM, Matthias Kaehlcke wrote:
-> > > > On Tue, Oct 29, 2019 at 09:50:40AM -0700, Stephen Boyd wrote:
-> > > > > Quoting Rajendra Nayak (2019-10-23 02:02:19)
-> > > > > > From: Maulik Shah <mkshah@codeaurora.org>
-> > > > > > 
-> > > > > > Add pdc interrupt controller for sc7180
-> > > > > > 
-> > > > > > Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> > > > > > Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> > > > > > ---
-> > > > > > v3:
-> > > > > > Used the qcom,sdm845-pdc compatible for pdc node
-> > > > > 
-> > > > > Everything else isn't doing the weird old compatible thing. Why not just
-> > > > > add the new compatible and update the driver? I guess I'll have to go
-> > > > > read the history.
-> > > > 
-> > > > Marc Zyngier complained  on v2 about the churn from adding compatible
-> > > > strings for identical components, and I kinda see his point.
-> > > > 
-> > > > I agree that using the 'sdm845' compatible string for sc7180 is odd too.
-> > > > Maybe we should introduce SoC independent compatible strings for IP blocks
-> > > > that are shared across multiple SoCs? If differentiation is needed SoC
-> > > > specific strings can be added.
-> > > 
-> > > Sure, I will perhaps add a qcom,pdc SoC independent compatible to avoid
-> > > confusion.
-> > > 
-> > 
-> > I agree,
-> > 
-> > compatible = "qcom,sc7180-pdc", "qcom,pdc";
-> > 
-> > is the way to go.
-> 
-> I wasn't planning on adding a qcom,sc7180-pdc, but instead just use the
-> qcom,pdc one for sc7180.
-> 
-> > 
-> > Reusing qcom,sdm845-pdc would prevent us from tackling any unforeseen
-> > issues/variations/erratas with one or the other platform in the future.
-> 
-> That was the intention of adding qcom,sc7180-pdc in the first place,
-> but Marc Zyngier was not happy with the churn, given there aren't really
-> any variations or erratas that we know of.
-> 
+--rMWmSaSbD7nr+du9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Right, but by putting both compatibles in the dts and the generic one in
-the driver we avoid the driver churn and we're future compatible.
+Hi!
 
-And given that we haven't yet added the qcom,sdm845-pdc node to the
-sdm845.dtsi we don't need to maintain the qcom,sdm845-pdc in the driver.
-So switch qcom,sdm845-pdc to qcom,pdc in qcom-pdc.c.
+> If you're going to apply them, you need to send out an immutable
+> branch for me to pull from.
 
-Regards,
-Bjorn
+Aha, its backlight, not LED. I really should not be taking
+those. Sorry for the noise, I dropped them from my tree.
 
-> > 
-> > Regards,
-> > Bjorn
-> > 
-> > > 
-> > > -- 
-> > > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> > > of Code Aurora Forum, hosted by The Linux Foundation
-> 
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
+Best regards,
+									Pavel
+--=20
+(english) http://www.livejournal.com/~pavelmachek
+(cesky, pictures) http://atrey.karlin.mff.cuni.cz/~pavel/picture/horses/blo=
+g.html
+
+--rMWmSaSbD7nr+du9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCXb/q0AAKCRAw5/Bqldv6
+8l1BAJ0bmVIcrnqsr2KzWzQTahM9WLj1hQCggLSSYOsNGZ9BiVClLoA4Mc1XKgU=
+=rRKG
+-----END PGP SIGNATURE-----
+
+--rMWmSaSbD7nr+du9--
