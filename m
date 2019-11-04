@@ -2,75 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 96272EDBA7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 10:28:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD163EDBC9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Nov 2019 10:41:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727788AbfKDJ2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Nov 2019 04:28:02 -0500
-Received: from mail.kernel.org ([198.145.29.99]:40436 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727419AbfKDJ2C (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Nov 2019 04:28:02 -0500
-Received: from localhost (unknown [106.201.55.174])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A0E53222D2;
-        Mon,  4 Nov 2019 09:28:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1572859681;
-        bh=mjpf4qHX+4LtFI3DUZH/vqduTv06o3J1bBEcBr2Htpk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SqRgqM0MKkPCfeT+cjF0A3wpLlpzSvc/pOu/qJdk2In5nKHVkXPDjHShTOEyWE1Jq
-         89bVncd30CMe29c0gCKbZme5E7O21d+RLPyUXABub9M73gMta8P4HmRwvy2MMyZnEa
-         YpEkGZ44myT4Mplb0nMyq1HRPhZmOXhh3dsRs1jY=
-Date:   Mon, 4 Nov 2019 14:57:57 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        id S1727444AbfKDJlb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Nov 2019 04:41:31 -0500
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:48277 "EHLO
+        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726364AbfKDJlb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 4 Nov 2019 04:41:31 -0500
+Received: from lupine.hi.pengutronix.de ([2001:67c:670:100:3ad5:47ff:feaf:1a17] helo=lupine)
+        by metis.ext.pengutronix.de with esmtp (Exim 4.92)
+        (envelope-from <p.zabel@pengutronix.de>)
+        id 1iRYrU-0001Jf-Ra; Mon, 04 Nov 2019 10:41:24 +0100
+Message-ID: <776ec4265217cc83e9e847ff3c80a52a86390b1b.camel@pengutronix.de>
+Subject: Re: [PATCH v2 2/2] PCI: qcom: Add support for SDM845 PCIe controller
+From:   Philipp Zabel <p.zabel@pengutronix.de>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <andrew.murray@arm.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/11] arm64: dts: qcom: msm8996: Introduce IFC6640
-Message-ID: <20191104092757.GT2695@vkoul-mobl.Dlink>
-References: <20191021051322.297560-1-bjorn.andersson@linaro.org>
- <20191103081311.GM2695@vkoul-mobl.Dlink>
- <20191104045507.GA28034@tuxbook-pro>
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Mon, 04 Nov 2019 10:41:23 +0100
+In-Reply-To: <20191102002721.4091180-3-bjorn.andersson@linaro.org>
+References: <20191102002721.4091180-1-bjorn.andersson@linaro.org>
+         <20191102002721.4091180-3-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.30.5-1.1 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191104045507.GA28034@tuxbook-pro>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2001:67c:670:100:3ad5:47ff:feaf:1a17
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03-11-19, 20:55, Bjorn Andersson wrote:
-> On Sun 03 Nov 01:13 PDT 2019, Vinod Koul wrote:
+Hi Bjorn,
+
+On Fri, 2019-11-01 at 17:27 -0700, Bjorn Andersson wrote:
+> The SDM845 has one Gen2 and one Gen3 controller, add support for these.
 > 
-> > On 20-10-19, 22:13, Bjorn Andersson wrote:
-> > > Refactor msm8996 and db820c in order to make it follow the structure of newer
-> > > platforms, move db820c specific things to db820c.dtsi and then introduce the
-> > > Informace 6640 Single Board Computer.
-> > 
-> > This has patch 9/11 missing. But rest look good to me.
-> > 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
 > 
-> That's really odd, I copy pasted the recipients into all the patches.
-> But I'm unable to find it under linux-arm-msm on lore as well.
-
-Yup I can see it there but not on arm-msm. Do you use @linaro smtp to
-send. Gmail is known to drop emails to lists on  vger..
-I use @kernel.org one, havent seen issues on that yet
-
-> It's under LKML though, can you please have a look and let me know if I
-> can extend your ack to patch 9/11 as well?
+> Changes since v1:
+> - Style changes requested by Stan
+> - Tested with second PCIe controller as well
 > 
-> https://lore.kernel.org/lkml/20191021051322.297560-10-bjorn.andersson@linaro.org/
+>  drivers/pci/controller/dwc/pcie-qcom.c | 152 +++++++++++++++++++++++++
+>  1 file changed, 152 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 7e581748ee9f..35f4980480bb 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -54,6 +54,7 @@
+[...]
+> +static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+> +{
+> +	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+> +	struct dw_pcie *pci = pcie->pci;
+> +	struct device *dev = pci->dev;
+> +	u32 val;
+> +	int ret;
+> +
+> +	ret = regulator_bulk_enable(ARRAY_SIZE(res->supplies), res->supplies);
+> +	if (ret < 0) {
+> +		dev_err(dev, "cannot enable regulators\n");
+> +		return ret;
+> +	}
+> +
+> +	ret = clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
+> +	if (ret < 0)
+> +		goto err_disable_regulators;
+> +
+> +	ret = reset_control_assert(res->pci_reset);
+> +	if (ret < 0) {
+> +		dev_err(dev, "cannot deassert pci reset\n");
+> +		goto err_disable_clocks;
+> +	}
 
-Mostly looks good but the reserve memory doesnt seem sorted by node
-(please recheck) and rest looks good so you can add it to that patch as
-well :)
+If for any of the above fails, the reset line is left in its default
+state, presumably unasserted. Is there a reason to assert and keep it
+asserted if enabling the clocks fails below?
 
--- 
-~Vinod
+> +	msleep(20);
+> +
+> +	ret = reset_control_deassert(res->pci_reset);
+> +	if (ret < 0) {
+> +		dev_err(dev, "cannot deassert pci reset\n");
+> +		goto err_assert_resets;
+
+Nitpick: this seems superfluous since the reset line was just asserted
+20 ms before. Maybe just:
+
+		goto err_disable_clocks;
+
+> +	}
+> +
+> +	ret = clk_prepare_enable(res->pipe_clk);
+> +	if (ret) {
+> +		dev_err(dev, "cannot prepare/enable pipe clock\n");
+> +		goto err_assert_resets;
+> +	}
+> +
+> +	/* configure PCIe to RC mode */
+> +	writel(DEVICE_TYPE_RC, pcie->parf + PCIE20_PARF_DEVICE_TYPE);
+> +
+> +	/* enable PCIe clocks and resets */
+> +	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
+> +	val &= ~BIT(0);
+> +	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
+> +
+> +	/* change DBI base address */
+> +	writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
+> +
+> +	/* MAC PHY_POWERDOWN MUX DISABLE  */
+> +	val = readl(pcie->parf + PCIE20_PARF_SYS_CTRL);
+> +	val &= ~BIT(29);
+> +	writel(val, pcie->parf + PCIE20_PARF_SYS_CTRL);
+> +
+> +	val = readl(pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
+> +	val |= BIT(4);
+> +	writel(val, pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
+> +
+> +	if (IS_ENABLED(CONFIG_PCI_MSI)) {
+> +		val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
+> +		val |= BIT(31);
+> +		writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
+> +	}
+> +
+> +	return 0;
+> +err_assert_resets:
+> +	reset_control_assert(res->pci_reset);
+
+So maybe this can just be removed. The reset isn't asserted in deinit
+either.
+
+regards
+Philipp
+
