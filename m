@@ -2,91 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 36253EF1DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 01:19:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4709EF207
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 01:34:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387440AbfKEATU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Nov 2019 19:19:20 -0500
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:46655 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387435AbfKEATT (ORCPT
+        id S1729443AbfKEAek (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Nov 2019 19:34:40 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:37400 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729576AbfKEAek (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Nov 2019 19:19:19 -0500
-Received: by mail-ed1-f49.google.com with SMTP id x11so4576734eds.13;
-        Mon, 04 Nov 2019 16:19:18 -0800 (PST)
+        Mon, 4 Nov 2019 19:34:40 -0500
+Received: by mail-pg1-f196.google.com with SMTP id z24so8183437pgu.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2019 16:34:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bPI3xRQSihbuAop68QULfROzLi2EqQlmJiEdDSx7yKE=;
-        b=gXZl+zKzALBpq+fDhPXT21QE8iwzlELC/ZV+jVycXbP2eTy3Uwu9Cl3W7EKqz9kL72
-         YUWbOyXIruonjwN/tA2FbXO4O4iTbnWLeeyj+9/WVfHDaQkkoLOadJFaLuRnHSxQXFaR
-         jLG6VbxTh7Uc5dbQA9qs2YcOtqg1h4fPLHgg+5uAHe+t2WNBW6cyaEzvneiH5mqw+pmp
-         ditee/TqiVtr16jPDzKVLW+eQEFv9i3j1ukyHUKu/w8hW3R9ygtcLrLM1gm9aps7Nbg/
-         Xju7iGRjtuXhln40aqbLE71aZBeZYkQ4+h2IxGaqHYzSUfbpUJieafDv/Tcg7EJcdcRO
-         GKKA==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:subject:from:to:user-agent:date;
+        bh=ssq1+qBeE4bILOYJCaUAQccnlP0dTDy9uKGzohCrZNI=;
+        b=fse+hifIQe9+HhAVismfmdd3dbc+AxDk6h2Czk0Xv9p+AFsp3NSOljWg/6eyC+wVnV
+         JqbMAuXWtjW1iH9BTPZe9sdCW3OmoJ+48j0DdRqw3TVHjd0sTq2ieka06m9nffvEBMXx
+         J/AXJd79/oM6HArb021dRsLKI75kvUlH4MkSw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bPI3xRQSihbuAop68QULfROzLi2EqQlmJiEdDSx7yKE=;
-        b=g/4dMemtYDXax5JeAzhk3L1P62uBNML2hhUX2Nx/x9lsg7ecC0Vsvgkzamwe+L9UFD
-         gdz7Z0c++wDjx9HJMT5Zz2v2sHFflfJPQlXzcllwm4gCEP0fMf5aOcFmuWkY+xYQ9wKn
-         KqFM54mD16mYxH6wqOiHpYwNz1dpoiFRncnJbVraAtlVjDBNhMBSHvW8/KJhX5/PQFsc
-         x3nCF+A6Gb4anR8N4JLJ6O0NWEU+pfbeLWmK8o2Efkqy1YkolrhkxQO9R12VyBPty2ZG
-         FwBXFHN5ZTm9seyI3PzpRci1z3imE/W1TBRsctiy7HufYv/8UP/4ai6gtk4Tz2vsx6MW
-         xv2A==
-X-Gm-Message-State: APjAAAULMwoaieUEK4PMakbPpTI/h5Wp2p85prsna18VG2uHnPN97oHr
-        CPA2R0pXdFJgYap+9a6AwsUaSuVMohxWoDlekbU=
-X-Google-Smtp-Source: APXvYqy0DLKlSOyi6a3ePnMUiv4rqcXhQw7mqHXXcfvNI578kX1CkWDeon4zEoAY8/o1xG3l5IN+7seHEEwOZvA/oFA=
-X-Received: by 2002:a17:906:594f:: with SMTP id g15mr11991768ejr.197.1572913157903;
- Mon, 04 Nov 2019 16:19:17 -0800 (PST)
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:subject:from:to
+         :user-agent:date;
+        bh=ssq1+qBeE4bILOYJCaUAQccnlP0dTDy9uKGzohCrZNI=;
+        b=t30Tj6cWV3u8CksCaTSy0WZfM3XfeheHzBueTj9OOGa01bEFyDtWoxQkApUnHdYETG
+         34xotF35N5b8sDthlXAahcQXkoWYITyqc25JMw8XlmoFl58QcQlFuTcCN6wgNmfD7esg
+         miV/G4a9uvA5sKphtmDu2MqlrXbLpOf8g0flZnpGSZHkXqMR2He5lKmgaxyGk4vKWSlc
+         H3Nhc7TXkgGfvPFOxxEYNiigKkaL5bY6zSMq8H95k6YkNVdCMfb+ZHn3j/JQyb/RT0s5
+         VA+HwCEoDMzIP4aeLo7wbl5wrPm1o6U2rBkg2Ty9dghOQllh5TFmCAlfjQRTSQRkFyHw
+         C/Xg==
+X-Gm-Message-State: APjAAAU2kIig50ZcZrdVFptWU48Nx+WMeFH0Cn+ml/p0/tNiTlYF0vmi
+        gAWhN941S0typOImLpSu6TshMA==
+X-Google-Smtp-Source: APXvYqyONkdssVcF2C2lSrS/XAzYbF22TVGGKOXcep4SCKhu3a9bGsH/qY2pM5E3sIVKM+vGi5lcqQ==
+X-Received: by 2002:a63:ee44:: with SMTP id n4mr15395228pgk.137.1572914079568;
+        Mon, 04 Nov 2019 16:34:39 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id s202sm19212727pfs.24.2019.11.04.16.34.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Nov 2019 16:34:38 -0800 (PST)
+Message-ID: <5dc0c39e.1c69fb81.f12ba.857f@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20191105000129.GA6536@onstation.org>
-In-Reply-To: <20191105000129.GA6536@onstation.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 4 Nov 2019 16:19:07 -0800
-Message-ID: <CAF6AEGv3gs+LFOP3AGthXd4niFb_XYOuwLfEa2G9eb27b1wMMA@mail.gmail.com>
-Subject: Re: [Freedreno] drm/msm: 'pp done time out' errors after async commit changes
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20191104071027.GD585@tuxbook-pro>
+References: <20191023090219.15603-1-rnayak@codeaurora.org> <20191023090219.15603-12-rnayak@codeaurora.org> <5db86de0.1c69fb81.9e27d.0f47@mx.google.com> <20191030195021.GC27773@google.com> <6610d7fe-5a4d-5a43-5c4f-9ae61e7e53ee@codeaurora.org> <20191104063348.GA2464@tuxbook-pro> <c214110f-7620-8771-ef83-8a4fb1f8724f@codeaurora.org> <20191104071027.GD585@tuxbook-pro>
+Cc:     Matthias Kaehlcke <mka@chromium.org>, agross@kernel.org,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: Re: [PATCH v3 11/11] arm64: dts: qcom: sc7180: Add pdc interrupt controller
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+User-Agent: alot/0.8.1
+Date:   Mon, 04 Nov 2019 16:34:37 -0800
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 4, 2019 at 4:01 PM Brian Masney <masneyb@onstation.org> wrote:
->
-> Hey Rob,
->
-> Since commit 2d99ced787e3 ("drm/msm: async commit support"), the frame
-> buffer console on my Nexus 5 began throwing these errors:
->
-> msm fd900000.mdss: pp done time out, lm=0
->
-> The display still works.
->
-> I see that mdp5_flush_commit() was introduced in commit 9f6b65642bd2
-> ("drm/msm: add kms->flush_commit()") with a TODO comment and the commit
-> description mentions flushing registers. I assume that this is the
-> proper fix. If so, can you point me to where these registers are
-> defined and I can work on the mdp5 implementation.
+Quoting Bjorn Andersson (2019-11-03 23:10:27)
+>=20
+> Right, but by putting both compatibles in the dts and the generic one in
+> the driver we avoid the driver churn and we're future compatible.
+>=20
+> And given that we haven't yet added the qcom,sdm845-pdc node to the
+> sdm845.dtsi we don't need to maintain the qcom,sdm845-pdc in the driver.
+> So switch qcom,sdm845-pdc to qcom,pdc in qcom-pdc.c.
+>=20
 
-See mdp5_ctl_commit(), which writes the CTL_FLUSH registers.. the idea
-would be to defer writing CTL_FLUSH[ctl_id] = flush_mask until
-kms->flush() (which happens from a timer shortly before vblank).
+I like this plan!
 
-But I think the async flush case should not come up with fbcon?  It
-was really added to cope with hwcursor updates (and userspace that
-assumes it can do an unlimited # of cursor updates per frame).. the
-intention was that nothing should change in the sequence for mdp5 (but
-I guess that was not the case).
-
-BR,
--R
