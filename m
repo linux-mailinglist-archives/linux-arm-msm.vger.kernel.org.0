@@ -2,155 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D0799F0294
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 17:23:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F023BF0316
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 17:34:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390293AbfKEQXl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Nov 2019 11:23:41 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:35569 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390163AbfKEQXk (ORCPT
+        id S2390177AbfKEQev (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Nov 2019 11:34:51 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:34685 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390153AbfKEQev (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Nov 2019 11:23:40 -0500
-Received: by mail-ed1-f65.google.com with SMTP id r16so1879944edq.2;
-        Tue, 05 Nov 2019 08:23:38 -0800 (PST)
+        Tue, 5 Nov 2019 11:34:51 -0500
+Received: by mail-ed1-f67.google.com with SMTP id b72so16714473edf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Nov 2019 08:34:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iBa+KNl3xfEoQ3x091yW97I1pFeckDAp+HE7IN9AsKI=;
-        b=ADZ8m3Wuu05byt5FiXJhBT03hcjcIPcfov3vj/h4AVSisEIHZv9YfyIkUT2yDdd4dx
-         B0WixpljI53ZSMmyqljoOzIpkP2LuXY8q1vsJVhIMk/imCrzuPLrJzMyLbBzQhTHJcQ3
-         R4bwlQ771m5PoPm1m9/UDGcBbh5qNQ6wl/QR2DsanVV1tJzcm7ppsmlvpQh4HjfNbG5t
-         63hV9BAt6JFSGsTOVQemjsGCjUeCkNqKjkqY/D7rG5gPA76/kjtkk8ORD20jUVmfhzho
-         8FiJ2Q40mtGYzMsduyUFwURe02dZkTSI3PLMEjzjKAQyod30gBQVCzquG/kQuAr4bEA1
-         HtTw==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=mNR/MSWlimZAiXcm7qQEJqNH/suNSkOqI93zRfY3ukg=;
+        b=TnOQy1YGhM0LwaFiaw5gfg5cLgvH7xVWr7BrdwdT8hwGyuOHPGrp/fdK5XLD3i4jc+
+         ZJWPutCDiteg8C51gtdUBCf4pIe0a0sl2MgQmgymKnI6GMi5ErliMaEpCbj0F22EnXzk
+         Bz/E8RJcIDJ4aP5uq5AwFO5ep+q0n5DtPYNTSNYYr97JnsjHZr5sBDNqagE+rMf4hP9i
+         MlTio9ZzzcanQ5eOKHLxmccEC95MyRbpn2iTT5RZt8zkZHGsZlA6wVBwwaJNPq6SypAA
+         g0h4myuM8STuJZz479yP+OMwBDNZ0BOhBdKVMZY65GG55ZGlvptOhvmBdi8HgDKhXJ6w
+         JZRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iBa+KNl3xfEoQ3x091yW97I1pFeckDAp+HE7IN9AsKI=;
-        b=bSc93u1iKmt8RKJHZwplrhOL22GmfXy24kCg8iY6N0og23zD9vXR9J3GP+go5OObNO
-         90x3mt3818uarDPDCvOwck1zWnhJpAhz+VrjXWGYNuPn9OAD+axfT3C48NA26/RHy6cD
-         3ti5pGlEHuRYLIrP9hoQ/uauB7yDw4sLbIPBSZZvPAd1OnLVFit+DRGmbXW1iNjsMNCD
-         fVRmr5D6Ld5451js6bLcPi5rjPv4rJ5mXriwO0Lp4sN5g4OIrVumabs4gqQaJTLSVJ3P
-         YV4wIGQgtJF1PnPG1glFCBY3njqS+pK74sY6wNxKbGRaCftFb2GV3XNlLqlfkkFVr/JA
-         Vy7g==
-X-Gm-Message-State: APjAAAWRItUOyWv2p0AEO7yzlzoorGZ/rB0kwlXTyHgQsjgLxAAooukH
-        mvKMJ3ELgGMzC8myFCCsWj6zPgNUqRdWuU6he2s=
-X-Google-Smtp-Source: APXvYqw6DHiWy5Jq5QER0vWdT0e+O38XHNiZfNfrlZo7CtFTenpQYQGBiQkm25QU55awefud20PSxaXykIphCpiisVU=
-X-Received: by 2002:a17:906:73d5:: with SMTP id n21mr30279787ejl.228.1572971018138;
- Tue, 05 Nov 2019 08:23:38 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=mNR/MSWlimZAiXcm7qQEJqNH/suNSkOqI93zRfY3ukg=;
+        b=XqZTCijXFsQYaQlQ8+eLa2kyDF3vUmcGsmSSqZ02KqynBW5639OBV/UBM5x56UTN/K
+         +Bq+0bGrDkf4oHnqlBiGo70+pf2UPUmylgiSZQDXdamiHsoIU6p+JuPxdrYlTVTFB4B2
+         pcaoS4Kbjdd9rvwClmLsSlgOOc01+O7YDmqB3JSYe0JffWKGAossVCCI1J76sDLz7tu5
+         eDHzJaL8hBSGG/w1HqVs4x1VKLyrQrdLOK9ErzChN/iPwKLyxs+snTvATl4WUOvMdsNg
+         LXKE1+qDI17BHMsU+fB6uvdUXpvdI72wQxLce8Qna0q1h6LTt6B2lQxnymR6J4uEybHC
+         rQTQ==
+X-Gm-Message-State: APjAAAWPC1Z2ZLc5Kg/NkR/3MNNskXpHY3gsi+1SG48M4F3RvCnP/Pcz
+        B5tChJbX0GcgEnH+XSrAmKKl/bDwNPxg6bvvlfA=
+X-Google-Smtp-Source: APXvYqwa78scJmHC4aO08kO2YFvBBcoSO6Inq6/772fOtxeXzhmswR7THbj4gynJs0wU7G/pO4AKfZQ6yg9/L7UNm8E=
+X-Received: by 2002:a17:906:a44:: with SMTP id x4mr29819993ejf.64.1572971688897;
+ Tue, 05 Nov 2019 08:34:48 -0800 (PST)
 MIME-Version: 1.0
-References: <20191105000129.GA6536@onstation.org> <CAF6AEGv3gs+LFOP3AGthXd4niFb_XYOuwLfEa2G9eb27b1wMMA@mail.gmail.com>
- <20191105100804.GA9492@onstation.org>
-In-Reply-To: <20191105100804.GA9492@onstation.org>
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 5 Nov 2019 08:23:27 -0800
-Message-ID: <CAF6AEGtB+g=4eiB31jkyuBGW7r0TBSh2oMj6TGtSgQ=q1ZV1tg@mail.gmail.com>
-Subject: Re: [Freedreno] drm/msm: 'pp done time out' errors after async commit changes
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     Rob Clark <robdclark@chromium.org>,
+Date:   Tue, 5 Nov 2019 08:34:38 -0800
+Message-ID: <CAF6AEGt_Zg9shp9XO=fY3nnef6uL5XPEcGndKGZ6L=TaPiEEcQ@mail.gmail.com>
+Subject: 
+To:     Dave Airlie <airlied@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         freedreno <freedreno@lists.freedesktop.org>,
         Sean Paul <sean@poorly.run>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Brian Masney <masneyb@onstation.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 5, 2019 at 2:08 AM Brian Masney <masneyb@onstation.org> wrote:
->
-> On Mon, Nov 04, 2019 at 04:19:07PM -0800, Rob Clark wrote:
-> > On Mon, Nov 4, 2019 at 4:01 PM Brian Masney <masneyb@onstation.org> wrote:
-> > >
-> > > Hey Rob,
-> > >
-> > > Since commit 2d99ced787e3 ("drm/msm: async commit support"), the frame
-> > > buffer console on my Nexus 5 began throwing these errors:
-> > >
-> > > msm fd900000.mdss: pp done time out, lm=0
-> > >
-> > > The display still works.
-> > >
-> > > I see that mdp5_flush_commit() was introduced in commit 9f6b65642bd2
-> > > ("drm/msm: add kms->flush_commit()") with a TODO comment and the commit
-> > > description mentions flushing registers. I assume that this is the
-> > > proper fix. If so, can you point me to where these registers are
-> > > defined and I can work on the mdp5 implementation.
-> >
-> > See mdp5_ctl_commit(), which writes the CTL_FLUSH registers.. the idea
-> > would be to defer writing CTL_FLUSH[ctl_id] = flush_mask until
-> > kms->flush() (which happens from a timer shortly before vblank).
-> >
-> > But I think the async flush case should not come up with fbcon?  It
-> > was really added to cope with hwcursor updates (and userspace that
-> > assumes it can do an unlimited # of cursor updates per frame).. the
-> > intention was that nothing should change in the sequence for mdp5 (but
-> > I guess that was not the case).
->
-> The 'pp done time out' errors go away if I revert the following three
-> commits:
->
-> cd6d923167b1 ("drm/msm/dpu: async commit support")
-> d934a712c5e6 ("drm/msm: add atomic traces")
-> 2d99ced787e3 ("drm/msm: async commit support")
->
-> I reverted the first one to fix a compiler error, and the second one so
-> that the last patch can be reverted without any merge conflicts.
->
-> I see that crtc_flush() calls mdp5_ctl_commit(). I tried to use
-> crtc_flush_all() in mdp5_flush_commit() and the contents of the frame
-> buffer dance around the screen like its out of sync. I renamed
-> crtc_flush_all() to mdp5_crtc_flush_all() and removed the static
-> declaration. Here's the relevant part of what I tried:
->
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> @@ -171,7 +171,15 @@ static void mdp5_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *st
->
->  static void mdp5_flush_commit(struct msm_kms *kms, unsigned crtc_mask)
->  {
-> -       /* TODO */
-> +       struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
-> +       struct drm_crtc *crtc;
-> +
-> +       for_each_crtc_mask(mdp5_kms->dev, crtc, crtc_mask) {
-> +               if (!crtc->state->active)
-> +                       continue;
-> +
-> +               mdp5_crtc_flush_all(crtc);
-> +       }
->  }
->
-> Any tips would be appreciated.
+Hi Dave,
 
+This time around:
 
-I think this is along the lines of what we need to enable async commit
-for mdp5 (but also removing the flush from the atomic-commit path)..
-the principle behind the async commit is to do all the atomic state
-commit normally, but defer writing the flush bits.  This way, if you
-get another async update before the next vblank, you just apply it
-immediately instead of waiting for vblank.
++ OCMEM support to enable the couple generations that had shared OCMEM
+  rather than GMEM exclusively for the GPU (late a3xx and I think basically
+  all of a4xx).  Bjorn and Brian decided to land this through the drm
+  tree to avoid having to coordinate merge requests.
++ a510 support, and various associated display support
++ the usual misc cleanups and fixes
 
-But I guess you are on a command mode panel, if I remember?  Which is
-a case I didn't have a way to test.  And I'm not entirely about how
-kms_funcs->vsync_time() should be implemented for cmd mode panels.
+The following changes since commit da0c9ea146cbe92b832f1b0f694840ea8eb33cce:
+  Linux 5.4-rc2 (2019-10-06 14:27:30 -0700)
 
-That all said, I think we should first fix what is broken, before
-worrying about extending async commit support to mdp5.. which
-shouldn't hit the async==true path, due to not implementing
-kms_funcs->vsync_time().
+are available in the Git repository at:
 
-What I think is going on is that, in the cmd mode case,
-mdp5_wait_flush() (indirectly) calls mdp5_crtc_wait_for_pp_done(),
-which waits for a pp-done irq regardless of whether there is a flush
-in progress.  Since there is no flush pending, the irq never comes.
-But the expectation is that kms_funcs->wait_flush() returns
-immediately if there is nothing to wait for.
+  https://gitlab.freedesktop.org/drm/msm.git drm-msm-next-2019-11-05
 
-BR,
--R
+for you to fetch changes up to e20c9284c8f212081afc28471daaac9b0d54252f:
+
+  drm/msm/adreno: Add support for Adreno 510 GPU (2019-11-04 13:18:31 -0800)
+
+----------------------------------------------------------------
+AngeloGioacchino Del Regno (6):
+      drm/msm/mdp5: Add optional TBU and TBU_RT clocks
+      dt-bindings: msm/mdp5: Document optional TBU and TBU_RT clocks
+      drm/msm/mdp5: Add configuration for msm8x76
+      drm/msm/dsi: Add configuration for 28nm PLL on family B
+      drm/msm/dsi: Add configuration for 8x76
+      drm/msm/adreno: Add support for Adreno 510 GPU
+
+Arnd Bergmann (1):
+      drm/msm: include linux/sched/task.h
+
+Ben Dooks (2):
+      drm/msm: make a5xx_show and a5xx_gpu_state_put static
+      drm/msm/mdp5: make config variables static
+
+Brian Masney (6):
+      dt-bindings: soc: qcom: add On Chip MEMory (OCMEM) bindings
+      dt-bindings: display: msm: gmu: add optional ocmem property
+      soc: qcom: add OCMEM driver
+      drm/msm/gpu: add ocmem init/cleanup functions
+      soc: qcom: ocmem: add missing includes
+      drm/msm/hdmi: silence -EPROBE_DEFER warning
+
+Drew Davenport (7):
+      drm/msm/dpu: Remove unused variables
+      drm/msm/dpu: Remove unused macro
+      drm/msm/dpu: Remove unnecessary NULL checks
+      drm/msm/dpu: Remove unnecessary NULL checks
+      drm/msm/dpu: Remove unnecessary NULL checks
+      drm/msm/dpu: Remove unnecessary NULL checks
+      drm/msm: Remove unused function arguments
+
+Krzysztof Wilczynski (1):
+      drm/msm/dsi: Move static keyword to the front of declarations
+
+Rob Clark (4):
+      firmware: qcom: scm: add OCMEM lock/unlock interface
+      firmware: qcom: scm: add support to restore secure config to qcm_scm-32
+      drm/msm: fix rd dumping for split-IB1
+      drm/msm: always dump buffer base/size
+
+Sean Paul (1):
+      drm/msm: Sanitize the modeset_is_locked checks in dpu
+
+Stephan Gerhold (1):
+      drm/msm/dsi: Implement qcom, dsi-phy-regulator-ldo-mode for 28nm PHY
+
+zhengbin (11):
+      drm/msm/dpu: Remove set but not used variable 'priv' in dpu_kms.c
+      drm/msm/dpu: Remove set but not used variable 'priv' in
+dpu_encoder_phys_vid.c
+      drm/msm/dpu: Remove set but not used variable 'priv' in dpu_core_irq.c
+      drm/msm/dpu: Remove set but not used variables 'dpu_cstate', 'priv'
+      drm/msm/dpu: Remove set but not used variables 'cmd_enc', 'priv'
+      drm/msm/dpu: Remove set but not used variables 'mode', 'dpu_kms', 'priv'
+      drm/msm/mdp5: Remove set but not used variable 'fmt'
+      drm/msm/mdp5: Remove set but not used variable 'hw_cfg' in blend_setup
+      drm/msm/dsi: Remove set but not used variable 'lpx'
+      drm/msm/dsi: Remove set but not used variable 'lp'
+      drm/msm/mdp5: Remove set but not used variable 'hw_cfg' in modeset_init
+
+ .../devicetree/bindings/display/msm/gmu.txt        |  51 +++
+ .../devicetree/bindings/display/msm/mdp5.txt       |   2 +
+ .../devicetree/bindings/sram/qcom,ocmem.yaml       |  96 +++++
+ drivers/firmware/qcom_scm-32.c                     |  52 ++-
+ drivers/firmware/qcom_scm-64.c                     |  12 +
+ drivers/firmware/qcom_scm.c                        |  53 +++
+ drivers/firmware/qcom_scm.h                        |   9 +
+ drivers/gpu/drm/msm/Kconfig                        |   1 +
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c              |  28 +-
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.h              |   3 +-
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c              |  25 +-
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.h              |   3 +-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |  79 +++-
+ drivers/gpu/drm/msm/adreno/a5xx_power.c            |   7 +
+ drivers/gpu/drm/msm/adreno/adreno_device.c         |  15 +
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c            |  40 ++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h            |  15 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c       |  43 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c      |  21 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |  20 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  39 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |  15 -
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   7 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  60 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |   4 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c           |   6 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c           |  10 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c           | 114 +++++-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c          |   3 -
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c           |  23 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h           |   2 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c           |   2 -
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |  28 +-
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |   1 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c                 |   3 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |   8 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |   1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c         |  60 ++-
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c                |   8 +-
+ drivers/gpu/drm/msm/msm_gpu.c                      |   6 +-
+ drivers/gpu/drm/msm/msm_gpummu.c                   |   6 +-
+ drivers/gpu/drm/msm/msm_iommu.c                    |   6 +-
+ drivers/gpu/drm/msm/msm_mmu.h                      |   4 +-
+ drivers/gpu/drm/msm/msm_rd.c                       |  16 +-
+ drivers/soc/qcom/Kconfig                           |  10 +
+ drivers/soc/qcom/Makefile                          |   1 +
+ drivers/soc/qcom/ocmem.c                           | 433 +++++++++++++++++++++
+ include/linux/qcom_scm.h                           |  26 ++
+ include/soc/qcom/ocmem.h                           |  65 ++++
+ 49 files changed, 1235 insertions(+), 307 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/sram/qcom,ocmem.yaml
+ create mode 100644 drivers/soc/qcom/ocmem.c
+ create mode 100644 include/soc/qcom/ocmem.h
