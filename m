@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F023BF0316
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 17:34:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6A5BF031B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 17:36:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390177AbfKEQev (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Nov 2019 11:34:51 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:34685 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390153AbfKEQev (ORCPT
+        id S2390153AbfKEQgW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Nov 2019 11:36:22 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:33151 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390060AbfKEQgW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Nov 2019 11:34:51 -0500
-Received: by mail-ed1-f67.google.com with SMTP id b72so16714473edf.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Nov 2019 08:34:49 -0800 (PST)
+        Tue, 5 Nov 2019 11:36:22 -0500
+Received: by mail-ed1-f68.google.com with SMTP id c4so16721657edl.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Nov 2019 08:36:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:from:date:message-id:subject:to:cc;
-        bh=mNR/MSWlimZAiXcm7qQEJqNH/suNSkOqI93zRfY3ukg=;
-        b=TnOQy1YGhM0LwaFiaw5gfg5cLgvH7xVWr7BrdwdT8hwGyuOHPGrp/fdK5XLD3i4jc+
-         ZJWPutCDiteg8C51gtdUBCf4pIe0a0sl2MgQmgymKnI6GMi5ErliMaEpCbj0F22EnXzk
-         Bz/E8RJcIDJ4aP5uq5AwFO5ep+q0n5DtPYNTSNYYr97JnsjHZr5sBDNqagE+rMf4hP9i
-         MlTio9ZzzcanQ5eOKHLxmccEC95MyRbpn2iTT5RZt8zkZHGsZlA6wVBwwaJNPq6SypAA
-         g0h4myuM8STuJZz479yP+OMwBDNZ0BOhBdKVMZY65GG55ZGlvptOhvmBdi8HgDKhXJ6w
-         JZRA==
+        bh=8TAXHgMOxewwwNYqoFugu/WMxxcEuvBd4JNThVeloqk=;
+        b=NGLhdiNtqC5nqBLIlyFaViscgwlowVtkSO8nfIFui4bufOAtO17qR28+BTwBq0mzvk
+         3M0vTgZ3jXeF/aIW/UJlVbTMPBBErtguTjBtwdgGF08S1n4ZLP3Wn4M6Cr9XWyG76+5F
+         uRxD00L0NS4u66SAdmB4X+uvAakz/wuzONYIrctutrJQfjf4Q5rWQ71HvohHkrN7Yass
+         IUZow0Krr/l6JYrq0FRAD16p0hf3dQnI9cU98V+jADk+cEoh+2FmJPro3n92kjULxi4l
+         K7xbtGvGrkQPirdb6p6iBmVhpSYlfDFGaTTP6NPdQxYKE7FPhOOzXRQKXc9LjFShuS9c
+         ting==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=mNR/MSWlimZAiXcm7qQEJqNH/suNSkOqI93zRfY3ukg=;
-        b=XqZTCijXFsQYaQlQ8+eLa2kyDF3vUmcGsmSSqZ02KqynBW5639OBV/UBM5x56UTN/K
-         +Bq+0bGrDkf4oHnqlBiGo70+pf2UPUmylgiSZQDXdamiHsoIU6p+JuPxdrYlTVTFB4B2
-         pcaoS4Kbjdd9rvwClmLsSlgOOc01+O7YDmqB3JSYe0JffWKGAossVCCI1J76sDLz7tu5
-         eDHzJaL8hBSGG/w1HqVs4x1VKLyrQrdLOK9ErzChN/iPwKLyxs+snTvATl4WUOvMdsNg
-         LXKE1+qDI17BHMsU+fB6uvdUXpvdI72wQxLce8Qna0q1h6LTt6B2lQxnymR6J4uEybHC
-         rQTQ==
-X-Gm-Message-State: APjAAAWPC1Z2ZLc5Kg/NkR/3MNNskXpHY3gsi+1SG48M4F3RvCnP/Pcz
-        B5tChJbX0GcgEnH+XSrAmKKl/bDwNPxg6bvvlfA=
-X-Google-Smtp-Source: APXvYqwa78scJmHC4aO08kO2YFvBBcoSO6Inq6/772fOtxeXzhmswR7THbj4gynJs0wU7G/pO4AKfZQ6yg9/L7UNm8E=
-X-Received: by 2002:a17:906:a44:: with SMTP id x4mr29819993ejf.64.1572971688897;
- Tue, 05 Nov 2019 08:34:48 -0800 (PST)
+        bh=8TAXHgMOxewwwNYqoFugu/WMxxcEuvBd4JNThVeloqk=;
+        b=bunLgoshFzYeTgLs5ObwG9O0QBZj3CWubm2tqHQIDy1CGsDW0DwHSSAmkf4NlyiIFK
+         Eef33BBL4lAzBQXjOVO8w+YiC9S+8l0PjDcIvLxJ4WNCQQFvEOkvchuImECOSLjfUnCl
+         aAvmkpylF6wOCIx0lxk1WyEs05NaeWtz7iYu/AkD6fpUyfP/7a5IoNWdKyts5KL7Hp+n
+         9LfYbHhIZKuGcVnAOQmI8diZ1ihUVyNGTRiQMJ12cdlkzjJykt+/1sfbZpOg/wrcK5YB
+         dWNBatBS51SMfqdgN0tbWKCugZqhRipvRZdT5b4G+RiD7uPtiqyLl7j/4VjFuq8e2oO0
+         9qUA==
+X-Gm-Message-State: APjAAAWl3yrD+QI7PdzPm//eGW4iyGyqPIdeT2cJEa3ZwD/BM9GUUozG
+        LaByi2KZj/++i/rG3An7V2H3Bs+bS/PtlOn0hgM=
+X-Google-Smtp-Source: APXvYqzm4b5Z3a2ioSqw5KgeawL7HLmvf2Qyf86RfvBDNe/fLPtVl+joHlqVcJflOy2yuF/UAveFd9w4SRBc3VL4YHI=
+X-Received: by 2002:a05:6402:13cd:: with SMTP id a13mr16664383edx.57.1572971780055;
+ Tue, 05 Nov 2019 08:36:20 -0800 (PST)
 MIME-Version: 1.0
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 5 Nov 2019 08:34:38 -0800
-Message-ID: <CAF6AEGt_Zg9shp9XO=fY3nnef6uL5XPEcGndKGZ6L=TaPiEEcQ@mail.gmail.com>
-Subject: 
-To:     Dave Airlie <airlied@gmail.com>
+Date:   Tue, 5 Nov 2019 08:36:08 -0800
+Message-ID: <CAF6AEGv-JWswEJRxe5AmnGQO1SZnpxK05kO1E29K6UUzC9GMMw@mail.gmail.com>
+Subject: [pull] drm/msm: msm-next for 5.5
+To:     David Airlie <airlied@linux.ie>
 Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         freedreno <freedreno@lists.freedesktop.org>,
@@ -57,6 +57,8 @@ Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
+
+(lets try this again with a $subject)
 
 Hi Dave,
 
