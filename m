@@ -2,173 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 76455F0771
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 21:58:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06D33F08CF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 22:55:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387399AbfKEU6g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Nov 2019 15:58:36 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:40386 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729399AbfKEU6g (ORCPT
+        id S1729770AbfKEVzv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Nov 2019 16:55:51 -0500
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:45516 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729747AbfKEVzv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Nov 2019 15:58:36 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id D8E47611AD; Tue,  5 Nov 2019 20:58:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572987514;
-        bh=DFwG6pf/4V77m0uRPCOyhwzD8vIsAi111b7qu4IFdAc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hGOq8i8f9KkAOWni1cquk2A46wVf3m/irDn5vQsfhj+5QcTbnD6lo8vdJFUOVE8yc
-         8UeISFb7wAHtSEcDZrpS1XgDSR2lDvkwtZodC35bPmjLe5MMBR3ALq3beD9pkYmucG
-         o8qFz7t6tT5JKMcLuhw/l1EL0ClC2lLezNqpVLew=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AC99961153;
-        Tue,  5 Nov 2019 20:58:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572987513;
-        bh=DFwG6pf/4V77m0uRPCOyhwzD8vIsAi111b7qu4IFdAc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=V7ZlSpdQdfVTY6VUfOwssIq8RuxzjhscpFXwJuzZbRTAOIpTvPYnr69IQLEm1mTsC
-         J7dnLYYRBM9eO5KPlVe49eCyNwETPu7jtPoQQ9irHf6XACHGg48gFeYK9PenV5uz8f
-         LgXySD/mAlzVgswi/BK1FrtbJn6lmGjfY+d6gmy4=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AC99961153
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-Date:   Tue, 5 Nov 2019 13:58:32 -0700
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, mkshah@codeaurora.org,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH RFC v2 06/14] dt-bindings/interrupt-controller: pdc: add
- SPI config register
-Message-ID: <20191105205832.GE16900@codeaurora.org>
-References: <1568411962-1022-1-git-send-email-ilina@codeaurora.org>
- <1568411962-1022-7-git-send-email-ilina@codeaurora.org>
- <5d92829e.1c69fb81.d860a.9096@mx.google.com>
- <5da6b849.1c69fb81.a9b04.1b9f@mx.google.com>
+        Tue, 5 Nov 2019 16:55:51 -0500
+Received: by mail-ot1-f65.google.com with SMTP id r24so2739705otk.12;
+        Tue, 05 Nov 2019 13:55:49 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=YELZCQwYPigqOFYaRv7YTPEJ4AJcr13YEeiRSB+FW5s=;
+        b=JQomvfY7ZDOp8rgTGeYIuK+BVEJprrYOUwFk8v0+0ofMAKor/Akjs9SO76hDoEVJhR
+         ZEcs7NRTwguWdPq4XMdyJ5V2j9UnDhJtmMpbA/RQLtmpVY76S/9hmPoZ6KMPgMdC1Xnh
+         Q2x/lhfKjbbAHnbIwLpJDxbP/+E8w8rnP8xS+iWaZShXBiaE2kkX9QsJ5oZ/mE97RVPO
+         hqfFQP3Ju06cNOAHk3gK6HomNg4BMOPw4W3zorC1HdATyklDm5fJUSnv3u5NQOVgo2/F
+         pJx5vY8lZhkJJ/OWivwDFuxXWjdTbcxJtP9MoQAudh8JxPNM/linMLjpabXeX+O+vK9z
+         YdDw==
+X-Gm-Message-State: APjAAAVui6QcM3JfQpmauglvhUz613jViGa/9jYt18dA1bd6IWPC26np
+        2y0sJrIRjxXvZuCvj8Q18Z91DxU=
+X-Google-Smtp-Source: APXvYqy4zjKx1imvVoqgoArtBoZXF2eaAGyn6TXNj1wQ4qDJLn+h46+UfHjeO440F37r29jD4dP9AA==
+X-Received: by 2002:a05:6830:2316:: with SMTP id u22mr25596171ote.100.1572990949120;
+        Tue, 05 Nov 2019 13:55:49 -0800 (PST)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id 34sm6484839otf.55.2019.11.05.13.55.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Nov 2019 13:55:48 -0800 (PST)
+Date:   Tue, 5 Nov 2019 15:55:47 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette =?iso-8859-1?Q?=A0?= 
+        <mturquette@baylibre.com>, David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: Re: [PATCH v2 1/3] dt-bindings: clock: Add YAML schemas for the QCOM
+ RPMHCC clock bindings
+Message-ID: <20191105215547.GA402@bogus>
+References: <1572371299-16774-1-git-send-email-tdas@codeaurora.org>
+ <1572371299-16774-2-git-send-email-tdas@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5da6b849.1c69fb81.a9b04.1b9f@mx.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <1572371299-16774-2-git-send-email-tdas@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sorry for the late reply.
+On Tue, 29 Oct 2019 23:18:17 +0530, Taniya Das wrote:
+> The RPMHCC clock provider have a bunch of generic properties that
+> are needed in a device tree. Add a YAML schemas for those.
+> 
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> ---
+>  .../devicetree/bindings/clock/qcom,rpmh-clk.txt    | 27 ------------
+>  .../devicetree/bindings/clock/qcom,rpmhcc.yaml     | 48 ++++++++++++++++++++++
+>  2 files changed, 48 insertions(+), 27 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/clock/qcom,rpmh-clk.txt
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
+> 
 
-On Tue, Oct 15 2019 at 00:27 -0600, Stephen Boyd wrote:
->Quoting Stephen Boyd (2019-09-30 15:33:01)
->> Quoting Lina Iyer (2019-09-13 14:59:14)
->> > In addition to configuring the PDC, additional registers that interface
->> > the GIC have to be configured to match the GPIO type. The registers on
->> > some QCOM SoCs are access restricted, while on other SoCs are not. They
->> > SoCs with access restriction to these SPI registers need to be written
->> > from the firmware using the SCM interface. Add a flag to indicate if the
->> > register is to be written using SCM interface.
->> >
->> > Cc: devicetree@vger.kernel.org
->> > Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->> > ---
->> >  .../devicetree/bindings/interrupt-controller/qcom,pdc.txt   | 13 ++++++++++++-
->> >  1 file changed, 12 insertions(+), 1 deletion(-)
->> >
->> > diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
->> > index 8e0797c..e329f8d 100644
->> > --- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
->> > +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
->> > @@ -24,6 +24,9 @@ Properties:
->> >         Usage: required
->> >         Value type: <prop-encoded-array>
->> >         Definition: Specifies the base physical address for PDC hardware.
->> > +                   Optionally, specify the PDC's GIC interface registers that
->> > +                   need to be configured for wakeup capable GPIOs routed to
->> > +                   the PDC.
->> >
->> >  - interrupt-cells:
->> >         Usage: required
->> > @@ -50,15 +53,23 @@ Properties:
->> >                     The second element is the GIC hwirq number for the PDC port.
->> >                     The third element is the number of interrupts in sequence.
->> >
->> > +- qcom,scm-spi-cfg:
->> > +       Usage: optional
->> > +       Value type: <bool>
->> > +       Definition: Specifies if the SPI configuration registers have to be
->> > +                   written from the firmware. Sometimes the PDC interface
->> > +                   register to the GIC can only be written from the firmware.
->> > +
->> >  Example:
->> >
->> >         pdc: interrupt-controller@b220000 {
->> >                 compatible = "qcom,sdm845-pdc";
->> > -               reg = <0xb220000 0x30000>;
->> > +               reg = <0 0x0b220000 0 0x30000>, <0 0x179900f0 0 0x60>;
->> >                 qcom,pdc-ranges = <0 512 94>, <94 641 15>, <115 662 7>;
->> >                 #interrupt-cells = <2>;
->> >                 interrupt-parent = <&intc>;
->> >                 interrupt-controller;
->> > +               qcom,scm-spi-cfg;
->> >         };
->>
->> This overlaps register region with the mailbox node. That node is
->> actually a pile of random "CPU" registers used to ping remote processors
->> and apparently control how the PDC interacts with the GIC. Maybe this
->> can be changed to a phandle and then the driver can interogate the
->> phandle to determine if it's the SCM firmware or if it's the shared
->> mailbox register? If it's a shared mailbox then it can write to it at
->> the offset it knows about (because it's sdm845 compatible specific) and
->> if it's SCM then it can use the hardcoded address as well?
->>
->> Basically I'm saying that it just needs a phandle.
->>
->>         qcom,spi-cfg = <&scm>;
->>
->> or
->>
->>         qcom,spi-cfg = <&mailbox>;
->>
->> and then driver knows how to use that to write into random registers.
->> Maybe we can have an API in regmap that finds the regmap for a given
->> device node? That way we don't have to funnel everything through syscon
->> for this.
->>
->>         of_get_regmap(struct device_node *np, const char *name);
->>
->> Where NULL name means "first available" and then do the devres search
->> otherwise for a device that has the matching node pointer.
->>
->
->I had another idea the other day. Maybe a better approach would be to
->make the mailbox or SCM code an interrupt controller with the
->appropriate functions to poke the bits necessary to make the interrupts
->work. Then we can make it a chip in the hierarchy between the GIC and
->PDC and make the interrupts call through from PDC to GIC. The locking
->could be handled in each respective driver if necessary, and otherwise
->we don't have to use a regmap or remap the same registers (except we may
->need to describe if the parent is the mailbox node or the scm fimware
->node).
->
-Wouldn't that be a stretch to image the SCM register write  or a random
-register write as an interrupt controller? But I agree that it solves
-the issue of determining whether we want to use SCM or regmap.
-
-But, we would still need to add syscon to the mailbox and then regmap
-the registers for the interrupt contoller.
-
-Thanks,
-Lina
-
-
+Reviewed-by: Rob Herring <robh@kernel.org>
