@@ -2,110 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B6636EF5C3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 07:51:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 791B2EF9F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 10:49:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727727AbfKEGvG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Nov 2019 01:51:06 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:39079 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725806AbfKEGvG (ORCPT
+        id S1730454AbfKEJtU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Nov 2019 04:49:20 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:45953 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730693AbfKEJtU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Nov 2019 01:51:06 -0500
-Received: by mail-pl1-f193.google.com with SMTP id o9so2198055plk.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2019 22:51:05 -0800 (PST)
+        Tue, 5 Nov 2019 04:49:20 -0500
+Received: by mail-lj1-f193.google.com with SMTP id n21so7414151ljg.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Nov 2019 01:49:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=MLZvtTZXNfvRWFvhu+xZrbhbWxZa6520w7xc3DnxMfk=;
-        b=ovFzPiyueyG5Yh6NS3lam6dcbSJjihEjm+M4xFDqkGmjUXjx//55rawC9WZoTAjUsu
-         A2Xy1v2lrnDeGPeUC3k+4sEuLT7/yKwKfiYk7xxItUg8cYGd1fI4ySLpzzPY+vmrqM5l
-         JjI20g8GwXjM0iQlF0516Cs1zx7PREOSiY5GOCJGmNAIZ3UXdF50ntGkynitHmrg4Ns2
-         StTckSIMgd0t9xWKYktljntLr2DHLTVnGbeyDo6pVMh7Xve2n4Jz9ODdatcMI3zFZU6g
-         /Lk+U4N0JDLfXsHuBZl3dAPUcPkKNQrv+9kSj9KRdQECaeSsuKbIb7jhX3RYakGm4+df
-         v3rw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TAJe5ziKrCKK7rX2BdKY2ykoCXQoTfLqEiQktMB0pZc=;
+        b=XCvudKjB3WldlrlLUYWp/rPSkhOTlZs7uTgllg94l9Dj/pvnvq+ZHihNGllZ5Cnfq2
+         3YEIZcIKR7ab5YkIh0hd3sd3vHojbv0gNSkvu/8KbJzhxt6ln836ALEKFfSCMzu/KCdj
+         CIm/wm9HhbRTGIlU7t98t9inx4s3syMNih/JbId2T8lWPiVQPkJfvBb8fXfHrmq8wVvu
+         puto/O0rx5kW+R1PhNelEX7ydVAXKvbm31QA1dx+VlQegxySg7VaY9I/nwJ+ThZ/HjYs
+         ZRMKjym+sv62w8vchDShhPjQ+J07r0+nWHFQAxFnFqO1NGw6cI3NdDud7gfMsrAp0dfG
+         HBmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=MLZvtTZXNfvRWFvhu+xZrbhbWxZa6520w7xc3DnxMfk=;
-        b=DbLxfeVIvNgEClWnBmOzNc8rc7E9dnWfIpna7GCP1sroaf8a2L6DAGMDmGic6GXSVt
-         qAyHkBjFjPKcZgN7o4KKeUwErXIK55/YEtBlDFckZiBTh14YBLhIeQRifQNIXEjJyAlF
-         813BThmYonSkDfnvwCllJ9vGuTcTUHb/w0rdkaJpZiFmKfnFTeKphni06TlakHLO2ES7
-         YlHXIq945pTKQSzxwXNzSTiVHWTXUm/7yYqy4Hy9mVdZcPX1aD10vge2F/X472R75XIl
-         HQutoavF2BKaCe3MAuPeHPNayk2MpdeVqYH8iLEeOxkZIlMJhAfVh/89FrQr48arj5d/
-         tLtA==
-X-Gm-Message-State: APjAAAUOsrxgrddFTz7+1/ycP/KP37SLBgVENePEE8LPUicDkeA/zoND
-        m0JoKrDBlWA+YS1t6eSPJde1pg==
-X-Google-Smtp-Source: APXvYqygTQR1HLlTaiQfWLrNs7Ep8bXeQMuApptnCYjO/5t+FBUMcOI0Th7332U5KHVlcuUUK4d/pA==
-X-Received: by 2002:a17:902:9a03:: with SMTP id v3mr7331351plp.61.1572936665309;
-        Mon, 04 Nov 2019 22:51:05 -0800 (PST)
-Received: from localhost ([122.171.110.253])
-        by smtp.gmail.com with ESMTPSA id s69sm7227648pgs.65.2019.11.04.22.51.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Nov 2019 22:51:04 -0800 (PST)
-Date:   Tue, 5 Nov 2019 12:20:58 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Zhang Rui <rui.zhang@intel.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, daniel.lezcano@linaro.org,
-        edubezval@gmail.com, ilina@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        tdas@codeaurora.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v3 5/6] clk: qcom: Initialise clock drivers earlier
-Message-ID: <20191105065058.yhqgvilti6cdzph2@vireshk-i7>
-References: <cover.1571314830.git.amit.kucheria@linaro.org>
- <5f1ca3bfc45e268f7f9f6e091ba13b8103fb4304.1571314830.git.amit.kucheria@linaro.org>
- <20191017174723.8024521D7A@mail.kernel.org>
- <20191018060345.wjflngfdnqa3gbsu@vireshk-i7>
- <20191028172225.1B1CF20862@mail.kernel.org>
- <20191029010605.GB27884@e107533-lin.cambridge.arm.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TAJe5ziKrCKK7rX2BdKY2ykoCXQoTfLqEiQktMB0pZc=;
+        b=unCfr837U/O/ErwBplqXavvXmlr7ruDW9wTp/oR12oLrR8RLFgxxwXRODuYGmsZCIC
+         GAFlE+8Co2tJkv19jy+DIi4wudK1jq+Bux13uYgLy7naDb/B7XQsM6udzkqIQNjBRyKy
+         wanujWR+E3i0a+Q/W+XZ+5hWG6f55JOswov7pt2Ldjw9PTOe9Mu2OiDR2l1k53949ixB
+         WrB9w572hlvZc+PkzX1FI8ca9jPO+dDUKrCx+2/xi2ZCh6dCk2FBzM51Mmx8lOAD3PRk
+         QuSCdxsItxeQdruoT/M5qmmbJOA2ezYH/gZPX5yGcDYeLzaLc/b9mNC43kg1WL8MQ3Fb
+         S6Aw==
+X-Gm-Message-State: APjAAAXwBVfoqERcbzm7tnRAh7JWozKrBMJceVR44bmuAIG3L0Azc4dG
+        GamsHzyyd6Ya00WqTpcPCsLBQmhnpABrly6kokYLKA==
+X-Google-Smtp-Source: APXvYqwzKGwdM6Y55E27yheMCcnZ7qcC3Lb2zH9XzpcvqFMRqUcMcymk+LRc2yyxdiCWk004eqbcBGD0s8yWxwr90pI=
+X-Received: by 2002:a2e:a0c9:: with SMTP id f9mr22644979ljm.77.1572947358711;
+ Tue, 05 Nov 2019 01:49:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191029010605.GB27884@e107533-lin.cambridge.arm.com>
-User-Agent: NeoMutt/20180716-391-311a52
+References: <1572419178-5750-1-git-send-email-mkshah@codeaurora.org> <1572419178-5750-2-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1572419178-5750-2-git-send-email-mkshah@codeaurora.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 5 Nov 2019 10:49:06 +0100
+Message-ID: <CACRpkdbjFSiSmRrbjAm3xD-2jYcyHPb0U9L8rqMPM44_cQi8Bg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] pinctrl: qcom: sc7180: Add GPIO wakeup interrupt map
+To:     Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>, lsrao@codeaurora.org,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Doug Anderson <dianders@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29-10-19, 09:06, Sudeep Holla wrote:
-> On Mon, Oct 28, 2019 at 10:22:24AM -0700, Stephen Boyd wrote:
-> > Quoting Viresh Kumar (2019-10-17 23:03:45)
-> > > On 17-10-19, 10:47, Stephen Boyd wrote:
-> > > > Quoting Amit Kucheria (2019-10-17 05:27:37)
-> > > > > Initialise the clock drivers on sdm845 and qcs404 in core_initcall so we
-> > > > > can have earlier access to cpufreq during booting.
-> > > > >
-> > > > > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > > > > ---
-> > > >
-> > > > Acked-by: Stephen Boyd <sboyd@kernel.org>
-> > > >
-> > > > Makes me sad again.
-> > >
-> > > I am wondering why it makes you sad ? :)
-> > >
-> >
-> > We're playing games with initcall levels :(
-> >
-> 
-> +1, which will come back and bite us hard soon :)
+On Wed, Oct 30, 2019 at 8:07 AM Maulik Shah <mkshah@codeaurora.org> wrote:
 
-:)
+> GPIOs that can be configured as wakeup sources, have their
+> interrupt lines routed to PDC interrupt controller.
+>
+> Provide the interrupt map of the GPIO to its wakeup capable
+> interrupt parent.
+>
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 
-I don't like reordering init calls as well, but only when they are
-used to avoid issues and probe things in a particular order. While the
-only thing we are doing here is to get things to probe earlier, which
-isn't wrong IMO :)
+Looks good to me but I'd like to see Bjorns and preferably also
+Lina's review on this.
 
-Lets see if it bites us anytime soon, I would be surprised really :)
-
--- 
-viresh
+Yours,
+Linus Walleij
