@@ -2,126 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 01DB3F0546
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 19:44:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E154F05D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 20:19:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390646AbfKESoM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Nov 2019 13:44:12 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:46444 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390432AbfKESoM (ORCPT
+        id S2403763AbfKETTn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Nov 2019 14:19:43 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:36049 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403760AbfKETTn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Nov 2019 13:44:12 -0500
-Received: by mail-pl1-f196.google.com with SMTP id l4so4670851plt.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Nov 2019 10:44:11 -0800 (PST)
+        Tue, 5 Nov 2019 14:19:43 -0500
+Received: by mail-pl1-f194.google.com with SMTP id g9so10003101plp.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Nov 2019 11:19:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Qih/alkmIQbfF3MY5qtSQFmZNoWqlS/zxFnHUyH1R38=;
-        b=aSnTg9KHEMB49AxbsfwaAz90kx72tV9XpVZf1DCYtUItEXCJcShFRUVYe8/jfcE70C
-         fGilYsFMnICncY1ka6ITmZXvvljgCa9MPJrZHnKzou4r6lD2kl1np+KosoU7P08tXIJA
-         4uopLlBFncqBQ7w1dSeAkq/yiydRQSSTBLdwOHIk6HC3QR4rB5Nt5jRhy1AVLlMZ0tKt
-         nKafeDwb0sh6ORPsClkqYrkSR7CtoM1wCptaYtlnwmZlYmEVX5Q7G0ic6R8gvBUXrZBl
-         mApaq6akcvbrAsOTtoZWo+NYl3/k72TJBI8oqYwFqrGYCyrUfdQYOZeEz/TuQljKB82S
-         erFA==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:subject:from:to:user-agent:date;
+        bh=hbU+lnz3PoPpDd5LQBdnFKQTsx0QptkCCfC4Iao/bDw=;
+        b=LCPyYI+iiiAIz7UBJ5PzgsIyD7zIA1uqeTHw3tC+72i8g7Cd0+VH7cG+XhA2/7lcB+
+         zzQN2EXWfjp3gN86AMcii+zGOnj7ouaZ3RwHLkptQH4xa3Jw8ev6FXa/zKE+0NOh5SK1
+         yY+s6T06b17ToJZleH5KhQo/aE/+4rsCtvI94=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Qih/alkmIQbfF3MY5qtSQFmZNoWqlS/zxFnHUyH1R38=;
-        b=p80T9eV4lRyfac9pTFRlEVJURblYcAgUzkeo/g8LM04Z520od8qqFWkfpbleWfDFD0
-         LXdcBmEYHSr7KZtm6kqOLBA3xLZCwcd+fppkXUBnNjPdnmy9UC+2sx3eWx+iWFDmVMaP
-         iDdYA0IdlxYRW2BT9MFFOAs82DADxw/+8Lc3te7qdgl5EpiAO9YUKhfdnlrOkqGMKYFe
-         mbmW7zQ8RkTNsM4vbH7zy9YYzUZejHUs/w4DYecn7b4bobnwZdOAT0xOlJBjm4jSAq2e
-         MJDoCd+h7Nrl6cu05qXp4SFgrL5FlGA3ekMOEpjs+ahjZfjJJAlZKh0KDKK3wzH7pIEw
-         Zybg==
-X-Gm-Message-State: APjAAAU94bSp6AqeA0iVwhx1K0gqYfYqTZTJm/t4J+jhJ0dliliCVb66
-        IwDVyXWqOo9ZWTKsyNCLwIjxLA==
-X-Google-Smtp-Source: APXvYqxSuxMrsqDhwIi6laAe2V358hbO8Mf5HSGwYgv9fa5ZiFoJA9Fqc+OE9ZGQSTS0VJdq29PhVA==
-X-Received: by 2002:a17:902:b60f:: with SMTP id b15mr35138746pls.68.1572979451125;
-        Tue, 05 Nov 2019 10:44:11 -0800 (PST)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id s24sm21442801pfm.144.2019.11.05.10.44.09
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:subject:from:to
+         :user-agent:date;
+        bh=hbU+lnz3PoPpDd5LQBdnFKQTsx0QptkCCfC4Iao/bDw=;
+        b=TnD9KRUdy38PLwYwMddHlQDVYaCqfb8zHzbm3o2LCtTbVkH26QyR35bsTSRe7oxFYO
+         3gNzyGadFQBgkKO7aAXPRT/w2yPWwqvpN+wR7xjH2PoNjcRXcEeaNgi0umqE+DCItBlu
+         I1iIwB9UiuuzXqUuu0xZRdXW7h4aVKbhz++M8rouOqROVPO5MKxlIJoBKamzytduDIHB
+         M2qUbUqp+wJyq6sA1Xo1T74NwBDSocHkaOGLVwSnvygNvUzaNHX7+uRurGa6TsuLbffA
+         eU7nKhMmdEja30pkVXMwL68HYqP9ygI+JdClk0BKQ5FG715H2boAgz9nwf16OgEAK52u
+         B93A==
+X-Gm-Message-State: APjAAAUlZ2saE3kHMpwJYI4iHFZqvDDcFW4525Zn28oGkEZEnwf0aYeQ
+        qnWE35VaEVQbWUuXyLL+IMD9+w==
+X-Google-Smtp-Source: APXvYqxKzQO2ljg2ThUedxjlJI/pyjirxn7/sziOiQy2u+ZZNeDvVJNw560Tzryh1Ox/hYTy/FAEow==
+X-Received: by 2002:a17:902:102:: with SMTP id 2mr35224735plb.156.1572981581248;
+        Tue, 05 Nov 2019 11:19:41 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id 39sm198792pjo.7.2019.11.05.11.19.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Nov 2019 10:44:10 -0800 (PST)
-Date:   Tue, 5 Nov 2019 10:44:07 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        tientzu@chromium.org, seanpaul@chromium.org
-Subject: Re: [PATCH v1 2/2] Bluetooth: hci_qca: Add support for Qualcomm
- Bluetooth SoC WCN3991
-Message-ID: <20191105184407.GA1852@minitux>
-References: <20191105144508.22989-1-bgodavar@codeaurora.org>
- <20191105144508.22989-3-bgodavar@codeaurora.org>
+        Tue, 05 Nov 2019 11:19:40 -0800 (PST)
+Message-ID: <5dc1cb4c.1c69fb81.af253.0b8a@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191105144508.22989-3-bgodavar@codeaurora.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1572931309-16250-1-git-send-email-kgunda@codeaurora.org>
+References: <1572931309-16250-1-git-send-email-kgunda@codeaurora.org>
+Cc:     rnayak@codeaurora.org, Kiran Gunda <kgunda@codeaurora.org>
+Subject: Re: [PATCH V2] mfd: qcom-spmi-pmic: Add support for pm6150 and pm6150l
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        lee.jones@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org
+User-Agent: alot/0.8.1
+Date:   Tue, 05 Nov 2019 11:19:39 -0800
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 05 Nov 06:45 PST 2019, Balakrishna Godavarthi wrote:
-
-> This patch add support for WCN3991 i.e. current values and fw download
-> support.
-> 
-> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+Quoting Kiran Gunda (2019-11-04 21:21:49)
+> Add the compatibles and PMIC ids for pm6150 and pm6150l PMICs
+> found on SC7180 based platforms.
+>=20
+> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
 > ---
->  drivers/bluetooth/btqca.c   | 68 +++++++++++++++++++++++++++++--------
->  drivers/bluetooth/btqca.h   | 10 ++++--
->  drivers/bluetooth/hci_qca.c | 16 +++++++--
->  3 files changed, 74 insertions(+), 20 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-[..]
-> @@ -48,13 +62,16 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version)
->  	}
->  
->  	if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
-> -	    edl->rtype != EDL_APP_VER_RES_EVT) {
-> +	    edl->rtype != rtype) {
->  		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
->  			   edl->rtype);
->  		err = -EIO;
->  		goto out;
->  	}
->  
-> +	if (soc_type == QCA_WCN3991)
-> +		memcpy(&edl->data, &edl->data[1], sizeof(*ver));
+>  - Changes from V1:
+>    Sorted the macros and compatibles.
 
-memcpy() shouldn't be used when the two memory regions are overlapping,
-use memmove() for this.
+I don't see anything sorted though.
 
-[..]
-> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-> index 7f7a2b2c0df6..309a720ff216 100644
-> --- a/drivers/bluetooth/btqca.h
-> +++ b/drivers/bluetooth/btqca.h
-> @@ -126,6 +126,7 @@ enum qca_btsoc_type {
->  	QCA_ROME,
->  	QCA_WCN3990,
->  	QCA_WCN3998,
-> +	QCA_WCN3991,
+>=20
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt | 2 ++
+>  drivers/mfd/qcom-spmi-pmic.c                             | 4 ++++
+>  2 files changed, 6 insertions(+)
+>=20
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt b/D=
+ocumentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> index 1437062..b5fc64e 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> @@ -32,6 +32,8 @@ Required properties:
+>                     "qcom,pm8998",
+>                     "qcom,pmi8998",
+>                     "qcom,pm8005",
+> +                  "qcom,pm6150",
+> +                  "qcom,pm6150l",
 
-Please maintain sort order.
+And this looks badly tabbed or something?
 
-[..]
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-[..]
-> @@ -1663,6 +1674,7 @@ static const struct of_device_id qca_bluetooth_of_match[] = {
->  	{ .compatible = "qcom,qca6174-bt" },
->  	{ .compatible = "qcom,wcn3990-bt", .data = &qca_soc_data_wcn3990},
->  	{ .compatible = "qcom,wcn3998-bt", .data = &qca_soc_data_wcn3998},
-> +	{ .compatible = "qcom,wcn3991-bt", .data = &qca_soc_data_wcn3991},
-
-Ditto
-
-Regards,
-Bjorn
+>                     or generalized "qcom,spmi-pmic".
+>  - reg:             Specifies the SPMI USID slave address for this device.
+>                     For more information see:
+> diff --git a/drivers/mfd/qcom-spmi-pmic.c b/drivers/mfd/qcom-spmi-pmic.c
+> index e8fe705..74b7980 100644
+> --- a/drivers/mfd/qcom-spmi-pmic.c
+> +++ b/drivers/mfd/qcom-spmi-pmic.c
+> @@ -34,6 +34,8 @@
+>  #define PM8998_SUBTYPE         0x14
+>  #define PMI8998_SUBTYPE                0x15
+>  #define PM8005_SUBTYPE         0x18
+> +#define PM6150_SUBTYPE         0x28
+> +#define PM6150L_SUBTYPE                0x27
+> =20
+>  static const struct of_device_id pmic_spmi_id_table[] =3D {
+>         { .compatible =3D "qcom,spmi-pmic", .data =3D (void *)COMMON_SUBT=
+YPE },
+> @@ -53,6 +55,8 @@
+>         { .compatible =3D "qcom,pm8998",    .data =3D (void *)PM8998_SUBT=
+YPE },
+>         { .compatible =3D "qcom,pmi8998",   .data =3D (void *)PMI8998_SUB=
+TYPE },
+>         { .compatible =3D "qcom,pm8005",    .data =3D (void *)PM8005_SUBT=
+YPE },
+> +       { .compatible =3D "qcom,pm6150",    .data =3D (void *)PM6150_SUBT=
+YPE },
+> +       { .compatible =3D "qcom,pm6150l",   .data =3D (void *)PM6150L_SUB=
+TYPE },
+>         { }
+>  };
+> =20
