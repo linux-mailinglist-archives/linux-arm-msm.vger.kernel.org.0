@@ -2,153 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A80DEFA42
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 10:57:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80077EFA7A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 11:08:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730573AbfKEJ5z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Nov 2019 04:57:55 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:35588 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730454AbfKEJ5z (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Nov 2019 04:57:55 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id C844060A1B; Tue,  5 Nov 2019 09:57:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572947873;
-        bh=1OgN3v4K0Y2QAPtzBaGy9XQW6fn4fdB2ScSQ0qqSInM=;
-        h=From:To:Cc:Subject:Date:From;
-        b=GFz3gyqllQooDBn3kwBf0wG9Zo5mS64h8cT6kI4Joch2g+zXAaD7m1WijUqez/TMb
-         3s29bdohGU0bHHJvRaUbMlUcvx4ArMfZjsUaJTb1y0v8dWWfExsqgvZogV4WqhZTi6
-         WF2GCgHHAO0FFmAVcxoIoo289JE2sqvSFYjVwD+4=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from akashast-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1730715AbfKEKIG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Nov 2019 05:08:06 -0500
+Received: from onstation.org ([52.200.56.107]:46082 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730699AbfKEKIG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Nov 2019 05:08:06 -0500
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: akashast@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 250A5607EF;
-        Tue,  5 Nov 2019 09:57:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1572947873;
-        bh=1OgN3v4K0Y2QAPtzBaGy9XQW6fn4fdB2ScSQ0qqSInM=;
-        h=From:To:Cc:Subject:Date:From;
-        b=GFz3gyqllQooDBn3kwBf0wG9Zo5mS64h8cT6kI4Joch2g+zXAaD7m1WijUqez/TMb
-         3s29bdohGU0bHHJvRaUbMlUcvx4ArMfZjsUaJTb1y0v8dWWfExsqgvZogV4WqhZTi6
-         WF2GCgHHAO0FFmAVcxoIoo289JE2sqvSFYjVwD+4=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 250A5607EF
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-From:   Akash Asthana <akashast@codeaurora.org>
-To:     gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        mgautam@codeaurora.org, swboyd@chromium.org,
-        Akash Asthana <akashast@codeaurora.org>
-Subject: [PATCH v4 2/2] tty: serial: qcom_geni_serial: Wakeup over UART RX
-Date:   Tue,  5 Nov 2019 15:27:40 +0530
-Message-Id: <1572947860-30645-1-git-send-email-akashast@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id D806B3E8F7;
+        Tue,  5 Nov 2019 10:08:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1572948485;
+        bh=KfnIsJjT3r6plldCySNd3bmNluaRX31wCcNiy0r6Xts=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=IxBhVMZS5/JpU1eXgyW7Fv/ilzktRpbORgO1mzIb3PZ5lNrugn5u3ATQ9cNwuha1E
+         noZYlzhYK/Q5PDYDmWXe/MuCrmSuA6oFs/5vz/dn1UZEm8jAVoAAiQ1PjB7Q+oTFs4
+         O1twcRr93yW/W5G65ZNSOc5vHZAcwId3oMz6ZtSs=
+Date:   Tue, 5 Nov 2019 05:08:04 -0500
+From:   Brian Masney <masneyb@onstation.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [Freedreno] drm/msm: 'pp done time out' errors after async
+ commit changes
+Message-ID: <20191105100804.GA9492@onstation.org>
+References: <20191105000129.GA6536@onstation.org>
+ <CAF6AEGv3gs+LFOP3AGthXd4niFb_XYOuwLfEa2G9eb27b1wMMA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGv3gs+LFOP3AGthXd4niFb_XYOuwLfEa2G9eb27b1wMMA@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add system wakeup capability over UART RX line for wakeup capable UART.
-When system is suspended, RX line act as an interrupt to wakeup system
-for any communication requests from peer.
+On Mon, Nov 04, 2019 at 04:19:07PM -0800, Rob Clark wrote:
+> On Mon, Nov 4, 2019 at 4:01 PM Brian Masney <masneyb@onstation.org> wrote:
+> >
+> > Hey Rob,
+> >
+> > Since commit 2d99ced787e3 ("drm/msm: async commit support"), the frame
+> > buffer console on my Nexus 5 began throwing these errors:
+> >
+> > msm fd900000.mdss: pp done time out, lm=0
+> >
+> > The display still works.
+> >
+> > I see that mdp5_flush_commit() was introduced in commit 9f6b65642bd2
+> > ("drm/msm: add kms->flush_commit()") with a TODO comment and the commit
+> > description mentions flushing registers. I assume that this is the
+> > proper fix. If so, can you point me to where these registers are
+> > defined and I can work on the mdp5 implementation.
+> 
+> See mdp5_ctl_commit(), which writes the CTL_FLUSH registers.. the idea
+> would be to defer writing CTL_FLUSH[ctl_id] = flush_mask until
+> kms->flush() (which happens from a timer shortly before vblank).
+> 
+> But I think the async flush case should not come up with fbcon?  It
+> was really added to cope with hwcursor updates (and userspace that
+> assumes it can do an unlimited # of cursor updates per frame).. the
+> intention was that nothing should change in the sequence for mdp5 (but
+> I guess that was not the case).
 
-Signed-off-by: Akash Asthana <akashast@codeaurora.org>
----
-Changes in V4:
- - As per Greg's comment, removed extra dev_err logging.
- - As per Stephen's comment, using common code that manage wakeirq irqs for
-   devices. Using dev_pm_set_dedicated_wake_irq API that will take care of
-   requesting and attaching wakeup irqs for devices. Also, it sets wakeirq
-   status to WAKE_IRQ_DEDICATED_ALLOCATED as a result enabling/disabling of
-   wake irq will be managed by suspend/resume framework so, removed the code
-   for enabling and disabling of wake irq from the driver.
+The 'pp done time out' errors go away if I revert the following three
+commits:
 
-Changes in V3:
- - As per Stephen's comment, using platform_get_irq_optional API to get wakeup
-   IRQ for device.
+cd6d923167b1 ("drm/msm/dpu: async commit support")
+d934a712c5e6 ("drm/msm: add atomic traces")
+2d99ced787e3 ("drm/msm: async commit support")
 
-Changes in V2:
- - As per Stephen's comment, splitted V1 patch into 2 seperate patch.
-   a) Clean up of core IRQ registration b) Add wakeup feature.
+I reverted the first one to fix a compiler error, and the second one so
+that the last patch can be reverted without any merge conflicts.
 
- drivers/tty/serial/qcom_geni_serial.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+I see that crtc_flush() calls mdp5_ctl_commit(). I tried to use
+crtc_flush_all() in mdp5_flush_commit() and the contents of the frame
+buffer dance around the screen like its out of sync. I renamed
+crtc_flush_all() to mdp5_crtc_flush_all() and removed the static
+declaration. Here's the relevant part of what I tried:
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 634054a..56dad67 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -14,6 +14,8 @@
- #include <linux/of.h>
- #include <linux/of_device.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/pm_wakeirq.h>
- #include <linux/qcom-geni-se.h>
- #include <linux/serial.h>
- #include <linux/serial_core.h>
-@@ -116,6 +118,7 @@ struct qcom_geni_serial_port {
- 	bool brk;
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -171,7 +171,15 @@ static void mdp5_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *st
  
- 	unsigned int tx_remaining;
-+	int wakeup_irq;
- };
- 
- static const struct uart_ops qcom_geni_console_pops;
-@@ -1302,6 +1305,9 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 		return irq;
- 	uport->irq = irq;
- 
-+	if (!console)
-+		port->wakeup_irq = platform_get_irq_optional(pdev, 1);
+ static void mdp5_flush_commit(struct msm_kms *kms, unsigned crtc_mask)
+ {
+-       /* TODO */
++       struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
++       struct drm_crtc *crtc;
 +
- 	uport->private_data = drv;
- 	platform_set_drvdata(pdev, port);
- 	port->handle_rx = console ? handle_rx_console : handle_rx_uart;
-@@ -1321,6 +1327,23 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	if (port->wakeup_irq > 0) {
-+		/*
-+		 * Set pm_runtime status as ACTIVE so that wakeup_irq gets
-+		 * enabled/disabled from dev_pm_arm_wake_irq  during  system
-+		 * suspend/resume respectively.
-+		 */
-+		pm_runtime_set_active(&pdev->dev);
-+		device_init_wakeup(&pdev->dev, true);
-+		ret = dev_pm_set_dedicated_wake_irq(&pdev->dev,
-+						port->wakeup_irq);
-+		if (ret) {
-+			device_init_wakeup(&pdev->dev, false);
-+			uart_remove_one_port(drv, uport);
-+			return ret;
-+		}
-+	}
++       for_each_crtc_mask(mdp5_kms->dev, crtc, crtc_mask) {
++               if (!crtc->state->active)
++                       continue;
 +
- 	return ret;
++               mdp5_crtc_flush_all(crtc);
++       }
  }
- 
-@@ -1330,6 +1353,10 @@ static int qcom_geni_serial_remove(struct platform_device *pdev)
- 	struct uart_driver *drv = port->uport.private_data;
- 
- 	uart_remove_one_port(drv, &port->uport);
-+
-+	device_init_wakeup(&pdev->dev, false);
-+	dev_pm_clear_wake_irq(&pdev->dev);
-+
- 	return 0;
- }
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
 
+Any tips would be appreciated.
+
+Brian
