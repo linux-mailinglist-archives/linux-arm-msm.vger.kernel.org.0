@@ -2,201 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 979F1EF23E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 01:49:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AAE7CEF29A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 02:27:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729443AbfKEAtr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Nov 2019 19:49:47 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:33308 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729829AbfKEAtr (ORCPT
+        id S1730199AbfKEB1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Nov 2019 20:27:49 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:37392 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729526AbfKEB1t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Nov 2019 19:49:47 -0500
-Received: by mail-pl1-f196.google.com with SMTP id ay6so1518762plb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2019 16:49:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:cc:subject:from:to:user-agent:date;
-        bh=JfcIcSlDhogLygSQexDsTs+N54I38tq29If96lMWiUI=;
-        b=XryGOxOtH+eztv4HRtsQXmCgTewugkTPGeQZmxUzBYLkQf5mg/i1bCeS1jj5e9Wc8S
-         jOG9SUQst6GgRbT/CJJ9MmvgjF5Hxt4ic2ZXuhLs+PqjAJt/1OcQNExxXblKQw4ge7SB
-         FoBcie8tE6qfVdybFJJHQ+sRnmkO1X7pY8zf4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:cc:subject:from:to
-         :user-agent:date;
-        bh=JfcIcSlDhogLygSQexDsTs+N54I38tq29If96lMWiUI=;
-        b=t20Mw4cMeq4Qimi5WFyARrsfVsAjIG0MubvTwKHEOY8yDCRbxY2onay3kKwVhwYYdL
-         e4MSZOMhw05kugnCoe+zW3prVkqBlgtXd3Nt8+DMPEKwtz4uH54YLN5xv5+N+LYKQycG
-         ZAytlQ7HaoztjsVnBITnCkHJxvPwCUN5HCCzdYqao1B31Yo0tP5MzaFy/rSgObQo7WPq
-         sKm8bCqRNCa45llxv2wehkuTLKsdJ4o+B6+sHgdpubWS9doUCG9/VquCHEqhDiFnJN/h
-         Q5wNrPjaZQ0NxrT1/fC+NtBVCDVdpYCW8k+SObEVc/UtAncjcDPwWAihIOrFmtwuVh48
-         5AEw==
-X-Gm-Message-State: APjAAAXByYZ3gGUGbQ0v5Uq36mU2lzhYc03HiFCYuVq/RUuMWAB1cKBw
-        LGexLPXXD7yZH/l/8TMLbjzl4sadIeCaDQ==
-X-Google-Smtp-Source: APXvYqydh8wiGjD4B4RIwh/9Ka0U7RW6feS+QAYqyMGvCeKmZsf7oPx/9mnCJHqVYDNc6UGDpiaqqQ==
-X-Received: by 2002:a17:902:9042:: with SMTP id w2mr31225637plz.323.1572914986166;
-        Mon, 04 Nov 2019 16:49:46 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id z2sm17577555pgo.13.2019.11.04.16.49.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2019 16:49:45 -0800 (PST)
-Message-ID: <5dc0c729.1c69fb81.4575.3392@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1572529762-31256-2-git-send-email-sanm@codeaurora.org>
-References: <1572529762-31256-1-git-send-email-sanm@codeaurora.org> <1572529762-31256-2-git-send-email-sanm@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: sc7180: Add USB related nodes
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, sanm@codeaurora.org
-User-Agent: alot/0.8.1
-Date:   Mon, 04 Nov 2019 16:49:44 -0800
+        Mon, 4 Nov 2019 20:27:49 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id EAD6760D9B; Tue,  5 Nov 2019 01:27:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1572917268;
+        bh=sSNOhcwmvuFISLbTZnmz9ND3WMelG52dYREpGmMV3Sc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=KJwRYVAE1mbbNwJXI+S8ro5a9u+cu/TjaIoqguxLEaNOO7dfDFMJJFo9zv8KSm+mm
+         07B+izX72lpxzZq2C/fFbg/sfDkN2gOvQ/aH65SerqmQpAw3eK2+fRE7J4Vn5wwDrP
+         bRhntYVVKVM2bdAcgxuL41VBOJdBWdY9pHXpkBSU=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from eberman-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: eberman@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4511F60A4E;
+        Tue,  5 Nov 2019 01:27:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1572917266;
+        bh=sSNOhcwmvuFISLbTZnmz9ND3WMelG52dYREpGmMV3Sc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=A+Izpe4beXCN1sW5znWPk/5+Ugx5G14HVCddcYU8q6vk5aI31QlYKClS3cipeAJ4S
+         9rmrtQ8B3A9Utkz8mCjO57CKYmLqN2YJ/Dj1jf1oUBIR2z9Ev/mc8phGwVMv1iuIFS
+         aKPorWqGTkFvmYiNdYo6KzWTdujpj7n4m+loxj4c=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4511F60A4E
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=eberman@codeaurora.org
+From:   Elliot Berman <eberman@codeaurora.org>
+To:     bjorn.andersson@linaro.org, saiprakash.ranjan@codeaurora.org,
+        agross@kernel.org
+Cc:     tsoni@codeaurora.org, sidgup@codeaurora.org,
+        psodagud@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Elliot Berman <eberman@codeaurora.org>
+Subject: [PATCH 00/17] Restructure, improve target support for qcom_scm driver
+Date:   Mon,  4 Nov 2019 17:27:19 -0800
+Message-Id: <1572917256-24205-1-git-send-email-eberman@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sandeep Maheswaram (2019-10-31 06:49:22)
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dt=
-s/qcom/sc7180-idp.dts
-> index 189254f..aecc994 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> @@ -400,3 +400,28 @@
->                         bias-pull-up;
->                 };
->  };
-> +
-> +&usb_1 {
-> +       status =3D "okay";
-> +};
-> +
-> +&usb_1_dwc3 {
-> +       dr_mode =3D "host";
-> +};
-> +
-> +&usb_1_hsphy {
-> +       status =3D "okay";
-> +       vdd-supply =3D <&vreg_l4a_0p8>;
-> +       vdda-pll-supply =3D <&vreg_l11a_1p8>;
-> +       vdda-phy-dpdm-supply =3D <&vreg_l17a_3p0>;
-> +       qcom,imp-res-offset-value =3D <8>;
-> +       qcom,hstx-trim-value =3D <QUSB2_V2_HSTX_TRIM_21_6_MA>;
-> +       qcom,preemphasis-level =3D <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
-> +       qcom,preemphasis-width =3D <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
-> +};
-> +
-> +&usb_1_qmpphy {
-> +       status =3D "okay";
-> +       vdda-phy-supply =3D <&vreg_l3c_1p2>;
-> +       vdda-pll-supply =3D <&vreg_l4a_0p8>;
-> +};
-> \ No newline at end of file
+This series improves support for 32-bit Qualcomm targets on qcom_scm driver.
 
-Why is there no newline at end of file?
+Currently, the qcom_scm driver supports only 64-bit Qualcomm targets and very
+old 32-bit Qualcomm targets. Newer 32-bit targets use ARM's SMC Calling
+Convention to communicate with secure world. Older 32-bit targets use a
+"buffer-based" legacy approach for communicating with secure world (as
+implemented in qcom_scm-32.c). All arm64 Qualcomm targets use ARM SMCCC.
+Currently, SMCCC-based communication is enabled only on ARM64 config and
+buffer-based communication only on ARM config. This patch-series combines SMCCC
+and legacy conventions and selects the correct convention by querying the secure
+world [1].
 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/q=
-com/sc7180.dtsi
-> index cb623b7..7ee068f 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -9,6 +9,7 @@
->  #include <dt-bindings/clock/qcom,rpmh.h>
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +#include <dt-bindings/phy/phy-qcom-qusb2.h>
+We decided to take the opportunity as well to clean up the driver rather than
+try to patch together qcom_scm-32 and qcom_scm-64.
 
-Sort includes?
+Patches 1-4 improve macro names, reorder macros/functions, and prune unused
+            macros/functions. No functional changes were introduced.
+Patches 5-9 clears up the SCM abstraction in qcom_scm-64.
+Patches 10-14 clears up the SCM abstraction in qcom_scm-32.
+Patches 9 and 15-16 enable dynamically using the different calling conventions.
 
-> =20
->  / {
->         interrupt-parent =3D <&intc>;
-> @@ -184,6 +185,17 @@
->                         #power-domain-cells =3D <1>;
->                 };
-> =20
-> +               qfprom@784000 {
-> +                       compatible =3D "qcom,qfprom";
-> +                       reg =3D <0 0x00784000 0 0x8ff>;
-> +                       #address-cells =3D <1>;
-> +                       #size-cells =3D <1>;
-> +
-> +                       qusb2p_hstx_trim: hstx-trim-primary@25b {
-> +                               reg =3D <0x25b 0x1>;
-> +                               bits =3D <1 3>;
-> +                       };
-> +               };
+This series is based on https://lore.kernel.org/patchwork/cover/1129991/
+ 
+[1]: https://source.codeaurora.org/quic/la/kernel/msm-4.9/tree/drivers/soc/qcom/scm.c?h=kernel.lnx.4.9.r28-rel#n555
 
-Add newline here?
+Changes since RFC:
+ - Fixed missing return values in qcom_scm_call_smccc
+ - Fixed order of arguments in qcom_scm_set_warm_boot_addr
+ - Adjusted logic of SMC convention to properly support older QCOM secure worlds
+ - Boot tested on IFC6410 based on linaro kernel tag:
+   debian-qcom-dragonboard410c-18.01 (which does basic verification of legacy
+   SCM calls: at least warm_boot_addr, cold_boot_addr, and power_down)
 
->                 pdc: interrupt-controller@b220000 {
->                         compatible =3D "qcom,sdm845-pdc";
->                         reg =3D <0 0xb220000 0 0x30000>;
-> @@ -913,6 +925,98 @@
->                         status =3D "disabled";
->                 };
-> =20
-> +               usb_1_hsphy: phy@88e3000 {
-> +                       compatible =3D "qcom,sc7180-qusb2-phy";
-> +                       reg =3D <0 0x088e3000 0 0x400>;
-> +                       status =3D "disabled";
-> +                       #phy-cells =3D <0>;
-> +                       clocks =3D <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-> +                       <&rpmhcc RPMH_CXO_CLK>;
+Elliot Berman (17):
+  firmware: qcom_scm: Rename macros and structures
+  firmware: qcom_scm: Apply consistent naming scheme to command IDs
+  firmware: qcom_scm: Order functions, definitions by service/command
+  firmware: qcom_scm: Remove unused qcom_scm_get_version
+  firmware: qcom_scm-64: Move svc/cmd/owner into qcom_scm_desc
+  firmware: qcom_scm-64: Add SCM results to descriptor
+  firmware: qcom_scm-64: Remove qcom_scm_call_do_smccc
+  firmware: qcom_scm-64: Move SMC register filling to
+    qcom_scm_call_smccc
+  firmware: qcom_scm-64: Improve SMC convention detection
+  firmware: qcom_scm-32: Use SMC arch wrappers
+  firmware: qcom_scm-32: Use qcom_scm_desc in non-atomic calls
+  firmware: qcom_scm-32: Move SMCCC register filling to qcom_scm_call
+  firmware: qcom_scm-32: Create common legacy atomic call
+  firmware: qcom_scm-32: Add device argument to atomic calls
+  firmware: qcom_scm: Merge legacy and SMCCC conventions
+  firmware: qcom_scm: Enable legacy calling convention in qcom_scm-64.c
+  firmware: qcom_scm: Rename -64 -> -smc, remove -32
 
-Nitpick: Can you indent this to align with clocks above?
+ drivers/firmware/Kconfig        |  18 +-
+ drivers/firmware/Makefile       |   4 +-
+ drivers/firmware/qcom_scm-32.c  | 621 --------------------------
+ drivers/firmware/qcom_scm-64.c  | 567 ------------------------
+ drivers/firmware/qcom_scm-smc.c | 949 ++++++++++++++++++++++++++++++++++++++++
+ drivers/firmware/qcom_scm.c     | 235 +++++-----
+ drivers/firmware/qcom_scm.h     | 115 +++--
+ include/linux/qcom_scm.h        |  72 +--
+ 8 files changed, 1169 insertions(+), 1412 deletions(-)
+ delete mode 100644 drivers/firmware/qcom_scm-32.c
+ delete mode 100644 drivers/firmware/qcom_scm-64.c
+ create mode 100644 drivers/firmware/qcom_scm-smc.c
 
-> +                       clock-names =3D "cfg_ahb","ref";
-> +                       resets =3D <&gcc GCC_QUSB2PHY_PRIM_BCR>;
-> +
-> +                       nvmem-cells =3D <&qusb2p_hstx_trim>;
-> +               };
-> +
-> +               usb_1_qmpphy: phy@88e9000 {
-> +                       compatible =3D "qcom,sc7180-qmp-usb3-phy";
-> +                       reg =3D <0 0x088e9000 0 0x18c>,
-> +                             <0 0x088e8000 0 0x38>;
-> +                       reg-names =3D "reg-base", "dp_com";
-> +                       status =3D "disabled";
-> +                       #clock-cells =3D <1>;
-> +                       #address-cells =3D <2>;
-> +                       #size-cells =3D <2>;
-> +                       ranges;
-> +
-> +                       clocks =3D <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
-> +                                <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-> +                                <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
-> +                                <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
-> +                       clock-names =3D "aux", "cfg_ahb", "ref", "com_aux=
-";
-> +
-> +                       resets =3D <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
-> +                                <&gcc GCC_USB3_PHY_PRIM_BCR>;
-> +                       reset-names =3D "phy", "common";
-> +
-> +                       usb_1_ssphy: lanes@88e9200 {
-> +                               reg =3D <0 0x088e9200 0 0x128>,
-> +                                     <0 0x088e9400 0 0x200>,
-> +                                     <0 0x088e9c00 0 0x218>,
-> +                                     <0 0x088e9600 0 0x128>,
-> +                                     <0 0x088e9800 0 0x200>,
-> +                                     <0 0x088e9a00 0 0x18>;
-> +                               #phy-cells =3D <0>;
-> +                               clocks =3D <&gcc GCC_USB3_PRIM_PHY_PIPE_C=
-LK>;
-> +                               clock-names =3D "pipe0";
-> +                               clock-output-names =3D "usb3_phy_pipe_clk=
-_src";
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-Does this clock go somewhere? Like GCC?
-
-> +                       };
-> +               };
-> +
