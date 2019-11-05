@@ -2,104 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A9E73EF548
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 07:02:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B6636EF5C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 07:51:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730479AbfKEGCz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Nov 2019 01:02:55 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44170 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730520AbfKEGCz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Nov 2019 01:02:55 -0500
-Received: from localhost (unknown [106.201.60.252])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6400120818;
-        Tue,  5 Nov 2019 06:02:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1572933774;
-        bh=Adr963WRlh5HjK13+m1iekOv9cCt3ddxETiP+Guxcp0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=umHTxwaFvOaVM+nKqOg3CVVW9K7zsMx7qvTi1pIVZPGZ1WpX75tmC5cMnW7wAePnU
-         j7RNOfS9eYGa+9nDFB4Zgfdun3F+v4xUJbRdaNLQzhEwdsNrl5xbt0dwNMBG0rXXAf
-         jV/3LxzOxwwUDZtvayjhoCO+AWYRTIkqd1gzLBIU=
-Date:   Tue, 5 Nov 2019 11:32:49 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v3 2/3] dt-bindings: phy-qcom-qmp: Add sm8150 UFS phy
- compatible string
-Message-ID: <20191105060249.GX2695@vkoul-mobl.Dlink>
-References: <20191024074802.26526-1-vkoul@kernel.org>
- <20191024074802.26526-3-vkoul@kernel.org>
+        id S1727727AbfKEGvG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Nov 2019 01:51:06 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:39079 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725806AbfKEGvG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Nov 2019 01:51:06 -0500
+Received: by mail-pl1-f193.google.com with SMTP id o9so2198055plk.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Nov 2019 22:51:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=MLZvtTZXNfvRWFvhu+xZrbhbWxZa6520w7xc3DnxMfk=;
+        b=ovFzPiyueyG5Yh6NS3lam6dcbSJjihEjm+M4xFDqkGmjUXjx//55rawC9WZoTAjUsu
+         A2Xy1v2lrnDeGPeUC3k+4sEuLT7/yKwKfiYk7xxItUg8cYGd1fI4ySLpzzPY+vmrqM5l
+         JjI20g8GwXjM0iQlF0516Cs1zx7PREOSiY5GOCJGmNAIZ3UXdF50ntGkynitHmrg4Ns2
+         StTckSIMgd0t9xWKYktljntLr2DHLTVnGbeyDo6pVMh7Xve2n4Jz9ODdatcMI3zFZU6g
+         /Lk+U4N0JDLfXsHuBZl3dAPUcPkKNQrv+9kSj9KRdQECaeSsuKbIb7jhX3RYakGm4+df
+         v3rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MLZvtTZXNfvRWFvhu+xZrbhbWxZa6520w7xc3DnxMfk=;
+        b=DbLxfeVIvNgEClWnBmOzNc8rc7E9dnWfIpna7GCP1sroaf8a2L6DAGMDmGic6GXSVt
+         qAyHkBjFjPKcZgN7o4KKeUwErXIK55/YEtBlDFckZiBTh14YBLhIeQRifQNIXEjJyAlF
+         813BThmYonSkDfnvwCllJ9vGuTcTUHb/w0rdkaJpZiFmKfnFTeKphni06TlakHLO2ES7
+         YlHXIq945pTKQSzxwXNzSTiVHWTXUm/7yYqy4Hy9mVdZcPX1aD10vge2F/X472R75XIl
+         HQutoavF2BKaCe3MAuPeHPNayk2MpdeVqYH8iLEeOxkZIlMJhAfVh/89FrQr48arj5d/
+         tLtA==
+X-Gm-Message-State: APjAAAUOsrxgrddFTz7+1/ycP/KP37SLBgVENePEE8LPUicDkeA/zoND
+        m0JoKrDBlWA+YS1t6eSPJde1pg==
+X-Google-Smtp-Source: APXvYqygTQR1HLlTaiQfWLrNs7Ep8bXeQMuApptnCYjO/5t+FBUMcOI0Th7332U5KHVlcuUUK4d/pA==
+X-Received: by 2002:a17:902:9a03:: with SMTP id v3mr7331351plp.61.1572936665309;
+        Mon, 04 Nov 2019 22:51:05 -0800 (PST)
+Received: from localhost ([122.171.110.253])
+        by smtp.gmail.com with ESMTPSA id s69sm7227648pgs.65.2019.11.04.22.51.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 04 Nov 2019 22:51:04 -0800 (PST)
+Date:   Tue, 5 Nov 2019 12:20:58 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Zhang Rui <rui.zhang@intel.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, daniel.lezcano@linaro.org,
+        edubezval@gmail.com, ilina@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        tdas@codeaurora.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v3 5/6] clk: qcom: Initialise clock drivers earlier
+Message-ID: <20191105065058.yhqgvilti6cdzph2@vireshk-i7>
+References: <cover.1571314830.git.amit.kucheria@linaro.org>
+ <5f1ca3bfc45e268f7f9f6e091ba13b8103fb4304.1571314830.git.amit.kucheria@linaro.org>
+ <20191017174723.8024521D7A@mail.kernel.org>
+ <20191018060345.wjflngfdnqa3gbsu@vireshk-i7>
+ <20191028172225.1B1CF20862@mail.kernel.org>
+ <20191029010605.GB27884@e107533-lin.cambridge.arm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191024074802.26526-3-vkoul@kernel.org>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20191029010605.GB27884@e107533-lin.cambridge.arm.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24-10-19, 13:18, Vinod Koul wrote:
-> Document "qcom,sdm845-qmp-ufs-phy" compatible string for QMP UFS PHY
-> found on SM8150.
+On 29-10-19, 09:06, Sudeep Holla wrote:
+> On Mon, Oct 28, 2019 at 10:22:24AM -0700, Stephen Boyd wrote:
+> > Quoting Viresh Kumar (2019-10-17 23:03:45)
+> > > On 17-10-19, 10:47, Stephen Boyd wrote:
+> > > > Quoting Amit Kucheria (2019-10-17 05:27:37)
+> > > > > Initialise the clock drivers on sdm845 and qcs404 in core_initcall so we
+> > > > > can have earlier access to cpufreq during booting.
+> > > > >
+> > > > > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > > > > ---
+> > > >
+> > > > Acked-by: Stephen Boyd <sboyd@kernel.org>
+> > > >
+> > > > Makes me sad again.
+> > >
+> > > I am wondering why it makes you sad ? :)
+> > >
+> >
+> > We're playing games with initcall levels :(
+> >
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
+> +1, which will come back and bite us hard soon :)
 
-Kishon,
+:)
 
-Can you pick this and 3rd patch please
+I don't like reordering init calls as well, but only when they are
+used to avoid issues and probe things in a particular order. While the
+only thing we are doing here is to get things to probe earlier, which
+isn't wrong IMO :)
 
-> ---
->  Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt b/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
-> index 085fbd676cfc..eac9ad3cbbc8 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
-> +++ b/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
-> @@ -14,7 +14,8 @@ Required properties:
->  	       "qcom,msm8998-qmp-pcie-phy" for PCIe QMP phy on msm8998,
->  	       "qcom,sdm845-qmp-usb3-phy" for USB3 QMP V3 phy on sdm845,
->  	       "qcom,sdm845-qmp-usb3-uni-phy" for USB3 QMP V3 UNI phy on sdm845,
-> -	       "qcom,sdm845-qmp-ufs-phy" for UFS QMP phy on sdm845.
-> +	       "qcom,sdm845-qmp-ufs-phy" for UFS QMP phy on sdm845,
-> +	       "qcom,sm8150-qmp-ufs-phy" for UFS QMP phy on sm8150.
->  
->  - reg:
->    - index 0: address and length of register set for PHY's common
-> @@ -57,6 +58,8 @@ Required properties:
->  			"aux", "cfg_ahb", "ref", "com_aux".
->  		For "qcom,sdm845-qmp-ufs-phy" must contain:
->  			"ref", "ref_aux".
-> +		For "qcom,sm8150-qmp-ufs-phy" must contain:
-> +			"ref", "ref_aux".
->  
->   - resets: a list of phandles and reset controller specifier pairs,
->  	   one for each entry in reset-names.
-> @@ -83,6 +86,8 @@ Required properties:
->  			"phy", "common".
->  		For "qcom,sdm845-qmp-ufs-phy": must contain:
->  			"ufsphy".
-> +		For "qcom,sm8150-qmp-ufs-phy": must contain:
-> +			"ufsphy".
->  
->   - vdda-phy-supply: Phandle to a regulator supply to PHY core block.
->   - vdda-pll-supply: Phandle to 1.8V regulator supply to PHY refclk pll block.
-> -- 
-> 2.20.1
+Lets see if it bites us anytime soon, I would be surprised really :)
 
 -- 
-~Vinod
+viresh
