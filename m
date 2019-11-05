@@ -2,119 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B6A25F004B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 15:51:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 369E8F00BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Nov 2019 16:06:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731003AbfKEOvg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Nov 2019 09:51:36 -0500
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:44231 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728942AbfKEOvg (ORCPT
+        id S1731032AbfKEPGh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Nov 2019 10:06:37 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:38822 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731040AbfKEPGh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Nov 2019 09:51:36 -0500
-Received: by mail-qk1-f196.google.com with SMTP id m16so20998215qki.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Nov 2019 06:51:33 -0800 (PST)
+        Tue, 5 Nov 2019 10:06:37 -0500
+Received: by mail-lj1-f193.google.com with SMTP id v8so6584848ljh.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Nov 2019 07:06:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=uYl0KjrEv9Q2fdLs6NYOjLfGeZFa/Sr+lnmD652MtRI=;
-        b=H8xdymB0cGUDXEMvbtbJMAL6qBdhLzrnZTOO1QO8jH9p/3pNXubisYMykQqflatEFB
-         tlJEl6YSvQpivAdYzQv/5o18WWVAuuxKYPVgb6AaWDbtp6gXsq5+vynGMJMcCKVnI6nE
-         tlFWNf9YyX1oaqyVZD3ifMAoj+JW7qrl9WrMZiXVVgi2vG7JgyihqkHZrizYkxiY/F56
-         PbnDYEjHShNf2Fmmq+0q4kMpJhOBklKZKeLHih9j4OxkjVUHS5u65TBHtHlrOgpAXxnn
-         iieP+YcBoFVXhYvOoM3y2j3QkVfEv8ag8r3V1IQFX8JijKsKSqEAaQ+wzm5O/PuDI4hb
-         bJVQ==
+        bh=XeLKSI0KpVKh7U51GFQKhu41G/kKMM6hiwNkiVQAYno=;
+        b=vmLGemzHKaxLBgLOj8ysaBgUxFMaOKKjcTIanlNzhYP69lx4N1ogVqivjUM37D2rJU
+         mqZpFLjzo/ZL8PcdliQcdNt45so0lInDzm5XPZpxb1dEXl776kPWKrmh47wo2KHWKBiS
+         OihVcAcKa7ILvYycaHoOqrGsb/Xv569qGfL5cyivyxmpqWoV70XY2FaTfZ4Nn4xQiBsv
+         7FcYcUKl5Yun5MQhkq6/S3MoubixSgNFspwkPZUoQQxzpKOqlkR4hn9SmDQqQpgZpaP4
+         ea/FaQ/9Ig6WlPkVHuj6Fj2xBUe3a5dMC/UZ3Z/D2iXjk3U6bGdWAoxHw5RPFdN0or70
+         1pFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=uYl0KjrEv9Q2fdLs6NYOjLfGeZFa/Sr+lnmD652MtRI=;
-        b=J35yPXtb0+BYoduPt+RW8yBXg+6kzcrrcBQfIUt70SY/+i9l3v39PX/nDjjKQAT9wb
-         i8pAgSlzQYsIaO78dUyXJCYv5SKrDAco7C6dSacNeU+7T2lllpha2ILRT8Kki6W33PSQ
-         HuEo8/BZaXRHpbbJkaLhgpeyI6Xx42EBWnF6WXUOVRGbqet25FVgmIL8nhOCtOkuDeaD
-         kNaqT2cvAIs7KDBsO1Xz87mL2ZHuJLoz4drfs/v2iM7H1qkPGJgrJWAv9GdQy4TQPlFI
-         +e9EtpzPPLdk+fvpHHxTCAiSF3J1rkRPA8dU/4tC2wAmTYPGsiY1CsSrd/YpUvPv7r8d
-         R5RA==
-X-Gm-Message-State: APjAAAUUSmiq2IZoG61nBmuCcksgGHIwBu5kSZYOOmMQXD2pbdfGCX6H
-        /a+9L5HA4V1DbwWjs343T/W1ycaBIp1YzmwbTccuFg==
-X-Google-Smtp-Source: APXvYqzGPmuUNzRcNl4nCWY9qbqLt3ZVffUgLt+cslxAC0qbCCChqf3XGl5+61mPiy+nnDobNSYGuCSIbzsYslFDySQ=
-X-Received: by 2002:a37:b6c3:: with SMTP id g186mr5225455qkf.187.1572965493257;
- Tue, 05 Nov 2019 06:51:33 -0800 (PST)
+        bh=XeLKSI0KpVKh7U51GFQKhu41G/kKMM6hiwNkiVQAYno=;
+        b=Fy7BkQyY+thNwmhDKXpIkd+XeaSjlYlwkTn/z3Y0cQd+QYIgESFYjC9UOW8Kpo1gIE
+         6ZUXOxCR0qejogsc1Ic8Rx1tIo1d3kJkVLKaqvxo8lAEsJU+K96kbHKCExLmuH6VWvZT
+         2PxU3wzKWXfnLe63IGXueZ4l2J2b1ZJ/vz6KaACs08PSIbIE7mZ+En55npiiVkWXr5eg
+         USyMpvt/E5K9eCe2CEs4H0EGjFNtZb4ojQKfffDa+IAFTbSx4oFgxM+/t9eXO6RCi5ru
+         Un+SfcppZv2/miboQrsz/93Vb/fXbSS9KrSB/xq3vi0Ihhyo0t7d9e9m6BOYeYdg92op
+         fxXg==
+X-Gm-Message-State: APjAAAWxBaVC50xoH2fYwcF1Yb3bCJe8L43tsNIGamzu/QSF93VW6x6d
+        PAcTtDotyFKo/4QZlUxLMf0Ol7MNHSqPJbPBDVhvDg==
+X-Google-Smtp-Source: APXvYqwnwnosIbALQWhH9iE66VbRevpNKoo2+AlOIGbO/YK+JvXEq7xF97GQzxccFEeM+dwg//oNT6x78p7b0HM0Jk0=
+X-Received: by 2002:a2e:9a12:: with SMTP id o18mr16050255lji.191.1572966395420;
+ Tue, 05 Nov 2019 07:06:35 -0800 (PST)
 MIME-Version: 1.0
-References: <1572610108-1363-1-git-send-email-rkambl@codeaurora.org>
- <1572610108-1363-2-git-send-email-rkambl@codeaurora.org> <5dc09bbb.1c69fb81.196e5.9770@mx.google.com>
-In-Reply-To: <5dc09bbb.1c69fb81.196e5.9770@mx.google.com>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Tue, 5 Nov 2019 20:21:22 +0530
-Message-ID: <CAP245DWz7qkS3mGEjRA-EfhGieZtOAbnLsPZCHqSG9DL+NvPcg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: sc7180: Add device node support for
- TSENS in SC7180
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rajeshwari <rkambl@codeaurora.org>,
+References: <20191104163834.8932-1-andrew.murray@arm.com> <20191104163834.8932-4-andrew.murray@arm.com>
+In-Reply-To: <20191104163834.8932-4-andrew.murray@arm.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 5 Nov 2019 16:06:24 +0100
+Message-ID: <CACRpkdYcUFkUUG8jQ=9i9LDpKbrzqNR0o_eLObijXn4YiBHOJw@mail.gmail.com>
+Subject: Re: [PATCH v1 3/7] arm: dts: Use IRQ flags for legacy PCI IRQ interrupts
+To:     Andrew Murray <andrew.murray@arm.com>
+Cc:     Tsahee Zidenberg <tsahee@annapurnalabs.com>,
+        Antoine Tenart <antoine.tenart@bootlin.com>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        sivaa@codeaurora.org, sanm@codeaurora.org
+        Mark Rutland <mark.rutland@arm.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Lars Persson <lars.persson@axis.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, linux-arm-kernel@axis.com,
+        MSM <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rajeshwari,
+On Mon, Nov 4, 2019 at 5:39 PM Andrew Murray <andrew.murray@arm.com> wrote:
 
-On Tue, Nov 5, 2019 at 3:14 AM Stephen Boyd <swboyd@chromium.org> wrote:
+> Replace magic numbers used to describe legacy PCI IRQ interrupts
+> with #define.
 >
-> Quoting Rajeshwari (2019-11-01 05:08:28)
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > index 07ea393..06ded1d 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > @@ -449,6 +465,508 @@
-> >                 };
-> >         };
-> >
-> > +       thermal-zones {
-> > +               aoss-0-usr {
-> > +                       polling-delay-passive = <0>;
-> > +                       polling-delay = <0>;
->
-> Can we get real polling delays instead of 0?
->
-> > +                       thermal-governor = "user_space";
-> > +                       thermal-sensors = <&tsens0 0>;
-> > +                       wake-capable-sensor;
->
-> What is this property?
+> Signed-off-by: Andrew Murray <andrew.murray@arm.com>
 
-Downstream property. If you need this, propose changes to the tsens bindings.
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-> > +                       trips {
-> > +                               active-config0 {
-> > +                                       temperature = <125000>;
-> > +                                       hysteresis = <1000>;
-> > +                                       type = "passive";
-> > +                               };
-> > +                               reset-mon-cfg {
-> > +                                       temperature = <115000>;
-> > +                                       hysteresis = <5000>;
-> > +                                       type = "passive";
-> > +                               };
-> > +                       };
-> > +               };
-> > +
-> > +               cpu-0-0-usr {
-> > +                       polling-delay-passive = <0>;
-> > +                       polling-delay = <0>;
-> > +                       thermal-governor = "user_space";
->
-> What is this property?
+Thanks for just changing them all in one patch, it is swift and elegant
+patching.
 
-Based on a downstream property that was rejected upstream. Please get rid of it.
-
-Regards,
-Amit
+Yours,
+Linus Walleij
