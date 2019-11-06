@@ -2,112 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 94291F2272
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 00:18:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C87FF2286
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 00:26:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727080AbfKFXSJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 18:18:09 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:44850 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725937AbfKFXSJ (ORCPT
+        id S1727516AbfKFX0H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 18:26:07 -0500
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:48400 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727296AbfKFX0H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 18:18:09 -0500
-Received: by mail-pf1-f195.google.com with SMTP id q26so339971pfn.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Nov 2019 15:18:09 -0800 (PST)
+        Wed, 6 Nov 2019 18:26:07 -0500
+Received: by mail-pg1-f202.google.com with SMTP id q20so195863pgj.15
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Nov 2019 15:26:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=SGORRswerRGgZb83hhOx9ckaLWQ0QPtRE4RCzu+hdLs=;
-        b=tKEGBKrCAbJWIHkSwrtRTiliUEyei4XSN1ZjV8jbmJcFB3P/OJmD9diJXPu1CvIWOo
-         AmmAan25C3+lXhDFEGLH0Kd99GTm1xcCxrzZN/ZFrjfPw9hOMylVxdbasInyfqNCPd/6
-         L8VfQ3OxlMvWvbTC5NNuwXvuE7sxoVx5BE0PrpH8ANkm9wgim6ZF2nMaJnRc8VZi/+F6
-         qXkJSQ3VptgcymL/7mbgqX3yaRPXHaIMDE13mx+7Thzl2qNi9UdZ+iM66REvdLXKb/Np
-         RfYHMKYvG7wuDKGIemHFpT7u2LM0QrU9krqyXzxFuv0DP2fE9vL712Q58MNN24caFx4r
-         n+9w==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=OHExp+tEDC2Ckd4KCyaDSPrKz/CgG2oFSWHwrtG6Nuk=;
+        b=hB5JsGIVBCVe0yAEVD1QoBFXIRnU5jUy1y5W0BWww6JzDTq785Vz0L54DSpf4k7Pym
+         ewgZkLcVkpxRzfGViPWtJw26qBsk3rLYAjJmd0c0b+f+Ok83IYPkuJBdtxzdM/DKkme7
+         5VKeZTdmZVSLFbDoOxW0+/y7vxlxwJeQR2g3XVel7onDJ7bXVGwxulyEPtj87iu9cQ2L
+         VgDEo4E5beVuXLVaEzKDprnA7iWAjdfOPG22NkzbTKfQcxS1hCWuRpoZ4PBv77NtiESc
+         YMHUKOv3mp33jia8LIdBOtYoIX29N8eRRp0bkhgd6JV3PQILVppg1ZAPAyuL0IALRa5k
+         swqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SGORRswerRGgZb83hhOx9ckaLWQ0QPtRE4RCzu+hdLs=;
-        b=RXCueJr2c6STE4Mr87Hxj7Of/JevRAUZR8cvhAebznngYqIz8dMVb1FT+oQWht8MxS
-         +qMz5hFEhgQxf4ghN0D+ecEyiKKAm+mqrJ2ppNMBVnWgPBqJcnwocmYE5RTuYqGm/OV2
-         RTSoBXhVtI5Tlu70lSBRK69+cGMZ2hWvwzfcOZp3YKTZfHW3sLeFkga6+sIty/CXi7f2
-         0UaDfLkvO2PdNs4g3XwUk976XJBa7SO6loGlzto4yihBgX0ZI9PjB9H0ojVQ2WbikoTT
-         suH+LDUFjX7Zk8e7Ze/xFRy4iUQX4w8b4no6gYD7XtOIWYL4BciHWCarINzW3xS3/84Q
-         pqsA==
-X-Gm-Message-State: APjAAAVAynL1A8hLgTUozsLHg/orxSzXNhSWVWHwIJg2+HgGTMaJeZ45
-        VJ0TIYXPhdYlm7Cz0IpjIJXVKA==
-X-Google-Smtp-Source: APXvYqxcy59hYgCqEMdh0JBfNeEqEneqe1WlmaAkMHqGuw6K66Fvgkuiq+8L6PvH68RDPFvTbDoUHA==
-X-Received: by 2002:a17:90a:a409:: with SMTP id y9mr605399pjp.106.1573082288563;
-        Wed, 06 Nov 2019 15:18:08 -0800 (PST)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 137sm49565pfu.173.2019.11.06.15.18.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2019 15:18:07 -0800 (PST)
-Date:   Wed, 6 Nov 2019 15:18:05 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Olof Johansson <olof@lixom.net>
-Cc:     Andy Gross <agross@kernel.org>, arm@kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Arnd Bergmann <arnd@arndb.de>,
-        Kevin Hilman <khilman@baylibre.com>
-Subject: Re: [GIT PULL] Qualcomm ARM64 Defconfig updates for 5.5
-Message-ID: <20191106231805.GG36595@minitux>
-References: <1573068840-13098-1-git-send-email-agross@kernel.org>
- <20191106220406.4aoq5suvwww6c3ov@localhost>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191106220406.4aoq5suvwww6c3ov@localhost>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=OHExp+tEDC2Ckd4KCyaDSPrKz/CgG2oFSWHwrtG6Nuk=;
+        b=F9WyEzQduY/f+VT2zZSQ7No3uHVgm/zV7Mv7uDBHvUEilIj/ZOZOFlJN624BSf95o9
+         W4DagLD6dd3QLn53S2lgykYpU8w3ymCrpzHYyWG1Ushyzb91CTlNYqHQYrnxaXahh4gt
+         a6l+KTbAeEKvwPVNyKmofv5/H5EbLA6zBkt+V7A7riJM94ZKk4L8SOsd3PAXVWTzgqjr
+         /BO6hcpiiqaSD3ySH8sQRv3WL5+xuGmOQYFJ77hewQBHj6k5dDuT7CCfAlS5nIaymYy3
+         m81U2npo2q1JUlcbG0zishbi7NUwReVi9sUMqPYMDSjlx/yDAE6ppIafY5nUTdvPwmdx
+         AXgQ==
+X-Gm-Message-State: APjAAAVwMgT155mgSdC0UrLrxNsBbApMS2ZegQP9jsnBUtPxYRZdyIfy
+        zAKj8WArHVNSqJYW/odiAb53vniaKf7tSA==
+X-Google-Smtp-Source: APXvYqw+lyIGfoOJx9NcumMhBIdS7SlvcbY2irz9ydE3WS2lDD1iv9VMZkOUmgFplo4egCEImSiASh5dTrFaow==
+X-Received: by 2002:a63:7247:: with SMTP id c7mr496438pgn.311.1573082766024;
+ Wed, 06 Nov 2019 15:26:06 -0800 (PST)
+Date:   Wed,  6 Nov 2019 15:25:53 -0800
+Message-Id: <20191106232553.76553-1-frkoenig@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.24.0.432.g9d3f5f5b63-goog
+Subject: [PATCH] drm/msm/dpu: Add UBWC support for RGB8888 formats
+From:   Fritz Koenig <frkoenig@google.com>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Fritz Koenig <frkoenig@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 06 Nov 14:04 PST 2019, Olof Johansson wrote:
+Hardware only natively supports BGR8888 UBWC.
+UBWC support for RGB8888 can be had by pretending
+that the buffer is BGR.
 
-> On Wed, Nov 06, 2019 at 01:33:56PM -0600, Andy Gross wrote:
-> > The following changes since commit 54ecb8f7028c5eb3d740bb82b0f1d90f2df63c5c:
-> > 
-> >   Linux 5.4-rc1 (2019-09-30 10:35:40 -0700)
-> > 
-> > are available in the git repository at:
-> > 
-> >   git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-5.5
-> > 
-> > for you to fetch changes up to a36612b7469cf76953cf237a2b9a62f6c97730bb:
-> > 
-> >   arm64: defconfig: Enable Qualcomm watchdog driver (2019-10-20 23:04:59 -0700)
-> > 
-> > ----------------------------------------------------------------
-> > Qualcomm ARM64 Based defconfig Updates for v5.5
-> > 
-> > * Enable Qualcomm cpufreq, watchdog, prng, socinfo, SPI, and QSPI controllers
-> > * Enable SN65DSI86 display bridge
-> > * Enable QCA Bluetooth over Uart
-> > * Enable various Qualcomm remoteproc dependencies
-> > 
-> > ----------------------------------------------------------------
-> > Bjorn Andersson (6):
-> >       arm64: defconfig: Enable Qualcomm remoteproc dependencies
-> >       arm64: defconfig: Enable Qualcomm SPI and QSPI controller
-> >       arm64: defconfig: Enable Qualcomm socinfo driver
-> >       arm64: defconfig: Enable Qualcomm CPUfreq HW driver
-> 
-> 
-> Hi, this turns on the driver as =y, when the option is tristate. Other
-> cpufreq drivers are also modules. Is this driver truly needed to be
-> a built-in for a generic defconfig?
-> 
+Signed-off-by: Fritz Koenig <frkoenig@google.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c    | 18 ++++++++++++++++++
+ .../drm/msm/disp/dpu1/dpu_hw_catalog_format.h  |  2 ++
+ 2 files changed, 20 insertions(+)
 
-linux-next has 7 CPUfreq drivers =y and 3 =m, so I picked =y for the
-Qualcomm by majority choice. And the same driver is used by a number of
-different Qualcomm platforms, so the growth looks to be bounded.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+index 24ab6249083a..528632690f1e 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+@@ -489,12 +489,28 @@ static const struct dpu_format dpu_format_map_ubwc[] = {
+ 		true, 4, DPU_FORMAT_FLAG_COMPRESSED,
+ 		DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
+ 
++	/* ARGB8888 and ABGR8888 purposely have the same color
++	 * ordering.  The hardware only supports ABGR8888 UBWC
++	 * natively.
++	 */
++	INTERLEAVED_RGB_FMT_TILED(ARGB8888,
++		COLOR_8BIT, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
++		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
++		true, 4, DPU_FORMAT_FLAG_COMPRESSED,
++		DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
++
+ 	INTERLEAVED_RGB_FMT_TILED(XBGR8888,
+ 		COLOR_8BIT, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
+ 		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
+ 		false, 4, DPU_FORMAT_FLAG_COMPRESSED,
+ 		DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
+ 
++	INTERLEAVED_RGB_FMT_TILED(XRGB8888,
++		COLOR_8BIT, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
++		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
++		false, 4, DPU_FORMAT_FLAG_COMPRESSED,
++		DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
++
+ 	INTERLEAVED_RGB_FMT_TILED(ABGR2101010,
+ 		COLOR_8BIT, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
+ 		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
+@@ -550,7 +566,9 @@ static int _dpu_format_get_media_color_ubwc(const struct dpu_format *fmt)
+ {
+ 	static const struct dpu_media_color_map dpu_media_ubwc_map[] = {
+ 		{DRM_FORMAT_ABGR8888, COLOR_FMT_RGBA8888_UBWC},
++		{DRM_FORMAT_ARGB8888, COLOR_FMT_RGBA8888_UBWC},
+ 		{DRM_FORMAT_XBGR8888, COLOR_FMT_RGBA8888_UBWC},
++		{DRM_FORMAT_XRGB8888, COLOR_FMT_RGBA8888_UBWC},
+ 		{DRM_FORMAT_ABGR2101010, COLOR_FMT_RGBA1010102_UBWC},
+ 		{DRM_FORMAT_XBGR2101010, COLOR_FMT_RGBA1010102_UBWC},
+ 		{DRM_FORMAT_BGR565, COLOR_FMT_RGB565_UBWC},
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h
+index bb6112c949ae..fbcb3c4bbfee 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h
+@@ -6,7 +6,9 @@
+ 
+ static const uint32_t qcom_compressed_supported_formats[] = {
+ 	DRM_FORMAT_ABGR8888,
++	DRM_FORMAT_ARGB8888,
+ 	DRM_FORMAT_XBGR8888,
++	DRM_FORMAT_XRGB8888,
+ 	DRM_FORMAT_BGR565,
+ };
+ 
+-- 
+2.24.0.432.g9d3f5f5b63-goog
 
-It should work as =m as well, but we would need to validate that.
-
-Regards,
-Bjorn
