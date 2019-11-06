@@ -2,108 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E075F0B4B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 01:53:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53561F0B57
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 02:00:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729785AbfKFAxz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Nov 2019 19:53:55 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:32874 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727252AbfKFAxz (ORCPT
+        id S1730319AbfKFBAP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Nov 2019 20:00:15 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:46896 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729614AbfKFBAP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Nov 2019 19:53:55 -0500
-Received: by mail-pf1-f194.google.com with SMTP id c184so17485494pfb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Nov 2019 16:53:54 -0800 (PST)
+        Tue, 5 Nov 2019 20:00:15 -0500
+Received: by mail-pg1-f193.google.com with SMTP id r18so191071pgu.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Nov 2019 17:00:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=message-id:mime-version:content-transfer-encoding:in-reply-to
          :references:subject:from:to:cc:user-agent:date;
-        bh=3uQpVyXJaXa5octIsuRsjge4Acr0kuDzkNnN24hp4S4=;
-        b=kRAq9RJC+IeswRYCOZIa7Dt+QMa4F0+m+dmVq/tibUgNLMB4pzEGqv8AQJvfOXmMiM
-         rgEZWUfqQA8ZbLqRYCA5fT3dvLgQjwwR4ILNznO/aqkbn0SrpOU3cYGJ2833uLcS3rkW
-         31QWs4Us/g1UEwckrc0qvkXPPTJzoilZvktSE=
+        bh=pIiIz2ItTZZzpFH82myiUiEAHJe7A+CuDoWHvWiTyeo=;
+        b=EdquaqrcYH+pAh+sVkOifPFVKkTyhPOK0Jl9tBrfdZ4G65rMoNhlQYM6I5b8CMlsw3
+         swt42RJKEBWkJSnFHzt5zwF9f/5xM6GOFYXNdlkHTPM97DfjLJuJ7yF1Gq9A3qtSMA9J
+         lX+sKkatsh8AE1FAZd0uVqbP68151fel3aBzw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:mime-version
          :content-transfer-encoding:in-reply-to:references:subject:from:to:cc
          :user-agent:date;
-        bh=3uQpVyXJaXa5octIsuRsjge4Acr0kuDzkNnN24hp4S4=;
-        b=gTf9BB2RPTWp52+qaMpNJdGgO6hMwoGcJN8+P9a8QEhDBOGvZaV9/GuvyXHDL8SiSz
-         S5ZSP5RbX+eulG7ov42N3rME0syQdgw9INrkzh0jgTg0kZxsJSfb47UZyuP89gqdq+Lk
-         L1kQg8VYPcActxNIrBLhOJWRK/AaCXqU9o9scO3qGn42efJ3eolEarbXVc5GSSA+Qdgw
-         /dKpymuYodORHur15DImJGpQu2i+YrAEa5rucPXjbmljqkMIsgEcoxBg6QCckYdav+LI
-         L4BuHev6KNkYW7YLFX5aqWPk1py/HYt0JoQHlcVrt0Bi3ZLSyJ1Xke2XPJevks5212kX
-         Rhsw==
-X-Gm-Message-State: APjAAAUz1XbLwa7/lSwvMt+KB8NS8Jj+NBdfla9+jWZAAUJ8myrpLhOo
-        lX7HjWFT6KLh2nPAiigK3sn9tA==
-X-Google-Smtp-Source: APXvYqy5UMRUJF7C0ofuP/uPjLiE6rZLxVjRUxFYcGqwGYVelxQZVEYveE06wun4pbXGH6Uk+r5FHA==
-X-Received: by 2002:aa7:9787:: with SMTP id o7mr40483812pfp.120.1573001634099;
-        Tue, 05 Nov 2019 16:53:54 -0800 (PST)
+        bh=pIiIz2ItTZZzpFH82myiUiEAHJe7A+CuDoWHvWiTyeo=;
+        b=NR7IN7Vhbpm1N/hm34EK/UCSaXxQ6PK0NGmWyuH/203C8mKY+wVfenCfOybhWiwgAa
+         2ce3Aqr/wu9nk0NnxaAFPtYKd0+rkR+8jtv/sG112Mt4ywtqB2UxfZaJibUzxvxOxg0Y
+         nUJIUt/gjPmm8IxCsCBMB+xVs1T+lxm1OwDyJ8P1NrPOhgFta+lIf6lR5JdAWoIYN0DK
+         CphIGeyf3obGCHaAIbIkde3W+8o+NPeZ/xq2+dLo7PfGXAE+UwYUU0UFKw6VUe0DiWkc
+         R1NaHvSTpSLGf1qiq262qRpB1Jb5aXCk8BEA1dE1R4WwBJwfckIzyZh6nB2m49mCw4FU
+         yGLQ==
+X-Gm-Message-State: APjAAAX8LLqdCa2uIrYmNV85LMaehDDHkfLw8PTgJb5PSUh4Rittzqvw
+        m+T6Ajf3sadw6XC1JXoKdwEvhw==
+X-Google-Smtp-Source: APXvYqyEBQ8gM3ICvnA0/Vi8tr28bW+OnYoccIDQURlnZ5qTR4tDYqk2vNth+OTrJuyi0c7kCIrqIg==
+X-Received: by 2002:a63:5125:: with SMTP id f37mr37765519pgb.98.1573002014320;
+        Tue, 05 Nov 2019 17:00:14 -0800 (PST)
 Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id 6sm23290656pfy.43.2019.11.05.16.53.52
+        by smtp.gmail.com with ESMTPSA id b82sm20863155pfb.33.2019.11.05.17.00.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Nov 2019 16:53:52 -0800 (PST)
-Message-ID: <5dc219a0.1c69fb81.f5014.42d2@mx.google.com>
+        Tue, 05 Nov 2019 17:00:13 -0800 (PST)
+Message-ID: <5dc21b1d.1c69fb81.8f924.e6e1@mx.google.com>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20191105205832.GE16900@codeaurora.org>
-References: <1568411962-1022-1-git-send-email-ilina@codeaurora.org> <1568411962-1022-7-git-send-email-ilina@codeaurora.org> <5d92829e.1c69fb81.d860a.9096@mx.google.com> <5da6b849.1c69fb81.a9b04.1b9f@mx.google.com> <20191105205832.GE16900@codeaurora.org>
-Subject: Re: [PATCH RFC v2 06/14] dt-bindings/interrupt-controller: pdc: add SPI config register
+In-Reply-To: <20191105171705.GB2815774@kroah.com>
+References: <1572947835-30600-1-git-send-email-akashast@codeaurora.org> <20191105171705.GB2815774@kroah.com>
+Subject: Re: [PATCH v4 1/2] tty: serial: qcom_geni_serial: IRQ cleanup
 From:   Stephen Boyd <swboyd@chromium.org>
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, mkshah@codeaurora.org,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
+To:     Akash Asthana <akashast@codeaurora.org>,
+        Greg KH <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        mgautam@codeaurora.org
 User-Agent: alot/0.8.1
-Date:   Tue, 05 Nov 2019 16:53:51 -0800
+Date:   Tue, 05 Nov 2019 17:00:12 -0800
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Lina Iyer (2019-11-05 12:58:32)
-> On Tue, Oct 15 2019 at 00:27 -0600, Stephen Boyd wrote:
-> >
-> >I had another idea the other day. Maybe a better approach would be to
-> >make the mailbox or SCM code an interrupt controller with the
-> >appropriate functions to poke the bits necessary to make the interrupts
-> >work. Then we can make it a chip in the hierarchy between the GIC and
-> >PDC and make the interrupts call through from PDC to GIC. The locking
-> >could be handled in each respective driver if necessary, and otherwise
-> >we don't have to use a regmap or remap the same registers (except we may
-> >need to describe if the parent is the mailbox node or the scm fimware
-> >node).
-> >
-> Wouldn't that be a stretch to image the SCM register write  or a random
-> register write as an interrupt controller? But I agree that it solves
-> the issue of determining whether we want to use SCM or regmap.
-
-As far as I can tell it's similar to PDC which is basically a gate on
-the line from a dedicated chip pad or a GPIO pad that lets the interrupt
-flow through to the GIC or not. Isn't this yet another hardware block on
-those paths that control the edge type or something?
-
+Quoting Greg KH (2019-11-05 09:17:05)
+> On Tue, Nov 05, 2019 at 03:27:15PM +0530, Akash Asthana wrote:
+> > @@ -1307,7 +1307,21 @@ static int qcom_geni_serial_probe(struct platfor=
+m_device *pdev)
+> >       port->handle_rx =3D console ? handle_rx_console : handle_rx_uart;
+> >       if (!console)
+> >               device_create_file(uport->dev, &dev_attr_loopback);
+> > -     return uart_add_one_port(drv, uport);
+> > +
+> > +     ret =3D uart_add_one_port(drv, uport);
+> > +     if (ret)
+> > +             return ret;
 >=20
-> But, we would still need to add syscon to the mailbox and then regmap
-> the registers for the interrupt contoller.
+> What is going to remove the sysfs file you just created above (in a racy
+> way, it's broken and needs to be fixed, but that's a different issue
+> here...)?
+>=20
+>=20
+> > +
+> > +     irq_set_status_flags(uport->irq, IRQ_NOAUTOEN);
+> > +     ret =3D devm_request_irq(uport->dev, uport->irq, qcom_geni_serial=
+_isr,
+> > +                     IRQF_TRIGGER_HIGH, port->name, uport);
+> > +     if (ret) {
+> > +             dev_err(uport->dev, "Failed to get IRQ ret %d\n", ret);
+> > +             uart_remove_one_port(drv, uport);
+> > +             return ret;
+>=20
+> Does this remove the sysfs file?
+>=20
 
-I'm saying that we can make the mailbox driver an interrupt controller
-driver too. Or if that doesn't work, we can map the region twice in each
-driver with ioremap and cross fingers that they don't touch the same
-register at the same time. It sounds like that is the case. We won't be
-able to fancily reserve the register region and map it in one function
-call, but maybe that can be fixed by limiting the size or offset that is
-reserved for each driver manually based on the same register property
-that's described in DT. Basically, one node in DT
+The loopback file isn't documented. It isn't removed when the driver is
+removed either. Can we just remove the whole thing? It would be nicer if
+that sort of thing was supported in the tty layer somehow. Is it?
 
- mailbox@f00 {
-   reg =3D <0xf00 0x1000>;
- };
-
-And then each driver will ioremap() the whole register region that's
-parsed from DT but each driver will mark sub-regions as reserved for the
-respective driver. That way we don't have to worry about using a regmap
-here and we'll still know what drivers are using what regions of IO in
-/proc/iomem.
