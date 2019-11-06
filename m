@@ -2,194 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 33133F2028
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 21:56:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B02CAF2153
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 23:04:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729725AbfKFU4P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 15:56:15 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:39377 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729479AbfKFU4O (ORCPT
+        id S1727700AbfKFWEV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 17:04:21 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:41072 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726957AbfKFWEV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 15:56:14 -0500
-Received: by mail-pg1-f196.google.com with SMTP id 29so6649103pgm.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Nov 2019 12:56:14 -0800 (PST)
+        Wed, 6 Nov 2019 17:04:21 -0500
+Received: by mail-lj1-f195.google.com with SMTP id m9so27919982ljh.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Nov 2019 14:04:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=lixom-net.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=ZPKtVJ0HeVq9A2u62u0N35fYwWIPZc3YcQ49fUKjo34=;
-        b=qcgoF8Pw8ajQN0r0/YA0B/GBPMJDU9rB7OMeSzx/+doN1UUPU+gZYkugbM6L6IKxMK
-         gOyF4J52nenyG9fb1b0ohaAqaXKl1p7z+VkhAUV32UDvorVQAMgI0rvNqE5THiUbV6ak
-         LNnZvUirh0CSgqIOowe27HE/B4e0aKNCNd1IHwwudwK2lD44dIWVmF3fgN2nA48Qeh0f
-         BxNdfzeUrqFLYP0SruRcTDB9KcVwxyfxnoCesiHx1u/nWh1utrwZ9jX1UUaIFJAcsZr0
-         hYb2r9bhcCrHx21GevIOyVYvkKE5q8Eanqv0f3abdzL/rfAWNva8NKO/7ZHpyMlsdDWp
-         6oeA==
+        bh=b4Y1JPpjGMsxvPxn35W51flX+hoR/EOYHK+rzP1aHWU=;
+        b=yHivMyiQij6HNG22rsWf26KBLWEI0yzWYNqfVYXuognM2nw2gJHeKPFxasY5VUVa8h
+         kZXae0rnxEe1UABLDYhpmyl2ovMKRLAN/satzWx8LVMT2ZH0namNhozNhmo193OB0lJc
+         JvrEp34RYW1CIOUFlPhWxYEyqAtOPECL8L77RuXj+Gz6jrx371DCD5b1DFNCJGEhWnVM
+         u1rGVky8AuwgixhGFXeyo5Z+ZHosjyco1FHT3sCLxM20Gql/Ie8rbe/pXef/RMd9qW5+
+         uV5Q51kRo/y00h/SbRLVpVGjQemvl0v26b4+k4q2jdd9TOdjxY8rDTjYSZz4imceJS53
+         Ubmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZPKtVJ0HeVq9A2u62u0N35fYwWIPZc3YcQ49fUKjo34=;
-        b=c9fvVI4J/5l8eFzJLgjXa4K7xoDBKf6HgZMVHD6othLDqieWm4J5UtF3GHAkIo30KZ
-         HLSoTjeU5KIVGdHULIkZkbmpsLfQaludNDRUzRkH2bkTiSQlhY3qfnHoYVPeSta040GQ
-         cod2hg7P2VUTQOi+YX2YV6yXZQMtrKQokkRZb2HYnyJPpi3raVFXc/+I5nbtgxtc67A9
-         +3IuVs5mKWIU977o7lrEwzVzdNM4JOw+cI8Tos0nFiYKicuFtsPZHjDd0aBlhv/e9rOx
-         lsfByOd4UkTHwiBp4mUdQ7A46m/mo3064eGtU4Wbos5wMDe2DnTF9TI5IqQWVCiHNil/
-         ug4w==
-X-Gm-Message-State: APjAAAVy2CbA0TfcWXYIgIHcUSnqdYCFj/BFXldnXnU0ps4uODciXI/g
-        jCfogeA8N1EYGks3612Rn/v3uQ==
-X-Google-Smtp-Source: APXvYqxrxtxc2N2ZiTl8LWPHZB7ZzGqBS2+4ZZz88KMpj7mjPWfn3zK2I8f0UzMGlHQIOP0r+baK9w==
-X-Received: by 2002:a63:1f09:: with SMTP id f9mr5109536pgf.89.1573073773276;
-        Wed, 06 Nov 2019 12:56:13 -0800 (PST)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 13sm27004520pgq.72.2019.11.06.12.56.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2019 12:56:12 -0800 (PST)
-Date:   Wed, 6 Nov 2019 12:56:08 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Philipp Zabel <p.zabel@pengutronix.de>
-Cc:     Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andrew Murray <andrew.murray@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] PCI: qcom: Add support for SDM845 PCIe controller
-Message-ID: <20191106205608.GF36595@minitux>
-References: <20191102002721.4091180-1-bjorn.andersson@linaro.org>
- <20191102002721.4091180-3-bjorn.andersson@linaro.org>
- <776ec4265217cc83e9e847ff3c80a52a86390b1b.camel@pengutronix.de>
+        bh=b4Y1JPpjGMsxvPxn35W51flX+hoR/EOYHK+rzP1aHWU=;
+        b=W4Dx42ndFBHlQkx9TnSqzxVDiL9o7bhaTEJdXJ/FtNVP/U7qSpdQFORf11JjNwYXHU
+         TJlsGP6e7D7b4EQgFwPtZrBmMHIUTliOsEwBZze6qBRPZcjsXvM2tMjIY5Opzb1Eg+eA
+         bf+kwW9BulDL/ZQBYN99R6pzqwhYbM/VQAvykY0FKVtXPhPk06CWbIYgIK4uTRfJpOWB
+         Is8sK6tjGB9LFwPJNlZDGMt754D7E6J5/yk/IQLjpG0gXRBQOpBatM47aAl4bSOMZs4l
+         GOerO9YhLoUjJAXOv2Ocdk2oR5D5tOqKgebspMR4vdW/NtN9pQ5khOJMNA+AcvaTG6t/
+         Tfyw==
+X-Gm-Message-State: APjAAAXLCawKVhPXGra96nfPxOoeketidpvZNp92KbpbywveuDLprwnP
+        LgZJN4mgC/TnMk5L2/+y6ci0Xw==
+X-Google-Smtp-Source: APXvYqy+Q/ffmMrHnPVMwxBzqY/VK8fGVA2u7nV7S2PwD1HF/DzGA/s6as59bd/04V/o3XsSAgeQhA==
+X-Received: by 2002:a2e:b053:: with SMTP id d19mr3680770ljl.36.1573077859341;
+        Wed, 06 Nov 2019 14:04:19 -0800 (PST)
+Received: from localhost (h85-30-9-151.cust.a3fiber.se. [85.30.9.151])
+        by smtp.gmail.com with ESMTPSA id r4sm39612ljn.64.2019.11.06.14.04.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 06 Nov 2019 14:04:18 -0800 (PST)
+Date:   Wed, 6 Nov 2019 14:04:06 -0800
+From:   Olof Johansson <olof@lixom.net>
+To:     Andy Gross <agross@kernel.org>
+Cc:     arm@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Kevin Hilman <khilman@baylibre.com>
+Subject: Re: [GIT PULL] Qualcomm ARM64 Defconfig updates for 5.5
+Message-ID: <20191106220406.4aoq5suvwww6c3ov@localhost>
+References: <1573068840-13098-1-git-send-email-agross@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <776ec4265217cc83e9e847ff3c80a52a86390b1b.camel@pengutronix.de>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <1573068840-13098-1-git-send-email-agross@kernel.org>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 04 Nov 01:41 PST 2019, Philipp Zabel wrote:
-
-> Hi Bjorn,
+On Wed, Nov 06, 2019 at 01:33:56PM -0600, Andy Gross wrote:
+> The following changes since commit 54ecb8f7028c5eb3d740bb82b0f1d90f2df63c5c:
 > 
-> On Fri, 2019-11-01 at 17:27 -0700, Bjorn Andersson wrote:
-> > The SDM845 has one Gen2 and one Gen3 controller, add support for these.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> > 
-> > Changes since v1:
-> > - Style changes requested by Stan
-> > - Tested with second PCIe controller as well
-> > 
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 152 +++++++++++++++++++++++++
-> >  1 file changed, 152 insertions(+)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index 7e581748ee9f..35f4980480bb 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -54,6 +54,7 @@
-> [...]
-> > +static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
-> > +{
-> > +	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> > +	struct dw_pcie *pci = pcie->pci;
-> > +	struct device *dev = pci->dev;
-> > +	u32 val;
-> > +	int ret;
-> > +
-> > +	ret = regulator_bulk_enable(ARRAY_SIZE(res->supplies), res->supplies);
-> > +	if (ret < 0) {
-> > +		dev_err(dev, "cannot enable regulators\n");
-> > +		return ret;
-> > +	}
-> > +
-> > +	ret = clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
-> > +	if (ret < 0)
-> > +		goto err_disable_regulators;
-> > +
-> > +	ret = reset_control_assert(res->pci_reset);
-> > +	if (ret < 0) {
-> > +		dev_err(dev, "cannot deassert pci reset\n");
-> > +		goto err_disable_clocks;
-> > +	}
+>   Linux 5.4-rc1 (2019-09-30 10:35:40 -0700)
 > 
-> If for any of the above fails, the reset line is left in its default
-> state, presumably unasserted. Is there a reason to assert and keep it
-> asserted if enabling the clocks fails below?
+> are available in the git repository at:
 > 
-
-No, I don't think there's any reason for doing this and looking at the
-downstream driver, they don't even propagate this error.
-
-> > +	msleep(20);
-
-And I see now that downstream has this as 1ms, will update and retest
-again.
-
-> > +
-> > +	ret = reset_control_deassert(res->pci_reset);
-> > +	if (ret < 0) {
-> > +		dev_err(dev, "cannot deassert pci reset\n");
-> > +		goto err_assert_resets;
+>   git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-5.5
 > 
-> Nitpick: this seems superfluous since the reset line was just asserted
-> 20 ms before. Maybe just:
+> for you to fetch changes up to a36612b7469cf76953cf237a2b9a62f6c97730bb:
 > 
-> 		goto err_disable_clocks;
-
-Yes, this seems reasonable.
-
+>   arm64: defconfig: Enable Qualcomm watchdog driver (2019-10-20 23:04:59 -0700)
 > 
-> > +	}
-> > +
-> > +	ret = clk_prepare_enable(res->pipe_clk);
-> > +	if (ret) {
-> > +		dev_err(dev, "cannot prepare/enable pipe clock\n");
-> > +		goto err_assert_resets;
-> > +	}
-> > +
-> > +	/* configure PCIe to RC mode */
-> > +	writel(DEVICE_TYPE_RC, pcie->parf + PCIE20_PARF_DEVICE_TYPE);
-> > +
-> > +	/* enable PCIe clocks and resets */
-> > +	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > +	val &= ~BIT(0);
-> > +	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > +
-> > +	/* change DBI base address */
-> > +	writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
-> > +
-> > +	/* MAC PHY_POWERDOWN MUX DISABLE  */
-> > +	val = readl(pcie->parf + PCIE20_PARF_SYS_CTRL);
-> > +	val &= ~BIT(29);
-> > +	writel(val, pcie->parf + PCIE20_PARF_SYS_CTRL);
-> > +
-> > +	val = readl(pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
-> > +	val |= BIT(4);
-> > +	writel(val, pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
-> > +
-> > +	if (IS_ENABLED(CONFIG_PCI_MSI)) {
-> > +		val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
-> > +		val |= BIT(31);
-> > +		writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
-> > +	}
-> > +
-> > +	return 0;
-> > +err_assert_resets:
-> > +	reset_control_assert(res->pci_reset);
+> ----------------------------------------------------------------
+> Qualcomm ARM64 Based defconfig Updates for v5.5
 > 
-> So maybe this can just be removed. The reset isn't asserted in deinit
-> either.
+> * Enable Qualcomm cpufreq, watchdog, prng, socinfo, SPI, and QSPI controllers
+> * Enable SN65DSI86 display bridge
+> * Enable QCA Bluetooth over Uart
+> * Enable various Qualcomm remoteproc dependencies
 > 
+> ----------------------------------------------------------------
+> Bjorn Andersson (6):
+>       arm64: defconfig: Enable Qualcomm remoteproc dependencies
+>       arm64: defconfig: Enable Qualcomm SPI and QSPI controller
+>       arm64: defconfig: Enable Qualcomm socinfo driver
+>       arm64: defconfig: Enable Qualcomm CPUfreq HW driver
 
-Sounds good.
 
-Thanks for your review, Philipp!
+Hi, this turns on the driver as =y, when the option is tristate. Other
+cpufreq drivers are also modules. Is this driver truly needed to be
+a built-in for a generic defconfig?
 
-Regards,
-Bjorn
+
+-Olof
