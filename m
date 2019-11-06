@@ -2,76 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A4EBF0D7F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 05:00:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 22A18F0E2E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 06:22:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731195AbfKFEA0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Nov 2019 23:00:26 -0500
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:45498 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727266AbfKFEA0 (ORCPT
+        id S1725535AbfKFFWU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 00:22:20 -0500
+Received: from userp2130.oracle.com ([156.151.31.86]:56778 "EHLO
+        userp2130.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725379AbfKFFWU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Nov 2019 23:00:26 -0500
-Received: by mail-oi1-f194.google.com with SMTP id k2so19710918oij.12;
-        Tue, 05 Nov 2019 20:00:25 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ysqS9rcdYrTtEuoWI9nbxHqCjwSJ2N3Q7Hvz5EM+mmA=;
-        b=Qry9BVoYDD8cxzLSjE/RKrBpCIwYoCdorOgRkAE8ePauvrZKkqPVSiv9aTmaasgnje
-         Xw8nbu2faNbSO7RQfp3085YljoANOOaPLbl3XDj0eK1pE7cbKkVR9UgJnfkVyiUQWcZ4
-         3gW2xv/X9ANuvl3rvnguqu2ICj89ugNCpYzucKgDGd+i0bbRLLmjlV5K9G9JCRaBdQqV
-         Ob9eGJZR0X5R0afKO1LdfhKbpdBLSJVxijVkKfOsLYjqhyJtvQX+lgf7PYDAE/vuRDBy
-         LHTS+IONBbaEQtC4m23SbE9p07tqcyQU+wcw5OxeKMfecf1dZxaf3qK03p0cdhg/m7+H
-         oxzg==
-X-Gm-Message-State: APjAAAUOzYx3Josg1ZdH7LjmbWSv2iw+bcGMrR7yY3hhowg2WRMFvh9L
-        qdSG9BzuqEAibRv4RyIJgg==
-X-Google-Smtp-Source: APXvYqyT5mAWFh8aqygKOd9JM7fV1DLfzWIErkA64Ibng0c8MMAJ375J/TSg1ewt4VmCOvZwOVxrFw==
-X-Received: by 2002:aca:5104:: with SMTP id f4mr407777oib.40.1573012825074;
-        Tue, 05 Nov 2019 20:00:25 -0800 (PST)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id p18sm6244401oip.18.2019.11.05.20.00.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Nov 2019 20:00:24 -0800 (PST)
-Date:   Tue, 5 Nov 2019 22:00:23 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette =?iso-8859-1?Q?=A0?= 
-        <mturquette@baylibre.com>, David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh@kernel.org, robh+dt@kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-Subject: Re: [PATCH v1 5/7] dt-bindings: clock: Add YAML schemas for the QCOM
- VIDEOCC clock bindings
-Message-ID: <20191106040023.GA4519@bogus>
-References: <1572524473-19344-1-git-send-email-tdas@codeaurora.org>
- <1572524473-19344-6-git-send-email-tdas@codeaurora.org>
+        Wed, 6 Nov 2019 00:22:20 -0500
+Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
+        by userp2130.oracle.com (8.16.0.27/8.16.0.27) with SMTP id xA65JL5K129051;
+        Wed, 6 Nov 2019 05:22:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : references : date : in-reply-to : message-id : mime-version :
+ content-type; s=corp-2019-08-05;
+ bh=v3A9EKB6S9GwcxgDZDgw3MdPS5TmufGhz9cO5wKo5TE=;
+ b=NKNZfFdvMocrfZLHSoWtnS4z3Q1rsJde2602QX3/ElahLwDNYYG1NjVpWnvNWmqAHPuH
+ PFIJp2WoAEaEYJ2qiv9j88Qfc2aVs92rptoGxqWWQLvSujz4iJ1K0HB2xRrMumQl9a/b
+ kcqZMuE/IlUaEt7BKty5tRjLPiibgm8AoMPmd6TSHRDDVVaurQD3d1UKVHrYaQIjrzTD
+ Mj0cBui4QO4XmEblcMHiz1H8u9WvNtMuFR1LdEp0pLevnrrwwhHTlULniXW5fX8URhvP
+ znKMfGElq6cTs8sA74ciEWiYOOzRZJpMqFjAFn1fRapm+i5FEfYYv0nU1b9xLxB3EjGu Ig== 
+Received: from userp3020.oracle.com (userp3020.oracle.com [156.151.31.79])
+        by userp2130.oracle.com with ESMTP id 2w117u39ag-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 06 Nov 2019 05:22:07 +0000
+Received: from pps.filterd (userp3020.oracle.com [127.0.0.1])
+        by userp3020.oracle.com (8.16.0.27/8.16.0.27) with SMTP id xA65I9ab046830;
+        Wed, 6 Nov 2019 05:22:06 GMT
+Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
+        by userp3020.oracle.com with ESMTP id 2w3162q6u1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 06 Nov 2019 05:22:06 +0000
+Received: from abhmp0015.oracle.com (abhmp0015.oracle.com [141.146.116.21])
+        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id xA65M1Ca030173;
+        Wed, 6 Nov 2019 05:22:02 GMT
+Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Tue, 05 Nov 2019 21:22:01 -0800
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Evan Green <evgreen@chromium.org>,
+        Can Guo <cang@codeaurora.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Subhash Jadavani <subhashj@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v3 1/3] dt-bindings: ufs: Add sm8150 compatible string
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+Organization: Oracle Corporation
+References: <20191024074802.26526-1-vkoul@kernel.org>
+        <20191024074802.26526-2-vkoul@kernel.org>
+        <20191105060212.GW2695@vkoul-mobl.Dlink>
+Date:   Wed, 06 Nov 2019 00:21:58 -0500
+In-Reply-To: <20191105060212.GW2695@vkoul-mobl.Dlink> (Vinod Koul's message of
+        "Tue, 5 Nov 2019 11:32:12 +0530")
+Message-ID: <yq1lfst1sw9.fsf@oracle.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.92 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1572524473-19344-6-git-send-email-tdas@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9432 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=956
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1908290000 definitions=main-1911060055
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9432 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
+ lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1908290000
+ definitions=main-1911060055
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 31 Oct 2019 17:51:11 +0530, Taniya Das wrote:
-> The VIDEOCC clock provider have a bunch of generic properties that
-> are needed in a device tree. Add a YAML schemas for those.
-> 
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
->  .../devicetree/bindings/clock/qcom,videocc.txt     | 18 -------
->  .../devicetree/bindings/clock/qcom,videocc.yaml    | 61 ++++++++++++++++++++++
->  2 files changed, 61 insertions(+), 18 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/clock/qcom,videocc.txt
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,videocc.yaml
-> 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Vinod,
+
+>> Document "qcom,sm8150-ufshc" compatible string for UFS HC found on
+>> SM8150.
+
+> Would you mind picking this up, Rob has acked this
+
+Applied to 5.5/scsi-queue, thanks!
+
+-- 
+Martin K. Petersen	Oracle Linux Engineering
