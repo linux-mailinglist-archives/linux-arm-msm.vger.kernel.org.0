@@ -2,139 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 337F9F10C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 09:08:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A76A9F113F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 09:39:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730260AbfKFIIg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 03:08:36 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:32918 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729986AbfKFIIg (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 03:08:36 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 0A4E7611FA; Wed,  6 Nov 2019 08:08:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573027715;
-        bh=Yo8SjkHYjtVRfPkp1PCsQaZra8UH8YIzC2IL8wAokAQ=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=VMB2FIKpdyZBdj/Gzgg0EPW60ktlEchBic4EaMJey34K57PbxkBAqpzVCppzsgqed
-         5yj5n03ZLKZRzXEvUyIqAP2W6ElvRfKcluz88VLPT+b5x5njoLRKhuTlpZnw61QVCd
-         W3g/pA8A6ChQYV0Ng/wgNRmFQNLMHT+t5x6y1jaM=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 0F17A611FA;
-        Wed,  6 Nov 2019 08:08:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573027714;
-        bh=Yo8SjkHYjtVRfPkp1PCsQaZra8UH8YIzC2IL8wAokAQ=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=Kjd7AuVic0Qh7zYpZM8+B10ufNxRXRFu1YkVYV1UH4ckWBzt1b2HedvixzIeG4wIk
-         4gX5fnjwTQ1CKTZZKPs6gaQev5qPNR9TKNqqqiZCLjfz+5s1jKoUk/NIVzuu6byMnk
-         ZcFHv6z/PC7j1xE+547iGggtVbr3c2G/jsQsaGp8=
+        id S1730134AbfKFIj3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 03:39:29 -0500
+Received: from mail.kernel.org ([198.145.29.99]:48026 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730088AbfKFIj3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 6 Nov 2019 03:39:29 -0500
+Received: from localhost.localdomain (unknown [223.226.46.117])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9FEB12084D;
+        Wed,  6 Nov 2019 08:39:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1573029568;
+        bh=7MFR2ZIi37ajuns9jLuWI/+9zvp+HfFtIxkIU4zEI60=;
+        h=From:To:Cc:Subject:Date:From;
+        b=bcAhhbMaoVAmAYFuJ10uG+owvwd2gbXCPmhqlNqTc0Fmn69XwzgZz9g/qXQRkpz7s
+         M9Iy9XgDlKDC/dGfdJkcQanFi8e3Dsk2PtXppoaojL9nyN7a4b7mQFSnnIKaiwo3mQ
+         stKr8yR7/lnsVKyuZZAIaYXEC5Dfe02Fx2sDwoCo=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Mathias Nyman <mathias.nyman@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v5 0/4] usb: xhci: Add support for Renesas USB controllers
+Date:   Wed,  6 Nov 2019 14:08:39 +0530
+Message-Id: <20191106083843.1718437-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 06 Nov 2019 13:38:34 +0530
-From:   Balakrishna Godavarthi <bgodavar@codeaurora.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        tientzu@chromium.org, seanpaul@chromium.org
-Subject: Re: [PATCH v1 2/2] Bluetooth: hci_qca: Add support for Qualcomm
- Bluetooth SoC WCN3991
-In-Reply-To: <20191105184407.GA1852@minitux>
-References: <20191105144508.22989-1-bgodavar@codeaurora.org>
- <20191105144508.22989-3-bgodavar@codeaurora.org>
- <20191105184407.GA1852@minitux>
-Message-ID: <739a8cadc6e01971a523d5a0b6fae057@codeaurora.org>
-X-Sender: bgodavar@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jorn,
+This series add support for Renesas USB controllers uPD720201 and uPD720202.
+These require firmware to be loaded and in case devices have ROM those can
+also be programmed if empty. If ROM is programmed, it runs from ROM as well.
 
-On 2019-11-06 00:14, Bjorn Andersson wrote:
-> On Tue 05 Nov 06:45 PST 2019, Balakrishna Godavarthi wrote:
-> 
->> This patch add support for WCN3991 i.e. current values and fw download
->> support.
->> 
->> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
->> ---
->>  drivers/bluetooth/btqca.c   | 68 
->> +++++++++++++++++++++++++++++--------
->>  drivers/bluetooth/btqca.h   | 10 ++++--
->>  drivers/bluetooth/hci_qca.c | 16 +++++++--
->>  3 files changed, 74 insertions(+), 20 deletions(-)
->> 
->> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> [..]
->> @@ -48,13 +62,16 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 
->> *soc_version)
->>  	}
->> 
->>  	if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
->> -	    edl->rtype != EDL_APP_VER_RES_EVT) {
->> +	    edl->rtype != rtype) {
->>  		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
->>  			   edl->rtype);
->>  		err = -EIO;
->>  		goto out;
->>  	}
->> 
->> +	if (soc_type == QCA_WCN3991)
->> +		memcpy(&edl->data, &edl->data[1], sizeof(*ver));
-> 
-> memcpy() shouldn't be used when the two memory regions are overlapping,
-> use memmove() for this.
-> 
+This includes two patches from Christian which supported these controllers
+w/o ROM and later my patches for ROM support and multiple firmware versions.
 
-[Bala]: will update
+Changes in v5:
+ Added a debugfs rom erase patch, helps in debugging
+ Squashed patch 1 & 2 as requested by Mathias
 
-> [..]
->> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
->> index 7f7a2b2c0df6..309a720ff216 100644
->> --- a/drivers/bluetooth/btqca.h
->> +++ b/drivers/bluetooth/btqca.h
->> @@ -126,6 +126,7 @@ enum qca_btsoc_type {
->>  	QCA_ROME,
->>  	QCA_WCN3990,
->>  	QCA_WCN3998,
->> +	QCA_WCN3991,
-> 
-> Please maintain sort order.
-> 
+Changes in v4:
+ Rollback the delay values as we got device failures
 
-[Bala]: will update
+Changes in v3:
+  Dropped patch 2 as discussed with Christian
+  Removed aligned 8 bytes check
+  Change order for firware search from highest version to lowest
+  Added entry for new firmware for device 0x14 as well
+  Add tested by Christian
 
-> [..]
->> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> [..]
->> @@ -1663,6 +1674,7 @@ static const struct of_device_id 
->> qca_bluetooth_of_match[] = {
->>  	{ .compatible = "qcom,qca6174-bt" },
->>  	{ .compatible = "qcom,wcn3990-bt", .data = &qca_soc_data_wcn3990},
->>  	{ .compatible = "qcom,wcn3998-bt", .data = &qca_soc_data_wcn3998},
->> +	{ .compatible = "qcom,wcn3991-bt", .data = &qca_soc_data_wcn3991},
-> 
-> Ditto
-> 
+Changes in v2:
+  used macros for timeout count and delay
+  removed renesas_fw_alive_check
+  cleaned renesas_fw_callback
+  removed recurion for renesas_fw_download
+  added MODULE_FIRMWARE
+  added comment for multiple fw order
 
-[Bala]: will update
+Christian Lamparter (1):
+  usb: xhci: add firmware loader for uPD720201 and uPD720202 w/o ROM
 
-> Regards,
-> Bjorn
+Vinod Koul (3):
+  usb: xhci: Add ROM loader for uPD720201
+  usb: xhci: allow multiple firmware versions
+  usb: xhci: provide a debugfs hook for erasing rom
+
+ drivers/usb/host/xhci-pci.c | 911 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 911 insertions(+)
 
 -- 
-Regards
-Balakrishna.
+2.23.0
+
