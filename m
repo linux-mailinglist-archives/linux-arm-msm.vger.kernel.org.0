@@ -2,135 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DB7CF1CB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 18:46:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ACB30F1CDE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 18:54:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728585AbfKFRqE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 12:46:04 -0500
-Received: from mail-yw1-f65.google.com ([209.85.161.65]:41241 "EHLO
-        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727286AbfKFRqE (ORCPT
+        id S1729007AbfKFRyr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 12:54:47 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:56199 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726963AbfKFRyr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 12:46:04 -0500
-Received: by mail-yw1-f65.google.com with SMTP id j190so4100237ywf.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Nov 2019 09:46:02 -0800 (PST)
+        Wed, 6 Nov 2019 12:54:47 -0500
+Received: by mail-wm1-f67.google.com with SMTP id b11so1785743wmb.5;
+        Wed, 06 Nov 2019 09:54:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ti2WIrG/wqVpP6gwSLMr10D1CGH87UGB79Iwp1jjWko=;
-        b=IhxBw/0pqpQSQ9R7a5DrsROMdvGXM67XkxQ2UirspG3CCZcPw2VgEkhV4uhOHzsggD
-         p2e6ztsXbDfECjlQazuurS8Ig1LCO5Yd+Z2ON8NxO23pQNsmafoj57jLxorJbr4KVwc2
-         4l2ov/HkhF0TdQQ7Nphnxj2Oque1M5QzM+9lOL3ZbsxXhZMl+4noMvz2jeKbHPK5vGcP
-         JJi4+xMB3I45K+plZysx4/nwu6Aum9+LFsfAl/2gWJISxN+3kJrz96a7Ns6teGzqnaKf
-         fHuUaIxpB38o4QiIlD5AeSUmbS2X49uoWGZurbJ4uomVtAK2TMvUDcTqKPPlOGyBfXh7
-         JAuw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Mp8PmEfmEPEAcc2ofDS4BS1efFDXiszJx2M4n5KAdao=;
+        b=ff8fs7QOtR+Z9b/UJVi2IJ9dy5ChIuEBWx0s53X0lM93+sSd5V6nahWjZiEj36RAww
+         14kAlycXxLvErSV0lf2/CsORQyl8daFs8RnOgvdVmxE7t2EKeOwPrDJRjAWly0XEuROt
+         d5PXbY+GTaI9aqPzD/g19PSwx9k7AUeDXYA9zE+2rYCdmZe77ipVdqLHEtfTUguv5Rfh
+         gyalQ1YiAGrD3ZQYpTHVVUSn2vS+YojOwxpm/Vw4eibQcAKbt07npzPo3ElkoxUQTQ4x
+         zSleWC3LZ7EY8fC+h45aA03gn3mBpS7cTzScxDKJcVu95fYWWzDP/RLb1FJ5frbFIjX+
+         IKdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ti2WIrG/wqVpP6gwSLMr10D1CGH87UGB79Iwp1jjWko=;
-        b=TcoJhrok6FHNCVFtme6B7Zp5ol0/SnJ8ttxIFBwY0BvbucZFWX/5lgdPaMd94g0rX/
-         wtdXz9pNqTmJk2vn5nD770BeZJI+SHvVJax5XXGh075slzVgbx4d/3zmHiV3MOhMsFHR
-         69SUFG9416REvKUD46qyKEfgurnqhJsgidU/TCS+43INN6Z+JNeCrUIlun0eZw1tQikW
-         FsfD3xd4rq7SWgCipp+h5EQ2weQnWZOU79W21s/fUboTwkT6sNA6ezvZpL2zlaVAHaEo
-         6qEfZaRcFNj5iR5mjkZvShE7picIQZTEYZNt5lthac3khzsqAYWzY/QhArxlGZD960sp
-         BNgg==
-X-Gm-Message-State: APjAAAXcshRcjW/V/CBXLfDl0sJRG86QiPZ9ZPjcX8C1otETj3zHfr6s
-        /OEBCsttwmuK8HuLpNRtzw9WuQ==
-X-Google-Smtp-Source: APXvYqx+E9tcHAdNQprtoLG2oNzLkUnhaDZUthibXbPbXDss3FV9KlCr/w+GU/N9UxBctOFYTUsCUw==
-X-Received: by 2002:a81:7a52:: with SMTP id v79mr2598939ywc.254.1573062362106;
-        Wed, 06 Nov 2019 09:46:02 -0800 (PST)
-Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
-        by smtp.gmail.com with ESMTPSA id t7sm6670902ywe.19.2019.11.06.09.46.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2019 09:46:01 -0800 (PST)
-Date:   Wed, 6 Nov 2019 12:46:00 -0500
-From:   Sean Paul <sean@poorly.run>
-To:     Sharat Masetty <smasetty@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH] drm: msm: a6xx: fix debug bus register
- configuration
-Message-ID: <20191106174600.GB63329@art_vandelay>
-References: <1573040963-24148-1-git-send-email-smasetty@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Mp8PmEfmEPEAcc2ofDS4BS1efFDXiszJx2M4n5KAdao=;
+        b=uAzJbxxvA0EC4WHMZC/89DswgrXyTSZ5wWtxfPhzMrNVQsPMuUDu/HIa672a2W6W28
+         o3kdPeoJTxBosfzfMbLBDsZqxoOiuwMc2XieCBR2dpPUejR8X+DeYhftVi1CRM0kEF1B
+         qtEx3LhT2COuSLnzaYSq1CRe66kL6Ay3qjHYyH9AnMHTaq2IBnhZCX7GdtPidJcHPYNE
+         jbzfUpjUv3jcJdsA/7BQfUDKHSzS2YLqeDLf43WT9WT+g4dhZB8XwjnKyV6W3rGBDx8K
+         881rjyVvLcETanl51SOvmSeqYFDFFIlYUZCLo4LgUP9eWMHlCEna6NAwAGvphzdZH0rS
+         2JhQ==
+X-Gm-Message-State: APjAAAVgVGoRK24anYl7IoGr48kWZuPCgUaa0G1vt43p5+ypdC65Z0UT
+        JX9oJ8ZoNjTGjVUquV1sdp5Hs2dEuD7yDi7ux+E=
+X-Google-Smtp-Source: APXvYqzpNch3Fb9b/d445GdZWn3E6PoWeBtZwRgMHeqLULbfRueuM+F7ivK+F0o85jwv0nU0iHxmivm9mRyubqG9xfI=
+X-Received: by 2002:a1c:6542:: with SMTP id z63mr3780423wmb.29.1573062885109;
+ Wed, 06 Nov 2019 09:54:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1573040963-24148-1-git-send-email-smasetty@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20191031111645.34777-1-kholk11@gmail.com> <20191031111645.34777-2-kholk11@gmail.com>
+ <20191105184211.GA30975@bogus>
+In-Reply-To: <20191105184211.GA30975@bogus>
+From:   AngeloGioacchino Del Regno <kholk11@gmail.com>
+Date:   Wed, 6 Nov 2019 18:54:34 +0100
+Message-ID: <CAK7fi1bJh53i2i7K_584X7QE7D7obQ0fU6i6QSCQi-pSmETWNg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/5] dt-bindings: iio: spmi-vadc: Add definitions for
+ USB DP/DM VADCs
+To:     Rob Herring <robh@kernel.org>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>, devicetree@vger.kernel.org,
+        ccross@android.com, Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        marijns95@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 06, 2019 at 05:19:23PM +0530, Sharat Masetty wrote:
-> Fix the cx debugbus related register configuration, to collect accurate
-> bus data during gpu snapshot. This helps with complete snapshot dump
-> and also complete proper GPU recovery.
-> 
-> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+Il giorno mar 5 nov 2019 alle ore 19:42 Rob Herring <robh@kernel.org>
+ha scritto:
+>
+> On Thu, 31 Oct 2019 12:16:41 +0100, kholk11@gmail.com wrote:
+> > From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> >
+> > Some PMICs, like PMI8950, feature two ADCs, at 0x43 and 0x44,
+> > respectively used for USB D+ and USB D- (DP/DM): add the definition
+> > for them as VADC_USB_DP and VADC_USB_DM.
+> >
+> > Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> > ---
+> >  include/dt-bindings/iio/qcom,spmi-vadc.h | 3 +++
+> >  1 file changed, 3 insertions(+)
+> >
+>
+> Please add Acked-by/Reviewed-by tags when posting new versions. However,
+> there's no need to repost patches *only* to add the tags. The upstream
+> maintainer will do that for acks received on the version they apply.
+>
+> If a tag was not added on purpose, please state why and what changed.
 
-Applied to drm-misc-next-fixes
-
-Thanks,
-
-Sean
-
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 24 ++++++++++++------------
->  1 file changed, 12 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> index 483e100..c5764b4 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> @@ -353,26 +353,26 @@ static void a6xx_get_debugbus(struct msm_gpu *gpu,
->  		cxdbg = ioremap(res->start, resource_size(res));
-> 
->  	if (cxdbg) {
-> -		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_CNTLT,
-> +		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_CNTLT,
->  			A6XX_DBGC_CFG_DBGBUS_CNTLT_SEGT(0xf));
-> 
-> -		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_CNTLM,
-> +		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_CNTLM,
->  			A6XX_DBGC_CFG_DBGBUS_CNTLM_ENABLE(0xf));
-> 
-> -		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_0, 0);
-> -		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_1, 0);
-> -		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_2, 0);
-> -		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_3, 0);
-> +		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_0, 0);
-> +		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_1, 0);
-> +		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_2, 0);
-> +		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_3, 0);
-> 
-> -		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_BYTEL_0,
-> +		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_0,
->  			0x76543210);
-> -		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_BYTEL_1,
-> +		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_1,
->  			0xFEDCBA98);
-> 
-> -		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_0, 0);
-> -		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_1, 0);
-> -		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_2, 0);
-> -		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_3, 0);
-> +		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_0, 0);
-> +		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_1, 0);
-> +		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_2, 0);
-> +		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_3, 0);
->  	}
-> 
->  	nr_debugbus_blocks = ARRAY_SIZE(a6xx_debugbus_blocks) +
-> --
-> 1.9.1
-> 
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
-
--- 
-Sean Paul, Software Engineer, Google / Chromium OS
+I'm sorry, that wasn't intentional. Nothing changed in this patch.
