@@ -2,98 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3287AF22D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 00:47:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5638EF22D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 00:47:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727238AbfKFXra (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 18:47:30 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:43160 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725937AbfKFXr3 (ORCPT
+        id S1732840AbfKFXrs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 18:47:48 -0500
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:44086 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727316AbfKFXrr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 18:47:29 -0500
-Received: by mail-pf1-f194.google.com with SMTP id 3so458141pfb.10;
-        Wed, 06 Nov 2019 15:47:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=IITHycz/tKeCtcoGS9oSqQaaGm3H0ejbd50X22z8NiA=;
-        b=QBM+UW+9MI+uREWzRjPCDMTdRcJ1Qg9A1mV9chE5KjhqRQK8ZTlnzavCFuKjvmApo0
-         dLMC9dCKtbzlyt2F0etYRl9F6hMMAl2ZWhnqk+1qjKTziWxKwfA9tYuxgHLUtNXUaQFY
-         OAtGyQlApB2naKonvaurwkRT8u5RsF2+hJd6dXgnsZvq4NSYZPju1+8F+8zPDs9+pZ+J
-         S2gwQtppNc/DtmGJz6rSAq4SJ5J4LjD/1ZNAluTfXjvV++shwxekEoJIQcMKzFiTHlL7
-         BPRzlUZ8gf1gO6+TvpexhzXi4VNnhOwwrCMQwpY24IymcCjHxGV2MjWegPyqB5uBNd1g
-         xyIQ==
+        Wed, 6 Nov 2019 18:47:47 -0500
+Received: by mail-ot1-f66.google.com with SMTP id c19so352646otr.11;
+        Wed, 06 Nov 2019 15:47:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=IITHycz/tKeCtcoGS9oSqQaaGm3H0ejbd50X22z8NiA=;
-        b=Ke9gYUfGogLpJdxKDkjkDe8Tix2vovfNghwn58tkOhQ39XH8H81gg5EdAUcl1i/aI/
-         bOMLDCDTTEBSAjGyRfVOYPR+SfBCAaBQvrWVZ/PIQcph+ulvAxQAP1vllYkx3D+nqU4q
-         z/NpP7FfBC3HpjZ9ddFj5OmchDJl+j348GHDQJYOhetorqGqixCH/ra+vU1DnnSFOrmi
-         9jrR9UidkNrrCkQIeXWFspp15s7fc2R7dXQiaVolVXxm0z9Nw7UyNTZNeXT5lTgKZIJy
-         KQNU1kqmUPInBdovxNhC8SyNx3PUYnESY7Ta+lG/UinU8MiB79OyFQfhHgoIp1fY0RDr
-         +rdA==
-X-Gm-Message-State: APjAAAXaEO+vQu/K7QHizu35e+gP9JZY+dPnibjQNUsIPbBrNeTx0Ml0
-        +QcA5Bt+qMWR4IRN9eJDFsZ76g2d
-X-Google-Smtp-Source: APXvYqxUKtpDTnctikFB0dQsxG/rxh3cI4BqhqNcmERqcbnbqreW4bT2lTMAT4Iu/13iDxCfITTTBQ==
-X-Received: by 2002:a63:ed17:: with SMTP id d23mr620290pgi.125.1573084049060;
-        Wed, 06 Nov 2019 15:47:29 -0800 (PST)
-Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id y26sm104198pfo.76.2019.11.06.15.47.27
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=YghF0O9CdijziXRtYqs4rBgfocxRjD2jrxaldxrfZPA=;
+        b=NIubXICO4wlGVnIg5qoO8hQMroL030JH9nSoCwhvljSnEhpxfdLyzJrzx3hVxfdP0c
+         r0tGFox0C9Hf7Q94N+liKh8UxwowiRZracamg7q1JQiQ8vyebGwnGVnkQ58ZiDbaXh2A
+         hueaOzIdK717Ua8pNc1j71PBsdkKK8Wo0NSrlQqy02HkAKtimfnoY7KHLXnacmDHFTlc
+         njks2uwLhoCX/daqpk1tfj5BTeeqm38a90vpGcZFYh32ao8NkfWK0F6B++PqaBl3W/cs
+         zYIgfWHdQsehdktbT5Crcwdj+NRAwGKNUh3rb+pd9KZu6HGZJh0r2lw1pp9h8q0eiY3b
+         pA6g==
+X-Gm-Message-State: APjAAAW/slmdA4QjjHqAzq0oBq+RGaD73dpyKvLvEtwl3XoXR6/wX9rn
+        Zb5zl4G0PNLGUL3kHCvqPg==
+X-Google-Smtp-Source: APXvYqwgUlLWV9jHJ0xyKT6tWKqUtqWriZJeI42q4NAZ1iSZ8g0t2OjEoqRReV7onJSmLDH/dWe6Lw==
+X-Received: by 2002:a05:6830:232c:: with SMTP id q12mr319872otg.168.1573084066922;
+        Wed, 06 Nov 2019 15:47:46 -0800 (PST)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id t12sm150529otl.71.2019.11.06.15.47.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2019 15:47:28 -0800 (PST)
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     kvalo@codeaurora.org, davem@davemloft.net
-Cc:     ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH] ath10k: Handle "invalid" BDFs for msm8998 devices
-Date:   Wed,  6 Nov 2019 15:47:12 -0800
-Message-Id: <20191106234712.2380-1-jeffrey.l.hugo@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        Wed, 06 Nov 2019 15:47:46 -0800 (PST)
+Date:   Wed, 6 Nov 2019 17:47:45 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Andrew Murray <andrew.murray@arm.com>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>,
+        Shawn Lin <shawn.lin@rock-chips.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Toan Le <toan@os.amperecomputing.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, rfi@lists.rocketboards.org,
+        linux-arm-kernel@axis.com, linux-mediatek@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-omap@vger.kernel.org
+Subject: Re: [PATCH v1 7/7] dt-bindings: PCI: Use IRQ flags for legacy PCI
+ IRQ interrupts
+Message-ID: <20191106234745.GA29524@bogus>
+References: <20191104163834.8932-1-andrew.murray@arm.com>
+ <20191104163834.8932-8-andrew.murray@arm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191104163834.8932-8-andrew.murray@arm.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When the BDF download QMI message has the end field set to 1, it signals
-the end of the transfer, and triggers the firmware to do a CRC check.  The
-BDFs for msm8998 devices fail this check, yet the firmware is happy to
-still use the BDF.  It appears that this error is not caught by the
-downstream drive by concidence, therefore there are production devices
-in the field where this issue needs to be handled otherwise we cannot
-support wifi on them.  So, attempt to detect this scenario as best we can
-and treat it as non-fatal.
+On Mon,  4 Nov 2019 16:38:21 +0000, Andrew Murray wrote:
+> Replace magic numbers used to describe legacy PCI IRQ interrupts
+> with #define.
+> 
+> Signed-off-by: Andrew Murray <andrew.murray@arm.com>
+> ---
+>  .../devicetree/bindings/pci/83xx-512x-pci.txt | 18 ++---
+>  .../devicetree/bindings/pci/aardvark-pci.txt  | 10 +--
+>  .../devicetree/bindings/pci/altera-pcie.txt   | 10 +--
+>  .../bindings/pci/axis,artpec6-pcie.txt        | 10 +--
+>  .../bindings/pci/cdns,cdns-pcie-host.txt      | 10 +--
+>  .../bindings/pci/faraday,ftpci100.txt         | 68 +++++++++----------
+>  .../bindings/pci/fsl,imx6q-pcie.txt           | 10 +--
+>  .../bindings/pci/hisilicon-pcie.txt           | 20 +++---
+>  .../bindings/pci/host-generic-pci.txt         | 10 +--
+>  .../devicetree/bindings/pci/kirin-pcie.txt    | 10 +--
+>  .../bindings/pci/layerscape-pci.txt           | 10 +--
+>  .../devicetree/bindings/pci/mediatek-pcie.txt | 40 +++++------
+>  .../devicetree/bindings/pci/mobiveil-pcie.txt |  8 +--
+>  .../devicetree/bindings/pci/pci-rcar-gen2.txt |  8 +--
+>  .../bindings/pci/pci-thunder-pem.txt          | 10 +--
+>  .../devicetree/bindings/pci/pcie-al.txt       |  4 +-
+>  .../devicetree/bindings/pci/qcom,pcie.txt     | 20 +++---
+>  .../bindings/pci/ralink,rt3883-pci.txt        | 18 ++---
+>  .../bindings/pci/rockchip-pcie-host.txt       | 10 +--
+>  .../devicetree/bindings/pci/ti-pci.txt        | 10 +--
+>  .../devicetree/bindings/pci/uniphier-pcie.txt | 10 +--
+>  .../bindings/pci/v3-v360epc-pci.txt           | 34 +++++-----
+>  .../devicetree/bindings/pci/versatile.txt     | 40 +++++------
+>  .../devicetree/bindings/pci/xgene-pci-msi.txt | 10 +--
+>  .../devicetree/bindings/pci/xgene-pci.txt     | 10 +--
+>  .../bindings/pci/xilinx-nwl-pcie.txt          | 10 +--
+>  .../devicetree/bindings/pci/xilinx-pcie.txt   | 20 +++---
+>  27 files changed, 224 insertions(+), 224 deletions(-)
+> 
 
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
----
- drivers/net/wireless/ath/ath10k/qmi.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/net/wireless/ath/ath10k/qmi.c b/drivers/net/wireless/ath/ath10k/qmi.c
-index eb618a2652db..5ff8cfc93778 100644
---- a/drivers/net/wireless/ath/ath10k/qmi.c
-+++ b/drivers/net/wireless/ath/ath10k/qmi.c
-@@ -265,10 +265,13 @@ static int ath10k_qmi_bdf_dnld_send_sync(struct ath10k_qmi *qmi)
- 			goto out;
- 
- 		if (resp.resp.result != QMI_RESULT_SUCCESS_V01) {
--			ath10k_err(ar, "failed to download board data file: %d\n",
--				   resp.resp.error);
--			ret = -EINVAL;
--			goto out;
-+			if (!(req->end == 1 &&
-+			      resp.resp.result == QMI_ERR_MALFORMED_MSG_V01)) {
-+				ath10k_err(ar, "failed to download board data file: %d\n",
-+					   resp.resp.error);
-+				ret = -EINVAL;
-+				goto out;
-+			}
- 		}
- 
- 		remaining -= req->data_len;
--- 
-2.17.1
-
+Reviewed-by: Rob Herring <robh@kernel.org>
