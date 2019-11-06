@@ -2,170 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 37AECF17B1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 14:53:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA37EF1B03
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 17:19:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731760AbfKFNx0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 08:53:26 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:39795 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731781AbfKFNxW (ORCPT
+        id S1728488AbfKFQTN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 11:19:13 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:44956 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727244AbfKFQTM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 08:53:22 -0500
-Received: by mail-ed1-f67.google.com with SMTP id l25so19401399edt.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Nov 2019 05:53:20 -0800 (PST)
+        Wed, 6 Nov 2019 11:19:12 -0500
+Received: by mail-ed1-f65.google.com with SMTP id a67so7716966edf.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Nov 2019 08:19:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:openpgp:message-id:date:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=f/07mDa7U3BeT4TUXv97i2fvuP+QZqH0SLBfnWPxR0U=;
-        b=e/qHUHQvOfyQWuy3eA3qaDE8QLdLHxOxgBx/u8WrUcPLw2FI90PTvJFxyxqsUNLPcK
-         o48+3FUDK3eRMzzx+D7+KEiZPRV/jFqRLoHsVyi/5NguB6gBPvM/LIaXj+splYGGG5kR
-         ZXvinxHU5+Lahgxs2ggeu1zUqtVOqRhUIdEqTbEOQxvYYMi+LarsvZ30hxcvMjRnEqog
-         KGrrSYluKhd2IUsGFqQxHRH1MblzTFCIw11rsXgj02UVzpf41mqQUp/H+C9mQjupJ8g+
-         pL5c1zvuCtZbWAgfe336LUIpRyY6H99nA9ssqIa8KHZsVdAFTzosjeZaaqBWPdjWlDxj
-         S6Ew==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hNEMiEOnnDjsgTbazzB3mAQ9dZ4k0jiMKw0yiocJJ5c=;
+        b=iUBciG0lUMovt7WWfhcwtB40mIB7G5EXKAcWjL+0PPDv5UJLTdPPmd3pxJvznaYmBK
+         cZKpRR37P/xJJeukCSR2OtUHUV+teiR7QkOov1F6M6RXu+Cwn2Y9c60z9z6z0ibebOez
+         u8dTAWft04aok/k5vIKQ/CfXfTEPui+eOw5xkdPMfs8QG081K+4wfscP7AdHTDob3zX+
+         +Jom4JgAv3DfQEVS1BKx/DfDdjdccMz5ggh9bZNla5E+B2QMhFG+70VDvaht3d5Rcn54
+         g+VKTyYOSZXm4LsW3dP/i734UMmoBhAWX4vJbKyGzclYNtV/wq+4r8NA7mPITjr2dA7J
+         kpIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=f/07mDa7U3BeT4TUXv97i2fvuP+QZqH0SLBfnWPxR0U=;
-        b=nofI5CRMRYKZM8zcp5EGJanTv6D9nl+IylOzOkgkTOuHXjF43r/Z5kL3xz47N5aTcQ
-         9zQFukNx+4Ud0Ip7LPn9pqpPZD5rgbBvvKMtWAoNQ1mPnVdktc0gBCB1NK4pOCg+Bct9
-         ZUHAgR/apeq0CSr2X49d9haSnzM7cgqREL0gSIANLaNdWrDFHQ/u0MY5oBjSysnu4z6G
-         pYGgWPCaapSBmhjGTxFBg7dToz+rFhPb0b1wP02Yr4InUpYZTfEb8INq4DDk8rNw6aVV
-         H0BN7gqd4btUjIZ47aR/2wu3/alVkTqfMYK1/sp10HSHWJZ/mrTivvoRFMiWGd+bWnCF
-         K7hQ==
-X-Gm-Message-State: APjAAAUECnOr68E1s7XscCNqW6u+IvgGWiZrfq4fCF/wRhlmN/dxxiaj
-        m93y5QLbCQ2Z5YtU4CDBJDBxiw==
-X-Google-Smtp-Source: APXvYqzmxUPfsyqC+mhuIOKBx2mpzZZuLmym1ciYOftytpCIGE4z17WT5/rL35GNWkuidzuUHi5yvA==
-X-Received: by 2002:a50:fd03:: with SMTP id i3mr2831317eds.70.1573048400117;
-        Wed, 06 Nov 2019 05:53:20 -0800 (PST)
-Received: from [192.168.27.135] ([37.157.136.206])
-        by smtp.googlemail.com with ESMTPSA id c93sm1172968edf.92.2019.11.06.05.53.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Nov 2019 05:53:19 -0800 (PST)
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sdm845: Add second PCIe PHY and
- controller
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20191102003148.4091335-1-bjorn.andersson@linaro.org>
- <20191102003148.4091335-3-bjorn.andersson@linaro.org>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Openpgp: preference=signencrypt
-Message-ID: <af66ac9a-f473-44b7-8604-2153c680960b@linaro.org>
-Date:   Wed, 6 Nov 2019 15:53:18 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hNEMiEOnnDjsgTbazzB3mAQ9dZ4k0jiMKw0yiocJJ5c=;
+        b=Pgl0TSPco5Z7g8yLihJh4ltoFFloc9N0HteyGuXRsi+zUNaXQAwwcEN/IYRDthzWEC
+         RxD7balzpayfg8zEtO7r03lGOLMjoST7ZO9Lfr3tKGRMI2jxoGtNxaXL37rQjsMGIBnz
+         oN0if5ajaTgvJ1trmvhhRdffDL2rqBEBVy47XNlZU3F21KQyUMHbJuVUIVX8+1VsiMZ0
+         2e4JamdMh/J0PKhQm2uSeVPgUW7cyx6Bqg3WDiY6wUsFDYuvEQ6Iv7wAu6xNFhvJ+Mwn
+         jVhu9TFEozcAkl/jZecCyO59B5d/ukoSWBJ/kxt2ckZDWs2UnNufysFeWelh9wsbgEHb
+         /WmQ==
+X-Gm-Message-State: APjAAAX/GAiJUfNttM8W8eM+8kC7DwQofNFXaUBzOP7OEJHITP73IFQ/
+        L4Tjdvqj8kXI3340YqJNf+nzw7Zt0PGPhoPz29A=
+X-Google-Smtp-Source: APXvYqztQa03nrJC/zMMrJ2TpWHwIt22SrIjQj3LuPPI/2j0RoWKnnhWmMtUgB1S5l4RJ3GajcZ9QJxLIhAcTldX2lM=
+X-Received: by 2002:aa7:d3da:: with SMTP id o26mr3685747edr.302.1573057150709;
+ Wed, 06 Nov 2019 08:19:10 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20191102003148.4091335-3-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <1573040963-24148-1-git-send-email-smasetty@codeaurora.org>
+In-Reply-To: <1573040963-24148-1-git-send-email-smasetty@codeaurora.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 6 Nov 2019 08:18:59 -0800
+Message-ID: <CAF6AEGtdEDAYg9bqKREv34aWiXR+uwEg+xsyJS_ySs4+-sFumg@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH] drm: msm: a6xx: fix debug bus register configuration
+To:     Sharat Masetty <smasetty@codeaurora.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+On Wed, Nov 6, 2019 at 3:49 AM Sharat Masetty <smasetty@codeaurora.org> wrote:
+>
+> Fix the cx debugbus related register configuration, to collect accurate
+> bus data during gpu snapshot. This helps with complete snapshot dump
+> and also complete proper GPU recovery.
+>
+> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
 
-On 2.11.19 г. 2:31 ч., Bjorn Andersson wrote:
-> Add the second PCIe controller and the associated QHP PHY found on
-> SDM845.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+(adding fixes tag for benefit of stable kernels)
+
+Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+
 > ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 111 +++++++++++++++++++++++++++
->  1 file changed, 111 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index b93537b7a59f..0cdcc8d6d223 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -1468,6 +1468,117 @@
->  			};
->  		};
->  
-> +		pcie1: pci@1c08000 {
-> +			compatible = "qcom,pcie-sdm845", "snps,dw-pcie";
-> +			reg = <0 0x01c08000 0 0x2000>,
-> +			      <0 0x40000000 0 0xf1d>,
-> +			      <0 0x40000f20 0 0xa8>,
-> +			      <0 0x40100000 0 0x100000>;
-> +			reg-names = "parf", "dbi", "elbi", "config";
-> +			device_type = "pci";
-> +			linux,pci-domain = <1>;
-> +			bus-range = <0x00 0xff>;
-> +			num-lanes = <1>;
-> +
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +
-> +			ranges = <0x01000000 0x0 0x40200000 0x0 0x40200000 0x0 0x100000>,
-> +				 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
-> +
-> +			interrupts = <GIC_SPI 307 IRQ_TYPE_EDGE_RISING>;
-> +			interrupt-names = "msi";
-> +			#interrupt-cells = <1>;
-> +			interrupt-map-mask = <0 0 0 0x7>;
-> +			interrupt-map = <0 0 0 1 &intc 0 434 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
-> +					<0 0 0 2 &intc 0 435 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
-> +					<0 0 0 3 &intc 0 438 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
-> +					<0 0 0 4 &intc 0 439 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
-> +
-> +			clocks = <&gcc GCC_PCIE_1_PIPE_CLK>,
-> +				 <&gcc GCC_PCIE_1_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_1_CLKREF_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_TBU_CLK>;
-> +			clock-names = "pipe",
-> +				      "aux",
-> +				      "cfg",
-> +				      "bus_master",
-> +				      "bus_slave",
-> +				      "slave_q2a",
-> +				      "ref",
-> +				      "tbu";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
-> +			assigned-clock-rates = <19200000>;
-> +
-> +			iommus = <&apps_smmu 0x1c00 0xf>;
-> +			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
-> +				    <0x100 &apps_smmu 0x1c01 0x1>,
-> +				    <0x200 &apps_smmu 0x1c02 0x1>,
-> +				    <0x300 &apps_smmu 0x1c03 0x1>,
-> +				    <0x400 &apps_smmu 0x1c04 0x1>,
-> +				    <0x500 &apps_smmu 0x1c05 0x1>,
-> +				    <0x600 &apps_smmu 0x1c06 0x1>,
-> +				    <0x700 &apps_smmu 0x1c07 0x1>,
-> +				    <0x800 &apps_smmu 0x1c08 0x1>,
-> +				    <0x900 &apps_smmu 0x1c09 0x1>,
-> +				    <0xa00 &apps_smmu 0x1c0a 0x1>,
-> +				    <0xb00 &apps_smmu 0x1c0b 0x1>,
-> +				    <0xc00 &apps_smmu 0x1c0c 0x1>,
-> +				    <0xd00 &apps_smmu 0x1c0d 0x1>,
-> +				    <0xe00 &apps_smmu 0x1c0e 0x1>,
-> +				    <0xf00 &apps_smmu 0x1c0f 0x1>;
-> +
-> +			resets = <&gcc GCC_PCIE_1_BCR>;
-> +			reset-names = "pci";
-> +
-> +			power-domains = <&gcc PCIE_1_GDSC>;
-> +
-> +			interconnects = <&rsc_hlos MASTER_PCIE_0 &rsc_hlos SLAVE_EBI1>;
-> +			interconnect-names = "pcie-mem";
-
-Maybe leave this hunk out (although it looks good), until we conclude on these
-refactoring patches [1].
-
-Thanks,
-Georgi
-
-[1]
-http://lore.kernel.org/r/1571278852-8023-1-git-send-email-daidavid1@codeaurora.org
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 24 ++++++++++++------------
+>  1 file changed, 12 insertions(+), 12 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> index 483e100..c5764b4 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> @@ -353,26 +353,26 @@ static void a6xx_get_debugbus(struct msm_gpu *gpu,
+>                 cxdbg = ioremap(res->start, resource_size(res));
+>
+>         if (cxdbg) {
+> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_CNTLT,
+> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_CNTLT,
+>                         A6XX_DBGC_CFG_DBGBUS_CNTLT_SEGT(0xf));
+>
+> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_CNTLM,
+> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_CNTLM,
+>                         A6XX_DBGC_CFG_DBGBUS_CNTLM_ENABLE(0xf));
+>
+> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_0, 0);
+> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_1, 0);
+> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_2, 0);
+> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_3, 0);
+> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_0, 0);
+> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_1, 0);
+> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_2, 0);
+> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_3, 0);
+>
+> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_BYTEL_0,
+> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_0,
+>                         0x76543210);
+> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_BYTEL_1,
+> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_1,
+>                         0xFEDCBA98);
+>
+> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_0, 0);
+> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_1, 0);
+> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_2, 0);
+> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_3, 0);
+> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_0, 0);
+> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_1, 0);
+> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_2, 0);
+> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_3, 0);
+>         }
+>
+>         nr_debugbus_blocks = ARRAY_SIZE(a6xx_debugbus_blocks) +
+> --
+> 1.9.1
+>
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
