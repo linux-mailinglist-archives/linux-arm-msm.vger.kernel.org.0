@@ -2,85 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F4F6F226F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 00:17:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94291F2272
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 00:18:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727196AbfKFXQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 18:16:57 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:45825 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727080AbfKFXQ5 (ORCPT
+        id S1727080AbfKFXSJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 18:18:09 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:44850 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725937AbfKFXSJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 18:16:57 -0500
-Received: by mail-pg1-f193.google.com with SMTP id w11so144161pga.12;
-        Wed, 06 Nov 2019 15:16:55 -0800 (PST)
+        Wed, 6 Nov 2019 18:18:09 -0500
+Received: by mail-pf1-f195.google.com with SMTP id q26so339971pfn.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Nov 2019 15:18:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=PEEwQUwm/mtCk8pRNL9DiIeL71bqH+DtmpEDVuEb4+U=;
-        b=neaEdK/p5ar2I/xlFi4UuC6GILTW3Ks2guXTHYrzRYhhB5GJHWuYAmHteeS9QtXB38
-         vpLKCrRcrgDtne+sUmpqEZdWMZsLWa5Ssry3hRvPt+l5AUgBe8AMaGUA2siXrzL8Tt84
-         1eEY/yBnhOu6s1Y2lrffcUanSuXEiTYu3WyAp+so6Q1eXsx3jz708LQ6Mdq1uvSN8Vo7
-         JJGPN6spp11oAjv6GnrPV+rZqhqQj9G6EdHNJEhFT0mtH6Yql9JJ7SVvWG6TjRr7Umk6
-         c3P7nc+lnjR33OrTvZC29nfkOE2IsU3Xy0BVcshSmyKnj79HzS1hNJh1d56jWAFEUuZj
-         ixbQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=SGORRswerRGgZb83hhOx9ckaLWQ0QPtRE4RCzu+hdLs=;
+        b=tKEGBKrCAbJWIHkSwrtRTiliUEyei4XSN1ZjV8jbmJcFB3P/OJmD9diJXPu1CvIWOo
+         AmmAan25C3+lXhDFEGLH0Kd99GTm1xcCxrzZN/ZFrjfPw9hOMylVxdbasInyfqNCPd/6
+         L8VfQ3OxlMvWvbTC5NNuwXvuE7sxoVx5BE0PrpH8ANkm9wgim6ZF2nMaJnRc8VZi/+F6
+         qXkJSQ3VptgcymL/7mbgqX3yaRPXHaIMDE13mx+7Thzl2qNi9UdZ+iM66REvdLXKb/Np
+         RfYHMKYvG7wuDKGIemHFpT7u2LM0QrU9krqyXzxFuv0DP2fE9vL712Q58MNN24caFx4r
+         n+9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=PEEwQUwm/mtCk8pRNL9DiIeL71bqH+DtmpEDVuEb4+U=;
-        b=RtgEvvQzJx/qMUL7ErGFfiO/PdxyuxaAuUBzXCZ5IplwODu5OCiLXB0h5/OPQjT/ZF
-         uygXFgUMycmZDBBcjgY9TxY0RDtgwdiOIMSVLaLF4cbOdXQnBlLZMP5Vz3ysFIs13ckw
-         3bJkqsZ4xQl1pYfGqq1G06bkbgRRD6uVp/u7tFx3Ib7zmMgFO8ZXWQr4w5+wXDpUHOtS
-         WbundO8wIkqSYqx+5NiaXzkKLZZNk/IUhD5ypkLnIurQpynz6FHyVaxXjrPqFP9wsz4R
-         MpzLQ9fMgNM9u83liXKkkDFQd5bS4MlKeAJn8kTRY0Aq2FOG0YKpmnyDb8onOtWDp+RW
-         x1LQ==
-X-Gm-Message-State: APjAAAXLc6ZlaGD5CX85kVpYmOCkdRSZQ3by+r2lLh4QJpIYtuEmaaGz
-        5k09WM3WoKBnx2OQb9Zf8Lo=
-X-Google-Smtp-Source: APXvYqy2/Y5pxVKOfsNfYmz4miHXZKCw3E8Ru4bwJEpq+vIruTB5jjvQyXI8vZKkp+EORx5jL/IDYA==
-X-Received: by 2002:a17:90a:cd03:: with SMTP id d3mr506186pju.137.1573082214787;
-        Wed, 06 Nov 2019 15:16:54 -0800 (PST)
-Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d139sm49075pfd.162.2019.11.06.15.16.53
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=SGORRswerRGgZb83hhOx9ckaLWQ0QPtRE4RCzu+hdLs=;
+        b=RXCueJr2c6STE4Mr87Hxj7Of/JevRAUZR8cvhAebznngYqIz8dMVb1FT+oQWht8MxS
+         +qMz5hFEhgQxf4ghN0D+ecEyiKKAm+mqrJ2ppNMBVnWgPBqJcnwocmYE5RTuYqGm/OV2
+         RTSoBXhVtI5Tlu70lSBRK69+cGMZ2hWvwzfcOZp3YKTZfHW3sLeFkga6+sIty/CXi7f2
+         0UaDfLkvO2PdNs4g3XwUk976XJBa7SO6loGlzto4yihBgX0ZI9PjB9H0ojVQ2WbikoTT
+         suH+LDUFjX7Zk8e7Ze/xFRy4iUQX4w8b4no6gYD7XtOIWYL4BciHWCarINzW3xS3/84Q
+         pqsA==
+X-Gm-Message-State: APjAAAVAynL1A8hLgTUozsLHg/orxSzXNhSWVWHwIJg2+HgGTMaJeZ45
+        VJ0TIYXPhdYlm7Cz0IpjIJXVKA==
+X-Google-Smtp-Source: APXvYqxcy59hYgCqEMdh0JBfNeEqEneqe1WlmaAkMHqGuw6K66Fvgkuiq+8L6PvH68RDPFvTbDoUHA==
+X-Received: by 2002:a17:90a:a409:: with SMTP id y9mr605399pjp.106.1573082288563;
+        Wed, 06 Nov 2019 15:18:08 -0800 (PST)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id 137sm49565pfu.173.2019.11.06.15.18.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2019 15:16:54 -0800 (PST)
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     kvalo@codeaurora.org, davem@davemloft.net
-Cc:     ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH] ath10k: Fix qmi init error handling
-Date:   Wed,  6 Nov 2019 15:16:50 -0800
-Message-Id: <20191106231650.1580-1-jeffrey.l.hugo@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        Wed, 06 Nov 2019 15:18:07 -0800 (PST)
+Date:   Wed, 6 Nov 2019 15:18:05 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Olof Johansson <olof@lixom.net>
+Cc:     Andy Gross <agross@kernel.org>, arm@kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Arnd Bergmann <arnd@arndb.de>,
+        Kevin Hilman <khilman@baylibre.com>
+Subject: Re: [GIT PULL] Qualcomm ARM64 Defconfig updates for 5.5
+Message-ID: <20191106231805.GG36595@minitux>
+References: <1573068840-13098-1-git-send-email-agross@kernel.org>
+ <20191106220406.4aoq5suvwww6c3ov@localhost>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191106220406.4aoq5suvwww6c3ov@localhost>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When ath10k_qmi_init() fails, the error handling does not free the irq
-resources, which causes an issue if we EPROBE_DEFER as we'll attempt to
-(re-)register irqs which are already registered.
+On Wed 06 Nov 14:04 PST 2019, Olof Johansson wrote:
 
-Fixes: ba94c753ccb4 ("ath10k: add QMI message handshake for wcn3990 client")
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
----
- drivers/net/wireless/ath/ath10k/snoc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> On Wed, Nov 06, 2019 at 01:33:56PM -0600, Andy Gross wrote:
+> > The following changes since commit 54ecb8f7028c5eb3d740bb82b0f1d90f2df63c5c:
+> > 
+> >   Linux 5.4-rc1 (2019-09-30 10:35:40 -0700)
+> > 
+> > are available in the git repository at:
+> > 
+> >   git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-5.5
+> > 
+> > for you to fetch changes up to a36612b7469cf76953cf237a2b9a62f6c97730bb:
+> > 
+> >   arm64: defconfig: Enable Qualcomm watchdog driver (2019-10-20 23:04:59 -0700)
+> > 
+> > ----------------------------------------------------------------
+> > Qualcomm ARM64 Based defconfig Updates for v5.5
+> > 
+> > * Enable Qualcomm cpufreq, watchdog, prng, socinfo, SPI, and QSPI controllers
+> > * Enable SN65DSI86 display bridge
+> > * Enable QCA Bluetooth over Uart
+> > * Enable various Qualcomm remoteproc dependencies
+> > 
+> > ----------------------------------------------------------------
+> > Bjorn Andersson (6):
+> >       arm64: defconfig: Enable Qualcomm remoteproc dependencies
+> >       arm64: defconfig: Enable Qualcomm SPI and QSPI controller
+> >       arm64: defconfig: Enable Qualcomm socinfo driver
+> >       arm64: defconfig: Enable Qualcomm CPUfreq HW driver
+> 
+> 
+> Hi, this turns on the driver as =y, when the option is tristate. Other
+> cpufreq drivers are also modules. Is this driver truly needed to be
+> a built-in for a generic defconfig?
+> 
 
-diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
-index fc15a0037f0e..f2a0b7aaad3b 100644
---- a/drivers/net/wireless/ath/ath10k/snoc.c
-+++ b/drivers/net/wireless/ath/ath10k/snoc.c
-@@ -1729,7 +1729,7 @@ static int ath10k_snoc_probe(struct platform_device *pdev)
- 	ret = ath10k_qmi_init(ar, msa_size);
- 	if (ret) {
- 		ath10k_warn(ar, "failed to register wlfw qmi client: %d\n", ret);
--		goto err_core_destroy;
-+		goto err_free_irq;
- 	}
- 
- 	ath10k_dbg(ar, ATH10K_DBG_SNOC, "snoc probe\n");
--- 
-2.17.1
+linux-next has 7 CPUfreq drivers =y and 3 =m, so I picked =y for the
+Qualcomm by majority choice. And the same driver is used by a number of
+different Qualcomm platforms, so the growth looks to be bounded.
 
+It should work as =m as well, but we would need to validate that.
+
+Regards,
+Bjorn
