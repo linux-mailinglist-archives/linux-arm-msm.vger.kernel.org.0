@@ -2,129 +2,287 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D1114F1363
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 11:09:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F066F14E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 12:20:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726811AbfKFKJo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 05:09:44 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:36138 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727257AbfKFKJo (ORCPT
+        id S1728503AbfKFLT6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 06:19:58 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:37238 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725856AbfKFLT5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 05:09:44 -0500
-Received: by mail-ed1-f67.google.com with SMTP id f7so15732088edq.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Nov 2019 02:09:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=zgoCk5GioxlHgORY0p+mSpP1ABgkg+76ItCxty7i0rU=;
-        b=lVCDDiFC7mB1HeXSorW1F0J1BJR+7gloIpo97XnohjxEkXdBWIevIFY48uSfzV39rH
-         BS+GlH1E4U5nFkaJZhlP8XjSbdD+JY4EVMShNzwdroPHn2xtlllexaKs+O9+AfiE3NgV
-         bqZh4C42KDLQE8hkmpPXZ6IwEuOnxmujCtWr1UKfZdgQm0l8AhMno+a71vwOaNIr35kS
-         pDz2xvRsTvH3u/RO/7+54YoUZNdbRqCcx0wtmt/NvLzHcNimZ3+pehs4Y1z67IZZMAYR
-         Vj/De4s/rKn0bUY6/t5BmOTAXirT0M3Bw59efk4w/DVcxcQtRkxPZWWOoo9wcPAx2Jw/
-         I/ZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=zgoCk5GioxlHgORY0p+mSpP1ABgkg+76ItCxty7i0rU=;
-        b=Bk2iPomThk1loshbOa/M394s3gIYsKe72gtTh35vagB/TcFcwYsdR8rL/Ge8UsFvDj
-         dwOptWmBxVufpt9u906Tyd5XpDZ5W2XpiT+LYqpC/91lVBVGE3WBDy95hcSE0zt5A0Tl
-         sSFJEM9e5cj2rPHG/qydHbU342vRpC7lp4ku1xi3Z5PzQtLTGs5uH8W6Dmq7QRhgNP5g
-         bU7dOPZYeyrdLlpck7HVxjimX+p3izyKJ6sWgIfxPMcqYmNGMl3RaugqZSh0GlAePMeK
-         SpefkpVVrnMIJDljBisMOaZ+cxX5cSPKtBxIWvGCiH/Z9nkmsGDpUZ915S2IC3vuHaec
-         4MXg==
-X-Gm-Message-State: APjAAAUIRhdqSsgoaC3tR16FRDATHUYcQXGATCXPQUqvvwYYaJAdE7z3
-        OVBTfWO//KSl8RUM7YdSuPHnHA==
-X-Google-Smtp-Source: APXvYqwzbGV1+GbZkbMKyaQhnDBzTxqEoRgZNpxwrhzpuynMbLgHk10WYVX44cgvvfB2ZRK1mtMC1A==
-X-Received: by 2002:a05:6402:2042:: with SMTP id bc2mr1642226edb.167.1573034980828;
-        Wed, 06 Nov 2019 02:09:40 -0800 (PST)
-Received: from [192.168.27.209] ([37.157.136.206])
-        by smtp.googlemail.com with ESMTPSA id s8sm1137900edj.6.2019.11.06.02.09.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Nov 2019 02:09:39 -0800 (PST)
-Subject: Re: [PATCH] media: venus: remove invalid compat_ioctl32 handler
-To:     Arnd Bergmann <arnd@arndb.de>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     stable@vger.kernel.org, Hans Verkuil <hans.verkuil@cisco.com>,
-        Mauro Carvalho Chehab <mchehab@s-opensource.com>,
-        Andy Gross <agross@kernel.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20191106090731.3152446-1-arnd@arndb.de>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <09d4d99f-55cf-54a1-b51e-ad883446b75b@linaro.org>
-Date:   Wed, 6 Nov 2019 12:09:37 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <20191106090731.3152446-1-arnd@arndb.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Wed, 6 Nov 2019 06:19:57 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 713E5602EF; Wed,  6 Nov 2019 11:19:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573039196;
+        bh=cURXtLqZ6tIDcwNNl2xs+365IFqil9Q21AKcdhK6P2s=;
+        h=From:To:Cc:Subject:Date:From;
+        b=FzC5gEZFLDwUdnTmlzBgLBIQIlaEKPqNVztfJlP3ns3jcQPcNpuL+R0jaiDKooJHU
+         TCZmF2bxKSRGidbyYmpRd67phZtrYkYtwbZOJdCUZl9/ujuPJzO4arzPMFo0MUFHsX
+         eIyeWuXvErFWgGxJMa8y6zrEMaGOpAkv9CZ4srBI=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 65DDA602EF;
+        Wed,  6 Nov 2019 11:19:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573039194;
+        bh=cURXtLqZ6tIDcwNNl2xs+365IFqil9Q21AKcdhK6P2s=;
+        h=From:To:Cc:Subject:Date:From;
+        b=k1oMGSEc9loZHH0gAFYjQJgPhz1/xo547CuC9B6+blzG4CoysehCY91ED1usAaMcJ
+         Q8lAYANkxC4eppRm4GZ1a/u897J+d5gByVfc4FygzQWGF/SJmaz7RRkJ3CZ+/C0Zvj
+         O+FhKDq8X8bv4R4YZiufDChthJbUtfBYqgsnWOB0=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 65DDA602EF
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     swboyd@chromium.org, agross@kernel.org, david.brown@linaro.org,
+        rafael@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: [v3] soc: qcom: Introduce subsystem sleep stats driver
+Date:   Wed,  6 Nov 2019 16:49:25 +0530
+Message-Id: <1573039165-30435-1-git-send-email-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Arnd,
+Multiple subsystems like modem, spss, adsp, cdsp present on
+Qualcomm Technologies Inc's (QTI) SoCs maintains low power mode
+statistics in shared memory (SMEM). Lets add a driver to read
+and display this information using sysfs.
 
-Thanks for the catch!
+Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+---
+Changes in v3:
+	- Addressed comments from v2.
 
-On 11/6/19 11:06 AM, Arnd Bergmann wrote:
-> v4l2_compat_ioctl32() is the function that calls into
-> v4l2_file_operations->compat_ioctl32(), so setting that back to the same
-> function leads to a trivial endless loop, followed by a kernel
-> stack overrun.
-> 
-> Remove the incorrect assignment.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 7472c1c69138 ("[media] media: venus: vdec: add video decoder files")
-> Fixes: aaaa93eda64b ("[media] media: venus: venc: add video encoder files")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Changes in v2:
+	- Correct Makefile to use QCOM_SS_SLEEP_STATS config
+---
+ Documentation/ABI/testing/sysfs-power    |  10 +++
+ drivers/soc/qcom/Kconfig                 |   9 ++
+ drivers/soc/qcom/Makefile                |   1 +
+ drivers/soc/qcom/subsystem_sleep_stats.c | 143 +++++++++++++++++++++++++++++++
+ 4 files changed, 163 insertions(+)
+ create mode 100644 drivers/soc/qcom/subsystem_sleep_stats.c
 
-Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-
-> ---
->  drivers/media/platform/qcom/venus/vdec.c | 3 ---
->  drivers/media/platform/qcom/venus/venc.c | 3 ---
->  2 files changed, 6 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 7f4660555ddb..59ae7a1e63bc 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -1412,9 +1412,6 @@ static const struct v4l2_file_operations vdec_fops = {
->  	.unlocked_ioctl = video_ioctl2,
->  	.poll = v4l2_m2m_fop_poll,
->  	.mmap = v4l2_m2m_fop_mmap,
-> -#ifdef CONFIG_COMPAT
-> -	.compat_ioctl32 = v4l2_compat_ioctl32,
-> -#endif
->  };
->  
->  static int vdec_probe(struct platform_device *pdev)
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index 1b7fb2d5887c..30028ceb548b 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -1235,9 +1235,6 @@ static const struct v4l2_file_operations venc_fops = {
->  	.unlocked_ioctl = video_ioctl2,
->  	.poll = v4l2_m2m_fop_poll,
->  	.mmap = v4l2_m2m_fop_mmap,
-> -#ifdef CONFIG_COMPAT
-> -	.compat_ioctl32 = v4l2_compat_ioctl32,
-> -#endif
->  };
->  
->  static int venc_probe(struct platform_device *pdev)
-> 
-
+diff --git a/Documentation/ABI/testing/sysfs-power b/Documentation/ABI/testing/sysfs-power
+index 6f87b9d..e095eae 100644
+--- a/Documentation/ABI/testing/sysfs-power
++++ b/Documentation/ABI/testing/sysfs-power
+@@ -288,6 +288,16 @@ Description:
+ 		writing a "0" (default) to it disables them.  Reads from
+ 		this file return the current value.
+ 
++What:		/sys/power/subsystem_sleep/stats
++Date:		December 2017
++Contact:	Maulik Shah <mkshah@codeaurora.org>
++Description:
++		The /sys/power/subsystem_sleep/stats file prints the subsystem
++		sleep information on Qualcomm Technologies, Inc. (QTI) SoCs.
++
++		Reading from this file will display subsystem level low power
++		mode statistics.
++
+ What:		/sys/power/resume_offset
+ Date:		April 2018
+ Contact:	Mario Limonciello <mario.limonciello@dell.com>
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index 79d8265..bed0704 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -185,6 +185,15 @@ config QCOM_SOCINFO
+ 	 Say yes here to support the Qualcomm socinfo driver, providing
+ 	 information about the SoC to user space.
+ 
++config QCOM_SS_SLEEP_STATS
++	tristate "Qualcomm Technologies Inc. Subsystem Sleep Stats driver"
++	depends on QCOM_SMEM
++	help
++	  Say y here to enable support for the Qualcomm Technologies Inc (QTI)
++	  SS sleep stats driver to read the sleep stats of various subsystems
++	  from SMEM. The stats are exported to sysfs. The driver also maintains
++	  application processor sleep stats.
++
+ config QCOM_WCNSS_CTRL
+ 	tristate "Qualcomm WCNSS control driver"
+ 	depends on ARCH_QCOM || COMPILE_TEST
+diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+index 9fb35c8..f3a2fb0 100644
+--- a/drivers/soc/qcom/Makefile
++++ b/drivers/soc/qcom/Makefile
+@@ -20,6 +20,7 @@ obj-$(CONFIG_QCOM_SMEM_STATE) += smem_state.o
+ obj-$(CONFIG_QCOM_SMP2P)	+= smp2p.o
+ obj-$(CONFIG_QCOM_SMSM)	+= smsm.o
+ obj-$(CONFIG_QCOM_SOCINFO)	+= socinfo.o
++obj-$(CONFIG_QCOM_SS_SLEEP_STATS)	+= subsystem_sleep_stats.o
+ obj-$(CONFIG_QCOM_WCNSS_CTRL) += wcnss_ctrl.o
+ obj-$(CONFIG_QCOM_APR) += apr.o
+ obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
+diff --git a/drivers/soc/qcom/subsystem_sleep_stats.c b/drivers/soc/qcom/subsystem_sleep_stats.c
+new file mode 100644
+index 00000000..724b213
+--- /dev/null
++++ b/drivers/soc/qcom/subsystem_sleep_stats.c
+@@ -0,0 +1,143 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++/*
++ * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
++ */
++
++#define pr_fmt(fmt) "%s: " fmt, KBUILD_MODNAME
++
++#include <linux/errno.h>
++#include <linux/module.h>
++#include <linux/slab.h>
++#include <linux/types.h>
++
++#include <linux/soc/qcom/smem.h>
++
++enum subsystem_item_id {
++	MODEM = 605,
++	ADSP,
++	CDSP,
++	SLPI,
++	GPU,
++	DISPLAY,
++};
++
++enum subsystem_pid {
++	PID_APSS = 0,
++	PID_MODEM = 1,
++	PID_ADSP = 2,
++	PID_SLPI = 3,
++	PID_CDSP = 5,
++	PID_GPU = PID_APSS,
++	PID_DISPLAY = PID_APSS,
++};
++
++struct subsystem_data {
++	char *name;
++	enum subsystem_item_id item_id;
++	enum subsystem_pid pid;
++};
++
++static const struct subsystem_data subsystems[] = {
++	{ "MODEM", MODEM, PID_MODEM },
++	{ "ADSP", ADSP, PID_ADSP },
++	{ "CDSP", CDSP, PID_CDSP },
++	{ "SLPI", SLPI, PID_SLPI },
++	{ "GPU", GPU, PID_GPU },
++	{ "DISPLAY", DISPLAY, PID_DISPLAY },
++};
++
++struct subsystem_stats {
++	uint32_t version_id;
++	uint32_t count;
++	uint64_t last_entered;
++	uint64_t last_exited;
++	uint64_t accumulated_duration;
++};
++
++struct subsystem_stats_prv_data {
++	struct kobj_attribute ka;
++	struct kobject *kobj;
++};
++
++static struct subsystem_stats_prv_data *prvdata;
++
++static inline ssize_t subsystem_stats_print(char *prvbuf, ssize_t length,
++					    struct subsystem_stats *record,
++					    const char *name)
++{
++	return scnprintf(prvbuf, length, "%s\n\tVersion:0x%x\n"
++			"\tSleep Count:0x%x\n"
++			"\tSleep Last Entered At:0x%llx\n"
++			"\tSleep Last Exited At:0x%llx\n"
++			"\tSleep Accumulated Duration:0x%llx\n\n",
++			name, record->version_id, record->count,
++			record->last_entered, record->last_exited,
++			record->accumulated_duration);
++}
++
++static ssize_t subsystem_stats_show(struct kobject *kobj,
++				    struct kobj_attribute *attr, char *buf)
++{
++	ssize_t length = 0;
++	int i = 0;
++	size_t size = 0;
++	struct subsystem_stats *record = NULL;
++
++	/* Read SMEM data written by other subsystems */
++	for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
++		record = (struct subsystem_stats *) qcom_smem_get(
++			  subsystems[i].pid, subsystems[i].item_id, &size);
++
++		if (!IS_ERR(record) && (PAGE_SIZE - length > 0))
++			length += subsystem_stats_print(buf + length,
++							PAGE_SIZE - length,
++							record,
++							subsystems[i].name);
++	}
++
++	return length;
++}
++
++static int __init subsystem_sleep_stats_init(void)
++{
++	struct kobject *ss_stats_kobj;
++	int ret;
++
++	prvdata = kzalloc(sizeof(*prvdata), GFP_KERNEL);
++	if (!prvdata)
++		return -ENOMEM;
++
++	ss_stats_kobj = kobject_create_and_add("subsystem_sleep",
++					       power_kobj);
++	if (!ss_stats_kobj)
++		return -ENOMEM;
++
++	prvdata->kobj = ss_stats_kobj;
++
++	sysfs_attr_init(&prvdata->ka.attr);
++	prvdata->ka.attr.mode = 0444;
++	prvdata->ka.attr.name = "stats";
++	prvdata->ka.show = subsystem_stats_show;
++
++	ret = sysfs_create_file(prvdata->kobj, &prvdata->ka.attr);
++	if (ret) {
++		kobject_put(prvdata->kobj);
++		kfree(prvdata);
++	}
++
++	return ret;
++}
++
++static void __exit subsystem_sleep_stats_exit(void)
++{
++	sysfs_remove_file(prvdata->kobj, &prvdata->ka.attr);
++	kobject_put(prvdata->kobj);
++	kfree(prvdata);
++}
++
++module_init(subsystem_sleep_stats_init);
++module_exit(subsystem_sleep_stats_exit);
++
++MODULE_LICENSE("GPL v2");
++MODULE_DESCRIPTION("Qualcomm Technologies, Inc subsystem sleep stats driver");
 -- 
-regards,
-Stan
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
