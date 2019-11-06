@@ -2,71 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 78464F0D6C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 04:57:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F11DAF0D78
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 04:59:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730623AbfKFD5Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Nov 2019 22:57:25 -0500
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:44194 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725768AbfKFD5Z (ORCPT
+        id S1731168AbfKFD7H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Nov 2019 22:59:07 -0500
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:37747 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725768AbfKFD7G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Nov 2019 22:57:25 -0500
-Received: by mail-ot1-f68.google.com with SMTP id c19so3557396otr.11;
-        Tue, 05 Nov 2019 19:57:23 -0800 (PST)
+        Tue, 5 Nov 2019 22:59:06 -0500
+Received: by mail-ot1-f66.google.com with SMTP id d5so7625898otp.4;
+        Tue, 05 Nov 2019 19:59:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=py0k6EUYYeSmHaWf8b61DJPhzhB9zPo4JBbzAH5bbDA=;
-        b=pZ7HPLBHSSugSXNvvGOUPwA10eC+wvu8JIZkRy903gyQ4ds4po/8xSKmrKaTL9lh19
-         DAX6LZcQLrBEdCF66L+fmWpTwu6zLJ5vd0SjKNifp7+GvHqiFU3cL0kwkYHQMlzviQ92
-         m/0OT2rCYRkC4naAVl9Auapf6MOIjPyY/VD8qn2/pl/2qu3epZUwzc6Dde2rPs1qNEsq
-         wueT3qZpuvrNtsw/QK5t+v0aI0lyIbezLLNkxKZhn5fos25oio73r9c3ffAzl2wmrx+K
-         3YTV0cP94ETQIlFmSYZkmA5fGe3+O5g40NY5LTCP8XMoDbFcGxO0fKivpjCCeECUza3J
-         YvpA==
-X-Gm-Message-State: APjAAAU0QnLO4TjdGUZc/E8qDzT2CzRdpeL32a3vnwZyl99xjbZ+fMkx
-        OEGodj0LGTYFT+pkCUsMiQ==
-X-Google-Smtp-Source: APXvYqxhoUkUh4/ocp0Q+Ei5bNgYCZy9+LoviHrciti8k+fdcmqucLXu88Zxso3APp73Fi7zfaWQ7g==
-X-Received: by 2002:a05:6830:2335:: with SMTP id q21mr200742otg.237.1573012642730;
-        Tue, 05 Nov 2019 19:57:22 -0800 (PST)
+        bh=3+jUWUO/bkFGdV0o7ONSAdtw/CD/1zLOWv9k0T1s+7k=;
+        b=FQ54nInJ4rJfm4Prwwap7N+gMCsGxFtHecNhV7k4NwVxs92QFCYMR0XWu2/UdlDLXQ
+         CN9xg62hw+Mnei9UVm43fUWclwSh2JNeiC0nNGca77A8bQbsaQRvpmUrObNo6bpvfXFG
+         vcaKT4wANN1rEa7yf+sOjlsWhLbIzisf5PKykqXU2LR2UhYTRG5fIUpO9fdwu0TPnwnl
+         vmfI/wYRu2ChxyEtXptaTgl9nZWKW2gliADb3g2vDpDxw1ryfyMEAaTgfuU7KAmPe66h
+         wPZvQm0ozQjdleMnWWjRtbztapwMqTxmX21cKoZKQjXN5ITvZ6sihnymOG+y5S2mD3b5
+         g6Ag==
+X-Gm-Message-State: APjAAAWt8Pc1rft2Uqf/7prloHCC+wWzc3MXvYDZFTEgsG3ja8lFGy2b
+        qf2P3LqPKosdPDKXnPgk1arjWe8=
+X-Google-Smtp-Source: APXvYqym4eHg6yJ8m7KJdSNq9SIvske3hrK1picvTYuzgQLPgCwl5Zg8oHQpbKKuZkQsSOH3aNv20Q==
+X-Received: by 2002:a9d:1c8f:: with SMTP id l15mr203341ota.313.1573012745732;
+        Tue, 05 Nov 2019 19:59:05 -0800 (PST)
 Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id r129sm2284230oih.49.2019.11.05.19.57.21
+        by smtp.gmail.com with ESMTPSA id k10sm6167581oig.25.2019.11.05.19.59.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Nov 2019 19:57:21 -0800 (PST)
-Date:   Tue, 5 Nov 2019 21:57:21 -0600
+        Tue, 05 Nov 2019 19:59:05 -0800 (PST)
+Date:   Tue, 5 Nov 2019 21:59:04 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     kholk11@gmail.com
-Cc:     linux-arm-msm@vger.kernel.org, kholk11@gmail.com,
-        marijns95@gmail.com, agross@kernel.org, mturquette@baylibre.com,
-        bjorn.andersson@linaro.org, sboyd@kernel.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/2] dt-bindings: clock: rpmcc: Document msm8976
- compatible
-Message-ID: <20191106035721.GA32273@bogus>
-References: <20191031112951.35850-1-kholk11@gmail.com>
- <20191031112951.35850-3-kholk11@gmail.com>
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette =?iso-8859-1?Q?=A0?= 
+        <mturquette@baylibre.com>, David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: Re: [PATCH v1 3/7] dt-bindings: clock: Introduce QCOM Graphics clock
+ bindings
+Message-ID: <20191106035904.GA2362@bogus>
+References: <1572524473-19344-1-git-send-email-tdas@codeaurora.org>
+ <1572524473-19344-4-git-send-email-tdas@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191031112951.35850-3-kholk11@gmail.com>
+In-Reply-To: <1572524473-19344-4-git-send-email-tdas@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 31 Oct 2019 12:29:51 +0100, kholk11@gmail.com wrote:
-> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+On Thu, 31 Oct 2019 17:51:09 +0530, Taniya Das wrote:
+> Add device tree bindings for graphics clock controller for
+> Qualcomm Technology Inc's SC7180 SoCs.
 > 
-> Support for MSM8976 was added to the clk-smd-rpm driver: let's
-> document here the newly added compatible string.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
 > ---
->  Documentation/devicetree/bindings/clock/qcom,rpmcc.txt | 1 +
->  1 file changed, 1 insertion(+)
+>  .../devicetree/bindings/clock/qcom,gpucc.yaml       |  1 +
+>  include/dt-bindings/clock/qcom,gpucc-sc7180.h       | 21 +++++++++++++++++++++
+>  2 files changed, 22 insertions(+)
+>  create mode 100644 include/dt-bindings/clock/qcom,gpucc-sc7180.h
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
