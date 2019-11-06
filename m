@@ -2,99 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 22A18F0E2E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 06:22:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 62FB7F0E5A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 06:27:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725535AbfKFFWU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 00:22:20 -0500
-Received: from userp2130.oracle.com ([156.151.31.86]:56778 "EHLO
-        userp2130.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725379AbfKFFWU (ORCPT
+        id S1725710AbfKFF12 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 00:27:28 -0500
+Received: from fllv0015.ext.ti.com ([198.47.19.141]:44856 "EHLO
+        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725616AbfKFF12 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 00:22:20 -0500
-Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
-        by userp2130.oracle.com (8.16.0.27/8.16.0.27) with SMTP id xA65JL5K129051;
-        Wed, 6 Nov 2019 05:22:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
- from : references : date : in-reply-to : message-id : mime-version :
- content-type; s=corp-2019-08-05;
- bh=v3A9EKB6S9GwcxgDZDgw3MdPS5TmufGhz9cO5wKo5TE=;
- b=NKNZfFdvMocrfZLHSoWtnS4z3Q1rsJde2602QX3/ElahLwDNYYG1NjVpWnvNWmqAHPuH
- PFIJp2WoAEaEYJ2qiv9j88Qfc2aVs92rptoGxqWWQLvSujz4iJ1K0HB2xRrMumQl9a/b
- kcqZMuE/IlUaEt7BKty5tRjLPiibgm8AoMPmd6TSHRDDVVaurQD3d1UKVHrYaQIjrzTD
- Mj0cBui4QO4XmEblcMHiz1H8u9WvNtMuFR1LdEp0pLevnrrwwhHTlULniXW5fX8URhvP
- znKMfGElq6cTs8sA74ciEWiYOOzRZJpMqFjAFn1fRapm+i5FEfYYv0nU1b9xLxB3EjGu Ig== 
-Received: from userp3020.oracle.com (userp3020.oracle.com [156.151.31.79])
-        by userp2130.oracle.com with ESMTP id 2w117u39ag-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 06 Nov 2019 05:22:07 +0000
-Received: from pps.filterd (userp3020.oracle.com [127.0.0.1])
-        by userp3020.oracle.com (8.16.0.27/8.16.0.27) with SMTP id xA65I9ab046830;
-        Wed, 6 Nov 2019 05:22:06 GMT
-Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
-        by userp3020.oracle.com with ESMTP id 2w3162q6u1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 06 Nov 2019 05:22:06 +0000
-Received: from abhmp0015.oracle.com (abhmp0015.oracle.com [141.146.116.21])
-        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id xA65M1Ca030173;
-        Wed, 6 Nov 2019 05:22:02 GMT
-Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Tue, 05 Nov 2019 21:22:01 -0800
+        Wed, 6 Nov 2019 00:27:28 -0500
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id xA65RN4I088440;
+        Tue, 5 Nov 2019 23:27:23 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1573018043;
+        bh=HIfHBLV7UeDHKtYPr2RYwi8NU1tW9wFFxVN+30qfl3A=;
+        h=Subject:To:CC:References:From:Date:In-Reply-To;
+        b=RThNnBD3ICA+EOkNwMYx3vJBgsn8k8XDnoSyC+2pThNzoisOEgoNQCYfVUvGEdQwk
+         7XeKQ/komQw31waEOcO5W43mrmZMFPFceAhbdxM36K+ao9uPuGrR4V7h/OGmbuMWq7
+         C0x5OBjmpFLlxdn7aXIw9GjFZSnSPRCUa5Ae0+/g=
+Received: from DFLE108.ent.ti.com (dfle108.ent.ti.com [10.64.6.29])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTP id xA65RNGF003776;
+        Tue, 5 Nov 2019 23:27:23 -0600
+Received: from DFLE103.ent.ti.com (10.64.6.24) by DFLE108.ent.ti.com
+ (10.64.6.29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Tue, 5 Nov
+ 2019 23:27:07 -0600
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE103.ent.ti.com
+ (10.64.6.24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
+ Frontend Transport; Tue, 5 Nov 2019 23:27:07 -0600
+Received: from [172.24.190.233] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id xA65RGpK024151;
+        Tue, 5 Nov 2019 23:27:17 -0600
+Subject: Re: [PATCH v3 2/3] dt-bindings: phy-qcom-qmp: Add sm8150 UFS phy
+ compatible string
 To:     Vinod Koul <vkoul@kernel.org>
-Cc:     "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org,
+CC:     <linux-arm-msm@vger.kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Evan Green <evgreen@chromium.org>,
-        Can Guo <cang@codeaurora.org>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Subhash Jadavani <subhashj@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
         Stephen Boyd <swboyd@chromium.org>,
         Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v3 1/3] dt-bindings: ufs: Add sm8150 compatible string
-From:   "Martin K. Petersen" <martin.petersen@oracle.com>
-Organization: Oracle Corporation
 References: <20191024074802.26526-1-vkoul@kernel.org>
-        <20191024074802.26526-2-vkoul@kernel.org>
-        <20191105060212.GW2695@vkoul-mobl.Dlink>
-Date:   Wed, 06 Nov 2019 00:21:58 -0500
-In-Reply-To: <20191105060212.GW2695@vkoul-mobl.Dlink> (Vinod Koul's message of
-        "Tue, 5 Nov 2019 11:32:12 +0530")
-Message-ID: <yq1lfst1sw9.fsf@oracle.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.92 (gnu/linux)
+ <20191024074802.26526-3-vkoul@kernel.org>
+ <20191105060249.GX2695@vkoul-mobl.Dlink>
+From:   Kishon Vijay Abraham I <kishon@ti.com>
+Message-ID: <733450bb-640a-c680-7e36-3f0192a9b996@ti.com>
+Date:   Wed, 6 Nov 2019 10:56:42 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9432 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=956
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1908290000 definitions=main-1911060055
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9432 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
- suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
- lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1908290000
- definitions=main-1911060055
+In-Reply-To: <20191105060249.GX2695@vkoul-mobl.Dlink>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
 Vinod,
 
->> Document "qcom,sm8150-ufshc" compatible string for UFS HC found on
->> SM8150.
+On 05/11/19 11:32 AM, Vinod Koul wrote:
+> On 24-10-19, 13:18, Vinod Koul wrote:
+>> Document "qcom,sdm845-qmp-ufs-phy" compatible string for QMP UFS PHY
+>> found on SM8150.
+>>
+>> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+>> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>> Reviewed-by: Rob Herring <robh@kernel.org>
+> 
+> Kishon,
+> 
+> Can you pick this and 3rd patch please
 
-> Would you mind picking this up, Rob has acked this
+This is already in phy -next. Will be sending a PR to Greg today.
 
-Applied to 5.5/scsi-queue, thanks!
+Thanks
+Kishon
 
--- 
-Martin K. Petersen	Oracle Linux Engineering
+> 
+>> ---
+>>  Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt | 7 ++++++-
+>>  1 file changed, 6 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt b/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
+>> index 085fbd676cfc..eac9ad3cbbc8 100644
+>> --- a/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
+>> +++ b/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
+>> @@ -14,7 +14,8 @@ Required properties:
+>>  	       "qcom,msm8998-qmp-pcie-phy" for PCIe QMP phy on msm8998,
+>>  	       "qcom,sdm845-qmp-usb3-phy" for USB3 QMP V3 phy on sdm845,
+>>  	       "qcom,sdm845-qmp-usb3-uni-phy" for USB3 QMP V3 UNI phy on sdm845,
+>> -	       "qcom,sdm845-qmp-ufs-phy" for UFS QMP phy on sdm845.
+>> +	       "qcom,sdm845-qmp-ufs-phy" for UFS QMP phy on sdm845,
+>> +	       "qcom,sm8150-qmp-ufs-phy" for UFS QMP phy on sm8150.
+>>  
+>>  - reg:
+>>    - index 0: address and length of register set for PHY's common
+>> @@ -57,6 +58,8 @@ Required properties:
+>>  			"aux", "cfg_ahb", "ref", "com_aux".
+>>  		For "qcom,sdm845-qmp-ufs-phy" must contain:
+>>  			"ref", "ref_aux".
+>> +		For "qcom,sm8150-qmp-ufs-phy" must contain:
+>> +			"ref", "ref_aux".
+>>  
+>>   - resets: a list of phandles and reset controller specifier pairs,
+>>  	   one for each entry in reset-names.
+>> @@ -83,6 +86,8 @@ Required properties:
+>>  			"phy", "common".
+>>  		For "qcom,sdm845-qmp-ufs-phy": must contain:
+>>  			"ufsphy".
+>> +		For "qcom,sm8150-qmp-ufs-phy": must contain:
+>> +			"ufsphy".
+>>  
+>>   - vdda-phy-supply: Phandle to a regulator supply to PHY core block.
+>>   - vdda-pll-supply: Phandle to 1.8V regulator supply to PHY refclk pll block.
+>> -- 
+>> 2.20.1
+> 
