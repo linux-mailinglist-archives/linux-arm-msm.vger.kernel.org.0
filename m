@@ -2,371 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 020D1F0C42
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 03:53:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C039F0CE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 04:18:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731013AbfKFCxt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Nov 2019 21:53:49 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:57454 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730788AbfKFCxs (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Nov 2019 21:53:48 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id C6C2D60B19; Wed,  6 Nov 2019 02:53:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573008818;
-        bh=ZNbrx0OoFfiIYzKe6eKZHH36QNhXSTZh2FwseYgbt4M=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=MoPwdOu1ivkyZetaCQ39eey6Jd2uj1heZNg3A2h9MO5mztTLwdV6xi5/lhP8oUVIF
-         kJt4mMvQU9gY1zUzcoXYctFv9OWFqv9yvFDXNbrQknlTwKBBNCItDYuaZSU17Lo1xt
-         3ucMaWQiE3sVI8aigWjp1TFwS/OLI55aHnO7ebCY=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.79.136.17] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        id S1730752AbfKFDSj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Nov 2019 22:18:39 -0500
+Received: from mail.kernel.org ([198.145.29.99]:51890 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730576AbfKFDSi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Nov 2019 22:18:38 -0500
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5090D602C8;
-        Wed,  6 Nov 2019 02:53:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573008817;
-        bh=ZNbrx0OoFfiIYzKe6eKZHH36QNhXSTZh2FwseYgbt4M=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=ETazk69pnq7abNzDoeg0EogzI2m+gTq5jYfrTaWEUzdu/q6SqeWL+g+P+IwWMKxPh
-         2f1Bxt8U5DV9mGI1VAliM188DpdZkxFf9+gqALKS9OfUwuYdDze6IVtzR9xNMlRIMu
-         sYwPwiIFDi3WUwTZ3lz6EgqrxLjLxBuTBhkd/x/k=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5090D602C8
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH 1/1] arm64: dts: sc7180: Add qupv3_0 and qupv3_1
-To:     Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Cc:     mgautam@codeaurora.org, akashast@codeaurora.org,
-        msavaliy@codeaurora.org, sanm@codeaurora.org,
-        skakit@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20191031074500.28523-1-rojay@codeaurora.org>
- <20191031074500.28523-2-rojay@codeaurora.org>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <13ad90c0-ff46-f85c-df5f-55e4985af76b@codeaurora.org>
-Date:   Wed, 6 Nov 2019 08:23:31 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        by mail.kernel.org (Postfix) with ESMTPSA id 8C18C2053B;
+        Wed,  6 Nov 2019 03:18:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1573010317;
+        bh=794v0ru8pfalS+8Pyn18QoBVERGFnv+vgCcy8vjcww4=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=h4+X6NnESnFUg7hSGbT1qji0fnzSSyx2iXJY2mCnwfnAuYQe1ssCMb3PYIL+aPRy4
+         r42LTaTdD0fNUJoKCRiky6GIjL9rbgUsGCoPn5bQFbtCo0qQ9mG5pf/A2RK6+M51E3
+         C/4a+yVOEYe4PXxvHTOqR6XEHcFq4n7Ww72WFhVo=
+Received: by mail-qt1-f178.google.com with SMTP id p20so13910367qtq.5;
+        Tue, 05 Nov 2019 19:18:37 -0800 (PST)
+X-Gm-Message-State: APjAAAVWmKHdvEaFgZLRdy2IeAQp2ehY1U6pIXJJ7wycsTmxnVK8/u3d
+        My+2Z1u8quJN3g6EEzrDsta8zoVuWDIwLP3QgA==
+X-Google-Smtp-Source: APXvYqx/MDqiFs4boZftGQ4Sm3LD1j9ie9A1PR+9tSRnYrAzeyJ63l67XS86a0hZ+oVQ8PeNFdWmOuEziMGHCusZdFg=
+X-Received: by 2002:ac8:458c:: with SMTP id l12mr483091qtn.300.1573010316820;
+ Tue, 05 Nov 2019 19:18:36 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20191031074500.28523-2-rojay@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1572524473-19344-1-git-send-email-tdas@codeaurora.org>
+ <1572524473-19344-3-git-send-email-tdas@codeaurora.org> <20191106002604.A1BC72087E@mail.kernel.org>
+In-Reply-To: <20191106002604.A1BC72087E@mail.kernel.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Tue, 5 Nov 2019 21:18:24 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+dihzR7Wy+9kbz+A8tJ8LCpUcci6w0oW7SxBML4jX_Fw@mail.gmail.com>
+Message-ID: <CAL_Jsq+dihzR7Wy+9kbz+A8tJ8LCpUcci6w0oW7SxBML4jX_Fw@mail.gmail.com>
+Subject: Re: [PATCH v1 2/7] dt-bindings: clock: Add YAML schemas for the QCOM
+ GPUCC clock bindings
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Nov 5, 2019 at 6:26 PM Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> Quoting Taniya Das (2019-10-31 05:21:08)
+> > diff --git a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
+> > new file mode 100644
+> > index 0000000..96aaf36
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
+> > @@ -0,0 +1,69 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only
+>
+> Can it be GPL2 or BSD? I think Rob is asking for that sort of license on
+> these files.
 
+I do, but only on new bindings unless we determine relicensing is
+okay. Though here it doesn't look like much is copied over.
 
-On 10/31/2019 1:15 PM, Roja Rani Yarubandi wrote:
-> Add QUP SE instances configuration for sc7180.
-> 
-> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
-> ---
->   arch/arm64/boot/dts/qcom/sc7180-idp.dts | 152 +++++-
->   arch/arm64/boot/dts/qcom/sc7180.dtsi    | 683 +++++++++++++++++++++++-
->   2 files changed, 828 insertions(+), 7 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> index e0724ef3317d..189254f5ae95 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-[]..
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/bindings/clock/qcom,gpucc.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm Graphics Clock & Reset Controller Binding
+> > +
+> > +maintainers:
+> > +  - Taniya Das <tdas@codeaurora.org>
+> > +
+> > +description: |
+> > +  Qualcomm grpahics clock control module which supports the clocks, resets and
+> > +  power domains.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    enum:
+> > +      - qcom,sdm845-gpucc
+> > +      - qcom,msm8998-gpucc
+>
+> Sort please.
 
->   
->   		tlmm: pinctrl@3500000 {
-> @@ -230,12 +623,294 @@
-[]..
-> +
-> +			qup_i2c0_default: qup-i2c0-default {
-> +				pinmux {
-> +					pins = "gpio34", "gpio35";
-> +					function = "qup00";
-> +				};
-> +			};
-> +
-> +			qup_i2c1_default: qup-i2c1-default {
-> +				pinmux {
-> +					pins = "gpio0", "gpio1";
-> +					function = "qup01";
-> +				};
-> +			};
-> +
-> +			qup_i2c2_default: qup-i2c2-default {
-> +				pinmux {
-> +					pins = "gpio15", "gpio16";
-> +					function = "qup02";
-> +				};
-> +			};
-> +
-> +			qup_i2c3_default: qup-i2c3-default {
-> +				pinmux {
-> +					pins = "gpio38", "gpio39";
-> +					function = "qup03";
-> +				};
-> +			};
-> +
-> +			qup_i2c4_default: qup-i2c4-default {
-> +				pinmux {
-> +					pins = "gpio115", "gpio116";
-> +					function = "qup04";
-> +				};
-> +			};
-> +
-> +			qup_i2c5_default: qup-i2c5-default {
-> +				pinmux {
-> +					pins = "gpio25", "gpio26";
-> +					function = "qup05";
-> +				};
-> +			};
-> +
-> +			qup_i2c6_default: qup-i2c6-default {
-> +				pinmux {
-> +					pins = "gpio59", "gpio60";
-> +					function = "qup06";
+When you get tired of telling people to do this we can make the
+tooling do it. :) Shouldn't be too hard. The majority of the work is
+probably fixing the existing cases that aren't sorted.
 
-The pinctrl driver has no functions named qup06/07/08/09
-These are the qup functions listed
-
-         FUNCTION(qup00),
-         FUNCTION(qup01),
-         FUNCTION(qup02),
-         FUNCTION(qup03),
-         FUNCTION(qup04),
-         FUNCTION(qup05),
-         FUNCTION(qup10),
-         FUNCTION(qup11),
-         FUNCTION(qup12),
-         FUNCTION(qup13),
-         FUNCTION(qup14),
-         FUNCTION(qup15),
-
-> +				};
-> +			};
-> +
-> +			qup_i2c7_default: qup-i2c7-default {
-> +				pinmux {
-> +					pins = "gpio6", "gpio7";
-> +					function = "qup07";
-> +				};
-> +			};
-> +
-> +			qup_i2c8_default: qup-i2c8-default {
-> +				pinmux {
-> +					pins = "gpio42", "gpio43";
-> +					function = "qup08";
-> +				};
-> +			};
-> +
-> +			qup_i2c9_default: qup-i2c9-default {
-> +				pinmux {
-> +					pins = "gpio46", "gpio47";
-> +					function = "qup09";
-> +				};
-> +			};
-> +
-> +			qup_i2c10_default: qup-i2c10-default {
-> +				pinmux {
-> +					pins = "gpio86", "gpio87";
-> +					function = "qup10";
-> +				};
-> +			};
-> +
-> +			qup_i2c11_default: qup-i2c11-default {
-> +				pinmux {
-> +					pins = "gpio53", "gpio54";
-> +					function = "qup11";
-> +				};
-> +			};
-> +
-> +			qup_spi0_default: qup-spi0-default {
-> +				pinmux {
-> +					pins = "gpio34", "gpio35",
-> +					       "gpio36", "gpio37";
-> +					function = "qup00";
-> +				};
-> +			};
-> +
-> +			qup_spi1_default: qup-spi1-default {
-> +				pinmux {
-> +					pins = "gpio0", "gpio1",
-> +					       "gpio2", "gpio3",
-> +					       "gpio12", "gpio94";
-> +					function = "qup01";
-> +				};
-> +			};
-> +
-> +			qup_spi3_default: qup-spi3-default {
-> +				pinmux {
-> +					pins = "gpio38", "gpio39",
-> +					       "gpio40", "gpio41";
-> +					function = "qup03";
-> +				};
-> +			};
-> +
-> +			qup_spi5_default: qup-spi5-default {
-> +				pinmux {
-> +					pins = "gpio25", "gpio26",
-> +					       "gpio27", "gpio28";
-> +					function = "qup05";
-> +				};
-> +			};
-> +
-> +			qup_spi6_default: qup-spi6-default {
-> +				pinmux {
-> +					pins = "gpio59", "gpio60",
-> +					       "gpio61", "gpio62",
-> +					       "gpio68", "gpio72";
-> +					function = "qup06";
-> +				};
-> +			};
-> +
-> +			qup_spi8_default: qup-spi8-default {
-> +				pinmux {
-> +					pins = "gpio42", "gpio43",
-> +					       "gpio44", "gpio45";
-> +					function = "qup08";
-> +				};
-> +			};
-> +
-> +			qup_spi10_default: qup-spi10-default {
-> +				pinmux {
-> +					pins = "gpio86", "gpio87",
-> +					       "gpio88", "gpio89",
-> +					       "gpio90", "gpio91";
-> +					function = "qup10";
-> +				};
-> +			};
-> +
-> +			qup_spi11_default: qup-spi11-default {
-> +				pinmux {
-> +					pins = "gpio53", "gpio54",
-> +					       "gpio55", "gpio56";
-> +					function = "qup11";
-> +				};
-> +			};
-> +
-> +			qup_uart0_default: qup-uart0-default {
-> +				pinmux {
-> +					pins = "gpio34", "gpio35",
-> +					       "gpio36", "gpio37";
-> +					function = "qup00";
-> +				};
-> +			};
-> +
-> +			qup_uart1_default: qup-uart1-default {
-> +				pinmux {
-> +					pins = "gpio0", "gpio1",
-> +					       "gpio2", "gpio3";
-> +					function = "qup01";
-> +				};
-> +			};
-> +
-> +			qup_uart2_default: qup-uart2-default {
-> +				pinmux {
-> +					pins = "gpio15", "gpio16";
-> +					function = "qup02";
-> +				};
-> +			};
-> +
-> +			qup_uart3_default: qup-uart3-default {
-> +				pinmux {
-> +					pins = "gpio38", "gpio39",
-> +					       "gpio40", "gpio41";
-> +					function = "qup03";
-> +				};
-> +			};
-> +
-> +			qup_uart4_default: qup-uart4-default {
-> +				pinmux {
-> +					pins = "gpio115", "gpio116";
-> +					function = "qup04";
-> +				};
-> +			};
-> +
-> +			qup_uart5_default: qup-uart5-default {
-> +				pinmux {
-> +					pins = "gpio25", "gpio26",
-> +					       "gpio27", "gpio28";
-> +					function = "qup05";
-> +				};
-> +			};
-> +
-> +			qup_uart6_default: qup-uart6-default {
-> +				pinmux {
-> +					pins = "gpio59", "gpio60",
-> +					       "gpio61", "gpio62";
-> +					function = "qup06";
-> +				};
-> +			};
-> +
-> +			qup_uart7_default: qup-uart7-default {
-> +				pinmux {
-> +					pins = "gpio6", "gpio7";
-> +					function = "qup07";
-> +				};
-> +			};
-> +
-> +			qup_uart8_default: qup-uart8-default {
->   				pinmux {
->   					pins = "gpio44", "gpio45";
-> -					function = "qup12";
-> +					function = "qup08";
-> +				};
-> +			};
-> +
-> +			qup_uart9_default: qup-uart9-default {
-> +				pinmux {
-> +					pins = "gpio46", "gpio47";
-> +					function = "qup09";
->   				};
->   			};
-> +
-> +			qup_uart10_default: qup-uart10-default {
-> +				pinmux {
-> +					pins = "gpio86", "gpio87",
-> +					       "gpio88", "gpio89";
-> +					function = "qup10";
-> +				};
-> +			};
-> +
-> +			qup_uart11_default: qup-uart11-default {
-> +				pinmux {
-> +					pins = "gpio53", "gpio54",
-> +					       "gpio55", "gpio56";
-> +					function = "qup11";
-> +				};
-> +			};
-> +		};
-> +
-> +		qspi: spi@88dc000 {
-> +			compatible = "qcom,qspi-v1";
-> +			reg = <0 0x088dc000 0 0x600>;
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +			interrupts = <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>;
-> +			clocks = <&gcc GCC_QSPI_CNOC_PERIPH_AHB_CLK>,
-> +				 <&gcc GCC_QSPI_CORE_CLK>;
-> +			clock-names = "iface", "core";
-> +			status = "disabled";
->   		};
->   
->   		spmi_bus: spmi@c440000 {
-> 
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Rob
