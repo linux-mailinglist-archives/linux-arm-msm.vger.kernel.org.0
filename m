@@ -2,103 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 696E5F11B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 10:07:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE81AF11DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 10:13:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726903AbfKFJHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 04:07:49 -0500
-Received: from mout.kundenserver.de ([212.227.126.187]:43043 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726843AbfKFJHt (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 04:07:49 -0500
-Received: from threadripper.lan ([149.172.19.189]) by mrelayeu.kundenserver.de
- (mreue009 [212.227.15.129]) with ESMTPA (Nemesis) id
- 1MIdW9-1igtkS0UiL-00EZgr; Wed, 06 Nov 2019 10:07:37 +0100
-From:   Arnd Bergmann <arnd@arndb.de>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, stable@vger.kernel.org,
-        Hans Verkuil <hans.verkuil@cisco.com>,
-        Mauro Carvalho Chehab <mchehab@s-opensource.com>,
-        Andy Gross <agross@kernel.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] media: venus: remove invalid compat_ioctl32 handler
-Date:   Wed,  6 Nov 2019 10:06:54 +0100
-Message-Id: <20191106090731.3152446-1-arnd@arndb.de>
-X-Mailer: git-send-email 2.20.0
+        id S1727084AbfKFJNi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 04:13:38 -0500
+Received: from onstation.org ([52.200.56.107]:50818 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727068AbfKFJNh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 6 Nov 2019 04:13:37 -0500
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 4C6AD3E89E;
+        Wed,  6 Nov 2019 09:13:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1573031616;
+        bh=RUF1WwHyOvF/ICJ9FPqUfBjj8jBynQSgDGGQCKj3KcU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=JZ7pcRrncpt2INI1fhnGVZld48I0H1BWpwgs/IFVtpcbeS3G0hex4iVWfr2R9CiAk
+         ilG9jWvfBz7JtizUD21xVJSid8A/XPYJn+J3RL0SvBM2aS0s7PV+nkZrLi5UUPcbiG
+         WncMd6mFPNbEg7eMg5YKAyiHFBJs1AopFvKSpK7Y=
+Date:   Wed, 6 Nov 2019 04:13:35 -0500
+From:   Brian Masney <masneyb@onstation.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [Freedreno] drm/msm: 'pp done time out' errors after async
+ commit changes
+Message-ID: <20191106091335.GA16729@onstation.org>
+References: <20191105000129.GA6536@onstation.org>
+ <CAF6AEGv3gs+LFOP3AGthXd4niFb_XYOuwLfEa2G9eb27b1wMMA@mail.gmail.com>
+ <20191105100804.GA9492@onstation.org>
+ <CAF6AEGtB+g=4eiB31jkyuBGW7r0TBSh2oMj6TGtSgQ=q1ZV1tg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:8RmDx4hHYVaGCRLB35n3qdiZOzUXcVe0+StcVe0UHvHpojc5T/4
- uzsWV9aOL+uHX72YbQa8qjbMgaBFg4cUcIuX3JwFT33wd+hDOHw0Gxu/AACyXMMPHDpO3qS
- e8SezUBQFDXhSY4USnlbekvkOTc1byAB440qbxJg6rA8EyNETSc1rU5kjdE6LCJiVl742X9
- hLCFCuyKLHCV6f6MIz+NA==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0e6MMvLXfls=:4/MvFiPhzD2v4dq4ei/GqJ
- upkwO1ea9eMllyQ5KzkyyMTYbb60gFwFTEtrz+i1c2gBGOvyvCLOHIHEiLQ4mc7grzJgOnLo5
- cLAI7xO9iOjJ+TLiYYsar95qpgCMbdpilVzPE5D4fAObNbjO6NbZxxKafvpaZebU/5FSGCy1R
- xsL/R0rjvdeRtCL/vRMRkiCr2+sbjYeYyQwtbTdATCP2+ZYLAMNgNux4U8+DbWB53HQHTsOL/
- yvvZx3Ib7IVG5Nl24s1cKtUNMIpPuakHOail8qcrPP4agnnQvtCcOCJLSPxK+75uo1sdlrtMN
- Hiz3h44usxXP9FjoU7DQi5/CgdKCEON9JSrsa/Ngw/rnHk+KARie5v6/I7Lfgtf4lsgiM2QXI
- iP5RScn8nQ+z48MBPpJCBsRqDGUWU04DPfosdtLeQXwoPCigrATip1eSK4DnGDYVC7Z2U2NLK
- MWHX5Auc8oQxCompC2le/breqc7FgdOj/tE9eVK/REyPzUblOwYse1MY2Pujs+ftFwt5JDVXX
- IlRu+bxvfhCaGYLK8S7q7YpBMkf3UA99ulViCXC8ZxVAv0T0+UXQ5JScvXisuCGnT1cUUTyFG
- tAi6dhVwDpJMUQcJZG/4rNfO9v7u1BO3h+w3ajKJ3P8XtpNgfFLwBlkgvT676IdMPntGQj2oy
- ueso2NPqA7MP8javvvaTs5CZg1uxO8z8ej+5qhqLCycAH9FaXkGrkQcbaZYeKcrjPDbRftAHe
- wIEkudc61tT8/Cu7fbETvo5oYwjjPvFMWlOcqzAtjH+ZA1wQFeS+BDTzIZ/219dljJ/3/donI
- HhB0FZo5AKnKawpGrRG/p1broZNesSc/6l466L377Bzj7tUJBkqWFeIPsPjmminibnprfgbbi
- QBpI7ZPdm/tcrJr3FH7w==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGtB+g=4eiB31jkyuBGW7r0TBSh2oMj6TGtSgQ=q1ZV1tg@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-v4l2_compat_ioctl32() is the function that calls into
-v4l2_file_operations->compat_ioctl32(), so setting that back to the same
-function leads to a trivial endless loop, followed by a kernel
-stack overrun.
+On Tue, Nov 05, 2019 at 08:23:27AM -0800, Rob Clark wrote:
+> On Tue, Nov 5, 2019 at 2:08 AM Brian Masney <masneyb@onstation.org> wrote:
+> > The 'pp done time out' errors go away if I revert the following three
+> > commits:
+> >
+> > cd6d923167b1 ("drm/msm/dpu: async commit support")
+> > d934a712c5e6 ("drm/msm: add atomic traces")
+> > 2d99ced787e3 ("drm/msm: async commit support")
+> >
+> > I reverted the first one to fix a compiler error, and the second one so
+> > that the last patch can be reverted without any merge conflicts.
+> >
+> > I see that crtc_flush() calls mdp5_ctl_commit(). I tried to use
+> > crtc_flush_all() in mdp5_flush_commit() and the contents of the frame
+> > buffer dance around the screen like its out of sync. I renamed
+> > crtc_flush_all() to mdp5_crtc_flush_all() and removed the static
+> > declaration. Here's the relevant part of what I tried:
+> >
+> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > @@ -171,7 +171,15 @@ static void mdp5_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *st
+> >
+> >  static void mdp5_flush_commit(struct msm_kms *kms, unsigned crtc_mask)
+> >  {
+> > -       /* TODO */
+> > +       struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
+> > +       struct drm_crtc *crtc;
+> > +
+> > +       for_each_crtc_mask(mdp5_kms->dev, crtc, crtc_mask) {
+> > +               if (!crtc->state->active)
+> > +                       continue;
+> > +
+> > +               mdp5_crtc_flush_all(crtc);
+> > +       }
+> >  }
+> >
+> > Any tips would be appreciated.
+> 
+> 
+> I think this is along the lines of what we need to enable async commit
+> for mdp5 (but also removing the flush from the atomic-commit path)..
+> the principle behind the async commit is to do all the atomic state
+> commit normally, but defer writing the flush bits.  This way, if you
+> get another async update before the next vblank, you just apply it
+> immediately instead of waiting for vblank.
+> 
+> But I guess you are on a command mode panel, if I remember?  Which is
+> a case I didn't have a way to test.  And I'm not entirely about how
+> kms_funcs->vsync_time() should be implemented for cmd mode panels.
 
-Remove the incorrect assignment.
+Yes, this is a command-mode panel and there's no hardware frame counter
+available. The key to getting the display working on this phone was this
+patch:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2bab52af6fe68c43b327a57e5ce5fc10eefdfadf
 
-Cc: stable@vger.kernel.org
-Fixes: 7472c1c69138 ("[media] media: venus: vdec: add video decoder files")
-Fixes: aaaa93eda64b ("[media] media: venus: venc: add video encoder files")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- drivers/media/platform/qcom/venus/vdec.c | 3 ---
- drivers/media/platform/qcom/venus/venc.c | 3 ---
- 2 files changed, 6 deletions(-)
+> That all said, I think we should first fix what is broken, before
+> worrying about extending async commit support to mdp5.. which
+> shouldn't hit the async==true path, due to not implementing
+> kms_funcs->vsync_time().
+> 
+> What I think is going on is that, in the cmd mode case,
+> mdp5_wait_flush() (indirectly) calls mdp5_crtc_wait_for_pp_done(),
+> which waits for a pp-done irq regardless of whether there is a flush
+> in progress.  Since there is no flush pending, the irq never comes.
+> But the expectation is that kms_funcs->wait_flush() returns
+> immediately if there is nothing to wait for.
 
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 7f4660555ddb..59ae7a1e63bc 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1412,9 +1412,6 @@ static const struct v4l2_file_operations vdec_fops = {
- 	.unlocked_ioctl = video_ioctl2,
- 	.poll = v4l2_m2m_fop_poll,
- 	.mmap = v4l2_m2m_fop_mmap,
--#ifdef CONFIG_COMPAT
--	.compat_ioctl32 = v4l2_compat_ioctl32,
--#endif
- };
- 
- static int vdec_probe(struct platform_device *pdev)
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 1b7fb2d5887c..30028ceb548b 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -1235,9 +1235,6 @@ static const struct v4l2_file_operations venc_fops = {
- 	.unlocked_ioctl = video_ioctl2,
- 	.poll = v4l2_m2m_fop_poll,
- 	.mmap = v4l2_m2m_fop_mmap,
--#ifdef CONFIG_COMPAT
--	.compat_ioctl32 = v4l2_compat_ioctl32,
--#endif
- };
- 
- static int venc_probe(struct platform_device *pdev)
--- 
-2.20.0
+I don't think that's happening in this case. I added some pr_info()
+statements to request_pp_done_pending() and mdp5_crtc_pp_done_irq().
+Here's the first two sets of messages that appear in dmesg:
 
+[   14.018907] msm fd900000.mdss: pp done time out, lm=0
+[   14.018993] request_pp_done_pending: HERE
+[   14.074208] mdp5_crtc_pp_done_irq: HERE
+[   14.074368] Console: switching to colour frame buffer device 135x120
+[   14.138938] msm fd900000.mdss: pp done time out, lm=0
+[   14.139021] request_pp_done_pending: HERE
+[   14.158097] mdp5_crtc_pp_done_irq: HERE
+
+The messages go on like this with the same pattern.
+
+I tried two different changes:
+
+1) I moved the request_pp_done_pending() and corresponding if statement
+   from mdp5_crtc_atomic_flush() and into mdp5_crtc_atomic_begin().
+
+2) I increased the timeout in wait_for_completion_timeout() by several
+   increments; all the way to 5 seconds.
+
+I haven't dug into the new code anymore.
+
+Brian
