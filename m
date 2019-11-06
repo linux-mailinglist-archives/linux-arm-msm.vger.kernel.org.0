@@ -2,102 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B02CAF2153
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 23:04:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 54DE9F2245
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 00:05:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727700AbfKFWEV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 17:04:21 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:41072 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726957AbfKFWEV (ORCPT
+        id S1727295AbfKFXFR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 18:05:17 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:41750 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727196AbfKFXFR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 17:04:21 -0500
-Received: by mail-lj1-f195.google.com with SMTP id m9so27919982ljh.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Nov 2019 14:04:20 -0800 (PST)
+        Wed, 6 Nov 2019 18:05:17 -0500
+Received: by mail-pf1-f195.google.com with SMTP id p26so308684pfq.8;
+        Wed, 06 Nov 2019 15:05:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lixom-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=b4Y1JPpjGMsxvPxn35W51flX+hoR/EOYHK+rzP1aHWU=;
-        b=yHivMyiQij6HNG22rsWf26KBLWEI0yzWYNqfVYXuognM2nw2gJHeKPFxasY5VUVa8h
-         kZXae0rnxEe1UABLDYhpmyl2ovMKRLAN/satzWx8LVMT2ZH0namNhozNhmo193OB0lJc
-         JvrEp34RYW1CIOUFlPhWxYEyqAtOPECL8L77RuXj+Gz6jrx371DCD5b1DFNCJGEhWnVM
-         u1rGVky8AuwgixhGFXeyo5Z+ZHosjyco1FHT3sCLxM20Gql/Ie8rbe/pXef/RMd9qW5+
-         uV5Q51kRo/y00h/SbRLVpVGjQemvl0v26b4+k4q2jdd9TOdjxY8rDTjYSZz4imceJS53
-         Ubmg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=95XhoZugvCbJ1xJolEFAVKQ1p0Gkg/QHi8Sw4Nb9JUU=;
+        b=dTcraDs9Cb9V7yUZrxzBw+VAgi/PsrVEU8E5WlU733RfVD9WLAayJRB69vEzq6BE+Z
+         xLXywT9D2BG6cP9vYfYYiWat8mQvCZn8P15evlPrxot12RtuyWsHPU6aaXXzIVBCHa8E
+         jyzfLFkqkFqfKzrDJ51Hrc6DsJ14P8XQX/f0Ztf17XPh01Ny3Ik3HauOvK13denp7VSW
+         dhSXcvUkVIIGZE62T6NPRGvy/Pe2383eEcn0te7Hye9KRghq0NuSfu3mnZjoslRv3CYT
+         ebKadQx8Abn0snAlgk8LSDxrv05I14XjqD7sIwsbl02AJxks0NGaMJ6b2r/iMcLBbicp
+         myWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=b4Y1JPpjGMsxvPxn35W51flX+hoR/EOYHK+rzP1aHWU=;
-        b=W4Dx42ndFBHlQkx9TnSqzxVDiL9o7bhaTEJdXJ/FtNVP/U7qSpdQFORf11JjNwYXHU
-         TJlsGP6e7D7b4EQgFwPtZrBmMHIUTliOsEwBZze6qBRPZcjsXvM2tMjIY5Opzb1Eg+eA
-         bf+kwW9BulDL/ZQBYN99R6pzqwhYbM/VQAvykY0FKVtXPhPk06CWbIYgIK4uTRfJpOWB
-         Is8sK6tjGB9LFwPJNlZDGMt754D7E6J5/yk/IQLjpG0gXRBQOpBatM47aAl4bSOMZs4l
-         GOerO9YhLoUjJAXOv2Ocdk2oR5D5tOqKgebspMR4vdW/NtN9pQ5khOJMNA+AcvaTG6t/
-         Tfyw==
-X-Gm-Message-State: APjAAAXLCawKVhPXGra96nfPxOoeketidpvZNp92KbpbywveuDLprwnP
-        LgZJN4mgC/TnMk5L2/+y6ci0Xw==
-X-Google-Smtp-Source: APXvYqy+Q/ffmMrHnPVMwxBzqY/VK8fGVA2u7nV7S2PwD1HF/DzGA/s6as59bd/04V/o3XsSAgeQhA==
-X-Received: by 2002:a2e:b053:: with SMTP id d19mr3680770ljl.36.1573077859341;
-        Wed, 06 Nov 2019 14:04:19 -0800 (PST)
-Received: from localhost (h85-30-9-151.cust.a3fiber.se. [85.30.9.151])
-        by smtp.gmail.com with ESMTPSA id r4sm39612ljn.64.2019.11.06.14.04.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Nov 2019 14:04:18 -0800 (PST)
-Date:   Wed, 6 Nov 2019 14:04:06 -0800
-From:   Olof Johansson <olof@lixom.net>
-To:     Andy Gross <agross@kernel.org>
-Cc:     arm@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Kevin Hilman <khilman@baylibre.com>
-Subject: Re: [GIT PULL] Qualcomm ARM64 Defconfig updates for 5.5
-Message-ID: <20191106220406.4aoq5suvwww6c3ov@localhost>
-References: <1573068840-13098-1-git-send-email-agross@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1573068840-13098-1-git-send-email-agross@kernel.org>
-User-Agent: NeoMutt/20170113 (1.7.2)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=95XhoZugvCbJ1xJolEFAVKQ1p0Gkg/QHi8Sw4Nb9JUU=;
+        b=Gcs9AtydITfNLz5MQJeQAzt7qq8frgFP+aJGmN39sqGhoO7YHB/ZpUDO/veQWlP80b
+         6ccIkYM7UBo40QoNiPVMwUwdnmKlgGYAo5jAOM3uEQl1/jupF24GY5dwUO1ZhrudD9dj
+         RWj2qmnedxoGVbXRduCB0GK2g4rLPszUTDZVLM17QQP1ciXgQpOMdBT3f+h9IY7asYdB
+         kAmBzjb61gW8f2QEPVslMC9Z9BT9swhOO5Njocct/Hv8M/uOVCUJly0U3uIMyy1ryoxN
+         wHW62BxxdpHKJc3d296UvVDejKzaBKbN/Lqv1Erw2V0BAGSb+0d5VKB4o5Ov1+VaKwaR
+         +R/w==
+X-Gm-Message-State: APjAAAXdVteTati7qHM9rTw3m/Cku/RNr0pMrP8FduVy9NirLAXwDYA7
+        goY0ZEsBnECytKm+NVdVYYJ0pDX3
+X-Google-Smtp-Source: APXvYqzjYfFmI0edQS67xESS7kJS4iOvGQYKfMtAXlXcpvSh2qO1c4rP7GEG2AhINNY9FH7h81JNRA==
+X-Received: by 2002:a63:ed4a:: with SMTP id m10mr391126pgk.255.1573081516638;
+        Wed, 06 Nov 2019 15:05:16 -0800 (PST)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id 70sm32538pfw.160.2019.11.06.15.05.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Nov 2019 15:05:16 -0800 (PST)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH] soc: qcom: qmi: Return EPROBE_DEFER if no address family
+Date:   Wed,  6 Nov 2019 15:05:11 -0800
+Message-Id: <20191106230511.1290-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 06, 2019 at 01:33:56PM -0600, Andy Gross wrote:
-> The following changes since commit 54ecb8f7028c5eb3d740bb82b0f1d90f2df63c5c:
-> 
->   Linux 5.4-rc1 (2019-09-30 10:35:40 -0700)
-> 
-> are available in the git repository at:
-> 
->   git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-5.5
-> 
-> for you to fetch changes up to a36612b7469cf76953cf237a2b9a62f6c97730bb:
-> 
->   arm64: defconfig: Enable Qualcomm watchdog driver (2019-10-20 23:04:59 -0700)
-> 
-> ----------------------------------------------------------------
-> Qualcomm ARM64 Based defconfig Updates for v5.5
-> 
-> * Enable Qualcomm cpufreq, watchdog, prng, socinfo, SPI, and QSPI controllers
-> * Enable SN65DSI86 display bridge
-> * Enable QCA Bluetooth over Uart
-> * Enable various Qualcomm remoteproc dependencies
-> 
-> ----------------------------------------------------------------
-> Bjorn Andersson (6):
->       arm64: defconfig: Enable Qualcomm remoteproc dependencies
->       arm64: defconfig: Enable Qualcomm SPI and QSPI controller
->       arm64: defconfig: Enable Qualcomm socinfo driver
->       arm64: defconfig: Enable Qualcomm CPUfreq HW driver
+If a client comes up early in the boot process (perhaps was a built-in
+driver), qmi_handle_init() will likely fail with a EAFNOSUPPORT since the
+underlying ipc router hasn't init'd and registered the address family.
+This should not be a fatal error since chances are, the router will come
+up later, so recode the error to EPROBE_DEFER so that clients will retry
+later.
 
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+---
+ drivers/soc/qcom/qmi_interface.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Hi, this turns on the driver as =y, when the option is tristate. Other
-cpufreq drivers are also modules. Is this driver truly needed to be
-a built-in for a generic defconfig?
+diff --git a/drivers/soc/qcom/qmi_interface.c b/drivers/soc/qcom/qmi_interface.c
+index f9e309f0acd3..1a03eaa38c46 100644
+--- a/drivers/soc/qcom/qmi_interface.c
++++ b/drivers/soc/qcom/qmi_interface.c
+@@ -655,8 +655,12 @@ int qmi_handle_init(struct qmi_handle *qmi, size_t recv_buf_size,
+ 
+ 	qmi->sock = qmi_sock_create(qmi, &qmi->sq);
+ 	if (IS_ERR(qmi->sock)) {
+-		pr_err("failed to create QMI socket\n");
+-		ret = PTR_ERR(qmi->sock);
++		if (PTR_ERR(qmi->sock) == -EAFNOSUPPORT) {
++			ret = -EPROBE_DEFER;
++		} else {
++			pr_err("failed to create QMI socket\n");
++			ret = PTR_ERR(qmi->sock);
++		}
+ 		goto err_destroy_wq;
+ 	}
+ 
+-- 
+2.17.1
 
-
--Olof
