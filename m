@@ -2,125 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C87FF2286
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 00:26:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1EACF22A2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 00:31:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727516AbfKFX0H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 18:26:07 -0500
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:48400 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727296AbfKFX0H (ORCPT
+        id S1727813AbfKFXbf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 18:31:35 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:36612 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727296AbfKFXbf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 18:26:07 -0500
-Received: by mail-pg1-f202.google.com with SMTP id q20so195863pgj.15
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Nov 2019 15:26:06 -0800 (PST)
+        Wed, 6 Nov 2019 18:31:35 -0500
+Received: by mail-pl1-f195.google.com with SMTP id g9so12306638plp.3;
+        Wed, 06 Nov 2019 15:31:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=OHExp+tEDC2Ckd4KCyaDSPrKz/CgG2oFSWHwrtG6Nuk=;
-        b=hB5JsGIVBCVe0yAEVD1QoBFXIRnU5jUy1y5W0BWww6JzDTq785Vz0L54DSpf4k7Pym
-         ewgZkLcVkpxRzfGViPWtJw26qBsk3rLYAjJmd0c0b+f+Ok83IYPkuJBdtxzdM/DKkme7
-         5VKeZTdmZVSLFbDoOxW0+/y7vxlxwJeQR2g3XVel7onDJ7bXVGwxulyEPtj87iu9cQ2L
-         VgDEo4E5beVuXLVaEzKDprnA7iWAjdfOPG22NkzbTKfQcxS1hCWuRpoZ4PBv77NtiESc
-         YMHUKOv3mp33jia8LIdBOtYoIX29N8eRRp0bkhgd6JV3PQILVppg1ZAPAyuL0IALRa5k
-         swqg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=XQlBjJQQjlLiOw6f2ULlsVGlJrKy32umFggc4zmnopc=;
+        b=gwQTp+0U9NUDWWwM66Vo43vKr5F6kMz6YnYStCt7FNFJHX+scw5dGwfAbuEShRbc8v
+         XcmX1D+eSJZYvdO0k9WgO/00JGvL5kjTxBS3D/FLPLBDgT2lLsa6Gho9KRe04ezZreU7
+         ttLGuXono0x8uy6S0YxD0shypeQWo1wKv5Z08VuRXS0KnWBtOCZwzJPgnDzTEWTuq18j
+         azzWsYkZWIWokwnvKfvCfdBwDww9XJV8XRquLpogRYv8WMBwwo5SUBM1XZNZVmzI/Tez
+         1OSlIqNp3kGEIeR9fRxGBHKxWT9pIGy2pEzMpOU+X5UCTFQrjf/QBMNRR9EsM0929Ccd
+         z4zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=OHExp+tEDC2Ckd4KCyaDSPrKz/CgG2oFSWHwrtG6Nuk=;
-        b=F9WyEzQduY/f+VT2zZSQ7No3uHVgm/zV7Mv7uDBHvUEilIj/ZOZOFlJN624BSf95o9
-         W4DagLD6dd3QLn53S2lgykYpU8w3ymCrpzHYyWG1Ushyzb91CTlNYqHQYrnxaXahh4gt
-         a6l+KTbAeEKvwPVNyKmofv5/H5EbLA6zBkt+V7A7riJM94ZKk4L8SOsd3PAXVWTzgqjr
-         /BO6hcpiiqaSD3ySH8sQRv3WL5+xuGmOQYFJ77hewQBHj6k5dDuT7CCfAlS5nIaymYy3
-         m81U2npo2q1JUlcbG0zishbi7NUwReVi9sUMqPYMDSjlx/yDAE6ppIafY5nUTdvPwmdx
-         AXgQ==
-X-Gm-Message-State: APjAAAVwMgT155mgSdC0UrLrxNsBbApMS2ZegQP9jsnBUtPxYRZdyIfy
-        zAKj8WArHVNSqJYW/odiAb53vniaKf7tSA==
-X-Google-Smtp-Source: APXvYqw+lyIGfoOJx9NcumMhBIdS7SlvcbY2irz9ydE3WS2lDD1iv9VMZkOUmgFplo4egCEImSiASh5dTrFaow==
-X-Received: by 2002:a63:7247:: with SMTP id c7mr496438pgn.311.1573082766024;
- Wed, 06 Nov 2019 15:26:06 -0800 (PST)
-Date:   Wed,  6 Nov 2019 15:25:53 -0800
-Message-Id: <20191106232553.76553-1-frkoenig@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.24.0.432.g9d3f5f5b63-goog
-Subject: [PATCH] drm/msm/dpu: Add UBWC support for RGB8888 formats
-From:   Fritz Koenig <frkoenig@google.com>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Fritz Koenig <frkoenig@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=XQlBjJQQjlLiOw6f2ULlsVGlJrKy32umFggc4zmnopc=;
+        b=Jppb/Fql/riqbrEgE6d4nwJIl4nGCWf2ZeFzm8BYZOEvis3Hf+EKsjeueruN/JR7ef
+         d0OTOaRd/pjPrD9Cc5L0Oo3N9VPBQywmnkY9l4oNzoMvq17WUBASb+3nawMiC6Vc3IR2
+         PyTBrX7oTs06M1CZbyUC4fzmKqbYMFKS+jSsoafKGVC+ModB7HdYVxvWSOlzLojt96BT
+         WQ1Jwksh7wRoCtoct79YwkOoLvuS6eI3xqlU7ZtwAne93OhYM1083EXSJ9YG0be9LxHg
+         fXZ86TxdEWMoZfOLnekRp4dsQCnY96Pb4sZGPVZKqpzpj03v6gi9BBTLhV3GYfpVHqE9
+         uzhw==
+X-Gm-Message-State: APjAAAXJ+pUDmwJ19HPKQz1tSui3khv3dvkXvUjfQ+mHpa5ErkUb9DJ/
+        0aPTA/my6MlKwlriCOADO5mH3rVb
+X-Google-Smtp-Source: APXvYqyxj6AvcxSxTZ1uXkDQ4TdMBL4b+00frqdfXS3bHWC4a2N3B+rJNl7uiZQ1SRrjJzBidWs0oQ==
+X-Received: by 2002:a17:902:b10c:: with SMTP id q12mr239799plr.97.1573083094431;
+        Wed, 06 Nov 2019 15:31:34 -0800 (PST)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id f7sm70667pfa.150.2019.11.06.15.31.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Nov 2019 15:31:34 -0800 (PST)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+To:     kvalo@codeaurora.org, davem@davemloft.net
+Cc:     ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH] ath10k: Handle when FW doesn't support QMI_WLFW_HOST_CAP_REQ_V01
+Date:   Wed,  6 Nov 2019 15:31:30 -0800
+Message-Id: <20191106233130.2169-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hardware only natively supports BGR8888 UBWC.
-UBWC support for RGB8888 can be had by pretending
-that the buffer is BGR.
+Firmware with the build id QC_IMAGE_VERSION_STRING=WLAN.HL.1.0.2-XXXX does
+not support the QMI_WLFW_HOST_CAP_REQ_V01 message and will return the
+QMI not supported error to the ath10k driver.  Since not supporting this
+message is not fatal to the firmware nor the ath10k driver, lets catch
+this particular scenario and ignore it so that we can still bring up
+wifi services successfully.
 
-Signed-off-by: Fritz Koenig <frkoenig@google.com>
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c    | 18 ++++++++++++++++++
- .../drm/msm/disp/dpu1/dpu_hw_catalog_format.h  |  2 ++
- 2 files changed, 20 insertions(+)
+ drivers/net/wireless/ath/ath10k/qmi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-index 24ab6249083a..528632690f1e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-@@ -489,12 +489,28 @@ static const struct dpu_format dpu_format_map_ubwc[] = {
- 		true, 4, DPU_FORMAT_FLAG_COMPRESSED,
- 		DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
+diff --git a/drivers/net/wireless/ath/ath10k/qmi.c b/drivers/net/wireless/ath/ath10k/qmi.c
+index 545ac1f06997..eb618a2652db 100644
+--- a/drivers/net/wireless/ath/ath10k/qmi.c
++++ b/drivers/net/wireless/ath/ath10k/qmi.c
+@@ -614,7 +614,9 @@ static int ath10k_qmi_host_cap_send_sync(struct ath10k_qmi *qmi)
+ 	if (ret < 0)
+ 		goto out;
  
-+	/* ARGB8888 and ABGR8888 purposely have the same color
-+	 * ordering.  The hardware only supports ABGR8888 UBWC
-+	 * natively.
-+	 */
-+	INTERLEAVED_RGB_FMT_TILED(ARGB8888,
-+		COLOR_8BIT, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
-+		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
-+		true, 4, DPU_FORMAT_FLAG_COMPRESSED,
-+		DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
-+
- 	INTERLEAVED_RGB_FMT_TILED(XBGR8888,
- 		COLOR_8BIT, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
- 		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
- 		false, 4, DPU_FORMAT_FLAG_COMPRESSED,
- 		DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
- 
-+	INTERLEAVED_RGB_FMT_TILED(XRGB8888,
-+		COLOR_8BIT, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
-+		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
-+		false, 4, DPU_FORMAT_FLAG_COMPRESSED,
-+		DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
-+
- 	INTERLEAVED_RGB_FMT_TILED(ABGR2101010,
- 		COLOR_8BIT, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
- 		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
-@@ -550,7 +566,9 @@ static int _dpu_format_get_media_color_ubwc(const struct dpu_format *fmt)
- {
- 	static const struct dpu_media_color_map dpu_media_ubwc_map[] = {
- 		{DRM_FORMAT_ABGR8888, COLOR_FMT_RGBA8888_UBWC},
-+		{DRM_FORMAT_ARGB8888, COLOR_FMT_RGBA8888_UBWC},
- 		{DRM_FORMAT_XBGR8888, COLOR_FMT_RGBA8888_UBWC},
-+		{DRM_FORMAT_XRGB8888, COLOR_FMT_RGBA8888_UBWC},
- 		{DRM_FORMAT_ABGR2101010, COLOR_FMT_RGBA1010102_UBWC},
- 		{DRM_FORMAT_XBGR2101010, COLOR_FMT_RGBA1010102_UBWC},
- 		{DRM_FORMAT_BGR565, COLOR_FMT_RGB565_UBWC},
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h
-index bb6112c949ae..fbcb3c4bbfee 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h
-@@ -6,7 +6,9 @@
- 
- static const uint32_t qcom_compressed_supported_formats[] = {
- 	DRM_FORMAT_ABGR8888,
-+	DRM_FORMAT_ARGB8888,
- 	DRM_FORMAT_XBGR8888,
-+	DRM_FORMAT_XRGB8888,
- 	DRM_FORMAT_BGR565,
- };
- 
+-	if (resp.resp.result != QMI_RESULT_SUCCESS_V01) {
++	/* older FW didn't support this request, which is not fatal */
++	if (resp.resp.result != QMI_RESULT_SUCCESS_V01 &&
++	    resp.resp.error != QMI_ERR_NOT_SUPPORTED_V01) {
+ 		ath10k_err(ar, "host capability request rejected: %d\n", resp.resp.error);
+ 		ret = -EINVAL;
+ 		goto out;
 -- 
-2.24.0.432.g9d3f5f5b63-goog
+2.17.1
 
