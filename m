@@ -2,91 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 54DE9F2245
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 00:05:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F4F6F226F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 00:17:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727295AbfKFXFR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 18:05:17 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:41750 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727196AbfKFXFR (ORCPT
+        id S1727196AbfKFXQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 18:16:57 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:45825 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727080AbfKFXQ5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 18:05:17 -0500
-Received: by mail-pf1-f195.google.com with SMTP id p26so308684pfq.8;
-        Wed, 06 Nov 2019 15:05:17 -0800 (PST)
+        Wed, 6 Nov 2019 18:16:57 -0500
+Received: by mail-pg1-f193.google.com with SMTP id w11so144161pga.12;
+        Wed, 06 Nov 2019 15:16:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id;
-        bh=95XhoZugvCbJ1xJolEFAVKQ1p0Gkg/QHi8Sw4Nb9JUU=;
-        b=dTcraDs9Cb9V7yUZrxzBw+VAgi/PsrVEU8E5WlU733RfVD9WLAayJRB69vEzq6BE+Z
-         xLXywT9D2BG6cP9vYfYYiWat8mQvCZn8P15evlPrxot12RtuyWsHPU6aaXXzIVBCHa8E
-         jyzfLFkqkFqfKzrDJ51Hrc6DsJ14P8XQX/f0Ztf17XPh01Ny3Ik3HauOvK13denp7VSW
-         dhSXcvUkVIIGZE62T6NPRGvy/Pe2383eEcn0te7Hye9KRghq0NuSfu3mnZjoslRv3CYT
-         ebKadQx8Abn0snAlgk8LSDxrv05I14XjqD7sIwsbl02AJxks0NGaMJ6b2r/iMcLBbicp
-         myWA==
+        bh=PEEwQUwm/mtCk8pRNL9DiIeL71bqH+DtmpEDVuEb4+U=;
+        b=neaEdK/p5ar2I/xlFi4UuC6GILTW3Ks2guXTHYrzRYhhB5GJHWuYAmHteeS9QtXB38
+         vpLKCrRcrgDtne+sUmpqEZdWMZsLWa5Ssry3hRvPt+l5AUgBe8AMaGUA2siXrzL8Tt84
+         1eEY/yBnhOu6s1Y2lrffcUanSuXEiTYu3WyAp+so6Q1eXsx3jz708LQ6Mdq1uvSN8Vo7
+         JJGPN6spp11oAjv6GnrPV+rZqhqQj9G6EdHNJEhFT0mtH6Yql9JJ7SVvWG6TjRr7Umk6
+         c3P7nc+lnjR33OrTvZC29nfkOE2IsU3Xy0BVcshSmyKnj79HzS1hNJh1d56jWAFEUuZj
+         ixbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=95XhoZugvCbJ1xJolEFAVKQ1p0Gkg/QHi8Sw4Nb9JUU=;
-        b=Gcs9AtydITfNLz5MQJeQAzt7qq8frgFP+aJGmN39sqGhoO7YHB/ZpUDO/veQWlP80b
-         6ccIkYM7UBo40QoNiPVMwUwdnmKlgGYAo5jAOM3uEQl1/jupF24GY5dwUO1ZhrudD9dj
-         RWj2qmnedxoGVbXRduCB0GK2g4rLPszUTDZVLM17QQP1ciXgQpOMdBT3f+h9IY7asYdB
-         kAmBzjb61gW8f2QEPVslMC9Z9BT9swhOO5Njocct/Hv8M/uOVCUJly0U3uIMyy1ryoxN
-         wHW62BxxdpHKJc3d296UvVDejKzaBKbN/Lqv1Erw2V0BAGSb+0d5VKB4o5Ov1+VaKwaR
-         +R/w==
-X-Gm-Message-State: APjAAAXdVteTati7qHM9rTw3m/Cku/RNr0pMrP8FduVy9NirLAXwDYA7
-        goY0ZEsBnECytKm+NVdVYYJ0pDX3
-X-Google-Smtp-Source: APXvYqzjYfFmI0edQS67xESS7kJS4iOvGQYKfMtAXlXcpvSh2qO1c4rP7GEG2AhINNY9FH7h81JNRA==
-X-Received: by 2002:a63:ed4a:: with SMTP id m10mr391126pgk.255.1573081516638;
-        Wed, 06 Nov 2019 15:05:16 -0800 (PST)
+        bh=PEEwQUwm/mtCk8pRNL9DiIeL71bqH+DtmpEDVuEb4+U=;
+        b=RtgEvvQzJx/qMUL7ErGFfiO/PdxyuxaAuUBzXCZ5IplwODu5OCiLXB0h5/OPQjT/ZF
+         uygXFgUMycmZDBBcjgY9TxY0RDtgwdiOIMSVLaLF4cbOdXQnBlLZMP5Vz3ysFIs13ckw
+         3bJkqsZ4xQl1pYfGqq1G06bkbgRRD6uVp/u7tFx3Ib7zmMgFO8ZXWQr4w5+wXDpUHOtS
+         WbundO8wIkqSYqx+5NiaXzkKLZZNk/IUhD5ypkLnIurQpynz6FHyVaxXjrPqFP9wsz4R
+         MpzLQ9fMgNM9u83liXKkkDFQd5bS4MlKeAJn8kTRY0Aq2FOG0YKpmnyDb8onOtWDp+RW
+         x1LQ==
+X-Gm-Message-State: APjAAAXLc6ZlaGD5CX85kVpYmOCkdRSZQ3by+r2lLh4QJpIYtuEmaaGz
+        5k09WM3WoKBnx2OQb9Zf8Lo=
+X-Google-Smtp-Source: APXvYqy2/Y5pxVKOfsNfYmz4miHXZKCw3E8Ru4bwJEpq+vIruTB5jjvQyXI8vZKkp+EORx5jL/IDYA==
+X-Received: by 2002:a17:90a:cd03:: with SMTP id d3mr506186pju.137.1573082214787;
+        Wed, 06 Nov 2019 15:16:54 -0800 (PST)
 Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 70sm32538pfw.160.2019.11.06.15.05.15
+        by smtp.gmail.com with ESMTPSA id d139sm49075pfd.162.2019.11.06.15.16.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2019 15:05:16 -0800 (PST)
+        Wed, 06 Nov 2019 15:16:54 -0800 (PST)
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+To:     kvalo@codeaurora.org, davem@davemloft.net
+Cc:     ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH] soc: qcom: qmi: Return EPROBE_DEFER if no address family
-Date:   Wed,  6 Nov 2019 15:05:11 -0800
-Message-Id: <20191106230511.1290-1-jeffrey.l.hugo@gmail.com>
+Subject: [PATCH] ath10k: Fix qmi init error handling
+Date:   Wed,  6 Nov 2019 15:16:50 -0800
+Message-Id: <20191106231650.1580-1-jeffrey.l.hugo@gmail.com>
 X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If a client comes up early in the boot process (perhaps was a built-in
-driver), qmi_handle_init() will likely fail with a EAFNOSUPPORT since the
-underlying ipc router hasn't init'd and registered the address family.
-This should not be a fatal error since chances are, the router will come
-up later, so recode the error to EPROBE_DEFER so that clients will retry
-later.
+When ath10k_qmi_init() fails, the error handling does not free the irq
+resources, which causes an issue if we EPROBE_DEFER as we'll attempt to
+(re-)register irqs which are already registered.
 
+Fixes: ba94c753ccb4 ("ath10k: add QMI message handshake for wcn3990 client")
 Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 ---
- drivers/soc/qcom/qmi_interface.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath10k/snoc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/qmi_interface.c b/drivers/soc/qcom/qmi_interface.c
-index f9e309f0acd3..1a03eaa38c46 100644
---- a/drivers/soc/qcom/qmi_interface.c
-+++ b/drivers/soc/qcom/qmi_interface.c
-@@ -655,8 +655,12 @@ int qmi_handle_init(struct qmi_handle *qmi, size_t recv_buf_size,
- 
- 	qmi->sock = qmi_sock_create(qmi, &qmi->sq);
- 	if (IS_ERR(qmi->sock)) {
--		pr_err("failed to create QMI socket\n");
--		ret = PTR_ERR(qmi->sock);
-+		if (PTR_ERR(qmi->sock) == -EAFNOSUPPORT) {
-+			ret = -EPROBE_DEFER;
-+		} else {
-+			pr_err("failed to create QMI socket\n");
-+			ret = PTR_ERR(qmi->sock);
-+		}
- 		goto err_destroy_wq;
+diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
+index fc15a0037f0e..f2a0b7aaad3b 100644
+--- a/drivers/net/wireless/ath/ath10k/snoc.c
++++ b/drivers/net/wireless/ath/ath10k/snoc.c
+@@ -1729,7 +1729,7 @@ static int ath10k_snoc_probe(struct platform_device *pdev)
+ 	ret = ath10k_qmi_init(ar, msa_size);
+ 	if (ret) {
+ 		ath10k_warn(ar, "failed to register wlfw qmi client: %d\n", ret);
+-		goto err_core_destroy;
++		goto err_free_irq;
  	}
  
+ 	ath10k_dbg(ar, ATH10K_DBG_SNOC, "snoc probe\n");
 -- 
 2.17.1
 
