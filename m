@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 29F98F0F34
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 07:51:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 81264F0F37
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 07:51:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731273AbfKFGvT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 01:51:19 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:45494 "EHLO
+        id S1731291AbfKFGvX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 01:51:23 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:45610 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731270AbfKFGvS (ORCPT
+        with ESMTP id S1731287AbfKFGvW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 01:51:18 -0500
+        Wed, 6 Nov 2019 01:51:22 -0500
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 55F36612D8; Wed,  6 Nov 2019 06:51:17 +0000 (UTC)
+        id 7A1FA61060; Wed,  6 Nov 2019 06:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573023077;
-        bh=J84BsQCgbqSoAY9g7MyiC+fAPILRmiqCIDydHbTyj4A=;
+        s=default; t=1573023081;
+        bh=XhlVak7vAHchCweRbldbZW7TvFyoJCIcZR3y7pWOCkM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=bwGHRugHFWct6TxfiNBOkPNIj0yOHEpkEYI0SXzmzn2wZz3vxYB/g0dUzZfdHsTx6
-         qXGpxcPECnTD9wq7j+5pvg3t/JswOdcs8nS/CTgg9GMT2oNZGJe6KOyCZhKGtcUeQ0
-         pUQicXZdgv4rLYlBNK1QEcV9ZVPuEhceyuIrFLSU=
+        b=oQH9PY3m9/8Bb2ELiUUhZCjGW973H+Ip6/AMstc3Rithq1cqWSuUEyb+yIC+uTUHA
+         8nEcvkmXahdhNYyu1kX90vFj3CW/QzCNG6lVA3uNt2Gn8mr1i5WuUfVMukr5dWE+Vs
+         RMPc/5VtQy2vrURNOY8xsIZkt9tEb/n+i5U4FdH8=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,16 +31,16 @@ Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5B9D761060;
-        Wed,  6 Nov 2019 06:51:13 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5A171612DE;
+        Wed,  6 Nov 2019 06:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573023076;
-        bh=J84BsQCgbqSoAY9g7MyiC+fAPILRmiqCIDydHbTyj4A=;
+        s=default; t=1573023080;
+        bh=XhlVak7vAHchCweRbldbZW7TvFyoJCIcZR3y7pWOCkM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=jgvCZFXIVQmFKT/qoClhD2C07E79GngFgSYNcWATrnf6xCGbaoW0KjLoWsA+gCkAt
-         0TwCedbbokpcpKq8+rEMvy0lS32cMd8/hu0O85wgzVPgJJBjHV1Czlzg7PL4fkkfz5
-         3SDGv3htwsMcWxjUpjUL+URBVDpIoqhNjqxfR42c=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5B9D761060
+        b=g9WiSJbM3Fgcbb0uKe+FU4VYx6ciZcJMfF3iy3y7EzVhcJyIwa9/pykgDZI5daFsH
+         jZWNNoViQUwLKPrzouattLsnajKGZEnRDSkKOM2OX1cClHs+O7VIlsseLNmMdWu0pc
+         0boSyPb96o+549DPNAEHi3H4+rCZdWo7G23/hcZM=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5A171612DE
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
 From:   Rajendra Nayak <rnayak@codeaurora.org>
@@ -49,9 +49,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, mka@chromium.org,
         swboyd@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>,
         Lina Iyer <ilina@codeaurora.org>, Marc Zyngier <maz@kernel.org>
-Subject: [PATCH v4 07/14] drivers: irqchip: qcom-pdc: Move to an SoC independent compatible
-Date:   Wed,  6 Nov 2019 12:20:10 +0530
-Message-Id: <20191106065017.22144-8-rnayak@codeaurora.org>
+Subject: [PATCH v4 08/14] dt-bindings: qcom,pdc: Add compatible for sc7180
+Date:   Wed,  6 Nov 2019 12:20:11 +0530
+Message-Id: <20191106065017.22144-9-rnayak@codeaurora.org>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20191106065017.22144-1-rnayak@codeaurora.org>
 References: <20191106065017.22144-1-rnayak@codeaurora.org>
@@ -62,28 +62,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove the sdm845 SoC specific compatible to make the driver
-easily reusable across other SoC's with the same IP block.
-This will reduce further churn adding any SoC specific
-compatibles unless really needed.
+Add the compatible string for sc7180 SoC from Qualcomm.
 
 Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 Cc: Lina Iyer <ilina@codeaurora.org>
 Cc: Marc Zyngier <maz@kernel.org>
 ---
- drivers/irqchip/qcom-pdc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/interrupt-controller/qcom,pdc.txt      | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-index faa7d61b9d6c..c175333bb646 100644
---- a/drivers/irqchip/qcom-pdc.c
-+++ b/drivers/irqchip/qcom-pdc.c
-@@ -309,4 +309,4 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
- 	return ret;
- }
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
+index 8e0797cb1487..1df293953327 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
++++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
+@@ -17,7 +17,8 @@ Properties:
+ - compatible:
+ 	Usage: required
+ 	Value type: <string>
+-	Definition: Should contain "qcom,<soc>-pdc"
++	Definition: Should contain "qcom,<soc>-pdc" and "qcom,pdc"
++		    - "qcom,sc7180-pdc": For SC7180
+ 		    - "qcom,sdm845-pdc": For SDM845
  
--IRQCHIP_DECLARE(pdc_sdm845, "qcom,sdm845-pdc", qcom_pdc_init);
-+IRQCHIP_DECLARE(qcom_pdc, "qcom,pdc", qcom_pdc_init);
+ - reg:
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
