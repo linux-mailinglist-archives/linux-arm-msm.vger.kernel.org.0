@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 12A07F1ED7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 20:34:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F198F1ED9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 20:34:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727463AbfKFTeF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 14:34:05 -0500
-Received: from mail.kernel.org ([198.145.29.99]:33000 "EHLO mail.kernel.org"
+        id S1727615AbfKFTeI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 14:34:08 -0500
+Received: from mail.kernel.org ([198.145.29.99]:33086 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727208AbfKFTeF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 14:34:05 -0500
+        id S1727208AbfKFTeI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 6 Nov 2019 14:34:08 -0500
 Received: from localhost (mobile-107-92-63-247.mycingular.net [107.92.63.247])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B45A8217D7;
-        Wed,  6 Nov 2019 19:34:04 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5A1E9217F9;
+        Wed,  6 Nov 2019 19:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573068845;
-        bh=l7TF57RHkdq/Fn70FKMOafR0s2A9EtSc6Ut+uxvH1/0=;
+        s=default; t=1573068846;
+        bh=niydE8E8tlgbxMzgPkVPuiVBj9Wdqn5HKmXxLh73XmQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=k09Dw2izKwPiqmjn+pTa2axdCOLlZ0c5xgFDU1joZeaJbkcZUVGQC9bPgjlEF0Uk0
-         IdPGoAhpftQaExSKUr5KOQ2MuglrGK7CkD3BAqd31TlgfdwvyjLlu5w8vp4whhdmzG
-         bxX7lHKi9f9St+rzUkV38r/ArlejV0M+/WNDKJ84=
+        b=tiFWWrH840xpypCQo+Y9E+A6OJCOeqSrWLI0IQtYZ5NsIRjUpEl2QIc3UOxCvRBQl
+         kpDW78Wbditu1ot/rtfAUlUdyGjsbAFY5LuQIIlJggiBu8fRlPbKrOUBqFCBB7JlFV
+         dSZ6WhPuKFnN4xYHLUwk6OTpJdozBwDIV2XltqnI=
 From:   Andy Gross <agross@kernel.org>
 To:     arm@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -30,9 +30,9 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
         Kevin Hilman <khilman@baylibre.com>
-Subject: [GIT PULL] Qualcomm Defconfig updates for 5.5
-Date:   Wed,  6 Nov 2019 13:33:58 -0600
-Message-Id: <1573068840-13098-3-git-send-email-agross@kernel.org>
+Subject: [GIT PULL] Qualcomm Driver updates for 5.5
+Date:   Wed,  6 Nov 2019 13:33:59 -0600
+Message-Id: <1573068840-13098-4-git-send-email-agross@kernel.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1573068840-13098-1-git-send-email-agross@kernel.org>
 References: <1573068840-13098-1-git-send-email-agross@kernel.org>
@@ -47,20 +47,71 @@ The following changes since commit 54ecb8f7028c5eb3d740bb82b0f1d90f2df63c5c:
 
 are available in the git repository at:
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-defconfig-for-5.5
+  git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-for-5.5
 
-for you to fetch changes up to b2181be1cfb81da3fad0f8b6994b2e714ae66876:
+for you to fetch changes up to 971112e072938517fe80ab2adcbfffc568a8838e:
 
-  ARM: qcom_defconfig: add ocmem support (2019-10-07 09:11:14 -0700)
-
-----------------------------------------------------------------
-Qualcomm ARM Based defconfig Updates for v5.5
-
-* Enable OCMEM support
+  MAINTAINERS: Add myself as co-maintainer for QCOM (2019-11-04 22:35:46 -0600)
 
 ----------------------------------------------------------------
-Brian Masney (1):
-      ARM: qcom_defconfig: add ocmem support
+Qualcomm ARM Based Driver Updates for v5.5
 
- arch/arm/configs/qcom_defconfig | 1 +
- 1 file changed, 1 insertion(+)
+* Add Bjorn as QCOM co-maintainer
+* Add LLLC yaml bindings and SC7180 support
+* Fixups/Cleanup for LLLC
+* Add SMD-RPM MSM8976 compatible and interconnect device
+* Add missing RPMD SMD perf level
+
+----------------------------------------------------------------
+Angelo G. Del Regno (2):
+      soc: qcom: smd-rpm: Add MSM8976 compatible
+      dt-bindings: power: Add missing rpmpd smd performance level
+
+AngeloGioacchino Del Regno (1):
+      soc: qcom: rpmpd: Add rpm power domains for msm8976
+
+Bjorn Andersson (1):
+      MAINTAINERS: Add myself as co-maintainer for QCOM
+
+Georgi Djakov (1):
+      soc: qcom: smd-rpm: Create RPM interconnect proxy child device
+
+Sai Prakash Ranjan (2):
+      dt-bindings: msm: Convert LLCC bindings to YAML
+      dt-bindings: msm: Add LLCC for SC7180
+
+Srinivas Kandagatla (1):
+      soc: qcom: socinfo: add sdm845 and sda845 soc ids
+
+Stephen Boyd (2):
+      soc: qcom: llcc: Name regmaps to avoid collisions
+      soc: qcom: llcc: Move regmap config to local variable
+
+Vivek Gautam (4):
+      soc: qcom: llcc cleanup to get rid of sdm845 specific driver file
+      soc: qcom: Rename llcc-slice to llcc-qcom
+      soc: qcom: Make llcc-qcom a generic driver
+      soc: qcom: llcc: Add configuration data for SC7180
+
+YueHaibing (1):
+      soc: qcom: Fix llcc-qcom definitions to include
+
+ .../devicetree/bindings/arm/msm/qcom,llcc.txt      |  41 -------
+ .../devicetree/bindings/arm/msm/qcom,llcc.yaml     |  55 +++++++++
+ .../devicetree/bindings/power/qcom,rpmpd.txt       |   1 +
+ .../devicetree/bindings/soc/qcom/qcom,smd-rpm.txt  |   1 +
+ MAINTAINERS                                        |   1 +
+ drivers/soc/qcom/Kconfig                           |  14 +--
+ drivers/soc/qcom/Makefile                          |   3 +-
+ drivers/soc/qcom/{llcc-slice.c => llcc-qcom.c}     | 130 ++++++++++++++++++---
+ drivers/soc/qcom/llcc-sdm845.c                     | 100 ----------------
+ drivers/soc/qcom/rpmpd.c                           |  23 ++++
+ drivers/soc/qcom/smd-rpm.c                         |  18 ++-
+ drivers/soc/qcom/socinfo.c                         |   2 +
+ include/dt-bindings/power/qcom-rpmpd.h             |   9 ++
+ include/linux/soc/qcom/llcc-qcom.h                 |  94 ++++-----------
+ 14 files changed, 250 insertions(+), 242 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,llcc.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml
+ rename drivers/soc/qcom/{llcc-slice.c => llcc-qcom.c} (68%)
+ delete mode 100644 drivers/soc/qcom/llcc-sdm845.c
