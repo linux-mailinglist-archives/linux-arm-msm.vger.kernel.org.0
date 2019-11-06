@@ -2,189 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 15ACAF1BD7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 17:59:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 95B4EF1C54
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 18:21:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727746AbfKFQ7N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 11:59:13 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:40378 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727894AbfKFQ7N (ORCPT
+        id S1732342AbfKFRVV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 12:21:21 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:47552 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729384AbfKFRVV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 11:59:13 -0500
-Received: by mail-ed1-f68.google.com with SMTP id p59so19922314edp.7;
-        Wed, 06 Nov 2019 08:59:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gBwyi2vUMFCQ9EewZLonM+Leo+vfm/dcmTg/r5rR65Q=;
-        b=gKTrM77V4qX8X9qNz87lZHT6mwnmLivmeLFE2de2qflrNk/4mrgkX04n48Isan050a
-         BroS/XWVaIoBDhky1eGK+V5+ai5JQClyjzpVtxCRkgSQLpEwbSqLUc6NXspmxepPQgRb
-         VP0oQ2gklGPuNKrluIIM3JYg7AzWz9733JZz40PVrqFbm3t0y9d68sMPOpCfRC61UJuy
-         SQi1jOz508jT/BwIq2ZRW/+vgiIQV5UWCw+sY2TKiDyi5/VLhttTJZ+FKpLXw3nchLfL
-         BGhoxx4Q65ewLeaZmVeNBGg9dY3cV/2Yb72fFpNfsLWyoyWTPlDYAXZgOK6a1XFdmUIr
-         oLRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gBwyi2vUMFCQ9EewZLonM+Leo+vfm/dcmTg/r5rR65Q=;
-        b=Gfvz/AjGdrMuIcvbYh3RMBJKZnhwx8Q8gwbUZkeBFtwW/qUhIbZN9aTCTqCJu5YXS5
-         gAdakheywFGMuuwHBXD7d3nWkvKMrQPOvnvfrLMcW20V3cnvq9UnGH4DidyTIJUl2IFp
-         byUcdrcxHcvqvr496rNG+4v9zkcR3meqI3cshJAboo0Lbmsp8833X2WkOP2PvVsKn8mW
-         4WysV3quny2i1p7kaAMx38bPPTSooDwUO7Zbj5Di2BQZjdF/0xJhcSHvVQE3WkG7CBAF
-         T7boN/REC4oUCHwo26/DC4BiqyWK3ZX4FO9x4CAD29FKAox1OgkkikD8eGURbD6v+lzb
-         dzsA==
-X-Gm-Message-State: APjAAAXe9buJgk97Zc6J2VxHvif15L+2s16Y+iWvtFRqfrKAHrU0NxoJ
-        EfZ2DbqtU8u2oNJTEBjlVZ9WFMaT0AP5IS0FqHE=
-X-Google-Smtp-Source: APXvYqzEuJcVK0/OeBybxHUu1Wd00sRuScOiu/CQgbGU9BUa13nu4GW5IOo8gWnrIuuAORXFO4+BtSQHgwGPslAckYI=
-X-Received: by 2002:a50:a697:: with SMTP id e23mr3871635edc.264.1573059550755;
- Wed, 06 Nov 2019 08:59:10 -0800 (PST)
-MIME-Version: 1.0
-References: <20191105000129.GA6536@onstation.org> <CAF6AEGv3gs+LFOP3AGthXd4niFb_XYOuwLfEa2G9eb27b1wMMA@mail.gmail.com>
- <20191105100804.GA9492@onstation.org> <CAF6AEGtB+g=4eiB31jkyuBGW7r0TBSh2oMj6TGtSgQ=q1ZV1tg@mail.gmail.com>
- <20191106091335.GA16729@onstation.org> <CAF6AEGuEO1jg6KhOFWEMUjq4ZQy5w61dWJk6uLWRzHnMZYZv=g@mail.gmail.com>
- <CAOCk7NomH2MsZ+FvPFAMWeabOFpyOwODCb_Ro07v+2k2v_C4NA@mail.gmail.com>
-In-Reply-To: <CAOCk7NomH2MsZ+FvPFAMWeabOFpyOwODCb_Ro07v+2k2v_C4NA@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 6 Nov 2019 08:58:59 -0800
-Message-ID: <CAF6AEGsZkJJTNZ8SzHsSioEnkpekr1Texu5_EeBW1hP-bsOyjQ@mail.gmail.com>
-Subject: Re: [Freedreno] drm/msm: 'pp done time out' errors after async commit changes
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Brian Masney <masneyb@onstation.org>,
-        Rob Clark <robdclark@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+        Wed, 6 Nov 2019 12:21:21 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 8A80C6050D; Wed,  6 Nov 2019 17:21:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573060879;
+        bh=lIdKuIB1t60YjOmFaeZGgfs4tDLYQnqztGQvbk3zep8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=HMu5wC6O8scrFQ/Db+RVyfETKpNF5L9ZUMqkGF5KAXTVYDT6Y7MgBrWwKNB+XKesi
+         N1k6S+pVS8mFAuwjnHC83mwOUcF0h5ogupdnv8YVYtrFWsZj43iJdsrk/H1EO+wQ9d
+         pbmaZauTXAtlZCfbc/2R1uR1bhotXcvofKv9kDXE=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 45D836063A;
+        Wed,  6 Nov 2019 17:21:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573060879;
+        bh=lIdKuIB1t60YjOmFaeZGgfs4tDLYQnqztGQvbk3zep8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=HMu5wC6O8scrFQ/Db+RVyfETKpNF5L9ZUMqkGF5KAXTVYDT6Y7MgBrWwKNB+XKesi
+         N1k6S+pVS8mFAuwjnHC83mwOUcF0h5ogupdnv8YVYtrFWsZj43iJdsrk/H1EO+wQ9d
+         pbmaZauTXAtlZCfbc/2R1uR1bhotXcvofKv9kDXE=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 45D836063A
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Wed, 6 Nov 2019 10:21:16 -0700
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Sharat Masetty <smasetty@codeaurora.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>
-Content-Type: text/plain; charset="UTF-8"
+        freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>
+Subject: Re: [Freedreno] [PATCH] drm: msm: a6xx: fix debug bus register
+ configuration
+Message-ID: <20191106172116.GA12872@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>
+References: <1573040963-24148-1-git-send-email-smasetty@codeaurora.org>
+ <CAF6AEGtdEDAYg9bqKREv34aWiXR+uwEg+xsyJS_ySs4+-sFumg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGtdEDAYg9bqKREv34aWiXR+uwEg+xsyJS_ySs4+-sFumg@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 6, 2019 at 8:47 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
->
-> On Wed, Nov 6, 2019 at 9:30 AM Rob Clark <robdclark@gmail.com> wrote:
+On Wed, Nov 06, 2019 at 08:18:59AM -0800, Rob Clark wrote:
+> On Wed, Nov 6, 2019 at 3:49 AM Sharat Masetty <smasetty@codeaurora.org> wrote:
 > >
-> > On Wed, Nov 6, 2019 at 1:13 AM Brian Masney <masneyb@onstation.org> wrote:
-> > >
-> > > On Tue, Nov 05, 2019 at 08:23:27AM -0800, Rob Clark wrote:
-> > > > On Tue, Nov 5, 2019 at 2:08 AM Brian Masney <masneyb@onstation.org> wrote:
-> > > > > The 'pp done time out' errors go away if I revert the following three
-> > > > > commits:
-> > > > >
-> > > > > cd6d923167b1 ("drm/msm/dpu: async commit support")
-> > > > > d934a712c5e6 ("drm/msm: add atomic traces")
-> > > > > 2d99ced787e3 ("drm/msm: async commit support")
-> > > > >
-> > > > > I reverted the first one to fix a compiler error, and the second one so
-> > > > > that the last patch can be reverted without any merge conflicts.
-> > > > >
-> > > > > I see that crtc_flush() calls mdp5_ctl_commit(). I tried to use
-> > > > > crtc_flush_all() in mdp5_flush_commit() and the contents of the frame
-> > > > > buffer dance around the screen like its out of sync. I renamed
-> > > > > crtc_flush_all() to mdp5_crtc_flush_all() and removed the static
-> > > > > declaration. Here's the relevant part of what I tried:
-> > > > >
-> > > > > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> > > > > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> > > > > @@ -171,7 +171,15 @@ static void mdp5_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *st
-> > > > >
-> > > > >  static void mdp5_flush_commit(struct msm_kms *kms, unsigned crtc_mask)
-> > > > >  {
-> > > > > -       /* TODO */
-> > > > > +       struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
-> > > > > +       struct drm_crtc *crtc;
-> > > > > +
-> > > > > +       for_each_crtc_mask(mdp5_kms->dev, crtc, crtc_mask) {
-> > > > > +               if (!crtc->state->active)
-> > > > > +                       continue;
-> > > > > +
-> > > > > +               mdp5_crtc_flush_all(crtc);
-> > > > > +       }
-> > > > >  }
-> > > > >
-> > > > > Any tips would be appreciated.
-> > > >
-> > > >
-> > > > I think this is along the lines of what we need to enable async commit
-> > > > for mdp5 (but also removing the flush from the atomic-commit path)..
-> > > > the principle behind the async commit is to do all the atomic state
-> > > > commit normally, but defer writing the flush bits.  This way, if you
-> > > > get another async update before the next vblank, you just apply it
-> > > > immediately instead of waiting for vblank.
-> > > >
-> > > > But I guess you are on a command mode panel, if I remember?  Which is
-> > > > a case I didn't have a way to test.  And I'm not entirely about how
-> > > > kms_funcs->vsync_time() should be implemented for cmd mode panels.
-> > >
-> > > Yes, this is a command-mode panel and there's no hardware frame counter
-> > > available. The key to getting the display working on this phone was this
-> > > patch:
-> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2bab52af6fe68c43b327a57e5ce5fc10eefdfadf
-> > >
-> > > > That all said, I think we should first fix what is broken, before
-> > > > worrying about extending async commit support to mdp5.. which
-> > > > shouldn't hit the async==true path, due to not implementing
-> > > > kms_funcs->vsync_time().
-> > > >
-> > > > What I think is going on is that, in the cmd mode case,
-> > > > mdp5_wait_flush() (indirectly) calls mdp5_crtc_wait_for_pp_done(),
-> > > > which waits for a pp-done irq regardless of whether there is a flush
-> > > > in progress.  Since there is no flush pending, the irq never comes.
-> > > > But the expectation is that kms_funcs->wait_flush() returns
-> > > > immediately if there is nothing to wait for.
-> > >
-> > > I don't think that's happening in this case. I added some pr_info()
-> > > statements to request_pp_done_pending() and mdp5_crtc_pp_done_irq().
-> > > Here's the first two sets of messages that appear in dmesg:
-> > >
-> > > [   14.018907] msm fd900000.mdss: pp done time out, lm=0
-> > > [   14.018993] request_pp_done_pending: HERE
-> > > [   14.074208] mdp5_crtc_pp_done_irq: HERE
-> > > [   14.074368] Console: switching to colour frame buffer device 135x120
-> > > [   14.138938] msm fd900000.mdss: pp done time out, lm=0
-> > > [   14.139021] request_pp_done_pending: HERE
-> > > [   14.158097] mdp5_crtc_pp_done_irq: HERE
-> > >
-> > > The messages go on like this with the same pattern.
-> > >
-> > > I tried two different changes:
-> > >
-> > > 1) I moved the request_pp_done_pending() and corresponding if statement
-> > >    from mdp5_crtc_atomic_flush() and into mdp5_crtc_atomic_begin().
-> > >
-> > > 2) I increased the timeout in wait_for_completion_timeout() by several
-> > >    increments; all the way to 5 seconds.
+> > Fix the cx debugbus related register configuration, to collect accurate
+> > bus data during gpu snapshot. This helps with complete snapshot dump
+> > and also complete proper GPU recovery.
 > >
-> > increasing the timeout won't help, because the pp-done irq has already
-> > come at the point where we wait for it..
+> > Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+
+This commit summary is far too polite. The word boneheaded should have appeared
+several times. Thanks for this patch.
+
+> (adding fixes tag for benefit of stable kernels)
+> 
+> Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
+
+Thanks, I was going to suggest this as well.
+
+> Reviewed-by: Rob Clark <robdclark@gmail.com>
+
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+
+> > ---
+> >  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 24 ++++++++++++------------
+> >  1 file changed, 12 insertions(+), 12 deletions(-)
 > >
-> > maybe the easy thing is just add mdp5_crtc->needs_pp, set to true
-> > before requesting, and false when we get the irq.. and then
-> > mdp5_crtc_wait_for_pp_done() just returns if needs_pp==false..
->
-> On the otherhand, what about trying to make command mode panels
-> resemble video mode panels slightly?  Video mode panels have a vsync
-> counter in hardware, which is missing from command mode - however it
-> seems like the driver/drm framework would prefer such a counter.
-> Would it be a reasonable idea to make a software counter, and just
-> increment it every time the pp_done irq is triggered?
->
-> I'm just thinking that we'll avoid issues long term by trying to make
-> the code common, rather than diverging it for the two modes.
->
+> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> > index 483e100..c5764b4 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> > @@ -353,26 +353,26 @@ static void a6xx_get_debugbus(struct msm_gpu *gpu,
+> >                 cxdbg = ioremap(res->start, resource_size(res));
+> >
+> >         if (cxdbg) {
+> > -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_CNTLT,
+> > +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_CNTLT,
+> >                         A6XX_DBGC_CFG_DBGBUS_CNTLT_SEGT(0xf));
+> >
+> > -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_CNTLM,
+> > +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_CNTLM,
+> >                         A6XX_DBGC_CFG_DBGBUS_CNTLM_ENABLE(0xf));
+> >
+> > -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_0, 0);
+> > -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_1, 0);
+> > -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_2, 0);
+> > -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_3, 0);
+> > +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_0, 0);
+> > +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_1, 0);
+> > +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_2, 0);
+> > +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_3, 0);
+> >
+> > -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_BYTEL_0,
+> > +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_0,
+> >                         0x76543210);
+> > -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_BYTEL_1,
+> > +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_1,
+> >                         0xFEDCBA98);
+> >
+> > -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_0, 0);
+> > -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_1, 0);
+> > -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_2, 0);
+> > -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_3, 0);
+> > +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_0, 0);
+> > +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_1, 0);
+> > +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_2, 0);
+> > +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_3, 0);
+> >         }
+> >
+> >         nr_debugbus_blocks = ARRAY_SIZE(a6xx_debugbus_blocks) +
+> > --
+> > 1.9.1
+> >
+> > _______________________________________________
+> > Freedreno mailing list
+> > Freedreno@lists.freedesktop.org
+> > https://lists.freedesktop.org/mailman/listinfo/freedreno
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
 
-*possibly*, but I think we want to account somehow periods where
-display is not updated.
-
-fwiw, it isn't that uncommon for userspace to use vblanks to "keep
-time" (drive animations for desktop switch, window
-maximize/unmaximize, etc).. it could be a surprise when "vblank" is
-not periodic.
-
-BR,
--R
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
