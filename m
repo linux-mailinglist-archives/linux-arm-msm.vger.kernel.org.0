@@ -2,112 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 59C2FF1568
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 12:49:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 036AFF15E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Nov 2019 13:16:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725868AbfKFLth (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 06:49:37 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:51720 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725856AbfKFLth (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 06:49:37 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id CD077611AD; Wed,  6 Nov 2019 11:49:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573040976;
-        bh=1dpV706bZTuScFAR17edEPKOVhlZyfhlbJYNG58DizU=;
-        h=From:To:Cc:Subject:Date:From;
-        b=RaSSsofD1vViYXpfy4/wmxyzmwv1qsn0N+iYoTIDofh59P6E4hN+Jf1dV7OKrsduu
-         Ln2tfuzSZ5V8tFVmt2Ko61ErevMu1/gAO0KaPw2hVi//6R6kZ/SgrghgjqHNsMxrq/
-         jKB9K3viFZR27exdUB0KLJhBBizBM6onSbD82wFM=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from smasetty-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1729164AbfKFMQD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 07:16:03 -0500
+Received: from mail.kernel.org ([198.145.29.99]:50842 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727391AbfKFMQD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 6 Nov 2019 07:16:03 -0500
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: smasetty@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BFE3160EE3;
-        Wed,  6 Nov 2019 11:49:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573040976;
-        bh=1dpV706bZTuScFAR17edEPKOVhlZyfhlbJYNG58DizU=;
-        h=From:To:Cc:Subject:Date:From;
-        b=RaSSsofD1vViYXpfy4/wmxyzmwv1qsn0N+iYoTIDofh59P6E4hN+Jf1dV7OKrsduu
-         Ln2tfuzSZ5V8tFVmt2Ko61ErevMu1/gAO0KaPw2hVi//6R6kZ/SgrghgjqHNsMxrq/
-         jKB9K3viFZR27exdUB0KLJhBBizBM6onSbD82wFM=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BFE3160EE3
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
-From:   Sharat Masetty <smasetty@codeaurora.org>
-To:     freedreno@lists.freedesktop.org
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Sharat Masetty <smasetty@codeaurora.org>
-Subject: [PATCH] drm: msm: a6xx: fix debug bus register configuration
-Date:   Wed,  6 Nov 2019 17:19:23 +0530
-Message-Id: <1573040963-24148-1-git-send-email-smasetty@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        by mail.kernel.org (Postfix) with ESMTPSA id 3B2DF20869;
+        Wed,  6 Nov 2019 12:16:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1573042562;
+        bh=7Qk21Xo/YMeoOVp/OL+OM/VRZzgjMrMsp3w0H5S702s=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Gd51ptMxvpSIMJUu6wIUs8HOaULo3C6lPjgN3I3PyH+aNcqzhCXgUEaO1qnBlj811
+         JipS6HXEdvO3+yrOCVvl5FoyFFo/yBHWDngRcgaiQ4PZ/OjRcKr4juhtZd5YOMMM3U
+         ClLnZvPKjkugl3hVzBujOA1NtTCfMS+Gl5dtOQ+w=
+Date:   Wed, 6 Nov 2019 13:16:00 +0100
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Akash Asthana <akashast@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        mgautam@codeaurora.org
+Subject: Re: [PATCH v4 1/2] tty: serial: qcom_geni_serial: IRQ cleanup
+Message-ID: <20191106121600.GA3105139@kroah.com>
+References: <1572947835-30600-1-git-send-email-akashast@codeaurora.org>
+ <20191105171705.GB2815774@kroah.com>
+ <5dc21b1d.1c69fb81.8f924.e6e1@mx.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5dc21b1d.1c69fb81.8f924.e6e1@mx.google.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix the cx debugbus related register configuration, to collect accurate
-bus data during gpu snapshot. This helps with complete snapshot dump
-and also complete proper GPU recovery.
+On Tue, Nov 05, 2019 at 05:00:12PM -0800, Stephen Boyd wrote:
+> Quoting Greg KH (2019-11-05 09:17:05)
+> > On Tue, Nov 05, 2019 at 03:27:15PM +0530, Akash Asthana wrote:
+> > > @@ -1307,7 +1307,21 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
+> > >       port->handle_rx = console ? handle_rx_console : handle_rx_uart;
+> > >       if (!console)
+> > >               device_create_file(uport->dev, &dev_attr_loopback);
+> > > -     return uart_add_one_port(drv, uport);
+> > > +
+> > > +     ret = uart_add_one_port(drv, uport);
+> > > +     if (ret)
+> > > +             return ret;
+> > 
+> > What is going to remove the sysfs file you just created above (in a racy
+> > way, it's broken and needs to be fixed, but that's a different issue
+> > here...)?
+> > 
+> > 
+> > > +
+> > > +     irq_set_status_flags(uport->irq, IRQ_NOAUTOEN);
+> > > +     ret = devm_request_irq(uport->dev, uport->irq, qcom_geni_serial_isr,
+> > > +                     IRQF_TRIGGER_HIGH, port->name, uport);
+> > > +     if (ret) {
+> > > +             dev_err(uport->dev, "Failed to get IRQ ret %d\n", ret);
+> > > +             uart_remove_one_port(drv, uport);
+> > > +             return ret;
+> > 
+> > Does this remove the sysfs file?
+> > 
+> 
+> The loopback file isn't documented. It isn't removed when the driver is
+> removed either. Can we just remove the whole thing? It would be nicer if
+> that sort of thing was supported in the tty layer somehow. Is it?
 
-Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+I don't know what that file does, so yes, please delete it :)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index 483e100..c5764b4 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -353,26 +353,26 @@ static void a6xx_get_debugbus(struct msm_gpu *gpu,
- 		cxdbg = ioremap(res->start, resource_size(res));
+And as for support in the tty layer itself, if you figure out what it
+does, sure, we can add support if needed.
 
- 	if (cxdbg) {
--		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_CNTLT,
-+		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_CNTLT,
- 			A6XX_DBGC_CFG_DBGBUS_CNTLT_SEGT(0xf));
+thanks,
 
--		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_CNTLM,
-+		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_CNTLM,
- 			A6XX_DBGC_CFG_DBGBUS_CNTLM_ENABLE(0xf));
-
--		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_0, 0);
--		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_1, 0);
--		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_2, 0);
--		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_3, 0);
-+		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_0, 0);
-+		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_1, 0);
-+		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_2, 0);
-+		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_3, 0);
-
--		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_BYTEL_0,
-+		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_0,
- 			0x76543210);
--		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_BYTEL_1,
-+		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_1,
- 			0xFEDCBA98);
-
--		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_0, 0);
--		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_1, 0);
--		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_2, 0);
--		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_3, 0);
-+		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_0, 0);
-+		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_1, 0);
-+		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_2, 0);
-+		cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_3, 0);
- 	}
-
- 	nr_debugbus_blocks = ARRAY_SIZE(a6xx_debugbus_blocks) +
---
-1.9.1
-
+greg k-h
