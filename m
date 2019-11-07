@@ -2,235 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AFB7F2C11
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 11:23:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F29BF2D1B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 12:10:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727926AbfKGKXC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Nov 2019 05:23:02 -0500
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:36894 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726866AbfKGKXC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Nov 2019 05:23:02 -0500
-Received: by mail-vs1-f66.google.com with SMTP id u6so933010vsp.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2019 02:23:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=klf1T6RBuB2EMHIc4Rj/8/h5XlKXIauPiGkAA0PQJHA=;
-        b=KcZmcBA01wjsArSslzWd0PcZKG5+oUh1YvoGSRLuorbgBtw8eQnaVjTKqr4FIjIgX7
-         QWKTyjkc2cyGpL33feXncnUPzVYWwoyn7MIFRS8keHpk2uwuil1HrOs2Hu8QWAvBq3MJ
-         FMY7P/utSM92pNef2sXoTwX1bpkEeb2XEK0ruARavfZPC15C/goMAfwjrPkIg4CtvhH3
-         agADHSfHT5q7zZCZPWUHJeYeSaa6aOg0A2hfjkGfz52i+vm775zUbSQ7jS1QaP2k3hQr
-         dNhlBens4XoPNq0D0yUFYdkpQQfJfbDmEhOYJXh5pmNxl9I2s8afDl0bgQdaqACLcbbb
-         ZTpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=klf1T6RBuB2EMHIc4Rj/8/h5XlKXIauPiGkAA0PQJHA=;
-        b=QrYm07PWUw1qZhEIZ7tILr4vi6LDD6NjG1pluziZNynpPRA2cjC3+yWhaz6DoRvOxJ
-         9vwe8tD0oSqv6UB+PdTT33vdpIvzJQr3REwWDYAdm16VKbH+QsDctUifN54bJvogwiOJ
-         YBYFfiJ7t4/KPGjHadaF9NOGKgFdj4uzDJ/n2u7MESg7DS49zi+KlYZkeIrcCCaifk8b
-         +Hk9+JjZlYxfBTkZZ8xFGor032hlOCiA0GTdJnbYLCiRILCL7b+5XcVwzqXzoVcEAz4+
-         9HT3qVP/WkbzYCKnNdmSop2wGwVS1jXbsvKci/bdkidK1AdiQvBrscQq4eFwffIqyily
-         jnqA==
-X-Gm-Message-State: APjAAAWjrwGreQ2puCojWn3tSd7ei3fazp2HDFqw0YdrXdX8y+b2r4LU
-        4qd3t4tpngfL5ulqXn1jKcPKu9H1v2IThtqFAziaQA==
-X-Google-Smtp-Source: APXvYqy0f8eg9ePlHMjSmey5WM9znhvGExZSxWGU0F+oNb8FPRtEBPgEercA1k8qGYybSqNZ7bJQmgTaBUVOK2n9zzE=
-X-Received: by 2002:a67:7ac5:: with SMTP id v188mr2229899vsc.191.1573122180217;
- Thu, 07 Nov 2019 02:23:00 -0800 (PST)
+        id S2388259AbfKGLKV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Nov 2019 06:10:21 -0500
+Received: from onstation.org ([52.200.56.107]:55338 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727707AbfKGLKV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Nov 2019 06:10:21 -0500
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id C56A53E89E;
+        Thu,  7 Nov 2019 11:10:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1573125020;
+        bh=QbmX0feSHkj2IBz00wrWT+q2Nqc82ijEV92sQq0svlo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=NtLyXOZmqzf2z4jSd+VRrh+vNbS11NeP0SbJy8Ayqi8JJsVSFOVWqFSwQVFfmXcmx
+         silVvYWhLO7Rq3UNcg5kss290CUlW6sNOSDD4Yx+g0xlt6lKigqJCK9yPHcwZ3G+6L
+         aVpDp2vnHeYstYeX6NNroAa3p0kT2PMdiD3HPPAQ=
+Date:   Thu, 7 Nov 2019 06:10:19 -0500
+From:   Brian Masney <masneyb@onstation.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>
+Subject: Re: [Freedreno] drm/msm: 'pp done time out' errors after async
+ commit changes
+Message-ID: <20191107111019.GA24028@onstation.org>
+References: <20191105000129.GA6536@onstation.org>
+ <CAF6AEGv3gs+LFOP3AGthXd4niFb_XYOuwLfEa2G9eb27b1wMMA@mail.gmail.com>
+ <20191105100804.GA9492@onstation.org>
+ <CAF6AEGtB+g=4eiB31jkyuBGW7r0TBSh2oMj6TGtSgQ=q1ZV1tg@mail.gmail.com>
+ <20191106091335.GA16729@onstation.org>
+ <CAF6AEGuEO1jg6KhOFWEMUjq4ZQy5w61dWJk6uLWRzHnMZYZv=g@mail.gmail.com>
+ <CAOCk7NomH2MsZ+FvPFAMWeabOFpyOwODCb_Ro07v+2k2v_C4NA@mail.gmail.com>
+ <CAF6AEGsZkJJTNZ8SzHsSioEnkpekr1Texu5_EeBW1hP-bsOyjQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20191029164438.17012-1-ulf.hansson@linaro.org>
- <20191029164438.17012-9-ulf.hansson@linaro.org> <20191107091335.GA1914942@centauri.lan>
-In-Reply-To: <20191107091335.GA1914942@centauri.lan>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 7 Nov 2019 11:22:24 +0100
-Message-ID: <CAPDyKFpaONqMa1OmULjo=XuyKg4gwd2yT3-b5i2oFLg306xasQ@mail.gmail.com>
-Subject: Re: [PATCH v2 08/13] cpuidle: psci: Add a helper to attach a CPU to
- its PM domain
-To:     Niklas Cassel <niklas.cassel@linaro.org>
-Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGsZkJJTNZ8SzHsSioEnkpekr1Texu5_EeBW1hP-bsOyjQ@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 7 Nov 2019 at 10:13, Niklas Cassel <niklas.cassel@linaro.org> wrote:
->
-> On Tue, Oct 29, 2019 at 05:44:33PM +0100, Ulf Hansson wrote:
-> > Introduce a PSCI DT helper function, psci_dt_attach_cpu(), which takes a
-> > CPU number as an in-parameter and tries to attach the CPU's struct device
-> > to its corresponding PM domain.
+On Wed, Nov 06, 2019 at 08:58:59AM -0800, Rob Clark wrote:
+> On Wed, Nov 6, 2019 at 8:47 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
 > >
-> > Let's makes use of dev_pm_domain_attach_by_name(), as it allows us to
-> > specify "psci" as the "name" of the PM domain to attach to. Additionally,
-> > let's also prepare the attached device to be power managed via runtime PM.
+> > On Wed, Nov 6, 2019 at 9:30 AM Rob Clark <robdclark@gmail.com> wrote:
+> > >
+> > > On Wed, Nov 6, 2019 at 1:13 AM Brian Masney <masneyb@onstation.org> wrote:
+> > > >
+> > > > On Tue, Nov 05, 2019 at 08:23:27AM -0800, Rob Clark wrote:
+> > > > > On Tue, Nov 5, 2019 at 2:08 AM Brian Masney <masneyb@onstation.org> wrote:
+> > > > > > The 'pp done time out' errors go away if I revert the following three
+> > > > > > commits:
+> > > > > >
+> > > > > > cd6d923167b1 ("drm/msm/dpu: async commit support")
+> > > > > > d934a712c5e6 ("drm/msm: add atomic traces")
+> > > > > > 2d99ced787e3 ("drm/msm: async commit support")
+> > > > > >
+> > > > > > I reverted the first one to fix a compiler error, and the second one so
+> > > > > > that the last patch can be reverted without any merge conflicts.
+> > > > > >
+> > > > > > I see that crtc_flush() calls mdp5_ctl_commit(). I tried to use
+> > > > > > crtc_flush_all() in mdp5_flush_commit() and the contents of the frame
+> > > > > > buffer dance around the screen like its out of sync. I renamed
+> > > > > > crtc_flush_all() to mdp5_crtc_flush_all() and removed the static
+> > > > > > declaration. Here's the relevant part of what I tried:
+> > > > > >
+> > > > > > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > > > > > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > > > > > @@ -171,7 +171,15 @@ static void mdp5_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *st
+> > > > > >
+> > > > > >  static void mdp5_flush_commit(struct msm_kms *kms, unsigned crtc_mask)
+> > > > > >  {
+> > > > > > -       /* TODO */
+> > > > > > +       struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
+> > > > > > +       struct drm_crtc *crtc;
+> > > > > > +
+> > > > > > +       for_each_crtc_mask(mdp5_kms->dev, crtc, crtc_mask) {
+> > > > > > +               if (!crtc->state->active)
+> > > > > > +                       continue;
+> > > > > > +
+> > > > > > +               mdp5_crtc_flush_all(crtc);
+> > > > > > +       }
+> > > > > >  }
+> > > > > >
+> > > > > > Any tips would be appreciated.
+> > > > >
+> > > > >
+> > > > > I think this is along the lines of what we need to enable async commit
+> > > > > for mdp5 (but also removing the flush from the atomic-commit path)..
+> > > > > the principle behind the async commit is to do all the atomic state
+> > > > > commit normally, but defer writing the flush bits.  This way, if you
+> > > > > get another async update before the next vblank, you just apply it
+> > > > > immediately instead of waiting for vblank.
+> > > > >
+> > > > > But I guess you are on a command mode panel, if I remember?  Which is
+> > > > > a case I didn't have a way to test.  And I'm not entirely about how
+> > > > > kms_funcs->vsync_time() should be implemented for cmd mode panels.
+> > > >
+> > > > Yes, this is a command-mode panel and there's no hardware frame counter
+> > > > available. The key to getting the display working on this phone was this
+> > > > patch:
+> > > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2bab52af6fe68c43b327a57e5ce5fc10eefdfadf
+> > > >
+> > > > > That all said, I think we should first fix what is broken, before
+> > > > > worrying about extending async commit support to mdp5.. which
+> > > > > shouldn't hit the async==true path, due to not implementing
+> > > > > kms_funcs->vsync_time().
+> > > > >
+> > > > > What I think is going on is that, in the cmd mode case,
+> > > > > mdp5_wait_flush() (indirectly) calls mdp5_crtc_wait_for_pp_done(),
+> > > > > which waits for a pp-done irq regardless of whether there is a flush
+> > > > > in progress.  Since there is no flush pending, the irq never comes.
+> > > > > But the expectation is that kms_funcs->wait_flush() returns
+> > > > > immediately if there is nothing to wait for.
+> > > >
+> > > > I don't think that's happening in this case. I added some pr_info()
+> > > > statements to request_pp_done_pending() and mdp5_crtc_pp_done_irq().
+> > > > Here's the first two sets of messages that appear in dmesg:
+> > > >
+> > > > [   14.018907] msm fd900000.mdss: pp done time out, lm=0
+> > > > [   14.018993] request_pp_done_pending: HERE
+> > > > [   14.074208] mdp5_crtc_pp_done_irq: HERE
+> > > > [   14.074368] Console: switching to colour frame buffer device 135x120
+> > > > [   14.138938] msm fd900000.mdss: pp done time out, lm=0
+> > > > [   14.139021] request_pp_done_pending: HERE
+> > > > [   14.158097] mdp5_crtc_pp_done_irq: HERE
+> > > >
+> > > > The messages go on like this with the same pattern.
+> > > >
+> > > > I tried two different changes:
+> > > >
+> > > > 1) I moved the request_pp_done_pending() and corresponding if statement
+> > > >    from mdp5_crtc_atomic_flush() and into mdp5_crtc_atomic_begin().
+> > > >
+> > > > 2) I increased the timeout in wait_for_completion_timeout() by several
+> > > >    increments; all the way to 5 seconds.
+> > >
+> > > increasing the timeout won't help, because the pp-done irq has already
+> > > come at the point where we wait for it..
+> > >
+> > > maybe the easy thing is just add mdp5_crtc->needs_pp, set to true
+> > > before requesting, and false when we get the irq.. and then
+> > > mdp5_crtc_wait_for_pp_done() just returns if needs_pp==false..
 > >
-> > Note that, the implementation of the new helper function is in a new
-> > separate c-file, which may seems a bit too much at this point. However,
-> > subsequent changes that implements the remaining part of the PM domain
-> > support for cpuidle-psci, helps to justify this split.
+> > On the otherhand, what about trying to make command mode panels
+> > resemble video mode panels slightly?  Video mode panels have a vsync
+> > counter in hardware, which is missing from command mode - however it
+> > seems like the driver/drm framework would prefer such a counter.
+> > Would it be a reasonable idea to make a software counter, and just
+> > increment it every time the pp_done irq is triggered?
 > >
-> > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> > ---
+> > I'm just thinking that we'll avoid issues long term by trying to make
+> > the code common, rather than diverging it for the two modes.
 > >
-> > Changes in v2:
-> >       - Reorder patch to be the first one that starts adding the PM domain
-> >         support.
-> >       - Rebased.
-> >
-> > ---
-> >  drivers/cpuidle/Makefile              |  4 ++-
-> >  drivers/cpuidle/cpuidle-psci-domain.c | 36 +++++++++++++++++++++++++++
-> >  drivers/cpuidle/cpuidle-psci.h        | 12 +++++++++
-> >  3 files changed, 51 insertions(+), 1 deletion(-)
-> >  create mode 100644 drivers/cpuidle/cpuidle-psci-domain.c
-> >  create mode 100644 drivers/cpuidle/cpuidle-psci.h
-> >
-> > diff --git a/drivers/cpuidle/Makefile b/drivers/cpuidle/Makefile
-> > index ee70d5cc5b99..cc8c769d7fa9 100644
-> > --- a/drivers/cpuidle/Makefile
-> > +++ b/drivers/cpuidle/Makefile
-> > @@ -21,7 +21,9 @@ obj-$(CONFIG_ARM_U8500_CPUIDLE)         += cpuidle-ux500.o
-> >  obj-$(CONFIG_ARM_AT91_CPUIDLE)          += cpuidle-at91.o
-> >  obj-$(CONFIG_ARM_EXYNOS_CPUIDLE)        += cpuidle-exynos.o
-> >  obj-$(CONFIG_ARM_CPUIDLE)            += cpuidle-arm.o
-> > -obj-$(CONFIG_ARM_PSCI_CPUIDLE)               += cpuidle-psci.o
-> > +obj-$(CONFIG_ARM_PSCI_CPUIDLE)               += cpuidle_psci.o
-> > +cpuidle_psci-y                               := cpuidle-psci.o
-> > +cpuidle_psci-$(CONFIG_PM_GENERIC_DOMAINS_OF) += cpuidle-psci-domain.o
-> >
-> >  ###############################################################################
-> >  # MIPS drivers
-> > diff --git a/drivers/cpuidle/cpuidle-psci-domain.c b/drivers/cpuidle/cpuidle-psci-domain.c
-> > new file mode 100644
-> > index 000000000000..bc7df4dc0686
-> > --- /dev/null
-> > +++ b/drivers/cpuidle/cpuidle-psci-domain.c
-> > @@ -0,0 +1,36 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +/*
-> > + * PM domains for CPUs via genpd - managed by cpuidle-psci.
-> > + *
-> > + * Copyright (C) 2019 Linaro Ltd.
-> > + * Author: Ulf Hansson <ulf.hansson@linaro.org>
-> > + *
-> > + */
-> > +
-> > +#include <linux/cpu.h>
-> > +#include <linux/device.h>
-> > +#include <linux/kernel.h>
-> > +#include <linux/pm_domain.h>
-> > +#include <linux/pm_runtime.h>
-> > +#include <linux/psci.h>
-> > +
-> > +#include "cpuidle-psci.h"
-> > +
-> > +struct device *psci_dt_attach_cpu(int cpu)
-> > +{
-> > +     struct device *dev;
-> > +
-> > +     /* Currently limit the hierarchical topology to be used in OSI mode. */
-> > +     if (!psci_has_osi_support())
-> > +             return NULL;
-> > +
-> > +     dev = dev_pm_domain_attach_by_name(get_cpu_device(cpu), "psci");
->
-> Hello Ulf,
->
-> here you use dev_pm_domain_attach_by_name(), which will call
-> genpd_dev_pm_attach_by_name(), which will call genpd_dev_pm_attach_by_id(),
-> which will call __genpd_dev_pm_attach(virt_dev, dev, index, false);
-> the last argument is power_on, which here is always set to false.
->
-> In older versions of your patch series, psci_dt_attach_cpu() called
-> dev_pm_domain_attach(dev, true), where the last argument is power_on.
-> Interestingly enough (for the non-ACPI case), dev_pm_domain_attach()
-> ignores the power_on parameter, and simply calls genpd_dev_pm_attach(dev);
-> which will call __genpd_dev_pm_attach(dev, dev, 0, true);
-> the last argument is power_on, which here is always set to true.
->
-> In other words, your previous patch series always powered on the power
-> domain, while the newer versions do not. Is this change intentional?
+> 
+> *possibly*, but I think we want to account somehow periods where
+> display is not updated.
+> 
+> fwiw, it isn't that uncommon for userspace to use vblanks to "keep
+> time" (drive animations for desktop switch, window
+> maximize/unmaximize, etc).. it could be a surprise when "vblank" is
+> not periodic.
 
-Wow, thanks for an in-depth review!
+What do you think about using some variation of the current value of
+jiffies in the kernel + the number of pp_done IRQs as the software
+counter for command-mode panels?
 
-Yes, the change is intentional.
-
-If the device is attached via dev_pm_domain_attach(), genpd needs to
-power on the PM domain, due to legacy reasons (from behaviours by
-drivers/subsystem).
-
-This isn't the case when the device is attached through
-dev_pm_domain_attach_by_*(), as there is no legacy to care about.
-
-> Perhaps psci_dt_attach_cpu() should call dev_to_genpd(dev)->power_on()
-> after attaching the power domain? (In order to be consistent with the
-> previous behavior of this patch series.)
-
-After calling dev_pm_domain_attach_by_name, I am calling
-pm_runtime_get_sync() if the cpu is online, which means the
-corresponding genpd will be powered on - but then, only when actually
-needed.
-
-The old behaviour actually relied on the late_initcall
-genpd_power_off_unused(), to power off the genpd, in case the CPU
-device was offline.
-
-In other words, the new behaviour is even slightly better. Does it make sense?
-
-Kind regards
-Uffe
-
->
->
-> Kind regards,
-> Niklas
->
-> > +     if (IS_ERR_OR_NULL(dev))
-> > +             return dev;
-> > +
-> > +     pm_runtime_irq_safe(dev);
-> > +     if (cpu_online(cpu))
-> > +             pm_runtime_get_sync(dev);
-> > +
-> > +     return dev;
-> > +}
-> > diff --git a/drivers/cpuidle/cpuidle-psci.h b/drivers/cpuidle/cpuidle-psci.h
-> > new file mode 100644
-> > index 000000000000..0cadbb71dc55
-> > --- /dev/null
-> > +++ b/drivers/cpuidle/cpuidle-psci.h
-> > @@ -0,0 +1,12 @@
-> > +/* SPDX-License-Identifier: GPL-2.0 */
-> > +
-> > +#ifndef __CPUIDLE_PSCI_H
-> > +#define __CPUIDLE_PSCI_H
-> > +
-> > +#ifdef CONFIG_PM_GENERIC_DOMAINS_OF
-> > +struct device *psci_dt_attach_cpu(int cpu);
-> > +#else
-> > +static inline struct device *psci_dt_attach_cpu(int cpu) { return NULL; }
-> > +#endif
-> > +
-> > +#endif /* __CPUIDLE_PSCI_H */
-> > --
-> > 2.17.1
-> >
+Brian
