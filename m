@@ -2,101 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E8FDDF268C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 05:25:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC794F2693
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 05:33:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733127AbfKGEY7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 23:24:59 -0500
-Received: from mail-io1-f65.google.com ([209.85.166.65]:35969 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733076AbfKGEY5 (ORCPT
+        id S1733034AbfKGEd2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Nov 2019 23:33:28 -0500
+Received: from mail-pf1-f170.google.com ([209.85.210.170]:43651 "EHLO
+        mail-pf1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727279AbfKGEd2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 23:24:57 -0500
-Received: by mail-io1-f65.google.com with SMTP id s3so803763ioe.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Nov 2019 20:24:56 -0800 (PST)
+        Wed, 6 Nov 2019 23:33:28 -0500
+Received: by mail-pf1-f170.google.com with SMTP id 3so1412227pfb.10;
+        Wed, 06 Nov 2019 20:33:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NkSeoMnuWg5T7g24I3SC9PrtQXIiA61Z2VNxVdt/qfE=;
-        b=KeT43MVjU2B4DpAy2SYkA6NIhlp0NXSIvrPo/xsJrBm01MgR7r5J7gwjL6ER2SKvvu
-         6zZI/iChBctFpUxgVnyp2K9HXsspnceqjcg0uSaOkMkVpQYDzb35q4B4mpiwWuV4v6yj
-         34iZRafJSCVKeLd8feC04XhdnMKrH3chAmGDQ=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=nvxthaTfx1srxjTfLKFTlEDvlap5S76uZJxJFqI/x1U=;
+        b=VbGDR0Nb1EQSuzSPC8FSACWw0fjgvYrV/hhqciF7gnKRmrdIA7CGfSWxv1QMc14U0B
+         b8pHqRLXpZCcT8Wo76xwNwwaige8ZAeiCKPJa8ieU40wIOLnEHvL3ZwJfVkgEt+6PfSJ
+         88uJPWXIFc5Z24Bz2hlgxsS3eIkipdHY3WqdfX3/ZJd/WOnoXGPiUCqShLlS8CYm4FFx
+         K0RPEP2/l7ybJ2Fexb/RYjG+M6T+UGJ05tWekh18VnbidMf7e2oNIlL/LIEbkOw4zFNN
+         BE+O3n1Dgxwz9PwSbD3UqBntLYjgK1LZo6pLpzwDG2290sJBBNU97DVjeAZkoAgwfla0
+         m8MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NkSeoMnuWg5T7g24I3SC9PrtQXIiA61Z2VNxVdt/qfE=;
-        b=JrAsvwPkgrF53Jyeal5dVUIvKxZ+ZicjgKFVkWiOpbVq93Mejb96d2nT32ZjDALdHk
-         /bzrIUNKnAtopb3z/IPmNb1MuC1v0hcPmpaVYIdIfomLu02bg22L2rc1QmI3CDWEu5Nw
-         ZUSzZdzGxVLHT2iTFCYJUrJoLlEGx6yzOpzZKMNH3pOqMr7lvPtQD5j2RwlgY1iC9D9f
-         LK4fiA/SP47dQrwINQI6RzymDTGdRxbaOXIDzFrpuPXV0sA2tSwVd1IWK9qEleRp9THP
-         S6Ei/9xLXMJ6IFclTgKximozZd1fCD6gbYbyrHoRmHIrvYPKCnViY7yLNOtRXs+ikybo
-         PssQ==
-X-Gm-Message-State: APjAAAWHFDtBrsPMPWW4v2oKCsD0ZybhHRy+wnlBvU82SaSqtC+etFWW
-        7PvFodfhyvNbq3jRqA6L6mmYg1coY9U=
-X-Google-Smtp-Source: APXvYqzZq+SdEW6XTYReDmLak565N9RAWZEOL2iaLujqAYivk8Jj2CxAsxcrTVmXxuHApx1XNfMu/w==
-X-Received: by 2002:a5d:8056:: with SMTP id b22mr1235663ior.60.1573100695623;
-        Wed, 06 Nov 2019 20:24:55 -0800 (PST)
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com. [209.85.166.179])
-        by smtp.gmail.com with ESMTPSA id z19sm132119ilj.49.2019.11.06.20.24.53
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Nov 2019 20:24:53 -0800 (PST)
-Received: by mail-il1-f179.google.com with SMTP id s5so574092iln.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Nov 2019 20:24:53 -0800 (PST)
-X-Received: by 2002:a92:109c:: with SMTP id 28mr1827293ilq.142.1573100692855;
- Wed, 06 Nov 2019 20:24:52 -0800 (PST)
-MIME-Version: 1.0
-References: <1572524473-19344-1-git-send-email-tdas@codeaurora.org> <1572524473-19344-2-git-send-email-tdas@codeaurora.org>
-In-Reply-To: <1572524473-19344-2-git-send-email-tdas@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 6 Nov 2019 20:24:41 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=UjwO25HeVtYvzqEdUxyA4ED18ZxcwEaYVzBGRFTa2FTw@mail.gmail.com>
-Message-ID: <CAD=FV=UjwO25HeVtYvzqEdUxyA4ED18ZxcwEaYVzBGRFTa2FTw@mail.gmail.com>
-Subject: Re: [PATCH v1 1/7] clk: qcom: clk-alpha-pll: Add support for Fabia
- PLL calibration
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Rob Herring <robh@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=nvxthaTfx1srxjTfLKFTlEDvlap5S76uZJxJFqI/x1U=;
+        b=cKaOy1GlB+FGGfItaDkYL6YuwWWExW4eJjrK+Xq/zFUTHeMo6SxRwnrFgiT234T/24
+         9d6BrqFB2+8bg9ryghm322WPYiCIUXcKYIoQvfl6K77yqNvxa8FVkEBgoNDBuLk8vsEY
+         bSGkMF5YMufEYLdxHA0y3Ylh1c1qhBItYQmSlIaHU35XMmp4kh9SgNkQz14vXSl9XIm2
+         vw2roLNT/KyzIbFYjtx2qePlNWtP8sFx08ioHnXH7PiONgHft0CLKNoI4CxCAkah3LGt
+         IzWpMrQT//3w/GiYwfXpuE5CN4cAU5fKDkQ1fQxJQPr5h6Jn4+Y8m2hj39eWnmthAc1a
+         +YOQ==
+X-Gm-Message-State: APjAAAUt2rdvSlHEsqU/DucqXrvrnr9XlVtkgWkN72CtlUtE+5D2ug/M
+        mu+b8LyBi/MfhV0aRJ5kheM=
+X-Google-Smtp-Source: APXvYqzvQDJRLnQ5r45vQi0+NBjgKhjH6Tpy9LfE5QVgtojjyywbiFxPsu0SHClDFyPtGI12/BsCag==
+X-Received: by 2002:a63:a452:: with SMTP id c18mr1978944pgp.188.1573101207815;
+        Wed, 06 Nov 2019 20:33:27 -0800 (PST)
+Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id r22sm737524pfg.54.2019.11.06.20.33.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Nov 2019 20:33:27 -0800 (PST)
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH 0/2] MSM8998 describe wifi hardware
+Date:   Wed,  6 Nov 2019 20:33:11 -0800
+Message-Id: <20191107043313.4055-1-jeffrey.l.hugo@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+We can describe the wifi hardware for the MSM8998 platforms.  The
+firmware runs on the modem subsystem, which is pending clock changes, so
+wifi won't be completely functional yet.  However, by describing the
+wifi hardware, we can use it as soon as the modem pieces come in.
 
-On Thu, Oct 31, 2019 at 5:21 AM Taniya Das <tdas@codeaurora.org> wrote:
->
-> @@ -1141,15 +1160,11 @@ static int alpha_pll_fabia_set_rate(struct clk_hw *hw, unsigned long rate,
->                                                 unsigned long prate)
->  {
->         struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-> -       u32 val, l, alpha_width = pll_alpha_width(pll);
-> +       u32 l, alpha_width = pll_alpha_width(pll);
->         u64 a;
->         unsigned long rrate;
->         int ret = 0;
->
-> -       ret = regmap_read(pll->clkr.regmap, PLL_MODE(pll), &val);
-> -       if (ret)
-> -               return ret;
+Jeffrey Hugo (2):
+  arm64: dts: qcom: msm8998: Add anoc2 smmu node
+  arm64: dts: qcom: msm8998: Add wifi node
 
-My compiler happened to notice that with the change to this function:
+ .../boot/dts/qcom/msm8998-clamshell.dtsi      |  9 ++++
+ arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi     |  9 ++++
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         | 50 +++++++++++++++++++
+ 3 files changed, 68 insertions(+)
 
-drivers/clk/qcom/clk-alpha-pll.c:1166:6: error: unused variable 'ret'
-[-Werror,-Wunused-variable]
-        int ret = 0;
+-- 
+2.17.1
 
--Doug
