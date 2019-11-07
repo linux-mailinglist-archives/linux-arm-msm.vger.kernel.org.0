@@ -2,83 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BD880F26B9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 05:59:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FEB5F273D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 06:46:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733118AbfKGE74 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Nov 2019 23:59:56 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:37906 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726582AbfKGE74 (ORCPT
+        id S1726537AbfKGFqY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Nov 2019 00:46:24 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:37802 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725770AbfKGFqX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Nov 2019 23:59:56 -0500
-Received: by mail-pf1-f195.google.com with SMTP id c13so1502330pfp.5;
-        Wed, 06 Nov 2019 20:59:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=HWH2JNED9UMHm88oRTrF5KMnkBCYYKbB6EppEgBO7N8=;
-        b=UsEFNnN9kZvrI6zrjrzWc40K7JQDT9M/iOvwky0/IPaSVg01eiV1x8KO0XRQu3aHZ5
-         Ij0zBUDbblyqW8+J2FY+rQvWJori921HLGLxe86verJIcWvUYoA2jEAADzrX5s9trHO3
-         k0Y+UB05NIAneBazZpRoyPBq6rhcUNxLB+47nJfTA4NkW5xRAMMOzLXeZIlDjqw3zi6N
-         z4Om7k5wHLAPC1WYUfFR4n/6vN+0LA9IioD/g7B42ZOopcVXllzHi7AkfrzuS3IIpq8B
-         H+WNnLZ3o5QxulOIT8KkDvIU/X10hW2vN6bmD43AxNwI0SM23OkEvKdMtvBHCQX1CDIk
-         LmDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=HWH2JNED9UMHm88oRTrF5KMnkBCYYKbB6EppEgBO7N8=;
-        b=hht05oh6gvb21pklRMgxKmiT6z6sXP30JWYQJaGULv+8ZUnEULcso8+/cq4m3KGYad
-         aXrooxEfb13Kvgq7PoWynovaWQcwikpi+v9a4FJzlZpIk6HIq7b156/V9jhmfd7LhFT1
-         PivzeXBOlqVBeqmEs2rGFBlR0hXzpMGtJ2ig1KxiLyYwJVNbfJ53rppRr9Foc47Em8YB
-         k6QL8n5GoD6xkGuv1ZoPmj7QLMhitTpufsqWiRz6w2NNZbtOwp3Rdh0xfLDPDZoZgYap
-         OBQATg8PpIMSrKxLiDN/iKD/JU7BWGOXJNsSzYLSKxytVl2+z2xLZrnRhahG7NlcIEFo
-         zUUQ==
-X-Gm-Message-State: APjAAAXIvbSjNN5W0ULqlSeOA5HE9+MEqDyVTC7mYk/CE67LGDQz+lWo
-        qJxzlHDadYGVMdEYzUr1zWk=
-X-Google-Smtp-Source: APXvYqwd+YlhHhhDUThAUYqhiTKByRHlliDBLUYyrGUbMG8FjccL8P+4FzOsjomtIn3MJboi1QHgrw==
-X-Received: by 2002:a17:90a:fc85:: with SMTP id ci5mr2424273pjb.17.1573102794561;
-        Wed, 06 Nov 2019 20:59:54 -0800 (PST)
-Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id i123sm828172pfe.145.2019.11.06.20.59.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2019 20:59:54 -0800 (PST)
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH] arm64: dts: qcom: msm8998: Fix tcsr syscon size
-Date:   Wed,  6 Nov 2019 20:59:48 -0800
-Message-Id: <20191107045948.4341-1-jeffrey.l.hugo@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        Thu, 7 Nov 2019 00:46:23 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id D814F60610; Thu,  7 Nov 2019 05:46:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573105582;
+        bh=5R7CvQNT/kKjJNFdzKmIt6+BvlKhn1cLoLRrPsfKIqo=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=XhnrecfL1k6NaedMJcED78XJ9cA3/WyKOu1st82/QN7Z0abZaKeErpTF3RsAdcKMr
+         2wNP5cn0mRpE7aPFzCJo129/AFLNkLmq8m9/1TCdq8uW6abeJJHVR57svyL7foxoqI
+         uoZKJflTtqJCFkS9NUfUPRyU2Jyr5hy8XK/PcP7E=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.79.136.17] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DC8D560112;
+        Thu,  7 Nov 2019 05:46:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573105582;
+        bh=5R7CvQNT/kKjJNFdzKmIt6+BvlKhn1cLoLRrPsfKIqo=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=XhnrecfL1k6NaedMJcED78XJ9cA3/WyKOu1st82/QN7Z0abZaKeErpTF3RsAdcKMr
+         2wNP5cn0mRpE7aPFzCJo129/AFLNkLmq8m9/1TCdq8uW6abeJJHVR57svyL7foxoqI
+         uoZKJflTtqJCFkS9NUfUPRyU2Jyr5hy8XK/PcP7E=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DC8D560112
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH v4 08/14] dt-bindings: qcom,pdc: Add compatible for sc7180
+To:     Rob Herring <robh@kernel.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org,
+        swboyd@chromium.org, Lina Iyer <ilina@codeaurora.org>,
+        Marc Zyngier <maz@kernel.org>
+References: <20191106065017.22144-1-rnayak@codeaurora.org>
+ <20191106065017.22144-9-rnayak@codeaurora.org> <20191106165632.GA15103@bogus>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <3302bde7-2299-476e-e3cc-35c84a459d63@codeaurora.org>
+Date:   Thu, 7 Nov 2019 11:16:16 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
+MIME-Version: 1.0
+In-Reply-To: <20191106165632.GA15103@bogus>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The tcsr syscon region is really 0x40000 in size.  We need access to the
-full region so that we can access the axi resets when managing the
-modem subsystem.
 
-Fixes: c7833949564e ("arm64: dts: qcom: msm8998: Add smem related nodes")
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
----
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index e624f0323d23..2d0ef426c2dd 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1011,7 +1011,7 @@
- 
- 		tcsr_mutex_regs: syscon@1f40000 {
- 			compatible = "syscon";
--			reg = <0x01f40000 0x20000>;
-+			reg = <0x01f40000 0x40000>;
- 		};
- 
- 		tlmm: pinctrl@3400000 {
+On 11/6/2019 10:26 PM, Rob Herring wrote:
+> On Wed,  6 Nov 2019 12:20:11 +0530, Rajendra Nayak wrote:
+>> Add the compatible string for sc7180 SoC from Qualcomm.
+>>
+>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+>> Cc: Lina Iyer <ilina@codeaurora.org>
+>> Cc: Marc Zyngier <maz@kernel.org>
+>> ---
+>>   .../devicetree/bindings/interrupt-controller/qcom,pdc.txt      | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+> 
+> Please add Acked-by/Reviewed-by tags when posting new versions. However,
+> there's no need to repost patches *only* to add the tags. The upstream
+> maintainer will do that for acks received on the version they apply.
+> 
+> If a tag was not added on purpose, please state why and what changed.
+
+Sorry I missed mentioning the delta and the reason for not including your Acked-by.
+The previous patch was proposing using just a SoC specific compatible, and this
+one adds a SoC independent one along with the SoC specific one as discussed here [1]
+
+[1] https://lkml.org/lkml/2019/11/4/73
+
 -- 
-2.17.1
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
