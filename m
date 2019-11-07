@@ -2,140 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A7283F3977
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 21:20:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 527E4F3A0D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 22:06:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725785AbfKGUUs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Nov 2019 15:20:48 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:33404 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725940AbfKGUUs (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Nov 2019 15:20:48 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 1D86A60D86; Thu,  7 Nov 2019 20:20:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573158047;
-        bh=AF9VLY6watOJ3PKU051QSd4D4th+Q/5xWRFMYozEKGQ=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=hw4PuUTLHrpa+1Ethw6L99BRbUCuzrcMhWRHDMng0R1GPZCAgmpGwekganXfkcrqZ
-         QPXbHJKvkVWk/F/lu2W3eD4CMBip36x3h2TrByxqwsNumGTy+1FMlcTAzY2GThPUkl
-         ko1Lj/PQhMf+aYUHyL9ek1LkNwsZhsYAsZ7YXYag=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 9D3B060D86;
-        Thu,  7 Nov 2019 20:20:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573158045;
-        bh=AF9VLY6watOJ3PKU051QSd4D4th+Q/5xWRFMYozEKGQ=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=eSkfbIRVoQNojtHphJpnfLwF6B56iWgUKo+Hh7/zi2EM4mM6AKapBodxLv69NBjoY
-         QZXB07SPW063wGz+KKTnHVs5uPrOfrttf+Nhc/ohDpqH+gCb0jmt1YS5cUnJF1NCVf
-         RkqriY+rSR2YK3/oSFXW+1REg20Cl05sZsvAPwHs=
+        id S1726251AbfKGVGI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Nov 2019 16:06:08 -0500
+Received: from mail.kernel.org ([198.145.29.99]:43832 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725870AbfKGVGI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Nov 2019 16:06:08 -0500
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id E536F21D79;
+        Thu,  7 Nov 2019 21:06:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1573160767;
+        bh=P+gx8Y/MLONswYmjEe2LF/E5o+K8Co2kGUVThgIx6LM=;
+        h=In-Reply-To:References:From:To:Cc:Subject:Date:From;
+        b=jIKB5C2x+SJZOlNufX08NfzFtDu9aVv23suQ4ls9Rloi1ALvkEhRVGcYNncwfIycj
+         jFg0hk8QdtOYiTIg92DIRf4FzqaB8ZyIk0vliOFuHOiMLpglU1rB6m81J/ce9FYDfd
+         zNcCVL4thHL7MIMliT6h24Gj8v9uPLz8XKLnu/bo=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 07 Nov 2019 12:20:44 -0800
-From:   eberman@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     saiprakash.ranjan@codeaurora.org, agross@kernel.org,
-        tsoni@codeaurora.org, sidgup@codeaurora.org,
-        psodagud@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 09/17] firmware: qcom_scm-64: Improve SMC convention
- detection
-In-Reply-To: <20191107191846.GA3907604@builder>
-References: <1572917256-24205-1-git-send-email-eberman@codeaurora.org>
- <1572917256-24205-10-git-send-email-eberman@codeaurora.org>
- <20191107191846.GA3907604@builder>
-Message-ID: <1eb1c0db6f2d9e65479205ddad92bac7@codeaurora.org>
-X-Sender: eberman@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20191031174149.GD27773@google.com>
+References: <20191014102308.27441-1-tdas@codeaurora.org> <20191014102308.27441-6-tdas@codeaurora.org> <20191029175941.GA27773@google.com> <fa17b97d-bfc4-4e9c-78b5-c225e5b38946@codeaurora.org> <20191031174149.GD27773@google.com>
+From:   Stephen Boyd <sboyd@kernel.org>
+To:     Matthias Kaehlcke <mka@chromium.org>,
+        Taniya Das <tdas@codeaurora.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Rob Clark <robdclark@chromium.org>
+Subject: Re: [PATCH v4 5/5] clk: qcom: Add Global Clock controller (GCC) driver for SC7180
+User-Agent: alot/0.8.1
+Date:   Thu, 07 Nov 2019 13:06:06 -0800
+Message-Id: <20191107210606.E536F21D79@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-11-07 11:18, Bjorn Andersson wrote:
->> +		(qcom_smc_convention == SMC_CONVENTION_ARM_64) ?
->> +			ARM_SMCCC_SMC_64 :
->> +			ARM_SMCCC_SMC_32,
-> 
-> Here SMC_CONVENTION_UNKNOWN would mean ARM_SMCCC_SMC_32...
+Quoting Matthias Kaehlcke (2019-10-31 10:41:49)
+> Hi Taniya,
+>=20
+> On Thu, Oct 31, 2019 at 04:59:26PM +0530, Taniya Das wrote:
+> > Hi Matthias,
+> >=20
+> > Thanks for your comments.
+> >=20
+> > On 10/29/2019 11:29 PM, Matthias Kaehlcke wrote:
+> > > Hi Taniya,
+> > >=20
+> > > On Mon, Oct 14, 2019 at 03:53:08PM +0530, Taniya Das wrote:
+> > > > Add support for the global clock controller found on SC7180
+> > > > based devices. This should allow most non-multimedia device
+> > > > drivers to probe and control their clocks.
+> > > >=20
+> > > > Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> >=20
+> > >=20
+> > > v3 also had
+> > >=20
+> > > +   [GCC_DISP_AHB_CLK] =3D &gcc_disp_ahb_clk.clkr,
+> > >=20
+> > > Removing it makes the dpu_mdss driver unhappy:
+> > >=20
+> > > [    2.999855] dpu_mdss_enable+0x2c/0x58->msm_dss_enable_clk: 'iface'=
+ is not available
+> > >=20
+> > > because:
+> > >=20
+> > >          mdss: mdss@ae00000 {
+> > >                     ...
+> > >=20
+> > >   =3D>             clocks =3D <&gcc GCC_DISP_AHB_CLK>,
+> > >                           <&gcc GCC_DISP_HF_AXI_CLK>,
+> > >                           <&dispcc DISP_CC_MDSS_MDP_CLK>;
+> > >                  clock-names =3D "iface", "gcc_bus", "core";
+> > >     };
+> > >=20
+> >=20
+> > The basic idea as you mentioned below was to move the CRITICAL clocks to
+> > probe. The clock provider to return NULL in case the clocks are not
+> > registered.
+> > This was discussed with Stephen on v3. Thus I submitted the below patch.
+> > clk: qcom: common: Return NULL from clk_hw OF provider.
+>=20
+> I see. My assumption was that the entire clock hierarchy should be regist=
+ered,
+> but Stephen almost certainly knows better :)
+>=20
+> > Yes it would throw these warnings, but no functional issue is observed =
+from
+> > display. I have tested it on the cheza board.
+>=20
+> The driver considers it an error (uses DEV_ERR to log the message) and do=
+esn't
+> handle other clocks when one is found missing. I'm not really famililar w=
+ith
+> the dpu_mdss driver, but I imagine this can have some side effects. Added=
+ some
+> of the authors/contributors to cc.
 
-Idea is that __qcom_scm_call_smccc would only be called if 
-qcom_smc_convention
-is SMC_CONVENTION_ARM_64 or _32. It should not be possible to get into
-__qcom_scm_call_smccc with the current convention being 
-SMC_CONVENTION_UNKNOWN.
+NULL is a valid clk pointer returned by clk_get(). What is the display
+driver doing that makes it consider NULL an error?
 
-> 
->>  		desc->owner,
->>  		SMCCC_FUNCNUM(desc->svc, desc->cmd));
->>  	smc.a[1] = desc->arginfo;
->> @@ -117,7 +125,7 @@ static int ___qcom_scm_call_smccc(struct device 
->> *dev,
->>  		if (!args_virt)
->>  			return -ENOMEM;
->> 
->> -		if (qcom_smccc_convention == ARM_SMCCC_SMC_32) {
->> +		if (qcom_smc_convention == SMC_CONVENTION_ARM_32) {
-> 
-> ...but here it would mean ARM_SMCCC_SMC_64.
-
-I will clean up to be consistent what the "else" case is.
-
-
->> @@ -583,19 +591,17 @@ int __qcom_scm_qsmmu500_wait_safe_toggle(struct 
->> device *dev, bool en)
->> 
->>  void __qcom_scm_init(void)
->>  {
->> -	u64 cmd;
->> -	struct arm_smccc_res res;
->> -	u32 function = SMCCC_FUNCNUM(QCOM_SCM_SVC_INFO, 
->> QCOM_SCM_INFO_IS_CALL_AVAIL);
->> -
->> -	/* First try a SMC64 call */
->> -	cmd = ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_64,
->> -				 ARM_SMCCC_OWNER_SIP, function);
->> -
->> -	arm_smccc_smc(cmd, QCOM_SCM_ARGS(1), cmd & 
->> (~BIT(ARM_SMCCC_TYPE_SHIFT)),
->> -		      0, 0, 0, 0, 0, &res);
->> -
->> -	if (!res.a0 && res.a1)
->> -		qcom_smccc_convention = ARM_SMCCC_SMC_64;
->> -	else
->> -		qcom_smccc_convention = ARM_SMCCC_SMC_32;
->> +	qcom_smc_convention = SMC_CONVENTION_ARM_64;
->> +	if (__qcom_scm_is_call_available(NULL, QCOM_SCM_SVC_INFO,
->> +			QCOM_SCM_INFO_IS_CALL_AVAIL) == 1)
->> +		goto out;
->> +
->> +	qcom_smc_convention = SMC_CONVENTION_ARM_32;
->> +	if (__qcom_scm_is_call_available(NULL, QCOM_SCM_SVC_INFO,
->> +			QCOM_SCM_INFO_IS_CALL_AVAIL) == 1)
->> +		goto out;
->> +
->> +	qcom_smc_convention = SMC_CONVENTION_UNKNOWN;
-> 
-> If above two tests can be considered reliable I would suggest that you
-> fail hard here instead.
-
-Is the suggestion here to BUG out?
-
-Thanks,
-
-Elliot
-
-
---
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
