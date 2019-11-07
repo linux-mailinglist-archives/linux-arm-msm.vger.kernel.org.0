@@ -2,122 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D0FCEF3AEB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 23:06:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92C6AF3AF4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 23:12:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725940AbfKGWGZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Nov 2019 17:06:25 -0500
-Received: from mail.kernel.org ([198.145.29.99]:36364 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725882AbfKGWGZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Nov 2019 17:06:25 -0500
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B6B3C20679;
-        Thu,  7 Nov 2019 22:06:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573164383;
-        bh=zZLMhikB7hoRMy0ddDiquboV9T7zKWdmy9eBzZlKbdI=;
-        h=In-Reply-To:References:From:To:Cc:Subject:Date:From;
-        b=vDydn33R6r2YyJxuK/ZXTPXZLfSKWZSKF67wl4TnPapyOQh8IT6ugwqfhxDQZBkrK
-         wlBAB8X/c8hTlnShZ/aB4lSb1rayLDbhlZ+lQFtF5jzh7sVqtbd8DHdIuKJq4JvURV
-         bverMnUPRudM9WGenOYLko1yBT2oa7uPbIbYk+XA=
-Content-Type: text/plain; charset="utf-8"
+        id S1725882AbfKGWMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Nov 2019 17:12:22 -0500
+Received: from mail-il1-f193.google.com ([209.85.166.193]:38789 "EHLO
+        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725870AbfKGWMW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Nov 2019 17:12:22 -0500
+Received: by mail-il1-f193.google.com with SMTP id e16so2369982ilc.5;
+        Thu, 07 Nov 2019 14:12:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4atNbgDLmKMazfSxxisgoZS7lfKrqITnqizdUixKaGc=;
+        b=ozwR/TfDYSXsake+S/cuZ0MglFqRuWiqz5U+H2NctB/zFIabtvUM829RufCGiHV74k
+         iicgI11/bHrDp9DKdjCa+ifHP+4osNiD6syGwWvcHnAOk2O0hWIpf7Vcxq/IH4mOtzaW
+         gf1qnm/5wOiCv03iMSHr8mfyENoR6AxDjZGPhVUwjRxeNcVAJOwHQ7aDVZwGK8RK9XkJ
+         JPM44UmKQQxH2WRpU1BZDnU9uc+TEfbbTFVt4FceVOv/Z/CsLu2PZe1Z+fQS2cBHmRrS
+         QIq6tk0JIhoMwthacpysQqxN/PBLu3w5ECSb+Poc9eUsRwyLpvBZsEAstydHdvVbhGAl
+         +Jqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4atNbgDLmKMazfSxxisgoZS7lfKrqITnqizdUixKaGc=;
+        b=XkaHBm8lFw/tjhn4xfK4nGz7e95ij2b96tP4Q7Ni3orst/wL6MilBM2C+GDjEkRLL5
+         YHhLvOKhKeXUO0o6/lCv37Br1SK041g6tCcXsvoyIkOT57TFkFoZreYr7aWazVTTR91y
+         spGLjJVXdGJTB7nwO8ZDvikeMRLcJuyOhIOwLoFK2NNjpXuPU8pHkFTFPcKmjPvTirHI
+         hN1hjNDNa+Cy+9qLoLXZ/evWJuhXGX4neAaO6T8ednqkjrWU29GAKWNUou2+2N2RWSKy
+         bcoPuh2YC2x7wvZwbW/9hP9QxgoSdm5M5byWQ7YY0z8FTp8Cs3VUygA5cH64dyC2UtrY
+         DnWg==
+X-Gm-Message-State: APjAAAUrQClIFG6FY47rsD87ICnAOT1e6Y47EAy7FAZConLBp5zhkImz
+        BBT3nrjVBGLj3/kcw9juLyH/mehKLRhuwjMb7Hk=
+X-Google-Smtp-Source: APXvYqzajhUKf45zxJC6CkimOq2IUGILgAemh9w85AKhTG1z7ufc/+Zg3CUP3W7OBBR4vdgfd6wk0vZqKLEJKeggPdY=
+X-Received: by 2002:a92:1d51:: with SMTP id d78mr8149508ild.166.1573164741036;
+ Thu, 07 Nov 2019 14:12:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20191105025032.GA7664@onstation.org>
-References: <20191006010100.32053-1-masneyb@onstation.org> <20191017181329.D593C21835@mail.kernel.org> <20191105025032.GA7664@onstation.org>
-From:   Stephen Boyd <sboyd@kernel.org>
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     mturquette@baylibre.com, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, jonathan@marek.ca
-Subject: Re: [PATCH] clk: qcom: mmcc8974: add frequency table for gfx3d
-User-Agent: alot/0.8.1
-Date:   Thu, 07 Nov 2019 14:06:22 -0800
-Message-Id: <20191107220623.B6B3C20679@mail.kernel.org>
+References: <20191031185538.15402-1-jeffrey.l.hugo@gmail.com>
+ <20191031185715.15504-1-jeffrey.l.hugo@gmail.com> <20191107214352.8A82E2166E@mail.kernel.org>
+In-Reply-To: <20191107214352.8A82E2166E@mail.kernel.org>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Thu, 7 Nov 2019 15:12:09 -0700
+Message-ID: <CAOCk7NrHyY0+tF=90Z1WDa7VpgehDY7kHiqcR6g8K_P_uRpRQw@mail.gmail.com>
+Subject: Re: [PATCH v5 1/3] clk: qcom: Allow constant ratio freq tables for rcg
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Andy Gross <agross@kernel.org>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        MSM <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Brian Masney (2019-11-04 18:50:32)
-> Hi Stephen,
->=20
-> On Thu, Oct 17, 2019 at 11:13:29AM -0700, Stephen Boyd wrote:
-> > Quoting Brian Masney (2019-10-05 18:01:00)
-> > > From: Jonathan Marek <jonathan@marek.ca>
-> > >=20
-> > > Add frequency table for the gfx3d clock that's needed in order to
-> > > support the GPU upstream on msm8974-based systems.
-> > >=20
-> > > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> > > Signed-off-by: Brian Masney <masneyb@onstation.org>
-> > > ---
-> > >  drivers/clk/qcom/mmcc-msm8974.c | 7 +++++++
-> > >  1 file changed, 7 insertions(+)
-> > >=20
-> > > diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-=
-msm8974.c
-> > > index bcb0a397ef91..e70abfe2a792 100644
-> > > --- a/drivers/clk/qcom/mmcc-msm8974.c
-> > > +++ b/drivers/clk/qcom/mmcc-msm8974.c
-> > > @@ -452,10 +452,17 @@ static struct clk_rcg2 mdp_clk_src =3D {
-> > >         },
-> > >  };
-> > > =20
-> > > +static struct freq_tbl ftbl_gfx3d_clk_src[] =3D {
-> > > +       F(37500000, P_GPLL0, 16, 0, 0),
-> > > +       F(533000000, P_MMPLL0, 1.5, 0, 0),
-> > > +       { }
-> > > +};
-> >=20
-> > On msm-3.10 kernel the gpu clk seems to be controlled by the RPM[1].
-> > What is going on here? This code just looks wrong, but I think it was
-> > added as an rcg so that the branch wasn't orphaned and would have some
-> > sane frequency. Eventually we planned to parent it to a clk exposed in
-> > the RPM clk driver. It's been a while so I'm having a hard time
-> > remembering, but I think GPU clk on this device needed to be controlled
-> > by RPM so that DDR self refresh wouldn't interact badly with ocmem? Or
-> > maybe ocmem needed GPU to be enabled to work? Maybe there is some
-> > information in the 3.10 downstream kernel.
-> >=20
-> > [1] https://source.codeaurora.org/quic/la/kernel/msm-3.10/tree/arch/arm=
-/mach-msm/clock-rpm-8974.c?h=3Dmsm-3.10#n82
->=20
-> I looked in the MSM 3.4 and 3.10 sources and I can't find that gfx3d
-> clock in the mmss (the downstream name for the mmcc that's upstream). I
-> even looked through the git history in the 3.10 sources to see if it was
-> removed at some point.
->=20
-> The gfx3d_clk_src was added to mmcc-msm8974.c upstream at the time the
-> file was first introduced into the kernel:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit=
-/?id=3Dd8b212014e69d6b6323773ce6898f224ef4ed0d6
-> I haven't been able to find anything else so far where that came from.
+On Thu, Nov 7, 2019 at 2:43 PM Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> Quoting Jeffrey Hugo (2019-10-31 11:57:15)
+> > Some RCGs (the gfx_3d_src_clk in msm8998 for example) are basically just
+> > some constant ratio from the input across the entire frequency range.  It
+> > would be great if we could specify the frequency table as a single entry
+> > constant ratio instead of a long list, ie:
+> >
+> >         { .src = P_GPUPLL0_OUT_EVEN, .pre_div = 3 },
+> >         { }
+> >
+> > So, lets support that.
+> >
+> > We need to fix a corner case in qcom_find_freq() where if the freq table
+> > is non-null, but has no frequencies, we end up returning an "entry" before
+> > the table array, which is bad.  Then, we need ignore the freq from the
+> > table, and instead base everything on the requested freq.
+> >
+> > Suggested-by: Stephen Boyd <sboyd@kernel.org>
+> > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> > ---
+>
+> Applied to clk-next and fixed the space thing. I guess ceil/floor
+> rounding isn't a problem?
+>
 
-Yes. I did that! :) I think it was to make sure there weren't any orphan
-clks in the tree, which is why I left the code in place to read the clk
-frequency but not change it by omitting a frequency table.
+Thanks for fixing the nit.
 
->=20
-> The GPU works using kmscube and KDE Plasma Mobile with this patch
-> applied but won't work without it. As for the status of the GPU working
-> upstream for MSM8974: My OCMEM and interconnect patches are now in
-> linux-next and are queued for the next merge window. All that's left is
-> 1) iommu support, 2) this patch (or whatever it needs to become), and
-> 3) add the GPU nodes to device tree for this board.
->=20
-> Would you be willing to reconsider accepting this patch since its 8974
-> specific and is one of the pieces that gets the GPU working upstream?
->=20
-
-No? I don't believe the kernel should be controlling this clk through
-direct register read/writes. Instead, the GPU frequency should be
-controlled through an RPM clk. See oxili_gfx3d_clk_src in the link you
-mention above [1] and how it indirects to gfx3d_clk_src via
-RPM_MEM_CLK_TYPE and OXILI_ID. In the end, anything that's parented to
-this rcg in mmcc should probably just be parented to the RPM clk
-instead.
-
+Hmm.  Looking back at it, floor is only used with the rcg_floor_ops.
+Right now, you can't use a constant ratio table with rcg_floor_ops -
+looks like you'd probably hit a null pointer dereference.  I'm having
+trouble seeing how the floor operation would work with this constant
+ratio idea in a way that would be different than the normal rcg_ops.
+I think I would say that either you have a good reason for using the
+constant ratio table, in which case you should be using the normal
+rcg_ops, or you have a good reason for using floor which is then
+incompatible with a constant ratio table.  If you think that the
+constant ratio table concept should be applied to floor ops, can you
+please detail what you expect the behavior to be?
