@@ -2,146 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 49C1DF3B7D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 23:35:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DFEEF3C4E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 00:44:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725893AbfKGWfZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Nov 2019 17:35:25 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:54762 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725870AbfKGWfZ (ORCPT
+        id S1727074AbfKGXos (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Nov 2019 18:44:48 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:36901 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725940AbfKGXos (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Nov 2019 17:35:25 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 2233660D84; Thu,  7 Nov 2019 22:35:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573166124;
-        bh=Q2G6160efqVb5qVyhoWW92xY36mZ64vNPwsbgT5/UE0=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=PtcZKf+ImPi9b7/IEeCW5PC1sMgJs0tayIdJU7odKLCIQW5qSdh9JYWx/GS0LMZ/A
-         +wfuQ4IWq7q3ab3AwXG7Fi+qLZkTh52g6RyZT/jORds/ILyXnDmmPmlha/22jhS0Nw
-         ztqI2jjDqPJYa26YvjHkVrHpQCjaMhvn/FvoN3K4=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6EC2260AD9;
-        Thu,  7 Nov 2019 22:35:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573166123;
-        bh=Q2G6160efqVb5qVyhoWW92xY36mZ64vNPwsbgT5/UE0=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=DTwZZgdX2gyXbuubR1oBlne3TXog4s/aJUuw6fx3yjpqEItoi3QiqqYRalQ0tRYuR
-         0WDjzPPRqPCpNZWdiFV9EgjiBD8BbwVz+yBSqWkhBBVUqj5lAethZR0oETcXnt/GbP
-         CvThii+QifpN4FMQ6t25unnKHN6x+ntyUHNDk7Tk=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6EC2260AD9
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v6 4/6] dt-bindings: clock: Add support for the MSM8998
- mmcc
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        marc.w.gonzalez@free.fr, mturquette@baylibre.com,
-        robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <1569959656-5202-1-git-send-email-jhugo@codeaurora.org>
- <1569959842-8399-1-git-send-email-jhugo@codeaurora.org>
- <20191107215506.8FBFA2084D@mail.kernel.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <7f3697ae-2e12-f306-b288-4dec19544275@codeaurora.org>
-Date:   Thu, 7 Nov 2019 15:35:21 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        Thu, 7 Nov 2019 18:44:48 -0500
+Received: by mail-pf1-f194.google.com with SMTP id p24so3519435pfn.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2019 15:44:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=1U0wPcyIG/9s48x7IfdmB9lT8/kPl3K5MB9kafPq4kQ=;
+        b=S/s0azMruXPaRqNJcdoSSNkgORzM89gGHIbVO3fAYv89FVXvjk65KmQCaB+E2lLDHI
+         TDhBW5Uvr0wpQNkWB30A72fd1dcPgpNO05sUddxV7PiITIbZb/n1wO8Maymbtu70efAT
+         UbvjUadU7q+GmiUrPpH/VD4LB57GqGRa0Djnv62+JAQGXllBk4OkIKDkRrNZ7XF9oxFj
+         oL0Sp1ZG6QJFhJ9+XfeKGRPbcU6zVtuM43aCeDuADFRhaWjoYLo0exQ9VPBMjgeG73+J
+         GIXl3Q+jtb8RNcoi0EPu6PxrxyHkCTQPYUgnU0Y1UsvyYCApwid1bfnWK+6yN3YMrsnN
+         fxIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=1U0wPcyIG/9s48x7IfdmB9lT8/kPl3K5MB9kafPq4kQ=;
+        b=oOcNfLvgOxPwyYhJshgw5GDVJiPRNoX/JtQR1ligJ4QnRUa4HoDHnXnyFT5COLI1Vp
+         FnX/O5slTeQK9ycjgfrZ69hfbqM25TFkHsC7PkBnZraq0WpuAWNU36+fIAHBSe7WdAUn
+         fKEo+1isbWdlol34q1BS9SkeCjpaOQHd7U0YR4s+x442UddaalqEsPz5d/0rzK85BayU
+         isGXkfSynFA+q1510NLiVArvZeIyvMsOoQC3YqhJY85zdtJyhKt2F9tPUFSE0iIKrBT7
+         /rHKL0n/x0JWt2SM3NzMAGljNO3jPf+ha3wYZflcaNucb9MNP7YhtBV3aRTkQGIcGoBF
+         ePpg==
+X-Gm-Message-State: APjAAAXCmFbQPqIrDPFJ86LDEU0K7DwAnvaGfWGhUyVxuhAccoDp0+h0
+        ypigqmaRbagCelPfaf7NhOs/02jcCqE=
+X-Google-Smtp-Source: APXvYqy81x91iTDJeaZtLHQ93IDGUFfWCM+caD2RnLcNF36qUqvWx1bxNzAOZp9kckdHErPtHKxvvg==
+X-Received: by 2002:a63:cc17:: with SMTP id x23mr7923619pgf.446.1573170287415;
+        Thu, 07 Nov 2019 15:44:47 -0800 (PST)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id z5sm3459995pgi.19.2019.11.07.15.44.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Nov 2019 15:44:46 -0800 (PST)
+Date:   Thu, 7 Nov 2019 15:44:44 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     eberman@codeaurora.org
+Cc:     saiprakash.ranjan@codeaurora.org, agross@kernel.org,
+        tsoni@codeaurora.org, sidgup@codeaurora.org,
+        psodagud@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 09/17] firmware: qcom_scm-64: Improve SMC convention
+ detection
+Message-ID: <20191107234444.GB3907604@builder>
+References: <1572917256-24205-1-git-send-email-eberman@codeaurora.org>
+ <1572917256-24205-10-git-send-email-eberman@codeaurora.org>
+ <20191107191846.GA3907604@builder>
+ <1eb1c0db6f2d9e65479205ddad92bac7@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20191107215506.8FBFA2084D@mail.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1eb1c0db6f2d9e65479205ddad92bac7@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/7/2019 2:55 PM, Stephen Boyd wrote:
-> Quoting Jeffrey Hugo (2019-10-01 12:57:22)
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,mmcc.txt b/Documentation/devicetree/bindings/clock/qcom,mmcc.txt
->> index 8b0f7841af8d..a92f3cbc9736 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,mmcc.txt
->> +++ b/Documentation/devicetree/bindings/clock/qcom,mmcc.txt
->> @@ -10,11 +10,32 @@ Required properties :
->>                          "qcom,mmcc-msm8960"
->>                          "qcom,mmcc-msm8974"
->>                          "qcom,mmcc-msm8996"
->> +                       "qcom,mmcc-msm8998"
+On Thu 07 Nov 12:20 PST 2019, eberman@codeaurora.org wrote:
+> On 2019-11-07 11:18, Bjorn Andersson wrote:
+[..]
+> > > @@ -583,19 +591,17 @@ int
+> > > __qcom_scm_qsmmu500_wait_safe_toggle(struct device *dev, bool en)
+> > > 
+> > >  void __qcom_scm_init(void)
+> > >  {
+> > > -	u64 cmd;
+> > > -	struct arm_smccc_res res;
+> > > -	u32 function = SMCCC_FUNCNUM(QCOM_SCM_SVC_INFO,
+> > > QCOM_SCM_INFO_IS_CALL_AVAIL);
+> > > -
+> > > -	/* First try a SMC64 call */
+> > > -	cmd = ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_64,
+> > > -				 ARM_SMCCC_OWNER_SIP, function);
+> > > -
+> > > -	arm_smccc_smc(cmd, QCOM_SCM_ARGS(1), cmd &
+> > > (~BIT(ARM_SMCCC_TYPE_SHIFT)),
+> > > -		      0, 0, 0, 0, 0, &res);
+> > > -
+> > > -	if (!res.a0 && res.a1)
+> > > -		qcom_smccc_convention = ARM_SMCCC_SMC_64;
+> > > -	else
+> > > -		qcom_smccc_convention = ARM_SMCCC_SMC_32;
+> > > +	qcom_smc_convention = SMC_CONVENTION_ARM_64;
+> > > +	if (__qcom_scm_is_call_available(NULL, QCOM_SCM_SVC_INFO,
+> > > +			QCOM_SCM_INFO_IS_CALL_AVAIL) == 1)
+> > > +		goto out;
+> > > +
+> > > +	qcom_smc_convention = SMC_CONVENTION_ARM_32;
+> > > +	if (__qcom_scm_is_call_available(NULL, QCOM_SCM_SVC_INFO,
+> > > +			QCOM_SCM_INFO_IS_CALL_AVAIL) == 1)
+> > > +		goto out;
+> > > +
+> > > +	qcom_smc_convention = SMC_CONVENTION_UNKNOWN;
+> > 
+> > If above two tests can be considered reliable I would suggest that you
+> > fail hard here instead.
 > 
-> Can you convert this binding to YAML? Makes it easier to validate it
-> against the dts files.
-
-I'll look at this since I'm already resending due to the merge conflict.
-
-> 
->>   
->>   - reg : shall contain base register location and length
->>   - #clock-cells : shall contain 1
->>   - #reset-cells : shall contain 1
->>   
->> +For MSM8998 only:
->> +       - clocks: a list of phandles and clock-specifier pairs,
->> +                 one for each entry in clock-names.
->> +       - clock-names: "xo" for the xo clock.
->> +                      "gpll0" for the global pll 0 clock.
->> +                      "dsi0dsi" for the dsi0 pll dsi clock (required if dsi is
->> +                               enabled, optional otherwise).
->> +                      "dsi0byte" for the dsi0 pll byte clock (required if dsi
->> +                               is enabled, optional otherwise).
->> +                      "dsi1dsi" for the dsi1 pll dsi clock (required if dsi is
->> +                               enabled, optional otherwise).
->> +                      "dsi1byte" for the dsi1 pll byte clock (required if dsi
->> +                               is enabled, optional otherwise).
->> +                      "hdmipll" for the hdmi pll clock (required if hdmi is
->> +                               enabled, optional otherwise).
->> +                      "dpvco" for the displayport pll vco clock (required if
->> +                               dp is enabled, optional otherwise).
->> +                      "dplink" for the displayport pll link clock (required if
->> +                               dp is enabled, optional otherwise).
-> 
-> I'm not sure why it's optional. The hardware is "fixed" in the sense
-> that the dp phy is always there and connected to this hardware block.
->  From a driver perspective I agree it's optional to be used, but from a
-> DT perspective it's always there so it should be required.
+> Is the suggestion here to BUG out?
 > 
 
-Sure, the DP phy is technically always there, but does a particular 
-platform have an actual DP output connected to the phy?  If not, why 
-bother describing something that isn't even used?
+We generally do not want that, but leaving it "unknown" feels like the
+next scm call will have similar outcome to calling BUG() here, but be
+harder to debug...
 
- From a more practical sense its undefined how to actually get the DP 
-clocks - the DP binding is implicitly a clock provider since it has 
-#clock-cells, but it doesn't specify how to actually get the clocks. 
-The DSI binding tells you which index is the dsi clock, and which is the 
-byte clock.
+So I would be willing to accept a BUG() here.
 
-The HDMI binding is not a clock provider at all.  Needs to be revised, 
-which didn't appear trivial when I took a quick look while working on mmcc.
-
-I want to do the right thing here by specifying all the external clocks 
-up front, and not have to worry about backwards compatibility with 
-pre-existing DTs later on, but I also would like to focus on one problem 
-at a time, and not go dig into all the problems with DP/HDMI before 
-landing this, particularly as those components also rely on the mmcc.
-
-Is that justification enough for you?  If not, how would you like to 
-proceed?  Make them required in the binding, and just have an invalid 
-(per the binding) DT until all the problems get sorted out?
-
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Regards,
+Bjorn
