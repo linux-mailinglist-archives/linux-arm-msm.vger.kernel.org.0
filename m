@@ -2,127 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 55AA2F2BEF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 11:15:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AFB7F2C11
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 11:23:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733267AbfKGKPa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Nov 2019 05:15:30 -0500
-Received: from ns.iliad.fr ([212.27.33.1]:37428 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1733142AbfKGKPa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Nov 2019 05:15:30 -0500
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id 3AA3C2022D;
-        Thu,  7 Nov 2019 11:15:27 +0100 (CET)
-Received: from [192.168.108.51] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id 1ADA120189;
-        Thu,  7 Nov 2019 11:15:27 +0100 (CET)
-Subject: Re: [PATCH] PCI: qcom: Fix the fixup of PCI_VENDOR_ID_QCOM
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andrew Murray <andrew.murray@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        PCI <linux-pci@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        stable <stable@vger.kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-References: <20191102002420.4091061-1-bjorn.andersson@linaro.org>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <8f15abf9-80bc-9767-e61c-6e0455effbf0@free.fr>
-Date:   Thu, 7 Nov 2019 11:15:27 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1727926AbfKGKXC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Nov 2019 05:23:02 -0500
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:36894 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726866AbfKGKXC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Nov 2019 05:23:02 -0500
+Received: by mail-vs1-f66.google.com with SMTP id u6so933010vsp.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Nov 2019 02:23:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=klf1T6RBuB2EMHIc4Rj/8/h5XlKXIauPiGkAA0PQJHA=;
+        b=KcZmcBA01wjsArSslzWd0PcZKG5+oUh1YvoGSRLuorbgBtw8eQnaVjTKqr4FIjIgX7
+         QWKTyjkc2cyGpL33feXncnUPzVYWwoyn7MIFRS8keHpk2uwuil1HrOs2Hu8QWAvBq3MJ
+         FMY7P/utSM92pNef2sXoTwX1bpkEeb2XEK0ruARavfZPC15C/goMAfwjrPkIg4CtvhH3
+         agADHSfHT5q7zZCZPWUHJeYeSaa6aOg0A2hfjkGfz52i+vm775zUbSQ7jS1QaP2k3hQr
+         dNhlBens4XoPNq0D0yUFYdkpQQfJfbDmEhOYJXh5pmNxl9I2s8afDl0bgQdaqACLcbbb
+         ZTpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=klf1T6RBuB2EMHIc4Rj/8/h5XlKXIauPiGkAA0PQJHA=;
+        b=QrYm07PWUw1qZhEIZ7tILr4vi6LDD6NjG1pluziZNynpPRA2cjC3+yWhaz6DoRvOxJ
+         9vwe8tD0oSqv6UB+PdTT33vdpIvzJQr3REwWDYAdm16VKbH+QsDctUifN54bJvogwiOJ
+         YBYFfiJ7t4/KPGjHadaF9NOGKgFdj4uzDJ/n2u7MESg7DS49zi+KlYZkeIrcCCaifk8b
+         +Hk9+JjZlYxfBTkZZ8xFGor032hlOCiA0GTdJnbYLCiRILCL7b+5XcVwzqXzoVcEAz4+
+         9HT3qVP/WkbzYCKnNdmSop2wGwVS1jXbsvKci/bdkidK1AdiQvBrscQq4eFwffIqyily
+         jnqA==
+X-Gm-Message-State: APjAAAWjrwGreQ2puCojWn3tSd7ei3fazp2HDFqw0YdrXdX8y+b2r4LU
+        4qd3t4tpngfL5ulqXn1jKcPKu9H1v2IThtqFAziaQA==
+X-Google-Smtp-Source: APXvYqy0f8eg9ePlHMjSmey5WM9znhvGExZSxWGU0F+oNb8FPRtEBPgEercA1k8qGYybSqNZ7bJQmgTaBUVOK2n9zzE=
+X-Received: by 2002:a67:7ac5:: with SMTP id v188mr2229899vsc.191.1573122180217;
+ Thu, 07 Nov 2019 02:23:00 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20191102002420.4091061-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Thu Nov  7 11:15:27 2019 +0100 (CET)
+References: <20191029164438.17012-1-ulf.hansson@linaro.org>
+ <20191029164438.17012-9-ulf.hansson@linaro.org> <20191107091335.GA1914942@centauri.lan>
+In-Reply-To: <20191107091335.GA1914942@centauri.lan>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 7 Nov 2019 11:22:24 +0100
+Message-ID: <CAPDyKFpaONqMa1OmULjo=XuyKg4gwd2yT3-b5i2oFLg306xasQ@mail.gmail.com>
+Subject: Re: [PATCH v2 08/13] cpuidle: psci: Add a helper to attach a CPU to
+ its PM domain
+To:     Niklas Cassel <niklas.cassel@linaro.org>
+Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/11/2019 01:24, Bjorn Andersson wrote:
+On Thu, 7 Nov 2019 at 10:13, Niklas Cassel <niklas.cassel@linaro.org> wrote:
+>
+> On Tue, Oct 29, 2019 at 05:44:33PM +0100, Ulf Hansson wrote:
+> > Introduce a PSCI DT helper function, psci_dt_attach_cpu(), which takes a
+> > CPU number as an in-parameter and tries to attach the CPU's struct device
+> > to its corresponding PM domain.
+> >
+> > Let's makes use of dev_pm_domain_attach_by_name(), as it allows us to
+> > specify "psci" as the "name" of the PM domain to attach to. Additionally,
+> > let's also prepare the attached device to be power managed via runtime PM.
+> >
+> > Note that, the implementation of the new helper function is in a new
+> > separate c-file, which may seems a bit too much at this point. However,
+> > subsequent changes that implements the remaining part of the PM domain
+> > support for cpuidle-psci, helps to justify this split.
+> >
+> > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> > ---
+> >
+> > Changes in v2:
+> >       - Reorder patch to be the first one that starts adding the PM domain
+> >         support.
+> >       - Rebased.
+> >
+> > ---
+> >  drivers/cpuidle/Makefile              |  4 ++-
+> >  drivers/cpuidle/cpuidle-psci-domain.c | 36 +++++++++++++++++++++++++++
+> >  drivers/cpuidle/cpuidle-psci.h        | 12 +++++++++
+> >  3 files changed, 51 insertions(+), 1 deletion(-)
+> >  create mode 100644 drivers/cpuidle/cpuidle-psci-domain.c
+> >  create mode 100644 drivers/cpuidle/cpuidle-psci.h
+> >
+> > diff --git a/drivers/cpuidle/Makefile b/drivers/cpuidle/Makefile
+> > index ee70d5cc5b99..cc8c769d7fa9 100644
+> > --- a/drivers/cpuidle/Makefile
+> > +++ b/drivers/cpuidle/Makefile
+> > @@ -21,7 +21,9 @@ obj-$(CONFIG_ARM_U8500_CPUIDLE)         += cpuidle-ux500.o
+> >  obj-$(CONFIG_ARM_AT91_CPUIDLE)          += cpuidle-at91.o
+> >  obj-$(CONFIG_ARM_EXYNOS_CPUIDLE)        += cpuidle-exynos.o
+> >  obj-$(CONFIG_ARM_CPUIDLE)            += cpuidle-arm.o
+> > -obj-$(CONFIG_ARM_PSCI_CPUIDLE)               += cpuidle-psci.o
+> > +obj-$(CONFIG_ARM_PSCI_CPUIDLE)               += cpuidle_psci.o
+> > +cpuidle_psci-y                               := cpuidle-psci.o
+> > +cpuidle_psci-$(CONFIG_PM_GENERIC_DOMAINS_OF) += cpuidle-psci-domain.o
+> >
+> >  ###############################################################################
+> >  # MIPS drivers
+> > diff --git a/drivers/cpuidle/cpuidle-psci-domain.c b/drivers/cpuidle/cpuidle-psci-domain.c
+> > new file mode 100644
+> > index 000000000000..bc7df4dc0686
+> > --- /dev/null
+> > +++ b/drivers/cpuidle/cpuidle-psci-domain.c
+> > @@ -0,0 +1,36 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +/*
+> > + * PM domains for CPUs via genpd - managed by cpuidle-psci.
+> > + *
+> > + * Copyright (C) 2019 Linaro Ltd.
+> > + * Author: Ulf Hansson <ulf.hansson@linaro.org>
+> > + *
+> > + */
+> > +
+> > +#include <linux/cpu.h>
+> > +#include <linux/device.h>
+> > +#include <linux/kernel.h>
+> > +#include <linux/pm_domain.h>
+> > +#include <linux/pm_runtime.h>
+> > +#include <linux/psci.h>
+> > +
+> > +#include "cpuidle-psci.h"
+> > +
+> > +struct device *psci_dt_attach_cpu(int cpu)
+> > +{
+> > +     struct device *dev;
+> > +
+> > +     /* Currently limit the hierarchical topology to be used in OSI mode. */
+> > +     if (!psci_has_osi_support())
+> > +             return NULL;
+> > +
+> > +     dev = dev_pm_domain_attach_by_name(get_cpu_device(cpu), "psci");
+>
+> Hello Ulf,
+>
+> here you use dev_pm_domain_attach_by_name(), which will call
+> genpd_dev_pm_attach_by_name(), which will call genpd_dev_pm_attach_by_id(),
+> which will call __genpd_dev_pm_attach(virt_dev, dev, index, false);
+> the last argument is power_on, which here is always set to false.
+>
+> In older versions of your patch series, psci_dt_attach_cpu() called
+> dev_pm_domain_attach(dev, true), where the last argument is power_on.
+> Interestingly enough (for the non-ACPI case), dev_pm_domain_attach()
+> ignores the power_on parameter, and simply calls genpd_dev_pm_attach(dev);
+> which will call __genpd_dev_pm_attach(dev, dev, 0, true);
+> the last argument is power_on, which here is always set to true.
+>
+> In other words, your previous patch series always powered on the power
+> domain, while the newer versions do not. Is this change intentional?
 
-> There exists non-bridge PCIe devices with PCI_VENDOR_ID_QCOM, so limit
-> the fixup to only affect the PCIe 2.0 (0x106) and PCIe 3.0 (0x107)
-> bridges.
+Wow, thanks for an in-depth review!
 
-Hey, git blames me! Why didn't you CC me? :-)
+Yes, the change is intentional.
 
-Commit 322f03436692481993d389f539c016d20bb0fa1d
-PCI: qcom: Use default config space read function
+If the device is attached via dev_pm_domain_attach(), genpd needs to
+power on the PM domain, due to legacy reasons (from behaviours by
+drivers/subsystem).
 
-The patch's history is of interest:
-https://lkml.org/lkml/2019/3/11/614
-https://www.spinics.net/lists/linux-arm-msm/msg49090.html
+This isn't the case when the device is attached through
+dev_pm_domain_attach_by_*(), as there is no legacy to care about.
 
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 3 ++-
->  include/linux/pci_ids.h                | 2 ++
->  2 files changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 35f4980480bb..b91abf4d4905 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1441,7 +1441,8 @@ static void qcom_fixup_class(struct pci_dev *dev)
->  {
->  	dev->class = PCI_CLASS_BRIDGE_PCI << 8;
->  }
-> -DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, PCI_ANY_ID, qcom_fixup_class);
-> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, PCIE_DEVICE_ID_QCOM_PCIE20, qcom_fixup_class);
-> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, PCIE_DEVICE_ID_QCOM_PCIE30, qcom_fixup_class);
->  
->  static struct platform_driver qcom_pcie_driver = {
->  	.probe = qcom_pcie_probe,
-> diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
-> index 21a572469a4e..3d0724ee4d2f 100644
-> --- a/include/linux/pci_ids.h
-> +++ b/include/linux/pci_ids.h
-> @@ -2413,6 +2413,8 @@
->  #define PCI_VENDOR_ID_LENOVO		0x17aa
->  
->  #define PCI_VENDOR_ID_QCOM		0x17cb
-> +#define PCIE_DEVICE_ID_QCOM_PCIE20	0x0106
-> +#define PCIE_DEVICE_ID_QCOM_PCIE30	0x0107
+> Perhaps psci_dt_attach_cpu() should call dev_to_genpd(dev)->power_on()
+> after attaching the power domain? (In order to be consistent with the
+> previous behavior of this patch series.)
 
-I don't think the fixup is required for 0x106 and 0x107...
+After calling dev_pm_domain_attach_by_name, I am calling
+pm_runtime_get_sync() if the cpu is online, which means the
+corresponding genpd will be powered on - but then, only when actually
+needed.
 
-In v1, I wrote:
-FWIW, this quirk is no longer required on recent chips:
-msm8996 (tested by Stanimir), msm8998 (tested by me), sdm845 (untested) are unaffected
-apq/ipq8064 is affected => what is the device ID for these chips?
-others?
+The old behaviour actually relied on the late_initcall
+genpd_power_off_unused(), to power off the genpd, in case the CPU
+device was offline.
 
-IIRC, 0x0101 requires the fixup because
-dw_pcie_wr_own_conf(pp, PCI_CLASS_DEVICE, 2, PCI_CLASS_BRIDGE_PCI);
-is broken on that platform (grrr, HW devs)
-(See my v3, tested by Srinivas)
+In other words, the new behaviour is even slightly better. Does it make sense?
 
-Stan wrote:
+Kind regards
+Uffe
 
-Yes it is good but to avoid breaking another SoCs could you add fixups
-for the following SoCs:
-
-SoC		device ID
-ipq4019 	0x1001
-ipq8064		0x101
-ipq8074		0x108
-
-ipq8064 has the same device ID as apq8064, but I'm not sure do we need
-defines per SoC or just rename DEV_ID_8064 ? I'm fine with both ways.
-
-
-In conclusion, my analysis in v5 was wrong
-"Changes from v4 to v5: Apply fixup to all qcom chips, the same way it was before
-(thus the code remains functionally equivalent)"
-=> The fixup was applied *more widely* than before, so not functionally equivalent.
-
-Regards.
+>
+>
+> Kind regards,
+> Niklas
+>
+> > +     if (IS_ERR_OR_NULL(dev))
+> > +             return dev;
+> > +
+> > +     pm_runtime_irq_safe(dev);
+> > +     if (cpu_online(cpu))
+> > +             pm_runtime_get_sync(dev);
+> > +
+> > +     return dev;
+> > +}
+> > diff --git a/drivers/cpuidle/cpuidle-psci.h b/drivers/cpuidle/cpuidle-psci.h
+> > new file mode 100644
+> > index 000000000000..0cadbb71dc55
+> > --- /dev/null
+> > +++ b/drivers/cpuidle/cpuidle-psci.h
+> > @@ -0,0 +1,12 @@
+> > +/* SPDX-License-Identifier: GPL-2.0 */
+> > +
+> > +#ifndef __CPUIDLE_PSCI_H
+> > +#define __CPUIDLE_PSCI_H
+> > +
+> > +#ifdef CONFIG_PM_GENERIC_DOMAINS_OF
+> > +struct device *psci_dt_attach_cpu(int cpu);
+> > +#else
+> > +static inline struct device *psci_dt_attach_cpu(int cpu) { return NULL; }
+> > +#endif
+> > +
+> > +#endif /* __CPUIDLE_PSCI_H */
+> > --
+> > 2.17.1
+> >
