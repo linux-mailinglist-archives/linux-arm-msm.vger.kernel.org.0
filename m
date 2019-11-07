@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E1E4F38CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 20:39:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F75EF38CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Nov 2019 20:39:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726295AbfKGTjt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Nov 2019 14:39:49 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:38156 "EHLO
+        id S1725785AbfKGTjx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Nov 2019 14:39:53 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:38264 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725818AbfKGTjt (ORCPT
+        with ESMTP id S1726390AbfKGTjx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Nov 2019 14:39:49 -0500
+        Thu, 7 Nov 2019 14:39:53 -0500
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id A8B0D60D88; Thu,  7 Nov 2019 19:39:48 +0000 (UTC)
+        id 384E560A4E; Thu,  7 Nov 2019 19:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573155588;
-        bh=31/b4Xs9G9WqSr6r3aTPk2Jthp+uBa6h73JY5NDZ6Bk=;
+        s=default; t=1573155592;
+        bh=vGLdRkcPj6szRI+TFank/Fc22n75Y001KavF2mYwq0w=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=cvQV0+EMWyS8SxUON+6k9M++S2pEZOqW0G7a4mVVRNI2O2rykk5gsNBmjs6+sQdr/
-         fFYkVRRPrKh/fIw0y3TcvLjzs141l3qjOWQ9H3tZLj1bH6baBeGIoL19xE89Qi4BQd
-         UvXnpxJCCE4hJH9gkDy8n3uYHbcUc0tPX627p0xA=
+        b=dsi6ZIPPQGMb0VABHys8syXmMNqSDBBtcTJA/8oZGjdi7FOiwzFbk/H/V+XChSMO9
+         Vk+DJMnd0tv18CjhorK1HbsdW73UwFndsleJg3rV0dmApV19Q8kWf3xusg4lLzWbSN
+         9KvVUxUIxe+odM7r/1kjuOb8cQemx7sV+HNCxj2E=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,16 +31,16 @@ Received: from cohens-linux.qualcomm.com (global_nat1_iad_fw.qualcomm.com [129.4
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: cohens@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0692E602DD;
-        Thu,  7 Nov 2019 19:39:46 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5232B60D8D;
+        Thu,  7 Nov 2019 19:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573155588;
-        bh=31/b4Xs9G9WqSr6r3aTPk2Jthp+uBa6h73JY5NDZ6Bk=;
+        s=default; t=1573155591;
+        bh=vGLdRkcPj6szRI+TFank/Fc22n75Y001KavF2mYwq0w=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=cvQV0+EMWyS8SxUON+6k9M++S2pEZOqW0G7a4mVVRNI2O2rykk5gsNBmjs6+sQdr/
-         fFYkVRRPrKh/fIw0y3TcvLjzs141l3qjOWQ9H3tZLj1bH6baBeGIoL19xE89Qi4BQd
-         UvXnpxJCCE4hJH9gkDy8n3uYHbcUc0tPX627p0xA=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0692E602DD
+        b=brbHp17Vjy9v1JvYjtPdlb9TlCv8zRUoWZxpl8FxnGBVArrdCg7Rk96XelKADMpzk
+         9RdpBFT4xtLHc2d/6sIbYloWvBbqGiStFSykkJ1jxyQUXxVZvL/zPRupO1vUPN0zsV
+         ruC/4LazTTkeRORiNdcccUtNckYi3FCw6fL5Eo3E=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5232B60D8D
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=cohens@codeaurora.org
 From:   Steve Cohen <cohens@codeaurora.org>
@@ -48,9 +48,9 @@ To:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org
 Cc:     pdhaval@codeaurora.org, seanpaul@chromium.org, adelva@google.com,
         Steve Cohen <cohens@codeaurora.org>
-Subject: [PATCH 1/3] drm: add driver hook for create blob limitations
-Date:   Thu,  7 Nov 2019 14:39:12 -0500
-Message-Id: <1573155554-16248-2-git-send-email-cohens@codeaurora.org>
+Subject: [PATCH 2/3] drm/msm: add support for createblob_check driver hook
+Date:   Thu,  7 Nov 2019 14:39:13 -0500
+Message-Id: <1573155554-16248-3-git-send-email-cohens@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1573155554-16248-1-git-send-email-cohens@codeaurora.org>
 References: <1573155554-16248-1-git-send-email-cohens@codeaurora.org>
@@ -59,54 +59,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow drivers with blob limitations to run checks before blobs
-are created. This can be used to limit how much memory can be
-allocated based on driver requirements.
+Allow msm_kms devices to register a hook to check blob count
+and blob size limitations before a new blob is created.
 
 Signed-off-by: Steve Cohen <cohens@codeaurora.org>
 ---
- drivers/gpu/drm/drm_property.c | 7 +++++++
- include/drm/drm_drv.h          | 9 +++++++++
- 2 files changed, 16 insertions(+)
+ drivers/gpu/drm/msm/msm_drv.c | 25 +++++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_kms.h |  1 +
+ 2 files changed, 26 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_property.c b/drivers/gpu/drm/drm_property.c
-index 892ce63..507a8a1 100644
---- a/drivers/gpu/drm/drm_property.c
-+++ b/drivers/gpu/drm/drm_property.c
-@@ -793,6 +793,13 @@ int drm_mode_createblob_ioctl(struct drm_device *dev,
- 	if (!drm_core_check_feature(dev, DRIVER_MODESET))
- 		return -EOPNOTSUPP;
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index c84f0a8..d0b0419 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -680,6 +680,30 @@ static void msm_disable_vblank(struct drm_device *dev, unsigned int pipe)
+ 	vblank_ctrl_queue_work(priv, pipe, false);
+ }
  
-+	if (dev->driver->createblob_check) {
-+		ret = dev->driver->createblob_check(
-+				dev, out_resp->length, file_priv);
-+		if (ret)
-+			return ret;
++static int msm_createblob_check (struct drm_device *dev, size_t length,
++		struct drm_file *file_priv)
++{
++	struct msm_drm_private *priv = dev->dev_private;
++	struct msm_kms *kms = priv->kms;
++	unsigned int count = 0;
++	struct drm_property_blob *blob;
++
++	if (!kms)
++		return -EINVAL;
++
++	if (!kms->funcs->createblob_check)
++		return 0;
++
++	mutex_lock(&dev->mode_config.blob_lock);
++	list_for_each_entry(blob, &file_priv->blobs, head_file) {
++		if (count < UINT_MAX)
++			count++;
 +	}
++	mutex_unlock(&dev->mode_config.blob_lock);
 +
- 	blob = drm_property_create_blob(dev, out_resp->length, NULL);
- 	if (IS_ERR(blob))
- 		return PTR_ERR(blob);
-diff --git a/include/drm/drm_drv.h b/include/drm/drm_drv.h
-index 8976afe..73b39b89 100644
---- a/include/drm/drm_drv.h
-+++ b/include/drm/drm_drv.h
-@@ -776,6 +776,15 @@ struct drm_driver {
- 	int (*dma_quiescent) (struct drm_device *);
- 	int (*context_dtor) (struct drm_device *dev, int context);
- 	int dev_priv_size;
++	return kms->funcs->createblob_check(count, length);
++}
 +
-+	/**
-+	 * @createblob_check: driver check for creating blob properties
-+	 *
-+	 * Hook for checking blob limitations imposed by drivers
-+	 */
-+	int (*createblob_check) (struct drm_device *dev,
-+				 size_t length,
-+				 struct drm_file *file_priv);
+ /*
+  * DRM ioctls:
+  */
+@@ -1011,6 +1035,7 @@ static struct drm_driver msm_driver = {
+ 	.gem_prime_vmap     = msm_gem_prime_vmap,
+ 	.gem_prime_vunmap   = msm_gem_prime_vunmap,
+ 	.gem_prime_mmap     = msm_gem_prime_mmap,
++	.createblob_check   = msm_createblob_check,
+ #ifdef CONFIG_DEBUG_FS
+ 	.debugfs_init       = msm_debugfs_init,
+ #endif
+diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
+index 1cbef6b..8a7e581 100644
+--- a/drivers/gpu/drm/msm/msm_kms.h
++++ b/drivers/gpu/drm/msm/msm_kms.h
+@@ -126,6 +126,7 @@ struct msm_kms_funcs {
+ 	/* debugfs: */
+ 	int (*debugfs_init)(struct msm_kms *kms, struct drm_minor *minor);
+ #endif
++	int (*createblob_check)(unsigned int count, size_t length);
  };
  
- extern unsigned int drm_debug;
+ struct msm_kms;
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
