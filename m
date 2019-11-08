@@ -2,96 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B1603F40B7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 07:44:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06AB0F4230
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 09:34:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729895AbfKHGoh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Nov 2019 01:44:37 -0500
-Received: from mail.kernel.org ([198.145.29.99]:59902 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725372AbfKHGoh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Nov 2019 01:44:37 -0500
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E868F21882;
-        Fri,  8 Nov 2019 06:44:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573195477;
-        bh=51RCMu1MiYJDTBePgqgqeZQyJIRjMshPhr4mlXze2fk=;
-        h=In-Reply-To:References:From:To:Cc:Subject:Date:From;
-        b=fY5cg7x80+6jRjvlwzGNp77jBXJexceFVpN+QIesOGJcQmj2Yh5HGh6XvoAYD12Il
-         Obh9AO2w0/yoOQPjXBs4wS2qjcUUqMsqLBiny8OX/u5OwEXh2oitSqk7vzfs2lBeHV
-         4tsRPHzgGCBW0ckvJFWt3EDkMSooTmEGAIpfgnos=
-Content-Type: text/plain; charset="utf-8"
+        id S1730281AbfKHIey (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Nov 2019 03:34:54 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:33333 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725975AbfKHIex (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 8 Nov 2019 03:34:53 -0500
+Received: by mail-wm1-f65.google.com with SMTP id a17so5996030wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2019 00:34:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=GNBx6vzN5n9iZ0DowN8UoHdT8V/yV/ZlTTgj8SuNHxw=;
+        b=ArZJRK5l4lbX7IXd9hkNrsVI0q35U8SROjjCaKLhN4RHO1SZE+KqNwIbps8Se7IEKt
+         col9v8Xc+AXID/lCJz/bWDehorG5CHS9shNIX8CwjctBjoCiNNktbD9suQHfZur6Kj7g
+         w5W6Izq40Selz214kUaevG2IoapbIb/Nn5P4c=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=GNBx6vzN5n9iZ0DowN8UoHdT8V/yV/ZlTTgj8SuNHxw=;
+        b=hGkuM4Xf0FfJQ5yc3w/9LOvicMa7rwLhCJZ0bclR2do7VCkzf5sTwsEjUvuRsVr386
+         vFw3MLQvoKAAg7lPu2Bb7de6IyDsAQZ0Ukafq8MY0iLRpfuJN1nXMbaZKtD9WarIUvX/
+         wgyRpuxw5T8bsvTJPlGBrmTAd5yqH2lghlEE6NLKFp7pFQ2V4Euu/a0W3HQ742WVY5s9
+         gQhtjdTpv/4eLzrqOWdIwWVO3hILoEnBzu1NalAdWdOE6Fg9wvd/QryFMzQH1l2A33sU
+         dtWK+/IEsKF1y3FZQet5PdPBsGMcJPPnfEw+wvD+DsPh4SuBEc9elVA1lP71n0D6kDIc
+         dWPA==
+X-Gm-Message-State: APjAAAXUnKL/qXxl276wBemUnuPwLHLC0C3eBZE1WFGupQ7w5oKoB6ot
+        cH8ozEjecSxgfWa9hYAqCGtVnGv4McI=
+X-Google-Smtp-Source: APXvYqyHKHX0v/WKP8FWHehNB24+E1bGaM6s4cXKYojPO1xiyu2qSI95yblhRj7a1eR06RxC+l1ZzQ==
+X-Received: by 2002:a05:600c:2105:: with SMTP id u5mr6797527wml.47.1573202091526;
+        Fri, 08 Nov 2019 00:34:51 -0800 (PST)
+Received: from phenom.ffwll.local (212-51-149-96.fiber7.init7.net. [212.51.149.96])
+        by smtp.gmail.com with ESMTPSA id n65sm1382891wmf.28.2019.11.08.00.34.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Nov 2019 00:34:50 -0800 (PST)
+Date:   Fri, 8 Nov 2019 09:34:48 +0100
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Steve Cohen <cohens@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, adelva@google.com,
+        pdhaval@codeaurora.org, seanpaul@chromium.org
+Subject: Re: [PATCH 0/3] allow DRM drivers to limit creation of blobs
+Message-ID: <20191108083448.GU23790@phenom.ffwll.local>
+References: <1573155554-16248-1-git-send-email-cohens@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAOCk7NrHyY0+tF=90Z1WDa7VpgehDY7kHiqcR6g8K_P_uRpRQw@mail.gmail.com>
-References: <20191031185538.15402-1-jeffrey.l.hugo@gmail.com> <20191031185715.15504-1-jeffrey.l.hugo@gmail.com> <20191107214352.8A82E2166E@mail.kernel.org> <CAOCk7NrHyY0+tF=90Z1WDa7VpgehDY7kHiqcR6g8K_P_uRpRQw@mail.gmail.com>
-From:   Stephen Boyd <sboyd@kernel.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Andy Gross <agross@kernel.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        MSM <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
-        lkml <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 1/3] clk: qcom: Allow constant ratio freq tables for rcg
-User-Agent: alot/0.8.1
-Date:   Thu, 07 Nov 2019 22:44:36 -0800
-Message-Id: <20191108064436.E868F21882@mail.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1573155554-16248-1-git-send-email-cohens@codeaurora.org>
+X-Operating-System: Linux phenom 5.2.0-3-amd64 
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jeffrey Hugo (2019-11-07 14:12:09)
-> On Thu, Nov 7, 2019 at 2:43 PM Stephen Boyd <sboyd@kernel.org> wrote:
-> >
-> > Quoting Jeffrey Hugo (2019-10-31 11:57:15)
-> > > Some RCGs (the gfx_3d_src_clk in msm8998 for example) are basically j=
-ust
-> > > some constant ratio from the input across the entire frequency range.=
-  It
-> > > would be great if we could specify the frequency table as a single en=
-try
-> > > constant ratio instead of a long list, ie:
-> > >
-> > >         { .src =3D P_GPUPLL0_OUT_EVEN, .pre_div =3D 3 },
-> > >         { }
-> > >
-> > > So, lets support that.
-> > >
-> > > We need to fix a corner case in qcom_find_freq() where if the freq ta=
-ble
-> > > is non-null, but has no frequencies, we end up returning an "entry" b=
-efore
-> > > the table array, which is bad.  Then, we need ignore the freq from the
-> > > table, and instead base everything on the requested freq.
-> > >
-> > > Suggested-by: Stephen Boyd <sboyd@kernel.org>
-> > > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> > > ---
-> >
-> > Applied to clk-next and fixed the space thing. I guess ceil/floor
-> > rounding isn't a problem?
-> >
->=20
-> Thanks for fixing the nit.
->=20
-> Hmm.  Looking back at it, floor is only used with the rcg_floor_ops.
-> Right now, you can't use a constant ratio table with rcg_floor_ops -
-> looks like you'd probably hit a null pointer dereference.  I'm having
-> trouble seeing how the floor operation would work with this constant
-> ratio idea in a way that would be different than the normal rcg_ops.
-> I think I would say that either you have a good reason for using the
-> constant ratio table, in which case you should be using the normal
-> rcg_ops, or you have a good reason for using floor which is then
-> incompatible with a constant ratio table.  If you think that the
-> constant ratio table concept should be applied to floor ops, can you
-> please detail what you expect the behavior to be?
+On Thu, Nov 07, 2019 at 02:39:11PM -0500, Steve Cohen wrote:
+> Fuzzers used in Android compliance testing repeatedly call the
+> create blob IOCTL which eventually exhausts the system memory.
+> This series adds a hook which allows drivers to impose their own
+> limitations on the size and/or number of blobs created.
 
-I don't think floor ops make sense. I just wanted to make sure that the
-floor and ceiling stuff in here isn't going to cause problems. Looking
-again after reading your response I think we're going to be fine.
+Pretty sure this isn't just a problem for msm/dpu alone, why this very
+limited approach?
 
+Also, why are your fuzzers not also allocating enormous amounts of gem
+buffers, which will also exhaust memory eventually?
+-Daniel
+
+> 
+> Steve Cohen (3):
+>   drm: add driver hook for create blob limitations
+>   drm/msm: add support for createblob_check driver hook
+>   drm/msm/dpu: check blob limitations during create blob ioctl
+> 
+>  drivers/gpu/drm/drm_property.c          |  7 +++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 14 ++++++++++++++
+>  drivers/gpu/drm/msm/msm_drv.c           | 25 +++++++++++++++++++++++++
+>  drivers/gpu/drm/msm/msm_kms.h           |  1 +
+>  include/drm/drm_drv.h                   |  9 +++++++++
+>  5 files changed, 56 insertions(+)
+> 
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
