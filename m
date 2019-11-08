@@ -2,233 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A8BDBF4EC8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 15:56:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 99036F51AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 17:54:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725883AbfKHO4i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Nov 2019 09:56:38 -0500
-Received: from mail-io1-f65.google.com ([209.85.166.65]:36737 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725995AbfKHO4i (ORCPT
+        id S1726231AbfKHQym (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Nov 2019 11:54:42 -0500
+Received: from mail-io1-f66.google.com ([209.85.166.66]:45388 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726101AbfKHQyf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Nov 2019 09:56:38 -0500
-Received: by mail-io1-f65.google.com with SMTP id s3so6670675ioe.3;
-        Fri, 08 Nov 2019 06:56:37 -0800 (PST)
+        Fri, 8 Nov 2019 11:54:35 -0500
+Received: by mail-io1-f66.google.com with SMTP id v17so5993194iol.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2019 08:54:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=M1gL1CxYyk5ZRbQCaI/0n42xHlKuUosMCVkClkV4vjI=;
-        b=IO1q7Rmwo8hRBqq+KY4MDgHFrdwIb3cVXS49ImO4hwLoA5j6tVhZ1VEMMXKNeDdxtP
-         E4Dojg7cMkAAlITubTQblS3nX1HCpqxi0+n8Q3cpMIDloGEphKqfBWF1IPVRHI/5pkbL
-         whtnd/dFV4lMlKWaSE/2CzmhRFoJTcFmkneGQXb/nOjS0iU+YvXCX/SheJpdEHzJwIKb
-         CpGbrWGBtGXg0eoyD7SJRd9lkoOzmzoQAVH0NodmC2rCDFi7VUGbzl+kb+R9Uw3RcQ7+
-         wt0gTPj1dusBMZR+cxJeJLD0zcU+orErO17sm64qltyKXqgeUPI1m6+8mFultpPC8gg/
-         zp7g==
+        bh=oBlGL2ZT1qM/spp+v8OfQqLKwCRJpPtsexANJmTmPvA=;
+        b=ALZBV9VNqthwC4XaKQWF9/+cuQdPrE6+x2xVO/S3DSHILymh5OMdjE/m5FYD0JbKBz
+         LaIwUR3CoqB2Y3Fi88ga13AtQqlagoQ3HwKEVys0MRaPbWQM7/sOIzf/oBWHpxrmJki7
+         tjICYxKk/dsSORynQSmur0R/VsviWcGrbwP5E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=M1gL1CxYyk5ZRbQCaI/0n42xHlKuUosMCVkClkV4vjI=;
-        b=iVZjE8g1e+/upJRmqQYwVB3x+m7zxy8RDggPrB/89cDZH5szBhXptWNLcdkyIo6OSJ
-         YynzNqKO35UItf0K3ZC+JgKxAx453AHcbsfwbwGh2Q12juEURzrcFm1i0wivhmBJogmZ
-         8HzUmAWG21BfS2mBHmw0ToP56r7YVWkMWB9/TTMSYWJZmvQ/dhBvuZv8Uuh2RonmMLBf
-         dGu43o27Mejn+DpfVDpDlKZt6Nk0sj9nWeMy7p5sMUtw7I+BEWGN6Y0XRNEfTkciJV5b
-         1sKABPxbIUSHJLHgt3IkuQN7vSesNz9noCwy2fXkmQwHUlak/dv1Xdq+1nHzKDkY8eiZ
-         +DNg==
-X-Gm-Message-State: APjAAAX6atucB/ognlGwSlNV5Euiu/tIN2erexd3jakLBNLYDlWqJMa3
-        UtkAynQxySIpT3qzMQvLXAlcCslnY7Rjg49AE60=
-X-Google-Smtp-Source: APXvYqwm0l7xxfwEoTccnWNTAXB7osAsSwy4S0yGePo5KceC4ewvpfzgh9RVzPRYQuvnfBjKun2Cwlua0EU8IC5S4RA=
-X-Received: by 2002:a5e:a70e:: with SMTP id b14mr11146117iod.166.1573224997311;
- Fri, 08 Nov 2019 06:56:37 -0800 (PST)
+        bh=oBlGL2ZT1qM/spp+v8OfQqLKwCRJpPtsexANJmTmPvA=;
+        b=BR9u+AMV+fRxu5adr3+12sacoCRrnaRyaGTEzNUh8zmDj9ityIop+1nzz77vJ57s4u
+         jmN1Bsj+tnBRFEWOQWaOC4FzPWcJVOo/3FWsq31fW19MwlFLgChReHFJUjA2mDSaGWpI
+         oUop+46voNv9r77zbzJnwZ8QNWFY4ltS1/Pb9R2nPWIlOrxWgYy6RtN4PcBi89byXd41
+         +HrdDy+IIp3PAhDLCIpRw3FeUvP3TiC9PhG2izE41mngxezcK4HNpq3fQt8WiE/7X/65
+         z3hyeElsLbXUo6nBRztyWG78dG5v6JF3vNeExtC4W63SqpTiXpdb+oIvIMUWilEN5smK
+         4sHQ==
+X-Gm-Message-State: APjAAAVlrekxBlcTtgQOqrH1GLb9uyiSnhETCaZ5/RE6YHwKkYbLE4Gt
+        6iOmgI5p3Lf0VbffSv/FdVXmcpn6aCoCyaqJLmn0lw==
+X-Google-Smtp-Source: APXvYqzXa+oPVVw/kRTaaucIi7gsQEB5szy8ycBHJmwimpROUevaESodbo17CscTvYcassIqn0vAPyGE9drKaSMDMb4=
+X-Received: by 2002:a6b:ee07:: with SMTP id i7mr11442996ioh.26.1573232074022;
+ Fri, 08 Nov 2019 08:54:34 -0800 (PST)
 MIME-Version: 1.0
-References: <20191105000129.GA6536@onstation.org> <CAF6AEGv3gs+LFOP3AGthXd4niFb_XYOuwLfEa2G9eb27b1wMMA@mail.gmail.com>
- <20191105100804.GA9492@onstation.org> <CAF6AEGtB+g=4eiB31jkyuBGW7r0TBSh2oMj6TGtSgQ=q1ZV1tg@mail.gmail.com>
- <20191106091335.GA16729@onstation.org> <CAF6AEGuEO1jg6KhOFWEMUjq4ZQy5w61dWJk6uLWRzHnMZYZv=g@mail.gmail.com>
- <CAOCk7NomH2MsZ+FvPFAMWeabOFpyOwODCb_Ro07v+2k2v_C4NA@mail.gmail.com>
- <CAF6AEGsZkJJTNZ8SzHsSioEnkpekr1Texu5_EeBW1hP-bsOyjQ@mail.gmail.com>
- <20191107111019.GA24028@onstation.org> <CAF6AEGtbP=X2+DELajQq9zMZYGgmhyUhe62ncvHvyFnyZexTXg@mail.gmail.com>
- <CAOCk7NrPdGqc4vo70NmTuyszkPaPe41-e89ym2vAYBY+GTt9BA@mail.gmail.com> <CAJs_Fx4UJYd-k3_3AAGJo-8udThhvf6t-J=OZi3jappWjTNnFQ@mail.gmail.com>
-In-Reply-To: <CAJs_Fx4UJYd-k3_3AAGJo-8udThhvf6t-J=OZi3jappWjTNnFQ@mail.gmail.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Fri, 8 Nov 2019 07:56:25 -0700
-Message-ID: <CAOCk7Nq7rPmraofy+o8vWTwSAd1+dTRsoZ4QN0mRAOOz7u7TUg@mail.gmail.com>
-Subject: Re: [Freedreno] drm/msm: 'pp done time out' errors after async commit changes
-To:     Rob Clark <robdclark@chromium.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Brian Masney <masneyb@onstation.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+References: <20191014102308.27441-1-tdas@codeaurora.org> <20191014102308.27441-6-tdas@codeaurora.org>
+ <20191029175941.GA27773@google.com> <fa17b97d-bfc4-4e9c-78b5-c225e5b38946@codeaurora.org>
+ <20191031174149.GD27773@google.com> <20191107210606.E536F21D79@mail.kernel.org>
+ <CAJs_Fx60uEdGFjJXAjvVy5LLBXXmergRi8diWxhgGqde1wiXXQ@mail.gmail.com> <20191108063543.0262921882@mail.kernel.org>
+In-Reply-To: <20191108063543.0262921882@mail.kernel.org>
+From:   Rob Clark <robdclark@chromium.org>
+Date:   Fri, 8 Nov 2019 08:54:23 -0800
+Message-ID: <CAJs_Fx5trp2B7uOMTFZNUsYoKrO1-MWsNECKp-hz+1qCOCeU8A@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] clk: qcom: Add Global Clock controller (GCC)
+ driver for SC7180
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>
+        linux-soc@vger.kernel.org, linux-clk@vger.kernel.org,
+        LKML <linux-kernel@vger.kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Sean Paul <seanpaul@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 7, 2019 at 7:03 PM Rob Clark <robdclark@chromium.org> wrote:
+On Thu, Nov 7, 2019 at 10:35 PM Stephen Boyd <sboyd@kernel.org> wrote:
 >
-> On Thu, Nov 7, 2019 at 9:40 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
-> >
-> > On Thu, Nov 7, 2019 at 9:17 AM Rob Clark <robdclark@gmail.com> wrote:
+> Quoting Rob Clark (2019-11-07 18:06:19)
+> > On Thu, Nov 7, 2019 at 1:06 PM Stephen Boyd <sboyd@kernel.org> wrote:
 > > >
-> > > On Thu, Nov 7, 2019 at 3:10 AM Brian Masney <masneyb@onstation.org> wrote:
+> > > Quoting Matthias Kaehlcke (2019-10-31 10:41:49)
+> > > > Hi Taniya,
 > > > >
-> > > > On Wed, Nov 06, 2019 at 08:58:59AM -0800, Rob Clark wrote:
-> > > > > On Wed, Nov 6, 2019 at 8:47 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+> > > > On Thu, Oct 31, 2019 at 04:59:26PM +0530, Taniya Das wrote:
+> > > > > Hi Matthias,
+> > > > >
+> > > > > Thanks for your comments.
+> > > > >
+> > > > > On 10/29/2019 11:29 PM, Matthias Kaehlcke wrote:
+> > > > > > Hi Taniya,
 > > > > > >
-> > > > > > On Wed, Nov 6, 2019 at 9:30 AM Rob Clark <robdclark@gmail.com> wrote:
+> > > > > > On Mon, Oct 14, 2019 at 03:53:08PM +0530, Taniya Das wrote:
+> > > > > > > Add support for the global clock controller found on SC7180
+> > > > > > > based devices. This should allow most non-multimedia device
+> > > > > > > drivers to probe and control their clocks.
 > > > > > > >
-> > > > > > > On Wed, Nov 6, 2019 at 1:13 AM Brian Masney <masneyb@onstation.org> wrote:
-> > > > > > > >
-> > > > > > > > On Tue, Nov 05, 2019 at 08:23:27AM -0800, Rob Clark wrote:
-> > > > > > > > > On Tue, Nov 5, 2019 at 2:08 AM Brian Masney <masneyb@onstation.org> wrote:
-> > > > > > > > > > The 'pp done time out' errors go away if I revert the following three
-> > > > > > > > > > commits:
-> > > > > > > > > >
-> > > > > > > > > > cd6d923167b1 ("drm/msm/dpu: async commit support")
-> > > > > > > > > > d934a712c5e6 ("drm/msm: add atomic traces")
-> > > > > > > > > > 2d99ced787e3 ("drm/msm: async commit support")
-> > > > > > > > > >
-> > > > > > > > > > I reverted the first one to fix a compiler error, and the second one so
-> > > > > > > > > > that the last patch can be reverted without any merge conflicts.
-> > > > > > > > > >
-> > > > > > > > > > I see that crtc_flush() calls mdp5_ctl_commit(). I tried to use
-> > > > > > > > > > crtc_flush_all() in mdp5_flush_commit() and the contents of the frame
-> > > > > > > > > > buffer dance around the screen like its out of sync. I renamed
-> > > > > > > > > > crtc_flush_all() to mdp5_crtc_flush_all() and removed the static
-> > > > > > > > > > declaration. Here's the relevant part of what I tried:
-> > > > > > > > > >
-> > > > > > > > > > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> > > > > > > > > > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> > > > > > > > > > @@ -171,7 +171,15 @@ static void mdp5_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *st
-> > > > > > > > > >
-> > > > > > > > > >  static void mdp5_flush_commit(struct msm_kms *kms, unsigned crtc_mask)
-> > > > > > > > > >  {
-> > > > > > > > > > -       /* TODO */
-> > > > > > > > > > +       struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
-> > > > > > > > > > +       struct drm_crtc *crtc;
-> > > > > > > > > > +
-> > > > > > > > > > +       for_each_crtc_mask(mdp5_kms->dev, crtc, crtc_mask) {
-> > > > > > > > > > +               if (!crtc->state->active)
-> > > > > > > > > > +                       continue;
-> > > > > > > > > > +
-> > > > > > > > > > +               mdp5_crtc_flush_all(crtc);
-> > > > > > > > > > +       }
-> > > > > > > > > >  }
-> > > > > > > > > >
-> > > > > > > > > > Any tips would be appreciated.
-> > > > > > > > >
-> > > > > > > > >
-> > > > > > > > > I think this is along the lines of what we need to enable async commit
-> > > > > > > > > for mdp5 (but also removing the flush from the atomic-commit path)..
-> > > > > > > > > the principle behind the async commit is to do all the atomic state
-> > > > > > > > > commit normally, but defer writing the flush bits.  This way, if you
-> > > > > > > > > get another async update before the next vblank, you just apply it
-> > > > > > > > > immediately instead of waiting for vblank.
-> > > > > > > > >
-> > > > > > > > > But I guess you are on a command mode panel, if I remember?  Which is
-> > > > > > > > > a case I didn't have a way to test.  And I'm not entirely about how
-> > > > > > > > > kms_funcs->vsync_time() should be implemented for cmd mode panels.
-> > > > > > > >
-> > > > > > > > Yes, this is a command-mode panel and there's no hardware frame counter
-> > > > > > > > available. The key to getting the display working on this phone was this
-> > > > > > > > patch:
-> > > > > > > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2bab52af6fe68c43b327a57e5ce5fc10eefdfadf
-> > > > > > > >
-> > > > > > > > > That all said, I think we should first fix what is broken, before
-> > > > > > > > > worrying about extending async commit support to mdp5.. which
-> > > > > > > > > shouldn't hit the async==true path, due to not implementing
-> > > > > > > > > kms_funcs->vsync_time().
-> > > > > > > > >
-> > > > > > > > > What I think is going on is that, in the cmd mode case,
-> > > > > > > > > mdp5_wait_flush() (indirectly) calls mdp5_crtc_wait_for_pp_done(),
-> > > > > > > > > which waits for a pp-done irq regardless of whether there is a flush
-> > > > > > > > > in progress.  Since there is no flush pending, the irq never comes.
-> > > > > > > > > But the expectation is that kms_funcs->wait_flush() returns
-> > > > > > > > > immediately if there is nothing to wait for.
-> > > > > > > >
-> > > > > > > > I don't think that's happening in this case. I added some pr_info()
-> > > > > > > > statements to request_pp_done_pending() and mdp5_crtc_pp_done_irq().
-> > > > > > > > Here's the first two sets of messages that appear in dmesg:
-> > > > > > > >
-> > > > > > > > [   14.018907] msm fd900000.mdss: pp done time out, lm=0
-> > > > > > > > [   14.018993] request_pp_done_pending: HERE
-> > > > > > > > [   14.074208] mdp5_crtc_pp_done_irq: HERE
-> > > > > > > > [   14.074368] Console: switching to colour frame buffer device 135x120
-> > > > > > > > [   14.138938] msm fd900000.mdss: pp done time out, lm=0
-> > > > > > > > [   14.139021] request_pp_done_pending: HERE
-> > > > > > > > [   14.158097] mdp5_crtc_pp_done_irq: HERE
-> > > > > > > >
-> > > > > > > > The messages go on like this with the same pattern.
-> > > > > > > >
-> > > > > > > > I tried two different changes:
-> > > > > > > >
-> > > > > > > > 1) I moved the request_pp_done_pending() and corresponding if statement
-> > > > > > > >    from mdp5_crtc_atomic_flush() and into mdp5_crtc_atomic_begin().
-> > > > > > > >
-> > > > > > > > 2) I increased the timeout in wait_for_completion_timeout() by several
-> > > > > > > >    increments; all the way to 5 seconds.
-> > > > > > >
-> > > > > > > increasing the timeout won't help, because the pp-done irq has already
-> > > > > > > come at the point where we wait for it..
-> > > > > > >
-> > > > > > > maybe the easy thing is just add mdp5_crtc->needs_pp, set to true
-> > > > > > > before requesting, and false when we get the irq.. and then
-> > > > > > > mdp5_crtc_wait_for_pp_done() just returns if needs_pp==false..
+> > > > > > > Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> > > > >
 > > > > > >
-> > > > > > On the otherhand, what about trying to make command mode panels
-> > > > > > resemble video mode panels slightly?  Video mode panels have a vsync
-> > > > > > counter in hardware, which is missing from command mode - however it
-> > > > > > seems like the driver/drm framework would prefer such a counter.
-> > > > > > Would it be a reasonable idea to make a software counter, and just
-> > > > > > increment it every time the pp_done irq is triggered?
+> > > > > > v3 also had
 > > > > > >
-> > > > > > I'm just thinking that we'll avoid issues long term by trying to make
-> > > > > > the code common, rather than diverging it for the two modes.
+> > > > > > +   [GCC_DISP_AHB_CLK] = &gcc_disp_ahb_clk.clkr,
+> > > > > >
+> > > > > > Removing it makes the dpu_mdss driver unhappy:
+> > > > > >
+> > > > > > [    2.999855] dpu_mdss_enable+0x2c/0x58->msm_dss_enable_clk: 'iface' is not available
+> > > > > >
+> > > > > > because:
+> > > > > >
+> > > > > >          mdss: mdss@ae00000 {
+> > > > > >                     ...
+> > > > > >
+> > > > > >   =>             clocks = <&gcc GCC_DISP_AHB_CLK>,
+> > > > > >                           <&gcc GCC_DISP_HF_AXI_CLK>,
+> > > > > >                           <&dispcc DISP_CC_MDSS_MDP_CLK>;
+> > > > > >                  clock-names = "iface", "gcc_bus", "core";
+> > > > > >     };
 > > > > > >
 > > > > >
-> > > > > *possibly*, but I think we want to account somehow periods where
-> > > > > display is not updated.
-> > > > >
-> > > > > fwiw, it isn't that uncommon for userspace to use vblanks to "keep
-> > > > > time" (drive animations for desktop switch, window
-> > > > > maximize/unmaximize, etc).. it could be a surprise when "vblank" is
-> > > > > not periodic.
+> > > > > The basic idea as you mentioned below was to move the CRITICAL clocks to
+> > > > > probe. The clock provider to return NULL in case the clocks are not
+> > > > > registered.
+> > > > > This was discussed with Stephen on v3. Thus I submitted the below patch.
+> > > > > clk: qcom: common: Return NULL from clk_hw OF provider.
 > > > >
-> > > > What do you think about using some variation of the current value of
-> > > > jiffies in the kernel + the number of pp_done IRQs as the software
-> > > > counter for command-mode panels?
+> > > > I see. My assumption was that the entire clock hierarchy should be registered,
+> > > > but Stephen almost certainly knows better :)
 > > > >
+> > > > > Yes it would throw these warnings, but no functional issue is observed from
+> > > > > display. I have tested it on the cheza board.
+> > > >
+> > > > The driver considers it an error (uses DEV_ERR to log the message) and doesn't
+> > > > handle other clocks when one is found missing. I'm not really famililar with
+> > > > the dpu_mdss driver, but I imagine this can have some side effects. Added some
+> > > > of the authors/contributors to cc.
 > > >
-> > > jiffies is probably too coarse.. but we could use monotonic clock, I guess.
+> > > NULL is a valid clk pointer returned by clk_get(). What is the display
+> > > driver doing that makes it consider NULL an error?
 > > >
-> > > But I suppose even a cmd mode panel has a "vblank", it is just
-> > > internal the panel.  Do we get the TE interrupt at regular intervals?
-> > > AFAIU this would be tied to the panel's internal vblank.
 > >
-> > The TE interrupt was first implemented in MDP 1.7.0 (msm8996).  8974
-> > predates that.
-> > You can get it from the WR_PTR interrupt, but you have to understand
-> > details about your panel to configure that correctly.
+> > do we not have an iface clk?  I think the driver assumes we should
+> > have one, rather than it being an optional thing.. we could ofc change
+> > that
 >
-> oh, sad.. I kinda assumed it was a pretty common DSI irq since
-> forever.. I guess the hw is just managing the flow control to prevent
-> tearing?
+> I think some sort of AHB clk is always enabled so the plan is to just
+> hand back NULL to the caller when they call clk_get() on it and nobody
+> should be the wiser when calling clk APIs with a NULL iface clk. The
+> common clk APIs typically just return 0 and move along. Of course, we'll
+> also turn the clk on in the clk driver so that hardware can function
+> properly, but we don't need to expose it as a clk object and all that
+> stuff if we're literally just slamming a bit somewhere and never looking
+> back.
 >
-> Well, anyways, I guess we could just use a free-running timer based on
-> refresh rate of the panel?
+> But it sounds like we can't return NULL for this clk for some reason? I
+> haven't tried to track it down yet but I think Matthias has found it
+> causes some sort of problem in the display driver.
+>
 
-That would work.  One more alternative (just want to make sure we've
-evaluated all options) is to use the autorefresh feature.  How I would
-put it simply, is that autorefresh turns a command mode panel into a
-video mode panel.  If autorefresh is enabled, the MDP will
-automatically send a frame to the panel every time the panel invokes
-the TE signal.  I'm pretty sure this will automatically trigger the
-PP_DONE irq, so essentially PP_DONE is now analogous to vsync.  The
-downside is that the START trigger and autorefresh are basically
-mutually exclusive.  I see the autorefresh config register in MDP 1.0,
-so it would be applicable to all platforms supported by the mdp5
-driver.
+ok, I guess we can change the dpu code to allow NULL..  but what would
+the return be, for example on a different SoC where we do have an
+iface clk, but the clk driver isn't enabled?  Would that also return
+NULL?  I guess it would be nice to differentiate between those cases..
+
+BR,
+-R
