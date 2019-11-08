@@ -2,118 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E9054F59E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 22:31:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92224F5A22
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 22:46:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731657AbfKHV3d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Nov 2019 16:29:33 -0500
-Received: from mail-il1-f194.google.com ([209.85.166.194]:42958 "EHLO
-        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731335AbfKHV3d (ORCPT
+        id S2387831AbfKHVf4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Nov 2019 16:35:56 -0500
+Received: from mout.kundenserver.de ([212.227.126.130]:33583 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387700AbfKHVf4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Nov 2019 16:29:33 -0500
-Received: by mail-il1-f194.google.com with SMTP id n18so6380957ilt.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2019 13:29:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mRmwhSGnJWcbro1I2NsU98mvkk0pcwQPiXBcJRg/O6I=;
-        b=nKl15u10ItYfNUfRdfrOlRLJn71C4ibsqBZ/3P+B+74i1afpRcQqn+q6zc8jpdWfF/
-         4TlxJXWMVA2CzKaTu4/TkkDz/vWRfcJCJh6ToAyHjyRSfJH2cy+7BAFBE4bUdTXhkVpa
-         +vhUPS0fXQBcgMO/mJWo4oLl/GXv8laDO3g2E=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mRmwhSGnJWcbro1I2NsU98mvkk0pcwQPiXBcJRg/O6I=;
-        b=qsaBSLszEtuD0ySkcAJB+x4CyNqNnN6NXOWGk5XGyaaWP4VVVYtf5vXX05RJjHmuk+
-         Rd3Jv37C4Kc1HDYmmok/xyhUbMy+lLuCu/Oq0rh8WagJy1DBdcyLgRw6B0UobPzTg1Kd
-         noq1JAaAqW8KF6tMjZT+uPbJgEK1GQ6WsiHODPNQtSboHmSGKn/og2xstXXNjuK3Mycy
-         OS7NUDeAcHmr67LFB7za7L3NU6Npq/4u0q8zZ1ezlUntv/US2guGW2bNdJy1veZqkpqI
-         4BwUjSpAwu1N4AzMG0urFkKGlD750QMgoIXRt4P+gp5zKVmuQKIT5LzA8vGlf0oPcY7Q
-         94AA==
-X-Gm-Message-State: APjAAAXgvAyAh0bH4RkJZ6UjFOOs9nUHaG506YgUV2jBZmDU5NLWefQO
-        Nnt6pbmaGX27N3xkmkt31/YyG7h2ps0=
-X-Google-Smtp-Source: APXvYqz0ikp3c2RBkm8rybmn7xCZ67PQbe//2+kDb3aIquHSpTLqt65YodnB5JO/uUodo0aHxRJHow==
-X-Received: by 2002:a92:6912:: with SMTP id e18mr13989253ilc.134.1573248571089;
-        Fri, 08 Nov 2019 13:29:31 -0800 (PST)
-Received: from mail-io1-f49.google.com (mail-io1-f49.google.com. [209.85.166.49])
-        by smtp.gmail.com with ESMTPSA id h14sm926086ilc.87.2019.11.08.13.29.30
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Nov 2019 13:29:30 -0800 (PST)
-Received: by mail-io1-f49.google.com with SMTP id j20so7635606ioo.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2019 13:29:30 -0800 (PST)
-X-Received: by 2002:a5e:c642:: with SMTP id s2mr914619ioo.218.1573248569668;
- Fri, 08 Nov 2019 13:29:29 -0800 (PST)
+        Fri, 8 Nov 2019 16:35:56 -0500
+Received: from threadripper.lan ([149.172.19.189]) by mrelayeu.kundenserver.de
+ (mreue011 [212.227.15.129]) with ESMTPA (Nemesis) id
+ 1MXXdn-1iQ6AP0R4R-00YveV; Fri, 08 Nov 2019 22:33:06 +0100
+From:   Arnd Bergmann <arnd@arndb.de>
+To:     y2038@lists.linaro.org
+Cc:     linux-kernel@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
+        jdike@addtoit.com, richard@nod.at, jcmvbkbc@gmail.com,
+        stefanr@s5r6.in-berlin.de, l.stach@pengutronix.de,
+        linux+etnaviv@armlinux.org.uk, christian.gmeiner@gmail.com,
+        airlied@linux.ie, daniel@ffwll.ch, robdclark@gmail.com,
+        sean@poorly.run, valdis.kletnieks@vt.edu,
+        gregkh@linuxfoundation.org, ccaulfie@redhat.com,
+        teigland@redhat.com, hirofumi@mail.parknet.co.jp, jack@suse.com,
+        davem@davemloft.net, edumazet@google.com, pablo@netfilter.org,
+        kadlec@netfilter.org, fw@strlen.de, willemb@google.com,
+        viro@zeniv.linux.org.uk, rfontana@redhat.com, tglx@linutronix.de,
+        linux-um@lists.infradead.org,
+        linux1394-devel@lists.sourceforge.net,
+        etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        devel@driverdev.osuosl.org, cluster-devel@redhat.com,
+        linux-fsdevel@vger.kernel.org, netdev@vger.kernel.org,
+        netfilter-devel@vger.kernel.org, coreteam@netfilter.org
+Subject: [PATCH 00/16] drivers: y2038 updates
+Date:   Fri,  8 Nov 2019 22:32:38 +0100
+Message-Id: <20191108213257.3097633-1-arnd@arndb.de>
+X-Mailer: git-send-email 2.20.0
 MIME-Version: 1.0
-References: <1568411962-1022-1-git-send-email-ilina@codeaurora.org> <1568411962-1022-6-git-send-email-ilina@codeaurora.org>
-In-Reply-To: <1568411962-1022-6-git-send-email-ilina@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 8 Nov 2019 13:29:17 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=WeDEaMEEqPr52WBKJ8MLGBZ590ro6nCpemctES0kvvDg@mail.gmail.com>
-Message-ID: <CAD=FV=WeDEaMEEqPr52WBKJ8MLGBZ590ro6nCpemctES0kvvDg@mail.gmail.com>
-Subject: Re: [PATCH RFC v2 05/14] of: irq: document properties for wakeup
- interrupt parent
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Evan Green <evgreen@chromium.org>, maz@kernel.org,
-        LinusW <linus.walleij@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        mkshah@codeaurora.org,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:cC60oL5qW9T6f3VnEX4IUPUnbZtH58Z5jHTCkfEP3lSVCyJMvvf
+ nXa+3lb+MuvX4UyJFUN+jNUJOtYV6vEdBeRluSdOxKcMLTIRW/MA2X5WNg5vjL4h5VMaMqq
+ bNkxydHkOOB1gWSeiigewsSsL+Ope/gjBqLstKOktXFNHvIvAI8OyB16Bh3/KHWq5bI5gbP
+ ttyknhIOC7MVt+zSJY39Q==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:C6N/AXULkaM=:Y7JwaiMRl7Ar2O9O2mXFFn
+ XNkpKgwWM8P0qO+0Is3DdFORJejcsg4Z7H/JEbKB71PaPIxwYqUaCL54KvYWbGI4UgpeJv2VL
+ TDM5JP6XHLZEPg418lMXvJDgfjoG3Hi8z6xcm4eVCYMVOopNmDKLw8sRTvZs5Y9MehLPeuCjA
+ FJDznxm+bmmpVwkpxdVxGg/UsFc/GByVXrqgr8aIeNTyU+6QiRoIugryzBDmS8vQIcTfTmtwM
+ Xis+iVVThIPm/7TlELGn4QUpWrGuBM87bpEytZmN7iZ2Xv4Pi09GCc0fWAfdVlykCBom4fWhN
+ SzMqNyByMJJu1qqSoOmRZIb/A06TGj1hHe1DR8fSuMXOJgyyZG4W2LkZTNTrG0kWBaTiNY4qD
+ FOQ5PN5Ds9rUxxJ5jvFQEnBCHs0boCj+R1ogKQHj961SNOjz/iTK9PRAJ2Q/S9lr1OiO0Aill
+ 9n9w+FUDSA0uaCjboLcZG7ZPwbRrutTP1fW0uPjb2lcWPcBIloby7q+PHrtvR5VMW5jiv1fmf
+ hfT7ITXtJL4SPQ1ZG94BaqALxufFNPlW7b2L8+b77UeY7PzZf7Q27rY8HVKNoecjq4sWzCpXp
+ sCo16dBMR11yeGV02rWBECYG21JJTtOeHNbls/EWzI9gHEegxzRctljs0BXpmtr3fDrj8dL0R
+ TjY2ibzd1SUcPAPXUGKnTI3EjBlBn5NTJbwUJGVyl+zhLeAtQdCVVn9ZET82XUaihtFVsb6l/
+ VlZeLSfRYEOZKFWPEnJYv06Nf3Nrd84B+GWSJ7z9QIE1YkNSFvSz0y/FFznyuSImBN+NzxHxs
+ 7v0SH2wqAYB54MS6c3rahz8Oz2PuxEdQKh0LU5tG8fz8w3hUaZHnsrADS9CMXvPoTccssMd61
+ Ly+JSeRt68rTP+cnNhXA==
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+These are updates to devidce drivers and file systems that for some
+reason or another were not included in the kernel in the previous
+y2038 series.
 
-On Fri, Sep 13, 2019 at 3:00 PM Lina Iyer <ilina@codeaurora.org> wrote:
->
-> Some interrupt controllers in a SoC, are always powered on and have a
-> select interrupts routed to them, so that they can wakeup the SoC from
-> suspend. Add wakeup-parent DT property to refer to these interrupt
-> controllers.
->
-> Cc: devicetree@vger.kernel.org
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> ---
->  .../devicetree/bindings/interrupt-controller/interrupts.txt | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/interrupt-controller/interrupts.txt b/Documentation/devicetree/bindings/interrupt-controller/interrupts.txt
-> index 8a3c408..c10e310 100644
-> --- a/Documentation/devicetree/bindings/interrupt-controller/interrupts.txt
-> +++ b/Documentation/devicetree/bindings/interrupt-controller/interrupts.txt
-> @@ -108,3 +108,16 @@ commonly used:
->                         sensitivity = <7>;
->                 };
->         };
-> +
-> +3) Interrupt wakeup parent
-> +--------------------------
-> +
-> +Some interrupt controllers in a SoC, are always powered on and have a select
-> +interrupts routed to them, so that they can wakeup the SoC from suspend. These
-> +interrupt controllers do not fall into the category of a parent interrupt
-> +controller and can be specified by the "wakeup-parent" property and contain a
-> +single phandle referring to the wakeup capable interrupt controller.
-> +
-> +   Example:
-> +       wakeup-parent = <&pdc_intc>;
-> +
+I've gone through all users of time_t again to make sure the
+kernel is in a long-term maintainable state.
 
-nit: git flags the above line as whitespace damage.  Please remove
-if/when you spin.
+Posting these as a series for better organization, but each change
+here is applicable standalone.
 
-Thanks!
+Please merge, review, ack/nack etc as you see fit. My plan is to
+include any patches that don't get a reply this time around in
+a future pull request, probably for linux-5.6.
 
--Doug
+As mentioned before, the full series of 90 patches is available at
+https://git.kernel.org/pub/scm/linux/kernel/git/arnd/playground.git/log/?h=y2038-endgame
+
+    Arnd
+
+Arnd Bergmann (16):
+  staging: exfat: use prandom_u32() for i_generation
+  fat: use prandom_u32() for i_generation
+  net: sock: use __kernel_old_timespec instead of timespec
+  dlm: use SO_SNDTIMEO_NEW instead of SO_SNDTIMEO_OLD
+  xtensa: ISS: avoid struct timeval
+  um: ubd: use 64-bit time_t where possible
+  acct: stop using get_seconds()
+  tsacct: add 64-bit btime field
+  netfilter: nft_meta: use 64-bit time arithmetic
+  packet: clarify timestamp overflow
+  quota: avoid time_t in v1_disk_dqblk definition
+  hostfs: pass 64-bit timestamps to/from user space
+  hfs/hfsplus: use 64-bit inode timestamps
+  drm/msm: avoid using 'timespec'
+  drm/etnaviv: use ktime_t for timeouts
+  firewire: ohci: stop using get_seconds() for BUS_TIME
+
+ arch/um/drivers/cow.h                         |  2 +-
+ arch/um/drivers/cow_user.c                    |  7 +++--
+ arch/um/drivers/ubd_kern.c                    | 10 +++----
+ arch/um/include/shared/os.h                   |  2 +-
+ arch/um/os-Linux/file.c                       |  2 +-
+ .../platforms/iss/include/platform/simcall.h  |  4 +--
+ drivers/firewire/ohci.c                       |  2 +-
+ drivers/gpu/drm/etnaviv/etnaviv_drv.c         | 19 ++++++-------
+ drivers/gpu/drm/etnaviv/etnaviv_drv.h         | 21 ++++++--------
+ drivers/gpu/drm/etnaviv/etnaviv_gem.c         |  5 ++--
+ drivers/gpu/drm/etnaviv/etnaviv_gem.h         |  2 +-
+ drivers/gpu/drm/etnaviv/etnaviv_gpu.c         |  4 +--
+ drivers/gpu/drm/etnaviv/etnaviv_gpu.h         |  4 +--
+ drivers/gpu/drm/msm/msm_drv.h                 |  3 +-
+ drivers/staging/exfat/exfat_super.c           |  4 +--
+ fs/dlm/lowcomms.c                             |  6 ++--
+ fs/fat/inode.c                                |  3 +-
+ fs/hfs/hfs_fs.h                               | 26 +++++++++++++----
+ fs/hfs/inode.c                                |  4 +--
+ fs/hfsplus/hfsplus_fs.h                       | 26 +++++++++++++----
+ fs/hfsplus/inode.c                            | 12 ++++----
+ fs/hostfs/hostfs.h                            | 22 +++++++++------
+ fs/hostfs/hostfs_kern.c                       | 15 ++++++----
+ fs/quota/quotaio_v1.h                         |  6 ++--
+ include/linux/skbuff.h                        |  7 +++--
+ include/uapi/linux/acct.h                     |  2 ++
+ include/uapi/linux/taskstats.h                |  6 +++-
+ kernel/acct.c                                 |  4 ++-
+ kernel/tsacct.c                               |  9 ++++--
+ net/compat.c                                  |  2 +-
+ net/ipv4/tcp.c                                | 28 +++++++++++--------
+ net/netfilter/nft_meta.c                      | 10 +++----
+ net/packet/af_packet.c                        | 27 +++++++++++-------
+ net/socket.c                                  |  2 +-
+ 34 files changed, 184 insertions(+), 124 deletions(-)
+
+-- 
+2.20.0
+
+Cc: jdike@addtoit.com
+Cc: richard@nod.at
+Cc: jcmvbkbc@gmail.com
+Cc: stefanr@s5r6.in-berlin.de
+Cc: l.stach@pengutronix.de
+Cc: linux+etnaviv@armlinux.org.uk
+Cc: christian.gmeiner@gmail.com
+Cc: airlied@linux.ie
+Cc: daniel@ffwll.ch
+Cc: robdclark@gmail.com
+Cc: sean@poorly.run
+Cc: valdis.kletnieks@vt.edu
+Cc: gregkh@linuxfoundation.org
+Cc: ccaulfie@redhat.com
+Cc: teigland@redhat.com
+Cc: hirofumi@mail.parknet.co.jp
+Cc: jack@suse.com
+Cc: davem@davemloft.net
+Cc: edumazet@google.com
+Cc: pablo@netfilter.org
+Cc: kadlec@netfilter.org
+Cc: fw@strlen.de
+Cc: willemb@google.com
+Cc: viro@zeniv.linux.org.uk
+Cc: rfontana@redhat.com
+Cc: tglx@linutronix.de
+Cc: linux-um@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux1394-devel@lists.sourceforge.net
+Cc: etnaviv@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org>
+Cc: linux-arm-msm@vger.kernel.org>
+Cc: freedreno@lists.freedesktop.org>
+Cc: devel@driverdev.osuosl.org>
+Cc: cluster-devel@redhat.com>
+Cc: linux-fsdevel@vger.kernel.org>
+Cc: netdev@vger.kernel.org>
+Cc: netfilter-devel@vger.kernel.org>
+Cc: coreteam@netfilter.org>
