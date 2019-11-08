@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BBD4CF3E85
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 04:50:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A9CF6F3E94
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 04:53:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729592AbfKHDuT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Nov 2019 22:50:19 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:45520 "EHLO
+        id S1729516AbfKHDxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Nov 2019 22:53:10 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:48018 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726504AbfKHDuT (ORCPT
+        with ESMTP id S1726618AbfKHDxK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Nov 2019 22:50:19 -0500
+        Thu, 7 Nov 2019 22:53:10 -0500
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id C38BE60DA6; Fri,  8 Nov 2019 03:50:18 +0000 (UTC)
+        id 0FD4860E0E; Fri,  8 Nov 2019 03:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573185018;
-        bh=FKAOMRwFC7OQo/fJ+VzJARN7pUwUPaE483PakKH4jXU=;
+        s=default; t=1573185189;
+        bh=Kchj0au/N2roxI5cPK5t9RsVMPtXp9zZPGu9Gafq45o=;
         h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=gMt0u74eLf2BinrcRNgY1QWBLSFzZdcwCwvHvZyGzCcpV6yJZPUGf0/UUf8YYOQ6G
-         LvQQxVH25mJ3Ryb18hxJ9PIaF8LpCOEgnyVgvLJ6LLOi0lyBv6MUNCrS0I93jErB8K
-         84Mglfu7vb+H6QNKI3fjVp3BkHNQXeKcnXdImRs0=
+        b=IIRBDa5URaP8XCJNl3qyTl/IBfFFqJ4hCefbJfb3CkhP24xbRNFip7SJWTMhj6b7z
+         XzC5e3skCKKjhiLpWD534Dn0CgeuteXKdQiAfDUkZ1OPhFh+4oU0x45XrkjpXhOHsY
+         H/op+ocYwOKWqYuo1ZWdKSuX9P0JOKqlednODtMQ=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,34 +31,34 @@ Received: from [10.79.136.17] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 832EC60ACF;
-        Fri,  8 Nov 2019 03:50:15 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B714F60F2F;
+        Fri,  8 Nov 2019 03:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573185018;
-        bh=FKAOMRwFC7OQo/fJ+VzJARN7pUwUPaE483PakKH4jXU=;
+        s=default; t=1573185172;
+        bh=Kchj0au/N2roxI5cPK5t9RsVMPtXp9zZPGu9Gafq45o=;
         h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=gMt0u74eLf2BinrcRNgY1QWBLSFzZdcwCwvHvZyGzCcpV6yJZPUGf0/UUf8YYOQ6G
-         LvQQxVH25mJ3Ryb18hxJ9PIaF8LpCOEgnyVgvLJ6LLOi0lyBv6MUNCrS0I93jErB8K
-         84Mglfu7vb+H6QNKI3fjVp3BkHNQXeKcnXdImRs0=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 832EC60ACF
+        b=btg+ahCv6zPYAoJbB3LJ89efoKL35mqMuestY4jQyRaRkAehfIt9qMjWhQLly8iV4
+         D/Kb0W+Kvj+aFnBHPwN6vUreWvk3fE9yLflTz8tPIpmoYyWrDfPFyrqpbNHMvomugE
+         bh/lSm/vo/FOEMrCnf9dEswmcdI586SXcnYFWqag=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B714F60F2F
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v4 06/14] arm64: dts: qcom: sc7180: Add rpmh-rsc node
+Subject: Re: [PATCH v4 14/14] arm64: dts: sc7180: Add qupv3_0 and qupv3_1
 To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
         bjorn.andersson@linaro.org, robh+dt@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, mka@chromium.org,
-        Maulik Shah <mkshah@codeaurora.org>
+        Roja Rani Yarubandi <rojay@codeaurora.org>
 References: <20191106065017.22144-1-rnayak@codeaurora.org>
- <20191106065017.22144-7-rnayak@codeaurora.org>
- <5dc45a1a.1c69fb81.62b3b.65c6@mx.google.com>
+ <20191106065017.22144-15-rnayak@codeaurora.org>
+ <5dc46805.1c69fb81.7b5fa.1eea@mx.google.com>
 From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <55258ebe-a341-57e5-dd9a-e8e719d899a4@codeaurora.org>
-Date:   Fri, 8 Nov 2019 09:20:13 +0530
+Message-ID: <d868998f-8b4d-bf9e-2539-a0915b1442fa@codeaurora.org>
+Date:   Fri, 8 Nov 2019 09:22:38 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <5dc45a1a.1c69fb81.62b3b.65c6@mx.google.com>
+In-Reply-To: <5dc46805.1c69fb81.7b5fa.1eea@mx.google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -69,29 +69,21 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 11/7/2019 11:23 PM, Stephen Boyd wrote:
-> Quoting Rajendra Nayak (2019-11-05 22:50:09)
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> index 61250560c7ef..98c8ab7d613c 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> @@ -387,6 +388,24 @@
->>                                  status = "disabled";
->>                          };
->>                  };
->> +
->> +               apps_rsc: rsc@18200000 {
+On 11/8/2019 12:22 AM, Stephen Boyd wrote:
+> Quoting Rajendra Nayak (2019-11-05 22:50:17)
+>> From: Roja Rani Yarubandi <rojay@codeaurora.org>
+>>
+>> Add QUP SE instances configuration for sc7180.
+>>
+>> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+>> ---
 > 
-> The node name is non-standard. This has been a problem since sdm845
-> though so it would be nice if we can invent some new name for this that
-> is standard at some point in the future.
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 > 
->> +                       label = "apps_rsc";
-> 
-> Can we remove this property? The value seems minimal given that we can
-> use the dev_name() and get the address in there instead of using a label.
+> It has the weird qup numbering too, but I guess it's correct somehow.
 
-Sure, i'll remove it.
+I responded to PATCH 2/14 as to why its weird.
 
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
