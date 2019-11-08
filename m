@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 554F7F4325
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 10:28:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0498BF4326
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 10:28:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731066AbfKHJ2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Nov 2019 04:28:53 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:37412 "EHLO
+        id S1731165AbfKHJ26 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Nov 2019 04:28:58 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:37506 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726987AbfKHJ2x (ORCPT
+        with ESMTP id S1726987AbfKHJ25 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Nov 2019 04:28:53 -0500
+        Fri, 8 Nov 2019 04:28:57 -0500
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 37B9960D90; Fri,  8 Nov 2019 09:28:52 +0000 (UTC)
+        id 1187F60D95; Fri,  8 Nov 2019 09:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573205332;
-        bh=ke60D9t+dwzQ+z8SQOBDCpN39NjpZrbZPLUtZ8er9aM=;
+        s=default; t=1573205336;
+        bh=Q7tjtf3AvCkK0B8EMpUKJ7O5lUErAuvnE9kzZoC0E7w=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Bqn4EYMdxN4K+kfb25XBjGYgcxrRwwW8nRow+VoRKG/ctFfy30Dy17fYgnSXvyV8T
-         4dZPMiKrKUpwabTzkLZIJrtRYPnWp9GL8IF0NBHRWdIUAHqB92bsxEwa9Sxg4VRJ9f
-         PWexrrSqJ/DVGXS0ikTlVv/829Wyj3KI+droWM6A=
+        b=nGThvaRTQcNyZhbQv5pSP/42Gwe03E7kf9xLwm83EOb+V1BlIZWFDbDnaEkqLM2f3
+         213wA5kk7pQdy2+1WJx3882KeF3VmAVxPU8Df0+O4ZaGteHhMMIWUDhhq5AvzcJdUG
+         cf+nN0Hm+oGUT2fGvC2jtxo7nEYwj2llgCu1YJFw=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE,UPPERCASE_50_75 autolearn=no
+        autolearn_force=no version=3.4.0
 Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0CFD460B18;
-        Fri,  8 Nov 2019 09:28:47 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CE0A560D5C;
+        Fri,  8 Nov 2019 09:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573205331;
-        bh=ke60D9t+dwzQ+z8SQOBDCpN39NjpZrbZPLUtZ8er9aM=;
+        s=default; t=1573205335;
+        bh=Q7tjtf3AvCkK0B8EMpUKJ7O5lUErAuvnE9kzZoC0E7w=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=g32FEk+ZKWsvQWBHPoSS1qhPg2ior7UmhN72rrpD1x9CUtMOfyKEizlruvM3+bKNh
-         E9TxBOUcGyCwiHa/UTnISqiJJfMKOy9IO/DQOEj/qkrU2j1bCBjzzuHLBtzAIxVKYm
-         /USCxkkywtUKiUz7yf3Qm3YP8ZAby6FLSYusKbvk=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0CFD460B18
+        b=SGFvkyTiJ5MgxL8QPMnEDOWyHzc5QYFp/gopZ9C4T9TObpd1Qsd3yVkxn/5gK8DHc
+         O/OpbfbubIXco2qe0RkngmO07vCocJW5qK53YlcWXq/KeBp6z1Hiakz8+rBShMQZIi
+         iNCuZpIcWs74hd9sac+9WwimiPI05nCeIwIBVZOE=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CE0A560D5C
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
 From:   Rajendra Nayak <rnayak@codeaurora.org>
 To:     agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, mka@chromium.org,
-        swboyd@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v5 02/13] arm64: dts: sc7180: Add minimal dts/dtsi files for SC7180 soc
-Date:   Fri,  8 Nov 2019 14:58:13 +0530
-Message-Id: <20191108092824.9773-3-rnayak@codeaurora.org>
+        swboyd@chromium.org, Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH v5 03/13] arm64: dts: sc7180: Add device node for apps_smmu
+Date:   Fri,  8 Nov 2019 14:58:14 +0530
+Message-Id: <20191108092824.9773-4-rnayak@codeaurora.org>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20191108092824.9773-1-rnayak@codeaurora.org>
 References: <20191108092824.9773-1-rnayak@codeaurora.org>
@@ -62,388 +62,118 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add skeletal sc7180 SoC dtsi and idp board dts files.
+From: Vivek Gautam <vivek.gautam@codeaurora.org>
 
-Co-developed-by: Taniya Das <tdas@codeaurora.org>
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
+Adding device node for APPS SMMU that is connected to
+devices such as display, video, usb, mmc, etc. on SC7180
+chipset.
+
+Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
 Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 ---
- arch/arm64/boot/dts/qcom/Makefile       |   1 +
- arch/arm64/boot/dts/qcom/sc7180-idp.dts |  47 ++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi    | 298 ++++++++++++++++++++++++
- 3 files changed, 346 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-idp.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180.dtsi
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 88 ++++++++++++++++++++++++++++
+ 1 file changed, 88 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 6498a1ec893f..7a5c2f7fe37f 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -13,6 +13,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-asus-novago-tp370ql.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-hp-envy-x2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-lenovo-miix-630.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-mtp.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-new file mode 100644
-index 000000000000..c637a4a647f8
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -0,0 +1,47 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * SC7180 IDP board device tree source
-+ *
-+ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. SC7180 IDP";
-+	compatible = "qcom,sc7180-idp";
-+
-+	aliases {
-+		serial0 = &uart8;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+};
-+
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
-+&uart8 {
-+	status = "okay";
-+};
-+
-+/* PINCTRL - additions to nodes defined in sc7180.dtsi */
-+
-+&qup_uart8_default {
-+	pinconf-tx {
-+		pins = "gpio44";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	pinconf-rx {
-+		pins = "gpio45";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+};
 diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-new file mode 100644
-index 000000000000..c0ac0a1fb526
---- /dev/null
+index c0ac0a1fb526..383593142f07 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -0,0 +1,298 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * SC7180 SoC device tree source
-+ *
-+ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-+ */
-+
-+#include <dt-bindings/clock/qcom,gcc-sc7180.h>
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+/ {
-+	interrupt-parent = <&intc>;
-+
-+	#address-cells = <2>;
-+	#size-cells = <2>;
-+
-+	chosen { };
-+
-+	clocks {
-+		xo_board: xo-board {
-+			compatible = "fixed-clock";
-+			clock-frequency = <38400000>;
-+			#clock-cells = <0>;
+@@ -209,6 +209,94 @@
+ 			};
+ 		};
+ 
++		apps_smmu: iommu@15000000 {
++			compatible = "qcom,sc7180-smmu-500", "arm,mmu-500";
++			reg = <0 0x15000000 0 0x100000>;
++			#iommu-cells = <2>;
++			#global-interrupts = <1>;
++			interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 105 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 106 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 107 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 181 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 182 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 185 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 187 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 188 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 191 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 192 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 315 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 316 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 317 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 318 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 320 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 321 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 322 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 323 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 324 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 325 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 327 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 328 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 329 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 331 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 332 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 333 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 334 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 335 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 336 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 337 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 339 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 340 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 342 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 343 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 344 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 345 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 401 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 402 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 403 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 404 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 406 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 407 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 408 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 409 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 410 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 411 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 412 IRQ_TYPE_LEVEL_HIGH>;
 +		};
 +
-+		sleep_clk: sleep-clk {
-+			compatible = "fixed-clock";
-+			clock-frequency = <32764>;
-+			#clock-cells = <0>;
-+		};
-+	};
-+
-+	cpus {
-+		#address-cells = <2>;
-+		#size-cells = <0>;
-+
-+		CPU0: cpu@0 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x0>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_0>;
-+			L2_0: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+				L3_0: l3-cache {
-+					compatible = "cache";
-+				};
-+			};
-+		};
-+
-+		CPU1: cpu@100 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x100>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_100>;
-+			L2_100: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+			};
-+		};
-+
-+		CPU2: cpu@200 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x200>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_200>;
-+			L2_200: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+			};
-+		};
-+
-+		CPU3: cpu@300 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x300>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_300>;
-+			L2_300: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+			};
-+		};
-+
-+		CPU4: cpu@400 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x400>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_400>;
-+			L2_400: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+			};
-+		};
-+
-+		CPU5: cpu@500 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x500>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_500>;
-+			L2_500: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+			};
-+		};
-+
-+		CPU6: cpu@600 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x600>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_600>;
-+			L2_600: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+			};
-+		};
-+
-+		CPU7: cpu@700 {
-+			device_type = "cpu";
-+			compatible = "arm,armv8";
-+			reg = <0x0 0x700>;
-+			enable-method = "psci";
-+			next-level-cache = <&L2_700>;
-+			L2_700: l2-cache {
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
-+			};
-+		};
-+	};
-+
-+	memory@80000000 {
-+		device_type = "memory";
-+		/* We expect the bootloader to fill in the size */
-+		reg = <0 0x80000000 0 0>;
-+	};
-+
-+	pmu {
-+		compatible = "arm,armv8-pmuv3";
-+		interrupts = <GIC_PPI 5 IRQ_TYPE_LEVEL_HIGH>;
-+	};
-+
-+	psci {
-+		compatible = "arm,psci-1.0";
-+		method = "smc";
-+	};
-+
-+	soc: soc {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges = <0 0 0 0 0x10 0>;
-+		dma-ranges = <0 0 0 0 0x10 0>;
-+		compatible = "simple-bus";
-+
-+		gcc: clock-controller@100000 {
-+			compatible = "qcom,gcc-sc7180";
-+			reg = <0 0x00100000 0 0x1f0000>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		qupv3_id_1: geniqup@ac0000 {
-+			compatible = "qcom,geni-se-qup";
-+			reg = <0 0x00ac0000 0 0x6000>;
-+			clock-names = "m-ahb", "s-ahb";
-+			clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
-+				 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+			status = "disabled";
-+
-+			uart8: serial@a88000 {
-+				compatible = "qcom,geni-debug-uart";
-+				reg = <0 0x00a88000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S2_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_uart8_default>;
-+				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
-+				status = "disabled";
-+			};
-+		};
-+
-+		tlmm: pinctrl@3500000 {
-+			compatible = "qcom,sc7180-pinctrl";
-+			reg = <0 0x03500000 0 0x300000>,
-+			      <0 0x03900000 0 0x300000>,
-+			      <0 0x03d00000 0 0x300000>;
-+			reg-names = "west", "north", "south";
-+			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+			gpio-ranges = <&tlmm 0 0 120>;
-+
-+			qup_uart8_default: qup-uart8-default {
-+				pinmux {
-+					pins = "gpio44", "gpio45";
-+					function = "qup12";
-+				};
-+			};
-+		};
-+
-+		intc: interrupt-controller@17a00000 {
-+			compatible = "arm,gic-v3";
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+			#interrupt-cells = <3>;
-+			interrupt-controller;
-+			reg = <0 0x17a00000 0 0x10000>,     /* GICD */
-+			      <0 0x17a60000 0 0x100000>;    /* GICR * 8 */
-+			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			gic-its@17a40000 {
-+				compatible = "arm,gic-v3-its";
-+				msi-controller;
-+				#msi-cells = <1>;
-+				reg = <0 0x17a40000 0 0x20000>;
-+				status = "disabled";
-+			};
-+		};
-+
-+		timer@17c20000{
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+			compatible = "arm,armv7-timer-mem";
-+			reg = <0 0x17c20000 0 0x1000>;
-+
-+			frame@17c21000 {
-+				frame-number = <0>;
-+				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
-+					     <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
-+				reg = <0 0x17c21000 0 0x1000>,
-+				      <0 0x17c22000 0 0x1000>;
-+			};
-+
-+			frame@17c23000 {
-+				frame-number = <1>;
-+				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
-+				reg = <0 0x17c23000 0 0x1000>;
-+				status = "disabled";
-+			};
-+
-+			frame@17c25000 {
-+				frame-number = <2>;
-+				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
-+				reg = <0 0x17c25000 0 0x1000>;
-+				status = "disabled";
-+			};
-+
-+			frame@17c27000 {
-+				frame-number = <3>;
-+				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
-+				reg = <0 0x17c27000 0 0x1000>;
-+				status = "disabled";
-+			};
-+
-+			frame@17c29000 {
-+				frame-number = <4>;
-+				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
-+				reg = <0 0x17c29000 0 0x1000>;
-+				status = "disabled";
-+			};
-+
-+			frame@17c2b000 {
-+				frame-number = <5>;
-+				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
-+				reg = <0 0x17c2b000 0 0x1000>;
-+				status = "disabled";
-+			};
-+
-+			frame@17c2d000 {
-+				frame-number = <6>;
-+				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
-+				reg = <0 0x17c2d000 0 0x1000>;
-+				status = "disabled";
-+			};
-+		};
-+	};
-+
-+	timer {
-+		compatible = "arm,armv8-timer";
-+		interrupts = <GIC_PPI 1 IRQ_TYPE_LEVEL_LOW>,
-+			     <GIC_PPI 2 IRQ_TYPE_LEVEL_LOW>,
-+			     <GIC_PPI 3 IRQ_TYPE_LEVEL_LOW>,
-+			     <GIC_PPI 0 IRQ_TYPE_LEVEL_LOW>;
-+	};
-+};
+ 		intc: interrupt-controller@17a00000 {
+ 			compatible = "arm,gic-v3";
+ 			#address-cells = <2>;
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
