@@ -2,83 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EB59F3E54
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 04:18:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A362CF3E6D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 04:31:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726219AbfKHDS5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Nov 2019 22:18:57 -0500
-Received: from mail.kernel.org ([198.145.29.99]:37086 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725930AbfKHDS5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Nov 2019 22:18:57 -0500
-Received: from localhost (mobile-107-92-63-247.mycingular.net [107.92.63.247])
+        id S1729448AbfKHDbB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Nov 2019 22:31:01 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:41802 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726320AbfKHDbA (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Nov 2019 22:31:00 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id E197A60DA7; Fri,  8 Nov 2019 03:30:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573183859;
+        bh=rHEApjQnqfCTZgUSmDIEe5R3XTHBwcKEcnceTTvqqOA=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=QZ851sH0LCUcD/iOhvnwNcQBEgoMlJkQZJ8hZJGp4Jnjp6ywX67AxO1eonJ+VwlOc
+         +C+qqmPD+moUzeWA63Qd5HPd+cgCOC7Sny4Px7MTt1tqYSuPiHZ9u8MmihbVeoGOeY
+         DDpdLXUkHumy28X5QLtuzi2Gd0V8wgOELnzQK/yg=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.206.28.9] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 215742084D;
-        Fri,  8 Nov 2019 03:18:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573183136;
-        bh=xt29T8BQ5Ybg+79CQWKq0HVKX+jG/2dpLfMwTw9mF7c=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=wneKloIVW1UmK29rzt/FE4sxapyCJkm6HISLK0cVNIPsPbzxiUy467StbawxD+3t6
-         r3xCXZesdKLd0jbBCM3I9LVwsGPU3b4hbJadvYXA/jws+bL8Voho5Mu/b1Bh+WQ0Os
-         e6GWPdITyDq7XwgsKq0D1OT1KYM0GQnv4vwhA3jo=
-Date:   Thu, 7 Nov 2019 21:18:54 -0600
-From:   Andy Gross <agross@kernel.org>
-To:     Amit Kucheria <amit.kucheria@verdurent.com>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        lakml <linux-arm-kernel@lists.infradead.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [GIT PULL] Qualcomm ARM64 DT updates for 5.5
-Message-ID: <20191108031854.GA12993@hector.lan>
-Mail-Followup-To: Amit Kucheria <amit.kucheria@verdurent.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        lakml <linux-arm-kernel@lists.infradead.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <1573068840-13098-1-git-send-email-agross@kernel.org>
- <1573068840-13098-2-git-send-email-agross@kernel.org>
- <CAHLCerN7buq82RmmFkoSi_n8g8sSe9VO2utcXuEGM3xG3HcRTg@mail.gmail.com>
+        (Authenticated sender: tdas@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 33C1360D9B;
+        Fri,  8 Nov 2019 03:30:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573183859;
+        bh=rHEApjQnqfCTZgUSmDIEe5R3XTHBwcKEcnceTTvqqOA=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=QZ851sH0LCUcD/iOhvnwNcQBEgoMlJkQZJ8hZJGp4Jnjp6ywX67AxO1eonJ+VwlOc
+         +C+qqmPD+moUzeWA63Qd5HPd+cgCOC7Sny4Px7MTt1tqYSuPiHZ9u8MmihbVeoGOeY
+         DDpdLXUkHumy28X5QLtuzi2Gd0V8wgOELnzQK/yg=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 33C1360D9B
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+Subject: Re: [PATCH v2 2/3] dt-bindings: clock: Introduce RPMHCC bindings for
+ SC7180
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org
+References: <1572371299-16774-1-git-send-email-tdas@codeaurora.org>
+ <1572371299-16774-3-git-send-email-tdas@codeaurora.org>
+ <20191107212409.58CA82087E@mail.kernel.org>
+From:   Taniya Das <tdas@codeaurora.org>
+Message-ID: <a47926fb-fb39-c533-8995-fe8563f6c282@codeaurora.org>
+Date:   Fri, 8 Nov 2019 09:00:53 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHLCerN7buq82RmmFkoSi_n8g8sSe9VO2utcXuEGM3xG3HcRTg@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1 (2014-03-12)
+In-Reply-To: <20191107212409.58CA82087E@mail.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 07, 2019 at 07:36:03PM +0530, Amit Kucheria wrote:
-> (Removing arm-soc)
-> 
-> Hi Andy,
-> 
-> On Thu, Nov 7, 2019 at 1:04 AM Andy Gross <agross@kernel.org> wrote:
-> >
-> > Arnd, Olof, and Kevin,
-> >
-> > I have one slight faux paux in this pull request.  A drivers: soc change got
-> > into my arm64 DTS branch and while it is innocuous, it wasn't easy to fix
-> > without messing up a lot of people who depend on the SHAs not changing.  So I'm
-> > sorry for this inclusion.  I'll scrub this better next time.
-> >
-> > Andy
-> 
-> > ----------------------------------------------------------------
-> > Amit Kucheria (5):
-> >       arm64: dts: qcs404: thermal: Add interrupt support
-> >       arm64: dts: msm8998: thermal: Add interrupt support
-> >       arm64: dts: msm8996: thermal: Add interrupt support
-> >       arm64: dts: sdm845: thermal: Add interrupt support
-> >       arm64: dts: msm8916: thermal: Fixup HW ids for cpu sensors
-> 
-> One of my patches to add interrupt support to msm8916 tsens is missing
-> here. Specifically this one:
-> https://patchwork.kernel.org/patch/11201853/
-> 
-> Will there be a second PR this cycle?
-
-I can work up another and throw it on top.
 
 
-Andy
+On 11/8/2019 2:54 AM, Stephen Boyd wrote:
+> Quoting Taniya Das (2019-10-29 10:48:18)
+>> Add compatible for SC7180 RPMHCC.
+>>
+>> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+>> Acked-by: Rob Herring <robh@kernel.org>
+>> ---
+> 
+> Applied to clk-next + fixed the sort.
+> 
+
+Thank you Stephen, will keep them sorted from next time.
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
+
+--
