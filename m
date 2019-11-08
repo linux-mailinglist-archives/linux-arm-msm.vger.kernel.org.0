@@ -2,37 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AE57EF49A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 13:04:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D341F49A0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 13:04:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389894AbfKHMEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Nov 2019 07:04:22 -0500
-Received: from mail.kernel.org ([198.145.29.99]:56062 "EHLO mail.kernel.org"
+        id S2389896AbfKHLmS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Nov 2019 06:42:18 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56092 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730614AbfKHLmQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Nov 2019 06:42:16 -0500
+        id S2389879AbfKHLmR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 8 Nov 2019 06:42:17 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E480521D82;
-        Fri,  8 Nov 2019 11:42:14 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2780E21D6C;
+        Fri,  8 Nov 2019 11:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573213335;
-        bh=qpvMGZ3IB0+wiopYrxiriRauFzfeubkGQ+P4ZAm2Ydc=;
+        s=default; t=1573213336;
+        bh=ZBUarJcRbt5B3LCR0U1Unw1x/sHcp5/3339eiUcDDvQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=sj3M5RR+41T4TrcmAGjMmSE8c1qcNRicsd5UuWUIp/VbIflmTJ8oK54G7o+wnugpO
-         DbDnshM7atjK+rr/9NJQRzmewXmJ2AzP+CtroCcGp7pJHMwDFEqLX3VlKVCyTDCFOV
-         +rv58CFCYWCoR0l+BjWBvXrMN3SMZJzNfJ658ecQ=
+        b=uLnciQXqj2MnlxBh3wwb6Ve4lyM+PV+lxtjDr2JtVyWFmckniNJ6j9n/dH2XUytMf
+         Wp+ufd5pmK1sivie5bME+HdogJlRn/uW0kSpheYDaTGUHWlipVG7VvJBAjsWecKcsB
+         3wXLXUCQiaauPmiy4ZMVhhWRrRn11qw7gWADb/io=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Christian Lamparter <chunkeey@gmail.com>,
-        John Crispin <john@phrozen.org>,
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
         Andy Gross <andy.gross@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 173/205] ARM: dts: qcom: ipq4019: fix cpu0's qcom,saw2 reg value
-Date:   Fri,  8 Nov 2019 06:37:20 -0500
-Message-Id: <20191108113752.12502-173-sashal@kernel.org>
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 174/205] soc: qcom: geni: Don't ignore clk_round_rate() errors in geni_se_clk_tbl_get()
+Date:   Fri,  8 Nov 2019 06:37:21 -0500
+Message-Id: <20191108113752.12502-174-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191108113752.12502-1-sashal@kernel.org>
 References: <20191108113752.12502-1-sashal@kernel.org>
@@ -45,42 +44,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Christian Lamparter <chunkeey@gmail.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit bd73a3dd257fb838bd456a18eeee0ef0224b7a40 ]
+[ Upstream commit e11bbcedecae85ce60a5d99ea03528c2d6f867e0 ]
 
-while compiling an ipq4019 target, dtc will complain:
-regulator@b089000 unit address format error, expected "2089000"
+The function clk_round_rate() is defined to return a "long", not an
+"unsigned long".  That's because it might return a negative error
+code.  Change the call in geni_se_clk_tbl_get() to check for errors.
 
-The saw0 regulator reg value seems to be
-copied and pasted from qcom-ipq8064.dtsi.
+While we're at it, get rid of a useless init of "freq".
 
-This patch fixes the reg value to match that of the
-unit address which in turn silences the warning.
-(There is no driver for qcom,saw2 right now.
-So this went unnoticed)
+NOTE: overall the idea that we should iterate over clk_round_rate() to
+try to reconstruct a table already present in the clock driver is
+questionable.  Specifically:
+- This method relies on "clk_round_rate()" rounding up.
+- This method only works if the table is sorted and has no duplicates.
+...this patch doesn't try to fix those problems, it just makes the
+error handling more correct.
 
-Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
-Signed-off-by: John Crispin <john@phrozen.org>
+Fixes: eddac5af0654 ("soc: qcom: Add GENI based QUP Wrapper driver")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 Signed-off-by: Andy Gross <andy.gross@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/qcom-ipq4019.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/qcom/qcom-geni-se.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-index 54d056b01bb51..8328ad589e2ba 100644
---- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-@@ -313,7 +313,7 @@
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index feed3db21c108..1b19b8428c4ac 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -513,7 +513,7 @@ EXPORT_SYMBOL(geni_se_resources_on);
+  */
+ int geni_se_clk_tbl_get(struct geni_se *se, unsigned long **tbl)
+ {
+-	unsigned long freq = 0;
++	long freq = 0;
+ 	int i;
  
-                 saw0: regulator@b089000 {
-                         compatible = "qcom,saw2";
--                        reg = <0x02089000 0x1000>, <0x0b009000 0x1000>;
-+			reg = <0x0b089000 0x1000>, <0x0b009000 0x1000>;
-                         regulator;
-                 };
+ 	if (se->clk_perf_tbl) {
+@@ -529,7 +529,7 @@ int geni_se_clk_tbl_get(struct geni_se *se, unsigned long **tbl)
  
+ 	for (i = 0; i < MAX_CLK_PERF_LEVEL; i++) {
+ 		freq = clk_round_rate(se->clk, freq + 1);
+-		if (!freq || freq == se->clk_perf_tbl[i - 1])
++		if (freq <= 0 || freq == se->clk_perf_tbl[i - 1])
+ 			break;
+ 		se->clk_perf_tbl[i] = freq;
+ 	}
 -- 
 2.20.1
 
