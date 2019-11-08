@@ -2,84 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 227DFF4991
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 13:04:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AC90F4D74
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 14:45:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389940AbfKHLmX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Nov 2019 06:42:23 -0500
-Received: from mail.kernel.org ([198.145.29.99]:56222 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389926AbfKHLmW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Nov 2019 06:42:22 -0500
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A29A3222C2;
-        Fri,  8 Nov 2019 11:42:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573213341;
-        bh=9Z9PeVMgmbJrx/z7THVYJryxPwx40uyoJ4isNwdXKNw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=u0KfU8ad9MoLI8cikiEqbifdnYIimo6wBHSbSF9/N35gOS9liKryB9u2PQC9pGVt6
-         f40IwXoFluY0OrRAT1Itkz0b6r/MRK0JhhQhmAUckyANgyICNBq2w+b29U9h7NeCic
-         Y2WOzLvI6MlG2rBp1MdSDNXgTB141M9GYsF9Ge0o=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Lina Iyer <ilina@codeaurora.org>,
-        "Raju P . L . S . S . S . N" <rplsssn@codeaurora.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 178/205] drivers: qcom: rpmh-rsc: clear wait_for_compl after use
-Date:   Fri,  8 Nov 2019 06:37:25 -0500
-Message-Id: <20191108113752.12502-178-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191108113752.12502-1-sashal@kernel.org>
-References: <20191108113752.12502-1-sashal@kernel.org>
-MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+        id S1727517AbfKHNpj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Nov 2019 08:45:39 -0500
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:58971 "EHLO
+        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726101AbfKHNpi (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 8 Nov 2019 08:45:38 -0500
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 08 Nov 2019 19:09:24 +0530
+IronPort-SDR: /dWwmR7yT4WPqU0ZJdl9Bkgn1+ARTLzU8YFofnkUToUpDd8pvnMoBF9kWJQNo+3/WeTDy4Amg0
+ DAAHDoqTLUtLFymohXXVondDWDmRlKTev7LE7Oqp82lhz6/21IPkj6ImeSlxTwLHMTzcdYGwA5
+ l3lRJ4Yamw/XJKxlFOqTTtgj2PzSOD/jv95lDs6d2la7nSETWcYFS4usjU1w82UYOofFo1Fbwe
+ oQYM+SUyZSG0Y5AebSpTm1h3FMCcEARLakoVZF/7aLkPnL/PzmZAvHpSUr+Ms8pPzrrt3UJcsY
+ MYHbN0e14eQcLPvHjl4Yq+RZ
+Received: from c-ppvk-linux.qualcomm.com ([10.206.24.34])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 08 Nov 2019 19:08:54 +0530
+Received: by c-ppvk-linux.qualcomm.com (Postfix, from userid 2304101)
+        id 83C5F4949; Fri,  8 Nov 2019 19:08:53 +0530 (IST)
+From:   Pradeep P V K <ppvk@codeaurora.org>
+To:     adrian.hunter@intel.com, georgi.djakov@linaro.org,
+        robh+dt@kernel.org, ulf.hansson@linaro.org,
+        asutoshd@codeaurora.org, vbadigan@codeaurora.org,
+        stummala@codeaurora.org, sayalil@codeaurora.org,
+        rampraka@codeaurora.org, sboyd@kernel.org
+Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, linux-mmc-owner@vger.kernel.org,
+        Pradeep P V K <ppvk@codeaurora.org>
+Subject: [RFC-v2 0/2] Add Support for SDHC bus bandwidth voting
+Date:   Fri,  8 Nov 2019 19:08:37 +0530
+Message-Id: <1573220319-4287-1-git-send-email-ppvk@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Lina Iyer <ilina@codeaurora.org>
+Vote for the MSM bus bandwidth required by SDHC driver
+based on the clock speed and bus width of the card.
+Otherwise, the system clocks may run at minimum clock
+speed and thus affecting the performance.
 
-[ Upstream commit 09e97b6c8754c91470455e69ebd827b741f80af5 ]
+Adapt to the new ICB framework for bus bandwidth voting.
 
-The wait_for_compl register ensures the request sequence is maintained
-when sending requests from the TCS. Clear the register after sending
-active request and during invalidate of the sleep and wake TCS.
+This requires the source/destination port ids.
+Also this requires a tuple of values.
 
-Reported-by: Raju P.L.S.S.S.N <rplsssn@codeaurora.org>
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-Signed-off-by: Andy Gross <andy.gross@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The tuple is for two different paths - from SDHC master
+to BIMC slave. The other is from CPU master to SDHC slave.
+This tuple consists of the average and peak bandwidth.
+
+This change is based on Georgi Djakov [RFC]
+(https://lkml.org/lkml/2018/10/11/499)
+
 ---
- drivers/soc/qcom/rpmh-rsc.c | 2 ++
- 1 file changed, 2 insertions(+)
+changed since v1:
+* Addressed all the Review comments.
+* Minor code rebasing.
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index ee75da66d64bf..75bd9a83aef00 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -121,6 +121,7 @@ static int tcs_invalidate(struct rsc_drv *drv, int type)
- 			return -EAGAIN;
- 		}
- 		write_tcs_reg_sync(drv, RSC_DRV_CMD_ENABLE, m, 0);
-+		write_tcs_reg_sync(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, m, 0);
- 	}
- 	bitmap_zero(tcs->slots, MAX_TCS_SLOTS);
- 	spin_unlock(&tcs->lock);
-@@ -239,6 +240,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
- skip:
- 		/* Reclaim the TCS */
- 		write_tcs_reg(drv, RSC_DRV_CMD_ENABLE, i, 0);
-+		write_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, i, 0);
- 		write_tcs_reg(drv, RSC_DRV_IRQ_CLEAR, 0, BIT(i));
- 		spin_lock(&drv->lock);
- 		clear_bit(i, drv->tcs_in_use);
+Pradeep P V K (2):
+  dt-bindings: mmc: sdhci-msm: Add Bus BW vote supported strings
+  mmc: sdhci-msm: Add support for bus bandwidth voting
+
+ .../devicetree/bindings/mmc/sdhci-msm.txt          |  32 ++
+ drivers/mmc/host/sdhci-msm.c                       | 366 ++++++++++++++++++++-
+ 2 files changed, 395 insertions(+), 3 deletions(-)
+
 -- 
-2.20.1
+1.9.1
 
