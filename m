@@ -2,102 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 06AB0F4230
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 09:34:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44DE6F431C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 10:28:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730281AbfKHIey (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Nov 2019 03:34:54 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:33333 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725975AbfKHIex (ORCPT
+        id S1730281AbfKHJ2p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Nov 2019 04:28:45 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:37150 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726987AbfKHJ2p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Nov 2019 03:34:53 -0500
-Received: by mail-wm1-f65.google.com with SMTP id a17so5996030wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2019 00:34:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=GNBx6vzN5n9iZ0DowN8UoHdT8V/yV/ZlTTgj8SuNHxw=;
-        b=ArZJRK5l4lbX7IXd9hkNrsVI0q35U8SROjjCaKLhN4RHO1SZE+KqNwIbps8Se7IEKt
-         col9v8Xc+AXID/lCJz/bWDehorG5CHS9shNIX8CwjctBjoCiNNktbD9suQHfZur6Kj7g
-         w5W6Izq40Selz214kUaevG2IoapbIb/Nn5P4c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=GNBx6vzN5n9iZ0DowN8UoHdT8V/yV/ZlTTgj8SuNHxw=;
-        b=hGkuM4Xf0FfJQ5yc3w/9LOvicMa7rwLhCJZ0bclR2do7VCkzf5sTwsEjUvuRsVr386
-         vFw3MLQvoKAAg7lPu2Bb7de6IyDsAQZ0Ukafq8MY0iLRpfuJN1nXMbaZKtD9WarIUvX/
-         wgyRpuxw5T8bsvTJPlGBrmTAd5yqH2lghlEE6NLKFp7pFQ2V4Euu/a0W3HQ742WVY5s9
-         gQhtjdTpv/4eLzrqOWdIwWVO3hILoEnBzu1NalAdWdOE6Fg9wvd/QryFMzQH1l2A33sU
-         dtWK+/IEsKF1y3FZQet5PdPBsGMcJPPnfEw+wvD+DsPh4SuBEc9elVA1lP71n0D6kDIc
-         dWPA==
-X-Gm-Message-State: APjAAAXUnKL/qXxl276wBemUnuPwLHLC0C3eBZE1WFGupQ7w5oKoB6ot
-        cH8ozEjecSxgfWa9hYAqCGtVnGv4McI=
-X-Google-Smtp-Source: APXvYqyHKHX0v/WKP8FWHehNB24+E1bGaM6s4cXKYojPO1xiyu2qSI95yblhRj7a1eR06RxC+l1ZzQ==
-X-Received: by 2002:a05:600c:2105:: with SMTP id u5mr6797527wml.47.1573202091526;
-        Fri, 08 Nov 2019 00:34:51 -0800 (PST)
-Received: from phenom.ffwll.local (212-51-149-96.fiber7.init7.net. [212.51.149.96])
-        by smtp.gmail.com with ESMTPSA id n65sm1382891wmf.28.2019.11.08.00.34.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Nov 2019 00:34:50 -0800 (PST)
-Date:   Fri, 8 Nov 2019 09:34:48 +0100
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Steve Cohen <cohens@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, adelva@google.com,
-        pdhaval@codeaurora.org, seanpaul@chromium.org
-Subject: Re: [PATCH 0/3] allow DRM drivers to limit creation of blobs
-Message-ID: <20191108083448.GU23790@phenom.ffwll.local>
-References: <1573155554-16248-1-git-send-email-cohens@codeaurora.org>
+        Fri, 8 Nov 2019 04:28:45 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 1C19B60B16; Fri,  8 Nov 2019 09:28:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573205324;
+        bh=wO2DnYHf47BbPnoIyv+w4BOr4cls9NbNRlyggcCjCWI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=PUruFUfeKn7FvnO1wPJs4mkMaDukBrZYo/zxLec9f/Q3XP0Fywki0ft8/dHgNI9hC
+         /qQejJPaW69YDX5nzi7L+poL3q5j6XDOfptpREMpxUHBtk1pu9QZbE1XIiiEExu71G
+         qM+7tGGWNZ/BWK4jglcomeYKF/ypmDA41pwgpwTA=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 79186607EB;
+        Fri,  8 Nov 2019 09:28:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573205323;
+        bh=wO2DnYHf47BbPnoIyv+w4BOr4cls9NbNRlyggcCjCWI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=KdDIXPBIReplcrhoohxxxsx8zj6kRhBf0Fvw2skQHmzTqZV1WcDPYSLmC67ISAPgS
+         8MJVXO2zcc/Jkz9xYw/tFxdxaOrsr40kstRM42vujfQiR/7SXEOwlURdDJ/pRurz1T
+         0XJFFvrA7rMJDM/USmth9xhAvy5J01rzUxyUTGDE=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 79186607EB
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org,
+        swboyd@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH v5 00/13] Add device tree support for sc7180
+Date:   Fri,  8 Nov 2019 14:58:11 +0530
+Message-Id: <20191108092824.9773-1-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1573155554-16248-1-git-send-email-cohens@codeaurora.org>
-X-Operating-System: Linux phenom 5.2.0-3-amd64 
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 07, 2019 at 02:39:11PM -0500, Steve Cohen wrote:
-> Fuzzers used in Android compliance testing repeatedly call the
-> create blob IOCTL which eventually exhausts the system memory.
-> This series adds a hook which allows drivers to impose their own
-> limitations on the size and/or number of blobs created.
+Bjorn/Andy, this patch series is now fairly reviewed and ack'ed,
+and given the dependent gcc patches (dt bindings header dependency
+for dts) have now landed in clk-next, can we pull these in as part
+of your second PR for 5.5?
 
-Pretty sure this isn't just a problem for msm/dpu alone, why this very
-limited approach?
+Changes in v5:
+* Dropped the arm-smmu binding update patch, pulled in by Rob H
+* Updated 1/13 to also sort SoC and board names
+* Dropped clock-output-names for sleep_clk
+* Dropped the label for rsc node
 
-Also, why are your fuzzers not also allocating enormous amounts of gem
-buffers, which will also exhaust memory eventually?
--Daniel
+Changes in v4:
+* Rebased on top of Rob;s for-next
+* reorderd patches to take care of pdc dependency
+* Updated pdc binding to use a soc specific and soc independent compatible
+* Other updates based on v3 feedback, changes listed in each patch
 
-> 
-> Steve Cohen (3):
->   drm: add driver hook for create blob limitations
->   drm/msm: add support for createblob_check driver hook
->   drm/msm/dpu: check blob limitations during create blob ioctl
-> 
->  drivers/gpu/drm/drm_property.c          |  7 +++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 14 ++++++++++++++
->  drivers/gpu/drm/msm/msm_drv.c           | 25 +++++++++++++++++++++++++
->  drivers/gpu/drm/msm/msm_kms.h           |  1 +
->  include/drm/drm_drv.h                   |  9 +++++++++
->  5 files changed, 56 insertions(+)
-> 
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+Changes in v3:
+* PATCH 2/11: Updated the qup and uart lables to be consistent
+with the naming convention followed in sdm845 as suggested
+by Matthias
+* Dropped 2 patches from v2 which added the new compatible and
+binding updates for sc7180 pdc and reused sdm845 compatible instead
+as suggested by Marc Z
+
+This series adds DT support for basic peripherals on qualcomm's sc7180 SoC,
+drivers for which are already upstream.
+
+Kiran Gunda (3):
+  arm64: dts: qcom: sc7180: Add SPMI PMIC arbiter device
+  arm64: dts: qcom: pm6150: Add PM6150/PM6150L PMIC peripherals
+  arm64: dts: qcom: sc7180-idp: Add RPMh regulators
+
+Maulik Shah (3):
+  arm64: dts: qcom: sc7180: Add cmd_db reserved area
+  arm64: dts: qcom: sc7180: Add rpmh-rsc node
+  arm64: dts: qcom: sc7180: Add pdc interrupt controller
+
+Rajendra Nayak (4):
+  dt-bindings: qcom: Add SC7180 bindings
+  arm64: dts: sc7180: Add minimal dts/dtsi files for SC7180 soc
+  drivers: irqchip: qcom-pdc: Move to an SoC independent compatible
+  dt-bindings: qcom,pdc: Add compatible for sc7180
+
+Roja Rani Yarubandi (1):
+  arm64: dts: sc7180: Add qupv3_0 and qupv3_1
+
+Taniya Das (1):
+  arm64: dts: qcom: SC7180: Add node for rpmhcc clock driver
+
+Vivek Gautam (1):
+  arm64: dts: sc7180: Add device node for apps_smmu
+
+ .../devicetree/bindings/arm/qcom.yaml         |   44 +-
+ .../interrupt-controller/qcom,pdc.txt         |    3 +-
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ arch/arm64/boot/dts/qcom/pm6150.dtsi          |   72 ++
+ arch/arm64/boot/dts/qcom/pm6150l.dtsi         |   31 +
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts       |  402 ++++++
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          | 1131 +++++++++++++++++
+ drivers/irqchip/qcom-pdc.c                    |    2 +-
+ 8 files changed, 1665 insertions(+), 21 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/pm6150.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/pm6150l.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-idp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180.dtsi
 
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
