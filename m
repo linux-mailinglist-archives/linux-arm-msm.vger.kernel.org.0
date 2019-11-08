@@ -2,182 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 92224F5A22
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 22:46:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EECEAF5A33
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 22:46:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387831AbfKHVf4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Nov 2019 16:35:56 -0500
-Received: from mout.kundenserver.de ([212.227.126.130]:33583 "EHLO
+        id S2388286AbfKHVhk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Nov 2019 16:37:40 -0500
+Received: from mout.kundenserver.de ([212.227.126.187]:33015 "EHLO
         mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387700AbfKHVf4 (ORCPT
+        with ESMTP id S2388098AbfKHVhk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Nov 2019 16:35:56 -0500
+        Fri, 8 Nov 2019 16:37:40 -0500
 Received: from threadripper.lan ([149.172.19.189]) by mrelayeu.kundenserver.de
  (mreue011 [212.227.15.129]) with ESMTPA (Nemesis) id
- 1MXXdn-1iQ6AP0R4R-00YveV; Fri, 08 Nov 2019 22:33:06 +0100
+ 1N3sye-1hkxG40Ils-00zl9w; Fri, 08 Nov 2019 22:37:20 +0100
 From:   Arnd Bergmann <arnd@arndb.de>
-To:     y2038@lists.linaro.org
+To:     y2038@lists.linaro.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
 Cc:     linux-kernel@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
-        jdike@addtoit.com, richard@nod.at, jcmvbkbc@gmail.com,
-        stefanr@s5r6.in-berlin.de, l.stach@pengutronix.de,
-        linux+etnaviv@armlinux.org.uk, christian.gmeiner@gmail.com,
-        airlied@linux.ie, daniel@ffwll.ch, robdclark@gmail.com,
-        sean@poorly.run, valdis.kletnieks@vt.edu,
-        gregkh@linuxfoundation.org, ccaulfie@redhat.com,
-        teigland@redhat.com, hirofumi@mail.parknet.co.jp, jack@suse.com,
-        davem@davemloft.net, edumazet@google.com, pablo@netfilter.org,
-        kadlec@netfilter.org, fw@strlen.de, willemb@google.com,
-        viro@zeniv.linux.org.uk, rfontana@redhat.com, tglx@linutronix.de,
-        linux-um@lists.infradead.org,
-        linux1394-devel@lists.sourceforge.net,
-        etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        devel@driverdev.osuosl.org, cluster-devel@redhat.com,
-        linux-fsdevel@vger.kernel.org, netdev@vger.kernel.org,
-        netfilter-devel@vger.kernel.org, coreteam@netfilter.org
-Subject: [PATCH 00/16] drivers: y2038 updates
-Date:   Fri,  8 Nov 2019 22:32:38 +0100
-Message-Id: <20191108213257.3097633-1-arnd@arndb.de>
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Sam Ravnborg <sam@ravnborg.org>, Joe Perches <joe@perches.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        "Kristian H. Kristensen" <hoegsberg@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 14/16] drm/msm: avoid using 'timespec'
+Date:   Fri,  8 Nov 2019 22:32:52 +0100
+Message-Id: <20191108213257.3097633-15-arnd@arndb.de>
 X-Mailer: git-send-email 2.20.0
+In-Reply-To: <20191108213257.3097633-1-arnd@arndb.de>
+References: <20191108213257.3097633-1-arnd@arndb.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:cC60oL5qW9T6f3VnEX4IUPUnbZtH58Z5jHTCkfEP3lSVCyJMvvf
- nXa+3lb+MuvX4UyJFUN+jNUJOtYV6vEdBeRluSdOxKcMLTIRW/MA2X5WNg5vjL4h5VMaMqq
- bNkxydHkOOB1gWSeiigewsSsL+Ope/gjBqLstKOktXFNHvIvAI8OyB16Bh3/KHWq5bI5gbP
- ttyknhIOC7MVt+zSJY39Q==
+X-Provags-ID: V03:K1:RjEXZPsu7wpFhVxxI0dg1gh3Sz1Hs1tSIhY/d+ypW54uoydpUSG
+ AmGQqqAY8JV5SlTDcXhYy28Cbwi6/UGOCD0adGaB381dFQFh/45M+dKBA0PhUP+o9KaobMD
+ qQ4+kG6gGE9DhvaaTxM/81sndh8nhZ8P0Vu53TlGZW7N7R5T5iUpKVXTQlPxMFUkAtL5rs2
+ msQ7tFAGZ+6hiDk9RernQ==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:C6N/AXULkaM=:Y7JwaiMRl7Ar2O9O2mXFFn
- XNkpKgwWM8P0qO+0Is3DdFORJejcsg4Z7H/JEbKB71PaPIxwYqUaCL54KvYWbGI4UgpeJv2VL
- TDM5JP6XHLZEPg418lMXvJDgfjoG3Hi8z6xcm4eVCYMVOopNmDKLw8sRTvZs5Y9MehLPeuCjA
- FJDznxm+bmmpVwkpxdVxGg/UsFc/GByVXrqgr8aIeNTyU+6QiRoIugryzBDmS8vQIcTfTmtwM
- Xis+iVVThIPm/7TlELGn4QUpWrGuBM87bpEytZmN7iZ2Xv4Pi09GCc0fWAfdVlykCBom4fWhN
- SzMqNyByMJJu1qqSoOmRZIb/A06TGj1hHe1DR8fSuMXOJgyyZG4W2LkZTNTrG0kWBaTiNY4qD
- FOQ5PN5Ds9rUxxJ5jvFQEnBCHs0boCj+R1ogKQHj961SNOjz/iTK9PRAJ2Q/S9lr1OiO0Aill
- 9n9w+FUDSA0uaCjboLcZG7ZPwbRrutTP1fW0uPjb2lcWPcBIloby7q+PHrtvR5VMW5jiv1fmf
- hfT7ITXtJL4SPQ1ZG94BaqALxufFNPlW7b2L8+b77UeY7PzZf7Q27rY8HVKNoecjq4sWzCpXp
- sCo16dBMR11yeGV02rWBECYG21JJTtOeHNbls/EWzI9gHEegxzRctljs0BXpmtr3fDrj8dL0R
- TjY2ibzd1SUcPAPXUGKnTI3EjBlBn5NTJbwUJGVyl+zhLeAtQdCVVn9ZET82XUaihtFVsb6l/
- VlZeLSfRYEOZKFWPEnJYv06Nf3Nrd84B+GWSJ7z9QIE1YkNSFvSz0y/FFznyuSImBN+NzxHxs
- 7v0SH2wqAYB54MS6c3rahz8Oz2PuxEdQKh0LU5tG8fz8w3hUaZHnsrADS9CMXvPoTccssMd61
- Ly+JSeRt68rTP+cnNhXA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:D5yuQNG3OL4=:+hVgFS2myj/sb8ogFE78Gf
+ FbKWcflcE8+US9yHfM4XVrV8foC/5BoESWZWiO/u184ma1eEMd/MnwSldHbYazHDHwj+Hk0cc
+ w1ZZoSZHw4i2n04uf7GQRD305sbby6a/ARii8mddT6zRtv89NmMt7YKRV2k6pa2McGa46TLXI
+ 27ESG6TqgROSWOlECco2f8f6/fAopAzdxTLoLuQQSdHwFAHO4VOhbQRmpC6yZ8gP75krH1mxD
+ 7RpqwXn3BD8r/pG1dTm/d6vf0KUkeMhjmjhvMn35EUGy10yqOyibgRSRNggUOVk+JXvqcbADt
+ k+HAhYEhuPLgVd0+QAe1B4po/j2ou2y1fW0/nx9zGNC0/cRdk9b+ndgOFHcmTRdjHOxOEwmTb
+ ibhZMHBgI7GoZJzMrt1nQ7+PYx+XcaL8O7kFdja71uOK/2P9ZFdFLRyROE0XQztIxXE+r3eF1
+ YfSIi582gUSMzpxM4iIcFe3ieBp8J6DKYq6NX8x8B4ylUAUAs0I9f6B6kp4Pnwz2JAsjHWEwG
+ h6f/GW3C8Uczi7An1srzRVP1SZriDAsuGBZvIamli9X7+IKnh09hTiJng40aSYHPBbKor/nDS
+ gLMC3fT2lbdLzt5MYBKransgJZ2pbKZ8Np/YdZxRnO69REzQyXI449mSspVn/wbf/VeQoL144
+ DUMHUqUPSL4P6uzETmFemX8tGWajJnhrjGeV0NLaelE2Lxhvsxn7IM3NAJW59eNULBS0RcMiD
+ IZQ2f7Gv6anhh/MtSw2sEO5tpQ7Ggk+81o17ssiA635dGoVymkpMfpRJxjJmoh6SY9w3HbS+D
+ nEhwjGkP08t6b86oomYL9qFNuRI5fmLgCcd45bPGdaCNzD2zaFO0+hUcD5kHmsalbPgc0w11X
+ zFmCZZt7G4MqQdjIlmUw==
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These are updates to devidce drivers and file systems that for some
-reason or another were not included in the kernel in the previous
-y2038 series.
+The timespec structure and associated interfaces are deprecated and will
+be removed in the future because of the y2038 overflow.
 
-I've gone through all users of time_t again to make sure the
-kernel is in a long-term maintainable state.
+The use of ktime_to_timespec() in timeout_to_jiffies() does not
+suffer from that overflow, but is easy to avoid by just converting
+the ktime_t into jiffies directly.
 
-Posting these as a series for better organization, but each change
-here is applicable standalone.
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ drivers/gpu/drm/msm/msm_drv.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Please merge, review, ack/nack etc as you see fit. My plan is to
-include any patches that don't get a reply this time around in
-a future pull request, probably for linux-5.6.
-
-As mentioned before, the full series of 90 patches is available at
-https://git.kernel.org/pub/scm/linux/kernel/git/arnd/playground.git/log/?h=y2038-endgame
-
-    Arnd
-
-Arnd Bergmann (16):
-  staging: exfat: use prandom_u32() for i_generation
-  fat: use prandom_u32() for i_generation
-  net: sock: use __kernel_old_timespec instead of timespec
-  dlm: use SO_SNDTIMEO_NEW instead of SO_SNDTIMEO_OLD
-  xtensa: ISS: avoid struct timeval
-  um: ubd: use 64-bit time_t where possible
-  acct: stop using get_seconds()
-  tsacct: add 64-bit btime field
-  netfilter: nft_meta: use 64-bit time arithmetic
-  packet: clarify timestamp overflow
-  quota: avoid time_t in v1_disk_dqblk definition
-  hostfs: pass 64-bit timestamps to/from user space
-  hfs/hfsplus: use 64-bit inode timestamps
-  drm/msm: avoid using 'timespec'
-  drm/etnaviv: use ktime_t for timeouts
-  firewire: ohci: stop using get_seconds() for BUS_TIME
-
- arch/um/drivers/cow.h                         |  2 +-
- arch/um/drivers/cow_user.c                    |  7 +++--
- arch/um/drivers/ubd_kern.c                    | 10 +++----
- arch/um/include/shared/os.h                   |  2 +-
- arch/um/os-Linux/file.c                       |  2 +-
- .../platforms/iss/include/platform/simcall.h  |  4 +--
- drivers/firewire/ohci.c                       |  2 +-
- drivers/gpu/drm/etnaviv/etnaviv_drv.c         | 19 ++++++-------
- drivers/gpu/drm/etnaviv/etnaviv_drv.h         | 21 ++++++--------
- drivers/gpu/drm/etnaviv/etnaviv_gem.c         |  5 ++--
- drivers/gpu/drm/etnaviv/etnaviv_gem.h         |  2 +-
- drivers/gpu/drm/etnaviv/etnaviv_gpu.c         |  4 +--
- drivers/gpu/drm/etnaviv/etnaviv_gpu.h         |  4 +--
- drivers/gpu/drm/msm/msm_drv.h                 |  3 +-
- drivers/staging/exfat/exfat_super.c           |  4 +--
- fs/dlm/lowcomms.c                             |  6 ++--
- fs/fat/inode.c                                |  3 +-
- fs/hfs/hfs_fs.h                               | 26 +++++++++++++----
- fs/hfs/inode.c                                |  4 +--
- fs/hfsplus/hfsplus_fs.h                       | 26 +++++++++++++----
- fs/hfsplus/inode.c                            | 12 ++++----
- fs/hostfs/hostfs.h                            | 22 +++++++++------
- fs/hostfs/hostfs_kern.c                       | 15 ++++++----
- fs/quota/quotaio_v1.h                         |  6 ++--
- include/linux/skbuff.h                        |  7 +++--
- include/uapi/linux/acct.h                     |  2 ++
- include/uapi/linux/taskstats.h                |  6 +++-
- kernel/acct.c                                 |  4 ++-
- kernel/tsacct.c                               |  9 ++++--
- net/compat.c                                  |  2 +-
- net/ipv4/tcp.c                                | 28 +++++++++++--------
- net/netfilter/nft_meta.c                      | 10 +++----
- net/packet/af_packet.c                        | 27 +++++++++++-------
- net/socket.c                                  |  2 +-
- 34 files changed, 184 insertions(+), 124 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 71547e756e29..740bf7c70d8f 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -454,8 +454,7 @@ static inline unsigned long timeout_to_jiffies(const ktime_t *timeout)
+ 		remaining_jiffies = 0;
+ 	} else {
+ 		ktime_t rem = ktime_sub(*timeout, now);
+-		struct timespec ts = ktime_to_timespec(rem);
+-		remaining_jiffies = timespec_to_jiffies(&ts);
++		remaining_jiffies = ktime_divns(rem, NSEC_PER_SEC / HZ);
+ 	}
+ 
+ 	return remaining_jiffies;
 -- 
 2.20.0
 
-Cc: jdike@addtoit.com
-Cc: richard@nod.at
-Cc: jcmvbkbc@gmail.com
-Cc: stefanr@s5r6.in-berlin.de
-Cc: l.stach@pengutronix.de
-Cc: linux+etnaviv@armlinux.org.uk
-Cc: christian.gmeiner@gmail.com
-Cc: airlied@linux.ie
-Cc: daniel@ffwll.ch
-Cc: robdclark@gmail.com
-Cc: sean@poorly.run
-Cc: valdis.kletnieks@vt.edu
-Cc: gregkh@linuxfoundation.org
-Cc: ccaulfie@redhat.com
-Cc: teigland@redhat.com
-Cc: hirofumi@mail.parknet.co.jp
-Cc: jack@suse.com
-Cc: davem@davemloft.net
-Cc: edumazet@google.com
-Cc: pablo@netfilter.org
-Cc: kadlec@netfilter.org
-Cc: fw@strlen.de
-Cc: willemb@google.com
-Cc: viro@zeniv.linux.org.uk
-Cc: rfontana@redhat.com
-Cc: tglx@linutronix.de
-Cc: linux-um@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Cc: linux1394-devel@lists.sourceforge.net
-Cc: etnaviv@lists.freedesktop.org
-Cc: dri-devel@lists.freedesktop.org>
-Cc: linux-arm-msm@vger.kernel.org>
-Cc: freedreno@lists.freedesktop.org>
-Cc: devel@driverdev.osuosl.org>
-Cc: cluster-devel@redhat.com>
-Cc: linux-fsdevel@vger.kernel.org>
-Cc: netdev@vger.kernel.org>
-Cc: netfilter-devel@vger.kernel.org>
-Cc: coreteam@netfilter.org>
