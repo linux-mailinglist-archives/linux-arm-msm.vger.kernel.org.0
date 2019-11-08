@@ -2,90 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EECEAF5A33
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 22:46:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 100D4F5A74
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 22:56:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388286AbfKHVhk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Nov 2019 16:37:40 -0500
-Received: from mout.kundenserver.de ([212.227.126.187]:33015 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388098AbfKHVhk (ORCPT
+        id S1727001AbfKHV4Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Nov 2019 16:56:16 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:48610 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726294AbfKHV4Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Nov 2019 16:37:40 -0500
-Received: from threadripper.lan ([149.172.19.189]) by mrelayeu.kundenserver.de
- (mreue011 [212.227.15.129]) with ESMTPA (Nemesis) id
- 1N3sye-1hkxG40Ils-00zl9w; Fri, 08 Nov 2019 22:37:20 +0100
-From:   Arnd Bergmann <arnd@arndb.de>
-To:     y2038@lists.linaro.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     linux-kernel@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Sam Ravnborg <sam@ravnborg.org>, Joe Perches <joe@perches.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        "Kristian H. Kristensen" <hoegsberg@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 14/16] drm/msm: avoid using 'timespec'
-Date:   Fri,  8 Nov 2019 22:32:52 +0100
-Message-Id: <20191108213257.3097633-15-arnd@arndb.de>
-X-Mailer: git-send-email 2.20.0
-In-Reply-To: <20191108213257.3097633-1-arnd@arndb.de>
-References: <20191108213257.3097633-1-arnd@arndb.de>
+        Fri, 8 Nov 2019 16:56:16 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 6081661288; Fri,  8 Nov 2019 21:54:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573250066;
+        bh=hul8lX8VnIGCRS89b/7nULSqp+nszvVrJWi5PtzYDAA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=n1l47WbEkWPWppEnUKOW5qjxziM0B+8buvvyYcpp+Np0neYwio6vedWYzFmo8yDZG
+         /FILx5ekf8uyiOhOvFBdHRLHi+x1ySWXPc9KzouN/LdXMFdjyP/zq11aOi+D6Vhvjd
+         kHcP+YcMoW9JBWCB+GRRqFFMsKxX/btTI1xcL6lU=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5CE9161203;
+        Fri,  8 Nov 2019 21:54:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573250065;
+        bh=hul8lX8VnIGCRS89b/7nULSqp+nszvVrJWi5PtzYDAA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Y4GufecoCySD4iWuwPYQZdHoon0DmqOfsgqrHzw96gGW+eSpfuDlqvQHmhambVNEG
+         /cB2dWLmtMHni8VWeuNLNJxh34ZgbPzZSFJelArzg59JfOEXNV+qHLGzIyqfLtV3QR
+         JxW/2gX38RfesP5AElS6spjmt0BA794FtpYsqtPg=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5CE9161203
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
+Date:   Fri, 8 Nov 2019 14:54:24 -0700
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>, maz@kernel.org,
+        LinusW <linus.walleij@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        mkshah@codeaurora.org,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
+Subject: Re: [PATCH RFC v2 04/14] drivers: irqchip: add PDC irqdomain for
+ wakeup capable GPIOs
+Message-ID: <20191108215424.GG16900@codeaurora.org>
+References: <1568411962-1022-1-git-send-email-ilina@codeaurora.org>
+ <1568411962-1022-5-git-send-email-ilina@codeaurora.org>
+ <CAD=FV=WOVHQyk0y3t0eki6cBfBedduQw3T-JZW2dERuCk9tRtA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:RjEXZPsu7wpFhVxxI0dg1gh3Sz1Hs1tSIhY/d+ypW54uoydpUSG
- AmGQqqAY8JV5SlTDcXhYy28Cbwi6/UGOCD0adGaB381dFQFh/45M+dKBA0PhUP+o9KaobMD
- qQ4+kG6gGE9DhvaaTxM/81sndh8nhZ8P0Vu53TlGZW7N7R5T5iUpKVXTQlPxMFUkAtL5rs2
- msQ7tFAGZ+6hiDk9RernQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:D5yuQNG3OL4=:+hVgFS2myj/sb8ogFE78Gf
- FbKWcflcE8+US9yHfM4XVrV8foC/5BoESWZWiO/u184ma1eEMd/MnwSldHbYazHDHwj+Hk0cc
- w1ZZoSZHw4i2n04uf7GQRD305sbby6a/ARii8mddT6zRtv89NmMt7YKRV2k6pa2McGa46TLXI
- 27ESG6TqgROSWOlECco2f8f6/fAopAzdxTLoLuQQSdHwFAHO4VOhbQRmpC6yZ8gP75krH1mxD
- 7RpqwXn3BD8r/pG1dTm/d6vf0KUkeMhjmjhvMn35EUGy10yqOyibgRSRNggUOVk+JXvqcbADt
- k+HAhYEhuPLgVd0+QAe1B4po/j2ou2y1fW0/nx9zGNC0/cRdk9b+ndgOFHcmTRdjHOxOEwmTb
- ibhZMHBgI7GoZJzMrt1nQ7+PYx+XcaL8O7kFdja71uOK/2P9ZFdFLRyROE0XQztIxXE+r3eF1
- YfSIi582gUSMzpxM4iIcFe3ieBp8J6DKYq6NX8x8B4ylUAUAs0I9f6B6kp4Pnwz2JAsjHWEwG
- h6f/GW3C8Uczi7An1srzRVP1SZriDAsuGBZvIamli9X7+IKnh09hTiJng40aSYHPBbKor/nDS
- gLMC3fT2lbdLzt5MYBKransgJZ2pbKZ8Np/YdZxRnO69REzQyXI449mSspVn/wbf/VeQoL144
- DUMHUqUPSL4P6uzETmFemX8tGWajJnhrjGeV0NLaelE2Lxhvsxn7IM3NAJW59eNULBS0RcMiD
- IZQ2f7Gv6anhh/MtSw2sEO5tpQ7Ggk+81o17ssiA635dGoVymkpMfpRJxjJmoh6SY9w3HbS+D
- nEhwjGkP08t6b86oomYL9qFNuRI5fmLgCcd45bPGdaCNzD2zaFO0+hUcD5kHmsalbPgc0w11X
- zFmCZZt7G4MqQdjIlmUw==
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=WOVHQyk0y3t0eki6cBfBedduQw3T-JZW2dERuCk9tRtA@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The timespec structure and associated interfaces are deprecated and will
-be removed in the future because of the y2038 overflow.
+On Fri, Nov 08 2019 at 14:22 -0700, Doug Anderson wrote:
+>Hi,
+>
+>On Fri, Sep 13, 2019 at 3:00 PM Lina Iyer <ilina@codeaurora.org> wrote:
+>>
+>> diff --git a/include/linux/soc/qcom/irq.h b/include/linux/soc/qcom/irq.h
+>> new file mode 100644
+>> index 0000000..85ac4b6
+>> --- /dev/null
+>> +++ b/include/linux/soc/qcom/irq.h
+>> @@ -0,0 +1,19 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +
+>> +#ifndef __QCOM_IRQ_H
+>> +#define __QCOM_IRQ_H
+>> +
+>
+>I happened to be looking at a pile of patches and one of them added:
+>
+>+#include <linux/irqdomain.h>
+>
+>...right here.  If/when you spin your patch, maybe you should too?  At
+>the moment the patch I was looking at is at:
+>
+>https://android.googlesource.com/kernel/common/+log/refs/heads/android-mainline-tracking
+>
+>Specifically:
+>
+>https://android.googlesource.com/kernel/common/+/448e2302f82a70f52475b6fc32bbe30301052e6b
+>
+>
+Sure, will take care of it in the next spin.
 
-The use of ktime_to_timespec() in timeout_to_jiffies() does not
-suffer from that overflow, but is easy to avoid by just converting
-the ktime_t into jiffies directly.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- drivers/gpu/drm/msm/msm_drv.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 71547e756e29..740bf7c70d8f 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -454,8 +454,7 @@ static inline unsigned long timeout_to_jiffies(const ktime_t *timeout)
- 		remaining_jiffies = 0;
- 	} else {
- 		ktime_t rem = ktime_sub(*timeout, now);
--		struct timespec ts = ktime_to_timespec(rem);
--		remaining_jiffies = timespec_to_jiffies(&ts);
-+		remaining_jiffies = ktime_divns(rem, NSEC_PER_SEC / HZ);
- 	}
- 
- 	return remaining_jiffies;
--- 
-2.20.0
+--Lina
 
