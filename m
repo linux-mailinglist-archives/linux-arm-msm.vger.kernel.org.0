@@ -2,89 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A9CF6F3E94
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 04:53:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C0561F3EF5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 05:36:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729516AbfKHDxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Nov 2019 22:53:10 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:48018 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726618AbfKHDxK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Nov 2019 22:53:10 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 0FD4860E0E; Fri,  8 Nov 2019 03:52:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573185189;
-        bh=Kchj0au/N2roxI5cPK5t9RsVMPtXp9zZPGu9Gafq45o=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=IIRBDa5URaP8XCJNl3qyTl/IBfFFqJ4hCefbJfb3CkhP24xbRNFip7SJWTMhj6b7z
-         XzC5e3skCKKjhiLpWD534Dn0CgeuteXKdQiAfDUkZ1OPhFh+4oU0x45XrkjpXhOHsY
-         H/op+ocYwOKWqYuo1ZWdKSuX9P0JOKqlednODtMQ=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.79.136.17] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1726618AbfKHEgh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Nov 2019 23:36:37 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56054 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726281AbfKHEgh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Nov 2019 23:36:37 -0500
+Received: from localhost (unknown [106.200.194.165])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B714F60F2F;
-        Fri,  8 Nov 2019 03:52:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573185172;
-        bh=Kchj0au/N2roxI5cPK5t9RsVMPtXp9zZPGu9Gafq45o=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=btg+ahCv6zPYAoJbB3LJ89efoKL35mqMuestY4jQyRaRkAehfIt9qMjWhQLly8iV4
-         D/Kb0W+Kvj+aFnBHPwN6vUreWvk3fE9yLflTz8tPIpmoYyWrDfPFyrqpbNHMvomugE
-         bh/lSm/vo/FOEMrCnf9dEswmcdI586SXcnYFWqag=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B714F60F2F
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v4 14/14] arm64: dts: sc7180: Add qupv3_0 and qupv3_1
-To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        Roja Rani Yarubandi <rojay@codeaurora.org>
-References: <20191106065017.22144-1-rnayak@codeaurora.org>
- <20191106065017.22144-15-rnayak@codeaurora.org>
- <5dc46805.1c69fb81.7b5fa.1eea@mx.google.com>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <d868998f-8b4d-bf9e-2539-a0915b1442fa@codeaurora.org>
-Date:   Fri, 8 Nov 2019 09:22:38 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        by mail.kernel.org (Postfix) with ESMTPSA id 505D4214DB;
+        Fri,  8 Nov 2019 04:36:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1573187797;
+        bh=ZZ4hCyTEqq28pLs9fJNg1dTOCNqcVyiTq7elto8mWfc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=CI8Zof4D+L2iB0WzUrf1UINzJIFfGJWalB8QPYRDQpXFPVw0gqho2NWOw3FNLOinU
+         i95KwQOTyIsDqzRKta1giMPPFC7hNRKg46PEHkc/HKyfa8wmkDvs3kjfBfr0vO4zRA
+         1GXFeU22iY0+c0Vc9f/mZkJygqsCoFK9uNFcV814=
+Date:   Fri, 8 Nov 2019 10:06:32 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Elliot Berman <eberman@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, saiprakash.ranjan@codeaurora.org,
+        agross@kernel.org, tsoni@codeaurora.org, sidgup@codeaurora.org,
+        psodagud@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 04/17] firmware: qcom_scm: Remove unused
+ qcom_scm_get_version
+Message-ID: <20191108043632.GY952516@vkoul-mobl>
+References: <1572917256-24205-1-git-send-email-eberman@codeaurora.org>
+ <1572917256-24205-5-git-send-email-eberman@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <5dc46805.1c69fb81.7b5fa.1eea@mx.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1572917256-24205-5-git-send-email-eberman@codeaurora.org>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 04-11-19, 17:27, Elliot Berman wrote:
+> Remove unused qcom_scm_get_version.
 
-
-On 11/8/2019 12:22 AM, Stephen Boyd wrote:
-> Quoting Rajendra Nayak (2019-11-05 22:50:17)
->> From: Roja Rani Yarubandi <rojay@codeaurora.org>
->>
->> Add QUP SE instances configuration for sc7180.
->>
->> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
->> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->> ---
-> 
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> 
-> It has the weird qup numbering too, but I guess it's correct somehow.
-
-I responded to PATCH 2/14 as to why its weird.
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+~Vinod
