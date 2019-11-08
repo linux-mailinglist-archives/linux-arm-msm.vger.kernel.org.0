@@ -2,27 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AC90F4D74
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 14:45:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CA0EF4D72
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Nov 2019 14:45:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727517AbfKHNpj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Nov 2019 08:45:39 -0500
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:58971 "EHLO
+        id S1726616AbfKHNpf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Nov 2019 08:45:35 -0500
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:11767 "EHLO
         alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726101AbfKHNpi (ORCPT
+        by vger.kernel.org with ESMTP id S1726101AbfKHNpf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Nov 2019 08:45:38 -0500
+        Fri, 8 Nov 2019 08:45:35 -0500
+X-Greylist: delayed 368 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 Nov 2019 08:45:33 EST
 Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
   by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 08 Nov 2019 19:09:24 +0530
-IronPort-SDR: /dWwmR7yT4WPqU0ZJdl9Bkgn1+ARTLzU8YFofnkUToUpDd8pvnMoBF9kWJQNo+3/WeTDy4Amg0
- DAAHDoqTLUtLFymohXXVondDWDmRlKTev7LE7Oqp82lhz6/21IPkj6ImeSlxTwLHMTzcdYGwA5
- l3lRJ4Yamw/XJKxlFOqTTtgj2PzSOD/jv95lDs6d2la7nSETWcYFS4usjU1w82UYOofFo1Fbwe
- oQYM+SUyZSG0Y5AebSpTm1h3FMCcEARLakoVZF/7aLkPnL/PzmZAvHpSUr+Ms8pPzrrt3UJcsY
- MYHbN0e14eQcLPvHjl4Yq+RZ
+IronPort-SDR: NWkI7rgL15orLupgRLT1GeV9BYDxTslGyQtTOhFGy4B+0G3VzwbWz4Re9HT5IIqunHcrUkYa+o
+ bpcDX/OMf84FkvdTEAmN5/L2mmiwJplaCRgC8/PBNDfl51QnOKcxlu242AQZ8oEiCIUlyCAWYj
+ Bz7e59YhBrYNhb+KK5tqE9gwjuqHr/VNUL0cFXuaeF164X/UtxTivynR1jt81ozGSDPTVkkXsT
+ +tVSJzn1smua0TMXo83+FBlkYFdJomJEu4nL+0tzAaoG+Q8EIcauNPy6No0c6YbRP3HWSO2nec
+ sP2JpV3JtjVYi5w6cT/N+WMA
 Received: from c-ppvk-linux.qualcomm.com ([10.206.24.34])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 08 Nov 2019 19:08:54 +0530
+  by ironmsg01-blr.qualcomm.com with ESMTP; 08 Nov 2019 19:09:00 +0530
 Received: by c-ppvk-linux.qualcomm.com (Postfix, from userid 2304101)
-        id 83C5F4949; Fri,  8 Nov 2019 19:08:53 +0530 (IST)
+        id C56B34949; Fri,  8 Nov 2019 19:08:58 +0530 (IST)
 From:   Pradeep P V K <ppvk@codeaurora.org>
 To:     adrian.hunter@intel.com, georgi.djakov@linaro.org,
         robh+dt@kernel.org, ulf.hansson@linaro.org,
@@ -33,45 +34,74 @@ Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         agross@kernel.org, linux-mmc-owner@vger.kernel.org,
         Pradeep P V K <ppvk@codeaurora.org>
-Subject: [RFC-v2 0/2] Add Support for SDHC bus bandwidth voting
-Date:   Fri,  8 Nov 2019 19:08:37 +0530
-Message-Id: <1573220319-4287-1-git-send-email-ppvk@codeaurora.org>
+Subject: [RFC-v2 1/2] dt-bindings: mmc: sdhci-msm: Add Bus BW vote supported strings
+Date:   Fri,  8 Nov 2019 19:08:38 +0530
+Message-Id: <1573220319-4287-2-git-send-email-ppvk@codeaurora.org>
 X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1573220319-4287-1-git-send-email-ppvk@codeaurora.org>
+References: <1573220319-4287-1-git-send-email-ppvk@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Vote for the MSM bus bandwidth required by SDHC driver
-based on the clock speed and bus width of the card.
-Otherwise, the system clocks may run at minimum clock
-speed and thus affecting the performance.
+Add Bus bandwidth voting supported strings for qcom-sdhci controller.
 
-Adapt to the new ICB framework for bus bandwidth voting.
-
-This requires the source/destination port ids.
-Also this requires a tuple of values.
-
-The tuple is for two different paths - from SDHC master
-to BIMC slave. The other is from CPU master to SDHC slave.
-This tuple consists of the average and peak bandwidth.
-
-This change is based on Georgi Djakov [RFC]
-(https://lkml.org/lkml/2018/10/11/499)
-
+Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
 ---
-changed since v1:
-* Addressed all the Review comments.
-* Minor code rebasing.
+ .../devicetree/bindings/mmc/sdhci-msm.txt          | 32 ++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-Pradeep P V K (2):
-  dt-bindings: mmc: sdhci-msm: Add Bus BW vote supported strings
-  mmc: sdhci-msm: Add support for bus bandwidth voting
-
- .../devicetree/bindings/mmc/sdhci-msm.txt          |  32 ++
- drivers/mmc/host/sdhci-msm.c                       | 366 ++++++++++++++++++++-
- 2 files changed, 395 insertions(+), 3 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+index da4edb1..22fb140 100644
+--- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
++++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+@@ -39,6 +39,25 @@ Required properties:
+ 	"cal"	- reference clock for RCLK delay calibration (optional)
+ 	"sleep"	- sleep clock for RCLK delay calibration (optional)
+ 
++Optional Properties:
++* Following bus parameters are required for bus bw voting:
++- interconnects: Pairs of phandles and interconnect provider specifier
++		 to denote the edge source and destination ports of
++		 the interconnect path. Please refer to
++		 Documentation/devicetree/bindings/interconnect/
++		 for more details.
++- interconnect-names: List of interconnect path name strings sorted in the same
++		order as the interconnects property. Consumers drivers will use
++		interconnect-names to match interconnect paths with interconnect
++		specifiers. Please refer to Documentation/devicetree/bindings/
++		interconnect/ for more details.
++- msm-bus,name: string describing the bus path
++- msm-bus,num-cases: number of configurations in which sdhc can operate in
++- msm-bus,num-paths: number of paths to vote for
++- msm-bus,vectors-KBps: Takes a tuple <ib ab>, <ib ab> (2 tuples for 2
++				num-paths) The number of these entries *must*
++				be same as num-cases.
++
+ Example:
+ 
+ 	sdhc_1: sdhci@f9824900 {
+@@ -56,6 +75,19 @@ Example:
+ 
+ 		clocks = <&gcc GCC_SDCC1_APPS_CLK>, <&gcc GCC_SDCC1_AHB_CLK>;
+ 		clock-names = "core", "iface";
++		interconnects = <&qnoc 50 &qnoc 512>,
++				<&qnoc 1 &qnoc 544>;
++		interconnect-names = "sdhc-ddr","cpu-sdhc";
++		msm-bus,name = "sdhc1";
++		msm-bus,num-cases = <3>;
++		msm-bus,num-paths = <2>;
++		msm-bus,vectors-KBps =
++		/* No Vote */
++		<0 0>, <0 0>,
++		/* 50 MB/s */
++		<130718 200000>, <133320 133320>,
++		/* 200 MB/s */
++		<1338562 4096000>, <1338562 4096000>;
+ 	};
+ 
+ 	sdhc_2: sdhci@f98a4900 {
 -- 
 1.9.1
 
