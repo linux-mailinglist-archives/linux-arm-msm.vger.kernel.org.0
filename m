@@ -2,106 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B600F5C25
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2019 01:01:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A9E1F5C63
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Nov 2019 01:40:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728075AbfKIABX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Nov 2019 19:01:23 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:43228 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726394AbfKIABX (ORCPT
+        id S1727672AbfKIAki (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Nov 2019 19:40:38 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:35869 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727412AbfKIAki (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Nov 2019 19:01:23 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id E838061410; Sat,  9 Nov 2019 00:01:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573257682;
-        bh=QFs2x+x4fIEuZOx7pz7201e961RZN+MksTxeVaGJTnE=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=Dh0vJccm1drtq/03VdtiQnlFwi0bDS6EjrrvryDfK9nwvvPowMGFqTfu++lxCWBEF
-         zUubn8/aQ5hUaMhvHvr+eGDds6k1DGIr+4rzot32Os48DJEjLHIWJ7HBnYHpODuPKq
-         SjINxGiyZI2gNoMnnOKgnB8LYsD1w2Vjicu1+Zn0=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id 6BC1A60F74;
-        Sat,  9 Nov 2019 00:01:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573257681;
-        bh=QFs2x+x4fIEuZOx7pz7201e961RZN+MksTxeVaGJTnE=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=WA26uZqmY2unk2FaSXIgqizhShISWXuLUSiujNPt1wPyPvzozvxP58besRG9/S3IV
-         FubVHkrGeRScD1O/aMeGZ5KA7DrFxZ2XdJCLyS+e+31NEnw3EW7hyNXPYkP5yOZgF1
-         uZgku3kH4pML1wAt5ugbm+sG0aEOLh6kfv4rWV7o=
+        Fri, 8 Nov 2019 19:40:38 -0500
+Received: by mail-pf1-f195.google.com with SMTP id v19so6164481pfm.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Nov 2019 16:40:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AByCPRt6TSYvOMrWfQaIDomi50/YNtjLj0E5fCsw8+A=;
+        b=ODLoSslVNz7PzgNe+vCXbT+Na90Rj+ERnsCGgx6FkLrYKub0DJ6dtqd2ZKjTXL5tJD
+         xJa649+asakizL+nayl/n7zgsSWcFhWHQXzIbmSMveihjmE3djbqf9aLfLyotClUxYPL
+         uTVQiJzo+hYiIjdJVSPzcEe1PWF1WGCHu/Snm7mTqXs4x51mwjzvPMMX/v9umjI3Nkq/
+         GnisVx1JqPnnxkQSlmgw9BFRoaxbD8ayDpbpWSZT/MXdo2ipnlTZh0Me0XnVDM+y1Ik/
+         amykAPZ4rxY27upimzRxfHH8Frtlwn7/sOQfAqnnb1r5Hyjev7XI64FzNo5cR/jSjbvM
+         yZ/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AByCPRt6TSYvOMrWfQaIDomi50/YNtjLj0E5fCsw8+A=;
+        b=m5WhSYgD55HHOGzmggQqsK5Hwrlo34icShVmgfwjY6QBjAaYx3IRNHF6mJTFVMUAHo
+         kmerCmUmP+g1f3YsoAHD/bspeSzgsuOgTQjYHnIvD9IK0MPAKXH61Q+8o2htT8A5CMRX
+         Z+yruRCd4MBqh/6mbs91yIgCqWS8LKkV/LjErbQjP5fWy3QLruvxmf3lKyoo6JKxNwUM
+         q1dmapDI2ENuqIfKS1u3wG18iHz8qDvRNrndMJWSkKQ1apJGQ1Zg8I2yRcpEDKMhPjMX
+         HtcXL97BVBel+7H0139O8ekT8M6LpcunWjdpjRJgtz9EYsTNSUvAAZrLkoEeplVepFh1
+         E+lg==
+X-Gm-Message-State: APjAAAW7S6x035RqZMin/8eyYg67PKHlJzXmRjO4Y9VqGBl+kJGXSFAS
+        0WHffOcI0LE0xAbi2W1kCeYtIg==
+X-Google-Smtp-Source: APXvYqzmQV2pqI612zNat/Qv4aguEWdnkc1e0UX7Tys8Ps5fLxso+IkSWQ9uzJM2E/5/unepZEl0dQ==
+X-Received: by 2002:a17:90b:948:: with SMTP id dw8mr17702226pjb.21.1573260037495;
+        Fri, 08 Nov 2019 16:40:37 -0800 (PST)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id y36sm6681461pgk.66.2019.11.08.16.40.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Nov 2019 16:40:36 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Ohad Ben-Cohen <ohad@wizery.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Sibi Sankar <sibis@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH v2 0/2] remoteproc: mss: Improve mem_assign and firmware load
+Date:   Fri,  8 Nov 2019 16:40:31 -0800
+Message-Id: <20191109004033.1496871-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 08 Nov 2019 19:01:21 -0500
-From:   cohens@codeaurora.org
-To:     Daniel Vetter <daniel@ffwll.ch>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, adelva@google.com,
-        pdhaval@codeaurora.org, seanpaul@chromium.org,
-        Daniel Vetter <daniel.vetter@ffwll.ch>
-Subject: Re: [PATCH 0/3] allow DRM drivers to limit creation of blobs
-In-Reply-To: <20191108083448.GU23790@phenom.ffwll.local>
-References: <1573155554-16248-1-git-send-email-cohens@codeaurora.org>
- <20191108083448.GU23790@phenom.ffwll.local>
-Message-ID: <7072bcc51eb44d49ab4266e0ec216df6@codeaurora.org>
-X-Sender: cohens@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-11-08 03:34, Daniel Vetter wrote:
-> On Thu, Nov 07, 2019 at 02:39:11PM -0500, Steve Cohen wrote:
->> Fuzzers used in Android compliance testing repeatedly call the
->> create blob IOCTL which eventually exhausts the system memory.
->> This series adds a hook which allows drivers to impose their own
->> limitations on the size and/or number of blobs created.
-> 
-> Pretty sure this isn't just a problem for msm/dpu alone, why this very
-> limited approach?
-> 
-I'm not familiar enough with the blob requirements for other
-vendor's drivers to impose any restrictions on them. The idea
-was to provide the hook for vendors to implement their own
-checks. Support for msm/mdp* drivers will be added in v2 if this
-approach is acceptable.
+Two things came up in the effort of figuring out why the modem crashed the
+entire system when being restarted; the first one solves the actual problem, in
+that it's not possible to reclaim the main modem firmware region unless the
+modem subsystem is running - causing the crash.
 
-> Also, why are your fuzzers not also allocating enormous amounts of gem
-> buffers, which will also exhaust memory eventually?
+The second patch aligns the firmware loading process to that of the downstream
+driver, which seems to be a requirement in 8974 as well.
 
-Excellent question... This will likely come in a follow-up series.
+Bjorn Andersson (2):
+  remoteproc: qcom_q6v5_mss: Don't reassign mpss region on shutdown
+  remoteproc: qcom_q6v5_mss: Validate each segment during loading
 
-> -Daniel
-> 
->> 
->> Steve Cohen (3):
->>   drm: add driver hook for create blob limitations
->>   drm/msm: add support for createblob_check driver hook
->>   drm/msm/dpu: check blob limitations during create blob ioctl
->> 
->>  drivers/gpu/drm/drm_property.c          |  7 +++++++
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 14 ++++++++++++++
->>  drivers/gpu/drm/msm/msm_drv.c           | 25 
->> +++++++++++++++++++++++++
->>  drivers/gpu/drm/msm/msm_kms.h           |  1 +
->>  include/drm/drm_drv.h                   |  9 +++++++++
->>  5 files changed, 56 insertions(+)
->> 
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
->> 
->> _______________________________________________
->> dri-devel mailing list
->> dri-devel@lists.freedesktop.org
->> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+ drivers/remoteproc/qcom_q6v5_mss.c | 92 +++++++++++++++++++-----------
+ 1 file changed, 59 insertions(+), 33 deletions(-)
+
+-- 
+2.23.0
+
