@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 81089F7087
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2019 10:25:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B980AF708E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2019 10:25:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726912AbfKKJZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Nov 2019 04:25:24 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43175 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726995AbfKKJZX (ORCPT
+        id S1726988AbfKKJZc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Nov 2019 04:25:32 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:37549 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727101AbfKKJZb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Nov 2019 04:25:23 -0500
-Received: by mail-wr1-f67.google.com with SMTP id n1so13723764wra.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Nov 2019 01:25:21 -0800 (PST)
+        Mon, 11 Nov 2019 04:25:31 -0500
+Received: by mail-wm1-f65.google.com with SMTP id b17so4141525wmj.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Nov 2019 01:25:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=wdf4vDYPrWUkIFw2I/tLGdO131jSnYkYMuWnygUSqLk=;
-        b=QVjHDp3d+469LsP2NblXGvyg7PmbjNJAA/Lj8/YUSMVqsYksNAe3Pk26vNoh86CaIW
-         Zs10nrrYxvXwqD3E1LIAWDrVEwn3zTuwrRvzYMAWSUhTqo88AO3X1KjkytzHetpoHW9K
-         UQr8ifsnScI5cEo+wBnLoG7JmoRrxAU0YM1EM4w7hfEi6zKmqCZbF0PeYWKnljsGNGZ0
-         k1M76IWhNU8FWi9JJNgOk06CotySwJoWYkOTjQBhyc5JsXUbecxnXUZ1JDeSBC56TWMq
-         3Sf6dhzdePDLzCE/i70ky3motAWkcan/qqAHfSLJwvAqS7dTUQh043flEES3TdcmO5tC
-         uLSA==
+        bh=EAGdmecmIYQMbogASNQhQtQecAe8bZ2za4Rdh2+08ME=;
+        b=w56mXCzCV0zuIKf5UgKd73iw22KzOjcm/ewjieo905GNM8iSDbjgrHD9m2hsv4+N/p
+         w3Mrdp0iqj4WQ1ftEYaBeJpjglqxWWNcz+udxPTk7EkuKxVsG1VrLYriVu2Qy/zPxpYf
+         zdpT9yI5Ck0J21noqDhFuBPAhKcW2CzERSW7Yghx7OUbF/hN1Ns78XszQtXvGzy6T39t
+         mC6KK5ZBZpkR3k8WPvTegUKeDltIcVUzVyd7IJnqcBRvH74F3hh3QEv9b+DmzXEqnXQr
+         6RzPTXp4Pp6QzLoHKgzOsZotTPAXj+8X6qaPo+b4Mg473QAe284G+Ntxo8Xhv2Kh6x86
+         Bfww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=wdf4vDYPrWUkIFw2I/tLGdO131jSnYkYMuWnygUSqLk=;
-        b=MYHbbuwQoki4mIcmJL36bBlTf6jx5cttAvT081mmnRvEcuoQXspup4p1UnlvKyKdug
-         zkfY2Fja3czfqrrCEsn8SFI7zLDA5OIskKTFeWe2shJfj8b8QzcEYNlkOfySHTXD0AD8
-         MsA7SCO2UeA+2cE3kzu1ZGlTKBrjZhSnmwqIOTkaFAFW8VkNXGHgZqmBJIbQ2/oDDkE9
-         50rWfXtL3FlGGqNOsQcld6+uEPpbGxRDAwZdDmOOOAhe+mjEW6x2TXj/kTLxc7ajMEGG
-         u3Zb/6Sh8ekeQLBEXmaZXbg41xLfWf2FALCwJZIM1Vck2pT2x4r5/7W5LYmUQax7QJT8
-         mb3A==
-X-Gm-Message-State: APjAAAXp418njlX5X4XgCdq+qj7Z6SsT/Lkam1y+/Lia2U/L9qBQjx2k
-        /kBh7eMykanN9xiHaW4eUERZwQ==
-X-Google-Smtp-Source: APXvYqwqrFBkB4DNwsCnkk+NnHy2fa3C1N/2ZofRGerNFLj9+QnWiuNncAs3CNYES0zU4rIEPpmpbQ==
-X-Received: by 2002:a5d:42d1:: with SMTP id t17mr7864805wrr.56.1573464320281;
-        Mon, 11 Nov 2019 01:25:20 -0800 (PST)
+        bh=EAGdmecmIYQMbogASNQhQtQecAe8bZ2za4Rdh2+08ME=;
+        b=ftXtwaVLIXS6wTFVYXduC3cTDdEHG+CqFVpyr/q4jxoxLke6elYj1hLBAtcFcspBb2
+         KBGLzmuXXRcymHOJCB/kHKHd3zJmoMYaOAsYjyef1VW5lI3PESzcASXxH7n4SKwMCCbC
+         BmKe/HkKHUZvhZKo0URCpH2cLU4F5oEF+OQ8fUCUPeobdSNfCbqnvcuYbpfwx77sk7NR
+         6wXh9aoiaSUF2LYfZ9iSHYLDtU5v3uoicpfDO9bAfArdeLDDXsyAmgJgrx6TJ52qjCqV
+         jdAaQYHVAGs5+jHKoVy2F1PI/xUkdrjUn2D/SqbXS+ZJhpUNZKcC8r9ddy07CPKLDBwa
+         UKxg==
+X-Gm-Message-State: APjAAAUajqj9ii1oWplc1wnOFONZL8fib/wYo0Td96XtwPLyf1dV+p/g
+        7THOYrY1/jszigFc9bpxwE0UiA==
+X-Google-Smtp-Source: APXvYqxsuEZoMa82YymohR63zheNj31pQiSiawLEKigrwQP7JSqSDgwgZGuFELRxkBAXjKVnTla1UA==
+X-Received: by 2002:a7b:c95a:: with SMTP id i26mr20598305wml.41.1573464329856;
+        Mon, 11 Nov 2019 01:25:29 -0800 (PST)
 Received: from dell ([95.147.198.88])
-        by smtp.gmail.com with ESMTPSA id v128sm25894991wmb.14.2019.11.11.01.25.19
+        by smtp.gmail.com with ESMTPSA id c144sm17688300wmd.1.2019.11.11.01.25.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Nov 2019 01:25:19 -0800 (PST)
-Date:   Mon, 11 Nov 2019 09:25:11 +0000
+        Mon, 11 Nov 2019 01:25:29 -0800 (PST)
+Date:   Mon, 11 Nov 2019 09:25:21 +0000
 From:   Lee Jones <lee.jones@linaro.org>
 To:     Kiran Gunda <kgunda@codeaurora.org>
 Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
@@ -57,15 +57,16 @@ Cc:     bjorn.andersson@linaro.org, jingoohan1@gmail.com,
         linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org
-Subject: Re: [PATCH V10 4/8] backlight: qcom-wled: Rename PM8941* to WLED3
-Message-ID: <20191111092511.GR18902@dell>
+Subject: Re: [PATCH V10 5/8] backlight: qcom-wled: Restructure the driver for
+ WLED3.
+Message-ID: <20191111092521.GS18902@dell>
 References: <1572589624-6095-1-git-send-email-kgunda@codeaurora.org>
- <1572589624-6095-5-git-send-email-kgunda@codeaurora.org>
+ <1572589624-6095-6-git-send-email-kgunda@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1572589624-6095-5-git-send-email-kgunda@codeaurora.org>
+In-Reply-To: <1572589624-6095-6-git-send-email-kgunda@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -74,19 +75,14 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Fri, 01 Nov 2019, Kiran Gunda wrote:
 
-> Rename the PM8941* references as WLED3 to make the driver
-> generic and have WLED support for other PMICs. Also rename
-> "i_boost_limit" and "i_limit" variables to "boost_i_limit"
-> and "string_i_limit" respectively to resemble the corresponding
-> register names.
+> Restructure the driver to add the support for new WLED
+> peripherals.
 > 
 > Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Acked-by: Pavel Machek <pavel@ucw.cz>
+> Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
 > ---
->  drivers/video/backlight/qcom-wled.c | 248 ++++++++++++++++++------------------
->  1 file changed, 125 insertions(+), 123 deletions(-)
+>  drivers/video/backlight/qcom-wled.c | 373 ++++++++++++++++++++++--------------
+>  1 file changed, 234 insertions(+), 139 deletions(-)
 
 Applied, thanks.
 
