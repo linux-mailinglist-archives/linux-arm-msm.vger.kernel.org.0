@@ -2,224 +2,291 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1913CF7710
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2019 15:51:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06E87F781E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2019 16:55:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727023AbfKKOvf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Nov 2019 09:51:35 -0500
-Received: from mail-il1-f195.google.com ([209.85.166.195]:35014 "EHLO
-        mail-il1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726903AbfKKOvf (ORCPT
+        id S1726877AbfKKPzB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Nov 2019 10:55:01 -0500
+Received: from smtprelay-out1.synopsys.com ([198.182.47.102]:47016 "EHLO
+        smtprelay-out1.synopsys.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726857AbfKKPzB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Nov 2019 09:51:35 -0500
-Received: by mail-il1-f195.google.com with SMTP id z12so12347792ilp.2;
-        Mon, 11 Nov 2019 06:51:34 -0800 (PST)
+        Mon, 11 Nov 2019 10:55:01 -0500
+Received: from mailhost.synopsys.com (badc-mailhost2.synopsys.com [10.192.0.18])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 5BA74C0E17;
+        Mon, 11 Nov 2019 15:55:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
+        t=1573487700; bh=jN+8se8JIrnHuVwHPgthe/xLArbA3Vt76eNxdGMNuWI=;
+        h=From:To:CC:Subject:Date:References:In-Reply-To:From;
+        b=HgzK8I6IJ9xVnUg9pGFlGYsxszSy7fGuUTWSeUCIz0QUwydRf64gHmHVdPPFRKua6
+         Daav9+hES8yPHYVsqaSYC+qoXIX5vqhEAB9FKWaax9YUz7RcPGCPVcVrY/FuwvAjMA
+         SlZbdLSRHMEaphzgRuwmisRFD+8DCkEyguMRybpB49eIFePfyPuMBfGV6+Eg+Ox2Bx
+         jrpnVGSloS/31m7DbM8FtfeyZI+2e4mAkoUwzfsbcPYEtioSW5SO0tG2bXt3bdIymZ
+         pjeCY1AKSBfew0IVirn1zb6rZNW74R0ZZbUWRlyg2xFfGni68sY63fsvEeDu5z4Ze4
+         IzGM+IRNyhtuQ==
+Received: from US01WEHTC3.internal.synopsys.com (us01wehtc3.internal.synopsys.com [10.15.84.232])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mailhost.synopsys.com (Postfix) with ESMTPS id F0376A0066;
+        Mon, 11 Nov 2019 15:54:59 +0000 (UTC)
+Received: from US01HYBRID2.internal.synopsys.com (10.15.246.24) by
+ US01WEHTC3.internal.synopsys.com (10.15.84.232) with Microsoft SMTP Server
+ (TLS) id 14.3.408.0; Mon, 11 Nov 2019 07:55:00 -0800
+Received: from NAM03-CO1-obe.outbound.protection.outlook.com (10.13.134.195)
+ by mrs.synopsys.com (10.15.246.24) with Microsoft SMTP Server (TLS) id
+ 14.3.408.0; Mon, 11 Nov 2019 07:54:59 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=oclTFEQFk1O3iaZOFH9eOMLHxGlLzpt+pMIU4l4Kt0gWEvK7pkeNO26xA/K71kHVm5f/FaRAb1n+gVE2AJ44XrYP0twH3ZvSvncutjlomGD458HU9hii8CQjqaIp+ySUK564sHrEgkVhGteC/KabDIY/rywvGtaVvON2gMvEL5Yhsk2hzzTXnNofhqnp9rVsY0JnQj0r2JVeZF57Y4ZkiElCs9GXIwdcF8OItnBU9itC39r4IdE18bZM7nA+OUXcUkQJEJPjCAkqqJ1fnNh0c1pZrNCW3YhaoL8MgHtg86ju/xWzssoi+2xXttUQ2se7iL6JcFIJBOF9kJO0ZRxQNw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=39z9SR/lzDEOjfQHDkm4H9fMVxjMVG//wtRQTepEI48=;
+ b=A8XzfI7iggEZn+YmTBNLib+4eD/6dhrWALSrJ75Ilaku5RHwx4NDeoXFFGL1iEMorLynlbR16PlTk2jjF+Z3vdFZPPVUjLrQsuUCE7hrpZJ8IjZ00YHofsm+qgmtOOuqkAS9p/PHyfBzJcIHxCI/QMffLjxcFj+aliWz6RGkAlGOVogq4jxVSHGOw9XZrmq9ihyzfd4TI5qh95DNgmgb02AkvjAxJIQd92UheUBFGXm9eVStQGsZNylbEr2CMHOO+JnV96AGAQ9F3v6I7jAFhflb91dU6QyOkIA9sR7NLYS5qaQkhNU32W5r1XjgktTRrkcp7PMs9UgnBtH69nr83w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=synopsys.com; dmarc=pass action=none header.from=synopsys.com;
+ dkim=pass header.d=synopsys.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QU4yU61+3fayjyL9mE4IWRckozBFaj3LyGNPua+usXc=;
-        b=hqXVMqbDU09cA/B9pjbODxjD7KzvqSrFRzwh4OChsYl0qILx6FWFebhCFMYf0r19+f
-         E4gSBgzqxBK+3sBMIlMftHjmkZfLfu0rHsdHk46FDh8xEVWvyqfAKy52zty6Gfjxfqqs
-         Klq89MvrOVq2LO83O5TRSVXytj3/3ZIBNZ4NPluqxJyd4qatSTnvCNefHLXgRJqzXS6J
-         EKVzldbnZ678YFF6l+PYO847ob05z2gK78LJ7oHi7d4viCFvib//OjdmIlZ0zwfAyNzo
-         EflJQbWE+NboRzJZEXABQck/yKfuqk5Q167x2t8wvGB/lD2eWVXdYsLE5KwZLwNd9wCz
-         WLgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QU4yU61+3fayjyL9mE4IWRckozBFaj3LyGNPua+usXc=;
-        b=Jx6nQVlmboaYZ4+bBdf9K9x3Id+2oZLD/YJzi+NQzVzQzpAy0bmGvbfA8ENgni0tBR
-         Ih0KCPebAarEEPDLUn8w+ZFIu3ZbCXvgQkopriKO1VuPMkc5ohtKZvfaGpEUQ3yIQ3qe
-         2/D5p8BJg6mXCvdQull5YxMv5l5OnrEkmN3eu/OxegUoEX9WxjOET5+oBVUT3eQmUZr0
-         7agaRbhafz91ANYW3PQIYJ+zJTgtFuUIZbsRE9owsWEMz26xU2gGN1hJra3xK1mY3qOA
-         N8RrChI+ht86chbxBg8uwFXbG2wVtOSr4xdd13jCrfXRaFszOLMGusYJohFMFzlRjnxU
-         Dxpw==
-X-Gm-Message-State: APjAAAW8kMC2djiXBJaZXHHaQ8bqG0rFkbv7cGJ16aVPZ/MUjs7mMvNE
-        GyesehLablytPBSeViyymPLl1LL9569eDfyYSC5QQQ==
-X-Google-Smtp-Source: APXvYqyBrTqggbYFjqSKn7Om6vOd9yMZd9sm82KfW9R2lj449n45l/jzPlkJjjQXdNsyL5Ebyx3ubk/0nyIKhnZy5fo=
-X-Received: by 2002:a05:6e02:c91:: with SMTP id b17mr29129843ile.33.1573483893905;
- Mon, 11 Nov 2019 06:51:33 -0800 (PST)
+ d=synopsys.onmicrosoft.com; s=selector2-synopsys-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=39z9SR/lzDEOjfQHDkm4H9fMVxjMVG//wtRQTepEI48=;
+ b=OwPFe/ImrBrJMf9jo+Rozcg9HSm//zetqyUHj0RIF2n2p8OISZOQn0529zGiFG1XIcSF+Laq3juZKQNRc1XUU7pt2UC1aP5A09i30HLufzaTODmBVDaHn4LDXBWZGs7lzP53lgjqwoigtiyWXJSnWBP9Nb6GnJPzqyPFujrwOpI=
+Received: from MN2PR12MB3167.namprd12.prod.outlook.com (20.179.80.95) by
+ MN2PR12MB3325.namprd12.prod.outlook.com (20.178.243.141) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2430.24; Mon, 11 Nov 2019 15:54:57 +0000
+Received: from MN2PR12MB3167.namprd12.prod.outlook.com
+ ([fe80::2974:feba:8a00:35ef]) by MN2PR12MB3167.namprd12.prod.outlook.com
+ ([fe80::2974:feba:8a00:35ef%6]) with mapi id 15.20.2430.027; Mon, 11 Nov 2019
+ 15:54:57 +0000
+From:   Pedro Sousa <PedroM.Sousa@synopsys.com>
+To:     Asutosh Das <asutoshd@codeaurora.org>,
+        "cang@codeaurora.org" <cang@codeaurora.org>,
+        "rnayak@codeaurora.org" <rnayak@codeaurora.org>,
+        "vinholikatti@gmail.com" <vinholikatti@gmail.com>,
+        "jejb@linux.vnet.ibm.com" <jejb@linux.vnet.ibm.com>,
+        "martin.petersen@oracle.com" <martin.petersen@oracle.com>
+CC:     "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+        "kernel-team@android.com" <kernel-team@android.com>,
+        "saravanak@google.com" <saravanak@google.com>,
+        "salyzyn@google.com" <salyzyn@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH v3 2/2] scsi: ufs-qcom: enter and exit hibern8 during
+ clock scaling
+Thread-Topic: [PATCH v3 2/2] scsi: ufs-qcom: enter and exit hibern8 during
+ clock scaling
+Thread-Index: AQHVicHjMc01age/aUm6zttfm5YwhqeGN47g
+Date:   Mon, 11 Nov 2019 15:54:57 +0000
+Message-ID: <MN2PR12MB31675521623C9AFEA87B6076CC740@MN2PR12MB3167.namprd12.prod.outlook.com>
+References: <1571849351-819-1-git-send-email-asutoshd@codeaurora.org>
+ <1571849351-819-2-git-send-email-asutoshd@codeaurora.org>
+In-Reply-To: <1571849351-819-2-git-send-email-asutoshd@codeaurora.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-dg-ref: =?us-ascii?Q?PG1ldGE+PGF0IG5tPSJib2R5LnR4dCIgcD0iYzpcdXNlcnNcc291c2FcYXBw?=
+ =?us-ascii?Q?ZGF0YVxyb2FtaW5nXDA5ZDg0OWI2LTMyZDMtNGE0MC04NWVlLTZiODRiYTI5?=
+ =?us-ascii?Q?ZTM1Ylxtc2dzXG1zZy05OWMxYTNhYy0wNDliLTExZWEtOWEwYS1iODA4Y2Yz?=
+ =?us-ascii?Q?YjJlNWVcYW1lLXRlc3RcOTljMWEzYWQtMDQ5Yi0xMWVhLTlhMGEtYjgwOGNm?=
+ =?us-ascii?Q?M2IyZTVlYm9keS50eHQiIHN6PSIyODczIiB0PSIxMzIxNzk2MTI5NDczODQ3?=
+ =?us-ascii?Q?OTciIGg9Im11bGxoRUtWaXh6bXJMTndqVFRJQys5emlqVT0iIGlkPSIiIGJs?=
+ =?us-ascii?Q?PSIwIiBibz0iMSIgY2k9ImNBQUFBRVJIVTFSU1JVRk5DZ1VBQUJRSkFBRGRD?=
+ =?us-ascii?Q?VWRjcUpqVkFlWU9NQnlnRVlSQzVnNHdIS0FSaEVJT0FBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFIQUFBQUNrQ0FBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFF?=
+ =?us-ascii?Q?QUFRQUJBQUFBbEF3ZnN3QUFBQUFBQUFBQUFBQUFBSjRBQUFCbUFHa0FiZ0Jo?=
+ =?us-ascii?Q?QUc0QVl3QmxBRjhBY0FCc0FHRUFiZ0J1QUdrQWJnQm5BRjhBZHdCaEFIUUFa?=
+ =?us-ascii?Q?UUJ5QUcwQVlRQnlBR3NBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUVB?=
+ =?us-ascii?Q?QUFBQUFBQUFBZ0FBQUFBQW5nQUFBR1lBYndCMUFHNEFaQUJ5QUhrQVh3QndB?=
+ =?us-ascii?Q?R0VBY2dCMEFHNEFaUUJ5QUhNQVh3Qm5BR1lBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFRQUFBQUFBQUFBQ0FBQUFB?=
+ =?us-ascii?Q?QUNlQUFBQVpnQnZBSFVBYmdCa0FISUFlUUJmQUhBQVlRQnlBSFFBYmdCbEFI?=
+ =?us-ascii?Q?SUFjd0JmQUhNQVlRQnRBSE1BZFFCdUFHY0FYd0JqQUc4QWJnQm1BQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFCQUFBQUFBQUFBQUlBQUFBQUFKNEFBQUJtQUc4QWRR?=
+ =?us-ascii?Q?QnVBR1FBY2dCNUFGOEFjQUJoQUhJQWRBQnVBR1VBY2dCekFGOEFjd0JoQUcw?=
+ =?us-ascii?Q?QWN3QjFBRzRBWndCZkFISUFaUUJ6QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?RUFBQUFBQUFBQUFnQUFBQUFBbmdBQUFHWUFid0IxQUc0QVpBQnlBSGtBWHdC?=
+ =?us-ascii?Q?d0FHRUFjZ0IwQUc0QVpRQnlBSE1BWHdCekFHMEFhUUJqQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQVFBQUFBQUFBQUFDQUFB?=
+ =?us-ascii?Q?QUFBQ2VBQUFBWmdCdkFIVUFiZ0JrQUhJQWVRQmZBSEFBWVFCeUFIUUFiZ0Js?=
+ =?us-ascii?Q?QUhJQWN3QmZBSE1BZEFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUJBQUFBQUFBQUFBSUFBQUFBQUo0QUFBQm1BRzhB?=
+ =?us-ascii?Q?ZFFCdUFHUUFjZ0I1QUY4QWNBQmhBSElBZEFCdUFHVUFjZ0J6QUY4QWRBQnpB?=
+ =?us-ascii?Q?RzBBWXdBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFFQUFBQUFBQUFBQWdBQUFBQUFuZ0FBQUdZQWJ3QjFBRzRBWkFCeUFIa0FY?=
+ =?us-ascii?Q?d0J3QUdFQWNnQjBBRzRBWlFCeUFITUFYd0IxQUcwQVl3QUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBUUFBQUFBQUFBQUNB?=
+ =?us-ascii?Q?QUFBQUFDZUFBQUFad0IwQUhNQVh3QndBSElBYndCa0FIVUFZd0IwQUY4QWRB?=
+ =?us-ascii?Q?QnlBR0VBYVFCdUFHa0FiZ0JuQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQkFBQUFBQUFBQUFJQUFBQUFBSjRBQUFCekFH?=
+ =?us-ascii?Q?RUFiQUJsQUhNQVh3QmhBR01BWXdCdkFIVUFiZ0IwQUY4QWNBQnNBR0VBYmdB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUVBQUFBQUFBQUFBZ0FBQUFBQW5nQUFBSE1BWVFCc0FHVUFjd0JmQUhF?=
+ =?us-ascii?Q?QWRRQnZBSFFBWlFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFRQUFBQUFBQUFB?=
+ =?us-ascii?Q?Q0FBQUFBQUNlQUFBQWN3QnVBSEFBY3dCZkFHd0FhUUJqQUdVQWJnQnpBR1VB?=
+ =?us-ascii?Q?WHdCMEFHVUFjZ0J0QUY4QU1RQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFCQUFBQUFBQUFBQUlBQUFBQUFKNEFBQUJ6?=
+ =?us-ascii?Q?QUc0QWNBQnpBRjhBYkFCcEFHTUFaUUJ1QUhNQVpRQmZBSFFBWlFCeUFHMEFY?=
+ =?us-ascii?Q?d0J6QUhRQWRRQmtBR1VBYmdCMEFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBRUFBQUFBQUFBQUFnQUFBQUFBbmdBQUFIWUFad0JmQUdzQVpRQjVB?=
+ =?us-ascii?Q?SGNBYndCeUFHUUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQVFBQUFBQUFB?=
+ =?us-ascii?Q?QUFDQUFBQUFBQT0iLz48L21ldGE+?=
+x-dg-rorf: true
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=sousa@synopsys.com; 
+x-originating-ip: [83.174.63.141]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 1235d88e-232d-4a6c-d0c1-08d766bf804e
+x-ms-traffictypediagnostic: MN2PR12MB3325:
+x-microsoft-antispam-prvs: <MN2PR12MB33259D25A707574ACF676CA8CC740@MN2PR12MB3325.namprd12.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7219;
+x-forefront-prvs: 0218A015FA
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(346002)(376002)(136003)(396003)(366004)(199004)(189003)(13464003)(4326008)(76176011)(71190400001)(66066001)(71200400001)(478600001)(7696005)(14454004)(6506007)(55016002)(486006)(186003)(476003)(7736002)(2201001)(53546011)(102836004)(2501003)(26005)(7416002)(25786009)(256004)(14444005)(305945005)(74316002)(86362001)(446003)(11346002)(9686003)(66946007)(8676002)(64756008)(66446008)(99286004)(76116006)(110136005)(54906003)(316002)(8936002)(2906002)(6436002)(229853002)(6116002)(81166006)(3846002)(81156014)(5660300002)(52536014)(33656002)(6246003)(66556008)(66476007);DIR:OUT;SFP:1102;SCL:1;SRVR:MN2PR12MB3325;H:MN2PR12MB3167.namprd12.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: synopsys.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: z+dJrNBJ0Dj92RSzVH8+bB1wigcSjS02UwS4D2+4DtrhUmbtV80H9Vplrs5dHwITP7xU1iJMS01j/ZZl2Xhot5UjXxsQtkQ8RvH6FH1tctKtblY3OpTTuB9sD1KGEQaba47HNqpZOr12Vh1x6asdAWwt5RjGpamkm6ljCBMNdFEllqJ6lcWX3/sPQzGW/HPPdeC8jb4M9YsuS+djrlRQyFLOg50VvDd+r3zsfksbb08QvrE1tVg/pXgLmRkqhVMDVoEpDwcmODbaxhY7c4InktpPR4DdVbiDgz4g+VNUNjOo3AEAQmZLIRRT+BydMZgYLjNK2CdB1MJOKZidRC/miPfVSF514JQiQupJ8UMbChLLE6iURGi6fgCvdTxxg6JA8CE3TBGXRLrxK7pMfGRSojboL1Xe/R6HZIHOP4e/vwl4rLUYOd8RN4QBY/BxgYdW
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <CAF6AEGuEO1jg6KhOFWEMUjq4ZQy5w61dWJk6uLWRzHnMZYZv=g@mail.gmail.com>
- <CAOCk7NomH2MsZ+FvPFAMWeabOFpyOwODCb_Ro07v+2k2v_C4NA@mail.gmail.com>
- <CAF6AEGsZkJJTNZ8SzHsSioEnkpekr1Texu5_EeBW1hP-bsOyjQ@mail.gmail.com>
- <20191107111019.GA24028@onstation.org> <CAF6AEGtbP=X2+DELajQq9zMZYGgmhyUhe62ncvHvyFnyZexTXg@mail.gmail.com>
- <CAOCk7NrPdGqc4vo70NmTuyszkPaPe41-e89ym2vAYBY+GTt9BA@mail.gmail.com>
- <CAJs_Fx4UJYd-k3_3AAGJo-8udThhvf6t-J=OZi3jappWjTNnFQ@mail.gmail.com>
- <CAOCk7Nq7rPmraofy+o8vWTwSAd1+dTRsoZ4QN0mRAOOz7u7TUg@mail.gmail.com>
- <20191110135321.GA6728@onstation.org> <CAOCk7Nr3nkUWOynxVK_0SxWKUss803_fhkdVehRajtiA9vi8ng@mail.gmail.com>
- <20191111113806.GA1420@onstation.org>
-In-Reply-To: <20191111113806.GA1420@onstation.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Mon, 11 Nov 2019 07:51:22 -0700
-Message-ID: <CAOCk7NoZN63zZQrbw-RRnbUko3OREy=15FMC7sN5M95oNb5JNw@mail.gmail.com>
-Subject: Re: [Freedreno] drm/msm: 'pp done time out' errors after async commit changes
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1235d88e-232d-4a6c-d0c1-08d766bf804e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Nov 2019 15:54:57.1611
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: c33c9f88-1eb7-4099-9700-16013fd9e8aa
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: N1AhWZmmSoeMgRsP0kARf1Q1UHGQYcJvf1HGJq8HNUrd0QtyuIVdsj7pMShW42mKc6FwnRbBrDSLbi/+xjOkdQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB3325
+X-OriginatorOrg: synopsys.com
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 11, 2019 at 4:38 AM Brian Masney <masneyb@onstation.org> wrote:
->
-> On Sun, Nov 10, 2019 at 10:37:33AM -0700, Jeffrey Hugo wrote:
-> > On Sun, Nov 10, 2019 at 6:53 AM Brian Masney <masneyb@onstation.org> wrote:
-> > >
-> > > On Fri, Nov 08, 2019 at 07:56:25AM -0700, Jeffrey Hugo wrote:
-> > > There's a REG_MDP5_PP_AUTOREFRESH_CONFIG() macro upstream here:
-> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/gpu/drm/msm/disp/mdp5/mdp5.xml.h#n1383
-> > >
-> > > I'm not sure what to put in that register but I tried configuring it
-> > > with a 1 this way and still have the same issue.
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-> > > index eeef41fcd4e1..6b9acf68fd2c 100644
-> > > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-> > > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-> > > @@ -80,6 +80,7 @@ static int pingpong_tearcheck_setup(struct drm_encoder *encoder,
-> > >         mdp5_write(mdp5_kms, REG_MDP5_PP_SYNC_THRESH(pp_id),
-> > >                         MDP5_PP_SYNC_THRESH_START(4) |
-> > >                         MDP5_PP_SYNC_THRESH_CONTINUE(4));
-> > > +       mdp5_write(mdp5_kms, REG_MDP5_PP_AUTOREFRESH_CONFIG(pp_id), 1);
-> > >
-> > >         return 0;
-> > >  }
-> >
-> > bit 31 is the enable bit (set that to 1), bits 15:0 are the
-> > frame_count (how many te events before the MDP sends a frame, I'd
-> > recommend set to 1).  Then after its programmed, you'll have to flush
-> > the config, and probably use a _START to make sure the flush takes
-> > effect.
->
-> I think that I initially get autorefresh enabled based on your
-> description above since the ping pong IRQs occur much more frequently.
-> However pretty quickly the error 'dsi_err_worker: status=c' is shown,
-> the contents on the screen shift to the right, and the screen no longer
-> updates after that. That error decodes to
-> DSI_ERR_STATE_DLN0_PHY | DSI_ERR_STATE_FIFO according to dsi_host.c.
->
-> Here's the relevant code that I have so far:
+Hi Asutosh,
 
-So, Unless I missed it, you haven't disabled using _start when
-autorefresh is enabled.  If you are using both at the same time,
-you'll overload the DSI and get those kinds of errors.
+Please check comments.
 
->
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-> index eeef41fcd4e1..85a5cfe54ce8 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-> @@ -157,6 +157,7 @@ void mdp5_cmd_encoder_enable(struct drm_encoder *encoder)
->         struct mdp5_ctl *ctl = mdp5_cmd_enc->ctl;
->         struct mdp5_interface *intf = mdp5_cmd_enc->intf;
->         struct mdp5_pipeline *pipeline = mdp5_crtc_get_pipeline(encoder->crtc);
-> +       struct mdp5_kms *mdp5_kms = get_kms(encoder);;
->
->         if (WARN_ON(mdp5_cmd_enc->enabled))
->                 return;
-> @@ -167,6 +168,14 @@ void mdp5_cmd_encoder_enable(struct drm_encoder *encoder)
->
->         mdp5_ctl_commit(ctl, pipeline, mdp_ctl_flush_mask_encoder(intf), true);
->
-> +       if (intf->type == INTF_DSI &&
-> +           intf->mode == MDP5_INTF_DSI_MODE_COMMAND) {
-> +               mdp5_write(mdp5_kms,
-> +                          REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp),
-> +                          BIT(31) | BIT(0));
-> +               mdp5_crtc_flush_all(encoder->crtc);
-> +       }
-> +
->         mdp5_ctl_set_encoder_state(ctl, pipeline, true);
->
->         mdp5_cmd_enc->enabled = true;
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> index 05cc04f729d6..369746ebbc42 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> @@ -103,7 +104,7 @@ static u32 crtc_flush(struct drm_crtc *crtc, u32 flush_mask)
->   * so that we can safely queue unref to current fb (ie. next
->   * vblank we know hw is done w/ previous scanout_fb).
->   */
-> -static u32 crtc_flush_all(struct drm_crtc *crtc)
-> +u32 mdp5_crtc_flush_all(struct drm_crtc *crtc)
->  {
->         struct mdp5_crtc_state *mdp5_cstate = to_mdp5_crtc_state(crtc->state);
->         struct mdp5_hw_mixer *mixer, *r_mixer;
-> @@ -734,7 +735,7 @@ static void mdp5_crtc_atomic_flush(struct drm_crtc *crtc,
->         if (mdp5_cstate->cmd_mode)
->                 request_pp_done_pending(crtc);
->
-> -       mdp5_crtc->flushed_mask = crtc_flush_all(crtc);
-> +       mdp5_crtc->flushed_mask = mdp5_crtc_flush_all(crtc);
->
->         /* XXX are we leaking out state here? */
->         mdp5_crtc->vblank.irqmask = mdp5_cstate->vblank_irqmask;
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
-> index 128866742593..3490328ab63e 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
-> @@ -278,6 +278,7 @@ enum mdp5_pipe mdp5_plane_right_pipe(struct drm_plane *plane);
->  struct drm_plane *mdp5_plane_init(struct drm_device *dev,
->                                   enum drm_plane_type type);
->
-> +u32 mdp5_crtc_flush_all(struct drm_crtc *crtc);
->  struct mdp5_ctl *mdp5_crtc_get_ctl(struct drm_crtc *crtc);
->  uint32_t mdp5_crtc_vblank(struct drm_crtc *crtc);
->
->
-> Note that mdp5_ctl_set_encoder_state() will call send_start_signal()
-> for a command-mode panel.
->
-> I put a HERE log statement in request_pp_done_pending() and
-> mdp5_crtc_pp_done_irq() and here's the relevant part of dmesg:
->
-> [   13.832596] msm fd900000.mdss: pp done time out, lm=0
-> [   13.832690] request_pp_done_pending: HERE
-> [   13.899890] mdp5_crtc_pp_done_irq: HERE
-> [   13.899981] Console: switching to colour frame buffer device 135x120
-> [   13.916662] mdp5_crtc_pp_done_irq: HERE
-> [   13.916813] request_pp_done_pending: HERE
-> [   13.933439] mdp5_crtc_pp_done_irq: HERE
-> [   13.950217] mdp5_crtc_pp_done_irq: HERE
-> [   13.950295] request_pp_done_pending: HERE
-> [   13.959973] msm fd900000.mdss: fb0: msmdrmfb frame buffer device
-> [   13.964469] i2c i2c-4: Added multiplexed i2c bus 5
-> [   13.966998] mdp5_crtc_pp_done_irq: HERE
-> [   13.983780] mdp5_crtc_pp_done_irq: HERE
-> [   13.983932] request_pp_done_pending: HERE
-> [   14.000617] mdp5_crtc_pp_done_irq: HERE
-> [   14.017393] mdp5_crtc_pp_done_irq: HERE
-> [   14.017539] request_pp_done_pending: HERE
-> [   14.034173] mdp5_crtc_pp_done_irq: HERE
-> [   14.050956] mdp5_crtc_pp_done_irq: HERE
-> [   14.067738] mdp5_crtc_pp_done_irq: HERE
-> [   14.084521] mdp5_crtc_pp_done_irq: HERE
-> [   14.101305] mdp5_crtc_pp_done_irq: HERE
-> [   14.118085] mdp5_crtc_pp_done_irq: HERE
-> [   14.134866] mdp5_crtc_pp_done_irq: HERE
-> [   14.151646] mdp5_crtc_pp_done_irq: HERE
-> [   14.168425] mdp5_crtc_pp_done_irq: HERE
-> [   14.185204] mdp5_crtc_pp_done_irq: HERE
-> [   14.192790] request_pp_done_pending: HERE
-> [   14.192967] dsi_err_worker: status=c
-> [   14.241759] dsi_err_worker: status=c
-> [   14.252650] msm fd900000.mdss: pp done time out, lm=0
-> [   14.462645] msm fd900000.mdss: pp done time out, lm=0
-> [   14.462704] request_pp_done_pending: HERE
-> [   14.522644] msm fd900000.mdss: pp done time out, lm=0
-> [   14.672643] msm fd900000.mdss: pp done time out, lm=0
-> [   14.672702] request_pp_done_pending: HERE
-> [   14.732643] msm fd900000.mdss: pp done time out, lm=0
-> [   14.882644] msm fd900000.mdss: pp done time out, lm=0
->
-> Brian
+-----Original Message-----
+From: Asutosh Das <asutoshd@codeaurora.org>=20
+Sent: Wednesday, October 23, 2019 5:49 PM
+To: cang@codeaurora.org; rnayak@codeaurora.org; vinholikatti@gmail.com; jej=
+b@linux.vnet.ibm.com; martin.petersen@oracle.com
+Cc: linux-scsi@vger.kernel.org; kernel-team@android.com; saravanak@google.c=
+om; salyzyn@google.com; Asutosh Das <asutoshd@codeaurora.org>; Andy Gross <=
+agross@kernel.org>; Alim Akhtar <alim.akhtar@samsung.com>; Avri Altman <avr=
+i.altman@wdc.com>; Pedro Sousa <pedrom.sousa@synopsys.com>; James E.J. Bott=
+omley <jejb@linux.ibm.com>; open list:ARM/QUALCOMM SUPPORT <linux-arm-msm@v=
+ger.kernel.org>; open list <linux-kernel@vger.kernel.org>
+Subject: [PATCH v3 2/2] scsi: ufs-qcom: enter and exit hibern8 during clock=
+ scaling
+
+Qualcomm controller needs to be in hibern8 before scaling clocks.
+This change puts the controller in hibern8 state before scaling
+and brings it out after scaling of clocks.
+
+Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+---
+ drivers/scsi/ufs/ufs-qcom.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index a5b7148..55b1de5 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -1305,18 +1305,27 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba=
+ *hba,
+ 	int err =3D 0;
+=20
+ 	if (status =3D=3D PRE_CHANGE) {
++		err =3D ufshcd_uic_hibern8_enter(hba);
++		if (err)
++			return err;
+ 		if (scale_up)
+ 			err =3D ufs_qcom_clk_scale_up_pre_change(hba);
+ 		else
+ 			err =3D ufs_qcom_clk_scale_down_pre_change(hba);
++		if (err)
++			ufshcd_uic_hibern8_exit(hba);
++
+ 	} else {
+ 		if (scale_up)
+ 			err =3D ufs_qcom_clk_scale_up_post_change(hba);
+ 		else
+ 			err =3D ufs_qcom_clk_scale_down_post_change(hba);
+=20
+-		if (err || !dev_req_params)
++
++		if (err || !dev_req_params) {
++			ufshcd_uic_hibern8_exit(hba);
+ 			goto out;
++		}
+=20
+ 		ufs_qcom_cfg_timers(hba,
+ 				    dev_req_params->gear_rx,
+@@ -1324,6 +1333,7 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *=
+hba,
+ 				    dev_req_params->hs_rate,
+ 				    false);
+ 		ufs_qcom_update_bus_bw_vote(host);
++		ufshcd_uic_hibern8_exit(hba);
+
+Here you are creating the possibility of returning a success even if hibern=
+8 exit fails.
+If hibern8 exit fails the ufs recovery will be triggered and "err" variable=
+ will not get updated=20
+in this function, how is this handled? Did you tested this possibility?
+
+ 	}
+=20
+ out:
+--=20
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux =
+Foundation Collaborative Project.
+
+This is just a doubt, it might make sense in this use case, please give me =
+your thoughts.
+
+Thank you,
+Pedro Sousa
+
+
+
