@@ -2,143 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 50470F98DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 19:37:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 688C7F995A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 20:08:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726978AbfKLShS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 13:37:18 -0500
-Received: from mail.kernel.org ([198.145.29.99]:55880 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726952AbfKLShS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 13:37:18 -0500
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9B7B721D7F;
-        Tue, 12 Nov 2019 18:37:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573583837;
-        bh=ClsBijm+tV2ywGmWiMMRKvlFiYq/cLBsl5lNg89WwmM=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=vruLFu7ENpBlykbdo/Y+H4Y3SP/8xiOwkSOXipue5AFlMZwYISAABQGOsHRNX+597
-         +BUbMZ7NOeZabQG+6KyrNEOUdKZ7Wu2bXUIFXcHZn326+LfItqW7K6t+9Vi1JBZKfo
-         1p9mW8cdtnPZCRvc3FliDt5E/x7ikMvQHP0WuySQ=
-Received: by mail-qk1-f182.google.com with SMTP id e187so15389481qkf.4;
-        Tue, 12 Nov 2019 10:37:17 -0800 (PST)
-X-Gm-Message-State: APjAAAVSB2Uq+isYQHCsx8iS6wzu0kY0j1YD8fnye0BEWD6M6FctY/qi
-        LVOVpcIN81pWn1lpTUNmZLo1nTcB5TKu8/NWzA==
-X-Google-Smtp-Source: APXvYqy4jjbxFKDPV7vSCOnen2eNnt02ZnVZpXB+MPur6jIpEK2TUR0oOqnkMSo4LuntV0L3+UCZlhm9vRywGKUM/gM=
-X-Received: by 2002:ae9:dd83:: with SMTP id r125mr8603172qkf.223.1573583836697;
- Tue, 12 Nov 2019 10:37:16 -0800 (PST)
+        id S1726718AbfKLTI0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 14:08:26 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:34326 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726936AbfKLTI0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Nov 2019 14:08:26 -0500
+Received: by mail-pf1-f196.google.com with SMTP id n13so14054191pff.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2019 11:08:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=BR4ymyy2vKO2uYqxjB3mPPNwSRoqEyTEGiX+v5/Slpg=;
+        b=mVOnRN1VFG1LQezT4n1aeleww9wgfdVf1EnGVEdr7UvuTM41Q68FBfeDADhsOrzeUb
+         33AfMamI/TexG3RQ1sGCIRtweUATCVoVgdDOudYh19VgpC+W0BMmg1E1Hhh7JlWEUPqt
+         NOQ8EeVvFx9SV2WtjU/Zq0Ap+MrWcohYDikzh/vOYlIInFOuGeBl7loPQf+vdGmPumcE
+         HhARyUvSUx+DMBqIoGzFSnU7e5845u+9IsgGBw+LIvCc6P48vcNHEAeDVPIXLQYdFhq7
+         QkK7D8It9DTCBrHT3JlEuz7J6vP775/VOpRRj1uonqBcFgj7pZnk0fGnalzeaFIi73n5
+         ht8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=BR4ymyy2vKO2uYqxjB3mPPNwSRoqEyTEGiX+v5/Slpg=;
+        b=AP0a6QHMk7zAL4/wVuctXXhz6g674xveLGkinsWZe4ULnzTsUrIFmHDPr0ylTLU5eK
+         XziUibxkJeUV3wbnIjJkMNVPkLxIW5VzAHZtJ7MnyqxwBuCbmoLGU/N/VFYNjwWwKd54
+         7NCh2cQXoaweHIzv4zr0QmayxX7zoqPQggS0aXEFuewY7NejDCCjyVnt8qR/pWpHQ09A
+         C+E9xCyYoq90+hXIJNMKtTndpaKG6w9hGiEdx98Cr2QU85oFR8eypNmN9w05HBeMVY/X
+         hOpjpyudCpuoLNR8tRCelOTMLU8m9qibt1epiIdyREE3vwjX4WHnTxYEdVlsQZevin0y
+         +EMg==
+X-Gm-Message-State: APjAAAUv1hBc4IK7Xj5NjSCwHglQS+n4XKM6JPp+ToW8VEj0Hc5Ykl7r
+        5AY6/p1MURpsls0qxkk9QT2fFw==
+X-Google-Smtp-Source: APXvYqy1gKPPrXY8YX4+sqitVZiIIJE+0IYMmTNjOu0a56hMa0jbdBrV/YRB4iYlDOv4vA7eF5VOuQ==
+X-Received: by 2002:aa7:80d2:: with SMTP id a18mr14758511pfn.29.1573585705571;
+        Tue, 12 Nov 2019 11:08:25 -0800 (PST)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id u8sm8351425pga.47.2019.11.12.11.08.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Nov 2019 11:08:24 -0800 (PST)
+Date:   Tue, 12 Nov 2019 11:08:22 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     kvalo@codeaurora.org, davem@davemloft.net,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] ath10k: Handle "invalid" BDFs for msm8998 devices
+Message-ID: <20191112190822.GA3140946@builder>
+References: <20191106234712.2380-1-jeffrey.l.hugo@gmail.com>
 MIME-Version: 1.0
-References: <1573254987-10241-1-git-send-email-jhugo@codeaurora.org>
- <1573255036-10302-1-git-send-email-jhugo@codeaurora.org> <20191112004417.GA16664@bogus>
- <3e4b1342-7965-2d80-e28d-0cb728037abd@codeaurora.org>
-In-Reply-To: <3e4b1342-7965-2d80-e28d-0cb728037abd@codeaurora.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Tue, 12 Nov 2019 12:37:04 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqJ3R0Y-KPKaknVT=+RTAskGhqmarb=i9ZDyX5-LzoFOjg@mail.gmail.com>
-Message-ID: <CAL_JsqJ3R0Y-KPKaknVT=+RTAskGhqmarb=i9ZDyX5-LzoFOjg@mail.gmail.com>
-Subject: Re: [PATCH v8 1/4] dt-bindings: clock: Document external clocks for
- MSM8998 gcc
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191106234712.2380-1-jeffrey.l.hugo@gmail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 12, 2019 at 10:25 AM Jeffrey Hugo <jhugo@codeaurora.org> wrote:
->
-> On 11/11/2019 5:44 PM, Rob Herring wrote:
-> > On Fri, Nov 08, 2019 at 04:17:16PM -0700, Jeffrey Hugo wrote:
-> >> The global clock controller on MSM8998 can consume a number of external
-> >> clocks.  Document them.
-> >>
-> >> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
-> >> ---
-> >>   .../devicetree/bindings/clock/qcom,gcc.yaml        | 47 +++++++++++++++-------
-> >>   1 file changed, 33 insertions(+), 14 deletions(-)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-> >> index e73a56f..2f3512b 100644
-> >> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-> >> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-> >> @@ -40,20 +40,38 @@ properties:
-> >>          - qcom,gcc-sm8150
-> >>
-> >>     clocks:
-> >> -    minItems: 1
-> >
-> > 1 or 2 clocks are no longer allowed?
->
-> Correct.
->
-> The primary reason is that Stephen indicated in previous discussions
-> that if the hardware exists, it should be indicated in DT, regardless if
-> the driver uses it.  In the 7180 and 8150 case, the hardware exists, so
-> these should not be optional.
+On Wed 06 Nov 15:47 PST 2019, Jeffrey Hugo wrote:
 
-Agreed. The commit message should mention this though.
+> When the BDF download QMI message has the end field set to 1, it signals
+> the end of the transfer, and triggers the firmware to do a CRC check.  The
+> BDFs for msm8998 devices fail this check, yet the firmware is happy to
+> still use the BDF.  It appears that this error is not caught by the
+> downstream drive by concidence, therefore there are production devices
+> in the field where this issue needs to be handled otherwise we cannot
+> support wifi on them.  So, attempt to detect this scenario as best we can
+> and treat it as non-fatal.
+> 
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> ---
+>  drivers/net/wireless/ath/ath10k/qmi.c | 11 +++++++----
+>  1 file changed, 7 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/net/wireless/ath/ath10k/qmi.c b/drivers/net/wireless/ath/ath10k/qmi.c
+> index eb618a2652db..5ff8cfc93778 100644
+> --- a/drivers/net/wireless/ath/ath10k/qmi.c
+> +++ b/drivers/net/wireless/ath/ath10k/qmi.c
+> @@ -265,10 +265,13 @@ static int ath10k_qmi_bdf_dnld_send_sync(struct ath10k_qmi *qmi)
+>  			goto out;
+>  
+>  		if (resp.resp.result != QMI_RESULT_SUCCESS_V01) {
+> -			ath10k_err(ar, "failed to download board data file: %d\n",
+> -				   resp.resp.error);
+> -			ret = -EINVAL;
+> -			goto out;
+> +			if (!(req->end == 1 &&
+> +			      resp.resp.result == QMI_ERR_MALFORMED_MSG_V01)) {
 
->
-> The secondary reason is I found that the schema was broken anyways.  In
-> the way it was written, if you implemented sleep, you could not skip
-> xo_ao, however there is a dts that did exactly that.
+Perhaps worth adding a comment in the code as well, to describe what
+scenario this relates to?
 
-If a dts can be updated in a compatible way, we should do that rather
-than carry inconsistencies into the schema.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> The third reason was that I couldn't find a way to write valid yaml to
-> preserve the original meaning.  when you have an "items" as a subnode of
-> "oneOf", you no longer have control over the minItems/maxItems, so all 3
-> became required anyways.
+Regards,
+Bjorn
 
-That would be a bug. You're saying something like this doesn't work?:
-
-oneOf:
-  - minItems: 1
-    maxItems: 3
-    items:
-      - const: a
-      - const: b
-      - const: c
-
->  I find it disappointing that the "version" of
-> Yaml used for DT bindings is not documented,
-
-Not sure which part you mean? json-schema is the vocabulary which has
-a spec. The meta-schema then constrains what the json-schema structure
-should look like. That's still evolving a bit as I try to improve it
-based on mistakes people make. Then there's the intermediate .dt.yaml
-format used internally. That's supposed to stay internal and may go
-away when/if we integrate the validation into dtc.
-
-> so after several hours of
-> trial and error, I just gave up since I found this to work (failed cases
-> just gave me an error with no indication of what was wrong, not even a
-> line number).
-
-Schema failures or dts failures? It is possible to get line numbers
-for either, but that makes validation much slower. In the latter case,
-the line numbers aren't too useful either given they are for the
-.dt.yaml file and not the .dts source file (dtc integration would
-solve that). Adding '-n' to dt-doc-validate or dt-validate will turn
-them on though.
-
-Yes, error messages need work. I have some idea how to improve them,
-but haven't had time to implement. Too many binding reviews... You can
-get more detail with '-v' option. It's *way* more verbose, but not
-necessarily more useful.
-
-Rob
+> +				ath10k_err(ar, "failed to download board data file: %d\n",
+> +					   resp.resp.error);
+> +				ret = -EINVAL;
+> +				goto out;
+> +			}
+>  		}
+>  
+>  		remaining -= req->data_len;
+> -- 
+> 2.17.1
+> 
