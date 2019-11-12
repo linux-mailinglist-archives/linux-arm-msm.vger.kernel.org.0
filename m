@@ -2,118 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 460B5F94CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 16:54:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 84FCBF951C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 17:07:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726983AbfKLPyD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 10:54:03 -0500
-Received: from mail-io1-f65.google.com ([209.85.166.65]:46880 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726659AbfKLPyD (ORCPT
+        id S1726981AbfKLQHT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 11:07:19 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:52512 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726979AbfKLQHT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 10:54:03 -0500
-Received: by mail-io1-f65.google.com with SMTP id i11so2414931iol.13;
-        Tue, 12 Nov 2019 07:54:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+1IEojNQRKaJ8R6eORbksbI7U86NwchAf1hHUgJqjpo=;
-        b=vYzeDsKt+LCERvwGBGKTwYAcLMKlX8aTKqabbg0JK21GrAPQcAhDLvykQYDpYPAfJD
-         YSLYQ/FE+wZZfSIQTQ/Yfl7Kw7kSvXi9QyWB6LnGZyemMZ6LiHXsf8SBT7XwYboj2/fu
-         Kc+wpOunu+fXCe3b7ri344w3kI5J9edQYl1tiVytFiYlbAwhRtaT0WXT5jCSWw716too
-         Q02zA9iTCBInKENJ51YRMfMNNCjJ5PauBVoxh0PBk6wdYk9bDhvS9ZKW0ilYrVAtX7W1
-         Yn6Rx7f6IU9i++q919E5gjvTNU0yqQ0AZ4FGOiMGZB4HJ2Iq9ooJBWBWz0aO7yYrfqu8
-         BgbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+1IEojNQRKaJ8R6eORbksbI7U86NwchAf1hHUgJqjpo=;
-        b=QTH5g4tuxBVRrZyQR9e/hMRksN/4FDMzP0nsD+QejUdrhd1IZzNYTpiuTd83qDUcMB
-         2UT7cLVIumxDlyMeqdxvNGioSMfa9TOzpQmL0EDh/kQ2ih1izIguMEn5pd13P+5qBLzu
-         FyAVkXkMpDfVb/nwpRLAlReWPVR+MmB3y7srJQsU/EuYJLe8FBFIWxNJ4amCfCTUw07N
-         Kd/9sVs+CY6IdOyS9YMTEQoCVGJihNsMZ6sGy1Cw9fwHAoCEDy8PbCJ9t/BmIt8cyxHu
-         AabGWzFDdU5j3ZS1SCu0pWkeiSG7p3L2QZxyFl8oOTCWbaSJtm06Sz2PucvEoq70Gay/
-         ysXg==
-X-Gm-Message-State: APjAAAV+LjByOepCchutb13qyGV+oEtaN8y1UQ11Pr91dDaZ4ZwTwknO
-        9+5caMrzhypTUZdc7+XjVRV3iNm8Z4dU8LLgrAw=
-X-Google-Smtp-Source: APXvYqynO/p313AXOl/WdxEoymEYNA7twP36L4Z5wcKFago9vMAZVo1EBJvr39aEvnOSMtl/ae0Wh7uuhz+Vh0aPrHg=
-X-Received: by 2002:a5e:8a04:: with SMTP id d4mr31139489iok.42.1573574042003;
- Tue, 12 Nov 2019 07:54:02 -0800 (PST)
+        Tue, 12 Nov 2019 11:07:19 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 9198060D5A; Tue, 12 Nov 2019 16:07:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573574838;
+        bh=LtdKcCfVo09bqodGRKYu7E6Q5R2Ji4qgLnYieGU7L6A=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=UEP+wHeyrWuVdLonKfdbdzmWmJ9yCEDkzMYyakEYGPVh5hRNkUn3l0CDilTj2Pj19
+         wjt07eyuavu6cbXlaC0aEv5pqIm9u5OtOCmrNkqvfEzfdV7Ud+kb93pKFNzXtuunQI
+         m5mAgKl/Ubt9TmPZons5Iq1fDehmae40iDVjVUSk=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E653C601A3;
+        Tue, 12 Nov 2019 16:07:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573574837;
+        bh=LtdKcCfVo09bqodGRKYu7E6Q5R2Ji4qgLnYieGU7L6A=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=Ki3rrQA/x0Par42iQQdjt9YYMo8co5xQwgIJ4DTs8HEVdYt7TnRUCc1QKP2PE9yI2
+         YjpK6y1ONdpJTu3k1mYW3bMLiBe5BNYskHsgT2PCcWN6oXUFCfHc1+HQ89wWyljFoB
+         p5oGDbyx/JChLIRrkMJepWfTkppEoXaWeyC7UR48=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E653C601A3
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v8 3/4] dt-bindings: clock: Add support for the MSM8998
+ mmcc
+To:     Rob Herring <robh@kernel.org>
+Cc:     mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, marc.w.gonzalez@free.fr,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <1573254987-10241-1-git-send-email-jhugo@codeaurora.org>
+ <1573255068-10400-1-git-send-email-jhugo@codeaurora.org>
+ <20191112005527.GA7038@bogus>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <b759445d-211e-b002-f193-a0dfcaaca449@codeaurora.org>
+Date:   Tue, 12 Nov 2019 09:07:15 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-References: <20191106234712.2380-1-jeffrey.l.hugo@gmail.com> <20191112090444.ak2xu67eawfgpdgb@netronome.com>
-In-Reply-To: <20191112090444.ak2xu67eawfgpdgb@netronome.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Tue, 12 Nov 2019 08:53:51 -0700
-Message-ID: <CAOCk7NoXv2-8GO=VYS8dNPJF6sj=S3RbkfqQGW0kvvVmR8V1kw@mail.gmail.com>
-Subject: Re: [PATCH] ath10k: Handle "invalid" BDFs for msm8998 devices
-To:     Simon Horman <simon.horman@netronome.com>
-Cc:     kvalo@codeaurora.org, davem@davemloft.net,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, MSM <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20191112005527.GA7038@bogus>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 12, 2019 at 2:04 AM Simon Horman <simon.horman@netronome.com> wrote:
->
-> On Wed, Nov 06, 2019 at 03:47:12PM -0800, Jeffrey Hugo wrote:
-> > When the BDF download QMI message has the end field set to 1, it signals
-> > the end of the transfer, and triggers the firmware to do a CRC check.  The
-> > BDFs for msm8998 devices fail this check, yet the firmware is happy to
-> > still use the BDF.  It appears that this error is not caught by the
-> > downstream drive by concidence, therefore there are production devices
-> > in the field where this issue needs to be handled otherwise we cannot
-> > support wifi on them.  So, attempt to detect this scenario as best we can
-> > and treat it as non-fatal.
-> >
-> > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> > ---
-> >  drivers/net/wireless/ath/ath10k/qmi.c | 11 +++++++----
-> >  1 file changed, 7 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/drivers/net/wireless/ath/ath10k/qmi.c b/drivers/net/wireless/ath/ath10k/qmi.c
-> > index eb618a2652db..5ff8cfc93778 100644
-> > --- a/drivers/net/wireless/ath/ath10k/qmi.c
-> > +++ b/drivers/net/wireless/ath/ath10k/qmi.c
-> > @@ -265,10 +265,13 @@ static int ath10k_qmi_bdf_dnld_send_sync(struct ath10k_qmi *qmi)
-> >                       goto out;
-> >
-> >               if (resp.resp.result != QMI_RESULT_SUCCESS_V01) {
-> > -                     ath10k_err(ar, "failed to download board data file: %d\n",
-> > -                                resp.resp.error);
-> > -                     ret = -EINVAL;
-> > -                     goto out;
-> > +                     if (!(req->end == 1 &&
-> > +                           resp.resp.result == QMI_ERR_MALFORMED_MSG_V01)) {
->
-> Would it make sense to combine the inner and outer condition,
-> something like this (completely untested) ?
+On 11/11/2019 5:55 PM, Rob Herring wrote:
+> On Fri,  8 Nov 2019 16:17:48 -0700, Jeffrey Hugo wrote:
+>> Document the multimedia clock controller found on MSM8998.
+>>
+>> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+>> ---
+>>   .../devicetree/bindings/clock/qcom,mmcc.yaml       |  36 ++++
+>>   include/dt-bindings/clock/qcom,mmcc-msm8998.h      | 210 +++++++++++++++++++++
+>>   2 files changed, 246 insertions(+)
+>>   create mode 100644 include/dt-bindings/clock/qcom,mmcc-msm8998.h
+>>
+> 
+> Please add Acked-by/Reviewed-by tags when posting new versions. However,
+> there's no need to repost patches *only* to add the tags. The upstream
+> maintainer will do that for acks received on the version they apply.
+> 
+> If a tag was not added on purpose, please state why and what changed.
+> 
 
-I guess, make sense from what perspective?  Looks like the assembly
-ends up being the same, so it would be down to "readability" which is
-subjective - I personally don't see a major advantage to one way or
-the other.  It does look like Kalle already picked up this patch, so
-I'm guessing that if folks feel your suggestion is superior, then it
-would need to be a follow on.
+Ya know, normally you are right about this, as I did something stupid, 
+but in this case I did mention in the cover letter that tags were 
+dropped because the bindings were re-written in yaml (ie no one had 
+reviewed the new code).
 
->
->                 if (resp.resp.result != QMI_RESULT_SUCCESS_V01 &&
->                     !(req->end == 1 &&
->                       resp.resp.result == QMI_ERR_MALFORMED_MSG_V01)) {
->
-> > +                             ath10k_err(ar, "failed to download board data file: %d\n",
-> > +                                        resp.resp.error);
-> > +                             ret = -EINVAL;
-> > +                             goto out;
-> > +                     }
-> >               }
-> >
-> >               remaining -= req->data_len;
-> > --
-> > 2.17.1
-> >
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
