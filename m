@@ -2,119 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FEF8F9658
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 17:56:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C25E2F9678
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 18:02:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727431AbfKLQzy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 11:55:54 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:50874 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727202AbfKLQzx (ORCPT
+        id S1726962AbfKLRBv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 12:01:51 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:36733 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726896AbfKLRBu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 11:55:53 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id DA0FA60F33; Tue, 12 Nov 2019 16:55:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573577753;
-        bh=2qpw0n4O5/VIIorasibWq8jjTR8oYNzI+JNmPHLt2pY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=iGmZdbQY66/bgutJyGZVBGTaKUuS8gepGQsU64940awZpY2+X1sD5qNEOW+V0ZAoH
-         vxhd/0kI4Ht1oDTdl1EULXWaN3AIvSf0EjKZ+3SFn0y8nsHK/+IMc18lS9zE+HZM80
-         4BGB687GMhlzpInsbZe4bgMJw1IFmc5306zA4P+0=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9FE5960A1D;
-        Tue, 12 Nov 2019 16:55:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573577751;
-        bh=2qpw0n4O5/VIIorasibWq8jjTR8oYNzI+JNmPHLt2pY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=aiEuMyLFE2BX5DhMR98stwoqCmSOxUKjan2nekilbOoz+9b5qK92E9833VzN9ojXj
-         KMdgeU+3XtXJHGLB2w9+waQSniDtc1F2JUjdFxUFw+XJDdUhJVyoCqE+JVmkAGmOjp
-         iEWRPErsxAAyWyAmlqe1R3DNZ0weD+LIl63yueoo=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9FE5960A1D
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Tue, 12 Nov 2019 09:55:48 -0700
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     y2038@lists.linaro.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Sam Ravnborg <sam@ravnborg.org>, Joe Perches <joe@perches.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        "Kristian H. Kristensen" <hoegsberg@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 14/16] drm/msm: avoid using 'timespec'
-Message-ID: <20191112165548.GB14014@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Arnd Bergmann <arnd@arndb.de>, y2038@lists.linaro.org,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Sam Ravnborg <sam@ravnborg.org>, Joe Perches <joe@perches.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        "Kristian H. Kristensen" <hoegsberg@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-References: <20191108213257.3097633-1-arnd@arndb.de>
- <20191108213257.3097633-15-arnd@arndb.de>
+        Tue, 12 Nov 2019 12:01:50 -0500
+Received: by mail-io1-f68.google.com with SMTP id s3so19527896ioe.3;
+        Tue, 12 Nov 2019 09:01:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Vni8rys6ZklkTBMHKTTW6jcdNhCX0bfUBFLTk67Zs9E=;
+        b=e8ar+oq0GDEo7IaX6MH6RqIH3QsQFxZVBJQIFnqucTGzfX9WAuCsGamP/KjECKigFW
+         TZoUR7HmmxTO6MQetBUtHNxSYfrB/I9wlIMriEBsNfko/8cOQCn8q0lq35KpUOh0f9GY
+         TZncq19vNpOB9pYO2D2BbeUoYIau2NyksmBlh/Z/S1Nmx/EaedO6H81V+7k4WaOryztx
+         mWrLXdtH24XL5fhSHJU5GbDL1k6lZ5aRvX9Fmc2fDFlMh+yvMPdfHlq1QGf/sg/i9M5K
+         AdlWnjU9VaLKOXxq74f8wsqlbeRKteHN9vaGoLp91oNggNKqHVBVVQEj/WRLBBpXEQQW
+         cJLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Vni8rys6ZklkTBMHKTTW6jcdNhCX0bfUBFLTk67Zs9E=;
+        b=iev3UBy3y/bTuc/uzeuj0NazuUzkO72a9d5X/uU2Yd894nePYA1K234RfnPWHzzCWv
+         HPgFDGlf65rfKInqY6i5ITHOVmPPyl8yzWBU13luya2w+vQ0G6E00epnnem7fmsGSTe2
+         /UXhdRALsUKkMxUYZK589JS6Bc8lSE9mIe6uWwSdGZXxYiYL4ONb2Z0ijGSKGjT1gOJH
+         QDi3Vc77YhLHIhjS92C8sH5OBxrD//rbSkkSMRL5wROkQKXvNUnNlOyHnxQtQKYN76kO
+         nn6MVOv1bVhAbYRoNruaTVUxb+FXgV1zV1CJPVihxepXJ/Jhp/NpAMjxO6uBN7+r7ALx
+         vRdQ==
+X-Gm-Message-State: APjAAAWD0rr7NndOZBmOv+R/xorSCSzWuuGeWSvzFyEAX2ktbLry4LIc
+        4MH8C0ORJ4YanJgaY+JHryM/v6x1mMUFr4t7DfI38Q==
+X-Google-Smtp-Source: APXvYqxBVtW6LRqSJQc0/Lj51xsGUFxCMeucmANELSomPYdSxtS3JOUFeagPtUQt3YLgqoMfrKoXDkYknusFnw8I6oI=
+X-Received: by 2002:a6b:f60f:: with SMTP id n15mr6392824ioh.263.1573578109461;
+ Tue, 12 Nov 2019 09:01:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191108213257.3097633-15-arnd@arndb.de>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20191109004033.1496871-1-bjorn.andersson@linaro.org> <20191109004033.1496871-2-bjorn.andersson@linaro.org>
+In-Reply-To: <20191109004033.1496871-2-bjorn.andersson@linaro.org>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Tue, 12 Nov 2019 10:01:38 -0700
+Message-ID: <CAOCk7NrkpwyuZnq7C3CgLDBHoCXM=SMxvt_iv+nQzS9atT3B9A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] remoteproc: qcom_q6v5_mss: Don't reassign mpss
+ region on shutdown
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Ohad Ben-Cohen <ohad@wizery.com>,
+        Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org,
+        lkml <linux-kernel@vger.kernel.org>,
+        Sibi Sankar <sibis@codeaurora.org>, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 08, 2019 at 10:32:52PM +0100, Arnd Bergmann wrote:
-> The timespec structure and associated interfaces are deprecated and will
-> be removed in the future because of the y2038 overflow.
-> 
-> The use of ktime_to_timespec() in timeout_to_jiffies() does not
-> suffer from that overflow, but is easy to avoid by just converting
-> the ktime_t into jiffies directly.
+On Fri, Nov 8, 2019 at 5:40 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> Trying to reclaim mpss memory while the mba is not running causes the
+> system to crash on devices with security fuses blown, so leave it
+> assigned to the remote on shutdown and recover it on a subsequent boot.
+>
+> Fixes: 6c5a9dc2481b ("remoteproc: qcom: Make secure world call for mem ownership switch")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-This seems good to me. y2038 changes are the best changes.
+Stuff still works on the laptop, and I don't hit the access violation
+with the crash dump scenario on the mtp.
 
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Tested-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 > ---
->  drivers/gpu/drm/msm/msm_drv.h | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 71547e756e29..740bf7c70d8f 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -454,8 +454,7 @@ static inline unsigned long timeout_to_jiffies(const ktime_t *timeout)
->  		remaining_jiffies = 0;
->  	} else {
->  		ktime_t rem = ktime_sub(*timeout, now);
-> -		struct timespec ts = ktime_to_timespec(rem);
-> -		remaining_jiffies = timespec_to_jiffies(&ts);
-> +		remaining_jiffies = ktime_divns(rem, NSEC_PER_SEC / HZ);
->  	}
->  
->  	return remaining_jiffies;
-> -- 
-> 2.20.0
-> 
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+>
+> Changes since v1:
+> - Assign memory back to Linux in coredump case
+>
+>  drivers/remoteproc/qcom_q6v5_mss.c | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
+>
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index de919f2e8b94..efab574b2e12 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -875,11 +875,6 @@ static void q6v5_mba_reclaim(struct q6v5 *qproc)
+>                 writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
+>         }
+>
+> -       ret = q6v5_xfer_mem_ownership(qproc, &qproc->mpss_perm,
+> -                                     false, qproc->mpss_phys,
+> -                                     qproc->mpss_size);
+> -       WARN_ON(ret);
+> -
+>         q6v5_reset_assert(qproc);
+>
+>         q6v5_clk_disable(qproc->dev, qproc->reset_clks,
+> @@ -969,6 +964,10 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+>                         max_addr = ALIGN(phdr->p_paddr + phdr->p_memsz, SZ_4K);
+>         }
+>
+> +       /* Try to reset ownership back to Linux */
+> +       q6v5_xfer_mem_ownership(qproc, &qproc->mpss_perm, false,
+> +                               qproc->mpss_phys, qproc->mpss_size);
+> +
+>         mpss_reloc = relocate ? min_addr : qproc->mpss_phys;
+>         qproc->mpss_reloc = mpss_reloc;
+>         /* Load firmware segments */
+> @@ -1058,9 +1057,14 @@ static void qcom_q6v5_dump_segment(struct rproc *rproc,
+>         void *ptr = rproc_da_to_va(rproc, segment->da, segment->size);
+>
+>         /* Unlock mba before copying segments */
+> -       if (!qproc->dump_mba_loaded)
+> +       if (!qproc->dump_mba_loaded) {
+>                 ret = q6v5_mba_load(qproc);
+>
+> +               /* Try to reset ownership back to Linux */
+> +               q6v5_xfer_mem_ownership(qproc, &qproc->mpss_perm, false,
+> +                                       qproc->mpss_phys, qproc->mpss_size);
+> +       }
+> +
+>         if (!ptr || ret)
+>                 memset(dest, 0xff, segment->size);
+>         else
+> @@ -1111,10 +1115,6 @@ static int q6v5_start(struct rproc *rproc)
+>         return 0;
+>
+>  reclaim_mpss:
+> -       xfermemop_ret = q6v5_xfer_mem_ownership(qproc, &qproc->mpss_perm,
+> -                                               false, qproc->mpss_phys,
+> -                                               qproc->mpss_size);
+> -       WARN_ON(xfermemop_ret);
+>         q6v5_mba_reclaim(qproc);
+>
+>         return ret;
+> --
+> 2.23.0
+>
