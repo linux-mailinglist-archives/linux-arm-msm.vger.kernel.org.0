@@ -2,85 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F32BBF95A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 17:27:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD5B3F95B2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 17:32:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727185AbfKLQ1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 11:27:24 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:43406 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727142AbfKLQ1X (ORCPT
+        id S1727183AbfKLQcV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 11:32:21 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:41606 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726799AbfKLQcV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 11:27:23 -0500
-Received: by mail-ed1-f66.google.com with SMTP id w6so15384234edx.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2019 08:27:22 -0800 (PST)
+        Tue, 12 Nov 2019 11:32:21 -0500
+Received: by mail-ed1-f67.google.com with SMTP id a21so15417908edj.8;
+        Tue, 12 Nov 2019 08:32:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=qNdulMghwGPBvmgJ8scwCvXDFRwh4jWCkPxL6qrSIjQ=;
-        b=WsNhISOt+hJkwbT7YN0D/1CAbxYs1x64PK9hVpM/9Lp0tdTDzA1sdtCfQ9ORQHddmu
-         SWw8MeBIFdqKCnfB+CTPjClScqjYAUa7xGNsH0xea1alpD0KKDb/71jlBRziY7Qd9qdx
-         KV0CvxkV5t6cSBUmoO5okM/7FYAgHCCesvlZyrCbTxeCe4tdDMsW85Doqmswx63GE7wZ
-         uYnLA+nQOsZqzuDT/yn8FPnBx5G04jDhrvGNcWr/+fINHW+iqGAPut6Np2TO1MBBWLIQ
-         mP8HdO9X3/9rvAsSXiTtY7np2QYRsalD3mhKoXcvIAmObokb1mwSJwDNBpAtw/Rzq2tr
-         tPFw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=e2Jz3E/qC25NF9IiKUouiFwK/DvFsp3VH/99djW83Tw=;
+        b=juR6/t7s9JzCUry7/6lTMFF27i/rneVimIPKY2HgzFAnMiFuV1WmO2ww+Pj8PdVbej
+         qP6gfhPakJK4d6SPvlUeYiQWRLeOka1T5sxZZLeaLfpdnYbQ46HBKD5amyqCU6c8u5nW
+         m9YuvO9yG5zyNdHia7jl93PojR4QMnOZj/9qK/h2bw+OdnE5vgw/8B95LZ5HFdCvF500
+         K9rOVtrRpx3vVI/iVCupSf21kBaSLBnRbBJdWNbM+WjxE8v33s1/0LZU/1bkbih/Uvk1
+         H56RFOj2/JCuZqeW0hNsE0Gci+GtOe0ILTaF4vIDij05gs6AXmjaeyVB4RgsjMf+3uQh
+         yXkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=qNdulMghwGPBvmgJ8scwCvXDFRwh4jWCkPxL6qrSIjQ=;
-        b=hVpyASNGtue/9iwkdUHK/aRzLe3cVcuqp8xilvChf8bPfH7tbB3+65Bq4vM/yQqAU/
-         5L1b8K9u3JxGQcrDRtJP9J/dMg+o8bYGqkR+akv0uKGZXdUakmzOVvEAPVedXJSMOQ4L
-         l07lN5DAcMhSW9r6q9DVrs8fCTp2uaVciHDp7CrmYnt2LiF49WlEdiqEOWMaESNu9Dw/
-         IHpPoM+iL/XE3xc5IuC5UyR65BCdqPjqXYdq+rRVBeOuHHp5ZQ5eAuKymK8tTgICJvGO
-         aTs6ne7wle3GJjE6iX4WZYFZc9bJwhF9Hti/xGbCjDVIQV136RzSLe4Y8ej4pThXwbnX
-         iLLg==
-X-Gm-Message-State: APjAAAXxBcdtOrBp3aoDV0JYZ2Y7pOnscnJQcIZ8hlWuSIWDvYNiW2NP
-        WB9wLIF6ZBT20Mxxj8A/Lzfx4CkQGaLa3eCbosk=
-X-Google-Smtp-Source: APXvYqyx6ZSP9pia1ghp0mGM0db9pMWKu3Ilw5isnMyYCLiKlWaoj5hSNiGZLYdu7/xruRv858z6c1CJ/zVYY273ryQ=
-X-Received: by 2002:a05:6402:142c:: with SMTP id c12mr33378742edx.96.1573576041909;
- Tue, 12 Nov 2019 08:27:21 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=e2Jz3E/qC25NF9IiKUouiFwK/DvFsp3VH/99djW83Tw=;
+        b=tBvbb2PAXL/CevqviHs6GcibHgRUuo7bdMjJBRNLPcsO4RuBoDdeq4biQsUj8Oulmr
+         vIZaW+xm437l6iKVQF6+YGGw5t9AaqshMlNMBT4GDf+HWDRp8Q95jC9uFDoidkGlmUyZ
+         Kw/97pjzy6P3dxHVJpD2D+SS5DUirlaaBegvZN8B2QtbEEwDWhrEWgwG7AHWgExO1dgZ
+         Gh6t5V669STraYmo5PHOz7wpytzfuZV9DNi7s8daZQ3hNHej8OxUerNcwdODYVuBs0kd
+         WxvMc8zUA84UA8It+bIsAs9TWb4uEslBL1UzND9nd8daaMN20lpmI4eFn6uTSgV61liC
+         YDew==
+X-Gm-Message-State: APjAAAXI6InRXONHPE0zbKQnwVtv6POTfm94xYG9CzGhovIPknsA3Hm4
+        Twd+9E5c5CakRmXiFyCWvGjgL9MytIWMIDNEkpQBkhj2
+X-Google-Smtp-Source: APXvYqxUJWvwSmr0nM3W2I8m8qS350GR+Yh1XQx0NXoCk7SkB+BvkcrjP5jRJcrXZBYMM4/uW4AMh0vphypZhJFQYwE=
+X-Received: by 2002:a17:906:73d5:: with SMTP id n21mr29350021ejl.228.1573576338515;
+ Tue, 12 Nov 2019 08:32:18 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a05:6402:1118:0:0:0:0 with HTTP; Tue, 12 Nov 2019 08:27:21
- -0800 (PST)
-Reply-To: walmart.b100263@gmail.com
-From:   "MS. MARYANNA B. THOMASON" <eco.bank1204@gmail.com>
-Date:   Tue, 12 Nov 2019 17:27:21 +0100
-Message-ID: <CAOE+jAB_cP8q9vvBDV62=BwoQhn_GcPJhAZsCyhMAnjxyg9-YA@mail.gmail.com>
-Subject: CONTACT WALMART TRANSFER To pick up $5000 sent to you this morning
-To:     undisclosed-recipients:;
+References: <20191010131333.23635-1-johan@kernel.org> <20191010131333.23635-2-johan@kernel.org>
+ <20191030100146.GC4691@localhost> <20191112104001.GP11035@localhost> <20191112140155.GJ23790@phenom.ffwll.local>
+In-Reply-To: <20191112140155.GJ23790@phenom.ffwll.local>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 12 Nov 2019 08:32:07 -0800
+Message-ID: <CAF6AEGvom2wZ89434VLhhgAHCk_MMCGRbxSO+DQsX=+LPOCy8A@mail.gmail.com>
+Subject: Re: [PATCH 1/4] drm/msm: fix memleak on release
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     Johan Hovold <johan@kernel.org>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Heiko Carstens <heiko.carstens@de.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@de.ibm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-media@vger.kernel.org, linux-s390@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        stable <stable@vger.kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Harald Freudenberger <freude@linux.ibm.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Fabien Dessenne <fabien.dessenne@st.com>,
+        Dave Airlie <airlied@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
- CONTACT WALMART TRANSFER To pick up $5000 sent to you this morning
+On Tue, Nov 12, 2019 at 6:01 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+>
+> On Tue, Nov 12, 2019 at 11:40:01AM +0100, Johan Hovold wrote:
+> > On Wed, Oct 30, 2019 at 11:01:46AM +0100, Johan Hovold wrote:
+> > > On Thu, Oct 10, 2019 at 03:13:30PM +0200, Johan Hovold wrote:
+> > > > If a process is interrupted while accessing the "gpu" debugfs file and
+> > > > the drm device struct_mutex is contended, release() could return early
+> > > > and fail to free related resources.
+> > > >
+> > > > Note that the return value from release() is ignored.
+> > > >
+> > > > Fixes: 4f776f4511c7 ("drm/msm/gpu: Convert the GPU show function to use the GPU state")
+> > > > Cc: stable <stable@vger.kernel.org>     # 4.18
+> > > > Cc: Jordan Crouse <jcrouse@codeaurora.org>
+> > > > Cc: Rob Clark <robdclark@gmail.com>
+> > > > Signed-off-by: Johan Hovold <johan@kernel.org>
+> > > > ---
+> > >
+> > > Rob, Sean,
+> > >
+> > > Sending a reminder about this one, which is not yet in linux-next.
+> > >
+> > > Perhaps Daniel can pick it up otherwise?
+> >
+> > Another two weeks, another reminder. This one is still not in -next.
+>
+> Well msm is maintained in a separate tree, so the usual group maintainer
+> fallback for when patches are stuck doesn't apply.
 
-Attn Dear Beneficiary.
-Happy to inform you,I have deposited your payment funds
-$10.500,000MillionUS DollarsWith Walmart international money
-transfers.
-Receive the Money with Walmart | MoneyGram service.
-Walmart partners with MoneyGram to allow customers
-easily receive money transfers abroad,
-Contact Walmart international money transfers office -Benin
-Receive your approval payment funds $10.500,000MillionUS Dollars
-HERE IS WALMART CONTACT INFORMATIONS.
-Contact person. Mrs. Mary Anderson,Dir. Walmart transfers-Benin
-Email: walmart.b100263@gmail.com
-Telephone. +229 68823234
-Text Her on this international phone line. (256) 284-4886
-Ask Mrs. Mary Anderson,Dir. Walmart transfers-Benin to send the transfer
-as i instructed.
-we agreed to keep sending the transfer to you $5000.00 daily.
-Until you received your total payment $10.500,000 from the office
-Once again,
-make sure you contact Mrs. Mary Anderson,Dir. Walmart transfers-Benin
-today including your infos.
-(1) Your  Full Name==============
-(2) house address=============
-(3) Your Phone Numbers=============
-Urgent to receive your transfer now without any further delay.
-Thanks
-MS. MARYANNA B. THOMASON
+oh, sorry, this wasn't showing up in patchwork.. or rather it did but
+the non-msm related series subject made me overlook it.
+
+I've already sent a PR, but this shouldn't conflict with anything and
+I think it can go in via drm-misc/fixes
+
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+
+> Rob, Sean, time to reconsider drm-misc for msm? I think there's some more
+> oddball patches that occasionally get stuck for msm ...
+>
+> Also +Dave.
+> -Daniel
+>
+> >
+> > Johan
+> >
+> > > >  drivers/gpu/drm/msm/msm_debugfs.c | 6 +-----
+> > > >  1 file changed, 1 insertion(+), 5 deletions(-)
+> > > >
+> > > > diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
+> > > > index 6be879578140..1c74381a4fc9 100644
+> > > > --- a/drivers/gpu/drm/msm/msm_debugfs.c
+> > > > +++ b/drivers/gpu/drm/msm/msm_debugfs.c
+> > > > @@ -47,12 +47,8 @@ static int msm_gpu_release(struct inode *inode, struct file *file)
+> > > >   struct msm_gpu_show_priv *show_priv = m->private;
+> > > >   struct msm_drm_private *priv = show_priv->dev->dev_private;
+> > > >   struct msm_gpu *gpu = priv->gpu;
+> > > > - int ret;
+> > > > -
+> > > > - ret = mutex_lock_interruptible(&show_priv->dev->struct_mutex);
+> > > > - if (ret)
+> > > > -         return ret;
+> > > >
+> > > > + mutex_lock(&show_priv->dev->struct_mutex);
+> > > >   gpu->funcs->gpu_state_put(show_priv->state);
+> > > >   mutex_unlock(&show_priv->dev->struct_mutex);
+>
+> --
+> Daniel Vetter
+> Software Engineer, Intel Corporation
+> http://blog.ffwll.ch
