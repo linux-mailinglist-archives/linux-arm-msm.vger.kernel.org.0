@@ -2,114 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 96F48F9868
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 19:18:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 50470F98DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 19:37:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727162AbfKLSSu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 13:18:50 -0500
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:35328 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726912AbfKLSSu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 13:18:50 -0500
-Received: by mail-ot1-f68.google.com with SMTP id z6so15177076otb.2;
-        Tue, 12 Nov 2019 10:18:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XTjrI15sJKpXt7dvewwDXHz0pV+jFPaIY5CBR1+M5B8=;
-        b=RXZsxcyWXB5gzaKeez4c9288OBzj9Zo01HOIeoOMvveHruIEyNKkVi+9s6I1vQd8iF
-         i+dYIsoMTxEf8JcovkcVJTcIYRT+ycop9cdVLSjM6TlecGlUN4I0w8t0Ie1evCREs5XA
-         Fu4XhD6TUw7Hzb0bJ42ImFdOXc5KyjeTQgpiE5qhAfHsOP/5XG2Fz8iV2nBHahEhOsmd
-         Wf4wX9dTfKzWZ0yL22MnPeXcKMDrneO8QMmX7Jxqdd3LOHKeUhHRVbRsP7Dfl+nAxBU3
-         DSlv2NSKKU9luRve65jltlqT6iaoDL94BF1P7CoAJfOxUnjxb9yCqqkSzYbLg1ZazllQ
-         37MA==
-X-Gm-Message-State: APjAAAVT9bCfAHvG7Zphvf40s3IPeB+abFPkC06lFrNgOStTkf9v/yJk
-        vSYpvJcyiobg/f7SS99tA8Ir65o9g7nRVOlXya0=
-X-Google-Smtp-Source: APXvYqzD+0NmN816zDyFVW7CaZTRm/xP/54mEwEWwWhYEoQSfE5Y17LnYKLFTjDPUOLhknTl9poWdDu1inn62pEqTEM=
-X-Received: by 2002:a9d:5511:: with SMTP id l17mr2705329oth.145.1573582728911;
- Tue, 12 Nov 2019 10:18:48 -0800 (PST)
+        id S1726978AbfKLShS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 13:37:18 -0500
+Received: from mail.kernel.org ([198.145.29.99]:55880 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726952AbfKLShS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Nov 2019 13:37:18 -0500
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9B7B721D7F;
+        Tue, 12 Nov 2019 18:37:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1573583837;
+        bh=ClsBijm+tV2ywGmWiMMRKvlFiYq/cLBsl5lNg89WwmM=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=vruLFu7ENpBlykbdo/Y+H4Y3SP/8xiOwkSOXipue5AFlMZwYISAABQGOsHRNX+597
+         +BUbMZ7NOeZabQG+6KyrNEOUdKZ7Wu2bXUIFXcHZn326+LfItqW7K6t+9Vi1JBZKfo
+         1p9mW8cdtnPZCRvc3FliDt5E/x7ikMvQHP0WuySQ=
+Received: by mail-qk1-f182.google.com with SMTP id e187so15389481qkf.4;
+        Tue, 12 Nov 2019 10:37:17 -0800 (PST)
+X-Gm-Message-State: APjAAAVSB2Uq+isYQHCsx8iS6wzu0kY0j1YD8fnye0BEWD6M6FctY/qi
+        LVOVpcIN81pWn1lpTUNmZLo1nTcB5TKu8/NWzA==
+X-Google-Smtp-Source: APXvYqy4jjbxFKDPV7vSCOnen2eNnt02ZnVZpXB+MPur6jIpEK2TUR0oOqnkMSo4LuntV0L3+UCZlhm9vRywGKUM/gM=
+X-Received: by 2002:ae9:dd83:: with SMTP id r125mr8603172qkf.223.1573583836697;
+ Tue, 12 Nov 2019 10:37:16 -0800 (PST)
 MIME-Version: 1.0
-References: <20191112141819.GA22076@localhost.localdomain>
-In-Reply-To: <20191112141819.GA22076@localhost.localdomain>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Tue, 12 Nov 2019 19:18:37 +0100
-Message-ID: <CAMuHMdW2aXF1dcs74joHu4q9xDoPAGmNFwUuVtPVSfFx9EgMmA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] pinctrl: Use new GPIO_LINE_DIRECTION
-To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Cc:     Matti Vaittinen <mazziesaccount@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Eric Anholt <eric@anholt.net>,
-        Stefan Wahren <wahrenst@gmx.net>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Sean Wang <sean.wang@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Patrice Chotard <patrice.chotard@st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
+References: <1573254987-10241-1-git-send-email-jhugo@codeaurora.org>
+ <1573255036-10302-1-git-send-email-jhugo@codeaurora.org> <20191112004417.GA16664@bogus>
+ <3e4b1342-7965-2d80-e28d-0cb728037abd@codeaurora.org>
+In-Reply-To: <3e4b1342-7965-2d80-e28d-0cb728037abd@codeaurora.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Tue, 12 Nov 2019 12:37:04 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJ3R0Y-KPKaknVT=+RTAskGhqmarb=i9ZDyX5-LzoFOjg@mail.gmail.com>
+Message-ID: <CAL_JsqJ3R0Y-KPKaknVT=+RTAskGhqmarb=i9ZDyX5-LzoFOjg@mail.gmail.com>
+Subject: Re: [PATCH v8 1/4] dt-bindings: clock: Document external clocks for
+ MSM8998 gcc
+To:     Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-rpi-kernel <linux-rpi-kernel@lists.infradead.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-mediatek@lists.infradead.org, linux-oxnas@groups.io,
-        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 12, 2019 at 3:18 PM Matti Vaittinen
-<matti.vaittinen@fi.rohmeurope.com> wrote:
-> Use newly added GPIO defines GPIO_LINE_DIRECTION_IN and
-> GPIO_LINE_DIRECTION_OUT instead of using hard-coded 1 and 0.
+On Tue, Nov 12, 2019 at 10:25 AM Jeffrey Hugo <jhugo@codeaurora.org> wrote:
 >
-> Main benefit is to make it easier to see which values mean IN and which
-> OUT. As a side effect this helps GPIO framework to change the direction
-> defines to something else if ever needed.
+> On 11/11/2019 5:44 PM, Rob Herring wrote:
+> > On Fri, Nov 08, 2019 at 04:17:16PM -0700, Jeffrey Hugo wrote:
+> >> The global clock controller on MSM8998 can consume a number of external
+> >> clocks.  Document them.
+> >>
+> >> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> >> ---
+> >>   .../devicetree/bindings/clock/qcom,gcc.yaml        | 47 +++++++++++++++-------
+> >>   1 file changed, 33 insertions(+), 14 deletions(-)
+> >>
+> >> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> >> index e73a56f..2f3512b 100644
+> >> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> >> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> >> @@ -40,20 +40,38 @@ properties:
+> >>          - qcom,gcc-sm8150
+> >>
+> >>     clocks:
+> >> -    minItems: 1
+> >
+> > 1 or 2 clocks are no longer allowed?
 >
-> Please note that return value from get_direction call on
-> pinctrl-axp209 driver was changed. Previously pinctrl-axp209 might have
-> returned value 2 for direction INPUT.
+> Correct.
 >
-> Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+> The primary reason is that Stephen indicated in previous discussions
+> that if the hardware exists, it should be indicated in DT, regardless if
+> the driver uses it.  In the 7180 and 8150 case, the hardware exists, so
+> these should not be optional.
 
-For:
+Agreed. The commit message should mention this though.
 
->  drivers/pinctrl/pinctrl-rza1.c                |  5 ++++-
->  drivers/pinctrl/pinctrl-rza2.c                |  6 +++---
+>
+> The secondary reason is I found that the schema was broken anyways.  In
+> the way it was written, if you implemented sleep, you could not skip
+> xo_ao, however there is a dts that did exactly that.
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Geert Uytterhoeven <geert+renesas@glider.be>
+If a dts can be updated in a compatible way, we should do that rather
+than carry inconsistencies into the schema.
 
-Gr{oetje,eeting}s,
+> The third reason was that I couldn't find a way to write valid yaml to
+> preserve the original meaning.  when you have an "items" as a subnode of
+> "oneOf", you no longer have control over the minItems/maxItems, so all 3
+> became required anyways.
 
-                        Geert
+That would be a bug. You're saying something like this doesn't work?:
 
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+oneOf:
+  - minItems: 1
+    maxItems: 3
+    items:
+      - const: a
+      - const: b
+      - const: c
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+>  I find it disappointing that the "version" of
+> Yaml used for DT bindings is not documented,
+
+Not sure which part you mean? json-schema is the vocabulary which has
+a spec. The meta-schema then constrains what the json-schema structure
+should look like. That's still evolving a bit as I try to improve it
+based on mistakes people make. Then there's the intermediate .dt.yaml
+format used internally. That's supposed to stay internal and may go
+away when/if we integrate the validation into dtc.
+
+> so after several hours of
+> trial and error, I just gave up since I found this to work (failed cases
+> just gave me an error with no indication of what was wrong, not even a
+> line number).
+
+Schema failures or dts failures? It is possible to get line numbers
+for either, but that makes validation much slower. In the latter case,
+the line numbers aren't too useful either given they are for the
+.dt.yaml file and not the .dts source file (dtc integration would
+solve that). Adding '-n' to dt-doc-validate or dt-validate will turn
+them on though.
+
+Yes, error messages need work. I have some idea how to improve them,
+but haven't had time to implement. Too many binding reviews... You can
+get more detail with '-v' option. It's *way* more verbose, but not
+necessarily more useful.
+
+Rob
