@@ -2,111 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A5CAF8D55
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 11:54:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F91FF8EBF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 12:40:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725881AbfKLKyw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 05:54:52 -0500
-Received: from onstation.org ([52.200.56.107]:48248 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725899AbfKLKyv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 05:54:51 -0500
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 76AAA3E994;
-        Tue, 12 Nov 2019 10:54:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1573556090;
-        bh=jjKN6d8ptQSkUyJcPph5rCkFf0mBynfnJx+7tQMICQ4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VORlG8Nn/3lq3rYkTopLtuLPXh2vlijLFzlNyEBCu4fJtdhpfSVehn+fa32ryyxyU
-         LxnIYKoabfxZU5OhptEPMIOeM3FbFpqdhWPOiHSxLbihbLXYO2eKzMOEsJFxb6pL4R
-         F+PmEubwY8vTdhKlUiQMI55U73QeJvBrbtU1alDE=
-Date:   Tue, 12 Nov 2019 05:54:50 -0500
-From:   Brian Masney <masneyb@onstation.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>
-Subject: Re: [Freedreno] drm/msm: 'pp done time out' errors after async
- commit changes
-Message-ID: <20191112105450.GA9144@onstation.org>
-References: <CAF6AEGsZkJJTNZ8SzHsSioEnkpekr1Texu5_EeBW1hP-bsOyjQ@mail.gmail.com>
- <20191107111019.GA24028@onstation.org>
- <CAF6AEGtbP=X2+DELajQq9zMZYGgmhyUhe62ncvHvyFnyZexTXg@mail.gmail.com>
- <CAOCk7NrPdGqc4vo70NmTuyszkPaPe41-e89ym2vAYBY+GTt9BA@mail.gmail.com>
- <CAJs_Fx4UJYd-k3_3AAGJo-8udThhvf6t-J=OZi3jappWjTNnFQ@mail.gmail.com>
- <CAOCk7Nq7rPmraofy+o8vWTwSAd1+dTRsoZ4QN0mRAOOz7u7TUg@mail.gmail.com>
- <20191110135321.GA6728@onstation.org>
- <CAOCk7Nr3nkUWOynxVK_0SxWKUss803_fhkdVehRajtiA9vi8ng@mail.gmail.com>
- <20191111113806.GA1420@onstation.org>
- <CAOCk7NoZN63zZQrbw-RRnbUko3OREy=15FMC7sN5M95oNb5JNw@mail.gmail.com>
+        id S1726988AbfKLLkL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 06:40:11 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:33919 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726738AbfKLLkL (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Nov 2019 06:40:11 -0500
+Received: by mail-wr1-f66.google.com with SMTP id e6so18212835wrw.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2019 03:40:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=SLuhtJEUY90bkqc19DKt+xd8yq8xw26lU1HTC8t+5Ww=;
+        b=v2f/kpHAG3P+dAelw27PbhnuN6PPubaQHKMkdlBuTKEATOxTzOE7QC7sKigDqDWOp9
+         /PomLsUcwsoNHkQ/+GUWD7yAHlQPDRoQ5D8eyMkFySsjDD4VISYFgaN77lqF9YUphhhu
+         Qz4lXcfjVX3e0gFkFiC1WAIBeq8/XOvMzJn3L3NnYO4ui/VDr7tTu6LpqiYfQTCCmKk0
+         L8SfAkihIdipXkrVlomuho9sj64bXeQ/WhJBZyJ2kYfy2gjKCLqU/IIWSoudQCjf3dX+
+         vUqg/veoDt7yVZpKAndlUgDs4sAkWdwoRdojufDpxpacK2UUDW2HtLqPGzhkWiVtldG8
+         d73g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=SLuhtJEUY90bkqc19DKt+xd8yq8xw26lU1HTC8t+5Ww=;
+        b=IDm9OD+kTIEfkICaehPTFMpAoLJUCSJV3WwNRXtVb59x/oGJnp5cRY/YdksEkPbuD/
+         A2EstupVl527pC7bQ0vFjUopYOl2Y6tU4+gfxza2x5dMK1mbd+/CYC+8FmO9WwSK4Xqd
+         hMkpCGssnvTnKeYyagmK3vw2sSJiucQ6Xl3E/60pmEaWynRNTI2b6fdKy8IbK5tYRWr0
+         kfF44qK21Ytw5aurtJ2+Qz4xKOb9Nd88NWzFQ4m/WyGTU3GLqpSP/74zTsqEQnmD/fvC
+         8ftXuggyelq8kG7208KUPO4lFSHpfGkf4+IuyedSWr7VqtdtYvmwcaJ1tVUhp5IzUD5t
+         LXyA==
+X-Gm-Message-State: APjAAAUCEmJUrtppa/T2VZ1KL2G9T5OX9fedwcgakEIqa7hmAnX90TXz
+        R8rN2OAhjOsjdI+YnAQCewfHUw==
+X-Google-Smtp-Source: APXvYqwt3tNaS/uT92o7K3rM2wGyefBrcWVvOCdsSmuV5mHmF/CHpgdD2v2b3xmUuttwQkFy9ND83A==
+X-Received: by 2002:adf:f744:: with SMTP id z4mr16993048wrp.205.1573558808635;
+        Tue, 12 Nov 2019 03:40:08 -0800 (PST)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
+        by smtp.gmail.com with ESMTPSA id v81sm3331292wmg.4.2019.11.12.03.40.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Nov 2019 03:40:07 -0800 (PST)
+Date:   Tue, 12 Nov 2019 11:40:06 +0000
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Colin King <colin.king@canonical.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-fbdev@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH][next] backlight: qcom-wled: fix spelling mistake
+ "trigged" -> "triggered"
+Message-ID: <20191112114006.wxjsrcmhrjyeai6e@holly.lan>
+References: <20191112093025.98638-1-colin.king@canonical.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOCk7NoZN63zZQrbw-RRnbUko3OREy=15FMC7sN5M95oNb5JNw@mail.gmail.com>
+In-Reply-To: <20191112093025.98638-1-colin.king@canonical.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 11, 2019 at 07:51:22AM -0700, Jeffrey Hugo wrote:
-> On Mon, Nov 11, 2019 at 4:38 AM Brian Masney <masneyb@onstation.org> wrote:
-> >
-> > On Sun, Nov 10, 2019 at 10:37:33AM -0700, Jeffrey Hugo wrote:
-> > > On Sun, Nov 10, 2019 at 6:53 AM Brian Masney <masneyb@onstation.org> wrote:
-> > > >
-> > > > On Fri, Nov 08, 2019 at 07:56:25AM -0700, Jeffrey Hugo wrote:
-> > > > There's a REG_MDP5_PP_AUTOREFRESH_CONFIG() macro upstream here:
-> > > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/gpu/drm/msm/disp/mdp5/mdp5.xml.h#n1383
-> > > >
-> > > > I'm not sure what to put in that register but I tried configuring it
-> > > > with a 1 this way and still have the same issue.
-> > > >
-> > > > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-> > > > index eeef41fcd4e1..6b9acf68fd2c 100644
-> > > > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-> > > > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c
-> > > > @@ -80,6 +80,7 @@ static int pingpong_tearcheck_setup(struct drm_encoder *encoder,
-> > > >         mdp5_write(mdp5_kms, REG_MDP5_PP_SYNC_THRESH(pp_id),
-> > > >                         MDP5_PP_SYNC_THRESH_START(4) |
-> > > >                         MDP5_PP_SYNC_THRESH_CONTINUE(4));
-> > > > +       mdp5_write(mdp5_kms, REG_MDP5_PP_AUTOREFRESH_CONFIG(pp_id), 1);
-> > > >
-> > > >         return 0;
-> > > >  }
-> > >
-> > > bit 31 is the enable bit (set that to 1), bits 15:0 are the
-> > > frame_count (how many te events before the MDP sends a frame, I'd
-> > > recommend set to 1).  Then after its programmed, you'll have to flush
-> > > the config, and probably use a _START to make sure the flush takes
-> > > effect.
-> >
-> > I think that I initially get autorefresh enabled based on your
-> > description above since the ping pong IRQs occur much more frequently.
-> > However pretty quickly the error 'dsi_err_worker: status=c' is shown,
-> > the contents on the screen shift to the right, and the screen no longer
-> > updates after that. That error decodes to
-> > DSI_ERR_STATE_DLN0_PHY | DSI_ERR_STATE_FIFO according to dsi_host.c.
-> >
-> > Here's the relevant code that I have so far:
+On Tue, Nov 12, 2019 at 09:30:25AM +0000, Colin King wrote:
+> From: Colin Ian King <colin.king@canonical.com>
 > 
-> So, Unless I missed it, you haven't disabled using _start when
-> autorefresh is enabled.  If you are using both at the same time,
-> you'll overload the DSI and get those kinds of errors.
+> There is a spelling mistake in a dev_err error message. Fix it.
+> 
+> Signed-off-by: Colin Ian King <colin.king@canonical.com>
 
-That fixed the issue. Just to close out this thread, I submitted a
-patch with what I have here:
-https://lore.kernel.org/lkml/20191112104854.20850-1-masneyb@onstation.org/T/#u
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
 
-I'll work on async commit support for the MDP5.
-
-Thanks Jeff and Rob!
-
-Brian
+> ---
+>  drivers/video/backlight/qcom-wled.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+> index 33b6007c5e55..d46052d8ff41 100644
+> --- a/drivers/video/backlight/qcom-wled.c
+> +++ b/drivers/video/backlight/qcom-wled.c
+> @@ -322,7 +322,7 @@ static irqreturn_t wled_short_irq_handler(int irq, void *_wled)
+>  		wled->short_count = 1;
+>  
+>  	if (wled->short_count > WLED_SHORT_CNT_MAX) {
+> -		dev_err(wled->dev, "Short trigged %d times, disabling WLED forever!\n",
+> +		dev_err(wled->dev, "Short triggered %d times, disabling WLED forever!\n",
+>  			wled->short_count);
+>  		wled->disabled_by_short = true;
+>  		goto unlock_mutex;
+> -- 
+> 2.20.1
+> 
