@@ -2,269 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C62BF99E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 20:38:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 08672F99E9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 20:39:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727159AbfKLTij (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 14:38:39 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:35342 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726952AbfKLTij (ORCPT
+        id S1727020AbfKLTjB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 14:39:01 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:42101 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726977AbfKLTi5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 14:38:39 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id B084C60909; Tue, 12 Nov 2019 19:38:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573587517;
-        bh=+uE/TWS5WT8aFrtGdahchP4ieE7STcp0632ThIZt/sE=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=CyRC84Ij6CI+3h2p1gWV8AWKBK5uwzuQ19mREjgw/kSoft6QxxwzIORDzf3hnPfHw
-         9oJphT/qTLZzhetCVolZin5Z7RbAIcvk5uRKXnXpOGqOAujcXDVcGtTO3+k/Eta5Io
-         gUqTT0DDoAnE3fbr3zx36IYlc/hMiBzCPBJ3r+6s=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0C694608FF;
-        Tue, 12 Nov 2019 19:38:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573587516;
-        bh=+uE/TWS5WT8aFrtGdahchP4ieE7STcp0632ThIZt/sE=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=gtdGaCkrsVeb0/yAIchbtq3UqXqlLoWhomAjyhn0SLtPIX9KZMK9vxAXS8hvsIpVg
-         PgKOqqR7r10cwf8//V4VsFn5ii5WLOsJ727PhQ5w14MpWjqyrUC/YbBB2dpx75q7jx
-         RW6cibJs2v9IVf6PeDoYWX6OdDWktD4dBtfdyTdY=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0C694608FF
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v8 1/4] dt-bindings: clock: Document external clocks for
- MSM8998 gcc
-To:     Rob Herring <robh@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
+        Tue, 12 Nov 2019 14:38:57 -0500
+Received: by mail-pf1-f196.google.com with SMTP id s5so14050061pfh.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2019 11:38:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=o8c8L+yq5uuteeSNGFKsd4YFj6CHGTB4powAvhzFPnY=;
+        b=cV1/yMqBzCFsW6cFqDNJvCbf2UDQGqjhfDyhntfVDOLeKmGZAU2S/sS0b9oxxz9Ysb
+         5GPFydtMuD9otbBfQIyFGfHV+GCkeZE5SvQWGMldPwawqp9UO6oG+Z+6As4gBbp5LT3w
+         8u6Cc97jizxpjA8Ks7Plgt6wjmjvMnLQ40WqAYsO+4phSj3r0yyVqGy5d1HANlh4jQFo
+         80Dx+1uE0UzOL3JrCNpxqc7vuCXRakkYQ8wtse1gGABogprdqX192w3kNUAkSHMUbH5u
+         ZEJJpDVCtgJZosJz/Cc9OrwzUZUZNDKAdv51G7+BY3qUEAiQUGAZvWLBwR2dUhK911sN
+         qxvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=o8c8L+yq5uuteeSNGFKsd4YFj6CHGTB4powAvhzFPnY=;
+        b=YvyPQAsvBd280WJPMIT1EWj1B2ghHKzjbwwKq7w117Sp4Owig4OkhUl+Orz++/ubcj
+         /FGUfm0U64x/vq5O3wiDtSonWa4tWJU3RM4d8ek01nFBxkkWJZFbrEKzzBIa1kCgEa8S
+         B03nu52U1DwsWpvIlStllFdodVOPsMtturPzPtIJLUI02IfWOprG7BGZHlnklyf7ek0M
+         1U1SGO21MGwqWNjIAqOPVIrVeuHny3h2Y9Rw4cwdkXG/j/r3XPa6yMPEL5mN6UOlQxgF
+         YheDjOTxjg7DZUi8lp1TuTlyFu0OXuzXyZcyYtMAsrd0ukEJsCsYTzJjg+NqLK1XfqYU
+         MxWA==
+X-Gm-Message-State: APjAAAUwjVLp5XowU9VtJe8y0F3XL2rSkibg48HkGVfh/j0hepoySScp
+        jblZVOvh8zqeHjMuVEDlwfk2WHwaS+4=
+X-Google-Smtp-Source: APXvYqwNk8rTopisVa5O//iCgC0uJ+EsNW1aFkZUV/LOERUiXv1g7ZmWg9AUyGjWe5ZiQ8QmBCXIhg==
+X-Received: by 2002:a17:90a:6d27:: with SMTP id z36mr8893488pjj.38.1573587535530;
+        Tue, 12 Nov 2019 11:38:55 -0800 (PST)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id y11sm23437710pfq.1.2019.11.12.11.38.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Nov 2019 11:38:54 -0800 (PST)
+Date:   Tue, 12 Nov 2019 11:38:52 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        edubezval@gmail.com, swboyd@chromium.org, sivaa@codeaurora.org,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org
-References: <1573254987-10241-1-git-send-email-jhugo@codeaurora.org>
- <1573255036-10302-1-git-send-email-jhugo@codeaurora.org>
- <20191112004417.GA16664@bogus>
- <3e4b1342-7965-2d80-e28d-0cb728037abd@codeaurora.org>
- <CAL_JsqJ3R0Y-KPKaknVT=+RTAskGhqmarb=i9ZDyX5-LzoFOjg@mail.gmail.com>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <fb73ec1e-e5b9-239b-737b-a687f65283d3@codeaurora.org>
-Date:   Tue, 12 Nov 2019 12:38:34 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH 1/3] drivers: thermal: tsens: Add critical interrupt
+ support
+Message-ID: <20191112193852.GC3140946@builder>
+References: <cover.1573499020.git.amit.kucheria@linaro.org>
+ <4b949a4f401a7f9d403ed0f0c16c7feb083f3524.1573499020.git.amit.kucheria@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <CAL_JsqJ3R0Y-KPKaknVT=+RTAskGhqmarb=i9ZDyX5-LzoFOjg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4b949a4f401a7f9d403ed0f0c16c7feb083f3524.1573499020.git.amit.kucheria@linaro.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/12/2019 11:37 AM, Rob Herring wrote:
-> On Tue, Nov 12, 2019 at 10:25 AM Jeffrey Hugo <jhugo@codeaurora.org> wrote:
->>
->> On 11/11/2019 5:44 PM, Rob Herring wrote:
->>> On Fri, Nov 08, 2019 at 04:17:16PM -0700, Jeffrey Hugo wrote:
->>>> The global clock controller on MSM8998 can consume a number of external
->>>> clocks.  Document them.
->>>>
->>>> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
->>>> ---
->>>>    .../devicetree/bindings/clock/qcom,gcc.yaml        | 47 +++++++++++++++-------
->>>>    1 file changed, 33 insertions(+), 14 deletions(-)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
->>>> index e73a56f..2f3512b 100644
->>>> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
->>>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
->>>> @@ -40,20 +40,38 @@ properties:
->>>>           - qcom,gcc-sm8150
->>>>
->>>>      clocks:
->>>> -    minItems: 1
->>>
->>> 1 or 2 clocks are no longer allowed?
->>
->> Correct.
->>
->> The primary reason is that Stephen indicated in previous discussions
->> that if the hardware exists, it should be indicated in DT, regardless if
->> the driver uses it.  In the 7180 and 8150 case, the hardware exists, so
->> these should not be optional.
+On Mon 11 Nov 11:21 PST 2019, Amit Kucheria wrote:
+
+> TSENS IP v2.x adds critical threshold interrupt support for each sensor
+> in addition to the upper/lower threshold interrupt. Add support in the
+> driver.
 > 
-> Agreed. The commit message should mention this though.
-
-Fair enough, will do.
-
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> ---
+>  drivers/thermal/qcom/tsens-common.c | 129 ++++++++++++++++++++++++++--
+>  drivers/thermal/qcom/tsens-v2.c     |   8 +-
+>  drivers/thermal/qcom/tsens.c        |  21 +++++
+>  drivers/thermal/qcom/tsens.h        |  73 ++++++++++++++++
+>  4 files changed, 220 insertions(+), 11 deletions(-)
 > 
->>
->> The secondary reason is I found that the schema was broken anyways.  In
->> the way it was written, if you implemented sleep, you could not skip
->> xo_ao, however there is a dts that did exactly that.
-> 
-> If a dts can be updated in a compatible way, we should do that rather
-> than carry inconsistencies into the schema.
-> 
->> The third reason was that I couldn't find a way to write valid yaml to
->> preserve the original meaning.  when you have an "items" as a subnode of
->> "oneOf", you no longer have control over the minItems/maxItems, so all 3
->> became required anyways.
-> 
-> That would be a bug. You're saying something like this doesn't work?:
-> 
-> oneOf:
->    - minItems: 1
->      maxItems: 3
->      items:
->        - const: a
->        - const: b
->        - const: c
+> diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
+> index 4359a4247ac3..2989cb952cdb 100644
+> --- a/drivers/thermal/qcom/tsens-common.c
+> +++ b/drivers/thermal/qcom/tsens-common.c
+> @@ -23,6 +23,10 @@
+>   * @low_thresh:     lower threshold temperature value
+>   * @low_irq_mask:   mask register for lower threshold irqs
+>   * @low_irq_clear:  clear register for lower threshold irqs
+> + * @crit_viol:      critical threshold violated
 
-Yes.  That specifically won't work.  "items" would need to have the dash 
-preceding it, otherwise it won't compile if you have more than one.  But 
-ignoring that, yes, when it compiled, and I saw the output from the 
-check failing (after adding verbose mode), min and max for the items 
-list would be 3, and the check would fail.
+"violated" as in "temperature is above crit_thresh"?
 
-> 
->>   I find it disappointing that the "version" of
->> Yaml used for DT bindings is not documented,
-> 
-> Not sure which part you mean? json-schema is the vocabulary which has
-> a spec. The meta-schema then constrains what the json-schema structure
-> should look like. That's still evolving a bit as I try to improve it
-> based on mistakes people make. Then there's the intermediate .dt.yaml
-> format used internally. That's supposed to stay internal and may go
-> away when/if we integrate the validation into dtc.
+> + * @crit_thresh:    critical threshold temperature value
+> + * @crit_irq_mask:  mask register for critical threshold irqs
+> + * @crit_irq_clear: clear register for critical threshold irqs
+>   *
+[..]
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 7d317660211e..784c4976c4f9 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -121,6 +121,27 @@ static int tsens_register(struct tsens_priv *priv)
+>  
+>  	enable_irq_wake(irq);
+>  
+> +	if (tsens_version(priv) > VER_1_X) {
+> +		irq = platform_get_irq_byname(pdev, "critical");
+> +		if (irq < 0) {
 
-So, this is probably off-topic, but hopefully you'll find this useful.
+Treating this as a fatal error breaks backwards compatibility with
+current devicetree; and even within your patch series, tsens should fail
+to probe between this patch and the application of patch 3.
 
-I'm probably in the minority, but I really haven't used json-schema nor 
-yaml before.  I have experience with other "schema" languages, so I 
-figured I could pick what I need from the documentation.
+Please flip this around and do:
 
-The only documentation I see is writing-schema.md and example-schema.yaml
+irq = platform_get_irq_byname(pdev, "critical");
+if (irq >= 0 && tsens_version(priv) > VER_1_X) {
+	request_irq()...
+}
 
-To me, writing-schema.md is insufficient.  Its better than nothing, so 
-I'm still glad it exists, but I don't have any confidence I can really 
-write a binding yaml from scratch based on it.  It does a good thing by 
-telling you what are important properties of a binding, so based on that 
-you can kind of start to understand how existing bindings actually work. 
-  Its great in telling you how to run the validation checks (the Running 
-checks) section.  The dependencies section is awesome from my 
-perspective - most projects seem to assume you just know what their 
-dependencies are, and its painful to try to figure them out when you get 
-cryptic errors during make.
+> +			ret = irq;
+> +			goto err_put_device;
+> +		}
+> +
+> +		ret = devm_request_threaded_irq(&pdev->dev, irq,
+> +						NULL, tsens_critical_irq_thread,
+> +						IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+> +						dev_name(&pdev->dev), priv);
+> +		if (ret) {
+> +			dev_err(&pdev->dev, "%s: failed to get critical irq\n", __func__);
+> +			goto err_put_device;
+> +		}
+> +
+> +		enable_irq_wake(irq);
+> +	}
+> +
+> +	return 0;
+> +
+>  err_put_device:
+>  	put_device(&pdev->dev);
+>  	return ret;
 
-Where it really fails is that I get no sense of the language.  As a 
-minimum a lexigraphic specification that would allow me to write a 
-compiler (I've done this before).  Then I would understand what are the 
-keywords, and where they are valid.  I wouldn't understand what they 
-mean, but at-least I can look at some implemented examples and 
-extrapolate from there.
-
-Have you by chance ever looked at the ACPI spec?  Maybe not the best 
-example, but its the one that comes to my mind first.  ACPI has ACPI 
-Source Language (ASL).  Its an interpreted hardware description language 
-that doesn't match yaml, but I think the ACPI spec does a reasonable job 
-of describing it.  You have a lexographic definition which seems to be 
-really helpful to ACPICA in implementing the intrepreter.  It lists all 
-of the valid operators, types, etc.  It provides detailed references of 
-each keyword - how they are used, what they do, etc.  Its not the 
-greatest at "how to write ASL 101" or "these are common problems that 
-people face, and how they can be solved", but atleast with what there 
-is, I could read every keyword that seems to be possibly related to what 
-I want to do, and hazard a guess if it would work for my problem.
-
-Perhaps that is outside the scope of the writing-schema.md document, 
-that is fair.  However, I argue that the document does not provide 
-sufficient references.  The document provides a reference to the 
-json-schema spec, but the spec is kinda useless (atleast I feel that it 
-is).  "minItems" is not defined anywhere in the spec.  What does it 
-mean?  How can I use it?  Specific to minItems/maxItems, I'll I've 
-gathered about it is from example-schema.yaml which indicates its a way 
-to identify mandatory and optional values for a property, but it doesn't 
-describe the fact that order matters, and you cannot mix/match things - 
-IE it looks like you need atleast min items, and at most max items, but 
-even if you have enough items to satisfy min, there cannot be gaps (you 
-can't pick items 1, 5, 10 from the list).  I only found that out from 
-running the validation checks with trial/error.
-
-There is no reference to the yaml spec, despite the document stating 
-that the bindings are written in yaml.
-
-However, having found the yaml spec, its really not much better than the 
-json-schema spec, and it doesn't line up because as the document states, 
-the bindings are not really written in yaml - its a subset of yaml where 
-a ton of the boilerplate "code" is skipped.
-
-What is boilerplate that is skipped?  IMO, if you are not strictly 
-adhering to yaml, then you need to clearly document your own derivative 
-language so that someone like me whom is being introduced to all of this 
-for the first time can start to figure out some of it.  It would be 
-helpful to look at other yaml examples, and understand what is 
-considered to be boilerplate so I can translate that to a DT binding.
-
-I understand, the majority of the above is complaints and demands which 
-is really not fair to you, since you are spending what I presume to be 
-your "non-dayjob" time to make the community better.  However, I don't 
-really know how to contribute to make the documentation better.  I don't 
-understand enough.  As far as this topic is concerned, I'm a dumb monkey 
-banging on a keyboard hoping to get close enough to Shakespeare to pass 
-mustard by accident, and maybe learn something along the way so that 
-next time, I might have an idea of how to do something of what I need.
-
-Hopefully you've made it this far - that ended up being a lot more text 
-that I thought it would be.  I really hope this is useful feedback to 
-you, but let me know if I am still not clear on something.  I will try 
-my best to clarify more.  If you feel like I can contribute somehow, 
-just let me know.
-
-> 
->> so after several hours of
->> trial and error, I just gave up since I found this to work (failed cases
->> just gave me an error with no indication of what was wrong, not even a
->> line number).
-> 
-> Schema failures or dts failures? It is possible to get line numbers
-> for either, but that makes validation much slower. In the latter case,
-> the line numbers aren't too useful either given they are for the
-> .dt.yaml file and not the .dts source file (dtc integration would
-> solve that). Adding '-n' to dt-doc-validate or dt-validate will turn
-> them on though.
-
-Schema compilation failures.  I don't recall the exact error message, 
-but it was something like "no valid schema found, continuing". 
-Essentially running "dt_binding_check".  I tried with -v but wasn't 
-getting much more in this case.  I didn't try -n.
-
-> 
-> Yes, error messages need work. I have some idea how to improve them,
-> but haven't had time to implement. Too many binding reviews... You can
-> get more detail with '-v' option. It's *way* more verbose, but not
-> necessarily more useful.
-> 
-> Rob
-> 
-
-
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Regards,
+Bjorn
