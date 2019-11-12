@@ -2,164 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 68A44F9AEF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 21:42:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D348FF9AF3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 21:43:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726983AbfKLUmY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 15:42:24 -0500
-Received: from mail-yb1-f193.google.com ([209.85.219.193]:37022 "EHLO
-        mail-yb1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726936AbfKLUmY (ORCPT
+        id S1726799AbfKLUnU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 15:43:20 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:39742 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726659AbfKLUnU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 15:42:24 -0500
-Received: by mail-yb1-f193.google.com with SMTP id q7so30060ybk.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2019 12:42:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=DjCiefqhC9NfqWC/1OWuy32sE5JWmV0rJU7JOPNgew0=;
-        b=W944HHeBKCxkA8DrDh1k5jwoR6EZOWptr72GU329mg37lMtwT4iUEUZ8MibJm1WXxY
-         mp7Vd5ttNkK4CKdk10wHGc7YF9Rmc7Qp+ybpA4tYo7/O523giEtR7c+XhEyDLATnYhVb
-         IHC5y7twtbRJyIHHZRzoKP5vi4ejGXVr27T0mo7g73zutfQIeyf6oGcvFewyLk2NPWyf
-         q8dSyuNzqh3edUolXoBkZG1uAJt7F9zXjjeQZ8cmV2aXlwTzMa1bBwazwh9AoGVjpztq
-         ROJ96zgqiMdd32cZMSWhMI6OeGD1IF1ynEhs9KMTYO6cZ/2BMyturVgRm8wJtwJzGjPa
-         d2sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DjCiefqhC9NfqWC/1OWuy32sE5JWmV0rJU7JOPNgew0=;
-        b=SEO+9JZIteUTSgz+KedEZJLsgAZQjH5JrUi5iJDT+BXNmtmdyMxfVlDeG2fD3dxsCi
-         H+GC8/lDZ4Pr4B2JNMIlE1VUFrWVtTIiOAdi+zgJ4aRdOVuJpfVNVcg3GPYb+pbxvzNf
-         s1O1TA1h/omamOrtarFOSqFVNuEA3UqBepyZzOmAQePYbSYSC16KK5RoeVCDFXtujpCN
-         SaduER70Upxc35lNylHHh3zuvc+rzMFdzDJdhrQBXWJUHFXOY3qlJs6RiNYhXHbYL5j7
-         l6hJomC5ZWRifqhFWqa6XPE2aFnT7J68JXwhmZ5bTehT0vequKeLF8Va31+fVWLm4FA3
-         nHjw==
-X-Gm-Message-State: APjAAAXiZquvTseLY9y/atXvZAaq85qCA7wHC6xFU1uHixRDuniEEv3D
-        AN8IbcMOV4wwCIc+ODDSukwOHQ==
-X-Google-Smtp-Source: APXvYqyYtUgeVlNwdv9fMm8VoUMF8TaIvGt5yJhxR65GCBa+3/C4/0mBjyFFaaUNb80Ijg+1jMj5gA==
-X-Received: by 2002:a25:7583:: with SMTP id q125mr2877735ybc.28.1573591343192;
-        Tue, 12 Nov 2019 12:42:23 -0800 (PST)
-Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
-        by smtp.gmail.com with ESMTPSA id 138sm9476213ywr.46.2019.11.12.12.42.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Nov 2019 12:42:22 -0800 (PST)
-Date:   Tue, 12 Nov 2019 15:42:22 -0500
-From:   Sean Paul <sean@poorly.run>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Daniel Vetter <daniel@ffwll.ch>, Johan Hovold <johan@kernel.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Heiko Carstens <heiko.carstens@de.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@de.ibm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-media@vger.kernel.org, linux-s390@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        stable <stable@vger.kernel.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Harald Freudenberger <freude@linux.ibm.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Fabien Dessenne <fabien.dessenne@st.com>,
-        Dave Airlie <airlied@gmail.com>
-Subject: Re: [PATCH 1/4] drm/msm: fix memleak on release
-Message-ID: <20191112204222.GB25787@art_vandelay>
-References: <20191010131333.23635-1-johan@kernel.org>
- <20191010131333.23635-2-johan@kernel.org>
- <20191030100146.GC4691@localhost>
- <20191112104001.GP11035@localhost>
- <20191112140155.GJ23790@phenom.ffwll.local>
- <CAF6AEGvom2wZ89434VLhhgAHCk_MMCGRbxSO+DQsX=+LPOCy8A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGvom2wZ89434VLhhgAHCk_MMCGRbxSO+DQsX=+LPOCy8A@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        Tue, 12 Nov 2019 15:43:20 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 719CC6092C; Tue, 12 Nov 2019 20:43:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573591399;
+        bh=W8LCXX57vG9WGQ6bDmEyJFhHu8q8ivzYhV4CXru2Ff8=;
+        h=From:To:Cc:Subject:Date:From;
+        b=lCM49WalkgRykWmctjZITvt/ub+uXQLOrF8iZy+K8dCYQaoPcBLVC99xVnr/DMNkw
+         qoq8WTAb6ta+DJsK6Gdt6z6IJ6b252DwikfLMBrSdByeehXqPE8vVOslH2B4DToI8m
+         26zQ4scS9tp5PxIkQhUS2nGlMSx241FQRvJt5idY=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from jhugo-perf-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5284160134;
+        Tue, 12 Nov 2019 20:43:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573591398;
+        bh=W8LCXX57vG9WGQ6bDmEyJFhHu8q8ivzYhV4CXru2Ff8=;
+        h=From:To:Cc:Subject:Date:From;
+        b=RldbeMtrN4AsYsH9oOYJ3YkJAMTu2dtai1Cfa2CqvUFz0N1Q7QN+oivhf47hyDVLv
+         iYXHvw7MRcF96GN5qG246tl5QGt3YQiXxKNJk8SK4QLYfBkPfo4gIskgnI7V62yzmM
+         Dred48scDO5h4m/ZXF2hEhjQfils9jg07ppKpRBo=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5284160134
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        marc.w.gonzalez@free.fr, mturquette@baylibre.com, sboyd@kernel.org,
+        robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Jeffrey Hugo <jhugo@codeaurora.org>
+Subject: [PATCH v9 0/4] MSM8998 Multimedia Clock Controller
+Date:   Tue, 12 Nov 2019 13:43:02 -0700
+Message-Id: <1573591382-14225-1-git-send-email-jhugo@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 12, 2019 at 08:32:07AM -0800, Rob Clark wrote:
-> On Tue, Nov 12, 2019 at 6:01 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> >
-> > On Tue, Nov 12, 2019 at 11:40:01AM +0100, Johan Hovold wrote:
-> > > On Wed, Oct 30, 2019 at 11:01:46AM +0100, Johan Hovold wrote:
-> > > > On Thu, Oct 10, 2019 at 03:13:30PM +0200, Johan Hovold wrote:
-> > > > > If a process is interrupted while accessing the "gpu" debugfs file and
-> > > > > the drm device struct_mutex is contended, release() could return early
-> > > > > and fail to free related resources.
-> > > > >
-> > > > > Note that the return value from release() is ignored.
-> > > > >
-> > > > > Fixes: 4f776f4511c7 ("drm/msm/gpu: Convert the GPU show function to use the GPU state")
-> > > > > Cc: stable <stable@vger.kernel.org>     # 4.18
-> > > > > Cc: Jordan Crouse <jcrouse@codeaurora.org>
-> > > > > Cc: Rob Clark <robdclark@gmail.com>
-> > > > > Signed-off-by: Johan Hovold <johan@kernel.org>
-> > > > > ---
-> > > >
-> > > > Rob, Sean,
-> > > >
-> > > > Sending a reminder about this one, which is not yet in linux-next.
-> > > >
-> > > > Perhaps Daniel can pick it up otherwise?
-> > >
-> > > Another two weeks, another reminder. This one is still not in -next.
-> >
-> > Well msm is maintained in a separate tree, so the usual group maintainer
-> > fallback for when patches are stuck doesn't apply.
-> 
-> oh, sorry, this wasn't showing up in patchwork.. or rather it did but
-> the non-msm related series subject made me overlook it.
-> 
-> I've already sent a PR, but this shouldn't conflict with anything and
-> I think it can go in via drm-misc/fixes
-> 
-> Reviewed-by: Rob Clark <robdclark@gmail.com>
+The multimedia clock controller (mmcc) is the main clock controller for
+the multimedia subsystem and is required to enable things like display and
+camera.
 
-Thanks for the patch, pushed to drm-misc-next-fixes
+v9:
+-expand the commit text for the DT changes a bit more to explain some of the
+extra changes
 
-Sean
+v8:
+-drop dts changes from series per Stephen's request
+-fix the mislabeled mmcc example
+-drop Stephen as maintainer of the mmcc binding
 
-> 
-> > Rob, Sean, time to reconsider drm-misc for msm? I think there's some more
-> > oddball patches that occasionally get stuck for msm ...
-> >
-> > Also +Dave.
-> > -Daniel
-> >
-> > >
-> > > Johan
-> > >
-> > > > >  drivers/gpu/drm/msm/msm_debugfs.c | 6 +-----
-> > > > >  1 file changed, 1 insertion(+), 5 deletions(-)
-> > > > >
-> > > > > diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
-> > > > > index 6be879578140..1c74381a4fc9 100644
-> > > > > --- a/drivers/gpu/drm/msm/msm_debugfs.c
-> > > > > +++ b/drivers/gpu/drm/msm/msm_debugfs.c
-> > > > > @@ -47,12 +47,8 @@ static int msm_gpu_release(struct inode *inode, struct file *file)
-> > > > >   struct msm_gpu_show_priv *show_priv = m->private;
-> > > > >   struct msm_drm_private *priv = show_priv->dev->dev_private;
-> > > > >   struct msm_gpu *gpu = priv->gpu;
-> > > > > - int ret;
-> > > > > -
-> > > > > - ret = mutex_lock_interruptible(&show_priv->dev->struct_mutex);
-> > > > > - if (ret)
-> > > > > -         return ret;
-> > > > >
-> > > > > + mutex_lock(&show_priv->dev->struct_mutex);
-> > > > >   gpu->funcs->gpu_state_put(show_priv->state);
-> > > > >   mutex_unlock(&show_priv->dev->struct_mutex);
-> >
-> > --
-> > Daniel Vetter
-> > Software Engineer, Intel Corporation
-> > http://blog.ffwll.ch
+v7:
+-port to gcc.yaml.  Drop reviewed-by for DT changes as they got completely
+rewritten
+-drop "clk: qcom: smd: Add XO clock for MSM8998".  Will need to find another
+solution and this is not blocking right now
+-convert mmcc to yaml
+-drop errant clk.h include
+-use blank entries in the DT when no clock is available
+
+v6:
+-drop clk_get from mmcc clock provider
+
+v5:
+-handle the case where gcc uses rpmcc for xo, but the link is not specified in dt
+-have gcc select rpmcc
+
+v4:
+-fix makefile to use correct config item
+-pick up tags
+-fix ordering of clocks and clock-names in dt
+-drop MODULE_ALIAS
+-wait for xo in mmcc since that was found to be useful in some debug configs
+
+v3:
+-Rebase onto linux-next to get the final version of the clk parent rewrite
+series
+-Moved the bindings header to the bindings patch per Rob
+-Made xo manditory for GCC to work around the lack of clk orphan probe defer
+to avoid the uart console glitch
+
+v2:
+-Rebased on the "Rewrite clk parent handling" series and updated to the clk init
+mechanisms introduced there.
+-Marked XO clk as CLK_IGNORE_UNUSED to avoid the concern about the XO going away
+"incorrectly" during late init
+-Corrected the name of the XO clock to "xo"
+-Dropped the fake XO clock in GCC to prevent a namespace conflict
+-Fully enumerated the external clocks (DSI PLLs, etc) in the DT binding
+-Cleaned up the weird newlines in the added DT node
+-Added DT header file to msm8998 DT for future clients
+
+Jeffrey Hugo (4):
+  dt-bindings: clock: Document external clocks for MSM8998 gcc
+  dt-bindings: clock: Convert qcom,mmcc to DT schema
+  dt-bindings: clock: Add support for the MSM8998 mmcc
+  clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver
+
+ .../devicetree/bindings/clock/qcom,gcc.yaml        |   47 +-
+ .../devicetree/bindings/clock/qcom,mmcc.txt        |   28 -
+ .../devicetree/bindings/clock/qcom,mmcc.yaml       |   95 +
+ drivers/clk/qcom/Kconfig                           |    9 +
+ drivers/clk/qcom/Makefile                          |    1 +
+ drivers/clk/qcom/mmcc-msm8998.c                    | 2913 ++++++++++++++++++++
+ include/dt-bindings/clock/qcom,mmcc-msm8998.h      |  210 ++
+ 7 files changed, 3261 insertions(+), 42 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/clock/qcom,mmcc.txt
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
+ create mode 100644 drivers/clk/qcom/mmcc-msm8998.c
+ create mode 100644 include/dt-bindings/clock/qcom,mmcc-msm8998.h
 
 -- 
-Sean Paul, Software Engineer, Google / Chromium OS
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
+
