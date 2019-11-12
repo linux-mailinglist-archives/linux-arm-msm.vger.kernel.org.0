@@ -2,116 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CC877F8CFB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 11:39:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 754A7F8D31
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 11:49:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726659AbfKLKj6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 05:39:58 -0500
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:34923 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725853AbfKLKj5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 05:39:57 -0500
-Received: by mail-lf1-f66.google.com with SMTP id i26so1356135lfl.2;
-        Tue, 12 Nov 2019 02:39:55 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XWXqgjsblbcyWM0h2meBDVZ+XPFRuLEW2MPm0S54S/s=;
-        b=CTVAyYnT5d6NFMoTSwruMSYLoQz31YwMh9f1b2imH4VEgUZqDunjh4OAZ0qiGkpMU4
-         2yyYvSmP/mCBvvzXw6+syV4fitEOKf6Xv29FqALV9M+3YnhzKPOTM5NjSPKaMvmlZJOl
-         H1OVAk3AggiVh8sNvwPUP5fcBb/SCxxC+L1AlFCYp1lMnLMJsa2fZ7HMIaodqMGq8x1R
-         d9mXNlWJXeWyv20bvSUJewbMbg1TnYDJCoo4oz1b21dfWaFvROuCVZF5wXZ5sZ8IQXbH
-         60XoAVLZoVF/zmJ6ohHK7uFPzhP4N5Cq88cl4vPaMVq3Iz31e3vyFdSosmFZz9UHKLM+
-         DFIA==
-X-Gm-Message-State: APjAAAXYPD1CN/dYvjmx9RDiixBwB8WCvp6aiseDojWCHXAgbc9lJZlu
-        4Sz7/vHAlzl8pCjcACPineI=
-X-Google-Smtp-Source: APXvYqxbw5J+tzBKcx+QigjOviaP1PWngnIR6FhtuOsFfYfySEHZWhgInymsNuVEPwxpwVY/mq8xpg==
-X-Received: by 2002:a05:6512:21e:: with SMTP id a30mr8849014lfo.76.1573555194825;
-        Tue, 12 Nov 2019 02:39:54 -0800 (PST)
-Received: from xi.terra (c-51f1e055.07-184-6d6c6d4.bbcust.telenor.se. [85.224.241.81])
-        by smtp.gmail.com with ESMTPSA id d24sm3344144ljg.73.2019.11.12.02.39.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Nov 2019 02:39:54 -0800 (PST)
-Received: from johan by xi.terra with local (Exim 4.92.3)
-        (envelope-from <johan@kernel.org>)
-        id 1iUTab-0000IZ-1b; Tue, 12 Nov 2019 11:40:01 +0100
-Date:   Tue, 12 Nov 2019 11:40:01 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     David Airlie <airlied@linux.ie>,
-        Heiko Carstens <heiko.carstens@de.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@de.ibm.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-s390@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Johan Hovold <johan@kernel.org>,
-        stable <stable@vger.kernel.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Harald Freudenberger <freude@linux.ibm.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Fabien Dessenne <fabien.dessenne@st.com>
-Subject: Re: [PATCH 1/4] drm/msm: fix memleak on release
-Message-ID: <20191112104001.GP11035@localhost>
-References: <20191010131333.23635-1-johan@kernel.org>
- <20191010131333.23635-2-johan@kernel.org>
- <20191030100146.GC4691@localhost>
+        id S1726953AbfKLKtH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 05:49:07 -0500
+Received: from onstation.org ([52.200.56.107]:48212 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725957AbfKLKtH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Nov 2019 05:49:07 -0500
+Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 50CD63E994;
+        Tue, 12 Nov 2019 10:49:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1573555746;
+        bh=56ifQmgIzk3QXd4ORBHCD/aXCQu1OaqK5LRDM7xRI0s=;
+        h=From:To:Cc:Subject:Date:From;
+        b=dWQQ90/o3DxsIwd6loRXS354139AX5Nqm5dr5Wlf342PS5ZdeV40xWKrb1AX1emWj
+         vQidP1SbtQaohvBFo+ZiVZAbbbRstbVrK+LDNH3oreZ9w8bnYByy4gAuGvX4bM0QNS
+         CBW2SxH0TXfba7EY8xTgeh86q6Yd1pYfvGuRO6d4=
+From:   Brian Masney <masneyb@onstation.org>
+To:     jeffrey.l.hugo@gmail.com, robdclark@chromium.org,
+        robdclark@gmail.com
+Cc:     freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        sean@poorly.run
+Subject: [PATCH] drm/msm/mdp5: enable autocommit
+Date:   Tue, 12 Nov 2019 05:48:54 -0500
+Message-Id: <20191112104854.20850-1-masneyb@onstation.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191030100146.GC4691@localhost>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 30, 2019 at 11:01:46AM +0100, Johan Hovold wrote:
-> On Thu, Oct 10, 2019 at 03:13:30PM +0200, Johan Hovold wrote:
-> > If a process is interrupted while accessing the "gpu" debugfs file and
-> > the drm device struct_mutex is contended, release() could return early
-> > and fail to free related resources.
-> > 
-> > Note that the return value from release() is ignored.
-> > 
-> > Fixes: 4f776f4511c7 ("drm/msm/gpu: Convert the GPU show function to use the GPU state")
-> > Cc: stable <stable@vger.kernel.org>     # 4.18
-> > Cc: Jordan Crouse <jcrouse@codeaurora.org>
-> > Cc: Rob Clark <robdclark@gmail.com>
-> > Signed-off-by: Johan Hovold <johan@kernel.org>
-> > ---
-> 
-> Rob, Sean,
-> 
-> Sending a reminder about this one, which is not yet in linux-next.
-> 
-> Perhaps Daniel can pick it up otherwise?
+Since the introduction of commit 2d99ced787e3 ("drm/msm: async commit
+support"), command-mode panels began throwing the following errors:
 
-Another two weeks, another reminder. This one is still not in -next.
+    msm fd900000.mdss: pp done time out, lm=0
 
-Johan
+Let's fix this by enabling the autorefresh feature that's available in
+the MDP starting at version 1.0. This will cause the MDP to
+automatically send a frame to the panel every time the panel invokes
+the TE signal, which will trigger the PP_DONE IRQ. This requires not
+sending a START signal for command-mode panels.
 
-> >  drivers/gpu/drm/msm/msm_debugfs.c | 6 +-----
-> >  1 file changed, 1 insertion(+), 5 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
-> > index 6be879578140..1c74381a4fc9 100644
-> > --- a/drivers/gpu/drm/msm/msm_debugfs.c
-> > +++ b/drivers/gpu/drm/msm/msm_debugfs.c
-> > @@ -47,12 +47,8 @@ static int msm_gpu_release(struct inode *inode, struct file *file)
-> >  	struct msm_gpu_show_priv *show_priv = m->private;
-> >  	struct msm_drm_private *priv = show_priv->dev->dev_private;
-> >  	struct msm_gpu *gpu = priv->gpu;
-> > -	int ret;
-> > -
-> > -	ret = mutex_lock_interruptible(&show_priv->dev->struct_mutex);
-> > -	if (ret)
-> > -		return ret;
-> >  
-> > +	mutex_lock(&show_priv->dev->struct_mutex);
-> >  	gpu->funcs->gpu_state_put(show_priv->state);
-> >  	mutex_unlock(&show_priv->dev->struct_mutex);
+This fixes the error and gives us a counter for command-mode panels that
+we can use to implement async commit support for the MDP5 in a follow up
+patch.
+
+Signed-off-by: Brian Masney <masneyb@onstation.org>
+Suggested-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 15 ++++++++++++++-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c  |  9 +--------
+ 2 files changed, 15 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+index 05cc04f729d6..539348cb6331 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+@@ -456,6 +456,7 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
+ {
+ 	struct mdp5_crtc *mdp5_crtc = to_mdp5_crtc(crtc);
+ 	struct mdp5_crtc_state *mdp5_cstate = to_mdp5_crtc_state(crtc->state);
++	struct mdp5_pipeline *pipeline = &mdp5_cstate->pipeline;
+ 	struct mdp5_kms *mdp5_kms = get_kms(crtc);
+ 	struct device *dev = &mdp5_kms->pdev->dev;
+ 
+@@ -493,9 +494,21 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
+ 
+ 	mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->err);
+ 
+-	if (mdp5_cstate->cmd_mode)
++	if (mdp5_cstate->cmd_mode) {
+ 		mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->pp_done);
+ 
++		/*
++		 * Enable autorefresh so we get regular ping/pong IRQs.
++		 * - Bit 31 is the enable bit
++		 * - Bits 0-15 represent the frame count, specifically how many
++		 *   TE events before the MDP sends a frame.
++		 */
++		mdp5_write(mdp5_kms,
++			   REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp),
++			   BIT(31) | BIT(0));
++		crtc_flush_all(crtc);
++	}
++
+ 	mdp5_crtc->enabled = true;
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+index 030279d7b64b..aee295abada3 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+@@ -187,14 +187,7 @@ static bool start_signal_needed(struct mdp5_ctl *ctl,
+ 	if (!ctl->encoder_enabled)
+ 		return false;
+ 
+-	switch (intf->type) {
+-	case INTF_WB:
+-		return true;
+-	case INTF_DSI:
+-		return intf->mode == MDP5_INTF_DSI_MODE_COMMAND;
+-	default:
+-		return false;
+-	}
++	return intf->type == INTF_WB;
+ }
+ 
+ /*
+-- 
+2.21.0
+
