@@ -2,114 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ECD1DF99FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 20:43:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68A44F9AEF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 21:42:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727083AbfKLTn4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 14:43:56 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:43990 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726970AbfKLTnz (ORCPT
+        id S1726983AbfKLUmY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 15:42:24 -0500
+Received: from mail-yb1-f193.google.com ([209.85.219.193]:37022 "EHLO
+        mail-yb1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726936AbfKLUmY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 14:43:55 -0500
-Received: by mail-pf1-f195.google.com with SMTP id 3so14056177pfb.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2019 11:43:54 -0800 (PST)
+        Tue, 12 Nov 2019 15:42:24 -0500
+Received: by mail-yb1-f193.google.com with SMTP id q7so30060ybk.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2019 12:42:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=poorly.run; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=HPem8TIIszZ7FemqTmbnyMN0h8Slh11f2S1uwgjMiNs=;
-        b=vCbC4L4b7VLJUVxMLdfu7tTiF+7v9bVwa2ILlKu9Fn4M2fXbwAWOJQgS8FoCOPusVZ
-         xVC8bQFTXjujcVkJ9se5vr3widjEEvQwNYG8F2b2EBg5AIUw5+fOPgQG++A4VYLRozqo
-         I0TRQVo5VgAsRL9UbLXgDoqWci22cl/Fm+fUjNAZ9g9Y6OdwiN6UPJc9iIpL2aV2P87j
-         T0tnEhvI9d35ls+XXBtg5NXJFPTbZJwuODyzDhudMtEvx88qzrv6yg3uZzXtJSK5iX6w
-         cPzhimTCv0pRwbAC7M+ErI0dUXGxv2qaOkloyNOT2SnYtiU/o5XmDPQkyfepeLZrvV/G
-         ESpg==
+        bh=DjCiefqhC9NfqWC/1OWuy32sE5JWmV0rJU7JOPNgew0=;
+        b=W944HHeBKCxkA8DrDh1k5jwoR6EZOWptr72GU329mg37lMtwT4iUEUZ8MibJm1WXxY
+         mp7Vd5ttNkK4CKdk10wHGc7YF9Rmc7Qp+ybpA4tYo7/O523giEtR7c+XhEyDLATnYhVb
+         IHC5y7twtbRJyIHHZRzoKP5vi4ejGXVr27T0mo7g73zutfQIeyf6oGcvFewyLk2NPWyf
+         q8dSyuNzqh3edUolXoBkZG1uAJt7F9zXjjeQZ8cmV2aXlwTzMa1bBwazwh9AoGVjpztq
+         ROJ96zgqiMdd32cZMSWhMI6OeGD1IF1ynEhs9KMTYO6cZ/2BMyturVgRm8wJtwJzGjPa
+         d2sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HPem8TIIszZ7FemqTmbnyMN0h8Slh11f2S1uwgjMiNs=;
-        b=ujdrouImFYRInBZIqpbhdL6TIWEMOGjoDQaTmsR10bwuBin9u6gV7/ic3wP5lz9xh5
-         ezX9IIhXZKe0HX3Ox2EpyQtpx3UMO3sDo+FkTrGX00UMk1U0+uvCEbFe7r6LxnB34+J1
-         XubuSflUjYLbHBzmdzM9a+7EV50fp5H321FuUEHF+a+wbj1HI3ungGx5cMUexcq5CweP
-         fFdek+sfdT17YrOchqojBDhujGExQ21qUS8HkG+otjwIk+VMlzLGVIJ2SJyPdh0qRb3t
-         69OrOladgXcd5QQpYNPJbeqMoJav8KgdeXFG6gM0wC4DEIWc08wtJAeWu5EN4jqxuz6c
-         z7Mw==
-X-Gm-Message-State: APjAAAWSA5SWM9Fn2zAwmNOk3snYdZy1cdfVYxDBHXaBX2ZZwCsd+/6e
-        2saDtJpLHYCNWxCYY4Lp5dMVpg==
-X-Google-Smtp-Source: APXvYqwvp01l6+NWe5Q3aOH506LuFAZx7SlH82bO5pfIp1D3hOIxDJgrjOioGwThFhLK0fe655HllA==
-X-Received: by 2002:aa7:96bd:: with SMTP id g29mr39160759pfk.28.1573587834096;
-        Tue, 12 Nov 2019 11:43:54 -0800 (PST)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id z18sm19047098pgv.90.2019.11.12.11.43.52
+        bh=DjCiefqhC9NfqWC/1OWuy32sE5JWmV0rJU7JOPNgew0=;
+        b=SEO+9JZIteUTSgz+KedEZJLsgAZQjH5JrUi5iJDT+BXNmtmdyMxfVlDeG2fD3dxsCi
+         H+GC8/lDZ4Pr4B2JNMIlE1VUFrWVtTIiOAdi+zgJ4aRdOVuJpfVNVcg3GPYb+pbxvzNf
+         s1O1TA1h/omamOrtarFOSqFVNuEA3UqBepyZzOmAQePYbSYSC16KK5RoeVCDFXtujpCN
+         SaduER70Upxc35lNylHHh3zuvc+rzMFdzDJdhrQBXWJUHFXOY3qlJs6RiNYhXHbYL5j7
+         l6hJomC5ZWRifqhFWqa6XPE2aFnT7J68JXwhmZ5bTehT0vequKeLF8Va31+fVWLm4FA3
+         nHjw==
+X-Gm-Message-State: APjAAAXiZquvTseLY9y/atXvZAaq85qCA7wHC6xFU1uHixRDuniEEv3D
+        AN8IbcMOV4wwCIc+ODDSukwOHQ==
+X-Google-Smtp-Source: APXvYqyYtUgeVlNwdv9fMm8VoUMF8TaIvGt5yJhxR65GCBa+3/C4/0mBjyFFaaUNb80Ijg+1jMj5gA==
+X-Received: by 2002:a25:7583:: with SMTP id q125mr2877735ybc.28.1573591343192;
+        Tue, 12 Nov 2019 12:42:23 -0800 (PST)
+Received: from localhost ([2620:0:1013:11:89c6:2139:5435:371d])
+        by smtp.gmail.com with ESMTPSA id 138sm9476213ywr.46.2019.11.12.12.42.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Nov 2019 11:43:53 -0800 (PST)
-Date:   Tue, 12 Nov 2019 11:43:51 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        edubezval@gmail.com, swboyd@chromium.org, sivaa@codeaurora.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH 3/3] arm64: dts: sdm845: thermal: Add critical interrupt
- support
-Message-ID: <20191112194351.GD3140946@builder>
-References: <cover.1573499020.git.amit.kucheria@linaro.org>
- <c536e9cdb448bbad3441f6580fa57f1f921fb580.1573499020.git.amit.kucheria@linaro.org>
+        Tue, 12 Nov 2019 12:42:22 -0800 (PST)
+Date:   Tue, 12 Nov 2019 15:42:22 -0500
+From:   Sean Paul <sean@poorly.run>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Daniel Vetter <daniel@ffwll.ch>, Johan Hovold <johan@kernel.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Heiko Carstens <heiko.carstens@de.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@de.ibm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-media@vger.kernel.org, linux-s390@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        stable <stable@vger.kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Harald Freudenberger <freude@linux.ibm.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Fabien Dessenne <fabien.dessenne@st.com>,
+        Dave Airlie <airlied@gmail.com>
+Subject: Re: [PATCH 1/4] drm/msm: fix memleak on release
+Message-ID: <20191112204222.GB25787@art_vandelay>
+References: <20191010131333.23635-1-johan@kernel.org>
+ <20191010131333.23635-2-johan@kernel.org>
+ <20191030100146.GC4691@localhost>
+ <20191112104001.GP11035@localhost>
+ <20191112140155.GJ23790@phenom.ffwll.local>
+ <CAF6AEGvom2wZ89434VLhhgAHCk_MMCGRbxSO+DQsX=+LPOCy8A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c536e9cdb448bbad3441f6580fa57f1f921fb580.1573499020.git.amit.kucheria@linaro.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <CAF6AEGvom2wZ89434VLhhgAHCk_MMCGRbxSO+DQsX=+LPOCy8A@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 11 Nov 11:21 PST 2019, Amit Kucheria wrote:
-
-> Register critical interrupts for each of the two tsens controllers
+On Tue, Nov 12, 2019 at 08:32:07AM -0800, Rob Clark wrote:
+> On Tue, Nov 12, 2019 at 6:01 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+> >
+> > On Tue, Nov 12, 2019 at 11:40:01AM +0100, Johan Hovold wrote:
+> > > On Wed, Oct 30, 2019 at 11:01:46AM +0100, Johan Hovold wrote:
+> > > > On Thu, Oct 10, 2019 at 03:13:30PM +0200, Johan Hovold wrote:
+> > > > > If a process is interrupted while accessing the "gpu" debugfs file and
+> > > > > the drm device struct_mutex is contended, release() could return early
+> > > > > and fail to free related resources.
+> > > > >
+> > > > > Note that the return value from release() is ignored.
+> > > > >
+> > > > > Fixes: 4f776f4511c7 ("drm/msm/gpu: Convert the GPU show function to use the GPU state")
+> > > > > Cc: stable <stable@vger.kernel.org>     # 4.18
+> > > > > Cc: Jordan Crouse <jcrouse@codeaurora.org>
+> > > > > Cc: Rob Clark <robdclark@gmail.com>
+> > > > > Signed-off-by: Johan Hovold <johan@kernel.org>
+> > > > > ---
+> > > >
+> > > > Rob, Sean,
+> > > >
+> > > > Sending a reminder about this one, which is not yet in linux-next.
+> > > >
+> > > > Perhaps Daniel can pick it up otherwise?
+> > >
+> > > Another two weeks, another reminder. This one is still not in -next.
+> >
+> > Well msm is maintained in a separate tree, so the usual group maintainer
+> > fallback for when patches are stuck doesn't apply.
 > 
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> Message-Id: <3686bd40c99692feb955e936b608b080e2cb1826.1568624011.git.amit.kucheria@linaro.org>
-
-Picked up for v5.6.
-
-Regards,
-Bjorn
-
-> ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+> oh, sorry, this wasn't showing up in patchwork.. or rather it did but
+> the non-msm related series subject made me overlook it.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 0990d5761860..3b643b04ab5a 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -2950,8 +2950,9 @@
->  			reg = <0 0x0c263000 0 0x1ff>, /* TM */
->  			      <0 0x0c222000 0 0x1ff>; /* SROT */
->  			#qcom,sensors = <13>;
-> -			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
-> -			interrupt-names = "uplow";
-> +			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "uplow", "critical";
->  			#thermal-sensor-cells = <1>;
->  		};
->  
-> @@ -2960,8 +2961,9 @@
->  			reg = <0 0x0c265000 0 0x1ff>, /* TM */
->  			      <0 0x0c223000 0 0x1ff>; /* SROT */
->  			#qcom,sensors = <8>;
-> -			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>;
-> -			interrupt-names = "uplow";
-> +			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "uplow", "critical";
->  			#thermal-sensor-cells = <1>;
->  		};
->  
-> -- 
-> 2.17.1
+> I've already sent a PR, but this shouldn't conflict with anything and
+> I think it can go in via drm-misc/fixes
 > 
+> Reviewed-by: Rob Clark <robdclark@gmail.com>
+
+Thanks for the patch, pushed to drm-misc-next-fixes
+
+Sean
+
+> 
+> > Rob, Sean, time to reconsider drm-misc for msm? I think there's some more
+> > oddball patches that occasionally get stuck for msm ...
+> >
+> > Also +Dave.
+> > -Daniel
+> >
+> > >
+> > > Johan
+> > >
+> > > > >  drivers/gpu/drm/msm/msm_debugfs.c | 6 +-----
+> > > > >  1 file changed, 1 insertion(+), 5 deletions(-)
+> > > > >
+> > > > > diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
+> > > > > index 6be879578140..1c74381a4fc9 100644
+> > > > > --- a/drivers/gpu/drm/msm/msm_debugfs.c
+> > > > > +++ b/drivers/gpu/drm/msm/msm_debugfs.c
+> > > > > @@ -47,12 +47,8 @@ static int msm_gpu_release(struct inode *inode, struct file *file)
+> > > > >   struct msm_gpu_show_priv *show_priv = m->private;
+> > > > >   struct msm_drm_private *priv = show_priv->dev->dev_private;
+> > > > >   struct msm_gpu *gpu = priv->gpu;
+> > > > > - int ret;
+> > > > > -
+> > > > > - ret = mutex_lock_interruptible(&show_priv->dev->struct_mutex);
+> > > > > - if (ret)
+> > > > > -         return ret;
+> > > > >
+> > > > > + mutex_lock(&show_priv->dev->struct_mutex);
+> > > > >   gpu->funcs->gpu_state_put(show_priv->state);
+> > > > >   mutex_unlock(&show_priv->dev->struct_mutex);
+> >
+> > --
+> > Daniel Vetter
+> > Software Engineer, Intel Corporation
+> > http://blog.ffwll.ch
+
+-- 
+Sean Paul, Software Engineer, Google / Chromium OS
