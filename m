@@ -2,157 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 34CCEF9487
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 16:38:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DACFDF94BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 16:51:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726923AbfKLPij (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 10:38:39 -0500
-Received: from mail-il1-f196.google.com ([209.85.166.196]:44417 "EHLO
-        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727316AbfKLPij (ORCPT
+        id S1727053AbfKLPvl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 10:51:41 -0500
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:44174 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726008AbfKLPvl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 10:38:39 -0500
-Received: by mail-il1-f196.google.com with SMTP id i6so15899070ilr.11;
-        Tue, 12 Nov 2019 07:38:38 -0800 (PST)
+        Tue, 12 Nov 2019 10:51:41 -0500
+Received: by mail-qt1-f193.google.com with SMTP id o11so20195010qtr.11;
+        Tue, 12 Nov 2019 07:51:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Yr6BI4I1G58Q9ppVoxfKvd4slmiaD/nL3ZVF0pbXsZk=;
-        b=K9hrElsX99SWt5Ednn+QUE5MOS8fc8J3NVvLl7BRMQGWsS1fWdA9JEElCCtyaeOk9n
-         Io6irpQ8lqfrQ5ej5SHkFxlDC+/tPTimgZL3QYj6H9VVVgEhiSQYjBNVBWqz7fS/fCQx
-         CkmdQuNF5C+PARJ/o/pArFQmurRyHmyN4dhKNjg9xgdnQ6+1th6bMRPtDzSvZbGDP9/k
-         q45SLHsr+TjPHEuC/Ygaypa72od6jdz06x5VY0PBRJUDB+h/bGqPG11W1xHVuqiL1M2y
-         TDfAOzuog9vUJQGrqcSXcSe/kmVyRlax5KENFMFBxrC11kCZ5FcAaMl1uHR5idIMNx68
-         x7AQ==
+        bh=LQBXaQZ8sYLX3FvyToEo9vTTZBjJQsr8E1LEgLzRPXs=;
+        b=RsE9lrNVKHVIjj4mLDlw3H/mypAihdMOWqmZd+CTUbTTAjq0/uplgxGeoxMwaJtIU8
+         JSxXfXBrRZtwLtJQBpO/wtp+ER6o35mC+oW16bJleR6ygLAc0ps7Z7PYt0zU14i3wtF2
+         CUhXzZkHnbnUtfjy+gfeX2iL5kE1bErsZS0DSx5nck/gJ7OlhzV8zgP/IoNJGTxz+kd3
+         ib98Gio8uq13GOr1ylMTj0i6YxTDDaPpqUtMCpVqbW2KuwgT677J8zkoCZW/qieBgJNs
+         K9xNmiY9uibdCWd+69izfCe4yNKpWjml7LQ7zUw4TNljpcqQOrsL2dNGI0Zq87SOlgsG
+         /TCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Yr6BI4I1G58Q9ppVoxfKvd4slmiaD/nL3ZVF0pbXsZk=;
-        b=rMqx4vona6SScM20m2EV/gN5BAJeuYS5fp0gtJuVG42e6gSmHa3XhXq6q3HTBo9EEV
-         ChvwycLW7NZaUQfHExOfz3yj1Y9uq2T+LFt2EVFwNAFNIqVoCbFUgKctUWsicRe2tP9B
-         IwUzJEk2byJjHHTpNM/PEOxrterrb4w5Ojs6WnsJICYpTMdo3qwKPk3Vbqbwy6W/Y1aI
-         xWjFVWbIFEEtO2amE/WQ9CAl699X5ZimS6RuNSj5OSZmhehobp/bNdbgrbAzBZHHDA61
-         6TUUhddiw3oimKU417oyDhy0OpyJ/nzHnrAAr7stbiUF1tRtj/I+76pWu8gEXBhziuwI
-         tfGQ==
-X-Gm-Message-State: APjAAAVyWfFHq6b9gO0mwCGdm2Fif/KS1Ohck5IvuJvz+/tyv3HxshRV
-        nbAJomZ1amJieGRBXopeFGh04oLypdehcJJtvPA=
-X-Google-Smtp-Source: APXvYqySAuW+prOeEBX4YzE0FVWFfe7dV+Mh0+pdW6Q0AWECKwn+x1wFimNSpWPY+i3JTrNJuDQ0Sa1W+XdOoMMdiD8=
-X-Received: by 2002:a92:b60e:: with SMTP id s14mr36796565ili.178.1573573118182;
- Tue, 12 Nov 2019 07:38:38 -0800 (PST)
+        bh=LQBXaQZ8sYLX3FvyToEo9vTTZBjJQsr8E1LEgLzRPXs=;
+        b=JZ0BbjV5+Wzi3o69GSQ2DCZKefoYNlskilEegjYI5MaqOjWIGIaJVJdRVOhlSHDYbj
+         UrJzT3Im9tMHPkMlg+3eBSM2ZFNhTsFbGSeYOIwd4L1tZqt6BL4chvg0mQFeoKOlSIES
+         uGEiBpGSonAujh8pYlZ1yEVU6tIhQ/ZmyinWWzhP418wMvc7FpxN3nIyllgdIvp3OcK4
+         dN0wKYxQzSMx7+zr6dnrbjVe6rVgIVpbMf5TJub7mpzsm1gRAWHbPyfTmuZ1FXnN6rmE
+         q6Uc1ecloC4YreHH4XLPn1Ddq2V8A2Uf6EEVHmy88EtomPHLFzYckD0o3ZxZSU5igy4q
+         BxqQ==
+X-Gm-Message-State: APjAAAV02XtIebtXpkrU2hn9en/gVpHW8ZFxrHz4WXOCFgiORdPFAkmY
+        /43AfXUTOVQULSMJ8Q3WhEQKCnC7VcIJ+lvdJrMkyg==
+X-Google-Smtp-Source: APXvYqw2USUknyNH12Zul6mHL6lqDlsWSFY9lTdDbwPKg2Pz6XlR6gnfvP35zB3LnBBhMSCqM3nWOFtORufpMc4G9HU=
+X-Received: by 2002:ac8:293a:: with SMTP id y55mr32569355qty.118.1573573899944;
+ Tue, 12 Nov 2019 07:51:39 -0800 (PST)
 MIME-Version: 1.0
-References: <20191112104854.20850-1-masneyb@onstation.org>
-In-Reply-To: <20191112104854.20850-1-masneyb@onstation.org>
+References: <20191106231650.1580-1-jeffrey.l.hugo@gmail.com> <20191112084225.casuncbo7z54vu4g@netronome.com>
+In-Reply-To: <20191112084225.casuncbo7z54vu4g@netronome.com>
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Tue, 12 Nov 2019 08:38:27 -0700
-Message-ID: <CAOCk7NosRhRp3vZxg2Nx8106PQ0ryo5b68cUv605XUzCm6gYPA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/mdp5: enable autocommit
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>, Sean Paul <sean@poorly.run>
+Date:   Tue, 12 Nov 2019 08:51:28 -0700
+Message-ID: <CAOCk7NpNgtTSus2KtBMe=jGLFyBumVfRVxKxtHoEDUEt2-6tqQ@mail.gmail.com>
+Subject: Re: [PATCH] ath10k: Fix qmi init error handling
+To:     Simon Horman <simon.horman@netronome.com>
+Cc:     kvalo@codeaurora.org, davem@davemloft.net,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 12, 2019 at 3:49 AM Brian Masney <masneyb@onstation.org> wrote:
+On Tue, Nov 12, 2019 at 1:42 AM Simon Horman <simon.horman@netronome.com> wrote:
 >
-> Since the introduction of commit 2d99ced787e3 ("drm/msm: async commit
-> support"), command-mode panels began throwing the following errors:
+> On Wed, Nov 06, 2019 at 03:16:50PM -0800, Jeffrey Hugo wrote:
+> > When ath10k_qmi_init() fails, the error handling does not free the irq
+> > resources, which causes an issue if we EPROBE_DEFER as we'll attempt to
+> > (re-)register irqs which are already registered.
+> >
+> > Fixes: ba94c753ccb4 ("ath10k: add QMI message handshake for wcn3990 client")
+> > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> > ---
+> >  drivers/net/wireless/ath/ath10k/snoc.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
+> > index fc15a0037f0e..f2a0b7aaad3b 100644
+> > --- a/drivers/net/wireless/ath/ath10k/snoc.c
+> > +++ b/drivers/net/wireless/ath/ath10k/snoc.c
+> > @@ -1729,7 +1729,7 @@ static int ath10k_snoc_probe(struct platform_device *pdev)
+> >       ret = ath10k_qmi_init(ar, msa_size);
+> >       if (ret) {
+> >               ath10k_warn(ar, "failed to register wlfw qmi client: %d\n", ret);
+> > -             goto err_core_destroy;
+> > +             goto err_free_irq;
+> >       }
 >
->     msm fd900000.mdss: pp done time out, lm=0
->
-> Let's fix this by enabling the autorefresh feature that's available in
-> the MDP starting at version 1.0. This will cause the MDP to
-> automatically send a frame to the panel every time the panel invokes
-> the TE signal, which will trigger the PP_DONE IRQ. This requires not
-> sending a START signal for command-mode panels.
->
-> This fixes the error and gives us a counter for command-mode panels that
-> we can use to implement async commit support for the MDP5 in a follow up
-> patch.
->
-> Signed-off-by: Brian Masney <masneyb@onstation.org>
-> Suggested-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> ---
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 15 ++++++++++++++-
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c  |  9 +--------
->  2 files changed, 15 insertions(+), 9 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> index 05cc04f729d6..539348cb6331 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> @@ -456,6 +456,7 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
->  {
->         struct mdp5_crtc *mdp5_crtc = to_mdp5_crtc(crtc);
->         struct mdp5_crtc_state *mdp5_cstate = to_mdp5_crtc_state(crtc->state);
-> +       struct mdp5_pipeline *pipeline = &mdp5_cstate->pipeline;
->         struct mdp5_kms *mdp5_kms = get_kms(crtc);
->         struct device *dev = &mdp5_kms->pdev->dev;
->
-> @@ -493,9 +494,21 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
->
->         mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->err);
->
-> -       if (mdp5_cstate->cmd_mode)
-> +       if (mdp5_cstate->cmd_mode) {
->                 mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->pp_done);
->
-> +               /*
-> +                * Enable autorefresh so we get regular ping/pong IRQs.
-> +                * - Bit 31 is the enable bit
-> +                * - Bits 0-15 represent the frame count, specifically how many
-> +                *   TE events before the MDP sends a frame.
-> +                */
-> +               mdp5_write(mdp5_kms,
-> +                          REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp),
-> +                          BIT(31) | BIT(0));
-> +               crtc_flush_all(crtc);
-> +       }
-> +
->         mdp5_crtc->enabled = true;
->  }
->
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-> index 030279d7b64b..aee295abada3 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-> @@ -187,14 +187,7 @@ static bool start_signal_needed(struct mdp5_ctl *ctl,
->         if (!ctl->encoder_enabled)
->                 return false;
->
-> -       switch (intf->type) {
-> -       case INTF_WB:
-> -               return true;
-> -       case INTF_DSI:
-> -               return intf->mode == MDP5_INTF_DSI_MODE_COMMAND;
-> -       default:
-> -               return false;
-> -       }
-> +       return intf->type == INTF_WB;
->  }
+> From a casual examination of the code this seems like a step in the right
+> direction. But does this error path also need to call ath10k_hw_power_off() ?
 
-I don't think this fully works.
-
-The whole "flush" thing exists because the configuration is double
-buffered.  You write to the flush register to tell the hardware to
-pickup the new configuration, but it doesn't do that automatically.
-It only picks up the new config on the next "vsync".  When you have a
-video mode panel, you have the timing engine running, which drives
-that.  With a command mode panel, you have either the start signal, or
-the auto refresh to do the same, but you have a bit of a chicken and
-egg situation where if you are programming the hardware from scratch,
-autorefresh isn't already enabled to then pickup the config to enable
-autorefresh. In this case, you'll need a single start to kick
-everything off.  However, if say the bootloader already configured
-things and has autorefresh running, then you need to not do that start
-because you'll overload the DSI like you saw.
-
-Nothing is simple, is it?  :)
+It probably should.  I don't see any fatal errors from the step being
+skipped, although it might silence some regulator warnings about being
+left on.  Unlikely to be observed by most folks as I was initing the
+driver pretty early to debug some things.  Looks like Kalle already
+picked up this patch though, so I guess your suggestion would need to
+be a follow up.
