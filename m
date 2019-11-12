@@ -2,104 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D573F7FB9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Nov 2019 20:21:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 99DF1F8588
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Nov 2019 01:44:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727344AbfKKTVr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Nov 2019 14:21:47 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:43301 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727334AbfKKTVr (ORCPT
+        id S1726923AbfKLAoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Nov 2019 19:44:20 -0500
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:37822 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726902AbfKLAoU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Nov 2019 14:21:47 -0500
-Received: by mail-pg1-f193.google.com with SMTP id l24so10029053pgh.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Nov 2019 11:21:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=ENjlE2+CrfkXc2Q7mLSVouta0KsTjqmsOLCAhcO+7eQ=;
-        b=l0HiMZP+b+mZ9p/Hx0jZWQg6r+cIYVPzDukzFvAkW0W63WUQ6Z3du7s+GssF3kQ0Rb
-         fU60AAq2srBAMp6wDzN3IREAiS9O+4RvGJt7uiHp7sTrGseDdNIFnYL0etGEZKLoSedK
-         5ZQMUdNtFqsBU+OKopxsWXK4Z+3TYzr52Ls1hpCited7/UsMzMG6n8YCF+WY7bqRxb5c
-         mBxp6AKBs0apNa5Ee6BLRbEJ1Tu/r4EUHiht0UfZFp/EvH4jfV9uoErshi0nQgEAChdS
-         IMStg6EIKZqBCtvy+QkOZw+etC1HHIPjQlNf6flb9L05SURrheFB0XuG5RSdV/0RBisb
-         u0MA==
+        Mon, 11 Nov 2019 19:44:20 -0500
+Received: by mail-ot1-f66.google.com with SMTP id d5so12881048otp.4;
+        Mon, 11 Nov 2019 16:44:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=ENjlE2+CrfkXc2Q7mLSVouta0KsTjqmsOLCAhcO+7eQ=;
-        b=etlXRtDY03Txp2hBBHVYPTm6GRa8Nt80AYeDrl8TEHHBAhv9kpFOMNscaXrUzlunI+
-         43VtUA14SKtBQeIocL5aYkUhSkIqoDcq+/akLSA23pghaGNUxYitx2/JdAqjUiTDkRG7
-         VB6gzj/MFnMENLfLKVG4kgIVqnEnMC5jp1U8yVsmOMmmqTYDD85pNNaNu3XlYXidcP57
-         jNHPrkN3KTV2wE+DBOzzAQgKReS0DKtmWOhOjNtL1+HlLlz1JYfuuaHtIdl3PdiBSmd7
-         Dtp6D4phcYQbgLd6XGd7S2YFx8Uh6vSXk3Cfip2wzz9atznnHcTsZo34/hwk0j5ri7G6
-         pHPA==
-X-Gm-Message-State: APjAAAUPTxwtRJyZ1bW8pB7WnSiMIcu/m/tLi1XEpa4ppm0d0oYk07qh
-        hzchbN68/zyPrN0Aq/Yy8DS/Kg==
-X-Google-Smtp-Source: APXvYqwN5zcAG2LINss6GXyueKmSTOhdlbEsZ/PLP8wu6FsYB5FbGntlXUi6GjR0CKSLO+/zFR7vaQ==
-X-Received: by 2002:a63:1c1f:: with SMTP id c31mr11872860pgc.292.1573500105937;
-        Mon, 11 Nov 2019 11:21:45 -0800 (PST)
-Received: from localhost ([49.248.192.129])
-        by smtp.gmail.com with ESMTPSA id b5sm16982813pfp.149.2019.11.11.11.21.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 11 Nov 2019 11:21:45 -0800 (PST)
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, edubezval@gmail.com,
-        swboyd@chromium.org, sivaa@codeaurora.org,
-        Andy Gross <agross@kernel.org>
-Cc:     devicetree@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: sdm845: thermal: Add critical interrupt support
-Date:   Tue, 12 Nov 2019 00:51:29 +0530
-Message-Id: <c536e9cdb448bbad3441f6580fa57f1f921fb580.1573499020.git.amit.kucheria@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <cover.1573499020.git.amit.kucheria@linaro.org>
-References: <cover.1573499020.git.amit.kucheria@linaro.org>
-In-Reply-To: <cover.1573499020.git.amit.kucheria@linaro.org>
-References: <cover.1573499020.git.amit.kucheria@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Vfe9Fg7BmbDCLOpxmVpT7Cu0nR/H6JXWKbwODF2l2L0=;
+        b=BYEE/fEHgsIMq9l0w5p1hlAN4RqHln1gWWvwmaHdF+uLtl5xbdvsEWdkG+vWhmOHfu
+         J5TYND7sJf3NDGNUGNsOAlqBUTHkUWgeKyvGdHFzoJCPcUPLjF+cX9H8KzUwX6EYDAPA
+         BuPBReEYP2yNrWt9qJ2btXKDRk1ebeUn+6gG1bA4FY7JhbQVan33StqdxC9tOvfYUqj3
+         +vFn4QkO92Ck7YzVspT3xe/qSfSjVTzhd59/n/8Q7CcV3BaYJkcJ5K3/o/TTafaxwR8j
+         vZwpx8Ns8avewJ/IBzClWPDrhPE7L5y4ijqXhnxUJFj7evgz0+uixVfeSvy8KkqH2Rnp
+         knzA==
+X-Gm-Message-State: APjAAAVSDp2LVjPF5F9geZrxoTXqHKPvrHmxdq9enPVeexQwzVIM5/pt
+        4j///2DdLwq37Pz9Be/lsA==
+X-Google-Smtp-Source: APXvYqzF36pipFPrfQSDb0XrigmalI4FTBoRhRDY4hsis2SzkDYu16sSKQh1L3XO/f36b7A7IKthgw==
+X-Received: by 2002:a9d:365:: with SMTP id 92mr1083256otv.9.1573519458955;
+        Mon, 11 Nov 2019 16:44:18 -0800 (PST)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id 100sm5621630otl.48.2019.11.11.16.44.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Nov 2019 16:44:18 -0800 (PST)
+Date:   Mon, 11 Nov 2019 18:44:17 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     mturquette@baylibre.com, sboyd@kernel.org, mark.rutland@arm.com,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        marc.w.gonzalez@free.fr, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v8 1/4] dt-bindings: clock: Document external clocks for
+ MSM8998 gcc
+Message-ID: <20191112004417.GA16664@bogus>
+References: <1573254987-10241-1-git-send-email-jhugo@codeaurora.org>
+ <1573255036-10302-1-git-send-email-jhugo@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1573255036-10302-1-git-send-email-jhugo@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Register critical interrupts for each of the two tsens controllers
+On Fri, Nov 08, 2019 at 04:17:16PM -0700, Jeffrey Hugo wrote:
+> The global clock controller on MSM8998 can consume a number of external
+> clocks.  Document them.
+> 
+> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> ---
+>  .../devicetree/bindings/clock/qcom,gcc.yaml        | 47 +++++++++++++++-------
+>  1 file changed, 33 insertions(+), 14 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> index e73a56f..2f3512b 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> @@ -40,20 +40,38 @@ properties:
+>         - qcom,gcc-sm8150
+>  
+>    clocks:
+> -    minItems: 1
 
-Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-Message-Id: <3686bd40c99692feb955e936b608b080e2cb1826.1568624011.git.amit.kucheria@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+1 or 2 clocks are no longer allowed?
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 0990d5761860..3b643b04ab5a 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2950,8 +2950,9 @@
- 			reg = <0 0x0c263000 0 0x1ff>, /* TM */
- 			      <0 0x0c222000 0 0x1ff>; /* SROT */
- 			#qcom,sensors = <13>;
--			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "uplow";
-+			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "uplow", "critical";
- 			#thermal-sensor-cells = <1>;
- 		};
- 
-@@ -2960,8 +2961,9 @@
- 			reg = <0 0x0c265000 0 0x1ff>, /* TM */
- 			      <0 0x0c223000 0 0x1ff>; /* SROT */
- 			#qcom,sensors = <8>;
--			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "uplow";
-+			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "uplow", "critical";
- 			#thermal-sensor-cells = <1>;
- 		};
- 
--- 
-2.17.1
+> -    maxItems: 3
+> -    items:
+> -      - description: Board XO source
+> -      - description: Board active XO source
+> -      - description: Sleep clock source
+> +    oneOf:
+> +      #qcom,gcc-sm8150
+> +      #qcom,gcc-sc7180
 
+Typically, this would be an if/then schema, but I'm okay with leaving it 
+like this. Depends whether you want to check the clocks match the 
+compatible.
+
+> +      - items:
+> +        - description: Board XO source
+> +        - description: Board active XO source
+> +        - description: Sleep clock source
+> +      #qcom,gcc-msm8998
+> +      - items:
+> +        - description: Board XO source
+> +        - description: USB 3.0 phy pipe clock
+> +        - description: UFS phy rx symbol clock for pipe 0
+> +        - description: UFS phy rx symbol clock for pipe 1
+> +        - description: UFS phy tx symbol clock
+> +        - description: PCIE phy pipe clock
+>  
+>    clock-names:
+> -    minItems: 1
+> -    maxItems: 3
+> -    items:
+> -      - const: bi_tcxo
+> -      - const: bi_tcxo_ao
+> -      - const: sleep_clk
+> +    oneOf:
+> +      #qcom,gcc-sm8150
+> +      #qcom,gcc-sc7180
+> +      - items:
+> +        - const: bi_tcxo
+> +        - const: bi_tcxo_ao
+> +        - const: sleep_clk
+> +      #qcom,gcc-msm8998
+> +      - items:
+> +        - const: xo
+> +        - const: usb3_pipe
+> +        - const: ufs_rx_symbol0
+> +        - const: ufs_rx_symbol1
+> +        - const: ufs_tx_symbol0
+> +        - const: pcie0_pipe
+>  
+>    '#clock-cells':
+>      const: 1
+> @@ -118,6 +136,7 @@ else:
+>        compatible:
+>          contains:
+>            enum:
+> +            - qcom,gcc-msm8998
+>              - qcom,gcc-sm8150
+>              - qcom,gcc-sc7180
+>    then:
+> @@ -179,8 +198,8 @@ examples:
+>      clock-controller@100000 {
+>        compatible = "qcom,gcc-sc7180";
+>        reg = <0x100000 0x1f0000>;
+> -      clocks = <&rpmhcc 0>, <&rpmhcc 1>;
+> -      clock-names = "bi_tcxo", "bi_tcxo_ao";
+> +      clocks = <&rpmhcc 0>, <&rpmhcc 1>, <0>;
+> +      clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
+
+The patch subject says 8998, but this is changing sc7180. 
+
+>        #clock-cells = <1>;
+>        #reset-cells = <1>;
+>        #power-domain-cells = <1>;
+> -- 
+> Qualcomm Technologies, Inc. is a member of the
+> Code Aurora Forum, a Linux Foundation Collaborative Project.
+> 
