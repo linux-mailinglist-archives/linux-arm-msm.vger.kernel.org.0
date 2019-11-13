@@ -2,59 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 82E8BFAD57
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 10:43:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DADF6FAD74
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 10:46:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727341AbfKMJmt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Nov 2019 04:42:49 -0500
-Received: from lelv0142.ext.ti.com ([198.47.23.249]:38604 "EHLO
-        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727036AbfKMJmt (ORCPT
+        id S1727385AbfKMJqh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Nov 2019 04:46:37 -0500
+Received: from lelv0143.ext.ti.com ([198.47.23.248]:57768 "EHLO
+        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725996AbfKMJqg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Nov 2019 04:42:49 -0500
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id xAD9gRx2086688;
-        Wed, 13 Nov 2019 03:42:27 -0600
+        Wed, 13 Nov 2019 04:46:36 -0500
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id xAD9j6pL064778;
+        Wed, 13 Nov 2019 03:45:06 -0600
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1573638147;
-        bh=ejmjEUvqs+1PhIX9IBENwt9urLUziMoMrCcf5MwMbKc=;
-        h=From:To:CC:Subject:Date:In-Reply-To:References;
-        b=jTJXup8L9t28/kwTXiVEs+c6CtsTvzmjmGd0DVGVfBPUe1eWxtLMjMNCI9TBIRgJz
-         Bt+S1yP/YhPY1ulG95RCBIfzqFCjr5uiiGU8WFKVCBCsHuYZgrLHogThWQXFd5T3CL
-         0jpodkGxLNBvOsDDugW/Kv6JeeFcm1LwVR6ttQsE=
-Received: from DLEE107.ent.ti.com (dlee107.ent.ti.com [157.170.170.37])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id xAD9gR5P002748
+        s=ti-com-17Q1; t=1573638306;
+        bh=oyPsIbZi0qnZFmN2PaTCXCyTAhZJdbqDlEEeX5wsMno=;
+        h=From:To:CC:Subject:Date;
+        b=MCvja4NFv9U1J76VG9/k7hm/UT+ME2Uj3gh5QLA6DokBvw9uALLeGYsG0pB0xGSl8
+         qxkI1qR4I9OExzvzIjQjKlHWn7wGfLE/Tqhgtt1LtEb0evY288Z/5a9r47HQ39V6wU
+         cFlk29GDVtLLFMqW01eVQzMCcStoQKeO4s0fCA6k=
+Received: from DFLE100.ent.ti.com (dfle100.ent.ti.com [10.64.6.21])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id xAD9j6aB085225
         (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 13 Nov 2019 03:42:27 -0600
-Received: from DLEE110.ent.ti.com (157.170.170.21) by DLEE107.ent.ti.com
- (157.170.170.37) with Microsoft SMTP Server (version=TLS1_2,
+        Wed, 13 Nov 2019 03:45:06 -0600
+Received: from DFLE104.ent.ti.com (10.64.6.25) by DFLE100.ent.ti.com
+ (10.64.6.21) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Wed, 13
- Nov 2019 03:42:09 -0600
-Received: from fllv0039.itg.ti.com (10.64.41.19) by DLEE110.ent.ti.com
- (157.170.170.21) with Microsoft SMTP Server (version=TLS1_2,
+ Nov 2019 03:44:48 -0600
+Received: from fllv0039.itg.ti.com (10.64.41.19) by DFLE104.ent.ti.com
+ (10.64.6.25) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Wed, 13 Nov 2019 03:42:09 -0600
+ Frontend Transport; Wed, 13 Nov 2019 03:44:48 -0600
 Received: from feketebors.ti.com (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id xAD9feM9072663;
-        Wed, 13 Nov 2019 03:42:22 -0600
+        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id xAD9j2KA078225;
+        Wed, 13 Nov 2019 03:45:02 -0600
 From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-To:     <broonie@kernel.org>, <radu_nicolae.pirea@upb.ro>,
-        <shawnguo@kernel.org>, <s.hauer@pengutronix.de>,
-        <linus.walleij@linaro.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <andi@etezian.org>,
+To:     <gregkh@linuxfoundation.org>, <linux@armlinux.org.uk>,
+        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
         <ldewangan@nvidia.com>, <thierry.reding@gmail.com>,
         <jonathanh@nvidia.com>
-CC:     <vkoul@kernel.org>, <linux-spi@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <alexandre.belloni@bootlin.com>,
-        <linux-arm-msm@vger.kernel.org>, <kgene@kernel.org>,
-        <krzk@kernel.org>, <linux-tegra@vger.kernel.org>
-Subject: [PATCH 9/9] spi: tegra20-slink: Use dma_request_chan() directly for channel request
-Date:   Wed, 13 Nov 2019 11:42:56 +0200
-Message-ID: <20191113094256.1108-10-peter.ujfalusi@ti.com>
+CC:     <vkoul@kernel.org>, <jslaby@suse.com>,
+        <linux-serial@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-tegra@vger.kernel.org>
+Subject: [PATCH 0/3] tty: serial: Use dma_request_chan() directly for channel request
+Date:   Wed, 13 Nov 2019 11:46:15 +0200
+Message-ID: <20191113094618.1725-1-peter.ujfalusi@ti.com>
 X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20191113094256.1108-1-peter.ujfalusi@ti.com>
-References: <20191113094256.1108-1-peter.ujfalusi@ti.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -64,29 +58,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-dma_request_slave_channel_reason() is:
+Hi,
+
+I'm going through the tree to remove dma_request_slave_channel_reason() as it
+is just:
 #define dma_request_slave_channel_reason(dev, name) \
 	dma_request_chan(dev, name)
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Regards,
+Peter
 ---
- drivers/spi/spi-tegra20-slink.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Peter Ujfalusi (3):
+  tty: serial: amba-pl011: Use dma_request_chan() directly for channel
+    request
+  tty: serial: msm_serial: Use dma_request_chan() directly for channel
+    request
+  tty: serial: tegra: Use dma_request_chan() directly for channel
+    request
 
-diff --git a/drivers/spi/spi-tegra20-slink.c b/drivers/spi/spi-tegra20-slink.c
-index 111fffc91435..51573f41ed12 100644
---- a/drivers/spi/spi-tegra20-slink.c
-+++ b/drivers/spi/spi-tegra20-slink.c
-@@ -599,8 +599,7 @@ static int tegra_slink_init_dma_param(struct tegra_slink_data *tspi,
- 	int ret;
- 	struct dma_slave_config dma_sconfig;
- 
--	dma_chan = dma_request_slave_channel_reason(tspi->dev,
--						dma_to_memory ? "rx" : "tx");
-+	dma_chan = dma_request_chan(tspi->dev, dma_to_memory ? "rx" : "tx");
- 	if (IS_ERR(dma_chan)) {
- 		ret = PTR_ERR(dma_chan);
- 		if (ret != -EPROBE_DEFER)
+ drivers/tty/serial/amba-pl011.c   | 2 +-
+ drivers/tty/serial/msm_serial.c   | 4 ++--
+ drivers/tty/serial/serial-tegra.c | 3 +--
+ 3 files changed, 4 insertions(+), 5 deletions(-)
+
 -- 
 Peter
 
