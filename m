@@ -2,37 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CE57CFA0E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 02:53:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE369FA5A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 03:24:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728605AbfKMBxe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 20:53:34 -0500
-Received: from mail.kernel.org ([198.145.29.99]:43342 "EHLO mail.kernel.org"
+        id S1728845AbfKMCYC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 21:24:02 -0500
+Received: from mail.kernel.org ([198.145.29.99]:40812 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727561AbfKMBxd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 20:53:33 -0500
+        id S1728185AbfKMBwO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Nov 2019 20:52:14 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5F9F02245A;
-        Wed, 13 Nov 2019 01:53:32 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id A5D4E222CE;
+        Wed, 13 Nov 2019 01:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573610013;
-        bh=tWMoYBDBxFN95d0VknL5vepaomjR5eoKtzCaE7yb/NY=;
+        s=default; t=1573609933;
+        bh=/fUyGVnz4vUZV7QqWfrT9JvA8+OesvTPpl/KA51g0nE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=IO9op3sTdcQ8pHwZrBBSlRXH3zPUkk4OmwuEgyfT+LeKOpAv2JtfrkFZe/yJkBis6
-         Wdn+Et5Ee3d83A0p6JGAgz5SUnRVBCX11Ym1cyeUDLyt3kGPSnnb7shcTX7JfNGGuO
-         y4qeIMLq+QW6aXPSmh3c5fh2tNd+zoh6tue3qvzo=
+        b=vF2i8ldmfvVQirprQN2PW38v/4lQD5dFlF7ixj3QVAb0h4RB5Zr1geiezZIsQEN8J
+         ttqNCZhxaXaNUt6R38GSY6fRZ9Y4LPXnR/iDYgsHwvxkVXZdH/lyRMaKsubjj627wf
+         uyRviSqM8Qo1ueQr1wl3Jw7H12Of3UTaZgBtDvII=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        Andy Gross <andy.gross@linaro.org>,
-        Wolfram Sang <wsa@the-dreams.de>,
+Cc:     Arun Kumar Neelakantam <aneela@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 117/209] i2c: qup: use core to detect 'no zero length' quirk
-Date:   Tue, 12 Nov 2019 20:48:53 -0500
-Message-Id: <20191113015025.9685-117-sashal@kernel.org>
+        linux-remoteproc@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 078/209] rpmsg: glink: smem: Support rx peak for size less than 4 bytes
+Date:   Tue, 12 Nov 2019 20:48:14 -0500
+Message-Id: <20191113015025.9685-78-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191113015025.9685-1-sashal@kernel.org>
 References: <20191113015025.9685-1-sashal@kernel.org>
@@ -45,69 +44,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Arun Kumar Neelakantam <aneela@codeaurora.org>
 
-[ Upstream commit de82bb431855580ad659bfed3e858bd9dd12efd0 ]
+[ Upstream commit 928002a5e9dab2ddc1a0fe3e00739e89be30dc6b ]
 
-And don't reimplement in the driver.
+The current rx peak function fails to read the data if size is
+less than 4bytes.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Andy Gross <andy.gross@linaro.org>
-Signed-off-by: Wolfram Sang <wsa@the-dreams.de>
+Use memcpy_fromio to support data reads of size less than 4 bytes.
+
+Cc: stable@vger.kernel.org
+Fixes: f0beb4ba9b18 ("rpmsg: glink: Remove chunk size word align warning")
+Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-qup.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/rpmsg/qcom_glink_smem.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-index c86c3ae1318f2..e09cd0775ae91 100644
---- a/drivers/i2c/busses/i2c-qup.c
-+++ b/drivers/i2c/busses/i2c-qup.c
-@@ -1088,11 +1088,6 @@ static int qup_i2c_xfer(struct i2c_adapter *adap,
- 	writel(I2C_MINI_CORE | I2C_N_VAL, qup->base + QUP_CONFIG);
+diff --git a/drivers/rpmsg/qcom_glink_smem.c b/drivers/rpmsg/qcom_glink_smem.c
+index 2b5cf27909540..7b6544348a3e0 100644
+--- a/drivers/rpmsg/qcom_glink_smem.c
++++ b/drivers/rpmsg/qcom_glink_smem.c
+@@ -89,15 +89,11 @@ static void glink_smem_rx_peak(struct qcom_glink_pipe *np,
+ 		tail -= pipe->native.length;
  
- 	for (idx = 0; idx < num; idx++) {
--		if (msgs[idx].len == 0) {
--			ret = -EINVAL;
--			goto out;
--		}
--
- 		if (qup_i2c_poll_state_i2c_master(qup)) {
- 			ret = -EIO;
- 			goto out;
-@@ -1520,9 +1515,6 @@ qup_i2c_determine_mode_v2(struct qup_i2c_dev *qup,
+ 	len = min_t(size_t, count, pipe->native.length - tail);
+-	if (len) {
+-		__ioread32_copy(data, pipe->fifo + tail,
+-				len / sizeof(u32));
+-	}
++	if (len)
++		memcpy_fromio(data, pipe->fifo + tail, len);
  
- 	/* All i2c_msgs should be transferred using either dma or cpu */
- 	for (idx = 0; idx < num; idx++) {
--		if (msgs[idx].len == 0)
--			return -EINVAL;
--
- 		if (msgs[idx].flags & I2C_M_RD)
- 			max_rx_len = max_t(unsigned int, max_rx_len,
- 					   msgs[idx].len);
-@@ -1636,9 +1628,14 @@ static const struct i2c_algorithm qup_i2c_algo_v2 = {
-  * which limits the possible read to 256 (QUP_READ_LIMIT) bytes.
-  */
- static const struct i2c_adapter_quirks qup_i2c_quirks = {
-+	.flags = I2C_AQ_NO_ZERO_LEN,
- 	.max_read_len = QUP_READ_LIMIT,
- };
+-	if (len != count) {
+-		__ioread32_copy(data + len, pipe->fifo,
+-				(count - len) / sizeof(u32));
+-	}
++	if (len != count)
++		memcpy_fromio(data + len, pipe->fifo, (count - len));
+ }
  
-+static const struct i2c_adapter_quirks qup_i2c_quirks_v2 = {
-+	.flags = I2C_AQ_NO_ZERO_LEN,
-+};
-+
- static void qup_i2c_enable_clocks(struct qup_i2c_dev *qup)
- {
- 	clk_prepare_enable(qup->clk);
-@@ -1701,6 +1698,7 @@ static int qup_i2c_probe(struct platform_device *pdev)
- 		is_qup_v1 = true;
- 	} else {
- 		qup->adap.algo = &qup_i2c_algo_v2;
-+		qup->adap.quirks = &qup_i2c_quirks_v2;
- 		is_qup_v1 = false;
- 		if (acpi_match_device(qup_i2c_acpi_match, qup->dev))
- 			goto nodma;
+ static void glink_smem_rx_advance(struct qcom_glink_pipe *np,
 -- 
 2.20.1
 
