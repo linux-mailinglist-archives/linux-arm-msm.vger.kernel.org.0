@@ -2,180 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 579EFFB9B2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 21:23:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D933FB9BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 21:26:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726473AbfKMUXV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Nov 2019 15:23:21 -0500
-Received: from mail.kernel.org ([198.145.29.99]:50292 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726179AbfKMUXV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Nov 2019 15:23:21 -0500
-Received: from gandalf.local.home (cpe-66-24-58-225.stny.res.rr.com [66.24.58.225])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A19FA206EC;
-        Wed, 13 Nov 2019 20:23:19 +0000 (UTC)
-Date:   Wed, 13 Nov 2019 15:23:17 -0500
-From:   Steven Rostedt <rostedt@goodmis.org>
-To:     Georgi Djakov <georgi.djakov@linaro.org>
-Cc:     linux-pm@vger.kernel.org, mingo@redhat.com,
-        bjorn.andersson@linaro.org, vincent.guittot@linaro.org,
-        daidavid1@codeaurora.org, okukatla@codeaurora.org,
-        evgreen@chromium.org, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] interconnect: Add basic tracepoints
-Message-ID: <20191113152317.00318ad8@gandalf.local.home>
-In-Reply-To: <20191101130031.27996-4-georgi.djakov@linaro.org>
-References: <20191101130031.27996-1-georgi.djakov@linaro.org>
-        <20191101130031.27996-4-georgi.djakov@linaro.org>
-X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        id S1727016AbfKMU0w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Nov 2019 15:26:52 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:40415 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726179AbfKMU0v (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 Nov 2019 15:26:51 -0500
+Received: by mail-pg1-f194.google.com with SMTP id 15so2066201pgt.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2019 12:26:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Z+jBZPXGfzcnRw7QYo9gRDJnZjTKzZ/V8mqM60vhhaw=;
+        b=wi3O4TLRwAqZuc7rG1hKf1wffoYiplV9EKCXwbESnVGxc8rWUypX7Jv/gCExV56QvW
+         0QhlD9bXNDkCV+wjAjAdF8lBbRM+LYHGH8vKSb11Ufa7eRlZg1kqhtWeHEaVEjJHQH6I
+         X7KBoDDQ73vGJIXZJTiImFias1/fOinLl7ftdC9qqfTlmiPjBaf+TB68+FPaMwEAsLm7
+         uUQu6x6q2bZsomjlGMqdoKtattnlblREftbgb1Jm/TSz9Xz/GzGm3ei1ZZ2pZVK8ddVc
+         FJcmbeOPypuuvLrLTFCOEN1ZMIZHsaicd4CHTy+Zb2Jnwyzkyq6mLORbZCPBJToMWxAo
+         ppqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Z+jBZPXGfzcnRw7QYo9gRDJnZjTKzZ/V8mqM60vhhaw=;
+        b=lNrzHlbZcRWJ7Prduz/5Az17vvJTconyQxzoDHX/0bqODEwNum42Jjfh9thSHuMgAC
+         G8DbrHYmGXj95QZNefhB2GJexXAWrWhDIew5g/e50miidmIQ9TJWlGlqEr2az95Plmfq
+         hnef6lT9arIh0tTeI3q/DmgZ4LDbfdnXZLcoRVw2B7HKISk8g5ncM2nuAm7t5Jpm6Qfa
+         YwrjGsNIC9Y2B4IjLe1rOHqTSuh4IvAMR/PhLM3un/hlmsQruqK/0F/C8VjH9N9JzU/v
+         hu+5Hlmzs+uYG55wyIImV4UWplmXCIXTJLWcm7IjAShIWhtwu3JezWDX5YAdV2AFzPo/
+         RD8A==
+X-Gm-Message-State: APjAAAV2dwOeZDAEUZd737+jk4O6a5KmkgzeVTuR+5fzR7UFvCz++zmU
+        4pZxMvWncrrUkQG6v0A77UPJ2Q==
+X-Google-Smtp-Source: APXvYqws5sHFjkVpWCAoo2wwOeNcsN0HZ1YtKA/fi79+wXnJUg21ygBsmcG+kSht7hkEW7DWgMr0OA==
+X-Received: by 2002:a63:364d:: with SMTP id d74mr5862446pga.408.1573676809438;
+        Wed, 13 Nov 2019 12:26:49 -0800 (PST)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id a145sm3991905pfa.7.2019.11.13.12.26.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Nov 2019 12:26:48 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Kalle Valo <kvalo@codeaurora.org>,
+        "David S. Miller" <davem@davemloft.net>
+Cc:     ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, jeffrey.l.hugo@gmail.com,
+        wenwen@cs.uga.edu
+Subject: [PATCH] ath10k: Revert "ath10k: add cleanup in ath10k_sta_state()"
+Date:   Wed, 13 Nov 2019 12:26:44 -0800
+Message-Id: <20191113202644.3673049-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri,  1 Nov 2019 15:00:31 +0200
-Georgi Djakov <georgi.djakov@linaro.org> wrote:
+'334f5b61a6f2 ("ath10k: add cleanup in ath10k_sta_state()")' causes
+ath10k_snoc on Qualcomm MSM8998, SDM845 and QCS404 platforms to trigger
+an assert in the firmware:
 
-> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-> index df44ef713db5..15e11e22ddf7 100644
-> --- a/drivers/interconnect/core.c
-> +++ b/drivers/interconnect/core.c
-> @@ -26,6 +26,9 @@ static LIST_HEAD(icc_providers);
->  static DEFINE_MUTEX(icc_lock);
->  static struct dentry *icc_debugfs_dir;
->  
-> +#define CREATE_TRACE_POINTS
-> +#include <trace/events/interconnect.h>
-> +
->  static void icc_summary_show_one(struct seq_file *s, struct icc_node *n)
->  {
->  	if (!n)
-> @@ -435,6 +438,8 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
->  
->  		/* aggregate requests for this node */
->  		aggregate_requests(node);
-> +
-> +		trace_icc_set_bw(path, node, i, avg_bw, peak_bw);
->  	}
->  
->  	ret = apply_constraints(path);
-> @@ -453,6 +458,8 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
->  
->  	mutex_unlock(&icc_lock);
->  
-> +	trace_icc_set_bw_end(path, ret);
-> +
->  	return ret;
->  }
->  EXPORT_SYMBOL_GPL(icc_set_bw);
-> diff --git a/include/trace/events/interconnect.h b/include/trace/events/interconnect.h
-> new file mode 100644
-> index 000000000000..64b646aa7bd3
-> --- /dev/null
-> +++ b/include/trace/events/interconnect.h
-> @@ -0,0 +1,81 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Copyright (c) 2019, Linaro Ltd.
-> + * Author: Georgi Djakov <georgi.djakov@linaro.org>
-> + */
-> +
-> +#if !defined(_TRACE_INTERCONNECT_H) || defined(TRACE_HEADER_MULTI_READ)
-> +#define _TRACE_INTERCONNECT_H
-> +
-> +#include <linux/tracepoint.h>
-> +
-> +#undef TRACE_SYSTEM
-> +#define TRACE_SYSTEM interconnect
-> +
-> +#include "../../../drivers/interconnect/internal.h"
+err_qdi.c:456:EF:wlan_process:1:cmnos_thread.c:3900:Asserted in wlan_vdev.c:_wlan_vdev_up:3219
 
-Ug.
+Revert the offending commit for now.
 
-I would recommend placing this file in with drivers/interconnect, and
-call it simply trace.h, or interconnect_trace.h. Then you can include
-"internal.h" nicely.
+This reverts commit 334f5b61a6f29834e881923b98d1e27e5ce9620d.
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/net/wireless/ath/ath10k/mac.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-To do so, you need to add to drivers/interconnect/Makefile:
-
- CFLAGS_core.o := -I$(src)
-
-To have core.c include this file.
-
-Rest looks fine.
-
--- Steve
-
-
-> +
-> +TRACE_EVENT(icc_set_bw,
-> +
-> +	TP_PROTO(struct icc_path *p, struct icc_node *n, int i,
-> +		 u32 avg_bw, u32 peak_bw),
-> +
-> +	TP_ARGS(p, n, i, avg_bw, peak_bw),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(path_name, p->name)
-> +		__string(dev, dev_name(p->reqs[i].dev))
-> +		__string(node_name, n->name)
-> +		__field(u32, avg_bw)
-> +		__field(u32, peak_bw)
-> +		__field(u32, node_avg_bw)
-> +		__field(u32, node_peak_bw)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(path_name, p->name);
-> +		__assign_str(dev, dev_name(p->reqs[i].dev));
-> +		__assign_str(node_name, n->name);
-> +		__entry->avg_bw = avg_bw;
-> +		__entry->peak_bw = peak_bw;
-> +		__entry->node_avg_bw = n->avg_bw;
-> +		__entry->node_peak_bw = n->peak_bw;
-> +	),
-> +
-> +	TP_printk("path=%s dev=%s node=%s avg_bw=%u peak_bw=%u agg_avg=%u agg_peak=%u",
-> +		  __get_str(path_name),
-> +		  __get_str(dev),
-> +		  __get_str(node_name),
-> +		  __entry->avg_bw,
-> +		  __entry->peak_bw,
-> +		  __entry->node_avg_bw,
-> +		  __entry->node_peak_bw)
-> +);
-> +
-> +TRACE_EVENT(icc_set_bw_end,
-> +
-> +	TP_PROTO(struct icc_path *p, int ret),
-> +
-> +	TP_ARGS(p, ret),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(path_name, p->name)
-> +		__string(dev, dev_name(p->reqs[0].dev))
-> +		__field(int, ret)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(path_name, p->name);
-> +		__assign_str(dev, dev_name(p->reqs[0].dev));
-> +		__entry->ret = ret;
-> +	),
-> +
-> +	TP_printk("path=%s dev=%s ret=%d",
-> +		  __get_str(path_name),
-> +		  __get_str(dev),
-> +		  __entry->ret)
-> +);
-> +
-> +#endif /* _TRACE_INTERCONNECT_H */
-> +
-> +/* This part must be outside protection */
-> +#include <trace/define_trace.h>
+diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
+index e8bdb2ba9b18..68f7d7246ef2 100644
+--- a/drivers/net/wireless/ath/ath10k/mac.c
++++ b/drivers/net/wireless/ath/ath10k/mac.c
+@@ -6638,12 +6638,8 @@ static int ath10k_sta_state(struct ieee80211_hw *hw,
+ 
+ 		spin_unlock_bh(&ar->data_lock);
+ 
+-		if (!sta->tdls) {
+-			ath10k_peer_delete(ar, arvif->vdev_id, sta->addr);
+-			ath10k_mac_dec_num_stations(arvif, sta);
+-			kfree(arsta->tx_stats);
++		if (!sta->tdls)
+ 			goto exit;
+-		}
+ 
+ 		ret = ath10k_wmi_update_fw_tdls_state(ar, arvif->vdev_id,
+ 						      WMI_TDLS_ENABLE_ACTIVE);
+-- 
+2.23.0
 
