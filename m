@@ -2,36 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 74D1CFA53B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 03:22:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2B1BFA4E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 03:20:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728652AbfKMCVq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 21:21:46 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44036 "EHLO mail.kernel.org"
+        id S1728143AbfKMBzL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 20:55:11 -0500
+Received: from mail.kernel.org ([198.145.29.99]:46530 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727717AbfKMBxx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 20:53:53 -0500
+        id S1728104AbfKMBzJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Nov 2019 20:55:09 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 526F8222D3;
-        Wed, 13 Nov 2019 01:53:52 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EFF0B222CD;
+        Wed, 13 Nov 2019 01:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573610033;
-        bh=X5sJjt7VX5Mvcc/8ptrKXV0mBAzqXlsQCrJR8uhh/lg=;
+        s=default; t=1573610108;
+        bh=omDMWs7oiMbcZbsR6yFJC92lzmGq0/GwmcRPEeaGxKc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=C4PURUdLaShGfvr/ikq63edB+gpoEZIlvVdVTplKVhzOdZLjvQPhH0VA6Yb6eCIm6
-         JSXPrXqHt8Q3zYHx1HuDnMO9zjLd+BDHjKswihNirHg+uS2XdL2Q5FBXToPc1yreoL
-         LrAbJaGj56RH36NFf8EjfMndaacshPS3t9NJtm8A=
+        b=nvu1CRB66BCA1qVPVKg/LxQ3hfQOYrZNBA428VgY2vleJWdS5ByGts0AnVVf1P6Q1
+         OTbdVrmcpmZJJZqatIIPAiNWmZSkaBtaCBZ7MvTACvsUJx8EFU84v+0pO6qbncryvH
+         Dgujz9NUbw9520pHWA72ZRPqBq3+FhxYx9lQ6ZAU=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Sibi Sankar <sibis@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 126/209] remoteproc: qcom: q6v5: Fix a race condition on fatal crash
-Date:   Tue, 12 Nov 2019 20:49:02 -0500
-Message-Id: <20191113015025.9685-126-sashal@kernel.org>
+Cc:     Vikash Garodia <vgarodia@codeaurora.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Hans Verkuil <hverkuil@xs4all.nl>,
+        Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 166/209] media: venus: vdec: fix decoded data size
+Date:   Tue, 12 Nov 2019 20:49:42 -0500
+Message-Id: <20191113015025.9685-166-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191113015025.9685-1-sashal@kernel.org>
 References: <20191113015025.9685-1-sashal@kernel.org>
@@ -44,69 +46,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sibi Sankar <sibis@codeaurora.org>
+From: Vikash Garodia <vgarodia@codeaurora.org>
 
-[ Upstream commit d3ae96c0e6b042a883927493351b2af6ee05e92c ]
+[ Upstream commit ce32c0a530bd955206fe45c2eff77e581202d699 ]
 
-Currently with GLINK_SSR enabled each fatal crash results in servicing
-a crash from wdog as well. This is due to a race that occurs in setting
-the running flag in the shutdown path. Fix this by moving the running
-flag to the end of fatal interrupt handler.
+Existing code returns the max of the decoded size and buffer size.
+It turns out that buffer size is always greater due to hardware
+alignment requirement. As a result, payload size given to client
+is incorrect. This change ensures that the bytesused is assigned
+to actual payload size, when available.
 
-Crash Logs:
-qcom-q6v5-pil 4080000.remoteproc: fatal error without message
-remoteproc remoteproc0: crash detected in 4080000.remoteproc: type fatal
-	error
-remoteproc remoteproc0: handling crash #1 in 4080000.remoteproc
-remoteproc remoteproc0: recovering 4080000.remoteproc
-qcom-q6v5-pil 4080000.remoteproc: watchdog without message
-remoteproc remoteproc0: crash detected in 4080000.remoteproc: type watchdog
-remoteproc:glink-edge: intent request timed out
-qcom_glink_ssr remoteproc:glink-edge.glink_ssr.-1.-1: failed to send
-	cleanup message
-qcom_glink_ssr remoteproc:glink-edge.glink_ssr.-1.-1: timeout waiting
-	for cleanup done message
-qcom-q6v5-pil 4080000.remoteproc: timed out on wait
-qcom-q6v5-pil 4080000.remoteproc: port failed halt
-remoteproc remoteproc0: stopped remote processor 4080000.remoteproc
-qcom-q6v5-pil 4080000.remoteproc: MBA booted, loading mpss
-remoteproc remoteproc0: remote processor 4080000.remoteproc is now up
-remoteproc remoteproc0: handling crash #2 in 4080000.remoteproc
-remoteproc remoteproc0: recovering 4080000.remoteproc
-qcom-q6v5-pil 4080000.remoteproc: port failed halt
-remoteproc remoteproc0: stopped remote processor 4080000.remoteproc
-qcom-q6v5-pil 4080000.remoteproc: MBA booted, loading mpss
-remoteproc remoteproc0: remote processor 4080000.remoteproc is now up
-
-Suggested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Vikash Garodia <vgarodia@codeaurora.org>
+Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5.c | 3 +--
+ drivers/media/platform/qcom/venus/vdec.c | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
-index 602af839421de..0d33e3079f0dc 100644
---- a/drivers/remoteproc/qcom_q6v5.c
-+++ b/drivers/remoteproc/qcom_q6v5.c
-@@ -84,6 +84,7 @@ static irqreturn_t q6v5_fatal_interrupt(int irq, void *data)
- 	else
- 		dev_err(q6v5->dev, "fatal error without message\n");
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index dfbbbf0f746f9..e40fdf97b0f03 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -888,8 +888,7 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
+ 		unsigned int opb_sz = venus_helper_get_opb_size(inst);
  
-+	q6v5->running = false;
- 	rproc_report_crash(q6v5->rproc, RPROC_FATAL_ERROR);
- 
- 	return IRQ_HANDLED;
-@@ -150,8 +151,6 @@ int qcom_q6v5_request_stop(struct qcom_q6v5 *q6v5)
- {
- 	int ret;
- 
--	q6v5->running = false;
--
- 	qcom_smem_state_update_bits(q6v5->state,
- 				    BIT(q6v5->stop_bit), BIT(q6v5->stop_bit));
- 
+ 		vb = &vbuf->vb2_buf;
+-		vb->planes[0].bytesused =
+-			max_t(unsigned int, opb_sz, bytesused);
++		vb2_set_plane_payload(vb, 0, bytesused ? : opb_sz);
+ 		vb->planes[0].data_offset = data_offset;
+ 		vb->timestamp = timestamp_us * NSEC_PER_USEC;
+ 		vbuf->sequence = inst->sequence_cap++;
 -- 
 2.20.1
 
