@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CE369FA5A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 03:24:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 74D1CFA53B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 03:22:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728845AbfKMCYC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 21:24:02 -0500
-Received: from mail.kernel.org ([198.145.29.99]:40812 "EHLO mail.kernel.org"
+        id S1728652AbfKMCVq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 21:21:46 -0500
+Received: from mail.kernel.org ([198.145.29.99]:44036 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728185AbfKMBwO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 20:52:14 -0500
+        id S1727717AbfKMBxx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Nov 2019 20:53:53 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A5D4E222CE;
-        Wed, 13 Nov 2019 01:52:12 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 526F8222D3;
+        Wed, 13 Nov 2019 01:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573609933;
-        bh=/fUyGVnz4vUZV7QqWfrT9JvA8+OesvTPpl/KA51g0nE=;
+        s=default; t=1573610033;
+        bh=X5sJjt7VX5Mvcc/8ptrKXV0mBAzqXlsQCrJR8uhh/lg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=vF2i8ldmfvVQirprQN2PW38v/4lQD5dFlF7ixj3QVAb0h4RB5Zr1geiezZIsQEN8J
-         ttqNCZhxaXaNUt6R38GSY6fRZ9Y4LPXnR/iDYgsHwvxkVXZdH/lyRMaKsubjj627wf
-         uyRviSqM8Qo1ueQr1wl3Jw7H12Of3UTaZgBtDvII=
+        b=C4PURUdLaShGfvr/ikq63edB+gpoEZIlvVdVTplKVhzOdZLjvQPhH0VA6Yb6eCIm6
+         JSXPrXqHt8Q3zYHx1HuDnMO9zjLd+BDHjKswihNirHg+uS2XdL2Q5FBXToPc1yreoL
+         LrAbJaGj56RH36NFf8EjfMndaacshPS3t9NJtm8A=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Arun Kumar Neelakantam <aneela@codeaurora.org>,
+Cc:     Sibi Sankar <sibis@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-remoteproc@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 078/209] rpmsg: glink: smem: Support rx peak for size less than 4 bytes
-Date:   Tue, 12 Nov 2019 20:48:14 -0500
-Message-Id: <20191113015025.9685-78-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 126/209] remoteproc: qcom: q6v5: Fix a race condition on fatal crash
+Date:   Tue, 12 Nov 2019 20:49:02 -0500
+Message-Id: <20191113015025.9685-126-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191113015025.9685-1-sashal@kernel.org>
 References: <20191113015025.9685-1-sashal@kernel.org>
@@ -44,48 +44,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Arun Kumar Neelakantam <aneela@codeaurora.org>
+From: Sibi Sankar <sibis@codeaurora.org>
 
-[ Upstream commit 928002a5e9dab2ddc1a0fe3e00739e89be30dc6b ]
+[ Upstream commit d3ae96c0e6b042a883927493351b2af6ee05e92c ]
 
-The current rx peak function fails to read the data if size is
-less than 4bytes.
+Currently with GLINK_SSR enabled each fatal crash results in servicing
+a crash from wdog as well. This is due to a race that occurs in setting
+the running flag in the shutdown path. Fix this by moving the running
+flag to the end of fatal interrupt handler.
 
-Use memcpy_fromio to support data reads of size less than 4 bytes.
+Crash Logs:
+qcom-q6v5-pil 4080000.remoteproc: fatal error without message
+remoteproc remoteproc0: crash detected in 4080000.remoteproc: type fatal
+	error
+remoteproc remoteproc0: handling crash #1 in 4080000.remoteproc
+remoteproc remoteproc0: recovering 4080000.remoteproc
+qcom-q6v5-pil 4080000.remoteproc: watchdog without message
+remoteproc remoteproc0: crash detected in 4080000.remoteproc: type watchdog
+remoteproc:glink-edge: intent request timed out
+qcom_glink_ssr remoteproc:glink-edge.glink_ssr.-1.-1: failed to send
+	cleanup message
+qcom_glink_ssr remoteproc:glink-edge.glink_ssr.-1.-1: timeout waiting
+	for cleanup done message
+qcom-q6v5-pil 4080000.remoteproc: timed out on wait
+qcom-q6v5-pil 4080000.remoteproc: port failed halt
+remoteproc remoteproc0: stopped remote processor 4080000.remoteproc
+qcom-q6v5-pil 4080000.remoteproc: MBA booted, loading mpss
+remoteproc remoteproc0: remote processor 4080000.remoteproc is now up
+remoteproc remoteproc0: handling crash #2 in 4080000.remoteproc
+remoteproc remoteproc0: recovering 4080000.remoteproc
+qcom-q6v5-pil 4080000.remoteproc: port failed halt
+remoteproc remoteproc0: stopped remote processor 4080000.remoteproc
+qcom-q6v5-pil 4080000.remoteproc: MBA booted, loading mpss
+remoteproc remoteproc0: remote processor 4080000.remoteproc is now up
 
-Cc: stable@vger.kernel.org
-Fixes: f0beb4ba9b18 ("rpmsg: glink: Remove chunk size word align warning")
-Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
+Suggested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/qcom_glink_smem.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/remoteproc/qcom_q6v5.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/rpmsg/qcom_glink_smem.c b/drivers/rpmsg/qcom_glink_smem.c
-index 2b5cf27909540..7b6544348a3e0 100644
---- a/drivers/rpmsg/qcom_glink_smem.c
-+++ b/drivers/rpmsg/qcom_glink_smem.c
-@@ -89,15 +89,11 @@ static void glink_smem_rx_peak(struct qcom_glink_pipe *np,
- 		tail -= pipe->native.length;
+diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+index 602af839421de..0d33e3079f0dc 100644
+--- a/drivers/remoteproc/qcom_q6v5.c
++++ b/drivers/remoteproc/qcom_q6v5.c
+@@ -84,6 +84,7 @@ static irqreturn_t q6v5_fatal_interrupt(int irq, void *data)
+ 	else
+ 		dev_err(q6v5->dev, "fatal error without message\n");
  
- 	len = min_t(size_t, count, pipe->native.length - tail);
--	if (len) {
--		__ioread32_copy(data, pipe->fifo + tail,
--				len / sizeof(u32));
--	}
-+	if (len)
-+		memcpy_fromio(data, pipe->fifo + tail, len);
++	q6v5->running = false;
+ 	rproc_report_crash(q6v5->rproc, RPROC_FATAL_ERROR);
  
--	if (len != count) {
--		__ioread32_copy(data + len, pipe->fifo,
--				(count - len) / sizeof(u32));
--	}
-+	if (len != count)
-+		memcpy_fromio(data + len, pipe->fifo, (count - len));
- }
+ 	return IRQ_HANDLED;
+@@ -150,8 +151,6 @@ int qcom_q6v5_request_stop(struct qcom_q6v5 *q6v5)
+ {
+ 	int ret;
  
- static void glink_smem_rx_advance(struct qcom_glink_pipe *np,
+-	q6v5->running = false;
+-
+ 	qcom_smem_state_update_bits(q6v5->state,
+ 				    BIT(q6v5->stop_bit), BIT(q6v5->stop_bit));
+ 
 -- 
 2.20.1
 
