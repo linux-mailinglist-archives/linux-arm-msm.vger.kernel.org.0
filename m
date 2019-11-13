@@ -2,180 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 97B31FAA60
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 07:46:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 62E9DFAA8D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 08:00:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726409AbfKMGqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Nov 2019 01:46:36 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:44304 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725866AbfKMGqg (ORCPT
+        id S1726216AbfKMHAe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Nov 2019 02:00:34 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39933 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726107AbfKMHAe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Nov 2019 01:46:36 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 1770360A1B; Wed, 13 Nov 2019 06:46:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573627595;
-        bh=vA5QMfOG8/tSJ0LbkGi4Gjgkhix8FM2eGb2eZp8y9oo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=M/HlsVB5bb8+l4+YaMJ1Tp7nqyHluESqXyhjgoJIa4KufRnWZNPDdoRhSs0Q9bFO7
-         UBmYcnB8EgCgeQPHs5MmZZnspEUf/uxVr8IBfOLM6zDBgmYSYIGGDzFVqilAi81BLR
-         lwB+2lu+Qe/1jHmVcrSXcLYULKrJlpkv10ojeLeI=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: cang@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EFDE06090E;
-        Wed, 13 Nov 2019 06:46:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573627593;
-        bh=vA5QMfOG8/tSJ0LbkGi4Gjgkhix8FM2eGb2eZp8y9oo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=M2vzfKsAG2mZGoKLD1sdBRfM6oL43Y7K2Iq/piQEA2HSRkd+Yh8H5qdbfkF2ycz6r
-         RP9aWEz4qxlAtAF33JT0uIQvvbcmxtzNcliyOU+iHCrrQcUv/2lGcR3fZvU3BJGBg3
-         +QNctqsuwRehLc3fHm68ln4NYOFVL2fXwxihleiA=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EFDE06090E
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=cang@codeaurora.org
-From:   Can Guo <cang@codeaurora.org>
-To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
-        rnayak@codeaurora.org, linux-scsi@vger.kernel.org,
-        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
-        cang@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4 2/7] scsi: ufs-qcom: Add reset control support for host controller
-Date:   Tue, 12 Nov 2019 22:45:46 -0800
-Message-Id: <1573627552-12615-3-git-send-email-cang@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1573627552-12615-1-git-send-email-cang@codeaurora.org>
-References: <1573627552-12615-1-git-send-email-cang@codeaurora.org>
+        Wed, 13 Nov 2019 02:00:34 -0500
+Received: by mail-wr1-f65.google.com with SMTP id l7so990336wrp.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Nov 2019 23:00:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=netronome-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rugrYaxZCiP2gM4hsS0PmTY/T9FiVMFS6xWRRwp7Uks=;
+        b=iLRBNzKe3Ty81HmbP7CV1b8+p7WvR524FmbkGbeQglx6vlgdPRIEtlT5aQ667wL1tT
+         fa5Jk+lPWh5Aba5vbf7Qv0SxdNsfarPP+m89qaVpdBD6q1y1SSlKcVdKojOZpKOD6o6d
+         jEoXGrwvFyn1VDH2BV6jkMVVKdGisEZ2TLc3U1/71aFYAsETXJS68fekfL7x/wRPQzTg
+         d/pWhoDmZkQTwAmliusnRed7o+iNesnwRFxbNsvtQbpgkOmFNOCfJIHBwFSiHBHwIe+b
+         t9EiLrDZ3+fQ7fkIi/BH3hCQgdP8zNfLg+akdBk7LMt23LTHtzUqpviZYkD8Uxx8o59Z
+         8yWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rugrYaxZCiP2gM4hsS0PmTY/T9FiVMFS6xWRRwp7Uks=;
+        b=V6lI7FUDaN0LjDH2sK4IFqEgtftmRPBGaOW0xcpz3tiofiBfashCrrLv8gVI+I4UIO
+         k3P+Fc9JuNOuvEO7nXPwxX/FtEhTImMblhSZRrAGVOlkv7tlae7N6FEzaojC5xbVBzKt
+         Z+2D09z4TNYjPA6ULOmz2xlfXtAVgG5cEw1O9/iRhxIl34cbtdGUvFyz3q/+eOD5vZgC
+         B5G6oZnsWdo/vCLhZKTaOTwd6Sb5Xx+I3JXi85bfsjbtTmUfC0uwZxvizlC84AZSLBvz
+         SsD6l7vdLnx608hnoIO1DmUuNxZBOBNjNLdTTR3DyWhowqtA62PpjMuM861wCjIEn/md
+         CF0Q==
+X-Gm-Message-State: APjAAAWI8NP5Tg63acFB/ROPuuEvxrRnE8SvkFvjXSUBQkOmTkRcMj7N
+        m2++Pu194wM0ao1y6k87eFaZIQ==
+X-Google-Smtp-Source: APXvYqzxXo5+THKRrJBHRbmsw/q0KRwfVf5UnS3F6vDui9Ylkubka0wc+vrYEI1WSLZkHjvVSA2Odw==
+X-Received: by 2002:adf:e8ce:: with SMTP id k14mr1149133wrn.393.1573628432175;
+        Tue, 12 Nov 2019 23:00:32 -0800 (PST)
+Received: from netronome.com ([2001:982:756:703:d63d:7eff:fe99:ac9d])
+        by smtp.gmail.com with ESMTPSA id 4sm1292022wmd.33.2019.11.12.23.00.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 12 Nov 2019 23:00:32 -0800 (PST)
+Date:   Wed, 13 Nov 2019 08:00:31 +0100
+From:   Simon Horman <simon.horman@netronome.com>
+To:     Kalle Valo <kvalo@codeaurora.org>
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, davem@davemloft.net,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] ath10k: Handle "invalid" BDFs for msm8998 devices
+Message-ID: <20191113070031.qlikjctfnoxtald5@netronome.com>
+References: <20191106234712.2380-1-jeffrey.l.hugo@gmail.com>
+ <20191112090444.ak2xu67eawfgpdgb@netronome.com>
+ <CAOCk7NoXv2-8GO=VYS8dNPJF6sj=S3RbkfqQGW0kvvVmR8V1kw@mail.gmail.com>
+ <878soks77y.fsf@kamboji.qca.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <878soks77y.fsf@kamboji.qca.qualcomm.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add reset control for host controller so that host controller can be reset
-as required in its power up sequence.
+On Wed, Nov 13, 2019 at 06:58:25AM +0200, Kalle Valo wrote:
+> Jeffrey Hugo <jeffrey.l.hugo@gmail.com> writes:
+> 
+> > On Tue, Nov 12, 2019 at 2:04 AM Simon Horman <simon.horman@netronome.com> wrote:
+> >>
+> >> On Wed, Nov 06, 2019 at 03:47:12PM -0800, Jeffrey Hugo wrote:
+> >> > When the BDF download QMI message has the end field set to 1, it signals
+> >> > the end of the transfer, and triggers the firmware to do a CRC check.  The
+> >> > BDFs for msm8998 devices fail this check, yet the firmware is happy to
+> >> > still use the BDF.  It appears that this error is not caught by the
+> >> > downstream drive by concidence, therefore there are production devices
+> >> > in the field where this issue needs to be handled otherwise we cannot
+> >> > support wifi on them.  So, attempt to detect this scenario as best we can
+> >> > and treat it as non-fatal.
+> >> >
+> >> > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> >> > ---
+> >> >  drivers/net/wireless/ath/ath10k/qmi.c | 11 +++++++----
+> >> >  1 file changed, 7 insertions(+), 4 deletions(-)
+> >> >
+> >> > diff --git a/drivers/net/wireless/ath/ath10k/qmi.c b/drivers/net/wireless/ath/ath10k/qmi.c
+> >> > index eb618a2652db..5ff8cfc93778 100644
+> >> > --- a/drivers/net/wireless/ath/ath10k/qmi.c
+> >> > +++ b/drivers/net/wireless/ath/ath10k/qmi.c
+> >> > @@ -265,10 +265,13 @@ static int ath10k_qmi_bdf_dnld_send_sync(struct ath10k_qmi *qmi)
+> >> >                       goto out;
+> >> >
+> >> >               if (resp.resp.result != QMI_RESULT_SUCCESS_V01) {
+> >> > -                     ath10k_err(ar, "failed to download board data file: %d\n",
+> >> > -                                resp.resp.error);
+> >> > -                     ret = -EINVAL;
+> >> > -                     goto out;
+> >> > +                     if (!(req->end == 1 &&
+> >> > +                           resp.resp.result == QMI_ERR_MALFORMED_MSG_V01)) {
+> >>
+> >> Would it make sense to combine the inner and outer condition,
+> >> something like this (completely untested) ?
+> >
+> > I guess, make sense from what perspective?  Looks like the assembly
+> > ends up being the same, so it would be down to "readability" which is
+> > subjective - I personally don't see a major advantage to one way or
+> > the other.  It does look like Kalle already picked up this patch, so
+> > I'm guessing that if folks feel your suggestion is superior, then it
+> > would need to be a follow on.
 
-Signed-off-by: Can Guo <cang@codeaurora.org>
----
- drivers/scsi/ufs/ufs-qcom.c | 53 +++++++++++++++++++++++++++++++++++++++++++++
- drivers/scsi/ufs/ufs-qcom.h |  3 +++
- 2 files changed, 56 insertions(+)
+My feeling is that it would reduce the churn in the patch making the
+patch more readable and likewise improving the readability of the code.
+But I do agree this does not affect run-time and I am ambivalent about
+updating the patch if it has already been (semi-)accepted.
 
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index a5b7148..c69c29a1c 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -246,6 +246,44 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
- 	mb();
- }
- 
-+/**
-+ * ufs_qcom_host_reset - reset host controller and PHY
-+ */
-+static int ufs_qcom_host_reset(struct ufs_hba *hba)
-+{
-+	int ret = 0;
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+
-+	if (!host->core_reset) {
-+		dev_warn(hba->dev, "%s: reset control not set\n", __func__);
-+		goto out;
-+	}
-+
-+	ret = reset_control_assert(host->core_reset);
-+	if (ret) {
-+		dev_err(hba->dev, "%s: core_reset assert failed, err = %d\n",
-+				 __func__, ret);
-+		goto out;
-+	}
-+
-+	/*
-+	 * The hardware requirement for delay between assert/deassert
-+	 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
-+	 * ~125us (4/32768). To be on the safe side add 200us delay.
-+	 */
-+	usleep_range(200, 210);
-+
-+	ret = reset_control_deassert(host->core_reset);
-+	if (ret)
-+		dev_err(hba->dev, "%s: core_reset deassert failed, err = %d\n",
-+				 __func__, ret);
-+
-+	usleep_range(1000, 1100);
-+
-+out:
-+	return ret;
-+}
-+
- static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-@@ -254,6 +292,12 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
- 	bool is_rate_B = (UFS_QCOM_LIMIT_HS_RATE == PA_HS_MODE_B)
- 							? true : false;
- 
-+	/* Reset UFS Host Controller and PHY */
-+	ret = ufs_qcom_host_reset(hba);
-+	if (ret)
-+		dev_warn(hba->dev, "%s: host reset returned %d\n",
-+				  __func__, ret);
-+
- 	if (is_rate_B)
- 		phy_set_mode(phy, PHY_MODE_UFS_HS_B);
- 
-@@ -1101,6 +1145,15 @@ static int ufs_qcom_init(struct ufs_hba *hba)
- 	host->hba = hba;
- 	ufshcd_set_variant(hba, host);
- 
-+	/* Setup the reset control of HCI */
-+	host->core_reset = devm_reset_control_get(hba->dev, "rst");
-+	if (IS_ERR(host->core_reset)) {
-+		err = PTR_ERR(host->core_reset);
-+		dev_warn(dev, "Failed to get reset control %d\n", err);
-+		host->core_reset = NULL;
-+		err = 0;
-+	}
-+
- 	/* Fire up the reset controller. Failure here is non-fatal. */
- 	host->rcdev.of_node = dev->of_node;
- 	host->rcdev.ops = &ufs_qcom_reset_ops;
-diff --git a/drivers/scsi/ufs/ufs-qcom.h b/drivers/scsi/ufs/ufs-qcom.h
-index d401f17..2d95e7c 100644
---- a/drivers/scsi/ufs/ufs-qcom.h
-+++ b/drivers/scsi/ufs/ufs-qcom.h
-@@ -6,6 +6,7 @@
- #define UFS_QCOM_H_
- 
- #include <linux/reset-controller.h>
-+#include <linux/reset.h>
- 
- #define MAX_UFS_QCOM_HOSTS	1
- #define MAX_U32                 (~(u32)0)
-@@ -233,6 +234,8 @@ struct ufs_qcom_host {
- 	u32 dbg_print_en;
- 	struct ufs_qcom_testbus testbus;
- 
-+	/* Reset control of HCI */
-+	struct reset_control *core_reset;
- 	struct reset_controller_dev rcdev;
- 
- 	struct gpio_desc *device_reset;
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+> 
+> Same here, it's only on the pending branch so changes are still
+> possible.
+> 
+> -- 
+> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
