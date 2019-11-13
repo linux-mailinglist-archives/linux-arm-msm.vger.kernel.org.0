@@ -2,92 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3341BFAFBD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 12:32:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 814A7FB0C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 13:47:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727845AbfKMLcU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Nov 2019 06:32:20 -0500
-Received: from mail-wr1-f42.google.com ([209.85.221.42]:45754 "EHLO
-        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727811AbfKMLcU (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Nov 2019 06:32:20 -0500
-Received: by mail-wr1-f42.google.com with SMTP id z10so1913429wrs.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2019 03:32:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=sS3GaEsmYVTT8e7e9aE8xCn5QY0c0oDK5wXddhigAzo=;
-        b=CYO8M14unOarpyCMrij5/QgQvuSQhghb6lNIxYwEhmTJDfQAfPVC9+D7zTsLxANKmS
-         XOhtiJRx+PgD9O/gBnG++DQiXFXLxHrROmodJu9nwj/KRsEGGR/sftjKT7S2uSI+5VLl
-         yZe9beW3UNVHVWEbNmNwB8mDKLDxLgYDXytky5cZjStLFR3FjqTa61F3vDNXnNvvHzYe
-         76Mtd4Rb98ulGoJENiFUg2nXaB9MM4MH+IALrHn9VUFjNIr1cubho30W9ayKiPYXDCGo
-         CssQBKMiFAx8N4DrCpDWlqKhpuZNe4KLEWF3QmcEx3zZjaQK6pN0pOBJYFnXcN7QiGiW
-         QAMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=sS3GaEsmYVTT8e7e9aE8xCn5QY0c0oDK5wXddhigAzo=;
-        b=XCQscOWYlQoQUAhOrwPEl6+DsuJc8UTiGXW8bsn3MjNBSRG8ciQoPCw4Ay9CxrTlZn
-         37WduKSQkKuIbfqk9+gwAjFL4OaV1qT2/JtP74QWuUyea9mdT8ASZKxMH0ULBrqYcPwW
-         D2BfkKO2GRMbMe4mzNy2q11fkX0Cg15bTNC6A0/3a3MUsbmzTaFUoHLpjiQDwIeDtfO5
-         EDp4SQQZgPHX4vvuHrIP1+WWAH8hjz3XZxsQKg6+bQOMYBdA8EeDv0wJZju7Y3fLntmt
-         qKGJnso6VA6brlxw5RI3doN5Dij1ZJoCH+7SE0znDlaTOZVWBQ2FQVlzGdASpMZl4dSa
-         Gatg==
-X-Gm-Message-State: APjAAAV8Trt23ljO8ydavnbP7TbB7clVlxNjOmCs8pBtmgsFXeuZ+XXP
-        oWOvDhYu4+xcAHZlFtn5gFW2Kw==
-X-Google-Smtp-Source: APXvYqznHxf9lTwtcWainnqvBciljEaqd825jlA+LPO+60naLZWLA4kld7qN7etRMPJUI7I//NyhTw==
-X-Received: by 2002:adf:e94e:: with SMTP id m14mr2414909wrn.233.1573644738184;
-        Wed, 13 Nov 2019 03:32:18 -0800 (PST)
-Received: from dell ([2.27.35.135])
-        by smtp.gmail.com with ESMTPSA id o10sm2519246wrq.92.2019.11.13.03.32.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Nov 2019 03:32:17 -0800 (PST)
-Date:   Wed, 13 Nov 2019 11:32:06 +0000
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Colin King <colin.king@canonical.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-fbdev@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH][next] backlight: qcom-wled: fix spelling mistake
- "trigged" -> "triggered"
-Message-ID: <20191113113206.GB3285@dell>
-References: <20191112093025.98638-1-colin.king@canonical.com>
+        id S1726190AbfKMMrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Nov 2019 07:47:53 -0500
+Received: from ns.mm-sol.com ([37.157.136.199]:45304 "EHLO extserv.mm-sol.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725908AbfKMMrx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 Nov 2019 07:47:53 -0500
+Received: from [192.168.27.209] (unknown [37.157.136.206])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        by extserv.mm-sol.com (Postfix) with ESMTPSA id 1E1A1CF23;
+        Wed, 13 Nov 2019 14:47:50 +0200 (EET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
+        t=1573649270; bh=V9P+kuRuVLcbVw6LCSQAo0MaJg66SRNAL9F0hA89RRg=;
+        h=Subject:To:Cc:From:Date:From;
+        b=qCd+8R770gN4/MIN7qXaGcwwcjl8AsBKzUnfmS0InYQiMBMp7AaAJ9RT2VMdRnjUK
+         HSZXy3H8+GQXbcSS8h72hy4a/CiWYxmN7wT/KkP3ougv4u4v5FLI2pXi719wX9Cdeq
+         p8JOHbFsuVeHMucVpM46CvXPsU2UOXwb+9zG9XQFFJ9kEy4GPAvGrfj0TU+7SHOWFg
+         q+GVgSFInY4uq0bGIBy1lyf34I2EcqL86uJ/Pv2y0hv+n+bGs6IUCTKRyJWChEVSYb
+         Ht3y4E1pn75iEfeXYKY2Ll/9Yi1C2oLh2zAzPrT3faXHoxPnB4QZNXRmrNYAl1V5Xy
+         eU6MuDQHdHCfg==
+Subject: Re: [PATCH v3 2/2] PCI: qcom: Add support for SDM845 PCIe controller
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <andrew.murray@arm.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Vinod Koul <vkoul@kernel.org>
+References: <20191107001642.1127561-1-bjorn.andersson@linaro.org>
+ <20191107001642.1127561-3-bjorn.andersson@linaro.org>
+From:   Stanimir Varbanov <svarbanov@mm-sol.com>
+Message-ID: <d2aa3189-fdf5-23d9-c6d7-9ab577fa98bd@mm-sol.com>
+Date:   Wed, 13 Nov 2019 14:47:47 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.1
 MIME-Version: 1.0
+In-Reply-To: <20191107001642.1127561-3-bjorn.andersson@linaro.org>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20191112093025.98638-1-colin.king@canonical.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 12 Nov 2019, Colin King wrote:
 
-> From: Colin Ian King <colin.king@canonical.com>
+On 11/7/19 2:16 AM, Bjorn Andersson wrote:
+> The SDM845 has one Gen2 and one Gen3 controller, add support for these.
 > 
-> There is a spelling mistake in a dev_err error message. Fix it.
-> 
-> Signed-off-by: Colin Ian King <colin.king@canonical.com>
+> Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  drivers/video/backlight/qcom-wled.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> Changes since v1:
+> - Don't assert the reset in the failure path
+> 
+>  drivers/pci/controller/dwc/pcie-qcom.c | 150 +++++++++++++++++++++++++
+>  1 file changed, 150 insertions(+)
 
-Applied, thanks.
+Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
 
 -- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+regards,
+Stan
