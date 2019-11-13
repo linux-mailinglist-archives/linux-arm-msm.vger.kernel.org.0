@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 75253FA0C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 02:52:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE57CFA0E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 02:53:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728218AbfKMBwR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 20:52:17 -0500
-Received: from mail.kernel.org ([198.145.29.99]:40864 "EHLO mail.kernel.org"
+        id S1728605AbfKMBxe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 20:53:34 -0500
+Received: from mail.kernel.org ([198.145.29.99]:43342 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728214AbfKMBwR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 20:52:17 -0500
+        id S1727561AbfKMBxd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Nov 2019 20:53:33 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 854452245D;
-        Wed, 13 Nov 2019 01:52:15 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5F9F02245A;
+        Wed, 13 Nov 2019 01:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573609936;
-        bh=GnLDcU3GQlLVz86X48Q6AD2uliaNpA6HTGkKvjNyt+w=;
+        s=default; t=1573610013;
+        bh=tWMoYBDBxFN95d0VknL5vepaomjR5eoKtzCaE7yb/NY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=gB9HJpqDdkNOgBy9jkUEw3G8Uoic4x+ZlNqZeANFoioZBIcevSajfY53pkB9pqHlE
-         G4y7P+l8oZGIlTvZ75klbgKlyNL42lyycOmeJiAgFu3Giy8JeQNk/3K0PwF1UVw+Mo
-         fyz74bCE1NQ4P0SHyThVlA8qzaC/A6mAbXROuXpc=
+        b=IO9op3sTdcQ8pHwZrBBSlRXH3zPUkk4OmwuEgyfT+LeKOpAv2JtfrkFZe/yJkBis6
+         Wdn+Et5Ee3d83A0p6JGAgz5SUnRVBCX11Ym1cyeUDLyt3kGPSnnb7shcTX7JfNGGuO
+         y4qeIMLq+QW6aXPSmh3c5fh2tNd+zoh6tue3qvzo=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
+Cc:     Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Andy Gross <andy.gross@linaro.org>,
+        Wolfram Sang <wsa@the-dreams.de>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.19 079/209] msm/gpu/a6xx: Force of_dma_configure to setup DMA for GMU
-Date:   Tue, 12 Nov 2019 20:48:15 -0500
-Message-Id: <20191113015025.9685-79-sashal@kernel.org>
+        linux-i2c@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 117/209] i2c: qup: use core to detect 'no zero length' quirk
+Date:   Tue, 12 Nov 2019 20:48:53 -0500
+Message-Id: <20191113015025.9685-117-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191113015025.9685-1-sashal@kernel.org>
 References: <20191113015025.9685-1-sashal@kernel.org>
@@ -45,40 +45,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jordan Crouse <jcrouse@codeaurora.org>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 32aa27e15c28d3898ed6f9b3c98f95f34a81eab2 ]
+[ Upstream commit de82bb431855580ad659bfed3e858bd9dd12efd0 ]
 
-The point of the 'force_dma' parameter for of_dma_configure
-is to force the device to be set up even if DMA capability is
-not described by the firmware which is exactly the use case
- we have for GMU - we need SMMU to get set up but we have no
-other dma capabilities since memory is managed by the GPU
-driver. Currently we pass false so of_dma_configure() fails
-and subsequently GMU and GPU probe does as well.
+And don't reimplement in the driver.
 
-Fixes: 4b565ca5a2c ("drm/msm: Add A6XX device support")
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-Tested-by: Sibi Sankar <sibis@codeaurora.org>
-Signed-off-by: Rob Clark <robdclark@gmail.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Andy Gross <andy.gross@linaro.org>
+Signed-off-by: Wolfram Sang <wsa@the-dreams.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-qup.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 9acb9dfaf57e6..9cde79a7335c8 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1140,7 +1140,7 @@ int a6xx_gmu_probe(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
+index c86c3ae1318f2..e09cd0775ae91 100644
+--- a/drivers/i2c/busses/i2c-qup.c
++++ b/drivers/i2c/busses/i2c-qup.c
+@@ -1088,11 +1088,6 @@ static int qup_i2c_xfer(struct i2c_adapter *adap,
+ 	writel(I2C_MINI_CORE | I2C_N_VAL, qup->base + QUP_CONFIG);
  
- 	gmu->dev = &pdev->dev;
+ 	for (idx = 0; idx < num; idx++) {
+-		if (msgs[idx].len == 0) {
+-			ret = -EINVAL;
+-			goto out;
+-		}
+-
+ 		if (qup_i2c_poll_state_i2c_master(qup)) {
+ 			ret = -EIO;
+ 			goto out;
+@@ -1520,9 +1515,6 @@ qup_i2c_determine_mode_v2(struct qup_i2c_dev *qup,
  
--	of_dma_configure(gmu->dev, node, false);
-+	of_dma_configure(gmu->dev, node, true);
+ 	/* All i2c_msgs should be transferred using either dma or cpu */
+ 	for (idx = 0; idx < num; idx++) {
+-		if (msgs[idx].len == 0)
+-			return -EINVAL;
+-
+ 		if (msgs[idx].flags & I2C_M_RD)
+ 			max_rx_len = max_t(unsigned int, max_rx_len,
+ 					   msgs[idx].len);
+@@ -1636,9 +1628,14 @@ static const struct i2c_algorithm qup_i2c_algo_v2 = {
+  * which limits the possible read to 256 (QUP_READ_LIMIT) bytes.
+  */
+ static const struct i2c_adapter_quirks qup_i2c_quirks = {
++	.flags = I2C_AQ_NO_ZERO_LEN,
+ 	.max_read_len = QUP_READ_LIMIT,
+ };
  
- 	/* Fow now, don't do anything fancy until we get our feet under us */
- 	gmu->idle_level = GMU_IDLE_STATE_ACTIVE;
++static const struct i2c_adapter_quirks qup_i2c_quirks_v2 = {
++	.flags = I2C_AQ_NO_ZERO_LEN,
++};
++
+ static void qup_i2c_enable_clocks(struct qup_i2c_dev *qup)
+ {
+ 	clk_prepare_enable(qup->clk);
+@@ -1701,6 +1698,7 @@ static int qup_i2c_probe(struct platform_device *pdev)
+ 		is_qup_v1 = true;
+ 	} else {
+ 		qup->adap.algo = &qup_i2c_algo_v2;
++		qup->adap.quirks = &qup_i2c_quirks_v2;
+ 		is_qup_v1 = false;
+ 		if (acpi_match_device(qup_i2c_acpi_match, qup->dev))
+ 			goto nodma;
 -- 
 2.20.1
 
