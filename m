@@ -2,178 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 20844FB261
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 15:18:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 63111FB310
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 16:00:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727612AbfKMOSy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Nov 2019 09:18:54 -0500
-Received: from esa6.microchip.iphmx.com ([216.71.154.253]:12233 "EHLO
-        esa6.microchip.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726410AbfKMOSy (ORCPT
+        id S1727942AbfKMPAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Nov 2019 10:00:43 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:46268 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727550AbfKMPAn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Nov 2019 09:18:54 -0500
-Received-SPF: Pass (esa6.microchip.iphmx.com: domain of
-  Nicolas.Ferre@microchip.com designates 198.175.253.82 as
-  permitted sender) identity=mailfrom;
-  client-ip=198.175.253.82; receiver=esa6.microchip.iphmx.com;
-  envelope-from="Nicolas.Ferre@microchip.com";
-  x-sender="Nicolas.Ferre@microchip.com";
-  x-conformance=spf_only; x-record-type="v=spf1";
-  x-record-text="v=spf1 mx a:ushub1.microchip.com
-  a:smtpout.microchip.com a:mx1.microchip.iphmx.com
-  a:mx2.microchip.iphmx.com include:servers.mcsv.net
-  include:mktomail.com include:spf.protection.outlook.com ~all"
-Received-SPF: None (esa6.microchip.iphmx.com: no sender
-  authenticity information available from domain of
-  postmaster@email.microchip.com) identity=helo;
-  client-ip=198.175.253.82; receiver=esa6.microchip.iphmx.com;
-  envelope-from="Nicolas.Ferre@microchip.com";
-  x-sender="postmaster@email.microchip.com";
-  x-conformance=spf_only
-Authentication-Results: esa6.microchip.iphmx.com; spf=Pass smtp.mailfrom=Nicolas.Ferre@microchip.com; spf=None smtp.helo=postmaster@email.microchip.com; dkim=pass (signature verified) header.i=@microchiptechnology.onmicrosoft.com; dmarc=pass (p=none dis=none) d=microchip.com
-IronPort-SDR: 8r1LOxkgUn8VI9rT9PlZYtvYcX9KosJx0t17VixGxmeT+XLuSbXvXZFaGit9egKW4zz9+LfsX9
- ZI1XTl3NXN5C8ld/Of3OWI4fMrkdvDt/WgOXJCSh41Gora/bI7wAk5s8UzosbN9Oepjh8E8OKq
- tcrEeipRu5ejFIDbt9ptLL0UpuAv4Zv2N+FVaeETRgRuS1MoPCdZK7TjUzflAO6biioHjDSSTT
- bJxpMhjaLU+BWB0Ry9usXYyUjy1oU+G6fPDa7CTuF06hN2lzrcuIUJD9NT81RncppwjEWfF6Q8
- bDg=
-X-IronPort-AV: E=Sophos;i="5.68,300,1569308400"; 
-   d="scan'208";a="54145797"
-Received: from smtpout.microchip.com (HELO email.microchip.com) ([198.175.253.82])
-  by esa6.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 13 Nov 2019 07:18:53 -0700
-Received: from chn-vm-ex01.mchp-main.com (10.10.85.143) by
- chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Wed, 13 Nov 2019 07:18:52 -0700
-Received: from NAM03-DM3-obe.outbound.protection.outlook.com (10.10.215.89) by
- email.microchip.com (10.10.87.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5 via Frontend
- Transport; Wed, 13 Nov 2019 07:18:52 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mzzbDNVynApcZ9eKDGplbiKCaM/noE5edJP3LUllRTvTU9Cu/8rUEOeMv8+G2/0I3yV1TtfUl7l90lzjUNni6MtDQbJL6+AfJk9Td5m9YoRwoSlV+5Nh/aFR1hH0IRE9MHoIDVA9rAKQuicjsJNOlUuDtIDFh4bpUYvGc67U6uUK3o0vOMcTxOU5kheQiX/5vYA2r0/FSJQ3eJo3yg+xLhE342Jk/2E6i1wu+eovEUf+HtSkW1aig2vBdSUNynWH72a5qXXJZxGUAyq/gyT86reMsUEjrtOSt1a6C8Rxd11wm5E/gAa8vkiTg7RcbSPruxGtlDAuQCNB2wFU4OZnTQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+BJNR5FIHY+1k0Xyl/mnU+RGnNdeRWYVHV/K7yxU+hY=;
- b=YcvUgrcJoVwExahVHdOpifblbKo9GjurDveNOY0PlcOxYtUVf4yIErPpiwnI+kb5vGtrPJu87AbROy0yc8rifmPewwVhFd7zSA9dW/OFNhq+GpRozOClmA1VZ77TIB6VbZ4nAwspxihciK2qmY//YLkP18YWb+7L1Md3fZ4KPr5mMhOvfZh4nXZTGE8fKZsPDofntIVKm4VUNtgY8UebfMZN3P2dVsE8SVm827xwOzu0tS2uT6FVqHVFOzhmtwyfXGb7uwLBZv3ltzGeI4CdJYtiFjncafPZ7T7Ygjq5+Dt0D1elGvH+IUhVCYo7FidyPAM4RIR5Wg8U6AfWQxCw7A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microchip.com; dmarc=pass action=none
- header.from=microchip.com; dkim=pass header.d=microchip.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=microchiptechnology.onmicrosoft.com;
- s=selector2-microchiptechnology-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+BJNR5FIHY+1k0Xyl/mnU+RGnNdeRWYVHV/K7yxU+hY=;
- b=ZV+M1pldDQ7T6XA9q+ujT60+OajMk03yUkWDg66GQarb7DzsfCaj3H5jw707rNXSoLnQLX9XOysueXRgXETBz1YJokRNulCXqMXAuXIzpNWWQcfKTYsXtrkTXppBOnkFhtSBG/FebG1OCvm3dMDZwI/JUf8TXes4YYutugssI1I=
-Received: from SN6PR11MB2830.namprd11.prod.outlook.com (52.135.93.21) by
- SN6PR11MB3486.namprd11.prod.outlook.com (52.135.112.207) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2430.24; Wed, 13 Nov 2019 14:18:51 +0000
-Received: from SN6PR11MB2830.namprd11.prod.outlook.com
- ([fe80::6460:e571:9440:bd83]) by SN6PR11MB2830.namprd11.prod.outlook.com
- ([fe80::6460:e571:9440:bd83%6]) with mapi id 15.20.2451.024; Wed, 13 Nov 2019
- 14:18:51 +0000
-From:   <Nicolas.Ferre@microchip.com>
-To:     <peter.ujfalusi@ti.com>, <broonie@kernel.org>,
-        <radu_nicolae.pirea@upb.ro>, <shawnguo@kernel.org>,
-        <s.hauer@pengutronix.de>, <linus.walleij@linaro.org>,
-        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <andi@etezian.org>, <ldewangan@nvidia.com>,
-        <thierry.reding@gmail.com>, <jonathanh@nvidia.com>
-CC:     <alexandre.belloni@bootlin.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <krzk@kernel.org>,
-        <linux-spi@vger.kernel.org>, <vkoul@kernel.org>,
-        <kgene@kernel.org>, <linux-tegra@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH 1/9] spi: at91-usart: Use dma_request_chan() directly for
- channel request
-Thread-Topic: [PATCH 1/9] spi: at91-usart: Use dma_request_chan() directly for
- channel request
-Thread-Index: AQHVmi1FIf5yTfqv106gQVZTWXlKoQ==
-Date:   Wed, 13 Nov 2019 14:18:51 +0000
-Message-ID: <05f47be4-f58a-d61f-92e1-c4985c4c3680@microchip.com>
-References: <20191113094256.1108-1-peter.ujfalusi@ti.com>
- <20191113094256.1108-2-peter.ujfalusi@ti.com>
-In-Reply-To: <20191113094256.1108-2-peter.ujfalusi@ti.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: MR2P264CA0036.FRAP264.PROD.OUTLOOK.COM (2603:10a6:500::24)
- To SN6PR11MB2830.namprd11.prod.outlook.com (2603:10b6:805:5b::21)
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [2a01:cb1c:a97:7600:a0f2:f1f3:de5d:e88]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: f58dd08e-2d66-4537-ba2e-08d7684467f6
-x-ms-traffictypediagnostic: SN6PR11MB3486:
-x-microsoft-antispam-prvs: <SN6PR11MB348652F8BE37A222629252C8E0760@SN6PR11MB3486.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:177;
-x-forefront-prvs: 0220D4B98D
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(136003)(39860400002)(366004)(346002)(396003)(376002)(199004)(189003)(256004)(386003)(6506007)(229853002)(53546011)(6436002)(476003)(2616005)(86362001)(2201001)(8936002)(7736002)(446003)(11346002)(76176011)(71190400001)(8676002)(81156014)(81166006)(6486002)(71200400001)(66476007)(31696002)(486006)(305945005)(102836004)(66556008)(7416002)(64756008)(31686004)(66446008)(186003)(99286004)(66946007)(54906003)(52116002)(110136005)(316002)(46003)(14444005)(4326008)(2501003)(5660300002)(6246003)(14454004)(25786009)(36756003)(478600001)(2906002)(6116002)(6512007)(921003)(1121003);DIR:OUT;SFP:1101;SCL:1;SRVR:SN6PR11MB3486;H:SN6PR11MB2830.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: microchip.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: uORPit9S6cooYTLG51MbJHa83qKpuL5sFgHrEIcARFwuVis1mG8fZbL0VBPHEpXRmVpyVPRmUdpk5vBfvL27w5iUP8IK2mMbGUd9F2cpoxj0rm+2KjpW7cMgx5BTMMWoaAP2czrwVUztWtJ55SI7q3zvXUuDmFCVJUqM0y0U8rH2UhA4y4DoKurlSxXf2Wi1IQjB28FHlltEtmUfePueEHG72lTFDt/rASZmhNs1ANqB1mMrSDSymwWMyb7+we3ViQdrwkRP7cLleZ6aifXPrFLyZ5gMceMb/DFEvtpWKOC1FY2SWshIndE7wvUEm/TiirCJG15gSB4jBnz9b19GHCzHQAmAOsY1IypYZGZ/2ZAzEwiBmtGg9qnVbI4+HDMin5JjILDfNWPQ/ZeezkIilM/l+udgNj25pNa+b9UMLtX75FWNwrqvxyJDU+kCQg/W
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="Windows-1252"
-Content-ID: <E9B225392312DD4A83975A3892B8473A@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+        Wed, 13 Nov 2019 10:00:43 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id DB7646030B; Wed, 13 Nov 2019 15:00:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573657241;
+        bh=6KJbCUxPimYHs4dQnfQiI+lDr5dgFdlKC/Z1ifkfhI0=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=Xgq0QdfprfvO891edqUa5hL252PgrGodyJhTWkNnZFguVg4feNCT/q7YamuaRGSBI
+         KgE4EbLGeCzTjn2JqK8DMIXUZFxG3aj0aslwVLFYU9Y+ZstWqw0ZeRvfY51EN6TF8u
+         WBSZ+bRL9OI8ur2ky2WltRmjGKWOTYq4HFlBEki8=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id B99626030B;
+        Wed, 13 Nov 2019 15:00:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573657240;
+        bh=6KJbCUxPimYHs4dQnfQiI+lDr5dgFdlKC/Z1ifkfhI0=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=i3uhVvKZD0Wztude+9oqQQE+wI8vdO5XMPxSc2QFKCMBwLqn0aSzNROj/7rs6Wmi8
+         PCYlKZfMtR6iu6fr3kf2dnZ6qXVnzZb5LVSctoAm/v993LKBRfewi+z5JkFE8bWzcn
+         ccy1gYEg5acNuBv0N0m0zdqB7d6DvpXILwoQ4x80=
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: f58dd08e-2d66-4537-ba2e-08d7684467f6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2019 14:18:51.1369
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3f4057f3-b418-4d4e-ba84-d55b4e897d88
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: qelW7BqasSdr83gKMNZeBpIrC6hU0MycY4HdWRJnjWxn58YigfK0a/6X0f5XzZA8KWRbHZV8R1gRc5IiObSwgswfRSu8zc4RaDjRfCFkzts=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR11MB3486
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 13 Nov 2019 20:30:40 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-kernel@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCHv2 0/3] Add LLCC support for SC7180 SoC
+In-Reply-To: <81f57dc623fe8705cea52b5cb2612b32@codeaurora.org>
+References: <cover.1571484439.git.saiprakash.ranjan@codeaurora.org>
+ <20191021033220.GG4500@tuxbook-pro>
+ <CAL_JsqLzRRQe8UZCxgXArVNhNry7PgMCthAR2aZNcm6CCEpvDA@mail.gmail.com>
+ <2fbab8bc38be37fba976d34b2f89e720@codeaurora.org>
+ <CAL_Jsq+5p7gQzDfGipNFr1ry-Pc3pDJpcXnAqdX9eo0HLETATQ@mail.gmail.com>
+ <81f57dc623fe8705cea52b5cb2612b32@codeaurora.org>
+Message-ID: <1565197bda60573937453e95dcafbe68@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/11/2019 at 10:42, Peter Ujfalusi wrote:
-> External E-Mail
->=20
->=20
-> dma_request_slave_channel_reason() is:
-> #define dma_request_slave_channel_reason(dev, name) \
-> 	dma_request_chan(dev, name)
->=20
-> Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Hello Rob,
 
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+On 2019-10-25 13:24, Sai Prakash Ranjan wrote:
+> On 2019-10-25 04:03, Rob Herring wrote:
+>> On Thu, Oct 24, 2019 at 6:00 AM Sai Prakash Ranjan
+>> <saiprakash.ranjan@codeaurora.org> wrote:
+>>> 
+>>> Hi Rob,
+>>> 
+>>> On 2019-10-24 01:19, Rob Herring wrote:
+>>> > On Sun, Oct 20, 2019 at 10:32 PM Bjorn Andersson
+>>> > <bjorn.andersson@linaro.org> wrote:
+>>> >>
+>>> >> On Sat 19 Oct 04:37 PDT 2019, Sai Prakash Ranjan wrote:
+>>> >>
+>>> >> > LLCC behaviour is controlled by the configuration data set
+>>> >> > in the llcc-qcom driver, add the same for SC7180 SoC.
+>>> >> > Also convert the existing bindings to json-schema and add
+>>> >> > the compatible for SC7180 SoC.
+>>> >> >
+>>> >>
+>>> >> Thanks for the patches and thanks for the review Stephen. Series
+>>> >> applied
+>>> >
+>>> > And they break dt_binding_check. Please fix.
+>>> >
+>>> 
+>>> I did check this and think that the error log from dt_binding_check 
+>>> is
+>>> not valid because it says cache-level is a required property [1], but
+>>> there is no such property in LLCC bindings.
+>> 
+>> Then you should point out the issue and not just submit stuff ignoring
+>> it. It has to be resolved one way or another.
+>> 
+> 
+> I did not ignore it. When I ran the dt-binding check locally, it did 
+> not
+> error out and just passed on [1] and it was my bad that I did not check
+> the entire build logs to see if llcc dt binding check had some warning 
+> or
+> not. But this is the usual case where most of us don't look at the 
+> entire
+> build logs to check if there is a warning or not. We notice if there is 
+> an
+> immediate exit/fail in case of some warning/error. So it would be good 
+> if
+> we fail the dt-binding check build if there is some warning/error or 
+> atleast
+> provide some option to strict build to fail on warning, maybe there is 
+> already
+> a flag to do this?
+> 
+> After submitting the patch, I noticed this build failure on
+> patchwork.ozlabs.org and was waiting for your reply.
+> 
+> [1] https://paste.ubuntu.com/p/jNK8yfVkMG/
+> 
+>> If you refer to the DT spec[1], cache-level is required. The schema is
+>> just enforcing that now. It's keying off the node name of
+>> 'cache-controller'.
+>> 
+> 
+> This is not L2 or L3 cache, this is a system cache (last level cache) 
+> shared by
+> clients other than just CPU. So I don't know how do we specify 
+> cache-level for
+> this, let me know if you have some pointers.
+> 
 
-> ---
->   drivers/spi/spi-at91-usart.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/drivers/spi/spi-at91-usart.c b/drivers/spi/spi-at91-usart.c
-> index a40bb2ef89dc..88033422a42a 100644
-> --- a/drivers/spi/spi-at91-usart.c
-> +++ b/drivers/spi/spi-at91-usart.c
-> @@ -132,7 +132,7 @@ static int at91_usart_spi_configure_dma(struct spi_co=
-ntroller *ctlr,
->   	dma_cap_zero(mask);
->   	dma_cap_set(DMA_SLAVE, mask);
->  =20
-> -	ctlr->dma_tx =3D dma_request_slave_channel_reason(dev, "tx");
-> +	ctlr->dma_tx =3D dma_request_chan(dev, "tx");
->   	if (IS_ERR_OR_NULL(ctlr->dma_tx)) {
->   		if (IS_ERR(ctlr->dma_tx)) {
->   			err =3D PTR_ERR(ctlr->dma_tx);
-> @@ -145,7 +145,7 @@ static int at91_usart_spi_configure_dma(struct spi_co=
-ntroller *ctlr,
->   		goto at91_usart_spi_error_clear;
->   	}
->  =20
-> -	ctlr->dma_rx =3D dma_request_slave_channel_reason(dev, "rx");
-> +	ctlr->dma_rx =3D dma_request_chan(dev, "rx");
->   	if (IS_ERR_OR_NULL(ctlr->dma_rx)) {
->   		if (IS_ERR(ctlr->dma_rx)) {
->   			err =3D PTR_ERR(ctlr->dma_rx);
->=20
+Any ideas on specifying the cache-level for system cache? Does 
+dt-binding-check
+needs to be updated for this case?
 
+Thanks,
+Sai
 
---=20
-Nicolas Ferre
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
