@@ -2,189 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B030FB321
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 16:02:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3C80FB33C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 16:11:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727655AbfKMPCl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Nov 2019 10:02:41 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:48544 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726812AbfKMPCl (ORCPT
+        id S1727640AbfKMPLy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Nov 2019 10:11:54 -0500
+Received: from mail-il1-f195.google.com ([209.85.166.195]:46147 "EHLO
+        mail-il1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727550AbfKMPLy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Nov 2019 10:02:41 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 297D760BF4; Wed, 13 Nov 2019 15:02:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573657359;
-        bh=PmuIPtzDsG95Mlbe4TmoFaii3H10pp3Kzpy+eC3cS6Y=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=UJgGktfGNeIBaLx2B5ouDR6rjhH1Z8copT+1dAq/AOwgRAUHUf8xeh6IDWReJ3P5J
-         roP06JekYZhkh2LgDn5DG20cw3buccx0G9NSA5ynqJy2l9rtN/BuQUYn1kPNEHEj1j
-         U0wjyWSdDL4I171Pb44QvrOo3TvFw16tTq5QUN7w=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6F2CE60AD9;
-        Wed, 13 Nov 2019 15:02:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573657354;
-        bh=PmuIPtzDsG95Mlbe4TmoFaii3H10pp3Kzpy+eC3cS6Y=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=BgDcsSh15qyyt0yE5G6jvzXvt94FTYXH+2Z2OwJFq+bUrpSBFQAys2hx+ZWgKlcl+
-         WGQpzjH51+9a3OFRmVP8QbXo+UkK2oVSVkXq+XaMJTtvr7WbHO0IKayDBX4mxxYVe9
-         knce6RHLvvKUCCwUw5Y1mCDGBqSO5sOVCVXjemHw=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6F2CE60AD9
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v9 1/4] dt-bindings: clock: Document external clocks for
- MSM8998 gcc
-To:     Taniya Das <tdas@codeaurora.org>, mturquette@baylibre.com,
-        sboyd@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        marc.w.gonzalez@free.fr, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <1573591382-14225-1-git-send-email-jhugo@codeaurora.org>
- <1573591466-14296-1-git-send-email-jhugo@codeaurora.org>
- <63e2cdd2-919d-9ec2-9fe8-48bbe34f732c@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <4dcd5e10-817e-0a12-6922-5e3f8dcf09bf@codeaurora.org>
-Date:   Wed, 13 Nov 2019 08:02:32 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        Wed, 13 Nov 2019 10:11:54 -0500
+Received: by mail-il1-f195.google.com with SMTP id q1so2072361ile.13;
+        Wed, 13 Nov 2019 07:11:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Oet7iN8luRIwm2cG0enPN1WO0bfm28VO//v3gW2hBng=;
+        b=GQ3XKwp2AaghEayclfUYMtj06s+kNJ3pPo2qy6o3BVVu+8If5uf39XUbSZkODmmU33
+         WDeAJ8hMYpRvi0cUuO/9lrc5XrrtCMRY0onKyQX+VhaWxmTI+Lz9TJj1GRzi3MxLdt04
+         tekoOYGqFXTHSJzb8/GuwS7hRrbPZtwG2eVfgxdjpZDVr/iJ7aDlFDftc6szgU1vzaZZ
+         WeINd1UMXpiaoHmo3QdKl8f0o0Ow/3SUmeyIp8xIT1lRCsIZfWVSQ879lYWJ+YbUDZFI
+         II3F90tO59YT4Nw3DJh9VTEt4ev51KZP3sH1tQ8GQslbwz1aAb4/uPva7x6OjUoSOp5j
+         K0/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Oet7iN8luRIwm2cG0enPN1WO0bfm28VO//v3gW2hBng=;
+        b=Em66xhI7iZmT7T/LPeWqOybGO8xX7y921lsnGQIplIt7UXDqLcwhSWXWW3A2PFTdDp
+         NdI07XtacRO9E02E1F671F71fgkCBB4QY4MPOgrMNPttUqk0+YcSKRU7o6zHKI11lEKQ
+         0Y/2wERkDV137dSeG1E6PylhdAo+gx1HWHE2KkKJUlpGwa8kVZXTWvrCiuYdLE7Ohq+d
+         Q7UDdGk88mjfNQAf0s+iSemnK3E9kF4Qh8UlO3pSIupl52kDkYgDjWoMaT5hXOFjQa5N
+         bTP547L7khkGVIUqu1guJ+eMTjQ1qoYsX6pz5c+RV4iCrHpVCnm/MjYgkTt6Y8vjCaGW
+         Itmg==
+X-Gm-Message-State: APjAAAUwwKznI1dOHVP9MtBLPCI29yxtfKU9x8i4EDTN7qdEFeRJ69gN
+        fW+pAlV0H4DH0Bp/pSySPEkt8KcwS0s1I0a28NaNIA==
+X-Google-Smtp-Source: APXvYqzJ6RcpW1AKYY64DcFg31Q3abj110+k7vsmWtJerlFCp+aLmBxLTxWeV9e9dqahFbq36N/70b0ruDZgONRDz9Y=
+X-Received: by 2002:a92:831d:: with SMTP id f29mr4564735ild.263.1573657912726;
+ Wed, 13 Nov 2019 07:11:52 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <63e2cdd2-919d-9ec2-9fe8-48bbe34f732c@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20191106231650.1580-1-jeffrey.l.hugo@gmail.com>
+ <20191112084225.casuncbo7z54vu4g@netronome.com> <CAOCk7NpNgtTSus2KtBMe=jGLFyBumVfRVxKxtHoEDUEt2-6tqQ@mail.gmail.com>
+ <87d0dws79m.fsf@kamboji.qca.qualcomm.com>
+In-Reply-To: <87d0dws79m.fsf@kamboji.qca.qualcomm.com>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Wed, 13 Nov 2019 08:11:41 -0700
+Message-ID: <CAOCk7NpGm7jLH-z9CdJaYAGkg_WuiBxtxgwby+BJef=asFbavw@mail.gmail.com>
+Subject: Re: [PATCH] ath10k: Fix qmi init error handling
+To:     Kalle Valo <kvalo@codeaurora.org>
+Cc:     Simon Horman <simon.horman@netronome.com>, davem@davemloft.net,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/13/2019 4:20 AM, Taniya Das wrote:
-> Hi Jeffrey,
-> 
-> On 11/13/2019 2:14 AM, Jeffrey Hugo wrote:
->> The global clock controller on MSM8998 can consume a number of external
->> clocks.  Document them.
->>
->> For 7180 and 8150, the hardware always exists, so no clocks are truly
->> optional.  Therefore, simplify the binding by removing the min/max
->> qualifiers to clocks.  Also, fixup an example so that dt_binding_check
->> passes.
->>
->> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
->> ---
->>   .../devicetree/bindings/clock/qcom,gcc.yaml        | 47 
->> +++++++++++++++-------
->>   1 file changed, 33 insertions(+), 14 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml 
->> b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
->> index e73a56f..2f3512b 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
->> @@ -40,20 +40,38 @@ properties:
->>          - qcom,gcc-sm8150
->>     clocks:
->> -    minItems: 1
->> -    maxItems: 3
->> -    items:
->> -      - description: Board XO source
->> -      - description: Board active XO source
->> -      - description: Sleep clock source
->> +    oneOf:
->> +      #qcom,gcc-sm8150
->> +      #qcom,gcc-sc7180
->> +      - items:
->> +        - description: Board XO source
->> +        - description: Board active XO source
->> +        - description: Sleep clock source
->> +      #qcom,gcc-msm8998
->> +      - items:
->> +        - description: Board XO source
->> +        - description: USB 3.0 phy pipe clock
->> +        - description: UFS phy rx symbol clock for pipe 0
->> +        - description: UFS phy rx symbol clock for pipe 1
->> +        - description: UFS phy tx symbol clock
->> +        - description: PCIE phy pipe clock
-> 
-> Would it be possible to add an example for MSM8998?
+On Tue, Nov 12, 2019 at 9:57 PM Kalle Valo <kvalo@codeaurora.org> wrote:
+>
+> Jeffrey Hugo <jeffrey.l.hugo@gmail.com> writes:
+>
+> > On Tue, Nov 12, 2019 at 1:42 AM Simon Horman <simon.horman@netronome.com> wrote:
+> >>
+> >> On Wed, Nov 06, 2019 at 03:16:50PM -0800, Jeffrey Hugo wrote:
+> >> > When ath10k_qmi_init() fails, the error handling does not free the irq
+> >> > resources, which causes an issue if we EPROBE_DEFER as we'll attempt to
+> >> > (re-)register irqs which are already registered.
+> >> >
+> >> > Fixes: ba94c753ccb4 ("ath10k: add QMI message handshake for wcn3990 client")
+> >> > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> >> > ---
+> >> >  drivers/net/wireless/ath/ath10k/snoc.c | 2 +-
+> >> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >> >
+> >> > diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
+> >> > index fc15a0037f0e..f2a0b7aaad3b 100644
+> >> > --- a/drivers/net/wireless/ath/ath10k/snoc.c
+> >> > +++ b/drivers/net/wireless/ath/ath10k/snoc.c
+> >> > @@ -1729,7 +1729,7 @@ static int ath10k_snoc_probe(struct platform_device *pdev)
+> >> >       ret = ath10k_qmi_init(ar, msa_size);
+> >> >       if (ret) {
+> >> >               ath10k_warn(ar, "failed to register wlfw qmi client: %d\n", ret);
+> >> > -             goto err_core_destroy;
+> >> > +             goto err_free_irq;
+> >> >       }
+> >>
+> >> From a casual examination of the code this seems like a step in the right
+> >> direction. But does this error path also need to call ath10k_hw_power_off() ?
+> >
+> > It probably should.  I don't see any fatal errors from the step being
+> > skipped, although it might silence some regulator warnings about being
+> > left on.  Unlikely to be observed by most folks as I was initing the
+> > driver pretty early to debug some things.  Looks like Kalle already
+> > picked up this patch though, so I guess your suggestion would need to
+> > be a follow up.
+>
+> Actually it's only in the pending branch, which means that the patch can
+> be changed or a new version can be submitted:
 
-It doesn't seem to be materially different that the existing examples, 
-but sure, that's something that can be done.
+Thats an interesting flow.  Ok.
 
-> 
->>     clock-names:
->> -    minItems: 1
->> -    maxItems: 3
->> -    items:
->> -      - const: bi_tcxo
->> -      - const: bi_tcxo_ao
->> -      - const: sleep_clk
->> +    oneOf:
->> +      #qcom,gcc-sm8150
->> +      #qcom,gcc-sc7180
->> +      - items:
->> +        - const: bi_tcxo
->> +        - const: bi_tcxo_ao
->> +        - const: sleep_clk
-> 
-> Not required for SC7180.
-
-How are you determining this?
-
-Per the earlier discussion with Stephen, if the hardware exists, it 
-should be represented in DT.  According to the documentation I see, the 
-sleep clock is routed to the GCC on SC7180.  The driver is not required 
-to make use of it.  Thus its required from the DT perspective.
-
-> 
->> +      #qcom,gcc-msm8998
->> +      - items:
->> +        - const: xo
->> +        - const: usb3_pipe
->> +        - const: ufs_rx_symbol0
->> +        - const: ufs_rx_symbol1
->> +        - const: ufs_tx_symbol0
->> +        - const: pcie0_pipe
->>     '#clock-cells':
->>       const: 1
->> @@ -118,6 +136,7 @@ else:
->>         compatible:
->>           contains:
->>             enum:
->> +            - qcom,gcc-msm8998
->>               - qcom,gcc-sm8150
->>               - qcom,gcc-sc7180
->>     then:
->> @@ -179,8 +198,8 @@ examples:
->>       clock-controller@100000 {
->>         compatible = "qcom,gcc-sc7180";
->>         reg = <0x100000 0x1f0000>;
->> -      clocks = <&rpmhcc 0>, <&rpmhcc 1>;
->> -      clock-names = "bi_tcxo", "bi_tcxo_ao";
->> +      clocks = <&rpmhcc 0>, <&rpmhcc 1>, <0>;
->> +      clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
-> 
-> SC7180 does not require a sleep clock.
-> 
->>         #clock-cells = <1>;
->>         #reset-cells = <1>;
->>         #power-domain-cells = <1>;
->>
-> 
-
-
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+>
+> https://wireless.wiki.kernel.org/en/users/drivers/ath10k/submittingpatches#patch_flow
+>
+> The easiest way to check the state of a wireless patch is from
+> patchwork:
+>
+> https://patchwork.kernel.org/patch/11231325/
+>
+> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches#checking_state_of_patches_from_patchwork
+>
+> --
+> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
