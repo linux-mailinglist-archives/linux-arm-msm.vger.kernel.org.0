@@ -2,151 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 63111FB310
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 16:00:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B030FB321
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 16:02:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727942AbfKMPAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Nov 2019 10:00:43 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:46268 "EHLO
+        id S1727655AbfKMPCl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Nov 2019 10:02:41 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:48544 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727550AbfKMPAn (ORCPT
+        with ESMTP id S1726812AbfKMPCl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Nov 2019 10:00:43 -0500
+        Wed, 13 Nov 2019 10:02:41 -0500
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id DB7646030B; Wed, 13 Nov 2019 15:00:41 +0000 (UTC)
+        id 297D760BF4; Wed, 13 Nov 2019 15:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573657241;
-        bh=6KJbCUxPimYHs4dQnfQiI+lDr5dgFdlKC/Z1ifkfhI0=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=Xgq0QdfprfvO891edqUa5hL252PgrGodyJhTWkNnZFguVg4feNCT/q7YamuaRGSBI
-         KgE4EbLGeCzTjn2JqK8DMIXUZFxG3aj0aslwVLFYU9Y+ZstWqw0ZeRvfY51EN6TF8u
-         WBSZ+bRL9OI8ur2ky2WltRmjGKWOTYq4HFlBEki8=
+        s=default; t=1573657359;
+        bh=PmuIPtzDsG95Mlbe4TmoFaii3H10pp3Kzpy+eC3cS6Y=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=UJgGktfGNeIBaLx2B5ouDR6rjhH1Z8copT+1dAq/AOwgRAUHUf8xeh6IDWReJ3P5J
+         roP06JekYZhkh2LgDn5DG20cw3buccx0G9NSA5ynqJy2l9rtN/BuQUYn1kPNEHEj1j
+         U0wjyWSdDL4I171Pb44QvrOo3TvFw16tTq5QUN7w=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.codeaurora.org (Postfix) with ESMTP id B99626030B;
-        Wed, 13 Nov 2019 15:00:40 +0000 (UTC)
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6F2CE60AD9;
+        Wed, 13 Nov 2019 15:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573657240;
-        bh=6KJbCUxPimYHs4dQnfQiI+lDr5dgFdlKC/Z1ifkfhI0=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=i3uhVvKZD0Wztude+9oqQQE+wI8vdO5XMPxSc2QFKCMBwLqn0aSzNROj/7rs6Wmi8
-         PCYlKZfMtR6iu6fr3kf2dnZ6qXVnzZb5LVSctoAm/v993LKBRfewi+z5JkFE8bWzcn
-         ccy1gYEg5acNuBv0N0m0zdqB7d6DvpXILwoQ4x80=
+        s=default; t=1573657354;
+        bh=PmuIPtzDsG95Mlbe4TmoFaii3H10pp3Kzpy+eC3cS6Y=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=BgDcsSh15qyyt0yE5G6jvzXvt94FTYXH+2Z2OwJFq+bUrpSBFQAys2hx+ZWgKlcl+
+         WGQpzjH51+9a3OFRmVP8QbXo+UkK2oVSVkXq+XaMJTtvr7WbHO0IKayDBX4mxxYVe9
+         knce6RHLvvKUCCwUw5Y1mCDGBqSO5sOVCVXjemHw=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6F2CE60AD9
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v9 1/4] dt-bindings: clock: Document external clocks for
+ MSM8998 gcc
+To:     Taniya Das <tdas@codeaurora.org>, mturquette@baylibre.com,
+        sboyd@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        marc.w.gonzalez@free.fr, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <1573591382-14225-1-git-send-email-jhugo@codeaurora.org>
+ <1573591466-14296-1-git-send-email-jhugo@codeaurora.org>
+ <63e2cdd2-919d-9ec2-9fe8-48bbe34f732c@codeaurora.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <4dcd5e10-817e-0a12-6922-5e3f8dcf09bf@codeaurora.org>
+Date:   Wed, 13 Nov 2019 08:02:32 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 13 Nov 2019 20:30:40 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCHv2 0/3] Add LLCC support for SC7180 SoC
-In-Reply-To: <81f57dc623fe8705cea52b5cb2612b32@codeaurora.org>
-References: <cover.1571484439.git.saiprakash.ranjan@codeaurora.org>
- <20191021033220.GG4500@tuxbook-pro>
- <CAL_JsqLzRRQe8UZCxgXArVNhNry7PgMCthAR2aZNcm6CCEpvDA@mail.gmail.com>
- <2fbab8bc38be37fba976d34b2f89e720@codeaurora.org>
- <CAL_Jsq+5p7gQzDfGipNFr1ry-Pc3pDJpcXnAqdX9eo0HLETATQ@mail.gmail.com>
- <81f57dc623fe8705cea52b5cb2612b32@codeaurora.org>
-Message-ID: <1565197bda60573937453e95dcafbe68@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.2.5
+In-Reply-To: <63e2cdd2-919d-9ec2-9fe8-48bbe34f732c@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Rob,
+On 11/13/2019 4:20 AM, Taniya Das wrote:
+> Hi Jeffrey,
+> 
+> On 11/13/2019 2:14 AM, Jeffrey Hugo wrote:
+>> The global clock controller on MSM8998 can consume a number of external
+>> clocks.  Document them.
+>>
+>> For 7180 and 8150, the hardware always exists, so no clocks are truly
+>> optional.  Therefore, simplify the binding by removing the min/max
+>> qualifiers to clocks.  Also, fixup an example so that dt_binding_check
+>> passes.
+>>
+>> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+>> ---
+>>   .../devicetree/bindings/clock/qcom,gcc.yaml        | 47 
+>> +++++++++++++++-------
+>>   1 file changed, 33 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml 
+>> b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+>> index e73a56f..2f3512b 100644
+>> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+>> @@ -40,20 +40,38 @@ properties:
+>>          - qcom,gcc-sm8150
+>>     clocks:
+>> -    minItems: 1
+>> -    maxItems: 3
+>> -    items:
+>> -      - description: Board XO source
+>> -      - description: Board active XO source
+>> -      - description: Sleep clock source
+>> +    oneOf:
+>> +      #qcom,gcc-sm8150
+>> +      #qcom,gcc-sc7180
+>> +      - items:
+>> +        - description: Board XO source
+>> +        - description: Board active XO source
+>> +        - description: Sleep clock source
+>> +      #qcom,gcc-msm8998
+>> +      - items:
+>> +        - description: Board XO source
+>> +        - description: USB 3.0 phy pipe clock
+>> +        - description: UFS phy rx symbol clock for pipe 0
+>> +        - description: UFS phy rx symbol clock for pipe 1
+>> +        - description: UFS phy tx symbol clock
+>> +        - description: PCIE phy pipe clock
+> 
+> Would it be possible to add an example for MSM8998?
 
-On 2019-10-25 13:24, Sai Prakash Ranjan wrote:
-> On 2019-10-25 04:03, Rob Herring wrote:
->> On Thu, Oct 24, 2019 at 6:00 AM Sai Prakash Ranjan
->> <saiprakash.ranjan@codeaurora.org> wrote:
->>> 
->>> Hi Rob,
->>> 
->>> On 2019-10-24 01:19, Rob Herring wrote:
->>> > On Sun, Oct 20, 2019 at 10:32 PM Bjorn Andersson
->>> > <bjorn.andersson@linaro.org> wrote:
->>> >>
->>> >> On Sat 19 Oct 04:37 PDT 2019, Sai Prakash Ranjan wrote:
->>> >>
->>> >> > LLCC behaviour is controlled by the configuration data set
->>> >> > in the llcc-qcom driver, add the same for SC7180 SoC.
->>> >> > Also convert the existing bindings to json-schema and add
->>> >> > the compatible for SC7180 SoC.
->>> >> >
->>> >>
->>> >> Thanks for the patches and thanks for the review Stephen. Series
->>> >> applied
->>> >
->>> > And they break dt_binding_check. Please fix.
->>> >
->>> 
->>> I did check this and think that the error log from dt_binding_check 
->>> is
->>> not valid because it says cache-level is a required property [1], but
->>> there is no such property in LLCC bindings.
->> 
->> Then you should point out the issue and not just submit stuff ignoring
->> it. It has to be resolved one way or another.
->> 
+It doesn't seem to be materially different that the existing examples, 
+but sure, that's something that can be done.
+
 > 
-> I did not ignore it. When I ran the dt-binding check locally, it did 
-> not
-> error out and just passed on [1] and it was my bad that I did not check
-> the entire build logs to see if llcc dt binding check had some warning 
-> or
-> not. But this is the usual case where most of us don't look at the 
-> entire
-> build logs to check if there is a warning or not. We notice if there is 
-> an
-> immediate exit/fail in case of some warning/error. So it would be good 
-> if
-> we fail the dt-binding check build if there is some warning/error or 
-> atleast
-> provide some option to strict build to fail on warning, maybe there is 
-> already
-> a flag to do this?
+>>     clock-names:
+>> -    minItems: 1
+>> -    maxItems: 3
+>> -    items:
+>> -      - const: bi_tcxo
+>> -      - const: bi_tcxo_ao
+>> -      - const: sleep_clk
+>> +    oneOf:
+>> +      #qcom,gcc-sm8150
+>> +      #qcom,gcc-sc7180
+>> +      - items:
+>> +        - const: bi_tcxo
+>> +        - const: bi_tcxo_ao
+>> +        - const: sleep_clk
 > 
-> After submitting the patch, I noticed this build failure on
-> patchwork.ozlabs.org and was waiting for your reply.
+> Not required for SC7180.
+
+How are you determining this?
+
+Per the earlier discussion with Stephen, if the hardware exists, it 
+should be represented in DT.  According to the documentation I see, the 
+sleep clock is routed to the GCC on SC7180.  The driver is not required 
+to make use of it.  Thus its required from the DT perspective.
+
 > 
-> [1] https://paste.ubuntu.com/p/jNK8yfVkMG/
+>> +      #qcom,gcc-msm8998
+>> +      - items:
+>> +        - const: xo
+>> +        - const: usb3_pipe
+>> +        - const: ufs_rx_symbol0
+>> +        - const: ufs_rx_symbol1
+>> +        - const: ufs_tx_symbol0
+>> +        - const: pcie0_pipe
+>>     '#clock-cells':
+>>       const: 1
+>> @@ -118,6 +136,7 @@ else:
+>>         compatible:
+>>           contains:
+>>             enum:
+>> +            - qcom,gcc-msm8998
+>>               - qcom,gcc-sm8150
+>>               - qcom,gcc-sc7180
+>>     then:
+>> @@ -179,8 +198,8 @@ examples:
+>>       clock-controller@100000 {
+>>         compatible = "qcom,gcc-sc7180";
+>>         reg = <0x100000 0x1f0000>;
+>> -      clocks = <&rpmhcc 0>, <&rpmhcc 1>;
+>> -      clock-names = "bi_tcxo", "bi_tcxo_ao";
+>> +      clocks = <&rpmhcc 0>, <&rpmhcc 1>, <0>;
+>> +      clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
 > 
->> If you refer to the DT spec[1], cache-level is required. The schema is
->> just enforcing that now. It's keying off the node name of
->> 'cache-controller'.
->> 
+> SC7180 does not require a sleep clock.
 > 
-> This is not L2 or L3 cache, this is a system cache (last level cache) 
-> shared by
-> clients other than just CPU. So I don't know how do we specify 
-> cache-level for
-> this, let me know if you have some pointers.
+>>         #clock-cells = <1>;
+>>         #reset-cells = <1>;
+>>         #power-domain-cells = <1>;
+>>
 > 
 
-Any ideas on specifying the cache-level for system cache? Does 
-dt-binding-check
-needs to be updated for this case?
-
-Thanks,
-Sai
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
