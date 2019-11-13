@@ -2,83 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D2B1BFA4E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 03:20:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6552FFA93D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 05:57:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728143AbfKMBzL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Nov 2019 20:55:11 -0500
-Received: from mail.kernel.org ([198.145.29.99]:46530 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728104AbfKMBzJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Nov 2019 20:55:09 -0500
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        id S1726995AbfKME5c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Nov 2019 23:57:32 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:47782 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726979AbfKME5c (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Nov 2019 23:57:32 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 5DDFA60A37; Wed, 13 Nov 2019 04:57:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573621051;
+        bh=oLIySlzm4waF73QkfWLZI//4DD73A8oR0Svrmit18ig=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=KpuqFiw3V4zh2+iqt14Ai+g7Bg8b/gQmVj3u2uXbk2w6XAbk+6mMOQ/rbdxcaoLUJ
+         y0eMYanu86bNuwTQb0Lje1dRGsS3LAfw/PQtPILdSZu9q7xKr4AEiUwulTso/ifC4l
+         xupZ7XKP7wg6aHHKAxT7ja7kCTDb2yoiKPXPE0fI=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id EFF0B222CD;
-        Wed, 13 Nov 2019 01:55:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573610108;
-        bh=omDMWs7oiMbcZbsR6yFJC92lzmGq0/GwmcRPEeaGxKc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=nvu1CRB66BCA1qVPVKg/LxQ3hfQOYrZNBA428VgY2vleJWdS5ByGts0AnVVf1P6Q1
-         OTbdVrmcpmZJJZqatIIPAiNWmZSkaBtaCBZ7MvTACvsUJx8EFU84v+0pO6qbncryvH
-         Dgujz9NUbw9520pHWA72ZRPqBq3+FhxYx9lQ6ZAU=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Vikash Garodia <vgarodia@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>,
-        Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 166/209] media: venus: vdec: fix decoded data size
-Date:   Tue, 12 Nov 2019 20:49:42 -0500
-Message-Id: <20191113015025.9685-166-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191113015025.9685-1-sashal@kernel.org>
-References: <20191113015025.9685-1-sashal@kernel.org>
+        (Authenticated sender: kvalo@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D687260A0A;
+        Wed, 13 Nov 2019 04:57:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573621049;
+        bh=oLIySlzm4waF73QkfWLZI//4DD73A8oR0Svrmit18ig=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=UfHIW2C9MORMYVLzwOiuDEPOLILGK1lU6oRok92Sh9zYD2uORll36UC7pBoblhQK1
+         3O2rSxgHQRU0TLihMVMYqfVsbq5ABxu+pEtAEmTBl2m9LD3kMElRWxga9/fbNczTYf
+         6wOwsJQcxzt68H5geCAQtOlPpNFVVCPlwKM5RuaY=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D687260A0A
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=kvalo@codeaurora.org
+From:   Kalle Valo <kvalo@codeaurora.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Simon Horman <simon.horman@netronome.com>, davem@davemloft.net,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] ath10k: Fix qmi init error handling
+References: <20191106231650.1580-1-jeffrey.l.hugo@gmail.com>
+        <20191112084225.casuncbo7z54vu4g@netronome.com>
+        <CAOCk7NpNgtTSus2KtBMe=jGLFyBumVfRVxKxtHoEDUEt2-6tqQ@mail.gmail.com>
+Date:   Wed, 13 Nov 2019 06:57:25 +0200
+In-Reply-To: <CAOCk7NpNgtTSus2KtBMe=jGLFyBumVfRVxKxtHoEDUEt2-6tqQ@mail.gmail.com>
+        (Jeffrey Hugo's message of "Tue, 12 Nov 2019 08:51:28 -0700")
+Message-ID: <87d0dws79m.fsf@kamboji.qca.qualcomm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vikash Garodia <vgarodia@codeaurora.org>
+Jeffrey Hugo <jeffrey.l.hugo@gmail.com> writes:
 
-[ Upstream commit ce32c0a530bd955206fe45c2eff77e581202d699 ]
+> On Tue, Nov 12, 2019 at 1:42 AM Simon Horman <simon.horman@netronome.com> wrote:
+>>
+>> On Wed, Nov 06, 2019 at 03:16:50PM -0800, Jeffrey Hugo wrote:
+>> > When ath10k_qmi_init() fails, the error handling does not free the irq
+>> > resources, which causes an issue if we EPROBE_DEFER as we'll attempt to
+>> > (re-)register irqs which are already registered.
+>> >
+>> > Fixes: ba94c753ccb4 ("ath10k: add QMI message handshake for wcn3990 client")
+>> > Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+>> > ---
+>> >  drivers/net/wireless/ath/ath10k/snoc.c | 2 +-
+>> >  1 file changed, 1 insertion(+), 1 deletion(-)
+>> >
+>> > diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
+>> > index fc15a0037f0e..f2a0b7aaad3b 100644
+>> > --- a/drivers/net/wireless/ath/ath10k/snoc.c
+>> > +++ b/drivers/net/wireless/ath/ath10k/snoc.c
+>> > @@ -1729,7 +1729,7 @@ static int ath10k_snoc_probe(struct platform_device *pdev)
+>> >       ret = ath10k_qmi_init(ar, msa_size);
+>> >       if (ret) {
+>> >               ath10k_warn(ar, "failed to register wlfw qmi client: %d\n", ret);
+>> > -             goto err_core_destroy;
+>> > +             goto err_free_irq;
+>> >       }
+>>
+>> From a casual examination of the code this seems like a step in the right
+>> direction. But does this error path also need to call ath10k_hw_power_off() ?
+>
+> It probably should.  I don't see any fatal errors from the step being
+> skipped, although it might silence some regulator warnings about being
+> left on.  Unlikely to be observed by most folks as I was initing the
+> driver pretty early to debug some things.  Looks like Kalle already
+> picked up this patch though, so I guess your suggestion would need to
+> be a follow up.
 
-Existing code returns the max of the decoded size and buffer size.
-It turns out that buffer size is always greater due to hardware
-alignment requirement. As a result, payload size given to client
-is incorrect. This change ensures that the bytesused is assigned
-to actual payload size, when available.
+Actually it's only in the pending branch, which means that the patch can
+be changed or a new version can be submitted:
 
-Signed-off-by: Vikash Garodia <vgarodia@codeaurora.org>
-Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/media/platform/qcom/venus/vdec.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+https://wireless.wiki.kernel.org/en/users/drivers/ath10k/submittingpatches#patch_flow
 
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index dfbbbf0f746f9..e40fdf97b0f03 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -888,8 +888,7 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
- 		unsigned int opb_sz = venus_helper_get_opb_size(inst);
- 
- 		vb = &vbuf->vb2_buf;
--		vb->planes[0].bytesused =
--			max_t(unsigned int, opb_sz, bytesused);
-+		vb2_set_plane_payload(vb, 0, bytesused ? : opb_sz);
- 		vb->planes[0].data_offset = data_offset;
- 		vb->timestamp = timestamp_us * NSEC_PER_USEC;
- 		vbuf->sequence = inst->sequence_cap++;
+The easiest way to check the state of a wireless patch is from
+patchwork:
+
+https://patchwork.kernel.org/patch/11231325/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches#checking_state_of_patches_from_patchwork
+
 -- 
-2.20.1
-
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
