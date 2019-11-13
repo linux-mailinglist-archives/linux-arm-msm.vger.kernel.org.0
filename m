@@ -2,175 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DEC3FB7B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 19:35:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 579EFFB9B2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Nov 2019 21:23:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728231AbfKMSfK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Nov 2019 13:35:10 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:54436 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727074AbfKMSfJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Nov 2019 13:35:09 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id CC3D760DBB; Wed, 13 Nov 2019 18:35:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573670108;
-        bh=ZnObaWots9cAPwfS6rL5OVJ53exeep9lKReRdSSgWnY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RORb36fKrdAEzq75EQUisPQ+PGe1p0pjbhhqdzLwrTSttlBUKHX0MFXXis+WouoeT
-         EfjwkTV0CoTSG2E12VWFl90HZ+p17Evykh+vab5VC7dsCIWXT9INjWXI4qpQ61ElBB
-         xO3y1vyn8qW1ftf/J1BSelm522AQkcwr/UrEtVF8=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1726473AbfKMUXV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Nov 2019 15:23:21 -0500
+Received: from mail.kernel.org ([198.145.29.99]:50292 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726179AbfKMUXV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 Nov 2019 15:23:21 -0500
+Received: from gandalf.local.home (cpe-66-24-58-225.stny.res.rr.com [66.24.58.225])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5E7A760D84;
-        Wed, 13 Nov 2019 18:35:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573670107;
-        bh=ZnObaWots9cAPwfS6rL5OVJ53exeep9lKReRdSSgWnY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Vr6cPxvBl2zoRGtKe6w/T8WpgumehIzIREYMP9pXSrIdFsZAcKv1FOwH2p/3uiug0
-         Qk5N6uOzLHGGTV9G8VTxdYLuHniTQwppAc08b04liTt8E3utHc9D08+SDClMw+SqDc
-         wx+fTDx8F0pHyXP5acU180xWDq3b+e+2alCNc3mY=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5E7A760D84
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-Date:   Wed, 13 Nov 2019 11:35:06 -0700
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        Marc Zyngier <maz@kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        mkshah@codeaurora.org,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
-Subject: Re: [PATCH RFC v2 10/14] drivers: pinctrl: msm: setup GPIO chip in
- hierarchy
-Message-ID: <20191113183506.GA18786@codeaurora.org>
-References: <1568411962-1022-1-git-send-email-ilina@codeaurora.org>
- <1568411962-1022-11-git-send-email-ilina@codeaurora.org>
- <CACRpkdav_BFubQ4-RWAN+uxBoExi7qfgdFhDVKfgtbXEOB5uvA@mail.gmail.com>
+        by mail.kernel.org (Postfix) with ESMTPSA id A19FA206EC;
+        Wed, 13 Nov 2019 20:23:19 +0000 (UTC)
+Date:   Wed, 13 Nov 2019 15:23:17 -0500
+From:   Steven Rostedt <rostedt@goodmis.org>
+To:     Georgi Djakov <georgi.djakov@linaro.org>
+Cc:     linux-pm@vger.kernel.org, mingo@redhat.com,
+        bjorn.andersson@linaro.org, vincent.guittot@linaro.org,
+        daidavid1@codeaurora.org, okukatla@codeaurora.org,
+        evgreen@chromium.org, mka@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] interconnect: Add basic tracepoints
+Message-ID: <20191113152317.00318ad8@gandalf.local.home>
+In-Reply-To: <20191101130031.27996-4-georgi.djakov@linaro.org>
+References: <20191101130031.27996-1-georgi.djakov@linaro.org>
+        <20191101130031.27996-4-georgi.djakov@linaro.org>
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CACRpkdav_BFubQ4-RWAN+uxBoExi7qfgdFhDVKfgtbXEOB5uvA@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 03 2019 at 06:17 -0600, Linus Walleij wrote:
->On Fri, Sep 13, 2019 at 11:59 PM Lina Iyer <ilina@codeaurora.org> wrote:
->
->> Some GPIOs are marked as wakeup capable and are routed to another
->> interrupt controller that is an always-domain and can detect interrupts
->> even most of the SoC is powered off. The wakeup interrupt controller
->> wakes up the GIC and replays the interrupt at the GIC.
->>
->> Setup the TLMM irqchip in hierarchy with the wakeup interrupt controller
->> and ensure the wakeup GPIOs are handled correctly.
->>
->> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->> ----
->> Changes in RFC v2:
->>         - Define irq_domain_qcom_handle_wakeup()
->>         - Rebase on top of GPIO hierarchy support in linux-next
->>         - Set the chained irq handler for summary line
->
->This is looking better every time I look at it, it's really complex
->but alas the problem is hard to solve so it requires complex solutions.
->
->> @@ -1006,6 +1091,7 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
->>         struct gpio_irq_chip *girq;
->>         int ret;
->>         unsigned ngpio = pctrl->soc->ngpios;
->> +       struct device_node *dn;
->
->I usually call the variable "np"
->
-Will change.
+On Fri,  1 Nov 2019 15:00:31 +0200
+Georgi Djakov <georgi.djakov@linaro.org> wrote:
 
->> @@ -1021,17 +1107,40 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
->>
->>         pctrl->irq_chip.name = "msmgpio";
->>         pctrl->irq_chip.irq_enable = msm_gpio_irq_enable;
->> +       pctrl->irq_chip.irq_disable = msm_gpio_irq_disable;
->>         pctrl->irq_chip.irq_mask = msm_gpio_irq_mask;
->>         pctrl->irq_chip.irq_unmask = msm_gpio_irq_unmask;
->>         pctrl->irq_chip.irq_ack = msm_gpio_irq_ack;
->> +       pctrl->irq_chip.irq_eoi = irq_chip_eoi_parent;
->
->This part and the functions called seem fine!
->
->> +       dn = of_parse_phandle(pctrl->dev->of_node, "wakeup-parent", 0);
->> +       if (dn) {
->> +               int i;
->> +               bool skip;
->> +               unsigned int gpio;
->> +
->> +               chip->irq.parent_domain = irq_find_matching_host(dn,
->> +                                                DOMAIN_BUS_WAKEUP);
->> +               of_node_put(dn);
->> +               if (!chip->irq.parent_domain)
->> +                       return -EPROBE_DEFER;
->> +               chip->irq.child_to_parent_hwirq = msm_gpio_wakeirq;
->> +
->> +               skip = irq_domain_qcom_handle_wakeup(chip->irq.parent_domain);
->> +               for (i = 0; skip && i < pctrl->soc->nwakeirq_map; i++) {
->> +                       gpio = pctrl->soc->wakeirq_map[i].gpio;
->> +                       set_bit(gpio, pctrl->skip_wake_irqs);
->> +               }
->> +       }
->
->OK I guess this is how we should do it, maybe add a comment to clarify
->that we are checking the parent irqdomain of the chained IRQ to see
->if we need to avoid disabling the irq as it is used for wakeup. (IIUC
->what the code does!)
->
-Okay.
+> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+> index df44ef713db5..15e11e22ddf7 100644
+> --- a/drivers/interconnect/core.c
+> +++ b/drivers/interconnect/core.c
+> @@ -26,6 +26,9 @@ static LIST_HEAD(icc_providers);
+>  static DEFINE_MUTEX(icc_lock);
+>  static struct dentry *icc_debugfs_dir;
+>  
+> +#define CREATE_TRACE_POINTS
+> +#include <trace/events/interconnect.h>
+> +
+>  static void icc_summary_show_one(struct seq_file *s, struct icc_node *n)
+>  {
+>  	if (!n)
+> @@ -435,6 +438,8 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
+>  
+>  		/* aggregate requests for this node */
+>  		aggregate_requests(node);
+> +
+> +		trace_icc_set_bw(path, node, i, avg_bw, peak_bw);
+>  	}
+>  
+>  	ret = apply_constraints(path);
+> @@ -453,6 +458,8 @@ int icc_set_bw(struct icc_path *path, u32 avg_bw, u32 peak_bw)
+>  
+>  	mutex_unlock(&icc_lock);
+>  
+> +	trace_icc_set_bw_end(path, ret);
+> +
+>  	return ret;
+>  }
+>  EXPORT_SYMBOL_GPL(icc_set_bw);
+> diff --git a/include/trace/events/interconnect.h b/include/trace/events/interconnect.h
+> new file mode 100644
+> index 000000000000..64b646aa7bd3
+> --- /dev/null
+> +++ b/include/trace/events/interconnect.h
+> @@ -0,0 +1,81 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Copyright (c) 2019, Linaro Ltd.
+> + * Author: Georgi Djakov <georgi.djakov@linaro.org>
+> + */
+> +
+> +#if !defined(_TRACE_INTERCONNECT_H) || defined(TRACE_HEADER_MULTI_READ)
+> +#define _TRACE_INTERCONNECT_H
+> +
+> +#include <linux/tracepoint.h>
+> +
+> +#undef TRACE_SYSTEM
+> +#define TRACE_SYSTEM interconnect
+> +
+> +#include "../../../drivers/interconnect/internal.h"
 
->> +       /*
->> +        * Since we are chained to the GIC using the TLMM summary line
->> +        * and in hierarchy with the wakeup parent interrupt controller,
->> +        * explicitly set the chained summary line. We need to do this because
->> +        * the summary line is not routed to the wakeup parent but directly
->> +        * to the GIC.
->> +        */
->> +       gpiochip_set_chained_irqchip(chip, &pctrl->irq_chip, pctrl->irq,
->> +                                    msm_gpio_irq_handler);
->
->I don't think this part is needed, we already have:
->
->girq->parent_handler = msm_gpio_irq_handler;
->girq->num_parents = 1;
->girq->parents = devm_kcalloc(pctrl->dev, 1, sizeof(*girq->parents),
->     GFP_KERNEL);
->if (!girq->parents)
->     return -ENOMEM;
->girq->default_type = IRQ_TYPE_NONE;
->girq->handler = handle_bad_irq;
->girq->parents[0] = pctrl->irq;
->
->This will make the irq chain when calling gpiochip_add_data(), so
->just delete this and see if everything works as before.
->
-I thought it didn't work without this change and I am not sure why it
-started working after I did. May be it was a bad set of patches that I
-pulled in.
+Ug.
 
->Other than that it looks fine!
-Thanks for your review.
+I would recommend placing this file in with drivers/interconnect, and
+call it simply trace.h, or interconnect_trace.h. Then you can include
+"internal.h" nicely.
 
---Lina
+To do so, you need to add to drivers/interconnect/Makefile:
+
+ CFLAGS_core.o := -I$(src)
+
+To have core.c include this file.
+
+Rest looks fine.
+
+-- Steve
+
+
+> +
+> +TRACE_EVENT(icc_set_bw,
+> +
+> +	TP_PROTO(struct icc_path *p, struct icc_node *n, int i,
+> +		 u32 avg_bw, u32 peak_bw),
+> +
+> +	TP_ARGS(p, n, i, avg_bw, peak_bw),
+> +
+> +	TP_STRUCT__entry(
+> +		__string(path_name, p->name)
+> +		__string(dev, dev_name(p->reqs[i].dev))
+> +		__string(node_name, n->name)
+> +		__field(u32, avg_bw)
+> +		__field(u32, peak_bw)
+> +		__field(u32, node_avg_bw)
+> +		__field(u32, node_peak_bw)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__assign_str(path_name, p->name);
+> +		__assign_str(dev, dev_name(p->reqs[i].dev));
+> +		__assign_str(node_name, n->name);
+> +		__entry->avg_bw = avg_bw;
+> +		__entry->peak_bw = peak_bw;
+> +		__entry->node_avg_bw = n->avg_bw;
+> +		__entry->node_peak_bw = n->peak_bw;
+> +	),
+> +
+> +	TP_printk("path=%s dev=%s node=%s avg_bw=%u peak_bw=%u agg_avg=%u agg_peak=%u",
+> +		  __get_str(path_name),
+> +		  __get_str(dev),
+> +		  __get_str(node_name),
+> +		  __entry->avg_bw,
+> +		  __entry->peak_bw,
+> +		  __entry->node_avg_bw,
+> +		  __entry->node_peak_bw)
+> +);
+> +
+> +TRACE_EVENT(icc_set_bw_end,
+> +
+> +	TP_PROTO(struct icc_path *p, int ret),
+> +
+> +	TP_ARGS(p, ret),
+> +
+> +	TP_STRUCT__entry(
+> +		__string(path_name, p->name)
+> +		__string(dev, dev_name(p->reqs[0].dev))
+> +		__field(int, ret)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__assign_str(path_name, p->name);
+> +		__assign_str(dev, dev_name(p->reqs[0].dev));
+> +		__entry->ret = ret;
+> +	),
+> +
+> +	TP_printk("path=%s dev=%s ret=%d",
+> +		  __get_str(path_name),
+> +		  __get_str(dev),
+> +		  __entry->ret)
+> +);
+> +
+> +#endif /* _TRACE_INTERCONNECT_H */
+> +
+> +/* This part must be outside protection */
+> +#include <trace/define_trace.h>
+
