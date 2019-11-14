@@ -2,154 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CE870FCB0C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 17:49:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D3F2FCB61
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 18:04:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726599AbfKNQtP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Nov 2019 11:49:15 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:45681 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727020AbfKNQtP (ORCPT
+        id S1726599AbfKNREy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Nov 2019 12:04:54 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:43214 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726491AbfKNREy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Nov 2019 11:49:15 -0500
-Received: by mail-pf1-f195.google.com with SMTP id z4so4595666pfn.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2019 08:49:13 -0800 (PST)
+        Thu, 14 Nov 2019 12:04:54 -0500
+Received: by mail-pg1-f193.google.com with SMTP id l24so4135712pgh.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2019 09:04:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:cc:to:from:subject:user-agent:date;
-        bh=Lsw4NM8ilCcLsFEk3WVMlx7LY6dwCnUqw6N4RDhOWYo=;
-        b=NSKxpFUN3Ugn9srDVLslcd3E1wLcNJ9OJWAmw1RcOC2DgJVNZW7Xitu3fkRLFV+iTT
-         0QNUR4I2eb6VBkCC98XVZDpXS+J7AwrEpA7EHnW5hFiulgFS44mIr8MGatPPHDn3zpuI
-         6cCWWx1oNLikmFSv9TuQz7YOp+EPcHHUXrVNw=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=7XNWyfRdpr24EDRK/YG4453Ghr8ygX346m8X217SNQk=;
+        b=ikXpotm3ypGRzwDkA+uphqKs6Dhwb2Qw18UsqiRmq5sPAqVh5d81UujkZgsBcLbYUs
+         orLk0ElMmQFW/QZL09vIzyTKMmHONg1T0QWhix83z2rnzzjahD+5pHvanSmFGJ+I1kdu
+         QlH5lcyADhMoPjdHiZHucRDMNKQSgpv5cLQ5g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:cc:to:from:subject
-         :user-agent:date;
-        bh=Lsw4NM8ilCcLsFEk3WVMlx7LY6dwCnUqw6N4RDhOWYo=;
-        b=kqYmMrnWzNOF1Lj/GR6YcP4KtyKBATderlNyczPMP5B5k3SlUYjIvWBZXAI3qgnSbD
-         YIIKBI008JwUYXAxEY7WZy5KOBltv+ZEEpxu/XwgIVT3Sos1HjfYGGUa6ULUSps7AQqL
-         3QXivnIf+weAdd9pvUbZZCwao84wG/DRsNrd20DIfrCXmWmtzo0jYDR3Nmk0psY+6nWn
-         HxMhbfHguIcDoeZWspOUR8UIUGUaRPCITbROhXYQYyWZ/Ag6ZNLHYbqAXPYibKc65G/F
-         N3OA3Y9KNMMT7IEXtkee4WMTm59/MTBuuKRMJE+HgWTh7hZzl4mC7HQb33qgu6be9zMM
-         kCJw==
-X-Gm-Message-State: APjAAAVLW7OaZ7GBg2YxBONPjCKra4oBXMiKk6VcPUOrv3RaCBpqkqsp
-        a29S8yWw/CMswQGysyO/xK7m7p/e+sg=
-X-Google-Smtp-Source: APXvYqxGXLXZNqmiLg6+BlJtaLCbmznDeauL5lts/GdPdVYICcsYus3WdGS3aAfiD9MZzjC4BUUs4Q==
-X-Received: by 2002:a62:5258:: with SMTP id g85mr11585671pfb.180.1573750153174;
-        Thu, 14 Nov 2019 08:49:13 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id y22sm7199564pfn.6.2019.11.14.08.49.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2019 08:49:12 -0800 (PST)
-Message-ID: <5dcd8588.1c69fb81.2528a.3460@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1565197bda60573937453e95dcafbe68@codeaurora.org>
-References: <cover.1571484439.git.saiprakash.ranjan@codeaurora.org> <20191021033220.GG4500@tuxbook-pro> <CAL_JsqLzRRQe8UZCxgXArVNhNry7PgMCthAR2aZNcm6CCEpvDA@mail.gmail.com> <2fbab8bc38be37fba976d34b2f89e720@codeaurora.org> <CAL_Jsq+5p7gQzDfGipNFr1ry-Pc3pDJpcXnAqdX9eo0HLETATQ@mail.gmail.com> <81f57dc623fe8705cea52b5cb2612b32@codeaurora.org> <1565197bda60573937453e95dcafbe68@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-kernel@vger.kernel.org,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=7XNWyfRdpr24EDRK/YG4453Ghr8ygX346m8X217SNQk=;
+        b=PFs+wOcu5WFIFzKtqkcf1vHLy7YCML2xbWdpF4pBvdRR38iu8HPraRQxsQ3jLEliO9
+         SGu6E4RM72ti/DgUrpdS4SrcvoSzNBVk1Mzd5p1m1HsUOR5QfL4fK3VL1Mq0LaXqfpjw
+         iJDX67ZJMtwrQkx28VtZFn4ARVEQo/vPU29XibItCNpzPt9hp0CJTR+twbmmwIbKEwEp
+         B6sKG8sZf7rSEDuJ68Klt6keKUc7ScmmJ/gWjS3U9qWxCUHbBj6zhVCsLfXL2ulvuN4g
+         D0oYxmlObb4qv9cWUP23FfzhYYpQaZRf/vvVl54NCdJa1BgJ2M6n27Ofdv4Cbt+wae15
+         Kv+w==
+X-Gm-Message-State: APjAAAXpqR6RAmjD98z4rG9xNm25zxY3hZCA4Y3WA5uEA7NhyiTrSIW9
+        X6bPXm2Bx4wkFIPfaYz9skNvew==
+X-Google-Smtp-Source: APXvYqxD2nMjn0cIqRXmT160OiBVgzqRoINItXt56fZxYK5ysqshErWGVdbKL+cNJ7zKy9hD6znPkg==
+X-Received: by 2002:a17:90a:4d8f:: with SMTP id m15mr3627528pjh.71.1573751092047;
+        Thu, 14 Nov 2019 09:04:52 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id a6sm8558346pja.30.2019.11.14.09.04.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Nov 2019 09:04:51 -0800 (PST)
+Date:   Thu, 14 Nov 2019 09:04:49 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        David Brown <david.brown@linaro.org>,
         Rajendra Nayak <rnayak@codeaurora.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm-owner@vger.kernel.org
-To:     Rob Herring <robh+dt@kernel.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCHv2 0/3] Add LLCC support for SC7180 SoC
-User-Agent: alot/0.8.1
-Date:   Thu, 14 Nov 2019 08:49:11 -0800
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Rob Herring <robh@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Sean Paul <seanpaul@chromium.org>
+Subject: Re: [PATCH v4 5/5] clk: qcom: Add Global Clock controller (GCC)
+ driver for SC7180
+Message-ID: <20191114170449.GG27773@google.com>
+References: <fa17b97d-bfc4-4e9c-78b5-c225e5b38946@codeaurora.org>
+ <20191031174149.GD27773@google.com>
+ <20191107210606.E536F21D79@mail.kernel.org>
+ <CAJs_Fx60uEdGFjJXAjvVy5LLBXXmergRi8diWxhgGqde1wiXXQ@mail.gmail.com>
+ <20191108063543.0262921882@mail.kernel.org>
+ <CAJs_Fx5trp2B7uOMTFZNUsYoKrO1-MWsNECKp-hz+1qCOCeU8A@mail.gmail.com>
+ <20191108184207.334DD21848@mail.kernel.org>
+ <CAJs_Fx6KCirGMtQxE=xA-A=bd5LeuYWviee0+KqO5OtGT9GKEw@mail.gmail.com>
+ <20191114010210.GF27773@google.com>
+ <CAF6AEGv9+Ow=RCXGKmaANfmA2NtR32E07CKwGFKJbeeOJRP9=Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGv9+Ow=RCXGKmaANfmA2NtR32E07CKwGFKJbeeOJRP9=Q@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sai Prakash Ranjan (2019-11-13 07:00:40)
-> Hello Rob,
->=20
-> On 2019-10-25 13:24, Sai Prakash Ranjan wrote:
-> > On 2019-10-25 04:03, Rob Herring wrote:
-> >> On Thu, Oct 24, 2019 at 6:00 AM Sai Prakash Ranjan
-> >> <saiprakash.ranjan@codeaurora.org> wrote:
-> >>>=20
-> >>> Hi Rob,
-> >>>=20
-> >>> On 2019-10-24 01:19, Rob Herring wrote:
-> >>> > On Sun, Oct 20, 2019 at 10:32 PM Bjorn Andersson
-> >>> > <bjorn.andersson@linaro.org> wrote:
-> >>> >>
-> >>> >> On Sat 19 Oct 04:37 PDT 2019, Sai Prakash Ranjan wrote:
-> >>> >>
-> >>> >> > LLCC behaviour is controlled by the configuration data set
-> >>> >> > in the llcc-qcom driver, add the same for SC7180 SoC.
-> >>> >> > Also convert the existing bindings to json-schema and add
-> >>> >> > the compatible for SC7180 SoC.
-> >>> >> >
-> >>> >>
-> >>> >> Thanks for the patches and thanks for the review Stephen. Series
-> >>> >> applied
-> >>> >
-> >>> > And they break dt_binding_check. Please fix.
-> >>> >
-> >>>=20
-> >>> I did check this and think that the error log from dt_binding_check=20
-> >>> is
-> >>> not valid because it says cache-level is a required property [1], but
-> >>> there is no such property in LLCC bindings.
-> >>=20
-> >> Then you should point out the issue and not just submit stuff ignoring
-> >> it. It has to be resolved one way or another.
-> >>=20
-> >=20
-> > I did not ignore it. When I ran the dt-binding check locally, it did=20
-> > not
-> > error out and just passed on [1] and it was my bad that I did not check
-> > the entire build logs to see if llcc dt binding check had some warning =
+On Wed, Nov 13, 2019 at 09:30:57PM -0800, Rob Clark wrote:
+> On Wed, Nov 13, 2019 at 5:03 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+> >
+> > On Fri, Nov 08, 2019 at 11:40:53AM -0800, Rob Clark wrote:
+> > > On Fri, Nov 8, 2019 at 10:42 AM Stephen Boyd <sboyd@kernel.org> wrote:
+> > > >
+> > > > Quoting Rob Clark (2019-11-08 08:54:23)
+> > > > > On Thu, Nov 7, 2019 at 10:35 PM Stephen Boyd <sboyd@kernel.org> wrote:
+> > > > > >
+> > > > > > Quoting Rob Clark (2019-11-07 18:06:19)
+> > > > > > > On Thu, Nov 7, 2019 at 1:06 PM Stephen Boyd <sboyd@kernel.org> wrote:
+> > > > > > > >
+> > > > > > > >
+> > > > > > > > NULL is a valid clk pointer returned by clk_get(). What is the display
+> > > > > > > > driver doing that makes it consider NULL an error?
+> > > > > > > >
+> > > > > > >
+> > > > > > > do we not have an iface clk?  I think the driver assumes we should
+> > > > > > > have one, rather than it being an optional thing.. we could ofc change
+> > > > > > > that
+> > > > > >
+> > > > > > I think some sort of AHB clk is always enabled so the plan is to just
+> > > > > > hand back NULL to the caller when they call clk_get() on it and nobody
+> > > > > > should be the wiser when calling clk APIs with a NULL iface clk. The
+> > > > > > common clk APIs typically just return 0 and move along. Of course, we'll
+> > > > > > also turn the clk on in the clk driver so that hardware can function
+> > > > > > properly, but we don't need to expose it as a clk object and all that
+> > > > > > stuff if we're literally just slamming a bit somewhere and never looking
+> > > > > > back.
+> > > > > >
+> > > > > > But it sounds like we can't return NULL for this clk for some reason? I
+> > > > > > haven't tried to track it down yet but I think Matthias has found it
+> > > > > > causes some sort of problem in the display driver.
+> > > > > >
+> > > > >
+> > > > > ok, I guess we can change the dpu code to allow NULL..  but what would
+> > > > > the return be, for example on a different SoC where we do have an
+> > > > > iface clk, but the clk driver isn't enabled?  Would that also return
+> > > > > NULL?  I guess it would be nice to differentiate between those cases..
+> > > > >
+> > > >
+> > > > So the scenario is DT describes the clk
+> > > >
+> > > >  dpu_node {
+> > > >      clocks = <&cc AHB_CLK>;
+> > > >      clock-names = "iface";
+> > > >  }
+> > > >
+> > > > but the &cc node has a driver that doesn't probe?
+> > > >
+> > > > I believe in this scenario we return -EPROBE_DEFER because we assume we
+> > > > should wait for the clk driver to probe and provide the iface clk. See
+> > > > of_clk_get_hw_from_clkspec() and how it looks through a list of clk
+> > > > providers and tries to match the &cc phandle to some provider.
+> > > >
+> > > > Once the driver probes, the match will happen and we'll be able to look
+> > > > up the clk in the provider with __of_clk_get_hw_from_provider(). If
+> > > > the clk provider decides that there isn't a clk object, it will return
+> > > > NULL and then eventually clk_hw_create_clk() will turn the NULL return
+> > > > value into a NULL pointer to return from clk_get().
+> > > >
+> > >
+> > > ok, that was the scenario I was worried about (since unclk'd register
+> > > access tends to be insta-reboot and hard to debug)..  so I think it
+> > > should be ok to make dpu just ignore NULL clks.
+> > >
+> > > From a quick look, I think something like the attached (untested).
+> >
+> > The driver appears to be happy with it, at least at probe() time.
+> 
+> Ok, I suppose I should re-send the dpu patch to the appropriate
+> lists.. does that count as a Tested-by?
 
-> > or
-> > not. But this is the usual case where most of us don't look at the=20
-> > entire
-> > build logs to check if there is a warning or not. We notice if there is=
-=20
-> > an
-> > immediate exit/fail in case of some warning/error. So it would be good =
-
-> > if
-> > we fail the dt-binding check build if there is some warning/error or=20
-> > atleast
-> > provide some option to strict build to fail on warning, maybe there is =
-
-> > already
-> > a flag to do this?
-> >=20
-> > After submitting the patch, I noticed this build failure on
-> > patchwork.ozlabs.org and was waiting for your reply.
-> >=20
-> > [1] https://paste.ubuntu.com/p/jNK8yfVkMG/
-> >=20
-> >> If you refer to the DT spec[1], cache-level is required. The schema is
-> >> just enforcing that now. It's keying off the node name of
-> >> 'cache-controller'.
-> >>=20
-> >=20
-> > This is not L2 or L3 cache, this is a system cache (last level cache)=20
-> > shared by
-> > clients other than just CPU. So I don't know how do we specify=20
-> > cache-level for
-> > this, let me know if you have some pointers.
-> >=20
->=20
-> Any ideas on specifying the cache-level for system cache? Does=20
-> dt-binding-check
-> needs to be updated for this case?
->=20
-
-I don't see how 'cache-level' fits here. Maybe the node name should be
-changed to 'system-cache-controller' and then the schema checker can
-skip it?
-
+Ack
