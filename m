@@ -2,159 +2,559 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D3F2FCB61
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 18:04:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB43FFCB93
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 18:15:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726599AbfKNREy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Nov 2019 12:04:54 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:43214 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726491AbfKNREy (ORCPT
+        id S1726444AbfKNRP1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Nov 2019 12:15:27 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:35188 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726443AbfKNRP0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Nov 2019 12:04:54 -0500
-Received: by mail-pg1-f193.google.com with SMTP id l24so4135712pgh.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2019 09:04:52 -0800 (PST)
+        Thu, 14 Nov 2019 12:15:26 -0500
+Received: by mail-pf1-f195.google.com with SMTP id q13so4674353pff.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2019 09:15:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7XNWyfRdpr24EDRK/YG4453Ghr8ygX346m8X217SNQk=;
-        b=ikXpotm3ypGRzwDkA+uphqKs6Dhwb2Qw18UsqiRmq5sPAqVh5d81UujkZgsBcLbYUs
-         orLk0ElMmQFW/QZL09vIzyTKMmHONg1T0QWhix83z2rnzzjahD+5pHvanSmFGJ+I1kdu
-         QlH5lcyADhMoPjdHiZHucRDMNKQSgpv5cLQ5g=
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:to:from:subject:user-agent:date;
+        bh=mXGc15ze5FkLvK8bKyJikjN/XitZLiqox2qKqZ0ej7M=;
+        b=TIOMk7lfZRHEzhgLxniST8xwCaUkax4lb9wy8IDtdMl7x/1ayef0CC5FHkxKnb665l
+         eUZN+NKq1gGP0IYXhtRZqkqOcrg+B8f/JW01COtBWtrVAAH8hCjPFP6C8bsz6/chTmxY
+         N2iFQ1ZnDVeQnsgkUCLlXWwEnqNsnPOYB2jCs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7XNWyfRdpr24EDRK/YG4453Ghr8ygX346m8X217SNQk=;
-        b=PFs+wOcu5WFIFzKtqkcf1vHLy7YCML2xbWdpF4pBvdRR38iu8HPraRQxsQ3jLEliO9
-         SGu6E4RM72ti/DgUrpdS4SrcvoSzNBVk1Mzd5p1m1HsUOR5QfL4fK3VL1Mq0LaXqfpjw
-         iJDX67ZJMtwrQkx28VtZFn4ARVEQo/vPU29XibItCNpzPt9hp0CJTR+twbmmwIbKEwEp
-         B6sKG8sZf7rSEDuJ68Klt6keKUc7ScmmJ/gWjS3U9qWxCUHbBj6zhVCsLfXL2ulvuN4g
-         D0oYxmlObb4qv9cWUP23FfzhYYpQaZRf/vvVl54NCdJa1BgJ2M6n27Ofdv4Cbt+wae15
-         Kv+w==
-X-Gm-Message-State: APjAAAXpqR6RAmjD98z4rG9xNm25zxY3hZCA4Y3WA5uEA7NhyiTrSIW9
-        X6bPXm2Bx4wkFIPfaYz9skNvew==
-X-Google-Smtp-Source: APXvYqxD2nMjn0cIqRXmT160OiBVgzqRoINItXt56fZxYK5ysqshErWGVdbKL+cNJ7zKy9hD6znPkg==
-X-Received: by 2002:a17:90a:4d8f:: with SMTP id m15mr3627528pjh.71.1573751092047;
-        Thu, 14 Nov 2019 09:04:52 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id a6sm8558346pja.30.2019.11.14.09.04.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Nov 2019 09:04:51 -0800 (PST)
-Date:   Thu, 14 Nov 2019 09:04:49 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Rob Herring <robh@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Sean Paul <seanpaul@chromium.org>
-Subject: Re: [PATCH v4 5/5] clk: qcom: Add Global Clock controller (GCC)
- driver for SC7180
-Message-ID: <20191114170449.GG27773@google.com>
-References: <fa17b97d-bfc4-4e9c-78b5-c225e5b38946@codeaurora.org>
- <20191031174149.GD27773@google.com>
- <20191107210606.E536F21D79@mail.kernel.org>
- <CAJs_Fx60uEdGFjJXAjvVy5LLBXXmergRi8diWxhgGqde1wiXXQ@mail.gmail.com>
- <20191108063543.0262921882@mail.kernel.org>
- <CAJs_Fx5trp2B7uOMTFZNUsYoKrO1-MWsNECKp-hz+1qCOCeU8A@mail.gmail.com>
- <20191108184207.334DD21848@mail.kernel.org>
- <CAJs_Fx6KCirGMtQxE=xA-A=bd5LeuYWviee0+KqO5OtGT9GKEw@mail.gmail.com>
- <20191114010210.GF27773@google.com>
- <CAF6AEGv9+Ow=RCXGKmaANfmA2NtR32E07CKwGFKJbeeOJRP9=Q@mail.gmail.com>
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:to:from:subject
+         :user-agent:date;
+        bh=mXGc15ze5FkLvK8bKyJikjN/XitZLiqox2qKqZ0ej7M=;
+        b=aeScjxbHSlh0OwqhPdiR4ALjytXARH9DDsjMZtfBl1HP7bU4xWh0zFa1QGu2Q6uQVb
+         ppYQc06W/zFMmB2UiGukBLsJyXbGxKxjaez8Iz+pLIyo3ceaqKWK4xJTvTZZ6o3nJ0vM
+         3P/hkxVvdrdsoQFhsqZp0FjvhBsGpdwETAGPHRZlyQcLx3lwz+apQ6h3B+Irg2jkFf5g
+         dj+LBA3DU8fxRx5UsGit1sjaoGox8k4mGjqqxhAng6KrxoFSJy5/Iz0QU5WCUKdDmloL
+         cEWle8vqqlHynPwt64hk/qq4womj1mB6LijP2EuflgPRCSkUR6kiNOR/E/u3mZt/twgi
+         MAtQ==
+X-Gm-Message-State: APjAAAXaYGla8qaeSc8leAbWomsS3YRhRK8HF+MMKktl3hUKzsUh8puC
+        gYUMafgE62WZvefzvoEfKjhwHA==
+X-Google-Smtp-Source: APXvYqz/9IgSpWBHpYH+F4lnVYLIaWHthdusN1FnC4aPUIjyMUv7RjdCi9mU0gmhzpEhUdgwiijBnA==
+X-Received: by 2002:a62:2bc1:: with SMTP id r184mr12046578pfr.88.1573751725638;
+        Thu, 14 Nov 2019 09:15:25 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id s26sm6898757pfh.66.2019.11.14.09.15.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Nov 2019 09:15:25 -0800 (PST)
+Message-ID: <5dcd8bad.1c69fb81.7569b.3b13@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGv9+Ow=RCXGKmaANfmA2NtR32E07CKwGFKJbeeOJRP9=Q@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1573726588-18897-2-git-send-email-harigovi@codeaurora.org>
+References: <1573726588-18897-1-git-send-email-harigovi@codeaurora.org> <1573726588-18897-2-git-send-email-harigovi@codeaurora.org>
+Cc:     Harigovindan P <harigovi@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        abhinavk@codeaurora.org, jsanka@codeaurora.org,
+        chandanu@codeaurora.org, nganji@codeaurora.org
+To:     Harigovindan P <harigovi@codeaurora.org>,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+From:   Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH v1 1/2] drm/panel: add support for rm69299 visionox panel driver
+User-Agent: alot/0.8.1
+Date:   Thu, 14 Nov 2019 09:15:24 -0800
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 13, 2019 at 09:30:57PM -0800, Rob Clark wrote:
-> On Wed, Nov 13, 2019 at 5:03 PM Matthias Kaehlcke <mka@chromium.org> wrote:
-> >
-> > On Fri, Nov 08, 2019 at 11:40:53AM -0800, Rob Clark wrote:
-> > > On Fri, Nov 8, 2019 at 10:42 AM Stephen Boyd <sboyd@kernel.org> wrote:
-> > > >
-> > > > Quoting Rob Clark (2019-11-08 08:54:23)
-> > > > > On Thu, Nov 7, 2019 at 10:35 PM Stephen Boyd <sboyd@kernel.org> wrote:
-> > > > > >
-> > > > > > Quoting Rob Clark (2019-11-07 18:06:19)
-> > > > > > > On Thu, Nov 7, 2019 at 1:06 PM Stephen Boyd <sboyd@kernel.org> wrote:
-> > > > > > > >
-> > > > > > > >
-> > > > > > > > NULL is a valid clk pointer returned by clk_get(). What is the display
-> > > > > > > > driver doing that makes it consider NULL an error?
-> > > > > > > >
-> > > > > > >
-> > > > > > > do we not have an iface clk?  I think the driver assumes we should
-> > > > > > > have one, rather than it being an optional thing.. we could ofc change
-> > > > > > > that
-> > > > > >
-> > > > > > I think some sort of AHB clk is always enabled so the plan is to just
-> > > > > > hand back NULL to the caller when they call clk_get() on it and nobody
-> > > > > > should be the wiser when calling clk APIs with a NULL iface clk. The
-> > > > > > common clk APIs typically just return 0 and move along. Of course, we'll
-> > > > > > also turn the clk on in the clk driver so that hardware can function
-> > > > > > properly, but we don't need to expose it as a clk object and all that
-> > > > > > stuff if we're literally just slamming a bit somewhere and never looking
-> > > > > > back.
-> > > > > >
-> > > > > > But it sounds like we can't return NULL for this clk for some reason? I
-> > > > > > haven't tried to track it down yet but I think Matthias has found it
-> > > > > > causes some sort of problem in the display driver.
-> > > > > >
-> > > > >
-> > > > > ok, I guess we can change the dpu code to allow NULL..  but what would
-> > > > > the return be, for example on a different SoC where we do have an
-> > > > > iface clk, but the clk driver isn't enabled?  Would that also return
-> > > > > NULL?  I guess it would be nice to differentiate between those cases..
-> > > > >
-> > > >
-> > > > So the scenario is DT describes the clk
-> > > >
-> > > >  dpu_node {
-> > > >      clocks = <&cc AHB_CLK>;
-> > > >      clock-names = "iface";
-> > > >  }
-> > > >
-> > > > but the &cc node has a driver that doesn't probe?
-> > > >
-> > > > I believe in this scenario we return -EPROBE_DEFER because we assume we
-> > > > should wait for the clk driver to probe and provide the iface clk. See
-> > > > of_clk_get_hw_from_clkspec() and how it looks through a list of clk
-> > > > providers and tries to match the &cc phandle to some provider.
-> > > >
-> > > > Once the driver probes, the match will happen and we'll be able to look
-> > > > up the clk in the provider with __of_clk_get_hw_from_provider(). If
-> > > > the clk provider decides that there isn't a clk object, it will return
-> > > > NULL and then eventually clk_hw_create_clk() will turn the NULL return
-> > > > value into a NULL pointer to return from clk_get().
-> > > >
-> > >
-> > > ok, that was the scenario I was worried about (since unclk'd register
-> > > access tends to be insta-reboot and hard to debug)..  so I think it
-> > > should be ok to make dpu just ignore NULL clks.
-> > >
-> > > From a quick look, I think something like the attached (untested).
-> >
-> > The driver appears to be happy with it, at least at probe() time.
-> 
-> Ok, I suppose I should re-send the dpu patch to the appropriate
-> lists.. does that count as a Tested-by?
+Quoting Harigovindan P (2019-11-14 02:16:27)
+> diff --git a/drivers/gpu/drm/panel/panel-visionox-rm69299.c b/drivers/gpu=
+/drm/panel/panel-visionox-rm69299.c
+> new file mode 100644
+> index 0000000..faf6d05
+> --- /dev/null
+> +++ b/drivers/gpu/drm/panel/panel-visionox-rm69299.c
+> @@ -0,0 +1,478 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#include <drm/drm_panel.h>
+> +#include <drm/drm_mipi_dsi.h>
+> +#include <drm/drm_modes.h>
+> +#include <drm/drm_panel.h>
 
-Ack
+This is included twice. It's really a panel!
+
+> +#include <drm/drm_print.h>
+> +
+> +#include <linux/of_gpio.h>
+
+Is this include used?
+
+> +#include <linux/gpio/consumer.h>
+> +#include <linux/of_device.h>
+> +#include <linux/of_graph.h>
+
+Is this include used?
+
+> +#include <linux/pinctrl/consumer.h>
+
+Is this include used?
+
+> +#include <linux/regulator/consumer.h>
+> +#include <linux/backlight.h>
+> +#include <linux/module.h>
+> +#include <linux/delay.h>
+> +
+> +#include <video/mipi_display.h>
+> +
+> +static const char * const regulator_names[] =3D {
+> +       "vdda",
+> +       "vdd3p3",
+> +};
+> +
+> +static unsigned long const regulator_enable_loads[] =3D {
+> +       32000,
+> +       13200,
+> +};
+> +
+> +static unsigned long const regulator_disable_loads[] =3D {
+> +       80,
+> +       80,
+> +};
+
+Why do we need these static arrays for two regulators? Is the panel
+going to have additional regulators added in the future? I'd prefer
+these arrays go away and the regulator setup is open coded in probe.
+Maybe that means dropping the use of bulk APIs, I'm not sure.
+
+> +
+> +struct cmd_set {
+> +       u8 commands[4];
+> +       u8 size;
+> +};
+> +
+> +struct rm69299_config {
+> +       u32 width_mm;
+> +       u32 height_mm;
+
+Why u32 for these types? Do they need to be 32 bits wide or can they be
+more generic like unsigned long types?
+
+> +       const char *panel_name;
+> +       const struct cmd_set *panel_on_cmds;
+> +       u32 num_on_cmds;
+> +       const struct drm_display_mode *dm;
+> +};
+> +
+> +struct visionox_rm69299 {
+> +       struct device *dev;
+> +       struct drm_panel panel;
+> +
+> +       struct regulator_bulk_data supplies[ARRAY_SIZE(regulator_names)];
+> +
+> +       struct gpio_desc *reset_gpio;
+> +
+> +       struct backlight_device *backlight;
+> +
+> +       struct mipi_dsi_device *dsi;
+> +       const struct rm69299_config *config;
+> +       bool prepared;
+> +       bool enabled;
+> +};
+> +
+> +static inline struct visionox_rm69299 *panel_to_ctx(struct drm_panel *pa=
+nel)
+> +{
+> +       return container_of(panel, struct visionox_rm69299, panel);
+> +}
+> +
+> +static const struct cmd_set qcom_rm69299_1080p_panel_magic_cmds[] =3D {
+
+I like magic.
+
+> +       { { 0xfe, 0x00 }, 2 },
+> +       { { 0xc2, 0x08 }, 2 },
+> +       { { 0x35, 0x00 }, 2 },
+> +       { { 0x51, 0xff }, 2 },
+> +};
+> +
+> +static int visionox_dcs_write(struct drm_panel *panel, u32 command)
+> +{
+> +       struct visionox_rm69299 *ctx =3D panel_to_ctx(panel);
+> +       int i =3D 0, ret;
+> +
+> +       ret =3D mipi_dsi_dcs_write(ctx->dsi, command, NULL, 0);
+> +       if (ret < 0) {
+> +               DRM_DEV_ERROR(ctx->dev,
+> +                       "cmd 0x%x failed for dsi =3D %d\n",
+> +                       command, i);
+> +       }
+> +
+> +       return ret;
+> +}
+> +
+> +static int visionox_dcs_write_buf(struct drm_panel *panel,
+> +       u32 size, const u8 *buf)
+> +{
+> +       struct visionox_rm69299 *ctx =3D panel_to_ctx(panel);
+> +       int ret =3D 0;
+> +       int i =3D 0;
+
+Please don't assign variables by default and then reassign them without
+testing them in between. Also, i is never used so it's confusing that it
+isn't just hardcoded into the printk message as '0'.
+
+> +
+> +       ret =3D mipi_dsi_dcs_write_buffer(ctx->dsi, buf, size);
+> +       if (ret < 0) {
+> +               DRM_DEV_ERROR(ctx->dev,
+> +                       "failed to tx cmd [%d], err: %d\n", i, ret);
+> +               return ret;
+> +       }
+> +
+> +       return ret;
+> +}
+> +
+> +static int visionox_35597_power_on(struct visionox_rm69299 *ctx)
+> +{
+> +       int ret, i;
+
+Nitpick: Add a newline between declarations and statements.
+
+> +       for (i =3D 0; i < ARRAY_SIZE(ctx->supplies); i++) {
+> +               ret =3D regulator_set_load(ctx->supplies[i].consumer,
+> +                                       regulator_enable_loads[i]);
+> +               if (ret)
+> +                       return ret;
+> +       }
+> +
+> +       ret =3D regulator_bulk_enable(ARRAY_SIZE(ctx->supplies), ctx->sup=
+plies);
+> +       if (ret < 0)
+> +               return ret;
+
+We forgot to drop the load... O well. Probably best to just never drop
+the load anyway, see below.
+
+> +
+> +       /*
+> +        * Reset sequence of visionox panel requires the panel to be
+> +        * out of reset for 10ms, followed by being held in reset
+> +        * for 10ms and then out again
+> +        */
+> +       gpiod_set_value(ctx->reset_gpio, 1);
+> +       usleep_range(10000, 20000);
+> +       gpiod_set_value(ctx->reset_gpio, 0);
+> +       usleep_range(10000, 20000);
+> +       gpiod_set_value(ctx->reset_gpio, 1);
+> +       usleep_range(10000, 20000);
+> +
+> +       return 0;
+> +}
+> +
+> +static int visionox_rm69299_power_off(struct visionox_rm69299 *ctx)
+> +{
+> +       int ret =3D 0;
+
+Ugh. Please stop pre-assigning ret.
+
+> +       int i;
+> +
+> +       gpiod_set_value(ctx->reset_gpio, 0);
+> +
+> +       for (i =3D 0; i < ARRAY_SIZE(ctx->supplies); i++) {
+> +               ret =3D regulator_set_load(ctx->supplies[i].consumer,
+> +                               regulator_disable_loads[i]);
+
+Do we need to drop the load? I thought that disabling the regulator
+would make the regulator core stop considering the load from these
+consumers.
+
+> +               if (ret) {
+> +                       DRM_DEV_ERROR(ctx->dev,
+> +                               "regulator_set_load failed %d\n", ret);
+> +                       return ret;
+> +               }
+> +       }
+> +
+> +       ret =3D regulator_bulk_disable(ARRAY_SIZE(ctx->supplies), ctx->su=
+pplies);
+> +       if (ret) {
+> +               DRM_DEV_ERROR(ctx->dev,
+> +                       "regulator_bulk_disable failed %d\n", ret);
+> +       }
+> +       return ret;
+> +}
+> +
+> +static int visionox_rm69299_disable(struct drm_panel *panel)
+> +{
+> +       struct visionox_rm69299 *ctx =3D panel_to_ctx(panel);
+> +       int ret;
+> +
+> +       if (!ctx->enabled)
+> +               return 0;
+> +
+> +       if (ctx->backlight) {
+
+backlight_disable() and backlight_enable() already check for NULL so
+these NULL checks can go away.
+
+> +               ret =3D backlight_disable(ctx->backlight);
+> +               if (ret < 0)
+> +                       DRM_DEV_ERROR(ctx->dev, "backlight disable failed=
+ %d\n",
+> +                               ret);
+> +       }
+> +
+> +       ctx->enabled =3D false;
+> +       return 0;
+> +}
+> +
+> +static int visionox_rm69299_unprepare(struct drm_panel *panel)
+> +{
+> +       struct visionox_rm69299 *ctx =3D panel_to_ctx(panel);
+> +       int ret =3D 0;
+> +
+> +       if (!ctx->prepared)
+> +               return 0;
+> +
+> +       ctx->dsi->mode_flags =3D 0;
+> +
+> +       ret =3D visionox_dcs_write(panel, MIPI_DCS_SET_DISPLAY_OFF);
+> +       if (ret < 0) {
+> +               DRM_DEV_ERROR(ctx->dev,
+> +                       "set_display_off cmd failed ret =3D %d\n",
+> +                       ret);
+
+There will be double error prints in this case. Can we just have one
+print instead?
+
+> +       }
+> +
+> +       /* 120ms delay required here as per DCS spec */
+> +       msleep(120);
+> +
+> +       ret =3D visionox_dcs_write(panel, MIPI_DCS_ENTER_SLEEP_MODE);
+> +       if (ret < 0) {
+> +               DRM_DEV_ERROR(ctx->dev,
+> +                       "enter_sleep cmd failed ret =3D %d\n", ret);
+> +       }
+> +
+> +       ret =3D visionox_rm69299_power_off(ctx);
+> +       if (ret < 0)
+> +               DRM_DEV_ERROR(ctx->dev, "power_off failed ret =3D %d\n", =
+ret);
+> +
+> +       ctx->prepared =3D false;
+> +       return ret;
+> +}
+> +
+> +static int visionox_rm69299_prepare(struct drm_panel *panel)
+> +{
+> +       struct visionox_rm69299 *ctx =3D panel_to_ctx(panel);
+> +       int ret;
+> +       int i;
+> +       const struct cmd_set *panel_on_cmds;
+> +       const struct rm69299_config *config;
+> +       u32 num_cmds;
+> +
+> +       if (ctx->prepared)
+> +               return 0;
+> +
+> +       ret =3D visionox_35597_power_on(ctx);
+> +       if (ret < 0)
+> +               return ret;
+> +
+> +       ctx->dsi->mode_flags |=3D MIPI_DSI_MODE_LPM;
+> +
+> +       config =3D ctx->config;
+> +       panel_on_cmds =3D config->panel_on_cmds;
+> +       num_cmds =3D config->num_on_cmds;
+> +
+> +       for (i =3D 0; i < num_cmds; i++) {
+> +               ret =3D visionox_dcs_write_buf(panel,
+> +                               panel_on_cmds[i].size,
+> +                                       panel_on_cmds[i].commands);
+> +               if (ret < 0) {
+> +                       DRM_DEV_ERROR(ctx->dev,
+> +                               "cmd set tx failed i =3D %d ret =3D %d\n",
+> +                                       i, ret);
+> +                       goto power_off;
+> +               }
+> +       }
+> +
+> +       ret =3D visionox_dcs_write(panel, MIPI_DCS_EXIT_SLEEP_MODE);
+> +       if (ret < 0) {
+> +               DRM_DEV_ERROR(ctx->dev,
+> +                       "exit_sleep_mode cmd failed ret =3D %d\n",
+> +                       ret);
+> +               goto power_off;
+> +       }
+> +
+> +       /* Per DSI spec wait 120ms after sending exit sleep DCS command */
+> +       msleep(120);
+> +
+> +       ret =3D visionox_dcs_write(panel, MIPI_DCS_SET_DISPLAY_ON);
+> +       if (ret < 0) {
+> +               DRM_DEV_ERROR(ctx->dev,
+> +                       "set_display_on cmd failed ret =3D %d\n", ret);
+> +               goto power_off;
+> +       }
+> +
+> +       /* Per DSI spec wait 120ms after sending set_display_on DCS comma=
+nd */
+> +       msleep(120);
+> +
+> +       ctx->prepared =3D true;
+> +
+> +       return 0;
+> +
+> +power_off:
+> +       if (visionox_rm69299_power_off(ctx))
+> +               DRM_DEV_ERROR(ctx->dev, "power_off failed\n");
+> +       return ret;
+> +}
+> +
+> +static int visionox_rm69299_enable(struct drm_panel *panel)
+> +{
+> +       struct visionox_rm69299 *ctx =3D panel_to_ctx(panel);
+> +       int ret;
+> +
+> +       if (ctx->enabled)
+> +               return 0;
+> +
+> +       if (ctx->backlight) {
+> +               ret =3D backlight_enable(ctx->backlight);
+> +               if (ret < 0)
+> +                       DRM_DEV_ERROR(ctx->dev, "backlight enable failed =
+%d\n",
+> +                                                 ret);
+> +       }
+> +
+> +       ctx->enabled =3D true;
+> +
+> +       return 0;
+> +}
+> +
+> +static int visionox_rm69299_get_modes(struct drm_panel *panel)
+> +{
+> +       struct drm_connector *connector =3D panel->connector;
+> +       struct visionox_rm69299 *ctx =3D panel_to_ctx(panel);
+> +       struct drm_display_mode *mode;
+> +       const struct rm69299_config *config;
+> +
+> +       config =3D ctx->config;
+> +       mode =3D drm_mode_create(connector->dev);
+> +       if (!mode) {
+> +               DRM_DEV_ERROR(ctx->dev,
+> +                       "failed to create a new display mode\n");
+> +               return 0;
+> +       }
+> +
+> +       connector->display_info.width_mm =3D config->width_mm;
+> +       connector->display_info.height_mm =3D config->height_mm;
+> +       drm_mode_copy(mode, config->dm);
+> +       mode->type =3D DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
+> +       drm_mode_probed_add(connector, mode);
+> +
+> +       return 1;
+> +}
+> +
+> +static const struct drm_panel_funcs visionox_rm69299_drm_funcs =3D {
+> +       .disable =3D visionox_rm69299_disable,
+> +       .unprepare =3D visionox_rm69299_unprepare,
+> +       .prepare =3D visionox_rm69299_prepare,
+> +       .enable =3D visionox_rm69299_enable,
+> +       .get_modes =3D visionox_rm69299_get_modes,
+> +};
+> +
+> +static int visionox_rm69299_panel_add(struct visionox_rm69299 *ctx)
+
+Please inline this function into probe. It's not helping much to be
+split out.
+
+> +{
+> +       struct device *dev =3D ctx->dev;
+> +       int ret, i;
+> +       const struct rm69299_config *config;
+> +
+> +       config =3D ctx->config;
+> +       for (i =3D 0; i < ARRAY_SIZE(ctx->supplies); i++)
+> +               ctx->supplies[i].supply =3D regulator_names[i];
+> +
+> +       ret =3D devm_regulator_bulk_get(dev, ARRAY_SIZE(ctx->supplies),
+> +                                     ctx->supplies);
+> +       if (ret < 0)
+> +               return ret;
+> +
+> +       ctx->reset_gpio =3D devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
+> +       if (IS_ERR(ctx->reset_gpio)) {
+> +               DRM_DEV_ERROR(dev, "cannot get reset gpio %ld\n",
+> +                       PTR_ERR(ctx->reset_gpio));
+> +               return PTR_ERR(ctx->reset_gpio);
+> +       }
+> +
+> +       ret =3D gpiod_direction_output(ctx->reset_gpio, 0);
+
+Didn't the devm_gpiod_get() call above make the gpio use output
+direction already? Why call this again?
+
+> +       if(ret < 0) {
+> +               pr_err("direction output failed \n");
+> +       }
+> +
+> +       drm_panel_init(&ctx->panel);
+> +       ctx->panel.dev =3D dev;
+> +       ctx->panel.funcs =3D &visionox_rm69299_drm_funcs;
+> +       drm_panel_add(&ctx->panel);
+> +
+> +       return 0;
+> +}
+> +
+> +static const struct drm_display_mode qcom_sc7180_mtp_1080p_mode =3D {
+> +       .name =3D "1080x2248",
+> +       .clock =3D 158695,
+> +       .hdisplay =3D 1080,
+> +       .hsync_start =3D 1080 + 26,
+> +       .hsync_end =3D 1080 + 26 + 2,
+> +       .htotal =3D 1080 + 26 + 2 + 36,
+> +       .vdisplay =3D 2248,
+> +       .vsync_start =3D 2248 + 56,
+> +       .vsync_end =3D 2248 + 56 + 4,
+> +       .vtotal =3D 2248 + 56 + 4 + 4,
+> +       .vrefresh =3D 60,
+> +       .flags =3D 0,
+> +};
+> +
+> +static const struct rm69299_config rm69299_dir =3D {
+> +       .width_mm =3D 74,
+> +       .height_mm =3D 131,
+> +       .panel_name =3D "qcom_sc7180_mtp_1080p_panel",
+> +       .dm =3D &qcom_sc7180_mtp_1080p_mode,
+> +       .panel_on_cmds =3D qcom_rm69299_1080p_panel_magic_cmds,
+> +       .num_on_cmds =3D ARRAY_SIZE(qcom_rm69299_1080p_panel_magic_cmds),
+> +};
+> +
+> +static int visionox_rm69299_probe(struct mipi_dsi_device *dsi)
+> +{
+> +       struct device *dev =3D &dsi->dev;
+> +       struct visionox_rm69299 *ctx;
+> +       int ret =3D 0;
+> +
+> +       ctx =3D devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
+> +
+> +       if (!ctx)
+> +               return -ENOMEM;
+> +
+> +       ctx->config =3D of_device_get_match_data(dev);
+
+Call device_get_match_data() instead?
+
+> +
+> +       if (!ctx->config) {
+> +               dev_err(dev, "missing device configuration\n");
+> +               return -ENODEV;
+> +       }
+> +
