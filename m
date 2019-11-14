@@ -2,132 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CDB90FCE28
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 19:54:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 943C1FCE36
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 19:57:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726098AbfKNSyN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Nov 2019 13:54:13 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:40121 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725976AbfKNSyM (ORCPT
+        id S1726505AbfKNS5S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Nov 2019 13:57:18 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:35050 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725976AbfKNS5R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Nov 2019 13:54:12 -0500
-Received: by mail-pf1-f196.google.com with SMTP id r4so4888195pfl.7;
-        Thu, 14 Nov 2019 10:54:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lv3vbSb0hoGBjroJ2Tdn1yzUDZjbGKNm38UA4zcYa4s=;
-        b=JYzvXJ92P3URGM1EZVGOx6BuS8G4Mdx15aVK361Xo3brwt7T11v6tN/M85BmixF8gm
-         x9yQqCmBVzfduyEnfCvp8OvAk6hx93Hdz2OR6cgIh01VVT+oRC/15Y6ffc5bxDSPIH+m
-         27S1Q27OQ7Oxi4IShfALB58nC8gzc6U+FByDvqh9wnV4JmJNdvXSxxlAoOLKmUdPw7Km
-         cMBy+MuOmR00vi49P8s0QN2KOrFwtwaacAeRm4lOENFwdo6f8jaqq3LOY8PSAzf5k2w6
-         lgrxioLslzBMzzYyOtWC3JQaQOGjqlMdG1lnsTx/I1ofrt3o+CF2UEEzPD4WoTP6FM0U
-         61aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lv3vbSb0hoGBjroJ2Tdn1yzUDZjbGKNm38UA4zcYa4s=;
-        b=XL2cDeLzX+o5hUJ13aoZhSV5mNTttGfqXYtZpLqSKTjtrC90zSMtIE7uGngsiNzWGk
-         leS/W1Nci60UwZG9As5b0QOExPM6k0cjNmUIbf/IIs5kPxlDgwqPAj0BlWvQWz2fwhZO
-         +YgyBmyM4RhsN/j9BxpesCSDPAxxKepk66FZPviWjVdGwfiU0PMDiznVF9E8wEA1HucD
-         raXA64JA4RS8IBg2PxajPKvIu/TlSIACi3hBQOyVjsBlv7uyfsV4XVoE2+RuyNlCCj0c
-         9hYh+JbAWRrbJrqsGtf9FY6FxcZw1TSFghhJyk2D+WolVcJmFL38rmC+Cc/ZU7FQ5qY/
-         Utpw==
-X-Gm-Message-State: APjAAAWjJWOl0CtlN3FXkP8RdJmCj3fDrYwjcKeUJxa8f06obUW0PhPq
-        8W0ycmNKxApnvLq5EMwdazb6V38Vjb8=
-X-Google-Smtp-Source: APXvYqxUcHD8QYR04zvjEfVRrevsRkXrCYCaiTtozRf4mEoOkYqRB3I7hM7yBUhdoONpAtm79wmvnw==
-X-Received: by 2002:a63:c24f:: with SMTP id l15mr4182842pgg.279.1573757651698;
-        Thu, 14 Nov 2019 10:54:11 -0800 (PST)
-Received: from localhost ([100.118.89.215])
-        by smtp.gmail.com with ESMTPSA id y123sm7220013pfg.64.2019.11.14.10.54.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2019 10:54:11 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/dpu: ignore NULL clocks
-Date:   Thu, 14 Nov 2019 10:51:50 -0800
-Message-Id: <20191114185152.101059-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.23.0
+        Thu, 14 Nov 2019 13:57:17 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 0B29C60F90; Thu, 14 Nov 2019 18:57:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573757837;
+        bh=kGHHDhxFcB0ua6Q2kIcueqlm1c4XucBEKXaw5BAbH1o=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=fdjfXYcIIGY0JvsTFSlxLE3edoVnATJC6OW93Xb8sc1V6oJ8Azc/qw9LkU8/GHWKA
+         SKmHT90OnQBIEIh0qzM0rf9UjoyzbXbZVjy7wWWFj3q+5y+Hlh0jJ6iioSNHNfWJwC
+         ZeeeF0ACyVf+OWWALgdHG/HLrQiewyJV5FR8FIkU=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2584B60EE9;
+        Thu, 14 Nov 2019 18:57:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573757836;
+        bh=kGHHDhxFcB0ua6Q2kIcueqlm1c4XucBEKXaw5BAbH1o=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=n85C23IjABwJpR203kWCymv2uXERPyhSyVy6Q2OJ0iKVLKD5bHz3lvsgm5PaXBdGp
+         9VyMrayg7ZML1W8ickZKOjD/db7J4zHN5qZ5wc3aBTc6RtiDcix/dPWqQs1FGKb2YB
+         44gr6NjcRzgUmTjWy7WMXWDsRM/UFVecpXbpSdpI=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2584B60EE9
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
+Date:   Thu, 14 Nov 2019 11:57:15 -0700
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, Marc Zyngier <maz@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Doug Anderson <dianders@chromium.org>
+Subject: Re: [PATCH 08/12] drivers: pinctrl: msm: setup GPIO chip in hierarchy
+Message-ID: <20191114185715.GC18786@codeaurora.org>
+References: <1573756521-27373-1-git-send-email-ilina@codeaurora.org>
+ <1573756521-27373-9-git-send-email-ilina@codeaurora.org>
+ <CACRpkdYZoAnFno630Fxazz_Kvz4fEmKd-wohprdQqeM44f3tAg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CACRpkdYZoAnFno630Fxazz_Kvz4fEmKd-wohprdQqeM44f3tAg@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Thu, Nov 14 2019 at 11:47 -0700, Linus Walleij wrote:
+>On Thu, Nov 14, 2019 at 7:35 PM Lina Iyer <ilina@codeaurora.org> wrote:
+>
+>> Some GPIOs are marked as wakeup capable and are routed to another
+>> interrupt controller that is an always-domain and can detect interrupts
+>> even most of the SoC is powered off. The wakeup interrupt controller
+>> wakes up the GIC and replays the interrupt at the GIC.
+>>
+>> Setup the TLMM irqchip in hierarchy with the wakeup interrupt controller
+>> and ensure the wakeup GPIOs are handled correctly.
+>>
+>> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+>> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+>
+>This looks finished, and elegant.
+>Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+>
+Thanks Linus.
 
-This isn't an error.  Also the clk APIs handle the NULL case, so we can
-just delete the check.
-
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Tested-by: Matthias Kaehlcke <mka@chromium.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c | 26 ++++++---------------
- 1 file changed, 7 insertions(+), 19 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c
-index 27fbeb504362..ec1437b0ef75 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c
-@@ -93,19 +93,12 @@ int msm_dss_enable_clk(struct dss_clk *clk_arry, int num_clk, int enable)
- 			DEV_DBG("%pS->%s: enable '%s'\n",
- 				__builtin_return_address(0), __func__,
- 				clk_arry[i].clk_name);
--			if (clk_arry[i].clk) {
--				rc = clk_prepare_enable(clk_arry[i].clk);
--				if (rc)
--					DEV_ERR("%pS->%s: %s en fail. rc=%d\n",
--						__builtin_return_address(0),
--						__func__,
--						clk_arry[i].clk_name, rc);
--			} else {
--				DEV_ERR("%pS->%s: '%s' is not available\n",
--					__builtin_return_address(0), __func__,
--					clk_arry[i].clk_name);
--				rc = -EPERM;
--			}
-+			rc = clk_prepare_enable(clk_arry[i].clk);
-+			if (rc)
-+				DEV_ERR("%pS->%s: %s en fail. rc=%d\n",
-+					__builtin_return_address(0),
-+					__func__,
-+					clk_arry[i].clk_name, rc);
- 
- 			if (rc && i) {
- 				msm_dss_enable_clk(&clk_arry[i - 1],
-@@ -119,12 +112,7 @@ int msm_dss_enable_clk(struct dss_clk *clk_arry, int num_clk, int enable)
- 				__builtin_return_address(0), __func__,
- 				clk_arry[i].clk_name);
- 
--			if (clk_arry[i].clk)
--				clk_disable_unprepare(clk_arry[i].clk);
--			else
--				DEV_ERR("%pS->%s: '%s' is not available\n",
--					__builtin_return_address(0), __func__,
--					clk_arry[i].clk_name);
-+			clk_disable_unprepare(clk_arry[i].clk);
- 		}
- 	}
- 
--- 
-2.23.0
-
+-- Lina
