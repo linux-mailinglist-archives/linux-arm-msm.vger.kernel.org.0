@@ -2,113 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A2855FC12B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 09:08:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BE58FC152
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 09:14:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725852AbfKNII5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Nov 2019 03:08:57 -0500
-Received: from lelv0143.ext.ti.com ([198.47.23.248]:59376 "EHLO
-        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725838AbfKNII5 (ORCPT
+        id S1726350AbfKNIOn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Nov 2019 03:14:43 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:34050 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726330AbfKNIOn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Nov 2019 03:08:57 -0500
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id xAE88TAI087495;
-        Thu, 14 Nov 2019 02:08:29 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1573718909;
-        bh=39b7nZ1qRF2Y+FLYhjNIYsRZV7qmctGWElYWFg7WX+c=;
-        h=Subject:To:CC:References:From:Date:In-Reply-To;
-        b=jz3+gAJ3tZEIyJcZzYoDt3ibitF3wiUAMwOW2S5lRPPY58xnjxyQg4oFQkUEHkTUk
-         3TUmRmXZAr4W+u8/Rwj3JafK+izUYxskI6nlAaLVuwLwSdjSJQZdhhMgEEaqdda8nJ
-         iO4BKurruUwtjfW9CuZlD+vuGD4UGU9pZ6l3e74k=
-Received: from DFLE109.ent.ti.com (dfle109.ent.ti.com [10.64.6.30])
-        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTP id xAE88SDs112761;
-        Thu, 14 Nov 2019 02:08:28 -0600
-Received: from DFLE101.ent.ti.com (10.64.6.22) by DFLE109.ent.ti.com
- (10.64.6.30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Thu, 14
- Nov 2019 02:08:22 -0600
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE101.ent.ti.com
- (10.64.6.22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Thu, 14 Nov 2019 02:08:22 -0600
-Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id xAE88H8G125696;
-        Thu, 14 Nov 2019 02:08:17 -0600
-Subject: Re: [PATCH 7/9] spi: s3c64xx: Use dma_request_chan() directly for
- channel request
-To:     Andi Shyti <andi@etezian.org>
-CC:     <linus.walleij@linaro.org>, <kgene@kernel.org>,
-        <alexandre.belloni@bootlin.com>, <linux-arm-msm@vger.kernel.org>,
-        <radu_nicolae.pirea@upb.ro>, <linux-spi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <krzk@kernel.org>,
-        <bjorn.andersson@linaro.org>, <vkoul@kernel.org>,
-        <agross@kernel.org>, <ldewangan@nvidia.com>, <broonie@kernel.org>,
-        <linux-tegra@vger.kernel.org>, <thierry.reding@gmail.com>,
-        <jonathanh@nvidia.com>, <shawnguo@kernel.org>,
-        <s.hauer@pengutronix.de>, <linux-arm-kernel@lists.infradead.org>
-References: <20191113094256.1108-1-peter.ujfalusi@ti.com>
- <20191113094256.1108-8-peter.ujfalusi@ti.com>
- <20191113234049.GA1249@jack.zhora.eu>
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-Message-ID: <e453c716-7658-a9fd-324d-4d95ff1aa29c@ti.com>
-Date:   Thu, 14 Nov 2019 10:09:33 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        Thu, 14 Nov 2019 03:14:43 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 30AC0601E7; Thu, 14 Nov 2019 08:14:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573719282;
+        bh=UiF0+gnF4eB8dUSiLw/KMBeKnt4Fl+raj9NHWbCWzVA=;
+        h=From:To:Cc:Subject:Date:From;
+        b=HKz/vjirNKzLTHWNR7D4+jmm+6Tsmd65akG1UHLPGyfFnnM+QFufcFJHKolaOyjT1
+         eQ0rz/Gg7nT9D7o+0VdaQlaKSt/OjBY8XgxCmLGOLpTcnpl7XBuymr/WGmpIPktoRc
+         LliRLAfoQYF/+6Z5L9ofplQlzb+YmpapRfr8Hxgo=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from bgodavar-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bgodavar@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 23A9F601E7;
+        Thu, 14 Nov 2019 08:14:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573719281;
+        bh=UiF0+gnF4eB8dUSiLw/KMBeKnt4Fl+raj9NHWbCWzVA=;
+        h=From:To:Cc:Subject:Date:From;
+        b=LB5755oWBSZO8HhBv1jljCwyGot9VJU6ECZXAnAGlcE5g+6Y9IlwOzsovwzvWwfoa
+         Yk09SpAd8VXUmZ+7AJeTvMJwSKh7Ga3s4k4bQS4Jv538eoLJEkjdtV33hXJHYI6i6X
+         z9Lwoatdix16BKPFInLR1F8pICL90AywX6SXjsPw=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 23A9F601E7
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=bgodavar@codeaurora.org
+From:   Balakrishna Godavarthi <bgodavar@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        tientzu@chromium.org, seanpaul@chromium.org
+Subject: [PATCH v1] Bluetooth: hci_qca: Enable clocks required for BT SOC
+Date:   Thu, 14 Nov 2019 13:44:30 +0530
+Message-Id: <20191114081430.25427-1-bgodavar@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-In-Reply-To: <20191113234049.GA1249@jack.zhora.eu>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Instead of relying on other subsytem to turn ON clocks
+required for BT SoC to operate, voting them from the driver.
 
+Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+---
+ drivers/bluetooth/hci_qca.c | 31 +++++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
 
-On 14/11/2019 1.40, Andi Shyti wrote:
-> Hi Peter,
-> 
->>  	if (!is_polling(sdd)) {
->>  		/* Acquire DMA channels */
->> -		sdd->rx_dma.ch = dma_request_slave_channel_reason(&pdev->dev,
->> -								  "rx");
->> +		sdd->rx_dma.ch = dma_request_chan(&pdev->dev, "rx");
-> 
-> I have a little concern here. We have two funcions
-> 'dma_request_chan' and  'dma_request_channel' don't we end up
-> making some confusion here?
-> 
-> Wouldn't it make more sense renaming 'dma_request_chan' to
-> 'dma_request_slave_channel_reason'?
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index f10bdf8e1fc5..dc95e378574b 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -164,6 +164,7 @@ struct qca_serdev {
+ };
+ 
+ static int qca_regulator_enable(struct qca_serdev *qcadev);
++static int qca_power_on(struct qca_serdev *qcadev);
+ static void qca_regulator_disable(struct qca_serdev *qcadev);
+ static void qca_power_shutdown(struct hci_uart *hu);
+ static int qca_power_off(struct hci_dev *hdev);
+@@ -528,7 +529,7 @@ static int qca_open(struct hci_uart *hu)
+ 		} else {
+ 			hu->init_speed = qcadev->init_speed;
+ 			hu->oper_speed = qcadev->oper_speed;
+-			ret = qca_regulator_enable(qcadev);
++			ret = qca_power_on(qcadev);
+ 			if (ret) {
+ 				destroy_workqueue(qca->workqueue);
+ 				kfree_skb(qca->rx_skb);
+@@ -1214,7 +1215,7 @@ static int qca_wcn3990_init(struct hci_uart *hu)
+ 	qcadev = serdev_device_get_drvdata(hu->serdev);
+ 	if (!qcadev->bt_power->vregs_on) {
+ 		serdev_device_close(hu->serdev);
+-		ret = qca_regulator_enable(qcadev);
++		ret = qca_power_on(qcadev);
+ 		if (ret)
+ 			return ret;
+ 
+@@ -1408,6 +1409,9 @@ static void qca_power_shutdown(struct hci_uart *hu)
+ 	host_set_baudrate(hu, 2400);
+ 	qca_send_power_pulse(hu, false);
+ 	qca_regulator_disable(qcadev);
++
++	if (qcadev->susclk)
++		clk_disable_unprepare(qcadev->susclk);
+ }
+ 
+ static int qca_power_off(struct hci_dev *hdev)
+@@ -1423,6 +1427,20 @@ static int qca_power_off(struct hci_dev *hdev)
+ 	return 0;
+ }
+ 
++static int qca_power_on(struct qca_serdev *qcadev)
++{
++	int err;
++
++	if (qcadev->susclk) {
++		err = clk_prepare_enable(qcadev->susclk);
++		if (err)
++			return err;
++	}
++
++	qca_regulator_enable(qcadev);
++	return 0;
++}
++
+ static int qca_regulator_enable(struct qca_serdev *qcadev)
+ {
+ 	struct qca_power *power = qcadev->bt_power;
+@@ -1523,6 +1541,15 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+ 
+ 		qcadev->bt_power->vregs_on = false;
+ 
++		if (qcadev->btsoc_type == QCA_WCN3990 ||
++		    qcadev->btsoc_type == QCA_WCN3991) {
++			qcadev->susclk = devm_clk_get(&serdev->dev, NULL);
++			if (IS_ERR(qcadev->susclk)) {
++				dev_err(&serdev->dev, "failed to acquire clk\n");
++				return PTR_ERR(qcadev->susclk);
++			}
++		}
++
+ 		device_property_read_u32(&serdev->dev, "max-speed",
+ 					 &qcadev->oper_speed);
+ 		if (!qcadev->oper_speed)
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-The dma_request_channel() should go away. It was the old API before we
-got the dma_slave_map for non DT (and non ACPI) platforms so we can get
-rid of the filter function exports from DMA drivers to clients all over
-the place.
-
-I know there are users where they provide dummy filter function.
-
-At the end the main API to request slave DMA channel should be
-dma_request_chan()
-For non slave channels (not HW triggered) we have dma_request_chan_by_mask()
-
-Imoh the dma_request_slave_channel_compat() should also go away with time.
-
-> 
-> Thanks,
-> Andi
-> 
-> _______________________________________________
-> linux-arm-kernel mailing list
-> linux-arm-kernel@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
-> 
-
-- Péter
-
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
