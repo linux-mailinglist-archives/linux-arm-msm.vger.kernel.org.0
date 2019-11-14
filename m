@@ -2,147 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AE3CFCBB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 18:20:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A2E18FCBD4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 18:29:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726869AbfKNRU4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Nov 2019 12:20:56 -0500
-Received: from mail-eopbgr140047.outbound.protection.outlook.com ([40.107.14.47]:63635
-        "EHLO EUR01-VE1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726491AbfKNRU4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Nov 2019 12:20:56 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=XmR9+9QKpSl2TbW78bI5XcH+nYpJbCXtK1XP99tkCZNQ+x44nWvZOB40rdUVzU/ZVhie3OswdVmdNyg+2VgLzBbX33rY/JkwSOTZbHxARF4eU/F34FFMP9Z0tHk5VLsJCyk/d5Ks5/mBRAsqeHgTpiE89qE7NnBCB6BIkZWduSm21Z1gk+UyyRHbBFsS038vPeHPpdhHUHROAFvcHIPvxJ4XanLU3KwuskMXVh2rc2xN/A8ltgn3NclQh7wHSWXshJ0Tx7WQBDkzao38YbyLIGQrT3mArmVSM+1QsC07Lc/02ByWv9hio9pccoBzdQ50eykaAfzdS5lMbW3eJyPakA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lkqS3vUpuCzSqtjWpusdOdAlqZROerLERMwBdZyTi6Q=;
- b=VzHiWap2fSANt3CzZjnt/j5uW0tI1d1OBELGp+zO06TThvYREGsqKLLU8zBCJkAfU4+telA8aQoyXokB+OX3ByP4Lr7UfpnFZroe/YoOyksT6y88fDSITx+WoLJvq1vITSDeKFQtjN9xrwtM1EfwS9+HzspjGudlxa6rQbp42uC/+1qCmjyhpZl6Y4ilXR78IxR4sBgWFVPDqU5pU6GvOz9A3a3OKf3bejZq7J40TZhesQ8arBm2GrasDa7zu/Ax/nFFKG0y/xCyBZgY9a99WM818wyMPo5GgtJlDU+h1DlHWSZ92WifbLWWaWhND4kT50uh+A+5fQSNg6GnzKJLXA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lkqS3vUpuCzSqtjWpusdOdAlqZROerLERMwBdZyTi6Q=;
- b=nTzbER+iitM2wZZ1LRhrkj7dUq0c4WxOVFRRp3yvauw420auPo+cGnVU3Lijl4LhKjYlJDrJ4FFtPbLeMEXKYXXq9K+jynp4SatcTG1PUvHA6WTRfP5QHp3I0A80/Pd7fj9aa8hoeEy+ZDkdyXvCCw9/01i6xHHVUj7c2WVmICk=
-Received: from VI1PR04MB7023.eurprd04.prod.outlook.com (10.186.159.144) by
- VI1PR04MB6127.eurprd04.prod.outlook.com (20.179.26.139) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2451.23; Thu, 14 Nov 2019 17:20:13 +0000
-Received: from VI1PR04MB7023.eurprd04.prod.outlook.com
- ([fe80::dd0c:72dc:e462:16b3]) by VI1PR04MB7023.eurprd04.prod.outlook.com
- ([fe80::dd0c:72dc:e462:16b3%5]) with mapi id 15.20.2451.024; Thu, 14 Nov 2019
- 17:20:13 +0000
-From:   Leonard Crestez <leonard.crestez@nxp.com>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>
-CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        =?iso-8859-2?Q?Artur_=A6wigo=F1?= <a.swigon@partner.samsung.com>,
-        Evan Green <evgreen@chromium.org>,
-        David Dai <daidavid1@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-pm@vger.kernel.org" <linux-pm@vger.kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>
-Subject: Re: [PATCH RFC] interconnect: Add interconnect_graph file to debugfs
-Thread-Topic: [PATCH RFC] interconnect: Add interconnect_graph file to debugfs
-Thread-Index: AQHVmpUL9/SyHMg2fkCUeguJeLjH5A==
-Date:   Thu, 14 Nov 2019 17:20:13 +0000
-Message-ID: <VI1PR04MB7023BA56243AADB3E462F535EE710@VI1PR04MB7023.eurprd04.prod.outlook.com>
-References: <70f672b39780ba7387d15fd6485f94b75d47b1ec.1573692109.git.leonard.crestez@nxp.com>
- <20191114024134.GA47006@kroah.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=leonard.crestez@nxp.com; 
-x-originating-ip: [89.37.124.34]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: 02dbc490-756e-49db-266b-08d76926e8d1
-x-ms-traffictypediagnostic: VI1PR04MB6127:
-x-microsoft-antispam-prvs: <VI1PR04MB612797BCB3E7F661941BEBCEEE710@VI1PR04MB6127.eurprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-forefront-prvs: 02213C82F8
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(4636009)(136003)(376002)(366004)(396003)(346002)(39860400002)(189003)(199004)(54534003)(64756008)(305945005)(74316002)(7416002)(8936002)(76176011)(5660300002)(7696005)(229853002)(8676002)(99286004)(81166006)(86362001)(478600001)(81156014)(4326008)(45080400002)(316002)(110136005)(71200400001)(71190400001)(25786009)(54906003)(6436002)(33656002)(9686003)(7736002)(6306002)(14454004)(55016002)(966005)(256004)(66066001)(6246003)(52536014)(486006)(26005)(91956017)(446003)(44832011)(476003)(2906002)(76116006)(102836004)(3846002)(186003)(6116002)(66476007)(66556008)(66446008)(53546011)(6506007)(66946007);DIR:OUT;SFP:1101;SCL:1;SRVR:VI1PR04MB6127;H:VI1PR04MB7023.eurprd04.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: nxp.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: dIJ1IlwQS8ANzN6dPRNXqAgPV1tSfYCpxwwZvc6IRvmN76Icu90Y1ht6RDXQObxsp+ldJmFFuFyZGGYPwItFz8OYrAwlYa/1iFvRHSOchxOJEYSSHloqkkB/6wFwnsPzCRuUyE7yODqT0gZHVdShSRWFALPEtwuFvajuIt/tAsjeJIhx8QKMjbrWPtKcuGvG2Fw4bOuTOhGpwGHxuNjsPcwvSSCkSjyTaZt29t031J6DH0/oYLiwdjnL4q77leIvc43yaraMLSEsdFEyko+HdRN9Fu6t3ZtcCP2k1ggMjIDBUBgFJZviF4yhDQRjyowPWNXXC0LPa8NyfwB0hbPnxkhHj93Y0ynTQcCTtOsF16E9OncP6yhffT+W9I2Zb2mXe8kej8ZxcA75EO/6hDdWjzKPGMrD9fS0rguvh6cKfGVl6RwAX0uryquw3qYWc5i9
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="iso-8859-2"
-Content-Transfer-Encoding: quoted-printable
+        id S1726473AbfKNR3n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Nov 2019 12:29:43 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:44066 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726210AbfKNR3m (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 14 Nov 2019 12:29:42 -0500
+Received: by mail-pg1-f195.google.com with SMTP id f19so4182956pgk.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2019 09:29:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:from:subject:to:user-agent:date;
+        bh=CcYQV1LmmMin4KfNUQWfqXUn7x+pyW1iTl5f3vQ+Lhw=;
+        b=NxMGYSTtBK4i5RPqbguGXItXdVNjv2nYm1/iGpCOqRIVhhVH6vf7946u7XMPm25GJA
+         q7nWJkt3+Xf/XDjNbHKHgXjXTbJHCI69Wm000ian3oAhz2GlGBNz1DTe9WXQgjh7aurH
+         DMoXuOTRdgV6nuAZHMYwbqnm9praYO+bqeVas=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:from:subject:to
+         :user-agent:date;
+        bh=CcYQV1LmmMin4KfNUQWfqXUn7x+pyW1iTl5f3vQ+Lhw=;
+        b=F612O9MlBXQ0YhO9l3lFOoEuAJaXwTOscnDWf57AHHaNFalF6TQXZIkPJXZrizDJxT
+         zZBxPeR3X3OQRK3Kt1ukeZXCglEXr90R3ufvWxVLqsKYiiuMH3iMi4xzR9bDj5A64zXZ
+         M3yDSgdNAqlaQq9AsPYksH2bhn37MLg2alEk4eVWgFGCmxyGapxBlzBBGlU7Sl74BKAh
+         CjNmevheOGBs1vI3MqetWvSn0HPiuk870558tRz6GRrI5hfJhMIzuWjTcQ8a2Ny2M43i
+         7rswchsHcQ2jGM6BgQS0oLRpvOMPRHcRX7T9EfsIGA6nIHYP+pJ4sO3tgzT3PX7LBRIN
+         r/Gw==
+X-Gm-Message-State: APjAAAXhjvHghhpq/6o7MnpdsXBRmRhnMZHZrS4TlXjVm9EARyxNmYii
+        WD0OXIMBB3WfD7jl5zn0HfRCwQ==
+X-Google-Smtp-Source: APXvYqzty8fGyHYZm9ySVIF8pi9T97dNqEd99tGhmW7ag+BB8smmNExV5fwEnlcaxmxVHJRlf+vtew==
+X-Received: by 2002:aa7:8256:: with SMTP id e22mr12167282pfn.247.1573752582247;
+        Thu, 14 Nov 2019 09:29:42 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id i71sm6900213pfe.103.2019.11.14.09.29.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Nov 2019 09:29:41 -0800 (PST)
+Message-ID: <5dcd8f05.1c69fb81.bdd4.2b0a@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 02dbc490-756e-49db-266b-08d76926e8d1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Nov 2019 17:20:13.1660
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 7clVE4HWVcpUTkQ43PT8mhVt2Z/vmZfXgkM45cWCPDtxdSIM8kd6HYakBb2w4vytaCl7Lc+wWLNUixmbNCKTEQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR04MB6127
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1573710976-27551-1-git-send-email-dhar@codeaurora.org>
+References: <1573710976-27551-1-git-send-email-dhar@codeaurora.org>
+Cc:     Shubhashree Dhar <dhar@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        abhinavk@codeaurora.org, jsanka@codeaurora.org,
+        chandanu@codeaurora.org, nganji@codeaurora.org
+From:   Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [v2] msm: disp: dpu1: add support to access hw irqs regs depending on revision
+To:     Shubhashree Dhar <dhar@codeaurora.org>, devicetree@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+User-Agent: alot/0.8.1
+Date:   Thu, 14 Nov 2019 09:29:40 -0800
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14.11.2019 04:41, Greg Kroah-Hartman wrote:=0A=
-> On Thu, Nov 14, 2019 at 02:50:49AM +0200, Leonard Crestez wrote:=0A=
->> The interconnect graphs can be difficult to understand and the current=
-=0A=
->> "interconnect_summary" file doesn't even display links in any way.=0A=
->>=0A=
->> Add a new "interconnect_graph" file to debugfs in the graphviz "dot"=0A=
->> format which describes interconnect providers, nodes and links.=0A=
->>=0A=
->> The file is human-readable and can be visualized by piping through=0A=
->> graphviz. Example:=0A=
->>=0A=
->> ssh $TARGET cat /sys/kernel/debug/interconnect/interconnect_graph \=0A=
->> 	| dot -Tsvg > interconnect_graph.svg=0A=
-> =0A=
-> You might want to document this somewhere so we don't all have to go dig=
-=0A=
-> it out of the changelog every time we want to look at this file.=0A=
-=0A=
-Files from sysfs are all described under Documentation/ABI but there's =0A=
-nothing similar for debugfs (and this should definitely not be =0A=
-considered ABI).=0A=
-=0A=
-Maybe Documentation/driver-api/interconnect.rst should have a "debugfs =0A=
-interfaces" paragraph?=0A=
-=0A=
->> Signed-off-by: Leonard Crestez <leonard.crestez@nxp.com>=0A=
->> ---=0A=
->>   drivers/interconnect/core.c | 66 +++++++++++++++++++++++++++++++++++++=
-=0A=
->>   1 file changed, 66 insertions(+)=0A=
->>=0A=
->> Example output as a github gist:=0A=
->> https://eur01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fgist=
-.github.com%2Fcdleonard%2F2f74a7efe74587e3d4b57cf7983b46a8&amp;data=3D02%7C=
-01%7Cleonard.crestez%40nxp.com%7C946b54955bda47a2c7a308d768ac2d23%7C686ea1d=
-3bc2b4c6fa92cd99c5c301635%7C0%7C0%7C637092961007878684&amp;sdata=3DUk7QI%2F=
-Oo70H4H5N3ZZl2IMXMHMvP3vov%2FqSMnPuNWg8%3D&amp;reserved=3D0=0A=
->>=0A=
->> The qcs404 driver was hacked to probe on imx, the links to "0" seem to=
-=0A=
->> from incorrect trailing 0s on DEFINE_QNODE. Possibly fallout from=0A=
->> switching to ARRAY_SIZE(__VA_ARGS__)?=0A=
->>=0A=
->> I'm not sure that "graphviz" is allowed as an output format even in=0A=
->> debugfs.=0A=
-> =0A=
-> Why not!  :)=0A=
-> =0A=
-> This is great, I love it, nice job, no objection from me.=0A=
-> =0A=
-> Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>=0A=
+Quoting Shubhashree Dhar (2019-11-13 21:56:16)
+> Current code assumes that all the irqs registers offsets can be
+> accessed in all the hw revisions; this is not the case for some
+> targets that should not access some of the irq registers.
+
+What happens if we read the irq registers that we "should not access"?
+Does the system reset? It would be easier to make those registers return
+0 when read indicating no interrupt and ignore writes so that everything
+keeps working without having to skip registers.
+
+> This change adds the support to selectively remove the irqs that
+> are not supported in some of the hw revisions.
+>=20
+> Change-Id: I6052b8237b703a1a9edd53893e04f7bd72223da1
+
+Please remove these before sending upstream.
+
+> Signed-off-by: Shubhashree Dhar <dhar@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  1 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  3 +++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 22 +++++++++++++++++=
+-----
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  1 +
+>  4 files changed, 22 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu=
+/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index ec76b868..def8a3f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -646,6 +646,7 @@ struct dpu_perf_cfg {
+>   * @dma_formats        Supported formats for dma pipe
+>   * @cursor_formats     Supported formats for cursor pipe
+>   * @vig_formats        Supported formats for vig pipe
+> + * @mdss_irqs          Bitmap with the irqs supported by the target
+
+Hmm pretty sure there needs to be a colon so that kernel-doc can match
+this but maybe I'm wrong.
+
+>   */
+>  struct dpu_mdss_cfg {
+>         u32 hwversion;
