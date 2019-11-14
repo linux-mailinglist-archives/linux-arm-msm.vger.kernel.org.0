@@ -2,204 +2,256 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A6440FBE71
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 04:50:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8363FBE8E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 05:31:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726521AbfKNDuD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Nov 2019 22:50:03 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:46647 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726393AbfKNDuD (ORCPT
+        id S1726491AbfKNEbz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Nov 2019 23:31:55 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:47704 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726489AbfKNEbz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Nov 2019 22:50:03 -0500
-Received: by mail-pf1-f195.google.com with SMTP id 193so3146783pfc.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Nov 2019 19:50:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=umYuaqH/vbuPE2RKme3P+diNf3XB7pJeeiLOBWpjlxQ=;
-        b=gbXjk36W2ZI78md3gZiDvYN1Ubl5bCYMO4M59KEKajKjLtHrIpu/7LqR0t9OkVEXaS
-         ADSvn0omLpE07LIqJy+CpADAYT0M+JPc6bMFsPndfeMNgrZsEeMssMJW68YS4JunuFmk
-         +scVI2LkJs/WsKIQbDLMwT7bu1baMltGUVWV+AYeP492naFHD4jvZ5FzUxmbfHrVMxp/
-         6WbIEtLCQZuo/VQ+wy/gehF7yBjIpQoC/AreaiEZ7bSG5guPXXXoTDdV2kCR0OmSyrB4
-         rptOHNs4ZbFZ9dC/9JLY/po12bMU6a+N9/2AQvVr8i19zJoLU2vEMEJIVhdGJf4zDXFc
-         i/MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=umYuaqH/vbuPE2RKme3P+diNf3XB7pJeeiLOBWpjlxQ=;
-        b=LGRyocea/miTnJHUFYkJ+/QxL+g5QSAN9HmA1CEwn1oWUYsXNOB0DTSp/rjWRawcxG
-         7JLpG+x8IZbSe8OC9U6Z7SsR9zmGY5EGXQxkan4uwFFWg++ZJMeKxw3P3xe4AAgInwr0
-         k4uhSyPXZ52wrFF8nkonTNb58oPME6R6qvEfcl3BdzD6P9E009d1ZS3SYO1oZXAC/3qS
-         8he3pEd1iInCMDrgyqLog/s3vi2YqsOZjd+HG5Ch79sZ8MYWGOLnWQrck9IyB2/L0god
-         +1RMt2fRfnBP2ivOCCMicJFuWNw/jSr7ORuYSo/+Rx/6etlcciLUsG63+vVOy+QSFD6g
-         tcEg==
-X-Gm-Message-State: APjAAAWKxUr85Xcn09vI8SVKRL5MrQUUldon3MBpzjpkXkRpZGLKl1u9
-        a1pzTkc9OpCRet9POz7XiCwfpqkg7lU=
-X-Google-Smtp-Source: APXvYqxuazx8M6Jgo0s4QPNDTfksqLUO1ArYjoFL+xvFC43QOaCBZoo+WhNmkI3OQ/GA10fktSFlsw==
-X-Received: by 2002:a63:4a1a:: with SMTP id x26mr4919608pga.298.1573703402162;
-        Wed, 13 Nov 2019 19:50:02 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id b82sm4649335pfb.33.2019.11.13.19.50.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Nov 2019 19:50:01 -0800 (PST)
-Date:   Wed, 13 Nov 2019 19:49:58 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Leonard Crestez <leonard.crestez@nxp.com>
-Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Artur ??wigo?? <a.swigon@partner.samsung.com>,
-        Evan Green <evgreen@chromium.org>,
-        David Dai <daidavid1@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH RFC] interconnect: Add interconnect_graph file to debugfs
-Message-ID: <20191114034958.GB21530@yoga>
-References: <70f672b39780ba7387d15fd6485f94b75d47b1ec.1573692109.git.leonard.crestez@nxp.com>
+        Wed, 13 Nov 2019 23:31:55 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 2953160D96; Thu, 14 Nov 2019 04:31:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573705914;
+        bh=1mnno7V8hbNstT1qSUss+lOiVaXQRdb+5ZIeKo2cB8E=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=OcrhaMw/UTV0aQ8VHy5QLkahlC1F7LTcpZNPtnH1KgKPqUL7YM61FyD0qVZ0VG6OG
+         +KT0q7bMiqzPEJkazSMUx04cKzKf9Us1+eZAkEYRJBbqH9P3e/GkoBPAOjCAnwbZMS
+         O1sCGo1PRlNr2ltODlJuUeyheOnbLURhg6GUOiQU=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.204.79.8] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: neeraju@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CA4EA60D78;
+        Thu, 14 Nov 2019 04:31:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573705911;
+        bh=1mnno7V8hbNstT1qSUss+lOiVaXQRdb+5ZIeKo2cB8E=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=CW0v7YQeMt35xuMtycNnMd5lmklNU52+j6sYbPOSZBHjOIx3iwzzLoIwgy32hZXYX
+         j82VbkmO598j1u4M2xyRBf4EJ5eR/xC8lN8hL97RVJGQUWI2AQ5wVI45FXHzmMmP80
+         XtmzSRwvuOybPpzA2a08Ux99ZbfdgvkgQPBDfL3g=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CA4EA60D78
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=neeraju@codeaurora.org
+Subject: Re: Query regarding hid-multitouch.c driver in 4.14/4.19
+To:     Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Cc:     Jiri Kosina <jikos@kernel.org>,
+        Henrik Rydberg <rydberg@bitmath.org>,
+        "open list:HID CORE LAYER" <linux-input@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, prsood@codeaurora.org,
+        gkohli@codeaurora.org
+References: <e1e05bd3-19f5-0dfe-66ad-70717c1c29c6@codeaurora.org>
+ <CAO-hwJLdz1sA4tNsLLgZKGA7Ko6dqt9VF5T2nh5uczHxU532HA@mail.gmail.com>
+From:   Neeraj Upadhyay <neeraju@codeaurora.org>
+Message-ID: <4eecbd2a-9d19-c6a2-a95b-656e3fce05a4@codeaurora.org>
+Date:   Thu, 14 Nov 2019 10:01:46 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <70f672b39780ba7387d15fd6485f94b75d47b1ec.1573692109.git.leonard.crestez@nxp.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <CAO-hwJLdz1sA4tNsLLgZKGA7Ko6dqt9VF5T2nh5uczHxU532HA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 13 Nov 16:50 PST 2019, Leonard Crestez wrote:
+Hi Benjamin,
 
-> The interconnect graphs can be difficult to understand and the current
-> "interconnect_summary" file doesn't even display links in any way.
-> 
-> Add a new "interconnect_graph" file to debugfs in the graphviz "dot"
-> format which describes interconnect providers, nodes and links.
-> 
-> The file is human-readable and can be visualized by piping through
-> graphviz. Example:
-> 
-> ssh $TARGET cat /sys/kernel/debug/interconnect/interconnect_graph \
-> 	| dot -Tsvg > interconnect_graph.svg
-> 
-> Signed-off-by: Leonard Crestez <leonard.crestez@nxp.com>
+Sorry for the delay, was waiting for the required information from our team.
 
-Nice, I like it!
+On 11/13/2019 3:00 PM, Benjamin Tissoires wrote:
+> Hi Neeraj,
+>
+> On Wed, Nov 13, 2019 at 4:11 AM Neeraj Upadhyay <neeraju@codeaurora.org> wrote:
+>> Hi,
+>>
+>> I have one query regarding hid-multitouch.c driver and need your guidance on
+>> how hid-multitouchc can restore/support the original behaviour, where, for
+>> devices, for which application is not
+>> HID_DG_TOUCHSCREEN/HID_DG_TOUCHPAD, and has
+>> HID_DG_CONTACTID usage in its report, can still use generic input mappings.
+>>
+>> We are using kernel versions 4.14 , 4.19 respectively in 2 different
+>> projects:
+>>
+>> 4.14:
+>> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/hid/hid-multitouch.c?h=v4.14.153
+>> 4.19:
+>> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/hid/hid-multitouch.c?h=v4.19.83
+>>
+>> I checked the application for our hid device, it's HID_DG_PEN, device
+>> also has a HID_DG_CONTACTID usage defined in
+>>
+>> its report.
+>>
+>> In 4.19, is_mt_collection is set to 'true'. All multitouch code paths or
+>> input mapping is configured
+>>
+>> mt_allocate_report_data()
+>>           ...
+>>           for (n = 0; n < field->report_count; n++) {
+>>                           if (field->usage[n].hid == HID_DG_CONTACTID)
+>>                                   rdata->is_mt_collection = true;   //
+>> is_mt_collection is set to 'true'
+>>                   }
+>>           }
+>>
+>> mt_input_mapping()
+>>           ...
+>>           if (rdata->is_mt_collection)
+>>               return mt_touch_input_mapping(...)  //
+>> mt_touch_input_mapping() is called
+>>
+>> mt_event()
+>>           if (rdata && rdata->is_mt_collection)
+>>               return mt_touch_event();  // mt_touch_event() is called
+>>
+>> However, in 4.14, the behaviour was different, mt input mapping was done
+>> only
+>> for HID_DG_TOUCHSCREEN/HID_DG_TOUCHPAD , and because our hid device is
+>> HID_DG_PEN, generic mappings were applied for it; with these settings,
+>> device
+>> responds to events.
+>>
+>> static int mt_input_mapping()
+>>           if (field->application == HID_DG_TOUCHSCREEN ||
+>>               field->application == HID_DG_TOUCHPAD)
+>>               return mt_touch_input_mapping();  // This is not called.
+>>
+>>
+>> mt_touch_input_mapping()
+>>           case HID_DG_CONTACTID:
+>>                           mt_store_field(usage, td, hi);
+>>                           td->touches_by_report++;
+>>                           td->mt_report_id = field->report->id; //
+>> mt_report_id is not set.
+>>                           return 1;
+>>
+>>
+>> Looks like this behaviour changed, with below commits:
+>>
+>> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/drivers/hid/hid-multitouch.c?h=v4.19.83&id=8dfe14b3b47ff832cb638731f9fc696a3a84f804
+>> 8dfe14b3b47f    HID: multitouch: ditch mt_report_id
+>> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/drivers/hid/hid-multitouch.c?h=v4.19.83&id=ba6b055e0f3b4ff4942e4ab273260affcfad9bff
+>> ba6b055e0f3b     HID: input: enable Totem on the Dell Canvas 27
+>>
+>> Can you please suggest on how we can support/preserve the original
+>> behaviour?
+> Hmm, I would initially say that a firmware that exports Contact ID for
+> a Pen is definitely wrong. The Contact ID usage has been introduced in
+> https://www.usb.org/sites/default/files/hutrr34.pdf and is
+> specifically for multi-touch, not multi pen.
+>
+> Anyway, couple of questions:
+> - does the device supports multi-pen?
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Actually the device is a selfie stick device: 
+https://item.jd.com/33082497741.html
 
-Regards,
-Bjorn
+It does not support multi-pen.
 
-> ---
->  drivers/interconnect/core.c | 66 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 66 insertions(+)
-> 
-> Example output as a github gist:
-> https://gist.github.com/cdleonard/2f74a7efe74587e3d4b57cf7983b46a8
-> 
-> The qcs404 driver was hacked to probe on imx, the links to "0" seem to
-> from incorrect trailing 0s on DEFINE_QNODE. Possibly fallout from
-> switching to ARRAY_SIZE(__VA_ARGS__)?
-> 
-> I'm not sure that "graphviz" is allowed as an output format even in
-> debugfs.
-> 
-> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-> index c498796adc07..07e91288c7f4 100644
-> --- a/drivers/interconnect/core.c
-> +++ b/drivers/interconnect/core.c
-> @@ -92,10 +92,74 @@ static int icc_summary_show(struct seq_file *s, void *data)
->  
->  	return 0;
->  }
->  DEFINE_SHOW_ATTRIBUTE(icc_summary);
->  
-> +static void icc_graph_show_link(struct seq_file *s, int level,
-> +				struct icc_node *n, struct icc_node *m)
-> +{
-> +	seq_printf(s, "%s\"%d:%s\" -> \"%d:%s\"\n",
-> +			level == 2 ? "\t\t" : "\t",
-> +			n->id, n->name, m->id, m->name);
-> +}
-> +
-> +static void icc_graph_show_node(struct seq_file *s, struct icc_node *n)
-> +{
-> +	seq_printf(s, "\t\t\"%d:%s\" [label=\"%d:%s",
-> +		   n->id, n->name, n->id, n->name);
-> +	seq_printf(s, "\n\t\t\t|avg_bw=%ukBps", n->avg_bw);
-> +	seq_printf(s, "\n\t\t\t|peak_bw=%ukBps", n->peak_bw);
-> +	seq_puts(s, "\"]\n");
-> +}
-> +
-> +static int icc_graph_show(struct seq_file *s, void *data)
-> +{
-> +	struct icc_provider *provider;
-> +	struct icc_node *n;
-> +	int cluster_index = 0;
-> +	int i;
-> +
-> +	seq_puts(s, "digraph {\n\trankdir = LR\n\tnode [shape = record]\n");
-> +	mutex_lock(&icc_lock);
-> +
-> +	/* draw providers as cluster subgraphs */
-> +	cluster_index = 0;
-> +	list_for_each_entry(provider, &icc_providers, provider_list) {
-> +		seq_printf(s, "\tsubgraph cluster_%d {\n", ++cluster_index);
-> +		if (provider->dev)
-> +			seq_printf(s, "\t\tlabel = \"%s\"\n",
-> +				   dev_name(provider->dev));
-> +
-> +		/* draw nodes */
-> +		list_for_each_entry(n, &provider->nodes, node_list)
-> +			icc_graph_show_node(s, n);
-> +
-> +		/* draw internal links */
-> +		list_for_each_entry(n, &provider->nodes, node_list)
-> +			for (i = 0; i < n->num_links; ++i)
-> +				if (n->provider == n->links[i]->provider)
-> +					icc_graph_show_link(s, 2, n,
-> +							    n->links[i]);
-> +
-> +		seq_puts(s, "\t}\n");
-> +	}
-> +
-> +	/* draw external links */
-> +	list_for_each_entry(provider, &icc_providers, provider_list)
-> +		list_for_each_entry(n, &provider->nodes, node_list)
-> +			for (i = 0; i < n->num_links; ++i)
-> +				if (n->provider != n->links[i]->provider)
-> +					icc_graph_show_link(s, 1, n,
-> +							    n->links[i]);
-> +
-> +	mutex_unlock(&icc_lock);
-> +	seq_puts(s, "}");
-> +
-> +	return 0;
-> +}
-> +DEFINE_SHOW_ATTRIBUTE(icc_graph);
-> +
->  static struct icc_node *node_find(const int id)
->  {
->  	return idr_find(&icc_idr, id);
->  }
->  
-> @@ -800,10 +864,12 @@ EXPORT_SYMBOL_GPL(icc_provider_del);
->  static int __init icc_init(void)
->  {
->  	icc_debugfs_dir = debugfs_create_dir("interconnect", NULL);
->  	debugfs_create_file("interconnect_summary", 0444,
->  			    icc_debugfs_dir, NULL, &icc_summary_fops);
-> +	debugfs_create_file("interconnect_graph", 0444,
-> +			    icc_debugfs_dir, NULL, &icc_graph_fops);
->  	return 0;
->  }
->  
->  static void __exit icc_exit(void)
->  {
-> -- 
-> 2.17.1
-> 
+> - can you share the report descriptor and a few events when triggering
+> this particular report (ideally with hid-recorder from
+> https://gitlab.freedesktop.org/libevdev/hid-tools/
+
+Report descriptor is below:
+
+05 0d 09 02 a1 01 85 01 09 22 a1 02 09 42 15 00 25 01 75 01 95 01 81 02 
+09 32 81 02 95 06 81 03 75 08 09 51 95 01 81 02 05 01 26 ff 0f 75 10 55 
+0e 65 33 09 30 35 00 46 b5 04 81 02 46 8a 03 09 31 81 02 c0 05 0d 09 54 
+95 01 75 08 81 02 85 08 09 55 25 05 b1 02 c0 05 0c 09 01 a1 01 85 02 09 
+e9 09 ea 0a ae 01 09 e2 09 30 15 01 25 0c 75 10 95 01 81 00 c0
+
+Events were collected using getevent call in adb shell in android:
+
+On 4.19
+
+# getevent -l
+
+add device 7: /dev/input/event6
+   name:     "BLE-M1 UNKNOWN"
+
+/dev/input/event6: EV_ABS       ABS_MT_TRACKING_ID   00000000
+/dev/input/event6: EV_ABS       ABS_MT_POSITION_X    00000800
+/dev/input/event6: EV_ABS       ABS_MT_POSITION_Y    00000d60
+/dev/input/event6: EV_KEY       BTN_TOUCH            DOWN
+/dev/input/event6: EV_SYN       SYN_REPORT           00000000
+/dev/input/event6: EV_ABS       ABS_MT_TRACKING_ID   ffffffff
+/dev/input/event6: EV_KEY       BTN_TOUCH            UP
+/dev/input/event6: EV_SYN       SYN_REPORT           00000000
+/dev/input/event6: EV_ABS       ABS_MT_TRACKING_ID   00000001
+/dev/input/event6: EV_KEY       BTN_TOUCH            DOWN
+/dev/input/event6: EV_SYN       SYN_REPORT           00000000
+/dev/input/event6: EV_ABS       ABS_MT_TRACKING_ID   ffffffff
+/dev/input/event6: EV_KEY       BTN_TOUCH            UP
+/dev/input/event6: EV_SYN       SYN_REPORT           00000000
+
+On 4.14
+
+add device 2: /dev/input/event5
+   name:     "BLE-M1 UNKNOWN"
+
+/dev/input/event5: EV_MSC       MSC_SCAN             000d0042
+/dev/input/event5: EV_KEY       BTN_TOUCH            DOWN
+/dev/input/event5: EV_KEY       BTN_DIGI             DOWN
+/dev/input/event5: EV_ABS       ABS_MISC             00000001
+/dev/input/event5: EV_ABS       ABS_X                00000800
+/dev/input/event5: EV_ABS       ABS_Y                00000d60
+/dev/input/event5: EV_ABS       0029                 00000001
+/dev/input/event5: EV_SYN       SYN_REPORT           00000000
+
+/dev/input/event5: EV_MSC       MSC_SCAN             000d0042
+/dev/input/event5: EV_KEY       BTN_TOUCH            UP
+/dev/input/event5: EV_KEY       BTN_DIGI             UP
+/dev/input/event5: EV_ABS       0029                 00000000
+/dev/input/event5: EV_SYN       SYN_REPORT           00000000
+
+/dev/input/event5: EV_MSC       MSC_SCAN             000d0042
+/dev/input/event5: EV_KEY       BTN_TOUCH            DOWN
+/dev/input/event5: EV_KEY       BTN_DIGI             DOWN
+/dev/input/event5: EV_ABS       0029                 00000001
+/dev/input/event5: EV_SYN       SYN_REPORT           00000000
+
+/dev/input/event5: EV_MSC       MSC_SCAN             000d0042
+/dev/input/event5: EV_KEY       BTN_TOUCH            UP
+/dev/input/event5: EV_KEY       BTN_DIGI             UP
+/dev/input/event5: EV_ABS       0029                 00000000
+/dev/input/event5: EV_SYN       SYN_REPORT           00000000
+
+
+As I have little understanding of the framework, use cases and of the 
+flow, I am sorry, if the information provided above is
+
+incomplete (w.r.t. what you were expecting).
+
+
+Thanks
+
+Neeraj
+
+> Cheers,
+> Benjamin
+>
+>>
+>> Thanks
+>> Neeraj
+>>
+>> --
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by The Linux Foundation
+>>
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by The Linux Foundation
+
