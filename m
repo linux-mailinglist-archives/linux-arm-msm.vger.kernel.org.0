@@ -2,108 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0952AFCBFE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 18:40:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B2ADFCC21
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 18:47:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726473AbfKNRkr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Nov 2019 12:40:47 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:37837 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725976AbfKNRkr (ORCPT
+        id S1726444AbfKNRrS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Nov 2019 12:47:18 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:37792 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725976AbfKNRrS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Nov 2019 12:40:47 -0500
-Received: by mail-pf1-f195.google.com with SMTP id p24so4729267pfn.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2019 09:40:46 -0800 (PST)
+        Thu, 14 Nov 2019 12:47:18 -0500
+Received: by mail-ed1-f65.google.com with SMTP id k14so5801601eds.4;
+        Thu, 14 Nov 2019 09:47:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:cc:from:subject:to:user-agent:date;
-        bh=BG4N3ZJy8QM1GTK7zwnsKQC3CcH+E5Rq/8uokPmQ3VU=;
-        b=MUEXmgHb+I2XoY4p1O0wZ5ncgFwmZaBpjLqBzoczGC4bAsVoK1QfGaOLOL/rd7NVuV
-         zx6cJ9PW930V4k9q3ZL2xAa86tNQ831rwD4y/BD8xDV60NoJ755PoUqFQLgxgrTz0DTn
-         GtAB/2oVhjHzA7OuISc0NuUEh9v0MCCDi8QxI=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uIo531B/cUq75IiN6qR4DNybSGADhsaWaGA4/dANrUU=;
+        b=rw6xzVmS7zdh8IO41zKmyH1EwS5ub484ZDfPzqMFnsZ8/bNOCwpsqUJT3eapWamnoa
+         hRE3otsinYDkEiNefw82XE+uOulf3MvWrhYEfNyY7RFgYcmWNcyS/yvHKJpQpenMAgLM
+         OD4hNu5S8VQ6WRXzgydzo0hjCt3n4IYDjIc9OYPRlSLy0Q5wGmBEhYZ1KLElSAnxuk4d
+         LWiULGeDyeTj3t8PP+E9iAPFSqc5jjeaUG9F3W0rEzd8rIu5HXHvb6X0nfY0Cz3eSSEj
+         t7aWD0smLhxLrybsj8804sTrjcFhPRFAbZdOCdNXQIwjN0lZiRGqA2mKWsppRsa4E9aE
+         UdAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:cc:from:subject:to
-         :user-agent:date;
-        bh=BG4N3ZJy8QM1GTK7zwnsKQC3CcH+E5Rq/8uokPmQ3VU=;
-        b=YXJHnFe7OdRyeZCJFZT9LJNHPVp5vEce4G/z6SLDZVgaQB6damXQ/NDZx4KtgtBPCf
-         FrUdKYmKkQarIQvTzE4ihMWJAxuH58JI3oDHfUNItzZmvTR1EgXDpFudgBuz8Cl0OrEf
-         eA9cdVKfpuiYtY3Mll60v52COACa/8nqOYe/utiyKH+Pt80dIF+aiq+ovoqeicYxUf6u
-         kljktLvrA1gHpPEmQ54TcocOogpdf1X5+lNNwin0ZVAkpSWdp6Qqw0WLjWajtXF1zRI/
-         bM0ZGt3l8DbXGrRP/29BHEatPcPRp5cIpq55qAH36mLdySFqLQyi5TH1H8KkSyes41oU
-         l5dg==
-X-Gm-Message-State: APjAAAV23yZrYc+Iv8nshfrsbDjhmamUEuNwp41CwN20Mxfplj48uup7
-        yh3t9PRUdHUKq/qvTFhNv3tdouqr1XU=
-X-Google-Smtp-Source: APXvYqwGwpEkUJhyA7vGnWF8+iNWK6lc1W1AnQdEc2FA1gHsW8pFTWM8tPTQKG1RfOtLEhsUb/thRQ==
-X-Received: by 2002:a63:4e5e:: with SMTP id o30mr11958597pgl.112.1573753246140;
-        Thu, 14 Nov 2019 09:40:46 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id y12sm6933105pjy.0.2019.11.14.09.40.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2019 09:40:45 -0800 (PST)
-Message-ID: <5dcd919d.1c69fb81.1c304.2dc5@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uIo531B/cUq75IiN6qR4DNybSGADhsaWaGA4/dANrUU=;
+        b=CEGQHxgwxcUm88TPR9QdaeO4ywvm0tPnU2CqdMF6iVjAYj/+/NEiLEUkkZ6wtiXNU+
+         L0JW3dDmFcveydUyedpuyUwhGhGr+27rI2YMHbwnripDyqlJoWkeTqBpQxbyuzg+qWBM
+         /C16Nm+Vr9/SYOKtR9TnEOBD5iYcjaSDZh/HnEDmuw2yHdn5/cTVgXpCyXmlbmExkMDv
+         jnfOYsEtUXJSzDbsf9/wQeHjB+BO6qE+pxx2vcsTyJmZhnHvRolNpVHFzU4n8HvT6c5D
+         c7QuOwolxmE2TS0HcEqbCP1V5YeSd58e/0AqD5JismS+s/Pq+vDp8Ii2z5c6G54RluP2
+         KvkA==
+X-Gm-Message-State: APjAAAUx7hzG9rFIoJzGuZQxfGRv3Hrj/K4+OYfChTqWwIvOA3ol111F
+        ByxNyb2Z5vxxddtMoiCKRMXgF5ayvvom7urm8z4=
+X-Google-Smtp-Source: APXvYqw3CejNmaVz5GldVr/MDvSo09GNjIMxV6cGEH5VCjX8kpYok2NSUnjdMbIQdf5qOmCQs3bB2RJx5SRQqmEzN2w=
+X-Received: by 2002:a17:906:f209:: with SMTP id gt9mr9586553ejb.241.1573753634099;
+ Thu, 14 Nov 2019 09:47:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1573642136-30488-1-git-send-email-akashast@codeaurora.org>
-References: <1573642136-30488-1-git-send-email-akashast@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        mgautam@codeaurora.org, msavaliy@codeaurora.org,
-        Akash Asthana <akashast@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH v5 2/3] tty: serial: qcom_geni_serial: Wakeup over UART RX
-To:     Akash Asthana <akashast@codeaurora.org>, gregkh@linuxfoundation.org
-User-Agent: alot/0.8.1
-Date:   Thu, 14 Nov 2019 09:40:44 -0800
+References: <1573726588-18897-1-git-send-email-harigovi@codeaurora.org> <1573726588-18897-3-git-send-email-harigovi@codeaurora.org>
+In-Reply-To: <1573726588-18897-3-git-send-email-harigovi@codeaurora.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 14 Nov 2019 09:47:02 -0800
+Message-ID: <CAF6AEGurmTxwhBeWf1Q2U7_jSwmofBq49G5dsZN0qRmAFfvDNQ@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] drm/msm: add DSI config changes to support DSI version
+To:     Harigovindan P <harigovi@codeaurora.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        nganji@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Akash Asthana (2019-11-13 02:48:56)
-> Add system wakeup capability over UART RX line for wakeup capable UART.
-> When system is suspended, RX line act as an interrupt to wakeup system
-> for any communication requests from peer.
+On Thu, Nov 14, 2019 at 2:16 AM Harigovindan P <harigovi@codeaurora.org> wrote:
+>
+> Add DSI config changes to support DSI version.
+>
+> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
 
-How does the RX line get remuxed as a GPIO interrupt here? Is that
-through some pinctrl magic in DT or just via enabling/disabling the
-interrupt?
+Reviewed-by: Rob Clark <robdclark@gmail.com>
 
->=20
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/q=
-com_geni_serial.c
-> index 634054a..56dad67 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -1321,6 +1327,23 @@ static int qcom_geni_serial_probe(struct platform_=
-device *pdev)
->                 return ret;
->         }
-> =20
-> +       if (port->wakeup_irq > 0) {
-> +               /*
-> +                * Set pm_runtime status as ACTIVE so that wakeup_irq gets
-> +                * enabled/disabled from dev_pm_arm_wake_irq  during  sys=
-tem
-> +                * suspend/resume respectively.
-> +                */
-> +               pm_runtime_set_active(&pdev->dev);
+For patch 1/2 with the panel driver, probably best to split that out
+into a different patch(set), since panel drivers are merged into
+drm-next via a different tree
 
-We can always set this device as active regardless of wakeup interrupt,
-right? Can we move this call outside of this if?
+BR,
+-R
 
-> +               device_init_wakeup(&pdev->dev, true);
-> +               ret =3D dev_pm_set_dedicated_wake_irq(&pdev->dev,
-> +                                               port->wakeup_irq);
-> +               if (ret) {
-> +                       device_init_wakeup(&pdev->dev, false);
-> +                       uart_remove_one_port(drv, uport);
-> +                       return ret;
-> +               }
-> +       }
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi_cfg.c | 21 +++++++++++++++++++++
+>  drivers/gpu/drm/msm/dsi/dsi_cfg.h |  1 +
+>  2 files changed, 22 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> index b7b7c1a..d2c4592 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> @@ -133,6 +133,10 @@ static const char * const dsi_sdm845_bus_clk_names[] = {
+>         "iface", "bus",
+>  };
+>
+> +static const char * const dsi_sc7180_bus_clk_names[] = {
+> +        "iface", "bus",
+> +};
 > +
->         return ret;
->  }
-> =20
+>  static const struct msm_dsi_config sdm845_dsi_cfg = {
+>         .io_offset = DSI_6G_REG_SHIFT,
+>         .reg_cfg = {
+> @@ -147,6 +151,20 @@ static const struct msm_dsi_config sdm845_dsi_cfg = {
+>         .num_dsi = 2,
+>  };
+>
+> +static const struct msm_dsi_config sc7180_dsi_cfg = {
+> +       .io_offset = DSI_6G_REG_SHIFT,
+> +       .reg_cfg = {
+> +               .num = 1,
+> +               .regs = {
+> +                       {"vdda", 21800, 4 },    /* 1.2 V */
+> +               },
+> +       },
+> +       .bus_clk_names = dsi_sc7180_bus_clk_names,
+> +       .num_bus_clks = ARRAY_SIZE(dsi_sc7180_bus_clk_names),
+> +       .io_start = { 0xae94000 },
+> +       .num_dsi = 1,
+> +};
+> +
+>  const static struct msm_dsi_host_cfg_ops msm_dsi_v2_host_ops = {
+>         .link_clk_enable = dsi_link_clk_enable_v2,
+>         .link_clk_disable = dsi_link_clk_disable_v2,
+> @@ -201,6 +219,9 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
+>                 &msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+>         {MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_1,
+>                 &sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+> +       {MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_4_1,
+> +               &sc7180_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+> +
+>  };
+>
+>  const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor)
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> index e2b7a7d..9919536 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> @@ -19,6 +19,7 @@
+>  #define MSM_DSI_6G_VER_MINOR_V1_4_1    0x10040001
+>  #define MSM_DSI_6G_VER_MINOR_V2_2_0    0x20000000
+>  #define MSM_DSI_6G_VER_MINOR_V2_2_1    0x20020001
+> +#define MSM_DSI_6G_VER_MINOR_V2_4_1    0x20040001
+>
+>  #define MSM_DSI_V2_VER_MINOR_8064      0x0
+>
+> --
+> 2.7.4
+>
