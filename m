@@ -2,203 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 89E16FD11F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 23:50:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6741FD188
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 00:26:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726767AbfKNWuU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Nov 2019 17:50:20 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:47053 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726319AbfKNWuU (ORCPT
+        id S1727075AbfKNX0d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Nov 2019 18:26:33 -0500
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:39443 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726767AbfKNX0c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Nov 2019 17:50:20 -0500
-Received: by mail-pf1-f194.google.com with SMTP id 193so5265373pfc.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2019 14:50:19 -0800 (PST)
+        Thu, 14 Nov 2019 18:26:32 -0500
+Received: by mail-lf1-f65.google.com with SMTP id j14so6486289lfk.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Nov 2019 15:26:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:cc:to:subject:from:user-agent:date;
-        bh=fV40oETXjKcGlIr1gGKnzSoiYzzgILYSSWxjfebyNP8=;
-        b=IQttiHaAJGKACK5iLQHgc60JB1JPMzLpLI1DfqpXl7axGbV2ULuY8eJUGc9Qoado47
-         UGVaSRRH1bnSNoxedmuguxdiav53vPa3kaEGVLaAQ3wkPsnqskxDHoBu+bPY/30ZD8PK
-         nr9n7pQ3Ltf+Jy66JShXkhoWL328ExLRzYYu4=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dh355UxLWVUsAWtwLkdueim4hUviJNMSeVlOVRSiyyU=;
+        b=fsPJNeng02AwnnNHtwtXoe3riey1s/OJrERM+5JLecji6GA9zq4JM5sHWvCJyNKnWC
+         6xvVpy3wgwf6hGgp3N3H+WuDv2r8poG8kCEbS5fXQkeIZ3eugGRcYDmTu6nCr9g/hqW8
+         GyeJopyeU9cHUKn7On5e4xnwapZTvRaUCO9Xq533CLFKtNyceG8bg2DwwTb7FPPgzTJ8
+         wVKTtqRx7FUrs9cUbhUP/RwggYxF5sy0lwWOeRytpjajYFmsTO+KX+VqTQf6LJFkpIp3
+         aNoAjxE448K3Tj09rXpE55JYCFFKXJlCLZd2+sVubjWjTJ1odWk3FpoPjoDu7D52yTqh
+         gZpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:cc:to:subject:from
-         :user-agent:date;
-        bh=fV40oETXjKcGlIr1gGKnzSoiYzzgILYSSWxjfebyNP8=;
-        b=AMDlFrb6NdFyOwkXxEsSC2wTckCvE/1rK7DxuUo+ICf1P9atv76tvrsc/JJ34+CCPm
-         tsfC2mlOKVMmutAPdo41HtbZCr9R7FwFGs5uCx/Sgiis8MiFSPdpydlRKVwX9GuI0m6L
-         kHpj74+lv9s2CAuRWsvPCOJAv++zvUHtY0O4l0r2r2/F8kQOTQyehNiWRVBNyCrWmDJ3
-         +x5FJcJmgfO5CJ8eBDd5gUkobylDjbWR8O+QlMJcV0gkAaXBjijOGvDy2LMLYc4KFORw
-         n1B403w9nbw5sXBYZ+tfGDZSuADa9APZRFGpqQqSoaKNH8yAy+o2v71piLcRRW3LLITL
-         xxnQ==
-X-Gm-Message-State: APjAAAXlVPbpw64j3e+4EFx9UhJMjbAdoKAlvVahTAwYrNkeDzDseINn
-        cU2GpbYSIZYMeYsAbc8FbmHzJA==
-X-Google-Smtp-Source: APXvYqwGZF0CNHJX1S5Aa2rAAxaMTnHOr5W0JJN8PB1EeZukU4bqr9Ehf1A2qoVMQcXBra2LOY9T8Q==
-X-Received: by 2002:a17:90b:d8e:: with SMTP id bg14mr14990905pjb.26.1573771818995;
-        Thu, 14 Nov 2019 14:50:18 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id u207sm9215633pfc.127.2019.11.14.14.50.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2019 14:50:18 -0800 (PST)
-Message-ID: <5dcdda2a.1c69fb81.27852.ac35@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dh355UxLWVUsAWtwLkdueim4hUviJNMSeVlOVRSiyyU=;
+        b=h5DsuTSXfTtk2/h5cEp14sMuZBvqO747mNbcPm+Pdw2zO0QbRwhuM3TtkrmLyCmPIT
+         1AXvwTiHaKJfSN6CIVg3RgWBx1roXlPKicllutQHgGGuIht+FoIX8wCW699HC3Pp0ZSH
+         HL+MQpdzkx54Ux/5fu9r+IEZVo/eLUO8gSoM90+bf7b90hobcxH7Gm6bdRJbrauGWrMA
+         bcWOt1vcQOK1fZt35unVRR8KiUGF0J5vh8Cfip2HcHP4o/r8o9FrWlXJaVwfC8e+E+fA
+         fW4awUAVlQtuy4h1cjBqHp3hRiMoBU2f6hk69l60sPJUjgixy+2Tb748st+KnqMjcK5L
+         ZfaA==
+X-Gm-Message-State: APjAAAUh+gzZ2jDHpvGfGO5/Sx0bwA6SurHX2mb4bHkofX8vgpVj6ew0
+        p3K3Zs+TPCPLjwKxMJ2uzzymR9KUGCKKXOYwIZ5iWA==
+X-Google-Smtp-Source: APXvYqzLk+KhD3Sj2zIb1agtuRx8FqBh+eeYu3cNtIavQb53WVkpwyRNOE71sOo8/sYqRoHw9clCFk4qt3Trn3pUKVk=
+X-Received: by 2002:a19:651b:: with SMTP id z27mr8714521lfb.117.1573773990709;
+ Thu, 14 Nov 2019 15:26:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <4b949a4f401a7f9d403ed0f0c16c7feb083f3524.1573499020.git.amit.kucheria@linaro.org>
-References: <cover.1573499020.git.amit.kucheria@linaro.org> <4b949a4f401a7f9d403ed0f0c16c7feb083f3524.1573499020.git.amit.kucheria@linaro.org>
-Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        linux-pm@vger.kernel.org
-To:     Amit Kucheria <amit.kucheria@linaro.org>,
-        Andy Gross <agross@kernel.org>, bjorn.andersson@linaro.org,
-        edubezval@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sivaa@codeaurora.org
-Subject: Re: [PATCH 1/3] drivers: thermal: tsens: Add critical interrupt support
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.8.1
-Date:   Thu, 14 Nov 2019 14:50:17 -0800
+References: <20191114185152.101059-1-robdclark@gmail.com>
+In-Reply-To: <20191114185152.101059-1-robdclark@gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Fri, 15 Nov 2019 00:26:18 +0100
+Message-ID: <CACRpkdYwBp59wGPbs4+4rNmYPJMXDF0g8qbmhf3_XDHAmFkjcQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dpu: ignore NULL clocks
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mamta Shukla <mamtashukla555@gmail.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Amit Kucheria (2019-11-11 11:21:27)
-> diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/t=
-sens-common.c
-> index 4359a4247ac3..2989cb952cdb 100644
-> --- a/drivers/thermal/qcom/tsens-common.c
-> +++ b/drivers/thermal/qcom/tsens-common.c
-> @@ -321,6 +357,65 @@ static inline u32 masked_irq(u32 hw_id, u32 mask, en=
-um tsens_ver ver)
->         return 0;
->  }
-> =20
-> +/**
-> + * tsens_critical_irq_thread - Threaded interrupt handler for critical i=
-nterrupts
-> + * @irq: irq number
-> + * @data: tsens controller private data
-> + *
-> + * Check all sensors to find ones that violated their critical threshold=
- limits.
-> + * Clear and then re-enable the interrupt.
-> + *
-> + * The level-triggered interrupt might deassert if the temperature retur=
-ned to
-> + * within the threshold limits by the time the handler got scheduled. We
-> + * consider the irq to have been handled in that case.
-> + *
-> + * Return: IRQ_HANDLED
-> + */
-> +irqreturn_t tsens_critical_irq_thread(int irq, void *data)
-> +{
-> +       struct tsens_priv *priv =3D data;
-> +       struct tsens_irq_data d;
-> +       bool enable =3D true, disable =3D false;
+On Thu, Nov 14, 2019 at 7:54 PM Rob Clark <robdclark@gmail.com> wrote:
 
-Why not just use true and false in the one place these variables are
-used?
+> From: Rob Clark <robdclark@chromium.org>
+>
+> This isn't an error.  Also the clk APIs handle the NULL case, so we can
+> just delete the check.
+>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Tested-by: Matthias Kaehlcke <mka@chromium.org>
 
-> +       unsigned long flags;
-> +       int temp, ret, i;
-> +
-> +       for (i =3D 0; i < priv->num_sensors; i++) {
-> +               struct tsens_sensor *s =3D &priv->sensor[i];
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-Maybe make this const?
-
-> +               u32 hw_id =3D s->hw_id;
-> +
-> +               if (IS_ERR(priv->sensor[i].tzd))
-
-IS_ERR(s->tzd)?
-
-> +                       continue;
-> +               if (!tsens_threshold_violated(priv, hw_id, &d))
-> +                       continue;
-> +               ret =3D get_temp_tsens_valid(s, &temp);
-
-Can this accept a const 's'?
-
-> +               if (ret) {
-> +                       dev_err(priv->dev, "[%u] %s: error reading sensor=
-\n", hw_id, __func__);
-> +                       continue;
-> +               }
-> +
-> +               spin_lock_irqsave(&priv->ul_lock, flags);
-> +
-> +               tsens_read_irq_state(priv, hw_id, s, &d);
-> +
-> +               if (d.crit_viol &&
-> +                   !masked_irq(hw_id, d.crit_irq_mask, tsens_version(pri=
-v))) {
-> +                       tsens_set_interrupt(priv, hw_id, CRITICAL, disabl=
-e);
-> +                       if (d.crit_thresh > temp) {
-> +                               dev_dbg(priv->dev, "[%u] %s: re-arm upper=
-\n",
-> +                                       priv->sensor[i].hw_id, __func__);
-
-hw_id instead of priv->sensor...?
-
-> +                       } else {
-> +                               dev_dbg(priv->dev, "[%u] %s: TZ update tr=
-igger (%d mC)\n",
-> +                                       hw_id, __func__, temp);
-> +                       }
-> +                       tsens_set_interrupt(priv, hw_id, CRITICAL, enable=
-);
-> +               }
-> +
-> +               spin_unlock_irqrestore(&priv->crit_lock, flags);
-> +       }
-> +
-> +       return IRQ_HANDLED;
-> +}
-> +
->  /**
->   * tsens_irq_thread - Threaded interrupt handler for uplow interrupts
->   * @irq: irq number
-> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> index 7d317660211e..784c4976c4f9 100644
-> --- a/drivers/thermal/qcom/tsens.c
-> +++ b/drivers/thermal/qcom/tsens.c
-> @@ -121,6 +121,27 @@ static int tsens_register(struct tsens_priv *priv)
-> =20
->         enable_irq_wake(irq);
-> =20
-> +       if (tsens_version(priv) > VER_1_X) {
-> +               irq =3D platform_get_irq_byname(pdev, "critical");
-> +               if (irq < 0) {
-> +                       ret =3D irq;
-> +                       goto err_put_device;
-> +               }
-> +
-> +               ret =3D devm_request_threaded_irq(&pdev->dev, irq,
-> +                                               NULL, tsens_critical_irq_=
-thread,
-> +                                               IRQF_TRIGGER_HIGH | IRQF_=
-ONESHOT,
-> +                                               dev_name(&pdev->dev), pri=
-v);
-> +               if (ret) {
-> +                       dev_err(&pdev->dev, "%s: failed to get critical i=
-rq\n", __func__);
-> +                       goto err_put_device;
-
-Do we need to disable_irq_wake() for the previous irq here?
-
-> +               }
-> +
-> +               enable_irq_wake(irq);
-> +       }
-> +
-> +       return 0;
-> +
->  err_put_device:
->         put_device(&pdev->dev);
->         return ret;
+Yours,
+Linus Walleij
