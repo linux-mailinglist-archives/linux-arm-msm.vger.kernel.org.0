@@ -2,91 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 943C1FCE36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 19:57:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B015FCFC9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Nov 2019 21:43:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726505AbfKNS5S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Nov 2019 13:57:18 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:35050 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725976AbfKNS5R (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Nov 2019 13:57:17 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 0B29C60F90; Thu, 14 Nov 2019 18:57:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573757837;
-        bh=kGHHDhxFcB0ua6Q2kIcueqlm1c4XucBEKXaw5BAbH1o=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fdjfXYcIIGY0JvsTFSlxLE3edoVnATJC6OW93Xb8sc1V6oJ8Azc/qw9LkU8/GHWKA
-         SKmHT90OnQBIEIh0qzM0rf9UjoyzbXbZVjy7wWWFj3q+5y+Hlh0jJ6iioSNHNfWJwC
-         ZeeeF0ACyVf+OWWALgdHG/HLrQiewyJV5FR8FIkU=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2584B60EE9;
-        Thu, 14 Nov 2019 18:57:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573757836;
-        bh=kGHHDhxFcB0ua6Q2kIcueqlm1c4XucBEKXaw5BAbH1o=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=n85C23IjABwJpR203kWCymv2uXERPyhSyVy6Q2OJ0iKVLKD5bHz3lvsgm5PaXBdGp
-         9VyMrayg7ZML1W8ickZKOjD/db7J4zHN5qZ5wc3aBTc6RtiDcix/dPWqQs1FGKb2YB
-         44gr6NjcRzgUmTjWy7WMXWDsRM/UFVecpXbpSdpI=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2584B60EE9
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-Date:   Thu, 14 Nov 2019 11:57:15 -0700
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, Marc Zyngier <maz@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Doug Anderson <dianders@chromium.org>
-Subject: Re: [PATCH 08/12] drivers: pinctrl: msm: setup GPIO chip in hierarchy
-Message-ID: <20191114185715.GC18786@codeaurora.org>
-References: <1573756521-27373-1-git-send-email-ilina@codeaurora.org>
- <1573756521-27373-9-git-send-email-ilina@codeaurora.org>
- <CACRpkdYZoAnFno630Fxazz_Kvz4fEmKd-wohprdQqeM44f3tAg@mail.gmail.com>
+        id S1726567AbfKNUnu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Nov 2019 15:43:50 -0500
+Received: from sauhun.de ([88.99.104.3]:44848 "EHLO pokefinder.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726533AbfKNUnu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 14 Nov 2019 15:43:50 -0500
+Received: from localhost (x4dbf5278.dyn.telefonica.de [77.191.82.120])
+        by pokefinder.org (Postfix) with ESMTPSA id 190892C03EE;
+        Thu, 14 Nov 2019 21:43:48 +0100 (CET)
+Date:   Thu, 14 Nov 2019 21:43:47 +0100
+From:   Wolfram Sang <wsa@the-dreams.de>
+To:     Peter Ujfalusi <peter.ujfalusi@ti.com>
+Cc:     ludovic.desroches@microchip.com, agross@kernel.org,
+        wsa+renesas@sang-engineering.com, ldewangan@nvidia.com,
+        vkoul@kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, digetx@gmail.com,
+        linux-tegra@vger.kernel.org, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, nicolas.ferre@microchip.com,
+        alexandre.belloni@bootlin.com, bjorn.andersson@linaro.org
+Subject: Re: [PATCH 0/4] i2c: Use dma_request_chan() directly for channel
+ request
+Message-ID: <20191114204347.GB7213@kunai>
+References: <20191113092235.30440-1-peter.ujfalusi@ti.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="oC1+HKm2/end4ao3"
 Content-Disposition: inline
-In-Reply-To: <CACRpkdYZoAnFno630Fxazz_Kvz4fEmKd-wohprdQqeM44f3tAg@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20191113092235.30440-1-peter.ujfalusi@ti.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 14 2019 at 11:47 -0700, Linus Walleij wrote:
->On Thu, Nov 14, 2019 at 7:35 PM Lina Iyer <ilina@codeaurora.org> wrote:
->
->> Some GPIOs are marked as wakeup capable and are routed to another
->> interrupt controller that is an always-domain and can detect interrupts
->> even most of the SoC is powered off. The wakeup interrupt controller
->> wakes up the GIC and replays the interrupt at the GIC.
->>
->> Setup the TLMM irqchip in hierarchy with the wakeup interrupt controller
->> and ensure the wakeup GPIOs are handled correctly.
->>
->> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->
->This looks finished, and elegant.
->Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
->
-Thanks Linus.
 
--- Lina
+--oC1+HKm2/end4ao3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Nov 13, 2019 at 11:22:31AM +0200, Peter Ujfalusi wrote:
+> Hi,
+>=20
+> I'm going through the tree to remove dma_request_slave_channel_reason() a=
+s it
+> is just:
+> #define dma_request_slave_channel_reason(dev, name) \
+> 	dma_request_chan(dev, name)
+>=20
+> Regards,
+> Peter
+
+Applied to for-next, thanks!
+
+
+--oC1+HKm2/end4ao3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl3NvIMACgkQFA3kzBSg
+KbZ4KhAAqSIoupVPNUTy5EUS3aRgDo8MVkiIW1UWgvqLUQ0Zf1I1wOJg39JEPMg9
+mNEvOCYkNOI7W85SarY869oxjmFsKlXjyMk9791x+8cHwNqtMQ/5WW/8oxaPM4FW
+H936eUEkiqDivyXszx0lUbc/Df3a8nz71vSEyTfltMQ4ypIrOeRYHbvqmd/3lxpK
+YIkVGF2RO76ddQOMJEA7GY1o3CpBJDUDYMiziMuLSgxEdcv+LfiHTE4eqAnSbOFW
+nNkC++LLjSPNUl9OqiZTKT5R+umlMXgdRcTAOLxkOb9bYci6ETiTVtjihcLy86e4
+Zt1DQIZbyxc0bWkYUB0JpKgHfUxk7s7jk6zFMJtBdF5bpOJWSDl3yc6LNHBimeBK
+5AO042p6KsJw6ZCMpuQudrZyAn827OQd0qjffPG74fyj4nA8r1Wa3M+jcy/RnNUp
+tp/2l605JpN47LW4qJ8W23MrcTReoeJTHv/xyKQQxAclfiM7yEN7XvHOmegS/I4k
+4ehvvUvmlIV5CCB712Ci7sGJcafe7AD3aTZ/VL/up2GsakvJ0HrpSSkk3wrqW5ju
+lSf73hxh62sD6o6eZXwt8Jp1FtYCrQKkPCBXXi322d7dgzrQ+8O9T/ffkxGxNYoN
+9V420J1qtUXCWoLB+DUHE+IUPOQ5kSbn3R27WALZ4wxrAI2jfNQ=
+=LdkV
+-----END PGP SIGNATURE-----
+
+--oC1+HKm2/end4ao3--
