@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B53CFDA5C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 11:04:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F09A2FDA65
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 11:04:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726920AbfKOKEU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Nov 2019 05:04:20 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:33840 "EHLO
+        id S1727368AbfKOKE3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Nov 2019 05:04:29 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:33944 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727365AbfKOKEU (ORCPT
+        with ESMTP id S1727132AbfKOKE3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Nov 2019 05:04:20 -0500
+        Fri, 15 Nov 2019 05:04:29 -0500
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 3635B61187; Fri, 15 Nov 2019 10:04:19 +0000 (UTC)
+        id 3EE24611D1; Fri, 15 Nov 2019 10:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573812259;
-        bh=VaQ+M/cW4KikmTdqZ7Lp5Io5EF9nqMDanu2nvq5JxhM=;
-        h=From:To:Cc:Subject:Date:From;
-        b=GTWXCCOnq5XtWiQ4ZxV8/n7it/OX0dwNRMOAruCpQMTeg7kBmOwQa+n3ZiVsxJUpJ
-         WT5D9/tbk2qk+zi7j+Sv3pXrsQm52NfNTB+cA9vwgPZ5rGETJnKMstV3I/OGIn+A/B
-         2nnIuw/CPTwpCVrWq8JHQKml9W7CDAe/1QUghQvs=
+        s=default; t=1573812266;
+        bh=RrMUjJPRQz+smOvwPr79jK6ZcVL32D1D6S/AAnEJU84=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=ZPxN65cybtEbJy41d3flWBR4fZvDubmSGn4PqXZ9OxM2iiMw42hBx6UcDCiA7o0Eg
+         rhZJiecKF3D9x4IcJ6TkerwJrxHZBCKANPFgucAVcFhYNfk06/Nn/V1La8W3hywali
+         BjGTTVu1+hKTasoWoZ0q6r9LoMdMtOKxnvyOFxlM=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
@@ -31,16 +31,16 @@ Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outsi
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: tdas@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 54E82610DC;
-        Fri, 15 Nov 2019 10:04:11 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DD6AD611C6;
+        Fri, 15 Nov 2019 10:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573812256;
-        bh=VaQ+M/cW4KikmTdqZ7Lp5Io5EF9nqMDanu2nvq5JxhM=;
-        h=From:To:Cc:Subject:Date:From;
-        b=cWprBifPUUATJDsFJkKauI4x/6I7C8D7Qt4zTLmcTAQafcqAJUT2NHKemjD/WHTFL
-         JIjERMPvZTfXtabobfS4Bg1vQ0460zcF6vQBBh9KH0WFTmjUsKt442VVvHPyrhgbKE
-         6a2DoZ5moYVN//CbLTs9YU3VoLho6zHACVPeNJ1A=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 54E82610DC
+        s=default; t=1573812264;
+        bh=RrMUjJPRQz+smOvwPr79jK6ZcVL32D1D6S/AAnEJU84=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=WNGTVsUq7bQYVOSRKT8tDcsLhEW3zjoNagtz214Xk3H2WZX7bKt8Re9HhaaVFV/j2
+         seLlllTsCJ2G2ucE2ByKCz2unIsnVMoKNWssXxgAYTSYvshmys6hkV3JnlxIa3hopZ
+         GV7UViiRmBZz5g4Kp5UitGVmPuwA1K3ICHC67w90=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DD6AD611C6
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
 From:   Taniya Das <tdas@codeaurora.org>
@@ -52,40 +52,125 @@ Cc:     David Brown <david.brown@linaro.org>,
         linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
         Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v1 0/3] Add display clock controller driver for SC7180
-Date:   Fri, 15 Nov 2019 15:34:02 +0530
-Message-Id: <1573812245-23827-1-git-send-email-tdas@codeaurora.org>
+Subject: [PATCH v1 1/3] dt-bindings: clock: Add YAML schemas for the QCOM DISPCC clock bindings
+Date:   Fri, 15 Nov 2019 15:34:03 +0530
+Message-Id: <1573812245-23827-2-git-send-email-tdas@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1573812245-23827-1-git-send-email-tdas@codeaurora.org>
+References: <1573812245-23827-1-git-send-email-tdas@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the display clock controller found on SC7180
-based devices. This would allow display drivers to probe and
-control their clocks.
+The DISPCC clock provider have a bunch of generic properties that
+are needed in a device tree. Add a YAML schemas for those.
 
-This driver depends on the display port clock ops support
-https://patchwork.kernel.org/patch/11069087/
-
-Taniya Das (3):
-  dt-bindings: clock: Add YAML schemas for the QCOM DISPCC clock
-    bindings
-  dt-bindings: clock: Introduce QCOM Display clock bindings
-  clk: qcom: Add display clock controller driver for SC7180
-
- .../devicetree/bindings/clock/qcom,dispcc.txt      |  19 -
- .../devicetree/bindings/clock/qcom,dispcc.yaml     |  67 ++
- drivers/clk/qcom/Kconfig                           |   9 +
- drivers/clk/qcom/Makefile                          |   1 +
- drivers/clk/qcom/dispcc-sc7180.c                   | 776 +++++++++++++++++++++
- include/dt-bindings/clock/qcom,dispcc-sc7180.h     |  46 ++
- 6 files changed, 899 insertions(+), 19 deletions(-)
+Signed-off-by: Taniya Das <tdas@codeaurora.org>
+---
+ .../devicetree/bindings/clock/qcom,dispcc.txt      | 19 -------
+ .../devicetree/bindings/clock/qcom,dispcc.yaml     | 66 ++++++++++++++++++++++
+ 2 files changed, 66 insertions(+), 19 deletions(-)
  delete mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc.txt
  create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc.yaml
- create mode 100644 drivers/clk/qcom/dispcc-sc7180.c
- create mode 100644 include/dt-bindings/clock/qcom,dispcc-sc7180.h
 
+diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc.txt b/Documentation/devicetree/bindings/clock/qcom,dispcc.txt
+deleted file mode 100644
+index d639e18..0000000
+--- a/Documentation/devicetree/bindings/clock/qcom,dispcc.txt
++++ /dev/null
+@@ -1,19 +0,0 @@
+-Qualcomm Technologies, Inc. Display Clock Controller Binding
+-------------------------------------------------------------
+-
+-Required properties :
+-
+-- compatible : shall contain "qcom,sdm845-dispcc"
+-- reg : shall contain base register location and length.
+-- #clock-cells : from common clock binding, shall contain 1.
+-- #reset-cells : from common reset binding, shall contain 1.
+-- #power-domain-cells : from generic power domain binding, shall contain 1.
+-
+-Example:
+-	dispcc: clock-controller@af00000 {
+-		compatible = "qcom,sdm845-dispcc";
+-		reg = <0xaf00000 0x100000>;
+-		#clock-cells = <1>;
+-		#reset-cells = <1>;
+-		#power-domain-cells = <1>;
+-	};
+diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc.yaml
+new file mode 100644
+index 0000000..1185e49
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,dispcc.yaml
+@@ -0,0 +1,66 @@
++# SPDX-License-Identifier: GPL-2.0-only
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/bindings/clock/qcom,dispcc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Display Clock & Reset Controller Binding
++
++maintainers:
++  - Taniya Das <tdas@codeaurora.org>
++
++description: |
++  Qualcomm display clock control module which supports the clocks, resets and
++  power domains.
++
++properties:
++  compatible:
++    enum:
++      - qcom,sdm845-dispcc
++
++  clocks:
++    minItems: 1
++    maxItems: 2
++    items:
++      - description: Board XO source
++      - description: GPLL0 source from GCC
++
++  clock-names:
++    items:
++      - const: xo
++      - const: gpll0
++
++  '#clock-cells':
++    const: 1
++
++  '#reset-cells':
++    const: 1
++
++  '#power-domain-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - '#clock-cells'
++  - '#reset-cells'
++  - '#power-domain-cells'
++
++examples:
++  # Example of DISPCC with clock node properties for SDM845:
++  - |
++    clock-controller@af00000 {
++      compatible = "qcom,sdm845-dispcc";
++      reg = <0xaf00000 0x10000>;
++      clocks = <&rpmhcc 0>, <&gcc 24>;
++      clock-names = "xo", "gpll0";
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++     };
++...
 --
 Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
 of the Code Aurora Forum, hosted by the  Linux Foundation.
