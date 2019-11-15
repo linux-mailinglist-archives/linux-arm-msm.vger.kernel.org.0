@@ -2,218 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 81305FD410
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 06:24:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EABC6FD5D5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 07:09:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726055AbfKOFYd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Nov 2019 00:24:33 -0500
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:26953 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725907AbfKOFYd (ORCPT
+        id S1727151AbfKOGJz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Nov 2019 01:09:55 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:37756 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725848AbfKOGJy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Nov 2019 00:24:33 -0500
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 15 Nov 2019 10:54:30 +0530
-IronPort-SDR: 3dYITZCa+XxfTL0SuJnuIO/JYOhC9b78QJZZLQ8KsbYbCckx0DMuhiQ/W/pusFxKzYcObOvdS1
- YUomPlqO8UHcyAlPZZSyJvw9jvF7pl22/jR5puj6flHAzy4vnIOsfdStHDBpypccTiN+ArBZMh
- WHP+acCCBdZ7Kp62l/QnVk+DTb+fhPFa8muHj4J6HTyNW09WOHfkAJ7Z+yJxH7kY/gSbpP+TVC
- cArfDxLl+gvuX7uNgfMttWU2nW+Eexqm42tpwz3Gs8ADyWQjBzrXLOU4fuqaLxdBolydyr0P2a
- sRcuX0f5cx3SjCgX4HaidM7K
-Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 15 Nov 2019 10:54:18 +0530
-Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
-        id A2AE71483; Fri, 15 Nov 2019 10:54:17 +0530 (IST)
-From:   Sandeep Maheswaram <sanm@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: [PATCH v3 1/1] arm64: dts: qcom: sc7180: Add USB related nodes
-Date:   Fri, 15 Nov 2019 10:53:41 +0530
-Message-Id: <1573795421-13989-2-git-send-email-sanm@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1573795421-13989-1-git-send-email-sanm@codeaurora.org>
-References: <1573795421-13989-1-git-send-email-sanm@codeaurora.org>
+        Fri, 15 Nov 2019 01:09:54 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 4027E611A7; Fri, 15 Nov 2019 06:09:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573798193;
+        bh=vA5QMfOG8/tSJ0LbkGi4Gjgkhix8FM2eGb2eZp8y9oo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=mAsU6c/wQz5Yca+WHSYXRRsEXxDvVfYFFCAl0xFPG4SFMv4nSAQt47oeOCYRY1Ox6
+         ggS0GCBBzzZN9iUtIp0Zxj/4cnxMmXMx8JM+VuqNHrK8SHmWp/OQ9oqak2wUb1wiEJ
+         Ok/VEwcYjk34pEyWpzKcLPDeeQVjfyidTgX/KFLM=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: cang@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 596296117A;
+        Fri, 15 Nov 2019 06:09:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573798188;
+        bh=vA5QMfOG8/tSJ0LbkGi4Gjgkhix8FM2eGb2eZp8y9oo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Jpzu97I+QLGqZfithVQdUJmo/SM3uZfhp8h4Ilu6zJ1ppjMkJiKzeABLppETA4fbA
+         ydAU4MFy/C1T53ZUh/f4BxWWPqlRSNVRlFP7C6RUtNflqKfl2TElt+NnEdRdYu6cHK
+         uADSiKdfRjTLJyfLxNc4TR/VNKJqUERJu1acFkNc=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 596296117A
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=cang@codeaurora.org
+From:   Can Guo <cang@codeaurora.org>
+To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        rnayak@codeaurora.org, linux-scsi@vger.kernel.org,
+        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
+        cang@codeaurora.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v5 2/7] scsi: ufs-qcom: Add reset control support for host controller
+Date:   Thu, 14 Nov 2019 22:09:25 -0800
+Message-Id: <1573798172-20534-3-git-send-email-cang@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1573798172-20534-1-git-send-email-cang@codeaurora.org>
+References: <1573798172-20534-1-git-send-email-cang@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add nodes for DWC3 USB controller, QMP and QUSB PHYs.
+Add reset control for host controller so that host controller can be reset
+as required in its power up sequence.
 
-Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Can Guo <cang@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180-idp.dts |  25 ++++++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi    | 105 ++++++++++++++++++++++++++++++++
- 2 files changed, 130 insertions(+)
+ drivers/scsi/ufs/ufs-qcom.c | 53 +++++++++++++++++++++++++++++++++++++++++++++
+ drivers/scsi/ufs/ufs-qcom.h |  3 +++
+ 2 files changed, 56 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 189254f..282d33e 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -400,3 +400,28 @@
- 			bias-pull-up;
- 		};
- };
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "host";
-+};
-+
-+&usb_1_hsphy {
-+	status = "okay";
-+	vdd-supply = <&vreg_l4a_0p8>;
-+	vdda-pll-supply = <&vreg_l11a_1p8>;
-+	vdda-phy-dpdm-supply = <&vreg_l17a_3p0>;
-+	qcom,imp-res-offset-value = <8>;
-+	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
-+	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
-+	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
-+};
-+
-+&usb_1_qmpphy {
-+	status = "okay";
-+	vdda-phy-supply = <&vreg_l3c_1p2>;
-+	vdda-pll-supply = <&vreg_l4a_0p8>;
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 666e9b9..2c7dbdc 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -8,6 +8,7 @@
- #include <dt-bindings/clock/qcom,gcc-sc7180.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-+#include <dt-bindings/phy/phy-qcom-qusb2.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index a5b7148..c69c29a1c 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -246,6 +246,44 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
+ 	mb();
+ }
  
- / {
-@@ -182,6 +183,18 @@
- 			#power-domain-cells = <1>;
- 		};
++/**
++ * ufs_qcom_host_reset - reset host controller and PHY
++ */
++static int ufs_qcom_host_reset(struct ufs_hba *hba)
++{
++	int ret = 0;
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++
++	if (!host->core_reset) {
++		dev_warn(hba->dev, "%s: reset control not set\n", __func__);
++		goto out;
++	}
++
++	ret = reset_control_assert(host->core_reset);
++	if (ret) {
++		dev_err(hba->dev, "%s: core_reset assert failed, err = %d\n",
++				 __func__, ret);
++		goto out;
++	}
++
++	/*
++	 * The hardware requirement for delay between assert/deassert
++	 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
++	 * ~125us (4/32768). To be on the safe side add 200us delay.
++	 */
++	usleep_range(200, 210);
++
++	ret = reset_control_deassert(host->core_reset);
++	if (ret)
++		dev_err(hba->dev, "%s: core_reset deassert failed, err = %d\n",
++				 __func__, ret);
++
++	usleep_range(1000, 1100);
++
++out:
++	return ret;
++}
++
+ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+@@ -254,6 +292,12 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+ 	bool is_rate_B = (UFS_QCOM_LIMIT_HS_RATE == PA_HS_MODE_B)
+ 							? true : false;
  
-+		qfprom@784000 {
-+			compatible = "qcom,qfprom";
-+			reg = <0 0x00784000 0 0x8ff>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
++	/* Reset UFS Host Controller and PHY */
++	ret = ufs_qcom_host_reset(hba);
++	if (ret)
++		dev_warn(hba->dev, "%s: host reset returned %d\n",
++				  __func__, ret);
 +
-+			qusb2p_hstx_trim: hstx-trim-primary@25b {
-+				reg = <0x25b 0x1>;
-+				bits = <1 3>;
-+			};
-+		};
-+
- 		qupv3_id_0: geniqup@8c0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0 0x008c0000 0 0x6000>;
-@@ -911,6 +924,98 @@
- 			status = "disabled";
- 		};
+ 	if (is_rate_B)
+ 		phy_set_mode(phy, PHY_MODE_UFS_HS_B);
  
-+		usb_1_hsphy: phy@88e3000 {
-+			compatible = "qcom,sc7180-qusb2-phy";
-+			reg = <0 0x088e3000 0 0x400>;
-+			status = "disabled";
-+			#phy-cells = <0>;
-+			clocks = <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "cfg_ahb", "ref";
-+			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+@@ -1101,6 +1145,15 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+ 	host->hba = hba;
+ 	ufshcd_set_variant(hba, host);
+ 
++	/* Setup the reset control of HCI */
++	host->core_reset = devm_reset_control_get(hba->dev, "rst");
++	if (IS_ERR(host->core_reset)) {
++		err = PTR_ERR(host->core_reset);
++		dev_warn(dev, "Failed to get reset control %d\n", err);
++		host->core_reset = NULL;
++		err = 0;
++	}
 +
-+			nvmem-cells = <&qusb2p_hstx_trim>;
-+		};
-+
-+		usb_1_qmpphy: phy@88e9000 {
-+			compatible = "qcom,sc7180-qmp-usb3-phy";
-+			reg = <0 0x088e9000 0 0x18c>,
-+			      <0 0x088e8000 0 0x38>;
-+			reg-names = "reg-base", "dp_com";
-+			status = "disabled";
-+			#clock-cells = <1>;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+
-+			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
-+				 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-+				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
-+				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
-+			clock-names = "aux", "cfg_ahb", "ref", "com_aux";
-+
-+			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
-+				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
-+			reset-names = "phy", "common";
-+
-+			usb_1_ssphy: lanes@88e9200 {
-+				reg = <0 0x088e9200 0 0x128>,
-+				      <0 0x088e9400 0 0x200>,
-+				      <0 0x088e9c00 0 0x218>,
-+				      <0 0x088e9600 0 0x128>,
-+				      <0 0x088e9800 0 0x200>,
-+				      <0 0x088e9a00 0 0x18>;
-+				#phy-cells = <0>;
-+				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-+				clock-names = "pipe0";
-+				clock-output-names = "usb3_phy_pipe_clk_src";
-+			};
-+		};
-+
-+		usb_1: usb@a6f8800 {
-+			compatible = "qcom,sc7180-dwc3", "qcom,dwc3";
-+			reg = <0 0x0a6f8800 0 0x400>;
-+			status = "disabled";
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+			dma-ranges;
-+
-+			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
-+				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
-+				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
-+				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
-+				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>;
-+			clock-names = "cfg_noc", "core", "iface", "mock_utmi",
-+				      "sleep";
-+
-+			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
-+					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
-+			assigned-clock-rates = <19200000>, <150000000>;
-+
-+			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hs_phy_irq", "ss_phy_irq",
-+					  "dm_hs_phy_irq", "dp_hs_phy_irq";
-+
-+			power-domains = <&gcc USB30_PRIM_GDSC>;
-+
-+			resets = <&gcc GCC_USB30_PRIM_BCR>;
-+
-+			usb_1_dwc3: dwc3@a600000 {
-+				compatible = "snps,dwc3";
-+				reg = <0 0x0a600000 0 0xe000>;
-+				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-+				iommus = <&apps_smmu 0x540 0>;
-+				snps,dis_u2_susphy_quirk;
-+				snps,dis_enblslpm_quirk;
-+				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
-+				phy-names = "usb2-phy", "usb3-phy";
-+			};
-+		};
-+
- 		spmi_bus: spmi@c440000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0 0x0c440000 0 0x1100>,
+ 	/* Fire up the reset controller. Failure here is non-fatal. */
+ 	host->rcdev.of_node = dev->of_node;
+ 	host->rcdev.ops = &ufs_qcom_reset_ops;
+diff --git a/drivers/scsi/ufs/ufs-qcom.h b/drivers/scsi/ufs/ufs-qcom.h
+index d401f17..2d95e7c 100644
+--- a/drivers/scsi/ufs/ufs-qcom.h
++++ b/drivers/scsi/ufs/ufs-qcom.h
+@@ -6,6 +6,7 @@
+ #define UFS_QCOM_H_
+ 
+ #include <linux/reset-controller.h>
++#include <linux/reset.h>
+ 
+ #define MAX_UFS_QCOM_HOSTS	1
+ #define MAX_U32                 (~(u32)0)
+@@ -233,6 +234,8 @@ struct ufs_qcom_host {
+ 	u32 dbg_print_en;
+ 	struct ufs_qcom_testbus testbus;
+ 
++	/* Reset control of HCI */
++	struct reset_control *core_reset;
+ 	struct reset_controller_dev rcdev;
+ 
+ 	struct gpio_desc *device_reset;
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
