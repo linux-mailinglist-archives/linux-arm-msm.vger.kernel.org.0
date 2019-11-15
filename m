@@ -2,85 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 04150FE5CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 20:41:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B12CAFE5E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 20:45:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726466AbfKOTll (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Nov 2019 14:41:41 -0500
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:36498 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726505AbfKOTlk (ORCPT
+        id S1726505AbfKOTp1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Nov 2019 14:45:27 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:35490 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726550AbfKOTp1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Nov 2019 14:41:40 -0500
-Received: by mail-pj1-f68.google.com with SMTP id cq11so130286pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2019 11:41:40 -0800 (PST)
+        Fri, 15 Nov 2019 14:45:27 -0500
+Received: by mail-pl1-f196.google.com with SMTP id s10so5368068plp.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2019 11:45:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=message-id:mime-version:content-transfer-encoding:in-reply-to
          :references:cc:to:subject:from:user-agent:date;
-        bh=8k/Rpm0GwxthXH5gCeA9lJZ+fXztebJcMOm1koH9MS0=;
-        b=Ynnju9j25BnTwhUIaGaCtuSU/cb/NDAogzyrwSJRdGJy7AXareoVyTX4zshl6mtHR1
-         qZvrhWJgmPV+rZUwqFMql0uI2H4t3CyTDjlZdA9dyt/j7Mg3P1tkbVmDy7LixSvqcoNM
-         TLcifOzlMCJsj2Gmi+398a12LmilMx3cDDVR0=
+        bh=4q+yuQTczIPpXFYrjST9iFAFqDLKVL3UwzUfPD0Ti0E=;
+        b=WRVlk7Lr3fLjV7Nkh2tcg1k4iFKQwFFUyIN0aGmGyAL1KkdukzksmdojGGoF2AJUkA
+         uCrx+HHEgAvmfb2tN5n20NzJV5BF+XrWPprdOHgtHotPhFXn8hOR9HVcJDF+lIbLuWBb
+         igcwvzK7fT7fJw7OWfr/qP8daSLYqjE02ZjBg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:mime-version
          :content-transfer-encoding:in-reply-to:references:cc:to:subject:from
          :user-agent:date;
-        bh=8k/Rpm0GwxthXH5gCeA9lJZ+fXztebJcMOm1koH9MS0=;
-        b=ORX/Zkc12riN90tLVDqjFWzNKyy2rRP+CE1u6Aos5TW1WrHrl9yEJDdcME/GRNyvZt
-         B7FV1gDS4kpwLVs3JYkV4K4IAAWyE2a7GSi2Dj8keltXqLG9JRrVJz3Rcrx7XuaIjUc9
-         W4R1Zq8cVsB2hHLQNowVtaCZ7ZbnDSuNcGk1WNJoQsd4zdol4SZEPA8ASbcuRyiYW5iu
-         uKuII3vb07MuJbOE8o9Oa5Cb9J9yYvL74Ybirz5AKfxDsendv6LSblUX/RKl6/gjQ/kw
-         lz+Km7SLtK6oiL7EkrXBCZnUtzaZfK16h0j6D9vfjwqRtS2PhHEKRllYTfDnIS7ss9sw
-         rOVA==
-X-Gm-Message-State: APjAAAUoQeodTUJUtCEpJIUSv/WV4CfTcdrU1r7VlbwoZr3hrroHH1sr
-        V9oSahO+u/XzCLLQZu/lKfxLjAdNIFI=
-X-Google-Smtp-Source: APXvYqzVa+BgSbzX25GdWSjE4pYYjgH8+F18GtAt3SxUT/YtilbXuea0jzEPNAepKdB0bAAGaN3+bw==
-X-Received: by 2002:a17:902:a70b:: with SMTP id w11mr15416536plq.27.1573846900036;
-        Fri, 15 Nov 2019 11:41:40 -0800 (PST)
+        bh=4q+yuQTczIPpXFYrjST9iFAFqDLKVL3UwzUfPD0Ti0E=;
+        b=t8Z9a8arV3SC4rLx0lGCXRA85LCNzqazBkN16Y3yWWBCS78AMwQ3pslUD1QCB3GGG6
+         PkRqqfdKygWjImTLKuVs3TdDvzSQRpoyUOW0GChAImL6PrssoLpG0NHss6doGN+FzOEq
+         7TqBOw4c8zAkLQMQPw8LOKVdT4iTnmmY+UJUmjZonCePsUkM4Z2n5X8xyzDjXfr6z9uE
+         gSmtMjId1w4IDuGHVIlKB/4od6maR3ydmYKjPwyOa/1og4hvRRkvMkw+94eR5m24bxaN
+         JxCMsARfvfo545zw/3g4E1nBnIvXJcoj5zvCvSxj8mdQYOdbJYCqlnZ7Z+4kmuZTOKoD
+         QdRA==
+X-Gm-Message-State: APjAAAUUTavlL9ZLhCcStttf8Sql1n1OOC77fhN9cT+2z7hUbSOsRH+e
+        50inFdvTw8f0cFUssB88YntU/g5ltTY=
+X-Google-Smtp-Source: APXvYqyB6QiOTnKo9LokNPBto3d0oQtY/rgpXWaemtQ96PKVRvPLaS089w/OqehgSpVlpKYTeoJZsQ==
+X-Received: by 2002:a17:902:ac90:: with SMTP id h16mr17332925plr.147.1573847126279;
+        Fri, 15 Nov 2019 11:45:26 -0800 (PST)
 Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id u7sm9468495pjx.19.2019.11.15.11.41.39
+        by smtp.gmail.com with ESMTPSA id r22sm13291949pfg.54.2019.11.15.11.45.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2019 11:41:39 -0800 (PST)
-Message-ID: <5dceff73.1c69fb81.e286f.aa4e@mx.google.com>
+        Fri, 15 Nov 2019 11:45:25 -0800 (PST)
+Message-ID: <5dcf0055.1c69fb81.258d1.5380@mx.google.com>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <55a02d0f-2dec-2ba7-82e6-f21a8c86792a@codeaurora.org>
-References: <1573642136-30488-1-git-send-email-akashast@codeaurora.org> <5dcd919d.1c69fb81.1c304.2dc5@mx.google.com> <55a02d0f-2dec-2ba7-82e6-f21a8c86792a@codeaurora.org>
+In-Reply-To: <04363987-0d4e-645f-87d0-79888913b8c3@codeaurora.org>
+References: <1573642161-14189-1-git-send-email-akashast@codeaurora.org> <5dcd90a4.1c69fb81.757a7.37e8@mx.google.com> <04363987-0d4e-645f-87d0-79888913b8c3@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
         mgautam@codeaurora.org, msavaliy@codeaurora.org
 To:     Akash Asthana <akashast@codeaurora.org>, gregkh@linuxfoundation.org
-Subject: Re: [PATCH v5 2/3] tty: serial: qcom_geni_serial: Wakeup over UART RX
+Subject: Re: [PATCH v5 3/3] tty: serial: qcom_geni_serial: Remove sysfs file
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.8.1
-Date:   Fri, 15 Nov 2019 11:41:38 -0800
+Date:   Fri, 15 Nov 2019 11:45:24 -0800
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Akash Asthana (2019-11-15 02:00:44)
+Quoting Akash Asthana (2019-11-15 01:57:48)
 >=20
-> On 11/14/2019 11:10 PM, Stephen Boyd wrote:
-> > Quoting Akash Asthana (2019-11-13 02:48:56)
-> >> Add system wakeup capability over UART RX line for wakeup capable UART.
-> >> When system is suspended, RX line act as an interrupt to wakeup system
-> >> for any communication requests from peer.
-> > How does the RX line get remuxed as a GPIO interrupt here? Is that
-> > through some pinctrl magic in DT or just via enabling/disabling the
-> > interrupt?
-> Yes, For wakeup capable UART node, we have registered UART RX line with=20
-> TLMM interrupt controller in DT file . Example: if GPIO48 is UART RX line
+> On 11/14/2019 11:06 PM, Stephen Boyd wrote:
+> > Please update the subject. This patch does more than remove the sysfs
+> > file. "Move loopback support to TIOCM_LOOP"?
+> Ok, I will update this in next version.
+> > Quoting Akash Asthana (2019-11-13 02:49:21)
+> >> Remove code from the driver that create and maintain loopback sysfs no=
+de.
+> >> Instead use the ioctl TIOCMSET with TIOCM_LOOP argument to set HW to
+> >> loopback mode.
+> >>
+> >> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> >> ---
+> >> Changes in V5:
+> >>   - As per Greg's and Stephen's comment on v4 patch, removed loopback =
+sysfs
+> >>     file related code.
+> >>
+> >>   drivers/tty/serial/qcom_geni_serial.c | 30 ++++---------------------=
+-----
+> >>   1 file changed, 4 insertions(+), 26 deletions(-)
+> >>
+> >> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/seria=
+l/qcom_geni_serial.c
+> >> index 56dad67..52f5ea2 100644
+> >> --- a/drivers/tty/serial/qcom_geni_serial.c
+> >> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> >> @@ -238,10 +214,14 @@ static void qcom_geni_serial_set_mctrl(struct ua=
+rt_port *uport,
+> >>                                                          unsigned int =
+mctrl)
+> >>   {
+> >>          u32 uart_manual_rfr =3D 0;
+> >> +       struct qcom_geni_serial_port *port =3D to_dev_port(uport, upor=
+t);
+> >>  =20
+> >>          if (uart_console(uport))
+> >>                  return;
+> >>  =20
+> >> +       if (mctrl & TIOCM_LOOP)
+> >> +               port->loopback =3D MAX_LOOPBACK_CFG;
+> > How does this work? The loopback is supposed to be the max all the time
+> > and not match some qup number or something?
+> port->loopback is unrelated to QUP number. However we have different=20
+> modes to run loopback test, 1(rx-tx sorted), 2(cts-rts sorted),
 >=20
-> interrupts-extended =3D=C2=A0 <&intc GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>,=C2=
-=A0 <&tlmm=20
-> 48 IRQ_TYPE_EDGE_FALLING>;
+> 3 or Max(rx-tx sorted and cts-rts sorted). In our internal testing we=20
+> only use mode 3 hence we are initializing port->loopback variable
+>=20
+> to 3 and eventually it will be written to HW register from set_termios=20
+> call.
 
-Right. So is gpio48 muxed as 'uart' function forever and the interrupt
-logic in tlmm is connected to that pad regardless of the function
-selected? I thought that gpios through TLMM had to be muxed as function
-0, i.e. gpio function, so that interrupts worked. But maybe that's wrong
-and it can work without that.
+Ok. Thanks for clarifying. Can you rename this macro to
+RX_TX_CTS_RTS_SORTED? I imagine seeing something like:
+
+	/* SE_UART_LOOPBACK_CFG */
+	#define RX_TX_SORTED		BIT(0)
+	#define CTS_RTS_SORTED		BIT(1)
+	#define RX_TX_CTS_RTS_SORTED	RX_TX_SORTED | CTS_RTS_SORTED
+
+or whatever the bit field names really are.
 
