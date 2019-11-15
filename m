@@ -2,125 +2,311 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B12CAFE5E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 20:45:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B4DDFE68C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 21:46:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726505AbfKOTp1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Nov 2019 14:45:27 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:35490 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726550AbfKOTp1 (ORCPT
+        id S1726549AbfKOUqA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Nov 2019 15:46:00 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:44883 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726550AbfKOUqA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Nov 2019 14:45:27 -0500
-Received: by mail-pl1-f196.google.com with SMTP id s10so5368068plp.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2019 11:45:26 -0800 (PST)
+        Fri, 15 Nov 2019 15:46:00 -0500
+Received: by mail-pl1-f195.google.com with SMTP id az9so5449954plb.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2019 12:45:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=message-id:mime-version:content-transfer-encoding:in-reply-to
          :references:cc:to:subject:from:user-agent:date;
-        bh=4q+yuQTczIPpXFYrjST9iFAFqDLKVL3UwzUfPD0Ti0E=;
-        b=WRVlk7Lr3fLjV7Nkh2tcg1k4iFKQwFFUyIN0aGmGyAL1KkdukzksmdojGGoF2AJUkA
-         uCrx+HHEgAvmfb2tN5n20NzJV5BF+XrWPprdOHgtHotPhFXn8hOR9HVcJDF+lIbLuWBb
-         igcwvzK7fT7fJw7OWfr/qP8daSLYqjE02ZjBg=
+        bh=YmzpnFwOPgE0XZ0FUKK1QiXjMq4DEEA521y7+3+D1hE=;
+        b=lV77Si8nf2rXnKOCZ7xW/oNAjBaiKIpNXZbMMwU1n8akZpCF32VndeJKQLLKESGbc0
+         FVEBoR9AaNNczGbyvQTyHhD3uwBwUVRdpgomdJGwEQKqajEQRWBmY6gylgqN7hF+nU3U
+         XONheAr8E/Hf5vsoKksCLUWZMQs1f8aUnnwkU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:mime-version
          :content-transfer-encoding:in-reply-to:references:cc:to:subject:from
          :user-agent:date;
-        bh=4q+yuQTczIPpXFYrjST9iFAFqDLKVL3UwzUfPD0Ti0E=;
-        b=t8Z9a8arV3SC4rLx0lGCXRA85LCNzqazBkN16Y3yWWBCS78AMwQ3pslUD1QCB3GGG6
-         PkRqqfdKygWjImTLKuVs3TdDvzSQRpoyUOW0GChAImL6PrssoLpG0NHss6doGN+FzOEq
-         7TqBOw4c8zAkLQMQPw8LOKVdT4iTnmmY+UJUmjZonCePsUkM4Z2n5X8xyzDjXfr6z9uE
-         gSmtMjId1w4IDuGHVIlKB/4od6maR3ydmYKjPwyOa/1og4hvRRkvMkw+94eR5m24bxaN
-         JxCMsARfvfo545zw/3g4E1nBnIvXJcoj5zvCvSxj8mdQYOdbJYCqlnZ7Z+4kmuZTOKoD
-         QdRA==
-X-Gm-Message-State: APjAAAUUTavlL9ZLhCcStttf8Sql1n1OOC77fhN9cT+2z7hUbSOsRH+e
-        50inFdvTw8f0cFUssB88YntU/g5ltTY=
-X-Google-Smtp-Source: APXvYqyB6QiOTnKo9LokNPBto3d0oQtY/rgpXWaemtQ96PKVRvPLaS089w/OqehgSpVlpKYTeoJZsQ==
-X-Received: by 2002:a17:902:ac90:: with SMTP id h16mr17332925plr.147.1573847126279;
-        Fri, 15 Nov 2019 11:45:26 -0800 (PST)
+        bh=YmzpnFwOPgE0XZ0FUKK1QiXjMq4DEEA521y7+3+D1hE=;
+        b=KfRe6yp32eiTfJ7Y3s2F7YTEiOejQNJ1p6xyRlZiROp6MnBpRwnJodhR30ZZqOQDQG
+         tV5AaY+jDoVTKp3hCwwQCqTHxWsa/EeWcTafvdZARqNbSObAhPynGW5Et3P6KjJR2EbX
+         cYQZrQGUp9Ii3Xcmngj9tI2odsfKT87G1TbweODcYHSLLKajbKxjciQyKQ2vUc+emyCO
+         4oYb9IVCJtG1JxfjXxLU2woiPzaPtrIap+23Xy6lR2xws5VBujUpm52YuVlpf4MpUxdd
+         SUkpZJa+T6qiQCUYuHxgcVWtyfDAgSMQowz+Raq/nuyssax8gjYBRS47yp91VfGZPDUz
+         3bng==
+X-Gm-Message-State: APjAAAUF7gSRbrFyg3Nljnhca5w3B10W9XPh2MVrVpux9aE8viV/vUCY
+        XjxE+25ixbdK2G+gSdA/kBOiM6Mu35A=
+X-Google-Smtp-Source: APXvYqxWgTk3dfmmxcbJQlCuJDpAzbvz/Iv7KkuGI4ThtNhdpvGb1tothE1ZO7Y75zNdr9ezEoDZ1g==
+X-Received: by 2002:a17:902:40a:: with SMTP id 10mr16904603ple.306.1573850758695;
+        Fri, 15 Nov 2019 12:45:58 -0800 (PST)
 Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id r22sm13291949pfg.54.2019.11.15.11.45.25
+        by smtp.gmail.com with ESMTPSA id f19sm13178941pfk.109.2019.11.15.12.45.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2019 11:45:25 -0800 (PST)
-Message-ID: <5dcf0055.1c69fb81.258d1.5380@mx.google.com>
+        Fri, 15 Nov 2019 12:45:58 -0800 (PST)
+Message-ID: <5dcf0e86.1c69fb81.a126f.5beb@mx.google.com>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <04363987-0d4e-645f-87d0-79888913b8c3@codeaurora.org>
-References: <1573642161-14189-1-git-send-email-akashast@codeaurora.org> <5dcd90a4.1c69fb81.757a7.37e8@mx.google.com> <04363987-0d4e-645f-87d0-79888913b8c3@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        mgautam@codeaurora.org, msavaliy@codeaurora.org
-To:     Akash Asthana <akashast@codeaurora.org>, gregkh@linuxfoundation.org
-Subject: Re: [PATCH v5 3/3] tty: serial: qcom_geni_serial: Remove sysfs file
+In-Reply-To: <1573039165-30435-1-git-send-email-mkshah@codeaurora.org>
+References: <1573039165-30435-1-git-send-email-mkshah@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+To:     Maulik Shah <mkshah@codeaurora.org>, agross@kernel.org,
+        david.brown@linaro.org, rafael@kernel.org
+Subject: Re: [v3] soc: qcom: Introduce subsystem sleep stats driver
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.8.1
-Date:   Fri, 15 Nov 2019 11:45:24 -0800
+Date:   Fri, 15 Nov 2019 12:45:56 -0800
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Akash Asthana (2019-11-15 01:57:48)
->=20
-> On 11/14/2019 11:06 PM, Stephen Boyd wrote:
-> > Please update the subject. This patch does more than remove the sysfs
-> > file. "Move loopback support to TIOCM_LOOP"?
-> Ok, I will update this in next version.
-> > Quoting Akash Asthana (2019-11-13 02:49:21)
-> >> Remove code from the driver that create and maintain loopback sysfs no=
-de.
-> >> Instead use the ioctl TIOCMSET with TIOCM_LOOP argument to set HW to
-> >> loopback mode.
-> >>
-> >> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> >> ---
-> >> Changes in V5:
-> >>   - As per Greg's and Stephen's comment on v4 patch, removed loopback =
-sysfs
-> >>     file related code.
-> >>
-> >>   drivers/tty/serial/qcom_geni_serial.c | 30 ++++---------------------=
------
-> >>   1 file changed, 4 insertions(+), 26 deletions(-)
-> >>
-> >> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/seria=
-l/qcom_geni_serial.c
-> >> index 56dad67..52f5ea2 100644
-> >> --- a/drivers/tty/serial/qcom_geni_serial.c
-> >> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> >> @@ -238,10 +214,14 @@ static void qcom_geni_serial_set_mctrl(struct ua=
-rt_port *uport,
-> >>                                                          unsigned int =
-mctrl)
-> >>   {
-> >>          u32 uart_manual_rfr =3D 0;
-> >> +       struct qcom_geni_serial_port *port =3D to_dev_port(uport, upor=
-t);
-> >>  =20
-> >>          if (uart_console(uport))
-> >>                  return;
-> >>  =20
-> >> +       if (mctrl & TIOCM_LOOP)
-> >> +               port->loopback =3D MAX_LOOPBACK_CFG;
-> > How does this work? The loopback is supposed to be the max all the time
-> > and not match some qup number or something?
-> port->loopback is unrelated to QUP number. However we have different=20
-> modes to run loopback test, 1(rx-tx sorted), 2(cts-rts sorted),
->=20
-> 3 or Max(rx-tx sorted and cts-rts sorted). In our internal testing we=20
-> only use mode 3 hence we are initializing port->loopback variable
->=20
-> to 3 and eventually it will be written to HW register from set_termios=20
-> call.
+Quoting Maulik Shah (2019-11-06 03:19:25)
+> diff --git a/Documentation/ABI/testing/sysfs-power b/Documentation/ABI/te=
+sting/sysfs-power
+> index 6f87b9d..e095eae 100644
+> --- a/Documentation/ABI/testing/sysfs-power
+> +++ b/Documentation/ABI/testing/sysfs-power
+> @@ -288,6 +288,16 @@ Description:
+>                 writing a "0" (default) to it disables them.  Reads from
+>                 this file return the current value.
+> =20
+> +What:          /sys/power/subsystem_sleep/stats
+> +Date:          December 2017
+> +Contact:       Maulik Shah <mkshah@codeaurora.org>
+> +Description:
+> +               The /sys/power/subsystem_sleep/stats file prints the subs=
+ystem
+> +               sleep information on Qualcomm Technologies, Inc. (QTI) So=
+Cs.
+> +
+> +               Reading from this file will display subsystem level low p=
+ower
+> +               mode statistics.
 
-Ok. Thanks for clarifying. Can you rename this macro to
-RX_TX_CTS_RTS_SORTED? I imagine seeing something like:
+I still don't understand what this has to do with the kernel's power
+management support.
 
-	/* SE_UART_LOOPBACK_CFG */
-	#define RX_TX_SORTED		BIT(0)
-	#define CTS_RTS_SORTED		BIT(1)
-	#define RX_TX_CTS_RTS_SORTED	RX_TX_SORTED | CTS_RTS_SORTED
+> +
+>  What:          /sys/power/resume_offset
+>  Date:          April 2018
+>  Contact:       Mario Limonciello <mario.limonciello@dell.com>
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index 79d8265..bed0704 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -185,6 +185,15 @@ config QCOM_SOCINFO
+>          Say yes here to support the Qualcomm socinfo driver, providing
+>          information about the SoC to user space.
+> =20
+> +config QCOM_SS_SLEEP_STATS
+> +       tristate "Qualcomm Technologies Inc. Subsystem Sleep Stats driver"
+> +       depends on QCOM_SMEM
+> +       help
+> +         Say y here to enable support for the Qualcomm Technologies Inc =
+(QTI)
 
-or whatever the bit field names really are.
+This 'Inc' is missing the full stop like in the summary above. Please be
+consistent.
 
+> +         SS sleep stats driver to read the sleep stats of various subsys=
+tems
+
+what is 'SS'?
+
+> +         from SMEM. The stats are exported to sysfs. The driver also mai=
+ntains
+> +         application processor sleep stats.
+> +
+>  config QCOM_WCNSS_CTRL
+>         tristate "Qualcomm WCNSS control driver"
+>         depends on ARCH_QCOM || COMPILE_TEST
+> diff --git a/drivers/soc/qcom/subsystem_sleep_stats.c b/drivers/soc/qcom/=
+subsystem_sleep_stats.c
+> new file mode 100644
+> index 00000000..724b213
+> --- /dev/null
+> +++ b/drivers/soc/qcom/subsystem_sleep_stats.c
+> @@ -0,0 +1,143 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +
+> +/*
+> + * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#define pr_fmt(fmt) "%s: " fmt, KBUILD_MODNAME
+> +
+> +#include <linux/errno.h>
+> +#include <linux/module.h>
+> +#include <linux/slab.h>
+> +#include <linux/types.h>
+
+I think we need to include linux/kernel.h for scnprintf() too.
+
+> +
+> +#include <linux/soc/qcom/smem.h>
+> +
+> +enum subsystem_item_id {
+> +       MODEM =3D 605,
+> +       ADSP,
+> +       CDSP,
+> +       SLPI,
+> +       GPU,
+> +       DISPLAY,
+> +};
+> +
+> +enum subsystem_pid {
+> +       PID_APSS =3D 0,
+> +       PID_MODEM =3D 1,
+> +       PID_ADSP =3D 2,
+> +       PID_SLPI =3D 3,
+> +       PID_CDSP =3D 5,
+> +       PID_GPU =3D PID_APSS,
+> +       PID_DISPLAY =3D PID_APSS,
+> +};
+
+Can these just be defines? There seems to be no value in enum because
+we're not testing these in switch statements and they're randomly
+assigned values.
+
+> +
+> +struct subsystem_data {
+> +       char *name;
+> +       enum subsystem_item_id item_id;
+> +       enum subsystem_pid pid;
+> +};
+> +
+> +static const struct subsystem_data subsystems[] =3D {
+> +       { "MODEM", MODEM, PID_MODEM },
+> +       { "ADSP", ADSP, PID_ADSP },
+> +       { "CDSP", CDSP, PID_CDSP },
+> +       { "SLPI", SLPI, PID_SLPI },
+> +       { "GPU", GPU, PID_GPU },
+> +       { "DISPLAY", DISPLAY, PID_DISPLAY },
+> +};
+> +
+> +struct subsystem_stats {
+> +       uint32_t version_id;
+> +       uint32_t count;
+> +       uint64_t last_entered;
+> +       uint64_t last_exited;
+> +       uint64_t accumulated_duration;
+
+We use u32 and u64 in kernel code. Also, is this the value in shared
+memory? Probably it's little endian so needs to be __le32 an __le64.
+
+> +};
+> +
+> +struct subsystem_stats_prv_data {
+> +       struct kobj_attribute ka;
+> +       struct kobject *kobj;
+> +};
+> +
+> +static struct subsystem_stats_prv_data *prvdata;
+> +
+> +static inline ssize_t subsystem_stats_print(char *prvbuf, ssize_t length,
+> +                                           struct subsystem_stats *recor=
+d,
+> +                                           const char *name)
+> +{
+> +       return scnprintf(prvbuf, length, "%s\n\tVersion:0x%x\n"
+> +                       "\tSleep Count:0x%x\n"
+> +                       "\tSleep Last Entered At:0x%llx\n"
+> +                       "\tSleep Last Exited At:0x%llx\n"
+> +                       "\tSleep Accumulated Duration:0x%llx\n\n",
+> +                       name, record->version_id, record->count,
+> +                       record->last_entered, record->last_exited,
+> +                       record->accumulated_duration);
+
+This isn't one value per file as per sysfs rules. Why can't this go to
+debugfs? Otherwise, it would be better to split it up into multiple
+files.
+
+And it still looks like something that should be plumbed into the remote
+proc subsystem so we can see from userspace what remote processors are
+1) present in the system and 2) how long they've been in a sleep state.
+
+> +}
+> +
+> +static ssize_t subsystem_stats_show(struct kobject *kobj,
+> +                                   struct kobj_attribute *attr, char *bu=
+f)
+> +{
+> +       ssize_t length =3D 0;
+> +       int i =3D 0;
+
+Drop assignment to i here.
+
+> +       size_t size =3D 0;
+
+Why assign size to 0? It looks unused in this function besides to store
+the size in qcom_smem_get(). It looks like we can pass NULL for that
+argument if we don't care to actually look at the size of what is
+returned.
+
+> +       struct subsystem_stats *record =3D NULL;
+
+Please don't assign to NULL and then overwrite it without testing in
+between.
+
+> +
+> +       /* Read SMEM data written by other subsystems */
+> +       for (i =3D 0; i < ARRAY_SIZE(subsystems); i++) {
+> +               record =3D (struct subsystem_stats *) qcom_smem_get(
+
+The cast is unnecessary, it returns a void * already.
+
+> +                         subsystems[i].pid, subsystems[i].item_id, &size=
+);
+> +
+> +               if (!IS_ERR(record) && (PAGE_SIZE - length > 0))
+> +                       length +=3D subsystem_stats_print(buf + length,
+> +                                                       PAGE_SIZE - lengt=
+h,
+> +                                                       record,
+> +                                                       subsystems[i].nam=
+e);
+> +       }
+> +
+> +       return length;
+> +}
+> +
+> +static int __init subsystem_sleep_stats_init(void)
+> +{
+> +       struct kobject *ss_stats_kobj;
+> +       int ret;
+> +
+> +       prvdata =3D kzalloc(sizeof(*prvdata), GFP_KERNEL);
+> +       if (!prvdata)
+> +               return -ENOMEM;
+> +
+> +       ss_stats_kobj =3D kobject_create_and_add("subsystem_sleep",
+> +                                              power_kobj);
+
+If this module is loaded on non-qcom platforms we'll create
+subsystem_sleep directory still. Please don't do that. If this was
+connected to remote proc it would be easier to avoid this problem.
+
+> +       if (!ss_stats_kobj)
+> +               return -ENOMEM;
+> +
+> +       prvdata->kobj =3D ss_stats_kobj;
+> +
+> +       sysfs_attr_init(&prvdata->ka.attr);
+> +       prvdata->ka.attr.mode =3D 0444;
+> +       prvdata->ka.attr.name =3D "stats";
+> +       prvdata->ka.show =3D subsystem_stats_show;
+> +
+> +       ret =3D sysfs_create_file(prvdata->kobj, &prvdata->ka.attr);
+> +       if (ret) {
+> +               kobject_put(prvdata->kobj);
+> +               kfree(prvdata);
+> +       }
+> +
+> +       return ret;
+> +}
+> +
