@@ -2,118 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EDA23FE774
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 23:13:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06B56FE832
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 23:43:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726822AbfKOWNU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Nov 2019 17:13:20 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:45988 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726661AbfKOWNU (ORCPT
+        id S1727022AbfKOWnf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Nov 2019 17:43:35 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:37863 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726920AbfKOWnf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Nov 2019 17:13:20 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 3A51860C1B; Fri, 15 Nov 2019 22:13:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573855999;
-        bh=44HhLxAT1m9ZyzYHe+uEYQs75rOZOAP5IkByaWQou6I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Frg8F22e8q5ujPwhzKs1Yx/jsLKDxEIsJdsu6hyDfLXQyWEkBfERKklguHjec0/N4
-         VGgbZQMRgRWQFfCl39jpkhM/yhOA9uvph/78QxwXUja1lTs0G1ZKPMgg3mUgStC4aT
-         aE7ViNH50NmAQV+iUoQx3CsBLG19zhkkQmx+GxR0=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        pdx-caf-mail.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 61E9660C3E;
-        Fri, 15 Nov 2019 22:13:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573855998;
-        bh=44HhLxAT1m9ZyzYHe+uEYQs75rOZOAP5IkByaWQou6I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BH8fp8S4TeVuokHpW8eLbZx4jQ+2V5gZG2p81n4WJ4SskYUGqT5P6nW3gimx7bT8S
-         SdgqBU6aZJCJzH12K06bMh0vkkXBGl6c6V94q3ciZiXIZLvlBkBv2rgZU899Q28EpG
-         g74i1KbEeQEEiV8RamAuQqumnff20Pke9zFMClUs=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 61E9660C3E
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-Date:   Fri, 15 Nov 2019 15:13:17 -0700
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     bjorn.andersson@linaro.org, linus.walleij@linaro.org,
-        maz@kernel.org, evgreen@chromium.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, mkshah@codeaurora.org,
-        linux-gpio@vger.kernel.org, agross@kernel.org,
-        dianders@chromium.org
-Subject: Re: [PATCH 08/12] drivers: pinctrl: msm: setup GPIO chip in hierarchy
-Message-ID: <20191115221317.GH18786@codeaurora.org>
-References: <1573756521-27373-1-git-send-email-ilina@codeaurora.org>
- <1573756521-27373-9-git-send-email-ilina@codeaurora.org>
- <5dcefd86.1c69fb81.c72c8.07a1@mx.google.com>
- <20191115205555.GF18786@codeaurora.org>
- <20191115215737.GG18786@codeaurora.org>
- <5dcf2213.1c69fb81.1e0ec.f500@mx.google.com>
+        Fri, 15 Nov 2019 17:43:35 -0500
+Received: by mail-pl1-f195.google.com with SMTP id bb5so5644344plb.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2019 14:43:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:to:subject:from:user-agent:date;
+        bh=7o6XJFRPmxhjke+xOAXjdubz9lTZY4Bf8A5Q4MvHVgM=;
+        b=i735wbRLkTV+X2RQq2yJqvlQ14P41p1rPATZ+3f8Xt2WkG43O5RCm72dDYNNvxmzDa
+         z0ifBWftulbWVW3g1WFhh8yv8gXti3Wp5qPgPy1fHoeM9khlaNFsqtV9tbc4kUOebj0f
+         U53LPLKOY6sQFAvCA/9p3CgMXInyTqX8oSr8o=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:to:subject:from
+         :user-agent:date;
+        bh=7o6XJFRPmxhjke+xOAXjdubz9lTZY4Bf8A5Q4MvHVgM=;
+        b=rcMkMtNOutQbYmNHH+eT2N3c7qk0Gf1bXYC8+rT8g4bC4RJB8vhyuvTEwKEBdjm+mV
+         RBH+oMzSeCfvaOamgQC6KqIl6wloHP5O+mFeBp8EKW5gL/sAFZgS2x7Avjkw4Z6mI86R
+         lW+c8CAorKjsg82HwzHKCpr9v4Cd+ny0so0ls0QcYPUtnjNqd961VPhHOKA2XWjetFRR
+         Z9JsZJ9dpGzC+pGKv7Wl+gDxbFCdS67EKsI5KpU2h0YtrJPu7Gd+TT/wNV7aQqjKq5bq
+         EHw2dUS20egGo9gnRXKG/GmTV6bb/rTOAEobUEaxsQDkwC9F8w6RHPve0zVMZf5Wv97p
+         d9Ig==
+X-Gm-Message-State: APjAAAVubSB+bav8ZH7WMF+bJKf73TPoTY59JqfAKoSXjbVUu4BErdAk
+        Hg129KdwHSuJYtd3kkmHK3vDKQ==
+X-Google-Smtp-Source: APXvYqzL/YIzEQ/4F8p95uH8VP6Lh3WXV2QpSRaoK+dUjlI6mT24JhIwSokKWCvuLLzsjCTstOj35g==
+X-Received: by 2002:a17:90a:2947:: with SMTP id x7mr22564702pjf.136.1573857814143;
+        Fri, 15 Nov 2019 14:43:34 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id g11sm9533898pjv.8.2019.11.15.14.43.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Nov 2019 14:43:33 -0800 (PST)
+Message-ID: <5dcf2a15.1c69fb81.b2b08.cc1a@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <5dcf2213.1c69fb81.1e0ec.f500@mx.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1573593774-12539-4-git-send-email-eberman@codeaurora.org>
+References: <1573593774-12539-1-git-send-email-eberman@codeaurora.org> <1573593774-12539-4-git-send-email-eberman@codeaurora.org>
+Cc:     Elliot Berman <eberman@codeaurora.org>, tsoni@codeaurora.org,
+        sidgup@codeaurora.org, psodagud@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Elliot Berman <eberman@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, saiprakash.ranjan@codeaurora.org
+Subject: Re: [PATCH v2 03/18] firmware: qcom_scm-64: Make SMCCC macros less magical
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.8.1
+Date:   Fri, 15 Nov 2019 14:43:32 -0800
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 15 2019 at 15:09 -0700, Stephen Boyd wrote:
->Quoting Lina Iyer (2019-11-15 13:57:37)
->> On Fri, Nov 15 2019 at 13:55 -0700, Lina Iyer wrote:
->> >>Quoting Lina Iyer (2019-11-14 10:35:17)
->>
->> >>>+static int msm_gpio_wakeirq(struct gpio_chip *gc,
->> >>>+                           unsigned int child,
->> >>>+                           unsigned int child_type,
->> >>>+                           unsigned int *parent,
->> >>>+                           unsigned int *parent_type)
->> >>>+{
->> >>>+       struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
->> >>>+       const struct msm_gpio_wakeirq_map *map;
->> >>>+       int i;
->> >>>+
->> >>>+       *parent = GPIO_NO_WAKE_IRQ;
->> >>>+       *parent_type = IRQ_TYPE_EDGE_RISING;
->> >>>+
->> >>>+       for (i = 0; i < pctrl->soc->nwakeirq_map; i++) {
->> >>>+               map = &pctrl->soc->wakeirq_map[i];
->> >>>+               if (map->gpio == child) {
->> >>>+                       *parent = map->wakeirq;
->> >>>+                       break;
->> >>>+               }
->> >>>+       }
->> >>>+
->> >>>+       return 0;
->> >>
->> >>Shouldn't we return -EINVAL if we can't translate the gpio irq to the
->> >>parent domain? I would expect to see return -EINVAL here and the above
->> >>if condition to return 0 instead of break.
->> >>
->> >Good catch. Sure.
->> >>>+}
->> >>>+
->> Looking into this, we have been setting GPIO in hierarchy with PDC and
->> the return 0 is appropriate as it would set the GPIO_NO_WAKE_IRQ as the
->> parent and setup the IRQ correctly. We fail to setup GPIOs otherwise.
->
->Ah ok so by default we will set the parent irq to ~0 and that means
->bypass pdc and go directly to GIC?
->
->Where do we fail to setup a GPIO otherwise? It sounds like we can always
->translate to either something in the map or to ~0.
->
-We do not, may be other architectures can use this check better.
+Quoting Elliot Berman (2019-11-12 13:22:39)
+> Improve understandability of SMCCC macros as they are all functions of
+> how many arguments can be shoved in registers and how many SCM arguments
+> are supported.
 
---lina
+By reversing the logic to build up these defines based on the number of
+register arguments instead of subtract them out of number of total
+arguments? Might be worth mentioning that.
+
+>=20
+> Signed-off-by: Elliot Berman <eberman@codeaurora.org>
+> ---
+
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+
+>  drivers/firmware/qcom_scm-64.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/drivers/firmware/qcom_scm-64.c b/drivers/firmware/qcom_scm-6=
+4.c
+> index de337b3..badc245 100644
+> --- a/drivers/firmware/qcom_scm-64.c
+> +++ b/drivers/firmware/qcom_scm-64.c
+> @@ -57,9 +57,9 @@ static DEFINE_MUTEX(qcom_scm_lock);
+>  #define QCOM_SCM_EBUSY_MAX_RETRY 20
+> =20
+>  #define SMCCC_FUNCNUM(s, c)    ((((s) & 0xFF) << 8) | ((c) & 0xFF))
+> -#define SMCCC_N_EXT_ARGS 7
+> -#define SMCCC_FIRST_EXT_IDX 3
+> -#define SMCCC_N_REG_ARGS (MAX_QCOM_SCM_ARGS - SMCCC_N_EXT_ARGS + 1)
+> +#define SMCCC_N_REG_ARGS       4
+> +#define SMCCC_FIRST_EXT_IDX    (SMCCC_N_REG_ARGS - 1)
+> +#define SMCCC_N_EXT_ARGS       (MAX_QCOM_SCM_ARGS - SMCCC_N_REG_ARGS + 1)
+> =20
+>  static void __qcom_scm_call_do_quirk(const struct qcom_scm_desc *desc,
