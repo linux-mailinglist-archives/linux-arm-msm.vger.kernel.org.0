@@ -2,116 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 98B0BFDA41
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 11:00:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B53CFDA5C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 11:04:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727112AbfKOKAx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Nov 2019 05:00:53 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:60202 "EHLO
+        id S1726920AbfKOKEU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Nov 2019 05:04:20 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:33840 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727089AbfKOKAx (ORCPT
+        with ESMTP id S1727365AbfKOKEU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Nov 2019 05:00:53 -0500
+        Fri, 15 Nov 2019 05:04:20 -0500
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id BA4DC61647; Fri, 15 Nov 2019 10:00:51 +0000 (UTC)
+        id 3635B61187; Fri, 15 Nov 2019 10:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573812052;
-        bh=wv3wn4UbKpryZVwwgmgzriaxUocydhMeJGuHKVgs3Bw=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=LQ7BBvA44sNlch11hqYqRzuGBkuoiDgfBxb7a4cAM/EKy6jxjA/HW5qAukAvUSkPK
-         jXVGIZjPMNEZL7/XGGf1JjbQAq1UTheUKsJ2aa9TK0FBx9UP3RwBHC1SB4Fm59t/Bb
-         C+s7vBonGMGbvvXLaBYfThSv4XdSOKBsBoWeojNk=
+        s=default; t=1573812259;
+        bh=VaQ+M/cW4KikmTdqZ7Lp5Io5EF9nqMDanu2nvq5JxhM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=GTWXCCOnq5XtWiQ4ZxV8/n7it/OX0dwNRMOAruCpQMTeg7kBmOwQa+n3ZiVsxJUpJ
+         WT5D9/tbk2qk+zi7j+Sv3pXrsQm52NfNTB+cA9vwgPZ5rGETJnKMstV3I/OGIn+A/B
+         2nnIuw/CPTwpCVrWq8JHQKml9W7CDAe/1QUghQvs=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
         DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
         version=3.4.0
-Received: from [192.168.0.8] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: akashast@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 53173611F3;
-        Fri, 15 Nov 2019 10:00:46 +0000 (UTC)
+        (Authenticated sender: tdas@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 54E82610DC;
+        Fri, 15 Nov 2019 10:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573812050;
-        bh=wv3wn4UbKpryZVwwgmgzriaxUocydhMeJGuHKVgs3Bw=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=LTyE2hWYkPSbjydXsgIXUJ1evzQivx3vOTjWFkH27EZIvFH2ZtsfQ81IA5ufQKz0W
-         ozh7xAT99/djNqwm3iwc7uuGFMCFSsbAlvpk5uIlFRX1k9soIxj6GR4JAvu7oju311
-         idy/LKX4k7+Zjp9DoLVZfUTa/SCaNTsz07cZ1woI=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 53173611F3
+        s=default; t=1573812256;
+        bh=VaQ+M/cW4KikmTdqZ7Lp5Io5EF9nqMDanu2nvq5JxhM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=cWprBifPUUATJDsFJkKauI4x/6I7C8D7Qt4zTLmcTAQafcqAJUT2NHKemjD/WHTFL
+         JIjERMPvZTfXtabobfS4Bg1vQ0460zcF6vQBBh9KH0WFTmjUsKt442VVvHPyrhgbKE
+         6a2DoZ5moYVN//CbLTs9YU3VoLho6zHACVPeNJ1A=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 54E82610DC
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH v5 2/3] tty: serial: qcom_geni_serial: Wakeup over UART RX
-To:     Stephen Boyd <swboyd@chromium.org>, gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        mgautam@codeaurora.org, msavaliy@codeaurora.org
-References: <1573642136-30488-1-git-send-email-akashast@codeaurora.org>
- <5dcd919d.1c69fb81.1c304.2dc5@mx.google.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <55a02d0f-2dec-2ba7-82e6-f21a8c86792a@codeaurora.org>
-Date:   Fri, 15 Nov 2019 15:30:44 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
-MIME-Version: 1.0
-In-Reply-To: <5dcd919d.1c69fb81.1c304.2dc5@mx.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v1 0/3] Add display clock controller driver for SC7180
+Date:   Fri, 15 Nov 2019 15:34:02 +0530
+Message-Id: <1573812245-23827-1-git-send-email-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add support for the display clock controller found on SC7180
+based devices. This would allow display drivers to probe and
+control their clocks.
 
-On 11/14/2019 11:10 PM, Stephen Boyd wrote:
-> Quoting Akash Asthana (2019-11-13 02:48:56)
->> Add system wakeup capability over UART RX line for wakeup capable UART.
->> When system is suspended, RX line act as an interrupt to wakeup system
->> for any communication requests from peer.
-> How does the RX line get remuxed as a GPIO interrupt here? Is that
-> through some pinctrl magic in DT or just via enabling/disabling the
-> interrupt?
-Yes, For wakeup capable UART node, we have registered UART RX line with 
-TLMM interrupt controller in DT file . Example: if GPIO48 is UART RX line
+This driver depends on the display port clock ops support
+https://patchwork.kernel.org/patch/11069087/
 
-interrupts-extended =  <&intc GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>,  <&tlmm 
-48 IRQ_TYPE_EDGE_FALLING>;
->
->> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
->> index 634054a..56dad67 100644
->> --- a/drivers/tty/serial/qcom_geni_serial.c
->> +++ b/drivers/tty/serial/qcom_geni_serial.c
->> @@ -1321,6 +1327,23 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->>                  return ret;
->>          }
->>   
->> +       if (port->wakeup_irq > 0) {
->> +               /*
->> +                * Set pm_runtime status as ACTIVE so that wakeup_irq gets
->> +                * enabled/disabled from dev_pm_arm_wake_irq  during  system
->> +                * suspend/resume respectively.
->> +                */
->> +               pm_runtime_set_active(&pdev->dev);
-> We can always set this device as active regardless of wakeup interrupt,
-> right? Can we move this call outside of this if?
-Ok, Yes we can move this call outside of if. I will update in next version.
->
->> +               device_init_wakeup(&pdev->dev, true);
->> +               ret = dev_pm_set_dedicated_wake_irq(&pdev->dev,
->> +                                               port->wakeup_irq);
->> +               if (ret) {
->> +                       device_init_wakeup(&pdev->dev, false);
->> +                       uart_remove_one_port(drv, uport);
->> +                       return ret;
->> +               }
->> +       }
->> +
->>          return ret;
->>   }
->>   
+Taniya Das (3):
+  dt-bindings: clock: Add YAML schemas for the QCOM DISPCC clock
+    bindings
+  dt-bindings: clock: Introduce QCOM Display clock bindings
+  clk: qcom: Add display clock controller driver for SC7180
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+ .../devicetree/bindings/clock/qcom,dispcc.txt      |  19 -
+ .../devicetree/bindings/clock/qcom,dispcc.yaml     |  67 ++
+ drivers/clk/qcom/Kconfig                           |   9 +
+ drivers/clk/qcom/Makefile                          |   1 +
+ drivers/clk/qcom/dispcc-sc7180.c                   | 776 +++++++++++++++++++++
+ include/dt-bindings/clock/qcom,dispcc-sc7180.h     |  46 ++
+ 6 files changed, 899 insertions(+), 19 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc.txt
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc.yaml
+ create mode 100644 drivers/clk/qcom/dispcc-sc7180.c
+ create mode 100644 include/dt-bindings/clock/qcom,dispcc-sc7180.h
+
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
 
