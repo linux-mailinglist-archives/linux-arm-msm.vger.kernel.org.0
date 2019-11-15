@@ -2,311 +2,335 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B4DDFE68C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 21:46:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F520FE6A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 21:56:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726549AbfKOUqA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Nov 2019 15:46:00 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:44883 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726550AbfKOUqA (ORCPT
+        id S1726605AbfKOUz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Nov 2019 15:55:59 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:54212 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726550AbfKOUz7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Nov 2019 15:46:00 -0500
-Received: by mail-pl1-f195.google.com with SMTP id az9so5449954plb.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2019 12:45:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:cc:to:subject:from:user-agent:date;
-        bh=YmzpnFwOPgE0XZ0FUKK1QiXjMq4DEEA521y7+3+D1hE=;
-        b=lV77Si8nf2rXnKOCZ7xW/oNAjBaiKIpNXZbMMwU1n8akZpCF32VndeJKQLLKESGbc0
-         FVEBoR9AaNNczGbyvQTyHhD3uwBwUVRdpgomdJGwEQKqajEQRWBmY6gylgqN7hF+nU3U
-         XONheAr8E/Hf5vsoKksCLUWZMQs1f8aUnnwkU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:cc:to:subject:from
-         :user-agent:date;
-        bh=YmzpnFwOPgE0XZ0FUKK1QiXjMq4DEEA521y7+3+D1hE=;
-        b=KfRe6yp32eiTfJ7Y3s2F7YTEiOejQNJ1p6xyRlZiROp6MnBpRwnJodhR30ZZqOQDQG
-         tV5AaY+jDoVTKp3hCwwQCqTHxWsa/EeWcTafvdZARqNbSObAhPynGW5Et3P6KjJR2EbX
-         cYQZrQGUp9Ii3Xcmngj9tI2odsfKT87G1TbweODcYHSLLKajbKxjciQyKQ2vUc+emyCO
-         4oYb9IVCJtG1JxfjXxLU2woiPzaPtrIap+23Xy6lR2xws5VBujUpm52YuVlpf4MpUxdd
-         SUkpZJa+T6qiQCUYuHxgcVWtyfDAgSMQowz+Raq/nuyssax8gjYBRS47yp91VfGZPDUz
-         3bng==
-X-Gm-Message-State: APjAAAUF7gSRbrFyg3Nljnhca5w3B10W9XPh2MVrVpux9aE8viV/vUCY
-        XjxE+25ixbdK2G+gSdA/kBOiM6Mu35A=
-X-Google-Smtp-Source: APXvYqxWgTk3dfmmxcbJQlCuJDpAzbvz/Iv7KkuGI4ThtNhdpvGb1tothE1ZO7Y75zNdr9ezEoDZ1g==
-X-Received: by 2002:a17:902:40a:: with SMTP id 10mr16904603ple.306.1573850758695;
-        Fri, 15 Nov 2019 12:45:58 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id f19sm13178941pfk.109.2019.11.15.12.45.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2019 12:45:58 -0800 (PST)
-Message-ID: <5dcf0e86.1c69fb81.a126f.5beb@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        Fri, 15 Nov 2019 15:55:59 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 70E8E6106C; Fri, 15 Nov 2019 20:55:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573851358;
+        bh=q8ehKbSaRswTHrhcKVkRojqb3pK7OFcjQn47HZCpCL8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=l0Jutpb7adP3MrODoqiJgh58sK67mIPKSj95fWPzv8clOOeL4OPkyHJv/P3A/sy30
+         mwqD/lIRYpbdV4PjODCatxARboKlZR24iWteH8BLV2rU2UgW+O9LUKPCzGyrmUL4EL
+         wyssg18CGIuWgdMLJAcaxaUebpNKBc/QYcIkbJfI=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B33EE60F83;
+        Fri, 15 Nov 2019 20:55:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573851357;
+        bh=q8ehKbSaRswTHrhcKVkRojqb3pK7OFcjQn47HZCpCL8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nCwqxwKRYrk8iRrUnSBStVuAQC8r/Cuv4QJvaWuqTifi3XTTuzWVI5+M6FUIT9qGD
+         GS2RfLyuYtCq/19gKihvH8upJBx1GS9wzVLLLNOFR1+d2qyeA8LnFB7VMfRe+1yQJm
+         DRuCZEuRP59hctdH+wbnbPMFAljkNCC44uJTw46g=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B33EE60F83
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
+Date:   Fri, 15 Nov 2019 13:55:55 -0700
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     bjorn.andersson@linaro.org, linus.walleij@linaro.org,
+        maz@kernel.org, evgreen@chromium.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, mkshah@codeaurora.org,
+        linux-gpio@vger.kernel.org, agross@kernel.org,
+        dianders@chromium.org
+Subject: Re: [PATCH 08/12] drivers: pinctrl: msm: setup GPIO chip in hierarchy
+Message-ID: <20191115205555.GF18786@codeaurora.org>
+References: <1573756521-27373-1-git-send-email-ilina@codeaurora.org>
+ <1573756521-27373-9-git-send-email-ilina@codeaurora.org>
+ <5dcefd86.1c69fb81.c72c8.07a1@mx.google.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1573039165-30435-1-git-send-email-mkshah@codeaurora.org>
-References: <1573039165-30435-1-git-send-email-mkshah@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-To:     Maulik Shah <mkshah@codeaurora.org>, agross@kernel.org,
-        david.brown@linaro.org, rafael@kernel.org
-Subject: Re: [v3] soc: qcom: Introduce subsystem sleep stats driver
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.8.1
-Date:   Fri, 15 Nov 2019 12:45:56 -0800
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <5dcefd86.1c69fb81.c72c8.07a1@mx.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Maulik Shah (2019-11-06 03:19:25)
-> diff --git a/Documentation/ABI/testing/sysfs-power b/Documentation/ABI/te=
-sting/sysfs-power
-> index 6f87b9d..e095eae 100644
-> --- a/Documentation/ABI/testing/sysfs-power
-> +++ b/Documentation/ABI/testing/sysfs-power
-> @@ -288,6 +288,16 @@ Description:
->                 writing a "0" (default) to it disables them.  Reads from
->                 this file return the current value.
-> =20
-> +What:          /sys/power/subsystem_sleep/stats
-> +Date:          December 2017
-> +Contact:       Maulik Shah <mkshah@codeaurora.org>
-> +Description:
-> +               The /sys/power/subsystem_sleep/stats file prints the subs=
-ystem
-> +               sleep information on Qualcomm Technologies, Inc. (QTI) So=
-Cs.
-> +
-> +               Reading from this file will display subsystem level low p=
-ower
-> +               mode statistics.
+>Quoting Lina Iyer (2019-11-14 10:35:17)
+>> Some GPIOs are marked as wakeup capable and are routed to another
+>> interrupt controller that is an always-domain and can detect interrupts
+>> even most of the SoC is powered off. The wakeup interrupt controller
+>
+>even when?
+>
+>> wakes up the GIC and replays the interrupt at the GIC.
+>>
+>> Setup the TLMM irqchip in hierarchy with the wakeup interrupt controller
+>> and ensure the wakeup GPIOs are handled correctly.
+>>
+>> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+>
+>Is it Co-developed-by for Maulik?
+>
+>> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+>
+>Some minor comments. Shouldn't be hard to fix and resend quickly I hope.
+>
+Thanks for the review Stephen. I will fix these and resend.
 
-I still don't understand what this has to do with the kernel's power
-management support.
+>> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+>> index 763da0b..c245686 100644
+>> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+>> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+>> @@ -44,6 +46,7 @@
+>>   * @enabled_irqs:   Bitmap of currently enabled irqs.
+>>   * @dual_edge_irqs: Bitmap of irqs that need sw emulated dual edge
+>>   *                  detection.
+>> + * @skip_wake_irqs: Skip IRQs that are handled by wakeup interrupt contrroller
+>
+>s/contrroller/controller/
+>
+>>   * @soc;            Reference to soc_data of platform specific data.
+>>   * @regs:           Base addresses for the TLMM tiles.
+>>   */
+>> @@ -778,10 +794,37 @@ static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
+>>
+>>  static void msm_gpio_irq_enable(struct irq_data *d)
+>>  {
+>> +       /*
+>> +        * Clear the interrupt that may be pending before we enable
+>> +        * the line.
+>> +        * This is especially a problem with the GPIOs routed to the
+>> +        * PDC. These GPIOs are direct-connect interrupts to the GIC.
+>> +        * Disabling the interrupt line at the PDC does not prevent
+>> +        * the interrupt from being latched at the GIC. The state at
+>> +        * GIC needs to be cleared before enabling.
+>> +        */
+>> +       if (d->parent_data) {
+>> +               irq_chip_set_parent_state(d, IRQCHIP_STATE_PENDING, 0);
+>> +               irq_chip_enable_parent(d);
+>> +       }
+>>
+>>         msm_gpio_irq_clear_unmask(d, true);
+>>  }
+>>
+>> +static void msm_gpio_irq_disable(struct irq_data *d)
+>> +{
+>> +       struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+>> +       struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+>> +
+>> +       if (d->parent_data)
+>> +               irq_chip_disable_parent(d);
+>> +
+>> +       if (test_bit(d->hwirq, pctrl->skip_wake_irqs))
+>> +               return;
+>> +
+>> +       msm_gpio_irq_mask(d);
+>
+>Why not
+>
+>	if (!test_bit(...)
+>		msm_gpio_irq_mask(d);
+>
+>> +}
+>> +
+>>  static void msm_gpio_irq_unmask(struct irq_data *d)
+>>  {
+>>         msm_gpio_irq_clear_unmask(d, false);
+>> @@ -912,6 +964,15 @@ static int msm_gpio_irq_set_wake(struct irq_data *d, unsigned int on)
+>>         struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+>>         unsigned long flags;
+>>
+>> +       if (d->parent_data)
+>> +               irq_chip_set_wake_parent(d, on);
+>> +
+>> +       /*
+>> +        * While they may not wake up when the TLMM is powered off,
+>> +        * some GPIOs would like to wakeup the system from suspend
+>> +        * when TLMM is powered on. To allow that, enable the GPIO
+>> +        * summary line to be wakeup capable at GIC.
+>> +        */
+>
+>Can this comment go above the irq_set_irq_wake() line below instead of
+>this spinlock?
+>
+Sure.
 
-> +
->  What:          /sys/power/resume_offset
->  Date:          April 2018
->  Contact:       Mario Limonciello <mario.limonciello@dell.com>
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index 79d8265..bed0704 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -185,6 +185,15 @@ config QCOM_SOCINFO
->          Say yes here to support the Qualcomm socinfo driver, providing
->          information about the SoC to user space.
-> =20
-> +config QCOM_SS_SLEEP_STATS
-> +       tristate "Qualcomm Technologies Inc. Subsystem Sleep Stats driver"
-> +       depends on QCOM_SMEM
-> +       help
-> +         Say y here to enable support for the Qualcomm Technologies Inc =
-(QTI)
+>>         raw_spin_lock_irqsave(&pctrl->lock, flags);
+>>
+>>         irq_set_irq_wake(pctrl->irq, on);
+>> @@ -990,6 +1051,30 @@ static void msm_gpio_irq_handler(struct irq_desc *desc)
+>>         chained_irq_exit(chip, desc);
+>>  }
+>>
+>> +static int msm_gpio_wakeirq(struct gpio_chip *gc,
+>> +                           unsigned int child,
+>> +                           unsigned int child_type,
+>> +                           unsigned int *parent,
+>> +                           unsigned int *parent_type)
+>> +{
+>> +       struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+>> +       const struct msm_gpio_wakeirq_map *map;
+>> +       int i;
+>> +
+>> +       *parent = GPIO_NO_WAKE_IRQ;
+>> +       *parent_type = IRQ_TYPE_EDGE_RISING;
+>> +
+>> +       for (i = 0; i < pctrl->soc->nwakeirq_map; i++) {
+>> +               map = &pctrl->soc->wakeirq_map[i];
+>> +               if (map->gpio == child) {
+>> +                       *parent = map->wakeirq;
+>> +                       break;
+>> +               }
+>> +       }
+>> +
+>> +       return 0;
+>
+>Shouldn't we return -EINVAL if we can't translate the gpio irq to the
+>parent domain? I would expect to see return -EINVAL here and the above
+>if condition to return 0 instead of break.
+>
+Good catch. Sure.
+>> +}
+>> +
+>>  static bool msm_gpio_needs_valid_mask(struct msm_pinctrl *pctrl)
+>>  {
+>>         if (pctrl->soc->reserved_gpios)
+>> @@ -1004,6 +1089,7 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
+>>         struct gpio_irq_chip *girq;
+>>         int ret;
+>>         unsigned ngpio = pctrl->soc->ngpios;
+>> +       struct device_node *np;
+>>
+>>         if (WARN_ON(ngpio > MAX_NR_GPIO))
+>>                 return -EINVAL;
+>> @@ -1020,17 +1106,44 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
+>>
+>>         pctrl->irq_chip.name = "msmgpio";
+>>         pctrl->irq_chip.irq_enable = msm_gpio_irq_enable;
+>> +       pctrl->irq_chip.irq_disable = msm_gpio_irq_disable;
+>>         pctrl->irq_chip.irq_mask = msm_gpio_irq_mask;
+>>         pctrl->irq_chip.irq_unmask = msm_gpio_irq_unmask;
+>>         pctrl->irq_chip.irq_ack = msm_gpio_irq_ack;
+>> +       pctrl->irq_chip.irq_eoi = irq_chip_eoi_parent;
+>>         pctrl->irq_chip.irq_set_type = msm_gpio_irq_set_type;
+>>         pctrl->irq_chip.irq_set_wake = msm_gpio_irq_set_wake;
+>>         pctrl->irq_chip.irq_request_resources = msm_gpio_irq_reqres;
+>>         pctrl->irq_chip.irq_release_resources = msm_gpio_irq_relres;
+>>
+>> +       np = of_parse_phandle(pctrl->dev->of_node, "wakeup-parent", 0);
+>> +       if (np) {
+>> +               int i;
+>> +               bool skip;
+>> +               unsigned int gpio;
+>
+>Can these be placed at the top of this function instead of buried
+>halfway down here?
+>
+>> +
+>> +               chip->irq.parent_domain = irq_find_matching_host(np,
+>> +                                                DOMAIN_BUS_WAKEUP);
+>> +               of_node_put(np);
+>> +               if (!chip->irq.parent_domain)
+>> +                       return -EPROBE_DEFER;
+>> +               chip->irq.child_to_parent_hwirq = msm_gpio_wakeirq;
+>> +
+>> +               /*
+>> +                * Let's skip handling the GPIOs, if the parent irqchip
+>> +                * handling the direct connect IRQ of the GPIO.
+>
+>is handling?
+>
+>> +                */
+>> +               skip = irq_domain_qcom_handle_wakeup(chip->irq.parent_domain);
+>> +               for (i = 0; skip && i < pctrl->soc->nwakeirq_map; i++) {
+>> +                       gpio = pctrl->soc->wakeirq_map[i].gpio;
+>> +                       set_bit(gpio, pctrl->skip_wake_irqs);
+>> +               }
+>> +       }
+>> +
+>>         girq = &chip->irq;
+>>         girq->chip = &pctrl->irq_chip;
+>>         girq->parent_handler = msm_gpio_irq_handler;
+>> +       girq->fwnode = pctrl->dev->fwnode;
+>>         girq->num_parents = 1;
+>>         girq->parents = devm_kcalloc(pctrl->dev, 1, sizeof(*girq->parents),
+>>                                      GFP_KERNEL);
+>> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+>> index 48569cda8..1547020 100644
+>> --- a/drivers/pinctrl/qcom/pinctrl-msm.h
+>> +++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+>> @@ -5,6 +5,8 @@
+>>  #ifndef __PINCTRL_MSM_H__
+>>  #define __PINCTRL_MSM_H__
+>>
+>> +#include <linux/gpio/driver.h>
+>
+>What is this include for?
+>
+Must be from an older version. Will remove.
 
-This 'Inc' is missing the full stop like in the summary above. Please be
-consistent.
+>> +
+>>  struct pinctrl_pin_desc;
+>>
+>>  /**
+>> @@ -101,6 +113,8 @@ struct msm_pingroup {
+>>   * @ngroups:       The numbmer of entries in @groups.
+>>   * @ngpio:         The number of pingroups the driver should expose as GPIOs.
+>>   * @pull_no_keeper: The SoC does not support keeper bias.
+>> + * @wakeirq_map:    The map of wakeup capable GPIOs and the pin at PDC/MPM
+>> + * @nwakeirq_map:   The number of entries in @hierarchy_map
+>
+>Is it 'number of entries in @wakeirq_map"?
+>
+Yes. Thanks.
+>>   */
+>>  struct msm_pinctrl_soc_data {
+>>         const struct pinctrl_pin_desc *pins;
+>> @@ -114,6 +128,8 @@ struct msm_pinctrl_soc_data {
+>>         const char *const *tiles;
+>>         unsigned int ntiles;
+>>         const int *reserved_gpios;
+>> +       const struct msm_gpio_wakeirq_map *wakeirq_map;
+>> +       unsigned int nwakeirq_map;
+>>  };
+>>
+>>  extern const struct dev_pm_ops msm_pinctrl_dev_pm_ops;
+>> diff --git a/include/linux/soc/qcom/irq.h b/include/linux/soc/qcom/irq.h
+>> index 637c0bf..e01391c 100644
+>> --- a/include/linux/soc/qcom/irq.h
+>> +++ b/include/linux/soc/qcom/irq.h
+>> @@ -18,4 +18,17 @@
+>>  #define IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP                (IRQ_DOMAIN_FLAG_NONCORE << 0)
+>>  #define IRQ_DOMAIN_FLAG_QCOM_MPM_WAKEUP                (IRQ_DOMAIN_FLAG_NONCORE << 1)
+>>
+>> +/**
+>> + * irq_domain_qcom_handle_wakeup: Return if the domain handles interrupt
+>> + *                                configuration
+>> + * @d: irq domain
+>> + *
+>> + * This QCOM specific irq domain call returns if the interrupt controller
+>> + * requires the interrupt be masked at the child interrupt controller.
+>> + */
+>> +static inline bool irq_domain_qcom_handle_wakeup(struct irq_domain *d)
+>
+>could be const irq_domain here.
+>
+Ok.
+>> +{
+>> +       return (d->flags & IRQ_DOMAIN_FLAG_QCOM_PDC_WAKEUP);
+>> +}
+>> +
 
-> +         SS sleep stats driver to read the sleep stats of various subsys=
-tems
-
-what is 'SS'?
-
-> +         from SMEM. The stats are exported to sysfs. The driver also mai=
-ntains
-> +         application processor sleep stats.
-> +
->  config QCOM_WCNSS_CTRL
->         tristate "Qualcomm WCNSS control driver"
->         depends on ARCH_QCOM || COMPILE_TEST
-> diff --git a/drivers/soc/qcom/subsystem_sleep_stats.c b/drivers/soc/qcom/=
-subsystem_sleep_stats.c
-> new file mode 100644
-> index 00000000..724b213
-> --- /dev/null
-> +++ b/drivers/soc/qcom/subsystem_sleep_stats.c
-> @@ -0,0 +1,143 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +
-> +/*
-> + * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#define pr_fmt(fmt) "%s: " fmt, KBUILD_MODNAME
-> +
-> +#include <linux/errno.h>
-> +#include <linux/module.h>
-> +#include <linux/slab.h>
-> +#include <linux/types.h>
-
-I think we need to include linux/kernel.h for scnprintf() too.
-
-> +
-> +#include <linux/soc/qcom/smem.h>
-> +
-> +enum subsystem_item_id {
-> +       MODEM =3D 605,
-> +       ADSP,
-> +       CDSP,
-> +       SLPI,
-> +       GPU,
-> +       DISPLAY,
-> +};
-> +
-> +enum subsystem_pid {
-> +       PID_APSS =3D 0,
-> +       PID_MODEM =3D 1,
-> +       PID_ADSP =3D 2,
-> +       PID_SLPI =3D 3,
-> +       PID_CDSP =3D 5,
-> +       PID_GPU =3D PID_APSS,
-> +       PID_DISPLAY =3D PID_APSS,
-> +};
-
-Can these just be defines? There seems to be no value in enum because
-we're not testing these in switch statements and they're randomly
-assigned values.
-
-> +
-> +struct subsystem_data {
-> +       char *name;
-> +       enum subsystem_item_id item_id;
-> +       enum subsystem_pid pid;
-> +};
-> +
-> +static const struct subsystem_data subsystems[] =3D {
-> +       { "MODEM", MODEM, PID_MODEM },
-> +       { "ADSP", ADSP, PID_ADSP },
-> +       { "CDSP", CDSP, PID_CDSP },
-> +       { "SLPI", SLPI, PID_SLPI },
-> +       { "GPU", GPU, PID_GPU },
-> +       { "DISPLAY", DISPLAY, PID_DISPLAY },
-> +};
-> +
-> +struct subsystem_stats {
-> +       uint32_t version_id;
-> +       uint32_t count;
-> +       uint64_t last_entered;
-> +       uint64_t last_exited;
-> +       uint64_t accumulated_duration;
-
-We use u32 and u64 in kernel code. Also, is this the value in shared
-memory? Probably it's little endian so needs to be __le32 an __le64.
-
-> +};
-> +
-> +struct subsystem_stats_prv_data {
-> +       struct kobj_attribute ka;
-> +       struct kobject *kobj;
-> +};
-> +
-> +static struct subsystem_stats_prv_data *prvdata;
-> +
-> +static inline ssize_t subsystem_stats_print(char *prvbuf, ssize_t length,
-> +                                           struct subsystem_stats *recor=
-d,
-> +                                           const char *name)
-> +{
-> +       return scnprintf(prvbuf, length, "%s\n\tVersion:0x%x\n"
-> +                       "\tSleep Count:0x%x\n"
-> +                       "\tSleep Last Entered At:0x%llx\n"
-> +                       "\tSleep Last Exited At:0x%llx\n"
-> +                       "\tSleep Accumulated Duration:0x%llx\n\n",
-> +                       name, record->version_id, record->count,
-> +                       record->last_entered, record->last_exited,
-> +                       record->accumulated_duration);
-
-This isn't one value per file as per sysfs rules. Why can't this go to
-debugfs? Otherwise, it would be better to split it up into multiple
-files.
-
-And it still looks like something that should be plumbed into the remote
-proc subsystem so we can see from userspace what remote processors are
-1) present in the system and 2) how long they've been in a sleep state.
-
-> +}
-> +
-> +static ssize_t subsystem_stats_show(struct kobject *kobj,
-> +                                   struct kobj_attribute *attr, char *bu=
-f)
-> +{
-> +       ssize_t length =3D 0;
-> +       int i =3D 0;
-
-Drop assignment to i here.
-
-> +       size_t size =3D 0;
-
-Why assign size to 0? It looks unused in this function besides to store
-the size in qcom_smem_get(). It looks like we can pass NULL for that
-argument if we don't care to actually look at the size of what is
-returned.
-
-> +       struct subsystem_stats *record =3D NULL;
-
-Please don't assign to NULL and then overwrite it without testing in
-between.
-
-> +
-> +       /* Read SMEM data written by other subsystems */
-> +       for (i =3D 0; i < ARRAY_SIZE(subsystems); i++) {
-> +               record =3D (struct subsystem_stats *) qcom_smem_get(
-
-The cast is unnecessary, it returns a void * already.
-
-> +                         subsystems[i].pid, subsystems[i].item_id, &size=
-);
-> +
-> +               if (!IS_ERR(record) && (PAGE_SIZE - length > 0))
-> +                       length +=3D subsystem_stats_print(buf + length,
-> +                                                       PAGE_SIZE - lengt=
-h,
-> +                                                       record,
-> +                                                       subsystems[i].nam=
-e);
-> +       }
-> +
-> +       return length;
-> +}
-> +
-> +static int __init subsystem_sleep_stats_init(void)
-> +{
-> +       struct kobject *ss_stats_kobj;
-> +       int ret;
-> +
-> +       prvdata =3D kzalloc(sizeof(*prvdata), GFP_KERNEL);
-> +       if (!prvdata)
-> +               return -ENOMEM;
-> +
-> +       ss_stats_kobj =3D kobject_create_and_add("subsystem_sleep",
-> +                                              power_kobj);
-
-If this module is loaded on non-qcom platforms we'll create
-subsystem_sleep directory still. Please don't do that. If this was
-connected to remote proc it would be easier to avoid this problem.
-
-> +       if (!ss_stats_kobj)
-> +               return -ENOMEM;
-> +
-> +       prvdata->kobj =3D ss_stats_kobj;
-> +
-> +       sysfs_attr_init(&prvdata->ka.attr);
-> +       prvdata->ka.attr.mode =3D 0444;
-> +       prvdata->ka.attr.name =3D "stats";
-> +       prvdata->ka.show =3D subsystem_stats_show;
-> +
-> +       ret =3D sysfs_create_file(prvdata->kobj, &prvdata->ka.attr);
-> +       if (ret) {
-> +               kobject_put(prvdata->kobj);
-> +               kfree(prvdata);
-> +       }
-> +
-> +       return ret;
-> +}
-> +
+Thanks,
+Lina
