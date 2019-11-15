@@ -2,180 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EABC6FD5D5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 07:09:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 657A6FD6A3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 07:58:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727151AbfKOGJz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Nov 2019 01:09:55 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:37756 "EHLO
+        id S1727020AbfKOG6Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Nov 2019 01:58:16 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:56542 "EHLO
         smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725848AbfKOGJy (ORCPT
+        with ESMTP id S1726182AbfKOG6Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Nov 2019 01:09:54 -0500
+        Fri, 15 Nov 2019 01:58:16 -0500
 Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 4027E611A7; Fri, 15 Nov 2019 06:09:50 +0000 (UTC)
+        id 6911360878; Fri, 15 Nov 2019 06:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573798193;
-        bh=vA5QMfOG8/tSJ0LbkGi4Gjgkhix8FM2eGb2eZp8y9oo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=mAsU6c/wQz5Yca+WHSYXRRsEXxDvVfYFFCAl0xFPG4SFMv4nSAQt47oeOCYRY1Ox6
-         ggS0GCBBzzZN9iUtIp0Zxj/4cnxMmXMx8JM+VuqNHrK8SHmWp/OQ9oqak2wUb1wiEJ
-         Ok/VEwcYjk34pEyWpzKcLPDeeQVjfyidTgX/KFLM=
+        s=default; t=1573801095;
+        bh=vqnkhyApQKljmrQxtB/6xAndiTpIeYqwAP22gMmqcfo=;
+        h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
+        b=ESv8dWjJ3yqb6d6+HfCtIcAgF0zUYzc6JeeALeMMdIRtgxRrQz7rwakd17WCFav2X
+         TKWpRk0Zc0nIBFAiWBqv8Di+dTaIo7ht9XvX2c4ngH0K6ZSTKOLFVf4kVYXSPtTD3j
+         MAQEl6osGuNbEz4mKx374T12PvtkVQe+n7hnL4gw=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         pdx-caf-mail.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_INVALID,DKIM_SIGNED,SPF_NONE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-0.8 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED,MISSING_DATE,MISSING_MID,SPF_NONE autolearn=no
+        autolearn_force=no version=3.4.0
+Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: cang@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 596296117A;
-        Fri, 15 Nov 2019 06:09:47 +0000 (UTC)
+        (Authenticated sender: kvalo@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AC81360878;
+        Fri, 15 Nov 2019 06:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1573798188;
-        bh=vA5QMfOG8/tSJ0LbkGi4Gjgkhix8FM2eGb2eZp8y9oo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Jpzu97I+QLGqZfithVQdUJmo/SM3uZfhp8h4Ilu6zJ1ppjMkJiKzeABLppETA4fbA
-         ydAU4MFy/C1T53ZUh/f4BxWWPqlRSNVRlFP7C6RUtNflqKfl2TElt+NnEdRdYu6cHK
-         uADSiKdfRjTLJyfLxNc4TR/VNKJqUERJu1acFkNc=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 596296117A
+        s=default; t=1573801094;
+        bh=vqnkhyApQKljmrQxtB/6xAndiTpIeYqwAP22gMmqcfo=;
+        h=Subject:From:In-Reply-To:References:To:Cc:From;
+        b=Z6QD/iJnIY4ohKtssBn/+6TMIh0fL4hA758SMPuglesU3UfVd+4QgZkeShvoo1KDO
+         7ykFKiSRLQIpvTwFaQSj8dOKzw9Ek0/Cco2bjKyY4Q2sWrCQ6SNZ2q7P1kFQ9cTDCk
+         nHHudZTK/bFpfY5nBjEmfQHts0UR3H9j+Q7J2Hho=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AC81360878
 Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=cang@codeaurora.org
-From:   Can Guo <cang@codeaurora.org>
-To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
-        rnayak@codeaurora.org, linux-scsi@vger.kernel.org,
-        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
-        cang@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v5 2/7] scsi: ufs-qcom: Add reset control support for host controller
-Date:   Thu, 14 Nov 2019 22:09:25 -0800
-Message-Id: <1573798172-20534-3-git-send-email-cang@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1573798172-20534-1-git-send-email-cang@codeaurora.org>
-References: <1573798172-20534-1-git-send-email-cang@codeaurora.org>
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=kvalo@codeaurora.org
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH] ath10k: Revert "ath10k: add cleanup in ath10k_sta_state()"
+From:   Kalle Valo <kvalo@codeaurora.org>
+In-Reply-To: <20191113202644.3673049-1-bjorn.andersson@linaro.org>
+References: <20191113202644.3673049-1-bjorn.andersson@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, jeffrey.l.hugo@gmail.com,
+        wenwen@cs.uga.edu
+User-Agent: pwcli/0.0.0-git (https://github.com/kvalo/pwcli/) Python/2.7.12
+Message-Id: <20191115065815.6911360878@smtp.codeaurora.org>
+Date:   Fri, 15 Nov 2019 06:58:15 +0000 (UTC)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add reset control for host controller so that host controller can be reset
-as required in its power up sequence.
+Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
 
-Signed-off-by: Can Guo <cang@codeaurora.org>
----
- drivers/scsi/ufs/ufs-qcom.c | 53 +++++++++++++++++++++++++++++++++++++++++++++
- drivers/scsi/ufs/ufs-qcom.h |  3 +++
- 2 files changed, 56 insertions(+)
+> This reverts commit 334f5b61a6f29834e881923b98d1e27e5ce9620d.
+> 
+> This caused ath10k_snoc on Qualcomm MSM8998, SDM845 and QCS404 platforms to
+> trigger an assert in the firmware:
+> 
+> err_qdi.c:456:EF:wlan_process:1:cmnos_thread.c:3900:Asserted in wlan_vdev.c:_wlan_vdev_up:3219
+> 
+> Revert the offending commit for now.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
 
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index a5b7148..c69c29a1c 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -246,6 +246,44 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
- 	mb();
- }
- 
-+/**
-+ * ufs_qcom_host_reset - reset host controller and PHY
-+ */
-+static int ufs_qcom_host_reset(struct ufs_hba *hba)
-+{
-+	int ret = 0;
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+
-+	if (!host->core_reset) {
-+		dev_warn(hba->dev, "%s: reset control not set\n", __func__);
-+		goto out;
-+	}
-+
-+	ret = reset_control_assert(host->core_reset);
-+	if (ret) {
-+		dev_err(hba->dev, "%s: core_reset assert failed, err = %d\n",
-+				 __func__, ret);
-+		goto out;
-+	}
-+
-+	/*
-+	 * The hardware requirement for delay between assert/deassert
-+	 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
-+	 * ~125us (4/32768). To be on the safe side add 200us delay.
-+	 */
-+	usleep_range(200, 210);
-+
-+	ret = reset_control_deassert(host->core_reset);
-+	if (ret)
-+		dev_err(hba->dev, "%s: core_reset deassert failed, err = %d\n",
-+				 __func__, ret);
-+
-+	usleep_range(1000, 1100);
-+
-+out:
-+	return ret;
-+}
-+
- static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-@@ -254,6 +292,12 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
- 	bool is_rate_B = (UFS_QCOM_LIMIT_HS_RATE == PA_HS_MODE_B)
- 							? true : false;
- 
-+	/* Reset UFS Host Controller and PHY */
-+	ret = ufs_qcom_host_reset(hba);
-+	if (ret)
-+		dev_warn(hba->dev, "%s: host reset returned %d\n",
-+				  __func__, ret);
-+
- 	if (is_rate_B)
- 		phy_set_mode(phy, PHY_MODE_UFS_HS_B);
- 
-@@ -1101,6 +1145,15 @@ static int ufs_qcom_init(struct ufs_hba *hba)
- 	host->hba = hba;
- 	ufshcd_set_variant(hba, host);
- 
-+	/* Setup the reset control of HCI */
-+	host->core_reset = devm_reset_control_get(hba->dev, "rst");
-+	if (IS_ERR(host->core_reset)) {
-+		err = PTR_ERR(host->core_reset);
-+		dev_warn(dev, "Failed to get reset control %d\n", err);
-+		host->core_reset = NULL;
-+		err = 0;
-+	}
-+
- 	/* Fire up the reset controller. Failure here is non-fatal. */
- 	host->rcdev.of_node = dev->of_node;
- 	host->rcdev.ops = &ufs_qcom_reset_ops;
-diff --git a/drivers/scsi/ufs/ufs-qcom.h b/drivers/scsi/ufs/ufs-qcom.h
-index d401f17..2d95e7c 100644
---- a/drivers/scsi/ufs/ufs-qcom.h
-+++ b/drivers/scsi/ufs/ufs-qcom.h
-@@ -6,6 +6,7 @@
- #define UFS_QCOM_H_
- 
- #include <linux/reset-controller.h>
-+#include <linux/reset.h>
- 
- #define MAX_UFS_QCOM_HOSTS	1
- #define MAX_U32                 (~(u32)0)
-@@ -233,6 +234,8 @@ struct ufs_qcom_host {
- 	u32 dbg_print_en;
- 	struct ufs_qcom_testbus testbus;
- 
-+	/* Reset control of HCI */
-+	struct reset_control *core_reset;
- 	struct reset_controller_dev rcdev;
- 
- 	struct gpio_desc *device_reset;
+Patch applied to ath-next branch of ath.git, thanks.
+
+f4fe2e53349f ath10k: Revert "ath10k: add cleanup in ath10k_sta_state()"
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+https://patchwork.kernel.org/patch/11242743/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
