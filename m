@@ -2,89 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 73086FDF05
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 14:37:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 65207FE090
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Nov 2019 15:55:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727380AbfKONhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Nov 2019 08:37:03 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60462 "EHLO mail.kernel.org"
+        id S1727626AbfKOOza (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Nov 2019 09:55:30 -0500
+Received: from mga18.intel.com ([134.134.136.126]:15041 "EHLO mga18.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727329AbfKONhD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Nov 2019 08:37:03 -0500
-Received: from localhost (unknown [122.181.197.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E30EC20728;
-        Fri, 15 Nov 2019 13:37:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573825022;
-        bh=xw6+YS+K/aX6p3C3mvtL28AvnVECOYE38j0p3cjI+i4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=exIVUUp5a2Q2YN9kc/gsxvHncmC3Ty8P1XudP4oreOB/6MqS4o8V6SYYyUf+zXvaz
-         a4QhGJ8J9jUJ4GjjizqVUdg3vNUmN7BJ58B61qzY0oEX3f5CxKYQX1b25HsZ8dIqpL
-         G8I0vRA1AUrD7KMckbe7o/4eM/xzNtNvx+m/nETo=
-Date:   Fri, 15 Nov 2019 19:06:57 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Takashi Iwai <tiwai@suse.de>
-Cc:     Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Patrick Lai <plai@codeaurora.org>,
+        id S1727496AbfKOOza (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Nov 2019 09:55:30 -0500
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 15 Nov 2019 06:55:29 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.68,308,1569308400"; 
+   d="scan'208";a="214789942"
+Received: from jdstodda-mobl.amr.corp.intel.com (HELO [10.254.177.96]) ([10.254.177.96])
+  by fmsmga001.fm.intel.com with ESMTP; 15 Nov 2019 06:55:28 -0800
+Subject: Re: [alsa-devel] [RFC PATCH 0/3] ALSA: compress: Add support for FLAC
+To:     Vinod Koul <vkoul@kernel.org>, Takashi Iwai <tiwai@suse.com>
+Cc:     alsa-devel@alsa-project.org,
         Banajit Goswami <bgoswami@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Patrick Lai <plai@codeaurora.org>,
         Liam Girdwood <lgirdwood@gmail.com>,
         Mark Brown <broonie@kernel.org>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 0/3] ALSA: compress: Add support for FLAC
-Message-ID: <20191115133657.GA6762@vkoul-mobl>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-kernel@vger.kernel.org
 References: <20191115102705.649976-1-vkoul@kernel.org>
- <s5h7e41jmvl.wl-tiwai@suse.de>
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Message-ID: <19c70dac-aa3e-f0ea-d729-26df4f193eb0@linux.intel.com>
+Date:   Fri, 15 Nov 2019 08:55:28 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <s5h7e41jmvl.wl-tiwai@suse.de>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20191115102705.649976-1-vkoul@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15-11-19, 14:21, Takashi Iwai wrote:
-> On Fri, 15 Nov 2019 11:27:02 +0100,
-> Vinod Koul wrote:
-> > 
-> > The current design of sending codec parameters assumes that decoders
-> > will have parsers so they can parse the encoded stream for parameters
-> > and configure the decoder.
-> > 
-> > But this assumption may not be universally true and we know some DSPs
-> > which do not contain the parsers so additional parameters are required
-> > to be passed.
-> > 
-> > So add these parameters starting with FLAC decoder. The size of
-> > snd_codec_options is still 120 bytes after this change (due to this
-> > being a union)
-> > 
-> > I think we should also bump the (minor) version if this proposal is
-> > acceptable so the userspace can check and populate flac specific structure.
-> > 
-> > Along, with the core header change, patches are added to support FLAC
-> > in Qualcomm drivers. This was tested on 96boards db845c
-> > 
-> > Srinivas Kandagatla (1):
-> >   ASoC: qcom: q6asm: add support to flac config
-> > 
-> > Vinod Koul (2):
-> >   ALSA: compress: add flac decoder params
-> >   ASoC: qcom: q6asm-dai: add support to flac decoder
-> 
-> Feel free to take my ACK for ALSA core part:
->   Acked-by: Takashi Iwai <tiwai@suse.de>
 
-Thanks Takashi, should we bump the version for the header to check for.
-Btw I plan to add other decoders required as well. I have mp3 working
-without any additional params but rest need additional info
 
-Thanks
--- 
-~Vinod
+On 11/15/19 4:27 AM, Vinod Koul wrote:
+> The current design of sending codec parameters assumes that decoders
+> will have parsers so they can parse the encoded stream for parameters
+> and configure the decoder.
+
+that's not quite correct. It's rather than there was no need so far for 
+existing implementations to have parameters on decode, this was never a 
+limitation of the design, see e.g. the comments below:
+
+/* AAC modes are required for encoders and decoders */
+
+/*
+  * IEC modes are mandatory for decoders. Format autodetection
+  * will only happen on the DSP side with mode 0. The PCM mode should
+  * not be used, the PCM codec should be used instead.
+  */
