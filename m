@@ -2,145 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 44B6EFE8E1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Nov 2019 00:57:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 848D1FE909
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Nov 2019 01:21:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727200AbfKOX5H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Nov 2019 18:57:07 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:43544 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727064AbfKOX5H (ORCPT
+        id S1727275AbfKPAVb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Nov 2019 19:21:31 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:38089 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727216AbfKPAVb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Nov 2019 18:57:07 -0500
-Received: by mail-pl1-f193.google.com with SMTP id a18so5735503plm.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2019 15:57:06 -0800 (PST)
+        Fri, 15 Nov 2019 19:21:31 -0500
+Received: by mail-pl1-f196.google.com with SMTP id q18so2077835pls.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2019 16:21:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=message-id:mime-version:content-transfer-encoding:in-reply-to
          :references:cc:to:subject:from:user-agent:date;
-        bh=+07j2B58hopyN/ZPaBe69iJHlWi51aKHuV5+M1PPQSc=;
-        b=H0ak2Hd2yu1RxB45LW+1S+MQGJCihk1/ctT1XWJ12Yeo9uhBHLnxrV/X7d3M8gU3r1
-         IujnsBnbUaOsjVaJFVaaiAQF/7E9zTkm/WcELCQ8jrChDsWzi1PTm9bRdlTqoAcKlwx2
-         SU8PqROMKmINdKcVH4+FolUKCWTdu4egG6DwI=
+        bh=UiFGe1ZptxBlAKxNM72C7gs1lEaFQWlmt9mtqRezKHM=;
+        b=Y1GqM6VL0BBiSy4Nlkblk4sJJTHGXh7Ja1fH72VPY0iJZpxMj0Ij0onnQSvRxyFK+f
+         ddw/6pJW1Upx1wi451QOlBmvtWKZAQWOJzChMAlkGFppxvTDzC1LSQfwCudoqqE2omH0
+         Yk7mD/l1tYMjvi7mhUL7YHG193JvZ4c5ngpqE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:mime-version
          :content-transfer-encoding:in-reply-to:references:cc:to:subject:from
          :user-agent:date;
-        bh=+07j2B58hopyN/ZPaBe69iJHlWi51aKHuV5+M1PPQSc=;
-        b=gM+oEuVdTWrJsSh3Mm68Z+UVRy4Bhx9P7A01pEeGG0o2FhK2mkiUT6u7qiZyxV1J2z
-         H9lbiLnsiY+N7FXwKcBebQ1AAT3cmo/juA387JELCiEEzvEMI7/xANr7a3zNuBCt+U5l
-         sg6V50HVywSEdUIJRaTHNKrP9DVDQVtbYY7jub33uzKKmXTTHYykIROF9IBQKqfJoPBc
-         bGKyJFkwmtkrkmjpG0Ey7PFQl9ZsxsGfdw9+imJVK8QG5cxw/Pv7CG5ttBiOiLWFaJG6
-         C5t+pf1tUq5gjA8iA3BSYYxbzqL7A45bOej8G87YZB3kgJQNL9CSJOw3iqdP0OLEacSZ
-         L/Qg==
-X-Gm-Message-State: APjAAAV0lEAmslMZ7NuQ7GmSk/yhu46PhI+idUU/1OdSo1OUiG9P2PGi
-        OHl/dOWgvB6/0FQWRBtE5CNzinGitoU=
-X-Google-Smtp-Source: APXvYqzSSQfd7/2G4P4J+spB+fI8VwxQvZbO2hAP1sVvyCC9MYJnOlPR7egzW0H2TdJXtAZnclDEpw==
-X-Received: by 2002:a17:90a:ca04:: with SMTP id x4mr23470260pjt.103.1573862226403;
-        Fri, 15 Nov 2019 15:57:06 -0800 (PST)
+        bh=UiFGe1ZptxBlAKxNM72C7gs1lEaFQWlmt9mtqRezKHM=;
+        b=Dmzc6gXebbmAaCahFi2nRwPbsBIESG1POTVx9MXDorRNIMeayMu7g8MZSnoHbyKJ1d
+         dGTqJzkUPaLf4Llz/zy5U0C28JyjSENZ9luHDmnCsUmqW2+Qpy5b9tCA09z3V1hxA4n+
+         m1rd3fRjlfrqhjLDhULgnw8lHMEUw+kC2MFAqFPxTmcd4q6tklVxQQfIsL3siFt3or3A
+         8HbCJktWP7vW9EERriRGtTO8Q0n4yX9TdHO4UsJsWrAv4UvTS9F/MSLUf0dhBa+jGBNB
+         Ktw5wQIzkwOHhUTsrfpQ/mWSIE7LgPvuk0SRhIj25TkDkm2lF9ryz9FTTg6m+eOkX0c8
+         9NMg==
+X-Gm-Message-State: APjAAAWSP6/EVwjx1geGKJBvPyNRwWWcGfyvKW+wQOqCWyW0iitAqjhg
+        ez4ywvth8lYwB76HYfGLuZ14Sg==
+X-Google-Smtp-Source: APXvYqw+wsCa7XS8lSHe7s8aY0RZs/GZA8FpNaIPtlOCDBAb9htlfUSM8Hs0kMLXQOcRQsfU/WEQpw==
+X-Received: by 2002:a17:902:6b47:: with SMTP id g7mr2496208plt.160.1573863690575;
+        Fri, 15 Nov 2019 16:21:30 -0800 (PST)
 Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id u7sm9751454pjx.19.2019.11.15.15.57.05
+        by smtp.gmail.com with ESMTPSA id hi2sm9313474pjb.22.2019.11.15.16.21.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2019 15:57:05 -0800 (PST)
-Message-ID: <5dcf3b51.1c69fb81.e286f.bdec@mx.google.com>
+        Fri, 15 Nov 2019 16:21:29 -0800 (PST)
+Message-ID: <5dcf4109.1c69fb81.ef683.dbd7@mx.google.com>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1573593774-12539-10-git-send-email-eberman@codeaurora.org>
-References: <1573593774-12539-1-git-send-email-eberman@codeaurora.org> <1573593774-12539-10-git-send-email-eberman@codeaurora.org>
+In-Reply-To: <1573593774-12539-11-git-send-email-eberman@codeaurora.org>
+References: <1573593774-12539-1-git-send-email-eberman@codeaurora.org> <1573593774-12539-11-git-send-email-eberman@codeaurora.org>
 Cc:     Elliot Berman <eberman@codeaurora.org>, tsoni@codeaurora.org,
         sidgup@codeaurora.org, psodagud@codeaurora.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 To:     Elliot Berman <eberman@codeaurora.org>, agross@kernel.org,
         bjorn.andersson@linaro.org, saiprakash.ranjan@codeaurora.org
-Subject: Re: [PATCH v2 09/18] firmware: qcom_scm-64: Move SMC register filling to qcom_scm_call_smccc
+Subject: Re: [PATCH v2 10/18] firmware: qcom_scm-64: Improve SMC convention detection
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.8.1
-Date:   Fri, 15 Nov 2019 15:57:04 -0800
+Date:   Fri, 15 Nov 2019 16:21:28 -0800
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Elliot Berman (2019-11-12 13:22:45)
+Quoting Elliot Berman (2019-11-12 13:22:46)
 > diff --git a/drivers/firmware/qcom_scm-64.c b/drivers/firmware/qcom_scm-6=
 4.c
-> index 4131093..977654bb 100644
+> index 977654bb..b82b450 100644
 > --- a/drivers/firmware/qcom_scm-64.c
 > +++ b/drivers/firmware/qcom_scm-64.c
-> @@ -54,6 +54,10 @@ struct qcom_scm_desc {
->         u32 owner;
->  };
+> @@ -302,21 +302,20 @@ int __qcom_scm_hdcp_req(struct device *dev, struct =
+qcom_scm_hdcp_req *req,
 > =20
-> +struct arm_smccc_args {
-> +       unsigned long a[8];
-
-Please call it 'args', not just 'a'.
-
-> +};
-> +
->  static u64 qcom_smccc_convention =3D -1;
->  static DEFINE_MUTEX(qcom_scm_lock);
-> =20
-> @@ -95,12 +95,22 @@ static int ___qcom_scm_call_smccc(struct device *dev,
+>  void __qcom_scm_init(void)
 >  {
->         int arglen =3D desc->arginfo & 0xf;
->         int i;
-> -       u64 x5 =3D desc->args[SMCCC_FIRST_EXT_IDX];
->         dma_addr_t args_phys =3D 0;
->         void *args_virt =3D NULL;
->         size_t alloc_len;
->         gfp_t flag =3D atomic ? GFP_ATOMIC : GFP_KERNEL;
-> +       u32 smccc_call_type =3D atomic ? ARM_SMCCC_FAST_CALL : ARM_SMCCC_=
-STD_CALL;
->         struct arm_smccc_res res;
-> +       struct arm_smccc_args smc =3D {0};
+> -       u64 cmd;
+> -       struct arm_smccc_res res;
+> -       u32 function =3D SMCCC_FUNCNUM(QCOM_SCM_SVC_INFO, QCOM_SCM_INFO_I=
+S_CALL_AVAIL);
+> -
+> -       /* First try a SMC64 call */
+> -       cmd =3D ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_64,
+> -                                ARM_SMCCC_OWNER_SIP, function);
+> -
+> -       arm_smccc_smc(cmd, QCOM_SCM_ARGS(1), cmd & (~BIT(ARM_SMCCC_TYPE_S=
+HIFT)),
+> -                     0, 0, 0, 0, 0, &res);
+> -
+> -       if (!res.a0 && res.a1)
+> -               qcom_smccc_convention =3D ARM_SMCCC_SMC_64;
+> -       else
+> -               qcom_smccc_convention =3D ARM_SMCCC_SMC_32;
+> +       qcom_smccc_convention =3D ARM_SMCCC_SMC_64;
+> +       if (__qcom_scm_is_call_available(NULL, QCOM_SCM_SVC_INFO,
+> +                       QCOM_SCM_INFO_IS_CALL_AVAIL) =3D=3D 1)
+
+Is this asking if the "is call available function" is available by using
+the is call available function? That is recursive. Isn't that why we
+make a manually open coded SMC call to see if it works? If this isn't
+going to work we may want to just have a property in DT that tells us
+what to do.
+
+> +               goto out;
 > +
-> +       smc.a[0] =3D ARM_SMCCC_CALL_VAL(
-> +               smccc_call_type,
-> +               qcom_smccc_convention,
-> +               desc->owner,
-> +               SMCCC_FUNCNUM(desc->svc, desc->cmd));
-> +       smc.a[1] =3D desc->arginfo;
-> +       for (i =3D 0; i < SMCCC_N_REG_ARGS; i++)
-> +               smc.a[i + SMCCC_FIRST_REG_IDX] =3D desc->args[i];
-> =20
->         if (unlikely(arglen > SMCCC_N_REG_ARGS)) {
->                 alloc_len =3D SMCCC_N_EXT_ARGS * sizeof(u64);
-> @@ -131,19 +141,18 @@ static int ___qcom_scm_call_smccc(struct device *de=
-v,
->                         return -ENOMEM;
->                 }
-> =20
-> -               x5 =3D args_phys;
-> +               smc.a[SMCCC_LAST_REG_IDX] =3D args_phys;
->         }
-> =20
->         if (atomic) {
-> -               __qcom_scm_call_do_quirk(desc, &res, x5, ARM_SMCCC_FAST_C=
-ALL);
-> +               __qcom_scm_call_do_quirk(&smc, &res);
->         } else {
->                 int retry_count =3D 0;
-> =20
->                 do {
->                         mutex_lock(&qcom_scm_lock);
-> =20
-> -                       __qcom_scm_call_do_quirk(desc, &res, x5,
-> -                                                ARM_SMCCC_STD_CALL);
-> +                       __qcom_scm_call_do_quirk(&smc, &res);
-> =20
->                         mutex_unlock(&qcom_scm_lock);
-> =20
+> +       qcom_smccc_convention =3D ARM_SMCCC_SMC_32;
+> +       if (__qcom_scm_is_call_available(NULL, QCOM_SCM_SVC_INFO,
+> +                       QCOM_SCM_INFO_IS_CALL_AVAIL) =3D=3D 1)
+> +               goto out;
+> +
+> +       qcom_smccc_convention =3D -1;
+> +       BUG();
 
-Maybe we need to restructure this whole function to be a few steps
+This BUG() is new and not mentioned in the commit text. Why can't we
+just start failing all scm calls if we can't detect the calling
+convention?
 
-	setup_and_map_args()
-	do_call()
-	unmap_args()
-	remap_error()
+> +out:
+> +       pr_debug("QCOM SCM SMC Convention: %llu\n", qcom_smccc_convention=
+);
 
-And pass some set of args to those functions. That would probably
-provide clarity to this monstrously large function.
+Maybe pr_info() is more appropriate. PSCI currently prints out the
+version info so maybe printing something like "QCOM SCM SMC_64 calling
+convention" will be useful for early debugging.
 
