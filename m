@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 13013FEF04
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Nov 2019 16:56:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 96B95FF1FD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Nov 2019 17:16:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730247AbfKPPz6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Nov 2019 10:55:58 -0500
-Received: from mail.kernel.org ([198.145.29.99]:37628 "EHLO mail.kernel.org"
+        id S1729245AbfKPQQR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Nov 2019 11:16:17 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53682 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731627AbfKPPzd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Nov 2019 10:55:33 -0500
+        id S1728892AbfKPPrD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 16 Nov 2019 10:47:03 -0500
 Received: from sasha-vm.mshome.net (unknown [50.234.116.4])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A25B92192D;
-        Sat, 16 Nov 2019 15:55:32 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0833520855;
+        Sat, 16 Nov 2019 15:47:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573919732;
-        bh=tHz6rQfVRrlihB6AmfT2FhFCw8KS4l93N13Y6nXzowU=;
+        s=default; t=1573919223;
+        bh=/UtcM2CJ+MzcFJltihVFYIShK9Fi91fdbH/dA9RjkHs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=2IAX7hRBOK7uSI/oP6sQi5n53JJ4J0oPkmMsnH4Yi1pI35Kqqta3nDxeg0GuFUn/r
-         NlE5bTLz7v0LSbn8pKMjJ7wQqcI8DnII5IgF5SwY2BQwVYHrFjc4cS5C9KnErDBafa
-         bVOM2dowvxDrj78cdBcijEqYyJ+g1hA4wsJPkcHw=
+        b=XnBauPPrY73SBV8wpD2xyd2vISE6Cuob0YSM1O22s9myl0RGwSRVWbGvZ2BkXthOG
+         H5iilzB4n6/rASJ/r6vM1BsQWqDTUVZE/zyoFBs3loH7y+g/YkAoNf9hFo7SSJ+VqM
+         Y2XTW2rjkggV/Z2ywOAKjyKSwkHJzcE0GhHsDn8E=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Brian Masney <masneyb@onstation.org>,
         Linus Walleij <linus.walleij@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 74/77] pinctrl: qcom: spmi-gpio: fix gpio-hog related boot issues
-Date:   Sat, 16 Nov 2019 10:53:36 -0500
-Message-Id: <20191116155339.11909-74-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 227/237] pinctrl: qcom: spmi-gpio: fix gpio-hog related boot issues
+Date:   Sat, 16 Nov 2019 10:41:02 -0500
+Message-Id: <20191116154113.7417-227-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191116155339.11909-1-sashal@kernel.org>
-References: <20191116155339.11909-1-sashal@kernel.org>
+In-Reply-To: <20191116154113.7417-1-sashal@kernel.org>
+References: <20191116154113.7417-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -67,11 +67,11 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-index 4ea810cafaac6..913b2604d3454 100644
+index cf82db78e69e6..0c30f5eb4c714 100644
 --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
 +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-@@ -793,10 +793,23 @@ static int pmic_gpio_probe(struct platform_device *pdev)
- 		goto err_chip;
+@@ -1028,10 +1028,23 @@ static int pmic_gpio_probe(struct platform_device *pdev)
+ 		return ret;
  	}
  
 -	ret = gpiochip_add_pin_range(&state->chip, dev_name(dev), 0, 0, npins);
