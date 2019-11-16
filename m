@@ -2,117 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BF436FE9D6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Nov 2019 01:41:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78A6AFEA0F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Nov 2019 02:19:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727112AbfKPAlh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Nov 2019 19:41:37 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:45750 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727151AbfKPAlg (ORCPT
+        id S1727497AbfKPBTO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Nov 2019 20:19:14 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:56578 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727511AbfKPBTO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Nov 2019 19:41:36 -0500
-Received: by mail-pl1-f196.google.com with SMTP id w7so5792134plz.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2019 16:41:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:cc:to:subject:from:user-agent:date;
-        bh=9yDnCue+dWr9HxY0N6Q2Pch2FE87EcvqUib0TtR7pSQ=;
-        b=SS09XMCCT188I3/yk/6QftNMC9IzPDYnQmdpD8FJApyiRworrCIHWetparqWbZqWfh
-         sE82EvbhMwpgbLEHsZ261itWPBv2wNpDGEFunxQYMSVby8PR3RU1562IzkkAROSbXOjn
-         IyKeUAD0YV6+aWB43jPUxzP0vmTiJL/RssgK0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:cc:to:subject:from
-         :user-agent:date;
-        bh=9yDnCue+dWr9HxY0N6Q2Pch2FE87EcvqUib0TtR7pSQ=;
-        b=UooyYEdsxbqhg1BE88QIVPVr9I7UhcD8adzvs9OUfXvg12RnPRNhaSWxhnDsRgnUf/
-         rtw5cfQfc97/49vKVAO8I7nDESTvXcmSnIJpywzXyWWfulWke7Boqd+vLUk0wcQMltiH
-         jfgi0LOX/WZWeVCHYbG1Jb0I+Oh8Z08NBgtoT35uTRJo+vny70W70WHaTGHqmey2QQ1W
-         cc2Ku5uvsHmDSsEXDU8fR5VDTfow3CG18rc0qQ8liqSRlfNVwtpSmQ7IRlC5Rm7V2eIZ
-         irVMrY2t1BniUMpcqlsc/XeZRA1KfH8p2GFBKE3E/qmNIK+2LkzDoQorHtqQBCMZ/AZ/
-         o6iQ==
-X-Gm-Message-State: APjAAAUEpjEBkiBd+loGyv3REvf5+s4TiIBpH7CXHxQrT+YqqYcah+wh
-        KqpQVuVcp9eFOsGjCmzykzPbAA==
-X-Google-Smtp-Source: APXvYqyvjrTceDeetKzJjeqQs3diL1hZzZJ5Y8qhrrcMn2HLl3bmepesp6jkH4039XhUy5/6ptKlmQ==
-X-Received: by 2002:a17:90a:35d0:: with SMTP id r74mr23276348pjb.47.1573864894228;
-        Fri, 15 Nov 2019 16:41:34 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id 193sm13872761pfv.18.2019.11.15.16.41.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2019 16:41:33 -0800 (PST)
-Message-ID: <5dcf45bd.1c69fb81.297bb.9cb9@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        Fri, 15 Nov 2019 20:19:14 -0500
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id BE25761060; Sat, 16 Nov 2019 01:19:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573867153;
+        bh=LFJEZ89g9PtHzr8dEUbLwSgKkc9eHaTVdtduLL6yNhQ=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=X8fF3kdKLWt5NcPJYOzjxQNs/X3VQ58qCsECnzNs853fcEHqMHkUDp8LvWRrny/Pd
+         CUuiWROVGC/74NI27lvj8bhJ/TsowflobwcP0ySfuHPUgD7CniX6Vovk37HCywk3XW
+         6tt65uAG2iIz6583JEZ3PnqqUaIIq2/TtAlETn28=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        pdx-caf-mail.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_INVALID,DKIM_SIGNED autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by smtp.codeaurora.org (Postfix) with ESMTP id 1D96761015;
+        Sat, 16 Nov 2019 01:19:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1573867153;
+        bh=LFJEZ89g9PtHzr8dEUbLwSgKkc9eHaTVdtduLL6yNhQ=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=X8fF3kdKLWt5NcPJYOzjxQNs/X3VQ58qCsECnzNs853fcEHqMHkUDp8LvWRrny/Pd
+         CUuiWROVGC/74NI27lvj8bhJ/TsowflobwcP0ySfuHPUgD7CniX6Vovk37HCywk3XW
+         6tt65uAG2iIz6583JEZ3PnqqUaIIq2/TtAlETn28=
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1573593774-12539-12-git-send-email-eberman@codeaurora.org>
-References: <1573593774-12539-1-git-send-email-eberman@codeaurora.org> <1573593774-12539-12-git-send-email-eberman@codeaurora.org>
-Cc:     Elliot Berman <eberman@codeaurora.org>, tsoni@codeaurora.org,
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 15 Nov 2019 17:19:13 -0800
+From:   eberman@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        saiprakash.ranjan@codeaurora.org, tsoni@codeaurora.org,
         sidgup@codeaurora.org, psodagud@codeaurora.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Elliot Berman <eberman@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, saiprakash.ranjan@codeaurora.org
-Subject: Re: [PATCH v2 11/18] firmware: qcom_scm-32: Use SMC arch wrappers
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.8.1
-Date:   Fri, 15 Nov 2019 16:41:32 -0800
+Subject: Re: [PATCH v2 01/18] firmware: qcom_scm: Rename macros and structures
+In-Reply-To: <5dcf345b.1c69fb81.df1ea.f7f6@mx.google.com>
+References: <1573593774-12539-1-git-send-email-eberman@codeaurora.org>
+ <1573593774-12539-2-git-send-email-eberman@codeaurora.org>
+ <5dcf345b.1c69fb81.df1ea.f7f6@mx.google.com>
+Message-ID: <4b63daf69f7b49ce8304b5cd85e39b22@codeaurora.org>
+X-Sender: eberman@codeaurora.org
+User-Agent: Roundcube Webmail/1.2.5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Elliot Berman (2019-11-12 13:22:47)
-> Use SMC arch wrappers instead of inline assembly.
->=20
-> Signed-off-by: Elliot Berman <eberman@codeaurora.org>
-> ---
+On 2019-11-15 15:27, Stephen Boyd wrote:
+> ... to here I don't understand why any of it needs to change. It looks
+> like a bunch of churn and it conflates qcom SCM calls with SMCCC which
+> is not desirable. Those two concepts are different.
 
-Nice. Can this come earlier in the series?
+I can see the confusion. The goal with this patch is to make it more 
+clear which
+macros and structures are for SCM interface from those which deal with 
+the
+implementation of how an SCM call is implemented with the smc 
+instruction. It's
+not presently clear that struct qcom_scm_response (for instance) is only
+relevant in the context of legacy convention.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+I choose the name "legacy" since only older firmwares use it and having
+"scm_buffer_get_command_buffer" seems even more confusing to me! "SMCCC" 
+was
+chosen for lack of a better name.
 
-> diff --git a/drivers/firmware/qcom_scm-32.c b/drivers/firmware/qcom_scm-3=
-2.c
-> index e06d59b..c3aeccf 100644
-> --- a/drivers/firmware/qcom_scm-32.c
-> +++ b/drivers/firmware/qcom_scm-32.c
-> @@ -10,6 +10,7 @@
->  #include <linux/errno.h>
->  #include <linux/err.h>
->  #include <linux/qcom_scm.h>
-> +#include <linux/arm-smccc.h>
->  #include <linux/dma-mapping.h>
-> =20
->  #include "qcom_scm.h"
-> @@ -124,25 +125,13 @@ static inline void *legacy_get_response_buffer(
->  static u32 __qcom_scm_call_do(u32 cmd_addr)
->  {
->         int context_id;
-> -       register u32 r0 asm("r0") =3D 1;
-> -       register u32 r1 asm("r1") =3D (u32)&context_id;
-> -       register u32 r2 asm("r2") =3D cmd_addr;
-> +       struct arm_smccc_res res;
->         do {
-> -               asm volatile(
-> -                       __asmeq("%0", "r0")
-> -                       __asmeq("%1", "r0")
-> -                       __asmeq("%2", "r1")
-> -                       __asmeq("%3", "r2")
-> -#ifdef REQUIRES_SEC
-> -                       ".arch_extension sec\n"
-> -#endif
-> -                       "smc    #0      @ switch to secure world\n"
-> -                       : "=3Dr" (r0)
-> -                       : "r" (r0), "r" (r1), "r" (r2)
-> -                       : "r3", "r12");
+Additionally, the concern with having qcom_scm_ prefix on these 
+functions
+(especially legacy_get_*_buffer()) is you get long function names which 
+didn't
+seem desirable. If the long names are preferable, I can update series 
+with the
+longer form of the names.
 
-I assume that the clobber list is not a problem? i.e. r12 is going to
-get clobbered and that's not a problem.
-
-> -       } while (r0 =3D=3D QCOM_SCM_INTERRUPTED);
-> -
-> -       return r0;
-> +               arm_smccc_smc(1, (unsigned long)&context_id, cmd_addr,
-> +                             0, 0, 0, 0, 0, &res);
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
