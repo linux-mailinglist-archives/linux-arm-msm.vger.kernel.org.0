@@ -2,98 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D41D4FEACB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Nov 2019 06:51:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A97E1FEAF9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Nov 2019 07:44:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726197AbfKPFvT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Nov 2019 00:51:19 -0500
-Received: from mail.kernel.org ([198.145.29.99]:59198 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725840AbfKPFvT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Nov 2019 00:51:19 -0500
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2FCD120729;
-        Sat, 16 Nov 2019 05:51:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1573883478;
-        bh=3glp16+H5Slzp2YEAa7YPPALJxZr7iGRwioZPJUYpxU=;
-        h=In-Reply-To:References:Cc:To:Subject:From:Date:From;
-        b=DyMApAvuBt1DmHYQwaweWiSlfZhcvWyMbqHWlqdlNwXIJ2HO7W04RG0PyEQsW33ot
-         cWIOO+AcvOLWQbrmNJPiu0C6gmrqEteA5EHV4DmpjB7lSMJi6VnY6ywMKh6nnoI/uj
-         5P6bEnCUnP4PSs0pKkO72mJjaKTPiMKRBr5pbgy0=
-Content-Type: text/plain; charset="utf-8"
+        id S1726156AbfKPGoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Nov 2019 01:44:20 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:35184 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726076AbfKPGoU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 16 Nov 2019 01:44:20 -0500
+Received: by mail-pg1-f196.google.com with SMTP id k32so1299539pgl.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Nov 2019 22:44:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=83mOzCZrk2hLeBIavxFW02Ub7zgigDrZgcfo7Rp02xE=;
+        b=etF6/auczY/PHyj2EW/5m9MAfa7+4KhKO2DKDAQqUiiJ/HJycDvebsWhFyy7ltErNz
+         GPdUetQoCqDTxijT0aZPIe5TPLoBcuI/HcwwSLoQvfsRwKrEcXKyfNi58/nXbyswpqjH
+         BprxdonwAHRWF6P4gsThGhzKQh/Py9iApmDHlM3sQN6OXVP0V9y6jMAMLR3TIIUCIAOs
+         wiAUpDM/MxLmyKx/CsTNelNQqSJLaS4PsRhsYQm37K7kVfWPrj01BPVG5X/0yGHts/rX
+         wRCVlVZ2lrtpKQbhURCDfqzz26gKxLE7PQlrRpXzosM17VsQnO3aK56Z84Nzqk9noZcq
+         43eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=83mOzCZrk2hLeBIavxFW02Ub7zgigDrZgcfo7Rp02xE=;
+        b=mFKS89Gl+sDH9BBBx+ptXnBLt6v0+VAqdHpOmOXcT674cGxWarpMuvy/K4WwQ4IoIm
+         j9/0kNVye/5/KaS7NAVU1sYEXok4TYF72EF4cQJGN1x6pynGjLE0I7jh1Ktc0adSS3dJ
+         dUm8iTS7skhMnGJI1MWTC1UZEmSfijLQ+eDvRx2XVKBU+ksAJu6D0k5VHHcArw+Rh+3U
+         /IkPWfrQljYc8ebsmu1S2B4/8zfTtXgrdc5oSO9gARy0l4C8r/lS2VaaiNAiqN1bJPx6
+         4CMCc+nCl+4UrznySuwGAGeuElVAOA7e31lLNNKlvAlE6n3oa7ZLp6GmDZb0zLGpuuMG
+         wTVw==
+X-Gm-Message-State: APjAAAWs39r1dc8viR8jMPbGHEardr86Vn89CtQK7zeA2QTVfanGm+x/
+        B/O3tOiv6OjHB3tfbfl7zoC7Tw==
+X-Google-Smtp-Source: APXvYqwkM4lZh6cRGZMVmRD+7muqSOChY7AWDb7zXeO/JwqTvRigHw1HpZUm08pwffapf4Vo4sOuEg==
+X-Received: by 2002:a63:5164:: with SMTP id r36mr7664120pgl.143.1573886659746;
+        Fri, 15 Nov 2019 22:44:19 -0800 (PST)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id f26sm10985615pgf.22.2019.11.15.22.44.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Nov 2019 22:44:18 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: msm8998-mtp: Add alias for blsp1_uart3
+Date:   Fri, 15 Nov 2019 22:44:15 -0800
+Message-Id: <20191116064415.159899-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <80e79595-0672-1d16-f251-717dbe449c57@codeaurora.org>
-References: <1572524473-19344-1-git-send-email-tdas@codeaurora.org> <1572524473-19344-8-git-send-email-tdas@codeaurora.org> <20191106003944.1BDAE2178F@mail.kernel.org> <80e79595-0672-1d16-f251-717dbe449c57@codeaurora.org>
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh@kernel.org, robh+dt@kernel.org
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Subject: Re: [PATCH v1 7/7] clk: qcom: Add video clock controller driver for SC7180
-From:   Stephen Boyd <sboyd@kernel.org>
-User-Agent: alot/0.8.1
-Date:   Fri, 15 Nov 2019 21:51:17 -0800
-Message-Id: <20191116055118.2FCD120729@mail.kernel.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2019-11-15 00:11:31)
-> Hi Stephen,
->=20
-> Thanks for the review.
->=20
-> On 11/6/2019 6:09 AM, Stephen Boyd wrote:
-> > Quoting Taniya Das (2019-10-31 05:21:13)
-> >> diff --git a/drivers/clk/qcom/videocc-sc7180.c b/drivers/clk/qcom/vide=
-occ-sc7180.c
-> >> new file mode 100644
-> >> index 0000000..bef034b
-> >> --- /dev/null
-> >> +++ b/drivers/clk/qcom/videocc-sc7180.c
-> >> @@ -0,0 +1,263 @@
-> >=20
-> >> +       video_pll0_config.alpha =3D 0x4000;
-> >> +       video_pll0_config.user_ctl_val =3D 0x00000001;
-> >> +       video_pll0_config.user_ctl_hi_val =3D 0x00004805;
-> >=20
-> > Same question, why on stack?
-> >=20
->=20
-> Will update the same.
+The msm_serial driver uses a simple counter to determine which port to
+use when no alias is defined, but there's no logic to prevent this from
+not colliding with what's defined by the aliases. As a result either
+none or all of the active msm_serial instances must be listed as
+aliases.
 
-Sounds like nothing to do.
+Define blsp1_uart3 as "serial1" to mitigate this problem.
 
->=20
-> >> +
-> >> +       clk_fabia_pll_configure(&video_pll0, regmap, &video_pll0_confi=
-g);
-> >> +
-> >> +       /* video_cc_xo_clk */
-> >=20
-> > What are we doing? Enabling it?
-> >=20
->=20
-> yes, enabling it. Did not model and mark it CRITICAL.
+Fixes: 4cffb9f2c700 ("arm64: dts: qcom: msm8998-mtp: Enable bluetooth")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-Ok. Please describe that in the comment.
-
-> >> +}
-> >> +module_exit(video_cc_sc7180_exit);
-> >=20
-> > Same question, module platform driver perhaps?
-> >=20
->=20
-> I will move it to subsys_initcall().
->=20
-
-Hmm ok.
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+index 5f101a20a20a..e08fcb426bbf 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+@@ -9,6 +9,7 @@
+ / {
+ 	aliases {
+ 		serial0 = &blsp2_uart1;
++		serial1 = &blsp1_uart3;
+ 	};
+ 
+ 	chosen {
+-- 
+2.23.0
 
