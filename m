@@ -2,123 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CC0B6100699
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2019 14:38:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 81C0F100758
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2019 15:27:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726703AbfKRNiT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Nov 2019 08:38:19 -0500
-Received: from mail-vk1-f194.google.com ([209.85.221.194]:35218 "EHLO
-        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726627AbfKRNiS (ORCPT
+        id S1726939AbfKRO1v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Nov 2019 09:27:51 -0500
+Received: from a27-10.smtp-out.us-west-2.amazonses.com ([54.240.27.10]:42390
+        "EHLO a27-10.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726712AbfKRO1v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Nov 2019 08:38:18 -0500
-Received: by mail-vk1-f194.google.com with SMTP id e205so4091503vke.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2019 05:38:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/77pUYmYz7k7jHWCZ8ME97fD0QEJopQhVV1Wft8srRM=;
-        b=rXVcwC04Dw3sP5f0UbSNsb70P5cHd+ewZ7Crr6h4d8hZ+AXTqm/fEI/LD6i03HFWVK
-         mlA61V1kbYdKS30Na5zP1VkSfWKB1gQxRiPgOtoR6GeKgO+sMkE578+5wExm7co2MhGA
-         eSiFPyv2zBMVZmVlG19sBdCpHTSPFIHxU6p72lS0EGXbEJ96Lcsu9aca9cIhS0tKhw5K
-         BYwmnTQppZjqQMzOpFy4CcBOxmmAl+PuTF/gmqG8uuqmqQPzMvcpAgq3BuBvMWK4xqAO
-         345tJ9uqP9jrlyEGUHYs3IevZPfkVgL8c+g9pPX8vlPCWrZ2YJVczaiEg1P3uT5eOqaD
-         g5HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/77pUYmYz7k7jHWCZ8ME97fD0QEJopQhVV1Wft8srRM=;
-        b=GOI7LgxQ560n5OHYEsL/S0TS0q2QjgzqvCflg2mmG9mmP3kX9Yd/oZI8NLfPUWmn7Y
-         MvC/EYxvsHB1+rOp28A6RF0CxhVz5KlUL38hFzHaDRU8LGxYaRg6LOisThdau8a3kqer
-         azgmTP4Zd0pIW9waEwSommgJ8e4Wmhqm7X3WgibHp/la3tYp+4giILXmcIPlOTsNgbd3
-         g8t1aGiOqR2hPG/zzqxLeKpXDIAXmr0astRZAxBGGuaXmUUAq1V4IoeOUPGSM2i3/jtI
-         F5OD0N1pqBis7QllPy7LuOQl1doy0yOdfGtynp7K5I7l8UIlr6z0ZYgLWiK3sA4E7sU5
-         dn/w==
-X-Gm-Message-State: APjAAAUObpH6nJWSG7x2B+y74R29E5GLvxrSJHng116xyrLRRW5kWzvp
-        OpLcweU4j2an8Qn2LxgeNVk20N3Jqe1zCz9uaUyC5Q==
-X-Google-Smtp-Source: APXvYqyAccXywO3dLSpf9U8QdQsjon07qgb4WXqdwjPKakwD0V8cWv3zMIgV+w3PtKaed2gIOPIutMtXJhjD1Beh3pY=
-X-Received: by 2002:a1f:7381:: with SMTP id o123mr16970902vkc.53.1574084297284;
- Mon, 18 Nov 2019 05:38:17 -0800 (PST)
+        Mon, 18 Nov 2019 09:27:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574087270;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding;
+        bh=OgF0Z1H+PaADFbMisqszmEQhv/II6Km3xEqFXk+lJkc=;
+        b=XabZZVtSL81eTezQPwK4OniAwR2dbeAazMuXRXU+UpBlomePigAC4tCEeZ0stg1l
+        tR+1/FHHdfNItyxLu27v4hKCafZR5LOigbgx47j+ak2xsdLFhrjDFs88kzOgml+twde
+        0WX8S7xCBOPMdJWib2aQ3ldRdLZiFDHFcTSPla18=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574087270;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding:Feedback-ID;
+        bh=OgF0Z1H+PaADFbMisqszmEQhv/II6Km3xEqFXk+lJkc=;
+        b=ObYMNeWOMFFIWrQ4XiVwnlB+1CsGDyk/59Xt/jomdHP3aey5HFp1s1/jav+k/Ida
+        fbsYNeWkyE5Vyj8Ru12nBAm144hRG/+baY75oqjxu/TZX1gfqVNKR9cruDTYVi3uhrE
+        gLPBiN73QKuX4K7cw2jL2y5WvYqx9G8q46biHn6o=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 33CE3C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org, srinivas.kandagatla@linaro.org,
+        robh+dt@kernel.org, tsoni@codeaurora.org
+Cc:     agross@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        rnayak@codeaurora.org, Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH 0/3] Introduce Protection Domain Restart (PDR) Helpers
+Date:   Mon, 18 Nov 2019 14:27:50 +0000
+Message-ID: <0101016e7ee9a027-e6223a1b-eafb-4b4e-a69c-75f7586a4a71-000000@us-west-2.amazonses.com>
+X-Mailer: git-send-email 2.22.1
 MIME-Version: 1.0
-References: <20191029164438.17012-1-ulf.hansson@linaro.org>
- <20191029164438.17012-11-ulf.hansson@linaro.org> <20191115173053.GE27170@bogus>
-In-Reply-To: <20191115173053.GE27170@bogus>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 18 Nov 2019 14:37:41 +0100
-Message-ID: <CAPDyKFraEhFVm27YG0fVkjT0-oBBxFpfiBY4zS+1TMy=0F6GRQ@mail.gmail.com>
-Subject: Re: [PATCH v2 10/13] cpuidle: psci: Prepare to use OS initiated
- suspend mode via PM domains
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Lina Iyer <lina.iyer@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-SES-Outgoing: 2019.11.18-54.240.27.10
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 15 Nov 2019 at 18:30, Sudeep Holla <sudeep.holla@arm.com> wrote:
->
-> On Tue, Oct 29, 2019 at 05:44:35PM +0100, Ulf Hansson wrote:
-> > The per CPU variable psci_power_state, contains an array of fixed values,
-> > which reflects the corresponding arm,psci-suspend-param parsed from DT, for
-> > each of the available CPU idle states.
-> >
-> > This isn't sufficient when using the hierarchical CPU topology in DT, in
-> > combination with having PSCI OS initiated (OSI) mode enabled. More
-> > precisely, in OSI mode, Linux is responsible of telling the PSCI FW what
-> > idle state the cluster (a group of CPUs) should enter, while in PSCI
-> > Platform Coordinated (PC) mode, each CPU independently votes for an idle
-> > state of the cluster.
-> >
-> > For this reason, introduce a per CPU variable called domain_state and
-> > implement two helper functions to read/write its value. Then let the
-> > domain_state take precedence over the regular selected state, when entering
-> > and idle state.
-> >
-> > Finally, let's also avoid sprinkling the existing non-OSI path with
-> > operations being specific for OSI.
-> >
->
-> Mostly looks good.
+Qualcomm SoCs (starting with MSM8998) allow for multiple protection
+domains (PDs) to run on the same Q6 sub-system. This allows for
+services like AVS AUDIO to have their own separate address space and
+crash/recover without disrupting the other PDs running on the same Q6
+ADSP. This patch series introduces pdr helper library and adds PD
+tracking functionality for "avs/audio" allowing apr services to register
+themselves asynchronously once the dependent PDs are up.
 
-Thanks!
+Sibi Sankar (3):
+  soc: qcom: Introduce Protection Domain Restart helpers
+  dt-bindings: soc: qcom: apr: Add protection domain bindings
+  soc: qcom: apr: Add avs/audio tracking functionality
 
+ .../devicetree/bindings/soc/qcom/qcom,apr.txt |  59 ++
+ drivers/soc/qcom/Kconfig                      |   6 +
+ drivers/soc/qcom/Makefile                     |   1 +
+ drivers/soc/qcom/apr.c                        | 100 ++-
+ drivers/soc/qcom/pdr_interface.c              | 685 ++++++++++++++++++
+ drivers/soc/qcom/pdr_internal.h               | 375 ++++++++++
+ include/linux/soc/qcom/apr.h                  |   1 +
+ include/linux/soc/qcom/pdr.h                  | 102 +++
+ include/linux/soc/qcom/qmi.h                  |   1 +
+ 9 files changed, 1319 insertions(+), 11 deletions(-)
+ create mode 100644 drivers/soc/qcom/pdr_interface.c
+ create mode 100644 drivers/soc/qcom/pdr_internal.h
+ create mode 100644 include/linux/soc/qcom/pdr.h
 
-> I am still wondering if we can keep all OSI related
-> info in the newly created structure and have psci_states outside it as
-> before. And I was think psci_enter_idle_state_pc and psci_enter_idle_state_osi
-> instead of single psci_enter_idle_state and assign/initialise state->enter
-> based on the mode chosen. I had to closer look now and looks like enter
-> is initialised in generic dt_idle_states. That said, what you have in this
-> patch also looks OK to me, was just trying to avoid access to the new
-> structure all together and keep the PC mode patch almost same as before
-> when suspending. I will see what Lorenzo thinks about this.
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-I did explore that approach a bit, but found it easier to go with what
-I propose here. The most important point, in my view, is that in this
-suggested approach only one if-check, "if (!data->dev)", is added to
-the PC mode path compared to the original path. I think this should be
-fine, right!?
-
-In any case, if you prefer any other solution, just tell me and I adapt to it.
-
-Now, I am looking forward to hear from Lorenzo.
-
-Kind regards
-Uffe
