@@ -2,188 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B5C631008C8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2019 16:57:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3C7C10090B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2019 17:19:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727339AbfKRP5f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Nov 2019 10:57:35 -0500
-Received: from a27-188.smtp-out.us-west-2.amazonses.com ([54.240.27.188]:49764
-        "EHLO a27-188.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727334AbfKRP5f (ORCPT
+        id S1726725AbfKRQTe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Nov 2019 11:19:34 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:41653 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726635AbfKRQTd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Nov 2019 10:57:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574092654;
-        h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To;
-        bh=0uOLVzLMI7MHc8k6E5GevpIZG9gm0SmkADc/SJd5Z0U=;
-        b=nzhklT8FJBBpz9mH5tKwRtUpH1XOKlOCBtyRMBv00av7yQeRn+rOJ/TZSd4JjXlT
-        O7PDyrw20tAB+EsdXNP45lJPJHKPmvjdAiAucANqsvx0iKoV2Dgx7jXx0YnwqBc4ruE
-        3E4w6ZCQW9sQZiDxkn6Ku9rmj9pRtW5nqVIRCJLA=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574092654;
-        h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Feedback-ID;
-        bh=0uOLVzLMI7MHc8k6E5GevpIZG9gm0SmkADc/SJd5Z0U=;
-        b=dMEH59FehjHpOlh1Lqk7BxDNcQD0y4BBHDv2fxpTiTYed2NYqjFk9CblgN4fr8md
-        UGn+UsgW0BnVQ78tpnngSMYSbh1GyU3+4hz3YL/zBn77YV+I52jVg7MHvguUY1E6OYT
-        1Kexlqa5TKb8cIQv7RiY/PUh7Hc8igJ9g3HxG0uY=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 79463C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Mon, 18 Nov 2019 15:57:34 +0000
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, robh+dt@kernel.org,
-        mark.rutland@arm.com, devicetree@vger.kernel.org, airlied@linux.ie,
-        linux-arm-msm@vger.kernel.org, dianders@chromium.org,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        daniel@ffwll.ch, freedreno@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH 2/4] drm/msm/gpu: add support for ocmem
- interconnect path
-Message-ID: <0101016e7f3bc614-0b50ca10-6ca3-459e-831c-af9e18acbacf-000000@us-west-2.amazonses.com>
-Mail-Followup-To: Brian Masney <masneyb@onstation.org>, robdclark@gmail.com,
-        sean@poorly.run, robh+dt@kernel.org, mark.rutland@arm.com,
-        devicetree@vger.kernel.org, airlied@linux.ie,
-        linux-arm-msm@vger.kernel.org, dianders@chromium.org,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        daniel@ffwll.ch, freedreno@lists.freedesktop.org
-References: <20191117114825.13541-1-masneyb@onstation.org>
- <20191117114825.13541-3-masneyb@onstation.org>
+        Mon, 18 Nov 2019 11:19:33 -0500
+Received: by mail-io1-f68.google.com with SMTP id r144so19374030iod.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2019 08:19:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=E9E85CtL9td3M11CPpft7JLYpTsiRw80DDYN+NBSTjo=;
+        b=inz6BKPqZnuPFIBOaggS5p7Eq85z3j336Z6TV07+Al4rjRDU6kXtvyQ+UbLZ+grkc7
+         F9IoCrhDHv9E0jbh24OtIzDmmwE+a0DYcrXe6lMlciR7KxmFm0bRRidgAu/DP2Y6bS0M
+         eryoP6eftPzMcIOhTmUSN+/UFMaYfEBxLPQPA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=E9E85CtL9td3M11CPpft7JLYpTsiRw80DDYN+NBSTjo=;
+        b=RXNsEs06kOVfBeuY0FIgsEI+7nZL7iRdelfnokEf9ysmGt5RTJvKBrS1xL1o9sjWUo
+         CoGxUrgHuhqRN9O1Wm/CLxuOrxZ99v5DeP6nf4P+Q254HG98fY5IRgDjOoXfrTEsvt6M
+         TwbUqfCpQmRGD+KNdSy2cZ+CnIyoZpLFxikthoQbBQBx7hhLSsuOx0QmW9DUEUiU6jjD
+         PM9O6w3QomCvcWUqBd8NKn/08GWWfenZc00OcVe2ePddvNpKBQUJ8Kly8oaQEfXktvmI
+         +QbvUDY1PvuA/bfUrKwjTXwu+QR9Ufmhc9HXMImEIRK5iYDIcMqqmHXU1kbWkx8ZLX1o
+         G4qA==
+X-Gm-Message-State: APjAAAULDtKOHpN1cPn/VwymDguoPQLUh2866DSAZ0k65q3oLRJQMIyp
+        mQNj0cKIim5W2zhF5yflM1qP2Qb3Hfg=
+X-Google-Smtp-Source: APXvYqzDgnwvFZfLX0Yu/dXVw2I3/PHLgF8cSckhLER/29Er2eXioE+HVIK6lflUhFv+KEwDzh3CsA==
+X-Received: by 2002:a5d:88c6:: with SMTP id i6mr8136381iol.251.1574093971602;
+        Mon, 18 Nov 2019 08:19:31 -0800 (PST)
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com. [209.85.166.171])
+        by smtp.gmail.com with ESMTPSA id c21sm4636048ilg.31.2019.11.18.08.19.30
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Nov 2019 08:19:30 -0800 (PST)
+Received: by mail-il1-f171.google.com with SMTP id o18so16510997ils.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2019 08:19:30 -0800 (PST)
+X-Received: by 2002:a92:109c:: with SMTP id 28mr16767271ilq.142.1574093970462;
+ Mon, 18 Nov 2019 08:19:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191117114825.13541-3-masneyb@onstation.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-SES-Outgoing: 2019.11.18-54.240.27.188
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
+References: <20190214173633.211000-1-dianders@chromium.org>
+In-Reply-To: <20190214173633.211000-1-dianders@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 18 Nov 2019 08:19:18 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=WD4r-GAM6mnTg9qB04aaX7JJzHajhtb+N8Yq9UR1WZAA@mail.gmail.com>
+Message-ID: <CAD=FV=WD4r-GAM6mnTg9qB04aaX7JJzHajhtb+N8Yq9UR1WZAA@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: rpmhpd: Set 'active_only' for active only
+ power domains
+To:     Andy Gross <andy.gross@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Nov 17, 2019 at 06:48:23AM -0500, Brian Masney wrote:
-> Some A3xx and all A4xx Adreno GPUs do not have GMEM inside the GPU core
-> and must use the On Chip MEMory (OCMEM) in order to be functional.
-> There's a separate interconnect path that needs to be setup to OCMEM.
-> Add support for this second path to the GPU core.
-> 
-> In the downstream MSM 3.4 sources, the two interconnect paths for the
-> GPU are between:
-> 
->   - MSM_BUS_MASTER_GRAPHICS_3D and MSM_BUS_SLAVE_EBI_CH0
->   - MSM_BUS_MASTER_V_OCMEM_GFX3D and MSM_BUS_SLAVE_OCMEM
-> 
-> Signed-off-by: Brian Masney <masneyb@onstation.org>
+Bjorn / Andy,
+
+On Thu, Feb 14, 2019 at 9:36 AM Douglas Anderson <dianders@chromium.org> wrote:
+>
+> The 'active_only' attribute was accidentally never set to true for any
+> power domains meaning that all the code handling this attribute was
+> dead.
+>
+> NOTE that the RPM power domain code (as opposed to the RPMh one) gets
+> this right.
+>
+> Fixes: 279b7e8a62cc ("soc: qcom: rpmhpd: Add RPMh power domain driver")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c   |  6 +++---
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 20 ++++++++++++++++----
->  drivers/gpu/drm/msm/msm_gpu.h           |  3 ++-
->  3 files changed, 21 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 85f14feafdec..7885e382fb8f 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -132,7 +132,7 @@ static void __a6xx_gmu_set_freq(struct a6xx_gmu *gmu, int index)
->  	 * Eventually we will want to scale the path vote with the frequency but
->  	 * for now leave it at max so that the performance is nominal.
->  	 */
-> -	icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
-> +	icc_set_bw(gpu->gfx_mem_icc_path, 0, MBps_to_icc(7216));
->  }
->  
->  void a6xx_gmu_set_freq(struct msm_gpu *gpu, unsigned long freq)
-> @@ -714,7 +714,7 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
->  	}
->  
->  	/* Set the bus quota to a reasonable value for boot */
-> -	icc_set_bw(gpu->icc_path, 0, MBps_to_icc(3072));
-> +	icc_set_bw(gpu->gfx_mem_icc_path, 0, MBps_to_icc(3072));
->  
->  	/* Enable the GMU interrupt */
->  	gmu_write(gmu, REG_A6XX_GMU_AO_HOST_INTERRUPT_CLR, ~0);
-> @@ -858,7 +858,7 @@ int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
->  		a6xx_gmu_shutdown(gmu);
->  
->  	/* Remove the bus vote */
-> -	icc_set_bw(gpu->icc_path, 0, 0);
-> +	icc_set_bw(gpu->gfx_mem_icc_path, 0, 0);
->  
->  	/*
->  	 * Make sure the GX domain is off before turning off the GMU (CX)
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index 0783e4b5486a..d1cc021c012c 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -887,9 +887,20 @@ static int adreno_get_pwrlevels(struct device *dev,
->  	DBG("fast_rate=%u, slow_rate=27000000", gpu->fast_rate);
->  
->  	/* Check for an interconnect path for the bus */
-> -	gpu->icc_path = of_icc_get(dev, NULL);
-> -	if (IS_ERR(gpu->icc_path))
-> -		gpu->icc_path = NULL;
-> +	gpu->gfx_mem_icc_path = of_icc_get(dev, "gfx-mem");
-> +	if (!gpu->gfx_mem_icc_path) {
-> +		/*
-> +		 * Keep compatbility with device trees that don't have an
-> +		 * interconnect-names property.
-> +		 */
-> +		gpu->gfx_mem_icc_path = of_icc_get(dev, NULL);
-> +	}
-> +	if (IS_ERR(gpu->gfx_mem_icc_path))
-> +		gpu->gfx_mem_icc_path = NULL;
-> +
-> +	gpu->ocmem_icc_path = of_icc_get(dev, "ocmem");
-> +	if (IS_ERR(gpu->ocmem_icc_path))
-> +		gpu->ocmem_icc_path = NULL;
+>
+>  drivers/soc/qcom/rpmhpd.c | 2 ++
+>  1 file changed, 2 insertions(+)
 
-This is the part where I am reminded that icc_set_bw doesn't check
-IS_ERR_OR_NULL and even worse, icc_put warns on IS_ERR and it makes 
-me grumble.
+Somehow this fell through the cracks and was never applied.  Can you
+pick it up?  Given that it's been a year and nobody has noticed this
+it seems like 5.5 is fine, but maybe you could add Cc: stable since it
+seems like something that stable trees would want...
 
->  	return 0;
->  }
-> @@ -976,7 +987,8 @@ void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
->  	for (i = 0; i < ARRAY_SIZE(adreno_gpu->info->fw); i++)
->  		release_firmware(adreno_gpu->fw[i]);
->  
-> -	icc_put(gpu->icc_path);
-> +	icc_put(gpu->gfx_mem_icc_path);
-> +	icc_put(gpu->ocmem_icc_path);
->  
->  	msm_gpu_cleanup(&adreno_gpu->base);
->  }
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-> index ab8f0f9c9dc8..e72e56f7b0ef 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.h
-> +++ b/drivers/gpu/drm/msm/msm_gpu.h
-> @@ -111,7 +111,8 @@ struct msm_gpu {
->  	struct clk *ebi1_clk, *core_clk, *rbbmtimer_clk;
->  	uint32_t fast_rate;
->  
-> -	struct icc_path *icc_path;
-> +	struct icc_path *gfx_mem_icc_path;
-> +	struct icc_path *ocmem_icc_path;
+Thanks!
 
-I'm not sure if we want a bulk rename of the main path.  icc_path and
-ocmem_icc_path seem to be reasonable names and not overly confusing especially
-if we added some documentation to the header).
-
-
->  	/* Hang and Inactivity Detection:
->  	 */
-> -- 
-> 2.21.0
-> 
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+-Doug
