@@ -2,175 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BBA35FFBC8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Nov 2019 22:32:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F4C2FFD28
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Nov 2019 03:41:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726128AbfKQVcQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Nov 2019 16:32:16 -0500
-Received: from a27-186.smtp-out.us-west-2.amazonses.com ([54.240.27.186]:32876
-        "EHLO a27-186.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726119AbfKQVcQ (ORCPT
+        id S1726336AbfKRClv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Nov 2019 21:41:51 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:43531 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725905AbfKRClu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Nov 2019 16:32:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574025992;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
-        bh=9AOx5Q+RJ0560RuXHckXHRjw7aV17Sj+XjiitrpNRJI=;
-        b=EAkv/zYDcWxTqutMctt7HWRVqikaGLEheL9Sq7w/bFMhW/NwwDVn/z7xUet0OX82
-        vMABfLCWRpfLKjhV0kWX5BX0ORQmEowfQ+txSE0dY2Bbf7Fvl/fONz+m8cxCz31FCvy
-        o63JIbLJg3DOL2tVfNhLjaiLw7lxeO+c0STrZCrU=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574025992;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:Feedback-ID;
-        bh=9AOx5Q+RJ0560RuXHckXHRjw7aV17Sj+XjiitrpNRJI=;
-        b=V3W+uu6owxlVftGF7HGrUq5EaNLKWUZxeCWFcvh4jeJ8lgPSrpG6luDLfS1lsU19
-        vOBy+va6Fr9H0Nhth145n5LbxxqVWCraQbNlHgbVwUlLJ3wIL0HUNUuUPhScyzZK20D
-        jsnoUO65tSjzKbKDo9h8hphF1Wvg6KVmI11jSoCY=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 03B61C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-To:     mturquette@baylibre.com, sboyd@kernel.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        marc.w.gonzalez@free.fr, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Jeffrey Hugo <jhugo@codeaurora.org>
-Subject: [PATCH v10 1/4] dt-bindings: clock: Document external clocks for MSM8998 gcc
-Date:   Sun, 17 Nov 2019 21:26:31 +0000
-Message-ID: <0101016e7b42967c-5fa46814-6107-475f-9029-aa7ea052615b-000000@us-west-2.amazonses.com>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1574025887-32667-1-git-send-email-jhugo@codeaurora.org>
-References: <1574025887-32667-1-git-send-email-jhugo@codeaurora.org>
-X-SES-Outgoing: 2019.11.17-54.240.27.186
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
+        Sun, 17 Nov 2019 21:41:50 -0500
+Received: by mail-pg1-f196.google.com with SMTP id l24so8851242pgh.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Nov 2019 18:41:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fJYb6L5a/iapIcfwsY2PvjI2V490sWHh3NSh3Twoa4Y=;
+        b=EE0onkOYhoERx7brBXEdiRX+DN2MPuKcFBxWvEf87vIBM4uJXkTis6SKeET/uw31pX
+         +w9ATldpV/J95BZ5Km7rkWdMLPeOHWyxx664EFOFjXYqSYjbHLO+M7CAihPdZaNwFB1D
+         cUc36wTD8Z8TztXNEYYABOr9PgY2r7Mkqg7AuqAa1nXHGsfg8f5jGPjImNFroBvnBivh
+         VhFhHS/kgRKBLN1wDK421Dmc87tqBBFTbBKxMiYxQK+6BBG//jZvzFEu7DcmQirWbsU3
+         0fxDtDUiQB1iglSrs6Tmm1aZ0DhNGU/dTQaU+I90GT4BohQwRgtsQbaqdQW4Qq81nsUA
+         sJ4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fJYb6L5a/iapIcfwsY2PvjI2V490sWHh3NSh3Twoa4Y=;
+        b=inkmcPXhQTN4gVBx8Xo5kGiVAsPEgAu6LEgGK3JAMNYB4msargUnzmRHGjHKAZH5Bu
+         rNnYFfhKT5bzVKA5pz1bfxcOvgl3i7JWm4iqgT3CBQsrt3UKI706zHeZ0IPyy5iSv1fV
+         DzmA4SDpfvQXpY9LUbSgyjP7mD/CrupE/8CWgTv2I1r5f7YzNS9nlVbbJMYFj9arY7xX
+         fYmcMhvz056lnAmi+pj/P8qOgD/KU0/DBX30DMm3C+MqWBEmGeagnJIF+mse0VHxoG6J
+         jHY2L9yvWkZ5MMFzUn46bGdAoyHrsqc+QxvvR6qH5O11zTf7fqAeau/OqrHnj6iosMhO
+         aTNA==
+X-Gm-Message-State: APjAAAXPB2pW2XKQww9RtGMqKBNRJWyzxyYlhbFJppbhm0qnYdyebenY
+        HwHXbQm0UmyFnEf4kofWubW5bA==
+X-Google-Smtp-Source: APXvYqx9PzHEY2s7nymmHBLR7qypFLfgeJJM/LJIfMC5Mu4iS1J3yTMR/wcdeDGp6z1pLnJy4y8fjw==
+X-Received: by 2002:a63:4d8:: with SMTP id 207mr7410369pge.441.1574044908379;
+        Sun, 17 Nov 2019 18:41:48 -0800 (PST)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id 12sm18133068pjm.11.2019.11.17.18.41.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 Nov 2019 18:41:47 -0800 (PST)
+Date:   Sun, 17 Nov 2019 18:41:45 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: msm8998-mtp: Add alias for blsp1_uart3
+Message-ID: <20191118024145.GC25371@yoga>
+References: <20191116064415.159899-1-bjorn.andersson@linaro.org>
+ <CAOCk7Nov_HvZe1Z6COd2z=VUf=mVbvqS4wjqU4Ee=F1qR_KKww@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOCk7Nov_HvZe1Z6COd2z=VUf=mVbvqS4wjqU4Ee=F1qR_KKww@mail.gmail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The global clock controller on MSM8998 can consume a number of external
-clocks.  Document them.
+On Sat 16 Nov 14:24 PST 2019, Jeffrey Hugo wrote:
 
-For 7180 and 8150, the hardware always exists, so no clocks are truly
-optional.  Therefore, simplify the binding by removing the min/max
-qualifiers to clocks.  Also, fixup an example so that dt_binding_check
-passes.
+> On Fri, Nov 15, 2019 at 11:44 PM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > The msm_serial driver uses a simple counter to determine which port to
+> > use when no alias is defined, but there's no logic to prevent this from
+> 
+> Which port to use for what, the default console?
+> 
 
-Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
----
- .../devicetree/bindings/clock/qcom,gcc.yaml        | 73 +++++++++++++++++-----
- 1 file changed, 59 insertions(+), 14 deletions(-)
+The driver defines three (3) struct uart_ports (wrapped in struct
+msm_ports), see msm_uart_port[] around line 1538 in msm_serial.c
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-index e73a56f..f2b5cd6 100644
---- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-@@ -40,20 +40,40 @@ properties:
-        - qcom,gcc-sm8150
- 
-   clocks:
--    minItems: 1
--    maxItems: 3
--    items:
--      - description: Board XO source
--      - description: Board active XO source
--      - description: Sleep clock source
-+    oneOf:
-+      #qcom,gcc-sm8150
-+      #qcom,gcc-sc7180
-+      - items:
-+        - description: Board XO source
-+        - description: Board active XO source
-+        - description: Sleep clock source
-+      #qcom,gcc-msm8998
-+      - items:
-+        - description: Board XO source
-+        - description: Sleep clock source
-+        - description: USB 3.0 phy pipe clock
-+        - description: UFS phy rx symbol clock for pipe 0
-+        - description: UFS phy rx symbol clock for pipe 1
-+        - description: UFS phy tx symbol clock
-+        - description: PCIE phy pipe clock
- 
-   clock-names:
--    minItems: 1
--    maxItems: 3
--    items:
--      - const: bi_tcxo
--      - const: bi_tcxo_ao
--      - const: sleep_clk
-+    oneOf:
-+      #qcom,gcc-sm8150
-+      #qcom,gcc-sc7180
-+      - items:
-+        - const: bi_tcxo
-+        - const: bi_tcxo_ao
-+        - const: sleep_clk
-+      #qcom,gcc-msm8998
-+      - items:
-+        - const: xo
-+        - const: sleep_clk
-+        - const: usb3_pipe
-+        - const: ufs_rx_symbol0
-+        - const: ufs_rx_symbol1
-+        - const: ufs_tx_symbol0
-+        - const: pcie0_pipe
- 
-   '#clock-cells':
-     const: 1
-@@ -118,6 +138,7 @@ else:
-       compatible:
-         contains:
-           enum:
-+            - qcom,gcc-msm8998
-             - qcom,gcc-sm8150
-             - qcom,gcc-sc7180
-   then:
-@@ -179,10 +200,34 @@ examples:
-     clock-controller@100000 {
-       compatible = "qcom,gcc-sc7180";
-       reg = <0x100000 0x1f0000>;
--      clocks = <&rpmhcc 0>, <&rpmhcc 1>;
--      clock-names = "bi_tcxo", "bi_tcxo_ao";
-+      clocks = <&rpmhcc 0>, <&rpmhcc 1>, <0>;
-+      clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
-+      #clock-cells = <1>;
-+      #reset-cells = <1>;
-+      #power-domain-cells = <1>;
-+    };
-+
-+  # Example of MSM8998 GCC:
-+  - |
-+    clock-controller@100000 {
-+      compatible = "qcom,gcc-msm8998";
-       #clock-cells = <1>;
-       #reset-cells = <1>;
-       #power-domain-cells = <1>;
-+      reg = <0x00100000 0xb0000>;
-+      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
-+               <&sleep>,
-+               <0>,
-+               <0>,
-+               <0>,
-+               <0>,
-+               <0>;
-+      clock-names = "xo",
-+                    "sleep",
-+                    "usb3_pipe",
-+                    "ufs_rx_symbol0",
-+                    "ufs_rx_symbol1",
-+                    "ufs_tx_symbol0",
-+                    "pcie0_pipe";
-     };
- ...
--- 
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+This means that you can have a whooping 3 instances of msm_serial in the
+system and per the logic found in msm_serial_probe() the allocation
+follows the serial%d aliases defined and for entries without an alias a
+simple counter, starting at 0 is used.
 
+> > not colliding with what's defined by the aliases. As a result either
+> > none or all of the active msm_serial instances must be listed as
+> > aliases.
+> >
+> > Define blsp1_uart3 as "serial1" to mitigate this problem.
+> >
+> > Fixes: 4cffb9f2c700 ("arm64: dts: qcom: msm8998-mtp: Enable bluetooth")
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> That driver behavior seems like a strange thing to be doing.
+> 
+> If you clarify the question above, -
+> Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> 
+
+Thanks, I'll respin the message to properly document this behavior.
+
+Regards,
+Bjorn
+
+> > ---
+> >  arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+> > index 5f101a20a20a..e08fcb426bbf 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+> > @@ -9,6 +9,7 @@
+> >  / {
+> >         aliases {
+> >                 serial0 = &blsp2_uart1;
+> > +               serial1 = &blsp1_uart3;
+> >         };
+> >
+> >         chosen {
+> > --
+> > 2.23.0
+> >
