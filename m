@@ -2,268 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1653C1027D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2019 16:16:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 87508102802
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2019 16:25:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727591AbfKSPQa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Nov 2019 10:16:30 -0500
-Received: from mail-vk1-f193.google.com ([209.85.221.193]:43028 "EHLO
-        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727505AbfKSPQa (ORCPT
+        id S1727509AbfKSPZs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Nov 2019 10:25:48 -0500
+Received: from a27-10.smtp-out.us-west-2.amazonses.com ([54.240.27.10]:34286
+        "EHLO a27-10.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727505AbfKSPZs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Nov 2019 10:16:30 -0500
-Received: by mail-vk1-f193.google.com with SMTP id k19so5130375vke.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2019 07:16:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5L2A8QO6Lknhw02yoV5/M3MO1trwIEwEqsWv1aYEh90=;
-        b=H8M8a84P2al3EOggvXui0Musem1r5oC9q7bgEi+ILCQ2gZx8gVwugbWW+ymWUNoxEU
-         zcGL50yVB9UHPE8gZgcWf05jpMP1snUW2yi0a9zTRJBYvlPLo4C7wGfkvLk8qI6M6iER
-         yHEeO7u1q5cY5ood5p2proqV45Wfo+GMx9Eglk1F15C9dKVmHKBEdxxYRwS4qoeziF6E
-         Kr0tjZifHYyKf7FNb1xKQBXiasYhmacmj84uRY68JWcWHwpMKUdrxhZ99AXNsKDsQYrP
-         4S/DCH/UnuhL9zYO6iiYNnmZAwBghM+2Zoi2CV1LTVmc7mD92VQa4J+018MYFyHy3Pad
-         C+hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5L2A8QO6Lknhw02yoV5/M3MO1trwIEwEqsWv1aYEh90=;
-        b=KA9JfXaEPh2GS+BByp/X5Qcz1bJSJx0T99RcEJKcwDjHXzWJUV60JOsusw9x8/BhZM
-         B+EHJHWQvp7xi0OgYZbviWdYQQVZxywdN8IQVH9aiKwm1ZbR+n4r5wIzMuWnYFuMgVY9
-         y9jsRT8Y/m5hDKw3PZCtDjbMfjZNJIelsiqvNU+qwlJPKjgd9dx7wNX8SK0F7+CDedg2
-         uIBr9827eBgcY/xwXZmOLtFmAe3y7sUknoQq6HtjVuaKFIujLeJFsnAj69SWF+nOB+Ym
-         y8WctyXhgKGmKR4d2UjOD4ibE46MCxWejR+BI4m8mEmTlXyAENOm7tuhXing/H7iCkIQ
-         KRog==
-X-Gm-Message-State: APjAAAWM1UOL1Dsf3i3hO+3YTVHcHh943+IxdWk5DCOdbdhlVhImVXBc
-        equsQjGQkdInp2btD2gWVyZSCoDGcKz0+K67yq8dZBQ0MA8=
-X-Google-Smtp-Source: APXvYqxuKUxvO/3z2gC0NLyjswtAsKo05ZVpznPLq86jWCuNXwTk4k201eeS30Me8LoUIKhKDpTZWEv4yzTBZwVt90E=
-X-Received: by 2002:a1f:7381:: with SMTP id o123mr20880364vkc.53.1574176588225;
- Tue, 19 Nov 2019 07:16:28 -0800 (PST)
+        Tue, 19 Nov 2019 10:25:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574177146;
+        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+        bh=9eIeIDGYpRoajHOA6V6r5A1WHGey/lyjLwLkgP/Ouzg=;
+        b=cNRMj3kz9XDvGdr4Pa1Srgz2f+pUltYIVyHg6bI7H91i2q18wqxvL6mFf7HjwYJq
+        YnD10cw0b5aUdu5OORfNrItNRjuzaE0z1ebk37fdAUzQl/hHOTfV7xzb8fSLU1ls2RK
+        G3HL+TMIXYVQSCQRMHZYJgQleJ6wS56oz7eq1YTM=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574177146;
+        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding:Feedback-ID;
+        bh=9eIeIDGYpRoajHOA6V6r5A1WHGey/lyjLwLkgP/Ouzg=;
+        b=f6qkpTGCJxTehWmRZG++Bysymr9EQog0V8yQJTl3EfueVybCnxYzv0byKBO6S2kD
+        GeK2Aee5nXlQsC6m+cxYKLzM7AXUHGAcuW+04bHkrGNYHXriCgmqTOmCAQlRUxaa6Mn
+        Y+HoIb1A6C62Gmxk4+C/mHrBZNJigK5y8oQNx6n8=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 409E3C447A6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+Subject: Re: [PATCH 01/16] remoteproc: q6v5-mss: fixup MSM8998 MSS out of
+ reset sequence
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Mark Rutland <mark.rutland@arm.com>, p.zabel@pengutronix.de,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org,
+        DTML <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>
+References: <20191118214250.14002-1-sibis@codeaurora.org>
+ <0101016e80782dd7-2617455b-7d73-4e68-8a9a-b63c29e9ad76-000000@us-west-2.amazonses.com>
+ <CAOCk7Nou94bxk_48JArrXhQw2KR+3bKanLe+hb2=d7_j6y3VbQ@mail.gmail.com>
+From:   Sibi Sankar <sibis@codeaurora.org>
+Message-ID: <0101016e844507bb-3be95e27-404d-48bb-a251-e5edf8731d67-000000@us-west-2.amazonses.com>
+Date:   Tue, 19 Nov 2019 15:25:46 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <20191029164438.17012-1-ulf.hansson@linaro.org> <20191029164438.17012-3-ulf.hansson@linaro.org>
-In-Reply-To: <20191029164438.17012-3-ulf.hansson@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 19 Nov 2019 16:15:52 +0100
-Message-ID: <CAPDyKFpg+T=FiA03O=OFq2G33AcKG6198MUGP1BxJ0t4E5dGtA@mail.gmail.com>
-Subject: Re: [PATCH v2 02/13] dt: psci: Update DT bindings to support
- hierarchical PSCI states
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Lina Iyer <lina.iyer@linaro.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAOCk7Nou94bxk_48JArrXhQw2KR+3bKanLe+hb2=d7_j6y3VbQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-SES-Outgoing: 2019.11.19-54.240.27.10
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+Hey Jeff,
 
-On Tue, 29 Oct 2019 at 17:44, Ulf Hansson <ulf.hansson@linaro.org> wrote:
->
-> Update PSCI DT bindings to allow to represent idle states for CPUs and the
-> CPU topology, by using a hierarchical layout. Primarily this is done by
-> re-using the existing DT bindings for PM domains [1] and for PM domain idle
-> states [2].
->
-> Let's also add an example into the document for the PSCI DT bindings, to
-> clearly show the new hierarchical based layout. The currently supported
-> flattened layout, is already described in the ARM idle states bindings [3],
-> so let's leave that as is.
->
-> [1] Documentation/devicetree/bindings/power/power_domain.txt
-> [2] Documentation/devicetree/bindings/power/domain-idle-state.txt
-> [3] Documentation/devicetree/bindings/arm/idle-states.txt
->
-> Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
-> Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> ---
->
-> Changes in v2:
->         - Clarifications and also added updates cpus.yaml, to descrive that CPUs
->         may be attached to PM domains.
->
-> ---
->  .../devicetree/bindings/arm/cpus.yaml         |  15 +++
->  .../devicetree/bindings/arm/psci.yaml         | 102 ++++++++++++++++++
->  2 files changed, 117 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
-> index cb30895e3b67..92a775d6fc0e 100644
-> --- a/Documentation/devicetree/bindings/arm/cpus.yaml
-> +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
-> @@ -241,6 +241,21 @@ properties:
->
->        where voltage is in V, frequency is in MHz.
->
-> +  power-domains:
-> +    $ref: '/schemas/types.yaml#/definitions/phandle-array'
-> +    description:
-> +      List of phandles and PM domain specifiers, as defined by bindings of the
-> +      PM domain provider (see also ../power_domain.txt).
-> +
-> +  power-domain-names:
-> +    $ref: '/schemas/types.yaml#/definitions/string-array'
-> +    description:
-> +      A list of power domain name strings sorted in the same order as the
-> +      power-domains property.
-> +
-> +      For PSCI based platforms, the name corresponding to the index of the PSCI
-> +      PM domain provider, must be "psci".
-> +
->    qcom,saw:
->      $ref: '/schemas/types.yaml#/definitions/phandle'
->      description: |
-> diff --git a/Documentation/devicetree/bindings/arm/psci.yaml b/Documentation/devicetree/bindings/arm/psci.yaml
-> index 7abdf58b335e..9fed255cc92d 100644
-> --- a/Documentation/devicetree/bindings/arm/psci.yaml
-> +++ b/Documentation/devicetree/bindings/arm/psci.yaml
-> @@ -102,6 +102,34 @@ properties:
->        [1] Kernel documentation - ARM idle states bindings
->          Documentation/devicetree/bindings/arm/idle-states.txt
->
-> +  "#power-domain-cells":
-> +    description:
-> +      The number of cells in a PM domain specifier as per binding in [3].
-> +      Must be 0 as to represent a single PM domain.
-> +
-> +      ARM systems can have multiple cores, sometimes in an hierarchical
-> +      arrangement. This often, but not always, maps directly to the processor
-> +      power topology of the system. Individual nodes in a topology have their
-> +      own specific power states and can be better represented hierarchically.
-> +
-> +      For these cases, the definitions of the idle states for the CPUs and the
-> +      CPU topology, must conform to the binding in [3]. The idle states
-> +      themselves must conform to the binding in [4] and must specify the
-> +      arm,psci-suspend-param property.
-> +
-> +      It should also be noted that, in PSCI firmware v1.0 the OS-Initiated
-> +      (OSI) CPU suspend mode is introduced. Using a hierarchical representation
-> +      helps to implement support for OSI mode and OS implementations may choose
-> +      to mandate it.
-> +
-> +      [3] Documentation/devicetree/bindings/power/power_domain.txt
-> +      [4] Documentation/devicetree/bindings/power/domain-idle-state.txt
-> +
-> +  power-domains:
-> +    $ref: '/schemas/types.yaml#/definitions/phandle-array'
-> +    description:
-> +      List of phandles and PM domain specifiers, as defined by bindings of the
-> +      PM domain provider.
->
->  required:
->    - compatible
-> @@ -160,4 +188,78 @@ examples:
->        cpu_on = <0x95c10002>;
->        cpu_off = <0x95c10001>;
->      };
-> +
-> +  - |+
-> +
-> +    // Case 4: CPUs and CPU idle states described using the hierarchical model.
-> +
-> +    cpus {
-> +
+On 11/19/19 3:24 AM, Jeffrey Hugo wrote:
+> On Mon, Nov 18, 2019 at 2:43 PM Sibi Sankar <sibis@codeaurora.org> wrote:
+>>
+>> Fixup the following in the MSS out of reset sequence on MSM8998:
+>> * skip ACC override on MSM8998.
+>> * wait for BHS_EN_REST_ACK to be set before setting the LDO to bypass.
+>> * remove "mem" clock from the active pool.
+> 
+> Why any of this is necessary isn't explained.
 
-I noticed that I got a compiler warning from "make dt_binding_check".
-I have fixed that by adding the below for the next version.
+Honestly the above two fixes didn't seem to have any impact when I
+tested it on MSM8998 MTP just making sure that we allign with the
+out of reset sequence found on msm-4.4.
 
-#size-cells = <0>;
-#address-cells = <1>;
+> Seems like it should be 3 separate patches.
+> Regarding the mem clock change, wouldn't it be an issue if we don't
+> vote for that?
 
-Other than that, are you okay with these bindings?
+we already proxy vote for it though.
 
-Note that, these bindings have been discussed and acked by you
-earlier. Although since your acked back then, they have been converted
-to the yaml format, hence why I wanted to double check that I managed
-to get this right.
+> 
+>>
+>> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>> ---
+>>   drivers/remoteproc/qcom_q6v5_mss.c | 23 ++++++++++++++++++++---
+>>   1 file changed, 20 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+>> index 471128a2e7239..2becf6dade936 100644
+>> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+>> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+>> @@ -100,6 +100,11 @@
+>>   #define QDSP6SS_XO_CBCR                0x0038
+>>   #define QDSP6SS_ACC_OVERRIDE_VAL               0x20
+>>
+>> +/* QDSP6v62 parameters */
+>> +#define QDSP6SS_BHS_EN_REST_ACK                BIT(0)
+>> +#define BHS_CHECK_MAX_LOOPS            200
+>> +#define QDSP6SS_BHS_STATUS             0x0C4
+>> +
+>>   /* QDSP6v65 parameters */
+>>   #define QDSP6SS_SLEEP                   0x3C
+>>   #define QDSP6SS_BOOT_CORE_START         0x400
+>> @@ -505,8 +510,9 @@ static int q6v5proc_reset(struct q6v5 *qproc)
+>>                  int mem_pwr_ctl;
+>>
+>>                  /* Override the ACC value if required */
+>> -               writel(QDSP6SS_ACC_OVERRIDE_VAL,
+>> -                      qproc->reg_base + QDSP6SS_STRAP_ACC);
+>> +               if (qproc->version == MSS_MSM8996)
+>> +                       writel(QDSP6SS_ACC_OVERRIDE_VAL,
+>> +                              qproc->reg_base + QDSP6SS_STRAP_ACC);
+>>
+>>                  /* Assert resets, stop core */
+>>                  val = readl(qproc->reg_base + QDSP6SS_RESET_REG);
+>> @@ -534,6 +540,18 @@ static int q6v5proc_reset(struct q6v5 *qproc)
+>>                  val |= readl(qproc->reg_base + QDSP6SS_PWR_CTL_REG);
+>>                  udelay(1);
+>>
+>> +               /* wait for BHS_EN_REST_ACK to be set */
+>> +               if (qproc->version == MSS_MSM8998) {
+>> +                       ret = readl_poll_timeout(qproc->reg_base + QDSP6SS_BHS_STATUS,
+>> +                                                val, (val & QDSP6SS_BHS_EN_REST_ACK),
+>> +                                                1, BHS_CHECK_MAX_LOOPS);
+>> +                       if (ret) {
+>> +                               dev_err(qproc->dev,
+>> +                                       "QDSP6SS_BHS_EN_REST_ACK timedout\n");
+>> +                               return -ETIMEDOUT;
+>> +                       }
+>> +               }
+>> +
+>>                  /* Put LDO in bypass mode */
+>>                  val |= QDSP6v56_LDO_BYP;
+>>                  writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
+>> @@ -1594,7 +1612,6 @@ static const struct rproc_hexagon_res msm8998_mss = {
+>>          .active_clk_names = (char*[]){
+>>                          "iface",
+>>                          "bus",
+>> -                       "mem",
+>>                          "gpll0_mss",
+>>                          "mnoc_axi",
+>>                          "snoc_axi",
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> a Linux Foundation Collaborative Project
+>>
+> 
 
-> +      CPU0: cpu@0 {
-> +        device_type = "cpu";
-> +        compatible = "arm,cortex-a53", "arm,armv8";
-> +        reg = <0x0>;
-> +        enable-method = "psci";
-> +        power-domains = <&CPU_PD0>;
-> +        power-domain-names = "psci";
-> +      };
-> +
-> +      CPU1: cpu@1 {
-> +        device_type = "cpu";
-> +        compatible = "arm,cortex-a57", "arm,armv8";
-> +        reg = <0x100>;
-> +        enable-method = "psci";
-> +        power-domains = <&CPU_PD1>;
-> +        power-domain-names = "psci";
-> +      };
-> +
-> +      idle-states {
-> +
-> +        CPU_PWRDN: cpu-power-down {
-> +          compatible = "arm,idle-state";
-> +          arm,psci-suspend-param = <0x0000001>;
-> +          entry-latency-us = <10>;
-> +          exit-latency-us = <10>;
-> +          min-residency-us = <100>;
-> +        };
-> +
-> +        CLUSTER_RET: cluster-retention {
-> +          compatible = "domain-idle-state";
-> +          arm,psci-suspend-param = <0x1000011>;
-> +          entry-latency-us = <500>;
-> +          exit-latency-us = <500>;
-> +          min-residency-us = <2000>;
-> +        };
-> +
-> +        CLUSTER_PWRDN: cluster-power-down {
-> +          compatible = "domain-idle-state";
-> +          arm,psci-suspend-param = <0x1000031>;
-> +          entry-latency-us = <2000>;
-> +          exit-latency-us = <2000>;
-> +          min-residency-us = <6000>;
-> +        };
-> +      };
-> +    };
-> +
-> +    psci {
-> +      compatible = "arm,psci-1.0";
-> +      method = "smc";
-> +
-> +      CPU_PD0: cpu-pd0 {
-> +        #power-domain-cells = <0>;
-> +        domain-idle-states = <&CPU_PWRDN>;
-> +        power-domains = <&CLUSTER_PD>;
-> +      };
-> +
-> +      CPU_PD1: cpu-pd1 {
-> +        #power-domain-cells = <0>;
-> +        domain-idle-states =  <&CPU_PWRDN>;
-> +        power-domains = <&CLUSTER_PD>;
-> +      };
-> +
-> +      CLUSTER_PD: cluster-pd {
-> +        #power-domain-cells = <0>;
-> +        domain-idle-states = <&CLUSTER_RET>, <&CLUSTER_PWRDN>;
-> +      };
-> +    };
->  ...
-> --
-> 2.17.1
->
-
-Kind regards
-Uffe
+-- 
+Qualcomm Innovation Center, Inc.
+Qualcomm Innovation Center, Inc, is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
