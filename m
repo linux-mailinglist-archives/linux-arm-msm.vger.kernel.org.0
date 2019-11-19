@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 11A071010A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2019 02:23:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A5DE4101103
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2019 02:52:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727047AbfKSBXy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Nov 2019 20:23:54 -0500
-Received: from mga14.intel.com ([192.55.52.115]:43424 "EHLO mga14.intel.com"
+        id S1727102AbfKSBvz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Nov 2019 20:51:55 -0500
+Received: from mga06.intel.com ([134.134.136.31]:14322 "EHLO mga06.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726761AbfKSBXy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Nov 2019 20:23:54 -0500
+        id S1726761AbfKSBvz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 18 Nov 2019 20:51:55 -0500
 X-Amp-Result: UNKNOWN
 X-Amp-Original-Verdict: FILE UNKNOWN
 X-Amp-File-Uploaded: False
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 18 Nov 2019 17:23:51 -0800
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 18 Nov 2019 17:51:53 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.68,322,1569308400"; 
-   d="gz'50?scan'50,208,50";a="215421817"
+   d="gz'50?scan'50,208,50";a="209268076"
 Received: from lkp-server01.sh.intel.com (HELO lkp-server01) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 18 Nov 2019 17:23:48 -0800
+  by orsmga006.jf.intel.com with ESMTP; 18 Nov 2019 17:51:49 -0800
 Received: from kbuild by lkp-server01 with local (Exim 4.89)
         (envelope-from <lkp@intel.com>)
-        id 1iWsFA-000FsS-9i; Tue, 19 Nov 2019 09:23:48 +0800
-Date:   Tue, 19 Nov 2019 09:23:33 +0800
+        id 1iWsgG-000GRG-P9; Tue, 19 Nov 2019 09:51:48 +0800
+Date:   Tue, 19 Nov 2019 09:51:04 +0800
 From:   kbuild test robot <lkp@intel.com>
 To:     Kalyan Thota <kalyan_t@codeaurora.org>
 Cc:     kbuild-all@lists.01.org, dri-devel@lists.freedesktop.org,
@@ -34,14 +34,14 @@ Cc:     kbuild-all@lists.01.org, dri-devel@lists.freedesktop.org,
         seanpaul@chromium.org, hoegsberg@chromium.org, dhar@codeaurora.org,
         jsanka@codeaurora.org, chandanu@codeaurora.org,
         travitej@codeaurora.org, nganji@codeaurora.org
-Subject: Re: [PATCH v1] msm:disp:dpu1: setup display datapath for SC7180
+Subject: Re: [PATCH v1] msm:disp:dpu1: add support for display for SC7180
  target
-Message-ID: <201911190932.SLw5NfPo%lkp@intel.com>
-References: <1574077444-24554-2-git-send-email-kalyan_t@codeaurora.org>
+Message-ID: <201911190905.ZoXpLdW5%lkp@intel.com>
+References: <1574074063-9222-1-git-send-email-kalyan_t@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="bb5ftjmcigecvcsi"
+Content-Type: multipart/mixed; boundary="inxd2rapmrjny64r"
 Content-Disposition: inline
-In-Reply-To: <1574077444-24554-2-git-send-email-kalyan_t@codeaurora.org>
+In-Reply-To: <1574074063-9222-1-git-send-email-kalyan_t@codeaurora.org>
 X-Patchwork-Hint: ignore
 User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -50,7 +50,7 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---bb5ftjmcigecvcsi
+--inxd2rapmrjny64r
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
@@ -59,12 +59,12 @@ Hi Kalyan,
 Thank you for the patch! Yet something to improve:
 
 [auto build test ERROR on tegra-drm/drm/tegra/for-next]
-[cannot apply to v5.4-rc8 next-20191118]
+[also build test ERROR on v5.4-rc8 next-20191118]
 [if your patch is applied to the wrong git tree, please drop us a note to help
 improve the system. BTW, we also suggest to use '--base' option to specify the
 base tree in git format-patch, please see https://stackoverflow.com/a/37406982]
 
-url:    https://github.com/0day-ci/linux/commits/Kalyan-Thota/msm-disp-dpu1-setup-display-datapath-for-SC7180-target/20191118-231647
+url:    https://github.com/0day-ci/linux/commits/Kalyan-Thota/msm-disp-dpu1-add-support-for-display-for-SC7180-target/20191118-193857
 base:   git://anongit.freedesktop.org/tegra/linux.git drm/tegra/for-next
 config: arm64-randconfig-a001-20191118 (attached as .config)
 compiler: aarch64-linux-gcc (GCC) 7.4.0
@@ -79,100 +79,58 @@ Reported-by: kbuild test robot <lkp@intel.com>
 
 All error/warnings (new ones prefixed by >>):
 
-   In file included from include/linux/bitops.h:5:0,
-                    from include/linux/kernel.h:12,
-                    from include/asm-generic/bug.h:19,
-                    from arch/arm64/include/asm/bug.h:26,
-                    from include/linux/bug.h:5,
-                    from include/linux/mmdebug.h:5,
-                    from include/linux/gfp.h:5,
-                    from include/linux/slab.h:15,
-                    from drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:6:
->> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:281:18: error: 'DPU_CTL_ACTIVE_CFG' undeclared here (not in a function); did you mean 'DPU_CTL_MODE_SEL_CMD'?
-     .features = BIT(DPU_CTL_ACTIVE_CFG), \
-                     ^
-   include/linux/bits.h:8:30: note: in definition of macro 'BIT'
-    #define BIT(nr)   (UL(1) << (nr))
-                                 ^~
->> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:288:2: note: in expansion of macro 'INTF_BLK'
-     INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0),
-     ^~~~~~~~
---
-   In file included from include/linux/bitops.h:5:0,
-                    from include/linux/kernel.h:12,
-                    from include/linux/delay.h:22,
-                    from drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c:5:
-   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c: In function '_setup_ctl_ops':
->> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c:526:16: error: 'DPU_CTL_ACTIVE_CFG' undeclared (first use in this function); did you mean 'DPU_CTL_MODE_SEL_CMD'?
-     if (cap & BIT(DPU_CTL_ACTIVE_CFG)) {
-                   ^
-   include/linux/bits.h:8:30: note: in definition of macro 'BIT'
-    #define BIT(nr)   (UL(1) << (nr))
-                                 ^~
-   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c:526:16: note: each undeclared identifier is reported only once for each function it appears in
-     if (cap & BIT(DPU_CTL_ACTIVE_CFG)) {
-                   ^
-   include/linux/bits.h:8:30: note: in definition of macro 'BIT'
-    #define BIT(nr)   (UL(1) << (nr))
-                                 ^~
---
-   In file included from include/linux/bitops.h:5:0,
-                    from include/linux/kernel.h:12,
-                    from include/asm-generic/bug.h:19,
-                    from arch/arm64/include/asm/bug.h:26,
-                    from include/linux/bug.h:5,
-                    from include/linux/io.h:11,
-                    from drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h:8,
-                    from drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h:8,
-                    from drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c:5:
-   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c: In function '_setup_intf_ops':
->> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c:283:16: error: 'DPU_CTL_ACTIVE_CFG' undeclared (first use in this function); did you mean 'DPU_CTL_MODE_SEL_CMD'?
-     if (cap & BIT(DPU_CTL_ACTIVE_CFG))
-                   ^
-   include/linux/bits.h:8:30: note: in definition of macro 'BIT'
-    #define BIT(nr)   (UL(1) << (nr))
-                                 ^~
-   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c:283:16: note: each undeclared identifier is reported only once for each function it appears in
-     if (cap & BIT(DPU_CTL_ACTIVE_CFG))
-                   ^
-   include/linux/bits.h:8:30: note: in definition of macro 'BIT'
-    #define BIT(nr)   (UL(1) << (nr))
-                                 ^~
+   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c: In function 'sc7180_cfg_init':
+>> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:589:4: error: 'struct dpu_mdss_cfg' has no member named 'mdss_irqs'
+      .mdss_irqs[0] = 0x3f,
+       ^~~~~~~~~
+>> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:589:19: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+      .mdss_irqs[0] = 0x3f,
+                      ^~~~
+   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:589:19: note: (near initialization for '(anonymous).dma_formats')
 
-vim +281 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+vim +589 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
 
-   273	
-   274	/*************************************************************
-   275	 * INTF sub blocks config
-   276	 *************************************************************/
-   277	#define INTF_BLK(_name, _id, _base, _type, _ctrl_id) \
-   278		{\
-   279		.name = _name, .id = _id, \
-   280		.base = _base, .len = 0x280, \
- > 281		.features = BIT(DPU_CTL_ACTIVE_CFG), \
-   282		.type = _type, \
-   283		.controller_id = _ctrl_id, \
-   284		.prog_fetch_lines_worst_case = 24 \
-   285		}
-   286	
-   287	static struct dpu_intf_cfg sdm845_intf[] = {
- > 288		INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0),
-   289		INTF_BLK("intf_1", INTF_1, 0x6A800, INTF_DSI, 0),
-   290		INTF_BLK("intf_2", INTF_2, 0x6B000, INTF_DSI, 1),
-   291		INTF_BLK("intf_3", INTF_3, 0x6B800, INTF_DP, 1),
-   292	};
-   293	
+   563	
+   564	/*
+   565	 * sc7180_cfg_init(): populate sc7180 dpu sub-blocks reg offsets
+   566	 * and instance counts.
+   567	 */
+   568	static void sc7180_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
+   569	{
+   570		*dpu_cfg = (struct dpu_mdss_cfg){
+   571			.caps = &sc7180_dpu_caps,
+   572			.mdp_count = ARRAY_SIZE(sc7180_mdp),
+   573			.mdp = sc7180_mdp,
+   574			.ctl_count = ARRAY_SIZE(sc7180_ctl),
+   575			.ctl = sc7180_ctl,
+   576			.sspp_count = ARRAY_SIZE(sc7180_sspp),
+   577			.sspp = sc7180_sspp,
+   578			.mixer_count = ARRAY_SIZE(sc7180_lm),
+   579			.mixer = sc7180_lm,
+   580			.pingpong_count = ARRAY_SIZE(sc7180_pp),
+   581			.pingpong = sc7180_pp,
+   582			.intf_count = ARRAY_SIZE(sc7180_intf),
+   583			.intf = sc7180_intf,
+   584			.vbif_count = ARRAY_SIZE(sdm845_vbif),
+   585			.vbif = sdm845_vbif,
+   586			.reg_dma_count = 1,
+   587			.dma_cfg = sdm845_regdma,
+   588			.perf = sc7180_perf_data,
+ > 589			.mdss_irqs[0] = 0x3f,
+   590		};
+   591	}
+   592	
 
 ---
 0-DAY kernel test infrastructure                 Open Source Technology Center
 https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org Intel Corporation
 
---bb5ftjmcigecvcsi
+--inxd2rapmrjny64r
 Content-Type: application/gzip
 Content-Disposition: attachment; filename=".config.gz"
 Content-Transfer-Encoding: base64
 
-H4sICJI8010AAy5jb25maWcAnDzbchs3su/5CpbzsltbyZIURdnnlB5ADIZEODcDGFLSC4qR
+H4sICDop010AAy5jb25maWcAnDzbchs3su/5CpbzsltbyZIURdnnlB5ADIZEODcDGFLSC4qR
 aUe1unh1SeK/P93AXAAMhnad1CYrohuYRqPR95mff/p5Qt5enx4Or3e3h/v7b5Mvx8fj8+H1
 +Gny+e7++L+TpJwUpZqwhKtfATm7e3z7+9+H54flYnL+6+LX6S/Pt4vJ9vj8eLyf0KfHz3df
 3mD63dPjTz//BP/7GQYfvsJKz/8zORyeb/9YLn65xzV++XJ7O/nHmtJ/Ti5wHcClZZHytaZU
@@ -825,4 +783,4 @@ epBlYtlA8PchLU8XkaIDLtEtakudVzSEZT7XX82GIsYaJ3V4loZuemtpiFn6zdhAMYMpVqyN
 mdqhs3/XLfKUMW8wdzxkeLsfpaUscVOcQxn6yoRdJYEKbVOSZ4GDaM4xmeHqid0fFIHmCFA1
 ErWULmvEV/tNtkz5G6RjXfk/d5hpdjMgAgA=
 
---bb5ftjmcigecvcsi--
+--inxd2rapmrjny64r--
