@@ -2,93 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BEEF910221A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2019 11:29:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 79682102235
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2019 11:46:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727262AbfKSK3q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Nov 2019 05:29:46 -0500
-Received: from a27-18.smtp-out.us-west-2.amazonses.com ([54.240.27.18]:47416
-        "EHLO a27-18.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725798AbfKSK3q (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Nov 2019 05:29:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574159385;
-        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
-        bh=95fs3y0jwLr+Ki/sJzS6q7a+Po6VEYGetLlCriQxmJk=;
-        b=ElvkP1lNXr2zBEHRZFWNE7fz/zChvA1hoLPys/dxt+KGIMXj1GFl/ZPh+xJAf7Pr
-        550MeUV8L5iTfE9HC3HTWl3cmu4HmSdF+GKWq3ksO639DPCp1k7SIWRuIV9e0oSgXnb
-        v3W4YhDDyeyc6OawtpGZXVhNViHwxYt5K7/u6/Wo=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574159385;
-        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
-        bh=95fs3y0jwLr+Ki/sJzS6q7a+Po6VEYGetLlCriQxmJk=;
-        b=DecOMo1uRIQ01nf7vrwW5+wKEoCORL9Q1KSDUeqzdfSVyODF64N274tdvxM2Wmpm
-        xYwVER3sEpXunRsNErHcjHkopp8cFqr6aEvbh8eWnm5ciRti9qtVUstHTQttfjN0+DC
-        +nzY8LghEylOpMd6hHwrwE+21t1ZEnuiHrgzFiSY=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
+        id S1726555AbfKSKqY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Nov 2019 05:46:24 -0500
+Received: from ns.iliad.fr ([212.27.33.1]:43272 "EHLO ns.iliad.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725798AbfKSKqY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 Nov 2019 05:46:24 -0500
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+        by ns.iliad.fr (Postfix) with ESMTP id DF7E820BA0;
+        Tue, 19 Nov 2019 11:46:21 +0100 (CET)
+Received: from [192.168.108.51] (freebox.vlq16.iliad.fr [213.36.7.13])
+        by ns.iliad.fr (Postfix) with ESMTP id CF4B7204EF;
+        Tue, 19 Nov 2019 11:46:21 +0100 (CET)
+Subject: Re: Using a GPIO as an interrupt line
+To:     Russell King - ARM Linux admin <linux@armlinux.org.uk>
+Cc:     GPIO <linux-gpio@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Marc Zyngier <marc.zyngier@arm.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
+References: <f0d383f3-8efa-ae68-62af-68f69cd4143f@free.fr>
+ <20191119095748.GX25745@shell.armlinux.org.uk>
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Message-ID: <07db59e7-ff16-0457-87f2-fba10dc182d6@free.fr>
+Date:   Tue, 19 Nov 2019 11:46:21 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20191119095748.GX25745@shell.armlinux.org.uk>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 19 Nov 2019 10:29:45 +0000
-From:   sibis@codeaurora.org
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     georgi.djakov@linaro.org, robh+dt@kernel.org,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, mark.rutland@arm.com,
-        evgreen@chromium.org, daidavid1@codeaurora.org,
-        saravanak@google.com, viresh.kumar@linaro.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: interconnect: Add OSM L3 DT bindings
-In-Reply-To: <20191119003115.CDEC32230B@mail.kernel.org>
-References: <20191118154435.20357-1-sibis@codeaurora.org>
- <0101016e7f30995e-3b0444eb-598a-4af3-9ea2-6ae0e4cbdf0f-000000@us-west-2.amazonses.com>
- <20191119003115.CDEC32230B@mail.kernel.org>
-Message-ID: <0101016e83360189-588bff57-180a-400e-8b5f-e9517992feb4-000000@us-west-2.amazonses.com>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
-X-SES-Outgoing: 2019.11.19-54.240.27.18
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
+X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Tue Nov 19 11:46:21 2019 +0100 (CET)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Stephen,
+On 19/11/2019 10:57, Russell King - ARM Linux admin wrote:
 
-Thanks for taking time to
-review the series.
-
-On 2019-11-19 06:01, Stephen Boyd wrote:
-> Quoting Sibi Sankar (2019-11-18 07:45:21)
->> diff --git 
->> a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml 
->> b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
->> new file mode 100644
->> index 0000000000000..fec8289ceeeed
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
->> @@ -0,0 +1,56 @@
->> +examples:
->> +  - |
->> +    osm_l3: interconnect@17d41000 {
->> +      compatible = "qcom,sdm845-osm-l3";
->> +      reg = <0x17d41000 0x1400>;
->> +
->> +      clocks = <&rpmhcc 0>, <&gcc 165>;
+> On Tue, Nov 19, 2019 at 10:28:15AM +0100, Marc Gonzalez wrote:
 > 
-> Can you use #define names here? That would make it clearer what sort of
-> clk is expected here.
+>> The board I'm working on provides a TCA9539 I/O expander.
+>> Or, as the datasheet(*) calls it, a "Low Voltage 16-Bit I2C and
+>> SMBus Low-Power I/O Expander with Interrupt Output, Reset Pin,
+>> and Configuration Registers"
+>>
+>> (*) http://www.ti.com/lit/ds/symlink/tca9539.pdf
+>>
+>> The binding is documented in Documentation/devicetree/bindings/gpio/gpio-pca953x.txt
+>>
+>> I have some doubts about the interrupt output, described as:
+>>
+>> Optional properties:
+>>  - interrupts: interrupt specifier for the device's interrupt output.
+>>
+>> In my board's DT, the I/O expander is described as:
+>>
+>> 	exp1: gpio@74 {
+>> 		compatible = "ti,tca9539";
+>> 		reg = <0x74>;
+>> 		gpio-controller;
+>> 		#gpio-cells = <2>;
+>> 		reset-gpios = <&tlmm 96 GPIO_ACTIVE_LOW>;
+>> 		pinctrl-names = "default";
+>> 		pinctrl-0 = <&top_exp_rst>;
+>> 		interrupt-parent = <&tlmm>;
+>> 		interrupts = <42 IRQ_TYPE_LEVEL_HIGH>;
 
-yes will do that.
+As pointed out by ukleinek on IRC, I might have (??) specified the wrong
+trigger type. The data-sheet states:
+"The TCA9539 open-drain interrupt (INTn) output is activated when any input state
+differs from its corresponding Input Port register state, and is used to indicate
+to the system master that an input state has changed."
+(The data sheet speaks of "INT with a line on top"; what is the typical way to
+write that in ASCII? I was told that adding a trailing 'n' or 'b' was common.)
 
+According to that description, it looks like IRQ_TYPE_LEVEL_LOW?
+(Weird, because it worked well with IRQ_TYPE_LEVEL_HIGH.)
+
+> This specifies an interrupt signal, number 42, on the tlmm interrupt
+> controller. It isn't a GPIO specification. Not every interrupt is a
+> GPIO, and some SoCs can have dedicated interrupt pins that are
+> exactly that.
 > 
->> +      clock-names = "xo", "alternate";
->> +
->> +      #interconnect-cells = <1>;
->> +    };
+> Hence, needlessly limiting an external device to requiring a GPIO for
+> its interrupt is detrimental.
+
+That makes complete sense.
+
+IIUC, what is missing in my DT spec is defining pin 42 as a GPIO pin.
+Looking more closely at top_exp_rst:
+
+	top_exp_rst: top_exp_rst {
+		mux {
+			pins = "gpio96";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio96";
+			drive-strength = <2>;
+			bias-pull-down;
+		};
+	};
+
+IIUC, this defines pin 96 as a GPIO pin (as well as defining some low-level
+properties of the pin). Likely I need something similar for pin 42?
+
+Regards.
