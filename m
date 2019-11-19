@@ -2,73 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 31EB9102C0B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2019 19:52:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF3EC102C77
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2019 20:20:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727627AbfKSSwi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Nov 2019 13:52:38 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:41741 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726994AbfKSSwi (ORCPT
+        id S1726792AbfKSTUC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Nov 2019 14:20:02 -0500
+Received: from mail-pg1-f173.google.com ([209.85.215.173]:37063 "EHLO
+        mail-pg1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726620AbfKSTUC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Nov 2019 13:52:38 -0500
-Received: by mail-pj1-f66.google.com with SMTP id gc1so2974233pjb.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2019 10:52:37 -0800 (PST)
+        Tue, 19 Nov 2019 14:20:02 -0500
+Received: by mail-pg1-f173.google.com with SMTP id b10so3316092pgd.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2019 11:20:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:subject:from:cc:to:user-agent:date;
-        bh=cqphRUBWoV7WE5nNKC8RYhviiEEJhT1j+Y7ZoErED5U=;
-        b=WOpL1RBXyIGRx7LAZsUabQOZOXFY6VbckSItM1OeGFrV3wPaVQymPt1VJcTPz1B8cr
-         zchv124LAaaBJD+OT7fj1lhnhX96FJ4SKT/N4wq0wQk7auHQCPOzOX+TAV5rxOlfwYYr
-         5bvaefywZDbXkp8Uh3vXiE/JibC3aEJaX27Co=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Qio7ElcX4cvHV7fnYSvJfkUTKXZs/DnMfuV15j1rnnU=;
+        b=zlnSLEE4zmxTmCw6K6/aKxUPsFgv7wkpksrcjnlWPh8xHEbq/zRspg7xYvb0/rVXa4
+         7CcVtsE7z5p+UililVIO7SAUz7KGu71FXaD+cFTpVtOIyxRh9UfTkI8NatrSyvmW6vX4
+         Zzn5g9ycKeDK+UhsNhmRi5Fxiahh1cbpDDPhviJlZi3qc09zCFeNIQo3btb6NOQqyPVt
+         xFCT/bEJL7mX5rtYAEBW/fQeF0phkFHjD9XQ6nLMFT9b1cp45dmIfSC5mxgfEkHaWzxC
+         HBODSodQs/XmYDNAWUfhoDIzqushEJEpLvcUyel2a3mMkGbVZO22nIe1QJ42Shc9bLgc
+         3j3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:subject:from:cc:to
-         :user-agent:date;
-        bh=cqphRUBWoV7WE5nNKC8RYhviiEEJhT1j+Y7ZoErED5U=;
-        b=HnLvIN0+/7/tyKwQVLJcM8m9PLDoo0Xc6dOyTaL1+gdmc/vruoRHo3TSk5ao739u+1
-         1xLhHyw5+2mfhGTpA44uTjCBRr5mcMJAjKXEYWnXCwwLg5LGNY6pG4CciBKi2PLkcYzN
-         G89AOyjm3jH+hOoPOXNdqUmOZqI+otB9U8W0WeWoZ/h3om/o7eGgD1afAcMH19uTTh9d
-         Gw8kIeCA24oajaS1FUMHe5Ni6tXrlQDaXAhX0EzBbUpzy0C/qVtkrNDToT7ilE95gqPT
-         fMxHrXkOdaUJXDMMMe3800Gy+J8iKe5omdlnF+tBmASLQjJLUZcuKuC0T867QXlQ8dWS
-         RvEQ==
-X-Gm-Message-State: APjAAAUsLq4GPV6bPWt1kG7Ugae0gSvZxj7RJvd2dNVejhvRAwp4pOsY
-        R3EjraGl/4snjl2Jj2W9cPQ5EQ==
-X-Google-Smtp-Source: APXvYqxJ/LCpjfL6i8k3WsYcLFwA+acmJMKmMqeGG0hum8Accmkz64zdUg7sdnrncEbx+LUDVgdWrw==
-X-Received: by 2002:a17:902:7b98:: with SMTP id w24mr20717726pll.307.1574189557220;
-        Tue, 19 Nov 2019 10:52:37 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id j17sm25734881pfr.2.2019.11.19.10.52.36
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Qio7ElcX4cvHV7fnYSvJfkUTKXZs/DnMfuV15j1rnnU=;
+        b=YsDm6FPVAWSnq+89OAT9bikrEyzzVtO3MwyskLEzcMZXJeiP6Kbja65alt2AA29/pZ
+         N9qBkKoiTMDrAgeyVC+ynb9C+zWXaHXh0vYeD2vDcDc0WxezsqCF4BoN3WXZqr8EVAYq
+         E/Z2WsJ+tc0tj98zd1/Ad8kkIWahypXzl5AIDPvHmOef6IIbS2BxFnqMioZ6n8aN8FzM
+         2YO02lgje6Q/qVl8LLjHl1z/ZivD3mxyaDJ7maBALe/rI74buOcv6eARADcJEamyr76B
+         uw4EFbmqp+6T3P49KiHK2hydWaIeoPHD4bsa1CeCpL1ji0RdCNw2/XvM9RpUyw8DP31k
+         N/VA==
+X-Gm-Message-State: APjAAAXmhSta9dNVb+N6SVtMHrv1o/SQ5MYqIzY7FIBGVbHtmNW1EyI7
+        BnnWk3gtV2P3Qkpl83xYQ5UMFw==
+X-Google-Smtp-Source: APXvYqy6RoYSL7e0rnhUW+FCU/i+gbbrS4kSfOqX07jXxqCNNdlcu2vwWXYReY6VxGC4PnWjXseE0A==
+X-Received: by 2002:a63:1303:: with SMTP id i3mr7366420pgl.430.1574191201144;
+        Tue, 19 Nov 2019 11:20:01 -0800 (PST)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id d23sm26930886pfo.140.2019.11.19.11.19.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Nov 2019 10:52:36 -0800 (PST)
-Message-ID: <5dd439f4.1c69fb81.8a1e8.adb5@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        Tue, 19 Nov 2019 11:20:00 -0800 (PST)
+Date:   Tue, 19 Nov 2019 11:19:58 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
+Cc:     Russell King - ARM Linux admin <linux@armlinux.org.uk>,
+        GPIO <linux-gpio@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>
+Subject: Re: Using a GPIO as an interrupt line
+Message-ID: <20191119191958.GP36595@minitux>
+References: <f0d383f3-8efa-ae68-62af-68f69cd4143f@free.fr>
+ <20191119095748.GX25745@shell.armlinux.org.uk>
+ <07db59e7-ff16-0457-87f2-fba10dc182d6@free.fr>
+ <20191119105814.GZ25745@shell.armlinux.org.uk>
+ <9356da2a-2190-03fd-f5cc-6a0fd8c38e89@free.fr>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <0101016e7f99eaca-e623ce91-3e2a-40ae-bf2d-647a786aa7d7-000000@us-west-2.amazonses.com>
-References: <20191118173944.27043-1-sibis@codeaurora.org> <0101016e7f99eaca-e623ce91-3e2a-40ae-bf2d-647a786aa7d7-000000@us-west-2.amazonses.com>
-Subject: Re: [PATCH 6/6] arm64: dts: sm8150: Add rpmh power-domain node
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        mark.rutland@arm.com, dianders@chromium.org,
-        Sibi Sankar <sibis@codeaurora.org>
-To:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org,
-        rnayak@codeaurora.org, robh+dt@kernel.org, ulf.hansson@linaro.org
-User-Agent: alot/0.8.1
-Date:   Tue, 19 Nov 2019 10:52:35 -0800
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9356da2a-2190-03fd-f5cc-6a0fd8c38e89@free.fr>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sibi Sankar (2019-11-18 09:40:23)
-> Add the DT node for the rpmhpd power controller.
->=20
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> ---
+On Tue 19 Nov 03:46 PST 2019, Marc Gonzalez wrote:
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> On 19/11/2019 11:58, Russell King - ARM Linux admin wrote:
+> 
+> > On Tue, Nov 19, 2019 at 11:46:21AM +0100, Marc Gonzalez wrote:
+> >
+> >> On 19/11/2019 10:57, Russell King - ARM Linux admin wrote:
+> >>
+> >>> On Tue, Nov 19, 2019 at 10:28:15AM +0100, Marc Gonzalez wrote:
+> >>>
+> >>>> The board I'm working on provides a TCA9539 I/O expander.
+> >>>> Or, as the datasheet(*) calls it, a "Low Voltage 16-Bit I2C and
+> >>>> SMBus Low-Power I/O Expander with Interrupt Output, Reset Pin,
+> >>>> and Configuration Registers"
+> >>>>
+> >>>> (*) http://www.ti.com/lit/ds/symlink/tca9539.pdf
+> >>>>
+> >>>> The binding is documented in Documentation/devicetree/bindings/gpio/gpio-pca953x.txt
+> >>>>
+> >>>> I have some doubts about the interrupt output, described as:
+> >>>>
+> >>>> Optional properties:
+> >>>>  - interrupts: interrupt specifier for the device's interrupt output.
+> >>>>
+> >>>> In my board's DT, the I/O expander is described as:
+> >>>>
+> >>>> 	exp1: gpio@74 {
+> >>>> 		compatible = "ti,tca9539";
+> >>>> 		reg = <0x74>;
+> >>>> 		gpio-controller;
+> >>>> 		#gpio-cells = <2>;
+> >>>> 		reset-gpios = <&tlmm 96 GPIO_ACTIVE_LOW>;
+> >>>> 		pinctrl-names = "default";
+> >>>> 		pinctrl-0 = <&top_exp_rst>;
+> >>>> 		interrupt-parent = <&tlmm>;
+> >>>> 		interrupts = <42 IRQ_TYPE_LEVEL_HIGH>;
+> >>
+> >> As pointed out by ukleinek on IRC, I might have (??) specified the wrong
+> >> trigger type. The data-sheet states:
+> >> "The TCA9539 open-drain interrupt (INTn) output is activated when any input state
+> >> differs from its corresponding Input Port register state, and is used to indicate
+> >> to the system master that an input state has changed."
+> >> (The data sheet speaks of "INT with a line on top"; what is the typical way to
+> >> write that in ASCII? I was told that adding a trailing 'n' or 'b' was common.)
+> > 
+> > /INT or nINT are commonly used - I've never heard or seen 'b' (which is
+> > commonly used as a suffix on binary numbers) or a trailing 'n'.
+> 
+> Perhaps the 'b' suffix is only used in French...
+> 'b' might stand for "barre" (i.e. the line above the symbol).
+> 
+> 
+> > Is pin 42 something that can be muxed?  If so, it seems sane to specify
+> > configuration for it.  Whether it needs to be a GPIO or whether it has
+> > a specific "interrupt" function mux state depends on the SoC.
+> 
+> According to drivers/pinctrl/qcom/pinctrl-msm8998.c
+> PINGROUP(42, EAST, blsp_spi6, blsp_uart3_b, blsp_uim3_b, _, qdss, _, _, _, _)
+> 
+> I don't think there is an explicit "interrupt" function in
+> this pinctrl driver... except FUNCTION(ssc_irq).
+> 
 
+No there's no "interrupt" function, the function to be used is "gpio",
+which will ensure that the irq logic is available. But in a modern
+kernel we're implicitly selecting the "gpio" function if you're
+requesting an interrupt. So you shouldn't need to specify this even.
+
+> static const char * const ssc_irq_groups[] = {
+> 	"gpio58", "gpio59", "gpio60", "gpio61", "gpio62", "gpio63", "gpio78",
+> 	"gpio79", "gpio80", "gpio117", "gpio118", "gpio119", "gpio120",
+> 	"gpio121", "gpio122", "gpio123", "gpio124", "gpio125",
+> };
+> 
+> @Bjorn, do you know what these are used for?
+> 
+
+The "ssc" would imply that it relates to the secure coprocessor somehow.
+
+Regards,
+Bjorn
