@@ -2,87 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AB67101042
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2019 01:32:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C0F5101070
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Nov 2019 02:06:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726939AbfKSAci (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Nov 2019 19:32:38 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:46753 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726809AbfKSAci (ORCPT
+        id S1727080AbfKSBFy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Nov 2019 20:05:54 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:36824 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726911AbfKSBFx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Nov 2019 19:32:38 -0500
-Received: by mail-pf1-f194.google.com with SMTP id 193so11190079pfc.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2019 16:32:37 -0800 (PST)
+        Mon, 18 Nov 2019 20:05:53 -0500
+Received: by mail-pf1-f193.google.com with SMTP id b19so11257387pfd.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Nov 2019 17:05:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:cc:to:subject:from:user-agent:date;
-        bh=o0OXgLmHTG6WHUoLd4+XFd/oiOrWoJBJ98oXwGWf49U=;
-        b=M5FXXW0mR0xn+5fsbeH0ePNNujEUWE4+jL4vomKqcmMB5GfonCjRlaIdutis/H5QB3
-         zAuMK1WjG32gGhpBOHHnDhMAREoTUU7xKb+mmBwWqIxeQbdzL4MQc+HxYvdIqqZ9dKnQ
-         opTS860TAZBLz8BVfzAH++6rhEyMViLuHo5rU=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=uZSX0gXZEyWbpeDATXICIzoasiY9Eo2qw3XPlac1tGg=;
+        b=XgvgsAl0bL1TY6fkGEmf81K8dDZO6A5M8XuF2XkY0OIUWUqI9/uZGfJW+9rUg/41ds
+         lDYdDNBuqlsQN+5710fIOI+S/ka9f/2JZM4Aa2tsKClSNyyzd06PFu+kiwawhCcuNosA
+         gZtw8MORRi4kOQw0u8lbvq4eR0bqPox7K8R+WJ8sm/1lFtL4Ixo6nVQVoWQeWfKRliXm
+         LUrCMIvKpQi9QWFHahsHd/kiWHKPLlABjI6AwtSIRQsNK967Aq21agg+Oqn4v24Qp7gZ
+         wmReq/HsIzrkFzUargGPWl7CUDBHOXY4gSw3PqWL5z1CZZ2K13kYazYyjPXGi4bUNeL+
+         /sNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:cc:to:subject:from
-         :user-agent:date;
-        bh=o0OXgLmHTG6WHUoLd4+XFd/oiOrWoJBJ98oXwGWf49U=;
-        b=Nyf26HjtOlAUjFgVNxO4tSCA2miLJ5Uek1no0M4GdOYN+f1iN/ChdAKR/0sg7D7Ie4
-         iMrIX9+sCEO+esqHDX//J+uIsB3gNrIqknF9FYXG64SFLv4kVw5xmSdlMIJg7wVDRXpO
-         RcDuphqCnww2zxT6yaGyOqYpYtl8teIt5qmmvWhD+htGETcwqkpRkB9TgTY4Ng16/O1G
-         wLluD+kNuIa8r6eergzXIBRuXhHDM4WjKWfFXcZQamUs/ivN2qli+8qus3Xmv4BNobdi
-         h71BpzWwLRQF+HNLczR+4A4hKbxcO6c4SgALevCpg2aOv3gGYWqv600UhTTTZ1A56ffo
-         2KwQ==
-X-Gm-Message-State: APjAAAXyHftn6qWliyMm8RUosOUcdfjZKErV90Kxr1mpX384rycG+WUN
-        JwgLSHWJ3FsLGoZlJ5hN52vSPY4++Tw=
-X-Google-Smtp-Source: APXvYqyAKyUgyhNNCirKuH+kZ1grecYk6P0rtU1NXPsuBpylGactVDgBMuarRDsz9xu7bEt2bBE6ww==
-X-Received: by 2002:a65:47c1:: with SMTP id f1mr2187675pgs.393.1574123557349;
-        Mon, 18 Nov 2019 16:32:37 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id d23sm23136047pfo.140.2019.11.18.16.32.36
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=uZSX0gXZEyWbpeDATXICIzoasiY9Eo2qw3XPlac1tGg=;
+        b=Be2hT0chTP0HjEd3DL11/9gVEZCGjB4CDt+tTwXsV1nH91qGbCTL9kfmaHJfS+biVj
+         TlkRzs0o65OppwomQKUmtDd+NS1tfAlggZ46WPz2IweDmF7CrVsB0JXyhpzJEKzHIKD1
+         Y6XCeb4+WK7RVE0bFIBNdAnRzZ1rcE+yeBqoL6kZWpVQf+GkbXMGWW2XGdtDVAthxv8a
+         ZpbIiPtKb+OJOmxdm3Ms6ReU2WkiGI0blcTIVnqvr55NKVlKLjAXK4t48pb19Ez/UrVk
+         7v3BaqjKYLAsqB4ZmgPqrYu8GXFvMleZ/rDjfUScSDLfCg/0ScO4J6UkB+lT9PST8+Fo
+         82cQ==
+X-Gm-Message-State: APjAAAVm21ceDNItIuUJxiXOJZakq/3odDjovc2bLhrskp3NkieFr8Ex
+        WfdxdKDc0Z+e49cR8+QXq335SA==
+X-Google-Smtp-Source: APXvYqw3NIZ6s/qg3ByJQpoS8wsFMhRGesqeKBTUjrMpriPYIyzvHa2rujTOL1ezqVrBTdyxxojgRw==
+X-Received: by 2002:a62:8c:: with SMTP id 134mr2550973pfa.31.1574125550804;
+        Mon, 18 Nov 2019 17:05:50 -0800 (PST)
+Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id h23sm20982195pgg.58.2019.11.18.17.05.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Nov 2019 16:32:36 -0800 (PST)
-Message-ID: <5dd33824.1c69fb81.2d94a.4f12@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        Mon, 18 Nov 2019 17:05:50 -0800 (PST)
+Date:   Mon, 18 Nov 2019 17:05:47 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     swboyd@chromium.org, maz@kernel.org, linus.walleij@linaro.org,
+        evgreen@chromium.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, mkshah@codeaurora.org,
+        linux-gpio@vger.kernel.org, agross@kernel.org,
+        dianders@chromium.org
+Subject: Re: [PATCH v2 00/12] Support wakeup capable GPIOs
+Message-ID: <20191119010547.GN36595@minitux>
+References: <1573855915-9841-1-git-send-email-ilina@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20191118234043.331542-1-robdclark@gmail.com>
-References: <20191118234043.331542-1-robdclark@gmail.com>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH] drm/msm/a6xx: restore previous freq on resume
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.8.1
-Date:   Mon, 18 Nov 2019 16:32:35 -0800
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1573855915-9841-1-git-send-email-ilina@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rob Clark (2019-11-18 15:40:38)
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/=
-adreno/a6xx_gmu.h
-> index 39a26dd63674..2af91ed7ed0c 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-> @@ -63,6 +63,9 @@ struct a6xx_gmu {
->         struct clk_bulk_data *clocks;
->         struct clk *core_clk;
-> =20
-> +       /* current performance index set externally */
-> +       int current_perf_index;
-> +
+On Fri 15 Nov 14:11 PST 2019, Lina Iyer wrote:
 
-Is there a reason this isn't unsigned? It looks like
-__a6xx_gmu_set_freq() takes an int, but maybe it should take a u16 or
-something?
+> Hi,
+> 
+> Here is the spin of the series with the review comments addressed and
+> Reviewed-by tags added. Thanks all for your reviews.
+> 
+> Andy/Bjorn, would you pull patches 10-12 in your tree? Marc would be
+> pulling the patches 1-9 into the irqchip tree.
+> 
 
+Patches 10-12 picked up for v5.6
+
+Regards,
+Bjorn
+
+> Thanks.
+> 
+> --Lina
+> 
+> ---
+> Changes in v2:
+> 	- Address review comments
+> 	- Added Reviewed-by tags
+> 
+> Changes in v1[7]:
+> 	- Address review comments
+> 	- Add Reviewed-by tags
+> 	- Drop SPI config patches
+> 	- Rebase on top of Rajendra's PDC changes [6]
+> 
+> Changes in RFC v2[5]:
+>         - Address review comments #3, #4, #6, #7, #8, #9, #10
+>         - Rebased on top of linux-next GPIO latest patches [1],[3],[4]
+>         - Increase PDC max irqs in #2 (avoid merge conflicts with
+>           downstream)
+>         - Add Reviewed-by #5
+> 
+> 
+> [1].
+> https://lore.kernel.org/linux-gpio/20190808123242.5359-1-linus.walleij@linaro.org/
+> [2].
+> https://lkml.org/lkml/2019/5/7/1173
+> [3].
+> https://lore.kernel.org/r/20190819084904.30027-1-linus.walleij@linaro.org
+> [4].
+> https://lore.kernel.org/r/20190724083828.7496-1-linus.walleij@linaro.org
+> [5].
+> https://lore.kernel.org/linux-gpio/5da6b849.1c69fb81.a9b04.1b9f@mx.google.com/t/
+> [6].
+> https://lore.kernel.org/linux-arm-msm/d622482d92059533f03b65af26c69b9b@www.loen.fr/
+> [7].
+> https://lore.kernel.org/linux-gpio/5dcefdfd.1c69fb81.c5332.fbe0@mx.google.com/T/#t
+> 
+> Lina Iyer (10):
+>   irqdomain: add bus token DOMAIN_BUS_WAKEUP
+>   drivers: irqchip: qcom-pdc: update max PDC interrupts
+>   drivers: irqchip: pdc: Do not toggle IRQ_ENABLE during mask/unmask
+>   drivers: irqchip: add PDC irqdomain for wakeup capable GPIOs
+>   of: irq: document properties for wakeup interrupt parent
+>   drivers: pinctrl: msm: setup GPIO chip in hierarchy
+>   drivers: pinctrl: sdm845: add PDC wakeup interrupt map for GPIOs
+>   arm64: dts: qcom: add PDC interrupt controller for SDM845
+>   arm64: dts: qcom: setup PDC as the wakeup parent for TLMM on SDM845
+>   arm64: defconfig: enable PDC interrupt controller for Qualcomm SDM845
+> 
+> Maulik Shah (2):
+>   genirq: Introduce irq_chip_get/set_parent_state calls
+>   drivers: irqchip: pdc: Add irqchip set/get state calls
+> 
+>  .../bindings/interrupt-controller/interrupts.txt   |  12 ++
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi               |  10 ++
+>  arch/arm64/configs/defconfig                       |   1 +
+>  drivers/irqchip/qcom-pdc.c                         | 147 +++++++++++++++++++--
+>  drivers/pinctrl/qcom/pinctrl-msm.c                 | 112 +++++++++++++++-
+>  drivers/pinctrl/qcom/pinctrl-msm.h                 |  14 ++
+>  drivers/pinctrl/qcom/pinctrl-sdm845.c              |  23 +++-
+>  include/linux/irq.h                                |   6 +
+>  include/linux/irqdomain.h                          |   1 +
+>  include/linux/soc/qcom/irq.h                       |  34 +++++
+>  kernel/irq/chip.c                                  |  44 ++++++
+>  11 files changed, 388 insertions(+), 16 deletions(-)
+>  create mode 100644 include/linux/soc/qcom/irq.h
+> 
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
