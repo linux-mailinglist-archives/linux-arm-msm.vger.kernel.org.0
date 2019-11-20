@@ -2,57 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 36627103268
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2019 05:02:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C46BF103270
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2019 05:10:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727415AbfKTECZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Nov 2019 23:02:25 -0500
-Received: from a27-55.smtp-out.us-west-2.amazonses.com ([54.240.27.55]:38566
-        "EHLO a27-55.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727383AbfKTECZ (ORCPT
+        id S1727415AbfKTEKU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Nov 2019 23:10:20 -0500
+Received: from a27-187.smtp-out.us-west-2.amazonses.com ([54.240.27.187]:45404
+        "EHLO a27-187.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727264AbfKTEKU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Nov 2019 23:02:25 -0500
+        Tue, 19 Nov 2019 23:10:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574222544;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574223019;
         h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-        bh=KFLCdUP2GtEjV4/R27pNOGYY+5fUM2fxkMqYx2EmUhA=;
-        b=Ymi3QDEd7lI+lFPsPdwKmVo4JbPHLuot+/sEllhokIFVJHc8T1x4p8Pp/Uxjzytg
-        DfaeSOUjAwRsYhZWq7IYFC7jUpYHbLfTHb1LrbqF1NN8XrrIeKxQPZKsai1oupGLTIL
-        7A548nWDMYvWYGBzhjuOfoUoLf780PvedCk3RWLI=
+        bh=1hBvSBPS247BMseE/4jYnIs2R+dBBvuuuU6qqBCAS1o=;
+        b=fJH82JNjBT0dBxyhXfANm7YTcB6ISgfHy0jz7mfjZuyGgKCrNZ7dKUW3pYyu8jvj
+        DBQEE/tIuULag9jW57azNJQSLLNjZTfFTg742BfzZaum7U3Gn3+9jNfC2c2g8feSmqb
+        lLRDp3CbLSo6HuV+y8Sily+ILKQyN2yc4tXNiKJk=
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574222544;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574223019;
         h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding:Feedback-ID;
-        bh=KFLCdUP2GtEjV4/R27pNOGYY+5fUM2fxkMqYx2EmUhA=;
-        b=FcxB0IRoxs/5hONWQjTwqvQeOtJcYuzNjA/tEVNB3LcKazTJ2p7s5Cjm/mRhtfo/
-        Pz2tX+l2EiJhW94roEuulS6fwEiCFOPVCtcbLLOfz5TXwysqWkPTNVJuz6PxG4z9p5I
-        Yv6BzieTD59pBsaDuOGzjKgjorgqmQMCIkTJx3hM=
+        bh=1hBvSBPS247BMseE/4jYnIs2R+dBBvuuuU6qqBCAS1o=;
+        b=BZMBLxFwW7KLaz/S2oAt1K0MkhE4Z7l/gvylaEwlOAFH5VAzBlT927+UU1pSD2B2
+        YVS9j+Miv1OnwEPjEAu7IZNJkiHEkxyXx32TQrEIZHrKxySolx3qX4kDOnMw5nHcgPC
+        LNXv2ZhxKSJmnc1psQoKWku/6MQY9gFdt3QkCep8=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
         URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DFF89C33F83
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E5122C447A1
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH 3/6] soc: qcom: rpmhpd: Add SM8150 RPMH power-domains
+Subject: Re: [PATCH 4/6] dt-bindings: power: Add rpmh power-domain bindings
+ for sc7180
 To:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org,
         robh+dt@kernel.org, ulf.hansson@linaro.org
 Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         mark.rutland@arm.com, swboyd@chromium.org, dianders@chromium.org
 References: <20191118173944.27043-1-sibis@codeaurora.org>
- <0101016e7f99b99a-e1a501f1-823e-4ede-86ad-f517323c5014-000000@us-west-2.amazonses.com>
+ <20191118173944.27043-5-sibis@codeaurora.org>
 From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <0101016e86f9bca2-086cdad4-cc56-4a39-b1f0-93b30d026ca8-000000@us-west-2.amazonses.com>
-Date:   Wed, 20 Nov 2019 04:02:24 +0000
+Message-ID: <0101016e8700fbc6-26e71133-00a4-451c-ab3e-236f2431b3d2-000000@us-west-2.amazonses.com>
+Date:   Wed, 20 Nov 2019 04:10:18 +0000
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.1
 MIME-Version: 1.0
-In-Reply-To: <0101016e7f99b99a-e1a501f1-823e-4ede-86ad-f517323c5014-000000@us-west-2.amazonses.com>
+In-Reply-To: <20191118173944.27043-5-sibis@codeaurora.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-SES-Outgoing: 2019.11.20-54.240.27.55
+X-SES-Outgoing: 2019.11.20-54.240.27.187
 Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -61,70 +62,51 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 11/18/2019 11:10 PM, Sibi Sankar wrote:
-> Add support for cx/mx/gfx/mss/ebi/mmcx power-domains found on
-> SM8150 SoCs.
-
-lmx/lcx also?
-
+On 11/18/2019 11:09 PM, Sibi Sankar wrote:
+> Add RPMH power-domain bindings for the SC7180 family of SoCs.
 > 
 > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 > ---
 
 Reviewed-by: Rajendra Nayak <rnayak@codeaurora.org>
 
->   drivers/soc/qcom/rpmhpd.c | 36 ++++++++++++++++++++++++++++++++++++
->   1 file changed, 36 insertions(+)
+>   Documentation/devicetree/bindings/power/qcom,rpmpd.txt |  1 +
+>   include/dt-bindings/power/qcom-rpmpd.h                 | 10 ++++++++++
+>   2 files changed, 11 insertions(+)
 > 
-> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-> index 51850cc68b701..3b109ee67a4d2 100644
-> --- a/drivers/soc/qcom/rpmhpd.c
-> +++ b/drivers/soc/qcom/rpmhpd.c
-> @@ -131,8 +131,44 @@ static const struct rpmhpd_desc sdm845_desc = {
->   	.num_pds = ARRAY_SIZE(sdm845_rpmhpds),
->   };
+> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
+> index f3bbaa4aef297..6346d00b1b400 100644
+> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
+> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
+> @@ -9,6 +9,7 @@ Required Properties:
+>   	* qcom,msm8996-rpmpd: RPM Power domain for the msm8996 family of SoC
+>   	* qcom,msm8998-rpmpd: RPM Power domain for the msm8998 family of SoC
+>   	* qcom,qcs404-rpmpd: RPM Power domain for the qcs404 family of SoC
+> +	* qcom,sc7180-rpmhpd: RPMh Power domain for the sc7180 family of SoC
+>   	* qcom,sdm845-rpmhpd: RPMh Power domain for the sdm845 family of SoC
+>   	* qcom,sm8150-rpmhpd: RPMh Power domain for the sm8150 family of SoC
+>    - #power-domain-cells: number of cells in Power domain specifier
+> diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
+> index 7d43bafc0026b..3f74096d5a7ca 100644
+> --- a/include/dt-bindings/power/qcom-rpmpd.h
+> +++ b/include/dt-bindings/power/qcom-rpmpd.h
+> @@ -28,6 +28,16 @@
+>   #define SM8150_MMCX	9
+>   #define SM8150_MMCX_AO	10
 >   
-> +/* SM8150 RPMH powerdomains */
+> +/* SC7180 Power Domain Indexes */
+> +#define SC7180_CX	0
+> +#define SC7180_CX_AO	1
+> +#define SC7180_GFX	2
+> +#define SC7180_MX	3
+> +#define SC7180_MX_AO	4
+> +#define SC7180_LMX	5
+> +#define SC7180_LCX	6
+> +#define SC7180_MSS	7
 > +
-> +static struct rpmhpd sm8150_mmcx_ao;
-> +static struct rpmhpd sm8150_mmcx = {
-> +	.pd = { .name = "mmcx", },
-> +	.peer = &sm8150_mmcx_ao,
-> +	.res_name = "mmcx.lvl",
-> +};
-> +
-> +static struct rpmhpd sm8150_mmcx_ao = {
-> +	.pd = { .name = "mmcx_ao", },
-> +	.active_only = true,
-> +	.peer = &sm8150_mmcx,
-> +	.res_name = "mmcx.lvl",
-> +};
-> +
-> +static struct rpmhpd *sm8150_rpmhpds[] = {
-> +	[SM8150_MSS] = &sdm845_mss,
-> +	[SM8150_EBI] = &sdm845_ebi,
-> +	[SM8150_LMX] = &sdm845_lmx,
-> +	[SM8150_LCX] = &sdm845_lcx,
-> +	[SM8150_GFX] = &sdm845_gfx,
-> +	[SM8150_MX] = &sdm845_mx,
-> +	[SM8150_MX_AO] = &sdm845_mx_ao,
-> +	[SM8150_CX] = &sdm845_cx,
-> +	[SM8150_CX_AO] = &sdm845_cx_ao,
-> +	[SM8150_MMCX] = &sm8150_mmcx,
-> +	[SM8150_MMCX_AO] = &sm8150_mmcx_ao,
-> +};
-> +
-> +static const struct rpmhpd_desc sm8150_desc = {
-> +	.rpmhpds = sm8150_rpmhpds,
-> +	.num_pds = ARRAY_SIZE(sm8150_rpmhpds),
-> +};
-> +
->   static const struct of_device_id rpmhpd_match_table[] = {
->   	{ .compatible = "qcom,sdm845-rpmhpd", .data = &sdm845_desc },
-> +	{ .compatible = "qcom,sm8150-rpmhpd", .data = &sm8150_desc },
->   	{ }
->   };
->   
+>   /* SDM845 Power Domain performance levels */
+>   #define RPMH_REGULATOR_LEVEL_RETENTION	16
+>   #define RPMH_REGULATOR_LEVEL_MIN_SVS	48
 > 
 
 -- 
