@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 10AFA1039F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2019 13:21:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C1DEC103A00
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2019 13:24:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729438AbfKTMVO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Nov 2019 07:21:14 -0500
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:19780 "EHLO
+        id S1729026AbfKTMYj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Nov 2019 07:24:39 -0500
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:35985 "EHLO
         alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728611AbfKTMVO (ORCPT
+        by vger.kernel.org with ESMTP id S1728611AbfKTMYj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Nov 2019 07:21:14 -0500
+        Wed, 20 Nov 2019 07:24:39 -0500
 Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 20 Nov 2019 17:50:07 +0530
-IronPort-SDR: U33b2/yOo2ffgouklv00CB0GP/uj6XPJnqHEeUjuW9WNvgJjXNqsNtnNubsU+NmwqtE6MT6Osh
- z/qAVP7/bQ633yLabsfOt8qk41YtnXFQNX9qxjh0Uj3TgW1b1b1Jd2kOhmUllAJ8V65/Gn3ZSM
- ypcW1WaXEgXLOPIiwEy14UrYN8p3GEtaO+f7pUd9yxvWbwF1LPhb3GDTQ+Cq4136QMK6VWcY+m
- 84IIVjRy01h/BJ4v2YfkiVVhOOO8R8fqMeVOeG/hAYFMOEVUKAya9D+FGRSI36M4oqj3eXsTdv
- lKQKTTyakM8WUMphUyBrJWYx
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 20 Nov 2019 17:54:34 +0530
+IronPort-SDR: Qo4JGS3ebzTC1Qc8xrajvB09FGOYP9/E30bv0a1lCLasPjQsXXYcmpgm5UjowWBrtunbjTCL4X
+ lsHAnZvl/T0QxOkfjP+dQpyb+er4/KWgLoJiQX6LAfek62GWedwACuFVHynGjukag+fmQKUYyR
+ hkSrQze32NyuZdQGkWKUYzGTLQKLLXYV3ss5CQ5dKGzIAfgWlUOPcP6Lu/eTPFQSg57UiFq8H6
+ 2n8h9T7n9ypCJdRH+AsGfHG7PYeeHvr3gGkpxJvkH+FSjYO4/UDpmp+FFB3EcHVhgq4rIfG+Vx
+ qtVPsl6qC18QnGDv2ry/ORVf
 Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 20 Nov 2019 17:49:42 +0530
+  by ironmsg02-blr.qualcomm.com with ESMTP; 20 Nov 2019 17:54:33 +0530
 Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
-        id 49EBD434B; Wed, 20 Nov 2019 17:49:41 +0530 (IST)
+        id 6E02A434B; Wed, 20 Nov 2019 17:54:32 +0530 (IST)
 From:   Kalyan Thota <kalyan_t@codeaurora.org>
 To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
@@ -31,32 +31,32 @@ Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
         seanpaul@chromium.org, hoegsberg@chromium.org, dhar@codeaurora.org,
         jsanka@codeaurora.org, chandanu@codeaurora.org,
         travitej@codeaurora.org, nganji@codeaurora.org
-Subject: [PATCH v3] msm:disp:dpu1: add support for display for SC7180 target
-Date:   Wed, 20 Nov 2019 17:49:28 +0530
-Message-Id: <1574252368-4645-1-git-send-email-kalyan_t@codeaurora.org>
+Subject: [PATCH v3] msm:disp:dpu1: setup display datapath for SC7180 target
+Date:   Wed, 20 Nov 2019 17:54:20 +0530
+Message-Id: <1574252660-5206-1-git-send-email-kalyan_t@codeaurora.org>
 X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add display hw catalog changes for SC7180 target.
+Add changes to setup display datapath on SC7180 target.
 
 Changes in v1:
- - Configure register offsets and capabilities for the
-   display hw blocks.
+ - Add changes to support ctl_active on SC7180 target.
+ - While selecting the number of mixers in the topology
+   consider the interface width.
 
 Changes in v2:
- - mdss_irq data type has changed in the dependent
-   patch, accommodate the necessary changes.
+ - Spawn topology mixer selection into separate patch (Rob Clark).
  - Add co-developed-by tags in the commit msg (Stephen Boyd).
 
 Changes in v3:
- - fix kernel checkpatch errors in v2
+ - Fix kernel checkpatch errors in v2.
 
 This patch has dependency on the below series
 
-https://patchwork.kernel.org/patch/11253647/
+https://patchwork.kernel.org/patch/11253747/
 
 Co-developed-by: Shubhashree Dhar <dhar@codeaurora.org>
 Signed-off-by: Shubhashree Dhar <dhar@codeaurora.org>
@@ -64,425 +64,357 @@ Co-developed-by: Raviteja Tamatam <travitej@codeaurora.org>
 Signed-off-by: Raviteja Tamatam <travitej@codeaurora.org>
 Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
 ---
- .../devicetree/bindings/display/msm/dpu.txt        |   4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     | 189 +++++++++++++++++++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   4 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c          |   3 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
- drivers/gpu/drm/msm/msm_drv.c                      |   4 +-
- 6 files changed, 190 insertions(+), 15 deletions(-)
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 21 +++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         | 84 +++++++++++++++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         | 24 +++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        | 28 ++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  6 ++
+ 6 files changed, 159 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dpu.txt b/Documentation/devicetree/bindings/display/msm/dpu.txt
-index a61dd40..512f022 100644
---- a/Documentation/devicetree/bindings/display/msm/dpu.txt
-+++ b/Documentation/devicetree/bindings/display/msm/dpu.txt
-@@ -8,7 +8,7 @@ The DPU display controller is found in SDM845 SoC.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index b9c84fb..8cc8ad12 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -280,6 +280,14 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
+ 	phys_enc->hw_intf->ops.setup_timing_gen(phys_enc->hw_intf,
+ 			&timing_params, fmt);
+ 	phys_enc->hw_ctl->ops.setup_intf_cfg(phys_enc->hw_ctl, &intf_cfg);
++
++	/* setup which pp blk will connect to this intf */
++	if (phys_enc->hw_intf->ops.bind_pingpong_blk)
++		phys_enc->hw_intf->ops.bind_pingpong_blk(
++				phys_enc->hw_intf,
++				true,
++				phys_enc->hw_pp->idx);
++
+ 	spin_unlock_irqrestore(phys_enc->enc_spinlock, lock_flags);
  
- MDSS:
- Required properties:
--- compatible: "qcom,sdm845-mdss"
-+- compatible: "qcom,sdm845-mdss", "qcom,sc7180-mdss"
- - reg: physical base address and length of contoller's registers.
- - reg-names: register region names. The following region is required:
-   * "mdss"
-@@ -41,7 +41,7 @@ Optional properties:
+ 	programmable_fetch_config(phys_enc, &timing_params);
+@@ -435,6 +443,7 @@ static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys *phys_enc)
+ {
+ 	struct dpu_hw_ctl *ctl;
+ 	u32 flush_mask = 0;
++	u32 intf_flush_mask = 0;
  
- MDP:
- Required properties:
--- compatible: "qcom,sdm845-dpu"
-+- compatible: "qcom,sdm845-dpu", "qcom,sc7180-dpu"
- - reg: physical base address and length of controller's registers.
- - reg-names : register region names. The following region is required:
-   * "mdp"
+ 	ctl = phys_enc->hw_ctl;
+ 
+@@ -459,10 +468,18 @@ static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys *phys_enc)
+ 	ctl->ops.get_bitmask_intf(ctl, &flush_mask, phys_enc->hw_intf->idx);
+ 	ctl->ops.update_pending_flush(ctl, flush_mask);
+ 
++	if (ctl->ops.get_bitmask_active_intf)
++		ctl->ops.get_bitmask_active_intf(ctl, &intf_flush_mask,
++			phys_enc->hw_intf->idx);
++
++	if (ctl->ops.update_pending_intf_flush)
++		ctl->ops.update_pending_intf_flush(ctl, intf_flush_mask);
++
+ skip_flush:
+ 	DPU_DEBUG_VIDENC(phys_enc,
+-			 "update pending flush ctl %d flush_mask %x\n",
+-			 ctl->idx - CTL_0, flush_mask);
++		"update pending flush ctl %d flush_mask 0%x intf_mask 0x%x\n",
++		ctl->idx - CTL_0, flush_mask, intf_flush_mask);
++
+ 
+ 	/* ctl_flush & timing engine enable will be triggered by framework */
+ 	if (phys_enc->enable_state == DPU_ENC_DISABLED)
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 88f2664..1cf4509 100644
+index 1cf4509..0ee2b6c 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -11,11 +11,17 @@
- #include "dpu_hw_catalog_format.h"
- #include "dpu_kms.h"
- 
--#define VIG_SDM845_MASK \
--	(BIT(DPU_SSPP_SRC) | BIT(DPU_SSPP_SCALER_QSEED3) | BIT(DPU_SSPP_QOS) |\
-+#define VIG_MASK \
-+	(BIT(DPU_SSPP_SRC) | BIT(DPU_SSPP_QOS) |\
- 	BIT(DPU_SSPP_CSC_10BIT) | BIT(DPU_SSPP_CDP) | BIT(DPU_SSPP_QOS_8LVL) |\
- 	BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_EXCL_RECT))
- 
-+#define VIG_SDM845_MASK \
-+	(VIG_MASK | BIT(DPU_SSPP_SCALER_QSEED3))
-+
-+#define VIG_SC7180_MASK \
-+	(VIG_MASK | BIT(DPU_SSPP_SCALER_QSEED4))
-+
- #define DMA_SDM845_MASK \
- 	(BIT(DPU_SSPP_SRC) | BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_QOS_8LVL) |\
- 	BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_TS_PREFILL_REC1) |\
-@@ -27,6 +33,9 @@
- #define MIXER_SDM845_MASK \
- 	(BIT(DPU_MIXER_SOURCESPLIT) | BIT(DPU_DIM_LAYER))
- 
-+#define MIXER_SC7180_MASK \
-+	(BIT(DPU_DIM_LAYER))
-+
- #define PINGPONG_SDM845_MASK BIT(DPU_PINGPONG_DITHER)
- 
- #define PINGPONG_SDM845_SPLIT_MASK \
-@@ -60,6 +69,16 @@
- 	.has_idle_pc = true,
- };
- 
-+static const struct dpu_caps sc7180_dpu_caps = {
-+	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
-+	.max_mixer_blendstages = 0x9,
-+	.qseed_type = DPU_SSPP_SCALER_QSEED4,
-+	.smart_dma_rev = DPU_SSPP_SMART_DMA_V2,
-+	.ubwc_version = DPU_HW_UBWC_VER_20,
-+	.has_dim_layer = true,
-+	.has_idle_pc = true,
-+};
-+
- static struct dpu_mdp_cfg sdm845_mdp[] = {
- 	{
- 	.name = "top_0", .id = MDP_TOP,
-@@ -85,6 +104,23 @@
- 	},
- };
- 
-+static struct dpu_mdp_cfg sc7180_mdp[] = {
-+	{
-+	.name = "top_0", .id = MDP_TOP,
-+	.base = 0x0, .len = 0x494,
-+	.features = 0,
-+	.highest_bank_bit = 0x3,
-+	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
-+		.reg_off = 0x2AC, .bit_off = 0},
-+	.clk_ctrls[DPU_CLK_CTRL_DMA0] = {
-+		.reg_off = 0x2AC, .bit_off = 8},
-+	.clk_ctrls[DPU_CLK_CTRL_DMA1] = {
-+		.reg_off = 0x2B4, .bit_off = 8},
-+	.clk_ctrls[DPU_CLK_CTRL_CURSOR0] = {
-+		.reg_off = 0x2BC, .bit_off = 8},
-+	},
-+};
-+
- /*************************************************************
-  * CTL sub blocks config
-  *************************************************************/
-@@ -116,6 +152,24 @@
- 	},
- };
- 
-+static struct dpu_ctl_cfg sc7180_ctl[] = {
-+	{
-+	.name = "ctl_0", .id = CTL_0,
-+	.base = 0x1000, .len = 0xE4,
-+	.features = BIT(DPU_CTL_ACTIVE_CFG)
-+	},
-+	{
-+	.name = "ctl_1", .id = CTL_1,
-+	.base = 0x1200, .len = 0xE4,
-+	.features = BIT(DPU_CTL_ACTIVE_CFG)
-+	},
-+	{
-+	.name = "ctl_2", .id = CTL_2,
-+	.base = 0x1400, .len = 0xE4,
-+	.features = BIT(DPU_CTL_ACTIVE_CFG)
-+	},
-+};
-+
- /*************************************************************
-  * SSPP sub blocks config
-  *************************************************************/
-@@ -203,9 +257,23 @@
- 		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
- };
- 
-+static struct dpu_sspp_cfg sc7180_sspp[] = {
-+	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7180_MASK,
-+		sdm845_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
-+	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
-+		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
-+	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK,
-+		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
-+	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK,
-+		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0),
-+};
-+
- /*************************************************************
-  * MIXER sub blocks config
-  *************************************************************/
-+
-+/* SDM845 */
-+
- static const struct dpu_lm_sub_blks sdm845_lm_sblk = {
- 	.maxwidth = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
- 	.maxblendstages = 11, /* excluding base layer */
-@@ -215,23 +283,46 @@
- 	},
- };
- 
--#define LM_BLK(_name, _id, _base, _pp, _lmpair) \
-+#define LM_BLK(_name, _id, _base, _fmask, _sblk, _pp, _lmpair) \
- 	{ \
+@@ -374,6 +374,7 @@
+ 	{\
  	.name = _name, .id = _id, \
- 	.base = _base, .len = 0x320, \
--	.features = MIXER_SDM845_MASK, \
--	.sblk = &sdm845_lm_sblk, \
-+	.features = _fmask, \
-+	.sblk = _sblk, \
- 	.pingpong = _pp, \
- 	.lm_pair_mask = (1 << _lmpair) \
- 	}
+ 	.base = _base, .len = 0x280, \
++	.features = BIT(DPU_CTL_ACTIVE_CFG), \
+ 	.type = _type, \
+ 	.controller_id = _ctrl_id, \
+ 	.prog_fetch_lines_worst_case = 24 \
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+index 179e8d5..2ce4b5a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+@@ -22,11 +22,15 @@
+ #define   CTL_PREPARE                   0x0d0
+ #define   CTL_SW_RESET                  0x030
+ #define   CTL_LAYER_EXTN_OFFSET         0x40
++#define   CTL_INTF_ACTIVE               0x0F4
++#define   CTL_INTF_FLUSH                0x110
++#define   CTL_INTF_MASTER               0x134
  
- static struct dpu_lm_cfg sdm845_lm[] = {
--	LM_BLK("lm_0", LM_0, 0x44000, PINGPONG_0, LM_1),
--	LM_BLK("lm_1", LM_1, 0x45000, PINGPONG_1, LM_0),
--	LM_BLK("lm_2", LM_2, 0x46000, PINGPONG_2, LM_5),
--	LM_BLK("lm_3", LM_3, 0x0, PINGPONG_MAX, 0),
--	LM_BLK("lm_4", LM_4, 0x0, PINGPONG_MAX, 0),
--	LM_BLK("lm_5", LM_5, 0x49000, PINGPONG_3, LM_2),
-+	LM_BLK("lm_0", LM_0, 0x44000, MIXER_SDM845_MASK,
-+		&sdm845_lm_sblk, PINGPONG_0, LM_1),
-+	LM_BLK("lm_1", LM_1, 0x45000, MIXER_SDM845_MASK,
-+		&sdm845_lm_sblk, PINGPONG_1, LM_0),
-+	LM_BLK("lm_2", LM_2, 0x46000, MIXER_SDM845_MASK,
-+		&sdm845_lm_sblk, PINGPONG_2, LM_5),
-+	LM_BLK("lm_3", LM_3, 0x0, MIXER_SDM845_MASK,
-+		&sdm845_lm_sblk, PINGPONG_MAX, 0),
-+	LM_BLK("lm_4", LM_4, 0x0, MIXER_SDM845_MASK,
-+		&sdm845_lm_sblk, PINGPONG_MAX, 0),
-+	LM_BLK("lm_5", LM_5, 0x49000, MIXER_SDM845_MASK,
-+		&sdm845_lm_sblk, PINGPONG_3, LM_2),
-+};
-+
-+/* SC7180 */
-+
-+static const struct dpu_lm_sub_blks sc7180_lm_sblk = {
-+	.maxwidth = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
-+	.maxblendstages = 7, /* excluding base layer */
-+	.blendstage_base = { /* offsets relative to mixer base */
-+		0x20, 0x38, 0x50, 0x68, 0x80, 0x98, 0xb0
-+	},
-+};
-+
-+static struct dpu_lm_cfg sc7180_lm[] = {
-+	LM_BLK("lm_0", LM_0, 0x44000, MIXER_SC7180_MASK,
-+		&sc7180_lm_sblk, PINGPONG_0, LM_1),
-+	LM_BLK("lm_1", LM_1, 0x45000, MIXER_SC7180_MASK,
-+		&sc7180_lm_sblk, PINGPONG_1, LM_0),
- };
+ #define CTL_MIXER_BORDER_OUT            BIT(24)
+ #define CTL_FLUSH_MASK_CTL              BIT(17)
  
- /*************************************************************
-@@ -271,6 +362,11 @@
- 	PP_BLK("pingpong_3", PINGPONG_3, 0x71800),
- };
+ #define DPU_REG_RESET_TIMEOUT_US        2000
++#define  INTF_IDX       31
  
-+static struct dpu_pingpong_cfg sc7180_pp[] = {
-+	PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000),
-+	PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800),
-+};
-+
- /*************************************************************
-  * INTF sub blocks config
-  *************************************************************/
-@@ -290,6 +386,11 @@
- 	INTF_BLK("intf_3", INTF_3, 0x6B800, INTF_DP, 1),
- };
- 
-+static struct dpu_intf_cfg sc7180_intf[] = {
-+	INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0),
-+	INTF_BLK("intf_1", INTF_1, 0x6A800, INTF_DSI, 0),
-+};
-+
- /*************************************************************
-  * VBIF sub blocks config
-  *************************************************************/
-@@ -340,6 +441,10 @@
- 	{.fl = 0, .lut = 0x11222222223357}
- };
- 
-+static struct dpu_qos_lut_entry sc7180_qos_linear[] = {
-+	{.fl = 0, .lut = 0x0011222222335777},
-+};
-+
- static struct dpu_qos_lut_entry sdm845_qos_macrotile[] = {
- 	{.fl = 10, .lut = 0x344556677},
- 	{.fl = 11, .lut = 0x3344556677},
-@@ -349,10 +454,18 @@
- 	{.fl = 0, .lut = 0x112233344556677},
- };
- 
-+static struct dpu_qos_lut_entry sc7180_qos_macrotile[] = {
-+	{.fl = 0, .lut = 0x0011223344556677},
-+};
-+
- static struct dpu_qos_lut_entry sdm845_qos_nrt[] = {
- 	{.fl = 0, .lut = 0x0},
- };
- 
-+static struct dpu_qos_lut_entry sc7180_qos_nrt[] = {
-+	{.fl = 0, .lut = 0x0},
-+};
-+
- static struct dpu_perf_cfg sdm845_perf_data = {
- 	.max_bw_low = 6800000,
- 	.max_bw_high = 6800000,
-@@ -392,6 +505,30 @@
- 	},
- };
- 
-+static struct dpu_perf_cfg sc7180_perf_data = {
-+	.max_bw_low = 3900000,
-+	.max_bw_high = 5500000,
-+	.min_core_ib = 2400000,
-+	.min_llcc_ib = 800000,
-+	.min_dram_ib = 800000,
-+	.danger_lut_tbl = {0xff, 0xffff, 0x0},
-+	.qos_lut_tbl = {
-+		{.nentry = ARRAY_SIZE(sc7180_qos_linear),
-+		.entries = sc7180_qos_linear
-+		},
-+		{.nentry = ARRAY_SIZE(sc7180_qos_macrotile),
-+		.entries = sc7180_qos_macrotile
-+		},
-+		{.nentry = ARRAY_SIZE(sc7180_qos_nrt),
-+		.entries = sc7180_qos_nrt
-+		},
-+	},
-+	.cdp_cfg = {
-+		{.rd_enable = 1, .wr_enable = 1},
-+		{.rd_enable = 1, .wr_enable = 0}
-+	},
-+};
-+
- /*************************************************************
-  * Hardware catalog init
-  *************************************************************/
-@@ -425,9 +562,39 @@ static void sdm845_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
- 	};
+ static struct dpu_ctl_cfg *_ctl_offset(enum dpu_ctl ctl,
+ 		struct dpu_mdss_cfg *m,
+@@ -100,11 +104,27 @@ static inline void dpu_hw_ctl_update_pending_flush(struct dpu_hw_ctl *ctx,
+ 	ctx->pending_flush_mask |= flushbits;
  }
  
-+/*
-+ * sc7180_cfg_init(): populate sc7180 dpu sub-blocks reg offsets
-+ * and instance counts.
-+ */
-+static void sc7180_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
++static inline void dpu_hw_ctl_update_pending_intf_flush(struct dpu_hw_ctl *ctx,
++		u32 flushbits)
 +{
-+	*dpu_cfg = (struct dpu_mdss_cfg){
-+		.caps = &sc7180_dpu_caps,
-+		.mdp_count = ARRAY_SIZE(sc7180_mdp),
-+		.mdp = sc7180_mdp,
-+		.ctl_count = ARRAY_SIZE(sc7180_ctl),
-+		.ctl = sc7180_ctl,
-+		.sspp_count = ARRAY_SIZE(sc7180_sspp),
-+		.sspp = sc7180_sspp,
-+		.mixer_count = ARRAY_SIZE(sc7180_lm),
-+		.mixer = sc7180_lm,
-+		.pingpong_count = ARRAY_SIZE(sc7180_pp),
-+		.pingpong = sc7180_pp,
-+		.intf_count = ARRAY_SIZE(sc7180_intf),
-+		.intf = sc7180_intf,
-+		.vbif_count = ARRAY_SIZE(sdm845_vbif),
-+		.vbif = sdm845_vbif,
-+		.reg_dma_count = 1,
-+		.dma_cfg = sdm845_regdma,
-+		.perf = sc7180_perf_data,
-+		.mdss_irqs = 0x3f,
-+	};
++	ctx->pending_intf_flush_mask |= flushbits;
 +}
 +
- static struct dpu_mdss_hw_cfg_handler cfg_handler[] = {
- 	{ .hw_rev = DPU_HW_VER_400, .cfg_init = sdm845_cfg_init},
- 	{ .hw_rev = DPU_HW_VER_401, .cfg_init = sdm845_cfg_init},
-+	{ .hw_rev = DPU_HW_VER_620, .cfg_init = sc7180_cfg_init},
- };
- 
- void dpu_hw_catalog_deinit(struct dpu_mdss_cfg *dpu_cfg)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 0fd3f50..2607ef3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -38,6 +38,7 @@
- #define DPU_HW_VER_401	DPU_HW_VER(4, 0, 1) /* sdm845 v2.0 */
- #define DPU_HW_VER_410	DPU_HW_VER(4, 1, 0) /* sdm670 v1.0 */
- #define DPU_HW_VER_500	DPU_HW_VER(5, 0, 0) /* sdm855 v1.0 */
-+#define DPU_HW_VER_620	DPU_HW_VER(6, 2, 0) /* sc7180 v1.0 */
- 
- 
- #define IS_MSM8996_TARGET(rev) IS_DPU_MAJOR_MINOR_SAME((rev), DPU_HW_VER_170)
-@@ -45,6 +46,7 @@
- #define IS_SDM845_TARGET(rev) IS_DPU_MAJOR_MINOR_SAME((rev), DPU_HW_VER_400)
- #define IS_SDM670_TARGET(rev) IS_DPU_MAJOR_MINOR_SAME((rev), DPU_HW_VER_410)
- #define IS_SDM855_TARGET(rev) IS_DPU_MAJOR_MINOR_SAME((rev), DPU_HW_VER_500)
-+#define IS_SC7180_TARGET(rev) IS_DPU_MAJOR_MINOR_SAME((rev), DPU_HW_VER_620)
- 
- 
- #define DPU_HW_BLK_NAME_LEN	16
-@@ -110,6 +112,7 @@ enum {
- 	DPU_SSPP_SRC = 0x1,
- 	DPU_SSPP_SCALER_QSEED2,
- 	DPU_SSPP_SCALER_QSEED3,
-+	DPU_SSPP_SCALER_QSEED4,
- 	DPU_SSPP_SCALER_RGB,
- 	DPU_SSPP_CSC,
- 	DPU_SSPP_CSC_10BIT,
-@@ -166,6 +169,7 @@ enum {
-  */
- enum {
- 	DPU_CTL_SPLIT_DISPLAY = 0x1,
-+	DPU_CTL_ACTIVE_CFG,
- 	DPU_CTL_MAX
- };
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-index 5bc39ba..50ee90e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-@@ -152,7 +152,8 @@ static void _setup_mixer_ops(struct dpu_mdss_cfg *m,
- 		unsigned long features)
+ static u32 dpu_hw_ctl_get_pending_flush(struct dpu_hw_ctl *ctx)
  {
- 	ops->setup_mixer_out = dpu_hw_lm_setup_out;
--	if (IS_SDM845_TARGET(m->hwversion) || IS_SDM670_TARGET(m->hwversion))
-+	if (IS_SDM845_TARGET(m->hwversion) || IS_SDM670_TARGET(m->hwversion)
-+	    || IS_SC7180_TARGET(m->hwversion))
- 		ops->setup_blend_config = dpu_hw_lm_setup_blend_config_sdm845;
- 	else
- 		ops->setup_blend_config = dpu_hw_lm_setup_blend_config;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 58b0485..ee93ba3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1111,6 +1111,7 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
+ 	return ctx->pending_flush_mask;
+ }
  
- static const struct of_device_id dpu_dt_match[] = {
- 	{ .compatible = "qcom,sdm845-dpu", },
-+	{ .compatible = "qcom,sc7180-dpu", },
- 	{}
++static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
++{
++
++	if (ctx->pending_flush_mask & BIT(INTF_IDX))
++		DPU_REG_WRITE(&ctx->hw, CTL_INTF_FLUSH,
++				ctx->pending_intf_flush_mask);
++
++	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
++}
++
+ static inline void dpu_hw_ctl_trigger_flush(struct dpu_hw_ctl *ctx)
+ {
+ 	trace_dpu_hw_ctl_trigger_pending_flush(ctx->pending_flush_mask,
+@@ -222,6 +242,36 @@ static int dpu_hw_ctl_get_bitmask_intf(struct dpu_hw_ctl *ctx,
+ 	return 0;
+ }
+ 
++static int dpu_hw_ctl_get_bitmask_intf_v1(struct dpu_hw_ctl *ctx,
++		u32 *flushbits, enum dpu_intf intf)
++{
++	switch (intf) {
++	case INTF_0:
++	case INTF_1:
++		*flushbits |= BIT(31);
++		break;
++	default:
++		return 0;
++	}
++	return 0;
++}
++
++static int dpu_hw_ctl_active_get_bitmask_intf(struct dpu_hw_ctl *ctx,
++		u32 *flushbits, enum dpu_intf intf)
++{
++	switch (intf) {
++	case INTF_0:
++		*flushbits |= BIT(0);
++		break;
++	case INTF_1:
++		*flushbits |= BIT(1);
++		break;
++	default:
++		return 0;
++	}
++	return 0;
++}
++
+ static u32 dpu_hw_ctl_poll_reset_status(struct dpu_hw_ctl *ctx, u32 timeout_us)
+ {
+ 	struct dpu_hw_blk_reg_map *c = &ctx->hw;
+@@ -422,6 +472,24 @@ static void dpu_hw_ctl_setup_blendstage(struct dpu_hw_ctl *ctx,
+ 	DPU_REG_WRITE(c, CTL_LAYER_EXT3(lm), mixercfg_ext3);
+ }
+ 
++
++static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
++		struct dpu_hw_intf_cfg *cfg)
++{
++	struct dpu_hw_blk_reg_map *c = &ctx->hw;
++	u32 intf_active = 0;
++	u32 mode_sel = 0;
++
++	if (cfg->intf_mode_sel == DPU_CTL_MODE_SEL_CMD)
++		mode_sel |= BIT(17);
++
++	intf_active = DPU_REG_READ(c, CTL_INTF_ACTIVE);
++	intf_active |= BIT(cfg->intf - INTF_0);
++
++	DPU_REG_WRITE(c, CTL_TOP, mode_sel);
++	DPU_REG_WRITE(c, CTL_INTF_ACTIVE, intf_active);
++}
++
+ static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
+ 		struct dpu_hw_intf_cfg *cfg)
+ {
+@@ -455,21 +523,31 @@ static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
+ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
+ 		unsigned long cap)
+ {
++	if (cap & BIT(DPU_CTL_ACTIVE_CFG)) {
++		ops->trigger_flush = dpu_hw_ctl_trigger_flush_v1;
++		ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg_v1;
++		ops->get_bitmask_intf = dpu_hw_ctl_get_bitmask_intf_v1;
++		ops->get_bitmask_active_intf =
++			dpu_hw_ctl_active_get_bitmask_intf;
++		ops->update_pending_intf_flush =
++			dpu_hw_ctl_update_pending_intf_flush;
++	} else {
++		ops->trigger_flush = dpu_hw_ctl_trigger_flush;
++		ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg;
++		ops->get_bitmask_intf = dpu_hw_ctl_get_bitmask_intf;
++	}
+ 	ops->clear_pending_flush = dpu_hw_ctl_clear_pending_flush;
+ 	ops->update_pending_flush = dpu_hw_ctl_update_pending_flush;
+ 	ops->get_pending_flush = dpu_hw_ctl_get_pending_flush;
+-	ops->trigger_flush = dpu_hw_ctl_trigger_flush;
+ 	ops->get_flush_register = dpu_hw_ctl_get_flush_register;
+ 	ops->trigger_start = dpu_hw_ctl_trigger_start;
+ 	ops->trigger_pending = dpu_hw_ctl_trigger_pending;
+-	ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg;
+ 	ops->reset = dpu_hw_ctl_reset_control;
+ 	ops->wait_reset_status = dpu_hw_ctl_wait_reset_status;
+ 	ops->clear_all_blendstages = dpu_hw_ctl_clear_all_blendstages;
+ 	ops->setup_blendstage = dpu_hw_ctl_setup_blendstage;
+ 	ops->get_bitmask_sspp = dpu_hw_ctl_get_bitmask_sspp;
+ 	ops->get_bitmask_mixer = dpu_hw_ctl_get_bitmask_mixer;
+-	ops->get_bitmask_intf = dpu_hw_ctl_get_bitmask_intf;
  };
- MODULE_DEVICE_TABLE(of, dpu_dt_match);
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index c84f0a8..f50fefb 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1192,7 +1192,8 @@ static int add_display_components(struct device *dev,
- 	 * the interfaces to our components list.
+ 
+ static struct dpu_hw_blk_ops dpu_hw_ops;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+index d3ae939..1e3973c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+@@ -91,6 +91,15 @@ struct dpu_hw_ctl_ops {
+ 		u32 flushbits);
+ 
+ 	/**
++	 * OR in the given flushbits to the cached pending_intf_flush_mask
++	 * No effect on hardware
++	 * @ctx       : ctl path ctx pointer
++	 * @flushbits : module flushmask
++	 */
++	void (*update_pending_intf_flush)(struct dpu_hw_ctl *ctx,
++		u32 flushbits);
++
++	/**
+ 	 * Write the value of the pending_flush_mask to hardware
+ 	 * @ctx       : ctl path ctx pointer
  	 */
- 	if (of_device_is_compatible(dev->of_node, "qcom,mdss") ||
--	    of_device_is_compatible(dev->of_node, "qcom,sdm845-mdss")) {
-+	    of_device_is_compatible(dev->of_node, "qcom,sdm845-mdss") ||
-+	    of_device_is_compatible(dev->of_node, "qcom,sc7180-mdss")) {
- 		ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
- 		if (ret) {
- 			DRM_DEV_ERROR(dev, "failed to populate children devices\n");
-@@ -1317,6 +1318,7 @@ static int msm_pdev_remove(struct platform_device *pdev)
- 	{ .compatible = "qcom,mdp4", .data = (void *)KMS_MDP4 },
- 	{ .compatible = "qcom,mdss", .data = (void *)KMS_MDP5 },
- 	{ .compatible = "qcom,sdm845-mdss", .data = (void *)KMS_DPU },
-+	{ .compatible = "qcom,sc7180-mdss", .data = (void *)KMS_DPU },
- 	{}
+@@ -130,11 +139,24 @@ struct dpu_hw_ctl_ops {
+ 	uint32_t (*get_bitmask_mixer)(struct dpu_hw_ctl *ctx,
+ 		enum dpu_lm blk);
+ 
++	/**
++	 * Query the value of the intf flush mask
++	 * No effect on hardware
++	 * @ctx       : ctl path ctx pointer
++	 */
+ 	int (*get_bitmask_intf)(struct dpu_hw_ctl *ctx,
+ 		u32 *flushbits,
+ 		enum dpu_intf blk);
+ 
+ 	/**
++	 * Query the value of the intf active flush mask
++	 * No effect on hardware
++	 * @ctx       : ctl path ctx pointer
++	 */
++	int (*get_bitmask_active_intf)(struct dpu_hw_ctl *ctx,
++		u32 *flushbits, enum dpu_intf blk);
++
++	/**
+ 	 * Set all blend stages to disabled
+ 	 * @ctx       : ctl path ctx pointer
+ 	 */
+@@ -159,6 +181,7 @@ struct dpu_hw_ctl_ops {
+  * @mixer_count: number of mixers
+  * @mixer_hw_caps: mixer hardware capabilities
+  * @pending_flush_mask: storage for pending ctl_flush managed via ops
++ * @pending_intf_flush_mask: pending INTF flush
+  * @ops: operation list
+  */
+ struct dpu_hw_ctl {
+@@ -171,6 +194,7 @@ struct dpu_hw_ctl {
+ 	int mixer_count;
+ 	const struct dpu_lm_cfg *mixer_hw_caps;
+ 	u32 pending_flush_mask;
++	u32 pending_intf_flush_mask;
+ 
+ 	/* ops */
+ 	struct dpu_hw_ctl_ops ops;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+index dcd87cd..eff5e6a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+@@ -56,6 +56,8 @@
+ #define   INTF_FRAME_COUNT              0x0AC
+ #define   INTF_LINE_COUNT               0x0B0
+ 
++#define   INTF_MUX                      0x25C
++
+ static struct dpu_intf_cfg *_intf_offset(enum dpu_intf intf,
+ 		struct dpu_mdss_cfg *m,
+ 		void __iomem *addr,
+@@ -218,6 +220,30 @@ static void dpu_hw_intf_setup_prg_fetch(
+ 	DPU_REG_WRITE(c, INTF_CONFIG, fetch_enable);
+ }
+ 
++static void dpu_hw_intf_bind_pingpong_blk(
++		struct dpu_hw_intf *intf,
++		bool enable,
++		const enum dpu_pingpong pp)
++{
++	struct dpu_hw_blk_reg_map *c;
++	u32 mux_cfg;
++
++	if (!intf)
++		return;
++
++	c = &intf->hw;
++
++	mux_cfg = DPU_REG_READ(c, INTF_MUX);
++	mux_cfg &= ~0xf;
++
++	if (enable)
++		mux_cfg |= (pp - PINGPONG_0) & 0x7;
++	else
++		mux_cfg |= 0xf;
++
++	DPU_REG_WRITE(c, INTF_MUX, mux_cfg);
++}
++
+ static void dpu_hw_intf_get_status(
+ 		struct dpu_hw_intf *intf,
+ 		struct intf_status *s)
+@@ -254,6 +280,8 @@ static void _setup_intf_ops(struct dpu_hw_intf_ops *ops,
+ 	ops->get_status = dpu_hw_intf_get_status;
+ 	ops->enable_timing = dpu_hw_intf_enable_timing_engine;
+ 	ops->get_line_count = dpu_hw_intf_get_line_count;
++	if (cap & BIT(DPU_CTL_ACTIVE_CFG))
++		ops->bind_pingpong_blk = dpu_hw_intf_bind_pingpong_blk;
+ }
+ 
+ static struct dpu_hw_blk_ops dpu_hw_ops;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+index b03acc2..a1e0ef3 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+@@ -52,6 +52,8 @@ struct intf_status {
+  * @ enable_timing: enable/disable timing engine
+  * @ get_status: returns if timing engine is enabled or not
+  * @ get_line_count: reads current vertical line counter
++ * @bind_pingpong_blk: enable/disable the connection with pingpong which will
++ *                     feed pixels to this interface
+  */
+ struct dpu_hw_intf_ops {
+ 	void (*setup_timing_gen)(struct dpu_hw_intf *intf,
+@@ -68,6 +70,10 @@ struct dpu_hw_intf_ops {
+ 			struct intf_status *status);
+ 
+ 	u32 (*get_line_count)(struct dpu_hw_intf *intf);
++
++	void (*bind_pingpong_blk)(struct dpu_hw_intf *intf,
++			bool enable,
++			const enum dpu_pingpong pp);
  };
- MODULE_DEVICE_TABLE(of, dt_match);
+ 
+ struct dpu_hw_intf {
 -- 
 1.9.1
 
