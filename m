@@ -2,96 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 78F1310339C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2019 06:17:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 31F1D10375C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2019 11:22:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726358AbfKTFRA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Nov 2019 00:17:00 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:37315 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725832AbfKTFRA (ORCPT
+        id S1728531AbfKTKWw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Nov 2019 05:22:52 -0500
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:45951 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726757AbfKTKWw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Nov 2019 00:17:00 -0500
-Received: by mail-pf1-f193.google.com with SMTP id p24so13628505pfn.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2019 21:17:00 -0800 (PST)
+        Wed, 20 Nov 2019 05:22:52 -0500
+Received: by mail-oi1-f193.google.com with SMTP id 14so21976859oir.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2019 02:22:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7uNFuGTkHht4kVlmGTndg0AtCQQACOHGMMX+d3QoKic=;
-        b=et/J9lmplBBlik2YCaRAp6TG8tH6vVIbWesmrAQ3Aohv3+V3X3VNz6wbtquVLnw2Ly
-         c4bIvqpXikhgKLXp/0sVXvheUmBT1PeO3JCszhUOQpv50PFwZ90tDOY6wDnA1KKQNyPb
-         IdjfrXc4b0PtcFQdUpAVDaT9DKmNM89f/uJsGvcLxK57Yc2+f/JBlTpwce3F1cdFRPLX
-         nfGqmJ/QP3NiwovChHCNcx+TOdfHgCC9qoN/z994JUX932xkcO8HjcKOUEm92tYoU43m
-         0kSRxk93EqAZQ3T5zBVxNNL8euORnzsg9hFWfQOVSYpe0jMVaHikzyg+ev3abv/RPk+8
-         3ZPg==
+        d=ffwll.ch; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BV0Dmq9a5ZLBcDoMXu3gWA5h7O+rvncKss28FAfnKM4=;
+        b=beR3qLZQ19xO6sXxpyJf7TjFMp80ju6iNXtGghM0GTSnbqSSZESiiq5NLP+e1jNMfl
+         4MYS3uxZ5ihUjBRLLN0IvWIv750tyMIfNb0ZR6DPoe9oRTpF6rZwymLJiEJLF69nqw5A
+         aOLlWVwtMUMSD6NLIaxN4IRpG9ctax8aTEh4I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7uNFuGTkHht4kVlmGTndg0AtCQQACOHGMMX+d3QoKic=;
-        b=cXpm/WblecyubEtNoM5vD0MduArTIr4tssOybHHDb/MCf8BB4bmUSnRjZWbBIWM3PO
-         70P4yXSPMnJiswKxom+rwfNsycfmC0Xy0+pOf8R1VVlqyA+FL0b3u4St8GN6j68qsf5n
-         8PyjnmVhyrnc3yEMfeWtmpo1PoAswhf8xF/CnEfMue8As6mWyubTQBJmY5WUI4QHQQFm
-         qUMlYiZwhF4Aqte6ut/Ldy/8RtBexCTgGa+nW1tQFo7ce5rEqQhomwRebsY1SJkQVS/g
-         IWIlHerkuYUICOEM4UCpPmmzByoAWjLNJxrYlA0/GgZAFRv2xIZZslYo15Pj2BcAgpdP
-         d6pA==
-X-Gm-Message-State: APjAAAV33Y4PD4PMzUsug7UUVqS7fK66Lj95ZNvTLcHAHn9bX9e969cM
-        WAZn6i02flaA2BMUU5DbPh2vmQ==
-X-Google-Smtp-Source: APXvYqyzRYmVnEKGm1r5WusT49tJmRjBJ7jzvN2oRZS+WXGVi9Kc9Yyv6xriF+KNAjdw9bjEEjGvlw==
-X-Received: by 2002:a63:d642:: with SMTP id d2mr1014621pgj.205.1574227019574;
-        Tue, 19 Nov 2019 21:16:59 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id f31sm5451979pjg.31.2019.11.19.21.16.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Nov 2019 21:16:58 -0800 (PST)
-Date:   Tue, 19 Nov 2019 21:16:56 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Niklas Cassel <niklas.cassel@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        amit.kucheria@linaro.org, sboyd@kernel.org, vireshk@kernel.org,
-        ulf.hansson@linaro.org, Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v6 5/5] arm64: defconfig: enable
- CONFIG_ARM_QCOM_CPUFREQ_NVMEM
-Message-ID: <20191120051656.GU18024@yoga>
-References: <20191119154621.55341-1-niklas.cassel@linaro.org>
- <20191119154621.55341-6-niklas.cassel@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BV0Dmq9a5ZLBcDoMXu3gWA5h7O+rvncKss28FAfnKM4=;
+        b=cCoQjCzp9SpvgZDR3O/TGri+LNzgq/20vO2D48MEH49iU4xkpUf/AYAMrN5Qtn6J08
+         5yyeOpsD0kqkIxUWv6Zl2N8wZTpxYK0H2RQ1Ts+mkOD9xSie2FLS0v3u0wjSrLLLcfL7
+         xn/5Si50y8mqR1NA0bBCHjVg2VZeuOAXW9ydnC2zNXwmLVzzIq3zp7caasVUGCJvpzxi
+         dWxlCwxWZK7yz8rK1qe+douTbz5piPlHG5YJxmdummBDKkocT0ThaOfZcXjfX8i9dl29
+         dQQr+/AKNrxGvL/CQRpG0bnC7KUSPIup0fZ18eKj2B1X/NkXc6yH6hNy1JUtxIVUOVOi
+         8aQg==
+X-Gm-Message-State: APjAAAXqfUgWa6A+3X2l7VMAgMjDhaPsPVWYW9YJ9FwHvHC//n3FOe7P
+        TFsx4xvbQZu0O/AvASxIka2B4nC+7SE0dYJigJbtnw==
+X-Google-Smtp-Source: APXvYqxwCzhD+f/VRdNZDgTdikEw/QSOUaezH8+D3+zqS5lACoMkVtmYxZEyV4QBJ0VWUXfyTXQiFmMbEH3LqFhQaiQ=
+X-Received: by 2002:aca:b805:: with SMTP id i5mr2170100oif.110.1574245369890;
+ Wed, 20 Nov 2019 02:22:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191119154621.55341-6-niklas.cassel@linaro.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+References: <20191119210844.16947-1-daniel.vetter@ffwll.ch>
+ <20191119210844.16947-4-daniel.vetter@ffwll.ch> <CAF6AEGuPtwFjM12MRBf_X7GUqJBHt+Xb8vKrT+dddic093Ki6g@mail.gmail.com>
+In-Reply-To: <CAF6AEGuPtwFjM12MRBf_X7GUqJBHt+Xb8vKrT+dddic093Ki6g@mail.gmail.com>
+From:   Daniel Vetter <daniel.vetter@ffwll.ch>
+Date:   Wed, 20 Nov 2019 11:22:38 +0100
+Message-ID: <CAKMK7uGox6G1dhMZr1ykYQFeUHq842CF3R4sKoSiPs6mOs-OPg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] drm/msm: Don't init ww_mutec acquire ctx before needed
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        DRI Development <dri-devel@lists.freedesktop.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Sean Paul <sean@poorly.run>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 19 Nov 07:46 PST 2019, Niklas Cassel wrote:
+On Wed, Nov 20, 2019 at 3:07 AM Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Tue, Nov 19, 2019 at 1:08 PM Daniel Vetter <daniel.vetter@ffwll.ch> wrote:
+> >
+> > For locking semantics it really doesn't matter when we grab the
+> > ticket. But for lockdep validation it does: the acquire ctx is a fake
+> > lockdep. Since other drivers might want to do a full multi-lock dance
+> > in their fault-handler, not just lock a single dma_resv. Therefore we
+> > must init the acquire_ctx only after we've done all the copy_*_user or
+> > anything else that might trigger a pagefault. For msm this means we
+> > need to move it past submit_lookup_objects.
+>
+> seems reasonable.. but maybe a comment would be useful to prevent
+> future-me from "cleaning-this-up" back to the way it was
 
-> Enable CONFIG_ARM_QCOM_CPUFREQ_NVMEM.
-> 
-> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+I'll add a comment.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> with that, r-b
 
-> ---
->  arch/arm64/configs/defconfig | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 4385033c0a34..09aaffd473a0 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -88,6 +88,7 @@ CONFIG_ACPI_CPPC_CPUFREQ=m
->  CONFIG_ARM_ARMADA_37XX_CPUFREQ=y
->  CONFIG_ARM_SCPI_CPUFREQ=y
->  CONFIG_ARM_IMX_CPUFREQ_DT=m
-> +CONFIG_ARM_QCOM_CPUFREQ_NVMEM=y
->  CONFIG_ARM_QCOM_CPUFREQ_HW=y
->  CONFIG_ARM_RASPBERRYPI_CPUFREQ=m
->  CONFIG_ARM_TEGRA186_CPUFREQ=y
-> -- 
-> 2.23.0
-> 
+Well I spotted a bug for the error handling, I'll need to respin.
+-Daniel
+
+>
+> >
+> > Aside: Why is msm still using struct_mutex, it seems to be using
+> > dma_resv_lock for general buffer state protection?
+>
+> only because I (or anyone else) hasn't had time to revisit the
+> struct_mutex usage since we moved to per-object-locks.. the downside,
+> I suppose, of kernel generally working ok and this not being a big
+> enough fire to bubble up to the top of my todo list
+>
+> BR,
+> -R
+>
+> >
+> > Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+> > Cc: Rob Clark <robdclark@gmail.com>
+> > Cc: Sean Paul <sean@poorly.run>
+> > Cc: linux-arm-msm@vger.kernel.org
+> > Cc: freedreno@lists.freedesktop.org
+> > ---
+> >  drivers/gpu/drm/msm/msm_gem_submit.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> > index fb1fdd7fa3ef..126b2f62bfe7 100644
+> > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> > @@ -54,7 +54,6 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
+> >
+> >         INIT_LIST_HEAD(&submit->node);
+> >         INIT_LIST_HEAD(&submit->bo_list);
+> > -       ww_acquire_init(&submit->ticket, &reservation_ww_class);
+> >
+> >         return submit;
+> >  }
+> > @@ -489,6 +488,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+> >         if (ret)
+> >                 goto out;
+> >
+> > +       ww_acquire_init(&submit->ticket, &reservation_ww_class);
+> >         ret = submit_lock_objects(submit);
+> >         if (ret)
+> >                 goto out;
+> > --
+> > 2.24.0
+> >
+
+
+
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
++41 (0) 79 365 57 48 - http://blog.ffwll.ch
