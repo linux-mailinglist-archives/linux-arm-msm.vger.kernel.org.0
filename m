@@ -2,64 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C54F610319F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2019 03:33:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4C751031A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2019 03:35:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727082AbfKTCdU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Nov 2019 21:33:20 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:33046 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727532AbfKTCdU (ORCPT
+        id S1727264AbfKTCfc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Nov 2019 21:35:32 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:41176 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727262AbfKTCfc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Nov 2019 21:33:20 -0500
-Received: by mail-pg1-f195.google.com with SMTP id h27so12569272pgn.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2019 18:33:18 -0800 (PST)
+        Tue, 19 Nov 2019 21:35:32 -0500
+Received: by mail-pg1-f194.google.com with SMTP id 207so5189541pge.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2019 18:35:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=4Z/IN6uvk+OR5RO5BaDOhPXntcLMJd2gG/07pm3/lZg=;
-        b=UmNVGtxCF/JlQeaIxodJH+zJ4yCN8D9jCQtcc+m9MCbdg5g/o/F3kZv14M9cPcrEdW
-         YZMJW3xAivm9Ss1HMwRpk6wlarbkcQ3X797wooyhJs2aI4I44KZZg7YUjzGj4iChPDsn
-         Dp5eLZShdL/29UIrMGRbc8Q/CfBBmQrEaBX7VTrlc45KVgLKkTMrPXhz4YPYmTVgw0TX
-         20C0YTazDiXyuDZU38u8BH7D9BmdujKK0AQReUIsPld5aHpf4xU3evQPRXveNi603lJF
-         qnGVU1kn64q/ila1t5xHOIR1frg5avV+zN/BfERpm9it/zuy6DgV9dka3XBfH6BjlBpV
-         5n1Q==
+        bh=demOKi0KmBJXgMXKUxgMCHYSTMZ41kb+ilF6SbHTJuQ=;
+        b=XNMurbf0t4fehDU7BCwNIN75pA9gnfvEnIOOhcJ5UqJIhzvwZeakrQZ1XXip+zT4at
+         GBT+W4v1j3sDr3tJPcTiS1/hLFnUpZ50rfrQXwxJkffTxT/gQ9wLnM22zpocxJK/hKsX
+         TYTK3QWC3EpoJOOnuW4ql0gnrFj9cQDJKc3Rso9azUgcz9fMwxklo7lgvu0i18cIyrLY
+         k7RzKIxb5Dc5giyHIk9H1qcWzu8WRZ6gfdRN+DravYT2B34tI3MUTdWeWLzUZsIr7TvU
+         YbqlqId3Hsle8dVB9bkf4Rlie3WpHHxskTFmEGDbJyRkATTPSkzemXaKyKTU+cWardh7
+         7hBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4Z/IN6uvk+OR5RO5BaDOhPXntcLMJd2gG/07pm3/lZg=;
-        b=kjTk7BexyLqVMGD9D0w4YhpBnA2yHgMEru4UG08He0aHdW00lrsVFKwoaF8n5l7dfg
-         ZUDa/z/+768RwCyWcMYFenfi1BXJCoJt7zgJAi2u5Aa1z+ZgK0M/FpWUxkFa8QtOzXKy
-         jhIapQrdX5hMD7n/e7HDrr44/jZYqq9cYACgUGgoV9aJqGde+kbVx56dDncB85j7CA5V
-         xYtcdGmTIuLEoiyRp/EXZ6kM35jMDzftbYROZ6zENxZmXBGWvVhHFNG0beio891/JfbE
-         vErZjMkSI/U2wWVz4qimAF3vdlb12mXTnZHRIgSzmfBgLmAfXNM0iMevSTdu43SxLyvB
-         FL6Q==
-X-Gm-Message-State: APjAAAUNSJIOD/Oy2fYrD4YKG1vysb0nLjf0bwrJZ7ZJGs5Zt1hOrDUk
-        JlWZEZQ5ffy2VqSPtplsOVIlPg==
-X-Google-Smtp-Source: APXvYqwS6W5xe+gKVXg0c9cTWPKG03EEIKCJDmSqhZhYfoRR//DVj1MLjdRI5FjEkWywPc7EJQJVbw==
-X-Received: by 2002:a63:a50d:: with SMTP id n13mr433224pgf.72.1574217197946;
-        Tue, 19 Nov 2019 18:33:17 -0800 (PST)
+        bh=demOKi0KmBJXgMXKUxgMCHYSTMZ41kb+ilF6SbHTJuQ=;
+        b=fqWr4z4kQR/Vhmq47AF5JyMFVLc/rVRAfijXIKloUYqdxZQgRJWlmltCL7gOVE9hme
+         SwOyIj4UDM9tm0MCBiavK+p5ZDcoD0a12AOLTRz7Vv33PL8phWwzUh2W8AAizWm8LoVo
+         KZxxEO7ex14ZdlRUMkDWVeEKOQsxc82sMdIUHZIPE5TdWSTrrEOXDXvaVZEdOyrqXxOQ
+         qOySsSqMYDqiSt48/JenMpbitRUjgxSYSJIBN3lRP0QtGg8Szt50bFU0zQATaEvmf+eF
+         5Sna7G4R+140wUQXA14PVQgi/aMGO7AWy67iWP+jiydG6vOM7tmS3mdMV6HTajahn3N/
+         E9jQ==
+X-Gm-Message-State: APjAAAV2RDXiB4Zc4o4AvJ12eVkT6eHGkZPRG+FcqI+w5zonwd2AkvUw
+        NHhvWS0zzEdxBaA6ykXqpnqrJw==
+X-Google-Smtp-Source: APXvYqzplDwcuPhXEeFBVafJ6hd/Ct5IVvHGuZjFEf55wyIRINqbwLDg4aZ7LcJedX3pxFtStlJYNA==
+X-Received: by 2002:a65:47c1:: with SMTP id f1mr376719pgs.393.1574217330662;
+        Tue, 19 Nov 2019 18:35:30 -0800 (PST)
 Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id f24sm4747108pjp.12.2019.11.19.18.33.16
+        by smtp.gmail.com with ESMTPSA id d6sm26533702pfn.32.2019.11.19.18.35.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Nov 2019 18:33:17 -0800 (PST)
-Date:   Tue, 19 Nov 2019 18:33:14 -0800
+        Tue, 19 Nov 2019 18:35:30 -0800 (PST)
+Date:   Tue, 19 Nov 2019 18:35:27 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Sibi Sankar <sibis@codeaurora.org>
 Cc:     robh+dt@kernel.org, ulf.hansson@linaro.org, rnayak@codeaurora.org,
         agross@kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         mark.rutland@arm.com, swboyd@chromium.org, dianders@chromium.org
-Subject: Re: [PATCH 5/6] soc: qcom: rpmhpd: Add SC7180 RPMH power-domains
-Message-ID: <20191120023314.GN18024@yoga>
+Subject: Re: [PATCH 6/6] arm64: dts: sm8150: Add rpmh power-domain node
+Message-ID: <20191120023527.GO18024@yoga>
 References: <20191118173944.27043-1-sibis@codeaurora.org>
- <0101016e7f99dc94-4513a473-16b3-418a-86cf-a89322016215-000000@us-west-2.amazonses.com>
+ <0101016e7f99efe5-cee866e3-7031-4ecf-a8a6-4b247e9e69ff-000000@us-west-2.amazonses.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0101016e7f99dc94-4513a473-16b3-418a-86cf-a89322016215-000000@us-west-2.amazonses.com>
+In-Reply-To: <0101016e7f99efe5-cee866e3-7031-4ecf-a8a6-4b247e9e69ff-000000@us-west-2.amazonses.com>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -68,48 +68,89 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Mon 18 Nov 09:40 PST 2019, Sibi Sankar wrote:
 
-> Add support for cx/mx/gfx/lcx/lmx/mss power-domains found
-> on SC7180 SoCs.
+> Add the DT node for the rpmhpd power controller.
 > 
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 > ---
->  drivers/soc/qcom/rpmhpd.c | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 55 ++++++++++++++++++++++++++++
+>  1 file changed, 55 insertions(+)
 > 
-> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-> index 3b109ee67a4d2..599208722650d 100644
-> --- a/drivers/soc/qcom/rpmhpd.c
-> +++ b/drivers/soc/qcom/rpmhpd.c
-> @@ -166,7 +166,26 @@ static const struct rpmhpd_desc sm8150_desc = {
->  	.num_pds = ARRAY_SIZE(sm8150_rpmhpds),
->  };
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index 8f23fcadecb89..0ac257637c2af 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -5,6 +5,7 @@
+>   */
 >  
-> +/* SC7180 RPMH powerdomains */
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/power/qcom-rpmpd.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+>  
+> @@ -469,6 +470,60 @@
+>  				clock-names = "xo";
+>  				clocks = <&xo_board>;
+>  			};
 > +
-> +static struct rpmhpd *sc7180_rpmhpds[] = {
-> +	[SC7180_CX] = &sdm845_cx,
-> +	[SC7180_CX_AO] = &sdm845_cx_ao,
-> +	[SC7180_GFX] = &sdm845_gfx,
-> +	[SC7180_MX] = &sdm845_mx,
-> +	[SC7180_MX_AO] = &sdm845_mx_ao,
-> +	[SC7180_LMX] = &sdm845_lmx,
-> +	[SC7180_LCX] = &sdm845_lcx,
-> +	[SC7180_MSS] = &sdm845_mss,
-> +};
+> +			rpmhpd: power-controller {
+> +				compatible = "qcom,sm8150-rpmhpd";
+> +				#power-domain-cells = <1>;
+> +				operating-points-v2 = <&rpmhpd_opp_table>;
 > +
-> +static const struct rpmhpd_desc sc7180_desc = {
-> +	.rpmhpds = sc7180_rpmhpds,
-> +	.num_pds = ARRAY_SIZE(sc7180_rpmhpds),
-> +};
+> +				rpmhpd_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
 > +
->  static const struct of_device_id rpmhpd_match_table[] = {
-> +	{ .compatible = "qcom,sc7180-rpmhpd", .data = &sc7180_desc },
->  	{ .compatible = "qcom,sdm845-rpmhpd", .data = &sdm845_desc },
->  	{ .compatible = "qcom,sm8150-rpmhpd", .data = &sm8150_desc },
->  	{ }
+> +					rpmhpd_opp_ret: opp1 {
+> +						opp-level = <RPMH_REGULATOR_LEVEL_RETENTION>;
+> +					};
+> +
+> +					rpmhpd_opp_min_svs: opp2 {
+> +						opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
+> +					};
+> +
+> +					rpmhpd_opp_low_svs: opp3 {
+> +						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+> +					};
+> +
+> +					rpmhpd_opp_svs: opp4 {
+> +						opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
+> +					};
+> +
+> +					rpmhpd_opp_svs_l1: opp5 {
+> +						opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
+> +					};
+> +
+> +					rpmhpd_opp_svs_l2: opp6 {
+> +						opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
+> +					};
+> +
+> +					rpmhpd_opp_nom: opp7 {
+> +						opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
+> +					};
+> +
+> +					rpmhpd_opp_nom_l1: opp8 {
+> +						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
+> +					};
+> +
+> +					rpmhpd_opp_nom_l2: opp9 {
+> +						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L2>;
+> +					};
+> +
+> +					rpmhpd_opp_turbo: opp10 {
+> +						opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
+> +					};
+> +
+> +					rpmhpd_opp_turbo_l1: opp11 {
+> +						opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
+> +					};
+> +				};
+> +			};
+>  		};
+>  	};
+>  
 > -- 
 > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 > a Linux Foundation Collaborative Project
