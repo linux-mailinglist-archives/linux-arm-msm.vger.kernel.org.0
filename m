@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0ADDC10339A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2019 06:16:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78F1310339C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2019 06:17:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726080AbfKTFQQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Nov 2019 00:16:16 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:44958 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725842AbfKTFQO (ORCPT
+        id S1726358AbfKTFRA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Nov 2019 00:17:00 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:37315 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725832AbfKTFRA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Nov 2019 00:16:14 -0500
-Received: by mail-pf1-f196.google.com with SMTP id q26so13593080pfn.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2019 21:16:12 -0800 (PST)
+        Wed, 20 Nov 2019 00:17:00 -0500
+Received: by mail-pf1-f193.google.com with SMTP id p24so13628505pfn.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Nov 2019 21:17:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=1Yv25wQDQFczcnj/PFyL1UNH1JjWrPFTBbhbehaHIng=;
-        b=Cv767rqnulM+BQqNRMs/64y/R7fbJKvDrNUq61kS1jLsdBTFOIriQ5SE6JtRP3K+PI
-         R4QA8MfYXkeRgPR5jTAAlTc32XFG7VENXNKQkOOtvbYZ8DbApxDUIMCu6tCR2j/wZttV
-         FKPPnam3ATxr4BZpfpZcOV16x8H0CpK2Kk4XHGewT0CS/cjcnmvs70fwV7PJR2WyDWxP
-         CUJM17GTPQ/G/mc2Rad2UMIpy+ZkpmTaYiGUHHz5irFykwHjiY5bz0vXbdy1GWRSVO08
-         h95M0PAJtd0xP18pJmSkaC+vJAZHbm/qbZ4O6tsEt1+7DLuDWNFYjMjcRMH2ReI4yOqz
-         2WAg==
+        bh=7uNFuGTkHht4kVlmGTndg0AtCQQACOHGMMX+d3QoKic=;
+        b=et/J9lmplBBlik2YCaRAp6TG8tH6vVIbWesmrAQ3Aohv3+V3X3VNz6wbtquVLnw2Ly
+         c4bIvqpXikhgKLXp/0sVXvheUmBT1PeO3JCszhUOQpv50PFwZ90tDOY6wDnA1KKQNyPb
+         IdjfrXc4b0PtcFQdUpAVDaT9DKmNM89f/uJsGvcLxK57Yc2+f/JBlTpwce3F1cdFRPLX
+         nfGqmJ/QP3NiwovChHCNcx+TOdfHgCC9qoN/z994JUX932xkcO8HjcKOUEm92tYoU43m
+         0kSRxk93EqAZQ3T5zBVxNNL8euORnzsg9hFWfQOVSYpe0jMVaHikzyg+ev3abv/RPk+8
+         3ZPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1Yv25wQDQFczcnj/PFyL1UNH1JjWrPFTBbhbehaHIng=;
-        b=HMUlUNBf0S6cikATO8K9aa4FKL0AC35mGjMH1jkazioNqwlHqvtpVGCRbJBaDon1M8
-         JCmouH8OOu97C7oU5GjdmQ5SjqTBvROdKJ9PvMWb8bHZCaPTIkXRCUZyUNNuaat9lQsI
-         Nl3+pmWa067CL4kOzA+uxqrm43CATAcZaIGQPgfeYdXLm7mhdWgo2OtboLFSgQ8M8+y0
-         sea4qPPcxoJJ65ylq1d2czH0DkZk2zpihM66K0ums1xmS8orG6h1X9CG1Nw0uOpI/9Dw
-         iszcS0SXkIbG3LmQoqxQkurGKdKFfkPCsdLAqscNtEj3PhwBTlSmmpMlTjFvU1zrfj8r
-         eEMw==
-X-Gm-Message-State: APjAAAWWQfMRPUCH/VcQ3TGwIWHhkGGXl6jERfWiaHVmHIEm7WvEjpI0
-        zg6NwIFYOMEK2X8FqaQAgsIvNw==
-X-Google-Smtp-Source: APXvYqxYCLvD4vNiwsF3rw+Ca/QrYYPh39SinCgxiYzgZZOUCffAdOBAR+9g1TpfstwMdS9OIwJDow==
-X-Received: by 2002:a63:5c42:: with SMTP id n2mr1007802pgm.229.1574226972064;
-        Tue, 19 Nov 2019 21:16:12 -0800 (PST)
+        bh=7uNFuGTkHht4kVlmGTndg0AtCQQACOHGMMX+d3QoKic=;
+        b=cXpm/WblecyubEtNoM5vD0MduArTIr4tssOybHHDb/MCf8BB4bmUSnRjZWbBIWM3PO
+         70P4yXSPMnJiswKxom+rwfNsycfmC0Xy0+pOf8R1VVlqyA+FL0b3u4St8GN6j68qsf5n
+         8PyjnmVhyrnc3yEMfeWtmpo1PoAswhf8xF/CnEfMue8As6mWyubTQBJmY5WUI4QHQQFm
+         qUMlYiZwhF4Aqte6ut/Ldy/8RtBexCTgGa+nW1tQFo7ce5rEqQhomwRebsY1SJkQVS/g
+         IWIlHerkuYUICOEM4UCpPmmzByoAWjLNJxrYlA0/GgZAFRv2xIZZslYo15Pj2BcAgpdP
+         d6pA==
+X-Gm-Message-State: APjAAAV33Y4PD4PMzUsug7UUVqS7fK66Lj95ZNvTLcHAHn9bX9e969cM
+        WAZn6i02flaA2BMUU5DbPh2vmQ==
+X-Google-Smtp-Source: APXvYqyzRYmVnEKGm1r5WusT49tJmRjBJ7jzvN2oRZS+WXGVi9Kc9Yyv6xriF+KNAjdw9bjEEjGvlw==
+X-Received: by 2002:a63:d642:: with SMTP id d2mr1014621pgj.205.1574227019574;
+        Tue, 19 Nov 2019 21:16:59 -0800 (PST)
 Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id z6sm5508736pjd.9.2019.11.19.21.16.10
+        by smtp.gmail.com with ESMTPSA id f31sm5451979pjg.31.2019.11.19.21.16.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Nov 2019 21:16:11 -0800 (PST)
-Date:   Tue, 19 Nov 2019 21:16:08 -0800
+        Tue, 19 Nov 2019 21:16:58 -0800 (PST)
+Date:   Tue, 19 Nov 2019 21:16:56 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Niklas Cassel <niklas.cassel@linaro.org>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
@@ -53,14 +53,15 @@ Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         ulf.hansson@linaro.org, Catalin Marinas <catalin.marinas@arm.com>,
         Will Deacon <will@kernel.org>,
         linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v6 4/5] arm64: defconfig: enable CONFIG_QCOM_CPR
-Message-ID: <20191120051608.GT18024@yoga>
+Subject: Re: [PATCH v6 5/5] arm64: defconfig: enable
+ CONFIG_ARM_QCOM_CPUFREQ_NVMEM
+Message-ID: <20191120051656.GU18024@yoga>
 References: <20191119154621.55341-1-niklas.cassel@linaro.org>
- <20191119154621.55341-5-niklas.cassel@linaro.org>
+ <20191119154621.55341-6-niklas.cassel@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191119154621.55341-5-niklas.cassel@linaro.org>
+In-Reply-To: <20191119154621.55341-6-niklas.cassel@linaro.org>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -69,7 +70,7 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue 19 Nov 07:46 PST 2019, Niklas Cassel wrote:
 
-> Enable CONFIG_QCOM_CPR.
+> Enable CONFIG_ARM_QCOM_CPUFREQ_NVMEM.
 > 
 > Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
 
@@ -80,17 +81,17 @@ Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 >  1 file changed, 1 insertion(+)
 > 
 > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index e76b42b25dd6..4385033c0a34 100644
+> index 4385033c0a34..09aaffd473a0 100644
 > --- a/arch/arm64/configs/defconfig
 > +++ b/arch/arm64/configs/defconfig
-> @@ -438,6 +438,7 @@ CONFIG_GPIO_PCA953X=y
->  CONFIG_GPIO_PCA953X_IRQ=y
->  CONFIG_GPIO_MAX77620=y
->  CONFIG_POWER_AVS=y
-> +CONFIG_QCOM_CPR=y
->  CONFIG_ROCKCHIP_IODOMAIN=y
->  CONFIG_POWER_RESET_MSM=y
->  CONFIG_POWER_RESET_XGENE=y
+> @@ -88,6 +88,7 @@ CONFIG_ACPI_CPPC_CPUFREQ=m
+>  CONFIG_ARM_ARMADA_37XX_CPUFREQ=y
+>  CONFIG_ARM_SCPI_CPUFREQ=y
+>  CONFIG_ARM_IMX_CPUFREQ_DT=m
+> +CONFIG_ARM_QCOM_CPUFREQ_NVMEM=y
+>  CONFIG_ARM_QCOM_CPUFREQ_HW=y
+>  CONFIG_ARM_RASPBERRYPI_CPUFREQ=m
+>  CONFIG_ARM_TEGRA186_CPUFREQ=y
 > -- 
 > 2.23.0
 > 
