@@ -2,30 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A458B1039BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2019 13:12:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AEC7D1039C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2019 13:14:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729633AbfKTMMz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Nov 2019 07:12:55 -0500
-Received: from a27-56.smtp-out.us-west-2.amazonses.com ([54.240.27.56]:43094
-        "EHLO a27-56.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729273AbfKTMMz (ORCPT
+        id S1728600AbfKTMOd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Nov 2019 07:14:33 -0500
+Received: from a27-185.smtp-out.us-west-2.amazonses.com ([54.240.27.185]:54348
+        "EHLO a27-185.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728251AbfKTMOd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Nov 2019 07:12:55 -0500
+        Wed, 20 Nov 2019 07:14:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574251974;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574252072;
         h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
-        bh=Mggx8pMu+6u7yoU5KugFafl4WYsd00aKUrPW0rMk5eQ=;
-        b=ali0RbgwfEO/ZA4sv9rX/aL0X++Hw6ZWs9pIel/kS8foRlEW7RWmQ4vaYpbrFZTV
-        npKtPjPdR2oX+Wgk+a6ne5Mw4FkbMqGFisumgRJ8bQ5NjHNJELlOTnN4ix/Fm5kEfjn
-        qzs6slzwAZPnwlnXJMD6yz3hWFggGoQFd67uT0v8=
+        bh=c3N+UHrBK1arDVU4vjMLuhdjzywq5jiY1zOpV3AvfGA=;
+        b=Cx2VVyiffg7YmwKBsWRgiv2dEGqRVXGjHboUKUMWVRZdiRDK4toF+JWkrTJqYuxh
+        inm6+MCe3FUse5lSWFXxrDtMdrooUzp+24BeOozN7wwoVd9UHYnpPSb9Q4cXIA0nhY1
+        A18D928DiB2Qsdpg9qq6djfrj7HBGiq2I+NbDe2o=
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574251974;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574252072;
         h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
-        bh=Mggx8pMu+6u7yoU5KugFafl4WYsd00aKUrPW0rMk5eQ=;
-        b=XEOD+GSwzMefz1l75Gi+43RwFVx2u6q0wqaLyuUMCJsuuCpQ/08JKqN4Mn+qd3M4
-        XvfvISKAiRt87ULL0pPiBAcMo4nUdgf3uTO7rTWehwkM/OsxeO9J5t2p/s4eb2u0fRe
-        X1F6DHn7m6nb4Bm7rZVUiPuSszlk4VqEB0l9Fvy0=
+        bh=c3N+UHrBK1arDVU4vjMLuhdjzywq5jiY1zOpV3AvfGA=;
+        b=Ll5WaAjJzEj4GmQCtxPp9+RawK5sp7b/Pu0XFeEhwnd+kdvezsckAKVZ21cXubGw
+        KGEh0Ng8g5uw0921UmJWa1RHgZqyq1wrv4XcjDqWI7yif0JHlutft66PxtE0AliWkOQ
+        wJQXFjS8P8G7Q6KB4ZPZON0Cl4V7yP8mRuEZfQtQ=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -35,119 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 20 Nov 2019 12:12:54 +0000
+Date:   Wed, 20 Nov 2019 12:14:31 +0000
 From:   Sibi Sankar <sibis@codeaurora.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     srinivas.kandagatla@linaro.org, robh+dt@kernel.org,
-        tsoni@codeaurora.org, agross@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        rnayak@codeaurora.org, linux-remoteproc-owner@vger.kernel.org
-Subject: Re: [PATCH 1/3] soc: qcom: Introduce Protection Domain Restart
- helpers
-In-Reply-To: <20191119231740.GJ18024@yoga>
-References: <20191118142728.30187-1-sibis@codeaurora.org>
- <0101016e7ee9be5e-1d6bbe06-4bab-434d-9040-ebfa3918b213-000000@us-west-2.amazonses.com>
- <20191119064026.GE18024@yoga>
- <0101016e832bd54d-453473ee-c0fa-44f5-a873-55b97dff4a9a-000000@us-west-2.amazonses.com>
- <20191119231740.GJ18024@yoga>
-Message-ID: <0101016e88bacc9e-26ddd827-c0ff-497b-b327-d14dc8832d20-000000@us-west-2.amazonses.com>
+Cc:     robh+dt@kernel.org, ulf.hansson@linaro.org, rnayak@codeaurora.org,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        mark.rutland@arm.com, swboyd@chromium.org, dianders@chromium.org
+Subject: Re: [PATCH 1/6] soc: qcom: rpmhpd: Set 'active_only' for active only
+ power domains
+In-Reply-To: <20191120023908.GP18024@yoga>
+References: <20191118173944.27043-1-sibis@codeaurora.org>
+ <0101016e7f9998d8-877e9166-8b6a-4530-ab66-3c88002e1db4-000000@us-west-2.amazonses.com>
+ <20191120023908.GP18024@yoga>
+Message-ID: <0101016e88bc4bf1-b1818c02-87cc-4ae8-9538-a426ce3c77ab-000000@us-west-2.amazonses.com>
 X-Sender: sibis@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
-X-SES-Outgoing: 2019.11.20-54.240.27.56
+X-SES-Outgoing: 2019.11.20-54.240.27.185
 Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-11-20 04:47, Bjorn Andersson wrote:
-> On Tue 19 Nov 02:18 PST 2019, sibis@codeaurora.org wrote:
+On 2019-11-20 08:09, Bjorn Andersson wrote:
+> On Mon 18 Nov 09:40 PST 2019, Sibi Sankar wrote:
 > 
->> Hey Bjorn,
->> Thanks for taking the time to
->> review the series :)
+>> From: Douglas Anderson <dianders@chromium.org>
 >> 
->> On 2019-11-19 12:10, Bjorn Andersson wrote:
->> > On Mon 18 Nov 06:27 PST 2019, Sibi Sankar wrote:
->> > > diff --git a/drivers/soc/qcom/pdr_interface.c
->> > > b/drivers/soc/qcom/pdr_interface.c
->> > [..]
->> > > +static void pdr_indack_work(struct work_struct *work)
->> > > +{
->> > > +	struct pdr_handle *pdr = container_of(work, struct pdr_handle,
->> > > +					      indack_work);
->> > > +	struct pdr_list_node *ind, *tmp;
->> > > +	struct pdr_service *pds;
->> > > +
->> > > +	list_for_each_entry_safe(ind, tmp, &pdr->indack_list, node) {
->> > > +		pds = ind->pds;
->> > > +		pdr_send_indack_msg(pdr, pds, ind->transaction_id);
->> >
->> > So when we et a ind_cb with the new status, we need to send an ack
->> > request, which will result in a response, just to confirm that we got
->> > the event?
->> >
->> > Seems like we should fix the qmi code to make it possible to send a
->> > request from the indication handler and then we could simply ignore the
+>> The 'active_only' attribute was accidentally never set to true for any
+>> power domains meaning that all the code handling this attribute was
+>> dead.
 >> 
->> yeah maybe having a provision to send custom requests back on
->> indication would be the way to go. Not all indication need to be
->> services with requests.
+>> NOTE that the RPM power domain code (as opposed to the RPMh one) gets
+>> this right.
 >> 
+>> Fixes: 279b7e8a62cc ("soc: qcom: rpmhpd: Add RPMh power domain 
+>> driver")
+>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>> Acked-by: Rajendra Nayak <rnayak@codeaurora.org>
 > 
-> Let's put this on the todo list.
-> 
->> > response. Or do we need to not pdr->status() until we get the response
->> > for some reason?
->> 
->> adsp waits on the ack response for a fixed duration and seems to throw
->> a fatal err is the ack is not serviced. Hence holding back pd->status
->> till we service the ack here.
->> 
-> 
-> You mean to ensure that someone sleeping in pd->status() doesn't delay
-> that until its too late?
+> You should have added your S-o-b here to certify its origin.
+> But I picked up this patch earlier today.
 
-yes
+sry missed it
 
 > 
-> [..]
->> > > +int pdr_handle_init(struct pdr_handle *pdr,
->> > > +		    int (*status)(struct pdr_handle *pdr,
->> > > +				  struct pdr_service *pds))
->> > > +{
->> > [..]
->> > > +	pdr->servreg_wq = create_singlethread_workqueue("pdr_servreg_wq");
->> > > +	if (!pdr->servreg_wq)
->> > > +		return -ENOMEM;
->> > > +
->> > > +	pdr->indack_wq = alloc_ordered_workqueue("pdr_indack_wq",
->> > > WQ_HIGHPRI);
->> >
->> > The two workqueues means that we should be able to call pdr->status()
->> > rom two concurrent contexts, I don't think our clients will expect that.
->> >
->> 
->> would creating another ordered wq to relay all the pd->status make
->> sense?
->> 
-> 
-> I would prefer less work queues ;) But I presume you split out the
-> indack_wq in order to improve the likelihood of meeting the latency
-> requirements of the remote side.
-> 
-> Perhaps just wrap the status() calls with a status-mutex and then 
-> remove
-> that by reworking the QMI interface to allow us to remove the indack
-> work?
-
-okay will fix it in the next
-re-spin.
-
-> 
-> Regards,
+> Thanks,
 > Bjorn
+> 
+>> ---
+>>  drivers/soc/qcom/rpmhpd.c | 2 ++
+>>  1 file changed, 2 insertions(+)
+>> 
+>> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+>> index 5741ec3fa814c..51850cc68b701 100644
+>> --- a/drivers/soc/qcom/rpmhpd.c
+>> +++ b/drivers/soc/qcom/rpmhpd.c
+>> @@ -93,6 +93,7 @@ static struct rpmhpd sdm845_mx = {
+>> 
+>>  static struct rpmhpd sdm845_mx_ao = {
+>>  	.pd = { .name = "mx_ao", },
+>> +	.active_only = true,
+>>  	.peer = &sdm845_mx,
+>>  	.res_name = "mx.lvl",
+>>  };
+>> @@ -107,6 +108,7 @@ static struct rpmhpd sdm845_cx = {
+>> 
+>>  static struct rpmhpd sdm845_cx_ao = {
+>>  	.pd = { .name = "cx_ao", },
+>> +	.active_only = true,
+>>  	.peer = &sdm845_cx,
+>>  	.parent = &sdm845_mx_ao.pd,
+>>  	.res_name = "cx.lvl",
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
 
 -- 
 Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
