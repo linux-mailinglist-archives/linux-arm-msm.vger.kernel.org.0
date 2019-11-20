@@ -2,419 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C1DEC103A00
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2019 13:24:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B94D103A61
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Nov 2019 13:56:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729026AbfKTMYj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Nov 2019 07:24:39 -0500
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:35985 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728611AbfKTMYj (ORCPT
+        id S1727799AbfKTM4k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Nov 2019 07:56:40 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:35494 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727752AbfKTM4k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Nov 2019 07:24:39 -0500
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 20 Nov 2019 17:54:34 +0530
-IronPort-SDR: Qo4JGS3ebzTC1Qc8xrajvB09FGOYP9/E30bv0a1lCLasPjQsXXYcmpgm5UjowWBrtunbjTCL4X
- lsHAnZvl/T0QxOkfjP+dQpyb+er4/KWgLoJiQX6LAfek62GWedwACuFVHynGjukag+fmQKUYyR
- hkSrQze32NyuZdQGkWKUYzGTLQKLLXYV3ss5CQ5dKGzIAfgWlUOPcP6Lu/eTPFQSg57UiFq8H6
- 2n8h9T7n9ypCJdRH+AsGfHG7PYeeHvr3gGkpxJvkH+FSjYO4/UDpmp+FFB3EcHVhgq4rIfG+Vx
- qtVPsl6qC18QnGDv2ry/ORVf
-Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 20 Nov 2019 17:54:33 +0530
-Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
-        id 6E02A434B; Wed, 20 Nov 2019 17:54:32 +0530 (IST)
-From:   Kalyan Thota <kalyan_t@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org, dhar@codeaurora.org,
-        jsanka@codeaurora.org, chandanu@codeaurora.org,
-        travitej@codeaurora.org, nganji@codeaurora.org
-Subject: [PATCH v3] msm:disp:dpu1: setup display datapath for SC7180 target
-Date:   Wed, 20 Nov 2019 17:54:20 +0530
-Message-Id: <1574252660-5206-1-git-send-email-kalyan_t@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Wed, 20 Nov 2019 07:56:40 -0500
+Received: by mail-qk1-f195.google.com with SMTP id i19so21120887qki.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2019 04:56:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=VNlZ/FAha3iKWfOhIc4DYO2pJ9QefE2nLob44SiCntU=;
+        b=m8Dcg7cpqnDtL5rhRGExV+fgeA7iO2Gwq0VxT5xB/ugruHtNtExvdqZYHlEwjx5Xqq
+         nzHy0TuXEEXJZL6DN7e+xvQIj4UaBePSaQ1P21paHUf9uaGFDbH3acXMl1Td3ufZNGBP
+         1vjxK4TGIFHRiVWtc32RW4X/ezDJC7aahvg7wpqG5B0GaxXDcqFgHDsg3edDhp5uTlq2
+         5DOpjO8fu27p3K0YdsjlQhaxffYNXHuCpCcBSteBBbTWKvuuHMBIjILSiLiGLRXyOhRf
+         hfQZumVuwLZlacHZbVnEpb9vZVcFvLAItwiqLnCwVIYGIT7QXAC7rlWhAumk92zHEMug
+         Y9wQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=VNlZ/FAha3iKWfOhIc4DYO2pJ9QefE2nLob44SiCntU=;
+        b=DaO9pfSRr4K5EBj7i6cF4ZCDZq20Tj8S5TDFxVqaogotSE3nYIW8UjBCZTOLlAj35s
+         7aFwb9bdd5us6dUHyTXz56qFwEzU+noGDDqLq+/Q5Tucm6D6WVPNkiIgMS4UaFYptpjw
+         ERWLKsG2v6C/ZkDVsbkG3i2p+JTJq+d/NLMCrxSZZlvpoeiMKuEAEnhBHdR7oyQz2o52
+         iXUUn8Ge1YcZfrJ5tzNlBcoF89bk6eZBj+fdHA5ELef9VR/bfLnq930WnH9meergQBRZ
+         NvjEcDY+xMcHF4AOL4aOHE48qI1ahmcevDRN3ldntRCXpvAcfF2RdzkZN95txCAQFOma
+         wm/w==
+X-Gm-Message-State: APjAAAUw+pj9czYehlHk/fYjSskRLtGBFqs4MoAalUHxv+IhSe6gvJXD
+        Sk0KyuLb/iKZTohk7xSiWve5Qg==
+X-Google-Smtp-Source: APXvYqzVdnLKCTQuz42URSFlj8vvD4cR9tivufHNr/dclj9E8ApdhZDS2EsED/hEVq4k8S9GyrRzLA==
+X-Received: by 2002:a37:7f02:: with SMTP id a2mr2101242qkd.111.1574254598759;
+        Wed, 20 Nov 2019 04:56:38 -0800 (PST)
+Received: from Thara-Work-Ubuntu.fios-router.home (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
+        by smtp.googlemail.com with ESMTPSA id r2sm14109637qtc.28.2019.11.20.04.56.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 20 Nov 2019 04:56:36 -0800 (PST)
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+To:     edubezval@gmail.com, rui.zhang@intel.com, ulf.hansson@linaro.org,
+        daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
+        agross@kernel.org
+Cc:     amit.kucheria@verdurent.com, mark.rutland@arm.com,
+        rjw@rjwysocki.net, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [Patch v4 0/7] Introduce Power domain based warming device driver
+Date:   Wed, 20 Nov 2019 07:56:26 -0500
+Message-Id: <1574254593-16078-1-git-send-email-thara.gopinath@linaro.org>
+X-Mailer: git-send-email 2.1.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add changes to setup display datapath on SC7180 target.
+Certain resources modeled as a generic power domain in linux kernel can be
+used to warm up the SoC (mx power domain on sdm845) if the temperature
+falls below certain threshold. These power domains can be considered as
+thermal warming devices.  (opposite of thermal cooling devices).
 
-Changes in v1:
- - Add changes to support ctl_active on SC7180 target.
- - While selecting the number of mixers in the topology
-   consider the interface width.
+In kernel, these warming devices can be modeled as a thermal cooling
+device. Since linux kernel today has no instance of a resource modeled as
+a power domain acting as a thermal warming device, a generic power domain
+based thermal warming device driver that can be used pan-Socs is the
+approach taken in this patch series. Since thermal warming devices can be
+thought of as the mirror opposite of thermal cooling devices, this patch
+series re-uses thermal cooling device framework. To use these power
+domains as warming devices require further tweaks in the thermal framework
+which are out of scope of this patch series. These tweaks have been posted
+as a separate series[1].
 
-Changes in v2:
- - Spawn topology mixer selection into separate patch (Rob Clark).
- - Add co-developed-by tags in the commit msg (Stephen Boyd).
+The first patch in this series extends the genpd framework to export out
+the performance states of a power domain so that when a power domain is
+modeled as a cooling device, the number of possible states and current
+state of the cooling device can be retrieved from the genpd framework.
 
-Changes in v3:
- - Fix kernel checkpatch errors in v2.
+The second patch implements the newly added genpd callback for Qualcomm
+RPMH power domain driver which hosts the mx power domain.
 
-This patch has dependency on the below series
+The third patch introduces a new cooling device register API that allows
+a parent to be specified for the cooling device.
 
-https://patchwork.kernel.org/patch/11253747/
+The fourth patch introduces the generic power domain warming device
+driver.
 
-Co-developed-by: Shubhashree Dhar <dhar@codeaurora.org>
-Signed-off-by: Shubhashree Dhar <dhar@codeaurora.org>
-Co-developed-by: Raviteja Tamatam <travitej@codeaurora.org>
-Signed-off-by: Raviteja Tamatam <travitej@codeaurora.org>
-Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
----
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 21 +++++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         | 84 +++++++++++++++++++++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         | 24 +++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        | 28 ++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  6 ++
- 6 files changed, 159 insertions(+), 5 deletions(-)
+The fifth patch extends Qualcomm RPMh power controller driver to register
+mx power domain as a thermal warming device in the kernel.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index b9c84fb..8cc8ad12 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -280,6 +280,14 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
- 	phys_enc->hw_intf->ops.setup_timing_gen(phys_enc->hw_intf,
- 			&timing_params, fmt);
- 	phys_enc->hw_ctl->ops.setup_intf_cfg(phys_enc->hw_ctl, &intf_cfg);
-+
-+	/* setup which pp blk will connect to this intf */
-+	if (phys_enc->hw_intf->ops.bind_pingpong_blk)
-+		phys_enc->hw_intf->ops.bind_pingpong_blk(
-+				phys_enc->hw_intf,
-+				true,
-+				phys_enc->hw_pp->idx);
-+
- 	spin_unlock_irqrestore(phys_enc->enc_spinlock, lock_flags);
- 
- 	programmable_fetch_config(phys_enc, &timing_params);
-@@ -435,6 +443,7 @@ static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys *phys_enc)
- {
- 	struct dpu_hw_ctl *ctl;
- 	u32 flush_mask = 0;
-+	u32 intf_flush_mask = 0;
- 
- 	ctl = phys_enc->hw_ctl;
- 
-@@ -459,10 +468,18 @@ static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys *phys_enc)
- 	ctl->ops.get_bitmask_intf(ctl, &flush_mask, phys_enc->hw_intf->idx);
- 	ctl->ops.update_pending_flush(ctl, flush_mask);
- 
-+	if (ctl->ops.get_bitmask_active_intf)
-+		ctl->ops.get_bitmask_active_intf(ctl, &intf_flush_mask,
-+			phys_enc->hw_intf->idx);
-+
-+	if (ctl->ops.update_pending_intf_flush)
-+		ctl->ops.update_pending_intf_flush(ctl, intf_flush_mask);
-+
- skip_flush:
- 	DPU_DEBUG_VIDENC(phys_enc,
--			 "update pending flush ctl %d flush_mask %x\n",
--			 ctl->idx - CTL_0, flush_mask);
-+		"update pending flush ctl %d flush_mask 0%x intf_mask 0x%x\n",
-+		ctl->idx - CTL_0, flush_mask, intf_flush_mask);
-+
- 
- 	/* ctl_flush & timing engine enable will be triggered by framework */
- 	if (phys_enc->enable_state == DPU_ENC_DISABLED)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 1cf4509..0ee2b6c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -374,6 +374,7 @@
- 	{\
- 	.name = _name, .id = _id, \
- 	.base = _base, .len = 0x280, \
-+	.features = BIT(DPU_CTL_ACTIVE_CFG), \
- 	.type = _type, \
- 	.controller_id = _ctrl_id, \
- 	.prog_fetch_lines_worst_case = 24 \
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-index 179e8d5..2ce4b5a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-@@ -22,11 +22,15 @@
- #define   CTL_PREPARE                   0x0d0
- #define   CTL_SW_RESET                  0x030
- #define   CTL_LAYER_EXTN_OFFSET         0x40
-+#define   CTL_INTF_ACTIVE               0x0F4
-+#define   CTL_INTF_FLUSH                0x110
-+#define   CTL_INTF_MASTER               0x134
- 
- #define CTL_MIXER_BORDER_OUT            BIT(24)
- #define CTL_FLUSH_MASK_CTL              BIT(17)
- 
- #define DPU_REG_RESET_TIMEOUT_US        2000
-+#define  INTF_IDX       31
- 
- static struct dpu_ctl_cfg *_ctl_offset(enum dpu_ctl ctl,
- 		struct dpu_mdss_cfg *m,
-@@ -100,11 +104,27 @@ static inline void dpu_hw_ctl_update_pending_flush(struct dpu_hw_ctl *ctx,
- 	ctx->pending_flush_mask |= flushbits;
- }
- 
-+static inline void dpu_hw_ctl_update_pending_intf_flush(struct dpu_hw_ctl *ctx,
-+		u32 flushbits)
-+{
-+	ctx->pending_intf_flush_mask |= flushbits;
-+}
-+
- static u32 dpu_hw_ctl_get_pending_flush(struct dpu_hw_ctl *ctx)
- {
- 	return ctx->pending_flush_mask;
- }
- 
-+static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
-+{
-+
-+	if (ctx->pending_flush_mask & BIT(INTF_IDX))
-+		DPU_REG_WRITE(&ctx->hw, CTL_INTF_FLUSH,
-+				ctx->pending_intf_flush_mask);
-+
-+	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
-+}
-+
- static inline void dpu_hw_ctl_trigger_flush(struct dpu_hw_ctl *ctx)
- {
- 	trace_dpu_hw_ctl_trigger_pending_flush(ctx->pending_flush_mask,
-@@ -222,6 +242,36 @@ static int dpu_hw_ctl_get_bitmask_intf(struct dpu_hw_ctl *ctx,
- 	return 0;
- }
- 
-+static int dpu_hw_ctl_get_bitmask_intf_v1(struct dpu_hw_ctl *ctx,
-+		u32 *flushbits, enum dpu_intf intf)
-+{
-+	switch (intf) {
-+	case INTF_0:
-+	case INTF_1:
-+		*flushbits |= BIT(31);
-+		break;
-+	default:
-+		return 0;
-+	}
-+	return 0;
-+}
-+
-+static int dpu_hw_ctl_active_get_bitmask_intf(struct dpu_hw_ctl *ctx,
-+		u32 *flushbits, enum dpu_intf intf)
-+{
-+	switch (intf) {
-+	case INTF_0:
-+		*flushbits |= BIT(0);
-+		break;
-+	case INTF_1:
-+		*flushbits |= BIT(1);
-+		break;
-+	default:
-+		return 0;
-+	}
-+	return 0;
-+}
-+
- static u32 dpu_hw_ctl_poll_reset_status(struct dpu_hw_ctl *ctx, u32 timeout_us)
- {
- 	struct dpu_hw_blk_reg_map *c = &ctx->hw;
-@@ -422,6 +472,24 @@ static void dpu_hw_ctl_setup_blendstage(struct dpu_hw_ctl *ctx,
- 	DPU_REG_WRITE(c, CTL_LAYER_EXT3(lm), mixercfg_ext3);
- }
- 
-+
-+static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
-+		struct dpu_hw_intf_cfg *cfg)
-+{
-+	struct dpu_hw_blk_reg_map *c = &ctx->hw;
-+	u32 intf_active = 0;
-+	u32 mode_sel = 0;
-+
-+	if (cfg->intf_mode_sel == DPU_CTL_MODE_SEL_CMD)
-+		mode_sel |= BIT(17);
-+
-+	intf_active = DPU_REG_READ(c, CTL_INTF_ACTIVE);
-+	intf_active |= BIT(cfg->intf - INTF_0);
-+
-+	DPU_REG_WRITE(c, CTL_TOP, mode_sel);
-+	DPU_REG_WRITE(c, CTL_INTF_ACTIVE, intf_active);
-+}
-+
- static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
- 		struct dpu_hw_intf_cfg *cfg)
- {
-@@ -455,21 +523,31 @@ static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
- static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
- 		unsigned long cap)
- {
-+	if (cap & BIT(DPU_CTL_ACTIVE_CFG)) {
-+		ops->trigger_flush = dpu_hw_ctl_trigger_flush_v1;
-+		ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg_v1;
-+		ops->get_bitmask_intf = dpu_hw_ctl_get_bitmask_intf_v1;
-+		ops->get_bitmask_active_intf =
-+			dpu_hw_ctl_active_get_bitmask_intf;
-+		ops->update_pending_intf_flush =
-+			dpu_hw_ctl_update_pending_intf_flush;
-+	} else {
-+		ops->trigger_flush = dpu_hw_ctl_trigger_flush;
-+		ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg;
-+		ops->get_bitmask_intf = dpu_hw_ctl_get_bitmask_intf;
-+	}
- 	ops->clear_pending_flush = dpu_hw_ctl_clear_pending_flush;
- 	ops->update_pending_flush = dpu_hw_ctl_update_pending_flush;
- 	ops->get_pending_flush = dpu_hw_ctl_get_pending_flush;
--	ops->trigger_flush = dpu_hw_ctl_trigger_flush;
- 	ops->get_flush_register = dpu_hw_ctl_get_flush_register;
- 	ops->trigger_start = dpu_hw_ctl_trigger_start;
- 	ops->trigger_pending = dpu_hw_ctl_trigger_pending;
--	ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg;
- 	ops->reset = dpu_hw_ctl_reset_control;
- 	ops->wait_reset_status = dpu_hw_ctl_wait_reset_status;
- 	ops->clear_all_blendstages = dpu_hw_ctl_clear_all_blendstages;
- 	ops->setup_blendstage = dpu_hw_ctl_setup_blendstage;
- 	ops->get_bitmask_sspp = dpu_hw_ctl_get_bitmask_sspp;
- 	ops->get_bitmask_mixer = dpu_hw_ctl_get_bitmask_mixer;
--	ops->get_bitmask_intf = dpu_hw_ctl_get_bitmask_intf;
- };
- 
- static struct dpu_hw_blk_ops dpu_hw_ops;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-index d3ae939..1e3973c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-@@ -91,6 +91,15 @@ struct dpu_hw_ctl_ops {
- 		u32 flushbits);
- 
- 	/**
-+	 * OR in the given flushbits to the cached pending_intf_flush_mask
-+	 * No effect on hardware
-+	 * @ctx       : ctl path ctx pointer
-+	 * @flushbits : module flushmask
-+	 */
-+	void (*update_pending_intf_flush)(struct dpu_hw_ctl *ctx,
-+		u32 flushbits);
-+
-+	/**
- 	 * Write the value of the pending_flush_mask to hardware
- 	 * @ctx       : ctl path ctx pointer
- 	 */
-@@ -130,11 +139,24 @@ struct dpu_hw_ctl_ops {
- 	uint32_t (*get_bitmask_mixer)(struct dpu_hw_ctl *ctx,
- 		enum dpu_lm blk);
- 
-+	/**
-+	 * Query the value of the intf flush mask
-+	 * No effect on hardware
-+	 * @ctx       : ctl path ctx pointer
-+	 */
- 	int (*get_bitmask_intf)(struct dpu_hw_ctl *ctx,
- 		u32 *flushbits,
- 		enum dpu_intf blk);
- 
- 	/**
-+	 * Query the value of the intf active flush mask
-+	 * No effect on hardware
-+	 * @ctx       : ctl path ctx pointer
-+	 */
-+	int (*get_bitmask_active_intf)(struct dpu_hw_ctl *ctx,
-+		u32 *flushbits, enum dpu_intf blk);
-+
-+	/**
- 	 * Set all blend stages to disabled
- 	 * @ctx       : ctl path ctx pointer
- 	 */
-@@ -159,6 +181,7 @@ struct dpu_hw_ctl_ops {
-  * @mixer_count: number of mixers
-  * @mixer_hw_caps: mixer hardware capabilities
-  * @pending_flush_mask: storage for pending ctl_flush managed via ops
-+ * @pending_intf_flush_mask: pending INTF flush
-  * @ops: operation list
-  */
- struct dpu_hw_ctl {
-@@ -171,6 +194,7 @@ struct dpu_hw_ctl {
- 	int mixer_count;
- 	const struct dpu_lm_cfg *mixer_hw_caps;
- 	u32 pending_flush_mask;
-+	u32 pending_intf_flush_mask;
- 
- 	/* ops */
- 	struct dpu_hw_ctl_ops ops;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-index dcd87cd..eff5e6a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-@@ -56,6 +56,8 @@
- #define   INTF_FRAME_COUNT              0x0AC
- #define   INTF_LINE_COUNT               0x0B0
- 
-+#define   INTF_MUX                      0x25C
-+
- static struct dpu_intf_cfg *_intf_offset(enum dpu_intf intf,
- 		struct dpu_mdss_cfg *m,
- 		void __iomem *addr,
-@@ -218,6 +220,30 @@ static void dpu_hw_intf_setup_prg_fetch(
- 	DPU_REG_WRITE(c, INTF_CONFIG, fetch_enable);
- }
- 
-+static void dpu_hw_intf_bind_pingpong_blk(
-+		struct dpu_hw_intf *intf,
-+		bool enable,
-+		const enum dpu_pingpong pp)
-+{
-+	struct dpu_hw_blk_reg_map *c;
-+	u32 mux_cfg;
-+
-+	if (!intf)
-+		return;
-+
-+	c = &intf->hw;
-+
-+	mux_cfg = DPU_REG_READ(c, INTF_MUX);
-+	mux_cfg &= ~0xf;
-+
-+	if (enable)
-+		mux_cfg |= (pp - PINGPONG_0) & 0x7;
-+	else
-+		mux_cfg |= 0xf;
-+
-+	DPU_REG_WRITE(c, INTF_MUX, mux_cfg);
-+}
-+
- static void dpu_hw_intf_get_status(
- 		struct dpu_hw_intf *intf,
- 		struct intf_status *s)
-@@ -254,6 +280,8 @@ static void _setup_intf_ops(struct dpu_hw_intf_ops *ops,
- 	ops->get_status = dpu_hw_intf_get_status;
- 	ops->enable_timing = dpu_hw_intf_enable_timing_engine;
- 	ops->get_line_count = dpu_hw_intf_get_line_count;
-+	if (cap & BIT(DPU_CTL_ACTIVE_CFG))
-+		ops->bind_pingpong_blk = dpu_hw_intf_bind_pingpong_blk;
- }
- 
- static struct dpu_hw_blk_ops dpu_hw_ops;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-index b03acc2..a1e0ef3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-@@ -52,6 +52,8 @@ struct intf_status {
-  * @ enable_timing: enable/disable timing engine
-  * @ get_status: returns if timing engine is enabled or not
-  * @ get_line_count: reads current vertical line counter
-+ * @bind_pingpong_blk: enable/disable the connection with pingpong which will
-+ *                     feed pixels to this interface
-  */
- struct dpu_hw_intf_ops {
- 	void (*setup_timing_gen)(struct dpu_hw_intf *intf,
-@@ -68,6 +70,10 @@ struct dpu_hw_intf_ops {
- 			struct intf_status *status);
- 
- 	u32 (*get_line_count)(struct dpu_hw_intf *intf);
-+
-+	void (*bind_pingpong_blk)(struct dpu_hw_intf *intf,
-+			bool enable,
-+			const enum dpu_pingpong pp);
- };
- 
- struct dpu_hw_intf {
+The sixth patch describes the dt binding extensions for mx power domain to
+be a thermal warming device.
+
+The seventh patch introduces the DT entreis for sdm845 to register mx
+power domain as a thermal warming device.
+
+v1->v2:
+	- Rename the patch series from "qcom: Model RPMH power domains as
+	  thermal cooling devices" to "Introduce Power domain based
+thermal warming devices" as it is more appropriate.
+	- Introduce a new patch(patch 3) describing the dt-bindings for
+	  generic power domain warming device.
+	- Patch specific changes mentioned in respective patches.
+
+v2->v3:
+	- Changed power domain warming device from a virtual device node
+	  entry in DT to being a subnode of power domain controller
+binding following Rob's review comments.
+	- Implemented Ulf's review comments.
+	- The changes above introduced two new patches (patch 3 and 4)
+v3->v4:
+	- Dropped late_init hook in cooling device ops. Instead introduced
+	  a new cooling device register API that allows to define a parent
+for the cooling device.
+	- Patch specific changes mentioned in respective patches. 
+
+1. https://lkml.org/lkml/2019/9/18/1180
+
+Thara Gopinath (7):
+  PM/Domains: Add support for retrieving genpd performance states
+    information
+  soc: qcom: rpmhpd: Introduce function to retrieve power domain
+    performance state count
+  thermal: core: Allow cooling devices to register a parent.
+  thermal: Add generic power domain warming device driver.
+  soc: qcom: Extend RPMh power controller driver to register warming
+    devices.
+  dt-bindings: soc: qcom: Extend RPMh power controller binding to
+    describe thermal warming device
+  arm64: dts: qcom: Add mx power domain as thermal warming device.
+
+ .../devicetree/bindings/power/qcom,rpmpd.txt       |   5 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |   5 +
+ drivers/base/power/domain.c                        |  37 ++++++
+ drivers/soc/qcom/rpmhpd.c                          |  47 ++++++-
+ drivers/thermal/Kconfig                            |  10 ++
+ drivers/thermal/Makefile                           |   2 +
+ drivers/thermal/pwr_domain_warming.c               | 138 +++++++++++++++++++++
+ drivers/thermal/thermal_core.c                     |  22 +++-
+ include/linux/pm_domain.h                          |  13 ++
+ include/linux/pwr_domain_warming.h                 |  29 +++++
+ include/linux/thermal.h                            |  15 +++
+ 11 files changed, 319 insertions(+), 4 deletions(-)
+ create mode 100644 drivers/thermal/pwr_domain_warming.c
+ create mode 100644 include/linux/pwr_domain_warming.h
+
 -- 
-1.9.1
+2.1.4
 
