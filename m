@@ -2,109 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C7CC9104776
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2019 01:22:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD6F610477A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2019 01:25:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726689AbfKUAW4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Nov 2019 19:22:56 -0500
-Received: from mail-pl1-f176.google.com ([209.85.214.176]:34567 "EHLO
-        mail-pl1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726202AbfKUAW4 (ORCPT
+        id S1726230AbfKUAZD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Nov 2019 19:25:03 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:36016 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726044AbfKUAZD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Nov 2019 19:22:56 -0500
-Received: by mail-pl1-f176.google.com with SMTP id h13so662759plr.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2019 16:22:56 -0800 (PST)
+        Wed, 20 Nov 2019 19:25:03 -0500
+Received: by mail-ed1-f68.google.com with SMTP id f7so1198697edq.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Nov 2019 16:25:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=XpLumQ6+8kS/7FEnMUVh6tBNEPuW17EqgedQes6/Rgo=;
-        b=oqEey50HW2wlEgyLxM8Ent3qNalnUP8TMbnp0D7p0xt1ALpDYexhGxHS8IQ+exiLFQ
-         JU/ZWcwAv3J9fy5tK4FpYhm+/xnUh97OiuEagC2/v+7ye90ZLzKr62zcs7Ufw+tl0OmS
-         da2hWuGFrrWivVg7fKUQtgDIYbPTwkz5MR0VKnolHbuQD64csoAqe/Ln7SaCZZQ6OfG8
-         PAqnvkb+sTdBW+JuukCoWeN8Oj6ixahH6GibDqJUhYf5R/vmnD+0fLG1krTgcdzxjRer
-         HOwWfge/CVSdaK02yPnU/0rY3JbwNJeACmRP7xlM6SrBm3V2KsxsQ7XUAJ8cbYlWtWBf
-         Gbmw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xxN8i90HnOWWko5dcue+Kq/+nC0j3ATjHIHy52kF8SQ=;
+        b=ey36+6j2JBABRW7nZ54IRAKoVx/bMZFSMOLrvctVXU2WDZSbW2HCiLu0rXE73cgGW5
+         UGBkG+bNb/5b0vFH30g1zWYtFLpmxwAekNfDojhFcFhkQXE/CP6cRdoPvW42HMeBiZpT
+         T2yaWjPpHtxRe7ZhE7jj3hyxL4HDGSI9C+HF8RQTRTsfLoxrFW3DHF2xSrwlb0sG0YEE
+         FP1VuMSK84dX6uV3RkmDMXOxo9ucCR/JLlrbUtzi3sWsX45et4AWz5PK3mMmQi0BOvta
+         3osIJCboO2p8mNwqTtvP834yWHV1O1ul5zzv5qO+Oi+mkHIR+g/nUPz/594ZaofiA7XI
+         OB2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=XpLumQ6+8kS/7FEnMUVh6tBNEPuW17EqgedQes6/Rgo=;
-        b=NzO+95G9QXvLDdAvDifzIqo3sUTkjASBS6RdKt+S5r/NHyvniRqBmNU/i5/e95ZZbP
-         c29wxvF7tnhqozoCg9bEnqWtZTzOWDRkwEZkNzoLr/GANlBcSRVtkj0fU22vacHzbkCV
-         scDfuiKXouyFZJnVw9kRDb7fUaUIxB2khSRgmZWmyzTpmWgwzq6kPG0HMSF6qVTgWDn9
-         h2D5fBfUPmmXs9zqA8UhOH3E77DZdkdO8KOg1oWo01Yp5VGfiYkorWzTmAbNaQTPUjwH
-         N5E11Q1dC39GjgN1/kIwKeai51hVXOO0N/2+9JTQyIbNjPkHBe1oTDr8jVEMAhSrQs40
-         I0fw==
-X-Gm-Message-State: APjAAAU8cyvviyLlufbNESHEg9KnxfWJMD8uUPtr18+164bVECTg156v
-        MrTh8MrVpNme5ps24jdSZmPifw==
-X-Google-Smtp-Source: APXvYqzR3ztM/HAb302nlCKU1w6nf3gPCKUlXCamhXKHwqAjqxtPz+F99RAJrHT+Hk4S9E5FQ1k2ig==
-X-Received: by 2002:a17:902:fe85:: with SMTP id x5mr5693653plm.292.1574295775675;
-        Wed, 20 Nov 2019 16:22:55 -0800 (PST)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id i11sm573028pfq.74.2019.11.20.16.22.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Nov 2019 16:22:54 -0800 (PST)
-Date:   Wed, 20 Nov 2019 16:22:52 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     linux-firmware@kernel.org
-Cc:     Nicolas Dechesne <nicolas.dechesne@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: qcom: Add SDM845 remoteproc firmware files
-Message-ID: <20191121002252.GA844457@builder>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xxN8i90HnOWWko5dcue+Kq/+nC0j3ATjHIHy52kF8SQ=;
+        b=P8/An96liaTADrTyZlRU6XwI2t0bYwIEBlC1xH0ff4NfqDqlMncT2QCiSmKkxIC6ze
+         N7zsCdOlRyM0+KXxoUfofWtWSIQvdShtM2X+wFYh3aGJr0xTbSyG4WYuKxAsiiIra/yl
+         VEs7r/8nZWNIhgL25wMgZK9lGVQ6JBh+GugVBLRGGbi+9wwGI8efkVqMdnTo6yE9t/lE
+         6Mf7H8dF0DNZC3XAX18whfvhUo0d99qAwU1dDhp/dsFk5O68D9nYTQ3mYMIoVgVPZk3I
+         eUL7dmCavY9yLvz32K4QWA4l1/ePX8MBjP66sjLR6eCyJA7lRw244KxJdGwwwprGbWke
+         mw/w==
+X-Gm-Message-State: APjAAAW2F4yLsr5lA1kbUyAqLT0mNbS/VWLjXsDQKfi6hgDwyjYafOyF
+        enw8wduyYPAkjNgMURP8ZVz5OOQg22kcqXFNhk0=
+X-Google-Smtp-Source: APXvYqwlwDO6EaPRqE5cvCovwt2XV0M+rtxk478VSQdRf3+xJl7A6zmhhzNGPjevdUt7lHzBidY5qIj1Fd99jKQwrzo=
+X-Received: by 2002:a17:906:d143:: with SMTP id br3mr9210265ejb.215.1574295900268;
+ Wed, 20 Nov 2019 16:25:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.12.2 (2019-09-21)
+References: <20191119210844.16947-4-daniel.vetter@ffwll.ch> <20191120105607.3023-1-daniel.vetter@ffwll.ch>
+In-Reply-To: <20191120105607.3023-1-daniel.vetter@ffwll.ch>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 20 Nov 2019 16:24:48 -0800
+Message-ID: <CAF6AEGt9N7EYHFOofU-9pBTs8X+w2h30a_KvTg3BVARbChAWZA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Don't init ww_mutec acquire ctx before needed
+To:     Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Sean Paul <sean@poorly.run>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
+On Wed, Nov 20, 2019 at 2:56 AM Daniel Vetter <daniel.vetter@ffwll.ch> wrote:
+>
+> For locking semantics it really doesn't matter when we grab the
+> ticket. But for lockdep validation it does: the acquire ctx is a fake
+> lockdep. Since other drivers might want to do a full multi-lock dance
+> in their fault-handler, not just lock a single dma_resv. Therefore we
+> must init the acquire_ctx only after we've done all the copy_*_user or
+> anything else that might trigger a pagefault. For msm this means we
+> need to move it past submit_lookup_objects.
+>
+> Aside: Why is msm still using struct_mutex, it seems to be using
+> dma_resv_lock for general buffer state protection?
+>
+> v2:
+> - Add comment to explain why the ww ticket setup is separate (Rob)
+> - Fix up error handling, we need to make sure we don't call
+>   ww_acquire_fini without _init.
+>
+> Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: freedreno@lists.freedesktop.org
 
-This adds the necessary firmware to boot the Audio DSP, Compute DSP and
-Modem DSP, as well as the dynamically loaded WiFi firmware for the
-Qualcomm RB3/Dragonboard845c.
+found a few minutes to take this for a spin and seems fine.. t-b && r-b
 
-Regards,
-Bjorn
+BR,
+-R
 
-The following changes since commit e8a0f4c9314754d8b2cbe9840357d88a861c438a:
-
-  rtl_nic: add firmware rtl8168fp-3 (2019-11-18 16:16:01 -0500)
-
-are available in the Git repository at:
-
-  https://github.com/andersson/linux-firmware.git RB3-adsp-cdsp-mss-v4
-
-for you to fetch changes up to 212e44122e71fe76e1e6a495739413597ea66a6e:
-
-  qcom: Add SDM845 Compute DSP firmware (2019-11-20 16:08:30 -0800)
-
-----------------------------------------------------------------
-Bjorn Andersson (3):
-      qcom: Add SDM845 modem firmware
-      qcom: Add SDM845 Audio DSP firmware
-      qcom: Add SDM845 Compute DSP firmware
-
- WHENCE                   |  38 ++++++++++++++++++++++++++++++++++++++
- qcom/sdm845/adsp.mbn     | Bin 0 -> 10420560 bytes
- qcom/sdm845/adspr.jsn    |  21 +++++++++++++++++++++
- qcom/sdm845/adspua.jsn   |  27 +++++++++++++++++++++++++++
- qcom/sdm845/cdsp.mbn     | Bin 0 -> 2704916 bytes
- qcom/sdm845/cdspr.jsn    |  21 +++++++++++++++++++++
- qcom/sdm845/mba.mbn      | Bin 0 -> 242400 bytes
- qcom/sdm845/modem.mbn    | Bin 0 -> 5652688 bytes
- qcom/sdm845/modemuw.jsn  |  33 +++++++++++++++++++++++++++++++++
- qcom/sdm845/wlanmdsp.mbn | Bin 0 -> 3311964 bytes
- 10 files changed, 140 insertions(+)
- create mode 100644 qcom/sdm845/adsp.mbn
- create mode 100644 qcom/sdm845/adspr.jsn
- create mode 100644 qcom/sdm845/adspua.jsn
- create mode 100644 qcom/sdm845/cdsp.mbn
- create mode 100644 qcom/sdm845/cdspr.jsn
- create mode 100644 qcom/sdm845/mba.mbn
- create mode 100644 qcom/sdm845/modem.mbn
- create mode 100644 qcom/sdm845/modemuw.jsn
- create mode 100644 qcom/sdm845/wlanmdsp.mbn
+> ---
+>  drivers/gpu/drm/msm/msm_gem_submit.c | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> index fb1fdd7fa3ef..385d4965a8d0 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> @@ -54,7 +54,6 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
+>
+>         INIT_LIST_HEAD(&submit->node);
+>         INIT_LIST_HEAD(&submit->bo_list);
+> -       ww_acquire_init(&submit->ticket, &reservation_ww_class);
+>
+>         return submit;
+>  }
+> @@ -390,8 +389,6 @@ static void submit_cleanup(struct msm_gem_submit *submit)
+>                 list_del_init(&msm_obj->submit_entry);
+>                 drm_gem_object_put(&msm_obj->base);
+>         }
+> -
+> -       ww_acquire_fini(&submit->ticket);
+>  }
+>
+>  int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+> @@ -408,6 +405,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+>         struct msm_ringbuffer *ring;
+>         int out_fence_fd = -1;
+>         struct pid *pid = get_pid(task_pid(current));
+> +       bool has_ww_ticket = false;
+>         unsigned i;
+>         int ret, submitid;
+>         if (!gpu)
+> @@ -489,6 +487,9 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+>         if (ret)
+>                 goto out;
+>
+> +       /* copy_*_user while holding a ww ticket upsets lockdep */
+> +       ww_acquire_init(&submit->ticket, &reservation_ww_class);
+> +       has_ww_ticket = true;
+>         ret = submit_lock_objects(submit);
+>         if (ret)
+>                 goto out;
+> @@ -588,6 +589,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+>
+>  out:
+>         submit_cleanup(submit);
+> +       if (has_ww_ticket)
+> +               ww_acquire_fini(&submit->ticket);
+>         if (ret)
+>                 msm_gem_submit_free(submit);
+>  out_unlock:
+> --
+> 2.24.0
+>
