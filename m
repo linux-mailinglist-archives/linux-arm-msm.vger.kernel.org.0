@@ -2,92 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 338A91053F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2019 15:07:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E91821053FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2019 15:10:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726887AbfKUOHN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Nov 2019 09:07:13 -0500
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:39178 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726861AbfKUOHN (ORCPT
+        id S1726358AbfKUOKH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Nov 2019 09:10:07 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:32816 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726502AbfKUOKF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Nov 2019 09:07:13 -0500
-Received: by mail-lf1-f65.google.com with SMTP id f18so2743012lfj.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2019 06:07:11 -0800 (PST)
+        Thu, 21 Nov 2019 09:10:05 -0500
+Received: by mail-qt1-f194.google.com with SMTP id y39so3840369qty.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2019 06:10:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yR25p077sY7XsyzIresfvdGtP0NxdR3Phye7bNz8IVg=;
-        b=CZiWmy0lOMSUMBEQdMx/dvvcTVUjQGVBpXZnRc5cLrC8Lf17LWwPQF5Ue+KBC2ZTlc
-         lvcS6VGR90NTZiSpEGqtGHSWTCLg3HmrBLdf9GnUJFMj0TqHaMmchIbXjE1Q5E433UoV
-         6rb2NkCG8Tlfy7Yt3mK9qzGuvUCeouGYHj+GNiA1pg2ex7KkaonvntMMb9fb9CRb9izC
-         YrNQ3xr4hXKDmMmtH90fs84Vayv6fmfCJ+//aDIo/Pc+dqwm16pW7arYu5hPHASTWnGl
-         vDChdWc9A5DqBuR067SuXgY0OIgK4mwwq3R80N4EBorhGyOguLd5G7Km3cuykdCNwlO3
-         RG0A==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=ndBghIAW5jexbjstvssowNgkv48SOm6LHbFBASVDuQI=;
+        b=E+3g4JXDHhaV3nv6Jnkpf/uAYDpBcirtfCOtykviPuf8+8JadmxlqRxUSn/i/KNfi/
+         xeXN6tcZhDjIGC/IeUgOCPvR0gwQu7VKBYj3LMVUGRRgG7McU7A58hCxswbVh0DNGp0U
+         Ryi8oflhf2IrzM7D3mrt04WStpLx8hISOn9RxKB4pWAlNcOOXNoeBlUZ24X2pl/JSdUG
+         4IB7uxRMijM70jcRyRe5pBrJrUn1n/2ZyWYg7UADvp8p73bxZTUo4OF3kx/XH+TNPyBs
+         P5Ouep2zfOJTWEVPZcMj50GwwOoUBL3LA3L1ThGjNckQ7kDrEaLvuRIKWcd7rz90/czD
+         fhBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yR25p077sY7XsyzIresfvdGtP0NxdR3Phye7bNz8IVg=;
-        b=K+h7dI/IArWqaeWT2QHahMAnDMqaa90K3npJ+vBCg5EZ7k8En0zC45gVc2ZtZPtsEC
-         3vfAauM88vF++LXkqbZFDW4nt8tZlmbfdf7lkCy0biw8GDqhFFRbn5A+4juTunmPYfjC
-         oq0bG++YH2ycLCyrtdrP+/wL4ORY0r5z9g4eKc8AJsUxVqcWRb5rq4WKsE6wPmvMcBW4
-         UE9CDhlrPvlRHLqHZAY9t/AXReLM+WNF8oQC0JTsa0HbKQtnQYRU7HHLe3BnVu/grK28
-         uZse9PenC3xFQEw+/s72LzUz8pfvsPjlDxI2LYB49J6RvmXxksn87fOeRIVSfxvH8m9E
-         KTRA==
-X-Gm-Message-State: APjAAAVEu0sd7gsa8zJbDoh3Ar9uGJk5lJne5bjMcB/TyzpblYqFxWIC
-        XCuIr+cQfSJuIbW3rQAz0Oj3yWe3vulY6j+sM/2yEA==
-X-Google-Smtp-Source: APXvYqx7y+O12Uu5ojAu8QNAvcacX/eJU7YDlJdyJO7nQwQjAJB69Xsu//F9QRhLjLh47IajvAAakFeD7WqmHGemTs4=
-X-Received: by 2002:a19:7d02:: with SMTP id y2mr7406713lfc.86.1574345231034;
- Thu, 21 Nov 2019 06:07:11 -0800 (PST)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=ndBghIAW5jexbjstvssowNgkv48SOm6LHbFBASVDuQI=;
+        b=c6RQtHSZe5ArqPHcerNld5ooQEAJRvniG+K1WZ3utjUpr7Sch3bZZTASIzchl8ZlPE
+         tohJGON3BsvhJUIEXPMfKH/cx6RMRJ/FcFgwwXJllwmb0ayEdymR/aeuhgZX+iFKyUKW
+         USjW/hOZAhA2BT3XPBX83Kyoc5D4FpLbcB0YlDSzCIgoJucuzd5HXtC4lZb3Fflwsc0B
+         +nWYfyTd8BWBOa7byHOkf1xCIZfhrzKk1zLA8x8e1EAbWWz/IzxWQ4U2Ff4gh+hbqRvK
+         T4Az4Hzn3S3OWunckR2WyBq8PyKDeY9KODrHXZ0ImZaYIM3hMFKkaWKj49mVkYFHIOvD
+         buaw==
+X-Gm-Message-State: APjAAAXK4/FVUHrzw9gtu0eQb2Xt2LqNEesUdNuSfoPF8IbUQ+XAsQRG
+        uru84pRhsWm2M38ykGEnQqJCBQ==
+X-Google-Smtp-Source: APXvYqwlIPVfLC7kmWQrv11Ie25ynbnCuwb33CgLllClg/M3PxJvJL6TKoWz3JyuO+mxbbwsZKZ0CA==
+X-Received: by 2002:ac8:7454:: with SMTP id h20mr8866546qtr.146.1574345402032;
+        Thu, 21 Nov 2019 06:10:02 -0800 (PST)
+Received: from [192.168.1.169] (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
+        by smtp.gmail.com with ESMTPSA id o53sm1557251qtj.91.2019.11.21.06.10.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Nov 2019 06:10:00 -0800 (PST)
+Subject: Re: [PATCH] drivers: thermal: step_wise: add support for hysteresis
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, swboyd@chromium.org, j-keerthy@ti.com,
+        Zhang Rui <rui.zhang@intel.com>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amit.kucheria@verdurent.com>
+References: <8e812065f4a76325097c5f9c17f3386736d8c1d4.1574315190.git.amit.kucheria@linaro.org>
+Cc:     Ram Chandrasekar <rkumbako@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>, linux-pm@vger.kernel.org
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <5DD69AB7.3060307@linaro.org>
+Date:   Thu, 21 Nov 2019 09:09:59 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
 MIME-Version: 1.0
-References: <1574306382-32516-1-git-send-email-krzk@kernel.org>
-In-Reply-To: <1574306382-32516-1-git-send-email-krzk@kernel.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 21 Nov 2019 15:06:58 +0100
-Message-ID: <CACRpkdaQCsSdZQrBkTQ_B-kz2jngkFoEgdYHW3uoPRwo=GcR7A@mail.gmail.com>
-Subject: Re: [PATCH v2] pinctrl: Fix Kconfig indentation
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Stefan Agner <stefan@agner.ch>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        MSM <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <8e812065f4a76325097c5f9c17f3386736d8c1d4.1574315190.git.amit.kucheria@linaro.org>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 21, 2019 at 4:19 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+On 11/21/2019 12:50 AM, Amit Kucheria wrote:
+> From: Ram Chandrasekar <rkumbako@codeaurora.org>
+> 
+> Currently, step wise governor increases the mitigation when the
+> temperature goes above a threshold and decreases the mitigation when the
+> temperature goes below the threshold. If there is a case where the
+> temperature is wavering around the threshold, the mitigation will be
+> applied and removed every iteration, which is not very efficient.
+> 
+> The use of hysteresis temperature could avoid this ping-pong of
+> mitigation by relaxing the mitigation to happen only when the
+> temperature goes below this lower hysteresis value.
+Hi Amit,
 
-> Adjust indentation from spaces to tab (+optional two spaces) as in
-> coding style with command like:
->         $ sed -e 's/^        /\t/' -i */Kconfig
->
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
->
+Can this not lead to ping-pong around the hysteresis temperature?
+If the idea is to minimize ping-pong isn't average a better method?
+
+Warm Regards
+Thara
+
+> 
+> Signed-off-by: Ram Chandrasekar <rkumbako@codeaurora.org>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> [Rebased patch from downstream]
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
 > ---
->
-> Changes since v1:
-> 1. Fix also 7-space and tab+1 space indentation issues.
-
-Patch applied, why not.
-
-If it causes severe merge conflicts with other trees (I don't
-know at this point) then I might have to take it out again,
-so keep fingers crossed.
-
-Yours,
-Linus Walleij
+>  drivers/thermal/step_wise.c | 35 ++++++++++++++++++++++++-----------
+>  1 file changed, 24 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/thermal/step_wise.c b/drivers/thermal/step_wise.c
+> index 6e051cbd824ff..2c8a34a7cf959 100644
+> --- a/drivers/thermal/step_wise.c
+> +++ b/drivers/thermal/step_wise.c
+> @@ -24,7 +24,7 @@
+>   *       for this trip point
+>   *    d. if the trend is THERMAL_TREND_DROP_FULL, use lower limit
+>   *       for this trip point
+> - * If the temperature is lower than a trip point,
+> + * If the temperature is lower than a hysteresis temperature,
+>   *    a. if the trend is THERMAL_TREND_RAISING, do nothing
+>   *    b. if the trend is THERMAL_TREND_DROPPING, use lower cooling
+>   *       state for this trip point, if the cooling state already
+> @@ -115,30 +115,31 @@ static void update_passive_instance(struct thermal_zone_device *tz,
+>  
+>  static void thermal_zone_trip_update(struct thermal_zone_device *tz, int trip)
+>  {
+> -	int trip_temp;
+> +	int trip_temp, hyst_temp;
+>  	enum thermal_trip_type trip_type;
+>  	enum thermal_trend trend;
+>  	struct thermal_instance *instance;
+> -	bool throttle = false;
+> +	bool throttle;
+>  	int old_target;
+>  
+>  	if (trip == THERMAL_TRIPS_NONE) {
+> -		trip_temp = tz->forced_passive;
+> +		hyst_temp = trip_temp = tz->forced_passive;
+>  		trip_type = THERMAL_TRIPS_NONE;
+>  	} else {
+>  		tz->ops->get_trip_temp(tz, trip, &trip_temp);
+> +		hyst_temp = trip_temp;
+> +		if (tz->ops->get_trip_hyst) {
+> +			tz->ops->get_trip_hyst(tz, trip, &hyst_temp);
+> +			hyst_temp = trip_temp - hyst_temp;
+> +		}
+>  		tz->ops->get_trip_type(tz, trip, &trip_type);
+>  	}
+>  
+>  	trend = get_tz_trend(tz, trip);
+>  
+> -	if (tz->temperature >= trip_temp) {
+> -		throttle = true;
+> -		trace_thermal_zone_trip(tz, trip, trip_type);
+> -	}
+> -
+> -	dev_dbg(&tz->device, "Trip%d[type=%d,temp=%d]:trend=%d,throttle=%d\n",
+> -				trip, trip_type, trip_temp, trend, throttle);
+> +	dev_dbg(&tz->device,
+> +		"Trip%d[type=%d,temp=%d,hyst=%d]:trend=%d,throttle=%d\n",
+> +		trip, trip_type, trip_temp, hyst_temp, trend, throttle);
+>  
+>  	mutex_lock(&tz->lock);
+>  
+> @@ -147,6 +148,18 @@ static void thermal_zone_trip_update(struct thermal_zone_device *tz, int trip)
+>  			continue;
+>  
+>  		old_target = instance->target;
+> +		throttle = false;
+> +		/*
+> +		 * Lower the mitigation only if the temperature
+> +		 * goes below the hysteresis temperature.
+> +		 */
+> +		if (tz->temperature >= trip_temp ||
+> +		    (tz->temperature >= hyst_temp &&
+> +		     old_target != THERMAL_NO_TARGET)) {
+> +			throttle = true;
+> +			trace_thermal_zone_trip(tz, trip, trip_type);
+> +		}
+> +
+>  		instance->target = get_target_state(instance, trend, throttle);
+>  		dev_dbg(&instance->cdev->device, "old_target=%d, target=%d\n",
+>  					old_target, (int)instance->target);
+> 
