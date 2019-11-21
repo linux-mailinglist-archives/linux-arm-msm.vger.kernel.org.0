@@ -2,42 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B0B811048E8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2019 04:19:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 529FC104903
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2019 04:20:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726230AbfKUDTB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Nov 2019 22:19:01 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60482 "EHLO mail.kernel.org"
+        id S1726532AbfKUDTs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Nov 2019 22:19:48 -0500
+Received: from mail.kernel.org ([198.145.29.99]:33224 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725819AbfKUDTB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Nov 2019 22:19:01 -0500
+        id S1727295AbfKUDTs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 Nov 2019 22:19:48 -0500
 Received: from PC-kkoz.proceq.com (unknown [213.160.61.66])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B2A6820898;
-        Thu, 21 Nov 2019 03:18:57 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id D8C1A208A3;
+        Thu, 21 Nov 2019 03:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1574306340;
-        bh=9Ksqhhd1L7R8tO8N1qP062uhuD/S93g4xX+3n7nrjuk=;
+        s=default; t=1574306387;
+        bh=LSzFWPpsVO+DHMVTB1mAdrxBaXS9PyPnO6OGbCDZ6n0=;
         h=From:To:Cc:Subject:Date:From;
-        b=dhjxDrCGeRc2byEQxgwNLsSWWxA7ebiuc5DOawNk7mBXmN8SBRIeMGPYM1L+rtUsk
-         jw5AuZek5sXPBBufjND8mFIc8AMxc1Xv0+fQ4GjTQqcegDJyr8JlxRHhMzoDZbTaWx
-         V8psmrv+ovo0Q7Mfd7RsK//vg6HkD+Uq/hzXOUYc=
+        b=jiF6umi+XcgpJlFZE8vEjUctCZj2HQWnz9Sy8ndxleVr2m/4yCtQEgB7M1+o/oNEN
+         ccZP47LhIHcpySVlkZc6yl8aZgRYhf2bPtrtmqTWAAgtdbZtkVCEs0+fcffnMrNDfz
+         DiqkNnfdHY81g9j3ZbdT+xnb2RVUdf8AZAVB5XMc=
 From:   Krzysztof Kozlowski <krzk@kernel.org>
 To:     linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stefan Agner <stefan@agner.ch>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org
-Subject: [PATCH v2] clk: Fix Kconfig indentation
-Date:   Thu, 21 Nov 2019 04:18:55 +0100
-Message-Id: <1574306335-29026-1-git-send-email-krzk@kernel.org>
+        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2] pinctrl: Fix Kconfig indentation
+Date:   Thu, 21 Nov 2019 04:19:41 +0100
+Message-Id: <1574306382-32516-1-git-send-email-krzk@kernel.org>
 X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -55,129 +60,197 @@ Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Changes since v1:
 1. Fix also 7-space and tab+1 space indentation issues.
 ---
- drivers/clk/Kconfig           |  2 +-
- drivers/clk/mediatek/Kconfig  | 44 +++++++++++++++++++++----------------------
- drivers/clk/mvebu/Kconfig     |  2 +-
- drivers/clk/qcom/Kconfig      |  4 ++--
- drivers/clk/versatile/Kconfig |  2 +-
- 5 files changed, 27 insertions(+), 27 deletions(-)
+ drivers/pinctrl/Kconfig           | 18 ++++----
+ drivers/pinctrl/freescale/Kconfig | 12 ++---
+ drivers/pinctrl/mvebu/Kconfig     | 10 ++---
+ drivers/pinctrl/qcom/Kconfig      | 92 +++++++++++++++++++--------------------
+ 4 files changed, 66 insertions(+), 66 deletions(-)
 
-diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
-index 0530bebfc25a..b8ebf7b93d63 100644
---- a/drivers/clk/Kconfig
-+++ b/drivers/clk/Kconfig
-@@ -27,7 +27,7 @@ config COMMON_CLK_WM831X
- 	tristate "Clock driver for WM831x/2x PMICs"
- 	depends on MFD_WM831X
- 	---help---
--          Supports the clocking subsystem of the WM831x/2x series of
-+	  Supports the clocking subsystem of the WM831x/2x series of
- 	  PMICs from Wolfson Microelectronics.
+diff --git a/drivers/pinctrl/Kconfig b/drivers/pinctrl/Kconfig
+index b372419d61f2..25b6c830f2f1 100644
+--- a/drivers/pinctrl/Kconfig
++++ b/drivers/pinctrl/Kconfig
+@@ -32,15 +32,15 @@ config DEBUG_PINCTRL
+ 	  Say Y here to add some extra checks and diagnostics to PINCTRL calls.
  
- source "drivers/clk/versatile/Kconfig"
-diff --git a/drivers/clk/mediatek/Kconfig b/drivers/clk/mediatek/Kconfig
-index 7efc3617bbd5..e4c7cb518cda 100644
---- a/drivers/clk/mediatek/Kconfig
-+++ b/drivers/clk/mediatek/Kconfig
-@@ -174,36 +174,36 @@ config COMMON_CLK_MT6779_AUDSYS
- 	  This driver supports Mediatek MT6779 audsys clocks.
+ config PINCTRL_ARTPEC6
+-        bool "Axis ARTPEC-6 pin controller driver"
+-        depends on MACH_ARTPEC6
+-        select PINMUX
+-        select GENERIC_PINCONF
+-        help
+-          This is the driver for the Axis ARTPEC-6 pin controller. This driver
+-          supports pin function multiplexing as well as pin bias and drive
+-          strength configuration. Device tree integration instructions can be
+-          found in Documentation/devicetree/bindings/pinctrl/axis,artpec6-pinctrl.txt
++	bool "Axis ARTPEC-6 pin controller driver"
++	depends on MACH_ARTPEC6
++	select PINMUX
++	select GENERIC_PINCONF
++	help
++	  This is the driver for the Axis ARTPEC-6 pin controller. This driver
++	  supports pin function multiplexing as well as pin bias and drive
++	  strength configuration. Device tree integration instructions can be
++	  found in Documentation/devicetree/bindings/pinctrl/axis,artpec6-pinctrl.txt
  
- config COMMON_CLK_MT6797
--       bool "Clock driver for MediaTek MT6797"
--       depends on (ARCH_MEDIATEK && ARM64) || COMPILE_TEST
--       select COMMON_CLK_MEDIATEK
--       default ARCH_MEDIATEK && ARM64
--       ---help---
--         This driver supports MediaTek MT6797 basic clocks.
-+	bool "Clock driver for MediaTek MT6797"
-+	depends on (ARCH_MEDIATEK && ARM64) || COMPILE_TEST
-+	select COMMON_CLK_MEDIATEK
-+	default ARCH_MEDIATEK && ARM64
-+	---help---
-+	 This driver supports MediaTek MT6797 basic clocks.
+ config PINCTRL_AS3722
+ 	tristate "Pinctrl and GPIO driver for ams AS3722 PMIC"
+diff --git a/drivers/pinctrl/freescale/Kconfig b/drivers/pinctrl/freescale/Kconfig
+index 5f4058033ec6..3ea9ce3e0cd9 100644
+--- a/drivers/pinctrl/freescale/Kconfig
++++ b/drivers/pinctrl/freescale/Kconfig
+@@ -39,12 +39,12 @@ config PINCTRL_IMX27
  
- config COMMON_CLK_MT6797_MMSYS
--       bool "Clock driver for MediaTek MT6797 mmsys"
--       depends on COMMON_CLK_MT6797
--       ---help---
--         This driver supports MediaTek MT6797 mmsys clocks.
-+	bool "Clock driver for MediaTek MT6797 mmsys"
-+	depends on COMMON_CLK_MT6797
-+	---help---
-+	 This driver supports MediaTek MT6797 mmsys clocks.
  
- config COMMON_CLK_MT6797_IMGSYS
--       bool "Clock driver for MediaTek MT6797 imgsys"
--       depends on COMMON_CLK_MT6797
--       ---help---
--         This driver supports MediaTek MT6797 imgsys clocks.
-+	bool "Clock driver for MediaTek MT6797 imgsys"
-+	depends on COMMON_CLK_MT6797
-+	---help---
-+	 This driver supports MediaTek MT6797 imgsys clocks.
+ config PINCTRL_IMX25
+-        bool "IMX25 pinctrl driver"
+-        depends on OF
+-        depends on SOC_IMX25
+-        select PINCTRL_IMX
+-        help
+-          Say Y here to enable the imx25 pinctrl driver
++	bool "IMX25 pinctrl driver"
++	depends on OF
++	depends on SOC_IMX25
++	select PINCTRL_IMX
++	help
++	  Say Y here to enable the imx25 pinctrl driver
  
- config COMMON_CLK_MT6797_VDECSYS
--       bool "Clock driver for MediaTek MT6797 vdecsys"
--       depends on COMMON_CLK_MT6797
--       ---help---
--         This driver supports MediaTek MT6797 vdecsys clocks.
-+	bool "Clock driver for MediaTek MT6797 vdecsys"
-+	depends on COMMON_CLK_MT6797
-+	---help---
-+	 This driver supports MediaTek MT6797 vdecsys clocks.
+ config PINCTRL_IMX35
+ 	bool "IMX35 pinctrl driver"
+diff --git a/drivers/pinctrl/mvebu/Kconfig b/drivers/pinctrl/mvebu/Kconfig
+index d69c25798871..0d12894d3ee1 100644
+--- a/drivers/pinctrl/mvebu/Kconfig
++++ b/drivers/pinctrl/mvebu/Kconfig
+@@ -46,8 +46,8 @@ config PINCTRL_ORION
+ 	select PINCTRL_MVEBU
  
- config COMMON_CLK_MT6797_VENCSYS
--       bool "Clock driver for MediaTek MT6797 vencsys"
--       depends on COMMON_CLK_MT6797
--       ---help---
--         This driver supports MediaTek MT6797 vencsys clocks.
-+	bool "Clock driver for MediaTek MT6797 vencsys"
-+	depends on COMMON_CLK_MT6797
-+	---help---
-+	 This driver supports MediaTek MT6797 vencsys clocks.
- 
- config COMMON_CLK_MT7622
- 	bool "Clock driver for MediaTek MT7622"
-diff --git a/drivers/clk/mvebu/Kconfig b/drivers/clk/mvebu/Kconfig
-index 415e6906a113..ded07b0bd0d5 100644
---- a/drivers/clk/mvebu/Kconfig
-+++ b/drivers/clk/mvebu/Kconfig
-@@ -29,7 +29,7 @@ config ARMADA_39X_CLK
- 	select MVEBU_CLK_COMMON
- 
- config ARMADA_37XX_CLK
+ config PINCTRL_ARMADA_37XX
 -       bool
+-       select GENERIC_PINCONF
+-       select MFD_SYSCON
+-       select PINCONF
+-       select PINMUX
 +	bool
++	select GENERIC_PINCONF
++	select MFD_SYSCON
++	select PINCONF
++	select PINMUX
+diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
+index 4f5645245b06..811af2f81c39 100644
+--- a/drivers/pinctrl/qcom/Kconfig
++++ b/drivers/pinctrl/qcom/Kconfig
+@@ -142,33 +142,33 @@ config PINCTRL_QDF2XXX
+ 	  Qualcomm Technologies QDF2xxx SOCs.
  
- config ARMADA_XP_CLK
- 	bool
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 3b33ef129274..f37f3cd615f2 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config KRAIT_CLOCKS
--       bool
--       select KRAIT_L2_ACCESSORS
-+	bool
-+	select KRAIT_L2_ACCESSORS
+ config PINCTRL_QCOM_SPMI_PMIC
+-       tristate "Qualcomm SPMI PMIC pin controller driver"
+-       depends on GPIOLIB && OF && SPMI
+-       select REGMAP_SPMI
+-       select PINMUX
+-       select PINCONF
+-       select GENERIC_PINCONF
+-       select GPIOLIB_IRQCHIP
+-       select IRQ_DOMAIN_HIERARCHY
+-       help
+-         This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+-         Qualcomm GPIO and MPP blocks found in the Qualcomm PMIC's chips,
+-         which are using SPMI for communication with SoC. Example PMIC's
+-         devices are pm8841, pm8941 and pma8084.
++	tristate "Qualcomm SPMI PMIC pin controller driver"
++	depends on GPIOLIB && OF && SPMI
++	select REGMAP_SPMI
++	select PINMUX
++	select PINCONF
++	select GENERIC_PINCONF
++	select GPIOLIB_IRQCHIP
++	select IRQ_DOMAIN_HIERARCHY
++	help
++	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
++	 Qualcomm GPIO and MPP blocks found in the Qualcomm PMIC's chips,
++	 which are using SPMI for communication with SoC. Example PMIC's
++	 devices are pm8841, pm8941 and pma8084.
  
- config QCOM_GDSC
- 	bool
-diff --git a/drivers/clk/versatile/Kconfig b/drivers/clk/versatile/Kconfig
-index ac766855ba16..c2618f1477a2 100644
---- a/drivers/clk/versatile/Kconfig
-+++ b/drivers/clk/versatile/Kconfig
-@@ -9,7 +9,7 @@ config COMMON_CLK_VERSATILE
- 		COMPILE_TEST
- 	select REGMAP_MMIO
- 	---help---
--          Supports clocking on ARM Reference designs:
-+	  Supports clocking on ARM Reference designs:
- 	  - Integrator/AP and Integrator/CP
- 	  - RealView PB1176, EB, PB11MP and PBX
- 	  - Versatile Express
+ config PINCTRL_QCOM_SSBI_PMIC
+-       tristate "Qualcomm SSBI PMIC pin controller driver"
+-       depends on GPIOLIB && OF
+-       select PINMUX
+-       select PINCONF
+-       select GENERIC_PINCONF
+-       select GPIOLIB_IRQCHIP
+-       select IRQ_DOMAIN_HIERARCHY
+-       help
+-         This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+-         Qualcomm GPIO and MPP blocks found in the Qualcomm PMIC's chips,
+-         which are using SSBI for communication with SoC. Example PMIC's
+-         devices are pm8058 and pm8921.
++	tristate "Qualcomm SSBI PMIC pin controller driver"
++	depends on GPIOLIB && OF
++	select PINMUX
++	select PINCONF
++	select GENERIC_PINCONF
++	select GPIOLIB_IRQCHIP
++	select IRQ_DOMAIN_HIERARCHY
++	help
++	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
++	 Qualcomm GPIO and MPP blocks found in the Qualcomm PMIC's chips,
++	 which are using SSBI for communication with SoC. Example PMIC's
++	 devices are pm8058 and pm8921.
+ 
+ config PINCTRL_SC7180
+ 	tristate "Qualcomm Technologies Inc SC7180 pin controller driver"
+@@ -180,30 +180,30 @@ config PINCTRL_SC7180
+ 	  Technologies Inc SC7180 platform.
+ 
+ config PINCTRL_SDM660
+-       tristate "Qualcomm Technologies Inc SDM660 pin controller driver"
+-       depends on GPIOLIB && OF
+-       select PINCTRL_MSM
+-       help
+-         This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+-         Qualcomm Technologies Inc TLMM block found on the Qualcomm
+-         Technologies Inc SDM660 platform.
++	tristate "Qualcomm Technologies Inc SDM660 pin controller driver"
++	depends on GPIOLIB && OF
++	select PINCTRL_MSM
++	help
++	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
++	 Qualcomm Technologies Inc TLMM block found on the Qualcomm
++	 Technologies Inc SDM660 platform.
+ 
+ config PINCTRL_SDM845
+-       tristate "Qualcomm Technologies Inc SDM845 pin controller driver"
+-       depends on GPIOLIB && (OF || ACPI)
+-       select PINCTRL_MSM
+-       help
+-         This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+-         Qualcomm Technologies Inc TLMM block found on the Qualcomm
+-         Technologies Inc SDM845 platform.
++	tristate "Qualcomm Technologies Inc SDM845 pin controller driver"
++	depends on GPIOLIB && (OF || ACPI)
++	select PINCTRL_MSM
++	help
++	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
++	 Qualcomm Technologies Inc TLMM block found on the Qualcomm
++	 Technologies Inc SDM845 platform.
+ 
+ config PINCTRL_SM8150
+-       tristate "Qualcomm Technologies Inc SM8150 pin controller driver"
+-       depends on GPIOLIB && OF
+-       select PINCTRL_MSM
+-       help
+-         This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+-         Qualcomm Technologies Inc TLMM block found on the Qualcomm
+-         Technologies Inc SM8150 platform.
++	tristate "Qualcomm Technologies Inc SM8150 pin controller driver"
++	depends on GPIOLIB && OF
++	select PINCTRL_MSM
++	help
++	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
++	 Qualcomm Technologies Inc TLMM block found on the Qualcomm
++	 Technologies Inc SM8150 platform.
+ 
+ endif
 -- 
 2.7.4
 
