@@ -2,83 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E8B0310480E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2019 02:27:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B0B811048E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2019 04:19:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725854AbfKUB1j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Nov 2019 20:27:39 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60364 "EHLO mail.kernel.org"
+        id S1726230AbfKUDTB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Nov 2019 22:19:01 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60482 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725819AbfKUB1j (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Nov 2019 20:27:39 -0500
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1725819AbfKUDTB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 Nov 2019 22:19:01 -0500
+Received: from PC-kkoz.proceq.com (unknown [213.160.61.66])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4A7B920898;
-        Thu, 21 Nov 2019 01:27:38 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id B2A6820898;
+        Thu, 21 Nov 2019 03:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1574299658;
-        bh=R22Op0DeOX2LBrbP7cckMdDgBWRoMNkNLhX1uIRD5F0=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=wE2IQ5OAY/1KErp65KA9zmFBjOLSjmEtUmphJIXe1FjaHxf1TQj7dlkU0XrQyFa7y
-         nrgue+jE0nOxEOBQc0eymSqqMe9BbPZ8ZIuXHNwVvOrVF5fSgLkc2Jcf58FHiQDnEy
-         yIAACPiyW+z66nBGhD+t86wNZXC+zUEsABeuG7H0=
-Received: by mail-lj1-f176.google.com with SMTP id d5so1292059ljl.4;
-        Wed, 20 Nov 2019 17:27:38 -0800 (PST)
-X-Gm-Message-State: APjAAAUDxLsErrAcWOq2melSLhtoVrT4HFEXQP0L+ChKxyZ9VG94bFcP
-        EYXIjvuNBWkjotgdZMa6Hf7mf0liSaYj2bHzIgU=
-X-Google-Smtp-Source: APXvYqzzC4/Fcn5mZhi9416C655teQ+R71jRODP7JGvSHDRSKX27QQZKpiWfBMhadkypvz5QsSQ19ELC6H8QXJSBa5o=
-X-Received: by 2002:a2e:9a55:: with SMTP id k21mr4599321ljj.85.1574299656479;
- Wed, 20 Nov 2019 17:27:36 -0800 (PST)
-MIME-Version: 1.0
-References: <20191120134019.14333-1-krzk@kernel.org> <279930f8-7463-555a-2dce-7c50fec8067e@pengutronix.de>
-In-Reply-To: <279930f8-7463-555a-2dce-7c50fec8067e@pengutronix.de>
+        s=default; t=1574306340;
+        bh=9Ksqhhd1L7R8tO8N1qP062uhuD/S93g4xX+3n7nrjuk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=dhjxDrCGeRc2byEQxgwNLsSWWxA7ebiuc5DOawNk7mBXmN8SBRIeMGPYM1L+rtUsk
+         jw5AuZek5sXPBBufjND8mFIc8AMxc1Xv0+fQ4GjTQqcegDJyr8JlxRHhMzoDZbTaWx
+         V8psmrv+ovo0Q7Mfd7RsK//vg6HkD+Uq/hzXOUYc=
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Thu, 21 Nov 2019 09:27:24 +0800
-X-Gmail-Original-Message-ID: <CAJKOXPc6C5WE0mV4=YRGBkKxLb_CWYKGAK=v43NjJW8MY8FMEQ@mail.gmail.com>
-Message-ID: <CAJKOXPc6C5WE0mV4=YRGBkKxLb_CWYKGAK=v43NjJW8MY8FMEQ@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: Fix Kconfig indentation
-To:     Ahmad Fatoum <a.fatoum@pengutronix.de>
-Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Stefan Agner <stefan@agner.ch>,
+To:     linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-gpio@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, Shawn Guo <shawnguo@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Linus Walleij <linus.walleij@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org
+Subject: [PATCH v2] clk: Fix Kconfig indentation
+Date:   Thu, 21 Nov 2019 04:18:55 +0100
+Message-Id: <1574306335-29026-1-git-send-email-krzk@kernel.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 20 Nov 2019 at 22:15, Ahmad Fatoum <a.fatoum@pengutronix.de> wrote:
->
-> Hello Krzysztof,
->
-> On 11/20/19 2:40 PM, Krzysztof Kozlowski wrote:
-> > Adjust indentation from spaces to tab (+optional two spaces) as in
-> > coding style with command like:
-> >       $ sed -e 's/^        /\t/' -i */Kconfig
->
-> >  config PINCTRL_ARTPEC6
-> > -        bool "Axis ARTPEC-6 pin controller driver"
-> > +     bool "Axis ARTPEC-6 pin controller driver"
->
-> Here you replace spaces for tabs before the prompt type.
->
-> >  config PINCTRL_SM8150
-> >         tristate "Qualcomm Technologies Inc SM8150 pin controller driver"
->
-> Here you leave the spaces before intact.
->
-> Intentional?
+Adjust indentation from spaces to tab (+optional two spaces) as in
+coding style with command like:
+	$ sed -e 's/^        /\t/' -i */Kconfig
 
-No, not intentional. Thanks for pointing it out. I made the sed
-patterns precise - 8 spaces -> tab, and there you have 7 spaces
-(ugh!). I'll send a follow up.
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Best regards,
-Krzysztof
+---
+
+Changes since v1:
+1. Fix also 7-space and tab+1 space indentation issues.
+---
+ drivers/clk/Kconfig           |  2 +-
+ drivers/clk/mediatek/Kconfig  | 44 +++++++++++++++++++++----------------------
+ drivers/clk/mvebu/Kconfig     |  2 +-
+ drivers/clk/qcom/Kconfig      |  4 ++--
+ drivers/clk/versatile/Kconfig |  2 +-
+ 5 files changed, 27 insertions(+), 27 deletions(-)
+
+diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+index 0530bebfc25a..b8ebf7b93d63 100644
+--- a/drivers/clk/Kconfig
++++ b/drivers/clk/Kconfig
+@@ -27,7 +27,7 @@ config COMMON_CLK_WM831X
+ 	tristate "Clock driver for WM831x/2x PMICs"
+ 	depends on MFD_WM831X
+ 	---help---
+-          Supports the clocking subsystem of the WM831x/2x series of
++	  Supports the clocking subsystem of the WM831x/2x series of
+ 	  PMICs from Wolfson Microelectronics.
+ 
+ source "drivers/clk/versatile/Kconfig"
+diff --git a/drivers/clk/mediatek/Kconfig b/drivers/clk/mediatek/Kconfig
+index 7efc3617bbd5..e4c7cb518cda 100644
+--- a/drivers/clk/mediatek/Kconfig
++++ b/drivers/clk/mediatek/Kconfig
+@@ -174,36 +174,36 @@ config COMMON_CLK_MT6779_AUDSYS
+ 	  This driver supports Mediatek MT6779 audsys clocks.
+ 
+ config COMMON_CLK_MT6797
+-       bool "Clock driver for MediaTek MT6797"
+-       depends on (ARCH_MEDIATEK && ARM64) || COMPILE_TEST
+-       select COMMON_CLK_MEDIATEK
+-       default ARCH_MEDIATEK && ARM64
+-       ---help---
+-         This driver supports MediaTek MT6797 basic clocks.
++	bool "Clock driver for MediaTek MT6797"
++	depends on (ARCH_MEDIATEK && ARM64) || COMPILE_TEST
++	select COMMON_CLK_MEDIATEK
++	default ARCH_MEDIATEK && ARM64
++	---help---
++	 This driver supports MediaTek MT6797 basic clocks.
+ 
+ config COMMON_CLK_MT6797_MMSYS
+-       bool "Clock driver for MediaTek MT6797 mmsys"
+-       depends on COMMON_CLK_MT6797
+-       ---help---
+-         This driver supports MediaTek MT6797 mmsys clocks.
++	bool "Clock driver for MediaTek MT6797 mmsys"
++	depends on COMMON_CLK_MT6797
++	---help---
++	 This driver supports MediaTek MT6797 mmsys clocks.
+ 
+ config COMMON_CLK_MT6797_IMGSYS
+-       bool "Clock driver for MediaTek MT6797 imgsys"
+-       depends on COMMON_CLK_MT6797
+-       ---help---
+-         This driver supports MediaTek MT6797 imgsys clocks.
++	bool "Clock driver for MediaTek MT6797 imgsys"
++	depends on COMMON_CLK_MT6797
++	---help---
++	 This driver supports MediaTek MT6797 imgsys clocks.
+ 
+ config COMMON_CLK_MT6797_VDECSYS
+-       bool "Clock driver for MediaTek MT6797 vdecsys"
+-       depends on COMMON_CLK_MT6797
+-       ---help---
+-         This driver supports MediaTek MT6797 vdecsys clocks.
++	bool "Clock driver for MediaTek MT6797 vdecsys"
++	depends on COMMON_CLK_MT6797
++	---help---
++	 This driver supports MediaTek MT6797 vdecsys clocks.
+ 
+ config COMMON_CLK_MT6797_VENCSYS
+-       bool "Clock driver for MediaTek MT6797 vencsys"
+-       depends on COMMON_CLK_MT6797
+-       ---help---
+-         This driver supports MediaTek MT6797 vencsys clocks.
++	bool "Clock driver for MediaTek MT6797 vencsys"
++	depends on COMMON_CLK_MT6797
++	---help---
++	 This driver supports MediaTek MT6797 vencsys clocks.
+ 
+ config COMMON_CLK_MT7622
+ 	bool "Clock driver for MediaTek MT7622"
+diff --git a/drivers/clk/mvebu/Kconfig b/drivers/clk/mvebu/Kconfig
+index 415e6906a113..ded07b0bd0d5 100644
+--- a/drivers/clk/mvebu/Kconfig
++++ b/drivers/clk/mvebu/Kconfig
+@@ -29,7 +29,7 @@ config ARMADA_39X_CLK
+ 	select MVEBU_CLK_COMMON
+ 
+ config ARMADA_37XX_CLK
+-       bool
++	bool
+ 
+ config ARMADA_XP_CLK
+ 	bool
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 3b33ef129274..f37f3cd615f2 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -1,7 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ config KRAIT_CLOCKS
+-       bool
+-       select KRAIT_L2_ACCESSORS
++	bool
++	select KRAIT_L2_ACCESSORS
+ 
+ config QCOM_GDSC
+ 	bool
+diff --git a/drivers/clk/versatile/Kconfig b/drivers/clk/versatile/Kconfig
+index ac766855ba16..c2618f1477a2 100644
+--- a/drivers/clk/versatile/Kconfig
++++ b/drivers/clk/versatile/Kconfig
+@@ -9,7 +9,7 @@ config COMMON_CLK_VERSATILE
+ 		COMPILE_TEST
+ 	select REGMAP_MMIO
+ 	---help---
+-          Supports clocking on ARM Reference designs:
++	  Supports clocking on ARM Reference designs:
+ 	  - Integrator/AP and Integrator/CP
+ 	  - RealView PB1176, EB, PB11MP and PBX
+ 	  - Versatile Express
+-- 
+2.7.4
+
