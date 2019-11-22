@@ -2,97 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CA98A107742
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2019 19:24:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A268910774E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2019 19:26:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726729AbfKVSYU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Nov 2019 13:24:20 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:41004 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726695AbfKVSYT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Nov 2019 13:24:19 -0500
-Received: by mail-pg1-f194.google.com with SMTP id 207so3689186pge.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2019 10:24:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:subject:from:cc:to:user-agent:date;
-        bh=7hJrD72iS4CTV/eqPsnjwRrd+DhYn98Uq27ZJW54QGw=;
-        b=jVNkUXPD5bIky3irD3XcBYEQIK7JcGj0S/ZADQDIQbgMGmjfzDAhNSuX0UiNNGxXVp
-         easfSnO5urLLc4lWAyEwRtQZ5asuP8eWlxh6XA92LJWPOtkoRcd0BG3dT7JpZtbVWrIT
-         v6sFK7x/kCmw9pHEnTnBto9MzcJKku7jB8Ay0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:subject:from:cc:to
-         :user-agent:date;
-        bh=7hJrD72iS4CTV/eqPsnjwRrd+DhYn98Uq27ZJW54QGw=;
-        b=VgmQBp88YMzNQqvpVft3u9M3HLVSBazdTZQlXhHCdsJ5EWbfZADcZIEmVUm9aha9i6
-         kK1rNAdVAFgikEdrUi/BZCFgTreGlfcQ8SXGhw6qyPHeXLVNaRp0NWy2FGIJoCQsSMWu
-         HoDhhRadKCKGXz/baHpJ66jJuRJP/y15IEePsCNCEaMzGVBQcyv0YGloRG/UU79PWQjh
-         qiLTtJzYxeHf0ayUI2APQgL0tB30yx7QdCzwaQx9ZHqKqo7Sd/PD0/S5fyCBmUjm/8Yd
-         xld3aW6Miwvkw4NyfQ03Q9BRhKRvoxmy0DB5wBxvR6OtF97eOaSLbvX7cMQWbJF2E46H
-         4Yhw==
-X-Gm-Message-State: APjAAAV/z/yC3iiuaDJgaxfRP95w84KqLg8iY+RIk/nTLP3n/0IKlTJK
-        K545wbIx8T+WPq9hC4LxiGGa6Lag4b4=
-X-Google-Smtp-Source: APXvYqwCGkNyOf7R8AA7Mp1x3NFIKX+iqD3uwFFsfJ7BP7zudBzdBbCdOkwtqqovQITmU05HGDrOgw==
-X-Received: by 2002:aa7:870c:: with SMTP id b12mr19227631pfo.30.1574447058874;
-        Fri, 22 Nov 2019 10:24:18 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id n8sm7183258pgs.44.2019.11.22.10.24.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Nov 2019 10:24:18 -0800 (PST)
-Message-ID: <5dd827d2.1c69fb81.51ab0.220e@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        id S1726759AbfKVS0c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Nov 2019 13:26:32 -0500
+Received: from foss.arm.com ([217.140.110.172]:50858 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726638AbfKVS0c (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 22 Nov 2019 13:26:32 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 34203328;
+        Fri, 22 Nov 2019 10:26:31 -0800 (PST)
+Received: from e121166-lin.cambridge.arm.com (e121166-lin.cambridge.arm.com [10.1.196.255])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 377293F6C4;
+        Fri, 22 Nov 2019 10:26:29 -0800 (PST)
+Date:   Fri, 22 Nov 2019 18:26:24 +0000
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Lina Iyer <lina.iyer@linaro.org>
+Subject: Re: [PATCH v2 10/13] cpuidle: psci: Prepare to use OS initiated
+ suspend mode via PM domains
+Message-ID: <20191122182623.GA8290@e121166-lin.cambridge.arm.com>
+References: <20191029164438.17012-1-ulf.hansson@linaro.org>
+ <20191029164438.17012-11-ulf.hansson@linaro.org>
+ <20191115173053.GE27170@bogus>
+ <CAPDyKFraEhFVm27YG0fVkjT0-oBBxFpfiBY4zS+1TMy=0F6GRQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <0101016e91dcbb45-f54cf6e5-8ace-457a-96cc-edec41305719-000000@us-west-2.amazonses.com>
-References: <1573642136-30488-1-git-send-email-akashast@codeaurora.org> <5dcd919d.1c69fb81.1c304.2dc5@mx.google.com> <55a02d0f-2dec-2ba7-82e6-f21a8c86792a@codeaurora.org> <5dceff73.1c69fb81.e286f.aa4e@mx.google.com> <0101016e91dcbb45-f54cf6e5-8ace-457a-96cc-edec41305719-000000@us-west-2.amazonses.com>
-Subject: Re: [PATCH v5 2/3] tty: serial: qcom_geni_serial: Wakeup over UART RX
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        mgautam@codeaurora.org, msavaliy@codeaurora.org
-To:     Akash Asthana <akashast@codeaurora.org>, gregkh@linuxfoundation.org
-User-Agent: alot/0.8.1
-Date:   Fri, 22 Nov 2019 10:24:17 -0800
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFraEhFVm27YG0fVkjT0-oBBxFpfiBY4zS+1TMy=0F6GRQ@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Akash Asthana (2019-11-21 22:46:32)
->=20
-> On 11/16/2019 1:11 AM, Stephen Boyd wrote:
-> > Quoting Akash Asthana (2019-11-15 02:00:44)
-> >> On 11/14/2019 11:10 PM, Stephen Boyd wrote:
-> >>> Quoting Akash Asthana (2019-11-13 02:48:56)
-> >>>> Add system wakeup capability over UART RX line for wakeup capable UA=
-RT.
-> >>>> When system is suspended, RX line act as an interrupt to wakeup syst=
-em
-> >>>> for any communication requests from peer.
-> >>> How does the RX line get remuxed as a GPIO interrupt here? Is that
-> >>> through some pinctrl magic in DT or just via enabling/disabling the
-> >>> interrupt?
-> >> Yes, For wakeup capable UART node, we have registered UART RX line with
-> >> TLMM interrupt controller in DT file . Example: if GPIO48 is UART RX l=
-ine
-> >>
-> >> interrupts-extended =3D=C2=A0 <&intc GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>,=
-=C2=A0 <&tlmm
-> >> 48 IRQ_TYPE_EDGE_FALLING>;
-> > Right. So is gpio48 muxed as 'uart' function forever and the interrupt
-> > logic in tlmm is connected to that pad regardless of the function
-> > selected? I thought that gpios through TLMM had to be muxed as function
-> > 0, i.e. gpio function, so that interrupts worked. But maybe that's wrong
-> > and it can work without that.
->=20
-> Yes, gpio48 is muxed as "uart' function function forever. There is no=20
-> need to mux gpio48 to
->=20
-> gpio function, interrupts can work without that.
->=20
+On Mon, Nov 18, 2019 at 02:37:41PM +0100, Ulf Hansson wrote:
+> On Fri, 15 Nov 2019 at 18:30, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> >
+> > On Tue, Oct 29, 2019 at 05:44:35PM +0100, Ulf Hansson wrote:
+> > > The per CPU variable psci_power_state, contains an array of fixed values,
+> > > which reflects the corresponding arm,psci-suspend-param parsed from DT, for
+> > > each of the available CPU idle states.
+> > >
+> > > This isn't sufficient when using the hierarchical CPU topology in DT, in
+> > > combination with having PSCI OS initiated (OSI) mode enabled. More
+> > > precisely, in OSI mode, Linux is responsible of telling the PSCI FW what
+> > > idle state the cluster (a group of CPUs) should enter, while in PSCI
+> > > Platform Coordinated (PC) mode, each CPU independently votes for an idle
+> > > state of the cluster.
+> > >
+> > > For this reason, introduce a per CPU variable called domain_state and
+> > > implement two helper functions to read/write its value. Then let the
+> > > domain_state take precedence over the regular selected state, when entering
+> > > and idle state.
+> > >
+> > > Finally, let's also avoid sprinkling the existing non-OSI path with
+> > > operations being specific for OSI.
+> > >
+> >
+> > Mostly looks good.
+> 
+> Thanks!
+> 
+> 
+> > I am still wondering if we can keep all OSI related
+> > info in the newly created structure and have psci_states outside it as
+> > before. And I was think psci_enter_idle_state_pc and psci_enter_idle_state_osi
+> > instead of single psci_enter_idle_state and assign/initialise state->enter
+> > based on the mode chosen. I had to closer look now and looks like enter
+> > is initialised in generic dt_idle_states. That said, what you have in this
+> > patch also looks OK to me, was just trying to avoid access to the new
+> > structure all together and keep the PC mode patch almost same as before
+> > when suspending. I will see what Lorenzo thinks about this.
+> 
+> I did explore that approach a bit, but found it easier to go with what
+> I propose here. The most important point, in my view, is that in this
+> suggested approach only one if-check, "if (!data->dev)", is added to
+> the PC mode path compared to the original path. I think this should be
+> fine, right!?
 
-Ok thanks for confirming.
+I don't see why we should use data->dev at runtime when we can
+have two separate idle enter functions and the detection can
+be done at probe once for all instead of every idle entry.
 
+The overhead is close to nought but the point is that it is
+really not needed.
+
+Thanks,
+Lorenzo
+
+> In any case, if you prefer any other solution, just tell me and I adapt to it.
+> 
+> Now, I am looking forward to hear from Lorenzo.
+> 
+> Kind regards
+> Uffe
