@@ -2,95 +2,397 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EC5310679B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2019 09:14:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B2CAB1068CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2019 10:25:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726364AbfKVIOv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Nov 2019 03:14:51 -0500
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:40866 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726248AbfKVIOv (ORCPT
+        id S1726364AbfKVJZe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Nov 2019 04:25:34 -0500
+Received: from us-smtp-2.mimecast.com ([207.211.31.81]:35585 "EHLO
+        us-smtp-delivery-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726568AbfKVJZd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Nov 2019 03:14:51 -0500
-Received: by mail-vs1-f66.google.com with SMTP id m9so4246401vsq.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2019 00:14:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kFTfLz77NfOOoLRcjoRQoDvWTF66Atpx3UZ3GFfFuKk=;
-        b=ZwDWMqx+Nhi1GjLIEgBzGDzcliHIzbVRqH6FsQsZS3QO+ytfBXNLs2DUa758bQdkdh
-         66Rb4/Vdi7d875DaOKhoxbpjLYWaf87TSMA8tpEP7kinrYYMXfmu+TqSxno3zNOPFxnb
-         taF3ZXVXk9b9/EabAcdMnv3VsekR7jctf7FAlzMwS3G2WjpJFtw444OcwMV0vlF4eJZK
-         PE78xHeCfX5fr2GCXh2wglMMw/bCdh2Zpw4mvFUsJJsTeKvLuN0e4SwQ60kthIwiFLqj
-         Y9E17GJcAzWqbhXPs1AJ1ei9+JDNjX1DKVx8fdlOE1AJcV0vv+3tHgyiAWxazI+fIF3X
-         jEkg==
+        Fri, 22 Nov 2019 04:25:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1574414731;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=CXUUpsyWDU2cM+cLUQA59TfrNDN+V8AzlITcV72K0sY=;
+        b=dG+CJPnYIzTSyqr+cW5+HInaSS9v24lz0cn8TUTAZNgYCmu2goKDTJJaUsc8oD9A+5xJ0r
+        fSuRik8aX76yAasQibnktlHclZBd35L6O9golO4laLVnj6OwrZoP1ftST0EiEi5taedVW+
+        QPgHB5G5J01yCqHPQdl8HgvkOS/Esyo=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-275-Z2QKNmxZPJm7JaBbrSmf4Q-1; Fri, 22 Nov 2019 04:25:29 -0500
+Received: by mail-qv1-f72.google.com with SMTP id g33so4287871qvd.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Nov 2019 01:25:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=kFTfLz77NfOOoLRcjoRQoDvWTF66Atpx3UZ3GFfFuKk=;
-        b=j8ImozEw4HNhrW+Tt5Bnwg1xyuX4zYdkqygrho3PxGK7uqH1RyxddpwuA+ayMAni+Q
-         dLWreDJoFBNsEpoVBSwjcHU15a6YmEO03qbCvE+SXBGvE5tidFWLQp1rmCIlxMhqUeYZ
-         5KdD/k/7poKeIa6GNNwwfgyOHYs9nE9DhcKMTwAIKdcF3j5phG9TiKgK74K1is1QfVmx
-         zeqyMZUg65kJ4QbwvN/r0KIdgyik+JmPdvzRHHUEu+JD7oyC5nnfIkp7Quu69VsSwqTA
-         RhEZ2+1aFfgTa+GDiGIS4YJDsvPewdT09sx/aFx2dhvS+7Afuyf83phUplNcQi3AQ0nE
-         NmyQ==
-X-Gm-Message-State: APjAAAXFMWkhOz1lRMid3forPUhKw04hCecffa1AejCR4bAIXfvHr2OC
-        gvQw2scI26xQ7j7KHMwlDrN4+wBtxC3Kg/4N4wy6QA==
-X-Google-Smtp-Source: APXvYqzK+cyn8m/2M4gYVtla7YFWEf/01wZBxA5Qm1kV1UpsOuvqk37Xn1jmB1PigbuN81mwvRR8Jtk1ZnfSecXaf4I=
-X-Received: by 2002:a67:5ec1:: with SMTP id s184mr9129478vsb.200.1574410490515;
- Fri, 22 Nov 2019 00:14:50 -0800 (PST)
+        bh=n8Fu7I27sg+o3llq8fP65oxlC1QYK1v+B/6fffBIWf8=;
+        b=SIEZE4UG7HdHN8IofZLK9xTWrs0GbBPeForurpUO/tt2OHXd23aOcIiKI5Gffp0ApU
+         8SITbFRe8f/y5k9VbsMx3fUl77Hw/9E6d8IFu2pYliraRMZPwYItKQIr4wPu5s4WN/Tv
+         eeRf2JkwzfMlG9zs11TWGeDsaKJwBq588FGX+IzlwYJcb8aJcwaCbo6vxCZOW+UjJQQX
+         fCkAOfl3aIzVqCxrajTOZfAYrxLQrzjmmDOZPKsqVO+AYcVbWKIvWVVO0QME5m3e86Bm
+         oDrqcgYiuwhe2g8NTS7SQgyq7BViBIkKBOY6L1FgzH2m20NjUeyUEE6PEo9pc5lokEdC
+         yOfw==
+X-Gm-Message-State: APjAAAV/DdP8E2ElBj9WWxxdxs5RTPfPaDtk/AvXfUe8Ve0R7Ssjz53A
+        wkiIq4zrRUFQklRLDHSHgjZEp4PlEF4Wp9uuhSa95Hq7bEokNhDjtk0eYp7l+5fJlRUQYQlGTPD
+        uhyCUaJUQIr+/3CdWfuuQUv15vF2zvNvwit9C/bSRJw==
+X-Received: by 2002:aed:36a1:: with SMTP id f30mr13265390qtb.154.1574414728588;
+        Fri, 22 Nov 2019 01:25:28 -0800 (PST)
+X-Google-Smtp-Source: APXvYqyD37BLMlqnPOCX8i6ROdXzmtyW9EeZ7JDJ5JAHnSGaVnVpukZ6YHiBldF7Bg5sWuyrWfNns/8JSOlSAb/Kh9Y=
+X-Received: by 2002:aed:36a1:: with SMTP id f30mr13265368qtb.154.1574414728151;
+ Fri, 22 Nov 2019 01:25:28 -0800 (PST)
 MIME-Version: 1.0
-References: <20191029164438.17012-1-ulf.hansson@linaro.org> <CAPDyKFpiMK_P+4+n9wHc+68X6j44XOoTm=J8OXz5HkqoMxOsOg@mail.gmail.com>
-In-Reply-To: <CAPDyKFpiMK_P+4+n9wHc+68X6j44XOoTm=J8OXz5HkqoMxOsOg@mail.gmail.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 22 Nov 2019 09:14:14 +0100
-Message-ID: <CAPDyKFprrtTJ8b5B1AgOWEGNeMGdjS4NbVFU1h4E2SA_oZ2dAw@mail.gmail.com>
-Subject: Re: [PATCH v2 00/13] cpuidle: psci: Support hierarchical CPU arrangement
-To:     Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <e1e05bd3-19f5-0dfe-66ad-70717c1c29c6@codeaurora.org>
+ <CAO-hwJLdz1sA4tNsLLgZKGA7Ko6dqt9VF5T2nh5uczHxU532HA@mail.gmail.com>
+ <4eecbd2a-9d19-c6a2-a95b-656e3fce05a4@codeaurora.org> <0101016e916ab42c-fbc61178-9bdd-42ba-b111-722c46db5dc1-000000@us-west-2.amazonses.com>
+In-Reply-To: <0101016e916ab42c-fbc61178-9bdd-42ba-b111-722c46db5dc1-000000@us-west-2.amazonses.com>
+From:   Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Date:   Fri, 22 Nov 2019 10:25:16 +0100
+Message-ID: <CAO-hwJLDtz7mjWDdqoMKtFjAoweUFq3bAJ2ovbtg0_Gji1nW1w@mail.gmail.com>
+Subject: Re: Query regarding hid-multitouch.c driver in 4.14/4.19
+To:     Neeraj Upadhyay <neeraju@codeaurora.org>
+Cc:     Jiri Kosina <jikos@kernel.org>,
+        Henrik Rydberg <rydberg@bitmath.org>,
+        "open list:HID CORE LAYER" <linux-input@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, prsood@codeaurora.org,
+        gkohli@codeaurora.org
+X-MC-Unique: Z2QKNmxZPJm7JaBbrSmf4Q-1
+X-Mimecast-Spam-Score: 0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 11 Nov 2019 at 12:00, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+Hi Neeraj,
+
+On Fri, Nov 22, 2019 at 5:42 AM Neeraj Upadhyay <neeraju@codeaurora.org> wr=
+ote:
 >
-> On Tue, 29 Oct 2019 at 17:44, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> Hi Benjamin,
+>
+> Can you please provide guidance on how to workaround this problem? Is it
+> possible to support the 4.14 kernel behaviour again, so that existing
+> clients are not impacted?
+
+Hmm, hard to say. Both evdev outputs from 4.14 and 4.19 are
+technically valid. So I guess the issue is more that the android
+version you are using is not interpreting correctly the 4.19 event
+stream and probably requires some more events (like pressure or
+width/height).
+
+Also, the report descriptor is crap:
+
+0x05, 0x0d,                    // Usage Page (Digitizers)             0
+0x09, 0x02,                    // Usage (Pen)                         2
+0xa1, 0x01,                    // Collection (Application)            4
+0x85, 0x01,                    //  Report ID (1)                      6
+0x09, 0x22,                    //  Usage (Finger)                     8
+0xa1, 0x02,                    //  Collection (Logical)               10
+0x09, 0x42,                    //   Usage (Tip Switch)                12
+0x15, 0x00,                    //   Logical Minimum (0)               14
+0x25, 0x01,                    //   Logical Maximum (1)               16
+0x75, 0x01,                    //   Report Size (1)                   18
+0x95, 0x01,                    //   Report Count (1)                  20
+0x81, 0x02,                    //   Input (Data,Var,Abs)              22
+0x09, 0x32,                    //   Usage (In Range)                  24
+0x81, 0x02,                    //   Input (Data,Var,Abs)              26
+0x95, 0x06,                    //   Report Count (6)                  28
+0x81, 0x03,                    //   Input (Cnst,Var,Abs)              30
+0x75, 0x08,                    //   Report Size (8)                   32
+0x09, 0x51,                    //   Usage (Contact Id)                34
+0x95, 0x01,                    //   Report Count (1)                  36
+0x81, 0x02,                    //   Input (Data,Var,Abs)              38
+0x05, 0x01,                    //   Usage Page (Generic Desktop)      40
+0x26, 0xff, 0x0f,              //   Logical Maximum (4095)            42
+0x75, 0x10,                    //   Report Size (16)                  45
+0x55, 0x0e,                    //   Unit Exponent (-2)                47
+0x65, 0x33,                    //   Unit (Inch^3,EngLinear)           49
+0x09, 0x30,                    //   Usage (X)                         51
+0x35, 0x00,                    //   Physical Minimum (0)              53
+0x46, 0xb5, 0x04,              //   Physical Maximum (1205)           55
+0x81, 0x02,                    //   Input (Data,Var,Abs)              58
+0x46, 0x8a, 0x03,              //   Physical Maximum (906)            60
+0x09, 0x31,                    //   Usage (Y)                         63
+0x81, 0x02,                    //   Input (Data,Var,Abs)              65
+0xc0,                          //  End Collection                     67
+0x05, 0x0d,                    //  Usage Page (Digitizers)            68
+0x09, 0x54,                    //  Usage (Contact Count)              70
+0x95, 0x01,                    //  Report Count (1)                   72
+0x75, 0x08,                    //  Report Size (8)                    74
+0x81, 0x02,                    //  Input (Data,Var,Abs)               76
+0x85, 0x08,                    //  Report ID (8)                      78
+0x09, 0x55,                    //  Usage (Contact Max)                80
+0x25, 0x05,                    //  Logical Maximum (5)                82
+0xb1, 0x02,                    //  Feature (Data,Var,Abs)             84
+0xc0,                          // End Collection                      86
+0x05, 0x0c,                    // Usage Page (Consumer Devices)       87
+0x09, 0x01,                    // Usage (Consumer Control)            89
+0xa1, 0x01,                    // Collection (Application)            91
+0x85, 0x02,                    //  Report ID (2)                      93
+0x09, 0xe9,                    //  Usage (Volume Up)                  95
+0x09, 0xea,                    //  Usage (Volume Down)                97
+0x0a, 0xae, 0x01,              //  Usage (AL Keyboard Layout)         99
+0x09, 0xe2,                    //  Usage (Mute)                       102
+0x09, 0x30,                    //  Usage (Power)                      104
+0x15, 0x01,                    //  Logical Minimum (1)                106
+0x25, 0x0c,                    //  Logical Maximum (12)               108
+0x75, 0x10,                    //  Report Size (16)                   110
+0x95, 0x01,                    //  Report Count (1)                   112
+0x81, 0x00,                    //  Input (Data,Arr,Abs)               114
+0xc0,                          // End Collection                      116
+
+It declares right at the beginning a Pen application collection then a
+Finger logical application. This should never happen as you can not
+use a pen with a bare finger.
+
+Anyway, there are a few things you could do to solve the issue,
+depending on what you are allowed to do:
+- if you can tweak the kernel, then maybe adding an extra kernel
+module that just binds to the device without changing anything in
+probe or in events might do the trick. For extra safety you should
+probably fix the report descriptor in this new kernel module
+- if you can tweak bluez or the device itself, at least change the
+ContactID usage to 00 (byte offset 35 above: change 0x51 to 0x00). It
+would be best to actually change the whole report descriptor with the
+correct applications, but, meh, this seems to be working.
+- if you can tweak android, then ensure it can understand this
+particular event stream
+
+Anyway, I don't think this is an upstream problem, as the device
+behaves somehow correctly by 5.3, at least it sends me the events I
+expect. So I can't really spend a lot of time providing a workaround
+for that.
+
+My best bet would be to contact the device maker, and ask them to fix
+their device to be working with 4.19 kernel.
+
+Cheers,
+Benjamin
+
+>
+>
+> Thanks
+> Neeraj
+>
+> On 11/14/2019 10:01 AM, Neeraj Upadhyay wrote:
+> > Hi Benjamin,
 > >
-> > Changes in v2:
-> >         - Avoid to affect the non-OSI path with specific changes for OSI. This
-> >         forced me to re-order the series and a caused more or less minor changes
-> >         to most of the patches.
-> >         - Updated the DT bindings for PSCI to clarify and to include the "psci"
-> >         name of the PM domain to attach to.
-> >         - Replaced patch1 with another patch from Sudeep, solving the same
-> >         problem, but in a different way.
+> > Sorry for the delay, was waiting for the required information from our
+> > team.
+> >
+> > On 11/13/2019 3:00 PM, Benjamin Tissoires wrote:
+> >> Hi Neeraj,
+> >>
+> >> On Wed, Nov 13, 2019 at 4:11 AM Neeraj Upadhyay
+> >> <neeraju@codeaurora.org> wrote:
+> >>> Hi,
+> >>>
+> >>> I have one query regarding hid-multitouch.c driver and need your
+> >>> guidance on
+> >>> how hid-multitouchc can restore/support the original behaviour,
+> >>> where, for
+> >>> devices, for which application is not
+> >>> HID_DG_TOUCHSCREEN/HID_DG_TOUCHPAD, and has
+> >>> HID_DG_CONTACTID usage in its report, can still use generic input
+> >>> mappings.
+> >>>
+> >>> We are using kernel versions 4.14 , 4.19 respectively in 2 different
+> >>> projects:
+> >>>
+> >>> 4.14:
+> >>> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree=
+/drivers/hid/hid-multitouch.c?h=3Dv4.14.153
+> >>>
+> >>> 4.19:
+> >>> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree=
+/drivers/hid/hid-multitouch.c?h=3Dv4.19.83
+> >>>
+> >>>
+> >>> I checked the application for our hid device, it's HID_DG_PEN, device
+> >>> also has a HID_DG_CONTACTID usage defined in
+> >>>
+> >>> its report.
+> >>>
+> >>> In 4.19, is_mt_collection is set to 'true'. All multitouch code paths=
+ or
+> >>> input mapping is configured
+> >>>
+> >>> mt_allocate_report_data()
+> >>>           ...
+> >>>           for (n =3D 0; n < field->report_count; n++) {
+> >>>                           if (field->usage[n].hid =3D=3D HID_DG_CONTA=
+CTID)
+> >>>                                   rdata->is_mt_collection =3D true;  =
+ //
+> >>> is_mt_collection is set to 'true'
+> >>>                   }
+> >>>           }
+> >>>
+> >>> mt_input_mapping()
+> >>>           ...
+> >>>           if (rdata->is_mt_collection)
+> >>>               return mt_touch_input_mapping(...)  //
+> >>> mt_touch_input_mapping() is called
+> >>>
+> >>> mt_event()
+> >>>           if (rdata && rdata->is_mt_collection)
+> >>>               return mt_touch_event();  // mt_touch_event() is called
+> >>>
+> >>> However, in 4.14, the behaviour was different, mt input mapping was d=
+one
+> >>> only
+> >>> for HID_DG_TOUCHSCREEN/HID_DG_TOUCHPAD , and because our hid device i=
+s
+> >>> HID_DG_PEN, generic mappings were applied for it; with these settings=
+,
+> >>> device
+> >>> responds to events.
+> >>>
+> >>> static int mt_input_mapping()
+> >>>           if (field->application =3D=3D HID_DG_TOUCHSCREEN ||
+> >>>               field->application =3D=3D HID_DG_TOUCHPAD)
+> >>>               return mt_touch_input_mapping();  // This is not called=
+.
+> >>>
+> >>>
+> >>> mt_touch_input_mapping()
+> >>>           case HID_DG_CONTACTID:
+> >>>                           mt_store_field(usage, td, hi);
+> >>>                           td->touches_by_report++;
+> >>>                           td->mt_report_id =3D field->report->id; //
+> >>> mt_report_id is not set.
+> >>>                           return 1;
+> >>>
+> >>>
+> >>> Looks like this behaviour changed, with below commits:
+> >>>
+> >>> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/comm=
+it/drivers/hid/hid-multitouch.c?h=3Dv4.19.83&id=3D8dfe14b3b47ff832cb638731f=
+9fc696a3a84f804
+> >>>
+> >>> 8dfe14b3b47f    HID: multitouch: ditch mt_report_id
+> >>> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/comm=
+it/drivers/hid/hid-multitouch.c?h=3Dv4.19.83&id=3Dba6b055e0f3b4ff4942e4ab27=
+3260affcfad9bff
+> >>>
+> >>> ba6b055e0f3b     HID: input: enable Totem on the Dell Canvas 27
+> >>>
+> >>> Can you please suggest on how we can support/preserve the original
+> >>> behaviour?
+> >> Hmm, I would initially say that a firmware that exports Contact ID for
+> >> a Pen is definitely wrong. The Contact ID usage has been introduced in
+> >> https://www.usb.org/sites/default/files/hutrr34.pdf and is
+> >> specifically for multi-touch, not multi pen.
+> >>
+> >> Anyway, couple of questions:
+> >> - does the device supports multi-pen?
+> >
+> > Actually the device is a selfie stick device:
+> > https://item.jd.com/33082497741.html
+> >
+> > It does not support multi-pen.
+> >
+> >> - can you share the report descriptor and a few events when triggering
+> >> this particular report (ideally with hid-recorder from
+> >> https://gitlab.freedesktop.org/libevdev/hid-tools/
+> >
+> > Report descriptor is below:
+> >
+> > 05 0d 09 02 a1 01 85 01 09 22 a1 02 09 42 15 00 25 01 75 01 95 01 81 02
+> > 09 32 81 02 95 06 81 03 75 08 09 51 95 01 81 02 05 01 26 ff 0f 75 10 55
+> > 0e 65 33 09 30 35 00 46 b5 04 81 02 46 8a 03 09 31 81 02 c0 05 0d 09 54
+> > 95 01 75 08 81 02 85 08 09 55 25 05 b1 02 c0 05 0c 09 01 a1 01 85 02 09
+> > e9 09 ea 0a ae 01 09 e2 09 30 15 01 25 0c 75 10 95 01 81 00 c0
+> >
+> > Events were collected using getevent call in adb shell in android:
+> >
+> > On 4.19
+> >
+> > # getevent -l
+> >
+> > add device 7: /dev/input/event6
+> >    name:     "BLE-M1 UNKNOWN"
+> >
+> > /dev/input/event6: EV_ABS       ABS_MT_TRACKING_ID   00000000
+> > /dev/input/event6: EV_ABS       ABS_MT_POSITION_X    00000800
+> > /dev/input/event6: EV_ABS       ABS_MT_POSITION_Y    00000d60
+> > /dev/input/event6: EV_KEY       BTN_TOUCH            DOWN
+> > /dev/input/event6: EV_SYN       SYN_REPORT           00000000
+> > /dev/input/event6: EV_ABS       ABS_MT_TRACKING_ID   ffffffff
+> > /dev/input/event6: EV_KEY       BTN_TOUCH            UP
+> > /dev/input/event6: EV_SYN       SYN_REPORT           00000000
+> > /dev/input/event6: EV_ABS       ABS_MT_TRACKING_ID   00000001
+> > /dev/input/event6: EV_KEY       BTN_TOUCH            DOWN
+> > /dev/input/event6: EV_SYN       SYN_REPORT           00000000
+> > /dev/input/event6: EV_ABS       ABS_MT_TRACKING_ID   ffffffff
+> > /dev/input/event6: EV_KEY       BTN_TOUCH            UP
+> > /dev/input/event6: EV_SYN       SYN_REPORT           00000000
+> >
+> > On 4.14
+> >
+> > add device 2: /dev/input/event5
+> >    name:     "BLE-M1 UNKNOWN"
+> >
+> > /dev/input/event5: EV_MSC       MSC_SCAN             000d0042
+> > /dev/input/event5: EV_KEY       BTN_TOUCH            DOWN
+> > /dev/input/event5: EV_KEY       BTN_DIGI             DOWN
+> > /dev/input/event5: EV_ABS       ABS_MISC             00000001
+> > /dev/input/event5: EV_ABS       ABS_X                00000800
+> > /dev/input/event5: EV_ABS       ABS_Y                00000d60
+> > /dev/input/event5: EV_ABS       0029                 00000001
+> > /dev/input/event5: EV_SYN       SYN_REPORT           00000000
+> >
+> > /dev/input/event5: EV_MSC       MSC_SCAN             000d0042
+> > /dev/input/event5: EV_KEY       BTN_TOUCH            UP
+> > /dev/input/event5: EV_KEY       BTN_DIGI             UP
+> > /dev/input/event5: EV_ABS       0029                 00000000
+> > /dev/input/event5: EV_SYN       SYN_REPORT           00000000
+> >
+> > /dev/input/event5: EV_MSC       MSC_SCAN             000d0042
+> > /dev/input/event5: EV_KEY       BTN_TOUCH            DOWN
+> > /dev/input/event5: EV_KEY       BTN_DIGI             DOWN
+> > /dev/input/event5: EV_ABS       0029                 00000001
+> > /dev/input/event5: EV_SYN       SYN_REPORT           00000000
+> >
+> > /dev/input/event5: EV_MSC       MSC_SCAN             000d0042
+> > /dev/input/event5: EV_KEY       BTN_TOUCH            UP
+> > /dev/input/event5: EV_KEY       BTN_DIGI             UP
+> > /dev/input/event5: EV_ABS       0029                 00000000
+> > /dev/input/event5: EV_SYN       SYN_REPORT           00000000
+> >
+> >
+> > As I have little understanding of the framework, use cases and of the
+> > flow, I am sorry, if the information provided above is
+> >
+> > incomplete (w.r.t. what you were expecting).
+> >
+> >
+> > Thanks
+> >
+> > Neeraj
+> >
+> >> Cheers,
+> >> Benjamin
+> >>
+> >>>
+> >>> Thanks
+> >>> Neeraj
+> >>>
+> >>> --
+> >>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
+> >>> member of the Code Aurora Forum, hosted by The Linux Foundation
+> >>>
 >
-> Hi Sudeep and Lorenzo,
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
+> member of the Code Aurora Forum, hosted by The Linux Foundation
 >
-> Apologize for nagging you about reviews, again. Can you please have a
-> look at the new version!?
 
-Lorenzo, apologize for nagging you about reviewing this series.
-
-It seems like both me and Sudeep are now waiting to hear from you, can
-you please have look.
-
-Kind regards
-Uffe
