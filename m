@@ -2,85 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 18BC1107B61
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2019 00:32:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CBE7107B6C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2019 00:32:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726830AbfKVXbw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Nov 2019 18:31:52 -0500
-Received: from a27-11.smtp-out.us-west-2.amazonses.com ([54.240.27.11]:38832
-        "EHLO a27-11.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726735AbfKVXbw (ORCPT
+        id S1727020AbfKVXcI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Nov 2019 18:32:08 -0500
+Received: from a27-185.smtp-out.us-west-2.amazonses.com ([54.240.27.185]:53282
+        "EHLO a27-185.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726089AbfKVXbw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 22 Nov 2019 18:31:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574465511;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
-        bh=o+LH9HwYJtl6AvafAe/yG6jV7U6wpVWP6EbR+x6D88w=;
-        b=UOEMVFHJbV7I0utUYthKxwbSiwvpzrLepaT/It9Tt6R6rmXEgdFtphjEspp0jt+Q
-        VZ/c4f94yWD+3ZLW+UNvye74Q9/jOFWjR9ZZc6Ij4tQ0gH4aUHA13ENUIgJUnhwibF+
-        dkdZLouWjTHjkVl8Sj3e1irs571Pc+IK7X/krvC0=
+        bh=LVP5fItJG7eJG5QBHWGLQQXnPsRB9cfJVZahjRJMFLw=;
+        b=mGHTcdRemriWYt75WzlQNHsZfCpnifp/1e/fZv+o4jNFLaK9SHh4AALKqm9TOQFB
+        cUbsmWjw0RP/4aA1DhLwYwrPY0Las1I3RWWAZ55RrEgOL+z0P0BUPZ1iAxRiAtr5J2F
+        6NDtw6r29ER+YEHXLERP9QhUUbQFrNfUD4U/82do=
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574465511;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:Feedback-ID;
-        bh=o+LH9HwYJtl6AvafAe/yG6jV7U6wpVWP6EbR+x6D88w=;
-        b=DgnsHuP/a2qwdF/oNLe8ARH+4tgl62xxjhYPZPB2c21Sfh8sNUeXZYwQ/WXgq1f4
-        rhug3GSgB6tFkkoVOWYSzPOAAcXinvVeSMTRb2admJxkb+DRe+fFMQqcdPpLYAWNHqg
-        4H2H+vBNnoImA1RzJBsNDW4tooYjmaPkcwpaoAIE=
+        bh=LVP5fItJG7eJG5QBHWGLQQXnPsRB9cfJVZahjRJMFLw=;
+        b=LVzs4zeNbP00nw+uIJU4AYfhdXZFaW1qElxacrLQlKrybLtdTvppEQfAKZdAyaAD
+        qV99Eba4lC0cl3cm+0Fv1U8W9/wwabxheUoCe1HvkzWKAdhJGSsYQtMkH01xaMPJZbU
+        KgJsxxRwg90bQpeeA4/fNNOOfkqLbZr2TCCZPMZA=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
         URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A9946C433A2
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 26A8EC447A5
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
 From:   Jordan Crouse <jcrouse@codeaurora.org>
 To:     iommu@lists.linux-foundation.org
 Cc:     robin.murphy@arm.com, will@kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Joerg Roedel <joro@8bytes.org>
-Subject: [PATCH v2 1/8] dt-bindings: arm-smmu: Add Adreno GPU variant
+        linux-arm-msm@vger.kernel.org, Joerg Roedel <joro@8bytes.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 2/8] iommu: Add DOMAIN_ATTR_SPLIT_TABLES
 Date:   Fri, 22 Nov 2019 23:31:51 +0000
-Message-ID: <0101016e95751ea5-da4da251-ddba-4017-9258-b2cfd4e06f7f-000000@us-west-2.amazonses.com>
+Message-ID: <0101016e957520c8-d07e90d2-4906-4479-9e33-2231e8c45619-000000@us-west-2.amazonses.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1574465484-7115-1-git-send-email-jcrouse@codeaurora.org>
 References: <1574465484-7115-1-git-send-email-jcrouse@codeaurora.org>
-X-SES-Outgoing: 2019.11.22-54.240.27.11
+X-SES-Outgoing: 2019.11.22-54.240.27.185
 Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a compatible string to identify SMMUs that are attached
-to Adreno GPU devices that wish to support split pagetables.
+Add a new attribute to enable and query the state of split pagetables
+for the domain.
 
 Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
 ---
 
- Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 6 ++++++
- 1 file changed, 6 insertions(+)
+ include/linux/iommu.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-index 6515dbe..db9f826 100644
---- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-+++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-@@ -31,6 +31,12 @@ properties:
-               - qcom,sdm845-smmu-v2
-           - const: qcom,smmu-v2
+diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+index f2223cb..18c861e 100644
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -126,6 +126,7 @@ enum iommu_attr {
+ 	DOMAIN_ATTR_FSL_PAMUV1,
+ 	DOMAIN_ATTR_NESTING,	/* two stages of translation */
+ 	DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE,
++	DOMAIN_ATTR_SPLIT_TABLES,
+ 	DOMAIN_ATTR_MAX,
+ };
  
-+      - description: Qcom Adreno GPU SMMU iplementing split pagetables
-+        items:
-+          - enum:
-+              - qcom,adreno-smmu-v2
-+          - const: qcom,smmu-v2
-+
-       - description: Qcom SoCs implementing "arm,mmu-500"
-         items:
-           - enum:
 -- 
 2.7.4
 
