@@ -2,130 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 769E7105B97
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Nov 2019 22:07:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 86086105DD5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Nov 2019 01:51:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726887AbfKUVHX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Nov 2019 16:07:23 -0500
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:38806 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726869AbfKUVHW (ORCPT
+        id S1726329AbfKVAvU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Nov 2019 19:51:20 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:40958 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726454AbfKVAvU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Nov 2019 16:07:22 -0500
-Received: by mail-qk1-f194.google.com with SMTP id e2so4398943qkn.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2019 13:07:22 -0800 (PST)
+        Thu, 21 Nov 2019 19:51:20 -0500
+Received: by mail-pf1-f195.google.com with SMTP id r4so2609873pfl.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Nov 2019 16:51:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=NENUynk4I14cLJ1gzY7kbHVItSkGHRUyltKk2t7G71k=;
-        b=g5iDPAGusrJ5T04T0la9VutqkiP2FlaTpfWeszcdEhnqyy+Wf4O7trjWSqztvlc2Y/
-         eOq0JX+qxqp862BdbChJYLpfkyRSkxU1OgZBos12SGOrDTklEIy9Oho3glmf4U8ZDkh3
-         Y8wIV8XPhXqjnI28AakLPiO29iU6jwSTorgYdDO+I7QVznE7zId5aO9qy/AHiwMtAOMR
-         4FCd24PhP/eEvqyVfd6pECXj+cBkfho5b3MlVxhnlBrWP3avZ1yQjn8pgZJxbtbga3Pz
-         dGIP4nXO7tvKkElauREkFPC6GmkN6DVS1bbFzlyD4wBiQy7vTIEVMP31Zt+6MrQ0Tbep
-         iCpw==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=F7N97syywZm5UtcsrgWnowpokxLoj9aunLFsYL+WSTs=;
+        b=CogzIq+wFBM2jxtDHj5Txm6K3QcBKkvZ4jPMbK0ZKYCJFs9SyqIBRSU5VO9ypETUMh
+         LX4VmFW9ktP4UthWhTRbAPyRd/xdSBcdo/Tmgk9EqNP2ZaJ/Ew5/KHSJGYWArFJtYzLX
+         sqVdSoAcKrciJePGz+z1BbiLWblExMjwFgNJo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=NENUynk4I14cLJ1gzY7kbHVItSkGHRUyltKk2t7G71k=;
-        b=P5h6/ZvD5xPzgN+ifv10SNWVA0nVPrkDJF78WnBcmPxZlamHIfslQh/74Y7vJcpsk1
-         Np7Y8zVcA+4XRiCC1M7eTpd1nOHIfE0JMu/K0pKfpVsEP1NSkzlzsQ1iDBfFTfVnstX4
-         ZTl55H6RvDcLJqCTZIo2sIiOtlmySw9n5pC+xyhvUQXI4tbEaqat2xsI9DRyVdw/wBCx
-         MMMbub1HnfjIuP7EkxStRtcPW8rSdtX9gR8wuhy5Ac8cfokE9qyxyvhdQOiOpNFCa9IO
-         eksj2rW/nscoUV0R2iehRTHmw8dNd/zPyJqORtHbURhMsjC5vhblIkfkYRWk3/ZE1w+M
-         Wf8Q==
-X-Gm-Message-State: APjAAAX80csiKp7yM30GCw+nmqFOPM08NPHBzN6ZkGsznu+MM4uame4T
-        6EQfHLTl9Z/UAfA5lIlPZx+HnA==
-X-Google-Smtp-Source: APXvYqwlynOQgNTLE0weHTUVWiNQd0hgkoM+NrDMGZXLhgwxuK7tEo4Ra/hAtmxs4ObbQbOXtAGAWA==
-X-Received: by 2002:a37:9b4a:: with SMTP id d71mr9974147qke.0.1574370441784;
-        Thu, 21 Nov 2019 13:07:21 -0800 (PST)
-Received: from [192.168.1.169] (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
-        by smtp.gmail.com with ESMTPSA id d139sm1983435qkb.36.2019.11.21.13.07.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Nov 2019 13:07:20 -0800 (PST)
-Subject: Re: [PATCH] drivers: thermal: step_wise: add support for hysteresis
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-References: <8e812065f4a76325097c5f9c17f3386736d8c1d4.1574315190.git.amit.kucheria@linaro.org>
- <5DD69AB7.3060307@linaro.org>
- <CAP245DVwEij-fs-LK=i3+Ps6BrsHt4DfxKG=C-tFM3CVKadtXA@mail.gmail.com>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=F7N97syywZm5UtcsrgWnowpokxLoj9aunLFsYL+WSTs=;
+        b=frWLmqxWctv/wzs+/5dfUjD+L0LIgwtetbrEImt9HBuBBMHFClRysZKzFJe62updzy
+         r65rnoA65pGXWxhh+0f9/I4vggMgzZaFVb8R/GT8vKYYnheNX97jH4p+7UuslUrmIgSL
+         JbZOJT/EtpSN8wKMZimE8yUaKuavsd+4Wxd77D3WGEGtkk1godD5L1CxWRausSWTHIHA
+         3N+PPhe1KjFEJRivriU4kxk1279xCL4PIgdiHikl34iJ+lZXcaGHBkXwS4bS0EmSFky/
+         o37D32s10A5M0XAUnc4oGqx/U4JDulCiWR4Efu9k2QwZ4+QPzsqaV3J0J680wddCTM40
+         /XoA==
+X-Gm-Message-State: APjAAAUVfx5KrP0m5TbLgDwsAkPpz1NlhDQ8pcgQ499CCFi8cKN1dzdS
+        P/tqEEzIkephnyAUsbZnfhaCyw==
+X-Google-Smtp-Source: APXvYqzRFzT70+8WTJ0V8pjwhy9ummb6K+OSh8qH+aj/aFjr9zXVCtvPqVkUI6ozTNu+aC2LaXC79A==
+X-Received: by 2002:a62:6404:: with SMTP id y4mr13859910pfb.170.1574383879283;
+        Thu, 21 Nov 2019 16:51:19 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id l10sm702279pjw.6.2019.11.21.16.51.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Nov 2019 16:51:18 -0800 (PST)
+Date:   Thu, 21 Nov 2019 16:51:17 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
         Stephen Boyd <swboyd@chromium.org>,
-        "J, KEERTHY" <j-keerthy@ti.com>, Zhang Rui <rui.zhang@intel.com>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Ram Chandrasekar <rkumbako@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Linux PM list <linux-pm@vger.kernel.org>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <5DD6FC87.6040403@linaro.org>
-Date:   Thu, 21 Nov 2019 16:07:19 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.1
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH v3 1/1] arm64: dts: qcom: sc7180: Add USB related nodes
+Message-ID: <20191122005117.GM27773@google.com>
+References: <1573795421-13989-1-git-send-email-sanm@codeaurora.org>
+ <1573795421-13989-2-git-send-email-sanm@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <CAP245DVwEij-fs-LK=i3+Ps6BrsHt4DfxKG=C-tFM3CVKadtXA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <1573795421-13989-2-git-send-email-sanm@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/21/2019 09:38 AM, Amit Kucheria wrote:
-> On Thu, Nov 21, 2019 at 7:40 PM Thara Gopinath
-> <thara.gopinath@linaro.org> wrote:
->>
->> On 11/21/2019 12:50 AM, Amit Kucheria wrote:
->>> From: Ram Chandrasekar <rkumbako@codeaurora.org>
->>>
->>> Currently, step wise governor increases the mitigation when the
->>> temperature goes above a threshold and decreases the mitigation when the
->>> temperature goes below the threshold. If there is a case where the
->>> temperature is wavering around the threshold, the mitigation will be
->>> applied and removed every iteration, which is not very efficient.
->>>
->>> The use of hysteresis temperature could avoid this ping-pong of
->>> mitigation by relaxing the mitigation to happen only when the
->>> temperature goes below this lower hysteresis value.
->> Hi Amit,
->>
->> Can this not lead to ping-pong around the hysteresis temperature?
-> 
-> That isn't how hysteresis is supposed to work if there is a sufficient
-> delta between your trip point and your hysteresis value.
-> 
-> e.g. if you have a trip at 80C and a hysteresis of 10C, it means that
-> you will start throttling at 80C, but you won't STOP throttling until
-> you cool down to 70C. At that point, you will wait again to get to 80C
-> before throttling again.
-> IOW, on the downward slope (80 -> 70) you still have throttling active
-> and on the upward slope (70 -> 80), you have no[1] throttling, so
-> different behaviour is the same temperature range depending on
-> direction.
-> 
-> If your hysteresis value was very low .e.g. 1C, it would certainly be useless.
+Hi Sandeep,
 
-Thanks for the explanation. I think averaging can still give a smoother
-experience/transition. But then it has to be implemented and tested
-against this solution. Other reason for this solution is hysteresis can
-be a higher value if needed where as averaging might not give that
-flexibility. I have some other comments on the patch which I have posted
-separately.
+On Fri, Nov 15, 2019 at 10:53:41AM +0530, Sandeep Maheswaram wrote:
+> Add nodes for DWC3 USB controller, QMP and QUSB PHYs.
 > 
->> If the idea is to minimize ping-pong isn't average a better method?
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  25 ++++++++
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 105 ++++++++++++++++++++++++++++++++
+>  2 files changed, 130 insertions(+)
 > 
-> We shouldn't ping-pong with the asymmetric behaviour described above.
-> 
-> Regards,
-> Amit
-> [1] This is a simple example with a single trip point.
-> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 666e9b9..2c7dbdc 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>
+> ...
+>
+> +		usb_1: usb@a6f8800 {
+> +			compatible = "qcom,sc7180-dwc3", "qcom,dwc3";
+> +			reg = <0 0x0a6f8800 0 0x400>;
+> +			status = "disabled";
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +			dma-ranges;
+> +
+> +			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
+> +				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
+> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
+> +				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+> +				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>;
+> +			clock-names = "cfg_noc", "core", "iface", "mock_utmi",
+> +				      "sleep";
+> +
+> +			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+> +					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
+> +			assigned-clock-rates = <19200000>, <150000000>;
+> +
+> +			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+> +					  "dm_hs_phy_irq", "dp_hs_phy_irq";
+> +
+> +			power-domains = <&gcc USB30_PRIM_GDSC>;
+> +
+> +			resets = <&gcc GCC_USB30_PRIM_BCR>;
+> +
+> +			usb_1_dwc3: dwc3@a600000 {
+> +				compatible = "snps,dwc3";
+> +				reg = <0 0x0a600000 0 0xe000>;
+> +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+> +				iommus = <&apps_smmu 0x540 0>;
+> +				snps,dis_u2_susphy_quirk;
+> +				snps,dis_enblslpm_quirk;
+> +				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
+> +				phy-names = "usb2-phy", "usb3-phy";
+> +			};
 
+I see the following message at boot:
 
--- 
-Warm Regards
-Thara
+[    4.248436] dwc3 a600000.dwc3: Failed to get clk 'ref': -2
+
+Apparently the driver is operational regardless, however the binding lists
+the clocks as required:
+
+  Required properties:
+   ...
+   - clock-names: should contain "ref", "bus_early", "suspend"
+   - clocks: list of phandle and clock specifier pairs corresponding to
+             entries in the clock-names property.
+
+  [Documentation/devicetree/bindings/usb/dwc3.txt]
+
+The driver code also has a comment stating that the clocks should be
+specified:
+
+  /*
+   * Clocks are optional, but new DT platforms should support all
+   * clocks as required by the DT-binding.
+   */
+
+  [drivers/usb/dwc3/core.txt]
