@@ -2,119 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FCF1107C19
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Nov 2019 01:44:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A9798108381
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2019 14:34:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726638AbfKWAok (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Nov 2019 19:44:40 -0500
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:37496 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726089AbfKWAok (ORCPT
+        id S1726813AbfKXNez (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Nov 2019 08:34:55 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:37644 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726744AbfKXNez (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Nov 2019 19:44:40 -0500
-Received: by mail-ot1-f66.google.com with SMTP id d5so7804570otp.4;
-        Fri, 22 Nov 2019 16:44:40 -0800 (PST)
+        Sun, 24 Nov 2019 08:34:55 -0500
+Received: by mail-io1-f68.google.com with SMTP id k24so2526538ioc.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Nov 2019 05:34:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=pI7cV3FDgc1XH+A619u5I2fUvKpFMBjQiQlWPO2Scvc=;
+        b=J71UHr0j282IzeBZ6MH6MJn8OxRPzuBMByMBHAITCzPamrp1L+QXm2EqrOPUrS4/uX
+         KWGxos75biYmAIRKz5Wp2UaxgC9A+ZIbGPlZs+tJQpXV1s99EvN6a89QV90e1ZsSvd12
+         Dm2dsV6J4ddIaYg7n3lB+6o73FIeaZ39f1hUbYcEmuv/A5PdFu4Du+9yeeGlqaX0CEbq
+         r7qK3c0NRzSqSORLJ62ANcFdOlyPSrlOZNrcCtPU+TL9kDywMVrgV3AzyMLNhSEq0PQ4
+         X+7AXIQecMZZDXnXBOtd1+WLQ3UR0nyURhbaCLlMB8ONpMck3S9L01EIDGi/w9a3u+sP
+         2mmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ocM/TfQWn8TE8osmtfQ8wIGRKP2lr8zZ4qHKR/RTxk8=;
-        b=MZL2RnXfBr0oQNz/jN6eDvGrlqEggl25jLFB/2JDoMW2z/vxnPgZseFxd/UDPyTgrq
-         o6it096EqUSaPVpcZrH26XKBI6SJvRhCHkB4zwC8qRC9ruQPKyW+mLjo5+QdJE+s/0JY
-         +ul1vY+5ogztPsdSVnnB/I5LdQjUzj/C/Yuf2EalJQEXMEAUO+kRCBbJKscpp+336ROG
-         ZHJTbDzhOj0VOa3kmVvdo7mAJOtnr5I0voq3pjEnsCnwX0VuiSxZ9+a0VJKKxHejaCMQ
-         pNKn044fU4IzXJIu8aHTvn5fpBo7T17RfXZMYjq5bO11U1E3LqZmy8wLk46JxwjciW2w
-         uIgw==
-X-Gm-Message-State: APjAAAXzmUbYU07RpcEKG8YTlZ2NaubUEguLrGzwk5sHQs+i1r8I/zFK
-        rbb2HYfPY7tFxZcXVX90wA==
-X-Google-Smtp-Source: APXvYqwTtwrVHOXVe5oR9OATyOVwIbX//sNr5xMzcE6pqC7NMGobhGuQsuCW78elG91OHMWuUlwY+Q==
-X-Received: by 2002:a9d:604d:: with SMTP id v13mr12838416otj.222.1574469879638;
-        Fri, 22 Nov 2019 16:44:39 -0800 (PST)
-Received: from localhost (ip-70-5-93-147.ftwttx.spcsdns.net. [70.5.93.147])
-        by smtp.gmail.com with ESMTPSA id m205sm2685802oib.27.2019.11.22.16.44.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Nov 2019 16:44:38 -0800 (PST)
-Date:   Fri, 22 Nov 2019 18:44:36 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Kalyan Thota <kalyan_t@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org, dhar@codeaurora.org,
-        jsanka@codeaurora.org, chandanu@codeaurora.org,
-        travitej@codeaurora.org, nganji@codeaurora.org
-Subject: Re: [PATCH v3] msm:disp:dpu1: add support for display for SC7180
- target
-Message-ID: <20191123004436.GA18110@bogus>
-References: <1574252368-4645-1-git-send-email-kalyan_t@codeaurora.org>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=pI7cV3FDgc1XH+A619u5I2fUvKpFMBjQiQlWPO2Scvc=;
+        b=uhOyIh9f2fnu+Nfn64b+eZEXYYuuGR7yTwuFsBJEbXU2zgOXnwMPcldYn2w+fAunmf
+         CUI2tWmEQFlfLOMFvk06jSOdyWp4xyrs9HiESBp3WV+vNYiu3lvwVEN6OqZDDAl230ra
+         xSlIxVFGcK+6js3EzUb2BT8N1Su5R2uHDyTECfVkfnjjso3O5MAv03Wy+vi4QntxGCOZ
+         gbIK7ea2dlL/O3vd243AbkBL03s1hl2UX+lQv4LENmkL417AF4muMH2a6Z0FSVCsrmsp
+         VimHhTx5iuubWhE24XQEpUrSyPFWgs59t6tqORzWKcGd16o+B2qmFP8qay5W7Pu1dSyr
+         NV4Q==
+X-Gm-Message-State: APjAAAWAuKLd3ZK66ucUHAOpPnuCndtdhahqxONvLX5jYIu9T7gabtd5
+        KIDzSFc+oqMb/j+hJ2gwVkzP3TC8QMBP/Ko5+oI=
+X-Google-Smtp-Source: APXvYqx548T0ycLknJ5jFW2VDRsVn24dq2fnWyS8tQNj5j2gU8cr/fjkcu/GTq2oLrSWjKhTmNyY9/R6jyaIi4yK1CY=
+X-Received: by 2002:a6b:ea05:: with SMTP id m5mr8819256ioc.109.1574602494183;
+ Sun, 24 Nov 2019 05:34:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1574252368-4645-1-git-send-email-kalyan_t@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Received: by 2002:a4f:4fd0:0:0:0:0:0 with HTTP; Sun, 24 Nov 2019 05:34:53
+ -0800 (PST)
+Reply-To: afginvestmentbrokers@al-faisaliah.org
+From:   "Mr. Joon-Kyu Lin" <johnpfox60@gmail.com>
+Date:   Sun, 24 Nov 2019 05:34:53 -0800
+Message-ID: <CAHLmmYPiBTWfVw0YArp9xn3wcbad-qMeF=fWUCsrpqX+C282JQ@mail.gmail.com>
+Subject: Venture Capital & Private Investors
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 20, 2019 at 05:49:28PM +0530, Kalyan Thota wrote:
-> Add display hw catalog changes for SC7180 target.
-> 
-> Changes in v1:
->  - Configure register offsets and capabilities for the
->    display hw blocks.
-> 
-> Changes in v2:
->  - mdss_irq data type has changed in the dependent
->    patch, accommodate the necessary changes.
->  - Add co-developed-by tags in the commit msg (Stephen Boyd).
-> 
-> Changes in v3:
->  - fix kernel checkpatch errors in v2
+Attention:
 
-But not the one telling you to split bindings to separate patch?
+I am an investor that can provide funding for any viable business idea or
+venture.
 
-> 
-> This patch has dependency on the below series
-> 
-> https://patchwork.kernel.org/patch/11253647/
-> 
-> Co-developed-by: Shubhashree Dhar <dhar@codeaurora.org>
-> Signed-off-by: Shubhashree Dhar <dhar@codeaurora.org>
-> Co-developed-by: Raviteja Tamatam <travitej@codeaurora.org>
-> Signed-off-by: Raviteja Tamatam <travitej@codeaurora.org>
-> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
-> ---
->  .../devicetree/bindings/display/msm/dpu.txt        |   4 +-
+Please do let me know if you have fund management abilities, credible
+projects in need of funding or advanced stage projects requiring Bank
+Guarantees, Loans or Partnership, Joint Venture, Equity, we would be
+delighted to work with you.
 
-Acked-by: Rob Herring <robh@kernel.org>
 
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     | 189 +++++++++++++++++++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   4 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c          |   3 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
->  drivers/gpu/drm/msm/msm_drv.c                      |   4 +-
->  6 files changed, 190 insertions(+), 15 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dpu.txt b/Documentation/devicetree/bindings/display/msm/dpu.txt
-> index a61dd40..512f022 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dpu.txt
-> +++ b/Documentation/devicetree/bindings/display/msm/dpu.txt
-> @@ -8,7 +8,7 @@ The DPU display controller is found in SDM845 SoC.
->  
->  MDSS:
->  Required properties:
-> -- compatible: "qcom,sdm845-mdss"
-> +- compatible: "qcom,sdm845-mdss", "qcom,sc7180-mdss"
->  - reg: physical base address and length of contoller's registers.
->  - reg-names: register region names. The following region is required:
->    * "mdss"
-> @@ -41,7 +41,7 @@ Optional properties:
->  
->  MDP:
->  Required properties:
-> -- compatible: "qcom,sdm845-dpu"
-> +- compatible: "qcom,sdm845-dpu", "qcom,sc7180-dpu"
->  - reg: physical base address and length of controller's registers.
->  - reg-names : register region names. The following region is required:
->    * "mdp"
+Best Regards,
+Mr. Joon-Kyu Lim
+Al Faisaliah Group (AFG)
+Venture Capital & Private Investors
+
+--
+*This email and any attachments are intended for the named recipients only
+and contain confidential materials. Any unauthorized copying, reviewing,
+dissemination or other use by anyone other than the named recipients of
+this communication is strictly prohibited. If you received this email in
+error and/or are not a named recipient, please notify the sender (Al
+Faisaliah Group) and delete all copies of this email. Thank you.
