@@ -2,150 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2213610854C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Nov 2019 23:24:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FF13108570
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2019 00:00:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726931AbfKXWY1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Nov 2019 17:24:27 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:40507 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726855AbfKXWY1 (ORCPT
+        id S1726952AbfKXXAd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Nov 2019 18:00:33 -0500
+Received: from mail-il1-f193.google.com ([209.85.166.193]:35307 "EHLO
+        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726855AbfKXXAd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Nov 2019 17:24:27 -0500
-Received: by mail-pl1-f194.google.com with SMTP id f9so5542396plr.7;
-        Sun, 24 Nov 2019 14:24:26 -0800 (PST)
+        Sun, 24 Nov 2019 18:00:33 -0500
+Received: by mail-il1-f193.google.com with SMTP id g12so3011559ild.2;
+        Sun, 24 Nov 2019 15:00:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VOR++9jxt0Xke/hJnBu2MpDG/X+jsGE0ucu7e62QStY=;
-        b=h0K2e9zp0gcGbDhBn2OYgjsawFE+NDpg7CKSb3AdhJImGEq6U9p363kULdcCEVfd4p
-         +8pPw8NHkFC4/s072mCIzhBtn77xrwoYFZ19sEhtm5cOI119XJqIPo0WipcXkP3XVSYr
-         v7E4csN6LVNwqRt9RKc779d2EVntclLJuwVj7LF3PXsy7l8huvM+xugnd+qics8JF6o2
-         4RzXMxBR/OWbPHLdprCLkYPr0VTA9Pp8oyb4ATUuG76uBa3yJoxdENgicpYTrwLFhr12
-         UT6W3cJVdD/iI2qL9vhsx/O2kiXnME4mu8V8fA1zsdh8QirjYEXNTJsXdc9jGbbUgx/u
-         4Myg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=odza52ilBwlA3qR/sWBKfuk+gEqR3R+QpYiXACzCFos=;
+        b=lEnE6f+4W6HZwageKml38lXSUMQYQ2zwYrERviQkywOciokwQJlcVArXQlhb5DNI4T
+         hAu+vPMlYTsH/QUWiOtkNPaFE43mo0DdOLwZQJinp1qP007Q1pYUN2YBUuWt68JLHnyw
+         QhjqYawiKtrk5pFnpodSFBhlHA1AraKCTw34bJnzIlblBlNTv4/59OcR26uXVSGnjbqu
+         8CMB79FUGM4F07WVpg0vuECMFzvaOLgmF4MTmNWvW5qfYi/K2vzduafn/JNvjmTFq34Y
+         hUYaQjHCNAeOXyLnd886cq9Y7e/gh0knc8cpAUvTI2e5O0lEfter1xwvnZVV1VBmSrI8
+         Rh5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VOR++9jxt0Xke/hJnBu2MpDG/X+jsGE0ucu7e62QStY=;
-        b=c+mmbjOJDe6ZR9oO5ttcZREf3rCEP9hy35pOhMR+52r/jRT2ONhNZcsInLymgYignU
-         lXVytoRGYmXa6VEzkJxLxa5Vb4k/w2+VzLdDEq3Ot2LuY83PK8CZlCD4bBhm+frdTWqN
-         W0EvrPv/RD9KhPn/AqCJLJgwVlRJ0eHjd2AVWsNpwQaaZ/LZvHGBXpzgd5I/q0ZfnzzX
-         t1lo+HU7eBEhncLwAyM32NL951YnOsWyoHrihgbP/bariWQ51f6vYxCtU7Fsr04ssVEy
-         wMeH/lZkEzmPlc8npki9TD/PdthgrFoj1OE76kwXLknvn1bmA4ajZFKZ4N2af9xRv6Oo
-         DVTg==
-X-Gm-Message-State: APjAAAVRUWjyzCBiLTSkQJnXn39CkD5Zq5BzOZeIoaV9yGUwm+8zO9ki
-        3HwNUfQMjgwgDD7OPs2i5VY=
-X-Google-Smtp-Source: APXvYqyRMQ/Bi/6tjprki/8e3yGWNZRWTWDaCm+BvjhNsnsGkCUH/UWfYSoAeUwQT4JD8iYH+pvHwA==
-X-Received: by 2002:a17:902:6e02:: with SMTP id u2mr25753923plk.234.1574634265930;
-        Sun, 24 Nov 2019 14:24:25 -0800 (PST)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id f13sm5597256pfa.57.2019.11.24.14.24.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Nov 2019 14:24:25 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Allison Randal <allison@lohutok.net>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        Wen Yang <wen.yang99@zte.com.cn>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/adreno: fix zap vs no-zap handling
-Date:   Sun, 24 Nov 2019 14:23:38 -0800
-Message-Id: <20191124222348.1467743-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.23.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=odza52ilBwlA3qR/sWBKfuk+gEqR3R+QpYiXACzCFos=;
+        b=tH6iiZLNYIEyWPN4spluiKyvo1ujzEoHj04CVysUYeAYUQ8iQrem7lmWX2gUmQf0KK
+         BQBhci+YbFaj+0rMST9SXWcwIOAn5GuId2t7QKui5SqbwW+FPpUeloja3r91SF8UZsRf
+         L6aTX9pvUO1NCLOp/FMfXQSORMR7VQdUPYmBspZYSvHGMevB8rNdrmpmW7Slfjc4b7CN
+         Ct3seN9mboCeZbBF17i5JJyojhEBrZP3cs3gNCZcxlcFr0S+T4gCcYxnJ3lpyAyaDIXb
+         K60pClFMI+hTKtJGSH5KxIIg4LS58Exmls835ARKyU6IAXLIZjyEpfzKVZTwZ2da0d0X
+         IFKg==
+X-Gm-Message-State: APjAAAXmKmIEEeeR1UCrrsaiAmKyzOWTNoMZZERVSd+ah4/LWcGOzH8k
+        ahZeL2+7JKfaL9d76uAp73pA5erQZioaW3Ju5qc=
+X-Google-Smtp-Source: APXvYqwOO13A41HtjuUQe4sv4eu4rVgFn0OC5AVd9V0cE3MSGxeqRZPuKbTrJ/y4K1egU01KhMONsaCryETY/yND3W0=
+X-Received: by 2002:a92:831d:: with SMTP id f29mr31049248ild.263.1574636432052;
+ Sun, 24 Nov 2019 15:00:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20191124154334.15366-1-leo.yan@linaro.org>
+In-Reply-To: <20191124154334.15366-1-leo.yan@linaro.org>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Sun, 24 Nov 2019 16:00:21 -0700
+Message-ID: <CAOCk7NoWR4cFepACH_r=tmZ+bX6uXsM4HWNr5uvm6CoRdQTw-w@mail.gmail.com>
+Subject: Re: [PATCH 1/2] tty: serial: msm_serial: Fix lockup for sysrq and oops
+To:     Leo Yan <leo.yan@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jslaby@suse.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        linux-serial@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Sun, Nov 24, 2019 at 8:44 AM Leo Yan <leo.yan@linaro.org> wrote:
+>
+> As the commit 677fe555cbfb ("serial: imx: Fix recursive locking bug")
+> has mentioned the uart driver might cause recursive locking between
+> normal printing and the kernel debugging facilities (e.g. sysrq and
+> oops).  In the commit it gave out suggestion for fixing recursive
+> locking issue: "The solution is to avoid locking in the sysrq case
+> and trylock in the oops_in_progress case."
+>
+> This patch follows the suggestion (also used the exactly same code with
+> other serial drivers, e.g. amba-pl011.c) to fix the recursive locking
+> issue, this can avoid stuck caused by deadlock and print out log for
+> sysrq and oops.
+>
+> Signed-off-by: Leo Yan <leo.yan@linaro.org>
 
-We can have two cases, when it comes to "zap" fw.  Either the fw
-requires zap fw to take the GPU out of secure mode at boot, or it does
-not and we can write RBBM_SECVID_TRUST_CNTL directly.  Previously we
-decided based on whether zap fw load succeeded, but this is not a great
-plan because:
+Shouldn't this patch have a Fixes tag?
 
-1) we could have zap fw in the filesystem on a device where it is not
-   required
-2) we could have the inverse case
-
-Instead, shift to deciding based on whether we have a 'zap-shader' node
-in dt.  In practice, there is only one device (currently) with upstream
-dt that does not use zap (cheza), and it already has a /delete-node/ for
-the zap-shader node.
-
-Fixes: abccb9fe3267 ("drm/msm/a6xx: Add zap shader load")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 11 +++++++++--
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 11 +++++++++--
- 2 files changed, 18 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index b02e2042547f..7d9e63e20ded 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -753,11 +753,18 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 		gpu->funcs->flush(gpu, gpu->rb[0]);
- 		if (!a5xx_idle(gpu, gpu->rb[0]))
- 			return -EINVAL;
--	} else {
--		/* Print a warning so if we die, we know why */
-+	} else if (ret == -ENODEV) {
-+		/*
-+		 * This device does not use zap shader (but print a warning
-+		 * just in case someone got their dt wrong.. hopefully they
-+		 * have a debug UART to realize the error of their ways...
-+		 * if you mess this up you are about to crash horribly)
-+		 */
- 		dev_warn_once(gpu->dev->dev,
- 			"Zap shader not enabled - using SECVID_TRUST_CNTL instead\n");
- 		gpu_write(gpu, REG_A5XX_RBBM_SECVID_TRUST_CNTL, 0x0);
-+	} else {
-+		return ret;
- 	}
- 
- 	/* Last step - yield the ringbuffer */
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index dc8ec2c94301..686c34d706b0 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -537,12 +537,19 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
- 		a6xx_flush(gpu, gpu->rb[0]);
- 		if (!a6xx_idle(gpu, gpu->rb[0]))
- 			return -EINVAL;
--	} else {
--		/* Print a warning so if we die, we know why */
-+	} else if (ret == -ENODEV) {
-+		/*
-+		 * This device does not use zap shader (but print a warning
-+		 * just in case someone got their dt wrong.. hopefully they
-+		 * have a debug UART to realize the error of their ways...
-+		 * if you mess this up you are about to crash horribly)
-+		 */
- 		dev_warn_once(gpu->dev->dev,
- 			"Zap shader not enabled - using SECVID_TRUST_CNTL instead\n");
- 		gpu_write(gpu, REG_A6XX_RBBM_SECVID_TRUST_CNTL, 0x0);
- 		ret = 0;
-+	} else {
-+		return ret;
- 	}
- 
- out:
--- 
-2.23.0
-
+Was there a cover letter?
