@@ -2,101 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 448AB108644
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2019 02:21:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF171108B1E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2019 10:44:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727234AbfKYBV2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Nov 2019 20:21:28 -0500
-Received: from mail-yw1-f67.google.com ([209.85.161.67]:38735 "EHLO
-        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727072AbfKYBV2 (ORCPT
+        id S1727188AbfKYJoK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Nov 2019 04:44:10 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:51659 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727052AbfKYJoK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Nov 2019 20:21:28 -0500
-Received: by mail-yw1-f67.google.com with SMTP id m196so4858450ywd.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Nov 2019 17:21:27 -0800 (PST)
+        Mon, 25 Nov 2019 04:44:10 -0500
+Received: by mail-wm1-f66.google.com with SMTP id g206so14403548wme.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2019 01:44:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YyJ1VR1edEPFGr7f1Rvpj3bxfKGaJt/XzYaaditupjE=;
-        b=L0CMZZSNKy4EC3zHjWVVtEtzScdrqbEarwGtYrD/wzZo43TPeKPLRknHDO888u07nK
-         FB4NbaSETotNJ+pm4ifFjJXL57SrVCkuVSA+0jO5JW1mJLviGDl3ZlABZ8QaA/kc6J67
-         gV0jXe230C3aVGgC4YaXQbBViQ1VsHUMWBSHPpC9z22yqyvZaV/IgsstM8v0XlCYjMnl
-         7wh89Xxh3UL+vkN9qdtKwI9sPSlpWIy2arSQiZNuqG69QB3Ej0j9Wx+hLtLSr9Hz4Kw3
-         qH6CBVskxyjAMfHspXnhdW5NMov9oJZnrDqJd2PDUAqS8a+JAhYsyW4CSq8G462jIZYu
-         S2dg==
+        d=ffwll.ch; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=3/JiBpwFT1+ekHayv85lWsaJZQoV1bVEwMRzX8OSdGk=;
+        b=I8xrDF0oNAPYFO8Rb+AzffCtLbH9qIP552Uqu9j1vGLjJ6yQDhYH78ajtfzHuLbxeW
+         9XLJmkSlZu3J4L4VbmvvYH7JF09ap94FA85ZC4oEJ6StY6rVm/WzAx3B1afQMTNLouYk
+         ncw+6FQJXicsGzs333qgtuejaRLD0kbw7gwKk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YyJ1VR1edEPFGr7f1Rvpj3bxfKGaJt/XzYaaditupjE=;
-        b=nq6pz779cX4nxd2996y4z4D2Fj3jX5ORWi8EwY2biehHgHR7lGgc/4Ojzsp3mU5A/I
-         ADkAn4mtUkXH7Cn6VaZEpbfrWFhIh1FaDDejiCp3dps4IL6OvUeZ39QFwM7bm6oDnWKu
-         ARnxvuqoIIZmU9rIST7uSfuhU15pv04DpastcZUXyYoVDmFw7F3+/q/DLYT982n0w/Lx
-         VkW2DeZ0GNlP3dadbg/8QdY1I4fcq+Avkgnl7jfxLU5hntcHJy9k6q/kps18XYTlfrZH
-         9/iMYmIE+lulVjLdv+GI19wn8DLEUuz5ssCRdFUDjawdwcB9HKNby269mCBE9O/hkm0e
-         UGKQ==
-X-Gm-Message-State: APjAAAVWsHC8A0HUPEqEdTsOiGi1OEBn3+bq2B54Vmtl1t4b6dsTirzS
-        qv8U4KtwK1UTd/cMOOCPbh25Ig==
-X-Google-Smtp-Source: APXvYqzvTeM7VZxhefQxQflut8iI1Dd7/df/CtPUfTacT0Piue1SPIhfmuYsOuOmjX2cP9jsVuNdKg==
-X-Received: by 2002:a81:53c2:: with SMTP id h185mr18749895ywb.113.1574644887312;
-        Sun, 24 Nov 2019 17:21:27 -0800 (PST)
-Received: from leoy-ThinkPad-X240s (li2093-158.members.linode.com. [172.105.159.158])
-        by smtp.gmail.com with ESMTPSA id y77sm2893809ywg.75.2019.11.24.17.21.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 24 Nov 2019 17:21:26 -0800 (PST)
-Date:   Mon, 25 Nov 2019 09:21:19 +0800
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jslaby@suse.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-serial@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/2] tty: serial: msm_serial: Fix lockup for sysrq and
- oops
-Message-ID: <20191125012119.GA15822@leoy-ThinkPad-X240s>
-References: <20191124154334.15366-1-leo.yan@linaro.org>
- <CAOCk7NoWR4cFepACH_r=tmZ+bX6uXsM4HWNr5uvm6CoRdQTw-w@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=3/JiBpwFT1+ekHayv85lWsaJZQoV1bVEwMRzX8OSdGk=;
+        b=hQ4T/C0rst1YsFnSnmc3ewO+i6D7zDaFYFkRxdtbCSNEgoMeQKOPDeYgur5yRKRM52
+         zV39+GqAS0mbzhZNkkDbjHrAtn79btAClK5astKwm2oHut/6KSFeOF33lVw+goMKPIx2
+         aVHiHDth6MFUORc+TtNVPiNjCcSmnBr1RJv67aXN/BXbWyLV+lw7KzyBiufD1n1JdBon
+         EyJPGWG3XZNJwFggUDXQdOLfWrR1nZh5S6ijxjThfoclq8NoFIg0mD3YWV6aFeG4nGwj
+         wzsGt0HTb/VvWHOHDw7knLa+zFx+yHRbwCmOdjduVNw6/a6Xyk3jEJI+hywexC/MAGs0
+         bA4g==
+X-Gm-Message-State: APjAAAXdEy1IPwqy5WpHyoipueyVryFanAultQrbZJMvMgQFGCh70/mu
+        AOw9MpdGAX6DrYX3j6m0M5Ww2g==
+X-Google-Smtp-Source: APXvYqz6TptZP6espzqoV7J4Xo6+2UKPpZ6aWz5jnYYvCXGuSvJjVXGzv0jO2i2J3D00Wy0yP1wdhA==
+X-Received: by 2002:a1c:ab0a:: with SMTP id u10mr29419978wme.0.1574675047320;
+        Mon, 25 Nov 2019 01:44:07 -0800 (PST)
+Received: from phenom.ffwll.local (212-51-149-96.fiber7.init7.net. [212.51.149.96])
+        by smtp.gmail.com with ESMTPSA id x2sm7598233wmc.3.2019.11.25.01.44.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Nov 2019 01:44:05 -0800 (PST)
+From:   Daniel Vetter <daniel.vetter@ffwll.ch>
+To:     DRI Development <dri-devel@lists.freedesktop.org>
+Cc:     Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: [PATCH 3/4] drm/msm: Use dma_resv locking wrappers
+Date:   Mon, 25 Nov 2019 10:43:55 +0100
+Message-Id: <20191125094356.161941-4-daniel.vetter@ffwll.ch>
+X-Mailer: git-send-email 2.24.0
+In-Reply-To: <20191125094356.161941-1-daniel.vetter@ffwll.ch>
+References: <20191125094356.161941-1-daniel.vetter@ffwll.ch>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOCk7NoWR4cFepACH_r=tmZ+bX6uXsM4HWNr5uvm6CoRdQTw-w@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeffrey,
+I'll add more fancy logic to them soon, so everyone really has to use
+them. Plus they already provide some nice additional debug
+infrastructure on top of direct ww_mutex usage for the fences tracked
+by dma_resv.
 
-On Sun, Nov 24, 2019 at 04:00:21PM -0700, Jeffrey Hugo wrote:
-> On Sun, Nov 24, 2019 at 8:44 AM Leo Yan <leo.yan@linaro.org> wrote:
-> >
-> > As the commit 677fe555cbfb ("serial: imx: Fix recursive locking bug")
-> > has mentioned the uart driver might cause recursive locking between
-> > normal printing and the kernel debugging facilities (e.g. sysrq and
-> > oops).  In the commit it gave out suggestion for fixing recursive
-> > locking issue: "The solution is to avoid locking in the sysrq case
-> > and trylock in the oops_in_progress case."
-> >
-> > This patch follows the suggestion (also used the exactly same code with
-> > other serial drivers, e.g. amba-pl011.c) to fix the recursive locking
-> > issue, this can avoid stuck caused by deadlock and print out log for
-> > sysrq and oops.
-> >
-> > Signed-off-by: Leo Yan <leo.yan@linaro.org>
-> 
-> Shouldn't this patch have a Fixes tag?
+Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+---
+ drivers/gpu/drm/msm/msm_gem_submit.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Will add fixes tag in next spin.
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 7d04c47d0023..385d4965a8d0 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -157,7 +157,7 @@ static void submit_unlock_unpin_bo(struct msm_gem_submit *submit,
+ 		msm_gem_unpin_iova(&msm_obj->base, submit->aspace);
+ 
+ 	if (submit->bos[i].flags & BO_LOCKED)
+-		ww_mutex_unlock(&msm_obj->base.resv->lock);
++		dma_resv_unlock(msm_obj->base.resv);
+ 
+ 	if (backoff && !(submit->bos[i].flags & BO_VALID))
+ 		submit->bos[i].iova = 0;
+@@ -180,8 +180,8 @@ static int submit_lock_objects(struct msm_gem_submit *submit)
+ 		contended = i;
+ 
+ 		if (!(submit->bos[i].flags & BO_LOCKED)) {
+-			ret = ww_mutex_lock_interruptible(&msm_obj->base.resv->lock,
+-					&submit->ticket);
++			ret = dma_resv_lock_interruptible(msm_obj->base.resv,
++							  &submit->ticket);
+ 			if (ret)
+ 				goto fail;
+ 			submit->bos[i].flags |= BO_LOCKED;
+@@ -202,8 +202,8 @@ static int submit_lock_objects(struct msm_gem_submit *submit)
+ 	if (ret == -EDEADLK) {
+ 		struct msm_gem_object *msm_obj = submit->bos[contended].obj;
+ 		/* we lost out in a seqno race, lock and retry.. */
+-		ret = ww_mutex_lock_slow_interruptible(&msm_obj->base.resv->lock,
+-				&submit->ticket);
++		ret = dma_resv_lock_slow_interruptible(msm_obj->base.resv,
++						       &submit->ticket);
+ 		if (!ret) {
+ 			submit->bos[contended].flags |= BO_LOCKED;
+ 			slow_locked = contended;
+-- 
+2.24.0
 
-> Was there a cover letter?
-
-Okay, I will add cover letter for patch set v2.
-
-Thanks for reviewing!
-Leo
