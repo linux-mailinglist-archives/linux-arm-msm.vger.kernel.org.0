@@ -2,132 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6939D108D6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2019 13:00:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 71792108D7E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2019 13:02:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727219AbfKYMAD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Nov 2019 07:00:03 -0500
-Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:11529 "EHLO
-        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725906AbfKYMAB (ORCPT
+        id S1727428AbfKYMCw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Nov 2019 07:02:52 -0500
+Received: from a27-55.smtp-out.us-west-2.amazonses.com ([54.240.27.55]:52762
+        "EHLO a27-55.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725868AbfKYMCw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Nov 2019 07:00:01 -0500
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 Nov 2019 17:29:59 +0530
-IronPort-SDR: dIZVpYKMubnPx89RpbGCZddgRJQFGAdkUk33un/axipKANfWlOY6SnO7uv6FJqOao7dgNDGfx1
- xWgZ0cmUXBs/KKuu6qeqka4D8YWVxEeAQVeve8Zh9jPEeLlGS3/SMwO33JicWtm2mB4dIAM+Im
- ENRyznQoqhmxNXN+/hW2vHtOntTiWNesYfJHYqZS93/UqfaGH9XvYYcDY7MRDECHn3H7u2myjm
- diXGTFSJ+THdFGuvXiLlqIe+1lfF56ZbPXi5uKCi6eNy7L4NCndns5jbp2jPvIH3hXiq83rWBF
- 7+VhF/33SgHL4HtTZ1brfMls
-Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 25 Nov 2019 17:29:43 +0530
-Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
-        id AC0D7432B; Mon, 25 Nov 2019 17:29:42 +0530 (IST)
-From:   Kalyan Thota <kalyan_t@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org, dhar@codeaurora.org,
-        jsanka@codeaurora.org, chandanu@codeaurora.org,
-        travitej@codeaurora.org, nganji@codeaurora.org
-Subject: [PATCH 4/4] msm:disp:dpu1: add mixer selection for display topology
-Date:   Mon, 25 Nov 2019 17:29:29 +0530
-Message-Id: <1574683169-19342-5-git-send-email-kalyan_t@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1574683169-19342-1-git-send-email-kalyan_t@codeaurora.org>
-References: <1574683169-19342-1-git-send-email-kalyan_t@codeaurora.org>
+        Mon, 25 Nov 2019 07:02:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574683371;
+        h=Content-Type:MIME-Version:Content-Transfer-Encoding:Subject:From:In-Reply-To:References:To:Cc:Message-Id:Date;
+        bh=z05eV/FaCW+MjIgQc7d1cmaIUFV3/DRVHnHkzXMroCA=;
+        b=OBeQd3oqLK026hOUymyIoM5F2mb1K3QFDsh7qSCEIZIXttUffQPFI2Vzh2t9xXWM
+        jyq7RqPk7tTjzOzS8LpJ6Hfr+kpvhpBiSDKmS5zb5X0Vn/zlr2x121uBloxVMXyzuje
+        iDj/QQ3f2HjWlbmUpBEFChkcbSKC0PEVzJ61gm5s=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574683371;
+        h=Content-Type:MIME-Version:Content-Transfer-Encoding:Subject:From:In-Reply-To:References:To:Cc:Message-Id:Date:Feedback-ID;
+        bh=z05eV/FaCW+MjIgQc7d1cmaIUFV3/DRVHnHkzXMroCA=;
+        b=Xd3xHjTqMKA315fi0az72GaYOkIc/dLtlqDobZSh9oX5GyW0EYTyd26GWY4YnWC3
+        xGiV/MkeLYcY2C2VpLw3sOSh4pKZqSY4pKRj6LJVzFkqk5QvMEgsmESRk0/CFQ9BW9C
+        4qs4tkMq6xHiy/38LJpUJOtvSlVnqQknC3D08LWE=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=0.5 required=2.0 tests=ALL_TRUSTED,MISSING_DATE,
+        MISSING_MID,SPF_NONE,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 01470C447B6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kvalo@codeaurora.org
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v2] ath10k: Fix qmi init error handling
+From:   Kalle Valo <kvalo@codeaurora.org>
+In-Reply-To: <20191113154016.42836-1-jeffrey.l.hugo@gmail.com>
+References: <20191113154016.42836-1-jeffrey.l.hugo@gmail.com>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     davem@davemloft.net, ath10k@lists.infradead.org,
+        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+User-Agent: pwcli/0.0.0-git (https://github.com/kvalo/pwcli/) Python/2.7.12
+Message-ID: <0101016ea27166f3-88061552-0765-4651-8b88-013cc0541d4d-000000@us-west-2.amazonses.com>
+Date:   Mon, 25 Nov 2019 12:02:51 +0000
+X-SES-Outgoing: 2019.11.25-54.240.27.55
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-mixer selection in the display topology is based on multiple
-factors
-1) mixers available in the hw
-2) interfaces to be enabled
-3) merge capability
+Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
 
-change will pickup mixer as per the topology need.
+> When ath10k_qmi_init() fails, the error handling does not free the irq
+> resources, which causes an issue if we EPROBE_DEFER as we'll attempt to
+> (re-)register irqs which are already registered.
+> 
+> Fix this by doing a power off since we just powered on the hardware, and
+> freeing the irqs as error handling.
+> 
+> Fixes: ba94c753ccb4 ("ath10k: add QMI message handshake for wcn3990 client")
+> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
 
-Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c    | 21 ++++++++++++++++++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  2 ++
- 3 files changed, 21 insertions(+), 3 deletions(-)
+Patch applied to ath-next branch of ath.git, thanks.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index d82ea99..067ef0b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -58,7 +58,7 @@
- 
- #define IDLE_SHORT_TIMEOUT	1
- 
--#define MAX_VDISPLAY_SPLIT 1080
-+#define MAX_HDISPLAY_SPLIT 1080
- 
- /* timeout in frames waiting for frame done */
- #define DPU_ENCODER_FRAME_DONE_TIMEOUT_FRAMES 5
-@@ -534,8 +534,23 @@ static struct msm_display_topology dpu_encoder_get_topology(
- 		if (dpu_enc->phys_encs[i])
- 			intf_count++;
- 
--	/* User split topology for width > 1080 */
--	topology.num_lm = (mode->vdisplay > MAX_VDISPLAY_SPLIT) ? 2 : 1;
-+	/* Datapath topology selection
-+	 *
-+	 * Dual display
-+	 * 2 LM, 2 INTF ( Split display using 2 interfaces)
-+	 *
-+	 * Single display
-+	 * 1 LM, 1 INTF
-+	 * 2 LM, 1 INTF (stream merge to support high resolution interfaces)
-+	 *
-+	 */
-+	if (intf_count == 2)
-+		topology.num_lm = 2;
-+	else if (!dpu_kms->catalog->caps->has_3d_merge)
-+		topology.num_lm = 1;
-+	else
-+		topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
-+
- 	topology.num_enc = 0;
- 	topology.num_intf = intf_count;
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 0ee2b6c..de69f71 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -67,6 +67,7 @@
- 	.has_src_split = true,
- 	.has_dim_layer = true,
- 	.has_idle_pc = true,
-+	.has_3d_merge = true,
- };
- 
- static const struct dpu_caps sc7180_dpu_caps = {
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 2607ef3..d0cb41c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -287,6 +287,7 @@ struct dpu_qos_lut_tbl {
-  * @has_src_split      source split feature status
-  * @has_dim_layer      dim layer feature status
-  * @has_idle_pc        indicate if idle power collapse feature is supported
-+ * @has_3d_merge       indicate if 3D merge is supported
-  */
- struct dpu_caps {
- 	u32 max_mixer_width;
-@@ -297,6 +298,7 @@ struct dpu_caps {
- 	bool has_src_split;
- 	bool has_dim_layer;
- 	bool has_idle_pc;
-+	bool has_3d_merge;
- };
- 
- /**
+f8a595a87e93 ath10k: Fix qmi init error handling
+
 -- 
-1.9.1
+https://patchwork.kernel.org/patch/11242133/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
