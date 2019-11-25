@@ -2,80 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 71792108D7E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2019 13:02:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 11EC4108D86
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2019 13:03:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727428AbfKYMCw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Nov 2019 07:02:52 -0500
-Received: from a27-55.smtp-out.us-west-2.amazonses.com ([54.240.27.55]:52762
-        "EHLO a27-55.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725868AbfKYMCw (ORCPT
+        id S1727124AbfKYMDg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Nov 2019 07:03:36 -0500
+Received: from a27-10.smtp-out.us-west-2.amazonses.com ([54.240.27.10]:37016
+        "EHLO a27-10.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725862AbfKYMDg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Nov 2019 07:02:52 -0500
+        Mon, 25 Nov 2019 07:03:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574683371;
-        h=Content-Type:MIME-Version:Content-Transfer-Encoding:Subject:From:In-Reply-To:References:To:Cc:Message-Id:Date;
-        bh=z05eV/FaCW+MjIgQc7d1cmaIUFV3/DRVHnHkzXMroCA=;
-        b=OBeQd3oqLK026hOUymyIoM5F2mb1K3QFDsh7qSCEIZIXttUffQPFI2Vzh2t9xXWM
-        jyq7RqPk7tTjzOzS8LpJ6Hfr+kpvhpBiSDKmS5zb5X0Vn/zlr2x121uBloxVMXyzuje
-        iDj/QQ3f2HjWlbmUpBEFChkcbSKC0PEVzJ61gm5s=
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574683415;
+        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+        bh=f0tNqJ+tpXJTD3tqUeDs5/VtS8SWjl8eSoD8rOe274s=;
+        b=IAmYDIvdxdr/4FwCMbI/yBn0zWDPDdT633riiz6d52kbWvk9vovdSvxxi6dAXFJp
+        MvSBbDK0yUb7FoplzeQKhPXWr1ujzHqDQlJ0jk/Pjj+enGS2cHvc/EWOhFcF/fgUds5
+        TgoYpflsXoDOJ+xqKDAsBNMm7kxs6C1xRhSE2U7Y=
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574683371;
-        h=Content-Type:MIME-Version:Content-Transfer-Encoding:Subject:From:In-Reply-To:References:To:Cc:Message-Id:Date:Feedback-ID;
-        bh=z05eV/FaCW+MjIgQc7d1cmaIUFV3/DRVHnHkzXMroCA=;
-        b=Xd3xHjTqMKA315fi0az72GaYOkIc/dLtlqDobZSh9oX5GyW0EYTyd26GWY4YnWC3
-        xGiV/MkeLYcY2C2VpLw3sOSh4pKZqSY4pKRj6LJVzFkqk5QvMEgsmESRk0/CFQ9BW9C
-        4qs4tkMq6xHiy/38LJpUJOtvSlVnqQknC3D08LWE=
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574683415;
+        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding:Feedback-ID;
+        bh=f0tNqJ+tpXJTD3tqUeDs5/VtS8SWjl8eSoD8rOe274s=;
+        b=GqzTkp2xEe1G1oHUZBscqLbGfJi9jHBRsKaIyE7SkUOdHkoG4UQIQdWcE/ZgsJi6
+        zjSOw9YTp2buRZzvY81VZR+A4uZdiy9jL4oF3deDHImHoq5kYD95pIur9XY9B6ifrmI
+        dVGOt6MXvgjVrz+73Jw9nmT/F0VvDL18qguFfNTU=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.5 required=2.0 tests=ALL_TRUSTED,MISSING_DATE,
-        MISSING_MID,SPF_NONE,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 01470C447B6
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 39109C447B4
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kvalo@codeaurora.org
-Content-Type: text/plain; charset="utf-8"
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH v6 0/5] Add wakeup support and move loopback to TIOCM_LOOP
+To:     Stephen Boyd <swboyd@chromium.org>, gregkh@linuxfoundation.org
+Cc:     mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org
+References: <0101016e937a0ef9-36754afa-105c-416f-b308-b5bed0cc0ccb-000000@us-west-2.amazonses.com>
+ <5dd827b1.1c69fb81.a7ff0.5ab4@mx.google.com>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <0101016ea27214d1-5cb5b74e-ca7b-410c-a9e7-bb0da9f6b2d7-000000@us-west-2.amazonses.com>
+Date:   Mon, 25 Nov 2019 12:03:35 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
+In-Reply-To: <5dd827b1.1c69fb81.a7ff0.5ab4@mx.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v2] ath10k: Fix qmi init error handling
-From:   Kalle Valo <kvalo@codeaurora.org>
-In-Reply-To: <20191113154016.42836-1-jeffrey.l.hugo@gmail.com>
-References: <20191113154016.42836-1-jeffrey.l.hugo@gmail.com>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     davem@davemloft.net, ath10k@lists.infradead.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-User-Agent: pwcli/0.0.0-git (https://github.com/kvalo/pwcli/) Python/2.7.12
-Message-ID: <0101016ea27166f3-88061552-0765-4651-8b88-013cc0541d4d-000000@us-west-2.amazonses.com>
-Date:   Mon, 25 Nov 2019 12:02:51 +0000
-X-SES-Outgoing: 2019.11.25-54.240.27.55
+Content-Language: en-US
+X-SES-Outgoing: 2019.11.25-54.240.27.10
 Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
 
-> When ath10k_qmi_init() fails, the error handling does not free the irq
-> resources, which causes an issue if we EPROBE_DEFER as we'll attempt to
-> (re-)register irqs which are already registered.
-> 
-> Fix this by doing a power off since we just powered on the hardware, and
-> freeing the irqs as error handling.
-> 
-> Fixes: ba94c753ccb4 ("ath10k: add QMI message handshake for wcn3990 client")
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
-
-Patch applied to ath-next branch of ath.git, thanks.
-
-f8a595a87e93 ath10k: Fix qmi init error handling
+On 11/22/2019 11:53 PM, Stephen Boyd wrote:
+> Quoting Akash Asthana (2019-11-22 06:18:00)
+>> This series adds wakeup support over UART RX line and moves loopback
+>> support to TIOCM_LOOP.
+>> Patch 1 & 2 reverts the V2 changes for wakeup support on tty-next tip.
+>> Patch 3 & 4 adds V6 changes for wakeup support.
+>>
+>> Akash Asthana (5):
+>>    Revert "tty: serial: qcom_geni_serial: Wakeup over UART RX"
+>>    Revert "tty: serial: qcom_geni_serial: IRQ cleanup"
+>>    tty: serial: qcom_geni_serial: IRQ cleanup
+>>    tty: serial: qcom_geni_serial: Wakeup over UART RX
+>>    tty: serial: qcom_geni_serial: Move loopback support to TIOCM_LOOP
+> Maybe the reverts aren't necessary? Is it possible to fix up the patches
+> that are already merged in Greg's tree?
+Ok, I will fix up already merged patches.
 
 -- 
-https://patchwork.kernel.org/patch/11242133/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
 
