@@ -2,81 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FA5A108D98
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2019 13:11:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 040ED108F62
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2019 14:59:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727263AbfKYMLV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Nov 2019 07:11:21 -0500
-Received: from a27-21.smtp-out.us-west-2.amazonses.com ([54.240.27.21]:52064
-        "EHLO a27-21.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725828AbfKYMLV (ORCPT
+        id S1727770AbfKYN71 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Nov 2019 08:59:27 -0500
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:37744 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727722AbfKYN7P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Nov 2019 07:11:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574683880;
-        h=Content-Type:MIME-Version:Content-Transfer-Encoding:Subject:From:In-Reply-To:References:To:Cc:Message-Id:Date;
-        bh=dZsCIhysheSA6zhrVti9PRmRDfktYhj5NEIj4Sd9LIY=;
-        b=es9llh8fC7Y8D0ISBR7qEK0u7P4lfHdlaza4Z+EJdm9ZQHfh3IiXP4M/q7jqGIpR
-        qLc6H57ITuSe3+wuhs7dirjbLupnCSmtWXVMFP91Xvtr8kU2RUaBP3a2ST4p9E3P16l
-        F9qk0DHJ17mrKMskc+sV0lXB+a9sMm4K/ZUZLoYs=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574683880;
-        h=Content-Type:MIME-Version:Content-Transfer-Encoding:Subject:From:In-Reply-To:References:To:Cc:Message-Id:Date:Feedback-ID;
-        bh=dZsCIhysheSA6zhrVti9PRmRDfktYhj5NEIj4Sd9LIY=;
-        b=M1g5Sb/rA3VojiI75WPCHYvfDUrOsSn/WjFegV2bBqepgce+Mjf37+drstQhar/V
-        fGk9jOm9ZgPmhS1RfrKOKho/xoZa2YXThAk8hzd8U4TZb2h3L9lN4C4DRToxxIfg/mk
-        HqqW4mfpYuou8J0SEEb+0dAXfbrkesS+MODQFazM=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=0.5 required=2.0 tests=ALL_TRUSTED,MISSING_DATE,
-        MISSING_MID,SPF_NONE autolearn=no autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C1961C447B4
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kvalo@codeaurora.org
-Content-Type: text/plain; charset="utf-8"
+        Mon, 25 Nov 2019 08:59:15 -0500
+Received: by mail-lj1-f196.google.com with SMTP id d5so15982255ljl.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Nov 2019 05:59:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1FQEFOP8k3SAXbImBIiqpJfmOdRRtRiacZt1f1LEqok=;
+        b=E3TYauW4TPVtlpWpGNXnLdNMHfBBvPHEF/LwwlTf7OZlTcJs7jAMSgBLABLVt5PnL+
+         HyQmbi9//rm6IdZN2fqORsmYqZqvnoh9wCoOBTEb4NKsB49CBGWc/PEXIQvarDJu1Hz/
+         8cryvUe5/vf5R/kkJr1K6RrFV1VTIswF/l9LMCjIt87CWzPTyJ8Cvad3ehuamgYjSnsR
+         IuRVmZ5Lu8RVNOJdeIjvALjUXXJdigAtIvBuGjCpcMrN6Fyvg0udAkykiAFb3+70GTTU
+         IzahDBAnmlRYjE0pdqAJbwPWRE5hGQFCbiegt47/5qZYm0vlAqzQaAU/Sj1qTeL2V4v5
+         frxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1FQEFOP8k3SAXbImBIiqpJfmOdRRtRiacZt1f1LEqok=;
+        b=hKgf2u896WN9OdmwH+fOrylPfsu8rYoXsfdTOass860Bc0hvVXeMSiA97Ey9yRWTuB
+         3LtLRNShODTGU6x5axz28GLss7nwz2tGTz6dBoAfcPid0rSc7BLENgm2UhtJE42PnkEI
+         9EmSixS+fMS48CkRraY1v7C2EWxajK3mXfDXvQa5ABWV9RhkKJR5oMKpSv7UUfC0ge0R
+         Dt1prcwm1p5kG7Jb6xC8lC62wxNNxfl6r6koQuuX/tIQJ+9X7WXnbgkf7T3ksdzItx7v
+         CxQsjsNDP1eZPv4Ta85U7MZec9tG1t+eiDtaW3MhClQ426r0NU/rVjS7kpOFmTsrY4Lw
+         gt5w==
+X-Gm-Message-State: APjAAAU8j7va8OlvuY2ArDDP2kOWysxR+CfKfhxAAbubQRDpNMbsvBVL
+        N5iRAc8abYXYvX/4FTI88dyZ/hClUbyBaQ==
+X-Google-Smtp-Source: APXvYqy+vTpb4+HCLB7KdfFc3jtA6JL7ae0EIjboDWKhsxQ4bU4M2hS4PqfhXanx6PJ5pjpmGLU9yg==
+X-Received: by 2002:a05:651c:1053:: with SMTP id x19mr22406217ljm.39.1574690352732;
+        Mon, 25 Nov 2019 05:59:12 -0800 (PST)
+Received: from centauri.lan (ua-84-217-220-205.bbcust.telenor.se. [84.217.220.205])
+        by smtp.gmail.com with ESMTPSA id w71sm4189705lff.0.2019.11.25.05.59.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Nov 2019 05:59:11 -0800 (PST)
+From:   Niklas Cassel <niklas.cassel@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     amit.kucheria@linaro.org, sboyd@kernel.org,
+        bjorn.andersson@linaro.org,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: [PATCH v3 0/7] Clock changes to support cpufreq on QCS404
+Date:   Mon, 25 Nov 2019 14:59:02 +0100
+Message-Id: <20191125135910.679310-1-niklas.cassel@linaro.org>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v2] ath10k: Handle "invalid" BDFs for msm8998 devices
-From:   Kalle Valo <kvalo@codeaurora.org>
-In-Reply-To: <20191113154646.43048-1-jeffrey.l.hugo@gmail.com>
-References: <20191113154646.43048-1-jeffrey.l.hugo@gmail.com>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     davem@davemloft.net, ath10k@lists.infradead.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-User-Agent: pwcli/0.0.0-git (https://github.com/kvalo/pwcli/) Python/2.7.12
-Message-ID: <0101016ea2792bf8-85cec4e9-f426-43ba-89a1-242f2308e25e-000000@us-west-2.amazonses.com>
-Date:   Mon, 25 Nov 2019 12:11:20 +0000
-X-SES-Outgoing: 2019.11.25-54.240.27.21
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+The following clock changes are required to enable cpufreq support on
+the QCS404.
 
-> When the BDF download QMI message has the end field set to 1, it signals
-> the end of the transfer, and triggers the firmware to do a CRC check.  The
-> BDFs for msm8998 devices fail this check, yet the firmware is happy to
-> still use the BDF.  It appears that this error is not caught by the
-> downstream drive by concidence, therefore there are production devices
-> in the field where this issue needs to be handled otherwise we cannot
-> support wifi on them.  So, attempt to detect this scenario as best we can
-> and treat it as non-fatal.
-> 
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
+Changes since v2:
+-Addressed Stephen Boyd's comment regarding apcs-msm8916
+should use new way of specifying clock parents.
+-DT binding now has "pll" as first clock, in order to
+not break DT backwards compatibility (in case no clock-names
+are given).
+-Moved EPROBE_DEFER error handling to its own patch.
 
-Patch applied to ath-next branch of ath.git, thanks.
+Jorge Ramirez-Ortiz (6):
+  dt-bindings: mailbox: qcom: Add clock-name optional property
+  clk: qcom: gcc: limit GPLL0_AO_OUT operating frequency
+  clk: qcom: hfpll: register as clock provider
+  clk: qcom: hfpll: CLK_IGNORE_UNUSED
+  clk: qcom: hfpll: use clk_parent_data to specify the parent
+  clk: qcom: apcs-msm8916: silently error out on EPROBE_DEFER
 
-319c2b71041f ath10k: Handle "invalid" BDFs for msm8998 devices
+Niklas Cassel (1):
+  clk: qcom: apcs-msm8916: use clk_parent_data to specify the parent
+
+ .../mailbox/qcom,apcs-kpss-global.txt         | 24 ++++++++++++++---
+ drivers/clk/qcom/apcs-msm8916.c               | 26 ++++++++++++++-----
+ drivers/clk/qcom/clk-alpha-pll.c              |  8 ++++++
+ drivers/clk/qcom/clk-alpha-pll.h              |  1 +
+ drivers/clk/qcom/gcc-qcs404.c                 |  2 +-
+ drivers/clk/qcom/hfpll.c                      | 21 +++++++++++++--
+ 6 files changed, 70 insertions(+), 12 deletions(-)
 
 -- 
-https://patchwork.kernel.org/patch/11242143/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+2.23.0
 
