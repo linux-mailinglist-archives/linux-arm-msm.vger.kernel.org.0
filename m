@@ -2,79 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C2A82108D58
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2019 12:56:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 045B3108D5C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Nov 2019 13:00:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725868AbfKYL4S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Nov 2019 06:56:18 -0500
-Received: from a27-56.smtp-out.us-west-2.amazonses.com ([54.240.27.56]:58124
-        "EHLO a27-56.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725828AbfKYL4S (ORCPT
+        id S1726957AbfKYMAA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Nov 2019 07:00:00 -0500
+Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:1231 "EHLO
+        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725851AbfKYMAA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Nov 2019 06:56:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574682977;
-        h=Content-Type:MIME-Version:Content-Transfer-Encoding:Subject:From:In-Reply-To:References:To:Cc:Message-Id:Date;
-        bh=cTtwrlGNTkiAUYkuNC9OPAuoAAZBBpmDBW6s3hPB4Xw=;
-        b=TQgEbxnxfaaVpJyfKq/1UJLhvAiHYuIVctLugJHTOIsQMS0e7tIULhu1EGH3D6n8
-        OKQ2I0jQ8yAeK7cEgBojIaB51ipGu5eqH2srgQBXYqkkJp1JktzJ4nKtfvqez16oMnq
-        ma6wPbEKGqUpwyIJyg/5LS07sBg1nNeBjKVBrmg0=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574682977;
-        h=Content-Type:MIME-Version:Content-Transfer-Encoding:Subject:From:In-Reply-To:References:To:Cc:Message-Id:Date:Feedback-ID;
-        bh=cTtwrlGNTkiAUYkuNC9OPAuoAAZBBpmDBW6s3hPB4Xw=;
-        b=RDpZ1odtrzeBcvyiVgRueZAKUg8Ohpxppv4HOs4Me3dBv/hNzWmJIVZLtGCVSaAO
-        AQmr6yfNOvjSuknunWRk5u7NJpJ3BHtiuRYAKP8SGSp2McXHF9eqzAZtOlbf9bLWhg9
-        QZGQ+T1otQRCUtBJopRGW+H+o/ZZR124sjYeHaJM=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=0.5 required=2.0 tests=ALL_TRUSTED,MISSING_DATE,
-        MISSING_MID,SPF_NONE autolearn=no autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 958EEC43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kvalo@codeaurora.org
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH] ath10k: Handle when FW doesn't support
- QMI_WLFW_HOST_CAP_REQ_V01
-From:   Kalle Valo <kvalo@codeaurora.org>
-In-Reply-To: <20191106233130.2169-1-jeffrey.l.hugo@gmail.com>
-References: <20191106233130.2169-1-jeffrey.l.hugo@gmail.com>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     davem@davemloft.net, ath10k@lists.infradead.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-User-Agent: pwcli/0.0.0-git (https://github.com/kvalo/pwcli/) Python/2.7.12
-Message-ID: <0101016ea26b635d-ed1f7406-4ae3-411f-8b1d-47a1a5cc2dd5-000000@us-west-2.amazonses.com>
-Date:   Mon, 25 Nov 2019 11:56:17 +0000
-X-SES-Outgoing: 2019.11.25-54.240.27.56
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
+        Mon, 25 Nov 2019 07:00:00 -0500
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 Nov 2019 17:29:59 +0530
+IronPort-SDR: fGVvEbj3FbHStOiD96Mom5gthGHa8KO1XYyHL8KQT4lSK5jDoYhy9GFDdyNRMiCfXnWSAAGJ75
+ +/dIjDLw5Nj1o1vpbO+k6vIHuXwJzLbSxdpRsKyPnGTJHmyPqcAwDo5SfHx2gqM5gzNLmD42tY
+ gCh607ITCmTatSPKQqp4hDYIAh9e0xNJ8yp4ZgQWQaX6wmk4KseFT33Ml8UfV1TbZBsqUKV5KN
+ GwPhaRPLNEyQkDanxd5ow47ksSvulK3qIl6YunVQtYt4y5ZlKhWVRjRzVNBFwDXKTF6ZIr0Z/O
+ 2RuPJ5STTqrkswm+/lv4ZpjQ
+Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 25 Nov 2019 17:29:32 +0530
+Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
+        id 1241C432B; Mon, 25 Nov 2019 17:29:32 +0530 (IST)
+From:   Kalyan Thota <kalyan_t@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org, dhar@codeaurora.org,
+        jsanka@codeaurora.org, chandanu@codeaurora.org,
+        travitej@codeaurora.org, nganji@codeaurora.org
+Subject: [PATCH 0/4] Add support for SC7180 display 
+Date:   Mon, 25 Nov 2019 17:29:25 +0530
+Message-Id: <1574683169-19342-1-git-send-email-kalyan_t@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+SC7180 follows a newer architecture where in some flush controls have been re-organized to simplify programming and provide for future expandability.
+Specifically:
+1) The TIMING_<j> bits that control flush of INTF_<j> have been replaced with a common INTF flush bit which flushes the programming in the MDP_CTL_<id>_INTF_ACTIVE register
+2) Individual flush bits for MERGE_3D, DSC and CDWN have been added which flush the programming in the MDP_CTL_<id>_MERGE_3D_ACTIVE, ... etc respectively
+3) PERIPH flush bit has been added to flush DSP packets for DisplayPort
 
-> Firmware with the build id QC_IMAGE_VERSION_STRING=WLAN.HL.1.0.2-XXXX does
-> not support the QMI_WLFW_HOST_CAP_REQ_V01 message and will return the
-> QMI not supported error to the ath10k driver.  Since not supporting this
-> message is not fatal to the firmware nor the ath10k driver, lets catch
-> this particular scenario and ignore it so that we can still bring up
-> wifi services successfully.
-> 
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
+The complete datapath is described using the MDP_CTL_<id>_TOP and newly added ACTIVE registers to handle other sub blocks
+such as interface (INTF) resources, PingPong buffer / Layer Mixer, Display Stream Compression (DSC) resources, writeback (WB) and 3D Merge
+selections that are part of the datapath.
 
-Patch applied to ath-next branch of ath.git, thanks.
+Kalyan Thota (4):
+  dt-bindings: msm:disp: add sc7180 DPU variant
+  msm:disp:dpu1: add support for display for SC7180 target
+  msm:disp:dpu1: setup display datapath for SC7180 target
+  msm:disp:dpu1: add mixer selection for display topology
 
-501d4152b018 ath10k: Handle when FW doesn't support QMI_WLFW_HOST_CAP_REQ_V01
+ .../devicetree/bindings/display/msm/dpu.txt        |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  21 ++-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |  21 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     | 191 +++++++++++++++++++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   6 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  84 ++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  24 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |  28 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |   6 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c          |   3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
+ drivers/gpu/drm/msm/msm_drv.c                      |   4 +-
+ 12 files changed, 370 insertions(+), 23 deletions(-)
 
 -- 
-https://patchwork.kernel.org/patch/11231343/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+1.9.1
 
