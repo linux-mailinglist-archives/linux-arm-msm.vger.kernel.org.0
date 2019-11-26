@@ -2,131 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DB3C109DD0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2019 13:22:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 51E6110A0DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Nov 2019 16:01:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728324AbfKZMWA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Nov 2019 07:22:00 -0500
-Received: from a27-185.smtp-out.us-west-2.amazonses.com ([54.240.27.185]:54890
-        "EHLO a27-185.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727733AbfKZMWA (ORCPT
+        id S1727727AbfKZPBB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Nov 2019 10:01:01 -0500
+Received: from a27-186.smtp-out.us-west-2.amazonses.com ([54.240.27.186]:35088
+        "EHLO a27-186.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726049AbfKZPBB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Nov 2019 07:22:00 -0500
+        Tue, 26 Nov 2019 10:01:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574770919;
-        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-        bh=Ttu+6ofExiF/Y4usUuA4r1/+Sh4A1mMo6YxP2R7eeGE=;
-        b=oSTAzZaaZhF+/fbFYz4LiFOVfzyLpT/9OqpSmZTeTb6DDMyigaVn1VZZHWA/HSYT
-        voOkhKxuO6fwcvaKaGulaKtQCoBtlkgIK32gqnFlPk5XXYJNqAbDKFXY50qFgYVtM2x
-        y3OUJy98WRFDeiNckSG16SgSwgCxuv9CkEwqzK9Y=
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574780460;
+        h=From:To:Cc:Subject:Date:Message-Id;
+        bh=24AiegpH7znqjaeLFqjli4zrLM23LRyoX6pngyIrKYg=;
+        b=eN56/0VqDwI+v7oufGPe/VBgWJZ09DKmZFNA0F8ol2pYv09U07IoMTpZxlBoLyto
+        NVqTem0oAiwfSW/qQtbk5IayxCQQdH//R513FVTVTEOgPM3dXapw1mFQWSAS8QvkKoy
+        gxP5bKOnBRDkRNrGPuAz0a8I+eQDUI1IhWNgskTU=
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574770919;
-        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding:Feedback-ID;
-        bh=Ttu+6ofExiF/Y4usUuA4r1/+Sh4A1mMo6YxP2R7eeGE=;
-        b=XsJP4pn9e9orEZl6Fjl/lIBlLBQVtXNp4Z4lIJF0/0SNq+bNqFBNfciDZypIpG+Z
-        aHIAUNPvKxC4+YRgouBOVlSY18dw7WbMVGY/vLNkROl7RqbFb7jT61kUuV9IYq7vlMs
-        G/jierc7gjKFaU9O+VhldgnvnLK+AO+sixsORHcQ=
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574780460;
+        h=From:To:Cc:Subject:Date:Message-Id:Feedback-ID;
+        bh=24AiegpH7znqjaeLFqjli4zrLM23LRyoX6pngyIrKYg=;
+        b=R416rXo3LhP+t5GJSqTTVBt7/7L3sR6BaPSCN2p4XE0iEh4OknMwDzQYPDbmnUt7
+        QVzMVenrtirmgs8PBS979bGWYYHxjaYBhtrb3j1h9CBb58FtK/IV+JZxGOeu99XqdJM
+        Yg3ikw7QEj/Kq6DEvYH9YwsAxnmpK55EvFbniv38=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 42C99C43383
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9CE3DC43383
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V7 1/2] tty: serial: qcom_geni_serial: Wakeup IRQ cleanup
-To:     Stephen Boyd <swboyd@chromium.org>, gregkh@linuxfoundation.org
-Cc:     mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, mka@chromium.org
-References: <1574694511-31479-1-git-send-email-akashast@codeaurora.org>
- <0101016ea31bae6b-614d45a0-ddb0-4f82-b906-48850f439280-000000@us-west-2.amazonses.com>
- <5ddbfbec.1c69fb81.c6c96.3c18@mx.google.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <0101016ea7a9463f-6363f81f-3b22-4b66-b8c3-23c5bf1cc624-000000@us-west-2.amazonses.com>
-Date:   Tue, 26 Nov 2019 12:21:59 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
-MIME-Version: 1.0
-In-Reply-To: <5ddbfbec.1c69fb81.c6c96.3c18@mx.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-SES-Outgoing: 2019.11.26-54.240.27.185
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=okukatla@codeaurora.org
+From:   Odelu Kukatla <okukatla@codeaurora.org>
+To:     georgi.djakov@linaro.org, daidavid1@codeaurora.org,
+        bjorn.andersson@linaro.org, evgreen@google.com, sboyd@kernel.org
+Cc:     ilina@codeaurora.org, seansw@qti.qualcomm.com, elder@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org,
+        Odelu Kukatla <okukatla@codeaurora.org>
+Subject: [PATCH V1 0/2] Add SC7180 interconnect provider driver
+Date:   Tue, 26 Nov 2019 15:01:00 +0000
+Message-ID: <0101016ea83add0b-b8d41e34-b3fe-48db-b64c-defa3a800e15-000000@us-west-2.amazonses.com>
+X-Mailer: git-send-email 1.9.1
+X-SES-Outgoing: 2019.11.26-54.240.27.186
 Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add driver to support scaling of the on-chip interconnects on
+the SC7180-based platforms.
 
-On 11/25/2019 9:36 PM, Stephen Boyd wrote:
-> Quoting Akash Asthana (2019-11-25 07:08:50)
->> This patch is the continuation of below mentioned commits which adds wakeup
->> feature over the UART RX line.
->> 1)commit 3e4aaea7a039 ("tty: serial: qcom_geni_serial: IRQ cleanup")[v2]
->> 2)commit 8b7103f31950 ("tty: serial: qcom_geni_serial: Wakeup over UART
->>    RX")[v2]
->>
->> The following cleanup is done based on upstream comment received on
->> subsequent versions of the above-mentioned commits to simplifying the code.
->>   - Use devm_kasprintf API in place of scnprintf.
->>   - Use dev_pm_set_dedicated_wake_irq API that will take care of
->>     requesting and attaching wakeup irqs for devices. Also, it sets wakeirq
->>     status to WAKE_IRQ_DEDICATED_ALLOCATED as a result enabling/disabling of
->>     wake irq will be managed by suspend/resume framework. We can remove the
->>     code for enabling and disabling of wake irq from the this driver.
->>   - Use platform_get_irq_optional API to get optional wakeup IRQ for
->>     device.
->>   - Move ISR registration later in probe after uart port gets register with
->>     serial core.
->>
->> Patch link:
->>   - https://patchwork.kernel.org/patch/11189717/ (v3)
->>   - https://patchwork.kernel.org/patch/11227435/ (v4)
->>   - https://patchwork.kernel.org/patch/11241669/ (v5)
->>   - https://patchwork.kernel.org/patch/11258045/ (v6)
->>
->> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
->> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
->> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> Ok sure.
->
->> ---
->> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
->> index ff63728..55b1d8b 100644
->> --- a/drivers/tty/serial/qcom_geni_serial.c
->> +++ b/drivers/tty/serial/qcom_geni_serial.c
->> @@ -1302,50 +1294,58 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->>          port->rx_fifo_depth = DEF_FIFO_DEPTH_WORDS;
->>          port->tx_fifo_width = DEF_FIFO_WIDTH_BITS;
->>   
->> -       scnprintf(port->name, sizeof(port->name), "qcom_geni_serial_%s%d",
->> -               (uart_console(uport) ? "console" : "uart"), uport->line);
->> +       port->name = devm_kasprintf(uport->dev, GFP_KERNEL,
->> +                       "qcom_geni_serial_%s%d",
->> +                       uart_console(uport) ? "console" : "uart", uport->line);
->> +       if (!port->name)
->> +               return -ENOMEM;
->> +
->>          irq = platform_get_irq(pdev, 0);
->>          if (irq < 0)
->>                  return irq;
->>          uport->irq = irq;
->>   
->> +       if (!console)
->> +               port->wakeup_irq = platform_get_irq_optional(pdev, 1);
-> Is there a DT binding update for this? It would be nice if the GENI SE
-> binding was updated to by YAML.
-Yes, there is DT binding update for this. Ok I will update GENI SE 
-binding to YAML
->> +
->> +       uport->private_data = drv;
->> +       platform_set_drvdata(pdev, port);
->> +       port->handle_rx = console ? handle_rx_console : handle_rx_uart;
->> +       if (!console)
->> +               device_create_file(uport->dev, &dev_attr_loopback);
->> +
+Depends-on: Redefine interconnect provider DT nodes for SDM845
+
+Odelu Kukatla (2):
+  dt-bindings: interconnect: Add Qualcomm SC7180 DT bindings
+  interconnect: qcom: Add SC7180 interconnect provider driver
+
+ .../bindings/interconnect/qcom,bcm-voter.yaml      |   1 +
+ .../bindings/interconnect/qcom,sc7180.yaml         | 155 ++++
+ drivers/interconnect/qcom/Kconfig                  |  10 +
+ drivers/interconnect/qcom/Makefile                 |   2 +
+ drivers/interconnect/qcom/sc7180.c                 | 843 +++++++++++++++++++++
+ include/dt-bindings/interconnect/qcom,sc7180.h     | 149 ++++
+ 6 files changed, 1160 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sc7180.yaml
+ create mode 100644 drivers/interconnect/qcom/sc7180.c
+ create mode 100644 include/dt-bindings/interconnect/qcom,sc7180.h
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
