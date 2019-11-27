@@ -2,211 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EB4110ADB1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2019 11:29:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C0E4610AEF3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2019 12:50:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727116AbfK0K3k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Nov 2019 05:29:40 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:35773 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727150AbfK0K3k (ORCPT
+        id S1726530AbfK0LuA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Nov 2019 06:50:00 -0500
+Received: from a27-55.smtp-out.us-west-2.amazonses.com ([54.240.27.55]:39426
+        "EHLO a27-55.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726320AbfK0LuA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Nov 2019 05:29:40 -0500
-Received: by mail-lf1-f67.google.com with SMTP id r15so13774821lff.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2019 02:29:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=YE8YvkurDwcmK3uqareXLGBcqQwJuyVozrMdvAFxIY4=;
-        b=V0sHWW+6lT6XzspaGhjr68xPBxpq7cPOhMWh1T+Yuzw50GwEW9jikpXcj4Xys51BZG
-         +uEZgF33ABgUWs+x7CUqOSTxvnuanzhxSRePKrmiiqBpnMsbA9sZbF7VmOpPS/SNkGPm
-         BIparBEt6Symbx9RStqtt6zw4wByrXDGWpP1pkjmBBNf+j2SYGbQn7tZOFc8OmK4X6LG
-         HBj6c6FBilNnoTc9kiephZw+sT4KpxSMylomgmXHxbP21AhsU00DviVyClbq2NucHpB2
-         lPNQAS61sJFOUXirZNTvRAMgUOUuuPQroVBFt2umHunxgvkAe+QY+F9rKUVTNv7HP6o8
-         Hegg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=YE8YvkurDwcmK3uqareXLGBcqQwJuyVozrMdvAFxIY4=;
-        b=c54AMUCHphLjikegTO7IW3qyBqXIlSD5M6FtIQCPpT0ucE7v4FoOnMIxnzEjKh1sdw
-         rs40JNpzIPbm+kGyktfC6rOzV2r0bv7FikYmQVEAc/p3o2gGPcRej6zhLweyV703RAx2
-         mir6Jc/AEeh1GG32F+gJ8datyGIbjG5B7ibBQVF3rH4wUj9Ail6qBOYkd3GdX3n871yV
-         yn3OUeb4DL7gm6NUWyaFIULGDLLR68MJGuIp/7QdC/VgpcXeVKQkpGXNGutopXTHNcYk
-         rWlY8two7RZlVhaFTRieaz6hk2DZI9I+r58a4Q1Sf8N+T7QtS68PAFvcPQZk6xk+KFOj
-         qnpg==
-X-Gm-Message-State: APjAAAW5Y/kTRRCtme7nTcEyGqOwiiCFFdO/TxZu4fDB30g6LxJ9MDE6
-        fZMJL5Whr2ajRuX6QlpD1RSV9g==
-X-Google-Smtp-Source: APXvYqzfK7p4G4XeXLmvxRBXQfax0x8CjKcQ8ndzaEP1RnAz44tx+i8EzhOqNotZjQZFL/St0ciykg==
-X-Received: by 2002:a19:8c4e:: with SMTP id i14mr14761604lfj.90.1574850577700;
-        Wed, 27 Nov 2019 02:29:37 -0800 (PST)
-Received: from uffe-XPS-13-9360.ideon.se ([85.235.10.227])
-        by smtp.gmail.com with ESMTPSA id t9sm6868260ljj.19.2019.11.27.02.29.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Nov 2019 02:29:37 -0800 (PST)
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-To:     Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org
-Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Lina Iyer <lina.iyer@linaro.org>
-Subject: [PATCH v3 13/13] arm64: dts: Convert to the hierarchical CPU topology layout for MSM8916
-Date:   Wed, 27 Nov 2019 11:29:14 +0100
-Message-Id: <20191127102914.18729-14-ulf.hansson@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20191127102914.18729-1-ulf.hansson@linaro.org>
-References: <20191127102914.18729-1-ulf.hansson@linaro.org>
+        Wed, 27 Nov 2019 06:50:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574855399;
+        h=From:To:Cc:Subject:Date:Message-Id;
+        bh=BnWwMJfUSqCLiU7rXf0pst3qGFvqPL0IaIQDsuZ/v+g=;
+        b=Ve+nGtR1r6bHYZ3enPWZrD262SYqjTbEc+KczufEOIkOBlplKSYN4AaCgaHxrz0q
+        RQgQUKkDK/cjRGPKDar3SuHQdqNooRC9isF57H2+XT+EGDOPd4dG3rVsYeVH0/t2b/9
+        cp/+wh9SRMZUeM81kEPYFUQTrQ2vqcCxhyO0bqiQ=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574855399;
+        h=From:To:Cc:Subject:Date:Message-Id:Feedback-ID;
+        bh=BnWwMJfUSqCLiU7rXf0pst3qGFvqPL0IaIQDsuZ/v+g=;
+        b=AJfly1Ebv3IxkntSIqnAn8ylUcNRC5abgwm4de5RBIDfHOYPcpLucsaGxv5hDWPK
+        hYeMahPrKUvvYOgw7ky/yJEQwJuPgYVHMuFhEoeSs/p7xk/9BSfvZkfcfv7Pr3HMQ5H
+        hOqfKWud5IOPrNyeGCfEfpEwRl5EOrQF+39x417M=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4415BC447AA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
+From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org, robh+dt@kernel.org
+Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
+        sayalil@codeaurora.org, cang@codeaurora.org,
+        rampraka@codeaurora.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Subject: [PATCH V1 1/2] dt-bindings: mmc: sdhci-msm: Add compatible string for sc7180
+Date:   Wed, 27 Nov 2019 11:49:59 +0000
+Message-ID: <0101016eacb255af-3985262d-9b7e-4813-88c2-61838406e12c-000000@us-west-2.amazonses.com>
+X-Mailer: git-send-email 1.9.1
+X-SES-Outgoing: 2019.11.27-54.240.27.55
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To enable the OS to better support PSCI OS initiated CPU suspend mode,
-let's convert from the flattened layout to the hierarchical layout.
+Add sc7180 SoC specific compatible strings for qcom-sdhci controller.
 
-In the hierarchical layout, let's create a power domain provider per CPU
-and describe the idle states for each CPU inside the power domain provider
-node. To group the CPUs into a cluster, let's add another power domain
-provider and make it act as the master domain. Note that, the CPU's idle
-states remains compatible with "arm,idle-state", while the cluster's idle
-state becomes compatible with "domain-idle-state".
-
-Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
-Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
 ---
+ Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes in v3:
-	- None.
-
----
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 57 +++++++++++++++++++++++++--
- 1 file changed, 53 insertions(+), 4 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 5ea9fb8f2f87..1ece0c763592 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -102,10 +102,11 @@
- 			reg = <0x0>;
- 			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-+			power-domains = <&CPU_PD0>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU1: cpu@1 {
-@@ -114,10 +115,11 @@
- 			reg = <0x1>;
- 			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-+			power-domains = <&CPU_PD1>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU2: cpu@2 {
-@@ -126,10 +128,11 @@
- 			reg = <0x2>;
- 			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-+			power-domains = <&CPU_PD2>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU3: cpu@3 {
-@@ -138,10 +141,11 @@
- 			reg = <0x3>;
- 			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-+			power-domains = <&CPU_PD3>;
-+			power-domain-names = "psci";
- 		};
- 
- 		L2_0: l2-cache {
-@@ -161,12 +165,57 @@
- 				min-residency-us = <2000>;
- 				local-timer-stop;
- 			};
-+
-+			CLUSTER_RET: cluster-retention {
-+				compatible = "domain-idle-state";
-+				arm,psci-suspend-param = <0x41000012>;
-+				entry-latency-us = <500>;
-+				exit-latency-us = <500>;
-+				min-residency-us = <2000>;
-+			};
-+
-+			CLUSTER_PWRDN: cluster-gdhs {
-+				compatible = "domain-idle-state";
-+				arm,psci-suspend-param = <0x41000032>;
-+				entry-latency-us = <2000>;
-+				exit-latency-us = <2000>;
-+				min-residency-us = <6000>;
-+			};
- 		};
- 	};
- 
- 	psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
-+
-+		CPU_PD0: cpu-pd0 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD1: cpu-pd1 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD2: cpu-pd2 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD3: cpu-pd3 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP_0>;
-+		};
-+
-+		CLUSTER_PD: cluster-pd {
-+			#power-domain-cells = <0>;
-+			domain-idle-states = <&CLUSTER_RET>, <&CLUSTER_PWRDN>;
-+		};
- 	};
- 
- 	pmu {
+diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+index da4edb1..7ee639b 100644
+--- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
++++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+@@ -19,6 +19,7 @@ Required properties:
+ 		"qcom,msm8996-sdhci", "qcom,sdhci-msm-v4"
+ 		"qcom,sdm845-sdhci", "qcom,sdhci-msm-v5"
+ 		"qcom,qcs404-sdhci", "qcom,sdhci-msm-v5"
++		"qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
+ 	NOTE that some old device tree files may be floating around that only
+ 	have the string "qcom,sdhci-msm-v4" without the SoC compatible string
+ 	but doing that should be considered a deprecated practice.
 -- 
-2.17.1
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
 
