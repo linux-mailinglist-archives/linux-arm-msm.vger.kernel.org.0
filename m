@@ -2,203 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A6C0010B204
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2019 16:13:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E14C610B3D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2019 17:50:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727286AbfK0PNq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Nov 2019 10:13:46 -0500
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:37917 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727197AbfK0PNg (ORCPT
+        id S1727138AbfK0QuA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Nov 2019 11:50:00 -0500
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:40898 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727111AbfK0Qt7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Nov 2019 10:13:36 -0500
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 27 Nov 2019 20:43:26 +0530
-IronPort-SDR: ALHVegyS+C6HEkrucJboFlMUqp0BMnL+bUZYq4VM58pc9SYRfDD2/1QiltG4RJwl5Zej3JXhn2
- gBZ/bIs9TW6Y+e8Yrys3AdBONOHl9lzF/kKp/u5RQL1m2P89oaGazsOBEx+u4Kv7q2lfGVWE0k
- 9wkVbeQ3zNLP2mT2uT4cCmOUa7vbLeNamcXhl2tkTtDFtTiqSq7iCTsiJCOupukoAal5zxbcP5
- HpA4VzbNzKbtC6pUsASwSU1y/4/+BLuTtqM9AUlpq+oEg1vsvwvujAUG55VBNRp9BVHgrtIldn
- CBPBPDZUJmLrIX+cTilODdG4
-Received: from gokulsri-linux.qualcomm.com ([10.201.2.207])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 27 Nov 2019 20:42:58 +0530
-Received: by gokulsri-linux.qualcomm.com (Postfix, from userid 432570)
-        id 05EAE398B; Wed, 27 Nov 2019 20:42:55 +0530 (IST)
-From:   Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-To:     gokulsri@codeaurora.org, sboyd@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, david.brown@linaro.org,
-        devicetree@vger.kernel.org, jassisinghbrar@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        mark.rutland@arm.com, mturquette@baylibre.com, ohad@wizery.com,
-        robh+dt@kernel.org, sricharan@codeaurora.org,
-        nprakash@codeaurora.org
-Subject: [PATCH V3 10/10] arm64: dts: qcom: Enable Q6v5 WCSS for ipq8074 SoC
-Date:   Wed, 27 Nov 2019 20:42:54 +0530
-Message-Id: <1574867574-2216-11-git-send-email-gokulsri@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1574867574-2216-1-git-send-email-gokulsri@codeaurora.org>
-References: <1574867574-2216-1-git-send-email-gokulsri@codeaurora.org>
+        Wed, 27 Nov 2019 11:49:59 -0500
+Received: by mail-pj1-f67.google.com with SMTP id ep1so10273635pjb.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2019 08:49:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=XP8xQxHYdgThc9Zld1p2KHyvVQHdtDNpRupwHh4QK1c=;
+        b=E9tB3Qhfa0XrmfAUm3gCKwGioDLD3EWQViXM4CPXKKihXTIM5RXvsirNPtUfcAGO2f
+         Syy1YIo3f8NqeITx6v6UkzSMoJFXLq9KT7arLZmSs/hYRAqz+ODuBSK/jnptHFTW+Uvw
+         f9p3FFG+1KiyyLtqO8tUMsmjJGF8m7haGeg4k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XP8xQxHYdgThc9Zld1p2KHyvVQHdtDNpRupwHh4QK1c=;
+        b=LsiJwGoZqUNONGzPYS+ex/YjfsWuflNBNxjo17e+q3G/ZFoUcyFMctA6F0HIWAZprE
+         pWCD8MdvLIiAPumeKXO0Gww9mHtBzmKDGpU7RqppQqv2RGYM1KGFPG+dwnNgNNq5TU7b
+         TZVdwKkdVb9Ku0UPSoCNmSQi2ui4cydstcG0dnBcEYUtCGFwG5uw523zAM7HlxnmAXBj
+         5oXKPoNjwA4gBe18B5myOB5/CshADCo8rcHAW5OhArIyTKMzH5B7nLRg15SV8165Wb8T
+         1LEsU8syISc0sPlqL+mYVs3BMZTdWfbpbkAY3RrSH7SkLjSVsujzryJ8kJ9ljl1BADTX
+         xtOg==
+X-Gm-Message-State: APjAAAX92zwROwxCnl+gPOGKFa/x0iJV7Y9wjZ8OIg1LJWWmUu2rmW8R
+        iFRSEmoJfwzIBnDUehSSzX9Utw==
+X-Google-Smtp-Source: APXvYqxA46ZEzE7Yv0U5LCXa9yNAl9DXPjMZ1oVoUL9L8QN5BgQiB0NTSIzl+FZG32FuOR1hC6qStQ==
+X-Received: by 2002:a17:902:bf0c:: with SMTP id bi12mr4773061plb.98.1574873398528;
+        Wed, 27 Nov 2019 08:49:58 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id k29sm4509575pfh.104.2019.11.27.08.49.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Nov 2019 08:49:57 -0800 (PST)
+Date:   Wed, 27 Nov 2019 08:49:56 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     "Sandeep Maheswaram (Temp)" <sanm@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH v3 1/1] arm64: dts: qcom: sc7180: Add USB related nodes
+Message-ID: <20191127164956.GF228856@google.com>
+References: <1573795421-13989-1-git-send-email-sanm@codeaurora.org>
+ <1573795421-13989-2-git-send-email-sanm@codeaurora.org>
+ <20191122005117.GM27773@google.com>
+ <0101016eac17bc4a-9bcb2dd5-bcb0-4532-84ff-c423179bfec4-000000@us-west-2.amazonses.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0101016eac17bc4a-9bcb2dd5-bcb0-4532-84ff-c423179bfec4-000000@us-west-2.amazonses.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable remoteproc WCSS PIL driver with glink
-and ssr subdevices. Also configures shared memory
-and enables smp2p and mailboxes required for IPC.
+On Wed, Nov 27, 2019 at 09:01:07AM +0000, Sandeep Maheswaram (Temp) wrote:
+> Hi Matthias,
+> 
+> Thanks for the review.
+> 
+> On 11/22/2019 6:21 AM, Matthias Kaehlcke wrote:
+> > Hi Sandeep,
+> > 
+> > On Fri, Nov 15, 2019 at 10:53:41AM +0530, Sandeep Maheswaram wrote:
+> > > Add nodes for DWC3 USB controller, QMP and QUSB PHYs.
+> > > 
+> > > Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> > > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> > > ---
+> > >   arch/arm64/boot/dts/qcom/sc7180-idp.dts |  25 ++++++++
+> > >   arch/arm64/boot/dts/qcom/sc7180.dtsi    | 105 ++++++++++++++++++++++++++++++++
+> > >   2 files changed, 130 insertions(+)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > > index 666e9b9..2c7dbdc 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > > 
+> > > ...
+> > > 
+> > > +		usb_1: usb@a6f8800 {
+> > > +			compatible = "qcom,sc7180-dwc3", "qcom,dwc3";
+> > > +			reg = <0 0x0a6f8800 0 0x400>;
+> > > +			status = "disabled";
+> > > +			#address-cells = <2>;
+> > > +			#size-cells = <2>;
+> > > +			ranges;
+> > > +			dma-ranges;
+> > > +
+> > > +			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
+> > > +				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
+> > > +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
+> > > +				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+> > > +				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>;
+> > > +			clock-names = "cfg_noc", "core", "iface", "mock_utmi",
+> > > +				      "sleep";
+> > > +
+> > > +			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+> > > +					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
+> > > +			assigned-clock-rates = <19200000>, <150000000>;
+> > > +
+> > > +			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+> > > +				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
+> > > +				     <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
+> > > +				     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
+> > > +			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+> > > +					  "dm_hs_phy_irq", "dp_hs_phy_irq";
+> > > +
+> > > +			power-domains = <&gcc USB30_PRIM_GDSC>;
+> > > +
+> > > +			resets = <&gcc GCC_USB30_PRIM_BCR>;
+> > > +
+> > > +			usb_1_dwc3: dwc3@a600000 {
+> > > +				compatible = "snps,dwc3";
+> > > +				reg = <0 0x0a600000 0 0xe000>;
+> > > +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+> > > +				iommus = <&apps_smmu 0x540 0>;
+> > > +				snps,dis_u2_susphy_quirk;
+> > > +				snps,dis_enblslpm_quirk;
+> > > +				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
+> > > +				phy-names = "usb2-phy", "usb3-phy";
+> > > +			};
+> > I see the following message at boot:
+> > 
+> > [    4.248436] dwc3 a600000.dwc3: Failed to get clk 'ref': -2
+> > 
+> > Apparently the driver is operational regardless, however the binding lists
+> > the clocks as required:
+> > 
+> >    Required properties:
+> >     ...
+> >     - clock-names: should contain "ref", "bus_early", "suspend"
+> >     - clocks: list of phandle and clock specifier pairs corresponding to
+> >               entries in the clock-names property.
+> > 
+> >    [Documentation/devicetree/bindings/usb/dwc3.txt]
+> > 
+> > The driver code also has a comment stating that the clocks should be
+> > specified:
+> > 
+> >    /*
+> >     * Clocks are optional, but new DT platforms should support all
+> >     * clocks as required by the DT-binding.
+> >     */
+> > 
+> >    [drivers/usb/dwc3/core.txt]
+> We are implenting all the required clocks in glue driver
+> drivers/usb/dwc3/dwc3-qcom.c.
+> 
+> Also there is exception for qcom,dwc3 in documentation
+> 
+> Documentation/devicetree/bindings/usb/dwc3.txt
+> 
+> 
+> Exception for clocks:
+> 
+> clocks are optional if the parent node (i.e. glue-layer) is compatible to
+> one of the following:
+> "amlogic,meson-axg-dwc3"
+> "amlogic,meson-gxl-dwc3"
+> "cavium,octeon-7130-usb-uctl"
+> "qcom,dwc3"
+> "samsung,exynos5250-dwusb3"
+> "samsung,exynos5433-dwusb3"
+> "samsung,exynos7-dwusb3"
+> "sprd,sc9860-dwc3"
+> "st,stih407-dwc3"
+> "ti,am437x-dwc3"
+> "ti,dwc3"
+> "ti,keystone-dwc3"
+> "rockchip,rk3399-dwc3"
+> "xlnx,zynqmp-dwc3"
 
-Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-Signed-off-by: Sricharan R <sricharan@codeaurora.org>
-Signed-off-by: Nikhil Prakash V <nprakash@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 121 ++++++++++++++++++++++++++++++++++
- 1 file changed, 121 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 6a61a63..da66533 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -10,12 +10,66 @@
- 	model = "Qualcomm Technologies, Inc. IPQ8074";
- 	compatible = "qcom,ipq8074";
- 
-+	reserved-memory {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		smem_region: memory@4ab00000 {
-+			no-map;
-+			reg = <0x0 0x4ab00000 0x0 0x00100000>;
-+		};
-+
-+		q6_region: memory@4b000000 {
-+			no-map;
-+			reg = <0x0 0x4b000000 0x0 0x05f00000>;
-+		};
-+	};
-+
- 	firmware {
- 		scm {
- 			compatible = "qcom,scm-ipq8074", "qcom,scm";
- 		};
- 	};
- 
-+	tcsr_mutex: hwlock@193d000 {
-+		compatible = "qcom,tcsr-mutex";
-+		syscon = <&tcsr_mutex_regs 0 0x80>;
-+		#hwlock-cells = <1>;
-+	};
-+
-+	smem {
-+		compatible = "qcom,smem";
-+		memory-region = <&smem_region>;
-+		hwlocks = <&tcsr_mutex 0>;
-+	};
-+
-+	wcss: smp2p-wcss {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <435>, <428>;
-+
-+		interrupt-parent = <&intc>;
-+		interrupts = <0 322 1>;
-+
-+		mboxes = <&apcs_glb 9>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <1>;
-+
-+		wcss_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			qcom,smp2p-feature-ssr-ack;
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		wcss_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
-+
- 	soc: soc {
- 		#address-cells = <0x1>;
- 		#size-cells = <0x1>;
-@@ -431,6 +485,73 @@
- 				      "axi_m_sticky";
- 			status = "disabled";
- 		};
-+
-+		tcsr_q6: syscon@1945000 {
-+			compatible = "syscon";
-+			reg = <0x01945000 0xe000>;
-+		};
-+
-+		tcsr_mutex_regs: syscon@193d000 {
-+			compatible = "syscon";
-+			reg = <0x01905000 0x8000>;
-+		};
-+
-+		apcs_glb: mailbox@b111000 {
-+			compatible = "qcom,ipq8074-apcs-apps-global";
-+			reg = <0x0b111000 0x1000>;
-+
-+			#mbox-cells = <1>;
-+		};
-+
-+		q6v5_wcss: q6v5_wcss@cd00000 {
-+			compatible = "qcom,ipq8074-wcss-pil";
-+			reg = <0x0cd00000 0x4040>,
-+			      <0x004ab000 0x20>;
-+			reg-names = "qdsp6",
-+				    "rmb";
-+			qca,auto-restart;
-+			qca,extended-intc;
-+			interrupts-extended = <&intc 0 325 1>,
-+					      <&wcss_smp2p_in 0 0>,
-+					      <&wcss_smp2p_in 1 0>,
-+					      <&wcss_smp2p_in 2 0>,
-+					      <&wcss_smp2p_in 3 0>;
-+			interrupt-names = "wdog",
-+					  "fatal",
-+					  "ready",
-+					  "handover",
-+					  "stop-ack";
-+
-+			resets = <&gcc GCC_WCSSAON_RESET>,
-+				 <&gcc GCC_WCSS_BCR>,
-+				 <&gcc GCC_WCSS_Q6_BCR>;
-+
-+			reset-names = "wcss_aon_reset",
-+				      "wcss_reset",
-+				      "wcss_q6_reset";
-+
-+			clocks = <&gcc GCC_PRNG_AHB_CLK>;
-+			clock-names = "prng";
-+
-+			qcom,halt-regs = <&tcsr_q6 0xa000 0xd000 0x0>;
-+
-+			qcom,smem-states = <&wcss_smp2p_out 0>,
-+					   <&wcss_smp2p_out 1>;
-+			qcom,smem-state-names = "shutdown",
-+						"stop";
-+
-+			memory-region = <&q6_region>;
-+
-+			glink-edge {
-+				interrupts = <GIC_SPI 321 IRQ_TYPE_EDGE_RISING>;
-+				qcom,remote-pid = <1>;
-+				mboxes = <&apcs_glb 8>;
-+
-+				rpm_requests {
-+					qcom,glink-channels = "IPCRTR";
-+				};
-+			};
-+		};
- 	};
- 
- 	cpus {
--- 
-1.9.1
-
+ah, I missed this, thanks for the pointer!
