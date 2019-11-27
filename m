@@ -2,184 +2,440 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 566D810AC59
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2019 10:01:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 63C6E10AC5E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2019 10:01:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726204AbfK0JBI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Nov 2019 04:01:08 -0500
-Received: from a27-18.smtp-out.us-west-2.amazonses.com ([54.240.27.18]:54440
-        "EHLO a27-18.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726112AbfK0JBI (ORCPT
+        id S1726320AbfK0JBj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Nov 2019 04:01:39 -0500
+Received: from a27-186.smtp-out.us-west-2.amazonses.com ([54.240.27.186]:58548
+        "EHLO a27-186.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726112AbfK0JBi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Nov 2019 04:01:08 -0500
+        Wed, 27 Nov 2019 04:01:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574845267;
-        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-        bh=/FYkTuY+LSN9o25C15XeQWbPXu5BJmnWfDm9uE5K0cA=;
-        b=TMm3m1/91ExRDCMLB8pJ6x0cX5rFP8AUa2GNo5KGDKpqqNnE+h1v/m8pmNbadOZq
-        15qbbBP0ZOIAVLtW4P5naY/p3Iu8jD8717CiUUPvOmDZnz1G5DBc+fHsetkQ2zb90YB
-        IsicgbQYAZ0z0YdrA1mMS6shwab4DPXVY79YRbGw=
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1574845296;
+        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
+        bh=W3L6nlmes8oXrfGyTRcQKAPftzxl1AiuiyJp8dmg4qg=;
+        b=LQG2OjjgFMOCHDWLBHvCmbMKHttjEMksDlR4S96SjPEyyV5pFvlSKq5yWrDu40aB
+        ZzASbkPRfUJSRra96rlqq6XKS0mY+zvnq6j4st/08Nlxxnlb2jlnHH22Iy5rVr62MIN
+        baya9Hl+8pojRgvEcwJkk8gpff5o6/Id4SN0Uu/k=
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574845267;
-        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding:Feedback-ID;
-        bh=/FYkTuY+LSN9o25C15XeQWbPXu5BJmnWfDm9uE5K0cA=;
-        b=SdpIEpRHyQDsTefS5/UEb4j2gq6rYwfKjTe7s9OpQlJ0fgwk64BgO9mFKTGEpVtj
-        K0kIC06KEt3Dqg2R+mGHQltz6j/v28P8WoNuNxMyCIL4ypG1ID8gKXNQlkk4QwKugbL
-        kPBzHW3nxYGERsjxgNzk9LDplxikkDPyB1w7n+Qg=
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1574845296;
+        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
+        bh=W3L6nlmes8oXrfGyTRcQKAPftzxl1AiuiyJp8dmg4qg=;
+        b=PshHnikMhvrHPlqgUvukSzpIAPjOmiHAHIL2mYDEbCBzbDICoJZ6bsV9/XU4+c0n
+        AxBylgkoqFTWVxlUMvEHGjE+XMgrVfTJ+pierx25rsVeJO+SNBJSM95BvO818tUch+h
+        7bZP+O+dXdBPE4s7uxDCClRezJQmKoTjEpuF5Kg4=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E5641C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sanm@codeaurora.org
-Subject: Re: [PATCH v3 1/1] arm64: dts: qcom: sc7180: Add USB related nodes
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>
-References: <1573795421-13989-1-git-send-email-sanm@codeaurora.org>
- <1573795421-13989-2-git-send-email-sanm@codeaurora.org>
- <20191122005117.GM27773@google.com>
-From:   "Sandeep Maheswaram (Temp)" <sanm@codeaurora.org>
-Message-ID: <0101016eac17bd3b-a4e688d8-03dd-45de-8e01-8052d9227752-000000@us-west-2.amazonses.com>
-Date:   Wed, 27 Nov 2019 09:01:07 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
 MIME-Version: 1.0
-In-Reply-To: <20191122005117.GM27773@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-SES-Outgoing: 2019.11.27-54.240.27.18
+Date:   Wed, 27 Nov 2019 09:01:36 +0000
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Odelu Kukatla <okukatla@codeaurora.org>
+Cc:     georgi.djakov@linaro.org, daidavid1@codeaurora.org,
+        bjorn.andersson@linaro.org, evgreen@google.com, sboyd@kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ilina@codeaurora.org, seansw@qti.qualcomm.com, elder@linaro.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH V1 1/2] dt-bindings: interconnect: Add Qualcomm SC7180 DT
+ bindings
+In-Reply-To: <0101016ea83b44e2-546fc9ff-6056-482b-a42d-231b9d908640-000000@us-west-2.amazonses.com>
+References: <1574780408-21282-1-git-send-email-okukatla@codeaurora.org>
+ <0101016ea83b44e2-546fc9ff-6056-482b-a42d-231b9d908640-000000@us-west-2.amazonses.com>
+Message-ID: <0101016eac183058-afcce911-d283-4748-b3ff-8455e076a313-000000@us-west-2.amazonses.com>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
+X-SES-Outgoing: 2019.11.27-54.240.27.186
 Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+Hey Odelu,
 
-Thanks for the review.
+On 2019-11-26 20:31, Odelu Kukatla wrote:
+> The Qualcomm SC7180 platform has several bus fabrics that could be
+> controlled and tuned dynamically according to the bandwidth demand.
+> 
+> Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
+> ---
+>  .../bindings/interconnect/qcom,bcm-voter.yaml      |   1 +
+>  .../bindings/interconnect/qcom,sc7180.yaml         | 155 
+> +++++++++++++++++++++
+>  include/dt-bindings/interconnect/qcom,sc7180.h     | 149 
+> ++++++++++++++++++++
+>  3 files changed, 305 insertions(+)
+>  create mode 100644
+> Documentation/devicetree/bindings/interconnect/qcom,sc7180.yaml
+>  create mode 100644 include/dt-bindings/interconnect/qcom,sc7180.h
+> 
+> diff --git
+> a/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
+> b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
+> index 74f0715..55c9f34 100644
+> --- 
+> a/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
+> +++ 
+> b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
+> @@ -19,6 +19,7 @@ description: |
+>  properties:
+>    compatible:
+>      enum:
+> +      - qcom,sc7180-bcm-voter
+>        - qcom,sdm845-bcm-voter
+> 
+>  required:
+> diff --git
+> a/Documentation/devicetree/bindings/interconnect/qcom,sc7180.yaml
+> b/Documentation/devicetree/bindings/interconnect/qcom,sc7180.yaml
+> new file mode 100644
+> index 0000000..487da5e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sc7180.yaml
+> @@ -0,0 +1,155 @@
+> +# SPDX-License-Identifier: GPL-2.0
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/interconnect/qcom,sc7180.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title:  Qualcomm SC7180 Network-On-Chip Interconnect
+> +
 
-On 11/22/2019 6:21 AM, Matthias Kaehlcke wrote:
-> Hi Sandeep,
->
-> On Fri, Nov 15, 2019 at 10:53:41AM +0530, Sandeep Maheswaram wrote:
->> Add nodes for DWC3 USB controller, QMP and QUSB PHYs.
->>
->> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
->> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7180-idp.dts |  25 ++++++++
->>   arch/arm64/boot/dts/qcom/sc7180.dtsi    | 105 ++++++++++++++++++++++++++++++++
->>   2 files changed, 130 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> index 666e9b9..2c7dbdc 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->>
->> ...
->>
->> +		usb_1: usb@a6f8800 {
->> +			compatible = "qcom,sc7180-dwc3", "qcom,dwc3";
->> +			reg = <0 0x0a6f8800 0 0x400>;
->> +			status = "disabled";
->> +			#address-cells = <2>;
->> +			#size-cells = <2>;
->> +			ranges;
->> +			dma-ranges;
->> +
->> +			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
->> +				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
->> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
->> +				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
->> +				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>;
->> +			clock-names = "cfg_noc", "core", "iface", "mock_utmi",
->> +				      "sleep";
->> +
->> +			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
->> +					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
->> +			assigned-clock-rates = <19200000>, <150000000>;
->> +
->> +			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "hs_phy_irq", "ss_phy_irq",
->> +					  "dm_hs_phy_irq", "dp_hs_phy_irq";
->> +
->> +			power-domains = <&gcc USB30_PRIM_GDSC>;
->> +
->> +			resets = <&gcc GCC_USB30_PRIM_BCR>;
->> +
->> +			usb_1_dwc3: dwc3@a600000 {
->> +				compatible = "snps,dwc3";
->> +				reg = <0 0x0a600000 0 0xe000>;
->> +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
->> +				iommus = <&apps_smmu 0x540 0>;
->> +				snps,dis_u2_susphy_quirk;
->> +				snps,dis_enblslpm_quirk;
->> +				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
->> +				phy-names = "usb2-phy", "usb3-phy";
->> +			};
-> I see the following message at boot:
->
-> [    4.248436] dwc3 a600000.dwc3: Failed to get clk 'ref': -2
->
-> Apparently the driver is operational regardless, however the binding lists
-> the clocks as required:
->
->    Required properties:
->     ...
->     - clock-names: should contain "ref", "bus_early", "suspend"
->     - clocks: list of phandle and clock specifier pairs corresponding to
->               entries in the clock-names property.
->
->    [Documentation/devicetree/bindings/usb/dwc3.txt]
->
-> The driver code also has a comment stating that the clocks should be
-> specified:
->
->    /*
->     * Clocks are optional, but new DT platforms should support all
->     * clocks as required by the DT-binding.
->     */
->
->    [drivers/usb/dwc3/core.txt]
-We are implenting all the required clocks in glue driver 
-drivers/usb/dwc3/dwc3-qcom.c.
+seems to be same as the SDM845
+icc description can't we just
+re-use/add it to that?
 
-Also there is exception for qcom,dwc3 in documentation
+> +maintainers:
+> +  - David Dai <daidavid1@codeaurora.org>
+> +
+> +description: |
+> +   SC7180 interconnect providers support system bandwidth requirements 
+> through
+> +   RPMh hardware accelerators known as Bus Clock Manager (BCM). The 
+> provider is
+> +   able to communicate with the BCM through the Resource State
+> Coordinator (RSC)
+> +   associated with each execution environment. Provider nodes must 
+> point to at
+> +   least one RPMh device child node pertaining to their RSC and each 
+> provider
+> +   can map to multiple RPMh resources.
+> +
+> +properties:
+> +  reg:
+> +    maxItems: 1
+> +
+> +  compatible:
+> +    enum:
+> +      - qcom,sc7180-aggre1-noc
+> +      - qcom,sc7180-aggre2-noc
+> +      - qcom,sc7180-camnoc-virt
+> +      - qcom,sc7180-compute-noc
+> +      - qcom,sc7180-config-noc
+> +      - qcom,sc7180-dc-noc
+> +      - qcom,sc7180-gem-noc
+> +      - qcom,sc7180-ipa-virt
+> +      - qcom,sc7180-mc-virt
+> +      - qcom,sc7180-mmss-noc
+> +      - qcom,sc7180-npu-noc
+> +      - qcom,sc7180-qup-virt
+> +      - qcom,sc7180-system-noc
+> +
+> +  '#interconnect-cells':
+> +    const: 1
+> +
+> +  qcom,bcm-voters:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    description: |
+> +      List of phandles to qcom,bcm-voter nodes that are required by
+> +      this interconnect to send RPMh commands.
+> +
+> +  qcom,bcm-voter-names:
+> +    $ref: /schemas/types.yaml#/definitions/string-array
+> +    description: |
+> +      Names for each of the qcom,bcm-voters specified.
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - '#interconnect-cells'
+> +  - qcom,bcm-voters
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +      #include <dt-bindings/interconnect/qcom,sc7180.h>
+> +
+> +      config_noc: interconnect@1500000 {
+> +            compatible = "qcom,sc7180-config-noc";
+> +            reg = <0 0x01500000 0 0x28000>;
+> +            #interconnect-cells = <1>;
+> +            qcom,bcm-voters = <&apps_bcm_voter>;
+> +      };
+> +
+> +      system_noc: interconnect@1620000 {
+> +            compatible = "qcom,sc7180-system-noc";
+> +            reg = <0 0x01620000 0 0x17080>;
+> +            #interconnect-cells = <1>;
+> +            qcom,bcm-voters = <&apps_bcm_voter>;
+> +      };
+> +
+> +      mc_virt: interconnect@1630000 {
+> +            compatible = "qcom,sc7180-mc-virt";
+> +            reg = <0 0x01630000 0 0x4000>;
+> +            #interconnect-cells = <1>;
+> +            qcom,bcm-voters = <&apps_bcm_voter>;
+> +      };
+> +
+> +      qup_virt: interconnect@1650000 {
+> +            compatible = "qcom,sc7180-qup-virt";
+> +            reg = <0 0x01650000 0 0x4000>;
+> +            #interconnect-cells = <1>;
+> +            qcom,bcm-voters = <&apps_bcm_voter>;
+> +      };
+> +
+> +      aggre1_noc: interconnect@16e0000 {
+> +            compatible = "qcom,sc7180-aggre1-noc";
+> +            reg = <0 0x016e0000 0 0x15080>;
+> +            #interconnect-cells = <1>;
+> +            qcom,bcm-voters = <&apps_bcm_voter>;
+> +      };
+> +
+> +      aggre2_noc: interconnect@1700000 {
+> +            compatible = "qcom,sc7180-aggre2-noc";
+> +            reg = <0 0x01700000 0 0x1f880>;
+> +            #interconnect-cells = <1>;
+> +            qcom,bcm-voters = <&apps_bcm_voter>;
+> +      };
+> +
+> +      compute_noc: interconnect@170e000 {
+> +            compatible = "qcom,sc7180-compute-noc";
+> +            reg = <0 0x0170e000 0 0x11880>;
+> +            #interconnect-cells = <1>;
+> +            qcom,bcm-voters = <&apps_bcm_voter>;
+> +      };
+> +
+> +      mmss_noc: interconnect@1740000 {
+> +            compatible = "qcom,sc7180-mmss-noc";
+> +            reg = <0 0x01740000 0 0x1c100>;
+> +            #interconnect-cells = <1>;
+> +            qcom,bcm-voters = <&apps_bcm_voter>;
+> +      };
+> +
+> +      ipa_virt: interconnect@1e00000 {
+> +            compatible = "qcom,sc7180-ipa-virt";
+> +            reg = <0 0x01e00000 0 0x4000>;
+> +            #interconnect-cells = <1>;
+> +            qcom,bcm-voters = <&apps_bcm_voter>;
+> +      };
+> +
+> +      dc_noc: interconnect@9160000 {
+> +            compatible = "qcom,sc7180-dc-noc";
+> +            reg = <0 0x09160000 0 0x03200>;
+> +            #interconnect-cells = <1>;
+> +            qcom,bcm-voters = <&apps_bcm_voter>;
+> +      };
+> +
+> +      gem_noc: interconnect@9680000 {
+> +            compatible = "qcom,sc7180-gem-noc";
+> +            reg = <0 0x09680000 0 0x3e200>;
+> +            #interconnect-cells = <1>;
+> +            qcom,bcm-voters = <&apps_bcm_voter>;
+> +      };
+> +
+> +      npu_noc: interconnect@9990000 {
+> +            compatible = "qcom,sc7180-npu-noc";
+> +            reg = <0 0x09990000 0 0x1600>;
+> +            #interconnect-cells = <1>;
+> +            qcom,bcm-voters = <&apps_bcm_voter>;
+> +      };
+> +
+> +      camnoc_virt: interconnect@ac00000 {
+> +            compatible = "qcom,sc7180-camnoc-virt";
+> +            reg = <0 0x0ac00000 0 0x4000>;
+> +            #interconnect-cells = <1>;
+> +            qcom,bcm-voters = <&apps_bcm_voter>;
+> +      };
+> diff --git a/include/dt-bindings/interconnect/qcom,sc7180.h
+> b/include/dt-bindings/interconnect/qcom,sc7180.h
+> new file mode 100644
+> index 0000000..b762bc3
+> --- /dev/null
+> +++ b/include/dt-bindings/interconnect/qcom,sc7180.h
+> @@ -0,0 +1,149 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Qualcomm SC7180 interconnect IDs
+> + *
+> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef __DT_BINDINGS_INTERCONNECT_QCOM_SC7180_H
+> +#define __DT_BINDINGS_INTERCONNECT_QCOM_SC7180_H
 
-Documentation/devicetree/bindings/usb/dwc3.txt
+Please use local ids instead, the
+following way of defining nodes will
+lead to unnecessarily large array
+sizes.
 
+> +
+> +#define MASTER_APPSS_PROC			0
+> +#define MASTER_SYS_TCU				1
+> +#define MASTER_NPU_SYS				2
+> +#define MASTER_IPA_CORE				3
+> +#define MASTER_LLCC				4
+> +#define MASTER_A1NOC_CFG			5
+> +#define MASTER_A2NOC_CFG			6
+> +#define MASTER_CNOC_DC_NOC			7
+> +#define MASTER_GEM_NOC_CFG			8
+> +#define MASTER_CNOC_MNOC_CFG			9
+> +#define MASTER_NPU_NOC_CFG			10
+> +#define MASTER_QDSS_BAM				11
+> +#define MASTER_QSPI				12
+> +#define MASTER_QUP_0				13
+> +#define MASTER_QUP_1				14
+> +#define MASTER_SNOC_CFG				15
+> +#define MASTER_A1NOC_SNOC			16
+> +#define MASTER_A2NOC_SNOC			17
+> +#define MASTER_COMPUTE_NOC			18
+> +#define MASTER_GEM_NOC_SNOC			19
+> +#define MASTER_MNOC_HF_MEM_NOC			20
+> +#define MASTER_MNOC_SF_MEM_NOC			21
+> +#define MASTER_NPU				22
+> +#define MASTER_SNOC_CNOC			23
+> +#define MASTER_SNOC_GC_MEM_NOC			24
+> +#define MASTER_SNOC_SF_MEM_NOC			25
+> +#define MASTER_QUP_CORE_0			26
+> +#define MASTER_QUP_CORE_1			27
+> +#define MASTER_CAMNOC_HF0			28
+> +#define MASTER_CAMNOC_HF1			29
+> +#define MASTER_CAMNOC_HF0_UNCOMP		30
+> +#define MASTER_CAMNOC_HF1_UNCOMP		31
+> +#define MASTER_CAMNOC_SF			32
+> +#define MASTER_CAMNOC_SF_UNCOMP			33
+> +#define MASTER_CRYPTO				34
+> +#define MASTER_GFX3D				35
+> +#define MASTER_IPA				36
+> +#define MASTER_MDP0				37
+> +#define MASTER_NPU_PROC				38
+> +#define MASTER_PIMEM				39
+> +#define MASTER_ROTATOR				40
+> +#define MASTER_VIDEO_P0				41
+> +#define MASTER_VIDEO_PROC			42
+> +#define MASTER_QDSS_DAP				43
+> +#define MASTER_QDSS_ETR				44
+> +#define MASTER_SDCC_2				45
+> +#define MASTER_UFS_MEM				46
+> +#define MASTER_USB3				47
+> +#define MASTER_EMMC				48
+> +#define SLAVE_EBI1				512
 
-Exception for clocks:
+Shouldn't the node ids be just
+sequential?
 
-clocks are optional if the parent node (i.e. glue-layer) is compatible to
-one of the following:
-"amlogic,meson-axg-dwc3"
-"amlogic,meson-gxl-dwc3"
-"cavium,octeon-7130-usb-uctl"
-"qcom,dwc3"
-"samsung,exynos5250-dwusb3"
-"samsung,exynos5433-dwusb3"
-"samsung,exynos7-dwusb3"
-"sprd,sc9860-dwc3"
-"st,stih407-dwc3"
-"ti,am437x-dwc3"
-"ti,dwc3"
-"ti,keystone-dwc3"
-"rockchip,rk3399-dwc3"
-"xlnx,zynqmp-dwc3"
-
+> +#define SLAVE_IPA_CORE				513
+> +#define SLAVE_A1NOC_CFG				514
+> +#define SLAVE_A2NOC_CFG				515
+> +#define SLAVE_AHB2PHY_SOUTH			516
+> +#define SLAVE_AHB2PHY_CENTER			517
+> +#define SLAVE_AOP				518
+> +#define SLAVE_AOSS				519
+> +#define SLAVE_APPSS				520
+> +#define SLAVE_BOOT_ROM				521
+> +#define SLAVE_NPU_CAL_DP0			522
+> +#define SLAVE_CAMERA_CFG			523
+> +#define SLAVE_CAMERA_NRT_THROTTLE_CFG		524
+> +#define SLAVE_CAMERA_RT_THROTTLE_CFG		525
+> +#define SLAVE_CLK_CTL				526
+> +#define SLAVE_NPU_CP				527
+> +#define SLAVE_RBCPR_CX_CFG			528
+> +#define SLAVE_RBCPR_MX_CFG			529
+> +#define SLAVE_CRYPTO_0_CFG			530
+> +#define SLAVE_DCC_CFG				531
+> +#define SLAVE_CNOC_DDRSS			532
+> +#define SLAVE_DISPLAY_CFG			533
+> +#define SLAVE_DISPLAY_RT_THROTTLE_CFG		534
+> +#define SLAVE_DISPLAY_THROTTLE_CFG		535
+> +#define SLAVE_NPU_INT_DMA_BWMON_CFG		536
+> +#define SLAVE_NPU_DPM				537
+> +#define SLAVE_EMMC_CFG				538
+> +#define SLAVE_GEM_NOC_CFG			539
+> +#define SLAVE_GLM				540
+> +#define SLAVE_GFX3D_CFG				541
+> +#define SLAVE_IMEM_CFG				542
+> +#define SLAVE_IPA_CFG				543
+> +#define SLAVE_ISENSE_CFG			544
+> +#define SLAVE_LLCC_CFG				545
+> +#define SLAVE_NPU_LLM_CFG			546
+> +#define SLAVE_MSS_PROC_MS_MPU_CFG		547
+> +#define SLAVE_CNOC_MNOC_CFG			548
+> +#define SLAVE_CNOC_MSS				549
+> +#define SLAVE_NPU_CFG				550
+> +#define SLAVE_NPU_DMA_BWMON_CFG			551
+> +#define SLAVE_NPU_PROC_BWMON_CFG		552
+> +#define SLAVE_PDM				553
+> +#define SLAVE_PIMEM_CFG				554
+> +#define SLAVE_PRNG				555
+> +#define SLAVE_QDSS_CFG				556
+> +#define SLAVE_QM_CFG				557
+> +#define SLAVE_QM_MPU_CFG			558
+> +#define SLAVE_QSPI_0				559
+> +#define SLAVE_QUP_0				560
+> +#define SLAVE_QUP_1				561
+> +#define SLAVE_SDCC_2				562
+> +#define SLAVE_SECURITY				563
+> +#define SLAVE_SNOC_CFG				564
+> +#define SLAVE_NPU_TCM				565
+> +#define SLAVE_TCSR				566
+> +#define SLAVE_TLMM_WEST				567
+> +#define SLAVE_TLMM_NORTH			568
+> +#define SLAVE_TLMM_SOUTH			569
+> +#define SLAVE_UFS_MEM_CFG			570
+> +#define SLAVE_USB3				571
+> +#define SLAVE_VENUS_CFG				572
+> +#define SLAVE_VENUS_THROTTLE_CFG		573
+> +#define SLAVE_VSENSE_CTRL_CFG			574
+> +#define SLAVE_A1NOC_SNOC			575
+> +#define SLAVE_A2NOC_SNOC			576
+> +#define SLAVE_CAMNOC_UNCOMP			577
+> +#define SLAVE_CDSP_GEM_NOC			578
+> +#define SLAVE_SNOC_CNOC				579
+> +#define SLAVE_GEM_NOC_SNOC			580
+> +#define SLAVE_SNOC_GEM_NOC_GC			581
+> +#define SLAVE_SNOC_GEM_NOC_SF			582
+> +#define SLAVE_LLCC				583
+> +#define SLAVE_MNOC_HF_MEM_NOC			584
+> +#define SLAVE_MNOC_SF_MEM_NOC			585
+> +#define SLAVE_NPU_COMPUTE_NOC			586
+> +#define SLAVE_QUP_CORE_0			587
+> +#define SLAVE_QUP_CORE_1			588
+> +#define SLAVE_IMEM				589
+> +#define SLAVE_PIMEM				590
+> +#define SLAVE_SERVICE_A1NOC			591
+> +#define SLAVE_SERVICE_A2NOC			592
+> +#define SLAVE_SERVICE_CNOC			593
+> +#define SLAVE_SERVICE_GEM_NOC			594
+> +#define SLAVE_SERVICE_MNOC			595
+> +#define SLAVE_SERVICE_NPU_NOC			596
+> +#define SLAVE_SERVICE_SNOC			597
+> +#define SLAVE_QDSS_STM				598
+> +#define SLAVE_TCU				599
+> +
+> +#endif
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
