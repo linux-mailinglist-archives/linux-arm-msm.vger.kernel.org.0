@@ -2,63 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FD5C10AD65
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2019 11:16:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 19A8310AD97
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Nov 2019 11:29:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726292AbfK0KQO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Nov 2019 05:16:14 -0500
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:64310 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726149AbfK0KQO (ORCPT
+        id S1727111AbfK0K3V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Nov 2019 05:29:21 -0500
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:46842 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726149AbfK0K3U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Nov 2019 05:16:14 -0500
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 27 Nov 2019 15:46:11 +0530
-IronPort-SDR: Qp494lQ+am4ylxGZ8MTvUKCSOUEOfZaZEJDAxZDOv7E88WehlZ/cFjIjgspwTSGMxbK2OOwb/s
- i+y0GQASfJlCr61kIYpVDRtyv1bAitIGVGC7nYQA6e35xfkd7ESYe3lXZtPdom7XBRhIz0dR1c
- baIqfYktoZFarl9JbaHYrKN/X8u6Tdrhx5Pjmi+ut+GvrvtvRohzoXZAIo6nU+7F1T5skt9+3S
- 0bgGgLxbr46y51wo1KSGzRw55qI9sOorGOwEdOXUPWgwe/WjPNMcn9m7N1YCzDkzD5GnGYBh0J
- PVtN7Zg4DpiDAzAiZBjKpPed
-Received: from dhar-linux.qualcomm.com ([10.204.66.25])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 27 Nov 2019 15:46:10 +0530
-Received: by dhar-linux.qualcomm.com (Postfix, from userid 2306995)
-        id 7652B3B5B; Wed, 27 Nov 2019 15:46:09 +0530 (IST)
-From:   Shubhashree Dhar <dhar@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Shubhashree Dhar <dhar@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        abhinavk@codeaurora.org, jsanka@codeaurora.org,
-        chandanu@codeaurora.org, nganji@codeaurora.org
-Subject: [PATCH] msm:disp:dpu1: Fix core clk rate in display driver
-Date:   Wed, 27 Nov 2019 15:46:07 +0530
-Message-Id: <1574849767-6376-1-git-send-email-dhar@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Wed, 27 Nov 2019 05:29:20 -0500
+Received: by mail-lf1-f65.google.com with SMTP id a17so16681408lfi.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Nov 2019 02:29:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=ix8gklYmB6UDNV/QC3c+tosxDnV18E4E+uiNnO6VScw=;
+        b=WjmA9qLe/NecRbZ3fzetc0/1Nm2xYFXmf6V+NnuxS9t/I35sAGxJE5N2A/3ajU1how
+         1tmTUhAQ8BZ2SL12A5B+pD1I7QQAgUKS/3lecivVvUrmS42uKZQOvokBmcaKA6fXiyhz
+         71cGRHIkFcMNWPhnwTGyeJYz4qUUjDM9W9cgT8Gg6qRWI55mgOTpkJnwhsNeutE+NNbB
+         Chcr7Pe9cW7ZF1uEAQMpz7qMtS/jK0OTWPq+BR3+MPTnPSq6HQyxyAAGny6hl2799QzJ
+         /ipHdBqyNwQcDJ7CHr5feCfwYuQqGZkZS05veAwKx65zFqrQVAW1uiXiV8e2CU11dm2s
+         wiSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ix8gklYmB6UDNV/QC3c+tosxDnV18E4E+uiNnO6VScw=;
+        b=hjbt0IvYhIX4WHdbDCOTyNlEipBKOJYGFaQM7z1DLbI1MXp/dRiaEBzGeGLpZOI+r3
+         2oLsKfQFu3AOuGzoNNNCVDyGjAmCyYnFNzSzwYGnPMo/OIT4RO8cQPR+RYhgkP+TI0kL
+         bK6UofkWdbpG7ucZ+F5SWG494Z5A9tqz3sEqTMBBc7rFlUFdSd5RYVM9e/sixaM2IDJ4
+         Q16RnH6OjbHJywVkZNp8dUEHfZOMmA5fs1ADMQyQne2t7O5lbTqWKmwPx4uacQwcydux
+         IYMjFGsNKM/XdSayEMuMmVG7QHAtRn0ycmgF2JUs/MSASV2dgt4N1TckKQBoLC25ZsRg
+         3/qw==
+X-Gm-Message-State: APjAAAU3GJ9UOF/U800wDuaMgtMFaOWYOVaJN2BzcbGevrGs2mbosm86
+        8Y/Tdy6Nl2WXqEni4sXDbPblUg==
+X-Google-Smtp-Source: APXvYqzwxSjoX0WePnCcqKWVwhIrIupw9nuRgrbFXnTzGgsvQBmMgqmcnl+RS0sDa/QqD5iVi1qHMA==
+X-Received: by 2002:ac2:4312:: with SMTP id l18mr28284015lfh.38.1574850557532;
+        Wed, 27 Nov 2019 02:29:17 -0800 (PST)
+Received: from uffe-XPS-13-9360.ideon.se ([85.235.10.227])
+        by smtp.gmail.com with ESMTPSA id t9sm6868260ljj.19.2019.11.27.02.29.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Nov 2019 02:29:16 -0800 (PST)
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+To:     Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org
+Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v3 00/13] cpuidle: psci: Support hierarchical CPU arrangement
+Date:   Wed, 27 Nov 2019 11:29:01 +0100
+Message-Id: <20191127102914.18729-1-ulf.hansson@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix max core clk rate during dt parsing in display driver.
+Rob, Lorenzo, Sudeep - apologize for sending a new version in the middle of the
+merge window, but I thought I might as well get this out, especially since
+there are only a very small amount of updates. Please review, whenever you find
+some time for it.
 
-Signed-off-by: Shubhashree Dhar <dhar@codeaurora.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c | 1 +
- 1 file changed, 1 insertion(+)
+Kind regards
+Ulf Hansson
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c
-index 27fbeb5..991fff1 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c
-@@ -187,6 +187,7 @@ int msm_dss_parse_clock(struct platform_device *pdev,
- 			continue;
- 		mp->clk_config[i].rate = rate;
- 		mp->clk_config[i].type = DSS_CLK_PCLK;
-+		mp->clk_config[i].max_rate = rate;
- 	}
- 
- 	mp->num_clk = num_clk;
+Changes in v3:
+	- Take one step further to completely avoid executing any OSI specific
+	code from the ->enter() callback, while operating in the default PSCI
+	Platform Coordinated mode.
+	- Update example for the PSCI DT bindings to make it compile with
+	"make dt_binding_check"
+
+Changes in v2:
+	- Avoid to affect the non-OSI path with specific changes for OSI. This
+	forced me to re-order the series and a caused more or less minor changes
+	to most of the patches.
+	- Updated the DT bindings for PSCI to clarify and to include the "psci"
+	name of the PM domain to attach to.
+	- Replaced patch1 with another patch from Sudeep, solving the same
+	problem, but in a different way.
+
+This series enables initial support for hierarchical CPU arrangement, managed
+by PSCI and its corresponding cpuidle driver. It's based on using the generic
+PM domain (genpd), which nowadays also supports devices belonging to CPUs.
+
+The last DTS patch enables the hierarchical topology to be used for the Qcom
+410c Dragonboard, which supports the PSCI OS-initiated mode.
+
+More detailed background can be found from previous submissions [1].
+
+The series is also available at:
+git.linaro.org/people/ulf.hansson/linux-pm.git next
+
+Kind regards
+Ulf Hansson
+
+[1]
+https://lwn.net/Articles/788306/
+
+Lina Iyer (1):
+  cpuidle: dt: Support hierarchical CPU idle states
+
+Sudeep Holla (1):
+  cpuidle: psci: Align psci_power_state count with idle state count
+
+Ulf Hansson (11):
+  dt: psci: Update DT bindings to support hierarchical PSCI states
+  firmware: psci: Export functions to manage the OSI mode
+  of: base: Add of_get_cpu_state_node() to get idle states for a CPU
+    node
+  cpuidle: psci: Simplify OF parsing of CPU idle state nodes
+  cpuidle: psci: Support hierarchical CPU idle states
+  cpuidle: psci: Add a helper to attach a CPU to its PM domain
+  cpuidle: psci: Attach CPU devices to their PM domains
+  cpuidle: psci: Prepare to use OS initiated suspend mode via PM domains
+  cpuidle: psci: Manage runtime PM in the idle path
+  cpuidle: psci: Add support for PM domains by using genpd
+  arm64: dts: Convert to the hierarchical CPU topology layout for
+    MSM8916
+
+ .../devicetree/bindings/arm/cpus.yaml         |  15 +
+ .../devicetree/bindings/arm/psci.yaml         | 104 ++++++
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |  57 +++-
+ drivers/cpuidle/Makefile                      |   4 +-
+ drivers/cpuidle/cpuidle-psci-domain.c         | 302 ++++++++++++++++++
+ drivers/cpuidle/cpuidle-psci.c                | 114 +++++--
+ drivers/cpuidle/cpuidle-psci.h                |  17 +
+ drivers/cpuidle/dt_idle_states.c              |   5 +-
+ drivers/firmware/psci/psci.c                  |  18 +-
+ drivers/of/base.c                             |  36 +++
+ include/linux/of.h                            |   8 +
+ include/linux/psci.h                          |   2 +
+ 12 files changed, 647 insertions(+), 35 deletions(-)
+ create mode 100644 drivers/cpuidle/cpuidle-psci-domain.c
+ create mode 100644 drivers/cpuidle/cpuidle-psci.h
+
 -- 
-1.9.1
+2.17.1
 
