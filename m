@@ -2,55 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B6C8110CB86
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2019 16:15:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C027510CDB4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2019 18:21:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726723AbfK1PPg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Nov 2019 10:15:36 -0500
-Received: from onstation.org ([52.200.56.107]:60716 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726608AbfK1PPg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Nov 2019 10:15:36 -0500
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id DA3D23EE8C;
-        Thu, 28 Nov 2019 15:15:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1574954135;
-        bh=CpuXn/1YuVR1thvz9vWG1G71nhfeLIpEDAFoJfvL0rY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Drs4fjWxdOVDm3ua1lPGFAi0pCzKM9XKe9royO0rhFS/hgGadjFOJftXIHIGjhQRA
-         lsQGPPTwGOAv2tHNdwOgJoqFmzrMWD7e8o96Xh8A/BSMCpBiFwzRP7HgziKlo4SaR4
-         P6fY/3UrWidq+vXoy25fh7AxbBBAjSseJFp+f/ms=
-Date:   Thu, 28 Nov 2019 10:15:35 -0500
-From:   Brian Masney <masneyb@onstation.org>
-To:     Georgi Djakov <georgi.djakov@linaro.org>
-Cc:     linux-pm@vger.kernel.org, bjorn.andersson@linaro.org,
-        agross@kernel.org, digetx@gmail.com, evgreen@chromium.org,
-        daidavid1@codeaurora.org, sibis@codeaurora.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 3/5] interconnect: qcom: msm8974: Walk the list safely on
- node removal
-Message-ID: <20191128151535.GC18117@onstation.org>
-References: <20191128133435.25667-1-georgi.djakov@linaro.org>
- <20191128133435.25667-3-georgi.djakov@linaro.org>
+        id S1726608AbfK1RVn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Nov 2019 12:21:43 -0500
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:40189 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726556AbfK1RVn (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 28 Nov 2019 12:21:43 -0500
+Received: by mail-ua1-f67.google.com with SMTP id p18so8415184uar.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2019 09:21:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jWkZvzbR/ZCBOrIAXP6oks1/eAZlhWE0zqLBZ2M7SMQ=;
+        b=W7UDV4c14mrLGdwXUV3VoqTwJpaneaRNFmFy1VATFsdnCSCAulu4QwYp4RjIE/e7JM
+         GN46LWMlA6UAie8zMpuPYDWPG6ULVAcd0HciOad4dQ4sJkG7Vt0RHZhBJ1Pk1zzejrzv
+         l29MYkqpwLmImsYg2NbH3UjIqv2tpsXl9UGxly4b5aFY3DWK/JlSo+6wyzMZPJgSdgp7
+         n5RJiDEVmvvda5B1e5zxk0HWG14uoKstjsjp4tY39lA8SewBGUsbzd/TlSdL8eeWYtYh
+         zf8XbelUETKTkMPfY94sq2yA2GbVXJ4VuLD+JUrzM4lndZlXdi1aiFDdwcm6lOUskK+A
+         W6bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jWkZvzbR/ZCBOrIAXP6oks1/eAZlhWE0zqLBZ2M7SMQ=;
+        b=PsiHlPuTh5oewtf5GWDpw65m6543hmNSNv7OTvzwbCZlafTnCkaKARFV+7JIZWHRqt
+         2cuGk9yZJGtGeBa2MjIAHn0u2dwQQAt+rndHH18PvIlkB49SLM6C/slriopbRJfPQTef
+         82ijr3yj/fHhMdI9PpuVrNqGba7WsM+ISd2/PSDSzdx/e4GBmgHlVoG9J7RXT2LNzxPz
+         diF3zN4RTiByI+RNt8cJ9UtHhqCeMWZyAmiHvhlIHnI0AdpX9YsuRu9zs0MD3X7Cs7DT
+         tMTCt4as1JZ4hKAdII8/GYM0xsfe+RovWcd4uv3cT8pTITeR/u9/BRTPKlu0ThrrDNIf
+         BOsQ==
+X-Gm-Message-State: APjAAAUlSsgsMgKCEx0ozKeH3+EBy2BKGSFG0j0iKKxDC50usK4EtCiW
+        3AwL+JWtwL3e6MtTlyc6fFZV4+1QC2d9DxSspsoliw==
+X-Google-Smtp-Source: APXvYqzFtMI/TaLzyv+05fJQrBZJzoCKp1k35HT7uhgJP/uJmSW4zO/ZIlZYzh1OEUl2NOO2zPDyUA5n1fUHYdvCgww=
+X-Received: by 2002:ab0:2042:: with SMTP id g2mr7289164ual.19.1574961700051;
+ Thu, 28 Nov 2019 09:21:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191128133435.25667-3-georgi.djakov@linaro.org>
+References: <20191127102914.18729-1-ulf.hansson@linaro.org>
+ <20191127102914.18729-9-ulf.hansson@linaro.org> <20191128141443.GA31123@e121166-lin.cambridge.arm.com>
+In-Reply-To: <20191128141443.GA31123@e121166-lin.cambridge.arm.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 28 Nov 2019 18:21:03 +0100
+Message-ID: <CAPDyKFr1GTAkNyTmLvvC1ovm4yOtMGLOVWA-e-wjGJz2ENdN1g@mail.gmail.com>
+Subject: Re: [PATCH v3 08/13] cpuidle: psci: Add a helper to attach a CPU to
+ its PM domain
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 28, 2019 at 03:34:33PM +0200, Georgi Djakov wrote:
-> As we will remove items off the list using list_del(), we need to use the
-> safe version of list_for_each_entry().
-> 
-> Fixes: 4e60a9568dc6 ("interconnect: qcom: add msm8974 driver")
-> Reported-by: Dmitry Osipenko <digetx@gmail.com>
-> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+On Thu, 28 Nov 2019 at 15:15, Lorenzo Pieralisi
+<lorenzo.pieralisi@arm.com> wrote:
+>
+> On Wed, Nov 27, 2019 at 11:29:09AM +0100, Ulf Hansson wrote:
+>
+> [...]
+>
+> > +struct device *psci_dt_attach_cpu(int cpu)
+> > +{
+> > +     struct device *dev;
+> > +
+> > +     /* Currently limit the hierarchical topology to be used in OSI mode. */
+> > +     if (!psci_has_osi_support())
+> > +             return NULL;
+> > +
+> > +     dev = dev_pm_domain_attach_by_name(get_cpu_device(cpu), "psci");
+> > +     if (IS_ERR_OR_NULL(dev))
+> > +             return dev;
+> > +
+> > +     pm_runtime_irq_safe(dev);
+> > +     if (cpu_online(cpu))
+>
+> It is unclear to me how we handle (or rather we don't) CPU hotplug
+> with this series - it does not look OK unless genpd code manages
+> that automatically.
 
-Reviewed-by: Brian Masney <masneyb@onstation.org>
+The series doesn't handle CPU hotplug at the moment, simply because I
+am targeting to get the basic support, upstream first.
+
+For a functionality point of view, this isn't a problem in my opinion.
+Simply because the consequence is only that the idle states for the
+"cluster" will not be reached if there is a CPU brought offline.
+
+As we talked about at LPC and as also told Sudeep for the v2 series,
+CPU hotplug is going to be implemented by using a CPU HP notifier.
+That should be fine, right?
+
+Kind regards
+Uffe
