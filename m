@@ -2,176 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ACA0B10CE58
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2019 19:08:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F09310CE68
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2019 19:14:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726648AbfK1SIn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Nov 2019 13:08:43 -0500
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:36651 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726520AbfK1SIn (ORCPT
+        id S1726401AbfK1SOm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Nov 2019 13:14:42 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:38057 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726545AbfK1SOm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Nov 2019 13:08:43 -0500
-Received: by mail-pj1-f67.google.com with SMTP id n96so957084pjc.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2019 10:08:43 -0800 (PST)
+        Thu, 28 Nov 2019 13:14:42 -0500
+Received: by mail-pg1-f195.google.com with SMTP id t3so12778466pgl.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2019 10:14:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=UzTAtRry397ZYhg0O1GlX7oqsC/jtQu5uTWNzYWatZU=;
-        b=jXnWKlni3SRaJ0xAUeaz25YOx8dNpgfEHFTumsUre4KFGIegDvD73LK/Co+4NnH3Pa
-         XwsKwowB8tclY+zCN2YQgl81i/kJ6ioeHEQUaU83TU/1dFZRhCgSeGkPRhSlipmKoO13
-         Ar4ry4Dr3ctbuGK/h+R7DA470yA52KedBnxqfNbxUDN67FNaWNR2BKqgrkW99b9eLTcV
-         gJzEQlMWrlDqJbAFfbLmL1BMrp4ujBQrdX4tZqoW5vZ1HxB11hRk7F8qG2gRee28risb
-         iYk9B+CRY/ij+HCqvosZJ7/tXDIu86X/PvIkAW71eTfeKZF5U1QRE1D+lcJATCQzRskA
-         /eDA==
+        bh=kzxdGrRpbIx3iqer3NoD+i566/YUyl1UTsZIqIXHL8g=;
+        b=jghqLvEpZPEY8roPdXK4chlHRt4N3R0YUvdb23sed3yv2N0d778VpDPtB7LqAtxJ4R
+         JxgGg3oiw4h7SceC5WZOmyMVHe3Pa9Z8gLILLF08n0c9dZz5ZjRLml1mAOGrm6+0V7AQ
+         sk/z7l72egF6jOyKWG2AriNrIiq7TLavZ1U8PkIaULHqCe8rVewKFo5rw6iLGSSN2q3R
+         uZ5xqRz3kC9ionb3CJr7HUozeGXLwKGuJkssyKglqK+8ZxCBbvfpuA8ed4fRnBvHe846
+         dtM8DGX0z7g3butb6L+vUwmhFL6fHBF+V7BF/SIhF43Is5JTpgfOQa3Yx641alio6plu
+         bAeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=UzTAtRry397ZYhg0O1GlX7oqsC/jtQu5uTWNzYWatZU=;
-        b=Irc6jkX3SFdxp8hIgBYXja6uOMY3Rhj8eQ88RA4p68w53lr9qD/sirL250BA7Ia35u
-         DXBm0XsCJh8oAPdXzRi7ZfUZZvOtGyPLZGIdE6i4Vs5iQ6ZzS8mWyBEdtVH4NKCD6hl3
-         7TC1wV920LVoNe3MrqZ5QoMQCZJV7lBLS2AMX+nsizwNL8qo2LOy/4XkYEa+/h3OwAB6
-         fxNAC+fn4KRVPyofFWREQFzYnDeqzR0gceN2LiHGMqTJK6Y4wvPFxHkjUSm8tzXYNum/
-         7Hp8EfGM306tTHDqBsHBEUrI6kcJawafqUrC/bZ2AsXv0Wf9HKuS7f3ZrAAUOSJCqb2d
-         guAg==
-X-Gm-Message-State: APjAAAUz97YKU83BXNknyu69q+RZrHeXYAJY6jqMNamBF16KcAzlgFo6
-        CkhMQtmRsIsPqX/wriDPCFZKxg==
-X-Google-Smtp-Source: APXvYqydcsPPlLQHOKIvBcm1KKunXeHD/OSxHg2CJr144gqJVjvmqFjSW1ftEUXE3tTpAOp8YUdJhA==
-X-Received: by 2002:a17:90a:bd8f:: with SMTP id z15mr9369094pjr.54.1574964522806;
-        Thu, 28 Nov 2019 10:08:42 -0800 (PST)
+        bh=kzxdGrRpbIx3iqer3NoD+i566/YUyl1UTsZIqIXHL8g=;
+        b=m7SzKrItgmzg3wFjmHRexMmTgnuA5+DlcCCjPrjuYriOy51ohQLB0H/iwrIOcUnGTk
+         a9NtXicklIe1XoWajis5Xa29eqf2UBTdBFsMuRJnlyoAXfhi+K6zbg/tAVlBmgsd4Sa4
+         8NkCZyrHV3ufZUvLvVnq7xnk5cgAAMzjB/tWeu8A3iEEDVgTGVjYAFkU+O4SWnr6XJ3v
+         YL4wHTCPJcJoX4WGOkrUATDyHVg6ZbmjUmeMmGPAtCWeQ3uW4ctkTbd/5rkdztVGU1Mr
+         WpKfHbE3A1fhTyNoVaKOLzR+OGEDxa/c4ta9rRumo7I82+rDE7MMeVsjO7Dl/lUyrBjO
+         TZRA==
+X-Gm-Message-State: APjAAAVl3E/eS9pkiLGtO44BVJo7jcMq/LD+mFR2LI/s3WNV0XkphM+y
+        WZvfx78D3w2jq1ey4oZV7HZkpQ==
+X-Google-Smtp-Source: APXvYqwNngPDp9Mzjo6D7IqZvUWBgaCWIGeB0o1wC9C/oX8BxWwFagWvKZ5iq1wprcMAPLXSE1JfMQ==
+X-Received: by 2002:a05:6a00:3:: with SMTP id h3mr1847541pfk.78.1574964881686;
+        Thu, 28 Nov 2019 10:14:41 -0800 (PST)
 Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id b1sm11323605pfi.74.2019.11.28.10.08.41
+        by smtp.gmail.com with ESMTPSA id r62sm3077816pfc.89.2019.11.28.10.14.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Nov 2019 10:08:42 -0800 (PST)
-Date:   Thu, 28 Nov 2019 10:08:39 -0800
+        Thu, 28 Nov 2019 10:14:41 -0800 (PST)
+Date:   Thu, 28 Nov 2019 10:14:38 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Georgi Djakov <georgi.djakov@linaro.org>
-Cc:     linux-pm@vger.kernel.org, rostedt@goodmis.org, mingo@redhat.com,
-        vincent.guittot@linaro.org, daidavid1@codeaurora.org,
-        okukatla@codeaurora.org, evgreen@chromium.org, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/3] interconnect: Move internal structs into a
- separate file
-Message-ID: <20191128180839.GH82109@yoga>
-References: <20191128141818.32168-1-georgi.djakov@linaro.org>
- <20191128141818.32168-2-georgi.djakov@linaro.org>
+Cc:     linux-pm@vger.kernel.org, agross@kernel.org, digetx@gmail.com,
+        evgreen@chromium.org, daidavid1@codeaurora.org,
+        masneyb@onstation.org, sibis@codeaurora.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/5] interconnect: qcom: sdm845: Walk the list safely on
+ node removal
+Message-ID: <20191128181438.GI82109@yoga>
+References: <20191128133435.25667-1-georgi.djakov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191128141818.32168-2-georgi.djakov@linaro.org>
+In-Reply-To: <20191128133435.25667-1-georgi.djakov@linaro.org>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 28 Nov 06:18 PST 2019, Georgi Djakov wrote:
+On Thu 28 Nov 05:34 PST 2019, Georgi Djakov wrote:
 
-> Move the interconnect framework internal structs into a separate file,
-> so that it can be included and used by ftrace code. This will allow us
-> to expose some more useful information in the traces.
+> As we will remove items off the list using list_del(), we need to use the
+> safe version of list_for_each_entry().
 > 
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
+> Fixes: b5d2f741077a ("interconnect: qcom: Add sdm845 interconnect provider driver")
+> Reported-by: Dmitry Osipenko <digetx@gmail.com>
 > Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
 > ---
->  drivers/interconnect/core.c     | 30 ++-----------------------
->  drivers/interconnect/internal.h | 40 +++++++++++++++++++++++++++++++++
->  2 files changed, 42 insertions(+), 28 deletions(-)
->  create mode 100644 drivers/interconnect/internal.h
+>  drivers/interconnect/qcom/sdm845.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-> index 1b811423020a..f30a326dc7ce 100644
-> --- a/drivers/interconnect/core.c
-> +++ b/drivers/interconnect/core.c
-> @@ -19,39 +19,13 @@
->  #include <linux/of.h>
->  #include <linux/overflow.h>
+> diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
+> index 502a6c22b41e..924c2d056d85 100644
+> --- a/drivers/interconnect/qcom/sdm845.c
+> +++ b/drivers/interconnect/qcom/sdm845.c
+> @@ -870,7 +870,7 @@ static int qnoc_remove(struct platform_device *pdev)
+>  	struct icc_provider *provider = &qp->provider;
+>  	struct icc_node *n;
 >  
-> +#include "internal.h"
-> +
->  static DEFINE_IDR(icc_idr);
->  static LIST_HEAD(icc_providers);
->  static DEFINE_MUTEX(icc_lock);
->  static struct dentry *icc_debugfs_dir;
->  
-> -/**
-> - * struct icc_req - constraints that are attached to each node
-> - * @req_node: entry in list of requests for the particular @node
-> - * @node: the interconnect node to which this constraint applies
-> - * @dev: reference to the device that sets the constraints
-> - * @tag: path tag (optional)
-> - * @avg_bw: an integer describing the average bandwidth in kBps
-> - * @peak_bw: an integer describing the peak bandwidth in kBps
-> - */
-> -struct icc_req {
-> -	struct hlist_node req_node;
-> -	struct icc_node *node;
-> -	struct device *dev;
-> -	u32 tag;
-> -	u32 avg_bw;
-> -	u32 peak_bw;
-> -};
-> -
-> -/**
-> - * struct icc_path - interconnect path structure
-> - * @num_nodes: number of hops (nodes)
-> - * @reqs: array of the requests applicable to this path of nodes
-> - */
-> -struct icc_path {
-> -	size_t num_nodes;
-> -	struct icc_req reqs[];
-> -};
-> -
->  static void icc_summary_show_one(struct seq_file *s, struct icc_node *n)
->  {
->  	if (!n)
-> diff --git a/drivers/interconnect/internal.h b/drivers/interconnect/internal.h
-> new file mode 100644
-> index 000000000000..5853e8faf223
-> --- /dev/null
-> +++ b/drivers/interconnect/internal.h
-> @@ -0,0 +1,40 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Interconnect framework internal structs
-> + *
-> + * Copyright (c) 2019, Linaro Ltd.
-> + * Author: Georgi Djakov <georgi.djakov@linaro.org>
-> + */
-> +
-> +#ifndef __DRIVERS_INTERCONNECT_INTERNAL_H
-> +#define __DRIVERS_INTERCONNECT_INTERNAL_H
-> +
-> +/**
-> + * struct icc_req - constraints that are attached to each node
-> + * @req_node: entry in list of requests for the particular @node
-> + * @node: the interconnect node to which this constraint applies
-> + * @dev: reference to the device that sets the constraints
-> + * @tag: path tag (optional)
-> + * @avg_bw: an integer describing the average bandwidth in kBps
-> + * @peak_bw: an integer describing the peak bandwidth in kBps
-> + */
-> +struct icc_req {
-> +	struct hlist_node req_node;
-> +	struct icc_node *node;
-> +	struct device *dev;
-> +	u32 tag;
-> +	u32 avg_bw;
-> +	u32 peak_bw;
-> +};
-> +
-> +/**
-> + * struct icc_path - interconnect path structure
-> + * @num_nodes: number of hops (nodes)
-> + * @reqs: array of the requests applicable to this path of nodes
-> + */
-> +struct icc_path {
-> +	size_t num_nodes;
-> +	struct icc_req reqs[];
-> +};
-> +
-> +#endif
+> -	list_for_each_entry(n, &provider->nodes, node_list) {
+> +	list_for_each_entry_safe(n, &provider->nodes, node_list) {
+
+This now takes 4 parameters, please update (same issue in next patch).
+
+Regards,
+Bjorn
+
+>  		icc_node_del(n);
+>  		icc_node_destroy(n->id);
+>  	}
