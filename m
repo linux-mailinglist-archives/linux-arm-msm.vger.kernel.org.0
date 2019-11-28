@@ -2,69 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 92D6E10C7F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2019 12:33:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2666610C98A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2019 14:35:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726401AbfK1Ldi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Nov 2019 06:33:38 -0500
-Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:42005 "EHLO
-        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726191AbfK1Ldi (ORCPT
+        id S1726764AbfK1Nem (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Nov 2019 08:34:42 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:50274 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726696AbfK1Nej (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Nov 2019 06:33:38 -0500
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 28 Nov 2019 17:03:32 +0530
-IronPort-SDR: K08YTXR/j9WhCTvgCZWgAEPnFY17rVFk/lxj+crc66ef+AmFveKQMBBRHtmECy16DVCRdDJWsy
- XpOFcDrlGgwFQVOP3RK1TEH6UqGptdIk0uiM2zlI1PuhScrnYwoL8C1zhLdd0HAkZw9ouoVV+4
- uBzRfUZVrBw+Cmw16JgihhmLIEaSOXvY0x2zxla8jH5yC2CrDQqPkloJYynp5jqNIGiGuQNApM
- XGjSatqmJfTI8ijFhk1CQ0nEJDv8sE7T9QUb+y7WWr0OLyIXiIQegAzyrJO07xtyyX4dlkTYK5
- MAVN8Rm1CC/Jo36uiqlRsPFp
-Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 28 Nov 2019 17:03:14 +0530
-Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
-        id E1A8319C2; Thu, 28 Nov 2019 17:03:12 +0530 (IST)
-From:   Sandeep Maheswaram <sanm@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: [PATCH v2 3/3] dt-bindings: usb: qcom,dwc3: Add compatible for SC7180
-Date:   Thu, 28 Nov 2019 17:03:07 +0530
-Message-Id: <1574940787-1004-4-git-send-email-sanm@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1574940787-1004-1-git-send-email-sanm@codeaurora.org>
-References: <1574940787-1004-1-git-send-email-sanm@codeaurora.org>
+        Thu, 28 Nov 2019 08:34:39 -0500
+Received: by mail-wm1-f65.google.com with SMTP id l17so11019228wmh.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2019 05:34:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/SDaimtx4qvfQT+a77LcPCR1TXpL+CTCSqALSHB4+Rg=;
+        b=fKWoGZnUHc0AEupO0e6BxYnAvJWsF4R3vlQfEGVemUrT1VmzmBVuRcs3pYHh1i022b
+         gHmZKlDlHLPDLKLOFB31mC+7L1exI346izL/6cLcwo2keOu59Zw/hKq7Fx1iS2FOTJZD
+         mrE7l2joW729IcshdEEbg8w+u5mfrT3HexEs7L86uvd6tZlm29ugtWvQDcHsUeUURYYj
+         vsec6EgQjjsV+Rn7koKFXTjcMr42HpbtZsEwcA5vxEIBbyymZfRIf9MWFdoWveRAa2xJ
+         y+FhU5PfevlbWXY3k+t9i7MqLgHUKy5Tn5QeNyyX0XO1UTS1j6uaZCNiWEMOzFGkdVX5
+         970Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/SDaimtx4qvfQT+a77LcPCR1TXpL+CTCSqALSHB4+Rg=;
+        b=l9ZASiphZnqys3KYpp4xuFlRIoSPm9BGFrZsdOaKzJKuKvlrEN3661UBeqtteIRMy1
+         MzcllYqfuVw4MOMHlS7Nr1zLlw4+gb2Mg0xrr7a/AgludVgkDqA4xKeWV3nLi3mbwypC
+         lohnFjcNz8Bxt6/VM7+G19i3tEypaeaxhYNVgPJxp6Ujq4W4fSdXPNvhO0z3zOVegB07
+         IPMJYEF0r/cVBgj91JYZ6wFaYODoy9gDssvkhnwL7kFFQzI2hPfsi0AqMxoF09KdQZdE
+         UsflfWJK6nnrkpzNG60g7Kdt5yIkd0RjsCQp1QF/I60tpcB57D/H7TC1LgdRHMg757oa
+         GWhg==
+X-Gm-Message-State: APjAAAWy3FWaiq/ixFZ74StJs1s7TSC9xtVQlYzRopuZ11dO7hP0F/hW
+        tKdm79tqBS592M0/HCH6TwB9qg==
+X-Google-Smtp-Source: APXvYqz50wTmdDHppw64lnOGv4kBmYEywC/jd69HR/l3/KqJ/30thrOsVhsT64GKvxVlxa0p/ykg9w==
+X-Received: by 2002:a1c:23d5:: with SMTP id j204mr9329041wmj.0.1574948077036;
+        Thu, 28 Nov 2019 05:34:37 -0800 (PST)
+Received: from localhost.localdomain ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id y20sm2220451wmi.25.2019.11.28.05.34.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 28 Nov 2019 05:34:36 -0800 (PST)
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+To:     linux-pm@vger.kernel.org
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org, digetx@gmail.com,
+        evgreen@chromium.org, daidavid1@codeaurora.org,
+        masneyb@onstation.org, sibis@codeaurora.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        georgi.djakov@linaro.org
+Subject: [PATCH 1/5] interconnect: qcom: sdm845: Walk the list safely on node removal
+Date:   Thu, 28 Nov 2019 15:34:31 +0200
+Message-Id: <20191128133435.25667-1-georgi.djakov@linaro.org>
+X-Mailer: git-send-email 2.24.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add compatible for SC7180 in usb dwc3 bindings.
+As we will remove items off the list using list_del(), we need to use the
+safe version of list_for_each_entry().
 
-Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+Fixes: b5d2f741077a ("interconnect: qcom: Add sdm845 interconnect provider driver")
+Reported-by: Dmitry Osipenko <digetx@gmail.com>
+Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
 ---
- Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/interconnect/qcom/sdm845.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-index 48ff9c5..3eab91a 100644
---- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-+++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-@@ -15,6 +15,7 @@ properties:
-       - enum:
-           - qcom,msm8996-dwc3
-           - qcom,msm8998-dwc3
-+          - qcom,sc7180-dwc3
-           - qcom,sdm845-dwc3
-       - const: qcom,dwc3
+diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
+index 502a6c22b41e..924c2d056d85 100644
+--- a/drivers/interconnect/qcom/sdm845.c
++++ b/drivers/interconnect/qcom/sdm845.c
+@@ -870,7 +870,7 @@ static int qnoc_remove(struct platform_device *pdev)
+ 	struct icc_provider *provider = &qp->provider;
+ 	struct icc_node *n;
  
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+-	list_for_each_entry(n, &provider->nodes, node_list) {
++	list_for_each_entry_safe(n, &provider->nodes, node_list) {
+ 		icc_node_del(n);
+ 		icc_node_destroy(n->id);
+ 	}
