@@ -2,55 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E136C10CECC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2019 20:19:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D1BA410CF94
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2019 22:43:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726712AbfK1TTK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Nov 2019 14:19:10 -0500
-Received: from mail-vk1-f194.google.com ([209.85.221.194]:36900 "EHLO
-        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726582AbfK1TTK (ORCPT
+        id S1726648AbfK1Vno (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Nov 2019 16:43:44 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:34436 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726641AbfK1Vno (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Nov 2019 14:19:10 -0500
-Received: by mail-vk1-f194.google.com with SMTP id l5so6655068vkb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2019 11:19:09 -0800 (PST)
+        Thu, 28 Nov 2019 16:43:44 -0500
+Received: by mail-pg1-f195.google.com with SMTP id z188so13415333pgb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2019 13:43:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cohhF1NGkG9wv8KaQQ+xdNEYPWRsIUKdm2ue5iTbmiM=;
-        b=oK8tIb+uLUO2qX0hYciICXuvv6wMjGagZAoTFfYbRaXRP9zlHg+O2RF6KdDI8I9pxt
-         HIn1aREPGUBckjK9jjUZ4fgV/sMMLaYBpqjRayTjPEthUiRGBATLB1qG2DP8bYDlJcFO
-         4KBd3eeIx8RyU+a8r4wS3+IV+IWv3XueP3tFRqhpp+wh9eYbq/AW5aa6nDC8BUdfU9LQ
-         fh8Ude7KCXeGOysmhP0htm+8EBl0Fhk9s28jgkTmRzL/whm2GCZdtkivWBl1bbBSt6BW
-         Nb34aL0GYPHub+Kr677NLhWIMd3tD9g2zQd6iv1jmkloCUFLz/inU9KAXS3YjjOCEJo3
-         gRSg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=K9FrLAOFp0g+hrdsabPVchjdViFjj8h0GNkeqZ4HQlM=;
+        b=kZeh47RNC2BtHUa2wCS8rsZONatpvYYLR3K646pyo72NUYaJ/cDpbMeVmz5Yvj0lCo
+         1g50TyX6V1STK60yAw+cgJZzEYfha6eRSBmYJKBnzZxOAzADErDowc173BZOHaPbENxU
+         6XEK3SKBHCw4edPwidyFtxBU1GPm2Fc8/d6gF9GtscAYtRINmE3LoMEADij0to1zXv/u
+         FDHww8EWCZu4DbibNnBJyYzbZkmBFEpKsZesGrvC9mPqVDMSsSLkonwZ+WIsJUl0grPT
+         fpQubcqqSy7C7c9k6rCEm4zTvqF7lbdNMowTyWWA8U6O6FQ1eYS//74MurZ87a9CHWGH
+         dCwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cohhF1NGkG9wv8KaQQ+xdNEYPWRsIUKdm2ue5iTbmiM=;
-        b=CNTe7M1chqSyLk9v/JlXJWTK3YDkNgj/xdz26BPBAe1Wa4YyNfv2DElIZnLmtRUOko
-         +phIileVADpdecQiUauAGV7jPHMkgbn5kDRNPsHMIF8i1lhobzVNJ4B0Wh5LrgINy5JP
-         SLHU14JzTrS/5zu+qH4z1WAHUfrSB24cb+fjzEDsEhda63jtyjrhF8HOwrebiRgTo3ks
-         mRESp0uWVe/LUbRvFVKcmhNzk3xSYL7+DE6lmoB7oKP7LUyasDhuybK3zs7p9QFTHrLr
-         zmE4Ctm0sHl5VpnrLCH3AIIhZ5QVjcdwLFX3knixcuXl7yl6VzxcQaYjN7Tg5dadtbQM
-         pggA==
-X-Gm-Message-State: APjAAAW3duHG5Xz+98A/9NP/xZ/98T+OROE8PX3hveL7aIvedJAqMaoG
-        lwCICDLJ/puTEL7Dk8OoL0p9XnAvANBrOfTaDGvZFQ==
-X-Google-Smtp-Source: APXvYqztvoQz7r5LCaOjyU7Z4nZCZOfzB76ES9oL6R3zQ1poLJ083TCQY3ueU5VXnq1YC+p+cQPvg+PhY3a0VcwKUyg=
-X-Received: by 2002:a1f:bdd0:: with SMTP id n199mr1849831vkf.86.1574968748546;
- Thu, 28 Nov 2019 11:19:08 -0800 (PST)
-MIME-Version: 1.0
-References: <cover.1573499020.git.amit.kucheria@linaro.org>
- <c08cf285b8696c4fd00706b85cd3c88d12f97df3.1573499020.git.amit.kucheria@linaro.org>
- <20191112192244.GB3140946@builder>
-In-Reply-To: <20191112192244.GB3140946@builder>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Fri, 29 Nov 2019 00:48:57 +0530
-Message-ID: <CAHLCerPojTpUV0TiJfis7skghuRzbkC+RB7kwDhi35c5-f=VgA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] drivers: thermal: tsens: Add watchdog support
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=K9FrLAOFp0g+hrdsabPVchjdViFjj8h0GNkeqZ4HQlM=;
+        b=sp3y5cecAAXsGpltzed5ygZgJKDMS3SYBR6KQr1a/v8L3GEB6e5dcVjoSs1JS6yYR3
+         8Y0WdVV8xFtYcQrQnWEvhxFqnpie5a3qek/AEj3YDiFft7V6v0KoD7KsMd3m6tyBs4m2
+         3IVuUYTVnjJk41g0F3fjNvdXCXrTIG6j/gfePIrK9oqle2Jn/wGtir4oAgOWVKn22EhO
+         e7dMcBYVauICrH7V7zhCyqJ7Q+s8DfSpRjPbOvDa5nPl2fq+3sehnj8TMuWywROSTNMH
+         yQ8wNKRWAY+v1J4Pp8ECQZuYPoYUQq0FQi4ZUTUm85pGjpnfBf7tfGhlOfMyRHPcdZKF
+         46Ow==
+X-Gm-Message-State: APjAAAUEZXQonzvBCyAEySmWzflsAgjzHU7i1kqOSpWze9RMXm/BfRQi
+        pzsIzkN4BuBNnPX2kMQ0zm3csA==
+X-Google-Smtp-Source: APXvYqxXK5VlxZHgjn3ehpw/1a/UvQMzGfyMHy3vxqme3i6QHac5tFm6KotaQWcLg7ThtP7KXY6L6w==
+X-Received: by 2002:aa7:90d0:: with SMTP id k16mr55284524pfk.131.1574977423508;
+        Thu, 28 Nov 2019 13:43:43 -0800 (PST)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id o23sm21753750pgj.90.2019.11.28.13.43.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Nov 2019 13:43:42 -0800 (PST)
+Date:   Thu, 28 Nov 2019 13:43:39 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Amit Kucheria <amit.kucheria@linaro.org>
 Cc:     LKML <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Eduardo Valentin <edubezval@gmail.com>,
@@ -58,173 +55,139 @@ Cc:     LKML <linux-kernel@vger.kernel.org>,
         Andy Gross <agross@kernel.org>,
         Daniel Lezcano <daniel.lezcano@linaro.org>,
         Linux PM list <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 1/3] drivers: thermal: tsens: Add critical interrupt
+ support
+Message-ID: <20191128214339.GL82109@yoga>
+References: <cover.1573499020.git.amit.kucheria@linaro.org>
+ <4b949a4f401a7f9d403ed0f0c16c7feb083f3524.1573499020.git.amit.kucheria@linaro.org>
+ <20191112193852.GC3140946@builder>
+ <CAHLCerN1VXhU0VQWN15PB2R16mkCV0i6Mn3+LW=xXtB5_7Z6JQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHLCerN1VXhU0VQWN15PB2R16mkCV0i6Mn3+LW=xXtB5_7Z6JQ@mail.gmail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 13, 2019 at 12:52 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Mon 11 Nov 11:21 PST 2019, Amit Kucheria wrote:
->
-> > TSENS IP v2.3 onwards adds support for a watchdog to detect if the TSENS
-> > HW FSM is frozen. Add support to detect and restart the FSM in the
-> > driver. The watchdog is configured by the bootloader, we just enable the
-> > feature in the kernel.
+On Thu 28 Nov 10:46 PST 2019, Amit Kucheria wrote:
+
+> On Wed, Nov 13, 2019 at 1:08 AM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
 > >
-> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > ---
-> >  drivers/thermal/qcom/tsens-common.c | 41 +++++++++++++++++++++++++++++
-> >  drivers/thermal/qcom/tsens-v2.c     | 10 +++++++
-> >  drivers/thermal/qcom/tsens.h        | 12 +++++++++
-> >  3 files changed, 63 insertions(+)
+> > On Mon 11 Nov 11:21 PST 2019, Amit Kucheria wrote:
 > >
-> > diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
-> > index 2989cb952cdb..9432518502a7 100644
-> > --- a/drivers/thermal/qcom/tsens-common.c
-> > +++ b/drivers/thermal/qcom/tsens-common.c
-> > @@ -378,6 +378,28 @@ irqreturn_t tsens_critical_irq_thread(int irq, void *data)
-> >       bool enable = true, disable = false;
-> >       unsigned long flags;
-> >       int temp, ret, i;
-> > +     u32 wdog_status, wdog_count, ver_minor;
-> > +
-> > +     ret = regmap_field_read(priv->rf[VER_MINOR], &ver_minor);
->
-> The version is unlikely to change from one interrupt to the next, so I
-> suggest that you add a boolean "has_watchdog" to your context that you
-> populate in init_common.
+> > > TSENS IP v2.x adds critical threshold interrupt support for each sensor
+> > > in addition to the upper/lower threshold interrupt. Add support in the
+> > > driver.
+> > >
+> > > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > > ---
+> > >  drivers/thermal/qcom/tsens-common.c | 129 ++++++++++++++++++++++++++--
+> > >  drivers/thermal/qcom/tsens-v2.c     |   8 +-
+> > >  drivers/thermal/qcom/tsens.c        |  21 +++++
+> > >  drivers/thermal/qcom/tsens.h        |  73 ++++++++++++++++
+> > >  4 files changed, 220 insertions(+), 11 deletions(-)
+> > >
+> > > diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
+> > > index 4359a4247ac3..2989cb952cdb 100644
+> > > --- a/drivers/thermal/qcom/tsens-common.c
+> > > +++ b/drivers/thermal/qcom/tsens-common.c
+> > > @@ -23,6 +23,10 @@
+> > >   * @low_thresh:     lower threshold temperature value
+> > >   * @low_irq_mask:   mask register for lower threshold irqs
+> > >   * @low_irq_clear:  clear register for lower threshold irqs
+> > > + * @crit_viol:      critical threshold violated
+> >
+> > "violated" as in "temperature is above crit_thresh"?
+> 
+> Yes.
+> 
+> >
+> > > + * @crit_thresh:    critical threshold temperature value
+> > > + * @crit_irq_mask:  mask register for critical threshold irqs
+> > > + * @crit_irq_clear: clear register for critical threshold irqs
+> > >   *
+> > [..]
+> > > diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> > > index 7d317660211e..784c4976c4f9 100644
+> > > --- a/drivers/thermal/qcom/tsens.c
+> > > +++ b/drivers/thermal/qcom/tsens.c
+> > > @@ -121,6 +121,27 @@ static int tsens_register(struct tsens_priv *priv)
+> > >
+> > >       enable_irq_wake(irq);
+> > >
+> > > +     if (tsens_version(priv) > VER_1_X) {
+> > > +             irq = platform_get_irq_byname(pdev, "critical");
+> > > +             if (irq < 0) {
+> >
+> > Treating this as a fatal error breaks backwards compatibility with
+> > current devicetree; and even within your patch series, tsens should fail
+> > to probe between this patch and the application of patch 3.
+> 
+> Good catch.
+> 
+> > Please flip this around and do:
+> >
+> > irq = platform_get_irq_byname(pdev, "critical");
+> > if (irq >= 0 && tsens_version(priv) > VER_1_X) {
+> >         request_irq()...
+> > }
+> 
+> Won't this still break with current devicetree since irq < 0 until
+> patch 3? Or are you saying we shouldn't check for
+> platform_get_irq_byname() failure?
+> 
 
-Fair enough, will de-const tsense_features pointer and add a flag
-there. It has been overdue, now that we're starting to look at
-features that were introduced midway through an IP version cycle. That
-is where this should reside instead of tsens_priv.
+I'm trying to say that dtsi without "critical" defined should cause the
+driver to simply skip this segment, not fail to initialize.
 
-> > +     if (ret)
-> > +             return ret;
-> > +
-> > +     if (tsens_version(priv) > VER_1_X &&  ver_minor > 2) {
-> > +             /* Watchdog is present only on v2.3+ */
-> > +             ret = regmap_field_read(priv->rf[WDOG_BARK_STATUS], &wdog_status);
-> > +             if (ret)
-> > +                     return ret;
-> > +
-> > +             /* Clear WDOG interrupt */
-> > +             regmap_field_write(priv->rf[WDOG_BARK_CLEAR], 1);
-> > +             regmap_field_write(priv->rf[WDOG_BARK_CLEAR], 0);
-> > +
-> > +             ret = regmap_field_read(priv->rf[WDOG_BARK_COUNT], &wdog_count);
-> > +             if (ret)
-> > +                     return ret;
-> > +             if (wdog_count)
-> > +                     dev_err(priv->dev, "%s: watchdog count: %d\n", __func__, wdog_count);
->
-> What's the benefit of reading wdog_count and who's the audience for this
-> print? What do I do when this goes to 11?
+> I can see two ways out:
+> 1. We patch the dtsi before the code change.
 
-Should be a debug statement. Will convert to dev_dbg.
+You're expected to maintain backwards compatibility with existing dtb
+files out there. The support for critical interrupt is an additional
+feature, so you should be able to do this by detecting if "critical" is
+defined (e.g. by checking the return value of
+platform_get_irq_byname()).
 
+> 2. We make critical interrupt failure non-fatal by just printing some
+> messages and still returning success.
+> 
+
+Try to make it as specific as possible (without adding a bunch of code)
+and throw in a dev_info() if no "critical" is found.
+
+Regards,
+Bjorn
 
 > Regards,
-> Bjorn
->
-> > +     }
+> Amit
+> 
+> 
+> > > +                     ret = irq;
+> > > +                     goto err_put_device;
+> > > +             }
+> > > +
+> > > +             ret = devm_request_threaded_irq(&pdev->dev, irq,
+> > > +                                             NULL, tsens_critical_irq_thread,
+> > > +                                             IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+> > > +                                             dev_name(&pdev->dev), priv);
+> > > +             if (ret) {
+> > > +                     dev_err(&pdev->dev, "%s: failed to get critical irq\n", __func__);
+> > > +                     goto err_put_device;
+> > > +             }
+> > > +
+> > > +             enable_irq_wake(irq);
+> > > +     }
+> > > +
+> > > +     return 0;
+> > > +
+> > >  err_put_device:
+> > >       put_device(&pdev->dev);
+> > >       return ret;
 > >
-> >       for (i = 0; i < priv->num_sensors; i++) {
-> >               struct tsens_sensor *s = &priv->sensor[i];
-> > @@ -685,6 +707,7 @@ int __init init_common(struct tsens_priv *priv)
-> >  {
-> >       void __iomem *tm_base, *srot_base;
-> >       struct device *dev = priv->dev;
-> > +     u32 ver_minor;
-> >       struct resource *res;
-> >       u32 enabled;
-> >       int ret, i, j;
-> > @@ -734,6 +757,9 @@ int __init init_common(struct tsens_priv *priv)
-> >                       if (IS_ERR(priv->rf[i]))
-> >                               return PTR_ERR(priv->rf[i]);
-> >               }
-> > +             ret = regmap_field_read(priv->rf[VER_MINOR], &ver_minor);
-> > +             if (ret)
-> > +                     goto err_put_device;
-> >       }
-> >
-> >       priv->rf[TSENS_EN] = devm_regmap_field_alloc(dev, priv->srot_map,
-> > @@ -794,6 +820,21 @@ int __init init_common(struct tsens_priv *priv)
-> >               }
-> >       }
-> >
-> > +     if (tsens_version(priv) > VER_1_X &&  ver_minor > 2) {
-> > +             /* Watchdog is present only on v2.3+ */
-> > +             for (i = 0, j = WDOG_BARK_STATUS; j <= CC_MON_MASK; i++, j++) {
-> > +                     priv->rf[j] = devm_regmap_field_alloc(dev, priv->tm_map,
-> > +                                                           priv->fields[j]);
-> > +                     if (IS_ERR(priv->rf[j])) {
-> > +                             ret = PTR_ERR(priv->rf[j]);
-> > +                             goto err_put_device;
-> > +                     }
-> > +             }
-> > +             /* Enable WDOG and disable cycle completion monitoring */
-> > +             regmap_field_write(priv->rf[WDOG_BARK_MASK], 0);
-> > +             regmap_field_write(priv->rf[CC_MON_MASK], 1);
-> > +     }
-> > +
-> >       spin_lock_init(&priv->ul_lock);
-> >       tsens_enable_irq(priv);
-> >       tsens_debug_init(op);
-> > diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
-> > index 47d831df0803..4184850d1e42 100644
-> > --- a/drivers/thermal/qcom/tsens-v2.c
-> > +++ b/drivers/thermal/qcom/tsens-v2.c
-> > @@ -24,6 +24,7 @@
-> >  #define TM_Sn_CRITICAL_THRESHOLD_OFF 0x0060
-> >  #define TM_Sn_STATUS_OFF             0x00a0
-> >  #define TM_TRDY_OFF                  0x00e4
-> > +#define TM_WDOG_LOG_OFF              0x013c
-> >
-> >  /* v2.x: 8996, 8998, sdm845 */
-> >
-> > @@ -66,6 +67,15 @@ static const struct reg_field tsens_v2_regfields[MAX_REGFIELDS] = {
-> >       REG_FIELD_SPLIT_BITS_0_15(CRIT_INT_CLEAR,  TM_CRITICAL_INT_CLEAR_OFF),
-> >       REG_FIELD_SPLIT_BITS_0_15(CRIT_INT_MASK,   TM_CRITICAL_INT_MASK_OFF),
-> >
-> > +     /* WATCHDOG on v2.3 or later */
-> > +     [WDOG_BARK_STATUS] = REG_FIELD(TM_CRITICAL_INT_STATUS_OFF, 31, 31),
-> > +     [WDOG_BARK_CLEAR]  = REG_FIELD(TM_CRITICAL_INT_CLEAR_OFF,  31, 31),
-> > +     [WDOG_BARK_MASK]   = REG_FIELD(TM_CRITICAL_INT_MASK_OFF,   31, 31),
-> > +     [CC_MON_STATUS]    = REG_FIELD(TM_CRITICAL_INT_STATUS_OFF, 30, 30),
-> > +     [CC_MON_CLEAR]     = REG_FIELD(TM_CRITICAL_INT_CLEAR_OFF,  30, 30),
-> > +     [CC_MON_MASK]      = REG_FIELD(TM_CRITICAL_INT_MASK_OFF,   30, 30),
-> > +     [WDOG_BARK_COUNT]  = REG_FIELD(TM_WDOG_LOG_OFF,             0,  7),
-> > +
-> >       /* Sn_STATUS */
-> >       REG_FIELD_FOR_EACH_SENSOR16(LAST_TEMP,       TM_Sn_STATUS_OFF,  0,  11),
-> >       REG_FIELD_FOR_EACH_SENSOR16(VALID,           TM_Sn_STATUS_OFF, 21,  21),
-> > diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-> > index 9b5a30533c52..7608e7877a7b 100644
-> > --- a/drivers/thermal/qcom/tsens.h
-> > +++ b/drivers/thermal/qcom/tsens.h
-> > @@ -440,6 +440,18 @@ enum regfield_ids {
-> >       CRIT_THRESH_13,
-> >       CRIT_THRESH_14,
-> >       CRIT_THRESH_15,
-> > +
-> > +     /* WATCHDOG */
-> > +     WDOG_BARK_STATUS,
-> > +     WDOG_BARK_CLEAR,
-> > +     WDOG_BARK_MASK,
-> > +     WDOG_BARK_COUNT,
-> > +
-> > +     /* CYCLE COMPLETION MONITOR */
-> > +     CC_MON_STATUS,
-> > +     CC_MON_CLEAR,
-> > +     CC_MON_MASK,
-> > +
-> >       MIN_STATUS_0,           /* MIN threshold violated */
-> >       MIN_STATUS_1,
-> >       MIN_STATUS_2,
-> > --
-> > 2.17.1
-> >
+> > Regards,
+> > Bjorn
