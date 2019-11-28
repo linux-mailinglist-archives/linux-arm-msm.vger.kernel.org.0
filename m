@@ -2,59 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 24EF110C9C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2019 14:48:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D42110C9CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2019 14:48:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726558AbfK1Nsn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Nov 2019 08:48:43 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43438 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726227AbfK1Nsn (ORCPT
+        id S1726320AbfK1Nso (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Nov 2019 08:48:44 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:38375 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726496AbfK1Nso (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Nov 2019 08:48:43 -0500
-Received: by mail-wr1-f66.google.com with SMTP id n1so31229380wra.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2019 05:48:41 -0800 (PST)
+        Thu, 28 Nov 2019 08:48:44 -0500
+Received: by mail-wm1-f65.google.com with SMTP id z19so11784786wmk.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2019 05:48:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hASZYFpvtuqMj2K9Ei/y6hgpj2q+o1mM77RhlWy+nlM=;
-        b=i9hyxSMdXuLPXnJAJs9ZWGt2uHdPrIAytFfduuedVuEyINMo//Lzg5xsxzqpWPohGs
-         NHBHrDvnfIsYCI3ppthFHJXFi8p6wrsMXd72bXnKBD2NQIjPv+qHrAoy1t4NYfiNfL3L
-         LyPsENVFPLEZtpjWFHEJKMoiURSE6B3UbPSaxgoF3cSh8Ms2oprtqQuD+frRIX1pmQPC
-         qEp+z6RftEsvK5EJ9nGb2TBP+VmuKU/PgV/Y/GyPqPdURFPde+H+ZPdaU/iCUpImxka9
-         CmlCw60wSsu1WvpdpohBK1rfaFzDLjEFDz+iJLJe9/kap3+/7D2iIo9hQxdGUlzyei+C
-         2ziQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=2+9lLzA6tYXl6Vs9wqUuF2Bk1fla14D0jQAd3Lh6NWE=;
+        b=ZeoJzVb9ioAAkeIhCTK8cIY6q3updyUVGelzHsYoR1wl03/0dEVMtb6UDeUP1sX/55
+         SxLFvJ5x1b79o2X4gs1K3n/3NzKn1zTm2A0RyoWwGwTfT2a6aOKxJLFaA/RYnGixcqpG
+         SR/EowZJO0/P9f9uYhS3MSkTKM8OwZOVdrw++9+gZPTaEaI7qt9wveKIzRxnt1m6aP1c
+         WyKq8qmYwoyINdTyqulOCXkM+2kg5T/awkMiRN6aXV0BivBCpcIip+ieUtOTRIdXF9Yr
+         y+2qubfrqtJYBblSJZwU4GnqQkPjKEGuwAejEsFBVaF3gUJ0B2XRVFeBg6jhsoMbq3iU
+         U8bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hASZYFpvtuqMj2K9Ei/y6hgpj2q+o1mM77RhlWy+nlM=;
-        b=RAI1p+AKt//tzSycjbOxAc1UtqtBjeNveoqE1OsOh6gws96Gp8x1go3qS2BNqH1Mfr
-         MG06KzUUz+lkBEKBzYcEew3bYF6zR0bBMhbQVugH9eMBhhkCe6HXERH0ju+foCD6YH7r
-         Mmk9L7Hc87DBWzVRbnwq2Zl6Rsq5JrT5mGZlfVBk+ccxPjw48ebuJ3c0CAiEd/aFDxQd
-         vO/Ai2XBvX1yrxKl/z/yadjHhn5CNcGfGnNdaBYdFlG/82BVaJT9lCxoknk7a8FioqHD
-         ApkdH0mCJ0xdCOkfe+gYgUjMXpBwQe8mXS3KLX31wUf5yO/M/UbiBkQfAq2iqoxemBOK
-         L3mQ==
-X-Gm-Message-State: APjAAAXvf/t0iXR0AQ3dzE1rTEBZsdboFrU0VjRBqhQWsiqX3uQ2E7AE
-        1Jul3o0iflHgDKdOSNxudyMq/w==
-X-Google-Smtp-Source: APXvYqwUl/c9Ev2fwHT9rSRo/CPTNmXhORMjUF9rVGT2228iCfXD2eVVfpBiCL+T0UowPmk9L4UngA==
-X-Received: by 2002:adf:f445:: with SMTP id f5mr26311139wrp.193.1574948920904;
-        Thu, 28 Nov 2019 05:48:40 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=2+9lLzA6tYXl6Vs9wqUuF2Bk1fla14D0jQAd3Lh6NWE=;
+        b=l4i2aQVQRH50cX28x4Z1F6iUHIMtiPRFolynYI2gaO83w2goD6eIlq29YoC8sM+Sgp
+         /ubF9boXOIsbJDrwetBgY7AjjX5bA67m4XuMLNRlMvg7GRGVaPjBCuJrhMCTBfiXWYuw
+         wtd2gWEBQX/+2O15ZzRwt8W+GMcyk5q3uh6dNZ9Xa9GzbmfmuFja/SsPKNvIqxSvKEEA
+         /lyVAPboydgJZMPUVtawy6tJYjm85r5RdFSrTLz3PbZOzOX4u7SJkfPiYkQ8wW//iagj
+         x2tJfR+2RDiUDq09VU+KVlaJieY/keiDdDG/G7BNAhngmFhkjHFm0cHI1RrFyXhiUYoQ
+         EL6g==
+X-Gm-Message-State: APjAAAWlWpkntQxN9uVkD3YJ8cHkn0i1wghzitLzr43WBbEiBp4Vx616
+        Zr3Hez7T8NFU+cfMJoHZuzlsdQ==
+X-Google-Smtp-Source: APXvYqx893KX5X1qljg2pe226q0Tjt5gya+f21cHdySFX/8fWZ2rys9ahSyS/AlO16MbDm+lV2dAdA==
+X-Received: by 2002:a7b:c5d9:: with SMTP id n25mr9861214wmk.8.1574948922009;
+        Thu, 28 Nov 2019 05:48:42 -0800 (PST)
 Received: from localhost.localdomain ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id m3sm8523734wrs.53.2019.11.28.05.48.39
+        by smtp.googlemail.com with ESMTPSA id m3sm8523734wrs.53.2019.11.28.05.48.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 28 Nov 2019 05:48:40 -0800 (PST)
+        Thu, 28 Nov 2019 05:48:41 -0800 (PST)
 From:   Georgi Djakov <georgi.djakov@linaro.org>
 To:     linux-pm@vger.kernel.org
 Cc:     evgreen@chromium.org, bjorn.andersson@linaro.org,
         agross@kernel.org, daidavid1@codeaurora.org, masneyb@onstation.org,
         sibis@codeaurora.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, georgi.djakov@linaro.org
-Subject: [PATCH 1/2] interconnect: Add a common standard aggregate function
-Date:   Thu, 28 Nov 2019 15:48:38 +0200
-Message-Id: <20191128134839.27606-1-georgi.djakov@linaro.org>
+Subject: [PATCH 2/2] interconnect: qcom: Use the standard aggregate function
+Date:   Thu, 28 Nov 2019 15:48:39 +0200
+Message-Id: <20191128134839.27606-2-georgi.djakov@linaro.org>
 X-Mailer: git-send-email 2.24.0
+In-Reply-To: <20191128134839.27606-1-georgi.djakov@linaro.org>
+References: <20191128134839.27606-1-georgi.djakov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -62,61 +64,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently there is one very standard aggregation method that is used by
-several drivers. Let's add this as a common function, so that drivers
-could just point to it, instead of copy/pasting code.
+Now we have a common function for standard aggregation, so let's use it,
+instead of duplicating the code.
 
-Suggested-by: Evan Green <evgreen@chromium.org>
 Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
 ---
- drivers/interconnect/core.c           | 10 ++++++++++
- include/linux/interconnect-provider.h |  8 ++++++++
- 2 files changed, 18 insertions(+)
+ drivers/interconnect/qcom/msm8974.c | 15 +++------------
+ drivers/interconnect/qcom/qcs404.c  | 15 +++------------
+ 2 files changed, 6 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index 0e4852feb395..2633fd223875 100644
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -221,6 +221,16 @@ static int apply_constraints(struct icc_path *path)
- 	return ret;
- }
+diff --git a/drivers/interconnect/qcom/msm8974.c b/drivers/interconnect/qcom/msm8974.c
+index 8823dce811c3..bf724c2ca02b 100644
+--- a/drivers/interconnect/qcom/msm8974.c
++++ b/drivers/interconnect/qcom/msm8974.c
+@@ -550,15 +550,6 @@ static struct msm8974_icc_desc msm8974_snoc = {
+ 	.num_nodes = ARRAY_SIZE(msm8974_snoc_nodes),
+ };
  
-+int icc_std_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
-+		      u32 peak_bw, u32 *agg_avg, u32 *agg_peak)
-+{
-+	*agg_avg += avg_bw;
-+	*agg_peak = max(*agg_peak, peak_bw);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(icc_std_aggregate);
-+
- /* of_icc_xlate_onecell() - Translate function using a single index.
-  * @spec: OF phandle args to map into an interconnect node.
-  * @data: private data (pointer to struct icc_onecell_data)
-diff --git a/include/linux/interconnect-provider.h b/include/linux/interconnect-provider.h
-index 31440c921216..0c494534b4d3 100644
---- a/include/linux/interconnect-provider.h
-+++ b/include/linux/interconnect-provider.h
-@@ -92,6 +92,8 @@ struct icc_node {
- 
- #if IS_ENABLED(CONFIG_INTERCONNECT)
- 
-+int icc_std_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
-+		      u32 peak_bw, u32 *agg_avg, u32 *agg_peak);
- struct icc_node *icc_node_create(int id);
- void icc_node_destroy(int id);
- int icc_link_create(struct icc_node *node, const int dst_id);
-@@ -104,6 +106,12 @@ int icc_provider_del(struct icc_provider *provider);
- 
- #else
- 
-+static inline int icc_std_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
-+				    u32 peak_bw, u32 *agg_avg, u32 *agg_peak)
-+{
-+	return -ENOTSUPP;
-+}
-+
- static inline struct icc_node *icc_node_create(int id)
+-static int msm8974_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+-				 u32 peak_bw, u32 *agg_avg, u32 *agg_peak)
+-{
+-	*agg_avg += avg_bw;
+-	*agg_peak = max(*agg_peak, peak_bw);
+-
+-	return 0;
+-}
+-
+ static void msm8974_icc_rpm_smd_send(struct device *dev, int rsc_type,
+ 				     char *name, int id, u64 val)
  {
- 	return ERR_PTR(-ENOTSUPP);
+@@ -603,8 +594,8 @@ static int msm8974_icc_set(struct icc_node *src, struct icc_node *dst)
+ 	qp = to_msm8974_icc_provider(provider);
+ 
+ 	list_for_each_entry(n, &provider->nodes, node_list)
+-		msm8974_icc_aggregate(n, 0, n->avg_bw, n->peak_bw,
+-				      &agg_avg, &agg_peak);
++		provider->aggregate(n, 0, n->avg_bw, n->peak_bw,
++				    &agg_avg, &agg_peak);
+ 
+ 	sum_bw = icc_units_to_bps(agg_avg);
+ 	max_peak_bw = icc_units_to_bps(agg_peak);
+@@ -703,7 +694,7 @@ static int msm8974_icc_probe(struct platform_device *pdev)
+ 	INIT_LIST_HEAD(&provider->nodes);
+ 	provider->dev = dev;
+ 	provider->set = msm8974_icc_set;
+-	provider->aggregate = msm8974_icc_aggregate;
++	provider->aggregate = icc_std_aggregate;
+ 	provider->xlate = of_icc_xlate_onecell;
+ 	provider->data = data;
+ 
+diff --git a/drivers/interconnect/qcom/qcs404.c b/drivers/interconnect/qcom/qcs404.c
+index a4c6ba715f61..ce2e6faa3a79 100644
+--- a/drivers/interconnect/qcom/qcs404.c
++++ b/drivers/interconnect/qcom/qcs404.c
+@@ -327,15 +327,6 @@ static struct qcom_icc_desc qcs404_snoc = {
+ 	.num_nodes = ARRAY_SIZE(qcs404_snoc_nodes),
+ };
+ 
+-static int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+-			      u32 peak_bw, u32 *agg_avg, u32 *agg_peak)
+-{
+-	*agg_avg += avg_bw;
+-	*agg_peak = max(*agg_peak, peak_bw);
+-
+-	return 0;
+-}
+-
+ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
+ {
+ 	struct qcom_icc_provider *qp;
+@@ -354,8 +345,8 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
+ 	qp = to_qcom_provider(provider);
+ 
+ 	list_for_each_entry(n, &provider->nodes, node_list)
+-		qcom_icc_aggregate(n, 0, n->avg_bw, n->peak_bw,
+-				   &agg_avg, &agg_peak);
++		provider->aggregate(n, 0, n->avg_bw, n->peak_bw,
++				    &agg_avg, &agg_peak);
+ 
+ 	sum_bw = icc_units_to_bps(agg_avg);
+ 	max_peak_bw = icc_units_to_bps(agg_peak);
+@@ -465,7 +456,7 @@ static int qnoc_probe(struct platform_device *pdev)
+ 	INIT_LIST_HEAD(&provider->nodes);
+ 	provider->dev = dev;
+ 	provider->set = qcom_icc_set;
+-	provider->aggregate = qcom_icc_aggregate;
++	provider->aggregate = icc_std_aggregate;
+ 	provider->xlate = of_icc_xlate_onecell;
+ 	provider->data = data;
+ 
