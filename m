@@ -2,192 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D1BA410CF94
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2019 22:43:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8947510CFAA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Nov 2019 23:05:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726648AbfK1Vno (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Nov 2019 16:43:44 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:34436 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726641AbfK1Vno (ORCPT
+        id S1726656AbfK1WFR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Nov 2019 17:05:17 -0500
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:39815 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726569AbfK1WFR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Nov 2019 16:43:44 -0500
-Received: by mail-pg1-f195.google.com with SMTP id z188so13415333pgb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2019 13:43:44 -0800 (PST)
+        Thu, 28 Nov 2019 17:05:17 -0500
+Received: by mail-vs1-f68.google.com with SMTP id x21so18291592vsp.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Nov 2019 14:05:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=K9FrLAOFp0g+hrdsabPVchjdViFjj8h0GNkeqZ4HQlM=;
-        b=kZeh47RNC2BtHUa2wCS8rsZONatpvYYLR3K646pyo72NUYaJ/cDpbMeVmz5Yvj0lCo
-         1g50TyX6V1STK60yAw+cgJZzEYfha6eRSBmYJKBnzZxOAzADErDowc173BZOHaPbENxU
-         6XEK3SKBHCw4edPwidyFtxBU1GPm2Fc8/d6gF9GtscAYtRINmE3LoMEADij0to1zXv/u
-         FDHww8EWCZu4DbibNnBJyYzbZkmBFEpKsZesGrvC9mPqVDMSsSLkonwZ+WIsJUl0grPT
-         fpQubcqqSy7C7c9k6rCEm4zTvqF7lbdNMowTyWWA8U6O6FQ1eYS//74MurZ87a9CHWGH
-         dCwg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=eg2hwVNG36UdAAXRMWJPY/0013JXkVyMI5qlSVza82Y=;
+        b=sLdYI3DYGQsUfNcUWae0ePETum3rBzILoYqPB0E3Nl4lI0tgq8C3M5YyyZ9IMwAZgh
+         fgFZVURclM4pRMKVWGDcpP4ckFgw6CmiAKjV6TJH6UtPUy3FGzxu5OjtTzn3Cxc5G94e
+         m8DUHKtnrVwdTMQHKW9fiD+GfIhL6dtHA5l7QLI703UKDFr7QLUMI+gfOoNPPT22EzS2
+         9veI2zmYFGE+rTuyzeMg6YnnwP8DATz1P7JiPJaEBNYiKbY6BFf1koI8kKMSb0HOs4Kc
+         H9Fspg+qY/axrYE0rOAeGJIRi9LyjnzkxVcsFOGvG5xmHLP1Yr/ciNrXMouMYtqtl8pT
+         TvZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=K9FrLAOFp0g+hrdsabPVchjdViFjj8h0GNkeqZ4HQlM=;
-        b=sp3y5cecAAXsGpltzed5ygZgJKDMS3SYBR6KQr1a/v8L3GEB6e5dcVjoSs1JS6yYR3
-         8Y0WdVV8xFtYcQrQnWEvhxFqnpie5a3qek/AEj3YDiFft7V6v0KoD7KsMd3m6tyBs4m2
-         3IVuUYTVnjJk41g0F3fjNvdXCXrTIG6j/gfePIrK9oqle2Jn/wGtir4oAgOWVKn22EhO
-         e7dMcBYVauICrH7V7zhCyqJ7Q+s8DfSpRjPbOvDa5nPl2fq+3sehnj8TMuWywROSTNMH
-         yQ8wNKRWAY+v1J4Pp8ECQZuYPoYUQq0FQi4ZUTUm85pGjpnfBf7tfGhlOfMyRHPcdZKF
-         46Ow==
-X-Gm-Message-State: APjAAAUEZXQonzvBCyAEySmWzflsAgjzHU7i1kqOSpWze9RMXm/BfRQi
-        pzsIzkN4BuBNnPX2kMQ0zm3csA==
-X-Google-Smtp-Source: APXvYqxXK5VlxZHgjn3ehpw/1a/UvQMzGfyMHy3vxqme3i6QHac5tFm6KotaQWcLg7ThtP7KXY6L6w==
-X-Received: by 2002:aa7:90d0:: with SMTP id k16mr55284524pfk.131.1574977423508;
-        Thu, 28 Nov 2019 13:43:43 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id o23sm21753750pgj.90.2019.11.28.13.43.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Nov 2019 13:43:42 -0800 (PST)
-Date:   Thu, 28 Nov 2019 13:43:39 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>, sivaa@codeaurora.org,
-        Andy Gross <agross@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Linux PM list <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH 1/3] drivers: thermal: tsens: Add critical interrupt
- support
-Message-ID: <20191128214339.GL82109@yoga>
-References: <cover.1573499020.git.amit.kucheria@linaro.org>
- <4b949a4f401a7f9d403ed0f0c16c7feb083f3524.1573499020.git.amit.kucheria@linaro.org>
- <20191112193852.GC3140946@builder>
- <CAHLCerN1VXhU0VQWN15PB2R16mkCV0i6Mn3+LW=xXtB5_7Z6JQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eg2hwVNG36UdAAXRMWJPY/0013JXkVyMI5qlSVza82Y=;
+        b=M2EmJ7k0sW+yQCHCagJlN23X4o2jr0jomwSX/v9dzAInuHVDwlgDKeKKVX66khmvtM
+         j0/6gIRRgHPtb9hyBJUn3l943Hy6g2CQ2+7owPjbIY+SdpQFQZ/q+0/jz1DXQbtFHu+G
+         p21zS+tFrdpnHQ4zhrV+daYN4jUTdTHlTYNjdHf5MCLZZ7vw0KAHbO68pyMwww2VgQ9j
+         P3LmIBER1WPyl5NIRVLUO3alPNvtkknqfWar/ad/pOzo2QsahGZuKbmXMBpY+92WLy7/
+         4HceKk816jUNg6aLh9ZqP9goWoZkqxL1eQrJTv+j4rNClK+/usrSkSOzRkxNva47ipF+
+         97MQ==
+X-Gm-Message-State: APjAAAVpBCaVb7SdXcgmuHUi94OaCnHMn/3IaYueN1QJp/myR+uJzfp6
+        3EpYHyD5Da/QT7NrjzaPzTqbK7eeYQm2+idzpYjTSA==
+X-Google-Smtp-Source: APXvYqy+w2SusbAnYTwpYOPR+3O04TV2fCvs/a6Owbg9BpfbqHj4W+afKqvLkHDe8YOqttHJE93znFv0z6daCoPiM4k=
+X-Received: by 2002:a67:2087:: with SMTP id g129mr31887061vsg.191.1574978716243;
+ Thu, 28 Nov 2019 14:05:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHLCerN1VXhU0VQWN15PB2R16mkCV0i6Mn3+LW=xXtB5_7Z6JQ@mail.gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+References: <20191127102914.18729-1-ulf.hansson@linaro.org>
+ <20191127102914.18729-9-ulf.hansson@linaro.org> <20191128141443.GA31123@e121166-lin.cambridge.arm.com>
+ <CAPDyKFr1GTAkNyTmLvvC1ovm4yOtMGLOVWA-e-wjGJz2ENdN1g@mail.gmail.com> <20191128183143.GA15793@e121166-lin.cambridge.arm.com>
+In-Reply-To: <20191128183143.GA15793@e121166-lin.cambridge.arm.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 28 Nov 2019 23:04:39 +0100
+Message-ID: <CAPDyKFoXk9pX0MWnFp+YpiKDzq9wWVPe89J0JqeSkjN+VgJeow@mail.gmail.com>
+Subject: Re: [PATCH v3 08/13] cpuidle: psci: Add a helper to attach a CPU to
+ its PM domain
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 28 Nov 10:46 PST 2019, Amit Kucheria wrote:
-
-> On Wed, Nov 13, 2019 at 1:08 AM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Mon 11 Nov 11:21 PST 2019, Amit Kucheria wrote:
-> >
-> > > TSENS IP v2.x adds critical threshold interrupt support for each sensor
-> > > in addition to the upper/lower threshold interrupt. Add support in the
-> > > driver.
+On Thu, 28 Nov 2019 at 19:31, Lorenzo Pieralisi
+<lorenzo.pieralisi@arm.com> wrote:
+>
+> On Thu, Nov 28, 2019 at 06:21:03PM +0100, Ulf Hansson wrote:
+> > On Thu, 28 Nov 2019 at 15:15, Lorenzo Pieralisi
+> > <lorenzo.pieralisi@arm.com> wrote:
 > > >
-> > > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > > ---
-> > >  drivers/thermal/qcom/tsens-common.c | 129 ++++++++++++++++++++++++++--
-> > >  drivers/thermal/qcom/tsens-v2.c     |   8 +-
-> > >  drivers/thermal/qcom/tsens.c        |  21 +++++
-> > >  drivers/thermal/qcom/tsens.h        |  73 ++++++++++++++++
-> > >  4 files changed, 220 insertions(+), 11 deletions(-)
+> > > On Wed, Nov 27, 2019 at 11:29:09AM +0100, Ulf Hansson wrote:
 > > >
-> > > diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
-> > > index 4359a4247ac3..2989cb952cdb 100644
-> > > --- a/drivers/thermal/qcom/tsens-common.c
-> > > +++ b/drivers/thermal/qcom/tsens-common.c
-> > > @@ -23,6 +23,10 @@
-> > >   * @low_thresh:     lower threshold temperature value
-> > >   * @low_irq_mask:   mask register for lower threshold irqs
-> > >   * @low_irq_clear:  clear register for lower threshold irqs
-> > > + * @crit_viol:      critical threshold violated
-> >
-> > "violated" as in "temperature is above crit_thresh"?
-> 
-> Yes.
-> 
-> >
-> > > + * @crit_thresh:    critical threshold temperature value
-> > > + * @crit_irq_mask:  mask register for critical threshold irqs
-> > > + * @crit_irq_clear: clear register for critical threshold irqs
-> > >   *
-> > [..]
-> > > diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> > > index 7d317660211e..784c4976c4f9 100644
-> > > --- a/drivers/thermal/qcom/tsens.c
-> > > +++ b/drivers/thermal/qcom/tsens.c
-> > > @@ -121,6 +121,27 @@ static int tsens_register(struct tsens_priv *priv)
+> > > [...]
 > > >
-> > >       enable_irq_wake(irq);
+> > > > +struct device *psci_dt_attach_cpu(int cpu)
+> > > > +{
+> > > > +     struct device *dev;
+> > > > +
+> > > > +     /* Currently limit the hierarchical topology to be used in OSI mode. */
+> > > > +     if (!psci_has_osi_support())
+> > > > +             return NULL;
+> > > > +
+> > > > +     dev = dev_pm_domain_attach_by_name(get_cpu_device(cpu), "psci");
+> > > > +     if (IS_ERR_OR_NULL(dev))
+> > > > +             return dev;
+> > > > +
+> > > > +     pm_runtime_irq_safe(dev);
+> > > > +     if (cpu_online(cpu))
 > > >
-> > > +     if (tsens_version(priv) > VER_1_X) {
-> > > +             irq = platform_get_irq_byname(pdev, "critical");
-> > > +             if (irq < 0) {
+> > > It is unclear to me how we handle (or rather we don't) CPU hotplug
+> > > with this series - it does not look OK unless genpd code manages
+> > > that automatically.
 > >
-> > Treating this as a fatal error breaks backwards compatibility with
-> > current devicetree; and even within your patch series, tsens should fail
-> > to probe between this patch and the application of patch 3.
-> 
-> Good catch.
-> 
-> > Please flip this around and do:
+> > The series doesn't handle CPU hotplug at the moment, simply because I
+> > am targeting to get the basic support, upstream first.
+>
+> Basic support must work and that includes CPU hotplug - I don't want
+> to merge code that work with assumptions that aren't valid.
+>
+> > For a functionality point of view, this isn't a problem in my opinion.
+> > Simply because the consequence is only that the idle states for the
+> > "cluster" will not be reached if there is a CPU brought offline.
 > >
-> > irq = platform_get_irq_byname(pdev, "critical");
-> > if (irq >= 0 && tsens_version(priv) > VER_1_X) {
-> >         request_irq()...
-> > }
-> 
-> Won't this still break with current devicetree since irq < 0 until
-> patch 3? Or are you saying we shouldn't check for
-> platform_get_irq_byname() failure?
-> 
+> > As we talked about at LPC and as also told Sudeep for the v2 series,
+> > CPU hotplug is going to be implemented by using a CPU HP notifier.
+>
+> Yes, it should be part of the series.
+>
+> > That should be fine, right?
+>
+> Yes, hopefully but it has to be part of the series.
 
-I'm trying to say that dtsi without "critical" defined should cause the
-driver to simply skip this segment, not fail to initialize.
+Alright, I send a patch on top, asap.
 
-> I can see two ways out:
-> 1. We patch the dtsi before the code change.
+Please review the rest and if it needs a respin, I can fold it into the series.
 
-You're expected to maintain backwards compatibility with existing dtb
-files out there. The support for critical interrupt is an additional
-feature, so you should be able to do this by detecting if "critical" is
-defined (e.g. by checking the return value of
-platform_get_irq_byname()).
-
-> 2. We make critical interrupt failure non-fatal by just printing some
-> messages and still returning success.
-> 
-
-Try to make it as specific as possible (without adding a bunch of code)
-and throw in a dev_info() if no "critical" is found.
-
-Regards,
-Bjorn
-
-> Regards,
-> Amit
-> 
-> 
-> > > +                     ret = irq;
-> > > +                     goto err_put_device;
-> > > +             }
-> > > +
-> > > +             ret = devm_request_threaded_irq(&pdev->dev, irq,
-> > > +                                             NULL, tsens_critical_irq_thread,
-> > > +                                             IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-> > > +                                             dev_name(&pdev->dev), priv);
-> > > +             if (ret) {
-> > > +                     dev_err(&pdev->dev, "%s: failed to get critical irq\n", __func__);
-> > > +                     goto err_put_device;
-> > > +             }
-> > > +
-> > > +             enable_irq_wake(irq);
-> > > +     }
-> > > +
-> > > +     return 0;
-> > > +
-> > >  err_put_device:
-> > >       put_device(&pdev->dev);
-> > >       return ret;
-> >
-> > Regards,
-> > Bjorn
+Kind regards
+Uffe
