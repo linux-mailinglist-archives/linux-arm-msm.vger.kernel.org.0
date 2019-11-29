@@ -2,98 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8170E10D1E6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2019 08:39:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9441210D8A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Nov 2019 17:48:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726702AbfK2Hju (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Nov 2019 02:39:50 -0500
-Received: from a27-11.smtp-out.us-west-2.amazonses.com ([54.240.27.11]:40872
-        "EHLO a27-11.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726360AbfK2Hju (ORCPT
+        id S1727079AbfK2Qsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Nov 2019 11:48:51 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:33443 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726909AbfK2Qsu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Nov 2019 02:39:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1575013189;
-        h=From:To:Cc:Subject:Date:Message-Id;
-        bh=ZbBL0YlCdFMCj/S3gwNbtzQ3ZaZijak+AHAvDHCVEKg=;
-        b=TwY1eixXaDG9fqdbbgAcYwh1jbu5GU9wXNuJu7oRI67c3l6JhJmg8uViOQilWM3D
-        kOjyOJNlRyLIvaeIARawbmUQo20/bSFpHVL7CSVR+/kESd1KVA7gmzN4bmQ/BiiQQeM
-        Ft4XNGl0tHj3Ky6hYF4IyLVDnwZ6CJWRUbCNHST4=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1575013189;
-        h=From:To:Cc:Subject:Date:Message-Id:Feedback-ID;
-        bh=ZbBL0YlCdFMCj/S3gwNbtzQ3ZaZijak+AHAvDHCVEKg=;
-        b=ZUV6uoZW1RCuanEdno+LnbA5W7nzIdXL7aPuYuXDgw5cahELv6ayc0sv57vCELWf
-        AXLDIvNGdpFsiB9xCF1YgREg32+F1V1aaLTCPVKTosZ2vDk72lHIHyNn2Pe54U42d3n
-        zN4IgWvsP4ORXuP6ZS+vbeuHcsTTcFFyX5TuNULY=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9FA06C433A2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
-From:   Sharat Masetty <smasetty@codeaurora.org>
-To:     freedreno@lists.freedesktop.org
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Sharat Masetty <smasetty@codeaurora.org>
-Subject: [PATCH] rnndb: Add GBIF registers for a6xx GPU
-Date:   Fri, 29 Nov 2019 07:39:49 +0000
-Message-ID: <0101016eb61a0601-14bd7732-c07c-4674-899f-0e570c145195-000000@us-west-2.amazonses.com>
-X-Mailer: git-send-email 1.9.1
-X-SES-Outgoing: 2019.11.29-54.240.27.11
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
+        Fri, 29 Nov 2019 11:48:50 -0500
+Received: by mail-ed1-f68.google.com with SMTP id a24so26228950edt.0;
+        Fri, 29 Nov 2019 08:48:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UufnYlf2GsYCPyzbkkHk/dTVOPXtueY9E5VYzdhLqUs=;
+        b=pY9tvyazS85bTfSIan9LQaMzwCiangviUqIczyltzkqih6hrGj2G5d8O0oWBBg2DVo
+         YKL90Vfw4gTHQYAwP3UzR3vqm8iE1gjZADNDnRVnfzBsdv7S2hS7H4QX3kkiPzhGnmzY
+         4wVayL16J93zLdJ15b7j5ISMap+5xu91iJFnxOgsNWTBlyKkzkb0JON4vI+PZXXNupXi
+         PhYlFRfJpxg07Skq3LYOGnO4bnMpne6RmIJFZKxdNwJ0Ycwf0YsGBmfrefQDDtfIGyM3
+         taNJpZYsFQkWfAI3yksn8Bv0Z/bQeLW6vRY8dZnZlZyeMd3MJHGO6Idu2N0NWjYEbmSU
+         9u4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UufnYlf2GsYCPyzbkkHk/dTVOPXtueY9E5VYzdhLqUs=;
+        b=BgRrdsTE+YYd25k8RU1bZuTcqyoEY2cXqsJjNfWhFuKVmCZAn7PXhn7rdnsca8aM57
+         d1ylgStbPm0NKBQ4me2pbPJqp9Pi1TDCTtOi4+XMwzhg0wZzzsB9sfVnoPo/hudBp8Cn
+         KFYHHXXWw4HSo27aWUD/p1hJ6tS+pnx2xSw3bZtQOxeCP8IATbx32gcWLAks1K79Weu6
+         Xr3yCz8i0LMYLsAvz4xu1aSpllDaKyH5A681pnHiLNfgSxmuptsZelEIV2T7gaD+unnW
+         NO0MSwhKd64xrSgucAYkpwoeGHWo0rHFRuox3TYqiq/Pr6PjItvlLm9xeDNdaNZJHwDH
+         sbzg==
+X-Gm-Message-State: APjAAAWhvl/a04HDuFN9vnTNWXtHbOouAl7B7lLanNNiVokSDihQC5Pp
+        F53FRU1Zzb1uSyC30G6hXWjrRk+5blRrWbvXzeQfarY2
+X-Google-Smtp-Source: APXvYqxMCZ12ZTAFseqpRkfanwT5QgN0HgMTMYKPNJBhwzpA+ToKqjaShI3w7o9le0g6Sk6wWYbkA/1kj05qoecE0lo=
+X-Received: by 2002:a50:9fcb:: with SMTP id c69mr46409317edf.163.1575046127828;
+ Fri, 29 Nov 2019 08:48:47 -0800 (PST)
+MIME-Version: 1.0
+References: <1575010545-25971-1-git-send-email-harigovi@codeaurora.org> <1575010545-25971-2-git-send-email-harigovi@codeaurora.org>
+In-Reply-To: <1575010545-25971-2-git-send-email-harigovi@codeaurora.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 29 Nov 2019 08:48:34 -0800
+Message-ID: <CAF6AEGt8zuKWz-e_yRS_hbn6HV6DAXDvK4zwjJ-naQtEoe7uuA@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH v1 1/2] dt-bindings: display: add sc7180 panel variant
+To:     Harigovindan P <harigovi@codeaurora.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        nganji@codeaurora.org, Sean Paul <seanpaul@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add GBIF register definitions required to implement a618
-GPU revision
+On Thu, Nov 28, 2019 at 10:56 PM Harigovindan P <harigovi@codeaurora.org> wrote:
+>
+> Add a compatible string to support sc7180 panel version.
+>
+> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+> ---
+>  .../bindings/display/visionox,rm69299.txt          | 68 ++++++++++++++++++++++
+>  1 file changed, 68 insertions(+)
+>  create mode 100755 Documentation/devicetree/bindings/display/visionox,rm69299.txt
+>
+> diff --git a/Documentation/devicetree/bindings/display/visionox,rm69299.txt b/Documentation/devicetree/bindings/display/visionox,rm69299.txt
+> new file mode 100755
+> index 0000000..4622191
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/visionox,rm69299.txt
+> @@ -0,0 +1,68 @@
+> +Visionox model RM69299 DSI display driver
+> +
+> +The Visionox RM69299 is a generic display driver, currently only configured
+> +for use in the 1080p display on the Qualcomm SC7180 MTP board.
+> +
+> +Required properties:
+> +- compatible: should be "visionox,rm69299-1080p-display"
+> +- vdda-supply: phandle of the regulator that provides the supply voltage
+> +  Power IC supply
+> +- vdd3p3-supply: phandle of the regulator that provides the supply voltage
+> +  Power IC supply
+> +- reset-gpios: phandle of gpio for reset line
+> +  This should be 8mA, gpio can be configured using mux, pinctrl, pinctrl-names
+> +  (active low)
+> +- mode-gpios: phandle of the gpio for choosing the mode of the display
+> +  for single DSI
+> +- ports: This device has one video port driven by one DSI. Their connections
+> +  are modeled using the OF graph bindings specified in
+> +  Documentation/devicetree/bindings/graph.txt.
+> +  - port@0: DSI input port driven by master DSI
+> +
+> +Example:
+> +
+> +       dsi@ae94000 {
+> +               panel@0 {
+> +                       compatible = "visionox,rm69299-1080p-display";
+> +                       reg = <0>;
+> +
+> +                       vdda-supply = <&src_pp1800_l8c>;
+> +                       vdd3p3-supply = <&src_pp2800_l18a>;
+> +
+> +                       pinctrl-names = "default", "suspend";
+> +                       pinctrl-0 = <&disp_pins_default>;
+> +                       pinctrl-1 = <&disp_pins_default>;
+> +
+> +                       reset-gpios = <&pm6150l_gpios 3 0>;
+> +
+> +                       display-timings {
+> +                               timing0: timing-0 {
+> +                                       /* originally
+> +                                        * 268316160 Mhz,
+> +                                        * but value below fits
+> +                                        * better w/ downstream
+> +                                        */
+> +                                       clock-frequency = <158695680>;
+> +                                       hactive = <1080>;
+> +                                       vactive = <2248>;
+> +                                       hfront-porch = <26>;
+> +                                       hback-porch = <36>;
+> +                                       hsync-len = <2>;
+> +                                       vfront-porch = <56>;
+> +                                       vback-porch = <4>;
+> +                                       vsync-len = <4>;
+> +                               };
 
-Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
----
- rnndb/adreno/a6xx.xml | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+why do we specify timings in dt?  Would the panel use different
+timings on a different board?
 
-diff --git a/rnndb/adreno/a6xx.xml b/rnndb/adreno/a6xx.xml
-index 747f071..2d2063a 100644
---- a/rnndb/adreno/a6xx.xml
-+++ b/rnndb/adreno/a6xx.xml
-@@ -1748,6 +1748,32 @@ to upconvert to 32b float internally?
- 	<reg32 offset="0x3119" name="VBIF_PERF_PWR_CNT_HIGH1"/>
- 	<reg32 offset="0x311a" name="VBIF_PERF_PWR_CNT_HIGH2"/>
- 
-+	<!-- GBIF registers -->
-+	<reg32 offset="0x3c02" name="GBIF_SCACHE_CNTL1"/>
-+	<reg32 offset="0x3c03" name="GBIF_QSB_SIDE0"/>
-+	<reg32 offset="0x3c04" name="GBIF_QSB_SIDE1"/>
-+	<reg32 offset="0x3c05" name="GBIF_QSB_SIDE2"/>
-+	<reg32 offset="0x3c06" name="GBIF_QSB_SIDE3"/>
-+	<reg32 offset="0x3c45" name="GBIF_HALT"/>
-+	<reg32 offset="0x3c46" name="GBIF_HALT_ACK"/>
-+
-+	<reg32 offset="0x3cc0" name="GBIF_PERF_PWR_CNT_EN"/>
-+	<reg32 offset="0x3cc2" name="GBIF_PERF_CNT_SEL"/>
-+	<reg32 offset="0x3cc3" name="GBIF_PERF_PWR_CNT_SEL"/>
-+	<reg32 offset="0x3cc4" name="GBIF_PERF_CNT_LOW0"/>
-+	<reg32 offset="0x3cc5" name="GBIF_PERF_CNT_LOW1"/>
-+	<reg32 offset="0x3cc6" name="GBIF_PERF_CNT_LOW2"/>
-+	<reg32 offset="0x3cc7" name="GBIF_PERF_CNT_LOW3"/>
-+	<reg32 offset="0x3cc8" name="GBIF_PERF_CNT_HIGH0"/>
-+	<reg32 offset="0x3cc9" name="GBIF_PERF_CNT_HIGH1"/>
-+	<reg32 offset="0x3cca" name="GBIF_PERF_CNT_HIGH2"/>
-+	<reg32 offset="0x3ccb" name="GBIF_PERF_CNT_HIGH3"/>
-+	<reg32 offset="0x3ccc" name="GBIF_PWR_CNT_LOW0"/>
-+	<reg32 offset="0x3ccd" name="GBIF_PWR_CNT_LOW1"/>
-+	<reg32 offset="0x3cce" name="GBIF_PWR_CNT_LOW2"/>
-+	<reg32 offset="0x3ccf" name="GBIF_PWR_CNT_HIGH0"/>
-+	<reg32 offset="0x3cd0" name="GBIF_PWR_CNT_HIGH1"/>
-+	<reg32 offset="0x3cd1" name="GBIF_PWR_CNT_HIGH2"/>
- 	<!-- move/rename these.. -->
- 
- 	<reg32 offset="0x88d4" name="RB_WINDOW_OFFSET2" type="adreno_reg_xy"/>
--- 
-1.9.1
+BR,
+-R
 
+> +                       };
+> +
+> +                       ports {
+> +                               #address-cells = <1>;
+> +                               #size-cells = <0>;
+> +                               port@0 {
+> +                                       reg = <0>;
+> +                                       panel0_in: endpoint {
+> +                                               remote-endpoint = <&dsi0_out>;
+> +                                       };
+> +                               };
+> +                       };
+> +               };
+> +       };
+> --
+> 2.7.4
+>
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
