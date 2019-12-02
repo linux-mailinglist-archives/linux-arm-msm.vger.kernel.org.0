@@ -2,193 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FA9510ED5A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2019 17:41:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 12FC010ED75
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2019 17:49:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727525AbfLBQlH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Dec 2019 11:41:07 -0500
-Received: from mail-il1-f194.google.com ([209.85.166.194]:34696 "EHLO
-        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727438AbfLBQlH (ORCPT
+        id S1727484AbfLBQtL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Dec 2019 11:49:11 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:37266 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727435AbfLBQtL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Dec 2019 11:41:07 -0500
-Received: by mail-il1-f194.google.com with SMTP id w13so272437ilo.1;
-        Mon, 02 Dec 2019 08:41:06 -0800 (PST)
+        Mon, 2 Dec 2019 11:49:11 -0500
+Received: by mail-ed1-f67.google.com with SMTP id cy15so25221157edb.4;
+        Mon, 02 Dec 2019 08:49:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=OOh+Bc1DWdItpbvyDVMetDcI62XQS3JiY37nnuo0X1o=;
-        b=bVNmOxsEVEp8YH+hiILRG3Pmj4Z+rGdDKJIJ8PbS5u/igb6I9ECpqn1bS+ZIHa29hD
-         Mb4f+KFlFF4W8dmbVbYMk9CWwRcX63uAn9ZRvbOA7pEIkPZVMrfIvTD2InoGmjsf6BpC
-         EPiGHHjnN/9CgI4G18iBQ2yJ56XZ6ZShTIs/qy9OEHiW+CjqmYjIN+cxns0GSWlZ78Cy
-         RcSrPdvf59w/6+V9gjGlqkW9zRZyj+VGYmQ8710JRt7GDe6GqPya7N6x5fLBM9AQvHTP
-         /W4Rtplt/vZgj8kDWyDgX6WpBJyRWbt+sVy+zkz7Le4l9rvmJ+ykCbVpoRhhPOeWkn3x
-         /ZLQ==
+        bh=JCNF6tgwefhUIMTdjVdbK7yFqIKcfTu3pjPnwJ0a8Uo=;
+        b=lk0XviqhK/oQnxW7KxSv6xIA7fuGC1wjpikxD+6lZuj6OxvsoblVOz65xae/1GRzSN
+         Da8mMBMC9Vi0tO1p4z7dnjGEdNZFqPOr6FgK9U6Z0rdnx+3ZKep4j/ivuWPpDsko8+eh
+         ZBAidPmsZAIQA8cuxKIrCueFM4s8IucnbcWIbyCv+rfQEZF0HZ5zZM/FNQU31jqSxI15
+         6NvKe5D80gcGPM2KlO4EdMVeXxHqLVRh6tbPx3GVCxU4c9HHsMHw3uk7nkWajshX/7sm
+         cm7nB/kZ3S9y1nef7oTSxYlxPCwM2upuxZdGvfzFLpwknBL/zt9BeAnUHmdfGgCriWFN
+         9X5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=OOh+Bc1DWdItpbvyDVMetDcI62XQS3JiY37nnuo0X1o=;
-        b=nXJLcqnt/ytj6mE3SZnpZ3mEiU9gyf2eCcD35MleMk2bYT5FVoAfbh8Kh1TzlHdyUY
-         T2rwjPzo2KHZAq8jgPBS9rresb9rZySwVfoXnCzeJSy/WZI0dOuXYAO07sgNcrvgHCnU
-         LpYA9F/40RnUZOv/FhTb+QbZX/WtnMfDuRgMYB7Vt6+Pu2T7feUqU2qNUI2bFqLaK9QA
-         /k5KRap0egqq+E3Lplb9yGDWU+J2dHFFwd9yd7VOFRySMf8DReG7VPgud8ZYgEwLVaPk
-         FgUEMDLmFhiw/ABwA1Qx0gt9qpWnYVR4hL/yP8JXJ1fLoLEHAryfOAxhGmrxM/kYzqMu
-         6FOw==
-X-Gm-Message-State: APjAAAUic774GJ+ImF+vIkcd1BJvZepjj266rcGDRnUaNzsFaF/0vlzF
-        bVgmbtYe6JkEQ1OaOSj1AW/Ij9Q01rfPsd1iTDM=
-X-Google-Smtp-Source: APXvYqzAaEwIforOBiTI0rbJEPuiD0fNLEyhsjIOukX/xgCyOfdwPSFCmlouh1JsqHdxv3qOTLI5g78cx1qUMuTHvjk=
-X-Received: by 2002:a92:b60e:: with SMTP id s14mr68371769ili.178.1575304866317;
- Mon, 02 Dec 2019 08:41:06 -0800 (PST)
+        bh=JCNF6tgwefhUIMTdjVdbK7yFqIKcfTu3pjPnwJ0a8Uo=;
+        b=GPJ6e0vmGvLqQf87MOAEXDY+/qlx8ZNG9Ev/5Zd2fGiQGrIyycVnAsig9TP8j1m8wq
+         d8IVocai14/QzXMlZ/Qf+26wcJPutspd/kgRFyNk180qz70Y8JSV2hEA9O4JdbfjhV5F
+         GBkrmNbUIfHlnYzgvkXYsZom8fSHnDuRQn6sXDUDJkMT5DBe5L74TBrcS313MOEtsLIt
+         nAEfyCyC0o69zPqflszmcaCYKtPlCiEs7B7fHsGXlo20gOL3ERS0Xa1JdMuhDrMAHirM
+         P6zaSnGa5f8/JdxSCVgu0i8W4F0lPwgRRdd1bptK9ie0SHUx6pimCndXJmEJjtOYQTsJ
+         Tz3w==
+X-Gm-Message-State: APjAAAUuA5p8jGddCz95EfvM0Tgq9ULOPhGkqLghnsw2JCg438S9+zWt
+        ULq/tuUSHS/03Pm3uZ+uOd+a+kl5t7HkmGh/ZN8=
+X-Google-Smtp-Source: APXvYqwOkds5zFJUwr1u9M8V2LfokAmaX+ozape5Zik4y2kw1WrjcT4qQdtDQd32rn1gW2vmWsf3uHb2NXG6Oy8/oOQ=
+X-Received: by 2002:a50:fc85:: with SMTP id f5mr27812882edq.294.1575305349177;
+ Mon, 02 Dec 2019 08:49:09 -0800 (PST)
 MIME-Version: 1.0
-References: <20191127141544.4277-1-leo.yan@linaro.org> <20191127141544.4277-3-leo.yan@linaro.org>
-In-Reply-To: <20191127141544.4277-3-leo.yan@linaro.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Mon, 2 Dec 2019 09:40:55 -0700
-Message-ID: <CAOCk7NqZmBYN4tY0_V8xzvBfWShDCP8gTa60Aoc78wK2tXx=6A@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] tty: serial: msm_serial: Fix deadlock caused by
- recursive output
-To:     Leo Yan <leo.yan@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jslaby@suse.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-serial@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>
+References: <1575294437-6129-1-git-send-email-chandanu@codeaurora.org> <0101016ec6df0d33-edb8acfc-a6f1-486e-a8db-38ec498951ed-000000@us-west-2.amazonses.com>
+In-Reply-To: <0101016ec6df0d33-edb8acfc-a6f1-486e-a8db-38ec498951ed-000000@us-west-2.amazonses.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 2 Dec 2019 08:48:58 -0800
+Message-ID: <CAF6AEGtHkPSx8xU+CdomDtOqLr-cC2bgfHngWWZzx=8STAsQtA@mail.gmail.com>
+Subject: Re: [DPU PATCH v3 3/5] drm/msm/dp: add displayPort driver support
+To:     Chandan Uddaraju <chandanu@codeaurora.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Sean Paul <seanpaul@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>, nganji@codeaurora.org,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 27, 2019 at 7:16 AM Leo Yan <leo.yan@linaro.org> wrote:
+On Mon, Dec 2, 2019 at 5:48 AM Chandan Uddaraju <chandanu@codeaurora.org> wrote:
 >
-> The uart driver might run into deadlock caused by recursive output; the
-> basic flow is after uart driver has acquired the port spinlock, then it
-> invokes some functions, e.g. dma engine operations and allocate dma
-> descriptor with kzalloc(), if the system has very less free memory, the
-> kernel will give out warning by printing logs, thus recursive output
-> will happen and at the second time the attempting to acquire lock will
-> cause deadlock.  The detailed flow is shown as below:
+> Add the needed displayPort files to enable DP driver
+> on msm target.
 >
->   msm_uart_irq()
->     spin_lock_irqsave(&port->lock, flags)  => First time to acquire lock
->     msm_handle_tx(port)
->       msm_handle_tx_dma()
->         dmaengine_prep_slave_single()
->           bam_prep_slave_sg()
->             kzalloc()
->                __kmalloc()
->                  ___slab_alloc()
->                    alloc_pages_current()
->                      __alloc_pages_nodemask()
->                        warn_alloc()
->                          printk()
->                            msm_console_write()
->                              __msm_console_write()
->                                spin_lock(&port->lock) => Cause deadlock
+> "dp_display" module is the main module that calls into
+> other sub-modules. "dp_drm" file represents the interface
+> between DRM framework and DP driver.
 >
-> This patch fixes the deadlock issue for recursive output; it adds a
-> variable 'curr_user' to indicate the uart port is used by which CPU, if
-> the CPU has acquired spinlock and wants to execute recursive output,
-> it will directly bail out.  Here we don't choose to avoid locking and
-> print out log, the reason is in this case we don't want to reset the
-> uart port with function msm_reset_dm_count(); otherwise it can introduce
-> confliction with other flows and results in uart port malfunction and
-> later cannot output anymore.
-
-Is this not fixable?  Sure, fixing the deadlock is an improvement, but
-dropping logs (particularly a memory warning like in your example)
-seems undesirable.
-
+> changes in v2:
+> -- Update copyright markings on all relevant files.
+> -- Change pr_err() to DRM_ERROR()
+> -- Use APIs directly instead of function pointers.
+> -- Use drm_display_mode structure to store link parameters in the driver.
+> -- Use macros for register definitions instead of hardcoded values.
+> -- Replace writel_relaxed/readl_relaxed with writel/readl
+>    and remove memory barriers.
+> -- Remove unnecessary NULL checks.
+> -- Use drm helper functions for dpcd read/write.
+> -- Use DRM_DEBUG_DP for debug msgs.
 >
-> Fixes: 99693945013a ("tty: serial: msm: Add RX DMA support")
-> Fixes: 3a878c430fd6 ("tty: serial: msm: Add TX DMA support")
-> Signed-off-by: Leo Yan <leo.yan@linaro.org>
+> changes in V3:
+> -- Removed changes in dpu_io_util.[ch]
+> -- Added locking around "is_connected" flag and removed atomic_set()
+> -- Removed the argument validation checks in all the static functions
+>    except initialization functions and few API calls across msm/dp files
+> -- Removed hardcoded values for register reads/writes
+> -- Removed vreg related generic structures.
+> -- Added return values where ever necessary.
+> -- Updated dp_ctrl_on function.
+> -- Calling the ctrl specific catalog functions directly instead of
+>    function pointers.
+> -- Added seperate change that adds standard value in drm_dp_helper file.
+> -- Added separate change in this list that is used to initialize
+>    displayport in DPU driver.
+> -- Added change to use drm_dp_get_adjust_request_voltage() function.
+>
+> Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
 > ---
->  drivers/tty/serial/msm_serial.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+
+[snip]
+
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index f96e142..29ac7d3 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -967,6 +967,9 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
 >
-> diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-> index 889538182e83..06076cd2948f 100644
-> --- a/drivers/tty/serial/msm_serial.c
-> +++ b/drivers/tty/serial/msm_serial.c
-> @@ -182,6 +182,7 @@ struct msm_port {
->         bool                    break_detected;
->         struct msm_dma          tx_dma;
->         struct msm_dma          rx_dma;
-> +       struct cpumask          curr_user;
->  };
+>         trace_dpu_enc_mode_set(DRMID(drm_enc));
 >
->  #define UART_TO_MSM(uart_port) container_of(uart_port, struct msm_port, uart)
-> @@ -436,6 +437,7 @@ static void msm_complete_tx_dma(void *args)
->         u32 val;
->
->         spin_lock_irqsave(&port->lock, flags);
-> +       cpumask_set_cpu(smp_processor_id(), &msm_port->curr_user);
->
->         /* Already stopped */
->         if (!dma->count)
-> @@ -470,6 +472,7 @@ static void msm_complete_tx_dma(void *args)
->
->         msm_handle_tx(port);
->  done:
-> +       cpumask_clear_cpu(smp_processor_id(), &msm_port->curr_user);
->         spin_unlock_irqrestore(&port->lock, flags);
->  }
->
-> @@ -544,6 +547,7 @@ static void msm_complete_rx_dma(void *args)
->         u32 val;
->
->         spin_lock_irqsave(&port->lock, flags);
-> +       cpumask_set_cpu(smp_processor_id(), &msm_port->curr_user);
->
->         /* Already stopped */
->         if (!dma->count)
-> @@ -590,6 +594,7 @@ static void msm_complete_rx_dma(void *args)
->
->         msm_start_rx_dma(msm_port);
->  done:
-> +       cpumask_clear_cpu(smp_processor_id(), &msm_port->curr_user);
->         spin_unlock_irqrestore(&port->lock, flags);
->
->         if (count)
-> @@ -931,6 +936,7 @@ static irqreturn_t msm_uart_irq(int irq, void *dev_id)
->         u32 val;
->
->         spin_lock_irqsave(&port->lock, flags);
-> +       cpumask_set_cpu(smp_processor_id(), &msm_port->curr_user);
->         misr = msm_read(port, UART_MISR);
->         msm_write(port, 0, UART_IMR); /* disable interrupt */
->
-> @@ -962,6 +968,7 @@ static irqreturn_t msm_uart_irq(int irq, void *dev_id)
->                 msm_handle_delta_cts(port);
->
->         msm_write(port, msm_port->imr, UART_IMR); /* restore interrupt */
-> +       cpumask_clear_cpu(smp_processor_id(), &msm_port->curr_user);
->         spin_unlock_irqrestore(&port->lock, flags);
->
->         return IRQ_HANDLED;
-> @@ -1572,6 +1579,7 @@ static inline struct uart_port *msm_get_port_from_line(unsigned int line)
->  static void __msm_console_write(struct uart_port *port, const char *s,
->                                 unsigned int count, bool is_uartdm)
->  {
-> +       struct msm_port *msm_port = UART_TO_MSM(port);
->         int i;
->         int num_newlines = 0;
->         bool replaced = false;
-> @@ -1593,6 +1601,8 @@ static void __msm_console_write(struct uart_port *port, const char *s,
->                 locked = 0;
->         else if (oops_in_progress)
->                 locked = spin_trylock(&port->lock);
-> +       else if (cpumask_test_cpu(smp_processor_id(), &msm_port->curr_user))
-> +               return;
->         else
->                 spin_lock(&port->lock);
->
-> --
-> 2.17.1
->
+> +       if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS && priv->dp)
+> +               msm_dp_display_mode_set(priv->dp, drm_enc, mode, adj_mode);
+> +
+
+for better or for worse, DSI and HDMI backends create an internal
+drm_bridge object to avoid all of these shunts over from the encoder.
+We might be still the only driver to do this, but IMHO it is better
+than making each encoder know about each backend, so we might as well
+stick with that.
+
+(same goes for the other 'if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS)'s)
+
+BR,
+-R
+
+
+>         list_for_each_entry(conn_iter, connector_list, head)
+>                 if (conn_iter->encoder == drm_enc)
+>                         conn = conn_iter;
