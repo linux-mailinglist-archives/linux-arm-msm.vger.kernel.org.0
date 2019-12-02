@@ -2,209 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 204C710EE9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2019 18:40:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C1F710EFA4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Dec 2019 19:59:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727898AbfLBRk3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Dec 2019 12:40:29 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:44039 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727721AbfLBRk0 (ORCPT
+        id S1727555AbfLBS7Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Dec 2019 13:59:24 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:35573 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727417AbfLBS7X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Dec 2019 12:40:26 -0500
-Received: by mail-pf1-f193.google.com with SMTP id d199so14143334pfd.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2019 09:40:24 -0800 (PST)
+        Mon, 2 Dec 2019 13:59:23 -0500
+Received: by mail-ed1-f66.google.com with SMTP id f8so472357edv.2;
+        Mon, 02 Dec 2019 10:59:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hyAeLi8mzrAljg+oqlKweKC1x2LO84uDajOvbhKEc6o=;
-        b=cwIOVoNj8BFAQnp6JkEeOfVeTVfoNVLdKQ1CTI59N9fU7j9SrPSvsQG2dmS6Roklsz
-         zDHKDfgCImDnFN8XF0fkzU8+2ywFUDS8CDovjbvr4t+bacSts/Xzwi+F4oamgJFsK05d
-         Hx/sF+MYP+1HUDj8YPmprAZNVaqQs3pffPlMLnh9K9Ggv+1iuxk8I0vNNADr1GDgZGEf
-         QDi+vTkHKWfaNIWfuZwOBN0EC5gRzdCyBzNiNiJmvP0vcFhejyLTQDNxvoS8veZNVeL3
-         QwIkbCcyqF3tGSS4RE26mEuMLwcvH5bxkhzyWl8Nx6ZF6pTSrhbViAq/+TIlt1Q4lxQ7
-         vTFQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=X63MMUhi8DWocLcKUjrI//Lp1UTjsR/8D+ptYNBBx6k=;
+        b=Ye3NquvkceMDlPIzVT0BDPeCOPvsuFj5W1hQaEsh8XypvNZDyuDS3awc8/7N1Rc1I0
+         Wk753JNnHXZzqXKqOSACQu9iU/X/mlKI96IsD4GsuxigZ3gr0BYHJic3o6c7d6L5QjsR
+         p/c9zZnrG+ifziQ/GlJ/dOwuy7TYoP61bfa6RlE2XVBXBG5hAxryxnKNGa7UYE1dz6yn
+         EKXJHIb0fU7ci+mmop4dhI/ZyuRPVGcdezClVZSS33n27eoTbDi7UxmHOOTOCWD4b09g
+         rLuFNFTPd8KoSRD1ABpsN/czyVLQKmtJ1gn/WRQNPqPKeytkWYXDikSAd9TNzQmIgTOE
+         756g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hyAeLi8mzrAljg+oqlKweKC1x2LO84uDajOvbhKEc6o=;
-        b=Pp+teT8O67VsLhxXH30EGJI6fYLv2UoTM0sMfJiXJj72y894itWzM6JjRoLytKh4KJ
-         t5O39hkboQXuX9YGTI3eFAWmD0zd2LFs5rhK2G3kFBm3BrjiZSZw3NUmvLyCqse63C8S
-         BjfQAylnSYl/vOP+qy4HmKCNVbpGrQqvIHMKeaCFZaqurg/kcz5eQ70A2vhbNpi1OB0+
-         x2wiMIGNstUiVpHrorW9mbiVM4Uc7iotTiCPvHGUwJj9p7QD14oOUqOEsf6tkAp5ekFG
-         Upvilq+LBQsWVpznGR6aN0kdYpeEf7WKV/C+9YW9MdBGKY6BW2vHfOqfdW13ZN2qPEYx
-         rwrg==
-X-Gm-Message-State: APjAAAU/IFGSm5GCIVME5CVvmviayvQxJ9eV6qhLFT1x+DC5r4RMuJDV
-        1Xjj67HvoYOhRwLNRRG5jUZyATUydV8=
-X-Google-Smtp-Source: APXvYqw/2Be/C4XxVxo1CEdS6TiMz6AGfb519d+Ziji+JEmMMF5nHQW9dkec9gBcbb6VDLK7vvR1gg==
-X-Received: by 2002:aa7:91d2:: with SMTP id z18mr48739048pfa.97.1575308423712;
-        Mon, 02 Dec 2019 09:40:23 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id w6sm180989pge.92.2019.12.02.09.40.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Dec 2019 09:40:22 -0800 (PST)
-Date:   Mon, 2 Dec 2019 09:40:20 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Georgi Djakov <georgi.djakov@linaro.org>
-Cc:     linux-pm@vger.kernel.org, agross@kernel.org, digetx@gmail.com,
-        evgreen@chromium.org, daidavid1@codeaurora.org,
-        masneyb@onstation.org, sibis@codeaurora.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] interconnect: qcom: Use the new common helper for
- node removal
-Message-ID: <20191202174020.GE133384@yoga>
-References: <20191202162133.7089-1-georgi.djakov@linaro.org>
- <20191202162133.7089-5-georgi.djakov@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=X63MMUhi8DWocLcKUjrI//Lp1UTjsR/8D+ptYNBBx6k=;
+        b=dDl0NO8+xWzZ8MZcVPFMPODWzoFdP9oPryYbyiT99MmPgWwrCuSe07Vm0MM36xBUVC
+         x2LGTIdgG+uvuHzrAbRn7x177mz3jZ/B8NgdaG2fvXIja7CJ52mza6izR72BYgFmswKO
+         Zt0mOS9cGa/9JKLUYwCVvBPQIxBg3u1hDppoWD2hjbCZKCF4R6Szfa6x0vveYHnRkRtt
+         3AkqI7Gp0kvK+hyWjkQBKD/ma7jQa0t7XQ50UCgtf4Ynj/R0MFgBSfG7Hhc4yCLATb+V
+         Ah09kO0iygiX14WQLKsoFOgTLi0kxwRzNe3Kv8lorY2PpuKfwZWA/LJjIYpo2BOAlSNv
+         pUew==
+X-Gm-Message-State: APjAAAUB8bAhntSTJA7sAU6pV+ByadLWGeHrowlLeHwmVkNdy11vIn8d
+        TiFSDB6Wx9m1R9Pe6Txq0oKNvdsED371w+lGFuQ=
+X-Google-Smtp-Source: APXvYqygAygqCx471dTqK0h+aHvSASYR1Fgph/UvNh3OSYFykwZqj+H2txbCq99UlrkFARPz20EXlokAvCmfLh8GXVs=
+X-Received: by 2002:aa7:d64f:: with SMTP id v15mr394370edr.71.1575313159548;
+ Mon, 02 Dec 2019 10:59:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191202162133.7089-5-georgi.djakov@linaro.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+References: <1575294437-6129-1-git-send-email-chandanu@codeaurora.org> <0101016ec6df0d33-edb8acfc-a6f1-486e-a8db-38ec498951ed-000000@us-west-2.amazonses.com>
+In-Reply-To: <0101016ec6df0d33-edb8acfc-a6f1-486e-a8db-38ec498951ed-000000@us-west-2.amazonses.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 2 Dec 2019 10:59:08 -0800
+Message-ID: <CAF6AEGtJT+w3RRdc2=y8T0tOnX9E8T7zpQ7Pdy=biCbDGD9=6Q@mail.gmail.com>
+Subject: Re: [DPU PATCH v3 3/5] drm/msm/dp: add displayPort driver support
+To:     Chandan Uddaraju <chandanu@codeaurora.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Sean Paul <seanpaul@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>, nganji@codeaurora.org,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 02 Dec 08:21 PST 2019, Georgi Djakov wrote:
-
-> There is a new helper function for removing all nodes. Let's use it instead
-> of duplicating the code.
-> 
-> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
+On Mon, Dec 2, 2019 at 5:48 AM Chandan Uddaraju <chandanu@codeaurora.org> wrote:
+>
+> Add the needed displayPort files to enable DP driver
+> on msm target.
+>
+> "dp_display" module is the main module that calls into
+> other sub-modules. "dp_drm" file represents the interface
+> between DRM framework and DP driver.
+>
+> changes in v2:
+> -- Update copyright markings on all relevant files.
+> -- Change pr_err() to DRM_ERROR()
+> -- Use APIs directly instead of function pointers.
+> -- Use drm_display_mode structure to store link parameters in the driver.
+> -- Use macros for register definitions instead of hardcoded values.
+> -- Replace writel_relaxed/readl_relaxed with writel/readl
+>    and remove memory barriers.
+> -- Remove unnecessary NULL checks.
+> -- Use drm helper functions for dpcd read/write.
+> -- Use DRM_DEBUG_DP for debug msgs.
+>
+> changes in V3:
+> -- Removed changes in dpu_io_util.[ch]
+> -- Added locking around "is_connected" flag and removed atomic_set()
+> -- Removed the argument validation checks in all the static functions
+>    except initialization functions and few API calls across msm/dp files
+> -- Removed hardcoded values for register reads/writes
+> -- Removed vreg related generic structures.
+> -- Added return values where ever necessary.
+> -- Updated dp_ctrl_on function.
+> -- Calling the ctrl specific catalog functions directly instead of
+>    function pointers.
+> -- Added seperate change that adds standard value in drm_dp_helper file.
+> -- Added separate change in this list that is used to initialize
+>    displayport in DPU driver.
+> -- Added change to use drm_dp_get_adjust_request_voltage() function.
+>
+> Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
 > ---
-> v2:
-> - Don't call qnoc_remove() directly from probe. (Dmitry)
-> 
->  drivers/interconnect/qcom/msm8974.c | 17 ++++-------------
->  drivers/interconnect/qcom/qcs404.c  | 17 ++++-------------
->  drivers/interconnect/qcom/sdm845.c  | 16 +++-------------
->  3 files changed, 11 insertions(+), 39 deletions(-)
-> 
-> diff --git a/drivers/interconnect/qcom/msm8974.c b/drivers/interconnect/qcom/msm8974.c
-> index ca25f31e5f0b..3a313e11e73d 100644
-> --- a/drivers/interconnect/qcom/msm8974.c
-> +++ b/drivers/interconnect/qcom/msm8974.c
-> @@ -643,7 +643,7 @@ static int msm8974_icc_probe(struct platform_device *pdev)
->  	struct device *dev = &pdev->dev;
->  	struct icc_onecell_data *data;
->  	struct icc_provider *provider;
-> -	struct icc_node *node, *tmp;
-> +	struct icc_node *node;
->  	size_t num_nodes, i;
->  	int ret;
->  
-> @@ -723,10 +723,7 @@ static int msm8974_icc_probe(struct platform_device *pdev)
->  	return 0;
->  
->  err_del_icc:
-> -	list_for_each_entry_safe(node, tmp, &provider->nodes, node_list) {
-> -		icc_node_del(node);
-> -		icc_node_destroy(node->id);
-> -	}
-> +	icc_nodes_remove(provider);
->  	icc_provider_del(provider);
->  
->  err_disable_clks:
-> @@ -738,16 +735,10 @@ static int msm8974_icc_probe(struct platform_device *pdev)
->  static int msm8974_icc_remove(struct platform_device *pdev)
->  {
->  	struct msm8974_icc_provider *qp = platform_get_drvdata(pdev);
-> -	struct icc_provider *provider = &qp->provider;
-> -	struct icc_node *n, *tmp;
->  
-> -	list_for_each_entry_safe(n, tmp, &provider->nodes, node_list) {
-> -		icc_node_del(n);
-> -		icc_node_destroy(n->id);
-> -	}
-> +	icc_nodes_remove(&qp->provider);
->  	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
-> -
-> -	return icc_provider_del(provider);
-> +	return icc_provider_del(&qp->provider);
->  }
->  
->  static const struct of_device_id msm8974_noc_of_match[] = {
-> diff --git a/drivers/interconnect/qcom/qcs404.c b/drivers/interconnect/qcom/qcs404.c
-> index 9064f6bdaa69..d4769a5ea182 100644
-> --- a/drivers/interconnect/qcom/qcs404.c
-> +++ b/drivers/interconnect/qcom/qcs404.c
-> @@ -405,7 +405,7 @@ static int qnoc_probe(struct platform_device *pdev)
->  	struct icc_provider *provider;
->  	struct qcom_icc_node **qnodes;
->  	struct qcom_icc_provider *qp;
-> -	struct icc_node *node, *tmp;
-> +	struct icc_node *node;
->  	size_t num_nodes, i;
->  	int ret;
->  
-> @@ -485,10 +485,7 @@ static int qnoc_probe(struct platform_device *pdev)
->  
->  	return 0;
->  err:
-> -	list_for_each_entry_safe(node, tmp, &provider->nodes, node_list) {
-> -		icc_node_del(node);
-> -		icc_node_destroy(node->id);
-> -	}
-> +	icc_nodes_remove(provider);
->  	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
->  	icc_provider_del(provider);
->  
-> @@ -498,16 +495,10 @@ static int qnoc_probe(struct platform_device *pdev)
->  static int qnoc_remove(struct platform_device *pdev)
->  {
->  	struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
-> -	struct icc_provider *provider = &qp->provider;
-> -	struct icc_node *n, *tmp;
->  
-> -	list_for_each_entry_safe(n, tmp, &provider->nodes, node_list) {
-> -		icc_node_del(n);
-> -		icc_node_destroy(n->id);
-> -	}
-> +	icc_nodes_remove(&qp->provider);
->  	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
-> -
-> -	return icc_provider_del(provider);
-> +	return icc_provider_del(&qp->provider);
->  }
->  
->  static const struct of_device_id qcs404_noc_of_match[] = {
-> diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
-> index 387267ee9648..f078cf0fce56 100644
-> --- a/drivers/interconnect/qcom/sdm845.c
-> +++ b/drivers/interconnect/qcom/sdm845.c
-> @@ -855,11 +855,7 @@ static int qnoc_probe(struct platform_device *pdev)
->  
->  	return ret;
->  err:
-> -	list_for_each_entry(node, &provider->nodes, node_list) {
-> -		icc_node_del(node);
-> -		icc_node_destroy(node->id);
-> -	}
-> -
-> +	icc_nodes_remove(provider);
->  	icc_provider_del(provider);
->  	return ret;
->  }
-> @@ -867,15 +863,9 @@ static int qnoc_probe(struct platform_device *pdev)
->  static int qnoc_remove(struct platform_device *pdev)
->  {
->  	struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
-> -	struct icc_provider *provider = &qp->provider;
-> -	struct icc_node *n, *tmp;
-> -
-> -	list_for_each_entry_safe(n, tmp, &provider->nodes, node_list) {
-> -		icc_node_del(n);
-> -		icc_node_destroy(n->id);
-> -	}
->  
-> -	return icc_provider_del(provider);
-> +	icc_nodes_remove(&qp->provider);
-> +	return icc_provider_del(&qp->provider);
->  }
->  
->  static const struct of_device_id qnoc_of_match[] = {
+
+[snip]
+
+> +
+> +void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog,
+> +                                       u32 rate, u32 stream_rate_khz,
+> +                                       bool fixed_nvid)
+> +{
+> +       u32 pixel_m, pixel_n;
+> +       u32 mvid, nvid;
+> +       u64 mvid_calc;
+> +       struct dp_catalog_private *catalog = container_of(dp_catalog,
+> +                               struct dp_catalog_private, dp_catalog);
+> +
+> +       if (fixed_nvid) {
+> +               nvid = DP_LINK_CONSTANT_N_VALUE;
+> +               DRM_DEBUG_DP("use fixed NVID=0x%x\n", nvid);
+> +
+> +               /*
+> +                * For intermediate results, use 64 bit arithmetic to avoid
+> +                * loss of precision.
+> +                */
+> +               mvid_calc = (u64) stream_rate_khz * nvid;
+> +               mvid_calc = div_u64(mvid_calc, rate);
+> +
+> +               /*
+> +                * truncate back to 32 bits as this final divided value will
+> +                * always be within the range of a 32 bit unsigned int.
+> +                */
+> +               mvid = (u32) mvid_calc;
+> +               DRM_DEBUG_DP("link rate=%dkbps, stream_rate_khz=%uKhz",
+> +                       rate, stream_rate_khz);
+> +       } else {
+> +               pixel_m = dp_read_cc(catalog, MMSS_DP_PIXEL_M);
+> +               pixel_n = dp_read_cc(catalog, MMSS_DP_PIXEL_N);
+
+Can we just calculate m/n from the rate instead.  That gets rid of
+having to ioremap() the dispcc region, which is really ugly.
+
+BR,
+-R
+
+> +               DRM_DEBUG_DP("pixel_m=0x%x, pixel_n=0x%x\n", pixel_m, pixel_n);
+> +
+> +               mvid = (pixel_m & 0xFFFF) * 5;
+> +               nvid = (0xFFFF & (~pixel_n)) + (pixel_m & 0xFFFF);
+> +
+> +               DRM_DEBUG_DP("rate = %d\n", rate);
+> +
+> +               switch (drm_dp_link_rate_to_bw_code(rate)) {
+> +               case DP_LINK_BW_5_4:
+> +                       nvid *= 2;
+> +                       break;
+> +               case DP_LINK_BW_8_1:
+> +                       nvid *= 3;
+> +                       break;
+> +               default:
+> +                       break;
+> +               }
+> +       }
+> +
+> +       DRM_DEBUG_DP("mvid=0x%x, nvid=0x%x\n", mvid, nvid);
+> +       dp_write_link(catalog, REG_DP_SOFTWARE_MVID, mvid);
+> +       dp_write_link(catalog, REG_DP_SOFTWARE_NVID, nvid);
+> +}
