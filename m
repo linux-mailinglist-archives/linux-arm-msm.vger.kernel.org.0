@@ -2,166 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C06710F49A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2019 02:40:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F5F710F670
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2019 05:57:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726008AbfLCBkI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Dec 2019 20:40:08 -0500
-Received: from onstation.org ([52.200.56.107]:44816 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725903AbfLCBkI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Dec 2019 20:40:08 -0500
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 0E9DD3E908;
-        Tue,  3 Dec 2019 01:40:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1575337207;
-        bh=EW7ZDM5c2n54mYfG5qzAbt/1sak+DzvY68J3v0XZe1A=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rp3il1LtXJzLhm2jL8NJ9MGPG2MBzaYmNAMXeExez1VZtDp8BHzI5nZR5ZXZYKebc
-         e761s2+MYD4aV0QZOGCWj0mXOVcfSOj6t83goKxrthzbasH6DZDJJ2i9cCXPYzS3UI
-         tisRG8JZsrzeFygCr/soNbu3M5SEwXyrbh36tLM4=
-Date:   Mon, 2 Dec 2019 20:40:06 -0500
-From:   Brian Masney <masneyb@onstation.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>, Sean Paul <sean@poorly.run>
-Subject: Re: [PATCH] drm/msm/mdp5: enable autocommit
-Message-ID: <20191203014006.GA7756@onstation.org>
-References: <20191112104854.20850-1-masneyb@onstation.org>
- <CAOCk7NosRhRp3vZxg2Nx8106PQ0ryo5b68cUv605XUzCm6gYPA@mail.gmail.com>
- <20191113112334.GA18702@onstation.org>
+        id S1726480AbfLCE5W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Dec 2019 23:57:22 -0500
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:40580 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726805AbfLCE5W (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Dec 2019 23:57:22 -0500
+Received: by mail-vs1-f65.google.com with SMTP id g23so1521870vsr.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Dec 2019 20:57:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ml7IBhdccfwW8j+1FG8S3XplDMBYZxcPTBvONmJE1w4=;
+        b=hzBgzHbtVIyov5zqV3RPememS0AoB5zpkOlw8cfhalKrZwGNpYSLoE0xQf4l02oWrV
+         FQIwZiBvAZGZJ/BLUAO+1ElZTAkEskhn665uiBkS/GtVX27yP0iD3c5CkHdCKNx9l6In
+         UFupIM/RbBb37lwylN9sEEofwxfW2F/UqYr5luhxyHmAL1N16l9X7W2mEZvw/ZNL6z5H
+         Bw0S6R/TIziKvfDb0bRK17RsVL3J33ww8NtVkfr2CaQtHOH+X9xfeD6ku0Dv40XKt/eg
+         yOyby/1W9LCUCJpSHehZru40vphONetoeBGtYAtubxFjaRwoy0ue+KAF6POvHQs4DZ9a
+         Fwow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ml7IBhdccfwW8j+1FG8S3XplDMBYZxcPTBvONmJE1w4=;
+        b=Hdvl8R3QkZ+yZmc7CPO/SWbOurqjaBcNIZDkp8Y3637arWwddH09FoC36Yd+Hb9TI6
+         qHj6fHgWS87vCoR0eScT18xxfOqNQDciYx0EUE3M/+w7HAnXFYYx2UvxsEfOH4N+vPCt
+         xjEyeTUi9z4lu1ElOfCJC8ryIPb3wEyG9R4J0WsPgy+mapQ0PB2wXk75iDXmlEfnXJ/7
+         wd8NzyJUpPn55ypHvoHqmZMKTPgjFRV3eQM/EhGqdgnsujSBXZO/Q1ocY6oUanb2jd90
+         o208RDSubFVkUp2D+wL2p9XALZUusRmd05QEXj/9TA5JQiE4F1JD6pN6Jnuh/RH+bWUQ
+         vfsw==
+X-Gm-Message-State: APjAAAWJpXXEPVH+Lou92H8bQupGm5JIuk2EAjd60Dame3LBRjKgFdW1
+        MovYyO/fwIebhWBNeFXGBP0dXIPpWC0Er5n4FModCw==
+X-Google-Smtp-Source: APXvYqzzuJ7zVrjIE0Y2zaZ/PAovWXEvXm3YYHoOqOoTi9vqEY52XFNHaanurVBB7nEb72UyUNt1t6NXf2SV3i7mJvQ=
+X-Received: by 2002:a05:6102:1261:: with SMTP id q1mr1756256vsg.182.1575349040559;
+ Mon, 02 Dec 2019 20:57:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191113112334.GA18702@onstation.org>
+References: <cover.1573499020.git.amit.kucheria@linaro.org>
+ <4b949a4f401a7f9d403ed0f0c16c7feb083f3524.1573499020.git.amit.kucheria@linaro.org>
+ <5dcdda2a.1c69fb81.27852.ac35@mx.google.com>
+In-Reply-To: <5dcdda2a.1c69fb81.27852.ac35@mx.google.com>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Tue, 3 Dec 2019 10:27:09 +0530
+Message-ID: <CAHLCerNw_FuFeqDfckjmsSE+=ZGCn5EkvquUtDn7EEVjrw9aVQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] drivers: thermal: tsens: Add critical interrupt support
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, sivaa@codeaurora.org,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Linux PM list <linux-pm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeffrey,
+On Fri, Nov 15, 2019 at 4:20 AM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Amit Kucheria (2019-11-11 11:21:27)
+> > diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
+> > index 4359a4247ac3..2989cb952cdb 100644
+> > --- a/drivers/thermal/qcom/tsens-common.c
+> > +++ b/drivers/thermal/qcom/tsens-common.c
+> > @@ -321,6 +357,65 @@ static inline u32 masked_irq(u32 hw_id, u32 mask, enum tsens_ver ver)
+> >         return 0;
+> >  }
+> >
+> > +/**
+> > + * tsens_critical_irq_thread - Threaded interrupt handler for critical interrupts
+> > + * @irq: irq number
+> > + * @data: tsens controller private data
+> > + *
+> > + * Check all sensors to find ones that violated their critical threshold limits.
+> > + * Clear and then re-enable the interrupt.
+> > + *
+> > + * The level-triggered interrupt might deassert if the temperature returned to
+> > + * within the threshold limits by the time the handler got scheduled. We
+> > + * consider the irq to have been handled in that case.
+> > + *
+> > + * Return: IRQ_HANDLED
+> > + */
+> > +irqreturn_t tsens_critical_irq_thread(int irq, void *data)
+> > +{
+> > +       struct tsens_priv *priv = data;
+> > +       struct tsens_irq_data d;
+> > +       bool enable = true, disable = false;
+>
+> Why not just use true and false in the one place these variables are
+> used?
 
-On Wed, Nov 13, 2019 at 06:23:34AM -0500, Brian Masney wrote:
-> On Tue, Nov 12, 2019 at 08:38:27AM -0700, Jeffrey Hugo wrote:
-> > On Tue, Nov 12, 2019 at 3:49 AM Brian Masney <masneyb@onstation.org> wrote:
-> > >
-> > > Since the introduction of commit 2d99ced787e3 ("drm/msm: async commit
-> > > support"), command-mode panels began throwing the following errors:
-> > >
-> > >     msm fd900000.mdss: pp done time out, lm=0
-> > >
-> > > Let's fix this by enabling the autorefresh feature that's available in
-> > > the MDP starting at version 1.0. This will cause the MDP to
-> > > automatically send a frame to the panel every time the panel invokes
-> > > the TE signal, which will trigger the PP_DONE IRQ. This requires not
-> > > sending a START signal for command-mode panels.
-> > >
-> > > This fixes the error and gives us a counter for command-mode panels that
-> > > we can use to implement async commit support for the MDP5 in a follow up
-> > > patch.
-> > >
-> > > Signed-off-by: Brian Masney <masneyb@onstation.org>
-> > > Suggested-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> > > ---
-> > >  drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 15 ++++++++++++++-
-> > >  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c  |  9 +--------
-> > >  2 files changed, 15 insertions(+), 9 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> > > index 05cc04f729d6..539348cb6331 100644
-> > > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> > > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> > > @@ -456,6 +456,7 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
-> > >  {
-> > >         struct mdp5_crtc *mdp5_crtc = to_mdp5_crtc(crtc);
-> > >         struct mdp5_crtc_state *mdp5_cstate = to_mdp5_crtc_state(crtc->state);
-> > > +       struct mdp5_pipeline *pipeline = &mdp5_cstate->pipeline;
-> > >         struct mdp5_kms *mdp5_kms = get_kms(crtc);
-> > >         struct device *dev = &mdp5_kms->pdev->dev;
-> > >
-> > > @@ -493,9 +494,21 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
-> > >
-> > >         mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->err);
-> > >
-> > > -       if (mdp5_cstate->cmd_mode)
-> > > +       if (mdp5_cstate->cmd_mode) {
-> > >                 mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->pp_done);
-> > >
-> > > +               /*
-> > > +                * Enable autorefresh so we get regular ping/pong IRQs.
-> > > +                * - Bit 31 is the enable bit
-> > > +                * - Bits 0-15 represent the frame count, specifically how many
-> > > +                *   TE events before the MDP sends a frame.
-> > > +                */
-> > > +               mdp5_write(mdp5_kms,
-> > > +                          REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp),
-> > > +                          BIT(31) | BIT(0));
-> > > +               crtc_flush_all(crtc);
-> > > +       }
-> > > +
-> > >         mdp5_crtc->enabled = true;
-> > >  }
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-> > > index 030279d7b64b..aee295abada3 100644
-> > > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-> > > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-> > > @@ -187,14 +187,7 @@ static bool start_signal_needed(struct mdp5_ctl *ctl,
-> > >         if (!ctl->encoder_enabled)
-> > >                 return false;
-> > >
-> > > -       switch (intf->type) {
-> > > -       case INTF_WB:
-> > > -               return true;
-> > > -       case INTF_DSI:
-> > > -               return intf->mode == MDP5_INTF_DSI_MODE_COMMAND;
-> > > -       default:
-> > > -               return false;
-> > > -       }
-> > > +       return intf->type == INTF_WB;
-> > >  }
-> > 
-> > I don't think this fully works.
-> > 
-> > The whole "flush" thing exists because the configuration is double
-> > buffered.  You write to the flush register to tell the hardware to
-> > pickup the new configuration, but it doesn't do that automatically.
-> > It only picks up the new config on the next "vsync".  When you have a
-> > video mode panel, you have the timing engine running, which drives
-> > that.  With a command mode panel, you have either the start signal, or
-> > the auto refresh to do the same, but you have a bit of a chicken and
-> > egg situation where if you are programming the hardware from scratch,
-> > autorefresh isn't already enabled to then pickup the config to enable
-> > autorefresh. In this case, you'll need a single start to kick
-> > everything off.  However, if say the bootloader already configured
-> > things and has autorefresh running, then you need to not do that start
-> > because you'll overload the DSI like you saw.
-> 
-> As part of my testing for this work, I added a log statement to
-> mdp5_crtc_pp_done_irq() and it shows that a PP_IRQ comes in consistently
-> every ~0.0166 seconds, which is about 60 HZ. Without this change, plus
-> the 3 commits I mentioned in an earlier email related to the async
-> commit support, the PP IRQs come in at a variety of times: between every
-> ~0.0140 and ~0.2224 seconds. That's why I assumed that this was working.
-> 
-> If I call send_start_signal() inside mdp5_crtc_atomic_enable(), then the
-> display does not work properly.
+Will fix.
 
-I'd like to get the 'pp done time out' errors that are now occurring
-upstream for command-mode panels fixed. As I mentioned above, this patch
-fixes the problem on the Nexus 5 and the pp done interrupts are
-delivered at approximately 60 HZ. I don't have any other command-mode
-panels to test.
+> > +       unsigned long flags;
+> > +       int temp, ret, i;
+> > +
+> > +       for (i = 0; i < priv->num_sensors; i++) {
+> > +               struct tsens_sensor *s = &priv->sensor[i];
+>
+> Maybe make this const?
 
-I'm not sure how to proceed here since sending the start command breaks
-the display. I'm likely putting that command in the wrong spot.
+OK.
 
-Brian
+>
+> > +               u32 hw_id = s->hw_id;
+> > +
+> > +               if (IS_ERR(priv->sensor[i].tzd))
+>
+> IS_ERR(s->tzd)?
+
+Yup.
+
+>
+> > +                       continue;
+> > +               if (!tsens_threshold_violated(priv, hw_id, &d))
+> > +                       continue;
+> > +               ret = get_temp_tsens_valid(s, &temp);
+>
+> Can this accept a const 's'?
+
+Yes.
+
+> > +               if (ret) {
+> > +                       dev_err(priv->dev, "[%u] %s: error reading sensor\n", hw_id, __func__);
+> > +                       continue;
+> > +               }
+> > +
+> > +               spin_lock_irqsave(&priv->ul_lock, flags);
+> > +
+> > +               tsens_read_irq_state(priv, hw_id, s, &d);
+> > +
+> > +               if (d.crit_viol &&
+> > +                   !masked_irq(hw_id, d.crit_irq_mask, tsens_version(priv))) {
+> > +                       tsens_set_interrupt(priv, hw_id, CRITICAL, disable);
+> > +                       if (d.crit_thresh > temp) {
+> > +                               dev_dbg(priv->dev, "[%u] %s: re-arm upper\n",
+> > +                                       priv->sensor[i].hw_id, __func__);
+>
+> hw_id instead of priv->sensor...?
+
+Done. Will fixup for older code in a separate patch.
+
+> > +                       } else {
+> > +                               dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
+> > +                                       hw_id, __func__, temp);
+> > +                       }
+> > +                       tsens_set_interrupt(priv, hw_id, CRITICAL, enable);
+> > +               }
+> > +
+> > +               spin_unlock_irqrestore(&priv->crit_lock, flags);
+> > +       }
+> > +
+> > +       return IRQ_HANDLED;
+> > +}
+> > +
+> >  /**
+> >   * tsens_irq_thread - Threaded interrupt handler for uplow interrupts
+> >   * @irq: irq number
+> > diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> > index 7d317660211e..784c4976c4f9 100644
+> > --- a/drivers/thermal/qcom/tsens.c
+> > +++ b/drivers/thermal/qcom/tsens.c
+> > @@ -121,6 +121,27 @@ static int tsens_register(struct tsens_priv *priv)
+> >
+> >         enable_irq_wake(irq);
+> >
+> > +       if (tsens_version(priv) > VER_1_X) {
+> > +               irq = platform_get_irq_byname(pdev, "critical");
+> > +               if (irq < 0) {
+> > +                       ret = irq;
+> > +                       goto err_put_device;
+> > +               }
+> > +
+> > +               ret = devm_request_threaded_irq(&pdev->dev, irq,
+> > +                                               NULL, tsens_critical_irq_thread,
+> > +                                               IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+> > +                                               dev_name(&pdev->dev), priv);
+> > +               if (ret) {
+> > +                       dev_err(&pdev->dev, "%s: failed to get critical irq\n", __func__);
+> > +                       goto err_put_device;
+>
+> Do we need to disable_irq_wake() for the previous irq here?
+
+Or we could just move the earlier enable_irq_wake() to after
+successful registration of the critical interrupt to avoid the error
+branch. See v2 posting.
+
+
+
+> > +               }
+> > +
+> > +               enable_irq_wake(irq);
+> > +       }
+> > +
+> > +       return 0;
+> > +
+> >  err_put_device:
+> >         put_device(&pdev->dev);
+> >         return ret;
