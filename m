@@ -2,49 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D12FF1100FE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2019 16:16:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FB9A110105
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2019 16:17:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726901AbfLCPQT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Dec 2019 10:16:19 -0500
-Received: from a27-55.smtp-out.us-west-2.amazonses.com ([54.240.27.55]:54622
-        "EHLO a27-55.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726057AbfLCPQT (ORCPT
+        id S1726928AbfLCPRu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Dec 2019 10:17:50 -0500
+Received: from a27-11.smtp-out.us-west-2.amazonses.com ([54.240.27.11]:54316
+        "EHLO a27-11.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726057AbfLCPRu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Dec 2019 10:16:19 -0500
+        Tue, 3 Dec 2019 10:17:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1575386178;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1575386269;
+        h=From:To:Cc:Subject:Date:Message-Id;
         bh=a+ZeEDIVNB9eGTEKRl0WtwhCV5OviwdJ9UgvQi9PSGI=;
-        b=P2CHVTSbxU/IZlRRUd3ulzIbil+vTF5daGDcckKwQxSCxLzg1Lngu+IFDZy1uaji
-        IXC9TiZ3Nyr1O4mZRAPz7b1gG1xQVkjLmm1XL25OKHJw+IxSaEiCyLe6lXvaRs+irP1
-        enABFh9a6fQuV6opbBkdeZryEmQpPA5ycbmRYe1o=
+        b=Ku24QkMiUR55PMFye3EJu2CWrR0x1yak5hlD8jLefVGuHED5vDiXk+636Efv27+R
+        y33LBKtpEOZ3OLd3TpDHzMBVi3euOnFeG0bdZvHD3Nel07DzMFbNHVS8/YwWVV75xXU
+        L6kElSq/QkYGY8TdQEd/ykaNeDfCwwQu9CbCQtgU=
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1575386178;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:Feedback-ID;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1575386269;
+        h=From:To:Cc:Subject:Date:Message-Id:Feedback-ID;
         bh=a+ZeEDIVNB9eGTEKRl0WtwhCV5OviwdJ9UgvQi9PSGI=;
-        b=eMJAOwX1fGNRtHyQqWqSGpQ9XJAXXGUqk9BQ2KDSw88Ri/w1SgSx5qKRNWQE0Xc6
-        RnTasfAY0NOmFe1Gp81b3Ww9Ba8gteERM+1rS2m+BI30v9m5FbWl8KLhaUYfFrPfdF1
-        KRqEiYPv9EAn8jAUt22zDq1bp31hIXwtfe6Kbbpw=
+        b=OtxmGkAPxZq7KX+8Aa7Zm6R7Xg/1t5MIqQq0FjaseRLAzDNVqXOEz+Jpjgp+E8yp
+        Mvq1ZBmbhPEx8hg4PEynwICOumL0IYaUOz0x0N5mtdKJmDU+3/SZxJz9jqT/hlxd9O+
+        lfVtrzbOAbBq9byFQe8Kv/rl9rCu0AF64hTaob/M=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7A637C447B5
+        autolearn=ham autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 99223C447A0
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
 From:   Sharat Masetty <smasetty@codeaurora.org>
-To:     freedreno@lists.freedesktop.org
+To:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
 Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
         Sharat Masetty <smasetty@codeaurora.org>
-Subject: [PATCH 5/5] arm: dts: sc7180: Add A618 gpu dt blob
-Date:   Tue, 3 Dec 2019 15:16:18 +0000
-Message-ID: <0101016ecc556508-b3be0a5f-4987-4c21-a0b4-33f380cf278b-000000@us-west-2.amazonses.com>
+Subject: [PATCH] arm: dts: sc7180: Add A618 gpu dt blob
+Date:   Tue, 3 Dec 2019 15:17:49 +0000
+Message-ID: <0101016ecc56c5c5-ab66c0ce-da45-4d8e-9cac-8f6be69001d3-000000@us-west-2.amazonses.com>
 X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1575386150-13299-1-git-send-email-smasetty@codeaurora.org>
-References: <1575386150-13299-1-git-send-email-smasetty@codeaurora.org>
-X-SES-Outgoing: 2019.12.03-54.240.27.55
+X-SES-Outgoing: 2019.12.03-54.240.27.11
 Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
