@@ -2,127 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2764111025B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2019 17:32:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BB38110322
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2019 18:04:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726182AbfLCQcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Dec 2019 11:32:36 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:33384 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725848AbfLCQcg (ORCPT
+        id S1726074AbfLCREu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Dec 2019 12:04:50 -0500
+Received: from mail-vk1-f196.google.com ([209.85.221.196]:35969 "EHLO
+        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726449AbfLCREu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Dec 2019 11:32:36 -0500
-Received: by mail-ed1-f68.google.com with SMTP id l63so3765458ede.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2019 08:32:35 -0800 (PST)
+        Tue, 3 Dec 2019 12:04:50 -0500
+Received: by mail-vk1-f196.google.com with SMTP id i4so1281087vkc.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Dec 2019 09:04:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=1NCG1ylm9tymUaVduWzgFk4t3GB5LIG1U/zxv5KoxqA=;
-        b=cZaAV8Ek3GgYUC4pEYh/6MjHMyNKiAsnFgr9Dez3llVj/ujA7UdBE8ccapaaStsk1d
-         xQkRO+41OkGO5T/YPBL8Mqp6PBpalHA6yIlMopw3IcIkppP+s1pEiZu3ltKlcPSV96m1
-         Pv91icDx/7WVnfrYuqwc/IaWlujxEeE29gNoH9zTKsHGnIjDw1tnrLWTb/ntuUNUFQpk
-         qqCl8j81PlL2L2SuQpq5C17Ibg6a/8xI8JlWLrTbhggaS1uEpuz0l/T34mtCcxFep2Go
-         jb8c3hBnTnyE46wmcvoRvMIVo4frZpyI1JNevvHiv8FkxxtaqGrAPKqg+RoADOoOcleA
-         2iOQ==
+        bh=uKEl7qNFIi9X+QXW3XmiWYr6gtYvjeFPeIzark7e3Kc=;
+        b=SjVDebo2l6qnq7mYoXHOBDv0TSRRFcvV4BhItzIdS86qcLi/YIVmYbcnMxfknlqYhD
+         H52BgHICLzr/0f1O9mYTSo7jipwh5XdXG2e43ThUq/cg5K/QXemoWUoN1FeNo0mJ7jbH
+         NbX3nBYGI//sD+fqG/anKzbDV+iTxAlPVbm/OMzcNs7NqScICyX16MbERmNKyg37k6b6
+         7ypUIEYiPBPmYNlPgSBSN0mANQvs4b+JZgWjrUVRSN7+oqZSY5Z+qmmnBgf8J0rGztgl
+         odsRuDHvduZxdG4alX06JadsjaAZ0e6hbxAWq9Tu4Bv9CU0R7G1vkNXBxt4M9VDoyt+p
+         O+Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=1NCG1ylm9tymUaVduWzgFk4t3GB5LIG1U/zxv5KoxqA=;
-        b=KdfhjrxzbR0P6N1+UK5zhDLvZ6n0wzWWybT14NEvWQTPwJrisHbR5J5jwkxzs1+j5C
-         AaI0Troe18+yAHubIj4+tO5mCPp7HnQvkLnZSJNRaBDKJieVMx9CRCXynlazcZwqyvlQ
-         UinwqetE2ZeIg1Tt4vjr46jTcpW2+D9vtm3bbBjvPVYaEPLLwpdjNKZMlntue+jwjfg2
-         b5QDGdT+bFwZyqQr8T80XV185QgGKAQSlpVgVQe08SsgX2F1kmP0wD8ER1Gid8J2ckT9
-         GuP38dVbZBTZJgUJv2ffrt+ibkr3J8cYW2oRkLM2gjuGerLbIgCrfQLYFXj0ryaqAcxN
-         2qtQ==
-X-Gm-Message-State: APjAAAUlgiIeRKlxW05P6rjyZVhg3yNZdw5bpG6KqOufk7CMsu5QgAMp
-        ve9fk0M+g5TnKXKJk8aO7F86qiVIsG5l/YXdP3U=
-X-Google-Smtp-Source: APXvYqzonmava8sCZQnELTETijv23HH0HeKfCjqyyO0AtwRA2EhwQQFAK+mwLGAWwtmY03UMuil75+0RcnhgMSMNhto=
-X-Received: by 2002:aa7:c49a:: with SMTP id m26mr4314864edq.264.1575390754813;
- Tue, 03 Dec 2019 08:32:34 -0800 (PST)
+        bh=uKEl7qNFIi9X+QXW3XmiWYr6gtYvjeFPeIzark7e3Kc=;
+        b=eS30NnvWVjMQyF3Lm9YUSnMzeeSUPAe27KsmEM0mL8B50BGj/3oLsQPJe4ReOrtIl6
+         JjTxBvNGZTnDU0RZbP5/tQsp/6KYPLivAr3d/XCXz6r6gPFPWZ1q4zjqzk6Pvs0tlo67
+         91zkSE7ugB/4Wq3MrQf3s3XaAYxJ1a2VKvQYytcWJzD07OtIxrR2eilnnN41241GjIWT
+         KKwNgUjczGdrd7hcomGU0HRuFmboUqPosEVzPXBiW3LN/UrOs0f+WxjUiXP05XuDsBWp
+         2fIEGRpyR8cw+MCG8Apy1DzX70eT7hTtYNyLZb7dxxvK6TKCiEC+PT/evTt9AS3V4A2S
+         Vifg==
+X-Gm-Message-State: APjAAAXwrN9sekPKpBWZK36n/wEjTP3UdrZ8elQ3CGP2PR2b1p8pdven
+        Brvcnwdm9pKceZGOksUwfKlTGswVVzb7fFDxn6xAcw==
+X-Google-Smtp-Source: APXvYqwKm8MpMl1siagRD/fOyBMzpEUip8dDd1vpjLe8Sx3Hl6Aa61T3XqlZpKdBWWKGOA+Cc/OEYNbwz3q/Vz2Kliw=
+X-Received: by 2002:ac5:c4f8:: with SMTP id b24mr3242890vkl.79.1575392688846;
+ Tue, 03 Dec 2019 09:04:48 -0800 (PST)
 MIME-Version: 1.0
-References: <1575386150-13299-1-git-send-email-smasetty@codeaurora.org> <0101016ecc5558bf-ec60fe4c-337a-44eb-8aae-08883795476e-000000@us-west-2.amazonses.com>
-In-Reply-To: <0101016ecc5558bf-ec60fe4c-337a-44eb-8aae-08883795476e-000000@us-west-2.amazonses.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 3 Dec 2019 08:32:24 -0800
-Message-ID: <CAF6AEGvWWN4ewfVbp=FcZFbR5sdVhzr9RhQPsLzCtBbOrcsWYQ@mail.gmail.com>
-Subject: Re: [PATCH 4/5] drm: msm: a6xx: fix debug bus register configuration
-To:     Sharat Masetty <smasetty@codeaurora.org>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
+References: <1571254641-13626-1-git-send-email-thara.gopinath@linaro.org> <1571254641-13626-4-git-send-email-thara.gopinath@linaro.org>
+In-Reply-To: <1571254641-13626-4-git-send-email-thara.gopinath@linaro.org>
+From:   Amit Kucheria <amit.kucheria@verdurent.com>
+Date:   Tue, 3 Dec 2019 22:34:37 +0530
+Message-ID: <CAHLCerOCt9VBizAHu+y+CmzFmz-ktqCJgcB_NeC3WC4W9YBvAQ@mail.gmail.com>
+Subject: Re: [PATCH v3 3/7] thermal: core: Add late init hook to cooling
+ device ops
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     Eduardo Valentin <edubezval@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel@freedesktop.org
+        LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 3, 2019 at 7:23 AM Sharat Masetty <smasetty@codeaurora.org> wrote:
+On Thu, Oct 17, 2019 at 1:07 AM Thara Gopinath
+<thara.gopinath@linaro.org> wrote:
 >
-> Fix the cx debugbus related register configuration, to collect accurate
-> bus data during gpu snapshot. This helps with complete snapshot dump
-> and also complete proper GPU recovery.
+> Add a hook in thermal_cooling_device_ops to be called after
+> the cooling device has been initialized and registered
+> but before binding it to a thermal zone.
 >
-> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+> In this patch series it is used to hook up a power domain
+> to the device pointer of cooling device.
+>
+> It can be used for any other relevant late initializations
+> of a cooling device as well.
 
-fwiw, this one we already landed, but in the future for things like
-this, a Fixes tag is a good idea so that patches get backported to
-appropriate stable branches.  In this case,
+Please describe WHY this hook is needed.
 
-Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
-
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 > ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 24 ++++++++++++------------
->  1 file changed, 12 insertions(+), 12 deletions(-)
+>  drivers/thermal/thermal_core.c | 13 +++++++++++++
+>  include/linux/thermal.h        |  1 +
+>  2 files changed, 14 insertions(+)
 >
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> index 99b5a41..d6023ba 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> @@ -353,26 +353,26 @@ static void a6xx_get_debugbus(struct msm_gpu *gpu,
->                 cxdbg = ioremap(res->start, resource_size(res));
+> diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+> index 886e8fa..c2ecb73 100644
+> --- a/drivers/thermal/thermal_core.c
+> +++ b/drivers/thermal/thermal_core.c
+> @@ -994,6 +994,19 @@ __thermal_cooling_device_register(struct device_node *np,
+>         list_add(&cdev->node, &thermal_cdev_list);
+>         mutex_unlock(&thermal_list_lock);
 >
->         if (cxdbg) {
-> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_CNTLT,
-> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_CNTLT,
->                         A6XX_DBGC_CFG_DBGBUS_CNTLT_SEGT(0xf));
+> +       /* Call into cdev late initialization if defined */
+> +       if (cdev->ops->late_init) {
+> +               result = cdev->ops->late_init(cdev);
+> +               if (result) {
+> +                       ida_simple_remove(&thermal_cdev_ida, cdev->id);
+> +                       put_device(&cdev->device);
+> +                       mutex_lock(&thermal_list_lock);
+> +                       list_del(&cdev->node);
+> +                       mutex_unlock(&thermal_list_lock);
+> +                       return ERR_PTR(result);
+> +               }
+> +       }
+> +
+>         /* Update binding information for 'this' new cdev */
+>         bind_cdev(cdev);
 >
-> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_CNTLM,
-> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_CNTLM,
->                         A6XX_DBGC_CFG_DBGBUS_CNTLM_ENABLE(0xf));
+> diff --git a/include/linux/thermal.h b/include/linux/thermal.h
+> index e45659c..e94b3de 100644
+> --- a/include/linux/thermal.h
+> +++ b/include/linux/thermal.h
+> @@ -125,6 +125,7 @@ struct thermal_cooling_device_ops {
+>                            struct thermal_zone_device *, unsigned long, u32 *);
+>         int (*power2state)(struct thermal_cooling_device *,
+>                            struct thermal_zone_device *, u32, unsigned long *);
+> +       int (*late_init)(struct thermal_cooling_device *);
+>  };
 >
-> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_0, 0);
-> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_1, 0);
-> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_2, 0);
-> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_IVTL_3, 0);
-> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_0, 0);
-> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_1, 0);
-> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_2, 0);
-> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_IVTL_3, 0);
->
-> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_BYTEL_0,
-> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_0,
->                         0x76543210);
-> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_BYTEL_1,
-> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_BYTEL_1,
->                         0xFEDCBA98);
->
-> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_0, 0);
-> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_1, 0);
-> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_2, 0);
-> -               cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_3, 0);
-> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_0, 0);
-> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_1, 0);
-> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_2, 0);
-> +               cxdbg_write(cxdbg, REG_A6XX_CX_DBGC_CFG_DBGBUS_MASKL_3, 0);
->         }
->
->         nr_debugbus_blocks = ARRAY_SIZE(a6xx_debugbus_blocks) +
+>  struct thermal_cooling_device {
 > --
-> 1.9.1
+> 2.1.4
 >
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
