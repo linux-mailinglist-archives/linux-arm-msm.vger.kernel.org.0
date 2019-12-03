@@ -2,214 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 858C91100FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2019 16:16:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D12FF1100FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Dec 2019 16:16:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726847AbfLCPQQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Dec 2019 10:16:16 -0500
-Received: from a27-188.smtp-out.us-west-2.amazonses.com ([54.240.27.188]:50512
-        "EHLO a27-188.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726057AbfLCPQQ (ORCPT
+        id S1726901AbfLCPQT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Dec 2019 10:16:19 -0500
+Received: from a27-55.smtp-out.us-west-2.amazonses.com ([54.240.27.55]:54622
+        "EHLO a27-55.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726057AbfLCPQT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Dec 2019 10:16:16 -0500
+        Tue, 3 Dec 2019 10:16:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1575386175;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1575386178;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
-        bh=w8Tk0Be0UFS5KL979ZqROUbN+JS2WtcdWkU0o4UVDN0=;
-        b=EiR/pO9VCwFRFwzlAmnD3hzkK/A1OvD5Qfmcvh2VB2Q8tlWGJmE4WaLFbXwHBZ+R
-        wMQRzFlnTqfQcCqMMxgzw4PxSG98iatZlbmqUSqeuQ/hLSqJq8lv4DNJHLA4+0pt5/A
-        SvX0nzYGmHiIGMqu6AfCnA0sEqLoFqrAjpYdWw84=
+        bh=a+ZeEDIVNB9eGTEKRl0WtwhCV5OviwdJ9UgvQi9PSGI=;
+        b=P2CHVTSbxU/IZlRRUd3ulzIbil+vTF5daGDcckKwQxSCxLzg1Lngu+IFDZy1uaji
+        IXC9TiZ3Nyr1O4mZRAPz7b1gG1xQVkjLmm1XL25OKHJw+IxSaEiCyLe6lXvaRs+irP1
+        enABFh9a6fQuV6opbBkdeZryEmQpPA5ycbmRYe1o=
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1575386175;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1575386178;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:Feedback-ID;
-        bh=w8Tk0Be0UFS5KL979ZqROUbN+JS2WtcdWkU0o4UVDN0=;
-        b=TeWZ6v/nhTkVvCoUWLfGzvQY5an+XSG5D8ay3X1/nMZzsGy2360KTpTFNMW5HPoV
-        VDYm/bCUmK68Ty5e8Vq+5inxEG5+NlieUgUFVIQQqkQpICjYJTeJHf82cDFqyob/bKD
-        uL579OWujk6G18orYR5hYETraLT3THobI+EctQzM=
+        bh=a+ZeEDIVNB9eGTEKRl0WtwhCV5OviwdJ9UgvQi9PSGI=;
+        b=eMJAOwX1fGNRtHyQqWqSGpQ9XJAXXGUqk9BQ2KDSw88Ri/w1SgSx5qKRNWQE0Xc6
+        RnTasfAY0NOmFe1Gp81b3Ww9Ba8gteERM+1rS2m+BI30v9m5FbWl8KLhaUYfFrPfdF1
+        KRqEiYPv9EAn8jAUt22zDq1bp31hIXwtfe6Kbbpw=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5B000C447AD
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7A637C447B5
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
 From:   Sharat Masetty <smasetty@codeaurora.org>
 To:     freedreno@lists.freedesktop.org
 Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
         Sharat Masetty <smasetty@codeaurora.org>
-Subject: [PATCH 3/5] drm: msm: a6xx: Dump GBIF registers, debugbus in gpu state
-Date:   Tue, 3 Dec 2019 15:16:15 +0000
-Message-ID: <0101016ecc555761-cd498085-917c-4763-bb54-41d255bb2628-000000@us-west-2.amazonses.com>
+Subject: [PATCH 5/5] arm: dts: sc7180: Add A618 gpu dt blob
+Date:   Tue, 3 Dec 2019 15:16:18 +0000
+Message-ID: <0101016ecc556508-b3be0a5f-4987-4c21-a0b4-33f380cf278b-000000@us-west-2.amazonses.com>
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1575386150-13299-1-git-send-email-smasetty@codeaurora.org>
 References: <1575386150-13299-1-git-send-email-smasetty@codeaurora.org>
-X-SES-Outgoing: 2019.12.03-54.240.27.188
+X-SES-Outgoing: 2019.12.03-54.240.27.55
 Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the relevant GBIF registers and the debug bus to the a6xx gpu
-state. This comes in pretty handy when debugging GPU bus related
-issues.
+This patch adds the required dt nodes and properties
+to enabled A618 GPU.
 
 Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 52 +++++++++++++++++++++++------
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 16 +++++++--
- 2 files changed, 55 insertions(+), 13 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 116 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 116 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index e686331..99b5a41 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -1,5 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
--/* Copyright (c) 2018 The Linux Foundation. All rights reserved. */
-+/* Copyright (c) 2018-2019 The Linux Foundation. All rights reserved. */
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index c3db2e5..31223d0 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -18,6 +18,8 @@
+ #include <dt-bindings/reset/qcom,sdm845-pdc.h>
+ #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+ #include <dt-bindings/phy/phy-qcom-qusb2.h>
++#include <dt-bindings/clock/qcom,gpucc-sc7180.h>
++#include <dt-bindings/power/qcom-rpmpd.h>
 
- #include <linux/ascii85.h>
- #include "msm_gem.h"
-@@ -320,6 +320,7 @@ static void a6xx_get_debugbus(struct msm_gpu *gpu,
- {
- 	struct resource *res;
- 	void __iomem *cxdbg = NULL;
-+	int nr_debugbus_blocks;
+ / {
+ 	interrupt-parent = <&intc>;
+@@ -733,6 +735,120 @@
+ 			#power-domain-cells = <1>;
+ 		};
 
- 	/* Set up the GX debug bus */
-
-@@ -374,9 +375,11 @@ static void a6xx_get_debugbus(struct msm_gpu *gpu,
- 		cxdbg_write(cxdbg, REG_A6XX_DBGC_CFG_DBGBUS_MASKL_3, 0);
- 	}
-
--	a6xx_state->debugbus = state_kcalloc(a6xx_state,
--		ARRAY_SIZE(a6xx_debugbus_blocks),
--		sizeof(*a6xx_state->debugbus));
-+	nr_debugbus_blocks = ARRAY_SIZE(a6xx_debugbus_blocks) +
-+		(a6xx_has_gbif(to_adreno_gpu(gpu)) ? 1 : 0);
++		gpu: gpu@5000000 {
++			compatible = "qcom,adreno-618.0", "qcom,adreno";
++			#stream-id-cells = <16>;
++			reg = <0 0x5000000 0 0x40000>, <0 0x509e000 0 0x1000>,
++				<0 0x5061000 0 0x800>;
++			reg-names = "kgsl_3d0_reg_memory", "cx_mem", "cx_dbgc";
 +
-+	a6xx_state->debugbus = state_kcalloc(a6xx_state, nr_debugbus_blocks,
-+			sizeof(*a6xx_state->debugbus));
-
- 	if (a6xx_state->debugbus) {
- 		int i;
-@@ -388,15 +391,31 @@ static void a6xx_get_debugbus(struct msm_gpu *gpu,
- 				&a6xx_state->debugbus[i]);
-
- 		a6xx_state->nr_debugbus = ARRAY_SIZE(a6xx_debugbus_blocks);
++			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
 +
-+		/*
-+		 * GBIF has same debugbus as of other GPU blocks, fall back to
-+		 * default path if GPU uses GBIF, also GBIF uses exactly same
-+		 * ID as of VBIF.
-+		 */
-+		if (a6xx_has_gbif(to_adreno_gpu(gpu))) {
-+			a6xx_get_debugbus_block(gpu, a6xx_state,
-+				&a6xx_gbif_debugbus_block,
-+				&a6xx_state->debugbus[i]);
++			iommus = <&adreno_smmu 0>;
 +
-+			a6xx_state->nr_debugbus += 1;
-+		}
- 	}
-
--	a6xx_state->vbif_debugbus =
--		state_kcalloc(a6xx_state, 1,
--			sizeof(*a6xx_state->vbif_debugbus));
-+	/*  Dump the VBIF debugbus on applicable targets */
-+	if (!a6xx_has_gbif(to_adreno_gpu(gpu))) {
-+		a6xx_state->vbif_debugbus =
-+			state_kcalloc(a6xx_state, 1,
-+					sizeof(*a6xx_state->vbif_debugbus));
-
--	if (a6xx_state->vbif_debugbus)
--		a6xx_get_vbif_debugbus_block(gpu, a6xx_state,
--			a6xx_state->vbif_debugbus);
-+		if (a6xx_state->vbif_debugbus)
-+			a6xx_get_vbif_debugbus_block(gpu, a6xx_state,
-+					a6xx_state->vbif_debugbus);
-+	}
-
- 	if (cxdbg) {
- 		a6xx_state->cx_debugbus =
-@@ -770,14 +789,16 @@ static void a6xx_get_gmu_registers(struct msm_gpu *gpu,
- 		&a6xx_state->gmu_registers[1]);
- }
-
-+#define A6XX_GBIF_REGLIST_SIZE   1
- static void a6xx_get_registers(struct msm_gpu *gpu,
- 		struct a6xx_gpu_state *a6xx_state,
- 		struct a6xx_crashdumper *dumper)
- {
- 	int i, count = ARRAY_SIZE(a6xx_ahb_reglist) +
- 		ARRAY_SIZE(a6xx_reglist) +
--		ARRAY_SIZE(a6xx_hlsq_reglist);
-+		ARRAY_SIZE(a6xx_hlsq_reglist) + A6XX_GBIF_REGLIST_SIZE;
- 	int index = 0;
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-
- 	a6xx_state->registers = state_kcalloc(a6xx_state,
- 		count, sizeof(*a6xx_state->registers));
-@@ -792,6 +813,15 @@ static void a6xx_get_registers(struct msm_gpu *gpu,
- 			a6xx_state, &a6xx_ahb_reglist[i],
- 			&a6xx_state->registers[index++]);
-
-+	if (a6xx_has_gbif(adreno_gpu))
-+		a6xx_get_ahb_gpu_registers(gpu,
-+				a6xx_state, &a6xx_gbif_reglist,
-+				&a6xx_state->registers[index++]);
-+	else
-+		a6xx_get_ahb_gpu_registers(gpu,
-+				a6xx_state, &a6xx_vbif_reglist,
-+				&a6xx_state->registers[index++]);
++			operating-points-v2 = <&gpu_opp_table>;
 +
- 	for (i = 0; i < ARRAY_SIZE(a6xx_reglist); i++)
- 		a6xx_get_crashdumper_registers(gpu,
- 			a6xx_state, &a6xx_reglist[i],
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-index 68cccfa..e67c20c 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-@@ -1,5 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
--/* Copyright (c) 2018 The Linux Foundation. All rights reserved. */
-+/* Copyright (c) 2018-2019 The Linux Foundation. All rights reserved. */
-
- #ifndef _A6XX_CRASH_DUMP_H_
- #define _A6XX_CRASH_DUMP_H_
-@@ -307,11 +307,20 @@ struct a6xx_registers {
- 	0x3410, 0x3410, 0x3800, 0x3801,
- };
-
-+static const u32 a6xx_gbif_registers[] = {
-+	0x3C00, 0X3C0B, 0X3C40, 0X3C47, 0X3CC0, 0X3CD1, 0xE3A, 0xE3A,
-+};
++			interconnects = <&gem_noc 35 &mc_virt 512>;
 +
- static const struct a6xx_registers a6xx_ahb_reglist[] = {
- 	REGS(a6xx_ahb_registers, 0, 0),
--	REGS(a6xx_vbif_registers, 0, 0),
- };
-
-+static const struct a6xx_registers a6xx_vbif_reglist =
-+			REGS(a6xx_vbif_registers, 0, 0);
++			qcom,gmu = <&gmu>;
 +
-+static const struct a6xx_registers a6xx_gbif_reglist =
-+			REGS(a6xx_gbif_registers, 0, 0);
++			gpu_opp_table: opp-table {
++				compatible = "operating-points-v2";
 +
- static const u32 a6xx_gmu_gx_registers[] = {
- 	/* GMU GX */
- 	0x0000, 0x0000, 0x0010, 0x0013, 0x0016, 0x0016, 0x0018, 0x001b,
-@@ -422,6 +431,9 @@ struct a6xx_registers {
- 	DEBUGBUS(A6XX_DBGBUS_TPL1_3, 0x100),
- };
-
-+static const struct a6xx_debugbus_block a6xx_gbif_debugbus_block =
-+			DEBUGBUS(A6XX_DBGBUS_VBIF, 0x100);
++				opp-800000000 {
++					opp-hz = /bits/ 64 <800000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
++				};
 +
- static const struct a6xx_debugbus_block a6xx_cx_debugbus_blocks[] = {
- 	DEBUGBUS(A6XX_DBGBUS_GMU_CX, 0x100),
- 	DEBUGBUS(A6XX_DBGBUS_CX, 0x100),
++				opp-650000000 {
++					opp-hz = /bits/ 64 <650000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
++				};
++
++				opp-565000000 {
++					opp-hz = /bits/ 64 <565000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
++				};
++
++				opp-430000000 {
++					opp-hz = /bits/ 64 <430000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
++				};
++
++                                opp-355000000 {
++					opp-hz = /bits/ 64 <355000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
++				};
++
++                                opp-267000000 {
++					opp-hz = /bits/ 64 <267000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
++				};
++
++				opp-180000000 {
++					opp-hz = /bits/ 64 <180000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
++				};
++			};
++		};
++
++		adreno_smmu: iommu@5040000 {
++			compatible = "qcom,sc7180-smmu-v2", "qcom,smmu-v2";
++			reg = <0 0x5040000 0 0x10000>;
++			#iommu-cells = <1>;
++			#global-interrupts = <2>;
++			interrupts = <GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 231 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 364 IRQ_TYPE_EDGE_RISING>,
++					<GIC_SPI 365 IRQ_TYPE_EDGE_RISING>,
++					<GIC_SPI 366 IRQ_TYPE_EDGE_RISING>,
++					<GIC_SPI 367 IRQ_TYPE_EDGE_RISING>,
++					<GIC_SPI 368 IRQ_TYPE_EDGE_RISING>,
++					<GIC_SPI 369 IRQ_TYPE_EDGE_RISING>,
++					<GIC_SPI 370 IRQ_TYPE_EDGE_RISING>,
++					<GIC_SPI 371 IRQ_TYPE_EDGE_RISING>;
++			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
++				<&gcc GCC_GPU_CFG_AHB_CLK>,
++				<&gcc GCC_DDRSS_GPU_AXI_CLK>;
++
++			clock-names = "bus", "iface", "mem_iface_clk";
++			power-domains = <&gpucc CX_GDSC>;
++		};
++
++		gmu: gmu@506a000 {
++			compatible="qcom,adreno-gmu-618", "qcom,adreno-gmu";
++
++			reg = 	<0 0x506a000 0 0x31000>,
++				<0 0xb290000 0 0x10000>,
++				<0 0xb490000 0 0x10000>;
++			reg-names = "gmu", "gmu_pdc", "gmu_pdc_seq";
++
++			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
++				   <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hfi", "gmu";
++
++			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
++			       <&gpucc GPU_CC_CXO_CLK>,
++			       <&gcc GCC_DDRSS_GPU_AXI_CLK>,
++			       <&gcc GCC_GPU_MEMNOC_GFX_CLK>;
++			clock-names = "gmu", "cxo", "axi", "memnoc";
++
++			power-domains = <&gpucc CX_GDSC>;
++
++			iommus = <&adreno_smmu 5>;
++
++			operating-points-v2 = <&gmu_opp_table>;
++
++			gmu_opp_table: opp-table {
++				compatible = "operating-points-v2";
++
++				opp-200000000 {
++					opp-hz = /bits/ 64 <200000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
++				};
++			};
++		};
++
+ 		apps_smmu: iommu@15000000 {
+ 			compatible = "qcom,sc7180-smmu-500", "arm,mmu-500";
+ 			reg = <0 0x15000000 0 0x100000>;
 --
 1.9.1
 
