@@ -2,74 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7394C1135C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2019 20:36:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EB2511361D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2019 21:04:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728072AbfLDTgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Dec 2019 14:36:18 -0500
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:41998 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727982AbfLDTgR (ORCPT
+        id S1727989AbfLDUER (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Dec 2019 15:04:17 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:37069 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727033AbfLDUER (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Dec 2019 14:36:17 -0500
-Received: by mail-oi1-f196.google.com with SMTP id j22so337965oij.9;
-        Wed, 04 Dec 2019 11:36:17 -0800 (PST)
+        Wed, 4 Dec 2019 15:04:17 -0500
+Received: by mail-pl1-f194.google.com with SMTP id bb5so177103plb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2019 12:04:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ELTAmH9zkiQxFiFkiHdPx6vGU7gbG/ie/I1ns5+Qwf0=;
+        b=b7NmR+qF+vnxWm4yIdm9VpajCEJKepEQB55cnHNpOMHIokAoPr34EBknlvq7Rx4SIX
+         HzzkF1H2mla69oKJZOjib3KdC1hLFVpPt6/JB3wIyoX+7CcRy7GXBX2cIo7YYAbL4QIm
+         SkECYLq/nhBcSmvVpJtYpE5Y67vz0aRAWHz14=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4l/JtwjXT1qBF416IXv0Ieqm2uxNXQ8tl4ay1L+NPDw=;
-        b=LW73LAQFfDiK4SOItykcM2bw5lvrfKW2sCQlh3mkdStsDutkGWLTvdcdZbcBohHnyr
-         0ywTA/nHRoOwkVOf9hAqp23y1WVzSUNrvWpaL3NXh2rxHFk2x/gvQZBANCqhC17Vv1gF
-         SuQhBEkCenZH9tQJ5sXzMVWLXJYLmeblOB47z8b1S3mv/gW65yaDqM+vSsK7ngtUme+O
-         GD0zF71qNo5GC6G7iO/wbbIpmjsey5YD+OqJB8NMO9aQmKudwrtJHp1VP5LmuimYWTqb
-         f4TeOJRPaGKqmXVen4/aVCWrOrE9xKbIXAaXqTDErN6d07dH34Mbpwh59EKF04yFcjEC
-         BPGQ==
-X-Gm-Message-State: APjAAAVgnbR3bg8G6RAyNyc56PK6XI/CwfVFT96CUJrve98jHF1I9L0A
-        /88EkG71l2EuHSkiUpmh8A==
-X-Google-Smtp-Source: APXvYqwbYbRZksHTtKqsDfJTwU2S/KsK6vdSez9yw9Sp1yFW45VcbvaETJUBHHTwFZidWzmuVFrCmg==
-X-Received: by 2002:a05:6808:b26:: with SMTP id t6mr3792135oij.123.1575488176840;
-        Wed, 04 Dec 2019 11:36:16 -0800 (PST)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id m68sm2634826oig.50.2019.12.04.11.36.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Dec 2019 11:36:16 -0800 (PST)
-Date:   Wed, 4 Dec 2019 13:36:15 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, robh+dt@kernel.org,
-        airlied@linux.ie, daniel@ffwll.ch, jcrouse@codeaurora.org,
-        dianders@chromium.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, mark.rutland@arm.com,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] dt-bindings: drm/msm/gpu: document second
- interconnect
-Message-ID: <20191204193615.GA20880@bogus>
-References: <20191122012645.7430-1-masneyb@onstation.org>
- <20191122012645.7430-2-masneyb@onstation.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ELTAmH9zkiQxFiFkiHdPx6vGU7gbG/ie/I1ns5+Qwf0=;
+        b=AhJGpJR1vt8wT+OMA/WpV77TtiBxTgDM7+WA+AOVTVHWrYWEGtAw0fKHbrBZvFG5HC
+         OryxJUCvotxztVdg1CmKbGSTTFGlkBudBeNxct+pw0D/T+xFXAwZ/Qe562YrEApXOY4H
+         B8URgJKGNOhBDtHRHQnNrqFDOYKBTXkQPfChPX9i3ATTm35+BNseJ7T2q8CbTb2zmQ7P
+         OPEFxnuHWP2+L+pd25olxTDlVRIM4H3DmZQPMHdJ8HRfkzwZBBYmgR/Ml8NZD6LX1RXO
+         U7UwJUysNyaxJWkFEygxOQwDTCKEFK3OVEEACCkiq7xkCeySmiumXxVjU2zB2dotLmbd
+         yTiw==
+X-Gm-Message-State: APjAAAVj9O5jC9vzjU7awKp3x45DHv+N0IRrRDfjDpwG1LkKazA0eYWn
+        tecfUUmwZ6phT7lhXTdRC4FAeg==
+X-Google-Smtp-Source: APXvYqyvlVyp3wP4RGPm+o/Ndrxy5XeKmjPozpw3mhNrwwRc7fTWujDUcpkjGLkMlZTIn4J60g5EhA==
+X-Received: by 2002:a17:90a:366e:: with SMTP id s101mr5231134pjb.18.1575489857123;
+        Wed, 04 Dec 2019 12:04:17 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id z23sm8423636pgj.43.2019.12.04.12.04.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Dec 2019 12:04:16 -0800 (PST)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     linux-arm-msm@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH] clk: qcom: gcc-sc7180: Fix setting flag for votable GDSCs
+Date:   Wed,  4 Dec 2019 12:04:12 -0800
+Message-Id: <20191204120341.1.I9971817e83ee890d1096c43c5a6ce6ced53d5bd3@changeid>
+X-Mailer: git-send-email 2.24.0.393.g34dc348eaf-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191122012645.7430-2-masneyb@onstation.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 21 Nov 2019 20:26:42 -0500, Brian Masney wrote:
-> Some A3xx and all A4xx Adreno GPUs do not have GMEM inside the GPU core
-> and must use the On Chip MEMory (OCMEM) in order to be functional.
-> There's a separate interconnect path that needs to be setup to OCMEM.
-> Let's document this second interconnect path that's available. Since
-> there's now two available interconnects, let's add the
-> interconnect-names property.
-> 
-> Signed-off-by: Brian Masney <masneyb@onstation.org>
-> ---
->  Documentation/devicetree/bindings/display/msm/gpu.txt | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
-> 
+Commit 17269568f7267 ("clk: qcom: Add Global Clock controller (GCC)
+driver for SC7180") sets the VOTABLE flag in .pwrsts, but it needs
+to be set in .flags, fix this.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Fixes: 17269568f7267 ("clk: qcom: Add Global Clock controller (GCC) driver for SC7180")
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+---
+
+ drivers/clk/qcom/gcc-sc7180.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
+index 38424e63bcae2..7f59fb8da0337 100644
+--- a/drivers/clk/qcom/gcc-sc7180.c
++++ b/drivers/clk/qcom/gcc-sc7180.c
+@@ -2186,7 +2186,8 @@ static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc = {
+ 	.pd = {
+ 		.name = "hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON | VOTABLE,
++	.pwrsts = PWRSTS_OFF_ON,
++	.flags = VOTABLE,
+ };
+ 
+ static struct gdsc hlos1_vote_mmnoc_mmu_tbu_sf_gdsc = {
+@@ -2194,7 +2195,8 @@ static struct gdsc hlos1_vote_mmnoc_mmu_tbu_sf_gdsc = {
+ 	.pd = {
+ 		.name = "hlos1_vote_mmnoc_mmu_tbu_sf_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON | VOTABLE,
++	.pwrsts = PWRSTS_OFF_ON,
++	.flags = VOTABLE,
+ };
+ 
+ static struct gdsc *gcc_sc7180_gdscs[] = {
+-- 
+2.24.0.393.g34dc348eaf-goog
+
