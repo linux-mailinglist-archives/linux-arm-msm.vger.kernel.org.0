@@ -2,123 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 79BC3113482
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2019 19:25:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7394C1135C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2019 20:36:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729720AbfLDSB5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Dec 2019 13:01:57 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:41991 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729275AbfLDSB4 (ORCPT
+        id S1728072AbfLDTgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Dec 2019 14:36:18 -0500
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:41998 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727982AbfLDTgR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Dec 2019 13:01:56 -0500
-Received: by mail-ed1-f67.google.com with SMTP id e10so143607edv.9;
-        Wed, 04 Dec 2019 10:01:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mvp9L8yGr+7Q73cf5DiMFkH0tKxVcTrdu8kuP8KT/wA=;
-        b=AnLIlKDxiENCXMUrbqTM8dDUPRPRHtCYpWJQ8og66XUs0vdaxN8hGdg8m117J2krEJ
-         SJ2rAhNZms6onCSAEhb1qbbpGHdAC1mNwB1yBzp4a46YCvh4DYplVBpVi9hnAnUdTk3V
-         7u+AMPmaRBp2zv5wG50ryD9qcrQW5TYYYwRmOFGRps5AMuyfZUiqtmkQZCMW1y1LJeOa
-         DRVwsjJb7aZBa4lcDk/NWOrtV9UDX2xwfA8hVKNB2z+B1q8U/7/BNl9KF3mOCI0qisZE
-         E+Pm16Xc42UW7lkGqqQY1hd/GGQfyoVxJXRWw9ipzYEk34PlwrqXzIRMfYLNeN/9jAsg
-         NaAA==
+        Wed, 4 Dec 2019 14:36:17 -0500
+Received: by mail-oi1-f196.google.com with SMTP id j22so337965oij.9;
+        Wed, 04 Dec 2019 11:36:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mvp9L8yGr+7Q73cf5DiMFkH0tKxVcTrdu8kuP8KT/wA=;
-        b=EEYwIaKxo8kTZrJJuv1zBAzl97GY1n6+NM7G8zOqAg6JMNN+ZzGkgAypPSHNQaBzRd
-         0BqKpgayJBvbveJcakn6zAdPkDrw10Ct/MGguGy0TF6gMhLava5/u7ECBnDzPXUOTNXK
-         abnPnK5hkIISiDM0uPpASsGiKQsED5I3ggNCAOjD6PaH/ycjr568bU+s1iR+AFF/GaxF
-         aumXaQg7L5qFUWbGuxxtppEpE9nasNVCf1POGtqnfRE5goPa5gHdWjdPFpK3jQuLx80K
-         5dg7gQXpzp+YVCs7RlVPWyMIgKSdsvjMfuuYvgdvr0nVPwsZFa/BkZI05SgVDZHFQr+a
-         /Atg==
-X-Gm-Message-State: APjAAAWduixBQLK/55H3wzIFnnyN0FLvHMGhsrPcukO3KvOniCyD7NN8
-        PPpD+xD9moCccQox8dXLveshkeScr4ULOhfHzhSdNw==
-X-Google-Smtp-Source: APXvYqyH+H1j/zREsxP/LJQ/Q6PhP0dprWgGzUYK4IWlJ02sNpCzzk2ec/2tRbkR3GG2lr++MiA4m7gV4rTsfvod+5U=
-X-Received: by 2002:aa7:d64f:: with SMTP id v15mr5520399edr.71.1575482513957;
- Wed, 04 Dec 2019 10:01:53 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=4l/JtwjXT1qBF416IXv0Ieqm2uxNXQ8tl4ay1L+NPDw=;
+        b=LW73LAQFfDiK4SOItykcM2bw5lvrfKW2sCQlh3mkdStsDutkGWLTvdcdZbcBohHnyr
+         0ywTA/nHRoOwkVOf9hAqp23y1WVzSUNrvWpaL3NXh2rxHFk2x/gvQZBANCqhC17Vv1gF
+         SuQhBEkCenZH9tQJ5sXzMVWLXJYLmeblOB47z8b1S3mv/gW65yaDqM+vSsK7ngtUme+O
+         GD0zF71qNo5GC6G7iO/wbbIpmjsey5YD+OqJB8NMO9aQmKudwrtJHp1VP5LmuimYWTqb
+         f4TeOJRPaGKqmXVen4/aVCWrOrE9xKbIXAaXqTDErN6d07dH34Mbpwh59EKF04yFcjEC
+         BPGQ==
+X-Gm-Message-State: APjAAAVgnbR3bg8G6RAyNyc56PK6XI/CwfVFT96CUJrve98jHF1I9L0A
+        /88EkG71l2EuHSkiUpmh8A==
+X-Google-Smtp-Source: APXvYqwbYbRZksHTtKqsDfJTwU2S/KsK6vdSez9yw9Sp1yFW45VcbvaETJUBHHTwFZidWzmuVFrCmg==
+X-Received: by 2002:a05:6808:b26:: with SMTP id t6mr3792135oij.123.1575488176840;
+        Wed, 04 Dec 2019 11:36:16 -0800 (PST)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id m68sm2634826oig.50.2019.12.04.11.36.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Dec 2019 11:36:16 -0800 (PST)
+Date:   Wed, 4 Dec 2019 13:36:15 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, robh+dt@kernel.org,
+        airlied@linux.ie, daniel@ffwll.ch, jcrouse@codeaurora.org,
+        dianders@chromium.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, mark.rutland@arm.com,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] dt-bindings: drm/msm/gpu: document second
+ interconnect
+Message-ID: <20191204193615.GA20880@bogus>
+References: <20191122012645.7430-1-masneyb@onstation.org>
+ <20191122012645.7430-2-masneyb@onstation.org>
 MIME-Version: 1.0
-References: <1574465484-7115-1-git-send-email-jcrouse@codeaurora.org>
- <0101016e95751c0b-33c9379b-6b8c-43b1-8785-e5e1b6f084f1-000000@us-west-2.amazonses.com>
- <3a283a7c-df75-a30a-1bcb-74e631f06a71@arm.com>
-In-Reply-To: <3a283a7c-df75-a30a-1bcb-74e631f06a71@arm.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 4 Dec 2019 10:01:42 -0800
-Message-ID: <CAF6AEGuxgUQNuSQVECiUzpj4DM0R7UYme0Q9ggF1a=JCxAJsBA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/8] dt-bindings: arm-smmu: Add Adreno GPU variant
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Will Deacon <will@kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191122012645.7430-2-masneyb@onstation.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 4, 2019 at 7:56 AM Robin Murphy <robin.murphy@arm.com> wrote:
->
-> On 22/11/2019 11:31 pm, Jordan Crouse wrote:
-> > Add a compatible string to identify SMMUs that are attached
-> > to Adreno GPU devices that wish to support split pagetables.
->
-> A software policy decision is not, in itself, a good justification for a
-> DT property. Is the GPU SMMU fundamentally different in hardware* from
-> the other SMMU(s) in any given SoC?
+On Thu, 21 Nov 2019 20:26:42 -0500, Brian Masney wrote:
+> Some A3xx and all A4xx Adreno GPUs do not have GMEM inside the GPU core
+> and must use the On Chip MEMory (OCMEM) in order to be functional.
+> There's a separate interconnect path that needs to be setup to OCMEM.
+> Let's document this second interconnect path that's available. Since
+> there's now two available interconnects, let's add the
+> interconnect-names property.
+> 
+> Signed-off-by: Brian Masney <masneyb@onstation.org>
+> ---
+>  Documentation/devicetree/bindings/display/msm/gpu.txt | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+> 
 
-The GPU CP has some sort of mechanism to switch pagetables.. although
-I guess under the firmware it is all the same.  Jordan should know
-better..
-
-BR,
--R
-
-> (* where "hardware" may encompass hypervisor shenanigans)
->
-> > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> > ---
-> >
-> >   Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 6 ++++++
-> >   1 file changed, 6 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-> > index 6515dbe..db9f826 100644
-> > --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-> > +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-> > @@ -31,6 +31,12 @@ properties:
-> >                 - qcom,sdm845-smmu-v2
-> >             - const: qcom,smmu-v2
-> >
-> > +      - description: Qcom Adreno GPU SMMU iplementing split pagetables
-> > +        items:
-> > +          - enum:
-> > +              - qcom,adreno-smmu-v2
-> > +          - const: qcom,smmu-v2
->
-> Given that we already have per-SoC compatibles for Qcom SMMUs in
-> general, this seems suspiciously vague.
->
-> Robin.
->
-> > +
-> >         - description: Qcom SoCs implementing "arm,mmu-500"
-> >           items:
-> >             - enum:
-> >
-> _______________________________________________
-> iommu mailing list
-> iommu@lists.linux-foundation.org
-> https://lists.linuxfoundation.org/mailman/listinfo/iommu
+Acked-by: Rob Herring <robh@kernel.org>
