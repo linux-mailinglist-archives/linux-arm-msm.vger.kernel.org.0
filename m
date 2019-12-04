@@ -2,111 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 68F06112BC0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2019 13:43:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 19E80112F0C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2019 16:56:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726010AbfLDMnK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Dec 2019 07:43:10 -0500
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:41137 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727726AbfLDMm6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Dec 2019 07:42:58 -0500
-Received: by mail-qt1-f193.google.com with SMTP id v2so7552940qtv.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2019 04:42:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=SWzs3svZdfoJNhQZue5B0UPApGf3QNVhTsPQAsjB3v0=;
-        b=AkbuvF8WWOeGkFuNbpEiUPeHs0D9XYCrvYJnn3sJBPk0l/N+bAJ+lU7by52a8c0/XL
-         X5y/+uJVi5SRPzgKpD7LZp2RSO63H/dWhNB+Sgv8CnTmnW6HnNvEkrD3pvFKiHue+ji0
-         Cyct4Vs7hozR5hYKDh8cJJMkT72K9aPHj93bK1Ew++bIIM698i5hGwNXpwVN8RyOlTlg
-         ekVZP06isuUhwZwFxkLwU0Sye3HMnEDkq9yUmWZzxA1JTm8RzibEufZxYTJilauyHwzc
-         pKJFDkaXtzzvkeOyU7ajhljX9QykaA8Ur2FHYJunK1Sxosbxld4ODKAYs9j7AB06Aipc
-         jW5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=SWzs3svZdfoJNhQZue5B0UPApGf3QNVhTsPQAsjB3v0=;
-        b=gcmUDSUlVxvtEefNgVP8pvFJuhzNFkl/xTvnsPBouZpf7Vo7qSmQCUr8GmQIEaVKg8
-         sKJUU5WXKclW2nqwNGCK5Hti6E3Ks6c+7RNA7F68+L7kclCKKm+HJ6aGtlYEGUQxFEHb
-         RZbBdnxKVOvloe459uJv0Hx9A9+GgN9e+/XWBxaRN4Vze58MR8+lbTB7SLeSm3V9DSQk
-         ooZI5/ILC6KxRRrN1Kjbff8eELWMCyczOlfWBl8EkDx7zvbGzKrH2ajq3UVnSns+ZBEm
-         1uL4JTyWemBCQnAq6tqWIl4DN40qdNwXeHOL+/YI7RK81eQvcEUUjlqxgubXPn4BZ8Ok
-         n35w==
-X-Gm-Message-State: APjAAAUAT7NoTW57m6qqGKCIZWcKpsenPkt1ONpHA1bOPh9mO+m9IMHJ
-        QGgLSWd9y0j64J6WJp6tTcqDd2nMMOqfc5TXya4=
-X-Google-Smtp-Source: APXvYqzw3gCG5cnmI6368TWfhjS/+LLSHd6b95oZCOsPTpsAjIN23auDStB1pQ1PTnMah1qk6gl8uYsnTPaZ7k01uH0=
-X-Received: by 2002:ac8:4a81:: with SMTP id l1mr2434940qtq.357.1575463377714;
- Wed, 04 Dec 2019 04:42:57 -0800 (PST)
+        id S1728354AbfLDP4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Dec 2019 10:56:01 -0500
+Received: from foss.arm.com ([217.140.110.172]:57720 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727828AbfLDP4B (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Dec 2019 10:56:01 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1BC9E31B;
+        Wed,  4 Dec 2019 07:56:00 -0800 (PST)
+Received: from [10.1.196.37] (e121345-lin.cambridge.arm.com [10.1.196.37])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A0FE53F52E;
+        Wed,  4 Dec 2019 07:55:58 -0800 (PST)
+Subject: Re: [PATCH v2 1/8] dt-bindings: arm-smmu: Add Adreno GPU variant
+To:     Jordan Crouse <jcrouse@codeaurora.org>,
+        iommu@lists.linux-foundation.org
+Cc:     will@kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Joerg Roedel <joro@8bytes.org>
+References: <1574465484-7115-1-git-send-email-jcrouse@codeaurora.org>
+ <0101016e95751c0b-33c9379b-6b8c-43b1-8785-e5e1b6f084f1-000000@us-west-2.amazonses.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <3a283a7c-df75-a30a-1bcb-74e631f06a71@arm.com>
+Date:   Wed, 4 Dec 2019 15:55:57 +0000
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Received: by 2002:ac8:2f0c:0:0:0:0:0 with HTTP; Wed, 4 Dec 2019 04:42:57 -0800 (PST)
-Reply-To: moneygram.1820@outlook.fr
-From:   "Rev.Dr Emmanuel Okoye CEO Ecobank-benin" 
-        <westernunion.benin982@gmail.com>
-Date:   Wed, 4 Dec 2019 13:42:57 +0100
-Message-ID: <CAP=nHBJXiPmPL21x=_0BHWRk_3N3Yax+tTxcFi=t=AhN7g==1Q@mail.gmail.com>
-Subject: God has remembered your prayers I have already sent you Money Gram
- payment of $5000.00 today, MG 1029-8096
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <0101016e95751c0b-33c9379b-6b8c-43b1-8785-e5e1b6f084f1-000000@us-west-2.amazonses.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Attn, dear Beneficiary.
+On 22/11/2019 11:31 pm, Jordan Crouse wrote:
+> Add a compatible string to identify SMMUs that are attached
+> to Adreno GPU devices that wish to support split pagetables.
 
-God has remembered your prayers
-I have already sent you Money Gram payment of $5000.00 today, MG 1029-8096
-This is because we have finally concluded to effect your transfer
-funds of $4.8,000.000usd
-through MONEY GRAM International Fund transfer Service
-Each payment will be sending to you by $5000.00 daily until the
-($4.8,000.000usd) is completely transferred
-we have this morning sent  MONEY GRAM payment of $5,000.00 in your name today
-So contact the MONEY GRAM Agent to pick up this first payment of $5000 now
+A software policy decision is not, in itself, a good justification for a 
+DT property. Is the GPU SMMU fundamentally different in hardware* from 
+the other SMMU(s) in any given SoC?
 
-Contact person Mrs. Alan Ude
-Dir. MONEY GRAM Service,Benin
-Phone number: +229 98856728
-E-mail: moneygram.1820@outlook.fr
+(* where "hardware" may encompass hypervisor shenanigans)
 
-Ask him to give you the complete mtcn, sender name, question and
-answer to enable you
-pick up the $5000.00 sent today,
-Also you are instructed to re-confirm your information's
-to Mrs.Alan Ude as listed below to avoid wrong transactions.
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> ---
+> 
+>   Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> index 6515dbe..db9f826 100644
+> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> @@ -31,6 +31,12 @@ properties:
+>                 - qcom,sdm845-smmu-v2
+>             - const: qcom,smmu-v2
+>   
+> +      - description: Qcom Adreno GPU SMMU iplementing split pagetables
+> +        items:
+> +          - enum:
+> +              - qcom,adreno-smmu-v2
+> +          - const: qcom,smmu-v2
 
-(1Your Full name:............................................
-(2 Phone number.....................................................
-(3 Contact address:.....................................
-(4 Age:..................................................................
-(5 Country..............................................
-(6) Sex .................................................................
-(7) your occupation...........................................
+Given that we already have per-SoC compatibles for Qcom SMMUs in 
+general, this seems suspiciously vague.
 
-(8)Passport/By Attach or Drivers License Number:
-Contact Mrs. Alan Ude for your MONEY GRAM payment of $4.8,000.000usd
-Note please: I have paid service fees for you but the only money you
-are required
-to send to Mrs. Alan Ude is $90.00 only Transfer fee before you can
-pick up your transfer today.
+Robin.
 
-Send it to via Money Gram
-Receiver's Name-----Alan Ude
-Country----------Benin
-Address-----------Cotonou
-Quest--------Honest
-Ans-----------Trust
-
-I done all my best for you to receive your transfer now ok.
-We need your urgent reply
-Best Regards
-Rev.Dr Emmanuel Okoye
-CEO Ecobank-benin
-
-If we did not receive it urgent from you today,
-I will go ahead and release you funds to Mrs. Lyndia Ppaulson as your
-representative.
+> +
+>         - description: Qcom SoCs implementing "arm,mmu-500"
+>           items:
+>             - enum:
+> 
