@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EBE8E112492
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2019 09:21:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2F91112494
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2019 09:22:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726856AbfLDIVr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Dec 2019 03:21:47 -0500
-Received: from a27-56.smtp-out.us-west-2.amazonses.com ([54.240.27.56]:52962
-        "EHLO a27-56.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726166AbfLDIVr (ORCPT
+        id S1727538AbfLDIV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Dec 2019 03:21:57 -0500
+Received: from a27-18.smtp-out.us-west-2.amazonses.com ([54.240.27.18]:50192
+        "EHLO a27-18.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726166AbfLDIV4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Dec 2019 03:21:47 -0500
+        Wed, 4 Dec 2019 03:21:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1575447706;
-        h=From:To:Cc:Subject:Date:Message-Id;
-        bh=gZXkqSU/a39Efrt2FbC+7Z4ewg5zJcA9TZ31Pu4BsP4=;
-        b=LgOMDRmhi/mlsEUaHcCZkzExiFb++eHZLy/X14LVUIvKWVkMCwhi8Tf24b+VyuVF
-        EGn0VS40pJYorExhcc0vqaJ0HHLNtxS6Es6fYsleOJJ+zZrmQNXOSpd6VqaMJNYkbcE
-        I8hf6c2UAUIqooWyXEfCzxAjZNL4t5otsDoSW/Z4=
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1575447716;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
+        bh=ZiTVE2JZ4Rjon7jeVHJPhOtX3KlOXsRS79Ibij6D/vg=;
+        b=ddK9VcaN2ZWpzIKEn1Iwg0ufQqlAMOZet6ZX3pLTcYnm8MRjITvGHR0VHjOBDv1r
+        JWs/iQfqcYV9My8CD2BFq8uigY/nCocc0/WsTZTikMMIqxGeRP/50DxZN640eZHt6YP
+        xRpSADyFxflH8JmV1fyMj4GngpZS107XFlLR2trQ=
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1575447706;
-        h=From:To:Cc:Subject:Date:Message-Id:Feedback-ID;
-        bh=gZXkqSU/a39Efrt2FbC+7Z4ewg5zJcA9TZ31Pu4BsP4=;
-        b=NfP1Of3rnNRqBwZ/q9J0wwH5yv59Gs9/Y+AYUvKclhdSQTPt1i6HnbCR0+moLY4h
-        yWaO2N3ikueNuHQpA/Ztf6oAp7hCjqhqEIC+gR6jH1OSjkPHMYeBWijbKPGryYp/7q8
-        lQXQAZiUjT6imfVLn4svsMkmJCqr+90z2YLatVOs=
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1575447716;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:Feedback-ID;
+        bh=ZiTVE2JZ4Rjon7jeVHJPhOtX3KlOXsRS79Ibij6D/vg=;
+        b=atFklPKY214xd5Dqvi9m++2xBfHGY2Btz/gSgzz9c6RRPvBML3n9vfQGDnzE7BE+
+        jEFGTOjCan0TTqXwMnbl+UIL9x99WsQgiGnR/RFKrWCSEb5nok2uie6tH2MXpaqgs17
+        qYpMnS9NEHiUNfl1Y3J0k3018Gl8lCARHi2yYMh8=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
         URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 636C6C43383
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C8F16C43383
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
 From:   Taniya Das <tdas@codeaurora.org>
@@ -44,39 +44,74 @@ Cc:     David Brown <david.brown@linaro.org>,
         linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
         Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
         robh@kernel.org, Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v1 0/3] Add modem Clock controller (MSS CC) driver for SC7180
-Date:   Wed, 4 Dec 2019 08:21:46 +0000
-Message-ID: <0101016ed0003c0a-c3f2e19a-eb6f-42f6-b66f-4cabb055e828-000000@us-west-2.amazonses.com>
+Subject: [PATCH v1 1/3] dt-bindings: clock: Add YAML schemas for the QCOM MSS clock bindings
+Date:   Wed, 4 Dec 2019 08:21:56 +0000
+Message-ID: <0101016ed0006092-b6693b0f-f8c6-428a-9b64-f6e1f4606844-000000@us-west-2.amazonses.com>
 X-Mailer: git-send-email 2.7.4
-X-SES-Outgoing: 2019.12.04-54.240.27.56
+In-Reply-To: <1575447687-9296-1-git-send-email-tdas@codeaurora.org>
+References: <1575447687-9296-1-git-send-email-tdas@codeaurora.org>
+X-SES-Outgoing: 2019.12.04-54.240.27.18
 Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add driver support for Modem clock controller for SC7180 and also
-update device tree bindings for the various clocks supported in the
-clock controller.
+The MSS clock provider have a bunch of generic properties that
+are needed in a device tree. Add a YAML schemas for those.
 
-
-Taniya Das (3):
-  dt-bindings: clock: Add YAML schemas for the QCOM MSS clock bindings
-  dt-bindings: clock: Introduce QCOM Modem clock  bindings
-  clk: qcom: Add modem clock controller driver for  SC7180
-
- .../devicetree/bindings/clock/qcom,mss.yaml        | 40 ++++++++++
- drivers/clk/qcom/Kconfig                           |  9 +++
- drivers/clk/qcom/Makefile                          |  1 +
- drivers/clk/qcom/gcc-sc7180.c                      | 70 ++++++++++++++++
- drivers/clk/qcom/mss-sc7180.c                      | 93 ++++++++++++++++++++++
- include/dt-bindings/clock/qcom,gcc-sc7180.h        |  5 ++
- include/dt-bindings/clock/qcom,mss-sc7180.h        | 12 +++
- 7 files changed, 230 insertions(+)
+Signed-off-by: Taniya Das <tdas@codeaurora.org>
+---
+ .../devicetree/bindings/clock/qcom,mss.yaml        | 40 ++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/clock/qcom,mss.yaml
- create mode 100644 drivers/clk/qcom/mss-sc7180.c
- create mode 100644 include/dt-bindings/clock/qcom,mss-sc7180.h
 
+diff --git a/Documentation/devicetree/bindings/clock/qcom,mss.yaml b/Documentation/devicetree/bindings/clock/qcom,mss.yaml
+new file mode 100644
+index 0000000..4494a6b
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,mss.yaml
+@@ -0,0 +1,40 @@
++# SPDX-License-Identifier: GPL-2.0-only
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/bindings/clock/qcom,mss.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Modem Clock Controller Binding
++
++maintainers:
++  - Taniya Das <tdas@codeaurora.org>
++
++description: |
++  Qualcomm modem clock control module which supports the clocks.
++
++properties:
++  compatible :
++    enum:
++       - qcom,mss-sc7180
++
++  '#clock-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - '#clock-cells'
++
++examples:
++  # Example of MSS with clock nodes properties for SC7180:
++  - |
++    clock-controller@41aa000 {
++      compatible = "qcom,sc7180-mss";
++      reg = <0x041aa000 0x100>;
++      reg-names = "cc";
++      #clock-cells = <1>;
++    };
++...
 --
 Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
 of the Code Aurora Forum, hosted by the  Linux Foundation.
