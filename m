@@ -2,229 +2,334 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 19A6E11375E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2019 23:00:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D525C113793
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Dec 2019 23:25:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728060AbfLDWAf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Dec 2019 17:00:35 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:34989 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727989AbfLDWAf (ORCPT
+        id S1728434AbfLDWZo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Dec 2019 17:25:44 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:42022 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728213AbfLDWZm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Dec 2019 17:00:35 -0500
-Received: by mail-pl1-f195.google.com with SMTP id s10so298509plp.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2019 14:00:35 -0800 (PST)
+        Wed, 4 Dec 2019 17:25:42 -0500
+Received: by mail-pg1-f196.google.com with SMTP id i5so536032pgj.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2019 14:25:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7/zW2u45vXdBGhhyd50VasD+jSu1J+/W+gJD1y97ilI=;
-        b=BRtmjyE4GQkhth7BhZYhigWj4jvuwBrG45DF+pXLNPlV7xv1ElJfGMdQtb0yBw9phB
-         OiWhH2kxhPbJ0m+egp4kgh+AUirhxJCNbOmDPeeTgrLjThiYjrPrdDut3gZQ+vDejvym
-         AQZ65V3i2wlc8uKSLl1FEOD5iHw4mGmLGTeoM=
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=ZuactyN4A4dYRUXhDIHCeCkwIm9yVEkpFLsO07TsWMo=;
+        b=hcGC+PTfEADAtTpYV00IwDi7gGhJIwdIxxVncPtNp+naLQKD2GcpYgCONjuPUWGrJT
+         68ZVoPyMrQfOz2k71HZP7CWGXwSIi9yPcJgpbY2RRsxIlml5I+q7OjSqyRlL8dBmsImq
+         XxXOFa8gzp1XgaOyd1HtMn5Qm8zU6pqGmri1M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7/zW2u45vXdBGhhyd50VasD+jSu1J+/W+gJD1y97ilI=;
-        b=SWegmNw7gXwim1e/9ih56wg14HW06vptyfW8ofkWz03iohlUG4ZF4ziWAhS+idw4Q+
-         4+w8DnAqa6Xt+S4zhNWZz/3XjMzYaG+Zk0dq7LvLSGooEfBzn/NkLhyayap8JhsvZBbS
-         9b+3r2jAC6W4oC8YZWqqcbCTadwwpXiJe14mHUpRWpX9cLa11nxWxrOwOa8rNHhBl7r0
-         I1s2eAnStk4e4UzHsKLDwu1bmr+NAIg8HtH1dlSBbATDXAizwfOwFQoF6T2ps0ujX82D
-         i8tUZRkpf4jVq5oAE6ImchkSBSxRmYjceiaJ5oQ1k6aRsvaXVE8htyG2zb1gMWHH3u9L
-         bdUg==
-X-Gm-Message-State: APjAAAUuKREMWdRJnLLQHIvdDgcib8fkccR2aIieoYQRmLyIg6ItDoSa
-        vU6pY80YeAdbQ9+tk18u9QvPVg==
-X-Google-Smtp-Source: APXvYqzDmTznYutWMOUv7g65j6d6vHMs7falqxtIlfukVB/h2vcBIeSCC5pSC83liQ8rAppyHQ90kQ==
-X-Received: by 2002:a17:902:6bc3:: with SMTP id m3mr5409493plt.185.1575496834691;
-        Wed, 04 Dec 2019 14:00:34 -0800 (PST)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=ZuactyN4A4dYRUXhDIHCeCkwIm9yVEkpFLsO07TsWMo=;
+        b=IUnPpf8HBZrNgw18CVsP5KqlzdZR6lkdKUu3NoNm/6U4eO4WCarn5HLfeT+pKG7sqs
+         qDGdt2Nm96e1o10Jftec06rrLbaoh+E+TUk5ua2+sUWDOhrhiDiXT36Dj+cBiVOzTtjg
+         3g2qCT5zzR+CItqagKU7TLWFOZjP7gDZ96yTZ/oarZK91x77rqKfypAoPFQlgDC+n9nS
+         iPYdoKaEcj3foUbusJT3rzPpbROde3ZQvaIG35FwOQ9nj1zmWqAfK2szjXcnpaDZvD3d
+         3MdMQgcqF8oQCDYt2xtlBHfqSYpiEOyHJfe28c4ofJ3eJL9mf3XH2Aum22PwafCCpfKZ
+         6H+Q==
+X-Gm-Message-State: APjAAAVw3vitRSeroqf4JDvgiGxtV6M41xBCpaDt8zSqkqHEG3AFGHmt
+        mB+Xqo2kxAQKxpJivRiYKrX2Xw==
+X-Google-Smtp-Source: APXvYqxBaAsAuBqWN6ofTztH1Ft6RofDpKfxbvrSawqVadU1ETT+uPUdPcG4iBOR1iaX0suaxHQU4Q==
+X-Received: by 2002:a63:d748:: with SMTP id w8mr5349746pgi.334.1575498340922;
+        Wed, 04 Dec 2019 14:25:40 -0800 (PST)
 Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id b7sm7493515pjo.3.2019.12.04.14.00.33
+        by smtp.gmail.com with ESMTPSA id j7sm9359067pgn.0.2019.12.04.14.25.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Dec 2019 14:00:34 -0800 (PST)
-Date:   Wed, 4 Dec 2019 14:00:33 -0800
+        Wed, 04 Dec 2019 14:25:40 -0800 (PST)
+Date:   Wed, 4 Dec 2019 14:25:38 -0800
 From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sharat Masetty <smasetty@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 5/5] arm: dts: sc7180: Add A618 gpu dt blob
-Message-ID: <20191204220033.GH228856@google.com>
-References: <1575386150-13299-1-git-send-email-smasetty@codeaurora.org>
- <0101016ecc556508-b3be0a5f-4987-4c21-a0b4-33f380cf278b-000000@us-west-2.amazonses.com>
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
+        robh+dt@kernel.org, asutoshd@codeaurora.org,
+        stummala@codeaurora.org, sayalil@codeaurora.org,
+        cang@codeaurora.org, rampraka@codeaurora.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Subject: Re: [PATCH V1 2/2] arm64: dts: qcom: sc7180: Add nodes for eMMC and
+ SD card
+Message-ID: <20191204222538.GI228856@google.com>
+References: <1574855381-15193-1-git-send-email-vbadigan@codeaurora.org>
+ <0101016eacb27366-31803877-9137-4c0e-922b-6a71a0e63ab3-000000@us-west-2.amazonses.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <0101016ecc556508-b3be0a5f-4987-4c21-a0b4-33f380cf278b-000000@us-west-2.amazonses.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0101016eacb27366-31803877-9137-4c0e-922b-6a71a0e63ab3-000000@us-west-2.amazonses.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sharat,
+Hi,
 
-on which tree is this patch based on? It does not apply against qcom/arm64-for-5.6-to-be-rebased.
+On Wed, Nov 27, 2019 at 11:50:06AM +0000, Veerabhadrarao Badiganti wrote:
 
-In one of my repos which has a non-upstream Qualcomm tree as remote git can
-make sense of the hashes in the index line, however the parent of your patch
-looks quite different from the maintainer version.
+> Add sdhc instances for supporting eMMC and SD-card on sc7180.
+> The regulators should be in HPM state for proper functionality of
+> eMMC and SD-card. Updating corresponding regulators accordingly.
+> 
+> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+> ---
+> 
+> This depends on the patch series (dt support for sc7180):
+> https://lkml.org/lkml/2019/11/8/149
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  32 +++++++-
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 136 ++++++++++++++++++++++++++++++++
+>  2 files changed, 164 insertions(+), 4 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index 189254f..583c42c 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> @@ -11,6 +11,7 @@
+>  #include "sc7180.dtsi"
+>  #include "pm6150.dtsi"
+>  #include "pm6150l.dtsi"
+> +#include <dt-bindings/gpio/gpio.h>
 
-Another thing that hints towards a custom tree:
+I think this should be above, together with
+'dt-bindings/regulator/qcom,rpmh-regulator.h'
 
-> +			interconnects = <&gem_noc 35 &mc_virt 512>;
+>  
+>  / {
+>  	model = "Qualcomm Technologies, Inc. SC7180 IDP";
+> @@ -103,7 +104,7 @@
+>  		vreg_l12a_1p8: ldo12 {
+>  			regulator-min-microvolt = <1696000>;
+>  			regulator-max-microvolt = <1952000>;
+> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>  		};
+>  
+>  		vreg_l13a_1p8: ldo13 {
+> @@ -145,7 +146,7 @@
+>  		vreg_l19a_2p9: ldo19 {
+>  			regulator-min-microvolt = <2696000>;
+>  			regulator-max-microvolt = <3304000>;
+> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>  		};
+>  	};
+>  
+> @@ -191,7 +192,7 @@
+>  		vreg_l6c_2p9: ldo6 {
+>  			regulator-min-microvolt = <2696000>;
+>  			regulator-max-microvolt = <3304000>;
+> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>  		};
+>  
+>  		vreg_l7c_3p0: ldo7 {
+> @@ -209,7 +210,7 @@
+>  		vreg_l9c_2p9: ldo9 {
+>  			regulator-min-microvolt = <2952000>;
+>  			regulator-max-microvolt = <3304000>;
+> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>  		};
+>  
+>  		vreg_l10c_3p3: ldo10 {
+> @@ -400,3 +401,26 @@
+>  			bias-pull-up;
+>  		};
+>  };
+> +
+> +&sdhc_1 {
+> +	status = "ok";
+> +
+> +	pinctrl-names = "default", "sleep";
+> +	pinctrl-0 = <&sdc1_on>;
+> +	pinctrl-1 = <&sdc1_off>;
+> +	vmmc-supply = <&vreg_l19a_2p9>;
+> +	vqmmc-supply = <&vreg_l12a_1p8>;
+> +
 
-To my knowledge no patches have been posted to add the referenced interconnect
-nodes for SC7180.
+remove empty line
 
-Please base your patches on the appropriate maintainer tree(s).
+> +};
+> +
+> +&sdhc_2 {
+> +	status = "ok";
+> +
+> +	pinctrl-names = "default","sleep";
+> +	pinctrl-0 = <&sdc2_on>;
+> +	pinctrl-1 = <&sdc2_off>;
+> +	vmmc-supply  = <&vreg_l9c_2p9>;
+> +	vqmmc-supply = <&vreg_l6c_2p9>;
+> +
+> +	cd-gpios = <&tlmm 69 GPIO_ACTIVE_LOW>;
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 666e9b9..207d44f 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -897,6 +897,100 @@
+>  					function = "qup15";
+>  				};
+>  			};
+> +
+> +			sdc1_on: sdc1-on {
+> +				clk {
+> +					pins = "sdc1_clk";
+> +					bias-disable;
+> +					drive-strength = <16>;
+> +				};
+> +
+> +				cmd {
+> +					pins = "sdc1_cmd";
+> +					bias-pull-up;
+> +					drive-strength = <10>;
+> +				};
+> +
+> +				data {
+> +					pins = "sdc1_data";
+> +					bias-pull-up;
+> +					drive-strength = <10>;
+> +				};
+> +
+> +				rclk {
+> +					pins = "sdc1_rclk";
+> +					bias-pull-down;
+> +				};
+> +			};
+> +
+> +			sdc1_off: sdc1-off {
+> +				clk {
+> +					pins = "sdc1_clk";
+> +					bias-disable;
+> +					drive-strength = <2>;
+> +				};
+> +
+> +				cmd {
+> +					pins = "sdc1_cmd";
+> +					bias-pull-up;
+> +					drive-strength = <2>;
+> +				};
+> +
+> +				data {
+> +					pins = "sdc1_data";
+> +					bias-pull-up;
+> +					drive-strength = <2>;
+> +				};
+> +
+> +				rclk {
+> +					pins = "sdc1_rclk";
+> +					bias-pull-down;
+> +				};
+> +			};
+> +
+> +			sdc2_on: sdc2_on {
+> +				clk {
+> +					pins = "sdc2_clk";
+> +					bias-disable;
+> +					drive-strength = <16>;
+> +				};
+
+nit: add blank lines, consistent with the other pinconf entries.
+
+> +				cmd {
+> +					pins = "sdc2_cmd";
+> +					bias-pull-up;
+> +					drive-strength = <10>;
+> +				};
+> +				data {
+> +					pins = "sdc2_data";
+> +					bias-pull-up;
+> +					drive-strength = <10>;
+> +				};
+> +				sd-cd {
+> +					pins = "gpio69";
+> +					bias-pull-down;
+> +				};
+> +			};
+> +
+> +			sdc2_off: sdc2_off {
+> +				clk {
+> +					pins = "sdc2_clk";
+> +					bias-disable;
+> +					drive-strength = <2>;
+> +				};
+> +				cmd {
+> +					pins = "sdc2_cmd";
+> +					bias-pull-up;
+> +					drive-strength = <2>;
+> +				};
+> +				data {
+> +					pins = "sdc2_data";
+> +					bias-pull-up;
+> +					drive-strength = <2>;
+> +				};
+> +				sd-cd {
+> +					pins = "gpio69";
+> +					bias-pull-down;
+> +				};
+> +			};
+>  		};
+>  
+>  		qspi: spi@88dc000 {
+> @@ -911,6 +1005,48 @@
+>  			status = "disabled";
+>  		};
+>  
+> +		sdhc_1: sdhci@7c4000 {
+
+IIUC the nodes are ordered by address, hence this one should be between
+'clock-controller@100000' and 'geniqup@8c0000'.
+
+> +			compatible = "qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
+> +			reg = <0 0x7c4000 0 0x1000>;
+> +			reg-names = "hc_mem";
+> +
+> +			interrupts = <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
+> +					<GIC_SPI 644 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hc_irq", "pwr_irq";
+> +
+> +			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
+> +					<&gcc GCC_SDCC1_AHB_CLK>;
+> +			clock-names = "core", "iface";
+> +
+> +			bus-width = <8>;
+> +			non-removable;
+> +
+> +			mmc-ddr-1_8v;
+> +			mmc-hs200-1_8v;
+> +			mmc-hs400-1_8v;
+> +			mmc-hs400-enhanced-strobe;
+> +
+> +			status = "disabled";
+> +		};
+> +
+> +		sdhc_2: sdhci@8804000 {
+
+nodes are ordered by address: this one should be between 'pinctrl@3500000'
+and 'spi@88dc000´.
+
+> +			compatible = "qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
+> +			reg = <0 0x08804000 0 0x1000>;
+> +			reg-names = "hc_mem";
+> +
+> +			interrupts = <GIC_SPI 204 IRQ_TYPE_LEVEL_HIGH>,
+> +					<GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hc_irq", "pwr_irq";
+> +
+> +			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
+> +					<&gcc GCC_SDCC2_AHB_CLK>;
+> +			clock-names = "core","iface";
+
+nit: add a blank after the comma.
 
 Thanks
 
 Matthias
-
-On Tue, Dec 03, 2019 at 03:16:18PM +0000, Sharat Masetty wrote:
-> This patch adds the required dt nodes and properties
-> to enabled A618 GPU.
-> 
-> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 116 +++++++++++++++++++++++++++++++++++
->  1 file changed, 116 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index c3db2e5..31223d0 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -18,6 +18,8 @@
->  #include <dt-bindings/reset/qcom,sdm845-pdc.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->  #include <dt-bindings/phy/phy-qcom-qusb2.h>
-> +#include <dt-bindings/clock/qcom,gpucc-sc7180.h>
-> +#include <dt-bindings/power/qcom-rpmpd.h>
-> 
->  / {
->  	interrupt-parent = <&intc>;
-> @@ -733,6 +735,120 @@
->  			#power-domain-cells = <1>;
->  		};
-> 
-> +		gpu: gpu@5000000 {
-> +			compatible = "qcom,adreno-618.0", "qcom,adreno";
-> +			#stream-id-cells = <16>;
-> +			reg = <0 0x5000000 0 0x40000>, <0 0x509e000 0 0x1000>,
-> +				<0 0x5061000 0 0x800>;
-> +			reg-names = "kgsl_3d0_reg_memory", "cx_mem", "cx_dbgc";
-> +
-> +			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			iommus = <&adreno_smmu 0>;
-> +
-> +			operating-points-v2 = <&gpu_opp_table>;
-> +
-> +			interconnects = <&gem_noc 35 &mc_virt 512>;
-> +
-> +			qcom,gmu = <&gmu>;
-> +
-> +			gpu_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-800000000 {
-> +					opp-hz = /bits/ 64 <800000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
-> +				};
-> +
-> +				opp-650000000 {
-> +					opp-hz = /bits/ 64 <650000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-> +				};
-> +
-> +				opp-565000000 {
-> +					opp-hz = /bits/ 64 <565000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-> +				};
-> +
-> +				opp-430000000 {
-> +					opp-hz = /bits/ 64 <430000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-> +				};
-> +
-> +                                opp-355000000 {
-> +					opp-hz = /bits/ 64 <355000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-> +				};
-> +
-> +                                opp-267000000 {
-> +					opp-hz = /bits/ 64 <267000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-> +				};
-> +
-> +				opp-180000000 {
-> +					opp-hz = /bits/ 64 <180000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-> +				};
-> +			};
-> +		};
-> +
-> +		adreno_smmu: iommu@5040000 {
-> +			compatible = "qcom,sc7180-smmu-v2", "qcom,smmu-v2";
-> +			reg = <0 0x5040000 0 0x10000>;
-> +			#iommu-cells = <1>;
-> +			#global-interrupts = <2>;
-> +			interrupts = <GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>,
-> +					<GIC_SPI 231 IRQ_TYPE_LEVEL_HIGH>,
-> +					<GIC_SPI 364 IRQ_TYPE_EDGE_RISING>,
-> +					<GIC_SPI 365 IRQ_TYPE_EDGE_RISING>,
-> +					<GIC_SPI 366 IRQ_TYPE_EDGE_RISING>,
-> +					<GIC_SPI 367 IRQ_TYPE_EDGE_RISING>,
-> +					<GIC_SPI 368 IRQ_TYPE_EDGE_RISING>,
-> +					<GIC_SPI 369 IRQ_TYPE_EDGE_RISING>,
-> +					<GIC_SPI 370 IRQ_TYPE_EDGE_RISING>,
-> +					<GIC_SPI 371 IRQ_TYPE_EDGE_RISING>;
-> +			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-> +				<&gcc GCC_GPU_CFG_AHB_CLK>,
-> +				<&gcc GCC_DDRSS_GPU_AXI_CLK>;
-> +
-> +			clock-names = "bus", "iface", "mem_iface_clk";
-> +			power-domains = <&gpucc CX_GDSC>;
-> +		};
-> +
-> +		gmu: gmu@506a000 {
-> +			compatible="qcom,adreno-gmu-618", "qcom,adreno-gmu";
-> +
-> +			reg = 	<0 0x506a000 0 0x31000>,
-> +				<0 0xb290000 0 0x10000>,
-> +				<0 0xb490000 0 0x10000>;
-> +			reg-names = "gmu", "gmu_pdc", "gmu_pdc_seq";
-> +
-> +			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
-> +				   <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "hfi", "gmu";
-> +
-> +			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
-> +			       <&gpucc GPU_CC_CXO_CLK>,
-> +			       <&gcc GCC_DDRSS_GPU_AXI_CLK>,
-> +			       <&gcc GCC_GPU_MEMNOC_GFX_CLK>;
-> +			clock-names = "gmu", "cxo", "axi", "memnoc";
-> +
-> +			power-domains = <&gpucc CX_GDSC>;
-> +
-> +			iommus = <&adreno_smmu 5>;
-> +
-> +			operating-points-v2 = <&gmu_opp_table>;
-> +
-> +			gmu_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-200000000 {
-> +					opp-hz = /bits/ 64 <200000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-> +				};
-> +			};
-> +		};
-> +
->  		apps_smmu: iommu@15000000 {
->  			compatible = "qcom,sc7180-smmu-500", "arm,mmu-500";
->  			reg = <0 0x15000000 0 0x100000>;
-> --
-> 1.9.1
-> 
