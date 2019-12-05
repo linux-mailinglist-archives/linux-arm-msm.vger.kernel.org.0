@@ -2,136 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D5CD11483C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2019 21:39:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 315CF11488A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2019 22:15:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729632AbfLEUjX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Dec 2019 15:39:23 -0500
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:44274 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729587AbfLEUjX (ORCPT
+        id S1729739AbfLEVPW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Dec 2019 16:15:22 -0500
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:42314 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729450AbfLEVPW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Dec 2019 15:39:23 -0500
-Received: by mail-vs1-f65.google.com with SMTP id p6so3404914vsj.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2019 12:39:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SSvOjQkThzkjS0E5kT8izv176PiG+QeLySxW76GfG/8=;
-        b=KEqh5U3mky5aGe7W96TiE2LasaP3xlk51SGQLcUTzI1gDcy3EH1dmJjfwPF/JMLEBM
-         nGW8/IEwFXENSKvuLMyqJq96Kr0LfnE6z/+8Tp7EQd2fB1Df1iiwJoWw6TRgiNgTJuLZ
-         TgrcNx9ZGBo597myzBWXph+Dsp5sIE/30gEpNX/TsvHQX0Pd5mTNnJDB53bYzEnCZTjb
-         v3zt0XPG6g9HJjA1lnPkIYhsHqMnsI809RxuIQ8B4lEh1rFGDgcs0uBPvTw3SMsr647w
-         a9KMvmrWdUgCDY6klznjR5FatNCjj3nUZMnQnyERTctkh5Sd+jGWTuXmjGz6YGJDfYl9
-         lt7A==
+        Thu, 5 Dec 2019 16:15:22 -0500
+Received: by mail-ot1-f67.google.com with SMTP id 66so3911410otd.9;
+        Thu, 05 Dec 2019 13:15:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SSvOjQkThzkjS0E5kT8izv176PiG+QeLySxW76GfG/8=;
-        b=q/wMcDmlP/g3ts/Ee8VFZXjEJbiDKN1tY5QjDw6TvtHpkge6nsBtxONt9tTXg2d39Q
-         Lo4bGsl3q80qflZHXGPKsF/HrDAGyn0tzJijvs1GN7w9GW0lVRVv1o3zVZiTwlY1Cy5R
-         rLHIC2hY2I0cfOBm6qAP7Av1h+xvcO37DrAp+/LGbrcc70DRjvQJDkTX/flja6/+CfSK
-         ttNx15Ky6JUD8eCaWX9LtrGBRGEDgJJnBtVFLQmCXlKomyAdL7bOwkxF7P3wDduMqhwc
-         XK7A0pViztQcpXnmVHB+LwU5FgEaEl24qFELSeQiIDjhShwiwKICMQlNZVsYLF3mXRdc
-         GlzQ==
-X-Gm-Message-State: APjAAAXouU7KeDgRxK2JEvIcUDwKm4mXDfdiUxOtUBYJSDF0l6iO1Vmz
-        UCtnwQqeq8f9jHgSYRkpBIhvL12SK7oc8CeISywgTg==
-X-Google-Smtp-Source: APXvYqwv8W+XvnbaXKWKlmbMYtOfLrbfwOBq+4ILBpgcTAHXNniAJi3G7xZyAP75rfwK/aPe4c6uig2q/Wwh9WLoeNU=
-X-Received: by 2002:a67:f499:: with SMTP id o25mr6993350vsn.165.1575578362421;
- Thu, 05 Dec 2019 12:39:22 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=YJ9zindtieuDhe+7MeY3HR+ZIrhEnTYORFnF43Fjuuo=;
+        b=H8FjBmCGpKJ12wybDVkmrbxMQtMFXJnBNXpQu+uP8Bz+UET1zkLgd0Q4DSYX+K4lqs
+         R+xgMm3YJptsTUZMSWQsR5M4heft+hOXqhNLpUIQJaP0VXUjTxkju2wgpjUXR5U/lcwP
+         xatmqD6UYO+CDHy7qPT44ntLXzsu9FHi/fT625rP2MWeBUxaTTuJuEzIIcOw/YMHVbeh
+         Nap/78Zfq7KqNjbk/IuBi54arNETu7ZdQVTTLJWPLrx+Ay+Hv9Yka5irqYUiQ3tY78nX
+         gR/+3iGYyIveGWAdpKKnvZYka/N4nqg76aDUMcLua+q4cUK1uErDLG6mWXob2rrUwBgu
+         XH8Q==
+X-Gm-Message-State: APjAAAUm4GCX9FzepGahoB43GDh77p2X0lTPes0nv1xj7bnzVm8fdF7z
+        xA4jPz7euZzcG6PhEmgzsA==
+X-Google-Smtp-Source: APXvYqxZcyLjEEXrywjejvo3Fovq/Vj1ZK2rPKMOypHYm8vTPRNz4P37AyKMhs/HcKqGxOLJBudH/Q==
+X-Received: by 2002:a9d:58c9:: with SMTP id s9mr8001069oth.121.1575580520010;
+        Thu, 05 Dec 2019 13:15:20 -0800 (PST)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id f62sm3800001otf.23.2019.12.05.13.15.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Dec 2019 13:15:19 -0800 (PST)
+Date:   Thu, 5 Dec 2019 15:15:18 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
+        robh+dt@kernel.org, asutoshd@codeaurora.org,
+        stummala@codeaurora.org, sayalil@codeaurora.org,
+        cang@codeaurora.org, rampraka@codeaurora.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Subject: Re: [PATCH V1 1/2] dt-bindings: mmc: sdhci-msm: Add compatible
+ string for sc7180
+Message-ID: <20191205211518.GA30447@bogus>
+References: <0101016eacb255af-3985262d-9b7e-4813-88c2-61838406e12c-000000@us-west-2.amazonses.com>
 MIME-Version: 1.0
-References: <20191127102914.18729-1-ulf.hansson@linaro.org>
- <20191127102914.18729-11-ulf.hansson@linaro.org> <20191205183544.GB1516@e121166-lin.cambridge.arm.com>
- <CAPDyKFra-C_EKrcec6Yys2P10bB+KBtVAKNtVFgqDvV=tzbDRQ@mail.gmail.com>
-In-Reply-To: <CAPDyKFra-C_EKrcec6Yys2P10bB+KBtVAKNtVFgqDvV=tzbDRQ@mail.gmail.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 5 Dec 2019 21:38:45 +0100
-Message-ID: <CAPDyKFpRLWO0D9an_OH3VJYDXM=SQWDfx0A4tOhufA+_L2Zp-g@mail.gmail.com>
-Subject: Re: [PATCH v3 10/13] cpuidle: psci: Prepare to use OS initiated
- suspend mode via PM domains
-To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     Sudeep Holla <sudeep.holla@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Lina Iyer <lina.iyer@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0101016eacb255af-3985262d-9b7e-4813-88c2-61838406e12c-000000@us-west-2.amazonses.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 5 Dec 2019 at 21:25, Ulf Hansson <ulf.hansson@linaro.org> wrote:
->
-> On Thu, 5 Dec 2019 at 19:35, Lorenzo Pieralisi
-> <lorenzo.pieralisi@arm.com> wrote:
-> >
-> > On Wed, Nov 27, 2019 at 11:29:11AM +0100, Ulf Hansson wrote:
-> >
-> > [...]
-> >
-> > > -static int __init psci_dt_cpu_init_idle(struct device_node *cpu_node,
-> > > +static int __init psci_dt_cpu_init_idle(struct cpuidle_driver *drv,
-> > > +                                     struct device_node *cpu_node,
-> > >                                       unsigned int state_count, int cpu)
-> > >  {
-> > >       int i, ret = 0;
-> > > @@ -118,6 +152,11 @@ static int __init psci_dt_cpu_init_idle(struct device_node *cpu_node,
-> > >               goto free_mem;
-> > >       }
-> > >
-> > > +     /* Manage the deepest state via a dedicated enter-function. */
-> > > +     if (dev)
-> > > +             drv->states[state_count - 1].enter =
-> > > +                     psci_enter_domain_idle_state;
-> >
-> >
-> > It is unfortunate to make this arbitrary choice, it would be best
-> > if you could detect which states are "domain" states aka are governed
-> > by multiple cpus.
->
-> The domain states are managed and selected by the genpd providers, via
-> using runtime PM reference counting. Please have a closer look at the
-> code in cpuidle-psci-domain.c and in the generic PM domain, that
-> should give you the needed details.
->
-> I am overriding the enter callback for the *deepest* known idle state
-> of the CPU, which is according to what you requested [1].
->
-> So, unless I am missing your point, I think the above code does
-> exactly what you want, no?
->
-> In regards to the "arbitrary choice" of what cpuidle state to use,
-> there are more details about why that is, in the changelog.
+On Wed, 27 Nov 2019 11:49:59 +0000, Veerabhadrarao Badiganti wrote:
+> Add sc7180 SoC specific compatible strings for qcom-sdhci controller.
+> 
+> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-Correction: Since I have moved patches around, I realized that the
-explanation is actually put in the changelog of patch11.
-
-For clarity, let me cut and paste it here as well:
-
-"The triggering point for when runtime PM reference counting should be done,
-has been selected to the deepest idle state for the CPU. However, from the
-hierarchical point view, there may be good reasons to do runtime PM
-reference counting even on shallower idle states, but at this point this
-isn't supported, mainly due to limitations set by the generic PM domain."
-
-Is that good enough or you want some of this information also in the
-changelog of $subject patch? Or if you have any other idea for how to
-make this more clear?
-
-[...]
-
-Kind regards
-Uffe
+Acked-by: Rob Herring <robh@kernel.org>
