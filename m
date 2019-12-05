@@ -2,118 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EB7B11448F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2019 17:15:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF181114490
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2019 17:15:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729187AbfLEQPJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Dec 2019 11:15:09 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:50662 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726028AbfLEQPJ (ORCPT
+        id S1729613AbfLEQPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Dec 2019 11:15:10 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55130 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729099AbfLEQPK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Dec 2019 11:15:09 -0500
-Received: by mail-wm1-f65.google.com with SMTP id p9so4531567wmg.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2019 08:15:07 -0800 (PST)
+        Thu, 5 Dec 2019 11:15:10 -0500
+Received: by mail-wm1-f67.google.com with SMTP id b11so4491705wmj.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2019 08:15:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=47X1V7vPpUGfZijH5fw+doIEIShAH7EVNX3Y7JRu0ZQ=;
-        b=PszjNfyelRsDZc+UOcCatEfKAg3JIX9nhuu1tqaQ4eMcl5HiuouMTwu6Uu+CfBXAYM
-         NdUTPBUJi0qDi39CJgHk0oP1BH6VjBHsItRuZuTC8GHO67Cs/BFBZznFP2Kex/VdfPha
-         +7clRXcpBM4nHJ0DzlUeZmKiZV04zFeeem6ljsC93PrB4dmJC+drIHRtgywgwndhWxR/
-         6iAAK4nJAqmLJqz9RRxmULNxdimsoA773rlW+TsYWo57IE2gSo1rPVaEKFRB9IEfKagh
-         X4CVHswQTCd2xaq+WXhMK3MJwIxmF9LJ3BV+eIzkmn5a0MyMQiM2Xj1jl+jAjXPEi9c2
-         /nqg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=wiYJvs9A2NXd1fHRkB6dBS+AK6nuaV80oV6YetXmGJI=;
+        b=KWLZl2b/6PQlobWM37hoxWhnoNlsmP2tN1Krl0Fs6s1r3VFhXK25+dQAtKeDErFMdB
+         2pXs/RJvUaBMDMc9onLtaTz+R0liD9XHftl6yc5Gt/UD406Q++EiRzxpL0vo3ROAy3Ko
+         WOsRJ6fuXByqkXcpB0BJoIb54lAvC+mhEN4TgKWLPHoBtqYxhjj7tBEipvEWB6aGp0Jo
+         D2a7uubzElPPuDG4wFOq+3FxK7dXIXm/8lxvcJuszMOSCIMNR7frLWR+14pI3+fIvxxC
+         cnvC1/vhoVOdw9M/9zeKGhahQX7AQe1urZ5/niqU6wMO+7ZPCcun7o8mJ9bQryG33g1S
+         3CfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=47X1V7vPpUGfZijH5fw+doIEIShAH7EVNX3Y7JRu0ZQ=;
-        b=eOaf5rZfu2a+WtF8O+SyFrXpDUCOKnIAKTMOzNvqvWVb08gNpwQlNd+d5nz/Ntp82F
-         w4kiVPNVOXJC14iY+7B9ddCdpJ0wtW0M29s5g538zXV9dxpnMOIZzpuOiqsysVbvkQwo
-         5bWBPHcksiwRKxSAKZcP/pk5VwQyEsK9sotJhecSGFK29vcFu5U7U3TP148J0FqkY2JL
-         4Jy3kIRYS1eCRcwjFXZB9vqkkRinvbROSTopZ11hYWNZkXXeaUFot/vLwqFnOw/yv9K6
-         PZCAPu2NI67YIte2uGNN977PnwwG0gt7zUii91WGAbyjxTH/gPI1/r13ObkxYxEMO5v3
-         aL3w==
-X-Gm-Message-State: APjAAAUeEhB+wcGkY9kyuy8jUpUotLmYbQaM+PK/8ViK5owXzbRcccvi
-        HCM2X/L2I5REGnXnemJA/DI=
-X-Google-Smtp-Source: APXvYqzxSC9XO3pqS8ydY+zsJufkJE7bzaHXGBv35YE0qlOMCcgxepW/oldk+a3/2hw57PFvuoCmrQ==
-X-Received: by 2002:a7b:c8d4:: with SMTP id f20mr6335525wml.56.1575562507107;
-        Thu, 05 Dec 2019 08:15:07 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=wiYJvs9A2NXd1fHRkB6dBS+AK6nuaV80oV6YetXmGJI=;
+        b=C0Qd/p+5a1llywZ/0cUdjW/NDp/7gkMmQL5RgJMaTLCvDyAHMhWTf55452/9Z+UwN7
+         vBKEi0ccvg/wO5JfLigcuX7nhmx5lVqitf0D2csAcc5mR6UhnTSUxZM8WRh57gI28UT1
+         PROO/rMw8DrO4ePl5XUJAMWm48yJQF1BZvvMFfar7Y0lreqHGrBS6yRrwUwil/Vueq9h
+         27KUAsCTmT2eW/QkyqJke/bO8Voer5E6vwYwt22ZXVaVK+Mk3i5ykdy/o2ADtls8PC1m
+         SMaUXzqF3NCSktHKWBF+ku78f5YtfZS/El6/UiaKgF7FN+gF2c8KI/uSBOy7qHIBrMmB
+         6lmA==
+X-Gm-Message-State: APjAAAXFuD1VjNtRWfS9dhnCdRZF0AzPEeg64v2Lxfo7x1OGTrNVRocQ
+        X7YFLiKNd1hDdI9hagVEyqk=
+X-Google-Smtp-Source: APXvYqwWw/PwEvyIzVeIeTgS8DvzAaqmQtFXahWlWFqVRobCJ2uMcVOwvB9LES5UllOXaXdh6K/OQg==
+X-Received: by 2002:a1c:f20c:: with SMTP id s12mr5863834wmc.133.1575562508266;
+        Thu, 05 Dec 2019 08:15:08 -0800 (PST)
 Received: from gmail.com (net-37-119-134-251.cust.vodafonedsl.it. [37.119.134.251])
-        by smtp.gmail.com with ESMTPSA id j184sm277364wmb.44.2019.12.05.08.15.06
+        by smtp.gmail.com with ESMTPSA id w20sm291013wmk.34.2019.12.05.08.15.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 05 Dec 2019 08:15:06 -0800 (PST)
+        Thu, 05 Dec 2019 08:15:07 -0800 (PST)
 From:   Paolo Pisati <p.pisati@gmail.com>
 To:     Andy Gross <agross@kernel.org>,
         Amit Pundir <amit.pundir@linaro.org>,
         Manu Gautam <mgautam@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
-Subject: [PATCH 0/6] msm8996: db820c: Fix mmc/ufs and get 5.4 to userspace
-Date:   Thu,  5 Dec 2019 17:14:59 +0100
-Message-Id: <20191205161505.15295-1-p.pisati@gmail.com>
+Subject: [PATCH 1/6] clk: qcom: Drop gcc_aggre1_pnoc_ahb_clk clock
+Date:   Thu,  5 Dec 2019 17:15:00 +0100
+Message-Id: <20191205161505.15295-2-p.pisati@gmail.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20191205161505.15295-1-p.pisati@gmail.com>
+References: <20191205161505.15295-1-p.pisati@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-With 5.4 + arm64 defconfig, db820c fails to boot to userspace: crashes
-right before mounting rootfs, and resets back to LK (Bjorn pushed a
-series of dts changes to support the IFC6640[1] out of msm8996, and i
-thought 5.4 was in a good state for this SoC).
+From: Amit Pundir <amit.pundir@linaro.org>
 
-To get a basic set of features working (mmc, ufs, eth, usb, etc), i had
-to cherry-pick a couple of patches and config changes from Linaro
-4.14[2], and revert an upstream qmp patch:
+Clock "gcc_aggre1_pnoc_ahb_clk" added in QcomLT commit 9a108d744fda
+("clk: qcom: Add some missing gcc clks for msm8996"), broke USB
+gagdets for db820c. So drop it for now and re-visit the dropped
+changes while submitting it upstream.
 
-1) these two cherry-picks from Linaro 4.14 fix the broken mmc[3].
+Fixes: 9a108d744fda ("clk: qcom: Add some missing gcc clks for msm8996")
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+---
+ drivers/clk/qcom/gcc-msm8996.c | 15 ---------------
+ 1 file changed, 15 deletions(-)
 
-clk: qcom: Drop gcc_aggre1_pnoc_ahb_clk clock
-arm64: dts: qcom: msm8996: Disable USB2 PHY suspend by core
-
-2) without these =y config changes, UFS refuses to init[4].
-
-arm64: defconfig: PHY_QCOM_QMP=y
-arm64: defconfig: PHY_QCOM_QUSB2=y
-arm64: defconfig: PHY_QCOM_UFS=y
-
-3) without this upstream revert, pci, ethernet and are wifi dead[5].
-
-Revert "phy: qcom-qmp: Correct ready status, again"
-
-4) with all the above patches applied, msm_drm still complain about
-clks, but at least the board is up, running and reachable[6].
-
-Any thoughts from the author of these patches or the ml?
-In particular, the =y config changes are bothering me because we
-are clearly pushing problems under the rug.
-
-1: https://lkml.org/lkml/2019/10/21/15
-2: https://git.linaro.org/landing-teams/working/qualcomm/kernel.git/log/?h=release/qcomlt-4.14
-3: https://pastebin.com/DDHvZD6Q
-4: https://pastebin.com/hmPVqNqs
-5: https://pastebin.com/fMqtH8u5
-6: https://pastebin.com/irGv9Qmb
-
-Amit Pundir (1):
-  clk: qcom: Drop gcc_aggre1_pnoc_ahb_clk clock
-
-Manu Gautam (1):
-  arm64: dts: qcom: msm8996: Disable USB2 PHY suspend by core
-
-Paolo Pisati (4):
-  Revert "phy: qcom-qmp: Correct ready status, again"
-  arm64: defconfig: PHY_QCOM_QMP=y
-  arm64: defconfig: PHY_QCOM_QUSB2=y
-  arm64: defconfig: PHY_QCOM_UFS=y
-
- arch/arm64/boot/dts/qcom/msm8996.dtsi |  4 ++++
- arch/arm64/configs/defconfig          |  5 +++--
- drivers/clk/qcom/gcc-msm8996.c        | 15 ---------------
- drivers/phy/qualcomm/phy-qcom-qmp.c   | 33 +++++++++++++++++----------------
- 4 files changed, 24 insertions(+), 33 deletions(-)
-
+diff --git a/drivers/clk/qcom/gcc-msm8996.c b/drivers/clk/qcom/gcc-msm8996.c
+index d004cda..c1e1148 100644
+--- a/drivers/clk/qcom/gcc-msm8996.c
++++ b/drivers/clk/qcom/gcc-msm8996.c
+@@ -2937,20 +2937,6 @@ static struct clk_branch gcc_smmu_aggre0_ahb_clk = {
+ 	},
+ };
+ 
+-static struct clk_branch gcc_aggre1_pnoc_ahb_clk = {
+-	.halt_reg = 0x82014,
+-	.clkr = {
+-		.enable_reg = 0x82014,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "gcc_aggre1_pnoc_ahb_clk",
+-			.parent_names = (const char *[]){ "periph_noc_clk_src" },
+-			.num_parents = 1,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+ static struct clk_branch gcc_aggre2_ufs_axi_clk = {
+ 	.halt_reg = 0x83014,
+ 	.clkr = {
+@@ -3453,7 +3439,6 @@ static struct clk_regmap *gcc_msm8996_clocks[] = {
+ 	[GCC_AGGRE0_CNOC_AHB_CLK] = &gcc_aggre0_cnoc_ahb_clk.clkr,
+ 	[GCC_SMMU_AGGRE0_AXI_CLK] = &gcc_smmu_aggre0_axi_clk.clkr,
+ 	[GCC_SMMU_AGGRE0_AHB_CLK] = &gcc_smmu_aggre0_ahb_clk.clkr,
+-	[GCC_AGGRE1_PNOC_AHB_CLK] = &gcc_aggre1_pnoc_ahb_clk.clkr,
+ 	[GCC_AGGRE2_UFS_AXI_CLK] = &gcc_aggre2_ufs_axi_clk.clkr,
+ 	[GCC_AGGRE2_USB3_AXI_CLK] = &gcc_aggre2_usb3_axi_clk.clkr,
+ 	[GCC_QSPI_AHB_CLK] = &gcc_qspi_ahb_clk.clkr,
 -- 
 2.7.4
 
