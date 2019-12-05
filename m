@@ -2,99 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 59F8A114153
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2019 14:18:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C54C1141FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2019 14:56:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729396AbfLENSr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Dec 2019 08:18:47 -0500
-Received: from inca-roads.misterjones.org ([213.251.177.50]:54941 "EHLO
-        inca-roads.misterjones.org" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729099AbfLENSq (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Dec 2019 08:18:46 -0500
-Received: from www-data by cheepnis.misterjones.org with local (Exim 4.80)
-        (envelope-from <maz@kernel.org>)
-        id 1icr1n-0006Zm-3t; Thu, 05 Dec 2019 14:18:43 +0100
-To:     Gaurav Kohli <gkohli@codeaurora.org>
-Subject: Re: [PATCH v0] irqchip/gic-v3: Avoid check of lpi configuration for  non existent cpu
-X-PHP-Originating-Script: 0:main.inc
+        id S1729396AbfLEN4Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Dec 2019 08:56:24 -0500
+Received: from mail.kernel.org ([198.145.29.99]:39286 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729099AbfLEN4Y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Dec 2019 08:56:24 -0500
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 41D1422525;
+        Thu,  5 Dec 2019 13:56:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1575554183;
+        bh=SI5/UqDvOLdW/ebXgeRPP0F1wEDuikwE8BLTviwj7zI=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=yg7lntnXFYlbDO+rC98Zawl9736UXE/JoMSwLlGu7DSzz7ZIVo1Fn+kvVe5wFj8oX
+         ORE1V1NZRCFe2OD/LgTnjmhjR3dknHNDXRNDSgqnudzCaVzxk3wXXypAPX4W9yBJo/
+         IvY/jADxsCi/U5vhAWde20l3rRE8DKIdnpbdYnKY=
+Received: by mail-qk1-f180.google.com with SMTP id g15so3351553qka.8;
+        Thu, 05 Dec 2019 05:56:23 -0800 (PST)
+X-Gm-Message-State: APjAAAXnxAyCdpUF/kT0rPEg9X/NRMCpzg9nVS5m0TdkobzL+7eVYT7R
+        K4mWvs+KgtYlesl2KJcDMSb2LPvlcoSLOk0E9w==
+X-Google-Smtp-Source: APXvYqxTieNjxwOysjbfDY0Jzt7u28n6wJ0i4JI/0Df2CY+8bRxVrS6cJAN5zimj0f/y7nSsmjIvD9YzQK49P9OeD5Y=
+X-Received: by 2002:ae9:f205:: with SMTP id m5mr8502354qkg.152.1575554182339;
+ Thu, 05 Dec 2019 05:56:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Thu, 05 Dec 2019 13:18:43 +0000
-From:   Marc Zyngier <maz@kernel.org>
-Cc:     <tglx@linutronix.de>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-In-Reply-To: <209f30c6-c03a-daeb-1f01-e03c489f41d8@codeaurora.org>
-References: <1575543357-31892-1-git-send-email-gkohli@codeaurora.org>
- <60f61282c1b1e512ca6ce638b6dfca09@www.loen.fr>
- <209f30c6-c03a-daeb-1f01-e03c489f41d8@codeaurora.org>
-Message-ID: <18011d088d5202339048ac5e3c224bb5@www.loen.fr>
-X-Sender: maz@kernel.org
-User-Agent: Roundcube Webmail/0.7.2
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Rcpt-To: gkohli@codeaurora.org, tglx@linutronix.de, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on cheepnis.misterjones.org); SAEximRunCond expanded to false
+References: <20191205002503.13088-1-masneyb@onstation.org> <20191205002503.13088-5-masneyb@onstation.org>
+In-Reply-To: <20191205002503.13088-5-masneyb@onstation.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Thu, 5 Dec 2019 07:56:10 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+jpz6_N18sChREC_xGYt9sSFZFtWr3omb_6o7+MFxuHg@mail.gmail.com>
+Message-ID: <CAL_Jsq+jpz6_N18sChREC_xGYt9sSFZFtWr3omb_6o7+MFxuHg@mail.gmail.com>
+Subject: Re: [PATCH 4/7] dt-bindings: Input: introduce new clock vibrator bindings
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Linux Input <linux-input@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-12-05 13:01, Gaurav Kohli wrote:
-> On 12/5/2019 6:17 PM, Marc Zyngier wrote:
->> Hi Gaurav,
->> On 2019-12-05 10:55, Gaurav Kohli wrote:
->>> As per GIC specification, we can configure gic for more no of cpus
->>> then the available cpus in the soc, But this can cause mem abort
->>> while iterating lpi region for non existent cpu as we don't map
->> Which LPI region? We're talking about RDs, right... Or does LPI mean
->> something other than GIC LPIs for you?
->>
+On Wed, Dec 4, 2019 at 6:25 PM Brian Masney <masneyb@onstation.org> wrote:
 >
-> Yes RDs only.
->>> redistrubutor region for non-existent cpu.
->>>
->>> To avoid this issue, put one more check of valid mpidr.
->> Sorry, but I'm not sure I grasp your problem. Let me try and 
->> rephrase it:
->> - Your GIC is configured for (let's say) 8 CPUs, and your SoC has 
->> only 4.
-> Yes, suppose gic is configured for 8 cpus but soc has only 4 cpus.
-> Then in this case gic_iterate will iterate till it get TYPER_LAST.
+> Add support for clock-based vibrator devices where the speed can be
+> controlled by changing the duty cycle.
+>
+> Signed-off-by: Brian Masney <masneyb@onstation.org>
+> ---
+>  .../bindings/input/clk-vibrator.yaml          | 60 +++++++++++++++++++
+>  1 file changed, 60 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/input/clk-vibrator.yaml
+>
+> diff --git a/Documentation/devicetree/bindings/input/clk-vibrator.yaml b/Documentation/devicetree/bindings/input/clk-vibrator.yaml
+> new file mode 100644
+> index 000000000000..2103a5694fad
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/input/clk-vibrator.yaml
+> @@ -0,0 +1,60 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/bindings/input/clk-vibrator.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Clock vibrator
+> +
+> +maintainers:
+> +  - Brian Masney <masneyb@onstation.org>
+> +
+> +description: |
+> +  Support for clock-based vibrator devices where the speed can be controlled
+> +  by changing the duty cycle.
+> +
+> +properties:
+> +  compatible:
+> +    const: clk-vibrator
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    description: output clock that controls the speed
+> +    items:
+> +      - const: core
 
-And that's what is expected from the architecture.
+No point in making up a name when there's only one clock, so drop.
 
->
-> But as gic is configured for 8, So last bit sets in eight
-> redistributor regions only.
->> - As part of the probing, the driver iterates on the RD regions and 
->> explodes
->>    because something isn't mapped?
->> That'd be a grave bug, but I believe the issue is somewhere else.
->
-> There are 4 cpus present, that's why we have mapped 4 redistributor
-> only, but during probe below function keeps iterating and give mem
-> abort for 5th cpu.
->
-> static void gic_update_vlpi_properties(void)
-> {
->         gic_iterate_rdists(__gic_update_vlpi_properties);
->
-> }
->
-> We can solve this problem by mapping all eight redistributor in dt,
-> but ideally code should also able to handle this and we can avoid
-> mappin?
+> +
+> +  clock-frequency: true
 
-The whole point of DT is to describe the HW, all the HW, nothing but
-the HW. This is what is expected by both the architecture and Linux.
+Given the frequency is variable, what does this mean in this case?
 
-So you have the solution already. Don't lie to the kernel, and 
-everything
-will be fine.
+> +  enable-gpios:
+> +    maxItems: 1
+> +
+> +  vcc-supply:
+> +    description: Regulator that provides power
+> +
+> +required:
+> +  - compatible
+> +  - clocks
+> +  - clock-names
+> +  - clock-frequency
 
-         M.
--- 
-Jazz is not dead. It just smells funny...
+Add:
+
+additionalProperties: false
+
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,mmcc-msm8974.h>
+> +    #include <dt-bindings/gpio/gpio.h>
+> +
+> +    vibrator {
+> +        compatible = "clk-vibrator";
+> +
+> +        vcc-supply = <&pm8941_l19>;
+> +
+> +        clocks = <&mmcc CAMSS_GP1_CLK>;
+> +        clock-names = "core";
+> +        clock-frequency = <24000>;
+> +
+> +        enable-gpios = <&msmgpio 60 GPIO_ACTIVE_HIGH>;
+> +
+> +        pinctrl-names = "default";
+> +        pinctrl-0 = <&vibrator_pin>;
+> +    };
+> --
+> 2.21.0
+>
