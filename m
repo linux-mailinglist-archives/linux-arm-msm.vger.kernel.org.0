@@ -2,98 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E5923113908
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2019 01:56:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D05DF113AEE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2019 05:43:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728098AbfLEA4t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Dec 2019 19:56:49 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:41904 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728121AbfLEA4t (ORCPT
+        id S1728975AbfLEEnb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Dec 2019 23:43:31 -0500
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:23182 "EHLO
+        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728132AbfLEEna (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Dec 2019 19:56:49 -0500
-Received: by mail-pj1-f66.google.com with SMTP id ca19so534227pjb.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Dec 2019 16:56:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=mkK1VbYU8pd8d1R2HwKoX7wARdH4Fdf+a3nqX6mf/A8=;
-        b=dbEieWkwvw6WZSpP1x7bC4rsOw5teKRhgEYI1EgQL8Mw6TV1DHWZ3AHvhig8Gj59sY
-         LYWUeilhVAielBO2XpkLLJrj/SG4ZABZgXwVppbT3ok1163wByjsemU6rq5Wqu02BFj8
-         mQWIyIKJUuY1CwGc+0KWD6po2054VL91TfDls=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mkK1VbYU8pd8d1R2HwKoX7wARdH4Fdf+a3nqX6mf/A8=;
-        b=ogMPhl5MDcqHPuecfez8WBqEr6ePGxIW1UCUhEHP8nPHReZ4YXbVywAi6+/e8GswMD
-         oev7zfXX+qSlGSJSDN5YN3wplVSHOXPu/ov1lBSlAVysL5O/Ct0jwvenA2js8pNtrmG0
-         V6jR0xXr8qE9xpgYTp0qR3WIXmKS/ONWD+3nPqUKXlBFEKKaaK7rVLb+VCkWNTfbJwx4
-         CtXotRXR4jnvlveXqSrgGNudHtN+1qECqeuDyLSp+pH2wMBfFjSDbAZYf32vFKao1MuI
-         mrSxfWiMz9k0msBes9joepFWv0WYAO3PvQF46Ug4+vKSjhKmBiQHdHAXpRvi6+/Leksi
-         gzLg==
-X-Gm-Message-State: APjAAAXxXNHqHHkzc/j+4uwpAOids2ZT/XDZyoJZNaZ0BiAjEu3KgeCD
-        7gCSl59fCrYrZeX8x9O3LMP/qA==
-X-Google-Smtp-Source: APXvYqxJ0zxJwZ22BShddeCBPYuInYIfGJ/UwK80td0CdFHYrbpSKP7c3zsMboM8VVVoF2a9Ix3HZw==
-X-Received: by 2002:a17:90a:b009:: with SMTP id x9mr6338021pjq.124.1575507408713;
-        Wed, 04 Dec 2019 16:56:48 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id u1sm9151663pfn.133.2019.12.04.16.56.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Dec 2019 16:56:48 -0800 (PST)
-Date:   Wed, 4 Dec 2019 16:56:46 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Rakesh Pillai <pillair@codeaurora.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Make MSA memory fixed for wifi
-Message-ID: <20191205005646.GL228856@google.com>
-References: <0101016ed035d185-20f04863-0f38-41b7-b88d-76bc36e4dcf9-000000@us-west-2.amazonses.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <0101016ed035d185-20f04863-0f38-41b7-b88d-76bc36e4dcf9-000000@us-west-2.amazonses.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        Wed, 4 Dec 2019 23:43:30 -0500
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 05 Dec 2019 10:12:56 +0530
+Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 05 Dec 2019 10:12:35 +0530
+Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
+        id 6AAFF19B7; Thu,  5 Dec 2019 10:12:34 +0530 (IST)
+From:   Sandeep Maheswaram <sanm@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: [PATCH v2 0/3] Add QUSB2 PHY support for SC7180
+Date:   Thu,  5 Dec 2019 10:11:18 +0530
+Message-Id: <1575520881-31458-1-git-send-email-sanm@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 04, 2019 at 09:20:18AM +0000, Rakesh Pillai wrote:
+Added QUSB2 PHY support for SC7180.
+Converting dt binding to yaml.
+Adding compatible for SC7180 in dt bindings.
 
-> arm64: dts: qcom: sc7180: Make MSA memory fixed for wifi
+Changes in v2:
+Sorted the compatible in driver.
+Converted dt binding to yaml.
+Added compatible in yaml.
 
-This is not really done for sc7180, but only for the sc7180-idp,
-which should be reflected in the subject (i.e. s/sc7180/sc7180-idp/)
 
-> The MSA memory is at a fixed offset, which will be
-> a part of reserved memory. Add this flag to indicate
-> that wifi in sc7180 will use a fixed memory for MSA.
+Sandeep Maheswaram (3):
+  phy: qcom-qusb2: Add QUSB2 PHY support for SC7180
+  dt-bindings: phy: qcom-qusb2: Convert QUSB2 phy bindings to yaml
+  dt-bindings: phy: qcom-qusb2: Add SC7180 QUSB2 phy support
 
-ditto, say it's the IDP
+ .../devicetree/bindings/phy/qcom-qusb2-phy.txt     |  68 -----------
+ .../devicetree/bindings/phy/qcom-qusb2-phy.yaml    | 130 +++++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-qusb2.c              |  57 ++++++++-
+ 3 files changed, 186 insertions(+), 69 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/phy/qcom-qusb2-phy.txt
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom-qusb2-phy.yaml
 
-> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
-> ---
-> This patchet is dependent on the below changes
-> arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node (https://lore.kernel.org/patchwork/patch/1162434/)
-> dt: bindings: add dt entry flag to skip SCM call for msa region (https://patchwork.ozlabs.org/patch/1192725/)
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> index 8a6a760..b2ca143f 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> @@ -250,6 +250,7 @@
->  
->  &wifi {
->  	status = "okay";
-> +	qcom,msa_fixed_perm;
->  };
->  
->  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
-> -- 
-> 2.7.4
-> 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
