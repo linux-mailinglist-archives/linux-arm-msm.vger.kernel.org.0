@@ -2,112 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AB619114418
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2019 16:51:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EB7B11448F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2019 17:15:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729830AbfLEPve (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Dec 2019 10:51:34 -0500
-Received: from a27-188.smtp-out.us-west-2.amazonses.com ([54.240.27.188]:43070
-        "EHLO a27-188.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726257AbfLEPve (ORCPT
+        id S1729187AbfLEQPJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Dec 2019 11:15:09 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:50662 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726028AbfLEQPJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Dec 2019 10:51:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1575561093;
-        h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To;
-        bh=9pymZMREs0aDkOkin38Qg0017bN8aBp0lR9eje0eErE=;
-        b=I0YX2aPyE1wmJuAEsRH7NG882VDFs1+W5HNYeqtHYLS+RCmrI85rJy4kN59Z2iun
-        N1ORqJaKoNb822rVVHaLduZXXxwcWENX9aqZyxUffln8idHIl1OkUl57WsCnfBurF9n
-        kh7cCK2GsYe9Z2w6PDGqSeTdmSS4NvsBAIK3Y9wI=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1575561093;
-        h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Feedback-ID;
-        bh=9pymZMREs0aDkOkin38Qg0017bN8aBp0lR9eje0eErE=;
-        b=dYisZPGV5kT0zFkXYf4Ja0qXK7puDCqj0ENz+EncOwW1SpkZ1dLJB4gQP2YijdTE
-        3j/cSRj2CQULLqQxFBRRu/HT4YgCw2B6wneHiiEQs9kwx/c8Aro0XuBsiCeH9z3YXmh
-        cB4UR2rKaiKWbtwGIDUgPqlb9yTCRE7gsorh1a8U=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 17A40C447B1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Thu, 5 Dec 2019 15:51:33 +0000
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     iommu@lists.linux-foundation.org, will@kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Joerg Roedel <joro@8bytes.org>
-Subject: Re: [PATCH v2 4/8] iommu/arm-smmu: Add split pagetables for Adreno
- IOMMU implementations
-Message-ID: <0101016ed6c26118-3bccfc33-005d-4824-a0d1-55ef6beeaeb8-000000@us-west-2.amazonses.com>
-Mail-Followup-To: Robin Murphy <robin.murphy@arm.com>,
-        iommu@lists.linux-foundation.org, will@kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Joerg Roedel <joro@8bytes.org>
-References: <1574465484-7115-1-git-send-email-jcrouse@codeaurora.org>
- <0101016e95752703-78491f46-41db-441c-b0fb-9a760e4d56cb-000000@us-west-2.amazonses.com>
- <2a43c49e-064e-1e95-6726-8d1e761f6749@arm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2a43c49e-064e-1e95-6726-8d1e761f6749@arm.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-SES-Outgoing: 2019.12.05-54.240.27.188
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
+        Thu, 5 Dec 2019 11:15:09 -0500
+Received: by mail-wm1-f65.google.com with SMTP id p9so4531567wmg.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2019 08:15:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=47X1V7vPpUGfZijH5fw+doIEIShAH7EVNX3Y7JRu0ZQ=;
+        b=PszjNfyelRsDZc+UOcCatEfKAg3JIX9nhuu1tqaQ4eMcl5HiuouMTwu6Uu+CfBXAYM
+         NdUTPBUJi0qDi39CJgHk0oP1BH6VjBHsItRuZuTC8GHO67Cs/BFBZznFP2Kex/VdfPha
+         +7clRXcpBM4nHJ0DzlUeZmKiZV04zFeeem6ljsC93PrB4dmJC+drIHRtgywgwndhWxR/
+         6iAAK4nJAqmLJqz9RRxmULNxdimsoA773rlW+TsYWo57IE2gSo1rPVaEKFRB9IEfKagh
+         X4CVHswQTCd2xaq+WXhMK3MJwIxmF9LJ3BV+eIzkmn5a0MyMQiM2Xj1jl+jAjXPEi9c2
+         /nqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=47X1V7vPpUGfZijH5fw+doIEIShAH7EVNX3Y7JRu0ZQ=;
+        b=eOaf5rZfu2a+WtF8O+SyFrXpDUCOKnIAKTMOzNvqvWVb08gNpwQlNd+d5nz/Ntp82F
+         w4kiVPNVOXJC14iY+7B9ddCdpJ0wtW0M29s5g538zXV9dxpnMOIZzpuOiqsysVbvkQwo
+         5bWBPHcksiwRKxSAKZcP/pk5VwQyEsK9sotJhecSGFK29vcFu5U7U3TP148J0FqkY2JL
+         4Jy3kIRYS1eCRcwjFXZB9vqkkRinvbROSTopZ11hYWNZkXXeaUFot/vLwqFnOw/yv9K6
+         PZCAPu2NI67YIte2uGNN977PnwwG0gt7zUii91WGAbyjxTH/gPI1/r13ObkxYxEMO5v3
+         aL3w==
+X-Gm-Message-State: APjAAAUeEhB+wcGkY9kyuy8jUpUotLmYbQaM+PK/8ViK5owXzbRcccvi
+        HCM2X/L2I5REGnXnemJA/DI=
+X-Google-Smtp-Source: APXvYqzxSC9XO3pqS8ydY+zsJufkJE7bzaHXGBv35YE0qlOMCcgxepW/oldk+a3/2hw57PFvuoCmrQ==
+X-Received: by 2002:a7b:c8d4:: with SMTP id f20mr6335525wml.56.1575562507107;
+        Thu, 05 Dec 2019 08:15:07 -0800 (PST)
+Received: from gmail.com (net-37-119-134-251.cust.vodafonedsl.it. [37.119.134.251])
+        by smtp.gmail.com with ESMTPSA id j184sm277364wmb.44.2019.12.05.08.15.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 05 Dec 2019 08:15:06 -0800 (PST)
+From:   Paolo Pisati <p.pisati@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org
+Subject: [PATCH 0/6] msm8996: db820c: Fix mmc/ufs and get 5.4 to userspace
+Date:   Thu,  5 Dec 2019 17:14:59 +0100
+Message-Id: <20191205161505.15295-1-p.pisati@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 04, 2019 at 04:44:59PM +0000, Robin Murphy wrote:
-> On 22/11/2019 11:31 pm, Jordan Crouse wrote:
-> >Add implementation specific support to enable split pagetables for
-> >SMMU implementations attached to Adreno GPUs on Qualcomm targets.
-> >
-> >To enable split pagetables the driver will set an attribute on the domain.
-> >if conditions are correct, set up the hardware to support equally sized
-> >TTBR0 and TTBR1 regions and programs the domain pagetable to TTBR1 to make
-> >it available for global buffers while allowing the GPU the chance to
-> >switch the TTBR0 at runtime for per-context pagetables.
-> >
-> >After programming the context, the value of the domain attribute can be
-> >queried to see if split pagetables were successfully programmed. The
-> >domain geometry will be updated so that the caller can determine the
-> >start of the region to generate correct virtual addresses.
-> 
-> Why is any of this in impl? It all looks like perfectly generic
-> architectural TTBR1 setup to me. As long as DOMAIN_ATTR_SPLIT_TABLES is
-> explicitly an opt-in for callers, I'm OK with them having to trust that
-> SEP_UPSTREAM is good enough. Or, even better, make the value of
-> DOMAIN_ATTR_SPLIT_TABLES not a boolean but the actual split point, where the
-> default of 0 would logically mean "no split".
+With 5.4 + arm64 defconfig, db820c fails to boot to userspace: crashes
+right before mounting rootfs, and resets back to LK (Bjorn pushed a
+series of dts changes to support the IFC6640[1] out of msm8996, and i
+thought 5.4 was in a good state for this SoC).
 
-(apologies if you get multiple copies of this email, I have tickets in with the
-CAF IT folks).
+To get a basic set of features working (mmc, ufs, eth, usb, etc), i had
+to cherry-pick a couple of patches and config changes from Linaro
+4.14[2], and revert an upstream qmp patch:
 
-I made it impl specific because my impression from the previous conversations
-was that setting up the T0 space but leaving TTBR0 un-programmed was a silly
-thing that was unique to the Adreno GPU. I don't mind moving it to the generic
-code since that saves us from some silly compatible string games.
+1) these two cherry-picks from Linaro 4.14 fix the broken mmc[3].
 
-I like the idea of DOMAIN_ATTR_SPLIT_TABLES returning the split point but would
-we want to allow the user to try to specific a desired split point ahead of
-time? It is my impression that we only have a handful of valid SEP values and
-I'm not sure what the right response would be if the user specified an incorrect
-one.
+clk: qcom: Drop gcc_aggre1_pnoc_ahb_clk clock
+arm64: dts: qcom: msm8996: Disable USB2 PHY suspend by core
 
-So far I've not found a use for anything except SEP_UPSTREAM but I have the
-extreme luxury of a SMMU with an actual 49 bit IAS.
+2) without these =y config changes, UFS refuses to init[4].
 
-New patchset coming soon.
+arm64: defconfig: PHY_QCOM_QMP=y
+arm64: defconfig: PHY_QCOM_QUSB2=y
+arm64: defconfig: PHY_QCOM_UFS=y
 
-Thanks,
-Jordan
+3) without this upstream revert, pci, ethernet and are wifi dead[5].
+
+Revert "phy: qcom-qmp: Correct ready status, again"
+
+4) with all the above patches applied, msm_drm still complain about
+clks, but at least the board is up, running and reachable[6].
+
+Any thoughts from the author of these patches or the ml?
+In particular, the =y config changes are bothering me because we
+are clearly pushing problems under the rug.
+
+1: https://lkml.org/lkml/2019/10/21/15
+2: https://git.linaro.org/landing-teams/working/qualcomm/kernel.git/log/?h=release/qcomlt-4.14
+3: https://pastebin.com/DDHvZD6Q
+4: https://pastebin.com/hmPVqNqs
+5: https://pastebin.com/fMqtH8u5
+6: https://pastebin.com/irGv9Qmb
+
+Amit Pundir (1):
+  clk: qcom: Drop gcc_aggre1_pnoc_ahb_clk clock
+
+Manu Gautam (1):
+  arm64: dts: qcom: msm8996: Disable USB2 PHY suspend by core
+
+Paolo Pisati (4):
+  Revert "phy: qcom-qmp: Correct ready status, again"
+  arm64: defconfig: PHY_QCOM_QMP=y
+  arm64: defconfig: PHY_QCOM_QUSB2=y
+  arm64: defconfig: PHY_QCOM_UFS=y
+
+ arch/arm64/boot/dts/qcom/msm8996.dtsi |  4 ++++
+ arch/arm64/configs/defconfig          |  5 +++--
+ drivers/clk/qcom/gcc-msm8996.c        | 15 ---------------
+ drivers/phy/qualcomm/phy-qcom-qmp.c   | 33 +++++++++++++++++----------------
+ 4 files changed, 24 insertions(+), 33 deletions(-)
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.7.4
+
