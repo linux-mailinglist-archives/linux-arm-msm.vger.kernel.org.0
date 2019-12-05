@@ -2,189 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 57EC711468C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2019 19:07:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B081B1146BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2019 19:18:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729145AbfLESHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Dec 2019 13:07:02 -0500
-Received: from foss.arm.com ([217.140.110.172]:42828 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729022AbfLESHC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Dec 2019 13:07:02 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 42338113E;
-        Thu,  5 Dec 2019 10:07:01 -0800 (PST)
-Received: from e121166-lin.cambridge.arm.com (e121166-lin.cambridge.arm.com [10.1.196.255])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 613CE3F718;
-        Thu,  5 Dec 2019 10:06:59 -0800 (PST)
-Date:   Thu, 5 Dec 2019 18:06:53 +0000
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Sudeep Holla <sudeep.holla@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] cpuidle: psci: Support CPU hotplug for the hierarchical
- model
-Message-ID: <20191205180653.GA1516@e121166-lin.cambridge.arm.com>
-References: <20191205103330.27166-1-ulf.hansson@linaro.org>
+        id S1729154AbfLESSO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Dec 2019 13:18:14 -0500
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:34616 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726028AbfLESSN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Dec 2019 13:18:13 -0500
+Received: by mail-ot1-f68.google.com with SMTP id a15so3478341otf.1;
+        Thu, 05 Dec 2019 10:18:13 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Ctt78cWwZCaPfsbkOwoWRKaRaaHO7Q0cJcGkZb/xygE=;
+        b=PP0xWugIq0GoEYCNfpnzOcmD+zugany1CzZU2uNXlm5AGKhkYb5pdxIJ9WB9HLxolI
+         l9JQMvCFOsA1NOZJvTNfZByu0P3sHnGq2rmSMGyXPyCpQo6gu3z3xC7LCbG1Vqx28XJu
+         +OEvUwfbQ+bszhAnhId8ufjPMYf+jVOyv7xTHR/dJQc3xT2LPXhIyUy/jRAzvMRKNK+q
+         mFVdD4rb9frydus/PlG27zTlmOc+fP86McmDfOsMCGPY+UclV7oQwK9StFD3GXDwg54S
+         aphRCzUfvPk8IoGot8Gw1n8mfN6FTYkUBEdsXgPPz+PaJ/a4aZVrCFYBBdjYggEQwIVW
+         95bQ==
+X-Gm-Message-State: APjAAAWk29KH/r2vfk4ihaKRvGxVk/mu1YEzgUI5GNS9s34zerbSSGtL
+        sVgvtqfuBfPNC8M8Ly+ZAA==
+X-Google-Smtp-Source: APXvYqyfs8OhUj0eeDczAIKIgi1gk0+FRTxh0W2z3IWAj0xjcIUjt8xn3BxVAR2EWbyK3UtPCpCimw==
+X-Received: by 2002:a9d:554f:: with SMTP id h15mr8059510oti.338.1575569892874;
+        Thu, 05 Dec 2019 10:18:12 -0800 (PST)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id n16sm3596887otk.25.2019.12.05.10.18.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Dec 2019 10:18:12 -0800 (PST)
+Date:   Thu, 5 Dec 2019 12:18:11 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Kalyan Thota <kalyan_t@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org, dhar@codeaurora.org,
+        jsanka@codeaurora.org, chandanu@codeaurora.org,
+        travitej@codeaurora.org, nganji@codeaurora.org
+Subject: Re: [PATCH 1/4] dt-bindings: msm:disp: add sc7180 DPU variant
+Message-ID: <20191205181811.GA5706@bogus>
+References: <1574683169-19342-1-git-send-email-kalyan_t@codeaurora.org>
+ <1574683169-19342-2-git-send-email-kalyan_t@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191205103330.27166-1-ulf.hansson@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <1574683169-19342-2-git-send-email-kalyan_t@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 05, 2019 at 11:33:30AM +0100, Ulf Hansson wrote:
-> When the hierarchical CPU topology is used and when a CPU is put offline,
-> that CPU prevents its PM domain from being powered off, which is because
-> genpd observes the corresponding attached device as being active from a
-> runtime PM point of view. Furthermore, any potential master PM domains are
-> also prevented from being powered off.
+On Mon, 25 Nov 2019 17:29:26 +0530, Kalyan Thota wrote:
+> Add a compatible string to support sc7180 dpu version.
 > 
-> To address this limitation, let's add add a new CPU hotplug state
-> (CPUHP_AP_CPU_PM_STARTING) and register up/down callbacks for it, which
-> allows us to deal with runtime PM accordingly.
-> 
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
 > ---
+>  Documentation/devicetree/bindings/display/msm/dpu.txt | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> Lorenzo, Sudeep, Rafael, Daniel,
-> 
-> Note that, this patch is based upon a recently posted series [1] and the intent
-> is to queue it on top. I can fold it into the series and resend it all, if that
-> makes it easier for people. Just tell me what you prefer.
-> 
-> Kind regards
-> Uffe
-> 
-> [1]
-> https://patchwork.kernel.org/cover/11263735/
-> 
-> ---
->  drivers/cpuidle/cpuidle-psci.c | 45 +++++++++++++++++++++++++++++++++-
->  include/linux/cpuhotplug.h     |  1 +
->  2 files changed, 45 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/cpuidle/cpuidle-psci.c b/drivers/cpuidle/cpuidle-psci.c
-> index 835c7c3aa118..46b481c524cc 100644
-> --- a/drivers/cpuidle/cpuidle-psci.c
-> +++ b/drivers/cpuidle/cpuidle-psci.c
-> @@ -8,6 +8,7 @@
->  
->  #define pr_fmt(fmt) "CPUidle PSCI: " fmt
->  
-> +#include <linux/cpuhotplug.h>
->  #include <linux/cpuidle.h>
->  #include <linux/cpumask.h>
->  #include <linux/cpu_pm.h>
-> @@ -31,6 +32,7 @@ struct psci_cpuidle_data {
->  
->  static DEFINE_PER_CPU_READ_MOSTLY(struct psci_cpuidle_data, psci_cpuidle_data);
->  static DEFINE_PER_CPU(u32, domain_state);
-> +static bool psci_cpuidle_use_cpuhp;
->  
->  void psci_set_domain_state(u32 state)
->  {
-> @@ -72,6 +74,44 @@ static int psci_enter_domain_idle_state(struct cpuidle_device *dev,
->  	return ret;
->  }
->  
-> +static int psci_idle_cpuhp_up(unsigned int cpu)
-> +{
-> +	struct device *pd_dev = __this_cpu_read(psci_cpuidle_data.dev);
-> +
-> +	if (pd_dev)
-> +		pm_runtime_get_sync(pd_dev);
-> +
-> +	return 0;
-> +}
-> +
-> +static int psci_idle_cpuhp_down(unsigned int cpu)
-> +{
-> +	struct device *pd_dev = __this_cpu_read(psci_cpuidle_data.dev);
-> +
-> +	if (pd_dev) {
-> +		pm_runtime_put_sync(pd_dev);
-> +		/* Clear domain state to start fresh at next online. */
-> +		psci_set_domain_state(0);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static void psci_idle_init_cpuhp(void)
-> +{
-> +	int err;
-> +
-> +	if (!psci_cpuidle_use_cpuhp)
-> +		return;
-> +
-> +	err = cpuhp_setup_state_nocalls(CPUHP_AP_CPU_PM_STARTING,
-> +					"cpuidle/psci:online",
-> +					psci_idle_cpuhp_up,
-> +					psci_idle_cpuhp_down);
 
-I would make it a cpuhp_setup_state() call and remove
-
-if (cpu_online(cpu))
-	pm_runtime_get_sync_dev(dev);
-
-in check in psci_dt_attach_cpu().
-
-Lorenzo
-
-> +	if (err)
-> +		pr_warn("Failed %d while setup cpuhp state\n", err);
-> +}
-> +
->  static int psci_enter_idle_state(struct cpuidle_device *dev,
->  				struct cpuidle_driver *drv, int idx)
->  {
-> @@ -161,9 +201,11 @@ static int __init psci_dt_cpu_init_idle(struct cpuidle_driver *drv,
->  	}
->  
->  	/* Manage the deepest state via a dedicated enter-function. */
-> -	if (dev)
-> +	if (dev) {
->  		drv->states[state_count - 1].enter =
->  			psci_enter_domain_idle_state;
-> +		psci_cpuidle_use_cpuhp = true;
-> +	}
->  
->  	data->dev = dev;
->  
-> @@ -285,6 +327,7 @@ static int __init psci_idle_init(void)
->  			goto out_fail;
->  	}
->  
-> +	psci_idle_init_cpuhp();
->  	return 0;
->  
->  out_fail:
-> diff --git a/include/linux/cpuhotplug.h b/include/linux/cpuhotplug.h
-> index e51ee772b9f5..01f04ed6ad92 100644
-> --- a/include/linux/cpuhotplug.h
-> +++ b/include/linux/cpuhotplug.h
-> @@ -95,6 +95,7 @@ enum cpuhp_state {
->  	CPUHP_AP_OFFLINE,
->  	CPUHP_AP_SCHED_STARTING,
->  	CPUHP_AP_RCUTREE_DYING,
-> +	CPUHP_AP_CPU_PM_STARTING,
->  	CPUHP_AP_IRQ_GIC_STARTING,
->  	CPUHP_AP_IRQ_HIP04_STARTING,
->  	CPUHP_AP_IRQ_ARMADA_XP_STARTING,
-> -- 
-> 2.17.1
-> 
+Acked-by: Rob Herring <robh@kernel.org>
