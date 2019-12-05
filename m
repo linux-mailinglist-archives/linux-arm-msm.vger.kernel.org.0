@@ -2,222 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 36AD7114495
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2019 17:15:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 57EC711468C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Dec 2019 19:07:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729099AbfLEQPQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Dec 2019 11:15:16 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37969 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729656AbfLEQPQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Dec 2019 11:15:16 -0500
-Received: by mail-wm1-f67.google.com with SMTP id p17so4299468wmi.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2019 08:15:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=osUs1MXgqq64XnjQfyE6+biIqafx/NsQy/3on47ZeQc=;
-        b=gVB4hAsLAgJa4rWpY/gdIDc3Ht4nVXm+ZgiEds5WPBm4kehXNFm9VaFK9wzd6FzJ9Q
-         5oEDrVh0k9luzhoi4ksu6IX04ouwMnAu18q4oJeMqXyBnrfubf6l2Uon5g/ZM6igkcou
-         c98s2ZH7UPg1aEN2msaM9npjb0yO07MUtctw8WzXSWOvfko3S8lk7n2pFRPpUj2F1hUE
-         Q0imXTtpmU1tTy8tx/Yy+HzSbBlDu6cKSWi5Amzrd9gzh1wFig+nYdwcKmMhYXJietZw
-         mMokjfnc4DgIqwypH99tKCdyDlNAS7zoU1ZHQU7+87y/Es1eMRZWLVnv8hemg5msY3Iv
-         P80Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=osUs1MXgqq64XnjQfyE6+biIqafx/NsQy/3on47ZeQc=;
-        b=dBpK6BSjp8txssMIEvT9oK3moQVx7b3+2pKWlBsJHgWccqoT0RXQcB9DOwh59CJxEc
-         zpciRJq9i41ScVz1gtjhyv7OWj59pcaU7dxiLKNrxpCVrb18E4+3tMeo9dSKRDI9qXWL
-         TcWRXxFSbpCsZ96uKuanWtgsb8sK56YQX+L7V0H9g3+etAJwOY6JDrqHOrChw3HXMG05
-         z0XBBEgXIjIGZpCpxCd9hEZQ6yRaC/REHfgxiimxMY6QjQePBudYIu7VDrvkjfa/w0F3
-         J5IIpknea37Vf7/g+HCGxZCl/wMqqstEqMlz6YncFoyjO4DSsL5wXyXBWJy4eemMZiHD
-         7rbg==
-X-Gm-Message-State: APjAAAUPuhv+N38juHQcINtr3fQkAx4Q4RVvt9xepO82Ul0gsD95gBOM
-        oNix4UoOcO8dlIf4EzqfaBk=
-X-Google-Smtp-Source: APXvYqzhjP1ec/JKkxlElca4E0iYyLjoPOb43YCvMrmh0V+wUR+OxcaUq3RU1P8ylNpziO937KhtCQ==
-X-Received: by 2002:a7b:c216:: with SMTP id x22mr5728628wmi.51.1575562513453;
-        Thu, 05 Dec 2019 08:15:13 -0800 (PST)
-Received: from gmail.com (net-37-119-134-251.cust.vodafonedsl.it. [37.119.134.251])
-        by smtp.gmail.com with ESMTPSA id e8sm12637330wrt.7.2019.12.05.08.15.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 05 Dec 2019 08:15:12 -0800 (PST)
-From:   Paolo Pisati <p.pisati@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org
-Subject: [PATCH 3/6] Revert "phy: qcom-qmp: Correct ready status, again"
-Date:   Thu,  5 Dec 2019 17:15:05 +0100
-Message-Id: <20191205161505.15295-7-p.pisati@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20191205161505.15295-1-p.pisati@gmail.com>
-References: <20191205161505.15295-1-p.pisati@gmail.com>
+        id S1729145AbfLESHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Dec 2019 13:07:02 -0500
+Received: from foss.arm.com ([217.140.110.172]:42828 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729022AbfLESHC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Dec 2019 13:07:02 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 42338113E;
+        Thu,  5 Dec 2019 10:07:01 -0800 (PST)
+Received: from e121166-lin.cambridge.arm.com (e121166-lin.cambridge.arm.com [10.1.196.255])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 613CE3F718;
+        Thu,  5 Dec 2019 10:06:59 -0800 (PST)
+Date:   Thu, 5 Dec 2019 18:06:53 +0000
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] cpuidle: psci: Support CPU hotplug for the hierarchical
+ model
+Message-ID: <20191205180653.GA1516@e121166-lin.cambridge.arm.com>
+References: <20191205103330.27166-1-ulf.hansson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191205103330.27166-1-ulf.hansson@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This reverts commit 14ced7e3a1ae9bed7051df3718c8c7b583854a5c.
+On Thu, Dec 05, 2019 at 11:33:30AM +0100, Ulf Hansson wrote:
+> When the hierarchical CPU topology is used and when a CPU is put offline,
+> that CPU prevents its PM domain from being powered off, which is because
+> genpd observes the corresponding attached device as being active from a
+> runtime PM point of view. Furthermore, any potential master PM domains are
+> also prevented from being powered off.
+> 
+> To address this limitation, let's add add a new CPU hotplug state
+> (CPUHP_AP_CPU_PM_STARTING) and register up/down callbacks for it, which
+> allows us to deal with runtime PM accordingly.
+> 
+> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> ---
+> 
+> Lorenzo, Sudeep, Rafael, Daniel,
+> 
+> Note that, this patch is based upon a recently posted series [1] and the intent
+> is to queue it on top. I can fold it into the series and resend it all, if that
+> makes it easier for people. Just tell me what you prefer.
+> 
+> Kind regards
+> Uffe
+> 
+> [1]
+> https://patchwork.kernel.org/cover/11263735/
+> 
+> ---
+>  drivers/cpuidle/cpuidle-psci.c | 45 +++++++++++++++++++++++++++++++++-
+>  include/linux/cpuhotplug.h     |  1 +
+>  2 files changed, 45 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/cpuidle/cpuidle-psci.c b/drivers/cpuidle/cpuidle-psci.c
+> index 835c7c3aa118..46b481c524cc 100644
+> --- a/drivers/cpuidle/cpuidle-psci.c
+> +++ b/drivers/cpuidle/cpuidle-psci.c
+> @@ -8,6 +8,7 @@
+>  
+>  #define pr_fmt(fmt) "CPUidle PSCI: " fmt
+>  
+> +#include <linux/cpuhotplug.h>
+>  #include <linux/cpuidle.h>
+>  #include <linux/cpumask.h>
+>  #include <linux/cpu_pm.h>
+> @@ -31,6 +32,7 @@ struct psci_cpuidle_data {
+>  
+>  static DEFINE_PER_CPU_READ_MOSTLY(struct psci_cpuidle_data, psci_cpuidle_data);
+>  static DEFINE_PER_CPU(u32, domain_state);
+> +static bool psci_cpuidle_use_cpuhp;
+>  
+>  void psci_set_domain_state(u32 state)
+>  {
+> @@ -72,6 +74,44 @@ static int psci_enter_domain_idle_state(struct cpuidle_device *dev,
+>  	return ret;
+>  }
+>  
+> +static int psci_idle_cpuhp_up(unsigned int cpu)
+> +{
+> +	struct device *pd_dev = __this_cpu_read(psci_cpuidle_data.dev);
+> +
+> +	if (pd_dev)
+> +		pm_runtime_get_sync(pd_dev);
+> +
+> +	return 0;
+> +}
+> +
+> +static int psci_idle_cpuhp_down(unsigned int cpu)
+> +{
+> +	struct device *pd_dev = __this_cpu_read(psci_cpuidle_data.dev);
+> +
+> +	if (pd_dev) {
+> +		pm_runtime_put_sync(pd_dev);
+> +		/* Clear domain state to start fresh at next online. */
+> +		psci_set_domain_state(0);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static void psci_idle_init_cpuhp(void)
+> +{
+> +	int err;
+> +
+> +	if (!psci_cpuidle_use_cpuhp)
+> +		return;
+> +
+> +	err = cpuhp_setup_state_nocalls(CPUHP_AP_CPU_PM_STARTING,
+> +					"cpuidle/psci:online",
+> +					psci_idle_cpuhp_up,
+> +					psci_idle_cpuhp_down);
 
-Signed-off-by: Paolo Pisati <p.pisati@gmail.com>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+I would make it a cpuhp_setup_state() call and remove
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index 39e8deb..e7b8283 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -35,7 +35,7 @@
- #define PLL_READY_GATE_EN			BIT(3)
- /* QPHY_PCS_STATUS bit */
- #define PHYSTATUS				BIT(6)
--/* QPHY_PCS_READY_STATUS & QPHY_COM_PCS_READY_STATUS bit */
-+/* QPHY_COM_PCS_READY_STATUS bit */
- #define PCS_READY				BIT(0)
- 
- /* QPHY_V3_DP_COM_RESET_OVRD_CTRL register bits */
-@@ -115,7 +115,6 @@ enum qphy_reg_layout {
- 	QPHY_SW_RESET,
- 	QPHY_START_CTRL,
- 	QPHY_PCS_READY_STATUS,
--	QPHY_PCS_STATUS,
- 	QPHY_PCS_AUTONOMOUS_MODE_CTRL,
- 	QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR,
- 	QPHY_PCS_LFPS_RXTERM_IRQ_STATUS,
-@@ -134,7 +133,7 @@ static const unsigned int pciephy_regs_layout[] = {
- 	[QPHY_FLL_MAN_CODE]		= 0xd4,
- 	[QPHY_SW_RESET]			= 0x00,
- 	[QPHY_START_CTRL]		= 0x08,
--	[QPHY_PCS_STATUS]		= 0x174,
-+	[QPHY_PCS_READY_STATUS]		= 0x174,
- };
- 
- static const unsigned int usb3phy_regs_layout[] = {
-@@ -145,7 +144,7 @@ static const unsigned int usb3phy_regs_layout[] = {
- 	[QPHY_FLL_MAN_CODE]		= 0xd0,
- 	[QPHY_SW_RESET]			= 0x00,
- 	[QPHY_START_CTRL]		= 0x08,
--	[QPHY_PCS_STATUS]		= 0x17c,
-+	[QPHY_PCS_READY_STATUS]		= 0x17c,
- 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= 0x0d4,
- 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR]  = 0x0d8,
- 	[QPHY_PCS_LFPS_RXTERM_IRQ_STATUS] = 0x178,
-@@ -154,7 +153,7 @@ static const unsigned int usb3phy_regs_layout[] = {
- static const unsigned int qmp_v3_usb3phy_regs_layout[] = {
- 	[QPHY_SW_RESET]			= 0x00,
- 	[QPHY_START_CTRL]		= 0x08,
--	[QPHY_PCS_STATUS]		= 0x174,
-+	[QPHY_PCS_READY_STATUS]		= 0x174,
- 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= 0x0d8,
- 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR]  = 0x0dc,
- 	[QPHY_PCS_LFPS_RXTERM_IRQ_STATUS] = 0x170,
-@@ -912,6 +911,7 @@ struct qmp_phy_cfg {
- 
- 	unsigned int start_ctrl;
- 	unsigned int pwrdn_ctrl;
-+	unsigned int mask_pcs_ready;
- 	unsigned int mask_com_pcs_ready;
- 
- 	/* true, if PHY has a separate PHY_COM control block */
-@@ -1074,6 +1074,7 @@ static const struct qmp_phy_cfg msm8996_pciephy_cfg = {
- 
- 	.start_ctrl		= PCS_START | PLL_READY_GATE_EN,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-+	.mask_pcs_ready		= PHYSTATUS,
- 	.mask_com_pcs_ready	= PCS_READY,
- 
- 	.has_phy_com_ctrl	= true,
-@@ -1105,6 +1106,7 @@ static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
-+	.mask_pcs_ready		= PHYSTATUS,
- };
- 
- /* list of resets */
-@@ -1134,6 +1136,7 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-+	.mask_pcs_ready		= PHYSTATUS,
- 
- 	.has_phy_com_ctrl	= false,
- 	.has_lane_rst		= false,
-@@ -1164,6 +1167,7 @@ static const struct qmp_phy_cfg qmp_v3_usb3phy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
-+	.mask_pcs_ready		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
- 	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
-@@ -1195,6 +1199,7 @@ static const struct qmp_phy_cfg qmp_v3_usb3_uniphy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
-+	.mask_pcs_ready		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
- 	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
-@@ -1221,6 +1226,7 @@ static const struct qmp_phy_cfg sdm845_ufsphy_cfg = {
- 
- 	.start_ctrl		= SERDES_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
-+	.mask_pcs_ready		= PCS_READY,
- 
- 	.is_dual_lane_phy	= true,
- 	.no_pcs_sw_reset	= true,
-@@ -1248,6 +1254,7 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
- 
- 	.start_ctrl             = SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-+	.mask_pcs_ready		= PHYSTATUS,
- };
- 
- static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
-@@ -1272,6 +1279,7 @@ static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
- 
- 	.start_ctrl             = SERDES_START | PCS_START,
- 	.pwrdn_ctrl             = SW_PWRDN,
-+	.mask_pcs_ready         = PHYSTATUS,
- 
- 	.is_dual_lane_phy       = true,
- };
-@@ -1449,7 +1457,7 @@ static int qcom_qmp_phy_enable(struct phy *phy)
- 	void __iomem *pcs = qphy->pcs;
- 	void __iomem *dp_com = qmp->dp_com;
- 	void __iomem *status;
--	unsigned int mask, val, ready;
-+	unsigned int mask, val;
- 	int ret;
- 
- 	dev_vdbg(qmp->dev, "Initializing QMP phy\n");
-@@ -1537,17 +1545,10 @@ static int qcom_qmp_phy_enable(struct phy *phy)
- 	/* start SerDes and Phy-Coding-Sublayer */
- 	qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
- 
--	if (cfg->type == PHY_TYPE_UFS) {
--		status = pcs + cfg->regs[QPHY_PCS_READY_STATUS];
--		mask = PCS_READY;
--		ready = PCS_READY;
--	} else {
--		status = pcs + cfg->regs[QPHY_PCS_STATUS];
--		mask = PHYSTATUS;
--		ready = 0;
--	}
-+	status = pcs + cfg->regs[QPHY_PCS_READY_STATUS];
-+	mask = cfg->mask_pcs_ready;
- 
--	ret = readl_poll_timeout(status, val, (val & mask) == ready, 10,
-+	ret = readl_poll_timeout(status, val, val & mask, 10,
- 				 PHY_INIT_COMPLETE_TIMEOUT);
- 	if (ret) {
- 		dev_err(qmp->dev, "phy initialization timed-out\n");
--- 
-2.7.4
+if (cpu_online(cpu))
+	pm_runtime_get_sync_dev(dev);
 
+in check in psci_dt_attach_cpu().
+
+Lorenzo
+
+> +	if (err)
+> +		pr_warn("Failed %d while setup cpuhp state\n", err);
+> +}
+> +
+>  static int psci_enter_idle_state(struct cpuidle_device *dev,
+>  				struct cpuidle_driver *drv, int idx)
+>  {
+> @@ -161,9 +201,11 @@ static int __init psci_dt_cpu_init_idle(struct cpuidle_driver *drv,
+>  	}
+>  
+>  	/* Manage the deepest state via a dedicated enter-function. */
+> -	if (dev)
+> +	if (dev) {
+>  		drv->states[state_count - 1].enter =
+>  			psci_enter_domain_idle_state;
+> +		psci_cpuidle_use_cpuhp = true;
+> +	}
+>  
+>  	data->dev = dev;
+>  
+> @@ -285,6 +327,7 @@ static int __init psci_idle_init(void)
+>  			goto out_fail;
+>  	}
+>  
+> +	psci_idle_init_cpuhp();
+>  	return 0;
+>  
+>  out_fail:
+> diff --git a/include/linux/cpuhotplug.h b/include/linux/cpuhotplug.h
+> index e51ee772b9f5..01f04ed6ad92 100644
+> --- a/include/linux/cpuhotplug.h
+> +++ b/include/linux/cpuhotplug.h
+> @@ -95,6 +95,7 @@ enum cpuhp_state {
+>  	CPUHP_AP_OFFLINE,
+>  	CPUHP_AP_SCHED_STARTING,
+>  	CPUHP_AP_RCUTREE_DYING,
+> +	CPUHP_AP_CPU_PM_STARTING,
+>  	CPUHP_AP_IRQ_GIC_STARTING,
+>  	CPUHP_AP_IRQ_HIP04_STARTING,
+>  	CPUHP_AP_IRQ_ARMADA_XP_STARTING,
+> -- 
+> 2.17.1
+> 
