@@ -2,198 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C7A88115062
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2019 13:25:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AB7B1115314
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2019 15:26:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726509AbfLFMZf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Dec 2019 07:25:35 -0500
-Received: from mail-io1-f66.google.com ([209.85.166.66]:37465 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726124AbfLFMZf (ORCPT
+        id S1726256AbfLFO0z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Dec 2019 09:26:55 -0500
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:45979 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726214AbfLFO0z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Dec 2019 07:25:35 -0500
-Received: by mail-io1-f66.google.com with SMTP id k24so7152617ioc.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2019 04:25:34 -0800 (PST)
+        Fri, 6 Dec 2019 09:26:55 -0500
+Received: by mail-vs1-f65.google.com with SMTP id l24so5113582vsr.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2019 06:26:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=VQbiMMJE8zlEQh6DwgZn6s76A3bT/QzQpsrN16dIp70=;
-        b=KRnCRFPTnjxqLiK5A6xLNqlh/5sC1ibeWR446TjHu4ztvog+DzCxEGvDuSJxXwVx6H
-         HYF+nNok8+hHYVd1qh6X6b6KnYPoEggHX9uC4Re4XQmkgD37I/5ZD4n2xlA6hCXbm21K
-         6f2UXAlpzsWPPqJ+JPtpcacjJktLBaF5y/wzE=
+        bh=sZyTKEpkqp2bs0AZzJDikttOK92FaSEis59tWv73Klo=;
+        b=Ub05OABUX71c3Sd5RIDj00+eC+hc+BYbNZXXoJ1/SGpURI8Vpr8pGoFVqXADUAAK85
+         YLrObq9486MNhO6AeqbSvZF6lb1Zp3OJLzqu/MDXiPyo5b+fkvONJMR8n+5r6vusJp6n
+         YJlSfDM8kZkhRvrspxAhDUOkg/j/LehQSMAKFL/Hjd4kAkblm/1ZxVtr5HuQUPv0ItRW
+         1vZApgukoMmAGIN1hkfqcUu26A1VHZfXCNKBvGnXA7G+4/QDhGVpDsQO8G993ASBqg8p
+         y/rQvifhD4skJ0xVFqcmXnjhbGxadZZ3ABQItmdGfhkzZsqfGyidgkPT9VCLB15o57jl
+         oHwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=VQbiMMJE8zlEQh6DwgZn6s76A3bT/QzQpsrN16dIp70=;
-        b=FD8YKqGDyYFi6kMuT7byr0a4aehUj1DW9q2TIahjdtk29GsXU004uv4QTCsUTosNgE
-         6M2ZfF0RB80olczbVSCwzD9L38M8Aj8D1R/zl0z1bSEJIXTCaPmBN73Q8AR73OJyBF+U
-         bY5e/MiMOnY42Kzv5dbU6WgSeVjE8qB4YbFc9fHSA67cFeHpZjRgGaa634fCjrk8Ref8
-         Hw3thLD8AcV0aZOFT1Jewdd4ISrUgh6Bl4d6V7v33xdlPmkrVhE2W5iMQAMospcVYadG
-         t3ttiyhUMVygArk0LuWr+PXQjU/DAbeHSLbTJGzQ6r179bJLVlMYcjf2/amn+Vs9+8vc
-         Bgsg==
-X-Gm-Message-State: APjAAAWcvGJMpECGAF8zln+h0egTvgCcfGdWpitoNH/vXCRkG8gEAn53
-        /8SO+PhY3TbjjiBPfC6IkVmSmUGJ2I5wSQ==
-X-Google-Smtp-Source: APXvYqxo8QLI6+YF1VKo0/tKdF5+6BB3AYGSFxbL/CSIHcJA4rqG1dHg5t/N/ca78qH/XQI7L2LWjA==
-X-Received: by 2002:a05:6602:2541:: with SMTP id j1mr10309783ioe.239.1575635133938;
-        Fri, 06 Dec 2019 04:25:33 -0800 (PST)
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com. [209.85.166.178])
-        by smtp.gmail.com with ESMTPSA id v4sm3805044ile.60.2019.12.06.04.25.32
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Dec 2019 04:25:32 -0800 (PST)
-Received: by mail-il1-f178.google.com with SMTP id b15so6112697iln.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2019 04:25:32 -0800 (PST)
-X-Received: by 2002:a92:46c8:: with SMTP id d69mr14733574ilk.168.1575635132283;
- Fri, 06 Dec 2019 04:25:32 -0800 (PST)
+        bh=sZyTKEpkqp2bs0AZzJDikttOK92FaSEis59tWv73Klo=;
+        b=UZIhLBVtwNuQM8UGhI7S48Owz8XX67D4SOqyyTim9T6S5CPujXq1lYLf0oWjC4Asg2
+         Sh+atdgyv90WtALE+Dqd1qMyWD4tLyU+pmhx1N3CD+l4LJtBHaLfcGWDBkoC9JtmyuwU
+         cAAthiFTIyzxLo5cTqeL4pSu7fRfeQ3SHn8YZ9B4RAdi07Mnx0AZbDMNkWY/OjJOnZA2
+         raS+PXf9MjfyX1vUfKHJ1DrmXyjxbgXp2VJdhXvp59z5MfgAq0WStMAFxW6BxU++ExQ8
+         fS6UZpPN92cJXpyIh8kAcaOWOG22qf/UzIvtSjcXxtFTIwWgNP/Z4xNj8IzdpZcc5Rr8
+         TSYw==
+X-Gm-Message-State: APjAAAV84r+k/0z/OeNCUAd3oDlgCRvFX+u9PBy17AFYqgzaFkJFNTq3
+        1zxDnQhajqyeQ6Fho0xOnjgraMAt5FYMmU5aMDTqZQ==
+X-Google-Smtp-Source: APXvYqy9VUv5+eQYZxi7bdtnnGxixhEpgnm3PaekqyV4GcZq4nxnJQMBOmyzvYTaGxV5BbQQnLbx54v6XTifBF6LzuM=
+X-Received: by 2002:a67:2087:: with SMTP id g129mr9963975vsg.191.1575642413970;
+ Fri, 06 Dec 2019 06:26:53 -0800 (PST)
 MIME-Version: 1.0
-References: <20191108092824.9773-1-rnayak@codeaurora.org> <20191108092824.9773-14-rnayak@codeaurora.org>
-In-Reply-To: <20191108092824.9773-14-rnayak@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 6 Dec 2019 20:25:20 +0800
-X-Gmail-Original-Message-ID: <CAD=FV=VUoj1egZqw9koNHDPBCCEh_XZ5nZAPNKcnya2UACG8hw@mail.gmail.com>
-Message-ID: <CAD=FV=VUoj1egZqw9koNHDPBCCEh_XZ5nZAPNKcnya2UACG8hw@mail.gmail.com>
-Subject: Re: [PATCH v5 13/13] arm64: dts: sc7180: Add qupv3_0 and qupv3_1
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+References: <20191127102914.18729-1-ulf.hansson@linaro.org>
+ <20191127102914.18729-11-ulf.hansson@linaro.org> <20191205183544.GB1516@e121166-lin.cambridge.arm.com>
+ <CAPDyKFra-C_EKrcec6Yys2P10bB+KBtVAKNtVFgqDvV=tzbDRQ@mail.gmail.com> <20191206112549.GA22964@e121166-lin.cambridge.arm.com>
+In-Reply-To: <20191206112549.GA22964@e121166-lin.cambridge.arm.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 6 Dec 2019 15:26:16 +0100
+Message-ID: <CAPDyKFq0gS2fasU3Yyh+wPC7Pjnucv6_+vDN234ks+yuiURKCw@mail.gmail.com>
+Subject: Re: [PATCH v3 10/13] cpuidle: psci: Prepare to use OS initiated
+ suspend mode via PM domains
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>
+        Lina Iyer <lina.iyer@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Fri, Nov 8, 2019 at 5:29 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+On Fri, 6 Dec 2019 at 12:25, Lorenzo Pieralisi
+<lorenzo.pieralisi@arm.com> wrote:
 >
-> From: Roja Rani Yarubandi <rojay@codeaurora.org>
+> On Thu, Dec 05, 2019 at 09:25:54PM +0100, Ulf Hansson wrote:
+> > On Thu, 5 Dec 2019 at 19:35, Lorenzo Pieralisi
+> > <lorenzo.pieralisi@arm.com> wrote:
+> > >
+> > > On Wed, Nov 27, 2019 at 11:29:11AM +0100, Ulf Hansson wrote:
+> > >
+> > > [...]
+> > >
+> > > > -static int __init psci_dt_cpu_init_idle(struct device_node *cpu_node,
+> > > > +static int __init psci_dt_cpu_init_idle(struct cpuidle_driver *drv,
+> > > > +                                     struct device_node *cpu_node,
+> > > >                                       unsigned int state_count, int cpu)
+> > > >  {
+> > > >       int i, ret = 0;
+> > > > @@ -118,6 +152,11 @@ static int __init psci_dt_cpu_init_idle(struct device_node *cpu_node,
+> > > >               goto free_mem;
+> > > >       }
+> > > >
+> > > > +     /* Manage the deepest state via a dedicated enter-function. */
+> > > > +     if (dev)
+> > > > +             drv->states[state_count - 1].enter =
+> > > > +                     psci_enter_domain_idle_state;
+> > >
+> > >
+> > > It is unfortunate to make this arbitrary choice, it would be best
+> > > if you could detect which states are "domain" states aka are governed
+> > > by multiple cpus.
+> >
+> > The domain states are managed and selected by the genpd providers, via
+> > using runtime PM reference counting. Please have a closer look at the
+> > code in cpuidle-psci-domain.c and in the generic PM domain, that
+> > should give you the needed details.
+> >
+> > I am overriding the enter callback for the *deepest* known idle state
+> > of the CPU, which is according to what you requested [1].
 >
-> Add QUP SE instances configuration for sc7180.
+> Overriding it yes but I have not requested to do it only for the
+> deepest idle state that, I repeat, in my opinion is an arbitrary
+> choice that works for the platform you are testing on but is
+> not generic as it should.
+
+Right, I agree. I recall we have discussed this already.
+
 >
-> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 146 +++++
->  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 675 ++++++++++++++++++++++++
->  2 files changed, 821 insertions(+)
+> You can merge it as it is but that's how things stand and adding
+> a comment to the *code* would help understand its logic.
 
-Comments below could be done in a follow-up patch if it makes more sense.
+Okay, how about adding a comment along the lines of this:
 
+"Using the deepest state for the CPU to trigger a potential selection
+of a shared state for the domain, assumes the domain states are all
+deeper states. This assumption may not be true for all platforms, thus
+we may consider to revisit this, if it turns out that optimizations
+can be made."
 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index e1d6278d85f7..666e9b92c7ad 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>
+> > So, unless I am missing your point, I think the above code does
+> > exactly what you want, no?
+> >
+> > In regards to the "arbitrary choice" of what cpuidle state to use,
+> > there are more details about why that is, in the changelog.
+> >
+> > >
+> > > This inizialization though does not belong in here, it is done at driver
+> > > level, it should not be done in this per-cpu path. IIUC the logic the
+> > > enter pointer should only be overridden if and only if all cpus managed
+> > > by the driver have a corresponding device associated.
+> >
+> > I think you have overlooked the fact that there are one cpuidle driver
+> > registered per CPU. The above doesn't make sense to me, sorry.
+>
+> You are calling psci_dt_cpu_init_idle() for every possibile cpu.
+>
+> Every time psci_dt_attach_cpu() is called, we check dev and override
+> the idle driver enter method. There is one driver, what I am saying
+> is that it is not correct to check dev and override the enter pointer
+> for *every* cpu that we try to attach to a power domain. This must
+> be done once for all by checking that *all* devices could be attached
+> to a power domain.
 
-At the top of this file, please add aliases for all i2c and spi
-devices (like sdm845 did).  Right now trying to use command line i2c
-tools is super confusing because busses are super jumbled.
+Ah, now I think get your point.
 
+You want me to re-iterate through all the registered cpuidle drivers,
+which means one per CPU - and then override the enter callback for
+each of them, but only if all devices was successfully attached to a
+PM domain. Is that correct?
 
-> +                       i2c2: i2c@888000 {
-> +                               compatible = "qcom,geni-i2c";
-> +                               reg = <0 0x00888000 0 0x4000>;
-> +                               clock-names = "se";
-> +                               clocks = <&gcc GCC_QUPV3_WRAP0_S2_CLK>;
-> +                               pinctrl-names = "default";
-> +                               pinctrl-0 = <&qup_i2c2_default>;
-> +                               interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
-> +                               #address-cells = <1>;
-> +                               #size-cells = <0>;
-> +                               status = "disabled";
-> +                       };
+My only worries with this, is that we have already registered the
+cpuidle drivers and I don't think it's a good idea to update the enter
+callbacks, beyond that point.
 
-Where is spi2?
+Perhaps another option is to track whether the first CPU gets attached
+(and then update the enter callback), but after that require all the
+remaining CPUs to be attached as well - else bail out with an error
+code, failing to register all the driver instances.
 
+What do you think about that?
 
-> +                       i2c4: i2c@890000 {
-> +                               compatible = "qcom,geni-i2c";
-> +                               reg = <0 0x00890000 0 0x4000>;
-> +                               clock-names = "se";
-> +                               clocks = <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
-> +                               pinctrl-names = "default";
-> +                               pinctrl-0 = <&qup_i2c4_default>;
-> +                               interrupts = <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>;
-> +                               #address-cells = <1>;
-> +                               #size-cells = <0>;
-> +                               status = "disabled";
-> +                       };
+>
+> > > To be frank I would even move the psci_has_osi_support() check from
+> > > psci_dt_attach_cpu() to this path and prevent calling
+> > > psci_dt_attach_cpu() and the tail of the function if
+> > > (!psci_has_osi_support()).
+> > >
+> > > >       data->dev = dev;
+> > >
+> > > I think Sudeep already mentioned that, by using psci_has_osi_support()
+> > > as above you can prevent running this code, there is really no point,
+> > > the data->dev NULL sentinel is already initialized.
+> >
+> > Yes, I discussed this with Sudeep, but we didn't reach a consensus.
+>
+> Consensus was already reached.
+>
+> http://www.open-std.org/jtc1/sc22/WG14/www/docs/n1570.pdf
+>
+> > Let me explain the reasons behind the selected approach, once more.
+> >
+> > The data->dev is a pointer within a static declared struct. Are you
+> > sure it's assigned NULL by initialization? Don't we explicitly need to
+> > set it to NULL, else it will be undefined, no?
+>
+> http://www.open-std.org/jtc1/sc22/WG14/www/docs/n1570.pdf
+>
+> 6.7.9 (10) page 140
 
-Where is spi4?
+Thanks for sharing, didn't know we could rely on this behaviour! Alright!
 
+>
+> > Of course, I can move the check for psci_has_osi_support() into here
+> > and avoid calling psci_dt_attach_cpu(). Just wondering what that
+> > actually gain us, especially if we need to explicitly set the pointer
+> > to NULL anyway.
+>
+> See above.
 
-> +                       i2c7: i2c@a84000 {
-> +                               compatible = "qcom,geni-i2c";
-> +                               reg = <0 0x00a84000 0 0x4000>;
-> +                               clock-names = "se";
-> +                               clocks = <&gcc GCC_QUPV3_WRAP1_S1_CLK>;
-> +                               pinctrl-names = "default";
-> +                               pinctrl-0 = <&qup_i2c7_default>;
-> +                               interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
-> +                               #address-cells = <1>;
-> +                               #size-cells = <0>;
-> +                               status = "disabled";
-> +                       };
+Yes, makes more sense now. I will adopt your suggestions!
 
-Where is spi7?
-
-
-> +                       i2c9: i2c@a8c000 {
-> +                               compatible = "qcom,geni-i2c";
-> +                               reg = <0 0x00a8c000 0 0x4000>;
-> +                               clock-names = "se";
-> +                               clocks = <&gcc GCC_QUPV3_WRAP1_S3_CLK>;
-> +                               pinctrl-names = "default";
-> +                               pinctrl-0 = <&qup_i2c9_default>;
-> +                               interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
-> +                               #address-cells = <1>;
-> +                               #size-cells = <0>;
-> +                               status = "disabled";
-> +                       };
-
-Where is spi9?
-
-
-> +                       qup_spi1_default: qup-spi1-default {
-> +                               pinmux {
-> +                                       pins = "gpio0", "gpio1",
-> +                                              "gpio2", "gpio3",
-> +                                              "gpio12", "gpio94";
-
-Please just mux one of the chip selects by default.  It seems like it
-would be _much_ more common to have a single SPI device on the bus and
-then every board doesn't have to override this.
-
-
-> +                       qup_spi6_default: qup-spi6-default {
-> +                               pinmux {
-> +                                       pins = "gpio59", "gpio60",
-> +                                              "gpio61", "gpio62",
-> +                                              "gpio68", "gpio72";
-
-Please just mux one of the chip selects by default.  It seems like it
-would be _much_ more common to have a single SPI device on the bus and
-then every board doesn't have to override this.
-
-
-> +                       qup_spi10_default: qup-spi10-default {
-> +                               pinmux {
-> +                                       pins = "gpio86", "gpio87",
-> +                                              "gpio88", "gpio89",
-> +                                              "gpio90", "gpio91";
-
-Please just mux one of the chip selects by default.  It seems like it
-would be _much_ more common to have a single SPI device on the bus and
-then every board doesn't have to override this.
-
-
--Doug
+Kind regards
+Uffe
