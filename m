@@ -2,115 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D2BA1115588
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2019 17:36:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F30A511565B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2019 18:24:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726480AbfLFQgY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Dec 2019 11:36:24 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:38555 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726366AbfLFQgX (ORCPT
+        id S1726314AbfLFRYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Dec 2019 12:24:36 -0500
+Received: from mail-vk1-f196.google.com ([209.85.221.196]:46694 "EHLO
+        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726287AbfLFRYf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Dec 2019 11:36:23 -0500
-Received: by mail-lj1-f195.google.com with SMTP id k8so8307240ljh.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2019 08:36:22 -0800 (PST)
+        Fri, 6 Dec 2019 12:24:35 -0500
+Received: by mail-vk1-f196.google.com with SMTP id u6so2476770vkn.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2019 09:24:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lixom-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=HnJtFpZ6jjWosnNm58PnBnTv4VRgmN3wB8xLAynPWog=;
-        b=KluAb/4Mo3kTzHDHB3oCfFJIyJBu6He1LR/O65SLLuUB9MPFPJAiBR0pO+r3CrCW7v
-         6YVIYTkVHKctyppN/7wPW8ZYOXmyb0z9UMQB4A4X7m/Y3F0kKJcubdldYDgNxET/Fu1F
-         fMDZRWhaTvY+91BOkXyCjg/uuJHFidRBW2L8tZAbaedFND0dVGbqEtB5X5ukXrjy37W1
-         3w1JI0dTRUW/nWqofMzbhGACVJyHZg0hTW3/d8o8zpgO7pCicaFf3+CUPBERbyXYseSJ
-         erfkuCG93rFUr7pqDa4HllSD8UUDZ13s+T51wrs5CKV5TBKfFzIgi0UllRgHfQqErnRj
-         NeDw==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=szPaD/KuEfS4Yi/OsnTIq0RLmNuR3/zYG9307ITUQeg=;
+        b=ddh1wJjlLEjQM1WR9kzJ8K+/crojHDHqI6LzfTwtSXaaB0WqnpjfjeL+rTTIJ1vTh0
+         0Jae6HDI7C24ZaHkb/tV1C7kaD9DZHxls6a/j6WXYQeC+t+zjE1tfOp0wwSFghgBSodc
+         xyFbeFRrDIyxqE+HNYYt5QHsnLyvsnay9uB4gJRUIv1QYL8Y+7xcOo+nIzibCax8Ds3q
+         7uch5mBUWbqVAdw57POuKhket4lEhvr8EwETVaufPJXDErI+g0NnSL955qD4/SHt10gF
+         Xe4Yt8pr3zdi7tiHoe9xerplJU9Ww0RoerlV8AqY1naYG9TAt+9JH9jFBGSE1NZpkmFL
+         XjQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HnJtFpZ6jjWosnNm58PnBnTv4VRgmN3wB8xLAynPWog=;
-        b=UjGl0JSpd/jK26/eshvaTJL3RyxGaluhtAY1n21qdQLRzbG/e5tfSZNDhhXmTVolFj
-         xHN9VKHMChJzChbbg1fPdQy7gLeqysiN7KUarlSeGCYwOTrWcvBcWE8AiKH7XnikY5Hw
-         rAb3oi3nDVBzbbj0vmLLYVrZ/6YicVrVRSqHvdI//zLEMlxRA9X4bx93vb8cTmmIGvrm
-         8uL1snIDfEGYHJaFFho5uinNEsu/BJNQay2rZvtY54Tf7lhat8SPo9pGpzfsrYpofWoq
-         kM4NqX7zECM+e5Uj/xLPCMPj+78NAtRNN//p+dJg8TornimKX/Xd1Z/mRE4YGoS0wIam
-         /sOw==
-X-Gm-Message-State: APjAAAVTQX0mvg/ZRaB5DhGcVlSR+j8hlROQTLq/0wXI9qh5NC6TpDKv
-        ArATUf1eRi/cGorJMfm+JRZTIA==
-X-Google-Smtp-Source: APXvYqwKWoNwsDw4lLlo6f+cwU2nrcz+ksaYea+IvWUnWl3JsguNTfwQAjFoWHJlaoF6xdIzrn9wxA==
-X-Received: by 2002:a2e:1f12:: with SMTP id f18mr8959769ljf.11.1575650181787;
-        Fri, 06 Dec 2019 08:36:21 -0800 (PST)
-Received: from localhost (h85-30-9-151.cust.a3fiber.se. [85.30.9.151])
-        by smtp.gmail.com with ESMTPSA id w19sm6748148lfl.55.2019.12.06.08.36.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 06 Dec 2019 08:36:20 -0800 (PST)
-Date:   Fri, 6 Dec 2019 08:32:37 -0800
-From:   Olof Johansson <olof@lixom.net>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, arm@kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Arnd Bergmann <arnd@arndb.de>,
-        Kevin Hilman <khilman@baylibre.com>
-Subject: Re: [GIT PULL] Qualcomm ARM64 Defconfig updates for 5.5
-Message-ID: <20191206163237.t4ohf7fviz4ywkck@localhost>
-References: <1573068840-13098-1-git-send-email-agross@kernel.org>
- <20191106220406.4aoq5suvwww6c3ov@localhost>
- <20191206050222.GC289401@yoga>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=szPaD/KuEfS4Yi/OsnTIq0RLmNuR3/zYG9307ITUQeg=;
+        b=ZEBHaxhvVtRDagYc8b02qsiLJhNIhEeOtMPmIoJzdi4nwsWXPZNKtqtvKh7XEr5pxA
+         XJ3gXRSnsSnDhrAorGiLSSJXKL6pu3ZjGq+P3tmbM571eHfxYXourxacnZy7IMc1YyHa
+         QqCLdsPgqNQgubh41UmrIu/gVgBqo63sLWLTvLxiHlZ5r7r1urS2g9lWeLqaZnTI6ABC
+         M4APulERTacNAByfhNqo4C/U/8e/KppoIZwKvAiaWllz7x9vt3wO4IemAM6pmJtsllwp
+         5r8708V58ctP/+38HxYnrwS4y9aPHaZ2sOjXqg3d8lVjkORw5U/wv7AJx7Fpwv2jcVXc
+         b84Q==
+X-Gm-Message-State: APjAAAWVDPpv//BoI+UBCCwTi2UOCNo+tPa99yt7dOx2fIUyACYlbanF
+        5TzaxItGNRii2VMXdesrtouxRx3WrjvHRV5Druzi0w==
+X-Google-Smtp-Source: APXvYqwiBKiBMnP+60X/FFFfP/Bz9E1Hn3ELs7RJsnESL+czx3hd2fk2X3QyQGJ/m6AVMyIMefSPqrTk9AZaTEbF9/0=
+X-Received: by 2002:ac5:c844:: with SMTP id g4mr13113089vkm.25.1575653074665;
+ Fri, 06 Dec 2019 09:24:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191206050222.GC289401@yoga>
-User-Agent: NeoMutt/20170113 (1.7.2)
+References: <20191127102914.18729-1-ulf.hansson@linaro.org>
+ <20191127102914.18729-11-ulf.hansson@linaro.org> <20191205183544.GB1516@e121166-lin.cambridge.arm.com>
+ <CAPDyKFra-C_EKrcec6Yys2P10bB+KBtVAKNtVFgqDvV=tzbDRQ@mail.gmail.com>
+ <20191206112549.GA22964@e121166-lin.cambridge.arm.com> <CAPDyKFq0gS2fasU3Yyh+wPC7Pjnucv6_+vDN234ks+yuiURKCw@mail.gmail.com>
+ <20191206151421.GA5288@e121166-lin.cambridge.arm.com>
+In-Reply-To: <20191206151421.GA5288@e121166-lin.cambridge.arm.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 6 Dec 2019 18:23:57 +0100
+Message-ID: <CAPDyKFraVC8MajxEWUbtR8+ur7MzCv9g81zeP1T4JWs6+2tEVQ@mail.gmail.com>
+Subject: Re: [PATCH v3 10/13] cpuidle: psci: Prepare to use OS initiated
+ suspend mode via PM domains
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Lina Iyer <lina.iyer@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 05, 2019 at 09:02:22PM -0800, Bjorn Andersson wrote:
-> On Wed 06 Nov 14:04 PST 2019, Olof Johansson wrote:
-> 
-> > On Wed, Nov 06, 2019 at 01:33:56PM -0600, Andy Gross wrote:
-> > > The following changes since commit 54ecb8f7028c5eb3d740bb82b0f1d90f2df63c5c:
-> > > 
-> > >   Linux 5.4-rc1 (2019-09-30 10:35:40 -0700)
-> > > 
-> > > are available in the git repository at:
-> > > 
-> > >   git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-5.5
-> > > 
-> > > for you to fetch changes up to a36612b7469cf76953cf237a2b9a62f6c97730bb:
-> > > 
-> > >   arm64: defconfig: Enable Qualcomm watchdog driver (2019-10-20 23:04:59 -0700)
-> > > 
-> > > ----------------------------------------------------------------
-> > > Qualcomm ARM64 Based defconfig Updates for v5.5
-> > > 
-> > > * Enable Qualcomm cpufreq, watchdog, prng, socinfo, SPI, and QSPI controllers
-> > > * Enable SN65DSI86 display bridge
-> > > * Enable QCA Bluetooth over Uart
-> > > * Enable various Qualcomm remoteproc dependencies
-> > > 
-> > > ----------------------------------------------------------------
-> > > Bjorn Andersson (6):
-> > >       arm64: defconfig: Enable Qualcomm remoteproc dependencies
-> > >       arm64: defconfig: Enable Qualcomm SPI and QSPI controller
-> > >       arm64: defconfig: Enable Qualcomm socinfo driver
-> > >       arm64: defconfig: Enable Qualcomm CPUfreq HW driver
-> > 
-> > 
-> > Hi, this turns on the driver as =y, when the option is tristate. Other
-> > cpufreq drivers are also modules. Is this driver truly needed to be
-> > a built-in for a generic defconfig?
-> > 
-> 
-> I see Linus merged the arm defconfig PR today, but afaict the patches
-> from this branch is missing. Please advice on how you would like us to
-> proceed.
+On Fri, 6 Dec 2019 at 16:14, Lorenzo Pieralisi
+<lorenzo.pieralisi@arm.com> wrote:
+>
+> On Fri, Dec 06, 2019 at 03:26:16PM +0100, Ulf Hansson wrote:
+>
+> [...]
+>
+> > > You can merge it as it is but that's how things stand and adding
+> > > a comment to the *code* would help understand its logic.
+> >
+> > Okay, how about adding a comment along the lines of this:
+> >
+> > "Using the deepest state for the CPU to trigger a potential selection
+> > of a shared state for the domain, assumes the domain states are all
+> > deeper states".
+>
+> Just this it should be fine (I trimmed it a bit).
 
-I think I was waiting on the promised validation of using =m for the cpufreq
-drivers and an updated pull request.
+Great, I add that!
 
+>
+> > > > So, unless I am missing your point, I think the above code does
+> > > > exactly what you want, no?
+> > > >
+> > > > In regards to the "arbitrary choice" of what cpuidle state to use,
+> > > > there are more details about why that is, in the changelog.
+> > > >
+> > > > >
+> > > > > This inizialization though does not belong in here, it is done at driver
+> > > > > level, it should not be done in this per-cpu path. IIUC the logic the
+> > > > > enter pointer should only be overridden if and only if all cpus managed
+> > > > > by the driver have a corresponding device associated.
+> > > >
+> > > > I think you have overlooked the fact that there are one cpuidle driver
+> > > > registered per CPU. The above doesn't make sense to me, sorry.
+> > >
+> > > You are calling psci_dt_cpu_init_idle() for every possibile cpu.
+> > >
+> > > Every time psci_dt_attach_cpu() is called, we check dev and override
+> > > the idle driver enter method. There is one driver, what I am saying
+> > > is that it is not correct to check dev and override the enter pointer
+> > > for *every* cpu that we try to attach to a power domain. This must
+> > > be done once for all by checking that *all* devices could be attached
+> > > to a power domain.
+> >
+> > Ah, now I think get your point.
+> >
+> > You want me to re-iterate through all the registered cpuidle drivers,
+> > which means one per CPU - and then override the enter callback for
+> > each of them, but only if all devices was successfully attached to a
+> > PM domain. Is that correct?
+> >
+> > My only worries with this, is that we have already registered the
+> > cpuidle drivers and I don't think it's a good idea to update the enter
+> > callbacks, beyond that point.
+> >
+> > Perhaps another option is to track whether the first CPU gets attached
+> > (and then update the enter callback), but after that require all the
+> > remaining CPUs to be attached as well - else bail out with an error
+> > code, failing to register all the driver instances.
+> >
+> > What do you think about that?
+>
+> I was confused - now we have one cpuidle driver per cpu so this
+> comment was bogus from this perspective (I was still reasoning
+> wit a *single* cpuidle driver across cpus. Apologies).
 
--Olof
+No worries!
+
+We agreed on the way forward, so I am happy. :-)
+
+>
+> Sudeep will follow up on this but please forget this specific
+> comment - I was wrong.
+
+Alright, thanks!
+
+Does that also mean I can add your ack for the rest of the patches in
+the series (besides the last hotplug patch) or is there any other
+issues you want to raise?
+
+Have a nice weekend!
+
+Kind regards
+Uffe
