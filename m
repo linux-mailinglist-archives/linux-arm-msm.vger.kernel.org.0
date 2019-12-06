@@ -2,74 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 64D8B114BA0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2019 05:21:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 40BC8114BD2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2019 06:02:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726266AbfLFEVU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Dec 2019 23:21:20 -0500
-Received: from mail.kernel.org ([198.145.29.99]:46704 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726076AbfLFEVU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Dec 2019 23:21:20 -0500
-Received: from localhost (unknown [122.167.86.189])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C9C0824676;
-        Fri,  6 Dec 2019 04:21:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1575606079;
-        bh=HS6rms4rMZVPWK20WSDR+1mgnHVL3Sq+/DR2UISwo+4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ilop41n2jDvYLyUIM+dKnWcGdHTj6WLloZex9s/Jfcu0eI9pr1jLSpJlM/RYV0ByK
-         MfE0bMFeCrWh7iajihyuKD/VSMZYsfPnEfNNHSKMMH0pZ8GxplOjVpILfI/5CXnJpi
-         +DfPIhO35sGupM3gU2IY/ooOT2weDwZjGAQSwo9Q=
-Date:   Fri, 6 Dec 2019 09:51:15 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Mathias Nyman <mathias.nyman@linux.intel.com>
-Cc:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        id S1726009AbfLFFC1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Dec 2019 00:02:27 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:42549 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725934AbfLFFC1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Dec 2019 00:02:27 -0500
+Received: by mail-pf1-f194.google.com with SMTP id 4so2704075pfz.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Dec 2019 21:02:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=U4Lcf6OzjK9nHXk3oZTWYhDlkvR9rdJR4Wl3wSLyGro=;
+        b=qj/d8D9KI6xRGYKEQ+Vq0h9kmJIL1AKFwocLZa2hfCKDv8jrieiUvCEROLIM+d5Juq
+         J5qwPq6ztIP/hCk6mbgE7qgJ3vOVr1tjgR2DI6JOezi5sOAdUM91PBJiPfiYtc0DzZwe
+         9Rhu8iN9XmZURwZgZDLhqr0HZqaYy2B+GVLykfJFCY/SKtrA2sXv4Gw7TQHcHOYQTcJc
+         P76BW+P856GdQQmfNZZobPLuR54fSkrR5FOtpfVuww/p4+NbaqClak4xN3btVL+gFpi3
+         G7dj2RNCKh9l8jREiLmefxL8zZwA/U11RbJpVIse87u1XdBH7s6Uil8lLHumoTA7Fv6Z
+         sQzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=U4Lcf6OzjK9nHXk3oZTWYhDlkvR9rdJR4Wl3wSLyGro=;
+        b=RdLOyJ9taeyEAqGaHL4m2RtomBLH+nSbh/5WlXYXWUMwTCo1ZPxHH+K5QyxS4zXAOR
+         oJssS+bTMcUwIpqYy7AAI2AzqD9fnVa3Uhtl0nk8Cd12iQwRltjPLqG5BF7avnXl9R0J
+         j1v7kJ+Oz3u4JC3PR5EwMqg4S7jPm/7ABzqzxUFNfDYwPvsihwSVFLS/hx3v6HGMQzHB
+         D64j+I9rXMARIKoJdE5O/rpwjib6UeIgzkcOfsBDWPfz6GF+17eUyA9SDtdG/QSCyeMQ
+         RhLRgbkiECUTa9Mc8+9RErjIBjyYcTToTN7fM0bVYYI5vDhj3t+dSqNW9lG/LZyPVFhg
+         FaLg==
+X-Gm-Message-State: APjAAAVIgZWhSOpfYXQ9MMYD32+dhG5sHOlJpaPW9ZChKSWYmhF/uxci
+        uDoZPOKMihWswoW3T3z52xbJ2g==
+X-Google-Smtp-Source: APXvYqyGIC+8KPPt0G9cZQQRc1DGQeGGAWvehzmEKSWMFhU3kqQXiyPa1VFb9dKGGld5b5TznRyh7A==
+X-Received: by 2002:a63:ec0a:: with SMTP id j10mr1487160pgh.178.1575608546072;
+        Thu, 05 Dec 2019 21:02:26 -0800 (PST)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id q6sm14341478pfl.140.2019.12.05.21.02.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Dec 2019 21:02:25 -0800 (PST)
+Date:   Thu, 5 Dec 2019 21:02:22 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Olof Johansson <olof@lixom.net>
+Cc:     Andy Gross <agross@kernel.org>, arm@kernel.org,
         linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 0/4] usb: xhci: Add support for Renesas USB controllers
-Message-ID: <20191206042115.GJ82508@vkoul-mobl>
-References: <20191106083843.1718437-1-vkoul@kernel.org>
- <20191121045457.GH82508@vkoul-mobl>
- <deaa3d5c-e11d-2194-27f8-3a75435d3027@linux.intel.com>
+        linux-arm-kernel@lists.infradead.org,
+        Arnd Bergmann <arnd@arndb.de>,
+        Kevin Hilman <khilman@baylibre.com>
+Subject: Re: [GIT PULL] Qualcomm ARM64 Defconfig updates for 5.5
+Message-ID: <20191206050222.GC289401@yoga>
+References: <1573068840-13098-1-git-send-email-agross@kernel.org>
+ <20191106220406.4aoq5suvwww6c3ov@localhost>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <deaa3d5c-e11d-2194-27f8-3a75435d3027@linux.intel.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
+In-Reply-To: <20191106220406.4aoq5suvwww6c3ov@localhost>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mathias,
+On Wed 06 Nov 14:04 PST 2019, Olof Johansson wrote:
 
-On 26-11-19, 17:59, Mathias Nyman wrote:
-> On 21.11.2019 6.54, Vinod Koul wrote:
-> > On 06-11-19, 14:08, Vinod Koul wrote:
-> > > This series add support for Renesas USB controllers uPD720201 and uPD720202.
-> > > These require firmware to be loaded and in case devices have ROM those can
-> > > also be programmed if empty. If ROM is programmed, it runs from ROM as well.
-> > > 
-> > > This includes two patches from Christian which supported these controllers
-> > > w/o ROM and later my patches for ROM support and multiple firmware versions.
+> On Wed, Nov 06, 2019 at 01:33:56PM -0600, Andy Gross wrote:
+> > The following changes since commit 54ecb8f7028c5eb3d740bb82b0f1d90f2df63c5c:
 > > 
-> > Greg, Mathias
+> >   Linux 5.4-rc1 (2019-09-30 10:35:40 -0700)
 > > 
-> > Any feedback on this?
+> > are available in the git repository at:
 > > 
+> >   git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-5.5
+> > 
+> > for you to fetch changes up to a36612b7469cf76953cf237a2b9a62f6c97730bb:
+> > 
+> >   arm64: defconfig: Enable Qualcomm watchdog driver (2019-10-20 23:04:59 -0700)
+> > 
+> > ----------------------------------------------------------------
+> > Qualcomm ARM64 Based defconfig Updates for v5.5
+> > 
+> > * Enable Qualcomm cpufreq, watchdog, prng, socinfo, SPI, and QSPI controllers
+> > * Enable SN65DSI86 display bridge
+> > * Enable QCA Bluetooth over Uart
+> > * Enable various Qualcomm remoteproc dependencies
+> > 
+> > ----------------------------------------------------------------
+> > Bjorn Andersson (6):
+> >       arm64: defconfig: Enable Qualcomm remoteproc dependencies
+> >       arm64: defconfig: Enable Qualcomm SPI and QSPI controller
+> >       arm64: defconfig: Enable Qualcomm socinfo driver
+> >       arm64: defconfig: Enable Qualcomm CPUfreq HW driver
 > 
-> I need to take a fresh look at this series, there is a lot of code.
+> 
+> Hi, this turns on the driver as =y, when the option is tristate. Other
+> cpufreq drivers are also modules. Is this driver truly needed to be
+> a built-in for a generic defconfig?
+> 
 
-Let me know if you if you have any suggestions for review. I did try to
-split it up logically so we have chunks to review independently.
+I see Linus merged the arm defconfig PR today, but afaict the patches
+from this branch is missing. Please advice on how you would like us to
+proceed.
 
-Thanks
--- 
-~Vinod
+Regards,
+Bjorn
