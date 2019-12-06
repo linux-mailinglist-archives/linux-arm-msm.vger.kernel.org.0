@@ -2,120 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F118114DC2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2019 09:54:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 85D8E114E8B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Dec 2019 11:00:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726065AbfLFIyc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Dec 2019 03:54:32 -0500
-Received: from inca-roads.misterjones.org ([213.251.177.50]:60450 "EHLO
-        inca-roads.misterjones.org" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725966AbfLFIyb (ORCPT
+        id S1726154AbfLFKAK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Dec 2019 05:00:10 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38233 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726102AbfLFKAK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Dec 2019 03:54:31 -0500
-Received: from www-data by cheepnis.misterjones.org with local (Exim 4.80)
-        (envelope-from <maz@kernel.org>)
-        id 1id9Nb-0007nG-Q6; Fri, 06 Dec 2019 09:54:27 +0100
-To:     Gaurav Kohli <gkohli@codeaurora.org>
-Subject: Re: [PATCH v0] irqchip/gic-v3: Avoid check of lpi configuration for  non existent cpu
-X-PHP-Originating-Script: 0:main.inc
+        Fri, 6 Dec 2019 05:00:10 -0500
+Received: by mail-wm1-f68.google.com with SMTP id p17so6723128wmi.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Dec 2019 02:00:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=xorKEGg9vg7MVfH4aysy6wZnzPeG+YYvWTnbgNI11/Q=;
+        b=Gvc9UIYkLRmnlhdun82nxgYDmyfaOWhF9QWj54EfFZmXQ+EMUJ+vpCnRW9My5bxDcP
+         dcZzFKwmYAYXSCeCLcN7N/b7thK+N7887oJ6NfrL9iqvJSfSq7v69kTU0BeitIWtrFe+
+         /jI4FOBcZ5T1ugvWvCISX3WU1CwDgMG8xY7xCX5/u5vyZs35vHJ/nd5bcU/ePSESoBkg
+         Wh1xj1RdgTyWXgq4UFeZ6DDi9LNdB+ShPc/umMapbuqAGlXmJ9yvDNKGQ45/SYPm5Gwj
+         3XHLQcAgD2x0+MDqKjwBKiLCC9CSHO6lkxgA80ZAfNWKk1dBmHJkp292+kXYy4VtwkZh
+         6Eag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=xorKEGg9vg7MVfH4aysy6wZnzPeG+YYvWTnbgNI11/Q=;
+        b=MkLZQocM1fxj8T9B3DNqp6OCVHXbTCmMX3kyGKiJ9yJLkDIFFP9YsOAuQ6zfSRWI+m
+         5uqG2XhsFaNJvwiFH7hLS8ssH/hM9WB4Ne8IyaQgBLWXHxbDTzXn97N78HeEcG8nPb8Q
+         D4tPn1LydQspXje/tAMZp/744Mbt3Fl8Doy4ri3byHgRnQM7UMj8bmIXn2l2K5FTPYFz
+         FkQydk2Jo2cAkTbtQSkWlZruJKgQmu+rAuETekMZbLdrCSbaaIoPR8LFN/ptN8bKcp5K
+         DawfI4geXWfycsYfw+11ZLVIicFnh7ptfuOQqcUURUYvj3R/B+Wa6Lml+KDrDOxbfvoe
+         nmCA==
+X-Gm-Message-State: APjAAAXNJY+Gpmzed0UVkAtMa4K3dOkYWT+n7tLw3akwecNIe2MsC3nD
+        EISEbBiNN/GCy4Aa3cKNGOw=
+X-Google-Smtp-Source: APXvYqzbY6ZA9BApDXy6EJxiEVwYWeqlpIoCgNeaA6UJVsNPiNkRs3kDY3Q1u4el03fqbMiyS6Fe7Q==
+X-Received: by 2002:a1c:a70e:: with SMTP id q14mr9674444wme.142.1575626407924;
+        Fri, 06 Dec 2019 02:00:07 -0800 (PST)
+Received: from gmail.com (net-37-119-134-251.cust.vodafonedsl.it. [37.119.134.251])
+        by smtp.gmail.com with ESMTPSA id g23sm2845438wmk.14.2019.12.06.02.00.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 06 Dec 2019 02:00:07 -0800 (PST)
+Date:   Fri, 6 Dec 2019 11:00:06 +0100
+From:   Paolo Pisati <p.pisati@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Paolo Pisati <p.pisati@gmail.com>, Andy Gross <agross@kernel.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 3/6] Revert "phy: qcom-qmp: Correct ready status, again"
+Message-ID: <20191206100006.GA18896@harukaze>
+References: <20191205161505.15295-1-p.pisati@gmail.com>
+ <20191205161505.15295-7-p.pisati@gmail.com>
+ <20191206070705.GD289401@yoga>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Fri, 06 Dec 2019 08:54:27 +0000
-From:   Marc Zyngier <maz@kernel.org>
-Cc:     <tglx@linutronix.de>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-In-Reply-To: <cfec6054-0ebe-f70b-b1a8-6c7bd7fc4450@codeaurora.org>
-References: <1575543357-31892-1-git-send-email-gkohli@codeaurora.org>
- <60f61282c1b1e512ca6ce638b6dfca09@www.loen.fr>
- <209f30c6-c03a-daeb-1f01-e03c489f41d8@codeaurora.org>
- <18011d088d5202339048ac5e3c224bb5@www.loen.fr>
- <cfec6054-0ebe-f70b-b1a8-6c7bd7fc4450@codeaurora.org>
-Message-ID: <1aa42fe27092cd25a81b13030048510a@www.loen.fr>
-X-Sender: maz@kernel.org
-User-Agent: Roundcube Webmail/0.7.2
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Rcpt-To: gkohli@codeaurora.org, tglx@linutronix.de, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on cheepnis.misterjones.org); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191206070705.GD289401@yoga>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-12-06 08:44, Gaurav Kohli wrote:
-> On 12/5/2019 6:48 PM, Marc Zyngier wrote:
->> On 2019-12-05 13:01, Gaurav Kohli wrote:
->>> On 12/5/2019 6:17 PM, Marc Zyngier wrote:
->>>> Hi Gaurav,
->>>> On 2019-12-05 10:55, Gaurav Kohli wrote:
->>>>> As per GIC specification, we can configure gic for more no of 
->>>>> cpus
->>>>> then the available cpus in the soc, But this can cause mem abort
->>>>> while iterating lpi region for non existent cpu as we don't map
->>>> Which LPI region? We're talking about RDs, right... Or does LPI 
->>>> mean
->>>> something other than GIC LPIs for you?
->>>>
->>>
->>> Yes RDs only.
->>>>> redistrubutor region for non-existent cpu.
->>>>>
->>>>> To avoid this issue, put one more check of valid mpidr.
->>>> Sorry, but I'm not sure I grasp your problem. Let me try and 
->>>> rephrase it:
->>>> - Your GIC is configured for (let's say) 8 CPUs, and your SoC has 
->>>> only 4.
->>> Yes, suppose gic is configured for 8 cpus but soc has only 4 cpus.
->>> Then in this case gic_iterate will iterate till it get TYPER_LAST.
->> And that's what is expected from the architecture.
->>
->>>
->>> But as gic is configured for 8, So last bit sets in eight
->>> redistributor regions only.
->>>> - As part of the probing, the driver iterates on the RD regions 
->>>> and explodes
->>>>    because something isn't mapped?
->>>> That'd be a grave bug, but I believe the issue is somewhere else.
->>>
->>> There are 4 cpus present, that's why we have mapped 4 redistributor
->>> only, but during probe below function keeps iterating and give mem
->>> abort for 5th cpu.
->>>
->>> static void gic_update_vlpi_properties(void)
->>> {
->>>         gic_iterate_rdists(__gic_update_vlpi_properties);
->>>
->>> }
->>>
->>> We can solve this problem by mapping all eight redistributor in dt,
->>> but ideally code should also able to handle this and we can avoid
->>> mappin?
->> The whole point of DT is to describe the HW, all the HW, nothing but
->> the HW. This is what is expected by both the architecture and Linux.
->> So you have the solution already. Don't lie to the kernel, and 
->> everything
->> will be fine.
->>         M.
->
-> HI Marc,
->
-> Thanks for detailed explanation, Yes we have mapped all 8
-> distributors now to resolve.
-> But my main concern is that last 4 redistributor is not connected to
-> core, as core is not present.
-> And as per gic driver it seems we are only
-> iterating and populating per cpu rd pointer.
->
-> So that would be fine correct, seems nothing wrong in this kind of
-> configuration?
+On Thu, Dec 05, 2019 at 11:07:05PM -0800, Bjorn Andersson wrote:
+> On Thu 05 Dec 08:15 PST 2019, Paolo Pisati wrote:
+> 
+> > This reverts commit 14ced7e3a1ae9bed7051df3718c8c7b583854a5c.
+> > 
+> > Signed-off-by: Paolo Pisati <p.pisati@gmail.com>
+> 
+> Thanks for the patch Paolo, but reverting this commit means we're
+> checking for the wrong status bit and thereby relies on timing of that
+> bit having an appropriate value again.
+> 
+> The problem at hand seems to be that some resources are missing while
+> trying to initialize the PHY, which causes it to not become ready. I saw
+> the same problem when bringing up PCIe on SDM845, but failed to validate
+> MSM8996, as this was not booting since mid-summer.
+> 
+> I verified that this is the case by applying:
+> https://lore.kernel.org/linux-arm-msm/20191107000917.1092409-4-bjorn.andersson@linaro.org/
 
-There is nothing wrong with having more redistributors that CPUs,
-and that's what is anticipated by the architecture. This is also
-why the GIC driver works by having each CPU finding its own
-redistributor in the RD regions, rather than the other way around.
+Thanks Bjorn,
 
-         M.
--- 
-Jazz is not dead. It just smells funny...
+indeed replacing the revert and leaving the rest of the series intact, my db820c
+boots fine.
+
+One thing though - i removed the =y config changes, and now the board crash
+while, it appears, powering on qmp-phy - no stacktrace, unfortunately:
+
+...
+[  OK  ] Reached target Local File Systems (Pre).
+         Starting Flush Journal to Persistent Storage...
+[  OK  ] Started Load/Save Random Seed.
+[  OK  ] Started udev Coldplug all Devices.
+[  OK  ] Started udev Kernel Device Manager.
+[   13.550757] dwc3 7600000.dwc3: Failed to get clk 'ref': -2
+[   13.552251] dwc3 6a00000.dwc3: Failed to get clk 'ref': -2
+[   13.580749] dwc3 7600000.dwc3: Failed to get clk 'ref': -2
+[   13.582802] dwc3 6a00000.dwc3: Failed to get clk 'ref': -2
+[   13.595811] dwc3 6a00000.dwc3: Failed to get clk 'ref': -2
+[   13.596502] hub 2-0:1.0: config failed, hub doesn't have any ports! (err -19)
+[   13.636319] ufshcd-qcom 624000.ufshc: ufshcd_variant_hba_init: variant qcom init failed err -517
+[   13.638919] ufshcd-qcom 624000.ufshc: Initialization failed
+[  OK  ] Found device /dev/ttyMSM0.
+[   13.675328] ufshcd-qcom 624000.ufshc: ufshcd_pltfrm_init() failed -517
+[   13.693300] qcom-qmp-phy 34000.phy: phy common block init timed-out
+[   13.693390] phy phy-34000.phy.2: phy poweron failed --> -110
+[   13.698831] qcom-pcie 600000.pcie: cannot initialize host
+
+Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+S - QC_IMAGE_VERSION_STRING=BOOT.XF.1.0-00301
+S - IMAGE_VARIANT_STRING=M8996LAB
+S - OEM_IMAGE_VERSION_STRING=crm-ubuntu68
+S - Boot Interface: UFS
+S - Secure Boot: Off
+...
+- 
+bye,
+p.
