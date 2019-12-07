@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 15C2C115E77
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2019 21:22:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 37B07115E75
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2019 21:22:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726748AbfLGUWQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Dec 2019 15:22:16 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:45358 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726777AbfLGUWQ (ORCPT
+        id S1726828AbfLGUWR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Dec 2019 15:22:17 -0500
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:34539 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726827AbfLGUWR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Dec 2019 15:22:16 -0500
-Received: by mail-pg1-f195.google.com with SMTP id b9so4663719pgk.12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Dec 2019 12:22:15 -0800 (PST)
+        Sat, 7 Dec 2019 15:22:17 -0500
+Received: by mail-pj1-f67.google.com with SMTP id j11so3050201pjs.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Dec 2019 12:22:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9S6A4yb/7HyVzgEd/Dmm6sbtVcMjwx4MvgfxDe+l8RU=;
-        b=Bi261QzGlgdW1HjxrGV44g6LVY3Jkgwr5vF7w7YExlAH9W4WGROjAInY1b+MSSw4/o
-         FDXj9pPnMJhOT1HDRkQYCfKnqNZkNBUenclUzCZPgh7YVODdejvR1gWOJg85gPn1E7OE
-         EuvZY1PDcyLjr+fkmJuKEvaNazQUpuMhVAhNb9IM1W4HLdFjiyMsLrRZgF/YX2z90WxV
-         t6KEQM+uPft7pYIEI+Ku5wCwvXFPR7MkCZii+ZuS80+oWYktH8Dg7l7j3FQHwUiyXnVJ
-         bT96surtu1f3hhAUR/qRokJmZYDL7LT4A9UKoSJR8lo/86x+hy/Guy+qVkd5+rumztvY
-         3MXA==
+        bh=RIGNb9tUxYsrgWzIrvsSPWd3nGUTvWJqMa0r5ty9ysg=;
+        b=FdvmcV7WJobL2lkk2TWCaEVCjYC7FRBoiSyYHSil2DoAUPxU8BWRJGIAQ/11IfR1hu
+         4vbL5lS4SE0hcSGsvFiOWsTuf83nq9fr5NAuNuL5KXHf3FBADZTqeJ/FzTYH4tOFslm4
+         Gy8JBaQJUnF2Slko5sJ67AtjqAEBiXuQiqg5lbXiAgMKbSy4QhNmDo11mRlAXZjPNFFW
+         5OeNEHnR8/vAaZm+q5jVKGEVx+QkQWTRLISXVZnpSXI4oMWCdLnRtt86m1ZDeliH3WUM
+         UwMS1doZ+lJ7pj2pP65P5tsPO4GKvXy8qqiQHH52UBV94XmVrlnoaFwYaHYMaZoEFeFM
+         MYbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9S6A4yb/7HyVzgEd/Dmm6sbtVcMjwx4MvgfxDe+l8RU=;
-        b=Er4zJZPyBGTmTy8mMinvtpDAC6e6vejitPEERP73EW/sd1iGWspdsRG8uRsscDMQxU
-         3UV8tfNt9jh/E3ryKzsBQw/rVVgWRul/gBNC0Fc34lB2ohntrOwJX6ywQgQhcRCZzK+x
-         G8SLAIsXb65IyMfLkirpOS05Iz0spKCV1DtnJXzvaBXPqXbUTPwCcMvGGcuF/PwDZhdP
-         b99y7gC1hRPvNnX7hJv0lfl1OOz8/GmHXwQuBzp7CEknJ2LiZQFiIslwMaSWCKLlWUVB
-         8WB/spe0aldRvUmH/LAO+KkjlZGDC4FEGYHKeGsTLwjuLmL36N9YEMGgnI5E3tpIZAMw
-         48hg==
-X-Gm-Message-State: APjAAAXit7HoCzC/hozT3wJUWoPyEv4C6SN0rusIlfYfIjd8zInEqX2k
-        WdLJosX8tyvbWtHHHDhm6H0hUQ==
-X-Google-Smtp-Source: APXvYqxtNQ3r5kFPMkuNEegepDE5ShY33JRATfnpptL/LlrIakwF5MMP1BY2uhVUcYRLYfLfqVRfcg==
-X-Received: by 2002:aa7:9098:: with SMTP id i24mr2544454pfa.58.1575750135057;
-        Sat, 07 Dec 2019 12:22:15 -0800 (PST)
+        bh=RIGNb9tUxYsrgWzIrvsSPWd3nGUTvWJqMa0r5ty9ysg=;
+        b=AQt3D559zui100JTkg8jGcAiy6kr4Ln6aVoMAr08px9wnIZhTSVyjBFHjFH23czzXu
+         qkYxL2h6I56xDwgGjyVqvanq7EN+pl9X8wprMEDgTaJ8TlRKL1strr/ZBdv7Q/uQy8tF
+         +loIyLDNAKHwJnVagIjEFv0lUslQqcWSqOLVPREt1YhAehkIK8Qc/0Zlglr3YGA1/iui
+         uk1TNRkbOSztUXDfp0HLQRXprGKzfS/7/gEOfLoAghsAlcax6vE4ZDKMyzR3AKrI5CCA
+         DqXPQM1/W3uoi1F0NBasSYsWBS769i002yX85Vqa4MgulLeb2S4NmrYcYvYQVpkRJMJI
+         ytCw==
+X-Gm-Message-State: APjAAAUh+9l5n/U1PHgE3W0IWx41QLppvqMJJ9FV0ZCzUGFyNx/zFSAT
+        XKdz1CpG5YcanuRFSs2CXo1euA==
+X-Google-Smtp-Source: APXvYqzu7qBalmvtd2P3hBAnyhZsB4Y+b0o8j2oLQTJqENk9g9Nhnus49NLQ8srgkx9JPDJgvPjiRw==
+X-Received: by 2002:a17:90a:4803:: with SMTP id a3mr23574216pjh.101.1575750136274;
+        Sat, 07 Dec 2019 12:22:16 -0800 (PST)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id r7sm21969662pfg.34.2019.12.07.12.22.13
+        by smtp.gmail.com with ESMTPSA id r7sm21969662pfg.34.2019.12.07.12.22.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Dec 2019 12:22:14 -0800 (PST)
+        Sat, 07 Dec 2019 12:22:15 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Kishon Vijay Abraham I <kishon@ti.com>,
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        vinod.koul@linaro.org
-Subject: [PATCH 1/2] phy: qcom-qmp: Add MSM8996 UFS QMP support
-Date:   Sat,  7 Dec 2019 12:21:46 -0800
-Message-Id: <20191207202147.2314248-2-bjorn.andersson@linaro.org>
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, vinod.koul@linaro.org
+Subject: [PATCH 2/2] arm64: dts: qcom: msm8996: Use generic QMP driver for UFS
+Date:   Sat,  7 Dec 2019 12:21:47 -0800
+Message-Id: <20191207202147.2314248-3-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <20191207202147.2314248-1-bjorn.andersson@linaro.org>
 References: <20191207202147.2314248-1-bjorn.andersson@linaro.org>
@@ -65,194 +66,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The support for the 14nm MSM8996 UFS PHY is currently handled by the
-UFS-specific 14nm QMP driver, due to the earlier need for additional
-operations beyond the standard PHY API.
-
-Add support for this PHY to the common QMP driver, to allow us to remove
-the old driver.
+With support for the MSM8996 UFS PHY added to the common QMP driver,
+migrate the DTS to use the common QMP binding.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- .../devicetree/bindings/phy/qcom-qmp-phy.txt  |   5 +
- drivers/phy/qualcomm/phy-qcom-qmp.c           | 106 ++++++++++++++++++
- 2 files changed, 111 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 33 +++++++++++++++------------
+ 1 file changed, 18 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt b/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
-index eac9ad3cbbc8..5b99cf081817 100644
---- a/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
-+++ b/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
-@@ -8,6 +8,7 @@ Required properties:
-  - compatible: compatible list, contains:
- 	       "qcom,ipq8074-qmp-pcie-phy" for PCIe phy on IPQ8074
- 	       "qcom,msm8996-qmp-pcie-phy" for 14nm PCIe phy on msm8996,
-+	       "qcom,msm8996-qmp-ufs-phy" for 14nm UFS phy on msm8996,
- 	       "qcom,msm8996-qmp-usb3-phy" for 14nm USB3 phy on msm8996,
- 	       "qcom,msm8998-qmp-usb3-phy" for USB3 QMP V3 phy on msm8998,
- 	       "qcom,msm8998-qmp-ufs-phy" for UFS QMP phy on msm8998,
-@@ -44,6 +45,8 @@ Required properties:
- 		For "qcom,ipq8074-qmp-pcie-phy": no clocks are listed.
- 		For "qcom,msm8996-qmp-pcie-phy" must contain:
- 			"aux", "cfg_ahb", "ref".
-+		For "qcom,msm8996-qmp-ufs-phy" must contain:
-+			"ref".
- 		For "qcom,msm8996-qmp-usb3-phy" must contain:
- 			"aux", "cfg_ahb", "ref".
- 		For "qcom,msm8998-qmp-usb3-phy" must contain:
-@@ -72,6 +75,8 @@ Required properties:
- 			"phy", "common".
- 		For "qcom,msm8996-qmp-pcie-phy" must contain:
- 			"phy", "common", "cfg".
-+		For "qcom,msm8996-qmp-ufs-phy": must contain:
-+			"ufsphy".
- 		For "qcom,msm8996-qmp-usb3-phy" must contain
- 			"phy", "common".
- 		For "qcom,msm8998-qmp-usb3-phy" must contain
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index a6b8fc5798e2..d81516c4d747 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -121,6 +121,11 @@ enum qphy_reg_layout {
- 	QPHY_PCS_LFPS_RXTERM_IRQ_STATUS,
- };
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index c9c6efbbcc01..d0f2544ccf5b 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -1323,27 +1323,30 @@ spmi_bus: qcom,spmi@400f000 {
+ 			#interrupt-cells = <4>;
+ 		};
  
-+static const unsigned int msm8996_ufsphy_regs_layout[] = {
-+	[QPHY_START_CTRL]		= 0x00,
-+	[QPHY_PCS_READY_STATUS]		= 0x168,
-+};
-+
- static const unsigned int pciephy_regs_layout[] = {
- 	[QPHY_COM_SW_RESET]		= 0x400,
- 	[QPHY_COM_POWER_DOWN_CONTROL]	= 0x404,
-@@ -330,6 +335,75 @@ static const struct qmp_phy_init_tbl msm8998_pcie_pcs_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V3_PCS_SIGDET_CNTRL, 0x03),
- };
+-		ufsphy: phy@627000 {
+-			compatible = "qcom,msm8996-ufs-phy-qmp-14nm";
+-			reg = <0x627000 0xda8>;
+-			reg-names = "phy_mem";
+-			#phy-cells = <0>;
++		ufs_phy: phy@627000 {
++			compatible = "qcom,msm8996-qmp-ufs-phy";
++			reg = <0x00627000 0x1c4>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
  
-+static const struct qmp_phy_init_tbl msm8996_ufs_serdes_tbl[] = {
-+	QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CMN_CONFIG, 0x0e),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0xd7),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CLK_SELECT, 0x30),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SYS_CLK_CTRL, 0x06),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_BIAS_EN_CLKBUFLR_EN, 0x08),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_BG_TIMER, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_HSCLK_SEL, 0x05),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CORECLK_DIV, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CORECLK_DIV_MODE1, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP_EN, 0x01),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_CTRL, 0x10),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_RESETSM_CNTRL, 0x20),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CORE_CLK_EN, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP_CFG, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_TIMER1, 0xff),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_TIMER2, 0x3f),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_MAP, 0x54),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SVS_MODE_CLK_SEL, 0x05),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DEC_START_MODE0, 0x82),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START1_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START2_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START3_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CP_CTRL_MODE0, 0x0b),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_PLL_RCTRL_MODE0, 0x16),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_PLL_CCTRL_MODE0, 0x28),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_INTEGLOOP_GAIN0_MODE0, 0x80),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_INTEGLOOP_GAIN1_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE1_MODE0, 0x28),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE2_MODE0, 0x02),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP1_MODE0, 0xff),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP2_MODE0, 0x0c),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP3_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DEC_START_MODE1, 0x98),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START1_MODE1, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START2_MODE1, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START3_MODE1, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CP_CTRL_MODE1, 0x0b),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_PLL_RCTRL_MODE1, 0x16),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_PLL_CCTRL_MODE1, 0x28),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_INTEGLOOP_GAIN0_MODE1, 0x80),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_INTEGLOOP_GAIN1_MODE1, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE1_MODE1, 0xd6),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE2_MODE1, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP1_MODE1, 0x32),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP2_MODE1, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP3_MODE1, 0x00),
-+};
-+
-+static const struct qmp_phy_init_tbl msm8996_ufs_tx_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_TX_HIGHZ_TRANSCEIVEREN_BIAS_DRVR_EN, 0x45),
-+	QMP_PHY_INIT_CFG(QSERDES_TX_LANE_MODE, 0x02),
-+};
-+
-+static const struct qmp_phy_init_tbl msm8996_ufs_rx_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_LVL, 0x24),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_CNTRL, 0x02),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_RX_INTERFACE_MODE, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_DEGLITCH_CNTRL, 0x18),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_UCDR_FASTLOCK_FO_GAIN, 0x0B),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_RX_TERM_BW, 0x5b),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQ_GAIN1_LSB, 0xff),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQ_GAIN1_MSB, 0x3f),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQ_GAIN2_LSB, 0xff),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQ_GAIN2_MSB, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL2, 0x0E),
-+};
-+
- static const struct qmp_phy_init_tbl msm8996_usb3_serdes_tbl[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0x14),
- 	QMP_PHY_INIT_CFG(QSERDES_COM_BIAS_EN_CLKBUFLR_EN, 0x08),
-@@ -1122,6 +1196,10 @@ static const char * const msm8996_phy_clk_l[] = {
- 	"aux", "cfg_ahb", "ref",
- };
+ 			vdda-phy-supply = <&pm8994_l28>;
+ 			vdda-pll-supply = <&pm8994_l12>;
+-
+-			vdda-phy-max-microamp = <18380>;
+-			vdda-pll-max-microamp = <9440>;
+-
+ 			vddp-ref-clk-supply = <&pm8994_l25>;
+-			vddp-ref-clk-max-microamp = <100>;
+-			vddp-ref-clk-always-on;
  
-+static const char * const msm8996_ufs_phy_clk_l[] = {
-+	"ref",
-+};
+-			clock-names = "ref_clk_src", "ref_clk";
+-			clocks = <&rpmcc RPM_SMD_LN_BB_CLK>,
+-				 <&gcc GCC_UFS_CLKREF_CLK>;
++			clocks = <&gcc GCC_UFS_CLKREF_CLK>;
++			clock-names = "ref";
 +
- static const char * const qmp_v3_phy_clk_l[] = {
- 	"aux", "cfg_ahb", "ref", "com_aux",
- };
-@@ -1175,6 +1253,31 @@ static const struct qmp_phy_cfg msm8996_pciephy_cfg = {
- 	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
- };
+ 			resets = <&ufshc 0>;
++			reset-names = "ufsphy";
+ 			status = "disabled";
++
++			ufs_phy_lane: lanes@627400 {
++				reg = <0x627400 0x12c>,
++				      <0x627600 0x200>,
++				      <0x627c00 0x1b4>;
++				#phy-cells = <0>;
++			};
+ 		};
  
-+static const struct qmp_phy_cfg msm8996_ufs_cfg = {
-+	.type			= PHY_TYPE_UFS,
-+	.nlanes			= 1,
-+
-+	.serdes_tbl		= msm8996_ufs_serdes_tbl,
-+	.serdes_tbl_num		= ARRAY_SIZE(msm8996_ufs_serdes_tbl),
-+	.tx_tbl			= msm8996_ufs_tx_tbl,
-+	.tx_tbl_num		= ARRAY_SIZE(msm8996_ufs_tx_tbl),
-+	.rx_tbl			= msm8996_ufs_rx_tbl,
-+	.rx_tbl_num		= ARRAY_SIZE(msm8996_ufs_rx_tbl),
-+
-+	.clk_list		= msm8996_ufs_phy_clk_l,
-+	.num_clks		= ARRAY_SIZE(msm8996_ufs_phy_clk_l),
-+
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+
-+	.regs			= msm8996_ufsphy_regs_layout,
-+
-+	.start_ctrl		= SERDES_START,
-+	.pwrdn_ctrl		= SW_PWRDN,
-+
-+	.no_pcs_sw_reset	= true,
-+};
-+
- static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
- 	.type			= PHY_TYPE_USB3,
- 	.nlanes			= 1,
-@@ -2091,6 +2194,9 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
- 	{
- 		.compatible = "qcom,msm8996-qmp-pcie-phy",
- 		.data = &msm8996_pciephy_cfg,
-+	}, {
-+		.compatible = "qcom,msm8996-qmp-ufs-phy",
-+		.data = &msm8996_ufs_cfg,
- 	}, {
- 		.compatible = "qcom,msm8996-qmp-usb3-phy",
- 		.data = &msm8996_usb3phy_cfg,
+ 		ufshc: ufshc@624000 {
+@@ -1351,7 +1354,7 @@ ufshc: ufshc@624000 {
+ 			reg = <0x624000 0x2500>;
+ 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+ 
+-			phys = <&ufsphy>;
++			phys = <&ufs_phy_lane>;
+ 			phy-names = "ufsphy";
+ 
+ 			vcc-supply = <&pm8994_l20>;
 -- 
 2.24.0
 
