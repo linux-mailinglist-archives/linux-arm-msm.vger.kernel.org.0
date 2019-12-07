@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AB44115E95
+	by mail.lfdr.de (Postfix) with ESMTP id A5365115E96
 	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2019 21:36:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726845AbfLGUgP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Dec 2019 15:36:15 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:32931 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726555AbfLGUgP (ORCPT
+        id S1726881AbfLGUgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Dec 2019 15:36:18 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:43942 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726555AbfLGUgR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Dec 2019 15:36:15 -0500
-Received: by mail-pj1-f66.google.com with SMTP id r67so4185769pjb.0;
-        Sat, 07 Dec 2019 12:36:14 -0800 (PST)
+        Sat, 7 Dec 2019 15:36:17 -0500
+Received: by mail-pf1-f196.google.com with SMTP id h14so5138317pfe.10;
+        Sat, 07 Dec 2019 12:36:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kPGabNCq4wvn/E6P0guB04MXnY7RQzJiTE6DO4F+/5c=;
-        b=fejbPTGExleKnqhKzbTJe2QRYYJ83L/AsFX3Orxh9feE9NIPyYEMNxKFqkGDyMQ6rF
-         FQyuovSyMWmvs5v8uI/3n6B8gT2FfXog5EEwnuGRcXfFF3VgFC/y3+TJGx6OliZQNop7
-         7RAXHmpNEiHg/m+Ma7H5ShJYS5Ylv/fe1oP6AgocW9BFyh3cMzHolHB7tJw9wAIaKUQ6
-         noB5rFM8gDPsi9qrnkgW9kWd/+5WjBumhgyIVxw5HqzWHuvW5wvWnnIvZWM5TX+RId5m
-         Kc2kn5vZLQW5z9rpfRdzfle2qQaUw9U/KQ8ORcog3GiP0gd3937HnI0FgaXikkWiBjGW
-         PxqA==
+        bh=cVm3fTMGs3Ke7LE9pcHFJZXCh+yS4/KCWiEc/FuKj34=;
+        b=OEECddpvOrRkOHKphVcLzjAo5l1LyjDSbYArI7pl794LpAjUmWUCJD5PxVBb/q7Rlw
+         Iky1w3tt3+AQH2X/oeWERBrmkT0PiAk1+PuEwMswhVguy0+wReG2xEJ9hqJKMQwMb52r
+         tzIfsIeV68azc1QXvzZWhGLG2pv8aD4jX6D5Y84xIfKPNiSkmMgF/VfD53hai+qNQpaj
+         9fCpljuMnNZl+sQFx2myqDUk1/fe0GwoM1JlzQBgxLuap2GENkT2BHBDb7KKmGLFmv20
+         8xXjGq86IFO8cp2RVkUWlPX/bFS/F7QQJPpP8OBXgOuWGUrEiGe7Rq1lUmNHZqjXr++U
+         a+DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kPGabNCq4wvn/E6P0guB04MXnY7RQzJiTE6DO4F+/5c=;
-        b=QyJiYQFZUin/6nj1I5wGWnoKJAD/lyX0c70nl3lvIvt+apxUeRwupcKwLQatmpddkc
-         lh2zwQyCA4rh9XDgjY6+7Ghkm3ztX8Ho+GL6YWWIw9aPlR+bqYxb/uKNhW6XPOZEqQQE
-         7Cfc7SVD5TxOjc7ngw0JuMUV3bPBGU24T7MhdCWig2GvBgsiZLda4micozZ5tBgQXRUE
-         WkqtXEnfitLPL65T8xHBruLsTOcQtAMYdJN5k/3Z+B3mJ+PX6goBb6T/TeTYrmoA3JBB
-         kLE1LHXPmaVV5kds6EBtqJ44/NkOhsTTjXO8WRsIxyDIRkI2CxPIlGyChuZ6HgJDzjaV
-         OhFg==
-X-Gm-Message-State: APjAAAUtQFTR/vSJ+zv1e/SEzx6tkO1u/Z7msSUYX48zzmLhR4Jjsg+R
-        g+a82jIMXzBBSwXFKCeLkGc=
-X-Google-Smtp-Source: APXvYqzDfayEIq2IU2ZF76xRpq1YVP/uNxKHNPyI6TREpRcqY3KTtpmPIdU+GsItMQeh+jnuG7UijA==
-X-Received: by 2002:a17:90b:3cc:: with SMTP id go12mr23177882pjb.89.1575750974098;
-        Sat, 07 Dec 2019 12:36:14 -0800 (PST)
+        bh=cVm3fTMGs3Ke7LE9pcHFJZXCh+yS4/KCWiEc/FuKj34=;
+        b=BivL127VdxBy9yBw1bW924Aa2WYPcq9C8YB5HERdTVzu5Be12WWF57I0Vy7ugh6BCK
+         CNh8hXZR25Mn5z96Rh6i2t5DWM1n5K3v7fhtmu4Qazbg0SR1raWCIDsSI2fJLqh4Rxmb
+         QRIJIPHhwe4tx+8iSAGR5fKTuJBB3hAHmbPVVoZdp93GRXqM/2KxpPCL29rVNXKFapgX
+         kWA22VePg1kSj7+1yP1Er/0YOiRmB4Wn6/x4Ge9ZMic8dBREcRN7GqYkFA2yd4zMyQTX
+         e7UKTTL5zEWvnJD6toNMnj8K1PXZ8CSA1iSlJu6MjJmAcugf3ywRscdQ9d/5vJtFVl2z
+         6k/A==
+X-Gm-Message-State: APjAAAXnmWaNCri7i9SCIRF7uKYrmf3Luqd0J2WYg7i09JkGX2pQ3/9P
+        4nVPLwIjhYXfim9cYGt+HDM=
+X-Google-Smtp-Source: APXvYqyXkQWGRk0eUOkq9bFetsRJZzyqR9S1EFwc18YoOwHz+LAS2LVd0p0QBem+UVSKxeVb7hixvw==
+X-Received: by 2002:a62:5202:: with SMTP id g2mr21373195pfb.43.1575750976236;
+        Sat, 07 Dec 2019 12:36:16 -0800 (PST)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id 133sm20887100pfy.14.2019.12.07.12.36.13
+        by smtp.gmail.com with ESMTPSA id j3sm20479085pfi.8.2019.12.07.12.36.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Dec 2019 12:36:13 -0800 (PST)
+        Sat, 07 Dec 2019 12:36:15 -0800 (PST)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         aarch64-laptops@lists.linaro.org
@@ -53,14 +53,16 @@ Cc:     Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Jeffrey Hugo <jhugo@codeaurora.org>,
         Rob Clark <robdclark@chromium.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/4] drm/of: add support to find any enabled endpoint
-Date:   Sat,  7 Dec 2019 12:35:51 -0800
-Message-Id: <20191207203553.286017-3-robdclark@gmail.com>
+Subject: [PATCH 3/4] drm/bridge: ti-sn65dsi86: find any enabled endpoint
+Date:   Sat,  7 Dec 2019 12:35:52 -0800
+Message-Id: <20191207203553.286017-4-robdclark@gmail.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20191207203553.286017-1-robdclark@gmail.com>
 References: <20191207203553.286017-1-robdclark@gmail.com>
@@ -73,78 +75,30 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-To handle the case where there are multiple panel endpoints, only one of
-which is enabled/installed, add support for a wildcard endpoint value to
-request finding whichever endpoint is enabled.
+This bridge is used on a number of devices that can have one of multiple
+different panels installed.  The firmware will enable the panel driver
+node for the panel that is actually installed.  So the bridge should ask
+drm_of_find_panel_or_bridge() to find the endpoint for the enabled
+panel.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- drivers/gpu/drm/drm_of.c | 41 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 40 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_of.c b/drivers/gpu/drm/drm_of.c
-index 0ca58803ba46..2baf44e401b8 100644
---- a/drivers/gpu/drm/drm_of.c
-+++ b/drivers/gpu/drm/drm_of.c
-@@ -219,11 +219,44 @@ int drm_of_encoder_active_endpoint(struct device_node *node,
- }
- EXPORT_SYMBOL_GPL(drm_of_encoder_active_endpoint);
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 43abf01ebd4c..62bc98d9d152 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -720,7 +720,7 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
  
-+static int find_enabled_endpoint(const struct device_node *node, u32 port)
-+{
-+	struct device_node *endpoint_node, *remote;
-+	u32 endpoint = 0;
-+
-+	for (endpoint = 0; ; endpoint++) {
-+		endpoint_node = of_graph_get_endpoint_by_regs(node, port, endpoint);
-+		if (!endpoint_node) {
-+			pr_debug("No more endpoints!\n");
-+			return -ENODEV;
-+		}
-+
-+		remote = of_graph_get_remote_port_parent(endpoint_node);
-+		of_node_put(endpoint_node);
-+		if (!remote) {
-+			pr_debug("no valid remote node\n");
-+			continue;
-+		}
-+
-+		if (!of_device_is_available(remote)) {
-+			pr_debug("not available for remote node\n");
-+			of_node_put(remote);
-+			continue;
-+		}
-+
-+		pr_debug("found enabled endpoint %d for %s\n", endpoint, remote->name);
-+		of_node_put(remote);
-+		return endpoint;
-+	}
-+
-+	return -ENODEV;
-+}
-+
- /**
-  * drm_of_find_panel_or_bridge - return connected panel or bridge device
-  * @np: device tree node containing encoder output ports
-  * @port: port in the device tree node
-- * @endpoint: endpoint in the device tree node
-+ * @endpoint: endpoint in the device tree node, or -1 to find an enabled endpoint
-  * @panel: pointer to hold returned drm_panel
-  * @bridge: pointer to hold returned drm_bridge
-  *
-@@ -246,6 +279,12 @@ int drm_of_find_panel_or_bridge(const struct device_node *np,
- 	if (panel)
- 		*panel = NULL;
+ 	pdata->dev = &client->dev;
  
-+	if (endpoint == -1) {
-+		endpoint = find_enabled_endpoint(np, port);
-+		if (endpoint < 0)
-+			return endpoint;
-+	}
-+
- 	remote = of_graph_get_remote_node(np, port, endpoint);
- 	if (!remote)
- 		return -ENODEV;
+-	ret = drm_of_find_panel_or_bridge(pdata->dev->of_node, 1, 0,
++	ret = drm_of_find_panel_or_bridge(pdata->dev->of_node, 1, -1,
+ 					  &pdata->panel, NULL);
+ 	if (ret) {
+ 		DRM_ERROR("could not find any panel node\n");
 -- 
 2.23.0
 
