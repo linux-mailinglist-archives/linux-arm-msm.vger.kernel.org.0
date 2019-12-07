@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B56D9115E92
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2019 21:36:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AB44115E95
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2019 21:36:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726824AbfLGUgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Dec 2019 15:36:14 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:45741 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726555AbfLGUgN (ORCPT
+        id S1726845AbfLGUgP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Dec 2019 15:36:15 -0500
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:32931 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726555AbfLGUgP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Dec 2019 15:36:13 -0500
-Received: by mail-pl1-f194.google.com with SMTP id w7so4134929plz.12;
-        Sat, 07 Dec 2019 12:36:12 -0800 (PST)
+        Sat, 7 Dec 2019 15:36:15 -0500
+Received: by mail-pj1-f66.google.com with SMTP id r67so4185769pjb.0;
+        Sat, 07 Dec 2019 12:36:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Z3/AYVovlJiJ1Alu6bE6pYRPal+N6Ynq1x5wnV6ZnAY=;
-        b=AI3kKMlUpDOEK8jI30xnwDi6FbaN9R3AEX+zDWP825P8L4WIE6lqRibsGBNH990x6S
-         2W1aLv0wOqFpSB31f8F7l1zxV56Did5ya2GMvZJ/7kw5cHAiEfhR2Tp53PQ3sBAT6oDh
-         JqVOaJt1II8tJNn5yAwswhTIVOU091UFAbTFFtsaWx9yef9ywpJEWEh8wHlNvkGl5Dz6
-         AyO6kHoUAsNIa12cbiDJO2VwLMlvuw05GwqlR+nBzBPNHq75Pfni4Kia7/5Ei0HVRpRP
-         xZ2t/i0AwZn6D+xVSpxrbG6oah5ngpYwQTzPZiNkuXxk2AlDapRg4dVo5mUFeoHH5c8p
-         FtEA==
+        bh=kPGabNCq4wvn/E6P0guB04MXnY7RQzJiTE6DO4F+/5c=;
+        b=fejbPTGExleKnqhKzbTJe2QRYYJ83L/AsFX3Orxh9feE9NIPyYEMNxKFqkGDyMQ6rF
+         FQyuovSyMWmvs5v8uI/3n6B8gT2FfXog5EEwnuGRcXfFF3VgFC/y3+TJGx6OliZQNop7
+         7RAXHmpNEiHg/m+Ma7H5ShJYS5Ylv/fe1oP6AgocW9BFyh3cMzHolHB7tJw9wAIaKUQ6
+         noB5rFM8gDPsi9qrnkgW9kWd/+5WjBumhgyIVxw5HqzWHuvW5wvWnnIvZWM5TX+RId5m
+         Kc2kn5vZLQW5z9rpfRdzfle2qQaUw9U/KQ8ORcog3GiP0gd3937HnI0FgaXikkWiBjGW
+         PxqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Z3/AYVovlJiJ1Alu6bE6pYRPal+N6Ynq1x5wnV6ZnAY=;
-        b=dh/hzZ3uSwUOsmp99yIDkbcNyZGJvW/x0x28nLWetKiIEB83kXUd0oFzjcLfuQiN5S
-         lxqFB7JXM6x+xX6eWkOcObIWa5YZyxy35L9GhbJY+phOi9PltsClCQH5q9qVxHd9/Kk0
-         lcJikDwwmWj7ha2sMaQtFMDy7T1eFiSdZYSngqoW25JM/KVwZA1J8LvPl5TTuVXNSV1B
-         hu+NYs1vp8LIsXMcOhS003i0Y6u/WaTcTCkXmbPnUPzI9/UgzhP1Rb3c6x3llFyW6dHt
-         DUxtNEDsYaEs+QWlJ/H+NZfWJvtDzM9V25/kuQP8JumjdOUeNgWiR2rVMg3wrQFtCgIN
-         ukQw==
-X-Gm-Message-State: APjAAAX/NKo2r0la6wSwoLraosZbMMysscUxiec+i2udyeklrsBPAF7/
-        J0/5JjNMI8fubnbTEn0TIK0=
-X-Google-Smtp-Source: APXvYqy0w+EuWHFKr8S5+G6Ihehi1cLJ75cYyMki2L3dxv/6qi53ML5wX8lcDeRM081R2NGlCpOONA==
-X-Received: by 2002:a17:90a:fb87:: with SMTP id cp7mr23509768pjb.56.1575750972199;
-        Sat, 07 Dec 2019 12:36:12 -0800 (PST)
+        bh=kPGabNCq4wvn/E6P0guB04MXnY7RQzJiTE6DO4F+/5c=;
+        b=QyJiYQFZUin/6nj1I5wGWnoKJAD/lyX0c70nl3lvIvt+apxUeRwupcKwLQatmpddkc
+         lh2zwQyCA4rh9XDgjY6+7Ghkm3ztX8Ho+GL6YWWIw9aPlR+bqYxb/uKNhW6XPOZEqQQE
+         7Cfc7SVD5TxOjc7ngw0JuMUV3bPBGU24T7MhdCWig2GvBgsiZLda4micozZ5tBgQXRUE
+         WkqtXEnfitLPL65T8xHBruLsTOcQtAMYdJN5k/3Z+B3mJ+PX6goBb6T/TeTYrmoA3JBB
+         kLE1LHXPmaVV5kds6EBtqJ44/NkOhsTTjXO8WRsIxyDIRkI2CxPIlGyChuZ6HgJDzjaV
+         OhFg==
+X-Gm-Message-State: APjAAAUtQFTR/vSJ+zv1e/SEzx6tkO1u/Z7msSUYX48zzmLhR4Jjsg+R
+        g+a82jIMXzBBSwXFKCeLkGc=
+X-Google-Smtp-Source: APXvYqzDfayEIq2IU2ZF76xRpq1YVP/uNxKHNPyI6TREpRcqY3KTtpmPIdU+GsItMQeh+jnuG7UijA==
+X-Received: by 2002:a17:90b:3cc:: with SMTP id go12mr23177882pjb.89.1575750974098;
+        Sat, 07 Dec 2019 12:36:14 -0800 (PST)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id l1sm1884223pgs.47.2019.12.07.12.36.11
+        by smtp.gmail.com with ESMTPSA id 133sm20887100pfy.14.2019.12.07.12.36.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Dec 2019 12:36:11 -0800 (PST)
+        Sat, 07 Dec 2019 12:36:13 -0800 (PST)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         aarch64-laptops@lists.linaro.org
@@ -53,17 +53,14 @@ Cc:     Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Jeffrey Hugo <jhugo@codeaurora.org>,
         Rob Clark <robdclark@chromium.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 1/4] dt-bindings: display: panel: document panel-id
-Date:   Sat,  7 Dec 2019 12:35:50 -0800
-Message-Id: <20191207203553.286017-2-robdclark@gmail.com>
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 2/4] drm/of: add support to find any enabled endpoint
+Date:   Sat,  7 Dec 2019 12:35:51 -0800
+Message-Id: <20191207203553.286017-3-robdclark@gmail.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20191207203553.286017-1-robdclark@gmail.com>
 References: <20191207203553.286017-1-robdclark@gmail.com>
@@ -76,109 +73,78 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-For devices that have one of several possible panels installed, the
-panel-id property gives firmware a generic way to locate and enable the
-panel node corresponding to the installed panel.  Example of how to use
-this property:
-
-    ivo_panel {
-        compatible = "ivo,m133nwf4-r0";
-        panel-id = <0xc5>;
-        status = "disabled";
-
-        ports {
-            port {
-                ivo_panel_in_edp: endpoint {
-                    remote-endpoint = <&sn65dsi86_out_ivo>;
-                };
-            };
-        };
-    };
-
-    boe_panel {
-        compatible = "boe,nv133fhm-n61";
-        panel-id = <0xc4>;
-        status = "disabled";
-
-        ports {
-            port {
-                boe_panel_in_edp: endpoint {
-                    remote-endpoint = <&sn65dsi86_out_boe>;
-                };
-            };
-        };
-    };
-
-    sn65dsi86: bridge@2c {
-        compatible = "ti,sn65dsi86";
-
-        ports {
-            #address-cells = <1>;
-            #size-cells = <0>;
-
-            port@0 {
-                reg = <0>;
-                sn65dsi86_in_a: endpoint {
-                    remote-endpoint = <&dsi0_out>;
-                };
-            };
-
-            port@1 {
-                reg = <1>;
-
-                sn65dsi86_out_boe: endpoint@c4 {
-                    remote-endpoint = <&boe_panel_in_edp>;
-                };
-
-                sn65dsi86_out_ivo: endpoint@c5 {
-                    remote-endpoint = <&ivo_panel_in_edp>;
-                };
-            };
-        };
-    };
+To handle the case where there are multiple panel endpoints, only one of
+which is enabled/installed, add support for a wildcard endpoint value to
+request finding whichever endpoint is enabled.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- .../bindings/display/panel/panel-common.yaml  | 26 +++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ drivers/gpu/drm/drm_of.c | 41 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 40 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/display/panel/panel-common.yaml b/Documentation/devicetree/bindings/display/panel/panel-common.yaml
-index ef8d8cdfcede..6113319b91dd 100644
---- a/Documentation/devicetree/bindings/display/panel/panel-common.yaml
-+++ b/Documentation/devicetree/bindings/display/panel/panel-common.yaml
-@@ -75,6 +75,32 @@ properties:
-       in the device graph bindings defined in
-       Documentation/devicetree/bindings/graph.txt.
+diff --git a/drivers/gpu/drm/drm_of.c b/drivers/gpu/drm/drm_of.c
+index 0ca58803ba46..2baf44e401b8 100644
+--- a/drivers/gpu/drm/drm_of.c
++++ b/drivers/gpu/drm/drm_of.c
+@@ -219,11 +219,44 @@ int drm_of_encoder_active_endpoint(struct device_node *node,
+ }
+ EXPORT_SYMBOL_GPL(drm_of_encoder_active_endpoint);
  
-+  panel-id:
-+    description:
-+      To support the case where one of several different panels can be installed
-+      on a device, the panel-id property can be used by the firmware to identify
-+      which panel should have it's status changed to "ok".  This property is not
-+      used by the HLOS itself.
++static int find_enabled_endpoint(const struct device_node *node, u32 port)
++{
++	struct device_node *endpoint_node, *remote;
++	u32 endpoint = 0;
 +
-+      For a device with multiple potential panels, a node for each potential
-+      should be defined with status = "disabled", and an appropriate panel-id
-+      property.  The video data producer should be setup with endpoints going to
-+      each possible panel.  The firmware will find the dt node with a panel-id
-+      matching the actual panel installed, and change it's status to "ok".
++	for (endpoint = 0; ; endpoint++) {
++		endpoint_node = of_graph_get_endpoint_by_regs(node, port, endpoint);
++		if (!endpoint_node) {
++			pr_debug("No more endpoints!\n");
++			return -ENODEV;
++		}
 +
-+      The exact method the firmware uses to determine the panel-id of the installed
-+      panel is outside the scope of this binding, but a few examples are
++		remote = of_graph_get_remote_port_parent(endpoint_node);
++		of_node_put(endpoint_node);
++		if (!remote) {
++			pr_debug("no valid remote node\n");
++			continue;
++		}
 +
-+      1) u-boot module reading a value from a u-boot env var
-+      2) EFI driver module reading a value from an EFI variable
-+      3) device specific firmware reading some device specific GPIOs or
-+         e-fuse
++		if (!of_device_is_available(remote)) {
++			pr_debug("not available for remote node\n");
++			of_node_put(remote);
++			continue;
++		}
 +
-+      The panel-id values are an opaque integer.  They can be sparse.  The only
-+      important thing is that each possible panel in the system has a unique
-+      panel-id, and that the values configured in the device's DTB match the
-+      values that the firmware is looking for.
++		pr_debug("found enabled endpoint %d for %s\n", endpoint, remote->name);
++		of_node_put(remote);
++		return endpoint;
++	}
 +
-   ddc-i2c-bus:
-     $ref: /schemas/types.yaml#/definitions/phandle
-     description:
++	return -ENODEV;
++}
++
+ /**
+  * drm_of_find_panel_or_bridge - return connected panel or bridge device
+  * @np: device tree node containing encoder output ports
+  * @port: port in the device tree node
+- * @endpoint: endpoint in the device tree node
++ * @endpoint: endpoint in the device tree node, or -1 to find an enabled endpoint
+  * @panel: pointer to hold returned drm_panel
+  * @bridge: pointer to hold returned drm_bridge
+  *
+@@ -246,6 +279,12 @@ int drm_of_find_panel_or_bridge(const struct device_node *np,
+ 	if (panel)
+ 		*panel = NULL;
+ 
++	if (endpoint == -1) {
++		endpoint = find_enabled_endpoint(np, port);
++		if (endpoint < 0)
++			return endpoint;
++	}
++
+ 	remote = of_graph_get_remote_node(np, port, endpoint);
+ 	if (!remote)
+ 		return -ENODEV;
 -- 
 2.23.0
 
