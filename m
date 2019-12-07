@@ -2,63 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 37B07115E75
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2019 21:22:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EC704115E89
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Dec 2019 21:36:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726828AbfLGUWR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Dec 2019 15:22:17 -0500
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:34539 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726827AbfLGUWR (ORCPT
+        id S1726595AbfLGUgL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Dec 2019 15:36:11 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:46486 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726555AbfLGUgK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Dec 2019 15:22:17 -0500
-Received: by mail-pj1-f67.google.com with SMTP id j11so3050201pjs.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Dec 2019 12:22:16 -0800 (PST)
+        Sat, 7 Dec 2019 15:36:10 -0500
+Received: by mail-pf1-f194.google.com with SMTP id y14so5131305pfm.13;
+        Sat, 07 Dec 2019 12:36:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=RIGNb9tUxYsrgWzIrvsSPWd3nGUTvWJqMa0r5ty9ysg=;
-        b=FdvmcV7WJobL2lkk2TWCaEVCjYC7FRBoiSyYHSil2DoAUPxU8BWRJGIAQ/11IfR1hu
-         4vbL5lS4SE0hcSGsvFiOWsTuf83nq9fr5NAuNuL5KXHf3FBADZTqeJ/FzTYH4tOFslm4
-         Gy8JBaQJUnF2Slko5sJ67AtjqAEBiXuQiqg5lbXiAgMKbSy4QhNmDo11mRlAXZjPNFFW
-         5OeNEHnR8/vAaZm+q5jVKGEVx+QkQWTRLISXVZnpSXI4oMWCdLnRtt86m1ZDeliH3WUM
-         UwMS1doZ+lJ7pj2pP65P5tsPO4GKvXy8qqiQHH52UBV94XmVrlnoaFwYaHYMaZoEFeFM
-         MYbQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2kMIJY/eOkF08UFC83+z2Yvw2OEsP0PRB4nAXO2fCAU=;
+        b=L1ah2JgjYkVbYTJrHXreZ/M03kKDjwenY8BAjQ9xJEx0gbKashe1+23y3HRp0Xx+WC
+         Ou2IQzV+8QXgBlKXvhkEtaCLdSQlIFo+qkXefce0BZdNG5kYKpv3JpAoWpMuy2Lnzwu1
+         C5J6apBOhbPYAqsgiW5bhXn3gix9FaHZ83rezWyEV1Za4Jt7ulew6i1DNB5bkjQK02oY
+         AzRWp4LLJR/ml+NOxujgBGeSnJuNQbye7c2/YNqS7a8ZU6zfZYHpcI7skbX6dyLODERj
+         T4J7zxloGX09YN0DMYOZYbEmtWXI+va/wJdXFZd3GaR71EWPoJJv2wwzxMOu77Q2F70I
+         7G8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=RIGNb9tUxYsrgWzIrvsSPWd3nGUTvWJqMa0r5ty9ysg=;
-        b=AQt3D559zui100JTkg8jGcAiy6kr4Ln6aVoMAr08px9wnIZhTSVyjBFHjFH23czzXu
-         qkYxL2h6I56xDwgGjyVqvanq7EN+pl9X8wprMEDgTaJ8TlRKL1strr/ZBdv7Q/uQy8tF
-         +loIyLDNAKHwJnVagIjEFv0lUslQqcWSqOLVPREt1YhAehkIK8Qc/0Zlglr3YGA1/iui
-         uk1TNRkbOSztUXDfp0HLQRXprGKzfS/7/gEOfLoAghsAlcax6vE4ZDKMyzR3AKrI5CCA
-         DqXPQM1/W3uoi1F0NBasSYsWBS769i002yX85Vqa4MgulLeb2S4NmrYcYvYQVpkRJMJI
-         ytCw==
-X-Gm-Message-State: APjAAAUh+9l5n/U1PHgE3W0IWx41QLppvqMJJ9FV0ZCzUGFyNx/zFSAT
-        XKdz1CpG5YcanuRFSs2CXo1euA==
-X-Google-Smtp-Source: APXvYqzu7qBalmvtd2P3hBAnyhZsB4Y+b0o8j2oLQTJqENk9g9Nhnus49NLQ8srgkx9JPDJgvPjiRw==
-X-Received: by 2002:a17:90a:4803:: with SMTP id a3mr23574216pjh.101.1575750136274;
-        Sat, 07 Dec 2019 12:22:16 -0800 (PST)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id r7sm21969662pfg.34.2019.12.07.12.22.15
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2kMIJY/eOkF08UFC83+z2Yvw2OEsP0PRB4nAXO2fCAU=;
+        b=K6h4yRGw5uWox67kFymH0ajVt4RiTLH+5xeGxxyxSDmNJIOpBxivyzq515piFlL6t/
+         RUe2ksGW5Hec1JC1memiWXLu0JMRCRvv59QFAP4d+BoUzPZGF/lb84fztjnPOwpBCPEP
+         R9IXO30VkHNxbgmlNDb1jOhJ2+56EDkEPSRn5oGpcMyoEo60ZN/FamiAaYtZ/yQKa+1p
+         UfdAKaVtWqp2kvYSZqFm7G1N1sS9yBusctiQl9UpVpyjYAg1LqWwtFW6/IYJbTyc1Rqg
+         9vFw4siazumvbKdC2h9f9htrHJ02fuueOpIcTqh/DvWd4Zu0OHEQO37889ljNwSWY+6H
+         JbsA==
+X-Gm-Message-State: APjAAAVBJEF81vcQXBeyqeUh821lllHhZlRjUQMFyklLfbPtP0MzXP9f
+        T2MN+HLKYLSWweESFng4oY8=
+X-Google-Smtp-Source: APXvYqyHsn0JRBAztc8gkWedID4H+F1dMmOijtBZeWWN976EbUglK6Cd/j6zKuX60a2hGwZ5Nhn3NA==
+X-Received: by 2002:a63:d958:: with SMTP id e24mr10614053pgj.31.1575750969811;
+        Sat, 07 Dec 2019 12:36:09 -0800 (PST)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id d24sm22327447pfq.75.2019.12.07.12.36.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Dec 2019 12:22:15 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, vinod.koul@linaro.org
-Subject: [PATCH 2/2] arm64: dts: qcom: msm8996: Use generic QMP driver for UFS
-Date:   Sat,  7 Dec 2019 12:21:47 -0800
-Message-Id: <20191207202147.2314248-3-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20191207202147.2314248-1-bjorn.andersson@linaro.org>
-References: <20191207202147.2314248-1-bjorn.andersson@linaro.org>
+        Sat, 07 Dec 2019 12:36:09 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        aarch64-laptops@lists.linaro.org
+Cc:     Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Vasily Khoruzhick <anarsoul@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS), Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        linux-kernel@vger.kernel.org (open list),
+        Sam Ravnborg <sam@ravnborg.org>
+Subject: [PATCH 0/4] drm+dt: multi panel selection and yoga c630 display
+Date:   Sat,  7 Dec 2019 12:35:49 -0800
+Message-Id: <20191207203553.286017-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -66,72 +69,111 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-With support for the MSM8996 UFS PHY added to the common QMP driver,
-migrate the DTS to use the common QMP binding.
+From: Rob Clark <robdclark@chromium.org>
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 33 +++++++++++++++------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+It is not uncommon for devices to use one of several possible panels.
+The Lenovo Yoga C630 laptop is one such device.  This patchset
+introduces an optional "panel-id" property which can be used by the
+firmware to find the correct panel node to enable.  The second patch
+adds support in drm/of to automatically pick the enabled endpoint, to
+avoid adding the same logic in multiple bridges/drivers.  The last
+patch uses this mechanism to enable display support for the Yoga C630.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index c9c6efbbcc01..d0f2544ccf5b 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1323,27 +1323,30 @@ spmi_bus: qcom,spmi@400f000 {
- 			#interrupt-cells = <4>;
- 		};
- 
--		ufsphy: phy@627000 {
--			compatible = "qcom,msm8996-ufs-phy-qmp-14nm";
--			reg = <0x627000 0xda8>;
--			reg-names = "phy_mem";
--			#phy-cells = <0>;
-+		ufs_phy: phy@627000 {
-+			compatible = "qcom,msm8996-qmp-ufs-phy";
-+			reg = <0x00627000 0x1c4>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
- 
- 			vdda-phy-supply = <&pm8994_l28>;
- 			vdda-pll-supply = <&pm8994_l12>;
--
--			vdda-phy-max-microamp = <18380>;
--			vdda-pll-max-microamp = <9440>;
--
- 			vddp-ref-clk-supply = <&pm8994_l25>;
--			vddp-ref-clk-max-microamp = <100>;
--			vddp-ref-clk-always-on;
- 
--			clock-names = "ref_clk_src", "ref_clk";
--			clocks = <&rpmcc RPM_SMD_LN_BB_CLK>,
--				 <&gcc GCC_UFS_CLKREF_CLK>;
-+			clocks = <&gcc GCC_UFS_CLKREF_CLK>;
-+			clock-names = "ref";
-+
- 			resets = <&ufshc 0>;
-+			reset-names = "ufsphy";
- 			status = "disabled";
-+
-+			ufs_phy_lane: lanes@627400 {
-+				reg = <0x627400 0x12c>,
-+				      <0x627600 0x200>,
-+				      <0x627c00 0x1b4>;
-+				#phy-cells = <0>;
-+			};
- 		};
- 
- 		ufshc: ufshc@624000 {
-@@ -1351,7 +1354,7 @@ ufshc: ufshc@624000 {
- 			reg = <0x624000 0x2500>;
- 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
- 
--			phys = <&ufsphy>;
-+			phys = <&ufs_phy_lane>;
- 			phy-names = "ufsphy";
- 
- 			vcc-supply = <&pm8994_l20>;
+An example usage:
+
+  boe_panel {
+      compatible = "boe,nv133fhm-n61";
+      panel-id = <0xc4>;
+      /* fw will change status to "Ok" if this panel is installed */
+      status = "disabled";
+
+      ports {
+          port {
+              boe_panel_in_edp: endpoint {
+                  remote-endpoint = <&sn65dsi86_out_boe>;
+              };
+          };
+      };
+  };
+
+  ivo_panel {
+      compatible = "ivo,m133nwf4-r0";
+      panel-id = <0xc5>;
+      /* fw will change status to "Ok" if this panel is installed */
+      status = "disabled";
+
+      ports {
+          port {
+              ivo_panel_in_edp: endpoint {
+                  remote-endpoint = <&sn65dsi86_out_ivo>;
+              };
+          };
+      };
+  };
+
+  sn65dsi86: bridge@2c {
+      compatible = "ti,sn65dsi86";
+
+      ports {
+          #address-cells = <1>;
+          #size-cells = <0>;
+
+          port@0 {
+              reg = <0>;
+              sn65dsi86_in_a: endpoint {
+                  remote-endpoint = <&dsi0_out>;
+              };
+          };
+
+          port@1 {
+              reg = <1>;
+
+              sn65dsi86_out_boe: endpoint@c4 {
+                  remote-endpoint = <&boe_panel_in_edp>;
+              };
+
+              sn65dsi86_out_ivo: endpoint@c5 {
+                  remote-endpoint = <&ivo_panel_in_edp>;
+              };
+          };
+      };
+  };
+
+This replaces an earlier proposal[1] to use chosen/panel-id to select the
+installed panel, in favor of adding support[2] to an EFI driver module
+(DtbLoader.efi) to find the installed panel, locate it in dtb via the
+'panel-id' property, and update it's status to "Ok".
+
+[1] https://patchwork.kernel.org/cover/11024613/
+[2] https://github.com/robclark/edk2/commits/dtbloader
+
+In this case, DtbLoader, which is somewhat generic (ie. this mechanism
+applies to all snapdragon based devices which orignally ship with
+windows), determines the panel-id of the installed panel from the
+UEFIDisplayInfo variable.
+
+As I understand, a similar situation exists with the pine64 laptops.  A
+similar scheme could be used to support this, by loading the panel-id
+from a u-boot variable.
+
+In other cases (phones), a more device specific shim would be needed to
+determine the panel-id by reading some GPIOs, or some other more device-
+specific mechanism.
+
+Bjorn Andersson (1):
+  arm64: dts: qcom: c630: Enable display
+
+Rob Clark (3):
+  dt-bindings: display: panel: document panel-id
+  drm/of: add support to find any enabled endpoint
+  drm/bridge: ti-sn65dsi86: find any enabled endpoint
+
+ .../bindings/display/panel/panel-common.yaml  |  26 +++
+ .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 165 ++++++++++++++++++
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c         |   2 +-
+ drivers/gpu/drm/drm_of.c                      |  41 ++++-
+ 4 files changed, 232 insertions(+), 2 deletions(-)
+
 -- 
-2.24.0
+2.23.0
 
