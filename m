@@ -2,160 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6922C11773A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2019 21:18:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 07E3B117775
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2019 21:32:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726495AbfLIUSG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Dec 2019 15:18:06 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:46764 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726335AbfLIUSG (ORCPT
+        id S1726598AbfLIUcl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Dec 2019 15:32:41 -0500
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:33797 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726509AbfLIUcl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Dec 2019 15:18:06 -0500
-Received: by mail-ed1-f66.google.com with SMTP id m8so13822110edi.13;
-        Mon, 09 Dec 2019 12:18:04 -0800 (PST)
+        Mon, 9 Dec 2019 15:32:41 -0500
+Received: by mail-oi1-f193.google.com with SMTP id l136so7656075oig.1;
+        Mon, 09 Dec 2019 12:32:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=h2yqKOxOZBGE0XueAD5uhzXamZSICOv0vTonYy2m++Q=;
-        b=SMQVSBiO2u7Fb5SpKffbCQvDZoPGHmi8wphxbwhMj4d0exd0owRkFxjpbTAwhxstzL
-         PcIqghdn1ODiO38nNuxtULQ7kFYYBtlB4UTyHkeimMxte1v13RifPXHF6Vz93hb0dFTw
-         ACxTBwDk8OuONNYiGCvtzif1RaZYg6S7no/8ZJr5Rtc1NyHshQ5O/L2XC5w4rsN5cuOy
-         UmKUxOyzzh5Jwd2hdRRUhb01wcNmbvrXenst78KwnqSGgdt5W+GEltl7u0owv/ScCOCc
-         B4cTZ0FbsZYQyOxRmVL59rrJqlBH7ff3R9ppLQRI0qy+wMia4LChmaIREb9OZJijeQKk
-         TtTg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QcDMXx7JLbsJ2UCoZNJKLtfB+ZkWm+OkWxKRuqwbsNs=;
+        b=ii5EIKHBMaUVjEe/pz16DIxXm7wIOI19PiJzZ/jRWPQdu6FJoVjJ0CDB9uIbNL4bhT
+         B+rmUwsjdnM2DJtFKideItEvY2CMBK4T3nHz780Don2HA/9AaYPso9dyQbR5SUcHq3JX
+         DNgFjgLNLcjaMR44m6YmsQZWcYZ+y8sobtakx0B+rV8O9haEKPhcG+p0HcED+hMfw42b
+         2Ci7tVAleD761wJTbclrhtNiWcs1HAkGMLdIOXbXzYElCdYa3Z8DM9A4XPGaD8On7uqS
+         th3RknfkyGEL09MbE6gt382YWYtvPpxrUVO0vcp8hRazfg5L+22guUXO3hfiasrzmIHZ
+         aVqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=h2yqKOxOZBGE0XueAD5uhzXamZSICOv0vTonYy2m++Q=;
-        b=gIU3oj2OxQrVgLWRiYGAQdHX2BvrwSE44DH5ctzFu2Ywy1Jh2K44Zcuc936dOFIRu9
-         2YCw6qXq8Kvs163GFw3xKtl89hdJGg+xaHODKlCzFeZ6hZR3rZiB0C4y7sA3KYGeOc6W
-         P5yWgDFUke6lTc0/2dLh8HTDCbKefoND5PRgyIy/AoFcoXbXqbGAOueBV2ScH9gBiR/6
-         I6dgEAgTpU3jUQy42eoli7YfKtX/H4Sacc4WDi2MVzMNrnuUbnxX5V2WUQAYjmU4Wnqs
-         Je1tN1LEOxyixenftc9RTjgt0TAlg6qYDHt9i/tJhiiPBYCHaDWf39D5/9u7JUlFCC4q
-         Fuww==
-X-Gm-Message-State: APjAAAVlaHkJkytcvYCAtNGfjX1o0PQ/wKl54cyxhD1IvUWJc7D5Slw6
-        wQQ4UfSOGO/dm2LjTG9skkQC2MZgulV1FPKpteI=
-X-Google-Smtp-Source: APXvYqxJoAfWGwg6T+oY0GTnfrw6XGw523tgFtibpXV6QP979ZIcnXwmJaPC+BaZ7VZ5Fotc0CennR+6m2o6cXTwAmY=
-X-Received: by 2002:a17:906:34d7:: with SMTP id h23mr33858892ejb.90.1575922684081;
- Mon, 09 Dec 2019 12:18:04 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QcDMXx7JLbsJ2UCoZNJKLtfB+ZkWm+OkWxKRuqwbsNs=;
+        b=Ztm024coPL41NjmNmntXMUozDBQBjGV6N6tPXbQ+PhR8xMK68JwMrCh5lh5B+hkvXy
+         I5s5A5i3+TN3C+ulJj1uTvco9r+SC3cprnA43z/tpQEYlsL/fd+7f1py/8nYY7/m3Ivq
+         a+tRCiAt5vdpsJ6FRKvBnfCDuigYTsXqILD5MzQzfQBLgkwEISCosoRPvAkIsc8SFRps
+         n+yEL3xcIbkD6kMufN/jgIw79q0cynW4UIVaylUmKuFE9/aRpnom7gmdUoLKMNOGKv9+
+         w3F4x5jQajHcWdeAnbWmENOnuSpSLCY87m8fqRHFm6MlfuNhKpDGKnvVlIvliTTzmzEN
+         +QcA==
+X-Gm-Message-State: APjAAAXHYg6gV9fVfzgXmVxUdVqGrXJcWdscrzX0KG+zIh048ic26yXY
+        k6gECv7X8ntAqw5Gc5lc+bI=
+X-Google-Smtp-Source: APXvYqwQiJRdqznvLkCjZMRsuRjsUdi2zEVecgF+rxwnBIHpEw9DLBMn1AR7VjFqiDCXnvZTVFexsg==
+X-Received: by 2002:aca:570f:: with SMTP id l15mr917514oib.120.1575923559992;
+        Mon, 09 Dec 2019 12:32:39 -0800 (PST)
+Received: from localhost.localdomain ([2604:1380:4111:8b00::1])
+        by smtp.gmail.com with ESMTPSA id f3sm368332oto.57.2019.12.09.12.32.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Dec 2019 12:32:39 -0800 (PST)
+From:   Nathan Chancellor <natechancellor@gmail.com>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        clang-built-linux@googlegroups.com,
+        Nathan Chancellor <natechancellor@gmail.com>
+Subject: [PATCH] drm: msm: mdp4: Adjust indentation in mdp4_dsi_encoder_enable
+Date:   Mon,  9 Dec 2019 13:32:30 -0700
+Message-Id: <20191209203230.1593-1-natechancellor@gmail.com>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-References: <1574465484-7115-1-git-send-email-jcrouse@codeaurora.org> <0101016e95754ea7-d6414f4c-9e25-4bc4-a852-7116a783bf63-000000@us-west-2.amazonses.com>
-In-Reply-To: <0101016e95754ea7-d6414f4c-9e25-4bc4-a852-7116a783bf63-000000@us-west-2.amazonses.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 9 Dec 2019 12:17:53 -0800
-Message-ID: <CAF6AEGuchn7fa+8j45sCH7Sd2_dz5WokeeinR8RYr8xvY4Uq+g@mail.gmail.com>
-Subject: Re: [PATCH v2 7/8] drm/msm/a6xx: Support split pagetables
-To:     Jordan Crouse <jcrouse@codeaurora.org>
-Cc:     "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Will Deacon <will@kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Mamta Shukla <mamtashukla555@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Content-Type: text/plain; charset="UTF-8"
+X-Patchwork-Bot: notify
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 22, 2019 at 3:32 PM Jordan Crouse <jcrouse@codeaurora.org> wrote:
->
-> Attempt to enable split pagetables if the arm-smmu driver supports it.
-> This will move the default address space from the default region to
-> the address range assigned to TTBR1. The behavior should be transparent
-> to the driver for now but it gets the default buffers out of the way
-> when we want to start swapping TTBR0 for context-specific pagetables.
->
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> ---
->
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 46 ++++++++++++++++++++++++++++++++++-
->  1 file changed, 45 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 5dc0b2c..96b3b28 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -811,6 +811,50 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
->         return (unsigned long)busy_time;
->  }
->
-> +static struct msm_gem_address_space *
-> +a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
-> +{
-> +       struct iommu_domain *iommu = iommu_domain_alloc(&platform_bus_type);
-> +       struct msm_gem_address_space *aspace;
-> +       struct msm_mmu *mmu;
-> +       u64 start, size;
-> +       u32 val = 1;
-> +       int ret;
-> +
-> +       if (!iommu)
-> +               return ERR_PTR(-ENOMEM);
-> +
-> +       /* Try to request split pagetables */
-> +       iommu_domain_set_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val);
-> +
-> +       mmu = msm_iommu_new(&pdev->dev, iommu);
-> +       if (IS_ERR(mmu)) {
-> +               iommu_domain_free(iommu);
-> +               return ERR_CAST(mmu);
-> +       }
-> +
-> +       /* Check to see if split pagetables were successful */
-> +       ret = iommu_domain_get_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val);
+Clang warns:
 
-I assume the split between this and iommu_domain_set_attr() is because
-attach needs to happen in between?  At any rate, if it needs to be
-like this, maybe a comment is in order.  As it is it looks like
-something future-self would "cleanup"..
+../drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c:124:3: warning:
+misleading indentation; statement is not part of the previous 'if'
+[-Wmisleading-indentation]
+         mdp4_crtc_set_config(encoder->crtc,
+         ^
+../drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c:121:2: note:
+previous statement is here
+        if (mdp4_dsi_encoder->enabled)
+        ^
 
-BR,
--R
+This warning occurs because there is a space after the tab on this line.
+Remove it so that the indentation is consistent with the Linux kernel
+coding style and clang no longer warns.
 
-> +       if (!ret && val) {
-> +               /*
-> +                * The aperture start will be at the beginning of the TTBR1
-> +                * space so use that as a base
-> +                */
-> +               start = iommu->geometry.aperture_start;
-> +               size = 0xffffffff;
-> +       } else {
-> +               /* Otherwise use the legacy 32 bit region */
-> +               start = SZ_16M;
-> +               size = 0xffffffff - SZ_16M;
-> +       }
-> +
-> +       aspace = msm_gem_address_space_create(mmu, "gpu", start, size);
-> +       if (IS_ERR(aspace))
-> +               iommu_domain_free(iommu);
-> +
-> +       return aspace;
-> +}
-> +
->  static const struct adreno_gpu_funcs funcs = {
->         .base = {
->                 .get_param = adreno_get_param,
-> @@ -832,7 +876,7 @@ static const struct adreno_gpu_funcs funcs = {
->  #if defined(CONFIG_DRM_MSM_GPU_STATE)
->                 .gpu_state_get = a6xx_gpu_state_get,
->                 .gpu_state_put = a6xx_gpu_state_put,
-> -               .create_address_space = adreno_iommu_create_address_space,
-> +               .create_address_space = a6xx_create_address_space,
->  #endif
->         },
->         .get_timestamp = a6xx_get_timestamp,
-> --
-> 2.7.4
->
+Fixes: 776638e73a19 ("drm/msm/dsi: Add a mdp4 encoder for DSI")
+Link: https://github.com/ClangBuiltLinux/linux/issues/792
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
+index 772f0753ed38..aaf2f26f8505 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c
+@@ -121,7 +121,7 @@ static void mdp4_dsi_encoder_enable(struct drm_encoder *encoder)
+ 	if (mdp4_dsi_encoder->enabled)
+ 		return;
+ 
+-	 mdp4_crtc_set_config(encoder->crtc,
++	mdp4_crtc_set_config(encoder->crtc,
+ 			MDP4_DMA_CONFIG_PACK_ALIGN_MSB |
+ 			MDP4_DMA_CONFIG_DEFLKR_EN |
+ 			MDP4_DMA_CONFIG_DITHER_EN |
+-- 
+2.24.0
+
