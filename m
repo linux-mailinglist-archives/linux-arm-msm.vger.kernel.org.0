@@ -2,278 +2,271 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A545E116857
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2019 09:39:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC283116B30
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2019 11:39:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727386AbfLIIjZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Dec 2019 03:39:25 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:38886 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727365AbfLIIjY (ORCPT
+        id S1727513AbfLIKjO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Dec 2019 05:39:14 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:56088 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727506AbfLIKjN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Dec 2019 03:39:24 -0500
-Received: by mail-lf1-f67.google.com with SMTP id r14so9993879lfm.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2019 00:39:22 -0800 (PST)
+        Mon, 9 Dec 2019 05:39:13 -0500
+Received: by mail-wm1-f65.google.com with SMTP id q9so14894804wmj.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2019 02:39:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=E7OL9HCqlq6FTMnIkypwI+Orss8jA9UZv9drDoXCN7g=;
-        b=T/Hcz0DHy/jPRqHKJPkvu53lgWdRoJhzWNiW+rwmc/+guJDxpMbmQ+DQs47qW+aNBK
-         iw/VnFeS0pgtq2UHwHb/AuZPVzEDe90Fh5k9V3YE5+Azq/3duK9HcXs6EiRiSEBAZdOB
-         tTPnO614bWAGhncbEsHNp2Dmupm/bYtCFlSGHlQZRFU6yfnNaCu7qWcXQ8BGSI9vBUT9
-         sgh5ndy+i28vfnryE8GOzD894SIJI+pXL0Lf5ngSjOlT9WXgiCtht/0HBtuWVUkZFJMR
-         Pm2PkWKs+kc6WJJmY0lbpfF2kn3NNaGr0VBW9Nf4YiwOrpUUO4a9bi/WM24Ab/d7B1fV
-         l0Ug==
+        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:openpgp:autocrypt:organization
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=Yqxh1pdLy6uM+a91cRzWoAqtDJMdodPbbqhNI6GhNvA=;
+        b=U74XPh3sESw3GToGDn9Du6Oq4eV/OO2pujDpsyWWpYT2ta6R/MeGaGeCozgz8Diw6E
+         iUzV7twZDczWsTKZdSzuOOOoSAbakI8WhBnT5yoETFJpTKxQq/tlnni4bUqAKddDNuPV
+         Cgc2dQhUD+XgAcdcKFZpH+iSgChW/zMdsJuFPaEK3OzK45mAXJ7fW1ALIRM4/PhekiPl
+         IkEdwX0V4jg8jVr5Gr1LmZEA9GwGhMfETF/V33oEL6D800TDBsuaePnTqt/UFGYWDX00
+         P8pNyucugi1XaXXeud1PPuqnYkjoT5X1kvCz10iptVDC+AQD3M5te/QG2JyB1/H3I0XN
+         xawA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=E7OL9HCqlq6FTMnIkypwI+Orss8jA9UZv9drDoXCN7g=;
-        b=hYNUD+P5m7WGwGw1VxNdIATQkh/7AvD1nLZw7Q5HlnzQkY0pu0dt0goyJIjdMiQwO6
-         5Nvasgkl5Wadfsz3e0F0kVg/wub9mfbapUtM966nfYPcUrP7IyBVqCXcJKKbI8Q9qCxc
-         Rw4FPN1OrmGAC89BFK6+oXnD74NmNhFq+ecfSLJOsXHUhn4SwgBM3lO0Krh/Wz2kY6Bz
-         qCX56JUrNkFIipUWbMsHaFnvhrAmeUCjNIBPojbPx7+PCzAJbps0BemBNXnyQ51tk1ej
-         8lLBX4hHqIvauna53U3l9m0xiz4VQgnk+C/E1MUJVsf5puxwlOyjZk9vsowDhpLCftTj
-         1F6g==
-X-Gm-Message-State: APjAAAVNN0BTm7G0r8yn32yiC7YRKMal8xaQTki97BZoq2LS/00e4S72
-        Mdst5ZyF4hiV7msLFU9cd90n3w==
-X-Google-Smtp-Source: APXvYqz9xkSLnDb+4BqrI+ki6aeRrtCLVeW9AByrjOWC9meOxrhoxNU0ECrfOFl0eR5A7Y0iGbzQ2g==
-X-Received: by 2002:a19:5201:: with SMTP id m1mr13047865lfb.114.1575880762176;
-        Mon, 09 Dec 2019 00:39:22 -0800 (PST)
-Received: from localhost.localdomain ([37.157.136.193])
-        by smtp.gmail.com with ESMTPSA id r26sm10438971lfm.82.2019.12.09.00.39.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Dec 2019 00:39:21 -0800 (PST)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     Vikash Garodia <vgarodia@codeaurora.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Aniket Masule <amasule@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH 6/6] media: venus: vdec: handle 10bit bitstreams
-Date:   Mon,  9 Dec 2019 10:38:24 +0200
-Message-Id: <20191209083824.806-7-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20191209083824.806-1-stanimir.varbanov@linaro.org>
-References: <20191209083824.806-1-stanimir.varbanov@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :organization:message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=Yqxh1pdLy6uM+a91cRzWoAqtDJMdodPbbqhNI6GhNvA=;
+        b=qvnCTq3G9xV9QYSSSme/is3NvxoWw650v310XVYVdoo0i/vn6YMohuPjUvqIHWI0Vm
+         ZfMv9knboQl1G2Cb9t2R01S43Ebr+xdSPEr4VTNmD22JSF/x3QnYDo+SCKoS1qn7OHH6
+         XFZtLk7QLgqRokCHQ+lM9QMtykSE0HwQYqKdMZ9q90recRsc5YwgC0rG9reGfyXa9fHZ
+         hv31N3JB6yu3WcFMArMKMDP992BNYEfrd1k9Q1RMY2SYgR6X3Nne6C/p0oKDu3hQsxVs
+         FtFrpd9Nna5Vhx3lMboCdnuAOP3IqoR6I9dhQruIC3mVDZChf71+7Pg9qv/7j7O26vZ/
+         mmSg==
+X-Gm-Message-State: APjAAAUh90xJDQG/jvekxF2WpSeMZhWJ2tzxJ/AymuulyHwxxpJ/PtuZ
+        BFgMuXS6/99p2izNjs4w16P99Q==
+X-Google-Smtp-Source: APXvYqzpQREDBjwPqYaqqI5uVbiA/09nriA+haizUWsQae6Nbqq8I6KdiCyDctfeIF0RQV9VI/z0uQ==
+X-Received: by 2002:a1c:2155:: with SMTP id h82mr24704688wmh.21.1575887950496;
+        Mon, 09 Dec 2019 02:39:10 -0800 (PST)
+Received: from [192.168.1.62] (wal59-h01-176-150-251-154.dsl.sta.abo.bbox.fr. [176.150.251.154])
+        by smtp.gmail.com with ESMTPSA id l204sm13543915wmf.2.2019.12.09.02.39.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 09 Dec 2019 02:39:09 -0800 (PST)
+Subject: Re: [PATCH v2 00/28] drm/bridge: Consolidate initialization
+To:     Mihail Atanassov <Mihail.Atanassov@arm.com>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>
+Cc:     Martyn Welch <martyn.welch@collabora.co.uk>,
+        David Airlie <airlied@linux.ie>,
+        Peter Senna Tschudin <peter.senna@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        "linux-renesas-soc@vger.kernel.org" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        Vincent Abriou <vincent.abriou@st.com>,
+        Martin Donnelly <martin.donnelly@ge.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Vasily Khoruzhick <anarsoul@gmail.com>,
+        Kukjin Kim <kgene@kernel.org>, Icenowy Zheng <icenowy@aosc.io>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        Brian Masney <masneyb@onstation.org>,
+        "linux-mediatek@lists.infradead.org" 
+        <linux-mediatek@lists.infradead.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>, nd <nd@arm.com>,
+        Sean Paul <sean@poorly.run>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        =?UTF-8?Q?Yannick_Fertr=c3=a9?= <yannick.fertre@st.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+        Torsten Duwe <duwe@lst.de>,
+        Dariusz Marcinkiewicz <darekm@google.com>,
+        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>
+References: <20191204114732.28514-1-mihail.atanassov@arm.com>
+From:   Neil Armstrong <narmstrong@baylibre.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=narmstrong@baylibre.com; prefer-encrypt=mutual; keydata=
+ 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
+ ZaTUOEkgIor5losDrePdPgE=
+Organization: Baylibre
+Message-ID: <2989c044-8134-bb7c-a7e0-c518334bf4a6@baylibre.com>
+Date:   Mon, 9 Dec 2019 11:39:07 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
+MIME-Version: 1.0
+In-Reply-To: <20191204114732.28514-1-mihail.atanassov@arm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Aniket Masule <amasule@codeaurora.org>
+Hi Mihail,
 
-Handle 10bit video streams in the decoder by using dithering, i.e
-the decoder output buffers will be in 8bit format.
+On 04/12/2019 12:48, Mihail Atanassov wrote:
+> Hi all,
+> 
+> I've dropped the fun parts of this series since they need more work, but
+> figured drm_bridge_init() as a concept is still valuable on its own (and
+> I think I'll need it to roll out device links for registered bridges),
+> so here goes.
+> 
+> v2:
+>  - expanded commit messages and added some extra bridge-related
+>    documentation (Daniel)
+>  - dropped v1 patches 29 and 30: 29 needs more work, and 30 depends on
+>    it
+>  - added all remaining drm_bridge implementers, found by searching for
+>    drm_bridge_funcs which is mandatory for any bridge; new uses in
+>    patches 3, 27, and 28 (Sam)
+>  - due to the above, I've decided to squash all analogix changes into
+>    one patch
+> 
+> ---
+> v1 [https://patchwork.freedesktop.org/series/70039/] cover text below:
+> 
+> This series adds device links support to drm_bridge. The motivation
+> behind it is that a drm_bridge in a module could get removed under the
+> feet of the bridge user without warning, so we need a way to remove and
+> reprobe the client as needed to avoid peering into the void.
+> 
+> 1: Add a drm_bridge_init() function which wraps all initialisation of
+> the structure prior to calling drm_bridge_add().
+> 
+> 2-26,28: Apply the drm_bridge_init() refactor to every bridge that uses
+> drm_bridge_add().
+> 
+> 27: Minor cleanup in rcar-du.
+> 
+> 29: Add of_drm_find_bridge_devlink() which functions the same as
+> of_drm_find_bridge() plus adds a device device link from the owning
+> drm_device to the bridge device.
+> 
+> 30: As a motivating example, convert komeda to exclusively use
+> drm_bridge for its pipe outputs; this isn't a regression in usability
+> any more since device links bring the same automatic remove/reprobe
+> feature as components.
+> 
+> Mihail Atanassov (28):
+>   drm: Introduce drm_bridge_init()
+>   drm/bridge: adv7511: Use drm_bridge_init()
+>   drm/bridge/analogix: Use drm_bridge_init()
+>   drm/bridge: cdns: Use drm_bridge_init()
+>   drm/bridge: dumb-vga-dac: Use drm_bridge_init()
+>   drm/bridge: lvds-encoder: Use drm_bridge_init()
+>   drm/bridge: megachips-stdpxxxx-ge-b850v3-fw: Use drm_bridge_init()
+>   drm/bridge: nxp-ptn3460: Use drm_bridge_init()
+>   drm/bridge: panel: Use drm_bridge_init()
+>   drm/bridge: ps8622: Use drm_bridge_init()
+>   drm/bridge: sii902x: Use drm_bridge_init()
+>   gpu: drm: bridge: sii9234: Use drm_bridge_init()
+>   drm/bridge: sil_sii8620: Use drm_bridge_init()
+>   drm/bridge: dw-hdmi: Use drm_bridge_init()
+>   drm/bridge/synopsys: dsi: Use drm_bridge_init()
+>   drm/bridge: tc358764: Use drm_bridge_init()
+>   drm/bridge: tc358767: Use drm_bridge_init()
+>   drm/bridge: thc63: Use drm_bridge_init()
+>   drm/bridge: ti-sn65dsi86: Use drm_bridge_init()
+>   drm/bridge: ti-tfp410: Use drm_bridge_init()
+>   drm/exynos: mic: Use drm_bridge_init()
+>   drm/i2c: tda998x: Use drm_bridge_init()
+>   drm/mcde: dsi: Use drm_bridge_init()
+>   drm/mediatek: hdmi: Use drm_bridge_init()
+>   drm: rcar-du: lvds: Use drm_bridge_init()
+>   drm: rcar-du: lvds: Don't set drm_bridge private pointer
+>   drm/sti: Use drm_bridge_init()
+>   drm/msm: Use drm_bridge_init()
+> 
+>  drivers/gpu/drm/bridge/adv7511/adv7511_drv.c  |  5 ++-
+>  .../drm/bridge/analogix/analogix-anx6345.c    |  5 ++-
+>  .../drm/bridge/analogix/analogix-anx78xx.c    |  8 ++---
+>  .../drm/bridge/analogix/analogix_dp_core.c    |  5 ++-
+>  drivers/gpu/drm/bridge/cdns-dsi.c             |  4 +--
+>  drivers/gpu/drm/bridge/dumb-vga-dac.c         |  6 ++--
+>  drivers/gpu/drm/bridge/lvds-encoder.c         |  7 ++--
+>  .../bridge/megachips-stdpxxxx-ge-b850v3-fw.c  |  4 +--
+>  drivers/gpu/drm/bridge/nxp-ptn3460.c          |  4 +--
+>  drivers/gpu/drm/bridge/panel.c                |  7 ++--
+>  drivers/gpu/drm/bridge/parade-ps8622.c        |  3 +-
+>  drivers/gpu/drm/bridge/sii902x.c              |  5 ++-
+>  drivers/gpu/drm/bridge/sii9234.c              |  3 +-
+>  drivers/gpu/drm/bridge/sil-sii8620.c          |  3 +-
+>  drivers/gpu/drm/bridge/synopsys/dw-hdmi.c     |  7 ++--
+>  drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c |  7 ++--
+>  drivers/gpu/drm/bridge/tc358764.c             |  4 +--
+>  drivers/gpu/drm/bridge/tc358767.c             |  3 +-
+>  drivers/gpu/drm/bridge/thc63lvd1024.c         |  7 ++--
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c         |  5 ++-
+>  drivers/gpu/drm/bridge/ti-tfp410.c            |  5 ++-
+>  drivers/gpu/drm/drm_bridge.c                  | 34 ++++++++++++++++++-
+>  drivers/gpu/drm/exynos/exynos_drm_mic.c       |  8 +----
+>  drivers/gpu/drm/i2c/tda998x_drv.c             |  6 +---
+>  drivers/gpu/drm/mcde/mcde_dsi.c               |  3 +-
+>  drivers/gpu/drm/mediatek/mtk_hdmi.c           |  4 +--
+>  drivers/gpu/drm/msm/dsi/dsi_manager.c         |  4 +--
+>  drivers/gpu/drm/msm/edp/edp_bridge.c          |  3 +-
+>  drivers/gpu/drm/msm/hdmi/hdmi_bridge.c        |  4 +--
+>  drivers/gpu/drm/rcar-du/rcar_lvds.c           |  5 ++-
+>  drivers/gpu/drm/sti/sti_dvo.c                 |  4 +--
+>  drivers/gpu/drm/sti/sti_hda.c                 |  3 +-
+>  drivers/gpu/drm/sti/sti_hdmi.c                |  3 +-
+>  include/drm/drm_bridge.h                      | 15 +++++++-
+>  34 files changed, 100 insertions(+), 103 deletions(-)
+> 
 
-The runtime handling is implemented by sending v4l2 event to
-userspace application, then the application should stop the
-streaming on capture queue and initiate format negotiation, and
-start streaming again.
+Can you check it doesn't collides with Boris 1-7 of "drm: Add support for bus-format negotiation" patches he just pushed on drm-misc-next ?
 
-Signed-off-by: Aniket Masule <amasule@codeaurora.org>
-Co-developed-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/core.h      |  1 +
- drivers/media/platform/qcom/venus/helpers.c   | 97 +++++++++++++++++++
- .../media/platform/qcom/venus/hfi_helper.h    |  5 +
- drivers/media/platform/qcom/venus/vdec.c      |  8 +-
- 4 files changed, 110 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 7efa5669dda3..8f71646df4c8 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -378,6 +378,7 @@ struct venus_inst {
- 	u32 session_type;
- 	union hfi_get_property hprop;
- 	unsigned int core_acquired: 1;
-+	unsigned int bit_depth;
- };
- 
- #define IS_V1(core)	((core)->res->hfi_version == HFI_VERSION_1XX)
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 043e0d8705a8..a29662405e3a 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -626,6 +626,76 @@ static u32 get_framesize_raw_nv12_ubwc(u32 width, u32 height)
- 		     max(extradata, y_stride * 48), SZ_4K);
- }
- 
-+static u32 get_framesize_raw_p010(u32 width, u32 height)
-+{
-+	u32 y_plane, uv_plane, y_stride, uv_stride, y_sclines, uv_sclines;
-+
-+	y_stride = ALIGN(width * 2, 256);
-+	uv_stride = ALIGN(width * 2, 256);
-+	y_sclines = ALIGN(height, 32);
-+	uv_sclines = ALIGN((height + 1) >> 1, 16);
-+	y_plane = y_stride * y_sclines;
-+	uv_plane = uv_stride * uv_sclines;
-+
-+	return ALIGN((y_plane + uv_plane), SZ_4K);
-+}
-+
-+static u32 get_framesize_raw_p010_ubwc(u32 width, u32 height)
-+{
-+	u32 y_stride, uv_stride, y_sclines, uv_sclines;
-+	u32 y_ubwc_plane, uv_ubwc_plane;
-+	u32 y_meta_stride, y_meta_scanlines;
-+	u32 uv_meta_stride, uv_meta_scanlines;
-+	u32 y_meta_plane, uv_meta_plane;
-+	u32 size;
-+
-+	y_stride = ALIGN(width * 2, 256);
-+	uv_stride = ALIGN(width * 2, 256);
-+	y_sclines = ALIGN(height, 16);
-+	uv_sclines = ALIGN((height + 1) >> 1, 16);
-+
-+	y_ubwc_plane = ALIGN(y_stride * y_sclines, SZ_4K);
-+	uv_ubwc_plane = ALIGN(uv_stride * uv_sclines, SZ_4K);
-+	y_meta_stride = ALIGN(DIV_ROUND_UP(width, 32), 64);
-+	y_meta_scanlines = ALIGN(DIV_ROUND_UP(height, 4), 16);
-+	y_meta_plane = ALIGN(y_meta_stride * y_meta_scanlines, SZ_4K);
-+	uv_meta_stride = ALIGN(DIV_ROUND_UP((width + 1) >> 1, 16), 64);
-+	uv_meta_scanlines = ALIGN(DIV_ROUND_UP((height + 1) >> 1, 4), 16);
-+	uv_meta_plane = ALIGN(uv_meta_stride * uv_meta_scanlines, SZ_4K);
-+
-+	size = y_ubwc_plane + uv_ubwc_plane + y_meta_plane + uv_meta_plane;
-+
-+	return ALIGN(size, SZ_4K);
-+}
-+
-+static u32 get_framesize_raw_yuv420_tp10_ubwc(u32 width, u32 height)
-+{
-+	u32 y_stride, uv_stride, y_sclines, uv_sclines;
-+	u32 y_ubwc_plane, uv_ubwc_plane;
-+	u32 y_meta_stride, y_meta_scanlines;
-+	u32 uv_meta_stride, uv_meta_scanlines;
-+	u32 y_meta_plane, uv_meta_plane;
-+	u32 size;
-+
-+	y_stride = ALIGN(ALIGN(width, 192) * 4 / 3, 256);
-+	uv_stride = ALIGN(ALIGN(width, 192) * 4 / 3, 256);
-+	y_sclines = ALIGN(height, 16);
-+	uv_sclines = ALIGN((height + 1) >> 1, 16);
-+
-+	y_ubwc_plane = ALIGN(y_stride * y_sclines, SZ_4K);
-+	uv_ubwc_plane = ALIGN(uv_stride * uv_sclines, SZ_4K);
-+	y_meta_stride = ALIGN(DIV_ROUND_UP(width, 48), 64);
-+	y_meta_scanlines = ALIGN(DIV_ROUND_UP(height, 4), 16);
-+	y_meta_plane = ALIGN(y_meta_stride * y_meta_scanlines, SZ_4K);
-+	uv_meta_stride = ALIGN(DIV_ROUND_UP((width + 1) >> 1, 24), 64);
-+	uv_meta_scanlines = ALIGN(DIV_ROUND_UP((height + 1) >> 1, 4), 16);
-+	uv_meta_plane = ALIGN(uv_meta_stride * uv_meta_scanlines, SZ_4K);
-+
-+	size = y_ubwc_plane + uv_ubwc_plane + y_meta_plane + uv_meta_plane;
-+
-+	return ALIGN(size, SZ_4K);
-+}
-+
- u32 venus_helper_get_framesz_raw(u32 hfi_fmt, u32 width, u32 height)
- {
- 	switch (hfi_fmt) {
-@@ -634,6 +704,12 @@ u32 venus_helper_get_framesz_raw(u32 hfi_fmt, u32 width, u32 height)
- 		return get_framesize_raw_nv12(width, height);
- 	case HFI_COLOR_FORMAT_NV12_UBWC:
- 		return get_framesize_raw_nv12_ubwc(width, height);
-+	case HFI_COLOR_FORMAT_P010:
-+		return get_framesize_raw_p010(width, height);
-+	case HFI_COLOR_FORMAT_P010_UBWC:
-+		return get_framesize_raw_p010_ubwc(width, height);
-+	case HFI_COLOR_FORMAT_YUV420_TP10_UBWC:
-+		return get_framesize_raw_yuv420_tp10_ubwc(width, height);
- 	default:
- 		return 0;
- 	}
-@@ -1235,6 +1311,27 @@ int venus_helper_get_out_fmts(struct venus_inst *inst, u32 v4l2_fmt,
- 	if (!caps)
- 		return -EINVAL;
- 
-+	if (inst->bit_depth == VIDC_BITDEPTH_10 &&
-+	    inst->session_type == VIDC_SESSION_TYPE_DEC) {
-+		found_ubwc =
-+			find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT,
-+					   HFI_COLOR_FORMAT_YUV420_TP10_UBWC);
-+		found = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT2,
-+					   HFI_COLOR_FORMAT_NV12);
-+		if (found_ubwc && found) {
-+			/*
-+			 * Hard-code DPB buffers to be 10bit UBWC and decoder
-+			 * output buffers in 8bit NV12 until V4L2 is able to
-+			 * expose compressed/tiled formats to applications.
-+			 */
-+			*out_fmt = HFI_COLOR_FORMAT_YUV420_TP10_UBWC;
-+			*out2_fmt = HFI_COLOR_FORMAT_NV12;
-+			return 0;
-+		}
-+
-+		return -EINVAL;
-+	}
-+
- 	if (ubwc) {
- 		ubwc_fmt = fmt | HFI_COLOR_FORMAT_UBWC_BASE;
- 		found_ubwc = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT,
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index 2a47f6c0a07a..0b4597c73fb5 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -793,6 +793,9 @@ struct hfi_h264_vui_timing_info {
- 	u32 time_scale;
- };
- 
-+#define VIDC_BITDEPTH_8		0
-+#define VIDC_BITDEPTH_10	1
-+
- struct hfi_bit_depth {
- 	u32 buffer_type;
- 	u32 bit_depth;
-@@ -841,8 +844,10 @@ struct hfi_extradata_input_crop {
- #define HFI_COLOR_FORMAT_10_BIT_BASE		0x4000
- 
- #define HFI_COLOR_FORMAT_YUV420_TP10		0x4002
-+#define HFI_COLOR_FORMAT_P010			0x4003
- #define HFI_COLOR_FORMAT_NV12_UBWC		0x8002
- #define HFI_COLOR_FORMAT_YUV420_TP10_UBWC	0xc002
-+#define HFI_COLOR_FORMAT_P010_UBWC		0xc003
- #define HFI_COLOR_FORMAT_RGBA8888_UBWC		0x8010
- 
- struct hfi_uncompressed_format_select {
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 7b7a4f3377cf..eeff0d8e46b2 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1172,7 +1172,7 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
- static void vdec_event_change(struct venus_inst *inst,
- 			      struct hfi_event_data *ev_data, bool sufficient)
- {
--	static const struct v4l2_event ev = {
-+	struct v4l2_event ev = {
- 		.type = V4L2_EVENT_SOURCE_CHANGE,
- 		.u.src_change.changes = V4L2_EVENT_SRC_CH_RESOLUTION };
- 	struct device *dev = inst->core->dev_dec;
-@@ -1193,6 +1193,11 @@ static void vdec_event_change(struct venus_inst *inst,
- 	inst->out_width = ev_data->width;
- 	inst->out_height = ev_data->height;
- 
-+	if (inst->bit_depth != ev_data->bit_depth) {
-+		inst->bit_depth = ev_data->bit_depth;
-+		ev.u.src_change.changes |= V4L2_EVENT_SRC_CH_COLOR_DEPTH;
-+	}
-+
- 	dev_dbg(dev, "event %s sufficient resources (%ux%u)\n",
- 		sufficient ? "" : "not", ev_data->width, ev_data->height);
- 
-@@ -1340,6 +1345,7 @@ static int vdec_open(struct file *file)
- 	inst->buf_count = 0;
- 	inst->clk_data.core_id = VIDC_CORE_ID_DEFAULT;
- 	inst->core_acquired = false;
-+	inst->bit_depth = VIDC_BITDEPTH_8;
- 	init_waitqueue_head(&inst->reconf_wait);
- 	venus_helper_init_instance(inst);
- 
--- 
-2.17.1
-
+Neil
