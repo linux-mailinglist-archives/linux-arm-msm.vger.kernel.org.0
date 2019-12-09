@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 836F31176AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2019 20:59:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9AB61176BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2019 20:59:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727145AbfLIT6V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Dec 2019 14:58:21 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:33082 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727140AbfLIT6T (ORCPT
+        id S1727193AbfLIT61 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Dec 2019 14:58:27 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:44976 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727067AbfLIT6V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Dec 2019 14:58:19 -0500
-Received: by mail-pg1-f193.google.com with SMTP id 6so7648816pgk.0;
-        Mon, 09 Dec 2019 11:58:19 -0800 (PST)
+        Mon, 9 Dec 2019 14:58:21 -0500
+Received: by mail-pj1-f68.google.com with SMTP id w5so6322761pjh.11;
+        Mon, 09 Dec 2019 11:58:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SbJEFogy5XAFY4TYFLgBXitNAQgdKkyYMT58Qy+43jg=;
-        b=XmA+olZeCpYR11cQzmQbfmvSmN+IsE5uP9rv7i1vzOAVv6sHuoqZB4DbaFo+TnEN6P
-         ahp2GcHUxJXqGF/tK5PkLADRoVeuhewH39dnTizx+bjFZkJQIJ67B2i6c7LAASdyiY8J
-         t7d/5vEb3E2E7isAub58n5W8bkd0MtGCPnMnAp2uhldQbbB6navMyR1iHAgrjKUZItA3
-         fs610lOV5eUsTnczYIWv8AbQLoo1J3ll4yes4ACWDPLMSqNQwk5uWiBXaONxm30aUAqt
-         RpL9Dyp77o5wk4KUD09lSJCO3D2Opi0JJKC4YZCnDQX70pNmIZT1hyA/NdV2kQuGmQX2
-         sjxw==
+        bh=DWgsVIOY0rpTchqlnxprL9pMKe3eJBtHdih5dvZI1YU=;
+        b=UVr8525x5PR1hCXi/zc6ClYrCBsS4xSdyLch11+WjRQOqJozOqeVeVVTG6Fa9LZrU2
+         9KBra6bw+soHXLUDgepf5rziEirRM/1eanxbjgSrCsKhfH1HL6sD0I1OAgr1PXYpOnSV
+         p88wyUs/6BZI8luz+1s13LeOqylfYMAiJhtviRBQOg9BH7w94Ab1GgeUmFDqUrfkURAj
+         sNXUg7jhFcimeceKhDc6r/PFwqgMOkhKCfEKjUB5NdzfuzH28wTt56kgMT4njq/IBZqb
+         XVh2xGpdmlY05wDhjWPOIgE3MKTspZQabX6QRYp62YM/MtYctDAvtyX9QxHohacsM8Lv
+         pURQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=SbJEFogy5XAFY4TYFLgBXitNAQgdKkyYMT58Qy+43jg=;
-        b=Ci5ALBKW17SVnL8Tv7WtBBDpEpTyJpvOwJhRhSXP/zJ8v5ymBuU0anlWiIWnINUhIo
-         XJyAYINep9lYiBBLYUQym7kbmJ04Vb3BSf2eCdrjBIbNJlhRrGaFElnfjruGMBcU5oA7
-         pPYqZmkn7oXTMThg4tyeWW01S197WuaUUmyLeH3dd0voTGJ4KIbgjAC5H6IW7cBpZvU7
-         /pEoXDimrilyqKlXYnn5KrMXsN6OTDkvLY9ueHFkBcxsl4oARKGLqLJ9P53Rp3IK0pyp
-         VWy9AWjuHNo49FpMxlTGvecVW86yhXN2eN5eucvJJ8DkS93O786IUlD+yNqfgxd2g9Us
-         rSvw==
-X-Gm-Message-State: APjAAAXlQgkWLAfd/Uce/seeHHpsMmIHYHj+S5By9k9uO5Oh88FeJ9Ku
-        QhBkY00lSK3xEJ4hLMVqWBY=
-X-Google-Smtp-Source: APXvYqztL0uynR1jfq6nvIVhCUpiCpIkwcvVJW0DmeVnGKgqbUuTQpHioHk3H4rrikSuYpAy2AXhKg==
-X-Received: by 2002:a63:4503:: with SMTP id s3mr20541879pga.311.1575921498910;
-        Mon, 09 Dec 2019 11:58:18 -0800 (PST)
+        bh=DWgsVIOY0rpTchqlnxprL9pMKe3eJBtHdih5dvZI1YU=;
+        b=D5HjPORaDfEmi2jwPNQtIuLpFbiCxlcuStrg1EmCOwganMx/0uY0GZBZzfzxIbTHcP
+         1Xbg8gjreYfAZeq08D7gRh9Xaj/5Aed9al6mzRg+xX5YVSMsZQjdGiXEL/Ma+ZewGv1A
+         GiCUQhCoFxLDMqMZq9VxWIVU0uk7OK0BqAj/2z1OMSf8sLNhcHZ9JwOnbtwGgNBrAeS0
+         Wml5Pv2Luac19Ibj2LuQy7IeFEVTrvWtkzFJSZLznTE1+/074xUA6XPFu0kbn0TZgaXk
+         INWCs7Mlx40cA8ZK3WxNyLlH/e1+cF0ggY3JKYE5KPcFoITxEO0bz6GtzmJHXxtOT0eB
+         /1oA==
+X-Gm-Message-State: APjAAAWbHs+ZqNW2DbNWkVPci/pUDRRr3x+m4bmH4PGKXNSctnt8JYbc
+        j+7TmSKqCnG2ZZfo6d4hQ7k=
+X-Google-Smtp-Source: APXvYqwKZyxJmpNNkafn9EdnP/h1LD/E4A0E7uVKQmtBTcyTdH/ma+S37ykzthLJxJAbBvrOHqREvw==
+X-Received: by 2002:a17:90a:7bc3:: with SMTP id d3mr924437pjl.86.1575921500696;
+        Mon, 09 Dec 2019 11:58:20 -0800 (PST)
 Received: from localhost ([2001:19f0:6001:12c8:5400:2ff:fe72:6403])
-        by smtp.gmail.com with ESMTPSA id f18sm289935pfk.124.2019.12.09.11.58.18
+        by smtp.gmail.com with ESMTPSA id u3sm365617pga.72.2019.12.09.11.58.20
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Dec 2019 11:58:18 -0800 (PST)
+        Mon, 09 Dec 2019 11:58:20 -0800 (PST)
 From:   Yangtao Li <tiny.windzz@gmail.com>
 To:     afaerber@suse.de, manivannan.sadhasivam@linaro.org,
         mturquette@baylibre.com, sboyd@kernel.org,
@@ -69,9 +69,9 @@ Cc:     linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
         linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
         linux-tegra@vger.kernel.org, linux-mediatek@lists.infradead.org,
         Yangtao Li <tiny.windzz@gmail.com>
-Subject: [PATCH 11/17] clk: milbeaut: convert to devm_platform_ioremap_resource
-Date:   Mon,  9 Dec 2019 19:57:43 +0000
-Message-Id: <20191209195749.868-11-tiny.windzz@gmail.com>
+Subject: [PATCH 12/17] clk: socfpga: convert to devm_platform_ioremap_resource
+Date:   Mon,  9 Dec 2019 19:57:44 +0000
+Message-Id: <20191209195749.868-12-tiny.windzz@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191209195749.868-1-tiny.windzz@gmail.com>
 References: <20191209195749.868-1-tiny.windzz@gmail.com>
@@ -84,29 +84,26 @@ Use devm_platform_ioremap_resource() to simplify code.
 
 Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
 ---
- drivers/clk/clk-milbeaut.c | 4 +---
+ drivers/clk/socfpga/clk-s10.c | 4 +---
  1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/clk/clk-milbeaut.c b/drivers/clk/clk-milbeaut.c
-index 80b9d78493bc..05f09fbfb80a 100644
---- a/drivers/clk/clk-milbeaut.c
-+++ b/drivers/clk/clk-milbeaut.c
-@@ -560,14 +560,12 @@ static void m10v_reg_mux_pre(const struct m10v_clk_mux_factors *factors,
- static int m10v_clk_probe(struct platform_device *pdev)
- {
- 	int id;
--	struct resource *res;
+diff --git a/drivers/clk/socfpga/clk-s10.c b/drivers/clk/socfpga/clk-s10.c
+index 993f3a73c71e..85055fc56404 100644
+--- a/drivers/clk/socfpga/clk-s10.c
++++ b/drivers/clk/socfpga/clk-s10.c
+@@ -276,11 +276,9 @@ static struct stratix10_clock_data *__socfpga_s10_clk_init(struct platform_devic
  	struct device *dev = &pdev->dev;
- 	struct device_node *np = dev->of_node;
+ 	struct stratix10_clock_data *clk_data;
+ 	struct clk **clk_table;
+-	struct resource *res;
  	void __iomem *base;
- 	const char *parent_name;
  
 -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 -	base = devm_ioremap_resource(dev, res);
 +	base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
- 
+ 	if (IS_ERR(base)) {
+ 		pr_err("%s: failed to map clock registers\n", __func__);
+ 		return ERR_CAST(base);
 -- 
 2.17.1
 
