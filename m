@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0236D116FD4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2019 16:05:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B1706117012
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Dec 2019 16:14:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726197AbfLIPFI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Dec 2019 10:05:08 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:52718 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725956AbfLIPFI (ORCPT
+        id S1726265AbfLIPOK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Dec 2019 10:14:10 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36862 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726197AbfLIPOK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Dec 2019 10:05:08 -0500
-Received: by mail-wm1-f68.google.com with SMTP id p9so15841207wmc.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2019 07:05:07 -0800 (PST)
+        Mon, 9 Dec 2019 10:14:10 -0500
+Received: by mail-wr1-f65.google.com with SMTP id z3so16641498wru.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2019 07:14:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=HqzXtV+pb4cH+4c6+BjizDGft/5s2rVRw3okVlVpKkE=;
-        b=OxmgWm98wnnUR1SbqmOw59l8mdpot7IgfCogy2Wv9XF4MeWrljQXnF6psHclJgvJAu
-         ir3Ujsh4uUJXRtkWU7XkkQvZIK/KZibwnuRyOPgp9mIj7FJJPc9sWfJ7hc7zwwnVaD1f
-         hh6PDe8fgn/eT6Vpse5rS3sTNYwqMqeRwZEujOSYZBHdwIWwPnlJJaklXa+Nz2tKZByf
-         Sj9WyImGkDraYecBYPkBww2y51vrxxcIKNBUZ8x7iLygcvuSF91O6uRTWEAplt8zU0CT
-         /eqdFG7jTB8c+d08irEQ7jzybeelB8diPOz1ZB5UH4bHftP/po95gzLlReHHPhUDM0NG
-         mh8A==
+        bh=seR2eR4oF+9mUqkJVZpxUp4ywuAuiYupPHrHVsyLleM=;
+        b=m5vIl0bN8GcddkonWrQti/f5RKhrXWiFxRd4S2Mix1D9ozLn+8PPOxRE/YZvesTICW
+         1K5XAv9/Yk5KvqNJ667vEghUpOd3vIlGhe2iYfP5kDgmMdHiY2nbBCnUq075v0K51Tj7
+         HNv0nlEYtZ6+pBttGGaxHOZi6sQWxRFNJFFY/w2qh6ehguyNOWEWDPPlDlQUcXeWLFXJ
+         07e6w0Vsi+VjwwKQmUjEEMpo3uNqTViwhdz7ob+WNKzWb+Vo0V1RIeUAlPLLiGa48TEX
+         Ai7BqC32FJOItNd5j8i9WOw7+rEexre+q7egDDgysH+KG6oBfmiGrHvj5VA0defdaowY
+         1IUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=HqzXtV+pb4cH+4c6+BjizDGft/5s2rVRw3okVlVpKkE=;
-        b=D7MgZm16t8uPhJE65N8pZW5eQwQHF7DRSwSv8ikDzLULwP/9lAmc7N7gLtR9KxQO4E
-         PuUQBdPRt1QQetIZh+cy+1HuLx4A9VT0tpp49NvQku49B+b99c33JbRm9v5DVqXmI/7s
-         fHdhST0YYaUxqM74o2jpTzuVw+hBByp92ilQl2cUIdVX0aidCQoEhTDrkZblZsCJiiHA
-         cJhKqgr4ZMGqZQuKKi92YaX3Y+at/1Ev5nQJm7eg7gxFKOUSqKOIBDF+jqiQEj786fsf
-         iO+acE8FJ3wdXVgN0M9vTq+4sjjs07rvWm3Szdv/K2P7S1H+hZbeLjZA6GcPegIRp5FP
-         YK+w==
-X-Gm-Message-State: APjAAAWEkIlQeCjXpYuEb1ndODhvYvvAlUSwNcpdUjLteKgzyqv1bFJd
-        ECXjLCnzFhk4Tr9Fw0Grt+s=
-X-Google-Smtp-Source: APXvYqwmzBme5Is0rDq5DTl98wm3y7njVVkVyN18G4+5QPDgkWpTIc5UqwXI3wwfN0ScWY1U1yL9Ow==
-X-Received: by 2002:a05:600c:2488:: with SMTP id 8mr7453533wms.152.1575903906312;
-        Mon, 09 Dec 2019 07:05:06 -0800 (PST)
+        bh=seR2eR4oF+9mUqkJVZpxUp4ywuAuiYupPHrHVsyLleM=;
+        b=b08gO8x9l3EkvAkHQ8gwJmMsJTq335q32vDzp8IVbgv6RUPA6cFfP8Y85c6IGyAl9c
+         FYTCzAkHHhn5Ae1n4tbjLjmA3CvK31gqJy5tLcil5QNf5c5lS2LZfyZhlIps5YGRE6t1
+         pdmPCG0f9ySc+g3XR99VxJwcnRGBULMblH/9lBEBBBr2HF3AuRiXIPoDp7wlMtweBf9d
+         SJnSxAMiw68UUP9VYgvX5W/s3pL6Mv6+5vGMakE7Glz6gldOuVnxu4KO/G6NWoCfwWc2
+         aSvUcnA4tJFM/OH+NzhS0eOldrNdVP6F/nttJn2c3/h/RVZgJU8iTb4CANqQ9xzLzY9t
+         IluA==
+X-Gm-Message-State: APjAAAWzwmeGfUXxgrhedB6/LBXKDJDfg8tzWDs4j1HFESUBCbXlPCkA
+        enTM4GmBDHFx0pdQYnG5aaMfEPJy
+X-Google-Smtp-Source: APXvYqyCiG5wOKi0eJaYMirLTK/MPN/s5q3LBvUpd0jatqDvV0nZzhmjwhegtqoMyxDlVndMArScKg==
+X-Received: by 2002:a5d:5704:: with SMTP id a4mr2750029wrv.198.1575904448221;
+        Mon, 09 Dec 2019 07:14:08 -0800 (PST)
 Received: from gmail.com (net-130-25-95-221.cust.vodafonedsl.it. [130.25.95.221])
-        by smtp.gmail.com with ESMTPSA id t5sm27521229wrr.35.2019.12.09.07.05.05
+        by smtp.gmail.com with ESMTPSA id q3sm28189522wrn.33.2019.12.09.07.14.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Dec 2019 07:05:05 -0800 (PST)
+        Mon, 09 Dec 2019 07:14:07 -0800 (PST)
 From:   Paolo Pisati <p.pisati@gmail.com>
 To:     Andy Gross <agross@kernel.org>,
         Amit Pundir <amit.pundir@linaro.org>,
         Manu Gautam <mgautam@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2] arm64: dts: qcom: msm8996: Disable USB2 PHY suspend by core
-Date:   Mon,  9 Dec 2019 16:05:05 +0100
-Message-Id: <20191209150505.26099-1-p.pisati@gmail.com>
+Subject: [PATCH v2] clk: qcom: Drop gcc_aggre1_pnoc_ahb_clk clock
+Date:   Mon,  9 Dec 2019 16:14:07 +0100
+Message-Id: <20191209151407.26886-1-p.pisati@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191205161505.15295-2-p.pisati@gmail.com>
 References: <20191205161505.15295-2-p.pisati@gmail.com>
@@ -61,44 +61,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Manu Gautam <mgautam@codeaurora.org>
+From: Amit Pundir <amit.pundir@linaro.org>
 
-QUSB2 PHY on msm8996 doesn't work well when autosuspend by
-dwc3 core using USB2PHYCFG register is enabled. One of the
-issue seen is that PHY driver reports PLL lock failure and
-fails phy_init() if dwc3 core has USB2 PHY suspend enabled.
-Fix this by using quirks to disable USB2 PHY LPM/suspend and
-dwc3 core already takes care of explicitly suspending PHY
-during suspend if quirks are specified.
+Clock "gcc_aggre1_pnoc_ahb_clk" added in QcomLT commit 9a108d744fda
+("clk: qcom: Add some missing gcc clks for msm8996"), broke USB
+gagdets for db820c. So drop it for now and re-visit the dropped
+changes while submitting it upstream.
 
-Signed-off-by: Manu Gautam <mgautam@codeaurora.org>
+Fixes: 9a108d744fda ("clk: qcom: Add some missing gcc clks for msm8996")
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
 Signed-off-by: Paolo Pisati <p.pisati@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/qcom/gcc-msm8996.c | 15 ---------------
+ 1 file changed, 15 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 87f4d9c..fbb8ce7 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1598,6 +1598,8 @@
- 				interrupts = <0 138 IRQ_TYPE_LEVEL_HIGH>;
- 				phys = <&hsusb_phy2>;
- 				phy-names = "usb2-phy";
-+				snps,dis_u2_susphy_quirk;
-+				snps,dis_enblslpm_quirk;
- 			};
- 		};
+diff --git a/drivers/clk/qcom/gcc-msm8996.c b/drivers/clk/qcom/gcc-msm8996.c
+index d004cda..c1e1148 100644
+--- a/drivers/clk/qcom/gcc-msm8996.c
++++ b/drivers/clk/qcom/gcc-msm8996.c
+@@ -2937,20 +2937,6 @@ static struct clk_branch gcc_smmu_aggre0_ahb_clk = {
+ 	},
+ };
  
-@@ -1628,6 +1630,8 @@
- 				interrupts = <0 131 IRQ_TYPE_LEVEL_HIGH>;
- 				phys = <&hsusb_phy1>, <&ssusb_phy_0>;
- 				phy-names = "usb2-phy", "usb3-phy";
-+				snps,dis_u2_susphy_quirk;
-+				snps,dis_enblslpm_quirk;
- 			};
- 		};
- 
+-static struct clk_branch gcc_aggre1_pnoc_ahb_clk = {
+-	.halt_reg = 0x82014,
+-	.clkr = {
+-		.enable_reg = 0x82014,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "gcc_aggre1_pnoc_ahb_clk",
+-			.parent_names = (const char *[]){ "periph_noc_clk_src" },
+-			.num_parents = 1,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+ static struct clk_branch gcc_aggre2_ufs_axi_clk = {
+ 	.halt_reg = 0x83014,
+ 	.clkr = {
+@@ -3453,7 +3439,6 @@ static struct clk_regmap *gcc_msm8996_clocks[] = {
+ 	[GCC_AGGRE0_CNOC_AHB_CLK] = &gcc_aggre0_cnoc_ahb_clk.clkr,
+ 	[GCC_SMMU_AGGRE0_AXI_CLK] = &gcc_smmu_aggre0_axi_clk.clkr,
+ 	[GCC_SMMU_AGGRE0_AHB_CLK] = &gcc_smmu_aggre0_ahb_clk.clkr,
+-	[GCC_AGGRE1_PNOC_AHB_CLK] = &gcc_aggre1_pnoc_ahb_clk.clkr,
+ 	[GCC_AGGRE2_UFS_AXI_CLK] = &gcc_aggre2_ufs_axi_clk.clkr,
+ 	[GCC_AGGRE2_USB3_AXI_CLK] = &gcc_aggre2_usb3_axi_clk.clkr,
+ 	[GCC_QSPI_AHB_CLK] = &gcc_qspi_ahb_clk.clkr,
 -- 
 2.7.4
 
