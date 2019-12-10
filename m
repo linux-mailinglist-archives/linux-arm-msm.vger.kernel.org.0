@@ -2,36 +2,35 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BCCAE11995E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 22:47:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 15F011198FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 22:46:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727435AbfLJVpr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Dec 2019 16:45:47 -0500
-Received: from mail.kernel.org ([198.145.29.99]:36766 "EHLO mail.kernel.org"
+        id S1728428AbfLJVls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Dec 2019 16:41:48 -0500
+Received: from mail.kernel.org ([198.145.29.99]:39040 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728133AbfLJVcy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Dec 2019 16:32:54 -0500
+        id S1729946AbfLJVeJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Dec 2019 16:34:09 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8F684207FF;
-        Tue, 10 Dec 2019 21:32:53 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6FB75214AF;
+        Tue, 10 Dec 2019 21:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576013574;
-        bh=mvXvOd2QmF66LP5aLAmLb7idpOcK3Y9vW51ob+koF4I=;
+        s=default; t=1576013648;
+        bh=I+5M1OvBvnbIsuIuCY91jspDv+zgNxKjT1mXgmBQd8w=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=XKH1RvXSqaA+mycOTuGr+JYX+caiY9YA2jL2SHex3M+l1121CFt7L/bmDZVCSfDU4
-         VRm0QppHgH3cdfutLapeoOf5PWxZDlh/gKmahRboff23uFmXlyrZHVRBPUpe2DK1Tp
-         OvzafCk3DQiB62/7Vl8BR2pRbyGpiA28KOk0haP0=
+        b=mFxcBu7bTjbK9tAaHpVtQ/TYDGCWMv7Sv0xsEKBHHe9rEMuKMDTbq+9R/j/ZgqSDE
+         oGJQpNlHMuUQAXasZH/MZ9RIKfqt3B5m49E2///1T+Gqfsgz+4q0vfVz5Mp5/ZmMTE
+         WW7pN75wt+KrgCJmJNECI2WoXwv4zFZYyxPiKGEA=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 027/177] media: venus: Fix occasionally failures to suspend
-Date:   Tue, 10 Dec 2019 16:29:51 -0500
-Message-Id: <20191210213221.11921-27-sashal@kernel.org>
+Cc:     Stephan Gerhold <stephan@gerhold.net>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 087/177] phy: qcom-usb-hs: Fix extcon double register after power cycle
+Date:   Tue, 10 Dec 2019 16:30:51 -0500
+Message-Id: <20191210213221.11921-87-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191210213221.11921-1-sashal@kernel.org>
 References: <20191210213221.11921-1-sashal@kernel.org>
@@ -44,55 +43,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-[ Upstream commit 8dbebb2bd01e6f36e9a215dcde99ace70408f2c8 ]
+[ Upstream commit 64f86b9978449ff05bfa6c64b4c5439e21e9c80b ]
 
-Failure to suspend (venus_suspend_3xx) happens when the system
-is fresh booted and loading venus driver. This happens once and
-after reload the venus driver modules the problem disrepair.
+Commit f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
+switched from extcon_register_notifier() to the resource-managed
+API, i.e. devm_extcon_register_notifier().
 
-Fix the failure by skipping the check for WFI and IDLE bits if
-PC_READY is on in control status register.
+This is problematic in this case, because the extcon notifier
+is dynamically registered/unregistered whenever the PHY is powered
+on/off. The resource-managed API does not unregister the notifier
+until the driver is removed, so as soon as the PHY is power cycled,
+attempting to register the notifier again results in:
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
+	double register detected
+	WARNING: CPU: 1 PID: 182 at kernel/notifier.c:26 notifier_chain_register+0x74/0xa0
+	Call trace:
+	 ...
+	 extcon_register_notifier+0x74/0xb8
+	 devm_extcon_register_notifier+0x54/0xb8
+	 qcom_usb_hs_phy_power_on+0x1fc/0x208
+	 ...
+
+... and USB stops working after plugging the cable out and in
+another time.
+
+The easiest way to fix this is to make a partial revert of
+commit f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
+and avoid using the resource-managed API in this case.
+
+Fixes: f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Signed-off-by: Kishon Vijay Abraham I <kishon@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-usb-hs.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index 124085556b94b..fbcc67c10993f 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -1484,6 +1484,7 @@ static int venus_suspend_3xx(struct venus_core *core)
- {
- 	struct venus_hfi_device *hdev = to_hfi_priv(core);
- 	struct device *dev = core->dev;
-+	u32 ctrl_status;
- 	bool val;
- 	int ret;
- 
-@@ -1499,6 +1500,10 @@ static int venus_suspend_3xx(struct venus_core *core)
- 		return -EINVAL;
+diff --git a/drivers/phy/qualcomm/phy-qcom-usb-hs.c b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
+index abbbe75070daa..5629d56a62578 100644
+--- a/drivers/phy/qualcomm/phy-qcom-usb-hs.c
++++ b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
+@@ -160,8 +160,8 @@ static int qcom_usb_hs_phy_power_on(struct phy *phy)
+ 		/* setup initial state */
+ 		qcom_usb_hs_phy_vbus_notifier(&uphy->vbus_notify, state,
+ 					      uphy->vbus_edev);
+-		ret = devm_extcon_register_notifier(&ulpi->dev, uphy->vbus_edev,
+-				EXTCON_USB, &uphy->vbus_notify);
++		ret = extcon_register_notifier(uphy->vbus_edev, EXTCON_USB,
++					       &uphy->vbus_notify);
+ 		if (ret)
+ 			goto err_ulpi;
  	}
+@@ -182,6 +182,9 @@ static int qcom_usb_hs_phy_power_off(struct phy *phy)
+ {
+ 	struct qcom_usb_hs_phy *uphy = phy_get_drvdata(phy);
  
-+	ctrl_status = venus_readl(hdev, CPU_CS_SCIACMDARG0);
-+	if (ctrl_status & CPU_CS_SCIACMDARG0_PC_READY)
-+		goto power_off;
-+
- 	/*
- 	 * Power collapse sequence for Venus 3xx and 4xx versions:
- 	 * 1. Check for ARM9 and video core to be idle by checking WFI bit
-@@ -1523,6 +1528,7 @@ static int venus_suspend_3xx(struct venus_core *core)
- 	if (ret)
- 		return ret;
- 
-+power_off:
- 	mutex_lock(&hdev->lock);
- 
- 	ret = venus_power_off(hdev);
++	if (uphy->vbus_edev)
++		extcon_unregister_notifier(uphy->vbus_edev, EXTCON_USB,
++					   &uphy->vbus_notify);
+ 	regulator_disable(uphy->v3p3);
+ 	regulator_disable(uphy->v1p8);
+ 	clk_disable_unprepare(uphy->sleep_clk);
 -- 
 2.20.1
 
