@@ -2,35 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7247C11969A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 22:28:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F35A9119608
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 22:25:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727183AbfLJV1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Dec 2019 16:27:47 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60548 "EHLO mail.kernel.org"
+        id S1727181AbfLJVYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Dec 2019 16:24:30 -0500
+Received: from mail.kernel.org ([198.145.29.99]:32886 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728526AbfLJVKc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Dec 2019 16:10:32 -0500
+        id S1727506AbfLJVKw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Dec 2019 16:10:52 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6BCBB246A3;
-        Tue, 10 Dec 2019 21:10:31 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 22B3E246AF;
+        Tue, 10 Dec 2019 21:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576012232;
-        bh=oadTmD8xMyFAJq7acvFQcDeq9NwvEcS53HvNHrBQQkY=;
+        s=default; t=1576012251;
+        bh=dC6fjqGh654ZZLwYjdy87ftZ5dG/h1Xx9eEY+r9Uk6Y=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=S/5VUTNxY0qJpaRLHBYwlQBYeXRd5H3FjmmMI+jQf05F2mEwpIjHCRevSIYKroJV6
-         VAfP0IM+DHHEyLEgNWMwaa8N+GMVW3tRaqCkWdVKmm4yc9nK2No8hXiDqpI9JqxcMs
-         M3cqjgqn1F1QwhQVwLOiEHAqz7Zq8cadRj9jCVME=
+        b=1CmsVIdVGPBbLbliVtnUKOlLgY6ihmRnVqACPBbdMKv9P7yKDxieqet1UZ0tHniLU
+         SU+w8iLDYxIyWrv63iKU+VasR0zrBfD1ceyHSVCrTG1+MHYMvfV5nW+aJKNzVimm3I
+         yip71i/qS9alvx1+OrqDgxZgmKddLo8hwDLeYlrY=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Stephan Gerhold <stephan@gerhold.net>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 181/350] phy: qcom-usb-hs: Fix extcon double register after power cycle
-Date:   Tue, 10 Dec 2019 16:04:46 -0500
-Message-Id: <20191210210735.9077-142-sashal@kernel.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 198/350] pinctrl: qcom: sc7180: Add missing tile info in SDC_QDSD_PINGROUP/UFS_RESET
+Date:   Tue, 10 Dec 2019 16:05:03 -0500
+Message-Id: <20191210210735.9077-159-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191210210735.9077-1-sashal@kernel.org>
 References: <20191210210735.9077-1-sashal@kernel.org>
@@ -43,69 +46,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Rajendra Nayak <rnayak@codeaurora.org>
 
-[ Upstream commit 64f86b9978449ff05bfa6c64b4c5439e21e9c80b ]
+[ Upstream commit 81898a44f288607cb3b11a42aed6efb646891c19 ]
 
-Commit f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
-switched from extcon_register_notifier() to the resource-managed
-API, i.e. devm_extcon_register_notifier().
+The SDC_QDSD_PINGROUP/UFS_RESET macros are missing the .tile info needed to
+calculate the right register offsets. Adding them here and also
+adjusting the offsets accordingly.
 
-This is problematic in this case, because the extcon notifier
-is dynamically registered/unregistered whenever the PHY is powered
-on/off. The resource-managed API does not unregister the notifier
-until the driver is removed, so as soon as the PHY is power cycled,
-attempting to register the notifier again results in:
+Fixes: f2ae04c45b1a ("pinctrl: qcom: Add SC7180 pinctrl driver")
 
-	double register detected
-	WARNING: CPU: 1 PID: 182 at kernel/notifier.c:26 notifier_chain_register+0x74/0xa0
-	Call trace:
-	 ...
-	 extcon_register_notifier+0x74/0xb8
-	 devm_extcon_register_notifier+0x54/0xb8
-	 qcom_usb_hs_phy_power_on+0x1fc/0x208
-	 ...
-
-... and USB stops working after plugging the cable out and in
-another time.
-
-The easiest way to fix this is to make a partial revert of
-commit f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
-and avoid using the resource-managed API in this case.
-
-Fixes: f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: Kishon Vijay Abraham I <kishon@ti.com>
+Reported-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+Link: https://lore.kernel.org/r/20191021141507.24066-1-rnayak@codeaurora.org
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-usb-hs.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-sc7180.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-usb-hs.c b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
-index b163b3a1558d5..61054272a7c8b 100644
---- a/drivers/phy/qualcomm/phy-qcom-usb-hs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
-@@ -158,8 +158,8 @@ static int qcom_usb_hs_phy_power_on(struct phy *phy)
- 		/* setup initial state */
- 		qcom_usb_hs_phy_vbus_notifier(&uphy->vbus_notify, state,
- 					      uphy->vbus_edev);
--		ret = devm_extcon_register_notifier(&ulpi->dev, uphy->vbus_edev,
--				EXTCON_USB, &uphy->vbus_notify);
-+		ret = extcon_register_notifier(uphy->vbus_edev, EXTCON_USB,
-+					       &uphy->vbus_notify);
- 		if (ret)
- 			goto err_ulpi;
- 	}
-@@ -180,6 +180,9 @@ static int qcom_usb_hs_phy_power_off(struct phy *phy)
- {
- 	struct qcom_usb_hs_phy *uphy = phy_get_drvdata(phy);
+diff --git a/drivers/pinctrl/qcom/pinctrl-sc7180.c b/drivers/pinctrl/qcom/pinctrl-sc7180.c
+index 6399c8a2bc22c..d6cfad7417b1c 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sc7180.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc7180.c
+@@ -77,6 +77,7 @@ enum {
+ 		.intr_cfg_reg = 0,			\
+ 		.intr_status_reg = 0,			\
+ 		.intr_target_reg = 0,			\
++		.tile = SOUTH,				\
+ 		.mux_bit = -1,				\
+ 		.pull_bit = pull,			\
+ 		.drv_bit = drv,				\
+@@ -102,6 +103,7 @@ enum {
+ 		.intr_cfg_reg = 0,			\
+ 		.intr_status_reg = 0,			\
+ 		.intr_target_reg = 0,			\
++		.tile = SOUTH,				\
+ 		.mux_bit = -1,				\
+ 		.pull_bit = 3,				\
+ 		.drv_bit = 0,				\
+@@ -1087,14 +1089,14 @@ static const struct msm_pingroup sc7180_groups[] = {
+ 	[116] = PINGROUP(116, WEST, qup04, qup04, _, _, _, _, _, _, _),
+ 	[117] = PINGROUP(117, WEST, dp_hot, _, _, _, _, _, _, _, _),
+ 	[118] = PINGROUP(118, WEST, _, _, _, _, _, _, _, _, _),
+-	[119] = UFS_RESET(ufs_reset, 0x97f000),
+-	[120] = SDC_QDSD_PINGROUP(sdc1_rclk, 0x97a000, 15, 0),
+-	[121] = SDC_QDSD_PINGROUP(sdc1_clk, 0x97a000, 13, 6),
+-	[122] = SDC_QDSD_PINGROUP(sdc1_cmd, 0x97a000, 11, 3),
+-	[123] = SDC_QDSD_PINGROUP(sdc1_data, 0x97a000, 9, 0),
+-	[124] = SDC_QDSD_PINGROUP(sdc2_clk, 0x97b000, 14, 6),
+-	[125] = SDC_QDSD_PINGROUP(sdc2_cmd, 0x97b000, 11, 3),
+-	[126] = SDC_QDSD_PINGROUP(sdc2_data, 0x97b000, 9, 0),
++	[119] = UFS_RESET(ufs_reset, 0x7f000),
++	[120] = SDC_QDSD_PINGROUP(sdc1_rclk, 0x7a000, 15, 0),
++	[121] = SDC_QDSD_PINGROUP(sdc1_clk, 0x7a000, 13, 6),
++	[122] = SDC_QDSD_PINGROUP(sdc1_cmd, 0x7a000, 11, 3),
++	[123] = SDC_QDSD_PINGROUP(sdc1_data, 0x7a000, 9, 0),
++	[124] = SDC_QDSD_PINGROUP(sdc2_clk, 0x7b000, 14, 6),
++	[125] = SDC_QDSD_PINGROUP(sdc2_cmd, 0x7b000, 11, 3),
++	[126] = SDC_QDSD_PINGROUP(sdc2_data, 0x7b000, 9, 0),
+ };
  
-+	if (uphy->vbus_edev)
-+		extcon_unregister_notifier(uphy->vbus_edev, EXTCON_USB,
-+					   &uphy->vbus_notify);
- 	regulator_disable(uphy->v3p3);
- 	regulator_disable(uphy->v1p8);
- 	clk_disable_unprepare(uphy->sleep_clk);
+ static const struct msm_pinctrl_soc_data sc7180_pinctrl = {
 -- 
 2.20.1
 
