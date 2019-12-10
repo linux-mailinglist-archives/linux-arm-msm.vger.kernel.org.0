@@ -2,242 +2,285 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 07036117D74
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 03:04:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 93DE2117F2C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 05:47:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726598AbfLJCEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Dec 2019 21:04:22 -0500
-Received: from mailout4.samsung.com ([203.254.224.34]:35128 "EHLO
-        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726538AbfLJCEW (ORCPT
+        id S1726996AbfLJErh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Dec 2019 23:47:37 -0500
+Received: from a27-56.smtp-out.us-west-2.amazonses.com ([54.240.27.56]:57758
+        "EHLO a27-56.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726890AbfLJErh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Dec 2019 21:04:22 -0500
-Received: from epcas1p1.samsung.com (unknown [182.195.41.45])
-        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20191210020418epoutp04311046dab4d46ed4a083aa16c0a91919~e4DmxOs8I1450614506epoutp04I;
-        Tue, 10 Dec 2019 02:04:18 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20191210020418epoutp04311046dab4d46ed4a083aa16c0a91919~e4DmxOs8I1450614506epoutp04I
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1575943458;
-        bh=JIlFhIxGiAWFjXmj8eutng+eKDk0ywJyefbSTWOuCns=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=JJQk8o7yF1js+i8wr7DbP4opuQkC18/V/d/fwlp5vdnBQjUIzATM1kk6fxI3RPdpb
-         rh7ASkXsDo+PQ7yvMHdsyb0gPx72Wzsf+zGS996PoLxs3IA7lReAemwE1J/Egerf1d
-         5FfKNG2QNaVEXPDJkF7jHjTJmB+U3FAFXzAX3t+c=
-Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
-        epcas1p3.samsung.com (KnoxPortal) with ESMTP id
-        20191210020417epcas1p3103e50cf5f2838be97d66d7844edca06~e4DmOD-n70406004060epcas1p3V;
-        Tue, 10 Dec 2019 02:04:17 +0000 (GMT)
-Received: from epsmges1p2.samsung.com (unknown [182.195.40.156]) by
-        epsnrtp4.localdomain (Postfix) with ESMTP id 47X3Jv075zzMqYl1; Tue, 10 Dec
-        2019 02:04:15 +0000 (GMT)
-Received: from epcas1p3.samsung.com ( [182.195.41.47]) by
-        epsmges1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        84.58.48498.E1DFEED5; Tue, 10 Dec 2019 11:04:14 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas1p3.samsung.com (KnoxPortal) with ESMTPA id
-        20191210020413epcas1p3e11eda64344c8e15d7781c5071e76953~e4DjAEU5S0406004060epcas1p3Q;
-        Tue, 10 Dec 2019 02:04:13 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20191210020413epsmtrp2b7f2e8b02004fb0c1daadd1d2454ecce~e4Di_LLlV2765727657epsmtrp2N;
-        Tue, 10 Dec 2019 02:04:13 +0000 (GMT)
-X-AuditID: b6c32a36-a55ff7000001bd72-dd-5deefd1ee477
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        C6.AD.10238.D1DFEED5; Tue, 10 Dec 2019 11:04:13 +0900 (KST)
-Received: from [10.113.221.102] (unknown [10.113.221.102]) by
-        epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20191210020413epsmtip2b78f213eb12d5fbee4bff5729c9aae69~e4DiI_two1930619306epsmtip2Y;
-        Tue, 10 Dec 2019 02:04:13 +0000 (GMT)
-Subject: Re: [PATCH 03/17] clk: samsung: convert to
- devm_platform_ioremap_resource
-To:     Yangtao Li <tiny.windzz@gmail.com>, afaerber@suse.de,
-        manivannan.sadhasivam@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, Eugeniy.Paltsev@synopsys.com,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, agross@kernel.org,
-        s.nawrocki@samsung.com, tomasz.figa@gmail.com, kgene@kernel.org,
-        krzk@kernel.org, palmer@sifive.com, paul.walmsley@sifive.com,
-        dinguyen@kernel.org, mripard@kernel.org, wens@csie.org,
-        emilio@elopez.com.ar, pdeschrijver@nvidia.com, pgaikwad@nvidia.com,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        matthias.bgg@gmail.com, rfontana@redhat.com,
-        gregkh@linuxfoundation.org, t-kristo@ti.com, john@phrozen.org,
-        tglx@linutronix.de, allison@lohutok.net,
-        kstewart@linuxfoundation.org, swinslow@gmail.com,
-        aisheng.dong@nxp.com, robh@kernel.org, daniel.baluta@nxp.com,
-        wangyan.wang@mediatek.com, chunhui.dai@mediatek.com,
-        miquel.raynal@bootlin.com, heiko@sntech.de, jcmvbkbc@gmail.com,
-        nsekhar@ti.com, geert+renesas@glider.be
-Cc:     linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
+        Mon, 9 Dec 2019 23:47:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1575953255;
+        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+        bh=mpAwQ0yghqGsPhLD+klLGT0jWL2m9olWHP42MbTN74M=;
+        b=h3tTN+1WLLUIqdIbkEahtkDdxI4CMkQEus8oeX+ADtUsPuVkhRc49qofDr1WQc15
+        +M3UvngO+7EM9HNzZ9i59evYYCa8udj5PAK1ycE2+L7xsT7wyg9iL8T7y/7igCM2JMP
+        eOuIrPK0Jz6Y6c2RZHrTTFc9dFoWwCztrBTb0DLw=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1575953255;
+        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding:Feedback-ID;
+        bh=mpAwQ0yghqGsPhLD+klLGT0jWL2m9olWHP42MbTN74M=;
+        b=UfqGKbFzpC3l+WSrZYhtcksQIHwZlmrC8mdyKlHJHcIAUtYD2gY+N3fgervxXp3B
+        1XXX1zFNPutBIzZtLT/ODbkvMQroEQaKGtifL0ELDaAhzd7lit71TxUpBa5JvDQ0ei4
+        pID6nShGgTM9ICFvN/7V5w+Zs9XW+A1PjcU6Bh7s=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3E672C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+Subject: Re: [PATCH 1/7] clk: qcom: add support for setting the duty cycle
+To:     Brian Masney <masneyb@onstation.org>, sboyd@kernel.org,
+        dmitry.torokhov@gmail.com, robh+dt@kernel.org
+Cc:     mark.rutland@arm.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, mturquette@baylibre.com,
+        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-tegra@vger.kernel.org, linux-mediatek@lists.infradead.org
-From:   Chanwoo Choi <cw00.choi@samsung.com>
-Organization: Samsung Electronics
-Message-ID: <02ece950-b3d2-0d1a-fd94-acb64272bc96@samsung.com>
-Date:   Tue, 10 Dec 2019 11:10:39 +0900
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101
-        Thunderbird/59.0
+        linux-clk@vger.kernel.org
+References: <20191205002503.13088-1-masneyb@onstation.org>
+ <20191205002503.13088-2-masneyb@onstation.org>
+From:   Taniya Das <tdas@codeaurora.org>
+Message-ID: <0101016eee224b83-b0577d24-8f51-4e1a-9afb-b3f518e5ba77-000000@us-west-2.amazonses.com>
+Date:   Tue, 10 Dec 2019 04:47:35 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-In-Reply-To: <20191209195749.868-3-tiny.windzz@gmail.com>
+In-Reply-To: <20191205002503.13088-2-masneyb@onstation.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA01UbTCcVxSeu+/HLo3mrUhdfrTrzbSdmBEWy9FGqq3KO22m1SYxnXSM7tg3
-        KNZ2l3z+aBKKRQbJENkS5KNKZHwOayPWEBGdYRmNSmszjZVISzdV35XQta9M/XvOc55znnvu
-        mXslhKtR4ilJUKXyGpUiiaWdyZbunb4+rz23RfvlVoVAeqMWBqwrJMwVGQmovrtKQvaDchoa
-        2i009JhviuBx/Zydqyql4OG9T6Hs+3MI0q/U0bA2PkXBwsNKBObFNhoy9JdJqClqIyHfOkWA
-        2VwvhrzSMwgarSMUFJr6xTCT94CCnH+rCRg2ltIwnD6EoGU2g4YSc4cIdHN6GiwZOgrOZARA
-        d1YHBZm6HygY+ulDMJ2tF0FTQYWd0m+FczeKENwvPwzt1joC1toNYnje2khC93QWBasjDSQ8
-        aXYH09AMgquPsmloaiwiYNl4iYSylQIaaozPEJTXLFGw3GUWhcm5p6PfiblLtSe5+vHrFPfM
-        tpcr7Pfh2vQWMddYo6O5sZF2mrMNDIg5U1mtmGu6+i03Mz0h5jL6TCR3Nt1Gcw02g4jLf+4X
-        6XEocXc8r1DyGimvik1RJqjiQtmP98d8ECMP8pP5yEIgmJWqFMl8KBu+L9InIiHJvhhWekSR
-        lGanIhVaLeu7Z7cmJS2Vl8anaFNDWV6tTFKHqHdpFcnaNFXcrtiU5Ldlfn7+crvwq8T4ptb7
-        tPq09NiPqwvoFJrwzEFOEswEYuvf42QOcpa4MgaE8+5mbwT/IPyo04SEYAHhyYV84kWJZXRR
-        LCRuIfxHbhEhBE8R7pz5jVxXbWMOYENOnSPhxuRK8Oj5CdF6QDC5Itwwf9HRi2a8senJKL2O
-        tzJe+N6SFa1jF2YPzusZdGhI5g38s9VCrePtTBTua8nY0LyC+y5OONycmBCcXlnv6EMw7vjX
-        iXKRgF/HrX+VOk6BmcdO+GZtCSkMEY6ndHdEAt6G/+xtFgvYE8/abtECPomr+27TQnE2ws2m
-        QUpIBGDTtfP2YondYSeuM/oKtBduWylDgvHL2DafR61LMOOCszNdBckOPPy7ZcPWA1/J0tEF
-        iNVvGke/aQT9phH0/5tVILIGvcqrtclxvFam9t+88EbkeLfeQQZ0eWBfF2IkiN3iUhFmi3al
-        FEe0x5O7EJYQrJtLb6adclEqjp/gNSkxmrQkXtuF5PbbLiQ8t8em2H8BVWqMTO4fEBAAgbIg
-        uUzGurtIloaiXZk4RSqfyPNqXvOiTiRx8jyFOqePvTXWkz8+Jl/8xT+n2ItNZnV7O3KrTzh7
-        tn00rwz0z6racQgHv3cNfV1w5/OXqg9ohnMj3umN3n+jmIogK4Pn3L5oCi5ee3fS+bNvhma7
-        37TU+VTNRjdUhU9KT28xHD34viHqwnKU/GB9eKLH0RK/w7bbYZMGZb+0YND45fXpT9xZUhuv
-        kHkTGq3iP+SSlHzNBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA02SbUxTZxTH89x3iJ2XouOBbXFrsiwj0YFOPSaGsCXKs2zJ/KAuminrxh26
-        0Up6QSdbMkc7pBUmmnS6y0thkCmdrqUYKdDRhK4oZlAYg+Bia7RlIcHWEBF1Ao4L2cK33/mf
-        8/t/OgKtbeYyhMPGEslk1BfpuGTmakC3bv1L84kDWf3nssDskWEw+pSBGXsXDa3XFxiojDg4
-        aPOFOQiGuin42z2zmF2oY+HO6PtQX3sWgbnZxcGzu1MszN5pQhB61MmBRfmRAae9k4HT0Ska
-        QiE3D1V15Qg80TEWzvgHeJiuirBg+6eVhpGuOg5GzMMIrj6wcHA+1EOBdUbhIGyxslBu2QSB
-        kz0sVFh/YmH4xg7wV7spaK9pXIyU1XD2sh3BTcen4Iu6aHjm8/Iw3+FhIHDvJAsLY20MTF5J
-        A//wNIKWiUoO2j12Gp50NTBQ/7SGA2fXHAKH8zELT3pDVO5mcn/8W540XPqSuO/+zJK5RB45
-        M7CedCphnnicVo7cGvNxJDE4yBN//SWetLd8TabvxXhi6fczpNqc4EhbwkuR0/NZu9L3J28v
-        kIoOH5VMb+R8lHyoveMmV/zNy19cXJhFJ1Asw4aSBCy+icPjj3gbSha0YjfCtQ/rqeVFOv5+
-        OEjbkLDIqTgQkNVYK8YRttemqJwq7sZem4tW3TXiKQH3TTWz6kCLpygc/L2C/r/V1tTGqAon
-        ZmL/5Din8mrxFTz6OIpU1og5uCo4RKvMiK/iP6NhVuW14l7c2RKllm9ScP8PsaWeJHEbNje5
-        l3po8TU81/AHvcxp+K+Yg1rmdbgjXkfXoFRlha6sUJQVirJCaUSME6VLxbKh0CBnF2cbpWMb
-        ZL1BLjUWbvjkiMGDll4383UvGmnJ70WigHSrNI25iQNaVn9UPm7oRVigdWs01yoWI02B/niZ
-        ZDqSbyotkuRe9ILA6NI0E8a+fVqxUF8ifS5JxZLpvy0lJGWcQBsrg4kJmMlNlOdt/My6J0jy
-        nfa3r2/d9MF06pbq4O7SaGVZyh783pzl+dKPW6mCdzb/MurfX+KJ73y32xlxVfhs511f3U6P
-        7NslXPwub6e/8MVfu82zQz3b4m9dmLgfL7u8d6sSueH9bXLMdpDEnsseUm5byZUBR2vfhzty
-        Dj44N69j5EP67EzaJOv/BcgKhNC2AwAA
-X-CMS-MailID: 20191210020413epcas1p3e11eda64344c8e15d7781c5071e76953
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: SVC_REQ_APPROVE
-CMS-TYPE: 101P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20191209195912epcas5p2759273f3c5b15df7e78285e5db964ee5
-References: <20191209195749.868-1-tiny.windzz@gmail.com>
-        <CGME20191209195912epcas5p2759273f3c5b15df7e78285e5db964ee5@epcas5p2.samsung.com>
-        <20191209195749.868-3-tiny.windzz@gmail.com>
+X-SES-Outgoing: 2019.12.10-54.240.27.56
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Brian,
 
-On 12/10/19 4:57 AM, Yangtao Li wrote:
-> Use devm_platform_ioremap_resource() to simplify code.
+On 12/5/2019 5:54 AM, Brian Masney wrote:
+> Add support for setting the duty cycle via the D register for the
+> Qualcomm clocks.
 > 
-> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
+> Signed-off-by: Brian Masney <masneyb@onstation.org>
 > ---
->  drivers/clk/samsung/clk-exynos-audss.c   | 4 +---
->  drivers/clk/samsung/clk-exynos4412-isp.c | 4 +---
->  drivers/clk/samsung/clk-exynos5433.c     | 4 +---
->  drivers/clk/samsung/clk-s5pv210-audss.c  | 4 +---
->  4 files changed, 4 insertions(+), 12 deletions(-)
+> A few quirks that were noted when varying the speed of CAMSS_GP1_CLK on
+> msm8974 (Nexus 5 phone):
 > 
-> diff --git a/drivers/clk/samsung/clk-exynos-audss.c b/drivers/clk/samsung/clk-exynos-audss.c
-> index 42b5d32c6cc7..9cc127a162ad 100644
-> --- a/drivers/clk/samsung/clk-exynos-audss.c
-> +++ b/drivers/clk/samsung/clk-exynos-audss.c
-> @@ -129,7 +129,6 @@ static int exynos_audss_clk_probe(struct platform_device *pdev)
->  	struct clk *pll_ref, *pll_in, *cdclk, *sclk_audio, *sclk_pcm_in;
->  	const struct exynos_audss_clk_drvdata *variant;
->  	struct clk_hw **clk_table;
-> -	struct resource *res;
->  	struct device *dev = &pdev->dev;
->  	int i, ret = 0;
->  
-> @@ -137,8 +136,7 @@ static int exynos_audss_clk_probe(struct platform_device *pdev)
->  	if (!variant)
->  		return -EINVAL;
->  
-> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	reg_base = devm_ioremap_resource(dev, res);
-> +	reg_base = devm_platform_ioremap_resource(pdev, 0);
->  	if (IS_ERR(reg_base))
->  		return PTR_ERR(reg_base);
->  
-> diff --git a/drivers/clk/samsung/clk-exynos4412-isp.c b/drivers/clk/samsung/clk-exynos4412-isp.c
-> index 4b9e73608c21..20f5129f7212 100644
-> --- a/drivers/clk/samsung/clk-exynos4412-isp.c
-> +++ b/drivers/clk/samsung/clk-exynos4412-isp.c
-> @@ -110,11 +110,9 @@ static int __init exynos4x12_isp_clk_probe(struct platform_device *pdev)
->  	struct samsung_clk_provider *ctx;
->  	struct device *dev = &pdev->dev;
->  	struct device_node *np = dev->of_node;
-> -	struct resource *res;
->  	void __iomem *reg_base;
->  
-> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	reg_base = devm_ioremap_resource(dev, res);
-> +	reg_base = devm_platform_ioremap_resource(pdev, 0);
->  	if (IS_ERR(reg_base)) {
->  		dev_err(dev, "failed to map registers\n");
->  		return PTR_ERR(reg_base);
-> diff --git a/drivers/clk/samsung/clk-exynos5433.c b/drivers/clk/samsung/clk-exynos5433.c
-> index 4b1aa9382ad2..b0d48cddfd6e 100644
-> --- a/drivers/clk/samsung/clk-exynos5433.c
-> +++ b/drivers/clk/samsung/clk-exynos5433.c
-> @@ -5557,7 +5557,6 @@ static int __init exynos5433_cmu_probe(struct platform_device *pdev)
->  	struct exynos5433_cmu_data *data;
->  	struct samsung_clk_provider *ctx;
->  	struct device *dev = &pdev->dev;
-> -	struct resource *res;
->  	void __iomem *reg_base;
->  	int i;
->  
-> @@ -5570,8 +5569,7 @@ static int __init exynos5433_cmu_probe(struct platform_device *pdev)
->  		return -ENOMEM;
->  	ctx = &data->ctx;
->  
-> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	reg_base = devm_ioremap_resource(dev, res);
-> +	reg_base = devm_platform_ioremap_resource(pdev, 0);
->  	if (IS_ERR(reg_base))
->  		return PTR_ERR(reg_base);
->  
-> diff --git a/drivers/clk/samsung/clk-s5pv210-audss.c b/drivers/clk/samsung/clk-s5pv210-audss.c
-> index 14985ebd043b..503bd8a10d8f 100644
-> --- a/drivers/clk/samsung/clk-s5pv210-audss.c
-> +++ b/drivers/clk/samsung/clk-s5pv210-audss.c
-> @@ -63,15 +63,13 @@ static struct syscore_ops s5pv210_audss_clk_syscore_ops = {
->  static int s5pv210_audss_clk_probe(struct platform_device *pdev)
->  {
->  	int i, ret = 0;
-> -	struct resource *res;
->  	const char *mout_audss_p[2];
->  	const char *mout_i2s_p[3];
->  	const char *hclk_p;
->  	struct clk_hw **clk_table;
->  	struct clk *hclk, *pll_ref, *pll_in, *cdclk, *sclk_audio;
->  
-> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	reg_base = devm_ioremap_resource(&pdev->dev, res);
-> +	reg_base = devm_platform_ioremap_resource(pdev, 0);
->  	if (IS_ERR(reg_base)) {
->  		dev_err(&pdev->dev, "failed to map audss registers\n");
->  		return PTR_ERR(reg_base);
+>    - The mnd_width is set to 8 bits, however the d width is actually 7
+>      bits, at least for this clock. I'm not sure about the other clocks.
+> 
+>    - When the d register has a value less than 17, the following error
+>      from update_config() is shown: rcg didn't update its configuration.
+>      So this patch keeps the value of the d register within the range
+>      [17, 127].
+> 
+> I'm not sure about the relationship of the m, n, and d values,
+> especially how the 50% duty cycle is calculated by inverting the n
+> value, so that's why I'm saving the duty cycle ratio for
+> get_duty_cycle().
+> 
+>   drivers/clk/qcom/clk-rcg.h  |  4 +++
+>   drivers/clk/qcom/clk-rcg2.c | 61 +++++++++++++++++++++++++++++++++++--
+>   2 files changed, 63 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
+> index 78358b81d249..c3b8732cec8f 100644
+> --- a/drivers/clk/qcom/clk-rcg.h
+> +++ b/drivers/clk/qcom/clk-rcg.h
+> @@ -139,6 +139,8 @@ extern const struct clk_ops clk_dyn_rcg_ops;
+>    * @freq_tbl: frequency table
+>    * @clkr: regmap clock handle
+>    * @cfg_off: defines the cfg register offset from the CMD_RCGR + CFG_REG
+> + * @duty_cycle_num: Numerator of the duty cycle ratio
+> + * @duty_cycle_den: Denominator of the duty cycle ratio
+>    */
+>   struct clk_rcg2 {
+>   	u32			cmd_rcgr;
+> @@ -149,6 +151,8 @@ struct clk_rcg2 {
+>   	const struct freq_tbl	*freq_tbl;
+>   	struct clk_regmap	clkr;
+>   	u8			cfg_off;
+> +	int			duty_cycle_num;
+> +	int			duty_cycle_den;
+>   };
+>   
+>   #define to_clk_rcg2(_hw) container_of(to_clk_regmap(_hw), struct clk_rcg2, clkr)
+> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+> index 8f4b9bec2956..8d685baefe50 100644
+> --- a/drivers/clk/qcom/clk-rcg2.c
+> +++ b/drivers/clk/qcom/clk-rcg2.c
+> @@ -258,7 +258,11 @@ static int clk_rcg2_determine_floor_rate(struct clk_hw *hw,
+>   	return _freq_tbl_determine_rate(hw, rcg->freq_tbl, req, FLOOR);
+>   }
+>   
+> -static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
+> +static int __clk_rcg2_configure_with_duty_cycle(struct clk_rcg2 *rcg,
+> +						const struct freq_tbl *f,
+> +						int d_reg_val,
+> +						int duty_cycle_num,
+> +						int duty_cycle_den)
+>   {
+>   	u32 cfg, mask;
+>   	struct clk_hw *hw = &rcg->clkr.hw;
+> @@ -280,9 +284,12 @@ static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
+>   			return ret;
+>   
+>   		ret = regmap_update_bits(rcg->clkr.regmap,
+> -				RCG_D_OFFSET(rcg), mask, ~f->n);
+> +				RCG_D_OFFSET(rcg), mask, d_reg_val);
+>   		if (ret)
+>   			return ret;
+> +
+> +		rcg->duty_cycle_num = duty_cycle_num;
+> +		rcg->duty_cycle_den = duty_cycle_den;
+>   	}
+>   
+>   	mask = BIT(rcg->hid_width) - 1;
+> @@ -295,6 +302,12 @@ static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
+>   					mask, cfg);
+>   }
+>   
+> +static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
+> +{
+> +	/* Set a 50% duty cycle */
+> +	return __clk_rcg2_configure_with_duty_cycle(rcg, f, ~f->n, 1, 2);
+> +}
+> +
+>   static int clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
+>   {
+>   	int ret;
+> @@ -353,6 +366,32 @@ static int clk_rcg2_set_floor_rate_and_parent(struct clk_hw *hw,
+>   	return __clk_rcg2_set_rate(hw, rate, FLOOR);
+>   }
+>   
+> +static int clk_rcg2_get_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+> +{
+> +	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+> +
+> +	duty->num = rcg->duty_cycle_num;
+> +	duty->den = rcg->duty_cycle_den;
+> +
+> +	return 0;
+> +}
+> +
+> +static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+> +{
+> +	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+> +	int ret, d_reg_val, mask;
+> +
+> +	mask = BIT(rcg->mnd_width - 1) - 1;
+> +	d_reg_val = mask - (((mask - 17) * duty->num) / duty->den);
+> +	ret = __clk_rcg2_configure_with_duty_cycle(rcg, rcg->freq_tbl,
+> +						   d_reg_val, duty->num,
+> +						   duty->den);
+
+The duty-cycle calculation is not accurate.
+There is already a plan to submit the duty-cycle changes from my side.
+> +	if (ret)
+> +		return ret;
+> +
+> +	return update_config(rcg);
+> +}
+> +
+>   const struct clk_ops clk_rcg2_ops = {
+>   	.is_enabled = clk_rcg2_is_enabled,
+>   	.get_parent = clk_rcg2_get_parent,
+> @@ -361,6 +400,8 @@ const struct clk_ops clk_rcg2_ops = {
+>   	.determine_rate = clk_rcg2_determine_rate,
+>   	.set_rate = clk_rcg2_set_rate,
+>   	.set_rate_and_parent = clk_rcg2_set_rate_and_parent,
+> +	.get_duty_cycle = clk_rcg2_get_duty_cycle,
+> +	.set_duty_cycle = clk_rcg2_set_duty_cycle,
+>   };
+>   EXPORT_SYMBOL_GPL(clk_rcg2_ops);
+>   
+> @@ -372,6 +413,8 @@ const struct clk_ops clk_rcg2_floor_ops = {
+>   	.determine_rate = clk_rcg2_determine_floor_rate,
+>   	.set_rate = clk_rcg2_set_floor_rate,
+>   	.set_rate_and_parent = clk_rcg2_set_floor_rate_and_parent,
+> +	.get_duty_cycle = clk_rcg2_get_duty_cycle,
+> +	.set_duty_cycle = clk_rcg2_set_duty_cycle,
+>   };
+>   EXPORT_SYMBOL_GPL(clk_rcg2_floor_ops);
+>   
+> @@ -499,6 +542,8 @@ const struct clk_ops clk_edp_pixel_ops = {
+>   	.set_rate = clk_edp_pixel_set_rate,
+>   	.set_rate_and_parent = clk_edp_pixel_set_rate_and_parent,
+>   	.determine_rate = clk_edp_pixel_determine_rate,
+> +	.get_duty_cycle = clk_rcg2_get_duty_cycle,
+> +	.set_duty_cycle = clk_rcg2_set_duty_cycle,
+>   };
+>   EXPORT_SYMBOL_GPL(clk_edp_pixel_ops);
+>   
+> @@ -557,6 +602,8 @@ const struct clk_ops clk_byte_ops = {
+>   	.set_rate = clk_byte_set_rate,
+>   	.set_rate_and_parent = clk_byte_set_rate_and_parent,
+>   	.determine_rate = clk_byte_determine_rate,
+> +	.get_duty_cycle = clk_rcg2_get_duty_cycle,
+> +	.set_duty_cycle = clk_rcg2_set_duty_cycle,
+>   };
+>   EXPORT_SYMBOL_GPL(clk_byte_ops);
+>   
+> @@ -627,6 +674,8 @@ const struct clk_ops clk_byte2_ops = {
+>   	.set_rate = clk_byte2_set_rate,
+>   	.set_rate_and_parent = clk_byte2_set_rate_and_parent,
+>   	.determine_rate = clk_byte2_determine_rate,
+> +	.get_duty_cycle = clk_rcg2_get_duty_cycle,
+> +	.set_duty_cycle = clk_rcg2_set_duty_cycle,
+>   };
+>   EXPORT_SYMBOL_GPL(clk_byte2_ops);
+>   
+> @@ -717,6 +766,8 @@ const struct clk_ops clk_pixel_ops = {
+>   	.set_rate = clk_pixel_set_rate,
+>   	.set_rate_and_parent = clk_pixel_set_rate_and_parent,
+>   	.determine_rate = clk_pixel_determine_rate,
+> +	.get_duty_cycle = clk_rcg2_get_duty_cycle,
+> +	.set_duty_cycle = clk_rcg2_set_duty_cycle,
+>   };
+>   EXPORT_SYMBOL_GPL(clk_pixel_ops);
+>   
+> @@ -804,6 +855,8 @@ const struct clk_ops clk_gfx3d_ops = {
+>   	.set_rate = clk_gfx3d_set_rate,
+>   	.set_rate_and_parent = clk_gfx3d_set_rate_and_parent,
+>   	.determine_rate = clk_gfx3d_determine_rate,
+> +	.get_duty_cycle = clk_rcg2_get_duty_cycle,
+> +	.set_duty_cycle = clk_rcg2_set_duty_cycle,
+>   };
+>   EXPORT_SYMBOL_GPL(clk_gfx3d_ops);
+>   
+> @@ -942,6 +995,8 @@ const struct clk_ops clk_rcg2_shared_ops = {
+>   	.determine_rate = clk_rcg2_determine_rate,
+>   	.set_rate = clk_rcg2_shared_set_rate,
+>   	.set_rate_and_parent = clk_rcg2_shared_set_rate_and_parent,
+> +	.get_duty_cycle = clk_rcg2_get_duty_cycle,
+> +	.set_duty_cycle = clk_rcg2_set_duty_cycle,
+>   };
+>   EXPORT_SYMBOL_GPL(clk_rcg2_shared_ops);
+>   
+> @@ -1081,6 +1136,8 @@ static const struct clk_ops clk_rcg2_dfs_ops = {
+>   	.get_parent = clk_rcg2_get_parent,
+>   	.determine_rate = clk_rcg2_dfs_determine_rate,
+>   	.recalc_rate = clk_rcg2_dfs_recalc_rate,
+> +	.get_duty_cycle = clk_rcg2_get_duty_cycle,
+> +	.set_duty_cycle = clk_rcg2_set_duty_cycle,
+>   };
 > 
 
-Acked-by: Chanwoo Choi <cw00.choi@samsung.com>
+Why do you want to support duty-cycle for other RCGs when you are 
+specifically want it for GP clocks only.
+The DFS can never handle duty-cycle set/get.
 
+>   static int clk_rcg2_enable_dfs(const struct clk_rcg_dfs_data *data,
+> 
 
 -- 
-Best Regards,
-Chanwoo Choi
-Samsung Electronics
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
+
+--
