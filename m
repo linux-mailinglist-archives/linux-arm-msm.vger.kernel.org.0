@@ -2,110 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 33225118F21
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 18:36:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 495AE118F3A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 18:45:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727598AbfLJRgP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Dec 2019 12:36:15 -0500
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:33517 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727590AbfLJRgP (ORCPT
+        id S1727540AbfLJRpK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Dec 2019 12:45:10 -0500
+Received: from mail-il1-f193.google.com ([209.85.166.193]:40100 "EHLO
+        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727495AbfLJRpJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Dec 2019 12:36:15 -0500
-Received: by mail-vs1-f65.google.com with SMTP id n27so13699212vsa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2019 09:36:14 -0800 (PST)
+        Tue, 10 Dec 2019 12:45:09 -0500
+Received: by mail-il1-f193.google.com with SMTP id b15so16880062ila.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2019 09:45:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=LF0NUs/gTAbnPh3P7c8Oln5jd1snr+9Etxa+YYjvbv0=;
-        b=dl6WuCKFsUS31yk49Inxc+5dHDgOn52SzlNfT/7dg+1I9qaCNTBCwNCCKAKKv5A7Li
-         Ay1z4j3MBsFKfYnfh6TAdmG7cTRkUf9somwN+9q44jT3L8VZvZFwd9ybu2MrXOlpkDC3
-         IgEEHFW8OOkvaKCoqcV1sdlJeqDsqOUD3JJxESAsE1NzAEN+KIC/kym/qNJlTwFBhEzL
-         4FF0JAjwEgxbq3VRnWZI8Yid6QLfbMv1+4jxKRe309K7+fJwHG7ODyEeRnGUHZqiM1VX
-         h5+BI8i2v5NH/K5rvCuSU2hBmOW3byyeDXZLSOxPtBwoW5cmbw/WzRHs48GCULg1skiW
-         DNIg==
+        bh=3s6PdFrRQnx7SzGv98D/hXCGEbh47W792wAg1h//fM4=;
+        b=AuawT6Mj8mrvWP8b/48YgIEtZKfz2N00kND2g9zLXj126JqCyPKltrUJb+YGgldS9z
+         8ZNm1rZez/YoUNrRd19EzaBSR7Hw5FAN832y4IXw5rZeuF2Wwx19ZXvjUeGJPIqjoyEX
+         /4KbFy5Y58GNjX538KsJ3sKAqDiKZdTjWs1Y4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=LF0NUs/gTAbnPh3P7c8Oln5jd1snr+9Etxa+YYjvbv0=;
-        b=Ms9uDg4mZl+nJUKy3QiBgp6RDaU++BRHCWo6pOEfQWuQ2dKt6Zbcu9zF410T6F+rMZ
-         irVtqN0FfouxuRYz6uNwkUhJ8xjMtXBQ/i/feWmlLa+/f37685FOB49nFx6AWp7GsVUG
-         ayDbbcvnU2JKrkfv6c+/91Y1ieI13gAyQVbCZ5NFNY78bqrm/XW2r/oRbo4qrDsEbb2s
-         QU+f+wfAUGBhyoOYQlcKPb/JT3zHm/S+QAhJzV+7GFHplN4UVvaD+PZb9V+wdbJjA9xS
-         hkE7FQSE6p3kJ/AhjfkAMIFa2w8dFUy+X6SvxLzTE83VWag+bFKzjY+Srx8UQ5kNBQMp
-         hwzQ==
-X-Gm-Message-State: APjAAAUZO39EH5HC5VhBCUxA175ENhFQshJPxV7d+vecBipyQzodzpvG
-        boR7NmDU8zkJtPURG5mYJ9SqSIyupp5YYArMe9Ksfw==
-X-Google-Smtp-Source: APXvYqzFz6yoFGEfW03gURGMxzSAkxQY/YFTYE5kw7PmONkGWJkCKN3lGIhJ7kLEYxYUXYGbEDxHiBIBu8xebUTWbew=
-X-Received: by 2002:a67:fb41:: with SMTP id e1mr18789486vsr.159.1575999374197;
- Tue, 10 Dec 2019 09:36:14 -0800 (PST)
+        bh=3s6PdFrRQnx7SzGv98D/hXCGEbh47W792wAg1h//fM4=;
+        b=ezEi8+FDNKXleuD3ZPNdXcJDHRwg1FHl68UBwO2Ig6Sesd+AOvMti7cNVsKuezQOvl
+         envWbibbUbGdTqDpUvqgiWPnbvZGG4X/R+bKGAqyyPIp0yVw0zvlgdqAlIGrD7cJG6Ms
+         1IvAJ77Tt+C6nJJaZEpM++IotE39yE9e2Cciu++aIIjaya0z/NDozpMJCRXXeFOEOBwI
+         13XUAH0N58Ekezxh85VYxacQfL37M78rOrz3fqTRanHjcGBF1Vx1G5oDSeB8MZSbshUO
+         2EVkUp2OkRX8OEqTuT6Wfk8v0EY2pyOZ+uwKj6iam94qTvjxBKGUgfiljlr/PRoDRxvR
+         aV0A==
+X-Gm-Message-State: APjAAAXzJo9sD0T/swmCVNlwkf1285+pWQnHesQQyqDiplf4r2aRUdTB
+        sRzK6stbmr04i6EzumhHgjo45GfDPfQ=
+X-Google-Smtp-Source: APXvYqwUex+xaqY6vn/SEEh4tuonjKXDtJ/p+ngSkKwSHuAA/RLDS+a99OXXC51/32JILK6RxG4bTg==
+X-Received: by 2002:a92:8fd8:: with SMTP id r85mr34375099ilk.29.1575999908688;
+        Tue, 10 Dec 2019 09:45:08 -0800 (PST)
+Received: from mail-il1-f181.google.com (mail-il1-f181.google.com. [209.85.166.181])
+        by smtp.gmail.com with ESMTPSA id r14sm1064826ilg.59.2019.12.10.09.45.07
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Dec 2019 09:45:07 -0800 (PST)
+Received: by mail-il1-f181.google.com with SMTP id z90so16889064ilc.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2019 09:45:07 -0800 (PST)
+X-Received: by 2002:a92:1547:: with SMTP id v68mr3619598ilk.58.1575999907357;
+ Tue, 10 Dec 2019 09:45:07 -0800 (PST)
 MIME-Version: 1.0
-References: <1573068840-13098-1-git-send-email-agross@kernel.org>
- <1573068840-13098-2-git-send-email-agross@kernel.org> <CAHLCerN7buq82RmmFkoSi_n8g8sSe9VO2utcXuEGM3xG3HcRTg@mail.gmail.com>
- <20191108031854.GA12993@hector.lan> <20191210105737.GB228968@gerhold.net>
-In-Reply-To: <20191210105737.GB228968@gerhold.net>
-From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Tue, 10 Dec 2019 23:06:03 +0530
-Message-ID: <CAHLCerPs8+Fp1N-x7cQ2ETQ8d+fHN5b08V-jVFyFdQLYDndoBA@mail.gmail.com>
-Subject: Re: [GIT PULL] Qualcomm ARM64 DT updates for 5.5
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
+References: <0101016eef165cd0-26845355-ff75-416e-99a2-0c4434e18b76-000000@us-west-2.amazonses.com>
+In-Reply-To: <0101016eef165cd0-26845355-ff75-416e-99a2-0c4434e18b76-000000@us-west-2.amazonses.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 10 Dec 2019 09:44:55 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XAhSWOOPrHpuhjObi0UpKaeaD4TX1yhTh64cy39E1wyQ@mail.gmail.com>
+Message-ID: <CAD=FV=XAhSWOOPrHpuhjObi0UpKaeaD4TX1yhTh64cy39E1wyQ@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: sc7180: Add new qup functions
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     LinusW <linus.walleij@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        lakml <linux-arm-kernel@lists.infradead.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 10, 2019 at 4:27 PM Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> On Thu, Nov 07, 2019 at 09:18:54PM -0600, Andy Gross wrote:
-> > On Thu, Nov 07, 2019 at 07:36:03PM +0530, Amit Kucheria wrote:
-> > > (Removing arm-soc)
-> > >
-> > > Hi Andy,
-> > >
-> > > On Thu, Nov 7, 2019 at 1:04 AM Andy Gross <agross@kernel.org> wrote:
-> > > >
-> > > > Arnd, Olof, and Kevin,
-> > > >
-> > > > I have one slight faux paux in this pull request.  A drivers: soc change got
-> > > > into my arm64 DTS branch and while it is innocuous, it wasn't easy to fix
-> > > > without messing up a lot of people who depend on the SHAs not changing.  So I'm
-> > > > sorry for this inclusion.  I'll scrub this better next time.
-> > > >
-> > > > Andy
-> > >
-> > > > ----------------------------------------------------------------
-> > > > Amit Kucheria (5):
-> > > >       arm64: dts: qcs404: thermal: Add interrupt support
-> > > >       arm64: dts: msm8998: thermal: Add interrupt support
-> > > >       arm64: dts: msm8996: thermal: Add interrupt support
-> > > >       arm64: dts: sdm845: thermal: Add interrupt support
-> > > >       arm64: dts: msm8916: thermal: Fixup HW ids for cpu sensors
-> > >
-> > > One of my patches to add interrupt support to msm8916 tsens is missing
-> > > here. Specifically this one:
-> > > https://patchwork.kernel.org/patch/11201853/
-> > >
-> > > Will there be a second PR this cycle?
-> >
-> > I can work up another and throw it on top.
-> >
->
-> FYI, the patch seems to be still missing in 5.5-rc1.
-> tsens now fails to probe on MSM8916 with:
->
->   qcom-tsens 4a9000.thermal-sensor: IRQ uplow not found
->
-> Can you queue up the patch as fix for 5.5?
+Hi,
 
-Indeed. Andy/Bjorn, let me know if you need anything from me to get
-this into -rc2.
+On Tue, Dec 10, 2019 at 1:14 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>
+> on sc7180 we have cases where multiple functions from the same
+> qup instance share the same pin. This is true for qup02/04/11 and qup13.
+> Add new function names to distinguish which qup function to use.
+>
+> Reported-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-sc7180.c | 60 +++++++++++++++++++++++------------
+>  1 file changed, 40 insertions(+), 20 deletions(-)
 
-Regards,
-Amit
+Two overall issues:
+
+1. I think you also need to update the device tree bindings, so this
+should be a 2-patch series.  Those list all possible values for
+"function" so you need to update.
+
+2. It would be nice if you mentioned in the commit message that this
+will break i2c usage on these QUPs for anyone using old device tree
+files.  That shouldn't be a problem (AKA no need to provide backward
+compatibility) since I think the main sc7180.dtsi hasn't landed
+anywhere yet, but if anyone pulled an early patch from the list it
+would be good to give them a heads up in your commit message.
+
+
+> @@ -976,8 +996,8 @@ static const struct msm_pingroup sc7180_groups[] = {
+>         [3] = PINGROUP(3, SOUTH, qup01, sp_cmu, dbg_out, qdss_cti, _, _, _, _, _),
+>         [4] = PINGROUP(4, NORTH, sdc1_tb, _, qdss_cti, _, _, _, _, _, _),
+>         [5] = PINGROUP(5, NORTH, sdc2_tb, _, _, _, _, _, _, _, _),
+> -       [6] = PINGROUP(6, NORTH, qup11, qup11, _, _, _, _, _, _, _),
+> -       [7] = PINGROUP(7, NORTH, qup11, qup11, ddr_bist, _, _, _, _, _, _),
+> +       [6] = PINGROUP(6, NORTH, qup11_i2c, qup11_uart, _, _, _, _, _, _, _),
+> +       [7] = PINGROUP(7, NORTH, qup11_i2c, qup11_uart, ddr_bist, _, _, _, _, _, _),
+
+You probably have a more complete document than I have.  ...but the
+one I'm looking at shows that for pins 6/7 only i2c is available, not
+UART.  Said another way: I see QUP1_L0[1] and QUP1_L1[1] on Func1 but
+I don't see anything on Func2.  Of course, my document also doesn't
+include "ddr_bist", so maybe it's just incomplete.
+
+-Doug
