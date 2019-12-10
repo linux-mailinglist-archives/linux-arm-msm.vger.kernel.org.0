@@ -2,128 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AC394118F9E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 19:17:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B262118FFE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 19:48:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727455AbfLJSR3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Dec 2019 13:17:29 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:43350 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727681AbfLJSR3 (ORCPT
+        id S1727455AbfLJSsk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Dec 2019 13:48:40 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:35945 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727558AbfLJSsj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Dec 2019 13:17:29 -0500
-Received: by mail-pf1-f195.google.com with SMTP id h14so223326pfe.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2019 10:17:29 -0800 (PST)
+        Tue, 10 Dec 2019 13:48:39 -0500
+Received: by mail-lf1-f68.google.com with SMTP id n12so14593214lfe.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2019 10:48:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=xnqsR6KxRMPZn1DprBXkpQaD3O7a0GCSa9jFkA9nGgk=;
-        b=tGzB/8kPxisFB1SLe4nogXiJNwsTcpnhtsQWeGCUCX7a94oYWAwsPz1bh4sv1IIA0a
-         H66W++HcFvvpP65d9zmekil7amPTrVNIfjqad+Iz36hnumA+LrZ1kieJpgm1ExqhL0xF
-         a2t6GgO8hiE9Rxp7zbScJSJqcb5pX7p6Bq8Kw+EIYwcVv9Se6oR+hVd/R4kaTE0gfShK
-         xF37SP/FwoorrTF/zKQD5UeKzEdYK0KWDbWj0fA4zMk6nkKPR76OhQOeqB5zXjNKRC5P
-         jyXF8+hileVU8sJgbKcNF5oPVJCI7wEjMEOdlEaOR0jyVRhZvIO4lCDwvob2MMQ8uDL6
-         3FGA==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BOSCVw9bioi+5hxnz7bz/OpGazg6+xs3kBeEbrtXG48=;
+        b=Pcg4dJHJx81bsDelVo2J311YXVKJfxTmtD9q4K/3ixqYZ3o9fcUZASvkvpmsNECc2m
+         goyWlV33/Y8CabpTc3jtAu198H4wWXtuNEOLsTX9j6W1blZgb9ZTwXUjsO0keytLEoFo
+         HSRPniaTF99B5LfPCNLoU/RQTDtXK0m3ygND4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xnqsR6KxRMPZn1DprBXkpQaD3O7a0GCSa9jFkA9nGgk=;
-        b=afaj/YBefhfsH9nweN32rTZlcvfWzEd15GTu7f5Jn1EcTuGG3yLgW/JXYoVifoMIuh
-         Uyb9WlaWAnE5NLLxaVljsJ4AqIHyDMo2ODSoiJ60rwAQLyu9VC4veil1IhFh90D/JdcH
-         BFCydJv1wltY2AI/hs7IaVz6ZOJ0Qa6P9VaQSW+fu/0u29lxains/HjN7LF9KQfWI/dr
-         OpfvybtqQQEIJcYpkCSl1AXFJ3NlM4xiEQlOzB3B7Qm5JpD/bz75gkmfqsKSs0z+noaI
-         /O5cCKy5XqPizCZRWc46Y8FBIokg4HH7upiGYrq72lNAydv/V6UEuGlHwctGEqIm3Lmf
-         zwpQ==
-X-Gm-Message-State: APjAAAXmxwlvD6e9ol2b5w5TnFyMJJUeZOeYyW7DWXYmAS7hNZS9bL5V
-        jKyAy2a9UhYupEs3rFM2crJWWQ==
-X-Google-Smtp-Source: APXvYqyJsFcqNjXcVcRsCHF1sgL46PHL0nJ7NBvxo6MpRW+/Q+hq7cdNhP7wCmyiABz2y2xhrm9JPw==
-X-Received: by 2002:aa7:8687:: with SMTP id d7mr36544154pfo.164.1576001848883;
-        Tue, 10 Dec 2019 10:17:28 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id u190sm4272842pfb.60.2019.12.10.10.17.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Dec 2019 10:17:28 -0800 (PST)
-Date:   Tue, 10 Dec 2019 10:17:25 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Amit Kucheria <amit.kucheria@verdurent.com>
-Cc:     Stephan Gerhold <stephan@gerhold.net>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        lakml <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [GIT PULL] Qualcomm ARM64 DT updates for 5.5
-Message-ID: <20191210181725.GD314059@yoga>
-References: <1573068840-13098-1-git-send-email-agross@kernel.org>
- <1573068840-13098-2-git-send-email-agross@kernel.org>
- <CAHLCerN7buq82RmmFkoSi_n8g8sSe9VO2utcXuEGM3xG3HcRTg@mail.gmail.com>
- <20191108031854.GA12993@hector.lan>
- <20191210105737.GB228968@gerhold.net>
- <CAHLCerPs8+Fp1N-x7cQ2ETQ8d+fHN5b08V-jVFyFdQLYDndoBA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BOSCVw9bioi+5hxnz7bz/OpGazg6+xs3kBeEbrtXG48=;
+        b=biwTreKdzlI/oKNcfQt1aU5m+139E7S+s4wCss2EeiL5HKv5ybHAaTz+LmVub+YWo7
+         +x1ndMxXWwpkyr4QrARRdcc9X1V6EheZI94+5ZOIUvFx2BjdU7iGNF324AXpHiY5XGkH
+         gvHvbgBG4+WSaVj+up+zcMzEIN8fAO4UIjI7dWZaH65jv92fzNSzWRi5Cf8z5YuT7heu
+         uVenhvo1OSuXbhCn3CigMDqIvkuJh0tWde/FspkP+rY1mHNtHZndnzuS1rE+7N0sLXSg
+         7d9Zo1br0di+ge9sHQZVIbKebWKXUQMVUAdPzNbOysBNlwRfTGWtkMgOFxr68378OgDV
+         tzTw==
+X-Gm-Message-State: APjAAAVynzvqoCfpVcXYb1caUTXn78SJyd8E96jRvDKNYrL8RkJ9OtPu
+        0hMzPnns8SPSx3VKfJedopfHCEMwPhU=
+X-Google-Smtp-Source: APXvYqwjzR1IB8RVOxlJbcIUdvhqnHCK0nqES3Yk0bV8M+1fC6Z1QuI8mrgt4QF8NuQHPEt85oSUSw==
+X-Received: by 2002:a19:4f54:: with SMTP id a20mr20406421lfk.39.1576003716036;
+        Tue, 10 Dec 2019 10:48:36 -0800 (PST)
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com. [209.85.167.48])
+        by smtp.gmail.com with ESMTPSA id 140sm2099515lfk.78.2019.12.10.10.48.34
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Dec 2019 10:48:34 -0800 (PST)
+Received: by mail-lf1-f48.google.com with SMTP id f15so13749731lfl.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2019 10:48:34 -0800 (PST)
+X-Received: by 2002:a19:23cb:: with SMTP id j194mr8691484lfj.79.1576003713698;
+ Tue, 10 Dec 2019 10:48:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHLCerPs8+Fp1N-x7cQ2ETQ8d+fHN5b08V-jVFyFdQLYDndoBA@mail.gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+References: <20191107000917.1092409-1-bjorn.andersson@linaro.org> <20191107000917.1092409-3-bjorn.andersson@linaro.org>
+In-Reply-To: <20191107000917.1092409-3-bjorn.andersson@linaro.org>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Tue, 10 Dec 2019 10:47:57 -0800
+X-Gmail-Original-Message-ID: <CAE=gft5mLSqsJzj=DtesH3G68_wSKUr8rZ5iubOerimQmZKegA@mail.gmail.com>
+Message-ID: <CAE=gft5mLSqsJzj=DtesH3G68_wSKUr8rZ5iubOerimQmZKegA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/5] phy: qcom-qmp: Increase PHY ready timeout
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 10 Dec 09:36 PST 2019, Amit Kucheria wrote:
+On Wed, Nov 6, 2019 at 4:09 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> It's typical for the QHP PHY to take slightly above 1ms to initialize,
+> so increase the timeout of the PHY ready check to 10ms - as already done
+> in the downstream PCIe driver.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> On Tue, Dec 10, 2019 at 4:27 PM Stephan Gerhold <stephan@gerhold.net> wrote:
-> >
-> > On Thu, Nov 07, 2019 at 09:18:54PM -0600, Andy Gross wrote:
-> > > On Thu, Nov 07, 2019 at 07:36:03PM +0530, Amit Kucheria wrote:
-> > > > (Removing arm-soc)
-> > > >
-> > > > Hi Andy,
-> > > >
-> > > > On Thu, Nov 7, 2019 at 1:04 AM Andy Gross <agross@kernel.org> wrote:
-> > > > >
-> > > > > Arnd, Olof, and Kevin,
-> > > > >
-> > > > > I have one slight faux paux in this pull request.  A drivers: soc change got
-> > > > > into my arm64 DTS branch and while it is innocuous, it wasn't easy to fix
-> > > > > without messing up a lot of people who depend on the SHAs not changing.  So I'm
-> > > > > sorry for this inclusion.  I'll scrub this better next time.
-> > > > >
-> > > > > Andy
-> > > >
-> > > > > ----------------------------------------------------------------
-> > > > > Amit Kucheria (5):
-> > > > >       arm64: dts: qcs404: thermal: Add interrupt support
-> > > > >       arm64: dts: msm8998: thermal: Add interrupt support
-> > > > >       arm64: dts: msm8996: thermal: Add interrupt support
-> > > > >       arm64: dts: sdm845: thermal: Add interrupt support
-> > > > >       arm64: dts: msm8916: thermal: Fixup HW ids for cpu sensors
-> > > >
-> > > > One of my patches to add interrupt support to msm8916 tsens is missing
-> > > > here. Specifically this one:
-> > > > https://patchwork.kernel.org/patch/11201853/
-> > > >
-> > > > Will there be a second PR this cycle?
-> > >
-> > > I can work up another and throw it on top.
-> > >
-> >
-> > FYI, the patch seems to be still missing in 5.5-rc1.
-> > tsens now fails to probe on MSM8916 with:
-> >
-> >   qcom-tsens 4a9000.thermal-sensor: IRQ uplow not found
-> >
-> > Can you queue up the patch as fix for 5.5?
-> 
-> Indeed. Andy/Bjorn, let me know if you need anything from me to get
-> this into -rc2.
-> 
+Tested-by: Evan Green <evgreen@chromium.org>
 
-I'm pulling in some fixes for a rc-pull, so I could add it there.
-
-But why are we breaking backwards compatibility with existing dtbs to
-add a new (optional) feature? Shouldn't there be a rc-fix in the driver
-for this regression?
-
-Regards,
-Bjorn
+Should this have a Fixes tag for 14ced7e3a1ae9 ("phy: qcom-qmp:
+Correct ready status, again")?
