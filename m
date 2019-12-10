@@ -2,101 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A80D11905E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 20:11:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 00AD2119246
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 21:41:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727680AbfLJTLr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Dec 2019 14:11:47 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:34023 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727653AbfLJTLr (ORCPT
+        id S1726187AbfLJUlV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Dec 2019 15:41:21 -0500
+Received: from mail-io1-f65.google.com ([209.85.166.65]:44168 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726689AbfLJUlU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Dec 2019 14:11:47 -0500
-Received: by mail-pf1-f195.google.com with SMTP id n13so313578pff.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2019 11:11:47 -0800 (PST)
+        Tue, 10 Dec 2019 15:41:20 -0500
+Received: by mail-io1-f65.google.com with SMTP id w3so779369iot.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2019 12:41:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wqyrsFbKvAgp1XOGnCH1wihydXPeMNhbMwSDb6gzLcg=;
-        b=X2LURZ9NmX6JBqBK3oxesIlMMR02B+nouIyC4ZFJa8JQnpsZPNoDo7vG7uH78lI//0
-         EHGMq5EtoA1LEtSTATvh53dflMWpvv4dxei5fiGtwxdumT6QTNN0f15rtqWFX+xqE8zT
-         A94HXIB24npveHSn1Zh2MhQjUTjPQE1liCZAUP5F8Wcslb82YS9rLKhWGR9ms5pHmD3U
-         5NbkIz7oKAvoN8FEUN7wNn+JO3ZMCTp23A2EZUOpWt/a6Wxmyr+b4/PrAzKmpZNpheSK
-         e4UppKMOciQExedz02GtK+SmHVx8n1sKczl7Fws73NsMhE8t2lsvADK/n7JCEsnbISCD
-         TVOg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=wFg8ZEWJIN7vey53mkr4mIFmYCyQyvthzeZbaGJwPkw=;
+        b=a6cnK+73982+3Kq5xHFk7AV6S2kIJzbXAeQjdiuU/quDeRHtvjScGn9NdiBzAl+ehr
+         YObqKIw+0lJPMEvJ2S4WKhnhjyPdQmeaAfUXnzZrpkSItd5rvp+KOq19FUd9FR3Xc07s
+         PSqfT0D1aQ/Apqo1M8znUmPBZWMMbjplC9MMQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wqyrsFbKvAgp1XOGnCH1wihydXPeMNhbMwSDb6gzLcg=;
-        b=sjCJ/vv2uRlv9+3a6rDvyPq4qMOa2jjmmB0DuYVghNBamp+g+aWU65NGRBVDkDmZTk
-         K0Nxt+qcnCliQs9z8NjnkB7POtWQAhLCRmbbl4uFFl6rKzd/kukikPIW+8S9qlABfQKi
-         bnl0fwLiwzq31YBfItvBopJltJ7pJ2wgoCPhW7mvBfEn9Al/6DK4SlYmgfnevJSJgk65
-         qlhS4SgEVOh0Kbxd5Xadx6w2D1RYhFzQ/IuRej8Ul7DKPRD0KLM6Wq2huEdC/LoQ+NDC
-         7Ni+u/ejD6PycdWByKNldfJGddwIemgThiV93Tl9NFaV1CQv6/sQ4xlqwC+g/Tk6640Z
-         jcSQ==
-X-Gm-Message-State: APjAAAUrfx7ipjcZ4p4ndOCKqtu1S332/XqyVkw+b9JxeYzDYUsMRxrO
-        m+JSR6Gx7yKrnYqQtUytvQJIAQ==
-X-Google-Smtp-Source: APXvYqyrDn4v27jGvSfMZp0Xc8hNq7oBuPploYRqtNc5nHYG0C8cSi5ilO4ThU7xeu5otzhHy6atng==
-X-Received: by 2002:a63:496:: with SMTP id 144mr27081792pge.207.1576005106666;
-        Tue, 10 Dec 2019 11:11:46 -0800 (PST)
-Received: from yoga ([2607:fb90:8497:e902:4ce0:3dff:fe1c:88ba])
-        by smtp.gmail.com with ESMTPSA id e10sm4574017pfm.3.2019.12.10.11.11.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Dec 2019 11:11:46 -0800 (PST)
-Date:   Tue, 10 Dec 2019 11:11:42 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Evan Green <evgreen@chromium.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v3 2/5] phy: qcom-qmp: Increase PHY ready timeout
-Message-ID: <20191210191142.GF314059@yoga>
-References: <20191107000917.1092409-1-bjorn.andersson@linaro.org>
- <20191107000917.1092409-3-bjorn.andersson@linaro.org>
- <CAE=gft5mLSqsJzj=DtesH3G68_wSKUr8rZ5iubOerimQmZKegA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wFg8ZEWJIN7vey53mkr4mIFmYCyQyvthzeZbaGJwPkw=;
+        b=aZfuLhPUuMi0eG1MdfhmbRF+cLlGwMeahUvMIo6sc0lYTbrCyfkmWBv7SUiREGFXCp
+         swzZoRzmF/ntS9Wc8P1JmX/ammUWKG1qGE9hkDPraXit0t3317Ctq2OO8bkSPMP25zag
+         dBeWXnFV1DBDQnFAsBXIXG48Vuy316DlfqOM1YRwF1gGnHkS7mF8bEWkZ1jHZl3LJ/wG
+         ANvL/baEFmKahg11+Mhudfjm+OKLCZqzchYpFsoBN1gFIxsbQl4DLJXzyZ8WNDD06T4V
+         j+MV29CPzzYfhfXAdLx85eYv3SjsrcNLkZEPvpbJTXymExUg42Rklb80G9hvhbE7FF1s
+         +nAg==
+X-Gm-Message-State: APjAAAWvoWSclLs4dpj8H2wmJnFUkejmRh7nircenoW6ufg+OM1HvvO5
+        WNpqk20uSOgZTt00X7ITc0mnUtcMYBM=
+X-Google-Smtp-Source: APXvYqxDk1+oammm51X1CHOAjfCCXUDp+yh3hFe72qtB14w56soGKDBTPaIDmqgDIgkzU++74BwRFg==
+X-Received: by 2002:a6b:fa08:: with SMTP id p8mr5861611ioh.1.1576010479592;
+        Tue, 10 Dec 2019 12:41:19 -0800 (PST)
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com. [209.85.166.46])
+        by smtp.gmail.com with ESMTPSA id k22sm922022ioj.24.2019.12.10.12.41.17
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Dec 2019 12:41:17 -0800 (PST)
+Received: by mail-io1-f46.google.com with SMTP id x1so20266563iop.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2019 12:41:17 -0800 (PST)
+X-Received: by 2002:a6b:be84:: with SMTP id o126mr25960550iof.269.1576010477101;
+ Tue, 10 Dec 2019 12:41:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE=gft5mLSqsJzj=DtesH3G68_wSKUr8rZ5iubOerimQmZKegA@mail.gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+References: <20191108092824.9773-1-rnayak@codeaurora.org> <20191108092824.9773-14-rnayak@codeaurora.org>
+ <CAD=FV=VUoj1egZqw9koNHDPBCCEh_XZ5nZAPNKcnya2UACG8hw@mail.gmail.com> <0101016eef5f3e37-2ab48ced-3543-4680-82f8-2c1950b012cd-000000@us-west-2.amazonses.com>
+In-Reply-To: <0101016eef5f3e37-2ab48ced-3543-4680-82f8-2c1950b012cd-000000@us-west-2.amazonses.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 10 Dec 2019 12:41:05 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=UgqcO0zELnopP9DXSqc-AZpJVwT24CDxrt_P39eWK9Lg@mail.gmail.com>
+Message-ID: <CAD=FV=UgqcO0zELnopP9DXSqc-AZpJVwT24CDxrt_P39eWK9Lg@mail.gmail.com>
+Subject: Re: [PATCH v5 13/13] arm64: dts: sc7180: Add qupv3_0 and qupv3_1
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 10 Dec 10:47 PST 2019, Evan Green wrote:
+Hi,
 
-> On Wed, Nov 6, 2019 at 4:09 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
+On Tue, Dec 10, 2019 at 2:33 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>
+> On 12/6/2019 5:55 PM, Doug Anderson wrote:
+> > Hi,
 > >
-> > It's typical for the QHP PHY to take slightly above 1ms to initialize,
-> > so increase the timeout of the PHY ready check to 10ms - as already done
-> > in the downstream PCIe driver.
+> > On Fri, Nov 8, 2019 at 5:29 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+> >>
+> >> From: Roja Rani Yarubandi <rojay@codeaurora.org>
+> >>
+> >> Add QUP SE instances configuration for sc7180.
+> >>
+> >> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+> >> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> >> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> >> ---
+> >>   arch/arm64/boot/dts/qcom/sc7180-idp.dts | 146 +++++
+> >>   arch/arm64/boot/dts/qcom/sc7180.dtsi    | 675 ++++++++++++++++++++++++
+> >>   2 files changed, 821 insertions(+)
 > >
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> Tested-by: Evan Green <evgreen@chromium.org>
-> 
+> > Comments below could be done in a follow-up patch if it makes more sense.
 
-Thanks.
+Just to note: looks like your patch is now landed in the Qualcomm
+maintainer tree, so I'll look for the fixes in a follow-up patch.  :-)
 
-> Should this have a Fixes tag for 14ced7e3a1ae9 ("phy: qcom-qmp:
-> Correct ready status, again")?
-
-For UFS it would be 885bd765963b ("phy: qcom-qmp: Correct READY_STATUS
-poll break condition"), but I think that before the two we would exit
-the poll immediately, so we would only hit the timeout in the "error"
-case - where the PHY did come up in a timely fashion.
-
-So I don't think there is a particular commit to "Fixes:"...
-
-
-But given that this is no longer only needed for the (new) QHP PCIe
-instance it would be reasonable to Cc: stable, to get it into v5.4
-
-Regards,
-Bjorn
+-Doug
