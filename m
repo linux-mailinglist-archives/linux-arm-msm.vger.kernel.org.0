@@ -2,38 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 15F011198FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 22:46:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DE16119C0B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 23:13:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728428AbfLJVls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Dec 2019 16:41:48 -0500
-Received: from mail.kernel.org ([198.145.29.99]:39040 "EHLO mail.kernel.org"
+        id S1727683AbfLJWDZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Dec 2019 17:03:25 -0500
+Received: from mail.kernel.org ([198.145.29.99]:33508 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729946AbfLJVeJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Dec 2019 16:34:09 -0500
+        id S1727666AbfLJWDZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Dec 2019 17:03:25 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6FB75214AF;
-        Tue, 10 Dec 2019 21:34:07 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id C7DF320637;
+        Tue, 10 Dec 2019 22:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576013648;
-        bh=I+5M1OvBvnbIsuIuCY91jspDv+zgNxKjT1mXgmBQd8w=;
+        s=default; t=1576015404;
+        bh=7Dc4axMlf7o0Iscg6wxMmGHMCOp0oY38gUotoCDzxbM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=mFxcBu7bTjbK9tAaHpVtQ/TYDGCWMv7Sv0xsEKBHHe9rEMuKMDTbq+9R/j/ZgqSDE
-         oGJQpNlHMuUQAXasZH/MZ9RIKfqt3B5m49E2///1T+Gqfsgz+4q0vfVz5Mp5/ZmMTE
-         WW7pN75wt+KrgCJmJNECI2WoXwv4zFZYyxPiKGEA=
+        b=HZs9bmrbARVB1iEmsyXNPGL/SK8/fQAi/1I/pk9W92QCHvoUeK5tgCn8URK2h9HFV
+         OoL7R74Lrrs9L3ot9t8bhs2E/xDySh7HxziZX+3Qn6iDdQCS34vubKk05YYrvKCBgl
+         C1wagIfogQuWKdbhp+78z8tcQ19C9Uz8UtjmnOk4=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Stephan Gerhold <stephan@gerhold.net>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 087/177] phy: qcom-usb-hs: Fix extcon double register after power cycle
-Date:   Tue, 10 Dec 2019 16:30:51 -0500
-Message-Id: <20191210213221.11921-87-sashal@kernel.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.14 019/130] media: venus: core: Fix msm8996 frequency table
+Date:   Tue, 10 Dec 2019 17:01:10 -0500
+Message-Id: <20191210220301.13262-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191210213221.11921-1-sashal@kernel.org>
-References: <20191210213221.11921-1-sashal@kernel.org>
+In-Reply-To: <20191210220301.13262-1-sashal@kernel.org>
+References: <20191210220301.13262-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -43,69 +45,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Loic Poulain <loic.poulain@linaro.org>
 
-[ Upstream commit 64f86b9978449ff05bfa6c64b4c5439e21e9c80b ]
+[ Upstream commit c690435ed07901737e5c007a65ec59f53b33eb71 ]
 
-Commit f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
-switched from extcon_register_notifier() to the resource-managed
-API, i.e. devm_extcon_register_notifier().
+In downstream driver, there are two frequency tables defined,
+one for the encoder and one for the decoder:
 
-This is problematic in this case, because the extcon notifier
-is dynamically registered/unregistered whenever the PHY is powered
-on/off. The resource-managed API does not unregister the notifier
-until the driver is removed, so as soon as the PHY is power cycled,
-attempting to register the notifier again results in:
+/* Encoders /
+<972000 490000000 0x55555555>, / 4k UHD @ 30 /
+<489600 320000000 0x55555555>, / 1080p @ 60 /
+<244800 150000000 0x55555555>, / 1080p @ 30 /
+<108000 75000000 0x55555555>, / 720p @ 30 */
 
-	double register detected
-	WARNING: CPU: 1 PID: 182 at kernel/notifier.c:26 notifier_chain_register+0x74/0xa0
-	Call trace:
-	 ...
-	 extcon_register_notifier+0x74/0xb8
-	 devm_extcon_register_notifier+0x54/0xb8
-	 qcom_usb_hs_phy_power_on+0x1fc/0x208
-	 ...
+/* Decoders /
+<1944000 490000000 0xffffffff>, / 4k UHD @ 60 /
+< 972000 320000000 0xffffffff>, / 4k UHD @ 30 /
+< 489600 150000000 0xffffffff>, / 1080p @ 60 /
+< 244800 75000000 0xffffffff>; / 1080p @ 30 */
 
-... and USB stops working after plugging the cable out and in
-another time.
+It shows that encoder always needs a higher clock than decoder.
 
-The easiest way to fix this is to make a partial revert of
-commit f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
-and avoid using the resource-managed API in this case.
+In current venus driver, the unified frequency table is aligned
+with the downstream decoder table which causes performance issues
+in encoding scenarios. Fix that by aligning frequency table on
+worst case (encoding).
 
-Fixes: f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: Kishon Vijay Abraham I <kishon@ti.com>
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-usb-hs.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/venus/core.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-usb-hs.c b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
-index abbbe75070daa..5629d56a62578 100644
---- a/drivers/phy/qualcomm/phy-qcom-usb-hs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
-@@ -160,8 +160,8 @@ static int qcom_usb_hs_phy_power_on(struct phy *phy)
- 		/* setup initial state */
- 		qcom_usb_hs_phy_vbus_notifier(&uphy->vbus_notify, state,
- 					      uphy->vbus_edev);
--		ret = devm_extcon_register_notifier(&ulpi->dev, uphy->vbus_edev,
--				EXTCON_USB, &uphy->vbus_notify);
-+		ret = extcon_register_notifier(uphy->vbus_edev, EXTCON_USB,
-+					       &uphy->vbus_notify);
- 		if (ret)
- 			goto err_ulpi;
- 	}
-@@ -182,6 +182,9 @@ static int qcom_usb_hs_phy_power_off(struct phy *phy)
- {
- 	struct qcom_usb_hs_phy *uphy = phy_get_drvdata(phy);
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index 769e9e68562df..9360b36b82cd8 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -345,10 +345,11 @@ static const struct venus_resources msm8916_res = {
+ };
  
-+	if (uphy->vbus_edev)
-+		extcon_unregister_notifier(uphy->vbus_edev, EXTCON_USB,
-+					   &uphy->vbus_notify);
- 	regulator_disable(uphy->v3p3);
- 	regulator_disable(uphy->v1p8);
- 	clk_disable_unprepare(uphy->sleep_clk);
+ static const struct freq_tbl msm8996_freq_table[] = {
+-	{ 1944000, 490000000 },	/* 4k UHD @ 60 */
+-	{  972000, 320000000 },	/* 4k UHD @ 30 */
+-	{  489600, 150000000 },	/* 1080p @ 60 */
+-	{  244800,  75000000 },	/* 1080p @ 30 */
++	{ 1944000, 520000000 },	/* 4k UHD @ 60 (decode only) */
++	{  972000, 520000000 },	/* 4k UHD @ 30 */
++	{  489600, 346666667 },	/* 1080p @ 60 */
++	{  244800, 150000000 },	/* 1080p @ 30 */
++	{  108000,  75000000 },	/* 720p @ 30 */
+ };
+ 
+ static const struct reg_val msm8996_reg_preset[] = {
 -- 
 2.20.1
 
