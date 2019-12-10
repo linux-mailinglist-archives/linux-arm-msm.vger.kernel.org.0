@@ -2,37 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BACC6119A5F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 22:53:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DFB541199BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 22:52:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727507AbfLJVHq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Dec 2019 16:07:46 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54296 "EHLO mail.kernel.org"
+        id S1727747AbfLJVIB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Dec 2019 16:08:01 -0500
+Received: from mail.kernel.org ([198.145.29.99]:54862 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727398AbfLJVHq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Dec 2019 16:07:46 -0500
+        id S1727728AbfLJVIA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Dec 2019 16:08:00 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id EC18D20836;
-        Tue, 10 Dec 2019 21:07:44 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id D3C5324691;
+        Tue, 10 Dec 2019 21:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576012065;
-        bh=wsJErOlEJj8NVasY0qcfuXIC3T5Btp8ye5MSynVvqc8=;
+        s=default; t=1576012079;
+        bh=asbODuq9YX1MLuI2W1AwEAHZRn0UwT3hDDn5Dkz5VQ8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=No3E1rpf3YFBg8rjo5bGavSvBkPckLqVqppfyqS/Pv0m1lobWdCkyZ7uRsTGAlyCD
-         Z+IBXN2d5ztVyDczxrzc/QDLTgvsEvGoRm4q2KRf+tTF3ID4f+EXAh4ud9qbWeaZAh
-         hvkOZBPlvYJAgIhNUjs3MMeaaLG2tZTfOboIXnxo=
+        b=xOLWSUVVbMd0kTYOrx4XUQLB1HWNHa3yZByLOrb1aezAZPGfDiVQExwrSkSMpTEAc
+         x+Uwl0J2fDcxcB5WgK51TJXSdJ2kXKeIxHopG2s6jGmhOmAL1jb3jpunGbXMm2iKO3
+         RZYD0AEoBu4f4sY4ZRjFhtYRgfqeSXQ5u0C8KoVk=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Loic Poulain <loic.poulain@linaro.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
         Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
         Sasha Levin <sashal@kernel.org>, linux-media@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 047/350] media: venus: core: Fix msm8996 frequency table
-Date:   Tue, 10 Dec 2019 16:02:32 -0500
-Message-Id: <20191210210735.9077-8-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 058/350] media: venus: Fix occasionally failures to suspend
+Date:   Tue, 10 Dec 2019 16:02:43 -0500
+Message-Id: <20191210210735.9077-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191210210735.9077-1-sashal@kernel.org>
 References: <20191210210735.9077-1-sashal@kernel.org>
@@ -45,60 +44,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Loic Poulain <loic.poulain@linaro.org>
+From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 
-[ Upstream commit c690435ed07901737e5c007a65ec59f53b33eb71 ]
+[ Upstream commit 8dbebb2bd01e6f36e9a215dcde99ace70408f2c8 ]
 
-In downstream driver, there are two frequency tables defined,
-one for the encoder and one for the decoder:
+Failure to suspend (venus_suspend_3xx) happens when the system
+is fresh booted and loading venus driver. This happens once and
+after reload the venus driver modules the problem disrepair.
 
-/* Encoders /
-<972000 490000000 0x55555555>, / 4k UHD @ 30 /
-<489600 320000000 0x55555555>, / 1080p @ 60 /
-<244800 150000000 0x55555555>, / 1080p @ 30 /
-<108000 75000000 0x55555555>, / 720p @ 30 */
+Fix the failure by skipping the check for WFI and IDLE bits if
+PC_READY is on in control status register.
 
-/* Decoders /
-<1944000 490000000 0xffffffff>, / 4k UHD @ 60 /
-< 972000 320000000 0xffffffff>, / 4k UHD @ 30 /
-< 489600 150000000 0xffffffff>, / 1080p @ 60 /
-< 244800 75000000 0xffffffff>; / 1080p @ 30 */
-
-It shows that encoder always needs a higher clock than decoder.
-
-In current venus driver, the unified frequency table is aligned
-with the downstream decoder table which causes performance issues
-in encoding scenarios. Fix that by aligning frequency table on
-worst case (encoding).
-
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/core.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_venus.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index e6eff512a8a14..84e982f259a06 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -427,10 +427,11 @@ static const struct venus_resources msm8916_res = {
- };
+diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+index 7129a2aea09ad..0d8855014ab3d 100644
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -1472,6 +1472,7 @@ static int venus_suspend_3xx(struct venus_core *core)
+ {
+ 	struct venus_hfi_device *hdev = to_hfi_priv(core);
+ 	struct device *dev = core->dev;
++	u32 ctrl_status;
+ 	bool val;
+ 	int ret;
  
- static const struct freq_tbl msm8996_freq_table[] = {
--	{ 1944000, 490000000 },	/* 4k UHD @ 60 */
--	{  972000, 320000000 },	/* 4k UHD @ 30 */
--	{  489600, 150000000 },	/* 1080p @ 60 */
--	{  244800,  75000000 },	/* 1080p @ 30 */
-+	{ 1944000, 520000000 },	/* 4k UHD @ 60 (decode only) */
-+	{  972000, 520000000 },	/* 4k UHD @ 30 */
-+	{  489600, 346666667 },	/* 1080p @ 60 */
-+	{  244800, 150000000 },	/* 1080p @ 30 */
-+	{  108000,  75000000 },	/* 720p @ 30 */
- };
+@@ -1487,6 +1488,10 @@ static int venus_suspend_3xx(struct venus_core *core)
+ 		return -EINVAL;
+ 	}
  
- static const struct reg_val msm8996_reg_preset[] = {
++	ctrl_status = venus_readl(hdev, CPU_CS_SCIACMDARG0);
++	if (ctrl_status & CPU_CS_SCIACMDARG0_PC_READY)
++		goto power_off;
++
+ 	/*
+ 	 * Power collapse sequence for Venus 3xx and 4xx versions:
+ 	 * 1. Check for ARM9 and video core to be idle by checking WFI bit
+@@ -1511,6 +1516,7 @@ static int venus_suspend_3xx(struct venus_core *core)
+ 	if (ret)
+ 		return ret;
+ 
++power_off:
+ 	mutex_lock(&hdev->lock);
+ 
+ 	ret = venus_power_off(hdev);
 -- 
 2.20.1
 
