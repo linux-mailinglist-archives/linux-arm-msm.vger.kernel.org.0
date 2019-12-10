@@ -2,170 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C4B01180CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 07:51:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 96C0911829B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 09:41:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727177AbfLJGva (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Dec 2019 01:51:30 -0500
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:42973 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727024AbfLJGv3 (ORCPT
+        id S1726890AbfLJIlw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Dec 2019 03:41:52 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:37729 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726883AbfLJIlw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Dec 2019 01:51:29 -0500
-Received: by mail-vs1-f65.google.com with SMTP id b79so7202531vsd.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Dec 2019 22:51:28 -0800 (PST)
+        Tue, 10 Dec 2019 03:41:52 -0500
+Received: by mail-ed1-f66.google.com with SMTP id cy15so15243281edb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2019 00:41:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ThCXORbwGE9xbug2jutD7MWlrN+Auf/XeZZe6HyXDCI=;
-        b=OJg6/Xiqa76NbusYSxC5X8GD57DM0I7MkUk0t1esPlgDll9GffgM7UtFmfWwrMrHxK
-         qNrl6lSYHJlSAdRr9EapLQs9zMBpxgefxGInziD7WYREkKd9QEmha5KZOrzhQPukdYzq
-         e/IetOsEfK5XeuGJ/rssXcoQDmDEvvmOvfYezBlb9CvcFsoZcGqR1I8PxKJvXWpmpuEk
-         /6MgT5UtEv56Ss3H91seuqI1JrXZgQ6kTtS66kNDo+0VLQNCnyaVhtxGzpmTlOuUNHmA
-         9Hjx1+eWTpXpixd1u33XZ+/FYkua1n1Q0Nlioz5xJ9oYdbn5xuJDq71iRxH4BfFRpur+
-         muYA==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=BapN+mqvvqkIREkBzQtrQe2NlcTvEKNzg8SbCbikvEM=;
+        b=TyHlp/9o6RmgZWQ9OdMTHRTg33dURWkbT7RhZ0VvLQoxDBshZlgfbnaNAQ1EBrIeiR
+         6p6CTrksiYuorY9/JZ26Gt2f3IJsGyj+c80u3bTsA0IKEBM3gqYznPhreYgc0k2M9kKq
+         ejEHPnCej6s5HCaTF7c5yaInyCFg6P05h79q/4XhM1n356KmdKclGKmul+h0tAqEYOP/
+         soTgc77rUzb08/Id1jkZDTxEFsGN2IvKhKq5713FbUss3yIda9xplgt/jyc6d0gsFUYI
+         HjxbIrJdWFkVIBREeulPwQVtA1UvhOXpJixaKu12SpArCsNnK673wHySZLoYVWKEB7Dq
+         uBUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ThCXORbwGE9xbug2jutD7MWlrN+Auf/XeZZe6HyXDCI=;
-        b=IW+AEC+EbeixvdhyS/NpXmbY9VOG7IQwKwcq/hBDh/QiKHps5F/H2+JlJuTFHmf/cn
-         q90QsslQsF18PouamVnv03OZ09MJrp9YwAq8GZ+WAWyrHcfA8lWOSpUxDAdI6B2gtNlr
-         2xOoCH0P08aMJuZXjrfscRCHR5Ji+cvAeKHHvhEp/NkRry8wqkMJ88A4nRJxs4gAhUOT
-         r+Ft7CvyBtazRMLIPLl/PlbA/HPmzd/73mcMDeMxrrXRF2BUvcN3jpjvR9HUnNuGio+Y
-         nFlSd9Z83eHGVt9sAwzktUkZP8eE/AfEa79vHs0rrm/YS7+qMJ4bzIokKvRSl8jROjwH
-         ztyQ==
-X-Gm-Message-State: APjAAAV1TnqItodbNF0IIAcP+DCClDRDar6KaDcN11XL8GO+RfcDB5tb
-        54Q5qMqdnMkiEE6RMCPl1ASWfPoWpk6ulX0UD5XwYA==
-X-Google-Smtp-Source: APXvYqwt/03vbKh2kfOs7ZHlFMp8YyR7qTrK2AXkCFkwS7Go5jnB8eSUieA6uPorGuWDG8/HS/r+AvBK94IUj0iUnFM=
-X-Received: by 2002:a67:7acd:: with SMTP id v196mr22065831vsc.95.1575960688036;
- Mon, 09 Dec 2019 22:51:28 -0800 (PST)
-MIME-Version: 1.0
-References: <8e812065f4a76325097c5f9c17f3386736d8c1d4.1574315190.git.amit.kucheria@linaro.org>
-In-Reply-To: <8e812065f4a76325097c5f9c17f3386736d8c1d4.1574315190.git.amit.kucheria@linaro.org>
-From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Tue, 10 Dec 2019 12:21:17 +0530
-Message-ID: <CAHLCerOxHq4DYn9xV6JEDkbxZxmKkzC0mY70RiFkhCAbpovFrg@mail.gmail.com>
-Subject: Re: [PATCH] drivers: thermal: step_wise: add support for hysteresis
-To:     LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=BapN+mqvvqkIREkBzQtrQe2NlcTvEKNzg8SbCbikvEM=;
+        b=et41PhzlwioWuUEIpLc7KmUqDu6W2ZuKQQg+gPIMdCiWxTkYUhHfctGDzY56hvI0Q6
+         2csFxDzj7JjPjOPQ6KMxoRWZVqD6PxP6csp4zXbd6lCsriD3D/U4UOpgLfIyW2JTTU0Z
+         636n8eEBD4AwLubyfEi60eVW/XP6roXb1lPj/e0VmsmSa4ZnQxsQo8EDcBYIH9n0iRVc
+         BMyUuRyT7xzMXAX566Ue/zZgpb1ouRt4bR/JZZiCfKasvCWgEvI2DN+HLdBqI4AyCN8i
+         t6n8oHcuDf7WRy9MIHlX44rASGeRvGdTHOIuBh9d9y4uyMWn79dW2MO+V6PerIIlahPx
+         cjvg==
+X-Gm-Message-State: APjAAAWD3zhvrDBdfzk01HI2ITxGlv+nyCsLNDr/jIta+C0iUhV5BfaL
+        RuK5qi/+P6nNB9EdXnWFlrWep73LPU4=
+X-Google-Smtp-Source: APXvYqxkrixkXEZmwLLK+fVnCJG0Rp9RCISTpuDg24vcflyHiDHcn215F0VicvvGIWwv4m5ULaa0uw==
+X-Received: by 2002:aa7:c3d7:: with SMTP id l23mr37263172edr.82.1575967310708;
+        Tue, 10 Dec 2019 00:41:50 -0800 (PST)
+Received: from [192.168.27.209] ([37.157.136.193])
+        by smtp.googlemail.com with ESMTPSA id bs4sm77128ejb.39.2019.12.10.00.41.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Dec 2019 00:41:50 -0800 (PST)
+Subject: Re: [PATCH] media: venus: hfi_parser: Ignore HEVC encoding for V1
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>, Keerthy <j-keerthy@ti.com>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amit.kucheria@verdurent.com>
-Cc:     Ram Chandrasekar <rkumbako@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Linux PM list <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20191209191652.222576-1-stephan@gerhold.net>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <fdac0a86-e055-3c81-64e1-0b80c6aebb3b@linaro.org>
+Date:   Tue, 10 Dec 2019 10:41:48 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.1
+MIME-Version: 1.0
+In-Reply-To: <20191209191652.222576-1-stephan@gerhold.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 21, 2019 at 11:21 AM Amit Kucheria <amit.kucheria@linaro.org> wrote:
->
-> From: Ram Chandrasekar <rkumbako@codeaurora.org>
->
-> Currently, step wise governor increases the mitigation when the
-> temperature goes above a threshold and decreases the mitigation when the
-> temperature goes below the threshold. If there is a case where the
-> temperature is wavering around the threshold, the mitigation will be
-> applied and removed every iteration, which is not very efficient.
->
-> The use of hysteresis temperature could avoid this ping-pong of
-> mitigation by relaxing the mitigation to happen only when the
-> temperature goes below this lower hysteresis value.
->
-> Signed-off-by: Ram Chandrasekar <rkumbako@codeaurora.org>
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-> [Rebased patch from downstream]
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+Hi Stephan,
 
-Daniel, Rui: ping.
+Thanks for the patch!
 
-Keerthy: This works for you, right?
-
+On 12/9/19 9:16 PM, Stephan Gerhold wrote:
+> Some older MSM8916 Venus firmware versions also seem to indicate
+> support for encoding HEVC, even though they really can't.
+> This will lead to errors later because hfi_session_init() fails
+> in this case.
+> 
+> HEVC is already ignored for "dec_codecs", so add the same for
+> "enc_codecs" to make these old firmware versions work correctly.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 > ---
->  drivers/thermal/step_wise.c | 35 ++++++++++++++++++++++++-----------
->  1 file changed, 24 insertions(+), 11 deletions(-)
->
-> diff --git a/drivers/thermal/step_wise.c b/drivers/thermal/step_wise.c
-> index 6e051cbd824ff..2c8a34a7cf959 100644
-> --- a/drivers/thermal/step_wise.c
-> +++ b/drivers/thermal/step_wise.c
-> @@ -24,7 +24,7 @@
->   *       for this trip point
->   *    d. if the trend is THERMAL_TREND_DROP_FULL, use lower limit
->   *       for this trip point
-> - * If the temperature is lower than a trip point,
-> + * If the temperature is lower than a hysteresis temperature,
->   *    a. if the trend is THERMAL_TREND_RAISING, do nothing
->   *    b. if the trend is THERMAL_TREND_DROPPING, use lower cooling
->   *       state for this trip point, if the cooling state already
-> @@ -115,30 +115,31 @@ static void update_passive_instance(struct thermal_zone_device *tz,
->
->  static void thermal_zone_trip_update(struct thermal_zone_device *tz, int trip)
->  {
-> -       int trip_temp;
-> +       int trip_temp, hyst_temp;
->         enum thermal_trip_type trip_type;
->         enum thermal_trend trend;
->         struct thermal_instance *instance;
-> -       bool throttle = false;
-> +       bool throttle;
->         int old_target;
->
->         if (trip == THERMAL_TRIPS_NONE) {
-> -               trip_temp = tz->forced_passive;
-> +               hyst_temp = trip_temp = tz->forced_passive;
->                 trip_type = THERMAL_TRIPS_NONE;
->         } else {
->                 tz->ops->get_trip_temp(tz, trip, &trip_temp);
-> +               hyst_temp = trip_temp;
-> +               if (tz->ops->get_trip_hyst) {
-> +                       tz->ops->get_trip_hyst(tz, trip, &hyst_temp);
-> +                       hyst_temp = trip_temp - hyst_temp;
-> +               }
->                 tz->ops->get_trip_type(tz, trip, &trip_type);
->         }
->
->         trend = get_tz_trend(tz, trip);
->
-> -       if (tz->temperature >= trip_temp) {
-> -               throttle = true;
-> -               trace_thermal_zone_trip(tz, trip, trip_type);
-> -       }
-> -
-> -       dev_dbg(&tz->device, "Trip%d[type=%d,temp=%d]:trend=%d,throttle=%d\n",
-> -                               trip, trip_type, trip_temp, trend, throttle);
-> +       dev_dbg(&tz->device,
-> +               "Trip%d[type=%d,temp=%d,hyst=%d]:trend=%d,throttle=%d\n",
-> +               trip, trip_type, trip_temp, hyst_temp, trend, throttle);
->
->         mutex_lock(&tz->lock);
->
-> @@ -147,6 +148,18 @@ static void thermal_zone_trip_update(struct thermal_zone_device *tz, int trip)
->                         continue;
->
->                 old_target = instance->target;
-> +               throttle = false;
-> +               /*
-> +                * Lower the mitigation only if the temperature
-> +                * goes below the hysteresis temperature.
-> +                */
-> +               if (tz->temperature >= trip_temp ||
-> +                   (tz->temperature >= hyst_temp &&
-> +                    old_target != THERMAL_NO_TARGET)) {
-> +                       throttle = true;
-> +                       trace_thermal_zone_trip(tz, trip, trip_type);
-> +               }
-> +
->                 instance->target = get_target_state(instance, trend, throttle);
->                 dev_dbg(&instance->cdev->device, "old_target=%d, target=%d\n",
->                                         old_target, (int)instance->target);
-> --
-> 2.17.1
->
+> This makes Venus work on the Samsung Galaxy S4 Mini VE (MSM8916),
+> which is stuck on a rather old Venus firmware version (1.6-00040).
+> The firmware is signed, so unfortunately I'm not aware of a way to upgrade it...
+> ---
+>  drivers/media/platform/qcom/venus/hfi_parser.c | 1 +
+>  1 file changed, 1 insertion(+)
+
+Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+> index 2293d936e49c..7f515a4b9bd1 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+> @@ -181,6 +181,7 @@ static void parse_codecs(struct venus_core *core, void *data)
+>  	if (IS_V1(core)) {
+>  		core->dec_codecs &= ~HFI_VIDEO_CODEC_HEVC;
+>  		core->dec_codecs &= ~HFI_VIDEO_CODEC_SPARK;
+> +		core->enc_codecs &= ~HFI_VIDEO_CODEC_HEVC;
+>  	}
+>  }
+>  
+> 
+
+-- 
+regards,
+Stan
