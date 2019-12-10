@@ -2,110 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 61A53119AD3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 23:10:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A881A119C4A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Dec 2019 23:23:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728692AbfLJWET (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Dec 2019 17:04:19 -0500
-Received: from mail.kernel.org ([198.145.29.99]:35022 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728684AbfLJWES (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Dec 2019 17:04:18 -0500
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 212CD20838;
-        Tue, 10 Dec 2019 22:04:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576015457;
-        bh=7rK+JIe/KmRszDNh9Cway0FAlgeYkapuIm7N6OuYmjU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=EPnQJxO0G49d65hxUvOkoy9SihUrPnXsywebu8HYjm/f95+A4bnlnOay6h5kkTWyZ
-         P+721f560RjN3XzUu+VMfKwwuOO0gvvnvZ7IMiYnmCxF/5JzBFVEIg+l66ztldOGrw
-         Ax8TCT2VwoPgEGtWDO/Rf8WrOUXSn7jqGaQsrUVw=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Stephan Gerhold <stephan@gerhold.net>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 064/130] phy: qcom-usb-hs: Fix extcon double register after power cycle
-Date:   Tue, 10 Dec 2019 17:01:55 -0500
-Message-Id: <20191210220301.13262-64-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191210220301.13262-1-sashal@kernel.org>
-References: <20191210220301.13262-1-sashal@kernel.org>
+        id S1727237AbfLJWX0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Dec 2019 17:23:26 -0500
+Received: from a27-55.smtp-out.us-west-2.amazonses.com ([54.240.27.55]:59316
+        "EHLO a27-55.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726883AbfLJWX0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Dec 2019 17:23:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1576016605;
+        h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To;
+        bh=5O6ko1wMdH3ZAe3za/gTc6jGmfe6ltuEFSuJCuFhaE4=;
+        b=GLA7OuE3q9Ckno+URVzFLhwwkaR1ZO0GcthJbP9hE3K5Iy3A/R+Y/IjweHZlbnqs
+        IU0rQ3Jjl18qRlEcZxQZBeGL0m4xLxCZIWxAwTbga+xv15hFfTqg5QhJi2oDYSsgpUI
+        CKC02DOEdc9qqI9xzxSx6p1/ZMkQXbdT/g3zgljE=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1576016605;
+        h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Feedback-ID;
+        bh=5O6ko1wMdH3ZAe3za/gTc6jGmfe6ltuEFSuJCuFhaE4=;
+        b=OblpijPjBWaUnQ7iMx3O1+gAfDhdKUreQ2A/HCrikRbTsg2II3DukNQ/wKGgSqWG
+        rergx1m0csTGoWf/5M5hZUQVmUjj68p8DKzpzzQnhHyV1OHGYOYpI9pdeFMhBxaLPLA
+        /p4taTWJHMq2Gq9nR+kp23AYTMJxDAQ1LvTpYxWI=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0090BC59948
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
+Date:   Tue, 10 Dec 2019 22:23:25 +0000
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
+        linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        rnayak@codeaurora.org, lsrao@codeaurora.org, mka@chromium.org,
+        swboyd@chromium.org, evgreen@chromium.org, dianders@chromium.org
+Subject: Re: [PATCH 1/2] pinctrl: qcom: sc7180: Add GPIO wakeup interrupt map
+Message-ID: <0101016ef1e8f0a2-c8311e64-3d6a-4b66-9121-6fa4d0a604df-000000@us-west-2.amazonses.com>
+References: <1572419178-5750-1-git-send-email-mkshah@codeaurora.org>
+ <1572419178-5750-2-git-send-email-mkshah@codeaurora.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <1572419178-5750-2-git-send-email-mkshah@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
+X-SES-Outgoing: 2019.12.10-54.240.27.55
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Stephan Gerhold <stephan@gerhold.net>
+On Wed, Oct 30 2019 at 01:07 -0600, Maulik Shah wrote:
+>GPIOs that can be configured as wakeup sources, have their
+>interrupt lines routed to PDC interrupt controller.
+>
+>Provide the interrupt map of the GPIO to its wakeup capable
+>interrupt parent.
+>
+>Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+Reviewed-by: Lina Iyer <ilina@codeaurora.org>
 
-[ Upstream commit 64f86b9978449ff05bfa6c64b4c5439e21e9c80b ]
-
-Commit f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
-switched from extcon_register_notifier() to the resource-managed
-API, i.e. devm_extcon_register_notifier().
-
-This is problematic in this case, because the extcon notifier
-is dynamically registered/unregistered whenever the PHY is powered
-on/off. The resource-managed API does not unregister the notifier
-until the driver is removed, so as soon as the PHY is power cycled,
-attempting to register the notifier again results in:
-
-	double register detected
-	WARNING: CPU: 1 PID: 182 at kernel/notifier.c:26 notifier_chain_register+0x74/0xa0
-	Call trace:
-	 ...
-	 extcon_register_notifier+0x74/0xb8
-	 devm_extcon_register_notifier+0x54/0xb8
-	 qcom_usb_hs_phy_power_on+0x1fc/0x208
-	 ...
-
-... and USB stops working after plugging the cable out and in
-another time.
-
-The easiest way to fix this is to make a partial revert of
-commit f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
-and avoid using the resource-managed API in this case.
-
-Fixes: f0b5c2c96370 ("phy: qcom-usb-hs: Replace the extcon API")
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: Kishon Vijay Abraham I <kishon@ti.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/phy/qualcomm/phy-qcom-usb-hs.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-usb-hs.c b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
-index 2d0c70b5589f4..643934a2a70c3 100644
---- a/drivers/phy/qualcomm/phy-qcom-usb-hs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
-@@ -159,8 +159,8 @@ static int qcom_usb_hs_phy_power_on(struct phy *phy)
- 		/* setup initial state */
- 		qcom_usb_hs_phy_vbus_notifier(&uphy->vbus_notify, state,
- 					      uphy->vbus_edev);
--		ret = devm_extcon_register_notifier(&ulpi->dev, uphy->vbus_edev,
--				EXTCON_USB, &uphy->vbus_notify);
-+		ret = extcon_register_notifier(uphy->vbus_edev, EXTCON_USB,
-+					       &uphy->vbus_notify);
- 		if (ret)
- 			goto err_ulpi;
- 	}
-@@ -181,6 +181,9 @@ static int qcom_usb_hs_phy_power_off(struct phy *phy)
- {
- 	struct qcom_usb_hs_phy *uphy = phy_get_drvdata(phy);
- 
-+	if (uphy->vbus_edev)
-+		extcon_unregister_notifier(uphy->vbus_edev, EXTCON_USB,
-+					   &uphy->vbus_notify);
- 	regulator_disable(uphy->v3p3);
- 	regulator_disable(uphy->v1p8);
- 	clk_disable_unprepare(uphy->sleep_clk);
--- 
-2.20.1
-
+>---
+> drivers/pinctrl/qcom/pinctrl-sc7180.c | 18 ++++++++++++++++++
+> 1 file changed, 18 insertions(+)
+>
+>diff --git a/drivers/pinctrl/qcom/pinctrl-sc7180.c b/drivers/pinctrl/qcom/pinctrl-sc7180.c
+>index 6399c8a..8a2b97c 100644
+>--- a/drivers/pinctrl/qcom/pinctrl-sc7180.c
+>+++ b/drivers/pinctrl/qcom/pinctrl-sc7180.c
+>@@ -1097,6 +1097,22 @@ static const struct msm_pingroup sc7180_groups[] = {
+> 	[126] = SDC_QDSD_PINGROUP(sdc2_data, 0x97b000, 9, 0),
+> };
+>
+>+static const struct msm_gpio_wakeirq_map sc7180_pdc_map[] = {
+>+	{0, 40}, {3, 50}, {4, 42}, {5, 70}, {6, 41}, {9, 35},
+>+	{10, 80}, {11, 51}, {16, 20}, {21, 55}, {22, 90}, {23, 21},
+>+	{24, 61}, {26, 52}, {28, 36}, {30, 100}, {31, 33}, {32, 81},
+>+	{33, 62}, {34, 43}, {36, 91}, {37, 53}, {38, 63}, {39, 72},
+>+	{41, 101}, {42, 7}, {43, 34}, {45, 73}, {47, 82}, {49, 17},
+>+	{52, 109}, {53, 102}, {55, 92}, {56, 56}, {57, 57}, {58, 83},
+>+	{59, 37}, {62, 110}, {63, 111}, {64, 74}, {65, 44}, {66, 93},
+>+	{67, 58}, {68, 112}, {69, 32}, {70, 54}, {72, 59}, {73, 64},
+>+	{74, 71}, {78, 31}, {82, 30}, {85, 103}, {86, 38}, {87, 39},
+>+	{88, 45}, {89, 46}, {90, 47}, {91, 48}, {92, 60}, {93, 49},
+>+	{94, 84}, {95, 94}, {98, 65}, {101, 66}, {104, 67}, {109, 104},
+>+	{110, 68}, {113, 69}, {114, 113}, {115, 108}, {116, 121},
+>+	{117, 114}, {118, 119},
+>+};
+>+
+> static const struct msm_pinctrl_soc_data sc7180_pinctrl = {
+> 	.pins = sc7180_pins,
+> 	.npins = ARRAY_SIZE(sc7180_pins),
+>@@ -1107,6 +1123,8 @@ static const struct msm_pinctrl_soc_data sc7180_pinctrl = {
+> 	.ngpios = 120,
+> 	.tiles = sc7180_tiles,
+> 	.ntiles = ARRAY_SIZE(sc7180_tiles),
+>+	.wakeirq_map = sc7180_pdc_map,
+>+	.nwakeirq_map = ARRAY_SIZE(sc7180_pdc_map),
+> };
+>
+> static int sc7180_pinctrl_probe(struct platform_device *pdev)
+>-- 
+>QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+>of Code Aurora Forum, hosted by The Linux Foundation
+>
