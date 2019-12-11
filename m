@@ -2,100 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AF26411A85F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 10:58:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ADD6D11A874
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 11:00:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728848AbfLKJ6m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Dec 2019 04:58:42 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:45828 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728743AbfLKJ6l (ORCPT
+        id S1728757AbfLKKAo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Dec 2019 05:00:44 -0500
+Received: from mail-ua1-f52.google.com ([209.85.222.52]:34043 "EHLO
+        mail-ua1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728512AbfLKKAo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Dec 2019 04:58:41 -0500
-Received: by mail-pg1-f196.google.com with SMTP id b9so10123348pgk.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 01:58:41 -0800 (PST)
+        Wed, 11 Dec 2019 05:00:44 -0500
+Received: by mail-ua1-f52.google.com with SMTP id w20so8556400uap.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 02:00:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=OXx9XO53uVwi3ak33l4H3Z3fkUzEjfR6oeMiOmgyZYM=;
-        b=I0d3LklYC8p3N+I8ufKTUua0HdRPrRWT2UM79MwNgcNWopaJgAZoM5w608Sn2fEArm
-         0B8kjBtprDc2SBjxf8O4R5JxQVH9T6msgIwr64CLTWSnwmCGPDCSoLS7urmCtycp2ob3
-         SnFRYSPVGmEhhSTi4m5XwvIONSxoVrHybqJXmHv+OUzLa8yra6MXqS9j9Fdw/hAyKfmC
-         vTK4sew6blqVyKjxv/Rl5jZOsC2H9lOMwpxqVJTdKe6JJ4D1/ydXHAPzK6Ik0AO3WcMa
-         x9INvVeJcY6vbd1eBd4/iYus2wDImrH64Obl9gWzGJbZkn4gjn3YzXTy2xkKF2348OMU
-         7R+Q==
+        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GPHN1AYuunZqO/oxGQmIHjw9s2N+wk7NQPQ24v17qUM=;
+        b=dGrmOjNR7baqiE2L5L/Ybgc7o6d7FBSsYshMAu12KnMmgEXtcHtpUrD/oD+H+OnY+V
+         anlCviiva6XzZMibzlxDTK15C+HOkJ3bhkU7BA3GfOob4wcHYNvyKKp2tOO3O1jfaUeI
+         0ITFfsHqBYZatXLd5rW3ZRJV8j3zROBpm3VGeIevq58B5D09uGoHw0m0mxiAMUx+7yh4
+         sfGnslmsuqyjuJ1MX3/btt3HN8nKWOMy+E33e1/lEHI8HL5KBH+4NXh4aDu81m7BbLIb
+         +Qu+QPsgdk/5kKugf3YeogdikHfPlUYM1VL9V02TxyagIg8itcDg0pweUqkbKrQGD3VK
+         vDQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=OXx9XO53uVwi3ak33l4H3Z3fkUzEjfR6oeMiOmgyZYM=;
-        b=LZs2hOu5vuzdrjG9HFNpawKnHy7U40sarC7rgfa+bhmQZHsyBG5hZAlRt1TCA5n7D4
-         kCoWEwhINK/gjMk2/jlmYsZ7DQARBOVKrzAPPU9hHrmTYdiNaQlzxeGG9LBTeR5/PZg5
-         u6osyQpihcBP1RyDZ9NGYWMn2P2heAbiKd13ZETZrRkGEAKQABT2JB6sTwCgSRKLDbYQ
-         bh5GJyOPRRZhiOriX7e/1pvBJD6DTg8JC87W7EvGTfZ19pFwR+fP1q8kNhRKqJSMSP1y
-         QxEKY3w44MPcu015xILTDXQECSVQ5i8Ye4Sonye9MiVA8d0xk8gkqqkABN32dWoxTrRJ
-         SYpA==
-X-Gm-Message-State: APjAAAWm98hr9mKy5eTnbkgkIM5NI24S+wbHx2iD+GZiymy1U+LM3TTv
-        tLHa+vP+5l3TBUeCbaluWun0cJj12Iqm3A==
-X-Google-Smtp-Source: APXvYqxG/vLlTnOdVHbynSL9RXJzBKUtTgt7S6F51j51B8Y5fyyQi+GBiJvAjtAnDfI3RphqoAKrOw==
-X-Received: by 2002:a63:e648:: with SMTP id p8mr3102185pgj.259.1576058320583;
-        Wed, 11 Dec 2019 01:58:40 -0800 (PST)
-Received: from localhost ([14.96.106.177])
-        by smtp.gmail.com with ESMTPSA id q6sm2311917pfl.140.2019.12.11.01.58.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2019 01:58:39 -0800 (PST)
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, agross@kernel.org, swboyd@chromium.org,
-        stephan@gerhold.net, olof@lixom.net,
-        Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     linux-pm@vger.kernel.org
-Subject: [PATCH] drivers: thermal: tsens: Work with old DTBs
-Date:   Wed, 11 Dec 2019 15:28:33 +0530
-Message-Id: <39d6b8e4b2cc5836839cfae7cdf0ee3470653b64.1576058136.git.amit.kucheria@linaro.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <cover.1576058136.git.amit.kucheria@linaro.org>
-References: <cover.1576058136.git.amit.kucheria@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GPHN1AYuunZqO/oxGQmIHjw9s2N+wk7NQPQ24v17qUM=;
+        b=QpHjcdeyxTL45q4H1I5fdfyeW+3MO3sUdbJP9FzQEZJ3n4SgoGtNfxi1liB3UwQt+G
+         0jUQS6DJyD7gyTDW9jNwvnefcrrUDJEejlBWNSQef6FS4bTlkejXDfToeR3O2J0g4y6u
+         F0z8KZ756ZUEC8/nbak1fyt+3tm0Rh7rORTdk+7UdUzz4pGfuxr6bV09eGEtge+3lILy
+         vdN1SJhS9b41rzFGNWb/W1sb4CxC+ig5ZqZ+848uxN605pA5cZAgB7fwAi/4QX9PtNSn
+         FtBMwGg0KMqVWSPWTmPLhmt7QXsKByYlZ1adOgOYReDDjux3794m+1zQlqc5ygZ+PPTu
+         tW9Q==
+X-Gm-Message-State: APjAAAVjeSPVfcZIQmtX7EGIpLNwVMHeHOWhn6UVfqlu00M9hmFtgN0P
+        yA1NRLUUSwVOdeiu9wRtkqC3WFdSu7JWJ5dgdICvHg==
+X-Google-Smtp-Source: APXvYqwlsnaNq951yteb1PwTdfkJJKYihJ7CwyOE/btAs9WN7+ZCke/5ntTlGoE1GZnJV/cHfBxqmwkKwhXt46MAt+w=
+X-Received: by 2002:ab0:7352:: with SMTP id k18mr2032094uap.77.1576058442748;
+ Wed, 11 Dec 2019 02:00:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1573068840-13098-1-git-send-email-agross@kernel.org>
+ <1573068840-13098-2-git-send-email-agross@kernel.org> <CAHLCerN7buq82RmmFkoSi_n8g8sSe9VO2utcXuEGM3xG3HcRTg@mail.gmail.com>
+ <20191108031854.GA12993@hector.lan> <20191210105737.GB228968@gerhold.net>
+ <CAHLCerPs8+Fp1N-x7cQ2ETQ8d+fHN5b08V-jVFyFdQLYDndoBA@mail.gmail.com>
+ <20191210181725.GD314059@yoga> <CAOesGMiiMG8kND=ZGv93t525B4L3ogA7py+3fdw2F6XaZspw_w@mail.gmail.com>
+In-Reply-To: <CAOesGMiiMG8kND=ZGv93t525B4L3ogA7py+3fdw2F6XaZspw_w@mail.gmail.com>
+From:   Amit Kucheria <amit.kucheria@verdurent.com>
+Date:   Wed, 11 Dec 2019 15:30:30 +0530
+Message-ID: <CAHLCerPsxhhLTN2bD8J97iQD=DzGzJrb=tV8jZ1t_xohj2PWxg@mail.gmail.com>
+Subject: Re: [GIT PULL] Qualcomm ARM64 DT updates for 5.5
+To:     Olof Johansson <olof@lixom.net>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        lakml <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In order for the old DTBs to continue working, the new interrupt code
-must not return an error if interrupts are not defined.
+On Wed, Dec 11, 2019 at 2:31 AM Olof Johansson <olof@lixom.net> wrote:
+>
+> On Tue, Dec 10, 2019 at 10:17 AM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Tue 10 Dec 09:36 PST 2019, Amit Kucheria wrote:
+> >
+> > > On Tue, Dec 10, 2019 at 4:27 PM Stephan Gerhold <stephan@gerhold.net> wrote:
+> > > >
+> > > > On Thu, Nov 07, 2019 at 09:18:54PM -0600, Andy Gross wrote:
+> > > > > On Thu, Nov 07, 2019 at 07:36:03PM +0530, Amit Kucheria wrote:
+> > > > > > (Removing arm-soc)
+> > > > > >
+> > > > > > Hi Andy,
+> > > > > >
+> > > > > > On Thu, Nov 7, 2019 at 1:04 AM Andy Gross <agross@kernel.org> wrote:
+> > > > > > >
+> > > > > > > Arnd, Olof, and Kevin,
+> > > > > > >
+> > > > > > > I have one slight faux paux in this pull request.  A drivers: soc change got
+> > > > > > > into my arm64 DTS branch and while it is innocuous, it wasn't easy to fix
+> > > > > > > without messing up a lot of people who depend on the SHAs not changing.  So I'm
+> > > > > > > sorry for this inclusion.  I'll scrub this better next time.
+> > > > > > >
+> > > > > > > Andy
+> > > > > >
+> > > > > > > ----------------------------------------------------------------
+> > > > > > > Amit Kucheria (5):
+> > > > > > >       arm64: dts: qcs404: thermal: Add interrupt support
+> > > > > > >       arm64: dts: msm8998: thermal: Add interrupt support
+> > > > > > >       arm64: dts: msm8996: thermal: Add interrupt support
+> > > > > > >       arm64: dts: sdm845: thermal: Add interrupt support
+> > > > > > >       arm64: dts: msm8916: thermal: Fixup HW ids for cpu sensors
+> > > > > >
+> > > > > > One of my patches to add interrupt support to msm8916 tsens is missing
+> > > > > > here. Specifically this one:
+> > > > > > https://patchwork.kernel.org/patch/11201853/
+> > > > > >
+> > > > > > Will there be a second PR this cycle?
+> > > > >
+> > > > > I can work up another and throw it on top.
+> > > > >
+> > > >
+> > > > FYI, the patch seems to be still missing in 5.5-rc1.
+> > > > tsens now fails to probe on MSM8916 with:
+> > > >
+> > > >   qcom-tsens 4a9000.thermal-sensor: IRQ uplow not found
+> > > >
+> > > > Can you queue up the patch as fix for 5.5?
+> > >
+> > > Indeed. Andy/Bjorn, let me know if you need anything from me to get
+> > > this into -rc2.
+> > >
+> >
+> > I'm pulling in some fixes for a rc-pull, so I could add it there.
+> >
+> > But why are we breaking backwards compatibility with existing dtbs to
+> > add a new (optional) feature? Shouldn't there be a rc-fix in the driver
+> > for this regression?
+>
+> 100% agreed.
+>
+> Driver shouldn't require the DT update to continue to function. It
+> needs to fill in the previous behavior as default.
+>
+> As a matter of fact, based on that I don't want to see that DT patch
+> as a fix, please queue it up for 5.6 instead.
 
-Fixes: 634e11d5b450a ("drivers: thermal: tsens: Add interrupt support")
-Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
----
- drivers/thermal/qcom/tsens.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+I've posted a fix for -rc2 to allow the driver to continue to work
+with old DTBs. Please consider for -rc2.
 
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 015e7d2015985..d8f51067ed411 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -109,7 +109,7 @@ static int tsens_register(struct tsens_priv *priv)
- 
- 	irq = platform_get_irq_byname(pdev, "uplow");
- 	if (irq < 0) {
--		ret = irq;
-+		dev_warn(&pdev->dev, "Missing uplow irq in DT\n");
- 		goto err_put_device;
- 	}
- 
-@@ -118,7 +118,8 @@ static int tsens_register(struct tsens_priv *priv)
- 					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
- 					dev_name(&pdev->dev), priv);
- 	if (ret) {
--		dev_err(&pdev->dev, "%s: failed to get irq\n", __func__);
-+		dev_warn(&pdev->dev, "%s: failed to get uplow irq\n", __func__);
-+		ret = 0;
- 		goto err_put_device;
- 	}
- 
--- 
-2.20.1
-
+Regards,
+Amit
