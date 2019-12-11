@@ -2,138 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ADD6D11A874
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 11:00:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CEECE11A8C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 11:22:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728757AbfLKKAo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Dec 2019 05:00:44 -0500
-Received: from mail-ua1-f52.google.com ([209.85.222.52]:34043 "EHLO
-        mail-ua1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728512AbfLKKAo (ORCPT
+        id S1728696AbfLKKWd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Dec 2019 05:22:33 -0500
+Received: from a27-10.smtp-out.us-west-2.amazonses.com ([54.240.27.10]:33204
+        "EHLO a27-10.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727469AbfLKKWd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Dec 2019 05:00:44 -0500
-Received: by mail-ua1-f52.google.com with SMTP id w20so8556400uap.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 02:00:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GPHN1AYuunZqO/oxGQmIHjw9s2N+wk7NQPQ24v17qUM=;
-        b=dGrmOjNR7baqiE2L5L/Ybgc7o6d7FBSsYshMAu12KnMmgEXtcHtpUrD/oD+H+OnY+V
-         anlCviiva6XzZMibzlxDTK15C+HOkJ3bhkU7BA3GfOob4wcHYNvyKKp2tOO3O1jfaUeI
-         0ITFfsHqBYZatXLd5rW3ZRJV8j3zROBpm3VGeIevq58B5D09uGoHw0m0mxiAMUx+7yh4
-         sfGnslmsuqyjuJ1MX3/btt3HN8nKWOMy+E33e1/lEHI8HL5KBH+4NXh4aDu81m7BbLIb
-         +Qu+QPsgdk/5kKugf3YeogdikHfPlUYM1VL9V02TxyagIg8itcDg0pweUqkbKrQGD3VK
-         vDQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GPHN1AYuunZqO/oxGQmIHjw9s2N+wk7NQPQ24v17qUM=;
-        b=QpHjcdeyxTL45q4H1I5fdfyeW+3MO3sUdbJP9FzQEZJ3n4SgoGtNfxi1liB3UwQt+G
-         0jUQS6DJyD7gyTDW9jNwvnefcrrUDJEejlBWNSQef6FS4bTlkejXDfToeR3O2J0g4y6u
-         F0z8KZ756ZUEC8/nbak1fyt+3tm0Rh7rORTdk+7UdUzz4pGfuxr6bV09eGEtge+3lILy
-         vdN1SJhS9b41rzFGNWb/W1sb4CxC+ig5ZqZ+848uxN605pA5cZAgB7fwAi/4QX9PtNSn
-         FtBMwGg0KMqVWSPWTmPLhmt7QXsKByYlZ1adOgOYReDDjux3794m+1zQlqc5ygZ+PPTu
-         tW9Q==
-X-Gm-Message-State: APjAAAVjeSPVfcZIQmtX7EGIpLNwVMHeHOWhn6UVfqlu00M9hmFtgN0P
-        yA1NRLUUSwVOdeiu9wRtkqC3WFdSu7JWJ5dgdICvHg==
-X-Google-Smtp-Source: APXvYqwlsnaNq951yteb1PwTdfkJJKYihJ7CwyOE/btAs9WN7+ZCke/5ntTlGoE1GZnJV/cHfBxqmwkKwhXt46MAt+w=
-X-Received: by 2002:ab0:7352:: with SMTP id k18mr2032094uap.77.1576058442748;
- Wed, 11 Dec 2019 02:00:42 -0800 (PST)
+        Wed, 11 Dec 2019 05:22:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1576059751;
+        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+        bh=vwcJjPcAeYtU95VIZmYe302qrrM4P5xyjn2TgM8BR0w=;
+        b=pBWojAKID6t1MT70uDdU6d7tIitE2SnvRIfCmEN2GdvxaBTKywbbXFp/sUsI2xVP
+        rv58o+xVcK56TL8bN0QJtZv8Td2nM6y4uCEFxjt1+fsp4d68G/heXw1uG+i6glC9K2D
+        6N6xwgeRMUlJXyFew9lmSKoEEWtUjRMXG1LlnolA=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1576059751;
+        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding:Feedback-ID;
+        bh=vwcJjPcAeYtU95VIZmYe302qrrM4P5xyjn2TgM8BR0w=;
+        b=WZ9kUw6yPlA8q5sNqqTuBCF2d6Gge6HgabHEng10vUZQQbJLA0pDwWbCGjTlIEXe
+        EGa0ubI53SToeEgmUAXaKZx+IdjTKkbai2KzTuBF21kmUe6q9PPb9mj9v4BjTz0xVkn
+        UxOl73zgLR1JfN7Xnh3ddP2pVm1UJ3PJRue2SnqA=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BB6CBC36ED5
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
+Subject: Re: [PATCH] mmc: sdhci-msm: Correct the offset and value for
+ DDR_CONFIG register
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Sahitya Tummala <stummala@codeaurora.org>,
+        Sayali Lokhande <sayalil@codeaurora.org>, cang@codeaurora.org,
+        Ram Prakash Gupta <rampraka@codeaurora.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <0101016ea738eb52-8c362755-205a-4383-9181-1a867e82eeed-000000@us-west-2.amazonses.com>
+ <CAPDyKFqdFc1RMNu38d7b+s2Bpr49v-w18frGsPSxsYf924HLWg@mail.gmail.com>
+From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Message-ID: <0101016ef47b4d25-49791932-586b-456e-b9a7-6f9a6f95babf-000000@us-west-2.amazonses.com>
+Date:   Wed, 11 Dec 2019 10:22:31 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-References: <1573068840-13098-1-git-send-email-agross@kernel.org>
- <1573068840-13098-2-git-send-email-agross@kernel.org> <CAHLCerN7buq82RmmFkoSi_n8g8sSe9VO2utcXuEGM3xG3HcRTg@mail.gmail.com>
- <20191108031854.GA12993@hector.lan> <20191210105737.GB228968@gerhold.net>
- <CAHLCerPs8+Fp1N-x7cQ2ETQ8d+fHN5b08V-jVFyFdQLYDndoBA@mail.gmail.com>
- <20191210181725.GD314059@yoga> <CAOesGMiiMG8kND=ZGv93t525B4L3ogA7py+3fdw2F6XaZspw_w@mail.gmail.com>
-In-Reply-To: <CAOesGMiiMG8kND=ZGv93t525B4L3ogA7py+3fdw2F6XaZspw_w@mail.gmail.com>
-From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Wed, 11 Dec 2019 15:30:30 +0530
-Message-ID: <CAHLCerPsxhhLTN2bD8J97iQD=DzGzJrb=tV8jZ1t_xohj2PWxg@mail.gmail.com>
-Subject: Re: [GIT PULL] Qualcomm ARM64 DT updates for 5.5
-To:     Olof Johansson <olof@lixom.net>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        lakml <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAPDyKFqdFc1RMNu38d7b+s2Bpr49v-w18frGsPSxsYf924HLWg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-SES-Outgoing: 2019.12.11-54.240.27.10
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 11, 2019 at 2:31 AM Olof Johansson <olof@lixom.net> wrote:
->
-> On Tue, Dec 10, 2019 at 10:17 AM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Tue 10 Dec 09:36 PST 2019, Amit Kucheria wrote:
-> >
-> > > On Tue, Dec 10, 2019 at 4:27 PM Stephan Gerhold <stephan@gerhold.net> wrote:
-> > > >
-> > > > On Thu, Nov 07, 2019 at 09:18:54PM -0600, Andy Gross wrote:
-> > > > > On Thu, Nov 07, 2019 at 07:36:03PM +0530, Amit Kucheria wrote:
-> > > > > > (Removing arm-soc)
-> > > > > >
-> > > > > > Hi Andy,
-> > > > > >
-> > > > > > On Thu, Nov 7, 2019 at 1:04 AM Andy Gross <agross@kernel.org> wrote:
-> > > > > > >
-> > > > > > > Arnd, Olof, and Kevin,
-> > > > > > >
-> > > > > > > I have one slight faux paux in this pull request.  A drivers: soc change got
-> > > > > > > into my arm64 DTS branch and while it is innocuous, it wasn't easy to fix
-> > > > > > > without messing up a lot of people who depend on the SHAs not changing.  So I'm
-> > > > > > > sorry for this inclusion.  I'll scrub this better next time.
-> > > > > > >
-> > > > > > > Andy
-> > > > > >
-> > > > > > > ----------------------------------------------------------------
-> > > > > > > Amit Kucheria (5):
-> > > > > > >       arm64: dts: qcs404: thermal: Add interrupt support
-> > > > > > >       arm64: dts: msm8998: thermal: Add interrupt support
-> > > > > > >       arm64: dts: msm8996: thermal: Add interrupt support
-> > > > > > >       arm64: dts: sdm845: thermal: Add interrupt support
-> > > > > > >       arm64: dts: msm8916: thermal: Fixup HW ids for cpu sensors
-> > > > > >
-> > > > > > One of my patches to add interrupt support to msm8916 tsens is missing
-> > > > > > here. Specifically this one:
-> > > > > > https://patchwork.kernel.org/patch/11201853/
-> > > > > >
-> > > > > > Will there be a second PR this cycle?
-> > > > >
-> > > > > I can work up another and throw it on top.
-> > > > >
-> > > >
-> > > > FYI, the patch seems to be still missing in 5.5-rc1.
-> > > > tsens now fails to probe on MSM8916 with:
-> > > >
-> > > >   qcom-tsens 4a9000.thermal-sensor: IRQ uplow not found
-> > > >
-> > > > Can you queue up the patch as fix for 5.5?
-> > >
-> > > Indeed. Andy/Bjorn, let me know if you need anything from me to get
-> > > this into -rc2.
-> > >
-> >
-> > I'm pulling in some fixes for a rc-pull, so I could add it there.
-> >
-> > But why are we breaking backwards compatibility with existing dtbs to
-> > add a new (optional) feature? Shouldn't there be a rc-fix in the driver
-> > for this regression?
->
-> 100% agreed.
->
-> Driver shouldn't require the DT update to continue to function. It
-> needs to fill in the previous behavior as default.
->
-> As a matter of fact, based on that I don't want to see that DT patch
-> as a fix, please queue it up for 5.6 instead.
 
-I've posted a fix for -rc2 to allow the driver to continue to work
-with old DTBs. Please consider for -rc2.
+On 12/10/2019 3:21 PM, Ulf Hansson wrote:
+> On Tue, 26 Nov 2019 at 11:19, Veerabhadrarao Badiganti
+> <vbadigan@codeaurora.org> wrote:
+>> The DDR_CONFIG register offset got updated after a specific
+>> minor version of sdcc V4. This offset change has not been properly
+>> taken care of while updating register changes for sdcc V5.
+>>
+>> Correcting proper offset for this register.
+>> Also updating this register value to reflect the recommended RCLK
+>> delay.
+>>
+>> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+> I have applied this for fixes, however it seems like this should also
+> be tagged for stable, right?
 
-Regards,
-Amit
+  Thank you. Yes, I agree.
+
+>
+> Is there a specific commit this fixes or should we just find the
+> version it applies to?
+
+It fixes the bug introduced by commit:
+
+f153588 (mmc: sdhci-msm: Define new Register address map)
+
+>
+> Kind regards
+> Uffe
+>
+>
+>
+>> ---
+>>   drivers/mmc/host/sdhci-msm.c | 28 +++++++++++++++++++---------
+>>   1 file changed, 19 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+>> index b75c82d..3d0bb5e 100644
+>> --- a/drivers/mmc/host/sdhci-msm.c
+>> +++ b/drivers/mmc/host/sdhci-msm.c
+>> @@ -99,7 +99,7 @@
+>>
+>>   #define CORE_PWRSAVE_DLL       BIT(3)
+>>
+>> -#define DDR_CONFIG_POR_VAL     0x80040853
+>> +#define DDR_CONFIG_POR_VAL     0x80040873
+>>
+>>
+>>   #define INVALID_TUNING_PHASE   -1
+>> @@ -148,8 +148,9 @@ struct sdhci_msm_offset {
+>>          u32 core_ddr_200_cfg;
+>>          u32 core_vendor_spec3;
+>>          u32 core_dll_config_2;
+>> +       u32 core_dll_config_3;
+>> +       u32 core_ddr_config_old; /* Applicable to sdcc minor ver < 0x49 */
+>>          u32 core_ddr_config;
+>> -       u32 core_ddr_config_2;
+>>   };
+>>
+>>   static const struct sdhci_msm_offset sdhci_msm_v5_offset = {
+>> @@ -177,8 +178,8 @@ struct sdhci_msm_offset {
+>>          .core_ddr_200_cfg = 0x224,
+>>          .core_vendor_spec3 = 0x250,
+>>          .core_dll_config_2 = 0x254,
+>> -       .core_ddr_config = 0x258,
+>> -       .core_ddr_config_2 = 0x25c,
+>> +       .core_dll_config_3 = 0x258,
+>> +       .core_ddr_config = 0x25c,
+>>   };
+>>
+>>   static const struct sdhci_msm_offset sdhci_msm_mci_offset = {
+>> @@ -207,8 +208,8 @@ struct sdhci_msm_offset {
+>>          .core_ddr_200_cfg = 0x184,
+>>          .core_vendor_spec3 = 0x1b0,
+>>          .core_dll_config_2 = 0x1b4,
+>> -       .core_ddr_config = 0x1b8,
+>> -       .core_ddr_config_2 = 0x1bc,
+>> +       .core_ddr_config_old = 0x1b8,
+>> +       .core_ddr_config = 0x1bc,
+>>   };
+>>
+>>   struct sdhci_msm_variant_ops {
+>> @@ -253,6 +254,7 @@ struct sdhci_msm_host {
+>>          const struct sdhci_msm_offset *offset;
+>>          bool use_cdr;
+>>          u32 transfer_mode;
+>> +       bool updated_ddr_cfg;
+>>   };
+>>
+>>   static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
+>> @@ -924,8 +926,10 @@ static int sdhci_msm_cdclp533_calibration(struct sdhci_host *host)
+>>   static int sdhci_msm_cm_dll_sdc4_calibration(struct sdhci_host *host)
+>>   {
+>>          struct mmc_host *mmc = host->mmc;
+>> -       u32 dll_status, config;
+>> +       u32 dll_status, config, ddr_cfg_offset;
+>>          int ret;
+>> +       struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>> +       struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>>          const struct sdhci_msm_offset *msm_offset =
+>>                                          sdhci_priv_msm_offset(host);
+>>
+>> @@ -938,8 +942,11 @@ static int sdhci_msm_cm_dll_sdc4_calibration(struct sdhci_host *host)
+>>           * bootloaders. In the future, if this changes, then the desired
+>>           * values will need to be programmed appropriately.
+>>           */
+>> -       writel_relaxed(DDR_CONFIG_POR_VAL, host->ioaddr +
+>> -                       msm_offset->core_ddr_config);
+>> +       if (msm_host->updated_ddr_cfg)
+>> +               ddr_cfg_offset = msm_offset->core_ddr_config;
+>> +       else
+>> +               ddr_cfg_offset = msm_offset->core_ddr_config_old;
+>> +       writel_relaxed(DDR_CONFIG_POR_VAL, host->ioaddr + ddr_cfg_offset);
+>>
+>>          if (mmc->ios.enhanced_strobe) {
+>>                  config = readl_relaxed(host->ioaddr +
+>> @@ -1899,6 +1906,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>>                                  msm_offset->core_vendor_spec_capabilities0);
+>>          }
+>>
+>> +       if (core_major == 1 && core_minor >= 0x49)
+>> +               msm_host->updated_ddr_cfg = true;
+>> +
+>>          /*
+>>           * Power on reset state may trigger power irq if previous status of
+>>           * PWRCTL was either BUS_ON or IO_HIGH_V. So before enabling pwr irq
+>> --
+>> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
+
+Thanks,
+
+Veera
+
