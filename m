@@ -2,104 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 301C211A49A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 07:39:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A91A011A4A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 07:42:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727891AbfLKGjh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Dec 2019 01:39:37 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:40171 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726487AbfLKGjh (ORCPT
+        id S1727846AbfLKGmL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Dec 2019 01:42:11 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:37641 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726151AbfLKGmL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Dec 2019 01:39:37 -0500
-Received: by mail-pf1-f194.google.com with SMTP id q8so1282161pfh.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2019 22:39:36 -0800 (PST)
+        Wed, 11 Dec 2019 01:42:11 -0500
+Received: by mail-pg1-f193.google.com with SMTP id q127so10278835pga.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2019 22:42:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=kcW6WrBcvg8R/lYPM6ixJTQAiO/MQeqfUNHc5Kw90lo=;
-        b=hpniJbqUrDNCh9CxSRDGYGaZ5GA0fJjKFFDeR3ptHaI6VzBFOfUIxkVOeowTgF/Y4f
-         TtQjnNMpI7o8m/pSpCKzqMKdWgsy5jV7TQQt0cXIWCX4KwPYo27HPFcq9FP81h/owPgi
-         ZVxjU0vm5bxPss8T/tWzy8X+KNCyn6w2/qhwcUVrRQcqAv889XbNayb1ZLNCvyp76lsq
-         4mtnsX2KVSQtx0pNmhYNal3KlCNhIonJai0ZBOoAhigRpchIWvQkUgZ6UrXsT+kFHbzB
-         5BdonK61rQtYqHfiYiGAT1rmBYh1uGX8k2phFvq2RWX5RfEpgolSXi7yAf2B/aul2kRe
-         K8/g==
+        bh=a3Pv1FvyrRTmg3SlVKuyuXg4XFdZ+s0KbsG+H/OpoI0=;
+        b=dHk2+4mpc/AxIXHPMINqxAIlDymrVI8uRVbiNj5IKUXb70wtxsif7Crkx0FR/n1WJH
+         p6NaJnXzhai/zbD06OKZJ2LKZs6z+WmjaQxvuCiRKSL6N4RfUF8Ra78RkHo59S3ubqX9
+         KxueP6g6Rqo8AyR0Oan25Cy4wnXxKua35yp4Xs388DQt5dsMnM9xyk+rMojo3z/NW4lA
+         u2Y763gNArz4lXoHZl+Oy6PPxiO25WW3OzcqJTa8qU0rizAyu094RSco9vzeB28YnDtd
+         Vv+YL4+eP0AjQACASkOF6EGRBDjHQ2sWlMe2U5aZp4VyhUn1/fd/CLLnrbH2bgKq3ovX
+         Be3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=kcW6WrBcvg8R/lYPM6ixJTQAiO/MQeqfUNHc5Kw90lo=;
-        b=nfjvxFsAfKAg2gK687MrzGRAkItlV4vBlobzd+b89y9V+YdFHeDWUqwHm+l9WGBsip
-         im08zMD8J+IevqMk4nSi/6bSsqkfxL1X7xFcERNulB9HhEGGhYLHjKKDveKzuPXRZRZz
-         lQ3GDm5P+L3bWCsb5YhNSnVjMNbfOTNAWjieKnZt2mV4gq5DtnvRW4S1KoH6Eksz5Ery
-         4qIxdxSRlPYhpt0I5JCskBa/c7dmuOFFsuVrUTI7I2sPqAhVxtls3WCeN3OJuial4+LQ
-         L3RF1Lo3KwB3uhS50cMUf8glAtf7yn3a45r4wUcZD+DGMXWBr1EZttdvzjy23FNKPgZ4
-         SqLg==
-X-Gm-Message-State: APjAAAULqckjM/8C6W3hu8T4U1zAWngTv3AAHlu4pbmxW4JK9i9Q+O8u
-        /Tji7o3TGO/YOa8r7MKJAo7OTg==
-X-Google-Smtp-Source: APXvYqyuF1aA0T4EDKsEb0XxR4EuXuNF7H4Vadx8g+kbRnhuYkm1szv3JcP02dztFnoFcvsw9bW1ig==
-X-Received: by 2002:aa7:85d8:: with SMTP id z24mr2115129pfn.202.1576046376453;
-        Tue, 10 Dec 2019 22:39:36 -0800 (PST)
+        bh=a3Pv1FvyrRTmg3SlVKuyuXg4XFdZ+s0KbsG+H/OpoI0=;
+        b=tqejbibYdZpjL85eviczXtYHI+O9HWq+3SvtAf/vJkhlECfH2vw4lBviPyL48qzoie
+         aff3fxls5RTLQJyx3hY5NeHTRfomqMr0mB/S9C4OTKrRYBJHe+Nq4k9TSObqAs/AexMO
+         17iBrBxQL5WNtYvIAHTwQ46LiMOSy7avjTZhq9qyhqXSVyR0S9Kzbpa+JVDCNoOARlav
+         6wgoQIB34jd74PCnc9nQLO/v7FV4iHSXbBpmuJXi0mheBTfMna4aANJr716d6hM1zKZd
+         KTqbmOhLd/YNieXuOHdrZL1Rxjj948rwIVU+YpSm79cDHak2RFvyT5hAZhS5ktDiqAcu
+         /Ykw==
+X-Gm-Message-State: APjAAAXXh6mhkoL9lZ6yKRO0/PxN99RN8kvOQMmTl02ssKNfykv9kbHQ
+        x2YLT0Dj6yb7gVD4NyNLkL6PIA==
+X-Google-Smtp-Source: APXvYqwxY9itd3dX5um974Cg31klBt8vPQm0Z8kxUemdP/NFJkXgmvUBY361z7dVUrkRHcV24uVTFA==
+X-Received: by 2002:aa7:9197:: with SMTP id x23mr2083246pfa.163.1576046530735;
+        Tue, 10 Dec 2019 22:42:10 -0800 (PST)
 Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id y22sm1272741pfn.122.2019.12.10.22.39.35
+        by smtp.gmail.com with ESMTPSA id e188sm1336701pfe.113.2019.12.10.22.42.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Dec 2019 22:39:35 -0800 (PST)
-Date:   Tue, 10 Dec 2019 22:39:33 -0800
+        Tue, 10 Dec 2019 22:42:10 -0800 (PST)
+Date:   Tue, 10 Dec 2019 22:42:07 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, dianders@chromium.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add new qup functions
- for sc7180
-Message-ID: <20191211063933.GD3143381@builder>
-References: <0101016ef36a5d13-457e6678-2e83-494e-8494-1b0776d5b7e4-000000@us-west-2.amazonses.com>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>, mka@chromium.org,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Subject: Re: [PATCH 1/2] arm64: dts: sc7180: Fix indentation/ordering of qspi
+ nodes in sc7180-idp
+Message-ID: <20191211064207.GE3143381@builder>
+References: <20191210163530.1.I69a6c29e08924229d160b651769c84508a07b3c6@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0101016ef36a5d13-457e6678-2e83-494e-8494-1b0776d5b7e4-000000@us-west-2.amazonses.com>
+In-Reply-To: <20191210163530.1.I69a6c29e08924229d160b651769c84508a07b3c6@changeid>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 10 Dec 21:24 PST 2019, Rajendra Nayak wrote:
+On Tue 10 Dec 16:35 PST 2019, Douglas Anderson wrote:
 
-> Add new qup functions for qup02/04/11 and qup13 wherein multiple
-> functions (for i2c and uart) share the same pin. This allows users
-> to identify which specific qup function for the instance one needs
-> to use for the pin.
+> The qspi pinctrl nodes had the wrong intentation and sort ordering and
+> the main qspi node was placed down in the pinctrl section.  Fix.
 > 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> Fixes: ba3fc6496366 ("arm64: dts: sc7180: Add qupv3_0 and qupv3_1")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Both patches merged, with improved spelling and r-b from Rajendra.
 
-Regards,
+Thanks,
 Bjorn
 
 > ---
->  Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt
-> index b5767ee..6ffeac9 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt
-> @@ -125,8 +125,9 @@ to specify in a pin configuration subnode:
->  		    mi2s_1, mi2s_2, mss_lte, m_voc, pa_indicator, phase_flag,
->  		    PLL_BIST, pll_bypassnl, pll_reset, prng_rosc, qdss,
->  		    qdss_cti, qlink_enable, qlink_request, qspi_clk, qspi_cs,
-> -		    qspi_data, qup00, qup01, qup02, qup03, qup04, qup05,
-> -		    qup10, qup11, qup12, qup13, qup14, qup15, sdc1_tb,
-> +		    qspi_data, qup00, qup01, qup02_i2c, qup02_uart, qup03,
-> +		    qup04_i2c, qup04_uart, qup05, qup10, qup11_i2c, qup11_uart,
-> +		    qup12, qup13_i2c, qup13_uart, qup14, qup15, sdc1_tb,
->  		    sdc2_tb, sd_write, sp_cmu, tgu_ch0, tgu_ch1, tgu_ch2,
->  		    tgu_ch3, tsense_pwm1, tsense_pwm2, uim1, uim2, uim_batt,
->  		    usb_phy, vfr_1, _V_GPIO, _V_PPS_IN, _V_PPS_OUT,
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 73 +++++++++++++------------
+>  1 file changed, 37 insertions(+), 36 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index 189254f5ae95..5eab3a282eba 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> @@ -232,6 +232,20 @@ vreg_bob: bob {
+>  	};
+>  };
+>  
+> +&qspi {
+> +	status = "okay";
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&qspi_clk &qspi_cs0 &qspi_data01>;
+> +
+> +	flash@0 {
+> +		compatible = "jedec,spi-nor";
+> +		reg = <0>;
+> +		spi-max-frequency = <25000000>;
+> +		spi-tx-bus-width = <2>;
+> +		spi-rx-bus-width = <2>;
+> +	};
+> +};
+> +
+>  &qupv3_id_0 {
+>  	status = "okay";
+>  };
+> @@ -250,6 +264,29 @@ &uart8 {
+>  
+>  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
+>  
+> +&qspi_clk {
+> +	pinconf {
+> +		pins = "gpio63";
+> +		bias-disable;
+> +	};
+> +};
+> +
+> +&qspi_cs0 {
+> +	pinconf {
+> +		pins = "gpio68";
+> +		bias-disable;
+> +	};
+> +};
+> +
+> +&qspi_data01 {
+> +	pinconf {
+> +		pins = "gpio64", "gpio65";
+> +
+> +		/* High-Z when no transfers; nice to park the lines */
+> +		bias-pull-up;
+> +	};
+> +};
+> +
+>  &qup_i2c2_default {
+>  	pinconf {
+>  		pins = "gpio15", "gpio16";
+> @@ -364,39 +401,3 @@ pinconf {
+>  	};
+>  };
+>  
+> -&qspi {
+> -	status = "okay";
+> -	pinctrl-names = "default";
+> -	pinctrl-0 = <&qspi_clk &qspi_cs0 &qspi_data01>;
+> -
+> -	flash@0 {
+> -		compatible = "jedec,spi-nor";
+> -		reg = <0>;
+> -		spi-max-frequency = <25000000>;
+> -		spi-tx-bus-width = <2>;
+> -		spi-rx-bus-width = <2>;
+> -	};
+> -};
+> -
+> -&qspi_cs0 {
+> -		pinconf {
+> -			pins = "gpio68";
+> -			bias-disable;
+> -		};
+> -};
+> -
+> -&qspi_clk {
+> -		pinconf {
+> -			pins = "gpio63";
+> -			bias-disable;
+> -		};
+> -};
+> -
+> -&qspi_data01 {
+> -		pinconf {
+> -			pins = "gpio64", "gpio65";
+> -
+> -			/* High-Z when no transfers; nice to park the lines */
+> -			bias-pull-up;
+> -		};
+> -};
 > -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
+> 2.24.0.525.g8f36a354ae-goog
 > 
