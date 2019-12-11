@@ -2,211 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A0B0011B3D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 16:44:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AFF5F11B812
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 17:12:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732285AbfLKPoT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Dec 2019 10:44:19 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:40003 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387474AbfLKPoR (ORCPT
+        id S1729469AbfLKPJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Dec 2019 10:09:33 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39762 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730610AbfLKPJc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Dec 2019 10:44:17 -0500
-Received: by mail-lj1-f193.google.com with SMTP id s22so24591685ljs.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 07:44:15 -0800 (PST)
+        Wed, 11 Dec 2019 10:09:32 -0500
+Received: by mail-wr1-f65.google.com with SMTP id y11so24387087wrt.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 07:09:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=57/Z02+ucp7qKhXMSKtjmCrn1ezz0VtvAepCcM3y9Cc=;
-        b=HxhRgIlMOIogsf/2YoKGG7lRsb3JKtwXbwg/B+A9tR9+NMsIdFtsixap/nqd8MoTzl
-         GrsbrUO2vFmbPPehEfbKpSxV4uRB5sF4pttcQGE99l4RzImTKaTkL0IcD36XP4L7dJ/Z
-         uOmVdMlWnzD/2tACIb9pT5g95D31moKGr2rPMGIAA/K+0+7tNSoIGnEOij7XTsdzCqer
-         8pCULS86IVVXtAU2cZTeDeXSfa2471IKM+MKNCENeTwL9O5RjcszBs2eWIt4fiRulCqz
-         ID9ddiWjUdxsimsGUzcppKKFQCiwiP0R+vH4htW5jcYdC+0JVhykOaS0qCE4RupNX0TO
-         CiKg==
+        h=subject:to:cc:references:from:autocrypt:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=rZVVfmcA7nilm43qu1vr0G4ih2DRvgI2LIwxMX3GmZM=;
+        b=NO2SAA+c5VVCLzfy9pyhAEiNINNX3kHFsCX/sL90lCqw2Ck0btb7CvhIKfc6Ac8gfg
+         Wg0/aq6TV+ODVHYQjkgxBJbh5PjEPXh2jhc3RzDAudrx/+1arQJrouTGtbU4hs9J81ZP
+         9KgyRAlCeg4ZzSlRYq8GKNGnJ+A+44y6Iu2cq5THKFUJtri5msXBupEeaxE2rH6zfmQd
+         TDExPqREaHpgeUw0t7fdo8svQF0ytEUhIY9NOgxB+BAxsdKDlzHHKB+xB44m3AwwAy5T
+         X1w6GBSy3Pt+RMb8k3HkWVqzRfUKu0PgYJkEGEdL5S+QAPEefpZ6HktLh8UoIThRlAMR
+         k6JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=57/Z02+ucp7qKhXMSKtjmCrn1ezz0VtvAepCcM3y9Cc=;
-        b=QQKmASbFs7hH+DOnDsYgQaaEe4Ap+fkyQFXYnEIdonJKoCJBcdNFFtZCa55+b2RRDk
-         mqCvabcIZlwUwJKZO3zeviBVcz6pNGaoo55LfS0lkGmMQGz+KKbfe8KVmavUgiGa7Aaw
-         PgNx/I/WFs0czvrCre4InD4YvEQi/XOSsvuOrkM68wm6hk7OydHVEZYCjnmMMzmO/bAb
-         1AkGPuV/xtSRUZTv6YCwel3wP+lk+eMQiJLttLIOxU/DWiflI7OoHHthrwcoQfMz6Lb3
-         hQe8uLNb3uCUZyYPhhZn14FaCJjarEbIN6fExeDBO689fnipVpAPxshY56x43BvdwjvP
-         GXYQ==
-X-Gm-Message-State: APjAAAWtHFIvwaN1xnRzG2J+ENRZP3NPbNMld+WZqiVvO1b6c/uR1Nzs
-        XplbEM+rJHOj3dRkd48T/9icvA==
-X-Google-Smtp-Source: APXvYqyzctDkVvnOP0bzJjLRPlg3nz19kJBie5gSq1vN5AM9HWkLvEF/wbc9WcyDRH9/GLpw3TU3WQ==
-X-Received: by 2002:a2e:97cf:: with SMTP id m15mr2609300ljj.130.1576079054866;
-        Wed, 11 Dec 2019 07:44:14 -0800 (PST)
-Received: from localhost.localdomain (h-158-174-22-210.NA.cust.bahnhof.se. [158.174.22.210])
-        by smtp.gmail.com with ESMTPSA id b14sm1389608lff.68.2019.12.11.07.44.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2019 07:44:14 -0800 (PST)
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-To:     Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org
-Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Lina Iyer <lina.iyer@linaro.org>
-Subject: [PATCH v4 14/14] arm64: dts: Convert to the hierarchical CPU topology layout for MSM8916
-Date:   Wed, 11 Dec 2019 16:43:43 +0100
-Message-Id: <20191211154343.29765-15-ulf.hansson@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20191211154343.29765-1-ulf.hansson@linaro.org>
-References: <20191211154343.29765-1-ulf.hansson@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=rZVVfmcA7nilm43qu1vr0G4ih2DRvgI2LIwxMX3GmZM=;
+        b=WVxmnyJ5hywBdyBzaPcnXI8y1VQN94IlH/K9sCvRD6u4kYnWjNsa6h4TU9Z6Eq5LsX
+         1Cbb5qmHXg1qeB2QmLfwA6bFhpfwpvVrNcBgeGM+FwNFvKhHLMOsT+41KR/63qXY4fua
+         5qPzLUAbzKKdyNutgVZ3MWXYOZxMZ8bIYxG02a/a2BTFBu/b1Kvu/Tp/XK/JmWISTw3I
+         iUtA+05LZLUmoIs83uALOLPk+RZO90DByaXvVAaC3X21ElLZFyJnGOadiz7Lx8tn9fxc
+         mJV0E/GU0eECI4ExFMEZuB1DBvI77U7yr7tuMJc/sMTU71Q3K/qGuCn7qJLkkfYKj3VJ
+         MIEg==
+X-Gm-Message-State: APjAAAUN2/8FzaziQ3FxFlaHHMU78HBrY8EPYtrWEadWqmm4OU/EN2qk
+        cbvigL725jr2I0Edmdk2KjJ9Cw==
+X-Google-Smtp-Source: APXvYqyd6vy+iUwCdrH8Too6eymccRguXlFfkclccjZT8vLOZpaoM9yZcOuXHxYXlg7OvsWu6BqZsw==
+X-Received: by 2002:a5d:558d:: with SMTP id i13mr288441wrv.364.1576076970624;
+        Wed, 11 Dec 2019 07:09:30 -0800 (PST)
+Received: from ?IPv6:2a01:e34:ed2f:f020:e505:be10:23e:110d? ([2a01:e34:ed2f:f020:e505:be10:23e:110d])
+        by smtp.googlemail.com with ESMTPSA id l17sm2549108wro.77.2019.12.11.07.09.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Dec 2019 07:09:30 -0800 (PST)
+Subject: Re: [PATCH] drivers: thermal: tsens: Work with old DTBs
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org, swboyd@chromium.org,
+        stephan@gerhold.net, olof@lixom.net
+Cc:     linux-pm@vger.kernel.org
+References: <cover.1576058136.git.amit.kucheria@linaro.org>
+ <39d6b8e4b2cc5836839cfae7cdf0ee3470653b64.1576058136.git.amit.kucheria@linaro.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Autocrypt: addr=daniel.lezcano@linaro.org; prefer-encrypt=mutual; keydata=
+ xsFNBFv/yykBEADDdW8RZu7iZILSf3zxq5y8YdaeyZjI/MaqgnvG/c3WjFaunoTMspeusiFE
+ sXvtg3ehTOoyD0oFjKkHaia1Zpa1m/gnNdT/WvTveLfGA1gH+yGes2Sr53Ht8hWYZFYMZc8V
+ 2pbSKh8wepq4g8r5YI1XUy9YbcTdj5mVrTklyGWA49NOeJz2QbfytMT3DJmk40LqwK6CCSU0
+ 9Ed8n0a+vevmQoRZJEd3Y1qXn2XHys0F6OHCC+VLENqNNZXdZE9E+b3FFW0lk49oLTzLRNIq
+ 0wHeR1H54RffhLQAor2+4kSSu8mW5qB0n5Eb/zXJZZ/bRiXmT8kNg85UdYhvf03ZAsp3qxcr
+ xMfMsC7m3+ADOtW90rNNLZnRvjhsYNrGIKH8Ub0UKXFXibHbafSuq7RqyRQzt01Ud8CAtq+w
+ P9EftUysLtovGpLSpGDO5zQ++4ZGVygdYFr318aGDqCljKAKZ9hYgRimPBToDedho1S1uE6F
+ 6YiBFnI3ry9+/KUnEP6L8Sfezwy7fp2JUNkUr41QF76nz43tl7oersrLxHzj2dYfWUAZWXva
+ wW4IKF5sOPFMMgxoOJovSWqwh1b7hqI+nDlD3mmVMd20VyE9W7AgTIsvDxWUnMPvww5iExlY
+ eIC0Wj9K4UqSYBOHcUPrVOKTcsBVPQA6SAMJlt82/v5l4J0pSQARAQABzSpEYW5pZWwgTGV6
+ Y2FubyA8ZGFuaWVsLmxlemNhbm9AbGluYXJvLm9yZz7Cwa4EEwEIAEECGwEFCwkIBwIGFQoJ
+ CAsCBBYCAwECHgECF4ACGQEWIQQk1ibyU76eh+bOW/SP9LjScWdVJwUCXAkeagUJDRnjhwAh
+ CRCP9LjScWdVJxYhBCTWJvJTvp6H5s5b9I/0uNJxZ1Un69gQAJK0ODuKzYl0TvHPU8W7uOeu
+ U7OghN/DTkG6uAkyqW+iIVi320R5QyXN1Tb6vRx6+yZ6mpJRW5S9fO03wcD8Sna9xyZacJfO
+ UTnpfUArs9FF1pB3VIr95WwlVoptBOuKLTCNuzoBTW6jQt0sg0uPDAi2dDzf+21t/UuF7I3z
+ KSeVyHuOfofonYD85FkQJN8lsbh5xWvsASbgD8bmfI87gEbt0wq2ND5yuX+lJK7FX4lMO6gR
+ ZQ75g4KWDprOO/w6ebRxDjrH0lG1qHBiZd0hcPo2wkeYwb1sqZUjQjujlDhcvnZfpDGR4yLz
+ 5WG+pdciQhl6LNl7lctNhS8Uct17HNdfN7QvAumYw5sUuJ+POIlCws/aVbA5+DpmIfzPx5Ak
+ UHxthNIyqZ9O6UHrVg7SaF3rvqrXtjtnu7eZ3cIsfuuHrXBTWDsVwub2nm1ddZZoC530BraS
+ d7Y7eyKs7T4mGwpsi3Pd33Je5aC/rDeF44gXRv3UnKtjq2PPjaG/KPG0fLBGvhx0ARBrZLsd
+ 5CTDjwFA4bo+pD13cVhTfim3dYUnX1UDmqoCISOpzg3S4+QLv1bfbIsZ3KDQQR7y/RSGzcLE
+ z164aDfuSvl+6Myb5qQy1HUQ0hOj5Qh+CzF3CMEPmU1v9Qah1ThC8+KkH/HHjPPulLn7aMaK
+ Z8t6h7uaAYnGzjMEXZLIEhYJKwYBBAHaRw8BAQdAGdRDglTydmxI03SYiVg95SoLOKT5zZW1
+ 7Kpt/5zcvt3CwhsEGAEIACAWIQQk1ibyU76eh+bOW/SP9LjScWdVJwUCXZLIEgIbAgCvCRCP
+ 9LjScWdVJ40gBBkWCAAdFiEEbinX+DPdhovb6oob3uarTi9/eqYFAl2SyBIAIQkQ3uarTi9/
+ eqYWIQRuKdf4M92Gi9vqihve5qtOL396pnZGAP0c3VRaj3RBEOUGKxHzcu17ZUnIoJLjpHdk
+ NfBnWU9+UgD/bwTxE56Wd8kQZ2e2UTy4BM8907FsJgAQLL4tD2YZggwWIQQk1ibyU76eh+bO
+ W/SP9LjScWdVJ5CaD/0YQyfUzjpR1GnCSkbaLYTEUsyaHuWPI/uSpKTtcbttpYv+QmYsIwD9
+ 8CeH3zwY0Xl/1fE9Hy59z6Vxv9YVapLx0nPDOA1zDVNq2MnutxHb8t+Imjz4ERCxysqtfYrv
+ gao3E/h0c8SEeh+bh5MkjwmU8CwZ3doWyiVdULKESe7/Gs5OuhFzaDVPCpWdsKdCAGyUuP/+
+ qRWwKGVpWP0Rrt6MTK24Ibeu3xEZO8c3XOEXH5d9nf6YRqBEIizAecoCr00E9c+6BlRS0AqR
+ OQC3/Mm7rWtco3+WOridqVXkko9AcZ8AiM5nu0F8AqYGKg0y7vkL2LOP8us85L0p57MqIR1u
+ gDnITlTY0x4RYRWJ9+k7led5WsnWlyv84KNzbDqQExTm8itzeZYW9RvbTS63r/+FlcTa9Cz1
+ 5fW3Qm0BsyECvpAD3IPLvX9jDIR0IkF/BQI4T98LQAkYX1M/UWkMpMYsL8tLObiNOWUl4ahb
+ PYi5Yd8zVNYuidXHcwPAUXqGt3Cs+FIhihH30/Oe4jL0/2ZoEnWGOexIFVFpue0jdqJNiIvA
+ F5Wpx+UiT5G8CWYYge5DtHI3m5qAP9UgPuck3N8xCihbsXKX4l8bdHfziaJuowief7igeQs/
+ WyY9FnZb0tl29dSa7PdDKFWu+B+ZnuIzsO5vWMoN6hMThTl1DxS+jc7ATQRb/8z6AQgAvSkg
+ 5w7dVCSbpP6nXc+i8OBz59aq8kuL3YpxT9RXE/y45IFUVuSc2kuUj683rEEgyD7XCf4QKzOw
+ +XgnJcKFQiACpYAowhF/XNkMPQFspPNM1ChnIL5KWJdTp0DhW+WBeCnyCQ2pzeCzQlS/qfs3
+ dMLzzm9qCDrrDh/aEegMMZFO+reIgPZnInAcbHj3xUhz8p2dkExRMTnLry8XXkiMu9WpchHy
+ XXWYxXbMnHkSRuT00lUfZAkYpMP7La2UudC/Uw9WqGuAQzTqhvE1kSQe0e11Uc+PqceLRHA2
+ bq/wz0cGriUrcCrnkzRmzYLoGXQHqRuZazMZn2/pSIMZdDxLbwARAQABwsGNBBgBCAAgFiEE
+ JNYm8lO+nofmzlv0j/S40nFnVScFAlv/zPoCGwwAIQkQj/S40nFnVScWIQQk1ibyU76eh+bO
+ W/SP9LjScWdVJ/g6EACFYk+OBS7pV9KZXncBQYjKqk7Kc+9JoygYnOE2wN41QN9Xl0Rk3wri
+ qO7PYJM28YjK3gMT8glu1qy+Ll1bjBYWXzlsXrF4szSqkJpm1cCxTmDOne5Pu6376dM9hb4K
+ l9giUinI4jNUCbDutlt+Cwh3YuPuDXBAKO8YfDX2arzn/CISJlk0d4lDca4Cv+4yiJpEGd/r
+ BVx2lRMUxeWQTz+1gc9ZtbRgpwoXAne4iw3FlR7pyg3NicvR30YrZ+QOiop8psWM2Fb1PKB9
+ 4vZCGT3j2MwZC50VLfOXC833DBVoLSIoL8PfTcOJOcHRYU9PwKW0wBlJtDVYRZ/CrGFjbp2L
+ eT2mP5fcF86YMv0YGWdFNKDCOqOrOkZVmxai65N9d31k8/O9h1QGuVMqCiOTULy/h+FKpv5q
+ t35tlzA2nxPOX8Qj3KDDqVgQBMYJRghZyj5+N6EKAbUVa9Zq8xT6Ms2zz/y7CPW74G1GlYWP
+ i6D9VoMMi6ICko/CXUZ77OgLtMsy3JtzTRbn/wRySOY2AsMgg0Sw6yJ0wfrVk6XAMoLGjaVt
+ X4iPTvwocEhjvrO4eXCicRBocsIB2qZaIj3mlhk2u4AkSpkKm9cN0KWYFUxlENF4/NKWMK+g
+ fGfsCsS3cXXiZpufZFGr+GoHwiELqfLEAQ9AhlrHGCKcgVgTOI6NHg==
+Message-ID: <aa9174c2-c851-4769-0f9c-5541047a7901@linaro.org>
+Date:   Wed, 11 Dec 2019 16:09:28 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.1
+MIME-Version: 1.0
+In-Reply-To: <39d6b8e4b2cc5836839cfae7cdf0ee3470653b64.1576058136.git.amit.kucheria@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To enable the OS to better support PSCI OS initiated CPU suspend mode,
-let's convert from the flattened layout to the hierarchical layout.
+On 11/12/2019 10:58, Amit Kucheria wrote:
+> In order for the old DTBs to continue working, the new interrupt code
+> must not return an error if interrupts are not defined.
+> 
+> Fixes: 634e11d5b450a ("drivers: thermal: tsens: Add interrupt support")
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> ---
+>  drivers/thermal/qcom/tsens.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 015e7d2015985..d8f51067ed411 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -109,7 +109,7 @@ static int tsens_register(struct tsens_priv *priv)
+>  
+>  	irq = platform_get_irq_byname(pdev, "uplow");
+>  	if (irq < 0) {
+> -		ret = irq;
 
-In the hierarchical layout, let's create a power domain provider per CPU
-and describe the idle states for each CPU inside the power domain provider
-node. To group the CPUs into a cluster, let's add another power domain
-provider and make it act as the master domain. Note that, the CPU's idle
-states remains compatible with "arm,idle-state", while the cluster's idle
-state becomes compatible with "domain-idle-state".
+'ret' remains uninitialized here.
 
-Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
-Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
----
+> +		dev_warn(&pdev->dev, "Missing uplow irq in DT\n");
+>  		goto err_put_device;
+>  	}
+>  
+> @@ -118,7 +118,8 @@ static int tsens_register(struct tsens_priv *priv)
+>  					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+>  					dev_name(&pdev->dev), priv);
+>  	if (ret) {
+> -		dev_err(&pdev->dev, "%s: failed to get irq\n", __func__);
+> +		dev_warn(&pdev->dev, "%s: failed to get uplow irq\n", __func__);
+> +		ret = 0;
+>  		goto err_put_device;
+>  	}
 
-Changes in v4:
-	- None.
+The code now is unable to make a distinction between an error in the DT
+and the old DT :/
 
----
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 57 +++++++++++++++++++++++++--
- 1 file changed, 53 insertions(+), 4 deletions(-)
+Why not version the DT?
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 8686e101905c..282c36c8fa3b 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -102,10 +102,11 @@
- 			reg = <0x0>;
- 			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-+			power-domains = <&CPU_PD0>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU1: cpu@1 {
-@@ -114,10 +115,11 @@
- 			reg = <0x1>;
- 			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-+			power-domains = <&CPU_PD1>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU2: cpu@2 {
-@@ -126,10 +128,11 @@
- 			reg = <0x2>;
- 			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-+			power-domains = <&CPU_PD2>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU3: cpu@3 {
-@@ -138,10 +141,11 @@
- 			reg = <0x3>;
- 			next-level-cache = <&L2_0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&CPU_SLEEP_0>;
- 			clocks = <&apcs>;
- 			operating-points-v2 = <&cpu_opp_table>;
- 			#cooling-cells = <2>;
-+			power-domains = <&CPU_PD3>;
-+			power-domain-names = "psci";
- 		};
- 
- 		L2_0: l2-cache {
-@@ -161,12 +165,57 @@
- 				min-residency-us = <2000>;
- 				local-timer-stop;
- 			};
-+
-+			CLUSTER_RET: cluster-retention {
-+				compatible = "domain-idle-state";
-+				arm,psci-suspend-param = <0x41000012>;
-+				entry-latency-us = <500>;
-+				exit-latency-us = <500>;
-+				min-residency-us = <2000>;
-+			};
-+
-+			CLUSTER_PWRDN: cluster-gdhs {
-+				compatible = "domain-idle-state";
-+				arm,psci-suspend-param = <0x41000032>;
-+				entry-latency-us = <2000>;
-+				exit-latency-us = <2000>;
-+				min-residency-us = <6000>;
-+			};
- 		};
- 	};
- 
- 	psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
-+
-+		CPU_PD0: cpu-pd0 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD1: cpu-pd1 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD2: cpu-pd2 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD3: cpu-pd3 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP_0>;
-+		};
-+
-+		CLUSTER_PD: cluster-pd {
-+			#power-domain-cells = <0>;
-+			domain-idle-states = <&CLUSTER_RET>, <&CLUSTER_PWRDN>;
-+		};
- 	};
- 
- 	pmu {
+
 -- 
-2.17.1
+ <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
 
