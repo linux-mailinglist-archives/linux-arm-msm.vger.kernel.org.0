@@ -2,93 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C0FF611BAA4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 18:52:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A13111BAE0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 19:00:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730534AbfLKRw0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Dec 2019 12:52:26 -0500
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:43074 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730522AbfLKRw0 (ORCPT
+        id S1730874AbfLKSAO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Dec 2019 13:00:14 -0500
+Received: from mail-il1-f194.google.com ([209.85.166.194]:46208 "EHLO
+        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730829AbfLKSAO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Dec 2019 12:52:26 -0500
-Received: by mail-ed1-f51.google.com with SMTP id dc19so20126411edb.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 09:52:25 -0800 (PST)
+        Wed, 11 Dec 2019 13:00:14 -0500
+Received: by mail-il1-f194.google.com with SMTP id t17so20189351ilm.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 10:00:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=EOLH9xGCIq9oFG6bGYcwxtab5R0yLdxQF2RKFwaOSEY=;
-        b=QtS2DDWmg7esT/nYCWb3rscHFH/clJDFIgWAx22w2ai3YrtC8ZQhIe9JZZOUB138PE
-         cqZMcOAuxS1zSq2Unve1xSUAHXyPunSq4s33+3vHBf4EEeogwhOqb6YUljDudVa07Ij6
-         rhkqY9PQbXwVl7L+o3Ij6ET49Eyoe7RsSO6+1sLes0Aiegxs1jijTWc0rEqhT9B8R6fD
-         jWEuQvqgWaC9QkEWb9wzB0+ngV7hNdllDBVt3LA/S9BSjxntOvBUyvyBEj/n4apirpCZ
-         qY2ihyY4kpVNTXOoVq2j3ITU+GpJgRV7Vk8+Qjc9m+g3NDB9BjWrgmLH5Yu3VUM1inZ4
-         VlCw==
+         :cc;
+        bh=Zw8ToasYb8/laTLFqP1g55dqKVSS0xO4pMqGOs5Lio4=;
+        b=muIVQgmKlRQQMPU+Jeeyvy8/9sXC3w7NT5fymLadIwje9b9OnbN5ClDxwE8279dvoE
+         spwJu8EmwWQkXCJk50n4AhPIlogG3r7l4JpwoizFRBnCNls6ZL5nRadADjzSUVUQtYOF
+         hLfTNe36v0MhAjt+3HNQ9L3QJiSHydvtf2gF4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=EOLH9xGCIq9oFG6bGYcwxtab5R0yLdxQF2RKFwaOSEY=;
-        b=sw5LNOT4+g4r23WSm0ZVsfTTLm6VyXfgVXFKcKncjnhXwj9DX7L6m2lH1i6O7oYqkg
-         /And8z/4AYiOCiZ4ZYByoLaV713FDnic8WKKVMTthXc/3xUdKt4MY/wsFuMwmu/RCewl
-         88YzZAo11pXRh7udjKb5lCsft7KAE6vZeeF9VfF4FA9WlbDDJuSxxXiUPNVFH7PVXuan
-         UR8bM9NUYGOuXslcYxea9LStya73S7j+4Wt+NgVGoUBV1nTKoYpCZ3ur0sPc3q2juRY7
-         qIzAcpKJx31ws29nsHJt3e1pWVjsJpgGxbxeOstEDKWq2IaoomFr+O46bWAXpoKmL9LS
-         k88g==
-X-Gm-Message-State: APjAAAWUCbT+kP0Yn0QJFx1xX6qta5r4621jfW8tYraX1ag4O6dDCd8/
-        fkuQn39e+jfqZW8nlqGavygnvxM62CTx2yKLXlM=
-X-Google-Smtp-Source: APXvYqwacMwAWOGpTQKdLSDOz3XzoW/Cj4bB+7U0MWOvr3excbWCD/NOs+alqBf1oo3wDDLgUaeVQCEDNYwqJAO1vZA=
-X-Received: by 2002:a17:906:2296:: with SMTP id p22mr4757180eja.269.1576086745026;
- Wed, 11 Dec 2019 09:52:25 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=Zw8ToasYb8/laTLFqP1g55dqKVSS0xO4pMqGOs5Lio4=;
+        b=aoMKpzCfwGZbd5Tna81CLnw4Ew9HLhq9tley9W8rAyZ1nZP9yfv8feeo4t2bw0kngz
+         0O9UKDrQrj3O94n8Svja1d2upNu8mdn8Xws9kjcMlkqXvlMMPSWnfsCUa8G6GMmXXWSV
+         AinN2ulvvQpr5N4nZHiCmdgbo6b4BbQWMGG/jmLgmti2znHjqYsBNARsdURAT2AUHqZZ
+         80C6n5NblkOytq9ecVmGvlitnr8b9gdB9b1FNU1cKCnqCuDRnwlohufVAdv1zLRDXsXH
+         9WbkOPQEDGgwXjm7YCwpBLsiBo4jXagAfR4PM/a0W9eL7DyXnMdrFcPICOfzh6pq1b0y
+         zTnA==
+X-Gm-Message-State: APjAAAVbtqnHoScKf7pahe4X8qol+zrY5tN6lYpXpt/YLWCn4Qihirp3
+        zYe8hbyTX+A4tgwZ4qSkqBMEJLd+4BE=
+X-Google-Smtp-Source: APXvYqzO8NQfbRR44ISvmV7rJwlA3OjtWNmVgpKQY7Zx0hpsm+7Z3fyIqG/6kvmJB1/jMKM/dcJpLQ==
+X-Received: by 2002:a92:ccd0:: with SMTP id u16mr3974006ilq.215.1576087213362;
+        Wed, 11 Dec 2019 10:00:13 -0800 (PST)
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com. [209.85.166.54])
+        by smtp.gmail.com with ESMTPSA id q12sm672394ion.31.2019.12.11.10.00.12
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Dec 2019 10:00:12 -0800 (PST)
+Received: by mail-io1-f54.google.com with SMTP id z193so23607445iof.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 10:00:12 -0800 (PST)
+X-Received: by 2002:a02:711d:: with SMTP id n29mr4090645jac.114.1576087212191;
+ Wed, 11 Dec 2019 10:00:12 -0800 (PST)
 MIME-Version: 1.0
-References: <CAAaE5fP+Znp1O4t=M7bwor8FH=f-z9CL0wQ9NTjtLSwjFb0LoQ@mail.gmail.com>
-In-Reply-To: <CAAaE5fP+Znp1O4t=M7bwor8FH=f-z9CL0wQ9NTjtLSwjFb0LoQ@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 11 Dec 2019 09:52:15 -0800
-Message-ID: <CAF6AEGtpPoZK4FCSLN=285hRQihhEjaLZTO82eFdKmwYWQMSHg@mail.gmail.com>
-Subject: Re: Question about MSM Driver
-To:     ggermanres <ggermanres@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+References: <0101016ef36a5bbc-82d31857-9d9b-454d-82e4-fed407e17443-000000@us-west-2.amazonses.com>
+In-Reply-To: <0101016ef36a5bbc-82d31857-9d9b-454d-82e4-fed407e17443-000000@us-west-2.amazonses.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 11 Dec 2019 10:00:01 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=WQN4okN8HVrVbwoFA+thagm1w6HkD6WRp_HOenCOBgcw@mail.gmail.com>
+Message-ID: <CAD=FV=WQN4okN8HVrVbwoFA+thagm1w6HkD6WRp_HOenCOBgcw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add new qup functions
+ for sc7180
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     LinusW <linus.walleij@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 11, 2019 at 6:22 AM ggermanres <ggermanres@gmail.com> wrote:
->
-> Hello.
->
-> I have question about MSM Driver.
->
-> I using Dragonboard 410 with ili9881 display. This is hobby project. This=
- display from xiaomi redmi 3x/4x. I made PCB board for connect them. I chan=
-ged dts, created panel driver (this all on buildroot with my config). All o=
-k. Run platform. I saw linux console. Freedreno (opengl test app) is workin=
-g fine. But I saw flickering like on old monitor I saw from phone. I tried =
-changing timings, but this helped a little bit (I used it from dtsi from xi=
-aomi repository).
->
-> I think this is with vsync problem. Your driver support DSI_VSYNC input? =
-In panel driver I sent command for vblank, on oscilloscope I saw pulse on t=
-his pin 60Hz. I tried find path in your driver code, added some debug outpu=
-t in code with sync. I saw MDSS_DSI_0_TRIG_CTRL configured with support TE.=
- But Its not helped for me.
->
-> If you know something, tell me. Or how change driver to support DSI_VSYNC=
- input.
->
+Hi,
 
-I guess this is a command mode panel?  So you'd be caring about the TE
-signal?  As far as I understand (from, iirc, jhugo) this was handled
-by the hardware and not exposed to the driver on older devices.
+On Tue, Dec 10, 2019 at 9:24 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>
+> Add new qup functions for qup02/04/11 and qup13 wherein multiple
+> functions (for i2c and uart) share the same pin. This allows users
+> to identify which specific qup function for the instance one needs
+> to use for the pin.
+>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 
-If it is a video mode panel, the problem could be different (userspace
-not waiting for pageflip event?)
-
-BR,
--R
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
