@@ -2,171 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EC97311A823
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 10:49:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF26411A85F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 10:58:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728757AbfLKJtG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Dec 2019 04:49:06 -0500
-Received: from hqnvemgate24.nvidia.com ([216.228.121.143]:18348 "EHLO
-        hqnvemgate24.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728370AbfLKJtG (ORCPT
+        id S1728848AbfLKJ6m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Dec 2019 04:58:42 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:45828 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728743AbfLKJ6l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Dec 2019 04:49:06 -0500
-Received: from hqpgpgate102.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate24.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
-        id <B5df0bb7b0000>; Wed, 11 Dec 2019 01:48:43 -0800
-Received: from hqmail.nvidia.com ([172.20.161.6])
-  by hqpgpgate102.nvidia.com (PGP Universal service);
-  Wed, 11 Dec 2019 01:49:05 -0800
-X-PGP-Universal: processed;
-        by hqpgpgate102.nvidia.com on Wed, 11 Dec 2019 01:49:05 -0800
-Received: from DRHQMAIL107.nvidia.com (10.27.9.16) by HQMAIL101.nvidia.com
- (172.20.187.10) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Wed, 11 Dec
- 2019 09:49:04 +0000
-Received: from tbergstrom-lnx.Nvidia.com (10.124.1.5) by
- DRHQMAIL107.nvidia.com (10.27.9.16) with Microsoft SMTP Server (TLS) id
- 15.0.1473.3; Wed, 11 Dec 2019 09:49:03 +0000
-Received: by tbergstrom-lnx.Nvidia.com (Postfix, from userid 1000)
-        id 83C0540D1A; Wed, 11 Dec 2019 11:49:01 +0200 (EET)
-Date:   Wed, 11 Dec 2019 11:49:01 +0200
-From:   Peter De Schrijver <pdeschrijver@nvidia.com>
-To:     Yangtao Li <tiny.windzz@gmail.com>
-CC:     <afaerber@suse.de>, <manivannan.sadhasivam@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <Eugeniy.Paltsev@synopsys.com>, <shawnguo@kernel.org>,
-        <s.hauer@pengutronix.de>, <kernel@pengutronix.de>,
-        <festevam@gmail.com>, <linux-imx@nxp.com>, <agross@kernel.org>,
-        <s.nawrocki@samsung.com>, <tomasz.figa@gmail.com>,
-        <cw00.choi@samsung.com>, <kgene@kernel.org>, <krzk@kernel.org>,
-        <palmer@sifive.com>, <paul.walmsley@sifive.com>,
-        <dinguyen@kernel.org>, <mripard@kernel.org>, <wens@csie.org>,
-        <emilio@elopez.com.ar>, <pgaikwad@nvidia.com>,
-        <thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
-        <matthias.bgg@gmail.com>, <rfontana@redhat.com>,
-        <gregkh@linuxfoundation.org>, <t-kristo@ti.com>,
-        <john@phrozen.org>, <tglx@linutronix.de>, <allison@lohutok.net>,
-        <kstewart@linuxfoundation.org>, <swinslow@gmail.com>,
-        <aisheng.dong@nxp.com>, <robh@kernel.org>, <daniel.baluta@nxp.com>,
-        <weiyongjun1@huawei.com>, <wangyan.wang@mediatek.com>,
-        <chunhui.dai@mediatek.com>, <miquel.raynal@bootlin.com>,
-        <heiko@sntech.de>, <jcmvbkbc@gmail.com>, <nsekhar@ti.com>,
-        <geert+renesas@glider.be>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-riscv@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>
-Subject: Re: [PATCH 06/17] clk: tegra: convert to
- devm_platform_ioremap_resource
-Message-ID: <20191211094901.GY28289@pdeschrijver-desktop.Nvidia.com>
-References: <20191209195749.868-1-tiny.windzz@gmail.com>
- <20191209195749.868-6-tiny.windzz@gmail.com>
+        Wed, 11 Dec 2019 04:58:41 -0500
+Received: by mail-pg1-f196.google.com with SMTP id b9so10123348pgk.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 01:58:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=OXx9XO53uVwi3ak33l4H3Z3fkUzEjfR6oeMiOmgyZYM=;
+        b=I0d3LklYC8p3N+I8ufKTUua0HdRPrRWT2UM79MwNgcNWopaJgAZoM5w608Sn2fEArm
+         0B8kjBtprDc2SBjxf8O4R5JxQVH9T6msgIwr64CLTWSnwmCGPDCSoLS7urmCtycp2ob3
+         SnFRYSPVGmEhhSTi4m5XwvIONSxoVrHybqJXmHv+OUzLa8yra6MXqS9j9Fdw/hAyKfmC
+         vTK4sew6blqVyKjxv/Rl5jZOsC2H9lOMwpxqVJTdKe6JJ4D1/ydXHAPzK6Ik0AO3WcMa
+         x9INvVeJcY6vbd1eBd4/iYus2wDImrH64Obl9gWzGJbZkn4gjn3YzXTy2xkKF2348OMU
+         7R+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=OXx9XO53uVwi3ak33l4H3Z3fkUzEjfR6oeMiOmgyZYM=;
+        b=LZs2hOu5vuzdrjG9HFNpawKnHy7U40sarC7rgfa+bhmQZHsyBG5hZAlRt1TCA5n7D4
+         kCoWEwhINK/gjMk2/jlmYsZ7DQARBOVKrzAPPU9hHrmTYdiNaQlzxeGG9LBTeR5/PZg5
+         u6osyQpihcBP1RyDZ9NGYWMn2P2heAbiKd13ZETZrRkGEAKQABT2JB6sTwCgSRKLDbYQ
+         bh5GJyOPRRZhiOriX7e/1pvBJD6DTg8JC87W7EvGTfZ19pFwR+fP1q8kNhRKqJSMSP1y
+         QxEKY3w44MPcu015xILTDXQECSVQ5i8Ye4Sonye9MiVA8d0xk8gkqqkABN32dWoxTrRJ
+         SYpA==
+X-Gm-Message-State: APjAAAWm98hr9mKy5eTnbkgkIM5NI24S+wbHx2iD+GZiymy1U+LM3TTv
+        tLHa+vP+5l3TBUeCbaluWun0cJj12Iqm3A==
+X-Google-Smtp-Source: APXvYqxG/vLlTnOdVHbynSL9RXJzBKUtTgt7S6F51j51B8Y5fyyQi+GBiJvAjtAnDfI3RphqoAKrOw==
+X-Received: by 2002:a63:e648:: with SMTP id p8mr3102185pgj.259.1576058320583;
+        Wed, 11 Dec 2019 01:58:40 -0800 (PST)
+Received: from localhost ([14.96.106.177])
+        by smtp.gmail.com with ESMTPSA id q6sm2311917pfl.140.2019.12.11.01.58.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Dec 2019 01:58:39 -0800 (PST)
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org, swboyd@chromium.org,
+        stephan@gerhold.net, olof@lixom.net,
+        Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     linux-pm@vger.kernel.org
+Subject: [PATCH] drivers: thermal: tsens: Work with old DTBs
+Date:   Wed, 11 Dec 2019 15:28:33 +0530
+Message-Id: <39d6b8e4b2cc5836839cfae7cdf0ee3470653b64.1576058136.git.amit.kucheria@linaro.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <cover.1576058136.git.amit.kucheria@linaro.org>
+References: <cover.1576058136.git.amit.kucheria@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20191209195749.868-6-tiny.windzz@gmail.com>
-X-NVConfidentiality: public
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Originating-IP: [10.124.1.5]
-X-ClientProxiedBy: HQMAIL111.nvidia.com (172.20.187.18) To
- DRHQMAIL107.nvidia.com (10.27.9.16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
-        t=1576057723; bh=r6KMkLsJhUlJn6kT8Vu8wn2241qWLrLOKRW+auTAdBw=;
-        h=X-PGP-Universal:Date:From:To:CC:Subject:Message-ID:References:
-         MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
-         X-NVConfidentiality:User-Agent:X-Originating-IP:X-ClientProxiedBy;
-        b=fehz9BkDjC3DMVoGOpqVqlRcbFB+5HaVT04s5D4cWHQvhLCn6gXQEF6JJYvG9urlB
-         s4hOQT8rZMu0RxfbGXBHlrizVjlU+MBWpN0zdOvs7VXqzPEAx0rJQEoyRB1VSgAF0A
-         m289OxsJav4Sxdi0oVtNIPZGjVdeNbo8sx+JhKsl1iNDcTpdmnXX5k0gKmMauhQ+9Z
-         XDGiV4yhyfPTseM3aKAa1n/aVdjBBiRP1CcndpVLoWBMQIL+f1qomtdDweAF2jj+Oc
-         haxlit6zV7iSueYhAjyDiFWvEhl7qBKIz75rmqG+D6byUdQIM6BSB47B6wmYyTUifb
-         AkfA7cHM53gag==
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 09, 2019 at 07:57:38PM +0000, Yangtao Li wrote:
-> External email: Use caution opening links or attachments
-> 
-> 
+In order for the old DTBs to continue working, the new interrupt code
+must not return an error if interrupts are not defined.
 
-Acked-by:  Peter De Schrijver <pdeschrijver@nvidia.com>
+Fixes: 634e11d5b450a ("drivers: thermal: tsens: Add interrupt support")
+Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+---
+ drivers/thermal/qcom/tsens.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-> Use devm_platform_ioremap_resource() to simplify code.
-> 
-> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
-> ---
->  drivers/clk/tegra/clk-dfll.c | 34 ++++------------------------------
->  1 file changed, 4 insertions(+), 30 deletions(-)
-> 
-> diff --git a/drivers/clk/tegra/clk-dfll.c b/drivers/clk/tegra/clk-dfll.c
-> index c051d92c2bbf..070a2957e119 100644
-> --- a/drivers/clk/tegra/clk-dfll.c
-> +++ b/drivers/clk/tegra/clk-dfll.c
-> @@ -1935,7 +1935,6 @@ static int dfll_fetch_common_params(struct tegra_dfll *td)
->  int tegra_dfll_register(struct platform_device *pdev,
->                         struct tegra_dfll_soc_data *soc)
->  {
-> -       struct resource *mem;
->         struct tegra_dfll *td;
->         int ret;
-> 
-> @@ -1985,51 +1984,26 @@ int tegra_dfll_register(struct platform_device *pdev,
->                 return ret;
->         }
-> 
-> -       mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -       if (!mem) {
-> -               dev_err(td->dev, "no control register resource\n");
-> -               return -ENODEV;
-> -       }
-> -
-> -       td->base = devm_ioremap(td->dev, mem->start, resource_size(mem));
-> +       td->base = devm_platform_ioremap_resource(pdev, 0);
->         if (!td->base) {
->                 dev_err(td->dev, "couldn't ioremap DFLL control registers\n");
->                 return -ENODEV;
->         }
-> 
-> -       mem = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-> -       if (!mem) {
-> -               dev_err(td->dev, "no i2c_base resource\n");
-> -               return -ENODEV;
-> -       }
-> -
-> -       td->i2c_base = devm_ioremap(td->dev, mem->start, resource_size(mem));
-> +       td->i2c_base = devm_platform_ioremap_resource(pdev, 1);
->         if (!td->i2c_base) {
->                 dev_err(td->dev, "couldn't ioremap i2c_base resource\n");
->                 return -ENODEV;
->         }
-> 
-> -       mem = platform_get_resource(pdev, IORESOURCE_MEM, 2);
-> -       if (!mem) {
-> -               dev_err(td->dev, "no i2c_controller_base resource\n");
-> -               return -ENODEV;
-> -       }
-> -
-> -       td->i2c_controller_base = devm_ioremap(td->dev, mem->start,
-> -                                              resource_size(mem));
-> +       td->i2c_controller_base = devm_platform_ioremap_resource(pdev, 2);
->         if (!td->i2c_controller_base) {
->                 dev_err(td->dev,
->                         "couldn't ioremap i2c_controller_base resource\n");
->                 return -ENODEV;
->         }
-> 
-> -       mem = platform_get_resource(pdev, IORESOURCE_MEM, 3);
-> -       if (!mem) {
-> -               dev_err(td->dev, "no lut_base resource\n");
-> -               return -ENODEV;
-> -       }
-> -
-> -       td->lut_base = devm_ioremap(td->dev, mem->start, resource_size(mem));
-> +       td->lut_base = devm_platform_ioremap_resource(pdev, 3);
->         if (!td->lut_base) {
->                 dev_err(td->dev,
->                         "couldn't ioremap lut_base resource\n");
-> --
-> 2.17.1
-> 
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index 015e7d2015985..d8f51067ed411 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -109,7 +109,7 @@ static int tsens_register(struct tsens_priv *priv)
+ 
+ 	irq = platform_get_irq_byname(pdev, "uplow");
+ 	if (irq < 0) {
+-		ret = irq;
++		dev_warn(&pdev->dev, "Missing uplow irq in DT\n");
+ 		goto err_put_device;
+ 	}
+ 
+@@ -118,7 +118,8 @@ static int tsens_register(struct tsens_priv *priv)
+ 					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+ 					dev_name(&pdev->dev), priv);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "%s: failed to get irq\n", __func__);
++		dev_warn(&pdev->dev, "%s: failed to get uplow irq\n", __func__);
++		ret = 0;
+ 		goto err_put_device;
+ 	}
+ 
+-- 
+2.20.1
+
