@@ -2,66 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BCACE11BAF6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 19:04:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A0B511BB84
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 19:18:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730800AbfLKSEP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Dec 2019 13:04:15 -0500
-Received: from mail-il1-f196.google.com ([209.85.166.196]:33124 "EHLO
-        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726242AbfLKSEP (ORCPT
+        id S1726411AbfLKSSC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Dec 2019 13:18:02 -0500
+Received: from mail-il1-f193.google.com ([209.85.166.193]:34773 "EHLO
+        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729991AbfLKSSB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Dec 2019 13:04:15 -0500
-Received: by mail-il1-f196.google.com with SMTP id r81so20277525ilk.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 10:04:14 -0800 (PST)
+        Wed, 11 Dec 2019 13:18:01 -0500
+Received: by mail-il1-f193.google.com with SMTP id w13so20314413ilo.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 10:18:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=lk2kHwOIGMIgDPaSWiDXXQawNgoxO/02PTT5MTHKBSk=;
-        b=oBg4iX5BFblswDGY+ml4KpSu9P9MZzXv04sTj8aWJf/VNEZfCNpb1QRgyiF4L+TAhq
-         vRmS0y1d6uDaeh07IjDEuYCwYKbW/ysvqPeXzgbvXkAczQYlCltxJedTvXM+OTPEFvu/
-         XneacJuDxO1F0RmpEFe5D17tm1Gpq2YxaFOK0=
+        bh=aSC20v3ZZ7Kn1pHo0qwS4Ke00bNlSDQ6xPcCLk1Bks8=;
+        b=DLg1Ex1x9EZ6ClCxY4Pwm79pVYYhk7uoSmXnuv6VTILCuD4AWEfjlu1UuKiQYKA4ud
+         XANl0JGCsKGJ6OX+2oYHjuAEGAX91bwsI4j+e68HRuGH1F9ZiAte76EvvwgmSa4uv3oj
+         PpWXe8CXxhgAJNw8dlv9IyFxA0uN4pZ20pVks=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=lk2kHwOIGMIgDPaSWiDXXQawNgoxO/02PTT5MTHKBSk=;
-        b=YzQofo1wL16v5NhpsJSlTalLWFNAZs3By/ONknxWFxwJWebkmtWgLbEBMBhbMRGweH
-         g5rVx2ribxSWBPmZMGAoHPHYHfBCqZVbcDWxmDPsrEGdHd3Lyb4kgBiA4kb5w6VK7gC/
-         UR87afnGYmMSBKew7lCxJW/z3apPVFptG4GwkGhZxD29Odkebk47fzHjhiEXptQM6bv4
-         mqxq/itK+Kw8TLsGQ32Vm7UvajUHFyVCymt3oBZLVL/u0uQT0WB/n2LELpwe1bKI+nYZ
-         086/gsg7p7yPC9X/CZaVL+4pZzhtPeoMR4gSCjU8Y+3hdrewZLTxNUceGJOodduIXJdo
-         tKgg==
-X-Gm-Message-State: APjAAAUiGMbCvMCsJyNY7AMPQfNsboKdLAZyMBt8MZm/tUEdFWr8W6Jx
-        2mz6JUMWbaXEwa+w/6VDY+7ycl6XsJg=
-X-Google-Smtp-Source: APXvYqxT7ZtDoLqo2xMX4IkPb/G8VjQJ1S9hTZyxkk5FT8Q74RluX33D9zbuTw10U22b9w0h74kmFw==
-X-Received: by 2002:a92:1e0c:: with SMTP id e12mr4298065ile.115.1576087454049;
-        Wed, 11 Dec 2019 10:04:14 -0800 (PST)
-Received: from mail-io1-f44.google.com (mail-io1-f44.google.com. [209.85.166.44])
-        by smtp.gmail.com with ESMTPSA id r10sm670952iot.28.2019.12.11.10.04.13
+        bh=aSC20v3ZZ7Kn1pHo0qwS4Ke00bNlSDQ6xPcCLk1Bks8=;
+        b=pUg5EklOybxqtSQMOG2d8eEx/89CbCZsFdlxrOieQXlQG6YqZJK0q+YvUtrDanTIkr
+         w5lIHVyDuqwksSRwN809CgqPu86yLH7YBXB5+HgtqHLXda8PiNEffFt58RxvzguKPeNB
+         2w6LxxrRN/YpRlgRJRPXAlsWsf/ELTEpfkmXwPMgY7LvJZvfL+z4fg1/N0NoAYCARnUP
+         2LSucgCCh8zaXVqbsc/U7AJOyu7y98r3k29wq/Z+6QyYubjzTPMJ8VbyGqpjZH/A0vPP
+         48jaqRgIinb/5JPP4CecyOyVzq9oDN1KOvmR5GdhQpV6Iugt166O1KE9+ViPeHTwhKb1
+         7Fag==
+X-Gm-Message-State: APjAAAXfXz9+MTAGAHhl8b4+Y4xoTvUji0X+1sgrNgoJswM+Sfn1TDfJ
+        DvgXGJXvKI+eDSbyxBPVZEt0RKgSQd4=
+X-Google-Smtp-Source: APXvYqxzLEecjncaoeE+5+ZMNgPqe50gSAVsZQQdSbHxi6pmvwLJ+FFcXbBqRHifFTeUmuMrKUojAw==
+X-Received: by 2002:a92:1a0a:: with SMTP id a10mr4365979ila.295.1576088281014;
+        Wed, 11 Dec 2019 10:18:01 -0800 (PST)
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com. [209.85.166.173])
+        by smtp.gmail.com with ESMTPSA id h23sm908720ilf.57.2019.12.11.10.18.00
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Dec 2019 10:04:13 -0800 (PST)
-Received: by mail-io1-f44.google.com with SMTP id t26so12199993ioi.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 10:04:13 -0800 (PST)
-X-Received: by 2002:a6b:5503:: with SMTP id j3mr3620512iob.142.1576087452757;
- Wed, 11 Dec 2019 10:04:12 -0800 (PST)
+        Wed, 11 Dec 2019 10:18:00 -0800 (PST)
+Received: by mail-il1-f173.google.com with SMTP id z90so20276201ilc.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 10:18:00 -0800 (PST)
+X-Received: by 2002:a92:1547:: with SMTP id v68mr4237963ilk.58.1576088279911;
+ Wed, 11 Dec 2019 10:17:59 -0800 (PST)
 MIME-Version: 1.0
-References: <1576041834-23084-1-git-send-email-rnayak@codeaurora.org>
- <0101016ef36a9118-f2919277-effa-4cd5-adf8-bbc8016f31df-000000@us-west-2.amazonses.com>
- <20191211063829.GC3143381@builder> <0101016ef3c8e061-462507db-9d6f-4ead-8740-73b08ed97574-000000@us-west-2.amazonses.com>
-In-Reply-To: <0101016ef3c8e061-462507db-9d6f-4ead-8740-73b08ed97574-000000@us-west-2.amazonses.com>
+References: <0101016ef3cdac32-1353f7d8-b973-4881-86ec-589d50849765-000000@us-west-2.amazonses.com>
+In-Reply-To: <0101016ef3cdac32-1353f7d8-b973-4881-86ec-589d50849765-000000@us-west-2.amazonses.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 11 Dec 2019 10:04:01 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=VHaFYsqt+3-jgJo8JWKxfRvgR_D-qP5e=TGq8h_f43EA@mail.gmail.com>
-Message-ID: <CAD=FV=VHaFYsqt+3-jgJo8JWKxfRvgR_D-qP5e=TGq8h_f43EA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] pinctrl: qcom: sc7180: Add new qup functions
+Date:   Wed, 11 Dec 2019 10:17:48 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=V+yM5bfHPpkwC1-DUmq4fbDCKiN-+JzVQH2VWjQJ=wYg@mail.gmail.com>
+Message-ID: <CAD=FV=V+yM5bfHPpkwC1-DUmq4fbDCKiN-+JzVQH2VWjQJ=wYg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] arm64: dts: sc7180: Remove additional spi chip select muxes
 To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LinusW <linus.walleij@linaro.org>,
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
         LKML <linux-kernel@vger.kernel.org>,
         Stephen Boyd <swboyd@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -72,37 +69,19 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Tue, Dec 10, 2019 at 11:07 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+On Tue, Dec 10, 2019 at 11:12 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
 >
-> On 12/11/2019 12:08 PM, Bjorn Andersson wrote:
-> > On Tue 10 Dec 21:24 PST 2019, Rajendra Nayak wrote:
-> >
-> >> on sc7180 we have cases where multiple functions from the same
-> >> qup instance share the same pin. This is true for qup02/04/11 and qup13.
-> >> Add new function names to distinguish which qup function to use.
-> >>
-> >> The device tree files for this platform haven't landed in mainline yet,
-> >> so there aren't any users upstream who should break with this change
-> >> in function names, however, anyone using the devicetree files that were
-> >> posted on the lists and using these specific function names will need
-> >> to update their changes.
-> >
-> > I don't think this paragraph adds value to the git log, but the patch
-> > looks good.
+> remove the additional CS muxes that were added by default for
+> spi so every board using sc7180 does not have to override it.
 >
-> Right, I should have mentioned that bit after the --- so its not in the
-> changelog :/
->
-> Linus, do you want me to resend with that paragraph moved below --- ?
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 9 +++------
+>  1 file changed, 3 insertions(+), 6 deletions(-)
 
-Personally I find this type of info useful even in the changelog
-itself.  Without it someone inspecting this change would wonder why it
-was OK to change the device tree bindings without an attempt at
-backward compatibility.  I suppose they could always go back to the
-mailing list and track down the history, but why is it bad to be in
-the changelog?
-
-In any case, if everyone hates it in the change log I won't stand in
-the way, so regardless of which way folks go on that:
+In theory we could add some extra pinmux configs that boards could
+reference if they want to use those chip selects (as long as we keep
+them out of the "default"), but it's also fine to wait until someone
+has an actual need for it.
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
