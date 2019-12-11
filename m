@@ -2,152 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 51F3911B920
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 17:47:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ACE8B11B962
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 17:58:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730812AbfLKQrY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Dec 2019 11:47:24 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:51110 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730934AbfLKQrY (ORCPT
+        id S1729880AbfLKQ6b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Dec 2019 11:58:31 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:41834 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729512AbfLKQ6b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Dec 2019 11:47:24 -0500
-Received: by mail-wm1-f67.google.com with SMTP id a5so2115704wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 08:47:23 -0800 (PST)
+        Wed, 11 Dec 2019 11:58:31 -0500
+Received: by mail-pl1-f196.google.com with SMTP id bd4so1643549plb.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 08:58:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=E3PYmv9+m7+3cAT1JW/rJqeLk+vNpRNUBln9Sx/2fnE=;
-        b=HfQbZHcvWPo/ltn/OdAhyQfSAAiy4S/MAnbsaZwMVmsfREH31U1BK9F3whypA1pqmK
-         VEoulZJa7KPSzFnXm+2+iXOKeq+hlIa/XUMW4vs/+0S4L4MchqoG8RBNp2wEpz6Caxlo
-         hLy4czk9pv416tPbdTQaofSQDWW/jPmRRZ3tEvYIborHOuEl4UEPqs8fH3HyOagcyIwg
-         duhg0MNCqB835kkSLj5/8SZxnVMFypHko8ntLoh/zLhtxdm2hvkeHIKj13VF7jklbk3l
-         QdP2YNIx9a4VkoZARC3E3GIthaI6CyqOhmjZxPnqtGhNCtH0e34LFk5ljUv+mtrVCPBp
-         ozLA==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:subject:to:from:cc:user-agent:date;
+        bh=nO1/D6YzLDQJru2EbIZiTMpHKIQ1x4Kj5OM8Yf3k2jA=;
+        b=X76wqWSKPn8j7rqfA4HXB8cSCWi8CSmRC2ja0st603SooTirVgKPZJ5HCqmZe8CDSV
+         mU2wKAJi6RWyXkcs/9dh2qYRY7CK4dak4+yAAJavfhkyihZrz2CuccNTmvgdskUIeHGD
+         Vkol4s7L21nmcjHhaqOc8TUCS6R1jbOAg9czI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=E3PYmv9+m7+3cAT1JW/rJqeLk+vNpRNUBln9Sx/2fnE=;
-        b=G5p4/IHz/82cWwYaW6EOOSWlfJJPhhXSRkl6Y8ih/VkdFkM3caL5/0Po4SQmbshy9G
-         eSMWe9h5adRVhgCSBqunh5iu5dlNFq7/u/PXpIA0ykyhrPA8dp/9e/Dk0k3fclVBgqhA
-         R8UriMqe6VHdFxcYrM7B8zC6lk+Ge1FgTSH0Pw2BdAeUJKhTMK1SOi6MlAn97rvqoiZd
-         +u8iyR6+5flcnDvtHlecIDsy9xkL0wfOpOsREvGUVE0cQlEMEvwAkTre26URuPE8kzU0
-         fLMQ6IbrosK4cdlK3EhlaDWB/xSYI8bNUObO3e69GOE62+LbtUDo7pAS6AeqU7Ys/7Vs
-         ROeQ==
-X-Gm-Message-State: APjAAAVyw2jjuIxKjvMiilHVkRpmJtt4319jGXtZmiH9sKEJJVBDFRJq
-        qpQIACuo16YNb5COT+35F6TVFw==
-X-Google-Smtp-Source: APXvYqyhUlNuE7g0enMZGRL0wsWrZrOS76tdCt/yqH/dew4kGEd0rk9nFfYmRiolW7xSKlFmLQjPYw==
-X-Received: by 2002:a1c:ed0a:: with SMTP id l10mr174wmh.136.1576082842223;
-        Wed, 11 Dec 2019 08:47:22 -0800 (PST)
-Received: from localhost.localdomain (amontpellier-651-1-319-58.w92-133.abo.wanadoo.fr. [92.133.198.58])
-        by smtp.gmail.com with ESMTPSA id a20sm3001309wmd.19.2019.12.11.08.47.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 Dec 2019 08:47:21 -0800 (PST)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     robh+dt@kernel.org, agross@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        amit.pundir@linaro.org, bjorn.andersson@linaro.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH] arm: dts: qcom: db410c: Enable USB OTG support
-Date:   Wed, 11 Dec 2019 17:50:14 +0100
-Message-Id: <1576083014-5842-1-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:subject:to:from:cc
+         :user-agent:date;
+        bh=nO1/D6YzLDQJru2EbIZiTMpHKIQ1x4Kj5OM8Yf3k2jA=;
+        b=Ed5kl6WYSrbkQsJmzAIsbdfN+3hIEvK5jszLdZ3PP+jhONIIRWJ1Gnozt/7URFQtJA
+         9V4AOetg8ESEpbV/GuMDz0z1jSYxuLh4SiMEb+XowqwI3kGX+O8+DQpEveHEKo0iBWbB
+         zlCt5wFnGkY8VhzkhEHhkYfDqg28XFmWHbkFLuBualaFgBoQ8JViXT63RzIGBt6GdAM7
+         QktwZNA3S5PWpGk2yhlfQ+oF2ti7S7V33YPxId6F0ShjuvygM48q5xt59+kIrWRZ6u0M
+         81/sYk5hgTUzixLPV9j2/pxK7kHb5NjlxwEWW1g31crqirIJcbZGk1VSsEMjzEMOVrMR
+         Zslg==
+X-Gm-Message-State: APjAAAU9CPoI9s3N5yQm5uRSF8GRHiwK07++fzbZEP2SeZ08MHvRQ5ta
+        CEarYK7W1vUEqpUFCyKziKCbwQ==
+X-Google-Smtp-Source: APXvYqzJgsV3DYCq9QJ4kxgM5GvK71kUpfoKmzn7rSTO7KmV71ONqmrQjqh3AE2WNpSbFEXBobEjig==
+X-Received: by 2002:a17:902:a615:: with SMTP id u21mr4467398plq.44.1576083510879;
+        Wed, 11 Dec 2019 08:58:30 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id u5sm3612263pfm.115.2019.12.11.08.58.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Dec 2019 08:58:30 -0800 (PST)
+Message-ID: <5df12036.1c69fb81.bdb18.8c4f@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <0101016ef3cdac32-1353f7d8-b973-4881-86ec-589d50849765-000000@us-west-2.amazonses.com>
+References: <0101016ef3cdac32-1353f7d8-b973-4881-86ec-589d50849765-000000@us-west-2.amazonses.com>
+Subject: Re: [PATCH 1/2] arm64: dts: sc7180: Remove additional spi chip select muxes
+To:     Rajendra Nayak <rnayak@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dianders@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>
+User-Agent: alot/0.8.1
+Date:   Wed, 11 Dec 2019 08:58:29 -0800
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Dragonboard-410c is able to act either as USB Host or Device.
-The role can be determined at runtime via the USB_HS_ID pin which is
-derived from the micro-usb port VBUS pin.
+Quoting Rajendra Nayak (2019-12-10 23:12:52)
+> remove the additional CS muxes that were added by default for
+> spi so every board using sc7180 does not have to override it.
+>=20
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
 
-In Host role, SoC USB D+/D- are routed to the onboard USB 2.0 HUB.
-In Device role, SoC USB D+/D- are routed to the USB 2.0 micro B port.
-Routing is selected via USB_SW_SEL_PM gpio.
-
-In device role USB HUB can be held in reset.
-
-chipidea driver expects two extcon device pointers, one for the
-EXTCON_USB event and one for the EXTCON_USB_HOST event. Since
-the extcon-usb-gpio device is capable of generating both these
-events, point two times to this extcon device.
-
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- arch/arm64/boot/dts/qcom/apq8016-sbc-pmic-pins.dtsi | 19 +++++++++++++++++++
- arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi           | 11 ++++++-----
- 2 files changed, 25 insertions(+), 5 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc-pmic-pins.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc-pmic-pins.dtsi
-index ec2f0de..aff218c 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc-pmic-pins.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc-pmic-pins.dtsi
-@@ -8,6 +8,15 @@
- 		pinconf {
- 			pins = "gpio3";
- 			function = PMIC_GPIO_FUNC_NORMAL;
-+			input-disable;
-+			output-high;
-+		};
-+	};
-+
-+	usb_hub_reset_pm_device: usb_hub_reset_pm_device {
-+		pinconf {
-+			pins = "gpio3";
-+			function = PMIC_GPIO_FUNC_NORMAL;
- 			output-low;
- 		};
- 	};
-@@ -22,6 +31,16 @@
- 		};
- 	};
- 
-+	usb_sw_sel_pm_device: usb_sw_sel_pm_device {
-+		pinconf {
-+			pins = "gpio4";
-+			function = PMIC_GPIO_FUNC_NORMAL;
-+			power-source = <PM8916_GPIO_VPH>;
-+			input-disable;
-+			output-low;
-+		};
-+	};
-+
- 	pm8916_gpios_leds: pm8916_gpios_leds {
- 		pinconf {
- 			pins = "gpio1", "gpio2";
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-index e12a36c..037e26b 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-@@ -358,14 +358,15 @@
- 		};
- 
- 		usb@78d9000 {
--			extcon = <&usb_id>;
-+			extcon = <&usb_id>, <&usb_id>;
- 			status = "okay";
- 			adp-disable;
- 			hnp-disable;
- 			srp-disable;
--			dr_mode = "host";
--			pinctrl-names = "default";
--			pinctrl-0 = <&usb_sw_sel_pm>;
-+			dr_mode = "otg";
-+			pinctrl-names = "default", "device";
-+			pinctrl-0 = <&usb_sw_sel_pm &usb_hub_reset_pm>;
-+			pinctrl-1 = <&usb_sw_sel_pm_device &usb_hub_reset_pm_device>;
- 			ulpi {
- 				phy {
- 					v1p8-supply = <&pm8916_l7>;
-@@ -504,7 +505,7 @@
- 
- 	usb_id: usb-id {
- 		compatible = "linux,extcon-usb-gpio";
--		vbus-gpio = <&msmgpio 121 GPIO_ACTIVE_HIGH>;
-+		id-gpio = <&msmgpio 121 GPIO_ACTIVE_HIGH>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&usb_id_default>;
- 	};
--- 
-2.7.4
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
