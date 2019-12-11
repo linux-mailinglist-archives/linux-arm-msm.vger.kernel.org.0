@@ -2,92 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BA2611A010
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 01:36:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C1E811A36A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 05:28:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727145AbfLKAge (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Dec 2019 19:36:34 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:45132 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726718AbfLKAgb (ORCPT
+        id S1727123AbfLKE2K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Dec 2019 23:28:10 -0500
+Received: from a27-185.smtp-out.us-west-2.amazonses.com ([54.240.27.185]:43648
+        "EHLO a27-185.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726783AbfLKE2K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Dec 2019 19:36:31 -0500
-Received: by mail-pf1-f196.google.com with SMTP id 2so821581pfg.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Dec 2019 16:36:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=YgLOEq+b3z3/DTsjuxwC7KLaORE8dq4xMxztFesSO1E=;
-        b=dDPPKNbrgbLGmMbRNeNgFCRoeauYBwrY00fbTjRfRSmxMpI2OpLj9AtyX7y2oPRgR6
-         d4I5SVqsBlXmaqb1+77ddPC5CfFwyJMR96XAaSBkO1Vrqw1lgldlKHJA2puQAKdgKKiM
-         NU/GaCpRjAa/67cieZTL6Nn4UliUEpYmfjKF8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=YgLOEq+b3z3/DTsjuxwC7KLaORE8dq4xMxztFesSO1E=;
-        b=Khm3Q94Z7+Vm2pPILMSNDgsUrUYbVQQ0od7msm332r/mDXc0QtLMDZjovpd3J1EMtQ
-         8q5EBZ1kmc0egXq0mUbmAmKIvNb/s5jWmi3rpU0dOZPnjhI7RuqVO7hJRCryZi3oiZrA
-         5pBvIfbWJzyC+0jGjmM3QGMyjPfuasGdylN0hBee25QSDh83f62HODdez1i867icN/v4
-         R1JdJ3No907ph9qU0mmanZETkjsJDdwnzvVs7sZZPL7XpTDs8g1a5/FtNykWGNLJ7rQm
-         v3yC6O9iIb4WYkp8PlQ+rkRxkK9MA4Z9DXkV6HnuPM/gCRcp6j7g5B2uQtXZBBQbSJy6
-         LyfA==
-X-Gm-Message-State: APjAAAVmz7jSbZFgudVshjaeQ4R929PzRDh5r/RzY7VQqYE+j7CYob+q
-        kI+TSoYLpbHhg/OrZbvPMY+vKg==
-X-Google-Smtp-Source: APXvYqzDHrJPYBFC/4ZRlo6kMRGcctk9Da8+L6mFYu9ZNYUFhmEDZGFglvH1i+JoExCrNLitCmIaUA==
-X-Received: by 2002:aa7:9145:: with SMTP id 5mr779281pfi.74.1576024590404;
-        Tue, 10 Dec 2019 16:36:30 -0800 (PST)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id d38sm159954pgd.59.2019.12.10.16.36.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Dec 2019 16:36:29 -0800 (PST)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     mka@chromium.org, Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Subject: [PATCH 2/2] arm64: dts: sc7180: Add a comment to i2c7 about external pullup
-Date:   Tue, 10 Dec 2019 16:35:40 -0800
-Message-Id: <20191210163530.2.I8d4cbb3d7ac5824f8e950c53038df8c27a512905@changeid>
-X-Mailer: git-send-email 2.24.0.525.g8f36a354ae-goog
-In-Reply-To: <20191210163530.1.I69a6c29e08924229d160b651769c84508a07b3c6@changeid>
-References: <20191210163530.1.I69a6c29e08924229d160b651769c84508a07b3c6@changeid>
+        Tue, 10 Dec 2019 23:28:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1576038488;
+        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+        bh=gMk9WhWup2884Y7Eo+6uMfgKSR+xyScM8bYv0/IBWzo=;
+        b=C4F7mO5R6jt5HkyItD+RlNdRrRcmWnYUZZUadKOZn2hVh54WZDmJC9pZfkoZIFAf
+        fkJnJ7Bbr7ACd2Bpvw//sTwp1Ozdta/rXbwZeBWhnyJ1FS17rG7mb+9Lt04BjMQVuoQ
+        BOdYHWkVZq9dDlY42SuZaWC1ljiaWjijZH5Z+gnY=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1576038488;
+        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding:Feedback-ID;
+        bh=gMk9WhWup2884Y7Eo+6uMfgKSR+xyScM8bYv0/IBWzo=;
+        b=Fxtfaq5Naf79sqyWqcdnegdfwveUJRlOQhj/KWcDRM/arzDNVEb9tRYsZkNnjidI
+        hgue9wFQhKqIg+8k1tqr8o0XFC9gTTcFgX3swxvm0IIdxv+dS+DnU76Dx1M8BqGexZh
+        ICT9tz/tYeyDIlI7NQq0XmkFFED8/8jiJ/LFlng0=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6703AC8F10C
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH] pinctrl: qcom: sc7180: Add new qup functions
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     LinusW <linus.walleij@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>
+References: <0101016eef165cd0-26845355-ff75-416e-99a2-0c4434e18b76-000000@us-west-2.amazonses.com>
+ <CAD=FV=XAhSWOOPrHpuhjObi0UpKaeaD4TX1yhTh64cy39E1wyQ@mail.gmail.com>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <0101016ef336d9c4-d9f221c4-bd59-41e0-a2ba-403880da148d-000000@us-west-2.amazonses.com>
+Date:   Wed, 11 Dec 2019 04:28:08 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAD=FV=XAhSWOOPrHpuhjObi0UpKaeaD4TX1yhTh64cy39E1wyQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-SES-Outgoing: 2019.12.11-54.240.27.185
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Make i2c7 symmetric with the other i2c busses and comment that we have
-no internal pull because there is an external one.
 
-Fixes: ba3fc6496366 ("arm64: dts: sc7180: Add qupv3_0 and qupv3_1")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+On 12/10/2019 11:14 PM, Doug Anderson wrote:
+> Hi,
+> 
+> On Tue, Dec 10, 2019 at 1:14 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>>
+>> on sc7180 we have cases where multiple functions from the same
+>> qup instance share the same pin. This is true for qup02/04/11 and qup13.
+>> Add new function names to distinguish which qup function to use.
+>>
+>> Reported-by: Stephen Boyd <swboyd@chromium.org>
+>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+>> ---
+>>   drivers/pinctrl/qcom/pinctrl-sc7180.c | 60 +++++++++++++++++++++++------------
+>>   1 file changed, 40 insertions(+), 20 deletions(-)
+> 
+> Two overall issues:
+> 
+> 1. I think you also need to update the device tree bindings, so this
+> should be a 2-patch series.  Those list all possible values for
+> "function" so you need to update.
 
- arch/arm64/boot/dts/qcom/sc7180-idp.dts | 2 ++
- 1 file changed, 2 insertions(+)
+yes, I will include the bindings update patch when I repost.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 5eab3a282eba..05d30a56eca9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -311,6 +311,8 @@ &qup_i2c7_default {
- 	pinconf {
- 		pins = "gpio6", "gpio7";
- 		drive-strength = <2>;
-+
-+		/* Has external pullup */
- 		bias-disable;
- 	};
- };
+> 
+> 2. It would be nice if you mentioned in the commit message that this
+> will break i2c usage on these QUPs for anyone using old device tree
+> files.  That shouldn't be a problem (AKA no need to provide backward
+> compatibility) since I think the main sc7180.dtsi hasn't landed
+> anywhere yet, but if anyone pulled an early patch from the list it
+> would be good to give them a heads up in your commit message.
+
+Sure, will update the commit msg accordingly.
+
+> 
+>> @@ -976,8 +996,8 @@ static const struct msm_pingroup sc7180_groups[] = {
+>>          [3] = PINGROUP(3, SOUTH, qup01, sp_cmu, dbg_out, qdss_cti, _, _, _, _, _),
+>>          [4] = PINGROUP(4, NORTH, sdc1_tb, _, qdss_cti, _, _, _, _, _, _),
+>>          [5] = PINGROUP(5, NORTH, sdc2_tb, _, _, _, _, _, _, _, _),
+>> -       [6] = PINGROUP(6, NORTH, qup11, qup11, _, _, _, _, _, _, _),
+>> -       [7] = PINGROUP(7, NORTH, qup11, qup11, ddr_bist, _, _, _, _, _, _),
+>> +       [6] = PINGROUP(6, NORTH, qup11_i2c, qup11_uart, _, _, _, _, _, _, _),
+>> +       [7] = PINGROUP(7, NORTH, qup11_i2c, qup11_uart, ddr_bist, _, _, _, _, _, _),
+> 
+> You probably have a more complete document than I have.  ...but the
+> one I'm looking at shows that for pins 6/7 only i2c is available, not
+> UART.  Said another way: I see QUP1_L0[1] and QUP1_L1[1] on Func1 but
+> I don't see anything on Func2.  Of course, my document also doesn't
+> include "ddr_bist", so maybe it's just incomplete.
+
+yes, I can confirm I do see QUP1_L2[1] and QUP1_L3[1] on Func2 for gpio 6/7
+in my doc.
+
+Thanks for the review.
+
 -- 
-2.24.0.525.g8f36a354ae-goog
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
