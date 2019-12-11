@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A0B511BB84
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 19:18:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A903011BB8A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Dec 2019 19:18:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726411AbfLKSSC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Dec 2019 13:18:02 -0500
-Received: from mail-il1-f193.google.com ([209.85.166.193]:34773 "EHLO
-        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729991AbfLKSSB (ORCPT
+        id S1731135AbfLKSS4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Dec 2019 13:18:56 -0500
+Received: from mail-il1-f196.google.com ([209.85.166.196]:43412 "EHLO
+        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730225AbfLKSSz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Dec 2019 13:18:01 -0500
-Received: by mail-il1-f193.google.com with SMTP id w13so20314413ilo.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 10:18:01 -0800 (PST)
+        Wed, 11 Dec 2019 13:18:55 -0500
+Received: by mail-il1-f196.google.com with SMTP id u16so20279002ilg.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 10:18:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=aSC20v3ZZ7Kn1pHo0qwS4Ke00bNlSDQ6xPcCLk1Bks8=;
-        b=DLg1Ex1x9EZ6ClCxY4Pwm79pVYYhk7uoSmXnuv6VTILCuD4AWEfjlu1UuKiQYKA4ud
-         XANl0JGCsKGJ6OX+2oYHjuAEGAX91bwsI4j+e68HRuGH1F9ZiAte76EvvwgmSa4uv3oj
-         PpWXe8CXxhgAJNw8dlv9IyFxA0uN4pZ20pVks=
+        bh=hF9BKa5wnk6mlJKv8zSjQWblgjM1RbwR2kAn63Qo6po=;
+        b=h0RUCMUGyGK0TWu6erO5q9iiXC0lQgxW2JFdFQNZ/21zcUbvREAdjB593cW6x2Q61H
+         C3on1JVH9ccpq4QLbCr6e9C6t7iyU9b1wOd/mGpjehDj66HbCPk/17OlqTdhi0Sf2qCj
+         fWtF4vFvDgUKUeSmzB1RdDjj43cP4mAEhCf2M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=aSC20v3ZZ7Kn1pHo0qwS4Ke00bNlSDQ6xPcCLk1Bks8=;
-        b=pUg5EklOybxqtSQMOG2d8eEx/89CbCZsFdlxrOieQXlQG6YqZJK0q+YvUtrDanTIkr
-         w5lIHVyDuqwksSRwN809CgqPu86yLH7YBXB5+HgtqHLXda8PiNEffFt58RxvzguKPeNB
-         2w6LxxrRN/YpRlgRJRPXAlsWsf/ELTEpfkmXwPMgY7LvJZvfL+z4fg1/N0NoAYCARnUP
-         2LSucgCCh8zaXVqbsc/U7AJOyu7y98r3k29wq/Z+6QyYubjzTPMJ8VbyGqpjZH/A0vPP
-         48jaqRgIinb/5JPP4CecyOyVzq9oDN1KOvmR5GdhQpV6Iugt166O1KE9+ViPeHTwhKb1
-         7Fag==
-X-Gm-Message-State: APjAAAXfXz9+MTAGAHhl8b4+Y4xoTvUji0X+1sgrNgoJswM+Sfn1TDfJ
-        DvgXGJXvKI+eDSbyxBPVZEt0RKgSQd4=
-X-Google-Smtp-Source: APXvYqxzLEecjncaoeE+5+ZMNgPqe50gSAVsZQQdSbHxi6pmvwLJ+FFcXbBqRHifFTeUmuMrKUojAw==
-X-Received: by 2002:a92:1a0a:: with SMTP id a10mr4365979ila.295.1576088281014;
-        Wed, 11 Dec 2019 10:18:01 -0800 (PST)
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com. [209.85.166.173])
-        by smtp.gmail.com with ESMTPSA id h23sm908720ilf.57.2019.12.11.10.18.00
+        bh=hF9BKa5wnk6mlJKv8zSjQWblgjM1RbwR2kAn63Qo6po=;
+        b=rjSJSytBg29jJIfxZK2rCgI+MwxEHGN5S7nk59pKn1/sFOacJy4QTPSNpIufOdO2Dr
+         3BpwwGg9gQ4slb1OBJEKKYr+3r4j5OX1GsNWdkUERLcQND8NqmhzdV8U3SJhs0oTcmOw
+         +7h+lE6/Qz4FA1TkVGVkXYaJ9sG3+ZmNq/xg/1lWtQpfKUFMbVf16wXogaqnIH9YEiKg
+         Kbegyk+2F2G/CZL0xp6I7bN4NJrDMM8mI5/wPri+8JBC+nSq9fQjlLeZlvCRaUBsGBCU
+         eJOQFzYUXSpTiLspNXMtm+aSMD/viAVprbxoaXQ0+NWa6E7gdEaGZR9GfW0IK1RikZTZ
+         GdnA==
+X-Gm-Message-State: APjAAAVjCcvn4SZcRdI2sMt+P+U89fMiY2lUVk0EVDTkIr9s3TM+uz/t
+        9yl4OdYqT6RLhilKvrEF9sOaD0eB0vk=
+X-Google-Smtp-Source: APXvYqxDYDZqM/uivOwaifcpOIBpHzjziON1tDKT7cJGw831PIbL5+n/2dPwc6u2tbTgu09ZMd79pg==
+X-Received: by 2002:a92:902:: with SMTP id y2mr4410355ilg.196.1576088334900;
+        Wed, 11 Dec 2019 10:18:54 -0800 (PST)
+Received: from mail-il1-f176.google.com (mail-il1-f176.google.com. [209.85.166.176])
+        by smtp.gmail.com with ESMTPSA id s88sm925190ilk.79.2019.12.11.10.18.53
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Dec 2019 10:18:00 -0800 (PST)
-Received: by mail-il1-f173.google.com with SMTP id z90so20276201ilc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 10:18:00 -0800 (PST)
-X-Received: by 2002:a92:1547:: with SMTP id v68mr4237963ilk.58.1576088279911;
- Wed, 11 Dec 2019 10:17:59 -0800 (PST)
+        Wed, 11 Dec 2019 10:18:54 -0800 (PST)
+Received: by mail-il1-f176.google.com with SMTP id u16so20278907ilg.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 10:18:53 -0800 (PST)
+X-Received: by 2002:a92:911b:: with SMTP id t27mr4383452ild.142.1576088333615;
+ Wed, 11 Dec 2019 10:18:53 -0800 (PST)
 MIME-Version: 1.0
-References: <0101016ef3cdac32-1353f7d8-b973-4881-86ec-589d50849765-000000@us-west-2.amazonses.com>
-In-Reply-To: <0101016ef3cdac32-1353f7d8-b973-4881-86ec-589d50849765-000000@us-west-2.amazonses.com>
+References: <1576048353-21154-1-git-send-email-rnayak@codeaurora.org> <0101016ef3cdeea5-fba7a1a7-75b0-43bc-b7e4-94d19ae6b576-000000@us-west-2.amazonses.com>
+In-Reply-To: <0101016ef3cdeea5-fba7a1a7-75b0-43bc-b7e4-94d19ae6b576-000000@us-west-2.amazonses.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 11 Dec 2019 10:17:48 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=V+yM5bfHPpkwC1-DUmq4fbDCKiN-+JzVQH2VWjQJ=wYg@mail.gmail.com>
-Message-ID: <CAD=FV=V+yM5bfHPpkwC1-DUmq4fbDCKiN-+JzVQH2VWjQJ=wYg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: sc7180: Remove additional spi chip select muxes
+Date:   Wed, 11 Dec 2019 10:18:42 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=U_9DGF9L7YwYnw1JAqk-T7XB0OJD78EarUJNfVR6pvzA@mail.gmail.com>
+Message-ID: <CAD=FV=U_9DGF9L7YwYnw1JAqk-T7XB0OJD78EarUJNfVR6pvzA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] arm64: dts: sc7180: Add aliases for all i2c and spi devices
 To:     Rajendra Nayak <rnayak@codeaurora.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -69,19 +69,13 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Tue, Dec 10, 2019 at 11:12 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+On Tue, Dec 10, 2019 at 11:13 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
 >
-> remove the additional CS muxes that were added by default for
-> spi so every board using sc7180 does not have to override it.
+> Add aliases for all i2c and spi nodes
 >
 > Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 9 +++------
->  1 file changed, 3 insertions(+), 6 deletions(-)
-
-In theory we could add some extra pinmux configs that boards could
-reference if they want to use those chip selects (as long as we keep
-them out of the "default"), but it's also fine to wait until someone
-has an actual need for it.
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
