@@ -2,75 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CF8AE11C5D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2019 07:08:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BED711C60F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2019 07:43:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726825AbfLLGIe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Dec 2019 01:08:34 -0500
-Received: from a27-55.smtp-out.us-west-2.amazonses.com ([54.240.27.55]:60456
-        "EHLO a27-55.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726784AbfLLGIe (ORCPT
+        id S1727891AbfLLGnD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Dec 2019 01:43:03 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:43572 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728003AbfLLGnD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Dec 2019 01:08:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1576130913;
-        h=From:To:Cc:Subject:Date:Message-Id;
-        bh=Msv++6Uc9+j+ovRizdCpCJpui0/hXtGDn0hO1MZQkrU=;
-        b=ZwaDYbcvEsy+DFDpkuRA/7ulcnIspIwCKOoCicOTgjnG4BabNwVOtjG5G8fey8iL
-        qNXSRmFwox7jZVJYIpoHWQIjO681w49bj3B+ssprihr8dGSQ9GhpLXUdFvm5zWFz/Le
-        JN5nGMSmyejgZAlgWT+Jft4ZQnTi5uRnqdrXhXI0=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1576130913;
-        h=From:To:Cc:Subject:Date:Message-Id:Feedback-ID;
-        bh=Msv++6Uc9+j+ovRizdCpCJpui0/hXtGDn0hO1MZQkrU=;
-        b=NsLPmDQ0cIwLXksQnyQ+gX1Idx6qNizULcgOnM45Q33D2cBPX/w1uoTYdjjO3uOu
-        OPliurc4JbKVFhgGVgM4wdkXk09ByPsOvaJLalStOe8QPLMKlyfepSXtrtwePusBttX
-        AY3htGBp/hSkZPb1fpPEdL8P1X7GuiS7q0PvUWAA=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3E68BC433A2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rjliao@codeaurora.org
-From:   Rocky Liao <rjliao@codeaurora.org>
-To:     robh+dt@kernel.org, mark.rutland@arm.com, marcel@holtmann.org,
-        johan.hedberg@gmail.com
-Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        Rocky Liao <rjliao@codeaurora.org>
-Subject: [PATCH v1 2/2] dt-bindings: net: bluetooth: Add device tree bindings for QCA6390
-Date:   Thu, 12 Dec 2019 06:08:33 +0000
-Message-ID: <0101016ef8b923cf-ef36a521-9c4b-4360-842d-d641e0eaaf0e-000000@us-west-2.amazonses.com>
-X-Mailer: git-send-email 2.17.1
-X-SES-Outgoing: 2019.12.12-54.240.27.55
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
+        Thu, 12 Dec 2019 01:43:03 -0500
+Received: by mail-pl1-f193.google.com with SMTP id p27so153689pli.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 22:43:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=gqSv0O4Jb2rJI/j1QKP0HTNOP+/liesGa8Pn0aNdars=;
+        b=JCXq7As0h3xDPxU/1A4Mwru5TAHokaxtSPhkGsaqZlGrPIL/pZu129xEd0OOZm9UKp
+         gZeCbiY8s8KA6Lk9JGeT8VvNciHyOYbx1F/TZ5PsKhNOdotoMjYppXMK7pwn7+B1fReB
+         4HOwkTP5FAh8sQ2XxF+2IYfUkKFQpdhzaUo7LVfE/OT2wldESxbDefbD1pFEpSwlfQc8
+         Xz4TX3iKLmgGBYG5wDwsItuowLaI/PrdjDlCxPo2Svx8iTFUhGF6QqH1ikDrf0RQ64A/
+         2bnvmk640Yiwd1BMEGiRvPnbFQJigvbh/cMcwyNLwYREXY21S5syosvsnibxW83wVeTD
+         eOEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gqSv0O4Jb2rJI/j1QKP0HTNOP+/liesGa8Pn0aNdars=;
+        b=q7EiPzNP77CMFvs/WSFGWX2DJ7N9FqsLCjBCAn48ZJUTeAKH2gGyeiP9KpSRQfnCNM
+         VFNiYe/3tnY14aKsvENCi7Eeo7S+AzdoYKySqI8lRQXdro08n7G3N5qmVGV4Qa117e2i
+         hToGFBjnpYGX42FwI27an79qhDSZ1jFVvrTmnt1Y0jSzOfMLvIyAPBC2XWj22zcFXsQt
+         0cQLZwgqg9Bv46eWnA4fBS+aJPo4L6b7yQS6C6Ngl4U/zNB/dg6HB8g47Y6iMk8bpbxY
+         MJCmItwUH5UXoerbLiZhKcQcVsU5sNTEEgdnWZ/uSfk/z9ifTLvftoHg/bST2/nswF1V
+         37yg==
+X-Gm-Message-State: APjAAAWQZ7IDqqwDIQFF7yIJugzMvCW0cOrFzzeHmYvd6l1w2QCcHekT
+        7gXcT+MAmwZOOkNbxLRRCNovs2N1LQk=
+X-Google-Smtp-Source: APXvYqw8BTiKW99DlPj2SrfMZfGsqUZhWDftoDK4ljjclrWQ8969eDnphdqtzC+imZfj4KuXi61DYQ==
+X-Received: by 2002:a17:902:7c83:: with SMTP id y3mr7901906pll.34.1576132982164;
+        Wed, 11 Dec 2019 22:43:02 -0800 (PST)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id z14sm3642476pfg.57.2019.12.11.22.43.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Dec 2019 22:43:01 -0800 (PST)
+Date:   Wed, 11 Dec 2019 22:42:59 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>,
+        Damien Riegel <damien.riegel@savoirfairelinux.com>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: pm8916: Add vibration motor node
+Message-ID: <20191212064259.GJ3143381@builder>
+References: <20191211192906.56638-1-stephan@gerhold.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191211192906.56638-1-stephan@gerhold.net>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add compatible string for the Qualcomm QCA6390 Bluetooth controller
+On Wed 11 Dec 11:29 PST 2019, Stephan Gerhold wrote:
 
-Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
----
- Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt | 1 +
- 1 file changed, 1 insertion(+)
+> PM8916 has one vibration motor driver that is already supported
+> by the pm8xxx-vibrator driver.
+> 
+> Add a node describing it to pm8916.dtsi.
+> Keep it disabled by default since not all devices make use of it.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 
-diff --git a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
-index 68b67d9db63a..87b7f9d22414 100644
---- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
-+++ b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
-@@ -10,6 +10,7 @@ device the slave device is attached to.
- Required properties:
-  - compatible: should contain one of the following:
-    * "qcom,qca6174-bt"
-+   * "qcom,qca6390-bt"
-    * "qcom,wcn3990-bt"
-    * "qcom,wcn3998-bt"
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+Applied, please also send a defconfig patch that enables the associated
+driver (=m)
 
+Thanks,
+Bjorn
+
+> ---
+>  arch/arm64/boot/dts/qcom/pm8916.dtsi | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
+> index 9dd2df1cbf47..0bcdf0471107 100644
+> --- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
+> @@ -111,6 +111,12 @@ pm8916_1: pm8916@1 {
+>  		#address-cells = <1>;
+>  		#size-cells = <0>;
+>  
+> +		pm8916_vib: vibrator@c000 {
+> +			compatible = "qcom,pm8916-vib";
+> +			reg = <0xc000>;
+> +			status = "disabled";
+> +		};
+> +
+>  		wcd_codec: codec@f000 {
+>  			compatible = "qcom,pm8916-wcd-analog-codec";
+>  			reg = <0xf000 0x200>;
+> -- 
+> 2.24.0
+> 
