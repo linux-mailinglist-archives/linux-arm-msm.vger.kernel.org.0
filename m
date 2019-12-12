@@ -2,125 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EF24F11D9F7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 00:25:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AEA6E11DA2E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 00:46:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730992AbfLLXXx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Dec 2019 18:23:53 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:38255 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730934AbfLLXXw (ORCPT
+        id S1731366AbfLLXqV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Dec 2019 18:46:21 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:44847 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731123AbfLLXqU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Dec 2019 18:23:52 -0500
-Received: by mail-pg1-f194.google.com with SMTP id a33so441557pgm.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2019 15:23:52 -0800 (PST)
+        Thu, 12 Dec 2019 18:46:20 -0500
+Received: by mail-pf1-f195.google.com with SMTP id d199so317364pfd.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2019 15:46:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=R1FesrMsNLhrmJsi/HIXYAEi1VeJJ7kHlJczvqulZYg=;
-        b=hUZYD0Xwf0RYw3e73Cga+16ykn54AOG9sWN+DWGevEMxHxPa2bBl6Xdr0x4tYA5bgJ
-         OcC8IgpVDelltxGAHytKr02PtODdaXeBVHJqnpg6PHC5hD3VeKQ51r85eEHqgWtwn3AY
-         sicScLXK+vHXGHprq8ERYZFU/bzvOaBiPYKX6/VbDOEMnrdmeLtpBJh/Lk0MR9G9qrTG
-         rsjih5wtjcwj6dN3CSWXLi9zi0NEvk1GwjX7in6lOiAoUnJZu0EQy0mutC9JawuF5mOj
-         VOlViIk5W/VDERh6tOBqpangXFKU13sefvq68cAdVEKHoSxLLfBv1PMiEAxgDWDVGRqO
-         JTuQ==
+        bh=eIHQNr9eba5L4XlIbOyWJRxI2gHfserq4iuA29IFaDM=;
+        b=X8NY5D0iToa7JChnlhDAEszCIxTzy3LeWj/cfBf7BkV8CYiBtUDe0n81/4Gs32p8ai
+         wl+gKwVYoOCPR/C1Q0o8ibrQett7r8j3amhvEjrlim8MYysj3YsObaDwTuD1EQeddqbc
+         qfro0Tk+k3ZN4+MYsTiR5ECdbZGpWUBMB7A4VCGFV/Ku8wvYMmZGCmzWqxZ3z+ysaOc/
+         ij/ms0WrKYveYecgTzJE4830I3L1LUDmFY5Dxq37WZ+KepfZW3h5LzWTp1iu8PiZ4W9a
+         UuKaTJjjdUAFfirNmhXU7vnFVev0Jh9gYV4t2bRrHaLCTdKFfwXA6EXf63Sw4nbgSN9Q
+         ejrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=R1FesrMsNLhrmJsi/HIXYAEi1VeJJ7kHlJczvqulZYg=;
-        b=ERMoOASOux7NVxLAGFMK99wgmr5PU+q2q5o2MMt+rWDw6CQvhqluoUahnLg3Td/bGw
-         2cDVQhUEb2ahHahLFUNLqEXwD2qtf89HbzodoD0XOQnjx2hVeuKiR436c3q6c2JtdCnw
-         kabGQqqrd3tzy+tYFufSeC+GXDZu6Y7DL0B3X4PkTfDabG/vXC9PUBGd12zPKzi8ZXdF
-         dAxLXH9YtwGKez1lRL/uP+Z3UiF58q4BUUeik/ReR/VhKxeyYdGYzbncCWi15o5GubG5
-         +zhZn5z6VBq5CXX7kQAXcOp+x+6+Gr06JrAgHGuye8bOyLc8fq/si+bFq4NGNBenUIw/
-         PYyA==
-X-Gm-Message-State: APjAAAWP8QS7mSKw8Q2x+6tCM2SKT/AR/HPmckIpiZPNKp2iZWpT7oyk
-        yYk1bP4TVaCG3g9Bm8Ynp58gZQ==
-X-Google-Smtp-Source: APXvYqy9/uRn0x+YeAKOgcxDnFG2QjQvadTqueYdtexhXSUlY/gHDWcdl5/u4PQl/qA5JD49AvuZMA==
-X-Received: by 2002:aa7:9988:: with SMTP id k8mr12254965pfh.200.1576193031952;
-        Thu, 12 Dec 2019 15:23:51 -0800 (PST)
+        bh=eIHQNr9eba5L4XlIbOyWJRxI2gHfserq4iuA29IFaDM=;
+        b=nVqiikh4t2DYWwQ6gfnfibpJXxyI9+KF7XFQbbB0S9L80Q0vrSce6EWpD0Ia0H1PDD
+         vrcjSub7VzmCRreatDor9/1WzMBZnZZM3MyCWub9E+DqiAc6xJt2myLS7WJZeIVxhOK6
+         k7bYNpNVZhtv6nwKeuOTlJ1GNFO/QXsbkYGm0aZc7rUcDXklCridkvoS6ybYmNzlvGeD
+         +YahY9pm7EHfv/k+IjBVRABUzGpX4FmuEkAr/eczNFCU+u7fnIFmCvksmi040dpCG7aV
+         fs89heE/toqpMZFRlpByIAimJr30f2IBe9tPPR5Pqryov3IBQsgTGxXLXhtcl53Hxbpz
+         LGVQ==
+X-Gm-Message-State: APjAAAX4rfEm54E9eKF4rqENnvZqA7NZpQjgcBrNLUljMRTPDeKeeyzl
+        X+IVc1XAdcpsQmCDr+CowOZdIQ==
+X-Google-Smtp-Source: APXvYqyUAxx1/zJ6on6c1Dj9UNuN3zylY3ZgaoNYxmxea1rF+cz0ibCIgbQEAcmHbeEwobHtnzm+/Q==
+X-Received: by 2002:a63:f814:: with SMTP id n20mr13440185pgh.318.1576194380117;
+        Thu, 12 Dec 2019 15:46:20 -0800 (PST)
 Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id a26sm8739052pfo.5.2019.12.12.15.23.50
+        by smtp.gmail.com with ESMTPSA id v16sm8442495pfn.77.2019.12.12.15.46.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Dec 2019 15:23:51 -0800 (PST)
-Date:   Thu, 12 Dec 2019 15:23:49 -0800
+        Thu, 12 Dec 2019 15:46:19 -0800 (PST)
+Date:   Thu, 12 Dec 2019 15:46:17 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH] usb: dwc3: qcom: Remove useless compatible strings from
- the match table
-Message-ID: <20191212232349.GR3143381@builder>
-References: <20191212132122.1.I85a23bdcff04dbce48cc46ddb8f1ffe7a51015eb@changeid>
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, swboyd@chromium.org, stephan@gerhold.net,
+        olof@lixom.net, Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH v2] drivers: thermal: tsens: Work with old DTBs
+Message-ID: <20191212234617.GS3143381@builder>
+References: <cover.1576146898.git.amit.kucheria@linaro.org>
+ <cea3317c5d793db312064d68b261ad420a4a81b1.1576146898.git.amit.kucheria@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191212132122.1.I85a23bdcff04dbce48cc46ddb8f1ffe7a51015eb@changeid>
+In-Reply-To: <cea3317c5d793db312064d68b261ad420a4a81b1.1576146898.git.amit.kucheria@linaro.org>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 12 Dec 13:21 PST 2019, Douglas Anderson wrote:
+On Thu 12 Dec 02:38 PST 2019, Amit Kucheria wrote:
 
-> The of match table in dwc3-qcom.c had an entry per Qualcomm SoC known
-> to have dwc3.  That's not needed.  Here's why:
+> In order for the old DTBs to continue working, the new interrupt code
+> must not return an error if interrupts are not defined. Don't return an
+> error in case of -ENXIO.
 > 
-> 1. The bindings specify that the compatible string in the device tree
->    should contain the SoC-specific compatible string followed by the
->    string "qcom,dwc3".
-> 
-> 2. All known Qualcomm SoC dts files (confirmed via git grep in
->    mainline Linux) using dwc3 follow the rules and do, in fact,
->    contain the SoC-specific compatible string followed by the string
->    "qcom,dwc3".
-> 
-> 3. The source code does nothing special with the per-SoC strings--they
->    are only used to match the node.
-> 
-> Let's remove the extra strings from the table.  Doing so will avoid
-> the need to land future useless patches [1] that do nothing more than
-> add yet more strings to the table.
-> 
-> NOTE: if later we _do_ find some SoC-specific quirk we need to handle
-> in the code we can add back a subset of these strings.  At the time we
-> will probably also add some data in the match table to make it easier
-> to generalize this hypothetical quirk across all the SoCs it affects.
-> 
-> [1] https://lore.kernel.org/r/1574940787-1004-2-git-send-email-sanm@codeaurora.org
-> 
+> Fixes: 634e11d5b450a ("drivers: thermal: tsens: Add interrupt support")
+> Suggested-by: Stephan Gerhold <stephan@gerhold.net>
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
+>  drivers/thermal/qcom/tsens.c | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
->  drivers/usb/dwc3/dwc3-qcom.c | 3 ---
->  1 file changed, 3 deletions(-)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 261af9e38ddd..72e867e02a1c 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -751,9 +751,6 @@ static const struct dev_pm_ops dwc3_qcom_dev_pm_ops = {
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 015e7d2015985..0e7cf52369326 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -110,6 +110,9 @@ static int tsens_register(struct tsens_priv *priv)
+>  	irq = platform_get_irq_byname(pdev, "uplow");
+>  	if (irq < 0) {
+>  		ret = irq;
+> +		/* For old DTs with no IRQ defined */
+> +		if (irq == -ENXIO)
+> +			ret = 0;
+>  		goto err_put_device;
+>  	}
 >  
->  static const struct of_device_id dwc3_qcom_of_match[] = {
->  	{ .compatible = "qcom,dwc3" },
-> -	{ .compatible = "qcom,msm8996-dwc3" },
-> -	{ .compatible = "qcom,msm8998-dwc3" },
-> -	{ .compatible = "qcom,sdm845-dwc3" },
->  	{ }
->  };
->  MODULE_DEVICE_TABLE(of, dwc3_qcom_of_match);
 > -- 
-> 2.24.1.735.g03f4e72817-goog
+> 2.20.1
 > 
