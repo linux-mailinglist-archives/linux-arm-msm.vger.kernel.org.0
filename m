@@ -2,185 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C7EAC11D786
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2019 20:55:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 687FA11D806
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2019 21:46:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730284AbfLLTzJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Dec 2019 14:55:09 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:34988 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730749AbfLLTzJ (ORCPT
+        id S1730846AbfLLUqB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Dec 2019 15:46:01 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:33241 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730834AbfLLUqB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Dec 2019 14:55:09 -0500
-Received: by mail-pg1-f196.google.com with SMTP id l24so87800pgk.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2019 11:55:08 -0800 (PST)
+        Thu, 12 Dec 2019 15:46:01 -0500
+Received: by mail-io1-f68.google.com with SMTP id s25so101281iob.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2019 12:46:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Xipc9AXS94+c5lbtEsh/KKCpzfOdW798Fs9Zb0D/PIM=;
-        b=n/trhhKh1SRnTbMZInQL3F/fYF7cApqpFLu8db8hCAxCkIS54227TZO5d952kgkFaT
-         Nt1BP4QBL1oo0zD8u62AcYIyafCRJlI0QVSV9hQqSpSO3fb/6wSDfAQbBwMhxantExaC
-         76utHdSG20yv5dEzWHT6d6/yK+IYkvlvmIoUk=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jyPUkZySLXKgf9TnxUpOyot3YnU8ObDh2XPQK80y2jU=;
+        b=LS9R9Sdxzil058X/36VJo8VobbVEGkMn+8e2lKrWNnX0ZwWoWWS/RVEY4XZV1UBYT5
+         wPneNbx3H0ThwSxxHuzE+CeXB4Od8e+v5XHcwZOFHzMuh+umqL0iCvZHsV2vWs5kP5cj
+         NyU3dRkDVH2rpW4CFkJYN0i8HAff/8TX8yXnA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Xipc9AXS94+c5lbtEsh/KKCpzfOdW798Fs9Zb0D/PIM=;
-        b=ngX9v/H5k/4C3Quy7pYwi/IjTFBELhUbIIwnrAkVnoSyttJiMwnnH8jd/SDpLcsvEs
-         AyfXUOiKtikeEHDWdD1gb9nR23nWZwE69DmJ0QPLEsGkvEIIcf+dkE9TIe8Jp2Y4RsGL
-         D2v/GrMUCHH4Oglr9vB07EIslE/u6L2fdyDX4uFqOGHd+OTZiOIY95Y6yJS6c9QVwrUl
-         CAFkunmU67apw/cHyWOGbhCoXSdW0X1Wh4SNAqNy1Kf59NKezH+NV+E00ieRb5/YoMtM
-         n3H9KBnp80ezOQJxRp+Tzq6CQBNeYwfv5lULd+yPmxuaqFnQ8TSD2kFJ1kzK5zlL8xLF
-         YdhA==
-X-Gm-Message-State: APjAAAU/2TmYFxPAFF0hD5BQQkRilU49uBpI0bSdMXqmVLT++TUuUWPM
-        6f5vlXQ/zUV1iqXeUCvxtkgeSA==
-X-Google-Smtp-Source: APXvYqzhuJPokwvUPye5ga1VPMjxotcugrUG9Ne+S1EX+edBcYRP2JJip+UdhFedyIJD4uuWm7WuJQ==
-X-Received: by 2002:a63:4b50:: with SMTP id k16mr12623072pgl.386.1576180508286;
-        Thu, 12 Dec 2019 11:55:08 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id u26sm7929974pfn.46.2019.12.12.11.55.07
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jyPUkZySLXKgf9TnxUpOyot3YnU8ObDh2XPQK80y2jU=;
+        b=FGQwqNCTAlnyjZ8lul2+Z2nHROk45kpc970/eEJdh6OLcgAspi6z+vezwnCimJzQYA
+         5QgBBpUtzWX8qQCwWQab2kmaW6z+aT0LudXjAQLcNDGKyRLhUnviC0eHjLrf958uWAKX
+         rvXkOrd4DCy8fLtkxLtKHdjohbwZsGcmKzR5SnQCBewl82Y0WQnu+RG/yRFDZ5RVnbP0
+         WM/4YoZt1a3T+Lcwx1SPj1ZK5vnOnkbNBTh3GEY7YjiWoUCRhVZQHE6UAF1txSoCUxOb
+         8iOoq89d6SPEs0yprpSj/FTLEj10ljknUQMtQRojdxBomUdI01TKyvyjHssnd0WsPFFE
+         ZT5A==
+X-Gm-Message-State: APjAAAUGAkELl3kmZc4tnlPc3eRTA3dX4f7FI7XtbhU/Q+OgGimOFmul
+        +wmsAXfjqkgPCfpyQ6eZIqKUIiu6W0E=
+X-Google-Smtp-Source: APXvYqxITkrwdtnT7oZovHq+VOFJT98P+fVq4hsOoPk/HFATJdj1Ih7qlpPYGus//eBVLxVAIW84kA==
+X-Received: by 2002:a05:6638:151:: with SMTP id y17mr9466127jao.124.1576183560070;
+        Thu, 12 Dec 2019 12:46:00 -0800 (PST)
+Received: from mail-io1-f52.google.com (mail-io1-f52.google.com. [209.85.166.52])
+        by smtp.gmail.com with ESMTPSA id q62sm2040969ili.55.2019.12.12.12.45.59
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Dec 2019 11:55:07 -0800 (PST)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
+        Thu, 12 Dec 2019 12:45:59 -0800 (PST)
+Received: by mail-io1-f52.google.com with SMTP id s2so42455iog.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2019 12:45:59 -0800 (PST)
+X-Received: by 2002:a5e:940f:: with SMTP id q15mr4341569ioj.218.1576183558931;
+ Thu, 12 Dec 2019 12:45:58 -0800 (PST)
+MIME-Version: 1.0
+References: <20191212115443.1.I55198466344789267ed1eb5ec555fd890c9fc6e1@changeid>
+In-Reply-To: <20191212115443.1.I55198466344789267ed1eb5ec555fd890c9fc6e1@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 12 Dec 2019 12:45:46 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XD2GKPc5qeMakvW8Ej9-y7n0Hi2qAie-gUM=DJOSv6sw@mail.gmail.com>
+Message-ID: <CAD=FV=XD2GKPc5qeMakvW8Ej9-y7n0Hi2qAie-gUM=DJOSv6sw@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Fix order of nodes
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rajeshwari <rkambl@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180: Fix order of nodes
-Date:   Thu, 12 Dec 2019 11:55:01 -0800
-Message-Id: <20191212115443.1.I55198466344789267ed1eb5ec555fd890c9fc6e1@changeid>
-X-Mailer: git-send-email 2.24.1.735.g03f4e72817-goog
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Mark Rutland <mark.rutland@arm.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Rajeshwari <rkambl@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SC7180 device tree nodes should be ordered by address. Re-shuffle
-some nodes which currently don't follow this convention.
+Hi,
 
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
----
-Bjorn/Andy: if this is considered correct could it be landed quickly,
-to have a sane baseline for other patches and minimize conflicts?
+On Thu, Dec 12, 2019 at 11:55 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+> +               pdc: interrupt-controller@b220000 {
+> +                       compatible = "qcom,sc7180-pdc", "qcom,pdc";
+> +                       reg = <0 0xb220000 0 0x30000>;
 
+nit: when applying, maybe Bjorn / Andy could change 0xb220000 to
+0x0b220000 to match the convention elsewhere in this file.  That's not
+a new problem introduced in your patch, but it seems like it could be
+part of the same patch and it feels like a waste to re-send just for
+that.  ;-)
 
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 74 ++++++++++++++--------------
- 1 file changed, 37 insertions(+), 37 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 63a7bfb7f5125..286a4b2aeced9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -619,16 +619,6 @@
- 			};
- 		};
- 
--		pdc: interrupt-controller@b220000 {
--			compatible = "qcom,sc7180-pdc", "qcom,pdc";
--			reg = <0 0xb220000 0 0x30000>;
--			qcom,pdc-ranges = <0 480 15>, <17 497 98>,
--					  <119 634 4>, <124 639 1>;
--			#interrupt-cells = <2>;
--			interrupt-parent = <&intc>;
--			interrupt-controller;
--		};
--
- 		tlmm: pinctrl@3500000 {
- 			compatible = "qcom,sc7180-pinctrl";
- 			reg = <0 0x03500000 0 0x300000>,
-@@ -932,33 +922,6 @@
- 			status = "disabled";
- 		};
- 
--		system-cache-controller@9200000 {
--			compatible = "qcom,sc7180-llcc";
--			reg = <0 0x09200000 0 0x200000>, <0 0x09600000 0 0x50000>;
--			reg-names = "llcc_base", "llcc_broadcast_base";
--			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
--		};
--
--		tsens0: thermal-sensor@c263000 {
--			compatible = "qcom,sc7180-tsens","qcom,tsens-v2";
--			reg = <0 0x0c263000 0 0x1ff>, /* TM */
--				<0 0x0c222000 0 0x1ff>; /* SROT */
--			#qcom,sensors = <15>;
--			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "uplow";
--			#thermal-sensor-cells = <1>;
--		};
--
--		tsens1: thermal-sensor@c265000 {
--			compatible = "qcom,sc7180-tsens","qcom,tsens-v2";
--			reg = <0 0x0c265000 0 0x1ff>, /* TM */
--				<0 0x0c223000 0 0x1ff>; /* SROT */
--			#qcom,sensors = <10>;
--			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "uplow";
--			#thermal-sensor-cells = <1>;
--		};
--
- 		usb_1_hsphy: phy@88e3000 {
- 			compatible = "qcom,sc7180-qusb2-phy";
- 			reg = <0 0x088e3000 0 0x400>;
-@@ -1007,6 +970,13 @@
- 			};
- 		};
- 
-+		system-cache-controller@9200000 {
-+			compatible = "qcom,sc7180-llcc";
-+			reg = <0 0x09200000 0 0x200000>, <0 0x09600000 0 0x50000>;
-+			reg-names = "llcc_base", "llcc_broadcast_base";
-+			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
-+		};
-+
- 		usb_1: usb@a6f8800 {
- 			compatible = "qcom,sc7180-dwc3", "qcom,dwc3";
- 			reg = <0 0x0a6f8800 0 0x400>;
-@@ -1051,6 +1021,36 @@
- 			};
- 		};
- 
-+		pdc: interrupt-controller@b220000 {
-+			compatible = "qcom,sc7180-pdc", "qcom,pdc";
-+			reg = <0 0xb220000 0 0x30000>;
-+			qcom,pdc-ranges = <0 480 15>, <17 497 98>,
-+					  <119 634 4>, <124 639 1>;
-+			#interrupt-cells = <2>;
-+			interrupt-parent = <&intc>;
-+			interrupt-controller;
-+		};
-+
-+		tsens0: thermal-sensor@c263000 {
-+			compatible = "qcom,sc7180-tsens","qcom,tsens-v2";
-+			reg = <0 0x0c263000 0 0x1ff>, /* TM */
-+				<0 0x0c222000 0 0x1ff>; /* SROT */
-+			#qcom,sensors = <15>;
-+			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "uplow";
-+			#thermal-sensor-cells = <1>;
-+		};
-+
-+		tsens1: thermal-sensor@c265000 {
-+			compatible = "qcom,sc7180-tsens","qcom,tsens-v2";
-+			reg = <0 0x0c265000 0 0x1ff>, /* TM */
-+				<0 0x0c223000 0 0x1ff>; /* SROT */
-+			#qcom,sensors = <10>;
-+			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "uplow";
-+			#thermal-sensor-cells = <1>;
-+		};
-+
- 		spmi_bus: spmi@c440000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0 0x0c440000 0 0x1100>,
--- 
-2.24.1.735.g03f4e72817-goog
-
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
