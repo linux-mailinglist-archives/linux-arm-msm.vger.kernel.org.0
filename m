@@ -2,159 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C8F1711C68C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2019 08:39:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 88FEA11C9D2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2019 10:48:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728140AbfLLHjW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Dec 2019 02:39:22 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:43638 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728072AbfLLHjW (ORCPT
+        id S1728316AbfLLJrk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Dec 2019 04:47:40 -0500
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:38308 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728274AbfLLJrk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Dec 2019 02:39:22 -0500
-Received: by mail-pf1-f194.google.com with SMTP id h14so293401pfe.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 23:39:21 -0800 (PST)
+        Thu, 12 Dec 2019 04:47:40 -0500
+Received: by mail-vs1-f68.google.com with SMTP id y195so1098127vsy.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2019 01:47:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Qo4K50LzAN2stnSI10i/xMxtvvEyKR1cSWIWv7pZkAY=;
-        b=QTHWe33GqVF+OXqosfCsmbjOnSeJdTu2Ok3v6PGMePJB7YQAsSH2vM9oXU47Iacc1K
-         VZ40OB8Jw7epK4xlR0cKDWXRT0MD9vBIZKU0ozV7lJqKRLWkpGu4x5biCxa24CJLzMmm
-         Af7H8zLmJguvauWsRE29SjWjC5xmgY0NvyLTypZP3UJ1/9kE6vA/tbijX1IuYbahDU9J
-         xLBhl1dQKQbMhG8lIuM1si7Kps/Ur5BXRPI9FyLQDkAymILFAXY8QqmTIY+U3sCCLRa4
-         rctivrQJNKlfawkqEDrFRlwXUfcMVLkbnX5GDlhYhfRbdN+Uk7EHa/G7Te1q80lDa28D
-         /Mjw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XMdYxxFfvBek0xJ9ws+XcV7OOK6TvbtKYblfPXo5Bx0=;
+        b=YaRmG0heHRTf1YamJewuwAaiScR2GhbNbuFYwcWc774QrWgGn/hDMHYjrvYeU/DYec
+         cMcfapTQsaH8k+N5fBhhDROkyzgZQDNeGp9uJp1QBVXQ21hQHFiTmCEuY/TvgDo5tv7m
+         RU09slsydMagH6yxibKUjcgugntALY8e2zRAggP/1tfg3dX693SU9ta/i9LI79Md9Ih4
+         lQaCQ7W7TF6D866/pFhPtRaqD6aUhJQ0ry+w+6QsFxIY039aSSKHSqVsQJqtJAiNgJzA
+         1Sp3LGvRApxwMgSj+MBq1b3P/Lqngavqp+MjuhAhwjdgM8YS0NvJGev3NDgjsamNsI5p
+         SSbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Qo4K50LzAN2stnSI10i/xMxtvvEyKR1cSWIWv7pZkAY=;
-        b=igd13n/iMvzC5lAY71v/ijM3rOzyzYOuv5ieNRn9YQdN5zTgrXey831z3NSKKuNN3c
-         o401gNYdcZc6JsP2zraWoC0jTtYLIx05jPX+ZEYTZF94GRNNLsL7zN9X5ri71M69MMXb
-         46hgDAEJ0PjTBgirzCEV/ajoOxUy7irjI6J7NB5o2ogxtqbqqzjDVov4qqMdEVLKs2nn
-         Cl8IrB/tES2b+iM7gEa6FzjddLRb3A9vjJYXxaruu0VBF9u3tToer6bevzoKY2Q+d1pz
-         VVgJGeCvJT8XoPG1Ez/6VbV3ThNtAVRO1aaYAU7qi1QyU41LRP2PDgGGHwcwWMksSwhB
-         hFwg==
-X-Gm-Message-State: APjAAAWOKTz/KNdLCyoE0zKFhDaVS1vUyFAwTqaAKiOI2nuPptYpXVeS
-        gWsbgYUOmHrpaaigEfYDloRZ4Q==
-X-Google-Smtp-Source: APXvYqyWrtLsL3y0QsBXtvnDvJ4rPvhnI90XbGOmcWEW32DAzZHdT8obP0vpz4JmOvrIUfBy6uGEPQ==
-X-Received: by 2002:a63:1f16:: with SMTP id f22mr8587016pgf.2.1576136361275;
-        Wed, 11 Dec 2019 23:39:21 -0800 (PST)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g17sm5962032pfb.180.2019.12.11.23.39.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2019 23:39:20 -0800 (PST)
-Date:   Wed, 11 Dec 2019 23:39:18 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     robh+dt@kernel.org, ulf.hansson@linaro.org, rnayak@codeaurora.org,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        mark.rutland@arm.com, swboyd@chromium.org, dianders@chromium.org
-Subject: Re: [PATCH 6/6] arm64: dts: sm8150: Add rpmh power-domain node
-Message-ID: <20191212073918.GO3143381@builder>
-References: <20191118173944.27043-1-sibis@codeaurora.org>
- <0101016e7f99eab9-35efa01f-8ed3-4a77-87e1-09c381173121-000000@us-west-2.amazonses.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XMdYxxFfvBek0xJ9ws+XcV7OOK6TvbtKYblfPXo5Bx0=;
+        b=F4DpKiW9i273a838R+DaVDYDXPRIEjDgdVL+p6PbgKa43afTycIYOJroS21dCPFanT
+         iw1Z5q9fyrR8VYRFLa51wqeWkveHGVPxuBNyaokJF0RHxs+uvHfRxc9FWDLlQVLa/msK
+         oSE0iz6jC2Bnpq64LJSRMYegW3tRtMmZJLfKyKa6uR7LTjeYQ/PQJ1ikGpXLc7WvV1TX
+         MlrvGkVovS4Viu12GvSkd42ZTqYqx/WrRWnaiJ3hdHDNN2ElowpFUHZVNkSqWmkeuXnK
+         AaHqukL7tbKf5SgpocDP9JHAf4oN8uw+YGpSFyhF6cIiNZiClrWXQ8T/ONMxg5Msl7/b
+         jidQ==
+X-Gm-Message-State: APjAAAXnxaHUqN9dPkMgTmz4KhUy/u/8MzbqeQ65ZGo82quNZ0drLTns
+        b+cl7IkI1bsUIqkzs3ZVjJsHZaS5frVJu4Fl6Zr0HA==
+X-Google-Smtp-Source: APXvYqz8bK51w8cXg8sOtlUH7nWrRPa31mFluvuPeG5or8/JqfR3jGZ+5D05DuNVCe7n2wO7bU++jdNTF+FXWAL0llg=
+X-Received: by 2002:a67:f496:: with SMTP id o22mr6244893vsn.9.1576144059117;
+ Thu, 12 Dec 2019 01:47:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0101016e7f99eab9-35efa01f-8ed3-4a77-87e1-09c381173121-000000@us-west-2.amazonses.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+References: <cover.1576058136.git.amit.kucheria@linaro.org>
+ <39d6b8e4b2cc5836839cfae7cdf0ee3470653b64.1576058136.git.amit.kucheria@linaro.org>
+ <20191211171313.GA1530@gerhold.net>
+In-Reply-To: <20191211171313.GA1530@gerhold.net>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Thu, 12 Dec 2019 15:17:27 +0530
+Message-ID: <CAHLCerNYiuu_KA7ixjDmXLx0x8Bbodf5=BBEDBBY3qS_P5GAPg@mail.gmail.com>
+Subject: Re: [PATCH] drivers: thermal: tsens: Work with old DTBs
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Olof Johansson <olof@lixom.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Linux PM list <linux-pm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 18 Nov 09:40 PST 2019, Sibi Sankar wrote:
+On Wed, Dec 11, 2019 at 10:43 PM Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> Hi Amit,
+>
+> Thanks for the patch!
+>
+> On Wed, Dec 11, 2019 at 03:28:33PM +0530, Amit Kucheria wrote:
+> > In order for the old DTBs to continue working, the new interrupt code
+> > must not return an error if interrupts are not defined.
+> >
+> > Fixes: 634e11d5b450a ("drivers: thermal: tsens: Add interrupt support")
+> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > ---
+> >  drivers/thermal/qcom/tsens.c | 5 +++--
+> >  1 file changed, 3 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> > index 015e7d2015985..d8f51067ed411 100644
+> > --- a/drivers/thermal/qcom/tsens.c
+> > +++ b/drivers/thermal/qcom/tsens.c
+> > @@ -109,7 +109,7 @@ static int tsens_register(struct tsens_priv *priv)
+> >
+> >       irq = platform_get_irq_byname(pdev, "uplow");
+> >       if (irq < 0) {
+> > -             ret = irq;
+> > +             dev_warn(&pdev->dev, "Missing uplow irq in DT\n");
+> >               goto err_put_device;
+> >       }
+>
+> platform_get_irq_byname() already logs an error if the IRQ cannot be
+> found: qcom-tsens 4a9000.thermal-sensor: IRQ uplow not found
+>
+> To replace that error with a warning (not sure if that is worth it),
+> we would need to replace the call with platform_get_irq_byname_optional().
 
-> Add the DT node for the rpmhpd power controller.
-> 
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+I didn't know about optional, interesting.
 
-Series applied, please send separate patch for the yaml migration.
+> >
+> > @@ -118,7 +118,8 @@ static int tsens_register(struct tsens_priv *priv)
+> >                                       IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+> >                                       dev_name(&pdev->dev), priv);
+> >       if (ret) {
+> > -             dev_err(&pdev->dev, "%s: failed to get irq\n", __func__);
+> > +             dev_warn(&pdev->dev, "%s: failed to get uplow irq\n", __func__);
+> > +             ret = 0;
+> >               goto err_put_device;
+>
+> In case of the old DT, platform_get_irq_byname() will return -ENXIO,
+> because no interrupt is specified in the device tree.
+> So we should have already run into the error earlier,
+> and jumped to "err_put_device".
+>
+> Is this hunk really necessary?
 
-Regards,
-Bjorn
+You're right. Just checking for ENXIO should be enough for old DTs.
 
-> ---
->  arch/arm64/boot/dts/qcom/sm8150.dtsi | 55 ++++++++++++++++++++++++++++
->  1 file changed, 55 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> index 8f23fcadecb89..0ac257637c2af 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> @@ -5,6 +5,7 @@
->   */
->  
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->  #include <dt-bindings/clock/qcom,rpmh.h>
->  
-> @@ -469,6 +470,60 @@
->  				clock-names = "xo";
->  				clocks = <&xo_board>;
->  			};
-> +
-> +			rpmhpd: power-controller {
-> +				compatible = "qcom,sm8150-rpmhpd";
-> +				#power-domain-cells = <1>;
-> +				operating-points-v2 = <&rpmhpd_opp_table>;
-> +
-> +				rpmhpd_opp_table: opp-table {
-> +					compatible = "operating-points-v2";
-> +
-> +					rpmhpd_opp_ret: opp1 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_RETENTION>;
-> +					};
-> +
-> +					rpmhpd_opp_min_svs: opp2 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-> +					};
-> +
-> +					rpmhpd_opp_low_svs: opp3 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-> +					};
-> +
-> +					rpmhpd_opp_svs: opp4 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-> +					};
-> +
-> +					rpmhpd_opp_svs_l1: opp5 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-> +					};
-> +
-> +					rpmhpd_opp_svs_l2: opp6 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
-> +					};
-> +
-> +					rpmhpd_opp_nom: opp7 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-> +					};
-> +
-> +					rpmhpd_opp_nom_l1: opp8 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-> +					};
-> +
-> +					rpmhpd_opp_nom_l2: opp9 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L2>;
-> +					};
-> +
-> +					rpmhpd_opp_turbo: opp10 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
-> +					};
-> +
-> +					rpmhpd_opp_turbo_l1: opp11 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
-> +					};
-> +				};
-> +			};
->  		};
->  	};
->  
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+> In other words, wouldn't it be enough to do something like
+>
+> @@ -110,6 +110,8 @@ static int tsens_register(struct tsens_priv *priv)
+>         irq = platform_get_irq_byname(pdev, "uplow");
+>         if (irq < 0) {
+>                 ret = irq;
+> +               if (ret == -ENXIO)
+> +                       ret = 0;
+>                 goto err_put_device;
+>         }
+>
+> ... to essentially ignore only the "IRQ does not exist" condition
+> for old device trees?
+
+Thanks for the review.
