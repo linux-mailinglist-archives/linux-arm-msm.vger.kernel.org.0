@@ -2,70 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3208111D9E0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 00:19:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BD8011D9EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 00:23:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731007AbfLLXS0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Dec 2019 18:18:26 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:44585 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730886AbfLLXSZ (ORCPT
+        id S1731150AbfLLXVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Dec 2019 18:21:18 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:44099 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730883AbfLLXVS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Dec 2019 18:18:25 -0500
-Received: by mail-pg1-f194.google.com with SMTP id x7so405169pgl.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2019 15:18:25 -0800 (PST)
+        Thu, 12 Dec 2019 18:21:18 -0500
+Received: by mail-pf1-f195.google.com with SMTP id d199so257351pfd.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2019 15:21:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=eSKr2UvQeHnJ1J34wBZpdetenzi2m5XSJBxN7DNlQ2U=;
-        b=SqE7s+D+7uwPKPM01MKY8oSngyBm+MyDtBx3EMaURnZlcRc9cZLVwyPcM9E7RaS0If
-         gBJ0ZA82j4XiatzJos4nkUSt7Py3z+m4HhThL/xpPotRmKvTa5E4jQGNKF4jTf/al9ZZ
-         YF+aV2W6PXqnl0wi2wEPyXF18+BJt6WuD0yikFEC1bzwk1R3OI8WVWPdgJbg7QN3O/ZW
-         BZyYYzpeGJdQEWy35Qry6OSJcq6txJITRM7VUinCyu+VF7csX6LNhWifs2Pia/knUAlY
-         /K74fOCw67GjEOSU7RqgY5sM9zri12PDWF1IvaL6O01w6If4EVfREVTMT/PNrEtI++Es
-         VUPQ==
+        bh=PwEI1yJ6T0AFskT5dlCNbVTasQQQ68Q/cR6yPVKDil0=;
+        b=iG1uqwZNOR1syLRVOi5Xd7H0Lm4Jnn5MY+w22djMXoS46pswB6y0UCzuOqvdbdDikD
+         AqJ2oBwf5BDU2K5gqkyjBAX1/hVf5EGz7VOxT693uKpiOw2uPledAL9RuFL+kuoGGMPD
+         5nGJceZfX101Ebtp07JCQeG86/VFQXUbhpKzahW9CIndokO35peMC+Vjxg7s3+S5I1Hd
+         Qz93ae7WzVta5hovaCxu8Zaz7CGm17bIW9ZtfxFEkmNYd9MHOfXMS8H6/vXg195vAPKV
+         EH+Px9KjnYEWp2VV/d1fJTukKJWcI5BSKIH7TY6NjJ8+IB57+Zwa7PWjfRAk/5uaD8v6
+         AZMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=eSKr2UvQeHnJ1J34wBZpdetenzi2m5XSJBxN7DNlQ2U=;
-        b=pYced4cMWnnADqO3Qsv+EzrExGvLgK8qLoU66jh+Omv1tdjAVcMuIYJEV9HciMGpfU
-         KmUTR+z+rY9WhIo67xtkmHwQIzNAxbhs1DZWTTHSqQjHLjyG0eajq2y/MF5zfflqvXp+
-         1raCQJRZKkeRkFD8gqT2sNtQPzRxQ48/DyJROC5dhdO1TxAsf9UJaP/2RRZA5p0P98rT
-         DXXpzrAKFd1AAwJleeArgTPkHSp1BT+LT38BPDJws+3FBp4fcU2uEDahwgJ8b9eYImzk
-         +5KB1nlz5C2b1xaTkVJ6HOwKRXAAy5MALfjD35ChnEl5Znd6mDiLKTnlTIATjqdLVZZO
-         qsYw==
-X-Gm-Message-State: APjAAAVizvfQme3Wx5+vxpKgB5eZvL0G7DiGTUscbyNjl2ite8RO6ZIa
-        K8ZusFVnDW3/ActuauyKuI0c5w==
-X-Google-Smtp-Source: APXvYqym66f1Av27Zu/JBw6fk6bxrLmnIsu5jCaB5d3pHu4LOGzJu78o+ZCtv/f7KMpycLd9pd+EYQ==
-X-Received: by 2002:aa7:9f94:: with SMTP id z20mr13164035pfr.111.1576192705032;
-        Thu, 12 Dec 2019 15:18:25 -0800 (PST)
+        bh=PwEI1yJ6T0AFskT5dlCNbVTasQQQ68Q/cR6yPVKDil0=;
+        b=GwNzHQjfB83uKhZSPddda2a6F0G3x5cYlyV6RCSl1UmKb24lvIPqYosKMNKgEWy1nH
+         tp6zMUS7kDOcVrnrUlanVZ8ktA6GRVBz7V0ihz8fy1GXJ6GFYkze3J8DvuYDvXR3PORB
+         cBh/o+MtdsWY8urdC5rLNg9QWDnfMboXRtxfU8YEVGmwP3Jtb3qn8peSiqICnVohK57b
+         4dejvEI3SXKY27ZZhPRe1KpL6quBHAKrZH/uBLkpty1afuJSdI9Tn+TUvSptb2u8Dzwv
+         MDEPFTZOoCgALa0tiX5EO0zcPUMMuqgkT6XAPwzriLNjlLcTzrFGossGyGcp5MBfF95u
+         Aing==
+X-Gm-Message-State: APjAAAVN8R5FaSGg6KBVkMLZKY/zcq+s+PWExLEXbz0zsAjZQIm6dSAi
+        UvHvPBpgMdFBkvh9Ba2cv9letA==
+X-Google-Smtp-Source: APXvYqxov3K1Wj491tYe3QMx2tNmECKyTzhVquS5PWR+IxNp3gxFXhBdBmzbiNQlyXk9Y/bYPZ5YJQ==
+X-Received: by 2002:aa7:9306:: with SMTP id 6mr12471387pfj.159.1576192877506;
+        Thu, 12 Dec 2019 15:21:17 -0800 (PST)
 Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id p68sm8616675pfp.149.2019.12.12.15.18.23
+        by smtp.gmail.com with ESMTPSA id h5sm8646678pfk.30.2019.12.12.15.21.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Dec 2019 15:18:24 -0800 (PST)
-Date:   Thu, 12 Dec 2019 15:18:21 -0800
+        Thu, 12 Dec 2019 15:21:16 -0800 (PST)
+Date:   Thu, 12 Dec 2019 15:21:14 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Douglas Anderson <dianders@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>
+To:     Douglas Anderson <dianders@chromium.org>
 Cc:     Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
         Kiran Gunda <kgunda@codeaurora.org>,
         Rajendra Nayak <rnayak@codeaurora.org>, swboyd@chromium.org,
         mka@chromium.org, Sandeep Maheswaram <sanm@codeaurora.org>,
         Amit Kucheria <amit.kucheria@linaro.org>,
         Maulik Shah <mkshah@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Mark Rutland <mark.rutland@arm.com>
-Subject: Re: [PATCH 5/7] arm64: dts: qcom: sc7180: Avoid "memory" for cmd-db
- reserved-memory node
-Message-ID: <20191212231821.GP3143381@builder>
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Subject: Re: [PATCH 0/7] arm64: dts: sc7180: Make dtbs_check mostly happy
+Message-ID: <20191212232114.GQ3143381@builder>
 References: <20191212193544.80640-1-dianders@chromium.org>
- <20191212113540.5.I4e41d4d872368e2e056db2ec8442ec18d3f7ef08@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191212113540.5.I4e41d4d872368e2e056db2ec8442ec18d3f7ef08@changeid>
+In-Reply-To: <20191212193544.80640-1-dianders@chromium.org>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -74,44 +73,45 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Thu 12 Dec 11:35 PST 2019, Douglas Anderson wrote:
 
-> By using "memory" we trigger we trigger the "schemas/memory.yaml"
-> rules when we run "dtbs_check" which then complains that we don't have
-> a "device_type" of "memory".
+> This gets rid of all of the dtbs_check that showed up atop the current
+> qcom maintainer tree for sc7180-idp, except the errors in the
+> 'thermal-sensor' nodes.  I believe those are known / being dealt with
+> separately [1] [2].
+> 
+> I don't expect this series to have any functional changes, it just
+> makes the device tree cleaner.  I was able to boot after applying
+> these patches atop a working tree.
+> 
+> I have tried to sort the changes here, first including the "obviously
+> correct" changes and later changes I am less certain about.  There are
+> no known dependencies between the changes.
+> 
+> [1] https://lore.kernel.org/r/CAD=FV=UXC3UT78vGBr9rRuRxz=8iwH4tOkFx6NC-pSs+Z5+7Xw@mail.gmail.com
+> [2] https://lore.kernel.org/r/CAD=FV=UtHebABCpJo1QUc6C2v2iZq2rFL+pTMx=EHBL+7d=jTQ@mail.gmail.com
 > 
 
-I like "memory" here, so we have a whole bunch of these to fix up in
-various dts files...
+I applied patch 1-4 and 6. Would like to hear from Rob on patch 5 and
+waiting for you to finish up the commit message in patch 7.
 
-@Rob, should we move away to descriptive node names or to some other
-generic name for entries in reseved-memory?
-
-Regards,
+Thanks,
 Bjorn
 
-> Looking at the "reserved-memory.txt" bindings, subnodes shouldn't just
-> be the word "memory".  Presumably using just "cmd-db" should be OK for
-> a node name.
 > 
-> Fixes: e0abc5eb526e ("arm64: dts: qcom: sc7180: Add cmd_db reserved area")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+> Douglas Anderson (7):
+>   arm64: dts: qcom: sc7180: Add SoC name to compatible
+>   arm64: dts: qcom: sc7180: Rename gic-its node to msi-controller
+>   arm64: dts: qcom: sc7180: Add "#clock-cells" property to usb_1_ssphy
+>   arm64: dts: qcom: pm6150: Remove macro from unit name of adc-chan
+>   arm64: dts: qcom: sc7180: Avoid "memory" for cmd-db reserved-memory
+>     node
+>   arm64: dts: qcom: sc7180: Avoid "phy" for USB QMP PHY wrapper
+>   arm64: dts: qcom: sc7180: Use 'ranges' in arm,armv7-timer-mem node
 > 
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  arch/arm64/boot/dts/qcom/pm6150.dtsi    |  2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  2 +-
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 45 +++++++++++++------------
+>  3 files changed, 25 insertions(+), 24 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index d114feade8e7..9766867abc88 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -61,7 +61,7 @@ reserved_memory: reserved-memory {
->  		#size-cells = <2>;
->  		ranges;
->  
-> -		aop_cmd_db_mem: memory@80820000 {
-> +		aop_cmd_db_mem: cmd-db@80820000 {
->  			reg = <0x0 0x80820000 0x0 0x20000>;
->  			compatible = "qcom,cmd-db";
->  			no-map;
 > -- 
 > 2.24.1.735.g03f4e72817-goog
 > 
