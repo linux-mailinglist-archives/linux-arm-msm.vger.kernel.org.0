@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BBA3611D5D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2019 19:37:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B168511D5C4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2019 19:37:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730400AbfLLShv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Dec 2019 13:37:51 -0500
-Received: from a27-186.smtp-out.us-west-2.amazonses.com ([54.240.27.186]:56606
+        id S1730492AbfLLShI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Dec 2019 13:37:08 -0500
+Received: from a27-186.smtp-out.us-west-2.amazonses.com ([54.240.27.186]:56604
         "EHLO a27-186.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730463AbfLLShF (ORCPT
+        by vger.kernel.org with ESMTP id S1730457AbfLLShF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 12 Dec 2019 13:37:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1576175825;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1576175824;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
-        bh=nS5dpPxwP7JE8bX7G/pF3Js40aKiOtZzLGDlluiHQHc=;
-        b=My9m+ttX9KpDVidQ4hPF4kpfgV2or5uPosdQ3XUS/72Zlnod3Z8gbl4NgrMJ8CGD
-        edMhEl96ZSBvWQJXiEzYa88qZMfGiEozJjY7tB3KLwjCSXHk8dNMKtO+Hx9o4GsU4el
-        o/2otR182IQUiyZD45EQEB90QRQG9IKxbCNufNfY=
+        bh=Rn03FluCaDQLghrbQl4vahU7+G26SUGCOzkKXznyMik=;
+        b=YR9GDTLf/snAh10P7PimOrkc4yAxAbbjt4E8wbyzGPC4vIUbi6RkfZ6IaT+u9DHb
+        1NGTaun8q83HRvLUYt84tp+fSjJsgX75l6gZoNgqojKeD6orBeQamJhU7nSAZ8EUyGC
+        r65x4YFT8JP7cXHUkIJ23/qZjO6Mt5G9lZ9WDI2s=
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1576175825;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1576175824;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:Feedback-ID;
-        bh=nS5dpPxwP7JE8bX7G/pF3Js40aKiOtZzLGDlluiHQHc=;
-        b=fWve77gIHbLxwJPmRgiAjq4lVIqigxoYW8o7HeGtJqLBtEbsEmCRh7TgyIUhTWbh
-        NXlgr8iKQAjLYJbuppKua4xqiw24QczVu3S+jB9olgZzSeeyypTcxUbBnQst2UUt8us
-        OIj8a6g2Dp1iTJY/s+6Tsz6MHPklWlaKPOstC1/A=
+        bh=Rn03FluCaDQLghrbQl4vahU7+G26SUGCOzkKXznyMik=;
+        b=G8gVAoAw0rSOQnQ+NzjUG57s20nnSoxRyOHDF/UQJKubGezN3XvAHeUJeErSLbeT
+        aZT42YvccdKKnQAmEjl8zBPGQq8tTteOaz+lkW5xBk3KvLD7lb/5TJ+TOVu4NccElft
+        A3jCsaljbHt1Xep8hB88hKvxDhO9kcKyU1kBoSMo=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D9A57C433A2
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8E3C3C4479C
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=eberman@codeaurora.org
 From:   Elliot Berman <eberman@codeaurora.org>
@@ -40,9 +40,9 @@ To:     bjorn.anderssen@linaro.org, saiprakash.ranjan@codeaurora.org,
 Cc:     Elliot Berman <eberman@codeaurora.org>, tsoni@codeaurora.org,
         sidgup@codeaurora.org, psodagud@codeaurora.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 09/17] firmware: qcom_scm-32: Use SMC arch wrappers
+Subject: [PATCH v3 10/17] firmware: qcom_scm-32: Add funcnum IDs
 Date:   Thu, 12 Dec 2019 18:37:04 +0000
-Message-ID: <0101016efb667011-a108ebb9-723b-4a15-a02e-1a2d49b6179c-000000@us-west-2.amazonses.com>
+Message-ID: <0101016efb666f04-5ac73975-01e3-49d5-82d3-9cf451e96785-000000@us-west-2.amazonses.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1576175807-11775-1-git-send-email-eberman@codeaurora.org>
 References: <1576175807-11775-1-git-send-email-eberman@codeaurora.org>
@@ -53,132 +53,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use SMC arch wrappers instead of inline assembly.
+Add SCM_LEGACY_FNID macro to qcom_scm-32.
 
 Signed-off-by: Elliot Berman <eberman@codeaurora.org>
 ---
- drivers/firmware/Makefile      |  1 -
- drivers/firmware/qcom_scm-32.c | 71 ++++++++++--------------------------------
- 2 files changed, 17 insertions(+), 55 deletions(-)
+ drivers/firmware/qcom_scm-32.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/Makefile b/drivers/firmware/Makefile
-index 3fcb919..747fb73 100644
---- a/drivers/firmware/Makefile
-+++ b/drivers/firmware/Makefile
-@@ -20,7 +20,6 @@ obj-$(CONFIG_FW_CFG_SYSFS)	+= qemu_fw_cfg.o
- obj-$(CONFIG_QCOM_SCM)		+= qcom_scm.o
- obj-$(CONFIG_QCOM_SCM_64)	+= qcom_scm-64.o
- obj-$(CONFIG_QCOM_SCM_32)	+= qcom_scm-32.o
--CFLAGS_qcom_scm-32.o :=$(call as-instr,.arch armv7-a\n.arch_extension sec,-DREQUIRES_SEC=1) -march=armv7-a
- obj-$(CONFIG_TI_SCI_PROTOCOL)	+= ti_sci.o
- obj-$(CONFIG_TRUSTED_FOUNDATIONS) += trusted_foundations.o
- obj-$(CONFIG_TURRIS_MOX_RWTM)	+= turris-mox-rwtm.o
 diff --git a/drivers/firmware/qcom_scm-32.c b/drivers/firmware/qcom_scm-32.c
-index 8b57240..362d042 100644
+index 362d042..fcbe9e0 100644
 --- a/drivers/firmware/qcom_scm-32.c
 +++ b/drivers/firmware/qcom_scm-32.c
-@@ -10,6 +10,7 @@
- #include <linux/errno.h>
- #include <linux/err.h>
- #include <linux/qcom_scm.h>
-+#include <linux/arm-smccc.h>
- #include <linux/dma-mapping.h>
+@@ -39,6 +39,8 @@ static struct qcom_scm_entry qcom_scm_wb[] = {
  
- #include "qcom_scm.h"
-@@ -121,25 +122,13 @@ static inline void *scm_legacy_get_response_buffer(
- static u32 __scm_legacy_do(u32 cmd_addr)
- {
- 	int context_id;
--	register u32 r0 asm("r0") = 1;
--	register u32 r1 asm("r1") = (u32)&context_id;
--	register u32 r2 asm("r2") = cmd_addr;
-+	struct arm_smccc_res res;
- 	do {
--		asm volatile(
--			__asmeq("%0", "r0")
--			__asmeq("%1", "r0")
--			__asmeq("%2", "r1")
--			__asmeq("%3", "r2")
--#ifdef REQUIRES_SEC
--			".arch_extension sec\n"
--#endif
--			"smc	#0	@ switch to secure world\n"
--			: "=r" (r0)
--			: "r" (r0), "r" (r1), "r" (r2)
--			: "r3", "r12");
--	} while (r0 == QCOM_SCM_INTERRUPTED);
--
--	return r0;
-+		arm_smccc_smc(1, (unsigned long)&context_id, cmd_addr,
-+			      0, 0, 0, 0, 0, &res);
-+	} while (res.a0 == QCOM_SCM_INTERRUPTED);
+ static DEFINE_MUTEX(qcom_scm_lock);
+ 
++#define SCM_LEGACY_FNID(s, c)	(((s) << 10) | ((c) & 0x3ff))
 +
-+	return res.a0;
- }
- 
  /**
-@@ -237,24 +226,12 @@ static int qcom_scm_call(struct device *dev, u32 svc_id, u32 cmd_id,
- static s32 qcom_scm_call_atomic1(u32 svc, u32 cmd, u32 arg1)
+  * struct scm_legacy_command - one SCM command buffer
+  * @len: total available memory for command and response
+@@ -168,7 +170,7 @@ static int qcom_scm_call(struct device *dev, u32 svc_id, u32 cmd_id,
+ 	cmd->buf_offset = cpu_to_le32(sizeof(*cmd));
+ 	cmd->resp_hdr_offset = cpu_to_le32(sizeof(*cmd) + cmd_len);
+ 
+-	cmd->id = cpu_to_le32((svc_id << 10) | cmd_id);
++	cmd->id = cpu_to_le32(SCM_LEGACY_FNID(svc_id, cmd_id));
+ 	if (cmd_buf)
+ 		memcpy(scm_legacy_get_command_buffer(cmd), cmd_buf, cmd_len);
+ 
+@@ -209,7 +211,7 @@ static int qcom_scm_call(struct device *dev, u32 svc_id, u32 cmd_id,
+ #define SCM_LEGACY_CLASS_REGISTER		(0x2 << 8)
+ #define SCM_LEGACY_MASK_IRQS		BIT(5)
+ #define SCM_LEGACY_ATOMIC_ID(svc, cmd, n) \
+-				(((((svc) << 10)|((cmd) & 0x3ff)) << 12) | \
++				((SCM_LEGACY_FNID(svc, cmd) << 12) | \
+ 				SCM_LEGACY_CLASS_REGISTER | \
+ 				SCM_LEGACY_MASK_IRQS | \
+ 				(n & 0xf))
+@@ -350,7 +352,7 @@ void __qcom_scm_cpu_power_down(u32 flags)
+ int __qcom_scm_is_call_available(struct device *dev, u32 svc_id, u32 cmd_id)
  {
- 	int context_id;
-+	struct arm_smccc_res res;
-+
-+	arm_smccc_smc(SCM_LEGACY_ATOMIC_ID(svc, cmd, 1),
-+		      (unsigned long)&context_id, arg1, 0, 0, 0, 0, 0, &res);
+ 	int ret;
+-	__le32 svc_cmd = cpu_to_le32((svc_id << 10) | cmd_id);
++	__le32 svc_cmd = cpu_to_le32(SCM_LEGACY_FNID(svc_id, cmd_id));
+ 	__le32 ret_val = 0;
  
--	register u32 r0 asm("r0") = SCM_LEGACY_ATOMIC_ID(svc, cmd, 1);
--	register u32 r1 asm("r1") = (u32)&context_id;
--	register u32 r2 asm("r2") = arg1;
--
--	asm volatile(
--			__asmeq("%0", "r0")
--			__asmeq("%1", "r0")
--			__asmeq("%2", "r1")
--			__asmeq("%3", "r2")
--#ifdef REQUIRES_SEC
--			".arch_extension sec\n"
--#endif
--			"smc    #0      @ switch to secure world\n"
--			: "=r" (r0)
--			: "r" (r0), "r" (r1), "r" (r2)
--			: "r3", "r12");
--	return r0;
-+	return res.a0;
- }
- 
- /**
-@@ -270,26 +247,12 @@ static s32 qcom_scm_call_atomic1(u32 svc, u32 cmd, u32 arg1)
- static s32 qcom_scm_call_atomic2(u32 svc, u32 cmd, u32 arg1, u32 arg2)
- {
- 	int context_id;
-+	struct arm_smccc_res res;
-+
-+	arm_smccc_smc(SCM_LEGACY_ATOMIC_ID(svc, cmd, 2),
-+		      (unsigned long)&context_id, arg1, 0, 0, 0, 0, 0, &res);
- 
--	register u32 r0 asm("r0") = SCM_LEGACY_ATOMIC_ID(svc, cmd, 2);
--	register u32 r1 asm("r1") = (u32)&context_id;
--	register u32 r2 asm("r2") = arg1;
--	register u32 r3 asm("r3") = arg2;
--
--	asm volatile(
--			__asmeq("%0", "r0")
--			__asmeq("%1", "r0")
--			__asmeq("%2", "r1")
--			__asmeq("%3", "r2")
--			__asmeq("%4", "r3")
--#ifdef REQUIRES_SEC
--			".arch_extension sec\n"
--#endif
--			"smc    #0      @ switch to secure world\n"
--			: "=r" (r0)
--			: "r" (r0), "r" (r1), "r" (r2), "r" (r3)
--			: "r12");
--	return r0;
-+	return res.a0;
- }
- 
- /**
+ 	ret = qcom_scm_call(dev, QCOM_SCM_SVC_INFO, QCOM_SCM_INFO_IS_CALL_AVAIL,
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
