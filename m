@@ -2,116 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B3DDC11C9E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2019 10:52:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0039511CADE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2019 11:33:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728396AbfLLJu7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Dec 2019 04:50:59 -0500
-Received: from mail-ua1-f68.google.com ([209.85.222.68]:38606 "EHLO
-        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728398AbfLLJu6 (ORCPT
+        id S1728777AbfLLKdI convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Dec 2019 05:33:08 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:45993 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728573AbfLLKdI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Dec 2019 04:50:58 -0500
-Received: by mail-ua1-f68.google.com with SMTP id z17so615361uac.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2019 01:50:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Th0Gxjy39UzyWkgaaSlqfUVGyatOKXBlhrJ1etVX5js=;
-        b=Lr4zFJbm8S7HgAMSDwABkA/wyND+xwdWGQnbqBjKgGo7aCnTiK8exjImHHk9GVigub
-         OaEkvndf8/JCWjrVQnkebzikIg3uTiUuNMj9PK+Hdz5dbj8KOi1h7JaRhq4Ez9J8mYN8
-         7GY99n0HWRrJq8+wjtLytVQYXZpJHijWwBw8hvMh5YDK0gY9LpzoPD4hzf6bjwToMqTF
-         BXYVG570RYgua0JseTb5oaqV7jIcHoZd6nBTTnYqs1ev1K36YKDKg2oPPhbyY5JbQT6G
-         EQhIA+/kNaa5FMfQh/+KDZ9zr9pZf/sXj42yi6Fu1wwHRpA+yK6HeCzVmaEhNuZBgrh8
-         Atmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Th0Gxjy39UzyWkgaaSlqfUVGyatOKXBlhrJ1etVX5js=;
-        b=I6wRFo6WSvPEOn5Yhr3cmOQyKA/wWxYSTDMXce3Xl85EYbqFtFlwW0PyNOz1P7NsnN
-         RcgbBqpoD2GKCgt7iTfG2BJDUlwX17pJe6gQP3FtBzVeC+Tu12F00NZW6qg/OEnL+0Oc
-         ByJasn0+11tLt9spw0SasJfL3zUZayHCrLP7O7zChHOqndZ+4T9UpqrQqGudJEnWeGEF
-         PTH4W5LtyLmGXE7cF2DwgP6sumoF+iH1/GUtOC9ucTl3amw5yo0GIg1FS4qgwKPRHXz2
-         wYdAUxd7mN5KSuEk39SCoJGoizRzMMZP2lgXlCRuMF4o3AgNHiB2UiLRqgQ8WgXljyTf
-         006w==
-X-Gm-Message-State: APjAAAWVVaHhWAx0sH+OuOMgJaHgeH9iMqvpLkQtqFWkcUvFFhaHOC6i
-        Gxz2Eu7N99qcHFBke4m0swPYyMqpMFtvn8pIfnFyhQ==
-X-Google-Smtp-Source: APXvYqwKZRVjkZ142WpeRsqhhDVJVdjOwhdMN2XDbdsfhAIXiWHisLYDXPMxFD1KaEHk4XY7A7F6pkHxDLP4o1kLsjo=
-X-Received: by 2002:ab0:7352:: with SMTP id k18mr7176180uap.77.1576144257519;
- Thu, 12 Dec 2019 01:50:57 -0800 (PST)
-MIME-Version: 1.0
-References: <cover.1576058136.git.amit.kucheria@linaro.org>
- <39d6b8e4b2cc5836839cfae7cdf0ee3470653b64.1576058136.git.amit.kucheria@linaro.org>
- <aa9174c2-c851-4769-0f9c-5541047a7901@linaro.org>
-In-Reply-To: <aa9174c2-c851-4769-0f9c-5541047a7901@linaro.org>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Thu, 12 Dec 2019 15:20:44 +0530
-Message-ID: <CAHLCerPNMBFgFv6zAdKtzs21p9Y18d8fohJEMJe7o4ufNwdS6Q@mail.gmail.com>
-Subject: Re: [PATCH] drivers: thermal: tsens: Work with old DTBs
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Olof Johansson <olof@lixom.net>,
-        Linux PM list <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Thu, 12 Dec 2019 05:33:08 -0500
+Received: from marcel-macbook.fritz.box (p4FF9F0D1.dip0.t-ipconnect.de [79.249.240.209])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 25707CECE2;
+        Thu, 12 Dec 2019 11:42:17 +0100 (CET)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.40.2.2.4\))
+Subject: Re: [PATCH v1 2/2] dt-bindings: net: bluetooth: Add device tree
+ bindings for QCA6390
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <0101016ef8b923bc-5760b40c-1968-4992-9186-8e3965207236-000000@us-west-2.amazonses.com>
+Date:   Thu, 12 Dec 2019 11:33:06 +0100
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <24B540FF-C627-4DF9-9077-247A4A6A3605@holtmann.org>
+References: <0101016ef8b923bc-5760b40c-1968-4992-9186-8e3965207236-000000@us-west-2.amazonses.com>
+To:     Rocky Liao <rjliao@codeaurora.org>
+X-Mailer: Apple Mail (2.3608.40.2.2.4)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 11, 2019 at 9:42 PM Daniel Lezcano
-<daniel.lezcano@linaro.org> wrote:
->
-> On 11/12/2019 10:58, Amit Kucheria wrote:
-> > In order for the old DTBs to continue working, the new interrupt code
-> > must not return an error if interrupts are not defined.
-> >
-> > Fixes: 634e11d5b450a ("drivers: thermal: tsens: Add interrupt support")
-> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > ---
-> >  drivers/thermal/qcom/tsens.c | 5 +++--
-> >  1 file changed, 3 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> > index 015e7d2015985..d8f51067ed411 100644
-> > --- a/drivers/thermal/qcom/tsens.c
-> > +++ b/drivers/thermal/qcom/tsens.c
-> > @@ -109,7 +109,7 @@ static int tsens_register(struct tsens_priv *priv)
-> >
-> >       irq = platform_get_irq_byname(pdev, "uplow");
-> >       if (irq < 0) {
-> > -             ret = irq;
->
-> 'ret' remains uninitialized here.
->
-> > +             dev_warn(&pdev->dev, "Missing uplow irq in DT\n");
-> >               goto err_put_device;
-> >       }
-> >
-> > @@ -118,7 +118,8 @@ static int tsens_register(struct tsens_priv *priv)
-> >                                       IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-> >                                       dev_name(&pdev->dev), priv);
-> >       if (ret) {
-> > -             dev_err(&pdev->dev, "%s: failed to get irq\n", __func__);
-> > +             dev_warn(&pdev->dev, "%s: failed to get uplow irq\n", __func__);
-> > +             ret = 0;
-> >               goto err_put_device;
-> >       }
->
-> The code now is unable to make a distinction between an error in the DT
-> and the old DT :/
->
-> Why not version the DT?
+Hi Rocky,
 
-Versioning the DT is probably overkill for this driver. Just checking
-for ENXIO as suggested by Stephan seems to be enough. We don't lose
-the error checking for devm_request_threaded_irq either.
+> Add compatible string for the Qualcomm QCA6390 Bluetooth controller
+> 
+> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+> ---
+> Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt | 1 +
+> 1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
+> index 68b67d9db63a..87b7f9d22414 100644
+> --- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
+> +++ b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
+> @@ -10,6 +10,7 @@ device the slave device is attached to.
+> Required properties:
+>  - compatible: should contain one of the following:
+>    * "qcom,qca6174-bt"
+> +   * "qcom,qca6390-bt"
+>    * "qcom,wcn3990-bt"
+>    * "qcom,wcn3998-bt"
 
-Regards,
-Amit
+now I am confused. Is this a DT platform or ACPI or both?
+
+Regards
+
+Marcel
+
