@@ -2,88 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4814511D73A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2019 20:38:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AFE9111D763
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2019 20:45:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730618AbfLLThb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Dec 2019 14:37:31 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:38382 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730593AbfLLTha (ORCPT
+        id S1730512AbfLLTpJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Dec 2019 14:45:09 -0500
+Received: from a27-11.smtp-out.us-west-2.amazonses.com ([54.240.27.11]:50554
+        "EHLO a27-11.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730284AbfLLTpJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Dec 2019 14:37:30 -0500
-Received: by mail-lj1-f195.google.com with SMTP id k8so3596321ljh.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2019 11:37:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dvGJ0797Qz8DUFLYM8Rit14ij9aZ1vENIS91EYjNpec=;
-        b=MThukkqGbJH0JqQq7NvRMwiKjEvckHmmxf4wk/k+CyqysQALPXBquylwgn1+SkKOux
-         hYds4XHtiXiqnLjBZTCZHVaMufoABT/oCOU20kwUAus7U+22gMzRkYcbyaBccoa7KyYv
-         12+iTzwdpt/manm3sKQDH7pyNVNLBK7zrgfczpEB0qxEGoyOp2RO1/x10LHuQJ2M7UF8
-         xwcczLh07pEx03HMT6hiKGSuIJDAsez0N1uPaJIkQaw89JkglxUV7L09rhWo2MmtWhMp
-         GIqxgm0dT3TxGD4WfuTEc14eHGp2Q5ogVIoDDyp9Pxly8HOvzkn+Q7nAi1hlWOskTmam
-         XFGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dvGJ0797Qz8DUFLYM8Rit14ij9aZ1vENIS91EYjNpec=;
-        b=LfI83n8VDKjf42WlqG2OcaW2MwKEnOTgkKJ4asT0Y05Csh7ruqJQRFJmftIlwm/zSN
-         OgZS/nza0zHSPyvshALMfXHvSFcJHFd5SX3U6EAzEOtpYXO9hkRJgF++QNWE3s4m9uSV
-         LvwmbNHa17SrWh0bbcLALCi3FWZzzqvAtzrREnLWVHV70TLyZVR9f3Q6JaZNdEe8F/rR
-         gxgi6OE0YcXz+2EYBF1+0wxITRyhQL6BJGcgcVxUPFImoC7WxCyFhWN0Kd8XJJA+M0a/
-         0guLvU9KXkOtEakv+W3QK2Frya/iYLY265Ahk6y0gaokze5rTrAZv8Xz0SSgEUrVdFoR
-         tbNg==
-X-Gm-Message-State: APjAAAVjf5QdHS3vcRd2H5TygTrwVvguvaEb9eHv3a53VP2Jkn/B0GER
-        HKeNwDiY5hkvKXpn/yz2fEeNbbBd1CAmhPKAXHDsOg==
-X-Google-Smtp-Source: APXvYqz4Z1nagdLRuefbsVS4snEWX7fyZkbq/3ND7xotrEE30d//QZNUnTbwcm2mnmu/6tLOV8m1Zcho9bqz56n4Swo=
-X-Received: by 2002:a2e:9e03:: with SMTP id e3mr7189882ljk.186.1576179448269;
- Thu, 12 Dec 2019 11:37:28 -0800 (PST)
+        Thu, 12 Dec 2019 14:45:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1576179908;
+        h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To;
+        bh=eQxrK8Iw23uSBOiCp/yidrRTawxLunZnrXI4AtGvRN8=;
+        b=kmM4+iiuXzCz2sueL2jv0+TXTB390Tqs2792/h/RdYEVoWV7JwaSEBTeqxBK98oZ
+        WtQfRQw4Q+sqxpSt7CDHeYF1DhdUaDO0CFrNxQh7wVQzUq/jU2/x9ARG0dNbtdyQqYe
+        rsScXiVTufva5gvgP3PSp2RYgL4p1ydIbBIC+Qzk=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1576179908;
+        h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Feedback-ID;
+        bh=eQxrK8Iw23uSBOiCp/yidrRTawxLunZnrXI4AtGvRN8=;
+        b=Pl8nwW5Ya+d3N3VA5qCjysPpYh23dMxfCF1/3RovGlW3OPqazIshzFsUxXXUz7Gn
+        0YDQAd/CUC7qKsTQI2PuBbYfHI/lvkNELwyHwqc/Cm6a0ofBfRPcj0oMKawiLm8xKRb
+        7iwjENbDNgTkjLrLUvwaLfdFRRkLHEkKWf6dXwxY=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 99458C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=eberman@codeaurora.org
+Date:   Thu, 12 Dec 2019 19:45:08 +0000
+From:   Elliot Berman <eberman@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        saiprakash.ranjan@codeaurora.org, tsoni@codeaurora.org,
+        sidgup@codeaurora.org, psodagud@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 11/18] firmware: qcom_scm-32: Use SMC arch wrappers
+Message-ID: <0101016efba4bff6-afac982d-5c34-4c5d-a383-05522db4d45f-000000@us-west-2.amazonses.com>
+References: <1573593774-12539-1-git-send-email-eberman@codeaurora.org>
+ <1573593774-12539-12-git-send-email-eberman@codeaurora.org>
+ <5dcf45bd.1c69fb81.297bb.9cb9@mx.google.com>
 MIME-Version: 1.0
-References: <1563568344-1274-1-git-send-email-daidavid1@codeaurora.org>
- <1563568344-1274-3-git-send-email-daidavid1@codeaurora.org>
- <20190721191305.GI7234@tuxbook-pro> <0ecba781-ad08-0f09-f4a8-83473569a4c5@codeaurora.org>
-In-Reply-To: <0ecba781-ad08-0f09-f4a8-83473569a4c5@codeaurora.org>
-From:   Evan Green <evgreen@google.com>
-Date:   Thu, 12 Dec 2019 11:36:52 -0800
-Message-ID: <CAE=gft57S_2yKQdP6x=R9nVUaHWvreS-ENKkKrKmOzhJYLpzEQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] arm64: dts: sdm845: Redefine interconnect provider DT nodes
-To:     David Dai <daidavid1@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Sean Sweeney <seansw@qti.qualcomm.com>,
-        Alex Elder <elder@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-pm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5dcf45bd.1c69fb81.297bb.9cb9@mx.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-SES-Outgoing: 2019.12.12-54.240.27.11
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 23, 2019 at 11:24 AM David Dai <daidavid1@codeaurora.org> wrote:
->
-> Thanks for looking over this, Bjorn.
->
-> On 7/21/2019 12:13 PM, Bjorn Andersson wrote:
-> > On Fri 19 Jul 13:32 PDT 2019, David Dai wrote:
-> >
-> >> Add the DT nodes for each of the Network-On-Chip interconnect
-> >> buses found on SDM845 based platform and redefine the rsc_hlos
-> >> child node as a bcm-voter device to better represent the hardware.
-> >>
-> >> Signed-off-by: David Dai <daidavid1@codeaurora.org>
-> >> ---
-> >>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 61 ++++++++++++++++++++++++++++++++++--
-> >>   1 file changed, 58 insertions(+), 3 deletions(-)
-> >>
+On Fri, Nov 15, 2019 at 04:41:32PM -0800, Stephen Boyd wrote:
+> Nice. Can this come earlier in the series?
 
-What happened to this series? Is it abandoned?
--Evan
+This patch is the first in this series that applies only to qcom_scm-32.
+Patches 1-5 were some common changes, 6-10 clean up qcom_scm-64, 11-15
+clean up qcom_scm-32, and 16-18 merges the two. I'd rather not move this
+patch earlier in the series as it breaks that organization of patches.
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
