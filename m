@@ -2,167 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A401211C618
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2019 07:49:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9798611C633
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Dec 2019 08:12:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728006AbfLLGtz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Dec 2019 01:49:55 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:36176 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727891AbfLLGtz (ORCPT
+        id S1728043AbfLLHMZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Dec 2019 02:12:25 -0500
+Received: from a27-18.smtp-out.us-west-2.amazonses.com ([54.240.27.18]:48844
+        "EHLO a27-18.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728037AbfLLHMZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Dec 2019 01:49:55 -0500
-Received: by mail-pj1-f66.google.com with SMTP id n96so615613pjc.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Dec 2019 22:49:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7alBOWMBOw01l5ZvKzB8PzRlMI+d1fuDgAvtsx1Cs+A=;
-        b=FpZH513r5ci7cDAB2WTk1UyTDgmvGjKU3SGUyd0EDu/2/TLvvYLDkU2ppOaIKYfwgL
-         iMonzMybr7wGVG0ha8JJ5mix9X7FtLfiZtqfennWRSkU4fiSy5bIB5elUex5PzDhIwc7
-         IjJ7NQq7nADBayNY2PqLpAClihJfYKGi+qZbUZlyDv1OdMh779Jt517SuMoYHShAIXZT
-         ajj3dth88N5Wc3mFY3cpOHslvttbGv8B9QhA0Gb7h87YCWI0xtIAfpTN2/adAJlqRUJp
-         m/Z5bdEtkx+Wc/8AYCoVBLE0SEO52i/3MB9WxFAf5lEcY4vKVJP8hiSoDRBD03rchYOu
-         EZpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7alBOWMBOw01l5ZvKzB8PzRlMI+d1fuDgAvtsx1Cs+A=;
-        b=fpq8xBvINv+G6VHvEPDALowZ7reTa2SqkrsRSaaQtX6TOlVu6WPkai1Nxwe0GSPFgM
-         /n8KaoESYYy78Ev3KF1U4DQcMz4SF9TZhjY9EnQpi/BykjptOHwjSmZS/C5kMNT+cQY0
-         E216gVXFyiQbkqHi2KteTs5Ox0WI4be3B14kXhZhbcoqlNjVLPgZ/IM7arcjEl/VZ2xS
-         fGAvK/01Dy33DsF6m5S9dWp2HJGTNNsyeQV5SRfd0JtldmEydDE0eVS86RS53gjsW86c
-         vIUZrRznN2YN2f87amiGlG7Q3brTxwgB68YjbbCCKNX8VtOj5E5aSApQjiGr6VS4tXPa
-         1f5A==
-X-Gm-Message-State: APjAAAXoC0F5yCd6+Yw2w90qQSm4Kx5la9i+Qp2uIQ2bNk7MIEem8m5d
-        J7j7qjFyOVVTB//y1h4oQMpk2Q==
-X-Google-Smtp-Source: APXvYqwa9SZE7PFE8Bp3TeM6caoeJXHZffw9/+jLbdUZSRPpbdRXF/cG0YTJEJYVKt8BnS5g7iXynQ==
-X-Received: by 2002:a17:902:44a:: with SMTP id 68mr7952542ple.27.1576133394663;
-        Wed, 11 Dec 2019 22:49:54 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id h14sm5221883pfn.174.2019.12.11.22.49.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2019 22:49:53 -0800 (PST)
-Date:   Wed, 11 Dec 2019 22:49:51 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     robh+dt@kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        amit.pundir@linaro.org
-Subject: Re: [PATCH] arm: dts: qcom: db410c: Enable USB OTG support
-Message-ID: <20191212064951.GD415177@yoga>
-References: <1576083014-5842-1-git-send-email-loic.poulain@linaro.org>
+        Thu, 12 Dec 2019 02:12:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1576134744;
+        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
+        bh=kuEHwgeZ7jH79Hf/NBh0IOJRffXknsvIjmqh5d4grpE=;
+        b=QCARYNCBezn6I1/GQaJzwCmf4L0nSOdQSEUkha8CwUvB7Absu9CdBOHIjm4K0Szm
+        f/2OGGF1fnreHAR7aPp1qo0jAA2bM0l7Ic/31hRZw6Dh3DyH3PRa8BBu0NllwLAbKDG
+        6jJt+5R1Qa///tXTeVQPhbNxbdx+Tmw3J3ogy7kQ=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1576134744;
+        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
+        bh=kuEHwgeZ7jH79Hf/NBh0IOJRffXknsvIjmqh5d4grpE=;
+        b=YtVEyq3SELgVXYfQVb/hMTCcPOoHir6ERHnEqkbIBy2iHi13C1XDPr11PWPOoD9A
+        DUZ+yug0JgCttF0ox/fHBOhAqiow8LuyFpNXmw1rhD+3ZAoGVVK2FjeUzchHm3zRMv/
+        pZ0uwO5uMv70gGV+h1xZO0Ry8TvS4SJs1HlIIGFM=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1576083014-5842-1-git-send-email-loic.poulain@linaro.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 12 Dec 2019 07:12:24 +0000
+From:   rkambl@codeaurora.org
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        sivaa@codeaurora.org, sanm@codeaurora.org,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: sc7180: Add device node support
+ for TSENS in SC7180
+In-Reply-To: <CAD=FV=UXC3UT78vGBr9rRuRxz=8iwH4tOkFx6NC-pSs+Z5+7Xw@mail.gmail.com>
+References: <1574934847-30372-1-git-send-email-rkambl@codeaurora.org>
+ <1574934847-30372-2-git-send-email-rkambl@codeaurora.org>
+ <CAD=FV=UXC3UT78vGBr9rRuRxz=8iwH4tOkFx6NC-pSs+Z5+7Xw@mail.gmail.com>
+Message-ID: <0101016ef8f397bf-8cf26b45-311c-437a-920a-bd5c58ae0c9f-000000@us-west-2.amazonses.com>
+X-Sender: rkambl@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
+X-SES-Outgoing: 2019.12.12-54.240.27.18
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 11 Dec 08:50 PST 2019, Loic Poulain wrote:
+On 2019-12-12 00:31, Doug Anderson wrote:
+> Hi,
+> 
+> On Thu, Nov 28, 2019 at 1:55 AM Rajeshwari <rkambl@codeaurora.org> 
+> wrote:
+>> 
+>> Add TSENS node and user thermal zone for TSENS sensors in SC7180.
+>> 
+>> Signed-off-by: Rajeshwari <rkambl@codeaurora.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 527 
+>> +++++++++++++++++++++++++++++++++++
+>>  1 file changed, 527 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> index 666e9b9..6656ffc 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> @@ -911,6 +911,26 @@
+>>                         status = "disabled";
+>>                 };
+>> 
+>> +               tsens0: thermal-sensor@c263000 {
+>> +                       compatible = 
+>> "qcom,sc7180-tsens","qcom,tsens-v2";
+> 
+> Can you please send a patch listing this configuration in
+> "Documentation/devicetree/bindings/thermal/qcom-tsens.yaml"?  You
+> shouldn't need to re-send the dts since it looks like it's already
+> landed, but it's good to get the bindings happy.
 
-> The Dragonboard-410c is able to act either as USB Host or Device.
-> The role can be determined at runtime via the USB_HS_ID pin which is
-> derived from the micro-usb port VBUS pin.
+Sure, i will send the patch, adding this configuration in 
+qcom-tsens.yaml.
 > 
-> In Host role, SoC USB D+/D- are routed to the onboard USB 2.0 HUB.
-> In Device role, SoC USB D+/D- are routed to the USB 2.0 micro B port.
-> Routing is selected via USB_SW_SEL_PM gpio.
+> Thanks!
 > 
-> In device role USB HUB can be held in reset.
-> 
-> chipidea driver expects two extcon device pointers, one for the
-> EXTCON_USB event and one for the EXTCON_USB_HOST event. Since
-> the extcon-usb-gpio device is capable of generating both these
-> events, point two times to this extcon device.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-
-Applied
-
-Thanks,
-Bjorn
-
-> ---
->  arch/arm64/boot/dts/qcom/apq8016-sbc-pmic-pins.dtsi | 19 +++++++++++++++++++
->  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi           | 11 ++++++-----
->  2 files changed, 25 insertions(+), 5 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc-pmic-pins.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc-pmic-pins.dtsi
-> index ec2f0de..aff218c 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8016-sbc-pmic-pins.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc-pmic-pins.dtsi
-> @@ -8,6 +8,15 @@
->  		pinconf {
->  			pins = "gpio3";
->  			function = PMIC_GPIO_FUNC_NORMAL;
-> +			input-disable;
-> +			output-high;
-> +		};
-> +	};
-> +
-> +	usb_hub_reset_pm_device: usb_hub_reset_pm_device {
-> +		pinconf {
-> +			pins = "gpio3";
-> +			function = PMIC_GPIO_FUNC_NORMAL;
->  			output-low;
->  		};
->  	};
-> @@ -22,6 +31,16 @@
->  		};
->  	};
->  
-> +	usb_sw_sel_pm_device: usb_sw_sel_pm_device {
-> +		pinconf {
-> +			pins = "gpio4";
-> +			function = PMIC_GPIO_FUNC_NORMAL;
-> +			power-source = <PM8916_GPIO_VPH>;
-> +			input-disable;
-> +			output-low;
-> +		};
-> +	};
-> +
->  	pm8916_gpios_leds: pm8916_gpios_leds {
->  		pinconf {
->  			pins = "gpio1", "gpio2";
-> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> index e12a36c..037e26b 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-> @@ -358,14 +358,15 @@
->  		};
->  
->  		usb@78d9000 {
-> -			extcon = <&usb_id>;
-> +			extcon = <&usb_id>, <&usb_id>;
->  			status = "okay";
->  			adp-disable;
->  			hnp-disable;
->  			srp-disable;
-> -			dr_mode = "host";
-> -			pinctrl-names = "default";
-> -			pinctrl-0 = <&usb_sw_sel_pm>;
-> +			dr_mode = "otg";
-> +			pinctrl-names = "default", "device";
-> +			pinctrl-0 = <&usb_sw_sel_pm &usb_hub_reset_pm>;
-> +			pinctrl-1 = <&usb_sw_sel_pm_device &usb_hub_reset_pm_device>;
->  			ulpi {
->  				phy {
->  					v1p8-supply = <&pm8916_l7>;
-> @@ -504,7 +505,7 @@
->  
->  	usb_id: usb-id {
->  		compatible = "linux,extcon-usb-gpio";
-> -		vbus-gpio = <&msmgpio 121 GPIO_ACTIVE_HIGH>;
-> +		id-gpio = <&msmgpio 121 GPIO_ACTIVE_HIGH>;
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&usb_id_default>;
->  	};
-> -- 
-> 2.7.4
-> 
+> -Rajeshwari
