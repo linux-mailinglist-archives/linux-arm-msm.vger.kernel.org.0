@@ -2,57 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7116B11DD7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 06:15:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F04311DD87
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 06:17:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728180AbfLMFPb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Dec 2019 00:15:31 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:36622 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbfLMFPb (ORCPT
+        id S1732021AbfLMFRY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Dec 2019 00:17:24 -0500
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:43279 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725875AbfLMFRY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Dec 2019 00:15:31 -0500
-Received: by mail-pf1-f194.google.com with SMTP id x184so835743pfb.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2019 21:15:30 -0800 (PST)
+        Fri, 13 Dec 2019 00:17:24 -0500
+Received: by mail-pj1-f65.google.com with SMTP id g4so684649pjs.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2019 21:17:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=sbtRF5Z/ahvzn5o3IzEj07oxQoWzK/KEBcmikz1JbyE=;
-        b=qv/jt8f43rEwLuK1BFTbLJ6+7o81AFjtWlf+XZM7xlZwBjU9EBUULp3DRdj9EJK9Z9
-         06ikCa5UM08SQuYnvHmK3+sw7A3H0LV3O/tK+l1pt8qZJYECSb/CVB0NMhXu0LpRjges
-         Hcp/zUrZbNDCpH6zzp9K09QekhnyybPQDiFpT7araq+kSEDdK8EOM88EGRVpRJ3Hesgj
-         /UqtSjB+11wk8uJHnMWKAemhrN7TRxTO7LFDtAGjgcKmfKAo3MM2wmue9hj1BJiZJSX0
-         UZ43UUdDl5X5zkpgXboMTGLHNoI6D2jxZqAyPltbbrdmSsghbopCvYRSdYaII7uzpAk1
-         brfQ==
+        bh=Dqy/QJc+oAc3Pxm6PYdZfNowES2QjcoSqMXPASTC9bA=;
+        b=fQ7IVTGGzOAEHEHDike9EbOXDYgyyH8SgqW8MpEv4RvmXds7m5DItzvv90k1mA4AWU
+         r0B99PPCANcjubVxR2JlNYr5ZVZp4vStws8TElJuPAvjd+WnaPjr0dkaaY7cn00j+gqJ
+         wAZQhF8azeNbXTv67uYl1GWU8uaGgve3/lqC9FzGZz9Xz2/3mkJ2BG++W4qBGsAHtdNE
+         hb4QoCCe0pvpf4/wIvEsrEhQRDLtmbonK1QpB1Kr4ekgAmlwqFR8+NUaqj0MtM/dHkx4
+         L1k5QYPsj5zarkYoHe4J7UvE+YXDfAeLfbzO7ceU+HlSoOslqyqxTqG7TJrxjSKyaAdB
+         lSCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=sbtRF5Z/ahvzn5o3IzEj07oxQoWzK/KEBcmikz1JbyE=;
-        b=OPCsr+5nJ3Nj2Zc5wRh+o7RkgpHS0qYVJi+HuPFujMfm2675Z00wRzgUZ4i2WoNkMd
-         yZygVUQS88/aXNtxg2TgLQxYE0DF3N/XqCgaAyZPq6zh1rl6XDIRg4PmY2PqJP3K0qi7
-         Hfn4NScaU8pxycsEoBlu2dBI6Mcml0qpmMWEVfqyYZd9Hrw0ExYyoydFyIW7Bh8he7Iu
-         yObfU+BVpjw/SMbP/hvtjGZ0jcw8tsRjM00Hug8Q1OjOz80xb0t0z8omqMoWeWPdyvwr
-         jqNjQqJg1j0BAsUVApqgabwFXa7YoSacK5pRkbLV69hwrIcQgDcceI62CAbWw0JV/ooF
-         PRPw==
-X-Gm-Message-State: APjAAAXLnFC4KJ95400iCxKxFWXbUoCr59WpxG3DP2+xydsHFkTsqTgL
-        +vCFCdboxbSITImfXxB6LI5ZWg==
-X-Google-Smtp-Source: APXvYqz4mcMJPzEzQy+4uDs1ARiJPCs9zpMbJF88wbt3IB15kjw36q8O8qDdJCEoFMY3p8+32Lw/iQ==
-X-Received: by 2002:a63:134e:: with SMTP id 14mr15121570pgt.115.1576214130322;
-        Thu, 12 Dec 2019 21:15:30 -0800 (PST)
+        bh=Dqy/QJc+oAc3Pxm6PYdZfNowES2QjcoSqMXPASTC9bA=;
+        b=lGVj2/R9eCaty2PaS1M/GvjD7k6mwmPfLez9E9y+YZvi9Uyv8RQS2jLMy3jYeA97jb
+         dciM/K1RX2I1f2MVbfUqLyp3dzElSxo3WNZL4+EjOdgykr6nQ+bmMJbQiY4ffIAcIqk+
+         hJ2ko/4OrKb2LMCKM9N3szCCLjbSE1I47fzM/Aehgjm7S3VRHYaL8r4aDScxoAlPzupj
+         lsdbU7FJIuVct4NSh73PHfrBkmoMrMvCotSO3/FrgcsM+bZdxd5Imo8Wb9Z91ws1J/AC
+         MhNWvRHuMBNK0x5cosJOWnm4hg24l2oNUptvh+l3ba0F/T6xkAeCJPcf0cXmLzPGXQBs
+         YB7A==
+X-Gm-Message-State: APjAAAUD9qIUs0wo7pnegg0fJw1HGBTN4dTmrxEhZ4hU5Yao0pEobvC/
+        Tt5TRDNLt3mERW5s7t2m8OMylg==
+X-Google-Smtp-Source: APXvYqw0GCGyKVbRAws7+exdzFyQp9oKPWroXC4euAviWcWLLtamSORnI4MfqTWy17WmSxdzhWGTFg==
+X-Received: by 2002:a17:90b:30c4:: with SMTP id hi4mr14596181pjb.62.1576214243274;
+        Thu, 12 Dec 2019 21:17:23 -0800 (PST)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id s15sm8475987pgq.4.2019.12.12.21.15.29
+        by smtp.gmail.com with ESMTPSA id g9sm9862109pfm.150.2019.12.12.21.17.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Dec 2019 21:15:29 -0800 (PST)
+        Thu, 12 Dec 2019 21:17:22 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] soc: qcom: mdt_loader: Support firmware without hash segment
-Date:   Thu, 12 Dec 2019 21:15:25 -0800
-Message-Id: <20191213051525.3688682-1-bjorn.andersson@linaro.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] ARM: dts: msm8974: castor: Define pm8841 regulators
+Date:   Thu, 12 Dec 2019 21:17:19 -0800
+Message-Id: <20191213051719.3688771-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -61,51 +63,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-At least some of the firmware found on 8974 does not follow the typical
-scheme of having a non-loadable hash segment directly following the ELF
-header, in the modem mdt.
+Define the pm8841 regulators under SMD/RPM, to allow the modem
+remoteproc to set the voltage during boot of the remote processor.
 
-Rather than failing the read of metadata, fall back to passing back a
-copy of the full first firmware file and let the metadata validator do
-its job.
+Entries are just copied from the Honami dts.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/soc/qcom/mdt_loader.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ .../dts/qcom-msm8974-sony-xperia-castor.dts   | 22 +++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-index 24cd193dec55..dd8a27f866db 100644
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -99,7 +99,7 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len)
- 		return ERR_PTR(-EINVAL);
- 
- 	if (phdrs[0].p_type == PT_LOAD || phdrs[1].p_type == PT_LOAD)
--		return ERR_PTR(-EINVAL);
-+		goto return_fw_copy;
- 
- 	if ((phdrs[1].p_flags & QCOM_MDT_TYPE_MASK) != QCOM_MDT_TYPE_HASH)
- 		return ERR_PTR(-EINVAL);
-@@ -123,6 +123,18 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len)
- 	*data_len = ehdr_size + hash_size;
- 
- 	return data;
+diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts
+index 701b396719c7..4655e7941232 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts
++++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts
+@@ -56,6 +56,28 @@
+ 	smd {
+ 		rpm {
+ 			rpm_requests {
++				pm8841-regulators {
++					s1 {
++						regulator-min-microvolt = <675000>;
++						regulator-max-microvolt = <1050000>;
++					};
 +
-+return_fw_copy:
-+	/*
-+	 * Some older firmware (e.g. on 8974) doesn't have a hash segment
-+	 * following the ELF header, just return a verbatim copy of the
-+	 * fw->data and let the metadata authenticator consume what it needs.
-+	 */
-+	data = kmemdup(fw->data, fw->size, GFP_KERNEL);
-+	if (!data)
-+		return ERR_PTR(-ENOMEM);
-+	*data_len = fw->size;
-+	return data;
- }
- EXPORT_SYMBOL_GPL(qcom_mdt_read_metadata);
- 
++					s2 {
++						regulator-min-microvolt = <500000>;
++						regulator-max-microvolt = <1050000>;
++					};
++
++					s3 {
++						regulator-min-microvolt = <500000>;
++						regulator-max-microvolt = <1050000>;
++					};
++
++					s4 {
++						regulator-min-microvolt = <500000>;
++						regulator-max-microvolt = <1050000>;
++					};
++				};
++
+ 				pm8941-regulators {
+ 					vdd_l1_l3-supply = <&pm8941_s1>;
+ 					vdd_l2_lvs1_2_3-supply = <&pm8941_s3>;
 -- 
 2.23.0
 
