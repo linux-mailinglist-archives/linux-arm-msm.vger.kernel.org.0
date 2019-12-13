@@ -2,113 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2764511E50D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 14:57:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 212CB11E696
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 16:32:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727601AbfLMN4o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Dec 2019 08:56:44 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:43423 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727573AbfLMN4n (ORCPT
+        id S1727833AbfLMPc3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Dec 2019 10:32:29 -0500
+Received: from m228-5.mailgun.net ([159.135.228.5]:55904 "EHLO
+        m228-5.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727831AbfLMPc3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Dec 2019 08:56:43 -0500
-Received: by mail-lj1-f195.google.com with SMTP id a13so2717486ljm.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Dec 2019 05:56:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ng0J7VT6q7et93hoQowYvQqzLfb9VIPnBEUDJ7gqlTQ=;
-        b=a7VtdNfHIVILhuTWgjDaH90Fod1yB199ZL5r5mn6i4THtWtQEmPH/80tBhAvFb2KbB
-         yIdi/QHqtBtrv8HC1b3iZZ1tPyZjOfk/FQIjWMiX2h688sfN4AXvyKc5nzSFeTYvBSKE
-         7JlvVL8AGXd7X4Lpz8QGLCSGmZKW9577YuwJvHYfKT9afQZu4Wx/L55yqoShjOmsAjTk
-         4j/BN4Whchk2P92Zep2kex1nqoloN3cLNLkBhpQgfZFknQ3NmneYmojRpBhR+20laW4F
-         P70/2ApsdcbiKLhVM13ta3Z0O1KKYVhkyhZ0fYXtmEgAu0629c6/T/AT4aHX82ooblbb
-         VmjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ng0J7VT6q7et93hoQowYvQqzLfb9VIPnBEUDJ7gqlTQ=;
-        b=J5DH1NGfFLa2m4ts21PpjSUH/goI8ToVvnGZi3lcw3ifSD3/5IEqLBhftH9qk4YBp4
-         lLkZqAh6aWhcwYD4jBVz7jJKRhOWScDcsRRZlbwESn8ef9JiGL1bNYnZBILeapeSJHlD
-         DlX+ivZH+4W5s7yhQ/AqP1RgJFWMeDVk08Cn/xCWZVV8JzaQIF1RdlZgpq/MbLKL9Sbe
-         ICalE4QJFpMLdIQWsyhsIYt6yjmXnlQa1Ayj+NOahA4PUdGfvqAavcxJGvF2nRo/XuV6
-         zUYluvG4KSMrN+VjIHYE+OowTzGuOxYGrNM8BppJjkyq+tOUuGO8qo9IxM08wgaR/0m4
-         tU7w==
-X-Gm-Message-State: APjAAAU/uTlMYyX27LCTOBo62oCkt353r1zXCL3KjXcyL0rdy3UM+icp
-        9Y8o78RNkl3MPNLk4+YX4I9BK4dXSpFe/ozPIXMgcg==
-X-Google-Smtp-Source: APXvYqy0vWEsCjDFZyfSN/Lrm144Do0DBoodpv0T4Wt1uLstCAlXzPsbmrt/BMig0xLpHmCvNRunXlxDBV860t28M7A=
-X-Received: by 2002:a05:651c:1049:: with SMTP id x9mr9521183ljm.233.1576245401607;
- Fri, 13 Dec 2019 05:56:41 -0800 (PST)
+        Fri, 13 Dec 2019 10:32:29 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1576251148; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=MudX+gsXfMKjKX5fDRX9tiJkJGSE7H9tIT9l1IWXj3c=;
+ b=fxzefVs1q292kv0Yc+VaHKinhOfokDWEE9vvI7Tq9JIBJ+NPjX3t+OL9Y7rYcKnSF6OOEBp5
+ a0mHKoSpk71Kdm4f0ngh8xntB5i2ym6Hqx6wL50EJGY9MJAVYoEUipM781ClHEbHhlzRbW5+
+ pjFsUGVVj78RHwmccxWkicHYhj8=
+X-Mailgun-Sending-Ip: 159.135.228.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5df3af0b.7f1a486b1308-smtp-out-n03;
+ Fri, 13 Dec 2019 15:32:27 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 11D52C63C76; Fri, 13 Dec 2019 15:32:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7FB51C8EB87;
+        Fri, 13 Dec 2019 15:31:44 +0000 (UTC)
 MIME-Version: 1.0
-References: <20191205002503.13088-1-masneyb@onstation.org> <20191205002503.13088-2-masneyb@onstation.org>
- <0101016eee224b50-8a5545e2-837f-41c2-9574-b385e111a6b3-000000@us-west-2.amazonses.com>
- <20191210115153.GA10298@onstation.org>
-In-Reply-To: <20191210115153.GA10298@onstation.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 13 Dec 2019 14:56:30 +0100
-Message-ID: <CACRpkdY+yP6-MyFw1tFvVN_FjNfPBGYZxiK5rZiS5Yyp7eainw@mail.gmail.com>
-Subject: Re: [PATCH 1/7] clk: qcom: add support for setting the duty cycle
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     Taniya Das <tdas@codeaurora.org>, Stephen Boyd <sboyd@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Linux Input <linux-input@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 13 Dec 2019 21:01:44 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     robh+dt@kernel.org, ulf.hansson@linaro.org, rnayak@codeaurora.org,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        mark.rutland@arm.com, swboyd@chromium.org, dianders@chromium.org
+Subject: Re: [PATCH 6/6] arm64: dts: sm8150: Add rpmh power-domain node
+In-Reply-To: <20191212073918.GO3143381@builder>
+References: <20191118173944.27043-1-sibis@codeaurora.org>
+ <0101016e7f99eab9-35efa01f-8ed3-4a77-87e1-09c381173121-000000@us-west-2.amazonses.com>
+ <20191212073918.GO3143381@builder>
+Message-ID: <b3c40ad880b68de228a2209fcb853954@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 10, 2019 at 12:52 PM Brian Masney <masneyb@onstation.org> wrote:
-> On Tue, Dec 10, 2019 at 04:47:35AM +0000, Taniya Das wrote:
-> > On 12/5/2019 5:54 AM, Brian Masney wrote:
+On 2019-12-12 13:09, Bjorn Andersson wrote:
+> On Mon 18 Nov 09:40 PST 2019, Sibi Sankar wrote:
+> 
+>> Add the DT node for the rpmhpd power controller.
+>> 
+>> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> 
+> Series applied, please send separate patch for the yaml migration.
 
-> > > I'm not sure about the relationship of the m, n, and d values,
-> > > especially how the 50% duty cycle is calculated by inverting the n
-> > > value, so that's why I'm saving the duty cycle ratio for
-> > > get_duty_cycle().
-(...)
-> > > +static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
-> > > +{
-> > > +   struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-> > > +   int ret, d_reg_val, mask;
-> > > +
-> > > +   mask = BIT(rcg->mnd_width - 1) - 1;
-> > > +   d_reg_val = mask - (((mask - 17) * duty->num) / duty->den);
-> > > +   ret = __clk_rcg2_configure_with_duty_cycle(rcg, rcg->freq_tbl,
-> > > +                                              d_reg_val, duty->num,
-> > > +                                              duty->den);
-> >
-> > The duty-cycle calculation is not accurate.
-> > There is already a plan to submit the duty-cycle changes from my side.
->
-> OK... I assume that the m and n values need to be changed as well. I
-> couldn't find any docs online about the meaning of the m, n, and d
-> values and how they relate to each other.
+Thanks Bjorn, will send it out
+asap
 
-I have also at times struggled to understand this.
+> 
+> Regards,
+> Bjorn
+> 
+>> ---
+>>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 55 
+>> ++++++++++++++++++++++++++++
+>>  1 file changed, 55 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+>> index 8f23fcadecb89..0ac257637c2af 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+>> @@ -5,6 +5,7 @@
+>>   */
+>> 
+>>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +#include <dt-bindings/power/qcom-rpmpd.h>
+>>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>>  #include <dt-bindings/clock/qcom,rpmh.h>
+>> 
+>> @@ -469,6 +470,60 @@
+>>  				clock-names = "xo";
+>>  				clocks = <&xo_board>;
+>>  			};
+>> +
+>> +			rpmhpd: power-controller {
+>> +				compatible = "qcom,sm8150-rpmhpd";
+>> +				#power-domain-cells = <1>;
+>> +				operating-points-v2 = <&rpmhpd_opp_table>;
+>> +
+>> +				rpmhpd_opp_table: opp-table {
+>> +					compatible = "operating-points-v2";
+>> +
+>> +					rpmhpd_opp_ret: opp1 {
+>> +						opp-level = <RPMH_REGULATOR_LEVEL_RETENTION>;
+>> +					};
+>> +
+>> +					rpmhpd_opp_min_svs: opp2 {
+>> +						opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
+>> +					};
+>> +
+>> +					rpmhpd_opp_low_svs: opp3 {
+>> +						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+>> +					};
+>> +
+>> +					rpmhpd_opp_svs: opp4 {
+>> +						opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
+>> +					};
+>> +
+>> +					rpmhpd_opp_svs_l1: opp5 {
+>> +						opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
+>> +					};
+>> +
+>> +					rpmhpd_opp_svs_l2: opp6 {
+>> +						opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
+>> +					};
+>> +
+>> +					rpmhpd_opp_nom: opp7 {
+>> +						opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
+>> +					};
+>> +
+>> +					rpmhpd_opp_nom_l1: opp8 {
+>> +						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
+>> +					};
+>> +
+>> +					rpmhpd_opp_nom_l2: opp9 {
+>> +						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L2>;
+>> +					};
+>> +
+>> +					rpmhpd_opp_turbo: opp10 {
+>> +						opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
+>> +					};
+>> +
+>> +					rpmhpd_opp_turbo_l1: opp11 {
+>> +						opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
+>> +					};
+>> +				};
+>> +			};
+>>  		};
+>>  	};
+>> 
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
 
-If someone could just in a very concise form describe how these
-rcg[2] clock dividers work and how m,n,d work that'd be GREAT.
-ASCII art etc would be a bonus :)
-
-Like with a patch with a big comment in
-drivers/clk/qcom/clk-rcg.h
-
-As these tend to be quite regularly reused and incarnated in
-ever new silicon a complete picture for developers would be
-much appreciated.
-
-Yours,
-Linus Walleij
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
