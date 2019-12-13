@@ -2,110 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F04311DD87
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 06:17:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD38C11DDC4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 06:31:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732021AbfLMFRY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Dec 2019 00:17:24 -0500
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:43279 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725875AbfLMFRY (ORCPT
+        id S1732043AbfLMFba (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Dec 2019 00:31:30 -0500
+Received: from m228-4.mailgun.net ([159.135.228.4]:21405 "EHLO
+        m228-4.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732038AbfLMFb1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Dec 2019 00:17:24 -0500
-Received: by mail-pj1-f65.google.com with SMTP id g4so684649pjs.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2019 21:17:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Dqy/QJc+oAc3Pxm6PYdZfNowES2QjcoSqMXPASTC9bA=;
-        b=fQ7IVTGGzOAEHEHDike9EbOXDYgyyH8SgqW8MpEv4RvmXds7m5DItzvv90k1mA4AWU
-         r0B99PPCANcjubVxR2JlNYr5ZVZp4vStws8TElJuPAvjd+WnaPjr0dkaaY7cn00j+gqJ
-         wAZQhF8azeNbXTv67uYl1GWU8uaGgve3/lqC9FzGZz9Xz2/3mkJ2BG++W4qBGsAHtdNE
-         hb4QoCCe0pvpf4/wIvEsrEhQRDLtmbonK1QpB1Kr4ekgAmlwqFR8+NUaqj0MtM/dHkx4
-         L1k5QYPsj5zarkYoHe4J7UvE+YXDfAeLfbzO7ceU+HlSoOslqyqxTqG7TJrxjSKyaAdB
-         lSCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Dqy/QJc+oAc3Pxm6PYdZfNowES2QjcoSqMXPASTC9bA=;
-        b=lGVj2/R9eCaty2PaS1M/GvjD7k6mwmPfLez9E9y+YZvi9Uyv8RQS2jLMy3jYeA97jb
-         dciM/K1RX2I1f2MVbfUqLyp3dzElSxo3WNZL4+EjOdgykr6nQ+bmMJbQiY4ffIAcIqk+
-         hJ2ko/4OrKb2LMCKM9N3szCCLjbSE1I47fzM/Aehgjm7S3VRHYaL8r4aDScxoAlPzupj
-         lsdbU7FJIuVct4NSh73PHfrBkmoMrMvCotSO3/FrgcsM+bZdxd5Imo8Wb9Z91ws1J/AC
-         MhNWvRHuMBNK0x5cosJOWnm4hg24l2oNUptvh+l3ba0F/T6xkAeCJPcf0cXmLzPGXQBs
-         YB7A==
-X-Gm-Message-State: APjAAAUD9qIUs0wo7pnegg0fJw1HGBTN4dTmrxEhZ4hU5Yao0pEobvC/
-        Tt5TRDNLt3mERW5s7t2m8OMylg==
-X-Google-Smtp-Source: APXvYqw0GCGyKVbRAws7+exdzFyQp9oKPWroXC4euAviWcWLLtamSORnI4MfqTWy17WmSxdzhWGTFg==
-X-Received: by 2002:a17:90b:30c4:: with SMTP id hi4mr14596181pjb.62.1576214243274;
-        Thu, 12 Dec 2019 21:17:23 -0800 (PST)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g9sm9862109pfm.150.2019.12.12.21.17.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Dec 2019 21:17:22 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] ARM: dts: msm8974: castor: Define pm8841 regulators
-Date:   Thu, 12 Dec 2019 21:17:19 -0800
-Message-Id: <20191213051719.3688771-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.23.0
+        Fri, 13 Dec 2019 00:31:27 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1576215087; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=YrvqTP9z2N2j9Eee0g2uwcZZNKGFYVYmedHWIpnWR2A=;
+ b=P1q3z09rLaDN8VhLf6gNEdf532kjvraPBVnF0YAkU5D5HqBKF3J+YSkV6tA6eDGyFL11lp7p
+ jpmUcMLwAyFQHPSRGQl2Pp0WUgQwwduyNtC3m/Ii9U5IMohqhqPWXN187iqTheH7ODXkuZtW
+ dB+zFd301Ui53K3GPkk6xpvpUM4=
+X-Mailgun-Sending-Ip: 159.135.228.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5df3222c.7fd25d5ad3e8-smtp-out-n01;
+ Fri, 13 Dec 2019 05:31:24 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A8198C447A2; Fri, 13 Dec 2019 05:31:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C1B48C433CB;
+        Fri, 13 Dec 2019 05:31:23 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 13 Dec 2019 11:01:23 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Evan Green <evgreen@chromium.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
+        <devicetree@vger.kernel.org>, Tony Luck <tony.luck@intel.com>,
+        psodagud@codeaurora.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        tsoni@codeaurora.org, LKML <linux-kernel@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Robert Richter <rrichter@marvell.com>,
+        Andy Gross <agross@kernel.org>, Borislav Petkov <bp@alien8.de>,
+        James Morse <james.morse@arm.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        linux-edac@vger.kernel.org
+Subject: Re: [PATCH 2/2] drivers: edac: Add EDAC support for Kryo CPU caches
+In-Reply-To: <5df16ebe.1c69fb81.6481f.a011@mx.google.com>
+References: <cover.1575529553.git.saiprakash.ranjan@codeaurora.org>
+ <0101016ed57a6311-e815485c-4b77-4342-a3de-203673941602-000000@us-west-2.amazonses.com>
+ <CAE=gft5JvCegmrjkKuxYr9dgASPFCkgy97O1XGRyKDF6xT=BMA@mail.gmail.com>
+ <5df16ebe.1c69fb81.6481f.a011@mx.google.com>
+Message-ID: <624229b9b2d5bf4b5eccf7778b420e2d@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Define the pm8841 regulators under SMD/RPM, to allow the modem
-remoteproc to set the voltage during boot of the remote processor.
+On 2019-12-12 04:03, Stephen Boyd wrote:
+> Quoting Evan Green (2019-12-11 11:32:37)
+>> Hi Sai,
+>> 
+>> On Thu, Dec 5, 2019 at 1:53 AM Sai Prakash Ranjan
+>> <saiprakash.ranjan@codeaurora.org> wrote:
+>> > diff --git a/drivers/edac/qcom_kryo_edac.c b/drivers/edac/qcom_kryo_edac.c
+>> > new file mode 100644
+>> > index 000000000000..05b60ad3cb0e
+>> > --- /dev/null
+>> > +++ b/drivers/edac/qcom_kryo_edac.c
+>> > @@ -0,0 +1,679 @@
+> [...]
+>> > +static const struct error_record serror_record[] = {
+>> > +       { 0x1,  "Errors due to fault injection"         },
+>> > +       { 0x2,  "ECC error from internal data buffer"   },
+>> > +       { 0x6,  "ECC error on cache data RAM"           },
+>> > +       { 0x7,  "ECC error on cache tag or dirty RAM"   },
+>> > +       { 0x8,  "Parity error on TLB data RAM"          },
+>> > +       { 0x9,  "Parity error on TLB tag RAM"           },
+>> > +       { 0x12, "Error response for a cache copyback"   },
+>> > +       { 0x15, "Deferred error not supported"          },
+>> > +};
+>> > +
+>> > +static const struct error_type err_type[] = {
+>> > +       { edac_device_handle_ce, "Kryo L1 Corrected Error"      },
+>> > +       { edac_device_handle_ue, "Kryo L1 Uncorrected Error"    },
+>> > +       { edac_device_handle_ue, "Kryo L1 Deferred Error"       },
+>> > +       { edac_device_handle_ce, "Kryo L2 Corrected Error"      },
+>> > +       { edac_device_handle_ue, "Kryo L2 Uncorrected Error"    },
+>> > +       { edac_device_handle_ue, "Kryo L2 Deferred Error"       },
+>> > +       { edac_device_handle_ce, "L3 Corrected Error"           },
+>> > +       { edac_device_handle_ue, "L3 Uncorrected Error"         },
+>> > +       { edac_device_handle_ue, "L3 Deferred Error"            },
+>> > +};
+>> 
+>> A comment is warranted to indicate that err_type is indexed by the
+>> enum, as this would be easy to mess up in later changes.
+> 
+> Instead of a comment please use array indexing.
+> 
+> 	[KRYO_L1_CE] = { edac_device_handle_ce, "Kryo L1..." },
+> 	...
 
-Entries are just copied from the Honami dts.
+Will do this in the next spin.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- .../dts/qcom-msm8974-sony-xperia-castor.dts   | 22 +++++++++++++++++++
- 1 file changed, 22 insertions(+)
+-Sai
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts
-index 701b396719c7..4655e7941232 100644
---- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts
-@@ -56,6 +56,28 @@
- 	smd {
- 		rpm {
- 			rpm_requests {
-+				pm8841-regulators {
-+					s1 {
-+						regulator-min-microvolt = <675000>;
-+						regulator-max-microvolt = <1050000>;
-+					};
-+
-+					s2 {
-+						regulator-min-microvolt = <500000>;
-+						regulator-max-microvolt = <1050000>;
-+					};
-+
-+					s3 {
-+						regulator-min-microvolt = <500000>;
-+						regulator-max-microvolt = <1050000>;
-+					};
-+
-+					s4 {
-+						regulator-min-microvolt = <500000>;
-+						regulator-max-microvolt = <1050000>;
-+					};
-+				};
-+
- 				pm8941-regulators {
- 					vdd_l1_l3-supply = <&pm8941_s1>;
- 					vdd_l2_lvs1_2_3-supply = <&pm8941_s3>;
 -- 
-2.23.0
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
