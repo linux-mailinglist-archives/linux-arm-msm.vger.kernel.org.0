@@ -2,126 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CD38C11DDC4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 06:31:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ACB4D11DE53
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 07:49:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732043AbfLMFba (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Dec 2019 00:31:30 -0500
-Received: from m228-4.mailgun.net ([159.135.228.4]:21405 "EHLO
-        m228-4.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732038AbfLMFb1 (ORCPT
+        id S1725770AbfLMGtq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Dec 2019 01:49:46 -0500
+Received: from m228-5.mailgun.net ([159.135.228.5]:23586 "EHLO
+        m228-5.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725468AbfLMGtq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Dec 2019 00:31:27 -0500
+        Fri, 13 Dec 2019 01:49:46 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1576215087; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=YrvqTP9z2N2j9Eee0g2uwcZZNKGFYVYmedHWIpnWR2A=;
- b=P1q3z09rLaDN8VhLf6gNEdf532kjvraPBVnF0YAkU5D5HqBKF3J+YSkV6tA6eDGyFL11lp7p
- jpmUcMLwAyFQHPSRGQl2Pp0WUgQwwduyNtC3m/Ii9U5IMohqhqPWXN187iqTheH7ODXkuZtW
- dB+zFd301Ui53K3GPkk6xpvpUM4=
-X-Mailgun-Sending-Ip: 159.135.228.4
+ s=smtp; t=1576219785; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=rsQgQXaQSRf07rNlF+2nEQlC5ph1o6pOgKqbbRi4Scw=; b=fytAK2IB8B26vFyoevdZZc/b6RZbnb1OSsmd/jRBLZsNAye6EurhQ9I/E4kmgeUSqEJ0G0SP
+ N0QbderFdZCUfFwEVNisCihpZf+z97phY79cPhosvIHYJTZbs5Uv6ru8XKbTIl66922Cfv3z
+ JvD7N33RJ73vNptADnDG+fTPi+U=
+X-Mailgun-Sending-Ip: 159.135.228.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5df3222c.7fd25d5ad3e8-smtp-out-n01;
- Fri, 13 Dec 2019 05:31:24 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5df33488.7f19e803cb58-smtp-out-n01;
+ Fri, 13 Dec 2019 06:49:44 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A8198C447A2; Fri, 13 Dec 2019 05:31:24 +0000 (UTC)
+        id 6D643C447A0; Fri, 13 Dec 2019 06:49:44 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C1B48C433CB;
-        Fri, 13 Dec 2019 05:31:23 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 13 Dec 2019 11:01:23 +0530
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 60FC6C433CB;
+        Fri, 13 Dec 2019 06:49:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 60FC6C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Evan Green <evgreen@chromium.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
-        <devicetree@vger.kernel.org>, Tony Luck <tony.luck@intel.com>,
-        psodagud@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        tsoni@codeaurora.org, LKML <linux-kernel@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Robert Richter <rrichter@marvell.com>,
-        Andy Gross <agross@kernel.org>, Borislav Petkov <bp@alien8.de>,
-        James Morse <james.morse@arm.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
-        linux-edac@vger.kernel.org
-Subject: Re: [PATCH 2/2] drivers: edac: Add EDAC support for Kryo CPU caches
-In-Reply-To: <5df16ebe.1c69fb81.6481f.a011@mx.google.com>
-References: <cover.1575529553.git.saiprakash.ranjan@codeaurora.org>
- <0101016ed57a6311-e815485c-4b77-4342-a3de-203673941602-000000@us-west-2.amazonses.com>
- <CAE=gft5JvCegmrjkKuxYr9dgASPFCkgy97O1XGRyKDF6xT=BMA@mail.gmail.com>
- <5df16ebe.1c69fb81.6481f.a011@mx.google.com>
-Message-ID: <624229b9b2d5bf4b5eccf7778b420e2d@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Guenter Roeck <linux@roeck-us.net>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        linux-watchdog@vger.kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH] watchdog: qcom: Use platform_get_irq_optional() for bark irq
+Date:   Fri, 13 Dec 2019 12:19:34 +0530
+Message-Id: <20191213064934.4112-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.24.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-12-12 04:03, Stephen Boyd wrote:
-> Quoting Evan Green (2019-12-11 11:32:37)
->> Hi Sai,
->> 
->> On Thu, Dec 5, 2019 at 1:53 AM Sai Prakash Ranjan
->> <saiprakash.ranjan@codeaurora.org> wrote:
->> > diff --git a/drivers/edac/qcom_kryo_edac.c b/drivers/edac/qcom_kryo_edac.c
->> > new file mode 100644
->> > index 000000000000..05b60ad3cb0e
->> > --- /dev/null
->> > +++ b/drivers/edac/qcom_kryo_edac.c
->> > @@ -0,0 +1,679 @@
-> [...]
->> > +static const struct error_record serror_record[] = {
->> > +       { 0x1,  "Errors due to fault injection"         },
->> > +       { 0x2,  "ECC error from internal data buffer"   },
->> > +       { 0x6,  "ECC error on cache data RAM"           },
->> > +       { 0x7,  "ECC error on cache tag or dirty RAM"   },
->> > +       { 0x8,  "Parity error on TLB data RAM"          },
->> > +       { 0x9,  "Parity error on TLB tag RAM"           },
->> > +       { 0x12, "Error response for a cache copyback"   },
->> > +       { 0x15, "Deferred error not supported"          },
->> > +};
->> > +
->> > +static const struct error_type err_type[] = {
->> > +       { edac_device_handle_ce, "Kryo L1 Corrected Error"      },
->> > +       { edac_device_handle_ue, "Kryo L1 Uncorrected Error"    },
->> > +       { edac_device_handle_ue, "Kryo L1 Deferred Error"       },
->> > +       { edac_device_handle_ce, "Kryo L2 Corrected Error"      },
->> > +       { edac_device_handle_ue, "Kryo L2 Uncorrected Error"    },
->> > +       { edac_device_handle_ue, "Kryo L2 Deferred Error"       },
->> > +       { edac_device_handle_ce, "L3 Corrected Error"           },
->> > +       { edac_device_handle_ue, "L3 Uncorrected Error"         },
->> > +       { edac_device_handle_ue, "L3 Deferred Error"            },
->> > +};
->> 
->> A comment is warranted to indicate that err_type is indexed by the
->> enum, as this would be easy to mess up in later changes.
-> 
-> Instead of a comment please use array indexing.
-> 
-> 	[KRYO_L1_CE] = { edac_device_handle_ce, "Kryo L1..." },
-> 	...
+platform_get_irq() prints an error message when the interrupt
+is not available. So on platforms where bark interrupt is
+not specified, following error message is observed on SDM845.
 
-Will do this in the next spin.
+[    2.975888] qcom_wdt 17980000.watchdog: IRQ index 0 not found
 
--Sai
+This is also seen on SC7180, SM8150 SoCs as well.
+Fix this by using platform_get_irq_optional() instead.
 
+Fixes: 36375491a4395654 ("watchdog: qcom: support pre-timeout when the bark irq is available")
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+ drivers/watchdog/qcom-wdt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
+index a494543d3ae1..eb47fe5ed280 100644
+--- a/drivers/watchdog/qcom-wdt.c
++++ b/drivers/watchdog/qcom-wdt.c
+@@ -246,7 +246,7 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	/* check if there is pretimeout support */
+-	irq = platform_get_irq(pdev, 0);
++	irq = platform_get_irq_optional(pdev, 0);
+ 	if (irq > 0) {
+ 		ret = devm_request_irq(dev, irq, qcom_wdt_isr,
+ 				       IRQF_TRIGGER_RISING,
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
