@@ -2,71 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E975E11DEBB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 08:38:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB60B11E032
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 10:05:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725770AbfLMHhU convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Dec 2019 02:37:20 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:59816 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725468AbfLMHhU (ORCPT
+        id S1726313AbfLMJFk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Dec 2019 04:05:40 -0500
+Received: from m228-5.mailgun.net ([159.135.228.5]:13052 "EHLO
+        m228-5.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726691AbfLMJFj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Dec 2019 02:37:20 -0500
-Received: from marcel-macbook.fritz.box (p4FF9F0D1.dip0.t-ipconnect.de [79.249.240.209])
-        by mail.holtmann.org (Postfix) with ESMTPSA id F13FBCECF0;
-        Fri, 13 Dec 2019 08:46:28 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.40.2.2.4\))
-Subject: Re: [PATCH v1 2/2] dt-bindings: net: bluetooth: Add device tree
- bindings for QCA6390
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <ab0557bcacdae61027b775f440145b05@codeaurora.org>
-Date:   Fri, 13 Dec 2019 08:37:17 +0100
-Cc:     Rob Herring <robh+dt@kernel.org>,
+        Fri, 13 Dec 2019 04:05:39 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1576227939; h=Message-ID: Subject: Cc: To: From: Date:
+ Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
+ bh=oiZ6N7do6DpLWyW7ai3fK8w8lB8Z4mhLsKqRpsecyYA=; b=SkGSPAgwx0jh+niktHIbBtLNA2vHXZUp2QIgKq/kd+/Jsib8QZqYVxIhpzJfdFQ8K6IBNX+T
+ WfjbUn9P+eZy6mEi3PTCSZHdukSzikdf4KiSUT2FP4tJn3bIWPb8YBt6ozRpRGe3ZCcNXxbX
+ Q4zMpGqp4PB52DAvtjYqcgcPhf4=
+X-Mailgun-Sending-Ip: 159.135.228.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5df35462.7f8b5ffcff48-smtp-out-n01;
+ Fri, 13 Dec 2019 09:05:38 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 34568C447A6; Fri, 13 Dec 2019 09:05:36 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7D24FC43383;
+        Fri, 13 Dec 2019 09:05:35 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 13 Dec 2019 14:35:35 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        linux-bluetooth-owner@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <5F24A10B-D0DB-4FE7-8EB1-1028671599FB@holtmann.org>
-References: <0101016ef8b923bc-5760b40c-1968-4992-9186-8e3965207236-000000@us-west-2.amazonses.com>
- <24B540FF-C627-4DF9-9077-247A4A6A3605@holtmann.org>
- <ab0557bcacdae61027b775f440145b05@codeaurora.org>
-To:     Rocky Liao <rjliao@codeaurora.org>
-X-Mailer: Apple Mail (2.3608.40.2.2.4)
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Borislav Petkov <bp@alien8.de>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Tony Luck <tony.luck@intel.com>,
+        James Morse <james.morse@arm.com>,
+        Robert Richter <rrichter@marvell.com>,
+        linux-edac@vger.kernel.org,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>, tsoni@codeaurora.org,
+        psodagud@codeaurora.org
+Subject: Re: [PATCH 2/2] drivers: edac: Add EDAC support for Kryo CPU caches
+Message-ID: <af73f8f15cfeb40746819e87b5a78b60@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rocky,
+Hi Evan,
 
->>> Add compatible string for the Qualcomm QCA6390 Bluetooth controller
->>> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
->>> ---
->>> Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt | 1 +
->>> 1 file changed, 1 insertion(+)
->>> diff --git a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
->>> index 68b67d9db63a..87b7f9d22414 100644
->>> --- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
->>> +++ b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
->>> @@ -10,6 +10,7 @@ device the slave device is attached to.
->>> Required properties:
->>> - compatible: should contain one of the following:
->>>   * "qcom,qca6174-bt"
->>> +   * "qcom,qca6390-bt"
->>>   * "qcom,wcn3990-bt"
->>>   * "qcom,wcn3998-bt"
->> now I am confused. Is this a DT platform or ACPI or both?
-> We need to support both, should I update ACPI part in this doc as well?
+Thanks for the review comments.
 
-this patch is fine the, but the other one would be better if you split it in DT and ACPI support.
+On 2019-12-12 01:02, Evan Green wrote:
+> 
+> No name?
+> 
 
-Regards
+Will add them in next spin.
 
-Marcel
+> 
+> A comment is warranted to indicate that err_type is indexed by the
+> enum, as this would be easy to mess up in later changes.
+> 
 
+Will use array index as suggested by Stephen.
+
+>> +static const char *get_error_msg(u64 errxstatus)
+>> +{
+>> +       const struct error_record *rec;
+>> +       u32 errxstatus_serr;
+>> +
+>> +       errxstatus_serr = FIELD_GET(KRYO_ERRXSTATUS_SERR, errxstatus);
+>> +
+>> +       for (rec = serror_record; rec->error_code; rec++) {
+> 
+> It looks like you expect the table to be zero terminated, but it's
+> not. Add the missing zero entry.
+> 
+
+Will add it.
+
+>> +
+>> +static inline void kryo_clear_error(u64 errxstatus)
+>> +{
+>> +       write_sysreg_s(errxstatus, SYS_ERXSTATUS_EL1);
+>> +       isb();
+> 
+> Is the isb() necessary? If so, why not a dsb as well?
+> 
+
+We usually use isb() with cache and system control registers.
+I do not see anything about isb or dsb mentioned in the TRM
+for error record registers so it's probably OK to remove this.
+James can help us here.
+
+>> +
+>> +static void kryo_check_l1_l2_ecc(void *info)
+>> +{
+>> +       struct edac_device_ctl_info *edev_ctl = info;
+>> +       u64 errxstatus;
+>> +       u64 errxmisc;
+>> +       int cpu;
+>> +
+>> +       cpu = smp_processor_id();
+>> +       /* We know record 0 is L1 and L2 */
+>> +       write_sysreg_s(0, SYS_ERRSELR_EL1);
+>> +       isb();
+> 
+> Another isb I'm not sure about. Is this meant to provide a barrier
+> between ERRSELR and ERXSTATUS? Wouldn't that be dsb, not isb?
+> 
+
+Same as above.
+
+I will repost with your comments addressed once I get more feedbacks 
+from EDAC maintainers.
+
+Thanks,
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
