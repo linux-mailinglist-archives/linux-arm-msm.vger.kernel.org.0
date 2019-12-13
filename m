@@ -2,113 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B2B811DD05
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 05:12:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 38E0111DD26
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 05:31:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731706AbfLMELn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Dec 2019 23:11:43 -0500
-Received: from m228-5.mailgun.net ([159.135.228.5]:31817 "EHLO
-        m228-5.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732059AbfLMELm (ORCPT
+        id S1731704AbfLMEbX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Dec 2019 23:31:23 -0500
+Received: from m228-4.mailgun.net ([159.135.228.4]:29118 "EHLO
+        m228-4.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731649AbfLMEbW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Dec 2019 23:11:42 -0500
-X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Dec 2019 23:11:41 EST
+        Thu, 12 Dec 2019 23:31:22 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1576210301; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=t3WuJRdbhQpYuvgidbSiHcxucdQ22ZxkAD1DdKzZCFQ=; b=CpAf3YdfSKeqUIXGN91GEx/b4PhcwAc4pCbLsl+ZB0QQYSj+pqCrXgULY7Nhzli97PV8PPic
- Pys+vsmDwR+RcJs/AlA68YiLKAhVY6RQ6+9+90XBv21N7bcoeTmL0BjOSdduexldw91c4kxh
- M5c6HvVrv8GAVZr54KJJ2yTnM2Y=
-X-Mailgun-Sending-Ip: 159.135.228.5
+ s=smtp; t=1576211482; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=2dEQvqwynE6D0k73vhsmc99DYPPkKBISeGiPH0xpt3U=;
+ b=aF/QkSTL8L1JeSCl/g42mraw7UWGNgNQOIDrjZKlz6GqetJBvl/i5EQspWdVgyaIPqQPmfN+
+ 5+ESyjeQDykipf6rgQxzV233Gbbtq9s5HgzzVxzukggPnIu3IoXxd2xxCBloNSAKtOooZgrm
+ sdpidfxsznFI8ABfSXQu+GVY4pU=
+X-Mailgun-Sending-Ip: 159.135.228.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5df30e4b.7f9bd3706ed8-smtp-out-n03;
- Fri, 13 Dec 2019 04:06:35 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5df31412.7fc5e7449ca8-smtp-out-n01;
+ Fri, 13 Dec 2019 04:31:14 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 02BB4C447A1; Fri, 13 Dec 2019 04:06:34 +0000 (UTC)
+        id D0017C433A2; Fri, 13 Dec 2019 04:31:13 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.131.117.127] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0F548C43383;
-        Fri, 13 Dec 2019 04:06:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0F548C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH 0/7] arm64: dts: sc7180: Make dtbs_check mostly happy
-To:     Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, Kiran Gunda <kgunda@codeaurora.org>,
-        swboyd@chromium.org, mka@chromium.org,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-References: <20191212193544.80640-1-dianders@chromium.org>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <5bccad6f-748e-1024-acd0-04af0a4cb731@codeaurora.org>
-Date:   Fri, 13 Dec 2019 09:36:26 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3FE2DC433CB;
+        Fri, 13 Dec 2019 04:31:13 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20191212193544.80640-1-dianders@chromium.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Fri, 13 Dec 2019 10:01:13 +0530
+From:   saiprakash.ranjan@codeaurora.org
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sc7180: Add APSS watchdog node
+In-Reply-To: <CAD=FV=X3Akg07hetQOgd0P_wTVWs3QpuCNQ8O6qQ5LK2ZeWSaQ@mail.gmail.com>
+References: <cover.1576037078.git.saiprakash.ranjan@codeaurora.org>
+ <0101016ef3391ded-57772416-f32d-40e8-acb5-5dd1b6064f73-000000@us-west-2.amazonses.com>
+ <CAD=FV=X3Akg07hetQOgd0P_wTVWs3QpuCNQ8O6qQ5LK2ZeWSaQ@mail.gmail.com>
+Message-ID: <6453ced1f718bf3a214c404b08f8c35b@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Doug,
 
-On 12/13/2019 1:05 AM, Douglas Anderson wrote:
-> This gets rid of all of the dtbs_check that showed up atop the current
-> qcom maintainer tree for sc7180-idp, except the errors in the
-> 'thermal-sensor' nodes.  I believe those are known / being dealt with
-> separately [1] [2].
+On 2019-12-12 00:55, Doug Anderson wrote:
+> If you haven't already done it (I couldn't find it), can you please
+> add this to "Documentation/devicetree/bindings/watchdog/qcom-wdt.txt"?
+>  Presumably at the same time it would be good to change the format of
+> that file to .yaml.
 > 
-> I don't expect this series to have any functional changes, it just
-> makes the device tree cleaner.  I was able to boot after applying
-> these patches atop a working tree.
-> 
-> I have tried to sort the changes here, first including the "obviously
-> correct" changes and later changes I am less certain about.  There are
-> no known dependencies between the changes.
 
-Thanks Doug for these cleanups, for the series
-
-Reviewed-by: Rajendra Nayak <rnayak@codeaurora.org>
+This was the copy paste mistake from sdm845, I will convert the wdog 
+bindings
+to yaml and add missing SoC specific compatible for SC7180, SDM845 and 
+SM8150.
 
 > 
-> [1] https://lore.kernel.org/r/CAD=FV=UXC3UT78vGBr9rRuRxz=8iwH4tOkFx6NC-pSs+Z5+7Xw@mail.gmail.com
-> [2] https://lore.kernel.org/r/CAD=FV=UtHebABCpJo1QUc6C2v2iZq2rFL+pTMx=EHBL+7d=jTQ@mail.gmail.com
+> Unrelated to sc7180, but it also feels like something is awfully
+> screwy here in terms of the various Qualcomm device tree files
+> referring to watchdog timers.  It feels wrong, but perhaps you can
+> educate me on how it works and I'll see the light.  Specifically:
 > 
+> 1. It seems like the same node is used for two things on other Qualcomm 
+> SoCs
 > 
-> Douglas Anderson (7):
->    arm64: dts: qcom: sc7180: Add SoC name to compatible
->    arm64: dts: qcom: sc7180: Rename gic-its node to msi-controller
->    arm64: dts: qcom: sc7180: Add "#clock-cells" property to usb_1_ssphy
->    arm64: dts: qcom: pm6150: Remove macro from unit name of adc-chan
->    arm64: dts: qcom: sc7180: Avoid "memory" for cmd-db reserved-memory
->      node
->    arm64: dts: qcom: sc7180: Avoid "phy" for USB QMP PHY wrapper
->    arm64: dts: qcom: sc7180: Use 'ranges' in arm,armv7-timer-mem node
+> If I grep the bindings for "qcom,kpss-timer" or "qcom,scss-timer", I
+> get two hits:
 > 
->   arch/arm64/boot/dts/qcom/pm6150.dtsi    |  2 +-
->   arch/arm64/boot/dts/qcom/sc7180-idp.dts |  2 +-
->   arch/arm64/boot/dts/qcom/sc7180.dtsi    | 45 +++++++++++++------------
->   3 files changed, 25 insertions(+), 24 deletions(-)
+> Documentation/devicetree/bindings/timer/qcom,msm-timer.txt
+> Documentation/devicetree/bindings/watchdog/qcom-wdt.txt
 > 
+> ...and, in fact, there appear to be two drivers claiming compatibility 
+> here:
+> 
+> drivers/clocksource/timer-qcom.c
+> drivers/watchdog/qcom-wdt.c
+> 
+> That seems super odd to me.  Is that really right?  We have two
+> drivers probing against the same device tree nodes?  ...and that's OK?
+>  If so, why does only one of the bindings list the SoC-specific
+> bindings names?
+> 
+
+This was before my time, but scratching my head and some internal docs
+and git history reveals that watchdog was part of the timer block in
+APQ8064, MSM8960. However in IPQ4019, watchdog was standalone and split
+from timer block.
+
+Below links gives us some more background:
+
+https://groups.google.com/forum/#!topic/linux.kernel/UnDgqU8QgLU
+https://patchwork.kernel.org/patch/5868261/
+
+> 
+> 2. The actual nodes look really wonky.  A few examples below:
+> 
+> 2a) arch/arm/boot/dts/qcom-apq8064.dtsi:
+> compatible = "qcom,kpss-timer", "qcom,kpss-wdt-apq8064", 
+> "qcom,msm-timer";
+> 
+> ...why is the SoC-specific compatible string in the middle?  The
+> SoC-specific one should be first.
+
+Yes, SoC specific compatible should come first, I guess they just didn't 
+care when
+it was merged.
+
+> 
+> 2b) arch/arm/boot/dts/qcom-ipq4019.dtsi:
+> compatible = "qcom,kpss-wdt", "qcom,kpss-wdt-ipq4019";
+> 
+> ...same question, but in this case there is no "msm-timer" at the end?
+> 
+
+IPQ4019 had watchdog as standalone outside of timer block as explained 
+above.
+
+> 2c) arch/arm64/boot/dts/qcom/qcs404.dtsi
+> compatible = "qcom,kpss-wdt";
+> 
+> ...no SoC-specific string at all?
+> 
+
+Needs a SoC specific compatible, I am going to add this in my coming 
+patch.
+
+Thanks,
+Sai
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
 of Code Aurora Forum, hosted by The Linux Foundation
