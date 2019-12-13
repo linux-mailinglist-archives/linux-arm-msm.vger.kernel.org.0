@@ -2,192 +2,224 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D404411DB82
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 02:09:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1741011DC2E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Dec 2019 03:40:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731428AbfLMBIl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Dec 2019 20:08:41 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:42156 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727513AbfLMBIl (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Dec 2019 20:08:41 -0500
-Received: by mail-pl1-f196.google.com with SMTP id x13so481319plr.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Dec 2019 17:08:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kkgyMWnJPA7zPuIRZMDlek4Ocs5Jn4Aj6e2Q5KIp8ZQ=;
-        b=XXue9bSsn/QGwPyZsS9Yw5oDsyV6R7ISqQjzNtilrdV0LqHP7ydlrwoNZ0Fe1Z58oY
-         5jqZZ/k9DgwzVES0emuhCdP43nT5SFJPwlfZWNmu9xvxF/F1I2p5/k8iMvZRG5uLeOHy
-         1Tyw4wHmYFJ4ycLlJGE2SmTSuQLsGmg8VoA1s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kkgyMWnJPA7zPuIRZMDlek4Ocs5Jn4Aj6e2Q5KIp8ZQ=;
-        b=LDmNVnBGwIYyjK5EnT7d6Vd+oFVXbcOkVCkZex/iLrgseveXDTWF9Ay7froiu/hNkX
-         rKlb0o5V/AUqw4oCq1lfvu9KcbGNxlOzcnKkmjMFcan+xv3F96s0ROrh1N98FFEPEGbD
-         IbxPy+3DvH6BxIUvDd8PY72FaMpNgqaEsTvUOUrCbrhbt/qKWv7/RvYdffIymqvSOi4+
-         ld9EUAfIJSf27plU7AK1NFEX3P+m8WvPO9Dv5iw0vNcMl2hUNvlz5k6HkgNRLn+7FEOk
-         nQM6eJeEbSsvh2kAxAHwoMyy8Wuby04LbI1Huq7r+hIRsXIO3QNOpCNj77Vni3u0JnU7
-         IPhQ==
-X-Gm-Message-State: APjAAAVH9fnqycsWwapMut+5GCF9qb7fFTW5tydublP9FvNygFhGxBRV
-        93A7N2twDcnPL/exTZVX7Ej2lw==
-X-Google-Smtp-Source: APXvYqzxQMXTCdlwRfSZ1o1MO2oKXU5lgxZGM559VlbYDbYkUzeHc6zmlxEHFO1YwaaLKV2mD+KtHA==
-X-Received: by 2002:a17:90a:fa13:: with SMTP id cm19mr12755762pjb.141.1576199320402;
-        Thu, 12 Dec 2019 17:08:40 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id b22sm8652452pfd.63.2019.12.12.17.08.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Dec 2019 17:08:39 -0800 (PST)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rajeshwari <rkambl@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH v2] arm64: dts: qcom: sc7180: Fix node order
-Date:   Thu, 12 Dec 2019 17:08:36 -0800
-Message-Id: <20191212170824.v2.1.I55198466344789267ed1eb5ec555fd890c9fc6e1@changeid>
-X-Mailer: git-send-email 2.24.1.735.g03f4e72817-goog
+        id S1727925AbfLMCkJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Dec 2019 21:40:09 -0500
+Received: from onstation.org ([52.200.56.107]:55718 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727789AbfLMCkJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 12 Dec 2019 21:40:09 -0500
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 9AFC43E95E;
+        Fri, 13 Dec 2019 02:40:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1576204807;
+        bh=sQr9GFcK/nXtEu1pTSwoNpOzLvi72nuH1eZFD30g5xY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Efh644ubspToVFQDygdNpLLalZ9nLPWRZy+7F4VX3puMxXr/PAEgXpq3DChGFb3/0
+         4k90xVBx3FlLBRb9k8z25jFhhTsn+ymuFeym5VYMb2hCt0Qu9F6YJk2fMPEyDpHcmt
+         buLBa+s6cOzZQ6nONtHjXCi5mutK0LUjJk/gcpD0=
+Date:   Thu, 12 Dec 2019 21:40:07 -0500
+From:   Brian Masney <masneyb@onstation.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, Sean Paul <sean@poorly.run>
+Subject: Re: [PATCH] drm/msm/mdp5: enable autocommit
+Message-ID: <20191213024007.GA23636@onstation.org>
+References: <20191112104854.20850-1-masneyb@onstation.org>
+ <CAOCk7NosRhRp3vZxg2Nx8106PQ0ryo5b68cUv605XUzCm6gYPA@mail.gmail.com>
+ <20191113112334.GA18702@onstation.org>
+ <20191203014006.GA7756@onstation.org>
+ <CAOCk7NpHE7kPX5tc=qUJo9qM-7Qzg2E+zmmmhBdnnVwJ+i5XLg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOCk7NpHE7kPX5tc=qUJo9qM-7Qzg2E+zmmmhBdnnVwJ+i5XLg@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SC7180 device tree nodes should be ordered by address. Re-shuffle
-some nodes which currently don't follow this convention.
+Hi Jeffrey,
 
-Since we are already moving it add a missing leading zero to the
-address in the 'reg' property of the 'interrupt-controller@b220000'
-node.
+On Tue, Dec 03, 2019 at 07:18:31AM -0700, Jeffrey Hugo wrote:
+> On Mon, Dec 2, 2019 at 6:40 PM Brian Masney <masneyb@onstation.org> wrote:
+> > On Wed, Nov 13, 2019 at 06:23:34AM -0500, Brian Masney wrote:
+> > > On Tue, Nov 12, 2019 at 08:38:27AM -0700, Jeffrey Hugo wrote:
+> > > > On Tue, Nov 12, 2019 at 3:49 AM Brian Masney <masneyb@onstation.org> wrote:
+> > > > >
+> > > > > Since the introduction of commit 2d99ced787e3 ("drm/msm: async commit
+> > > > > support"), command-mode panels began throwing the following errors:
+> > > > >
+> > > > >     msm fd900000.mdss: pp done time out, lm=0
+> > > > >
+> > > > > Let's fix this by enabling the autorefresh feature that's available in
+> > > > > the MDP starting at version 1.0. This will cause the MDP to
+> > > > > automatically send a frame to the panel every time the panel invokes
+> > > > > the TE signal, which will trigger the PP_DONE IRQ. This requires not
+> > > > > sending a START signal for command-mode panels.
+> > > > >
+> > > > > This fixes the error and gives us a counter for command-mode panels that
+> > > > > we can use to implement async commit support for the MDP5 in a follow up
+> > > > > patch.
+> > > > >
+> > > > > Signed-off-by: Brian Masney <masneyb@onstation.org>
+> > > > > Suggested-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> > > > > ---
+> > > > >  drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 15 ++++++++++++++-
+> > > > >  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c  |  9 +--------
+> > > > >  2 files changed, 15 insertions(+), 9 deletions(-)
+> > > > >
+> > > > > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+> > > > > index 05cc04f729d6..539348cb6331 100644
+> > > > > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+> > > > > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+> > > > > @@ -456,6 +456,7 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
+> > > > >  {
+> > > > >         struct mdp5_crtc *mdp5_crtc = to_mdp5_crtc(crtc);
+> > > > >         struct mdp5_crtc_state *mdp5_cstate = to_mdp5_crtc_state(crtc->state);
+> > > > > +       struct mdp5_pipeline *pipeline = &mdp5_cstate->pipeline;
+> > > > >         struct mdp5_kms *mdp5_kms = get_kms(crtc);
+> > > > >         struct device *dev = &mdp5_kms->pdev->dev;
+> > > > >
+> > > > > @@ -493,9 +494,21 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
+> > > > >
+> > > > >         mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->err);
+> > > > >
+> > > > > -       if (mdp5_cstate->cmd_mode)
+> > > > > +       if (mdp5_cstate->cmd_mode) {
+> > > > >                 mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->pp_done);
+> > > > >
+> > > > > +               /*
+> > > > > +                * Enable autorefresh so we get regular ping/pong IRQs.
+> > > > > +                * - Bit 31 is the enable bit
+> > > > > +                * - Bits 0-15 represent the frame count, specifically how many
+> > > > > +                *   TE events before the MDP sends a frame.
+> > > > > +                */
+> > > > > +               mdp5_write(mdp5_kms,
+> > > > > +                          REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp),
+> > > > > +                          BIT(31) | BIT(0));
+> > > > > +               crtc_flush_all(crtc);
+> > > > > +       }
+> > > > > +
+> > > > >         mdp5_crtc->enabled = true;
+> > > > >  }
+> > > > >
+> > > > > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+> > > > > index 030279d7b64b..aee295abada3 100644
+> > > > > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+> > > > > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+> > > > > @@ -187,14 +187,7 @@ static bool start_signal_needed(struct mdp5_ctl *ctl,
+> > > > >         if (!ctl->encoder_enabled)
+> > > > >                 return false;
+> > > > >
+> > > > > -       switch (intf->type) {
+> > > > > -       case INTF_WB:
+> > > > > -               return true;
+> > > > > -       case INTF_DSI:
+> > > > > -               return intf->mode == MDP5_INTF_DSI_MODE_COMMAND;
+> > > > > -       default:
+> > > > > -               return false;
+> > > > > -       }
+> > > > > +       return intf->type == INTF_WB;
+> > > > >  }
+> > > >
+> > > > I don't think this fully works.
+> > > >
+> > > > The whole "flush" thing exists because the configuration is double
+> > > > buffered.  You write to the flush register to tell the hardware to
+> > > > pickup the new configuration, but it doesn't do that automatically.
+> > > > It only picks up the new config on the next "vsync".  When you have a
+> > > > video mode panel, you have the timing engine running, which drives
+> > > > that.  With a command mode panel, you have either the start signal, or
+> > > > the auto refresh to do the same, but you have a bit of a chicken and
+> > > > egg situation where if you are programming the hardware from scratch,
+> > > > autorefresh isn't already enabled to then pickup the config to enable
+> > > > autorefresh. In this case, you'll need a single start to kick
+> > > > everything off.  However, if say the bootloader already configured
+> > > > things and has autorefresh running, then you need to not do that start
+> > > > because you'll overload the DSI like you saw.
+> > >
+> > > As part of my testing for this work, I added a log statement to
+> > > mdp5_crtc_pp_done_irq() and it shows that a PP_IRQ comes in consistently
+> > > every ~0.0166 seconds, which is about 60 HZ. Without this change, plus
+> > > the 3 commits I mentioned in an earlier email related to the async
+> > > commit support, the PP IRQs come in at a variety of times: between every
+> > > ~0.0140 and ~0.2224 seconds. That's why I assumed that this was working.
+> > >
+> > > If I call send_start_signal() inside mdp5_crtc_atomic_enable(), then the
+> > > display does not work properly.
+> >
+> > I'd like to get the 'pp done time out' errors that are now occurring
+> > upstream for command-mode panels fixed. As I mentioned above, this patch
+> > fixes the problem on the Nexus 5 and the pp done interrupts are
+> > delivered at approximately 60 HZ. I don't have any other command-mode
+> > panels to test.
+> >
+> > I'm not sure how to proceed here since sending the start command breaks
+> > the display. I'm likely putting that command in the wrong spot.
+> 
+> Sorry, I didn't realize you were waiting on me,
+> 
+> I'm traveling currently, so this is more off the top of my head than
+> looking at the code/docs.  What I'm thinking is that we want to get
+> autorefresh enabled, which would be simple except that the bootloader
+> may have already enabled it for us.  Perhaps we have a state flag that
+> indicates if autorefresh is enabled, and if so, it skips the start
+> command (where the start command is normally in the code).  When we
+> boot up, we check the hardware and set the flag if its already enabled
+> (note I just realized the flag is per ping pong, so we need multiple
+> flags I guess).  If the flag is not enabled when we go to use the
+> start command, we issue the start, then set the flag.  The only catch
+> is I don't know recall the exact sequence of when we configure the
+> ping pong in the entire initialization sequence.  We may configure a
+> bunch of stuff, but not the ping pong, flush the config (which issues
+> a start) and then get stuck because we didn't set the autorefresh.
 
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
----
+I finally had a chance look into this tonight. This makes sense to me:
+the double buffering of the configuration, the start signal, and a
+separate flag for each of the 4 ping pongs on the MDP5.
 
-Changes in v2:
-- updated commit message
-- added Doug's 'Reviewed-by' tag
-- added leading zero to address of 'interrupt-controller@b220000'
+The part that I'm still unsure about is querying the initial state from
+the boot loader to see if autorefresh is already enabled and whether or
+not a single START command is needed. Here's a slightly modified snippet
+from mdp5_crtc_atomic_enable() in my patch above:
 
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 74 ++++++++++++++--------------
- 1 file changed, 37 insertions(+), 37 deletions(-)
+  if (mdp5_cstate->cmd_mode) {
+     /* mdp5_read() returns 0 */
+     val = mdp5_read(mdp5_kms,
+                     REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp));
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 52a58615ec06d..6876aae2e46b1 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -642,16 +642,6 @@ uart11: serial@a94000 {
- 			};
- 		};
- 
--		pdc: interrupt-controller@b220000 {
--			compatible = "qcom,sc7180-pdc", "qcom,pdc";
--			reg = <0 0xb220000 0 0x30000>;
--			qcom,pdc-ranges = <0 480 15>, <17 497 98>,
--					  <119 634 4>, <124 639 1>;
--			#interrupt-cells = <2>;
--			interrupt-parent = <&intc>;
--			interrupt-controller;
--		};
--
- 		tlmm: pinctrl@3500000 {
- 			compatible = "qcom,sc7180-pinctrl";
- 			reg = <0 0x03500000 0 0x300000>,
-@@ -952,33 +942,6 @@ qspi: spi@88dc000 {
- 			status = "disabled";
- 		};
- 
--		system-cache-controller@9200000 {
--			compatible = "qcom,sc7180-llcc";
--			reg = <0 0x09200000 0 0x200000>, <0 0x09600000 0 0x50000>;
--			reg-names = "llcc_base", "llcc_broadcast_base";
--			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
--		};
--
--		tsens0: thermal-sensor@c263000 {
--			compatible = "qcom,sc7180-tsens","qcom,tsens-v2";
--			reg = <0 0x0c263000 0 0x1ff>, /* TM */
--				<0 0x0c222000 0 0x1ff>; /* SROT */
--			#qcom,sensors = <15>;
--			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "uplow";
--			#thermal-sensor-cells = <1>;
--		};
--
--		tsens1: thermal-sensor@c265000 {
--			compatible = "qcom,sc7180-tsens","qcom,tsens-v2";
--			reg = <0 0x0c265000 0 0x1ff>, /* TM */
--				<0 0x0c223000 0 0x1ff>; /* SROT */
--			#qcom,sensors = <10>;
--			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "uplow";
--			#thermal-sensor-cells = <1>;
--		};
--
- 		usb_1_hsphy: phy@88e3000 {
- 			compatible = "qcom,sc7180-qusb2-phy";
- 			reg = <0 0x088e3000 0 0x400>;
-@@ -1028,6 +991,13 @@ usb_1_ssphy: phy@88e9200 {
- 			};
- 		};
- 
-+		system-cache-controller@9200000 {
-+			compatible = "qcom,sc7180-llcc";
-+			reg = <0 0x09200000 0 0x200000>, <0 0x09600000 0 0x50000>;
-+			reg-names = "llcc_base", "llcc_broadcast_base";
-+			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
-+		};
-+
- 		usb_1: usb@a6f8800 {
- 			compatible = "qcom,sc7180-dwc3", "qcom,dwc3";
- 			reg = <0 0x0a6f8800 0 0x400>;
-@@ -1072,6 +1042,36 @@ usb_1_dwc3: dwc3@a600000 {
- 			};
- 		};
- 
-+		pdc: interrupt-controller@b220000 {
-+			compatible = "qcom,sc7180-pdc", "qcom,pdc";
-+			reg = <0 0x0b220000 0 0x30000>;
-+			qcom,pdc-ranges = <0 480 15>, <17 497 98>,
-+					  <119 634 4>, <124 639 1>;
-+			#interrupt-cells = <2>;
-+			interrupt-parent = <&intc>;
-+			interrupt-controller;
-+		};
-+
-+		tsens0: thermal-sensor@c263000 {
-+			compatible = "qcom,sc7180-tsens","qcom,tsens-v2";
-+			reg = <0 0x0c263000 0 0x1ff>, /* TM */
-+				<0 0x0c222000 0 0x1ff>; /* SROT */
-+			#qcom,sensors = <15>;
-+			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "uplow";
-+			#thermal-sensor-cells = <1>;
-+		};
-+
-+		tsens1: thermal-sensor@c265000 {
-+			compatible = "qcom,sc7180-tsens","qcom,tsens-v2";
-+			reg = <0 0x0c265000 0 0x1ff>, /* TM */
-+				<0 0x0c223000 0 0x1ff>; /* SROT */
-+			#qcom,sensors = <10>;
-+			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "uplow";
-+			#thermal-sensor-cells = <1>;
-+		};
-+
- 		spmi_bus: spmi@c440000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0 0x0c440000 0 0x1100>,
--- 
-2.24.1.735.g03f4e72817-goog
+     mdp5_write(mdp5_kms,
+                REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp),
+                BIT(31) | BIT(0));
 
+     crtc_flush_all(crtc);
+
+     /* mdp5_read() now returns 0x80000001 */
+     val = mdp5_read(mdp5_kms,
+                     REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp));
+  }
+
+So I assume that the boot loader is not enabling autorefresh on this
+board since the value from the first read is zero? Or more likely, that
+since this is double buffered that the first mdp5_read() is reading from
+the configuration buffer that's not active yet and it defaults to 0? Is
+there a way to query the other configuration buffer that's currently
+active?
+
+Why do I see the ping pong IRQs delivered consistently around 60 HZ once
+I enable autorefresh with the patch that started this thread?
+
+Sorry if I'm being dense here.
+
+Brian
