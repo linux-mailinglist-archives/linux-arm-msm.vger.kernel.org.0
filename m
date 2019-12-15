@@ -2,53 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8566911FAEF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Dec 2019 21:02:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 57C8211FAF6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Dec 2019 21:08:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726219AbfLOUCS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Dec 2019 15:02:18 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:44872 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726146AbfLOUCR (ORCPT
+        id S1726267AbfLOUFD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Dec 2019 15:05:03 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:40680 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726146AbfLOUFD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Dec 2019 15:02:17 -0500
-Received: by mail-ed1-f67.google.com with SMTP id bx28so122975edb.11;
-        Sun, 15 Dec 2019 12:02:16 -0800 (PST)
+        Sun, 15 Dec 2019 15:05:03 -0500
+Received: by mail-pg1-f196.google.com with SMTP id k25so2426547pgt.7;
+        Sun, 15 Dec 2019 12:05:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0Eb9PaeS91fFId6JoOrDL2h8mYp/pNovUb3BQNtXEkY=;
-        b=l39CyODrigrJr//o2nlMDiXSW3PPVc3PNwlifzyBK9+ZaFT4yW+61K18suZPiJhZ4y
-         9P3RWsUKzrow2krjPjWnJ02+xHox/C9gDf14LyZW1OFgJI+HljebzeklvQer9KNO1zN7
-         BcjQA+gomciH5LFjv8vu03ZwAVOc5ZmY2Z3zFOrGLMC5DFAd+chfQIPFEl0IH2t3Sh9T
-         r/HLEqDrH3pPwBIFHlDmFMtNYiRSkT7qxSe6qZXZ8j7KDSP+vqedTca2cqLQBSu3a/zm
-         UIF6u2zSeOoCxqxCVF9/8OMen+aV2r3X1AMH6CBA6CXNWKUMiMU7TQXatxoBG1aLR0qd
-         D5aA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=xIgln2CTeNUTcohT4yCRcrSFMvesnt3sC8dwNxQQtUM=;
+        b=o2wysAteIijZ8tWGZKG3kD7OLB1HVQ98F+1acPL7apqrId+6bkSJZp4bfeQPcLTcCD
+         W5zJdE9b8FfrrxIQq6rg5wWqgxa1Slp9K5vgMHjhOYD3g/FiPj97CRVs4giFDnmA5GRG
+         nBEw8JDPILEc6VehgT3fCDIidNQYVDmkTwwKIVhcVWY7GfxqNhk7VtPAsAqJDk5GjSU7
+         nHvQB+momWt3yrCoLOHZ1qraHWRt5BDUr3d6ZW5R2GvkYBczxl6ZuBY5Yat4RqDPCm+3
+         VbSoSGG2PgXYDLxJj38VD3pwr/8x8Wx1sjMpswhQCx3Dhr0L6y3Y0xiyXOOTOC+fYNSu
+         91dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0Eb9PaeS91fFId6JoOrDL2h8mYp/pNovUb3BQNtXEkY=;
-        b=osH78/WeXVo/jYujIfbc+hHj74kvySi/Eusmo7fpq253HsgLdur2szz0OcNalXsrIc
-         VWYSO/A3QtiVXTJ+Vnb5sW2p7LgOwPZfbqIm3dEUlY8ImC8EYOBlyRaszEgD8I5Nr70H
-         aMfGTEnKygpvIZKWbzvH13mi0LSUSix8cSwy0luh+Qmsy4RmImq6Xa2jXJyMaz4xidVW
-         NNid0gzgaqoUF53gxTLuxse+4vS2nwtUlJM1xUIxN1rKY9MM/e9hUpuQ66jCTx8gSDkm
-         GQetuB0RRerDB3lvE9xfu+n54nwubAxPJvWN6gzOaq1erwLfCBGyyda5sBxu3++49VnK
-         oNGg==
-X-Gm-Message-State: APjAAAWrkkWSojD4zezPCD9dEPuKc1c+GG7+6I54nZBDSMfTHevZmahI
-        h2ckSBntBb7kmRNxstg2v08tD+IF+3NxI/n41yg=
-X-Google-Smtp-Source: APXvYqwXWuftMyTU+v9pDTeFceCDJh7oOC80IPG6kupreczCdmilrRrpGU30V0yDNxarQZ4IwUA5DCbL3g36OxTBcSw=
-X-Received: by 2002:aa7:d80c:: with SMTP id v12mr16528373edq.302.1576440135503;
- Sun, 15 Dec 2019 12:02:15 -0800 (PST)
-MIME-Version: 1.0
-References: <20191213234530.145963-1-dianders@chromium.org>
-In-Reply-To: <20191213234530.145963-1-dianders@chromium.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=xIgln2CTeNUTcohT4yCRcrSFMvesnt3sC8dwNxQQtUM=;
+        b=HWp+512Fgjulh3mWvohdB2i1ce+bQvJ1gRDf0Ez+YZt1JJZxoPLFY2j6VSi6PporSK
+         qrBNJZzjBLhOZVfUdURydsnVxWrzGXR4f6KClea8pvj/1YB8m+fJv32pBox7YZEiJdT7
+         suahpivOIeOpfJAY1BwF1QoYMNShCqx79kSfSfWqPlZsnCRI6IwX0DINUx7sq6SsU7P7
+         MwECH9zsVhUdI27RCF8yy2ZxwPr7l1n4LwpsyDhGWd3fVAD/HwTRoF0rFb6XWwKB4rcl
+         JB5sYB/niIXsUkGosVG2YnAE5DwkXwVtRFWIYj25dJvKm5sgUJNxNkfWD+J321E9AYfh
+         996g==
+X-Gm-Message-State: APjAAAWZ+0Z7eMWvWnmZNncADf8fLbSqvJX2IsEz7XNzICJ5HXRnbKyK
+        DYllA7yGiwL1taFslDsWSyhflwVv
+X-Google-Smtp-Source: APXvYqwhMYzq9LVfNRlgXR0Z/3qbGzkkpOo79arI9v4XBwf4PSol4vSxiffMt0IkLYIKZtwLVmBK6g==
+X-Received: by 2002:a63:4f64:: with SMTP id p36mr14378616pgl.271.1576440302589;
+        Sun, 15 Dec 2019 12:05:02 -0800 (PST)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id c8sm18881075pfj.106.2019.12.15.12.05.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Dec 2019 12:05:01 -0800 (PST)
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Sun, 15 Dec 2019 12:02:07 -0800
-Message-ID: <CAF6AEGusg19F-=m7k5JDQDdr4xAT1By--5FicM_iuKcFRCfMdA@mail.gmail.com>
-Subject: Re: [PATCH 0/9] drm/bridge: ti-sn65dsi86: Improve support for AUO
- B116XAK01 + other low res DP
 To:     Douglas Anderson <dianders@chromium.org>
 Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
@@ -61,95 +58,64 @@ Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sean Paul <seanpaul@chromium.org>,
         Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>
+Subject: [PATCH 1/2] fixup! drm/bridge: ti-sn65dsi86: Train at faster rates if slower ones fail
+Date:   Sun, 15 Dec 2019 12:04:59 -0800
+Message-Id: <20191215200459.1018893-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20191213154448.8.I251add713bc5c97225200894ab110ea9183434fd@changeid>
+References: <20191213154448.8.I251add713bc5c97225200894ab110ea9183434fd@changeid>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Dec 13, 2019 at 3:46 PM Douglas Anderson <dianders@chromium.org> wrote:
->
-> This series contains a pile of patches that was created to support
-> hooking up the AUO B116XAK01 panel to the eDP side of the bridge.  In
-> general it should be useful for hooking up a wider variety of DP
-> panels to the bridge, especially those with lower resolution and lower
-> bits per pixel.
->
-> The overall result of this series:
-> * Allows panels with fewer than 4 DP lanes hooked up to work.
-> * Optimizes the link rate for panels with 6 bpp.
-> * Supports trying more than one link rate when training if the main
->   link rate didn't work.
->
-> It's not expected that this series will break any existing users, but
-> it is possible that the patch to skip non-standard DP rates could mean
-> that a panel that used to use one of these non-standard link rates
-> will now run at a higher rate than it used to.  If this happens, the
-> patch could be reverted or someone could figure out how to decide when
-> it's OK to use the non-standard rates.
->
-> To support the AUO B116XAK01, we could actually stop at the ("Use
-> 18-bit DP if we can") patch since that causes the panel to run at a
-> link rate of 1.62 which works.  The patches to try more than one link
-> rate were all developed prior to realizing that I could just use
-> 18-bit mode and were validated with that patch reverted.
->
-> The patch to try more than one rate was validated by forcing the code
-> to try 2.16 GHz (but still skip 2.43 GHz, which trains but shows
-> garbage on AUO B116XAK01) and seeing that we'd try 2.16 GHz (and fail)
-> and then eventually pass at 2.7 GHz and show a pretty screen.
->
-> These patches were tested on sdm845-cheza atop mainline as of
-> 2019-12-13 and also on another board (the one with AUO B116XAK01) atop
-> a downstream kernel tree.
->
-> This patch series doesn't do anything to optimize the MIPI link and
-> only focuses on the DP link.  For instance, it's left as an exercise
-> to the reader to see if we can use the 666-packed mode on the MIPI
-> link and save some power (because we could lower the clock rate).
->
-> I am nowhere near a display expert and my knowledge of DP and MIPI is
-> pretty much zero.  If something about this patch series smells wrong,
-> it probably is.  Please let know and I'll try to fix it.
->
->
-> Douglas Anderson (9):
->   drm/bridge: ti-sn65dsi86: Split the setting of the dp and dsi rates
->   drm/bridge: ti-sn65dsi86: zero is never greater than an unsigned int
->   drm/bridge: ti-sn65dsi86: Don't use MIPI variables for DP link
->   drm/bridge: ti-sn65dsi86: Config number of DP lanes Mo' Betta
->   drm/bridge: ti-sn65dsi86: Read num lanes from the DP sink
->   drm/bridge: ti-sn65dsi86: Use 18-bit DP if we can
->   drm/bridge: ti-sn65dsi86: Group DP link training bits in a function
->   drm/bridge: ti-sn65dsi86: Train at faster rates if slower ones fail
->   drm/bridge: ti-sn65dsi86: Skip non-standard DP rates
->
->  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 230 +++++++++++++++++++++-----
->  1 file changed, 187 insertions(+), 43 deletions(-)
+From: Rob Clark <robdclark@chromium.org>
 
-I've given these a spin on my yoga c630, which uses the same bridge, so:
+Fixes:
 
-Tested-by: Rob Clark <robdclark@gmail.com>
+In file included from ../drivers/gpu/drm/bridge/ti-sn65dsi86.c:25:
+../drivers/gpu/drm/bridge/ti-sn65dsi86.c: In function ‘ti_sn_bridge_enable’:
+../include/drm/drm_print.h:339:2: warning: ‘last_err_str’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+  339 |  drm_dev_printk(dev, KERN_ERR, "*ERROR* " fmt, ##__VA_ARGS__)
+      |  ^~~~~~~~~~~~~~
+../drivers/gpu/drm/bridge/ti-sn65dsi86.c:650:14: note: ‘last_err_str’ was declared here
+  650 |  const char *last_err_str;
+      |              ^~~~~~~~~~~~
+In file included from ../drivers/gpu/drm/bridge/ti-sn65dsi86.c:25:
+../include/drm/drm_print.h:339:2: warning: ‘ret’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+  339 |  drm_dev_printk(dev, KERN_ERR, "*ERROR* " fmt, ##__VA_ARGS__)
+      |  ^~~~~~~~~~~~~~
+../drivers/gpu/drm/bridge/ti-sn65dsi86.c:654:6: note: ‘ret’ was declared here
+  654 |  int ret;
+      |      ^~~
+  Building modules, stage 2.
+---
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I've got one small fixup for a compiler warning for the 2nd to last,
-and with that, the first 8 are:
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index cb774ee536cd..976f98991b3d 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -618,11 +618,11 @@ static int ti_sn_link_training(struct ti_sn_bridge *pdata, int dp_rate_idx,
+ static void ti_sn_bridge_enable(struct drm_bridge *bridge)
+ {
+ 	struct ti_sn_bridge *pdata = bridge_to_ti_sn_bridge(bridge);
+-	const char *last_err_str;
++	const char *last_err_str = "No supported DP rate";
+ 	int dp_rate_idx;
+ 	int max_dp_rate_idx;
+ 	unsigned int val;
+-	int ret;
++	int ret = -EINVAL;
+ 
+ 	/*
+ 	 * Run with the maximum number of lanes that the DP sink supports.
+-- 
+2.23.0
 
-Reviewed-by: Rob Clark <robdclark@gmail.com>
-
-I've also got a fixup for the last one which reads
-SUPPORTED_LINK_RATES.  However the panel I have is pre eDP 1.4, so the
-interesting codepath there is untested.  Not sure offhand if the
-panels you have are eDP 1.4+ or not?
-
-BR,
--R
-
->
-> --
-> 2.24.1.735.g03f4e72817-goog
->
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
