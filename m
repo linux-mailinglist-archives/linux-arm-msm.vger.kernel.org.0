@@ -2,124 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C4FAD11F791
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Dec 2019 13:00:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CE4B11F7B0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Dec 2019 13:29:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726099AbfLOMAO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Dec 2019 07:00:14 -0500
-Received: from mail-io1-f65.google.com ([209.85.166.65]:45804 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726089AbfLOMAO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Dec 2019 07:00:14 -0500
-Received: by mail-io1-f65.google.com with SMTP id i11so960220ioi.12;
-        Sun, 15 Dec 2019 04:00:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=U32Ya4ZtyKRe0g31iyaOrg9bNIbVTfXKPEbGivDkS10=;
-        b=OSen5Gcvcdj9lEzBZB15Tn6QiRTI9MWlO/rPN49bMq0K83mAgq18VHkzQ7zVlPrjML
-         gszdUGt2eF1kyYhDFF+GP7FeP1RPEnPsfH7wY9I095RPAYClYjywGRCaSteDEqN+zK62
-         IKehzG864B+NpPZLPI1yH3m0V9J02rnTKvgIZxkccK3VNzHuy++Doo+IV2cQKWeFpyGv
-         sOw1S4YJdTl9C8RnFpAVjILHeJMichKHxPUSI98wDRt0UmqQkWCWFLtA7q2g+jukhVzx
-         EloylsApJVNnAMvbYem3m+vszDWIyz4reg4yOYbOHfUjbut1/oBMn1uR67AGYca3deCP
-         DSrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=U32Ya4ZtyKRe0g31iyaOrg9bNIbVTfXKPEbGivDkS10=;
-        b=hAZx0teeY1ceX/WJXIRvWdfy8H49b3zDRCWyKhNKAGBwd9JU1/N5frsnWmpC2WlPdS
-         0hrP3X8Urp+BKXvf3jDnWJyJfSEx2QeBQt6fYGnNID8JFQ3/VOsXEf920Io7G5gUPZSj
-         1BtzoQyyMrmqNZrpjW2m3ywPnixc8vU1hNfM34mNiuVopVIRjWG5xqZM8u86IljsIu4a
-         WP5NkpPpUhP/Nn0C9S79or0lARxTcsBwRXKoHh8KUdFPuLWVZJ3yiYnIKwlarHgbyVRN
-         rMKxgJ+ePwb4Yv1YgA2E6uuJrt0GVozvvZLwCk0Z1wbkfqm0iVB4He1RrfRZuK2x988r
-         bhWA==
-X-Gm-Message-State: APjAAAXaR48/hPi7HGyK3yBSMlybcj5OFMvnIlMoscFchUGtabzBqoBD
-        dOVBg2sajdNapmNg5TvPtnh5TJ+sC/2zDiQX1p8=
-X-Google-Smtp-Source: APXvYqytWwvnLfUD+171nhXHDbJqlTikV21tQNc2dQdQlOI6X6lJ/eLQFLTNTro7mQyhFx4wzdvzbYn6q+tytdyDIA8=
-X-Received: by 2002:a5d:9f05:: with SMTP id q5mr14678305iot.295.1576411213379;
- Sun, 15 Dec 2019 04:00:13 -0800 (PST)
+        id S1726112AbfLOM3l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Dec 2019 07:29:41 -0500
+Received: from mail.kernel.org ([198.145.29.99]:54296 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726101AbfLOM3l (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 15 Dec 2019 07:29:41 -0500
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 437B2205C9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Dec 2019 12:29:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1576412980;
+        bh=sjzJMccn0a5Yd2bZTTdlqOV8QR2fYI7yYQFIu392A4I=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=WqdIDiHZblhBUz8m9pRhX+PsNWXWWsvcjFvS3R8kMyzZunlqv3h/11sL0yl6I+ORn
+         /f5DY8NQ/JQlMZaTfIHBkAF9JXVyuF7SevVEHLXQUGxVWiCvw8N9pp5G93mlGGmkdD
+         aGgPXFD27akmRCQ+J9mkALgKRD3iAmjg048ynxTw=
+Received: by mail-qk1-f169.google.com with SMTP id c17so2193328qkg.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Dec 2019 04:29:40 -0800 (PST)
+X-Gm-Message-State: APjAAAWTk1AYgWJU0uDUiiA4OXjUmU+vg/teE6M8QbSwSCVyFf+y7bqV
+        DkzQzrm2/4q2pdF3n2CV9QCwRkAI9KwkDFbuoWY=
+X-Google-Smtp-Source: APXvYqw9DX7KgTbYnYmxZ2caM4roaLuK25aOK+go4n6uTmSkzQxJq2/SmA+L7J5p2+ybD6V4tTMeAxIFon6dve/Sg0M=
+X-Received: by 2002:a05:620a:1358:: with SMTP id c24mr23198180qkl.285.1576412979437;
+ Sun, 15 Dec 2019 04:29:39 -0800 (PST)
 MIME-Version: 1.0
-References: <20191214175447.25482-1-tiny.windzz@gmail.com> <20191214175447.25482-10-tiny.windzz@gmail.com>
- <20191215104824.658889d3@why>
-In-Reply-To: <20191215104824.658889d3@why>
-From:   Frank Lee <tiny.windzz@gmail.com>
-Date:   Sun, 15 Dec 2019 20:00:01 +0800
-Message-ID: <CAEExFWtgXt2pGM1fGfmxNdk_7S_53gnhN0-bProWA4-vOaNN3w@mail.gmail.com>
-Subject: Re: [PATCH 10/10] soc: qcom: convert to devm_platform_ioremap_resource
-To:     Marc Zyngier <maz@kernel.org>
-Cc:     khilman@baylibre.com, leoyang.li@nxp.com, khalasa@piap.pl,
-        john@phrozen.org, Matthias Brugger <matthias.bgg@gmail.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org, kgene@kernel.org,
-        krzk@kernel.org, Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>, ssantosh@kernel.org,
-        jun.nie@linaro.org, shawnguo@kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
+References: <20191121002252.GA844457@builder>
+In-Reply-To: <20191121002252.GA844457@builder>
+From:   Josh Boyer <jwboyer@kernel.org>
+Date:   Sun, 15 Dec 2019 07:29:28 -0500
+X-Gmail-Original-Message-ID: <CA+5PVA79vCkFettUWAnHOaBYJFzsU7fXCM=p6X+dg8aKH22RSg@mail.gmail.com>
+Message-ID: <CA+5PVA79vCkFettUWAnHOaBYJFzsU7fXCM=p6X+dg8aKH22RSg@mail.gmail.com>
+Subject: Re: qcom: Add SDM845 remoteproc firmware files
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Linux Firmware <linux-firmware@kernel.org>,
+        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
+        Linux-arm Msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Dec 15, 2019 at 6:48 PM Marc Zyngier <maz@kernel.org> wrote:
+On Wed, Nov 20, 2019 at 7:22 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 >
-> On Sat, 14 Dec 2019 17:54:47 +0000
-> Yangtao Li <tiny.windzz@gmail.com> wrote:
+> Hi
 >
-> > Use devm_platform_ioremap_resource() to simplify code.
-> >
-> > Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
-> > ---
-> >  drivers/soc/qcom/llcc-qcom.c    | 7 +------
-> >  drivers/soc/qcom/qcom-geni-se.c | 4 +---
-> >  drivers/soc/qcom/qcom_aoss.c    | 4 +---
-> >  drivers/soc/qcom/qcom_gsbi.c    | 5 +----
-> >  drivers/soc/qcom/spm.c          | 4 +---
-> >  5 files changed, 5 insertions(+), 19 deletions(-)
-> >
-> > diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> > index 429b5a60a1ba..99e19df76889 100644
-> > --- a/drivers/soc/qcom/llcc-qcom.c
-> > +++ b/drivers/soc/qcom/llcc-qcom.c
-> > @@ -387,7 +387,6 @@ static int qcom_llcc_remove(struct platform_device *pdev)
-> >  static struct regmap *qcom_llcc_init_mmio(struct platform_device *pdev,
-> >               const char *name)
-> >  {
-> > -     struct resource *res;
-> >       void __iomem *base;
-> >       struct regmap_config llcc_regmap_config = {
-> >               .reg_bits = 32,
-> > @@ -396,11 +395,7 @@ static struct regmap *qcom_llcc_init_mmio(struct platform_device *pdev,
-> >               .fast_io = true,
-> >       };
-> >
-> > -     res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
-> > -     if (!res)
-> > -             return ERR_PTR(-ENODEV);
-> > -
-> > -     base = devm_ioremap_resource(&pdev->dev, res);
-> > +     base = devm_platform_ioremap_resource(pdev, 0);
+> This adds the necessary firmware to boot the Audio DSP, Compute DSP and
+> Modem DSP, as well as the dynamically loaded WiFi firmware for the
+> Qualcomm RB3/Dragonboard845c.
 >
-> What guarantees do you have that entry 0 matches name?
-
-Yeah, this place is wrong. I intruduce another helper.
-
-https://lore.kernel.org/patchwork/patch/1165186/
-
-Thx,
-Yangtao
-
-
+> Regards,
+> Bjorn
 >
-> I find these changes pointless: they don't add much to the readability
-> or maintainability of the code, and instead introduce creative bugs.
+> The following changes since commit e8a0f4c9314754d8b2cbe9840357d88a861c438a:
 >
->         M.
-> --
-> Jazz is not dead. It just smells funny...
+>   rtl_nic: add firmware rtl8168fp-3 (2019-11-18 16:16:01 -0500)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/andersson/linux-firmware.git RB3-adsp-cdsp-mss-v4
+>
+> for you to fetch changes up to 212e44122e71fe76e1e6a495739413597ea66a6e:
+>
+>   qcom: Add SDM845 Compute DSP firmware (2019-11-20 16:08:30 -0800)
+>
+> ----------------------------------------------------------------
+> Bjorn Andersson (3):
+>       qcom: Add SDM845 modem firmware
+>       qcom: Add SDM845 Audio DSP firmware
+>       qcom: Add SDM845 Compute DSP firmware
+>
+>  WHENCE                   |  38 ++++++++++++++++++++++++++++++++++++++
+>  qcom/sdm845/adsp.mbn     | Bin 0 -> 10420560 bytes
+>  qcom/sdm845/adspr.jsn    |  21 +++++++++++++++++++++
+>  qcom/sdm845/adspua.jsn   |  27 +++++++++++++++++++++++++++
+>  qcom/sdm845/cdsp.mbn     | Bin 0 -> 2704916 bytes
+>  qcom/sdm845/cdspr.jsn    |  21 +++++++++++++++++++++
+>  qcom/sdm845/mba.mbn      | Bin 0 -> 242400 bytes
+>  qcom/sdm845/modem.mbn    | Bin 0 -> 5652688 bytes
+>  qcom/sdm845/modemuw.jsn  |  33 +++++++++++++++++++++++++++++++++
+>  qcom/sdm845/wlanmdsp.mbn | Bin 0 -> 3311964 bytes
+>  10 files changed, 140 insertions(+)
+>  create mode 100644 qcom/sdm845/adsp.mbn
+>  create mode 100644 qcom/sdm845/adspr.jsn
+>  create mode 100644 qcom/sdm845/adspua.jsn
+>  create mode 100644 qcom/sdm845/cdsp.mbn
+>  create mode 100644 qcom/sdm845/cdspr.jsn
+>  create mode 100644 qcom/sdm845/mba.mbn
+>  create mode 100644 qcom/sdm845/modem.mbn
+>  create mode 100644 qcom/sdm845/modemuw.jsn
+>  create mode 100644 qcom/sdm845/wlanmdsp.mbn
+
+Pulled and pushed out.
+
+josh
