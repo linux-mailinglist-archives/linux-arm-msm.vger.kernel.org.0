@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A0B4311FA06
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Dec 2019 18:52:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E0E3E11F9F0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Dec 2019 18:51:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726834AbfLORvm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Dec 2019 12:51:42 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:36808 "EHLO
+        id S1726861AbfLORvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Dec 2019 12:51:43 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:39775 "EHLO
         mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726757AbfLORvl (ORCPT
+        with ESMTP id S1726847AbfLORvn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Dec 2019 12:51:41 -0500
-Received: by mail-pf1-f194.google.com with SMTP id x184so4335359pfb.3;
-        Sun, 15 Dec 2019 09:51:41 -0800 (PST)
+        Sun, 15 Dec 2019 12:51:43 -0500
+Received: by mail-pf1-f194.google.com with SMTP id 2so4326020pfx.6;
+        Sun, 15 Dec 2019 09:51:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=M4rb0k6npd2G8XmrmT8Mmuq1Mqx3Tqp4JozWv4IeGBE=;
-        b=Dffo/ivbPuSxvOTilFvFyuCjze8R3Nz1KdRpjRZXiuzi/VElxSGfIWsE7zsGZ16JIl
-         wvqLG4syWI7BDu80fWkO44X0LxOO0zbyOuuPqoHFZE7qxFnwAfg1WM85/YsC08Lr6Atc
-         f1x3CHSxQxK4W8uN0GPvNQbdOhAbGrKD/lkgp19Wh+tZzD28fwxnFI/rgDycdti4x/Vd
-         NvvdWS9zDoHBOnZcouhEQCaJJTr/qCV+yoefROCP2SQE88CSB79DLklO0AP4rsAyO4us
-         kaDbsGbd9ayVBP85+vIGzL5vJ+PoGnyHsXOqkZ2051uGdqVxhI1E/zUisQmkG7MAc+ej
-         WBkA==
+        bh=A8oziVX0OVPNw7lU9FI+EUt433jdMUM01Z2ORYeAVas=;
+        b=fBKZq3B+UTdbWsi9+g8bdOFCHGpe7TR9sfAOlLy6zhHgToqYKI2okWlUO/wS9d6u+p
+         QObETgFmagku6GU1FlRQNb5t/Y9dhG0vMyt6zn/KGXslbl4lHP+yyMILKeUnZCONpcFn
+         nFk0ak5IMJLciJtTB9ij91nLomUhjmWlZ14uu6ohZjsqPZqXutI+9z1rnDlHxiPEPw6t
+         7YZThJj7UCNgkM0r2R80yHDaLx7hfnKGgi8f/DRlmtx1GVhlgdgpoz3UYxNu9ZDMXFcK
+         Yv+Xe0JZFl44GM/aIAmtJ/YQsFJ79OS2CDFVX3XxVQTVvTKoAvpv2bPHh+bVZJgQgtIs
+         BI3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=M4rb0k6npd2G8XmrmT8Mmuq1Mqx3Tqp4JozWv4IeGBE=;
-        b=ikNI1GcCwLO9z5fKWrCHlIDw9LbA7q3/hLxTgos8GdpWO8U6I2OAeBxVTJeGw/nS3H
-         GyFXdpM/oEeYC8rBGW337X6ofy7jxoYur4KF4vyyDrJI26Qn0eQEuU2YvXP/k+x490JX
-         xWQJHkXC0ad32FIjTwfQFDDydat3AEnTofQ01tjS/PjZp4wrXNbOgyo7tI1MSoIH93Ok
-         u4NVA6JrxWtCandun4AcyZPhURMgUIr51W3chEcI+HDpfmTzbB9OKSqFDjKMD6g93qC5
-         T/qCRRylJHF5t9qyJNUyc3IQSUZ+HLVYr90MWZiYNJztkxOPdauo5kSOfKNWYgKyi+5o
-         4wIQ==
-X-Gm-Message-State: APjAAAVNbBgCjoI4M/o44o0daGieGzguMNTCFipbYftQhn1As5VDjCE7
-        N/9UYMSYB5yAOyV3gPsalQY=
-X-Google-Smtp-Source: APXvYqyQzdWSpl2Sd5Qy8EvlwnGWckT99MmmuRs6mMqDmxroD8ufUiQwLV2+LBkw71MDRzquOsBmeg==
-X-Received: by 2002:a63:6f8a:: with SMTP id k132mr13514164pgc.70.1576432300626;
-        Sun, 15 Dec 2019 09:51:40 -0800 (PST)
+        bh=A8oziVX0OVPNw7lU9FI+EUt433jdMUM01Z2ORYeAVas=;
+        b=MjyUi9WbzfXt2aUMIFBE+g4N6/Bi0dbHoU2aA73I3gWOdSizrbkUo6AZ3/IZzsSb/t
+         NbpdOdMJi3OmoBu5LzWPCdRRlPFbekNOFxVpOdapQPAkzlBxq18sd7AdTx0JwL0ScT9H
+         67pczMG0lXW4EMT82spSeNE0fT4aL4lPCa77jhhQsTTU9Uc572QT1cI6JCQ/4XkHOCd9
+         bwX6rzjdXI7JeCRzeAlNb29i0P1vDGswiCbvGvHWgp71nshh02AoOPAGTx3NyHgc6lji
+         9FY81oclNLw1mKuojY8urX+F91NSYNJsoRFBJWi77Ua65ltjem+ofU6s1uazZhG28fWo
+         Dhkw==
+X-Gm-Message-State: APjAAAW0iX78knivzw2kdtud5e4sQI25NmvtIwS8wj0XnMrz1ZNoqG/T
+        gfNXY+hDBFPuZcp9yA1RCuM=
+X-Google-Smtp-Source: APXvYqzRYb6wWnfYIhsx/jpaCv0k0FMwBhDH/4hA1EyERHMjQx3fHd7/IHnrk/B7nyDbivGMX1th5Q==
+X-Received: by 2002:a63:ea4b:: with SMTP id l11mr13127641pgk.357.1576432302424;
+        Sun, 15 Dec 2019 09:51:42 -0800 (PST)
 Received: from localhost ([2001:19f0:6001:12c8:5400:2ff:fe72:6403])
-        by smtp.gmail.com with ESMTPSA id r62sm19900871pfc.89.2019.12.15.09.51.39
+        by smtp.gmail.com with ESMTPSA id i4sm16309004pjd.19.2019.12.15.09.51.41
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 15 Dec 2019 09:51:40 -0800 (PST)
+        Sun, 15 Dec 2019 09:51:42 -0800 (PST)
 From:   Yangtao Li <tiny.windzz@gmail.com>
 To:     manuel.lauss@gmail.com, ulf.hansson@linaro.org,
         khilman@baylibre.com, chaotian.jing@mediatek.com,
@@ -60,9 +60,9 @@ Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-amlogic@lists.infradead.org,
         linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
         Yangtao Li <tiny.windzz@gmail.com>
-Subject: [PATCH 07/13] mmc: sdhci_f_sdh30: convert to devm_platform_ioremap_resource
-Date:   Sun, 15 Dec 2019 17:51:14 +0000
-Message-Id: <20191215175120.3290-7-tiny.windzz@gmail.com>
+Subject: [PATCH 08/13] mmc: sdhci_am654: convert to devm_platform_ioremap_resource
+Date:   Sun, 15 Dec 2019 17:51:15 +0000
+Message-Id: <20191215175120.3290-8-tiny.windzz@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191215175120.3290-1-tiny.windzz@gmail.com>
 References: <20191215175120.3290-1-tiny.windzz@gmail.com>
@@ -75,31 +75,31 @@ Use devm_platform_ioremap_resource() to simplify code.
 
 Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
 ---
- drivers/mmc/host/sdhci_f_sdh30.c | 4 +---
+ drivers/mmc/host/sdhci_am654.c | 4 +---
  1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci_f_sdh30.c b/drivers/mmc/host/sdhci_f_sdh30.c
-index fa0dfc657c22..4625cc071b61 100644
---- a/drivers/mmc/host/sdhci_f_sdh30.c
-+++ b/drivers/mmc/host/sdhci_f_sdh30.c
-@@ -89,7 +89,6 @@ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
- {
+diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
+index b8e897e31e2e..aa237f565e23 100644
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -491,7 +491,6 @@ static int sdhci_am654_probe(struct platform_device *pdev)
+ 	struct sdhci_am654_data *sdhci_am654;
+ 	const struct of_device_id *match;
  	struct sdhci_host *host;
- 	struct device *dev = &pdev->dev;
 -	struct resource *res;
- 	int irq, ctrl = 0, ret = 0;
- 	struct f_sdhost_priv *priv;
- 	u32 reg = 0;
-@@ -123,8 +122,7 @@ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
- 	host->ops = &sdhci_f_sdh30_ops;
- 	host->irq = irq;
+ 	struct clk *clk_xin;
+ 	struct device *dev = &pdev->dev;
+ 	void __iomem *base;
+@@ -524,8 +523,7 @@ static int sdhci_am654_probe(struct platform_device *pdev)
+ 		goto pm_runtime_disable;
+ 	}
  
--	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	host->ioaddr = devm_ioremap_resource(&pdev->dev, res);
-+	host->ioaddr = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(host->ioaddr)) {
- 		ret = PTR_ERR(host->ioaddr);
- 		goto err;
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+-	base = devm_ioremap_resource(dev, res);
++	base = devm_platform_ioremap_resource(pdev, 1);
+ 	if (IS_ERR(base)) {
+ 		ret = PTR_ERR(base);
+ 		goto pm_runtime_put;
 -- 
 2.17.1
 
