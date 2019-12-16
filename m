@@ -2,144 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 219F6120FC5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 17:41:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AEA65120FDA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 17:43:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726758AbfLPQiT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Dec 2019 11:38:19 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:50919 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726742AbfLPQiT (ORCPT
+        id S1726637AbfLPQmg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Dec 2019 11:42:36 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:40158 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726263AbfLPQmf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Dec 2019 11:38:19 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1576514299; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=2+EDXN6iZgZzpeQrdNotKtBLTO05w7oHvPgGY8rGGuk=; b=tVVWmtA31H3VsggRfLRJx/37BadanM1uvaFioweZWOYw4baRptaK5q5NKqNn/avfz37OATh2
- 4+NJoxtq5so7fHWk2w6wajEpCfNSF4nqRqqs+tRRCWrIfAuc21EvSBYGZVQNphmvYjHfUmHe
- kP3MkefQDGUb9nbrzYb3Ll+Ucog=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5df7b2f4.7fca63c88a78-smtp-out-n01;
- Mon, 16 Dec 2019 16:38:12 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 057BFC447A6; Mon, 16 Dec 2019 16:38:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 45EB8C433CB;
-        Mon, 16 Dec 2019 16:38:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 45EB8C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     iommu@lists.linux-foundation.org
-Cc:     robin.murphy@arm.com, will@kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Sean Paul <sean@poorly.run>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>
-Subject: [PATCH v3 5/5] drm/msm/a6xx: Support split pagetables
-Date:   Mon, 16 Dec 2019 09:37:51 -0700
-Message-Id: <1576514271-15687-6-git-send-email-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1576514271-15687-1-git-send-email-jcrouse@codeaurora.org>
-References: <1576514271-15687-1-git-send-email-jcrouse@codeaurora.org>
+        Mon, 16 Dec 2019 11:42:35 -0500
+Received: by mail-pf1-f194.google.com with SMTP id q8so5873123pfh.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2019 08:42:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:subject:to:from:cc:user-agent:date;
+        bh=tEFANuRfrtEbXVW2kT4hb0C2KzTNmSirXF8koSqQv8o=;
+        b=OC0UO2BJXeENM4Cbn94I+bIgETrJ0X6BAYk8ZfwLXFw18OzceJhE8oiuEoSMUL/pHt
+         M/H+Y2c0EtXdGPj/+B2I7W0dHG7mRFTrLdnK9c+EfpmkcOlvPnLkzvwZKAmS23pAPDJp
+         YLdmB9hBVjmn9V/B9tJibbZJmv830c+C4cuws=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:subject:to:from:cc
+         :user-agent:date;
+        bh=tEFANuRfrtEbXVW2kT4hb0C2KzTNmSirXF8koSqQv8o=;
+        b=gqMBEGlxJn7PrabsoCBFaYvw0oPaxTl3cJJLp1RGw/J0Qmu3DPqWErTHetZqs9wWGU
+         nAcYABdaAEiPhQqduIgQ4yiyWoI/YPxO7S5N0gpsZ8jPiX1HYaUDVgxf4TkkgkUxdwv1
+         jsiErpQ/e0VtmOwKVXTl/zd2vRZ5F+qr/ixSlisJPnxoLSIIKpviJecS8se/RYDGnwGT
+         +AZYZCyR3zj3BZjVGYmH1NLklUx6ladpjgRy8Gyp7fnP0JEJHyUsnn8+48Q+Jx8NwZED
+         w+3g+qLe4ubvd73kJuzQ+IkUniu4qUjf7RVLHHsE9Wcrfh3OrG+1ks8hlEd+Gmj2vR4L
+         e0yw==
+X-Gm-Message-State: APjAAAX8UExAuxTSx0T47MVuzdg5sIY+DnPSK9Gt/0DcPcgzw3wKy2Wl
+        VQo166nRUNlzol7SyefHPRywgQ==
+X-Google-Smtp-Source: APXvYqx858IvO891FQ+PAlePnfwquAJeL9h4+4TcpmC6btQgALdMcGge3MsYBYMJWyRrqvxCfMaqYw==
+X-Received: by 2002:a62:7696:: with SMTP id r144mr16912411pfc.177.1576514555188;
+        Mon, 16 Dec 2019 08:42:35 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id w11sm22988142pfn.4.2019.12.16.08.42.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Dec 2019 08:42:34 -0800 (PST)
+Message-ID: <5df7b3fa.1c69fb81.fa080.21a7@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1576488351-22396-1-git-send-email-akashast@codeaurora.org>
+References: <1576488351-22396-1-git-send-email-akashast@codeaurora.org>
+Subject: Re: [PATCH] dt-bindings: geni-se: Convert QUP geni-se bindings to YAML
+To:     Akash Asthana <akashast@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, mark.rutland@arm.com,
+        robh+dt@kernel.org
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
+        Akash Asthana <akashast@codeaurora.org>
+User-Agent: alot/0.8.1
+Date:   Mon, 16 Dec 2019 08:42:33 -0800
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Attempt to enable split pagetables if the arm-smmu driver supports it.
-This will move the default address space from the default region to
-the address range assigned to TTBR1. The behavior should be transparent
-to the driver for now but it gets the default buffers out of the way
-when we want to start swapping TTBR0 for context-specific pagetables.
+Quoting Akash Asthana (2019-12-16 01:25:51)
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml=
+ b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+> new file mode 100644
+> index 0000000..2c3b911
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+> @@ -0,0 +1,196 @@
+[...]
+> +
+> +  "serial@[0-9]+$":
+> +    type: object
+> +    description: GENI Serial Engine based UART Controller.
+> +
+> +    properties:
+> +      compatible:
+> +        enum:
+> +          - qcom,geni-uart
+> +          - qcom,geni-debug-uart
+> +
+> +      reg:
+> +        description: GENI Serial Engine register address and length.
+> +
+> +      interrupts:
+> +        description: Contains UART core and wakeup interrupts for wakeup
+> +                     capable UART devices. We configure wakeup interrupt
+> +                     on UART RX line using TLMM interrupt controller.
+> +        maxItems: 2
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
+Shouldn't there be a minItems: 1 here? And then you should specify the orde=
+r?
+Presumably something like
 
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 52 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 51 insertions(+), 1 deletion(-)
+	interrupts:
+	  minItems: 1
+	  maxItems: 2
+	  items:
+	    - description: UART core irq
+	    - description: Wakeup irq (RX GPIO)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 5dc0b2c..1c6da93 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -811,6 +811,56 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
- 	return (unsigned long)busy_time;
- }
- 
-+static struct msm_gem_address_space *
-+a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
-+{
-+	struct iommu_domain *iommu = iommu_domain_alloc(&platform_bus_type);
-+	struct msm_gem_address_space *aspace;
-+	struct msm_mmu *mmu;
-+	u64 start, size;
-+	u32 val = 1;
-+	int ret;
-+
-+	if (!iommu)
-+		return ERR_PTR(-ENOMEM);
-+
-+	/*
-+	 * Try to request split pagetables - the request has to be made before
-+	 * the domian is attached
-+	 */
-+	iommu_domain_set_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val);
-+
-+	mmu = msm_iommu_new(&pdev->dev, iommu);
-+	if (IS_ERR(mmu)) {
-+		iommu_domain_free(iommu);
-+		return ERR_CAST(mmu);
-+	}
-+
-+	/*
-+	 * After the domain is attached, see if the split tables were actually
-+	 * successful.
-+	 */
-+	ret = iommu_domain_get_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val);
-+	if (!ret && val) {
-+		/*
-+		 * The aperture start will be at the beginning of the TTBR1
-+		 * space so use that as a base
-+		 */
-+		start = iommu->geometry.aperture_start;
-+		size = 0xffffffff;
-+	} else {
-+		/* Otherwise use the legacy 32 bit region */
-+		start = SZ_16M;
-+		size = 0xffffffff - SZ_16M;
-+	}
-+
-+	aspace = msm_gem_address_space_create(mmu, "gpu", start, size);
-+	if (IS_ERR(aspace))
-+		iommu_domain_free(iommu);
-+
-+	return aspace;
-+}
-+
- static const struct adreno_gpu_funcs funcs = {
- 	.base = {
- 		.get_param = adreno_get_param,
-@@ -832,7 +882,7 @@ static const struct adreno_gpu_funcs funcs = {
- #if defined(CONFIG_DRM_MSM_GPU_STATE)
- 		.gpu_state_get = a6xx_gpu_state_get,
- 		.gpu_state_put = a6xx_gpu_state_put,
--		.create_address_space = adreno_iommu_create_address_space,
-+		.create_address_space = a6xx_create_address_space,
- #endif
- 	},
- 	.get_timestamp = a6xx_get_timestamp,
--- 
-2.7.4
