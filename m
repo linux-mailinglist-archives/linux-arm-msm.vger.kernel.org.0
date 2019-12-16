@@ -2,249 +2,257 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C801121967
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 19:51:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA188121987
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 19:57:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726875AbfLPSur (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Dec 2019 13:50:47 -0500
-Received: from mail-il1-f195.google.com ([209.85.166.195]:33814 "EHLO
-        mail-il1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726683AbfLPSuo (ORCPT
+        id S1725836AbfLPS5i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Dec 2019 13:57:38 -0500
+Received: from mail-il1-f196.google.com ([209.85.166.196]:46678 "EHLO
+        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726141AbfLPS5h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Dec 2019 13:50:44 -0500
-Received: by mail-il1-f195.google.com with SMTP id s15so3187943iln.1;
-        Mon, 16 Dec 2019 10:50:43 -0800 (PST)
+        Mon, 16 Dec 2019 13:57:37 -0500
+Received: by mail-il1-f196.google.com with SMTP id t17so6239039ilm.13;
+        Mon, 16 Dec 2019 10:57:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=w0GqAeMADEza9fllh4bzbMMhhnGfJ6Bsr92tmvmU29Q=;
-        b=XHIt33Sbu/oJ/7qVpTvsAHtZHBwLg9SQwva5srVojJiAus8eZEtoJILNZgBk+Se82t
-         FRYS1X4R8m6hzUP68lIRVFnVJD+hI2lRDTA5ixyOhVYqgDo4ZWJP+8ZBuNG4SVR9q8wO
-         f48dO6lyFE0ERpv55rIk8bc2mzlOH2eOg4FzQMLBjr1P719Q1rxCOLJCHh+Fdf8QS7L9
-         325JLqgl73XAM4ATbXKycmRDjnBp3U579bTfSala8hC8MwADZ81HZldZSuRCnMP4ay1S
-         GqpQ/CxGIuGVM3SqiNlNZKiYiP2Y1tyoFZIa1p1bDMx69MXIamsR6tRHFKv0ESL/sFKj
-         1MJg==
+        bh=fRErO3p6DkzrKjGHgI+x7pKPjZQkWFKWkX/ri5ylyrc=;
+        b=QNe7q2ni/0HbANj4xw7ZJWlzvRh6yVfNlgdg8Zk0iAZRDSdUId4MRtHuF2rxWM8Thv
+         ImFjjwLDpyVRFLfOjpBx42Wfp5TMXew8VfcBzM+AGa2DLiHD9cCyl8BGARXaG4d9w9VE
+         Kfmohs4N2J003JXOBbydKQ8RoeZa5xuR93hSAlU1uctdCxBbTyYrP/X7kQoDAX9Ui+bQ
+         PdNaSZA8AcThzurom2HFulFWHXxlq8TD4D48FE9Hc5+niaa4OArUz7tz+han43KzVyU5
+         qos5U6MeFiKgoPty2zBZRiLFO3f7WoJfxHzq803eT9vPgteiYOyXBUN/Hr7jcpJ0nU/7
+         WdwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=w0GqAeMADEza9fllh4bzbMMhhnGfJ6Bsr92tmvmU29Q=;
-        b=YF+BszQPLOW67TAcYK10XVO/xSV4M03gISSMLmWSIsZ8iK8tktABDMYsqFD4CV0nii
-         V8rgwZPTThHUIhjrxgWgW4mMfPLBVhCf8zaOYe+LPPRKah/5RTz7DDZOEhFICEMwc9zC
-         DmiXESZs65d2VdOBrbZKsXua0WYHVo97AgCHvWTVRcg9T8NO4eve4klVauFetXRPsG7y
-         9tZRA7f1zDPFMjZQZLvxwLVd8zTKcO7kaBpJPh3P9FeZCQMtZto3AWL1gKdeaZQtsTt3
-         YIcFJC+wbFNAYmpoWV99mFWnFu205xMcpvWJivOkOpIJ12BZMTyNaNn8K5eqxR3M9+8m
-         ILqw==
-X-Gm-Message-State: APjAAAXMt2qKOhLex1z3EwQ5zaFufBPIjzxbWqAHKuPWOsqbQzyNMCb1
-        roZhGwj2bHR6cf3FeGRCKGZbuh5wbl7LTiCXRhU=
-X-Google-Smtp-Source: APXvYqypJW7zX7JyFKFt7HBQ8IFzxMx8ab/QOfg5OvPPeZw6Wz/pWUWEXSfeBLH2Zai8aIypXtN8r03Gms7377jgnkw=
-X-Received: by 2002:a92:d308:: with SMTP id x8mr13709006ila.42.1576522243125;
- Mon, 16 Dec 2019 10:50:43 -0800 (PST)
+        bh=fRErO3p6DkzrKjGHgI+x7pKPjZQkWFKWkX/ri5ylyrc=;
+        b=eckbDc3IZLp9IqjeyKnJz0jcW/PQjt0E4vhsojepfnccDmxFasClFF8X7GPhLxGNz/
+         fWWdamZ5W8x02Ecg7AKISRwyMBVYWPr1xo7l9LO0cqInG68Rc8be8xhOXBt40GnotYUh
+         LEVhWSWzBfa4DmnSeD9JS54lsJJNJxVpsSFyYKe9ApibShhvZxCkvJqbYwEQ2w6CXbeI
+         9/tsJQhvnrtb9hmTAHEBlbVzg6fZ0Byxt/8M6cuotD555EUnPhhRMKznQNqb2uOKtySb
+         0kJvvKV1qFplRfZ1ewQEatWsChFnPj5Sq5Pzo/NUi77jHkBMGoytJKn7LiWfi9EsuuOD
+         jZGw==
+X-Gm-Message-State: APjAAAWvLAk2D6KXkw4WqhDLrRix5A13dk4YUQIEugfLZh+fqse60QUd
+        kzOruR3sxQmtvY9nST8PF8OyMiAqa7J8Q9hKLDE=
+X-Google-Smtp-Source: APXvYqxaoCR3QZIQJUHBFbypBRT5pC0Du6V+0URCSBapyjSPUoxEmqYoKvzzx3VBu7ZRAjqM9PGmSPu9pHd1XKFy37s=
+X-Received: by 2002:a92:465c:: with SMTP id t89mr14007894ila.263.1576522656793;
+ Mon, 16 Dec 2019 10:57:36 -0800 (PST)
 MIME-Version: 1.0
-References: <20191127141544.4277-1-leo.yan@linaro.org> <20191127141544.4277-3-leo.yan@linaro.org>
- <CAOCk7NqZmBYN4tY0_V8xzvBfWShDCP8gTa60Aoc78wK2tXx=6A@mail.gmail.com>
- <20191203082325.GC28241@leoy-ThinkPad-X240s> <CAOCk7NpYt_OVYB7yZz+U9OE7jdtdm4sKG9wzKY7_YvKKx2Q4fg@mail.gmail.com>
- <20191204161330.GA28567@leoy-ThinkPad-X240s> <CAD9cdQ6ROYf6B2PkQYJds_80-0dA=Jcew=TCNCSB=r+WEUNvdQ@mail.gmail.com>
-In-Reply-To: <CAD9cdQ6ROYf6B2PkQYJds_80-0dA=Jcew=TCNCSB=r+WEUNvdQ@mail.gmail.com>
+References: <20191112104854.20850-1-masneyb@onstation.org> <CAOCk7NosRhRp3vZxg2Nx8106PQ0ryo5b68cUv605XUzCm6gYPA@mail.gmail.com>
+ <20191113112334.GA18702@onstation.org> <20191203014006.GA7756@onstation.org>
+ <CAOCk7NpHE7kPX5tc=qUJo9qM-7Qzg2E+zmmmhBdnnVwJ+i5XLg@mail.gmail.com> <20191213024007.GA23636@onstation.org>
+In-Reply-To: <20191213024007.GA23636@onstation.org>
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Mon, 16 Dec 2019 11:50:31 -0700
-Message-ID: <CAOCk7Np3DCYmeq1n3aemuLRK=krjOYp88rj_mdrwG2_vg0Gn_w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] tty: serial: msm_serial: Fix deadlock caused by
- recursive output
-To:     Rainer Sickinger <rainersickinger.official@gmail.com>
-Cc:     Leo Yan <leo.yan@linaro.org>, Andy Gross <agross@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jslaby@suse.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-serial@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>
+Date:   Mon, 16 Dec 2019 11:57:25 -0700
+Message-ID: <CAOCk7Np7VkuzFTN_CEqwPFwgu9thcPBMpuQpa3=KMdyahfE8uw@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/mdp5: enable autocommit
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, Sean Paul <sean@poorly.run>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 4, 2019 at 9:21 AM Rainer Sickinger
-<rainersickinger.official@gmail.com> wrote:
+On Thu, Dec 12, 2019 at 7:40 PM Brian Masney <masneyb@onstation.org> wrote:
 >
-> Can't you just exit with System.exit()?
+> Hi Jeffrey,
+>
+> On Tue, Dec 03, 2019 at 07:18:31AM -0700, Jeffrey Hugo wrote:
+> > On Mon, Dec 2, 2019 at 6:40 PM Brian Masney <masneyb@onstation.org> wrote:
+> > > On Wed, Nov 13, 2019 at 06:23:34AM -0500, Brian Masney wrote:
+> > > > On Tue, Nov 12, 2019 at 08:38:27AM -0700, Jeffrey Hugo wrote:
+> > > > > On Tue, Nov 12, 2019 at 3:49 AM Brian Masney <masneyb@onstation.org> wrote:
+> > > > > >
+> > > > > > Since the introduction of commit 2d99ced787e3 ("drm/msm: async commit
+> > > > > > support"), command-mode panels began throwing the following errors:
+> > > > > >
+> > > > > >     msm fd900000.mdss: pp done time out, lm=0
+> > > > > >
+> > > > > > Let's fix this by enabling the autorefresh feature that's available in
+> > > > > > the MDP starting at version 1.0. This will cause the MDP to
+> > > > > > automatically send a frame to the panel every time the panel invokes
+> > > > > > the TE signal, which will trigger the PP_DONE IRQ. This requires not
+> > > > > > sending a START signal for command-mode panels.
+> > > > > >
+> > > > > > This fixes the error and gives us a counter for command-mode panels that
+> > > > > > we can use to implement async commit support for the MDP5 in a follow up
+> > > > > > patch.
+> > > > > >
+> > > > > > Signed-off-by: Brian Masney <masneyb@onstation.org>
+> > > > > > Suggested-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> > > > > > ---
+> > > > > >  drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 15 ++++++++++++++-
+> > > > > >  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c  |  9 +--------
+> > > > > >  2 files changed, 15 insertions(+), 9 deletions(-)
+> > > > > >
+> > > > > > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+> > > > > > index 05cc04f729d6..539348cb6331 100644
+> > > > > > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+> > > > > > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+> > > > > > @@ -456,6 +456,7 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
+> > > > > >  {
+> > > > > >         struct mdp5_crtc *mdp5_crtc = to_mdp5_crtc(crtc);
+> > > > > >         struct mdp5_crtc_state *mdp5_cstate = to_mdp5_crtc_state(crtc->state);
+> > > > > > +       struct mdp5_pipeline *pipeline = &mdp5_cstate->pipeline;
+> > > > > >         struct mdp5_kms *mdp5_kms = get_kms(crtc);
+> > > > > >         struct device *dev = &mdp5_kms->pdev->dev;
+> > > > > >
+> > > > > > @@ -493,9 +494,21 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
+> > > > > >
+> > > > > >         mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->err);
+> > > > > >
+> > > > > > -       if (mdp5_cstate->cmd_mode)
+> > > > > > +       if (mdp5_cstate->cmd_mode) {
+> > > > > >                 mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->pp_done);
+> > > > > >
+> > > > > > +               /*
+> > > > > > +                * Enable autorefresh so we get regular ping/pong IRQs.
+> > > > > > +                * - Bit 31 is the enable bit
+> > > > > > +                * - Bits 0-15 represent the frame count, specifically how many
+> > > > > > +                *   TE events before the MDP sends a frame.
+> > > > > > +                */
+> > > > > > +               mdp5_write(mdp5_kms,
+> > > > > > +                          REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp),
+> > > > > > +                          BIT(31) | BIT(0));
+> > > > > > +               crtc_flush_all(crtc);
+> > > > > > +       }
+> > > > > > +
+> > > > > >         mdp5_crtc->enabled = true;
+> > > > > >  }
+> > > > > >
+> > > > > > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+> > > > > > index 030279d7b64b..aee295abada3 100644
+> > > > > > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+> > > > > > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+> > > > > > @@ -187,14 +187,7 @@ static bool start_signal_needed(struct mdp5_ctl *ctl,
+> > > > > >         if (!ctl->encoder_enabled)
+> > > > > >                 return false;
+> > > > > >
+> > > > > > -       switch (intf->type) {
+> > > > > > -       case INTF_WB:
+> > > > > > -               return true;
+> > > > > > -       case INTF_DSI:
+> > > > > > -               return intf->mode == MDP5_INTF_DSI_MODE_COMMAND;
+> > > > > > -       default:
+> > > > > > -               return false;
+> > > > > > -       }
+> > > > > > +       return intf->type == INTF_WB;
+> > > > > >  }
+> > > > >
+> > > > > I don't think this fully works.
+> > > > >
+> > > > > The whole "flush" thing exists because the configuration is double
+> > > > > buffered.  You write to the flush register to tell the hardware to
+> > > > > pickup the new configuration, but it doesn't do that automatically.
+> > > > > It only picks up the new config on the next "vsync".  When you have a
+> > > > > video mode panel, you have the timing engine running, which drives
+> > > > > that.  With a command mode panel, you have either the start signal, or
+> > > > > the auto refresh to do the same, but you have a bit of a chicken and
+> > > > > egg situation where if you are programming the hardware from scratch,
+> > > > > autorefresh isn't already enabled to then pickup the config to enable
+> > > > > autorefresh. In this case, you'll need a single start to kick
+> > > > > everything off.  However, if say the bootloader already configured
+> > > > > things and has autorefresh running, then you need to not do that start
+> > > > > because you'll overload the DSI like you saw.
+> > > >
+> > > > As part of my testing for this work, I added a log statement to
+> > > > mdp5_crtc_pp_done_irq() and it shows that a PP_IRQ comes in consistently
+> > > > every ~0.0166 seconds, which is about 60 HZ. Without this change, plus
+> > > > the 3 commits I mentioned in an earlier email related to the async
+> > > > commit support, the PP IRQs come in at a variety of times: between every
+> > > > ~0.0140 and ~0.2224 seconds. That's why I assumed that this was working.
+> > > >
+> > > > If I call send_start_signal() inside mdp5_crtc_atomic_enable(), then the
+> > > > display does not work properly.
+> > >
+> > > I'd like to get the 'pp done time out' errors that are now occurring
+> > > upstream for command-mode panels fixed. As I mentioned above, this patch
+> > > fixes the problem on the Nexus 5 and the pp done interrupts are
+> > > delivered at approximately 60 HZ. I don't have any other command-mode
+> > > panels to test.
+> > >
+> > > I'm not sure how to proceed here since sending the start command breaks
+> > > the display. I'm likely putting that command in the wrong spot.
+> >
+> > Sorry, I didn't realize you were waiting on me,
+> >
+> > I'm traveling currently, so this is more off the top of my head than
+> > looking at the code/docs.  What I'm thinking is that we want to get
+> > autorefresh enabled, which would be simple except that the bootloader
+> > may have already enabled it for us.  Perhaps we have a state flag that
+> > indicates if autorefresh is enabled, and if so, it skips the start
+> > command (where the start command is normally in the code).  When we
+> > boot up, we check the hardware and set the flag if its already enabled
+> > (note I just realized the flag is per ping pong, so we need multiple
+> > flags I guess).  If the flag is not enabled when we go to use the
+> > start command, we issue the start, then set the flag.  The only catch
+> > is I don't know recall the exact sequence of when we configure the
+> > ping pong in the entire initialization sequence.  We may configure a
+> > bunch of stuff, but not the ping pong, flush the config (which issues
+> > a start) and then get stuck because we didn't set the autorefresh.
+>
+> I finally had a chance look into this tonight. This makes sense to me:
+> the double buffering of the configuration, the start signal, and a
+> separate flag for each of the 4 ping pongs on the MDP5.
+>
+> The part that I'm still unsure about is querying the initial state from
+> the boot loader to see if autorefresh is already enabled and whether or
+> not a single START command is needed. Here's a slightly modified snippet
+> from mdp5_crtc_atomic_enable() in my patch above:
+>
+>   if (mdp5_cstate->cmd_mode) {
+>      /* mdp5_read() returns 0 */
+>      val = mdp5_read(mdp5_kms,
+>                      REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp));
+>
+>      mdp5_write(mdp5_kms,
+>                 REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp),
+>                 BIT(31) | BIT(0));
+>
+>      crtc_flush_all(crtc);
+>
+>      /* mdp5_read() now returns 0x80000001 */
+>      val = mdp5_read(mdp5_kms,
+>                      REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp));
+>   }
+>
+> So I assume that the boot loader is not enabling autorefresh on this
+> board since the value from the first read is zero? Or more likely, that
+> since this is double buffered that the first mdp5_read() is reading from
+> the configuration buffer that's not active yet and it defaults to 0? Is
+> there a way to query the other configuration buffer that's currently
+> active?
 
-Isn't System.exit() a Java thing, and we are in a C environment?
+Sorry, catching up now that I'm back from travel
+
+Its not possible to read the "shadow" registers that have the active
+config.  However, if we can trust that the bootloader is doing the
+right thing, then the configuration register you can read should match
+the shadow registers.  The only way the bootloader could screw up is
+if it didn't flush the config, but then we wouldn't have boot splash
+which would be very easy to catch.
+
+In short, if your first read is 0, then bootloader didn't enable autorefresh.
 
 >
-> Am Mi., 4. Dez. 2019 um 17:14 Uhr schrieb Leo Yan <leo.yan@linaro.org>:
->>
->> On Tue, Dec 03, 2019 at 03:42:31PM -0700, Jeffrey Hugo wrote:
->>
->> [...]
->>
->> > > > > This patch fixes the deadlock issue for recursive output; it adds a
->> > > > > variable 'curr_user' to indicate the uart port is used by which CPU, if
->> > > > > the CPU has acquired spinlock and wants to execute recursive output,
->> > > > > it will directly bail out.  Here we don't choose to avoid locking and
->> > > > > print out log, the reason is in this case we don't want to reset the
->> > > > > uart port with function msm_reset_dm_count(); otherwise it can introduce
->> > > > > confliction with other flows and results in uart port malfunction and
->> > > > > later cannot output anymore.
->> > > >
->> > > > Is this not fixable?  Sure, fixing the deadlock is an improvement, but
->> > > > dropping logs (particularly a memory warning like in your example)
->> > > > seems undesirable.
->> > >
->> > > Thanks a lot for your reviewing, Jeffrey.
->> > >
->> > > Agreed with you for the concern.
->> > >
->> > > To be honest, I am not familiar with the msm uart driver, so have no
->> > > confidence which is the best way for uart port operations.  I can
->> > > think out one possible fixing is shown in below, if detects the lock
->> > > is not acquired then it will force to reset UART port before exit the
->> > > function __msm_console_write().
->> > >
->> > > This approach is not tested yet and it looks too arbitrary; I will
->> > > give a try for it.  At the meantime, welcome any insight suggestion
->> > > with proper register operations.
->> >
->> > According to the documentation, NCF_TX is only needed for SW transmit
->> > mode, where software is directly puttting characters in the fifo.  Its
->> > not needed for BAM mode.  According to your example, recursive console
->> > printing will only happen in BAM mode, and not in SW mode.  Perhaps if
->> > we put the NCF_TX uses to just the SW mode, we avoid the issue and can
->> > allow recursive printing?
->>
->> Thanks for the suggestion!  But based on the suggestion, I tried to
->> change code as below, the console even cannot work when boot the
->> kernel:
->>
->>  static void msm_reset_dm_count(struct uart_port *port, int count)
->>  {
->> +       u32 val;
->> +
->>         msm_wait_for_xmitr(port);
->> -       msm_write(port, count, UARTDM_NCF_TX);
->> -       msm_read(port, UARTDM_NCF_TX);
->> +
->> +       val = msm_read(port, UARTDM_DMEN);
->> +
->> +       /*
->> +        * NCF is only enabled for SW transmit mode and is
->> +        * skipped for BAM mode.
->> +        */
->> +       if (!(val & UARTDM_DMEN_TX_BAM_ENABLE) &&
->> +           !(val & UARTDM_DMEN_RX_BAM_ENABLE)) {
->> +               msm_write(port, count, UARTDM_NCF_TX);
->> +               msm_read(port, UARTDM_NCF_TX);
->> +       }
->>  }
->>
->>
->> Alternatively, when exit from __msm_console_write() and if detect the
->> case for without acquiring spinlock, invoke msm_wait_for_xmitr() to wait
->> for transmit completion looks a good candidate solution. The updated
->> patch is as below.  Please let me know if this is doable?
->>
->> diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
->> index 1db79ee8a886..aa6a494c898d 100644
->> --- a/drivers/tty/serial/msm_serial.c
->> +++ b/drivers/tty/serial/msm_serial.c
->> @@ -190,6 +190,7 @@ struct msm_port {
->>         bool                    break_detected;
->>         struct msm_dma          tx_dma;
->>         struct msm_dma          rx_dma;
->> +       struct cpumask          curr_user;
->>  };
->>
->>  #define UART_TO_MSM(uart_port) container_of(uart_port, struct msm_port, uart)
->> @@ -440,6 +441,7 @@ static void msm_complete_tx_dma(void *args)
->>         u32 val;
->>
->>         spin_lock_irqsave(&port->lock, flags);
->> +       cpumask_set_cpu(smp_processor_id(), &msm_port->curr_user);
->>
->>         /* Already stopped */
->>         if (!dma->count)
->> @@ -474,6 +476,7 @@ static void msm_complete_tx_dma(void *args)
->>
->>         msm_handle_tx(port);
->>  done:
->> +       cpumask_clear_cpu(smp_processor_id(), &msm_port->curr_user);
->>         spin_unlock_irqrestore(&port->lock, flags);
->>  }
->>
->> @@ -548,6 +551,7 @@ static void msm_complete_rx_dma(void *args)
->>         u32 val;
->>
->>         spin_lock_irqsave(&port->lock, flags);
->> +       cpumask_set_cpu(smp_processor_id(), &msm_port->curr_user);
->>
->>         /* Already stopped */
->>         if (!dma->count)
->> @@ -594,6 +598,7 @@ static void msm_complete_rx_dma(void *args)
->>
->>         msm_start_rx_dma(msm_port);
->>  done:
->> +       cpumask_clear_cpu(smp_processor_id(), &msm_port->curr_user);
->>         spin_unlock_irqrestore(&port->lock, flags);
->>
->>         if (count)
->> @@ -932,6 +937,7 @@ static irqreturn_t msm_uart_irq(int irq, void *dev_id)
->>         u32 val;
->>
->>         spin_lock_irqsave(&port->lock, flags);
->> +       cpumask_set_cpu(smp_processor_id(), &msm_port->curr_user);
->>         misr = msm_read(port, UART_MISR);
->>         msm_write(port, 0, UART_IMR); /* disable interrupt */
->>
->> @@ -963,6 +969,7 @@ static irqreturn_t msm_uart_irq(int irq, void *dev_id)
->>                 msm_handle_delta_cts(port);
->>
->>         msm_write(port, msm_port->imr, UART_IMR); /* restore interrupt */
->> +       cpumask_clear_cpu(smp_processor_id(), &msm_port->curr_user);
->>         spin_unlock_irqrestore(&port->lock, flags);
->>
->>         return IRQ_HANDLED;
->> @@ -1573,10 +1580,12 @@ static inline struct uart_port *msm_get_port_from_line(unsigned int line)
->>  static void __msm_console_write(struct uart_port *port, const char *s,
->>                                 unsigned int count, bool is_uartdm)
->>  {
->> +       struct msm_port *msm_port = UART_TO_MSM(port);
->>         int i;
->>         int num_newlines = 0;
->>         bool replaced = false;
->>         void __iomem *tf;
->> +       int locked = 1;
->>
->>         if (is_uartdm)
->>                 tf = port->membase + UARTDM_TF;
->> @@ -1589,7 +1598,15 @@ static void __msm_console_write(struct uart_port *port, const char *s,
->>                         num_newlines++;
->>         count += num_newlines;
->>
->> -       spin_lock(&port->lock);
->> +       if (port->sysrq)
->> +               locked = 0;
->> +       else if (oops_in_progress)
->> +               locked = spin_trylock(&port->lock);
->> +       else if (cpumask_test_cpu(smp_processor_id(), &msm_port->curr_user))
->> +               locked = 0;
->> +       else
->> +               spin_lock(&port->lock);
->> +
->>         if (is_uartdm)
->>                 msm_reset_dm_count(port, count);
->>
->> @@ -1625,7 +1642,12 @@ static void __msm_console_write(struct uart_port *port, const char *s,
->>                 iowrite32_rep(tf, buf, 1);
->>                 i += num_chars;
->>         }
->> -       spin_unlock(&port->lock);
->> +
->> +       if (!locked)
->> +               msm_wait_for_xmitr(port);
->> +
->> +       if (locked)
->> +               spin_unlock(&port->lock);
->>  }
+> Why do I see the ping pong IRQs delivered consistently around 60 HZ once
+> I enable autorefresh with the patch that started this thread?
+
+Hmm.  Good question.  I would expect everything to be fine once
+autorefresh is enabled, but your initial patch leaves questions about
+how that config is taking effect in the first place.
+
+>
+> Sorry if I'm being dense here.
+>
+> Brian
