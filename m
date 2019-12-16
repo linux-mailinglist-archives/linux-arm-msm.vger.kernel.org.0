@@ -2,108 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DF7B1202AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 11:32:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7D4A120473
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 12:55:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727452AbfLPKcd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Dec 2019 05:32:33 -0500
-Received: from foss.arm.com ([217.140.110.172]:49062 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727229AbfLPKcc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Dec 2019 05:32:32 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D71C91FB;
-        Mon, 16 Dec 2019 02:32:31 -0800 (PST)
-Received: from localhost (unknown [10.37.6.20])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4EFAD3F6CF;
-        Mon, 16 Dec 2019 02:32:31 -0800 (PST)
-Date:   Mon, 16 Dec 2019 10:32:29 +0000
-From:   Andrew Murray <andrew.murray@arm.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>, Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH v3 1/2] dt-bindings: PCI: qcom: Add support for SDM845
- PCIe
-Message-ID: <20191216103229.GP24359@e119886-lin.cambridge.arm.com>
-References: <20191107001642.1127561-1-bjorn.andersson@linaro.org>
- <20191107001642.1127561-2-bjorn.andersson@linaro.org>
+        id S1727316AbfLPLzv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Dec 2019 06:55:51 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:37163 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727241AbfLPLzv (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 16 Dec 2019 06:55:51 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1576497350; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=au8vO3KMuxrkifh9G1Cd6WwOUM8vQ2UbFX6nSLazp8w=; b=iRmdKUmmfxRAnvm0nMF0OFHewuawYAOtTlCMlDXVHkaKsou7OS3v+s1fh62tHYWHfkxY2ThQ
+ EA7l7zqKZDwpoCWZ+TrkdPHUGZgAboHvbYUXQm/Rwn4o6DX0eQvmRPsBJ02OH/P9T5TWa1FQ
+ Mf9o9ykYxpRXRnKe9O1ie0Aw3NA=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5df770c2.7fac525fe5e0-smtp-out-n01;
+ Mon, 16 Dec 2019 11:55:46 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 69F4DC433CB; Mon, 16 Dec 2019 11:55:46 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D6E1BC433CB;
+        Mon, 16 Dec 2019 11:55:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D6E1BC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        rnayak@codeaurora.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        mark.rutland@arm.com, swboyd@chromium.org, dianders@chromium.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH 0/2] Add RPMH power-domain node for SC7180 SoCs
+Date:   Mon, 16 Dec 2019 17:25:29 +0530
+Message-Id: <20191216115531.17573-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.22.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191107001642.1127561-2-bjorn.andersson@linaro.org>
-User-Agent: Mutt/1.10.1+81 (426a6c1) (2018-08-26)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 06, 2019 at 04:16:41PM -0800, Bjorn Andersson wrote:
-> Add compatible and necessary clocks and resets definitions for the
-> SDM845 PCIe controller.
-> 
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Reviewed-by: Vinod Koul <vkoul@kernel.org>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
+This patch series converts the RPMH/RPM power-domain bindings to yaml and
+adds the RPMH power-domain device node for SC7180 SoCs.
 
-Reviewed-by: Andrew Murray <andrew.murray@arm.com>
+Sibi Sankar (2):
+  dt-bindings: power: rpmpd: Convert rpmpd bindings to yaml
+  arm64: dts: qcom: sc7180: Add rpmh power-domain node
 
-> 
-> Changes since v1:
-> - Picked up Rob and Vinod's R-b
-> 
->  .../devicetree/bindings/pci/qcom,pcie.txt     | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> index ada80b01bf0c..981b4de12807 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> @@ -11,6 +11,7 @@
->  			- "qcom,pcie-ipq4019" for ipq4019
->  			- "qcom,pcie-ipq8074" for ipq8074
->  			- "qcom,pcie-qcs404" for qcs404
-> +			- "qcom,pcie-sdm845" for sdm845
->  
->  - reg:
->  	Usage: required
-> @@ -126,6 +127,18 @@
->  			- "master_bus"	AXI Master clock
->  			- "slave_bus"	AXI Slave clock
->  
-> +-clock-names:
-> +	Usage: required for sdm845
-> +	Value type: <stringlist>
-> +	Definition: Should contain the following entries
-> +			- "aux"		Auxiliary clock
-> +			- "cfg"		Configuration clock
-> +			- "bus_master"	Master AXI clock
-> +			- "bus_slave"	Slave AXI clock
-> +			- "slave_q2a"	Slave Q2A clock
-> +			- "tbu"		PCIe TBU clock
-> +			- "pipe"	PIPE clock
-> +
->  - resets:
->  	Usage: required
->  	Value type: <prop-encoded-array>
-> @@ -188,6 +201,12 @@
->  			- "pwr"			PWR reset
->  			- "ahb"			AHB reset
->  
-> +- reset-names:
-> +	Usage: required for sdm845
-> +	Value type: <stringlist>
-> +	Definition: Should contain the following entries
-> +			- "pci"			PCIe core reset
-> +
->  - power-domains:
->  	Usage: required for apq8084 and msm8996/apq8096
->  	Value type: <prop-encoded-array>
-> -- 
-> 2.23.0
-> 
+ .../devicetree/bindings/power/qcom,rpmpd.txt  | 150 ----------------
+ .../devicetree/bindings/power/qcom,rpmpd.yaml | 170 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |  55 ++++++
+ 3 files changed, 225 insertions(+), 150 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/power/qcom,rpmpd.txt
+ create mode 100644 Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
