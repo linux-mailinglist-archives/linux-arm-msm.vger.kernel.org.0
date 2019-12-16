@@ -2,87 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E62D512100B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 17:49:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F2370121200
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 18:44:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726633AbfLPQtA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Dec 2019 11:49:00 -0500
-Received: from mail-pg1-f175.google.com ([209.85.215.175]:43907 "EHLO
-        mail-pg1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726181AbfLPQtA (ORCPT
+        id S1726275AbfLPRoI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Dec 2019 12:44:08 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:43274 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726133AbfLPRoI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Dec 2019 11:49:00 -0500
-Received: by mail-pg1-f175.google.com with SMTP id k197so4019255pga.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2019 08:48:59 -0800 (PST)
+        Mon, 16 Dec 2019 12:44:08 -0500
+Received: by mail-ed1-f68.google.com with SMTP id dc19so5701831edb.10;
+        Mon, 16 Dec 2019 09:44:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:subject:to:from:cc:user-agent:date;
-        bh=g0u6MYVXB1r8q7tLRy3ssmuddCpp1ygE+qNfEAR+tzs=;
-        b=GkO3p/N3v9DaMjY7s3JJKqo9ZYMrAiq7NezoyL1jtHl6rflpR5LpxodzDPOS8dZeg5
-         QtHOw6SaEFGm0JM8ZeTFp+c9CyZE3latVdmMaNlabZHZwEDIGKnqD4/f4WVZ92UEe6V0
-         JLkYF7c7oqGbJsZ4js+mM2KbizqOYu/UwJGSo=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dotsp4hlrRRgAJ8KtDm+ECaZ4Cv3RzpcnEOHjwNyGY4=;
+        b=XuMhWcCBF/5Ytd0QFb2aWT2ZjIhuShrmxVGkMOWEHF4GTXo/JJO3tpKzaYezLulgtb
+         ymJn6D9SihsyvAj/EkVlj+aj0p9Ywx+4WTU8EuNhn01x+niEpzjpq4vjuYeRmoNeByn4
+         PJZ0QlMrGdlv1Ma6updVH0Q6orL1dTU2clAJaH8wkau3kwvAj6eTD5Tpe4oSrym6hJ9Q
+         7eNQp6O33KdXkmOj224psFuq5lGg+mHv/9oIs69Uqb+zT1cnAuC1Iuw/itukC1gfD577
+         fUSzQTCBMpZ6lVtgzcUx0NJlloH5c2qOEvZWhWWlxw7dbGyvfsGEpCpyfTXO1vkLURHr
+         uZRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:subject:to:from:cc
-         :user-agent:date;
-        bh=g0u6MYVXB1r8q7tLRy3ssmuddCpp1ygE+qNfEAR+tzs=;
-        b=jtnFe0GOiqYXIc67o07X92I3XbQuiolPChLxSJVT535lxuq9jTRezHCTi50gKi1nh1
-         2Maep9VkPftZ2D+4MMugLzkENPF9WOBQAlIZw+8KecS2vplVqdD2Gw3kvCY+wUcmRZ1X
-         tz1a2GqvxQ7ex5/eVSxwthuumceXFFXsrOK4JQ1YLuytbc0mek8iBk0AgX5UPjBNtirS
-         Ttshqt4Cppd1prDGAz/lfTdNF2d9KJ7TQOUzXDuLMOv20lybWvNI2sDLxvCAmfiLEwvG
-         tfSmKT21XTwLyxmshXiBMqpvyDBqrm2AxDwgd14dt9Cu+Ms7Vpc1xYPi5/4GaVCRatwr
-         76QQ==
-X-Gm-Message-State: APjAAAV2JU8itavIduI0KIScNPbWoIizRTbHYN0vYP6RpFMiU42n9i3R
-        HbjsKIUG8whaiigLsHT+M3yHvg==
-X-Google-Smtp-Source: APXvYqxCcxTpMnkRTvpz5cLBjNYbPUx15IUg+xR6p8uH9udpwIzZK5vvkm1iTdzAgUHQrgxw+yGwzQ==
-X-Received: by 2002:a65:66d7:: with SMTP id c23mr19824054pgw.40.1576514939270;
-        Mon, 16 Dec 2019 08:48:59 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id d24sm23769672pfq.75.2019.12.16.08.48.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Dec 2019 08:48:57 -0800 (PST)
-Message-ID: <5df7b579.1c69fb81.c9187.3f3a@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dotsp4hlrRRgAJ8KtDm+ECaZ4Cv3RzpcnEOHjwNyGY4=;
+        b=Ps2hde2x8QP1EsCEDBn/eA2ZZjcSoGHsxLLQQaiCtXvscucy8JGpCpfrXjrFslMB8R
+         Njr4bCtAF3DVZZjIKXFCZZF2jczoTirrdXmzW1n7P/sDoFTK/6Qpao6oyVHI7tjG3sFZ
+         HJ9tcVlGJmvmEKdstUuZLw42oGU38wQYMmIF1Ix98kPAYfIB6YppGQx4mjOFfyDf227I
+         8K9sYauzagBD12gzY1Dt6aHtWbudPitg4UCGmq3dXFvvfMehw7Iy1cOpDYNipK3AJ1kv
+         3JnK5NRTDX0zqEXrogeM89c4UK9Zl+3wgjYsSN9v+Lhl/NTo867pMteRPLX6j7DfRkSy
+         4UwQ==
+X-Gm-Message-State: APjAAAVCZyXYuxFiLaxcURo+LN7t7a2GVb6fyzxWCGSFlNVuvOWveMGO
+        eKLJVeTvob2cOr2eXtRJeySKUfYpMZbOec3+9xA=
+X-Google-Smtp-Source: APXvYqzMZmKG4O0FupZLieU7MkUuk6V2ElDf+PeLMM9q5q0SW8+Pb9iyDBHD9J+QeQV1ICnDIpyJSoUw51ELTZ5J+Xk=
+X-Received: by 2002:aa7:d6d1:: with SMTP id x17mr365496edr.57.1576518246192;
+ Mon, 16 Dec 2019 09:44:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20191213064934.4112-1-saiprakash.ranjan@codeaurora.org>
-References: <20191213064934.4112-1-saiprakash.ranjan@codeaurora.org>
-Subject: Re: [PATCH] watchdog: qcom: Use platform_get_irq_optional() for bark irq
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        linux-watchdog@vger.kernel.org,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-User-Agent: alot/0.8.1
-Date:   Mon, 16 Dec 2019 08:48:56 -0800
+References: <1576514271-15687-1-git-send-email-jcrouse@codeaurora.org> <1576514271-15687-6-git-send-email-jcrouse@codeaurora.org>
+In-Reply-To: <1576514271-15687-6-git-send-email-jcrouse@codeaurora.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 16 Dec 2019 09:43:55 -0800
+Message-ID: <CAF6AEGsWAjgcsqMQEtCfUn9smqfVyOcf-Nn1+eJGrMuLkjgwRA@mail.gmail.com>
+Subject: Re: [PATCH v3 5/5] drm/msm/a6xx: Support split pagetables
+To:     Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Will Deacon <will@kernel.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        David Airlie <airlied@linux.ie>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Daniel Vetter <daniel@ffwll.ch>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sai Prakash Ranjan (2019-12-12 22:49:34)
-> platform_get_irq() prints an error message when the interrupt
-> is not available. So on platforms where bark interrupt is
-> not specified, following error message is observed on SDM845.
->=20
-> [    2.975888] qcom_wdt 17980000.watchdog: IRQ index 0 not found
->=20
-> This is also seen on SC7180, SM8150 SoCs as well.
-> Fix this by using platform_get_irq_optional() instead.
->=20
-> Fixes: 36375491a4395654 ("watchdog: qcom: support pre-timeout when the ba=
-rk irq is available")
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+On Mon, Dec 16, 2019 at 8:38 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
+>
+> Attempt to enable split pagetables if the arm-smmu driver supports it.
+> This will move the default address space from the default region to
+> the address range assigned to TTBR1. The behavior should be transparent
+> to the driver for now but it gets the default buffers out of the way
+> when we want to start swapping TTBR0 for context-specific pagetables.
+>
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+
+(my previous r-b's on the other patches from v2 carries over to v3)
+
 > ---
-
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-
+>
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 52 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 51 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 5dc0b2c..1c6da93 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -811,6 +811,56 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
+>         return (unsigned long)busy_time;
+>  }
+>
+> +static struct msm_gem_address_space *
+> +a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
+> +{
+> +       struct iommu_domain *iommu = iommu_domain_alloc(&platform_bus_type);
+> +       struct msm_gem_address_space *aspace;
+> +       struct msm_mmu *mmu;
+> +       u64 start, size;
+> +       u32 val = 1;
+> +       int ret;
+> +
+> +       if (!iommu)
+> +               return ERR_PTR(-ENOMEM);
+> +
+> +       /*
+> +        * Try to request split pagetables - the request has to be made before
+> +        * the domian is attached
+> +        */
+> +       iommu_domain_set_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val);
+> +
+> +       mmu = msm_iommu_new(&pdev->dev, iommu);
+> +       if (IS_ERR(mmu)) {
+> +               iommu_domain_free(iommu);
+> +               return ERR_CAST(mmu);
+> +       }
+> +
+> +       /*
+> +        * After the domain is attached, see if the split tables were actually
+> +        * successful.
+> +        */
+> +       ret = iommu_domain_get_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val);
+> +       if (!ret && val) {
+> +               /*
+> +                * The aperture start will be at the beginning of the TTBR1
+> +                * space so use that as a base
+> +                */
+> +               start = iommu->geometry.aperture_start;
+> +               size = 0xffffffff;
+> +       } else {
+> +               /* Otherwise use the legacy 32 bit region */
+> +               start = SZ_16M;
+> +               size = 0xffffffff - SZ_16M;
+> +       }
+> +
+> +       aspace = msm_gem_address_space_create(mmu, "gpu", start, size);
+> +       if (IS_ERR(aspace))
+> +               iommu_domain_free(iommu);
+> +
+> +       return aspace;
+> +}
+> +
+>  static const struct adreno_gpu_funcs funcs = {
+>         .base = {
+>                 .get_param = adreno_get_param,
+> @@ -832,7 +882,7 @@ static const struct adreno_gpu_funcs funcs = {
+>  #if defined(CONFIG_DRM_MSM_GPU_STATE)
+>                 .gpu_state_get = a6xx_gpu_state_get,
+>                 .gpu_state_put = a6xx_gpu_state_put,
+> -               .create_address_space = adreno_iommu_create_address_space,
+> +               .create_address_space = a6xx_create_address_space,
+>  #endif
+>         },
+>         .get_timestamp = a6xx_get_timestamp,
+> --
+> 2.7.4
