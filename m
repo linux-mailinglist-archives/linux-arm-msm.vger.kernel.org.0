@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 29588121223
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 18:49:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F2B8121690
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 19:30:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726281AbfLPRqY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Dec 2019 12:46:24 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:21456 "EHLO
+        id S1730908AbfLPSaO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Dec 2019 13:30:14 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:29899 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726141AbfLPRqY (ORCPT
+        by vger.kernel.org with ESMTP id S1728499AbfLPSaO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Dec 2019 12:46:24 -0500
+        Mon, 16 Dec 2019 13:30:14 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1576518383; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1576521013; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=rzuAqWFdTzrWO4clWvy7mwhpSIFXq93mC1ouQT7d0SU=; b=i+RmSP29LGcKHFfGNyrdMulgcQoTL1fMWa+2g56A1ijBU+6wW1OHXRPy3p/ayLbTInSiXXjv
- suGv1hY4/MWcWERJpeqc0TuCDF7HwNrC6n5F8PjcOvfHMUWDygDwa9+e6mcvqGUjOwx7c0zx
- PjNdaSR6xmUyWHfQM4GVYrkxfpo=
+ Subject: Sender; bh=TfuUlFywcHJXSJ0alv7KYk4aSCzvzEvraTMqxX+xQ+w=; b=Q5OnBk5JGscogj+6+jLM277Yscb/a7Cl4fe7WWle/IpYlU5EeCps4x2Awwand8uMWNTkMAdO
+ A8lUCBuUN3JizfRj0WdVMKBPneEmhyzgnbTVX36ksv1cONwoBQttjyVmC6EuEm188N3GoN6J
+ 48nbcPjt6x3AIMb+Q9gxK9+3Pkc=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5df7c2ee.7f4ad81ac420-smtp-out-n02;
- Mon, 16 Dec 2019 17:46:22 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5df7cd33.7f2d8a1e65e0-smtp-out-n03;
+ Mon, 16 Dec 2019 18:30:11 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0A126C447A2; Mon, 16 Dec 2019 17:46:22 +0000 (UTC)
+        id D1402C447A3; Mon, 16 Dec 2019 18:30:09 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,29 +34,40 @@ Received: from [10.79.43.230] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5C946C433A2;
-        Mon, 16 Dec 2019 17:46:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5C946C433A2
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1B666C43383;
+        Mon, 16 Dec 2019 18:30:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1B666C43383
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-Subject: Re: [PATCH 2/3] dt-bindings: soc: qcom: apr: Add protection domain
- bindings
-To:     Rob Herring <robh@kernel.org>
-Cc:     bjorn.andersson@linaro.org, srinivas.kandagatla@linaro.org,
-        tsoni@codeaurora.org, agross@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        rnayak@codeaurora.org
-References: <20191118142728.30187-1-sibis@codeaurora.org>
- <0101016e7ee9c591-d04928e8-6440-488c-a956-3b5c9b8988bf-000000@us-west-2.amazonses.com>
- <20191203215248.GA1688@bogus>
+Subject: Re: [PATCH v3 2/2] interconnect: qcom: Add OSM L3 interconnect
+ provider support
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        David Dai <daidavid1@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        linux-kernel-owner@vger.kernel.org
+References: <20191118154435.20357-1-sibis@codeaurora.org>
+ <0101016e7f30ad15-18908ef0-a2b9-4a2a-bf32-6cb3aa447b01-000000@us-west-2.amazonses.com>
+ <CAE=gft5jGagsFS2yBeJCLt9R26RQjx9bfMxhQu8Jj4uc4ca40w@mail.gmail.com>
+ <0101016e83897442-ecc4c00f-c0d1-4c2c-92ed-ce78e65c0935-000000@us-west-2.amazonses.com>
+ <0101016eac068d05-761f0d60-b1ef-400f-bf84-3164c2a26d2e-000000@us-west-2.amazonses.com>
+ <CAE=gft5cS54qn0JjxO58xL6sFyQk4t=8ofLFWPUSVQ9sdU4XpQ@mail.gmail.com>
 From:   Sibi Sankar <sibis@codeaurora.org>
-Message-ID: <a19623d4-ab33-d87e-5925-d0411d7479dd@codeaurora.org>
-Date:   Mon, 16 Dec 2019 23:16:10 +0530
+Message-ID: <b11c2116-f247-17c5-69ca-071183365a01@codeaurora.org>
+Date:   Tue, 17 Dec 2019 00:00:01 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <20191203215248.GA1688@bogus>
+In-Reply-To: <CAE=gft5cS54qn0JjxO58xL6sFyQk4t=8ofLFWPUSVQ9sdU4XpQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -65,118 +76,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Rob,
-Thanks for the review :)
+Hey Evan,
 
-On 12/4/19 3:22 AM, Rob Herring wrote:
-> On Mon, Nov 18, 2019 at 02:28:00PM +0000, Sibi Sankar wrote:
->> Add optional "qcom,protection-domain" bindings for APR services. This
->> helps to capture the dependencies between APR services and the PD on
->> which each apr service run.
+On 12/7/19 12:46 AM, Evan Green wrote:
+> On Wed, Nov 27, 2019 at 12:42 AM Sibi Sankar <sibis@codeaurora.org> wrote:
 >>
->> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
->> ---
->>   .../devicetree/bindings/soc/qcom/qcom,apr.txt | 59 +++++++++++++++++++
->>   1 file changed, 59 insertions(+)
+>> Hey Evan/Georgi,
 >>
->> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
->> index db501269f47b8..f87c0b2a48de4 100644
->> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
->> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
->> @@ -45,6 +45,12 @@ by the individual bindings for the specific service
->>   			12 - Ultrasound stream manager.
->>   			13 - Listen stream manager.
->>   
->> +- qcom,protection-domain
->> +	Usage: optional
->> +	Value type: <stringlist>
->> +	Definition: Must list the protection domain service name and path
->> +		    that the particular apr service has a dependency on.
+>> https://git.linaro.org/people/georgi.djakov/linux.git/commit/?h=icc-dev&id=9197da7d06e88666d1588e3c21a743e60381264d
+>>
+>> With the "Redefine interconnect provider
+>> DT nodes for SDM845" series, wouldn't it
+>> make more sense to define the OSM_L3 icc
+>> nodes in the sdm845.c icc driver and have
+>> the common helpers in osm_l3 driver? Though
+>> we don't plan on linking the OSM L3 nodes
+>> to the other nodes on SDM845/SC7180, we
+>> might have GPU needing to be linked to the
+>> OSM L3 nodes on future SoCs. Let me know
+>> how you want this done.
+>>
+>> Anyway I'll re-spin the series once the
+>> SDM845 icc re-work gets re-posted.
 > 
-> Is name and path 2 values? Length is always 2?
+> I don't have a clear picture of the proposal. You'd put the couple of
+> extra defines in sdm845.c for the new nodes. But then you'd need to do
+> something in icc_set() of sdm845. Is that when you'd call out to the
+> osm_l3 driver?
 
-Yes the length is always 2 values i.e service name and the path where
-the service is hosted.
+with sdm845 icc rework "https://patchwork.kernel.org/cover/11293399/"
+osm l3 icc provider needs to know the total number of rsc icc nodes,
+i.e I can define the total number of rsc nodes and continue using the
+same design as v3 since on sdm845/sc7180 gpu is not cache coherent.
 
-> 
-> You've got the same values for every case in the example. Is there a
-> defined list of possible values?
-
-apr bus is expected to track just the "avs/audio" running on
-msm/adsp/audio_pd on msm8998 and sdm845 SoCs. So shouldn't
-make much sense to list all possible service names:paths here.
-
-However the qcom,protection-domain is expected to be used
-on fastrpc compute bank nodes as well, where they track other
-services:paths. I'll make sure to include all the possible
-values that fastrpc cb nodes depend on.
+or have the osm l3 table population logic and osm icc_set as helpers
+and have it called from the sdm845/sc7180 icc driver so that we would
+be able to link osm_l3 with rsc nodes on future qcom SoCs.
 
 > 
->> +
->>   = EXAMPLE
->>   The following example represents a QDSP based sound card on a MSM8996 device
->>   which uses apr as communication between Apps and QDSP.
->> @@ -82,3 +88,56 @@ which uses apr as communication between Apps and QDSP.
->>   			...
->>   		};
->>   	};
->> +
->> += EXAMPLE 2
->> +The following example represents a QDSP based sound card on SDM845 device.
->> +Here the apr services are dependent on "avs/audio" service running on AUDIO
->> +Protection Domain hosted on ADSP remote processor.
->> +
->> +	apr {
->> +		compatible = "qcom,apr-v2";
->> +		qcom,glink-channels = "apr_audio_svc";
->> +		qcom,apr-domain = <APR_DOMAIN_ADSP>;
->> +
->> +		q6core {
->> +			compatible = "qcom,q6core";
->> +			reg = <APR_SVC_ADSP_CORE>;
->> +			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
->> +		};
->> +
->> +		q6afe: q6afe {
->> +			compatible = "qcom,q6afe";
->> +			reg = <APR_SVC_AFE>;
->> +			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
->> +			q6afedai: dais {
->> +				compatible = "qcom,q6afe-dais";
->> +				#sound-dai-cells = <1>;
->> +
->> +				qi2s@22 {
->> +					reg = <22>;
->> +					qcom,sd-lines = <3>;
->> +				};
->> +			};
->> +		};
->> +
->> +		q6asm: q6asm {
->> +			compatible = "qcom,q6asm";
->> +			reg = <APR_SVC_ASM>;
->> +			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
->> +			q6asmdai: dais {
->> +				compatible = "qcom,q6asm-dais";
->> +				#sound-dai-cells = <1>;
->> +				iommus = <&apps_smmu 0x1821 0x0>;
->> +			};
->> +		};
->> +
->> +		q6adm: q6adm {
->> +			compatible = "qcom,q6adm";
->> +			reg = <APR_SVC_ADM>;
->> +			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
->> +			q6routing: routing {
->> +				compatible = "qcom,q6adm-routing";
->> +				#sound-dai-cells = <0>;
->> +			};
->> +		};
->> +	};
->> -- 
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->>
 
 -- 
 Qualcomm Innovation Center, Inc.
