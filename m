@@ -2,53 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BEDE111FFF9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 09:38:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C519A120008
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 09:40:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726937AbfLPIiS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Dec 2019 03:38:18 -0500
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:34916 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726722AbfLPIiS (ORCPT
+        id S1726818AbfLPIks (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Dec 2019 03:40:48 -0500
+Received: from mail-vk1-f196.google.com ([209.85.221.196]:37733 "EHLO
+        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726756AbfLPIks (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Dec 2019 03:38:18 -0500
-Received: by mail-ua1-f65.google.com with SMTP id y23so1796364ual.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2019 00:38:17 -0800 (PST)
+        Mon, 16 Dec 2019 03:40:48 -0500
+Received: by mail-vk1-f196.google.com with SMTP id b129so658343vka.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2019 00:40:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=OP2XiHV+z9XRmOc6CVIQd7a0qzdvr1/Q3scZZYxr1/c=;
-        b=r186NgrdfTPHE2tpoPDJa7x9tQuQ/QFHgodakc61Ob+nFNnXNgovHI3f1/7CUBT/1v
-         4wcw0kUA9wCRMKc6fuAe+RcZzpp3T5EIzlUrObzeRWgYp5L0/dyQfTt8+/apH0TPJ7Oc
-         2gVCCjJ9L61hrUgACxE7Gx2t7WFaRzRM7IpiJWo+wTfIg292hispYmrOsZzsBvoLMNfF
-         Ir+O1OpLqiEbXITQT6ito6EowgfIVcrr5s8cMA7qBowJYvBKBKvicFeL2es39Dvv6J+2
-         aYXnn6xwZg35oIC5h21qC/j/dgwQFtPSlC2JSprHr5rDSXU9LNIuIsQCUbktM0XaS5j7
-         bo9w==
+        bh=9i8NLL29zOxzbeVv9WJDSdkA/n85OdBQUr5rvukK5uU=;
+        b=goGA1RWvfOpUyi458vfd6a+MRTeiYH8AA4LHoXCnfQndO7lmx0SMaqPpy7gs0obgPb
+         IYga8C6Ig7W6NUigxjRVd8gi8xvdfrq2Yg9VV/cD0/mhrLB80YzFHMf5DqJrZlekghHx
+         c7lK0blM2eo+c4nzNRrH9Tg/rX+ONd3P/qSNYrexf+7xL4FTs06/TDO587z5SUSIL+sk
+         +0jyNnZljRzXLNlCu//uf6N6Fb7bHXXFQr5M/NypiCSONznJ3gcE7/0D/STSxXiHuujS
+         QvqdB89KSQDprKxku4kv/X9zUGt24/sJUnt95m45V3reqnAvCrTOVbiYnWmMJwEKqkBq
+         XSgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=OP2XiHV+z9XRmOc6CVIQd7a0qzdvr1/Q3scZZYxr1/c=;
-        b=h36kZgRcBa8cR4vFXxd2wva8zm+8rdnFjQTBBx8Mf58eCvIRndNevlLMox3H7+huN9
-         nEf3jkAekoLA+JQNJEzgdSlcWrNpzem0f7BKMOLBSYWxEqmdD4SqqQgiC2H4nYVVUaop
-         332NQ0hIo0L9vbQ8qLx93mN7Ay7MKqq6BMrDbzjA+X/EIG6nr2HhnQgwfgqhGjKkC3Jr
-         OUL5toBv2clRMWzz8DajTlOwAXCOIXnR5SbyoUV3CjyS1e6PhaBWaO083sEjoWKp5r3s
-         rmU9eWYoc93UMdKP7JZXqDOV+udGM7Hzuj1o3OBvvmn0inIFubjTBulrQr7vXo7LfOFb
-         6+Og==
-X-Gm-Message-State: APjAAAVPqaf+TNBhdVHV1FdMHeGjF7vQIOGiKNCfOUlHsKSHPLNZFRev
-        RgadTMc3cjUasDSYtLmEiP1RANb0fFmc2S3GD2lpMA==
-X-Google-Smtp-Source: APXvYqxWyOGptlYcgZ8GG7DRjA0eoZhkshCQNRcbI8e/5CoIydNXg1zYY8yTVFSvvZjiGUSUFzsofLus8fU624q0t2I=
-X-Received: by 2002:ab0:5512:: with SMTP id t18mr22644336uaa.128.1576485497137;
- Mon, 16 Dec 2019 00:38:17 -0800 (PST)
+        bh=9i8NLL29zOxzbeVv9WJDSdkA/n85OdBQUr5rvukK5uU=;
+        b=BOv7NyUuOrYFHVOmohZKCO3Bcbl85rcEGOFLMtG7COBqu5n+YTB3vcNRqs45YBWL/J
+         1vL9RqbTWDFadTLT0EFbAlpT3xjkcxoCkqUh1nHwo6JaSOAd7ByeDe/OIcpR3Afu0ffv
+         PUVVcxjPxCcPLUY9hTHgGDLPhDsBf9pE14Ct/il/SB/TEpwDgGmqmeMCWKBFDg/lE6mA
+         Pw8ZDtMwscOM2uMDKfgg4yTtoVdWOJAmHG6NgnEZHqhV3XEwQrJcIo/TqPz/KWRSwM/y
+         5cV+Quuprx8XXP0akkEfrry4G++wKe1A/YRR78+uSA0UdVTwg78hiCymVPR2clvNdbZe
+         K8Yw==
+X-Gm-Message-State: APjAAAXdkd9Lv0jjPlTTsYNzfhzxXsnItnQQrOTidv1HZfAU96kBtphx
+        /XISo/9OQmidKpgt9CjhXKCT9bCiZb9MTUH965M5Fg==
+X-Google-Smtp-Source: APXvYqwIwOmAQikFuLGCCF1qYOpK8AdyUVEAbAZ6s0wZ/Mc/9otdS7XTcULAnkpFiXprqh2XiRdxi3ytr98rUBpzSkA=
+X-Received: by 2002:a1f:7288:: with SMTP id n130mr24179450vkc.46.1576485647023;
+ Mon, 16 Dec 2019 00:40:47 -0800 (PST)
 MIME-Version: 1.0
-References: <0101016ef36a5c54-2907cf32-2269-4a8c-9447-b086e7c86d98-000000@us-west-2.amazonses.com>
-In-Reply-To: <0101016ef36a5c54-2907cf32-2269-4a8c-9447-b086e7c86d98-000000@us-west-2.amazonses.com>
+References: <1576041834-23084-1-git-send-email-rnayak@codeaurora.org> <0101016ef36a9118-f2919277-effa-4cd5-adf8-bbc8016f31df-000000@us-west-2.amazonses.com>
+In-Reply-To: <0101016ef36a9118-f2919277-effa-4cd5-adf8-bbc8016f31df-000000@us-west-2.amazonses.com>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 16 Dec 2019 09:38:06 +0100
-Message-ID: <CACRpkdY9ETQRHn7x2D2XVLZ810Uo1cPQxMBqTy5LnrORRNjTVw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add new qup functions
- for sc7180
+Date:   Mon, 16 Dec 2019 09:40:36 +0100
+Message-ID: <CACRpkdYZi2tC-t8R6_V85yuSyE82ARjZzSE+NSB1_QbmjW0Rag@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] pinctrl: qcom: sc7180: Add new qup functions
 To:     Rajendra Nayak <rnayak@codeaurora.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         MSM <linux-arm-msm@vger.kernel.org>,
@@ -64,14 +63,20 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Wed, Dec 11, 2019 at 6:24 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
 
-> Add new qup functions for qup02/04/11 and qup13 wherein multiple
-> functions (for i2c and uart) share the same pin. This allows users
-> to identify which specific qup function for the instance one needs
-> to use for the pin.
+> on sc7180 we have cases where multiple functions from the same
+> qup instance share the same pin. This is true for qup02/04/11 and qup13.
+> Add new function names to distinguish which qup function to use.
 >
+> The device tree files for this platform haven't landed in mainline yet,
+> so there aren't any users upstream who should break with this change
+> in function names, however, anyone using the devicetree files that were
+> posted on the lists and using these specific function names will need
+> to update their changes.
+>
+> Reported-by: Stephen Boyd <swboyd@chromium.org>
 > Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 
-Patch applied for v5.6 with the ACKs.
+Patch applied with the ACKs. Thanks!
 
 Yours,
 Linus Walleij
