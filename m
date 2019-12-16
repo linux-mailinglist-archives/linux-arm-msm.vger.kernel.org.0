@@ -2,257 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DA188121987
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 19:57:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DA631219A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 20:06:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725836AbfLPS5i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Dec 2019 13:57:38 -0500
-Received: from mail-il1-f196.google.com ([209.85.166.196]:46678 "EHLO
-        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726141AbfLPS5h (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Dec 2019 13:57:37 -0500
-Received: by mail-il1-f196.google.com with SMTP id t17so6239039ilm.13;
-        Mon, 16 Dec 2019 10:57:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fRErO3p6DkzrKjGHgI+x7pKPjZQkWFKWkX/ri5ylyrc=;
-        b=QNe7q2ni/0HbANj4xw7ZJWlzvRh6yVfNlgdg8Zk0iAZRDSdUId4MRtHuF2rxWM8Thv
-         ImFjjwLDpyVRFLfOjpBx42Wfp5TMXew8VfcBzM+AGa2DLiHD9cCyl8BGARXaG4d9w9VE
-         Kfmohs4N2J003JXOBbydKQ8RoeZa5xuR93hSAlU1uctdCxBbTyYrP/X7kQoDAX9Ui+bQ
-         PdNaSZA8AcThzurom2HFulFWHXxlq8TD4D48FE9Hc5+niaa4OArUz7tz+han43KzVyU5
-         qos5U6MeFiKgoPty2zBZRiLFO3f7WoJfxHzq803eT9vPgteiYOyXBUN/Hr7jcpJ0nU/7
-         WdwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fRErO3p6DkzrKjGHgI+x7pKPjZQkWFKWkX/ri5ylyrc=;
-        b=eckbDc3IZLp9IqjeyKnJz0jcW/PQjt0E4vhsojepfnccDmxFasClFF8X7GPhLxGNz/
-         fWWdamZ5W8x02Ecg7AKISRwyMBVYWPr1xo7l9LO0cqInG68Rc8be8xhOXBt40GnotYUh
-         LEVhWSWzBfa4DmnSeD9JS54lsJJNJxVpsSFyYKe9ApibShhvZxCkvJqbYwEQ2w6CXbeI
-         9/tsJQhvnrtb9hmTAHEBlbVzg6fZ0Byxt/8M6cuotD555EUnPhhRMKznQNqb2uOKtySb
-         0kJvvKV1qFplRfZ1ewQEatWsChFnPj5Sq5Pzo/NUi77jHkBMGoytJKn7LiWfi9EsuuOD
-         jZGw==
-X-Gm-Message-State: APjAAAWvLAk2D6KXkw4WqhDLrRix5A13dk4YUQIEugfLZh+fqse60QUd
-        kzOruR3sxQmtvY9nST8PF8OyMiAqa7J8Q9hKLDE=
-X-Google-Smtp-Source: APXvYqxaoCR3QZIQJUHBFbypBRT5pC0Du6V+0URCSBapyjSPUoxEmqYoKvzzx3VBu7ZRAjqM9PGmSPu9pHd1XKFy37s=
-X-Received: by 2002:a92:465c:: with SMTP id t89mr14007894ila.263.1576522656793;
- Mon, 16 Dec 2019 10:57:36 -0800 (PST)
+        id S1726858AbfLPTEX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Dec 2019 14:04:23 -0500
+Received: from mail.kernel.org ([198.145.29.99]:59832 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726390AbfLPTEX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 16 Dec 2019 14:04:23 -0500
+Received: from localhost (unknown [122.182.192.178])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3CF892064B;
+        Mon, 16 Dec 2019 19:04:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1576523062;
+        bh=n2niy3GX1/9dWzk5LJO7Idaltrdy2g6TUiU7ytqHdg4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=GrLm1kH8cGzprX5bRAdC9IFHf9PwgtB3rDM9Y1Rh4KyynOYRUxfFrdcO29vCOgCfS
+         S14SXrlvWYR1u/7RD/9MEzzKGP8YrjBDnYATHx8f8RDGUaSe7IQR9yNwwfN3hJH8Tj
+         MPM1KdIkBgL+6AY5w0e50P3IClgXBBcMGsxm00ao=
+Date:   Tue, 17 Dec 2019 00:34:15 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Can Guo <cang@codeaurora.org>
+Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        rnayak@codeaurora.org, linux-scsi@vger.kernel.org,
+        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
+        Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 2/7] scsi: ufs-qcom: Add reset control support for
+ host controller
+Message-ID: <20191216190415.GL2536@vkoul-mobl>
+References: <1573798172-20534-1-git-send-email-cang@codeaurora.org>
+ <1573798172-20534-3-git-send-email-cang@codeaurora.org>
 MIME-Version: 1.0
-References: <20191112104854.20850-1-masneyb@onstation.org> <CAOCk7NosRhRp3vZxg2Nx8106PQ0ryo5b68cUv605XUzCm6gYPA@mail.gmail.com>
- <20191113112334.GA18702@onstation.org> <20191203014006.GA7756@onstation.org>
- <CAOCk7NpHE7kPX5tc=qUJo9qM-7Qzg2E+zmmmhBdnnVwJ+i5XLg@mail.gmail.com> <20191213024007.GA23636@onstation.org>
-In-Reply-To: <20191213024007.GA23636@onstation.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Mon, 16 Dec 2019 11:57:25 -0700
-Message-ID: <CAOCk7Np7VkuzFTN_CEqwPFwgu9thcPBMpuQpa3=KMdyahfE8uw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/mdp5: enable autocommit
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>, Sean Paul <sean@poorly.run>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1573798172-20534-3-git-send-email-cang@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 12, 2019 at 7:40 PM Brian Masney <masneyb@onstation.org> wrote:
->
-> Hi Jeffrey,
->
-> On Tue, Dec 03, 2019 at 07:18:31AM -0700, Jeffrey Hugo wrote:
-> > On Mon, Dec 2, 2019 at 6:40 PM Brian Masney <masneyb@onstation.org> wrote:
-> > > On Wed, Nov 13, 2019 at 06:23:34AM -0500, Brian Masney wrote:
-> > > > On Tue, Nov 12, 2019 at 08:38:27AM -0700, Jeffrey Hugo wrote:
-> > > > > On Tue, Nov 12, 2019 at 3:49 AM Brian Masney <masneyb@onstation.org> wrote:
-> > > > > >
-> > > > > > Since the introduction of commit 2d99ced787e3 ("drm/msm: async commit
-> > > > > > support"), command-mode panels began throwing the following errors:
-> > > > > >
-> > > > > >     msm fd900000.mdss: pp done time out, lm=0
-> > > > > >
-> > > > > > Let's fix this by enabling the autorefresh feature that's available in
-> > > > > > the MDP starting at version 1.0. This will cause the MDP to
-> > > > > > automatically send a frame to the panel every time the panel invokes
-> > > > > > the TE signal, which will trigger the PP_DONE IRQ. This requires not
-> > > > > > sending a START signal for command-mode panels.
-> > > > > >
-> > > > > > This fixes the error and gives us a counter for command-mode panels that
-> > > > > > we can use to implement async commit support for the MDP5 in a follow up
-> > > > > > patch.
-> > > > > >
-> > > > > > Signed-off-by: Brian Masney <masneyb@onstation.org>
-> > > > > > Suggested-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> > > > > > ---
-> > > > > >  drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 15 ++++++++++++++-
-> > > > > >  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c  |  9 +--------
-> > > > > >  2 files changed, 15 insertions(+), 9 deletions(-)
-> > > > > >
-> > > > > > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> > > > > > index 05cc04f729d6..539348cb6331 100644
-> > > > > > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> > > > > > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> > > > > > @@ -456,6 +456,7 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
-> > > > > >  {
-> > > > > >         struct mdp5_crtc *mdp5_crtc = to_mdp5_crtc(crtc);
-> > > > > >         struct mdp5_crtc_state *mdp5_cstate = to_mdp5_crtc_state(crtc->state);
-> > > > > > +       struct mdp5_pipeline *pipeline = &mdp5_cstate->pipeline;
-> > > > > >         struct mdp5_kms *mdp5_kms = get_kms(crtc);
-> > > > > >         struct device *dev = &mdp5_kms->pdev->dev;
-> > > > > >
-> > > > > > @@ -493,9 +494,21 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
-> > > > > >
-> > > > > >         mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->err);
-> > > > > >
-> > > > > > -       if (mdp5_cstate->cmd_mode)
-> > > > > > +       if (mdp5_cstate->cmd_mode) {
-> > > > > >                 mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->pp_done);
-> > > > > >
-> > > > > > +               /*
-> > > > > > +                * Enable autorefresh so we get regular ping/pong IRQs.
-> > > > > > +                * - Bit 31 is the enable bit
-> > > > > > +                * - Bits 0-15 represent the frame count, specifically how many
-> > > > > > +                *   TE events before the MDP sends a frame.
-> > > > > > +                */
-> > > > > > +               mdp5_write(mdp5_kms,
-> > > > > > +                          REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp),
-> > > > > > +                          BIT(31) | BIT(0));
-> > > > > > +               crtc_flush_all(crtc);
-> > > > > > +       }
-> > > > > > +
-> > > > > >         mdp5_crtc->enabled = true;
-> > > > > >  }
-> > > > > >
-> > > > > > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-> > > > > > index 030279d7b64b..aee295abada3 100644
-> > > > > > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-> > > > > > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-> > > > > > @@ -187,14 +187,7 @@ static bool start_signal_needed(struct mdp5_ctl *ctl,
-> > > > > >         if (!ctl->encoder_enabled)
-> > > > > >                 return false;
-> > > > > >
-> > > > > > -       switch (intf->type) {
-> > > > > > -       case INTF_WB:
-> > > > > > -               return true;
-> > > > > > -       case INTF_DSI:
-> > > > > > -               return intf->mode == MDP5_INTF_DSI_MODE_COMMAND;
-> > > > > > -       default:
-> > > > > > -               return false;
-> > > > > > -       }
-> > > > > > +       return intf->type == INTF_WB;
-> > > > > >  }
-> > > > >
-> > > > > I don't think this fully works.
-> > > > >
-> > > > > The whole "flush" thing exists because the configuration is double
-> > > > > buffered.  You write to the flush register to tell the hardware to
-> > > > > pickup the new configuration, but it doesn't do that automatically.
-> > > > > It only picks up the new config on the next "vsync".  When you have a
-> > > > > video mode panel, you have the timing engine running, which drives
-> > > > > that.  With a command mode panel, you have either the start signal, or
-> > > > > the auto refresh to do the same, but you have a bit of a chicken and
-> > > > > egg situation where if you are programming the hardware from scratch,
-> > > > > autorefresh isn't already enabled to then pickup the config to enable
-> > > > > autorefresh. In this case, you'll need a single start to kick
-> > > > > everything off.  However, if say the bootloader already configured
-> > > > > things and has autorefresh running, then you need to not do that start
-> > > > > because you'll overload the DSI like you saw.
-> > > >
-> > > > As part of my testing for this work, I added a log statement to
-> > > > mdp5_crtc_pp_done_irq() and it shows that a PP_IRQ comes in consistently
-> > > > every ~0.0166 seconds, which is about 60 HZ. Without this change, plus
-> > > > the 3 commits I mentioned in an earlier email related to the async
-> > > > commit support, the PP IRQs come in at a variety of times: between every
-> > > > ~0.0140 and ~0.2224 seconds. That's why I assumed that this was working.
-> > > >
-> > > > If I call send_start_signal() inside mdp5_crtc_atomic_enable(), then the
-> > > > display does not work properly.
-> > >
-> > > I'd like to get the 'pp done time out' errors that are now occurring
-> > > upstream for command-mode panels fixed. As I mentioned above, this patch
-> > > fixes the problem on the Nexus 5 and the pp done interrupts are
-> > > delivered at approximately 60 HZ. I don't have any other command-mode
-> > > panels to test.
-> > >
-> > > I'm not sure how to proceed here since sending the start command breaks
-> > > the display. I'm likely putting that command in the wrong spot.
-> >
-> > Sorry, I didn't realize you were waiting on me,
-> >
-> > I'm traveling currently, so this is more off the top of my head than
-> > looking at the code/docs.  What I'm thinking is that we want to get
-> > autorefresh enabled, which would be simple except that the bootloader
-> > may have already enabled it for us.  Perhaps we have a state flag that
-> > indicates if autorefresh is enabled, and if so, it skips the start
-> > command (where the start command is normally in the code).  When we
-> > boot up, we check the hardware and set the flag if its already enabled
-> > (note I just realized the flag is per ping pong, so we need multiple
-> > flags I guess).  If the flag is not enabled when we go to use the
-> > start command, we issue the start, then set the flag.  The only catch
-> > is I don't know recall the exact sequence of when we configure the
-> > ping pong in the entire initialization sequence.  We may configure a
-> > bunch of stuff, but not the ping pong, flush the config (which issues
-> > a start) and then get stuck because we didn't set the autorefresh.
->
-> I finally had a chance look into this tonight. This makes sense to me:
-> the double buffering of the configuration, the start signal, and a
-> separate flag for each of the 4 ping pongs on the MDP5.
->
-> The part that I'm still unsure about is querying the initial state from
-> the boot loader to see if autorefresh is already enabled and whether or
-> not a single START command is needed. Here's a slightly modified snippet
-> from mdp5_crtc_atomic_enable() in my patch above:
->
->   if (mdp5_cstate->cmd_mode) {
->      /* mdp5_read() returns 0 */
->      val = mdp5_read(mdp5_kms,
->                      REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp));
->
->      mdp5_write(mdp5_kms,
->                 REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp),
->                 BIT(31) | BIT(0));
->
->      crtc_flush_all(crtc);
->
->      /* mdp5_read() now returns 0x80000001 */
->      val = mdp5_read(mdp5_kms,
->                      REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp));
->   }
->
-> So I assume that the boot loader is not enabling autorefresh on this
-> board since the value from the first read is zero? Or more likely, that
-> since this is double buffered that the first mdp5_read() is reading from
-> the configuration buffer that's not active yet and it defaults to 0? Is
-> there a way to query the other configuration buffer that's currently
-> active?
+Hi Can,
 
-Sorry, catching up now that I'm back from travel
+On 14-11-19, 22:09, Can Guo wrote:
+> Add reset control for host controller so that host controller can be reset
+> as required in its power up sequence.
 
-Its not possible to read the "shadow" registers that have the active
-config.  However, if we can trust that the bootloader is doing the
-right thing, then the configuration register you can read should match
-the shadow registers.  The only way the bootloader could screw up is
-if it didn't flush the config, but then we wouldn't have boot splash
-which would be very easy to catch.
+I am seeing a regression on UFS on SM8150-mtp with this patch. I think
+Jeff is seeing same one lenove laptop on 8998.
 
-In short, if your first read is 0, then bootloader didn't enable autorefresh.
+845 does not seem to have this issue and only thing I can see is that on
+sm8150 and 8998 we define reset as:
 
->
-> Why do I see the ping pong IRQs delivered consistently around 60 HZ once
-> I enable autorefresh with the patch that started this thread?
+                        resets = <&gcc GCC_UFS_BCR>;
+                        reset-names = "rst";
 
-Hmm.  Good question.  I would expect everything to be fine once
-autorefresh is enabled, but your initial patch leaves questions about
-how that config is taking effect in the first place.
+Thanks
 
->
-> Sorry if I'm being dense here.
->
-> Brian
+> 
+> Signed-off-by: Can Guo <cang@codeaurora.org>
+> ---
+>  drivers/scsi/ufs/ufs-qcom.c | 53 +++++++++++++++++++++++++++++++++++++++++++++
+>  drivers/scsi/ufs/ufs-qcom.h |  3 +++
+>  2 files changed, 56 insertions(+)
+> 
+> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+> index a5b7148..c69c29a1c 100644
+> --- a/drivers/scsi/ufs/ufs-qcom.c
+> +++ b/drivers/scsi/ufs/ufs-qcom.c
+> @@ -246,6 +246,44 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
+>  	mb();
+>  }
+>  
+> +/**
+> + * ufs_qcom_host_reset - reset host controller and PHY
+> + */
+> +static int ufs_qcom_host_reset(struct ufs_hba *hba)
+> +{
+> +	int ret = 0;
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +
+> +	if (!host->core_reset) {
+> +		dev_warn(hba->dev, "%s: reset control not set\n", __func__);
+> +		goto out;
+> +	}
+> +
+> +	ret = reset_control_assert(host->core_reset);
+> +	if (ret) {
+> +		dev_err(hba->dev, "%s: core_reset assert failed, err = %d\n",
+> +				 __func__, ret);
+> +		goto out;
+> +	}
+> +
+> +	/*
+> +	 * The hardware requirement for delay between assert/deassert
+> +	 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
+> +	 * ~125us (4/32768). To be on the safe side add 200us delay.
+> +	 */
+> +	usleep_range(200, 210);
+> +
+> +	ret = reset_control_deassert(host->core_reset);
+> +	if (ret)
+> +		dev_err(hba->dev, "%s: core_reset deassert failed, err = %d\n",
+> +				 __func__, ret);
+> +
+> +	usleep_range(1000, 1100);
+> +
+> +out:
+> +	return ret;
+> +}
+> +
+>  static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+>  {
+>  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> @@ -254,6 +292,12 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+>  	bool is_rate_B = (UFS_QCOM_LIMIT_HS_RATE == PA_HS_MODE_B)
+>  							? true : false;
+>  
+> +	/* Reset UFS Host Controller and PHY */
+> +	ret = ufs_qcom_host_reset(hba);
+> +	if (ret)
+> +		dev_warn(hba->dev, "%s: host reset returned %d\n",
+> +				  __func__, ret);
+> +
+>  	if (is_rate_B)
+>  		phy_set_mode(phy, PHY_MODE_UFS_HS_B);
+>  
+> @@ -1101,6 +1145,15 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+>  	host->hba = hba;
+>  	ufshcd_set_variant(hba, host);
+>  
+> +	/* Setup the reset control of HCI */
+> +	host->core_reset = devm_reset_control_get(hba->dev, "rst");
+> +	if (IS_ERR(host->core_reset)) {
+> +		err = PTR_ERR(host->core_reset);
+> +		dev_warn(dev, "Failed to get reset control %d\n", err);
+> +		host->core_reset = NULL;
+> +		err = 0;
+> +	}
+> +
+>  	/* Fire up the reset controller. Failure here is non-fatal. */
+>  	host->rcdev.of_node = dev->of_node;
+>  	host->rcdev.ops = &ufs_qcom_reset_ops;
+> diff --git a/drivers/scsi/ufs/ufs-qcom.h b/drivers/scsi/ufs/ufs-qcom.h
+> index d401f17..2d95e7c 100644
+> --- a/drivers/scsi/ufs/ufs-qcom.h
+> +++ b/drivers/scsi/ufs/ufs-qcom.h
+> @@ -6,6 +6,7 @@
+>  #define UFS_QCOM_H_
+>  
+>  #include <linux/reset-controller.h>
+> +#include <linux/reset.h>
+>  
+>  #define MAX_UFS_QCOM_HOSTS	1
+>  #define MAX_U32                 (~(u32)0)
+> @@ -233,6 +234,8 @@ struct ufs_qcom_host {
+>  	u32 dbg_print_en;
+>  	struct ufs_qcom_testbus testbus;
+>  
+> +	/* Reset control of HCI */
+> +	struct reset_control *core_reset;
+>  	struct reset_controller_dev rcdev;
+>  
+>  	struct gpio_desc *device_reset;
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+
+-- 
+~Vinod
