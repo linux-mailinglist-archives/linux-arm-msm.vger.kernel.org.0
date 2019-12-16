@@ -2,157 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CF97911FE47
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 06:59:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A8DBF11FF93
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 09:24:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726520AbfLPF7Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Dec 2019 00:59:16 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:56387 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726633AbfLPF7P (ORCPT
+        id S1726756AbfLPIUK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Dec 2019 03:20:10 -0500
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:42856 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726712AbfLPIUK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Dec 2019 00:59:15 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1576475955; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=WfYVZRY7NUJGi0SdNulsMWXe+awHuELnsj9TepITErQ=; b=bmgMoBsreisGLp/GLwwq8zkeVCMCwn/Am4zFKClTGV76aX+VWHqxBPr8RZueTzzktH+GD0Mh
- lLXTsqU56L5Z+su3p9QiitIKJuZwnKX4XrHj58t11l8kqhYWHvwvAZdQAUqxfrsC4YMgERLs
- 5DbJP0Flss0KHtLgVWKCc6a0aew=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5df71d2d.7fb8ca01de68-smtp-out-n02;
- Mon, 16 Dec 2019 05:59:09 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BDB89C4479D; Mon, 16 Dec 2019 05:59:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from davidai-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: daidavid1)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E1231C433A2;
-        Mon, 16 Dec 2019 05:59:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E1231C433A2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=daidavid1@codeaurora.org
-From:   David Dai <daidavid1@codeaurora.org>
-To:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org
-Cc:     David Dai <daidavid1@codeaurora.org>, evgreen@google.com,
-        sboyd@kernel.org, ilina@codeaurora.org, seansw@qti.qualcomm.com,
-        elder@linaro.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: [PATCH v1 4/4] arm64: dts: sdm845: Redefine interconnect provider DT nodes
-Date:   Sun, 15 Dec 2019 21:58:45 -0800
-Message-Id: <1576475925-20601-5-git-send-email-daidavid1@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1576475925-20601-1-git-send-email-daidavid1@codeaurora.org>
-References: <1576475925-20601-1-git-send-email-daidavid1@codeaurora.org>
+        Mon, 16 Dec 2019 03:20:10 -0500
+Received: by mail-ua1-f67.google.com with SMTP id d8so1764527uak.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2019 00:20:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4ejdI6l2MpiYe782h59jIGE5FMUmgtUe4qzVwYNXmww=;
+        b=zNhA6sQIvrirlHCC9+lV8lwZmYIThF6Cb5/e10jRvCda1SodrIGyW+1y1FRxISYeqt
+         ymjut6ALn0lrVMeyzd0+Wq5TK73LF/UmbntZSTE9+HDYoHZzjMkMfFVWskPN3ePSbaSm
+         Rhp5nBqj+mVFO+JZSBBZsmiMg46Xoa7lxa0A4zIzuj9RLdtazLXsimA1mhiYn+Byk2ic
+         ZfEAwaDeDohDz18BHRUzfZHvQkhnPUaTP/eCjcihcbpl2twLfFUvg3T9/WvkDqfekzIo
+         lY5jMNMerytVgatLCjJcUkR14W9DYj/i3K7Xmj6dJsVsLnQ3SkDBa+d2qyALhl9Fw0TW
+         FChQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4ejdI6l2MpiYe782h59jIGE5FMUmgtUe4qzVwYNXmww=;
+        b=O/rboQT9KL7wTS7hT0zDXY3DNNUUWw++PRUus35LWMBm/0hlIvcCFYYhcwqVDtJIda
+         7ztnSttrrtAOzKwMg4HkEMXS524v9454mnMKV58jt6lJXyfrUwdAccaM5X64SAGiS3WA
+         IWdCEgn04AadVBjTtr38ieusUbA11HTehyY40urOJNx6LGjjHd2p3pnSbtNIKrz5rEbt
+         9Q+yuh/DazY7JbtE4VzgNa80dwaNTj5i9lJMBU+g+HEeGl21vhUU4HMYhHh8m9ETckqL
+         KIjXelqL9P9NDj0CNNcN7TRuLhDlwdvGkB/oLGi7FAAP8wxtOt7DsnHXjYIrINyPyzwr
+         Gzzg==
+X-Gm-Message-State: APjAAAV3Avn/lS20agXZ+3Q+yylTkoH4+3fV0wWLP7uVPrKMpAlmcF7A
+        MgtLWeIy+Gkuq0clL1QFtvwpO1JN/u1zPCQlt024iw==
+X-Google-Smtp-Source: APXvYqyMIA/7VP13JucpywWenFRwuvJQzwyVI4uVwVCF1oD8d8lLCXdxOD2nx2LY/dqipJEgihXFLTAgCEdx8FIQays=
+X-Received: by 2002:ab0:32ce:: with SMTP id f14mr5108941uao.54.1576484409083;
+ Mon, 16 Dec 2019 00:20:09 -0800 (PST)
+MIME-Version: 1.0
+References: <1572419178-5750-1-git-send-email-mkshah@codeaurora.org> <1572419178-5750-2-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1572419178-5750-2-git-send-email-mkshah@codeaurora.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 16 Dec 2019 09:19:58 +0100
+Message-ID: <CACRpkdZtbViGmGr=L3C4ibx3RVvB0tsv6JamvOPzo2mRmfk1FQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] pinctrl: qcom: sc7180: Add GPIO wakeup interrupt map
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Doug Anderson <dianders@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the DT nodes for each of the Network-On-Chip interconnect
-buses found on SDM845 based platform and redefine the rsc_hlos
-child node as a bcm-voter device to better represent the hardware.
+On Wed, Oct 30, 2019 at 8:07 AM Maulik Shah <mkshah@codeaurora.org> wrote:
 
-Signed-off-by: David Dai <daidavid1@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 61 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 58 insertions(+), 3 deletions(-)
+> GPIOs that can be configured as wakeup sources, have their
+> interrupt lines routed to PDC interrupt controller.
+>
+> Provide the interrupt map of the GPIO to its wakeup capable
+> interrupt parent.
+>
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index ddb1f23..7c617a9 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -1364,6 +1364,55 @@
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		mem_noc: interconnect@1380000 {
-+			compatible = "qcom,sdm845-mem-noc";
-+			reg = <0 0x01380000 0 0x27200>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		dc_noc: interconnect@14e0000 {
-+			compatible = "qcom,sdm845-dc-noc";
-+			reg = <0 0x014e0000 0 0x400>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		config_noc: interconnect@1500000 {
-+			compatible = "qcom,sdm845-config-noc";
-+			reg = <0 0x01500000 0 0x5080>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		system_noc: interconnect@1620000 {
-+			compatible = "qcom,sdm845-system-noc";
-+			reg = <0 0x01620000 0 0x18080>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		aggre1_noc: interconnect@16e0000 {
-+			compatible = "qcom,sdm845-aggre1-noc";
-+			reg = <0 0x016e0000 0 0xd080>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		aggre2_noc: interconnect@1700000 {
-+			compatible = "qcom,sdm845-aggre2-noc";
-+			reg = <0 0x01700000 0 0x3b100>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		mmss_noc: interconnect@1740000 {
-+			compatible = "qcom,sdm845-mmss-noc";
-+			reg = <0 0x01740000 0 0x1c1000>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		ufs_mem_hc: ufshc@1d84000 {
- 			compatible = "qcom,sdm845-ufshc", "qcom,ufshc",
- 				     "jedec,ufs-2.0";
-@@ -3100,6 +3149,13 @@
- 			#mbox-cells = <1>;
- 		};
- 
-+		gladiator_noc: interconnect@17900000 {
-+			compatible = "qcom,sdm845-gladiator-noc";
-+			reg = <0 0x17900000 0 0xd080>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		apps_rsc: rsc@179c0000 {
- 			label = "apps_rsc";
- 			compatible = "qcom,rpmh-rsc";
-@@ -3174,9 +3230,8 @@
- 				};
- 			};
- 
--			rsc_hlos: interconnect {
--				compatible = "qcom,sdm845-rsc-hlos";
--				#interconnect-cells = <1>;
-+			apps_bcm_voter: bcm-voter {
-+				compatible = "qcom,sdm845-bcm-voter";
- 			};
- 		};
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Patch applied for v5.6 with the ACKs!
+
+Yours,
+Linus Walleij
