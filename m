@@ -2,160 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F2370121200
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 18:44:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29588121223
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Dec 2019 18:49:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726275AbfLPRoI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Dec 2019 12:44:08 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:43274 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726133AbfLPRoI (ORCPT
+        id S1726281AbfLPRqY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Dec 2019 12:46:24 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:21456 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726141AbfLPRqY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Dec 2019 12:44:08 -0500
-Received: by mail-ed1-f68.google.com with SMTP id dc19so5701831edb.10;
-        Mon, 16 Dec 2019 09:44:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dotsp4hlrRRgAJ8KtDm+ECaZ4Cv3RzpcnEOHjwNyGY4=;
-        b=XuMhWcCBF/5Ytd0QFb2aWT2ZjIhuShrmxVGkMOWEHF4GTXo/JJO3tpKzaYezLulgtb
-         ymJn6D9SihsyvAj/EkVlj+aj0p9Ywx+4WTU8EuNhn01x+niEpzjpq4vjuYeRmoNeByn4
-         PJZ0QlMrGdlv1Ma6updVH0Q6orL1dTU2clAJaH8wkau3kwvAj6eTD5Tpe4oSrym6hJ9Q
-         7eNQp6O33KdXkmOj224psFuq5lGg+mHv/9oIs69Uqb+zT1cnAuC1Iuw/itukC1gfD577
-         fUSzQTCBMpZ6lVtgzcUx0NJlloH5c2qOEvZWhWWlxw7dbGyvfsGEpCpyfTXO1vkLURHr
-         uZRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dotsp4hlrRRgAJ8KtDm+ECaZ4Cv3RzpcnEOHjwNyGY4=;
-        b=Ps2hde2x8QP1EsCEDBn/eA2ZZjcSoGHsxLLQQaiCtXvscucy8JGpCpfrXjrFslMB8R
-         Njr4bCtAF3DVZZjIKXFCZZF2jczoTirrdXmzW1n7P/sDoFTK/6Qpao6oyVHI7tjG3sFZ
-         HJ9tcVlGJmvmEKdstUuZLw42oGU38wQYMmIF1Ix98kPAYfIB6YppGQx4mjOFfyDf227I
-         8K9sYauzagBD12gzY1Dt6aHtWbudPitg4UCGmq3dXFvvfMehw7Iy1cOpDYNipK3AJ1kv
-         3JnK5NRTDX0zqEXrogeM89c4UK9Zl+3wgjYsSN9v+Lhl/NTo867pMteRPLX6j7DfRkSy
-         4UwQ==
-X-Gm-Message-State: APjAAAVCZyXYuxFiLaxcURo+LN7t7a2GVb6fyzxWCGSFlNVuvOWveMGO
-        eKLJVeTvob2cOr2eXtRJeySKUfYpMZbOec3+9xA=
-X-Google-Smtp-Source: APXvYqzMZmKG4O0FupZLieU7MkUuk6V2ElDf+PeLMM9q5q0SW8+Pb9iyDBHD9J+QeQV1ICnDIpyJSoUw51ELTZ5J+Xk=
-X-Received: by 2002:aa7:d6d1:: with SMTP id x17mr365496edr.57.1576518246192;
- Mon, 16 Dec 2019 09:44:06 -0800 (PST)
+        Mon, 16 Dec 2019 12:46:24 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1576518383; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=rzuAqWFdTzrWO4clWvy7mwhpSIFXq93mC1ouQT7d0SU=; b=i+RmSP29LGcKHFfGNyrdMulgcQoTL1fMWa+2g56A1ijBU+6wW1OHXRPy3p/ayLbTInSiXXjv
+ suGv1hY4/MWcWERJpeqc0TuCDF7HwNrC6n5F8PjcOvfHMUWDygDwa9+e6mcvqGUjOwx7c0zx
+ PjNdaSR6xmUyWHfQM4GVYrkxfpo=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5df7c2ee.7f4ad81ac420-smtp-out-n02;
+ Mon, 16 Dec 2019 17:46:22 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0A126C447A2; Mon, 16 Dec 2019 17:46:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.79.43.230] (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5C946C433A2;
+        Mon, 16 Dec 2019 17:46:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5C946C433A2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+Subject: Re: [PATCH 2/3] dt-bindings: soc: qcom: apr: Add protection domain
+ bindings
+To:     Rob Herring <robh@kernel.org>
+Cc:     bjorn.andersson@linaro.org, srinivas.kandagatla@linaro.org,
+        tsoni@codeaurora.org, agross@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        rnayak@codeaurora.org
+References: <20191118142728.30187-1-sibis@codeaurora.org>
+ <0101016e7ee9c591-d04928e8-6440-488c-a956-3b5c9b8988bf-000000@us-west-2.amazonses.com>
+ <20191203215248.GA1688@bogus>
+From:   Sibi Sankar <sibis@codeaurora.org>
+Message-ID: <a19623d4-ab33-d87e-5925-d0411d7479dd@codeaurora.org>
+Date:   Mon, 16 Dec 2019 23:16:10 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <1576514271-15687-1-git-send-email-jcrouse@codeaurora.org> <1576514271-15687-6-git-send-email-jcrouse@codeaurora.org>
-In-Reply-To: <1576514271-15687-6-git-send-email-jcrouse@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 16 Dec 2019 09:43:55 -0800
-Message-ID: <CAF6AEGsWAjgcsqMQEtCfUn9smqfVyOcf-Nn1+eJGrMuLkjgwRA@mail.gmail.com>
-Subject: Re: [PATCH v3 5/5] drm/msm/a6xx: Support split pagetables
-To:     Jordan Crouse <jcrouse@codeaurora.org>
-Cc:     "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Will Deacon <will@kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Daniel Vetter <daniel@ffwll.ch>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20191203215248.GA1688@bogus>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 16, 2019 at 8:38 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
->
-> Attempt to enable split pagetables if the arm-smmu driver supports it.
-> This will move the default address space from the default region to
-> the address range assigned to TTBR1. The behavior should be transparent
-> to the driver for now but it gets the default buffers out of the way
-> when we want to start swapping TTBR0 for context-specific pagetables.
->
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+Hey Rob,
+Thanks for the review :)
 
-Reviewed-by: Rob Clark <robdclark@gmail.com>
+On 12/4/19 3:22 AM, Rob Herring wrote:
+> On Mon, Nov 18, 2019 at 02:28:00PM +0000, Sibi Sankar wrote:
+>> Add optional "qcom,protection-domain" bindings for APR services. This
+>> helps to capture the dependencies between APR services and the PD on
+>> which each apr service run.
+>>
+>> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>> ---
+>>   .../devicetree/bindings/soc/qcom/qcom,apr.txt | 59 +++++++++++++++++++
+>>   1 file changed, 59 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
+>> index db501269f47b8..f87c0b2a48de4 100644
+>> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
+>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
+>> @@ -45,6 +45,12 @@ by the individual bindings for the specific service
+>>   			12 - Ultrasound stream manager.
+>>   			13 - Listen stream manager.
+>>   
+>> +- qcom,protection-domain
+>> +	Usage: optional
+>> +	Value type: <stringlist>
+>> +	Definition: Must list the protection domain service name and path
+>> +		    that the particular apr service has a dependency on.
+> 
+> Is name and path 2 values? Length is always 2?
 
-(my previous r-b's on the other patches from v2 carries over to v3)
+Yes the length is always 2 values i.e service name and the path where
+the service is hosted.
 
-> ---
->
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 52 ++++++++++++++++++++++++++++++++++-
->  1 file changed, 51 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 5dc0b2c..1c6da93 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -811,6 +811,56 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
->         return (unsigned long)busy_time;
->  }
->
-> +static struct msm_gem_address_space *
-> +a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
-> +{
-> +       struct iommu_domain *iommu = iommu_domain_alloc(&platform_bus_type);
-> +       struct msm_gem_address_space *aspace;
-> +       struct msm_mmu *mmu;
-> +       u64 start, size;
-> +       u32 val = 1;
-> +       int ret;
-> +
-> +       if (!iommu)
-> +               return ERR_PTR(-ENOMEM);
-> +
-> +       /*
-> +        * Try to request split pagetables - the request has to be made before
-> +        * the domian is attached
-> +        */
-> +       iommu_domain_set_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val);
-> +
-> +       mmu = msm_iommu_new(&pdev->dev, iommu);
-> +       if (IS_ERR(mmu)) {
-> +               iommu_domain_free(iommu);
-> +               return ERR_CAST(mmu);
-> +       }
-> +
-> +       /*
-> +        * After the domain is attached, see if the split tables were actually
-> +        * successful.
-> +        */
-> +       ret = iommu_domain_get_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val);
-> +       if (!ret && val) {
-> +               /*
-> +                * The aperture start will be at the beginning of the TTBR1
-> +                * space so use that as a base
-> +                */
-> +               start = iommu->geometry.aperture_start;
-> +               size = 0xffffffff;
-> +       } else {
-> +               /* Otherwise use the legacy 32 bit region */
-> +               start = SZ_16M;
-> +               size = 0xffffffff - SZ_16M;
-> +       }
-> +
-> +       aspace = msm_gem_address_space_create(mmu, "gpu", start, size);
-> +       if (IS_ERR(aspace))
-> +               iommu_domain_free(iommu);
-> +
-> +       return aspace;
-> +}
-> +
->  static const struct adreno_gpu_funcs funcs = {
->         .base = {
->                 .get_param = adreno_get_param,
-> @@ -832,7 +882,7 @@ static const struct adreno_gpu_funcs funcs = {
->  #if defined(CONFIG_DRM_MSM_GPU_STATE)
->                 .gpu_state_get = a6xx_gpu_state_get,
->                 .gpu_state_put = a6xx_gpu_state_put,
-> -               .create_address_space = adreno_iommu_create_address_space,
-> +               .create_address_space = a6xx_create_address_space,
->  #endif
->         },
->         .get_timestamp = a6xx_get_timestamp,
-> --
-> 2.7.4
+> 
+> You've got the same values for every case in the example. Is there a
+> defined list of possible values?
+
+apr bus is expected to track just the "avs/audio" running on
+msm/adsp/audio_pd on msm8998 and sdm845 SoCs. So shouldn't
+make much sense to list all possible service names:paths here.
+
+However the qcom,protection-domain is expected to be used
+on fastrpc compute bank nodes as well, where they track other
+services:paths. I'll make sure to include all the possible
+values that fastrpc cb nodes depend on.
+
+> 
+>> +
+>>   = EXAMPLE
+>>   The following example represents a QDSP based sound card on a MSM8996 device
+>>   which uses apr as communication between Apps and QDSP.
+>> @@ -82,3 +88,56 @@ which uses apr as communication between Apps and QDSP.
+>>   			...
+>>   		};
+>>   	};
+>> +
+>> += EXAMPLE 2
+>> +The following example represents a QDSP based sound card on SDM845 device.
+>> +Here the apr services are dependent on "avs/audio" service running on AUDIO
+>> +Protection Domain hosted on ADSP remote processor.
+>> +
+>> +	apr {
+>> +		compatible = "qcom,apr-v2";
+>> +		qcom,glink-channels = "apr_audio_svc";
+>> +		qcom,apr-domain = <APR_DOMAIN_ADSP>;
+>> +
+>> +		q6core {
+>> +			compatible = "qcom,q6core";
+>> +			reg = <APR_SVC_ADSP_CORE>;
+>> +			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+>> +		};
+>> +
+>> +		q6afe: q6afe {
+>> +			compatible = "qcom,q6afe";
+>> +			reg = <APR_SVC_AFE>;
+>> +			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+>> +			q6afedai: dais {
+>> +				compatible = "qcom,q6afe-dais";
+>> +				#sound-dai-cells = <1>;
+>> +
+>> +				qi2s@22 {
+>> +					reg = <22>;
+>> +					qcom,sd-lines = <3>;
+>> +				};
+>> +			};
+>> +		};
+>> +
+>> +		q6asm: q6asm {
+>> +			compatible = "qcom,q6asm";
+>> +			reg = <APR_SVC_ASM>;
+>> +			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+>> +			q6asmdai: dais {
+>> +				compatible = "qcom,q6asm-dais";
+>> +				#sound-dai-cells = <1>;
+>> +				iommus = <&apps_smmu 0x1821 0x0>;
+>> +			};
+>> +		};
+>> +
+>> +		q6adm: q6adm {
+>> +			compatible = "qcom,q6adm";
+>> +			reg = <APR_SVC_ADM>;
+>> +			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+>> +			q6routing: routing {
+>> +				compatible = "qcom,q6adm-routing";
+>> +				#sound-dai-cells = <0>;
+>> +			};
+>> +		};
+>> +	};
+>> -- 
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> a Linux Foundation Collaborative Project
+>>
+
+-- 
+Qualcomm Innovation Center, Inc.
+Qualcomm Innovation Center, Inc, is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
