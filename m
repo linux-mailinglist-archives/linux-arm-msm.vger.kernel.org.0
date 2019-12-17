@@ -2,87 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 61D15121F40
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2019 01:10:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DF8B121F5F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2019 01:21:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727572AbfLQAI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Dec 2019 19:08:57 -0500
-Received: from mail-il1-f195.google.com ([209.85.166.195]:38448 "EHLO
-        mail-il1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727420AbfLQAIy (ORCPT
+        id S1727487AbfLQATj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Dec 2019 19:19:39 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:44045 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727313AbfLQATi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Dec 2019 19:08:54 -0500
-Received: by mail-il1-f195.google.com with SMTP id f5so6919772ilq.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2019 16:08:54 -0800 (PST)
+        Mon, 16 Dec 2019 19:19:38 -0500
+Received: by mail-pg1-f196.google.com with SMTP id x7so4632589pgl.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2019 16:19:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bb2twKZDh29ThWZYRQTRqA2Jiy4KqbokvVGsd8dKMgg=;
-        b=aCtNPlB9aPaMY4cJwRiZed5kiziibm2paiUxxBllsBG7zjS6p8M6aAmbMTh6fpnHhT
-         EehB7lZS3uU6T0O9471kbfDFgCM9P35lzdv2mq3W7Lz7j4mzTmWHVC+9WXxAuppWfFfD
-         RGHl9tuFssxZ7il/MtuEvgtjLOmQGhJN7CSfQ=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=kSRMyRpGvN3O6oC2QK8ni8ozT+CBlR4DXsbN2O0RLUk=;
+        b=jVLsVcL+tDd05VMnMqEWC/RH3jR0TeoTexR/4Jp2JrT+81wvxprdmBRSkjDT0WzRj0
+         FzbLjkNZd3Rn4xsNLWoTL1V6hMYsyhe8B4EiSzpCNe15QVAkXANDcy9S92SWBOJJnf92
+         vQsJn/wV4V4vE061RMljzuH4Nmq8rsIDc3HLVZwjKoEU+9tEivqbB4gPHd9iQXjsyZ/7
+         XsRLQhIeddKOKft6IbM9eT1jU4E+WOBAOE0ATVQzW8TgBy6XqNzk2p8UIlgXi//DO6wb
+         u3D9XdBLWkWpqS6xcgzVtZIvL0RVVVNdBlzeamMC/kzKBNxSDTJVLWQ6nXxCjR2VqJjA
+         N/bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bb2twKZDh29ThWZYRQTRqA2Jiy4KqbokvVGsd8dKMgg=;
-        b=HJuv+qqC6n3EFU16dRBsaTj/L+x4ieWRPxyBjopMafwNsAWZK0tKvG3Zh1LBoh7Jh4
-         6u0psg/1QgNQf8hxpGNrUcl/fhbK8ZtzGOO7hivxDYCFv0M+FRChGw3UOt5ckS4+11uM
-         UGhnz6gQEAb5bc8WFRzKoMpCJzagfQ6khRoS08z1ni+wKs4/F7krMBuw7TVCSBiiAHEG
-         0L1S9PADCuxZZU7FfhfgD6u8BC9a77CrWC/WpS4sVTs4rf1MVNpjgoQtx2tBfx2o7KPP
-         4LGyfb7wb47woyJVq9xzQ6Ldx6rckARIuh3u8x7/QMTcfZCJLBi+ikGVGDpg2wixVkU5
-         /w2Q==
-X-Gm-Message-State: APjAAAU2fjEVsL7Zpz+KkP/r4Oc1+u3xfjO/hH4z6c7SXdXTNzMaAPQG
-        OQBQzHn/o6rz+s5Z7GH0oBXGjzo1yu8=
-X-Google-Smtp-Source: APXvYqxW+RqljzyIg/oy4J05w8RQCMYFKeoipsG9R9//0LqtydyPt3LcfPRl6RcutA3s+yrn2WkPGw==
-X-Received: by 2002:a92:17d0:: with SMTP id 77mr6744701ilx.27.1576541333632;
-        Mon, 16 Dec 2019 16:08:53 -0800 (PST)
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com. [209.85.166.172])
-        by smtp.gmail.com with ESMTPSA id h3sm2276710ilh.6.2019.12.16.16.08.53
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Dec 2019 16:08:53 -0800 (PST)
-Received: by mail-il1-f172.google.com with SMTP id t17so6884261ilm.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2019 16:08:53 -0800 (PST)
-X-Received: by 2002:a92:da44:: with SMTP id p4mr3406926ilq.168.1576541332664;
- Mon, 16 Dec 2019 16:08:52 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=kSRMyRpGvN3O6oC2QK8ni8ozT+CBlR4DXsbN2O0RLUk=;
+        b=Z19wdLi1PL7JGxtKFcCvWObq+WfAlWNeRDqewMDNBjShg6GcMK8STOX3k39tIOnF4f
+         WQdpaQQ5DE+eUvfKfG8sPkVjmWbgGWXgGvPjcYkfEiEQpEKHqkdpORJWyumwDcXCgp7X
+         ZLDSlCvXKCYmLmtkGagCkQcugDmG2fm98LY/gmCpm5DqgMiANZ4WQfdDPCl6SKJo3iIl
+         9xeRteAMcqNNHdkQ+pQ3qfUwK12TmHqQdQG1hWAJw0xERnoZIv54tXaE4LwXeq87ayNA
+         cMjioNO6vkjeIaxeMTftzhI2uNyhH1MbBPSkYxpS0GVNuW1S52RM8syrTJwVpN1pV1OI
+         5WLg==
+X-Gm-Message-State: APjAAAUs/vZ+Gh4vG+7zT9ZEevqxjPJqfZ1V6k6Odbg2kHKnZyfUT8cD
+        6tULyRo5ETke1QoOIgBjPWM5QQ==
+X-Google-Smtp-Source: APXvYqzGZHGPHjW1ue1HrbvnzOPYObbsplWRfg2TIsKHZ0VTBST/SlVCZt6iaZb64cWODmXhxvakmQ==
+X-Received: by 2002:a62:2ad5:: with SMTP id q204mr7061373pfq.33.1576541977891;
+        Mon, 16 Dec 2019 16:19:37 -0800 (PST)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id d38sm21816480pgd.59.2019.12.16.16.19.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Dec 2019 16:19:36 -0800 (PST)
+Date:   Mon, 16 Dec 2019 16:19:34 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     jhugo@codeaurora.org, robh+dt@kernel.org, jonathan@marek.ca,
+        ohad@wizery.com, mark.rutland@arm.com, p.zabel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        agross@kernel.org
+Subject: Re: [PATCH 16/16] arm64: dts: qcom: sm8150: Add ADSP, CDSP, MPSS and
+ SLPI remoteprocs
+Message-ID: <20191217001934.GT3143381@builder>
+References: <20191118214250.14002-1-sibis@codeaurora.org>
+ <0101016e80794e1d-7c9ce825-6ba5-479e-bc98-f5d56ce6933f-000000@us-west-2.amazonses.com>
 MIME-Version: 1.0
-References: <20191216234204.190769-1-swboyd@chromium.org>
-In-Reply-To: <20191216234204.190769-1-swboyd@chromium.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 16 Dec 2019 16:08:39 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=VrnMNS6EnGC5DQcPh2GBW+9_h_oqW3pOqqm5DXSkXp6w@mail.gmail.com>
-Message-ID: <CAD=FV=VrnMNS6EnGC5DQcPh2GBW+9_h_oqW3pOqqm5DXSkXp6w@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sdm845-cheza: Add cr50 spi node
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0101016e80794e1d-7c9ce825-6ba5-479e-bc98-f5d56ce6933f-000000@us-west-2.amazonses.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Mon 18 Nov 13:44 PST 2019, Sibi Sankar wrote:
 
-On Mon, Dec 16, 2019 at 3:42 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Add the cr50 device to the spi controller it is attached to. This
-> enables /dev/tpm0 and some login things on Cheza.
->
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> Add ADSP, CDSP, MPSS and SLPI device tree nodes for SM8150 SoC.
+> 
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 > ---
->
-> Changes from v1:
->
->  - Fixed node name to be tpm
->
->  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
+>  arch/arm64/boot/dts/qcom/sm8150-mtp.dts |  12 +++
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi    | 135 ++++++++++++++++++++++++
+>  2 files changed, 147 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+> index aa5de42fcae45..4d9bb8145dbba 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+> @@ -348,6 +348,18 @@
+>  	};
+>  };
+>  
+> +&adsp_pas {
+> +	status = "okay";
+> +};
+> +
+> +&cdsp_pas {
+> +	status = "okay";
+> +};
+> +
+> +&slpi_pas {
+> +	status = "okay";
+> +};
+> +
+>  &qupv3_id_1 {
+>  	status = "okay";
+>  };
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index 98a96fd1d6117..58f4ce95bd966 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -5,6 +5,8 @@
+>   */
+>  
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/clock/qcom,gcc-sm8150.h>
+> +#include <dt-bindings/power/qcom-aoss-qmp.h>
+>  #include <dt-bindings/power/qcom-rpmpd.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+> @@ -278,6 +280,139 @@
+>  		};
+>  	};
+>  
+> +	adsp_pas: remoteproc-adsp {
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Please move this in under /soc, name it "remoteproc" and slap a reg = <>
+on it. Even if qcom,*-pas doesn't use the information I find it look
+better in the DT and it becomes more consistent between PAS and non-PAS
+targets.
+
+Regards,
+Bjorn
