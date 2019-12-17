@@ -2,139 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8622E121FC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2019 01:31:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EFB8121FE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2019 01:38:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727742AbfLQAbc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Dec 2019 19:31:32 -0500
-Received: from mail-il1-f195.google.com ([209.85.166.195]:32924 "EHLO
-        mail-il1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727669AbfLQAbc (ORCPT
+        id S1727918AbfLQAhZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Dec 2019 19:37:25 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:51742 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727780AbfLQAhY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Dec 2019 19:31:32 -0500
-Received: by mail-il1-f195.google.com with SMTP id r81so6992860ilk.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2019 16:31:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JwnjQSU0EMCbEaNHZW9Pw+wOWET0cgofZxvyjHhghRs=;
-        b=LJge9oaMrdmXTTvEYO7zbOnORPyCGcmSx53eq5HbKh7MEapWdoj7UiSSzPrrcAxKGG
-         psQgIO3vUwA3pMDg1bVbqxBErOp57AR+YE0+G2XA3g65R2n9aGqodnYFuyJKN+kxnGuS
-         n25OcKWj8PdKc6W18kAYZY23GnZPl6xsIg9ZU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JwnjQSU0EMCbEaNHZW9Pw+wOWET0cgofZxvyjHhghRs=;
-        b=C5JTlJK7nXp3e+RoGqPRM041jASAgvXAsIWCFq8fRrRVFzQUgXb8vHgpOZITXKnG06
-         lVzJITVO+n2Sqg+ozFR6uwCGyjvVqwtckuiW7NuwStfomol4JqjTkXJLY6fA7JvKdAcE
-         1/YFIMg6oRZf7AiFIrfgPdXrWsLUV4riiaP9edqXR4+fFQEtgcQPSEaStkahjwG97mED
-         cI3RoDUFyB7WJmdkihpzwc6gchHve+SG7Sz89NLRMt4znAZP25d/egwej4S++FIFGaoD
-         fUB8tl30QTZBN0jPawSJWG4UO3ru/3a6NhPezBdblFeTcs0MAVg/DmflD0TdgP15vVdw
-         XnLQ==
-X-Gm-Message-State: APjAAAVtT7PMFsF1E9YykWGkyN9P4299c4flh1tRgDJWPPoyMRrzmzYc
-        gUEmlzFyKBBLEMd7fkiI+I22uS+zyC4=
-X-Google-Smtp-Source: APXvYqy0brkXpIMooUU81eiHUDXp81e+qyIo2Gw0iDrzBKvcvMqcXfuXdxxtNgfeN/l+BSl0CEh/iw==
-X-Received: by 2002:a92:3a9b:: with SMTP id i27mr12118318ilf.39.1576542691375;
-        Mon, 16 Dec 2019 16:31:31 -0800 (PST)
-Received: from mail-il1-f175.google.com (mail-il1-f175.google.com. [209.85.166.175])
-        by smtp.gmail.com with ESMTPSA id s21sm4741715ioa.33.2019.12.16.16.31.29
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Dec 2019 16:31:30 -0800 (PST)
-Received: by mail-il1-f175.google.com with SMTP id t8so5519085iln.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2019 16:31:29 -0800 (PST)
-X-Received: by 2002:a92:da44:: with SMTP id p4mr3491014ilq.168.1576542689632;
- Mon, 16 Dec 2019 16:31:29 -0800 (PST)
+        Mon, 16 Dec 2019 19:37:24 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1576543043; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=qRX079jE/itaclnaKIpdviMGMfL0EtHGbhwevzdypMU=;
+ b=FoLn2yxcdM71sY6lPtTRhv9E7U+dkkcIqCM8lXAm5HEXJMwPWCuibINhdjx9zYv84e9x0oNC
+ 9Rxj6sidPHle8saqBI/MQOWuXnQdBWpvKhoUs5sJGw7+GVunBUHFiu49EKbwyzlCT+ENiuH6
+ KNi16SEiDjSiI3oO9pcPw//dd7o=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5df8233d.7fe30a3131b8-smtp-out-n03;
+ Tue, 17 Dec 2019 00:37:17 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9BD36C4479F; Tue, 17 Dec 2019 00:37:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: cang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6DE4BC43383;
+        Tue, 17 Dec 2019 00:37:14 +0000 (UTC)
 MIME-Version: 1.0
-References: <20191213234530.145963-1-dianders@chromium.org>
- <20191213154448.9.I1791f91dd22894da04f86699a7507d101d4385bc@changeid>
- <20191214000738.GP624164@phenom.ffwll.local> <CAD=FV=VqU8Aeuno44hAi6SP+7NZRTfgJcYPHcWpVNCo6GXUJPw@mail.gmail.com>
- <CAOCk7NoT9FKikk3pNi-JGZPopaicE0kM-7nEK4GeqZmEtB+nAA@mail.gmail.com>
-In-Reply-To: <CAOCk7NoT9FKikk3pNi-JGZPopaicE0kM-7nEK4GeqZmEtB+nAA@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 16 Dec 2019 16:31:16 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=UwXHVyDD=Qj8Exq9xiw7=nisC_c02s76Gig8MDCUEh+Q@mail.gmail.com>
-Message-ID: <CAD=FV=UwXHVyDD=Qj8Exq9xiw7=nisC_c02s76Gig8MDCUEh+Q@mail.gmail.com>
-Subject: Re: [PATCH 9/9] drm/bridge: ti-sn65dsi86: Skip non-standard DP rates
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 17 Dec 2019 08:37:14 +0800
+From:   cang@codeaurora.org
 To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        LKML <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Vinod Koul <vkoul@kernel.org>, asutoshd@codeaurora.org,
+        nguyenb@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-scsi@vger.kernel.org, kernel-team@android.com,
+        saravanak@google.com, salyzyn@google.com,
+        Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 2/7] scsi: ufs-qcom: Add reset control support for host
+ controller
+In-Reply-To: <CAOCk7NpAp+DHBp-owyKGgJFLRajfSQR6ff1XMmAj6A4nM3VnMQ@mail.gmail.com>
+References: <1573798172-20534-1-git-send-email-cang@codeaurora.org>
+ <1573798172-20534-3-git-send-email-cang@codeaurora.org>
+ <20191216190415.GL2536@vkoul-mobl>
+ <CAOCk7NpAp+DHBp-owyKGgJFLRajfSQR6ff1XMmAj6A4nM3VnMQ@mail.gmail.com>
+Message-ID: <091562cbe7d88ca1c30638bc10197074@codeaurora.org>
+X-Sender: cang@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 2019-12-17 03:12, Jeffrey Hugo wrote:
+> On Mon, Dec 16, 2019 at 12:05 PM Vinod Koul <vkoul@kernel.org> wrote:
+>> 
+>> Hi Can,
+>> 
+>> On 14-11-19, 22:09, Can Guo wrote:
+>> > Add reset control for host controller so that host controller can be reset
+>> > as required in its power up sequence.
+>> 
+>> I am seeing a regression on UFS on SM8150-mtp with this patch. I think
+>> Jeff is seeing same one lenove laptop on 8998.
+> 
+> Confirmed.
+> 
+>> 
+>> 845 does not seem to have this issue and only thing I can see is that 
+>> on
+>> sm8150 and 8998 we define reset as:
+>> 
+>>                         resets = <&gcc GCC_UFS_BCR>;
+>>                         reset-names = "rst";
+>> 
+>> Thanks
+>> 
+>> >
+>> > Signed-off-by: Can Guo <cang@codeaurora.org>
+>> > ---
+>> >  drivers/scsi/ufs/ufs-qcom.c | 53 +++++++++++++++++++++++++++++++++++++++++++++
+>> >  drivers/scsi/ufs/ufs-qcom.h |  3 +++
+>> >  2 files changed, 56 insertions(+)
+>> >
+>> > diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+>> > index a5b7148..c69c29a1c 100644
+>> > --- a/drivers/scsi/ufs/ufs-qcom.c
+>> > +++ b/drivers/scsi/ufs/ufs-qcom.c
+>> > @@ -246,6 +246,44 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
+>> >       mb();
+>> >  }
+>> >
+>> > +/**
+>> > + * ufs_qcom_host_reset - reset host controller and PHY
+>> > + */
+>> > +static int ufs_qcom_host_reset(struct ufs_hba *hba)
+>> > +{
+>> > +     int ret = 0;
+>> > +     struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>> > +
+>> > +     if (!host->core_reset) {
+>> > +             dev_warn(hba->dev, "%s: reset control not set\n", __func__);
+>> > +             goto out;
+>> > +     }
+>> > +
+>> > +     ret = reset_control_assert(host->core_reset);
+>> > +     if (ret) {
+>> > +             dev_err(hba->dev, "%s: core_reset assert failed, err = %d\n",
+>> > +                              __func__, ret);
+>> > +             goto out;
+>> > +     }
+>> > +
+>> > +     /*
+>> > +      * The hardware requirement for delay between assert/deassert
+>> > +      * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
+>> > +      * ~125us (4/32768). To be on the safe side add 200us delay.
+>> > +      */
+>> > +     usleep_range(200, 210);
+>> > +
+>> > +     ret = reset_control_deassert(host->core_reset);
+>> > +     if (ret)
+>> > +             dev_err(hba->dev, "%s: core_reset deassert failed, err = %d\n",
+>> > +                              __func__, ret);
+>> > +
+>> > +     usleep_range(1000, 1100);
+>> > +
+>> > +out:
+>> > +     return ret;
+>> > +}
+>> > +
+>> >  static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+>> >  {
+>> >       struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>> > @@ -254,6 +292,12 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+>> >       bool is_rate_B = (UFS_QCOM_LIMIT_HS_RATE == PA_HS_MODE_B)
+>> >                                                       ? true : false;
+>> >
+>> > +     /* Reset UFS Host Controller and PHY */
+>> > +     ret = ufs_qcom_host_reset(hba);
+>> > +     if (ret)
+>> > +             dev_warn(hba->dev, "%s: host reset returned %d\n",
+>> > +                               __func__, ret);
+>> > +
+>> >       if (is_rate_B)
+>> >               phy_set_mode(phy, PHY_MODE_UFS_HS_B);
+>> >
+>> > @@ -1101,6 +1145,15 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+>> >       host->hba = hba;
+>> >       ufshcd_set_variant(hba, host);
+>> >
+>> > +     /* Setup the reset control of HCI */
+>> > +     host->core_reset = devm_reset_control_get(hba->dev, "rst");
+>> > +     if (IS_ERR(host->core_reset)) {
+>> > +             err = PTR_ERR(host->core_reset);
+>> > +             dev_warn(dev, "Failed to get reset control %d\n", err);
+>> > +             host->core_reset = NULL;
+>> > +             err = 0;
+>> > +     }
+>> > +
+>> >       /* Fire up the reset controller. Failure here is non-fatal. */
+>> >       host->rcdev.of_node = dev->of_node;
+>> >       host->rcdev.ops = &ufs_qcom_reset_ops;
+>> > diff --git a/drivers/scsi/ufs/ufs-qcom.h b/drivers/scsi/ufs/ufs-qcom.h
+>> > index d401f17..2d95e7c 100644
+>> > --- a/drivers/scsi/ufs/ufs-qcom.h
+>> > +++ b/drivers/scsi/ufs/ufs-qcom.h
+>> > @@ -6,6 +6,7 @@
+>> >  #define UFS_QCOM_H_
+>> >
+>> >  #include <linux/reset-controller.h>
+>> > +#include <linux/reset.h>
+>> >
+>> >  #define MAX_UFS_QCOM_HOSTS   1
+>> >  #define MAX_U32                 (~(u32)0)
+>> > @@ -233,6 +234,8 @@ struct ufs_qcom_host {
+>> >       u32 dbg_print_en;
+>> >       struct ufs_qcom_testbus testbus;
+>> >
+>> > +     /* Reset control of HCI */
+>> > +     struct reset_control *core_reset;
+>> >       struct reset_controller_dev rcdev;
+>> >
+>> >       struct gpio_desc *device_reset;
+>> > --
+>> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> > a Linux Foundation Collaborative Project
+>> 
+>> --
+>> ~Vinod
 
-On Sun, Dec 15, 2019 at 5:19 PM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
->
-> On Fri, Dec 13, 2019 at 5:49 PM Doug Anderson <dianders@chromium.org> wrote:
-> >
-> > Hi,
-> >
-> > On Fri, Dec 13, 2019 at 4:07 PM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > >
-> > > On Fri, Dec 13, 2019 at 03:45:30PM -0800, Douglas Anderson wrote:
-> > > > The bridge chip supports these DP rates according to TI's spec:
-> > > > * 1.62 Gbps (RBR)
-> > > > * 2.16 Gbps
-> > > > * 2.43 Gbps
-> > > > * 2.7 Gbps (HBR)
-> > > > * 3.24 Gbps
-> > > > * 4.32 Gbps
-> > > > * 5.4 Gbps (HBR2)
-> > > >
-> > > > As far as I can tell, only RBR, HBR, and HBR2 are part of the DP spec.
-> > > > If other rates work then I believe it's because the sink has allowed
-> > > > bending the spec a little bit.
-> > >
-> > > I think you need to look at the eDP spec. And filter this stuff correctly
-> > > (there's more fields there for these somewhat irky edp timings). Simply
-> > > not using them works, but it's defeating the point of having these
-> > > intermediate clocks for edp panels.
-> >
-> > Ah, I see my problem.  I had earlier only found the eDP 1.3 spec which
-> > doesn't mention these rates.  The eDP 1.4 spec does, however.  ...and
-> > the change log for 1.4 specifically mentions that it added 4 new link
-> > rates and also adds the "SUPPORTED_LINK_RATES" register.
->
-> Yeah, you need the eDP spec.  I previously posted
-> https://patchwork.kernel.org/patch/11205201/ and was hoping Bjorn
-> would find time to test it.  Maybe it would fit well with your series?
->  I'm coming back from tracel, and hope to review everything you have,
-> but this caught my eye.
+Hi Jeffrey and Vinod,
 
-Ah, interesting.  It looks like Rob has already posted a Fixup on my patch:
+Thanks for reporting this. May I know what kind of regression do you see 
+on
+8150 and 8998?
+BTW, do you have reset control for UFS PHY in your DT?
+See 71278b058a9f8752e51030e363b7a7306938f64e.
 
-https://lore.kernel.org/r/20191215200632.1019065-1-robdclark@gmail.com
+FYI, we use reset control on all of our platforms and it is
+a must during our power up sequence.
 
-...that should also read the supported rates.  I need to go and review
-/ test his new patch (I lost access to the hardware but should get it
-back tomorrow or the next day), but would you be OK with going that
-route?  I think my series is a superset of yours.  Specifically it has
-these extra features atop yours:
-
-* If link training fails and the panel supports faster rates, it will
-try a faster rate in case it works.
-
-* It adds support for using 6bpp when that's all that's needed,
-reducing bandwidth to the panel (and link rate)
-
-* It breaks things into smaller functions (assuming you agree this is
-a good thing).
-
--Doug
+Thanks,
+Can Guo.
