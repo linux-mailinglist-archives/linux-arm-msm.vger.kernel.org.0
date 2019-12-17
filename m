@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 40E85122184
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2019 02:30:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 84FEF122199
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2019 02:33:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726591AbfLQBaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Dec 2019 20:30:23 -0500
-Received: from mailout4.samsung.com ([203.254.224.34]:37680 "EHLO
-        mailout4.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726368AbfLQBaX (ORCPT
+        id S1726620AbfLQBdf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Dec 2019 20:33:35 -0500
+Received: from mailout3.samsung.com ([203.254.224.33]:56170 "EHLO
+        mailout3.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726540AbfLQBde (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Dec 2019 20:30:23 -0500
-Received: from epcas1p3.samsung.com (unknown [182.195.41.47])
-        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20191217013016epoutp04c47f1db8824a3e0c8aad42ad20fd172c~hBG47hrjq2438524385epoutp04V
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2019 01:30:16 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20191217013016epoutp04c47f1db8824a3e0c8aad42ad20fd172c~hBG47hrjq2438524385epoutp04V
+        Mon, 16 Dec 2019 20:33:34 -0500
+Received: from epcas1p4.samsung.com (unknown [182.195.41.48])
+        by mailout3.samsung.com (KnoxPortal) with ESMTP id 20191217013324epoutp033de144c71956236dfa5fa1b16e7ca593~hBJoK9vGy2735127351epoutp033
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2019 01:33:24 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20191217013324epoutp033de144c71956236dfa5fa1b16e7ca593~hBJoK9vGy2735127351epoutp033
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1576546216;
-        bh=NgkMa1j/7iRlD76NiceUoAa4uvZSvuSjZeaXXGAcJHE=;
+        s=mail20170921; t=1576546404;
+        bh=L4bC4iFZip8u+jXXdMOgfE32OMTXf9j8EuWpCNkJnio=;
         h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=XZYtviOjxhp6IVZFfsLK3IDlsqWhxOriAAQ/UI5lM2ZcJSyvqfws8LpawN9Ux1cnr
-         gLnOmXBcJVydfaV7QdEJ6uLSH2e/cA8MN+THGVdYx6ybVxSH0nKycswpC8T0HHnycW
-         YJ8OVfk9WdzLoUX58B75s0EtOkUU6oDdjNDIIXbE=
+        b=oq3h+gGDBrJRh1+kIRvrwHCZtmbCbklWkkjuKlu/onPIx+kCmqt+pfR39j7ry/CD7
+         CkJJBa435+ysBYYqlhQveqxyMzbyoXP+vq0AAlKt7hi+vpJ2UyJlkpbujocMEwjHMc
+         RQXp+RsdPTua7WxzAC3ljMs7VDZ1u9x5EL+8zaGE=
 Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
-        epcas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20191217013015epcas1p1f4f53c10139c4f5390799e69e0acc26c~hBG4er-MG1258712587epcas1p1L;
-        Tue, 17 Dec 2019 01:30:15 +0000 (GMT)
-Received: from epsmges1p3.samsung.com (unknown [182.195.40.157]) by
-        epsnrtp2.localdomain (Postfix) with ESMTP id 47cLDQ3g2CzMqYky; Tue, 17 Dec
-        2019 01:30:14 +0000 (GMT)
+        epcas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20191217013323epcas1p226e2e3628f5a90f9b060b6e24b0063b5~hBJnpnbO01567515675epcas1p2W;
+        Tue, 17 Dec 2019 01:33:23 +0000 (GMT)
+Received: from epsmges1p3.samsung.com (unknown [182.195.40.154]) by
+        epsnrtp2.localdomain (Postfix) with ESMTP id 47cLJ04PYKzMqYkX; Tue, 17 Dec
+        2019 01:33:20 +0000 (GMT)
 Received: from epcas1p1.samsung.com ( [182.195.41.45]) by
         epsmges1p3.samsung.com (Symantec Messaging Gateway) with SMTP id
-        52.23.52419.6AF28FD5; Tue, 17 Dec 2019 10:30:14 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+        11.E4.52419.06038FD5; Tue, 17 Dec 2019 10:33:20 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
         epcas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20191217013013epcas1p2b8f89957e166ac549739af612cf41944~hBG26FMdA2242022420epcas1p2Y;
-        Tue, 17 Dec 2019 01:30:13 +0000 (GMT)
-Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20191217013013epsmtrp19abece3a84a29e20b47601f3f85753e5~hBG248PNn0936309363epsmtrp15;
-        Tue, 17 Dec 2019 01:30:13 +0000 (GMT)
-X-AuditID: b6c32a37-5b7ff7000001ccc3-c3-5df82fa66756
+        20191217013319epcas1p22d5bd1cb147345fdec972b41f5af719c~hBJkHI68U1234612346epcas1p2T;
+        Tue, 17 Dec 2019 01:33:19 +0000 (GMT)
+Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20191217013319epsmtrp22488c10e85e626d2ad935f7b55890df5~hBJkGGasU3276332763epsmtrp2e;
+        Tue, 17 Dec 2019 01:33:19 +0000 (GMT)
+X-AuditID: b6c32a37-5b7ff7000001ccc3-fb-5df830602562
 Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        96.07.10238.5AF28FD5; Tue, 17 Dec 2019 10:30:13 +0900 (KST)
+        epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        8E.A8.06569.F5038FD5; Tue, 17 Dec 2019 10:33:19 +0900 (KST)
 Received: from [10.113.221.102] (unknown [10.113.221.102]) by
         epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20191217013013epsmtip1bbfd5d6145f7f6d09f3885510948a635~hBG2ktHo_0941209412epsmtip1-;
-        Tue, 17 Dec 2019 01:30:13 +0000 (GMT)
+        20191217013319epsmtip149a93cfd401a9d9bbf9d3a335c7ecf36~hBJj1JvmN0861608616epsmtip1b;
+        Tue, 17 Dec 2019 01:33:19 +0000 (GMT)
 Subject: Re: [PATCH RFC 2/7] mmc: core: devfreq: Add devfreq based clock
  scaling support
 To:     Sayali Lokhande <sayalil@codeaurora.org>, adrian.hunter@intel.com,
@@ -62,45 +62,45 @@ Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
         vbadigan@codeaurora.org, Talel Shenhar <tatias@codeaurora.org>
 From:   Chanwoo Choi <cw00.choi@samsung.com>
 Organization: Samsung Electronics
-Message-ID: <5cca8329-03ec-0f10-3816-58315a67e8d2@samsung.com>
-Date:   Tue, 17 Dec 2019 10:36:48 +0900
+Message-ID: <0929e6e1-428e-29c5-dfd2-6010ecd54654@samsung.com>
+Date:   Tue, 17 Dec 2019 10:39:54 +0900
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101
         Thunderbird/59.0
 MIME-Version: 1.0
 In-Reply-To: <1531475583-7050-3-git-send-email-sayalil@codeaurora.org>
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrDJsWRmVeSWpSXmKPExsWy7bCmru4y/R+xBo3HZSxOPlnDZrG37QS7
-        xen971gs5h85x2oxfe8mNouJ+8+yW1zeNYfN4sj/fkaLpdcvMlnsf32B1aJ17xF2i3cNz1kt
-        7jxZz2pxcctndouzJ9ayWBxfG26xZ3sPu8Ws4x/ZLDZ/62F1EPZYM28No8flvl4mj8V7XjJ5
-        bFrVyeZx59oeNo+/s/azeHzeJBfAHpVtk5GamJJapJCal5yfkpmXbqvkHRzvHG9qZmCoa2hp
-        Ya6kkJeYm2qr5OIToOuWmQP0i5JCWWJOKVAoILG4WEnfzqYov7QkVSEjv7jEVim1ICWnwLJA
-        rzgxt7g0L10vOT/XytDAwMgUqDAhO+Nz33LWgnl/mSrmfctvYJy/nqmLkZNDQsBEon/jESCb
-        i0NIYAejxP8/r1ggnE+MEi/X9TCDVAkJfGOU6FztANMxYfoaRoiivYwS25asYIdw3jNKnF31
-        gRGkSlggSuLauSdgCRGBTqDE8R5WEIdZoJtZ4sO6TewgVWwCWhL7X9xgA7H5BRQlrv54DNbN
-        K2Ansf7Df6DdHBwsAqoS1+86gYRFBcIkTm5rgSoRlDg58wkLiM0p4Cax8dUtsIeYBcQlbj2Z
-        D2XLS2x/O4cZZK+EwC12id1/FjJC/OAisf9YJzOELSzx6vgWdghbSuJlfxuUXS2x8uQRNojm
-        DkaJLfsvsEIkjCX2L53MBHIcs4CmxPpd+hBhRYmdv+cyQizmk3j3FeRhDqA4r0RHmxBEibLE
-        5Qd3oQEvKbG4vZNtAqPSLCTvzELywiwkL8xCWLaAkWUVo1hqQXFuemqxYYExcnxvYgSndC3z
-        HYwbzvkcYhTgYFTi4S0o+x4rxJpYVlyZe4hRgoNZSYR3hwJQiDclsbIqtSg/vqg0J7X4EKMp
-        MLAnMkuJJucD801eSbyhqZGxsbGFiaGZqaGhkjgvx4+LsUIC6YklqdmpqQWpRTB9TBycUg2M
-        Zixml+/9nJjnKjQ5cearSznrb9/5V8N5yfXnGUcul+mhIhxzbwpeeJzX8UA4VebJrvU3Yvge
-        ZfCEPWrcffX5MdMXKhr5yUI2b3wVv1Q8CHoaEz9RxItt15NfJs4X/8d8meLVyLBqWW6ekerZ
-        JLk1L5yzyiwW6kfx5QuvzL7wrDlLLXZqi+B9JZbijERDLeai4kQAWZiDpf8DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA02RXUhTYRzGeXc+drYcnaaxVwM/Bn0JqYOC9yJMCmIQgQSmSaaHPEzLTdlR
-        06LcTYVWyzKTTrZJKYZOzGVpqUzm1FlMmsMZZl3kzFS0rYEaKOa2gt09/+d5fjwXfwqTTuEx
-        VKGmlNVqmCI5KcbfDsljD7Ukr+ek1P1JQmMeE4kGbtmF6KNlBUdG2ziBGgbMJHpgcQiR630j
-        iWxb9wFqmXIKkGXpE4FuDtiEaEU3T6AZTyeBnN1+IXLYO3A02pGJ+nvuChE/6iPR69W7RFqk
-        0mQwAaVLf0+gfNG/IFCa26pJ5Yy7n1Ru8hZc6TfHpguzxUfz2aLCclabnJonLvDrW4kSw6ag
-        wrBarAPGTkENEFGQPgxrG0ygBogpKd0H4FPdIhkKouFj5zBWA6htHQmHhrhQZxnAZ92zWKAT
-        SWdD97hHGAii6GoAf+t5InBg9B0M1vm8eAiZBHCp3RBESDoRWn5+Dk7spBPg5PosCGgJnQo7
-        vVvBOZzeC6e+Hg/Yu+mz8F3zrCBU2QXHnnjwgBbRJ2HX4nTQx+j9cMMwgYW0DE57jP/8ONiz
-        3IjVgkg+DOfDED4M4cOQJoC3gWi2hFOr1JyiRKFhryRxjJor06iSLharzSD47sSDvcDVnGsF
-        NAXkERJYupYjJZhyrlJtBZDC5FGS3vhtS5LPVF5ltcW52rIilrOCPRQul0nmNCPnpLSKKWUv
-        s2wJq/2fCihRjA48apdxP/JO3/52nikcyXb7fbK4DyqOYidkXMYZx2A6Zz/1/eWB+ISNY2+s
-        878i7NNZJ5rmRPKIxEul4+4vmn1OV2ufZccC78lKVdi8LdeqHo4lOPgFfFDadURvi6nPW7uQ
-        VvbcUZVSafTeuC7KGK1gsnP1rzJ9w2ayfq51Uo5zBYwiEdNyzF9KR45s6gIAAA==
-X-CMS-MailID: 20191217013013epcas1p2b8f89957e166ac549739af612cf41944
+X-Brightmail-Tracker: H4sIAAAAAAAAA01TbUxTVxje6f2ErHpWRI78GPWauUBS7LUWjpsly1Rsoj9YXCQzY3gDNxTp
+        V3pbAuoPks0PkOGI4kKDYmIwkYG4yuRjbYrQrSK2AcFvBRMaNyGgk6lkyz56e1nGv+d93+c5
+        b57nnMMSmjk6nS23u0WXXbBydDJ5dShTp9unXyzSj/zB4eFYB40DR64zeCQ4T+LWUJTC3wZ8
+        NG4MRhg83t9C49A/JwBuuzumwsHZUQofDoQYPF/zC4UfxbooPNa9wODI9U4ShzsLsb+nnsHe
+        8G80vvK6nvooxdxxtgOYxxu+VpnP+5+pzL72Wtr86I6fNv/lDZLmBd+7Bczeii0WUSgVXVrR
+        XuIoLbeXmbidu4u3Fhtz9LyO34xzOa1dsIkmbtuuAl1+uTXuhdNWClZPvFUgSBK3IW+Ly+Fx
+        i1qLQ3KbONFZanVudmZLgk3y2MuySxy2D3i9fqMxTtxXYWnynyCcpxdVVS0dL8kaMPCdqg4k
+        sQhuQuGhWbIOJLMa2AvQ76GzhFK8BGhkaoZWitcATXw5wdQBNiE5Ht4jqzUwANCU/0OF8xyg
+        SV+UkgcpcC+6E40x8mAVrAUoEq6n5IKAxwn04pKPkVk0zELBX+/RMl4J16Lbi9NAxmqYh1pv
+        DpAyJuF76Iejs4lTU+EeNHz1qyXOO2i4OZbgJMF89P3Mg4QhAqahB7HWJZyBeuZaEn4QnGRQ
+        37ULhOJ6GwpOzwEFp6CZcDej4HS0MB+gFXwQXRwO0Yr4GEDdwVFKGRhQsO2kSs6CgJmoq3+D
+        0l6L+v48A5TFK9D8K9mxHJcaHTuiUSjr0PiTx0vBr0Hnj9bS3wDOu8yOd5kF7zIL3v+XnQNk
+        O1gtOiVbmSjxTsPyC/eBxFPPyu0Fl6O7BgFkAfe22ln5pkhDCZVStW0QIJbgVql7tfGWulSo
+        PiC6HMUuj1WUBoExnnYjkZ5a4oh/HLu7mDduNBgMeBOfY+R5Lk3NLo4VaWCZ4BYrRNEpuv7T
+        qdik9BqQocmYLBnK+WKHabYpL3B/onprwcD60+7xvgsPCy9m34p0vtm+4vOqA/UNGaFPdnbd
+        SHt6cl37oeSmU+rDVW/lrhzZ3fzZ++Kh3BeeZ9HI6BVLW8Otxhv2j6dq+2pOFZ5pBI5rqaY1
+        mZd+ijX8bdXl5Tel5D+e/nT7QM+P/dM/P6ebd+w3cKRkEfgswiUJ/wIKLuq8AAQAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Ra0hTYRzGe3fOzjlqq7fN8p2Bl0UYI02t6P0QEkSxbxmIomZ60uMF3ZQd
+        L2kIGlZ4SVuS0tAtLxG4abjKSylb23RKKS1zhUhfHKSJkkoplFRHC/bt9zz/5/fpzxBSDxnM
+        5GmKOa2GLVBQ/uSAQxESmR69lRbdPRyFJ71mCo/enqDxG+sqiY3OaTFuHbVQWGedovHMyzYK
+        O383Afz4o1uErcvvxPjWqJPGq1VfxHje+1SM3c83aDw10UtiV28SHhlsoLHetUbhZz8axOdk
+        KrPBDFQzjXdFqq6RJZHK0lNLqeY9I5RqW28lVRuWkHg6xf9sFleQV8ppT8Rl+Oc+GGkiilq2
+        RNfbzOtkFbCZRHWAYRA8hepdiXXAj5HCVwA1zQUKjKActbjHiN2JDDkc/O5kBaDX1UhgGUxB
+        nmkvXQf8mUBYC9B6o14sBALWE6h57RspBCmcBWjZZCAEhYJKZF38RAm8H4aj2a0FILAExiHj
+        WxspMAmPohd3lsUCH4SJaLh7QbS7OYAmH3p3Nn7wIur/OrfTEzAC/TK8J3Y5CM15jf/6UDS4
+        0kbcAzK9j673UfQ+it5HeQTIHiDninh1jpqPKYrVcGVRPKvmSzQ5UZmFagvY+bZSOQQmJtLt
+        ADJAsVeCijfTpGK2lC9X2wFiCEWgZCjsbyXJYssrOG1hurakgOPt4DBDKoIkoYXjyVKYwxZz
+        +RxXxGn/X0WMX3AVgO5rPTerA5yfM05nypfG+uL7U9sr2r/3ebqyj7HkzwsRicOxM+H21k2H
+        zhRgu78dSXdkP5H3tA7l6AwNpoFVNklXqS9buuTqSjZm6mom+zcqw7qbjVc/LEsXThbayPyM
+        K5dveBPOjK8d6TzfnFZTmbBnX+ihzuMyaUjqonO9Q0HyuWyMktDy7B9Fpd/c6QIAAA==
+X-CMS-MailID: 20191217013319epcas1p22d5bd1cb147345fdec972b41f5af719c
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 X-Sendblock-Type: SVC_REQ_APPROVE
@@ -116,7 +116,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sayali,
+Hi,
 
 On 7/13/18 6:52 PM, Sayali Lokhande wrote:
 > This change adds the use of devfreq to MMC.
@@ -185,33 +185,8 @@ On 7/13/18 6:52 PM, Sayali Lokhande wrote:
 >  		clock-names = "core", "iface";
 > +		qcom,devfreq,freq-table = <52000000 200000000>;
 
-
-OPP framwork already support the DT binding method to get the frequency.
-You can refer to opp.txt[1]
-[1] /Documentation/devicetree/bindings/opp/opp.txt
-
-
-For example, can use 'operating-points-v2' defined property
-instead of qcom,devfreq,freq-table'. 
-
-	operating-points-v2 = <&bus_dmc_opp_table>;
-
-	mmc_opp_table: opp_table0 {                                 
-		compatible = "operating-points-v2";                     
-
-		opp-52000000 {
-			opp-hz = /bits/ 64 <52000000>;
-		};
-		opp-200000000 {
-			opp-hz = /bits/ 64 <200000000>;
-		};
-	};
-
-Also, if you need the reference code using OPP,
-you can check them[3][4]
-[3] drivers/devfreq/exynos-bus.c
-[4] Documentation/devicetree/bindings/devfreq/exynos-bus.txt
-
+I replied about OPP usage on DT as following.
+- https://patchwork.kernel.org/patch/10522931/
 
 >  	};
 >  
