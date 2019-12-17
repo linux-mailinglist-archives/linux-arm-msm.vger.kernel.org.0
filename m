@@ -2,101 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 09FEE1222ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2019 05:17:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 60967122497
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2019 07:23:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727441AbfLQENt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Dec 2019 23:13:49 -0500
-Received: from mail.kernel.org ([198.145.29.99]:35914 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725836AbfLQENt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Dec 2019 23:13:49 -0500
-Received: from localhost (unknown [171.61.91.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 95A23206E6;
-        Tue, 17 Dec 2019 04:13:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576556028;
-        bh=TQMMeBBZrVKYEy0YvA+gnlD3IzbyNHER3EDmj07O190=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=xJmHkIQcN4IiGutvhNuTe5LhQqWgs03XXk8b1vSQECWNfA31QEDiw7XQ2/6Omsx+L
-         N3Ne/OmncLMpEHBBhuRJ82BZkKTT5/xa3O8cO6H5Fl9aYEjvFfC4ZmAy6ZhgmY/V+A
-         Uurc8yJvr+4ET0UVLz/jET1qyN23Kv7XeGPf4dz0=
-Date:   Tue, 17 Dec 2019 09:43:42 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     cang@codeaurora.org
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, asutoshd@codeaurora.org,
-        nguyenb@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-scsi@vger.kernel.org, kernel-team@android.com,
-        saravanak@google.com, salyzyn@google.com,
-        Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 2/7] scsi: ufs-qcom: Add reset control support for
- host controller
-Message-ID: <20191217041342.GM2536@vkoul-mobl>
-References: <1573798172-20534-1-git-send-email-cang@codeaurora.org>
- <1573798172-20534-3-git-send-email-cang@codeaurora.org>
- <20191216190415.GL2536@vkoul-mobl>
- <CAOCk7NpAp+DHBp-owyKGgJFLRajfSQR6ff1XMmAj6A4nM3VnMQ@mail.gmail.com>
- <091562cbe7d88ca1c30638bc10197074@codeaurora.org>
+        id S1726767AbfLQGXA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Dec 2019 01:23:00 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:39784 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725886AbfLQGXA (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Dec 2019 01:23:00 -0500
+Received: by mail-pf1-f196.google.com with SMTP id q10so107646pfs.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2019 22:23:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fwHTfnJaI9qnMvf2gSHfOz3OAkZOCzCGX5TYMPhWqUA=;
+        b=dFn7VKlHM/jteR5MfqGleAz/hb1y6mlIHXAhvp1Jq7TNAdwfpl0D30IIVXK32ytp6Q
+         +YAo0OOlee56Yr5UTweg+CKiB565URXCbLnmw4B8JBfXVDOngHrK8DX0OPk6m5eVc0nE
+         b9VPMLnT2AxEfHM/z5N53rqS/4C2J1ciUc/x8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fwHTfnJaI9qnMvf2gSHfOz3OAkZOCzCGX5TYMPhWqUA=;
+        b=ZELHn75Qjjn8cfnDctT+hgqk0dQ9lme5NLUHowcmWohz9ufGn5qkZIQqBrp92sdbKv
+         +4pcNprtoE4eQesov24p6ta1vW/319D3gL8ccOU6hBC5qckg/1WYaWU+DYd6ROcf4UK9
+         TFPyPHH6h5rZfAQZ86ZVZtzYk8MuhXZUvCNPkoF3md79txdzM6lY3t1pj0rDpHnezkfS
+         IJEyMmxj3b/rp5en8HnvwkOGlFVvwhEEJKkaqI46DJMZLH6BgpoTsjpQN2b/QZ7jVGX5
+         Btv728K+cxY5hHOZc5pf+F0DSaPUKWYmkZZeV7NqvtA4cJYcwiUoZ6CRaRytR5CSvgZi
+         zhDg==
+X-Gm-Message-State: APjAAAXZufKp2KczPtHt/ReasfAThMMKehZlknMfZKhywSqmqC3ZeOMy
+        uPYYD8dXxqNtmlMNt+anK/rOaTRh/S0=
+X-Google-Smtp-Source: APXvYqwW+VxK5AtUGJmLgOOgbGeKk/ycNO1girO5Y2k2LEjMPwPRptHfbSgY5Hf3BXOoHwNutypMXA==
+X-Received: by 2002:a62:3045:: with SMTP id w66mr20893324pfw.122.1576563779568;
+        Mon, 16 Dec 2019 22:22:59 -0800 (PST)
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com. [209.85.210.177])
+        by smtp.gmail.com with ESMTPSA id m45sm1577942pje.32.2019.12.16.22.22.59
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Dec 2019 22:22:59 -0800 (PST)
+Received: by mail-pf1-f177.google.com with SMTP id 4so6953431pfz.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Dec 2019 22:22:59 -0800 (PST)
+X-Received: by 2002:a6b:be84:: with SMTP id o126mr2416373iof.269.1576563289206;
+ Mon, 16 Dec 2019 22:14:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <091562cbe7d88ca1c30638bc10197074@codeaurora.org>
+References: <20191212193544.80640-1-dianders@chromium.org> <20191212113540.7.Ia9bd3fca24ad34a5faaf1c3e58095c74b38abca1@changeid>
+ <5df2b752.1c69fb81.77c46.0f9a@mx.google.com>
+In-Reply-To: <5df2b752.1c69fb81.77c46.0f9a@mx.google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 16 Dec 2019 22:14:35 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=UGRqeAr8vVUfx3ADyxNLJRz3g=YhWNX1adgepx_kADrA@mail.gmail.com>
+Message-ID: <CAD=FV=UGRqeAr8vVUfx3ADyxNLJRz3g=YhWNX1adgepx_kADrA@mail.gmail.com>
+Subject: Re: [PATCH 7/7] arm64: dts: qcom: sc7180: Use 'ranges' in
+ arm,armv7-timer-mem node
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Can,
+Hi,
 
-On 17-12-19, 08:37, cang@codeaurora.org wrote:
-> On 2019-12-17 03:12, Jeffrey Hugo wrote:
-> > On Mon, Dec 16, 2019 at 12:05 PM Vinod Koul <vkoul@kernel.org> wrote:
-> > > 
-> > > Hi Can,
-> > > 
-> > > On 14-11-19, 22:09, Can Guo wrote:
-> > > > Add reset control for host controller so that host controller can be reset
-> > > > as required in its power up sequence.
-> > > 
-> > > I am seeing a regression on UFS on SM8150-mtp with this patch. I think
-> > > Jeff is seeing same one lenove laptop on 8998.
-> > 
-> > Confirmed.
-> > 
-> > > 
-> > > 845 does not seem to have this issue and only thing I can see is
-> > > that on
-> > > sm8150 and 8998 we define reset as:
-> > > 
-> > >                         resets = <&gcc GCC_UFS_BCR>;
-> > >                         reset-names = "rst";
-> > > 
-> 
-> Hi Jeffrey and Vinod,
-> 
-> Thanks for reporting this. May I know what kind of regression do you see on
-> 8150 and 8998?
-> BTW, do you have reset control for UFS PHY in your DT?
-> See 71278b058a9f8752e51030e363b7a7306938f64e.
-> 
-> FYI, we use reset control on all of our platforms and it is
-> a must during our power up sequence.
+On Thu, Dec 12, 2019 at 1:55 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Douglas Anderson (2019-12-12 11:35:43)
+> > Running `make dtbs_check` yells:
+> >
+> >   arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml: timer@17c20000: #size-cells:0:0: 1 was expected
+> >
+> > It appears that someone was trying to assert the fact that sub-nodes
+> > describing frames would never have a size that's more than 32-bits
+> > big.  That's certainly true in the case of sc7180.
+> >
+> > I guess this is a hint that it's time to do the thing that nobody
+> > seems to do but that "writing-bindings.txt" says we should all do.
+> > Specifically it says: "DO use non-empty 'ranges' to limit the size of
+> > child buses/devices".  That means we should probably limit the
+>
+> It got cut off here. I'm waiting to find out what it is!!
 
-Yes we do have this and additionally both the DTS describe a 'rst' reset
-and this patch tries to use this.
+I was going to say that I should use ranges to limit the address cells
+in addition to the size cells, but then I think I must have got
+distracted and forgot to finish my
 
-Can you please tell me which platform this was tested on how the reset
-was described in DT
 
-Thanks
--- 
-~Vinod
+> > I believe that this patch is the way to do it and there should be no
+> > bad side effects here.  I believe that since we're far enough down
+> > (not trying to describe an actual device, just some sub-pieces) that
+> > this won't cause us to run into the problems that caused us to
+> > increase the soc-level #address-cells and #size-cells to 2 in sdm845
+> > in commit bede7d2dc8f3 ("arm64: dts: qcom: sdm845: Increase address
+> > and size cells for soc").
+> >
+> > I can at least confirm that "arch_mem_timer" seems to keep getting
+> > interrupts in "/proc/interrupts" after this change.
+> >
+> > Fixes: 90db71e48070 ("arm64: dts: sc7180: Add minimal dts/dtsi files for SC7180 soc")
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+>
+> This pattern exists in most of the qcom dts files. Can you fix all the
+> arm,armv7-timer-mem nodes. Maybe the binding has the same problem too in
+> the example.
+
+Yeah.  I'm a little scared to go and do this for every qcom device
+tree file since I have no good way to test them, but I suppose I can
+give it a shot.  I was kinda thinking that, in general, it would make
+sense for folks to tackle one SoC at a time and make that SoC clean
+and test it.
+
+In any case, your idea about updating the example seemed wise to me,
+so I sent out:
+
+https://lore.kernel.org/r/20191216220512.1.I7dbd712cfe0bdf7b53d9ef9791072b7e9c6d3c33@changeid
+
+I'll put this patch on hold until Rob gives his thoughts on that one
+so we can really make sure we're supposed to be using ranges in this
+way.
+
+-Doug
