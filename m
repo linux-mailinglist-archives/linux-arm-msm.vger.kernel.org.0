@@ -2,88 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 67D8112335C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2019 18:19:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C89A1234B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Dec 2019 19:22:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727161AbfLQRTK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Dec 2019 12:19:10 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:36419 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726887AbfLQRTK (ORCPT
+        id S1727162AbfLQSV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Dec 2019 13:21:57 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:39304 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727335AbfLQSV5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Dec 2019 12:19:10 -0500
-Received: by mail-pl1-f196.google.com with SMTP id d15so6401742pll.3;
-        Tue, 17 Dec 2019 09:19:10 -0800 (PST)
+        Tue, 17 Dec 2019 13:21:57 -0500
+Received: by mail-pg1-f193.google.com with SMTP id b137so6115194pga.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2019 10:21:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=0+bQNPLFRgrOnjruSTJiPHn1ioRUh4JUplPIt6H3zco=;
-        b=Vi8EBTAoHCx//m8jY8MWHk9Vg8SHJeRdd1m0Ml2k+7DWhHfGxEcgfIHoOFlJ0NSx+D
-         dc7BKSbdC8cMwVuhQbKtaU2EmJuc+tuu+WgWNZ2w6ZvnYbumIdEwDvxAHyEU7G73XvRJ
-         okJv4BSKIxvJDi4Tu69sQam902T1DqYebrd79Tk0rTOEbB7ZHiVy8Ok7R4K5MHqk+3UM
-         UcK+bj0waHefluq+SYUG/OKHNuFbvGtCSXgg9PPy0W6H7Od6PbNaHvST2K0lQjcF5QAv
-         bKn3P6ImNT9rgus2QO0b+kD5zrUk+7VPMHuUqQOecrZcVTWN4Opyn5qOOhu/yA6uIl5z
-         9LIg==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=qkSZEp2LsinKzRtMJteSGld5vsa6OFgl+t86XDP5eEU=;
+        b=fepTE0HUb5CxTHXBrBY/0AvfYJMMrP1gat9cDME0DI3EuyUd6j3bN1pQjn/LoB/JX5
+         FplU4s+GxX6xCAMCsdFs+w4PxLGsCGR+K+4ZqqrwKaj22+Inf0SCofnPXxQ81SobXr0V
+         FYwTUqXsz/LtG/3rJsZz934fXOd2gNEXg8QK4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=0+bQNPLFRgrOnjruSTJiPHn1ioRUh4JUplPIt6H3zco=;
-        b=rwesFq1yHY/GhXivC1DX4IkL0fYu7G170jNmUNyn/88UnBOfS43oThmtwQ7scPPMzG
-         ALVBSaOyzsd7NmET3oZaRSTl4+wpnu5zF8CfyPtTDqBmw6YNlbuafpjxmugD9EXJ0JAQ
-         Cf7zjhGVVtuwSQQo26zX8XEof68LaOCktKm9NMSI+pz37Y013cmHqqiV5B5NuiMYmqqG
-         I0bxyC/SnWFCFCGdQ1Bvu0Bh2W8MSSJ4LAfhAshpvPnnDyus/d4f3RYdk9r00hSCl0Dm
-         GuupyeKrsOvLnUoWzlJjwfDDUyQCF2bCnK/bLTX1OCZVmCq3TsBiFv4ygT17zPW+TXyF
-         eH2A==
-X-Gm-Message-State: APjAAAXriezdBCFuDKW/V282sZ3KLmloCVgKJkCOD9+rU9Mofxvuz273
-        1ezai3kW6Duu+n2SMvqVbBk=
-X-Google-Smtp-Source: APXvYqzU5Jj/4ldH9kbwaYhFB+jis5t+pdYif2vfndTq3mRrNah3880ddnF/9HXmy3biZkqqq4ZSkQ==
-X-Received: by 2002:a17:902:bb8c:: with SMTP id m12mr24410091pls.320.1576603149784;
-        Tue, 17 Dec 2019 09:19:09 -0800 (PST)
-Received: from aw-bldr-10.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id w66sm27618721pfw.102.2019.12.17.09.19.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2019 09:19:09 -0800 (PST)
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-To:     mturquette@baylibre.com, sboyd@kernel.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: [PATCH] clk: qcom: Avoid SMMU/cx gdsc corner cases
-Date:   Tue, 17 Dec 2019 09:19:05 -0800
-Message-Id: <20191217171905.5619-1-jeffrey.l.hugo@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=qkSZEp2LsinKzRtMJteSGld5vsa6OFgl+t86XDP5eEU=;
+        b=miJBylF0FTZeLmqvnk8kLzIB+hDbnlzpRvm6Oq8E3v7Ed5kIzYHsIjcayvPkBixngA
+         PUQjNJ1+nxg1b6XERzwyGgUNLJGoLerLocLQ2e6DIC8MdLTEvopX2qIXJHChUp7y9/6L
+         cQpVROBmaquM3FsTZb4GPOySTcbQkcyCEmb3/x4jeVf+r6MHbY5xc1sOLeEGljoHH7HY
+         SC9P4W7eW/HKS6RfrHy0Jed+7LFYA1GAfAZGtNe+aQgyQihZMwPc415K7o3HMBsqMejE
+         WSHJGyTtG9PCPpyUGYLsf5EM0tX5PLc5YB2xcjftSIbEDIbJKm+u48q6rP3fyKTyq1Ry
+         vRwQ==
+X-Gm-Message-State: APjAAAWh1T0OB+WzbYNGE+sHMrvT/jGrYViYHj6nTEVWsGLUS3UsuVoG
+        CaedPjXZ+2Qcb5QFE727QbQ+5g==
+X-Google-Smtp-Source: APXvYqxIHPlHk6frzgBdbcR7f5i/RUbydfwrku2XtLrzXZ5HNuusSXKMYkvaNahnG8jdCyClazvg1w==
+X-Received: by 2002:a63:a555:: with SMTP id r21mr23297365pgu.158.1576606916432;
+        Tue, 17 Dec 2019 10:21:56 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id 73sm27711835pgc.13.2019.12.17.10.21.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Dec 2019 10:21:55 -0800 (PST)
+Date:   Tue, 17 Dec 2019 10:21:54 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Dikshita Agarwal <dikshita@codeaurora.org>
+Cc:     andy.gross@linaro.org, david.brown@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+Subject: Re: [PATCH] arm64: dts: sc7180: Enable video node
+Message-ID: <20191217182154.GU228856@google.com>
+References: <1576569218-24817-1-git-send-email-dikshita@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1576569218-24817-1-git-send-email-dikshita@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Mark the msm8998 cpu CX gdsc as votable and use the hw control to avoid
-corner cases with SMMU per hardware documentation.
+Hi
 
-Fixes: 3f7df5baa259 ("clk: qcom: Add MSM8998 GPU Clock Controller (GPUCC) driver")
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
----
- drivers/clk/qcom/gpucc-msm8998.c | 2 ++
- 1 file changed, 2 insertions(+)
+On Tue, Dec 17, 2019 at 01:23:38PM +0530, Dikshita Agarwal wrote:
+> This is a preparation gerrit to enable video node for sc7180.
 
-diff --git a/drivers/clk/qcom/gpucc-msm8998.c b/drivers/clk/qcom/gpucc-msm8998.c
-index e5e2492b20c5..9b3923af02a1 100644
---- a/drivers/clk/qcom/gpucc-msm8998.c
-+++ b/drivers/clk/qcom/gpucc-msm8998.c
-@@ -242,10 +242,12 @@ static struct clk_branch gfx3d_isense_clk = {
- 
- static struct gdsc gpu_cx_gdsc = {
- 	.gdscr = 0x1004,
-+	.gds_hw_ctrl = 0x1008,
- 	.pd = {
- 		.name = "gpu_cx",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE,
- };
- 
- static struct gdsc gpu_gx_gdsc = {
--- 
-2.17.1
+gerrit is a code review tool, please change to something like
+"Add venus video codec node for sc7180"
+
+> This change depends on patch series Venus new features.
+
+Notes like this should not be part of the commit message, but put
+below '---'. It would also be good to include a link to the series,
+I suppose it's
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=213439
+
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 28 ++++++++++++++++++++++++++++
+>  1 file changed, 28 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 52a5861..ccf9ef5 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1297,6 +1297,34 @@
+>  
+>  			#freq-domain-cells = <1>;
+>  		};
+> +
+> +		venus: video-codec@aa00000 {
+> +			compatible = "qcom,sc7180-venus";
+
+This compatible string is not listed in the bindings
+(Documentation/devicetree/bindings/media/qcom,venus.txt), nor
+in the driver.
 
