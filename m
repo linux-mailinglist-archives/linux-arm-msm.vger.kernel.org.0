@@ -2,202 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 63CD4125739
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 23:51:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E4D431257D8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 00:37:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726694AbfLRWvy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Dec 2019 17:51:54 -0500
-Received: from mail.kernel.org ([198.145.29.99]:37946 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726463AbfLRWvy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Dec 2019 17:51:54 -0500
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B3019227BF;
-        Wed, 18 Dec 2019 22:51:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576709513;
-        bh=ikIQL3G4qYb8KbWizxcrAUGL1YeXt314hX/pFQ5TyHQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=yN86uhHVuanyGmYlZ2UiRTDBQmIsfbs+GLuq8RIuBgz4ZkAuXKMu7n1HnUZQA6qVM
-         eW5hafPQvno+/8pl5AY+E2dWs6keMM5izYAbYVnjeGdOYED7Hv566k03ufAJHvV9Rx
-         X0HbfvCpxC06YomOX8K/V2NMDugaG/FZDzGy4lRw=
-Received: by mail-qk1-f176.google.com with SMTP id w127so3009782qkb.11;
-        Wed, 18 Dec 2019 14:51:53 -0800 (PST)
-X-Gm-Message-State: APjAAAWZO2XkEQSiX9iz18YhDgMRcDKoz927zn7RvOm1qwfdg3ffQ4w3
-        4CKreDcA1GRTV7ieYFNrVz4odb15KiDZvlwzzg==
-X-Google-Smtp-Source: APXvYqxaQcia+7wj43il7/VAVS2mF5JlbvYF0y3vbSxJME+Yu57ll5wT1N+cqSquqi899qwSawtvom5DUUYmgUmDHto=
-X-Received: by 2002:a37:a70b:: with SMTP id q11mr5145839qke.393.1576709512817;
- Wed, 18 Dec 2019 14:51:52 -0800 (PST)
-MIME-Version: 1.0
-References: <20191218132251.24161-1-stanimir.varbanov@linaro.org> <20191218132251.24161-7-stanimir.varbanov@linaro.org>
-In-Reply-To: <20191218132251.24161-7-stanimir.varbanov@linaro.org>
+        id S1726561AbfLRXhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Dec 2019 18:37:17 -0500
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:36505 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726463AbfLRXhR (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Dec 2019 18:37:17 -0500
+Received: by mail-ot1-f65.google.com with SMTP id w1so4607351otg.3;
+        Wed, 18 Dec 2019 15:37:16 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rVq3FctMUlxxbFCAv4Hq3F1IucA62kHuaSw0yCHlOq8=;
+        b=beH6OFUWr5JKlMtvSveZhc4RtA5nbTOiRLI19KLI8OXc7pE5AdYZK1D+eNZ3/LUV5c
+         nMLWAx+I7VSTSn4ycvSFbqCuTfP95CwiC2FZhd2i8EfYpIHSz+bhzW/tCJaec3qGvvsI
+         ++XTzSgYa5teSPCfd0Snf0wVBw2k2+S3a4VhWJMXgbzhsu1kiLUnxEP6N6EEpA29iess
+         OKPeJVpM2C4p9v0+CQBnY0WaM7ZcSSQcivKQllDFJbkQVbIvWYz6XAsZ2UCglkAGnM/l
+         ggWoikGUEVjfBRjIa+oyokyA+zZcQhKpU9bCxKjqwYDJrKGj5T+BxSm76t0OXeTYFlhG
+         mrzg==
+X-Gm-Message-State: APjAAAUEYegaIh3iDUR6LCxmvTU/isEeOkh2xZAGI3L+FhmfAhtArURa
+        aDWM2Sngm2SOb4Kdpz9GWA==
+X-Google-Smtp-Source: APXvYqyPh+4IInW14BHCfGHQzEnJR270O8hYZIX77r6+KeTYekhQCeI3drPFmDyVwEvselhJDCNYTg==
+X-Received: by 2002:a9d:2482:: with SMTP id z2mr5197001ota.279.1576712236059;
+        Wed, 18 Dec 2019 15:37:16 -0800 (PST)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id c12sm1358241oic.27.2019.12.18.15.37.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Dec 2019 15:37:15 -0800 (PST)
+Date:   Wed, 18 Dec 2019 17:37:14 -0600
 From:   Rob Herring <robh@kernel.org>
-Date:   Wed, 18 Dec 2019 16:51:41 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+1Z72J03tZa9T4DLzR7skFweV8Xe4vBd_QBUktVOekrA@mail.gmail.com>
-Message-ID: <CAL_Jsq+1Z72J03tZa9T4DLzR7skFweV8Xe4vBd_QBUktVOekrA@mail.gmail.com>
-Subject: Re: [PATCH v2 06/12] dt-bindings: media: venus: Convert msm8916 to DT schema
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        dikshita@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, Borislav Petkov <bp@alien8.de>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Tony Luck <tony.luck@intel.com>,
+        James Morse <james.morse@arm.com>,
+        Robert Richter <rrichter@marvell.com>,
+        linux-edac@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>, tsoni@codeaurora.org,
+        psodagud@codeaurora.org
+Subject: Re: [PATCH 1/2] dt-bindings: edac: Add DT bindings for Kryo EDAC
+Message-ID: <20191218233714.GA30302@bogus>
+References: <cover.1575529553.git.saiprakash.ranjan@codeaurora.org>
+ <0101016ed57a3259-eee09e9e-e99a-40f1-ab1c-63e58a42615c-000000@us-west-2.amazonses.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0101016ed57a3259-eee09e9e-e99a-40f1-ab1c-63e58a42615c-000000@us-west-2.amazonses.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 18, 2019 at 7:24 AM Stanimir Varbanov
-<stanimir.varbanov@linaro.org> wrote:
->
-> Convert qcom,msm8916-venus Venus binding to DT schema
->
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+On Thu, Dec 05, 2019 at 09:53:05AM +0000, Sai Prakash Ranjan wrote:
+> This adds DT bindings for Kryo EDAC implemented with RAS
+> extensions on KRYO{3,4}XX CPU cores for reporting of cache
+> errors.
+> 
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 > ---
->  .../bindings/media/qcom,venus-msm8916.yaml    | 115 ++++++++++++++++++
->  1 file changed, 115 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/qcom,venus-msm8916.yaml
-
-Make the filename match the compatible.
-
->
-> diff --git a/Documentation/devicetree/bindings/media/qcom,venus-msm8916.yaml b/Documentation/devicetree/bindings/media/qcom,venus-msm8916.yaml
+>  .../bindings/edac/qcom-kryo-edac.yaml         | 67 +++++++++++++++++++
+>  1 file changed, 67 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/edac/qcom-kryo-edac.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/edac/qcom-kryo-edac.yaml b/Documentation/devicetree/bindings/edac/qcom-kryo-edac.yaml
 > new file mode 100644
-> index 000000000000..f82a8d968202
+> index 000000000000..1a39429a73b4
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/media/qcom,venus-msm8916.yaml
-> @@ -0,0 +1,115 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +
+> +++ b/Documentation/devicetree/bindings/edac/qcom-kryo-edac.yaml
+> @@ -0,0 +1,67 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 > +%YAML 1.2
 > +---
-> +$id: "http://devicetree.org/schemas/media/qcom,venus-msm8916.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +$id: http://devicetree.org/schemas/edac/qcom-kryo-edac.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +title: Qualcomm Venus video encode and decode accelerators
+> +title: Kryo Error Detection and Correction(EDAC)
 > +
 > +maintainers:
-> +  - Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> +  - Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 > +
 > +description: |
-> +  The Venus IP is a video encode and decode accelerator present
-> +  on Qualcomm platforms
+> +  Kryo EDAC is defined to describe on-chip error detection and correction
+> +  for the Kryo CPU cores which implement RAS extensions. It will report
+> +  all Single Bit Errors and Double Bit Errors found in L1/L2 caches in
+> +  in two registers ERXSTATUS_EL1 and ERXMISC0_EL1. L3-SCU cache errors
+> +  are reported in ERR1STATUS and ERR1MISC0 registers.
+> +    ERXSTATUS_EL1 - Selected Error Record Primary Status Register, EL1
+> +    ERXMISC0_EL1 - Selected Error Record Miscellaneous Register 0, EL1
+> +    ERR1STATUS - Error Record Primary Status Register
+> +    ERR1MISC0 - Error Record Miscellaneous Register 0
+> +  Current implementation of Kryo ECC(Error Correcting Code) mechanism is
+> +  based on interrupts.
 > +
 > +properties:
 > +  compatible:
 > +    enum:
-> +      - qcom,msm8916-venus
-
-Not likely a 2nd compatible here?, so you can use 'const' instead.
-
-> +
-> +  reg:
-> +    maxItems: 1
+> +      - qcom,kryo-edac
 > +
 > +  interrupts:
-> +    maxItems: 1
+> +    minItems: 1
+> +    maxItems: 4
+> +    items:
+> +      - description: l1-l2 cache faultirq interrupt
+> +      - description: l1-l2 cache errirq interrupt
+> +      - description: l3-scu cache errirq interrupt
+> +      - description: l3-scu cache faultirq interrupt
 > +
-> +  power-domains:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 3
-> +
-> +  clock-names:
-> +    maxItems: 3
+> +  interrupt-names:
+> +    minItems: 1
+> +    maxItems: 4
 
-Don't need this. Implied with the length of 'items'.
+You are saying only these combinations are valid:
+
+l1-l2-faultirq
+
+l1-l2-faultirq
+l1-l2-errirq
+
+l1-l2-faultirq
+l1-l2-errirq
+l3-scu-errirq
+
+l1-l2-faultirq
+l1-l2-errirq
+l3-scu-errirq
+l3-scu-faultirq
+
+Is that your intent?
 
 > +    items:
-> +      - const: core
-> +      - const: iface
-> +      - const: bus
-> +
-> +  iommus:
-> +    minItems: 1
-> +    maxItems: 20
-> +
-> +  memory-region:
-> +    maxItems: 1
-> +
-> +  video-decoder:
-> +    type: object
-> +
-> +    properties:
-> +      compatible:
-> +        const: "venus-decoder"
-> +
-> +    required:
-> +      - compatible
-
-       additionalProperties: false
-
-> +
-> +  video-encoder:
-> +    type: object
-> +
-> +    properties:
-> +      compatible:
-> +        const: "venus-encoder"
-> +
-> +    required:
-> +      - compatible
-
-Here too.
-
-> +
-> +  video-firmware:
-> +    type: object
-> +
-> +    description: |
-> +      Firmware subnode is needed when the platform does not
-> +      have TrustZone.
-> +
-> +    properties:
-> +      iommus:
-> +        minItems: 1
+> +      - const: l1-l2-faultirq
+> +      - const: l1-l2-errirq
+> +      - const: l3-scu-errirq
+> +      - const: l3-scu-faultirq
 > +
 > +required:
 > +  - compatible
-> +  - reg
 > +  - interrupts
-> +  - power-domains
-> +  - clocks
-> +  - clock-names
-> +  - iommus
-> +  - memory-region
-> +  - video-decoder
-> +  - video-encoder
+> +  - interrupt-names
 > +
 > +examples:
 > +  - |
-> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +        #include <dt-bindings/clock/qcom,gcc-msm8916.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
 > +
-> +        video-codec@1d00000 {
-> +                compatible = "qcom,msm8916-venus";
-> +                reg = <0x01d00000 0xff000>;
-> +                interrupts = <GIC_SPI 44 IRQ_TYPE_LEVEL_HIGH>;
-> +                clocks = <&gcc GCC_VENUS0_VCODEC0_CLK>,
-> +                        <&gcc GCC_VENUS0_AHB_CLK>,
-> +                        <&gcc GCC_VENUS0_AXI_CLK>;
-> +                clock-names = "core", "iface", "bus";
-> +                power-domains = <&gcc VENUS_GDSC>;
-> +                iommus = <&apps_iommu 5>;
-> +                memory-region = <&venus_mem>;
-> +
-> +                video-decoder {
-> +                        compatible = "venus-decoder";
-> +                };
-> +
-> +                video-encoder {
-> +                        compatible = "venus-encoder";
-> +                };
-> +        };
-> --
-> 2.17.1
->
+> +    kryo_edac {
+> +      compatible = "qcom,kryo-edac";
+> +      interrupts = <GIC_PPI 6 IRQ_TYPE_LEVEL_HIGH>,
+> +                   <GIC_PPI 7 IRQ_TYPE_LEVEL_HIGH>,
+> +                   <GIC_SPI 34 IRQ_TYPE_LEVEL_HIGH>,
+> +                   <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +      interrupt-names = "l1-l2-faultirq",
+> +                        "l1-l2-errirq",
+> +                        "l3-scu-errirq",
+> +                        "l3-scu-faultirq";
+> +    };
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
