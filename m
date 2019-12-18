@@ -2,205 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AC1C6124C7F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 17:06:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D0741250C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 19:38:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727549AbfLRQG3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Dec 2019 11:06:29 -0500
-Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:63178 "EHLO
-        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727529AbfLRQG3 (ORCPT
+        id S1727444AbfLRSiH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Dec 2019 13:38:07 -0500
+Received: from mail-il1-f196.google.com ([209.85.166.196]:34627 "EHLO
+        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727441AbfLRSiH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Dec 2019 11:06:29 -0500
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 18 Dec 2019 21:36:18 +0530
-Received: from gokulsri-linux.qualcomm.com ([10.201.2.207])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 18 Dec 2019 21:35:49 +0530
-Received: by gokulsri-linux.qualcomm.com (Postfix, from userid 432570)
-        id 9BFEF3C57; Wed, 18 Dec 2019 21:35:47 +0530 (IST)
-From:   Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-To:     gokulsri@codeaurora.org, sboyd@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, david.brown@linaro.org,
-        devicetree@vger.kernel.org, jassisinghbrar@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        mark.rutland@arm.com, mturquette@baylibre.com, ohad@wizery.com,
-        robh+dt@kernel.org, sricharan@codeaurora.org,
-        nprakash@codeaurora.org
-Subject: [PATCH V4 10/10] arm64: dts: qcom: Enable Q6v5 WCSS for ipq8074 SoC
-Date:   Wed, 18 Dec 2019 21:35:46 +0530
-Message-Id: <1576685146-17135-11-git-send-email-gokulsri@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1576685146-17135-1-git-send-email-gokulsri@codeaurora.org>
-References: <1576685146-17135-1-git-send-email-gokulsri@codeaurora.org>
+        Wed, 18 Dec 2019 13:38:07 -0500
+Received: by mail-il1-f196.google.com with SMTP id s15so2584362iln.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2019 10:38:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=If9n9LWtZGwO9cBtHXPSqWrRQWL2H+dGPsSdvZ1Ke3s=;
+        b=G5QCuHckZR+UYBlSuoqYvD3YazGZK1yBYvycKFSY3URC8LIyhCbIuej/Kaaffiq5L4
+         92606OJK+TKfXSAfkh0FiaB3G5jt9UGQshpfDs2q+I944lz3SEdLnkj/Ub0mvoEu5dOO
+         J/Rd18YDRIPIOTc4M8TImCc1kMLL8HN3M2P7g=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=If9n9LWtZGwO9cBtHXPSqWrRQWL2H+dGPsSdvZ1Ke3s=;
+        b=T9jdsqRdi4ZBgoCm/N7t5eRn7m2O6druWFOj5WHjsGg0p0JNew7qlFc1g+WmtySUd0
+         50gNfzfm/+ha8+h3QBz6E4BqPyYczi+sKAeLVzUHUfjekDq4s+zsLMec7auDnUxDu79H
+         18sWb5QF71Qlq4LKD+oi9ZwfoLjqMlcWUCF3iOBWIbb8Y6NO8A64bQYZwwiZO1DwsDTJ
+         kLF5vBuH8YRIdRGyZ8cv23WGUgINpZ44HE/RY/vBcSAUpziMgWFaAEIRHp1Vc9DbiJ8Z
+         YPMp6BxWlN0i0/B1lGBnwZ8xDzGpzB9zNE73iFg9kMFoISqJn6WxPx57sFqIzRVrMpcl
+         6t7A==
+X-Gm-Message-State: APjAAAUwn6NhvacgKP6nyBPEAyANX+woPaXxXwIPbKds/cQ+G2aqqSC2
+        Cz7ztnEWpsc8SWuCsAHM5fbA9nrSTaI=
+X-Google-Smtp-Source: APXvYqwbIB4EStBam4Vnle1//iFRADe1NGYiQKfB9sPieRQnMXUzaeThDdNfpW62eC3EkWkl0kfw7w==
+X-Received: by 2002:a92:1d98:: with SMTP id g24mr3101383ile.307.1576694286382;
+        Wed, 18 Dec 2019 10:38:06 -0800 (PST)
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com. [209.85.166.43])
+        by smtp.gmail.com with ESMTPSA id e7sm613574iot.71.2019.12.18.10.38.05
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Dec 2019 10:38:05 -0800 (PST)
+Received: by mail-io1-f43.google.com with SMTP id v18so3049893iol.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2019 10:38:05 -0800 (PST)
+X-Received: by 2002:a6b:b941:: with SMTP id j62mr2902869iof.168.1576694284957;
+ Wed, 18 Dec 2019 10:38:04 -0800 (PST)
+MIME-Version: 1.0
+References: <1576474742-23409-1-git-send-email-sanm@codeaurora.org>
+ <1576474742-23409-2-git-send-email-sanm@codeaurora.org> <CAD=FV=U48gdGHMbQ22M_59t6va2n41Zh1CDTqMJYpLCwiD35Mg@mail.gmail.com>
+ <6d8c979f-daa3-3b40-f29c-cca5a2f8f1c8@codeaurora.org>
+In-Reply-To: <6d8c979f-daa3-3b40-f29c-cca5a2f8f1c8@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 18 Dec 2019 10:37:53 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=UER4zt=z3XWEzNt5v2oe8V=z6Hb-Wm-2BzuWtuHmYg-A@mail.gmail.com>
+Message-ID: <CAD=FV=UER4zt=z3XWEzNt5v2oe8V=z6Hb-Wm-2BzuWtuHmYg-A@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: usb: qcom,dwc3: Convert USB DWC3 bindings
+To:     "Sandeep Maheswaram (Temp)" <sanm@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-usb@vger.kernel.org,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Manu Gautam <mgautam@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable remoteproc WCSS PIL driver with glink
-and ssr subdevices. Also configures shared memory
-and enables smp2p and mailboxes required for IPC.
+Hi,
 
-Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-Signed-off-by: Sricharan R <sricharan@codeaurora.org>
-Signed-off-by: Nikhil Prakash V <nprakash@codeaurora.org>
----
-changes since v3:
- - Added release_firmware to free up memory requested for m3 firmware.
-changes since v2:
- - Removed syscon implementation to use mailbox framework to access APCS IPC
-Changes since v1:
- - Addressed minor review comments.
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 121 ++++++++++++++++++++++++++++++++++
- 1 file changed, 121 insertions(+)
+On Wed, Dec 18, 2019 at 4:41 AM Sandeep Maheswaram (Temp)
+<sanm@codeaurora.org> wrote:
+> +  assigned-clock-rates:
+> +    description:
+> +      Should be 19.2MHz (19200000) for MOCK_UTMI_CLK
+> +      >=125MHz (125000000) for MASTER_CLK in SS mode
+> +      >=60MHz (60000000) for MASTER_CLK in HS mode
+> +    maxItems: 2
+>
+> You can still express some limits here even if we don't go all out
+> with the "oneOf".  AKA I think this is better:
+>
+> assigned-clock-rates:
+>   items:
+>     - const: 19200000
+>     - minimum: 60000000
+>       description: >= 60 MHz in HS mode, >= 125 MHz in SS mode
+>
+> Facing error when i add as above.
+> properties:assigned-clock-rates: {'items': [{'const': 19200000}, {'minimum': 60000000}]} is not valid under any of the given schemas
+> Documentation/devicetree/bindings/Makefile:12: recipe for target 'Documentation/devicetree/bindings/usb/qcom,dwc3.example.dts' failed
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 6a61a63..da66533 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -10,12 +10,66 @@
- 	model = "Qualcomm Technologies, Inc. IPQ8074";
- 	compatible = "qcom,ipq8074";
- 
-+	reserved-memory {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		smem_region: memory@4ab00000 {
-+			no-map;
-+			reg = <0x0 0x4ab00000 0x0 0x00100000>;
-+		};
-+
-+		q6_region: memory@4b000000 {
-+			no-map;
-+			reg = <0x0 0x4b000000 0x0 0x05f00000>;
-+		};
-+	};
-+
- 	firmware {
- 		scm {
- 			compatible = "qcom,scm-ipq8074", "qcom,scm";
- 		};
- 	};
- 
-+	tcsr_mutex: hwlock@193d000 {
-+		compatible = "qcom,tcsr-mutex";
-+		syscon = <&tcsr_mutex_regs 0 0x80>;
-+		#hwlock-cells = <1>;
-+	};
-+
-+	smem {
-+		compatible = "qcom,smem";
-+		memory-region = <&smem_region>;
-+		hwlocks = <&tcsr_mutex 0>;
-+	};
-+
-+	wcss: smp2p-wcss {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <435>, <428>;
-+
-+		interrupt-parent = <&intc>;
-+		interrupts = <0 322 1>;
-+
-+		mboxes = <&apcs_glb 9>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <1>;
-+
-+		wcss_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			qcom,smp2p-feature-ssr-ack;
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		wcss_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
-+
- 	soc: soc {
- 		#address-cells = <0x1>;
- 		#size-cells = <0x1>;
-@@ -431,6 +485,73 @@
- 				      "axi_m_sticky";
- 			status = "disabled";
- 		};
-+
-+		tcsr_q6: syscon@1945000 {
-+			compatible = "syscon";
-+			reg = <0x01945000 0xe000>;
-+		};
-+
-+		tcsr_mutex_regs: syscon@193d000 {
-+			compatible = "syscon";
-+			reg = <0x01905000 0x8000>;
-+		};
-+
-+		apcs_glb: mailbox@b111000 {
-+			compatible = "qcom,ipq8074-apcs-apps-global";
-+			reg = <0x0b111000 0x1000>;
-+
-+			#mbox-cells = <1>;
-+		};
-+
-+		q6v5_wcss: q6v5_wcss@cd00000 {
-+			compatible = "qcom,ipq8074-wcss-pil";
-+			reg = <0x0cd00000 0x4040>,
-+			      <0x004ab000 0x20>;
-+			reg-names = "qdsp6",
-+				    "rmb";
-+			qca,auto-restart;
-+			qca,extended-intc;
-+			interrupts-extended = <&intc 0 325 1>,
-+					      <&wcss_smp2p_in 0 0>,
-+					      <&wcss_smp2p_in 1 0>,
-+					      <&wcss_smp2p_in 2 0>,
-+					      <&wcss_smp2p_in 3 0>;
-+			interrupt-names = "wdog",
-+					  "fatal",
-+					  "ready",
-+					  "handover",
-+					  "stop-ack";
-+
-+			resets = <&gcc GCC_WCSSAON_RESET>,
-+				 <&gcc GCC_WCSS_BCR>,
-+				 <&gcc GCC_WCSS_Q6_BCR>;
-+
-+			reset-names = "wcss_aon_reset",
-+				      "wcss_reset",
-+				      "wcss_q6_reset";
-+
-+			clocks = <&gcc GCC_PRNG_AHB_CLK>;
-+			clock-names = "prng";
-+
-+			qcom,halt-regs = <&tcsr_q6 0xa000 0xd000 0x0>;
-+
-+			qcom,smem-states = <&wcss_smp2p_out 0>,
-+					   <&wcss_smp2p_out 1>;
-+			qcom,smem-state-names = "shutdown",
-+						"stop";
-+
-+			memory-region = <&q6_region>;
-+
-+			glink-edge {
-+				interrupts = <GIC_SPI 321 IRQ_TYPE_EDGE_RISING>;
-+				qcom,remote-pid = <1>;
-+				mboxes = <&apcs_glb 8>;
-+
-+				rpm_requests {
-+					qcom,glink-channels = "IPCRTR";
-+				};
-+			};
-+		};
- 	};
- 
- 	cpus {
--- 
-1.9.1
+I couldn't figure it out either.  ...but at least this seemed to work
+and is slightly better than what you have:
 
+  assigned-clock-rates:
+    items:
+      - description: Must be 19.2MHz (19200000)
+      - description: Must be >= 60 MHz in HS mode, >= 125 MHz in SS mode
+
+So I'd say go with that.
+
+
+-Doug
