@@ -2,254 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A15EF1249C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 15:33:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47CD5124B05
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 16:13:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726856AbfLROdz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Dec 2019 09:33:55 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:50117 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727030AbfLROdz (ORCPT
+        id S1727265AbfLRPNy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Dec 2019 10:13:54 -0500
+Received: from mail-il1-f193.google.com ([209.85.166.193]:44771 "EHLO
+        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727174AbfLRPNx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Dec 2019 09:33:55 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1576679634; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=iqtwOlCiJqGy4B1VCNqpNj5v+p2wn063PEVEdzNJ318=; b=YmfSvqwYTgqvYliX61Rz3/3YZH65RUGUrw7hsD0gRsJeNs/9TXYTMFLdyiQW+HlPRKPeiYhs
- depF6nlxxvKk4kLEnr97iyapfRIZoerT1X8IfuNYrihpzjGTTvouUBfcqNLbj+eFWSJv7NCQ
- 7QOUiyySLJM1v7w8GvlGQec7j3M=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5dfa38cb.7f9b82697068-smtp-out-n02;
- Wed, 18 Dec 2019 14:33:47 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1459AC4479F; Wed, 18 Dec 2019 14:33:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1B1ADC433CB;
-        Wed, 18 Dec 2019 14:33:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1B1ADC433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org
-Cc:     mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, swboyd@chromium.org, dianders@chromium.org,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180: Enable multiple nodes
-Date:   Wed, 18 Dec 2019 20:03:32 +0530
-Message-Id: <20191218143332.29107-1-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.22.1
+        Wed, 18 Dec 2019 10:13:53 -0500
+Received: by mail-il1-f193.google.com with SMTP id z12so1958852iln.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2019 07:13:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=R9l9mbjTMtC+3agOxuj88vgGSGUSi1shzIvbtHPQHDA=;
+        b=Q3vp2fJ40VWpq9rX2ikiWTUrhuiQJXzCeUu43e1oIIOk8rzGCPMljco+W3g3Sdt7mK
+         0zMp27lNXT81ott0dYeyE6wCdI4c1wfi5qCqRmoGIMvdtgle/6NMWI0GJrkD30CBojRq
+         hZbdgtbn9F/6uhvfSLkMdN7NhUpQoMVScRn9uDFKZJxofy0MWDF6kZw53YXeVt8sjWjA
+         Dd9TBzj4Ogplv/txGap2r0I252pQP7l7XSY4YOVhZ7qL539zlqhtO9W4mad505PIZ9Xp
+         yYy+XyL34oyC2pvEIWTDP8EMj+Gj6Cu0eHyc7GTPTD7Enq1rjLHU3JyAyX8LQzaLW/WP
+         +a+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=R9l9mbjTMtC+3agOxuj88vgGSGUSi1shzIvbtHPQHDA=;
+        b=XieJ4SV0zgpO56WXz45D7NUqrEoqSMdyWHsJixOuqZpto2qpMvk3qO8+/aZQ965Gao
+         2zut7qi5D0fFqWGqS3U/F64Ue5saX0yDkdmeb3+A4s0yNp01ctLRno+uq7KyMUiteCgF
+         DMn51pwz9YexzV5Lav8XLu0SqgJ5TTuzPAmP9Tfu8n4SrOp0yE7qZGpGCX2Aw8Hj84/G
+         Q4skUZJXcChPsf17pDuzfvie2foDpNDtbyYZkT7X04PtyU9dGSEApz6874QLLsOXZnio
+         8cSCgrVQjUT+BDVFNjFyWqc1WGdZS/Wo1W5aH02NisEyNus9Fy+6EaJ5aw4++Fczg9C0
+         KaOA==
+X-Gm-Message-State: APjAAAVgHkSs/HoeCf1QyvmUEAjLGcrFjDWO4jWl07mDbEXR0Og7PhMj
+        OjaKa7X0see4rXk35BC4/Zr6PokL+xWS2i4ODw==
+X-Google-Smtp-Source: APXvYqzpDMY1kfzvQTGFYFDuSf5Wkv4RFsY3uCP+mpqq6wLn7kqjCTzLCYufYBbbmMCBsVo5PHwr9dpQEEDI7K8RY00=
+X-Received: by 2002:a92:cc90:: with SMTP id x16mr2363556ilo.269.1576682033220;
+ Wed, 18 Dec 2019 07:13:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a02:6603:0:0:0:0:0 with HTTP; Wed, 18 Dec 2019 07:13:52
+ -0800 (PST)
+Reply-To: dhl.expresscourier102156@outlook.fr
+From:   "MS. MARYANNA B. THOMASON" <info.zennitbankplcnigerian@gmail.com>
+Date:   Wed, 18 Dec 2019 16:13:52 +0100
+Message-ID: <CABHzvrnY8Lhdw4Y2q97jvAVrRpM9CVLFkw=Ved7y1GhGqHiAdw@mail.gmail.com>
+Subject: I WANT TO YOU TO TREAT THIS EMAIL VERY URGENT
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add scm, smem, smp2p, aoss-qmp, aoss-cc and pdc-global device nodes
-to SC7180 SoCs.
+Attn Dear.
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
+Urgent delivery Notification of your ATM MASTER CARD, Dhl-Benin is
+ready for delivery of your ATM Master card worth $15.800=E2=80=99000=E2=80=
+=9900, as
+approved this morning, Date, 18/12/2019. Through the Intruction from
+INTERNATIONAL MONETARY FUNDS, I.M.F official Directors.
 
-Depends on https://patchwork.kernel.org/patch/11289689/
+REGISTRATION NO :EG58945
+PARCEL NUMBER: 140479
+Delivery Schuleded now,
+Finally all we required from you is your ATM Card Proccessing Delivery
+fees $19.00 only which you must send to this DHL service to enable us
+dispatch the parcel to your destination today.
 
-I'll probably need to re-spin the patch once Rob decides on how to name
-the reserved-memory nodes.
+Here is our receiving payment details.
+You are advised to send it Via Money Gram Service.
 
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 126 +++++++++++++++++++++++++++
- 1 file changed, 126 insertions(+)
+Receiver's Name--------Alan Ude
+Country-------Benin Republic.
+City/ Address--------Cotonou
+Test Question--------In God
+Answer-------We Trust
+Amount------------$US19.00 only
+Mtcn-------------
+Sender's Name-------
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 8903f9afe62f6..4e3f092093925 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -9,7 +9,10 @@
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/phy/phy-qcom-qusb2.h>
-+#include <dt-bindings/power/qcom-aoss-qmp.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
-+#include <dt-bindings/reset/qcom,sdm845-aoss.h>
-+#include <dt-bindings/reset/qcom,sdm845-pdc.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
- 
- / {
-@@ -65,6 +68,10 @@
- 		aop_cmd_db_mem: memory@80820000 {
- 			reg = <0x0 0x80820000 0x0 0x20000>;
- 			compatible = "qcom,cmd-db";
-+		};
-+
-+		smem_mem: memory@80900000 {
-+			reg = <0x0 0x80900000 0x0 0x200000>;
- 			no-map;
- 		};
- 	};
-@@ -192,6 +199,92 @@
- 		interrupts = <GIC_PPI 5 IRQ_TYPE_LEVEL_HIGH>;
- 	};
- 
-+	firmware {
-+		scm {
-+			compatible = "qcom,scm-sc7180", "qcom,scm";
-+		};
-+	};
-+
-+	tcsr_mutex: hwlock {
-+		compatible = "qcom,tcsr-mutex";
-+		syscon = <&tcsr_mutex_regs 0 0x1000>;
-+		#hwlock-cells = <1>;
-+	};
-+
-+	smem {
-+		compatible = "qcom,smem";
-+		memory-region = <&smem_mem>;
-+		hwlocks = <&tcsr_mutex 3>;
-+	};
-+
-+	smp2p-cdsp {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <94>, <432>;
-+
-+		interrupts = <GIC_SPI 576 IRQ_TYPE_EDGE_RISING>;
-+
-+		mboxes = <&apss_shared 6>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <5>;
-+
-+		cdsp_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		cdsp_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
-+
-+	smp2p-lpass {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <443>, <429>;
-+
-+		interrupts = <GIC_SPI 158 IRQ_TYPE_EDGE_RISING>;
-+
-+		mboxes = <&apss_shared 10>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <2>;
-+
-+		adsp_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		adsp_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
-+
-+	smp2p-mpss {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <435>, <428>;
-+		interrupts = <GIC_SPI 451 IRQ_TYPE_EDGE_RISING>;
-+		mboxes = <&apss_shared 14>;
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <1>;
-+
-+		modem_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		modem_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
-+
- 	psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
-@@ -643,6 +736,11 @@
- 			};
- 		};
- 
-+		tcsr_mutex_regs: syscon@1f40000 {
-+			compatible = "syscon";
-+			reg = <0 0x01f40000 0 0x40000>;
-+		};
-+
- 		tlmm: pinctrl@3500000 {
- 			compatible = "qcom,sc7180-pinctrl";
- 			reg = <0 0x03500000 0 0x300000>,
-@@ -1052,6 +1150,12 @@
- 			interrupt-controller;
- 		};
- 
-+		pdc_reset: reset-controller@b2e0000 {
-+			compatible = "qcom,sc7180-pdc-global", "qcom,sdm845-pdc-global";
-+			reg = <0 0x0b2e0000 0 0x20000>;
-+			#reset-cells = <1>;
-+		};
-+
- 		tsens0: thermal-sensor@c263000 {
- 			compatible = "qcom,sc7180-tsens","qcom,tsens-v2";
- 			reg = <0 0x0c263000 0 0x1ff>, /* TM */
-@@ -1072,6 +1176,22 @@
- 			#thermal-sensor-cells = <1>;
- 		};
- 
-+		aoss_reset: reset-controller@c2a0000 {
-+			compatible = "qcom,sc7180-aoss-cc", "qcom,sdm845-aoss-cc";
-+			reg = <0 0x0c2a0000 0 0x31000>;
-+			#reset-cells = <1>;
-+		};
-+
-+		aoss_qmp: qmp@c300000 {
-+			compatible = "qcom,sc7180-aoss-qmp";
-+			reg = <0 0x0c300000 0 0x100000>;
-+			interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
-+			mboxes = <&apss_shared 0>;
-+
-+			#clock-cells = <0>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		spmi_bus: spmi@c440000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0 0x0c440000 0 0x1100>,
-@@ -1199,6 +1319,12 @@
- 			};
- 		};
- 
-+		apss_shared: mailbox@17c00000 {
-+			compatible = "qcom,sc7180-apss-shared";
-+			reg = <0 0x17c00000 0 0x10000>;
-+			#mbox-cells = <1>;
-+		};
-+
- 		watchdog@17c10000 {
- 			compatible = "qcom,apss-wdt-sc7180", "qcom,kpss-wdt";
- 			reg = <0 0x17c10000 0 0x1000>;
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Your delivery  ATM card worth $15.800=E2=80=99000=E2=80=9900,
+Is Due for delivery to your address today upon confirmation of
+required fee from you asap.
+
+Call us on this phone number for any inquiry. +229 62819378
+Awaiting your urgent response.
+
+MS. MARYANNA B. THOMASON, Shipment director, DHL Express
+Courier Company-Benin
