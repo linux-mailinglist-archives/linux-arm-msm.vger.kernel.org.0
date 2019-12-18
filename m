@@ -2,333 +2,250 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D696123F6F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 07:14:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 50BD5123F8D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 07:28:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726617AbfLRGOE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Dec 2019 01:14:04 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:38741 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726520AbfLRGOE (ORCPT
+        id S1725912AbfLRG23 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Dec 2019 01:28:29 -0500
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:55032 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725882AbfLRG23 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Dec 2019 01:14:04 -0500
-Received: by mail-pf1-f193.google.com with SMTP id x185so619766pfc.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2019 22:14:03 -0800 (PST)
+        Wed, 18 Dec 2019 01:28:29 -0500
+Received: by mail-pj1-f67.google.com with SMTP id ep17so398673pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2019 22:28:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=ni4ioz4cHSspRUetFlkhp++4BuBbKUkcpKsMHKLoQk4=;
-        b=k72dwMROlB/5xTum/N3Dg8puButRQRcfxcx7j0084cyf567O6kaSijeRu3JOQBLTr0
-         4rNl5FO2DGYD2lvBEc4hWCo8mj+D9C3c5fILwFSWjQsqJhpcsTIgWJ0hilUI4jaRjLmq
-         fg0sFh+IhlXpCqplZQYbihg2YWL/+w22/pMTETvjyJHwSdTtbUlRM/ESAsL0lf4EH16A
-         7s9IEBg4NmQdCxUrurr4+U3ZZlXxuIm6LBHnyqjoEvjn4LCQuKqdIokRg4O/XjseCvf9
-         tjqvJox9O+vjcTrdfL8yPzidXziBKRt0ByJ7/rEbfS+Lr0GiBuOZkhKhMiIO1OEN5mnY
-         7suA==
+        bh=fziCYHKMFGHsNNkb3erFLyDFxVdCoJ51kiuuQ1qt9Kc=;
+        b=kW22feBUWfPB/kASEVMgzJn2QdKFoWWWeI67fHE0GTQczcpANL+r5Y1l+I4bIh11fu
+         l3qVbyQ7u2prTTODSULlbCJLGLytdTJvyEJ91Ue2deuxD9sGpn60w2HgxjpvygK3Qd/q
+         3WkWecayTLDHH9dNRDt+RRcuBM4c14hgodrhcLI8DC0TpyyX2XEs1m3rHnVsiuLJK1Qi
+         Al3NyGIfpUjalE2kH5pxnVQTKOusWx9GfQbL64tcxJ5KqeMZwarQNVmxD5fop0n8U2+p
+         o/umlfpCRrVER55UalRcc8sWOXVfzYy83kYFWYomJFUDexQd1OT/d6GHpXlRiCkc+ttG
+         kmNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ni4ioz4cHSspRUetFlkhp++4BuBbKUkcpKsMHKLoQk4=;
-        b=UWZsFOMLpNs4/OBCeisO85rrQQWfT/nXlrEViiG8CfjrLXNyT9meaK11KyiXHv35IS
-         vMA7F4v8H504bimYeGGR4ru8hfy391XPBXmhM1lwhsVmBnTsrtrT9dYU3RDI4g24l0Db
-         2RLp8tt/17SdrU2SSSQzGxjd6S5ley1kK1ntAnXWJBcfMGE5bQ9p+eF1DgRk6Lje6ydS
-         Ru9luD5fHd1aMDYGO4ieK4tPOZm3vEcOQsZm/56aQEcHVqRF8eCBDL3kLcxmcPxrVE68
-         AIGHcV4G3DHpwjxU78E/lrfy2s8wNMUZzkOmtePmi9A4LV68eex0lXdk1Dg4XL+7dRwA
-         ugdg==
-X-Gm-Message-State: APjAAAWE1sLptAuQrykEAjVlo2gupB6wzKrKABa6ELXa9IpoqiYqyO5h
-        ABufNb9inLPV656U2fixBdatYB1ZXmQ=
-X-Google-Smtp-Source: APXvYqwI1Ph4QcJeaM7oB8QgkRDo+T57+U4ON0O3cR11egnBxKg0EDnymABpMfPiJZHYIGs7Si+D4A==
-X-Received: by 2002:aa7:968b:: with SMTP id f11mr1165731pfk.209.1576649643170;
-        Tue, 17 Dec 2019 22:14:03 -0800 (PST)
+        bh=fziCYHKMFGHsNNkb3erFLyDFxVdCoJ51kiuuQ1qt9Kc=;
+        b=CAF5cUfHyjR5vNwGLWojRg3QZHiVhcidGPaZOzhQa3m3goQLMO7GobOXGsoHw8vmI7
+         tJidCgH0XyVJdKiK14ihrDX32NoQg40e0LtQwXer4+OCGzyMTBEH+huuGof9NNeLLBcw
+         qhHKWF/LauZ8kPOV8I8uovNIXEySxWsbjYaCfgvUbA4UrfOvh9zx6I/ntAkLiYs8nVJp
+         4vdHXc8UV9qxdtnNAgP0TnVJtEvqbd5YXQzDfCOniV/E9gr75HuK8f4kvL+cIrC1vguf
+         SVPAgvZkUmdPgTUnGI3Fz6Wfr23rmhm1UN3WZK/tUYbnEKTothofmdm1C464X0L2v6At
+         F4tw==
+X-Gm-Message-State: APjAAAWChdczl/VdBaJGGC/h611EeMbU9lMMvz+dYmaXdKvS6qKp7+i2
+        bC/jsy7lw/GxUyhVZEGxha+zAQ==
+X-Google-Smtp-Source: APXvYqw09rCC+r58pnI4mLp/hhbh2GNoXV+2C8tiw+f7MCtjIXKEwA5+2HLBZyEyUtKnq+pNtSP7xg==
+X-Received: by 2002:a17:902:ba8c:: with SMTP id k12mr98163pls.329.1576650508476;
+        Tue, 17 Dec 2019 22:28:28 -0800 (PST)
 Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id x132sm987879pfc.148.2019.12.17.22.14.01
+        by smtp.gmail.com with ESMTPSA id a69sm1300253pfa.129.2019.12.17.22.28.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2019 22:14:02 -0800 (PST)
-Date:   Tue, 17 Dec 2019 22:14:00 -0800
+        Tue, 17 Dec 2019 22:28:27 -0800 (PST)
+Date:   Tue, 17 Dec 2019 22:28:25 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shyam Kumar Thella <sthella@codeaurora.org>
-Cc:     srinivas.kandagatla@linaro.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] nvmem: add QTI SDAM driver
-Message-ID: <20191218061400.GV3143381@builder>
-References: <1576574432-9649-1-git-send-email-sthella@codeaurora.org>
+To:     Victhor Foster <victhor.foster@ufpe.br>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        robh+dt@kernel.org, mark.rutland@arm.com,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH] arm: dts: apq8084: Fix tsens kernel panic during boot
+ and kernel warnings due to IRQ_TYPE_NONE interrupt type
+Message-ID: <20191218062825.GA3755841@builder>
+References: <587764682.8806511.1576626759806.JavaMail.zimbra@ufpe.br>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1576574432-9649-1-git-send-email-sthella@codeaurora.org>
+In-Reply-To: <587764682.8806511.1576626759806.JavaMail.zimbra@ufpe.br>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 17 Dec 01:20 PST 2019, Shyam Kumar Thella wrote:
+On Tue 17 Dec 15:52 PST 2019, Victhor Foster wrote:
 
-> QTI SDAM driver allows PMIC peripherals to access the shared memory
-> that is available on QTI PMICs.
+> This patch fixes a kernel panic on the tsens driver that prevented APQ8084 platforms from booting, by adding a missing register property and the number of sensors
+
+I was under the impression that the tsens driver did maintain backwards
+compatibility wrt a single reg cell...
+
+> , corrects all instances of IRQ_TYPE_NONE in interrupts, to avoid causing kernel warnings during boot, and also changes most interrupt properties to their respective macros, as defined by arm-gic.h.
 > 
-> Change-Id: I40005646ab1fbba9e0e4aa68e0a61cfbc7b51ba6
+> Signed-off by: Victhor Foster <victhor.foster@ufpe.br>
 
-No Change-Id upstream please.
+The content looks good, but can you please split it in two; one for the
+tsens change and one for the interrupts cells? And please limit your
+commit message to 72 chars.
 
-> Signed-off-by: Shyam Kumar Thella <sthella@codeaurora.org>
-[..]
-> diff --git a/drivers/nvmem/qcom-spmi-sdam.c b/drivers/nvmem/qcom-spmi-sdam.c
-> new file mode 100644
-> index 0000000..e80a446
-> --- /dev/null
-> +++ b/drivers/nvmem/qcom-spmi-sdam.c
-> @@ -0,0 +1,197 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2017 The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include <linux/device.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_platform.h>
-> +#include <linux/nvmem-provider.h>
-> +#include <linux/regmap.h>
-> +
-> +#define SDAM_MEM_START			0x40
-> +#define REGISTER_MAP_ID			0x40
-> +#define REGISTER_MAP_VERSION		0x41
-> +#define SDAM_SIZE			0x44
-> +#define SDAM_PBS_TRIG_SET		0xE5
-> +#define SDAM_PBS_TRIG_CLR		0xE6
-> +
-> +struct sdam_chip {
-> +	struct platform_device		*pdev;
-
-As written right now, pdev is unused. But if you stash struct device *
-here instead you can replace your pr_err() with dev_err() using this,
-for better error messages.
-
-> +	struct regmap			*regmap;
-> +	int				base;
-
-This would look better as a unsigned int.
-
-> +	int				size;
-
-Ditto, or perhaps even size_t.
-
-> +};
-> +
-> +/* read only register offsets */
-> +static const u8 sdam_ro_map[] = {
-> +	REGISTER_MAP_ID,
-> +	REGISTER_MAP_VERSION,
-> +	SDAM_SIZE
-> +};
-> +
-> +static bool is_valid(struct sdam_chip *sdam, unsigned int offset, size_t len)
-
-Please do prefix this with "sdam_"
-
-> +{
-> +	int sdam_mem_end = SDAM_MEM_START + sdam->size - 1;
-> +
-> +	if (!len)
-> +		return false;
-> +
-> +	if (offset >= SDAM_MEM_START && offset <= sdam_mem_end
-> +				&& (offset + len - 1) <= sdam_mem_end)
-> +		return true;
-> +	else if ((offset == SDAM_PBS_TRIG_SET || offset == SDAM_PBS_TRIG_CLR)
-> +				&& (len == 1))
-> +		return true;
-> +
-> +	return false;
-> +}
-> +
-> +static bool is_ro(unsigned int offset, size_t len)
-
-Ditto
-
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < ARRAY_SIZE(sdam_ro_map); i++)
-> +		if (offset <= sdam_ro_map[i] && (offset + len) > sdam_ro_map[i])
-> +			return true;
-> +
-> +	return false;
-> +}
-> +
-> +static int sdam_read(void *priv, unsigned int offset, void *val, size_t bytes)
-> +{
-> +	struct sdam_chip *sdam = priv;
-> +	int rc;
-> +
-> +	if (!is_valid(sdam, offset, bytes)) {
-> +		pr_err("Invalid SDAM offset 0x%02x len=%zd\n", offset, bytes);
-
-Use %#x instead of 0x%02x
-
-> +		return -EINVAL;
-> +	}
-> +
-> +	rc = regmap_bulk_read(sdam->regmap, sdam->base + offset, val, bytes);
-> +	if (rc < 0)
-> +		pr_err("Failed to read SDAM offset 0x%02x len=%zd, rc=%d\n",
-> +						offset, bytes, rc);
-> +
-> +	return rc;
-> +}
-> +
-> +static int sdam_write(void *priv, unsigned int offset, void *val, size_t bytes)
-> +{
-> +	struct sdam_chip *sdam = priv;
-> +	int rc;
-> +
-> +	if (!is_valid(sdam, offset, bytes)) {
-> +		pr_err("Invalid SDAM offset 0x%02x len=%zd\n", offset, bytes);
-> +		return -EINVAL;
-> +	}
-> +
-> +	if (is_ro(offset, bytes)) {
-> +		pr_err("Invalid write offset 0x%02x len=%zd\n", offset, bytes);
-> +		return -EINVAL;
-> +	}
-> +
-> +	rc = regmap_bulk_write(sdam->regmap, sdam->base + offset, val, bytes);
-> +	if (rc < 0)
-> +		pr_err("Failed to write SDAM offset 0x%02x len=%zd, rc=%d\n",
-> +						offset, bytes, rc);
-> +
-> +	return rc;
-> +}
-> +
-> +static int sdam_probe(struct platform_device *pdev)
-> +{
-> +	struct sdam_chip *sdam;
-> +	struct nvmem_device *nvmem;
-> +	struct nvmem_config *sdam_config;
-> +	unsigned int val = 0;
-
-No need to initialize this.
-
-> +	int rc;
-> +
-> +	sdam = devm_kzalloc(&pdev->dev, sizeof(*sdam), GFP_KERNEL);
-> +	if (!sdam)
-> +		return -ENOMEM;
-> +
-> +	sdam_config = devm_kzalloc(&pdev->dev, sizeof(*sdam_config),
-> +							GFP_KERNEL);
-
-Can't this be included in struct sdam_chip, for a single allocation?
-
-> +	if (!sdam_config)
-> +		return -ENOMEM;
-> +
-> +	sdam->regmap = dev_get_regmap(pdev->dev.parent, NULL);
-> +	if (!sdam->regmap) {
-> +		pr_err("Failed to get regmap handle\n");
-
-dev_err(&pdev->dev, ...);
-
-> +		return -ENXIO;
-> +	}
-> +
-> +	rc = of_property_read_u32(pdev->dev.of_node, "reg", &sdam->base);
-
-In other words, base must be u32.
-
-> +	if (rc < 0) {
-> +		pr_err("Failed to get SDAM base, rc=%d\n", rc);
-> +		return -EINVAL;
-> +	}
-> +
-> +	rc = regmap_read(sdam->regmap, sdam->base + SDAM_SIZE, &val);
-> +	if (rc < 0) {
-> +		pr_err("Failed to read SDAM_SIZE rc=%d\n", rc);
-> +		return -EINVAL;
-> +	}
-> +	sdam->size = val * 32;
-> +
-> +	sdam_config->dev = &pdev->dev;
-> +	sdam_config->name = "spmi_sdam";
-> +	sdam_config->id = pdev->id;
-> +	sdam_config->owner = THIS_MODULE,
-> +	sdam_config->stride = 1;
-> +	sdam_config->word_size = 1;
-> +	sdam_config->reg_read = sdam_read;
-> +	sdam_config->reg_write = sdam_write;
-> +	sdam_config->priv = sdam;
-> +
-> +	nvmem = nvmem_register(sdam_config);
-> +	if (IS_ERR(nvmem)) {
-> +		pr_err("Failed to register SDAM nvmem device rc=%ld\n",
-> +						PTR_ERR(nvmem));
-> +		return -ENXIO;
-> +	}
-> +	platform_set_drvdata(pdev, nvmem);
-> +
-> +	pr_info("SDAM base=0x%04x size=%d registered successfully\n",
-> +						sdam->base, sdam->size);
-
-Please don't print notifications in the kernel log. You can possibly use
-dev_dbg(). Or just look for devices in
-/sys/bus/platform/drivers/qcom,spmi-sdam/
-
-> +
-> +	return 0;
-> +}
-> +
-> +static int sdam_remove(struct platform_device *pdev)
-
-Instead of using nvmem_register(), use devm_nvmem_register() and just
-omit the remote function completely - which also allows you to drop the
-platform_set_drvdata() above.
-
-> +{
-> +	struct nvmem_device *nvmem = platform_get_drvdata(pdev);
-> +
-> +	return nvmem_unregister(nvmem);
-> +}
-> +
-> +static const struct of_device_id sdam_match_table[] = {
-> +	{.compatible = "qcom,spmi-sdam"},
-
-Please add a space after { and before }.
-
-> +	{},
-> +};
-> +
-> +static struct platform_driver sdam_driver = {
-> +	.driver = {
-> +		.name = "qcom,spmi-sdam",
-> +		.of_match_table = sdam_match_table,
-> +	},
-> +	.probe		= sdam_probe,
-> +	.remove		= sdam_remove,
-> +};
-> +
-> +static int __init sdam_init(void)
-> +{
-> +	return platform_driver_register(&sdam_driver);
-> +}
-> +subsys_initcall(sdam_init);
-
-module_platform_driver(sdam_driver), unless you have some strong
-arguments for why this needs to be subsys_initcall
-
-Regards,
+Thanks,
 Bjorn
 
-> +
-> +static void __exit sdam_exit(void)
-> +{
-> +	return platform_driver_unregister(&sdam_driver);
-> +}
-> +module_exit(sdam_exit);
-> +
-> +MODULE_DESCRIPTION("QCOM SPMI SDAM driver");
-> +MODULE_LICENSE("GPL v2");
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->  a Linux Foundation Collaborative Project
+> ---
+>  arch/arm/boot/dts/qcom-apq8084.dtsi | 43 +++++++++++++++--------------
+>  1 file changed, 23 insertions(+), 20 deletions(-)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-apq8084.dtsi b/arch/arm/boot/dts/qcom-apq8084.dtsi
+> index 0a0fb147ebb9..dc4ea3a8dc6d 100644
+> --- a/arch/arm/boot/dts/qcom-apq8084.dtsi
+> +++ b/arch/arm/boot/dts/qcom-apq8084.dtsi
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /dts-v1/;
+>  
+> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/clock/qcom,gcc-apq8084.h>
+>  #include <dt-bindings/gpio/gpio.h>
+>  
+> @@ -184,7 +185,7 @@
+>  
+>  	cpu-pmu {
+>  		compatible = "qcom,krait-pmu";
+> -		interrupts = <1 7 0xf04>;
+> +		interrupts = <GIC_PPI 7 0xf04>;
+>  	};
+>  
+>  	clocks {
+> @@ -203,10 +204,10 @@
+>  
+>  	timer {
+>  		compatible = "arm,armv7-timer";
+> -		interrupts = <1 2 0xf08>,
+> -			     <1 3 0xf08>,
+> -			     <1 4 0xf08>,
+> -			     <1 1 0xf08>;
+> +		interrupts = <GIC_PPI 2 0xf08>,
+> +			     <GIC_PPI 3 0xf08>,
+> +			     <GIC_PPI 4 0xf08>,
+> +			     <GIC_PPI 1 0xf08>;
+>  		clock-frequency = <19200000>;
+>  	};
+>  
+> @@ -253,9 +254,11 @@
+>  
+>  		tsens: thermal-sensor@fc4a8000 {
+>  			compatible = "qcom,msm8974-tsens";
+> -			reg = <0xfc4a8000 0x2000>;
+> +			reg = <0xfc4a9000 0x1000>, /* TM */
+> +			      <0xfc4a8000 0x1000>; /* SROT */
+>  			nvmem-cells = <&tsens_calib>, <&tsens_backup>;
+>  			nvmem-cell-names = "calib", "calib_backup";
+> +			#qcom,sensors = <11>;
+>  			#thermal-sensor-cells = <1>;
+>  		};
+>  
+> @@ -269,50 +272,50 @@
+>  
+>  			frame@f9021000 {
+>  				frame-number = <0>;
+> -				interrupts = <0 8 0x4>,
+> -					     <0 7 0x4>;
+> +				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
+> +					     <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
+>  				reg = <0xf9021000 0x1000>,
+>  				      <0xf9022000 0x1000>;
+>  			};
+>  
+>  			frame@f9023000 {
+>  				frame-number = <1>;
+> -				interrupts = <0 9 0x4>;
+> +				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
+>  				reg = <0xf9023000 0x1000>;
+>  				status = "disabled";
+>  			};
+>  
+>  			frame@f9024000 {
+>  				frame-number = <2>;
+> -				interrupts = <0 10 0x4>;
+> +				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
+>  				reg = <0xf9024000 0x1000>;
+>  				status = "disabled";
+>  			};
+>  
+>  			frame@f9025000 {
+>  				frame-number = <3>;
+> -				interrupts = <0 11 0x4>;
+> +				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
+>  				reg = <0xf9025000 0x1000>;
+>  				status = "disabled";
+>  			};
+>  
+>  			frame@f9026000 {
+>  				frame-number = <4>;
+> -				interrupts = <0 12 0x4>;
+> +				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
+>  				reg = <0xf9026000 0x1000>;
+>  				status = "disabled";
+>  			};
+>  
+>  			frame@f9027000 {
+>  				frame-number = <5>;
+> -				interrupts = <0 13 0x4>;
+> +				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
+>  				reg = <0xf9027000 0x1000>;
+>  				status = "disabled";
+>  			};
+>  
+>  			frame@f9028000 {
+>  				frame-number = <6>;
+> -				interrupts = <0 14 0x4>;
+> +				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
+>  				reg = <0xf9028000 0x1000>;
+>  				status = "disabled";
+>  			};
+> @@ -404,13 +407,13 @@
+>  			#gpio-cells = <2>;
+>  			interrupt-controller;
+>  			#interrupt-cells = <2>;
+> -			interrupts = <0 208 0>;
+> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+>  		};
+>  
+>  		blsp2_uart2: serial@f995e000 {
+>  			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+>  			reg = <0xf995e000 0x1000>;
+> -			interrupts = <0 114 0x0>;
+> +			interrupts = <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>;
+>  			clocks = <&gcc GCC_BLSP2_UART2_APPS_CLK>, <&gcc GCC_BLSP2_AHB_CLK>;
+>  			clock-names = "core", "iface";
+>  			status = "disabled";
+> @@ -420,7 +423,7 @@
+>  			compatible = "qcom,apq8084-sdhci", "qcom,sdhci-msm-v4";
+>  			reg = <0xf9824900 0x11c>, <0xf9824000 0x800>;
+>  			reg-names = "hc_mem", "core_mem";
+> -			interrupts = <0 123 0>, <0 138 0>;
+> +			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
+>  			interrupt-names = "hc_irq", "pwr_irq";
+>  			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
+>  				 <&gcc GCC_SDCC1_AHB_CLK>,
+> @@ -433,7 +436,7 @@
+>  			compatible = "qcom,apq8084-sdhci", "qcom,sdhci-msm-v4";
+>  			reg = <0xf98a4900 0x11c>, <0xf98a4000 0x800>;
+>  			reg-names = "hc_mem", "core_mem";
+> -			interrupts = <0 125 0>, <0 221 0>;
+> +			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>;
+>  			interrupt-names = "hc_irq", "pwr_irq";
+>  			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
+>  				 <&gcc GCC_SDCC2_AHB_CLK>,
+> @@ -449,7 +452,7 @@
+>  			      <0xfc4cb000 0x1000>,
+>  			      <0xfc4ca000 0x1000>;
+>  			interrupt-names = "periph_irq";
+> -			interrupts = <0 190 0>;
+> +			interrupts = <GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>;
+>  			qcom,ee = <0>;
+>  			qcom,channel = <0>;
+>  			#address-cells = <2>;
+> @@ -463,7 +466,7 @@
+>  		compatible = "qcom,smd";
+>  
+>  		rpm {
+> -			interrupts = <0 168 1>;
+> +			interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+>  			qcom,ipc = <&apcs 8 0>;
+>  			qcom,smd-edge = <15>;
+>  
+> --
+> 2.24.0
