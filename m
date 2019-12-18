@@ -2,105 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 23E30123FA1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 07:32:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF4DC124072
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 08:37:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726683AbfLRGcC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Dec 2019 01:32:02 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:38189 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725881AbfLRGcC (ORCPT
+        id S1726715AbfLRHhP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Dec 2019 02:37:15 -0500
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:32875 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726710AbfLRHhP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Dec 2019 01:32:02 -0500
-Received: by mail-pj1-f66.google.com with SMTP id l35so400741pje.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2019 22:32:01 -0800 (PST)
+        Wed, 18 Dec 2019 02:37:15 -0500
+Received: by mail-vs1-f66.google.com with SMTP id n27so808040vsa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2019 23:37:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=oEVE507JdfKug+x814O3ZP8pBC3owXqUqbJxxCBNBvo=;
-        b=R9jQoqseeYK48O/sdtRMi8vavijIpzlbU7qFX1dMNArz5MkqCSMv5RU+LSR9NsjjW7
-         l2457GFxJiGjJa4DwPEeW04D4cv5FOgbrnhf8Y+PI/V7xFwXh5tLChAPlrPrPGVbqdu1
-         3tvIEmL7kkn8hivOsaZFmNy3n0jw4MSbYMHepmHAUxVhWYt1YqTHgbeasw8fd04Si7WY
-         27HyDqVMXVuriIMZG7fy5PvnJABJDCEdib28SsvekU+iSTBE0mxqXr5w1kaqIFSYl+T4
-         mGk3Kw3czfbbumrHiVxYhLRQSCl1iFQrrlMA52voavpzrtLpvl3qHDqcJ7QH9dJQfrPL
-         gufQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=do6SVqqrSwYfkhVDYH5RikYbwbOxWPehu5jl8jI0+ro=;
+        b=dRl6siJx8/e5LA8G0oj29mO4iXrBu9qbVmovo0gKnnEwC1hFh8awIvWNZc0Rr0BwEB
+         loKd1AI31kRkpDHV5kbhNBbK8mvWpRSBooECgvRtbR/Lj5xgHkLRRC4wyOaiq3cOlv4O
+         1K/YhNefY9Ae1Hr/nV7LgZ/55G+zlOaK+EBZLRIVuMTAgp0WzgLvplshDV4linqhCDZC
+         OC9ziugqRL/g1VLvgl8/NTkLv6ezS0iRcYKx9pvI/ioOdyWHOPYdJ90Y0ohXlrkQ6cIA
+         AaJjCinfFMs7aus+bmO1E0kWvobHHMBMhTZPx97Wm10IP1BNEG4PyjeTOOxbox0v+x13
+         glZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=oEVE507JdfKug+x814O3ZP8pBC3owXqUqbJxxCBNBvo=;
-        b=hh7UszSAiA5lZNgnzo1Er3zJyRNBu8YtAsRL9vVJe+Sm3e6FfJwkmbuKY289esaMD6
-         M1GgUO0thcYQtXF+Sq+5YSS0ELNjBl3WzOrJY1p20aAZtwfboALrIucDeVm5Q3D3duyL
-         HXXj1ngWMnh+Z2MdByEoxjVUZet/cMuHMclp5c/xLMg873qOGS/3dmdlOuJlnLkUAYqF
-         bLjELXiujJJkHb89XtfDLE2I82ys2N34oytrROWHQGTF8GzwgdKrOsGhqqFYHn9nu8wp
-         u0YBHWavgHD+oe2s9ZCibmv7SkpIBSPa7All72wegfrNIFuzNNpHPV08TPBSRoDJTaJP
-         1X4A==
-X-Gm-Message-State: APjAAAU+rDH2IEDfUymnLY3r6NwPxml/RUX0+ddRXQ9wF26hA32utiIk
-        Sms6LaNsLYi4wCcy61E65enRDg==
-X-Google-Smtp-Source: APXvYqyWK8BUSpd73OSUhdZscPaP5aEVoYA4pdHgRb/W77IJSvAhof2kqD/T+bYLU3CLQybiJ6P84A==
-X-Received: by 2002:a17:90a:ac0f:: with SMTP id o15mr830043pjq.133.1576650721351;
-        Tue, 17 Dec 2019 22:32:01 -0800 (PST)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id k23sm1234264pgg.7.2019.12.17.22.32.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2019 22:32:00 -0800 (PST)
-Date:   Tue, 17 Dec 2019 22:31:58 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     mturquette@baylibre.com, sboyd@kernel.org, andy.gross@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: smd: Add missing bimc clock
-Message-ID: <20191218063158.GD3755841@builder>
-References: <20191217165409.4919-1-jeffrey.l.hugo@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=do6SVqqrSwYfkhVDYH5RikYbwbOxWPehu5jl8jI0+ro=;
+        b=Ls0mCIVsGnZgEAof+1gS6YIBt9zzCyw/MS6Mfwiu1BmZ8AylYNS3AsDscP7xNVNW7F
+         2wn7Q5ym/hZc6/svkOvzaPgTxbdeAaxaeFeBx+RyG/G1ak9EaBif44mNfjPEGuQuBw6L
+         nndhAndc1kwMwYPjfVlxY+I6VJshLG7JZ43yHWMoIftW7CbY44wMinvMVyF7Daqf/b3N
+         BOEGWLC4SEivm9Dc+vScUSZuaXbJ81dWjvlrykAE92w6psW92hts5euqqeOVe8s0EyLV
+         icAqDOwoorIUu7qBrrStMy3BT3p/yBgl7g5RAB38Xj4RZVv3AspINceA6AMj6e3eCTh1
+         ZWqQ==
+X-Gm-Message-State: APjAAAUpodbfnjrLFyqjp9vGFK34Y1LF4VT8isxSoI3NFy8kEW2Y747X
+        MLmNwGinbPy0lcyo1R9+4AutkGKf2c0cGOkpUkrKZQ==
+X-Google-Smtp-Source: APXvYqwgUxsqu+XwnIdw+nD/Mf13KCyvX5NTV1GCHYpw+JayUBeFvWW3aLmH5gcfiI9UpYv2GOoClnViaDRb37oAJ/U=
+X-Received: by 2002:a67:f499:: with SMTP id o25mr488125vsn.165.1576654634125;
+ Tue, 17 Dec 2019 23:37:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191217165409.4919-1-jeffrey.l.hugo@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+References: <20191211154343.29765-1-ulf.hansson@linaro.org>
+In-Reply-To: <20191211154343.29765-1-ulf.hansson@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 18 Dec 2019 08:36:38 +0100
+Message-ID: <CAPDyKFoTKAs-sFZWNgY+Ym8-hQ_Ks2Qa+g3EtgfMPhEstHTddw@mail.gmail.com>
+Subject: Re: [PATCH v4 00/14] cpuidle: psci: Support hierarchical CPU arrangement
+To:     Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+        Linux PM <linux-pm@vger.kernel.org>
+Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 17 Dec 08:54 PST 2019, Jeffrey Hugo wrote:
+Sudeep, Lorenzo,
 
-> It turns out booting the modem is dependent on a bimc vote from Linux on
-> msm8998.  To make the modem happy, add the bimc clock to rely on the
-> default vote from rpmcc.  Once we have interconnect support, bimc should
-> be controlled properly.
-> 
-> Fixes: 6131dc81211c ("clk: qcom: smd: Add support for MSM8998 rpm clocks")
+On Wed, 11 Dec 2019 at 16:43, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+>
+> Changes in v4:
+>         - Mover the check for OSI support from psci_dt_attach_cpu() to the
+>         caller's side of it.
+>         - Add comment in the code about using the deepest idle state as the
+>         triggering point for the domain state selection.
+>         - Folded in a patch to enable support for CPU hotplug.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+I believe I should have addressed all your provided inputs for this
+version, unless you find something new, of course.
 
-> Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> ---
->  drivers/clk/qcom/clk-smd-rpm.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
-> index 930fa4a4c52a..e5c3db11bf26 100644
-> --- a/drivers/clk/qcom/clk-smd-rpm.c
-> +++ b/drivers/clk/qcom/clk-smd-rpm.c
-> @@ -648,6 +648,7 @@ static const struct rpm_smd_clk_desc rpm_clk_qcs404 = {
->  };
->  
->  /* msm8998 */
-> +DEFINE_CLK_SMD_RPM(msm8998, bimc_clk, bimc_a_clk, QCOM_SMD_RPM_MEM_CLK, 0);
->  DEFINE_CLK_SMD_RPM(msm8998, pcnoc_clk, pcnoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 0);
->  DEFINE_CLK_SMD_RPM(msm8998, snoc_clk, snoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 1);
->  DEFINE_CLK_SMD_RPM(msm8998, cnoc_clk, cnoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 2);
-> @@ -671,6 +672,8 @@ DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8998, rf_clk2_pin, rf_clk2_a_pin, 5);
->  DEFINE_CLK_SMD_RPM_XO_BUFFER(msm8998, rf_clk3, rf_clk3_a, 6);
->  DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8998, rf_clk3_pin, rf_clk3_a_pin, 6);
->  static struct clk_smd_rpm *msm8998_clks[] = {
-> +	[RPM_SMD_BIMC_CLK] = &msm8998_bimc_clk,
-> +	[RPM_SMD_BIMC_A_CLK] = &msm8998_bimc_a_clk,
->  	[RPM_SMD_PCNOC_CLK] = &msm8998_pcnoc_clk,
->  	[RPM_SMD_PCNOC_A_CLK] = &msm8998_pcnoc_a_clk,
->  	[RPM_SMD_SNOC_CLK] = &msm8998_snoc_clk,
-> -- 
+Then, would it be possible to get your blessing for this, before
+Christmas, to allow this to cook for a while in linux-next via
+Rafael's tree?
+
+Kind regards
+Uffe
+
+>
+> Changes in v3:
+>         - Take one step further to completely avoid executing any OSI specific
+>         code from the ->enter() callback, while operating in the default PSCI
+>         Platform Coordinated mode.
+>         - Update example for the PSCI DT bindings to make it compile with
+>         "make dt_binding_check"
+>
+> Changes in v2:
+>         - Avoid to affect the non-OSI path with specific changes for OSI. This
+>         forced me to re-order the series and a caused more or less minor changes
+>         to most of the patches.
+>         - Updated the DT bindings for PSCI to clarify and to include the "psci"
+>         name of the PM domain to attach to.
+>         - Replaced patch1 with another patch from Sudeep, solving the same
+>         problem, but in a different way.
+>
+> This series enables initial support for hierarchical CPU arrangement, managed
+> by PSCI and its corresponding cpuidle driver. It's based on using the generic
+> PM domain (genpd), which nowadays also supports devices belonging to CPUs.
+>
+> The last DTS patch enables the hierarchical topology to be used for the Qcom
+> 410c Dragonboard, which supports the PSCI OS-initiated mode.
+>
+> More detailed background can be found from previous submissions [1].
+>
+> The series is also available at:
+> git.linaro.org/people/ulf.hansson/linux-pm.git next
+>
+> Kind regards
+> Ulf Hansson
+>
+> [1]
+> https://lwn.net/Articles/788306/
+>
+>
+> Lina Iyer (1):
+>   cpuidle: dt: Support hierarchical CPU idle states
+>
+> Sudeep Holla (1):
+>   cpuidle: psci: Align psci_power_state count with idle state count
+>
+> Ulf Hansson (12):
+>   dt: psci: Update DT bindings to support hierarchical PSCI states
+>   firmware: psci: Export functions to manage the OSI mode
+>   of: base: Add of_get_cpu_state_node() to get idle states for a CPU
+>     node
+>   cpuidle: psci: Simplify OF parsing of CPU idle state nodes
+>   cpuidle: psci: Support hierarchical CPU idle states
+>   cpuidle: psci: Add a helper to attach a CPU to its PM domain
+>   cpuidle: psci: Attach CPU devices to their PM domains
+>   cpuidle: psci: Prepare to use OS initiated suspend mode via PM domains
+>   cpuidle: psci: Manage runtime PM in the idle path
+>   cpuidle: psci: Support CPU hotplug for the hierarchical model
+>   cpuidle: psci: Add support for PM domains by using genpd
+>   arm64: dts: Convert to the hierarchical CPU topology layout for
+>     MSM8916
+>
+>  .../devicetree/bindings/arm/cpus.yaml         |  15 +
+>  .../devicetree/bindings/arm/psci.yaml         | 104 ++++++
+>  arch/arm64/boot/dts/qcom/msm8916.dtsi         |  57 +++-
+>  drivers/cpuidle/Makefile                      |   4 +-
+>  drivers/cpuidle/cpuidle-psci-domain.c         | 298 ++++++++++++++++++
+>  drivers/cpuidle/cpuidle-psci.c                | 161 ++++++++--
+>  drivers/cpuidle/cpuidle-psci.h                |  17 +
+>  drivers/cpuidle/dt_idle_states.c              |   5 +-
+>  drivers/firmware/psci/psci.c                  |  18 +-
+>  drivers/of/base.c                             |  36 +++
+>  include/linux/cpuhotplug.h                    |   1 +
+>  include/linux/of.h                            |   8 +
+>  include/linux/psci.h                          |   2 +
+>  13 files changed, 691 insertions(+), 35 deletions(-)
+>  create mode 100644 drivers/cpuidle/cpuidle-psci-domain.c
+>  create mode 100644 drivers/cpuidle/cpuidle-psci.h
+>
+> --
 > 2.17.1
-> 
+>
