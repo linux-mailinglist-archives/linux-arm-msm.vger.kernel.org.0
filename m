@@ -2,46 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D0849123BDB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 01:49:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB97C123BC6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 01:48:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726771AbfLRAs6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Dec 2019 19:48:58 -0500
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:34533 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726637AbfLRAsc (ORCPT
+        id S1726512AbfLRAsg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Dec 2019 19:48:36 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:35110 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726674AbfLRAsf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Dec 2019 19:48:32 -0500
-Received: by mail-pj1-f67.google.com with SMTP id s94so539668pjc.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2019 16:48:32 -0800 (PST)
+        Tue, 17 Dec 2019 19:48:35 -0500
+Received: by mail-pl1-f194.google.com with SMTP id g6so176463plt.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2019 16:48:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5I5RsOjGn6AIw10awvPPmKNOIBhCgMn63qgGQLogkT0=;
-        b=Z/kLD0eoZedWUdTEDSVJ6kbPawHJOoiVPCNRGbgQQgKOAw7fzhYDSK3K02mAbNdlQq
-         Fr0oNSrqzR9oqMNnsCr8ULdLH02KZAFfz2cypDlJkWrPbgZ+koWO0EFsgvgaya0R9qXw
-         ZlvpV3CLhTTS4eAvXf4/9iFbM0UzmmsU5A7t0=
+        bh=si3/aZxayWyxRtmbxBApJb8jBIUuiyY2NA4K59mZEjs=;
+        b=I1vPcKTziCjSzpUpntR3WPkNkwwxVqSkesYgV1nXY4rDmZ+dphNINRv5omhsnvmw2m
+         RNI2g/w7Z/rtDEe9IqxHx850lqY34FqBfIf9W8dBTPux2CJTFmX+xsRwg15uC80400wT
+         JEXw2YJm7anCk8NrcAaJdlINcOOoeZugZtg1k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5I5RsOjGn6AIw10awvPPmKNOIBhCgMn63qgGQLogkT0=;
-        b=k5BCig3RKMCt2diV+qpGFt6WUt6pI/aVWAlXOWF/GAay72bdBHeqkNZ8f6WeT3CNU5
-         BwaStFG59csmg0WtcXEqnsK0vf62TH6V8tysGbSP6nwz6MdI6IkGYbab/4AR1IKinu4l
-         wDgdxfrvT5QC0oGXYIMXZ6HKcc1YI5RJAvw4GoQDxJDK6SsC7Mf5lcHhYdEbHr5OGHAk
-         /l6QiaiTEGKzw08ZPBKQhQjG96TSTzMknEAcKcTbkOG0etchjWVOHr3PlVz9pz+MwnES
-         2PwGUjbA9sDoenhn5xu148gc0iCPs75ACnvWamLXd1q3cpecjNpxMaWkup7qYMpVtFYs
-         XDag==
-X-Gm-Message-State: APjAAAVU+EUQzLGUCMjTlMykQ2O6dkbXJEMAuc25s+8yH+9iwvxof3ov
-        N3R4smN0GF6tofIjp7RWOrNyJw==
-X-Google-Smtp-Source: APXvYqzlYuY6Q06NylLwmoyVjvz5Q+yRFHQQVef1ISO7bP+Gy7Ho4kEkiZtVedpDN3oy9tmnzGorAg==
-X-Received: by 2002:a17:902:9302:: with SMTP id bc2mr1101734plb.148.1576630112269;
-        Tue, 17 Dec 2019 16:48:32 -0800 (PST)
+        bh=si3/aZxayWyxRtmbxBApJb8jBIUuiyY2NA4K59mZEjs=;
+        b=Lm+UOjQD0hWVq0029u70rSeb5/CH6BqpGaIPdidih1iSOB1CGZihHb8bSYs8qwVQ+v
+         R5/+wXiIi3Y8w3qVtb0TFhyA/Ln41qujbU1s/1DypEINTaFJ9r+gaKqLdQQT3kkMKCbF
+         IznvFJhvWgYgLDgNdqVcungAXNxqjty7pynZ2x7A8ZGKBRdcRLV2iTobKFjTahuRiCdJ
+         uqHMwqfW3mMkmTOSgsH23rQKusnwcg+C0wNCw8e/+pTdlmseslNXUOmey/zC3s0B36VP
+         RpzFY1q4gHyaz9bviLBCXn9anD43UPSsKQOI6zvVAQroLiAl4Hqo7DMfoUpI2JsAa8Yc
+         keow==
+X-Gm-Message-State: APjAAAWQdVloUj5AGMf03Nz/ysa8StmfC+Z+LrH3TPhcRLmERm9IJBeM
+        H68z38ppgUQ/tgHoclht4VNrqA==
+X-Google-Smtp-Source: APXvYqyU+DrDIYXKwJopWVnTcJrTm9iCZXee/CEelL/zaVEx5zgQtVdaftfoj2XLFYZuI3Dh1fO9kg==
+X-Received: by 2002:a17:90a:cb83:: with SMTP id a3mr220788pju.80.1576630113475;
+        Tue, 17 Dec 2019 16:48:33 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id v72sm139885pjb.25.2019.12.17.16.48.30
+        by smtp.gmail.com with ESMTPSA id v72sm139885pjb.25.2019.12.17.16.48.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2019 16:48:31 -0800 (PST)
+        Tue, 17 Dec 2019 16:48:32 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>
@@ -55,9 +55,9 @@ Cc:     robdclark@chromium.org, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
         Jernej Skrabec <jernej.skrabec@siol.net>,
         Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-Subject: [PATCH v2 5/9] drm/bridge: ti-sn65dsi86: Read num lanes from the DP sink
-Date:   Tue, 17 Dec 2019 16:47:37 -0800
-Message-Id: <20191217164702.v2.5.Idbd0051d0de53f7e9d18a291ea33011c0854fcc6@changeid>
+Subject: [PATCH v2 6/9] drm/bridge: ti-sn65dsi86: Use 18-bit DP if we can
+Date:   Tue, 17 Dec 2019 16:47:38 -0800
+Message-Id: <20191217164702.v2.6.Iaf8d698f4e5253d658ae283d2fd07268076a7c27@changeid>
 X-Mailer: git-send-email 2.24.1.735.g03f4e72817-goog
 In-Reply-To: <20191218004741.102067-1-dianders@chromium.org>
 References: <20191218004741.102067-1-dianders@chromium.org>
@@ -68,9 +68,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-At least one panel hooked up to the bridge (AUO B116XAK01) only
-supports 1 lane of DP.  Let's read this information and stop
-hardcoding 4 DP lanes.
+The current bridge driver always forced us to use 24 bits per pixel
+over the DP link.  This is a waste if you are hooked up to a panel
+that only supports 6 bits per color or fewer, since in that case you
+ran run at 18 bits per pixel and thus end up at a lower DP clock rate.
+
+Let's support this.
+
+While at it, let's clean up the math in the function to avoid rounding
+errors (and round in the correct direction when we have to round).
+Numbers are sufficiently small (because mode->clock is in kHz) that we
+don't need to worry about integer overflow.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Tested-by: Rob Clark <robdclark@gmail.com>
@@ -79,65 +87,74 @@ Reviewed-by: Rob Clark <robdclark@gmail.com>
 
 Changes in v2: None
 
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 32 +++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index d55d19759796..0fc9e97b2d98 100644
+index 0fc9e97b2d98..d5990a0947b9 100644
 --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
 +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -313,8 +313,7 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge)
- 		goto err_dsi_host;
- 	}
- 
--	/* TODO: setting to 4 lanes always for now */
--	pdata->dp_lanes = 4;
-+	/* TODO: setting to 4 MIPI lanes always for now */
- 	dsi->lanes = 4;
- 	dsi->format = MIPI_DSI_FMT_RGB888;
- 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO;
-@@ -511,12 +510,41 @@ static void ti_sn_bridge_set_video_timings(struct ti_sn_bridge *pdata)
- 	usleep_range(10000, 10500); /* 10ms delay recommended by spec */
+@@ -51,6 +51,7 @@
+ #define SN_ENH_FRAME_REG			0x5A
+ #define  VSTREAM_ENABLE				BIT(3)
+ #define SN_DATA_FORMAT_REG			0x5B
++#define  BPP_18_RGB				BIT(0)
+ #define SN_HPD_DISABLE_REG			0x5C
+ #define  HPD_DISABLE				BIT(0)
+ #define SN_AUX_WDATA_REG(x)			(0x64 + (x))
+@@ -436,6 +437,14 @@ static void ti_sn_bridge_set_dsi_rate(struct ti_sn_bridge *pdata)
+ 	regmap_write(pdata->regmap, SN_DSIA_CLK_FREQ_REG, val);
  }
  
-+static unsigned int ti_sn_get_max_lanes(struct ti_sn_bridge *pdata)
++static unsigned int ti_sn_bridge_get_bpp(struct ti_sn_bridge *pdata)
 +{
-+	u8 data;
-+	int ret;
-+
-+	ret = drm_dp_dpcd_readb(&pdata->aux, DP_MAX_LANE_COUNT, &data);
-+	if (ret != 1) {
-+		DRM_DEV_ERROR(pdata->dev,
-+			      "Can't read lane count (%d); assuming 4\n", ret);
-+		return 4;
-+	}
-+
-+	return data & DP_LANE_COUNT_MASK;
++	if (pdata->connector.display_info.bpc <= 6)
++		return 18;
++	else
++		return 24;
 +}
 +
- static void ti_sn_bridge_enable(struct drm_bridge *bridge)
- {
- 	struct ti_sn_bridge *pdata = bridge_to_ti_sn_bridge(bridge);
- 	unsigned int val;
- 	int ret;
+ /**
+  * LUT index corresponds to register value and
+  * LUT values corresponds to dp data rate supported
+@@ -447,21 +456,17 @@ static const unsigned int ti_sn_bridge_dp_rate_lut[] = {
  
-+	/*
-+	 * Run with the maximum number of lanes that the DP sink supports.
-+	 *
-+	 * Depending use cases, we might want to revisit this later because:
-+	 * - It's plausible that someone may have run fewer lines to the
-+	 *   sink than the sink actually supports, assuming that the lines
-+	 *   will just be driven at a higher rate.
-+	 * - The DP spec seems to indicate that it's more important to minimize
-+	 *   the number of lanes than the link rate.
-+	 *
-+	 * If we do revisit, it would be important to measure the power impact.
-+	 */
-+	pdata->dp_lanes = ti_sn_get_max_lanes(pdata);
-+
- 	/* DSI_A lane config */
- 	val = CHA_DSI_LANES(4 - pdata->dsi->lanes);
+ static void ti_sn_bridge_set_dp_rate(struct ti_sn_bridge *pdata)
+ {
+-	unsigned int bit_rate_mhz, dp_rate_mhz;
++	unsigned int bit_rate_khz, dp_rate_mhz;
+ 	unsigned int i;
+ 	struct drm_display_mode *mode =
+ 		&pdata->bridge.encoder->crtc->state->adjusted_mode;
+ 
+-	/*
+-	 * Calculate minimum bit rate based on our pixel clock.  At
+-	 * the moment this driver never sets the DP_18BPP_EN bit in
+-	 * register 0x5b so we hardcode 24bpp.
+-	 */
+-	bit_rate_mhz = (mode->clock / 1000) * 24;
++	/* Calculate minimum bit rate based on our pixel clock. */
++	bit_rate_khz = mode->clock * ti_sn_bridge_get_bpp(pdata);
+ 
+ 	/* Calculate minimum DP data rate, taking 80% as per DP spec */
+-	dp_rate_mhz = ((bit_rate_mhz / pdata->dp_lanes) * DP_CLK_FUDGE_NUM) /
+-							DP_CLK_FUDGE_DEN;
++	dp_rate_mhz = DIV_ROUND_UP(bit_rate_khz * DP_CLK_FUDGE_NUM,
++				   1000 * pdata->dp_lanes * DP_CLK_FUDGE_DEN);
+ 
+ 	for (i = 1; i < ARRAY_SIZE(ti_sn_bridge_dp_rate_lut) - 1; i++)
+ 		if (ti_sn_bridge_dp_rate_lut[i] > dp_rate_mhz)
+@@ -550,6 +555,10 @@ static void ti_sn_bridge_enable(struct drm_bridge *bridge)
  	regmap_update_bits(pdata->regmap, SN_DSI_LANES_REG,
+ 			   CHA_DSI_LANES_MASK, val);
+ 
++	/* Set the DP output format (18 bpp or 24 bpp) */
++	val = (ti_sn_bridge_get_bpp(pdata) == 18) ? BPP_18_RGB : 0;
++	regmap_update_bits(pdata->regmap, SN_DATA_FORMAT_REG, BPP_18_RGB, val);
++
+ 	/* DP lane config */
+ 	val = DP_NUM_LANES(min(pdata->dp_lanes, 3));
+ 	regmap_update_bits(pdata->regmap, SN_SSC_CONFIG_REG, DP_NUM_LANES_MASK,
 -- 
 2.24.1.735.g03f4e72817-goog
 
