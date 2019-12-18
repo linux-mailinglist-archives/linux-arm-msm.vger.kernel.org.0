@@ -2,112 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AF581246AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 13:21:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B63011247FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 14:22:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726707AbfLRMVx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Dec 2019 07:21:53 -0500
-Received: from ste-pvt-msa2.bahnhof.se ([213.80.101.71]:64698 "EHLO
-        ste-pvt-msa2.bahnhof.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725930AbfLRMVx (ORCPT
+        id S1726996AbfLRNWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Dec 2019 08:22:41 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:26699 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726969AbfLRNWk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Dec 2019 07:21:53 -0500
-X-Greylist: delayed 339 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Dec 2019 07:21:51 EST
-Received: from localhost (localhost [127.0.0.1])
-        by ste-pvt-msa2.bahnhof.se (Postfix) with ESMTP id 003D53F4E2;
-        Wed, 18 Dec 2019 13:16:10 +0100 (CET)
-Authentication-Results: ste-pvt-msa2.bahnhof.se;
-        dkim=pass (1024-bit key; unprotected) header.d=flawful.org header.i=@flawful.org header.b=Xg93ZJD1;
-        dkim-atps=neutral
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -2.099
+        Wed, 18 Dec 2019 08:22:40 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1576675360; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=gJteFETaOrkhNWBbzpOZWWr+q40zt1FuW5gOqxEFqQM=; b=TZSjbtrHeJniXdjldojlqdNslVDS68OtYiO51S81Vn9ftogitWtNFxEJ46e90MN7YmET9XW6
+ bF1Vxr2ye65Upwjqur54vKMg5seGp1SErKBtoHEEWqRqaIGqLXc7H483dnrIipUtuFk4L1Uu
+ JT98BFYBqa/M+YPkT4zNhQ10n50=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5dfa2818.7f0ba9d43848-smtp-out-n01;
+ Wed, 18 Dec 2019 13:22:32 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1F196C4479D; Wed, 18 Dec 2019 13:22:31 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.099 tagged_above=-999 required=6.31
-        tests=[BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
-        DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, URIBL_BLOCKED=0.001]
-        autolearn=ham autolearn_force=no
-Authentication-Results: ste-ftg-msa2.bahnhof.se (amavisd-new);
-        dkim=pass (1024-bit key) header.d=flawful.org
-Received: from ste-pvt-msa2.bahnhof.se ([127.0.0.1])
-        by localhost (ste-ftg-msa2.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id S8UUBs6IQdRp; Wed, 18 Dec 2019 13:16:09 +0100 (CET)
-Received: from flawful.org (ua-84-217-220-205.bbcust.telenor.se [84.217.220.205])
-        (Authenticated sender: mb274189)
-        by ste-pvt-msa2.bahnhof.se (Postfix) with ESMTPA id DD3363F3BA;
-        Wed, 18 Dec 2019 13:16:08 +0100 (CET)
-Received: by flawful.org (Postfix, from userid 1001)
-        id E3946E50; Wed, 18 Dec 2019 13:16:07 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flawful.org; s=mail;
-        t=1576671368; bh=tDgQ8Hd7X2DMLFKWDPV38ouTSnh9qudUss4S+7QTdhc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Xg93ZJD1Xo4idJjy5M2BapnXGYA2U/a5Ejjo3qQjPm/B97aFFjq/73mWy1iGtyuhN
-         NGNIe8OkbS2NvfLHbteFPSdHYcNxK/2MR+kxTunx7t89lmQfQ2NwujCZ264jx6cfRV
-         +fkGbppgVjYEqm3txWXU+N5tk+nkzxFZCJ3cKtL4=
-Date:   Wed, 18 Dec 2019 13:16:07 +0100
-From:   Niklas Cassel <nks@flawful.org>
-To:     sboyd@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, amit.kucheria@linaro.org,
-        sboyd@kernel.org, bjorn.andersson@linaro.org,
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6E683C433A2;
+        Wed, 18 Dec 2019 13:22:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6E683C433A2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org, jhugo@codeaurora.org,
+        robh+dt@kernel.org
+Cc:     ohad@wizery.com, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, niklas.cassel@linaro.org
-Subject: Re: [PATCH v3 0/7] Clock changes to support cpufreq on QCS404
-Message-ID: <20191218121607.djwnxkrsgpdcf5k3@flawful.org>
-References: <20191125135910.679310-1-niklas.cassel@linaro.org>
+        agross@kernel.org, Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v2 0/5] Add the missing remoteprocs on MSM8998
+Date:   Wed, 18 Dec 2019 18:52:12 +0530
+Message-Id: <20191218132217.28141-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.22.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191125135910.679310-1-niklas.cassel@linaro.org>
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 25, 2019 at 02:59:02PM +0100, Niklas Cassel wrote:
-> The following clock changes are required to enable cpufreq support on
-> the QCS404.
-> 
-> Changes since v2:
-> -Addressed Stephen Boyd's comment regarding apcs-msm8916
-> should use new way of specifying clock parents.
-> -DT binding now has "pll" as first clock, in order to
-> not break DT backwards compatibility (in case no clock-names
-> are given).
-> -Moved EPROBE_DEFER error handling to its own patch.
-> 
-> Jorge Ramirez-Ortiz (6):
->   dt-bindings: mailbox: qcom: Add clock-name optional property
->   clk: qcom: gcc: limit GPLL0_AO_OUT operating frequency
->   clk: qcom: hfpll: register as clock provider
->   clk: qcom: hfpll: CLK_IGNORE_UNUSED
->   clk: qcom: hfpll: use clk_parent_data to specify the parent
->   clk: qcom: apcs-msm8916: silently error out on EPROBE_DEFER
-> 
-> Niklas Cassel (1):
->   clk: qcom: apcs-msm8916: use clk_parent_data to specify the parent
-> 
->  .../mailbox/qcom,apcs-kpss-global.txt         | 24 ++++++++++++++---
->  drivers/clk/qcom/apcs-msm8916.c               | 26 ++++++++++++++-----
->  drivers/clk/qcom/clk-alpha-pll.c              |  8 ++++++
->  drivers/clk/qcom/clk-alpha-pll.h              |  1 +
->  drivers/clk/qcom/gcc-qcs404.c                 |  2 +-
->  drivers/clk/qcom/hfpll.c                      | 21 +++++++++++++--
->  6 files changed, 70 insertions(+), 12 deletions(-)
-> 
-> -- 
-> 2.23.0
-> 
+This patch series adds support for booting the Audio, Modem and Sensor
+DSPs found in Qualcomm's MSM8998 SoCs.
 
-Hello Stephen,
+Patch 5: arm64: dts: qcom: msm8998: Add ADSP, MPSS and SLPI
+depends on RPM_SMD_XO_CLK_SRC
 
-I have adressed your review comments
-on the previous patch series version.
+V2:
+ * split the series according to SoC
+ * gpu reserved memory size is now updated
+ * addressed review comments from Jeff
 
-Could you please have a look?
+Sibi Sankar (5):
+  remoteproc: q6v5-mss: Remove mem clk from the active pool
+  dt-bindings: remoteproc: qcom: Add ADSP and SLPI support for MSM8998
+    SoC
+  remoteproc: qcom: pas: Add MSM8998 ADSP and SLPI support
+  arm64: dts: qcom: msm8998: Update reserved memory map
+  arm64: dts: qcom: msm8998: Add ADSP, MPSS and SLPI nodes
 
-If it looks good, could you please
-consider taking them via your tree?
+ .../bindings/remoteproc/qcom,adsp.txt         |   7 +
+ arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi     |   8 +
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         | 194 +++++++++++++++++-
+ drivers/remoteproc/qcom_q6v5_mss.c            |   1 -
+ drivers/remoteproc/qcom_q6v5_pas.c            |  32 +++
+ 5 files changed, 230 insertions(+), 12 deletions(-)
 
-Kind regards,
-Niklas
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
