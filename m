@@ -2,108 +2,333 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CFDE123E49
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 05:12:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D696123F6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 07:14:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbfLREMG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Dec 2019 23:12:06 -0500
-Received: from mail.kernel.org ([198.145.29.99]:48974 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726454AbfLREMG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Dec 2019 23:12:06 -0500
-Received: from localhost (unknown [106.51.106.0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C4812206EE;
-        Wed, 18 Dec 2019 04:12:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576642324;
-        bh=ZAbF2S9rwhQ5Np9UIx7sP+iPWCIl9l61NUz0CIKnVHI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Y5PInxWYOG2Jj3uTvebbGJxeyCLoCi0XgpHGUvbshl6aIuXKTTvZDgzXd8AOcakIC
-         NEGIc1JBjYtr6CJJsod3f2IJFWaClrrQoMeaTFt00m4/NRhCRyfyeh+MWMv7YpsnLJ
-         I3JPsdTwz2q18iIkxNREgsVlAWYFhyzGywURMhSM=
-Date:   Wed, 18 Dec 2019 09:42:00 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     cang@codeaurora.org
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, asutoshd@codeaurora.org,
-        nguyenb@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-scsi@vger.kernel.org, kernel-team@android.com,
-        saravanak@google.com, Mark Salyzyn <salyzyn@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 2/7] scsi: ufs-qcom: Add reset control support for
- host controller
-Message-ID: <20191218041200.GP2536@vkoul-mobl>
-References: <20191216190415.GL2536@vkoul-mobl>
- <CAOCk7NpAp+DHBp-owyKGgJFLRajfSQR6ff1XMmAj6A4nM3VnMQ@mail.gmail.com>
- <091562cbe7d88ca1c30638bc10197074@codeaurora.org>
- <20191217041342.GM2536@vkoul-mobl>
- <763d7b30593b31646f3c198c2be99671@codeaurora.org>
- <20191217092433.GN2536@vkoul-mobl>
- <fc8952a0eee5c010fe14e5f107d89e64@codeaurora.org>
- <20191217150852.GO2536@vkoul-mobl>
- <CAOCk7Np691Hau1FdJqWs1UY6jvEvYfzA6NnG9U--ZcRsuV5=Zw@mail.gmail.com>
- <75f7065d08f450c6cbb2b2662658ecaa@codeaurora.org>
+        id S1726617AbfLRGOE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Dec 2019 01:14:04 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:38741 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726520AbfLRGOE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Dec 2019 01:14:04 -0500
+Received: by mail-pf1-f193.google.com with SMTP id x185so619766pfc.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Dec 2019 22:14:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ni4ioz4cHSspRUetFlkhp++4BuBbKUkcpKsMHKLoQk4=;
+        b=k72dwMROlB/5xTum/N3Dg8puButRQRcfxcx7j0084cyf567O6kaSijeRu3JOQBLTr0
+         4rNl5FO2DGYD2lvBEc4hWCo8mj+D9C3c5fILwFSWjQsqJhpcsTIgWJ0hilUI4jaRjLmq
+         fg0sFh+IhlXpCqplZQYbihg2YWL/+w22/pMTETvjyJHwSdTtbUlRM/ESAsL0lf4EH16A
+         7s9IEBg4NmQdCxUrurr4+U3ZZlXxuIm6LBHnyqjoEvjn4LCQuKqdIokRg4O/XjseCvf9
+         tjqvJox9O+vjcTrdfL8yPzidXziBKRt0ByJ7/rEbfS+Lr0GiBuOZkhKhMiIO1OEN5mnY
+         7suA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ni4ioz4cHSspRUetFlkhp++4BuBbKUkcpKsMHKLoQk4=;
+        b=UWZsFOMLpNs4/OBCeisO85rrQQWfT/nXlrEViiG8CfjrLXNyT9meaK11KyiXHv35IS
+         vMA7F4v8H504bimYeGGR4ru8hfy391XPBXmhM1lwhsVmBnTsrtrT9dYU3RDI4g24l0Db
+         2RLp8tt/17SdrU2SSSQzGxjd6S5ley1kK1ntAnXWJBcfMGE5bQ9p+eF1DgRk6Lje6ydS
+         Ru9luD5fHd1aMDYGO4ieK4tPOZm3vEcOQsZm/56aQEcHVqRF8eCBDL3kLcxmcPxrVE68
+         AIGHcV4G3DHpwjxU78E/lrfy2s8wNMUZzkOmtePmi9A4LV68eex0lXdk1Dg4XL+7dRwA
+         ugdg==
+X-Gm-Message-State: APjAAAWE1sLptAuQrykEAjVlo2gupB6wzKrKABa6ELXa9IpoqiYqyO5h
+        ABufNb9inLPV656U2fixBdatYB1ZXmQ=
+X-Google-Smtp-Source: APXvYqwI1Ph4QcJeaM7oB8QgkRDo+T57+U4ON0O3cR11egnBxKg0EDnymABpMfPiJZHYIGs7Si+D4A==
+X-Received: by 2002:aa7:968b:: with SMTP id f11mr1165731pfk.209.1576649643170;
+        Tue, 17 Dec 2019 22:14:03 -0800 (PST)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id x132sm987879pfc.148.2019.12.17.22.14.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Dec 2019 22:14:02 -0800 (PST)
+Date:   Tue, 17 Dec 2019 22:14:00 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Shyam Kumar Thella <sthella@codeaurora.org>
+Cc:     srinivas.kandagatla@linaro.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] nvmem: add QTI SDAM driver
+Message-ID: <20191218061400.GV3143381@builder>
+References: <1576574432-9649-1-git-send-email-sthella@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <75f7065d08f450c6cbb2b2662658ecaa@codeaurora.org>
+In-Reply-To: <1576574432-9649-1-git-send-email-sthella@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18-12-19, 02:44, cang@codeaurora.org wrote:
- 
-> Hi Vinod and Jeffrey,
-> 
-> Let me summary here, now the 1000000us timeout works for both 845 and 8998.
-> However, 8150 still fails.
-> 
-> > > The bigger question is why is the reset causing the timeout to be
-> > > increased for sdm845 and not to work in case of sm8150! (Vinod)
-> 
-> I would not say this patch increases the timeout. With this patch,
-> the PCS polling timeout, per my profiling, the PCS ready usually needs
-> less than 5000us, which is the actual time needed for PCS bit to be ready.
-> 
-> The reason why 1000us worked for you is because, w/o the patch, UFS PHY
-> registers are retained from pre-kernel stage (bootloader i.e.), the PCS
-> ready
-> bit was set to 1 in pre-kernel stage, so when kernel driver reads it, it
-> returns
-> 1, not even to be polled at all. It may seem "faster", but not the right
-> thing to do, because kernel stage may need different PHY settings than
-> pre-kernel stage, keeping the settings configured in pre-kernel stage is not
-> always right, so this patch is needed. And increasing 1000us to 1000000us
-> is the right thing to do, but not a hack.
-> 
-> As reg for the phy initialization timeout on 8150, I found there is
-> something
-> wrong with its settings in /drivers/phy/qualcomm/phy-qcom-qmp.c
-> 
-> static const struct qmp_phy_init_tbl sm8150_ufsphy_serdes_tbl[] = {
-> 	QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01),
-> 	QMP_PHY_INIT_CFG(QSERDES_V4_COM_SYSCLK_EN_SEL, 0xd9),
-> 
-> "QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01)" should NOT appear in the
-> serdes
-> table! I haven't check who made this change, but please have a try after
-> remove
-> this line from sm8150_ufsphy_serdes_tbl.
+On Tue 17 Dec 01:20 PST 2019, Shyam Kumar Thella wrote:
 
-That is me :) Looks like I made an error while porting from downstream. I
-did a quick check to remove this and it doesn't work yet, let me recheck
-the settings again ...
+> QTI SDAM driver allows PMIC peripherals to access the shared memory
+> that is available on QTI PMICs.
+> 
+> Change-Id: I40005646ab1fbba9e0e4aa68e0a61cfbc7b51ba6
 
-Thanks for your help!
+No Change-Id upstream please.
 
--- 
-~Vinod
+> Signed-off-by: Shyam Kumar Thella <sthella@codeaurora.org>
+[..]
+> diff --git a/drivers/nvmem/qcom-spmi-sdam.c b/drivers/nvmem/qcom-spmi-sdam.c
+> new file mode 100644
+> index 0000000..e80a446
+> --- /dev/null
+> +++ b/drivers/nvmem/qcom-spmi-sdam.c
+> @@ -0,0 +1,197 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2017 The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#include <linux/device.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/of_platform.h>
+> +#include <linux/nvmem-provider.h>
+> +#include <linux/regmap.h>
+> +
+> +#define SDAM_MEM_START			0x40
+> +#define REGISTER_MAP_ID			0x40
+> +#define REGISTER_MAP_VERSION		0x41
+> +#define SDAM_SIZE			0x44
+> +#define SDAM_PBS_TRIG_SET		0xE5
+> +#define SDAM_PBS_TRIG_CLR		0xE6
+> +
+> +struct sdam_chip {
+> +	struct platform_device		*pdev;
+
+As written right now, pdev is unused. But if you stash struct device *
+here instead you can replace your pr_err() with dev_err() using this,
+for better error messages.
+
+> +	struct regmap			*regmap;
+> +	int				base;
+
+This would look better as a unsigned int.
+
+> +	int				size;
+
+Ditto, or perhaps even size_t.
+
+> +};
+> +
+> +/* read only register offsets */
+> +static const u8 sdam_ro_map[] = {
+> +	REGISTER_MAP_ID,
+> +	REGISTER_MAP_VERSION,
+> +	SDAM_SIZE
+> +};
+> +
+> +static bool is_valid(struct sdam_chip *sdam, unsigned int offset, size_t len)
+
+Please do prefix this with "sdam_"
+
+> +{
+> +	int sdam_mem_end = SDAM_MEM_START + sdam->size - 1;
+> +
+> +	if (!len)
+> +		return false;
+> +
+> +	if (offset >= SDAM_MEM_START && offset <= sdam_mem_end
+> +				&& (offset + len - 1) <= sdam_mem_end)
+> +		return true;
+> +	else if ((offset == SDAM_PBS_TRIG_SET || offset == SDAM_PBS_TRIG_CLR)
+> +				&& (len == 1))
+> +		return true;
+> +
+> +	return false;
+> +}
+> +
+> +static bool is_ro(unsigned int offset, size_t len)
+
+Ditto
+
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(sdam_ro_map); i++)
+> +		if (offset <= sdam_ro_map[i] && (offset + len) > sdam_ro_map[i])
+> +			return true;
+> +
+> +	return false;
+> +}
+> +
+> +static int sdam_read(void *priv, unsigned int offset, void *val, size_t bytes)
+> +{
+> +	struct sdam_chip *sdam = priv;
+> +	int rc;
+> +
+> +	if (!is_valid(sdam, offset, bytes)) {
+> +		pr_err("Invalid SDAM offset 0x%02x len=%zd\n", offset, bytes);
+
+Use %#x instead of 0x%02x
+
+> +		return -EINVAL;
+> +	}
+> +
+> +	rc = regmap_bulk_read(sdam->regmap, sdam->base + offset, val, bytes);
+> +	if (rc < 0)
+> +		pr_err("Failed to read SDAM offset 0x%02x len=%zd, rc=%d\n",
+> +						offset, bytes, rc);
+> +
+> +	return rc;
+> +}
+> +
+> +static int sdam_write(void *priv, unsigned int offset, void *val, size_t bytes)
+> +{
+> +	struct sdam_chip *sdam = priv;
+> +	int rc;
+> +
+> +	if (!is_valid(sdam, offset, bytes)) {
+> +		pr_err("Invalid SDAM offset 0x%02x len=%zd\n", offset, bytes);
+> +		return -EINVAL;
+> +	}
+> +
+> +	if (is_ro(offset, bytes)) {
+> +		pr_err("Invalid write offset 0x%02x len=%zd\n", offset, bytes);
+> +		return -EINVAL;
+> +	}
+> +
+> +	rc = regmap_bulk_write(sdam->regmap, sdam->base + offset, val, bytes);
+> +	if (rc < 0)
+> +		pr_err("Failed to write SDAM offset 0x%02x len=%zd, rc=%d\n",
+> +						offset, bytes, rc);
+> +
+> +	return rc;
+> +}
+> +
+> +static int sdam_probe(struct platform_device *pdev)
+> +{
+> +	struct sdam_chip *sdam;
+> +	struct nvmem_device *nvmem;
+> +	struct nvmem_config *sdam_config;
+> +	unsigned int val = 0;
+
+No need to initialize this.
+
+> +	int rc;
+> +
+> +	sdam = devm_kzalloc(&pdev->dev, sizeof(*sdam), GFP_KERNEL);
+> +	if (!sdam)
+> +		return -ENOMEM;
+> +
+> +	sdam_config = devm_kzalloc(&pdev->dev, sizeof(*sdam_config),
+> +							GFP_KERNEL);
+
+Can't this be included in struct sdam_chip, for a single allocation?
+
+> +	if (!sdam_config)
+> +		return -ENOMEM;
+> +
+> +	sdam->regmap = dev_get_regmap(pdev->dev.parent, NULL);
+> +	if (!sdam->regmap) {
+> +		pr_err("Failed to get regmap handle\n");
+
+dev_err(&pdev->dev, ...);
+
+> +		return -ENXIO;
+> +	}
+> +
+> +	rc = of_property_read_u32(pdev->dev.of_node, "reg", &sdam->base);
+
+In other words, base must be u32.
+
+> +	if (rc < 0) {
+> +		pr_err("Failed to get SDAM base, rc=%d\n", rc);
+> +		return -EINVAL;
+> +	}
+> +
+> +	rc = regmap_read(sdam->regmap, sdam->base + SDAM_SIZE, &val);
+> +	if (rc < 0) {
+> +		pr_err("Failed to read SDAM_SIZE rc=%d\n", rc);
+> +		return -EINVAL;
+> +	}
+> +	sdam->size = val * 32;
+> +
+> +	sdam_config->dev = &pdev->dev;
+> +	sdam_config->name = "spmi_sdam";
+> +	sdam_config->id = pdev->id;
+> +	sdam_config->owner = THIS_MODULE,
+> +	sdam_config->stride = 1;
+> +	sdam_config->word_size = 1;
+> +	sdam_config->reg_read = sdam_read;
+> +	sdam_config->reg_write = sdam_write;
+> +	sdam_config->priv = sdam;
+> +
+> +	nvmem = nvmem_register(sdam_config);
+> +	if (IS_ERR(nvmem)) {
+> +		pr_err("Failed to register SDAM nvmem device rc=%ld\n",
+> +						PTR_ERR(nvmem));
+> +		return -ENXIO;
+> +	}
+> +	platform_set_drvdata(pdev, nvmem);
+> +
+> +	pr_info("SDAM base=0x%04x size=%d registered successfully\n",
+> +						sdam->base, sdam->size);
+
+Please don't print notifications in the kernel log. You can possibly use
+dev_dbg(). Or just look for devices in
+/sys/bus/platform/drivers/qcom,spmi-sdam/
+
+> +
+> +	return 0;
+> +}
+> +
+> +static int sdam_remove(struct platform_device *pdev)
+
+Instead of using nvmem_register(), use devm_nvmem_register() and just
+omit the remote function completely - which also allows you to drop the
+platform_set_drvdata() above.
+
+> +{
+> +	struct nvmem_device *nvmem = platform_get_drvdata(pdev);
+> +
+> +	return nvmem_unregister(nvmem);
+> +}
+> +
+> +static const struct of_device_id sdam_match_table[] = {
+> +	{.compatible = "qcom,spmi-sdam"},
+
+Please add a space after { and before }.
+
+> +	{},
+> +};
+> +
+> +static struct platform_driver sdam_driver = {
+> +	.driver = {
+> +		.name = "qcom,spmi-sdam",
+> +		.of_match_table = sdam_match_table,
+> +	},
+> +	.probe		= sdam_probe,
+> +	.remove		= sdam_remove,
+> +};
+> +
+> +static int __init sdam_init(void)
+> +{
+> +	return platform_driver_register(&sdam_driver);
+> +}
+> +subsys_initcall(sdam_init);
+
+module_platform_driver(sdam_driver), unless you have some strong
+arguments for why this needs to be subsys_initcall
+
+Regards,
+Bjorn
+
+> +
+> +static void __exit sdam_exit(void)
+> +{
+> +	return platform_driver_unregister(&sdam_driver);
+> +}
+> +module_exit(sdam_exit);
+> +
+> +MODULE_DESCRIPTION("QCOM SPMI SDAM driver");
+> +MODULE_LICENSE("GPL v2");
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>  a Linux Foundation Collaborative Project
