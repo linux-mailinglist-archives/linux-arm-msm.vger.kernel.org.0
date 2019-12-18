@@ -2,73 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FB671257E8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 00:42:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 098601257EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 00:43:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726571AbfLRXmx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Dec 2019 18:42:53 -0500
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:38604 "EHLO
+        id S1726633AbfLRXn1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Dec 2019 18:43:27 -0500
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:40794 "EHLO
         mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726463AbfLRXmx (ORCPT
+        with ESMTP id S1726463AbfLRXn0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Dec 2019 18:42:53 -0500
-Received: by mail-oi1-f196.google.com with SMTP id b8so2146162oiy.5;
-        Wed, 18 Dec 2019 15:42:52 -0800 (PST)
+        Wed, 18 Dec 2019 18:43:26 -0500
+Received: by mail-oi1-f196.google.com with SMTP id c77so1700782oib.7;
+        Wed, 18 Dec 2019 15:43:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=TdBF77lLKHR1KmeH3phx4WFNbPMkcGwAiRzD6dJUrrY=;
-        b=tKD0p7sasUpTMSAzAV4tw1i5Ilbdeho8mxWYGbQjZuIuj7PNdE7R040nhB7RLeK+v9
-         k4X1Cj46Yp1rgOc6MjaKpIWZg/k9kVunbW4w37c7Udn9cAa/rI6ZxydFXaX0eLFSIyUU
-         +16X/eGKCpVSdKWHuBFWAoOpVF4IoI5Q8TE+TTMUxczX1+K8Yzz2oKDWVGF2VYLuXjWi
-         5IOi7HRhcAPx0D069n+LqguG/8t7ZJXznGEuub/E8Ts14x42uwyksm8lawM/ReA7Fsim
-         f9qJ54ikAeq+t/DvH/KVNQDYzZEMBCxBPLzQ5juvKgdrqFQiMkQTazUypICSoKNZ6m2r
-         LsAw==
-X-Gm-Message-State: APjAAAVdArJrNPHD6yG4B395j3wkVfEULkcrqztNEFGKy1g5hW8GmW2l
-        7o44zO/gLJWECBV+bf3qjtp8oH1I6Q==
-X-Google-Smtp-Source: APXvYqyD7aG3GgXlP0JdazmFnPE0UPUpVe3o6mplOud1TiZL1/tGRqFeNFIuuIA9T2O/EbSZ4Cm2fg==
-X-Received: by 2002:a05:6808:356:: with SMTP id j22mr1723375oie.130.1576712572477;
-        Wed, 18 Dec 2019 15:42:52 -0800 (PST)
+        bh=msjfoAGOe1xlJPE1TZ3Bmw7KcL7yxIkeg+V5WRco54U=;
+        b=fGiFjuWswxGFDQ7VEF5t5A9uXobESIby0bmDSp/LSeLKGzv7ala6fe6sqX1l6C7Nz4
+         Lq91Iv2Wylt6uxcvWeHbcCK0QzdDnhLNtINJQ4hdL9bGRXBvVNIUmGyLRZDc0Ux7Bvhv
+         EmT0kros8K4mcCR1bduXSw7hBF+JaAntbrygVFRWAyoGX70p0nZ6PNEgATwcDu+X/jA/
+         DNTtbdpGI1xnw7JRAS7OUNFKPxX0UBDmHrS44SNpV8JNPEsp3BfCwEfs6betGz/TLz/W
+         QBtzhEdETEq/hSfT4eWssLwjbDaE3YG+lxHPnnjptORjdPNDmbTmZNJGYvemL/4BNci0
+         Jgug==
+X-Gm-Message-State: APjAAAUvs2BJztz2Bxg4cENipeAwL+mXnLZZKMcWI8rTj/O33TXANKsZ
+        qmnR/XLQm6KpWWclNQWACw==
+X-Google-Smtp-Source: APXvYqyuAOpnUBmA0v6QZRoARMBZbF7L6n+QbJWT4C9peJtbIAP5gasaJY57lTkyGrnVRbEgUNeoDA==
+X-Received: by 2002:aca:bb08:: with SMTP id l8mr1594201oif.47.1576712605848;
+        Wed, 18 Dec 2019 15:43:25 -0800 (PST)
 Received: from localhost (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id j20sm1394532otl.5.2019.12.18.15.42.51
+        by smtp.gmail.com with ESMTPSA id m7sm1396738otl.20.2019.12.18.15.43.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2019 15:42:51 -0800 (PST)
-Date:   Wed, 18 Dec 2019 17:42:51 -0600
+        Wed, 18 Dec 2019 15:43:24 -0800 (PST)
+Date:   Wed, 18 Dec 2019 17:43:23 -0600
 From:   Rob Herring <robh@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
         Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        vinod.koul@linaro.org
-Subject: Re: [PATCH 1/2] phy: qcom-qmp: Add MSM8996 UFS QMP support
-Message-ID: <20191218234251.GA17292@bogus>
-References: <20191207202147.2314248-1-bjorn.andersson@linaro.org>
- <20191207202147.2314248-2-bjorn.andersson@linaro.org>
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Paolo Pisati <p.pisati@gmail.com>
+Subject: Re: [PATCH 1/2] clk: qcom: gcc-msm8996: Fix parent for CLKREF clocks
+Message-ID: <20191218234323.GA18109@bogus>
+References: <20191207203603.2314424-1-bjorn.andersson@linaro.org>
+ <20191207203603.2314424-2-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191207202147.2314248-2-bjorn.andersson@linaro.org>
+In-Reply-To: <20191207203603.2314424-2-bjorn.andersson@linaro.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat,  7 Dec 2019 12:21:46 -0800, Bjorn Andersson wrote:
-> The support for the 14nm MSM8996 UFS PHY is currently handled by the
-> UFS-specific 14nm QMP driver, due to the earlier need for additional
-> operations beyond the standard PHY API.
+On Sat,  7 Dec 2019 12:36:02 -0800, Bjorn Andersson wrote:
+> The CLKREF clocks are all fed by the clock signal on the CXO2 pad on the
+> SoC. Update the definition of these clocks to allow this to be wired up
+> to the appropriate clock source.
 > 
-> Add support for this PHY to the common QMP driver, to allow us to remove
-> the old driver.
+> Retain "xo" as the global named parent to make the change a nop in the
+> event that DT doesn't carry the necessary clocks definition.
 > 
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  .../devicetree/bindings/phy/qcom-qmp-phy.txt  |   5 +
->  drivers/phy/qualcomm/phy-qcom-qmp.c           | 106 ++++++++++++++++++
->  2 files changed, 111 insertions(+)
+>  .../devicetree/bindings/clock/qcom,gcc.yaml   |  6 ++--
+>  drivers/clk/qcom/gcc-msm8996.c                | 35 +++++++++++++++----
+>  2 files changed, 32 insertions(+), 9 deletions(-)
 > 
 
 Acked-by: Rob Herring <robh@kernel.org>
