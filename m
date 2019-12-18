@@ -2,240 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DFFB71256ED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 23:36:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F290125710
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Dec 2019 23:42:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726880AbfLRWgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Dec 2019 17:36:09 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:39034 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726867AbfLRWgI (ORCPT
+        id S1726512AbfLRWmN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Dec 2019 17:42:13 -0500
+Received: from mail-il1-f193.google.com ([209.85.166.193]:45413 "EHLO
+        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726387AbfLRWmN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Dec 2019 17:36:08 -0500
-Received: by mail-pl1-f195.google.com with SMTP id z3so1621668plk.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2019 14:36:07 -0800 (PST)
+        Wed, 18 Dec 2019 17:42:13 -0500
+Received: by mail-il1-f193.google.com with SMTP id p8so3094548iln.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2019 14:42:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=zh2WONlL2QLylOiG7Lvfb6u/MwNz9xzHSH4c0Q9q478=;
-        b=J6WJV0wasg+kqIVXBNMlns+IsbVKKG4AQ9LpSOrPAkgwihNdILN9tQK+U0O+k1PbA5
-         gxrpCN5/+F+L12BahYXVgWPU2kvlNARg4aWNfXFBEE8fs57buniyOA7+tb9PlCnVhWlO
-         oORfvcQ/MB164pAjKE7Ps0YfSw8EwFdXoDDtY=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HUPNGjTxVnCf9t8O1v8YRvPP2CQXKG1MqWvD1p/QE64=;
+        b=TmD8VqL0QC029L9QBQZU+bTfXvQswXjeDXnjiIOMPmWs4dhTEN5qRx+I8xn0raKeX5
+         hDcIrNbJquXkV5ebv4aCtGwI9MCCjCz9e4PFwTXle0aKuGwqoYOwAbuQLaASjKA1sS1V
+         uwICXiz1tyYXpX6mcKkbfEByYEPzD+Iorh3RI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=zh2WONlL2QLylOiG7Lvfb6u/MwNz9xzHSH4c0Q9q478=;
-        b=mbljahSWZNcv73zJ+EK0nYbj2Ze9byqNXdnQ/K6SMxZtvacD44z6xE5QhjOEg4XQno
-         Zh18SJ3edzKIsDDePjHychBGS1l1tuH9F3Gv+QDjuSkRz0x5UXH4ZuJ6Oty2/86eP8Rn
-         lVSpPp2Ec8dQJ8eUBRqobbke1/JPC0NoRaugZwQXICBc919uMQYSDWdaKvTayA121WGq
-         VR+i6E2JRgXYs16Mcez5ru/hAmZF9znDuhf/iI5mE25OCQY42z3LPBezTgjpo1GTlaOi
-         SnNOqWdnsVwe90sWox+loU0knCIKrL/mDJ3AIt0H1SVQRaVHH6eJQw67y8yjDvD73HKu
-         LXxQ==
-X-Gm-Message-State: APjAAAUz52DM5v2K+3SWUpUd2KszIq70Mf3/CYh+YmwIXrQz0MndVfsh
-        097MkubWIMlEuqOFW6BpwYEwFA==
-X-Google-Smtp-Source: APXvYqyvRh+2bjRGA1ph9HJJL+8k25OE8VeJdeu2JybP6jBo2txzOTS7qsQDIK4g9KIBEugQQcE0mA==
-X-Received: by 2002:a17:902:8f85:: with SMTP id z5mr5552213plo.43.1576708567454;
-        Wed, 18 Dec 2019 14:36:07 -0800 (PST)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id i9sm4709919pfk.24.2019.12.18.14.36.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2019 14:36:07 -0800 (PST)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>
-Cc:     robdclark@chromium.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, seanpaul@chromium.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Douglas Anderson <dianders@chromium.org>,
-        Jonas Karlman <jonas@kwiboo.se>, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-Subject: [PATCH v3 9/9] drm/bridge: ti-sn65dsi86: Avoid invalid rates
-Date:   Wed, 18 Dec 2019 14:35:30 -0800
-Message-Id: <20191218143416.v3.9.Ib59207b66db377380d13748752d6fce5596462c5@changeid>
-X-Mailer: git-send-email 2.24.1.735.g03f4e72817-goog
-In-Reply-To: <20191218223530.253106-1-dianders@chromium.org>
-References: <20191218223530.253106-1-dianders@chromium.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HUPNGjTxVnCf9t8O1v8YRvPP2CQXKG1MqWvD1p/QE64=;
+        b=n3yfK8BGZmoY11U1npgZ0Y1gtCI5EUhRsuwOX98j+qZUD+FHw+plXouawNYrHrUEsl
+         O5d4bQUjrfl0bwBMW2a53HrEpCm/V0TuIwxQjXZhZPZnAxFx0G3PEyZDiP10k/Dm97Hz
+         7gXhrintApyhRqOdFdD4sivjt2GCmu994A0WiyNSLe88mYpaX1KuHKINC7xl8pv3idgL
+         RsL2qptuAMPhTji8duX4xen/cQwOXTZNgsrzM1DFMxF0qKQ73+q6e2kQGkcbKiJ1Vjxy
+         53c4IHxKXOdggynAFn3czrN/urhcixxhHwUd+PEsnQWvkemfHzLE13tvudcFkoZUbQIw
+         AnVw==
+X-Gm-Message-State: APjAAAVCzoQmZ4Wx/RaTEfp6MMVlo2D0Qar/KEeN9ijJPcyTtBFRzeSn
+        TY81DhylWQZCaMdsXoFBw6vQrvQLh5s=
+X-Google-Smtp-Source: APXvYqwK/BW8mkH/1dyt2PrDgxHwfEuH+txFdkJxNvHwz/My50X0QOj3DCYLRLC/YhDBpnRqdUakzw==
+X-Received: by 2002:a92:d7c1:: with SMTP id g1mr4404620ilq.192.1576708932223;
+        Wed, 18 Dec 2019 14:42:12 -0800 (PST)
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com. [209.85.166.180])
+        by smtp.gmail.com with ESMTPSA id y11sm751317iol.23.2019.12.18.14.42.10
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Dec 2019 14:42:10 -0800 (PST)
+Received: by mail-il1-f180.google.com with SMTP id x5so3124625ila.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2019 14:42:10 -0800 (PST)
+X-Received: by 2002:a92:ca90:: with SMTP id t16mr3875343ilo.218.1576708930281;
+ Wed, 18 Dec 2019 14:42:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20191218004741.102067-1-dianders@chromium.org>
+ <20191217164702.v2.9.Ib59207b66db377380d13748752d6fce5596462c5@changeid>
+ <CAF6AEGs5CKNhKh_ZLUqWh8_2GxiDiuaTC2P-yzHqz+Dvhbp-VQ@mail.gmail.com> <CAF6AEGukOwr6TUmo3UySML5LWOC-b7vN4NwJv0OGprFafgTdEw@mail.gmail.com>
+In-Reply-To: <CAF6AEGukOwr6TUmo3UySML5LWOC-b7vN4NwJv0OGprFafgTdEw@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 18 Dec 2019 14:41:58 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=UqFYAoyxaAF4B768j-SeZOp71=Cq84s61W3s8BB7TO+w@mail.gmail.com>
+Message-ID: <CAD=FV=UqFYAoyxaAF4B768j-SeZOp71=Cq84s61W3s8BB7TO+w@mail.gmail.com>
+Subject: Re: [PATCH v2 9/9] drm/bridge: ti-sn65dsi86: Avoid invalid rates
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Based on work by Bjorn Andersson <bjorn.andersson@linaro.org>,
-Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, and
-Rob Clark <robdclark@chromium.org>.
+Hi,
 
-Let's read the SUPPORTED_LINK_RATES and/or MAX_LINK_RATE (depending on
-the eDP version of the sink) to figure out what eDP rates are
-supported and pick the ideal one.
+On Tue, Dec 17, 2019 at 8:03 PM Rob Clark <robdclark@gmail.com> wrote:
+>
+> > > +               for (i = 0; i < ARRAY_SIZE(sink_rates); i++) {
+> > > +                       rate_times_200khz = le16_to_cpu(sink_rates[i]);
+> > > +
+> > > +                       if (!rate_times_200khz)
+> > > +                               break;
+> > > +
+> > > +                       switch (rate_times_200khz) {
+> > > +                       case 27000:
+> >
+> > maybe a bit bike-sheddy, but I kinda prefer to use traditional normal
+> > units, ie. just multiply the returned value by 200 and adjust the
+> > switch case values.  At least then they match the values in the lut
+> > (other than khz vs mhz), which makes this whole logic a bit more
+> > obvious... and at that point, maybe just loop over the lut table?
+>
+> (hit SEND too soon)
+>
+> and other than that, lgtm but haven't had a chance to test it yet
+> (although I guess none of us have an eDP 1.4+ screen so maybe that is
+> moot :-))
 
-NOTE: I have only personally tested this code on eDP panels that are
-1.3 or older.  Code reading SUPPORTED_LINK_RATES for DP 1.4+ was
-tested by hacking the code to pretend that a table was there.
+I think v3 should look much better to you.  I also added a note to the
+commit log indicating that the DP 1.4 patch was only tested via
+hackery...
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+https://lore.kernel.org/r/20191218143416.v3.9.Ib59207b66db377380d13748752d6fce5596462c5@changeid
 
-Changes in v3:
-- Init rate_valid table, don't rely on stack being 0 (oops).
-- Rename rate_times_200khz to rate_per_200khz.
-- Loop over the ti_sn_bridge_dp_rate_lut table, making code smaller.
-- Use 'true' instead of 1 for bools.
-- Added note to commit message noting DP 1.4+ isn't well tested.
-
-Changes in v2:
-- Patch ("Avoid invalid rates") replaces ("Skip non-standard DP rates")
-
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 100 +++++++++++++++++++-------
- 1 file changed, 75 insertions(+), 25 deletions(-)
-
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index e1b817ccd9c7..a57c6108cb1f 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -475,39 +475,85 @@ static int ti_sn_bridge_calc_min_dp_rate_idx(struct ti_sn_bridge *pdata)
- 	return i;
- }
- 
--static int ti_sn_bridge_get_max_dp_rate_idx(struct ti_sn_bridge *pdata)
-+static void ti_sn_bridge_read_valid_rates(struct ti_sn_bridge *pdata,
-+					  bool rate_valid[])
- {
--	u8 data;
-+	unsigned int rate_per_200khz;
-+	unsigned int rate_mhz;
-+	u8 dpcd_val;
- 	int ret;
-+	int i, j;
-+
-+	ret = drm_dp_dpcd_readb(&pdata->aux, DP_EDP_DPCD_REV, &dpcd_val);
-+	if (ret != 1) {
-+		DRM_DEV_ERROR(pdata->dev,
-+			      "Can't read eDP rev (%d), assuming 1.1\n", ret);
-+		dpcd_val = DP_EDP_11;
-+	}
-+
-+	if (dpcd_val >= DP_EDP_14) {
-+		/* eDP 1.4 devices must provide a custom table */
-+		__le16 sink_rates[DP_MAX_SUPPORTED_RATES];
-+
-+		ret = drm_dp_dpcd_read(&pdata->aux, DP_SUPPORTED_LINK_RATES,
-+				       sink_rates, sizeof(sink_rates));
-+
-+		if (ret != sizeof(sink_rates)) {
-+			DRM_DEV_ERROR(pdata->dev,
-+				"Can't read supported rate table (%d)\n", ret);
-+
-+			/* By zeroing we'll fall back to DP_MAX_LINK_RATE. */
-+			memset(sink_rates, 0, sizeof(sink_rates));
-+		}
-+
-+		for (i = 0; i < ARRAY_SIZE(sink_rates); i++) {
-+			rate_per_200khz = le16_to_cpu(sink_rates[i]);
-+
-+			if (!rate_per_200khz)
-+				break;
-+
-+			rate_mhz = rate_per_200khz * 200 / 1000;
-+			for (j = 0;
-+			     j < ARRAY_SIZE(ti_sn_bridge_dp_rate_lut);
-+			     j++) {
-+				if (ti_sn_bridge_dp_rate_lut[j] == rate_mhz)
-+					rate_valid[j] = true;
-+			}
-+		}
-+
-+		for (i = 0; i < ARRAY_SIZE(ti_sn_bridge_dp_rate_lut); i++) {
-+			if (rate_valid[i])
-+				return;
-+		}
-+		DRM_DEV_ERROR(pdata->dev,
-+			      "No matching eDP rates in table; falling back\n");
-+	}
- 
--	ret = drm_dp_dpcd_readb(&pdata->aux, DP_MAX_LINK_RATE, &data);
-+	/* On older versions best we can do is use DP_MAX_LINK_RATE */
-+	ret = drm_dp_dpcd_readb(&pdata->aux, DP_MAX_LINK_RATE, &dpcd_val);
- 	if (ret != 1) {
- 		DRM_DEV_ERROR(pdata->dev,
- 			      "Can't read max rate (%d); assuming 5.4 GHz\n",
- 			      ret);
--		return ARRAY_SIZE(ti_sn_bridge_dp_rate_lut) - 1;
-+		dpcd_val = DP_LINK_BW_5_4;
- 	}
- 
--	/*
--	 * Return an index into ti_sn_bridge_dp_rate_lut.  Just hardcode
--	 * these indicies since it's not like the register spec is ever going
--	 * to change and a loop would just be more complicated.  Apparently
--	 * the DP sink can only return these few rates as supported even
--	 * though the bridge allows some rates in between.
--	 */
--	switch (data) {
--	case DP_LINK_BW_1_62:
--		return 1;
--	case DP_LINK_BW_2_7:
--		return 4;
-+	switch (dpcd_val) {
-+	default:
-+		DRM_DEV_ERROR(pdata->dev,
-+			      "Unexpected max rate (%#x); assuming 5.4 GHz\n",
-+			      (int)dpcd_val);
-+		/* fall through */
- 	case DP_LINK_BW_5_4:
--		return 7;
-+		rate_valid[7] = 1;
-+		/* fall through */
-+	case DP_LINK_BW_2_7:
-+		rate_valid[4] = 1;
-+		/* fall through */
-+	case DP_LINK_BW_1_62:
-+		rate_valid[1] = 1;
-+		break;
- 	}
--
--	DRM_DEV_ERROR(pdata->dev,
--		      "Unexpected max data rate (%#x); assuming 5.4 GHz\n",
--		      (int)data);
--	return ARRAY_SIZE(ti_sn_bridge_dp_rate_lut) - 1;
- }
- 
- static void ti_sn_bridge_set_video_timings(struct ti_sn_bridge *pdata)
-@@ -609,9 +655,9 @@ static int ti_sn_link_training(struct ti_sn_bridge *pdata, int dp_rate_idx,
- static void ti_sn_bridge_enable(struct drm_bridge *bridge)
- {
- 	struct ti_sn_bridge *pdata = bridge_to_ti_sn_bridge(bridge);
-+	bool rate_valid[ARRAY_SIZE(ti_sn_bridge_dp_rate_lut)] = { };
- 	const char *last_err_str = "No supported DP rate";
- 	int dp_rate_idx;
--	int max_dp_rate_idx;
- 	unsigned int val;
- 	int ret = -EINVAL;
- 
-@@ -655,11 +701,15 @@ static void ti_sn_bridge_enable(struct drm_bridge *bridge)
- 	regmap_update_bits(pdata->regmap, SN_SSC_CONFIG_REG, DP_NUM_LANES_MASK,
- 			   val);
- 
-+	ti_sn_bridge_read_valid_rates(pdata, rate_valid);
-+
- 	/* Train until we run out of rates */
--	max_dp_rate_idx = ti_sn_bridge_get_max_dp_rate_idx(pdata);
- 	for (dp_rate_idx = ti_sn_bridge_calc_min_dp_rate_idx(pdata);
--	     dp_rate_idx <= max_dp_rate_idx;
-+	     dp_rate_idx < ARRAY_SIZE(ti_sn_bridge_dp_rate_lut);
- 	     dp_rate_idx++) {
-+		if (!rate_valid[dp_rate_idx])
-+			continue;
-+
- 		ret = ti_sn_link_training(pdata, dp_rate_idx, &last_err_str);
- 		if (!ret)
- 			break;
--- 
-2.24.1.735.g03f4e72817-goog
-
+-Doug
