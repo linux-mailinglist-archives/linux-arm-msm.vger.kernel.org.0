@@ -2,227 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D1F4125BE7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 08:12:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E55B0125BF6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 08:20:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726536AbfLSHM3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 02:12:29 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:46706 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726155AbfLSHM3 (ORCPT
+        id S1726294AbfLSHUg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 02:20:36 -0500
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:37276 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726439AbfLSHUg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 02:12:29 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1576739548; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=p6F+HJf9pwTVCYkBLIDwl50rIboYlyyDoCq2S3Q3fjA=;
- b=HKuq9hGl1ty67HQS65483tahWgw9CSmJSvuxa4+O7YGoenkG86/IPDUb478b1Og/eWgNeJWE
- BXwmgpsdLUfAg0bOke/PJkXOrob8FriC4lBuiQb3fPtp9SDPwWa8wVMjXlpeo59sO8l1Vj4T
- lAjBQoSluy8dmuMsL8RzGrBGRxE=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5dfb22da.7f8ab5a5d458-smtp-out-n01;
- Thu, 19 Dec 2019 07:12:26 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B099FC63C6C; Thu, 19 Dec 2019 07:12:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: cang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6AB2DC494BC;
-        Thu, 19 Dec 2019 07:12:25 +0000 (UTC)
+        Thu, 19 Dec 2019 02:20:36 -0500
+Received: by mail-pj1-f67.google.com with SMTP id m13so2089406pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2019 23:20:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=kscgx3K8f9rm17CyfQ9LRYgvhZGZDTucQRqu6s3cXY8=;
+        b=wUlqPM9OwvDSBUIguTphIAJetJoP7jzTbb4OIqI84eMHS3lsLy9/5tzHTOqCO7QIBw
+         pJrS4iyWynSx5Lp6ccLVem+BqrD+MswvsMg3CoCWPsAo3Yu1MYcq4AOiYJmSYjzndq27
+         EG+ib26O/X9xpIikIHi8G8mpEGH4B/tgc8M5+/u+wlWdqZZDwPgd/fVxwmw5G/1Rz5lh
+         G4rXxgcmbAF4OVt44n+PpRTdze8k8ywufIRjdT5XJwifVPC1Zsp4Z2ZmBQsbaf0kIFj/
+         nCJDLd5WCeDxqpRrB0ZlG/AJsmk+VA2atptI2W8+sXubVQiLg7pK2rQHCDq/P/TR6TMK
+         nP6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=kscgx3K8f9rm17CyfQ9LRYgvhZGZDTucQRqu6s3cXY8=;
+        b=dYTnBS9MYDB64p1OTJdbZtsIpdmEDnQrgVfvZbCFndIuB3T+1hc8rX7y80wTDoa6Bu
+         FJTCocEdus9RA1WIJPgd7uibOSn4pRiOVPJhIr2CpP0AznyodqajWtkR1WXGUiKpYAcR
+         8mIJ/SVf9TxAgip2eJQVOgsCZ/+VbFtRxIL7Nptyuoxyy3jAv0TFL6Af6lbRx+zBY8CR
+         Tl6WuhrVjQjRD1ErIeKYvZ3pynvqxdTYwcCMv7n3v1WajqNzpiELyM2aWjUA2yKV0l8F
+         vIu8RRRW68DlKRy9z93WjoxwdoFXTcKE9YuXkuXR23JWo4VUu9ZdHVRTh3MHSQzcB9yQ
+         mI6Q==
+X-Gm-Message-State: APjAAAVHwYhye+gVzv6bZ9gpxg0eza/C55visgkhu591fiFV0Iv+L4Kl
+        UZokwfkECpWLr9rFR4TVHlL6mpvbK/Y=
+X-Google-Smtp-Source: APXvYqwZDaVVbLJc92e8Bk8x6mCLD0JaErRln4COlsW6/zlSXZ0qymPWOOzXN9QDcgGQYfvmGi86Nw==
+X-Received: by 2002:a17:902:7d84:: with SMTP id a4mr7303034plm.97.1576740034787;
+        Wed, 18 Dec 2019 23:20:34 -0800 (PST)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id q6sm6515119pfh.127.2019.12.18.23.20.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Dec 2019 23:20:34 -0800 (PST)
+Date:   Wed, 18 Dec 2019 23:20:31 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     pillair@codeaurora.org
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device
+ node
+Message-ID: <20191219072031.GH448416@yoga>
+References: <0101016ed018cde9-da3dc3e0-de6e-4b18-9add-bc6f88511ab2-000000@us-west-2.amazonses.com>
+ <20191211072053.GH3143381@builder>
+ <000b01d5b631$30ae26f0$920a74d0$@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 19 Dec 2019 15:12:25 +0800
-From:   cang@codeaurora.org
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, asutoshd@codeaurora.org,
-        nguyenb@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-scsi@vger.kernel.org, kernel-team@android.com,
-        saravanak@google.com, Mark Salyzyn <salyzyn@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 2/7] scsi: ufs-qcom: Add reset control support for host
- controller
-In-Reply-To: <20191218041200.GP2536@vkoul-mobl>
-References: <20191216190415.GL2536@vkoul-mobl>
- <CAOCk7NpAp+DHBp-owyKGgJFLRajfSQR6ff1XMmAj6A4nM3VnMQ@mail.gmail.com>
- <091562cbe7d88ca1c30638bc10197074@codeaurora.org>
- <20191217041342.GM2536@vkoul-mobl>
- <763d7b30593b31646f3c198c2be99671@codeaurora.org>
- <20191217092433.GN2536@vkoul-mobl>
- <fc8952a0eee5c010fe14e5f107d89e64@codeaurora.org>
- <20191217150852.GO2536@vkoul-mobl>
- <CAOCk7Np691Hau1FdJqWs1UY6jvEvYfzA6NnG9U--ZcRsuV5=Zw@mail.gmail.com>
- <75f7065d08f450c6cbb2b2662658ecaa@codeaurora.org>
- <20191218041200.GP2536@vkoul-mobl>
-Message-ID: <983c21bb5ad2d38e11c074528d8898b9@codeaurora.org>
-X-Sender: cang@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <000b01d5b631$30ae26f0$920a74d0$@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-12-18 12:12, Vinod Koul wrote:
-> On 18-12-19, 02:44, cang@codeaurora.org wrote:
+On Wed 18 Dec 21:57 PST 2019, pillair@codeaurora.org wrote:
+
+> I will raise the next patchset with the comments addressed.
 > 
->> Hi Vinod and Jeffrey,
->> 
->> Let me summary here, now the 1000000us timeout works for both 845 and 
->> 8998.
->> However, 8150 still fails.
->> 
->> > > The bigger question is why is the reset causing the timeout to be
->> > > increased for sdm845 and not to work in case of sm8150! (Vinod)
->> 
->> I would not say this patch increases the timeout. With this patch,
->> the PCS polling timeout, per my profiling, the PCS ready usually needs
->> less than 5000us, which is the actual time needed for PCS bit to be 
->> ready.
->> 
->> The reason why 1000us worked for you is because, w/o the patch, UFS 
->> PHY
->> registers are retained from pre-kernel stage (bootloader i.e.), the 
->> PCS
->> ready
->> bit was set to 1 in pre-kernel stage, so when kernel driver reads it, 
->> it
->> returns
->> 1, not even to be polled at all. It may seem "faster", but not the 
->> right
->> thing to do, because kernel stage may need different PHY settings than
->> pre-kernel stage, keeping the settings configured in pre-kernel stage 
->> is not
->> always right, so this patch is needed. And increasing 1000us to 
->> 1000000us
->> is the right thing to do, but not a hack.
->> 
->> As reg for the phy initialization timeout on 8150, I found there is
->> something
->> wrong with its settings in /drivers/phy/qualcomm/phy-qcom-qmp.c
->> 
->> static const struct qmp_phy_init_tbl sm8150_ufsphy_serdes_tbl[] = {
->> 	QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01),
->> 	QMP_PHY_INIT_CFG(QSERDES_V4_COM_SYSCLK_EN_SEL, 0xd9),
->> 
->> "QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01)" should NOT appear in 
->> the
->> serdes
->> table! I haven't check who made this change, but please have a try 
->> after
->> remove
->> this line from sm8150_ufsphy_serdes_tbl.
+> > -----Original Message-----
+> > From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Sent: Wednesday, December 11, 2019 12:51 PM
+> > To: Rakesh Pillai <pillair@codeaurora.org>
+> > Cc: devicetree@vger.kernel.org; linux-arm-msm@vger.kernel.org; linux-
+> > kernel@vger.kernel.org; linux-arm-kernel@lists.infradead.org
+> > Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module
+> > device node
+> > 
+> > On Wed 04 Dec 00:48 PST 2019, Rakesh Pillai wrote:
+> > 
+> > > Add device node for the ath10k SNOC platform driver probe
+> > > and add resources required for WCN3990 on sc7180 soc.
+> > >
+> > > Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+> > > ---
+> > > This change is dependent on the below set of changes
+> > > arm64: dts: sc7180: Add qupv3_0 and qupv3_1
+> > (https://lore.kernel.org/patchwork/patch/1150367/)
+> > 
+> > Why?
 > 
-> That is me :) Looks like I made an error while porting from downstream. 
-> I
-> did a quick check to remove this and it doesn't work yet, let me 
-> recheck
-> the settings again ...
+> The mentioned series of patchset brings the DTSI for sc7180.
+> Hence the addition of wifi node is dependent on this series
+> https://lore.kernel.org/patchwork/patch/1150367/
 > 
-> Thanks for your help!
 
-Hi Vinod,
+I see, this should all be settled now. Looking forward to v2.
 
-Indeed, you need to tweak your settings. I spent some time help you
-figure this out. Try below change and please let me know if it can
-resolve your problem.
+Thanks,
+Bjorn
 
-I would not say this is a regression caused by my patch, it is just
-my patch reveals something incorrect in the settings.
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c 
-b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index 8e642a6..0cc9044 100755
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -66,7 +66,7 @@
-  /* QPHY_V3_PCS_MISC_CLAMP_ENABLE register bits */
-  #define CLAMP_EN                               BIT(0) /* enables i/o 
-clamp_n */
-
--#define PHY_INIT_COMPLETE_TIMEOUT              1000
-+#define PHY_INIT_COMPLETE_TIMEOUT              1000000
-  #define POWER_DOWN_DELAY_US_MIN                        10
-  #define POWER_DOWN_DELAY_US_MAX                        11
-
-@@ -166,6 +166,7 @@ static const unsigned int 
-sdm845_ufsphy_regs_layout[] = {
-  };
-
-  static const unsigned int sm8150_ufsphy_regs_layout[] = {
-+       [QPHY_SW_RESET]                 = 0x08,
-         [QPHY_START_CTRL]               = 0x00,
-         [QPHY_PCS_READY_STATUS]         = 0x180,
-  };
-@@ -885,7 +886,6 @@ static const struct qmp_phy_init_tbl 
-msm8998_usb3_pcs_tbl[] = {
-  };
-
-  static const struct qmp_phy_init_tbl sm8150_ufsphy_serdes_tbl[] = {
--       QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01),
-         QMP_PHY_INIT_CFG(QSERDES_V4_COM_SYSCLK_EN_SEL, 0xd9),
-         QMP_PHY_INIT_CFG(QSERDES_V4_COM_HSCLK_SEL, 0x11),
-         QMP_PHY_INIT_CFG(QSERDES_V4_COM_HSCLK_HS_SWITCH_SEL, 0x00),
-@@ -1390,7 +1390,6 @@ static const struct qmp_phy_cfg sm8150_ufsphy_cfg 
-= {
-         .pwrdn_ctrl             = SW_PWRDN,
-
-         .is_dual_lane_phy       = true,
--       .no_pcs_sw_reset        = true,
-  };
-
-  static void qcom_qmp_phy_configure(void __iomem *base,
----
-
-Aside of the phy settings, your DT needs some modifications too,
-seems you copied most of them from sdm845.
-https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=for-next&id=3834a2e92229ef26d30de28acb698b2b23d3e397
-
-<--snip-->
-> +		ufs_mem_phy: phy@1d87000 {
-> +			compatible = "qcom,sm8150-qmp-ufs-phy";
-> +			reg = <0 0x01d87000 0 0x18c>;
-
-The size 0x18c is wrong, in the code you are even accessing registers
-whose offsets are beyond 0x18c, see
-
-#define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE1_MODE0	0x1ac
-#define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE2_MODE0	0x1b0
-#define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE1_MODE1	0x1b4
-#define QSERDES_V4_COM_BIN_VCOCAL_HSCLK_SEL		0x1bc
-#define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE2_MODE1	0x1b8
-
-FYI, the total size of serdes registers is 0x1c0.
-
-<--snip-->
-> +			ufs_mem_phy_lanes: lanes@1d87400 {
-> +				reg = <0 0x01d87400 0 0x108>,
-> +				      <0 0x01d87600 0 0x1e0>,
-> +				      <0 0x01d87c00 0 0x1dc>,
-
-Same as above, see
-
-#define QPHY_V4_MULTI_LANE_CTRL1			0x1e0
-
-FYI, the total size of PCS registers is 0x200
-
-> +				      <0 0x01d87800 0 0x108>,
-> +				      <0 0x01d87a00 0 0x1e0>;
-> +				#phy-cells = <0>;
-> +			};
-<--snip-->
+> 
+> > 
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  4 ++++
+> > >  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27
+> > +++++++++++++++++++++++++++
+> > >  2 files changed, 31 insertions(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > index 189254f..8a6a760 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > @@ -248,6 +248,10 @@
+> > >  	status = "okay";
+> > >  };
+> > >
+> > > +&wifi {
+> > > +	status = "okay";
+> > 
+> > Please conclude on the representation of the "skip-hyp-mem-assign" and
+> > add it here, rather than in a subsequent patch - which implies that this
+> > patch doesn't work on its own.
+> 
+> 
+> Sure, I will update the next patchset.
+> 
+> 
+> > 
+> > > +};
+> > > +
+> > >  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
+> > >
+> > >  &qup_i2c2_default {
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > > index 666e9b9..40c9971 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > > @@ -42,6 +42,12 @@
+> > >  			compatible = "qcom,cmd-db";
+> > >  			no-map;
+> > >  		};
+> > > +
+> > > +		wlan_fw_mem: wlan_fw_region@93900000 {
+> > 
+> > wlan_fw_mem: memory@93900000 {
+> > 
+> > > +			compatible = "removed-dma-pool";
+> > > +			no-map;
+> > > +			reg = <0 0x93900000 0 0x200000>;
+> > > +		};
+> > >  	};
+> > >
+> > >  	cpus {
+> > > @@ -1119,6 +1125,27 @@
+> > >  				#clock-cells = <1>;
+> > >  			};
+> > >  		};
+> > > +
+> > > +		wifi: wifi@18800000 {
+> > > +			status = "disabled";
+> > > +			compatible = "qcom,wcn3990-wifi";
+> > > +			reg = <0 0x18800000 0 0x800000>;
+> > > +			reg-names = "membase";
+> > > +			interrupts =
+> > > +				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0
+> > */ >,
+> > > +				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1
+> > */ >,
+> > > +				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2
+> > */ >,
+> > > +				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3
+> > */ >,
+> > > +				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4
+> > */ >,
+> > > +				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5
+> > */ >,
+> > > +				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6
+> > */ >,
+> > > +				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7
+> > */ >,
+> > > +				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8
+> > */ >,
+> > > +				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9
+> > */ >,
+> > > +				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10
+> > */>,
+> > > +				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11
+> > */>;
+> > > +			memory-region = <&wlan_fw_mem>;
+> > 
+> > No iommus in sc7180?
+> > 
+> > Regards,
+> > Bjorn
+> > 
+> > > +		};
+> > >  	};
+> > >
+> > >  	timer {
+> > > --
+> > > 2.7.4
+> > >
+> > >
+> > > _______________________________________________
+> > > linux-arm-kernel mailing list
+> > > linux-arm-kernel@lists.infradead.org
+> > > http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
