@@ -2,78 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5008812608C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 12:11:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 23C741261AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 13:07:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726695AbfLSLLM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 06:11:12 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:51066 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726698AbfLSLLM (ORCPT
+        id S1726757AbfLSMGz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 07:06:55 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:11906 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726736AbfLSMGx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 06:11:12 -0500
-Received: by mail-wm1-f65.google.com with SMTP id a5so5011933wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2019 03:11:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5Xc5XvWcEEycjOnD+EPG6sMgV+BpYwH+4ZWrv1cyfpw=;
-        b=TosF3EXn2hu9xqrdp8Xsd+n2oQJbGcJX3yeio9cZrfQ76GW9tAWpEY7FryfsOnlr4h
-         M5BJs3iJOBWHYuGk/fDR/pKx3kNOf+IHheXOy0IW2AHQPshclkpU5MlMYwPnTCkR0Kr8
-         eG9jhD/R1vPq2dgBnWM7vtKRQH1mN/ak+Qc70L/mMRUAYzWYS7rWplvOECf0G3sjYWHs
-         6AMzaCwyPQEJo+9GM8Bn3aqdxmnnUAYl397Wr8mi+9OzRTWM1v4ODan2luTjSqcbLOjT
-         p5MUXJ8iOjvFa7mDOXJksj2gk61KZCw2FAqNWef+VS4+6LpUf2RUTOh06YNozLbDD5Rk
-         mE9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=5Xc5XvWcEEycjOnD+EPG6sMgV+BpYwH+4ZWrv1cyfpw=;
-        b=efIKPMZ0uoC3IPZq1WyoBpyG1smoitIiS60nzAXRQjKX8A3QJQwY7/Krm8a82dsLC6
-         v9edkEKygloZAcU94u6STRvjM3W/XpJd17iAYteIV2YlV2ydWkyBLBsRtDX/GUgdg6r2
-         W0lzGdFjglqAIClx+c53n2qTL6O7sftb8P0/bNQ7/gSSWHGL5MVbeK0p9rT3kCS+J9sR
-         YU9PyvvXJd9i6yjcadPZuX7Oojhuz6HtsEygQdvilsr85kZy16Y4YgFZ5FRFBm1xk591
-         RfGQd8IeSSi6ygVle4zypHZ4UTCDdSB/re52ombUqyC1vNA0+XbtGoL2Gng9l9IQkF0v
-         vm6Q==
-X-Gm-Message-State: APjAAAUTVLiCjHUPpfPchz/sQQl7UDwapfqR5djgkilGyrBPYu2hslGa
-        oAOEF7nfOwxlPMclYTVAAoMp/1pSfNM=
-X-Google-Smtp-Source: APXvYqy3JYgxz0Mf9riMDxtaRhDbhfUewuJHxYKjM1zkamYu6acokMF69y9Qp0nohXAR304IbOAAyw==
-X-Received: by 2002:a7b:c346:: with SMTP id l6mr9324907wmj.100.1576753870114;
-        Thu, 19 Dec 2019 03:11:10 -0800 (PST)
-Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.googlemail.com with ESMTPSA id c17sm5993682wrr.87.2019.12.19.03.11.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Dec 2019 03:11:09 -0800 (PST)
-Subject: Re: [PATCH v2] nvmem: add QTI SDAM driver
-To:     Shyam Kumar Thella <sthella@codeaurora.org>
-Cc:     Anirudh Ghayal <aghayal@codeaurora.org>, agross@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <1576753570-23515-1-git-send-email-sthella@codeaurora.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <b6a6ce09-2af6-0c67-bb24-e5066d819897@linaro.org>
-Date:   Thu, 19 Dec 2019 11:11:08 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Thu, 19 Dec 2019 07:06:53 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1576757213; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=IF4vMvqiy9Q7KLJ8/f0lHi+0oxVzVOrufU/ebDNywnM=; b=eCR/BG9lfJZQhpiM4aJeR5u2gpgZXHxEyN59WDmBKncNR7iCY5rU44RVcZG6vJRi6MxQ6JWl
+ kU+VKyXSSp2H3gbsW4z3iNX1ADuDELHRgJUcotAJCMzQZP3qzmpncat1rodQtNIGfk/OA3OH
+ cF/Qk4oIkzgfSsf5aZzeZTPveFk=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5dfb67d7.7f533b9aa148-smtp-out-n01;
+ Thu, 19 Dec 2019 12:06:47 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8DA9AC4479D; Thu, 19 Dec 2019 12:06:46 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3CB0CC433CB;
+        Thu, 19 Dec 2019 12:06:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3CB0CC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, amit.kucheria@linaro.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH] arm64: dts: qcom: sm8150: Add cpufreq HW device node
+Date:   Thu, 19 Dec 2019 17:36:33 +0530
+Message-Id: <20191219120633.20723-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.22.1
 MIME-Version: 1.0
-In-Reply-To: <1576753570-23515-1-git-send-email-sthella@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add cpufreq HW device node to scale 4-Silver/3-Gold/1-Gold+ cores
+on SM8150 SoCs.
 
+Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+---
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-On 19/12/2019 11:06, Shyam Kumar Thella wrote:
-> +static const struct of_device_id sdam_match_table[] = {
-> +	{ .compatible = "qcom,spmi-sdam" },
-> +	{},
-> +};
-
-This patch can not be accepted without Device tree bindings documented.
-
---srini
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 694be3c001a68..bad77e539cb1d 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -45,6 +45,7 @@
+ 			reg = <0x0 0x0>;
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_0>;
++			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			L2_0: l2-cache {
+ 				compatible = "cache";
+ 				next-level-cache = <&L3_0>;
+@@ -60,6 +61,7 @@
+ 			reg = <0x0 0x100>;
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_100>;
++			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			L2_100: l2-cache {
+ 				compatible = "cache";
+ 				next-level-cache = <&L3_0>;
+@@ -73,6 +75,7 @@
+ 			reg = <0x0 0x200>;
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_200>;
++			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			L2_200: l2-cache {
+ 				compatible = "cache";
+ 				next-level-cache = <&L3_0>;
+@@ -85,6 +88,7 @@
+ 			reg = <0x0 0x300>;
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_300>;
++			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			L2_300: l2-cache {
+ 				compatible = "cache";
+ 				next-level-cache = <&L3_0>;
+@@ -97,6 +101,7 @@
+ 			reg = <0x0 0x400>;
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_400>;
++			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			L2_400: l2-cache {
+ 				compatible = "cache";
+ 				next-level-cache = <&L3_0>;
+@@ -109,6 +114,7 @@
+ 			reg = <0x0 0x500>;
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_500>;
++			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			L2_500: l2-cache {
+ 				compatible = "cache";
+ 				next-level-cache = <&L3_0>;
+@@ -121,6 +127,7 @@
+ 			reg = <0x0 0x600>;
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_600>;
++			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			L2_600: l2-cache {
+ 				compatible = "cache";
+ 				next-level-cache = <&L3_0>;
+@@ -133,6 +140,7 @@
+ 			reg = <0x0 0x700>;
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_700>;
++			qcom,freq-domain = <&cpufreq_hw 2>;
+ 			L2_700: l2-cache {
+ 				compatible = "cache";
+ 				next-level-cache = <&L3_0>;
+@@ -834,6 +842,19 @@
+ 				};
+ 			};
+ 		};
++
++		cpufreq_hw: cpufreq@18323000 {
++			compatible = "qcom,cpufreq-hw";
++			reg = <0 0x18323000 0 0x1400>, <0 0x18325800 0 0x1400>,
++			      <0 0x18327800 0 0x1400>;
++			reg-names = "freq-domain0", "freq-domain1",
++				    "freq-domain2";
++
++			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
++			clock-names = "xo", "alternate";
++
++			#freq-domain-cells = <1>;
++		};
+ 	};
+ 
+ 	timer {
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
