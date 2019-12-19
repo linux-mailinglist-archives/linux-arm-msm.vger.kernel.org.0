@@ -2,99 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CD61126528
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 15:48:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28671126539
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 15:52:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726701AbfLSOsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 09:48:51 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:45820 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726778AbfLSOsv (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 09:48:51 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1576766931; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=3zKPnWBvxLfobydpG1oWipP1FXmPrlABqmI/X79v9lQ=;
- b=sCqge6UeJOw3HZGXDPIJmhBxxBGUar5fZfjo5ydvT+32gX36m49bE7tRmJlt6IAEdrirH9Oe
- M/df4yXVjwjSRpGLuk91YiUx6O0gJmugX8iTKQm1f/VdnlCt/D6lbZAhnouDUKAi0JDioG/d
- qpHqR0WwUAEi3eV5weMl9WIFQb8=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5dfb8dd0.7fb376be70a0-smtp-out-n03;
- Thu, 19 Dec 2019 14:48:48 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6DD52C00A44; Thu, 19 Dec 2019 14:48:48 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1726778AbfLSOwN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 09:52:13 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60032 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726757AbfLSOwM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Dec 2019 09:52:12 -0500
+Received: from localhost (unknown [122.178.234.230])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E782CC5383A;
-        Thu, 19 Dec 2019 14:48:47 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2B66121D7D;
+        Thu, 19 Dec 2019 14:52:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1576767131;
+        bh=FCHQHL3L/UK6uaZ8WVrUOXc9X18q5rOgFQVpTjuknYw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=gMgluTEjYhz70bDTfkmZIMD0skjFVzgkaygNbOg3PDR4HAPTebm4D+4OJCUqx10TL
+         5zxRiCntZCiDxJ1Gs0wbT0yO39Zo7tSpmK4lrbEG5KW4MVuI0QcANj39ph5bLsrXam
+         841tBMInPqDhjUCcD7RnmK7UMjZoT+Cd3oMH+8hs=
+Date:   Thu, 19 Dec 2019 20:22:06 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Can Guo <cang@codeaurora.org>, asutoshd@codeaurora.org,
+        nguyenb@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-scsi@vger.kernel.org, kernel-team@android.com,
+        saravanak@google.com, Mark Salyzyn <salyzyn@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 2/7] scsi: ufs-qcom: Add reset control support for
+ host controller
+Message-ID: <20191219145206.GW2536@vkoul-mobl>
+References: <763d7b30593b31646f3c198c2be99671@codeaurora.org>
+ <20191217092433.GN2536@vkoul-mobl>
+ <fc8952a0eee5c010fe14e5f107d89e64@codeaurora.org>
+ <20191217150852.GO2536@vkoul-mobl>
+ <CAOCk7Np691Hau1FdJqWs1UY6jvEvYfzA6NnG9U--ZcRsuV5=Zw@mail.gmail.com>
+ <75f7065d08f450c6cbb2b2662658ecaa@codeaurora.org>
+ <20191218041200.GP2536@vkoul-mobl>
+ <983c21bb5ad2d38e11c074528d8898b9@codeaurora.org>
+ <20191219142145.GV2536@vkoul-mobl>
+ <CAOCk7NrKRXsTffNyQFt_tQmdNq7+SaH+kAJVk8AAPJWJjPxYYw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 19 Dec 2019 20:18:47 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, Borislav Petkov <bp@alien8.de>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Tony Luck <tony.luck@intel.com>,
-        James Morse <james.morse@arm.com>,
-        Robert Richter <rrichter@marvell.com>,
-        linux-edac <linux-edac@vger.kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        linux-kernel@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        Trilok Soni <tsoni@codeaurora.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>
-Subject: Re: [PATCH 1/2] dt-bindings: edac: Add DT bindings for Kryo EDAC
-In-Reply-To: <CAL_JsqL-uBGy5ekHUZAJB4L1QYoCpnOw-4QPpZraXnsZ49wZ6w@mail.gmail.com>
-References: <cover.1575529553.git.saiprakash.ranjan@codeaurora.org>
- <0101016ed57a3259-eee09e9e-e99a-40f1-ab1c-63e58a42615c-000000@us-west-2.amazonses.com>
- <20191218233714.GA30302@bogus>
- <7469b239edd4beed3e8fefdf02f10ada@codeaurora.org>
- <CAL_JsqL-uBGy5ekHUZAJB4L1QYoCpnOw-4QPpZraXnsZ49wZ6w@mail.gmail.com>
-Message-ID: <86b3a0735df320bc7808930f2bbd0d97@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOCk7NrKRXsTffNyQFt_tQmdNq7+SaH+kAJVk8AAPJWJjPxYYw@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-12-19 19:28, Rob Herring wrote:
->> > Is that your intent?
->> >
->> 
->> No, I want any combination of interrupts to be valid with atleast one
->> interrupt as mandatory.
->> I thought specifying minItems as 1 and maxItems as 4 will take care of
->> this,  am I doing something wrong?
+On 19-12-19, 07:25, Jeffrey Hugo wrote:
+> On Thu, Dec 19, 2019 at 7:21 AM Vinod Koul <vkoul@kernel.org> wrote:
+> >
+> > On 19-12-19, 15:12, cang@codeaurora.org wrote:
+> > > On 2019-12-18 12:12, Vinod Koul wrote:
+> > > > On 18-12-19, 02:44, cang@codeaurora.org wrote:
+> >
+> > >
+> > > Aside of the phy settings, your DT needs some modifications too,
+> > > seems you copied most of them from sdm845.
+> > > https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=for-next&id=3834a2e92229ef26d30de28acb698b2b23d3e397
+> > >
+> > > <--snip-->
+> > > > +           ufs_mem_phy: phy@1d87000 {
+> > > > +                   compatible = "qcom,sm8150-qmp-ufs-phy";
+> > > > +                   reg = <0 0x01d87000 0 0x18c>;
+> > >
+> > > The size 0x18c is wrong, in the code you are even accessing registers
+> > > whose offsets are beyond 0x18c, see
+> > >
+> > > #define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE1_MODE0     0x1ac
+> > > #define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE2_MODE0     0x1b0
+> > > #define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE1_MODE1     0x1b4
+> > > #define QSERDES_V4_COM_BIN_VCOCAL_HSCLK_SEL           0x1bc
+> > > #define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE2_MODE1     0x1b8
+> > >
+> > > FYI, the total size of serdes registers is 0x1c0.
+> >
+> > Yeah I will update it to 0x1c0
+> >
+> > >
+> > > <--snip-->
+> > > > +                   ufs_mem_phy_lanes: lanes@1d87400 {
+> > > > +                           reg = <0 0x01d87400 0 0x108>,
+> > > > +                                 <0 0x01d87600 0 0x1e0>,
+> > > > +                                 <0 0x01d87c00 0 0x1dc>,
+> > >
+> > > Same as above, see
+> > >
+> > > #define QPHY_V4_MULTI_LANE_CTRL1                      0x1e0
+> > >
+> > > FYI, the total size of PCS registers is 0x200
+> > >
+> > > > +                                 <0 0x01d87800 0 0x108>,
+> > > > +                                 <0 0x01d87a00 0 0x1e0>;
+> > > > +                           #phy-cells = <0>;
+> > > > +                   };
+> > > <--snip-->
+> >
+> > So I managed to fix it by configuring QPHY_SW_RESET in
+> > qcom_qmp_phy_com_init() before invoking the configuration. That makes it
+> > work for me. Will send patches shortly
 > 
-> Interrupts (really all properties) have a defined order in DT and an
-> 'items' list defines both the order and index. You'll need to use
-> oneOf and list out the possibilities. Stick to ones you actually need.
-> 
+> So, you are going to send some fixes to make sm8150 work.  We also
+> need the extended timeout for all platforms, yes?  Who is going to
+> send up the patch for the timeout?  All of this should be -rc material
+> since Can's change caused these issues to appear, and thus impact
+> users, no?
 
-Thanks, I will make the change in the next spin.
+yeah I have tested a timeout of 10ms and seems to look good for me on
+sm8150 and sdm845. I will be sending the patches in few minutes :) and
+yes the timeout should be marked to 5.5 fixes
 
--Sai
-
+Thanks
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+~Vinod
