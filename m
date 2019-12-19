@@ -2,170 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 78F5C12641A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 14:58:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C5E7126458
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 15:11:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726836AbfLSN6f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 08:58:35 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44810 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726712AbfLSN6f (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 08:58:35 -0500
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id EB73024680;
-        Thu, 19 Dec 2019 13:58:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576763914;
-        bh=JOfDuzbX5KhFQruw5/hk7NXJKA6KWbQ5U0uen+8uMe8=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=W/fJRZXBUvYkHq3JlwObr/7TxhyVP73UtkCQDHeP+pZ0z2sFRgmyKrlQRpaf9uD8O
-         jR8ZeleXC8Rgbf8v2xJT4CPTvh/cUiNjKj1UhTWbOHHGBu4aEJQwJF8vImJN1phNY6
-         exOXosUCscOy4yKa7VEWdiEgSdYqzmkhIc/Z2TIc=
-Received: by mail-qk1-f174.google.com with SMTP id z76so5046023qka.2;
-        Thu, 19 Dec 2019 05:58:33 -0800 (PST)
-X-Gm-Message-State: APjAAAWmTcCt7Tfqb7Av36vibksl2RcpNQpmRWVsAE59ReCj363Q4BgC
-        5PQZMcqhDXOnbxePZZcCBJKeCc7+WW0zQYuUrg==
-X-Google-Smtp-Source: APXvYqxIEdSdLGQ1r7BdWufTzQ/ecvo0rjriE1A6fphicM+PwzjpRWbhhJbCCHPqP1QOATmIWvV31zWPninmnAf8LbY=
-X-Received: by 2002:a37:a70b:: with SMTP id q11mr8042276qke.393.1576763912999;
- Thu, 19 Dec 2019 05:58:32 -0800 (PST)
-MIME-Version: 1.0
-References: <cover.1575529553.git.saiprakash.ranjan@codeaurora.org>
- <0101016ed57a3259-eee09e9e-e99a-40f1-ab1c-63e58a42615c-000000@us-west-2.amazonses.com>
- <20191218233714.GA30302@bogus> <7469b239edd4beed3e8fefdf02f10ada@codeaurora.org>
-In-Reply-To: <7469b239edd4beed3e8fefdf02f10ada@codeaurora.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Thu, 19 Dec 2019 07:58:21 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqL-uBGy5ekHUZAJB4L1QYoCpnOw-4QPpZraXnsZ49wZ6w@mail.gmail.com>
-Message-ID: <CAL_JsqL-uBGy5ekHUZAJB4L1QYoCpnOw-4QPpZraXnsZ49wZ6w@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: edac: Add DT bindings for Kryo EDAC
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, Borislav Petkov <bp@alien8.de>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Tony Luck <tony.luck@intel.com>,
-        James Morse <james.morse@arm.com>,
-        Robert Richter <rrichter@marvell.com>,
-        linux-edac <linux-edac@vger.kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
+        id S1726786AbfLSOLT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 09:11:19 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:37099 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726712AbfLSOLP (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Dec 2019 09:11:15 -0500
+Received: by mail-ed1-f68.google.com with SMTP id cy15so5005766edb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2019 06:11:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=clZzE5oWuHu58s8VOdHWBVy38e2LT2FNqa0IOiJ8Pno=;
+        b=n5WKHtOjKZAcEpXknaKrANkMjPc5I9UKtCBGQ78HA2khJ4nfDTYRJYEc2+fj3I1Fkn
+         ha25hcVjnIDI+wrc1oFeWcvd8eBNuapXSPBoqY0nKHI2V03hwHZ+Ay/jFSkkEO0kW0BY
+         NM4Ql8kso4wGnxO+V0PrRoGr9hO1a01H9GkjcfQT9QoLwVBLDtwQ3BuUjW6y9sAv8lfg
+         Syr9yRHqd5u7Kv6K8ZUFm1qm3zv1yySq8mPCo+epWPqtyIG/zDpvLIPKs6ntJSWfWhFI
+         fZiZASZTwE6EYJBxtv269hcaO52Mwo7k67Mkh1PtyRFg1Fdleszn9rB/L30T79sxc40C
+         cc1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=clZzE5oWuHu58s8VOdHWBVy38e2LT2FNqa0IOiJ8Pno=;
+        b=Ve/3BUDI2lR0KwJ8YxKbwuQZn2gbdoNv3vLlrUmLoparnlgiByWKZHAWSubuCwLOpF
+         jL/t1nG52W4S2ikgVJPOQq1Y4onJg6XQ4PrFcNQ+YVSRs0hcAoQ03rUwJMdc09b0HbZV
+         1F8yaZkxvldDH3acpBYG0uGHVWJm8VwQcB0lV6fip8eOGYqCy6CQMED2L9GREraClI0d
+         7M8/oPB1ODvFJK37oT9JpxYD6bB+U9CH9SrQAMlJ5/WtzGVg6rZaYXVzOVoYwPC1WbPM
+         zZUtcuvtZWXODn/gVRHa+tMH6lNRZFBPgK1ns9dWdta9zamwAHCbpQl+Q5ZL/qSiczgZ
+         1r+A==
+X-Gm-Message-State: APjAAAUC9Z/ISy4LCn2A/xAjnEpCSluKFW2v1lWcuj7ygnLVvFFnEZWH
+        53vdcRXYEJ3WvlOgeqoPZ8rmVg==
+X-Google-Smtp-Source: APXvYqxl9SNHmQvO1V2+yKIouleHiF6c6w+NSNZDRU8V+Hpd4Y0zEbiUkVrTKUgdQk/MjFnTiDxYXQ==
+X-Received: by 2002:a05:6402:1251:: with SMTP id l17mr9406658edw.54.1576764672969;
+        Thu, 19 Dec 2019 06:11:12 -0800 (PST)
+Received: from [192.168.27.209] ([37.157.136.193])
+        by smtp.googlemail.com with ESMTPSA id i9sm418056edl.34.2019.12.19.06.11.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Dec 2019 06:11:11 -0800 (PST)
+Subject: Re: [PATCH v2 06/12] dt-bindings: media: venus: Convert msm8916 to DT
+ schema
+To:     Rob Herring <robh@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        Trilok Soni <tsoni@codeaurora.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        dikshita@codeaurora.org
+References: <20191218132251.24161-1-stanimir.varbanov@linaro.org>
+ <20191218132251.24161-7-stanimir.varbanov@linaro.org>
+ <CAL_Jsq+1Z72J03tZa9T4DLzR7skFweV8Xe4vBd_QBUktVOekrA@mail.gmail.com>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <0d11ce8f-cd34-624f-e1be-0f533968adbd@linaro.org>
+Date:   Thu, 19 Dec 2019 16:11:10 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
+MIME-Version: 1.0
+In-Reply-To: <CAL_Jsq+1Z72J03tZa9T4DLzR7skFweV8Xe4vBd_QBUktVOekrA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 19, 2019 at 12:50 AM Sai Prakash Ranjan
-<saiprakash.ranjan@codeaurora.org> wrote:
->
-> Hi Rob,
->
-> On 2019-12-19 05:07, Rob Herring wrote:
-> > On Thu, Dec 05, 2019 at 09:53:05AM +0000, Sai Prakash Ranjan wrote:
-> >> This adds DT bindings for Kryo EDAC implemented with RAS
-> >> extensions on KRYO{3,4}XX CPU cores for reporting of cache
-> >> errors.
-> >>
-> >> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> >> ---
-> >>  .../bindings/edac/qcom-kryo-edac.yaml         | 67
-> >> +++++++++++++++++++
-> >>  1 file changed, 67 insertions(+)
-> >>  create mode 100644
-> >> Documentation/devicetree/bindings/edac/qcom-kryo-edac.yaml
-> >>
-> >> diff --git
-> >> a/Documentation/devicetree/bindings/edac/qcom-kryo-edac.yaml
-> >> b/Documentation/devicetree/bindings/edac/qcom-kryo-edac.yaml
-> >> new file mode 100644
-> >> index 000000000000..1a39429a73b4
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/edac/qcom-kryo-edac.yaml
-> >> @@ -0,0 +1,67 @@
-> >> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> >> +%YAML 1.2
-> >> +---
-> >> +$id: http://devicetree.org/schemas/edac/qcom-kryo-edac.yaml#
-> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> +
-> >> +title: Kryo Error Detection and Correction(EDAC)
-> >> +
-> >> +maintainers:
-> >> +  - Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> >> +
-> >> +description: |
-> >> +  Kryo EDAC is defined to describe on-chip error detection and
-> >> correction
-> >> +  for the Kryo CPU cores which implement RAS extensions. It will
-> >> report
-> >> +  all Single Bit Errors and Double Bit Errors found in L1/L2 caches
-> >> in
-> >> +  in two registers ERXSTATUS_EL1 and ERXMISC0_EL1. L3-SCU cache
-> >> errors
-> >> +  are reported in ERR1STATUS and ERR1MISC0 registers.
-> >> +    ERXSTATUS_EL1 - Selected Error Record Primary Status Register,
-> >> EL1
-> >> +    ERXMISC0_EL1 - Selected Error Record Miscellaneous Register 0,
-> >> EL1
-> >> +    ERR1STATUS - Error Record Primary Status Register
-> >> +    ERR1MISC0 - Error Record Miscellaneous Register 0
-> >> +  Current implementation of Kryo ECC(Error Correcting Code) mechanism
-> >> is
-> >> +  based on interrupts.
-> >> +
-> >> +properties:
-> >> +  compatible:
-> >> +    enum:
-> >> +      - qcom,kryo-edac
-> >> +
-> >> +  interrupts:
-> >> +    minItems: 1
-> >> +    maxItems: 4
-> >> +    items:
-> >> +      - description: l1-l2 cache faultirq interrupt
-> >> +      - description: l1-l2 cache errirq interrupt
-> >> +      - description: l3-scu cache errirq interrupt
-> >> +      - description: l3-scu cache faultirq interrupt
-> >> +
-> >> +  interrupt-names:
-> >> +    minItems: 1
-> >> +    maxItems: 4
-> >
-> > You are saying only these combinations are valid:
-> >
-> > l1-l2-faultirq
-> >
-> > l1-l2-faultirq
-> > l1-l2-errirq
-> >
-> > l1-l2-faultirq
-> > l1-l2-errirq
-> > l3-scu-errirq
-> >
-> > l1-l2-faultirq
-> > l1-l2-errirq
-> > l3-scu-errirq
-> > l3-scu-faultirq
-> >
-> > Is that your intent?
-> >
->
-> No, I want any combination of interrupts to be valid with atleast one
-> interrupt as mandatory.
-> I thought specifying minItems as 1 and maxItems as 4 will take care of
-> this,  am I doing something wrong?
+Hi Rob,
 
-Interrupts (really all properties) have a defined order in DT and an
-'items' list defines both the order and index. You'll need to use
-oneOf and list out the possibilities. Stick to ones you actually need.
+Thanks for the review!
 
-Rob
+On 12/19/19 12:51 AM, Rob Herring wrote:
+> On Wed, Dec 18, 2019 at 7:24 AM Stanimir Varbanov
+> <stanimir.varbanov@linaro.org> wrote:
+>>
+>> Convert qcom,msm8916-venus Venus binding to DT schema
+>>
+>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> ---
+>>  .../bindings/media/qcom,venus-msm8916.yaml    | 115 ++++++++++++++++++
+>>  1 file changed, 115 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/media/qcom,venus-msm8916.yaml
+> 
+> Make the filename match the compatible.
+> 
+>>
+>> diff --git a/Documentation/devicetree/bindings/media/qcom,venus-msm8916.yaml b/Documentation/devicetree/bindings/media/qcom,venus-msm8916.yaml
+>> new file mode 100644
+>> index 000000000000..f82a8d968202
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/media/qcom,venus-msm8916.yaml
+>> @@ -0,0 +1,115 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +
+>> +%YAML 1.2
+>> +---
+>> +$id: "http://devicetree.org/schemas/media/qcom,venus-msm8916.yaml#"
+>> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+>> +
+>> +title: Qualcomm Venus video encode and decode accelerators
+>> +
+>> +maintainers:
+>> +  - Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> +
+>> +description: |
+>> +  The Venus IP is a video encode and decode accelerator present
+>> +  on Qualcomm platforms
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,msm8916-venus
+> 
+> Not likely a 2nd compatible here?, so you can use 'const' instead.
+
+I don't expect more compatibles here. I split every compatible on
+separate .yaml file to make bindings clearer.
+
+> 
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  interrupts:
+>> +    maxItems: 1
+>> +
+>> +  power-domains:
+>> +    maxItems: 1
+>> +
+>> +  clocks:
+>> +    maxItems: 3
+>> +
+>> +  clock-names:
+>> +    maxItems: 3
+> 
+> Don't need this. Implied with the length of 'items'.
+> 
+>> +    items:
+>> +      - const: core
+>> +      - const: iface
+>> +      - const: bus
+>> +
+>> +  iommus:
+>> +    minItems: 1
+>> +    maxItems: 20
+>> +
+>> +  memory-region:
+>> +    maxItems: 1
+>> +
+>> +  video-decoder:
+>> +    type: object
+>> +
+>> +    properties:
+>> +      compatible:
+>> +        const: "venus-decoder"
+>> +
+>> +    required:
+>> +      - compatible
+> 
+>        additionalProperties: false
+> 
+>> +
+>> +  video-encoder:
+>> +    type: object
+>> +
+>> +    properties:
+>> +      compatible:
+>> +        const: "venus-encoder"
+>> +
+>> +    required:
+>> +      - compatible
+> 
+> Here too.
+
+I guess the above comments are valid for the the other DT schema
+conversions in this series? If so I'll correct them as well in next version.
+
+-- 
+regards,
+Stan
