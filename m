@@ -2,213 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 05EE6127037
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 23:03:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ACDA127145
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2019 00:07:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726963AbfLSWDS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 17:03:18 -0500
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:46703 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726866AbfLSWDR (ORCPT
+        id S1727169AbfLSXHs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 18:07:48 -0500
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:35978 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726818AbfLSXHs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 17:03:17 -0500
-Received: by mail-vs1-f68.google.com with SMTP id t12so4757486vso.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2019 14:03:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xGg/VPhjljPEVy0oiqQLSbznsgjjJxXVog0U+hn/ESU=;
-        b=joZKWf1bgg/jx0Kz2E85dVdv/+g9mz4KnfA/da0PI7njX4kfc6A7WxGZHdGvygjeMu
-         PKwReZgOihjo6JjJjDSA46biM2iDfKwWe1KOU5vznQSQzwj/+Pz0RmAP8kf3EyGKmR4x
-         u2iGLpz4CPnsW/9smhDMXJJYGTrOyOfzyyBglbxrMrIZp9onbgnkRlcoilGe67zIWR+r
-         1rUwqG4zCzTuJ+cg1OCuWVBsBT5FJOicQPk+8kVjx2P55RwrBpheKrJBTmh7eDzJwxSw
-         LupcdqxTI4+0csD+EHLvwC2b6eZyFSQuFAX3RScM4PccDgPLm+Nb3Otpc4fLMIGbR8+N
-         1xsA==
+        Thu, 19 Dec 2019 18:07:48 -0500
+Received: by mail-ot1-f67.google.com with SMTP id w1so9261060otg.3;
+        Thu, 19 Dec 2019 15:07:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xGg/VPhjljPEVy0oiqQLSbznsgjjJxXVog0U+hn/ESU=;
-        b=Lib1gxe+dRYiPwjdKLMN8C+kE69C1X2rJQVQ8EYRtxb9J/XZPmuGh/JiWDkH65Wrfn
-         PbWzuKMhwd9YhClX/ajb9Ho2hUzT7gCL6N4uA9wPPKspEAeQIMZkYAl5nzdTuKoEgQvI
-         MeHFJQUumhyvsNMWldjErXYG0EGrFLBcgNBisWR/IuKTuevAsYOqexqqbwijWM0m8dpp
-         HDzGYiVXOTOgaWMWZO6OmCmntUqebL5Ep6i8nl9OHrpfO1QzhUZ4VjUbE++Prxbo5aF8
-         SeOTgJrmiH7nKB4y7a5VPYgHL+eKJtMG241aXd8vdEtRt5hQQQUXARKF5MInfqL3l8s5
-         nflA==
-X-Gm-Message-State: APjAAAXYVKzVoCwFKajqwErwqdex/eORklgs4Owq0/angv5Pb3VYzJf7
-        093meWuSOlIn8KgY7Ug5QjZfFoe3/ZNfHrHEIxXLyg==
-X-Google-Smtp-Source: APXvYqyRX1pzAqviTPuOSBvVIlNW5JOH5lKka+Li4LQDMkaCXYVWnDzP2Pq7TaLzmcw8QKgibrbnbOZiNhJVtiWy+jo=
-X-Received: by 2002:a67:f499:: with SMTP id o25mr6341165vsn.165.1576792996509;
- Thu, 19 Dec 2019 14:03:16 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=DgX0NKioz1rOLIBSrzLogpmefAWeE3WIM8ZkXd4rq84=;
+        b=WvTmuBodTGIZtY1oFNFfJL0P6LAVRUMz2RXFVwdEzb3k0zNZprzumrcfEJLVlUj8yp
+         eJhAOgQANtKA3NE6nlsUmEB+npmJFyCodJNpc/aCoHP5CRqSW5jRiy8+GhR33bhqklxi
+         61NCAL6XVIiQqYPKPf2RnEut8DlioGfjSrrmaS+dNLvjjKGlwfz4+gkvhWQ31vlK4y83
+         53cDWoztNiU0D0wxq9unRi9FyVVG2u9EaknyiNb3IPBZQlwy5IxtLtScoijx6bilLBLV
+         6bVQbr2MsZiwDMCVNnXzPHc8RMGyUgzBa/zyCf39b5q5oKuqZYFC51o5UPQdn5kb8B1D
+         ocVQ==
+X-Gm-Message-State: APjAAAUHTprp+HyYz1W3FNwXBIrgXuCSt1GQbApXkedTvuLLYbbuo2Or
+        rJNMMu6QE0gaCLdcBdK7eg==
+X-Google-Smtp-Source: APXvYqwB9T3HzArMlvLUll2SoZeItk08mg/8cUPV/SIjXWZaF7FfZ7O50gyaF8wV0hnYcqYD0TrjJA==
+X-Received: by 2002:a9d:7c97:: with SMTP id q23mr11280615otn.253.1576796867866;
+        Thu, 19 Dec 2019 15:07:47 -0800 (PST)
+Received: from localhost (ip-184-205-174-147.ftwttx.spcsdns.net. [184.205.174.147])
+        by smtp.gmail.com with ESMTPSA id n25sm2528516oic.6.2019.12.19.15.07.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Dec 2019 15:07:47 -0800 (PST)
+Date:   Thu, 19 Dec 2019 17:07:45 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Rocky Liao <rjliao@codeaurora.org>
+Cc:     robh+dt@kernel.org, mark.rutland@arm.com, marcel@holtmann.org,
+        johan.hedberg@gmail.com, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bgodavar@codeaurora.org, Rocky Liao <rjliao@codeaurora.org>
+Subject: Re: [PATCH v1 2/2] dt-bindings: net: bluetooth: Add device tree
+ bindings for QCA6390
+Message-ID: <20191219230745.GA9366@bogus>
+References: <0101016ef8b923cf-ef36a521-9c4b-4360-842d-d641e0eaaf0e-000000@us-west-2.amazonses.com>
 MIME-Version: 1.0
-References: <20191211154343.29765-1-ulf.hansson@linaro.org>
- <20191211154343.29765-14-ulf.hansson@linaro.org> <20191219143427.GF20746@bogus>
- <CAPDyKFpPmtXkP6LSNWBbfyTJowjQXF39_4LN5YEcDtW1BzVw-g@mail.gmail.com> <20191219180629.GC21846@bogus>
-In-Reply-To: <20191219180629.GC21846@bogus>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 19 Dec 2019 23:02:40 +0100
-Message-ID: <CAPDyKFrtrkASV4d2+x+A2P=TMrnLGh4LK9nzNeqZCg71Hs2TEQ@mail.gmail.com>
-Subject: Re: [PATCH v4 13/14] cpuidle: psci: Add support for PM domains by
- using genpd
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0101016ef8b923cf-ef36a521-9c4b-4360-842d-d641e0eaaf0e-000000@us-west-2.amazonses.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 19 Dec 2019 at 19:06, Sudeep Holla <sudeep.holla@arm.com> wrote:
->
-> On Thu, Dec 19, 2019 at 04:48:39PM +0100, Ulf Hansson wrote:
-> > On Thu, 19 Dec 2019 at 15:34, Sudeep Holla <sudeep.holla@arm.com> wrote:
-> > >
-> > > On Wed, Dec 11, 2019 at 04:43:42PM +0100, Ulf Hansson wrote:
-> > > > When the hierarchical CPU topology layout is used in DT and the PSCI OSI
-> > > > mode is supported by the PSCI FW, let's initialize a corresponding PM
-> > > > domain topology by using genpd. This enables a CPU and a group of CPUs,
-> > > > when attached to the topology, to be power-managed accordingly.
-> > > >
-> > > > To trigger the attempt to initialize the genpd data structures let's use a
-> > > > subsys_initcall, which should be early enough to allow CPUs, but also other
-> > > > devices to be attached.
-> > > >
-> > > > The initialization consists of parsing the PSCI OF node for the topology
-> > > > and the "domain idle states" DT bindings. In case the idle states are
-> > > > compatible with "domain-idle-state", the initialized genpd becomes
-> > > > responsible of selecting an idle state for the PM domain, via assigning it
-> > > > a genpd governor.
-> > > >
-> > > > Note that, a successful initialization of the genpd data structures, is
-> > > > followed by a call to psci_set_osi_mode(), as to try to enable the OSI mode
-> > > > in the PSCI FW. In case this fails, we fall back into a degraded mode
-> > > > rather than bailing out and returning an error code.
-> > > >
-> > > > Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
-> > > > Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
-> > > > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> > > > ---
-> > > >
-> > > > Changes in v4:
-> > > >       - None.
-> > > >
-> > > > ---
-> > > >  drivers/cpuidle/cpuidle-psci-domain.c | 267 ++++++++++++++++++++++++++
-> > > >  drivers/cpuidle/cpuidle-psci.c        |   4 +-
-> > > >  drivers/cpuidle/cpuidle-psci.h        |   5 +
-> > > >  3 files changed, 274 insertions(+), 2 deletions(-)
-> > > >
-> > > > diff --git a/drivers/cpuidle/cpuidle-psci-domain.c b/drivers/cpuidle/cpuidle-psci-domain.c
-> > > > index 656ef3d59149..c2f94ba42222 100644
-> > > > --- a/drivers/cpuidle/cpuidle-psci-domain.c
-> > > > +++ b/drivers/cpuidle/cpuidle-psci-domain.c
-> > > > @@ -7,14 +7,281 @@
-> > > >   *
-> > > >   */
-> > > >
-> > > > +#define pr_fmt(fmt) "CPUidle PSCI: " fmt
-> > > > +
-> > > >  #include <linux/cpu.h>
-> > > >  #include <linux/device.h>
-> > > >  #include <linux/kernel.h>
-> > > >  #include <linux/pm_domain.h>
-> > > >  #include <linux/pm_runtime.h>
-> > > > +#include <linux/psci.h>
-> > > > +#include <linux/slab.h>
-> > > > +#include <linux/string.h>
-> > > >
-> > > >  #include "cpuidle-psci.h"
-> > > >
-> > > > +struct psci_pd_provider {
-> > > > +     struct list_head link;
-> > > > +     struct device_node *node;
-> > > > +};
-> > > > +
-> > > > +static LIST_HEAD(psci_pd_providers);
-> > > > +static bool osi_mode_enabled;
-> > > > +
-> > > > +static int psci_pd_power_off(struct generic_pm_domain *pd)
-> > > > +{
-> > > > +     struct genpd_power_state *state = &pd->states[pd->state_idx];
-> > > > +     u32 *pd_state;
-> > > > +
-> > > > +     /* If we have failed to enable OSI mode, then abort power off. */
-> > > > +     if (!osi_mode_enabled)
-> > > > +             return -EBUSY;
-> > > > +
-> > >
-> > > Why is above check needed ? Shouldn't we have disable/remove pd of
-> > > OSI is not enabled ?
-> >
-> > Well, failing to enable OSI should in practice not happen, while it
-> > theoretically it could.
-> >
->
-> I won't assume that. Since it's new and not tested yet, I prefer to assume
-> it can fail.
+On Thu, 12 Dec 2019 06:08:33 +0000, Rocky Liao wrote:
+> Add compatible string for the Qualcomm QCA6390 Bluetooth controller
+> 
+> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-Yes, I agree. Hence the degraded mode.
-
->
-> > My approach to this has been to fall back to use a "degraded mode",
-> > which seems quite common for these kind of situations. The degraded
-> > mode means, we are preventing domain states from being used.
-> >
->
-> But why can't we just fail registering or remove if already added.
-
-We can, but there are more problems with that than leaving this in a
-degraded mode, I think. See more below.
-
-> They are useless for "degraded mode" anyways. And it will ensure that
-> data->dev is NULL. Sorry now I see why you said it can be NULL but I
-> would rather not leave those unused genpd in place in case of error.
-
-data->dev would not be NULL in this case, because the
-dev_pm_domain_attach_by_name() which is called when we attach the CPU
-is going to return an error code, not NULL.
-
-That's because the connection is there in the DTB and thus it must
-fail, in this case it would be with -EPROBE_DEFER (waiting for a genpd
-provider to be registered).
-
-That would then lead to that the entire cpuidle-psci driver would fail
-to initiate/probe. In my opinion, I think it's better to fall back
-into a degraded mode, using all the idle states for the CPUs, but just
-preventing the cluster idle states.
-
-Just wanted to make this more clear for you to consider. I am happy to
-change in any way you suggest, but please confirm that you really want
-another behaviour than the degraded mode.
-
->
-> > More importantly, it also keeps the code registering the PM domains, a
-> > bit simpler.
-> >
->
-> I feel it is simpler other way around especially if I am testing and
-> seeing failures but I see genpd succeeding. That's confusing.
-
-There is an warning message printed if psci_set_osi_mode() fails,
-"failed to enable OSI mode", in psci_idle_init_domains().
-
-We could potentially add some more information to that message, that
-this also leads into using a "degraded mode". Would that be sufficient
-to satisfy your concerns?
-
-Kind regards
-Uffe
+Acked-by: Rob Herring <robh@kernel.org>
