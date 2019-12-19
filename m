@@ -2,530 +2,356 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 09DAC125EDD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 11:26:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C6B40125EEC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 11:29:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726699AbfLSK0d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 05:26:33 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:55361 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726633AbfLSK0c (ORCPT
+        id S1726622AbfLSK3b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 05:29:31 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:20860 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726633AbfLSK3b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 05:26:32 -0500
+        Thu, 19 Dec 2019 05:29:31 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1576751191; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: To:
- Subject: Sender; bh=coZa58DCykuzeXGhJVtD0sLP5wucNCnUk5TI8rakwPM=; b=Al+Xc5kiz6BXGYnsKgJSm06XlnFeZTgra+T1JfJ3Mq97leGyuGuX6z75lHKeXN7SN3PJE5HO
- D6IkeeZH0Fnxsh82VRWlJqztiBw7WyG6k0Lsf4dsS/7owofM6QxIaeSS1IemlnaBzNwH4hVM
- td59G/Up/9EJv0RKrkQpv+MNBGA=
-X-Mailgun-Sending-Ip: 104.130.122.25
+ s=smtp; t=1576751370; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=I9qdGoXyzJL5FK/NNe6J0jNkgxIYZtJ1rAN41woyFQs=;
+ b=hoiUkfjOklDa+C4iCMRMgj4IMM3mkZxvsGVYtWiubQcFj4voKVdN2IA+i/ZRhyqLcd6W4+R9
+ thG6IQnhHwftPVWkXXenIzx6TRnPVpYh6v231JDtogmDDKaWCoAoxnsszXtsVA9JeF7Dbvlk
+ /zrMt3IfzqBcW5jiCNxFIxVToLs=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5dfb5053.7f4b8f278960-smtp-out-n03;
- Thu, 19 Dec 2019 10:26:27 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5dfb5101.7f39eb5fb650-smtp-out-n03;
+ Thu, 19 Dec 2019 10:29:21 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4CBF8C348D1; Thu, 19 Dec 2019 10:26:26 +0000 (UTC)
+        id 09AE1C4A272; Thu, 19 Dec 2019 10:29:20 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.201.2.161] (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: sricharan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 69F35C348CC;
-        Thu, 19 Dec 2019 10:26:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 69F35C348CC
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sricharan@codeaurora.org
-Subject: Re: [PATCH 4/6] clk: qcom: Add ipq6018 Global Clock Controller
- support
-To:     Stephen Boyd <sboyd@kernel.org>, agross@kernel.org,
-        devicetree@vger.kernel.org, linus.walleij@linaro.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-soc@vger.kernel.org, robh+dt@kernel.org
-References: <1559755738-28643-1-git-send-email-sricharan@codeaurora.org>
- <1559755738-28643-5-git-send-email-sricharan@codeaurora.org>
- <20190610152205.1EC24207E0@mail.kernel.org>
-From:   Sricharan R <sricharan@codeaurora.org>
-Message-ID: <a0212a93-c790-1535-4531-3112e2fa27fb@codeaurora.org>
-Date:   Thu, 19 Dec 2019 15:56:18 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
+        (Authenticated sender: sthella)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EC411C4A26E;
+        Thu, 19 Dec 2019 10:29:18 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20190610152205.1EC24207E0@mail.kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Thu, 19 Dec 2019 15:59:18 +0530
+From:   sthella@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     srinivas.kandagatla@linaro.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] nvmem: add QTI SDAM driver
+In-Reply-To: <20191218061400.GV3143381@builder>
+References: <1576574432-9649-1-git-send-email-sthella@codeaurora.org>
+ <20191218061400.GV3143381@builder>
+Message-ID: <17c718c483db710b32b2dbbcf4637783@codeaurora.org>
+X-Sender: sthella@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
-  Sorry for the late response, started looking in to this again.
-
-On 6/10/2019 8:52 PM, Stephen Boyd wrote:
-> Quoting Sricharan R (2019-06-05 10:28:56)
->> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
->> index e1ff83c..e5fb091 100644
->> --- a/drivers/clk/qcom/Kconfig
->> +++ b/drivers/clk/qcom/Kconfig
->> @@ -120,6 +120,15 @@ config IPQ_GCC_8074
->>           i2c, USB, SD/eMMC, etc. Select this for the root clock
->>           of ipq8074.
->>  
->> +config IPQ_GCC_6018
->> +       tristate "IPQ6018 Global Clock Controller"
->> +       depends on COMMON_CLK_QCOM
+On 2019-12-18 11:44, Bjorn Andersson wrote:
+> On Tue 17 Dec 01:20 PST 2019, Shyam Kumar Thella wrote:
 > 
-> Not sure I commented on this, but this should be removed. The whole
-> thing is inside an if now.
+>> QTI SDAM driver allows PMIC peripherals to access the shared memory
+>> that is available on QTI PMICs.
+>> 
+>> Change-Id: I40005646ab1fbba9e0e4aa68e0a61cfbc7b51ba6
 > 
-
- ok, will change.
-
->> +       help
->> +         Support for global clock controller on ipq6018 devices.
->> +         Say Y if you want to use peripheral devices such as UART, SPI,
->> +         i2c, USB, SD/eMMC, etc. Select this for the root clock
->> +         of ipq6018.
->> +
->>  config MSM_GCC_8660
->>         tristate "MSM8660 Global Clock Controller"
->>         help
->> diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
+> No Change-Id upstream please.
+OK. I will remove it in next patch set.
+> 
+>> Signed-off-by: Shyam Kumar Thella <sthella@codeaurora.org>
+> [..]
+>> diff --git a/drivers/nvmem/qcom-spmi-sdam.c 
+>> b/drivers/nvmem/qcom-spmi-sdam.c
 >> new file mode 100644
->> index 0000000..9f4552b
+>> index 0000000..e80a446
 >> --- /dev/null
->> +++ b/drivers/clk/qcom/gcc-ipq6018.c
->> @@ -0,0 +1,5267 @@
->> +// SPDX-License-Identifier: GPL-2.0
+>> +++ b/drivers/nvmem/qcom-spmi-sdam.c
+>> @@ -0,0 +1,197 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
 >> +/*
->> + * Copyright (c) 2018, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2017 The Linux Foundation. All rights reserved.
 >> + */
 >> +
->> +#include <linux/kernel.h>
->> +#include <linux/err.h>
->> +#include <linux/platform_device.h>
+>> +#include <linux/device.h>
 >> +#include <linux/module.h>
 >> +#include <linux/of.h>
->> +#include <linux/of_device.h>
->> +#include <linux/clk-provider.h>
+>> +#include <linux/of_platform.h>
+>> +#include <linux/nvmem-provider.h>
 >> +#include <linux/regmap.h>
 >> +
->> +#include <linux/reset-controller.h>
->> +#include <dt-bindings/clock/qcom,gcc-ipq6018.h>
+>> +#define SDAM_MEM_START			0x40
+>> +#define REGISTER_MAP_ID			0x40
+>> +#define REGISTER_MAP_VERSION		0x41
+>> +#define SDAM_SIZE			0x44
+>> +#define SDAM_PBS_TRIG_SET		0xE5
+>> +#define SDAM_PBS_TRIG_CLR		0xE6
 >> +
->> +#include "common.h"
->> +#include "clk-regmap.h"
->> +#include "clk-pll.h"
->> +#include "clk-rcg.h"
->> +#include "clk-branch.h"
->> +#include "clk-alpha-pll.h"
->> +#include "clk-regmap-divider.h"
->> +#include "clk-regmap-mux.h"
->> +#include "reset.h"
->> +
->> +#define F(f, s, h, m, n) { (f), (s), (2 * (h) - 1), (m), (n) }
-> [...]
->> +
->> +static struct clk_alpha_pll gpll0_main = {
->> +       .offset = 0x21000,
->> +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
->> +       .clkr = {
->> +               .enable_reg = 0x0b000,
->> +               .enable_mask = BIT(0),
->> +               .hw.init = &(struct clk_init_data){
->> +                       .name = "gpll0_main",
->> +                       .parent_names = (const char *[]){
->> +                               "xo"
->> +                       },
->> +                       .num_parents = 1,
->> +                       .ops = &clk_alpha_pll_ops,
->> +                       .flags = CLK_IS_CRITICAL,
+>> +struct sdam_chip {
+>> +	struct platform_device		*pdev;
 > 
-> Can you add a comment on why this is critical?
+> As written right now, pdev is unused. But if you stash struct device *
+> here instead you can replace your pr_err() with dev_err() using this,
+> for better error messages.
 > 
-
- Need not be critical, will remove it here and in
- rest of the places as well.
-
->> +               },
->> +       },
+I will use dev_err messages in next patchset.
+>> +	struct regmap			*regmap;
+>> +	int				base;
+> 
+> This would look better as a unsigned int.
+OK. I will do it in next patch set.
+> 
+>> +	int				size;
+> 
+> Ditto, or perhaps even size_t.
+OK. I will do it.
+> 
 >> +};
 >> +
->> +static struct clk_fixed_factor gpll0_out_main_div2 = {
->> +       .mult = 1,
->> +       .div = 2,
->> +       .hw.init = &(struct clk_init_data){
->> +               .name = "gpll0_out_main_div2",
->> +               .parent_names = (const char *[]){
->> +                       "gpll0_main"
->> +               },
->> +               .num_parents = 1,
->> +               .ops = &clk_fixed_factor_ops,
->> +               .flags = CLK_SET_RATE_PARENT,
->> +       },
+>> +/* read only register offsets */
+>> +static const u8 sdam_ro_map[] = {
+>> +	REGISTER_MAP_ID,
+>> +	REGISTER_MAP_VERSION,
+>> +	SDAM_SIZE
 >> +};
 >> +
->> +static struct clk_alpha_pll_postdiv gpll0 = {
->> +       .offset = 0x21000,
->> +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
->> +       .width = 4,
->> +       .clkr.hw.init = &(struct clk_init_data){
->> +               .name = "gpll0",
->> +               .parent_names = (const char *[]){
->> +                       "gpll0_main"
->> +               },
->> +               .num_parents = 1,
->> +               .ops = &clk_alpha_pll_postdiv_ro_ops,
->> +               .flags = CLK_SET_RATE_PARENT,
->> +       },
+>> +static bool is_valid(struct sdam_chip *sdam, unsigned int offset, 
+>> size_t len)
+> 
+> Please do prefix this with "sdam_"
+OK. I will prefix is_valid and is_ro with "sdam_".
+> 
+>> +{
+>> +	int sdam_mem_end = SDAM_MEM_START + sdam->size - 1;
+>> +
+>> +	if (!len)
+>> +		return false;
+>> +
+>> +	if (offset >= SDAM_MEM_START && offset <= sdam_mem_end
+>> +				&& (offset + len - 1) <= sdam_mem_end)
+>> +		return true;
+>> +	else if ((offset == SDAM_PBS_TRIG_SET || offset == 
+>> SDAM_PBS_TRIG_CLR)
+>> +				&& (len == 1))
+>> +		return true;
+>> +
+>> +	return false;
+>> +}
+>> +
+>> +static bool is_ro(unsigned int offset, size_t len)
+> 
+> Ditto
+OK.
+> 
+>> +{
+>> +	int i;
+>> +
+>> +	for (i = 0; i < ARRAY_SIZE(sdam_ro_map); i++)
+>> +		if (offset <= sdam_ro_map[i] && (offset + len) > sdam_ro_map[i])
+>> +			return true;
+>> +
+>> +	return false;
+>> +}
+>> +
+>> +static int sdam_read(void *priv, unsigned int offset, void *val, 
+>> size_t bytes)
+>> +{
+>> +	struct sdam_chip *sdam = priv;
+>> +	int rc;
+>> +
+>> +	if (!is_valid(sdam, offset, bytes)) {
+>> +		pr_err("Invalid SDAM offset 0x%02x len=%zd\n", offset, bytes);
+> 
+> Use %#x instead of 0x%02x
+OK. Will do it in next patch set.
+> 
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	rc = regmap_bulk_read(sdam->regmap, sdam->base + offset, val, 
+>> bytes);
+>> +	if (rc < 0)
+>> +		pr_err("Failed to read SDAM offset 0x%02x len=%zd, rc=%d\n",
+>> +						offset, bytes, rc);
+>> +
+>> +	return rc;
+>> +}
+>> +
+>> +static int sdam_write(void *priv, unsigned int offset, void *val, 
+>> size_t bytes)
+>> +{
+>> +	struct sdam_chip *sdam = priv;
+>> +	int rc;
+>> +
+>> +	if (!is_valid(sdam, offset, bytes)) {
+>> +		pr_err("Invalid SDAM offset 0x%02x len=%zd\n", offset, bytes);
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	if (is_ro(offset, bytes)) {
+>> +		pr_err("Invalid write offset 0x%02x len=%zd\n", offset, bytes);
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	rc = regmap_bulk_write(sdam->regmap, sdam->base + offset, val, 
+>> bytes);
+>> +	if (rc < 0)
+>> +		pr_err("Failed to write SDAM offset 0x%02x len=%zd, rc=%d\n",
+>> +						offset, bytes, rc);
+>> +
+>> +	return rc;
+>> +}
+>> +
+>> +static int sdam_probe(struct platform_device *pdev)
+>> +{
+>> +	struct sdam_chip *sdam;
+>> +	struct nvmem_device *nvmem;
+>> +	struct nvmem_config *sdam_config;
+>> +	unsigned int val = 0;
+> 
+> No need to initialize this.
+OK. I will remove initialization in next patch set.
+> 
+>> +	int rc;
+>> +
+>> +	sdam = devm_kzalloc(&pdev->dev, sizeof(*sdam), GFP_KERNEL);
+>> +	if (!sdam)
+>> +		return -ENOMEM;
+>> +
+>> +	sdam_config = devm_kzalloc(&pdev->dev, sizeof(*sdam_config),
+>> +							GFP_KERNEL);
+> 
+> Can't this be included in struct sdam_chip, for a single allocation?
+OK. I will make this a member in struct sdam_chip and eliminate need for 
+dynamic allocation.
+> 
+>> +	if (!sdam_config)
+>> +		return -ENOMEM;
+>> +
+>> +	sdam->regmap = dev_get_regmap(pdev->dev.parent, NULL);
+>> +	if (!sdam->regmap) {
+>> +		pr_err("Failed to get regmap handle\n");
+> 
+> dev_err(&pdev->dev, ...);
+OK. I will change all pr_err()... to dev_err().
+> 
+>> +		return -ENXIO;
+>> +	}
+>> +
+>> +	rc = of_property_read_u32(pdev->dev.of_node, "reg", &sdam->base);
+> 
+> In other words, base must be u32.
+OK. This will be changed to u32 in next patchs et.
+> 
+>> +	if (rc < 0) {
+>> +		pr_err("Failed to get SDAM base, rc=%d\n", rc);
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	rc = regmap_read(sdam->regmap, sdam->base + SDAM_SIZE, &val);
+>> +	if (rc < 0) {
+>> +		pr_err("Failed to read SDAM_SIZE rc=%d\n", rc);
+>> +		return -EINVAL;
+>> +	}
+>> +	sdam->size = val * 32;
+>> +
+>> +	sdam_config->dev = &pdev->dev;
+>> +	sdam_config->name = "spmi_sdam";
+>> +	sdam_config->id = pdev->id;
+>> +	sdam_config->owner = THIS_MODULE,
+>> +	sdam_config->stride = 1;
+>> +	sdam_config->word_size = 1;
+>> +	sdam_config->reg_read = sdam_read;
+>> +	sdam_config->reg_write = sdam_write;
+>> +	sdam_config->priv = sdam;
+>> +
+>> +	nvmem = nvmem_register(sdam_config);
+>> +	if (IS_ERR(nvmem)) {
+>> +		pr_err("Failed to register SDAM nvmem device rc=%ld\n",
+>> +						PTR_ERR(nvmem));
+>> +		return -ENXIO;
+>> +	}
+>> +	platform_set_drvdata(pdev, nvmem);
+>> +
+>> +	pr_info("SDAM base=0x%04x size=%d registered successfully\n",
+>> +						sdam->base, sdam->size);
+> 
+> Please don't print notifications in the kernel log. You can possibly 
+> use
+> dev_dbg(). Or just look for devices in
+> /sys/bus/platform/drivers/qcom,spmi-sdam/
+OK. I would usedev_dbg() to serve the purpose.
+> 
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int sdam_remove(struct platform_device *pdev)
+> 
+> Instead of using nvmem_register(), use devm_nvmem_register() and just
+> omit the remote function completely - which also allows you to drop the
+> platform_set_drvdata() above.
+Yes. You are right. That will help omit remove and 
+platform_set_drvdata().
+> 
+>> +{
+>> +	struct nvmem_device *nvmem = platform_get_drvdata(pdev);
+>> +
+>> +	return nvmem_unregister(nvmem);
+>> +}
+>> +
+>> +static const struct of_device_id sdam_match_table[] = {
+>> +	{.compatible = "qcom,spmi-sdam"},
+> 
+> Please add a space after { and before }.
+OK. I will add spaces.
+> 
+>> +	{},
 >> +};
 >> +
->> +static struct clk_alpha_pll ubi32_pll_main = {
->> +       .offset = 0x25000,
->> +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_HUAYRA],
->> +       .flags = SUPPORTS_DYNAMIC_UPDATE,
->> +       .clkr = {
->> +               .enable_reg = 0x0b000,
->> +               .enable_mask = BIT(6),
->> +               .hw.init = &(struct clk_init_data){
->> +                       .name = "ubi32_pll_main",
->> +                       .parent_names = (const char *[]){
->> +                               "xo"
->> +                       },
->> +                       .num_parents = 1,
->> +                       .ops = &clk_alpha_pll_huayra_ops,
->> +               },
->> +       },
+>> +static struct platform_driver sdam_driver = {
+>> +	.driver = {
+>> +		.name = "qcom,spmi-sdam",
+>> +		.of_match_table = sdam_match_table,
+>> +	},
+>> +	.probe		= sdam_probe,
+>> +	.remove		= sdam_remove,
 >> +};
 >> +
->> +static struct clk_alpha_pll_postdiv ubi32_pll = {
->> +       .offset = 0x25000,
->> +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_HUAYRA],
->> +       .width = 2,
->> +       .clkr.hw.init = &(struct clk_init_data){
->> +               .name = "ubi32_pll",
->> +               .parent_names = (const char *[]){
->> +                       "ubi32_pll_main"
->> +               },
->> +               .num_parents = 1,
->> +               .ops = &clk_alpha_pll_postdiv_ro_ops,
->> +               .flags = CLK_SET_RATE_PARENT,
->> +       },
->> +};
+>> +static int __init sdam_init(void)
+>> +{
+>> +	return platform_driver_register(&sdam_driver);
+>> +}
+>> +subsys_initcall(sdam_init);
+> 
+> module_platform_driver(sdam_driver), unless you have some strong
+> arguments for why this needs to be subsys_initcall
+There are some critical sybsystems which depend on nvmem data. So I 
+would prefer using subsys_initcall().
+> 
+> Regards,
+> Bjorn
+> 
 >> +
->> +static struct clk_alpha_pll gpll6_main = {
->> +       .offset = 0x37000,
->> +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_BRAMMO],
->> +       .clkr = {
->> +               .enable_reg = 0x0b000,
->> +               .enable_mask = BIT(7),
->> +               .hw.init = &(struct clk_init_data){
->> +                       .name = "gpll6_main",
->> +                       .parent_names = (const char *[]){
->> +                               "xo"
->> +                       },
->> +                       .num_parents = 1,
->> +                       .ops = &clk_alpha_pll_ops,
->> +                       .flags = CLK_IS_CRITICAL,
-> 
-> Can you add a comment on why this is critical?
-> 
->> +               },
->> +       },
->> +};
+>> +static void __exit sdam_exit(void)
+>> +{
+>> +	return platform_driver_unregister(&sdam_driver);
+>> +}
+>> +module_exit(sdam_exit);
 >> +
->> +static struct clk_alpha_pll_postdiv gpll6 = {
->> +       .offset = 0x37000,
->> +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_BRAMMO],
->> +       .width = 2,
->> +       .clkr.hw.init = &(struct clk_init_data){
->> +               .name = "gpll6",
->> +               .parent_names = (const char *[]){
->> +                       "gpll6_main"
->> +               },
->> +               .num_parents = 1,
->> +               .ops = &clk_alpha_pll_postdiv_ro_ops,
->> +               .flags = CLK_SET_RATE_PARENT,
->> +       },
->> +};
->> +
->> +static struct clk_alpha_pll gpll4_main = {
->> +       .offset = 0x24000,
->> +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
->> +       .clkr = {
->> +               .enable_reg = 0x0b000,
->> +               .enable_mask = BIT(5),
->> +               .hw.init = &(struct clk_init_data){
->> +                       .name = "gpll4_main",
->> +                       .parent_names = (const char *[]){
->> +                               "xo"
->> +                       },
->> +                       .num_parents = 1,
->> +                       .ops = &clk_alpha_pll_ops,
->> +                       .flags = CLK_IS_CRITICAL,
-> 
-> Can you add a comment on why this is critical?
-> 
->> +               },
->> +       },
->> +};
->> +
->> +static struct clk_alpha_pll_postdiv gpll4 = {
->> +       .offset = 0x24000,
->> +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
->> +       .width = 4,
->> +       .clkr.hw.init = &(struct clk_init_data){
->> +               .name = "gpll4",
->> +               .parent_names = (const char *[]){
->> +                       "gpll4_main"
->> +               },
->> +               .num_parents = 1,
->> +               .ops = &clk_alpha_pll_postdiv_ro_ops,
->> +               .flags = CLK_SET_RATE_PARENT,
->> +       },
->> +};
->> +
->> +static const struct freq_tbl ftbl_pcnoc_bfdcd_clk_src[] = {
->> +       F(24000000, P_XO, 1, 0, 0),
->> +       F(50000000, P_GPLL0, 16, 0, 0),
->> +       F(100000000, P_GPLL0, 8, 0, 0),
->> +       { }
->> +};
->> +
->> +static struct clk_rcg2 pcnoc_bfdcd_clk_src = {
->> +       .cmd_rcgr = 0x27000,
->> +       .freq_tbl = ftbl_pcnoc_bfdcd_clk_src,
->> +       .hid_width = 5,
->> +       .parent_map = gcc_xo_gpll0_gpll0_out_main_div2_map,
->> +       .clkr.hw.init = &(struct clk_init_data){
->> +               .name = "pcnoc_bfdcd_clk_src",
->> +               .parent_names = gcc_xo_gpll0_gpll0_out_main_div2,
->> +               .num_parents = 3,
->> +               .ops = &clk_rcg2_ops,
->> +               .flags = CLK_IS_CRITICAL,
-> 
-> Can you add a comment on why this is critical?
-> 
->> +       },
->> +};
->> +
->> +static struct clk_fixed_factor pcnoc_clk_src = {
->> +       .mult = 1,
->> +       .div = 1,
->> +       .hw.init = &(struct clk_init_data){
->> +               .name = "pcnoc_clk_src",
->> +               .parent_names = (const char *[]){
->> +                       "pcnoc_bfdcd_clk_src"
->> +               },
->> +               .num_parents = 1,
->> +               .ops = &clk_fixed_factor_ops,
->> +               .flags = CLK_SET_RATE_PARENT,
->> +       },
->> +};
->> +
->> +static struct clk_alpha_pll gpll2_main = {
->> +       .offset = 0x4a000,
->> +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
->> +       .clkr = {
->> +               .enable_reg = 0x0b000,
->> +               .enable_mask = BIT(2),
->> +               .hw.init = &(struct clk_init_data){
->> +                       .name = "gpll2_main",
->> +                       .parent_names = (const char *[]){
->> +                               "xo"
->> +                       },
->> +                       .num_parents = 1,
->> +                       .ops = &clk_alpha_pll_ops,
->> +                       .flags = CLK_IS_CRITICAL,
-> 
-> Can you add a comment on why this is critical?
-> 
->> +               },
->> +       },
->> +};
->> +
-> [...]
->> +
->> +static struct clk_fixed_factor system_noc_clk_src = {
->> +       .mult = 1,
->> +       .div = 1,
->> +       .hw.init = &(struct clk_init_data){
->> +               .name = "system_noc_clk_src",
->> +               .parent_names = (const char *[]){
->> +                       "system_noc_bfdcd_clk_src"
->> +               },
->> +               .num_parents = 1,
->> +               .ops = &clk_fixed_factor_ops,
->> +               .flags = CLK_SET_RATE_PARENT,
->> +       },
->> +};
-> 
-> What is the point of these fixed factor 1/1 clks? Just to rename things?
-> Does it matter, or can we just specify system_noc_bfdcd_clk_src as the
-> parent and drop this intermediate clk?
-> 
-
-  ok, will remove it.
-
->> +
->> +static struct clk_branch gcc_sleep_clk_src = {
->> +       .halt_reg = 0x30000,
->> +       .clkr = {
->> +               .enable_reg = 0x30000,
->> +               .enable_mask = BIT(1),
->> +               .hw.init = &(struct clk_init_data){
->> +                       .name = "gcc_sleep_clk_src",
->> +                       .parent_names = (const char *[]){
->> +                               "sleep_clk"
->> +                       },
->> +                       .num_parents = 1,
->> +                       .ops = &clk_branch2_ops,
->> +                       .flags = CLK_IS_CRITICAL,
->> +               },
->> +       },
->> +};
->> +
-> [...]
->> +
->> +static struct clk_branch gcc_qdss_at_clk = {
->> +       .halt_reg = 0x29024,
->> +       .clkr = {
->> +               .enable_reg = 0x29024,
->> +               .enable_mask = BIT(0),
->> +               .hw.init = &(struct clk_init_data){
->> +                       .name = "gcc_qdss_at_clk",
->> +                       .parent_names = (const char *[]){
->> +                               "qdss_at_clk_src"
->> +                       },
->> +                       .num_parents = 1,
->> +                       .flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-> 
-> Can you add a comment on why this is critical?
-> 
->> +                       .ops = &clk_branch2_ops,
->> +               },
->> +       },
->> +};
->> +
->> +static struct clk_branch gcc_qdss_dap_clk = {
->> +       .halt_reg = 0x29084,
->> +       .clkr = {
->> +               .enable_reg = 0x29084,
->> +               .enable_mask = BIT(0),
->> +               .hw.init = &(struct clk_init_data){
->> +                       .name = "gcc_qdss_dap_clk",
->> +                       .parent_names = (const char *[]){
->> +                               "qdss_dap_sync_clk_src"
->> +                       },
->> +                       .num_parents = 1,
->> +                       .flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-> 
-> Can you add a comment on why this is critical?
-> 
->> +                       .ops = &clk_branch2_ops,
->> +               },
->> +       },
->> +};
->> +
->> +static struct clk_branch gcc_qpic_ahb_clk = {
->> +       .halt_reg = 0x57024,
->> +       .clkr = {
->> +               .enable_reg = 0x57024,
->> +               .enable_mask = BIT(0),
->> +               .hw.init = &(struct clk_init_data){
->> +                       .name = "gcc_qpic_ahb_clk",
->> +                       .parent_names = (const char *[]){
->> +                               "pcnoc_clk_src"
->> +                       },
->> +                       .num_parents = 1,
->> +                       .flags = CLK_SET_RATE_PARENT,
->> +                       .ops = &clk_branch2_ops,
->> +               },
->> +       },
->> +};
->> +
-> [...]
->> +static struct clk_branch gcc_dcc_clk = {
->> +       .halt_reg = 0x77004,
->> +       .clkr = {
->> +               .enable_reg = 0x77004,
->> +               .enable_mask = BIT(0),
->> +               .hw.init = &(struct clk_init_data){
->> +                       .name = "gcc_dcc_clk",
->> +                       .parent_names = (const char *[]){
->> +                               "pcnoc_clk_src"
->> +                       },
-> 
-> Can you use the new method of specifying clk parents here? That will
-> make this simpler.
-> 
-
- ok, will use it.
-
->> +                       .num_parents = 1,
->> +                       .flags = CLK_SET_RATE_PARENT,
->> +                       .ops = &clk_branch2_ops,
->> +               },
->> +       },
->> +};
->> +
->> +static const struct alpha_pll_config ubi32_pll_config = {
->> +       .l = 0x3e,
->> +       .alpha = 0x57,
->> +       .config_ctl_val = 0x200d6aa8,
->> +       .config_ctl_hi_val = 0x3c2,
->> +       .main_output_mask = BIT(0),
->> +       .aux_output_mask = BIT(1),
->> +       .pre_div_val = 0x0,
->> +       .pre_div_mask = BIT(12),
->> +       .post_div_val = 0x0,
->> +       .post_div_mask = GENMASK(9, 8),
->> +};
->> +
->> +static const struct alpha_pll_config nss_crypto_pll_config = {
->> +       .l = 0x32,
->> +       .alpha = 0x0,
->> +       .alpha_hi = 0x0,
->> +       .config_ctl_val = 0x4001055b,
->> +       .main_output_mask = BIT(0),
->> +       .pre_div_val = 0x0,
->> +       .pre_div_mask = GENMASK(14, 12),
->> +       .post_div_val = 0x1 << 8,
->> +       .post_div_mask = GENMASK(11, 8),
->> +       .vco_mask = GENMASK(21, 20),
->> +       .vco_val = 0x0,
->> +       .alpha_en_mask = BIT(24),
->> +};
->> +
->> +static struct clk_hw *gcc_ipq6018_hws[] = {
-> 
-> It would be nice to trim this down to a list of 0.
-> 
->> +       &gpll0_out_main_div2.hw,
->> +       &pcnoc_clk_src.hw,
->> +       &snoc_nssnoc_clk_src.hw,
->> +       &system_noc_clk_src.hw,
->> +       &gcc_xo_div4_clk_src.hw,
->> +       &ubi32_mem_noc_clk_src.hw,
->> +       &nss_ppe_cdiv_clk_src.hw,
->> +       &gpll6_out_main_div2.hw,
-> 
-> Why do we need this? Does anyone use it?
-> 
-
-   Yes, will remove the fixed factor 1/1 parents from this list.
-   But other div clks are still required.
-
-Regards,
- Sricharan
-    
-
--- 
-"QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+>> +MODULE_DESCRIPTION("QCOM SPMI SDAM driver");
+>> +MODULE_LICENSE("GPL v2");
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>>  a Linux Foundation Collaborative Project
