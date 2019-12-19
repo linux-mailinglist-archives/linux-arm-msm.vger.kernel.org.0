@@ -2,188 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C5E7126458
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 15:11:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB5B4126477
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 15:20:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726786AbfLSOLT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 09:11:19 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:37099 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726712AbfLSOLP (ORCPT
+        id S1726759AbfLSOUf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 09:20:35 -0500
+Received: from mail-io1-f67.google.com ([209.85.166.67]:42063 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726695AbfLSOUf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 09:11:15 -0500
-Received: by mail-ed1-f68.google.com with SMTP id cy15so5005766edb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2019 06:11:13 -0800 (PST)
+        Thu, 19 Dec 2019 09:20:35 -0500
+Received: by mail-io1-f67.google.com with SMTP id n11so4368981iom.9;
+        Thu, 19 Dec 2019 06:20:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=clZzE5oWuHu58s8VOdHWBVy38e2LT2FNqa0IOiJ8Pno=;
-        b=n5WKHtOjKZAcEpXknaKrANkMjPc5I9UKtCBGQ78HA2khJ4nfDTYRJYEc2+fj3I1Fkn
-         ha25hcVjnIDI+wrc1oFeWcvd8eBNuapXSPBoqY0nKHI2V03hwHZ+Ay/jFSkkEO0kW0BY
-         NM4Ql8kso4wGnxO+V0PrRoGr9hO1a01H9GkjcfQT9QoLwVBLDtwQ3BuUjW6y9sAv8lfg
-         Syr9yRHqd5u7Kv6K8ZUFm1qm3zv1yySq8mPCo+epWPqtyIG/zDpvLIPKs6ntJSWfWhFI
-         fZiZASZTwE6EYJBxtv269hcaO52Mwo7k67Mkh1PtyRFg1Fdleszn9rB/L30T79sxc40C
-         cc1w==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=d3uNqyau+uqHl1+nVlgL9fnHSgknMtxXHMZq1PGXbPI=;
+        b=fIjaEL+xy1liB8a19YiHcLE/YmTaQAcfoRDPTsFpSyJAWVR/R+GbGxWTkTlklsSPjX
+         Yu3FCBgbImKi2S9yWuq/Npy+Idoa147eGtNr5dCggAIUGBVk7rz0wkRkoqvV/BU15Clo
+         GOkz839U3L8RH6QMkA17wi+1ZGyFSpMmcZuNe1OmqmA/hLOkcCDBSCGGfk8C78vv+h3J
+         UiwvHtSeS3wvhRDLAiBbY4YzDVmZwFGFV3Cp6Nts75kM7OaYbn5fJQS9eDpGjbIP+/Nr
+         qiAi/fj7z/9aAFtIM+VhPKC7tMqGFjp4+IPHBCocWN/yTnJwqGvSNxQcbmtGQT/ieM/x
+         01Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=clZzE5oWuHu58s8VOdHWBVy38e2LT2FNqa0IOiJ8Pno=;
-        b=Ve/3BUDI2lR0KwJ8YxKbwuQZn2gbdoNv3vLlrUmLoparnlgiByWKZHAWSubuCwLOpF
-         jL/t1nG52W4S2ikgVJPOQq1Y4onJg6XQ4PrFcNQ+YVSRs0hcAoQ03rUwJMdc09b0HbZV
-         1F8yaZkxvldDH3acpBYG0uGHVWJm8VwQcB0lV6fip8eOGYqCy6CQMED2L9GREraClI0d
-         7M8/oPB1ODvFJK37oT9JpxYD6bB+U9CH9SrQAMlJ5/WtzGVg6rZaYXVzOVoYwPC1WbPM
-         zZUtcuvtZWXODn/gVRHa+tMH6lNRZFBPgK1ns9dWdta9zamwAHCbpQl+Q5ZL/qSiczgZ
-         1r+A==
-X-Gm-Message-State: APjAAAUC9Z/ISy4LCn2A/xAjnEpCSluKFW2v1lWcuj7ygnLVvFFnEZWH
-        53vdcRXYEJ3WvlOgeqoPZ8rmVg==
-X-Google-Smtp-Source: APXvYqxl9SNHmQvO1V2+yKIouleHiF6c6w+NSNZDRU8V+Hpd4Y0zEbiUkVrTKUgdQk/MjFnTiDxYXQ==
-X-Received: by 2002:a05:6402:1251:: with SMTP id l17mr9406658edw.54.1576764672969;
-        Thu, 19 Dec 2019 06:11:12 -0800 (PST)
-Received: from [192.168.27.209] ([37.157.136.193])
-        by smtp.googlemail.com with ESMTPSA id i9sm418056edl.34.2019.12.19.06.11.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Dec 2019 06:11:11 -0800 (PST)
-Subject: Re: [PATCH v2 06/12] dt-bindings: media: venus: Convert msm8916 to DT
- schema
-To:     Rob Herring <robh@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        dikshita@codeaurora.org
-References: <20191218132251.24161-1-stanimir.varbanov@linaro.org>
- <20191218132251.24161-7-stanimir.varbanov@linaro.org>
- <CAL_Jsq+1Z72J03tZa9T4DLzR7skFweV8Xe4vBd_QBUktVOekrA@mail.gmail.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <0d11ce8f-cd34-624f-e1be-0f533968adbd@linaro.org>
-Date:   Thu, 19 Dec 2019 16:11:10 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=d3uNqyau+uqHl1+nVlgL9fnHSgknMtxXHMZq1PGXbPI=;
+        b=qsTzIjSzpy3fiz8FNlJqS3Vd6TlT1Kfff1fwbpZ430wg7XoXbJ+drERvkmHo5gYN03
+         oDwT7cRV4WezTM8gZxkKWul8afSwwyTfRsYUZ19B2YyRirPQfbmAsqwwCYJILzElBE52
+         KUKkXIKf9a0QfaTp2rzTOwEOvWOU4UPRWsWn+AVTJiDDsIgKOTn5B2/K1GYen+4QJPa2
+         jSKPM2NoieSI5Hz6aNhPxhSO92vsjZgoaXDA3rEAdzNqX75Szi43Z74kVKBXZmxeof6f
+         J4dZbWHInceMhu70bFlGTxajTGUS5MyA6q7k5VV+wY8iUB44jwjAvdWg8zn9Yg79TlQ+
+         sd8g==
+X-Gm-Message-State: APjAAAXsnqoyqpR3qcY4UZwE5A/VgjIEN59v2cxWzHvl1jIXJcd/o75H
+        u3WPC9hC3OzLk5i8H5jtQTxUTSDrNIAtbBwAX8A=
+X-Google-Smtp-Source: APXvYqyse2tZmLbWeTJHu9jPZ4y7jNwi6OE18BMIORT8ZvbIy8VS+HkWhe05B83mbuQvzggj2mMbqfwpJ8aQ0JO88YY=
+X-Received: by 2002:a5d:9c4e:: with SMTP id 14mr6199922iof.166.1576765234271;
+ Thu, 19 Dec 2019 06:20:34 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAL_Jsq+1Z72J03tZa9T4DLzR7skFweV8Xe4vBd_QBUktVOekrA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20191217171205.5492-1-jeffrey.l.hugo@gmail.com> <20191219060020.573342146E@mail.kernel.org>
+In-Reply-To: <20191219060020.573342146E@mail.kernel.org>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Thu, 19 Dec 2019 07:20:23 -0700
+Message-ID: <CAOCk7NpZmH8XahFmcKXSGsbT2nrY7kuWftGW1Ss6NdkqGs08cA@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: Make gcc_gpu_cfg_ahb_clk critical
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+On Wed, Dec 18, 2019 at 11:00 PM Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> Quoting Jeffrey Hugo (2019-12-17 09:12:05)
+> > diff --git a/drivers/clk/qcom/gcc-msm8998.c b/drivers/clk/qcom/gcc-msm8998.c
+> > index df1d7056436c..26cc1458ce4a 100644
+> > --- a/drivers/clk/qcom/gcc-msm8998.c
+> > +++ b/drivers/clk/qcom/gcc-msm8998.c
+> > @@ -2044,6 +2044,7 @@ static struct clk_branch gcc_gpu_cfg_ahb_clk = {
+> >                 .hw.init = &(struct clk_init_data){
+> >                         .name = "gcc_gpu_cfg_ahb_clk",
+> >                         .ops = &clk_branch2_ops,
+> > +                       .flags = CLK_IS_CRITICAL, /* to access gpucc */
+>
+> Can we not do the thing that Bjorn did to turn on ahb clks with runtime
+> PM for clk controllers that need them? See 892df0191b29 ("clk: qcom: Add
+> QCS404 TuringCC").
+>
 
-Thanks for the review!
-
-On 12/19/19 12:51 AM, Rob Herring wrote:
-> On Wed, Dec 18, 2019 at 7:24 AM Stanimir Varbanov
-> <stanimir.varbanov@linaro.org> wrote:
->>
->> Convert qcom,msm8916-venus Venus binding to DT schema
->>
->> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> ---
->>  .../bindings/media/qcom,venus-msm8916.yaml    | 115 ++++++++++++++++++
->>  1 file changed, 115 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/media/qcom,venus-msm8916.yaml
-> 
-> Make the filename match the compatible.
-> 
->>
->> diff --git a/Documentation/devicetree/bindings/media/qcom,venus-msm8916.yaml b/Documentation/devicetree/bindings/media/qcom,venus-msm8916.yaml
->> new file mode 100644
->> index 000000000000..f82a8d968202
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/media/qcom,venus-msm8916.yaml
->> @@ -0,0 +1,115 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +
->> +%YAML 1.2
->> +---
->> +$id: "http://devicetree.org/schemas/media/qcom,venus-msm8916.yaml#"
->> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
->> +
->> +title: Qualcomm Venus video encode and decode accelerators
->> +
->> +maintainers:
->> +  - Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> +
->> +description: |
->> +  The Venus IP is a video encode and decode accelerator present
->> +  on Qualcomm platforms
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,msm8916-venus
-> 
-> Not likely a 2nd compatible here?, so you can use 'const' instead.
-
-I don't expect more compatibles here. I split every compatible on
-separate .yaml file to make bindings clearer.
-
-> 
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  interrupts:
->> +    maxItems: 1
->> +
->> +  power-domains:
->> +    maxItems: 1
->> +
->> +  clocks:
->> +    maxItems: 3
->> +
->> +  clock-names:
->> +    maxItems: 3
-> 
-> Don't need this. Implied with the length of 'items'.
-> 
->> +    items:
->> +      - const: core
->> +      - const: iface
->> +      - const: bus
->> +
->> +  iommus:
->> +    minItems: 1
->> +    maxItems: 20
->> +
->> +  memory-region:
->> +    maxItems: 1
->> +
->> +  video-decoder:
->> +    type: object
->> +
->> +    properties:
->> +      compatible:
->> +        const: "venus-decoder"
->> +
->> +    required:
->> +      - compatible
-> 
->        additionalProperties: false
-> 
->> +
->> +  video-encoder:
->> +    type: object
->> +
->> +    properties:
->> +      compatible:
->> +        const: "venus-encoder"
->> +
->> +    required:
->> +      - compatible
-> 
-> Here too.
-
-I guess the above comments are valid for the the other DT schema
-conversions in this series? If so I'll correct them as well in next version.
-
--- 
-regards,
-Stan
+Interesting.  I didn't think of that solution, nor was I aware of that
+change.  Let me have a look.  Thanks for the tip.
