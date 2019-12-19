@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A82571265C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 16:31:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 979401265CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 16:31:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726928AbfLSPbP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 10:31:15 -0500
-Received: from mail-il1-f193.google.com ([209.85.166.193]:45245 "EHLO
+        id S1726866AbfLSPbd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 10:31:33 -0500
+Received: from mail-il1-f193.google.com ([209.85.166.193]:37664 "EHLO
         mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726776AbfLSPbP (ORCPT
+        with ESMTP id S1726760AbfLSPbd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 10:31:15 -0500
-Received: by mail-il1-f193.google.com with SMTP id p8so5183246iln.12;
-        Thu, 19 Dec 2019 07:31:14 -0800 (PST)
+        Thu, 19 Dec 2019 10:31:33 -0500
+Received: by mail-il1-f193.google.com with SMTP id t8so5215618iln.4;
+        Thu, 19 Dec 2019 07:31:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=DVVdjtKv58x1Uc55az3ApF8gHKz/ZX1W12cqDT6rODs=;
-        b=JvT9zp0EpA5eXF3hdg5MJ34MDzA+56QpVQBg2UKGdtLFpGPxwriFh2JNeb5+8GCUUR
-         3FVZmZYkoygMpEeVdWhi+LE5dH6aPhNfKjJiY7Ff48bUcuLSCYO7QA5CEItHQ9dNkhCa
-         iZfQiR9+gKBigCx3Lllt5e07K7eHwUm1mVswmm8osg75KEQU7ptlwDA8b7RxcFh14OYD
-         PjyWrLlMmI0Gcz0dbMBMk5AFiBnFhIokefAuuaiDe5kjeuc6f8nb8TTQW/PGGMPJfPo4
-         8jrLLZQ0eY+xcDrCFidMz7XSIDV95ytpBSwO9pAltXnBOlp7Hv+aGzF62gSGaRgSi9oM
-         0EQw==
+        bh=UY5FQV8FyAQW6rl4nbXg4NF/KWQqHmtwQKPSH3d9DOo=;
+        b=tWgqgnpMimF23wrui/wvwnkZnRfmVScwK5ZZZMtM9bpVtjLOXbuv5wsC1CEiwnn2zg
+         qHjW11ihJF2HD4K2ov8w/DIbYKqO+EeuK47bQpELIpScG9G1ImpzNdy+qzdM6TYy4kXs
+         ALtHlwZxnBgzmq++ppDJhnO0jBM+k5WueYRg6L69VSKyV6UUKWNR3ViKRImo+UUaGdiM
+         XRkbO7COojRg5jsNEXI6Cn9FL3JXtU9uudcMtjWsgyumfFlan53na1EsFgv99uyHu68U
+         z6y5SOp6z4bWBGAv6KocWNxiI7tDKw4ToHtNxVHissfTWprniZFO0gpU1cuVnOYKHoR7
+         Aw0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=DVVdjtKv58x1Uc55az3ApF8gHKz/ZX1W12cqDT6rODs=;
-        b=iCjC96KGf51HJM5X8vqi4xgPT5cEQFvgWqxrBLtcXXs5fHDKJGP8SlOkvRtvfsdYHr
-         h5aOuZ66lMm3SFezuuGCWlOtJlezaWzKWG/upFO3AjV7yvCMwhp8jCHMyuxDdpOP3fFF
-         HgA78KrqKQjly7jnstjlXOn/nvTmFa4Th36DL7ERnFDqnFqiiRYzfP8wG+FD2UEsgPtJ
-         WfsGvc1IK6AeQu5Od+IoXaBgBwuSge7lDR7Zc47rFpnNLj9gbJ0x3KO4bt16TRQ6dPJH
-         bVPbf1ZCQKr69p3zArfaGKnxjUnZZM4M1kGRB+O7tkCy8lJ5ZVzA4x4mEKg2sfspRhh7
-         BXig==
-X-Gm-Message-State: APjAAAXnyHY3UFo9thJjrrDZdb36BNZLhXryMXgYCBbsuPCVAZqnqQyz
-        OohfnhJcWFwoxVEeFzFup10aSEw8Xwe48ONR/U8=
-X-Google-Smtp-Source: APXvYqxu56w/oZweN1AJFZaIqxBT7mc8D28YjI4wjWxWnEhn6CrcFRtowiwHA4gjbAu7VV8Nywl4FO9TWrdap2lBJv8=
-X-Received: by 2002:a92:465c:: with SMTP id t89mr7929451ila.263.1576769474440;
- Thu, 19 Dec 2019 07:31:14 -0800 (PST)
+        bh=UY5FQV8FyAQW6rl4nbXg4NF/KWQqHmtwQKPSH3d9DOo=;
+        b=LXRU+zJL9w1y/oA7nascN3MXjnqyEjlqf1jmPXIdHYvb2mqdgLI6KMOg963YWauscX
+         eiEeuSxGwxm0RuhQPK1aHRjh045UtRtPIQay2PPLasIzdrKW6dGoMCVSnVtSxJHQpnQt
+         dBSP6T0+cVWlUpA9OXSmXUFqE5SchxDcl7d7sXp9Kd2XEUL6npaVSunHPAoZTUwMJVEe
+         lRhT6XbuBd5nEzkGKf/n4LaJJGdZCoTdSQFV4TuWNp7fslKFMG8qDBaAS/k58u0iZyj0
+         ezy+/3Gm+eF0eP44DqlsLqZJ7bQWvEvB6a+e3sxGb0Lc+5swOGIE+gsUZ+y4FNjvEcXw
+         xEJw==
+X-Gm-Message-State: APjAAAWar9H0KhzvDSK7/ZnFziVMjuGXxtoSRqlyT8WisnTB3eaeY2YI
+        Wf7Fy6Kpsag+QOmkUA68OJiieYSKgczN+qynoiQ=
+X-Google-Smtp-Source: APXvYqz8vCJE5RXYrYgZwGLv3eEzGm4+0T/TuIuLvvoiu6M3OFpVHcFCtS6LFSDIlCpjffJ2pyHL0Q02XRxPxElQoeE=
+X-Received: by 2002:a92:2904:: with SMTP id l4mr7929611ilg.166.1576769492958;
+ Thu, 19 Dec 2019 07:31:32 -0800 (PST)
 MIME-Version: 1.0
-References: <20191219150433.2785427-1-vkoul@kernel.org> <20191219150433.2785427-4-vkoul@kernel.org>
-In-Reply-To: <20191219150433.2785427-4-vkoul@kernel.org>
+References: <20191219150433.2785427-1-vkoul@kernel.org> <20191219150433.2785427-5-vkoul@kernel.org>
+In-Reply-To: <20191219150433.2785427-5-vkoul@kernel.org>
 From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Thu, 19 Dec 2019 08:31:03 -0700
-Message-ID: <CAOCk7NqUdxCMnK0ZsjN1u7RfaW=z3ZHpsZ8Vk7+JKpsrjBPJJw@mail.gmail.com>
-Subject: Re: [PATCH 3/4] phy: qcom-qmp: Add optional SW reset
+Date:   Thu, 19 Dec 2019 08:31:21 -0700
+Message-ID: <CAOCk7NqJ4pEqdLbbQ7OpGUi_iCC0BTEVVFeAMfD007URnyz-PQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] phy: qcom-qmp: remove duplicate powerdown write
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
         MSM <linux-arm-msm@vger.kernel.org>,
@@ -62,60 +62,29 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Thu, Dec 19, 2019 at 8:05 AM Vinod Koul <vkoul@kernel.org> wrote:
 >
-> For V4 QMP UFS Phy, we need to assert reset bits, configure the phy and
-> then deassert it, so add optional has_sw_reset flag and use that to
-> configure the QPHY_SW_RESET register.
+> We already write to QPHY_POWER_DOWN_CONTROL in qcom_qmp_phy_com_init()
+> before invoking qcom_qmp_phy_configure() so remove the duplicate write.
 >
 > Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
 Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>  drivers/phy/qualcomm/phy-qcom-qmp.c | 1 -
+>  1 file changed, 1 deletion(-)
 >
 > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> index 06f971ca518e..80304b7cd895 100644
+> index 80304b7cd895..309ef15e46b0 100644
 > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
 > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> @@ -1023,6 +1023,9 @@ struct qmp_phy_cfg {
->
->         /* true, if PCS block has no separate SW_RESET register */
->         bool no_pcs_sw_reset;
-> +
-> +       /* true if sw reset needs to be invoked */
-> +       bool has_sw_reset;
+> @@ -885,7 +885,6 @@ static const struct qmp_phy_init_tbl msm8998_usb3_pcs_tbl[] = {
 >  };
 >
->  /**
-> @@ -1391,6 +1394,7 @@ static const struct qmp_phy_cfg sm8150_ufsphy_cfg = {
->
->         .is_dual_lane_phy       = true,
->         .no_pcs_sw_reset        = true,
-> +       .has_sw_reset           = true,
->  };
->
->  static void qcom_qmp_phy_configure(void __iomem *base,
-> @@ -1475,6 +1479,9 @@ static int qcom_qmp_phy_com_init(struct qmp_phy *qphy)
->                              SW_USB3PHY_RESET_MUX | SW_USB3PHY_RESET);
->         }
->
-> +       if (cfg->has_sw_reset)
-> +               qphy_setbits(serdes, cfg->regs[QPHY_SW_RESET], SW_RESET);
-> +
->         if (cfg->has_phy_com_ctrl)
->                 qphy_setbits(serdes, cfg->regs[QPHY_COM_POWER_DOWN_CONTROL],
->                              SW_PWRDN);
-> @@ -1651,6 +1658,9 @@ static int qcom_qmp_phy_enable(struct phy *phy)
->         if (cfg->has_phy_dp_com_ctrl)
->                 qphy_clrbits(dp_com, QPHY_V3_DP_COM_SW_RESET, SW_RESET);
->
-> +       if (cfg->has_sw_reset)
-> +               qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
-> +
->         /* start SerDes and Phy-Coding-Sublayer */
->         qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
->
+>  static const struct qmp_phy_init_tbl sm8150_ufsphy_serdes_tbl[] = {
+> -       QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01),
+>         QMP_PHY_INIT_CFG(QSERDES_V4_COM_SYSCLK_EN_SEL, 0xd9),
+>         QMP_PHY_INIT_CFG(QSERDES_V4_COM_HSCLK_SEL, 0x11),
+>         QMP_PHY_INIT_CFG(QSERDES_V4_COM_HSCLK_HS_SWITCH_SEL, 0x00),
 > --
 > 2.23.0
 >
