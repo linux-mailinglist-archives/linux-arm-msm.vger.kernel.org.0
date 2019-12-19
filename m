@@ -2,148 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F58F125BD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 08:07:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D1F4125BE7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 08:12:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726439AbfLSHHD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 02:07:03 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:45423 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726300AbfLSHHC (ORCPT
+        id S1726536AbfLSHM3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 02:12:29 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:46706 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726155AbfLSHM3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 02:07:02 -0500
-Received: by mail-pg1-f193.google.com with SMTP id b9so2597460pgk.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Dec 2019 23:07:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Fm+w6iomcjuXCL8fauWtHgK7waEj6ZumdluEW3weLEo=;
-        b=r3M3HqwWGDHXJkn+/B3N+HIx9K4alkicLq5wXf4pwfxInFuBgNoIrLLzH8GU+7rifv
-         ExT6eL7+5mQnp7eqwVEenErdKk2oI+kR4wv/UhIpVSWND3R7u/RHcy6QOcMxJ0EBAgcf
-         FQ4APK7Gb7mzk2wNVT/BhU+5cW5vm0CDW91MWBRAWspq2jGlfrwNpP/xh31AfzV7pnKo
-         kQ868nBQiwwk3dx4ZC1mwOMXLN8u8aRs3P4q/hrR7URj1Sl976Mm+k0lQNW9+HBb+oqZ
-         rNPYfrJkwd/vsPNFmrIinL3izYGRmGXPv7wI4Aj0+9wXSDXOd1lLZsnEfK2r7M3OJ6k3
-         dOpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Fm+w6iomcjuXCL8fauWtHgK7waEj6ZumdluEW3weLEo=;
-        b=jws0iL1dPIxNi26ksXmJGMwxIkMf4fhVe2PezWWl70vm4IqA7/L1IUCyUay2GHeJXT
-         avWsEMiZ1FCpRzP+uG5gghGamTUAfJ/KyDA+WxfrTvNZ/+tCeSdzS1HDRJ6VHxh0TUCx
-         Z27VGiFyG4IZTJPq0iiUnMn2SK3UvkQt+uzIcc8/K/zLujTzdijBXeesWvBr+MNrcUiO
-         oG/laTJDJQTS2qSmuQvWRuy4yzHZJ1DaTrHeXrPzV9ikrv7fwpVLKE2R3NUEQvBuPrwQ
-         7ccSHojZif5x2f0GqVz+n8ZMtRkCTc9NqERioDbL+AceCTb0OZWchwV9n1fRAx0OdTlf
-         NkHg==
-X-Gm-Message-State: APjAAAVfE9pdwuEqbZx+1IDAFS4CoYHTh+HMlC/gqH/m7B2QgPl3V+gx
-        hY0KID90HE0gop7++hNZpjyk3g==
-X-Google-Smtp-Source: APXvYqxUxu7IoSGnaMb1R6YodG3fNsxk/So/wu5Hx35rfBLQvcUPgZkuAWdrltM/xiI4H0ih+4erTQ==
-X-Received: by 2002:a65:5608:: with SMTP id l8mr7727226pgs.210.1576739221708;
-        Wed, 18 Dec 2019 23:07:01 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id r30sm2812990pfl.162.2019.12.18.23.07.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2019 23:07:01 -0800 (PST)
-Date:   Wed, 18 Dec 2019 23:06:58 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/2] phy: qcom-qmp: Add MSM8996 UFS QMP support
-Message-ID: <20191219070658.GG448416@yoga>
-References: <20191207202147.2314248-1-bjorn.andersson@linaro.org>
- <20191207202147.2314248-2-bjorn.andersson@linaro.org>
- <20191219042047.GT2536@vkoul-mobl>
+        Thu, 19 Dec 2019 02:12:29 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1576739548; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=p6F+HJf9pwTVCYkBLIDwl50rIboYlyyDoCq2S3Q3fjA=;
+ b=HKuq9hGl1ty67HQS65483tahWgw9CSmJSvuxa4+O7YGoenkG86/IPDUb478b1Og/eWgNeJWE
+ BXwmgpsdLUfAg0bOke/PJkXOrob8FriC4lBuiQb3fPtp9SDPwWa8wVMjXlpeo59sO8l1Vj4T
+ lAjBQoSluy8dmuMsL8RzGrBGRxE=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5dfb22da.7f8ab5a5d458-smtp-out-n01;
+ Thu, 19 Dec 2019 07:12:26 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B099FC63C6C; Thu, 19 Dec 2019 07:12:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: cang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6AB2DC494BC;
+        Thu, 19 Dec 2019 07:12:25 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191219042047.GT2536@vkoul-mobl>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 19 Dec 2019 15:12:25 +0800
+From:   cang@codeaurora.org
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, asutoshd@codeaurora.org,
+        nguyenb@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-scsi@vger.kernel.org, kernel-team@android.com,
+        saravanak@google.com, Mark Salyzyn <salyzyn@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 2/7] scsi: ufs-qcom: Add reset control support for host
+ controller
+In-Reply-To: <20191218041200.GP2536@vkoul-mobl>
+References: <20191216190415.GL2536@vkoul-mobl>
+ <CAOCk7NpAp+DHBp-owyKGgJFLRajfSQR6ff1XMmAj6A4nM3VnMQ@mail.gmail.com>
+ <091562cbe7d88ca1c30638bc10197074@codeaurora.org>
+ <20191217041342.GM2536@vkoul-mobl>
+ <763d7b30593b31646f3c198c2be99671@codeaurora.org>
+ <20191217092433.GN2536@vkoul-mobl>
+ <fc8952a0eee5c010fe14e5f107d89e64@codeaurora.org>
+ <20191217150852.GO2536@vkoul-mobl>
+ <CAOCk7Np691Hau1FdJqWs1UY6jvEvYfzA6NnG9U--ZcRsuV5=Zw@mail.gmail.com>
+ <75f7065d08f450c6cbb2b2662658ecaa@codeaurora.org>
+ <20191218041200.GP2536@vkoul-mobl>
+Message-ID: <983c21bb5ad2d38e11c074528d8898b9@codeaurora.org>
+X-Sender: cang@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 18 Dec 20:20 PST 2019, Vinod Koul wrote:
-
-> On 07-12-19, 12:21, Bjorn Andersson wrote:
-> > The support for the 14nm MSM8996 UFS PHY is currently handled by the
-> > UFS-specific 14nm QMP driver, due to the earlier need for additional
-> > operations beyond the standard PHY API.
-> > 
-> > Add support for this PHY to the common QMP driver, to allow us to remove
-> > the old driver.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >  .../devicetree/bindings/phy/qcom-qmp-phy.txt  |   5 +
-> >  drivers/phy/qualcomm/phy-qcom-qmp.c           | 106 ++++++++++++++++++
-> >  2 files changed, 111 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt b/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
-> > index eac9ad3cbbc8..5b99cf081817 100644
-> > --- a/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
-> > +++ b/Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
-> > @@ -8,6 +8,7 @@ Required properties:
-> >   - compatible: compatible list, contains:
-> >  	       "qcom,ipq8074-qmp-pcie-phy" for PCIe phy on IPQ8074
-> >  	       "qcom,msm8996-qmp-pcie-phy" for 14nm PCIe phy on msm8996,
-> > +	       "qcom,msm8996-qmp-ufs-phy" for 14nm UFS phy on msm8996,
-> >  	       "qcom,msm8996-qmp-usb3-phy" for 14nm USB3 phy on msm8996,
-> >  	       "qcom,msm8998-qmp-usb3-phy" for USB3 QMP V3 phy on msm8998,
-> >  	       "qcom,msm8998-qmp-ufs-phy" for UFS QMP phy on msm8998,
-> > @@ -44,6 +45,8 @@ Required properties:
-> >  		For "qcom,ipq8074-qmp-pcie-phy": no clocks are listed.
-> >  		For "qcom,msm8996-qmp-pcie-phy" must contain:
-> >  			"aux", "cfg_ahb", "ref".
-> > +		For "qcom,msm8996-qmp-ufs-phy" must contain:
-> > +			"ref".
-> >  		For "qcom,msm8996-qmp-usb3-phy" must contain:
-> >  			"aux", "cfg_ahb", "ref".
-> >  		For "qcom,msm8998-qmp-usb3-phy" must contain:
-> > @@ -72,6 +75,8 @@ Required properties:
-> >  			"phy", "common".
-> >  		For "qcom,msm8996-qmp-pcie-phy" must contain:
-> >  			"phy", "common", "cfg".
-> > +		For "qcom,msm8996-qmp-ufs-phy": must contain:
-> > +			"ufsphy".
-> >  		For "qcom,msm8996-qmp-usb3-phy" must contain
-> >  			"phy", "common".
-> >  		For "qcom,msm8998-qmp-usb3-phy" must contain
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > index a6b8fc5798e2..d81516c4d747 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > @@ -121,6 +121,11 @@ enum qphy_reg_layout {
-> >  	QPHY_PCS_LFPS_RXTERM_IRQ_STATUS,
-> >  };
-> >  
-> > +static const unsigned int msm8996_ufsphy_regs_layout[] = {
-> > +	[QPHY_START_CTRL]		= 0x00,
-> > +	[QPHY_PCS_READY_STATUS]		= 0x168,
-> > +};
-> > +
-> >  static const unsigned int pciephy_regs_layout[] = {
-> >  	[QPHY_COM_SW_RESET]		= 0x400,
-> >  	[QPHY_COM_POWER_DOWN_CONTROL]	= 0x404,
-> > @@ -330,6 +335,75 @@ static const struct qmp_phy_init_tbl msm8998_pcie_pcs_tbl[] = {
-> >  	QMP_PHY_INIT_CFG(QPHY_V3_PCS_SIGDET_CNTRL, 0x03),
-> >  };
-> >  
-> > +static const struct qmp_phy_init_tbl msm8996_ufs_serdes_tbl[] = {
-> > +	QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01),
+On 2019-12-18 12:12, Vinod Koul wrote:
+> On 18-12-19, 02:44, cang@codeaurora.org wrote:
 > 
-> Can you check this after adding the reset for ufs, I suspect you might
-> run into same issue as I am seeing on 8150, power down here does not
-> seem correct.
+>> Hi Vinod and Jeffrey,
+>> 
+>> Let me summary here, now the 1000000us timeout works for both 845 and 
+>> 8998.
+>> However, 8150 still fails.
+>> 
+>> > > The bigger question is why is the reset causing the timeout to be
+>> > > increased for sdm845 and not to work in case of sm8150! (Vinod)
+>> 
+>> I would not say this patch increases the timeout. With this patch,
+>> the PCS polling timeout, per my profiling, the PCS ready usually needs
+>> less than 5000us, which is the actual time needed for PCS bit to be 
+>> ready.
+>> 
+>> The reason why 1000us worked for you is because, w/o the patch, UFS 
+>> PHY
+>> registers are retained from pre-kernel stage (bootloader i.e.), the 
+>> PCS
+>> ready
+>> bit was set to 1 in pre-kernel stage, so when kernel driver reads it, 
+>> it
+>> returns
+>> 1, not even to be polled at all. It may seem "faster", but not the 
+>> right
+>> thing to do, because kernel stage may need different PHY settings than
+>> pre-kernel stage, keeping the settings configured in pre-kernel stage 
+>> is not
+>> always right, so this patch is needed. And increasing 1000us to 
+>> 1000000us
+>> is the right thing to do, but not a hack.
+>> 
+>> As reg for the phy initialization timeout on 8150, I found there is
+>> something
+>> wrong with its settings in /drivers/phy/qualcomm/phy-qcom-qmp.c
+>> 
+>> static const struct qmp_phy_init_tbl sm8150_ufsphy_serdes_tbl[] = {
+>> 	QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01),
+>> 	QMP_PHY_INIT_CFG(QSERDES_V4_COM_SYSCLK_EN_SEL, 0xd9),
+>> 
+>> "QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01)" should NOT appear in 
+>> the
+>> serdes
+>> table! I haven't check who made this change, but please have a try 
+>> after
+>> remove
+>> this line from sm8150_ufsphy_serdes_tbl.
 > 
+> That is me :) Looks like I made an error while porting from downstream. 
+> I
+> did a quick check to remove this and it doesn't work yet, let me 
+> recheck
+> the settings again ...
+> 
+> Thanks for your help!
 
-I'm not sure why we need to tickle POWER_DOWN here, but it's documented
-as such, done in the old driver and without it the PHY does not come up.
+Hi Vinod,
 
-Regards,
-Bjorn
+Indeed, you need to tweak your settings. I spent some time help you
+figure this out. Try below change and please let me know if it can
+resolve your problem.
+
+I would not say this is a regression caused by my patch, it is just
+my patch reveals something incorrect in the settings.
+
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c 
+b/drivers/phy/qualcomm/phy-qcom-qmp.c
+index 8e642a6..0cc9044 100755
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -66,7 +66,7 @@
+  /* QPHY_V3_PCS_MISC_CLAMP_ENABLE register bits */
+  #define CLAMP_EN                               BIT(0) /* enables i/o 
+clamp_n */
+
+-#define PHY_INIT_COMPLETE_TIMEOUT              1000
++#define PHY_INIT_COMPLETE_TIMEOUT              1000000
+  #define POWER_DOWN_DELAY_US_MIN                        10
+  #define POWER_DOWN_DELAY_US_MAX                        11
+
+@@ -166,6 +166,7 @@ static const unsigned int 
+sdm845_ufsphy_regs_layout[] = {
+  };
+
+  static const unsigned int sm8150_ufsphy_regs_layout[] = {
++       [QPHY_SW_RESET]                 = 0x08,
+         [QPHY_START_CTRL]               = 0x00,
+         [QPHY_PCS_READY_STATUS]         = 0x180,
+  };
+@@ -885,7 +886,6 @@ static const struct qmp_phy_init_tbl 
+msm8998_usb3_pcs_tbl[] = {
+  };
+
+  static const struct qmp_phy_init_tbl sm8150_ufsphy_serdes_tbl[] = {
+-       QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01),
+         QMP_PHY_INIT_CFG(QSERDES_V4_COM_SYSCLK_EN_SEL, 0xd9),
+         QMP_PHY_INIT_CFG(QSERDES_V4_COM_HSCLK_SEL, 0x11),
+         QMP_PHY_INIT_CFG(QSERDES_V4_COM_HSCLK_HS_SWITCH_SEL, 0x00),
+@@ -1390,7 +1390,6 @@ static const struct qmp_phy_cfg sm8150_ufsphy_cfg 
+= {
+         .pwrdn_ctrl             = SW_PWRDN,
+
+         .is_dual_lane_phy       = true,
+-       .no_pcs_sw_reset        = true,
+  };
+
+  static void qcom_qmp_phy_configure(void __iomem *base,
+---
+
+Aside of the phy settings, your DT needs some modifications too,
+seems you copied most of them from sdm845.
+https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=for-next&id=3834a2e92229ef26d30de28acb698b2b23d3e397
+
+<--snip-->
+> +		ufs_mem_phy: phy@1d87000 {
+> +			compatible = "qcom,sm8150-qmp-ufs-phy";
+> +			reg = <0 0x01d87000 0 0x18c>;
+
+The size 0x18c is wrong, in the code you are even accessing registers
+whose offsets are beyond 0x18c, see
+
+#define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE1_MODE0	0x1ac
+#define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE2_MODE0	0x1b0
+#define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE1_MODE1	0x1b4
+#define QSERDES_V4_COM_BIN_VCOCAL_HSCLK_SEL		0x1bc
+#define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE2_MODE1	0x1b8
+
+FYI, the total size of serdes registers is 0x1c0.
+
+<--snip-->
+> +			ufs_mem_phy_lanes: lanes@1d87400 {
+> +				reg = <0 0x01d87400 0 0x108>,
+> +				      <0 0x01d87600 0 0x1e0>,
+> +				      <0 0x01d87c00 0 0x1dc>,
+
+Same as above, see
+
+#define QPHY_V4_MULTI_LANE_CTRL1			0x1e0
+
+FYI, the total size of PCS registers is 0x200
+
+> +				      <0 0x01d87800 0 0x108>,
+> +				      <0 0x01d87a00 0 0x1e0>;
+> +				#phy-cells = <0>;
+> +			};
+<--snip-->
