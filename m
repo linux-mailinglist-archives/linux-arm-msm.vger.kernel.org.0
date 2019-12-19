@@ -2,58 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CDD96125AD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 06:36:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BB87125ADA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 06:45:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725987AbfLSFgH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 00:36:07 -0500
-Received: from mail.kernel.org ([198.145.29.99]:46592 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725817AbfLSFgG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 00:36:06 -0500
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1725821AbfLSFp0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 00:45:26 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:58293 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725996AbfLSFp0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Dec 2019 00:45:26 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1576734325; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=x6DO8XFiQIG79wBQeDvjsylUmPKRxCL8a0jiGOwzMNc=; b=ljh2nQ3hQLeGU7eQ+WKZ85rVqRV/VIjDEpVp2+zJY3ikN13C2871GK8C1QDZpUEt4whHSwHt
+ uqArnzgTe/IpeuDTFri+uzikvcpJ48vTp8JmRViv3VcytR2cMAUhuKCrIDbM5zQzdguNUOcc
+ ZuOzHfmar7ZxhwJpQW4MxcyebzU=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5dfb0e73.7f4943671730-smtp-out-n02;
+ Thu, 19 Dec 2019 05:45:23 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C5EC8C48B01; Thu, 19 Dec 2019 05:45:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id AD605222C2;
-        Thu, 19 Dec 2019 05:36:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576733765;
-        bh=SphPqeX+O5iIOIShcb3YDC1d5sRfJwLkxLogSjEcn9s=;
-        h=In-Reply-To:References:Cc:Subject:From:To:Date:From;
-        b=V8Prj0YDFwA75GBp1ddOn/96sqam6QW7/oUTjTSJoghdtDDWsH41RFHZrPJ2PRY+n
-         cY80UGmF/Q/285RTL7xc6xHh+0gUsPf5kQl29PbEIiroycpy9t7tnd+jp6ZKiCd/b5
-         hsh8IDVmBXgFwbEeOi/yE5G+AoK2mpyUz/sQ6vUY=
-Content-Type: text/plain; charset="utf-8"
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D5CA0C2BB93;
+        Thu, 19 Dec 2019 05:45:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D5CA0C2BB93
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org
+Cc:     ohad@wizery.com, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        p.zabel@pengutronix.de, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, agross@kernel.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v2 0/2] Add Modem support on SC7180 SoCs
+Date:   Thu, 19 Dec 2019 11:15:04 +0530
+Message-Id: <20191219054506.20565-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.22.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20191204120341.1.I9971817e83ee890d1096c43c5a6ce6ced53d5bd3@changeid>
-References: <20191204120341.1.I9971817e83ee890d1096c43c5a6ce6ced53d5bd3@changeid>
-Cc:     linux-arm-msm@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Matthias Kaehlcke <mka@chromium.org>
-Subject: Re: [PATCH] clk: qcom: gcc-sc7180: Fix setting flag for votable GDSCs
-From:   Stephen Boyd <sboyd@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>
-User-Agent: alot/0.8.1
-Date:   Wed, 18 Dec 2019 21:36:04 -0800
-Message-Id: <20191219053605.AD605222C2@mail.kernel.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Matthias Kaehlcke (2019-12-04 12:04:12)
-> Commit 17269568f7267 ("clk: qcom: Add Global Clock controller (GCC)
-> driver for SC7180") sets the VOTABLE flag in .pwrsts, but it needs
-> to be set in .flags, fix this.
->=20
-> Fixes: 17269568f7267 ("clk: qcom: Add Global Clock controller (GCC) drive=
-r for SC7180")
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
+This patch series adds support for booting the Modem Q6 DSP found in
+Qualcomm's SC7180 SoCs.
 
-Applied to clk-fixes
+V2:
+ * split the series according to SoC
+ * Duplicate code across q6v5proc_reset
+ * add Rob's 'Reviewed-by' tag
 
+Sibi Sankar (2):
+  dt-bindings: remoteproc: qcom: Add Q6V5 Modem PIL binding for SC7180
+  remoteproc: mss: q6v5-mss: Add modem support on SC7180
+
+ .../bindings/remoteproc/qcom,q6v5.txt         |  23 +-
+ drivers/remoteproc/qcom_q6v5_mss.c            | 199 +++++++++++++++++-
+ 2 files changed, 219 insertions(+), 3 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
