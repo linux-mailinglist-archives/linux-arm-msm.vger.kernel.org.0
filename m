@@ -2,106 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 577E5126E73
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 21:10:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 635B8126FBF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 22:34:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726964AbfLSUKq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 15:10:46 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:23659 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726869AbfLSUKq (ORCPT
+        id S1727328AbfLSVeN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 16:34:13 -0500
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:36942 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726963AbfLSVeN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 15:10:46 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1576786245; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: To: From: Date: Sender;
- bh=/5veci3IX8iV9Lr7OinmX1GSclV5/3Uya8rEs4CH8nA=; b=wtvPaOr2BZbEoJhvPSB+Ku5EK2t5bx2U1rTs7jINojbbbWMaaYJ6btR1cjS+SynOmH+9hHT0
- +R4I9rPys9+ygWDCvhlPKKsjWzyOBmPZ56wgQSQRUXdEkRI90YWaomKHAoH/L0mDXqtmxIno
- ns0dh+3Xez+M8U18/eQ8giHk8OQ=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5dfbd944.7f6b5df85c38-smtp-out-n03;
- Thu, 19 Dec 2019 20:10:44 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BE1E6C447A5; Thu, 19 Dec 2019 20:10:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5878AC447A0;
-        Thu, 19 Dec 2019 20:10:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5878AC447A0
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Thu, 19 Dec 2019 13:10:41 -0700
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Sharat Masetty <smasetty@codeaurora.org>,
-        freedreno@lists.freedesktop.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
-        iommu@lists.linux-foundation.org, saiprakash.ranjan@codeaurora.org
-Subject: Re: [PATCH 5/5] drm/msm/a6xx: Add support for using system cache(LLC)
-Message-ID: <20191219201041.GB23673@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Sharat Masetty <smasetty@codeaurora.org>,
-        freedreno@lists.freedesktop.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
-        iommu@lists.linux-foundation.org, saiprakash.ranjan@codeaurora.org
-References: <1576761286-20451-1-git-send-email-smasetty@codeaurora.org>
- <1576761286-20451-6-git-send-email-smasetty@codeaurora.org>
- <20191219195814.GA23673@jcrouse1-lnx.qualcomm.com>
+        Thu, 19 Dec 2019 16:34:13 -0500
+Received: by mail-vs1-f66.google.com with SMTP id x18so4734482vsq.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2019 13:34:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=H3N/xv20J8SmKyxdIBUydg+WJKi/j4HZgNUpU29Nvw8=;
+        b=X0VPbWMBHLoH26X8vqiNrC1USpNu0Y2WZmLwRzsHOK66WfFJl04w40Dti6rYzinylY
+         fXZSMt1pCfDVpMtlImlTr4cXx/NL+66inQnMeJfQ7C41oPVC+LmABn9csGSATMMHk8Dm
+         GwNvKX9uzPIiPYLApJa2RN8irdMoJN+B7tACJRUnwR7NPCg81Iil3daOTS1Vn7nRev4S
+         79WG4ajElSmdSZZc0mkaVuFMZfPKq+g6obXny69+emL12bOH20G/9n8JvaMDrV1JDCLS
+         uPWWLd/xZ0d+mx0W8CQVE2wXfUxyA1QOJgbm3vRfx4sfEJTaI2HY8/3b/oa7XHB0hu4X
+         +QfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=H3N/xv20J8SmKyxdIBUydg+WJKi/j4HZgNUpU29Nvw8=;
+        b=oQD1aS2bRXChtCr21ED/MpTHXEKBcQurGAlNc3CtW3lvVWENVJdXegoQW/4+kmNBdT
+         U6kYnIykDwpswjlJLD0mmFLDyr5o1EV8XzI2kw3qXe2IW9eGR6btAi5K4oKptHvb223V
+         p4B6ciXZOKgM9ICQX0TfEkGyf77NrTUF444U5B1sQJDVbAVC4UzRdssFqV0slVZPGFmG
+         fC6u1oKKAs2TJBp5SS+J2gw2XJdZ0DiWZufF+qCfVQZhv5S6uqYx/lSdGGlQAhU/A+Kq
+         uKnzfcavfS+HOI3soDzWci5Sn0gmZDvQDeiUdvu255Qa2yWj1hd8GmxiZ692ClgY8XbK
+         GjbA==
+X-Gm-Message-State: APjAAAUTdYiZTOtDufCZ8fisJ9iEcPEoLLUyyUhnCAKV3cDnv9LBm2dO
+        brAayt+8Zyk7eCSga/bTLbEd9GCuv8Elc9NWnSnmgw==
+X-Google-Smtp-Source: APXvYqy91D68qidVmpk52u0XOvDjbWwmOgNQsn1lbBUaMX69/fN9Y1E/vvMWovtfTFN9NKzSlbvgMxNRbcs9ab7FTqA=
+X-Received: by 2002:a67:f499:: with SMTP id o25mr6268154vsn.165.1576791251573;
+ Thu, 19 Dec 2019 13:34:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191219195814.GA23673@jcrouse1-lnx.qualcomm.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20191211154343.29765-1-ulf.hansson@linaro.org>
+ <20191211154343.29765-11-ulf.hansson@linaro.org> <20191219143154.GC20746@bogus>
+ <CAPDyKForeHdXPTocvAgFDbX+94UQWbJixUpKLY=0MbnF5XUAMA@mail.gmail.com> <20191219180133.GB21846@bogus>
+In-Reply-To: <20191219180133.GB21846@bogus>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 19 Dec 2019 22:33:34 +0100
+Message-ID: <CAPDyKFoM+SccsawV+0hHF+ku+P=5WuVaUCnKV=ftCgBRmRPseA@mail.gmail.com>
+Subject: Re: [PATCH v4 10/14] cpuidle: psci: Prepare to use OS initiated
+ suspend mode via PM domains
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 19, 2019 at 12:58:15PM -0700, Jordan Crouse wrote:
-> On Thu, Dec 19, 2019 at 06:44:46PM +0530, Sharat Masetty wrote:
+On Thu, 19 Dec 2019 at 19:01, Sudeep Holla <sudeep.holla@arm.com> wrote:
+>
+> On Thu, Dec 19, 2019 at 04:48:13PM +0100, Ulf Hansson wrote:
+> > On Thu, 19 Dec 2019 at 15:32, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> > >
+> > > On Wed, Dec 11, 2019 at 04:43:39PM +0100, Ulf Hansson wrote:
+> > > > The per CPU variable psci_power_state, contains an array of fixed values,
+> > > > which reflects the corresponding arm,psci-suspend-param parsed from DT, for
+> > > > each of the available CPU idle states.
+> > > >
+> > > > This isn't sufficient when using the hierarchical CPU topology in DT, in
+> > > > combination with having PSCI OS initiated (OSI) mode enabled. More
+> > > > precisely, in OSI mode, Linux is responsible of telling the PSCI FW what
+> > > > idle state the cluster (a group of CPUs) should enter, while in PSCI
+> > > > Platform Coordinated (PC) mode, each CPU independently votes for an idle
+> > > > state of the cluster.
+> > > >
+> > > > For this reason, introduce a per CPU variable called domain_state and
+> > > > implement two helper functions to read/write its value. Then let the
+> > > > domain_state take precedence over the regular selected state, when entering
+> > > > and idle state.
+> > > >
+> > > > To avoid executing the above OSI specific code in the ->enter() callback,
+> > > > while operating in the default PSCI Platform Coordinated mode, let's also
+> > > > add a new enter-function and use it for OSI.
+> > > >
+> > > > Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
+> > > > Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
+> > > > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> > > > ---
+> > > >
+> > > > Changes in v4:
+> > > >       - Rebased on top of earlier changes.
+> > > >       - Add comment about using the deepest cpuidle state for the domain state
+> > > >       selection.
+> > > >
+> > > > ---
+> > > >  drivers/cpuidle/cpuidle-psci.c | 56 ++++++++++++++++++++++++++++++----
+> > > >  1 file changed, 50 insertions(+), 6 deletions(-)
+> > > >
+> > > > diff --git a/drivers/cpuidle/cpuidle-psci.c b/drivers/cpuidle/cpuidle-psci.c
+> > > > index 6a87848be3c3..9600fe674a89 100644
+> > > > --- a/drivers/cpuidle/cpuidle-psci.c
+> > > > +++ b/drivers/cpuidle/cpuidle-psci.c
+> > > > @@ -29,14 +29,47 @@ struct psci_cpuidle_data {
+> > > >  };
+> > > >
+> > > >  static DEFINE_PER_CPU_READ_MOSTLY(struct psci_cpuidle_data, psci_cpuidle_data);
+> > > > +static DEFINE_PER_CPU(u32, domain_state);
+> > > > +
+> > >
+> > > [...]
+> > >
+> > > > +static int psci_enter_domain_idle_state(struct cpuidle_device *dev,
+> > > > +                                     struct cpuidle_driver *drv, int idx)
+> > > > +{
+> > > > +     struct psci_cpuidle_data *data = this_cpu_ptr(&psci_cpuidle_data);
+> > > > +     u32 *states = data->psci_states;
+> > >
+> > > Why can't the above be like this for consistency(see below in
+> > > psci_enter_idle_state) ?
+> >
+> > You have a point, however in patch11 I am adding this line below.
+> >
+> > struct device *pd_dev = data->dev;
+> >
+> > So I don't think it matters much, agree?
+> >
+>
+> Ah OK, looked odd as part of this patch, may be you could have moved
+> this change into that patch. Anyways fine as is.
 
+Okay, then I rather just keep it.
 
-<snip>
+>
+> > >
+> > >         u32 *states = __this_cpu_read(psci_cpuidle_data.psci_states);
+> > >
+> > > > +     u32 state = psci_get_domain_state();
+> > > > +     int ret;
+> > > > +
+> > > > +     if (!state)
+> > > > +             state = states[idx];
+> > > > +
+> > > > +     ret = psci_enter_state(idx, state);
+> > > > +
+> > > > +     /* Clear the domain state to start fresh when back from idle. */
+> > > > +     psci_set_domain_state(0);
+> > > > +     return ret;
+> > > > +}
+> > > >
+> > >
+> > > [...]
+> > >
+> > > > @@ -118,6 +152,15 @@ static int __init psci_dt_cpu_init_idle(struct device_node *cpu_node,
+> > > >                       ret = PTR_ERR(data->dev);
+> > > >                       goto free_mem;
+> > > >               }
+> > > > +
+> > > > +             /*
+> > > > +              * Using the deepest state for the CPU to trigger a potential
+> > > > +              * selection of a shared state for the domain, assumes the
+> > > > +              * domain states are all deeper states.
+> > > > +              */
+> > > > +             if (data->dev)
+> > >
+> > > You can drop this check as return on error above.
+> >
+> > Actually not, because if OSI is supported, there is still a
+> > possibility that the PM domain topology isn't used.
+> >
+>
+> And how do we support that ? I am missing something here.
+>
+> > This means ->data->dev is NULL.
+> >
+>
+> I don't get that.
 
-> > +
-> > +	/*
-> > +	 * CNTL1 is used to specify SCID for (CP, TP, VFD, CCU and UBWC
-> > +	 * FLAG cache) GPU blocks. This value will be passed along with
-> > +	 * the address for any memory transaction from GPU to identify
-> > +	 * the sub-cache for that transaction.
-> > +	 */
-> > +	if (!IS_ERR(llc->gpu_llc_slice)) {
-> > +		u32 gpu_scid = llcc_get_slice_id(llc->gpu_llc_slice);
-> > +		int i;
-> > +
-> > +		for (i = 0; i < A6XX_LLC_NUM_GPU_SCIDS; i++)
-> > +			llc->cntl1_regval |=
-> > +				gpu_scid << (A6XX_GPU_LLC_SCID_NUM_BITS * i);
-> 
-> As above, i'm not sure a loop is better than just:
-> 
-> gpu_scid &= 0x1f;
-> 
-> llc->cntl1_regval = (gpu_scid << 0) || (gpu_scid << 5) | (gpu_scid << 10)
->  | (gpu_scid << 15) | (gpu_scid << 20);
-> 
-> And I'm not even sure we need do this math here in the first place.
+This is quite similar to the existing limited support we have for OSI today.
 
-One more question - can you get a valid slice id before activation?
+We are using the idle states for the CPU, but ignoring the idle states
+for the cluster. If you just skip applying the DTS patch14, this is
+what happens.
 
-<snip>
+>
+> > >
+> > > > +                     drv->states[state_count - 1].enter =
+> > > > +                             psci_enter_domain_idle_state;
+> > >
+> > > I see the comment above but this potential blocks retention mode at
+> > > cluster level when all cpu enter retention at CPU level. I don't like
+> > > this assumption, but I don't have any better suggestion. Please add the
+> > > note that we can't enter RETENTION state at cluster/domain level when
+> > > all CPUs enter at CPU level.
+> >
+> > You are correct, but I think the comment a few lines above (agreed to
+> > be added by Lorenzo in the previous version) should be enough to
+> > explain that. No?
+> >
+> > The point is, this is only a problem if cluster RETENTION is
+> > considered to be a shallower state that CPU power off, for example.
+> >
+>
+> Yes, but give examples makes it better and helps people who may be
+> wondering why cluster retention state is not being entered. You can just
+> add to the above comment:
+>
+> "e.g. If CPU Retention is one of the shallower state, then we can't enter
+> any of the allowed domain states."
 
-Jordan
+Hmm, that it's not a correct statement I think, let me elaborate.
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+The problem is, that in case the CPU has both RETENTION and POWER OFF
+(deepest CPU state), we would only be able to reach a cluster state
+(RETENTION or POWER OFF) when the CPUs are in CPU POWER OFF (as that's
+the deepest).
+
+This is okay, as long as a cluster RETENTION state is considered being
+"deeper" than the CPU POWER OFF state. However, if that isn't the
+case, it means  the cluster RETENTION state is not considered in the
+correct order, but it's still possible to reach as a "domain state".
+
+I think this all is kind of summarized in the comment I agreed upon
+with Lorenzo, but if you still think there is some clarification
+needed I happy to add it.
+
+Makes sense?
+
+[...]
+
+Kind regards
+Uffe
