@@ -2,90 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EDF01265E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 16:40:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9DA612660F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 16:48:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726751AbfLSPkQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 10:40:16 -0500
-Received: from mail.kernel.org ([198.145.29.99]:41092 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726758AbfLSPkP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 10:40:15 -0500
-Received: from localhost (unknown [122.178.234.230])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2F0BD206EC;
-        Thu, 19 Dec 2019 15:40:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576770015;
-        bh=zjrNAQxSo9YIjVhVdnA6CeKJyfbiwv9WV9GOdbURvIU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=O2pKAqW6CchuZ3q3t13kjD7vXWpT9Q6DWWEcJ3b2q6OcukXchJLA4qjr06s04Alqb
-         ON8en1yzwROMzEYLJNLhf74MUqZdYay+NMrwsA+V2XV41AXRiEUwUdM5dpaneCJy0l
-         W3JENpfEH82BvmCyxPXvk9LlYL+509+eUYOKR65k=
-Date:   Thu, 19 Dec 2019 21:10:09 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, Can Guo <cang@codeaurora.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/4] phy: qcom-qmp: Increase the phy init timeout
-Message-ID: <20191219154009.GX2536@vkoul-mobl>
-References: <20191219150433.2785427-1-vkoul@kernel.org>
- <20191219150433.2785427-2-vkoul@kernel.org>
- <CAOCk7Npwkx0hJ6hom7yDbN_n-a=sybVi7A=unc4d3UPJysPr+Q@mail.gmail.com>
+        id S1726760AbfLSPsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 10:48:51 -0500
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:42849 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726789AbfLSPsv (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Dec 2019 10:48:51 -0500
+Received: by mail-vs1-f65.google.com with SMTP id b79so4041117vsd.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2019 07:48:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5KrItn2ITQ/gEkMRXxlNzrQRHLgN8opGe0fqAyinPUw=;
+        b=Krs4v/f5ShTU6CHF0kcrKOfGo7eQ1cC8sZXkheJgud6E52UN2qdbWjgA0hVxLVjNi4
+         xttVorIYYFJMhg9rmpwqL4mpm6Aqo00mzZOE6JLxvAXbUAeDIgU1c3NA06d//tiKU3vn
+         Eb4BIHzOYGuloyzyHiRfu5SyQDyR8LDTln9mFiThtfqvwx1PPJw4sTE0bwWci2+1arro
+         InOyFqt4TlI+xY/YlgF0mgG2UXZaVaEbPQwhf6xC6IqWOZuN887kPaTKQ9LJcuPPK7qy
+         vxGMrH2aIqaPPfLq+KwXgidpZovEQV8dbuSYsEu+zIoH1eB4Aw/E6/FJB4IsEGLNF5SK
+         cyeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5KrItn2ITQ/gEkMRXxlNzrQRHLgN8opGe0fqAyinPUw=;
+        b=n7OH4RuNm3jMNkZek6nLk0jCMSYyHODDp/ZNLneRv8Yk7KNr/pC9g2Ia4OW4Bf54fJ
+         TUSW4qD3teFbAMyo8qDfoFzdwVWUBf5vFqRZSDKtAHTNALr37ry3UXV5pNAMVVouZgv4
+         Zngyc9KHcTwQUFXbGO/q3XI/qHB1jf36moK6wm1aOkcpUy8cqGZwmAoxbMvvOiPJz1JV
+         Jf5RmoNih5+sWNZh5zql2EPjrFEZUVNjvRRpFOCnMyFI1gI9BnZvy5IMRH9I7YncNRUh
+         8Qb9sG0ww4j+6ZgUUFfENsDWKkQqPlSdvUpUjIaaQHYy8R6VO2zm6jP/Ao6NY13hL0GO
+         s8UQ==
+X-Gm-Message-State: APjAAAV1fuGIiVKF03TTqJy1/LQQ6NR+pCnPRGiFvClxJdb7BTATH86u
+        aH2eQI4jaZlOZv4e0L8V+QxjHn9PovXu13gYsUIS8w==
+X-Google-Smtp-Source: APXvYqxqo21q1MMNfYKhRJXzlWwvyuU59L2d1Xb7zAa7BXcxGpN1Fniu6C6xLfMTbN70e+rP5ASWf+q3jTb16FT4FAA=
+X-Received: by 2002:a67:b649:: with SMTP id e9mr5500898vsm.34.1576770529749;
+ Thu, 19 Dec 2019 07:48:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOCk7Npwkx0hJ6hom7yDbN_n-a=sybVi7A=unc4d3UPJysPr+Q@mail.gmail.com>
+References: <20191211154343.29765-1-ulf.hansson@linaro.org>
+ <20191211154343.29765-11-ulf.hansson@linaro.org> <20191219143154.GC20746@bogus>
+In-Reply-To: <20191219143154.GC20746@bogus>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 19 Dec 2019 16:48:13 +0100
+Message-ID: <CAPDyKForeHdXPTocvAgFDbX+94UQWbJixUpKLY=0MbnF5XUAMA@mail.gmail.com>
+Subject: Re: [PATCH v4 10/14] cpuidle: psci: Prepare to use OS initiated
+ suspend mode via PM domains
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Lina Iyer <lina.iyer@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19-12-19, 08:29, Jeffrey Hugo wrote:
-> On Thu, Dec 19, 2019 at 8:04 AM Vinod Koul <vkoul@kernel.org> wrote:
+On Thu, 19 Dec 2019 at 15:32, Sudeep Holla <sudeep.holla@arm.com> wrote:
+>
+> On Wed, Dec 11, 2019 at 04:43:39PM +0100, Ulf Hansson wrote:
+> > The per CPU variable psci_power_state, contains an array of fixed values,
+> > which reflects the corresponding arm,psci-suspend-param parsed from DT, for
+> > each of the available CPU idle states.
 > >
-> > If we do full reset of the phy, it seems to take a couple of ms to come
-> > up on my system so increase the timeout to 10ms.
+> > This isn't sufficient when using the hierarchical CPU topology in DT, in
+> > combination with having PSCI OS initiated (OSI) mode enabled. More
+> > precisely, in OSI mode, Linux is responsible of telling the PSCI FW what
+> > idle state the cluster (a group of CPUs) should enter, while in PSCI
+> > Platform Coordinated (PC) mode, each CPU independently votes for an idle
+> > state of the cluster.
 > >
-> > This was found by full reset addition by commit 870b1279c7a0
-> > ("scsi: ufs-qcom: Add reset control support for host controller") and
-> > fixes the regression to platforms by this commit.
+> > For this reason, introduce a per CPU variable called domain_state and
+> > implement two helper functions to read/write its value. Then let the
+> > domain_state take precedence over the regular selected state, when entering
+> > and idle state.
 > >
-> > Suggested-by: Can Guo <cang@codeaurora.org>
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> 
-> Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> Tested-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> 
-> Tested on the Lenovo Miix 630 laptop (a msm8998 based system).  This
-> addresses the regression.
-
-Thanks Jeff for quick test and reviews! Appreciate it.
-
+> > To avoid executing the above OSI specific code in the ->enter() callback,
+> > while operating in the default PSCI Platform Coordinated mode, let's also
+> > add a new enter-function and use it for OSI.
+> >
+> > Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
+> > Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
+> > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 > > ---
-> >  drivers/phy/qualcomm/phy-qcom-qmp.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
 > >
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > index 091e20303a14..c2e800a3825a 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > @@ -66,7 +66,7 @@
-> >  /* QPHY_V3_PCS_MISC_CLAMP_ENABLE register bits */
-> >  #define CLAMP_EN                               BIT(0) /* enables i/o clamp_n */
+> > Changes in v4:
+> >       - Rebased on top of earlier changes.
+> >       - Add comment about using the deepest cpuidle state for the domain state
+> >       selection.
 > >
-> > -#define PHY_INIT_COMPLETE_TIMEOUT              1000
-> > +#define PHY_INIT_COMPLETE_TIMEOUT              100000
-> >  #define POWER_DOWN_DELAY_US_MIN                        10
-> >  #define POWER_DOWN_DELAY_US_MAX                        11
+> > ---
+> >  drivers/cpuidle/cpuidle-psci.c | 56 ++++++++++++++++++++++++++++++----
+> >  1 file changed, 50 insertions(+), 6 deletions(-)
 > >
-> > --
-> > 2.23.0
+> > diff --git a/drivers/cpuidle/cpuidle-psci.c b/drivers/cpuidle/cpuidle-psci.c
+> > index 6a87848be3c3..9600fe674a89 100644
+> > --- a/drivers/cpuidle/cpuidle-psci.c
+> > +++ b/drivers/cpuidle/cpuidle-psci.c
+> > @@ -29,14 +29,47 @@ struct psci_cpuidle_data {
+> >  };
 > >
+> >  static DEFINE_PER_CPU_READ_MOSTLY(struct psci_cpuidle_data, psci_cpuidle_data);
+> > +static DEFINE_PER_CPU(u32, domain_state);
+> > +
+>
+> [...]
+>
+> > +static int psci_enter_domain_idle_state(struct cpuidle_device *dev,
+> > +                                     struct cpuidle_driver *drv, int idx)
+> > +{
+> > +     struct psci_cpuidle_data *data = this_cpu_ptr(&psci_cpuidle_data);
+> > +     u32 *states = data->psci_states;
+>
+> Why can't the above be like this for consistency(see below in
+> psci_enter_idle_state) ?
 
--- 
-~Vinod
+You have a point, however in patch11 I am adding this line below.
+
+struct device *pd_dev = data->dev;
+
+So I don't think it matters much, agree?
+
+>
+>         u32 *states = __this_cpu_read(psci_cpuidle_data.psci_states);
+>
+> > +     u32 state = psci_get_domain_state();
+> > +     int ret;
+> > +
+> > +     if (!state)
+> > +             state = states[idx];
+> > +
+> > +     ret = psci_enter_state(idx, state);
+> > +
+> > +     /* Clear the domain state to start fresh when back from idle. */
+> > +     psci_set_domain_state(0);
+> > +     return ret;
+> > +}
+> >
+>
+> [...]
+>
+> > @@ -118,6 +152,15 @@ static int __init psci_dt_cpu_init_idle(struct device_node *cpu_node,
+> >                       ret = PTR_ERR(data->dev);
+> >                       goto free_mem;
+> >               }
+> > +
+> > +             /*
+> > +              * Using the deepest state for the CPU to trigger a potential
+> > +              * selection of a shared state for the domain, assumes the
+> > +              * domain states are all deeper states.
+> > +              */
+> > +             if (data->dev)
+>
+> You can drop this check as return on error above.
+
+Actually not, because if OSI is supported, there is still a
+possibility that the PM domain topology isn't used.
+
+This means ->data->dev is NULL.
+
+>
+> > +                     drv->states[state_count - 1].enter =
+> > +                             psci_enter_domain_idle_state;
+>
+> I see the comment above but this potential blocks retention mode at
+> cluster level when all cpu enter retention at CPU level. I don't like
+> this assumption, but I don't have any better suggestion. Please add the
+> note that we can't enter RETENTION state at cluster/domain level when
+> all CPUs enter at CPU level.
+
+You are correct, but I think the comment a few lines above (agreed to
+be added by Lorenzo in the previous version) should be enough to
+explain that. No?
+
+The point is, this is only a problem if cluster RETENTION is
+considered to be a shallower state that CPU power off, for example.
+
+>
+> As I wrote above I got another doubt. What if platform specifies just
+> RETENTION state at CPU as well as Cluster/domain ? I think it should be
+> fine, just asking it out loud.
+
+It's fine.
+
+However, I am looking at what future improvements that can be made.
+This is one of them, but let's discuss that later on.
+
+Kind regards
+Uffe
