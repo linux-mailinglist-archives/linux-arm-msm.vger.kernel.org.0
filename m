@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E9DA612660F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 16:48:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D78C0126611
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 16:48:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726760AbfLSPsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 10:48:51 -0500
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:42849 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726789AbfLSPsv (ORCPT
+        id S1726813AbfLSPs7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 10:48:59 -0500
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:36221 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726789AbfLSPs6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 10:48:51 -0500
-Received: by mail-vs1-f65.google.com with SMTP id b79so4041117vsd.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2019 07:48:50 -0800 (PST)
+        Thu, 19 Dec 2019 10:48:58 -0500
+Received: by mail-vs1-f66.google.com with SMTP id u14so4057795vsu.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2019 07:48:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=5KrItn2ITQ/gEkMRXxlNzrQRHLgN8opGe0fqAyinPUw=;
-        b=Krs4v/f5ShTU6CHF0kcrKOfGo7eQ1cC8sZXkheJgud6E52UN2qdbWjgA0hVxLVjNi4
-         xttVorIYYFJMhg9rmpwqL4mpm6Aqo00mzZOE6JLxvAXbUAeDIgU1c3NA06d//tiKU3vn
-         Eb4BIHzOYGuloyzyHiRfu5SyQDyR8LDTln9mFiThtfqvwx1PPJw4sTE0bwWci2+1arro
-         InOyFqt4TlI+xY/YlgF0mgG2UXZaVaEbPQwhf6xC6IqWOZuN887kPaTKQ9LJcuPPK7qy
-         vxGMrH2aIqaPPfLq+KwXgidpZovEQV8dbuSYsEu+zIoH1eB4Aw/E6/FJB4IsEGLNF5SK
-         cyeQ==
+        bh=1kaCXRwivzzZ0gDYQMxNb5fZvTKN4Drl/BBA8SeSbvk=;
+        b=eJqmNR4yFeu1cbLSw2uG6FfugRqV5dKrxt2YHM9/D9gMpcABkEbswYB8eSaWcXntOS
+         mbzjrlF4O2WmbzpBXute4ocZBEnBpbzA6iYMkzyKvI+SbBvchcUgGJBf7naGlw0opObr
+         Y46WQiGzBy9SAfjvmPCjmgu7s1paeIAIkRgQj28RQUdH1fEnycR6Ld5+bUHwcj/+yRBT
+         exdptdE4Lz73b68vBf2XsQ6q5pulrH8ik5cIQ78uzWYC7MxBF+XFn7DZND19tlp2/pXx
+         S14ROpwyoKDClO+2CXDOhgR267n7rlVXK8wIkviSg/eYL8mbvcAGMc1ZHbyKQ/FNcKLC
+         XbqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=5KrItn2ITQ/gEkMRXxlNzrQRHLgN8opGe0fqAyinPUw=;
-        b=n7OH4RuNm3jMNkZek6nLk0jCMSYyHODDp/ZNLneRv8Yk7KNr/pC9g2Ia4OW4Bf54fJ
-         TUSW4qD3teFbAMyo8qDfoFzdwVWUBf5vFqRZSDKtAHTNALr37ry3UXV5pNAMVVouZgv4
-         Zngyc9KHcTwQUFXbGO/q3XI/qHB1jf36moK6wm1aOkcpUy8cqGZwmAoxbMvvOiPJz1JV
-         Jf5RmoNih5+sWNZh5zql2EPjrFEZUVNjvRRpFOCnMyFI1gI9BnZvy5IMRH9I7YncNRUh
-         8Qb9sG0ww4j+6ZgUUFfENsDWKkQqPlSdvUpUjIaaQHYy8R6VO2zm6jP/Ao6NY13hL0GO
-         s8UQ==
-X-Gm-Message-State: APjAAAV1fuGIiVKF03TTqJy1/LQQ6NR+pCnPRGiFvClxJdb7BTATH86u
-        aH2eQI4jaZlOZv4e0L8V+QxjHn9PovXu13gYsUIS8w==
-X-Google-Smtp-Source: APXvYqxqo21q1MMNfYKhRJXzlWwvyuU59L2d1Xb7zAa7BXcxGpN1Fniu6C6xLfMTbN70e+rP5ASWf+q3jTb16FT4FAA=
-X-Received: by 2002:a67:b649:: with SMTP id e9mr5500898vsm.34.1576770529749;
- Thu, 19 Dec 2019 07:48:49 -0800 (PST)
+        bh=1kaCXRwivzzZ0gDYQMxNb5fZvTKN4Drl/BBA8SeSbvk=;
+        b=hWf9kEY8/TuxeD4l1h3JICzctf/vM8QtUtxWm8RkF2kSTryTrUY6fCQGJp7EaPg/SP
+         +qdC/1CprgtcxHkDHX5UUPzGE2MGYQRgRLiUck5dE8ZcR1T6JhMGWiZQxuGiIMNhzO3o
+         1NGS8sHc/T25ZT4Gz26urmupFFf4dUNWCRPFHb3mIk5dmhb0QZtoBJjOWal1FTZY9Hl8
+         ntRXSpOIEcLBx+obPQWn6DF0qL7dsV6sflOnqbTeOz9F/cIkgruzVqCiJNQdfJ6QpESJ
+         t+3uS2jPHk4zqYE43UYPebR9HGwE21Bb2EyDzjMG37uhNfXYUfGaiapMF+3DVKN3mPgh
+         VyLQ==
+X-Gm-Message-State: APjAAAVWg+TUxOxJv0dIueKE52GsZYjj8PylYcMR0hD214zA5azJGuDv
+        MkXOmjejT3GHpXYe2J0tZLj+Rl/vKS8VdvJ0Feir8R4V
+X-Google-Smtp-Source: APXvYqyEHXTOiaWT64UHyDsh1e5xkHNXkp6qXSMXSPXq6knbbWfOcCv0hWw8oxuY1uMAA0t2E6RRJdBwf/IgoNOzarc=
+X-Received: by 2002:a67:f499:: with SMTP id o25mr5245791vsn.165.1576770537822;
+ Thu, 19 Dec 2019 07:48:57 -0800 (PST)
 MIME-Version: 1.0
 References: <20191211154343.29765-1-ulf.hansson@linaro.org>
- <20191211154343.29765-11-ulf.hansson@linaro.org> <20191219143154.GC20746@bogus>
-In-Reply-To: <20191219143154.GC20746@bogus>
+ <20191211154343.29765-13-ulf.hansson@linaro.org> <20191219143340.GE20746@bogus>
+In-Reply-To: <20191219143340.GE20746@bogus>
 From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 19 Dec 2019 16:48:13 +0100
-Message-ID: <CAPDyKForeHdXPTocvAgFDbX+94UQWbJixUpKLY=0MbnF5XUAMA@mail.gmail.com>
-Subject: Re: [PATCH v4 10/14] cpuidle: psci: Prepare to use OS initiated
- suspend mode via PM domains
+Date:   Thu, 19 Dec 2019 16:48:21 +0100
+Message-ID: <CAPDyKFoayFW_gj5d=7q_YBVSRDEWRiqsKQj85D02EV7B7CWczg@mail.gmail.com>
+Subject: Re: [PATCH v4 12/14] cpuidle: psci: Support CPU hotplug for the
+ hierarchical model
 To:     Sudeep Holla <sudeep.holla@arm.com>
 Cc:     Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
@@ -64,143 +64,72 @@ Cc:     Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Kevin Hilman <khilman@kernel.org>,
         Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Lina Iyer <lina.iyer@linaro.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 19 Dec 2019 at 15:32, Sudeep Holla <sudeep.holla@arm.com> wrote:
+On Thu, 19 Dec 2019 at 15:33, Sudeep Holla <sudeep.holla@arm.com> wrote:
 >
-> On Wed, Dec 11, 2019 at 04:43:39PM +0100, Ulf Hansson wrote:
-> > The per CPU variable psci_power_state, contains an array of fixed values,
-> > which reflects the corresponding arm,psci-suspend-param parsed from DT, for
-> > each of the available CPU idle states.
+> On Wed, Dec 11, 2019 at 04:43:41PM +0100, Ulf Hansson wrote:
+> > When the hierarchical CPU topology is used and when a CPU is put offline,
+> > that CPU prevents its PM domain from being powered off, which is because
+> > genpd observes the corresponding attached device as being active from a
+> > runtime PM point of view. Furthermore, any potential master PM domains are
+> > also prevented from being powered off.
 > >
-> > This isn't sufficient when using the hierarchical CPU topology in DT, in
-> > combination with having PSCI OS initiated (OSI) mode enabled. More
-> > precisely, in OSI mode, Linux is responsible of telling the PSCI FW what
-> > idle state the cluster (a group of CPUs) should enter, while in PSCI
-> > Platform Coordinated (PC) mode, each CPU independently votes for an idle
-> > state of the cluster.
+> > To address this limitation, let's add add a new CPU hotplug state
+> > (CPUHP_AP_CPU_PM_STARTING) and register up/down callbacks for it, which
+> > allows us to deal with runtime PM accordingly.
 > >
-> > For this reason, introduce a per CPU variable called domain_state and
-> > implement two helper functions to read/write its value. Then let the
-> > domain_state take precedence over the regular selected state, when entering
-> > and idle state.
-> >
-> > To avoid executing the above OSI specific code in the ->enter() callback,
-> > while operating in the default PSCI Platform Coordinated mode, let's also
-> > add a new enter-function and use it for OSI.
-> >
-> > Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
-> > Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
 > > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 > > ---
 > >
 > > Changes in v4:
+> >       - Folded in the patch to be part of the series.
 > >       - Rebased on top of earlier changes.
-> >       - Add comment about using the deepest cpuidle state for the domain state
-> >       selection.
 > >
 > > ---
-> >  drivers/cpuidle/cpuidle-psci.c | 56 ++++++++++++++++++++++++++++++----
-> >  1 file changed, 50 insertions(+), 6 deletions(-)
+> >  drivers/cpuidle/cpuidle-psci.c | 45 +++++++++++++++++++++++++++++++++-
+> >  include/linux/cpuhotplug.h     |  1 +
+> >  2 files changed, 45 insertions(+), 1 deletion(-)
 > >
 > > diff --git a/drivers/cpuidle/cpuidle-psci.c b/drivers/cpuidle/cpuidle-psci.c
-> > index 6a87848be3c3..9600fe674a89 100644
+> > index 6e7804e697ed..34a89d99bb0f 100644
 > > --- a/drivers/cpuidle/cpuidle-psci.c
 > > +++ b/drivers/cpuidle/cpuidle-psci.c
-> > @@ -29,14 +29,47 @@ struct psci_cpuidle_data {
-> >  };
+> > @@ -8,6 +8,7 @@
+> >
+> >  #define pr_fmt(fmt) "CPUidle PSCI: " fmt
+> >
+> > +#include <linux/cpuhotplug.h>
+> >  #include <linux/cpuidle.h>
+> >  #include <linux/cpumask.h>
+> >  #include <linux/cpu_pm.h>
+> > @@ -31,6 +32,7 @@ struct psci_cpuidle_data {
 > >
 > >  static DEFINE_PER_CPU_READ_MOSTLY(struct psci_cpuidle_data, psci_cpuidle_data);
-> > +static DEFINE_PER_CPU(u32, domain_state);
-> > +
->
-> [...]
->
-> > +static int psci_enter_domain_idle_state(struct cpuidle_device *dev,
-> > +                                     struct cpuidle_driver *drv, int idx)
-> > +{
-> > +     struct psci_cpuidle_data *data = this_cpu_ptr(&psci_cpuidle_data);
-> > +     u32 *states = data->psci_states;
->
-> Why can't the above be like this for consistency(see below in
-> psci_enter_idle_state) ?
-
-You have a point, however in patch11 I am adding this line below.
-
-struct device *pd_dev = data->dev;
-
-So I don't think it matters much, agree?
-
->
->         u32 *states = __this_cpu_read(psci_cpuidle_data.psci_states);
->
-> > +     u32 state = psci_get_domain_state();
-> > +     int ret;
-> > +
-> > +     if (!state)
-> > +             state = states[idx];
-> > +
-> > +     ret = psci_enter_state(idx, state);
-> > +
-> > +     /* Clear the domain state to start fresh when back from idle. */
-> > +     psci_set_domain_state(0);
-> > +     return ret;
-> > +}
+> >  static DEFINE_PER_CPU(u32, domain_state);
+> > +static bool psci_cpuidle_use_cpuhp;
 > >
 >
 > [...]
 >
-> > @@ -118,6 +152,15 @@ static int __init psci_dt_cpu_init_idle(struct device_node *cpu_node,
-> >                       ret = PTR_ERR(data->dev);
-> >                       goto free_mem;
-> >               }
 > > +
-> > +             /*
-> > +              * Using the deepest state for the CPU to trigger a potential
-> > +              * selection of a shared state for the domain, assumes the
-> > +              * domain states are all deeper states.
-> > +              */
-> > +             if (data->dev)
+> > +static void psci_idle_init_cpuhp(void)
+> > +{
 >
-> You can drop this check as return on error above.
+> Can this be made __init along with the boolean psci_cpuidle_use_cpuhp ?
 
-Actually not, because if OSI is supported, there is still a
-possibility that the PM domain topology isn't used.
-
-This means ->data->dev is NULL.
+Yeah, make sense!
 
 >
-> > +                     drv->states[state_count - 1].enter =
-> > +                             psci_enter_domain_idle_state;
->
-> I see the comment above but this potential blocks retention mode at
-> cluster level when all cpu enter retention at CPU level. I don't like
-> this assumption, but I don't have any better suggestion. Please add the
-> note that we can't enter RETENTION state at cluster/domain level when
-> all CPUs enter at CPU level.
+> With that,
+> Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
 
-You are correct, but I think the comment a few lines above (agreed to
-be added by Lorenzo in the previous version) should be enough to
-explain that. No?
-
-The point is, this is only a problem if cluster RETENTION is
-considered to be a shallower state that CPU power off, for example.
-
->
-> As I wrote above I got another doubt. What if platform specifies just
-> RETENTION state at CPU as well as Cluster/domain ? I think it should be
-> fine, just asking it out loud.
-
-It's fine.
-
-However, I am looking at what future improvements that can be made.
-This is one of them, but let's discuss that later on.
+Thanks!
 
 Kind regards
 Uffe
