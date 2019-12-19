@@ -2,81 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BB5B4126477
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 15:20:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9024612647C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Dec 2019 15:21:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726759AbfLSOUf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 09:20:35 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:42063 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726695AbfLSOUf (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 09:20:35 -0500
-Received: by mail-io1-f67.google.com with SMTP id n11so4368981iom.9;
-        Thu, 19 Dec 2019 06:20:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=d3uNqyau+uqHl1+nVlgL9fnHSgknMtxXHMZq1PGXbPI=;
-        b=fIjaEL+xy1liB8a19YiHcLE/YmTaQAcfoRDPTsFpSyJAWVR/R+GbGxWTkTlklsSPjX
-         Yu3FCBgbImKi2S9yWuq/Npy+Idoa147eGtNr5dCggAIUGBVk7rz0wkRkoqvV/BU15Clo
-         GOkz839U3L8RH6QMkA17wi+1ZGyFSpMmcZuNe1OmqmA/hLOkcCDBSCGGfk8C78vv+h3J
-         UiwvHtSeS3wvhRDLAiBbY4YzDVmZwFGFV3Cp6Nts75kM7OaYbn5fJQS9eDpGjbIP+/Nr
-         qiAi/fj7z/9aAFtIM+VhPKC7tMqGFjp4+IPHBCocWN/yTnJwqGvSNxQcbmtGQT/ieM/x
-         01Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=d3uNqyau+uqHl1+nVlgL9fnHSgknMtxXHMZq1PGXbPI=;
-        b=qsTzIjSzpy3fiz8FNlJqS3Vd6TlT1Kfff1fwbpZ430wg7XoXbJ+drERvkmHo5gYN03
-         oDwT7cRV4WezTM8gZxkKWul8afSwwyTfRsYUZ19B2YyRirPQfbmAsqwwCYJILzElBE52
-         KUKkXIKf9a0QfaTp2rzTOwEOvWOU4UPRWsWn+AVTJiDDsIgKOTn5B2/K1GYen+4QJPa2
-         jSKPM2NoieSI5Hz6aNhPxhSO92vsjZgoaXDA3rEAdzNqX75Szi43Z74kVKBXZmxeof6f
-         J4dZbWHInceMhu70bFlGTxajTGUS5MyA6q7k5VV+wY8iUB44jwjAvdWg8zn9Yg79TlQ+
-         sd8g==
-X-Gm-Message-State: APjAAAXsnqoyqpR3qcY4UZwE5A/VgjIEN59v2cxWzHvl1jIXJcd/o75H
-        u3WPC9hC3OzLk5i8H5jtQTxUTSDrNIAtbBwAX8A=
-X-Google-Smtp-Source: APXvYqyse2tZmLbWeTJHu9jPZ4y7jNwi6OE18BMIORT8ZvbIy8VS+HkWhe05B83mbuQvzggj2mMbqfwpJ8aQ0JO88YY=
-X-Received: by 2002:a5d:9c4e:: with SMTP id 14mr6199922iof.166.1576765234271;
- Thu, 19 Dec 2019 06:20:34 -0800 (PST)
-MIME-Version: 1.0
-References: <20191217171205.5492-1-jeffrey.l.hugo@gmail.com> <20191219060020.573342146E@mail.kernel.org>
-In-Reply-To: <20191219060020.573342146E@mail.kernel.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Thu, 19 Dec 2019 07:20:23 -0700
-Message-ID: <CAOCk7NpZmH8XahFmcKXSGsbT2nrY7kuWftGW1Ss6NdkqGs08cA@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: Make gcc_gpu_cfg_ahb_clk critical
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
+        id S1726757AbfLSOVu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 09:21:50 -0500
+Received: from mail.kernel.org ([198.145.29.99]:50552 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726751AbfLSOVu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Dec 2019 09:21:50 -0500
+Received: from localhost (unknown [122.178.234.230])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 30C51222C2;
+        Thu, 19 Dec 2019 14:21:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1576765310;
+        bh=qPE9//mZgMQYau8o2brsaK7UTZVASfudmoR5jovYAu0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=oovSBiD9bsR9UznqfKVYt5Xn3KNRdTeZ1HLao554efYP9YrFjoExRf30GNnvCpjD0
+         i+HV8NpoIG/XhdiP0X111Qo8tjbv5hMUDr/r/Ejhh6QsAQx48gNu7hTFjub+yX5git
+         V8g/zGOlBMfxXlP/L2NX+RetD6d/qW7Tizue6bQ8=
+Date:   Thu, 19 Dec 2019 19:51:45 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     cang@codeaurora.org
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, asutoshd@codeaurora.org,
+        nguyenb@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-scsi@vger.kernel.org, kernel-team@android.com,
+        saravanak@google.com, Mark Salyzyn <salyzyn@google.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
-        lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 2/7] scsi: ufs-qcom: Add reset control support for
+ host controller
+Message-ID: <20191219142145.GV2536@vkoul-mobl>
+References: <091562cbe7d88ca1c30638bc10197074@codeaurora.org>
+ <20191217041342.GM2536@vkoul-mobl>
+ <763d7b30593b31646f3c198c2be99671@codeaurora.org>
+ <20191217092433.GN2536@vkoul-mobl>
+ <fc8952a0eee5c010fe14e5f107d89e64@codeaurora.org>
+ <20191217150852.GO2536@vkoul-mobl>
+ <CAOCk7Np691Hau1FdJqWs1UY6jvEvYfzA6NnG9U--ZcRsuV5=Zw@mail.gmail.com>
+ <75f7065d08f450c6cbb2b2662658ecaa@codeaurora.org>
+ <20191218041200.GP2536@vkoul-mobl>
+ <983c21bb5ad2d38e11c074528d8898b9@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <983c21bb5ad2d38e11c074528d8898b9@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 18, 2019 at 11:00 PM Stephen Boyd <sboyd@kernel.org> wrote:
->
-> Quoting Jeffrey Hugo (2019-12-17 09:12:05)
-> > diff --git a/drivers/clk/qcom/gcc-msm8998.c b/drivers/clk/qcom/gcc-msm8998.c
-> > index df1d7056436c..26cc1458ce4a 100644
-> > --- a/drivers/clk/qcom/gcc-msm8998.c
-> > +++ b/drivers/clk/qcom/gcc-msm8998.c
-> > @@ -2044,6 +2044,7 @@ static struct clk_branch gcc_gpu_cfg_ahb_clk = {
-> >                 .hw.init = &(struct clk_init_data){
-> >                         .name = "gcc_gpu_cfg_ahb_clk",
-> >                         .ops = &clk_branch2_ops,
-> > +                       .flags = CLK_IS_CRITICAL, /* to access gpucc */
->
-> Can we not do the thing that Bjorn did to turn on ahb clks with runtime
-> PM for clk controllers that need them? See 892df0191b29 ("clk: qcom: Add
-> QCS404 TuringCC").
->
+On 19-12-19, 15:12, cang@codeaurora.org wrote:
+> On 2019-12-18 12:12, Vinod Koul wrote:
+> > On 18-12-19, 02:44, cang@codeaurora.org wrote:
 
-Interesting.  I didn't think of that solution, nor was I aware of that
-change.  Let me have a look.  Thanks for the tip.
+> 
+> Aside of the phy settings, your DT needs some modifications too,
+> seems you copied most of them from sdm845.
+> https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=for-next&id=3834a2e92229ef26d30de28acb698b2b23d3e397
+> 
+> <--snip-->
+> > +		ufs_mem_phy: phy@1d87000 {
+> > +			compatible = "qcom,sm8150-qmp-ufs-phy";
+> > +			reg = <0 0x01d87000 0 0x18c>;
+> 
+> The size 0x18c is wrong, in the code you are even accessing registers
+> whose offsets are beyond 0x18c, see
+> 
+> #define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE1_MODE0	0x1ac
+> #define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE2_MODE0	0x1b0
+> #define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE1_MODE1	0x1b4
+> #define QSERDES_V4_COM_BIN_VCOCAL_HSCLK_SEL		0x1bc
+> #define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE2_MODE1	0x1b8
+> 
+> FYI, the total size of serdes registers is 0x1c0.
+
+Yeah I will update it to 0x1c0
+
+> 
+> <--snip-->
+> > +			ufs_mem_phy_lanes: lanes@1d87400 {
+> > +				reg = <0 0x01d87400 0 0x108>,
+> > +				      <0 0x01d87600 0 0x1e0>,
+> > +				      <0 0x01d87c00 0 0x1dc>,
+> 
+> Same as above, see
+> 
+> #define QPHY_V4_MULTI_LANE_CTRL1			0x1e0
+> 
+> FYI, the total size of PCS registers is 0x200
+> 
+> > +				      <0 0x01d87800 0 0x108>,
+> > +				      <0 0x01d87a00 0 0x1e0>;
+> > +				#phy-cells = <0>;
+> > +			};
+> <--snip-->
+
+So I managed to fix it by configuring QPHY_SW_RESET in
+qcom_qmp_phy_com_init() before invoking the configuration. That makes it
+work for me. Will send patches shortly
+
+-- 
+~Vinod
