@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 19E5212783E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2019 10:34:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 05BC8127846
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2019 10:34:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727327AbfLTJdn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Dec 2019 04:33:43 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:38335 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727205AbfLTJdn (ORCPT
+        id S1727443AbfLTJen (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Dec 2019 04:34:43 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:41655 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727438AbfLTJen (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Dec 2019 04:33:43 -0500
-Received: by mail-ed1-f65.google.com with SMTP id i16so7605342edr.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2019 01:33:41 -0800 (PST)
+        Fri, 20 Dec 2019 04:34:43 -0500
+Received: by mail-ed1-f66.google.com with SMTP id c26so7605240eds.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2019 01:34:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=IdRAcGLRRg8iKt3mImCAWyzVNXDNfr3GQXuYmx9xEBc=;
-        b=c/r8EebMIT04qDRK32za4rw3kkCHqeJihYbC/JuIH5uKb2pINtIbYx1BMVb5HlGgrA
-         rZ04UxrGuKKVmEhy/6vrlAkCcQLHFSPNVEZ+5fs5aBufrHW9sVug77pRH7b/+c3251/O
-         NOxG9SzKAzUzdjhSCk7pugFRACejjYiHeq9Y3zgbR8M4LxtfdtAp7mQm77rqbw/Kg+YA
-         +MYNSgLiJdU488X7zdi/Nz7EgIGIXOIcp+wtV2g9gFe5GtZnP4/Gl2hSJbnSWRJzb83k
-         itY4K+L7MhblfKTmWCQ0CIDMs7g14Dyyt+q3QYPXGECwHgPyO0foPFqpY3icWZDVVpTS
-         RPyA==
+        bh=NTB7wX7Yv4jCUuAve4vjjE5dVjsx/SPNfAjKddDNjGA=;
+        b=TWfDrkroJVL91zz3SzoGgEFWBV+3o/1TdQOazPMUiXOyF7Eg2eG4497kjHIBTG1wG1
+         Vtg9OucWHFlGksGjOf2Gt5/8N8d2H8mnaueXjfY4BwJ8gS9SywFmxOYLL9X7R8MOCXg7
+         EUQcKbGqPWiu4iWnvubdiHlsj+dKARxxammH8DECs4J2kuaU8ljFoXdWPuY2iSLayoZ/
+         jDf4IhT9dftLRZg0RrEKlzvh4KyVQoneyT5aQ0BIq3jUKdwXhK5l6Hn/rw8+czugI/EN
+         lmuAL9WNlTiIujJApVDuXzwdgFVQY9qrWcmVz7hinUyhZMPT3nUzecYMczWBaW1kL9UW
+         krJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=IdRAcGLRRg8iKt3mImCAWyzVNXDNfr3GQXuYmx9xEBc=;
-        b=lg2430vFs170HANrmhPEs7bYDqMUiN/3eWzj3trVY+GxYcLtQ4aLIzle86W1gSjOvs
-         gXRtHNFcKM41Sho9cFAraMT8Qng4xlWMcLbjx8CrRPmX5ZsXi0cPDpjE2I8p/t0Go1dQ
-         PTO6Sexl+apEwMUL5D5dSQ8S9wakULKXdP7sC9+1ac5/dLzu8bHUQgZwSCFz/D0sjRrE
-         ip6pdHTwObDj9AxyEplnlggn2g+T/nXYyU9uM9RmujT1yRl7jGpkBzq6jZg78P1m6SvS
-         wBfuxLj4tEurKwC+N7ARjh+C9Rxc8rer8UWu8/qTKzIztNiJWRJDIlImbRiRJGHUnWzh
-         8N9Q==
-X-Gm-Message-State: APjAAAUE81bT7FQnKYu9lQVhFkRZgsXAJ29dIKRwB1X5aLzqMy1QqzPG
-        3s3lv0MJmIPQTczq3GCtcnFNaDjFkSM=
-X-Google-Smtp-Source: APXvYqzWCfqm8KGSdm+UnLUG2XwPn5sKlp0oZPiMWYuaTmOCE/DBPs/XpccD3F2EzBw03B9ho0xHAA==
-X-Received: by 2002:a50:e108:: with SMTP id h8mr14849903edl.196.1576834421273;
-        Fri, 20 Dec 2019 01:33:41 -0800 (PST)
+        bh=NTB7wX7Yv4jCUuAve4vjjE5dVjsx/SPNfAjKddDNjGA=;
+        b=aQbUTP4QDShs44fBv9fDunUHP3s/GCiHhsa0y/d7IVI/5oZmiwhW6DJBPrcRkF7def
+         Mc39GwTDWBKlC7r1iFd4JFaK0QfuB3lMdv7+XOBXkN+LZc0K/r/e3TbC/G5H5C0iD0U6
+         th81+Jl6WERArtk5B1lMHlgO+9t+9kqmap9Ih/5AS8yUtFtt+hP4XPW5Zm3mhdAyBHGP
+         DfJmgadDuswPmz+MVZZgLkZFChrrJhaqi/1fPDz9/k2tiYlFngVsfK+PxU0+Sr2HHCms
+         IMAzBbBdWVV1rOMRgfzk6p5PsIGotS1GlHwtJ8n7XwSvSsENZeQeGGX6B9Z6+Ql/B17E
+         yHnw==
+X-Gm-Message-State: APjAAAXR3Kh9YJI5ckfg22X1PY4FvTyAqGqyiGdIh1BFTLzIerjczLUt
+        K+Iiw3TQ5QzzJo9hd3RoPLpOjg==
+X-Google-Smtp-Source: APXvYqwtedAE80TQ1voCP5xx8obcg7Jzf+08DPEo4f2WFFFbsiXKKauQR9XC8bMXaXk+7XM4CFAmiA==
+X-Received: by 2002:a05:6402:229a:: with SMTP id cw26mr7564061edb.69.1576834481632;
+        Fri, 20 Dec 2019 01:34:41 -0800 (PST)
 Received: from [192.168.27.209] ([37.157.136.193])
-        by smtp.googlemail.com with ESMTPSA id ay24sm856223edb.29.2019.12.20.01.33.40
+        by smtp.googlemail.com with ESMTPSA id c20sm867853edt.67.2019.12.20.01.34.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Dec 2019 01:33:40 -0800 (PST)
-Subject: Re: [PATCH 3/3] venus: core: add sc7180 DT compatible and resource
- struct
+        Fri, 20 Dec 2019 01:34:40 -0800 (PST)
+Subject: Re: [PATCH 1/3] arm64: dts: sc7180: Add Venus video codec DT node
 To:     Dikshita Agarwal <dikshita@codeaurora.org>,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org
 Cc:     linux-kernel@vger.kernel.org, vgarodia@codeaurora.org
 References: <1576828760-13176-1-git-send-email-dikshita@codeaurora.org>
- <1576828760-13176-4-git-send-email-dikshita@codeaurora.org>
+ <1576828760-13176-2-git-send-email-dikshita@codeaurora.org>
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <b1b5ee06-bc39-cfc0-b2c8-8073f8857fde@linaro.org>
-Date:   Fri, 20 Dec 2019 11:33:39 +0200
+Message-ID: <17a371c0-d73a-75eb-34f2-c9afb51d46f5@linaro.org>
+Date:   Fri, 20 Dec 2019 11:34:40 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.2
 MIME-Version: 1.0
-In-Reply-To: <1576828760-13176-4-git-send-email-dikshita@codeaurora.org>
+In-Reply-To: <1576828760-13176-2-git-send-email-dikshita@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -71,94 +70,100 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi Dikshita,
 
-Thanks for the patch!
+Thanks for the patch.
 
 On 12/20/19 9:59 AM, Dikshita Agarwal wrote:
-> This add DT compatible string and resource structure for sc7180.
+> This adds Venus video codec DT node for sc7180.
 > 
 > Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
 > ---
->  drivers/media/platform/qcom/venus/core.c | 58 +++++++++++++++++++++++++++++++-
->  1 file changed, 57 insertions(+), 1 deletion(-)
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 36 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 36 insertions(+)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> index c7525d9..e8c8b28 100644
-> --- a/drivers/media/platform/qcom/venus/core.c
-> +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -469,7 +469,7 @@ static __maybe_unused int venus_runtime_resume(struct device *dev)
->  	{ 2073600, 3929000, 0, 5551000, 0 },	/* 4096x2160@60 */
->  	{ 1036800, 1987000, 0, 2797000, 0 },	/* 4096x2160@30 */
->  	{  489600, 1040000, 0, 1298000, 0 },	/* 1920x1080@60 */
-> -	{  244800,  530000, 0,  659000, 0 },	/* 1920x1080@30 */
-> +	{  244800,  442000, 0,  659000, 0 },	/* 1920x1080@30 */
-
-unrelated change, please drop it
-
->  };
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 6876aae2..42c70f5 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -10,6 +10,7 @@
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/phy/phy-qcom-qusb2.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> +#include <dt-bindings/clock/qcom,videocc-sc7180.h>
 >  
->  static const struct venus_resources sdm845_res = {
-> @@ -521,11 +521,67 @@ static __maybe_unused int venus_runtime_resume(struct device *dev)
->  	.fwname = "qcom/venus-5.2/venus.mdt",
->  };
+>  / {
+>  	interrupt-parent = <&intc>;
+> @@ -66,6 +67,11 @@
+>  			compatible = "qcom,cmd-db";
+>  			no-map;
+>  		};
+> +
+> +		venus_mem: memory@8F600000 {
+> +			reg = <0 0x8F600000 0 0x500000>;
+
+Please use lower-case for hex numbers.
+
+> +			no-map;
+> +		};
+>  	};
 >  
-> +static const struct freq_tbl sc7180_freq_table[] = {
-> +	{  0, 380000000 },
-> +	{  0, 340000000 },
-> +	{  0, 270000000 },
-> +	{  0, 150000000 },
+>  	cpus {
+> @@ -1042,6 +1048,36 @@
+>  			};
+>  		};
+>  
+> +		venus: video-codec@aa00000 {
+> +			compatible = "qcom,sc7180-venus";
+> +			reg = <0 0x0aa00000 0 0xff000>;
+> +			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+> +			power-domains = <&videocc VENUS_GDSC>,
+> +					<&videocc VCODEC0_GDSC>;
+> +			power-domain-names = "venus", "vcodec0";
+> +			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
+> +				<&videocc VIDEO_CC_VENUS_AHB_CLK>,
+> +				<&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
+> +				<&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
+> +				<&videocc VIDEO_CC_VCODEC0_AXI_CLK>;
 
-why .load is zero?
+could you align those entries to the first one (you can use tabs and
+after that spaces to align)
 
-> +};
+> +			clock-names = "core", "iface", "bus",
+> +					"vcodec0_core", "vcodec0_bus";
+> +			iommus = <&apps_smmu 0x0C00 0x60>;
+
+lower-case please
+
+> +			memory-region = <&venus_mem>;
 > +
-> +static struct codec_freq_data sc7180_codec_freq_data[] =  {
-> +	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10 },
-> +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 10 },
-> +	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 10 },
-> +	{ V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 10 },
-> +	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 10 },
-> +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 10 },
-> +	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 10 },
-> +	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 10 },
-> +};
+> +			video-core0 {
+> +					compatible = "venus-decoder";
 
-the table is exactly the same as sdm845 one, please reuse it.
+something is wrong with the indentation?
 
+Please run checkpatch with --strict
+
+> +			};
 > +
-> +static const struct bw_tbl sc7180_bw_table_enc[] = {
-> +	{  972000,  750000, 0, 0, 0 },	/* 3840x2160@30 */
-> +	{  489600,  451000, 0, 0, 0 },	/* 1920x1080@60 */
-> +	{  244800,  234000, 0, 0, 0 },	/* 1920x1080@30 */
-> +};
+> +			video-core1 {
+> +					compatible = "venus-encoder";
+> +			};
 > +
-> +static const struct bw_tbl sc7180_bw_table_dec[] = {
-> +	{ 1036800, 1386000, 0, 1875000, 0 },	/* 4096x2160@30 */
-> +	{  489600,  865000, 0, 1146000, 0 },	/* 1920x1080@60 */
-> +	{  244800,  530000, 0,  583000, 0 },	/* 1920x1080@30 */
-> +};
+> +			video-firmware {
+> +					iommus = <&apps_smmu 0x0C42 0x0>;
+
+lower-case
+
+> +			};
+
+This subnode should be in sc7180-idp.dts, because we assume that by
+default the qcom platforms have TZ.
+
+> +		};
 > +
-> +static const struct venus_resources sc7180_res = {
-> +	.freq_tbl = sc7180_freq_table,
-> +	.freq_tbl_size = ARRAY_SIZE(sc7180_freq_table),
-> +	.bw_tbl_enc = sc7180_bw_table_enc,
-> +	.bw_tbl_enc_size = ARRAY_SIZE(sc7180_bw_table_enc),
-> +	.bw_tbl_dec = sc7180_bw_table_dec,
-> +	.bw_tbl_dec_size = ARRAY_SIZE(sc7180_bw_table_dec),
-> +	.codec_freq_data = sc7180_codec_freq_data,
-> +	.codec_freq_data_size = ARRAY_SIZE(sc7180_codec_freq_data),
-> +	.clks = {"core", "iface", "bus" },
-> +	.clks_num = 3,
-> +	.vcodec0_clks = { "vcodec0_core", "vcodec0_bus" },
-> +	.vcodec_clks_num = 2,
-> +	.vcodec_pmdomains = { "venus", "vcodec0" },
-> +	.vcodec_pmdomains_num = 2,
-> +	.vcodec_num = 1,
-> +	.max_load = 3110400,	/* 4096x2160@90 */
-
-Looking into above bandwidth tables I can guess that the maximimum load
-is reached at 4096x2160@30? If so you have to change it here.
-
-<cut>
+>  		pdc: interrupt-controller@b220000 {
+>  			compatible = "qcom,sc7180-pdc", "qcom,pdc";
+>  			reg = <0 0x0b220000 0 0x30000>;
+> 
 
 -- 
 regards,
