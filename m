@@ -2,268 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F339128151
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2019 18:21:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B58E6128153
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2019 18:22:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727516AbfLTRUz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Dec 2019 12:20:55 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:40967 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727514AbfLTRUv (ORCPT
+        id S1727400AbfLTRWR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Dec 2019 12:22:17 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:38741 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727362AbfLTRWR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Dec 2019 12:20:51 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1576862450; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=vuuqJ73RYNPZB5++9ydg1fEs2W+tW/hjcTRH47X7J18=; b=MKLjL5gnb4yCODhJNs2srj+QWMjMY5P0ZzBXxdzX3+0Airek6qZ1Ev6Du+xrlEYZCmQgA9dD
- R8i0uEQotPaP+z6tgI1ZsAoyw8EFNYlihLzBi2q3WB4RPuZDNH14ck21NTjUS2OSAs5+9YwF
- QUQrcY0HJx/RI2IEBdoK7EE+1yo=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5dfd02f0.7f0165577068-smtp-out-n02;
- Fri, 20 Dec 2019 17:20:48 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AEA20C447A3; Fri, 20 Dec 2019 17:20:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4DAAAC433CB;
-        Fri, 20 Dec 2019 17:20:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4DAAAC433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org, srinivas.kandagatla@linaro.org,
-        robh+dt@kernel.org, tsoni@codeaurora.org
-Cc:     agross@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH v2 3/3] soc: qcom: apr: Add avs/audio tracking functionality
-Date:   Fri, 20 Dec 2019 22:50:19 +0530
-Message-Id: <20191220172019.11774-4-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.22.1
-In-Reply-To: <20191220172019.11774-1-sibis@codeaurora.org>
-References: <20191220172019.11774-1-sibis@codeaurora.org>
+        Fri, 20 Dec 2019 12:22:17 -0500
+Received: by mail-pl1-f193.google.com with SMTP id f20so4372797plj.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Dec 2019 09:22:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=/2DfzHUs0wsHD/N2W+XhWHO23KTYPn9e2s28qhRJzhQ=;
+        b=XjJXAYPUZ8YdDmf+jaUqlJRjgwtOxi6VMYlNPJ0TfWrt/80WfT0Y3L48ZzNOY/MWln
+         N/K8E43vURX8cw47TlbrPiDraNNiygcW3fgUCCBT6COyXamPgc2aRq0S7NVcgq31Ib8h
+         2BnBK804e2tsDcubk2Mm/zs6n9F/MFTOuGSfnLkZGKWUEKGnoJ9azGu1i4DjwQFIzayx
+         zVlAxETeneD0V5NyJ0NURbZVrYMDXW+DaUr7yDi77bVZISgUuEyZMNdKdvjJHnDbh9R1
+         ZZBqzpxjNALx+HhVBQCgthKpnXIYVa9HhRWNc0m57OlWZHY7OtwX+16kCBF7SeZVLDhD
+         L8wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=/2DfzHUs0wsHD/N2W+XhWHO23KTYPn9e2s28qhRJzhQ=;
+        b=CtldeRDodHPkL+ihNufnATfJ07VbRR6a4pXZe3cRuYXiSUGRalM1lKWtV9U/SxDDCS
+         C8PHcr8QeuXlK+rHUN7gquiv2yCbs84rNtQJq++oZpw6Ur1ph5Y8hPZcqlvCOcOAZAbj
+         rJyJNF3CAX0qQhx6XmSqCg5Xct0BzucaF7JGvolUeOMqyBR+D5TlWv7224s23HBYZ5h8
+         mMzff6AMgktvTRqvZHdgIeIf00i4y+OFKBj5eyKj/qmFFt7mftNSON/YyS/NV3uPL5xx
+         NSfZjXQWM8kQrdTh0ABypfTfWlijsTi/r7IxzE1YmmjbfAA7GJ3Hyn7qtvhlqYAvEeLZ
+         Vo5g==
+X-Gm-Message-State: APjAAAVE5Y5u2h11V+8aq9LiqzhhItGvyulQXGAoT33LR6Mfv8HH4ItI
+        gtdiR25VZf9EHo6vDvNlxi1doQ==
+X-Google-Smtp-Source: APXvYqy1FpD2j/oQp4717WQbUxL5P6k3OuBWeZGZGtqNIeNYxUs8xcXL64DHhVRvlC21gva151JhIw==
+X-Received: by 2002:a17:902:b496:: with SMTP id y22mr16764859plr.158.1576862536707;
+        Fri, 20 Dec 2019 09:22:16 -0800 (PST)
+Received: from ripper (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id e9sm12572878pgn.49.2019.12.20.09.22.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Dec 2019 09:22:16 -0800 (PST)
+Date:   Fri, 20 Dec 2019 09:22:06 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        linux-arm-msm@vger.kernel.org, amit.kucheria@linaro.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 7/7] clk: qcom: apcs-msm8916: use clk_parent_data to
+ specify the parent
+Message-ID: <20191220172206.GB1908628@ripper>
+References: <20191125135910.679310-1-niklas.cassel@linaro.org>
+ <20191125135910.679310-8-niklas.cassel@linaro.org>
+ <20191219062339.DC0DE21582@mail.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191219062339.DC0DE21582@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use PDR helper functions to track the protection domains that the apr
-services are dependent upon on SDM845 SoC, specifically the "avs/audio"
-service running on ADSP Q6.
+On Wed 18 Dec 22:23 PST 2019, Stephen Boyd wrote:
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
- drivers/soc/qcom/Kconfig     |   1 +
- drivers/soc/qcom/apr.c       | 100 +++++++++++++++++++++++++++++++----
- include/linux/soc/qcom/apr.h |   1 +
- 3 files changed, 91 insertions(+), 11 deletions(-)
+> Quoting Niklas Cassel (2019-11-25 05:59:09)
+> > diff --git a/drivers/clk/qcom/apcs-msm8916.c b/drivers/clk/qcom/apcs-msm8916.c
+> > index 46061b3d230e..bb91644edc00 100644
+> > --- a/drivers/clk/qcom/apcs-msm8916.c
+> > +++ b/drivers/clk/qcom/apcs-msm8916.c
+> > @@ -51,6 +51,19 @@ static int qcom_apcs_msm8916_clk_probe(struct platform_device *pdev)
+> >         struct clk_init_data init = { };
+> >         int ret = -ENODEV;
+> >  
+> > +       /*
+> > +        * This driver is defined by the devicetree binding
+> > +        * Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.txt,
+> > +        * however, this driver is registered as a platform device by
+> > +        * qcom-apcs-ipc-mailbox.c. Because of this, when this driver
+> > +        * uses dev_get_regmap() and devm_clk_get(), it has to send the parent
+> > +        * device as argument.
+> > +        * When registering with the clock framework, we cannot use this trick,
+> > +        * since the clock framework always looks at dev->of_node when it tries
+> > +        * to find parent clock names using clk_parent_data.
+> > +        */
+> > +       dev->of_node = parent->of_node;
+> 
+> This is odd. The clks could be registered with of_clk_hw_register() but
+> then we lose the device provider information. Maybe we should search up
+> one level to the parent node and if that has a DT node but the
+> clk controller device doesn't we should use that instead?
+> 
 
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 5c4e76837f59b..cacfed945b275 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -202,6 +202,7 @@ config QCOM_APR
- 	tristate "Qualcomm APR Bus (Asynchronous Packet Router)"
- 	depends on ARCH_QCOM || COMPILE_TEST
- 	depends on RPMSG
-+	select QCOM_PDR_HELPERS
- 	help
-           Enable APR IPC protocol support between
-           application processor and QDSP6. APR is
-diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-index 4fcc32420c474..5234426718e88 100644
---- a/drivers/soc/qcom/apr.c
-+++ b/drivers/soc/qcom/apr.c
-@@ -11,6 +11,7 @@
- #include <linux/workqueue.h>
- #include <linux/of_device.h>
- #include <linux/soc/qcom/apr.h>
-+#include <linux/soc/qcom/pdr.h>
- #include <linux/rpmsg.h>
- #include <linux/of.h>
- 
-@@ -21,6 +22,7 @@ struct apr {
- 	spinlock_t rx_lock;
- 	struct idr svcs_idr;
- 	int dest_domain_id;
-+	struct pdr_handle pdr;
- 	struct workqueue_struct *rxwq;
- 	struct work_struct rx_work;
- 	struct list_head rx_list;
-@@ -289,6 +291,9 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 		  id->svc_id + 1, GFP_ATOMIC);
- 	spin_unlock(&apr->svcs_lock);
- 
-+	of_property_read_string_index(np, "qcom,protection-domain",
-+				      1, &adev->service_path);
-+
- 	dev_info(dev, "Adding APR dev: %s\n", dev_name(&adev->dev));
- 
- 	ret = device_register(&adev->dev);
-@@ -300,14 +305,56 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 	return ret;
- }
- 
--static void of_register_apr_devices(struct device *dev)
-+static void of_apr_add_pd_lookups(struct device *dev)
- {
-+	const char *service_name, *service_path;
- 	struct apr *apr = dev_get_drvdata(dev);
- 	struct device_node *node;
-+	int ret;
-+
-+	for_each_child_of_node(dev->of_node, node) {
-+		ret = of_property_read_string_index(node, "qcom,protection-domain",
-+						    0, &service_name);
-+		if (ret < 0)
-+			continue;
-+
-+		ret = of_property_read_string_index(node, "qcom,protection-domain",
-+						    1, &service_path);
-+		if (ret < 0)
-+			continue;
-+
-+		ret = pdr_add_lookup(&apr->pdr, service_name, service_path);
-+		if (ret && ret != -EALREADY)
-+			dev_err(dev, "pdr add lookup failed: %d\n", ret);
-+	}
-+}
-+
-+static void of_register_apr_devices(struct device *dev, const char *svc_path)
-+{
-+	struct apr *apr = dev_get_drvdata(dev);
-+	struct device_node *node;
-+	const char *service_path;
-+	int ret;
- 
- 	for_each_child_of_node(dev->of_node, node) {
- 		struct apr_device_id id = { {0} };
- 
-+		ret = of_property_read_string_index(node, "qcom,protection-domain",
-+						    1, &service_path);
-+		if (svc_path) {
-+			/* skip APR services that are PD independent */
-+			if (ret)
-+				continue;
-+
-+			/* skip APR services whose PD paths don't match */
-+			if (strcmp(service_path, svc_path))
-+				continue;
-+		} else {
-+			/* skip APR services whose PD lookups are registered */
-+			if (ret == 0)
-+				continue;
-+		}
-+
- 		if (of_property_read_u32(node, "reg", &id.svc_id))
- 			continue;
- 
-@@ -318,6 +365,35 @@ static void of_register_apr_devices(struct device *dev)
- 	}
- }
- 
-+static int apr_remove_device(struct device *dev, void *svc_path)
-+{
-+	struct apr_device *adev = to_apr_device(dev);
-+
-+	if (svc_path) {
-+		if (!strcmp(adev->service_path, (char *)svc_path))
-+			device_unregister(&adev->dev);
-+	} else {
-+		device_unregister(&adev->dev);
-+	}
-+
-+	return 0;
-+}
-+
-+static void apr_pd_status(struct pdr_handle *pdr, struct pdr_service *pds)
-+{
-+	struct apr *apr = container_of(pdr, struct apr, pdr);
-+
-+	switch (pds->state) {
-+	case SERVREG_SERVICE_STATE_UP:
-+		of_register_apr_devices(apr->dev, pds->service_path);
-+		break;
-+	case SERVREG_SERVICE_STATE_DOWN:
-+		device_for_each_child(apr->dev, pds->service_path,
-+				      apr_remove_device);
-+		break;
-+	}
-+}
-+
- static int apr_probe(struct rpmsg_device *rpdev)
- {
- 	struct device *dev = &rpdev->dev;
-@@ -337,26 +413,27 @@ static int apr_probe(struct rpmsg_device *rpdev)
- 	dev_set_drvdata(dev, apr);
- 	apr->ch = rpdev->ept;
- 	apr->dev = dev;
-+
- 	apr->rxwq = create_singlethread_workqueue("qcom_apr_rx");
- 	if (!apr->rxwq) {
- 		dev_err(apr->dev, "Failed to start Rx WQ\n");
- 		return -ENOMEM;
- 	}
- 	INIT_WORK(&apr->rx_work, apr_rxwq);
-+
-+	ret = pdr_handle_init(&apr->pdr, apr_pd_status);
-+	if (ret) {
-+		dev_err(dev, "Failed to init PDR handle\n");
-+		destroy_workqueue(apr->rxwq);
-+		return ret;
-+	}
-+
- 	INIT_LIST_HEAD(&apr->rx_list);
- 	spin_lock_init(&apr->rx_lock);
- 	spin_lock_init(&apr->svcs_lock);
- 	idr_init(&apr->svcs_idr);
--	of_register_apr_devices(dev);
--
--	return 0;
--}
--
--static int apr_remove_device(struct device *dev, void *null)
--{
--	struct apr_device *adev = to_apr_device(dev);
--
--	device_unregister(&adev->dev);
-+	of_apr_add_pd_lookups(dev);
-+	of_register_apr_devices(dev, NULL);
- 
- 	return 0;
- }
-@@ -365,6 +442,7 @@ static void apr_remove(struct rpmsg_device *rpdev)
- {
- 	struct apr *apr = dev_get_drvdata(&rpdev->dev);
- 
-+	pdr_handle_release(&apr->pdr);
- 	device_for_each_child(&rpdev->dev, NULL, apr_remove_device);
- 	flush_workqueue(apr->rxwq);
- 	destroy_workqueue(apr->rxwq);
-diff --git a/include/linux/soc/qcom/apr.h b/include/linux/soc/qcom/apr.h
-index c5d52e2cb275f..7f0bc3cf4d610 100644
---- a/include/linux/soc/qcom/apr.h
-+++ b/include/linux/soc/qcom/apr.h
-@@ -85,6 +85,7 @@ struct apr_device {
- 	uint16_t	domain_id;
- 	uint32_t	version;
- 	char name[APR_NAME_SIZE];
-+	const char *service_path;
- 	spinlock_t	lock;
- 	struct list_head node;
- };
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Yeah, we shouldn't have two struct device with the same of_node in the
+system, and your suggestion looks quite reasonable. Do you mind spinning
+a patch out of it and we can drop above chunk from Niklas' patch - and
+afaict merge all the remaining patches to enable CPR on our first
+target!
+
+Thanks,
+Bjorn
+
+> ----8<-----
+> diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+> index b68e200829f2..c8745c415c04 100644
+> --- a/drivers/clk/clk.c
+> +++ b/drivers/clk/clk.c
+> @@ -3669,7 +3669,7 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
+>  	if (dev && pm_runtime_enabled(dev))
+>  		core->rpm_enabled = true;
+>  	core->dev = dev;
+> -	core->of_node = np;
+> +	core->of_node = np ? : dev_of_node(dev->parent);
+>  	if (dev && dev->driver)
+>  		core->owner = dev->driver->owner;
+>  	core->hw = hw;
