@@ -2,162 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0571212726D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2019 01:31:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8088D127280
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2019 01:40:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727063AbfLTAbA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 19:31:00 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:35431 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726963AbfLTAbA (ORCPT
+        id S1727016AbfLTAk0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 19:40:26 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:34650 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726992AbfLTAk0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 19:31:00 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1576801859; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=NYkaSg/yIOVM8Zt4nI2tIa2sDjh7Ya1C7IesYRlw4WY=;
- b=HiOEloIv88y1z5burFoKHlWm5PLyyoH3wlUHHcoSescuNc0yA9J8bmCOoTQBcac5io7fN4pL
- S3HpFdst88sRdVf1bXFyzcJzh/Ybt7MgpvGwnMSOxpOHdRQ01vW5o0p8u+gS3dp2+aHtmMj+
- HgVRCG7rjFjQ+J6BlIqPIH7+afk=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5dfc1642.7f782f9a17a0-smtp-out-n02;
- Fri, 20 Dec 2019 00:30:58 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8463CC447A6; Fri, 20 Dec 2019 00:30:58 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: cang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 68F59C4479F;
-        Fri, 20 Dec 2019 00:30:57 +0000 (UTC)
+        Thu, 19 Dec 2019 19:40:26 -0500
+Received: by mail-pl1-f196.google.com with SMTP id x17so3342546pln.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Dec 2019 16:40:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=jRdtiusu+beWJmpVDOcRJ7adeaD2r8nAbkaw7dnEM3o=;
+        b=IiSA+8Zu5xMGrVWMYcIurnZ+82iGEVaMNMAYiegms9yncV4Odo6L5M/TGQpyIezn8m
+         tV4zwJ4ShOl3QB4MLIww8dJAE8GgAtN7bg0I0FblsIfNchewk13zr9OCsk24esyGcjqe
+         CeGtVcnpDJB1UcX3MdrZrffNlHFR9DBIuVtsQScHTeosd/J4UpJWV4sVJUWxuiyyXFQU
+         usb0+ndwgbW0KJE1z0Nad/3t/NOHqyRlRhrJe85j6rweybaBMTQABri1nG5ZdcejyZTZ
+         Yyv5+xScQSwEnGQiQDlpr+SiYIO0C+ZYrWJ42h1joK3SUIkhf0UQcgqSZAIkbCqAZ3pP
+         EReQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=jRdtiusu+beWJmpVDOcRJ7adeaD2r8nAbkaw7dnEM3o=;
+        b=tJFfCl5EVcJ5RqW2EqH35yl4t8M9YaAmLscNzMQPoFpRAgh9/ehh/XHL19/g2gI1kC
+         iZaxwY1e7QWx5xa7v8RmciqYIpLDhf9ZR9ONsSpqmnVxCP5vDpsvt55CvRCvWIQlfxyQ
+         7vh1EI2G1wKTTBTfiPTa3PB0Ez9WXhaasaWWF6TUuSKhSKavW5lQWNKclUsQ2+0uKtHg
+         ZqtHWUpPp++haYwe0BKZ2St7Y4wGuhELMAdI6KmtVcW5/uNgXZmY6kVp/ooqynvAUY5+
+         DB7cy54SzX9/SIyzVYf9LNvD3PydHZH7PRsEqPuX/18tqz1fSDvXmpZhO+H/Gxb7EMua
+         aGpg==
+X-Gm-Message-State: APjAAAV2mvhkTyYhvlBGaTtATnQ1Y/2HJjNsAi/ITZaKv67XBxVSBBEx
+        EeZGdIosTWaGuHNQ4LhT0DU2ug==
+X-Google-Smtp-Source: APXvYqyXI07TRonse1dFs0JYqbSY6q5JMDHO4GTlLVXHf3CyrogLeSTQza7mciIV4JED48jdhYeetg==
+X-Received: by 2002:a17:902:59c9:: with SMTP id d9mr11951312plj.184.1576802425465;
+        Thu, 19 Dec 2019 16:40:25 -0800 (PST)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id o16sm8713462pgl.58.2019.12.19.16.40.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Dec 2019 16:40:24 -0800 (PST)
+Date:   Thu, 19 Dec 2019 16:40:22 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: qcs404: Update the compatible for
+ watchdog timer
+Message-ID: <20191220004022.GE3755841@builder>
+References: <cover.1576211720.git.saiprakash.ranjan@codeaurora.org>
+ <757995875cc12d3f5a8f5fd5659b04653950970a.1576211720.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 20 Dec 2019 08:30:57 +0800
-From:   cang@codeaurora.org
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, asutoshd@codeaurora.org,
-        nguyenb@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-scsi@vger.kernel.org, kernel-team@android.com,
-        saravanak@google.com, Mark Salyzyn <salyzyn@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Pedro Sousa <pedrom.sousa@synopsys.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 2/7] scsi: ufs-qcom: Add reset control support for host
- controller
-In-Reply-To: <20191219145206.GW2536@vkoul-mobl>
-References: <763d7b30593b31646f3c198c2be99671@codeaurora.org>
- <20191217092433.GN2536@vkoul-mobl>
- <fc8952a0eee5c010fe14e5f107d89e64@codeaurora.org>
- <20191217150852.GO2536@vkoul-mobl>
- <CAOCk7Np691Hau1FdJqWs1UY6jvEvYfzA6NnG9U--ZcRsuV5=Zw@mail.gmail.com>
- <75f7065d08f450c6cbb2b2662658ecaa@codeaurora.org>
- <20191218041200.GP2536@vkoul-mobl>
- <983c21bb5ad2d38e11c074528d8898b9@codeaurora.org>
- <20191219142145.GV2536@vkoul-mobl>
- <CAOCk7NrKRXsTffNyQFt_tQmdNq7+SaH+kAJVk8AAPJWJjPxYYw@mail.gmail.com>
- <20191219145206.GW2536@vkoul-mobl>
-Message-ID: <3dcdc4f7f090e1f1dd45d499bef0a4d1@codeaurora.org>
-X-Sender: cang@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <757995875cc12d3f5a8f5fd5659b04653950970a.1576211720.git.saiprakash.ranjan@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-12-19 22:52, Vinod Koul wrote:
-> On 19-12-19, 07:25, Jeffrey Hugo wrote:
->> On Thu, Dec 19, 2019 at 7:21 AM Vinod Koul <vkoul@kernel.org> wrote:
->> >
->> > On 19-12-19, 15:12, cang@codeaurora.org wrote:
->> > > On 2019-12-18 12:12, Vinod Koul wrote:
->> > > > On 18-12-19, 02:44, cang@codeaurora.org wrote:
->> >
->> > >
->> > > Aside of the phy settings, your DT needs some modifications too,
->> > > seems you copied most of them from sdm845.
->> > > https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=for-next&id=3834a2e92229ef26d30de28acb698b2b23d3e397
->> > >
->> > > <--snip-->
->> > > > +           ufs_mem_phy: phy@1d87000 {
->> > > > +                   compatible = "qcom,sm8150-qmp-ufs-phy";
->> > > > +                   reg = <0 0x01d87000 0 0x18c>;
->> > >
->> > > The size 0x18c is wrong, in the code you are even accessing registers
->> > > whose offsets are beyond 0x18c, see
->> > >
->> > > #define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE1_MODE0     0x1ac
->> > > #define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE2_MODE0     0x1b0
->> > > #define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE1_MODE1     0x1b4
->> > > #define QSERDES_V4_COM_BIN_VCOCAL_HSCLK_SEL           0x1bc
->> > > #define QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE2_MODE1     0x1b8
->> > >
->> > > FYI, the total size of serdes registers is 0x1c0.
->> >
->> > Yeah I will update it to 0x1c0
->> >
->> > >
->> > > <--snip-->
->> > > > +                   ufs_mem_phy_lanes: lanes@1d87400 {
->> > > > +                           reg = <0 0x01d87400 0 0x108>,
->> > > > +                                 <0 0x01d87600 0 0x1e0>,
->> > > > +                                 <0 0x01d87c00 0 0x1dc>,
->> > >
->> > > Same as above, see
->> > >
->> > > #define QPHY_V4_MULTI_LANE_CTRL1                      0x1e0
->> > >
->> > > FYI, the total size of PCS registers is 0x200
->> > >
->> > > > +                                 <0 0x01d87800 0 0x108>,
->> > > > +                                 <0 0x01d87a00 0 0x1e0>;
->> > > > +                           #phy-cells = <0>;
->> > > > +                   };
->> > > <--snip-->
->> >
->> > So I managed to fix it by configuring QPHY_SW_RESET in
->> > qcom_qmp_phy_com_init() before invoking the configuration. That makes it
->> > work for me. Will send patches shortly
->> 
->> So, you are going to send some fixes to make sm8150 work.  We also
->> need the extended timeout for all platforms, yes?  Who is going to
->> send up the patch for the timeout?  All of this should be -rc material
->> since Can's change caused these issues to appear, and thus impact
->> users, no?
+On Thu 12 Dec 20:53 PST 2019, Sai Prakash Ranjan wrote:
+
+> Update the compatible for QCS404 watchdog timer with proper
+> SoC specific compatible.
 > 
-> yeah I have tested a timeout of 10ms and seems to look good for me on
-> sm8150 and sdm845. I will be sending the patches in few minutes :) and
-> yes the timeout should be marked to 5.5 fixes
+
+Applied
+
+Thanks,
+Bjorn
+
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs404.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Thanks
-
-Hi Vinod,
-
-Good to know it works for you. Vivek Gautam, who is the author QCOM UFS 
-PHY
-driver, has left QCOM. Please add Asutosh Das(asutoshd@codeaurora.org),
-Bao D. Nguyen(nguyenb@codeaurora.org) and me for QCOM UFS PHY changes.
-
-Actually, without this change, your PHY is not even re-initialized at 
-all
-during kernel bootup, it just retains whatever it was configured in 
-UEFI,
-yet you are still saying this is a regression. The extended timeout is 
-what
-UFS PHY has to take for a full initialization.
-
-Regards,
-Can Guo.
+> diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> index f5f0c4c9cb16..c9e8e629045b 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+> @@ -905,7 +905,7 @@
+>  		};
+>  
+>  		watchdog@b017000 {
+> -			compatible = "qcom,kpss-wdt";
+> +			compatible = "qcom,apss-wdt-qcs404", "qcom,kpss-wdt";
+>  			reg = <0x0b017000 0x1000>;
+>  			clocks = <&sleep_clk>;
+>  		};
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
