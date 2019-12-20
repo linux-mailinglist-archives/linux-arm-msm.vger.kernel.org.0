@@ -2,258 +2,278 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2214E127C1E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2019 15:00:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F8AB127D60
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2019 15:37:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727390AbfLTOAD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Dec 2019 09:00:03 -0500
-Received: from mga17.intel.com ([192.55.52.151]:3553 "EHLO mga17.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727347AbfLTOAC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Dec 2019 09:00:02 -0500
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 20 Dec 2019 06:00:02 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,336,1571727600"; 
-   d="scan'208";a="416539963"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.76]) ([10.237.72.76])
-  by fmsmga005.fm.intel.com with ESMTP; 20 Dec 2019 05:59:58 -0800
-Subject: Re: [PATCH V1] mmc: sdhci-msm: Add CQHCI support for sdhci-msm
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        ulf.hansson@linaro.org, agross@kernel.org
-Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
-        sayalil@codeaurora.org, cang@codeaurora.org,
-        rampraka@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Ritesh Harjani <riteshh@codeaurora.org>
-References: <1576586233-28443-1-git-send-email-vbadigan@codeaurora.org>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <1c6a6749-68c3-ee16-2c1b-e7534dee4791@intel.com>
-Date:   Fri, 20 Dec 2019 15:59:07 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        id S1727532AbfLTOdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Dec 2019 09:33:25 -0500
+Received: from mail-il1-f196.google.com ([209.85.166.196]:43243 "EHLO
+        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727585AbfLTOdX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 20 Dec 2019 09:33:23 -0500
+Received: by mail-il1-f196.google.com with SMTP id v69so8090558ili.10;
+        Fri, 20 Dec 2019 06:33:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=B7zRI5HFZ9GdOv7/nuMrwlmDNkCl7lHHGMLGFpofT+E=;
+        b=fB6Gur4QH9KukcvwvfXarOJODwF4Cj8kYhFYHj92mj89R38WMd+4D6+qXvS02ibmDN
+         nmiCag1Iq36Y/OoVirpVXpYThuT4m1WeI3fIvUJNtbXp6XqO93+1PSgTyje9oIcsLd4w
+         DPSftyDp7iy0EaPbhK56tb7K2XIa8yESSOhLrtByhcK5cxET6CQ5LOdesQyfB6rt4k+r
+         Z8qrnko03b72rFxPMcff+vvdykOdSr3xbSb5A5EdXW0qDRZ9JQbWH+AZaoxXBWJnYWBn
+         aPMhV1hz37HQm00sBnYfzZ8SOA8fUTOxu+0rBBKQspC2/nrqcdErlcsC7PT+f0rNmjCE
+         vTag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=B7zRI5HFZ9GdOv7/nuMrwlmDNkCl7lHHGMLGFpofT+E=;
+        b=Oh4kAO7NtOGX3hn9m4sJ7aRc2MDr1Aj5LBhyw5DKo/xTtA3aa2DmBFRSeiD3NwfJFt
+         bL8+nMGJJ8MWLEguP179aEz5f+UGkZ6dn3XJxF8IXPq58iyofP0MFBh3tAkxLuui4Q8a
+         bw2DQwvP0K9H3qeDA6sp84c0EXoXjvrr+alFFzp/1+3Qxnd5rdmoASoTez5D3idsGmtH
+         7rVuWJ+MoayDVcG7TThDC6HAbAgWhOEY7l3XVhmzCZfrZgBxoKAr3ksni3GxBC7+MFEd
+         r8YnODr9vP8zCrw1pTsuESBs1cQZqZhjC9XBjDQQelGBKT+CQI/QToyZzRaTi/eWSdEo
+         7oDg==
+X-Gm-Message-State: APjAAAVYE3d3TpBcjqrmyCXBgUDex7VX+ZTnUo1YAp+q6s+ugfhllsc+
+        5boiPa58wTkzxK3khlrwoRv+0hcRsJfyY6GBc1U=
+X-Google-Smtp-Source: APXvYqziBD0NHeii8XJfTXHcWaB5cMulU0ZxJuLhN36rkOAlUk9SmN8ImVZQtX/lp8iQVt5ZG1U2Dd6RJLNTZHnrEqA=
+X-Received: by 2002:a92:465c:: with SMTP id t89mr13064188ila.263.1576852402106;
+ Fri, 20 Dec 2019 06:33:22 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <1576586233-28443-1-git-send-email-vbadigan@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20191218132217.28141-1-sibis@codeaurora.org> <20191218132217.28141-6-sibis@codeaurora.org>
+ <20191220065954.GA1908628@ripper>
+In-Reply-To: <20191220065954.GA1908628@ripper>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Fri, 20 Dec 2019 07:33:11 -0700
+Message-ID: <CAOCk7NoaWw8Tor-P02SESztWEGpGMK6GbRNG45yMVYhMdDCEnQ@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: msm8998: Add ADSP, MPSS and SLPI nodes
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Sibi Sankar <sibis@codeaurora.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org,
+        DTML <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/12/19 2:37 pm, Veerabhadrarao Badiganti wrote:
-> From: Ritesh Harjani <riteshh@codeaurora.org>
-> 
-> This adds CQHCI support for sdhci-msm platforms.
-> 
-> Signed-off-by: Ritesh Harjani <riteshh@codeaurora.org>
-> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-> 
-> ---
-> This patch is based on RFC patch
-> https://lkml.org/lkml/2017/8/30/313
-> 
-> Changes since RFC:
-> 	- Updated settings so that TDLBA won't get reset when
-> 	  CQE is enabled.
-> 	- Removed new compatible string and moved to supports-cqe
-> 	  dt flag to identify CQE support.
-> 	- Incorporated review comments.
-> 
-> Tested on: qcs404, sc7180
-> ---
->  drivers/mmc/host/sdhci-msm.c | 115 ++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 114 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 3d0bb5e..a4e3507 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -15,6 +15,7 @@
->  #include <linux/regulator/consumer.h>
->  
->  #include "sdhci-pltfm.h"
-> +#include "cqhci.h"
->  
->  #define CORE_MCI_VERSION		0x50
->  #define CORE_VERSION_MAJOR_SHIFT	28
-> @@ -122,6 +123,10 @@
->  #define msm_host_writel(msm_host, val, host, offset) \
->  	msm_host->var_ops->msm_writel_relaxed(val, host, offset)
->  
-> +/* CQHCI vendor specific registers */
-> +#define CQHCI_VENDOR_CFG1	0xA00
-> +#define DISABLE_RST_ON_CMDQ_EN	(0x3 << 13)
-> +
->  struct sdhci_msm_offset {
->  	u32 core_hc_mode;
->  	u32 core_mci_data_cnt;
-> @@ -1567,6 +1572,109 @@ static void sdhci_msm_set_clock(struct sdhci_host *host, unsigned int clock)
->  	__sdhci_msm_set_clock(host, clock);
->  }
->  
-> +/*****************************************************************************\
-> + *                                                                           *
-> + * MSM Command Queue Engine (CQE)                                            *
-> + *                                                                           *
-> +\*****************************************************************************/
-> +
-> +static u32 sdhci_msm_cqe_irq(struct sdhci_host *host, u32 intmask)
-> +{
-> +	int cmd_error = 0;
-> +	int data_error = 0;
-> +
-> +	if (!sdhci_cqe_irq(host, intmask, &cmd_error, &data_error))
-> +		return intmask;
-> +
-> +	cqhci_irq(host->mmc, intmask, cmd_error, data_error);
-> +	return 0;
-> +}
-> +
-> +void sdhci_msm_cqe_disable(struct mmc_host *mmc, bool recovery)
-> +{
-> +	struct sdhci_host *host = mmc_priv(mmc);
-> +	unsigned long flags;
-> +	u32 ctrl;
-> +
-> +	/*
-> +	 * When CQE is halted, the legacy SDHCI path operates only
-> +	 * on 128bit descriptors in 64bit mode.
-> +	 */
-> +	if (host->flags & SDHCI_USE_64_BIT_DMA)
-> +		host->desc_sz = 16;
+On Fri, Dec 20, 2019 at 12:00 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Wed 18 Dec 05:22 PST 2019, Sibi Sankar wrote:
+>
+> > This patch adds ADSP, MPSS and SLPI nodes for MSM8998 SoCs.
+> >
+> > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi |   8 ++
+> >  arch/arm64/boot/dts/qcom/msm8998.dtsi     | 124 ++++++++++++++++++++++
+> >  2 files changed, 132 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+> > index 6db3f9e0344d1..e87094665c52c 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+> > @@ -312,6 +312,14 @@
+> >       };
+> >  };
+> >
+> > +&remoteproc_adsp {
+> > +     status = "okay";
+> > +};
+> > +
+> > +&remoteproc_slpi {
+> > +     status = "okay";
+> > +};
+> > +
+> >  &tlmm {
+> >       gpio-reserved-ranges = <0 4>, <81 4>;
+> >  };
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> > index 8d799e868a5d3..014127700afb0 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> > @@ -1075,6 +1075,61 @@
+> >                       #interrupt-cells = <0x2>;
+> >               };
+> >
+> > +             remoteproc_mss: remoteproc@4080000 {
+> > +                     compatible = "qcom,msm8998-mss-pil";
+> > +                     reg = <0x04080000 0x100>, <0x04180000 0x20>;
+> > +                     reg-names = "qdsp6", "rmb";
+> > +
+> > +                     interrupts-extended =
+> > +                             <&intc GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
+> > +                             <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+> > +                             <&modem_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
+> > +                             <&modem_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
+> > +                             <&modem_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
+> > +                             <&modem_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
+> > +                     interrupt-names = "wdog", "fatal", "ready",
+> > +                                       "handover", "stop-ack",
+> > +                                       "shutdown-ack";
+> > +
+> > +                     clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
+> > +                              <&gcc GCC_BIMC_MSS_Q6_AXI_CLK>,
+> > +                              <&gcc GCC_BOOT_ROM_AHB_CLK>,
+> > +                              <&gcc GCC_MSS_GPLL0_DIV_CLK_SRC>,
+> > +                              <&gcc GCC_MSS_SNOC_AXI_CLK>,
+> > +                              <&gcc GCC_MSS_MNOC_BIMC_AXI_CLK>,
+> > +                              <&rpmcc RPM_SMD_QDSS_CLK>,
+> > +                              <&rpmcc RPM_SMD_XO_CLK_SRC>;
+>
+> RPM_SMD_XO_CLK_SRC doesn't seem to be implemented...
+>
+> I did pull in a patch from Jeff that defines it, but when I boot the
+> modem I see the following error repeatedly:
 
-The adma_table_sz depends on desc_sz, so it cannot be changed here.
-If you do something like below, then you can set desc_sz before calling
-sdhci_setup_host()
+Yeah, we need to figure out a solution for rpmcc to actually provide
+this since the previous N solutions were not acceptable.  Its on my
+todo list to look into in Jan.  However, I really think the DT should
+be defined this way, since it replicates the hardware config.
 
-diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-index f4540f9892ce..f1d3b70ff769 100644
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -3825,9 +3825,10 @@ int sdhci_setup_host(struct sdhci_host *host)
- 		void *buf;
- 
- 		if (host->flags & SDHCI_USE_64_BIT_DMA) {
-+			if (!host->desc_sz)
-+				host->desc_sz = SDHCI_ADMA2_64_DESC_SZ(host);
- 			host->adma_table_sz = host->adma_table_cnt *
--					      SDHCI_ADMA2_64_DESC_SZ(host);
--			host->desc_sz = SDHCI_ADMA2_64_DESC_SZ(host);
-+					      host->desc_sz;
- 		} else {
- 			host->adma_table_sz = host->adma_table_cnt *
- 					      SDHCI_ADMA2_32_DESC_SZ;
+>
+> [  616.632227] qcom-q6v5-mss 4080000.remoteproc: fatal error received: dog_hb.c:266:DOG_HB detects starvation of task 0xda172640, triage with its own
 
+Maybe the BIMC fix will address this?
 
-> +
-> +	spin_lock_irqsave(&host->lock, flags);
-> +
-> +	/*
-> +	 * During CQE operation command complete bit gets latched.
-> +	 * So s/w should clear command complete interrupt status when CQE is
-> +	 * halted. Otherwise unexpected SDCHI legacy interrupt gets
-> +	 * triggered when CQE is halted.
-> +	 */
-> +	ctrl = sdhci_readl(host, SDHCI_INT_ENABLE);
-> +	ctrl |= SDHCI_INT_RESPONSE;
-> +	sdhci_writel(host,  ctrl, SDHCI_INT_ENABLE);
-> +	sdhci_writel(host, SDHCI_INT_RESPONSE, SDHCI_INT_STATUS);
-> +
-> +	spin_unlock_irqrestore(&host->lock, flags);
-> +
-> +	sdhci_cqe_disable(mmc, recovery);
-> +}
-> +
-> +static const struct cqhci_host_ops sdhci_msm_cqhci_ops = {
-> +	.enable		= sdhci_cqe_enable,
-> +	.disable	= sdhci_msm_cqe_disable,
-> +};
-> +
-> +static int sdhci_msm_cqe_add_host(struct sdhci_host *host,
-> +				struct platform_device *pdev)
-> +{
-> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-> +	struct cqhci_host *cq_host;
-> +	bool dma64;
-> +	int ret;
-> +
-> +	ret = sdhci_setup_host(host);
-> +	if (ret)
-> +		return ret;
-> +
-> +	cq_host = cqhci_pltfm_init(pdev);
-> +	if (IS_ERR(cq_host)) {
-> +		ret = PTR_ERR(cq_host);
-> +		dev_err(&pdev->dev, "cqhci-pltfm init: failed: %d\n", ret);
-> +		goto cleanup;
-> +	}
-> +
-> +	msm_host->mmc->caps2 |= MMC_CAP2_CQE | MMC_CAP2_CQE_DCMD;
-> +	cq_host->ops = &sdhci_msm_cqhci_ops;
-> +
-> +	dma64 = host->flags & SDHCI_USE_64_BIT_DMA;
-> +
-> +	ret = cqhci_init(cq_host, host->mmc, dma64);
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "%s: CQE init: failed (%d)\n",
-> +				mmc_hostname(host->mmc), ret);
-> +		goto cleanup;
-> +	}
-> +
-> +	/* Disable cqe reset due to cqe enable signal */
-> +	cqhci_writel(cq_host, cqhci_readl(cq_host, CQHCI_VENDOR_CFG1) |
-> +		       DISABLE_RST_ON_CMDQ_EN, CQHCI_VENDOR_CFG1);
-> +
-> +	ret = __sdhci_add_host(host);
-> +	if (ret)
-> +		goto cleanup;
-> +
-> +	dev_info(&pdev->dev, "%s: CQE init: success\n",
-> +			mmc_hostname(host->mmc));
-> +	return ret;
-> +
-> +cleanup:
-> +	sdhci_cleanup_host(host);
-> +	return ret;
-> +}
-> +
->  /*
->   * Platform specific register write functions. This is so that, if any
->   * register write needs to be followed up by platform specific actions,
-> @@ -1731,6 +1839,7 @@ static void sdhci_msm_set_regulator_caps(struct sdhci_msm_host *msm_host)
->  	.set_uhs_signaling = sdhci_msm_set_uhs_signaling,
->  	.write_w = sdhci_msm_writew,
->  	.write_b = sdhci_msm_writeb,
-> +	.irq	= sdhci_msm_cqe_irq,
->  };
->  
->  static const struct sdhci_pltfm_data sdhci_msm_pdata = {
-> @@ -1754,6 +1863,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->  	u8 core_major;
->  	const struct sdhci_msm_offset *msm_offset;
->  	const struct sdhci_msm_variant_info *var_info;
-> +	struct device_node *node = pdev->dev.of_node;
->  
->  	host = sdhci_pltfm_init(pdev, &sdhci_msm_pdata, sizeof(*msm_host));
->  	if (IS_ERR(host))
-> @@ -1952,7 +2062,10 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->  	pm_runtime_use_autosuspend(&pdev->dev);
->  
->  	host->mmc_host_ops.execute_tuning = sdhci_msm_execute_tuning;
-> -	ret = sdhci_add_host(host);
-> +	if (of_property_read_bool(node, "supports-cqe"))
-> +		ret = sdhci_msm_cqe_add_host(host, pdev);
-> +	else
-> +		ret = sdhci_add_host(host);
->  	if (ret)
->  		goto pm_runtime_disable;
->  	sdhci_msm_set_regulator_caps(msm_host);
-> 
-
+>
+>
+>
+> All the qrtr services seems registered nicely, so the remote does come
+> up before it goes down.
+>
+> Also, adsp comes up nicely.
+>
+> Regards,
+> Bjorn
+>
+> > +                     clock-names = "iface", "bus", "mem", "gpll0_mss",
+> > +                                   "snoc_axi", "mnoc_axi", "qdss", "xo";
+> > +
+> > +                     qcom,smem-states = <&modem_smp2p_out 0>;
+> > +                     qcom,smem-state-names = "stop";
+> > +
+> > +                     resets = <&gcc GCC_MSS_RESTART>;
+> > +                     reset-names = "mss_restart";
+> > +
+> > +                     qcom,halt-regs = <&tcsr_mutex_regs 0x23000 0x25000 0x24000>;
+> > +
+> > +                     power-domains = <&rpmpd MSM8998_VDDCX>,
+> > +                                     <&rpmpd MSM8998_VDDMX>;
+> > +                     power-domain-names = "cx", "mx";
+> > +
+> > +                     mba {
+> > +                             memory-region = <&mba_mem>;
+> > +                     };
+> > +
+> > +                     mpss {
+> > +                             memory-region = <&mpss_mem>;
+> > +                     };
+> > +
+> > +                     glink-edge {
+> > +                             interrupts = <GIC_SPI 452 IRQ_TYPE_EDGE_RISING>;
+> > +                             label = "modem";
+> > +                             qcom,remote-pid = <1>;
+> > +                             mboxes = <&apcs_glb 15>;
+> > +                     };
+> > +             };
+> > +
+> >               gpucc: clock-controller@5065000 {
+> >                       compatible = "qcom,msm8998-gpucc";
+> >                       #clock-cells = <1>;
+> > @@ -1088,6 +1143,42 @@
+> >                                     "gpll0";
+> >               };
+> >
+> > +             remoteproc_slpi: remoteproc@5800000 {
+> > +                     compatible = "qcom,msm8998-slpi-pas";
+> > +                     reg = <0x05800000 0x4040>;
+> > +
+> > +                     interrupts-extended = <&intc GIC_SPI 390 IRQ_TYPE_EDGE_RISING>,
+> > +                                           <&slpi_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+> > +                                           <&slpi_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
+> > +                                           <&slpi_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
+> > +                                           <&slpi_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
+> > +                     interrupt-names = "wdog", "fatal", "ready",
+> > +                                       "handover", "stop-ack";
+> > +
+> > +                     px-supply = <&vreg_lvs2a_1p8>;
+> > +
+> > +                     clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+> > +                              <&rpmcc RPM_SMD_AGGR2_NOC_CLK>;
+> > +                     clock-names = "xo", "aggre2";
+> > +
+> > +                     memory-region = <&slpi_mem>;
+> > +
+> > +                     qcom,smem-states = <&slpi_smp2p_out 0>;
+> > +                     qcom,smem-state-names = "stop";
+> > +
+> > +                     power-domains = <&rpmpd MSM8998_SSCCX>;
+> > +                     power-domain-names = "ssc_cx";
+> > +
+> > +                     status = "disabled";
+> > +
+> > +                     glink-edge {
+> > +                             interrupts = <GIC_SPI 179 IRQ_TYPE_EDGE_RISING>;
+> > +                             label = "dsps";
+> > +                             qcom,remote-pid = <3>;
+> > +                             mboxes = <&apcs_glb 27>;
+> > +                     };
+> > +             };
+> > +
+> >               stm: stm@6002000 {
+> >                       compatible = "arm,coresight-stm", "arm,primecell";
+> >                       reg = <0x06002000 0x1000>,
+> > @@ -1880,6 +1971,39 @@
+> >                       #size-cells = <0>;
+> >               };
+> >
+> > +             remoteproc_adsp: remoteproc@17300000 {
+> > +                     compatible = "qcom,msm8998-adsp-pas";
+> > +                     reg = <0x17300000 0x4040>;
+> > +
+> > +                     interrupts-extended = <&intc GIC_SPI 162 IRQ_TYPE_EDGE_RISING>,
+> > +                                           <&adsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+> > +                                           <&adsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
+> > +                                           <&adsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
+> > +                                           <&adsp_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
+> > +                     interrupt-names = "wdog", "fatal", "ready",
+> > +                                       "handover", "stop-ack";
+> > +
+> > +                     clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>;
+> > +                     clock-names = "xo";
+> > +
+> > +                     memory-region = <&adsp_mem>;
+> > +
+> > +                     qcom,smem-states = <&adsp_smp2p_out 0>;
+> > +                     qcom,smem-state-names = "stop";
+> > +
+> > +                     power-domains = <&rpmpd MSM8998_VDDCX>;
+> > +                     power-domain-names = "cx";
+> > +
+> > +                     status = "disabled";
+> > +
+> > +                     glink-edge {
+> > +                             interrupts = <GIC_SPI 157 IRQ_TYPE_EDGE_RISING>;
+> > +                             label = "lpass";
+> > +                             qcom,remote-pid = <2>;
+> > +                             mboxes = <&apcs_glb 9>;
+> > +                     };
+> > +             };
+> > +
+> >               apcs_glb: mailbox@17911000 {
+> >                       compatible = "qcom,msm8998-apcs-hmss-global";
+> >                       reg = <0x17911000 0x1000>;
+> > --
+> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> > a Linux Foundation Collaborative Project
