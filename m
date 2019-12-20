@@ -2,88 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A7B3127480
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2019 05:21:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C120D127483
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2019 05:22:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727110AbfLTEV3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Dec 2019 23:21:29 -0500
-Received: from mail.kernel.org ([198.145.29.99]:45010 "EHLO mail.kernel.org"
+        id S1727084AbfLTEWf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Dec 2019 23:22:35 -0500
+Received: from mail.kernel.org ([198.145.29.99]:45176 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726986AbfLTEV3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Dec 2019 23:21:29 -0500
+        id S1726986AbfLTEWf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Dec 2019 23:22:35 -0500
 Received: from localhost (unknown [106.201.107.54])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 788B921D7D;
-        Fri, 20 Dec 2019 04:21:27 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3B7E4206EF;
+        Fri, 20 Dec 2019 04:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1576815688;
-        bh=TEM0b/JaWXh5vC0Me0WpSth4fQG3Gksa+E3z056weGw=;
+        s=default; t=1576815755;
+        bh=Puza4F4qgk4RDqbJT+7VKvoL6ZDUdD3ktZeuxippD+8=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=QmM0djdzoD5smoRw/7poKBsNkM4Wwhz9RSg2N67KXQsvEwKSUVNIsbuFSRxzS0UvA
-         mCCDjztcD1+/uNHygFSGG1qvsqBhp1IiPunDdklJ/6BRC07aofviK6fi4dhQOPJUBs
-         CnEF8p+fcgZtNjCIvvYhbqwy6O33MmCa8n7ABEGA=
-Date:   Fri, 20 Dec 2019 09:51:23 +0530
+        b=ET2sPU5JjID/dzNdAzf1z7ndYsmcMj8DBAIlQd2GKmYG/avJxf3XEo084C8klnvy7
+         bGR/dq/Tg4MxsUnhhgVsndHPd46UxPO2O9dvA5Sju+J22paAea/kF4TP90Yrk4WvyC
+         K1LNwjwricLkJ2ekjHuFZHm9tbmKyC1PeiPSc+YM=
+Date:   Fri, 20 Dec 2019 09:52:30 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     cang@codeaurora.org
 Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Can Guo <cang@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] phy: qcom-qmp: Increase the phy init timeout
-Message-ID: <20191220042123.GC2536@vkoul-mobl>
+Subject: Re: [PATCH 2/4] phy: qcom-qmp: Use register defines
+Message-ID: <20191220042230.GD2536@vkoul-mobl>
 References: <20191219150433.2785427-1-vkoul@kernel.org>
- <20191219150433.2785427-2-vkoul@kernel.org>
- <20191220020835.GK448416@yoga>
+ <20191219150433.2785427-3-vkoul@kernel.org>
+ <9e69d0b803cdbfe69d6edb62b8aa9b24@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191220020835.GK448416@yoga>
+In-Reply-To: <9e69d0b803cdbfe69d6edb62b8aa9b24@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19-12-19, 18:08, Bjorn Andersson wrote:
-> On Thu 19 Dec 07:04 PST 2019, Vinod Koul wrote:
-> 
-> > If we do full reset of the phy, it seems to take a couple of ms to come
-> > up on my system so increase the timeout to 10ms.
+On 20-12-19, 08:44, cang@codeaurora.org wrote:
+> On 2019-12-19 23:04, Vinod Koul wrote:
+> > We already define register offsets so use them in register layout.
 > > 
-> > This was found by full reset addition by commit 870b1279c7a0
-> > ("scsi: ufs-qcom: Add reset control support for host controller") and
-> > fixes the regression to platforms by this commit.
-> > 
-> > Suggested-by: Can Guo <cang@codeaurora.org>
 > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> 
-> This does look familiar...
-> 
-> https://lore.kernel.org/linux-arm-msm/20191107000917.1092409-3-bjorn.andersson@linaro.org/
-> 
 > > ---
-> >  drivers/phy/qualcomm/phy-qcom-qmp.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >  drivers/phy/qualcomm/phy-qcom-qmp.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
 > > 
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > index 091e20303a14..c2e800a3825a 100644
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > index c2e800a3825a..06f971ca518e 100644
 > > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
 > > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > @@ -66,7 +66,7 @@
-> >  /* QPHY_V3_PCS_MISC_CLAMP_ENABLE register bits */
-> >  #define CLAMP_EN				BIT(0) /* enables i/o clamp_n */
-> >  
-> > -#define PHY_INIT_COMPLETE_TIMEOUT		1000
-> > +#define PHY_INIT_COMPLETE_TIMEOUT		100000
+> > @@ -166,8 +166,8 @@ static const unsigned int
+> > sdm845_ufsphy_regs_layout[] = {
+> >  };
+> > 
+> >  static const unsigned int sm8150_ufsphy_regs_layout[] = {
+> > -	[QPHY_START_CTRL]		= 0x00,
+> > -	[QPHY_PCS_READY_STATUS]		= 0x180,
+> > +	[QPHY_START_CTRL]		= QPHY_V4_PHY_START,
+> > +	[QPHY_SW_RESET]			= QPHY_V4_SW_RESET,
+> >  };
+> > 
+> >  static const struct qmp_phy_init_tbl msm8996_pcie_serdes_tbl[] = {
 > 
-> 100ms seems a little bit excessive, and we do end up waiting this long
-> when we have PCIe links without an attached device...
+> Why is the QPHY_PCS_READY_STATUS removed here? Then what "status" are we
+> polling here for UFS PHY?
 > 
-> Do you need >10ms or could we just have my patch merged?
+> <snip>
+>      if (cfg->type == PHY_TYPE_UFS) {
+>          status = pcs + cfg->regs[QPHY_PCS_READY_STATUS];
+>          mask = PCS_READY;
+>          ready = PCS_READY;
+>      } else {
+> <snip>
 
-Yeah I quick tested 10ms as well and seems good for me, so either ways
-if fine, but lets get it applied quickly :-)
+Good catch Can, I dont think I intended it that way. Will fix it up!
 
+Thanks
 -- 
 ~Vinod
