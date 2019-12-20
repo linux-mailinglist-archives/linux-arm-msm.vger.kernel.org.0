@@ -2,366 +2,409 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ADB1B1282F6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Dec 2019 20:58:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 33F95128577
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2019 00:20:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727394AbfLTT6K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Dec 2019 14:58:10 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:52240 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727413AbfLTT6H (ORCPT
+        id S1726470AbfLTXUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Dec 2019 18:20:49 -0500
+Received: from mail-io1-f66.google.com ([209.85.166.66]:35949 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726267AbfLTXUs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Dec 2019 14:58:07 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1576871886; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=qqzsE6iE6h9c38qi8OJwL6QizKwmkcXr+epT82FyQ1U=; b=GykuAbwDO6voH7KuRDNSw/bxaRpVYsVRTVCh9fn5d1sgfovrRJjfEaagrmwvTXVH7m7t+vDY
- bZPVAcTMAkx+HbE6miz6PTRlX2lRn9K/SA0S8lhrS5iqzKm8jApN8mwHsPPjocpU0J/05MWl
- 669I4jUxchUBSuTt6wgQchjRl9M=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5dfd27cb.7fc92c9f4068-smtp-out-n02;
- Fri, 20 Dec 2019 19:58:03 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2E6D7C433CB; Fri, 20 Dec 2019 19:58:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A3857C43383;
-        Fri, 20 Dec 2019 19:58:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A3857C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Fri, 20 Dec 2019 12:57:58 -0700
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     smasetty@codeaurora.org
-Cc:     freedreno@lists.freedesktop.org, saiprakash.ranjan@codeaurora.org,
-        will@kernel.org, linux-arm-msm@vger.kernel.org, joro@8bytes.org,
-        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
-        dri-devel@freedesktop.org, robin.murphy@arm.com,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [Freedreno] [PATCH 5/5] drm/msm/a6xx: Add support for using
- system cache(LLC)
-Message-ID: <20191220195758.GA12730@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: smasetty@codeaurora.org, freedreno@lists.freedesktop.org,
-        saiprakash.ranjan@codeaurora.org, will@kernel.org,
-        linux-arm-msm@vger.kernel.org, joro@8bytes.org,
-        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
-        dri-devel@freedesktop.org, robin.murphy@arm.com,
-        linux-arm-msm-owner@vger.kernel.org
-References: <1576761286-20451-1-git-send-email-smasetty@codeaurora.org>
- <1576761286-20451-6-git-send-email-smasetty@codeaurora.org>
- <20191219195814.GA23673@jcrouse1-lnx.qualcomm.com>
- <9c32a63c7300cb68e459f58a1b6fe3f8@codeaurora.org>
+        Fri, 20 Dec 2019 18:20:48 -0500
+Received: by mail-io1-f66.google.com with SMTP id r13so967411ioa.3;
+        Fri, 20 Dec 2019 15:20:48 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=nToGohRzbcvtGJGvS9bZUDG4QHSeGKTIa0oX9N/eOCw=;
+        b=qzZUkiAJ4eEvc97U77xOEP5Ws3xzxTdBnN8iLtpO8Gz97gvMq5TUp4+B7hgamg/LLv
+         SD0d9K8utb7LfF472beTJf57nQbAnTLel7eviysC3jjBMygW/py0FPp1QaisI2SFBks0
+         lNRrRLRAx2PSK0I6EidI2gIkUAryhwmUGbvkPz2fuuyE6v9yaGvsYQDMfDsWa/Vdto++
+         W8dU/knPT9rP6ykshot3yNP2CL70VtUAmprUz8WOcrLDyE+YP9u113ZA6gilrIXqWM3L
+         xOiKSsVOoo9gjxBXQc+qaFTmxQHAFw6+lW05L+EdrcCXKn2+xIsl0yrEAYXU6rXhZr9L
+         MxAA==
+X-Gm-Message-State: APjAAAW2cZllzKjI4ZAHc9Q/ipni8Et6Qb1zdpEgzZJAelNz4Bgzlucd
+        v+7TuczobpGBSIgET2bxIA==
+X-Google-Smtp-Source: APXvYqyAHATAQt3ZrPRsZ/7csGNdq8RLdQi+VY25XtzUjR1itdJ/03MzT3khYszSykAkaHrsWPwDnQ==
+X-Received: by 2002:a6b:e711:: with SMTP id b17mr11434927ioh.307.1576884047752;
+        Fri, 20 Dec 2019 15:20:47 -0800 (PST)
+Received: from localhost ([64.188.179.251])
+        by smtp.gmail.com with ESMTPSA id j5sm3923212ioq.30.2019.12.20.15.20.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Dec 2019 15:20:46 -0800 (PST)
+Date:   Fri, 20 Dec 2019 16:20:46 -0700
+From:   Rob Herring <robh@kernel.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mgautam@codeaurora.org, swboyd@chromium.org
+Subject: Re: [PATCH V2] dt-bindings: geni-se: Convert QUP geni-se bindings to
+ YAML
+Message-ID: <20191220232046.GA408@bogus>
+References: <1576576279-29927-1-git-send-email-akashast@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9c32a63c7300cb68e459f58a1b6fe3f8@codeaurora.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <1576576279-29927-1-git-send-email-akashast@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Dec 20, 2019 at 03:40:59PM +0530, smasetty@codeaurora.org wrote:
-> On 2019-12-20 01:28, Jordan Crouse wrote:
-> >On Thu, Dec 19, 2019 at 06:44:46PM +0530, Sharat Masetty wrote:
-> >>The last level system cache can be partitioned to 32 different slices
-> >>of which GPU has two slices preallocated. One slice is used for caching
-> >>GPU
-> >>buffers and the other slice is used for caching the GPU SMMU pagetables.
-> >>This patch talks to the core system cache driver to acquire the slice
-> >>handles,
-> >>configure the SCID's to those slices and activates and deactivates the
-> >>slices
-> >>upon GPU power collapse and restore.
-> >>
-> >>Some support from the IOMMU driver is also needed to make use of the
-> >>system cache. IOMMU_QCOM_SYS_CACHE is a buffer protection flag which
-> >>enables
-> >>caching GPU data buffers in the system cache with memory attributes such
-> >>as outer cacheable, read-allocate, write-allocate for buffers. The GPU
-> >>then has the ability to override a few cacheability parameters which it
-> >>does to override write-allocate to write-no-allocate as the GPU hardware
-> >>does not benefit much from it.
-> >>
-> >>Similarly DOMAIN_ATTR_QCOM_SYS_CACHE is another domain level attribute
-> >>used by the IOMMU driver to set the right attributes to cache the
-> >>hardware
-> >>pagetables into the system cache.
-> >>
-> >>Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
-> >>---
-> >> drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 122
-> >>+++++++++++++++++++++++++++++++++-
-> >> drivers/gpu/drm/msm/adreno/a6xx_gpu.h |   9 +++
-> >> drivers/gpu/drm/msm/msm_iommu.c       |  13 ++++
-> >> drivers/gpu/drm/msm/msm_mmu.h         |   3 +
-> >> 4 files changed, 146 insertions(+), 1 deletion(-)
-> >>
-> >>diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> >>b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> >>index faff6ff..0c7fdee 100644
-> >>--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> >>+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> >>@@ -9,6 +9,7 @@
-> >> #include "a6xx_gmu.xml.h"
-> >>
-> >> #include <linux/devfreq.h>
-> >>+#include <linux/soc/qcom/llcc-qcom.h>
-> >>
-> >> #define GPU_PAS_ID 13
-> >>
-> >>@@ -781,6 +782,117 @@ static void
-> >>a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu)
-> >> 	gpu_write(gpu, REG_A6XX_GBIF_HALT, 0x0);
-> >> }
-> >>
-> >>+#define A6XX_LLC_NUM_GPU_SCIDS		5
-> >>+#define A6XX_GPU_LLC_SCID_NUM_BITS	5
-> >
-> >As I mention below, I'm not sure if we need these
-> >
-> >>+#define A6XX_GPU_LLC_SCID_MASK \
-> >>+	((1 << (A6XX_LLC_NUM_GPU_SCIDS * A6XX_GPU_LLC_SCID_NUM_BITS)) - 1)
-> >>+
-> >>+#define A6XX_GPUHTW_LLC_SCID_SHIFT	25
-> >>+#define A6XX_GPUHTW_LLC_SCID_MASK \
-> >>+	(((1 << A6XX_GPU_LLC_SCID_NUM_BITS) - 1) <<
-> >>A6XX_GPUHTW_LLC_SCID_SHIFT)
-> >>+
-> >
-> >Normally these go into the envytools regmap but if we're going to do these
-> >guys
-> >lets use the power of <linux/bitfield.h> for good.
-> >
-> >#define A6XX_GPU_LLC_SCID GENMASK(24, 0)
-> >#define A6XX_GPUHTW_LLC_SCID GENMASK(29, 25)
-> >
-> >>+static inline void a6xx_gpu_cx_rmw(struct a6xx_llc *llc,
-> >
-> >Don't mark C functions as inline - let the compiler figure it out for you.
-> >
-> >>+	u32 reg, u32 mask, u32 or)
-> >>+{
-> >>+	msm_rmw(llc->mmio + (reg << 2), mask, or);
-> >>+}
-> >>+
-> >>+static void a6xx_llc_deactivate(struct a6xx_llc *llc)
-> >>+{
-> >>+	llcc_slice_deactivate(llc->gpu_llc_slice);
-> >>+	llcc_slice_deactivate(llc->gpuhtw_llc_slice);
-> >>+}
-> >>+
-> >>+static void a6xx_llc_activate(struct a6xx_llc *llc)
-> >>+{
-> >>+	if (!llc->mmio)
-> >>+		return;
-> >>+
-> >>+	/* Program the sub-cache ID for all GPU blocks */
-> >>+	if (!llcc_slice_activate(llc->gpu_llc_slice))
-> >>+		a6xx_gpu_cx_rmw(llc,
-> >>+				REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_1,
-> >>+				A6XX_GPU_LLC_SCID_MASK,
-> >>+				(llc->cntl1_regval &
-> >>+				 A6XX_GPU_LLC_SCID_MASK));
-> >
-> >This is out of order with the comments below, but if we store the slice id
-> >then
-> >you could calculate regval here and not have to store it.
-> >
-> >>+
-> >>+	/* Program the sub-cache ID for the GPU pagetables */
-> >>+	if (!llcc_slice_activate(llc->gpuhtw_llc_slice))
-> >
-> >val |= FIELD_SET(A6XX_GPUHTW_LLC_SCID, htw_llc_sliceid);
-> >
-> >>+		a6xx_gpu_cx_rmw(llc,
-> >>+				REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_1,
-> >>+				A6XX_GPUHTW_LLC_SCID_MASK,
-> >>+				(llc->cntl1_regval &
-> >>+				 A6XX_GPUHTW_LLC_SCID_MASK));
-> >
-> >And this could be FIELD_SET(A6XX_GPUHTW_LLC_SCID, sliceid);
-> >
-> >In theory you could just calculate the u32 and write it directly without a
-> >rmw.
-> >In fact, that might be preferable - if the slice activate failed, you
-> >don't want
-> >to run the risk that the scid for htw is still populated.
-> >
-> >>+
-> >>+	/* Program cacheability overrides */
-> >>+	a6xx_gpu_cx_rmw(llc, REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_0, 0xF,
-> >>+		llc->cntl0_regval);
-> >
-> >As below, this could easily be a constant.
-> >
-> >>+}
-> >>+
-> >>+static void a6xx_llc_slices_destroy(struct a6xx_llc *llc)
-> >>+{
-> >>+	if (llc->mmio)
-> >>+		iounmap(llc->mmio);
-> >
-> >msm_ioremap returns a devm_ managed resource, so do not use iounmap() to
-> >free
-> >it. Bets to just leave it and let the gpu device handle it when it goes
-> >boom.
-> >
-> >>+
-> >>+	llcc_slice_putd(llc->gpu_llc_slice);
-> >>+	llcc_slice_putd(llc->gpuhtw_llc_slice);
-> >>+}
-> >>+
-> >>+static int a6xx_llc_slices_init(struct platform_device *pdev,
-> >T
-> >This can be void, I don't think we care if it passes or fails.
-> >
-> >>+		struct a6xx_llc *llc)
-> >>+{
-> >>+	llc->mmio = msm_ioremap(pdev, "cx_mem", "gpu_cx");
-> >>+	if (IS_ERR_OR_NULL(llc->mmio))
-> >
-> >msm_ioremap can not return NULL.
-> >
-> >>+		return -ENODEV;
-> >>+
-> >>+	llc->gpu_llc_slice = llcc_slice_getd(LLCC_GPU);
-> >>+	llc->gpuhtw_llc_slice = llcc_slice_getd(LLCC_GPUHTW);
-> >>+	if (IS_ERR(llc->gpu_llc_slice) && IS_ERR(llc->gpuhtw_llc_slice))
-> >>+		return -ENODEV;
-> >>+
-> >>+	/*
-> >>+	 * CNTL0 provides options to override the settings for the
-> >>+	 * read and write allocation policies for the LLC. These
-> >>+	 * overrides are global for all memory transactions from
-> >>+	 * the GPU.
-> >>+	 *
-> >>+	 * 0x3: read-no-alloc-overridden = 0
-> >>+	 *      read-no-alloc = 0 - Allocate lines on read miss
-> >>+	 *      write-no-alloc-overridden = 1
-> >>+	 *      write-no-alloc = 1 - Do not allocates lines on write miss
-> >>+	 */
-> >>+	llc->cntl0_regval = 0x03;
-> >
-> >This is a fixed value isn't it?  We should be able to get away with
-> >writing a
-> >constant.
-> >
-> >>+
-> >>+	/*
-> >>+	 * CNTL1 is used to specify SCID for (CP, TP, VFD, CCU and UBWC
-> >>+	 * FLAG cache) GPU blocks. This value will be passed along with
-> >>+	 * the address for any memory transaction from GPU to identify
-> >>+	 * the sub-cache for that transaction.
-> >>+	 */
-> >>+	if (!IS_ERR(llc->gpu_llc_slice)) {
-> >>+		u32 gpu_scid = llcc_get_slice_id(llc->gpu_llc_slice);
-> >>+		int i;
-> >>+
-> >>+		for (i = 0; i < A6XX_LLC_NUM_GPU_SCIDS; i++)
-> >>+			llc->cntl1_regval |=
-> >>+				gpu_scid << (A6XX_GPU_LLC_SCID_NUM_BITS * i);
-> >
-> >As above, i'm not sure a loop is better than just:
-> >
-> >gpu_scid &= 0x1f;
-> >
-> >llc->cntl1_regval = (gpu_scid << 0) || (gpu_scid << 5) | (gpu_scid << 10)
-> > | (gpu_scid << 15) | (gpu_scid << 20);
-> >
-> >And I'm not even sure we need do this math here in the first place.
-> >
-> >>+	}
-> >>+
-> >>+	/*
-> >>+	 * Set SCID for GPU IOMMU. This will be used to access
-> >>+	 * page tables that are cached in LLC.
-> >>+	 */
-> >>+	if (!IS_ERR(llc->gpuhtw_llc_slice)) {
-> >>+		u32 gpuhtw_scid = llcc_get_slice_id(llc->gpuhtw_llc_slice);
-> >>+
-> >>+		llc->cntl1_regval |=
-> >>+			gpuhtw_scid << A6XX_GPUHTW_LLC_SCID_SHIFT;
-> >>+	}
-> >
-> >As above, I think storing the slice id could be more beneficial than
-> >calculating
-> >a value, but if we do calculate a value, use
-> >FIELD_SET(A6XX_GPUHTW_LLC_SCID, )
-> >
-> >>+
-> >>+	return 0;
-> >>+}
-> >>+
-> >> static int a6xx_pm_resume(struct msm_gpu *gpu)
-> >> {
-> >> 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-> >>@@ -795,6 +907,8 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
-> >>
-> >> 	msm_gpu_resume_devfreq(gpu);
-> >>
-> >>+	a6xx_llc_activate(&a6xx_gpu->llc);
-> >>+
-> >> 	return 0;
-> >> }
-> >>
-> >>@@ -803,6 +917,8 @@ static int a6xx_pm_suspend(struct msm_gpu *gpu)
-> >> 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-> >> 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-> >>
-> >>+	a6xx_llc_deactivate(&a6xx_gpu->llc);
-> >>+
-> >> 	devfreq_suspend_device(gpu->devfreq.devfreq);
-> >>
-> >> 	/*
-> >>@@ -851,6 +967,7 @@ static void a6xx_destroy(struct msm_gpu *gpu)
-> >> 		drm_gem_object_put_unlocked(a6xx_gpu->sqe_bo);
-> >> 	}
-> >>
-> >>+	a6xx_llc_slices_destroy(&a6xx_gpu->llc);
-> >> 	a6xx_gmu_remove(a6xx_gpu);
-> >>
-> >> 	adreno_gpu_cleanup(adreno_gpu);
-> >>@@ -924,7 +1041,10 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device
-> >>*dev)
-> >> 	adreno_gpu->registers = NULL;
-> >> 	adreno_gpu->reg_offsets = a6xx_register_offsets;
-> >>
-> >>-	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 1, 0);
-> >>+	ret = a6xx_llc_slices_init(pdev, &a6xx_gpu->llc);
-> >>+
-> >
-> >Confirming we don't care if a6xx_llc_slices_init passes or fails.
+On Tue, Dec 17, 2019 at 03:21:19PM +0530, Akash Asthana wrote:
+> Convert QUP geni-se bindings to DT schema format using json-schema.
 > 
-> Are you suggesting to unconditionally set the memory attributes in iommu(see
-> the code below in msm_iommu.c).
-> We probably wouldn't need this patch too in that case:
-> https://patchwork.freedesktop.org/patch/346097/
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> ---
+> Changes in V2:
+>  - As per Stephen's comment corrected defintion of interrupts for UART node.
+>    Any valid UART node must contain atleast 1 interrupts.
 > 
-> The return code  is used in the line below to pass
-> MMU_FEATURE_USE_SYSTEM_CACHE. Am I missing something here?
+>  .../devicetree/bindings/soc/qcom/qcom,geni-se.txt  |  94 ----------
+>  .../devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 197 +++++++++++++++++++++
+>  2 files changed, 197 insertions(+), 94 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.txt
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.txt
+> deleted file mode 100644
+> index dab7ca9..0000000
+> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.txt
+> +++ /dev/null
+> @@ -1,94 +0,0 @@
+> -Qualcomm Technologies, Inc. GENI Serial Engine QUP Wrapper Controller
+> -
+> -Generic Interface (GENI) based Qualcomm Universal Peripheral (QUP) wrapper
+> -is a programmable module for supporting a wide range of serial interfaces
+> -like UART, SPI, I2C, I3C, etc. A single QUP module can provide upto 8 Serial
+> -Interfaces, using its internal Serial Engines. The GENI Serial Engine QUP
+> -Wrapper controller is modeled as a node with zero or more child nodes each
+> -representing a serial engine.
+> -
+> -Required properties:
+> -- compatible:		Must be "qcom,geni-se-qup".
+> -- reg:			Must contain QUP register address and length.
+> -- clock-names:		Must contain "m-ahb" and "s-ahb".
+> -- clocks:		AHB clocks needed by the device.
+> -
+> -Required properties if child node exists:
+> -- #address-cells: 	Must be <1> for Serial Engine Address
+> -- #size-cells: 		Must be <1> for Serial Engine Address Size
+> -- ranges: 		Must be present
+> -
+> -Properties for children:
+> -
+> -A GENI based QUP wrapper controller node can contain 0 or more child nodes
+> -representing serial devices.  These serial devices can be a QCOM UART, I2C
+> -controller, SPI controller, or some combination of aforementioned devices.
+> -Please refer below the child node definitions for the supported serial
+> -interface protocols.
+> -
+> -Qualcomm Technologies Inc. GENI Serial Engine based I2C Controller
+> -
+> -Required properties:
+> -- compatible:		Must be "qcom,geni-i2c".
+> -- reg: 			Must contain QUP register address and length.
+> -- interrupts: 		Must contain I2C interrupt.
+> -- clock-names: 		Must contain "se".
+> -- clocks: 		Serial engine core clock needed by the device.
+> -- #address-cells:	Must be <1> for I2C device address.
+> -- #size-cells:		Must be <0> as I2C addresses have no size component.
+> -
+> -Optional property:
+> -- clock-frequency:	Desired I2C bus clock frequency in Hz.
+> -			When missing default to 100000Hz.
+> -
+> -Child nodes should conform to I2C bus binding as described in i2c.txt.
+> -
+> -Qualcomm Technologies Inc. GENI Serial Engine based UART Controller
+> -
+> -Required properties:
+> -- compatible:		Must be "qcom,geni-debug-uart" or "qcom,geni-uart".
+> -- reg: 			Must contain UART register location and length.
+> -- interrupts: 		Must contain UART core interrupts.
+> -- clock-names:		Must contain "se".
+> -- clocks:		Serial engine core clock needed by the device.
+> -
+> -Qualcomm Technologies Inc. GENI Serial Engine based SPI Controller
+> -node binding is described in
+> -Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt.
+> -
+> -Example:
+> -	geniqup@8c0000 {
+> -		compatible = "qcom,geni-se-qup";
+> -		reg = <0x8c0000 0x6000>;
+> -		clock-names = "m-ahb", "s-ahb";
+> -		clocks = <&clock_gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
+> -			<&clock_gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
+> -		#address-cells = <1>;
+> -		#size-cells = <1>;
+> -		ranges;
+> -
+> -		i2c0: i2c@a94000 {
+> -			compatible = "qcom,geni-i2c";
+> -			reg = <0xa94000 0x4000>;
+> -			interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
+> -			clock-names = "se";
+> -			clocks = <&clock_gcc GCC_QUPV3_WRAP0_S5_CLK>;
+> -			pinctrl-names = "default", "sleep";
+> -			pinctrl-0 = <&qup_1_i2c_5_active>;
+> -			pinctrl-1 = <&qup_1_i2c_5_sleep>;
+> -			#address-cells = <1>;
+> -			#size-cells = <0>;
+> -		};
+> -
+> -		uart0: serial@a88000 {
+> -			compatible = "qcom,geni-debug-uart";
+> -			reg = <0xa88000 0x7000>;
+> -			interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
+> -			clock-names = "se";
+> -			clocks = <&clock_gcc GCC_QUPV3_WRAP0_S0_CLK>;
+> -			pinctrl-names = "default", "sleep";
+> -			pinctrl-0 = <&qup_1_uart_3_active>;
+> -			pinctrl-1 = <&qup_1_uart_3_sleep>;
+> -		};
+> -
+> -	}
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+> new file mode 100644
+> index 0000000..5ba0e0e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+> @@ -0,0 +1,197 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: GENI Serial Engine QUP Wrapper Controller
+> +
+> +maintainers:
+> + - Mukesh Savaliya <msavaliy@codeaurora.org>
+> + - Akash Asthana <akashast@codeaurora.org>
+> +
+> +description: |
+> + Generic Interface (GENI) based Qualcomm Universal Peripheral (QUP) wrapper
+> + is a programmable module for supporting a wide range of serial interfaces
+> + like UART, SPI, I2C, I3C, etc. A single QUP module can provide upto 8 Serial
+> + Interfaces, using its internal Serial Engines. The GENI Serial Engine QUP
+> + Wrapper controller is modeled as a node with zero or more child nodes each
+> + representing a serial engine.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,geni-se-qup
+> +
+> +  reg:
+> +    description: QUP wrapper common register address and length.
+> +
+> +  clock-names:
+> +    items:
+> +      - const: m-ahb
+> +      - const: s-ahb
+> +
+> +  clocks:
+> +    minItems: 2
+> +    maxItems: 2
+> +    items:
+> +      - description: Master AHB Clock
+> +      - description: Slave AHB Clock
+> +
+> +  "#address-cells":
+> +     const: 2
+> +
+> +  "#size-cells":
+> +     const: 2
+> +
+> +  ranges: true
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - "#address-cells"
+> +  - "#size-cells"
+> +  - ranges
+> +
+> +patternProperties:
+> +  "[i2c|spi]@[0-9]+$":
 
-Oh, I see. Please don't do that. Set a separate flag if you need to.
+You'll need to split this so you can a add $ref to SPI and I2C 
+controller schemas.
 
-features = 0;
+For example:
 
- if (a6xx_llc_slices_init(pdev, &a6xx_gpu->llc))
-    features = MMU_FEATURE_USE_SYSTEM_CACHE;
+allOf:
+  - $ref: /spi/spi-controller.yaml#
 
-Hiding ret in a function that also sets ret has a tendency to confuse people
-like me.
 
-Jordan
+Though you could have 1 pattern that matches everything common and then 
+ones for I2C, SPI, etc.
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+
+> +    type: object
+> +    description: GENI Serial Engine based I2C and SPI Controller.
+> +                 SPI in master mode supports up to 50MHz, up to four chip
+> +                 selects, programmable data path from 4 bits to 32 bits and
+> +                 numerous protocol variants.
+> +
+> +    properties:
+> +      compatible:
+> +        enum:
+> +          - qcom,geni-i2c
+> +          - qcom,geni-spi
+> +
+> +      reg:
+> +        description: GENI Serial Engine register address and length.
+
+Number of reg entries? Needs a 'maxItems: 1' or a list of the entries.
+
+> +
+> +      interrupts:
+> +        maxItems: 1
+> +
+> +      clock-names:
+> +        const: se
+> +
+> +      clocks:
+> +        description: Serial engine core clock needed by the device.
+> +        maxItems: 1
+> +
+> +      "#address-cells":
+> +         const: 1
+> +
+> +      "#size-cells":
+> +         const: 0
+> +
+> +      clock-frequency:
+> +        description: Desired I2C bus clock frequency in Hz.
+> +        default: 100000
+> +
+> +    required:
+> +      - compatible
+> +      - reg
+> +      - interrupts
+> +      - clock-names
+> +      - clocks
+> +      - "#address-cells"
+> +      - "#size-cells"
+> +
+> +  "serial@[0-9]+$":
+
+unit-address is hex.
+
+> +    type: object
+> +    description: GENI Serial Engine based UART Controller.
+> +
+> +    properties:
+> +      compatible:
+> +        enum:
+> +          - qcom,geni-uart
+> +          - qcom,geni-debug-uart
+> +
+> +      reg:
+> +        description: GENI Serial Engine register address and length.
+
+Number of reg entries?
+
+> +
+> +      interrupts:
+> +        minItems: 1
+> +        maxItems: 2
+> +        items:
+> +          - description: UART core irq
+> +          - description: Wakeup irq (RX GPIO)
+> +
+> +      clock-names:
+> +        const: se
+> +
+> +      clocks:
+> +        description: Serial engine core clock needed by the device.
+> +        maxItems: 1
+> +
+> +    required:
+> +      - compatible
+> +      - reg
+> +      - interrupts
+> +      - clock-names
+> +      - clocks
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    soc: soc@0 {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        qupv3_id_0: geniqup@8c0000 {
+> +            compatible = "qcom,geni-se-qup";
+> +            reg = <0 0x008c0000 0 0x6000>;
+> +            clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
+> +                <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
+> +            #address-cells = <2>;
+> +            #size-cells = <2>;
+> +            ranges;
+> +            status = "disabled";
+
+Don't show status in examples.
+
+Why is the example changed? I don't really want to review it again.
+
+> +
+> +            i2c0: i2c@880000 {
+> +                compatible = "qcom,geni-i2c";
+> +                reg = <0 0x00880000 0 0x4000>;
+> +                clock-names = "se";
+> +                clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
+> +                pinctrl-names = "default";
+> +                pinctrl-0 = <&qup_i2c0_default>;
+> +                interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
+> +                #address-cells = <1>;
+> +                #size-cells = <0>;
+> +                status = "disabled";
+> +            };
+> +
+> +            spi0: spi@880000 {
+
+Overlapping addresses are a problem unless these are all enable only 1 
+at a time. The original example didn't have this issue.
+
+> +                compatible = "qcom,geni-spi";
+> +                reg = <0 0x00880000 0 0x4000>;
+> +                clock-names = "se";
+> +                clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
+> +                pinctrl-names = "default";
+> +                pinctrl-0 = <&qup_spi0_default>;
+> +                interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
+> +                #address-cells = <1>;
+> +                #size-cells = <0>;
+> +                status = "disabled";
+> +            };
+> +
+> +            uart0: serial@880000 {
+> +                compatible = "qcom,geni-uart";
+> +                reg = <0 0x00880000 0 0x4000>;
+> +                clock-names = "se";
+> +                clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
+> +                pinctrl-names = "default";
+> +                pinctrl-0 = <&qup_uart0_default>;
+> +                interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
+> +                status = "disabled";
+> +            };
+> +        };
+> +    };
+> +
+> +...
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+> 
