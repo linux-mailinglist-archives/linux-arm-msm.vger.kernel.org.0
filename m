@@ -2,175 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 050E61289F9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2019 16:05:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10F0B128B8D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Dec 2019 21:57:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727516AbfLUPFO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Dec 2019 10:05:14 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:35290 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727208AbfLUPFN (ORCPT
+        id S1726940AbfLUU54 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Dec 2019 15:57:56 -0500
+Received: from mail-il1-f196.google.com ([209.85.166.196]:46569 "EHLO
+        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726900AbfLUU54 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Dec 2019 10:05:13 -0500
-Received: by mail-ed1-f67.google.com with SMTP id f8so11405987edv.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Dec 2019 07:05:11 -0800 (PST)
+        Sat, 21 Dec 2019 15:57:56 -0500
+Received: by mail-il1-f196.google.com with SMTP id t17so10945561ilm.13;
+        Sat, 21 Dec 2019 12:57:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tcd-ie.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=0N+893Qfq6YLP1OvUkum1ZO1qWJ01GUT6Ih8V2c80Vk=;
-        b=Ukw6PoNAZjf5krJJRS06xPvTLavrof9Akn4Pak+RjVdM62j1/NqPdGsYUU6ngGpNzI
-         ZHRA+faVKygYXpBoHQBzzSrMhFuDjDM3rPT8thlw7ti3Ya7E/2Ia2hgJGmjOkpCbhcKi
-         fWFJ41yTlMvsKGf/oqAM1MkQf60LS0RKrqZ8loUGznkUimWWsqYUsRHeSebLKMi4vBlg
-         XuhtpVGYw4uTiieNAiV6TEl+/HFnxAfvR6qkWvowyMkkJ9p39r4oe6DrrFdOAOaTjRHK
-         ZuOahTLph0HLpnOdVRH8cOKfXQ7P8kaiwem0m0P3CTEBJSk0wQflsk31c0yoR6ujnQx5
-         TqqQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=RdRMbfvT7ToYO4IXf9aTfMV8O7SDeU1yIb+GInd1nZw=;
+        b=WCDIKDoM1/9OxguUwRo5xL3Y56bhxtsYB/A117Dvol4FrLN7xgp17JqsiuBYp7TKTY
+         ydbTmGBYUK4fvvoVgXHXjdLgAeMqhsjNBuLppXolh8V8kYt0wwuAW59jEnt0vdr+lzOh
+         aAWmk3zgQypudHymFYhrQzhwqSIf2KCiqiTWqAqeePQuY3kVY18t5Cq1+TQAs5/SpCbc
+         lGG2BJYPwYt1GocodDclUcWkXkb62i/W9Kz8uri+Lb7VtIRAyhN3cYRQ9K95J+pGPNv4
+         f6Qiq/wkDj3olX9enJShP1SHafGfJQsZe9sy6yKan62+scAqm4Yoeo6jpTfjoqUq4a2Y
+         M6iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=0N+893Qfq6YLP1OvUkum1ZO1qWJ01GUT6Ih8V2c80Vk=;
-        b=TenPp1A8EDpq53RBh5XtFgdqJglvETA0ob1zWxlid0Gxz2daeVqMrYALDLUVvXH75j
-         1edT3Q95MRgJtq5RTY5EZmlmJiqoACyXGJx+jj4WG18ycwvRXenhp7xS8xeU39lhh7rj
-         QZ6Tc19ttyv3DhIcU7XVzO9asz633YyIYwoWpdAd/4/o8a2iZpULQYs0v/PSYy9NykNT
-         87riKT3X1WiGE6W9tBfTSieCZ8Fon+WVS6fkQhEiAr1ykXKMRHsccHbVnVWA+c5y4fuF
-         b5bbKuSMVJSW6hU3nHYcIsIa9ZRfaXmbPFhbz000eb68rWHlbSN73BjQ3xFofjT3qsEJ
-         Cimg==
-X-Gm-Message-State: APjAAAUUiJ/Ip/fCA4ePr6TCrG2VomKbcpzDxTOkeXiqpCOWDqMxyl1U
-        6O+K51KSoHO+5vPCqbcXTlIg4A==
-X-Google-Smtp-Source: APXvYqzYBtLgHyu41wW+pu/pR134HwMgfABxCFG7SFTaKHnLsnkRqp9tkFJSv1iaSEoyl+LQ52YyaQ==
-X-Received: by 2002:a17:906:2649:: with SMTP id i9mr22633139ejc.120.1576940711107;
-        Sat, 21 Dec 2019 07:05:11 -0800 (PST)
-Received: from localhost.localdomain ([80.233.37.20])
-        by smtp.googlemail.com with ESMTPSA id u13sm1517639ejz.69.2019.12.21.07.05.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Dec 2019 07:05:10 -0800 (PST)
-From:   Tom Murphy <murphyt7@tcd.ie>
-To:     iommu@lists.linux-foundation.org
-Cc:     Tom Murphy <murphyt7@tcd.ie>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        Cornelia Huck <cohuck@redhat.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Eric Auger <eric.auger@redhat.com>,
-        Julien Grall <julien.grall@arm.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, kvm@vger.kernel.org
-Subject: [PATCH 8/8] DO NOT MERGE: iommu: disable list appending in dma-iommu
-Date:   Sat, 21 Dec 2019 15:04:00 +0000
-Message-Id: <20191221150402.13868-9-murphyt7@tcd.ie>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191221150402.13868-1-murphyt7@tcd.ie>
-References: <20191221150402.13868-1-murphyt7@tcd.ie>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=RdRMbfvT7ToYO4IXf9aTfMV8O7SDeU1yIb+GInd1nZw=;
+        b=ukSVyaiU//l7kuXIocw26oDf0HxGKMqXcAIWLrhUjqm5xTAsnO1DVKJq+KcoA5JlMC
+         B9lJYc8+dj+UgK4Q0cNh5S9zdU8cPZQYWzDSiPQxf3VWN0yqixylCcJonkz+yuoa1qfU
+         U2myuKdI0dFqowxCCgkMX43EjqOoRPHw5m7M/R15aOgkaaWXv0GgAU1/y9wUbvmvg0zN
+         RCoow5NuPKRtKcEw4BG2xrcCfi9FZcNE6TIgsEeIdW86e9QAdOVlaGqflS7foKb/swJJ
+         IIWWUERJm8h1S22C7pr8S3hKMaCjdUl3Z1FpDJ2/g1l/Ks+bH0J/r/k7V+fsTyN3Um9N
+         SnQQ==
+X-Gm-Message-State: APjAAAUA17+uH3A7ZcaIb6p00o2XekN9apNSAqbnFjzy96JHX5Cctwq/
+        iR9OGSZ/ljvrsS2Gd81idQioJvjjkDys9Qa76bA=
+X-Google-Smtp-Source: APXvYqyc3usFhtdUMBFJVhsK8kbJdVf5uAfgGNjp3RnRQcd67CMjzV5QLX70BxY68NmGPHOn4t6NFZ3U1CraR0TI1u0=
+X-Received: by 2002:a92:465c:: with SMTP id t89mr19462451ila.263.1576961875969;
+ Sat, 21 Dec 2019 12:57:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20191028171837.3907550-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20191028171837.3907550-1-bjorn.andersson@linaro.org>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Sat, 21 Dec 2019 13:57:45 -0700
+Message-ID: <CAOCk7NqB2ZYewAb9cy=-atACGEF0Wi=b5QbAhFtQEPxU-KKzbA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: defconfig: Enable ATH10K_SNOC
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        Olof Johansson <olof@lixom.net>,
+        Maxime Ripard <mripard@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Leonard Crestez <leonard.crestez@nxp.com>,
+        Dinh Nguyen <dinguyen@kernel.org>,
+        Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-ops __finalise_sg
+On Mon, Oct 28, 2019 at 11:18 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> The ath10k snoc is found on the Qualcomm QCS404 and SDM845, so enable
+> the driver for this.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Disable combining sg segments in the dma-iommu api.
-Combining the sg segments exposes a bug in the intel i915 driver which
-causes visual artifacts and the screen to freeze. This is most likely
-because of how the i915 handles the returned list. It probably doesn't
-respect the returned value specifying the number of elements in the list
-and instead depends on the previous behaviour of the intel iommu driver
-which would return the same number of elements in the output list as in
-the input list.
+This also works for MSM8998, particularly the Lenovo Miix 630 laptop.
 
-Signed-off-by: Tom Murphy <murphyt7@tcd.ie>
----
- drivers/iommu/dma-iommu.c | 38 +++++++-------------------------------
- 1 file changed, 7 insertions(+), 31 deletions(-)
+Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Tested-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
-diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-index cf778db7d84d..d7547b912c87 100644
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -853,8 +853,7 @@ static int __finalise_sg(struct device *dev, struct scatterlist *sg, int nents,
- {
- 	struct scatterlist *s, *cur = sg;
- 	unsigned long seg_mask = dma_get_seg_boundary(dev);
--	unsigned int cur_len = 0, max_len = dma_get_max_seg_size(dev);
--	int i, count = 0;
-+	int i;
- 
- 	for_each_sg(sg, s, nents, i) {
- 		/* Restore this segment's original unaligned fields first */
-@@ -862,39 +861,16 @@ static int __finalise_sg(struct device *dev, struct scatterlist *sg, int nents,
- 		unsigned int s_length = sg_dma_len(s);
- 		unsigned int s_iova_len = s->length;
- 
-+		if (i > 0)
-+			cur = sg_next(cur);
-+
- 		s->offset += s_iova_off;
- 		s->length = s_length;
--		sg_dma_address(s) = DMA_MAPPING_ERROR;
--		sg_dma_len(s) = 0;
--
--		/*
--		 * Now fill in the real DMA data. If...
--		 * - there is a valid output segment to append to
--		 * - and this segment starts on an IOVA page boundary
--		 * - but doesn't fall at a segment boundary
--		 * - and wouldn't make the resulting output segment too long
--		 */
--		if (cur_len && !s_iova_off && (dma_addr & seg_mask) &&
--		    (max_len - cur_len >= s_length)) {
--			/* ...then concatenate it with the previous one */
--			cur_len += s_length;
--		} else {
--			/* Otherwise start the next output segment */
--			if (i > 0)
--				cur = sg_next(cur);
--			cur_len = s_length;
--			count++;
--
--			sg_dma_address(cur) = dma_addr + s_iova_off;
--		}
--
--		sg_dma_len(cur) = cur_len;
-+		sg_dma_address(cur) = dma_addr + s_iova_off;
-+		sg_dma_len(cur) = s_length;
- 		dma_addr += s_iova_len;
--
--		if (s_length + s_iova_off < s_iova_len)
--			cur_len = 0;
- 	}
--	return count;
-+	return nents;
- }
- 
- /*
--- 
-2.20.1
-
+> ---
+>  arch/arm64/configs/defconfig | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index e5e83dbf1433..c350ca25ba8e 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -308,6 +308,7 @@ CONFIG_USB_NET_PLUSB=m
+>  CONFIG_USB_NET_MCS7830=m
+>  CONFIG_ATH10K=m
+>  CONFIG_ATH10K_PCI=m
+> +CONFIG_ATH10K_SNOC=m
+>  CONFIG_BRCMFMAC=m
+>  CONFIG_MWIFIEX=m
+>  CONFIG_MWIFIEX_PCIE=m
+> --
+> 2.23.0
+>
+>
+> _______________________________________________
+> linux-arm-kernel mailing list
+> linux-arm-kernel@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
