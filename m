@@ -2,137 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DF36A128BEF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Dec 2019 00:46:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE25912904D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 00:37:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726449AbfLUXqm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Dec 2019 18:46:42 -0500
-Received: from mail-qv1-f65.google.com ([209.85.219.65]:34193 "EHLO
-        mail-qv1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726024AbfLUXqm (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Dec 2019 18:46:42 -0500
-Received: by mail-qv1-f65.google.com with SMTP id o18so5079840qvf.1;
-        Sat, 21 Dec 2019 15:46:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=DZy1sByRbPp81Fc4unsIfUDkM1speXohHbJEFLa+79Y=;
-        b=K2F08+kbBOHpEb5GI2snEkwsgZNjaPXWMKDftdpnSDrNjdoFsaU7mJy1E8X+UN6pTF
-         CqMGQGTCVzkASTJTbCKGzwmcE+xGW9X9DoBShnHYBHrUjwA2y0thgfSaIDeXsAsxh80K
-         Lzsw/9ErY21ZUOic82HoE2snRWWJy1wLWDPwW7IWmh5yvrdgv4rUVX4xVE004OheL+PI
-         /8AUmTvOKwGIU5Ku/sIm9m5U0rOim/SPjYy3gzVxef0QWGwTj1JJt9SDEH83TWoChVOq
-         wLkEyhYrjgWcWjYym7iQAuL3qcxgGsX3JQNmgv7pU5p9IHVMooy6My1cg5SbonFnCmxX
-         Fqwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:date:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DZy1sByRbPp81Fc4unsIfUDkM1speXohHbJEFLa+79Y=;
-        b=cvV8272CjqKNjseP9IVVUXbbxKJ0slLx1WsbkDJHDoeN/3vHwuctTz95T3x5v8qef4
-         wfQuL7StZwZjPkgUDbtB+lwe/oMAwB9Xbdy10mk/u+2jQR3GNEe7D0D74q70kMq9arlb
-         PNhpmuqIUw/xbiPYSNl5/rUdu6ZFvqxccOvNBRozsvoS6a54JRTc/3sqU3aSAA/0JUGC
-         Y3VAraup61c7CsK8ZBh2M96ClkM7ofpaMh+1a0fD0joJM0iWn/CYvcAr53OIWtdMFcZl
-         FXh0enaSlbVfnKVaYH03LCc6yFScN4tbWLcZmnZySjUxro6ycPDJmnN/BrhaN27W9cjt
-         IMDw==
-X-Gm-Message-State: APjAAAXdYKo5LbSIyB+ksyGRkl7Fcg1OvKReFWcuR7hCwWAQBk3DWZYm
-        wG6m4ecW0EFirlb5YPryXQA=
-X-Google-Smtp-Source: APXvYqxZv5pvU+COa+Z57bqd7TVlj3AKMVnWrlNSwtaonBLRwl6oAVA7CbZzWjXYXul1zP2Wc7+ZAQ==
-X-Received: by 2002:a05:6214:14b3:: with SMTP id bo19mr18216129qvb.93.1576972000657;
-        Sat, 21 Dec 2019 15:46:40 -0800 (PST)
-Received: from rani.riverdale.lan ([2001:470:1f07:5f3::b55f])
-        by smtp.gmail.com with ESMTPSA id b7sm4323472qkh.106.2019.12.21.15.46.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Dec 2019 15:46:40 -0800 (PST)
-From:   Arvind Sankar <nivedita@alum.mit.edu>
-X-Google-Original-From: Arvind Sankar <arvind@rani.riverdale.lan>
-Date:   Sat, 21 Dec 2019 18:46:37 -0500
-To:     Tom Murphy <murphyt7@tcd.ie>
-Cc:     iommu@lists.linux-foundation.org,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        Cornelia Huck <cohuck@redhat.com>,
-        Eric Auger <eric.auger@redhat.com>,
-        Julien Grall <julien.grall@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, kvm@vger.kernel.org
-Subject: Re: [PATCH 1/8] iommu/vt-d: clean up 32bit si_domain assignment
-Message-ID: <20191221234635.GA99623@rani.riverdale.lan>
-References: <20191221150402.13868-1-murphyt7@tcd.ie>
- <20191221150402.13868-2-murphyt7@tcd.ie>
+        id S1726139AbfLVXh0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Dec 2019 18:37:26 -0500
+Received: from titan.ufpe.br ([150.161.6.80]:38354 "EHLO canit.ufpe.br"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726057AbfLVXhZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 22 Dec 2019 18:37:25 -0500
+Received: from zimbraufpe.ufpe.br (zimbraufpe.ufpe.br [150.161.6.73])
+        by canit.ufpe.br (8.14.4/8.14.4/Debian-4) with ESMTP id xBMNb5k1130510
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 22 Dec 2019 20:37:06 -0300
+Received: from localhost (localhost [127.0.0.1])
+        by zimbraufpe.ufpe.br (Postfix) with ESMTP id 0E503C7A3948;
+        Sun, 22 Dec 2019 20:37:04 -0300 (-03)
+X-Virus-Scanned: amavisd-new at ufpe.br
+Received: from zimbraufpe.ufpe.br ([127.0.0.1])
+        by localhost (zimbraufpe.ufpe.br [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id 0X7v5IwT_RGt; Sun, 22 Dec 2019 20:37:03 -0300 (-03)
+Received: from zimbraufpe.ufpe.br (zimbraufpe.ufpe.br [150.161.6.73])
+        by zimbraufpe.ufpe.br (Postfix) with ESMTP id B719D6B7FCAC;
+        Sun, 22 Dec 2019 20:37:03 -0300 (-03)
+Date:   Sun, 22 Dec 2019 20:37:03 -0300 (BRT)
+From:   Victhor Foster <victhor.foster@ufpe.br>
+To:     linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Cc:     agross <agross@kernel.org>, robh+dt <robh+dt@kernel.org>,
+        mark rutland <mark.rutland@arm.com>,
+        devicetree <devicetree@vger.kernel.org>
+Message-ID: <108381142.9510389.1577057823350.JavaMail.zimbra@ufpe.br>
+Subject: [PATCH] arm: dts: apq8084: Change tsens definition to new style
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20191221150402.13868-2-murphyt7@tcd.ie>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [179.235.209.15]
+X-Mailer: Zimbra 8.8.7_GA_1964 (ZimbraWebClient - GC78 (Linux)/8.8.7_GA_1964)
+Thread-Index: /aPAUEAnqdHVSSwgzgG/IXT197l2aA==
+Thread-Topic: apq8084: Change tsens definition to new style
+X-Bayes-Prob: 0.5 (Score 0: No Bayes scoring rules defined, tokens from: SAIDA)
+X-Spam-Score: 0.00 () [Hold at 10.00] 
+X-CanIt-Incident-Id: 011FbB6Pz
+X-CanIt-Geo: ip=150.161.6.73; country=BR; region=Pernambuco; city=Recife; latitude=-8.05; longitude=-34.9000; http://maps.google.com/maps?q=-8.05,-34.9000&z=6
+X-CanItPRO-Stream: SAIDA
+X-Canit-Stats-ID: 011FbB6Pz - d77f4841f649 - 20191222
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=ufpe.br; h=date:from:to
+        :cc:message-id:subject:mime-version:content-type
+        :content-transfer-encoding; s=ufpe201801; bh=0euJECY7iR6dg4GlbOo
+        CvBVpwi9Hb5UrQY0uzUfBPTY=; b=dHog3oudUN97pg/72qtBc6odhww7BaStsG1
+        bRXOkmQittW4zobegTcdCGyQ4C2XDeZ3pt3vUxq+m+qDtBFM0AeM1wVXQBLaMrxG
+        cZcAdC1imngXLNAmrrInyNXZ8s6JJf9wrMqbZsjH9LZtOyAQCCROgVq/K6IoZNkI
+        3nTacZA2rpZfnwb/EUZhmOxRppxFYlZqXrieSomYap1zUx5jrRVpmxho4Bd59Nkv
+        gfzIjitxCkSYlDRbTg4J4YZsAWGdWSJjoWwoM+4g9zadlzGcAXvHXqd3YJBog7iz
+        qGqLvTELjDhSG3Xt98mnzAX4sA6AGja+DtMBC0L43wuQmtlJr8w==
+X-Scanned-By: CanIt (www . roaringpenguin . com) on 150.161.6.80
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Dec 21, 2019 at 03:03:53PM +0000, Tom Murphy wrote:
-> In the intel iommu driver devices which only support 32bit DMA can't be
-> direct mapped. The implementation of this is weird. Currently we assign
-> it a direct mapped domain and then remove the domain later and replace
-> it with a domain of type IOMMU_DOMAIN_IDENTITY. We should just assign it
-> a domain of type IOMMU_DOMAIN_IDENTITY from the begging rather than
-> needlessly swapping domains.
-> 
-> Signed-off-by: Tom Murphy <murphyt7@tcd.ie>
-> ---
->  drivers/iommu/intel-iommu.c | 88 +++++++++++++------------------------
->  1 file changed, 31 insertions(+), 57 deletions(-)
-> 
-> diff --git a/drivers/iommu/intel-iommu.c b/drivers/iommu/intel-iommu.c
-> index 0c8d81f56a30..c1ea66467918 100644
-> --- a/drivers/iommu/intel-iommu.c
-> +++ b/drivers/iommu/intel-iommu.c
-> @@ -5640,7 +5609,12 @@ static int intel_iommu_add_device(struct device *dev)
->  	domain = iommu_get_domain_for_dev(dev);
->  	dmar_domain = to_dmar_domain(domain);
->  	if (domain->type == IOMMU_DOMAIN_DMA) {
-> -		if (device_def_domain_type(dev) == IOMMU_DOMAIN_IDENTITY) {
-> +		/*
-> +		 * We check dma_mask >= dma_get_required_mask(dev) because
-> +		 * 32 bit DMA falls back to non-identity mapping.
-> +		 */
-> +		if (device_def_domain_type(dev) == IOMMU_DOMAIN_IDENTITY &&
-> +				dma_mask >= dma_get_required_mask(dev)) {
->  			ret = iommu_request_dm_for_dev(dev);
->  			if (ret) {
->  				dmar_remove_one_dev_info(dev);
-> -- 
-> 2.20.1
-> 
+This patch changes the tsens peripheral definition to the new style, which fixes a kernel panic caused by a change in the tsens driver, introduced by commit 37624b58542fb9f2d9a70e6ea006ef8a5f66c30b.
+There was a patch submitted recently to this list that should fix this problem with old device trees and the new driver, so it may be redundant at this point, in terms of fixing the kernel panic, but this should align the APQ8084 device tree with the others.
 
-Should this be dma_direct_get_required_mask? dma_get_required_mask may
-return DMA_BIT_MASK(32) -- it callbacks into intel_get_required_mask,
-but I'm not sure what iommu_no_mapping(dev) will do at this point?
+Signed-off by: Victhor Foster <victhor.foster@ufpe.br>
+---
+ arch/arm/boot/dts/qcom-apq8084.dtsi | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/qcom-apq8084.dtsi b/arch/arm/boot/dts/qcom-apq8084.dtsi
+index 0a0fb147ebb9..26d79ff2af22 100644
+--- a/arch/arm/boot/dts/qcom-apq8084.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8084.dtsi
+@@ -253,9 +253,11 @@ tsens_backup: backup@440 {
+ 
+ 		tsens: thermal-sensor@fc4a8000 {
+ 			compatible = "qcom,msm8974-tsens";
+-			reg = <0xfc4a8000 0x2000>;
++			reg = <0xfc4a9000 0x1000>, /* TM */
++			      <0xfc4a8000 0x1000>; /* SROT */
+ 			nvmem-cells = <&tsens_calib>, <&tsens_backup>;
+ 			nvmem-cell-names = "calib", "calib_backup";
++			#qcom,sensors = <11>;
+ 			#thermal-sensor-cells = <1>;
+ 		};
+ 
+-- 
+2.24.0
