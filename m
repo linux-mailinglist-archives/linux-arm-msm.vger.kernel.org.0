@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A716129A09
+	by mail.lfdr.de (Postfix) with ESMTP id BEBB1129A0D
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 19:59:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726948AbfLWS71 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Dec 2019 13:59:27 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:46847 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726756AbfLWS70 (ORCPT
+        id S1726756AbfLWS72 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Dec 2019 13:59:28 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:37150 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726971AbfLWS72 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Dec 2019 13:59:26 -0500
-Received: by mail-pf1-f193.google.com with SMTP id n9so1726802pff.13;
-        Mon, 23 Dec 2019 10:59:25 -0800 (PST)
+        Mon, 23 Dec 2019 13:59:28 -0500
+Received: by mail-pj1-f68.google.com with SMTP id m13so149308pjb.2;
+        Mon, 23 Dec 2019 10:59:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dMVf+vh+cYX5uqjs+l++BphNgREG8uxW+2Ovm+/JNJw=;
-        b=HqLoU5OvR8ugzzxNAKVEVtBkjiqSufaKIUZEDpKdXp94Y/bUt4KrKLTKl5UQqNAl44
-         KA1fNRoJ6aNwieatce2GqNLQOnq3UaqeJtl909ctqCyPbdF0LXDmaJcS432q9CSkhn4B
-         dtiCTNvUBMjcOk0W2u3xT65sebwLH0CmduWcb75OfItc8DLFy4cAVoitzIDAMhzcNtfg
-         Io5nLgK9BvT4faeoz5v59U2R5s86MLJT3XvGKf64+RHwRrSqizeESPFrxInRHcYca0GM
-         6LqgvwaDt95S1xY3LDJ6L2k9xpIofsqFoI/ZRs3ID25B6iWoEeKIDGA52xAh1bQzdw9z
-         aAjA==
+        bh=bLznaHMy4KKZ0cyTMqudvu5r2Rqk/jELD1oKLNSR2dU=;
+        b=RjgIjnGy+JvVdj2w8xB8Td7Jcp/uaEDjiyOG1FJNw7ItOBOMlDiBexx/UkW6dkkAGm
+         voY0QC4zCFHaNyKdZbneErqsNlEEsUkH+mUTUEX4IGwRuLutautx5/QiGR7Dg54OfMF4
+         Pzd2xf3gtJb7iLRKy3oLhDhaoannVg2g07KyLU/4m8Tg9yffQkks69i7RNV4T7iLy6Dw
+         leXWNSpzbps7unh9oz1fwH+msb7iJL7CO2jLuJIISG1WX9/pxpG18Yu7So73y4H8ZtNa
+         74d58L/NAst17PBprENwJOgzCuTFMGvNh/uHdQUQxylZpO1+sNfkhBafPyxxAqhwGPS0
+         uB1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=dMVf+vh+cYX5uqjs+l++BphNgREG8uxW+2Ovm+/JNJw=;
-        b=HU3amjks5bQfXdBjfJkWJcWIL03cd3XgWHZBUhYjZVrvA1FEWEXEy53QSvQTl9tHTG
-         g/YJbqswuM8e1sDkVJaIscOa2wdlB0rsgBO7p4OSSvk8FMHG/9Pmv3VdNJC8giM6b9mW
-         90hyOlcAygHOOVIw4utH9cmcQMSNYQuWUFeFsZKv31X0cN9TVpbWuNL2FbQ7RlboCjAp
-         PLOjRK5aRkQSiyOID9e/TaK/rhDvHZMdHooH5NMxfmXL7XrofTjI+HL7ZxJCp/vLb85L
-         93pP8SMgv9lRH4vQmlmlSdom8nYslaLxuNSSE7KTL1lnQYtT1c+3E/lhYqnRarq1nsPg
-         Leug==
-X-Gm-Message-State: APjAAAW/RYaAuTHEpDU3BO+EoAmyGSfUM3+zg1znNjJ74CssurRVNDnR
-        t4WpD0pZivhykaaZFIl6qJtuQybArkg=
-X-Google-Smtp-Source: APXvYqzDhJWagEWSF5CD+5+GERxPnQgzx1vAVm8NgEcWmvblC2Ftuyzdp3PuA5nDZwdfH/7PhfYRpw==
-X-Received: by 2002:a62:3343:: with SMTP id z64mr32628043pfz.150.1577127565404;
-        Mon, 23 Dec 2019 10:59:25 -0800 (PST)
+        bh=bLznaHMy4KKZ0cyTMqudvu5r2Rqk/jELD1oKLNSR2dU=;
+        b=evNxMDDKKycYBgs+NZJ8htDJPjne26ZZnI6PLp6unplTH7K4xigOe5r9dZwHkw9DAq
+         ndbZvGUaMytBxJ6B9jvhyN075UwVPVyzi+Fi9glZMx1iQjpgXXKitBlKgETLACS6/J0W
+         +nWdihzOPfk3vOxqz7jr5UVKsbnWgHHGc4M7ZseMomtAfEVcB+JI3x7qpXYKPBo+qWDh
+         JSNmFMrYcG6p3JvkDZFnmAkETFcQv3qHYOFnIYpGxBCEL6On02E4dCIhds6zQqnjugWK
+         uIJwEkUirdbty1/DEYAo4LRV9/lKFXkKH/ky5rR5CZre40JSxc0hfoUQvuNDb/UtQrCv
+         15mg==
+X-Gm-Message-State: APjAAAU8aOqtTWMOLHsG4XN1kQ319pd7Gohoa2c1tprENWH/7lo3GDhf
+        xESx+O4WI5TzG6Zur9XELa4=
+X-Google-Smtp-Source: APXvYqwSmasDf38gpvZQ5kYkHfbJ9oeF2AFKtP2Fehgro57BEHYXKQsly+hr8s0/HHHdkDEArOHtIA==
+X-Received: by 2002:a17:902:b788:: with SMTP id e8mr32700948pls.1.1577127567423;
+        Mon, 23 Dec 2019 10:59:27 -0800 (PST)
 Received: from localhost ([2001:19f0:6001:12c8:5400:2ff:fe72:6403])
-        by smtp.gmail.com with ESMTPSA id u12sm3892956pfm.165.2019.12.23.10.59.24
+        by smtp.gmail.com with ESMTPSA id x4sm25703139pff.143.2019.12.23.10.59.26
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Dec 2019 10:59:25 -0800 (PST)
+        Mon, 23 Dec 2019 10:59:26 -0800 (PST)
 From:   Yangtao Li <tiny.windzz@gmail.com>
 To:     m.szyprowski@samsung.com, joro@8bytes.org, kgene@kernel.org,
         krzk@kernel.org, matthias.bgg@gmail.com, agross@kernel.org,
@@ -56,9 +56,9 @@ To:     m.szyprowski@samsung.com, joro@8bytes.org, kgene@kernel.org,
         linux-rockchip@lists.infradead.org,
         virtualization@lists.linux-foundation.org
 Cc:     Yangtao Li <tiny.windzz@gmail.com>
-Subject: [PATCH 2/6] iommu/exynos: convert to devm_platform_ioremap_resource
-Date:   Mon, 23 Dec 2019 18:59:14 +0000
-Message-Id: <20191223185918.9877-3-tiny.windzz@gmail.com>
+Subject: [PATCH 3/6] iommu/qcom: convert to devm_platform_ioremap_resource
+Date:   Mon, 23 Dec 2019 18:59:15 +0000
+Message-Id: <20191223185918.9877-4-tiny.windzz@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191223185918.9877-1-tiny.windzz@gmail.com>
 References: <20191223185918.9877-1-tiny.windzz@gmail.com>
@@ -71,28 +71,30 @@ Use devm_platform_ioremap_resource() to simplify code.
 
 Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
 ---
- drivers/iommu/exynos-iommu.c | 4 +---
+ drivers/iommu/qcom_iommu.c | 4 +---
  1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/exynos-iommu.c b/drivers/iommu/exynos-iommu.c
-index 186ff5cc975c..42d8407267ef 100644
---- a/drivers/iommu/exynos-iommu.c
-+++ b/drivers/iommu/exynos-iommu.c
-@@ -571,14 +571,12 @@ static int exynos_sysmmu_probe(struct platform_device *pdev)
- 	int irq, ret;
+diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
+index 52f38292df5b..bf94d4d67da4 100644
+--- a/drivers/iommu/qcom_iommu.c
++++ b/drivers/iommu/qcom_iommu.c
+@@ -709,7 +709,6 @@ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
+ 	struct qcom_iommu_ctx *ctx;
  	struct device *dev = &pdev->dev;
- 	struct sysmmu_drvdata *data;
+ 	struct qcom_iommu_dev *qcom_iommu = dev_get_drvdata(dev->parent);
 -	struct resource *res;
+ 	int ret, irq;
  
- 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
+ 	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
+@@ -719,8 +718,7 @@ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
+ 	ctx->dev = dev;
+ 	platform_set_drvdata(pdev, ctx);
  
 -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	data->sfrbase = devm_ioremap_resource(dev, res);
-+	data->sfrbase = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(data->sfrbase))
- 		return PTR_ERR(data->sfrbase);
+-	ctx->base = devm_ioremap_resource(dev, res);
++	ctx->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(ctx->base))
+ 		return PTR_ERR(ctx->base);
  
 -- 
 2.17.1
