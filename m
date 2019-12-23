@@ -2,226 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 35F7B129477
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 11:56:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE13F129504
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 12:29:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726729AbfLWK4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Dec 2019 05:56:37 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:51040 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726663AbfLWK4h (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Dec 2019 05:56:37 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1577098596; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=NiJfAY1Jaqnfgr+KNz/woUb2dC2lG4O1oUiFhjKVbSI=;
- b=jZRaRg/EqnDI9Hg+0PcjwQdPCGF7OVCfryy9JTk+wsMW59XYS9MijhhMfvpTKV6LLcwGR3wH
- L1XWBRqg5n2VKpBbeNQoLvReMz9K2+vP2Dr1jVT2sKuSrbWJt30Vu3pFgFFGHlR7gexk/2uv
- IaK+Dp6lR/xjzH+XgqVLaYY79L4=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e009d62.7f2672f31928-smtp-out-n03;
- Mon, 23 Dec 2019 10:56:34 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CE398C433CB; Mon, 23 Dec 2019 10:56:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: dikshita)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 25FA9C43383;
-        Mon, 23 Dec 2019 10:56:34 +0000 (UTC)
+        id S1726691AbfLWL3d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Dec 2019 06:29:33 -0500
+Received: from foss.arm.com ([217.140.110.172]:43030 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726679AbfLWL3c (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Dec 2019 06:29:32 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9F7EC328;
+        Mon, 23 Dec 2019 03:29:31 -0800 (PST)
+Received: from [192.168.1.123] (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id EE2493F68F;
+        Mon, 23 Dec 2019 03:29:25 -0800 (PST)
+Subject: Re: [PATCH 0/8] Convert the intel iommu driver to the dma-iommu api
+To:     Jani Nikula <jani.nikula@linux.intel.com>,
+        Tom Murphy <murphyt7@tcd.ie>, iommu@lists.linux-foundation.org
+Cc:     Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        Alex Williamson <alex.williamson@redhat.com>,
+        Cornelia Huck <cohuck@redhat.com>,
+        Julien Grall <julien.grall@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Eric Auger <eric.auger@redhat.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org, kvm@vger.kernel.org
+References: <20191221150402.13868-1-murphyt7@tcd.ie>
+ <87blrzwcn8.fsf@intel.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <432d306c-fe9f-75b2-f0f7-27698f1467ad@arm.com>
+Date:   Mon, 23 Dec 2019 11:29:17 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 23 Dec 2019 16:26:34 +0530
-From:   dikshita@codeaurora.org
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        vgarodia@codeaurora.org
-Subject: Re: [PATCH 2/3] dt-bindings: media: venus: Add sc7180 DT schema
-In-Reply-To: <0b38ad39-4601-2b1b-2710-63796ed0c730@linaro.org>
-References: <1576828760-13176-1-git-send-email-dikshita@codeaurora.org>
- <1576828760-13176-3-git-send-email-dikshita@codeaurora.org>
- <0b38ad39-4601-2b1b-2710-63796ed0c730@linaro.org>
-Message-ID: <98d3b2e393eec448b96ac520108688a8@codeaurora.org>
-X-Sender: dikshita@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <87blrzwcn8.fsf@intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stan,
+On 2019-12-23 10:37 am, Jani Nikula wrote:
+> On Sat, 21 Dec 2019, Tom Murphy <murphyt7@tcd.ie> wrote:
+>> This patchset converts the intel iommu driver to the dma-iommu api.
+>>
+>> While converting the driver I exposed a bug in the intel i915 driver
+>> which causes a huge amount of artifacts on the screen of my
+>> laptop. You can see a picture of it here:
+>> https://github.com/pippy360/kernelPatches/blob/master/IMG_20191219_225922.jpg
+>>
+>> This issue is most likely in the i915 driver and is most likely caused
+>> by the driver not respecting the return value of the
+>> dma_map_ops::map_sg function. You can see the driver ignoring the
+>> return value here:
+>> https://github.com/torvalds/linux/blob/7e0165b2f1a912a06e381e91f0f4e495f4ac3736/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c#L51
+>>
+>> Previously this didn’t cause issues because the intel map_sg always
+>> returned the same number of elements as the input scatter gather list
+>> but with the change to this dma-iommu api this is no longer the
+>> case. I wasn’t able to track the bug down to a specific line of code
+>> unfortunately.
+>>
+>> Could someone from the intel team look at this?
+> 
+> Let me get this straight. There is current API that on success always
+> returns the same number of elements as the input scatter gather
+> list. You propose to change the API so that this is no longer the case?
 
-Thanks for the review.
-Sure, I will apply the same changes to this file as well once
-you update DT schema for msm8916 in the next version.
+No, the API for dma_map_sg() has always been that it may return fewer 
+DMA segments than nents - see Documentation/DMA-API.txt (and otherwise, 
+the return value would surely be a simple success/fail condition). 
+Relying on a particular implementation behaviour has never been strictly 
+correct, even if it does happen to be a very common behaviour.
 
-On 2019-12-20 15:07, Stanimir Varbanov wrote:
-> Hi Dikshita,
+> A quick check of various dma_map_sg() calls in the kernel seems to
+> indicate checking for 0 for errors and then ignoring the non-zero return
+> is a common pattern. Are you sure it's okay to make the change you're
+> proposing?
+
+Various code uses tricks like just iterating the mapped list until the 
+first segment with zero sg_dma_len(). Others may well simply have bugs.
+
+Robin.
+
+> Anyway, due to the time of year and all, I'd like to ask you to file a
+> bug against i915 at [1] so this is not forgotten, and please let's not
+> merge the changes before this is resolved.
 > 
-> Thanks for the patch!
 > 
-> Please see Rob's comments about DT schema for msm8916. You have to
-> address them too.
+> Thanks,
+> Jani.
 > 
-> On 12/20/19 9:59 AM, Dikshita Agarwal wrote:
->> Add new qcom,sc7180-venus DT binding schema.
->> 
->> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
->> ---
->>  .../bindings/media/qcom,venus-sc7180.yaml          | 131 
->> +++++++++++++++++++++
->>  1 file changed, 131 insertions(+)
->>  create mode 100644 
->> Documentation/devicetree/bindings/media/qcom,venus-sc7180.yaml
->> 
->> diff --git 
->> a/Documentation/devicetree/bindings/media/qcom,venus-sc7180.yaml 
->> b/Documentation/devicetree/bindings/media/qcom,venus-sc7180.yaml
->> new file mode 100644
->> index 0000000..a609739
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/media/qcom,venus-sc7180.yaml
->> @@ -0,0 +1,131 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +
->> +%YAML 1.2
->> +---
->> +$id: "http://devicetree.org/schemas/media/qcom,venus-sc7180.yaml#"
->> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
->> +
->> +title: Qualcomm Venus video encode and decode accelerators
->> +
->> +maintainers:
->> +  - Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> +
->> +description: |
->> +  The Venus IP is a video encode and decode accelerator present
->> +  on Qualcomm platforms
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,sc7180-venus
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  interrupts:
->> +    maxItems: 1
->> +
->> +  power-domains:
->> +    maxItems: 2
->> +
->> +  power-domain-names:
->> +    maxItems: 2
->> +    items:
->> +      - const: venus
->> +      - const: vcodec0
->> +
->> +  clocks:
->> +    maxItems: 5
->> +
->> +  clock-names:
->> +    maxItems: 5
->> +    items:
->> +      - const: core
->> +      - const: iface
->> +      - const: bus
->> +      - const: vcodec0_core
->> +      - const: vcodec0_bus
->> +
->> +  iommus:
->> +    minItems: 1
->> +    maxItems: 20
->> +
->> +  memory-region:
->> +    maxItems: 1
->> +
->> +  video-core0:
->> +    type: object
->> +
->> +    properties:
->> +      compatible:
->> +        const: "venus-decoder"
->> +
->> +    required:
->> +      - compatible
->> +
->> +  video-core1:
->> +    type: object
->> +
->> +    properties:
->> +      compatible:
->> +        const: "venus-encoder"
->> +
->> +    required:
->> +      - compatible
->> +
->> +  video-firmware:
->> +    type: object
->> +
->> +    description: |
->> +      Firmware subnode is needed when the platform does not
->> +      have TrustZone.
->> +
->> +    properties:
->> +      iommus:
->> +        minItems: 1
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - interrupts
->> +  - power-domains
->> +  - power-domain-names
->> +  - clocks
->> +  - clock-names
->> +  - iommus
->> +  - memory-region
->> +  - video-core0
->> +  - video-core1
->> +
->> +examples:
->> +  - |
->> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
->> +        #include <dt-bindings/clock/qcom,videocc-sc7180.h>
->> +
->> +		venus: video-codec@aa00000 {
->> +			compatible = "qcom,sc7180-venus";
->> +			reg = <0 0x0aa00000 0 0xff000>;
->> +			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
->> +			power-domains = <&videocc VENUS_GDSC>,
->> +					<&videocc VCODEC0_GDSC>;
->> +
->> +			power-domain-names = "venus", "vcodec0";
->> +			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
->> +				<&videocc VIDEO_CC_VENUS_AHB_CLK>,
->> +				<&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
->> +				<&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
->> +				<&videocc VIDEO_CC_VCODEC0_AXI_CLK>;
->> +			clock-names = "core", "iface", "bus",
->> +					"vcodec0_core", "vcodec0_bus";
->> +			iommus = <&apps_smmu 0x0C00 0x60>;
->> +			memory-region = <&venus_mem>;
->> +			video-core0 {
->> +					compatible = "venus-decoder";
->> +			};
->> +			video-core1 {
->> +					compatible = "venus-encoder";
->> +			};
->> +			video-firmware {
->> +					iommus = <&apps_smmu 0x0C42 0x0>;
->> +			};
->> +		};
->> 
+> 
+> [1] https://gitlab.freedesktop.org/drm/intel/issues/new
+> 
+> 
