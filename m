@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B2CDE129756
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 15:31:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16CB1129759
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 15:31:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726846AbfLWOa7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Dec 2019 09:30:59 -0500
-Received: from mail.kernel.org ([198.145.29.99]:51312 "EHLO mail.kernel.org"
+        id S1726885AbfLWObD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Dec 2019 09:31:03 -0500
+Received: from mail.kernel.org ([198.145.29.99]:51400 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726840AbfLWOa7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Dec 2019 09:30:59 -0500
+        id S1726840AbfLWObD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Dec 2019 09:31:03 -0500
 Received: from vkoul-mobl.Dlink (unknown [106.51.110.206])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A02EF20709;
-        Mon, 23 Dec 2019 14:30:55 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id B605020715;
+        Mon, 23 Dec 2019 14:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1577111459;
-        bh=+a7Dxz7RAuVm+FbhWjOq9hoUsXhxZzNgbeolx7Tc3Gk=;
-        h=From:To:Cc:Subject:Date:From;
-        b=q8I/EKh0XXj/KSQGE0Vehqw5RgAgY15IoaGyK5iS8ONoDiI6HWuuNU16oug4zJIeX
-         8ZP+XdgLZtyDCKy9lMoGer+YXF1uP7uG73Txr5famY80uElkNxmCND5PSurID3kTbb
-         rh3txh4rsgDsxH9OuWlw5LaA6UzhUYGUjiZIJBiI=
+        s=default; t=1577111463;
+        bh=HbnZQLpmgHXuQZD4rzr1fzFLDl+IaGj4mWYVNAsbNqI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=hNVaCVZeiTF3YPNzO7IGoU5IepR3bZV0K/2HZ+Hv91LB+uQrhQYYKDDPMB8jnzNen
+         IOfNb1pOzdg2N2TPDHLrJ9TtpMvt61fV+7qj3Tp8JNa8pqzlGOg/h6ngIJklHqOE+Z
+         pA93xoX2rdzKSCyo4FHL3z+y/ic3E3dxiOrL+sm4=
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Kishon Vijay Abraham I <kishon@ti.com>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -32,10 +32,12 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
         Manu Gautam <mgautam@codeaurora.org>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v3 0/4] phy: qcom-qmp: Fixes and updates for sm8150
-Date:   Mon, 23 Dec 2019 20:00:42 +0530
-Message-Id: <20191223143046.3376299-1-vkoul@kernel.org>
+Subject: [PATCH v3 1/4] phy: qcom-qmp: Use register defines
+Date:   Mon, 23 Dec 2019 20:00:43 +0530
+Message-Id: <20191223143046.3376299-2-vkoul@kernel.org>
 X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20191223143046.3376299-1-vkoul@kernel.org>
+References: <20191223143046.3376299-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -43,30 +45,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For SM8150 we need additional SW reset so clear the no_pcs_sw_reset, and add
-SW reset register. Along with that remove duplicate powerdown write.
+We already define register offsets so use them in register layout.
 
-Changes in v3:
- - Drop patch 1 "phy: qcom-qmp: Increase PHY ready timeout" as that is
-   applied by Kishon
- - Drop patch "phy: qcom-qmp: Add optional SW reset" as that is no longer
-   required
- - Add "phy: qcom-qmp: Add SW reset register"
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Changes in v2:
- - Drop patch 1 and pick the one Bjorn had already sent, makes timeout 10ms
- - Fix optional reset write as pointed by Can
- - Fix register define as pointed by Can
-
-Vinod Koul (4):
-  phy: qcom-qmp: Use register defines
-  phy: qcom-qmp: remove duplicate powerdown write
-  phy: qcom-qmp: remove no_pcs_sw_reset for sm8150
-  phy: qcom-qmp: Add SW reset register
-
- drivers/phy/qualcomm/phy-qcom-qmp.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+index 66f91726b8b2..1196c85aa023 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -166,8 +166,8 @@ static const unsigned int sdm845_ufsphy_regs_layout[] = {
+ };
+ 
+ static const unsigned int sm8150_ufsphy_regs_layout[] = {
+-	[QPHY_START_CTRL]		= 0x00,
+-	[QPHY_PCS_READY_STATUS]		= 0x180,
++	[QPHY_START_CTRL]		= QPHY_V4_PHY_START,
++	[QPHY_PCS_READY_STATUS]		= QPHY_V4_PCS_READY_STATUS,
+ };
+ 
+ static const struct qmp_phy_init_tbl msm8996_pcie_serdes_tbl[] = {
 -- 
 2.23.0
 
