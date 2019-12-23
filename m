@@ -2,120 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EFDDB1296B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 14:58:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 220691296CD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 15:06:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726682AbfLWN6o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Dec 2019 08:58:44 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:36641 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726676AbfLWN6n (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Dec 2019 08:58:43 -0500
-Received: by mail-io1-f67.google.com with SMTP id r13so6169596ioa.3;
-        Mon, 23 Dec 2019 05:58:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3PKfJo7e/F8iYmHNlUC4kcHL5CKe5kHebcIO1c7mfek=;
-        b=dDAyIimizk4oR9NYXHcsKtFz27JZds8feHchTbuhSFGETI/pNbAsciKDI4kkOO1IfW
-         nd1fJJu8DGsZTzaO48gK39ip/2Y7RXR64/zH5QtItx5EMlpR/syeXSe2R4uiULrRrwOF
-         DGIaEEckCcWI0jeY0KKBgvwVAilBeRgkNhrBI9GEFTr+z77vSDBRAysEiLX9O5JQ+sl8
-         89Bv2ne5VAOHZasFhbr5n/1sqBzJ+m2+PDv7/foH36JVYk+2N6zc0oY2wVDAx/ELxRVJ
-         9/Hjh8GLcGbiqL84jnvkKy46ND/X9Enf9+4wn4alAT5qQoGvuaru7lZB96gaBN10o4jB
-         T7/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3PKfJo7e/F8iYmHNlUC4kcHL5CKe5kHebcIO1c7mfek=;
-        b=qO52ApdHUP6nHcLJT8UtBz284YenKPidOAI42S4sELqaZAHSwB0KDURhmr8Xip5CCy
-         WxQ/HS2wLEkh28wPfdqD8WcHGlLq2HUXZcPtEMCzSxl2t+MJFCivoVEo7nbaBb6dEEc0
-         iiT+/A/1AKwqpKDe4QoIxg6M8hWTQaw2jiAmWVtVgzU1l4U3cfwwISs0ELQq7bJu0kLT
-         sCtf37MMX8/I1DFnJH6Wj3Joi1AU0fZ7HLZ16H9GDCW+/icsQ3P/op8CNJe+Ffb6Nk+W
-         N02hhYQEN0NbCwUpljx20qzTfWBfdkkTkt6MWmqRiBOTnW2+muXmQ3YHmN4fPf5asM21
-         90UA==
-X-Gm-Message-State: APjAAAVIUF9M9oorJiHExJL2s1T/Q8h2dRzLqYXhF+NbgkfBypdsSpvG
-        XtQzgL+vSeIupTSuPTbZ93hMqOGZsmVYhMwWAK8=
-X-Google-Smtp-Source: APXvYqzUM8YJ6tRj448hYxFlxEOEtyUsp/J3wkALdJo8nymUv20lta/KuUBHcl5Mm/Nxt1SgHLy1Br5zccJrGGPCy8E=
-X-Received: by 2002:a02:ca56:: with SMTP id i22mr22510644jal.140.1577109523001;
- Mon, 23 Dec 2019 05:58:43 -0800 (PST)
+        id S1726682AbfLWOG4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Dec 2019 09:06:56 -0500
+Received: from mail.kernel.org ([198.145.29.99]:37528 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726676AbfLWOG4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Dec 2019 09:06:56 -0500
+Received: from localhost (unknown [106.51.110.206])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9E82620709;
+        Mon, 23 Dec 2019 14:06:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1577110015;
+        bh=Cbual4ehB2Zz84mgi4lJ0W18gNgG1GLTDzrUJDxiHqw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=CY4gc8xS6rLzYfPE0ErrDYtGywpDKEXzrMIKKhPEBALM9uCQA675Dc0+YZ3N7EnbB
+         ePf49u5rigB7mKL5ShjrkKQ2KrK9+IO+u2q0B7tGBGeZrI4KY6PwEm/+2RhID6H2C0
+         geyRfdKEVouA0UtJak9q+ZeyglZgXrw6JZv8pROM=
+Date:   Mon, 23 Dec 2019 19:36:50 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Manu Gautam <mgautam@codeaurora.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, Can Guo <cang@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/5] phy: qcom-qmp: Add optional SW reset
+Message-ID: <20191223140650.GG2536@vkoul-mobl>
+References: <20191220101719.3024693-1-vkoul@kernel.org>
+ <20191220101719.3024693-4-vkoul@kernel.org>
+ <5dc55690-61cc-de35-2e02-ec812f086bf5@codeaurora.org>
 MIME-Version: 1.0
-References: <1577096361-8381-1-git-send-email-harigovi@codeaurora.org>
-In-Reply-To: <1577096361-8381-1-git-send-email-harigovi@codeaurora.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Mon, 23 Dec 2019 06:58:32 -0700
-Message-ID: <CAOCk7NoDsjGWV=ddZO2yVG_n2N-mhdhfeaNML=kTTr2Mg88q0Q@mail.gmail.com>
-Subject: Re: [Freedreno] [v1] drm/msm: update LANE_CTRL register value from
- default value
-To:     Harigovindan P <harigovi@codeaurora.org>
-Cc:     "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>, nganji@codeaurora.org,
-        Sean Paul <seanpaul@chromium.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5dc55690-61cc-de35-2e02-ec812f086bf5@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 23, 2019 at 3:19 AM Harigovindan P <harigovi@codeaurora.org> wrote:
->
-> Updating REG_DSI_LANE_CTRL register value by reading default
-> register value and writing it back using bitwise OR with
-> DSI_LANE_CTRL_CLKLN_HS_FORCE_REQUEST. This works for all panels.
+Hi Manu,
 
-Why?
-You explain what the code does, which I can tell from reading the
-code.  The commit text should tell me why this change is necessary.
-Why would I care if this change is in my tree or not?  What feature
-does it provide or what issue does it fix?
+On 23-12-19, 14:38, Manu Gautam wrote:
+> 
+> On 12/20/2019 3:47 PM, Vinod Koul wrote:
+> > For V4 QMP UFS Phy, we need to assert reset bits, configure the phy and
+> > then deassert it, so add optional has_sw_reset flag and use that to
+> > configure the QPHY_SW_RESET register.
+> >
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > ---
+> >  drivers/phy/qualcomm/phy-qcom-qmp.c | 11 +++++++++++
+> >  1 file changed, 11 insertions(+)
+> >
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > index 1196c85aa023..47a66d55107d 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > @@ -168,6 +168,7 @@ static const unsigned int sdm845_ufsphy_regs_layout[] = {
+> >  static const unsigned int sm8150_ufsphy_regs_layout[] = {
+> >  	[QPHY_START_CTRL]		= QPHY_V4_PHY_START,
+> >  	[QPHY_PCS_READY_STATUS]		= QPHY_V4_PCS_READY_STATUS,
+> > +	[QPHY_SW_RESET]			= QPHY_V4_SW_RESET,
+> >  };
+> >  
+> >  static const struct qmp_phy_init_tbl msm8996_pcie_serdes_tbl[] = {
+> > @@ -1023,6 +1024,9 @@ struct qmp_phy_cfg {
+> >  
+> >  	/* true, if PCS block has no separate SW_RESET register */
+> >  	bool no_pcs_sw_reset;
+> > +
+> > +	/* true if sw reset needs to be invoked */
+> > +	bool has_sw_reset;
+> 
+> 
+> There is no need to add new flag. Existing code will take care of it for UFS once you
+> clear no_pcs_sw_reset flag.
+> 
+> >  };
+> >  
+> >  /**
+> > @@ -1391,6 +1395,7 @@ static const struct qmp_phy_cfg sm8150_ufsphy_cfg = {
+> >  
+> >  	.is_dual_lane_phy	= true,
+> >  	.no_pcs_sw_reset	= true,
+> > +	.has_sw_reset		= true,
+> >  };
+> >  
+> >  static void qcom_qmp_phy_configure(void __iomem *base,
+> > @@ -1475,6 +1480,9 @@ static int qcom_qmp_phy_com_init(struct qmp_phy *qphy)
+> >  			     SW_USB3PHY_RESET_MUX | SW_USB3PHY_RESET);
+> >  	}
+> >  
+> > +	if (cfg->has_sw_reset)
+> > +		qphy_setbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
+> > +
+> 
+> Not needed. POR value of the bit is '1'.
+> 
+> 
+> >  	if (cfg->has_phy_com_ctrl)
+> >  		qphy_setbits(serdes, cfg->regs[QPHY_COM_POWER_DOWN_CONTROL],
+> >  			     SW_PWRDN);
+> > @@ -1651,6 +1659,9 @@ static int qcom_qmp_phy_enable(struct phy *phy)
+> >  	if (cfg->has_phy_dp_com_ctrl)
+> >  		qphy_clrbits(dp_com, QPHY_V3_DP_COM_SW_RESET, SW_RESET);
+> >  
+> > +	if (cfg->has_sw_reset)
+> > +		qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
+> > +
+> 
+> There is no need to add UFS specific change here as existing PHY driver can
+> handle PCS based PHY sw_reset and already does it for USB and PCIe.
 
->
-> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
-> ---
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index e6289a3..d3c5233 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -816,7 +816,7 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
->         u32 flags = msm_host->mode_flags;
->         enum mipi_dsi_pixel_format mipi_fmt = msm_host->format;
->         const struct msm_dsi_cfg_handler *cfg_hnd = msm_host->cfg_hnd;
-> -       u32 data = 0;
-> +       u32 data = 0, lane_ctrl = 0;
->
->         if (!enable) {
->                 dsi_write(msm_host, REG_DSI_CTRL, 0);
-> @@ -904,9 +904,11 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
->         dsi_write(msm_host, REG_DSI_LANE_SWAP_CTRL,
->                   DSI_LANE_SWAP_CTRL_DLN_SWAP_SEL(msm_host->dlane_swap));
->
-> -       if (!(flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
-> +       if (!(flags & MIPI_DSI_CLOCK_NON_CONTINUOUS)) {
-> +               lane_ctrl = dsi_read(msm_host, REG_DSI_LANE_CTRL);
->                 dsi_write(msm_host, REG_DSI_LANE_CTRL,
-> -                       DSI_LANE_CTRL_CLKLN_HS_FORCE_REQUEST);
-> +                       lane_ctrl | DSI_LANE_CTRL_CLKLN_HS_FORCE_REQUEST);
-> +       }
->
->         data |= DSI_CTRL_ENABLE;
->
-> --
-> 2.7.4
->
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+Thanks for the explanation in this and previous version.
+
+I confirm that adding sw_reset and clearing .no_pcs_sw_reset does make
+it work for me on UFS on SM8150.
+
+I will drop this patch and send the update in v3
+
+-- 
+~Vinod
