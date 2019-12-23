@@ -2,125 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AE13F129504
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 12:29:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE155129512
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 12:33:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726691AbfLWL3d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Dec 2019 06:29:33 -0500
-Received: from foss.arm.com ([217.140.110.172]:43030 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726679AbfLWL3c (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Dec 2019 06:29:32 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9F7EC328;
-        Mon, 23 Dec 2019 03:29:31 -0800 (PST)
-Received: from [192.168.1.123] (unknown [172.31.20.19])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id EE2493F68F;
-        Mon, 23 Dec 2019 03:29:25 -0800 (PST)
-Subject: Re: [PATCH 0/8] Convert the intel iommu driver to the dma-iommu api
-To:     Jani Nikula <jani.nikula@linux.intel.com>,
-        Tom Murphy <murphyt7@tcd.ie>, iommu@lists.linux-foundation.org
-Cc:     Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        Cornelia Huck <cohuck@redhat.com>,
-        Julien Grall <julien.grall@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Eric Auger <eric.auger@redhat.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, kvm@vger.kernel.org
-References: <20191221150402.13868-1-murphyt7@tcd.ie>
- <87blrzwcn8.fsf@intel.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <432d306c-fe9f-75b2-f0f7-27698f1467ad@arm.com>
-Date:   Mon, 23 Dec 2019 11:29:17 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
- Thunderbird/68.3.0
-MIME-Version: 1.0
-In-Reply-To: <87blrzwcn8.fsf@intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
+        id S1726663AbfLWLdb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Dec 2019 06:33:31 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:41657 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726679AbfLWLda (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Dec 2019 06:33:30 -0500
+Received: by mail-lj1-f195.google.com with SMTP id h23so17399837ljc.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2019 03:33:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=W86PjKWMp0DXo0oqU8GNbupPzD4JvnNKtjFCMr2/NeY=;
+        b=NdccdyXLPkXmuyhQhYpFznqNVNxOoSsQFB6qZE+cGCN/yafZMxkrGX0vWu+TxIsXW/
+         X5BGr3a08PLAYMNKPk/W2RNBFvKi062Fy0T4WRkjPVBQTpKEkYFbAv7ZMAYw+R/2YrT9
+         UGJ46wZHvNC6WDA9XZS7gBWDVCB31c93auJxUMVpu0QsAJwj3Mhvxp+Bopcqu7p5Aajj
+         v1YibMM54480J3Qh7wX7BLOSZMEigllisVovl2hKKF9ck7cUrijaKtfHSczq7eIdwtm5
+         +duB5ivl1vG4Eshuy2LtdzkuhTKtCGtOujbkafb06ml+1+gIV9k1KhjG6oAnGCBp1su0
+         ZUyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=W86PjKWMp0DXo0oqU8GNbupPzD4JvnNKtjFCMr2/NeY=;
+        b=qzOVSnR40gtOTl03b25EhkBfE91eJpsUFvmE9ZnNzGDkcGA+skE1bKrnARhuErawB/
+         J5hzzqSolyzaFDbcKmPZN9+3lfEsDLk7eaLgwcWcEfvJVjOw8m/XJGOjqYNXy6xuZuQp
+         l3i1acw6faLEJGEkTO8BmlWcoCXyJV5egTWaHeCOWPUmasFzb/SoDUKQEYjZ4b+ihToP
+         6CDkp8WZD6aoN8/0jMN7Do8ZK45ckjw1+Il2CKx7XI1d4SkqIAeibvQTnM0MFLvyxDOq
+         5Ri9oZWqhdpB8k87PCvW5Wg3wGxECCT0JHHOdGCvEC5vdMay7ME71Te/HwOp5fQXtyWD
+         ZhYw==
+X-Gm-Message-State: APjAAAXfVqiPocpFHB7Ww17rwY9K/VCerGBFHbNwF66fsBXEYj/LQTrz
+        ATuGD7P8cVfKXOaJNdxJTtn3+CRgW6c=
+X-Google-Smtp-Source: APXvYqyvE4LFXz14TEeueaK3Hw30PRJx8l5ut0WQKynuK1BG5vv7bGEblHk4zcQqosmEsfb6sqn3Mw==
+X-Received: by 2002:a2e:2d01:: with SMTP id t1mr12640896ljt.36.1577100808204;
+        Mon, 23 Dec 2019 03:33:28 -0800 (PST)
+Received: from localhost.localdomain ([37.157.136.193])
+        by smtp.gmail.com with ESMTPSA id g15sm8381500ljk.8.2019.12.23.03.33.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Dec 2019 03:33:27 -0800 (PST)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     Vikash Garodia <vgarodia@codeaurora.org>, dikshita@codeaurora.org,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH v3 00/12] Venus new features
+Date:   Mon, 23 Dec 2019 13:32:59 +0200
+Message-Id: <20191223113311.20602-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-12-23 10:37 am, Jani Nikula wrote:
-> On Sat, 21 Dec 2019, Tom Murphy <murphyt7@tcd.ie> wrote:
->> This patchset converts the intel iommu driver to the dma-iommu api.
->>
->> While converting the driver I exposed a bug in the intel i915 driver
->> which causes a huge amount of artifacts on the screen of my
->> laptop. You can see a picture of it here:
->> https://github.com/pippy360/kernelPatches/blob/master/IMG_20191219_225922.jpg
->>
->> This issue is most likely in the i915 driver and is most likely caused
->> by the driver not respecting the return value of the
->> dma_map_ops::map_sg function. You can see the driver ignoring the
->> return value here:
->> https://github.com/torvalds/linux/blob/7e0165b2f1a912a06e381e91f0f4e495f4ac3736/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c#L51
->>
->> Previously this didn’t cause issues because the intel map_sg always
->> returned the same number of elements as the input scatter gather list
->> but with the change to this dma-iommu api this is no longer the
->> case. I wasn’t able to track the bug down to a specific line of code
->> unfortunately.
->>
->> Could someone from the intel team look at this?
-> 
-> Let me get this straight. There is current API that on success always
-> returns the same number of elements as the input scatter gather
-> list. You propose to change the API so that this is no longer the case?
+Hello,
 
-No, the API for dma_map_sg() has always been that it may return fewer 
-DMA segments than nents - see Documentation/DMA-API.txt (and otherwise, 
-the return value would surely be a simple success/fail condition). 
-Relying on a particular implementation behaviour has never been strictly 
-correct, even if it does happen to be a very common behaviour.
+Chnages since v2:
 
-> A quick check of various dma_map_sg() calls in the kernel seems to
-> indicate checking for 0 for errors and then ignoring the non-zero return
-> is a common pattern. Are you sure it's okay to make the change you're
-> proposing?
+  - addressed DT schema review comments in patches 6/12 to 9/12
 
-Various code uses tricks like just iterating the mapped list until the 
-first segment with zero sg_dma_len(). Others may well simply have bugs.
 
-Robin.
+v2 can be found at [1].
 
-> Anyway, due to the time of year and all, I'd like to ask you to file a
-> bug against i915 at [1] so this is not forgotten, and please let's not
-> merge the changes before this is resolved.
-> 
-> 
-> Thanks,
-> Jani.
-> 
-> 
-> [1] https://gitlab.freedesktop.org/drm/intel/issues/new
-> 
-> 
+regards,
+Stan
+
+[1] https://lkml.org/lkml/2019/12/18/444
+
+Aniket Masule (2):
+  media: venus: introduce core selection
+  media: venus: vdec: handle 10bit bitstreams
+
+Stanimir Varbanov (10):
+  venus: redesign clocks and pm domains control
+  venus: venc: blacklist two encoder properties
+  v4l: Add source event change for bit-depth
+  dt-bindings: media: venus: Convert msm8916 to DT schema
+  dt-bindings: media: venus: Convert msm8996 to DT schema
+  dt-bindings: media: venus: Convert sdm845 to DT schema
+  dt-bindings: media: venus: Add sdm845v2 DT schema
+  venus: core: add sdm845-v2 DT compatible and resource struct
+  arm64: dts: sdm845: follow venus-sdm845v2 DT binding
+  dt-bindings: media: venus: delete old binding document
+
+ .../bindings/media/qcom,msm8916-venus.yaml    | 117 +++
+ .../bindings/media/qcom,msm8996-venus.yaml    | 153 +++
+ .../bindings/media/qcom,sdm845-venus-v2.yaml  | 139 +++
+ .../bindings/media/qcom,sdm845-venus.yaml     | 157 +++
+ .../devicetree/bindings/media/qcom,venus.txt  | 120 ---
+ .../media/uapi/v4l/vidioc-dqevent.rst         |   8 +-
+ .../media/videodev2.h.rst.exceptions          |   1 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  25 +-
+ drivers/media/platform/qcom/venus/Makefile    |   2 +-
+ drivers/media/platform/qcom/venus/core.c      | 122 ++-
+ drivers/media/platform/qcom/venus/core.h      |  31 +-
+ drivers/media/platform/qcom/venus/helpers.c   | 435 ++------
+ drivers/media/platform/qcom/venus/helpers.h   |   4 -
+ drivers/media/platform/qcom/venus/hfi_cmds.c  |   2 +
+ .../media/platform/qcom/venus/hfi_helper.h    |   6 +
+ .../media/platform/qcom/venus/hfi_parser.h    |   5 +
+ .../media/platform/qcom/venus/pm_helpers.c    | 964 ++++++++++++++++++
+ .../media/platform/qcom/venus/pm_helpers.h    |  65 ++
+ drivers/media/platform/qcom/venus/vdec.c      |  88 +-
+ drivers/media/platform/qcom/venus/venc.c      |  75 +-
+ include/uapi/linux/videodev2.h                |   1 +
+ 21 files changed, 1873 insertions(+), 647 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml
+ delete mode 100644 Documentation/devicetree/bindings/media/qcom,venus.txt
+ create mode 100644 drivers/media/platform/qcom/venus/pm_helpers.c
+ create mode 100644 drivers/media/platform/qcom/venus/pm_helpers.h
+
+-- 
+2.17.1
+
