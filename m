@@ -2,196 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B660129457
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 11:43:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C23112946D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 11:51:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726679AbfLWKnZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Dec 2019 05:43:25 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37597 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726666AbfLWKnZ (ORCPT
+        id S1726866AbfLWKvi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Dec 2019 05:51:38 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:35626 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726846AbfLWKvi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Dec 2019 05:43:25 -0500
-Received: by mail-ed1-f67.google.com with SMTP id cy15so14917325edb.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Dec 2019 02:43:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=uk7naUju2+XbutO3mWqlPuK0fzl6xEjormjMxI+qpl8=;
-        b=hmsl3JEtm3nmnkhumYmwRTOC19hA7BaLhnTRrHH1S5/z6VywLyGNHuRCFtG1Mps340
-         JwYL7ixxMa0X7G2Jm3Hbe0G+GMf5CvjC87tfxTfU5fi9xbr9RbIWy5ssft3S/ZKDkXue
-         xL9+tlHsEP4+yN7KvLQPnTALQTZovIKws3LeFG99J2xTTe4+glksinN5Rtt4ZS3y8IBm
-         P1YkWz5BGkv+S1p2LxDFQucAxMCL+uxaM7k8+EGcaQNHh1Dg0K8MwsSmmk8+eI43KJ+G
-         7NDv/0LWEs2kmgYl3gEC6VHrnudvOypshfYxFWln18a0JCKOmUWciBKgd9d8CQeohHoW
-         THhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=uk7naUju2+XbutO3mWqlPuK0fzl6xEjormjMxI+qpl8=;
-        b=jRJAT8IscjX0A24ZebSjzn55iauHDpBOvyQn9UTm/5+ak+kN8lwOfbsluxl1IUbN2z
-         myF3sk2reodGcHZH3uI2KPraLiiHj60NLBcVjFQz/a4sZasyNsuNa1YlzHnTDheimg1G
-         0LFrnxk7P9fKJTQMIfTynGWVRb3syjDZTtTTP9Xgk/4VyIUqSv/4TFCipo7ysClGyalQ
-         K3bzECfPWWUSxE1m74iimYd+OeWOsq/+nsBrRDdrm0yaF9X4aLG0TzSxXfml4WVQmb7B
-         i2/ocEdpXtDPjg5wsUAK9DdN1o/OsOCha8egKY+fryBhSBcJwwp8t8rfigpIlYODu3c9
-         qZqQ==
-X-Gm-Message-State: APjAAAVI+zObJnm5RxGTYsaYCxQQrLxI7iXZQwOrXfvBYsJtsGgl4Zy6
-        /BbyKLMEGW50ZWY/LL7Xox8dDg==
-X-Google-Smtp-Source: APXvYqyWEpmt29x0qQj5AT9WoLd0KyIuXpzp58GzNrpJ0iW9CCWNUHZbp3UHiIf4zluasnKm5DBz5Q==
-X-Received: by 2002:a05:6402:12d2:: with SMTP id k18mr31420757edx.253.1577097803403;
-        Mon, 23 Dec 2019 02:43:23 -0800 (PST)
-Received: from [192.168.27.209] ([37.157.136.193])
-        by smtp.googlemail.com with ESMTPSA id z22sm2200251edq.79.2019.12.23.02.43.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Dec 2019 02:43:22 -0800 (PST)
-Subject: Re: [PATCH 3/3] venus: core: add sc7180 DT compatible and resource
- struct
-To:     dikshita@codeaurora.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        vgarodia@codeaurora.org
-References: <1576828760-13176-1-git-send-email-dikshita@codeaurora.org>
- <1576828760-13176-4-git-send-email-dikshita@codeaurora.org>
- <b1b5ee06-bc39-cfc0-b2c8-8073f8857fde@linaro.org>
- <98c83352cae3a5e38a3711f81dc28df5@codeaurora.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <bf25039f-f9de-69f9-0e18-305f39c3eb9d@linaro.org>
-Date:   Mon, 23 Dec 2019 12:43:22 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        Mon, 23 Dec 2019 05:51:38 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1577098296; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=TGpdVO4TQrAiEbW35Q+cAOtdIcH3Y8wTeKCax2w3lDk=;
+ b=FqpmAvP0JOHL6TmUZoKVM9BptAEGLe8avf1XQ+osDCFQPf3kp7xFU6HNC8m9PPvlgpL2Hnv0
+ y3pF+7u3L2SiiwkJgJpyCIO84JwNriiXBwMI+Ix1xaDzLelbtMAFZhOAL0YnVC8vsTqjryCQ
+ 8Mw4NSlIp+pwa6h52y+S0fAm3n0=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e009c36.7f2a6607ae68-smtp-out-n01;
+ Mon, 23 Dec 2019 10:51:34 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D950BC4479C; Mon, 23 Dec 2019 10:51:34 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sthella)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7BB85C43383;
+        Mon, 23 Dec 2019 10:51:34 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <98c83352cae3a5e38a3711f81dc28df5@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 23 Dec 2019 16:21:34 +0530
+From:   sthella@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     srinivas.kandagatla@linaro.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] nvmem: add QTI SDAM driver
+In-Reply-To: <20191220002929.GJ448416@yoga>
+References: <1576574432-9649-1-git-send-email-sthella@codeaurora.org>
+ <20191218061400.GV3143381@builder>
+ <17c718c483db710b32b2dbbcf4637783@codeaurora.org>
+ <20191220002929.GJ448416@yoga>
+Message-ID: <9d1cd4bdf63fd2ad980554e913c5741a@codeaurora.org>
+X-Sender: sthella@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dikshita,
-
-On 12/23/19 12:04 PM, dikshita@codeaurora.org wrote:
-> Hi Stan,
+On 2019-12-20 05:59, Bjorn Andersson wrote:
+> On Thu 19 Dec 02:29 PST 2019, sthella@codeaurora.org wrote:
 > 
-> Thanks for the review!
+>> On 2019-12-18 11:44, Bjorn Andersson wrote:
+>> > On Tue 17 Dec 01:20 PST 2019, Shyam Kumar Thella wrote:
+> [..]
+>> > > +subsys_initcall(sdam_init);
+>> >
+>> > module_platform_driver(sdam_driver), unless you have some strong
+>> > arguments for why this needs to be subsys_initcall
+>> There are some critical sybsystems which depend on nvmem data. So I 
+>> would
+>> prefer using subsys_initcall().
 > 
-> On 2019-12-20 15:03, Stanimir Varbanov wrote:
->> Hi Dikshita,
->>
->> Thanks for the patch!
->>
->> On 12/20/19 9:59 AM, Dikshita Agarwal wrote:
->>> This add DT compatible string and resource structure for sc7180.
->>>
->>> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
->>> ---
->>>  drivers/media/platform/qcom/venus/core.c | 58
->>> +++++++++++++++++++++++++++++++-
->>>  1 file changed, 57 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/core.c
->>> b/drivers/media/platform/qcom/venus/core.c
->>> index c7525d9..e8c8b28 100644
->>> --- a/drivers/media/platform/qcom/venus/core.c
->>> +++ b/drivers/media/platform/qcom/venus/core.c
->>> @@ -469,7 +469,7 @@ static __maybe_unused int
->>> venus_runtime_resume(struct device *dev)
->>>      { 2073600, 3929000, 0, 5551000, 0 },    /* 4096x2160@60 */
->>>      { 1036800, 1987000, 0, 2797000, 0 },    /* 4096x2160@30 */
->>>      {  489600, 1040000, 0, 1298000, 0 },    /* 1920x1080@60 */
->>> -    {  244800,  530000, 0,  659000, 0 },    /* 1920x1080@30 */
->>> +    {  244800,  442000, 0,  659000, 0 },    /* 1920x1080@30 */
->>
->> unrelated change, please drop it
-> Sure, I will address this in next version.
->>
->>>  };
->>>
->>>  static const struct venus_resources sdm845_res = {
->>> @@ -521,11 +521,67 @@ static __maybe_unused int
->>> venus_runtime_resume(struct device *dev)
->>>      .fwname = "qcom/venus-5.2/venus.mdt",
->>>  };
->>>
->>> +static const struct freq_tbl sc7180_freq_table[] = {
->>> +    {  0, 380000000 },
->>> +    {  0, 340000000 },
->>> +    {  0, 270000000 },
->>> +    {  0, 150000000 },
->>
->> why .load is zero?
-> .load is not being used any longer to calculate load and is a dummy value.
-> So keeping it 0.
-
-Hmm, ok I forgot about that fact. I suppose it is fine then.
-
-I found some other issue. Looking into [1], for sc7180 we have two more
-clock-controller frequencies, could you add them too in the table. And
-last, in the same patch we have 19.2MHz do you think such frequency
-makes any sense?
-
-[1] https://lkml.org/lkml/2019/11/15/361
+> How critical? Needed to kernel module loading?
 > 
->>
->>> +};
->>> +
->>> +static struct codec_freq_data sc7180_codec_freq_data[] =  {
->>> +    { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10 },
->>> +    { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 10 },
->>> +    { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 10 },
->>> +    { V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 10 },
->>> +    { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 10 },
->>> +    { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 10 },
->>> +    { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 10 },
->>> +    { V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 10 },
->>> +};
->>
->> the table is exactly the same as sdm845 one, please reuse it.
-> Sure, I will address this in next version.
->>
->>> +
->>> +static const struct bw_tbl sc7180_bw_table_enc[] = {
->>> +    {  972000,  750000, 0, 0, 0 },    /* 3840x2160@30 */
->>> +    {  489600,  451000, 0, 0, 0 },    /* 1920x1080@60 */
->>> +    {  244800,  234000, 0, 0, 0 },    /* 1920x1080@30 */
->>> +};
->>> +
->>> +static const struct bw_tbl sc7180_bw_table_dec[] = {
->>> +    { 1036800, 1386000, 0, 1875000, 0 },    /* 4096x2160@30 */
->>> +    {  489600,  865000, 0, 1146000, 0 },    /* 1920x1080@60 */
->>> +    {  244800,  530000, 0,  583000, 0 },    /* 1920x1080@30 */
->>> +};
->>> +
->>> +static const struct venus_resources sc7180_res = {
->>> +    .freq_tbl = sc7180_freq_table,
->>> +    .freq_tbl_size = ARRAY_SIZE(sc7180_freq_table),
->>> +    .bw_tbl_enc = sc7180_bw_table_enc,
->>> +    .bw_tbl_enc_size = ARRAY_SIZE(sc7180_bw_table_enc),
->>> +    .bw_tbl_dec = sc7180_bw_table_dec,
->>> +    .bw_tbl_dec_size = ARRAY_SIZE(sc7180_bw_table_dec),
->>> +    .codec_freq_data = sc7180_codec_freq_data,
->>> +    .codec_freq_data_size = ARRAY_SIZE(sc7180_codec_freq_data),
->>> +    .clks = {"core", "iface", "bus" },
->>> +    .clks_num = 3,
->>> +    .vcodec0_clks = { "vcodec0_core", "vcodec0_bus" },
->>> +    .vcodec_clks_num = 2,
->>> +    .vcodec_pmdomains = { "venus", "vcodec0" },
->>> +    .vcodec_pmdomains_num = 2,
->>> +    .vcodec_num = 1,
->>> +    .max_load = 3110400,    /* 4096x2160@90 */
->>
->> Looking into above bandwidth tables I can guess that the maximimum load
->> is reached at 4096x2160@30? If so you have to change it here.
+> Can you please document this need somehow? (either a comment here or
+> something in the commit message). Be specific.
+Sure. I will add the need in commit message in its next patch.
 > 
-> After checking further on this I see that max_load can be removed since
-> it is not being used now to determine if H/W is overloaded or not.
-> What do you suggest?
-
-Lets have it just for informational reasons.
-
--- 
-regards,
-Stan
+> THanks,
+> Bjorn
