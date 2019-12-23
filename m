@@ -2,135 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 46B2612959C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 12:41:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D444129637
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 14:02:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726798AbfLWLlr convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Dec 2019 06:41:47 -0500
-Received: from mga11.intel.com ([192.55.52.93]:49453 "EHLO mga11.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726663AbfLWLlr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Dec 2019 06:41:47 -0500
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 23 Dec 2019 03:41:45 -0800
-X-IronPort-AV: E=Sophos;i="5.69,347,1571727600"; 
-   d="scan'208";a="211530914"
-Received: from jnikula-mobl3.fi.intel.com (HELO localhost) ([10.237.66.161])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 23 Dec 2019 03:41:35 -0800
-From:   Jani Nikula <jani.nikula@linux.intel.com>
-To:     Robin Murphy <robin.murphy@arm.com>, Tom Murphy <murphyt7@tcd.ie>,
-        iommu@lists.linux-foundation.org
-Cc:     Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        Alex Williamson <alex.williamson@redhat.com>,
-        Cornelia Huck <cohuck@redhat.com>,
-        Julien Grall <julien.grall@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Eric Auger <eric.auger@redhat.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, kvm@vger.kernel.org
-Subject: Re: [PATCH 0/8] Convert the intel iommu driver to the dma-iommu api
-In-Reply-To: <432d306c-fe9f-75b2-f0f7-27698f1467ad@arm.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <20191221150402.13868-1-murphyt7@tcd.ie> <87blrzwcn8.fsf@intel.com> <432d306c-fe9f-75b2-f0f7-27698f1467ad@arm.com>
-Date:   Mon, 23 Dec 2019 13:41:33 +0200
-Message-ID: <87o8vzuv4i.fsf@intel.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+        id S1726936AbfLWNCq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Dec 2019 08:02:46 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:18522 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726691AbfLWNCq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Dec 2019 08:02:46 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1577106165; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=/YMggVbc7M6CjZVE5kCb7Ofg44zujSw7jl0Io5iU98k=; b=R/3WaMM3esi29Rd4nxk0fJs/qOt8JDEDkF6lv6FcEtUn7CROOYUh0v+xQdaC3f1pawVmxSeZ
+ xN0x9ccUUUB8A1H383vfaoIkgWwa4XWvi9jKnIC4x11X9RuOj6DQTMYPSLYxXuU42YHD07DG
+ B5QqJlov3V/KwtwKzapmNpKhcZ0=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e00baf0.7f77e91640a0-smtp-out-n02;
+ Mon, 23 Dec 2019 13:02:40 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6541BC3D694; Mon, 23 Dec 2019 13:02:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from sramana-linux.qualcomm.com (blr-c-bdr-fw-01_globalnat_allzones-outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sramana)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 548BDC3D68C;
+        Mon, 23 Dec 2019 13:02:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 548BDC3D68C
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sramana@codeaurora.org
+From:   Srinivas Ramana <sramana@codeaurora.org>
+To:     will@kernel.org, catalin.marinas@arm.com, maz@kernel.org,
+        will.deacon@arm.com
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Srinivas Ramana <sramana@codeaurora.org>
+Subject: [PATCH] arm64: Set SSBS for user threads while creation
+Date:   Mon, 23 Dec 2019 18:32:26 +0530
+Message-Id: <1577106146-8999-1-git-send-email-sramana@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 23 Dec 2019, Robin Murphy <robin.murphy@arm.com> wrote:
-> On 2019-12-23 10:37 am, Jani Nikula wrote:
->> On Sat, 21 Dec 2019, Tom Murphy <murphyt7@tcd.ie> wrote:
->>> This patchset converts the intel iommu driver to the dma-iommu api.
->>>
->>> While converting the driver I exposed a bug in the intel i915 driver
->>> which causes a huge amount of artifacts on the screen of my
->>> laptop. You can see a picture of it here:
->>> https://github.com/pippy360/kernelPatches/blob/master/IMG_20191219_225922.jpg
->>>
->>> This issue is most likely in the i915 driver and is most likely caused
->>> by the driver not respecting the return value of the
->>> dma_map_ops::map_sg function. You can see the driver ignoring the
->>> return value here:
->>> https://github.com/torvalds/linux/blob/7e0165b2f1a912a06e381e91f0f4e495f4ac3736/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c#L51
->>>
->>> Previously this didn’t cause issues because the intel map_sg always
->>> returned the same number of elements as the input scatter gather list
->>> but with the change to this dma-iommu api this is no longer the
->>> case. I wasn’t able to track the bug down to a specific line of code
->>> unfortunately.
->>>
->>> Could someone from the intel team look at this?
->> 
->> Let me get this straight. There is current API that on success always
->> returns the same number of elements as the input scatter gather
->> list. You propose to change the API so that this is no longer the case?
->
-> No, the API for dma_map_sg() has always been that it may return fewer 
-> DMA segments than nents - see Documentation/DMA-API.txt (and otherwise, 
-> the return value would surely be a simple success/fail condition). 
-> Relying on a particular implementation behaviour has never been strictly 
-> correct, even if it does happen to be a very common behaviour.
->
->> A quick check of various dma_map_sg() calls in the kernel seems to
->> indicate checking for 0 for errors and then ignoring the non-zero return
->> is a common pattern. Are you sure it's okay to make the change you're
->> proposing?
->
-> Various code uses tricks like just iterating the mapped list until the 
-> first segment with zero sg_dma_len(). Others may well simply have bugs.
+Current SSBS implementation takes care of setting the
+SSBS bit in start_thread() for user threads. While this works
+for tasks launched with fork/clone followed by execve, for cases
+where userspace would just call fork (eg, Java applications) this
+leaves the SSBS bit unset. This results in performance
+regression for such tasks.
 
-Thanks for the clarification.
+It is understood that commit cbdf8a189a66 ("arm64: Force SSBS
+on context switch") masks this issue, but that was done for a
+different reason where heterogeneous CPUs(both SSBS supported
+and unsupported) are present. It is appropriate to take care
+of the SSBS bit for all threads while creation itself.
 
-BR,
-Jani.
+Fixes: 8f04e8e6e29c ("arm64: ssbd: Add support for PSTATE.SSBS rather than trapping to EL3")
+Signed-off-by: Srinivas Ramana <sramana@codeaurora.org>
+---
+ arch/arm64/kernel/process.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
->
-> Robin.
->
->> Anyway, due to the time of year and all, I'd like to ask you to file a
->> bug against i915 at [1] so this is not forgotten, and please let's not
->> merge the changes before this is resolved.
->> 
->> 
->> Thanks,
->> Jani.
->> 
->> 
->> [1] https://gitlab.freedesktop.org/drm/intel/issues/new
->> 
->> 
-
+diff --git a/arch/arm64/kernel/process.c b/arch/arm64/kernel/process.c
+index 71f788cd2b18..a8f05cc39261 100644
+--- a/arch/arm64/kernel/process.c
++++ b/arch/arm64/kernel/process.c
+@@ -399,6 +399,13 @@ int copy_thread(unsigned long clone_flags, unsigned long stack_start,
+ 		 */
+ 		if (clone_flags & CLONE_SETTLS)
+ 			p->thread.uw.tp_value = childregs->regs[3];
++
++		if (arm64_get_ssbd_state() != ARM64_SSBD_FORCE_ENABLE) {
++			if (is_compat_thread(task_thread_info(p)))
++				set_compat_ssbs_bit(childregs);
++			else
++				set_ssbs_bit(childregs);
++		}
+ 	} else {
+ 		memset(childregs, 0, sizeof(struct pt_regs));
+ 		childregs->pstate = PSR_MODE_EL1h;
 -- 
-Jani Nikula, Intel Open Source Graphics Center
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., 
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
