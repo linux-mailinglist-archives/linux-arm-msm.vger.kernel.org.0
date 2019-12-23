@@ -2,144 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B17612937D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 10:10:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C19D1293CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Dec 2019 10:50:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726777AbfLWJIt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Dec 2019 04:08:49 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:13849 "EHLO
+        id S1726828AbfLWJuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Dec 2019 04:50:24 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:21633 "EHLO
         mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726027AbfLWJIt (ORCPT
+        by vger.kernel.org with ESMTP id S1726832AbfLWJuW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Dec 2019 04:08:49 -0500
+        Mon, 23 Dec 2019 04:50:22 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1577092128; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=c7mOfwiSyiAwsq0BDVqLJVggtQ+/XeOB+YJPSnlrgvY=; b=mla8ZmhYF+uqbDnxvFkINPrYpD8MFWoksVUwFM9QLCS8e8nMjUF7u+BqZ+5Pw/8qQPeFq/h1
- QJ1a57JnVwch5pLGXlhyzSGK5EB6q+XcxquDxNJe3EsOVWiyxh66QtcHp42g7IUz3bZKGFR9
- Uk6Df12i2gMo4iBS3NTbIG2Hcxc=
+ s=smtp; t=1577094621; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=KJ1U0ZRQgXwWQsUptcXeQV98BEoXo5TChpOyayX6HDw=;
+ b=WFJnbmFceP2I9ixH0cLnFaypEo2YAZenxn7ixdDPQGjfvWQa7pojp6X26ZcE7Jhn2L2EElMn
+ 3fwL6pYOrGdj91Iw9BtaYnuY1U2Y/WMK0j2m3c8+eEQ63eEfzJF+0GpRkz0VJCBwXvGuhB0/
+ fNnz6yFxzKVzW4bqPZOPcrFVgno=
 X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e00841f.7f7763386ea0-smtp-out-n02;
- Mon, 23 Dec 2019 09:08:47 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e008dd8.7f5b105241f0-smtp-out-n01;
+ Mon, 23 Dec 2019 09:50:16 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A8F00C433CB; Mon, 23 Dec 2019 09:08:47 +0000 (UTC)
+        id D4C58C433A2; Mon, 23 Dec 2019 09:50:14 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.206.24.214] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: mgautam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A6472C43383;
-        Mon, 23 Dec 2019 09:08:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A6472C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mgautam@codeaurora.org
-Subject: Re: [PATCH v2 3/5] phy: qcom-qmp: Add optional SW reset
-To:     Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, Can Guo <cang@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        linux-kernel@vger.kernel.org
-References: <20191220101719.3024693-1-vkoul@kernel.org>
- <20191220101719.3024693-4-vkoul@kernel.org>
-From:   Manu Gautam <mgautam@codeaurora.org>
-Message-ID: <5dc55690-61cc-de35-2e02-ec812f086bf5@codeaurora.org>
-Date:   Mon, 23 Dec 2019 14:38:42 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
+        (Authenticated sender: dikshita)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 805B0C43383;
+        Mon, 23 Dec 2019 09:50:14 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20191220101719.3024693-4-vkoul@kernel.org>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Date:   Mon, 23 Dec 2019 15:20:14 +0530
+From:   dikshita@codeaurora.org
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        vgarodia@codeaurora.org, linux-media-owner@vger.kernel.org
+Subject: Re: [PATCH 1/3] arm64: dts: sc7180: Add Venus video codec DT node
+In-Reply-To: <17a371c0-d73a-75eb-34f2-c9afb51d46f5@linaro.org>
+References: <1576828760-13176-1-git-send-email-dikshita@codeaurora.org>
+ <1576828760-13176-2-git-send-email-dikshita@codeaurora.org>
+ <17a371c0-d73a-75eb-34f2-c9afb51d46f5@linaro.org>
+Message-ID: <3f41daa245ed9df52a513c99ee6c0749@codeaurora.org>
+X-Sender: dikshita@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Stan,
 
-On 12/20/2019 3:47 PM, Vinod Koul wrote:
-> For V4 QMP UFS Phy, we need to assert reset bits, configure the phy and
-> then deassert it, so add optional has_sw_reset flag and use that to
-> configure the QPHY_SW_RESET register.
->
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> index 1196c85aa023..47a66d55107d 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> @@ -168,6 +168,7 @@ static const unsigned int sdm845_ufsphy_regs_layout[] = {
->  static const unsigned int sm8150_ufsphy_regs_layout[] = {
->  	[QPHY_START_CTRL]		= QPHY_V4_PHY_START,
->  	[QPHY_PCS_READY_STATUS]		= QPHY_V4_PCS_READY_STATUS,
-> +	[QPHY_SW_RESET]			= QPHY_V4_SW_RESET,
->  };
->  
->  static const struct qmp_phy_init_tbl msm8996_pcie_serdes_tbl[] = {
-> @@ -1023,6 +1024,9 @@ struct qmp_phy_cfg {
->  
->  	/* true, if PCS block has no separate SW_RESET register */
->  	bool no_pcs_sw_reset;
-> +
-> +	/* true if sw reset needs to be invoked */
-> +	bool has_sw_reset;
+Thanks for the review!
+I will address all the comments in the next version.
 
-
-There is no need to add new flag. Existing code will take care of it for UFS once you
-clear no_pcs_sw_reset flag.
-
->  };
->  
->  /**
-> @@ -1391,6 +1395,7 @@ static const struct qmp_phy_cfg sm8150_ufsphy_cfg = {
->  
->  	.is_dual_lane_phy	= true,
->  	.no_pcs_sw_reset	= true,
-> +	.has_sw_reset		= true,
->  };
->  
->  static void qcom_qmp_phy_configure(void __iomem *base,
-> @@ -1475,6 +1480,9 @@ static int qcom_qmp_phy_com_init(struct qmp_phy *qphy)
->  			     SW_USB3PHY_RESET_MUX | SW_USB3PHY_RESET);
->  	}
->  
-> +	if (cfg->has_sw_reset)
-> +		qphy_setbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
-> +
-
-Not needed. POR value of the bit is '1'.
-
-
->  	if (cfg->has_phy_com_ctrl)
->  		qphy_setbits(serdes, cfg->regs[QPHY_COM_POWER_DOWN_CONTROL],
->  			     SW_PWRDN);
-> @@ -1651,6 +1659,9 @@ static int qcom_qmp_phy_enable(struct phy *phy)
->  	if (cfg->has_phy_dp_com_ctrl)
->  		qphy_clrbits(dp_com, QPHY_V3_DP_COM_SW_RESET, SW_RESET);
->  
-> +	if (cfg->has_sw_reset)
-> +		qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
-> +
-
-There is no need to add UFS specific change here as existing PHY driver can
-handle PCS based PHY sw_reset and already does it for USB and PCIe.
-
-
->  	/* start SerDes and Phy-Coding-Sublayer */
->  	qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
->  
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+On 2019-12-20 15:04, Stanimir Varbanov wrote:
+> Hi Dikshita,
+> 
+> Thanks for the patch.
+> 
+> On 12/20/19 9:59 AM, Dikshita Agarwal wrote:
+>> This adds Venus video codec DT node for sc7180.
+>> 
+>> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 36 
+>> ++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 36 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> index 6876aae2..42c70f5 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> @@ -10,6 +10,7 @@
+>>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>  #include <dt-bindings/phy/phy-qcom-qusb2.h>
+>>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>> +#include <dt-bindings/clock/qcom,videocc-sc7180.h>
+>> 
+>>  / {
+>>  	interrupt-parent = <&intc>;
+>> @@ -66,6 +67,11 @@
+>>  			compatible = "qcom,cmd-db";
+>>  			no-map;
+>>  		};
+>> +
+>> +		venus_mem: memory@8F600000 {
+>> +			reg = <0 0x8F600000 0 0x500000>;
+> 
+> Please use lower-case for hex numbers.
+> 
+>> +			no-map;
+>> +		};
+>>  	};
+>> 
+>>  	cpus {
+>> @@ -1042,6 +1048,36 @@
+>>  			};
+>>  		};
+>> 
+>> +		venus: video-codec@aa00000 {
+>> +			compatible = "qcom,sc7180-venus";
+>> +			reg = <0 0x0aa00000 0 0xff000>;
+>> +			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+>> +			power-domains = <&videocc VENUS_GDSC>,
+>> +					<&videocc VCODEC0_GDSC>;
+>> +			power-domain-names = "venus", "vcodec0";
+>> +			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
+>> +				<&videocc VIDEO_CC_VENUS_AHB_CLK>,
+>> +				<&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
+>> +				<&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
+>> +				<&videocc VIDEO_CC_VCODEC0_AXI_CLK>;
+> 
+> could you align those entries to the first one (you can use tabs and
+> after that spaces to align)
+> 
+>> +			clock-names = "core", "iface", "bus",
+>> +					"vcodec0_core", "vcodec0_bus";
+>> +			iommus = <&apps_smmu 0x0C00 0x60>;
+> 
+> lower-case please
+> 
+>> +			memory-region = <&venus_mem>;
+>> +
+>> +			video-core0 {
+>> +					compatible = "venus-decoder";
+> 
+> something is wrong with the indentation?
+> 
+> Please run checkpatch with --strict
+> 
+>> +			};
+>> +
+>> +			video-core1 {
+>> +					compatible = "venus-encoder";
+>> +			};
+>> +
+>> +			video-firmware {
+>> +					iommus = <&apps_smmu 0x0C42 0x0>;
+> 
+> lower-case
+> 
+>> +			};
+> 
+> This subnode should be in sc7180-idp.dts, because we assume that by
+> default the qcom platforms have TZ.
+> 
+>> +		};
+>> +
+>>  		pdc: interrupt-controller@b220000 {
+>>  			compatible = "qcom,sc7180-pdc", "qcom,pdc";
+>>  			reg = <0 0x0b220000 0 0x30000>;
+>> 
