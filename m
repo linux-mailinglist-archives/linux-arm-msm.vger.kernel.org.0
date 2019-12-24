@@ -2,90 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1022E129DF3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2019 06:56:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 21B30129E1E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2019 07:37:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726043AbfLXF4X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Dec 2019 00:56:23 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:21386 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726020AbfLXF4W (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Dec 2019 00:56:22 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1577166982; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=N78ejg9rqJGWEVBDpiZaJ8zMo/6RK3GuNyY8fajolbU=;
- b=D2s5SS70aEftc8TnUTzXCQL9MqB1afoEiLj7GyOkEgk2mU+gcKPIbkqiQeUMlFTrAndssDBc
- HXmHX09TUzhU6geBZ/82tjgD9zQcm3s/LZhAf7AqLAtgyUqyZgllUvC6Q3mj3xIUj/Iy3uBL
- guEIqTR4Ivaz1JJKEwR83a6H8ZI=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e01a882.7fc08109fbc8-smtp-out-n01;
- Tue, 24 Dec 2019 05:56:18 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CA6E0C4479F; Tue, 24 Dec 2019 05:56:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: *
-X-Spam-Status: No, score=1.3 required=2.0 tests=ALL_TRUSTED,TVD_SUBJ_WIPE_DEBT,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1726178AbfLXGhm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Dec 2019 01:37:42 -0500
+Received: from mail.kernel.org ([198.145.29.99]:59390 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726070AbfLXGhl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Dec 2019 01:37:41 -0500
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: cang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 84677C433CB;
-        Tue, 24 Dec 2019 05:56:17 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 1A2BB206B7;
+        Tue, 24 Dec 2019 06:37:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1577169461;
+        bh=ON0QdqQ+wjgFyA7W2CtWIRLA64ZOjDQt5hzeb32O6V4=;
+        h=In-Reply-To:References:Cc:From:To:Subject:Date:From;
+        b=lWZx/U9u+vy7OwSIikON6FT0bCHntn0XiTdyqYN+5ZYdYlUUy6p+Y6zv6iwwVa7Wz
+         yJ3c67UcgeooKtp0JlSla/v0fyBckAivXtj/f1BYfW71YwUGd/Hzq2HMmRJDDVIDAt
+         p3vBi1o3AfwGwRf0klfEuGIErKNjAV38b5GgyI74=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 24 Dec 2019 13:56:17 +0800
-From:   Can Guo <cang@codeaurora.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/4] phy: qcom-qmp: remove duplicate powerdown write
-In-Reply-To: <20191223143046.3376299-3-vkoul@kernel.org>
-References: <20191223143046.3376299-1-vkoul@kernel.org>
- <20191223143046.3376299-3-vkoul@kernel.org>
-Message-ID: <e4de5d5bc0a1ddc9117055499b143bf3@codeaurora.org>
-X-Sender: cang@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1573812304-24074-2-git-send-email-tdas@codeaurora.org>
+References: <1573812304-24074-1-git-send-email-tdas@codeaurora.org> <1573812304-24074-2-git-send-email-tdas@codeaurora.org>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+From:   Stephen Boyd <sboyd@kernel.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>
+Subject: Re: [PATCH v2 1/8] clk: qcom: alpha-pll: Remove useless read from set rate
+User-Agent: alot/0.8.1
+Date:   Mon, 23 Dec 2019 22:37:40 -0800
+Message-Id: <20191224063741.1A2BB206B7@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-12-23 22:30, Vinod Koul wrote:
-> We already write to QPHY_POWER_DOWN_CONTROL in qcom_qmp_phy_com_init()
-> before invoking qcom_qmp_phy_configure() so remove the duplicate write.
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-
-Reviewed-by: Can Guo <cang@codeaurora.org>
-
+Quoting Taniya Das (2019-11-15 02:04:57)
+> PLL_MODE read in fabia set rate is not required, thus remove the same.
+>=20
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp.c | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> index 1196c85aa023..4f2e65c7cf45 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> @@ -885,7 +885,6 @@ static const struct qmp_phy_init_tbl
-> msm8998_usb3_pcs_tbl[] = {
->  };
-> 
->  static const struct qmp_phy_init_tbl sm8150_ufsphy_serdes_tbl[] = {
-> -	QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01),
->  	QMP_PHY_INIT_CFG(QSERDES_V4_COM_SYSCLK_EN_SEL, 0xd9),
->  	QMP_PHY_INIT_CFG(QSERDES_V4_COM_HSCLK_SEL, 0x11),
->  	QMP_PHY_INIT_CFG(QSERDES_V4_COM_HSCLK_HS_SWITCH_SEL, 0x00),
+
+Applied to clk-next
+
