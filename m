@@ -2,151 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A87E1129DD3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2019 06:32:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CC39129DEA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2019 06:49:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726043AbfLXFce (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Dec 2019 00:32:34 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:26118 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725934AbfLXFce (ORCPT
+        id S1726037AbfLXFt6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Dec 2019 00:49:58 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:29731 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725934AbfLXFt6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Dec 2019 00:32:34 -0500
+        Tue, 24 Dec 2019 00:49:58 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1577165553; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=/zIvwtp8UO85ebHhHKbecVWYaBp9mm+ttOxLD7tikHo=; b=YvAPkjPMibPLRd04ti/+IfDF4rKr+cWaL7zAfTOkrSTEpI+wM0POVfJnQxxmQUJwTEZZqpQR
- sdKQOUa8YOrzwlA10S4hz2LaJA+HSoPaQipDwexQcvZ2PGh4HwUK/VIijNxCSeROdIokyjmN
- Ek02WULZq5h1NXqiEQARCmQyX08=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ s=smtp; t=1577166597; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=CFnavtNpq98L4zVKbo5v3U5dZHO4SedTs2LixKWu2/0=;
+ b=OqNSkJhtrGtL+t5TuRqcZ1PGZzX2Y7qooh+GmfLMOcn7MSR6uA+KWk7FymKpfO6vv6k5xJUB
+ ElrHm/3uhUQo7NAn/GyEre2bQY0MC7v04iEwiAYj7og32oQmRommktocPAwdis5Iqf8vc8U2
+ VzUNfTMjR36GGfZRnSP+BG+4xDM=
+X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e01a2eb.7fc2925100a0-smtp-out-n01;
- Tue, 24 Dec 2019 05:32:27 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e01a701.7ff5e729db90-smtp-out-n02;
+ Tue, 24 Dec 2019 05:49:53 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6E7C6C433CB; Tue, 24 Dec 2019 05:32:27 +0000 (UTC)
+        id 081CAC447A3; Tue, 24 Dec 2019 05:49:53 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from sthella-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: sthella)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C30D5C43383;
-        Tue, 24 Dec 2019 05:32:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C30D5C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sthella@codeaurora.org
-From:   Shyam Kumar Thella <sthella@codeaurora.org>
-To:     agross@kernel.org, srinivas.kandagatla@linaro.org,
-        robh+dt@kernel.org, mark.rutland@arm.com
-Cc:     Shyam Kumar Thella <sthella@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        (Authenticated sender: cang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7F13AC433CB;
+        Tue, 24 Dec 2019 05:49:52 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 24 Dec 2019 13:49:52 +0800
+From:   Can Guo <cang@codeaurora.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Manu Gautam <mgautam@codeaurora.org>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: nvmem: add binding for QTI SPMI SDAM
-Date:   Tue, 24 Dec 2019 11:02:12 +0530
-Message-Id: <1577165532-28772-1-git-send-email-sthella@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+Subject: Re: [PATCH v3 1/4] phy: qcom-qmp: Use register defines
+In-Reply-To: <20191223143046.3376299-2-vkoul@kernel.org>
+References: <20191223143046.3376299-1-vkoul@kernel.org>
+ <20191223143046.3376299-2-vkoul@kernel.org>
+Message-ID: <dd87f98b4dce29c4a509f03265b0a3aa@codeaurora.org>
+X-Sender: cang@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QTI SDAM allows PMIC peripherals to access the shared memory that is
-available on QTI PMICs. Add documentation for it.
+On 2019-12-23 22:30, Vinod Koul wrote:
+> We already define register offsets so use them in register layout.
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-Signed-off-by: Shyam Kumar Thella <sthella@codeaurora.org>
----
- .../devicetree/bindings/nvmem/qcom,spmi-sdam.yaml  | 79 ++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+Reviewed-by: Can Guo <cang@codeaurora.org>
 
-diff --git a/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-new file mode 100644
-index 0000000..8961a99
---- /dev/null
-+++ b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-@@ -0,0 +1,79 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/nvmem/qcom,spmi-sdam.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Technologies, Inc. SPMI SDAM DT bindings
-+
-+maintainers:
-+  - Shyam Kumar Thella <sthella@codeaurora.org>
-+
-+description: |
-+  The SDAM provides scratch register space for the PMIC clients. This
-+  memory can be used by software to store information or communicate
-+  to/from the PBUS.
-+
-+allOf:
-+  - $ref: "nvmem.yaml#"
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,spmi-sdam
-+
-+  reg:
-+    maxItems: 1
-+
-+  "#address-cells":
-+    const: 1
-+
-+  "#size-cells":
-+    const: 1
-+
-+required:
-+  - compatible
-+  - reg
-+
-+patternProperties:
-+  "^.*@[0-9a-f]+$":
-+    type: object
-+
-+    properties:
-+      reg:
-+        maxItems: 1
-+        description:
-+          Offset and size in bytes within the storage device.
-+
-+      bits:
-+        maxItems: 1
-+        items:
-+          items:
-+            - minimum: 0
-+              maximum: 7
-+              description:
-+                Offset in bit within the address range specified by reg.
-+            - minimum: 1
-+              description:
-+                Size in bit within the address range specified by reg.
-+
-+    required:
-+      - reg
-+
-+    additionalProperties: false
-+
-+examples:
-+  - |
-+      sdam_1: nvram@b000 {
-+         #address-cells = <1>;
-+         #size-cells = <1>;
-+         compatible = "qcom,spmi-sdam";
-+          reg = <0xb000 0x100>;
-+
-+          /* Data cells */
-+          restart_reason: restart@50 {
-+              reg = <0x50 0x1>;
-+              bits = <7 2>;
-+          };
-+      };
-+...
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
- a Linux Foundation Collaborative Project
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> index 66f91726b8b2..1196c85aa023 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> @@ -166,8 +166,8 @@ static const unsigned int 
+> sdm845_ufsphy_regs_layout[] = {
+>  };
+> 
+>  static const unsigned int sm8150_ufsphy_regs_layout[] = {
+> -	[QPHY_START_CTRL]		= 0x00,
+> -	[QPHY_PCS_READY_STATUS]		= 0x180,
+> +	[QPHY_START_CTRL]		= QPHY_V4_PHY_START,
+> +	[QPHY_PCS_READY_STATUS]		= QPHY_V4_PCS_READY_STATUS,
+>  };
+> 
+>  static const struct qmp_phy_init_tbl msm8996_pcie_serdes_tbl[] = {
