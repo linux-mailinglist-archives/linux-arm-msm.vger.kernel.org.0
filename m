@@ -2,63 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 23549129CE5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2019 03:48:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A4735129CF3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Dec 2019 03:57:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726853AbfLXCsq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Dec 2019 21:48:46 -0500
-Received: from mail.kernel.org ([198.145.29.99]:56182 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726747AbfLXCsq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Dec 2019 21:48:46 -0500
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726847AbfLXC5e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Dec 2019 21:57:34 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:28324 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726747AbfLXC5d (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Dec 2019 21:57:33 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1577156253; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=mF5Yk5W/LFHhcmsl8A7AIYFZxAxJ+b22oU+U2E97r6g=;
+ b=LiFvg0MCyXM2Ahl3LUKkZSwdLn69wrfT4ev+qgnq4hKQ3L0IKPT7UBhSvxYo4CZteBJcrcP+
+ VldZGaP12w5L/3oDkTjyzyOTv7owmWwOJi6AQSSvDdLdjjMki+hJFjDsOmJpUusiXWDY8d8G
+ 6Pk+VOb+G4c8i6jvbtN9cAQy/sQ=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e017e9b.7f3277fc4b20-smtp-out-n03;
+ Tue, 24 Dec 2019 02:57:31 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A8E68C43383; Tue, 24 Dec 2019 02:57:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 445A92070E;
-        Tue, 24 Dec 2019 02:48:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1577155725;
-        bh=GDZHiwpYpPN2Oz81f+vptATrIiOpyVjE00BybrrHoww=;
-        h=In-Reply-To:References:Cc:From:To:Subject:Date:From;
-        b=z9nfV09MMzOEluK/WrMZxT7JKKaRJPLFpw4iOxLjRXT7xq+aF9PpQZ3fOobbEMje8
-         ohoUrlCHniVm1aVt7fZgw9Lq/y9xcmK7r6cZB5oRyh3ohpc7sNu43ssFhOyKra0PbW
-         RPeO3zDe0ThxiXn0obt3CgoeCLnQAKVuEfHk+3NI=
-Content-Type: text/plain; charset="utf-8"
+        (Authenticated sender: smasetty)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C5E8DC43383;
+        Tue, 24 Dec 2019 02:57:28 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20191207203603.2314424-2-bjorn.andersson@linaro.org>
-References: <20191207203603.2314424-1-bjorn.andersson@linaro.org> <20191207203603.2314424-2-bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Paolo Pisati <p.pisati@gmail.com>
-From:   Stephen Boyd <sboyd@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH 1/2] clk: qcom: gcc-msm8996: Fix parent for CLKREF clocks
-User-Agent: alot/0.8.1
-Date:   Mon, 23 Dec 2019 18:48:44 -0800
-Message-Id: <20191224024845.445A92070E@mail.kernel.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 24 Dec 2019 08:27:28 +0530
+From:   smasetty@codeaurora.org
+To:     Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     iommu@lists.linux-foundation.org, freedreno@lists.freedesktop.org,
+        David Airlie <airlied@linux.ie>, will@kernel.org,
+        robin.murphy@arm.com, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Sean Paul <sean@poorly.run>,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v3 5/5] drm/msm/a6xx: Support split pagetables
+In-Reply-To: <1576514271-15687-6-git-send-email-jcrouse@codeaurora.org>
+References: <1576514271-15687-1-git-send-email-jcrouse@codeaurora.org>
+ <1576514271-15687-6-git-send-email-jcrouse@codeaurora.org>
+Message-ID: <8aec2a4f74fede1cf616b9e2eece3e8e@codeaurora.org>
+X-Sender: smasetty@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2019-12-07 12:36:02)
-> The CLKREF clocks are all fed by the clock signal on the CXO2 pad on the
-> SoC. Update the definition of these clocks to allow this to be wired up
-> to the appropriate clock source.
->=20
-> Retain "xo" as the global named parent to make the change a nop in the
-> event that DT doesn't carry the necessary clocks definition.
->=20
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On 2019-12-16 22:07, Jordan Crouse wrote:
+> Attempt to enable split pagetables if the arm-smmu driver supports it.
+> This will move the default address space from the default region to
+> the address range assigned to TTBR1. The behavior should be transparent
+> to the driver for now but it gets the default buffers out of the way
+> when we want to start swapping TTBR0 for context-specific pagetables.
+> 
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
 > ---
->  .../devicetree/bindings/clock/qcom,gcc.yaml   |  6 ++--
->  drivers/clk/qcom/gcc-msm8996.c                | 35 +++++++++++++++----
->  2 files changed, 32 insertions(+), 9 deletions(-)
-
-What is this patch based on? I think I'm missing some sort of 8996 yaml
-gcc binding patch.
-
+> 
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 52 
+> ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 51 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 5dc0b2c..1c6da93 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -811,6 +811,56 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu 
+> *gpu)
+>  	return (unsigned long)busy_time;
+>  }
+> 
+> +static struct msm_gem_address_space *
+> +a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device 
+> *pdev)
+> +{
+> +	struct iommu_domain *iommu = iommu_domain_alloc(&platform_bus_type);
+> +	struct msm_gem_address_space *aspace;
+> +	struct msm_mmu *mmu;
+> +	u64 start, size;
+> +	u32 val = 1;
+> +	int ret;
+> +
+> +	if (!iommu)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	/*
+> +	 * Try to request split pagetables - the request has to be made 
+> before
+> +	 * the domian is attached
+> +	 */
+> +	iommu_domain_set_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val);
+> +
+> +	mmu = msm_iommu_new(&pdev->dev, iommu);
+> +	if (IS_ERR(mmu)) {
+> +		iommu_domain_free(iommu);
+> +		return ERR_CAST(mmu);
+> +	}
+> +
+> +	/*
+> +	 * After the domain is attached, see if the split tables were 
+> actually
+> +	 * successful.
+> +	 */
+> +	ret = iommu_domain_get_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val);
+> +	if (!ret && val) {
+> +		/*
+> +		 * The aperture start will be at the beginning of the TTBR1
+> +		 * space so use that as a base
+> +		 */
+> +		start = iommu->geometry.aperture_start;
+> +		size = 0xffffffff;
+This should be the va_end and not the size
+> +	} else {
+> +		/* Otherwise use the legacy 32 bit region */
+> +		start = SZ_16M;
+> +		size = 0xffffffff - SZ_16M;
+same as above
+> +	}
+> +
+> +	aspace = msm_gem_address_space_create(mmu, "gpu", start, size);
+> +	if (IS_ERR(aspace))
+> +		iommu_domain_free(iommu);
+> +
+> +	return aspace;
+> +}
+> +
+>  static const struct adreno_gpu_funcs funcs = {
+>  	.base = {
+>  		.get_param = adreno_get_param,
+> @@ -832,7 +882,7 @@ static const struct adreno_gpu_funcs funcs = {
+>  #if defined(CONFIG_DRM_MSM_GPU_STATE)
+>  		.gpu_state_get = a6xx_gpu_state_get,
+>  		.gpu_state_put = a6xx_gpu_state_put,
+> -		.create_address_space = adreno_iommu_create_address_space,
+> +		.create_address_space = a6xx_create_address_space,
+>  #endif
+>  	},
+>  	.get_timestamp = a6xx_get_timestamp,
