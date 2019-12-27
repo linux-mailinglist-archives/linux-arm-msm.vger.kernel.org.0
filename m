@@ -2,65 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 282E012B03E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 02:33:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B55112B04D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 02:35:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726277AbfL0Bdy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Dec 2019 20:33:54 -0500
-Received: from mail.kernel.org ([198.145.29.99]:46432 "EHLO mail.kernel.org"
+        id S1727114AbfL0Bfa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Dec 2019 20:35:30 -0500
+Received: from mail.kernel.org ([198.145.29.99]:47602 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726193AbfL0Bdy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Dec 2019 20:33:54 -0500
+        id S1727076AbfL0Bf3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 26 Dec 2019 20:35:29 -0500
 Received: from kernel.org (unknown [104.132.0.74])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4CB292080D;
-        Fri, 27 Dec 2019 01:33:53 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id A445B2080D;
+        Fri, 27 Dec 2019 01:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1577410433;
-        bh=qaY83pBKOFqCF2j6sSNOsyRRud62S9BGBHikCZv7I9Q=;
-        h=In-Reply-To:References:From:To:Subject:Date:From;
-        b=jYFgvh2Onwrf7oOpuwoLj2e8Wg+JrUQHEIlDA0bV93IyV8mM7tORkZjX88BoxPW9K
-         v7/fNXdSlhrLZoDZOrxdnkT8ECzFA3R2biM1f16oJIgTJNQYWfKgOBxO3Pa7eqt0i7
-         XQamt9Jw1x1kzXx6dVPIojhOnjURO0edKx5QHJZc=
+        s=default; t=1577410528;
+        bh=cza6PrMG2LCdaf+NGecegJLqy0CS9RpK88jv08rjwLU=;
+        h=In-Reply-To:References:From:Cc:To:Subject:Date:From;
+        b=PeZBHZBkQyRaDfaZDG3vZaRTcEMgVMs9ouVBb87r8KwsXuvhUp2ZIC21Zt29xBQsT
+         lT/+O3ub5mPrstV1Ct2Hj3KSmxl4FiAmwKUDyfOWxO2tFH/yJYTnuM+KWYklR7p7cn
+         Jjf1v0Iv/997dbhwWiiSCHcqaa7+SJneSxhzho7A=
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1576752109-24497-1-git-send-email-sricharan@codeaurora.org>
-References: <1576752109-24497-1-git-send-email-sricharan@codeaurora.org>
+In-Reply-To: <20191226224156.GE1908628@ripper>
+References: <20191207203603.2314424-1-bjorn.andersson@linaro.org> <20191207203603.2314424-2-bjorn.andersson@linaro.org> <20191219063719.5AF942146E@mail.kernel.org> <20191220023427.GL448416@yoga> <20191224022042.7DDB120709@mail.kernel.org> <20191226224156.GE1908628@ripper>
 From:   Stephen Boyd <sboyd@kernel.org>
-To:     agross@kernel.org, devicetree@vger.kernel.org,
-        linus.walleij@linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-soc@vger.kernel.org, robh+dt@kernel.org,
-        sivaprak@codeaurora.org, sricharan@codeaurora.org
-Subject: Re: [PATCH V2 0/7] Add minimal boot support for IPQ6018
+Cc:     Mark Rutland <mark.rutland@arm.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Paolo Pisati <p.pisati@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH 1/2] clk: qcom: gcc-msm8996: Fix parent for CLKREF clocks
 User-Agent: alot/0.8.1
-Date:   Thu, 26 Dec 2019 17:33:52 -0800
-Message-Id: <20191227013353.4CB292080D@mail.kernel.org>
+Date:   Thu, 26 Dec 2019 17:35:27 -0800
+Message-Id: <20191227013528.A445B2080D@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sricharan R (2019-12-19 02:41:42)
-> The IPQ6018 is Qualcomm\u2019s 802.11ax SoC for Routers,
-> Gateways and Access Points.
+Quoting Bjorn Andersson (2019-12-26 14:41:56)
+> On Mon 23 Dec 18:20 PST 2019, Stephen Boyd wrote:
 >=20
-> This series adds minimal board boot support for ipq6018-cp01 board.
+> > Quoting Bjorn Andersson (2019-12-19 18:34:27)
+> > > On Wed 18 Dec 22:37 PST 2019, Stephen Boyd wrote:
+> > >=20
+> > > > Quoting Bjorn Andersson (2019-12-07 12:36:02)
+> > > > > The CLKREF clocks are all fed by the clock signal on the CXO2 pad=
+ on the
+> > > > > SoC. Update the definition of these clocks to allow this to be wi=
+red up
+> > > > > to the appropriate clock source.
+> > > > >=20
+> > > > > Retain "xo" as the global named parent to make the change a nop i=
+n the
+> > > > > event that DT doesn't carry the necessary clocks definition.
+> > > >=20
+> > > > Something seems wrong still.
+> > > >=20
+> > > > I wonder if we need to add the XO "active only" clk to the rpm clk
+> > > > driver(s) and mark it as CLK_IS_CRITICAL. In theory that is really =
+the
+> > > > truth for most of the SoCs out there because it's the only crystal =
+that
+> > > > needs to be on all the time when the CPU is active. The "normal" XO=
+ clk
+> > > > will then be on all the time unless deep idle is entered and nobody=
+ has
+> > > > turned that on via some clk_prepare() call. That's because we root =
+all
+> > > > other clks through the "normal" XO clk that will be on in deep
+> > > > idle/suspend if someone needs it to be.
+> > > >=20
+> > >=20
+> > > The patch doesn't attempt to address the fact that our representation=
+ of
+> > > XO is incomplete, only the fact that CXO2 isn't properly described.
+> > >=20
+> > > Looking at the clock distribution, we do have RPM_SMD_BB_CLK1_A which
+> > > presumably is the clock you're referring to here - i.e. the clock
+> > > resource connected to CXO.
+> >=20
+> > I don't mean the buffer clks, but the XO resource specifically. It's the
+> > representation to the RPM that deep sleep/deep idle should or shouldn't
+> > turn off XO and achieve "XO shutdown". Basically it can never be off
+> > when the CPU is active because then the CPU itself wouldn't be clocked,
+> > but when the CPU isn't active we may want to turn it off if nothing is
+> > using it during sleep to clock some sort of wakeup logic or device that
+> > is active when the CPU is idle.
+> >=20
 >=20
-> [v2]
->  * Splitted dt bindings  and driver into different patches. Added missing=
- bindings
->    and some style changes.
->  * Added ipq6018 schema
->  * Addressed review comments for gcc clock bindings.
->  * Removed all clk critical flags, removed 1/1 factor clocks, moved to new
->    way of specifying clk parents, and addressed other review comments.
->  * Sorted nodes based on address, name, label. Removed unused clock nodes,
->    Addressed other review comments.
+> I see. So we're missing the representation of the "raw" CXO in
+> clk-smd-rpm.c, and I'm lacking some understanding of how these pieces
+> should be tied together for us to realize the "XO shutdown"...
 
-Can you just send the clk and clk binding to me in a different series?
-I don't want to review all the other patches in the same thread.
+Ok. This is another topic so not important to this patch right now.
+
+>=20
+> > >=20
+> > > > Did the downstream code explicitly enable this ln_bb_clk in the phy
+> > > > drivers? I think it may have?
+> > > >=20
+> > >=20
+> > > Yes, afaict all downstream drivers consuming a CLKREF also consumes
+> > > LN_BB and ensures that this is enabled. So we've been relying on UFS =
+to
+> > > either not have probed yet or that UFS probed successfully for PCIe a=
+nd
+> > > USB to be functional.
+> > >=20
+> > > So either we need this patch to ensure that the requests propagates
+> > > down, or I need to patch up the PHY drivers to ensure that they also
+> > > vote for the PMIC clock - and I do prefer this patch.
+> >=20
+> > Cool. Yeah seems better to just indicate that the reference clks are
+> > clocked by something else and fix that problem now.
+> >=20
+>=20
+> Let me know if I shouldn't interpret this sentence as "let's merge this
+> for now".
+
+Yes I'd like to merge for now but the binding needs to be adjusted.
+Please resend.
 
