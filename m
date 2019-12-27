@@ -2,63 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1006512B219
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 07:47:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8620A12B21F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 07:52:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726270AbfL0Gre (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Dec 2019 01:47:34 -0500
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:52313 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725936AbfL0Grd (ORCPT
+        id S1725994AbfL0GwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Dec 2019 01:52:08 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:39950 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725904AbfL0GwI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Dec 2019 01:47:33 -0500
-Received: by mail-pj1-f67.google.com with SMTP id a6so4353730pjh.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2019 22:47:33 -0800 (PST)
+        Fri, 27 Dec 2019 01:52:08 -0500
+Received: by mail-pg1-f195.google.com with SMTP id k25so14007567pgt.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2019 22:52:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=i1jU9WYAPc4xCJGOPq7dKOHOVBSIJC7kt5waCW6o8GA=;
-        b=QnOlMNeoamFT7k80Gi3W8E7wIrQQrDVW5lIfs86YZeKFKUc4hbVU56vVe3CziL2pEJ
-         L0Em10TSKqhJQtnhTZcUrgtvn+uu3ToHsQTUnJeSlLtQCzzlp1ihgHTYwxllrdqxieKN
-         PpvBNGA4G6kyFAkQIeZUXrc2q0jidchmksgXUuh96wwRTVO+wnTxBAQHb1WcAArdGzna
-         UrpQiK9MXZnea3NR+J+WrPEbOBteNEeR/SnTDGMFAnS0MBicArmC+25W7y23jLgGqBiW
-         K/hQ4cNhCqQgsglPsU1uCArOrhXtOGgV4maTeY7gFbAA6mM0UBMMw3HqUKSO7NxbaemB
-         9shA==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=h10PX8DJZLkPTns7u+7EuYORpZ6ZCEapdli54+ecjxE=;
+        b=IlEGowUjJh+UEXHDSpv9xzRlUtyRJqnj18TeES1zEeZ0Ufgd4cSTU3pujZA8pWrJqY
+         uUK//86SVklBs+lGleyGtdF9p4m9bCd5BUNNyn6E4Kn5JpaK9Dnc3n6Gh1fLrN5JBU8L
+         6N/VQH+jlyExVwxkxI5uTStVd1CPYH6Kbr9v0SHtP0n2vZW/sWlbG8AT/xlEpQJUTrQR
+         tcUX6v60Kwfqu4nw3g8/qFeHbc0xJ8w74d040mqbnZHu1/h0B26yq6IARvcHcwyfS1xe
+         ogrA4NkzcVMA7rgdR5I51p7OoqMAeForma67L7imtjVH73lq8vvk9ma5eAMoEPQATA0J
+         ZJ9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=i1jU9WYAPc4xCJGOPq7dKOHOVBSIJC7kt5waCW6o8GA=;
-        b=Kw/3KpYxprmE7Q3MfM7ChCaeY4RLQNqM/MNaEv9kOStvc98x0W2BtIJiaFmXRuz2RX
-         gBhV0xNuT7q3T8QUlGh4l6eyjXCnub6Q3bQI1QRvtFYxtvIc3rtbIBtgttOdEs2SghwI
-         Ylp8e1XMCT5243VUC8c+73yngvrYmoinNtsq4OCMBa6McwOu6k/Vtdum7VfehRYIKELj
-         M5qXnLxzvla619zB+NugBH1M8nvQwYBWHCuVqCY3frT3B7PQh5yP6ptVdt+avWP9dfVE
-         CEXAJtUhPtEE17nESoQsdRToHpv4vKgSk0wk+Z/QecgJtWg3aJyxCHIWj7xZwKQErlW2
-         d/Fg==
-X-Gm-Message-State: APjAAAWxczPTbPKFkHSFFJSpPVNjGeQmjteuKRxtBqurd01+Bo+EypXu
-        q0XvT9cGlCPQkQ7nzdxUmE4xxw==
-X-Google-Smtp-Source: APXvYqxYzqcRJTeW8lgh2UOjxmMS6lGC8m3AbQR50vG7aWXM/hganMvePsChhKRmm0NuIT26chs2vA==
-X-Received: by 2002:a17:902:6906:: with SMTP id j6mr45719615plk.321.1577429253190;
-        Thu, 26 Dec 2019 22:47:33 -0800 (PST)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=h10PX8DJZLkPTns7u+7EuYORpZ6ZCEapdli54+ecjxE=;
+        b=Rg160DzEUQfShuGKmpllzwOtBffSvvd+EQcP5dRJWT/NRxzp76lXmny+9n42VtTWI4
+         pzAbkAfGWsshfzHN5VtjwBJwNsZJbrBqY1q3J9/JSza/kTwTAV0gRxaOy8VBAetnQNK+
+         Bj8tawotVSiSlsQlW6HZQEGWglDif6W+DrYuFxdC8UTe5vHnVrYWPYJFzl8BwnzeaZF7
+         geD9mnQYtoFZYTwzEN4F+Fldgry6+RggcAIGaJenaLR3lKBmulCaLkbvgEsuG0ct4CEM
+         nTOiq42upjqfn5IwZGs2zof1bAPhr1ns4KLYyGIz1xAkXCr2oyag30H87hast3SIAuLi
+         IgfQ==
+X-Gm-Message-State: APjAAAUkworcfs8EHm/eHGJqBZzqrpWwNgVtYR4kop2c9qF6Zw6phwBL
+        zVNaxSR8z2kbBAhGXLZ/yZTwkA==
+X-Google-Smtp-Source: APXvYqyNUvZALjln+pn3J5Nvw3y9HrAHIAb9GQ1w9VWf2pZ2BHcUsqmXIr+KGgm8fNiWIfbsDxWyDg==
+X-Received: by 2002:a63:289:: with SMTP id 131mr53477901pgc.149.1577429527727;
+        Thu, 26 Dec 2019 22:52:07 -0800 (PST)
 Received: from ripper (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id q8sm36443082pgg.92.2019.12.26.22.47.32
+        by smtp.gmail.com with ESMTPSA id d1sm13099541pjx.6.2019.12.26.22.52.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Dec 2019 22:47:32 -0800 (PST)
-Date:   Thu, 26 Dec 2019 22:47:18 -0800
+        Thu, 26 Dec 2019 22:52:07 -0800 (PST)
+Date:   Thu, 26 Dec 2019 22:51:53 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Niklas Cassel <nks@flawful.org>
 Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>, linux-pm@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/5] power: avs: qcom-cpr: fix unsigned expression
- compared with zero
-Message-ID: <20191227064718.GK1908628@ripper>
+Subject: Re: [PATCH 3/5] power: avs: qcom-cpr: make sure that regmap is
+ available
+Message-ID: <20191227065153.GL1908628@ripper>
 References: <20191223141934.19837-1-nks@flawful.org>
- <20191223141934.19837-3-nks@flawful.org>
+ <20191223141934.19837-4-nks@flawful.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=windows-1252
 Content-Disposition: inline
-In-Reply-To: <20191223141934.19837-3-nks@flawful.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20191223141934.19837-4-nks@flawful.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -66,40 +68,29 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Mon 23 Dec 06:19 PST 2019, Niklas Cassel wrote:
 
-> drivers/power/avs/qcom-cpr.c:1539:5-21:
-> warning: unsigned expression compared with zero: drv->num_corners < 0
+> drivers/power/avs/qcom-cpr.c:402:4:
+> error: implicit declaration of function ‘regmap_multi_reg_write’
 > 
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> Reported-by: kbuild test robot <lkp@intel.com>
-> Reported-by: Julia Lawall <julia.lawall@lip6.fr>
 > Signed-off-by: Niklas Cassel <nks@flawful.org>
 > ---
->  drivers/power/avs/qcom-cpr.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+>  drivers/power/avs/Kconfig | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/drivers/power/avs/qcom-cpr.c b/drivers/power/avs/qcom-cpr.c
-> index a52d2cef1300..232836a1ef27 100644
-> --- a/drivers/power/avs/qcom-cpr.c
-> +++ b/drivers/power/avs/qcom-cpr.c
-> @@ -1535,11 +1535,13 @@ static int cpr_pd_attach_dev(struct generic_pm_domain *domain,
->  	 * The reason for this is that we need to know the highest
->  	 * frequency associated with each fuse corner.
->  	 */
-> -	drv->num_corners = dev_pm_opp_get_opp_count(&drv->pd.dev);
-> -	if (drv->num_corners < 0) {
-> -		ret = drv->num_corners;
-> +	ret = dev_pm_opp_get_opp_count(&drv->pd.dev);
-> +	if (ret < 0) {
-> +		dev_err(drv->dev, "could not get OPP count\n");
->  		goto unlock;
->  	}
-> +	drv->num_corners = ret;
-> +
->  	if (drv->num_corners < 2) {
->  		dev_err(drv->dev, "need at least 2 OPPs to use CPR\n");
->  		ret = -EINVAL;
+> diff --git a/drivers/power/avs/Kconfig b/drivers/power/avs/Kconfig
+> index c21882908a66..b8fe166cd0d9 100644
+> --- a/drivers/power/avs/Kconfig
+> +++ b/drivers/power/avs/Kconfig
+> @@ -16,6 +16,7 @@ config QCOM_CPR
+>  	tristate "QCOM Core Power Reduction (CPR) support"
+>  	depends on POWER_AVS
+>  	select PM_OPP
+> +	select REGMAP
+>  	help
+>  	  Say Y here to enable support for the CPR hardware found on Qualcomm
+>  	  SoCs like QCS404.
 > -- 
 > 2.24.1
 > 
