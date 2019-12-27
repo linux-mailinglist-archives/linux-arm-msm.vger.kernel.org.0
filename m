@@ -2,277 +2,735 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2116D12B18B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 06:52:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D25AB12B1BC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 07:22:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726165AbfL0Fwo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Dec 2019 00:52:44 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:45349 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726156AbfL0Fwn (ORCPT
+        id S1725854AbfL0GWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Dec 2019 01:22:41 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:34581 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725904AbfL0GWk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Dec 2019 00:52:43 -0500
-Received: by mail-ot1-f65.google.com with SMTP id 59so35039685otp.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2019 21:52:42 -0800 (PST)
+        Fri, 27 Dec 2019 01:22:40 -0500
+Received: by mail-pl1-f195.google.com with SMTP id x17so11361340pln.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2019 22:22:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=fbsPvvZhyUEETqP1XztX+8HPssG9Yi77OXnSRzUeKaA=;
-        b=d06iPXzY9ugRCpfA/oe/H3cmFN0CPR7qPMlbmpaaPhT9BiHnOFbh57VdXNObpGDAal
-         X7lofcemsrXLxDDp2D6N6khryQlWcxletwRE+lsHbdoNPugMPAFDuzqji5f5McJ/4k16
-         Hc1pUPvwA21sLkNQNNpSBBdiRCoDbPiW2knUhsMtx2+wu/OstAosLiTS6p59ddc4kTne
-         907ji1wgXhIjpYGOHInQnOjy4hVUcxiDBvvdQ9SwvjRMCW1QcUE7a/t77aKwJAjPWDGS
-         fozyHPmmjxU900KXyrCYSlBL9xzheKBF+3p5Y/Zi15V2i1bQp5uUVCpPO1aoMW+mtENu
-         GZLQ==
+        bh=kSr9mOsoSEnmbzL9sPT40m2QkkfYAnlyHFJj5NZPWNU=;
+        b=Ds3MWX7K5VZ17E0RrNX8tRbeEyCEgSWJ4t7WfmNhE1CUEIDnQsmPKJvFp08frN9neN
+         WihaVs0+SolAZRZQmuLgOflrjqtSi3LDnA7l8vfXVPOHl9hNLyZjCCkF6k72yi9ebibP
+         tNb+D8p4SaVyZjWpHQ5MMOuNnIOt/IagCWsfdsSBkesRLPxDphVM/fMs7wMXg6ssiQ3W
+         NXjASXM0J9YfN8ja0cmqEoMSWyTMkL6K5E3MS7hwhu0eW4dkjIrMYVWotzuqkaLcKNMc
+         f+aPKLySIU3Hsuz4qGwLnh8yTALZucvtc7Y0gsxAerTnLOMysM3GY8FvH9hjMDQml8DQ
+         FZdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fbsPvvZhyUEETqP1XztX+8HPssG9Yi77OXnSRzUeKaA=;
-        b=EuxARlT0Z6LUZ/1SuxOxoVZqLCpmrbTJwaIiL9fHARkmozPVTyATyKjudakGeVgvHv
-         9pJSlZuhVfm2qieAv367g1EgGDDhkXMXNu76BF66WsHUXYUxQTwqBTGQWgrnmckc0MJd
-         HktVMCwfIgNHHxhZci2tUP92wKjPtP71ezNY1LTjvoYNywudvknZmoN9h7LN63x+JgMO
-         yUUBjaCHckAx4FZmMGVJU64HaKfFyElDCvZRfTFKo2ySwuA0oQv9VnRd1iphHNc0tNEB
-         QUtis7U6bS6yn6+tnvBFJ6ikuVdrdwNDWvzhi4DZeTIlJWxiGSFJFP/PhmPQsFVwzzRZ
-         QM2w==
-X-Gm-Message-State: APjAAAU3BII4g41AgsuhrfTolu0Ujs1kmqtB1GjgsOplElI5/aMdmR/C
-        va/98ywGQ3HgO8NZP9GkrSPWeQ==
-X-Google-Smtp-Source: APXvYqzjv3TODw6DetObqbLTckDwU26BwLwRS57bC+Hg2ggaRLds1AOvjT3CnLJqJRSwC87r/yLw5A==
-X-Received: by 2002:a05:6830:681:: with SMTP id q1mr56554676otr.162.1577425962408;
-        Thu, 26 Dec 2019 21:52:42 -0800 (PST)
-Received: from leoy-ThinkPad-X240s (li1058-79.members.linode.com. [45.33.121.79])
-        by smtp.gmail.com with ESMTPSA id r10sm11724334otn.37.2019.12.26.21.52.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 26 Dec 2019 21:52:41 -0800 (PST)
-Date:   Fri, 27 Dec 2019 13:52:34 +0800
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jslaby@suse.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-serial@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 2/2] tty: serial: msm_serial: Fix deadlock caused by
- recursive output
-Message-ID: <20191227055233.GA4552@leoy-ThinkPad-X240s>
-References: <20191127141544.4277-1-leo.yan@linaro.org>
- <20191127141544.4277-3-leo.yan@linaro.org>
- <CAOCk7NqZmBYN4tY0_V8xzvBfWShDCP8gTa60Aoc78wK2tXx=6A@mail.gmail.com>
- <20191203082325.GC28241@leoy-ThinkPad-X240s>
- <CAOCk7NpYt_OVYB7yZz+U9OE7jdtdm4sKG9wzKY7_YvKKx2Q4fg@mail.gmail.com>
- <20191204161330.GA28567@leoy-ThinkPad-X240s>
- <CAOCk7NpN3=Hj2g-O3-8=MreJ65CReQR+EaMDbV=Af14pgg87FQ@mail.gmail.com>
+        bh=kSr9mOsoSEnmbzL9sPT40m2QkkfYAnlyHFJj5NZPWNU=;
+        b=VIx+6Pb0mnWOXoWFE6FhgXaVo3Pllj6LBSsk1CLYAAjVv4UAUXvjT0Ok/hdh3C6rCm
+         osghzJLjmYw0AP+2XmihYWKJdq1VV5zCzcFSpMY5PB/5NOgXZsePiGqtO3CPtI0hY286
+         yLcb6BdSyO5iiZK2Bjeh2PBJrTJ5Ihqc6SrBEOsqn6VLunSU+FQTw3TRLswtNcjOhAFL
+         dk2M2xBuY/NPnHindk+AOjo9/vWp1/zoGOrLEzB2i75syOXv6+IM5T0y2A0rQDHosuWa
+         07hcQGEjIfkC13RiMwPi2VPBHT33AtaxPi+7LYCK1710FbjAaPFPKzcSOXnCtYUMZ+yl
+         85LQ==
+X-Gm-Message-State: APjAAAUh9luEq9tdetfGNWXKbRkNpXMTZ1AupVHHKIuadHRd/utbn0EE
+        ANqYwIU9bd0zI3c61eZFGtLIlQ==
+X-Google-Smtp-Source: APXvYqy5NmPkkw2TYwp4DZVgwdJToq40tZNIT3DUjWj4HOafdx8i2VZLXcb55SeUdddApCbH68Wqug==
+X-Received: by 2002:a17:90b:438e:: with SMTP id in14mr23541131pjb.83.1577427758920;
+        Thu, 26 Dec 2019 22:22:38 -0800 (PST)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id g67sm35825321pfb.66.2019.12.26.22.22.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Dec 2019 22:22:38 -0800 (PST)
+Date:   Thu, 26 Dec 2019 22:22:35 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rajeshwari <rkambl@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sanm@codeaurora.org, sivaa@codeaurora.org, manafm@codeaurora.org
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180:  Add critical interrupt
+ and cooling maps for TSENS in SC7180.
+Message-ID: <20191227062235.GM549437@yoga>
+References: <1577106871-19863-1-git-send-email-rkambl@codeaurora.org>
+ <1577106871-19863-2-git-send-email-rkambl@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOCk7NpN3=Hj2g-O3-8=MreJ65CReQR+EaMDbV=Af14pgg87FQ@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <1577106871-19863-2-git-send-email-rkambl@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeffrey,
+On Mon 23 Dec 05:14 PST 2019, Rajeshwari wrote:
 
-On Mon, Dec 16, 2019 at 11:49:52AM -0700, Jeffrey Hugo wrote:
-> On Wed, Dec 4, 2019 at 9:13 AM Leo Yan <leo.yan@linaro.org> wrote:
-> >
-> > On Tue, Dec 03, 2019 at 03:42:31PM -0700, Jeffrey Hugo wrote:
-> >
-> > [...]
-> >
-> > > > > > This patch fixes the deadlock issue for recursive output; it adds a
-> > > > > > variable 'curr_user' to indicate the uart port is used by which CPU, if
-> > > > > > the CPU has acquired spinlock and wants to execute recursive output,
-> > > > > > it will directly bail out.  Here we don't choose to avoid locking and
-> > > > > > print out log, the reason is in this case we don't want to reset the
-> > > > > > uart port with function msm_reset_dm_count(); otherwise it can introduce
-> > > > > > confliction with other flows and results in uart port malfunction and
-> > > > > > later cannot output anymore.
-> > > > >
-> > > > > Is this not fixable?  Sure, fixing the deadlock is an improvement, but
-> > > > > dropping logs (particularly a memory warning like in your example)
-> > > > > seems undesirable.
-> > > >
-> > > > Thanks a lot for your reviewing, Jeffrey.
-> > > >
-> > > > Agreed with you for the concern.
-> > > >
-> > > > To be honest, I am not familiar with the msm uart driver, so have no
-> > > > confidence which is the best way for uart port operations.  I can
-> > > > think out one possible fixing is shown in below, if detects the lock
-> > > > is not acquired then it will force to reset UART port before exit the
-> > > > function __msm_console_write().
-> > > >
-> > > > This approach is not tested yet and it looks too arbitrary; I will
-> > > > give a try for it.  At the meantime, welcome any insight suggestion
-> > > > with proper register operations.
-> > >
-> > > According to the documentation, NCF_TX is only needed for SW transmit
-> > > mode, where software is directly puttting characters in the fifo.  Its
-> > > not needed for BAM mode.  According to your example, recursive console
-> > > printing will only happen in BAM mode, and not in SW mode.  Perhaps if
-> > > we put the NCF_TX uses to just the SW mode, we avoid the issue and can
-> > > allow recursive printing?
-> >
-> > Thanks for the suggestion!  But based on the suggestion, I tried to
-> > change code as below, the console even cannot work when boot the
-> > kernel:
-> >
-> >  static void msm_reset_dm_count(struct uart_port *port, int count)
-> >  {
-> > +       u32 val;
-> > +
-> >         msm_wait_for_xmitr(port);
-> > -       msm_write(port, count, UARTDM_NCF_TX);
-> > -       msm_read(port, UARTDM_NCF_TX);
-> > +
-> > +       val = msm_read(port, UARTDM_DMEN);
-> > +
-> > +       /*
-> > +        * NCF is only enabled for SW transmit mode and is
-> > +        * skipped for BAM mode.
-> > +        */
-> > +       if (!(val & UARTDM_DMEN_TX_BAM_ENABLE) &&
-> > +           !(val & UARTDM_DMEN_RX_BAM_ENABLE)) {
-> > +               msm_write(port, count, UARTDM_NCF_TX);
-> > +               msm_read(port, UARTDM_NCF_TX);
-> > +       }
-> >  }
-> >
-> >
-> > Alternatively, when exit from __msm_console_write() and if detect the
-> > case for without acquiring spinlock, invoke msm_wait_for_xmitr() to wait
-> > for transmit completion looks a good candidate solution. The updated
-> > patch is as below.  Please let me know if this is doable?
-> >
-> > diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-> > index 1db79ee8a886..aa6a494c898d 100644
-> > --- a/drivers/tty/serial/msm_serial.c
-> > +++ b/drivers/tty/serial/msm_serial.c
-> > @@ -190,6 +190,7 @@ struct msm_port {
-> >         bool                    break_detected;
-> >         struct msm_dma          tx_dma;
-> >         struct msm_dma          rx_dma;
-> > +       struct cpumask          curr_user;
-> >  };
-> >
-> >  #define UART_TO_MSM(uart_port) container_of(uart_port, struct msm_port, uart)
-> > @@ -440,6 +441,7 @@ static void msm_complete_tx_dma(void *args)
-> >         u32 val;
-> >
-> >         spin_lock_irqsave(&port->lock, flags);
-> > +       cpumask_set_cpu(smp_processor_id(), &msm_port->curr_user);
-> >
-> >         /* Already stopped */
-> >         if (!dma->count)
-> > @@ -474,6 +476,7 @@ static void msm_complete_tx_dma(void *args)
-> >
-> >         msm_handle_tx(port);
-> >  done:
-> > +       cpumask_clear_cpu(smp_processor_id(), &msm_port->curr_user);
-> >         spin_unlock_irqrestore(&port->lock, flags);
-> >  }
-> >
-> > @@ -548,6 +551,7 @@ static void msm_complete_rx_dma(void *args)
-> >         u32 val;
-> >
-> >         spin_lock_irqsave(&port->lock, flags);
-> > +       cpumask_set_cpu(smp_processor_id(), &msm_port->curr_user);
-> >
-> >         /* Already stopped */
-> >         if (!dma->count)
-> > @@ -594,6 +598,7 @@ static void msm_complete_rx_dma(void *args)
-> >
-> >         msm_start_rx_dma(msm_port);
-> >  done:
-> > +       cpumask_clear_cpu(smp_processor_id(), &msm_port->curr_user);
-> >         spin_unlock_irqrestore(&port->lock, flags);
-> >
-> >         if (count)
-> > @@ -932,6 +937,7 @@ static irqreturn_t msm_uart_irq(int irq, void *dev_id)
-> >         u32 val;
-> >
-> >         spin_lock_irqsave(&port->lock, flags);
-> > +       cpumask_set_cpu(smp_processor_id(), &msm_port->curr_user);
-> >         misr = msm_read(port, UART_MISR);
-> >         msm_write(port, 0, UART_IMR); /* disable interrupt */
-> >
-> > @@ -963,6 +969,7 @@ static irqreturn_t msm_uart_irq(int irq, void *dev_id)
-> >                 msm_handle_delta_cts(port);
-> >
-> >         msm_write(port, msm_port->imr, UART_IMR); /* restore interrupt */
-> > +       cpumask_clear_cpu(smp_processor_id(), &msm_port->curr_user);
-> >         spin_unlock_irqrestore(&port->lock, flags);
-> >
-> >         return IRQ_HANDLED;
-> > @@ -1573,10 +1580,12 @@ static inline struct uart_port *msm_get_port_from_line(unsigned int line)
-> >  static void __msm_console_write(struct uart_port *port, const char *s,
-> >                                 unsigned int count, bool is_uartdm)
-> >  {
-> > +       struct msm_port *msm_port = UART_TO_MSM(port);
-> >         int i;
-> >         int num_newlines = 0;
-> >         bool replaced = false;
-> >         void __iomem *tf;
-> > +       int locked = 1;
-> >
-> >         if (is_uartdm)
-> >                 tf = port->membase + UARTDM_TF;
-> > @@ -1589,7 +1598,15 @@ static void __msm_console_write(struct uart_port *port, const char *s,
-> >                         num_newlines++;
-> >         count += num_newlines;
-> >
-> > -       spin_lock(&port->lock);
-> > +       if (port->sysrq)
-> > +               locked = 0;
-> > +       else if (oops_in_progress)
-> > +               locked = spin_trylock(&port->lock);
-> > +       else if (cpumask_test_cpu(smp_processor_id(), &msm_port->curr_user))
-> > +               locked = 0;
-> > +       else
-> > +               spin_lock(&port->lock);
-> > +
-> >         if (is_uartdm)
-> >                 msm_reset_dm_count(port, count);
-> >
-> > @@ -1625,7 +1642,12 @@ static void __msm_console_write(struct uart_port *port, const char *s,
-> >                 iowrite32_rep(tf, buf, 1);
-> >                 i += num_chars;
-> >         }
-> > -       spin_unlock(&port->lock);
-> > +
-> > +       if (!locked)
-> > +               msm_wait_for_xmitr(port);
-> 
-> Sorry, catching up from some travel.
-> 
-> I don't understand this.  At this point, haven't we already called
-> msm_reset_dm_count() and "corrupted" the state of the hardware?
+This patch adds critical interrupt to tsens nodes, add cooling maps,
+renames nodes and renames labels.
 
-Yeah, at here msm_reset_dm_count() has been called.
-
-msm_wait_for_xmitr() is used to wait for completing transmition.
-So we can get flow as:
-
-  msm_complete_tx_dma()
-    kmalloc() fail
-      __msm_console_write()
-        msm_reset_dm_count()
-        output logs
-        msm_wait_for_xmitr()  => ensure to not impact out flow
-
-My essential reason for adding msm_wait_for_xmitr() is to cleanup
-the "corrupted" state before return to out flow.
+While the end result looks reasonable I would like to see this split in
+a few different patches - and perhaps a line or two in the commit
+message describing the new naming scheme for the renames.
 
 Thanks,
-Leo Yan
+Bjorn
 
-> > +
-> > +       if (locked)
-> > +               spin_unlock(&port->lock);
-> >  }
+> Signed-off-by: Rajeshwari <rkambl@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 289 +++++++++++++++++++++++++++++------
+>  1 file changed, 239 insertions(+), 50 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 3676bfd..e419ca0 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -10,6 +10,7 @@
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/phy/phy-qcom-qusb2.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> +#include <dt-bindings/thermal/thermal.h>
+>  
+>  / {
+>  	interrupt-parent = <&intc>;
+> @@ -78,6 +79,7 @@
+>  			reg = <0x0 0x0>;
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_0>;
+> +			#cooling-cells = <2>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			L2_0: l2-cache {
+>  				compatible = "cache";
+> @@ -94,6 +96,7 @@
+>  			reg = <0x0 0x100>;
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_100>;
+> +			#cooling-cells = <2>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			L2_100: l2-cache {
+>  				compatible = "cache";
+> @@ -107,6 +110,7 @@
+>  			reg = <0x0 0x200>;
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_200>;
+> +			#cooling-cells = <2>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			L2_200: l2-cache {
+>  				compatible = "cache";
+> @@ -120,6 +124,7 @@
+>  			reg = <0x0 0x300>;
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_300>;
+> +			#cooling-cells = <2>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			L2_300: l2-cache {
+>  				compatible = "cache";
+> @@ -133,6 +138,7 @@
+>  			reg = <0x0 0x400>;
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_400>;
+> +			#cooling-cells = <2>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			L2_400: l2-cache {
+>  				compatible = "cache";
+> @@ -146,6 +152,7 @@
+>  			reg = <0x0 0x500>;
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_500>;
+> +			#cooling-cells = <2>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			L2_500: l2-cache {
+>  				compatible = "cache";
+> @@ -159,6 +166,7 @@
+>  			reg = <0x0 0x600>;
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_600>;
+> +			#cooling-cells = <2>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			L2_600: l2-cache {
+>  				compatible = "cache";
+> @@ -172,6 +180,7 @@
+>  			reg = <0x0 0x700>;
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_700>;
+> +			#cooling-cells = <2>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			L2_700: l2-cache {
+>  				compatible = "cache";
+> @@ -1058,8 +1067,9 @@
+>  			reg = <0 0x0c263000 0 0x1ff>, /* TM */
+>  				<0 0x0c222000 0 0x1ff>; /* SROT */
+>  			#qcom,sensors = <15>;
+> -			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
+> -			interrupt-names = "uplow";
+> +			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow","critical";
+>  			#thermal-sensor-cells = <1>;
+>  		};
+>  
+> @@ -1068,8 +1078,9 @@
+>  			reg = <0 0x0c265000 0 0x1ff>, /* TM */
+>  				<0 0x0c223000 0 0x1ff>; /* SROT */
+>  			#qcom,sensors = <10>;
+> -			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>;
+> -			interrupt-names = "uplow";
+> +			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow","critical";
+>  			#thermal-sensor-cells = <1>;
+>  		};
+>  
+> @@ -1301,277 +1312,455 @@
+>  	};
+>  
+>  	thermal-zones {
+> -		cpu0-thermal {
+> +		cpu_0_0-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+>  			thermal-sensors = <&tsens0 1>;
+>  
+>  			trips {
+> -				cpu0_alert0: trip-point0 {
+> +				cpu_0_0_alert0: trip-point0 {
+>  					temperature = <90000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu0_alert1: trip-point1 {
+> +				cpu_0_0_alert1: trip-point1 {
+>  					temperature = <95000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu0_crit: cpu_crit {
+> +				cpu_0_0_crit: cpu_crit {
+>  					temperature = <110000>;
+>  					hysteresis = <1000>;
+>  					type = "critical";
+>  				};
+>  			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&cpu_0_0_alert0>;
+> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +				map1 {
+> +					trip = <&cpu_0_0_alert1>;
+> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+>  		};
+>  
+> -		cpu1-thermal {
+> +		cpu_0_1-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+>  			thermal-sensors = <&tsens0 2>;
+>  
+>  			trips {
+> -				cpu1_alert0: trip-point0 {
+> +				cpu_0_1_alert0: trip-point0 {
+>  					temperature = <90000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu1_alert1: trip-point1 {
+> +				cpu_0_1_alert1: trip-point1 {
+>  					temperature = <95000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu1_crit: cpu_crit {
+> +				cpu_0_1_crit: cpu_crit {
+>  					temperature = <110000>;
+>  					hysteresis = <1000>;
+>  					type = "critical";
+>  				};
+>  			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&cpu_0_1_alert0>;
+> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +				map1 {
+> +					trip = <&cpu_0_1_alert1>;
+> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+>  		};
+>  
+> -		cpu2-thermal {
+> +		cpu_0_2-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+>  			thermal-sensors = <&tsens0 3>;
+>  
+>  			trips {
+> -				cpu2_alert0: trip-point0 {
+> +				cpu_0_2_alert0: trip-point0 {
+>  					temperature = <90000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu2_alert1: trip-point1 {
+> +				cpu_0_2_alert1: trip-point1 {
+>  					temperature = <95000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu2_crit: cpu_crit {
+> +				cpu_0_2_crit: cpu_crit {
+>  					temperature = <110000>;
+>  					hysteresis = <1000>;
+>  					type = "critical";
+>  				};
+>  			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&cpu_0_2_alert0>;
+> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +				map1 {
+> +					trip = <&cpu_0_2_alert1>;
+> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+>  		};
+>  
+> -		cpu3-thermal {
+> +		cpu_0_3-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+>  			thermal-sensors = <&tsens0 4>;
+>  
+>  			trips {
+> -				cpu3_alert0: trip-point0 {
+> +				cpu_0_3_alert0: trip-point0 {
+>  					temperature = <90000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu3_alert1: trip-point1 {
+> +				cpu_0_3_alert1: trip-point1 {
+>  					temperature = <95000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu3_crit: cpu_crit {
+> +				cpu_0_3_crit: cpu_crit {
+>  					temperature = <110000>;
+>  					hysteresis = <1000>;
+>  					type = "critical";
+>  				};
+>  			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&cpu_0_3_alert0>;
+> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +				map1 {
+> +					trip = <&cpu_0_3_alert1>;
+> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+>  		};
+>  
+> -		cpu4-thermal {
+> +		cpu_0_4-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+>  			thermal-sensors = <&tsens0 5>;
+>  
+>  			trips {
+> -				cpu4_alert0: trip-point0 {
+> +				cpu_0_4_alert0: trip-point0 {
+>  					temperature = <90000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu4_alert1: trip-point1 {
+> +				cpu_0_4_alert1: trip-point1 {
+>  					temperature = <95000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu4_crit: cpu_crit {
+> +				cpu_0_4_crit: cpu_crit {
+>  					temperature = <110000>;
+>  					hysteresis = <1000>;
+>  					type = "critical";
+>  				};
+>  			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&cpu_0_4_alert0>;
+> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +				map1 {
+> +					trip = <&cpu_0_4_alert1>;
+> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+>  		};
+>  
+> -		cpu5-thermal {
+> +		cpu_0_5-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+>  			thermal-sensors = <&tsens0 6>;
+>  
+>  			trips {
+> -				cpu5_alert0: trip-point0 {
+> +				cpu_0_5_alert0: trip-point0 {
+>  					temperature = <90000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu5_alert1: trip-point1 {
+> +				cpu_0_5_alert1: trip-point1 {
+>  					temperature = <95000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu5_crit: cpu_crit {
+> +				cpu_0_5_crit: cpu_crit {
+>  					temperature = <110000>;
+>  					hysteresis = <1000>;
+>  					type = "critical";
+>  				};
+>  			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&cpu_0_5_alert0>;
+> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +				map1 {
+> +					trip = <&cpu_0_5_alert1>;
+> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+>  		};
+>  
+> -		cpu6-thermal {
+> +		cpu_1_0-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+>  			thermal-sensors = <&tsens0 9>;
+>  
+>  			trips {
+> -				cpu6_alert0: trip-point0 {
+> +				cpu_1_0_alert0: trip-point0 {
+>  					temperature = <90000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu6_alert1: trip-point1 {
+> +				cpu_1_0_alert1: trip-point1 {
+>  					temperature = <95000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu6_crit: cpu_crit {
+> +				cpu_1_0_crit: cpu_crit {
+>  					temperature = <110000>;
+>  					hysteresis = <1000>;
+>  					type = "critical";
+>  				};
+>  			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&cpu_1_0_alert0>;
+> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +				map1 {
+> +					trip = <&cpu_1_0_alert1>;
+> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+>  		};
+>  
+> -		cpu7-thermal {
+> +		cpu_1_1-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+>  			thermal-sensors = <&tsens0 10>;
+>  
+>  			trips {
+> -				cpu7_alert0: trip-point0 {
+> +				cpu_1_1_alert0: trip-point0 {
+>  					temperature = <90000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu7_alert1: trip-point1 {
+> +				cpu_1_1_alert1: trip-point1 {
+>  					temperature = <95000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu7_crit: cpu_crit {
+> +				cpu_1_1_crit: cpu_crit {
+>  					temperature = <110000>;
+>  					hysteresis = <1000>;
+>  					type = "critical";
+>  				};
+>  			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&cpu_1_1_alert0>;
+> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +				map1 {
+> +					trip = <&cpu_1_1_alert1>;
+> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+>  		};
+>  
+> -		cpu8-thermal {
+> +		cpu_1_2-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+>  			thermal-sensors = <&tsens0 11>;
+>  
+>  			trips {
+> -				cpu8_alert0: trip-point0 {
+> +				cpu_1_2_alert0: trip-point0 {
+>  					temperature = <90000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu8_alert1: trip-point1 {
+> +				cpu_1_2_alert1: trip-point1 {
+>  					temperature = <95000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu8_crit: cpu_crit {
+> +				cpu_1_2_crit: cpu_crit {
+>  					temperature = <110000>;
+>  					hysteresis = <1000>;
+>  					type = "critical";
+>  				};
+>  			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&cpu_1_2_alert0>;
+> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +				map1 {
+> +					trip = <&cpu_1_2_alert1>;
+> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+>  		};
+>  
+> -		cpu9-thermal {
+> +		cpu_1_3-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+>  			thermal-sensors = <&tsens0 12>;
+>  
+>  			trips {
+> -				cpu9_alert0: trip-point0 {
+> +				cpu_1_3_alert0: trip-point0 {
+>  					temperature = <90000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu9_alert1: trip-point1 {
+> +				cpu_1_3_alert1: trip-point1 {
+>  					temperature = <95000>;
+>  					hysteresis = <2000>;
+>  					type = "passive";
+>  				};
+>  
+> -				cpu9_crit: cpu_crit {
+> +				cpu_1_3_crit: cpu_crit {
+>  					temperature = <110000>;
+>  					hysteresis = <1000>;
+>  					type = "critical";
+>  				};
+>  			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&cpu_1_3_alert0>;
+> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +				map1 {
+> +					trip = <&cpu_1_3_alert1>;
+> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+>  		};
+>  
+> -		aoss0-thermal {
+> +		aoss_0-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+> @@ -1586,7 +1775,7 @@
+>  			};
+>  		};
+>  
+> -		cpuss0-thermal {
+> +		cpuss_0-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+> @@ -1606,7 +1795,7 @@
+>  			};
+>  		};
+>  
+> -		cpuss1-thermal {
+> +		cpuss_1-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+> @@ -1626,7 +1815,7 @@
+>  			};
+>  		};
+>  
+> -		gpuss0-thermal {
+> +		gpuss_0-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+> @@ -1641,7 +1830,7 @@
+>  			};
+>  		};
+>  
+> -		gpuss1-thermal {
+> +		gpuss_1-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+> @@ -1656,7 +1845,7 @@
+>  			};
+>  		};
+>  
+> -		aoss1-thermal {
+> +		aoss_1-thermal {
+>  			polling-delay-passive = <250>;
+>  			polling-delay = <1000>;
+>  
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
