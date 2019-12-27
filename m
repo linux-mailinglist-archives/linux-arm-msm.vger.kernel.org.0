@@ -2,372 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F4CC12B202
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 07:39:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A97DE12B205
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 07:39:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727282AbfL0Gj3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Dec 2019 01:39:29 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:49553 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727002AbfL0Gj3 (ORCPT
+        id S1727311AbfL0Gja (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Dec 2019 01:39:30 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:35978 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727287AbfL0Gja (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Dec 2019 01:39:29 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1577428768; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=AZXTG0cslf+YgUMb8uBOFZik8DwvCkPO9lUG4AAn1HM=; b=TD3GkkRl79wSK+aAbTPhmojAGvs6KVlAKssn/hAWaesJQaOliaEtBK2MPhNMZcVwJwButrU+
- iPt66TIEwBB5ieZ1+bjIfrXuWXQIhB8KtkF5ZilUT3fc3YCRcu+Gs2O9n7eiwIVx27vERa/t
- PnEluG+Ckn9FtLD75blFDjA76Io=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e05a71f.7f4b8f6105a8-smtp-out-n03;
- Fri, 27 Dec 2019 06:39:27 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6E450C447A0; Fri, 27 Dec 2019 06:39:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 48ADAC447A4;
-        Fri, 27 Dec 2019 06:39:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 48ADAC447A4
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-From:   Taniya Das <tdas@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>,
-        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh@kernel.org, robh+dt@kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v3 6/6] clk: qcom: Add video clock controller driver for SC7180
-Date:   Fri, 27 Dec 2019 12:08:34 +0530
-Message-Id: <1577428714-17766-7-git-send-email-tdas@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1577428714-17766-1-git-send-email-tdas@codeaurora.org>
-References: <1577428714-17766-1-git-send-email-tdas@codeaurora.org>
+        Fri, 27 Dec 2019 01:39:30 -0500
+Received: by mail-pl1-f196.google.com with SMTP id a6so10636668plm.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2019 22:39:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=t0JhfQXqwvsrBVHIc9FoCtLnTmKQkndMD2Zq+leqajk=;
+        b=ATeg/AZpEVVu/zzKxM41Gi38Tego1wb4/bAhm5+kH/7D3iosOE0ZaLSI4hsJ2sw3Py
+         yi9T+xKB8IiYFZsxGDS5EqPNS4pQ3m9uz/n/rILt/Z61xaxMKGgGuApZ2wWNvK6VI/Xc
+         1+IKM8EQ1fNer+hMWAou4/OhTnYjoaKcq8oCerlJGjm5iPDAwimFyuMCIWtO1MPlKRsF
+         ZxzjGVvdYzTgntX/o2FgtZq0BiGycxuLPuSM0WpjH37YnMmZkuu5iK2KiMnCf87tDLjF
+         +NZYtuEqX7qm5nQ1s1MnGonfwqXCxW4u7JygoPXpi/opDP4XG+KlmKUACFoQW7IdqATY
+         oqYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=t0JhfQXqwvsrBVHIc9FoCtLnTmKQkndMD2Zq+leqajk=;
+        b=R6TH0wl/sjZ7l6e2/J6lFkHzIhSHtRfEr0pKbfPbqEz2QN0ovzJVGWpxKdgGPG1BVw
+         xioZ1hheHcjr/oiOkfXl1kxnJSOJdcmZAo7MMkTspX37xwWCinqW72OT3tjopC56/XtS
+         6zuYjGAuTBXCYPJaaTBsxrNPNdcOGtvbiR2obJBSbMTnvwuksiA/P2INhBRMeH4dqREv
+         hwRhNG8SaSaexIhL1veWXw/ccLLTUabL3LoCV284fmxV9Xd0lypu2CKg2jDfuMd4rbAk
+         TyJPgVJoDTSgjHdM3IgUvnSvYVOUTNC0E74SitASvuxi/lqL7QmCwIgZ2Npd7xjDV+LN
+         wTVA==
+X-Gm-Message-State: APjAAAVbtshsgmQotrlTXtPmLMUVyB7Iny7nYufPDjbGAwRTsCaARDxK
+        PqMFoLDuT0ogWL+5VWPayfA9IQ==
+X-Google-Smtp-Source: APXvYqyFA5E8nGzaiWY8T+cpTP6ABUjEiZB7ONgvKrMEFw6iP/g3fmeY4/Xr2ZWP5NFoXB4htPGF+w==
+X-Received: by 2002:a17:902:b609:: with SMTP id b9mr50522157pls.70.1577428769647;
+        Thu, 26 Dec 2019 22:39:29 -0800 (PST)
+Received: from ripper (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id l9sm35705531pgh.34.2019.12.26.22.39.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Dec 2019 22:39:29 -0800 (PST)
+Date:   Thu, 26 Dec 2019 22:39:15 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     catalin.marinas@arm.com, will@kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] arm64: Add qcom Kconfig fragment
+Message-ID: <20191227063915.GI1908628@ripper>
+References: <1576850160-1564-1-git-send-email-loic.poulain@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1576850160-1564-1-git-send-email-loic.poulain@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the video clock controller found on SC7180
-based devices. This would allow video drivers to probe
-and control their clocks.
+On Fri 20 Dec 05:56 PST 2019, Loic Poulain wrote:
 
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
----
- drivers/clk/qcom/Kconfig          |   8 ++
- drivers/clk/qcom/Makefile         |   1 +
- drivers/clk/qcom/videocc-sc7180.c | 259 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 268 insertions(+)
- create mode 100644 drivers/clk/qcom/videocc-sc7180.c
+> Add qcom Kconfig fragment which enables the appropriate symbols for
+> support of Qualcomm based boards, like the 'popular' dragonboards.
+> This permits to fully support the boards upstream without having to
+> rely on downstream deconfig changes.
+> 
+> This patch has been tested with Dragonboard-410c and Dragonboard-820c.
+> 
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index e648a60..cf21d5c 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -253,6 +253,14 @@ config SC_GPUCC_7180
- 	  Say Y if you want to support graphics controller devices and
- 	  functionality such as 3D graphics.
+As Catalin said, this should be added to the generic defconfig. I have a
+few of these queued up already for v5.6 in linux-next, but please do
+send me additional patches and I'll include them in the qcom/defconfig
+branch.
 
-+config SC_VIDEOCC_7180
-+	tristate "SC7180 Video Clock Controller"
-+	select SC_GCC_7180
-+	help
-+	  Support for the video clock controller on SC7180 devices.
-+	  Say Y if you want to support video devices and functionality such as
-+	  video encode and decode.
-+
- config SDM_CAMCC_845
- 	tristate "SDM845 Camera Clock Controller"
- 	select SDM_GCC_845
-diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-index 5477482..4cdd08f 100644
---- a/drivers/clk/qcom/Makefile
-+++ b/drivers/clk/qcom/Makefile
-@@ -47,6 +47,7 @@ obj-$(CONFIG_QCS_Q6SSTOP_404) += q6sstop-qcs404.o
- obj-$(CONFIG_QCS_TURING_404) += turingcc-qcs404.o
- obj-$(CONFIG_SC_GCC_7180) += gcc-sc7180.o
- obj-$(CONFIG_SC_GPUCC_7180) += gpucc-sc7180.o
-+obj-$(CONFIG_SC_VIDEOCC_7180) += videocc-sc7180.o
- obj-$(CONFIG_SDM_CAMCC_845) += camcc-sdm845.o
- obj-$(CONFIG_SDM_DISPCC_845) += dispcc-sdm845.o
- obj-$(CONFIG_SDM_GCC_660) += gcc-sdm660.o
-diff --git a/drivers/clk/qcom/videocc-sc7180.c b/drivers/clk/qcom/videocc-sc7180.c
-new file mode 100644
-index 0000000..76add30
---- /dev/null
-+++ b/drivers/clk/qcom/videocc-sc7180.c
-@@ -0,0 +1,259 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-+ */
-+
-+#include <linux/clk-provider.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/regmap.h>
-+
-+#include <dt-bindings/clock/qcom,videocc-sc7180.h>
-+
-+#include "clk-alpha-pll.h"
-+#include "clk-branch.h"
-+#include "clk-rcg.h"
-+#include "clk-regmap.h"
-+#include "common.h"
-+#include "gdsc.h"
-+
-+enum {
-+	P_BI_TCXO,
-+	P_CHIP_SLEEP_CLK,
-+	P_CORE_BI_PLL_TEST_SE,
-+	P_VIDEO_PLL0_OUT_EVEN,
-+	P_VIDEO_PLL0_OUT_MAIN,
-+	P_VIDEO_PLL0_OUT_ODD,
-+};
-+
-+static const struct pll_vco fabia_vco[] = {
-+	{ 249600000, 2000000000, 0 },
-+};
-+
-+static struct clk_alpha_pll video_pll0 = {
-+	.offset = 0x42c,
-+	.vco_table = fabia_vco,
-+	.num_vco = ARRAY_SIZE(fabia_vco),
-+	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_FABIA],
-+	.clkr = {
-+		.hw.init = &(struct clk_init_data){
-+			.name = "video_pll0",
-+			.parent_data = &(const struct clk_parent_data){
-+				.fw_name = "bi_tcxo",
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_alpha_pll_fabia_ops,
-+		},
-+	},
-+};
-+
-+static const struct parent_map video_cc_parent_map_1[] = {
-+	{ P_BI_TCXO, 0 },
-+	{ P_VIDEO_PLL0_OUT_MAIN, 1 },
-+	{ P_CORE_BI_PLL_TEST_SE, 7 },
-+};
-+
-+static const struct clk_parent_data video_cc_parent_data_1[] = {
-+	{ .fw_name = "bi_tcxo" },
-+	{ .hw = &video_pll0.clkr.hw },
-+	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-+};
-+
-+static const struct freq_tbl ftbl_video_cc_venus_clk_src[] = {
-+	F(19200000, P_BI_TCXO, 1, 0, 0),
-+	F(150000000, P_VIDEO_PLL0_OUT_MAIN, 4, 0, 0),
-+	F(270000000, P_VIDEO_PLL0_OUT_MAIN, 2.5, 0, 0),
-+	F(340000000, P_VIDEO_PLL0_OUT_MAIN, 2, 0, 0),
-+	F(434000000, P_VIDEO_PLL0_OUT_MAIN, 2, 0, 0),
-+	F(500000000, P_VIDEO_PLL0_OUT_MAIN, 2, 0, 0),
-+	{ }
-+};
-+
-+static struct clk_rcg2 video_cc_venus_clk_src = {
-+	.cmd_rcgr = 0x7f0,
-+	.mnd_width = 0,
-+	.hid_width = 5,
-+	.parent_map = video_cc_parent_map_1,
-+	.freq_tbl = ftbl_video_cc_venus_clk_src,
-+	.clkr.hw.init = &(struct clk_init_data){
-+		.name = "video_cc_venus_clk_src",
-+		.parent_data = video_cc_parent_data_1,
-+		.num_parents = 3,
-+		.flags = CLK_SET_RATE_PARENT,
-+		.ops = &clk_rcg2_shared_ops,
-+	},
-+};
-+
-+static struct clk_branch video_cc_vcodec0_axi_clk = {
-+	.halt_reg = 0x9ec,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x9ec,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "video_cc_vcodec0_axi_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch video_cc_vcodec0_core_clk = {
-+	.halt_reg = 0x890,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x890,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "video_cc_vcodec0_core_clk",
-+			.parent_data = &(const struct clk_parent_data){
-+				.hw = &video_cc_venus_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch video_cc_venus_ahb_clk = {
-+	.halt_reg = 0xa4c,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0xa4c,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "video_cc_venus_ahb_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch video_cc_venus_ctl_axi_clk = {
-+	.halt_reg = 0x9cc,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x9cc,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "video_cc_venus_ctl_axi_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch video_cc_venus_ctl_core_clk = {
-+	.halt_reg = 0x850,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x850,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "video_cc_venus_ctl_core_clk",
-+			.parent_data = &(const struct clk_parent_data){
-+				.hw = &video_cc_venus_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct gdsc venus_gdsc = {
-+	.gdscr = 0x814,
-+	.pd = {
-+		.name = "venus_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+};
-+
-+static struct gdsc vcodec0_gdsc = {
-+	.gdscr = 0x874,
-+	.pd = {
-+		.name = "vcodec0_gdsc",
-+	},
-+	.flags = HW_CTRL,
-+	.pwrsts = PWRSTS_OFF_ON,
-+};
-+
-+static struct clk_regmap *video_cc_sc7180_clocks[] = {
-+	[VIDEO_CC_VCODEC0_AXI_CLK] = &video_cc_vcodec0_axi_clk.clkr,
-+	[VIDEO_CC_VCODEC0_CORE_CLK] = &video_cc_vcodec0_core_clk.clkr,
-+	[VIDEO_CC_VENUS_AHB_CLK] = &video_cc_venus_ahb_clk.clkr,
-+	[VIDEO_CC_VENUS_CLK_SRC] = &video_cc_venus_clk_src.clkr,
-+	[VIDEO_CC_VENUS_CTL_AXI_CLK] = &video_cc_venus_ctl_axi_clk.clkr,
-+	[VIDEO_CC_VENUS_CTL_CORE_CLK] = &video_cc_venus_ctl_core_clk.clkr,
-+	[VIDEO_PLL0] = &video_pll0.clkr,
-+};
-+
-+static struct gdsc *video_cc_sc7180_gdscs[] = {
-+	[VENUS_GDSC] = &venus_gdsc,
-+	[VCODEC0_GDSC] = &vcodec0_gdsc,
-+};
-+
-+static const struct regmap_config video_cc_sc7180_regmap_config = {
-+	.reg_bits = 32,
-+	.reg_stride = 4,
-+	.val_bits = 32,
-+	.max_register = 0xb94,
-+	.fast_io = true,
-+};
-+
-+static const struct qcom_cc_desc video_cc_sc7180_desc = {
-+	.config = &video_cc_sc7180_regmap_config,
-+	.clks = video_cc_sc7180_clocks,
-+	.num_clks = ARRAY_SIZE(video_cc_sc7180_clocks),
-+	.gdscs = video_cc_sc7180_gdscs,
-+	.num_gdscs = ARRAY_SIZE(video_cc_sc7180_gdscs),
-+};
-+
-+static const struct of_device_id video_cc_sc7180_match_table[] = {
-+	{ .compatible = "qcom,sc7180-videocc" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, video_cc_sc7180_match_table);
-+
-+static int video_cc_sc7180_probe(struct platform_device *pdev)
-+{
-+	struct regmap *regmap;
-+	struct alpha_pll_config video_pll0_config = {};
-+
-+	regmap = qcom_cc_map(pdev, &video_cc_sc7180_desc);
-+	if (IS_ERR(regmap))
-+		return PTR_ERR(regmap);
-+
-+	video_pll0_config.l = 0x1f;
-+	video_pll0_config.alpha = 0x4000;
-+	video_pll0_config.user_ctl_val = 0x00000001;
-+	video_pll0_config.user_ctl_hi_val = 0x00004805;
-+
-+	clk_fabia_pll_configure(&video_pll0, regmap, &video_pll0_config);
-+
-+	/* Keep VIDEO_CC_XO_CLK ALWAYS-ON */
-+	regmap_update_bits(regmap, 0x984, 0x1, 0x1);
-+
-+	return qcom_cc_really_probe(pdev, &video_cc_sc7180_desc, regmap);
-+}
-+
-+static struct platform_driver video_cc_sc7180_driver = {
-+	.probe = video_cc_sc7180_probe,
-+	.driver = {
-+		.name = "sc7180-videocc",
-+		.of_match_table = video_cc_sc7180_match_table,
-+	},
-+};
-+
-+static int __init video_cc_sc7180_init(void)
-+{
-+	return platform_driver_register(&video_cc_sc7180_driver);
-+}
-+subsys_initcall(video_cc_sc7180_init);
-+
-+static void __exit video_cc_sc7180_exit(void)
-+{
-+	platform_driver_unregister(&video_cc_sc7180_driver);
-+}
-+module_exit(video_cc_sc7180_exit);
-+
-+MODULE_LICENSE("GPL v2");
-+MODULE_DESCRIPTION("QTI VIDEOCC SC7180 Driver");
---
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-of the Code Aurora Forum, hosted by the  Linux Foundation.
+> qcom.config fragment has been generated with ./script/diffconfig
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> ---
+>  arch/arm64/configs/qcom.config | 57 ++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 57 insertions(+)
+>  create mode 100644 arch/arm64/configs/qcom.config
+> 
+> diff --git a/arch/arm64/configs/qcom.config b/arch/arm64/configs/qcom.config
+> new file mode 100644
+> index 0000000..9358df8
+> --- /dev/null
+> +++ b/arch/arm64/configs/qcom.config
+> @@ -0,0 +1,57 @@
+> +CONFIG_ARM_QCOM_CPUFREQ_HW=y
+> +CONFIG_BT_HCIUART_3WIRE=y
+> +CONFIG_BT_HCIUART_QCA=y
+> +CONFIG_BT_HCIUART_RTL=y
+> +CONFIG_CRYPTO_DEV_QCOM_RNG=y
+
+=m
+
+> +CONFIG_EXTCON_QCOM_SPMI_MISC=y
+> +CONFIG_INTERCONNECT=y
+> +CONFIG_MFD_QCOM_RPM=y
+
+This is for 32-bit targets.
+
+> +CONFIG_PHY_QCOM_PCIE2=y
+
+=m
+
+> +CONFIG_PHY_QCOM_QMP=y
+
+=m
+
+> +CONFIG_PHY_QCOM_QUSB2=y
+
+=m
+
+> +CONFIG_PHY_QCOM_UFS=y
+
+I recently proposed a patch to add 8996 UFS support to the common QMP
+driver, so hopefully we can get that merged for v5.6 instead.
+
+> +CONFIG_PM8916_WATCHDOG=y
+
+=m
+
+> +CONFIG_POWER_RESET_QCOM_PON=y
+
+=m
+
+> +CONFIG_QCOM_APR=m
+> +CONFIG_QCOM_FASTRPC=y
+
+=m
+
+> +CONFIG_QCOM_RMTFS_MEM=m
+> +CONFIG_QCOM_RPMHPD=y
+> +CONFIG_QCOM_RPMPD=y
+> +CONFIG_QCOM_SOCINFO=m
+> +CONFIG_QCOM_WCNSS_CTRL=m
+> +CONFIG_QCOM_WCNSS_PIL=m
+> +CONFIG_SCSI_UFS_QCOM=y
+
+=m
+
+> +CONFIG_SND_SOC_CROS_EC_CODEC=m
+> +CONFIG_SND_SOC_MAX98927=m
+> +CONFIG_SND_SOC_MSM8916_WCD_ANALOG=m
+> +CONFIG_SND_SOC_MSM8916_WCD_DIGITAL=m
+> +CONFIG_VIDEO_QCOM_CAMSS=m
+> +CONFIG_VIDEO_QCOM_VENUS=m
+> +CONFIG_WCN36XX=m
+> +CONFIG_BT_QCA=m
+> +CONFIG_BT_QCOMSMD=m
+> +CONFIG_INTERCONNECT_QCOM=y
+> +CONFIG_INTERCONNECT_QCOM_MSM8974=y
+> +CONFIG_INTERCONNECT_QCOM_QCS404=y
+> +CONFIG_INTERCONNECT_QCOM_SDM845=y
+> +CONFIG_INTERCONNECT_QCOM_SMD_RPM=y
+
+Selected as needed by previous options.
+
+> +CONFIG_PHY_QCOM_UFS_14NM=y
+
+Follows CONFIG_PHY_QCOM_UFS, and should be replaced by
+CONFIG_PHY_QCOM_QMP
+
+> +CONFIG_QCOM_CLK_RPM=y
+> +CONFIG_REGULATOR_QCOM_RPM=y
+
+These two are for 32-bit targets.
+
+Regards,
+Bjorn
+
+> +CONFIG_SND_COMPRESS_OFFLOAD=y
+> +CONFIG_SND_SOC_COMPRESS=y
+> +CONFIG_SND_SOC_MSM8996=m
+> +CONFIG_SND_SOC_QCOM_COMMON=m
+> +CONFIG_SND_SOC_QDSP6=m
+> +CONFIG_SND_SOC_QDSP6_ADM=m
+> +CONFIG_SND_SOC_QDSP6_AFE=m
+> +CONFIG_SND_SOC_QDSP6_AFE_DAI=m
+> +CONFIG_SND_SOC_QDSP6_ASM=m
+> +CONFIG_SND_SOC_QDSP6_ASM_DAI=m
+> +CONFIG_SND_SOC_QDSP6_COMMON=m
+> +CONFIG_SND_SOC_QDSP6_CORE=m
+> +CONFIG_SND_SOC_QDSP6_ROUTING=m
+> +CONFIG_SND_SOC_RT5663=m
+> +CONFIG_SND_SOC_SDM845=m
+> +CONFIG_VIDEOBUF2_DMA_SG=m
+> +CONFIG_WCN36XX_DEBUGFS=y
+> -- 
+> 2.7.4
+> 
