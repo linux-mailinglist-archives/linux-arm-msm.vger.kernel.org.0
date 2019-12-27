@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DEC4D12B751
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 18:48:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C1E412B988
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 19:06:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728243AbfL0Rsg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Dec 2019 12:48:36 -0500
-Received: from mail.kernel.org ([198.145.29.99]:42956 "EHLO mail.kernel.org"
+        id S1727814AbfL0SFz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Dec 2019 13:05:55 -0500
+Received: from mail.kernel.org ([198.145.29.99]:59974 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728523AbfL0Rol (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Dec 2019 12:44:41 -0500
+        id S1728338AbfL0SC4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 27 Dec 2019 13:02:56 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A5E23206F4;
-        Fri, 27 Dec 2019 17:44:39 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id CC8A320CC7;
+        Fri, 27 Dec 2019 18:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1577468680;
-        bh=Lu/z27rISEQkff99lu4NTlGODLGO7EcU5sfR/JvIbFk=;
+        s=default; t=1577469775;
+        bh=LaSY8/f8rjl7AmIwdoczWmQ10HHYjsW/aaIre+kdXeM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=VsqxNBY3IVxEQ8rlHAvX0+kUpA04U1DvWNglre8sCTFBM2mbIOACMdCc4qsODiRkX
-         2WfXPpVMOc6yFhVqZRRdfqUvIM1VMfp8EotTlA/jVQ4fZuURRGIGhF+QpK3aYUhHzO
-         s3ujGdlOqZgcCXVWZGzQKwdj0boIJPiIbotkaabs=
+        b=bdVC+YSTivx5hUBh8xBHMf0Io/XCMI6+mjsRMy8WjoR7o/Q3/dVRbdaitzuuNJyWh
+         QEetzybWuxobzTebczKJfKD03kRAcvhFLmC8+xIT2e6XcuG7W/geFo6Nvlhxfu8OpJ
+         RECayJRQG9ux0vmHiQN6BUxX6/ILp1eOYcnA5vj8=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Leo Yan <leo.yan@linaro.org>,
@@ -30,12 +30,12 @@ Cc:     Leo Yan <leo.yan@linaro.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-serial@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 39/84] tty: serial: msm_serial: Fix lockup for sysrq and oops
-Date:   Fri, 27 Dec 2019 12:43:07 -0500
-Message-Id: <20191227174352.6264-39-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 26/57] tty: serial: msm_serial: Fix lockup for sysrq and oops
+Date:   Fri, 27 Dec 2019 13:01:51 -0500
+Message-Id: <20191227180222.7076-26-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191227174352.6264-1-sashal@kernel.org>
-References: <20191227174352.6264-1-sashal@kernel.org>
+In-Reply-To: <20191227180222.7076-1-sashal@kernel.org>
+References: <20191227180222.7076-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -72,10 +72,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-index c10d9cc553c6..4caeca67fd14 100644
+index e937fb189034..77a1f00fe843 100644
 --- a/drivers/tty/serial/msm_serial.c
 +++ b/drivers/tty/serial/msm_serial.c
-@@ -1580,6 +1580,7 @@ static void __msm_console_write(struct uart_port *port, const char *s,
+@@ -1588,6 +1588,7 @@ static void __msm_console_write(struct uart_port *port, const char *s,
  	int num_newlines = 0;
  	bool replaced = false;
  	void __iomem *tf;
@@ -83,7 +83,7 @@ index c10d9cc553c6..4caeca67fd14 100644
  
  	if (is_uartdm)
  		tf = port->membase + UARTDM_TF;
-@@ -1592,7 +1593,13 @@ static void __msm_console_write(struct uart_port *port, const char *s,
+@@ -1600,7 +1601,13 @@ static void __msm_console_write(struct uart_port *port, const char *s,
  			num_newlines++;
  	count += num_newlines;
  
@@ -98,7 +98,7 @@ index c10d9cc553c6..4caeca67fd14 100644
  	if (is_uartdm)
  		msm_reset_dm_count(port, count);
  
-@@ -1628,7 +1635,9 @@ static void __msm_console_write(struct uart_port *port, const char *s,
+@@ -1636,7 +1643,9 @@ static void __msm_console_write(struct uart_port *port, const char *s,
  		iowrite32_rep(tf, buf, 1);
  		i += num_chars;
  	}
