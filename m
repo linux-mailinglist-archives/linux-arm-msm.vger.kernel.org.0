@@ -2,734 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CD5D712B419
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 11:56:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D9DB712B4AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 14:00:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726379AbfL0K4T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Dec 2019 05:56:19 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:61640 "EHLO
+        id S1727102AbfL0NAj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Dec 2019 08:00:39 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:55934 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726053AbfL0K4R (ORCPT
+        by vger.kernel.org with ESMTP id S1727074AbfL0NAi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Dec 2019 05:56:17 -0500
+        Fri, 27 Dec 2019 08:00:38 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1577444175; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1577451637; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=9XYxrNMQs0vXbyciOdvVpfaSWWrvel0H/ZYToAsb3SU=; b=n9BeOn2xLDChxb37tQnvicqfsHdNAcYxsHF00yLLf5wGdG0PZBm2JbB3S6g8botOPmHYKNyl
- VM7zcfouVYGi3tgYv9IE5ZiWoZAC2YVwnKBfhPkKng6OmH6N869hqUXEzLgaXCWG8xAvr/7g
- nXCuejua7ibRenThZHJpP6MG2Po=
+ Subject: Sender; bh=elAZDYyWpHh1dEeZKdpEIhlxZZccEhpE0oQywbjr8TQ=; b=e9OG2kv43vEvAJLBxEiiADsarodMTzJt7jfn0Lhw5VpJ0/hhaWL01YaxoTkGVlRvWgxqIX7c
+ mQv7O+LaVSZvDWolVC1AmVFYV5AB1iWWtIpjcY1Bk9ZgXSm5pbxmTwlq3BWUynmK5kpxxAHR
+ TNA+iGaBBKpwjKSo5Z9YeX4fv9g=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e05e34e.7fe170574260-smtp-out-n03;
- Fri, 27 Dec 2019 10:56:14 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e060072.7f7729b19420-smtp-out-n01;
+ Fri, 27 Dec 2019 13:00:34 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C52ADC4479C; Fri, 27 Dec 2019 10:56:12 +0000 (UTC)
+        id 3BF47C447AF; Fri, 27 Dec 2019 13:00:34 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.242.50.228] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from [10.204.79.138] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: rkambl)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CBE74C433CB;
-        Fri, 27 Dec 2019 10:56:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CBE74C433CB
+        (Authenticated sender: akdwived)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 36A09C447AD;
+        Fri, 27 Dec 2019 13:00:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 36A09C447AD
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rkambl@codeaurora.org
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: Add critical interrupt and
- cooling maps for TSENS in SC7180.
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sanm@codeaurora.org, sivaa@codeaurora.org, manafm@codeaurora.org
-References: <1577106871-19863-1-git-send-email-rkambl@codeaurora.org>
- <1577106871-19863-2-git-send-email-rkambl@codeaurora.org>
- <20191227062235.GM549437@yoga>
-From:   "Rajeshwari Ravindra Kamble (Temp)" <rkambl@codeaurora.org>
-Message-ID: <a585265c-689a-a0c0-4377-bcf121320df3@codeaurora.org>
-Date:   Fri, 27 Dec 2019 16:26:04 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akdwived@codeaurora.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: Documentation for qcom,eud
+To:     Rob Herring <robh@kernel.org>,
+        Prakruthi Deepak Heragu <pheragu@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ckadabi@codeaurora.org, tsoni@codeaurora.org,
+        rnayak@codeaurora.org, bryanh@codeaurora.org,
+        psodagud@codeaurora.org,
+        Satya Durga Srinivasu Prabhala <satyap@codeaurora.org>
+References: <1536096853-30473-1-git-send-email-pheragu@codeaurora.org>
+ <1536096853-30473-2-git-send-email-pheragu@codeaurora.org>
+ <20180925192507.GA19360@bogus>
+From:   "Dwivedi, Avaneesh Kumar (avani)" <akdwived@codeaurora.org>
+Message-ID: <03949a1b-ee93-ee71-ff6e-e1f045b15129@codeaurora.org>
+Date:   Fri, 27 Dec 2019 18:30:27 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-In-Reply-To: <20191227062235.GM549437@yoga>
+In-Reply-To: <20180925192507.GA19360@bogus>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Rob,
 
-On 12/27/2019 11:52 AM, Bjorn Andersson wrote:
-> On Mon 23 Dec 05:14 PST 2019, Rajeshwari wrote:
->
-> This patch adds critical interrupt to tsens nodes, add cooling maps,
-> renames nodes and renames labels.
->
-> While the end result looks reasonable I would like to see this split in
-> a few different patches - and perhaps a line or two in the commit
-> message describing the new naming scheme for the renames.
-yeah sure, I'll provide separate patch for renames.
-> Thanks,
-> Rajeshwari
->
->> Signed-off-by: Rajeshwari <rkambl@codeaurora.org>
+We would like to revive this thread, We also would like to address your 
+comments on this patch set.
+
+Please consider our reply against your comments so that we can proceed.
+
+On 9/26/2018 12:55 AM, Rob Herring wrote:
+> On Tue, Sep 04, 2018 at 02:34:12PM -0700, Prakruthi Deepak Heragu wrote:
+>> Documentation for Embedded USB Debugger (EUD) device tree bindings.
+>>
+>> Signed-off-by: Satya Durga Srinivasu Prabhala <satyap@codeaurora.org>
+>> Signed-off-by: Prakruthi Deepak Heragu <pheragu@codeaurora.org>
 >> ---
->>   arch/arm64/boot/dts/qcom/sc7180.dtsi | 289 +++++++++++++++++++++++++++++------
->>   1 file changed, 239 insertions(+), 50 deletions(-)
+>>   .../devicetree/bindings/soc/qcom/qcom,msm-eud.txt  | 41 ++++++++++++++++++++++
+>>   1 file changed, 41 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,msm-eud.txt
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> index 3676bfd..e419ca0 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> @@ -10,6 +10,7 @@
->>   #include <dt-bindings/interrupt-controller/arm-gic.h>
->>   #include <dt-bindings/phy/phy-qcom-qusb2.h>
->>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->> +#include <dt-bindings/thermal/thermal.h>
->>   
->>   / {
->>   	interrupt-parent = <&intc>;
->> @@ -78,6 +79,7 @@
->>   			reg = <0x0 0x0>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_0>;
->> +			#cooling-cells = <2>;
->>   			qcom,freq-domain = <&cpufreq_hw 0>;
->>   			L2_0: l2-cache {
->>   				compatible = "cache";
->> @@ -94,6 +96,7 @@
->>   			reg = <0x0 0x100>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_100>;
->> +			#cooling-cells = <2>;
->>   			qcom,freq-domain = <&cpufreq_hw 0>;
->>   			L2_100: l2-cache {
->>   				compatible = "cache";
->> @@ -107,6 +110,7 @@
->>   			reg = <0x0 0x200>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_200>;
->> +			#cooling-cells = <2>;
->>   			qcom,freq-domain = <&cpufreq_hw 0>;
->>   			L2_200: l2-cache {
->>   				compatible = "cache";
->> @@ -120,6 +124,7 @@
->>   			reg = <0x0 0x300>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_300>;
->> +			#cooling-cells = <2>;
->>   			qcom,freq-domain = <&cpufreq_hw 0>;
->>   			L2_300: l2-cache {
->>   				compatible = "cache";
->> @@ -133,6 +138,7 @@
->>   			reg = <0x0 0x400>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_400>;
->> +			#cooling-cells = <2>;
->>   			qcom,freq-domain = <&cpufreq_hw 0>;
->>   			L2_400: l2-cache {
->>   				compatible = "cache";
->> @@ -146,6 +152,7 @@
->>   			reg = <0x0 0x500>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_500>;
->> +			#cooling-cells = <2>;
->>   			qcom,freq-domain = <&cpufreq_hw 0>;
->>   			L2_500: l2-cache {
->>   				compatible = "cache";
->> @@ -159,6 +166,7 @@
->>   			reg = <0x0 0x600>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_600>;
->> +			#cooling-cells = <2>;
->>   			qcom,freq-domain = <&cpufreq_hw 1>;
->>   			L2_600: l2-cache {
->>   				compatible = "cache";
->> @@ -172,6 +180,7 @@
->>   			reg = <0x0 0x700>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_700>;
->> +			#cooling-cells = <2>;
->>   			qcom,freq-domain = <&cpufreq_hw 1>;
->>   			L2_700: l2-cache {
->>   				compatible = "cache";
->> @@ -1058,8 +1067,9 @@
->>   			reg = <0 0x0c263000 0 0x1ff>, /* TM */
->>   				<0 0x0c222000 0 0x1ff>; /* SROT */
->>   			#qcom,sensors = <15>;
->> -			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
->> -			interrupt-names = "uplow";
->> +			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "uplow","critical";
->>   			#thermal-sensor-cells = <1>;
->>   		};
->>   
->> @@ -1068,8 +1078,9 @@
->>   			reg = <0 0x0c265000 0 0x1ff>, /* TM */
->>   				<0 0x0c223000 0 0x1ff>; /* SROT */
->>   			#qcom,sensors = <10>;
->> -			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>;
->> -			interrupt-names = "uplow";
->> +			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "uplow","critical";
->>   			#thermal-sensor-cells = <1>;
->>   		};
->>   
->> @@ -1301,277 +1312,455 @@
->>   	};
->>   
->>   	thermal-zones {
->> -		cpu0-thermal {
->> +		cpu_0_0-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->>   			thermal-sensors = <&tsens0 1>;
->>   
->>   			trips {
->> -				cpu0_alert0: trip-point0 {
->> +				cpu_0_0_alert0: trip-point0 {
->>   					temperature = <90000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu0_alert1: trip-point1 {
->> +				cpu_0_0_alert1: trip-point1 {
->>   					temperature = <95000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu0_crit: cpu_crit {
->> +				cpu_0_0_crit: cpu_crit {
->>   					temperature = <110000>;
->>   					hysteresis = <1000>;
->>   					type = "critical";
->>   				};
->>   			};
+>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,msm-eud.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,msm-eud.txt
+>> new file mode 100644
+>> index 0000000..a03021a
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,msm-eud.txt
+>> @@ -0,0 +1,41 @@
+>> +* Qualcomm Technologies Inc Embedded USB Debugger (EUD)
 >> +
->> +			cooling-maps {
->> +				map0 {
->> +					trip = <&cpu_0_0_alert0>;
->> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +				map1 {
->> +					trip = <&cpu_0_0_alert1>;
->> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +			};
->>   		};
->>   
->> -		cpu1-thermal {
->> +		cpu_0_1-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->>   			thermal-sensors = <&tsens0 2>;
->>   
->>   			trips {
->> -				cpu1_alert0: trip-point0 {
->> +				cpu_0_1_alert0: trip-point0 {
->>   					temperature = <90000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu1_alert1: trip-point1 {
->> +				cpu_0_1_alert1: trip-point1 {
->>   					temperature = <95000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu1_crit: cpu_crit {
->> +				cpu_0_1_crit: cpu_crit {
->>   					temperature = <110000>;
->>   					hysteresis = <1000>;
->>   					type = "critical";
->>   				};
->>   			};
+>> +The EUD (Embedded USB Debugger) is a mini-USB hub implemented
+>> +on chip to support the USB-based debug and trace capabilities.
+> Is it just for debug and normally bypassed?
+Yes, In normal mode EUD is bypassed.
 >> +
->> +			cooling-maps {
->> +				map0 {
->> +					trip = <&cpu_0_1_alert0>;
->> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +				map1 {
->> +					trip = <&cpu_0_1_alert1>;
->> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +			};
->>   		};
->>   
->> -		cpu2-thermal {
->> +		cpu_0_2-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->>   			thermal-sensors = <&tsens0 3>;
->>   
->>   			trips {
->> -				cpu2_alert0: trip-point0 {
->> +				cpu_0_2_alert0: trip-point0 {
->>   					temperature = <90000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu2_alert1: trip-point1 {
->> +				cpu_0_2_alert1: trip-point1 {
->>   					temperature = <95000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu2_crit: cpu_crit {
->> +				cpu_0_2_crit: cpu_crit {
->>   					temperature = <110000>;
->>   					hysteresis = <1000>;
->>   					type = "critical";
->>   				};
->>   			};
+>> +Required properties:
 >> +
->> +			cooling-maps {
->> +				map0 {
->> +					trip = <&cpu_0_2_alert0>;
->> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +				map1 {
->> +					trip = <&cpu_0_2_alert1>;
->> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +			};
->>   		};
->>   
->> -		cpu3-thermal {
->> +		cpu_0_3-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->>   			thermal-sensors = <&tsens0 4>;
->>   
->>   			trips {
->> -				cpu3_alert0: trip-point0 {
->> +				cpu_0_3_alert0: trip-point0 {
->>   					temperature = <90000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu3_alert1: trip-point1 {
->> +				cpu_0_3_alert1: trip-point1 {
->>   					temperature = <95000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu3_crit: cpu_crit {
->> +				cpu_0_3_crit: cpu_crit {
->>   					temperature = <110000>;
->>   					hysteresis = <1000>;
->>   					type = "critical";
->>   				};
->>   			};
+>> + - compatible:  Should be "qcom,msm-eud"
+> Needs to be SoC specific (though a fallback is fine).
+
+This IP will be present in all qcom SoC's that is why this is specific 
+to qcom, let us know if this is anyway problematic?
+
+>> + - interrupts:  Interrupt number
+>> + - reg: Should be address and size of EUD register space
 >> +
->> +			cooling-maps {
->> +				map0 {
->> +					trip = <&cpu_0_3_alert0>;
->> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +				map1 {
->> +					trip = <&cpu_0_3_alert1>;
->> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +			};
->>   		};
->>   
->> -		cpu4-thermal {
->> +		cpu_0_4-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->>   			thermal-sensors = <&tsens0 5>;
->>   
->>   			trips {
->> -				cpu4_alert0: trip-point0 {
->> +				cpu_0_4_alert0: trip-point0 {
->>   					temperature = <90000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu4_alert1: trip-point1 {
->> +				cpu_0_4_alert1: trip-point1 {
->>   					temperature = <95000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu4_crit: cpu_crit {
->> +				cpu_0_4_crit: cpu_crit {
->>   					temperature = <110000>;
->>   					hysteresis = <1000>;
->>   					type = "critical";
->>   				};
->>   			};
+>> +Driver notifies clients for VBUS attach/detach and charger enable/disable
+> Bindings are for h/w blocks, not drivers.
+This has been addressed in patch set v3 which is pending for your review.
+>
+>> +events. The link between client and EUD is established via a directed
+>> +graph. EUD driver has one endpoint of the graph link mentioning EUD as an
+>> +output link and clients registered for these notifications from the EUD
+>> +should have the other endpoint of the graph link as an input link.
+> OF graph is for describing data flows (i.e. h/w connections), not
+> clients wanting some event.
+
+Will rephrasing above description as below would work?
+
+"The link between event receiver and EUD is established via a directed 
+graph. Where EUD act as output link and event receiver(ex. usb 
+controller or charger h/w)  as input link"
+
+>> Each of
+>> +these endpoints should contain a 'remote-endpoint' phandle property that
+>> +points to the corresponding endpoint in the port of the remote device.
+> You don't need to describe how the graph binding works. Just what the
+> port assignments are.
+
+patch set v3 has removed the part describing how graph binding works.
+
+>
+> I worry this is going to collide with using the graph binding for USB
+> connectors.
+
+Can you please elaborate your query little more? USB controller has 
+input connection from EUD as well as USB connectors.
+
+As mentioned earlier, usb controller receive event from EUD only in 
+debug mode while in normal mode USB connector supplies the event.
+
+does that address concern?
+
+>
 >> +
->> +			cooling-maps {
->> +				map0 {
->> +					trip = <&cpu_0_4_alert0>;
->> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +				map1 {
->> +					trip = <&cpu_0_4_alert1>;
->> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +			};
->>   		};
->>   
->> -		cpu5-thermal {
->> +		cpu_0_5-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->>   			thermal-sensors = <&tsens0 6>;
->>   
->>   			trips {
->> -				cpu5_alert0: trip-point0 {
->> +				cpu_0_5_alert0: trip-point0 {
->>   					temperature = <90000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu5_alert1: trip-point1 {
->> +				cpu_0_5_alert1: trip-point1 {
->>   					temperature = <95000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu5_crit: cpu_crit {
->> +				cpu_0_5_crit: cpu_crit {
->>   					temperature = <110000>;
->>   					hysteresis = <1000>;
->>   					type = "critical";
->>   				};
->>   			};
+>> +An example for EUD device node:
 >> +
->> +			cooling-maps {
->> +				map0 {
->> +					trip = <&cpu_0_5_alert0>;
->> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +				map1 {
->> +					trip = <&cpu_0_5_alert1>;
->> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +			};
->>   		};
->>   
->> -		cpu6-thermal {
->> +		cpu_1_0-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->>   			thermal-sensors = <&tsens0 9>;
->>   
->>   			trips {
->> -				cpu6_alert0: trip-point0 {
->> +				cpu_1_0_alert0: trip-point0 {
->>   					temperature = <90000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu6_alert1: trip-point1 {
->> +				cpu_1_0_alert1: trip-point1 {
->>   					temperature = <95000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu6_crit: cpu_crit {
->> +				cpu_1_0_crit: cpu_crit {
->>   					temperature = <110000>;
->>   					hysteresis = <1000>;
->>   					type = "critical";
->>   				};
->>   			};
+>> +	eud: qcom,msm-eud@88e0000 {
+>> +		compatible = "qcom,msm-eud";
+>> +		interrupts = <GIC_SPI 492 IRQ_TYPE_LEVEL_HIGH>;
+>> +		reg = <0x88e0000 0x4000>;
+>> +		port {
+>> +                	eud_output: endpoint {
+>> +                        	remote-endpoint = <&usb3_input>;
+>> +                        };
+>> +        	};
+>> +	};
 >> +
->> +			cooling-maps {
->> +				map0 {
->> +					trip = <&cpu_1_0_alert0>;
->> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +				map1 {
->> +					trip = <&cpu_1_0_alert1>;
->> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +			};
->>   		};
->>   
->> -		cpu7-thermal {
->> +		cpu_1_1-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->>   			thermal-sensors = <&tsens0 10>;
->>   
->>   			trips {
->> -				cpu7_alert0: trip-point0 {
->> +				cpu_1_1_alert0: trip-point0 {
->>   					temperature = <90000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu7_alert1: trip-point1 {
->> +				cpu_1_1_alert1: trip-point1 {
->>   					temperature = <95000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu7_crit: cpu_crit {
->> +				cpu_1_1_crit: cpu_crit {
->>   					temperature = <110000>;
->>   					hysteresis = <1000>;
->>   					type = "critical";
->>   				};
->>   			};
+>> +An example for EUD client:
+> What are possible clients? Could we want to switch clients at runtime?
+
+As of now clients are usb controller and charger hardware, and they are 
+fixed.
+
+EUD application decide events dynamically.
+
+>
 >> +
->> +			cooling-maps {
->> +				map0 {
->> +					trip = <&cpu_1_1_alert0>;
->> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +				map1 {
->> +					trip = <&cpu_1_1_alert1>;
->> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +			};
->>   		};
->>   
->> -		cpu8-thermal {
->> +		cpu_1_2-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->>   			thermal-sensors = <&tsens0 11>;
->>   
->>   			trips {
->> -				cpu8_alert0: trip-point0 {
->> +				cpu_1_2_alert0: trip-point0 {
->>   					temperature = <90000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu8_alert1: trip-point1 {
->> +				cpu_1_2_alert1: trip-point1 {
->>   					temperature = <95000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu8_crit: cpu_crit {
->> +				cpu_1_2_crit: cpu_crit {
->>   					temperature = <110000>;
->>   					hysteresis = <1000>;
->>   					type = "critical";
->>   				};
->>   			};
->> +
->> +			cooling-maps {
->> +				map0 {
->> +					trip = <&cpu_1_2_alert0>;
->> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +				map1 {
->> +					trip = <&cpu_1_2_alert1>;
->> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +			};
->>   		};
->>   
->> -		cpu9-thermal {
->> +		cpu_1_3-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->>   			thermal-sensors = <&tsens0 12>;
->>   
->>   			trips {
->> -				cpu9_alert0: trip-point0 {
->> +				cpu_1_3_alert0: trip-point0 {
->>   					temperature = <90000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu9_alert1: trip-point1 {
->> +				cpu_1_3_alert1: trip-point1 {
->>   					temperature = <95000>;
->>   					hysteresis = <2000>;
->>   					type = "passive";
->>   				};
->>   
->> -				cpu9_crit: cpu_crit {
->> +				cpu_1_3_crit: cpu_crit {
->>   					temperature = <110000>;
->>   					hysteresis = <1000>;
->>   					type = "critical";
->>   				};
->>   			};
->> +
->> +			cooling-maps {
->> +				map0 {
->> +					trip = <&cpu_1_3_alert0>;
->> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +				map1 {
->> +					trip = <&cpu_1_3_alert1>;
->> +					cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->> +				};
->> +			};
->>   		};
->>   
->> -		aoss0-thermal {
->> +		aoss_0-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->> @@ -1586,7 +1775,7 @@
->>   			};
->>   		};
->>   
->> -		cpuss0-thermal {
->> +		cpuss_0-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->> @@ -1606,7 +1795,7 @@
->>   			};
->>   		};
->>   
->> -		cpuss1-thermal {
->> +		cpuss_1-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->> @@ -1626,7 +1815,7 @@
->>   			};
->>   		};
->>   
->> -		gpuss0-thermal {
->> +		gpuss_0-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->> @@ -1641,7 +1830,7 @@
->>   			};
->>   		};
->>   
->> -		gpuss1-thermal {
->> +		gpuss_1-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
->> @@ -1656,7 +1845,7 @@
->>   			};
->>   		};
->>   
->> -		aoss1-thermal {
->> +		aoss_1-thermal {
->>   			polling-delay-passive = <250>;
->>   			polling-delay = <1000>;
->>   
+>> +	usb3 {
+>> +		port {
+>> +                	usb3_input: endpoint {
+>> +                        	remote-endpoint = <&eud_output>;
+>> +                        };
+>> +        	};
+>> +	};
 >> -- 
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
->> of Code Aurora Forum, hosted by The Linux Foundation
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> a Linux Foundation Collaborative Project
 >>
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project.
