@@ -2,130 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B55112B04D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 02:35:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E543112B065
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 02:55:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727114AbfL0Bfa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Dec 2019 20:35:30 -0500
-Received: from mail.kernel.org ([198.145.29.99]:47602 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727076AbfL0Bf3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Dec 2019 20:35:29 -0500
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A445B2080D;
-        Fri, 27 Dec 2019 01:35:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1577410528;
-        bh=cza6PrMG2LCdaf+NGecegJLqy0CS9RpK88jv08rjwLU=;
-        h=In-Reply-To:References:From:Cc:To:Subject:Date:From;
-        b=PeZBHZBkQyRaDfaZDG3vZaRTcEMgVMs9ouVBb87r8KwsXuvhUp2ZIC21Zt29xBQsT
-         lT/+O3ub5mPrstV1Ct2Hj3KSmxl4FiAmwKUDyfOWxO2tFH/yJYTnuM+KWYklR7p7cn
-         Jjf1v0Iv/997dbhwWiiSCHcqaa7+SJneSxhzho7A=
-Content-Type: text/plain; charset="utf-8"
+        id S1727049AbfL0Bze (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Dec 2019 20:55:34 -0500
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:53179 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726804AbfL0Bzd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 26 Dec 2019 20:55:33 -0500
+Received: by mail-pj1-f65.google.com with SMTP id a6so4087774pjh.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2019 17:55:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=5hsCrMTZYHk6MZK3STHgWH1aI8W/dnxMU12UtCy4EVI=;
+        b=HJ7t+jrUrzqkbtF50iIlE/RGsLn7QER95oyue5dvejXCMPv1ejAmHnjK7q66/5XEh8
+         7WDJGF2Q6oaIesFGP1m06emOxwnQ9v9YqkhqyR/YHRFQ2AheVEAssUoBU7iWm8WEJXrh
+         mWDVfGjZox2cqt/m3Zos6GDs+nZ1c+tATWiCbLgW+J2aWiUinDoqrhZFTtx6dtTjCvmN
+         e3hn14Sb+VClYv29uNXGK6JgrD78y3wkDvg6BvCHfYQdUUJXdT3n4hogQgTekiCO1J4n
+         Slw1y9rLorv8p632IyV0uOVsnYE4S2EFMRZ7Ra3ks1fHCwAesoM24yRi5F3ihpIz6ZhM
+         5I3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=5hsCrMTZYHk6MZK3STHgWH1aI8W/dnxMU12UtCy4EVI=;
+        b=A1TyAazvdOG16zCGTjbmnrfxru5TwLF/sVpmr/ONPVkPKozKdEBsLdyvfhOlEYC5Eg
+         HnLcel1GEf5V1AJ9Z9/9+NnCk8DTWBEbrErFoFkTrsbLoNqBqJJMi0STjUFPgFB3UPjc
+         VyKgDPKoTeYLanVoCxKY7bNLip6FS7XPsIVQmykNSnomPtQyjGBSMlLU8Q+ndurDejh8
+         qYLB7z2NhjG6XTXQBX2z8odWy15JsUtzEz+FHviZ/5MJGOeSq6vN3alz14MtMa9QBulx
+         B14MRhvDDEHRYS/y8exatgrpGTmehSj7WJVGFNLYv+mQfAzcPBEi8Cov9ux3QB2s/W1J
+         5Mww==
+X-Gm-Message-State: APjAAAWl+E/rL3IfHL87oQDElVwDv7i3Ya/uHQmgcIDIlK6fI4ogEw8f
+        rFro/ky+pW8whWwNG7rJQV5Ckg==
+X-Google-Smtp-Source: APXvYqyZCWPmO4YkLcDUQR/rmO7fCNIJU0RT1xe60uOqjcozXfjUcZgYA3nHgad6UytxJ3jrUhneBQ==
+X-Received: by 2002:a17:902:503:: with SMTP id 3mr46173960plf.77.1577411733185;
+        Thu, 26 Dec 2019 17:55:33 -0800 (PST)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id g22sm35037739pgk.85.2019.12.26.17.55.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Dec 2019 17:55:32 -0800 (PST)
+Date:   Thu, 26 Dec 2019 17:55:30 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     linux-firmware@kernel.org
+Cc:     Nicolas Dechesne <nicolas.dechesne@linaro.org>,
+        linux-arm-msm@vger.kernel.org, kvalo@codeaurora.org
+Subject: qcom: Switch SDM845 WLAN firmware
+Message-ID: <20191227015530.GA3828441@builder>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20191226224156.GE1908628@ripper>
-References: <20191207203603.2314424-1-bjorn.andersson@linaro.org> <20191207203603.2314424-2-bjorn.andersson@linaro.org> <20191219063719.5AF942146E@mail.kernel.org> <20191220023427.GL448416@yoga> <20191224022042.7DDB120709@mail.kernel.org> <20191226224156.GE1908628@ripper>
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Mark Rutland <mark.rutland@arm.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Paolo Pisati <p.pisati@gmail.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH 1/2] clk: qcom: gcc-msm8996: Fix parent for CLKREF clocks
-User-Agent: alot/0.8.1
-Date:   Thu, 26 Dec 2019 17:35:27 -0800
-Message-Id: <20191227013528.A445B2080D@mail.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2019-12-26 14:41:56)
-> On Mon 23 Dec 18:20 PST 2019, Stephen Boyd wrote:
->=20
-> > Quoting Bjorn Andersson (2019-12-19 18:34:27)
-> > > On Wed 18 Dec 22:37 PST 2019, Stephen Boyd wrote:
-> > >=20
-> > > > Quoting Bjorn Andersson (2019-12-07 12:36:02)
-> > > > > The CLKREF clocks are all fed by the clock signal on the CXO2 pad=
- on the
-> > > > > SoC. Update the definition of these clocks to allow this to be wi=
-red up
-> > > > > to the appropriate clock source.
-> > > > >=20
-> > > > > Retain "xo" as the global named parent to make the change a nop i=
-n the
-> > > > > event that DT doesn't carry the necessary clocks definition.
-> > > >=20
-> > > > Something seems wrong still.
-> > > >=20
-> > > > I wonder if we need to add the XO "active only" clk to the rpm clk
-> > > > driver(s) and mark it as CLK_IS_CRITICAL. In theory that is really =
-the
-> > > > truth for most of the SoCs out there because it's the only crystal =
-that
-> > > > needs to be on all the time when the CPU is active. The "normal" XO=
- clk
-> > > > will then be on all the time unless deep idle is entered and nobody=
- has
-> > > > turned that on via some clk_prepare() call. That's because we root =
-all
-> > > > other clks through the "normal" XO clk that will be on in deep
-> > > > idle/suspend if someone needs it to be.
-> > > >=20
-> > >=20
-> > > The patch doesn't attempt to address the fact that our representation=
- of
-> > > XO is incomplete, only the fact that CXO2 isn't properly described.
-> > >=20
-> > > Looking at the clock distribution, we do have RPM_SMD_BB_CLK1_A which
-> > > presumably is the clock you're referring to here - i.e. the clock
-> > > resource connected to CXO.
-> >=20
-> > I don't mean the buffer clks, but the XO resource specifically. It's the
-> > representation to the RPM that deep sleep/deep idle should or shouldn't
-> > turn off XO and achieve "XO shutdown". Basically it can never be off
-> > when the CPU is active because then the CPU itself wouldn't be clocked,
-> > but when the CPU isn't active we may want to turn it off if nothing is
-> > using it during sleep to clock some sort of wakeup logic or device that
-> > is active when the CPU is idle.
-> >=20
->=20
-> I see. So we're missing the representation of the "raw" CXO in
-> clk-smd-rpm.c, and I'm lacking some understanding of how these pieces
-> should be tied together for us to realize the "XO shutdown"...
+Hi,
 
-Ok. This is another topic so not important to this patch right now.
+The recently committed wlan firmware found under ath10k/WCN3990 shows
+better stability under load than the one present for SDM845. So this
+replaces the current firmware with a symlink to the newly contributed
+one.
 
->=20
-> > >=20
-> > > > Did the downstream code explicitly enable this ln_bb_clk in the phy
-> > > > drivers? I think it may have?
-> > > >=20
-> > >=20
-> > > Yes, afaict all downstream drivers consuming a CLKREF also consumes
-> > > LN_BB and ensures that this is enabled. So we've been relying on UFS =
-to
-> > > either not have probed yet or that UFS probed successfully for PCIe a=
-nd
-> > > USB to be functional.
-> > >=20
-> > > So either we need this patch to ensure that the requests propagates
-> > > down, or I need to patch up the PHY drivers to ensure that they also
-> > > vote for the PMIC clock - and I do prefer this patch.
-> >=20
-> > Cool. Yeah seems better to just indicate that the reference clks are
-> > clocked by something else and fix that problem now.
-> >=20
->=20
-> Let me know if I shouldn't interpret this sentence as "let's merge this
-> for now".
+Regards,
+Bjorn
 
-Yes I'd like to merge for now but the binding needs to be adjusted.
-Please resend.
+The following changes since commit 6871bffa79ed240696986837cfb17b272ff57466:
 
+  Merge branch 'ath10k-20191220' of git://git.kernel.org/pub/scm/linux/kernel/git/kvalo/linux-firmware (2019-12-20 08:41:19 -0500)
+
+are available in the Git repository at:
+
+  https://github.com/andersson/linux-firmware.git RB3-wlan-firmware-1387
+
+for you to fetch changes up to 4570585aad1009b84fe0d4d0677dd8d4c9956b42:
+
+  qcom: Switch SDM845 WLAN firmware (2019-12-26 17:47:56 -0800)
+
+----------------------------------------------------------------
+Bjorn Andersson (1):
+      qcom: Switch SDM845 WLAN firmware
+
+ WHENCE                   |   1 -
+ qcom/sdm845/wlanmdsp.mbn | Bin 3311964 -> 39 bytes
+ 2 files changed, 1 deletion(-)
+ mode change 100644 => 120000 qcom/sdm845/wlanmdsp.mbn
