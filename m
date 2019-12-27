@@ -2,102 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 80A5012B22C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 07:56:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DA7D12B234
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 08:01:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726197AbfL0G46 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Dec 2019 01:56:58 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:35131 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726156AbfL0G46 (ORCPT
+        id S1726491AbfL0HBJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Dec 2019 02:01:09 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:64704 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725904AbfL0HBJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Dec 2019 01:56:58 -0500
-Received: by mail-pf1-f195.google.com with SMTP id i23so8908010pfo.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2019 22:56:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=QJHhq9PnWmsC3qWUqBCMwKHMICd+cwEFxCtyiFSIzhI=;
-        b=Gy9c/7mNWBcoSXG5JdMpERe6Mi4Mk+j0A9qoBUgPrAxt1ObYc0s03lONaOs3iBZsu0
-         IS/M59dnNuwfb2hLDg+DLciLU3NfgvUN8GYTsc+Y8f2/SfLnFpHpJhs3hZ05nDoic5V6
-         PEIL4MG4Vs+5baZjOg2hQCFbKyV1jJaRXR8BqLaqgLibEgMI0HnvoKtIbDiH4wjuPKSK
-         inZXg2SAOpNdiQYY4baJ699X8ggCO+F3alcQeHhNkM3k/Jmmy1hnbUra+725qVhBBHqa
-         MXoBcSjR03/9wfKv6KsQM1XkMYcjP7MlSbYRoPPftxUyadT78etLKnSYoucuNNvZ0DBh
-         Q/Qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=QJHhq9PnWmsC3qWUqBCMwKHMICd+cwEFxCtyiFSIzhI=;
-        b=OfwejaMHa4wvMR95/E0tgrJj6VwVwu88ks5eKEjegpvrAuwbNeD0a750ykKQNHvYHJ
-         mSbmc0T2ZeR9BFGNpbBuQbIRpPHcAPvediUXMNOJvb2bk+vcHngqLNmsfFMVjDKcpu+i
-         ChdvIXNDAcZze6hfWq9VefdadvQ4Daf7lTI9tR/i7ADtgyieefSfC6hLPgoVcfm45YJu
-         uYwekdjYrwYvbEGU5Q4DmKKmsDKgAZy8PtKrdHsiIDcYHAzQCViq/lQtHvaziZiF5OMw
-         PKUjrkxSLvgwfJMJ837YdtnfoZ9WmenpbajV9YgPwcLophjPZXUz3XN+5TApmdoIXDEX
-         s6Vg==
-X-Gm-Message-State: APjAAAVbkHn4YKEp0Iy+1qDvP1obWRzgebSS8HFfbnFxadDp2keQxvRL
-        9wmy/UFIvprQ1qdnFK6wqKXyZQ==
-X-Google-Smtp-Source: APXvYqxRAJ2vRRMp4XiDMooEXngMMAys9nnNPFEVMme7jTBcfs3W3fzAIF2up5EZCAJl3zz+GH/p7Q==
-X-Received: by 2002:aa7:8d14:: with SMTP id j20mr37973171pfe.207.1577429817761;
-        Thu, 26 Dec 2019 22:56:57 -0800 (PST)
-Received: from ripper (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id c199sm39927727pfb.126.2019.12.26.22.56.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Dec 2019 22:56:57 -0800 (PST)
-Date:   Thu, 26 Dec 2019 22:56:43 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Niklas Cassel <nks@flawful.org>
-Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 5/5] power: avs: qcom-cpr: make cpr_get_opp_hz_for_req()
- static
-Message-ID: <20191227065643.GN1908628@ripper>
-References: <20191223141934.19837-1-nks@flawful.org>
- <20191223141934.19837-6-nks@flawful.org>
+        Fri, 27 Dec 2019 02:01:09 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1577430069; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=jEq3NH8Tt/tdYJokKq7xs3z1G/fYNQMKHrUk2kxZTyE=;
+ b=XH7UgCIlGU1QyDpo/KNS3BFSM9DHsTuGmzRRsxEnS12Oi4n0wlEHcejE1GqB89JyRK30ScQE
+ QmAzTtLPSdlhrnczlR7ZDvQDL540fVptjzMJA62sbiSzmV29riTaIneiG9EcyUnxstd3Qil1
+ up04KPyLV54bdZKT0ij7MBQabb0=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e05ac34.7f01612741b8-smtp-out-n02;
+ Fri, 27 Dec 2019 07:01:08 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 24E47C447A0; Fri, 27 Dec 2019 07:01:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 67CA6C4479F;
+        Fri, 27 Dec 2019 07:01:05 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20191223141934.19837-6-nks@flawful.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 27 Dec 2019 12:31:05 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Taniya Das <tdas@codeaurora.org>, bjorn.andersson@linaro.org
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?Q?Michael_Turquette_=C2=A0?= <mturquette@baylibre.com>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: clock: Add YAML schemas for the QCOM
+ MSS clock bindings
+In-Reply-To: <1577421760-1174-2-git-send-email-tdas@codeaurora.org>
+References: <1577421760-1174-1-git-send-email-tdas@codeaurora.org>
+ <1577421760-1174-2-git-send-email-tdas@codeaurora.org>
+Message-ID: <5b16d051146224c1efad40c4548dd0c4@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 23 Dec 06:19 PST 2019, Niklas Cassel wrote:
+Hey Taniya,
 
-> drivers/power/avs/qcom-cpr.c:1081:15:
-> warning: no previous prototype for ‘cpr_get_opp_hz_for_req’
+On 2019-12-27 10:12, Taniya Das wrote:
+> The MSS clock provider have a bunch of generic properties that
+> are needed in a device tree. Add a YAML schemas for those.
 > 
-> Detected when running make with W=1.
-> 
-
-And now also Reported-by: kbuild test robot <lkp@intel.com>
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-> Signed-off-by: Niklas Cassel <nks@flawful.org>
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
 > ---
->  drivers/power/avs/qcom-cpr.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  .../devicetree/bindings/clock/qcom,mss.yaml        | 41 
+> ++++++++++++++++++++++
+>  1 file changed, 41 insertions(+)
+>  create mode 100644 
+> Documentation/devicetree/bindings/clock/qcom,mss.yaml
 > 
-> diff --git a/drivers/power/avs/qcom-cpr.c b/drivers/power/avs/qcom-cpr.c
-> index 484dd498f8b9..9247f53550b3 100644
-> --- a/drivers/power/avs/qcom-cpr.c
-> +++ b/drivers/power/avs/qcom-cpr.c
-> @@ -1078,8 +1078,8 @@ static unsigned int cpr_get_fuse_corner(struct dev_pm_opp *opp)
->  	return fuse_corner;
->  }
->  
-> -unsigned long cpr_get_opp_hz_for_req(struct dev_pm_opp *ref,
-> -				     struct device *cpu_dev)
-> +static unsigned long cpr_get_opp_hz_for_req(struct dev_pm_opp *ref,
-> +					    struct device *cpu_dev)
->  {
->  	u64 rate = 0;
->  	struct device_node *ref_np;
-> -- 
-> 2.24.1
-> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,mss.yaml
+> b/Documentation/devicetree/bindings/clock/qcom,mss.yaml
+> new file mode 100644
+> index 0000000..05efe2b2
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,mss.yaml
+> @@ -0,0 +1,41 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/bindings/clock/qcom,mss.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Modem Clock Controller Binding
+> +
+> +maintainers:
+> +  - Taniya Das <tdas@codeaurora.org>
+> +
+> +description: |
+> +  Qualcomm modem clock control module which supports the clocks.
+> +
+> +properties:
+> +  compatible :
+> +    enum:
+> +       - qcom,sc7180-mss
+> +
+> +  '#clock-cells':
+> +    const: 1
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  additionalItems: false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - '#clock-cells'
+> +
+> +examples:
+> +  # Example of MSS with clock nodes properties for SC7180:
+> +  - |
+> +    clock-controller@41aa000 {
+> +      compatible = "qcom,sc7180-mss";
+> +      reg = <0x041aa000 0x100>;
+
+Bjorn/me had a discussion about the size
+a while back, we should use the entire
+reg space instead of fragmenting it.
+
+reg = <0x041a8000 0x8000>;
+
+We should just use ^^ instead.
+
+> +      #clock-cells = <1>;
+> +    };
+> +...
+> --
+> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a 
+> member
+> of the Code Aurora Forum, hosted by the  Linux Foundation.
+
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
