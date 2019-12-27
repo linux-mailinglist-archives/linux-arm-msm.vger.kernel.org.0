@@ -2,88 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 978B612B213
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 07:46:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B9E012B217
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 07:46:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725904AbfL0Gog (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Dec 2019 01:44:36 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:62671 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726156AbfL0Gog (ORCPT
+        id S1726483AbfL0Gpd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Dec 2019 01:45:33 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:38841 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726197AbfL0Gpd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Dec 2019 01:44:36 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1577429075; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=3CSvDtpGg7KClQhTEdyBaheE3oP4+TR2kHYW+0myb+w=; b=FXjjDR59xxkY8y0Wjg+CxCKgeWBFoaOMBKS7Xo7F9MQHEyZlQfGGh/tpM0ytVpVmXto8NSFS
- 2ng4wl9+oTwrA90FWUNQpme3ggbnpYsGBO7cOJU+PFxa55nuybVme2qGCpH+78tLJViB5lcw
- l1CacrBvW+K+FdE3cKqcdkV8yuc=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e05a852.7f2673138ed8-smtp-out-n03;
- Fri, 27 Dec 2019 06:44:34 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 76EF2C433CB; Fri, 27 Dec 2019 06:44:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.206.28.9] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8DDE2C447A0;
-        Fri, 27 Dec 2019 06:44:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8DDE2C447A0
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v2 0/8] Add GPU & Video Clock controller driver for SC7180
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org
-References: <1573812304-24074-1-git-send-email-tdas@codeaurora.org>
- <20191224023250.5A3EC206D3@mail.kernel.org>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <c2906227-fc53-895c-824c-13f4b69a3610@codeaurora.org>
-Date:   Fri, 27 Dec 2019 12:14:26 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        Fri, 27 Dec 2019 01:45:33 -0500
+Received: by mail-pg1-f195.google.com with SMTP id a33so14007219pgm.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Dec 2019 22:45:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=EHKb09Bo9NXc4wn1DU4ET23g1zwKMM6aXZNkrin1Vps=;
+        b=rEId7gc7xFknZfu0tumeoPE9xebk9BfNc5+7s5Fwxy6lmocTkh9AsxrBGS4T+br6MI
+         TIGk9MgXNerEAtfL0Si9o9qafIlyB2O948GgM1kIjV2A+Im7f/2tpWAXNMpU8+jrlSsM
+         wH4NL/LdtrQO/8p6ZNBilgxeAW/fWmnv/+4tdEbVG+ZxS39JKWNLcOa30QNs1dXk9Zy5
+         etRrFMju3zZfE6yj21siIJAqTzkr8U/60Eh1Z+RcgR2RgwkSDv0GCYUcstIhFAWvEWZq
+         edEbmwrRaqaQA2kLZOud+6o3Yh9Ryi//5s+Kyynov29pL2tJj47Irzje3cLWv+J0tbSi
+         3TLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=EHKb09Bo9NXc4wn1DU4ET23g1zwKMM6aXZNkrin1Vps=;
+        b=N6W1gvMug684GtRVx0bZJP7PCgT9NR00Bz/10zgMRIe0RlZM0lVEspwsCO9hLheWKl
+         ReBcjdlvdEN+k2XT9CUpW5U1H3wbffTW24kggGbmfSh2kYr65BW+0A4yyw0e5FUsFdVr
+         CsGQnsXxPd9Hk6+q2U8ysruEI+nW3nkAX0DKD2XkwSjwUxIrv/0L6STsroBCcLh76woA
+         Eja1Ti/+5z3HFib3tMq4A065FjN5xted4cRJ8N0Y/bJyTNGQ82Li1VtF7Ko9npN+j2mf
+         6O1bkvDhL7VfO0CAY+0tYmF20ejSWeGtElJ2tgzikOEPBBryl5rG4g0k85BVVuHFQZs0
+         xJ/w==
+X-Gm-Message-State: APjAAAVDjsSeuu87uj/b67USb4tYcpZxWRRRR/3OBqHQrVGcedMPIUGD
+        cAUfhIupQU8OMQjAAy6p51/Th450E4o=
+X-Google-Smtp-Source: APXvYqxR40v09O53cOBVHM46vxcD81M6KnLPh8iXzVK3/wvC+uc9NuvQfV1mRgOdM5WDHj0moqE0Nw==
+X-Received: by 2002:a63:d906:: with SMTP id r6mr53019398pgg.440.1577429132861;
+        Thu, 26 Dec 2019 22:45:32 -0800 (PST)
+Received: from ripper (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id k21sm25406001pfa.63.2019.12.26.22.45.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Dec 2019 22:45:32 -0800 (PST)
+Date:   Thu, 26 Dec 2019 22:45:18 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Niklas Cassel <nks@flawful.org>
+Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/5] power: avs: qcom-cpr: fix invalid printk specifier
+ in debug print
+Message-ID: <20191227064518.GJ1908628@ripper>
+References: <20191223141934.19837-1-nks@flawful.org>
+ <20191223141934.19837-2-nks@flawful.org>
 MIME-Version: 1.0
-In-Reply-To: <20191224023250.5A3EC206D3@mail.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=windows-1252
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20191223141934.19837-2-nks@flawful.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon 23 Dec 06:19 PST 2019, Niklas Cassel wrote:
 
-
-On 12/24/2019 8:02 AM, Stephen Boyd wrote:
-> Quoting Taniya Das (2019-11-15 02:04:56)
->> [v2]
->>   * Split Fabia code cleanup and calibration code.
->>   * Few cleanups for GPU/Video CC are
->>      * header file inclusion, const for pll vco table.
->>      * removal of always enabled clock from gpucc.
->>      * compatibles added in sorted order.
->>      * move from core_initcall to subsys_initcall().
->>      * cleanup clk_parent_data for clocks to be provided from DT.
-> 
-> Can you please resend with comments addressed?
+> drivers/power/avs/qcom-cpr.c:838:15:
+> warning: format ‘%ld’ expects argument of type ‘long int’, but argument 6 has type ‘ssize_t’
 > 
 
-Next patches are submitted for review.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
-
---
+> Reported-by: kbuild test robot <lkp@intel.com>
+> Signed-off-by: Niklas Cassel <nks@flawful.org>
+> ---
+>  drivers/power/avs/qcom-cpr.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/power/avs/qcom-cpr.c b/drivers/power/avs/qcom-cpr.c
+> index a3187973bbb5..a52d2cef1300 100644
+> --- a/drivers/power/avs/qcom-cpr.c
+> +++ b/drivers/power/avs/qcom-cpr.c
+> @@ -835,7 +835,7 @@ static int cpr_read_efuse(struct device *dev, const char *cname, u32 *data)
+>  		*data |= ret[i] << (8 * i);
+>  
+>  	kfree(ret);
+> -	dev_dbg(dev, "efuse read(%s) = %x, bytes %ld\n", cname, *data, len);
+> +	dev_dbg(dev, "efuse read(%s) = %x, bytes %zd\n", cname, *data, len);
+>  
+>  	return 0;
+>  }
+> -- 
+> 2.24.1
+> 
