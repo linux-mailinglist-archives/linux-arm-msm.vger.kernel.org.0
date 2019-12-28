@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F86212BE6B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2019 19:36:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FA5C12BE6D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2019 19:36:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726957AbfL1SgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1726853AbfL1SgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sat, 28 Dec 2019 13:36:14 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:35525 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726763AbfL1Sfz (ORCPT
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:43904 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726798AbfL1Sf4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Dec 2019 13:35:55 -0500
-Received: by mail-pf1-f194.google.com with SMTP id i23so10907075pfo.2;
-        Sat, 28 Dec 2019 10:35:53 -0800 (PST)
+        Sat, 28 Dec 2019 13:35:56 -0500
+Received: by mail-pf1-f196.google.com with SMTP id x6so15232559pfo.10;
+        Sat, 28 Dec 2019 10:35:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=P8HOUTr3eF/0dZg+if1YFcXmVFAjMiDjsMoChiGwrOo=;
-        b=qBDWwT735xPG/Q9VTH7Jk7ltHqJGzS3SIxRJyL/UGKLhT7cIiteBnbPNein0+zuYE8
-         G5i8IlFW2hE7Oa2TgAYWyq/BO/6LSnQx3UVC/uxt/9u4n8IPFi3wj3qTM60uObs3vPDd
-         jQv4IxlP2VO+QrcbqwkFMJqyHITKONYz4jXKqOm+U11JeG/N35CiFkMurclNO0EXtPQE
-         Bw21iyPcB3S8P0FC3LPvm13lLMp4aiRHWpIiGIOVR/X04PmcBJrbgvC7yrtjFe+I217L
-         5zkbf8OI+YCmGViTfmzsoEIVblJ47JqV2dp9CGtOzypeTVpEdtYAEcY1CAwd2SUPF0yj
-         gAmw==
+        bh=ui3H4sw6TXQZWyHZyumXfMS536ZRAUjdYlFCGuvHxAE=;
+        b=QR/5gU3bd29uWtBlob2vq9WqKJ3hQUz+QbCW77CdxMCDaWVnA0C/c5Lx8ui8kEF7E4
+         EJow2hD7opQrUZ22y3QHevj4gAvdDrI+hipJ2NNfxEZsOyHb444K1XGg/QZQJkKNH9n6
+         hDfRLiS1l0jR5Krj2XWoSBuz5HpaMLXUGGuvcRI/vccwwizylRM35WopdZZg925EqhPy
+         n0e08sqtH3zgT/f3gSypGJpdp4GCNnBueiPK26DJIb3wHYNUPrqr+S/8LRhfKekIp3Ev
+         qRbJwKA7g1M6NqZUbhNvwoZPWSdTsI5x1Hy7jNncmQnUGUXYbl1tupuGX/2eLm0XD5Ny
+         hmZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=P8HOUTr3eF/0dZg+if1YFcXmVFAjMiDjsMoChiGwrOo=;
-        b=QlTRNMHYlHb4IM4HzEVX2l7tap1BbPaqLY9r9GOM473dqm3OTijAIpDY01vo/PBHpC
-         DYYmljet6i8LXvad6ZdNbQuJ2muLTCUReGeR1uPYg2DMDvBxIEJc+V08UkWxYrQqOy1I
-         cINLmONs5aKekCxE64RcBB8R+uMY3HDUQ0126iNevjDjQeNQsStOEd+L4y7wgJjWvQfB
-         YBF/9gu5oT/dWhLaPbxoXX6xwBx7FiQAZNVClEUxQyr00+cuYx5Jw7NY1eALityM2KN+
-         EP133bUVy68sajFt3WvAWxl8SO2YRgn++Ct0oK2ZTvm7d6hyRWgOVeZsE/2H12ri33gU
-         Wtdg==
-X-Gm-Message-State: APjAAAWaGl5F470hGgESo4HgkF7CTHFUTufqysjwyVU0KMh+AntqPo1N
-        qf8SKrbPxcJzcxhpiD6XYwI=
-X-Google-Smtp-Source: APXvYqxea8vWEh1FOmzdiLRfJsv6AzNkX2LzmseSeWMmZhHvq8Jq9qBoRVY01nxVBzYg5sRmju+cRw==
-X-Received: by 2002:a63:c40c:: with SMTP id h12mr43297443pgd.77.1577558153578;
-        Sat, 28 Dec 2019 10:35:53 -0800 (PST)
+        bh=ui3H4sw6TXQZWyHZyumXfMS536ZRAUjdYlFCGuvHxAE=;
+        b=njHo1OL1fZZIPqBXGNJxQ3cuflRpUJ63Tdytq1Dy6Nfloi1VZBaeDvSG0Vh4c7wOjz
+         PtGPAmYM3Fw9lurVB1pB+QAXWh3ntxCfHkyhiGcQC2VfOskn1FZ1PLmtY+slON4CJFUX
+         x3nSjcdE57+UqCvZQ7OmGTTZZq63kuoIlvNm+PtkuKqY2tUgFMlorMDLTqgaMSWITDg8
+         OFTe0eE5BnQ2XqkAQqrfPNmtkvz6q4MCu5H6AzW9QYHgqSW5EPE/ABbqqMaLQBYtZg6K
+         RJAlFYjIp+tqu8dIv6/fvIiW1LzMNkn1z8hfShrEAbNkqkNQolESrLS/MSzZ0r8pz0qG
+         b8MA==
+X-Gm-Message-State: APjAAAVqs9Wl4/rfdTfMO/z02Re7i97AkUo8MW1pOPYLj5aZkLkoArp1
+        rYJBH6+Ey3ro7WtzPxa6yvg=
+X-Google-Smtp-Source: APXvYqzHr4KeI0b8gMJWBokRn8PKrEYYqhG+ocElUlfVhzxi6A9/q0OMkXH/noLIQBQBJ/jS6urxWg==
+X-Received: by 2002:a62:ed0b:: with SMTP id u11mr60416235pfh.46.1577558155293;
+        Sat, 28 Dec 2019 10:35:55 -0800 (PST)
 Received: from localhost ([2001:19f0:6001:12c8:5400:2ff:fe72:6403])
-        by smtp.gmail.com with ESMTPSA id n1sm45063313pfd.47.2019.12.28.10.35.53
+        by smtp.gmail.com with ESMTPSA id w187sm27832830pfw.62.2019.12.28.10.35.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 28 Dec 2019 10:35:53 -0800 (PST)
+        Sat, 28 Dec 2019 10:35:54 -0800 (PST)
 From:   Yangtao Li <tiny.windzz@gmail.com>
 To:     jassisinghbrar@gmail.com, nsaenzjulienne@suse.de,
         f.fainelli@gmail.com, rjui@broadcom.com, sbranden@broadcom.com,
@@ -59,9 +59,9 @@ To:     jassisinghbrar@gmail.com, nsaenzjulienne@suse.de,
         linux-stm32@st-md-mailman.stormreply.com,
         linux-tegra@vger.kernel.org
 Cc:     Yangtao Li <tiny.windzz@gmail.com>
-Subject: [PATCH 09/13] mailbox: sti: do some cleanup
-Date:   Sat, 28 Dec 2019 18:35:34 +0000
-Message-Id: <20191228183538.26189-9-tiny.windzz@gmail.com>
+Subject: [PATCH 10/13] mailbox: tegra: convert to devm_platform_ioremap_resource
+Date:   Sat, 28 Dec 2019 18:35:35 +0000
+Message-Id: <20191228183538.26189-10-tiny.windzz@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191228183538.26189-1-tiny.windzz@gmail.com>
 References: <20191228183538.26189-1-tiny.windzz@gmail.com>
@@ -71,38 +71,33 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Use devm_platform_ioremap_resource() to simplify code.
-'irq' and 'ret' are variables of the same type and there is no
-need to use two lines.
 
 Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
 ---
- drivers/mailbox/mailbox-sti.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/mailbox/tegra-hsp.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/mailbox/mailbox-sti.c b/drivers/mailbox/mailbox-sti.c
-index 2baf69a0b81c..2a2316dfdca0 100644
---- a/drivers/mailbox/mailbox-sti.c
-+++ b/drivers/mailbox/mailbox-sti.c
-@@ -408,9 +408,7 @@ static int sti_mbox_probe(struct platform_device *pdev)
- 	struct sti_mbox_device *mdev;
- 	struct device_node *np = pdev->dev.of_node;
- 	struct mbox_chan *chans;
+diff --git a/drivers/mailbox/tegra-hsp.c b/drivers/mailbox/tegra-hsp.c
+index 834b35dc3b13..6d16e56942ff 100644
+--- a/drivers/mailbox/tegra-hsp.c
++++ b/drivers/mailbox/tegra-hsp.c
+@@ -631,7 +631,6 @@ static int tegra_hsp_request_shared_irq(struct tegra_hsp *hsp)
+ static int tegra_hsp_probe(struct platform_device *pdev)
+ {
+ 	struct tegra_hsp *hsp;
 -	struct resource *res;
--	int irq;
--	int ret;
-+	int irq, ret;
- 
- 	match = of_match_device(sti_mailbox_match, &pdev->dev);
- 	if (!match) {
-@@ -425,8 +423,7 @@ static int sti_mbox_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, mdev);
+ 	unsigned int i;
+ 	u32 value;
+ 	int err;
+@@ -645,8 +644,7 @@ static int tegra_hsp_probe(struct platform_device *pdev)
+ 	INIT_LIST_HEAD(&hsp->doorbells);
+ 	spin_lock_init(&hsp->lock);
  
 -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	mdev->base = devm_ioremap_resource(&pdev->dev, res);
-+	mdev->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(mdev->base))
- 		return PTR_ERR(mdev->base);
+-	hsp->regs = devm_ioremap_resource(&pdev->dev, res);
++	hsp->regs = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(hsp->regs))
+ 		return PTR_ERR(hsp->regs);
  
 -- 
 2.17.1
