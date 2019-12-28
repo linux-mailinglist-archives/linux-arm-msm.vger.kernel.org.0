@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FE5312BE49
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2019 19:35:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 20D5E12BE72
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2019 19:36:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726359AbfL1Sfo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Dec 2019 13:35:44 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:35005 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726476AbfL1Sfn (ORCPT
+        id S1726603AbfL1Sfq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Dec 2019 13:35:46 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:44619 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726476AbfL1Sfp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Dec 2019 13:35:43 -0500
-Received: by mail-pl1-f193.google.com with SMTP id g6so13039838plt.2;
-        Sat, 28 Dec 2019 10:35:43 -0800 (PST)
+        Sat, 28 Dec 2019 13:35:45 -0500
+Received: by mail-pf1-f193.google.com with SMTP id 195so15455016pfw.11;
+        Sat, 28 Dec 2019 10:35:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fo5K0TPliEV99faGCrDAtoXjqd/u/f/pgI4tXILZggE=;
-        b=bwDm/LYmefFJ+yrVjqwVqleBC+dVr4zFymT/XmDlSRZmDs39PHAJyYv6Rv/syLbg3+
-         k70t6WZ4z+KBbkrD/38bHo0vozwx9mUI3ZZIU1WjRz++gkUPTiBVpANkWy8hRJUtQooc
-         5AsLJzpS+cDTcgox6s63deyucKFJQl20XFFo2aWRMMKTn3Ey4qiZ73EQ8X4HF+u/Szoq
-         AxTNjN4C0e7WRtsEJTwEXB59yZ3b/EFo+PVSwD2JJNujM3Jo65fFFlkCFCkkCWxz+MKe
-         vTUL7DOlgV/vSe9n4Z8/QrDaA/8AGjRG/35ydwEpQOWUjA6MPMm6rLT40g4dCeGdRt78
-         l5ww==
+        bh=hqSfykticrVROnPZePmOru2pp1VCz0LFD/v0VexrqBA=;
+        b=TN5UMyKtGRFA9r24t/ZYgRXLOw/LCoKmhLVbbsgo4/9YAbF01PPDODx3Tg5TIqMice
+         9+t2T8Cz0hK+BqG+Xyey3W3XOXnNK/H9hEE7XXjFeftyMBA2os7fKbrgmOF3Uf5qv4wY
+         Kad1ZksLn7TWdjNFT78COriJqMCYMQlUSNkosa2FmFDxWXLUSMcitCKdiboBnxd0zQWr
+         hi88HS+npw/ogvjqq/+jY0hby/cENDfini7neUTe9xDcEijGSkGIfMgDPXTucJ+luVYd
+         g5QYLr1IVKvSeLPoTvbnpyRgJMJu43ss8Kly5/kDA+r+v1DElUws4jNDk1dao/QCykbv
+         jxiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=fo5K0TPliEV99faGCrDAtoXjqd/u/f/pgI4tXILZggE=;
-        b=Xj3Q2kUWZ5vSLHsZnxRBsZNHByaJuAQ1F1kA+2w+yVViNvBy+u+i2H1jUNltizDZ31
-         uz4Fgk5GeoYQ938Vm0bx+w+3g6XGjRni/j9hCUtR08wV1mGErVUvTa4+erOwlaAjnka2
-         zN/fGMg8pKsGCKD/vX+IW6anBF+MHygZjsaoXu8c5OQxHM4Qw5ubO2Ud7CSd/IPkfGjb
-         Sy4WKl0SZS/0as9ruIdzYREhVVhbY/aqhLuOIUr8ulrsHDuBOEjY+4Fr20+Uwv+EPjCB
-         f0a2Jx7WbPBLO29oKy75AFGAKm7CdWL55o0Q7NwDi7YWKZytke1ERna02w9QqT7tKvsJ
-         CJhw==
-X-Gm-Message-State: APjAAAUyiFB9WpDVnKt8kuMYv0oXi6VRQbKfCA5NZ9iYVOcQukm7Dego
-        mMW0naxCpFdVi/E4b7aiQrg=
-X-Google-Smtp-Source: APXvYqwUmRdS/j5Ko1syf2WgkT7LxHN76wS8zqcKdPBh656bSiwfHZJ5FFjisEcSZu9ospl02un4HA==
-X-Received: by 2002:a17:90a:a881:: with SMTP id h1mr34064320pjq.50.1577558142809;
-        Sat, 28 Dec 2019 10:35:42 -0800 (PST)
+        bh=hqSfykticrVROnPZePmOru2pp1VCz0LFD/v0VexrqBA=;
+        b=iiKvZfjaifAXr+pbem5ned0VqFj6B97ryWgr8rmqoLXngJj660r7Se2/j8ne7WhxgE
+         oOy+ZvAlK/IPKmpZuHGcWg67F1wWmzyRVu5Ps7uNLQhJoB1WuZwkcNxM9oRBcQm6f6PF
+         aDafIBqrkUs75W+XCHO1KUSVz8jVt63PHrZT5s/UugY3qNWOH4XVo4JKCCR4k6t33noa
+         97Be+zVSDqxIEl4F8hvPW3tdZbx5ieDtlb49qUH6/ZpxYvWLa25/Mhc8LU+E9qdsRqSL
+         o0CGBZSvz/rmhzFso0tMrNmWsTSrvlpiIGuH9mr3J9k+tfCzvNqsXfJu60MPO8G9ArH4
+         W8FA==
+X-Gm-Message-State: APjAAAXdNaws+QxC/3FgH8sWWIbdPagn6nOt5d7/LjpXtvZvD0joK+yy
+        EO1jVjh6kHpMEqXAMVPk9Mc=
+X-Google-Smtp-Source: APXvYqxhLmtho2czElmGfzLozaAqFNdvpPt2BmXqglNEJ0AN6V99RjBsDbUR/heJgBjeBiaCFQdPeA==
+X-Received: by 2002:a65:621a:: with SMTP id d26mr59969401pgv.151.1577558144795;
+        Sat, 28 Dec 2019 10:35:44 -0800 (PST)
 Received: from localhost ([2001:19f0:6001:12c8:5400:2ff:fe72:6403])
-        by smtp.gmail.com with ESMTPSA id u18sm42980854pgn.9.2019.12.28.10.35.42
+        by smtp.gmail.com with ESMTPSA id k190sm42068720pga.73.2019.12.28.10.35.44
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 28 Dec 2019 10:35:42 -0800 (PST)
+        Sat, 28 Dec 2019 10:35:44 -0800 (PST)
 From:   Yangtao Li <tiny.windzz@gmail.com>
 To:     jassisinghbrar@gmail.com, nsaenzjulienne@suse.de,
         f.fainelli@gmail.com, rjui@broadcom.com, sbranden@broadcom.com,
@@ -59,9 +59,9 @@ To:     jassisinghbrar@gmail.com, nsaenzjulienne@suse.de,
         linux-stm32@st-md-mailman.stormreply.com,
         linux-tegra@vger.kernel.org
 Cc:     Yangtao Li <tiny.windzz@gmail.com>
-Subject: [PATCH 03/13] mailbox: qcom-apcs: convert to devm_platform_ioremap_resource
-Date:   Sat, 28 Dec 2019 18:35:28 +0000
-Message-Id: <20191228183538.26189-3-tiny.windzz@gmail.com>
+Subject: [PATCH 04/13] mailbox: mediatek: cmdq: convert to devm_platform_ioremap_resource
+Date:   Sat, 28 Dec 2019 18:35:29 +0000
+Message-Id: <20191228183538.26189-4-tiny.windzz@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191228183538.26189-1-tiny.windzz@gmail.com>
 References: <20191228183538.26189-1-tiny.windzz@gmail.com>
@@ -74,31 +74,31 @@ Use devm_platform_ioremap_resource() to simplify code.
 
 Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
 ---
- drivers/mailbox/qcom-apcs-ipc-mailbox.c | 4 +---
+ drivers/mailbox/mtk-cmdq-mailbox.c | 4 +---
  1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-index eeebafd546e5..0faf69137780 100644
---- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-+++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-@@ -49,7 +49,6 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
+diff --git a/drivers/mailbox/mtk-cmdq-mailbox.c b/drivers/mailbox/mtk-cmdq-mailbox.c
+index 9a6ce9f5a7db..7f9e34b021c8 100644
+--- a/drivers/mailbox/mtk-cmdq-mailbox.c
++++ b/drivers/mailbox/mtk-cmdq-mailbox.c
+@@ -458,7 +458,6 @@ static struct mbox_chan *cmdq_xlate(struct mbox_controller *mbox,
+ static int cmdq_probe(struct platform_device *pdev)
  {
- 	struct qcom_apcs_ipc *apcs;
- 	struct regmap *regmap;
+ 	struct device *dev = &pdev->dev;
 -	struct resource *res;
- 	unsigned long offset;
- 	void __iomem *base;
- 	unsigned long i;
-@@ -64,8 +63,7 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
- 	if (!apcs)
+ 	struct cmdq *cmdq;
+ 	int err, i;
+ 
+@@ -466,8 +465,7 @@ static int cmdq_probe(struct platform_device *pdev)
+ 	if (!cmdq)
  		return -ENOMEM;
  
 -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	base = devm_ioremap_resource(&pdev->dev, res);
-+	base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
- 
+-	cmdq->base = devm_ioremap_resource(dev, res);
++	cmdq->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(cmdq->base)) {
+ 		dev_err(dev, "failed to ioremap gce\n");
+ 		return PTR_ERR(cmdq->base);
 -- 
 2.17.1
 
