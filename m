@@ -2,113 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A075512BA39
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Dec 2019 19:17:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6991412BDF4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Dec 2019 16:41:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728142AbfL0SQC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Dec 2019 13:16:02 -0500
-Received: from mail.kernel.org ([198.145.29.99]:41116 "EHLO mail.kernel.org"
+        id S1726388AbfL1Pla (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Dec 2019 10:41:30 -0500
+Received: from smtp4-g21.free.fr ([212.27.42.4]:21342 "EHLO smtp4-g21.free.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728140AbfL0SQB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Dec 2019 13:16:01 -0500
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3A9FE21582;
-        Fri, 27 Dec 2019 18:16:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1577470561;
-        bh=KQUacGwDkWLuijj1e3YKci1uj1889QRnXqZ6x3PvBYQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=thW6gt99qrNI3F/40bbe9d6bMAO5JD6n7vHxQSx/7sw4f9TRKr0Wd1oCwBdcD3du/
-         JhSpg64d/uCWSqmHOeyfC9p3d4/fHaDQzJTMMQMjsRzo9B44CA+lBxqigFu5kKDIWb
-         5toCBwppHiZdOmXHP+wcWIdUl/YlaxvI2B44ewbY=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Leo Yan <leo.yan@linaro.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 09/25] tty: serial: msm_serial: Fix lockup for sysrq and oops
-Date:   Fri, 27 Dec 2019 13:15:33 -0500
-Message-Id: <20191227181549.8040-9-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191227181549.8040-1-sashal@kernel.org>
-References: <20191227181549.8040-1-sashal@kernel.org>
+        id S1726080AbfL1Pla (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 28 Dec 2019 10:41:30 -0500
+Received: from [192.168.1.91] (unknown [77.207.133.132])
+        (Authenticated sender: marc.w.gonzalez)
+        by smtp4-g21.free.fr (Postfix) with ESMTPSA id 6AC7119F5A8;
+        Sat, 28 Dec 2019 16:41:08 +0100 (CET)
+Subject: Re: [PATCH v2] PCI: qcom: Fix the fixup of PCI_VENDOR_ID_QCOM
+To:     Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <andrew.murray@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20191227012717.78965-1-bjorn.andersson@linaro.org>
+ <9e5ee7e8-aa63-e82c-8135-acc77b476c87@mm-sol.com>
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Message-ID: <38acf5fc-85aa-7090-e666-97a1281e9905@free.fr>
+Date:   Sat, 28 Dec 2019 16:41:08 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <9e5ee7e8-aa63-e82c-8135-acc77b476c87@mm-sol.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Leo Yan <leo.yan@linaro.org>
+On 27/12/2019 09:51, Stanimir Varbanov wrote:
 
-[ Upstream commit 0e4f7f920a5c6bfe5e851e989f27b35a0cc7fb7e ]
+> On 12/27/19 3:27 AM, Bjorn Andersson wrote:
+>
+>> There exists non-bridge PCIe devices with PCI_VENDOR_ID_QCOM, so limit
+>> the fixup to only affect the relevant PCIe bridges.
+>>
+>> Cc: stable@vger.kernel.org
+>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> ---
+>>
+>> Stan, I picked up all the suggested device id's from the previous thread and
+>> added 0x1000 for QCS404. I looked at creating platform specific defines in
+>> pci_ids.h, but SDM845 has both 106 and 107... Please let me know if you would
+>> prefer that I do this anyway.
+> 
+> Looks good,
+> 
+> Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
+> 
+>>  drivers/pci/controller/dwc/pcie-qcom.c | 8 +++++++-
+>>  1 file changed, 7 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>> index 5ea527a6bd9f..138e1a2d21cc 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -1439,7 +1439,13 @@ static void qcom_fixup_class(struct pci_dev *dev)
+>>  {
+>>  	dev->class = PCI_CLASS_BRIDGE_PCI << 8;
+>>  }
+>> -DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, PCI_ANY_ID, qcom_fixup_class);
+>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0101, qcom_fixup_class);
+>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0104, qcom_fixup_class);
+>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0106, qcom_fixup_class);
+>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0107, qcom_fixup_class);
+>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
+>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
+>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
 
-As the commit 677fe555cbfb ("serial: imx: Fix recursive locking bug")
-has mentioned the uart driver might cause recursive locking between
-normal printing and the kernel debugging facilities (e.g. sysrq and
-oops).  In the commit it gave out suggestion for fixing recursive
-locking issue: "The solution is to avoid locking in the sysrq case
-and trylock in the oops_in_progress case."
+Hrmmm... still not CCed on the patch, and still don't think the
+fixup is required(?) for 0x106 and 0x107.
 
-This patch follows the suggestion (also used the exactly same code with
-other serial drivers, e.g. amba-pl011.c) to fix the recursive locking
-issue, this can avoid stuck caused by deadlock and print out log for
-sysrq and oops.
-
-Fixes: 04896a77a97b ("msm_serial: serial driver for MSM7K onboard serial peripheral.")
-Signed-off-by: Leo Yan <leo.yan@linaro.org>
-Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Link: https://lore.kernel.org/r/20191127141544.4277-2-leo.yan@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/tty/serial/msm_serial.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-index 03cac2183579..1a4df5005aec 100644
---- a/drivers/tty/serial/msm_serial.c
-+++ b/drivers/tty/serial/msm_serial.c
-@@ -1381,6 +1381,7 @@ static void __msm_console_write(struct uart_port *port, const char *s,
- 	int num_newlines = 0;
- 	bool replaced = false;
- 	void __iomem *tf;
-+	int locked = 1;
- 
- 	if (is_uartdm)
- 		tf = port->membase + UARTDM_TF;
-@@ -1393,7 +1394,13 @@ static void __msm_console_write(struct uart_port *port, const char *s,
- 			num_newlines++;
- 	count += num_newlines;
- 
--	spin_lock(&port->lock);
-+	if (port->sysrq)
-+		locked = 0;
-+	else if (oops_in_progress)
-+		locked = spin_trylock(&port->lock);
-+	else
-+		spin_lock(&port->lock);
-+
- 	if (is_uartdm)
- 		msm_reset_dm_count(port, count);
- 
-@@ -1429,7 +1436,9 @@ static void __msm_console_write(struct uart_port *port, const char *s,
- 		iowrite32_rep(tf, buf, 1);
- 		i += num_chars;
- 	}
--	spin_unlock(&port->lock);
-+
-+	if (locked)
-+		spin_unlock(&port->lock);
- }
- 
- static void msm_console_write(struct console *co, const char *s,
--- 
-2.20.1
-
+Regards.
