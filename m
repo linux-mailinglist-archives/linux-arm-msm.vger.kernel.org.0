@@ -2,113 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FBBE12BFEE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Dec 2019 02:59:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06DD912BFF9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Dec 2019 03:45:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726359AbfL2B7J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Dec 2019 20:59:09 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:34888 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726187AbfL2B7J (ORCPT
+        id S1726396AbfL2Cpv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Dec 2019 21:45:51 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:43958 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726329AbfL2Cpv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Dec 2019 20:59:09 -0500
-Received: by mail-pl1-f193.google.com with SMTP id g6so13315604plt.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Dec 2019 17:59:09 -0800 (PST)
+        Sat, 28 Dec 2019 21:45:51 -0500
+Received: by mail-pf1-f193.google.com with SMTP id x6so15590404pfo.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Dec 2019 18:45:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=B0YqCZdtASo8W3+DNsZKxEkKUnEoAfpsuE3h6bg+BKA=;
-        b=SUBvHzkDy3ObczV/2Tibqb/J+Bch+J+BkQLTRD7VEq1pgSLY5siprwnL8ItHD8F9X0
-         CLYNPAl6cuX+YtWyUz4Jv6O3q5S6xdwYdxId7gchqdvDjxrpI174YpeyGAVnq5OCLnYu
-         mjnk8FJDiqHP2OyS9LeyMpUTtRHfWnHiSWEIuaxjubiE/JKwwlviZBeCb1t/7K0h+fYh
-         0vjWt+KfOtPAEGUy76eHmG3OAfy6XCIgbDlBxBVQINB4iZl4afyF3PioZAzKOKODRE1X
-         oQLqq8b0HCjpBZ3AJYpqPIprChvuIUnjenWvUp0O9V64bXJNy2P1yqNwOkoX6pEoUsOG
-         rZuw==
+        bh=6vQfMDnjAnyBecC4EFX4YToQU0vypJ/cCTtTTcCKPbQ=;
+        b=wP8/Z/fA9v6JoO3+Oqg8HNkYly6trwIiyQslwb8eMR0EJflqyY7kQ841eKvzL6t7Tu
+         NHjGwIdu5gfTyen+njsZyiefStSrCKSidxy23jGOx6WzdDsZjYUiqs3mR17+ZsCDOUfV
+         dTXLUe6Z+Mq31YgonJj1j/D6MKfLF6uov9FmqsMOBsCY+lEA7HJzJYHYaH5hRF3Q+wkm
+         i7RbBHkbJhoXMA+zHDVkAGfpmvIi+BBVwkBOOVdIN/mxpYrrANQ/KHdrgROr/CUv+ZFx
+         eURuoD7Zz9CTiwBZL/pM7UcE+qKqtUp5PNPg3OctGlT91iL/YiQ23JjiwqKBgPiEMpe4
+         Sizg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=B0YqCZdtASo8W3+DNsZKxEkKUnEoAfpsuE3h6bg+BKA=;
-        b=rGRkP31scBPeySL1sKn1xsbaUZpR+kT+blDhiOZQVW15Z/35ORD8gTku4ZZHL6t+t2
-         r6+F6vmtMuen6WUxVQHWvU5pOSwFiaXpTQLdJ6kFF0sjAK08ccqDiajLQxqVGkFdxjKB
-         QA96IO8eHw9Ry2GCxh6wowZ7adS+yZX4y1vZhqmHQ/ZesNdzUzDyCKQQ7Qxsdx+85T99
-         VW50/SUl5bmwlbeePL1B+Lq80nkW6FsBDeG5kW3pqcHKAGE8+7nk/jAwHdWY7sdB9zIr
-         1jEA9MnidjBGU5A8Hwg3gENvLXoY9Ia3WFsyp8jsnLFRL6sYyopWx0Rm3CUBZqLPlc8X
-         3xEA==
-X-Gm-Message-State: APjAAAXtu2b91UbTlKZw7m+EAQddJAhZF0z5c200UjFd1mAikXWLFDU0
-        kuO5wiPsqy37Zs2Yp0MqLo2y+A==
-X-Google-Smtp-Source: APXvYqwFD0Z6M2ULKf78TvessQAN+owraVNT/WM/LcoBIbydcpRlk+A9rbJjuwmOeeAvLemOFIwgmw==
-X-Received: by 2002:a17:90b:d94:: with SMTP id bg20mr34993201pjb.99.1577584748559;
-        Sat, 28 Dec 2019 17:59:08 -0800 (PST)
+        bh=6vQfMDnjAnyBecC4EFX4YToQU0vypJ/cCTtTTcCKPbQ=;
+        b=anlqPBck8amAG4lBtTUvcr5dSP9oQvWJlA1bzaOsD7Mlryn5sJAh3VpMwLRT5ieQkO
+         pI6Uf2JeeDgPQeE/Yc6WA/6v1koeSjqsBGXJ8tZIwBj2QTJBVSv49vV4ezyyyzUt2YXp
+         Q9jt3eCbVt7UnY/YFjTduEQYjSvs4D/3PCZQIqsOBwOgBKy2ShXWQMRqsVAJQJaQvkrP
+         eJn7tj/D/4v1GXCj3D+nD42FMdYGzByAkzjij7vGKklm23JN4p04ipD+WzxAJM/lnobE
+         u9n5fqc8jyzWpxnSNKE1XskzNlJeRtKmmunODIM4h7KOQPAbu0xdiys/hKTGxCtHC1tH
+         BdFQ==
+X-Gm-Message-State: APjAAAXalmVLFDMb09GYeDOTmyT1sMqY3nnRepuanTyd/ypAtrb4cVFS
+        qJ/ccPzuT3CJ+wo8YYJEenAyvw==
+X-Google-Smtp-Source: APXvYqzUR77xdE839/m6l8S88LYUtA1Wd64x+Elee8gvNt2cGvGDlb/OXr1UQYYdYRdHMPZDl3i5Bw==
+X-Received: by 2002:a63:338e:: with SMTP id z136mr64204052pgz.60.1577587550101;
+        Sat, 28 Dec 2019 18:45:50 -0800 (PST)
 Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id p185sm46804599pfg.61.2019.12.28.17.59.05
+        by smtp.gmail.com with ESMTPSA id p17sm44724028pfn.31.2019.12.28.18.45.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Dec 2019 17:59:07 -0800 (PST)
-Date:   Sat, 28 Dec 2019 17:59:04 -0800
+        Sat, 28 Dec 2019 18:45:49 -0800 (PST)
+Date:   Sat, 28 Dec 2019 18:45:47 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Yangtao Li <tiny.windzz@gmail.com>
-Cc:     jassisinghbrar@gmail.com, nsaenzjulienne@suse.de,
-        f.fainelli@gmail.com, rjui@broadcom.com, sbranden@broadcom.com,
-        bcm-kernel-feedback-list@broadcom.com, lftan@altera.com,
-        matthias.bgg@gmail.com, agross@kernel.org,
-        mcoquelin.stm32@gmail.com, alexandre.torgue@st.com,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        linux-kernel@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        nios2-dev@lists.rocketboards.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 03/13] mailbox: qcom-apcs: convert to
- devm_platform_ioremap_resource
-Message-ID: <20191229015904.GG3755841@builder>
-References: <20191228183538.26189-1-tiny.windzz@gmail.com>
- <20191228183538.26189-3-tiny.windzz@gmail.com>
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
+Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <andrew.murray@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v2] PCI: qcom: Fix the fixup of PCI_VENDOR_ID_QCOM
+Message-ID: <20191229024547.GH3755841@builder>
+References: <20191227012717.78965-1-bjorn.andersson@linaro.org>
+ <9e5ee7e8-aa63-e82c-8135-acc77b476c87@mm-sol.com>
+ <38acf5fc-85aa-7090-e666-97a1281e9905@free.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191228183538.26189-3-tiny.windzz@gmail.com>
+In-Reply-To: <38acf5fc-85aa-7090-e666-97a1281e9905@free.fr>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 28 Dec 10:35 PST 2019, Yangtao Li wrote:
+On Sat 28 Dec 07:41 PST 2019, Marc Gonzalez wrote:
 
-> Use devm_platform_ioremap_resource() to simplify code.
+> On 27/12/2019 09:51, Stanimir Varbanov wrote:
 > 
-> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
+> > On 12/27/19 3:27 AM, Bjorn Andersson wrote:
+> >
+> >> There exists non-bridge PCIe devices with PCI_VENDOR_ID_QCOM, so limit
+> >> the fixup to only affect the relevant PCIe bridges.
+> >>
+> >> Cc: stable@vger.kernel.org
+> >> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> >> ---
+> >>
+> >> Stan, I picked up all the suggested device id's from the previous thread and
+> >> added 0x1000 for QCS404. I looked at creating platform specific defines in
+> >> pci_ids.h, but SDM845 has both 106 and 107... Please let me know if you would
+> >> prefer that I do this anyway.
+> > 
+> > Looks good,
+> > 
+> > Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
+> > 
+> >>  drivers/pci/controller/dwc/pcie-qcom.c | 8 +++++++-
+> >>  1 file changed, 7 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> >> index 5ea527a6bd9f..138e1a2d21cc 100644
+> >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> >> @@ -1439,7 +1439,13 @@ static void qcom_fixup_class(struct pci_dev *dev)
+> >>  {
+> >>  	dev->class = PCI_CLASS_BRIDGE_PCI << 8;
+> >>  }
+> >> -DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, PCI_ANY_ID, qcom_fixup_class);
+> >> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0101, qcom_fixup_class);
+> >> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0104, qcom_fixup_class);
+> >> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0106, qcom_fixup_class);
+> >> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0107, qcom_fixup_class);
+> >> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
+> >> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
+> >> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
+> 
+> Hrmmm... still not CCed on the patch,
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+You are Cc'ed on the patch, but as usual your mail server responds "451
+too many errors from your ip" and throw my emails away.
 
-> ---
->  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
+> and still don't think the fixup is required(?) for 0x106 and 0x107.
 > 
-> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> index eeebafd546e5..0faf69137780 100644
-> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> @@ -49,7 +49,6 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
->  {
->  	struct qcom_apcs_ipc *apcs;
->  	struct regmap *regmap;
-> -	struct resource *res;
->  	unsigned long offset;
->  	void __iomem *base;
->  	unsigned long i;
-> @@ -64,8 +63,7 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
->  	if (!apcs)
->  		return -ENOMEM;
->  
-> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	base = devm_ioremap_resource(&pdev->dev, res);
-> +	base = devm_platform_ioremap_resource(pdev, 0);
->  	if (IS_ERR(base))
->  		return PTR_ERR(base);
->  
-> -- 
-> 2.17.1
-> 
+
+I re-read your reply in my v1 thread. So we know that 0x104 doesn't need
+the fixup, so resumably only 0x101 needs the fixup?
+
+Regards,
+Bjorn
