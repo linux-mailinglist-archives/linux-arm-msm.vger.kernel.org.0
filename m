@@ -2,289 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 21EA712C055
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Dec 2019 04:41:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8008112C0ED
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Dec 2019 07:33:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726377AbfL2Dla (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Dec 2019 22:41:30 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:44335 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726187AbfL2Dla (ORCPT
+        id S1725800AbfL2Gda (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 Dec 2019 01:33:30 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:41088 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725973AbfL2Gd3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Dec 2019 22:41:30 -0500
-Received: by mail-pl1-f194.google.com with SMTP id az3so13345825plb.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Dec 2019 19:41:29 -0800 (PST)
+        Sun, 29 Dec 2019 01:33:29 -0500
+Received: by mail-pl1-f193.google.com with SMTP id bd4so13455136plb.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Dec 2019 22:33:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=3nYzbiySbBMWr0PTl27fhW8zMhEg+ip2bE0c5QuOqsI=;
-        b=S1mkTqQVQ4HAOpRtLQ3Z5Ot5b91O27ZQMN1tfWr/raiqea/k8s8N8PSIaJbI0eVc+o
-         wD+9B5R9McHSd/EBOEFNTwMwNZyMuEOmazjgDRZrCxYZkvptsX+YD8lU+ylSMOYJuhmT
-         uhfTLW8UQwhkfZwVgyUt8hK+WXYDwKOl04yZZXQHrg9BDI1LGlE7lnhTovBU6JXXW755
-         vVHv8fXhfmO1BF5s+YfNchQ8A2UWPm06AjsXzN2ZBfpNZlmXLK5y0yd179I0qNPiBypn
-         laZ5sIZHqIfpuW33OA/0j/F1GAFFktKbhWvKszbcSgCZ270SwxYVASQkEY//HhAop+Pr
-         3SaA==
+        bh=nqGIhwYTh0DiBSLBMDh1uZ5wGRcp0IHXwUhJAqa821o=;
+        b=USXZNxmckjGT1gFkzviu7A1+ak1urciIU+1xtmdBGP0ny/2qFn4lPJ7F+3P+KjkWz9
+         mypGG4CSY3rUakmiDqZvF0lYdz/8UogjLVzK0d5SGnOcNcwePrBRI7Z791bQXc0ZjUty
+         y+Oa8LZmZW7sWHiej6XI9Yj7NxFkJJhH4/DmZH37fZzH+TH0MVbJaBcwf+UKlBbSDaeu
+         HEEOzeXblFJOTV/smOAttBNrSAHmfbef47opWMEoQl8mvAC1F7cj+KNj0VLhQhXHon5T
+         UWPnhJwG8lS2wST10uBq4bDGhFXdvlZKVQG7v2oFVVnNpTsNd3o09aBt5IR/hl83eBx+
+         ZDPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3nYzbiySbBMWr0PTl27fhW8zMhEg+ip2bE0c5QuOqsI=;
-        b=PoBMME7xcNvW8Y4+AaAd4lKFuSATLNe4swhSSuVdUmYSF+MpnNbBbmnxRcKv/ijRxk
-         61cQNDITBbhbFHSfO2FkGIefF+DRyjZB8swXqJZq8MUEeAMibQ1q05mcjM1+jQe+NfN3
-         Qayjh7ddqsZpv1MA0X+VDRspHHw0gy9k7oAATtJ0Oxjl37EcrM5f+CRkzkQmXs1nFAl0
-         7Rk4sZYadSKTQ1D8qia3OwMs51nIEeLnnKHRWV1iVgyEDVWrK/GzuN5QlGzJyIqLzSYE
-         9TCk7PaS5LV0bcqrJkZagOS8roQqpfwZlX3K9lzNMegsLs2iKAi/wAc7V0e8zPXjyAGe
-         v8dQ==
-X-Gm-Message-State: APjAAAUlXHv3Mv7jUlkLMCumObs8IAUCPiHUfyfrWDR0biR0ksiZj6ti
-        ZPH5eFYZjXqMADFKfKG/oXXYyA==
-X-Google-Smtp-Source: APXvYqx2y3B/ZHSUs+Yq+AjalZ9qvoYa/EeRtB3Ey/8PQ54ZGkoeZ7JZ0pjNRy1k0Qim7ZgoA659iA==
-X-Received: by 2002:a17:902:82c3:: with SMTP id u3mr57953226plz.73.1577590889282;
-        Sat, 28 Dec 2019 19:41:29 -0800 (PST)
+        bh=nqGIhwYTh0DiBSLBMDh1uZ5wGRcp0IHXwUhJAqa821o=;
+        b=oAz2HkQG7CdffXbDm/ZZqMuH9mMpZ1513d1VowAUcSf6wQJPUQxYE2oQ/so5xuMWe9
+         Os2tqo3r3O7o3lPt2gK6Adg/s4lQ9CIGkKF9+L8RtS/J0Z9YRzM6FBQf5AWw/RrydAN3
+         kw7TCK5aNnpjk25dJtfaXTQhjt+JR4IASQ/qynPbHX7wvIbfLUh3WAe2jlOoC+LE55Vo
+         2fZ7KET9kKLlHsu4LavDFH1zgHUumCMZzxXALGGUwBG20EqInQqwBnB2yJn/1FHtguVv
+         JbONkOOkMzspbU9ZCS1sbEOsndIynmtXFKS3F4QxXRJDXVU+B7/9W5ygLZx43g9cFXEF
+         C3Jw==
+X-Gm-Message-State: APjAAAV0zAAtL16CAdewxJe5/MlksRGAfbUDedjZA0k85iIccDcbsM8d
+        nD8Fe63kxxk49VlperfRlZYbag==
+X-Google-Smtp-Source: APXvYqwxEV0O6vRqHXU4ePHQt8ChvcTTjo2G9Do4DVPv3Y1n/SAqrvUsgBmIZ4Je3/ZERvOyxrHdjA==
+X-Received: by 2002:a17:902:b18e:: with SMTP id s14mr63595046plr.261.1577601208519;
+        Sat, 28 Dec 2019 22:33:28 -0800 (PST)
 Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id u23sm45938315pfm.29.2019.12.28.19.41.27
+        by smtp.gmail.com with ESMTPSA id i9sm45974852pfk.24.2019.12.28.22.33.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Dec 2019 19:41:28 -0800 (PST)
-Date:   Sat, 28 Dec 2019 19:41:26 -0800
+        Sat, 28 Dec 2019 22:33:27 -0800 (PST)
+Date:   Sat, 28 Dec 2019 22:33:25 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sricharan R <sricharan@codeaurora.org>
-Cc:     agross@kernel.org, devicetree@vger.kernel.org,
-        linus.walleij@linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-soc@vger.kernel.org, robh+dt@kernel.org, sboyd@kernel.org,
-        sivaprak@codeaurora.org
-Subject: Re: [PATCH V2 1/7] dt-bindings: pinctrl: qcom: Add ipq6018 pinctrl
- bindings
-Message-ID: <20191229034126.GO3755841@builder>
-References: <1576752109-24497-1-git-send-email-sricharan@codeaurora.org>
- <1576752109-24497-2-git-send-email-sricharan@codeaurora.org>
+To:     Sharat Masetty <smasetty@codeaurora.org>
+Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] arm: dts: sc7180: Add A618 gpu dt blob
+Message-ID: <20191229063325.GP3755841@builder>
+References: <0101016ecc56c5c5-ab66c0ce-da45-4d8e-9cac-8f6be69001d3-000000@us-west-2.amazonses.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1576752109-24497-2-git-send-email-sricharan@codeaurora.org>
+In-Reply-To: <0101016ecc56c5c5-ab66c0ce-da45-4d8e-9cac-8f6be69001d3-000000@us-west-2.amazonses.com>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 19 Dec 02:41 PST 2019, Sricharan R wrote:
+On Tue 03 Dec 07:17 PST 2019, Sharat Masetty wrote:
 
-> Add device tree binding Documentation details for ipq6018
-> pinctrl driver.
+Please update subject to "arm64: dts: qcom: sc7180: Add A618 GPU nodes"
+
+> This patch adds the required dt nodes and properties
+> to enabled A618 GPU.
 > 
-> Co-developed-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
-> Signed-off-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
-> Co-developed-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-> Co-developed-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
+> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
 > ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 116 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 116 insertions(+)
 > 
-> [V2] Splitted dt bindings and driver into different patches. Added missing bindings,
->      and some style changes.
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index c3db2e5..31223d0 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -18,6 +18,8 @@
+>  #include <dt-bindings/reset/qcom,sdm845-pdc.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>  #include <dt-bindings/phy/phy-qcom-qusb2.h>
+> +#include <dt-bindings/clock/qcom,gpucc-sc7180.h>
+> +#include <dt-bindings/power/qcom-rpmpd.h>
+
+Please maintain sort order of includes.
+
 > 
->  .../bindings/pinctrl/qcom,ipq6018-pinctrl.yaml     | 172 +++++++++++++++++++++
->  1 file changed, 172 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
+>  / {
+>  	interrupt-parent = <&intc>;
+> @@ -733,6 +735,120 @@
+>  			#power-domain-cells = <1>;
+>  		};
 > 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
-> new file mode 100644
-> index 0000000..745a11e
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
-> @@ -0,0 +1,172 @@
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,ipq6018-pinctrl.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. IPQ6018 TLMM block
-> +
-> +maintainers:
-> +  - Sricharan R <sricharan@codeaurora.org>
-> +
-> +description: |
-> +  This binding describes the Top Level Mode Multiplexer block found in the
-> +  IPQ6018 platform.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,ipq6018-pinctrl
-> +  reg:
-> +    maxItems: 1
-> +  interrupts:
-> +    Description: Specifies the TLMM summary IRQ
-> +    maxItems: 1
-> +  interrupt-controller: true
-> +  '#interrupt-cells':
-> +    Description:
-> +      Specifies the PIN numbers and Flags, as defined in defined in
-> +      include/dt-bindings/interrupt-controller/irq.h
-> +    const: 2
-> +  gpio-controller: true
-> +  '#gpio-cells':
-> +    Description: Specifying the pin number and flags, as defined in
-> +      include/dt-bindings/gpio/gpio.h
-> +    const: 2
-> +  gpio-ranges:
-> +    Description: Documentation/devicetree/bindings/gpio/gpio.txt
-> +    maxItems: 1
-> +
-> +#PIN CONFIGURATION NODES
-> +patternProperties:
-> +  '-pins$':
-> +    type: object
-> +    Description:
-> +      Pinctrl node's client devices use subnodes for desired pin configuration.
-> +      Client device subnodes use below standard properties.
-> +
-> +    Properties:
-> +      pins:
-> +        allOf:
-> +          $ref: /schemas/types.yaml#/definitions/string
-> +          enum:
-> +            gpio0-gpio80
-> +            sdc1_clk
-> +            sdc1_cmd
-> +            sdc1_data
-> +            sdc2_clk
-> +            sdc2_cmd
-> +            sdc2_data
-> +            qdsd_cmd
-> +            qdsd_data0
-> +            qdsd_data1
-> +            qdsd_data2
-> +            qdsd_data3
-> +        Description:
-> +          List of gpio pins affected by the properties specified in this
-> +          subnode.
-> +
-> +      function:
-> +        allOf:
-> +          $ref: /schemas/types.yaml#/definitions/string
-> +          enum:
-> +            adsp_ext, alsp_int, atest_bbrx0, atest_bbrx1, atest_char,
-> +            atest_char0, atest_char1, atest_char2, atest_char3, atest_combodac,
-> +            atest_gpsadc0, atest_gpsadc1, atest_tsens, atest_wlan0,
-> +            atest_wlan1, backlight_en, bimc_dte0, bimc_dte1, blsp_i2c1,
-> +            blsp_i2c2, blsp_i2c3, blsp_i2c4, blsp_i2c5, blsp_i2c6,  blsp_spi1,
-> +            blsp_spi1_cs1, blsp_spi1_cs2, blsp_spi1_cs3, blsp_spi2,
-> +            blsp_spi2_cs1, blsp_spi2_cs2, blsp_spi2_cs3, blsp_spi3,
-> +            blsp_spi3_cs1, blsp_spi3_cs2, blsp_spi3_cs3, blsp_spi4, blsp_spi5,
-> +            blsp_spi6, blsp_uart1, blsp_uart2, blsp_uim1, blsp_uim2, cam1_rst,
-> +            cam1_standby, cam_mclk0, cam_mclk1, cci_async, cci_i2c, cci_timer0,
-> +            cci_timer1, cci_timer2, cdc_pdm0, codec_mad, dbg_out, display_5v,
-> +            dmic0_clk, dmic0_data, dsi_rst, ebi0_wrcdc, euro_us, ext_lpass,
-> +            flash_strobe, gcc_gp1_clk_a, gcc_gp1_clk_b, gcc_gp2_clk_a,
-> +            gcc_gp2_clk_b, gcc_gp3_clk_a, gcc_gp3_clk_b, gpio, gsm0_tx0,
-> +            gsm0_tx1, gsm1_tx0, gsm1_tx1, gyro_accl, kpsns0, kpsns1, kpsns2,
-> +            ldo_en, ldo_update, mag_int, mdp_vsync, modem_tsync, m_voc,
-> +            nav_pps, nav_tsync, pa_indicator, pbs0, pbs1, pbs2, pri_mi2s,
-> +            pri_mi2s_ws, prng_rosc, pwr_crypto_enabled_a, pwr_crypto_enabled_b,
-> +            pwr_modem_enabled_a,  pwr_modem_enabled_b, pwr_nav_enabled_a,
-> +            pwr_nav_enabled_b, qdss_ctitrig_in_a0, qdss_ctitrig_in_a1,
-> +            qdss_ctitrig_in_b0, qdss_ctitrig_in_b1, qdss_ctitrig_out_a0,
-> +            qdss_ctitrig_out_a1, qdss_ctitrig_out_b0, qdss_ctitrig_out_b1,
-> +            qdss_traceclk_a, qdss_traceclk_b, qdss_tracectl_a, qdss_tracectl_b,
-> +            qdss_tracedata_a, qdss_tracedata_b, reset_n, sd_card, sd_write,
-> +            sec_mi2s, smb_int, ssbi_wtr0, ssbi_wtr1, uim1, uim2, uim3,
-> +            uim_batt, wcss_bt, wcss_fm, wcss_wlan, webcam1_rst
-> +        Description:
-> +          Specify the alternative function to be configured for the specified
-> +          pins.
-> +      bias-disable:
+> +		gpu: gpu@5000000 {
 
-Is there any way to inherit these from some common definition?
+Please rebase this on linux-next and ensure to maintain the sort order.
 
-> +        type: boolean
-> +        Description:
-> +          The specified pins should be configured as no pull.
-> +      bias-pull-down:
-> +        type: boolean
-> +        Description:
-> +          The specified pins should be configured as pull down.
-> +      bias-pull-up:
-> +        type: boolean
-> +        Description:
-> +          The specified pins should be configured as pull up.
-> +      output-high:
-> +        type: boolean
-> +        Description:
-> +          The specified pins are configured in output mode, driven high.
-> +          This option is not available for sdc pins.
-> +      output-low:
-> +        type: boolean
-> +        Description:
-> +          The specified pins are configured in output mode, driven low.
-> +          This option is not available for sdc pins.
-> +      drive-strength:
-> +        allOf:
-> +          $ref: /schemas/types.yaml#/definitions/uint32
-> +          enum: [2, 4, 6, 8, 10, 12, 14, 16]
-> +        Description:
-> +          elects the drive strength for the specified pins, in mA.
+> +			compatible = "qcom,adreno-618.0", "qcom,adreno";
+> +			#stream-id-cells = <16>;
+> +			reg = <0 0x5000000 0 0x40000>, <0 0x509e000 0 0x1000>,
 
-Selects?
+Please pad addresses to 8 digits.
+
+> +				<0 0x5061000 0 0x800>;
+> +			reg-names = "kgsl_3d0_reg_memory", "cx_mem", "cx_dbgc";
+> +
+> +			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			iommus = <&adreno_smmu 0>;
+> +
+> +			operating-points-v2 = <&gpu_opp_table>;
+> +
+> +			interconnects = <&gem_noc 35 &mc_virt 512>;
+
+Please use the defines for these ports.
 
 > +
-> +    required:
-> +      - pins
-> +      - function
+> +			qcom,gmu = <&gmu>;
+
+You can reduce the number of empty lines above.
+
 > +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - interrupt-controller
-> +  - '#interrupt-cells'
-> +  - gpio-controller
-> +  - '#gpio-cells'
-> +  - gpio-ranges
+> +			gpu_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
 > +
-> +example:
-> +        tlmm: pinctrl@1000000 {
-> +                compatible = "qcom,ipq6018-pinctrl";
-> +                reg = <0x1000000 0x300000>;
-> +                interrupts = <0 208 0>;
-
-<GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>
-
-> +                gpio-controller;
-> +                #gpio-cells = <2>;
-> +                interrupt-controller;
-> +                #interrupt-cells = <2>;
+> +				opp-800000000 {
+> +					opp-hz = /bits/ 64 <800000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
+> +				};
 > +
-> +                uart_pins: uart_pins {
+> +				opp-650000000 {
+> +					opp-hz = /bits/ 64 <650000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
+> +				};
+> +
+> +				opp-565000000 {
+> +					opp-hz = /bits/ 64 <565000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
+> +				};
+> +
+> +				opp-430000000 {
+> +					opp-hz = /bits/ 64 <430000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
+> +				};
+> +
+> +                                opp-355000000 {
 
-s/_/- in the node name.
+The indentation is off here.
 
-> +                        mux {
-> +                                pins = "gpio4", "gpio5";
-> +                                function = "blsp_uart2";
+> +					opp-hz = /bits/ 64 <355000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
+> +				};
+> +
+> +                                opp-267000000 {
 
-Duplicate the function definition in tx and rx and drop the "mux" node.
+And here.
+
+> +					opp-hz = /bits/ 64 <267000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+> +				};
+> +
+> +				opp-180000000 {
+> +					opp-hz = /bits/ 64 <180000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
+> +				};
+> +			};
+> +		};
+> +
+> +		adreno_smmu: iommu@5040000 {
+> +			compatible = "qcom,sc7180-smmu-v2", "qcom,smmu-v2";
+> +			reg = <0 0x5040000 0 0x10000>;
+> +			#iommu-cells = <1>;
+> +			#global-interrupts = <2>;
+> +			interrupts = <GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>,
+> +					<GIC_SPI 231 IRQ_TYPE_LEVEL_HIGH>,
+> +					<GIC_SPI 364 IRQ_TYPE_EDGE_RISING>,
+> +					<GIC_SPI 365 IRQ_TYPE_EDGE_RISING>,
+> +					<GIC_SPI 366 IRQ_TYPE_EDGE_RISING>,
+> +					<GIC_SPI 367 IRQ_TYPE_EDGE_RISING>,
+> +					<GIC_SPI 368 IRQ_TYPE_EDGE_RISING>,
+> +					<GIC_SPI 369 IRQ_TYPE_EDGE_RISING>,
+> +					<GIC_SPI 370 IRQ_TYPE_EDGE_RISING>,
+> +					<GIC_SPI 371 IRQ_TYPE_EDGE_RISING>;
+> +			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+> +				<&gcc GCC_GPU_CFG_AHB_CLK>,
+> +				<&gcc GCC_DDRSS_GPU_AXI_CLK>;
+> +
+> +			clock-names = "bus", "iface", "mem_iface_clk";
+> +			power-domains = <&gpucc CX_GDSC>;
+> +		};
+> +
+> +		gmu: gmu@506a000 {
+> +			compatible="qcom,adreno-gmu-618", "qcom,adreno-gmu";
+> +
+> +			reg = 	<0 0x506a000 0 0x31000>,
+
+Extra spaces after =
+
+> +				<0 0xb290000 0 0x10000>,
+> +				<0 0xb490000 0 0x10000>;
+> +			reg-names = "gmu", "gmu_pdc", "gmu_pdc_seq";
+> +
+> +			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
+> +				   <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hfi", "gmu";
+> +
+> +			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
+> +			       <&gpucc GPU_CC_CXO_CLK>,
+> +			       <&gcc GCC_DDRSS_GPU_AXI_CLK>,
+> +			       <&gcc GCC_GPU_MEMNOC_GFX_CLK>;
+> +			clock-names = "gmu", "cxo", "axi", "memnoc";
+> +
+> +			power-domains = <&gpucc CX_GDSC>;
+> +
+> +			iommus = <&adreno_smmu 5>;
+> +
+> +			operating-points-v2 = <&gmu_opp_table>;
+
+As above, please drop a few of these empty lines.
 
 Regards,
 Bjorn
 
-> +                        };
 > +
-> +                        tx {
-> +                                pins = "gpio4";
-> +                                drive-strength = <4>;
-> +                                bias-disable;
-> +                        };
+> +			gmu_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
 > +
-> +                        rx {
-> +                                pins = "gpio5";
-> +                                drive-strength = <2>;
-> +                                bias-pull-up;
-> +                        };
-> +                };
-> +        };
-> -- 
+> +				opp-200000000 {
+> +					opp-hz = /bits/ 64 <200000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
+> +				};
+> +			};
+> +		};
+> +
+>  		apps_smmu: iommu@15000000 {
+>  			compatible = "qcom,sc7180-smmu-500", "arm,mmu-500";
+>  			reg = <0 0x15000000 0 0x100000>;
+> --
 > 1.9.1
+> 
