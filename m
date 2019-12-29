@@ -2,243 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8008112C0ED
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Dec 2019 07:33:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B07512C5A2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Dec 2019 18:42:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725800AbfL2Gda (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Dec 2019 01:33:30 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:41088 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725973AbfL2Gd3 (ORCPT
+        id S1729887AbfL2RjT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 Dec 2019 12:39:19 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:35812 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729422AbfL2RdS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 Dec 2019 01:33:29 -0500
-Received: by mail-pl1-f193.google.com with SMTP id bd4so13455136plb.8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Dec 2019 22:33:29 -0800 (PST)
+        Sun, 29 Dec 2019 12:33:18 -0500
+Received: by mail-ed1-f68.google.com with SMTP id f8so30480207edv.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Dec 2019 09:33:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=nqGIhwYTh0DiBSLBMDh1uZ5wGRcp0IHXwUhJAqa821o=;
-        b=USXZNxmckjGT1gFkzviu7A1+ak1urciIU+1xtmdBGP0ny/2qFn4lPJ7F+3P+KjkWz9
-         mypGG4CSY3rUakmiDqZvF0lYdz/8UogjLVzK0d5SGnOcNcwePrBRI7Z791bQXc0ZjUty
-         y+Oa8LZmZW7sWHiej6XI9Yj7NxFkJJhH4/DmZH37fZzH+TH0MVbJaBcwf+UKlBbSDaeu
-         HEEOzeXblFJOTV/smOAttBNrSAHmfbef47opWMEoQl8mvAC1F7cj+KNj0VLhQhXHon5T
-         UWPnhJwG8lS2wST10uBq4bDGhFXdvlZKVQG7v2oFVVnNpTsNd3o09aBt5IR/hl83eBx+
-         ZDPQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=g+ZqxN5m5gAkIByhRJf04aggcuX7J+K/cyMPSK2p+QA=;
+        b=wf71Wq0yMOB58FsNbi2p888B5RLQ+mTavSy4HA7XvUnu6YC98zDS1ey+qK1HxpzbCz
+         6L2tloRWFY4Q7RvQIsEA9ZbK5V1v4V5avPP+9GCeSHiPIbf7Tpmorx0qZXXba7X2DB5W
+         kwmNwUUsBAk2CmQxiD6T2LL+e7bhOpjNvW2pbsPNyLF+/+jQlCa1UL01REnyBo48MJuh
+         JumoHJbyuy81K+RyvAR81dhk9zZwR/fTiDARReOxK4iG/D7vF0f+jbXECX1btRxqyckv
+         0ABHpABgoZ4jGMtVfG/I5hdTjow6AKldsBt3vO0+5UKn1ClaUEw6AKa9x3tu06mRS6wa
+         JArw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=nqGIhwYTh0DiBSLBMDh1uZ5wGRcp0IHXwUhJAqa821o=;
-        b=oAz2HkQG7CdffXbDm/ZZqMuH9mMpZ1513d1VowAUcSf6wQJPUQxYE2oQ/so5xuMWe9
-         Os2tqo3r3O7o3lPt2gK6Adg/s4lQ9CIGkKF9+L8RtS/J0Z9YRzM6FBQf5AWw/RrydAN3
-         kw7TCK5aNnpjk25dJtfaXTQhjt+JR4IASQ/qynPbHX7wvIbfLUh3WAe2jlOoC+LE55Vo
-         2fZ7KET9kKLlHsu4LavDFH1zgHUumCMZzxXALGGUwBG20EqInQqwBnB2yJn/1FHtguVv
-         JbONkOOkMzspbU9ZCS1sbEOsndIynmtXFKS3F4QxXRJDXVU+B7/9W5ygLZx43g9cFXEF
-         C3Jw==
-X-Gm-Message-State: APjAAAV0zAAtL16CAdewxJe5/MlksRGAfbUDedjZA0k85iIccDcbsM8d
-        nD8Fe63kxxk49VlperfRlZYbag==
-X-Google-Smtp-Source: APXvYqwxEV0O6vRqHXU4ePHQt8ChvcTTjo2G9Do4DVPv3Y1n/SAqrvUsgBmIZ4Je3/ZERvOyxrHdjA==
-X-Received: by 2002:a17:902:b18e:: with SMTP id s14mr63595046plr.261.1577601208519;
-        Sat, 28 Dec 2019 22:33:28 -0800 (PST)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id i9sm45974852pfk.24.2019.12.28.22.33.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Dec 2019 22:33:27 -0800 (PST)
-Date:   Sat, 28 Dec 2019 22:33:25 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sharat Masetty <smasetty@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm: dts: sc7180: Add A618 gpu dt blob
-Message-ID: <20191229063325.GP3755841@builder>
-References: <0101016ecc56c5c5-ab66c0ce-da45-4d8e-9cac-8f6be69001d3-000000@us-west-2.amazonses.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=g+ZqxN5m5gAkIByhRJf04aggcuX7J+K/cyMPSK2p+QA=;
+        b=cKCs4q7cvpJiGDN6MLCIpaxG6jkyDXVv8VH2F4fUqteQx+hn1pD911s7ZXdwC3/3Hr
+         4c7sRYTj89OEII2/2wYBOw1eep24R2Uf8i+QJsEuBMn1TSDwTA9WNuFP8bqwTNCtZs0O
+         J8MFlRKpxU6/5ljIq5LtvldIizQOsDFth7hcQG+NZntUlu3aSlrTWEuhoIJQE15MjrPQ
+         9dosToDUAP1xs5mlfjJM/yhDB2QRyq09YIb3VMz/StKvVb/PNDcvmvZnGIks+LwDZti4
+         5vWlIMKcY+aYAIWehxSWs/QDLMdoEqBUedfWdfiIZxYhB5cDXzTL4hTTjgGHQdMV1xAs
+         BLKQ==
+X-Gm-Message-State: APjAAAW7XbecJAUENwHYPDN7i2K1M0ShYl8Skr8+mHwD4OGucrGuwkSa
+        GnV1xN1fiL4rbB6KLvGjSdbGsQ==
+X-Google-Smtp-Source: APXvYqxl8lf/vPqrZynpCjFh+E2DeE1Gmv+uphj+YiOjk0n+Mhaq4H+8GfqCzbvQgw4NmnTE2TrGcg==
+X-Received: by 2002:a17:906:7b96:: with SMTP id s22mr65320610ejo.213.1577640796290;
+        Sun, 29 Dec 2019 09:33:16 -0800 (PST)
+Received: from [192.168.0.104] ([91.139.216.39])
+        by smtp.googlemail.com with ESMTPSA id c19sm5162660edu.76.2019.12.29.09.33.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 29 Dec 2019 09:33:15 -0800 (PST)
+Subject: Re: [PATCH v3 6/6] clk: qcom: Add video clock controller driver for
+ SC7180
+To:     Taniya Das <tdas@codeaurora.org>, Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org
+References: <1577428714-17766-1-git-send-email-tdas@codeaurora.org>
+ <1577428714-17766-7-git-send-email-tdas@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <8f744444-428c-56e2-2565-35b55f1e4aae@linaro.org>
+Date:   Sun, 29 Dec 2019 19:33:14 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0101016ecc56c5c5-ab66c0ce-da45-4d8e-9cac-8f6be69001d3-000000@us-west-2.amazonses.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <1577428714-17766-7-git-send-email-tdas@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 03 Dec 07:17 PST 2019, Sharat Masetty wrote:
+Hi Taniya,
 
-Please update subject to "arm64: dts: qcom: sc7180: Add A618 GPU nodes"
-
-> This patch adds the required dt nodes and properties
-> to enabled A618 GPU.
+On 12/27/19 8:38 AM, Taniya Das wrote:
+> Add support for the video clock controller found on SC7180
+> based devices. This would allow video drivers to probe
+> and control their clocks.
 > 
-> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 116 +++++++++++++++++++++++++++++++++++
->  1 file changed, 116 insertions(+)
+>  drivers/clk/qcom/Kconfig          |   8 ++
+>  drivers/clk/qcom/Makefile         |   1 +
+>  drivers/clk/qcom/videocc-sc7180.c | 259 ++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 268 insertions(+)
+>  create mode 100644 drivers/clk/qcom/videocc-sc7180.c
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index c3db2e5..31223d0 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -18,6 +18,8 @@
->  #include <dt-bindings/reset/qcom,sdm845-pdc.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->  #include <dt-bindings/phy/phy-qcom-qusb2.h>
-> +#include <dt-bindings/clock/qcom,gpucc-sc7180.h>
-> +#include <dt-bindings/power/qcom-rpmpd.h>
 
-Please maintain sort order of includes.
+<cut>
 
-> 
->  / {
->  	interrupt-parent = <&intc>;
-> @@ -733,6 +735,120 @@
->  			#power-domain-cells = <1>;
->  		};
-> 
-> +		gpu: gpu@5000000 {
+> +static const struct freq_tbl ftbl_video_cc_venus_clk_src[] = {
+> +	F(19200000, P_BI_TCXO, 1, 0, 0),
 
-Please rebase this on linux-next and ensure to maintain the sort order.
+Do you know is this frequency (19.2MHz) has real usage? The lower freq
+I've seen for Venus was 75MHz.
 
-> +			compatible = "qcom,adreno-618.0", "qcom,adreno";
-> +			#stream-id-cells = <16>;
-> +			reg = <0 0x5000000 0 0x40000>, <0 0x509e000 0 0x1000>,
-
-Please pad addresses to 8 digits.
-
-> +				<0 0x5061000 0 0x800>;
-> +			reg-names = "kgsl_3d0_reg_memory", "cx_mem", "cx_dbgc";
+> +	F(150000000, P_VIDEO_PLL0_OUT_MAIN, 4, 0, 0),
+> +	F(270000000, P_VIDEO_PLL0_OUT_MAIN, 2.5, 0, 0),
+> +	F(340000000, P_VIDEO_PLL0_OUT_MAIN, 2, 0, 0),
+> +	F(434000000, P_VIDEO_PLL0_OUT_MAIN, 2, 0, 0),
+> +	F(500000000, P_VIDEO_PLL0_OUT_MAIN, 2, 0, 0),
+> +	{ }
+> +};
 > +
-> +			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			iommus = <&adreno_smmu 0>;
-> +
-> +			operating-points-v2 = <&gpu_opp_table>;
-> +
-> +			interconnects = <&gem_noc 35 &mc_virt 512>;
-
-Please use the defines for these ports.
-
-> +
-> +			qcom,gmu = <&gmu>;
-
-You can reduce the number of empty lines above.
-
-> +
-> +			gpu_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-800000000 {
-> +					opp-hz = /bits/ 64 <800000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
-> +				};
-> +
-> +				opp-650000000 {
-> +					opp-hz = /bits/ 64 <650000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-> +				};
-> +
-> +				opp-565000000 {
-> +					opp-hz = /bits/ 64 <565000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-> +				};
-> +
-> +				opp-430000000 {
-> +					opp-hz = /bits/ 64 <430000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-> +				};
-> +
-> +                                opp-355000000 {
-
-The indentation is off here.
-
-> +					opp-hz = /bits/ 64 <355000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-> +				};
-> +
-> +                                opp-267000000 {
-
-And here.
-
-> +					opp-hz = /bits/ 64 <267000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-> +				};
-> +
-> +				opp-180000000 {
-> +					opp-hz = /bits/ 64 <180000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-> +				};
-> +			};
-> +		};
-> +
-> +		adreno_smmu: iommu@5040000 {
-> +			compatible = "qcom,sc7180-smmu-v2", "qcom,smmu-v2";
-> +			reg = <0 0x5040000 0 0x10000>;
-> +			#iommu-cells = <1>;
-> +			#global-interrupts = <2>;
-> +			interrupts = <GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>,
-> +					<GIC_SPI 231 IRQ_TYPE_LEVEL_HIGH>,
-> +					<GIC_SPI 364 IRQ_TYPE_EDGE_RISING>,
-> +					<GIC_SPI 365 IRQ_TYPE_EDGE_RISING>,
-> +					<GIC_SPI 366 IRQ_TYPE_EDGE_RISING>,
-> +					<GIC_SPI 367 IRQ_TYPE_EDGE_RISING>,
-> +					<GIC_SPI 368 IRQ_TYPE_EDGE_RISING>,
-> +					<GIC_SPI 369 IRQ_TYPE_EDGE_RISING>,
-> +					<GIC_SPI 370 IRQ_TYPE_EDGE_RISING>,
-> +					<GIC_SPI 371 IRQ_TYPE_EDGE_RISING>;
-> +			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-> +				<&gcc GCC_GPU_CFG_AHB_CLK>,
-> +				<&gcc GCC_DDRSS_GPU_AXI_CLK>;
-> +
-> +			clock-names = "bus", "iface", "mem_iface_clk";
-> +			power-domains = <&gpucc CX_GDSC>;
-> +		};
-> +
-> +		gmu: gmu@506a000 {
-> +			compatible="qcom,adreno-gmu-618", "qcom,adreno-gmu";
-> +
-> +			reg = 	<0 0x506a000 0 0x31000>,
-
-Extra spaces after =
-
-> +				<0 0xb290000 0 0x10000>,
-> +				<0 0xb490000 0 0x10000>;
-> +			reg-names = "gmu", "gmu_pdc", "gmu_pdc_seq";
-> +
-> +			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
-> +				   <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "hfi", "gmu";
-> +
-> +			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
-> +			       <&gpucc GPU_CC_CXO_CLK>,
-> +			       <&gcc GCC_DDRSS_GPU_AXI_CLK>,
-> +			       <&gcc GCC_GPU_MEMNOC_GFX_CLK>;
-> +			clock-names = "gmu", "cxo", "axi", "memnoc";
-> +
-> +			power-domains = <&gpucc CX_GDSC>;
-> +
-> +			iommus = <&adreno_smmu 5>;
-> +
-> +			operating-points-v2 = <&gmu_opp_table>;
-
-As above, please drop a few of these empty lines.
-
-Regards,
-Bjorn
-
-> +
-> +			gmu_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-200000000 {
-> +					opp-hz = /bits/ 64 <200000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-> +				};
-> +			};
-> +		};
-> +
->  		apps_smmu: iommu@15000000 {
->  			compatible = "qcom,sc7180-smmu-500", "arm,mmu-500";
->  			reg = <0 0x15000000 0 0x100000>;
-> --
-> 1.9.1
-> 
+-- 
+regards,
+Stan
