@@ -2,198 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D744C12CC68
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 06:00:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 657F712CC6F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 06:00:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725536AbfL3FAZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Dec 2019 00:00:25 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:25934 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725379AbfL3FAZ (ORCPT
+        id S1727169AbfL3FAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Dec 2019 00:00:43 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:19022 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727126AbfL3FAk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Dec 2019 00:00:25 -0500
+        Mon, 30 Dec 2019 00:00:40 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1577682024; h=Content-Transfer-Encoding: Content-Type:
- MIME-Version: Message-ID: Date: Subject: In-Reply-To: References: Cc:
- To: From: Sender; bh=bq9GBo1exy5H5niGUOPp3ceZeVp8DhBy57oRJt6GY54=; b=B/ArEumHf3rsF/s6+JQjJYrThsQfsunRm0Am7CdUlCScM4NnTv7x21A7jkuffHzKIRXdcnu9
- AoMTz01lZjMsc5onBVkdgkpk+3hgVtlpGjgeetkgXsyGQbbqrwqaUI3goYrAtz2lGG+bWA1U
- f5A70ykNVpfx899QOPj47YYJijg=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ s=smtp; t=1577682040; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=NW92puXAkgQ9HjP3tiVheK7NWnsGpPSlSTDUpm/toq0=; b=QJMp7SAqhYV5v1c7Yx6P88QGtZI4uq/aYzC+EigEMF+4143MwHXOmvU2U0uKo7x11eLvVvA1
+ Ul9WhfNiLQj/Xx+gjtVtTh50bVmqgU1OhmmKPMFR83o3yUY3BUBvOjgaYTV72nb5RKzarL5/
+ W0janfDu08DwCXf9a7Q1yZZtISQ=
+X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e09845e.7f4dc71b9f80-smtp-out-n02;
- Mon, 30 Dec 2019 05:00:14 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e098469.7f7754ac5d50-smtp-out-n01;
+ Mon, 30 Dec 2019 05:00:25 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1EE03C433A2; Mon, 30 Dec 2019 05:00:14 +0000 (UTC)
+        id 60B83C447AA; Mon, 30 Dec 2019 05:00:24 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from Pillair (unknown [183.83.68.224])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 53172C433CB;
-        Mon, 30 Dec 2019 05:00:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 53172C433CB
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6D6A5C447A0;
+        Mon, 30 Dec 2019 05:00:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6D6A5C447A0
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=pillair@codeaurora.org
-From:   <pillair@codeaurora.org>
-To:     "'Bjorn Andersson'" <bjorn.andersson@linaro.org>
-Cc:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <1577181575-25788-1-git-send-email-pillair@codeaurora.org> <20191229031416.GK3755841@builder>
-In-Reply-To: <20191229031416.GK3755841@builder>
-Subject: RE: [PATCH v3] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node
-Date:   Mon, 30 Dec 2019 10:29:56 +0530
-Message-ID: <061701d5bece$044b6cd0$0ce24670$@codeaurora.org>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org, srinivas.kandagatla@linaro.org,
+        robh+dt@kernel.org, tsoni@codeaurora.org
+Cc:     agross@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v3 0/3] Introduce Protection Domain Restart (PDR) Helpers
+Date:   Mon, 30 Dec 2019 10:30:05 +0530
+Message-Id: <20191230050008.8143-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.22.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIRwFJlApFoTZl1gTtUmtjwT7YanQH7LU55p0pBkhA=
-Content-Language: en-us
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Qualcomm SoCs (starting with MSM8998) allow for multiple protection
+domains (PDs) to run on the same Q6 sub-system. This allows for
+services like AVS AUDIO to have their own separate address space and
+crash/recover without disrupting the other PDs running on the same Q6
+ADSP. This patch series introduces pdr helper library and adds PD
+tracking functionality for "avs/audio" allowing apr services to register
+themselves asynchronously once the dependent PDs are up.
 
-Thanks for the comments.
-I will post an updated patchset v4 after the patch bringing-in
-"qcom,msa-fixed-perm" is merged/approved.
-I will address all the comments together.
+V3:
+ * patches 2 and 3 remain unchanged.
+ * reset servloc_addr/servreg_addr.
+ * fixup the helpers to handle servloc_work/servreg_work asynchronously.
+ * fixup useage of list_lock across traversals, insertions and deletions.
+ * fixup the helpers to use a single lookup list.
+ * skip waiting for response on ind_ack send.
+ * introduce pdr_servreg_link_create to re-use existing qmi connection to
+   servreg instances. This helps tracking PDs running on the same remote
+   processor.
+ * have a per node curr_state in pdr_list_node to preserve all state
+   updates during indack_cb.
+ * introduce additional servreg_service_state values to help the client
+   distinguish between a fatal and non-fatal pdr_lookup errors.
+ * re-order pdr_handle_release sequence.
+ * fixup "!ind_msg->service_path returns true always" warning.
+ * fixup comments.
 
-Thanks,
-Rakesh Pillai.
+V2:
+ * fixup pd_status callback to return void.
+ * return 0 from pdr_get_domain_list on success.
+ * introduce status_lock to linearize the pd_status reported back
+   to the clients.
+ * use the correct service name length across various string operations
+   performed.
+ * service locator will now schedule the pending lookups registered
+   when it comes up.
+ * other minor cleanups that Bjorn suggested.
+ * use pr_warn to indicate that the wait for service locator timed
+   out.
+ * add Bjorn/Srini's "Reviewed-by" for the dt-bindings.
 
-> -----Original Message-----
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Sent: Sunday, December 29, 2019 8:44 AM
-> To: Rakesh Pillai <pillair@codeaurora.org>
-> Cc: devicetree@vger.kernel.org; linux-arm-msm@vger.kernel.org; linux-
-> kernel@vger.kernel.org; linux-arm-kernel@lists.infradead.org
-> Subject: Re: [PATCH v3] arm64: dts: qcom: sc7180: Add WCN3990 WLAN
-> module device node
-> 
-> On Tue 24 Dec 01:59 PST 2019, Rakesh Pillai wrote:
-> 
-> > Add device node for the ath10k SNOC platform driver probe
-> > and add resources required for WCN3990 on sc7180 soc.
-> >
-> > Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
-> > ---
-> > This change is dependent on the below set of changes
-> > arm64: dts: sc7180: Add qupv3_0 and qupv3_1
-> (https://lore.kernel.org/patchwork/patch/1150367/)
-> 
-> It would be clearer if you linked to the series instead, but it doesn't
-> matter at this point, this is merged already.
-> 
-> What doesn't seem to be merged is the addition of the
-> qcom,msa_fixed_perm property, so I presume I need to hold off on merging
-> this?
-> 
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  5 +++++
-> >  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 28
-> ++++++++++++++++++++++++++++
-> >  2 files changed, 33 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > index 189254f..b2ca143f 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > @@ -248,6 +248,11 @@
-> >  	status = "okay";
-> >  };
-> >
-> > +&wifi {
-> > +	status = "okay";
-> > +	qcom,msa_fixed_perm;
-> 
-> As remarked by Rob, properties should be using - instead of _.
-> 
-> > +};
-> > +
-> >  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
-> >
-> >  &qup_i2c2_default {
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > index 666e9b9..7efb97f 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > @@ -42,6 +42,12 @@
-> >  			compatible = "qcom,cmd-db";
-> >  			no-map;
-> >  		};
-> > +
-> > +		wlan_fw_mem: memory@93900000 {
-> > +			compatible = "removed-dma-pool";
-> > +			no-map;
-> > +			reg = <0 0x93900000 0 0x200000>;
-> > +		};
-> >  	};
-> >
-> >  	cpus {
-> > @@ -1119,6 +1125,28 @@
-> >  				#clock-cells = <1>;
-> >  			};
-> >  		};
-> > +
-> > +		wifi: wifi@18800000 {
-> > +			compatible = "qcom,wcn3990-wifi";
-> > +			reg = <0 0x18800000 0 0x800000>;
-> > +			reg-names = "membase";
-> > +			iommus = <&apps_smmu 0xC0 0x1>;
-> 
-> Lowercase 'c' please.
-> 
-> Regards,
-> Bjorn
-> 
-> > +			interrupts =
-> > +				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0
-> */ >,
-> > +				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1
-> */ >,
-> > +				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2
-> */ >,
-> > +				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3
-> */ >,
-> > +				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4
-> */ >,
-> > +				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5
-> */ >,
-> > +				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6
-> */ >,
-> > +				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7
-> */ >,
-> > +				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8
-> */ >,
-> > +				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9
-> */ >,
-> > +				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10
-> */>,
-> > +				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11
-> */>;
-> > +			memory-region = <&wlan_fw_mem>;
-> > +			status = "disabled";
-> > +		};
-> >  	};
-> >
-> >  	timer {
-> > --
-> > 2.7.4
-> >
-> >
-> > _______________________________________________
-> > linux-arm-kernel mailing list
-> > linux-arm-kernel@lists.infradead.org
-> > http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
+To Do:
+ * Add support for pd tracking in fastrpc driver.
+
+Sibi Sankar (3):
+  soc: qcom: Introduce Protection Domain Restart helpers
+  dt-bindings: soc: qcom: apr: Add protection domain bindings
+  soc: qcom: apr: Add avs/audio tracking functionality
+
+ .../devicetree/bindings/soc/qcom/qcom,apr.txt |  59 ++
+ drivers/soc/qcom/Kconfig                      |   6 +
+ drivers/soc/qcom/Makefile                     |   1 +
+ drivers/soc/qcom/apr.c                        | 100 ++-
+ drivers/soc/qcom/pdr_interface.c              | 709 ++++++++++++++++++
+ drivers/soc/qcom/pdr_internal.h               | 375 +++++++++
+ include/linux/soc/qcom/apr.h                  |   1 +
+ include/linux/soc/qcom/pdr.h                  | 109 +++
+ include/linux/soc/qcom/qmi.h                  |   1 +
+ 9 files changed, 1350 insertions(+), 11 deletions(-)
+ create mode 100644 drivers/soc/qcom/pdr_interface.c
+ create mode 100644 drivers/soc/qcom/pdr_internal.h
+ create mode 100644 include/linux/soc/qcom/pdr.h
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
