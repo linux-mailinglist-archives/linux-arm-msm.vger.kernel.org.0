@@ -2,47 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BF9312D23F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 17:44:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6F2B12D23D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 17:44:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727256AbfL3Qos (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Dec 2019 11:44:48 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35486 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727187AbfL3Qos (ORCPT
+        id S1727187AbfL3Qot (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Dec 2019 11:44:49 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43646 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727235AbfL3Qot (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Dec 2019 11:44:48 -0500
-Received: by mail-wr1-f67.google.com with SMTP id g17so33159107wro.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2019 08:44:45 -0800 (PST)
+        Mon, 30 Dec 2019 11:44:49 -0500
+Received: by mail-wr1-f68.google.com with SMTP id d16so33166812wre.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2019 08:44:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=fUE7vYaM/ILwC1SQip70Pq0/D83Q7w0FggJOaCd6ypQ=;
-        b=sLppxT7UilQJxJWn/IiDlmnil71SEphQBcJkQF79C2E2exgbOAuhzyCVWdPjX5fRac
-         P67vKDYeefSH/iwFWMa5OXL/TyKcSbamvAusH5kk73Bf3Mo1GWGtVvZjMSHhAcGt+TU/
-         qalu7XqixY04MfDG1OqgkmLbR3oVBgRqTvneM2K4k97/E1CVg6RDMalrLIEO5D5oh4e9
-         p0bVW5IRSlVVaYIjPwHifrTQ6zr89/GKJ/2ZLrB+Gmamm7Y305FTOA2g3cr9XyvDOtxS
-         SSg/oqe8y6k4m7tDZfkOao7O6Dbp2n/vFmMCZ1ZUoCW++rP2vJAkRPl0lE0oPEgCiRiG
-         oDmw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=K/OQ1Jgex7gK828pBxgz7p1Ugpl7TPPOgqjJJN6erjc=;
+        b=uBD/SmUIXnUKTE5KwX0F1I6OhqqqypwSUnDdY4MPjN8M95ue/fHwHrde7CJR2UeCaY
+         2GF17mFEL7apj8Alfz9CyFSpnXaztmGasqyvROkYCrrOWtj4VeSAKZ26AQGXa2DquPt5
+         VBV/GFPTB3v5e3TujK2EDf5zO5L0jphujlx9tjlMNRzoUMDkPEVQYz0GR9dkO2s9WxVy
+         8MP1SpAIS5lad6F0vSqEAioW2CJ5sLZDo4Ihr9pNE+jp8ZQuldyWGX7Yb7C89s//gerc
+         0tIlqW5WS9/gYAl0kLAnMCwYkYHwJSOCJpKCAQSWjeqatoBU8B5H82iufARV2AZWPT9Z
+         qA/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=fUE7vYaM/ILwC1SQip70Pq0/D83Q7w0FggJOaCd6ypQ=;
-        b=sxB49Bl6PVJkbEiTnQHix4+d3mf8M+Vzs0sH9mawk0zvMRiw5cDSuMd0i21mnvvoAy
-         9qQD/ANZBW5vSuVid2ELtO8mStqkVG3TLt8TkZmYN+0lz+q6xGvYuite2ihLktE8dHpK
-         HoTvRe1k3Q0nABVDoo44vvRackFyYq/KA/YAzoS3pbXBIKDudIyVnfFAjcnExhwD+KWu
-         fG3Q7yzXm0PL/y21yLe8WNhooW6Vx1Z38qw0CKMNqzrmdkFo5gSypYoQEUd5k7u408Hb
-         S/IJGzmOH/rgTfy7/suu/9/DvE90+tBo7EAeZY/D5uM+KDbkCX4DlZscfpZoHPLEG84/
-         N7XQ==
-X-Gm-Message-State: APjAAAUech+qSHqSytuztc4VeU438aTY7u0klgMe6QZPmj803OFyZZAp
-        d6POdm87B1FVvFoRyIiei8GkOg==
-X-Google-Smtp-Source: APXvYqzliieArciTvepyNqx7sa9enJFXgJYOOZ9MaVptOuVFVSZ936VwzyVoyQwsBRDq/WE82h2UXw==
-X-Received: by 2002:adf:9c8a:: with SMTP id d10mr67091135wre.156.1577724284639;
-        Mon, 30 Dec 2019 08:44:44 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=K/OQ1Jgex7gK828pBxgz7p1Ugpl7TPPOgqjJJN6erjc=;
+        b=la/wT8LkfJ80Czt96b/bU3jBEX20SZ4+0fWI/SbiOc8b2LfJ6B4G0Dzx/20UBaSEYm
+         rWwlYhq6OQp16u+O+WU4wBqT8YJT90x0rDWakoSORJDfvNZPfgI93zNtDSgcCJI4qeku
+         +YHAAXOe0ArCUgyMLiNNu+YgofCH3r3SalfBRndPoXM6jOcaZtomDmOT7Sx42uI+cF3H
+         wgXi4kyksbXGv2+mViVQAyiJcuuJrE4s56bvuHZc6yu4GzKN1Qcc5oCNhC0At6UZ9mVD
+         XEG+vZWL73Q7t3yKOjXIRJrO+40qdHKXI8+n+7JqelfbMS07Gepmt71cdMpXkFVeJZK7
+         2q9A==
+X-Gm-Message-State: APjAAAU5FsG60+q4Lx0IrjpL9vIy/HDhqW04l89MLICyY04tONSVl6oT
+        ukOsMVWeNmJGGOkzLUBUm2V8LQ==
+X-Google-Smtp-Source: APXvYqwiWM7LFoy8NA5bMURgt+xSgFjUPcEWPgklmbuboLMKUV7ZdpEOO/yPuC9BfMlIxUf/eq4N9g==
+X-Received: by 2002:a5d:5381:: with SMTP id d1mr10999451wrv.259.1577724285766;
+        Mon, 30 Dec 2019 08:44:45 -0800 (PST)
 Received: from linaro.org ([2a00:23c5:6815:3901:a1cf:b00b:5683:ed40])
-        by smtp.gmail.com with ESMTPSA id r62sm22276842wma.32.2019.12.30.08.44.43
+        by smtp.gmail.com with ESMTPSA id r62sm22276842wma.32.2019.12.30.08.44.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Dec 2019 08:44:44 -0800 (PST)
+        Mon, 30 Dec 2019 08:44:45 -0800 (PST)
 From:   Mike Leach <mike.leach@linaro.org>
 To:     linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
         coresight@lists.linaro.org, linux-doc@vger.kernel.org
@@ -51,272 +52,252 @@ Cc:     linux-arm-msm@vger.kernel.org, mathieu.poirier@linaro.org,
         liviu.dudau@arm.com, sudeep.holla@arm.com,
         lorenzo.pieralisi@arm.com, agross@kernel.org, corbet@lwn.net,
         Mike Leach <mike.leach@linaro.org>
-Subject: [PATCH v7 13/15] docs: coresight: Update documentation for CoreSight to cover CTI.
-Date:   Mon, 30 Dec 2019 16:44:40 +0000
-Message-Id: <20191230164441.28375-1-mike.leach@linaro.org>
+Subject: [PATCH v7 14/15] docs: sysfs: coresight: Add sysfs ABI documentation for CTI
+Date:   Mon, 30 Dec 2019 16:44:41 +0000
+Message-Id: <20191230164441.28375-2-mike.leach@linaro.org>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20191230164441.28375-1-mike.leach@linaro.org>
+References: <20191230164441.28375-1-mike.leach@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add new document covering CTI / CTM usage in CoreSight.
-
-Add section in coresight.rst introducing CTI and CTM modules with link
-to new document.
+Add API usage document for sysfs API in CTI driver.
 
 Signed-off-by: Mike Leach <mike.leach@linaro.org>
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 ---
- .../trace/coresight/coresight-ect.rst         | 211 ++++++++++++++++++
- Documentation/trace/coresight/coresight.rst   |  13 ++
- 2 files changed, 224 insertions(+)
- create mode 100644 Documentation/trace/coresight/coresight-ect.rst
+ .../testing/sysfs-bus-coresight-devices-cti   | 221 ++++++++++++++++++
+ 1 file changed, 221 insertions(+)
+ create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
 
-diff --git a/Documentation/trace/coresight/coresight-ect.rst b/Documentation/trace/coresight/coresight-ect.rst
+diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti b/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
 new file mode 100644
-index 000000000000..3e06588f24fa
+index 000000000000..5ed54d196a17
 --- /dev/null
-+++ b/Documentation/trace/coresight/coresight-ect.rst
-@@ -0,0 +1,211 @@
-+=============================================
-+CoreSight Embedded Cross Trigger (CTI & CTM).
-+=============================================
++++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
+@@ -0,0 +1,221 @@
++What:		/sys/bus/coresight/devices/<cti-name>/enable
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(RW) Enable/Disable the CTI hardware.
 +
-+    :Author:   Mike Leach <mike.leach@linaro.org>
-+    :Date:     November 2019
++What:		/sys/bus/coresight/devices/<cti-name>/ctmid
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(R) Display the associated CTM ID
 +
-+Hardware Description
-+--------------------
++What:		/sys/bus/coresight/devices/<cti-name>/nr_trigger_cons
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(R) Number of devices connected to triggers on this CTI
 +
-+The CoreSight Cross Trigger Interface (CTI) is a hardware device that takes
-+individual input and output hardware signals known as triggers to and from
-+devices and interconnects them via the Cross Trigger Matrix (CTM) to other
-+devices via numbered channels, in order to propagate events between devices.
++What:		/sys/bus/coresight/devices/<cti-name>/triggers<N>/name
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(R) Name of connected device <N>
 +
-+e.g.::
++What:		/sys/bus/coresight/devices/<cti-name>/triggers<N>/in_signals
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(R) Input trigger signals from connected device <N>
 +
-+ 0000000  in_trigs  :::::::
-+ 0 C   0----------->:     :             +======>(other CTI channel IO)
-+ 0  P  0<-----------:     :             v
-+ 0   U 0  out_trigs :     : Channels  *****      :::::::
-+ 0000000            : CTI :<=========>*CTM*<====>: CTI :---+
-+ #######  in_trigs  :     : (id 0-3)  *****      :::::::   v
-+ # ETM #----------->:     :                         ^   #######
-+ #     #<-----------:     :                         +---# ETR #
-+ ####### out_trigs  :::::::                             #######
++What:		/sys/bus/coresight/devices/<cti-name>/triggers<N>/in_types
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(R) Functional types for the input trigger signals
++		from connected device <N>
 +
-+The CTI driver enables the programming of the CTI to attach triggers to
-+channels. When an input trigger becomes active, the attached channel will
-+become active. Any output trigger attached to that channel will also
-+become active. The active channel is propagated to other CTIs via the CTM,
-+activating connected output triggers there, unless filtered by the CTI
-+channel gate.
++What:		/sys/bus/coresight/devices/<cti-name>/triggers<N>/out_signals
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(R) Output trigger signals to connected device <N>
 +
-+It is also possible to activate a channel using system software directly
-+programming registers in the CTI.
++What:		/sys/bus/coresight/devices/<cti-name>/triggers<N>/out_types
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(R) Functional types for the output trigger signals
++		to connected device <N>
 +
-+The CTIs are registered by the system to be associated with CPUs and/or other
-+CoreSight devices on the trace data path. When these devices are enabled the
-+attached CTIs will also be enabled. By default/on power up the CTIs have
-+no programmed trigger/channel attachments, so will not affect the system
-+until explicitly programmed.
++What:		/sys/bus/coresight/devices/<cti-name>/regs/inout_sel
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(RW) Select the index for inen and outen registers.
 +
-+The hardware trigger connections between CTIs and devices is implementation
-+defined, unless the CPU/ETM combination is a v8 architecture, in which case
-+the connections have an architecturally defined standard layout.
++What:		/sys/bus/coresight/devices/<cti-name>/regs/inen
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(RW) Read or write the CTIINEN register selected by inout_sel.
 +
-+The hardware trigger signals can also be connected to non-CoreSight devices
-+(e.g. UART), or be propagated off chip as hardware IO lines.
++What:		/sys/bus/coresight/devices/<cti-name>/regs/outen
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(RW) Read or write the CTIOUTEN register selected by inout_sel.
 +
-+All the CTI devices are associated with a CTM. On many systems there will be a
-+single effective CTM (one CTM, or multiple CTMs all interconnected), but it is
-+possible that systems can have nets of CTIs+CTM that are not interconnected by
-+a CTM to each other. On these systems a CTM index is declared to associate
-+CTI devices that are interconnected via a given CTM.
++What:		/sys/bus/coresight/devices/<cti-name>/regs/gate
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(RW) Read or write CTIGATE register.
 +
-+Sysfs files and directories
-+---------------------------
++What:		/sys/bus/coresight/devices/<cti-name>/regs/asicctl
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(RW) Read or write ASICCTL register.
 +
-+The CTI devices appear on the existing CoreSight bus alongside the other
-+CoreSight devices::
++What:		/sys/bus/coresight/devices/<cti-name>/regs/intack
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(W) Write the INTACK register.
 +
-+    >$ ls /sys/bus/coresight/devices
-+     cti_cpu0  cti_cpu2  cti_sys0  etm0  etm2  funnel0  replicator0  tmc_etr0
-+     cti_cpu1  cti_cpu3  cti_sys1  etm1  etm3  funnel1  tmc_etf0     tpiu0
++What:		/sys/bus/coresight/devices/<cti-name>/regs/appset
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(RW) Set CTIAPPSET register to activate channel. Read back to
++		determine current value of register.
 +
-+The ``cti_cpu<N>`` named CTIs are associated with a CPU, and any ETM used by
-+that core. the ``cti_sys<N>`` CTIs are general system infrastructure CTIs that
-+can be associated with other CoreSight devices, or other system hardware
-+capable of generating or using trigger signals.::
++What:		/sys/bus/coresight/devices/<cti-name>/regs/appclear
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(W) Write APPCLEAR register to deactivate channel.
 +
-+  >$ ls /sys/bus/coresight/devices/etm0/cti_cpu0
-+  channels  ctmid  enable  nr_trigger_cons mgmt  power  regs  subsystem
-+  triggers0 triggers1  uevent
++What:		/sys/bus/coresight/devices/<cti-name>/regs/apppulse
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(W) Write APPPULSE to pulse a channel active for one clock
++		cycle.
 +
-+*Key file items are:-*
-+   * ``enable``: enables/disables the CTI.
-+   * ``ctmid`` : associated CTM - only relevant if system has multiple CTI+CTM
-+     clusters that are not interconnected.
-+   * ``nr_trigger_cons`` : total connections - triggers<N> directories.
++What:		/sys/bus/coresight/devices/<cti-name>/regs/chinstatus
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(R) Read current status of channel inputs.
 +
-+*Sub-directories:-*
-+   * ``triggers<N>``: contains list of triggers for an individual connection.
-+   * ``channels``: Contains the channel API - CTI main programming interface.
-+   * ``regs``: Gives access to the raw programmable CTI regs.
-+   * ``mgmt``: the standard CoreSight management registers.
++What:		/sys/bus/coresight/devices/<cti-name>/regs/choutstatus
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(R) read current status of channel outputs.
 +
++What:		/sys/bus/coresight/devices/<cti-name>/regs/triginstatus
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(R) read current status of input trigger signals
 +
-+triggers<N> directories
-+~~~~~~~~~~~~~~~~~~~~~~~
++What:		/sys/bus/coresight/devices/<cti-name>/regs/trigoutstatus
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(R) read current status of output trigger signals.
 +
-+Individual trigger connection information. This describes trigger signals for
-+CoreSight and non-CoreSight connections.
++What:		/sys/bus/coresight/devices/<cti-name>/channels/trigin_attach
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(W) Attach a CTI input trigger to a CTM channel.
 +
-+Each triggers directory has a set of parameters describing the triggers for
-+the connection.
++What:		/sys/bus/coresight/devices/<cti-name>/channels/trigin_detach
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(W) Detach a CTI input trigger from a CTM channel.
 +
-+   * ``name`` : name of connection
-+   * ``in_signals`` : input trigger signal indexes used in this connection.
-+   * ``in_types`` : functional types for in signals.
-+   * ``out_signals`` : output trigger signals for this connection.
-+   * ``out_types`` : functional types for out signals.
++What:		/sys/bus/coresight/devices/<cti-name>/channels/trigout_attach
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(W) Attach a CTI output trigger to a CTM channel.
 +
-+e.g::
++What:		/sys/bus/coresight/devices/<cti-name>/channels/trigout_detach
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(W) Detach a CTI output trigger from a CTM channel.
 +
-+    >$ ls ./cti_cpu0/triggers0/
-+    in_signals  in_types  name  out_signals  out_types
-+    >$ cat ./cti_cpu0/triggers0/name
-+    cpu0
-+    >$ cat ./cti_cpu0/triggers0/out_signals
-+    0-2
-+    >$ cat ./cti_cpu0/triggers0/out_types
-+    pe_edbgreq pe_dbgrestart pe_ctiirq
-+    >$ cat ./cti_cpu0/triggers0/in_signals
-+    0-1
-+    >$ cat ./cti_cpu0/triggers0/in_types
-+    pe_dbgtrigger pe_pmuirq
++What:		/sys/bus/coresight/devices/<cti-name>/channels/chan_gate_enable
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(RW) Enable CTIGATE for single channel (W) or list enabled
++		channels through the gate (R).
 +
-+If a connection has zero signals in either the 'in' or 'out' triggers then
-+those parameters will be omitted.
++What:		/sys/bus/coresight/devices/<cti-name>/channels/chan_gate_disable
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(W) Disable CTIGATE for single channel.
 +
-+Channels API Directory
-+~~~~~~~~~~~~~~~~~~~~~~
++What:		/sys/bus/coresight/devices/<cti-name>/channels/chan_set
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(W) Activate a single channel.
 +
-+This provides an easy way to attach triggers to channels, without needing
-+the multiple register operations that are required if manipulating the
-+'regs' sub-dir elements directly.
++What:		/sys/bus/coresight/devices/<cti-name>/channels/chan_clear
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(W) Deactivate a single channel.
 +
-+A number of files provide this API::
++What:		/sys/bus/coresight/devices/<cti-name>/channels/chan_pulse
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(W) Pulse a single channel - activate for a single clock cycle.
 +
-+   >$ ls ./cti_sys0/channels/
-+   chan_clear         chan_inuse         chan_xtrigs_view      trigin_detach
-+   chan_free          chan_pulse         chan_xtrigs_view_sel  trigout_attach
-+   chan_gate_disable  chan_set           trig_filter_enable    trigout_detach
-+   chan_gate_enable   chan_xtrigs_reset  trigin_attach         trigout_filtered
++What:		/sys/bus/coresight/devices/<cti-name>/channels/trigout_filtered
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(R) List of output triggers filtered across all connections.
 +
-+Most access to these elements take the form::
++What:		/sys/bus/coresight/devices/<cti-name>/channels/trig_filter_enable
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(RW) Enable or disable trigger output signal filtering.
 +
-+  echo <chan> [<trigger>] > /<device_path>/<operation>
++What:		/sys/bus/coresight/devices/<cti-name>/channels/chan_inuse
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(R) show channels with at least one attached trigger signal.
 +
-+where the optional <trigger> is only needed for trigXX_attach | detach
-+operations.
++What:		/sys/bus/coresight/devices/<cti-name>/channels/chan_free
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(R) show channels with no attached trigger signals.
 +
-+e.g.::
++What:		/sys/bus/coresight/devices/<cti-name>/channels/chan_xtrigs_view
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(RW) Write channel number to select a channel to view, read to
++		see triggers attached to selected channel on this CTI.
 +
-+   >$ echo 0 1 > ./cti_sys0/channels/trigout_attach
-+   >$ echo 0 > ./cti_sys0/channels/chan_set
-+
-+Attaches trigout(1) to channel(0), then activates channel(0) generating a
-+set state on cti_sys0.trigout(1)
-+
-+
-+*API operations*
-+
-+   * ``trigin_attach, trigout_attach``: Attach a channel to a trigger signal.
-+   * ``trigin_detach, trigout_detach``: Detach a channel from a trigger signal.
-+   * ``chan_set``: Set the channel - the set state will be propagated around
-+     the CTM to other connected devices.
-+   * ``chan_clear``: Clear the channel.
-+   * ``chan_pulse``: Set the channel for a single CoreSight clock cycle.
-+   * ``chan_gate_enable``: Write operation sets the CTI gate to propagate
-+     (enable) the channel to other devices. This operation takes a channel
-+     number. CTI gate is enabled for all channels by default at power up. Read
-+     to list the currently enabled channels on the gate.
-+   * ``chan_gate_disable``: Write channel number to disable gate for that
-+     channel.
-+   * ``chan_inuse``: Show the current channels attached to any signal
-+   * ``chan_free``: Show channels with no attached signals.
-+   * ``chan_xtrig_view``: write a channel number to select a channel to view,
-+     read to show the cross triggers programmed for the selected channel.
-+   * ``trig_filter_enable``: Defaults to enabled, disable to allow potentially
-+     dangerous output signals to be set.
-+   * ``trigout_filtered``: Trigger out signals that are prevented from being
-+     set if filtering ``trig_filter_enable`` is enabled. One use is to prevent
-+     accidental ``EDBGREQ`` signals stopping a core.
-+   * ``chan_xtrigs_reset``: Write 1 to clear all channel / trigger programming.
-+     Resets device hardware to default state.
-+
-+
-+The example below attaches input trigger index 1 to channel 2, and output
-+trigger index 6 to the same channel. It then examines the state of the
-+channel / trigger connections using the appropriate sysfs attributes.
-+
-+The settings mean that if either input trigger 1, or channel 2 go active then
-+trigger out 6 will go active. We then enable the CTI, and use the software
-+channel control to activate channel 2. We see the active channel on the
-+``choutstatus`` register and the active signal on the ``trigoutstatus``
-+register. Finally clearing the channel removes this.
-+
-+e.g.::
-+
-+   .../cti_sys0/channels# echo 2 1 > trigin_attach
-+   .../cti_sys0/channels# echo 2 6 > trigout_attach
-+   .../cti_sys0/channels# cat chan_free
-+   0-1,3
-+   .../cti_sys0/channels# cat chan_inuse
-+   2
-+   .../cti_sys0/channels# echo 2 > chan_xtrigs_view
-+   .../cti_sys0/channels# cat chan_xtrigs_view
-+   [2] IN: 1 OUT: 6
-+   .../cti_sys0/# echo 1 > enable
-+   .../cti_sys0/channels# echo 2 > chan_set
-+   .../cti_sys0/channels# cat ../regs/choutstatus
-+   0x4
-+   .../cti_sys0/channels# cat ../regs/trigoutstatus
-+   0x40
-+   .../cti_sys0/channels# echo 2 > chan_clear
-+   .../cti_sys0/channels# cat ../regs/trigoutstatus
-+   0x0
-+   .../cti_sys0/channels# cat ../regs/choutstatus
-+   0x0
-diff --git a/Documentation/trace/coresight/coresight.rst b/Documentation/trace/coresight/coresight.rst
-index a566719f8e7e..108600ee1e12 100644
---- a/Documentation/trace/coresight/coresight.rst
-+++ b/Documentation/trace/coresight/coresight.rst
-@@ -491,8 +491,21 @@ interface provided for that purpose by the generic STM API::
- 
- Details on how to use the generic STM API can be found here:- :doc:`../stm` [#second]_.
- 
-+The CTI & CTM Modules
-+---------------------
-+
-+The CTI (Cross Trigger Interface) provides a set of trigger signals between
-+individual CTIs and components, and can propagate these between all CTIs via
-+channels on the CTM (Cross Trigger Matrix).
-+
-+A separate documentation file is provided to explain the use of these devices.
-+(:doc:`coresight-ect`) [#fourth]_.
-+
-+
- .. [#first] Documentation/ABI/testing/sysfs-bus-coresight-devices-stm
- 
- .. [#second] Documentation/trace/stm.rst
- 
- .. [#third] https://github.com/Linaro/perf-opencsd
-+
-+.. [#fourth] Documentation/trace/coresight/coresight-ect.rst
++What:		/sys/bus/coresight/devices/<cti-name>/channels/chan_xtrigs_reset
++Date:		Jan 2020
++KernelVersion	5.6
++Contact:	Mike Leach or Mathieu Poirier
++Description:	(W) Clear all channel / trigger programming.
 -- 
 2.17.1
 
