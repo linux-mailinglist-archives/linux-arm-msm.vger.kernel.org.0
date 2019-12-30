@@ -2,37 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D03D912CBCC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 03:01:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1A5812CBC8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 03:01:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726798AbfL3CBL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Dec 2019 21:01:11 -0500
-Received: from onstation.org ([52.200.56.107]:37582 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726343AbfL3CBI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1726654AbfL3CBI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sun, 29 Dec 2019 21:01:08 -0500
+Received: from onstation.org ([52.200.56.107]:37594 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726653AbfL3CBH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 29 Dec 2019 21:01:07 -0500
 Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 80B7B3EE7A;
+        by onstation.org (Postfix) with ESMTPSA id E0EE13F262;
         Mon, 30 Dec 2019 02:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1577671266;
+        s=default; t=1577671267;
         bh=t0PObDLzsPhcqnRoun2t4cn7CK8IaaEUsOLL32hsp+A=;
-        h=From:To:Cc:Subject:Date:From;
-        b=hAmoq4Npmz3/1IQcX+qOctett7tt7TPaPFnCTIYg2L4+yaM0wk7VV2rrH85EtNsy/
-         AlF/nGb/YkJxqKzRKxv+x14HYwOwENwdBDvGfrnT/xnO1FVuXzO3tNN8BoUvAFh83T
-         6pTNrklhEV5bUK409DI2L7LOlxWMvPDu18MuWTfU=
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=kZENiB83tEIEqiyvYfxpIm/AUe9rYXindPV5Wc6UPLe9ALgOWZg6dxrxcj10b/Mak
+         eUtBxlHssLnK5FzNqOCzVypYY11Ut1p0uiiTWL1rxxle/dCfv0tHipu1/ikpdbaqMz
+         NZJxJji08Tv2ZcOLQEp33HWAX9RDYlF5m3OousJA=
 From:   Brian Masney <masneyb@onstation.org>
 To:     jeffrey.l.hugo@gmail.com, robdclark@gmail.com
 Cc:     freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         sean@poorly.run
 Subject: [PATCH RFC v2] drm/msm/mdp5: enable autorefresh
-Date:   Sun, 29 Dec 2019 21:00:52 -0500
-Message-Id: <20191230020053.26016-1-masneyb@onstation.org>
+Date:   Sun, 29 Dec 2019 21:00:53 -0500
+Message-Id: <20191230020053.26016-2-masneyb@onstation.org>
 X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20191230020053.26016-1-masneyb@onstation.org>
+References: <20191230020053.26016-1-masneyb@onstation.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
