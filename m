@@ -2,41 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F1F3F12CC77
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 06:00:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B5E812CC78
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 06:00:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727218AbfL3FAv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Dec 2019 00:00:51 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:25934 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727187AbfL3FAu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1727201AbfL3FAu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 30 Dec 2019 00:00:50 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:16577 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727189AbfL3FAt (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Dec 2019 00:00:49 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1577682050; h=Content-Transfer-Encoding: MIME-Version:
+ s=smtp; t=1577682048; h=Content-Transfer-Encoding: MIME-Version:
  References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=r7+777Bq/auiINnXBCY0CkWxtdqQsdfrcvKYf1wNfLY=; b=oYjMwO6XIGH61ihs1K+6cfmwgBPHImrbLuFfVNrhMAJGGnk9SEk3hv1hvuBHIVYn/z4I4Y6L
- LCJJo1h41gLvJmgHdoSNT+3pAqZ9uXROq8JgqvNjVnt1RRAI7Wj4BEvc7jR7GGSGfIeb9vo7
- cGuAHmcCb/U3ab4bM2DVxxDLonw=
+ Sender; bh=vuuqJ73RYNPZB5++9ydg1fEs2W+tW/hjcTRH47X7J18=; b=LRxE4HB+qVBbzZd4aWXWCtTSD6e/sjpNBi4l6LaR/IWIr8cUYVf7HO5aXbQRF5MzJtVG3ubf
+ S1km7ir1CN3u73l/+gph+GNR1qS1OXKkAqU35Q/cAqiU3VsTCmUPhsdQGG/LZNC9odGqppUP
+ A4JoKvUkewhTmTx6whZ9YC/XooI=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e098472.7fc6d23f1e30-smtp-out-n01;
- Mon, 30 Dec 2019 05:00:34 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e098475.7ff4dcc09f48-smtp-out-n01;
+ Mon, 30 Dec 2019 05:00:37 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 24E6BC447AB; Mon, 30 Dec 2019 05:00:33 +0000 (UTC)
+        id B78FDC447AD; Mon, 30 Dec 2019 05:00:36 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F00ECC447AE;
-        Mon, 30 Dec 2019 05:00:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F00ECC447AE
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E50E0C447B2;
+        Mon, 30 Dec 2019 05:00:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E50E0C447B2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
 From:   Sibi Sankar <sibis@codeaurora.org>
@@ -46,9 +46,9 @@ Cc:     agross@kernel.org, mark.rutland@arm.com,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH v3 2/3] dt-bindings: soc: qcom: apr: Add protection domain bindings
-Date:   Mon, 30 Dec 2019 10:30:07 +0530
-Message-Id: <20191230050008.8143-3-sibis@codeaurora.org>
+Subject: [PATCH v3 3/3] soc: qcom: apr: Add avs/audio tracking functionality
+Date:   Mon, 30 Dec 2019 10:30:08 +0530
+Message-Id: <20191230050008.8143-4-sibis@codeaurora.org>
 X-Mailer: git-send-email 2.22.1
 In-Reply-To: <20191230050008.8143-1-sibis@codeaurora.org>
 References: <20191230050008.8143-1-sibis@codeaurora.org>
@@ -59,91 +59,211 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add optional "qcom,protection-domain" bindings for APR services. This
-helps to capture the dependencies between APR services and the PD on
-which each apr service run.
+Use PDR helper functions to track the protection domains that the apr
+services are dependent upon on SDM845 SoC, specifically the "avs/audio"
+service running on ADSP Q6.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 ---
- .../devicetree/bindings/soc/qcom/qcom,apr.txt | 59 +++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ drivers/soc/qcom/Kconfig     |   1 +
+ drivers/soc/qcom/apr.c       | 100 +++++++++++++++++++++++++++++++----
+ include/linux/soc/qcom/apr.h |   1 +
+ 3 files changed, 91 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
-index db501269f47b8..f87c0b2a48de4 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.txt
-@@ -45,6 +45,12 @@ by the individual bindings for the specific service
- 			12 - Ultrasound stream manager.
- 			13 - Listen stream manager.
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index 5c4e76837f59b..cacfed945b275 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -202,6 +202,7 @@ config QCOM_APR
+ 	tristate "Qualcomm APR Bus (Asynchronous Packet Router)"
+ 	depends on ARCH_QCOM || COMPILE_TEST
+ 	depends on RPMSG
++	select QCOM_PDR_HELPERS
+ 	help
+           Enable APR IPC protocol support between
+           application processor and QDSP6. APR is
+diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
+index 4fcc32420c474..5234426718e88 100644
+--- a/drivers/soc/qcom/apr.c
++++ b/drivers/soc/qcom/apr.c
+@@ -11,6 +11,7 @@
+ #include <linux/workqueue.h>
+ #include <linux/of_device.h>
+ #include <linux/soc/qcom/apr.h>
++#include <linux/soc/qcom/pdr.h>
+ #include <linux/rpmsg.h>
+ #include <linux/of.h>
  
-+- qcom,protection-domain
-+	Usage: optional
-+	Value type: <stringlist>
-+	Definition: Must list the protection domain service name and path
-+		    that the particular apr service has a dependency on.
+@@ -21,6 +22,7 @@ struct apr {
+ 	spinlock_t rx_lock;
+ 	struct idr svcs_idr;
+ 	int dest_domain_id;
++	struct pdr_handle pdr;
+ 	struct workqueue_struct *rxwq;
+ 	struct work_struct rx_work;
+ 	struct list_head rx_list;
+@@ -289,6 +291,9 @@ static int apr_add_device(struct device *dev, struct device_node *np,
+ 		  id->svc_id + 1, GFP_ATOMIC);
+ 	spin_unlock(&apr->svcs_lock);
+ 
++	of_property_read_string_index(np, "qcom,protection-domain",
++				      1, &adev->service_path);
 +
- = EXAMPLE
- The following example represents a QDSP based sound card on a MSM8996 device
- which uses apr as communication between Apps and QDSP.
-@@ -82,3 +88,56 @@ which uses apr as communication between Apps and QDSP.
- 			...
- 		};
- 	};
+ 	dev_info(dev, "Adding APR dev: %s\n", dev_name(&adev->dev));
+ 
+ 	ret = device_register(&adev->dev);
+@@ -300,14 +305,56 @@ static int apr_add_device(struct device *dev, struct device_node *np,
+ 	return ret;
+ }
+ 
+-static void of_register_apr_devices(struct device *dev)
++static void of_apr_add_pd_lookups(struct device *dev)
+ {
++	const char *service_name, *service_path;
+ 	struct apr *apr = dev_get_drvdata(dev);
+ 	struct device_node *node;
++	int ret;
 +
-+= EXAMPLE 2
-+The following example represents a QDSP based sound card on SDM845 device.
-+Here the apr services are dependent on "avs/audio" service running on AUDIO
-+Protection Domain hosted on ADSP remote processor.
++	for_each_child_of_node(dev->of_node, node) {
++		ret = of_property_read_string_index(node, "qcom,protection-domain",
++						    0, &service_name);
++		if (ret < 0)
++			continue;
 +
-+	apr {
-+		compatible = "qcom,apr-v2";
-+		qcom,glink-channels = "apr_audio_svc";
-+		qcom,apr-domain = <APR_DOMAIN_ADSP>;
++		ret = of_property_read_string_index(node, "qcom,protection-domain",
++						    1, &service_path);
++		if (ret < 0)
++			continue;
 +
-+		q6core {
-+			compatible = "qcom,q6core";
-+			reg = <APR_SVC_ADSP_CORE>;
-+			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
-+		};
++		ret = pdr_add_lookup(&apr->pdr, service_name, service_path);
++		if (ret && ret != -EALREADY)
++			dev_err(dev, "pdr add lookup failed: %d\n", ret);
++	}
++}
 +
-+		q6afe: q6afe {
-+			compatible = "qcom,q6afe";
-+			reg = <APR_SVC_AFE>;
-+			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
-+			q6afedai: dais {
-+				compatible = "qcom,q6afe-dais";
-+				#sound-dai-cells = <1>;
++static void of_register_apr_devices(struct device *dev, const char *svc_path)
++{
++	struct apr *apr = dev_get_drvdata(dev);
++	struct device_node *node;
++	const char *service_path;
++	int ret;
+ 
+ 	for_each_child_of_node(dev->of_node, node) {
+ 		struct apr_device_id id = { {0} };
+ 
++		ret = of_property_read_string_index(node, "qcom,protection-domain",
++						    1, &service_path);
++		if (svc_path) {
++			/* skip APR services that are PD independent */
++			if (ret)
++				continue;
 +
-+				qi2s@22 {
-+					reg = <22>;
-+					qcom,sd-lines = <3>;
-+				};
-+			};
-+		};
++			/* skip APR services whose PD paths don't match */
++			if (strcmp(service_path, svc_path))
++				continue;
++		} else {
++			/* skip APR services whose PD lookups are registered */
++			if (ret == 0)
++				continue;
++		}
 +
-+		q6asm: q6asm {
-+			compatible = "qcom,q6asm";
-+			reg = <APR_SVC_ASM>;
-+			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
-+			q6asmdai: dais {
-+				compatible = "qcom,q6asm-dais";
-+				#sound-dai-cells = <1>;
-+				iommus = <&apps_smmu 0x1821 0x0>;
-+			};
-+		};
+ 		if (of_property_read_u32(node, "reg", &id.svc_id))
+ 			continue;
+ 
+@@ -318,6 +365,35 @@ static void of_register_apr_devices(struct device *dev)
+ 	}
+ }
+ 
++static int apr_remove_device(struct device *dev, void *svc_path)
++{
++	struct apr_device *adev = to_apr_device(dev);
 +
-+		q6adm: q6adm {
-+			compatible = "qcom,q6adm";
-+			reg = <APR_SVC_ADM>;
-+			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
-+			q6routing: routing {
-+				compatible = "qcom,q6adm-routing";
-+				#sound-dai-cells = <0>;
-+			};
-+		};
-+	};
++	if (svc_path) {
++		if (!strcmp(adev->service_path, (char *)svc_path))
++			device_unregister(&adev->dev);
++	} else {
++		device_unregister(&adev->dev);
++	}
++
++	return 0;
++}
++
++static void apr_pd_status(struct pdr_handle *pdr, struct pdr_service *pds)
++{
++	struct apr *apr = container_of(pdr, struct apr, pdr);
++
++	switch (pds->state) {
++	case SERVREG_SERVICE_STATE_UP:
++		of_register_apr_devices(apr->dev, pds->service_path);
++		break;
++	case SERVREG_SERVICE_STATE_DOWN:
++		device_for_each_child(apr->dev, pds->service_path,
++				      apr_remove_device);
++		break;
++	}
++}
++
+ static int apr_probe(struct rpmsg_device *rpdev)
+ {
+ 	struct device *dev = &rpdev->dev;
+@@ -337,26 +413,27 @@ static int apr_probe(struct rpmsg_device *rpdev)
+ 	dev_set_drvdata(dev, apr);
+ 	apr->ch = rpdev->ept;
+ 	apr->dev = dev;
++
+ 	apr->rxwq = create_singlethread_workqueue("qcom_apr_rx");
+ 	if (!apr->rxwq) {
+ 		dev_err(apr->dev, "Failed to start Rx WQ\n");
+ 		return -ENOMEM;
+ 	}
+ 	INIT_WORK(&apr->rx_work, apr_rxwq);
++
++	ret = pdr_handle_init(&apr->pdr, apr_pd_status);
++	if (ret) {
++		dev_err(dev, "Failed to init PDR handle\n");
++		destroy_workqueue(apr->rxwq);
++		return ret;
++	}
++
+ 	INIT_LIST_HEAD(&apr->rx_list);
+ 	spin_lock_init(&apr->rx_lock);
+ 	spin_lock_init(&apr->svcs_lock);
+ 	idr_init(&apr->svcs_idr);
+-	of_register_apr_devices(dev);
+-
+-	return 0;
+-}
+-
+-static int apr_remove_device(struct device *dev, void *null)
+-{
+-	struct apr_device *adev = to_apr_device(dev);
+-
+-	device_unregister(&adev->dev);
++	of_apr_add_pd_lookups(dev);
++	of_register_apr_devices(dev, NULL);
+ 
+ 	return 0;
+ }
+@@ -365,6 +442,7 @@ static void apr_remove(struct rpmsg_device *rpdev)
+ {
+ 	struct apr *apr = dev_get_drvdata(&rpdev->dev);
+ 
++	pdr_handle_release(&apr->pdr);
+ 	device_for_each_child(&rpdev->dev, NULL, apr_remove_device);
+ 	flush_workqueue(apr->rxwq);
+ 	destroy_workqueue(apr->rxwq);
+diff --git a/include/linux/soc/qcom/apr.h b/include/linux/soc/qcom/apr.h
+index c5d52e2cb275f..7f0bc3cf4d610 100644
+--- a/include/linux/soc/qcom/apr.h
++++ b/include/linux/soc/qcom/apr.h
+@@ -85,6 +85,7 @@ struct apr_device {
+ 	uint16_t	domain_id;
+ 	uint32_t	version;
+ 	char name[APR_NAME_SIZE];
++	const char *service_path;
+ 	spinlock_t	lock;
+ 	struct list_head node;
+ };
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
