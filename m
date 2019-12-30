@@ -2,47 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 66DEB12D22F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 17:43:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C1F7D12D22D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 17:43:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727163AbfL3QnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Dec 2019 11:43:17 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:34416 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727123AbfL3QnR (ORCPT
+        id S1727175AbfL3QnQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Dec 2019 11:43:16 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43357 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727146AbfL3QnQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Dec 2019 11:43:17 -0500
-Received: by mail-wm1-f68.google.com with SMTP id c127so241866wme.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2019 08:43:13 -0800 (PST)
+        Mon, 30 Dec 2019 11:43:16 -0500
+Received: by mail-wr1-f66.google.com with SMTP id d16so33162212wre.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2019 08:43:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=Dz/cJdELPmJrnmCn4UxPzGvH13yuPY2C0/ICULwwhGw=;
-        b=VQtYagzM+yngF/L3lu+6OWySz8XhGj9QJXNjO7n4SI2NACfab3gHcY9dpraXEVcRTF
-         sCjrOJ1eVIUS/ctaYUVYr1HE2226+JDDyP3jha91PJz2saAznh8ou0G4tgnbntYO52Xe
-         9BDGvXgXNMe/il5vdU2lWFGeCuu3Ki2i1DV1wVpWXqIaTa73hikM6kbXDh2zUfdYDZl2
-         naS07tF+163cNdsMqXMdvNKWjpg1KntebN+qTz249Q5veOM9WtZ8A34/NXTl+rbtGULC
-         ezExgVtbU8EPP0xpAdK2p+bStwgXp8YDD7NRIwCX01PYg8kvKi6h8rHPyKnMFlKx43oZ
-         sIjQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=YB3f30pJRu3JULH7XG/mWzUNFJ0TPVlsc2Y5J8rGS1s=;
+        b=Ue9Dh2bNnHoL9o8EcVY3qR9lIVVycoMC1u1NtH9SFNUioxB6SkJz3IKPMgaCQ/UAkt
+         0vMGRXrHWGGj2mRu9BhayYSw4X2/dkWxRAvSMi8vfzZpFyPBdLq3+Lkxlke1j/apaCN5
+         3YTqtO94MKtRyOAY00LlN6rok4TvaCzWCMRjuh99uUmQmWhucbhqQ2mRUoAzIWkeFN7f
+         r+GLhAcRUhSSXY51YjweNm7dFxMnIEWm+9t3t60t8PDJRJhgjEkoT3idhOoP753tQWCJ
+         IfI947cQ3mzLdkwDy0YYQa39vg8GFJ8zDshhST0tF8ICm8khyPlHC5dpi4TB1lv5/rff
+         1J/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Dz/cJdELPmJrnmCn4UxPzGvH13yuPY2C0/ICULwwhGw=;
-        b=Uot1roOtDVKZUTjWwrrqemvzRJQ4GykcNQpw22vmvXT4aebAw8lohg1240YbL5l+lI
-         kOLnBWPSsnkLSdGzNVGYaasMclkWWDbj6D/pS50XJ+Z49e+8OQ2nBc49apTVqMVs8QzB
-         WGHmIZAZ7AzQ4IWybK+Hhtw/BChQuDuL/n6Hm5bXXMZD3TVxMciz44xCD0nKJYrfYkLI
-         qB4IEv4Fry0ONa8WNQ3qyI8+4arg1OWtX7zNrOfMBdO+3xcelD08+I+r14JtYMli8L92
-         X3K5hNYK8W4CaibLGRG0eK5AaQUo8JyYQUmaffuXpASKE3Q4/0067NPd+abMnxs7isJh
-         xSnA==
-X-Gm-Message-State: APjAAAXhNX/WFMXa4v3PnBolc+IidncT8oMgY76JC9cc464DC0km7UX7
-        4mvgQjLJPuga5JXepaT0/rrTVQ==
-X-Google-Smtp-Source: APXvYqwRG/WlTGLP1dHk5Ge3KQvtzeQvIHSp7+2CmF8ZN51JwZNpWMvrxLkdkhHerWEBERFe/ykp5Q==
-X-Received: by 2002:a1c:b3d4:: with SMTP id c203mr36787122wmf.30.1577724192886;
-        Mon, 30 Dec 2019 08:43:12 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=YB3f30pJRu3JULH7XG/mWzUNFJ0TPVlsc2Y5J8rGS1s=;
+        b=TWmryb2GOvCzwOL6yEnFZCDvcTB6JfLevXEemmukhCt3KAqwDq54Us6q9tT6+6VwUu
+         2RnfmGCNltBAAxnZGNjinmET6kDGB2rVGSI5yyb8mv2Dp3oZHTcerq2dCUkuSE5NOiI+
+         BGZMImSZ5351zuKSFbnEEJzMgcqY5tTa+gnP57ENK/GygK6UG4WOJMzhOZw0XL9IKUXb
+         vCfZc12opt2SF6XRGKKtBYqNlQrdu7QL46+zCWvHUgOTSny2T9IPGe6TwXdiTAKKt2dg
+         bjwpYzXC6RudswxXTm3tNMv1CJWyN/CHAEWfGcGiyJ47JsKYbCacohH9Oe1gBKzrJ/hS
+         c2rA==
+X-Gm-Message-State: APjAAAU6ALijrYRXBEjsaeWAXpjfXv0giKVGbojGaDWUEnwHex29JAtg
+        Kf0AcAXWaA/wiuCbfT1lA/KC//YMA3Br8g==
+X-Google-Smtp-Source: APXvYqyditLM4czt6DXltQROybhVhYPGdF3xp/LxygA3E4yhhkZTRYqMwvzcOg1NkjI3oh5TgzYlTg==
+X-Received: by 2002:adf:f58a:: with SMTP id f10mr70947710wro.105.1577724193953;
+        Mon, 30 Dec 2019 08:43:13 -0800 (PST)
 Received: from linaro.org ([2a00:23c5:6815:3901:a1cf:b00b:5683:ed40])
-        by smtp.gmail.com with ESMTPSA id g25sm344901wmh.3.2019.12.30.08.43.08
+        by smtp.gmail.com with ESMTPSA id g25sm344901wmh.3.2019.12.30.08.43.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Dec 2019 08:43:12 -0800 (PST)
+        Mon, 30 Dec 2019 08:43:13 -0800 (PST)
 From:   Mike Leach <mike.leach@linaro.org>
 To:     linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
         coresight@lists.linaro.org
@@ -51,480 +52,159 @@ Cc:     linux-arm-msm@vger.kernel.org, mathieu.poirier@linaro.org,
         liviu.dudau@arm.com, sudeep.holla@arm.com,
         lorenzo.pieralisi@arm.com, agross@kernel.org,
         Mike Leach <mike.leach@linaro.org>
-Subject: [PATCH v7 09/15] coresight: cti: Add connection information to sysfs
-Date:   Mon, 30 Dec 2019 16:43:05 +0000
-Message-Id: <20191230164306.28259-1-mike.leach@linaro.org>
+Subject: [PATCH v7 10/15] dt-bindings: qcom: Add CTI options for qcom msm8916
+Date:   Mon, 30 Dec 2019 16:43:06 +0000
+Message-Id: <20191230164306.28259-2-mike.leach@linaro.org>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20191230164306.28259-1-mike.leach@linaro.org>
+References: <20191230164306.28259-1-mike.leach@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dynamically adds sysfs attributes for all connections defined in the CTI.
-
-Each connection has a triggers<N> sub-directory with name, in_signals,
-in_types, out_signals and out_types as read-only parameters in the
-directory. in_ or out_ parameters may be omitted if there are no in or
-out signals for the connection.
-
-Additionally each device has a nr_cons in the connections sub-directory.
-
-This allows clients to explore the connection and trigger signal details
-without needing to refer to device tree or specification of the device.
-
-Standardised type information is provided for certain common functions -
-e.g. snk_full for a trigger from a sink indicating full. Otherwise type
-defaults to genio.
+Adds system and CPU bound CTI definitions for Qualcom msm8916 platform
+(Dragonboard DB410C).
+System CTIs 2-11 are omitted as no information available at present.
 
 Signed-off-by: Mike Leach <mike.leach@linaro.org>
 Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
 ---
- .../hwtracing/coresight/coresight-cti-sysfs.c | 333 +++++++++++++++++-
- drivers/hwtracing/coresight/coresight-cti.c   |  10 +-
- drivers/hwtracing/coresight/coresight-cti.h   |   8 +
- 3 files changed, 348 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 85 +++++++++++++++++++++++++--
+ 1 file changed, 81 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-cti-sysfs.c b/drivers/hwtracing/coresight/coresight-cti-sysfs.c
-index 8af1986ed69f..db3395c46f51 100644
---- a/drivers/hwtracing/coresight/coresight-cti-sysfs.c
-+++ b/drivers/hwtracing/coresight/coresight-cti-sysfs.c
-@@ -8,6 +8,67 @@
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index 8686e101905c..68587968f5c0 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -8,6 +8,7 @@
+ #include <dt-bindings/reset/qcom,gcc-msm8916.h>
+ #include <dt-bindings/clock/qcom,rpmcc.h>
+ #include <dt-bindings/thermal/thermal.h>
++#include <dt-bindings/arm/coresight-cti-dt.h>
  
- #include "coresight-cti.h"
+ / {
+ 	interrupt-parent = <&intc>;
+@@ -1357,7 +1358,7 @@
+ 			cpu = <&CPU3>;
+ 		};
  
-+/*
-+ * Declare the number of static declared attribute groups
-+ * Value includes groups + NULL value at end of table.
-+ */
-+#define CORESIGHT_CTI_STATIC_GROUPS_MAX 5
-+
-+/*
-+ * List of trigger signal type names. Match the constants declared in
-+ * include\dt-bindings\arm\coresight-cti-dt.h
-+ */
-+static const char * const sig_type_names[] = {
-+	"genio",	/* GEN_IO */
-+	"intreq",	/* GEN_INTREQ */
-+	"intack",	/* GEN_INTACK */
-+	"haltreq",	/* GEN_HALTREQ */
-+	"restartreq",	/* GEN_RESTARTREQ */
-+	"pe_edbgreq",	/* PE_EDBGREQ */
-+	"pe_dbgrestart",/* PE_DBGRESTART */
-+	"pe_ctiirq",	/* PE_CTIIRQ */
-+	"pe_pmuirq",	/* PE_PMUIRQ */
-+	"pe_dbgtrigger",/* PE_DBGTRIGGER */
-+	"etm_extout",	/* ETM_EXTOUT */
-+	"etm_extin",	/* ETM_EXTIN */
-+	"snk_full",	/* SNK_FULL */
-+	"snk_acqcomp",	/* SNK_ACQCOMP */
-+	"snk_flushcomp",/* SNK_FLUSHCOMP */
-+	"snk_flushin",	/* SNK_FLUSHIN */
-+	"snk_trigin",	/* SNK_TRIGIN */
-+	"stm_asyncout",	/* STM_ASYNCOUT */
-+	"stm_tout_spte",/* STM_TOUT_SPTE */
-+	"stm_tout_sw",	/* STM_TOUT_SW */
-+	"stm_tout_hete",/* STM_TOUT_HETE */
-+	"stm_hwevent",	/* STM_HWEVENT */
-+	"ela_tstart",	/* ELA_TSTART */
-+	"ela_tstop",	/* ELA_TSTOP */
-+	"ela_dbgreq",	/* ELA_DBGREQ */
-+};
-+
-+/* Show function pointer used in the connections dynamic declared attributes*/
-+typedef ssize_t (*p_show_fn)(struct device *dev, struct device_attribute *attr,
-+			     char *buf);
-+
-+/* Connection attribute types */
-+enum cti_conn_attr_type {
-+	CTI_CON_ATTR_NAME,
-+	CTI_CON_ATTR_TRIGIN_SIG,
-+	CTI_CON_ATTR_TRIGOUT_SIG,
-+	CTI_CON_ATTR_TRIGIN_TYPES,
-+	CTI_CON_ATTR_TRIGOUT_TYPES,
-+	CTI_CON_ATTR_MAX,
-+};
-+
-+/* Names for the connection attributes */
-+static const char * const con_attr_names[CTI_CON_ATTR_MAX] = {
-+	"name",
-+	"in_signals",
-+	"out_signals",
-+	"in_types",
-+	"out_types",
-+};
-+
- /* basic attributes */
- static ssize_t enable_show(struct device *dev,
- 			   struct device_attribute *attr,
-@@ -66,10 +127,21 @@ static ssize_t ctmid_show(struct device *dev,
- }
- static DEVICE_ATTR_RO(ctmid);
+-		etm@85c000 {
++		etm0: etm@85c000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0x85c000 0x1000>;
  
-+static ssize_t nr_trigger_cons_show(struct device *dev,
-+				    struct device_attribute *attr,
-+				    char *buf)
-+{
-+	struct cti_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+
-+	return scnprintf(buf, PAGE_SIZE, "%d\n", drvdata->ctidev.nr_trig_con);
-+}
-+static DEVICE_ATTR_RO(nr_trigger_cons);
-+
- /* attribute and group sysfs tables. */
- static struct attribute *coresight_cti_attrs[] = {
- 	&dev_attr_enable.attr,
- 	&dev_attr_ctmid.attr,
-+	&dev_attr_nr_trigger_cons.attr,
- 	NULL,
- };
+@@ -1375,7 +1376,7 @@
+ 			};
+ 		};
  
-@@ -817,7 +889,263 @@ static struct attribute *coresight_cti_channel_attrs[] = {
- 	NULL,
- };
+-		etm@85d000 {
++		etm1: etm@85d000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0x85d000 0x1000>;
  
--/* sysfs groups */
-+/* Create the connections trigger groups and attrs dynamically */
-+/*
-+ * Each connection has dynamic group triggers<N> + name, trigin/out sigs/types
-+ * attributes, + each device has static nr_trigger_cons giving the number
-+ * of groups. e.g. in sysfs:-
-+ * /cti_<name>/triggers0
-+ * /cti_<name>/triggers1
-+ * /cti_<name>/nr_trigger_cons
-+ * where nr_trigger_cons = 2
-+ */
-+static ssize_t con_name_show(struct device *dev,
-+			     struct device_attribute *attr,
-+			     char *buf)
-+{
-+	struct dev_ext_attribute *ext_attr =
-+		container_of(attr, struct dev_ext_attribute, attr);
-+	struct cti_trig_con *con = (struct cti_trig_con *)ext_attr->var;
-+
-+	return scnprintf(buf, PAGE_SIZE, "%s\n", con->con_dev_name);
-+}
-+
-+static ssize_t trigin_sig_show(struct device *dev,
-+			       struct device_attribute *attr,
-+			       char *buf)
-+{
-+	struct dev_ext_attribute *ext_attr =
-+		container_of(attr, struct dev_ext_attribute, attr);
-+	struct cti_trig_con *con = (struct cti_trig_con *)ext_attr->var;
-+	struct cti_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	struct cti_config *cfg = &drvdata->config;
-+	unsigned long mask = con->con_in->used_mask;
-+
-+	return bitmap_print_to_pagebuf(true, buf, &mask, cfg->nr_trig_max);
-+}
-+
-+static ssize_t trigout_sig_show(struct device *dev,
-+				struct device_attribute *attr,
-+				char *buf)
-+{
-+	struct dev_ext_attribute *ext_attr =
-+		container_of(attr, struct dev_ext_attribute, attr);
-+	struct cti_trig_con *con = (struct cti_trig_con *)ext_attr->var;
-+	struct cti_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	struct cti_config *cfg = &drvdata->config;
-+	unsigned long mask = con->con_out->used_mask;
-+
-+	return bitmap_print_to_pagebuf(true, buf, &mask, cfg->nr_trig_max);
-+}
-+
-+/* convert a sig type id to a name */
-+static const char *
-+cti_sig_type_name(struct cti_trig_con *con, int used_count, bool in)
-+{
-+	int idx = 0;
-+	struct cti_trig_grp *grp = in ? con->con_in : con->con_out;
-+
-+	if (grp->sig_types) {
-+		if (used_count < grp->nr_sigs)
-+			idx = grp->sig_types[used_count];
-+	}
-+	return sig_type_names[idx];
-+}
-+
-+static ssize_t trigin_type_show(struct device *dev,
-+				struct device_attribute *attr,
-+				char *buf)
-+{
-+	struct dev_ext_attribute *ext_attr =
-+		container_of(attr, struct dev_ext_attribute, attr);
-+	struct cti_trig_con *con = (struct cti_trig_con *)ext_attr->var;
-+	int sig_idx, used = 0, b_sz = PAGE_SIZE;
-+	const char *name;
-+
-+	for (sig_idx = 0; sig_idx < con->con_in->nr_sigs; sig_idx++) {
-+		name = cti_sig_type_name(con, sig_idx, true);
-+		used += scnprintf(buf + used, b_sz - used, "%s ", name);
-+	}
-+	used += scnprintf(buf + used, b_sz - used, "\n");
-+	return used;
-+}
-+
-+static ssize_t trigout_type_show(struct device *dev,
-+				 struct device_attribute *attr,
-+				 char *buf)
-+{
-+	struct dev_ext_attribute *ext_attr =
-+		container_of(attr, struct dev_ext_attribute, attr);
-+	struct cti_trig_con *con = (struct cti_trig_con *)ext_attr->var;
-+	int sig_idx, used = 0, b_sz = PAGE_SIZE;
-+	const char *name;
-+
-+	for (sig_idx = 0; sig_idx < con->con_out->nr_sigs; sig_idx++) {
-+		name = cti_sig_type_name(con, sig_idx, false);
-+		used += scnprintf(buf + used, b_sz - used, "%s ", name);
-+	}
-+	used += scnprintf(buf + used, b_sz - used, "\n");
-+	return used;
-+}
-+
-+/*
-+ * Array of show function names declared above to allow selection
-+ * for the connection attributes
-+ */
-+static p_show_fn show_fns[CTI_CON_ATTR_MAX] = {
-+	con_name_show,
-+	trigin_sig_show,
-+	trigout_sig_show,
-+	trigin_type_show,
-+	trigout_type_show,
-+};
-+
-+static int cti_create_con_sysfs_attr(struct device *dev,
-+				     struct cti_trig_con *con,
-+				     enum cti_conn_attr_type attr_type,
-+				     int attr_idx)
-+{
-+	struct dev_ext_attribute *eattr = 0;
-+	char *name = 0;
-+
-+	eattr = devm_kzalloc(dev, sizeof(struct dev_ext_attribute),
-+				    GFP_KERNEL);
-+	if (eattr) {
-+		name = devm_kstrdup(dev, con_attr_names[attr_type],
-+				    GFP_KERNEL);
-+		if (name) {
-+			/* fill out the underlying attribute struct */
-+			eattr->attr.attr.name = name;
-+			eattr->attr.attr.mode = 0444;
-+
-+			/* now the device_attribute struct */
-+			eattr->attr.show = show_fns[attr_type];
-+		} else {
-+			return -ENOMEM;
-+		}
-+	} else {
-+		return -ENOMEM;
-+	}
-+	eattr->var = con;
-+	con->con_attrs[attr_idx] = &eattr->attr.attr;
-+	return 0;
-+}
-+
-+static struct attribute_group *
-+cti_create_con_sysfs_group(struct device *dev, struct cti_device *ctidev,
-+			   int con_idx, struct cti_trig_con *tc)
-+{
-+	struct attribute_group *group = NULL;
-+	int grp_idx;
-+
-+	group = devm_kzalloc(dev, sizeof(struct attribute_group), GFP_KERNEL);
-+	if (!group)
-+		return NULL;
-+
-+	group->name = devm_kasprintf(dev, GFP_KERNEL, "triggers%d", con_idx);
-+	if (!group->name)
-+		return NULL;
-+
-+	grp_idx = con_idx + CORESIGHT_CTI_STATIC_GROUPS_MAX - 1;
-+	ctidev->con_groups[grp_idx] = group;
-+	tc->attr_group = group;
-+	return group;
-+}
-+
-+/* create a triggers connection group and the attributes for that group */
-+static int cti_create_con_attr_set(struct device *dev, int con_idx,
-+				   struct cti_device *ctidev,
-+				   struct cti_trig_con *tc)
-+{
-+	struct attribute_group *attr_group = NULL;
-+	int attr_idx = 0;
-+	int err = -ENOMEM;
-+
-+	attr_group = cti_create_con_sysfs_group(dev, ctidev, con_idx, tc);
-+	if (!attr_group)
-+		return -ENOMEM;
-+
-+	/* allocate NULL terminated array of attributes */
-+	tc->con_attrs = devm_kcalloc(dev, CTI_CON_ATTR_MAX + 1,
-+				     sizeof(struct attribute *), GFP_KERNEL);
-+	if (!tc->con_attrs)
-+		return -ENOMEM;
-+
-+	err = cti_create_con_sysfs_attr(dev, tc, CTI_CON_ATTR_NAME,
-+					attr_idx++);
-+	if (err)
-+		return err;
-+
-+	if (tc->con_in->nr_sigs > 0) {
-+		err = cti_create_con_sysfs_attr(dev, tc,
-+						CTI_CON_ATTR_TRIGIN_SIG,
-+						attr_idx++);
-+		if (err)
-+			return err;
-+
-+		err = cti_create_con_sysfs_attr(dev, tc,
-+						CTI_CON_ATTR_TRIGIN_TYPES,
-+						attr_idx++);
-+		if (err)
-+			return err;
-+	}
-+
-+	if (tc->con_out->nr_sigs > 0) {
-+		err = cti_create_con_sysfs_attr(dev, tc,
-+						CTI_CON_ATTR_TRIGOUT_SIG,
-+						attr_idx++);
-+		if (err)
-+			return err;
-+
-+		err = cti_create_con_sysfs_attr(dev, tc,
-+						CTI_CON_ATTR_TRIGOUT_TYPES,
-+						attr_idx++);
-+		if (err)
-+			return err;
-+	}
-+	attr_group->attrs = tc->con_attrs;
-+	return 0;
-+}
-+
-+/* create the array of group pointers for the CTI sysfs groups */
-+int cti_create_cons_groups(struct device *dev, struct cti_device *ctidev)
-+{
-+	int nr_groups;
-+
-+	/* nr groups - dynamic + static + NULL terminator */
-+	nr_groups = ctidev->nr_trig_con + CORESIGHT_CTI_STATIC_GROUPS_MAX;
-+	ctidev->con_groups = devm_kcalloc(dev, nr_groups,
-+					  sizeof(struct attribute_group *),
-+					  GFP_KERNEL);
-+	if (!ctidev->con_groups)
-+		return -ENOMEM;
-+	return 0;
-+}
-+
-+int cti_create_cons_sysfs(struct device *dev, struct cti_drvdata *drvdata)
-+{
-+	struct cti_device *ctidev = &drvdata->ctidev;
-+	int err = 0, con_idx = 0, i;
-+	struct cti_trig_con *tc = NULL;
-+
-+	err = cti_create_cons_groups(dev, ctidev);
-+	if (err)
-+		return err;
-+
-+	/* populate first locations with the static set of groups */
-+	for (i = 0; i < (CORESIGHT_CTI_STATIC_GROUPS_MAX - 1); i++)
-+		ctidev->con_groups[i] = coresight_cti_groups[i];
-+
-+	/* add dynamic set for each connection */
-+	list_for_each_entry(tc, &ctidev->trig_cons, node) {
-+		err = cti_create_con_attr_set(dev, con_idx++, ctidev, tc);
-+		if (err)
-+			break;
-+	}
-+	return err;
-+}
-+
-+/* attribute and group sysfs tables. */
- static const struct attribute_group coresight_cti_group = {
- 	.attrs = coresight_cti_attrs,
- };
-@@ -837,7 +1165,8 @@ static const struct attribute_group coresight_cti_channels_group = {
- 	.name = "channels",
- };
+@@ -1393,7 +1394,7 @@
+ 			};
+ 		};
  
--const struct attribute_group *coresight_cti_groups[] = {
-+const struct attribute_group *
-+coresight_cti_groups[CORESIGHT_CTI_STATIC_GROUPS_MAX] = {
- 	&coresight_cti_group,
- 	&coresight_cti_mgmt_group,
- 	&coresight_cti_regs_group,
-diff --git a/drivers/hwtracing/coresight/coresight-cti.c b/drivers/hwtracing/coresight/coresight-cti.c
-index 2be1b310e854..9d27dea1625f 100644
---- a/drivers/hwtracing/coresight/coresight-cti.c
-+++ b/drivers/hwtracing/coresight/coresight-cti.c
-@@ -676,12 +676,20 @@ static int cti_probe(struct amba_device *adev, const struct amba_id *id)
- 		goto err_out;
- 	}
+-		etm@85e000 {
++		etm2: etm@85e000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0x85e000 0x1000>;
  
-+	/* create dynamic attributes for connections */
-+	ret = cti_create_cons_sysfs(dev, drvdata);
-+	if (ret) {
-+		dev_err(dev, "%s: create dynamic sysfs entries failed\n",
-+			cti_desc.name);
-+		goto err_out;
-+	}
+@@ -1411,7 +1412,7 @@
+ 			};
+ 		};
+ 
+-		etm@85f000 {
++		etm3: etm@85f000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0x85f000 0x1000>;
+ 
+@@ -1429,6 +1430,82 @@
+ 			};
+ 		};
+ 
++		/* System CTIs */
++		/* CTI 0 - TMC connections */
++		cti@810000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x810000 0x1000>;
 +
- 	/* set up coresight component description */
- 	cti_desc.pdata = pdata;
- 	cti_desc.type = CORESIGHT_DEV_TYPE_ECT;
- 	cti_desc.subtype.ect_subtype = CORESIGHT_DEV_SUBTYPE_ECT_CTI;
- 	cti_desc.ops = &cti_ops;
--	cti_desc.groups = coresight_cti_groups;
-+	cti_desc.groups = drvdata->ctidev.con_groups;
- 	cti_desc.dev = dev;
- 	drvdata->csdev = coresight_register(&cti_desc);
- 	if (IS_ERR(drvdata->csdev)) {
-diff --git a/drivers/hwtracing/coresight/coresight-cti.h b/drivers/hwtracing/coresight/coresight-cti.h
-index 578d7e9ac67e..14d1b8933c18 100644
---- a/drivers/hwtracing/coresight/coresight-cti.h
-+++ b/drivers/hwtracing/coresight/coresight-cti.h
-@@ -74,6 +74,8 @@ struct cti_trig_grp {
-  * @con_dev: coresight device connected to the CTI, NULL if not CS device
-  * @con_dev_name: name of connected device (CS or CPU)
-  * @node: entry node in list of connections.
-+ * @con_attrs: Dynamic sysfs attributes specific to this connection.
-+ * @attr_group: Dynamic attribute group created for this connection.
-  */
- struct cti_trig_con {
- 	struct cti_trig_grp *con_in;
-@@ -81,6 +83,8 @@ struct cti_trig_con {
- 	struct coresight_device *con_dev;
- 	char *con_dev_name;
- 	struct list_head node;
-+	struct attribute **con_attrs;
-+	struct attribute_group *attr_group;
- };
- 
- /**
-@@ -91,12 +95,15 @@ struct cti_trig_con {
-  *          assumed there is a single CTM per SoC, ID 0).
-  * @trig_cons: list of connections to this device.
-  * @cpu: CPU ID if associated with CPU, -1 otherwise.
-+ * @con_groups: combined static and dynamic sysfs groups for trigger
-+ *		connections.
-  */
- struct cti_device {
- 	int nr_trig_con;
- 	u32 ctm_id;
- 	struct list_head trig_cons;
- 	int cpu;
-+	const struct attribute_group **con_groups;
- };
- 
- /**
-@@ -214,6 +221,7 @@ int cti_channel_gate_op(struct device *dev, enum cti_chan_gate_op op,
- 			u32 channel_idx);
- int cti_channel_setop(struct device *dev, enum cti_chan_set_op op,
- 		      u32 channel_idx);
-+int cti_create_cons_sysfs(struct device *dev, struct cti_drvdata *drvdata);
- struct coresight_platform_data *
- coresight_cti_get_platform_data(struct device *dev);
- const char *cti_plat_get_node_name(struct fwnode_handle *fwnode);
++			clocks = <&rpmcc RPM_QDSS_CLK>;
++			clock-names = "apb_pclk";
++		};
++
++		/* CTI 1 - TPIU connections */
++		cti@811000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x811000 0x1000>;
++
++			clocks = <&rpmcc RPM_QDSS_CLK>;
++			clock-names = "apb_pclk";
++		};
++
++		/* CTIs 2-11 - no information - not instantiated */
++
++		/* Core CTIs; CTIs 12-15 */
++		/* CTI - CPU-0 */
++		cti@858000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0x858000 0x1000>;
++
++			clocks = <&rpmcc RPM_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			cpu = <&CPU0>;
++			arm,cs-dev-assoc = <&etm0>;
++
++		};
++
++		/* CTI - CPU-1 */
++		cti@859000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0x859000 0x1000>;
++
++			clocks = <&rpmcc RPM_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			cpu = <&CPU1>;
++			arm,cs-dev-assoc = <&etm1>;
++		};
++
++		/* CTI - CPU-2 */
++		cti@85a000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0x85a000 0x1000>;
++
++			clocks = <&rpmcc RPM_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			cpu = <&CPU2>;
++			arm,cs-dev-assoc = <&etm2>;
++		};
++
++		/* CTI - CPU-3 */
++		cti@85b000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0x85b000 0x1000>;
++
++			clocks = <&rpmcc RPM_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			cpu = <&CPU3>;
++			arm,cs-dev-assoc = <&etm3>;
++		};
++
++
+ 		venus: video-codec@1d00000 {
+ 			compatible = "qcom,msm8916-venus";
+ 			reg = <0x01d00000 0xff000>;
 -- 
 2.17.1
 
