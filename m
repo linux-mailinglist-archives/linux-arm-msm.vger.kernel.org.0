@@ -2,78 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3697412D313
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 19:04:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C1EC12D40D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 20:41:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727207AbfL3SEo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Dec 2019 13:04:44 -0500
-Received: from mail.kernel.org ([198.145.29.99]:33888 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726602AbfL3SEo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Dec 2019 13:04:44 -0500
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9E700206CB;
-        Mon, 30 Dec 2019 18:04:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1577729083;
-        bh=PefIuhleT62reL1BGXQA1Kqd0QhpZCj1UPeZANIHGDk=;
-        h=In-Reply-To:References:From:Cc:To:Subject:Date:From;
-        b=2GV3WUJ23FqwRWHpgiNTl/gBeW2YfcgSVFxrhVmsATo0HkEcGXIFzRiHNrw/mD+nn
-         YVjGFZcFxWf/f/ZPcBKC2THggoyc9dhBrI+6IDzx1apM7yhOzsTUVmNRaJXTM6l/J4
-         UARnIv23D82aqMx8vuY2SOVWGOoXcnCThVfdc6pc=
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20191227022652.GH1908628@ripper>
-References: <20191125135910.679310-1-niklas.cassel@linaro.org> <20191125135910.679310-8-niklas.cassel@linaro.org> <20191219062339.DC0DE21582@mail.kernel.org> <20191220175616.3wdslb7hm773zb22@flawful.org> <20191224021636.CF47E20643@mail.kernel.org> <20191227022652.GH1908628@ripper>
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Niklas Cassel <nks@flawful.org>, Andy Gross <agross@kernel.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        linux-arm-msm@vger.kernel.org, amit.kucheria@linaro.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH v3 7/7] clk: qcom: apcs-msm8916: use clk_parent_data to specify the parent
-User-Agent: alot/0.8.1
-Date:   Mon, 30 Dec 2019 10:04:42 -0800
-Message-Id: <20191230180443.9E700206CB@mail.kernel.org>
+        id S1727648AbfL3TlK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Dec 2019 14:41:10 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:32774 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727278AbfL3TlK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Dec 2019 14:41:10 -0500
+Received: by mail-wr1-f65.google.com with SMTP id b6so33640781wrq.0;
+        Mon, 30 Dec 2019 11:41:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=dXg8oFzBEXS5AG929jnjM1jsF6o4ohe+Wl9/z4Sa0Kk=;
+        b=N3Il+Igx/93EmUIkp4Qn7D4C0qYnr0Zm38eM/RyUnHj3fIu88+MfVRzvu05TtNB1RI
+         owSAEZX27S/3Sj7lup7vXTu9Dz6tr899n2q4V0yVA1XcFvP6PR8doKKHN8OMVPnd0A/9
+         yqiZg1nBjCA7I1vsVt/EINDdHNUXMdQz03cxDmS7nfsJc2I58cMJM38EminOTwOvxV9T
+         kM0yNNarkUhD1T6B0xCVk4Uq6VOVjH30XqIiSw8Ddxhillis6CRNlYSemQ3F8/nr5nKK
+         TMn8U9HLeSXsHPc0N73KXCm+ao9zPZrRviqRUQPXO11ky4G6LnJEyKH7SBP4JDipEcDX
+         LG7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=dXg8oFzBEXS5AG929jnjM1jsF6o4ohe+Wl9/z4Sa0Kk=;
+        b=mT7Ot8sHG9LkMvBUtXtOvV+8Z4pjNR0fwlWl9ijue6SV0iUki1aUDonRb0lNtoEaOp
+         Pc9Vx7O6Z/dnMqm5MgcygnEjZDKPknaqjCRCecbU/ALuZl87bB2rLZ4EsdEQUs/j4vPS
+         mK1UIyVEGVOQp+TGMBmEdO4cqr646QCa9btNnrxX4FF1/z9LwBdgE0HjIAsDFXfCsK59
+         JkcgEl/DaspDlooUYT9GjjuF30TMrRAYrMT2WckZmGe3+P8pMlxMrZr1cRMeL0h6fofm
+         zmnUuCxbDjYeUsOB/zfA2+GOQ8I1khoU5Po4Xet7+jiVUgVYp3VghUnUMxJJDyADVU0b
+         xvpg==
+X-Gm-Message-State: APjAAAVgeLwSR8fsRUF2XnqxjyHN9GSR86ppQG8CUZX07j2z8zAoC/CV
+        kFQgmOGYqDRgfK95O/Uv7L0=
+X-Google-Smtp-Source: APXvYqyvzye3Ooh54UXS218+xZWxHTIG40U09D7tH9MsS86sPq32CvZylveADRnLKxa3J7IKokgM2Q==
+X-Received: by 2002:a5d:4d06:: with SMTP id z6mr67047992wrt.339.1577734868421;
+        Mon, 30 Dec 2019 11:41:08 -0800 (PST)
+Received: from localhost.localdomain ([197.254.95.38])
+        by smtp.googlemail.com with ESMTPSA id p17sm47239785wrx.20.2019.12.30.11.41.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Dec 2019 11:41:07 -0800 (PST)
+From:   Wambui Karuga <wambui.karugax@gmail.com>
+To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm: use BUG_ON macro for debugging.
+Date:   Mon, 30 Dec 2019 22:41:02 +0300
+Message-Id: <20191230194102.2843-1-wambui.karugax@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2019-12-26 18:26:52)
-> On Mon 23 Dec 18:16 PST 2019, Stephen Boyd wrote:
->=20
-> > Quoting Niklas Cassel (2019-12-20 09:56:16)
-> > > On Wed, Dec 18, 2019 at 10:23:39PM -0800, Stephen Boyd wrote:
-> > > > This is odd. The clks could be registered with of_clk_hw_register()=
- but
-> > > > then we lose the device provider information. Maybe we should searc=
-h up
-> > > > one level to the parent node and if that has a DT node but the
-> > > > clk controller device doesn't we should use that instead?
-> > >=20
-> > > Hello Stephen,
-> > >=20
-> > > Having this in the clk core is totally fine with me,
-> > > since it solves my problem.
-> > >=20
-> > > Will you cook up a patch, or do you want me to do it?
-> > >=20
-> >=20
-> > Can you try the patch I appended to my previous mail? I can write
-> > something up more proper later this week.
-> >=20
->=20
-> Unfortunately we have clocks with no dev, so this fail as below. Adding
-> a second check for dev !=3D NULL to your oneliner works fine though.
->=20
-> I.e. this ugly hack works fine:
->   core->of_node =3D np ? : (dev ? dev_of_node(dev->parent) : NULL);
->=20
+As the if statement only checks for the value of the offset_name
+variable, it can be replaced by the more conscise BUG_ON macro for error
+reporting.
 
-Ok, thanks for testing!
+Signed-off-by: Wambui Karuga <wambui.karugax@gmail.com>
+---
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index c7441fb8313e..0fe7907f5a7d 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -315,10 +315,7 @@ OUT_PKT7(struct msm_ringbuffer *ring, uint8_t opcode, uint16_t cnt)
+ static inline bool adreno_reg_check(struct adreno_gpu *gpu,
+ 		enum adreno_regs offset_name)
+ {
+-	if (offset_name >= REG_ADRENO_REGISTER_MAX ||
+-			!gpu->reg_offsets[offset_name]) {
+-		BUG();
+-	}
++	BUG_ON(offset_name >= REG_ADRENO_REGISTER_MAX || !gpu->reg_offsets[offset_name]);
+ 
+ 	/*
+ 	 * REG_SKIP is a special value that tell us that the register in
+-- 
+2.17.1
 
