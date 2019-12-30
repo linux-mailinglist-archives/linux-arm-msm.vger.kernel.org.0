@@ -2,47 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 254A812D235
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 17:43:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 74E7712D232
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 17:43:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727186AbfL3Qnu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1727104AbfL3Qnu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 30 Dec 2019 11:43:50 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38826 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727123AbfL3Qnu (ORCPT
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40866 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727146AbfL3Qnu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 30 Dec 2019 11:43:50 -0500
-Received: by mail-wm1-f66.google.com with SMTP id u2so14607603wmc.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2019 08:43:47 -0800 (PST)
+Received: by mail-wr1-f66.google.com with SMTP id c14so33155586wrn.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2019 08:43:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=kgPv1xhL+mbW9NmJe5kryNqVes+1z2lPlIFwnRL1YA0=;
-        b=Psl9DHkuLRMRbZBQKdJDOr9T90aJc4PCn7utL9orf4h1Ecgt+QT5u1fdFpYsQ2dFnb
-         Jo4d5JdzXsjS9I0EuUpup66VGIA6Bjg2YolonDUqeOeK8oRG3BWWN4VotQwu5tzxwpRI
-         redkNdkG2fJH5GWMJ+K7MnCkQ4Z7HAobyDGgmCpwkZQgEfUu8VfpsUtWJEAyWU9m6Un0
-         XFeEfF015sA0s4eyhUJ54fu7M+rOPPk301KL1ieFC2IcCFg3JMCzUEnHhFP/Mh31atVl
-         DpEhDkQ5zJIafcbhJxVNT94XzKvL70NTETwddempwMv7y6N+Y6hXA+Y3khDIfhWsmDp6
-         kcaA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=BucIs76BJlau9NCsGrtA8TwA9hcR+pRMGii5xstBwn8=;
+        b=SBzZ0rDZRjiKBsb2L/NpX+zIZ1gIR5WsGJdHWgR0Or+ZErpG5vx0saPuQCq2dF7Y5r
+         UmjrJarGEPj+GT5o/z9Jq6OFGg9WRY/8qzrTxIDzwWi6bVGLVZDdZSdjBpOlKx13JHxd
+         wLH3pptL74jNCfSy+FDsi2YSMXwCuDAnWvdVAHC4jAQl0Q1cHAUAXk4Pgxb3oDik8VTR
+         J2ad3GoGnPCrI4tR4bfELh9X06NhXvNDQ7c7TGt/uCKyeFi2cH1MdoV6sKTswfBnfAWF
+         5/n3YPjt5fbb1XiAN3slTk5NlHoA7Rc5NMt76N6zbDNB+We1AUI8hS58f8kR7/CdR1eE
+         A0pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=kgPv1xhL+mbW9NmJe5kryNqVes+1z2lPlIFwnRL1YA0=;
-        b=fG6GPtr5VM4Jvfu5eEhIZzR3MsSpjXu/fgj35+qPEK3L+vqN5uA0QRaFD9EImFHXnI
-         vKhFjXuXFy1mvRKJbe2NZsB7M4RC7Pp+QgfDxj1VTp0Vu7ZZ5aEm3k6OIio41H/wZ14L
-         Tpd1W6BjBQ327aIbcQB+7tw8yUr8SsILQGr4fZ4YzzoX+rcuqTIFJfTddXFsZgA3qLIU
-         7M+T8QrcKh22zUv4+qv+6jKlHn40JfthEtQ6PxJpr6xxGdq7XLe/MY5HcqDi1hrBMLJ6
-         rKF+U80U7ae41c5/48dluOuS7OA4HSaJGxupdot+/EphnX5jsuyXkvzQLnXlpRrGdZMz
-         Qelg==
-X-Gm-Message-State: APjAAAXR+CGNdeZlZ1WFeqorKeeNgpj5mubBE/qNrElC3hhR7KCLFA7R
-        rEPcqXwM/O1j2Z50s6e+25abFw==
-X-Google-Smtp-Source: APXvYqyeObx+3NbIgTlCtbfomqRNNuk8NcEjqsjAH35tCaLcaREHtPp0jrwnaiIzzIbJrlPRdr5L6g==
-X-Received: by 2002:a1c:1d16:: with SMTP id d22mr36683233wmd.158.1577724226375;
-        Mon, 30 Dec 2019 08:43:46 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=BucIs76BJlau9NCsGrtA8TwA9hcR+pRMGii5xstBwn8=;
+        b=crCle3yRrbdShZTN8wLrKCeYQNYLs3L3HZHcHykcwo7Ytl4+HoGwuk6oT9bYCZKnLs
+         UK032J88I68PGkZqPzg7aygIq0bs4ULvVPI1BCUFca6lP9RUj+ro+84OkfkqZZmblkHd
+         r3U8zO5rxszVDsT/E0MOyWj7OIjPg7Nhqlz37ocTnDbf8G3Pkn9xfUAagtGzBoUTDwIj
+         yICjuO7orq7PDZjsUYn8Sw8gRRH3h/3B6BgEcPwmbgSPOQurcqjRlJObdlt+UOAHmG4u
+         q0676hH1p69ZSd/BAPFnWTl2bDiP8EVXVlPF0IpLyf37VRDHZjPTs3KeLsbSOer0wroF
+         XU9A==
+X-Gm-Message-State: APjAAAWn7dyOmhiDpvM42bgv55JsvYLWXj6/vYDhd/q6XWi9NMSTA7Pt
+        v4H1+NGClrSfyFvxAvw1LLeDmg==
+X-Google-Smtp-Source: APXvYqxsnvEw9WLsPaciInH5I+ri43dDgiWBaydmGgYdjUWTk+gcvQO8oEURiJMLKo3qtystWutxpQ==
+X-Received: by 2002:a5d:6a0f:: with SMTP id m15mr67691513wru.40.1577724227316;
+        Mon, 30 Dec 2019 08:43:47 -0800 (PST)
 Received: from linaro.org ([2a00:23c5:6815:3901:a1cf:b00b:5683:ed40])
-        by smtp.gmail.com with ESMTPSA id g2sm45691586wrw.76.2019.12.30.08.43.41
+        by smtp.gmail.com with ESMTPSA id g2sm45691586wrw.76.2019.12.30.08.43.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Dec 2019 08:43:45 -0800 (PST)
+        Mon, 30 Dec 2019 08:43:46 -0800 (PST)
 From:   Mike Leach <mike.leach@linaro.org>
 To:     linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
         coresight@lists.linaro.org
@@ -51,436 +52,222 @@ Cc:     linux-arm-msm@vger.kernel.org, mathieu.poirier@linaro.org,
         liviu.dudau@arm.com, sudeep.holla@arm.com,
         lorenzo.pieralisi@arm.com, agross@kernel.org,
         Mike Leach <mike.leach@linaro.org>
-Subject: [PATCH v7 11/15] dt-bindings: arm: Juno platform - add CTI entries to device tree.
-Date:   Mon, 30 Dec 2019 16:43:39 +0000
-Message-Id: <20191230164340.28317-1-mike.leach@linaro.org>
+Subject: [PATCH v7 12/15] dt-bindings: hisilicon: Add CTI bindings for hi-6220
+Date:   Mon, 30 Dec 2019 16:43:40 +0000
+Message-Id: <20191230164340.28317-2-mike.leach@linaro.org>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20191230164340.28317-1-mike.leach@linaro.org>
+References: <20191230164340.28317-1-mike.leach@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add in CTI entries for Juno r0, r1 and r2 to device tree entries.
+Adds in CTI device tree information for the Hikey620 board.
 
 Signed-off-by: Mike Leach <mike.leach@linaro.org>
 Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Tested-by: Leo Yan <leo.yan@linaro.org>
 ---
- arch/arm64/boot/dts/arm/juno-base.dtsi    | 162 +++++++++++++++++++++-
- arch/arm64/boot/dts/arm/juno-cs-r1r2.dtsi |  37 ++++-
- arch/arm64/boot/dts/arm/juno-r1.dts       |  25 ++++
- arch/arm64/boot/dts/arm/juno-r2.dts       |  25 ++++
- arch/arm64/boot/dts/arm/juno.dts          |  25 ++++
- 5 files changed, 269 insertions(+), 5 deletions(-)
+ .../boot/dts/hisilicon/hi6220-coresight.dtsi  | 130 ++++++++++++++++--
+ 1 file changed, 122 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/arm/juno-base.dtsi b/arch/arm64/boot/dts/arm/juno-base.dtsi
-index 1f3c80aafbd7..fffd75cd2fd9 100644
---- a/arch/arm64/boot/dts/arm/juno-base.dtsi
-+++ b/arch/arm64/boot/dts/arm/juno-base.dtsi
-@@ -119,7 +119,7 @@
- 	 * The actual size is just 4K though 64K is reserved. Access to the
- 	 * unmapped reserved region results in a DECERR response.
- 	 */
--	etf@20010000 { /* etf0 */
-+	etf_sys0: etf@20010000 { /* etf0 */
- 		compatible = "arm,coresight-tmc", "arm,primecell";
- 		reg = <0 0x20010000 0 0x1000>;
- 
-@@ -143,7 +143,7 @@
+diff --git a/arch/arm64/boot/dts/hisilicon/hi6220-coresight.dtsi b/arch/arm64/boot/dts/hisilicon/hi6220-coresight.dtsi
+index 651771a73ed6..27f067e87601 100644
+--- a/arch/arm64/boot/dts/hisilicon/hi6220-coresight.dtsi
++++ b/arch/arm64/boot/dts/hisilicon/hi6220-coresight.dtsi
+@@ -213,7 +213,7 @@
+ 			};
  		};
- 	};
  
--	tpiu@20030000 {
-+	tpiu_sys: tpiu@20030000 {
- 		compatible = "arm,coresight-tpiu", "arm,primecell";
- 		reg = <0 0x20030000 0 0x1000>;
+-		etm@f659c000 {
++		etm0: etm@f659c000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0xf659c000 0 0x1000>;
  
-@@ -196,7 +196,7 @@
+@@ -232,7 +232,7 @@
+ 			};
  		};
- 	};
  
--	etr@20070000 {
-+	etr_sys: etr@20070000 {
- 		compatible = "arm,coresight-tmc", "arm,primecell";
- 		reg = <0 0x20070000 0 0x1000>;
- 		iommus = <&smmu_etr 0>;
-@@ -214,7 +214,7 @@
+-		etm@f659d000 {
++		etm1: etm@f659d000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0xf659d000 0 0x1000>;
+ 
+@@ -251,7 +251,7 @@
+ 			};
  		};
- 	};
  
--	stm@20100000 {
-+	stm_sys: stm@20100000 {
- 		compatible = "arm,coresight-stm", "arm,primecell";
- 		reg = <0 0x20100000 0 0x1000>,
- 		      <0 0x28000000 0 0x1000000>;
-@@ -291,6 +291,18 @@
+-		etm@f659e000 {
++		etm2: etm@f659e000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0xf659e000 0 0x1000>;
+ 
+@@ -270,7 +270,7 @@
+ 			};
  		};
- 	};
  
-+	cti0: cti@22020000 {
-+		compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
-+			     "arm,primecell";
-+		reg = <0 0x22020000 0 0x1000>;
-+
-+		clocks = <&soc_smc50mhz>;
-+		clock-names = "apb_pclk";
-+		power-domains = <&scpi_devpd 0>;
-+
-+		arm,cs-dev-assoc = <&etm0>;
-+	};
-+
- 	funnel@220c0000 { /* cluster0 funnel */
- 		compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 		reg = <0 0x220c0000 0 0x1000>;
-@@ -351,6 +363,18 @@
+-		etm@f659f000 {
++		etm3: etm@f659f000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0xf659f000 0 0x1000>;
+ 
+@@ -289,7 +289,7 @@
+ 			};
  		};
- 	};
  
-+	cti1: cti@22120000 {
-+		compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
-+			     "arm,primecell";
-+		reg = <0 0x22120000 0 0x1000>;
-+
-+		clocks = <&soc_smc50mhz>;
-+		clock-names = "apb_pclk";
-+		power-domains = <&scpi_devpd 0>;
-+
-+		arm,cs-dev-assoc = <&etm1>;
-+	};
-+
- 	cpu_debug2: cpu-debug@23010000 {
- 		compatible = "arm,coresight-cpu-debug", "arm,primecell";
- 		reg = <0x0 0x23010000 0x0 0x1000>;
-@@ -376,6 +400,18 @@
+-		etm@f65dc000 {
++		etm4: etm@f65dc000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0xf65dc000 0 0x1000>;
+ 
+@@ -308,7 +308,7 @@
+ 			};
  		};
- 	};
  
-+	cti2: cti@23020000 {
-+		compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
-+			     "arm,primecell";
-+		reg = <0 0x23020000 0 0x1000>;
-+
-+		clocks = <&soc_smc50mhz>;
-+		clock-names = "apb_pclk";
-+		power-domains = <&scpi_devpd 0>;
-+
-+		arm,cs-dev-assoc = <&etm2>;
-+	};
-+
- 	funnel@230c0000 { /* cluster1 funnel */
- 		compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 		reg = <0 0x230c0000 0 0x1000>;
-@@ -448,6 +484,18 @@
+-		etm@f65dd000 {
++		etm5: etm@f65dd000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0xf65dd000 0 0x1000>;
+ 
+@@ -327,7 +327,7 @@
+ 			};
  		};
- 	};
  
-+	cti3: cti@23120000 {
-+		compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
-+			     "arm,primecell";
-+		reg = <0 0x23120000 0 0x1000>;
-+
-+		clocks = <&soc_smc50mhz>;
-+		clock-names = "apb_pclk";
-+		power-domains = <&scpi_devpd 0>;
-+
-+		arm,cs-dev-assoc = <&etm3>;
-+	};
-+
- 	cpu_debug4: cpu-debug@23210000 {
- 		compatible = "arm,coresight-cpu-debug", "arm,primecell";
- 		reg = <0x0 0x23210000 0x0 0x1000>;
-@@ -473,6 +521,18 @@
+-		etm@f65de000 {
++		etm6: etm@f65de000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0xf65de000 0 0x1000>;
+ 
+@@ -346,7 +346,7 @@
+ 			};
  		};
- 	};
  
-+	cti4: cti@23220000 {
-+		compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
-+			     "arm,primecell";
-+		reg = <0 0x23220000 0 0x1000>;
-+
-+		clocks = <&soc_smc50mhz>;
-+		clock-names = "apb_pclk";
-+		power-domains = <&scpi_devpd 0>;
-+
-+		arm,cs-dev-assoc = <&etm4>;
-+	};
-+
- 	cpu_debug5: cpu-debug@23310000 {
- 		compatible = "arm,coresight-cpu-debug", "arm,primecell";
- 		reg = <0x0 0x23310000 0x0 0x1000>;
-@@ -498,6 +558,100 @@
+-		etm@f65df000 {
++		etm7: etm@f65df000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0xf65df000 0 0x1000>;
+ 
+@@ -364,5 +364,119 @@
+ 				};
+ 			};
  		};
- 	};
- 
-+	cti5: cti@23320000 {
-+		compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
-+			     "arm,primecell";
-+		reg = <0 0x23320000 0 0x1000>;
 +
-+		clocks = <&soc_smc50mhz>;
-+		clock-names = "apb_pclk";
-+		power-domains = <&scpi_devpd 0>;
++		/* System CTIs */
++		/* CTI 0 - TMC and TPIU connections */
++		cti@f6403000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0 0xf6403000 0 0x1000>;
 +
-+		arm,cs-dev-assoc = <&etm5>;
-+	};
-+
-+	cti@20020000 { /* sys_cti_0 */
-+		compatible = "arm,coresight-cti", "arm,primecell";
-+		reg = <0 0x20020000 0 0x1000>;
-+
-+		clocks = <&soc_smc50mhz>;
-+		clock-names = "apb_pclk";
-+		power-domains = <&scpi_devpd 0>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		trig-conns@0 {
-+			reg = <0>;
-+			arm,trig-in-sigs=<2 3>;
-+			arm,trig-in-types=<SNK_FULL SNK_ACQCOMP>;
-+			arm,trig-out-sigs=<0 1>;
-+			arm,trig-out-types=<SNK_FLUSHIN SNK_TRIGIN>;
-+			arm,cs-dev-assoc = <&etr_sys>;
++			clocks = <&acpu_sctrl HI6220_ACPU_SFT_AT_S>;
++			clock-names = "apb_pclk";
 +		};
 +
-+		trig-conns@1 {
-+			reg = <1>;
-+			arm,trig-in-sigs=<0 1>;
-+			arm,trig-in-types=<SNK_FULL SNK_ACQCOMP>;
-+			arm,trig-out-sigs=<7 6>;
-+			arm,trig-out-types=<SNK_FLUSHIN SNK_TRIGIN>;
-+			arm,cs-dev-assoc = <&etf_sys0>;
++		/* CTI - CPU-0 */
++		cti@f6598000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0 0xf6598000 0 0x1000>;
++
++			clocks = <&acpu_sctrl HI6220_ACPU_SFT_AT_S>;
++			clock-names = "apb_pclk";
++
++			cpu = <&cpu0>;
++			arm,cs-dev-assoc = <&etm0>;
 +		};
 +
-+		trig-conns@2 {
-+			reg = <2>;
-+			arm,trig-in-sigs=<4 5 6 7>;
-+			arm,trig-in-types=<STM_TOUT_SPTE STM_TOUT_SW
-+					   STM_TOUT_HETE STM_ASYNCOUT>;
-+			arm,trig-out-sigs=<4 5>;
-+			arm,trig-out-types=<STM_HWEVENT STM_HWEVENT>;
-+			arm,cs-dev-assoc = <&stm_sys>;
++		/* CTI - CPU-1 */
++		cti@f6599000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0 0xf6599000 0 0x1000>;
++
++			clocks = <&acpu_sctrl HI6220_ACPU_SFT_AT_S>;
++			clock-names = "apb_pclk";
++
++			cpu = <&cpu1>;
++			arm,cs-dev-assoc = <&etm1>;
 +		};
 +
-+		trig-conns@3 {
-+			reg = <3>;
-+			arm,trig-out-sigs=<2 3>;
-+			arm,trig-out-types=<SNK_FLUSHIN SNK_TRIGIN>;
-+			arm,cs-dev-assoc = <&tpiu_sys>;
-+		};
-+	};
++		/* CTI - CPU-2 */
++		cti@f659a000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0 0xf659a000 0 0x1000>;
 +
-+	cti@20110000 { /* sys_cti_1 */
-+		compatible = "arm,coresight-cti", "arm,primecell";
-+		reg = <0 0x20110000 0 0x1000>;
++			clocks = <&acpu_sctrl HI6220_ACPU_SFT_AT_S>;
++			clock-names = "apb_pclk";
 +
-+		clocks = <&soc_smc50mhz>;
-+		clock-names = "apb_pclk";
-+		power-domains = <&scpi_devpd 0>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		trig-conns@0 {
-+			reg = <0>;
-+			arm,trig-in-sigs=<0>;
-+			arm,trig-in-types=<GEN_INTREQ>;
-+			arm,trig-out-sigs=<0>;
-+			arm,trig-out-types=<GEN_HALTREQ>;
-+			arm,trig-conn-name = "sys_profiler";
++			cpu = <&cpu2>;
++			arm,cs-dev-assoc = <&etm2>;
 +		};
 +
-+		trig-conns@1 {
-+			reg = <1>;
-+			arm,trig-out-sigs=<2 3>;
-+			arm,trig-out-types=<GEN_HALTREQ GEN_RESTARTREQ>;
-+			arm,trig-conn-name = "watchdog";
++		/* CTI - CPU-3 */
++		cti@f659b000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0 0xf659b000 0 0x1000>;
++
++			clocks = <&acpu_sctrl HI6220_ACPU_SFT_AT_S>;
++			clock-names = "apb_pclk";
++
++			cpu = <&cpu3>;
++			arm,cs-dev-assoc = <&etm3>;
 +		};
 +
-+		trig-conns@2 {
-+			reg = <2>;
-+			arm,trig-out-sigs=<1 6>;
-+			arm,trig-out-types=<GEN_HALTREQ GEN_RESTARTREQ>;
-+			arm,trig-conn-name = "g_counter";
-+		};
-+	};
++		/* CTI - CPU-4 */
++		cti@f65d8000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0 0xf65d8000 0 0x1000>;
 +
- 	gpu: gpu@2d000000 {
- 		compatible = "arm,juno-mali", "arm,mali-t624";
- 		reg = <0 0x2d000000 0 0x10000>;
-diff --git a/arch/arm64/boot/dts/arm/juno-cs-r1r2.dtsi b/arch/arm64/boot/dts/arm/juno-cs-r1r2.dtsi
-index eda3d9e18af6..752b05f8bf31 100644
---- a/arch/arm64/boot/dts/arm/juno-cs-r1r2.dtsi
-+++ b/arch/arm64/boot/dts/arm/juno-cs-r1r2.dtsi
-@@ -23,7 +23,7 @@
- 		};
++			clocks = <&acpu_sctrl HI6220_ACPU_SFT_AT_S>;
++			clock-names = "apb_pclk";
++
++			cpu = <&cpu4>;
++			arm,cs-dev-assoc = <&etm4>;
++		};
++
++		/* CTI - CPU-5 */
++		cti@f65d9000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0 0xf65d9000 0 0x1000>;
++
++			clocks = <&acpu_sctrl HI6220_ACPU_SFT_AT_S>;
++			clock-names = "apb_pclk";
++
++			cpu = <&cpu5>;
++			arm,cs-dev-assoc = <&etm5>;
++		};
++
++		/* CTI - CPU-6 */
++		cti@f65da000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0 0xf65da000 0 0x1000>;
++
++			clocks = <&acpu_sctrl HI6220_ACPU_SFT_AT_S>;
++			clock-names = "apb_pclk";
++
++			cpu = <&cpu6>;
++			arm,cs-dev-assoc = <&etm6>;
++		};
++
++		/* CTI - CPU-7 */
++		cti@f65db000 {
++			compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
++				     "arm,primecell";
++			reg = <0 0xf65db000 0 0x1000>;
++
++			clocks = <&acpu_sctrl HI6220_ACPU_SFT_AT_S>;
++			clock-names = "apb_pclk";
++
++			cpu = <&cpu7>;
++			arm,cs-dev-assoc = <&etm7>;
++		};
  	};
- 
--	etf@20140000 { /* etf1 */
-+	etf_sys1: etf@20140000 { /* etf1 */
- 		compatible = "arm,coresight-tmc", "arm,primecell";
- 		reg = <0 0x20140000 0 0x1000>;
- 
-@@ -82,4 +82,39 @@
- 
- 		};
- 	};
-+
-+	cti@20160000 { /* sys_cti_2 */
-+		compatible = "arm,coresight-cti", "arm,primecell";
-+		reg = <0 0x20160000 0 0x1000>;
-+
-+		clocks = <&soc_smc50mhz>;
-+		clock-names = "apb_pclk";
-+		power-domains = <&scpi_devpd 0>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		trig-conns@0 {
-+			reg = <0>;
-+			arm,trig-in-sigs=<0 1>;
-+			arm,trig-in-types=<SNK_FULL SNK_ACQCOMP>;
-+			arm,trig-out-sigs=<0 1>;
-+			arm,trig-out-types=<SNK_FLUSHIN SNK_TRIGIN>;
-+			arm,cs-dev-assoc = <&etf_sys1>;
-+		};
-+
-+		trig-conns@1 {
-+			reg = <1>;
-+			arm,trig-in-sigs=<2 3 4>;
-+			arm,trig-in-types=<ELA_DBGREQ ELA_TSTART ELA_TSTOP>;
-+			arm,trig-conn-name = "ela_clus_0";
-+		};
-+
-+		trig-conns@2 {
-+			reg = <2>;
-+			arm,trig-in-sigs=<5 6 7>;
-+			arm,trig-in-types=<ELA_DBGREQ ELA_TSTART ELA_TSTOP>;
-+			arm,trig-conn-name = "ela_clus_1";
-+		};
-+	};
  };
-diff --git a/arch/arm64/boot/dts/arm/juno-r1.dts b/arch/arm64/boot/dts/arm/juno-r1.dts
-index 5f290090b0cf..02aa51eb311d 100644
---- a/arch/arm64/boot/dts/arm/juno-r1.dts
-+++ b/arch/arm64/boot/dts/arm/juno-r1.dts
-@@ -9,6 +9,7 @@
- /dts-v1/;
- 
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-+#include <dt-bindings/arm/coresight-cti-dt.h>
- #include "juno-base.dtsi"
- #include "juno-cs-r1r2.dtsi"
- 
-@@ -309,3 +310,27 @@
- &cpu_debug5 {
- 	cpu = <&A53_3>;
- };
-+
-+&cti0 {
-+	cpu = <&A57_0>;
-+};
-+
-+&cti1 {
-+	cpu = <&A57_1>;
-+};
-+
-+&cti2 {
-+	cpu = <&A53_0>;
-+};
-+
-+&cti3 {
-+	cpu = <&A53_1>;
-+};
-+
-+&cti4 {
-+	cpu = <&A53_2>;
-+};
-+
-+&cti5 {
-+	cpu = <&A53_3>;
-+};
-diff --git a/arch/arm64/boot/dts/arm/juno-r2.dts b/arch/arm64/boot/dts/arm/juno-r2.dts
-index 305300dd521c..75bb27c2d4dc 100644
---- a/arch/arm64/boot/dts/arm/juno-r2.dts
-+++ b/arch/arm64/boot/dts/arm/juno-r2.dts
-@@ -9,6 +9,7 @@
- /dts-v1/;
- 
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-+#include <dt-bindings/arm/coresight-cti-dt.h>
- #include "juno-base.dtsi"
- #include "juno-cs-r1r2.dtsi"
- 
-@@ -315,3 +316,27 @@
- &cpu_debug5 {
- 	cpu = <&A53_3>;
- };
-+
-+&cti0 {
-+	cpu = <&A72_0>;
-+};
-+
-+&cti1 {
-+	cpu = <&A72_1>;
-+};
-+
-+&cti2 {
-+	cpu = <&A53_0>;
-+};
-+
-+&cti3 {
-+	cpu = <&A53_1>;
-+};
-+
-+&cti4 {
-+	cpu = <&A53_2>;
-+};
-+
-+&cti5 {
-+	cpu = <&A53_3>;
-+};
-diff --git a/arch/arm64/boot/dts/arm/juno.dts b/arch/arm64/boot/dts/arm/juno.dts
-index f00cffbd032c..dbc22e70b62c 100644
---- a/arch/arm64/boot/dts/arm/juno.dts
-+++ b/arch/arm64/boot/dts/arm/juno.dts
-@@ -9,6 +9,7 @@
- /dts-v1/;
- 
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-+#include <dt-bindings/arm/coresight-cti-dt.h>
- #include "juno-base.dtsi"
- 
- / {
-@@ -295,3 +296,27 @@
- &cpu_debug5 {
- 	cpu = <&A53_3>;
- };
-+
-+&cti0 {
-+	cpu = <&A57_0>;
-+};
-+
-+&cti1 {
-+	cpu = <&A57_1>;
-+};
-+
-+&cti2 {
-+	cpu = <&A53_0>;
-+};
-+
-+&cti3 {
-+	cpu = <&A53_1>;
-+};
-+
-+&cti4 {
-+	cpu = <&A53_2>;
-+};
-+
-+&cti5 {
-+	cpu = <&A53_3>;
-+};
 -- 
 2.17.1
 
