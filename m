@@ -2,86 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C1EC12D40D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 20:41:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FDC312D47B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 21:29:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727648AbfL3TlK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Dec 2019 14:41:10 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:32774 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727278AbfL3TlK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Dec 2019 14:41:10 -0500
-Received: by mail-wr1-f65.google.com with SMTP id b6so33640781wrq.0;
-        Mon, 30 Dec 2019 11:41:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=dXg8oFzBEXS5AG929jnjM1jsF6o4ohe+Wl9/z4Sa0Kk=;
-        b=N3Il+Igx/93EmUIkp4Qn7D4C0qYnr0Zm38eM/RyUnHj3fIu88+MfVRzvu05TtNB1RI
-         owSAEZX27S/3Sj7lup7vXTu9Dz6tr899n2q4V0yVA1XcFvP6PR8doKKHN8OMVPnd0A/9
-         yqiZg1nBjCA7I1vsVt/EINDdHNUXMdQz03cxDmS7nfsJc2I58cMJM38EminOTwOvxV9T
-         kM0yNNarkUhD1T6B0xCVk4Uq6VOVjH30XqIiSw8Ddxhillis6CRNlYSemQ3F8/nr5nKK
-         TMn8U9HLeSXsHPc0N73KXCm+ao9zPZrRviqRUQPXO11ky4G6LnJEyKH7SBP4JDipEcDX
-         LG7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=dXg8oFzBEXS5AG929jnjM1jsF6o4ohe+Wl9/z4Sa0Kk=;
-        b=mT7Ot8sHG9LkMvBUtXtOvV+8Z4pjNR0fwlWl9ijue6SV0iUki1aUDonRb0lNtoEaOp
-         Pc9Vx7O6Z/dnMqm5MgcygnEjZDKPknaqjCRCecbU/ALuZl87bB2rLZ4EsdEQUs/j4vPS
-         mK1UIyVEGVOQp+TGMBmEdO4cqr646QCa9btNnrxX4FF1/z9LwBdgE0HjIAsDFXfCsK59
-         JkcgEl/DaspDlooUYT9GjjuF30TMrRAYrMT2WckZmGe3+P8pMlxMrZr1cRMeL0h6fofm
-         zmnUuCxbDjYeUsOB/zfA2+GOQ8I1khoU5Po4Xet7+jiVUgVYp3VghUnUMxJJDyADVU0b
-         xvpg==
-X-Gm-Message-State: APjAAAVgeLwSR8fsRUF2XnqxjyHN9GSR86ppQG8CUZX07j2z8zAoC/CV
-        kFQgmOGYqDRgfK95O/Uv7L0=
-X-Google-Smtp-Source: APXvYqyvzye3Ooh54UXS218+xZWxHTIG40U09D7tH9MsS86sPq32CvZylveADRnLKxa3J7IKokgM2Q==
-X-Received: by 2002:a5d:4d06:: with SMTP id z6mr67047992wrt.339.1577734868421;
-        Mon, 30 Dec 2019 11:41:08 -0800 (PST)
-Received: from localhost.localdomain ([197.254.95.38])
-        by smtp.googlemail.com with ESMTPSA id p17sm47239785wrx.20.2019.12.30.11.41.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Dec 2019 11:41:07 -0800 (PST)
-From:   Wambui Karuga <wambui.karugax@gmail.com>
-To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm: use BUG_ON macro for debugging.
-Date:   Mon, 30 Dec 2019 22:41:02 +0300
-Message-Id: <20191230194102.2843-1-wambui.karugax@gmail.com>
-X-Mailer: git-send-email 2.17.1
+        id S1727720AbfL3U3v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Dec 2019 15:29:51 -0500
+Received: from smtp4-g21.free.fr ([212.27.42.4]:18254 "EHLO smtp4-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727695AbfL3U3v (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Dec 2019 15:29:51 -0500
+Received: from [192.168.1.91] (unknown [77.207.133.132])
+        (Authenticated sender: marc.w.gonzalez)
+        by smtp4-g21.free.fr (Postfix) with ESMTPSA id 4F4BA19F5E6;
+        Mon, 30 Dec 2019 21:25:39 +0100 (CET)
+Subject: Re: [PATCH v2] PCI: qcom: Fix the fixup of PCI_VENDOR_ID_QCOM
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andrew Murray <andrew.murray@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20191227012717.78965-1-bjorn.andersson@linaro.org>
+ <9e5ee7e8-aa63-e82c-8135-acc77b476c87@mm-sol.com>
+ <38acf5fc-85aa-7090-e666-97a1281e9905@free.fr>
+ <20191229024547.GH3755841@builder>
+From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
+Message-ID: <9c7d69cc-29e7-07c5-1e93-e9fdadf370a6@free.fr>
+Date:   Mon, 30 Dec 2019 21:25:28 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
+MIME-Version: 1.0
+In-Reply-To: <20191229024547.GH3755841@builder>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As the if statement only checks for the value of the offset_name
-variable, it can be replaced by the more conscise BUG_ON macro for error
-reporting.
+On 29/12/2019 03:45, Bjorn Andersson wrote:
 
-Signed-off-by: Wambui Karuga <wambui.karugax@gmail.com>
----
- drivers/gpu/drm/msm/adreno/adreno_gpu.h | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+> On Sat 28 Dec 07:41 PST 2019, Marc Gonzalez wrote:
+> 
+>> On 27/12/2019 09:51, Stanimir Varbanov wrote:
+>>
+>>> On 12/27/19 3:27 AM, Bjorn Andersson wrote:
+>>>
+>>>> There exists non-bridge PCIe devices with PCI_VENDOR_ID_QCOM, so limit
+>>>> the fixup to only affect the relevant PCIe bridges.
+>>>>
+>>>> Cc: stable@vger.kernel.org
+>>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>>> ---
+>>>>
+>>>> Stan, I picked up all the suggested device id's from the previous thread and
+>>>> added 0x1000 for QCS404. I looked at creating platform specific defines in
+>>>> pci_ids.h, but SDM845 has both 106 and 107... Please let me know if you would
+>>>> prefer that I do this anyway.
+>>>
+>>> Looks good,
+>>>
+>>> Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
+>>>
+>>>>  drivers/pci/controller/dwc/pcie-qcom.c | 8 +++++++-
+>>>>  1 file changed, 7 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>>>> index 5ea527a6bd9f..138e1a2d21cc 100644
+>>>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>>>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>>>> @@ -1439,7 +1439,13 @@ static void qcom_fixup_class(struct pci_dev *dev)
+>>>>  {
+>>>>  	dev->class = PCI_CLASS_BRIDGE_PCI << 8;
+>>>>  }
+>>>> -DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, PCI_ANY_ID, qcom_fixup_class);
+>>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0101, qcom_fixup_class);
+>>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0104, qcom_fixup_class);
+>>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0106, qcom_fixup_class);
+>>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0107, qcom_fixup_class);
+>>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
+>>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
+>>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
+>>
+>> Hrmmm... still not CCed on the patch,
+> 
+> You are Cc'ed on the patch, but as usual your mail server responds "451
+> too many errors from your ip" and throw my emails away.
+> 
+>> and still don't think the fixup is required(?) for 0x106 and 0x107.
+>>
+> 
+> I re-read your reply in my v1 thread. So we know that 0x104 doesn't need
+> the fixup, so presumably only 0x101 needs the fixup?
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index c7441fb8313e..0fe7907f5a7d 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -315,10 +315,7 @@ OUT_PKT7(struct msm_ringbuffer *ring, uint8_t opcode, uint16_t cnt)
- static inline bool adreno_reg_check(struct adreno_gpu *gpu,
- 		enum adreno_regs offset_name)
- {
--	if (offset_name >= REG_ADRENO_REGISTER_MAX ||
--			!gpu->reg_offsets[offset_name]) {
--		BUG();
--	}
-+	BUG_ON(offset_name >= REG_ADRENO_REGISTER_MAX || !gpu->reg_offsets[offset_name]);
- 
- 	/*
- 	 * REG_SKIP is a special value that tell us that the register in
--- 
-2.17.1
+I apologize for the tone of my reply. I did not mean to sound
+so snarky.
 
+All I can say is that, if I remember correctly, the fixup was
+not necessary on apq8098 (0x0105) and it was probably not
+required on msm8996 and sdm845. For older platforms, all bets
+are off.
+
+Regards.
