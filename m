@@ -2,437 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F10B012D20F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 17:39:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB7ED12D212
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 17:40:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726628AbfL3QjA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Dec 2019 11:39:00 -0500
-Received: from foss.arm.com ([217.140.110.172]:56466 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726597AbfL3QjA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Dec 2019 11:39:00 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 61FA331B;
-        Mon, 30 Dec 2019 08:38:58 -0800 (PST)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 675723F703;
-        Mon, 30 Dec 2019 08:38:56 -0800 (PST)
-Date:   Mon, 30 Dec 2019 16:38:54 +0000
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v5 14/15] cpuidle: psci: Add support for PM domains by
- using genpd
-Message-ID: <20191230163854.GB16256@bogus>
-References: <20191230144402.30195-1-ulf.hansson@linaro.org>
- <20191230144402.30195-15-ulf.hansson@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191230144402.30195-15-ulf.hansson@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        id S1726673AbfL3QkO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Dec 2019 11:40:14 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:55204 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726597AbfL3QkN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Dec 2019 11:40:13 -0500
+Received: by mail-wm1-f68.google.com with SMTP id b19so14336595wmj.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Dec 2019 08:40:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=8tObW2Y+8fTfmFiK9yuGB6NcH5jADMC1h14qPDKuK7g=;
+        b=vIp1GZiH6LCgVBcmaNA+k0OXAJYBPhsMy3hg9p4J0BJERnzOSoYz+o3v4NSeWYuEQJ
+         eepS+mrUfiNWOhxHScGa47xys3690RvmDCR6H4rPDWooPV10I4zvUNpGs/qrehMmPB1k
+         wxz9VJBUrPpGBmCtiTCf18j4ZDHeI0DmpHMsJzpiPGtbdO9IBsYLbVYrvVCgt0sBmbaF
+         vV1p629Kia1h56cYSbis/FDzlITfY9Jk5CvNZnr/YNd7J462ptHYBHO4V25Dv0mNsWRU
+         rA8sWx2t2CBSrDCz8RZefPoxZZcVpDTRw/AKVCxEKZPna4in0Gvr6Oskadzue+n+FnSB
+         gA2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=8tObW2Y+8fTfmFiK9yuGB6NcH5jADMC1h14qPDKuK7g=;
+        b=ZL81yUVQUvQtibDTBVnZOAxFQz0vrmNp6P1KQyKtRj4UMImZXzYW3GC5gILLWzG0Ig
+         dNgWs5QQr23tbWU/ennsBLrtcJkHcxxq6zVQiMwcZlp7nwODxDJfKQ2CLor2WvHhZfw0
+         ek9OCgxZEpt9BG6qvGH6odAGHpQ9ZiDSEdoNkIozNZBAbv7WK/MeKigqwohd/tfv+DAq
+         /ZiupnWcBFKUgE7bVvqVcpK6tLGz+JdU3RV1WA+Y/J0rnriapMxTpqPltkKcsie0VCH5
+         VwX/17NvEMSxU+9MWjyzYZLAIHiJY9lyyBpCWArRANrmUKwgwLGv4LCngkWtZttMAYV/
+         7urQ==
+X-Gm-Message-State: APjAAAX1leKm5vBkZQXgi1M6d53GvUDu/hqFnaZaR0WA72zM+vD4YJo2
+        0/odwBduU2WOgwX84P3vXxPHiMOR38LTKQ==
+X-Google-Smtp-Source: APXvYqzqzuA3s5kBfdTMv9W4mAU+5EJ/XDsP+NlN8o/rGLdbAmV1nYLhd2RcBlmn2BQou0S4txsxjA==
+X-Received: by 2002:a1c:8055:: with SMTP id b82mr35748818wmd.127.1577724010564;
+        Mon, 30 Dec 2019 08:40:10 -0800 (PST)
+Received: from linaro.org ([2a00:23c5:6815:3901:a1cf:b00b:5683:ed40])
+        by smtp.gmail.com with ESMTPSA id b137sm21993094wme.26.2019.12.30.08.40.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Dec 2019 08:40:10 -0800 (PST)
+From:   Mike Leach <mike.leach@linaro.org>
+To:     linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        coresight@lists.linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, mathieu.poirier@linaro.org,
+        suzuki.poulose@arm.com, robh+dt@kernel.org, maxime@cerno.tech,
+        liviu.dudau@arm.com, sudeep.holla@arm.com,
+        lorenzo.pieralisi@arm.com, agross@kernel.org,
+        Mike Leach <mike.leach@linaro.org>
+Subject: [PATCH v7 00/15] CoreSight CTI Driver
+Date:   Mon, 30 Dec 2019 16:39:59 +0000
+Message-Id: <20191230163959.27909-1-mike.leach@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 30, 2019 at 03:44:01PM +0100, Ulf Hansson wrote:
-> When the hierarchical CPU topology layout is used in DT and the PSCI OSI
-> mode is supported by the PSCI FW, let's initialize a corresponding PM
-> domain topology by using genpd. This enables a CPU and a group of CPUs,
-> when attached to the topology, to be power-managed accordingly.
-> 
-> To trigger the attempt to initialize the genpd data structures let's use a
-> subsys_initcall, which should be early enough to allow CPUs, but also other
-> devices to be attached.
-> 
-> The initialization consists of parsing the PSCI OF node for the topology
-> and the "domain idle states" DT bindings. In case the idle states are
-> compatible with "domain-idle-state", the initialized genpd becomes
-> responsible of selecting an idle state for the PM domain, via assigning it
-> a genpd governor.
-> 
-> Note that, a successful initialization of the genpd data structures, is
-> followed by a call to psci_set_osi_mode(), as to try to enable the OSI mode
-> in the PSCI FW. In case this fails, we fall back into a degraded mode
-> rather than bailing out and returning error codes.
-> 
-> Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
-> Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> ---
-> 
-> Changes in v5:
-> 	- Remove genpds in the error path, when enabling OSI failed.
-> 	- Let psci_dt_attach_cpu() return NULL if OSI mode isn't enabled.
-> 	- Make the osi_mode_enabled variable __initdata.
-> 	- Drop some DT compatible strings, as PSCI v1.0 introduces OSI.
-> 
-> ---
->  drivers/cpuidle/cpuidle-psci-domain.c | 277 ++++++++++++++++++++++++++
->  drivers/cpuidle/cpuidle-psci.c        |   4 +-
->  drivers/cpuidle/cpuidle-psci.h        |   5 +
->  3 files changed, 284 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/cpuidle/cpuidle-psci-domain.c b/drivers/cpuidle/cpuidle-psci-domain.c
-> index 87f881c21af1..423f03bbeb74 100644
-> --- a/drivers/cpuidle/cpuidle-psci-domain.c
-> +++ b/drivers/cpuidle/cpuidle-psci-domain.c
-> @@ -7,18 +7,295 @@
->   *
->   */
->  
-> +#define pr_fmt(fmt) "CPUidle PSCI: " fmt
-> +
+CTIs are defined in the device tree and associated with other CoreSight
+devices. The core CoreSight code has been modified to enable the registration
+of the CTI devices on the same bus as the other CoreSight components,
+but as these are not actually trace generation / capture devices, they
+are not part of the Coresight path when generating trace.
 
-Looks like a candidate for cpuidle-psci.h so that it's effective even for
-cpuidle-psci.c, if you re-spin(I don't see any reasons to) or if you are
-sending PR, you can fix-up this along with dropping data->dev :)
+However, the definition of the standard CoreSight device has been extended
+to include a reference to an associated CTI device, and the enable / disable
+trace path operations will auto enable/disable any associated CTI devices at
+the same time.
 
-Anyways,
+Programming is at present via sysfs - a full API is provided to utilise the
+hardware capabilities. As CTI devices are unprogrammed by default, the auto
+enable describe above will have no effect until explicit programming takes
+place.
 
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+A set of device tree bindings specific to the CTI topology has been defined.
+The driver accesses these in a platform agnostic manner, so ACPI bindings
+can be added later, once they have been agreed and defined for the CTI device.
 
->  #include <linux/cpu.h>
->  #include <linux/device.h>
->  #include <linux/kernel.h>
->  #include <linux/pm_domain.h>
->  #include <linux/pm_runtime.h>
-> +#include <linux/psci.h>
-> +#include <linux/slab.h>
-> +#include <linux/string.h>
->  
->  #include "cpuidle-psci.h"
->  
-> +struct psci_pd_provider {
-> +	struct list_head link;
-> +	struct device_node *node;
-> +};
-> +
-> +static LIST_HEAD(psci_pd_providers);
-> +static bool osi_mode_enabled __initdata;
-> +
-> +static int psci_pd_power_off(struct generic_pm_domain *pd)
-> +{
-> +	struct genpd_power_state *state = &pd->states[pd->state_idx];
-> +	u32 *pd_state;
-> +
-> +	if (!state->data)
-> +		return 0;
-> +
-> +	/* OSI mode is enabled, set the corresponding domain state. */
-> +	pd_state = state->data;
-> +	psci_set_domain_state(*pd_state);
-> +
-> +	return 0;
-> +}
-> +
-> +static int __init psci_pd_parse_state_nodes(struct genpd_power_state *states,
-> +					int state_count)
-> +{
-> +	int i, ret;
-> +	u32 psci_state, *psci_state_buf;
-> +
-> +	for (i = 0; i < state_count; i++) {
-> +		ret = psci_dt_parse_state_node(to_of_node(states[i].fwnode),
-> +					&psci_state);
-> +		if (ret)
-> +			goto free_state;
-> +
-> +		psci_state_buf = kmalloc(sizeof(u32), GFP_KERNEL);
-> +		if (!psci_state_buf) {
-> +			ret = -ENOMEM;
-> +			goto free_state;
-> +		}
-> +		*psci_state_buf = psci_state;
-> +		states[i].data = psci_state_buf;
-> +	}
-> +
-> +	return 0;
-> +
-> +free_state:
-> +	i--;
-> +	for (; i >= 0; i--)
-> +		kfree(states[i].data);
-> +	return ret;
-> +}
-> +
-> +static int __init psci_pd_parse_states(struct device_node *np,
-> +			struct genpd_power_state **states, int *state_count)
-> +{
-> +	int ret;
-> +
-> +	/* Parse the domain idle states. */
-> +	ret = of_genpd_parse_idle_states(np, states, state_count);
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* Fill out the PSCI specifics for each found state. */
-> +	ret = psci_pd_parse_state_nodes(*states, *state_count);
-> +	if (ret)
-> +		kfree(*states);
-> +
-> +	return ret;
-> +}
-> +
-> +static void psci_pd_free_states(struct genpd_power_state *states,
-> +				unsigned int state_count)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < state_count; i++)
-> +		kfree(states[i].data);
-> +	kfree(states);
-> +}
-> +
-> +static int __init psci_pd_init(struct device_node *np)
-> +{
-> +	struct generic_pm_domain *pd;
-> +	struct psci_pd_provider *pd_provider;
-> +	struct dev_power_governor *pd_gov;
-> +	struct genpd_power_state *states = NULL;
-> +	int ret = -ENOMEM, state_count = 0;
-> +
-> +	pd = kzalloc(sizeof(*pd), GFP_KERNEL);
-> +	if (!pd)
-> +		goto out;
-> +
-> +	pd_provider = kzalloc(sizeof(*pd_provider), GFP_KERNEL);
-> +	if (!pd_provider)
-> +		goto free_pd;
-> +
-> +	pd->name = kasprintf(GFP_KERNEL, "%pOF", np);
-> +	if (!pd->name)
-> +		goto free_pd_prov;
-> +
-> +	/*
-> +	 * Parse the domain idle states and let genpd manage the state selection
-> +	 * for those being compatible with "domain-idle-state".
-> +	 */
-> +	ret = psci_pd_parse_states(np, &states, &state_count);
-> +	if (ret)
-> +		goto free_name;
-> +
-> +	pd->free_states = psci_pd_free_states;
-> +	pd->name = kbasename(pd->name);
-> +	pd->power_off = psci_pd_power_off;
-> +	pd->states = states;
-> +	pd->state_count = state_count;
-> +	pd->flags |= GENPD_FLAG_IRQ_SAFE | GENPD_FLAG_CPU_DOMAIN;
-> +
-> +	/* Use governor for CPU PM domains if it has some states to manage. */
-> +	pd_gov = state_count > 0 ? &pm_domain_cpu_gov : NULL;
-> +
-> +	ret = pm_genpd_init(pd, pd_gov, false);
-> +	if (ret) {
-> +		psci_pd_free_states(states, state_count);
-> +		goto free_name;
-> +	}
-> +
-> +	ret = of_genpd_add_provider_simple(np, pd);
-> +	if (ret)
-> +		goto remove_pd;
-> +
-> +	pd_provider->node = of_node_get(np);
-> +	list_add(&pd_provider->link, &psci_pd_providers);
-> +
-> +	pr_debug("init PM domain %s\n", pd->name);
-> +	return 0;
-> +
-> +remove_pd:
-> +	pm_genpd_remove(pd);
-> +free_name:
-> +	kfree(pd->name);
-> +free_pd_prov:
-> +	kfree(pd_provider);
-> +free_pd:
-> +	kfree(pd);
-> +out:
-> +	pr_err("failed to init PM domain ret=%d %pOF\n", ret, np);
-> +	return ret;
-> +}
-> +
-> +static void __init psci_pd_remove(void)
-> +{
-> +	struct psci_pd_provider *pd_provider, *it;
-> +	struct generic_pm_domain *genpd;
-> +
-> +	list_for_each_entry_safe(pd_provider, it, &psci_pd_providers, link) {
-> +		of_genpd_del_provider(pd_provider->node);
-> +
-> +		genpd = of_genpd_remove_last(pd_provider->node);
-> +		if (!IS_ERR(genpd))
-> +			kfree(genpd);
-> +
-> +		of_node_put(pd_provider->node);
-> +		list_del(&pd_provider->link);
-> +		kfree(pd_provider);
-> +	}
-> +}
-> +
-> +static int __init psci_pd_init_topology(struct device_node *np, bool add)
-> +{
-> +	struct device_node *node;
-> +	struct of_phandle_args child, parent;
-> +	int ret;
-> +
-> +	for_each_child_of_node(np, node) {
-> +		if (of_parse_phandle_with_args(node, "power-domains",
-> +					"#power-domain-cells", 0, &parent))
-> +			continue;
-> +
-> +		child.np = node;
-> +		child.args_count = 0;
-> +
-> +		ret = add ? of_genpd_add_subdomain(&parent, &child) :
-> +			of_genpd_remove_subdomain(&parent, &child);
-> +		of_node_put(parent.np);
-> +		if (ret) {
-> +			of_node_put(node);
-> +			return ret;
-> +		}
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int __init psci_pd_add_topology(struct device_node *np)
-> +{
-> +	return psci_pd_init_topology(np, true);
-> +}
-> +
-> +static void __init psci_pd_remove_topology(struct device_node *np)
-> +{
-> +	psci_pd_init_topology(np, false);
-> +}
-> +
-> +static const struct of_device_id psci_of_match[] __initconst = {
-> +	{ .compatible = "arm,psci-1.0" },
-> +	{}
-> +};
-> +
-> +static int __init psci_idle_init_domains(void)
-> +{
-> +	struct device_node *np = of_find_matching_node(NULL, psci_of_match);
-> +	struct device_node *node;
-> +	int ret = 0, pd_count = 0;
-> +
-> +	if (!np)
-> +		return -ENODEV;
-> +
-> +	/* Currently limit the hierarchical topology to be used in OSI mode. */
-> +	if (!psci_has_osi_support())
-> +		goto out;
-> +
-> +	/*
-> +	 * Parse child nodes for the "#power-domain-cells" property and
-> +	 * initialize a genpd/genpd-of-provider pair when it's found.
-> +	 */
-> +	for_each_child_of_node(np, node) {
-> +		if (!of_find_property(node, "#power-domain-cells", NULL))
-> +			continue;
-> +
-> +		ret = psci_pd_init(node);
-> +		if (ret)
-> +			goto put_node;
-> +
-> +		pd_count++;
-> +	}
-> +
-> +	/* Bail out if not using the hierarchical CPU topology. */
-> +	if (!pd_count)
-> +		goto out;
-> +
-> +	/* Link genpd masters/subdomains to model the CPU topology. */
-> +	ret = psci_pd_add_topology(np);
-> +	if (ret)
-> +		goto remove_pd;
-> +
-> +	/* Try to enable OSI mode. */
-> +	ret = psci_set_osi_mode();
-> +	if (ret) {
-> +		pr_warn("failed to enable OSI mode: %d\n", ret);
-> +		psci_pd_remove_topology(np);
-> +		goto remove_pd;
-> +	}
-> +
-> +	osi_mode_enabled = true;
-> +	of_node_put(np);
-> +	pr_info("Initialized CPU PM domain topology\n");
-> +	return pd_count;
-> +
-> +put_node:
-> +	of_node_put(node);
-> +remove_pd:
-> +	if (pd_count)
-> +		psci_pd_remove();
-> +	pr_err("failed to create CPU PM domains ret=%d\n", ret);
-> +out:
-> +	of_node_put(np);
-> +	return ret;
-> +}
-> +subsys_initcall(psci_idle_init_domains);
-> +
->  struct device __init *psci_dt_attach_cpu(int cpu)
->  {
->  	struct device *dev;
->  
-> +	if (!osi_mode_enabled)
-> +		return NULL;
-> +
->  	dev = dev_pm_domain_attach_by_name(get_cpu_device(cpu), "psci");
->  	if (IS_ERR_OR_NULL(dev))
->  		return dev;
-> diff --git a/drivers/cpuidle/cpuidle-psci.c b/drivers/cpuidle/cpuidle-psci.c
-> index 9d779be27071..edd7a54ef0d3 100644
-> --- a/drivers/cpuidle/cpuidle-psci.c
-> +++ b/drivers/cpuidle/cpuidle-psci.c
-> @@ -34,7 +34,7 @@ static DEFINE_PER_CPU_READ_MOSTLY(struct psci_cpuidle_data, psci_cpuidle_data);
->  static DEFINE_PER_CPU(u32, domain_state);
->  static bool psci_cpuidle_use_cpuhp __initdata;
->  
-> -static inline void psci_set_domain_state(u32 state)
-> +void psci_set_domain_state(u32 state)
->  {
->  	__this_cpu_write(domain_state, state);
->  }
-> @@ -143,7 +143,7 @@ static const struct of_device_id psci_idle_state_match[] __initconst = {
->  	{ },
->  };
->  
-> -static int __init psci_dt_parse_state_node(struct device_node *np, u32 *state)
-> +int __init psci_dt_parse_state_node(struct device_node *np, u32 *state)
->  {
->  	int err = of_property_read_u32(np, "arm,psci-suspend-param", state);
->  
-> diff --git a/drivers/cpuidle/cpuidle-psci.h b/drivers/cpuidle/cpuidle-psci.h
-> index 8609482cf490..7299a04dd467 100644
-> --- a/drivers/cpuidle/cpuidle-psci.h
-> +++ b/drivers/cpuidle/cpuidle-psci.h
-> @@ -3,6 +3,11 @@
->  #ifndef __CPUIDLE_PSCI_H
->  #define __CPUIDLE_PSCI_H
->  
-> +struct device_node;
-> +
-> +void psci_set_domain_state(u32 state);
-> +int __init psci_dt_parse_state_node(struct device_node *np, u32 *state);
-> +
->  #ifdef CONFIG_PM_GENERIC_DOMAINS_OF
->  struct device __init *psci_dt_attach_cpu(int cpu);
->  #else
-> -- 
-> 2.17.1
-> 
+Documentation has been updated to describe both the CTI hardware, its use and
+programming in sysfs, and the new dts bindings required.
+
+Tested on DB410 board and Juno board, against the Linux 5.5-rc1. 5.5-rc4 trees.
+
+Changes since v6:
+NB: No functional driver changes in this set. Full set released for
+consistency, completeness and ease of use.
+1) Updates to .yaml following comments from Maxime Ripard. Correct child node
+   descriptions, fix validation, and ensure reg entries required in child
+   nodes as per DeviceTree specification.
+2) Update to Juno bindings to implement reg entry specification requirements.
+
+Changes since v5:
+1) Fixed up device tree .yaml file. Using extra compatible string for
+v8 architecture CTI connections.
+2) Ensure association code respects coresight mutex when setting cross
+referenced pointers. Add in shutdown code.
+3) Multiple minor code fixes & rationalisation. 
+
+Changes since v4:
+Multiple changes following feedback from Mathieu, Leo and Suzuki.
+1) Dropped RFC tag - wider distribution
+2) CTI bindings definition now presented as a .yaml file - tested with
+with 'dt-doc-validate' from devicetree.org/dt-schema project and in kernel
+build tree with 'make dtbs_check' per kernel docs.
+3) Sysfs links to other CoreSight devices moved out of this set into
+a following set that deals with all CoreSight devices & sysfs links.
+4) Documentation in .rst format and new directory following patchset in [1].
+Extended example provided in docs.
+5) Rationalised devicetree of_ specifics to use generic fwnode functions
+where possible to enable easier addition of ACPI support later.
+6) Other minor changes as requested in feedback from last patchset.
+
+Changes since v3:
+1) After discussion on CS mailing list, each CTI connection has a triggers<N>
+   sysfs directory with name and trigger signals listed for the connection.
+2) Initial code for creating sysfs links between CoreSight components is
+  introduced and implementation for CTI provided. This allows exploration
+  of the CoreSight topology within the sysfs infrastructure. Patches for
+  links between other CoreSight components to follow.
+3) Power management - CPU hotplug and idle omitted from this set as ongoing
+   developments may define required direction. Additional patch set to follow.
+4) Multiple fixes applied as requested by reviewers esp. Matthieu, Suzuki
+   and Leo. 
+
+Changes since v2:
+Updates to allow for new features on coresight/next and feedback from
+Mathieu and Leo.
+
+1) Rebase and restructuring to apply on top of ACPI support patch set,
+currently on coresight/next. of_coresight_cti has been renamed to
+coresight-cti-platform and device tree bindings added to this but accessed
+in a platform agnostic manner using fwnode for later ACPI support
+to be added.
+2) Split the sysfs patch info a series of functional patches.
+3) Revised the refcount and enabling support.
+4) Adopted the generic naming protocol - CTIs are either cti_cpuN or
+cti_sysM
+5) Various minor presentation /checkpatch issues highlighted in feedback.
+6) revised CPU hotplug to cover missing cases needed by ETM.
+
+Changes since v1:
+1) Significant restructuring of the source code. Adds cti-sysfs file and
+cti device tree file. Patches add per feature rather than per source
+file.
+2) CPU type power event handling for hotplug moved to CoreSight core,
+with generic registration interface provided for all CPU bound CS devices
+to use.
+3) CTI signal interconnection details in sysfs now generated dynamically
+from connection lists in driver. This to fix issue with multi-line sysfs
+output in previous version.
+4) Full device tree bindings for DB410 and Juno provided (to the extent
+that CTI information is available).
+5) AMBA driver update for UCI IDs are now upstream so no longer included
+in this set
+
+Mike Leach (15):
+  coresight: cti: Initial CoreSight CTI Driver
+  coresight: cti: Add sysfs coresight mgmt reg access.
+  coresight: cti: Add sysfs access to program function regs
+  coresight: cti: Add sysfs trigger / channel programming API
+  dt-bindings: arm: Adds CoreSight CTI hardware definitions.
+  coresight: cti: Add device tree support for v8 arch CTI
+  coresight: cti: Add device tree support for custom CTI.
+  coresight: cti: Enable CTI associated with devices.
+  coresight: cti: Add connection information to sysfs
+  dt-bindings: qcom: Add CTI options for qcom msm8916
+  dt-bindings: arm: Juno platform - add CTI entries to device tree.
+  dt-bindings: hisilicon: Add CTI bindings for hi-6220
+  docs: coresight: Update documentation for CoreSight to cover CTI.
+  docs: sysfs: coresight: Add sysfs ABI documentation for CTI
+  Update MAINTAINERS to add reviewer for CoreSight.
+
+ .../testing/sysfs-bus-coresight-devices-cti   |  221 ++++
+ .../bindings/arm/coresight-cti.yaml           |  326 +++++
+ .../devicetree/bindings/arm/coresight.txt     |    7 +
+ .../trace/coresight/coresight-ect.rst         |  211 +++
+ Documentation/trace/coresight/coresight.rst   |   13 +
+ MAINTAINERS                                   |    3 +
+ arch/arm64/boot/dts/arm/juno-base.dtsi        |  162 ++-
+ arch/arm64/boot/dts/arm/juno-cs-r1r2.dtsi     |   37 +-
+ arch/arm64/boot/dts/arm/juno-r1.dts           |   25 +
+ arch/arm64/boot/dts/arm/juno-r2.dts           |   25 +
+ arch/arm64/boot/dts/arm/juno.dts              |   25 +
+ .../boot/dts/hisilicon/hi6220-coresight.dtsi  |  130 +-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |   85 +-
+ drivers/hwtracing/coresight/Kconfig           |   21 +
+ drivers/hwtracing/coresight/Makefile          |    3 +
+ .../coresight/coresight-cti-platform.c        |  485 +++++++
+ .../hwtracing/coresight/coresight-cti-sysfs.c | 1175 +++++++++++++++++
+ drivers/hwtracing/coresight/coresight-cti.c   |  748 +++++++++++
+ drivers/hwtracing/coresight/coresight-cti.h   |  235 ++++
+ .../hwtracing/coresight/coresight-platform.c  |   21 +
+ drivers/hwtracing/coresight/coresight-priv.h  |   15 +
+ drivers/hwtracing/coresight/coresight.c       |   86 +-
+ include/dt-bindings/arm/coresight-cti-dt.h    |   37 +
+ include/linux/coresight.h                     |   27 +
+ 24 files changed, 4092 insertions(+), 31 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-cti
+ create mode 100644 Documentation/devicetree/bindings/arm/coresight-cti.yaml
+ create mode 100644 Documentation/trace/coresight/coresight-ect.rst
+ create mode 100644 drivers/hwtracing/coresight/coresight-cti-platform.c
+ create mode 100644 drivers/hwtracing/coresight/coresight-cti-sysfs.c
+ create mode 100644 drivers/hwtracing/coresight/coresight-cti.c
+ create mode 100644 drivers/hwtracing/coresight/coresight-cti.h
+ create mode 100644 include/dt-bindings/arm/coresight-cti-dt.h
+
+-- 
+2.17.1
+
