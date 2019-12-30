@@ -2,216 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E1A5812CBC8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 03:01:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D744C12CC68
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 06:00:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726654AbfL3CBI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Dec 2019 21:01:08 -0500
-Received: from onstation.org ([52.200.56.107]:37594 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726653AbfL3CBH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 Dec 2019 21:01:07 -0500
-Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        id S1725536AbfL3FAZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Dec 2019 00:00:25 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:25934 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725379AbfL3FAZ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Dec 2019 00:00:25 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1577682024; h=Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Message-ID: Date: Subject: In-Reply-To: References: Cc:
+ To: From: Sender; bh=bq9GBo1exy5H5niGUOPp3ceZeVp8DhBy57oRJt6GY54=; b=B/ArEumHf3rsF/s6+JQjJYrThsQfsunRm0Am7CdUlCScM4NnTv7x21A7jkuffHzKIRXdcnu9
+ AoMTz01lZjMsc5onBVkdgkpk+3hgVtlpGjgeetkgXsyGQbbqrwqaUI3goYrAtz2lGG+bWA1U
+ f5A70ykNVpfx899QOPj47YYJijg=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e09845e.7f4dc71b9f80-smtp-out-n02;
+ Mon, 30 Dec 2019 05:00:14 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1EE03C433A2; Mon, 30 Dec 2019 05:00:14 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from Pillair (unknown [183.83.68.224])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id E0EE13F262;
-        Mon, 30 Dec 2019 02:01:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1577671267;
-        bh=t0PObDLzsPhcqnRoun2t4cn7CK8IaaEUsOLL32hsp+A=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=kZENiB83tEIEqiyvYfxpIm/AUe9rYXindPV5Wc6UPLe9ALgOWZg6dxrxcj10b/Mak
-         eUtBxlHssLnK5FzNqOCzVypYY11Ut1p0uiiTWL1rxxle/dCfv0tHipu1/ikpdbaqMz
-         NZJxJji08Tv2ZcOLQEp33HWAX9RDYlF5m3OousJA=
-From:   Brian Masney <masneyb@onstation.org>
-To:     jeffrey.l.hugo@gmail.com, robdclark@gmail.com
-Cc:     freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        sean@poorly.run
-Subject: [PATCH RFC v2] drm/msm/mdp5: enable autorefresh
-Date:   Sun, 29 Dec 2019 21:00:53 -0500
-Message-Id: <20191230020053.26016-2-masneyb@onstation.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20191230020053.26016-1-masneyb@onstation.org>
-References: <20191230020053.26016-1-masneyb@onstation.org>
+        (Authenticated sender: pillair)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 53172C433CB;
+        Mon, 30 Dec 2019 05:00:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 53172C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=pillair@codeaurora.org
+From:   <pillair@codeaurora.org>
+To:     "'Bjorn Andersson'" <bjorn.andersson@linaro.org>
+Cc:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <1577181575-25788-1-git-send-email-pillair@codeaurora.org> <20191229031416.GK3755841@builder>
+In-Reply-To: <20191229031416.GK3755841@builder>
+Subject: RE: [PATCH v3] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node
+Date:   Mon, 30 Dec 2019 10:29:56 +0530
+Message-ID: <061701d5bece$044b6cd0$0ce24670$@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIRwFJlApFoTZl1gTtUmtjwT7YanQH7LU55p0pBkhA=
+Content-Language: en-us
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since the introduction of commit 2d99ced787e3 ("drm/msm: async commit
-support"), command-mode panels began throwing the following errors:
+Hi Bjorn,
 
-    msm fd900000.mdss: pp done time out, lm=0
+Thanks for the comments.
+I will post an updated patchset v4 after the patch bringing-in
+"qcom,msa-fixed-perm" is merged/approved.
+I will address all the comments together.
 
-Let's fix this by enabling the autorefresh feature that's available in
-the MDP starting at version 1.0. This will cause the MDP to
-automatically send a frame to the panel every time the panel invokes the
-TE signal, which will trigger the PP_DONE IRQ. This requires only
-sending a single START signal for command-mode panels.
+Thanks,
+Rakesh Pillai.
 
-This gives us a counter for command-mode panels that we can use to
-implement async commit support for the MDP5 in a follow up patch.
-
-Signed-off-by: Brian Masney <masneyb@onstation.org>
-Suggested-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Fixes: 2d99ced787e3 ("drm/msm: async commit support")
----
-Changes since v1:
-- Send a single start command to kick off the pipeline.
-
-The reason I marked this patch as a RFC is that the display during some
-small percentage of boots will stop updating after a minute or so, and
-the ping pong IRQs stop. Most of the time it works with no issues and I
-haven't been able to find a way to reproduce the issue. I tried
-suspending the phone by toggling /sys/power/state since I thought that
-the issue could potentially be related to power management.
-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 17 ++++++++++++-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c  | 31 ++++++++++++++++++++---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h  |  3 +--
- 3 files changed, 44 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-index 05cc04f729d6..39dd144295b3 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-@@ -436,6 +436,8 @@ static void mdp5_crtc_atomic_disable(struct drm_crtc *crtc,
- 		spin_unlock_irqrestore(&mdp5_kms->dev->event_lock, flags);
- 	}
- 
-+	mdp5_ctl_disable(mdp5_cstate->ctl, &mdp5_cstate->pipeline);
-+
- 	mdp5_crtc->enabled = false;
- }
- 
-@@ -456,6 +458,7 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
- {
- 	struct mdp5_crtc *mdp5_crtc = to_mdp5_crtc(crtc);
- 	struct mdp5_crtc_state *mdp5_cstate = to_mdp5_crtc_state(crtc->state);
-+	struct mdp5_pipeline *pipeline = &mdp5_cstate->pipeline;
- 	struct mdp5_kms *mdp5_kms = get_kms(crtc);
- 	struct device *dev = &mdp5_kms->pdev->dev;
- 
-@@ -493,9 +496,21 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
- 
- 	mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->err);
- 
--	if (mdp5_cstate->cmd_mode)
-+	if (mdp5_cstate->cmd_mode) {
- 		mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->pp_done);
- 
-+		/*
-+		 * Enable autorefresh so we get regular ping/pong IRQs.
-+		 * - Bit 31 is the enable bit
-+		 * - Bits 0-15 represent the frame count, specifically how many
-+		 *   TE events before the MDP sends a frame.
-+		 */
-+		mdp5_write(mdp5_kms,
-+			   REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp),
-+			   BIT(31) | BIT(0));
-+		crtc_flush_all(crtc);
-+	}
-+
- 	mdp5_crtc->enabled = true;
- }
- 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-index 030279d7b64b..965757d4f356 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-@@ -50,6 +50,13 @@ struct mdp5_ctl {
- 	bool flush_pending;
- 
- 	struct mdp5_ctl *pair; /* Paired CTL to be flushed together */
-+
-+	/*
-+	 * The command mode panels are ran with autorefresh enabled. Only a
-+	 * single START command can be sent so keep track on a per ping pong
-+	 * basis.
-+	 */
-+	bool start_sent_by_pp[4];
- };
- 
- struct mdp5_ctl_manager {
-@@ -191,7 +198,8 @@ static bool start_signal_needed(struct mdp5_ctl *ctl,
- 	case INTF_WB:
- 		return true;
- 	case INTF_DSI:
--		return intf->mode == MDP5_INTF_DSI_MODE_COMMAND;
-+		return intf->mode == MDP5_INTF_DSI_MODE_COMMAND &&
-+			!ctl->start_sent_by_pp[pipeline->mixer->pp];
- 	default:
- 		return false;
- 	}
-@@ -204,13 +212,17 @@ static bool start_signal_needed(struct mdp5_ctl *ctl,
-  * executed in order to kick off operation and activate all layers.
-  * e.g.: DSI command mode, Writeback
-  */
--static void send_start_signal(struct mdp5_ctl *ctl)
-+static void send_start_signal(struct mdp5_ctl *ctl,
-+			      struct mdp5_pipeline *pipeline)
- {
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&ctl->hw_lock, flags);
- 	ctl_write(ctl, REG_MDP5_CTL_START(ctl->id), 1);
- 	spin_unlock_irqrestore(&ctl->hw_lock, flags);
-+
-+	if (pipeline->intf->mode == MDP5_INTF_DSI_MODE_COMMAND)
-+		ctl->start_sent_by_pp[pipeline->mixer->pp] = true;
- }
- 
- /**
-@@ -234,7 +246,7 @@ int mdp5_ctl_set_encoder_state(struct mdp5_ctl *ctl,
- 	DBG("intf_%d: %s", intf->num, enabled ? "on" : "off");
- 
- 	if (start_signal_needed(ctl, pipeline)) {
--		send_start_signal(ctl);
-+		send_start_signal(ctl, pipeline);
- 	}
- 
- 	return 0;
-@@ -562,7 +574,7 @@ u32 mdp5_ctl_commit(struct mdp5_ctl *ctl,
- 	}
- 
- 	if (start_signal_needed(ctl, pipeline)) {
--		send_start_signal(ctl);
-+		send_start_signal(ctl, pipeline);
- 	}
- 
- 	return curr_ctl_flush_mask;
-@@ -753,3 +765,14 @@ struct mdp5_ctl_manager *mdp5_ctlm_init(struct drm_device *dev,
- 
- 	return ERR_PTR(ret);
- }
-+
-+void mdp5_ctl_disable(struct mdp5_ctl *ctl, struct mdp5_pipeline *pipeline)
-+{
-+	int i;
-+
-+	if (pipeline->intf->mode != MDP5_INTF_DSI_MODE_COMMAND)
-+		return;
-+
-+	for (i = 0; i < ARRAY_SIZE(ctl->start_sent_by_pp); i++)
-+		ctl->start_sent_by_pp[i] = false;
-+}
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h
-index c2af68aa77ae..f9bbf1295669 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h
-@@ -72,7 +72,6 @@ u32 mdp_ctl_flush_mask_encoder(struct mdp5_interface *intf);
- u32 mdp5_ctl_commit(struct mdp5_ctl *ctl, struct mdp5_pipeline *pipeline,
- 		    u32 flush_mask, bool start);
- u32 mdp5_ctl_get_commit_status(struct mdp5_ctl *ctl);
--
--
-+void mdp5_ctl_disable(struct mdp5_ctl *ctl, struct mdp5_pipeline *pipeline);
- 
- #endif /* __MDP5_CTL_H__ */
--- 
-2.21.0
-
+> -----Original Message-----
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Sent: Sunday, December 29, 2019 8:44 AM
+> To: Rakesh Pillai <pillair@codeaurora.org>
+> Cc: devicetree@vger.kernel.org; linux-arm-msm@vger.kernel.org; linux-
+> kernel@vger.kernel.org; linux-arm-kernel@lists.infradead.org
+> Subject: Re: [PATCH v3] arm64: dts: qcom: sc7180: Add WCN3990 WLAN
+> module device node
+> 
+> On Tue 24 Dec 01:59 PST 2019, Rakesh Pillai wrote:
+> 
+> > Add device node for the ath10k SNOC platform driver probe
+> > and add resources required for WCN3990 on sc7180 soc.
+> >
+> > Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+> > ---
+> > This change is dependent on the below set of changes
+> > arm64: dts: sc7180: Add qupv3_0 and qupv3_1
+> (https://lore.kernel.org/patchwork/patch/1150367/)
+> 
+> It would be clearer if you linked to the series instead, but it doesn't
+> matter at this point, this is merged already.
+> 
+> What doesn't seem to be merged is the addition of the
+> qcom,msa_fixed_perm property, so I presume I need to hold off on merging
+> this?
+> 
+> > ---
+> >  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  5 +++++
+> >  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 28
+> ++++++++++++++++++++++++++++
+> >  2 files changed, 33 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > index 189254f..b2ca143f 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > @@ -248,6 +248,11 @@
+> >  	status = "okay";
+> >  };
+> >
+> > +&wifi {
+> > +	status = "okay";
+> > +	qcom,msa_fixed_perm;
+> 
+> As remarked by Rob, properties should be using - instead of _.
+> 
+> > +};
+> > +
+> >  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
+> >
+> >  &qup_i2c2_default {
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > index 666e9b9..7efb97f 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > @@ -42,6 +42,12 @@
+> >  			compatible = "qcom,cmd-db";
+> >  			no-map;
+> >  		};
+> > +
+> > +		wlan_fw_mem: memory@93900000 {
+> > +			compatible = "removed-dma-pool";
+> > +			no-map;
+> > +			reg = <0 0x93900000 0 0x200000>;
+> > +		};
+> >  	};
+> >
+> >  	cpus {
+> > @@ -1119,6 +1125,28 @@
+> >  				#clock-cells = <1>;
+> >  			};
+> >  		};
+> > +
+> > +		wifi: wifi@18800000 {
+> > +			compatible = "qcom,wcn3990-wifi";
+> > +			reg = <0 0x18800000 0 0x800000>;
+> > +			reg-names = "membase";
+> > +			iommus = <&apps_smmu 0xC0 0x1>;
+> 
+> Lowercase 'c' please.
+> 
+> Regards,
+> Bjorn
+> 
+> > +			interrupts =
+> > +				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0
+> */ >,
+> > +				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1
+> */ >,
+> > +				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2
+> */ >,
+> > +				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3
+> */ >,
+> > +				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4
+> */ >,
+> > +				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5
+> */ >,
+> > +				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6
+> */ >,
+> > +				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7
+> */ >,
+> > +				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8
+> */ >,
+> > +				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9
+> */ >,
+> > +				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10
+> */>,
+> > +				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11
+> */>;
+> > +			memory-region = <&wlan_fw_mem>;
+> > +			status = "disabled";
+> > +		};
+> >  	};
+> >
+> >  	timer {
+> > --
+> > 2.7.4
+> >
+> >
+> > _______________________________________________
+> > linux-arm-kernel mailing list
+> > linux-arm-kernel@lists.infradead.org
+> > http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
