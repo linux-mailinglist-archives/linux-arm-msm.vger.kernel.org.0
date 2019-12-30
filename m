@@ -2,84 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C93612CBC3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 02:58:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D03D912CBCC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 03:01:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726626AbfL3B62 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Dec 2019 20:58:28 -0500
-Received: from mailgw01.mediatek.com ([210.61.82.183]:31391 "EHLO
-        mailgw01.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726343AbfL3B62 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 Dec 2019 20:58:28 -0500
-X-UUID: 5b596ee3d2d14837b6ce8d059778b654-20191230
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-        h=Content-Transfer-Encoding:MIME-Version:Content-Type:References:In-Reply-To:Date:CC:To:From:Subject:Message-ID; bh=/lpQkAv3iCwWOkWgJJE5MaCHaqTpfO0sf9t+VBFhKO0=;
-        b=GTjlAmp0bUzhzZ0gAq4CejELM4MMdAWNVRWicb93uz0IRUHzH073haBzaUpl//g5fxEa2dj1cjoWyuI5HBsDgCqp26l/bZNJ75FBrDDOTBbo3qPy3NnkMs1Y7JAWjeW0pCKN1FiiFXdPhWq1oxG9zVWIXCoTiFK7kpeAHjtlTQc=;
-X-UUID: 5b596ee3d2d14837b6ce8d059778b654-20191230
-Received: from mtkcas08.mediatek.inc [(172.21.101.126)] by mailgw01.mediatek.com
-        (envelope-from <ck.hu@mediatek.com>)
-        (Cellopoint E-mail Firewall v4.1.10 Build 0809 with TLS)
-        with ESMTP id 1975550861; Mon, 30 Dec 2019 09:58:21 +0800
-Received: from mtkcas09.mediatek.inc (172.21.101.178) by
- mtkmbs07n2.mediatek.inc (172.21.101.141) with Microsoft SMTP Server (TLS) id
- 15.0.1395.4; Mon, 30 Dec 2019 09:57:57 +0800
-Received: from [172.21.77.4] (172.21.77.4) by mtkcas09.mediatek.inc
- (172.21.101.73) with Microsoft SMTP Server id 15.0.1395.4 via Frontend
- Transport; Mon, 30 Dec 2019 09:58:42 +0800
-Message-ID: <1577671100.8160.0.camel@mtksdaap41>
-Subject: Re: [PATCH 04/13] mailbox: mediatek: cmdq: convert to
- devm_platform_ioremap_resource
-From:   CK Hu <ck.hu@mediatek.com>
-To:     Yangtao Li <tiny.windzz@gmail.com>
-CC:     <jassisinghbrar@gmail.com>, <nsaenzjulienne@suse.de>,
-        <f.fainelli@gmail.com>, <rjui@broadcom.com>,
-        <sbranden@broadcom.com>, <bcm-kernel-feedback-list@broadcom.com>,
-        <lftan@altera.com>, <matthias.bgg@gmail.com>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <mcoquelin.stm32@gmail.com>,
-        <alexandre.torgue@st.com>, <thierry.reding@gmail.com>,
-        <jonathanh@nvidia.com>, <linux-kernel@vger.kernel.org>,
-        <linux-rpi-kernel@lists.infradead.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <nios2-dev@lists.rocketboards.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-tegra@vger.kernel.org>
-Date:   Mon, 30 Dec 2019 09:58:20 +0800
-In-Reply-To: <20191228183538.26189-4-tiny.windzz@gmail.com>
-References: <20191228183538.26189-1-tiny.windzz@gmail.com>
-         <20191228183538.26189-4-tiny.windzz@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+        id S1726798AbfL3CBL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 Dec 2019 21:01:11 -0500
+Received: from onstation.org ([52.200.56.107]:37582 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726343AbfL3CBI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 29 Dec 2019 21:01:08 -0500
+Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 80B7B3EE7A;
+        Mon, 30 Dec 2019 02:01:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1577671266;
+        bh=t0PObDLzsPhcqnRoun2t4cn7CK8IaaEUsOLL32hsp+A=;
+        h=From:To:Cc:Subject:Date:From;
+        b=hAmoq4Npmz3/1IQcX+qOctett7tt7TPaPFnCTIYg2L4+yaM0wk7VV2rrH85EtNsy/
+         AlF/nGb/YkJxqKzRKxv+x14HYwOwENwdBDvGfrnT/xnO1FVuXzO3tNN8BoUvAFh83T
+         6pTNrklhEV5bUK409DI2L7LOlxWMvPDu18MuWTfU=
+From:   Brian Masney <masneyb@onstation.org>
+To:     jeffrey.l.hugo@gmail.com, robdclark@gmail.com
+Cc:     freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        sean@poorly.run
+Subject: [PATCH RFC v2] drm/msm/mdp5: enable autorefresh
+Date:   Sun, 29 Dec 2019 21:00:52 -0500
+Message-Id: <20191230020053.26016-1-masneyb@onstation.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-X-MTK:  N
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGksIFlhbmd0YW86DQoNCk9uIFNhdCwgMjAxOS0xMi0yOCBhdCAxODozNSArMDAwMCwgWWFuZ3Rh
-byBMaSB3cm90ZToNCj4gVXNlIGRldm1fcGxhdGZvcm1faW9yZW1hcF9yZXNvdXJjZSgpIHRvIHNp
-bXBsaWZ5IGNvZGUuDQo+IA0KDQpSZXZpZXdlZC1ieTogQ0sgSHUgPGNrLmh1QG1lZGlhdGVrLmNv
-bT4NCg0KPiBTaWduZWQtb2ZmLWJ5OiBZYW5ndGFvIExpIDx0aW55LndpbmR6ekBnbWFpbC5jb20+
-DQo+IC0tLQ0KPiAgZHJpdmVycy9tYWlsYm94L210ay1jbWRxLW1haWxib3guYyB8IDQgKy0tLQ0K
-PiAgMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAzIGRlbGV0aW9ucygtKQ0KPiANCj4g
-ZGlmZiAtLWdpdCBhL2RyaXZlcnMvbWFpbGJveC9tdGstY21kcS1tYWlsYm94LmMgYi9kcml2ZXJz
-L21haWxib3gvbXRrLWNtZHEtbWFpbGJveC5jDQo+IGluZGV4IDlhNmNlOWY1YTdkYi4uN2Y5ZTM0
-YjAyMWM4IDEwMDY0NA0KPiAtLS0gYS9kcml2ZXJzL21haWxib3gvbXRrLWNtZHEtbWFpbGJveC5j
-DQo+ICsrKyBiL2RyaXZlcnMvbWFpbGJveC9tdGstY21kcS1tYWlsYm94LmMNCj4gQEAgLTQ1OCw3
-ICs0NTgsNiBAQCBzdGF0aWMgc3RydWN0IG1ib3hfY2hhbiAqY21kcV94bGF0ZShzdHJ1Y3QgbWJv
-eF9jb250cm9sbGVyICptYm94LA0KPiAgc3RhdGljIGludCBjbWRxX3Byb2JlKHN0cnVjdCBwbGF0
-Zm9ybV9kZXZpY2UgKnBkZXYpDQo+ICB7DQo+ICAJc3RydWN0IGRldmljZSAqZGV2ID0gJnBkZXYt
-PmRldjsNCj4gLQlzdHJ1Y3QgcmVzb3VyY2UgKnJlczsNCj4gIAlzdHJ1Y3QgY21kcSAqY21kcTsN
-Cj4gIAlpbnQgZXJyLCBpOw0KPiAgDQo+IEBAIC00NjYsOCArNDY1LDcgQEAgc3RhdGljIGludCBj
-bWRxX3Byb2JlKHN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYpDQo+ICAJaWYgKCFjbWRxKQ0K
-PiAgCQlyZXR1cm4gLUVOT01FTTsNCj4gIA0KPiAtCXJlcyA9IHBsYXRmb3JtX2dldF9yZXNvdXJj
-ZShwZGV2LCBJT1JFU09VUkNFX01FTSwgMCk7DQo+IC0JY21kcS0+YmFzZSA9IGRldm1faW9yZW1h
-cF9yZXNvdXJjZShkZXYsIHJlcyk7DQo+ICsJY21kcS0+YmFzZSA9IGRldm1fcGxhdGZvcm1faW9y
-ZW1hcF9yZXNvdXJjZShwZGV2LCAwKTsNCj4gIAlpZiAoSVNfRVJSKGNtZHEtPmJhc2UpKSB7DQo+
-ICAJCWRldl9lcnIoZGV2LCAiZmFpbGVkIHRvIGlvcmVtYXAgZ2NlXG4iKTsNCj4gIAkJcmV0dXJu
-IFBUUl9FUlIoY21kcS0+YmFzZSk7DQoNCg==
+Since the introduction of commit 2d99ced787e3 ("drm/msm: async commit
+support"), command-mode panels began throwing the following errors:
+
+    msm fd900000.mdss: pp done time out, lm=0
+
+Let's fix this by enabling the autorefresh feature that's available in
+the MDP starting at version 1.0. This will cause the MDP to
+automatically send a frame to the panel every time the panel invokes the
+TE signal, which will trigger the PP_DONE IRQ. This requires only
+sending a single START signal for command-mode panels.
+
+This gives us a counter for command-mode panels that we can use to
+implement async commit support for the MDP5 in a follow up patch.
+
+Signed-off-by: Brian Masney <masneyb@onstation.org>
+Suggested-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Fixes: 2d99ced787e3 ("drm/msm: async commit support")
+---
+Changes since v1:
+- Send a single start command to kick off the pipeline.
+
+The reason I marked this patch as a RFC is that the display during some
+small percentage of boots will stop updating after a minute or so, and
+the ping pong IRQs stop. Most of the time it works with no issues and I
+haven't been able to find a way to reproduce the issue. I tried
+suspending the phone by toggling /sys/power/state since I thought that
+the issue could potentially be related to power management.
+
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 17 ++++++++++++-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c  | 31 ++++++++++++++++++++---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h  |  3 +--
+ 3 files changed, 44 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+index 05cc04f729d6..39dd144295b3 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+@@ -436,6 +436,8 @@ static void mdp5_crtc_atomic_disable(struct drm_crtc *crtc,
+ 		spin_unlock_irqrestore(&mdp5_kms->dev->event_lock, flags);
+ 	}
+ 
++	mdp5_ctl_disable(mdp5_cstate->ctl, &mdp5_cstate->pipeline);
++
+ 	mdp5_crtc->enabled = false;
+ }
+ 
+@@ -456,6 +458,7 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
+ {
+ 	struct mdp5_crtc *mdp5_crtc = to_mdp5_crtc(crtc);
+ 	struct mdp5_crtc_state *mdp5_cstate = to_mdp5_crtc_state(crtc->state);
++	struct mdp5_pipeline *pipeline = &mdp5_cstate->pipeline;
+ 	struct mdp5_kms *mdp5_kms = get_kms(crtc);
+ 	struct device *dev = &mdp5_kms->pdev->dev;
+ 
+@@ -493,9 +496,21 @@ static void mdp5_crtc_atomic_enable(struct drm_crtc *crtc,
+ 
+ 	mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->err);
+ 
+-	if (mdp5_cstate->cmd_mode)
++	if (mdp5_cstate->cmd_mode) {
+ 		mdp_irq_register(&mdp5_kms->base, &mdp5_crtc->pp_done);
+ 
++		/*
++		 * Enable autorefresh so we get regular ping/pong IRQs.
++		 * - Bit 31 is the enable bit
++		 * - Bits 0-15 represent the frame count, specifically how many
++		 *   TE events before the MDP sends a frame.
++		 */
++		mdp5_write(mdp5_kms,
++			   REG_MDP5_PP_AUTOREFRESH_CONFIG(pipeline->mixer->pp),
++			   BIT(31) | BIT(0));
++		crtc_flush_all(crtc);
++	}
++
+ 	mdp5_crtc->enabled = true;
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+index 030279d7b64b..965757d4f356 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+@@ -50,6 +50,13 @@ struct mdp5_ctl {
+ 	bool flush_pending;
+ 
+ 	struct mdp5_ctl *pair; /* Paired CTL to be flushed together */
++
++	/*
++	 * The command mode panels are ran with autorefresh enabled. Only a
++	 * single START command can be sent so keep track on a per ping pong
++	 * basis.
++	 */
++	bool start_sent_by_pp[4];
+ };
+ 
+ struct mdp5_ctl_manager {
+@@ -191,7 +198,8 @@ static bool start_signal_needed(struct mdp5_ctl *ctl,
+ 	case INTF_WB:
+ 		return true;
+ 	case INTF_DSI:
+-		return intf->mode == MDP5_INTF_DSI_MODE_COMMAND;
++		return intf->mode == MDP5_INTF_DSI_MODE_COMMAND &&
++			!ctl->start_sent_by_pp[pipeline->mixer->pp];
+ 	default:
+ 		return false;
+ 	}
+@@ -204,13 +212,17 @@ static bool start_signal_needed(struct mdp5_ctl *ctl,
+  * executed in order to kick off operation and activate all layers.
+  * e.g.: DSI command mode, Writeback
+  */
+-static void send_start_signal(struct mdp5_ctl *ctl)
++static void send_start_signal(struct mdp5_ctl *ctl,
++			      struct mdp5_pipeline *pipeline)
+ {
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&ctl->hw_lock, flags);
+ 	ctl_write(ctl, REG_MDP5_CTL_START(ctl->id), 1);
+ 	spin_unlock_irqrestore(&ctl->hw_lock, flags);
++
++	if (pipeline->intf->mode == MDP5_INTF_DSI_MODE_COMMAND)
++		ctl->start_sent_by_pp[pipeline->mixer->pp] = true;
+ }
+ 
+ /**
+@@ -234,7 +246,7 @@ int mdp5_ctl_set_encoder_state(struct mdp5_ctl *ctl,
+ 	DBG("intf_%d: %s", intf->num, enabled ? "on" : "off");
+ 
+ 	if (start_signal_needed(ctl, pipeline)) {
+-		send_start_signal(ctl);
++		send_start_signal(ctl, pipeline);
+ 	}
+ 
+ 	return 0;
+@@ -562,7 +574,7 @@ u32 mdp5_ctl_commit(struct mdp5_ctl *ctl,
+ 	}
+ 
+ 	if (start_signal_needed(ctl, pipeline)) {
+-		send_start_signal(ctl);
++		send_start_signal(ctl, pipeline);
+ 	}
+ 
+ 	return curr_ctl_flush_mask;
+@@ -753,3 +765,14 @@ struct mdp5_ctl_manager *mdp5_ctlm_init(struct drm_device *dev,
+ 
+ 	return ERR_PTR(ret);
+ }
++
++void mdp5_ctl_disable(struct mdp5_ctl *ctl, struct mdp5_pipeline *pipeline)
++{
++	int i;
++
++	if (pipeline->intf->mode != MDP5_INTF_DSI_MODE_COMMAND)
++		return;
++
++	for (i = 0; i < ARRAY_SIZE(ctl->start_sent_by_pp); i++)
++		ctl->start_sent_by_pp[i] = false;
++}
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h
+index c2af68aa77ae..f9bbf1295669 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.h
+@@ -72,7 +72,6 @@ u32 mdp_ctl_flush_mask_encoder(struct mdp5_interface *intf);
+ u32 mdp5_ctl_commit(struct mdp5_ctl *ctl, struct mdp5_pipeline *pipeline,
+ 		    u32 flush_mask, bool start);
+ u32 mdp5_ctl_get_commit_status(struct mdp5_ctl *ctl);
+-
+-
++void mdp5_ctl_disable(struct mdp5_ctl *ctl, struct mdp5_pipeline *pipeline);
+ 
+ #endif /* __MDP5_CTL_H__ */
+-- 
+2.21.0
 
