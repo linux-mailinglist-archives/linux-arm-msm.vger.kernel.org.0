@@ -2,268 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B5E812CC78
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 06:00:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4D5412CDF1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 10:06:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727201AbfL3FAu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Dec 2019 00:00:50 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:16577 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727189AbfL3FAt (ORCPT
+        id S1727260AbfL3JGp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Dec 2019 04:06:45 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:26722 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727273AbfL3JGo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Dec 2019 00:00:49 -0500
+        Mon, 30 Dec 2019 04:06:44 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1577682048; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=vuuqJ73RYNPZB5++9ydg1fEs2W+tW/hjcTRH47X7J18=; b=LRxE4HB+qVBbzZd4aWXWCtTSD6e/sjpNBi4l6LaR/IWIr8cUYVf7HO5aXbQRF5MzJtVG3ubf
- S1km7ir1CN3u73l/+gph+GNR1qS1OXKkAqU35Q/cAqiU3VsTCmUPhsdQGG/LZNC9odGqppUP
- A4JoKvUkewhTmTx6whZ9YC/XooI=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ s=smtp; t=1577696803; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: To:
+ Subject: Sender; bh=LV7xfSg7Fvcq4FbHammYw5/k3x8J77zufwq24k9cwiA=; b=aeTFiVVIENbwkAnyR0l1Lt1uEpW7SyKN9Sa5gcfz+wJmNli+sTCMZN50p0rcIxD+mmNvR1/D
+ w4HMUIEZtbug1KpYPLMaGj5a8DcRemNBi2lrAzOr85ifFEz6Bp7RvNiFcZ2mcQ91qpIRIc+H
+ yXHedv/mKPzRPURj7S9zIb9CB1s=
+X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e098475.7ff4dcc09f48-smtp-out-n01;
- Mon, 30 Dec 2019 05:00:37 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e09be20.7ff4dd64b068-smtp-out-n01;
+ Mon, 30 Dec 2019 09:06:40 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B78FDC447AD; Mon, 30 Dec 2019 05:00:36 +0000 (UTC)
+        id 0A029C433CB; Mon, 30 Dec 2019 09:06:39 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.201.2.161] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E50E0C447B2;
-        Mon, 30 Dec 2019 05:00:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E50E0C447B2
+        (Authenticated sender: sricharan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DABE9C43383;
+        Mon, 30 Dec 2019 09:06:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DABE9C43383
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org, srinivas.kandagatla@linaro.org,
-        robh+dt@kernel.org, tsoni@codeaurora.org
-Cc:     agross@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH v3 3/3] soc: qcom: apr: Add avs/audio tracking functionality
-Date:   Mon, 30 Dec 2019 10:30:08 +0530
-Message-Id: <20191230050008.8143-4-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.22.1
-In-Reply-To: <20191230050008.8143-1-sibis@codeaurora.org>
-References: <20191230050008.8143-1-sibis@codeaurora.org>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sricharan@codeaurora.org
+Subject: Re: [PATCH V2 5/7] clk: qcom: Add ipq6018 Global Clock Controller
+ support
+To:     Stephen Boyd <sboyd@kernel.org>, agross@kernel.org,
+        devicetree@vger.kernel.org, linus.walleij@linaro.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-soc@vger.kernel.org, robh+dt@kernel.org,
+        sivaprak@codeaurora.org
+References: <1576752109-24497-1-git-send-email-sricharan@codeaurora.org>
+ <1576752109-24497-6-git-send-email-sricharan@codeaurora.org>
+ <20191227013317.C7E912080D@mail.kernel.org>
+From:   Sricharan R <sricharan@codeaurora.org>
+Message-ID: <9b2e4eae-34d2-ec3c-9111-4fa6a1276229@codeaurora.org>
+Date:   Mon, 30 Dec 2019 14:36:32 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20191227013317.C7E912080D@mail.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use PDR helper functions to track the protection domains that the apr
-services are dependent upon on SDM845 SoC, specifically the "avs/audio"
-service running on ADSP Q6.
+Hi Stephen,
+  Thanks for the review.
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
- drivers/soc/qcom/Kconfig     |   1 +
- drivers/soc/qcom/apr.c       | 100 +++++++++++++++++++++++++++++++----
- include/linux/soc/qcom/apr.h |   1 +
- 3 files changed, 91 insertions(+), 11 deletions(-)
+On 12/27/2019 7:03 AM, Stephen Boyd wrote:
+> Quoting Sricharan R (2019-12-19 02:41:47)
+>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+>> index 3b33ef1..d0392f1 100644
+>> --- a/drivers/clk/qcom/Kconfig
+>> +++ b/drivers/clk/qcom/Kconfig
+>> @@ -95,6 +95,14 @@ config IPQ_GCC_4019
+>>           Say Y if you want to use peripheral devices such as UART, SPI,
+>>           i2c, USB, SD/eMMC, etc.
+>>  
+>> +config IPQ_GCC_6018
+>> +       tristate "IPQ6018 Global Clock Controller"
+>> +       help
+>> +         Support for global clock controller on ipq6018 devices.
+>> +         Say Y if you want to use peripheral devices such as UART, SPI,
+>> +         i2c, USB, SD/eMMC, etc. Select this for the root clock
+>> +         of ipq6018.
+> 
+> What is the root clock of ipq6018?
+> 
 
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 5c4e76837f59b..cacfed945b275 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -202,6 +202,7 @@ config QCOM_APR
- 	tristate "Qualcomm APR Bus (Asynchronous Packet Router)"
- 	depends on ARCH_QCOM || COMPILE_TEST
- 	depends on RPMSG
-+	select QCOM_PDR_HELPERS
- 	help
-           Enable APR IPC protocol support between
-           application processor and QDSP6. APR is
-diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-index 4fcc32420c474..5234426718e88 100644
---- a/drivers/soc/qcom/apr.c
-+++ b/drivers/soc/qcom/apr.c
-@@ -11,6 +11,7 @@
- #include <linux/workqueue.h>
- #include <linux/of_device.h>
- #include <linux/soc/qcom/apr.h>
-+#include <linux/soc/qcom/pdr.h>
- #include <linux/rpmsg.h>
- #include <linux/of.h>
- 
-@@ -21,6 +22,7 @@ struct apr {
- 	spinlock_t rx_lock;
- 	struct idr svcs_idr;
- 	int dest_domain_id;
-+	struct pdr_handle pdr;
- 	struct workqueue_struct *rxwq;
- 	struct work_struct rx_work;
- 	struct list_head rx_list;
-@@ -289,6 +291,9 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 		  id->svc_id + 1, GFP_ATOMIC);
- 	spin_unlock(&apr->svcs_lock);
- 
-+	of_property_read_string_index(np, "qcom,protection-domain",
-+				      1, &adev->service_path);
-+
- 	dev_info(dev, "Adding APR dev: %s\n", dev_name(&adev->dev));
- 
- 	ret = device_register(&adev->dev);
-@@ -300,14 +305,56 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 	return ret;
- }
- 
--static void of_register_apr_devices(struct device *dev)
-+static void of_apr_add_pd_lookups(struct device *dev)
- {
-+	const char *service_name, *service_path;
- 	struct apr *apr = dev_get_drvdata(dev);
- 	struct device_node *node;
-+	int ret;
-+
-+	for_each_child_of_node(dev->of_node, node) {
-+		ret = of_property_read_string_index(node, "qcom,protection-domain",
-+						    0, &service_name);
-+		if (ret < 0)
-+			continue;
-+
-+		ret = of_property_read_string_index(node, "qcom,protection-domain",
-+						    1, &service_path);
-+		if (ret < 0)
-+			continue;
-+
-+		ret = pdr_add_lookup(&apr->pdr, service_name, service_path);
-+		if (ret && ret != -EALREADY)
-+			dev_err(dev, "pdr add lookup failed: %d\n", ret);
-+	}
-+}
-+
-+static void of_register_apr_devices(struct device *dev, const char *svc_path)
-+{
-+	struct apr *apr = dev_get_drvdata(dev);
-+	struct device_node *node;
-+	const char *service_path;
-+	int ret;
- 
- 	for_each_child_of_node(dev->of_node, node) {
- 		struct apr_device_id id = { {0} };
- 
-+		ret = of_property_read_string_index(node, "qcom,protection-domain",
-+						    1, &service_path);
-+		if (svc_path) {
-+			/* skip APR services that are PD independent */
-+			if (ret)
-+				continue;
-+
-+			/* skip APR services whose PD paths don't match */
-+			if (strcmp(service_path, svc_path))
-+				continue;
-+		} else {
-+			/* skip APR services whose PD lookups are registered */
-+			if (ret == 0)
-+				continue;
-+		}
-+
- 		if (of_property_read_u32(node, "reg", &id.svc_id))
- 			continue;
- 
-@@ -318,6 +365,35 @@ static void of_register_apr_devices(struct device *dev)
- 	}
- }
- 
-+static int apr_remove_device(struct device *dev, void *svc_path)
-+{
-+	struct apr_device *adev = to_apr_device(dev);
-+
-+	if (svc_path) {
-+		if (!strcmp(adev->service_path, (char *)svc_path))
-+			device_unregister(&adev->dev);
-+	} else {
-+		device_unregister(&adev->dev);
-+	}
-+
-+	return 0;
-+}
-+
-+static void apr_pd_status(struct pdr_handle *pdr, struct pdr_service *pds)
-+{
-+	struct apr *apr = container_of(pdr, struct apr, pdr);
-+
-+	switch (pds->state) {
-+	case SERVREG_SERVICE_STATE_UP:
-+		of_register_apr_devices(apr->dev, pds->service_path);
-+		break;
-+	case SERVREG_SERVICE_STATE_DOWN:
-+		device_for_each_child(apr->dev, pds->service_path,
-+				      apr_remove_device);
-+		break;
-+	}
-+}
-+
- static int apr_probe(struct rpmsg_device *rpdev)
- {
- 	struct device *dev = &rpdev->dev;
-@@ -337,26 +413,27 @@ static int apr_probe(struct rpmsg_device *rpdev)
- 	dev_set_drvdata(dev, apr);
- 	apr->ch = rpdev->ept;
- 	apr->dev = dev;
-+
- 	apr->rxwq = create_singlethread_workqueue("qcom_apr_rx");
- 	if (!apr->rxwq) {
- 		dev_err(apr->dev, "Failed to start Rx WQ\n");
- 		return -ENOMEM;
- 	}
- 	INIT_WORK(&apr->rx_work, apr_rxwq);
-+
-+	ret = pdr_handle_init(&apr->pdr, apr_pd_status);
-+	if (ret) {
-+		dev_err(dev, "Failed to init PDR handle\n");
-+		destroy_workqueue(apr->rxwq);
-+		return ret;
-+	}
-+
- 	INIT_LIST_HEAD(&apr->rx_list);
- 	spin_lock_init(&apr->rx_lock);
- 	spin_lock_init(&apr->svcs_lock);
- 	idr_init(&apr->svcs_idr);
--	of_register_apr_devices(dev);
--
--	return 0;
--}
--
--static int apr_remove_device(struct device *dev, void *null)
--{
--	struct apr_device *adev = to_apr_device(dev);
--
--	device_unregister(&adev->dev);
-+	of_apr_add_pd_lookups(dev);
-+	of_register_apr_devices(dev, NULL);
- 
- 	return 0;
- }
-@@ -365,6 +442,7 @@ static void apr_remove(struct rpmsg_device *rpdev)
- {
- 	struct apr *apr = dev_get_drvdata(&rpdev->dev);
- 
-+	pdr_handle_release(&apr->pdr);
- 	device_for_each_child(&rpdev->dev, NULL, apr_remove_device);
- 	flush_workqueue(apr->rxwq);
- 	destroy_workqueue(apr->rxwq);
-diff --git a/include/linux/soc/qcom/apr.h b/include/linux/soc/qcom/apr.h
-index c5d52e2cb275f..7f0bc3cf4d610 100644
---- a/include/linux/soc/qcom/apr.h
-+++ b/include/linux/soc/qcom/apr.h
-@@ -85,6 +85,7 @@ struct apr_device {
- 	uint16_t	domain_id;
- 	uint32_t	version;
- 	char name[APR_NAME_SIZE];
-+	const char *service_path;
- 	spinlock_t	lock;
- 	struct list_head node;
- };
+	root clock is 'xo'. But i guess this statement is not correct.
+	will remove that line.
+
+>> +
+>>  config IPQ_GCC_806X
+>>         tristate "IPQ806x Global Clock Controller"
+>>         help
+>> diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
+>> new file mode 100644
+>> index 0000000..b6f0148
+>> --- /dev/null
+>> +++ b/drivers/clk/qcom/gcc-ipq6018.c
+>> @@ -0,0 +1,4674 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * Copyright (c) 2018, The Linux Foundation. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/kernel.h>
+>> +#include <linux/err.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of.h>
+>> +#include <linux/of_device.h>
+>> +#include <linux/clk-provider.h>
+>> +#include <linux/regmap.h>
+>> +
+>> +#include <linux/reset-controller.h>
+>> +#include <dt-bindings/clock/qcom,gcc-ipq6018.h>
+>> +#include <dt-bindings/reset/qcom,gcc-ipq6018.h>
+>> +
+>> +#include "common.h"
+>> +#include "clk-regmap.h"
+>> +#include "clk-pll.h"
+>> +#include "clk-rcg.h"
+>> +#include "clk-branch.h"
+>> +#include "clk-alpha-pll.h"
+>> +#include "clk-regmap-divider.h"
+>> +#include "clk-regmap-mux.h"
+>> +#include "reset.h"
+>> +
+>> +#define F(f, s, h, m, n) { (f), (s), (2 * (h) - 1), (m), (n) }
+>> +
+>> +enum {
+>> +       P_XO,
+>> +       P_BIAS_PLL,
+>> +       P_UNIPHY0_RX,
+>> +       P_UNIPHY0_TX,
+>> +       P_UNIPHY1_RX,
+>> +       P_BIAS_PLL_NSS_NOC,
+>> +       P_UNIPHY1_TX,
+>> +       P_PCIE20_PHY0_PIPE,
+>> +       P_USB3PHY_0_PIPE,
+>> +       P_GPLL0,
+>> +       P_GPLL0_DIV2,
+>> +       P_GPLL2,
+>> +       P_GPLL4,
+>> +       P_GPLL6,
+>> +       P_SLEEP_CLK,
+>> +       P_UBI32_PLL,
+>> +       P_NSS_CRYPTO_PLL,
+>> +       P_PI_SLEEP,
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_xo_gpll0_gpll0_out_main_div2[] = {
+>> +       { .fw_name = "xo", .name = "xo"},
+>> +       { .fw_name = "gpll0", .name = "gpll0"},
+>> +       { .fw_name = "gpll0_out_main_div2", .name = "gpll0_out_main_div2"},
+> 
+> Because we aren't migrating this from existing DT to new DT we should be
+> able to leave out .name in all these structs. That's the legacy fallback
+> mechanism used to migrate DT over to the new way.
+> 
+
+	ok will fix it.
+
+>> +};
+>> +
+>> +static const struct parent_map gcc_xo_gpll0_gpll0_out_main_div2_map[] = {
+>> +       { P_XO, 0 },
+>> +       { P_GPLL0, 1 },
+>> +       { P_GPLL0_DIV2, 4 },
+>> +};
+>> +
+> [...]
+>> +
+>> +static int gcc_ipq6018_probe(struct platform_device *pdev)
+>> +{
+>> +       int i, ret;
+>> +       struct regmap *regmap;
+>> +       struct clk *clk;
+>> +       struct device *dev = &pdev->dev;
+>> +
+>> +       regmap = qcom_cc_map(pdev, &gcc_ipq6018_desc);
+>> +       if (IS_ERR(regmap))
+>> +               return PTR_ERR(regmap);
+>> +
+>> +       for (i = 0; i < ARRAY_SIZE(gcc_ipq6018_hws); i++) {
+>> +               clk = devm_clk_register(&pdev->dev, gcc_ipq6018_hws[i]);
+>> +               if (IS_ERR(clk))
+>> +                       return PTR_ERR(clk);
+>> +       }
+>> +
+>> +       clk_register_fixed_rate(dev, "pcie20_phy0_pipe_clk", NULL, 0, 250000000);
+> 
+> Why do we need to register this? Can it come from DT then? Also what if
+> it fails? And what if really_probe fails? Then we'll need to undo this
+> registration. Ideally this is created somewhere else.
+> 
+
+	ok, will move this in to the actual clk list.
+
+>> +
+>> +       /* Disable SW_COLLAPSE for USB0 GDSCR */
+>> +       regmap_update_bits(regmap, 0x3e078, BIT(0), 0x0);
+>> +       /* Enable SW_OVERRIDE for USB0 GDSCR */
+>> +       regmap_update_bits(regmap, 0x3e078, BIT(2), BIT(2));
+>> +       /* Disable SW_COLLAPSE for USB1 GDSCR */
+>> +       regmap_update_bits(regmap, 0x3f078, BIT(0), 0x0);
+>> +       /* Enable SW_OVERRIDE for USB1 GDSCR */
+>> +       regmap_update_bits(regmap, 0x3f078, BIT(2), BIT(2));
+>> +
+>> +       /* SW Workaround for UBI Huyara PLL */
+>> +       regmap_update_bits(regmap, 0x2501c, BIT(26), BIT(26));
+>> +
+>> +       clk_alpha_pll_configure(&ubi32_pll_main, regmap, &ubi32_pll_config);
+>> +
+>> +       clk_alpha_pll_configure(&nss_crypto_pll_main, regmap,
+>> +                               &nss_crypto_pll_config);
+>> +
+>> +       ret = qcom_cc_really_probe(pdev, &gcc_ipq6018_desc, regmap);
+>> +
+>> +       dev_dbg(&pdev->dev, "Registered ipq6018 clock provider");
+> 
+> Please remove this and just return the result of really_probe.
+> 
+
+ ok, will fix it
+
+Regards,
+  Sricharan
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+"QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
