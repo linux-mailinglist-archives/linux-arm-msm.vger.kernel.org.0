@@ -2,446 +2,420 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 935EE12CFB4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 12:47:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F152112CFB9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Dec 2019 12:50:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727360AbfL3LrK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Dec 2019 06:47:10 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:44439 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727399AbfL3LrK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Dec 2019 06:47:10 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1577706429; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=dGHIBy4/XdNceCKSzyT4MigXenSFJoLKxToQvsEoJqU=;
- b=KcETn4DcymzsIh3Kdx1EunfJQ3y7jo0pmWVUftbjuH1Avl8KdpEkeIqjjqyiyXfZpKtqQSzz
- xqm8w8Pn2XtzZJm82iOx5r1LQeY58YKdDuo0BZerYDSvdnEmEs4ztrQZSv5rns59yjUfwEeH
- 0PkNScrKN3xQc7PGMFqh+89Okxk=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e09e3b7.7f6e52900500-smtp-out-n01;
- Mon, 30 Dec 2019 11:47:03 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3C4B8C43383; Mon, 30 Dec 2019 11:47:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1727425AbfL3Luo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Dec 2019 06:50:44 -0500
+Received: from mail.skyhub.de ([5.9.137.197]:59948 "EHLO mail.skyhub.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727359AbfL3Lun (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Dec 2019 06:50:43 -0500
+Received: from zn.tnic (p200300EC2F008100794E84A6AD7DE589.dip0.t-ipconnect.de [IPv6:2003:ec:2f00:8100:794e:84a6:ad7d:e589])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: okukatla)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 90D2DC43383;
-        Mon, 30 Dec 2019 11:47:01 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 30 Dec 2019 17:17:01 +0530
-From:   okukatla@codeaurora.org
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     georgi.djakov@linaro.org, daidavid1@codeaurora.org,
-        bjorn.andersson@linaro.org, evgreen@google.com, sboyd@kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 1D66B1EC05DE;
+        Mon, 30 Dec 2019 12:50:41 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+        t=1577706641;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+        bh=qJEp1zf5++y0M/fbvkAvwA4TkpQ2f7meEDTCFWylBkY=;
+        b=Ql3iwTKSBrXu9PNwzPkWQ8G5wcfRjsmkHFiqxx0il73ZhI0VMZPr3aIAkoC97eal8oB3Cj
+        sJxDJEmPXo3oImdFyyzqQk3qoJ6nDM6E2MdM48xdWp+XYW9/kK+YhiU/lU13UJzygTPT55
+        hRyP5i1FmBVydMRID5+iaEbdTZPX1lI=
+Date:   Mon, 30 Dec 2019 12:50:30 +0100
+From:   Borislav Petkov <bp@alien8.de>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        James Morse <james.morse@arm.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ilina@codeaurora.org, seansw@qti.qualcomm.com, elder@linaro.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH V1 1/2] dt-bindings: interconnect: Add Qualcomm SC7180 DT
- bindings
-In-Reply-To: <0101016eac183058-afcce911-d283-4748-b3ff-8455e076a313-000000@us-west-2.amazonses.com>
-References: <1574780408-21282-1-git-send-email-okukatla@codeaurora.org>
- <0101016ea83b44e2-546fc9ff-6056-482b-a42d-231b9d908640-000000@us-west-2.amazonses.com>
- <0101016eac183058-afcce911-d283-4748-b3ff-8455e076a313-000000@us-west-2.amazonses.com>
-Message-ID: <61e527c57ea22e197c0fcf06bb6bce57@codeaurora.org>
-X-Sender: okukatla@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Tony Luck <tony.luck@intel.com>,
+        Robert Richter <rrichter@marvell.com>,
+        linux-edac@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>, tsoni@codeaurora.org,
+        psodagud@codeaurora.org
+Subject: Re: [PATCH 2/2] drivers: edac: Add EDAC support for Kryo CPU caches
+Message-ID: <20191230115030.GA30767@zn.tnic>
+References: <cover.1575529553.git.saiprakash.ranjan@codeaurora.org>
+ <0101016ed57a6559-46c6c649-db28-4945-a11c-7441b8e9ac5b-000000@us-west-2.amazonses.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0101016ed57a6559-46c6c649-db28-4945-a11c-7441b8e9ac5b-000000@us-west-2.amazonses.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-11-27 14:31, Sibi Sankar wrote:
-> Hey Odelu,
+On Thu, Dec 05, 2019 at 09:53:18AM +0000, Sai Prakash Ranjan wrote:
+> Kryo{3,4}XX CPU cores implement RAS extensions to support
+> Error Correcting Code(ECC). Currently all Kryo{3,4}XX CPU
+> cores (gold/silver a.k.a big/LITTLE) support ECC via RAS.
+
+via RAS what? ARM64_RAS_EXTN?
+
+In any case, this needs James to look at and especially if there's some
+ARM-generic functionality in there which should be shared, of course.
+
+> This adds an interrupt based driver for those CPUs and
+
+s/This adds/Add/
+
+> provides an optional polling of error recording system
+> registers.
 > 
-> On 2019-11-26 20:31, Odelu Kukatla wrote:
->> The Qualcomm SC7180 platform has several bus fabrics that could be
->> controlled and tuned dynamically according to the bandwidth demand.
->> 
->> Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
->> ---
->>  .../bindings/interconnect/qcom,bcm-voter.yaml      |   1 +
->>  .../bindings/interconnect/qcom,sc7180.yaml         | 155 
->> +++++++++++++++++++++
->>  include/dt-bindings/interconnect/qcom,sc7180.h     | 149 
->> ++++++++++++++++++++
->>  3 files changed, 305 insertions(+)
->>  create mode 100644
->> Documentation/devicetree/bindings/interconnect/qcom,sc7180.yaml
->>  create mode 100644 include/dt-bindings/interconnect/qcom,sc7180.h
->> 
->> diff --git
->> a/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
->> b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
->> index 74f0715..55c9f34 100644
->> --- 
->> a/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
->> +++ 
->> b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
->> @@ -19,6 +19,7 @@ description: |
->>  properties:
->>    compatible:
->>      enum:
->> +      - qcom,sc7180-bcm-voter
->>        - qcom,sdm845-bcm-voter
->> 
->>  required:
->> diff --git
->> a/Documentation/devicetree/bindings/interconnect/qcom,sc7180.yaml
->> b/Documentation/devicetree/bindings/interconnect/qcom,sc7180.yaml
->> new file mode 100644
->> index 0000000..487da5e
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sc7180.yaml
->> @@ -0,0 +1,155 @@
->> +# SPDX-License-Identifier: GPL-2.0
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/interconnect/qcom,sc7180.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title:  Qualcomm SC7180 Network-On-Chip Interconnect
->> +
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
+>  MAINTAINERS                   |   7 +
+>  drivers/edac/Kconfig          |  20 +
+>  drivers/edac/Makefile         |   1 +
+>  drivers/edac/qcom_kryo_edac.c | 679 ++++++++++++++++++++++++++++++++++
+>  4 files changed, 707 insertions(+)
+>  create mode 100644 drivers/edac/qcom_kryo_edac.c
 > 
-> seems to be same as the SDM845
-> icc description can't we just
-> re-use/add it to that?
-> 
-No, NoC topology is different b/w SDM845 and SC7180. we need to have 
-separate file for SC7180.
->> +maintainers:
->> +  - David Dai <daidavid1@codeaurora.org>
->> +
->> +description: |
->> +   SC7180 interconnect providers support system bandwidth 
->> requirements through
->> +   RPMh hardware accelerators known as Bus Clock Manager (BCM). The 
->> provider is
->> +   able to communicate with the BCM through the Resource State
->> Coordinator (RSC)
->> +   associated with each execution environment. Provider nodes must 
->> point to at
->> +   least one RPMh device child node pertaining to their RSC and each 
->> provider
->> +   can map to multiple RPMh resources.
->> +
->> +properties:
->> +  reg:
->> +    maxItems: 1
->> +
->> +  compatible:
->> +    enum:
->> +      - qcom,sc7180-aggre1-noc
->> +      - qcom,sc7180-aggre2-noc
->> +      - qcom,sc7180-camnoc-virt
->> +      - qcom,sc7180-compute-noc
->> +      - qcom,sc7180-config-noc
->> +      - qcom,sc7180-dc-noc
->> +      - qcom,sc7180-gem-noc
->> +      - qcom,sc7180-ipa-virt
->> +      - qcom,sc7180-mc-virt
->> +      - qcom,sc7180-mmss-noc
->> +      - qcom,sc7180-npu-noc
->> +      - qcom,sc7180-qup-virt
->> +      - qcom,sc7180-system-noc
->> +
->> +  '#interconnect-cells':
->> +    const: 1
->> +
->> +  qcom,bcm-voters:
->> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->> +    description: |
->> +      List of phandles to qcom,bcm-voter nodes that are required by
->> +      this interconnect to send RPMh commands.
->> +
->> +  qcom,bcm-voter-names:
->> +    $ref: /schemas/types.yaml#/definitions/string-array
->> +    description: |
->> +      Names for each of the qcom,bcm-voters specified.
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - '#interconnect-cells'
->> +  - qcom,bcm-voters
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +      #include <dt-bindings/interconnect/qcom,sc7180.h>
->> +
->> +      config_noc: interconnect@1500000 {
->> +            compatible = "qcom,sc7180-config-noc";
->> +            reg = <0 0x01500000 0 0x28000>;
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +      };
->> +
->> +      system_noc: interconnect@1620000 {
->> +            compatible = "qcom,sc7180-system-noc";
->> +            reg = <0 0x01620000 0 0x17080>;
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +      };
->> +
->> +      mc_virt: interconnect@1630000 {
->> +            compatible = "qcom,sc7180-mc-virt";
->> +            reg = <0 0x01630000 0 0x4000>;
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +      };
->> +
->> +      qup_virt: interconnect@1650000 {
->> +            compatible = "qcom,sc7180-qup-virt";
->> +            reg = <0 0x01650000 0 0x4000>;
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +      };
->> +
->> +      aggre1_noc: interconnect@16e0000 {
->> +            compatible = "qcom,sc7180-aggre1-noc";
->> +            reg = <0 0x016e0000 0 0x15080>;
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +      };
->> +
->> +      aggre2_noc: interconnect@1700000 {
->> +            compatible = "qcom,sc7180-aggre2-noc";
->> +            reg = <0 0x01700000 0 0x1f880>;
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +      };
->> +
->> +      compute_noc: interconnect@170e000 {
->> +            compatible = "qcom,sc7180-compute-noc";
->> +            reg = <0 0x0170e000 0 0x11880>;
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +      };
->> +
->> +      mmss_noc: interconnect@1740000 {
->> +            compatible = "qcom,sc7180-mmss-noc";
->> +            reg = <0 0x01740000 0 0x1c100>;
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +      };
->> +
->> +      ipa_virt: interconnect@1e00000 {
->> +            compatible = "qcom,sc7180-ipa-virt";
->> +            reg = <0 0x01e00000 0 0x4000>;
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +      };
->> +
->> +      dc_noc: interconnect@9160000 {
->> +            compatible = "qcom,sc7180-dc-noc";
->> +            reg = <0 0x09160000 0 0x03200>;
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +      };
->> +
->> +      gem_noc: interconnect@9680000 {
->> +            compatible = "qcom,sc7180-gem-noc";
->> +            reg = <0 0x09680000 0 0x3e200>;
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +      };
->> +
->> +      npu_noc: interconnect@9990000 {
->> +            compatible = "qcom,sc7180-npu-noc";
->> +            reg = <0 0x09990000 0 0x1600>;
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +      };
->> +
->> +      camnoc_virt: interconnect@ac00000 {
->> +            compatible = "qcom,sc7180-camnoc-virt";
->> +            reg = <0 0x0ac00000 0 0x4000>;
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +      };
->> diff --git a/include/dt-bindings/interconnect/qcom,sc7180.h
->> b/include/dt-bindings/interconnect/qcom,sc7180.h
->> new file mode 100644
->> index 0000000..b762bc3
->> --- /dev/null
->> +++ b/include/dt-bindings/interconnect/qcom,sc7180.h
->> @@ -0,0 +1,149 @@
->> +/* SPDX-License-Identifier: GPL-2.0 */
->> +/*
->> + * Qualcomm SC7180 interconnect IDs
->> + *
->> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
->> + */
->> +
->> +#ifndef __DT_BINDINGS_INTERCONNECT_QCOM_SC7180_H
->> +#define __DT_BINDINGS_INTERCONNECT_QCOM_SC7180_H
-> 
-> Please use local ids instead, the
-> following way of defining nodes will
-> lead to unnecessarily large array
-> sizes.
-> 
-I will fix it. Thank you!
->> +
->> +#define MASTER_APPSS_PROC			0
->> +#define MASTER_SYS_TCU				1
->> +#define MASTER_NPU_SYS				2
->> +#define MASTER_IPA_CORE				3
->> +#define MASTER_LLCC				4
->> +#define MASTER_A1NOC_CFG			5
->> +#define MASTER_A2NOC_CFG			6
->> +#define MASTER_CNOC_DC_NOC			7
->> +#define MASTER_GEM_NOC_CFG			8
->> +#define MASTER_CNOC_MNOC_CFG			9
->> +#define MASTER_NPU_NOC_CFG			10
->> +#define MASTER_QDSS_BAM				11
->> +#define MASTER_QSPI				12
->> +#define MASTER_QUP_0				13
->> +#define MASTER_QUP_1				14
->> +#define MASTER_SNOC_CFG				15
->> +#define MASTER_A1NOC_SNOC			16
->> +#define MASTER_A2NOC_SNOC			17
->> +#define MASTER_COMPUTE_NOC			18
->> +#define MASTER_GEM_NOC_SNOC			19
->> +#define MASTER_MNOC_HF_MEM_NOC			20
->> +#define MASTER_MNOC_SF_MEM_NOC			21
->> +#define MASTER_NPU				22
->> +#define MASTER_SNOC_CNOC			23
->> +#define MASTER_SNOC_GC_MEM_NOC			24
->> +#define MASTER_SNOC_SF_MEM_NOC			25
->> +#define MASTER_QUP_CORE_0			26
->> +#define MASTER_QUP_CORE_1			27
->> +#define MASTER_CAMNOC_HF0			28
->> +#define MASTER_CAMNOC_HF1			29
->> +#define MASTER_CAMNOC_HF0_UNCOMP		30
->> +#define MASTER_CAMNOC_HF1_UNCOMP		31
->> +#define MASTER_CAMNOC_SF			32
->> +#define MASTER_CAMNOC_SF_UNCOMP			33
->> +#define MASTER_CRYPTO				34
->> +#define MASTER_GFX3D				35
->> +#define MASTER_IPA				36
->> +#define MASTER_MDP0				37
->> +#define MASTER_NPU_PROC				38
->> +#define MASTER_PIMEM				39
->> +#define MASTER_ROTATOR				40
->> +#define MASTER_VIDEO_P0				41
->> +#define MASTER_VIDEO_PROC			42
->> +#define MASTER_QDSS_DAP				43
->> +#define MASTER_QDSS_ETR				44
->> +#define MASTER_SDCC_2				45
->> +#define MASTER_UFS_MEM				46
->> +#define MASTER_USB3				47
->> +#define MASTER_EMMC				48
->> +#define SLAVE_EBI1				512
-> 
-> Shouldn't the node ids be just
-> sequential?
-> 
-I will address  it.
->> +#define SLAVE_IPA_CORE				513
->> +#define SLAVE_A1NOC_CFG				514
->> +#define SLAVE_A2NOC_CFG				515
->> +#define SLAVE_AHB2PHY_SOUTH			516
->> +#define SLAVE_AHB2PHY_CENTER			517
->> +#define SLAVE_AOP				518
->> +#define SLAVE_AOSS				519
->> +#define SLAVE_APPSS				520
->> +#define SLAVE_BOOT_ROM				521
->> +#define SLAVE_NPU_CAL_DP0			522
->> +#define SLAVE_CAMERA_CFG			523
->> +#define SLAVE_CAMERA_NRT_THROTTLE_CFG		524
->> +#define SLAVE_CAMERA_RT_THROTTLE_CFG		525
->> +#define SLAVE_CLK_CTL				526
->> +#define SLAVE_NPU_CP				527
->> +#define SLAVE_RBCPR_CX_CFG			528
->> +#define SLAVE_RBCPR_MX_CFG			529
->> +#define SLAVE_CRYPTO_0_CFG			530
->> +#define SLAVE_DCC_CFG				531
->> +#define SLAVE_CNOC_DDRSS			532
->> +#define SLAVE_DISPLAY_CFG			533
->> +#define SLAVE_DISPLAY_RT_THROTTLE_CFG		534
->> +#define SLAVE_DISPLAY_THROTTLE_CFG		535
->> +#define SLAVE_NPU_INT_DMA_BWMON_CFG		536
->> +#define SLAVE_NPU_DPM				537
->> +#define SLAVE_EMMC_CFG				538
->> +#define SLAVE_GEM_NOC_CFG			539
->> +#define SLAVE_GLM				540
->> +#define SLAVE_GFX3D_CFG				541
->> +#define SLAVE_IMEM_CFG				542
->> +#define SLAVE_IPA_CFG				543
->> +#define SLAVE_ISENSE_CFG			544
->> +#define SLAVE_LLCC_CFG				545
->> +#define SLAVE_NPU_LLM_CFG			546
->> +#define SLAVE_MSS_PROC_MS_MPU_CFG		547
->> +#define SLAVE_CNOC_MNOC_CFG			548
->> +#define SLAVE_CNOC_MSS				549
->> +#define SLAVE_NPU_CFG				550
->> +#define SLAVE_NPU_DMA_BWMON_CFG			551
->> +#define SLAVE_NPU_PROC_BWMON_CFG		552
->> +#define SLAVE_PDM				553
->> +#define SLAVE_PIMEM_CFG				554
->> +#define SLAVE_PRNG				555
->> +#define SLAVE_QDSS_CFG				556
->> +#define SLAVE_QM_CFG				557
->> +#define SLAVE_QM_MPU_CFG			558
->> +#define SLAVE_QSPI_0				559
->> +#define SLAVE_QUP_0				560
->> +#define SLAVE_QUP_1				561
->> +#define SLAVE_SDCC_2				562
->> +#define SLAVE_SECURITY				563
->> +#define SLAVE_SNOC_CFG				564
->> +#define SLAVE_NPU_TCM				565
->> +#define SLAVE_TCSR				566
->> +#define SLAVE_TLMM_WEST				567
->> +#define SLAVE_TLMM_NORTH			568
->> +#define SLAVE_TLMM_SOUTH			569
->> +#define SLAVE_UFS_MEM_CFG			570
->> +#define SLAVE_USB3				571
->> +#define SLAVE_VENUS_CFG				572
->> +#define SLAVE_VENUS_THROTTLE_CFG		573
->> +#define SLAVE_VSENSE_CTRL_CFG			574
->> +#define SLAVE_A1NOC_SNOC			575
->> +#define SLAVE_A2NOC_SNOC			576
->> +#define SLAVE_CAMNOC_UNCOMP			577
->> +#define SLAVE_CDSP_GEM_NOC			578
->> +#define SLAVE_SNOC_CNOC				579
->> +#define SLAVE_GEM_NOC_SNOC			580
->> +#define SLAVE_SNOC_GEM_NOC_GC			581
->> +#define SLAVE_SNOC_GEM_NOC_SF			582
->> +#define SLAVE_LLCC				583
->> +#define SLAVE_MNOC_HF_MEM_NOC			584
->> +#define SLAVE_MNOC_SF_MEM_NOC			585
->> +#define SLAVE_NPU_COMPUTE_NOC			586
->> +#define SLAVE_QUP_CORE_0			587
->> +#define SLAVE_QUP_CORE_1			588
->> +#define SLAVE_IMEM				589
->> +#define SLAVE_PIMEM				590
->> +#define SLAVE_SERVICE_A1NOC			591
->> +#define SLAVE_SERVICE_A2NOC			592
->> +#define SLAVE_SERVICE_CNOC			593
->> +#define SLAVE_SERVICE_GEM_NOC			594
->> +#define SLAVE_SERVICE_MNOC			595
->> +#define SLAVE_SERVICE_NPU_NOC			596
->> +#define SLAVE_SERVICE_SNOC			597
->> +#define SLAVE_QDSS_STM				598
->> +#define SLAVE_TCU				599
->> +
->> +#endif
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index c2d80079dccc..f58c93f963f6 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -6049,6 +6049,13 @@ L:	linux-edac@vger.kernel.org
+>  S:	Maintained
+>  F:	drivers/edac/qcom_edac.c
+>  
+> +EDAC-KRYO-QCOM
+> +M:	Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> +L:	linux-arm-msm@vger.kernel.org
+> +L:	linux-edac@vger.kernel.org
+> +S:	Maintained
+> +F:	drivers/edac/qcom_kryo_edac.c
+> +
+>  EDIROL UA-101/UA-1000 DRIVER
+>  M:	Clemens Ladisch <clemens@ladisch.de>
+>  L:	alsa-devel@alsa-project.org (moderated for non-subscribers)
+> diff --git a/drivers/edac/Kconfig b/drivers/edac/Kconfig
+> index 417dad635526..cd78ac2917c9 100644
+> --- a/drivers/edac/Kconfig
+> +++ b/drivers/edac/Kconfig
+> @@ -508,6 +508,26 @@ config EDAC_QCOM
+>  	  For debugging issues having to do with stability and overall system
+>  	  health, you should probably say 'Y' here.
+>  
+> +config EDAC_QCOM_KRYO
+> +	tristate "QCOM Kryo EDAC for CPU L1/L2/L3-SCU caches"
+> +	depends on ARCH_QCOM && ARM64_RAS_EXTN
+> +	help
+> +	  Support for Error detection and correction on Kryo Gold and Silver CPU
+> +	  cores with RAS extensions. Currently it detects and reports all Single
+> +	  Bit Errors (SBEs) and Double Bit Errors (DBEs).
+> +
+> +	  For debugging issues having to do with stability and overall system
+> +	  health, you should probably say 'Y' here.
+> +
+> +config EDAC_QCOM_KRYO_POLL
+> +	depends on EDAC_QCOM_KRYO
+> +	bool "Poll on Kryo ECC registers"
+> +	help
+> +	  This option chooses whether or not you want to poll on the Kryo ECC
+> +	  registers. When this is enabled, the polling rate can be set as a
+> +	  module parameter. By default, it will call the polling function every
+> +	  second.
+
+Why is this a separate option and why should people use that?
+
+Can the polling/irq be switched automatically?
+
+> +
+>  config EDAC_ASPEED
+>  	tristate "Aspeed AST 2500 SoC"
+>  	depends on MACH_ASPEED_G5
+> diff --git a/drivers/edac/Makefile b/drivers/edac/Makefile
+> index d77200c9680b..29edcfa6ec0e 100644
+> --- a/drivers/edac/Makefile
+> +++ b/drivers/edac/Makefile
+> @@ -85,5 +85,6 @@ obj-$(CONFIG_EDAC_SYNOPSYS)		+= synopsys_edac.o
+>  obj-$(CONFIG_EDAC_XGENE)		+= xgene_edac.o
+>  obj-$(CONFIG_EDAC_TI)			+= ti_edac.o
+>  obj-$(CONFIG_EDAC_QCOM)			+= qcom_edac.o
+> +obj-$(CONFIG_EDAC_QCOM_KRYO)		+= qcom_kryo_edac.o
+
+What is the difference between this new driver and the qcom_edac one? Can
+functionality be shared?
+
+Should this new one be called simply kryo_edac instead?
+
+>  obj-$(CONFIG_EDAC_ASPEED)		+= aspeed_edac.o
+>  obj-$(CONFIG_EDAC_BLUEFIELD)		+= bluefield_edac.o
+> diff --git a/drivers/edac/qcom_kryo_edac.c b/drivers/edac/qcom_kryo_edac.c
+> new file mode 100644
+> index 000000000000..05b60ad3cb0e
+> --- /dev/null
+> +++ b/drivers/edac/qcom_kryo_edac.c
+> @@ -0,0 +1,679 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#include <linux/bitfield.h>
+> +#include <linux/cpu_pm.h>
+> +#include <linux/of_irq.h>
+> +#include <linux/smp.h>
+> +
+> +#include <asm/cputype.h>
+> +#include <asm/sysreg.h>
+> +
+> +#include "edac_device.h"
+> +#include "edac_mc.h"
+> +
+> +#define DRV_NAME		"qcom_kryo_edac"
+> +
+> +/*
+> + * ARM Cortex-A55, Cortex-A75, Cortex-A76 TRM Chapter B3.3
+
+Chapter? Where? URL?
+
+> + * ARM DSU TRM Chapter B2.3
+> + * CFI = Corrected Fault Handling interrupt, FI = Fault handling interrupt
+> + * UI = Uncorrected error recovery interrupt, ED = Error Detection
+> + */
+> +#define KRYO_ERRXCTLR_ED	BIT(0)
+> +#define KRYO_ERRXCTLR_UI	BIT(2)
+> +#define KRYO_ERRXCTLR_FI	BIT(3)
+> +#define KRYO_ERRXCTLR_CFI	BIT(8)
+> +#define KRYO_ERRXCTLR_ENABLE	(KRYO_ERRXCTLR_CFI | KRYO_ERRXCTLR_FI | \
+> +				 KRYO_ERRXCTLR_UI | KRYO_ERRXCTLR_ED)
+> +
+> +/*
+> + * ARM Cortex-A55, Cortex-A75, Cortex-A76 TRM Chapter B3.4
+> + * ARM DSU TRM Chapter B2.4
+> + */
+> +#define KRYO_ERRXFR_ED		GENMASK(1, 0)
+> +#define KRYO_ERRXFR_DE		GENMASK(3, 2)
+> +#define KRYO_ERRXFR_UI		GENMASK(5, 4)
+> +#define KRYO_ERRXFR_FI		GENMASK(7, 6)
+> +#define KRYO_ERRXFR_UE		GENMASK(9, 8)
+> +#define KRYO_ERRXFR_CFI		GENMASK(11, 10)
+> +#define KRYO_ERRXFR_CEC		GENMASK(14, 12)
+> +#define KRYO_ERRXFR_RP		BIT(15)
+> +#define KRYO_ERRXFR_SUPPORTED	(KRYO_ERRXFR_ED | KRYO_ERRXFR_DE | \
+> +				 KRYO_ERRXFR_UI | KRYO_ERRXFR_FI | \
+> +				 KRYO_ERRXFR_UE | KRYO_ERRXFR_CFI | \
+> +				 KRYO_ERRXFR_CEC | KRYO_ERRXFR_RP)
+> +
+> +/*
+> + * ARM Cortex-A55, Cortex-A75, Cortex-A76 TRM Chapter B3.5
+> + * ARM DSU TRM Chapter B2.5
+> + */
+> +#define KRYO_ERRXMISC0_CECR	GENMASK_ULL(38, 32)
+> +#define KRYO_ERRXMISC0_CECO	GENMASK_ULL(46, 40)
+> +
+> +/* ARM Cortex-A76 TRM Chapter B3.5 */
+> +#define KRYO_ERRXMISC0_UNIT	GENMASK(3, 0)
+> +#define KRYO_ERRXMISC0_LVL	GENMASK(3, 1)
+> +
+> +/* ARM Cortex-A76 TRM Chapter B3.10 has SERR bitfields 4:0
+> + * but Cortex-A55, Cortex-A75 and DSU TRM has SERR bitfields 7:0.
+> + * Since max error record is 21, we can use bitfields 4:0 for
+> + * Kryo{3,4}XX CPUs.
+> + */
+> +#define KRYO_ERRXSTATUS_SERR	GENMASK(4, 0)
+> +#define KRYO_ERRXSTATUS_DE	BIT(23)
+> +#define KRYO_ERRXSTATUS_CE	GENMASK(25, 24)
+> +#define KRYO_ERRXSTATUS_MV	BIT(26)
+> +#define KRYO_ERRXSTATUS_UE	BIT(29)
+> +#define KRYO_ERRXSTATUS_VALID	BIT(30)
+> +
+> +/* ARM Cortex-A76 TRM Chapter B3.5
+> + * IC = Instruction Cache, DC = Data Cache
+> + */
+> +#define KRYO_L1_UNIT_IC		0x1
+> +#define KRYO_L2_UNIT_TLB	0x2
+> +#define KRYO_L1_UNIT_DC		0x4
+> +#define KRYO_L2_UNIT		0x8
+> +
+> +/*
+> + * ARM Cortex-A55 TRM Chapter B2.36
+> + * ARM Cortex-A75, Cortex-A76 TRM Chapter B2.37
+> + */
+> +#define KRYO_ERR_RECORD_L1_L2	0x0
+> +#define KRYO_ERR_RECORD_L3	0x1
+> +
+> +/* ARM DSU TRM Chapter B2.10 */
+> +#define BUS_ERROR		0x12
+> +
+> +/* QCOM Kryo CPU part numbers */
+> +#define KRYO3XX_GOLD		0x802
+> +#define KRYO4XX_GOLD		0x804
+> +#define KRYO4XX_SILVER_V1	0x803
+> +#define KRYO4XX_SILVER_V2	0x805
+> +
+> +#define KRYO_EDAC_MSG_MAX	256
+> +
+> +static int poll_msec = 1000;
+> +module_param(poll_msec, int, 0444);
+> +
+> +enum {
+> +	KRYO_L1 = 0,
+> +	KRYO_L2,
+> +	KRYO_L3,
+> +};
+> +
+> +/* CE = Corrected Error, UE = Uncorrected Error, DE = Deferred Error */
+> +enum {
+> +	KRYO_L1_CE = 0,
+> +	KRYO_L1_UE,
+> +	KRYO_L1_DE,
+> +	KRYO_L2_CE,
+> +	KRYO_L2_UE,
+> +	KRYO_L2_DE,
+> +	KRYO_L3_CE,
+> +	KRYO_L3_UE,
+> +	KRYO_L3_DE,
+> +};
+> +
+> +struct error_record {
+> +	u32 error_code;
+> +	const char *error_msg;
+> +};
+> +
+> +struct error_type {
+> +	void (*fn)(struct edac_device_ctl_info *edev_ctl,
+> +		   int inst_nr, int block_nr, const char *msg);
+> +	const char *msg;
+> +};
+> +
+> +/*
+> + * ARM Cortex-A55, Cortex-A75, Cortex-A76 TRM Chapter B3.10
+> + * ARM DSU TRM Chapter B2.10
+> + */
+> +static const struct error_record serror_record[] = {
+> +	{ 0x1,	"Errors due to fault injection"		},
+> +	{ 0x2,	"ECC error from internal data buffer"	},
+> +	{ 0x6,	"ECC error on cache data RAM"		},
+> +	{ 0x7,	"ECC error on cache tag or dirty RAM"	},
+> +	{ 0x8,	"Parity error on TLB data RAM"		},
+> +	{ 0x9,	"Parity error on TLB tag RAM"		},
+> +	{ 0x12,	"Error response for a cache copyback"	},
+> +	{ 0x15,	"Deferred error not supported"		},
+> +};
+> +
+> +static const struct error_type err_type[] = {
+> +	{ edac_device_handle_ce, "Kryo L1 Corrected Error"	},
+> +	{ edac_device_handle_ue, "Kryo L1 Uncorrected Error"	},
+> +	{ edac_device_handle_ue, "Kryo L1 Deferred Error"	},
+> +	{ edac_device_handle_ce, "Kryo L2 Corrected Error"	},
+> +	{ edac_device_handle_ue, "Kryo L2 Uncorrected Error"	},
+> +	{ edac_device_handle_ue, "Kryo L2 Deferred Error"	},
+> +	{ edac_device_handle_ce, "L3 Corrected Error"		},
+> +	{ edac_device_handle_ue, "L3 Uncorrected Error"		},
+> +	{ edac_device_handle_ue, "L3 Deferred Error"		},
+> +};
+> +
+
+All that is not really needed - you can put the whole error type
+detection and dumping in kryo_check_err_type() in nicely readable
+switch-case statement. No need for the function pointers and special
+structs.
+
+> +static struct edac_device_ctl_info __percpu *edac_dev;
+> +static struct edac_device_ctl_info *drv_edev_ctl;
+> +
+> +static const char *get_error_msg(u64 errxstatus)
+> +{
+> +	const struct error_record *rec;
+> +	u32 errxstatus_serr;
+> +
+> +	errxstatus_serr = FIELD_GET(KRYO_ERRXSTATUS_SERR, errxstatus);
+> +
+> +	for (rec = serror_record; rec->error_code; rec++) {
+> +		if (errxstatus_serr == rec->error_code)
+> +			return rec->error_msg;
+> +	}
+> +
+> +	return NULL;
+> +}
+> +
+> +static void dump_syndrome_reg(int error_type, int level,
+> +			      u64 errxstatus, u64 errxmisc,
+> +			      struct edac_device_ctl_info *edev_ctl)
+> +{
+> +	char msg[KRYO_EDAC_MSG_MAX];
+> +	const char *error_msg;
+> +	int cpu;
+> +
+> +	cpu = raw_smp_processor_id();
+
+Why raw_?
+
+> +
+> +	error_msg = get_error_msg(errxstatus);
+> +	if (!error_msg)
+> +		return;
+> +
+> +	snprintf(msg, KRYO_EDAC_MSG_MAX,
+> +		 "CPU%d: %s, ERRXSTATUS_EL1:%#llx ERRXMISC0_EL1:%#llx, %s",
+> +		 cpu, err_type[error_type].msg, errxstatus, errxmisc,
+> +		 error_msg);
+> +
+> +	err_type[error_type].fn(edev_ctl, 0, level, msg);
+> +}
+
+...
+
+> +static int kryo_l1_l2_setup_irq(struct platform_device *pdev,
+> +				struct edac_device_ctl_info *edev_ctl)
+> +{
+> +	int cpu, errirq, faultirq, ret;
+> +
+> +	edac_dev = devm_alloc_percpu(&pdev->dev, *edac_dev);
+> +	if (!edac_dev)
+> +		return -ENOMEM;
+> +
+> +	for_each_possible_cpu(cpu) {
+> +		preempt_disable();
+> +		per_cpu(edac_dev, cpu) = edev_ctl;
+> +		preempt_enable();
+> +	}
+
+That sillyness doesn't belong here, if at all.
+
+...
+
+> +static void kryo_poll_cache_error(struct edac_device_ctl_info *edev_ctl)
+> +{
+> +	if (!edev_ctl)
+> +		edev_ctl = drv_edev_ctl;
+
+That's silly.
+
+> +
+> +	on_each_cpu(kryo_check_l1_l2_ecc, edev_ctl, 1);
+> +	kryo_check_l3_scu_ecc(edev_ctl);
+> +}
+
+...
+
+> +static int qcom_kryo_edac_probe(struct platform_device *pdev)
+> +{
+> +	struct edac_device_ctl_info *edev_ctl;
+> +	struct device *dev = &pdev->dev;
+> +	int ret;
+> +
+> +	qcom_kryo_edac_setup();
+
+This function needs to have a return value saying whether it did setup
+the hw properly or not and the probe function needs to return here if
+not.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
