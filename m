@@ -2,167 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FFF412E083
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jan 2020 22:13:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E218712E085
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jan 2020 22:16:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727305AbgAAVNT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jan 2020 16:13:19 -0500
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:36855 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727196AbgAAVNT (ORCPT
+        id S1727369AbgAAVQL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jan 2020 16:16:11 -0500
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:41295 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727171AbgAAVQL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jan 2020 16:13:19 -0500
-Received: by mail-vs1-f68.google.com with SMTP id u14so24402210vsu.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jan 2020 13:13:18 -0800 (PST)
+        Wed, 1 Jan 2020 16:16:11 -0500
+Received: by mail-ua1-f67.google.com with SMTP id f7so12994958uaa.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jan 2020 13:16:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=97LkHj455aBoVei3YqvNr8qA4L7Cfp/wwx2DG5D61uI=;
-        b=CUFUmxQACKGvhwByCAStYbtnmv89SNXEgymZ3fEtyZiukyaiueQk7B/DIe4RqsI2pA
-         pk0Ptr1wugg1wvpCGga1ePARhRhInGpVx9BhMYDnYCj3Vt1/oW3fNX9HkLGYIvkqoPFj
-         WAA8p8UlTigapmxp+FFJrdZ0H9BsVX/4slGiwCZlW1EtqqaFvXhBpP0xc2UE6hxPFXcP
-         0ZUHx4EltqfTlU+Lxekp+6pW4M9bL7yaaPYr+Sjm2TfZ+K3X/1QqrVklA53DZQkbzx6x
-         +hhCbn6JujW9ieBaSP8oUryYXaNtWsQgIGxbifk+0KgCbakNIjwJNlVLG7WCuC05vFw6
-         bYHA==
+        bh=CcCF1rxq2Pk5WTtIE879sPZ4spchmlqFWlGadt2tei8=;
+        b=WX7N4eXBYo8B4Y/qw45TKK1fBOA03UGCzBkKH0DOYphDG7KdePyxbYAzDAeiqIGGkU
+         lRc0/8KrEefOwe/TOXds6249+PxHVd0P/nZNYtNcHGaZlSu9lbFRc+uJJ/lPrKDhcpby
+         Euk8Ka8N7Ikkpqk8AJjO6s2quZNqWXcUWQNejhgqSF0BiohaFol038E3nlMcK8faLpsv
+         IXo46d2Iim7HkEw+SVdmdjgbgJBGjt2fEgxFP9SwM+ZdfDNIQQWVqSIqFtkh/SdTPN60
+         0697oZNB4/+HbKlZFhKlw86fVGYWO300F4wFJMQ4y+lEcAd5hzsETlmE8NvdmnXckeSp
+         MPeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=97LkHj455aBoVei3YqvNr8qA4L7Cfp/wwx2DG5D61uI=;
-        b=KhJn0527t5Tgdy09mhS/Dah+Nzvk485pMrOF1tjVkcag4/SEmI815SnYmjy/q0Q37Z
-         jyYAguPLneoLZGPAz9q5QGgFjpDaxFWiJvK7NAE5AdsASfND/jyIQZS5WUlfRuPn6VRf
-         FUK8dcQYpiC08TuOlQk5Wi/CNKgQw5phklI+L9LAJHvGI6wc53XgtymU/rcnHqqHDn77
-         5K/zGvfTUBDHEjyDDqvWbmF091JRbn1+HdYiJXm1I60ssheWka7JVykCOju8GO/ALNjB
-         YXaWWCy/AX7nOH3IK+Rf2+W/KgR+6rrfANDlzqEKWFZfpjN344gpz+OJIsKvg0ZnaJYp
-         6eoQ==
-X-Gm-Message-State: APjAAAVUdZ8vL2NukZltslzvuCw64bL3GszW32MAZXqmtAnLct8y+UmK
-        Q1YGyiSR4Y2cZujitjytr5j3+eX41MF1JoHKMSpQ6A==
-X-Google-Smtp-Source: APXvYqybxu8iBN7W5efJJuoYzfh491Jy45lH3MXU66KTTpkZvQI5f0pUz8+qATDeLmDHXGH0xkv4J3//lASK8i3qnCM=
-X-Received: by 2002:a05:6102:d4:: with SMTP id u20mr32348868vsp.27.1577913197555;
- Wed, 01 Jan 2020 13:13:17 -0800 (PST)
+        bh=CcCF1rxq2Pk5WTtIE879sPZ4spchmlqFWlGadt2tei8=;
+        b=DkTZ0y1KWB7+65rGhFcBezEdd4aWmnNMx4s3SHxNxwoh0dXiZgHo7uvRud2r4IZf1l
+         1ZDX685pKzC0gLSgnKj6r5rOmWn88BL3llMXrnJ79uk3nz2DpKoSLrqspjFZ8eIwZR8Q
+         PgJBCF91oaxoWWs+tSEo8wdAJW9n7uG73Cotdo0kMmT7FbFldXdWkaINudbIMedn/e43
+         3r4xEXCdp1gqS9s7kscyl5NIV/3AoAERHMPDqUaIZTm2H/oCkkihtUGsRh7Gd0yrp/VO
+         z6nk97ziu0wcDeAisgX0Bc620kk7AD0LHflm9/ZQCDDEnTFrsYeqs/qOJedQpry1QU0l
+         Asng==
+X-Gm-Message-State: APjAAAWqyZ/D4n7Onk6QoiGW/wgDJNHw8+lUYr3xKWDdYyaBT2pM17hK
+        qmqc2bz/So32YhJ3Gk9NHt/N9yJuaiMwp9iyyjb4vaSzpM8=
+X-Google-Smtp-Source: APXvYqzfUap7PPa4Ci4VcLXoV15qac7sY43uAqaI29GOvH6BmNigjds4Fe4HtOfWU09OaXLR7dEm+FndCbPAoJAP0oU=
+X-Received: by 2002:ab0:634c:: with SMTP id f12mr41911073uap.48.1577913369830;
+ Wed, 01 Jan 2020 13:16:09 -0800 (PST)
 MIME-Version: 1.0
-References: <20191219120633.20723-1-sibis@codeaurora.org>
-In-Reply-To: <20191219120633.20723-1-sibis@codeaurora.org>
+References: <cover.1576146898.git.amit.kucheria@linaro.org>
+ <cea3317c5d793db312064d68b261ad420a4a81b1.1576146898.git.amit.kucheria@linaro.org>
+ <be07b05d-421f-35a7-0582-a04a226c8c2c@linaro.org>
+In-Reply-To: <be07b05d-421f-35a7-0582-a04a226c8c2c@linaro.org>
 From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Thu, 2 Jan 2020 02:43:06 +0530
-Message-ID: <CAHLCerN1N5XeF_RrwLQ_YveTk8NwjE-VFEKGH9cBTUgHABxDxA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sm8150: Add cpufreq HW device node
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
+Date:   Thu, 2 Jan 2020 02:45:59 +0530
+Message-ID: <CAHLCerMYkEBs7HfYV0WNfypNPCRBEeU3w7ye=4+VxiiXVZT9GQ@mail.gmail.com>
+Subject: Re: [PATCH v2] drivers: thermal: tsens: Work with old DTBs
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Olof Johansson <olof@lixom.net>,
+        Linux PM list <linux-pm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 19, 2019 at 5:36 PM Sibi Sankar <sibis@codeaurora.org> wrote:
+On Mon, Dec 16, 2019 at 2:58 PM Daniel Lezcano
+<daniel.lezcano@linaro.org> wrote:
 >
-> Add cpufreq HW device node to scale 4-Silver/3-Gold/1-Gold+ cores
-> on SM8150 SoCs.
+> On 12/12/2019 11:38, Amit Kucheria wrote:
+> > In order for the old DTBs to continue working, the new interrupt code
+> > must not return an error if interrupts are not defined. Don't return an
+> > error in case of -ENXIO.
+> >
+> > Fixes: 634e11d5b450a ("drivers: thermal: tsens: Add interrupt support")
+> > Suggested-by: Stephan Gerhold <stephan@gerhold.net>
+> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
 >
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> Applied.
 
-Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
+Hi Daniel,
 
-> ---
->  arch/arm64/boot/dts/qcom/sm8150.dtsi | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> index 694be3c001a68..bad77e539cb1d 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> @@ -45,6 +45,7 @@
->                         reg = <0x0 0x0>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_0>;
-> +                       qcom,freq-domain = <&cpufreq_hw 0>;
->                         L2_0: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -60,6 +61,7 @@
->                         reg = <0x0 0x100>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_100>;
-> +                       qcom,freq-domain = <&cpufreq_hw 0>;
->                         L2_100: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -73,6 +75,7 @@
->                         reg = <0x0 0x200>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_200>;
-> +                       qcom,freq-domain = <&cpufreq_hw 0>;
->                         L2_200: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -85,6 +88,7 @@
->                         reg = <0x0 0x300>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_300>;
-> +                       qcom,freq-domain = <&cpufreq_hw 0>;
->                         L2_300: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -97,6 +101,7 @@
->                         reg = <0x0 0x400>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_400>;
-> +                       qcom,freq-domain = <&cpufreq_hw 1>;
->                         L2_400: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -109,6 +114,7 @@
->                         reg = <0x0 0x500>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_500>;
-> +                       qcom,freq-domain = <&cpufreq_hw 1>;
->                         L2_500: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -121,6 +127,7 @@
->                         reg = <0x0 0x600>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_600>;
-> +                       qcom,freq-domain = <&cpufreq_hw 1>;
->                         L2_600: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -133,6 +140,7 @@
->                         reg = <0x0 0x700>;
->                         enable-method = "psci";
->                         next-level-cache = <&L2_700>;
-> +                       qcom,freq-domain = <&cpufreq_hw 2>;
->                         L2_700: l2-cache {
->                                 compatible = "cache";
->                                 next-level-cache = <&L3_0>;
-> @@ -834,6 +842,19 @@
->                                 };
->                         };
->                 };
-> +
-> +               cpufreq_hw: cpufreq@18323000 {
-> +                       compatible = "qcom,cpufreq-hw";
-> +                       reg = <0 0x18323000 0 0x1400>, <0 0x18325800 0 0x1400>,
-> +                             <0 0x18327800 0 0x1400>;
-> +                       reg-names = "freq-domain0", "freq-domain1",
-> +                                   "freq-domain2";
-> +
-> +                       clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
-> +                       clock-names = "xo", "alternate";
-> +
-> +                       #freq-domain-cells = <1>;
-> +               };
->         };
->
->         timer {
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+I haven't seen this fix until -rc4. Do you plan to send it?
+
+Regards,
+Amit
