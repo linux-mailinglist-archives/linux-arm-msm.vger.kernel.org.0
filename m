@@ -2,136 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 19CF112DFEC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jan 2020 19:19:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F61312E05F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jan 2020 21:14:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727264AbgAASTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jan 2020 13:19:05 -0500
-Received: from mout.gmx.net ([212.227.15.18]:36953 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727170AbgAASTF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jan 2020 13:19:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1577902738;
-        bh=hpm2OGR91QQ/m5niGl/vEaS3kObf+3M6jFZ61Y1/CY8=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=G8/oZsF9CPIVvIVmeUxBTihG3u6zLZ8zGIYhKv8u079GM9xmjWMmIeappByWQJd+a
-         6bVYoesWtV0yVbbnoXOw8YBYzOgQ2N83qYmL6TM2/H4qWiLHi3IXLaJkFavOjJbHxZ
-         sXouv3VcvcWHpvJDS/XK5+QaXvY3w7RLj3hHeRTA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([109.90.233.102]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MkYc0-1jRnuG0BIc-00m3Qw; Wed, 01
- Jan 2020 19:18:58 +0100
-Date:   Wed, 1 Jan 2020 19:18:57 +0100
-From:   Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     robdclark@gmail.com, bjorn.andersson@linaro.org, joro@8bytes.org,
-        agross@kernel.org, iommu@lists.linux-foundation.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] iommu/qcom: fix NULL pointer dereference during probe
- deferral
-Message-ID: <20200101181857.GB2110@latitude>
-References: <20200101033949.755-1-masneyb@onstation.org>
+        id S1727161AbgAAUOb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jan 2020 15:14:31 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:33131 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725871AbgAAUOb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Jan 2020 15:14:31 -0500
+Received: by mail-ed1-f66.google.com with SMTP id r21so37583625edq.0;
+        Wed, 01 Jan 2020 12:14:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dA7p3SwLAkRQTTiidDN3D+F+xkhlU3b/35cKZOnXouk=;
+        b=nTOYZsyvitbb3ruPWXF0wLFs8CKRD1vCOR3PKmN/ci3dkmraINCkHqEAwb4S40jSLp
+         gDNtrgzTvV8gQcHKUaAEKUXXEQWOpfK69wDRTAX9tabBRgSetlS9GM7C1fbj1Cw2nWL6
+         +wxjVznDjsOiLH0YQJdC3g43LX++D3Ujm98wusNoV56LuVFDQT3ptnOJQ50Zdx06R9eY
+         huU0W+FMFxuND/j7WoBA25bL+NzPjmLq0MaqIzWAuZXhDN8tLCtcwCnkkjwpogc1EF4V
+         LDulo106EM202PSDj2y1mbMlDi7oSypIhPM1ip1f+/W0PnAAdsK2wfDSGPbeqhGtt18A
+         S4/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dA7p3SwLAkRQTTiidDN3D+F+xkhlU3b/35cKZOnXouk=;
+        b=eupe7eE87co6lGyIcb1ezSG/EC79ZShfLi+/AktCmccIprsXos7bW8gq7OuDDxtv1V
+         agjZADQfJ//C4Cc76ovHRYopHmzQhWa/x343/BHMrsdEcaUFIkTLBpjMFK2q6gVF8TRU
+         xZUrgu0jt1kvLjcpsxdBkSICrXZcJbhxLKCYTz0HJeclCwiJw1Y937jb/bUJHsiIvAFf
+         PO6yj6haNEwTf7dnaHiizaUSc9jOyZxJQLJUx0el2S35wNWz0CY97cDvnBq1P36Yc06Q
+         0BJO9bj7h3TcxJ6/TWoUJbpSXUf95Nsyejf9br70ubh3GTJkpML+aLIR7D43chr/oAmO
+         CKsw==
+X-Gm-Message-State: APjAAAUZzw1uFlKIWEITNb541eRAkK3yL+ufOP3nruypih9pfa6+JTST
+        pjv+0Qto6RGpWhry/2wz/FMBrkfKMWgW23jLRwY=
+X-Google-Smtp-Source: APXvYqxx6j+Fwe2pFiHwqo/nbBhfSu4TpJZOhN6fBWYrBSf5GHXdmSjH1PkmpZLHyryVqF0d85TTcNsY3PJjne6fEHI=
+X-Received: by 2002:a17:906:34d7:: with SMTP id h23mr6207833ejb.90.1577909669737;
+ Wed, 01 Jan 2020 12:14:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="mP3DRpeJDSE+ciuQ"
-Content-Disposition: inline
-In-Reply-To: <20200101033949.755-1-masneyb@onstation.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:3eYn0RZGHqV1q9jear8kWLgBqk7G/K4ETwM30zDRTCkJUqY6pCy
- K48FKiO3NN3BtpX31To/OcNCQiU4cs6fWV0iKVceLlc5KnL+I8mr+i4/i4F+M/xeEz97yn/
- UA4SezqipJ1XKPN8AV1V8ywBoC66lYeT0Jm636FhQuDnxsNTe3RlNNabqbUbyA7XpuZo7tP
- aJGtkbsuWqLjlmP//fE0g==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:iLkOSE/y0FE=:1U22ENNWgayFiSrwSh3M37
- crbHF62WoA5m10xSN6vB76UxhTot4SEQDASsoFjnvMNUPvQcqmFQc3iNydauQTWZolUv+61k7
- Qkt519I4MnfNNFu0k/J6Drc28aSjyWqBijaWPueID4n6f/coz0erbEKVoHDHUB7quOJUynuSv
- /sIkoJ0MH1poV2JAXjy45ievAPC5tZv+TNtlo4NcPrL2KC7GXi3EI39tvra3Gx9I2NUCYHYwn
- CcBKp0es90e1F6wYYod2sz14wcIGg3X3MHCkj2vDTJfx2B90612PZqoGFqD3p1DeJ3LmB5ZVQ
- xK0iXXBtNMzPM/TAWwiEeLY90kOGQcRuoRG3qGo/NZ1cxHPbNrf/K0das2vaJA94mvdyO1mVK
- DP0YgnQ6hoa4AYrmkUL9sWZuqtIpLbgC3dnMAsusKRnLH1Pue0/XxONNxiMisujb9AVRS9Vva
- +t0rY24oM4H0slQ0/1YzCv80OoGVJAVRb6cIjscIYbwtvx5xLg3zVaBl520CpY36pKauJ82Gx
- kQm4hIvCC1SUo+bz9M/EeqmT2SBcFoHVnQHqtFIV+H+Vh2s8bHpCkAevZVA/0CjIMSUB7LZkd
- ggavJNDaYIsvWVJYB75qf11qS71TyvqfMtLTyr1z16ihOkttdHeAMUkpd/SRg+oC+rPamSz/g
- I5UoEu3dw23UUHecV7rJeA77mBY4JBCYRefUTyvXyMdh0aff2N4XJw3OyQoNntJmyTx9nNmkr
- yTiKoXPuXPpcvS0dvTr1C6IESXlOSBKBx2SLsBFoHOvkd4NPtf1DkvVnPEGjlXQNQlUOPDwvi
- pS1oUVq4XIC++LKAMT269jBcXAV7/VZfIG3AHAAZLZ5ylEM59KD7p57//KOh1lhRls3//qljg
- /wOoXBTGqRvxKuU/LZ7OxgB/XLitYCHNp1xk2FCy1eplMh6t/UFXCAnGKe5yogAFUrBn5wSzF
- RRF4Ht+HY3zAa5nEWZK2LJ0RHA3YCSR0bxrghhuI2kYRdYhylGSZhXgQbmMVRsSiINkYSY84e
- MGhfCAT702ntQ85u/+7dV37wPI84n2KK4Fkq7C4GugmWZ9gf/i6Edl1tRzUfegceDfUJ6le4E
- cWM2PlD570jRpGSTdSjQ3xk2P+BhfJpx8hCZeGCVF+5bb2G+BRwv7UP/W5BFmUzvv/HXb1yFQ
- nQssxjlfnkCkOfN+qzhIdsfKtpQkw3GfmZPw3a1JzMoa/e89fl9/DXykHeScGxqnXIp2tXrcx
- BLNsZroG7655XoznHBk6I5pMt0mwo0CR5XYA+DwRHLhOfoDmicK9c1UKyNhM=
+References: <20200101033704.32264-1-masneyb@onstation.org> <20200101111521.GA67534@gerhold.net>
+In-Reply-To: <20200101111521.GA67534@gerhold.net>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 1 Jan 2020 12:14:35 -0800
+Message-ID: <CAF6AEGu=G4x3Kpzm=0x-Mj_VOrkvTGq1WcFr8QNAn6APjevHjA@mail.gmail.com>
+Subject: Re: [PATCH] firmware: qcom: scm: add 32 bit iommu page table support
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Brian Masney <masneyb@onstation.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Jan 1, 2020 at 3:16 AM Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> On Tue, Dec 31, 2019 at 10:37:04PM -0500, Brian Masney wrote:
+> > Add 32 bit implmentations of the functions
+> > __qcom_scm_iommu_secure_ptbl_size() and
+> > __qcom_scm_iommu_secure_ptbl_init() that are required by the qcom_iommu
+> > driver.
+> >
+> > Signed-off-by: Brian Masney <masneyb@onstation.org>
+> > ---
+> >  drivers/firmware/qcom_scm-32.c | 32 ++++++++++++++++++++++++++++++--
+> >  1 file changed, 30 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/firmware/qcom_scm-32.c b/drivers/firmware/qcom_scm-32.c
+> > index 48e2ef794ea3..f149a85d36b0 100644
+> > --- a/drivers/firmware/qcom_scm-32.c
+> > +++ b/drivers/firmware/qcom_scm-32.c
+> > @@ -638,13 +638,41 @@ int __qcom_scm_restore_sec_cfg(struct device *dev, u32 device_id,
+> >  int __qcom_scm_iommu_secure_ptbl_size(struct device *dev, u32 spare,
+> >                                     size_t *size)
+> >  {
+> > -     return -ENODEV;
+> > +     int psize[2] = { 0, 0 };
+>
+> I would use an explicit size (i.e. __le32) here.
+>
+> > +     int ret;
+> > +
+> > +     ret = qcom_scm_call(dev, QCOM_SCM_SVC_MP,
+> > +                         QCOM_SCM_IOMMU_SECURE_PTBL_SIZE,
+> > +                         &spare, sizeof(spare), &psize, sizeof(psize));
+> > +     if (ret || psize[1])
+> > +             return ret ? ret : -EINVAL;
+> > +
+> > +     *size = psize[0];
+> > +
+> > +     return 0;
+> >  }
+> >
+> >  int __qcom_scm_iommu_secure_ptbl_init(struct device *dev, u64 addr, u32 size,
+> >                                     u32 spare)
+> >  {
+> > -     return -ENODEV;
+> > +     struct msm_scm_ptbl_init {
+> > +             __le32 paddr;
+> > +             __le32 size;
+> > +             __le32 spare;
+> > +     } req;
+> > +     int ret, scm_ret = 0;
+> > +
+> > +     req.paddr = addr;
+> > +     req.size = size;
+> > +     req.spare = spare;
+>
+> I'm not sure if there is actually anyone using qcom in BE mode (does
+> that even work?), but all the other methods in this file explicitly
+> convert using cpu_to_le32(), so this method should do the same :)
 
---mP3DRpeJDSE+ciuQ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+sboyd used to occasionally fix things related to qcom in BE back in
+the day.. not sure if modern snapdragons still support BE.
 
-On Tue, Dec 31, 2019 at 10:39:49PM -0500, Brian Masney wrote:
-[...]
->     (kernel_init) from ret_from_fork (arch/arm/kernel/entry-common.S:156)
->     Exception stack(0xee89dfb0 to 0xee89dff8)
->     dfa0:                                     00000000 00000000 00000000 =
-00000000
->     dfc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 =
-00000000
->     dfe0: 00000000 00000000 00000000 00000000 00000013 00000000
->     Code: e92d4070 e1a04000 e3a01004 e240501c (e5930014)
+(I'm willing to just pretend that they don't.. that lessens the chance
+that someday someone gets far enough to try the GPU in BE mode, and
+realizes they've wasted their time getting that far ;-))
 
-This looks like ARM code...
+BR,
+-R
 
->     All code
->     =3D=3D=3D=3D=3D=3D=3D=3D
->        0:	70 40                	jo     0x42
->        2:	2d e9 00 40 a0       	sub    $0xa04000e9,%eax
->        7:	e1 04                	loope  0xd
->        9:	10 a0 e3 1c 50 40    	adc    %ah,0x40501ce3(%rax)
->        f:	e2 14                	loop   0x25
->       11:*	00                   	.byte 0x0		<-- trapping instruction
->       12:	93                   	xchg   %eax,%ebx
->       13:	e5                   	.byte 0xe5
-
-=2E.. disassembled as x86 code.
-
-I suspect that scripts/decodecode picked up the wrong architecture
-somehow. Perhaps CROSS_COMPILE wasn't set?
-
->=20
->     Code starting with the faulting instruction
->     =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->        0:	14 00                	adc    $0x0,%al
->        2:	93                   	xchg   %eax,%ebx
->        3:	e5                   	.byte 0xe5
-
-
-Greetings and a happy new year,
-Jonathan Neusch=C3=A4fer
-
---mP3DRpeJDSE+ciuQ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAl4M4ogACgkQCDBEmo7z
-X9uc6xAAt8EnWXrDJbKJksr2JLYDwsRONNkcbseMDFX6lxbaUtMInIzz+lALKI23
-VFFFwmNKK72kxiQYgITNFWV4LC19MBMKdXSXtw8F56MX1vIFgcibvh703Y0n/hEE
-81tMDn3DVlDyuRMN+jTAZrFMqeFB2yywoPYjzesQX9hprI0DyyGZtPbqRHkCpWfN
-aWthJYvX1+QWyMjt8fHinUsLptLA7qtb4ZRUMXg/O8xO+NC3Khn9nVc8wqDeddAH
-A/U9i9bvhFBzQotNQdqaxzn/4mlBGN9xpPR+b2m6evJ+71Di1uNpoZocxrIdEMsv
-NPor1p04QFW8nWL1ZT6qa8MyUPuv+YTRrqBYnaXgPskBMal/KA+0U98WOWzWh84u
-IKxWLYD1O3SL0udQsIXOb6FUE4fSrzXDKIWtgZERhnqM2vrmGooJbRNyE/IeRdXD
-Q8gkOLwxZKX7aRzzXqYVCWbQsBIvE3oUUtJB/kdleY0Q1CRb9l2tYTqrlnMcSjIE
-Qxh9EZim7MgzwX8nmf4CSAV5t7gSSoxlLXiMZOAye2AkhHygdVlGEH0AQk4P17oW
-P6jwyKZ/88PgNai3frPAYOufE+AHS49K/p7iOWcmPbSmyJ3ii6tml6h8kvWA0ff1
-sHXQgCiyZPUKNg3KD5TOZ4rLQwxon85eYlqP+KbB3taO1H6Mwvo=
-=xMEO
------END PGP SIGNATURE-----
-
---mP3DRpeJDSE+ciuQ--
+> > +
+> > +     ret = qcom_scm_call(dev, QCOM_SCM_SVC_MP,
+> > +                         QCOM_SCM_IOMMU_SECURE_PTBL_INIT,
+> > +                         &req, sizeof(req), &scm_ret, sizeof(scm_ret));
+> > +     if (ret || scm_ret)
+> > +             return ret ? ret : -EINVAL;
+> > +
+> > +     return 0;
+> >  }
+> >
+> >  int __qcom_scm_io_readl(struct device *dev, phys_addr_t addr,
+> > --
+> > 2.21.0
+> >
