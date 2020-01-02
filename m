@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CE07F12E566
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jan 2020 12:02:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D84012E573
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jan 2020 12:03:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728171AbgABLCx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jan 2020 06:02:53 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:21763 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728173AbgABLCx (ORCPT
+        id S1728201AbgABLC7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jan 2020 06:02:59 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:33653 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728194AbgABLC7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jan 2020 06:02:53 -0500
+        Thu, 2 Jan 2020 06:02:59 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1577962973; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1577962978; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=F0HKMINl3+D7ca7yazU8W5un8/qnI/MseURKMqYKj7Y=; b=w6nNSzIjTcK5w6Q3DZM1hoIn0j96dmt9l+yZOUvrSO0K+2dQNJmEUC+9OGQNG18G7DmMf4Be
- ev+PlnZDlfwXBxpcV3bfpvXKlQCVqo69csFIEzeV0gdZcg+sehfBXM1ffopGDNpEoqoNlewI
- upyFQtp4He2VUUSEVRy+TfYLRCY=
-X-Mailgun-Sending-Ip: 104.130.122.25
+ bh=i7oxiMyBgiIZ2dbZdFQVJg8EVbTKW2n6EXzUY/2iksU=; b=B2wXjilekLLY031ZLGPQ2N5AmlyzfuW0vcR+ag6SGf8UhQsX/gerxt7FYGHEYNGWvSLov1S8
+ 43E2khS5B2VyHJrnaAh0TaTbkeVHUQGCTTPvlATgAmW3gONvodqh19Z4QJs7Usiet0MVPwBX
+ riUuylpFrAquIwx1fvVgfdBolDc=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e0dcdd9.7f8b23d09228-smtp-out-n02;
- Thu, 02 Jan 2020 11:02:49 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e0dcdde.7f77d68d5880-smtp-out-n02;
+ Thu, 02 Jan 2020 11:02:54 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4B0E3C447AD; Thu,  2 Jan 2020 11:02:48 +0000 (UTC)
+        id 42B9FC447B2; Thu,  2 Jan 2020 11:02:54 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,9 +34,9 @@ Received: from smasetty-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-O
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: smasetty)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AF815C4479D;
-        Thu,  2 Jan 2020 11:02:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AF815C4479D
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6B686C447A6;
+        Thu,  2 Jan 2020 11:02:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6B686C447A6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
 From:   Sharat Masetty <smasetty@codeaurora.org>
@@ -47,9 +47,9 @@ Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
         iommu@lists.linux-foundation.org, jcrouse@codeaurora.org,
         saiprakash.ranjan@codeaurora.org,
         Sharat Masetty <smasetty@codeaurora.org>
-Subject: [PATCH v2 5/7] drm: msm: a6xx: Properly free up the iommu objects
-Date:   Thu,  2 Jan 2020 16:32:11 +0530
-Message-Id: <1577962933-13577-6-git-send-email-smasetty@codeaurora.org>
+Subject: [PATCH v2 6/7] drm/msm: rearrange the gpu_rmw() function
+Date:   Thu,  2 Jan 2020 16:32:12 +0530
+Message-Id: <1577962933-13577-7-git-send-email-smasetty@codeaurora.org>
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1577962933-13577-1-git-send-email-smasetty@codeaurora.org>
 References: <1577962933-13577-1-git-send-email-smasetty@codeaurora.org>
@@ -58,27 +58,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch calls the right function to destroy the iommu domain as well
-as free the associated iommu structure there by facilitating proper
-clean up of resources upon failure of creating an address space.
+The register read-modify-write construct is generic enough
+that it can be used by other subsystems as needed, create
+a more generic rmw() function and have the gpu_rmw() use
+this new function.
 
 Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_drv.c | 8 ++++++++
+ drivers/gpu/drm/msm/msm_drv.h | 1 +
+ drivers/gpu/drm/msm/msm_gpu.h | 5 +----
+ 3 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 0d72e6c..ab562f6 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -896,7 +896,7 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
-
- 	aspace = msm_gem_address_space_create(mmu, "gpu", SZ_16M, 0xffffffff);
- 	if (IS_ERR(aspace))
--		iommu_domain_free(iommu);
-+		mmu->funcs->destroy(mmu);
-
- 	return aspace;
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index f50fefb..4c4559f 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -165,6 +165,14 @@ u32 msm_readl(const void __iomem *addr)
+ 	return val;
  }
---
+ 
++void msm_rmw(void __iomem *addr, u32 mask, u32 or)
++{
++	u32 val = msm_readl(addr);
++
++	val &= ~mask;
++	msm_writel(val | or, addr);
++}
++
+ struct msm_vblank_work {
+ 	struct work_struct work;
+ 	int crtc_id;
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 2203729..1bc778b 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -405,6 +405,7 @@ void __iomem *msm_ioremap(struct platform_device *pdev, const char *name,
+ 		const char *dbgname);
+ void msm_writel(u32 data, void __iomem *addr);
+ u32 msm_readl(const void __iomem *addr);
++void msm_rmw(void __iomem *addr, u32 mask, u32 or);
+ 
+ struct msm_gpu_submitqueue;
+ int msm_submitqueue_init(struct drm_device *drm, struct msm_file_private *ctx);
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index 41d86c2..935a12f 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -223,10 +223,7 @@ static inline u32 gpu_read(struct msm_gpu *gpu, u32 reg)
+ 
+ static inline void gpu_rmw(struct msm_gpu *gpu, u32 reg, u32 mask, u32 or)
+ {
+-	uint32_t val = gpu_read(gpu, reg);
+-
+-	val &= ~mask;
+-	gpu_write(gpu, reg, val | or);
++	msm_rmw(gpu->mmio + (reg << 2), mask, or);
+ }
+ 
+ static inline u64 gpu_read64(struct msm_gpu *gpu, u32 lo, u32 hi)
+-- 
 1.9.1
