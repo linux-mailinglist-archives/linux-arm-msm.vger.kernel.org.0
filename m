@@ -2,142 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 67DB912E358
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jan 2020 08:36:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 74DDE12E37E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jan 2020 08:54:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726299AbgABHgL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jan 2020 02:36:11 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:42249 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726207AbgABHgL (ORCPT
+        id S1727799AbgABHyO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jan 2020 02:54:14 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:19797 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727767AbgABHyN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jan 2020 02:36:11 -0500
-Received: by mail-pf1-f195.google.com with SMTP id 4so21669832pfz.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jan 2020 23:36:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9BZFCWByeFBQFg4ZpwRS8Ep8P4RYSRYVRbf7sq8YUn4=;
-        b=vgr7ojvK1IpBjMrcuFNiAurp1izGXu8v7/Imtdb6mtTYZBlrX+xEzK0+/prqYuJvZi
-         WRAUeI84rPPjrl2b15KK4FTmNBRvGIoFq7s7exbiy9n+82PZXEBGveUnsFnRDm5zO6hA
-         m/k+R6DyPs3kaYeOBTQp0ONWpFmX2csttv42PjhTMqEsvXG/068gcqRMgpkesN9j/pcF
-         1jfxPU7M43Ki6z63KdCdIwfOayDLGG1u8tznmWzrm+RiMd3u4/HP8I00vU57HDdEcuVv
-         n3cHAT5JS5/c9DhWeKkQZmwoMzwgUG3A+TlX4fNehBy5O6r+60t/sAL1xOJypCiVYc3Z
-         AGeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9BZFCWByeFBQFg4ZpwRS8Ep8P4RYSRYVRbf7sq8YUn4=;
-        b=iI3kWK+I4MyUOXA5LYvpXFi2359CC1xsz2oZpMLtdnt7NvArxQjb57OoDYsOZem5Y6
-         zeFb2VSHvn7ugkwQY4G0939bW2PcruojrR1u4JCJEaTHGP5SrS1FGE0jGvfZGaZauoet
-         LpAoZXNLxO7lDuqsMrkO5Fd2qyQZAgv3fIpJ31PvaeFfDj6xrTXYxvhqIfHbxdTikI7f
-         u6ynZkBynUSFTdNpO31/UiYUq+yiv9pxXTL8gQPcvBWg/Hwcsx4fuUyOLpcKTsPx+56r
-         2yqKxR/isZ9TDRjKvtMCKypXm/+6PbvBLL9jCa+YS0UJ2Eb00usDmHHyV9xaOso2R35y
-         zBvQ==
-X-Gm-Message-State: APjAAAU1EajsFf2uyyHVidVuFgR76/tXpC1H/XUQnjG0RHzXtHRHjSIi
-        W3ZaJufa2LRAi6Xr07Z/VhKY5g==
-X-Google-Smtp-Source: APXvYqwST97ivxeEeCej8Jd+8HddEhoVJprknV1/YugYLwdhyqMzNoOEOQmeu+khAFhJ/ze/6cRsvg==
-X-Received: by 2002:a62:a209:: with SMTP id m9mr77068574pff.16.1577950570999;
-        Wed, 01 Jan 2020 23:36:10 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 207sm64170807pfu.88.2020.01.01.23.36.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jan 2020 23:36:10 -0800 (PST)
-Date:   Wed, 1 Jan 2020 23:36:07 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Brian Masney <masneyb@onstation.org>
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] firmware: qcom: scm: add 32 bit iommu page table support
-Message-ID: <20200102073607.GS549437@yoga>
-References: <20200101033704.32264-1-masneyb@onstation.org>
+        Thu, 2 Jan 2020 02:54:13 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1577951653; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=yJYJDd1Z2YXAv6jesy41e54rJyXI82cXXASQ0/OaVFU=;
+ b=i8k+0GdbTGbblw1C6SZ07XX+CQAEZ5HTwmu/0k4cru43UY4ZKPvOHQHku6LZQ8nzJgfMN37d
+ 528hUUp1bRjgkIbRkEDtyVQwh6q0VXKIsJNrC9TF2N6/aVLjKEH44RRhLy+xtgxvc1ph4shs
+ 6waTqL94i9vM7DPTNeMXSaYTXF8=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e0da1a2.7fb722093458-smtp-out-n02;
+ Thu, 02 Jan 2020 07:54:10 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A0A10C4479C; Thu,  2 Jan 2020 07:54:09 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: vgarodia)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 062CEC433CB;
+        Thu,  2 Jan 2020 07:54:09 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200101033704.32264-1-masneyb@onstation.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 02 Jan 2020 13:24:08 +0530
+From:   vgarodia@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Dikshita Agarwal <dikshita@codeaurora.org>,
+        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] arm64: dts: sc7180: Add Venus video codec DT node
+In-Reply-To: <20191229031853.GL3755841@builder>
+References: <1576828760-13176-1-git-send-email-dikshita@codeaurora.org>
+ <1576828760-13176-2-git-send-email-dikshita@codeaurora.org>
+ <20191229031853.GL3755841@builder>
+Message-ID: <17bc9ed78316f483fea273849d39d6a8@codeaurora.org>
+X-Sender: vgarodia@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 31 Dec 19:37 PST 2019, Brian Masney wrote:
+Hi Bjorn,
 
-> Add 32 bit implmentations of the functions
-> __qcom_scm_iommu_secure_ptbl_size() and
-> __qcom_scm_iommu_secure_ptbl_init() that are required by the qcom_iommu
-> driver.
+Thanks for your review comments.
+
+On 2019-12-29 08:48, Bjorn Andersson wrote:
+> On Thu 19 Dec 23:59 PST 2019, Dikshita Agarwal wrote:
 > 
-
-Hi Brian,
-
-This looks good, but I was hoping to  hoping to reach a conclusion and
-merge [1] - which in patch 16 squashes the argument filling boiler plate
-code of the 32 and 64-bit version of scm and hence implements the same.
-
-If you have time to take a peek at this series I would greatly
-appreciate it (not a lot of people testing 32-bit these days...)
-
-[1] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=215943
-
-Regards,
-Bjorn
-
-> Signed-off-by: Brian Masney <masneyb@onstation.org>
-> ---
->  drivers/firmware/qcom_scm-32.c | 32 ++++++++++++++++++++++++++++++--
->  1 file changed, 30 insertions(+), 2 deletions(-)
+>> This adds Venus video codec DT node for sc7180.
+>> 
+>> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 36 
+>> ++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 36 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> index 6876aae2..42c70f5 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> @@ -10,6 +10,7 @@
+>>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>  #include <dt-bindings/phy/phy-qcom-qusb2.h>
+>>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>> +#include <dt-bindings/clock/qcom,videocc-sc7180.h>
+>> 
+>>  / {
+>>  	interrupt-parent = <&intc>;
+>> @@ -66,6 +67,11 @@
+>>  			compatible = "qcom,cmd-db";
+>>  			no-map;
+>>  		};
+>> +
+>> +		venus_mem: memory@8F600000 {
+>> +			reg = <0 0x8F600000 0 0x500000>;
+>> +			no-map;
+>> +		};
+>>  	};
+>> 
+>>  	cpus {
+>> @@ -1042,6 +1048,36 @@
+>>  			};
+>>  		};
+>> 
+>> +		venus: video-codec@aa00000 {
+>> +			compatible = "qcom,sc7180-venus";
+>> +			reg = <0 0x0aa00000 0 0xff000>;
+>> +			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+>> +			power-domains = <&videocc VENUS_GDSC>,
 > 
-> diff --git a/drivers/firmware/qcom_scm-32.c b/drivers/firmware/qcom_scm-32.c
-> index 48e2ef794ea3..f149a85d36b0 100644
-> --- a/drivers/firmware/qcom_scm-32.c
-> +++ b/drivers/firmware/qcom_scm-32.c
-> @@ -638,13 +638,41 @@ int __qcom_scm_restore_sec_cfg(struct device *dev, u32 device_id,
->  int __qcom_scm_iommu_secure_ptbl_size(struct device *dev, u32 spare,
->  				      size_t *size)
->  {
-> -	return -ENODEV;
-> +	int psize[2] = { 0, 0 };
-> +	int ret;
-> +
-> +	ret = qcom_scm_call(dev, QCOM_SCM_SVC_MP,
-> +			    QCOM_SCM_IOMMU_SECURE_PTBL_SIZE,
-> +			    &spare, sizeof(spare), &psize, sizeof(psize));
-> +	if (ret || psize[1])
-> +		return ret ? ret : -EINVAL;
-> +
-> +	*size = psize[0];
-> +
-> +	return 0;
->  }
->  
->  int __qcom_scm_iommu_secure_ptbl_init(struct device *dev, u64 addr, u32 size,
->  				      u32 spare)
->  {
-> -	return -ENODEV;
-> +	struct msm_scm_ptbl_init {
-> +		__le32 paddr;
-> +		__le32 size;
-> +		__le32 spare;
-> +	} req;
-> +	int ret, scm_ret = 0;
-> +
-> +	req.paddr = addr;
-> +	req.size = size;
-> +	req.spare = spare;
-> +
-> +	ret = qcom_scm_call(dev, QCOM_SCM_SVC_MP,
-> +			    QCOM_SCM_IOMMU_SECURE_PTBL_INIT,
-> +			    &req, sizeof(req), &scm_ret, sizeof(scm_ret));
-> +	if (ret || scm_ret)
-> +		return ret ? ret : -EINVAL;
-> +
-> +	return 0;
->  }
->  
->  int __qcom_scm_io_readl(struct device *dev, phys_addr_t addr,
-> -- 
-> 2.21.0
+> Should this be aligned with the DT refactoring done for sdm845, where
+> the GDSC is moved into the *-core subnodes etc?
+This is already aligned to new refactored design i.e clocks/GDSCs are no 
+more
+core specific.
+
+> Regards,
+> Bjorn
 > 
+>> +					<&videocc VCODEC0_GDSC>;
+>> +			power-domain-names = "venus", "vcodec0";
+>> +			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
+>> +				<&videocc VIDEO_CC_VENUS_AHB_CLK>,
+>> +				<&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
+>> +				<&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
+>> +				<&videocc VIDEO_CC_VCODEC0_AXI_CLK>;
+>> +			clock-names = "core", "iface", "bus",
+>> +					"vcodec0_core", "vcodec0_bus";
+>> +			iommus = <&apps_smmu 0x0C00 0x60>;
+>> +			memory-region = <&venus_mem>;
+>> +
+>> +			video-core0 {
+>> +					compatible = "venus-decoder";
+>> +			};
+>> +
+>> +			video-core1 {
+>> +					compatible = "venus-encoder";
+>> +			};
+>> +
+>> +			video-firmware {
+>> +					iommus = <&apps_smmu 0x0C42 0x0>;
+>> +			};
+>> +		};
+>> +
+>>  		pdc: interrupt-controller@b220000 {
+>>  			compatible = "qcom,sc7180-pdc", "qcom,pdc";
+>>  			reg = <0 0x0b220000 0 0x30000>;
+>> --
+>> 1.9.1
+>> 
