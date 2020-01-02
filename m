@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 917D712EA3D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jan 2020 20:18:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2568E12EA73
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jan 2020 20:29:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728074AbgABTSj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jan 2020 14:18:39 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:33949 "EHLO
+        id S1728435AbgABT33 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jan 2020 14:29:29 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:45962 "EHLO
         mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728234AbgABTSi (ORCPT
+        with ESMTP id S1728239AbgABT33 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jan 2020 14:18:38 -0500
-Received: by mail-pl1-f195.google.com with SMTP id x17so18170829pln.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jan 2020 11:18:38 -0800 (PST)
+        Thu, 2 Jan 2020 14:29:29 -0500
+Received: by mail-pl1-f195.google.com with SMTP id b22so18167084pls.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jan 2020 11:29:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=5v8YmE4lq5pm3n48JSYbm+XxfNVgtGcEo9dEgVmMKes=;
-        b=nqVjCCKi/RNZVE/bmRsnbbEhTSk8MhBG5ALiX+uI5k6s9VYGdUmI3AXqT9iLB9Kdng
-         QSVMiEpnDR401TBusnOYbk2scewB5MkdJnKQ+bkLK9pcYQJTu60BrpwOkLxAE1umKIo8
-         c/e/7TH55dyh8FZe1aSAI0Ohpbp4PeZRrcNfvp69EllKrOMDWjeQInoogKexLb57Jv1U
-         DD0PNRXvi8RfdSpYdVfwZqDi92cXi3E95ZiK2vJLq3wz5X0KYW6a2+tDdSsEFYfbU33M
-         phPyknsg/cM1bMlq4Tqtuj/el/ie6p+Z8hB2C5Dk7nPMp00EsHD3DGSzmFQLPo0MvIe/
-         1aqA==
+        bh=NvU0yti40S840n5QG3gVP/0HZjtdrLIA9EgmtFMdjeY=;
+        b=zu8FI6S0upnpm0ix25G3oaUOc0+/iGH++sv5Bcj2kBLoEdj4G5VLPaG3P9qofdE3jM
+         kGUCcRTgL2gpIFpgfYy8+7EBIN+kA18SrgprqG1Hx2JUlzDb9GtY/RrrYMUXbtDVY2DB
+         5cY4cvup5gLoGT5jtbYCYsnjZNTuWdUlxaDvbCd8bANScYTV7mYZG90qRPPJleqWen+C
+         ZZpw+5VbdODX/MT7Q74c02z/z69qpq5ZkU6j45apQgPvUEMPYVW2IwjU0LH0Klr6uZx5
+         EclAgxpf4f65o/gcdnf98we6dlSPeYiAHl1H1Mx+nTezrYAoOEKzzFbKGKSohdq2K+s/
+         YwTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5v8YmE4lq5pm3n48JSYbm+XxfNVgtGcEo9dEgVmMKes=;
-        b=F4GxQ/b6N2O/jyv6QPVUVSTD+cspDdkcOU+YVcWI+4Wt5kk7qNlHpvBLzUObx5bpPR
-         zYtx7lzqpZU/a5rhQ3taZmJwZPFKKcSY66AyhkYl+vpo3C676OiqrsYvCFRWyhJ2CCt4
-         VV+g08V+ttnpEshnvw3MXino85XMG6MLvZESP5G8rcqTcCF6cFgVavnsA/dXvUJs90i8
-         VqGhsfsHg0HKCcz+1nvAsZpGB3a1jLorrMCGixw+Z8tXWwX7SJRvVBKa+YuGvfGsvJVV
-         1Et1G3kxp5RgbnRnyzimwD3HutiHPDyNgwgPMGVw/so5aMHGzRzfAgcUEeIxHXMY8jri
-         awMQ==
-X-Gm-Message-State: APjAAAU3r25O0CyR+mRkEQmb0HUhvBcl2PcmgITqnc4CrrTGtNQR7ral
-        pSUi3t7Rux+AeWi7n+mEizERkw==
-X-Google-Smtp-Source: APXvYqzUZXast5HDCFoCWpka7cRchbSV4gtoHv7dita+qvQPpmpysiWRq22r6mn49W4QMAJRITOhZg==
-X-Received: by 2002:a17:902:9b83:: with SMTP id y3mr61188806plp.32.1577992718051;
-        Thu, 02 Jan 2020 11:18:38 -0800 (PST)
+        bh=NvU0yti40S840n5QG3gVP/0HZjtdrLIA9EgmtFMdjeY=;
+        b=obcyLRgwVQmB4VNtNCBaUpECZLy3vdon9mfQk+Ayk9SWL4Ds4KpVVpGMs/uhDN2bsU
+         WUFi6unHQu9jT4+lUDpACBi1/bdhaOOc3WzSDlx59dy4SslMGxkEwOq6Tk+QGKoOEcCr
+         mRk+Bmlvj3mZAAz+ZRg2qxqE9oB865z8bcCk04i3W+4pU/QECG8PSb5vSLq2itYaOPnS
+         lM9CBkIeEQlqvZNqW3q0c4bXEUCKzb2yWaKCa2o/E/Cb1xNaM/E5oyfeSQxPZAxwKGdy
+         H1EG3bUMDcFN59pvieMBYUOFCMRaIYetM8eIvzTAJIl1AcFNhcw6FG3xLwGg7Bq+2pjD
+         zuNg==
+X-Gm-Message-State: APjAAAWxeQtdT77/aRgApzuPPnNfWP4bidDtUB62HjCqGLQXED9/kUmh
+        2YwMqyuX4UwsXqFaYAu45W3mAw==
+X-Google-Smtp-Source: APXvYqzK6klpqUHj5VLLlr49JBuhy2FCQTzFaMgfn5/VXfd20M9M3/Lj/GoFiNaoEiw0ndMfgfZ6Mg==
+X-Received: by 2002:a17:902:aa46:: with SMTP id c6mr88130383plr.200.1577993368332;
+        Thu, 02 Jan 2020 11:29:28 -0800 (PST)
 Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g19sm65407665pfh.134.2020.01.02.11.18.36
+        by smtp.gmail.com with ESMTPSA id b193sm56938366pfb.57.2020.01.02.11.29.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jan 2020 11:18:37 -0800 (PST)
-Date:   Thu, 2 Jan 2020 11:18:35 -0800
+        Thu, 02 Jan 2020 11:29:27 -0800 (PST)
+Date:   Thu, 2 Jan 2020 11:29:25 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Amit Kucheria <amit.kucheria@linaro.org>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
@@ -53,14 +53,15 @@ Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Amit Kucheria <amit.kucheria@verdurent.com>,
         linux-pm@vger.kernel.org
-Subject: Re: [PATCH v3 3/9] drivers: thermal: tsens: use simpler variables
-Message-ID: <20200102191835.GB988120@minitux>
+Subject: Re: [PATCH v3 4/9] drivers: thermal: tsens: Release device in
+ success path
+Message-ID: <20200102192925.GC988120@minitux>
 References: <cover.1577976221.git.amit.kucheria@linaro.org>
- <09ac47eea963e84bd3eb630897c2b77f3868b90b.1577976221.git.amit.kucheria@linaro.org>
+ <0a969ecd48910dac4da81581eff45b5e579b2bfc.1577976221.git.amit.kucheria@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <09ac47eea963e84bd3eb630897c2b77f3868b90b.1577976221.git.amit.kucheria@linaro.org>
+In-Reply-To: <0a969ecd48910dac4da81581eff45b5e579b2bfc.1577976221.git.amit.kucheria@linaro.org>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -69,57 +70,47 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Thu 02 Jan 06:54 PST 2020, Amit Kucheria wrote:
 
-> We already dereference the sensor and save it into a variable. Use the
-> variable directly to make the code easier to read.
+> We don't currently call put_device in case of successfully initialising
+> the device.
+> 
+> Allow control to fall through so we can use same code for success and
+> error paths to put_device.
 > 
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Given the relationship between priv->dev and op I think this wouldn't be
+a problem in practice, but there's two devm_ioremap_resource() done on
+op->dev in this function. So you're depending on op->dev to stick
+around, but with this patch you're no longer expressing that dependency.
+
+That said, it looks iffy to do devm_ioremap_resource() on op->dev and
+then create a regmap on priv->dev using that resource. So I think it
+would be better to do platform_get_source() on op, and then
+devm_ioremap_resource() on priv->dev, in which case the regmap backing
+memory will be related to the same struct device as the regmap and it
+makes perfect sense to put_device() the op->dev when you're done
+inspecting it's resources.
+
+Regards,
+Bjorn
 
 > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
 > ---
->  drivers/thermal/qcom/tsens-common.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  drivers/thermal/qcom/tsens-common.c | 2 --
+>  1 file changed, 2 deletions(-)
 > 
 > diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
-> index c2df30a08b9e..1cbc5a6e5b4f 100644
+> index 1cbc5a6e5b4f..e84e94a6f1a7 100644
 > --- a/drivers/thermal/qcom/tsens-common.c
 > +++ b/drivers/thermal/qcom/tsens-common.c
-> @@ -368,7 +368,7 @@ irqreturn_t tsens_irq_thread(int irq, void *data)
->  			tsens_set_interrupt(priv, hw_id, UPPER, disable);
->  			if (d.up_thresh > temp) {
->  				dev_dbg(priv->dev, "[%u] %s: re-arm upper\n",
-> -					priv->sensor[i].hw_id, __func__);
-> +					hw_id, __func__);
->  				tsens_set_interrupt(priv, hw_id, UPPER, enable);
->  			} else {
->  				trigger = true;
-> @@ -379,7 +379,7 @@ irqreturn_t tsens_irq_thread(int irq, void *data)
->  			tsens_set_interrupt(priv, hw_id, LOWER, disable);
->  			if (d.low_thresh < temp) {
->  				dev_dbg(priv->dev, "[%u] %s: re-arm low\n",
-> -					priv->sensor[i].hw_id, __func__);
-> +					hw_id, __func__);
->  				tsens_set_interrupt(priv, hw_id, LOWER, enable);
->  			} else {
->  				trigger = true;
-> @@ -392,7 +392,7 @@ irqreturn_t tsens_irq_thread(int irq, void *data)
->  		if (trigger) {
->  			dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
->  				hw_id, __func__, temp);
-> -			thermal_zone_device_update(priv->sensor[i].tzd,
-> +			thermal_zone_device_update(s->tzd,
->  						   THERMAL_EVENT_UNSPECIFIED);
->  		} else {
->  			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n",
-> @@ -435,7 +435,7 @@ int tsens_set_trips(void *_sensor, int low, int high)
->  	spin_unlock_irqrestore(&priv->ul_lock, flags);
+> @@ -687,8 +687,6 @@ int __init init_common(struct tsens_priv *priv)
+>  	tsens_enable_irq(priv);
+>  	tsens_debug_init(op);
 >  
->  	dev_dbg(dev, "[%u] %s: (%d:%d)->(%d:%d)\n",
-> -		s->hw_id, __func__, d.low_thresh, d.up_thresh, cl_low, cl_high);
-> +		hw_id, __func__, d.low_thresh, d.up_thresh, cl_low, cl_high);
->  
->  	return 0;
->  }
+> -	return 0;
+> -
+>  err_put_device:
+>  	put_device(&op->dev);
+>  	return ret;
 > -- 
 > 2.20.1
 > 
