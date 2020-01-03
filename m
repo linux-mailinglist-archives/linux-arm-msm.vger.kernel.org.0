@@ -2,128 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CDFC512FCE5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2020 20:16:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BDB3812FD10
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2020 20:31:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728460AbgACTQD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jan 2020 14:16:03 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:42917 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728452AbgACTQD (ORCPT
+        id S1728514AbgACTbl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jan 2020 14:31:41 -0500
+Received: from asavdk3.altibox.net ([109.247.116.14]:59110 "EHLO
+        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728488AbgACTbl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jan 2020 14:16:03 -0500
-Received: by mail-pg1-f196.google.com with SMTP id s64so23803189pgb.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2020 11:16:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=vZomX7k0gRVpj14/WdJAyZSo4OdRTfm/ogrPyU/9NuM=;
-        b=VmUoJ7cuQOj8yvosIWRMEu6d5NSTnv4p0HCrFcIu9fQ4l81Ey6q939zzYUJeJaZ64a
-         ZH8V3w/Bxs4NPF/ciAa/Idlx5QoLWz7IlUOexJ2fdFdHBiONrwSU/VYL5byEW+44CLfQ
-         SMfc1uIBdlW6N7rHmwH63GYVPdqwbGIdXyBTt5ll2vlVFjZw6dO7LIYME8drzz9PvEUf
-         Cr4DqbBrGxUqrRXNQYMHmTDa8yTAWLx+XW05Xb12ejiGIgLOCQ1KDNTsEubkkZQ4vg0n
-         HDrz4DuaHQxjGrYKBtm18XZDIWGtMELTBthS32VS8DHo3BsMjSYp/gr1AWuQYKhJ/JGx
-         7hcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vZomX7k0gRVpj14/WdJAyZSo4OdRTfm/ogrPyU/9NuM=;
-        b=VHAakutQlk5f+64r8W1GoHXxX+Cvk3qpwDJB8WIY0UGFG/uEQL0ibnoM7UYXcSC4Cd
-         CDUert8yQIr8wo5S+T2hFUngaGzRWTmvdfekXv23cbqtQY/E6UxzSTgiWEv2CtNmzXsq
-         u/yjCbG2tOvkw1iDh83qgFWTphjsEoFHZhs26irOVOKSNgZHard14a9+C6pLur+JhiU4
-         WOeq0ce3EQoZbiXcaI7FugrbwNXKq06z8h89+iNnF77zjirbPpU3SyN5lRpPx9bYWp4h
-         P/75/i+5LT0N7dJEKzDhbZh5TQGWVo1r/YtlTQbCWfskbOIjKeGIc1C4saJuCKUvMm3b
-         shKg==
-X-Gm-Message-State: APjAAAUe/CF8huoPgr3tCfcE0NCQ/2hV9jlkDPHByBTaVWyqW20LPoAU
-        KabDP03y4cboORX+n7/Sb49t4w==
-X-Google-Smtp-Source: APXvYqwbWrzgOHLfBKPcJOel52aFz7gJfvMHupIec6iWxtw+mfGglLXvkI30VeaYCSjb/tycYQe4Sg==
-X-Received: by 2002:a63:6c82:: with SMTP id h124mr97258222pgc.328.1578078962175;
-        Fri, 03 Jan 2020 11:16:02 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 13sm67210755pfi.78.2020.01.03.11.16.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jan 2020 11:16:01 -0800 (PST)
-Date:   Fri, 3 Jan 2020 11:15:59 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Niklas Cassel <nks@flawful.org>
-Cc:     sboyd@kernel.org, mturquette@baylibre.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v4] clk: qcom: apcs-msm8916: use clk_parent_data to
- specify the parent
-Message-ID: <20200103191559.GV549437@yoga>
-References: <20200103111429.1347-1-nks@flawful.org>
+        Fri, 3 Jan 2020 14:31:41 -0500
+Received: from ravnborg.org (unknown [158.248.194.18])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk3.altibox.net (Postfix) with ESMTPS id 770C720028;
+        Fri,  3 Jan 2020 20:31:36 +0100 (CET)
+Date:   Fri, 3 Jan 2020 20:31:35 +0100
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/2] drm/panel: Add support for AUO B116XAK01 panel
+Message-ID: <20200103193135.GA21515@ravnborg.org>
+References: <20200103183025.569201-1-robdclark@gmail.com>
+ <20200103183025.569201-2-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200103111429.1347-1-nks@flawful.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <20200103183025.569201-2-robdclark@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=eMA9ckh1 c=1 sm=1 tr=0
+        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
+        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=cm27Pg_UAAAA:8
+        a=Z6NHpIEtjzRDsLnzokIA:9 a=CjuIK1q_8ugA:10 a=xmb-EsYY8bH0VWELuYED:22
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 03 Jan 03:14 PST 2020, Niklas Cassel wrote:
+Hi Rob.
 
-> From: Niklas Cassel <niklas.cassel@linaro.org>
+On Fri, Jan 03, 2020 at 10:30:24AM -0800, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Allow accessing the parent clock names required for the driver operation
-> by using the device tree 'clock-names' property, while falling back to
-> the previous method of using names in the global name space.
-> 
-> This permits extending the driver to other platforms without having to
-> modify its source code.
-> 
-> Co-developed-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
-
-Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
-> Changes since v3:
-> -Don't set dev->of_node explicitly, since the clock framework will now
-> automatically use the parent node pointer when needed.
+>  drivers/gpu/drm/panel/panel-simple.c | 32 ++++++++++++++++++++++++++++
+>  1 file changed, 32 insertions(+)
 > 
-> Requires the following patch to the clock framework to land first:
-> https://patchwork.kernel.org/patch/11313639/
-> 
->  drivers/clk/qcom/apcs-msm8916.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/apcs-msm8916.c b/drivers/clk/qcom/apcs-msm8916.c
-> index 46061b3d230e..cf69a97d0439 100644
-> --- a/drivers/clk/qcom/apcs-msm8916.c
-> +++ b/drivers/clk/qcom/apcs-msm8916.c
-> @@ -19,9 +19,9 @@
->  
->  static const u32 gpll0_a53cc_map[] = { 4, 5 };
->  
-> -static const char * const gpll0_a53cc[] = {
-> -	"gpll0_vote",
-> -	"a53pll",
-> +static const struct clk_parent_data pdata[] = {
-> +	{ .fw_name = "aux", .name = "gpll0_vote", },
-> +	{ .fw_name = "pll", .name = "a53pll", },
+> diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+> index 5d487686d25c..895a25cfc54f 100644
+> --- a/drivers/gpu/drm/panel/panel-simple.c
+> +++ b/drivers/gpu/drm/panel/panel-simple.c
+> @@ -680,6 +680,35 @@ static const struct panel_desc auo_b116xw03 = {
+>  	},
 >  };
 >  
->  /*
-> @@ -62,8 +62,8 @@ static int qcom_apcs_msm8916_clk_probe(struct platform_device *pdev)
->  		return -ENOMEM;
->  
->  	init.name = "a53mux";
-> -	init.parent_names = gpll0_a53cc;
-> -	init.num_parents = ARRAY_SIZE(gpll0_a53cc);
-> +	init.parent_data = pdata;
-> +	init.num_parents = ARRAY_SIZE(pdata);
->  	init.ops = &clk_regmap_mux_div_ops;
->  	init.flags = CLK_SET_RATE_PARENT;
->  
-> -- 
-> 2.24.1
-> 
+> +static const struct drm_display_mode auo_b116xak01_mode = {
+> +	.clock = 69300,
+> +	.hdisplay = 1366,
+> +	.hsync_start = 1366 + 48,
+> +	.hsync_end = 1366 + 48 + 32,
+> +	.htotal = 1366 + 48 + 32 + 10,
+> +	.vdisplay = 768,
+> +	.vsync_start = 768 + 4,
+> +	.vsync_end = 768 + 4 + 6,
+> +	.vtotal = 768 + 4 + 6 + 15,
+> +	.vrefresh = 60,
+> +	.flags = DRM_MODE_FLAG_NVSYNC | DRM_MODE_FLAG_NHSYNC,
+> +};
+> +
+> +static const struct panel_desc auo_b116xak01 = {
+> +	.modes = &auo_b116xak01_mode,
+> +	.num_modes = 1,
+> +	.bpc = 6,
+> +	.size = {
+> +		.width = 256,
+> +		.height = 144,
+> +	},
+> +	.delay = {
+> +		.hpd_absent_delay = 200,
+> +	},
+> +	.bus_format = MEDIA_BUS_FMT_RGB666_1X18,
+> +	.connector_type = DRM_MODE_CONNECTOR_eDP,
+> +};
+Entries in alphabetical order - check.
+.connector_type specified - check.
+.flags and .bus_format specified - check.
+.bus_flags not specified but optional - OK.
+
+> +
+>  static const struct drm_display_mode auo_b133xtn01_mode = {
+>  	.clock = 69500,
+>  	.hdisplay = 1366,
+> @@ -3125,6 +3154,9 @@ static const struct of_device_id platform_of_match[] = {
+>  	}, {
+>  		.compatible = "auo,b133htn01",
+>  		.data = &auo_b133htn01,
+> +	}, {
+> +		.compatible = "auo,b116xa01",
+> +		.data = &auo_b116xak01,
+This entry most also be in alphabetical order.
+
+>  	}, {
+>  		.compatible = "auo,b133xtn01",
+>  		.data = &auo_b133xtn01,
+
+Please fix and resend.
+
+I am in general holding back on patches to panel-simple.
+I hope we can reach a decision for the way forward with the bindings
+files sometimes next week.
+
+	Sam
