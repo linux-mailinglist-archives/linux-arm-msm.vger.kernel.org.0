@@ -2,101 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B5A2412FDA4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2020 21:20:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 25F7512FE95
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2020 23:08:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727868AbgACUT7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jan 2020 15:19:59 -0500
-Received: from mail-qv1-f66.google.com ([209.85.219.66]:39556 "EHLO
-        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727907AbgACUTq (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jan 2020 15:19:46 -0500
-Received: by mail-qv1-f66.google.com with SMTP id y8so16693089qvk.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2020 12:19:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=40ACnQIUnpge54Cj+EODMXbGQ2AM0yGbootCDBdgIh0=;
-        b=AWCc/ylFmQ91zZEJrbKovcmODhKduqUVkKGxHK8uCtVvWppAnjCzAVhlqtuTB6Zv3H
-         fwGfadWPG5OWx3vtouAanI9rAb4+nCSTS9ougZHH94RmFVRXusGOhSeq6LcZbXUbpYke
-         LecHuReAxOHZIAlNr0puF8IN10taJseJbu/8dZmgE65qy44VHc90CsjCbMPz9YIW56uc
-         KAocddCq9fbTe+4eLEe4ukQAx3KuF/S8Bs/5ss0PU18bAsmodPObJCziaNGvW+fW97nj
-         vqPpR6NvW2UHqccwDYrcuioTdRRCTX8F5vGOe97A6Uj5iUQG4sbm5c76feOsNIPb/J8O
-         nOKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=40ACnQIUnpge54Cj+EODMXbGQ2AM0yGbootCDBdgIh0=;
-        b=WsiluFvvFQa9FnFVnQFSYAZBqfFXtWEjBNULLDU0N4o5JD63SxOPv8XZ48bFyTvSaD
-         mTkNLuldVO3MU9Nzs179DPj+oUdOsoUvRcET6XhvnZrxE+Y5GpZ6M93w9fJrjzLxQhEp
-         qoBVY80JEDTYVc6DOqntofFqkMBK9aHDRk2UYmrGzRons6uoGq5LWhpxbXE7z1H1Gt8z
-         5T4Ffu8IqUH2fin8JiNNyY/+9llVPoE0D4pyMQTsRiqmeSqBasixw328iIX7J9/y5zx7
-         jWxGX4Z2W7bSlLlsHwS4Fdgmk9sMnB+EIxLp9NKU3cPnIR6HmaTYDfZ2W0b4Rav7Go21
-         5Ong==
-X-Gm-Message-State: APjAAAWtbUmf20N0jb/uu6SOUUSepNP7dltFdWIWtzViORrPSgeYLVuI
-        3UcFXxR7UcxqVfsbC1zeK1fB3MXfD2dj9BVzx8E=
-X-Google-Smtp-Source: APXvYqwTD0MzQRfSqMjBdpNUeZAJzfDvhrEGhXGCrMyvXGb//+N8M9ASxsqTbkQfP5NbaV7n6hKI5gEfY+hOjDS6Fyg=
-X-Received: by 2002:ad4:478b:: with SMTP id z11mr69635758qvy.185.1578082785331;
- Fri, 03 Jan 2020 12:19:45 -0800 (PST)
-MIME-Version: 1.0
-Received: by 2002:ac8:4410:0:0:0:0:0 with HTTP; Fri, 3 Jan 2020 12:19:45 -0800 (PST)
-From:   "Rev.Dr Emmanuel Okoye CEO Ecobank-benin" 
-        <westernunion.benin982@gmail.com>
-Date:   Fri, 3 Jan 2020 21:19:45 +0100
-Message-ID: <CAP=nHBKxfmbdRg7q4-1jdSUL6+zok9agasMSrXV5CsEJEmZz3A@mail.gmail.com>
-Subject: I promise you must be happy today, God has uplifted you and your
- family ok
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+        id S1728698AbgACWIc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jan 2020 17:08:32 -0500
+Received: from mail.kernel.org ([198.145.29.99]:48642 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728549AbgACWIc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Jan 2020 17:08:32 -0500
+Received: from localhost.localdomain (unknown [194.230.155.149])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id E7B1821835;
+        Fri,  3 Jan 2020 22:08:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1578089311;
+        bh=d3/j7z2yjI7lEIuDxbgdAHv52WUhDcszZmPvZvTiEp8=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Nie4K1gpZcU3az/rdhD9XkV6Ern8kdkfy421SNl/iDVQ/g5YQU2nnA+BgHq2hfB6O
+         8Mp9BFQYnwT9pHO7Mlu6zQfgIF32nWIgb374YZmzW5x2ZrQAn0a7NtNVMq0L+EivJS
+         FZGa096PHMarzvD+4BRZ9ZmwCzetosVMomxg1jls=
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Fabio Estevam <festevam@gmail.com>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH] firmware: scm: Add stubs for OCMEM and restore_sec_cfg_available
+Date:   Fri,  3 Jan 2020 23:08:25 +0100
+Message-Id: <20200103220825.28710-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dear Friend
+Add few more stubs (for OCMEM-related functions and
+qcom_scm_restore_sec_cfg_available()) in case of !CONFIG_QCOM_SCM.
+These are actually not necessary for builds but provide them for
+completeness.
 
-i hope all is well with you,if so, glory be to God almighty. I'm very
-happy to inform you, about my success in getting payment funds under
-the cooperation of a new partner from United States of
-America.Presently I am in uk for investment projects with my own share
-of the total sum. I didn't forget your past efforts. IMF finally
-approved your compensation payment funds this morning by prepaid (ATM)
-Debit card of US$12,500.000.00Million Dollars, Since you not received
-this payment yet, I was not certified
-but it is not your fault and not my fault, I hold nothing against
-you.than bank official whom has been detaining the transfer in the
-bank, trying to claim your funds by themselves.
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+---
+ include/linux/qcom_scm.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Therefore, in appreciation of your effort I have raised an
-International prepaid (ATM) Debit card of US$12,500.000.00 in your
-favor as compensation to you.
+diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
+index d05ddac9a57e..2c1d20312ce0 100644
+--- a/include/linux/qcom_scm.h
++++ b/include/linux/qcom_scm.h
+@@ -105,6 +105,11 @@ static inline bool qcom_scm_is_available(void) { return false; }
+ static inline bool qcom_scm_hdcp_available(void) { return false; }
+ static inline int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt,
+ 				    u32 *resp) { return -ENODEV; }
++static inline bool qcom_scm_ocmem_lock_available(void) { return false; }
++static inline int qcom_scm_ocmem_lock(enum qcom_scm_ocmem_client id, u32 offset,
++				      u32 size, u32 mode) { return -ENODEV; }
++static inline int qcom_scm_ocmem_unlock(enum qcom_scm_ocmem_client id, u32 offset,
++					u32 size) { return -ENODEV; }
+ static inline bool qcom_scm_pas_supported(u32 peripheral) { return false; }
+ static inline int qcom_scm_pas_init_image(u32 peripheral, const void *metadata,
+ 					  size_t size) { return -ENODEV; }
+@@ -121,6 +126,7 @@ static inline void qcom_scm_cpu_power_down(u32 flags) {}
+ static inline u32 qcom_scm_get_version(void) { return 0; }
+ static inline u32
+ qcom_scm_set_remote_state(u32 state,u32 id) { return -ENODEV; }
++static inline bool qcom_scm_restore_sec_cfg_available(void) { return false; }
+ static inline int qcom_scm_restore_sec_cfg(u32 device_id, u32 spare) { return -ENODEV; }
+ static inline int qcom_scm_iommu_secure_ptbl_size(u32 spare, size_t *size) { return -ENODEV; }
+ static inline int qcom_scm_iommu_secure_ptbl_init(u64 addr, u32 size, u32 spare) { return -ENODEV; }
+-- 
+2.17.1
 
-Now, i want you to contact my Diplomatic Agent, His name is Mike Benz
-on His  e-mail Address (mikebenz550@aol.com
-
-ask Him to send the Prepaid (ATM) Debit card to you. Bear in mind that
-the money is in Prepaid (ATM) Debit card, not cash, so you need to
-send to him,
-your full name
-address  where the prepaid (ATM) Debit card will be delivered to you,
-including your cell phone number. Finally, I left explicit
-instructions with him, on how to send the (ATM CARD) to you.
-
-The Prepaid (ATM) Debit card, will be send to you through my
-Diplomatic Agent Mr. Mike Benz immediately you contact him. So contact
-my Diplomatic Agent Mr. Mike Benz immediately you receive this letter.
-Below is his contact information:
-
-NAME : MIKE BENZ
-EMAIL ADDRESS: mikebenz550@aol.com
-Text Him, (256) 284-4886
-
-Request for Delivery of the Prepaid (ATM) Debit card  to you today.
-Note, please I have paid for the whole service fees for you, so the
-only money you will send to my Diplomatic Agent Mr. Mike Benz is
-$50.00 for your prepaid (ATM) Debit card DELIVERY FEE to your address
-ok.
-Let me know once you receive this Card at your address.
-Best regards,
-Rev.Dr, George Adadar
