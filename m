@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D847612FC98
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2020 19:32:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AA81F12FC9E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2020 19:34:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728279AbgACScm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jan 2020 13:32:42 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:46018 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728251AbgACScm (ORCPT
+        id S1728331AbgACSex (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jan 2020 13:34:53 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:45409 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728319AbgACSex (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jan 2020 13:32:42 -0500
-Received: by mail-pg1-f193.google.com with SMTP id b9so23759119pgk.12;
-        Fri, 03 Jan 2020 10:32:42 -0800 (PST)
+        Fri, 3 Jan 2020 13:34:53 -0500
+Received: by mail-pl1-f194.google.com with SMTP id b22so19318317pls.12;
+        Fri, 03 Jan 2020 10:34:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=WICDo2yLVbawePfe3ygrB2v/7fHzbgU3dR2J9o17Eio=;
-        b=LWyzuVPk/Tl3xG5lk+yqRkzMQ3QrWvfrlb1/Why5YnYfiNnL3r+OPJMIitIrADl1QX
-         NAEGHGw6ZP8yedOCzBxqToLPFXAdxbUZr1lANZYjDpkcUY1T1i4mOe7BNXcmLgkhQXhn
-         861CsEjz/GiyBwISX8f9W4pZAY8r2p3Us6IP6n86nEZ6iqolQHKwTBbTTQz4x6iF1l+A
-         Jl9t1NFb7tBkwRi5a1nk3RnpqZbtBcUnwPCl8XRNYC/bENlQP5YAdH4r0VZjrLaRI16W
-         DKISds2yaZgPJtn/ZKCSsE0k6CVt+KLujxlOMwBm4Btsw2pk15T/kOgJ2IcDS9TpDzoz
-         P8+w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=8Dusf/4KDqcrQi/VonO+4x5vUuCsxZgl6QQ8UNNQfZ0=;
+        b=DNo7kR9vKKDTlqoxQ8AOGZwUhmfVgoLHQ/GJPi8L8/TwGW9RmPmJL3RgsmW5koUk8r
+         R13GnTuZM90xCE8Td4Cj1s74JKKQD/0CXRns0wHW9qEDaGQfv4l8UUkoQN1PgbUafQdP
+         4KrO4C/jJz9b0nSPejTbElePBzrFPvWA73N5k5hticNG4TCmzfuMEu8ivh336xtVYlNV
+         3GYOnZrarUvl+QyQF7seSqhB1dTmW2jVYjKpIGuNkvSh2LB59qj/ufaKl/BgY+7KUH+d
+         hD25nntUoYn5dkFq40YOucrUbpMlAeHiI+6MmUxt8KOlqfpTjLzkE6f7cLQT0f3zw4Bl
+         f4uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=WICDo2yLVbawePfe3ygrB2v/7fHzbgU3dR2J9o17Eio=;
-        b=N/MIM/jxB4Lk0fj/77eb96yvz16nsxlXKuPmqa1iCmAFhC3HWgE/Ge8taLMS7anGsl
-         J1JpYIA/NrmiCGlTbwNEm43GpZYaMX17UyDmzUoWIrd8udb3bjP/5oFkxzG7O2fPSQ/k
-         81RdOvrr+ZjhkzotRy33YiiPmf3sFPYpm6MRyzVB7Oz7GfL865KFKtLW8sgKrq2Pi/y3
-         mNLsGV2DxZhnOgj5W01M2eDyoPQma+ELgVCfmrATLwz5diEiFvEOwApSPJqF/QHxE7ty
-         cUzv9la6w8mbsz0uDRW+76xEq6jEhgvbsABrxpTsjuAxd3Cssj4XK5qarbKqyNQEqQP4
-         5IdQ==
-X-Gm-Message-State: APjAAAWfGLfOr8N+17Rkg+2erpHQoqbTE2nNaisHXJuy9BsnrMUXrxrr
-        ap0vHnHgwRGInmKIs3JGE04=
-X-Google-Smtp-Source: APXvYqyRZRtK5dOUg2fH7/BI27kEXbjxzAGcfihQbA6hlrebKhbLBvHLy1v4GvKfnsltfdXhyecewA==
-X-Received: by 2002:a65:578e:: with SMTP id b14mr97955738pgr.444.1578076361952;
-        Fri, 03 Jan 2020 10:32:41 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=8Dusf/4KDqcrQi/VonO+4x5vUuCsxZgl6QQ8UNNQfZ0=;
+        b=q8nLrCWuD3dy4fn9AHKg9ZX+zD404g32wsYmWumKpLpV4hIEOsl0LJMcuQs4Gsu3w5
+         xIHbsNVVTxRm6qMS7+8gpV/u03da2DJ0FVfgzdv/ML6AGzCHAq3DYQ0BDC+qHhKmrYT3
+         QrsXTFOjKDUvOWbjgFBP0ZEGly1rLtC790qc42cx3IevqThTrATJbbMb/m2A9d0PZNS+
+         /BVfuaIJ/NVXvbJO9QeGrkHi+5w7uHhP+Vtve5CMurrVsK3ArXFisOIkYNU1NnOFIOOI
+         9wG8IsWJcKK4YsrihxZRXVMuiKA7GQSIsitQT3APRB+m5sRDouTXhiFj77yeEriOidEv
+         Vq8Q==
+X-Gm-Message-State: APjAAAXxo7b2NO3fpCHGcZ9taHqAVszWVjLqvwFu4J4jITvOHQOxduwt
+        /WuqtiRV87plMuLuHCIqmxU=
+X-Google-Smtp-Source: APXvYqx9m7oZjNsk+KdmrE/zTv6Qh85g23ksK74cqcggdeWZztPomG0rZabNyWSNWbmvPGqxpCDWYg==
+X-Received: by 2002:a17:902:8342:: with SMTP id z2mr89565186pln.181.1578076492887;
+        Fri, 03 Jan 2020 10:34:52 -0800 (PST)
 Received: from localhost ([100.118.89.215])
-        by smtp.gmail.com with ESMTPSA id s130sm62693732pgc.82.2020.01.03.10.32.41
+        by smtp.gmail.com with ESMTPSA id r14sm68677143pfh.10.2020.01.03.10.34.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jan 2020 10:32:41 -0800 (PST)
+        Fri, 03 Jan 2020 10:34:52 -0800 (PST)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -54,14 +54,13 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Sam Ravnborg <sam@ravnborg.org>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 1/2] dt-bindings: display: panel: Add AUO B116XAK01 panel bindings
-Date:   Fri,  3 Jan 2020 10:30:23 -0800
-Message-Id: <20200103183025.569201-1-robdclark@gmail.com>
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 2/2] drm/panel: Add support for AUO B116XAK01 panel
+Date:   Fri,  3 Jan 2020 10:30:24 -0800
+Message-Id: <20200103183025.569201-2-robdclark@gmail.com>
 X-Mailer: git-send-email 2.24.1
+In-Reply-To: <20200103183025.569201-1-robdclark@gmail.com>
+References: <20200103183025.569201-1-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -73,48 +72,59 @@ From: Rob Clark <robdclark@chromium.org>
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- .../bindings/display/panel/auo,b116xa01.yaml  | 32 +++++++++++++++++++
+ drivers/gpu/drm/panel/panel-simple.c | 32 ++++++++++++++++++++++++++++
  1 file changed, 32 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/display/panel/auo,b116xa01.yaml
 
-diff --git a/Documentation/devicetree/bindings/display/panel/auo,b116xa01.yaml b/Documentation/devicetree/bindings/display/panel/auo,b116xa01.yaml
-new file mode 100644
-index 000000000000..6cb8ed9b2c0a
---- /dev/null
-+++ b/Documentation/devicetree/bindings/display/panel/auo,b116xa01.yaml
-@@ -0,0 +1,32 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/display/panel/auo,b116xa01.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 5d487686d25c..895a25cfc54f 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -680,6 +680,35 @@ static const struct panel_desc auo_b116xw03 = {
+ 	},
+ };
+ 
++static const struct drm_display_mode auo_b116xak01_mode = {
++	.clock = 69300,
++	.hdisplay = 1366,
++	.hsync_start = 1366 + 48,
++	.hsync_end = 1366 + 48 + 32,
++	.htotal = 1366 + 48 + 32 + 10,
++	.vdisplay = 768,
++	.vsync_start = 768 + 4,
++	.vsync_end = 768 + 4 + 6,
++	.vtotal = 768 + 4 + 6 + 15,
++	.vrefresh = 60,
++	.flags = DRM_MODE_FLAG_NVSYNC | DRM_MODE_FLAG_NHSYNC,
++};
 +
-+title: AUO B116XAK01 eDP TFT LCD Panel
++static const struct panel_desc auo_b116xak01 = {
++	.modes = &auo_b116xak01_mode,
++	.num_modes = 1,
++	.bpc = 6,
++	.size = {
++		.width = 256,
++		.height = 144,
++	},
++	.delay = {
++		.hpd_absent_delay = 200,
++	},
++	.bus_format = MEDIA_BUS_FMT_RGB666_1X18,
++	.connector_type = DRM_MODE_CONNECTOR_eDP,
++};
 +
-+allOf:
-+  - $ref: panel-common.yaml#
-+
-+properties:
-+  compatible:
-+    enum:
-+      - auo,b116xa01
-+  port: true
-+
-+required:
-+  - compatible
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    panel {
-+        compatible = "auo,b116xa01";
-+        port {
-+            panel_in: endpoint {
-+                remote-endpoint = <&edp_out>;
-+            };
-+        };
-+    };
+ static const struct drm_display_mode auo_b133xtn01_mode = {
+ 	.clock = 69500,
+ 	.hdisplay = 1366,
+@@ -3125,6 +3154,9 @@ static const struct of_device_id platform_of_match[] = {
+ 	}, {
+ 		.compatible = "auo,b133htn01",
+ 		.data = &auo_b133htn01,
++	}, {
++		.compatible = "auo,b116xa01",
++		.data = &auo_b116xak01,
+ 	}, {
+ 		.compatible = "auo,b133xtn01",
+ 		.data = &auo_b133xtn01,
 -- 
 2.24.1
 
