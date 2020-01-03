@@ -2,188 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CC7D012FCC8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2020 20:02:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CDFC512FCE5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2020 20:16:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728353AbgACTCR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jan 2020 14:02:17 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:34889 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728279AbgACTCR (ORCPT
+        id S1728460AbgACTQD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jan 2020 14:16:03 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:42917 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728452AbgACTQD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jan 2020 14:02:17 -0500
-Received: by mail-ed1-f67.google.com with SMTP id f8so42425918edv.2;
-        Fri, 03 Jan 2020 11:02:15 -0800 (PST)
+        Fri, 3 Jan 2020 14:16:03 -0500
+Received: by mail-pg1-f196.google.com with SMTP id s64so23803189pgb.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2020 11:16:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TkjoiDoXf+Ju82Ph5GrtKx56lLId5gNQMBVsYU2UV2I=;
-        b=O2MUFtAD4ZE08qe5e8wUK40pSV3MWGSqQ9oCAPTvZsEdPCFIN0dnMBZamFXlmw6lEt
-         pjbp3ltsNqOVn7rnbJL3TqQGijOBPe5Jkq4gD5dRfySP0YItvvLFTf9mBhrabASlg47a
-         2Bm4XFI54uLMXNw/GcTGRethvJsUfjLSYEww68efsuRZlnlAi4KyEx1bqLE+478t/sdf
-         wzTGDoAFKcyin76PjFi53Ex/UhOtNaJMwvUOQ16KKmtS9KpIv3NpYuNdfBDbe41oMYaE
-         kqPu3OqyaIDoEPWR1htm4+anPvqidSSfXQOKV+wWLhqQYyWv1KVOrDaTpkowvcvxiUGt
-         1Azw==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=vZomX7k0gRVpj14/WdJAyZSo4OdRTfm/ogrPyU/9NuM=;
+        b=VmUoJ7cuQOj8yvosIWRMEu6d5NSTnv4p0HCrFcIu9fQ4l81Ey6q939zzYUJeJaZ64a
+         ZH8V3w/Bxs4NPF/ciAa/Idlx5QoLWz7IlUOexJ2fdFdHBiONrwSU/VYL5byEW+44CLfQ
+         SMfc1uIBdlW6N7rHmwH63GYVPdqwbGIdXyBTt5ll2vlVFjZw6dO7LIYME8drzz9PvEUf
+         Cr4DqbBrGxUqrRXNQYMHmTDa8yTAWLx+XW05Xb12ejiGIgLOCQ1KDNTsEubkkZQ4vg0n
+         HDrz4DuaHQxjGrYKBtm18XZDIWGtMELTBthS32VS8DHo3BsMjSYp/gr1AWuQYKhJ/JGx
+         7hcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TkjoiDoXf+Ju82Ph5GrtKx56lLId5gNQMBVsYU2UV2I=;
-        b=cnin5tzS9eyKuzbJ8skkjlrgqZw+ivLdIKJRqg05/FxntyRrxLxXoqz2WjyvQL01ck
-         oIItCqxZVJa129tMRzakM+ZJaIJJMh0pJxxTfX0v2iEBj74F3d1D1nbfohRfW5Yn0AUu
-         FBSL+eIy2MbjjHfPqe+Cv+hZthpEbc7guKg67JM2bWjEq2MUo213PAnACVaulrA54v0e
-         3S1KLrL3ozjhj4mC71/ZKUutdzNIg/7ZMHU1lL2O+CzGyt5GKHTsMrwsUM9kRh0LSOU5
-         SO0zGCWYRx6SOx5tZL8OKN6Me0nXvuQuAo4paGRUttP3ZFzCitCPR7iaLgjwXQMPz1LX
-         5UpA==
-X-Gm-Message-State: APjAAAWAeCSfnykhG6H6oEN7bK/8AhHVYtCa67/3K7BJ+lcSXdzTLY0p
-        yu2LJT/V0C3T7vbAoxDjGv/Zj07HCwPLOf/AHg4=
-X-Google-Smtp-Source: APXvYqxS55HXS3z8CIX9ctS+VVvu28guenRxGgfT7JZP5HxyppRusJag9NZUaCsJSd1/RAnJOLIyc/xzpyWSZQZVZhs=
-X-Received: by 2002:aa7:da03:: with SMTP id r3mr94494730eds.163.1578078134838;
- Fri, 03 Jan 2020 11:02:14 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vZomX7k0gRVpj14/WdJAyZSo4OdRTfm/ogrPyU/9NuM=;
+        b=VHAakutQlk5f+64r8W1GoHXxX+Cvk3qpwDJB8WIY0UGFG/uEQL0ibnoM7UYXcSC4Cd
+         CDUert8yQIr8wo5S+T2hFUngaGzRWTmvdfekXv23cbqtQY/E6UxzSTgiWEv2CtNmzXsq
+         u/yjCbG2tOvkw1iDh83qgFWTphjsEoFHZhs26irOVOKSNgZHard14a9+C6pLur+JhiU4
+         WOeq0ce3EQoZbiXcaI7FugrbwNXKq06z8h89+iNnF77zjirbPpU3SyN5lRpPx9bYWp4h
+         P/75/i+5LT0N7dJEKzDhbZh5TQGWVo1r/YtlTQbCWfskbOIjKeGIc1C4saJuCKUvMm3b
+         shKg==
+X-Gm-Message-State: APjAAAUe/CF8huoPgr3tCfcE0NCQ/2hV9jlkDPHByBTaVWyqW20LPoAU
+        KabDP03y4cboORX+n7/Sb49t4w==
+X-Google-Smtp-Source: APXvYqwbWrzgOHLfBKPcJOel52aFz7gJfvMHupIec6iWxtw+mfGglLXvkI30VeaYCSjb/tycYQe4Sg==
+X-Received: by 2002:a63:6c82:: with SMTP id h124mr97258222pgc.328.1578078962175;
+        Fri, 03 Jan 2020 11:16:02 -0800 (PST)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id 13sm67210755pfi.78.2020.01.03.11.16.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Jan 2020 11:16:01 -0800 (PST)
+Date:   Fri, 3 Jan 2020 11:15:59 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Niklas Cassel <nks@flawful.org>
+Cc:     sboyd@kernel.org, mturquette@baylibre.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v4] clk: qcom: apcs-msm8916: use clk_parent_data to
+ specify the parent
+Message-ID: <20200103191559.GV549437@yoga>
+References: <20200103111429.1347-1-nks@flawful.org>
 MIME-Version: 1.0
-References: <1577962933-13577-1-git-send-email-smasetty@codeaurora.org> <1577962933-13577-3-git-send-email-smasetty@codeaurora.org>
-In-Reply-To: <1577962933-13577-3-git-send-email-smasetty@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 3 Jan 2020 11:02:03 -0800
-Message-ID: <CAF6AEGvmrTmjyFsqX+DQNNgXxDw2uGYJv6bA0Y6OGn05m_0WFQ@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH v2 2/7] iommu/arm-smmu: Add domain attribute
- for QCOM system cache
-To:     Sharat Masetty <smasetty@codeaurora.org>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        saiprakash.ranjan@codeaurora.org,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Will Deacon <will@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        dri-devel@freedesktop.org,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200103111429.1347-1-nks@flawful.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 2, 2020 at 3:02 AM Sharat Masetty <smasetty@codeaurora.org> wrote:
->
-> From: Vivek Gautam <vivek.gautam@codeaurora.org>
->
-> Add iommu domain attribute for using system cache aka last level
-> cache on QCOM SoCs by client drivers like GPU to set right
-> attributes for caching the hardware pagetables into the system cache.
->
-> Signed-off-by: Vivek Gautam <vivek.gautam@codeaurora.org>
-> Co-developed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+On Fri 03 Jan 03:14 PST 2020, Niklas Cassel wrote:
+
+> From: Niklas Cassel <niklas.cassel@linaro.org>
+> 
+> Allow accessing the parent clock names required for the driver operation
+> by using the device tree 'clock-names' property, while falling back to
+> the previous method of using names in the global name space.
+> 
+> This permits extending the driver to other platforms without having to
+> modify its source code.
+> 
+> Co-developed-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+
+Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
 > ---
->  drivers/iommu/arm-smmu-qcom.c | 10 ++++++++++
->  drivers/iommu/arm-smmu.c      | 14 ++++++++++++++
->  drivers/iommu/arm-smmu.h      |  1 +
->  include/linux/iommu.h         |  1 +
->  4 files changed, 26 insertions(+)
->
-> diff --git a/drivers/iommu/arm-smmu-qcom.c b/drivers/iommu/arm-smmu-qcom.c
-> index 24c071c..d1d22df 100644
-> --- a/drivers/iommu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm-smmu-qcom.c
-> @@ -30,7 +30,17 @@ static int qcom_sdm845_smmu500_reset(struct arm_smmu_device *smmu)
->         return ret;
->  }
->
-> +static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
-> +                                 struct io_pgtable_cfg *pgtbl_cfg)
-> +{
-> +       if (smmu_domain->sys_cache)
-> +               pgtbl_cfg->coherent_walk = false;
-
-just curious, does coherent walk not work with sys-cache, or is it
-just that it is kind of pointless (given that, afaiu, the pagetables
-can be cached by the system cache)?
-
-> +
-> +       return 0;
-> +}
-> +
->  static const struct arm_smmu_impl qcom_smmu_impl = {
-> +       .init_context = qcom_smmu_init_context,
->         .reset = qcom_sdm845_smmu500_reset,
+> Changes since v3:
+> -Don't set dev->of_node explicitly, since the clock framework will now
+> automatically use the parent node pointer when needed.
+> 
+> Requires the following patch to the clock framework to land first:
+> https://patchwork.kernel.org/patch/11313639/
+> 
+>  drivers/clk/qcom/apcs-msm8916.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/apcs-msm8916.c b/drivers/clk/qcom/apcs-msm8916.c
+> index 46061b3d230e..cf69a97d0439 100644
+> --- a/drivers/clk/qcom/apcs-msm8916.c
+> +++ b/drivers/clk/qcom/apcs-msm8916.c
+> @@ -19,9 +19,9 @@
+>  
+>  static const u32 gpll0_a53cc_map[] = { 4, 5 };
+>  
+> -static const char * const gpll0_a53cc[] = {
+> -	"gpll0_vote",
+> -	"a53pll",
+> +static const struct clk_parent_data pdata[] = {
+> +	{ .fw_name = "aux", .name = "gpll0_vote", },
+> +	{ .fw_name = "pll", .name = "a53pll", },
 >  };
->
-> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-> index 4f7e0c0..055b548 100644
-> --- a/drivers/iommu/arm-smmu.c
-> +++ b/drivers/iommu/arm-smmu.c
-> @@ -1466,6 +1466,9 @@ static int arm_smmu_domain_get_attr(struct iommu_domain *domain,
->                 case DOMAIN_ATTR_NESTING:
->                         *(int *)data = (smmu_domain->stage == ARM_SMMU_DOMAIN_NESTED);
->                         return 0;
-> +               case DOMAIN_ATTR_QCOM_SYS_CACHE:
-> +                       *((int *)data) = smmu_domain->sys_cache;
-> +                       return 0;
->                 default:
->                         return -ENODEV;
->                 }
-> @@ -1506,6 +1509,17 @@ static int arm_smmu_domain_set_attr(struct iommu_domain *domain,
->                         else
->                                 smmu_domain->stage = ARM_SMMU_DOMAIN_S1;
->                         break;
-> +               case DOMAIN_ATTR_QCOM_SYS_CACHE:
-> +                       if (smmu_domain->smmu) {
-> +                               ret = -EPERM;
-> +                               goto out_unlock;
-> +                       }
-> +
-> +                       if (*((int *)data))
-> +                               smmu_domain->sys_cache = true;
-> +                       else
-> +                               smmu_domain->sys_cache = false;
-> +                       break;
->                 default:
->                         ret = -ENODEV;
->                 }
-> diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
-> index f57cdbe..8aeaaf0 100644
-> --- a/drivers/iommu/arm-smmu.h
-> +++ b/drivers/iommu/arm-smmu.h
-> @@ -322,6 +322,7 @@ struct arm_smmu_domain {
->         struct mutex                    init_mutex; /* Protects smmu pointer */
->         spinlock_t                      cb_lock; /* Serialises ATS1* ops and TLB syncs */
->         struct iommu_domain             domain;
-> +       bool                            sys_cache;
->  };
->
->
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index 0c60e75..bd61c60 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -127,6 +127,7 @@ enum iommu_attr {
->         DOMAIN_ATTR_FSL_PAMUV1,
->         DOMAIN_ATTR_NESTING,    /* two stages of translation */
->         DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE,
-> +       DOMAIN_ATTR_QCOM_SYS_CACHE,
-
-Given that IOMMU_QCOM_SYS_CACHE was renamed to IOMMU_SYS_CACHE_ONLY, I
-wonder if this domain attr should simply be DOMAIN_ATTR_SYS_CACHE?
-
-But that said, the function of this domain attr seems to simply be to
-disable coherent walk.. I wonder if naming the domain attr after what
-it does would make more sense?
-
-BR,
--R
-
-
->         DOMAIN_ATTR_MAX,
->  };
->
-> --
-> 1.9.1
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+>  
+>  /*
+> @@ -62,8 +62,8 @@ static int qcom_apcs_msm8916_clk_probe(struct platform_device *pdev)
+>  		return -ENOMEM;
+>  
+>  	init.name = "a53mux";
+> -	init.parent_names = gpll0_a53cc;
+> -	init.num_parents = ARRAY_SIZE(gpll0_a53cc);
+> +	init.parent_data = pdata;
+> +	init.num_parents = ARRAY_SIZE(pdata);
+>  	init.ops = &clk_regmap_mux_div_ops;
+>  	init.flags = CLK_SET_RATE_PARENT;
+>  
+> -- 
+> 2.24.1
+> 
