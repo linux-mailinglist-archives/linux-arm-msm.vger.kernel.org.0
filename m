@@ -2,88 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5987212FD52
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2020 20:58:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B5A2412FDA4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jan 2020 21:20:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728564AbgACT6U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jan 2020 14:58:20 -0500
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:35732 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728488AbgACT6U (ORCPT
+        id S1727868AbgACUT7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jan 2020 15:19:59 -0500
+Received: from mail-qv1-f66.google.com ([209.85.219.66]:39556 "EHLO
+        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727907AbgACUTq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jan 2020 14:58:20 -0500
-Received: by mail-ed1-f54.google.com with SMTP id f8so42536959edv.2;
-        Fri, 03 Jan 2020 11:58:19 -0800 (PST)
+        Fri, 3 Jan 2020 15:19:46 -0500
+Received: by mail-qv1-f66.google.com with SMTP id y8so16693089qvk.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jan 2020 12:19:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lElfBd/8jigO1KSCmDplgs5SeL89T17ANPHJDCQ3IOA=;
-        b=Coe0w+paNOOQSNE3/OF7/NyZkbuDuTiyGJaCeDoUv+GeyzNQPhIm58cgy9bk+qZHj1
-         oCnaRvLbS8kQ8y11xuOpVuaRY1+GBhFZ/cbtR3/VoLOh2Crv53tN7lc2yPjkWM3htBs4
-         3sf4oPhGAsdw37jeFw0b1YHfxilF8wK2I/0ZFqA7ZH3lz2VBVtYolZGnGJU3OoRmqP8o
-         4g5tpxdV5+amASC8oDIvLB8BPaIXsTEsUG0yZj2es4AUz5Xyo1qDHG+HUBFaeQPJoae5
-         9K83e5zWYJAbiWkX3DbbmmTWKiFznYDlfF6zx8MnrIBPXPeKM2j8Rx3PPX6SGihtBApN
-         E1XQ==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=40ACnQIUnpge54Cj+EODMXbGQ2AM0yGbootCDBdgIh0=;
+        b=AWCc/ylFmQ91zZEJrbKovcmODhKduqUVkKGxHK8uCtVvWppAnjCzAVhlqtuTB6Zv3H
+         fwGfadWPG5OWx3vtouAanI9rAb4+nCSTS9ougZHH94RmFVRXusGOhSeq6LcZbXUbpYke
+         LecHuReAxOHZIAlNr0puF8IN10taJseJbu/8dZmgE65qy44VHc90CsjCbMPz9YIW56uc
+         KAocddCq9fbTe+4eLEe4ukQAx3KuF/S8Bs/5ss0PU18bAsmodPObJCziaNGvW+fW97nj
+         vqPpR6NvW2UHqccwDYrcuioTdRRCTX8F5vGOe97A6Uj5iUQG4sbm5c76feOsNIPb/J8O
+         nOKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lElfBd/8jigO1KSCmDplgs5SeL89T17ANPHJDCQ3IOA=;
-        b=DqWiMhyEIfK/rHIge+DcpJUG6Gdxo4ypnrwesio+4ZG+cmj2Lr4nWlAOvrKJBCmG7p
-         LtDQSenkcEGUeasujg63kL67I9n1Fok2Dux08W3szuL0NsmUBr3iiYWdI5ClkIqGZ9+Q
-         5q0ClU2v3Ji3WFknX2ZdRrnvQag14tf0+xpXdWZuc/TYWQnR/xIaqA2CEnfTtbn8T0az
-         RWbn/i8OeprCi3755duP7EFcbk6eDJxVKRmJToYZodICBAzuKhmm93tuZQ99d6aVAmiW
-         TMTph+f4i6i4K5QOa/Zmn40lV9uR1tV4A8nIIuxUA1+WEysu9s4qmieLQH91Fagb/MNf
-         9DCg==
-X-Gm-Message-State: APjAAAXPpLg9/9PXmRWGI9yq324Cgcr0iwR0aG0swCyh/O3nxT7wsGtw
-        minEIkCyghcCqdoiuaWeEKN9hPLK2AiKND1geUk=
-X-Google-Smtp-Source: APXvYqyugADp3hO7h03oK2DaaWliYETiOggFR6uHjCw4XYSOsGVANeWDg8mecDKvovZmnz2SYVwWs6I2LeUmZU+WXP0=
-X-Received: by 2002:aa7:da03:: with SMTP id r3mr94729576eds.163.1578081498516;
- Fri, 03 Jan 2020 11:58:18 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=40ACnQIUnpge54Cj+EODMXbGQ2AM0yGbootCDBdgIh0=;
+        b=WsiluFvvFQa9FnFVnQFSYAZBqfFXtWEjBNULLDU0N4o5JD63SxOPv8XZ48bFyTvSaD
+         mTkNLuldVO3MU9Nzs179DPj+oUdOsoUvRcET6XhvnZrxE+Y5GpZ6M93w9fJrjzLxQhEp
+         qoBVY80JEDTYVc6DOqntofFqkMBK9aHDRk2UYmrGzRons6uoGq5LWhpxbXE7z1H1Gt8z
+         5T4Ffu8IqUH2fin8JiNNyY/+9llVPoE0D4pyMQTsRiqmeSqBasixw328iIX7J9/y5zx7
+         jWxGX4Z2W7bSlLlsHwS4Fdgmk9sMnB+EIxLp9NKU3cPnIR6HmaTYDfZ2W0b4Rav7Go21
+         5Ong==
+X-Gm-Message-State: APjAAAWtbUmf20N0jb/uu6SOUUSepNP7dltFdWIWtzViORrPSgeYLVuI
+        3UcFXxR7UcxqVfsbC1zeK1fB3MXfD2dj9BVzx8E=
+X-Google-Smtp-Source: APXvYqwTD0MzQRfSqMjBdpNUeZAJzfDvhrEGhXGCrMyvXGb//+N8M9ASxsqTbkQfP5NbaV7n6hKI5gEfY+hOjDS6Fyg=
+X-Received: by 2002:ad4:478b:: with SMTP id z11mr69635758qvy.185.1578082785331;
+ Fri, 03 Jan 2020 12:19:45 -0800 (PST)
 MIME-Version: 1.0
-References: <20200103183025.569201-1-robdclark@gmail.com> <20200103183025.569201-2-robdclark@gmail.com>
- <20200103193135.GA21515@ravnborg.org> <CAF6AEGtdFA7XzSq3w3N6_TRLWQY+zumU2mahbsPY=pc0r_x6fw@mail.gmail.com>
- <20200103195406.GA22623@ravnborg.org>
-In-Reply-To: <20200103195406.GA22623@ravnborg.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 3 Jan 2020 11:58:07 -0800
-Message-ID: <CAF6AEGvCNK8fQW3JvXk63ecpTU7Q-ixf4yJsYQyxwiV-4SUf0Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] drm/panel: Add support for AUO B116XAK01 panel
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
+Received: by 2002:ac8:4410:0:0:0:0:0 with HTTP; Fri, 3 Jan 2020 12:19:45 -0800 (PST)
+From:   "Rev.Dr Emmanuel Okoye CEO Ecobank-benin" 
+        <westernunion.benin982@gmail.com>
+Date:   Fri, 3 Jan 2020 21:19:45 +0100
+Message-ID: <CAP=nHBKxfmbdRg7q4-1jdSUL6+zok9agasMSrXV5CsEJEmZz3A@mail.gmail.com>
+Subject: I promise you must be happy today, God has uplifted you and your
+ family ok
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 3, 2020 at 11:54 AM Sam Ravnborg <sam@ravnborg.org> wrote:
->
-> Hi Rob.
->
-> > > Please fix and resend.
-> > >
-> > > I am in general holding back on patches to panel-simple.
-> > > I hope we can reach a decision for the way forward with the bindings
-> > > files sometimes next week.
-> >
-> > I've fixed the sort-order and the couple things you've pointed out in
-> > the bindings.  Not sure if you want me to resend immediately or
-> > hang-tight until the bindings discussion is resolved?
-> Could we give it until Wednesday - if we do not resolve the
-> binding discussion I will process panel patches in the weekend or maybe
-> a day before.
+Dear Friend
 
+i hope all is well with you,if so, glory be to God almighty. I'm very
+happy to inform you, about my success in getting payment funds under
+the cooperation of a new partner from United States of
+America.Presently I am in uk for investment projects with my own share
+of the total sum. I didn't forget your past efforts. IMF finally
+approved your compensation payment funds this morning by prepaid (ATM)
+Debit card of US$12,500.000.00Million Dollars, Since you not received
+this payment yet, I was not certified
+but it is not your fault and not my fault, I hold nothing against
+you.than bank official whom has been detaining the transfer in the
+bank, trying to claim your funds by themselves.
 
-sounds good
+Therefore, in appreciation of your effort I have raised an
+International prepaid (ATM) Debit card of US$12,500.000.00 in your
+favor as compensation to you.
 
-BR,
--R
+Now, i want you to contact my Diplomatic Agent, His name is Mike Benz
+on His  e-mail Address (mikebenz550@aol.com
+
+ask Him to send the Prepaid (ATM) Debit card to you. Bear in mind that
+the money is in Prepaid (ATM) Debit card, not cash, so you need to
+send to him,
+your full name
+address  where the prepaid (ATM) Debit card will be delivered to you,
+including your cell phone number. Finally, I left explicit
+instructions with him, on how to send the (ATM CARD) to you.
+
+The Prepaid (ATM) Debit card, will be send to you through my
+Diplomatic Agent Mr. Mike Benz immediately you contact him. So contact
+my Diplomatic Agent Mr. Mike Benz immediately you receive this letter.
+Below is his contact information:
+
+NAME : MIKE BENZ
+EMAIL ADDRESS: mikebenz550@aol.com
+Text Him, (256) 284-4886
+
+Request for Delivery of the Prepaid (ATM) Debit card  to you today.
+Note, please I have paid for the whole service fees for you, so the
+only money you will send to my Diplomatic Agent Mr. Mike Benz is
+$50.00 for your prepaid (ATM) Debit card DELIVERY FEE to your address
+ok.
+Let me know once you receive this Card at your address.
+Best regards,
+Rev.Dr, George Adadar
