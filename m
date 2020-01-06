@@ -2,150 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AC95C130F06
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2020 09:59:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1091B131029
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2020 11:18:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726212AbgAFI65 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jan 2020 03:58:57 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:35948 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726155AbgAFI65 (ORCPT
+        id S1726080AbgAFKSX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jan 2020 05:18:23 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:26875 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726212AbgAFKSV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jan 2020 03:58:57 -0500
-Received: by mail-pl1-f196.google.com with SMTP id a6so20888063plm.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2020 00:58:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=X3dOelacYxn9KIq2c0lVVrTdMISMt6ePdc4LIZBttsE=;
-        b=VeurVa6W0lVai4NQoX/XBCveJbHKCydpGkT0MM87ek4A2/ON92GZIhFYR7kRjGlgP3
-         mI9lSzxhASsRXnhVBp5zcowqJuifnn8wHhtygkGWK56rKFMcAEwlSp+lMiD6yv9isTsC
-         j0h1VxUfHqGkQc3TkMBrNK0gM+pYAqlwvGcEhFC5r5L5HVyjC9xFDyewXcE/xdw+3HrM
-         xsFC/1ZvV7tKlL6tmawIuIXIHj4L0j3zrIluDykAZhSxG/21FSWmhTRCI+6kT2JjMjpC
-         adS2xmI21vrTbvLvojEJXp50IcZCfp3PAhw5fzJlTkjs7or4Q7ey0sOiOipbzlRqyJI5
-         bN8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=X3dOelacYxn9KIq2c0lVVrTdMISMt6ePdc4LIZBttsE=;
-        b=OHVPt97sd1T7+bLKY0SG+387XO6TNuMPRASc/LF0O51aB4lZ70GiaNpEZWQtXQUblC
-         5j6p5Ovfn8sFkOxAXVYaYyJvYxd96T4t42gGYHhz+giMS1ox5A9MoHqZnKFmkZ0j7Z8t
-         GjUq7edrR3OLcgxNPCuWX9bw42yCvTLcx8LcWBDVu5oG4ZDYHrRMVrOz1ODk3Xy7vFZd
-         Id/cvb5gLdeup8Bq0sB5DDYlhS5I8HNbmHYXW/PsfcoF50oRJsK9241d7YnJe3p8DOxs
-         9Qv9ndf2yNJrOfjcSM2QaPcbkECZ19MVTFus6EZECaKrKKCGu7y4FrvUG8mEqqLGRH3u
-         F7pQ==
-X-Gm-Message-State: APjAAAXupMpvJZvJ9kBKYdWnxFyzUbRbukEtrt0AiIE4KGB/gb0dIW10
-        NqATffAP4FbCZukWhhueT9slxA==
-X-Google-Smtp-Source: APXvYqxYFVoMAFYm4ehjGUNJYrdDMBfNyD7GFNI22SJzewWug8QgdaScgHVBrSz/ICU42udSqm4y3w==
-X-Received: by 2002:a17:902:6b8c:: with SMTP id p12mr88899809plk.290.1578301136221;
-        Mon, 06 Jan 2020 00:58:56 -0800 (PST)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id z11sm69219515pfk.96.2020.01.06.00.58.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2020 00:58:55 -0800 (PST)
-Date:   Mon, 6 Jan 2020 00:58:53 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: apq8096-db820c: Fix VDD core voltage
-Message-ID: <20200106085853.GT3755841@builder>
-References: <1577785957-31291-1-git-send-email-loic.poulain@linaro.org>
+        Mon, 6 Jan 2020 05:18:21 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1578305901; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=1OHQW4/xD2XUS1jStNjnGNpG1EuF7f1TD2E/Qky6pv4=; b=sjpMTO63FfJc3lLcwYKnPyLg+CcJfufiKwMXtyzAJtXHfGSYA0adseRkGPdMxeFppEKACtKP
+ UEv+6XYY3N2AH6Qil107Wh/064gQBrkkjkPd6i44Ob1zGwtCUlFvGB6ifTF9/CWcCM5y/8GX
+ grk/Y9XVNK33HOmxa8BFxBWt58I=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e130965.7efd9b990848-smtp-out-n02;
+ Mon, 06 Jan 2020 10:18:13 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EA5E5C447A1; Mon,  6 Jan 2020 10:18:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.206.28.9] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 31D34C433CB;
+        Mon,  6 Jan 2020 10:18:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 31D34C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+Subject: Re: [PATCH v1 1/2] clk: qcom: rpmh: skip undefined clocks when
+ registering
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1577790048-18263-1-git-send-email-tdas@codeaurora.org>
+ <1577790048-18263-2-git-send-email-tdas@codeaurora.org>
+ <20200102005700.1EAAE20672@mail.kernel.org>
+From:   Taniya Das <tdas@codeaurora.org>
+Message-ID: <806299af-38fb-05e4-7fd5-9e2344a53f8d@codeaurora.org>
+Date:   Mon, 6 Jan 2020 15:48:06 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1577785957-31291-1-git-send-email-loic.poulain@linaro.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <20200102005700.1EAAE20672@mail.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 31 Dec 01:52 PST 2019, Loic Poulain wrote:
+Hello Stephen,
 
-> APQ8096 has its VDD APC (Power for quad Kryo applications
-> microprocessors) powered by PM8996 PMIC S9, S10, S11 tri-phase
-> regulators (gang). The bootloader may have configured these
-> regulators with non sustainable default values, leading to sporadic
-> hangs under CPU stress tests (cpufreq-becnh). Ideally we should enable
-> voltage scaling along with frequency scaling, but for now just set the
-> regulator gang value to a sane voltage, capable of supporting highest
-> frequencies (turbo).
+Thanks for your review comments.
+
+On 1/2/2020 6:26 AM, Stephen Boyd wrote:
+> Quoting Taniya Das (2019-12-31 03:00:47)
+>> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+>> index 7ed313a..05cbe6f 100644
+>> --- a/drivers/clk/qcom/clk-rpmh.c
+>> +++ b/drivers/clk/qcom/clk-rpmh.c
+>> @@ -462,7 +464,8 @@ static int clk_rpmh_probe(struct platform_device *pdev)
+>>
+>>                  ret = devm_clk_hw_register(&pdev->dev, hw_clks[i]);
+>>                  if (ret) {
+>> -                       dev_err(&pdev->dev, "failed to register %s\n", name);
+>> +                       dev_err(&pdev->dev, "failed to register %s\n",
+>> +                                                       hw_clks[i]->init->name);
+> 
+> After register clk_hw::init is NULL. This will probably oops. It would
+> be better to save off the name before registering.
 > 
 
-I wasn't able to boot my db820c with the previous attempts to do opp
-based voltage scaling, but this seems to work (booted twice
-successfully).
+Will take care in the next patch series.
 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 24 ++++++++++++++++++++++++
->  1 file changed, 24 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-> index dba3488..8cde693 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-> @@ -493,6 +493,11 @@
->  				core-vcc-supply = <&pm8994_s4>;
->  			};
->  		};
-> +
-> +		saw3: syscon@9A10000 {
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
 
-This node should live in msm8996.dtsi.
-
-> +			compatible = "syscon";
-> +			reg = <0x9A10000 0x1000>;
-
-Please pad address to 8 digits, make 'A' lowercase and sort it among the
-other nodes by address.
-
-> +		};
->  	};
->  
->  
-> @@ -681,6 +686,25 @@
->  			};
->  		};
->  	};
-> +
-> +	pmic@1 {
-> +		spm-regulators {
-
-This node represents the SPMI regulators, although the ganging relates
-to the SPM. Please define an "empty":
-
-pm8994_spmi_regulators: regulators {
-	compatible = "qcom,pm8994-regulators";
-};
-
-In pm8994.dtsi, then add the rest here by extending
-&pm8994_spmi_regulators in db820c.dtsi (sorted by label name)
-
-Regards,
-Bjorn
-
-> +			compatible = "qcom,pm8994-regulators";
-> +			qcom,saw-reg = <&saw3>;
-> +			s9 {
-> +				qcom,saw-slave;
-> +			};
-> +			s10 {
-> +				qcom,saw-slave;
-> +			};
-> +			s11 {
-> +				qcom,saw-leader;
-> +				regulator-always-on;
-> +				regulator-min-microvolt = <1230000>;
-> +				regulator-max-microvolt = <1230000>;
-> +			};
-> +		};
-> +	};
->  };
->  
->  &sound {
-> -- 
-> 2.7.4
-> 
+--
