@@ -2,93 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B59C5130CD8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2020 06:02:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AC056130CE6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2020 06:14:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726618AbgAFFCr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jan 2020 00:02:47 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:56258 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726303AbgAFFCr (ORCPT
+        id S1725887AbgAFFOc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jan 2020 00:14:32 -0500
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:32358 "EHLO
+        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725446AbgAFFOc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jan 2020 00:02:47 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1578286967; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: To:
- Subject: Sender; bh=CX/VHEJpV4no3LnvxpQFy1wS7PVPnmsZ8jU3trASlSQ=; b=SP23DtN0iYSWsqut2n4R/zTjgVabIrMGzrzUwWQ4EXRQw4pbFqPj/UNvEK0xXZCVLZYCx5hU
- 3kH1ml9vD2IxPafDkfsqFH1TFhhAwqQh6bwlvgJXKQOpq+npmGCW6pBf+pLlJf+VFE34r9DN
- e/t7Z293ZMpvQc+GwK3iH5nRX7o=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e12bf74.7f9ba3b66998-smtp-out-n03;
- Mon, 06 Jan 2020 05:02:44 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CF8D8C433A2; Mon,  6 Jan 2020 05:02:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.201.2.161] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sricharan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7E84CC43383;
-        Mon,  6 Jan 2020 05:02:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7E84CC43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sricharan@codeaurora.org
-Subject: Re: [PATCH 0/2] Add Global clock controller support for IPQ6018
-To:     Stephen Boyd <sboyd@kernel.org>, agross@kernel.org,
-        devicetree@vger.kernel.org, linus.walleij@linaro.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-soc@vger.kernel.org, robh+dt@kernel.org,
-        sivaprak@codeaurora.org
-References: <1578050744-3761-1-git-send-email-sricharan@codeaurora.org>
- <20200105065919.4A548207FD@mail.kernel.org>
-From:   Sricharan R <sricharan@codeaurora.org>
-Message-ID: <4b4b9f0b-5473-aea8-9ebb-7a2c4fecea07@codeaurora.org>
-Date:   Mon, 6 Jan 2020 10:32:37 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
-MIME-Version: 1.0
-In-Reply-To: <20200105065919.4A548207FD@mail.kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Mon, 6 Jan 2020 00:14:32 -0500
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 Jan 2020 10:44:28 +0530
+Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 06 Jan 2020 10:44:04 +0530
+Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
+        id AEB2827C8; Mon,  6 Jan 2020 10:44:03 +0530 (IST)
+From:   Harigovindan P <harigovi@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Harigovindan P <harigovi@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        abhinavk@codeaurora.org, jsanka@codeaurora.org,
+        chandanu@codeaurora.org, nganji@codeaurora.org
+Subject: [v2] drm/msm: add support for 2.4.1 DSI version for sc7180 soc
+Date:   Mon,  6 Jan 2020 10:43:49 +0530
+Message-Id: <1578287629-26709-1-git-send-email-harigovi@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
+Modify commit text to indicate DSI version and SOC detail
 
-On 1/5/2020 12:29 PM, Stephen Boyd wrote:
-> Quoting Sricharan R (2020-01-03 03:25:42)
->> The IPQ6018 is Qualcomm\u2019s 802.11ax SoC for Routers,
->> Gateways and Access Points.
->>
->> This series adds Global clock controller support for ipq6018.
-> 
-> Can you fold the fixes in?
-> 
+Changes in v1:
+	-Modify commit text to indicate DSI version and SOC detail(Jeffrey Hugo).
+	-Splitting visionox panel driver code out into a
+	 different patch(set), since panel drivers are merged into
+	 drm-next via a different tree(Rob Clark).
+Changes in v2:
+	-Update commit text accordingly(Matthias Kaehlcke).
 
- Sure, will do and resend.
+Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+---
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c | 21 +++++++++++++++++++++
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h |  1 +
+ 2 files changed, 22 insertions(+)
 
->>
->> The patches were a part of https://patchwork.kernel.org/cover/11303075/,
->> now moved it outside based on Stephen's suggestion.
-> 
-> Thanks, but I still got the other pinctrl patches :(
-> 
-
- ho, will remove you from CC on those.
-
-Regards,
- Sricharan
-
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+index b7b7c1a..7b967dd 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+@@ -133,6 +133,10 @@ static const char * const dsi_sdm845_bus_clk_names[] = {
+ 	"iface", "bus",
+ };
+ 
++static const char * const dsi_sc7180_bus_clk_names[] = {
++	"iface", "bus",
++};
++
+ static const struct msm_dsi_config sdm845_dsi_cfg = {
+ 	.io_offset = DSI_6G_REG_SHIFT,
+ 	.reg_cfg = {
+@@ -147,6 +151,20 @@ static const struct msm_dsi_config sdm845_dsi_cfg = {
+ 	.num_dsi = 2,
+ };
+ 
++static const struct msm_dsi_config sc7180_dsi_cfg = {
++	.io_offset = DSI_6G_REG_SHIFT,
++	.reg_cfg = {
++		.num = 1,
++		.regs = {
++			{"vdda", 21800, 4 },	/* 1.2 V */
++		},
++	},
++	.bus_clk_names = dsi_sc7180_bus_clk_names,
++	.num_bus_clks = ARRAY_SIZE(dsi_sc7180_bus_clk_names),
++	.io_start = { 0xae94000 },
++	.num_dsi = 1,
++};
++
+ const static struct msm_dsi_host_cfg_ops msm_dsi_v2_host_ops = {
+ 	.link_clk_enable = dsi_link_clk_enable_v2,
+ 	.link_clk_disable = dsi_link_clk_disable_v2,
+@@ -201,6 +219,9 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
+ 		&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+ 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_1,
+ 		&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
++	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_4_1,
++		&sc7180_dsi_cfg, &msm_dsi_6g_v2_host_ops},
++
+ };
+ 
+ const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor)
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+index e2b7a7d..9919536 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
++++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+@@ -19,6 +19,7 @@
+ #define MSM_DSI_6G_VER_MINOR_V1_4_1	0x10040001
+ #define MSM_DSI_6G_VER_MINOR_V2_2_0	0x20000000
+ #define MSM_DSI_6G_VER_MINOR_V2_2_1	0x20020001
++#define MSM_DSI_6G_VER_MINOR_V2_4_1	0x20040001
+ 
+ #define MSM_DSI_V2_VER_MINOR_8064	0x0
+ 
 -- 
-"QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+2.7.4
+
