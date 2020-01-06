@@ -2,68 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FC04130DD1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2020 08:08:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DFBC4130E0A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2020 08:35:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726912AbgAFHIu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jan 2020 02:08:50 -0500
-Received: from mail.kernel.org ([198.145.29.99]:42388 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726863AbgAFHIu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jan 2020 02:08:50 -0500
-Received: from localhost.localdomain (unknown [117.99.94.5])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B35DF21734;
-        Mon,  6 Jan 2020 07:08:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1578294529;
-        bh=44oiUtfcaubKc2dXyAO0YR8fIfToGP2lW2jZ1pz+o68=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=BSrfk4iPsNmCJT3YIROL/luxFKd7SAUeMLbVSzocX5TSDn8WUNgxpNdheISPfJf12
-         lwpo8Dei+zrHohg6kgYDwzWLPFqaVlfEEVKIiAiXSFxUpi/RcqY8eoB/KVIRWCQSSK
-         CWzwRVlNud/O0aHeh+acGAz3LVVxfPDv0ov+9V3c=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        id S1726545AbgAFHfR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jan 2020 02:35:17 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:38257 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726133AbgAFHfQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Jan 2020 02:35:16 -0500
+Received: by mail-pl1-f196.google.com with SMTP id f20so21542215plj.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Jan 2020 23:35:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=oVNk6bhyLjt8r84RksFdfisLfEAXMaIvQk56gnsbeYM=;
+        b=oRxC4wdTKGpvF22k3rrG7CtB+fTVW4M7e7LQv0Gz4powEO8VJJEG2Hi57iQ+ngSTq2
+         F4DQ8qa0+yXomK2s5y4/PvtmmVG2xYM16fFVZ+PTn2kZxu1BFrL7w43PmbMrzSJ/j3GK
+         7/nr6gIVq9WN5x0MYiELyJwioVCadEkM3rb0Gj48UzRBkjDO7uMjxZMkSZitDBUAPx7V
+         fWAoDxY2meiz1L1TiBJQ3nsvlFkC9YBvhfT/xO1Hc1wmzgAEvLPiFJQGTdFLaLstcJlR
+         65TLWnaWfx3fVuHWLZmy3qFTawpurhUtj7z8aOIW7x/zCZQ1Ks6HaBnJ1IW8FSG8iYIr
+         7vKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=oVNk6bhyLjt8r84RksFdfisLfEAXMaIvQk56gnsbeYM=;
+        b=X7b7nZ77go5D4lAs+eYuCp7XDhn0opiYDu6fHuXibT4gSAfgdipXuFRG/d1pZVDqDl
+         +s4ZAvVguYAq+n+L84Gx0Ruc0y7HD87dYUOXU+o6bQf3Jf6obXTlYzn/znk8R6CI9Lt3
+         GrbHAH1l32cnxvGJo5P1COD8222YgvUaBp3u/6QcE5aM9sqguXQIteFiR+xfWKxwpwVw
+         eslFvPe6S8fYsPqO2/FWtAd8UkYg0k+Q+6nwPv0mnK+zMmwLZX+aGX9NiUH42t52VDif
+         EIOh7AD2D1htTohWyv6RcJWfxh0QFnspMtZLyS/dU2Y6H7KAFqhPXArBhnKAl8k56cNz
+         9EdA==
+X-Gm-Message-State: APjAAAUWZaCNiAE3SYRkT5BevUqbP265seDmQlW47/syN1wR98hNwgba
+        6Hvcl8ZkuuFz2N9+MvX7IMhgUw==
+X-Google-Smtp-Source: APXvYqy+OyNfwdMuDxkpln91vEZljy6Q/k5GoGhEatSC0Z8NBvgn3DcdncHFQbIusclWFMlscvWPGg==
+X-Received: by 2002:a17:902:6a8c:: with SMTP id n12mr104671873plk.152.1578296116059;
+        Sun, 05 Jan 2020 23:35:16 -0800 (PST)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id a195sm77510496pfa.120.2020.01.05.23.35.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 05 Jan 2020 23:35:15 -0800 (PST)
+Date:   Sun, 5 Jan 2020 23:35:13 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Can Guo <cang@codeaurora.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: sdm845: add the ufs reset
-Date:   Mon,  6 Jan 2020 12:38:26 +0530
-Message-Id: <20200106070826.147064-4-vkoul@kernel.org>
-X-Mailer: git-send-email 2.24.1
-In-Reply-To: <20200106070826.147064-1-vkoul@kernel.org>
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: UFS updates
+Message-ID: <20200106073513.GS3755841@builder>
 References: <20200106070826.147064-1-vkoul@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200106070826.147064-1-vkoul@kernel.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the core UFS reset for sdm845
+On Sun 05 Jan 23:08 PST 2020, Vinod Koul wrote:
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+> We recently saw regression on UFS on SM8150 and few other boards and that
+> was resolved by adding timeout and fixing the UFS phy reset sequence. That
+> patches are in linux-next now.
+> 
+> During this we found sm8150 lacks gpio reset for ufs, so add that and fix
+> the ufs phy register size.
+> Also add the sdm845 ufs reset.
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index ddb1f23c936f..0c233afd7a5e 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -1374,6 +1374,8 @@ ufs_mem_hc: ufshc@1d84000 {
- 			lanes-per-direction = <2>;
- 			power-domains = <&gcc UFS_PHY_GDSC>;
- 			#reset-cells = <1>;
-+			resets = <&gcc GCC_UFS_PHY_BCR>;
-+			reset-names = "rst";
- 
- 			iommus = <&apps_smmu 0x100 0xf>;
- 
--- 
-2.24.1
+Thanks Vinod, boot tested and merged.
 
+> Vinod Koul (3):
+>   arm64: dts: qcom: sm8150-mtp: Add UFS gpio reset
+>   arm64: dts: qcom: sm8150: Fix UFS phy register size
+>   arm64: dts: qcom: sdm845: add the ufs reset
+> 
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi    | 2 ++
+>  arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 3 +++
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi    | 2 +-
+>  3 files changed, 6 insertions(+), 1 deletion(-)
+> 
+> -- 
+> 2.24.1
+> 
