@@ -2,116 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 45B5B1316CB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2020 18:29:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 228041316D7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2020 18:31:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726696AbgAFR3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jan 2020 12:29:16 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:33209 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726690AbgAFR3P (ORCPT
+        id S1726569AbgAFRb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jan 2020 12:31:58 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:34764 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726448AbgAFRb6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jan 2020 12:29:15 -0500
-Received: by mail-ed1-f66.google.com with SMTP id r21so48042485edq.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2020 09:29:14 -0800 (PST)
+        Mon, 6 Jan 2020 12:31:58 -0500
+Received: by mail-lj1-f193.google.com with SMTP id z22so46935412ljg.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2020 09:31:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=xILTpET5HvTSzruyix3vfVm6CvfCGp/jihwvwllbC3w=;
-        b=HlJEyMb8VUi7sQRbOTe70KWZFvO4offX7v6+PJlsTms05KH/5Zk2AcWBD9QwLXKqGT
-         ieSHoimZJohktzModRyY8OAzatcq9yauRfiGnkz32G9Ipx/4A49q5YqcD5aPva03h2Gw
-         iG/yDXnl2eWu9nK2nKVrfDj721JJZDwkforMU2Jn8MknDcBd+czSHnh1eS8CymkNkqAV
-         r9k3nOJs2+i89oIxZFd9w2Yqh4Va+CZT2PGBQCWYuAyQmw47boYD9S7MyfCSZNt3wfn9
-         tcKDGcFrzCrm9o/daxrbRT35fhFe4Ez0ffBC1AeUnDlIeJp8mZKfYprbwwzxEAAyBLh/
-         A8Aw==
+        d=lixom-net.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=xFu7eCg3yS+RsR9D/Z3sZGznS8kv1kY8aO9qxzERxms=;
+        b=Em55WpmAzW3ZOnLXJfcLJha9SqS5Qw3j3/OKYBG0xj5al9+1IAuNNmcweHm4UeqB4g
+         5DdRMU7eajNI33LhOrK08iJbl3aNfx8ukg77VVjxk5Z8dDS2FzqUnynl5p+bsRXi8L4D
+         YHgoqi2NhzxYuP9DumZYPhMr6OOJoue43ZaT7kMyHXq5u60RGafl7MkvGizstBg7tuFo
+         awx/t6d2FAYUIHmY8OFcAusvXq9tnxHxYc5vsasdpcW1XBAIrFqXi3G/FctOP14SmcOz
+         4dtnis7T7rCG8YC0pCwLSoSSXEStyBiIL5kJmtsBgLDJ+ETxsWYYrPzm77b5NXbzqril
+         B7IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xILTpET5HvTSzruyix3vfVm6CvfCGp/jihwvwllbC3w=;
-        b=P4CgD0q6rtlpnf5JZCLkrfymVXVkEFttO2Iyp8VzdpuH7nuwAZPUHuIEhB0BIisIrv
-         6JrqKN5QoKGLAtBti1VWq+ief3WD03wzEl6zqKlu1DWiIYxA2Hf0Zs4r0jRgfKsxO8ag
-         haFl5HUKhK9MWCv1Uy2GNXacV5OldtMwhpbODHR651iIJERAvptLFW4mW2COAb4ktRQU
-         tKW1+iPvsTyTFzJPpo9RMXfQPxJyBMijsDkgG28066UCMUaoJZknf1ugdovClu1JNpN4
-         EIfwN3B33IWuGaxkkcP3KVHOZAGe5RPMUjfIPI+d5D4yghypGaypAddi8ypWBIQIvlGV
-         oI0A==
-X-Gm-Message-State: APjAAAWRqscqKkBNP6+miAus/ekBx3/LNVART4qXI3w3IQxhL1757EWR
-        O62Y87J0OFZ4LkejZ4lm5Xy87w==
-X-Google-Smtp-Source: APXvYqxEzJZM06OUQohBMr1QHRp1MDY9Ku71gw8Iw1kMg/pbAp8k7JloMdp2qZLjR6txq6yNFFdkFQ==
-X-Received: by 2002:a17:906:b301:: with SMTP id n1mr108850634ejz.285.1578331754162;
-        Mon, 06 Jan 2020 09:29:14 -0800 (PST)
-Received: from [192.168.27.135] ([37.157.136.193])
-        by smtp.googlemail.com with ESMTPSA id e24sm7403328edy.93.2020.01.06.09.29.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jan 2020 09:29:13 -0800 (PST)
-Subject: Re: [V2, 3/3] arm64: dts: sc7180: Add interconnect provider DT nodes
-To:     Odelu Kukatla <okukatla@codeaurora.org>, daidavid1@codeaurora.org,
-        bjorn.andersson@linaro.org, evgreen@google.com,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=xFu7eCg3yS+RsR9D/Z3sZGznS8kv1kY8aO9qxzERxms=;
+        b=Ftpzu2PwXJiHSE8Aw7D12Jhi4ds1TWFcUMK0+XXrI4rxjNziuEfe677iEXO8Swuy2m
+         B6Jmbq/+h13oMIYDqB2FVsBi/MnLKsmxnNVcEw6kognUrFd/K9cxm9P53eLGRv/Srp8b
+         +EGhf3qfwUT5xGZlzJwDNe0yP8MmkCrKmCWIQ0Rdicq54G8Awjkx4aB6F5wXr+QPVMXz
+         5N/BHgFLbePnpWxtLGFq3oddPCq1yTr/o2zehrsm1l5/juUmSyCKb1wOV4UG2dZYtLTf
+         D7JmO8eQ4WgyeykMfB9ncSxxk3Z1ipluBy4szB0rBPquUb0TC46yDbmPt7YFz/RSR2xP
+         XS8Q==
+X-Gm-Message-State: APjAAAWQJm3mPjSXiNmteKPG1bQzTDtBuQzKRJ7MnMl/mg89pavax+kd
+        hXwb4hTJ/yIcTN6zRIm+1ga9hg==
+X-Google-Smtp-Source: APXvYqyj67w8AuhfPdbkEgB1bCmOYwqDVq9nc73PWsbef+neE5Y0RW1nE8a6Mkhduwqz6oxuzAIgfg==
+X-Received: by 2002:a2e:809a:: with SMTP id i26mr59271167ljg.108.1578331916456;
+        Mon, 06 Jan 2020 09:31:56 -0800 (PST)
+Received: from localhost (h85-30-9-151.cust.a3fiber.se. [85.30.9.151])
+        by smtp.gmail.com with ESMTPSA id s1sm23576228ljc.3.2020.01.06.09.31.55
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 06 Jan 2020 09:31:55 -0800 (PST)
+Date:   Mon, 6 Jan 2020 09:26:08 -0800
+From:   Olof Johansson <olof@lixom.net>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     arm@kernel.org, soc@kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Arnd Bergmann <arnd@arndb.de>,
+        Kevin Hilman <khilman@kernel.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     sboyd@kernel.org, ilina@codeaurora.org, seansw@qti.qualcomm.com,
-        elder@linaro.org, linux-pm@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-References: <1577782737-32068-1-git-send-email-okukatla@codeaurora.org>
- <1577782737-32068-4-git-send-email-okukatla@codeaurora.org>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Message-ID: <f144cc82-d4d9-b841-0cdf-41202e11b979@linaro.org>
-Date:   Mon, 6 Jan 2020 19:29:11 +0200
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [GIT PULL] cpuidle/psci updates for v5.6
+Message-ID: <20200106172608.63qhvwr5b7jsmxmg@localhost>
+References: <20200102160820.3572-1-ulf.hansson@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <1577782737-32068-4-git-send-email-okukatla@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200102160820.3572-1-ulf.hansson@linaro.org>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31.12.19 г. 10:58 ч., Odelu Kukatla wrote:
-> Add the DT nodes for the network-on-chip interconnect buses found
-> on sc7180-based platforms.
-> ---
->   arch/arm64/boot/dts/qcom/sc7180.dtsi | 96 ++++++++++++++++++++++++++++++++++++
->   1 file changed, 96 insertions(+)
+Hi,
+
+On Thu, Jan 02, 2020 at 05:08:20PM +0100, Ulf Hansson wrote:
+> Hi SoC maintainers,
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 3676bfd..077b1e5 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -8,6 +8,7 @@
->   #include <dt-bindings/clock/qcom,gcc-sc7180.h>
->   #include <dt-bindings/clock/qcom,rpmh.h>
->   #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/interconnect/qcom,sc7180.h>
+> Here's a PR with updates for v5.6 for cpuidle/psci for ARM/ARM64.
+> 
+> The changes are somewhat sprinkled over a couple of different directories and
+> there is also dts update for MSM8916. The main changes are in drivers/cpuidle/,
+> which have been acked-by Rafael [1] and Sudeep.
+> 
+> If you have any further questions, please just tell.
 
-This should be moved one line up if we want to keep the headers sorted.
+What was the reason to bring in a dts change in this branch? Bindings should be
+stable such that old DT contents still works even if drivers are updated to
+support newer attributes, etc.
 
->   #include <dt-bindings/phy/phy-qcom-qusb2.h>
->   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->   
-> @@ -1286,6 +1287,10 @@
->   				clock-names = "xo";
->   				#clock-cells = <1>;
->   			};
-> +
-> +			apps_bcm_voter: bcm_voter {
-> +				compatible = "qcom,sc7180-bcm-voter";
-> +			};
->   		};
->   
->   		cpufreq_hw: cpufreq@18323000 {
-> @@ -1298,6 +1303,97 @@
->   
->   			#freq-domain-cells = <1>;
->   		};
-> + > +		config_noc: interconnect@1500000 {
 
-All DT nodes in this file are ordered by their address. Please move these up
-to keep it consistent.
 
-Thanks,
-Georgi
+-Olof
