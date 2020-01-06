@@ -2,90 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C8D41131A71
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2020 22:31:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 77509131AD6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jan 2020 22:57:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726760AbgAFVbc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jan 2020 16:31:32 -0500
-Received: from mail.kernel.org ([198.145.29.99]:45188 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726739AbgAFVbc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jan 2020 16:31:32 -0500
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+        id S1726742AbgAFV55 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jan 2020 16:57:57 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:58948 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726721AbgAFV54 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Jan 2020 16:57:56 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1578347876; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=Dh6uBBQOO4o59nsJrAsOkHICiEkRHSqYa9UZMQn8AGc=; b=Qs08K3nxggj3VQcwRFI8UriNrJXpvjdeCxgdi1Nrla28KM9Hr1i1oBeqFaD7NSzHqO4ncqyG
+ kkszK4sHnmaO3DBTei1bdSlkMvl4X+irqmYZf1AF++m+ft17qmXNaroUky96J3938/sk+IRW
+ Jxmy7uESRv00w1E1qEbsFjpQIS8=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e13ad62.7f4d73e86768-smtp-out-n03;
+ Mon, 06 Jan 2020 21:57:54 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 76AB4C447A4; Mon,  6 Jan 2020 21:57:54 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C4CAE2146E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jan 2020 21:31:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1578346291;
-        bh=u/K/CvhbIvCmpp8TNIBjsqm0nrF4iQWTvvtkVb8/zpk=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=HkMlbrffMnn18Ot01Tr1yS+c0tmL7e5JTWiELOux2weexX6De9s+Ma44A+1BTuJ5W
-         2CrIg5+dTlLGP7NXXpnHvC4/sSkLE6cfZoV6JWbQO+O9fxqRflSmEdejjNSIShOEiR
-         5WEMXpYpvsYSXxULCHhyCEn4LVSueMLfZ2LKxUJo=
-Received: by mail-qv1-f44.google.com with SMTP id x1so19668193qvr.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2020 13:31:31 -0800 (PST)
-X-Gm-Message-State: APjAAAUXhDRUOI0LjBFqte1vnWNuNLQAya9acuV7IB5OKfdkNyEyxsYN
-        8EXkJRMoNKHALGXg12tcsoiOyCyezsVhnaiT/Ls=
-X-Google-Smtp-Source: APXvYqxgu8M2LWBFC2yNxt+nyKaZ1RSLWWW+G4W+1q9ldAek3IOvjQgdVA5AFBFxwMIo4diaxzzrBwnj5kVG5xQipHE=
-X-Received: by 2002:a0c:9023:: with SMTP id o32mr65746702qvo.110.1578346290945;
- Mon, 06 Jan 2020 13:31:30 -0800 (PST)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BEF3EC43383;
+        Mon,  6 Jan 2020 21:57:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BEF3EC43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Mon, 6 Jan 2020 14:57:51 -0700
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     smasetty@codeaurora.org
+Cc:     iommu@lists.linux-foundation.org, freedreno@lists.freedesktop.org,
+        David Airlie <airlied@linux.ie>, will@kernel.org,
+        robin.murphy@arm.com, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Sean Paul <sean@poorly.run>,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v3 5/5] drm/msm/a6xx: Support split pagetables
+Message-ID: <20200106215750.GA4341@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: smasetty@codeaurora.org, iommu@lists.linux-foundation.org,
+        freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        will@kernel.org, robin.murphy@arm.com,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Sean Paul <sean@poorly.run>,
+        linux-arm-kernel@lists.infradead.org
+References: <1576514271-15687-1-git-send-email-jcrouse@codeaurora.org>
+ <1576514271-15687-6-git-send-email-jcrouse@codeaurora.org>
+ <8aec2a4f74fede1cf616b9e2eece3e8e@codeaurora.org>
 MIME-Version: 1.0
-References: <20200103063522.GA4002960@builder>
-In-Reply-To: <20200103063522.GA4002960@builder>
-From:   Josh Boyer <jwboyer@kernel.org>
-Date:   Mon, 6 Jan 2020 16:31:08 -0500
-X-Gmail-Original-Message-ID: <CA+5PVA5AhWMKQN_6_e-cPogqR6z8spY=ep8QGqyfv=t35QZh2g@mail.gmail.com>
-Message-ID: <CA+5PVA5AhWMKQN_6_e-cPogqR6z8spY=ep8QGqyfv=t35QZh2g@mail.gmail.com>
-Subject: Re: [GIT PULL v2] qcom: Switch SDM845 WLAN firmware
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Linux Firmware <linux-firmware@kernel.org>,
-        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
-        Linux-arm Msm <linux-arm-msm@vger.kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8aec2a4f74fede1cf616b9e2eece3e8e@codeaurora.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 3, 2020 at 1:35 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> Hi,
->
-> The recently committed wlan firmware found under ath10k/WCN3990 shows
-> better stability under load than the one present for SDM845. So this
-> replaces the current firmware with a symlink to the newly contributed
-> one.
->
-> Change since v1:
-> - Properly use Link: in WHENCE
->
-> Regards,
-> Bjorn
->
-> The following changes since commit 6871bffa79ed240696986837cfb17b272ff57466:
->
->   Merge branch 'ath10k-20191220' of git://git.kernel.org/pub/scm/linux/kernel/git/kvalo/linux-firmware (2019-12-20 08:41:19 -0500)
->
-> are available in the Git repository at:
->
->   https://github.com/andersson/linux-firmware.git RB3-wlan-firmware-1387-v2
->
-> for you to fetch changes up to d6219ab5b49816cbe9de9b2af1e3c8cd26a3d05b:
->
->   qcom: Switch SDM845 WLAN firmware (2020-01-02 22:25:39 -0800)
->
-> ----------------------------------------------------------------
-> Bjorn Andersson (1):
->       qcom: Switch SDM845 WLAN firmware
->
->  WHENCE                   |   2 +-
->  qcom/sdm845/wlanmdsp.mbn | Bin 3311964 -> 0 bytes
->  2 files changed, 1 insertion(+), 1 deletion(-)
->  delete mode 100644 qcom/sdm845/wlanmdsp.mbn
+On Tue, Dec 24, 2019 at 08:27:28AM +0530, smasetty@codeaurora.org wrote:
+> On 2019-12-16 22:07, Jordan Crouse wrote:
+> >Attempt to enable split pagetables if the arm-smmu driver supports it.
+> >This will move the default address space from the default region to
+> >the address range assigned to TTBR1. The behavior should be transparent
+> >to the driver for now but it gets the default buffers out of the way
+> >when we want to start swapping TTBR0 for context-specific pagetables.
+> >
+> >Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> >---
+> >
+> > drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 52
+> >++++++++++++++++++++++++++++++++++-
+> > 1 file changed, 51 insertions(+), 1 deletion(-)
+> >
+> >diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >index 5dc0b2c..1c6da93 100644
+> >--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >@@ -811,6 +811,56 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu
+> >*gpu)
+> > 	return (unsigned long)busy_time;
+> > }
+> >
+> >+static struct msm_gem_address_space *
+> >+a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device
+> >*pdev)
+> >+{
+> >+	struct iommu_domain *iommu = iommu_domain_alloc(&platform_bus_type);
+> >+	struct msm_gem_address_space *aspace;
+> >+	struct msm_mmu *mmu;
+> >+	u64 start, size;
+> >+	u32 val = 1;
+> >+	int ret;
+> >+
+> >+	if (!iommu)
+> >+		return ERR_PTR(-ENOMEM);
+> >+
+> >+	/*
+> >+	 * Try to request split pagetables - the request has to be made before
+> >+	 * the domian is attached
+> >+	 */
+> >+	iommu_domain_set_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val);
+> >+
+> >+	mmu = msm_iommu_new(&pdev->dev, iommu);
+> >+	if (IS_ERR(mmu)) {
+> >+		iommu_domain_free(iommu);
+> >+		return ERR_CAST(mmu);
+> >+	}
+> >+
+> >+	/*
+> >+	 * After the domain is attached, see if the split tables were actually
+> >+	 * successful.
+> >+	 */
+> >+	ret = iommu_domain_get_attr(iommu, DOMAIN_ATTR_SPLIT_TABLES, &val);
+> >+	if (!ret && val) {
+> >+		/*
+> >+		 * The aperture start will be at the beginning of the TTBR1
+> >+		 * space so use that as a base
+> >+		 */
+> >+		start = iommu->geometry.aperture_start;
+> >+		size = 0xffffffff;
+> This should be the va_end and not the size
 
-Pulled and pushed out.
+This is a bug in msm_gem_address_space_create - I intended the parameter to be
+the size.
 
-josh
+Jordan
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
