@@ -2,115 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D24F132958
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2020 15:50:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C67B132A46
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2020 16:44:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728362AbgAGOuf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jan 2020 09:50:35 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:36112 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727814AbgAGOuf (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jan 2020 09:50:35 -0500
-Received: by mail-ed1-f68.google.com with SMTP id j17so50560822edp.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2020 06:50:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=zQ0CDE5pR8neEBT96GGd6Zl+e4E1L+wcwPMTPVeUMWY=;
-        b=ASA2D1lkB7REIfyPlmaMsYwPz5LXd60dZ9AohAmGkjzBxWCOpIWASOL8ovWalzv+On
-         i5Tvfk1jcjx98wXn0txbEcLH03fPO5KjhN3TxU/BTEdmgv9A/SPXRVBMXdZj8wD8G3nW
-         oQrXM7aP5bhNr6dSG8GiG3p2eLSSHqw6Up+xkIX8neht8uHyYQJ52EpyfqMQhkecH3RJ
-         KCsZp7lk6GTRt9aiZrIwwD/GUU+8sQUeifjpnO7f2YQT9pWxyyEkXcs6Uc8QwPOIdj0L
-         37gZ66Fuw+BQ9E7CGVmZ1c7WBXnSTqpPPdram73Q7Mw8akCT3tqYmjBAPwYhqPP6f27H
-         boYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=zQ0CDE5pR8neEBT96GGd6Zl+e4E1L+wcwPMTPVeUMWY=;
-        b=DgeO1pWYP0e91u4cJLtadqVD6uT/v/hXno/p98Z5vCTMF9xvzjeBPvwIz6wBk6oBFT
-         EwTmEOEehaZn90+w0eD04fJLk5LzcQv1tIFuEfnnfpR7vRoklCM/ptaPvM1SJHoaGipH
-         FwY+k5wUVghXypYmodeFIZlqTlhM+6CCKE6PGHXg4kKVONKVF/LkSoiXNiKx3wT/ImzK
-         z8w3HhQ8jFp9CKA6HL5NAJbz9neRjWSWuIlFr3lw3cEbcWolv62v6zMG77JaXOy1SECV
-         L07YuuJ/ura+9N+2reiRMdsPy9d6W8/G49ywptNV/mfrMuwf3S+hhb8S4nf4uX0TMOQZ
-         /GbA==
-X-Gm-Message-State: APjAAAXtSHFwgmzeQEjNAoTvOd5Ozc69s3VtmTzOvwqc1ntNJBHUoXWN
-        QiO3m7aedY8ueyh4w13j/rkygwc8JTc=
-X-Google-Smtp-Source: APXvYqxGNZwQ5POBSjPO3k9WdMkYMCzyQNCS/a8BoYustyBBs9XIR4a/2PM5Yq5XnTgqEJ5mv/xGHw==
-X-Received: by 2002:a50:cbc3:: with SMTP id l3mr130438edi.258.1578408633124;
-        Tue, 07 Jan 2020 06:50:33 -0800 (PST)
-Received: from [192.168.27.209] ([37.157.136.193])
-        by smtp.googlemail.com with ESMTPSA id y21sm543edu.70.2020.01.07.06.50.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jan 2020 06:50:32 -0800 (PST)
-Subject: Re: [PATCH] arm64: dts: qcom: add Venus firmware node on Cheza
-To:     Alexandre Courbot <acourbot@chromium.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200107143402.122455-1-acourbot@chromium.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <3aef91ea-30c1-530f-0c18-ea52b92347f9@linaro.org>
-Date:   Tue, 7 Jan 2020 16:50:31 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        id S1727994AbgAGPod (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jan 2020 10:44:33 -0500
+Received: from 8bytes.org ([81.169.241.247]:59260 "EHLO theia.8bytes.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727559AbgAGPod (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 Jan 2020 10:44:33 -0500
+Received: by theia.8bytes.org (Postfix, from userid 1000)
+        id 5DF506A3; Tue,  7 Jan 2020 16:44:31 +0100 (CET)
+Date:   Tue, 7 Jan 2020 16:44:29 +0100
+From:   Joerg Roedel <joro@8bytes.org>
+To:     Brian Masney <masneyb@onstation.org>
+Cc:     robdclark@gmail.com, bjorn.andersson@linaro.org, agross@kernel.org,
+        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>
+Subject: Re: [PATCH] iommu/qcom: fix NULL pointer dereference during probe
+ deferral
+Message-ID: <20200107154429.GE30750@8bytes.org>
+References: <20200101033949.755-1-masneyb@onstation.org>
+ <20200107132530.GC30750@8bytes.org>
+ <20200107140013.GA9084@onstation.org>
 MIME-Version: 1.0
-In-Reply-To: <20200107143402.122455-1-acourbot@chromium.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200107140013.GA9084@onstation.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Alex,
-
-On 1/7/20 4:34 PM, Alexandre Courbot wrote:
-> Cheza boards require this node to probe, so add it.
+On Tue, Jan 07, 2020 at 09:00:14AM -0500, Brian Masney wrote:
+> On Tue, Jan 07, 2020 at 02:25:30PM +0100, Joerg Roedel wrote:
+> > On Tue, Dec 31, 2019 at 10:39:49PM -0500, Brian Masney wrote:
+> > >  drivers/iommu/qcom_iommu.c | 12 ++++++++++--
+> > >  1 file changed, 10 insertions(+), 2 deletions(-)
+> > 
+> > Shortened commit-message a bit and applied for v5.5, thanks.
 > 
-> Signed-off-by: Alexandre Courbot <acourbot@chromium.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 6 ++++++
->  arch/arm64/boot/dts/qcom/sdm845.dtsi       | 2 +-
->  2 files changed, 7 insertions(+), 1 deletion(-)
+> You might want to hold off on applying this since it looks like Robin
+> Murphy has a better fix.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> index 9a4ff57fc877..35ba65cd9822 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> @@ -1279,3 +1279,9 @@ config {
->  		};
->  	};
->  };
-> +
-> +&venus_codec {
+> https://lore.kernel.org/lkml/fc055443-8716-4a0e-b4d5-311517d71ea0@arm.com/
 
-We have similar patch for sc7180 and call it just "venus". Do you think
-we should shorten it here too?
+Alright, thanks for the heads-up. I dropped that patch from my fixes
+branch.
 
-> +	video-firmware {
-> +		iommus = <&apps_smmu 0x10b2 0x0>;
-> +	};
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index ddb1f23c936f..7b913688cc6d 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -2567,7 +2567,7 @@ usb_2_dwc3: dwc3@a800000 {
->  			};
->  		};
->  
-> -		video-codec@aa00000 {
-> +		venus_codec: video-codec@aa00000 {
->  			compatible = "qcom,sdm845-venus";
->  			reg = <0 0x0aa00000 0 0xff000>;
->  			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
-> 
+Regards,
 
--- 
-regards,
-Stan
+	Joerg
