@@ -2,96 +2,432 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 04C05131F46
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2020 06:27:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B863131F4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2020 06:28:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726530AbgAGF13 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jan 2020 00:27:29 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:44496 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725267AbgAGF12 (ORCPT
+        id S1726389AbgAGF2K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jan 2020 00:28:10 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:44786 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725920AbgAGF2K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jan 2020 00:27:28 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1578374847; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=vgKhB3s7JYy/GZx22dlIXelC1zIwKoYUxSawh99Gnj0=; b=aVTZXkcdjr4r8n29bdgELM6c9zF0WCvPAdtguE+KjRGGrOAVMvfAdDwwRlKPJ9VLYgJDQoQH
- FPAS9keU8opY+aWjQKXDhLhyvHvohAmplzyavkq8pPoVm4augbAPh10yVASiemK4BN6k8zqE
- wjSbI4tB4fUhIepV+4QvE4DUxH4=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e1416be.7f9253902c70-smtp-out-n02;
- Tue, 07 Jan 2020 05:27:26 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9C23CC43383; Tue,  7 Jan 2020 05:27:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from rocky-Inspiron-7590.qca.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rjliao)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 07A65C433CB;
-        Tue,  7 Jan 2020 05:27:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 07A65C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rjliao@codeaurora.org
-From:   Rocky Liao <rjliao@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Rocky Liao <rjliao@codeaurora.org>
-Subject: [PATCH v1] Bluetooth: hci_qca: Add qca_power_on() API to support both wcn399x and Rome power up
-Date:   Tue,  7 Jan 2020 13:26:01 +0800
-Message-Id: <20200107052601.32216-1-rjliao@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
+        Tue, 7 Jan 2020 00:28:10 -0500
+Received: by mail-qt1-f196.google.com with SMTP id t3so44411365qtr.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2020 21:28:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rcmkD/9v4b+53E6GjW5R0GW4pSO8MSkkoijdwi9ygDE=;
+        b=vjW0z3Qo9z4u23EOdkIVy5i5u+xv5M1aZSkBRTb698Wo9QtMwF9xr5aiiKqxxk0lmX
+         Uct1DBKg2+uw4hFJC0c15R3ueMQjX/ZGJ+KmERd3NRisS4O+Qoo02Y0Y90cKoLwDrc9U
+         14lDKmIBGaewHftcD4OE2mK5FGOKG1Nu8CzqoU0O1w9HEv7X1MV1XGNzImBPMbm5Z/lC
+         BhSBfPzIqAfosZNpneJqW7V/RwP1GkqkfsUhPvisghKKibUYHJiiIyVl4vxtLcTzqjDq
+         1ObMjTNvEf4c/Ap/TOVo2hH86mgn/U8hsjWj0tz0i0yb5c3RIcFO6wGQxHQVyA1PY0+m
+         ATag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rcmkD/9v4b+53E6GjW5R0GW4pSO8MSkkoijdwi9ygDE=;
+        b=H+bpNcGZSECpQXzdEDdxxAoD/Rjyz/7MnMUx8lJG9IIm5PjSJuE5PysZqPSseXDg/0
+         Ag+xBenbIwwuLoRT4FVTHq3d5NDjLWAVXR5UWlUVfDtl6fUyOc6NWQBX3135Njr9LBCU
+         M7U9Ks9Wc/qsiSDBqSpTu4uMR6qMSwZ0m2dSXYaP10bYK5blamAnXoHjSLrcMfmmRGs+
+         TMgsk8hpJeRXDV6PGrE1xTBXmhKqh5BAntHrDKLg7zokcRRe846QZjJk2uzSSjmJq3Ng
+         ZczIN2nkitt1f37cJaf6tmQ7IPP48pr+fW4KDsMgUfcpsIqIYIiQ5QGKBIxHZDlJPLvh
+         IEDg==
+X-Gm-Message-State: APjAAAVHh4MTMgJ2qOXl21OH0PxAxaX0SpY2403xQHbpUZmsL7G2H//m
+        hiy4rzxupGluLacD2Uox9cpma8JzluDOgMi2zF3Sig==
+X-Google-Smtp-Source: APXvYqx+P/L27fcwgrT9RHel7bVMydq557EcRzVv/87kNG6X4nYloUbWHBjkKXEEvU80UvasZNXukAT6qHcve9WbLiE=
+X-Received: by 2002:ac8:674e:: with SMTP id n14mr47351937qtp.264.1578374887909;
+ Mon, 06 Jan 2020 21:28:07 -0800 (PST)
+MIME-Version: 1.0
+References: <1578317369-16045-1-git-send-email-rkambl@codeaurora.org> <1578317369-16045-2-git-send-email-rkambl@codeaurora.org>
+In-Reply-To: <1578317369-16045-2-git-send-email-rkambl@codeaurora.org>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Tue, 7 Jan 2020 10:57:56 +0530
+Message-ID: <CAP245DXTbtDE_gzVpcAsGvnMzE9bEyv_MoCf11uWoPPK-GsNjQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: sc7180: Add critical interrupt
+ and cooling maps for TSENS in SC7180
+To:     Rajeshwari <rkambl@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        sanm@codeaurora.org, sivaa@codeaurora.org, manaf@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds a unified API qca_power_on() to support both wcn399x and
-Rome power on. For wcn399x it calls the qca_wcn3990_init() to init the
-regulators, and for Rome it pulls up the bt_en GPIO to power up the btsoc.
+On Mon, Jan 6, 2020 at 7:00 PM Rajeshwari <rkambl@codeaurora.org> wrote:
+>
+> Added critical interrupt support in TSENS node and cooling maps in Thermal-zones node.
+>
+> Signed-off-by: Rajeshwari <rkambl@codeaurora.org>
 
-Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
----
- drivers/bluetooth/hci_qca.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 9392cc7f9908..f6555bd1adbc 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1532,6 +1532,27 @@ static int qca_wcn3990_init(struct hci_uart *hu)
- 	return 0;
- }
- 
-+static int qca_power_on(struct hci_dev *hdev)
-+{
-+	struct hci_uart *hu = hci_get_drvdata(hdev);
-+	enum qca_btsoc_type soc_type = qca_soc_type(hu);
-+	struct qca_serdev *qcadev;
-+	int ret = 0;
-+
-+	if (qca_is_wcn399x(soc_type)) {
-+		ret = qca_wcn3990_init(hu);
-+	} else {
-+		if (hu->serdev) {
-+			qcadev = serdev_device_get_drvdata(hu->serdev);
-+			gpiod_set_value_cansleep(qcadev->bt_en, 1);
-+			/* Controller needs time to bootup. */
-+			msleep(150);
-+		}
-+	}
-+
-+	return ret;
-+}
-+
- static int qca_setup(struct hci_uart *hu)
- {
- 	struct hci_dev *hdev = hu->hdev;
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 197 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 193 insertions(+), 4 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 3676bfd..c414ce0 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -10,6 +10,7 @@
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/phy/phy-qcom-qusb2.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> +#include <dt-bindings/thermal/thermal.h>
+>
+>  / {
+>         interrupt-parent = <&intc>;
+> @@ -78,6 +79,7 @@
+>                         reg = <0x0 0x0>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_0>;
+> +                       #cooling-cells = <2>;
+>                         qcom,freq-domain = <&cpufreq_hw 0>;
+>                         L2_0: l2-cache {
+>                                 compatible = "cache";
+> @@ -94,6 +96,7 @@
+>                         reg = <0x0 0x100>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_100>;
+> +                       #cooling-cells = <2>;
+>                         qcom,freq-domain = <&cpufreq_hw 0>;
+>                         L2_100: l2-cache {
+>                                 compatible = "cache";
+> @@ -107,6 +110,7 @@
+>                         reg = <0x0 0x200>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_200>;
+> +                       #cooling-cells = <2>;
+>                         qcom,freq-domain = <&cpufreq_hw 0>;
+>                         L2_200: l2-cache {
+>                                 compatible = "cache";
+> @@ -120,6 +124,7 @@
+>                         reg = <0x0 0x300>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_300>;
+> +                       #cooling-cells = <2>;
+>                         qcom,freq-domain = <&cpufreq_hw 0>;
+>                         L2_300: l2-cache {
+>                                 compatible = "cache";
+> @@ -133,6 +138,7 @@
+>                         reg = <0x0 0x400>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_400>;
+> +                       #cooling-cells = <2>;
+>                         qcom,freq-domain = <&cpufreq_hw 0>;
+>                         L2_400: l2-cache {
+>                                 compatible = "cache";
+> @@ -146,6 +152,7 @@
+>                         reg = <0x0 0x500>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_500>;
+> +                       #cooling-cells = <2>;
+>                         qcom,freq-domain = <&cpufreq_hw 0>;
+>                         L2_500: l2-cache {
+>                                 compatible = "cache";
+> @@ -159,6 +166,7 @@
+>                         reg = <0x0 0x600>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_600>;
+> +                       #cooling-cells = <2>;
+>                         qcom,freq-domain = <&cpufreq_hw 1>;
+>                         L2_600: l2-cache {
+>                                 compatible = "cache";
+> @@ -172,6 +180,7 @@
+>                         reg = <0x0 0x700>;
+>                         enable-method = "psci";
+>                         next-level-cache = <&L2_700>;
+> +                       #cooling-cells = <2>;
+>                         qcom,freq-domain = <&cpufreq_hw 1>;
+>                         L2_700: l2-cache {
+>                                 compatible = "cache";
+> @@ -1058,8 +1067,9 @@
+>                         reg = <0 0x0c263000 0 0x1ff>, /* TM */
+>                                 <0 0x0c222000 0 0x1ff>; /* SROT */
+>                         #qcom,sensors = <15>;
+> -                       interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>;
+> -                       interrupt-names = "uplow";
+> +                       interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
+> +                       interrupt-names = "uplow","critical";
+>                         #thermal-sensor-cells = <1>;
+>                 };
+>
+> @@ -1068,8 +1078,9 @@
+>                         reg = <0 0x0c265000 0 0x1ff>, /* TM */
+>                                 <0 0x0c223000 0 0x1ff>; /* SROT */
+>                         #qcom,sensors = <10>;
+> -                       interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>;
+> -                       interrupt-names = "uplow";
+> +                       interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
+> +                       interrupt-names = "uplow","critical";
+>                         #thermal-sensor-cells = <1>;
+>                 };
+>
+> @@ -1326,6 +1337,27 @@
+>                                         type = "critical";
+>                                 };
+>                         };
+> +
+> +                       cooling-maps {
+> +                               map0 {
+> +                                       trip = <&cpu0_alert0>;
+> +                                       cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                               map1 {
+> +                                       trip = <&cpu0_alert1>;
+> +                                       cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                       };
+>                 };
+>
+>                 cpu1-thermal {
+> @@ -1353,6 +1385,27 @@
+>                                         type = "critical";
+>                                 };
+>                         };
+> +
+> +                       cooling-maps {
+> +                               map0 {
+> +                                       trip = <&cpu1_alert0>;
+> +                                       cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                               map1 {
+> +                                       trip = <&cpu1_alert1>;
+> +                                       cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                       };
+>                 };
+>
+>                 cpu2-thermal {
+> @@ -1380,6 +1433,27 @@
+>                                         type = "critical";
+>                                 };
+>                         };
+> +
+> +                       cooling-maps {
+> +                               map0 {
+> +                                       trip = <&cpu2_alert0>;
+> +                                       cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                               map1 {
+> +                                       trip = <&cpu2_alert1>;
+> +                                       cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                       };
+>                 };
+>
+>                 cpu3-thermal {
+> @@ -1407,6 +1481,27 @@
+>                                         type = "critical";
+>                                 };
+>                         };
+> +
+> +                       cooling-maps {
+> +                               map0 {
+> +                                       trip = <&cpu3_alert0>;
+> +                                       cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                               map1 {
+> +                                       trip = <&cpu3_alert1>;
+> +                                       cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                       };
+>                 };
+>
+>                 cpu4-thermal {
+> @@ -1434,6 +1529,27 @@
+>                                         type = "critical";
+>                                 };
+>                         };
+> +
+> +                       cooling-maps {
+> +                               map0 {
+> +                                       trip = <&cpu4_alert0>;
+> +                                       cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                               map1 {
+> +                                       trip = <&cpu4_alert1>;
+> +                                       cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                       };
+>                 };
+>
+>                 cpu5-thermal {
+> @@ -1461,6 +1577,27 @@
+>                                         type = "critical";
+>                                 };
+>                         };
+> +
+> +                       cooling-maps {
+> +                               map0 {
+> +                                       trip = <&cpu5_alert0>;
+> +                                       cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                               map1 {
+> +                                       trip = <&cpu5_alert1>;
+> +                                       cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                       };
+>                 };
+>
+>                 cpu6-thermal {
+> @@ -1488,6 +1625,19 @@
+>                                         type = "critical";
+>                                 };
+>                         };
+> +
+> +                       cooling-maps {
+> +                               map0 {
+> +                                       trip = <&cpu6_alert0>;
+> +                                       cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                               map1 {
+> +                                       trip = <&cpu6_alert1>;
+> +                                       cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                       };
+>                 };
+>
+>                 cpu7-thermal {
+> @@ -1515,6 +1665,19 @@
+>                                         type = "critical";
+>                                 };
+>                         };
+> +
+> +                       cooling-maps {
+> +                               map0 {
+> +                                       trip = <&cpu7_alert0>;
+> +                                       cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                               map1 {
+> +                                       trip = <&cpu7_alert1>;
+> +                                       cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                       };
+>                 };
+>
+>                 cpu8-thermal {
+> @@ -1542,6 +1705,19 @@
+>                                         type = "critical";
+>                                 };
+>                         };
+> +
+> +                       cooling-maps {
+> +                               map0 {
+> +                                       trip = <&cpu8_alert0>;
+> +                                       cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                               map1 {
+> +                                       trip = <&cpu8_alert1>;
+> +                                       cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                       };
+>                 };
+>
+>                 cpu9-thermal {
+> @@ -1569,6 +1745,19 @@
+>                                         type = "critical";
+>                                 };
+>                         };
+> +
+> +                       cooling-maps {
+> +                               map0 {
+> +                                       trip = <&cpu9_alert0>;
+> +                                       cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                               map1 {
+> +                                       trip = <&cpu9_alert1>;
+> +                                       cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +                                                        <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +                               };
+> +                       };
+>                 };
+>
+>                 aoss0-thermal {
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+>
