@@ -2,89 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 09E0A132FD7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2020 20:51:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 661FF133023
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2020 20:56:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728379AbgAGTvY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jan 2020 14:51:24 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:50248 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728364AbgAGTvY (ORCPT
+        id S1728654AbgAGT4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jan 2020 14:56:47 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:35350 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728669AbgAGT4h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jan 2020 14:51:24 -0500
-Received: by mail-wm1-f68.google.com with SMTP id a5so79103wmb.0;
-        Tue, 07 Jan 2020 11:51:23 -0800 (PST)
+        Tue, 7 Jan 2020 14:56:37 -0500
+Received: by mail-ed1-f66.google.com with SMTP id f8so650374edv.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2020 11:56:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=N+e1mVy5VPUC1b+U+QeGIXntkp+YQnzcx3wiamDhMYI=;
-        b=QzQ1Ia8BIn5mC4RILSDjoqVdXSHmjccrKCoJNvWM2zSQmTcZAwsYzZEKn0Fs4q+/Ew
-         vTs8+3whhN/s2kdibQlxCDmmUEZOL1pmmi4QgbslQ3omMsrrqd9qsfp2nRXG6kOjJ3Ma
-         R836nHwK4x2xEEFWttu6vNR3jvUfaIsECs4jR2FZdqVvR2AFtNCQr1osvYBcJ2WknA80
-         t/nd4rW9YpkuWfU3RUTWPcqA7fRpoYMzjFOYysEWJ3yK/1Eq2q0FgJ1BlFiczNQ7dfKO
-         bWwF1NZB+1mam0xjkDDL5dRcqrM6zByTrxaySGbP4iPFW7SRoNALnEX7Ntmv/R3calS4
-         14CA==
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=lUsTd9lJYwK928kai9reachpHe0HC9Hv8/gDLGwtaBI=;
+        b=m/Udengj3famfT4AeeQ1IRW+yMW7VasUnASahB37i/PoeHrkRBk2CGyFKYNukmjW7S
+         L8SRka5Jakx3oOkJPsG2IofN9vOqI+MJeZI3Q0YE0hhIfxJgla/Mvi4GlBIJ0+PXKJyR
+         fGhtIsUmeS9lphgKJPwASTV0Wis5x+akjvA6FztTMBR/K8fgi7sOjdtLa1OeTeeGw/oC
+         WuhGv+1qsxod0shrSr56iRhzuujf6ypC8mQV8JosjFfNeYtuq3xDGNFupimiXFOQL0SO
+         8SxYRsEAywqZcf7WmcQRmN/Qkf20W+/a6rRSJl252WjsQoa/SZxLvQ4mGRJVkfZ3ex9s
+         ABpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=N+e1mVy5VPUC1b+U+QeGIXntkp+YQnzcx3wiamDhMYI=;
-        b=GW6jE3YFR+JPYQujXl+l/1TrDARdt+4uuFRZT11iljbjeeJpV0DiUEQeSKHjg9yqI7
-         2jtdqBm6dnSB2TOj1rlmFIzyTtnD7YOfsKDP0/9LyKGlZTlza4PmUY7HsaJedxAZrose
-         uDI/xKpwl36pJ1maB8WEwGJbJz5aDbeVSyBT8NaNEmyR8pQScRdFV03o/2mTpQbXxX0Y
-         jm4x7OOJDeyryV63zGJtj6Os7n4mnzP86r0xLec9hjpK8yWZFh4R6NCWBAWxcQT1HmLj
-         pODVk6NCkKiK1uO+j+vVy00YMZmUJWMdHgNgzh0UH0lsY0wGgkOewm1lEr4/IOoUSgSj
-         tspA==
-X-Gm-Message-State: APjAAAV5z9zxu887VDxQbweFXuAxfev4kwTMWMTY0aQTahbvOKAG5xQv
-        WhbpnCt+dfZ1rpQHvZu5BoXIyb5ur9g5NnpWZzo=
-X-Google-Smtp-Source: APXvYqxw2oF+3vnxN6qUMzMwgtepbEmBB6gHsuaGdrKPHQ6z09MDLjhaFV4qD1LA2QQhEM2/cytMn5uqV5+eaYnwndI=
-X-Received: by 2002:a1c:1b15:: with SMTP id b21mr48232wmb.17.1578426682449;
- Tue, 07 Jan 2020 11:51:22 -0800 (PST)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=lUsTd9lJYwK928kai9reachpHe0HC9Hv8/gDLGwtaBI=;
+        b=Dhp+eGzzVQn8iULrcYbr9YDX1d7ykIJZV1UqJvIHVLyaTr2A9RE0YNPPB983Iw3CTR
+         5vvjVjX6trMZShFlhB2k5Dqu9IsfMEZEdNGFj1syeQOwD4Zfo9m3xsHchTSZuXqi9/x6
+         ETMeUx3wJnIujmgUFs5RgVMfcUzG0KZ7JzmHmV4Vqy5zxh3IGRScE1Sleu5o28Gs4QfU
+         NTB6HbuqiisIrwZOF+duQHh0jP3TOTUa8BPc9JOV2gLUivVk9sOceq4H6tYMqGlvvoEV
+         hoYW9isi/pIqexu/20L7smmMfRzOktvVx2Quv3a+M4WPbwdZlDl2Ffh4SeMEmbV16MNk
+         BYhw==
+X-Gm-Message-State: APjAAAWciCARXgFjIZ/+qtaPU466RlrdkgcWXqzblb/CXMv8vsoTcjhF
+        G9Yj1xOGMCnHLLx4a8hCTwh5BEBqKl2XqCQ0B5E=
+X-Google-Smtp-Source: APXvYqzNbcT08PcgNHBR6CjdjGMonF1aREtl3FixKkalZzLFfyP3YZsjOtPyVn2SjFoUiZ8TzNVIEuitC7fnDU0d3Kk=
+X-Received: by 2002:a17:907:20ef:: with SMTP id rh15mr1111482ejb.325.1578426995176;
+ Tue, 07 Jan 2020 11:56:35 -0800 (PST)
 MIME-Version: 1.0
-References: <20191106083843.1718437-1-vkoul@kernel.org>
-In-Reply-To: <20191106083843.1718437-1-vkoul@kernel.org>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Tue, 7 Jan 2020 11:51:11 -0800
-Message-ID: <CANcMJZDqX6-+naGEbBiyM+1cZS6jfMoP9bm5Uk4ZuP_mw5aNWw@mail.gmail.com>
-Subject: Re: [PATCH v5 0/4] usb: xhci: Add support for Renesas USB controllers
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        linux-usb@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Todd Kjos <tkjos@google.com>,
-        Alistair Delva <adelva@google.com>
+Received: by 2002:a17:906:72c6:0:0:0:0 with HTTP; Tue, 7 Jan 2020 11:56:34
+ -0800 (PST)
+Reply-To: dhlexpresscouriercompany.nyusa@gmail.com
+From:   "Dr. William Johnson" <currency1000000@gmail.com>
+Date:   Tue, 7 Jan 2020 20:56:34 +0100
+Message-ID: <CAPqfnSEyU1pBR_7HT2g1KK7i8caLMBQ8yPA8KRDVm+MN-K_Z4w@mail.gmail.com>
+Subject: contact Dhl office New York to receive your Prepaid ATM Master Card
+ worth $15.8Million US DOLLARS now.
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 6, 2019 at 12:40 AM Vinod Koul <vkoul@kernel.org> wrote:
->
-> This series add support for Renesas USB controllers uPD720201 and uPD720202.
-> These require firmware to be loaded and in case devices have ROM those can
-> also be programmed if empty. If ROM is programmed, it runs from ROM as well.
->
-> This includes two patches from Christian which supported these controllers
-> w/o ROM and later my patches for ROM support and multiple firmware versions.
->
-
-Hey Vinod!
-   In pushing this series to one of the Android trees for the db845c,
-there was some concern raised that this series is adding a lot of
-renesas specific logic to the more generic xhci-pci driver. There was
-some question if instead that logic should be added to its own
-file/module? Do you have any thoughts on this?
-
-Also, It seems there hasn't been much feedback on this for a few
-months now. Is there a newer version of the patchset I should sync
-with? Do you have plans to resubmit soon?
-
-thanks
--john
+ATTN Dear Beneficiary.
+Goodnews
+I have Registered your Prepaid ATM Master Card
+worth $15.800,000.00 US DOLLARS with Courier company
+asigned to deliver it to you today.
+So contact Dhl office New York to receive your Prepaid ATM Master Card
+worth $15.8Million US DOLLARS now.
+Contact Person: Mrs. Mary Michael, Director, DHL Courier Company-NY USA. 10218
+Email. dhlexpresscouriercompany.nyusa@gmail.com
+Call the office +(202) 890-8752
+Rec-Confirmed your mailing address to the office as I listed below.
+Your Full Name--------------
+House Address-----------
+Your working Phone Number----------------
+ID copy-------------------------
+Sex-----------------------------
+Note,delivery fee to your address is only $25.00. send it to this
+company urgent on itunes card today so that DHL will deliver this
+Prepaid ATM Master Card to you today according to our finally
+agreement.
+Thanks for coperations,
+Dr. William Johnson
