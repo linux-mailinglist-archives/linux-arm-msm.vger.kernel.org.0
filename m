@@ -2,120 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 403AE132F9C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2020 20:38:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 09E0A132FD7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2020 20:51:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728451AbgAGTis (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jan 2020 14:38:48 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:35605 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728364AbgAGTis (ORCPT
+        id S1728379AbgAGTvY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jan 2020 14:51:24 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:50248 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728364AbgAGTvY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jan 2020 14:38:48 -0500
-Received: by mail-pj1-f66.google.com with SMTP id s7so16245pjc.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2020 11:38:48 -0800 (PST)
+        Tue, 7 Jan 2020 14:51:24 -0500
+Received: by mail-wm1-f68.google.com with SMTP id a5so79103wmb.0;
+        Tue, 07 Jan 2020 11:51:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=2Prj57eO28z5lgjo5XEk+60ja6L41tebRV2EmrAGd90=;
-        b=j6KbHbJr6pXF3rIONFb1cXW8QZ6nec5Rs+xZLy4qdYTunmQOmRb1h0OnZ47bqsF+Ri
-         YSQao8pisPbywoGr/7hPXXrMSHX1zI5E6RyVonCaJDhBWg4zYdDoR+3ksI0DLD1ZdCcQ
-         nSctQ9OBXzljZPCntnEVcEmSj71sYnbCnweigad/o8pteHJPIFbgQgujn6W9Fk7AYT+u
-         2bbqJ8glQZDUJIw7YGduRpXSlsz0trqwfDJH4jrH9M6XXlVnDz1L4rBCbub/UDkd0jLe
-         Pype796b1IlvyI8Kq0UPUFuO4eX75OdI2+5nXNY3Zsr0Gzjig3+M3Y8MOSINfIA1DfoB
-         asiQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=N+e1mVy5VPUC1b+U+QeGIXntkp+YQnzcx3wiamDhMYI=;
+        b=QzQ1Ia8BIn5mC4RILSDjoqVdXSHmjccrKCoJNvWM2zSQmTcZAwsYzZEKn0Fs4q+/Ew
+         vTs8+3whhN/s2kdibQlxCDmmUEZOL1pmmi4QgbslQ3omMsrrqd9qsfp2nRXG6kOjJ3Ma
+         R836nHwK4x2xEEFWttu6vNR3jvUfaIsECs4jR2FZdqVvR2AFtNCQr1osvYBcJ2WknA80
+         t/nd4rW9YpkuWfU3RUTWPcqA7fRpoYMzjFOYysEWJ3yK/1Eq2q0FgJ1BlFiczNQ7dfKO
+         bWwF1NZB+1mam0xjkDDL5dRcqrM6zByTrxaySGbP4iPFW7SRoNALnEX7Ntmv/R3calS4
+         14CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2Prj57eO28z5lgjo5XEk+60ja6L41tebRV2EmrAGd90=;
-        b=qLo4nwGnmzqZVNy5KX86/9hiPRdzMqi9RddCM5Ozm1CxVvjfBDJrLV7rKPunuLFvbb
-         Py5VEn79kHHx2jZWG7ZSkovJrnanxxC2l8nmhSAua5Av2u3gOLJ94UK0OeuTx4epph/a
-         cPg6YvMpSvmiStnQI9L63zRUGFmfoiwrvUA54PO8zPBDBW2jftYYUJzCeEKACFErzK1+
-         tS6dtcUVwVEZc1fvt2vYhyMjT3n6dKwBxOaU0x3Mm0L1KOyL7CBibzOQyD7/J0YOn8sW
-         eI5a5Ei62zJhlVlbPsimkJjFWpWgtBmTdqeakQ7BIqX0tr0OcDc0kN1vxyBgznI2XLNC
-         aBnA==
-X-Gm-Message-State: APjAAAUUSwfxFm9EAZHQ4xzN1H+PwYnNWuR4vRnlaMVvR9EvuJV4ct5H
-        RnNKwU/K8rBElbJA+cWTMIfcog==
-X-Google-Smtp-Source: APXvYqzmgPKQJGSGcikCPKGdGu42fAIoSm9qJ5Nc/utaPnrITLEcQkgEEbKybjhplo9KuTs//Z9WaA==
-X-Received: by 2002:a17:90a:19d3:: with SMTP id 19mr20993pjj.1.1578425927665;
-        Tue, 07 Jan 2020 11:38:47 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id x22sm593940pgc.2.2020.01.07.11.38.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2020 11:38:46 -0800 (PST)
-Date:   Tue, 7 Jan 2020 11:38:44 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Olof Johansson <olof@lixom.net>, arm-soc <arm@kernel.org>,
-        soc@kernel.org, Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Kevin Hilman <khilman@kernel.org>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [GIT PULL] cpuidle/psci updates for v5.6
-Message-ID: <20200107193844.GE716784@yoga>
-References: <20200102160820.3572-1-ulf.hansson@linaro.org>
- <20200106172608.63qhvwr5b7jsmxmg@localhost>
- <CAPDyKFq-ueSK2xAOBtec_N95sBVf-Vcm_-xgAhxQUuwAjUzbPw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=N+e1mVy5VPUC1b+U+QeGIXntkp+YQnzcx3wiamDhMYI=;
+        b=GW6jE3YFR+JPYQujXl+l/1TrDARdt+4uuFRZT11iljbjeeJpV0DiUEQeSKHjg9yqI7
+         2jtdqBm6dnSB2TOj1rlmFIzyTtnD7YOfsKDP0/9LyKGlZTlza4PmUY7HsaJedxAZrose
+         uDI/xKpwl36pJ1maB8WEwGJbJz5aDbeVSyBT8NaNEmyR8pQScRdFV03o/2mTpQbXxX0Y
+         jm4x7OOJDeyryV63zGJtj6Os7n4mnzP86r0xLec9hjpK8yWZFh4R6NCWBAWxcQT1HmLj
+         pODVk6NCkKiK1uO+j+vVy00YMZmUJWMdHgNgzh0UH0lsY0wGgkOewm1lEr4/IOoUSgSj
+         tspA==
+X-Gm-Message-State: APjAAAV5z9zxu887VDxQbweFXuAxfev4kwTMWMTY0aQTahbvOKAG5xQv
+        WhbpnCt+dfZ1rpQHvZu5BoXIyb5ur9g5NnpWZzo=
+X-Google-Smtp-Source: APXvYqxw2oF+3vnxN6qUMzMwgtepbEmBB6gHsuaGdrKPHQ6z09MDLjhaFV4qD1LA2QQhEM2/cytMn5uqV5+eaYnwndI=
+X-Received: by 2002:a1c:1b15:: with SMTP id b21mr48232wmb.17.1578426682449;
+ Tue, 07 Jan 2020 11:51:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFq-ueSK2xAOBtec_N95sBVf-Vcm_-xgAhxQUuwAjUzbPw@mail.gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+References: <20191106083843.1718437-1-vkoul@kernel.org>
+In-Reply-To: <20191106083843.1718437-1-vkoul@kernel.org>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Tue, 7 Jan 2020 11:51:11 -0800
+Message-ID: <CANcMJZDqX6-+naGEbBiyM+1cZS6jfMoP9bm5Uk4ZuP_mw5aNWw@mail.gmail.com>
+Subject: Re: [PATCH v5 0/4] usb: xhci: Add support for Renesas USB controllers
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Mathias Nyman <mathias.nyman@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        linux-usb@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Todd Kjos <tkjos@google.com>,
+        Alistair Delva <adelva@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 07 Jan 11:28 PST 2020, Ulf Hansson wrote:
+On Wed, Nov 6, 2019 at 12:40 AM Vinod Koul <vkoul@kernel.org> wrote:
+>
+> This series add support for Renesas USB controllers uPD720201 and uPD720202.
+> These require firmware to be loaded and in case devices have ROM those can
+> also be programmed if empty. If ROM is programmed, it runs from ROM as well.
+>
+> This includes two patches from Christian which supported these controllers
+> w/o ROM and later my patches for ROM support and multiple firmware versions.
+>
 
-> On Mon, 6 Jan 2020 at 18:31, Olof Johansson <olof@lixom.net> wrote:
-> >
-> > Hi,
-> >
-> > On Thu, Jan 02, 2020 at 05:08:20PM +0100, Ulf Hansson wrote:
-> > > Hi SoC maintainers,
-> > >
-> > > Here's a PR with updates for v5.6 for cpuidle/psci for ARM/ARM64.
-> > >
-> > > The changes are somewhat sprinkled over a couple of different directories and
-> > > there is also dts update for MSM8916. The main changes are in drivers/cpuidle/,
-> > > which have been acked-by Rafael [1] and Sudeep.
-> > >
-> > > If you have any further questions, please just tell.
-> >
-> > What was the reason to bring in a dts change in this branch?
-> 
-> Convenience. But I am not usually sending these PR, so feel free to
-> tell me to change.
-> 
+Hey Vinod!
+   In pushing this series to one of the Android trees for the db845c,
+there was some concern raised that this series is adding a lot of
+renesas specific logic to the more generic xhci-pci driver. There was
+some question if instead that logic should be added to its own
+file/module? Do you have any thoughts on this?
 
-The dts files are typically moving a lot, so to reduce the risk of
-conflicts it's generally better if we take them through the qcom tree.
+Also, It seems there hasn't been much feedback on this for a few
+months now. Is there a newer version of the patchset I should sync
+with? Do you have plans to resubmit soon?
 
-> > Bindings should be
-> > stable such that old DT contents still works even if drivers are updated to
-> > support newer attributes, etc.
-> 
-> They already are. No worries!
-> 
-> If you want to pick everything else but the DTS patch, that's fine by me.
-> 
-
-Generally, yes.
-
-> Do you want me to send a new PR?
-> 
-
-But I'm happy with the dts patch and afaict there's nothing that this
-will conflict with. So you have my retroactive ack on the patch and
-lets stick with the current PR.
-
-Regards,
-Bjorn
+thanks
+-john
