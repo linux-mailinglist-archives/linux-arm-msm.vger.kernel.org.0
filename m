@@ -2,83 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B8F9131F67
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2020 06:40:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AC33F131F87
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jan 2020 06:48:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725874AbgAGFkr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jan 2020 00:40:47 -0500
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:48264 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725835AbgAGFkr (ORCPT
+        id S1725965AbgAGFr5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jan 2020 00:47:57 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:43139 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725835AbgAGFr5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jan 2020 00:40:47 -0500
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 07 Jan 2020 11:10:43 +0530
-Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 07 Jan 2020 11:10:11 +0530
-Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
-        id 2F2FC256D; Tue,  7 Jan 2020 11:10:10 +0530 (IST)
-From:   Harigovindan P <harigovi@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Harigovindan P <harigovi@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        abhinavk@codeaurora.org, jsanka@codeaurora.org,
-        chandanu@codeaurora.org, nganji@codeaurora.org
-Subject: [v2] drm/msm: update LANE_CTRL register value from default value
-Date:   Tue,  7 Jan 2020 11:10:08 +0530
-Message-Id: <1578375608-28995-1-git-send-email-harigovi@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Tue, 7 Jan 2020 00:47:57 -0500
+Received: by mail-pf1-f194.google.com with SMTP id x6so26939016pfo.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jan 2020 21:47:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=a5znaXZKlBTVMs68+b0GTeS4YJ7CQCUkofQQyekYzV4=;
+        b=oC97eC5TLPVr7Jrsjlrnmc83ooVvbjeUIh3ZiqGqLoKtjrO4Ij8a1NAl9kCzOIwEYi
+         6QeOXid2yQ70AjpokUwCI3BpCoRzJMahrUsFwLSC5xjTzfsNgMSolD8NCiEm9Vc3H2St
+         ue4nnXeoi3Kbj+VXtdxCV0QwUbhqMSAj6tWsxwDwsHM67piQHOz98uWvEGo37Fetg33f
+         W6k/zzB9NE6gCR3VKPVP9cQEcNnCUfYu8nY28qAnCKerlVIjSa4TeoYkvzF40FQvhOg+
+         X8DFm1JQSs5iTA6seyPXtPnMDI8t0rUvSu9nNkHqLitJfH9/qIaWrVrBwTJUesTuEBX6
+         EH6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=a5znaXZKlBTVMs68+b0GTeS4YJ7CQCUkofQQyekYzV4=;
+        b=SxGsGBIdsa9zIDUnp7nLEWL6eKh3jdfkpVWKOznhfK3KIsJjDag0EWXHK7JUVmkggm
+         9NpgC5EeapnzLBSGo9fuMd6Z7rnjTtNjGRyVUpyOGzS3xSws6Apyo+EEwrb7GQcuCO38
+         gSKvsN1FZ9q3HiUpvtzJjTHjUYQ52z41KRAm/0jxfJw+dJoO0iQ0pfwRpPjWBgFoNDP5
+         b44P9oHOVhi5duKioV4skuJN23Hr1MUryjpEuFBHgOtHi+PxBeznmI0TgUoXOI6Ny/rG
+         T91McaWzdGrUT8AcHHObOdBsUE+gh38C5IsMPND3MZfoMVIi1ysxwGqT6cZpzMzO0MYz
+         zwnw==
+X-Gm-Message-State: APjAAAUukgh2idW0YJBCoepU4VsopEeQaiAe2Rr3M2PpSMQPb3JyouWI
+        WlrbvOE6dThV/nkaQ1qDBE271Q==
+X-Google-Smtp-Source: APXvYqy2leZLuc9tAwF1AB/pqhfsi3mK/YIK7ZOzGsgaxNOLvQ9JQ/qFXE8LAge+Av32D8Bq/3Tvww==
+X-Received: by 2002:aa7:9115:: with SMTP id 21mr81653278pfh.224.1578376076558;
+        Mon, 06 Jan 2020 21:47:56 -0800 (PST)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id k21sm67129177pfa.63.2020.01.06.21.47.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Jan 2020 21:47:55 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     "David S. Miller" <davem@davemloft.net>
+Cc:     Arun Kumar Neelakantam <aneela@codeaurora.org>,
+        Chris Lew <clew@codeaurora.org>, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v3 0/5] QRTR flow control improvements
+Date:   Mon,  6 Jan 2020 21:47:08 -0800
+Message-Id: <20200107054713.3909260-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.24.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-LANE_CTRL register in latest version of DSI controller (v2.2)
-has additional functionality introduced to enable/disable HS
-signalling with default value set to enabled. To accommodate this
-change, LANE_CTRL register should be read and bit wise ORed to enable
-non continuous clock mode. Without this change, if register is written
-directly, HS signalling will be disabled resulting in black screen.
+In order to prevent overconsumption of resources on the remote side QRTR
+implements a flow control mechanism.
 
-Changes in v1:
-	-Update LANE_CTRL register value
-Changes in v2:
-	-Changing commit message accordingly.
+Move the handling of the incoming confirm_rx to the receiving process to
+ensure incoming flow is controlled. Then implement outgoing flow
+control, using the recommended algorithm of counting outstanding
+non-confirmed messages and blocking when hitting a limit. The last three
+patches refactors the node assignment and port lookup, in order to
+remove the worker in the receive path.
 
-Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+Bjorn Andersson (5):
+  net: qrtr: Move resume-tx transmission to recvmsg
+  net: qrtr: Implement outgoing flow control
+  net: qrtr: Migrate node lookup tree to spinlock
+  net: qrtr: Make qrtr_port_lookup() use RCU
+  net: qrtr: Remove receive worker
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index e6289a3..d3c5233 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -816,7 +816,7 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
- 	u32 flags = msm_host->mode_flags;
- 	enum mipi_dsi_pixel_format mipi_fmt = msm_host->format;
- 	const struct msm_dsi_cfg_handler *cfg_hnd = msm_host->cfg_hnd;
--	u32 data = 0;
-+	u32 data = 0, lane_ctrl = 0;
- 
- 	if (!enable) {
- 		dsi_write(msm_host, REG_DSI_CTRL, 0);
-@@ -904,9 +904,11 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
- 	dsi_write(msm_host, REG_DSI_LANE_SWAP_CTRL,
- 		  DSI_LANE_SWAP_CTRL_DLN_SWAP_SEL(msm_host->dlane_swap));
- 
--	if (!(flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
-+	if (!(flags & MIPI_DSI_CLOCK_NON_CONTINUOUS)) {
-+		lane_ctrl = dsi_read(msm_host, REG_DSI_LANE_CTRL);
- 		dsi_write(msm_host, REG_DSI_LANE_CTRL,
--			DSI_LANE_CTRL_CLKLN_HS_FORCE_REQUEST);
-+			lane_ctrl | DSI_LANE_CTRL_CLKLN_HS_FORCE_REQUEST);
-+	}
- 
- 	data |= DSI_CTRL_ENABLE;
- 
+ net/qrtr/qrtr.c | 314 +++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 242 insertions(+), 72 deletions(-)
+
 -- 
-2.7.4
+2.24.0
 
