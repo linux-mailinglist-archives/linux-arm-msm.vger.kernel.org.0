@@ -2,115 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 49943133736
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2020 00:18:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7701E1337AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2020 00:46:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727159AbgAGXSX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jan 2020 18:18:23 -0500
-Received: from onstation.org ([52.200.56.107]:35462 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727074AbgAGXSW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jan 2020 18:18:22 -0500
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 3FF903EE6F;
-        Tue,  7 Jan 2020 23:18:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1578439101;
-        bh=dPi/tlFFpKEhh6XGOkAwyWFcjw/UEJV74jJZmzMoFC4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=HJOmLIqBjzocoa69Tgfssq8+Zhsh/tT9Ma4MDBktwAV8J8Eg9QpZQxspeRIIPCEly
-         4OT73k4esnw71aA6YvcjVvjU51j2V3r36iUt/GxRhIcFoFUrIgm/Zoy3wrcNXGiPJk
-         bzaaAwwrQzuZNwx8/a154IzGC6zRXEYe0O+vl7s8=
-Date:   Tue, 7 Jan 2020 18:18:20 -0500
-From:   Brian Masney <masneyb@onstation.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     dmitry.torokhov@gmail.com, robh+dt@kernel.org,
-        mark.rutland@arm.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, mturquette@baylibre.com,
-        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH 4/7] dt-bindings: Input: introduce new clock vibrator
- bindings
-Message-ID: <20200107231820.GA13416@onstation.org>
-References: <20191205002503.13088-1-masneyb@onstation.org>
- <20191205002503.13088-5-masneyb@onstation.org>
- <20200105083534.01EB12071A@mail.kernel.org>
- <20200107120317.GB8083@onstation.org>
- <20200107175222.6B5052073D@mail.kernel.org>
+        id S1727761AbgAGXqH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jan 2020 18:46:07 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:35698 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726470AbgAGXqG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 Jan 2020 18:46:06 -0500
+Received: by mail-lj1-f195.google.com with SMTP id j1so1431187lja.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2020 15:46:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HQMY8R3LoWt/DsrAqKQp49rhgXtLc3e3mn4wK30Z9bk=;
+        b=gkmbpd8bIKIIQEgsb7PEU+2r4ebECX1mH3jgU38dGjJQ8bwXIJG5GKLnoLrnX3Q1Tp
+         v1SDB6I1ZXgqhUT4odQ8aVr64tXRhQzQKUJB+gim+8tzuQBIEEgYa0NEh52zxV9MySl4
+         8hPqbEMycxVGQOzMT2ZoovSrn2sYCBWsQ2InRnJJnXhziW8CiS8uBVxVuagMUfjKujCp
+         HniHcll8yMXWX4ecEITXFam+QamI4BHfLL7Gcvl7S+kf3c4RHt8RoST1Bi3vdrXuETyI
+         Kn2nFOF6G8BTDLxmpQhXEOKSQ8HHgKI3g4y9E8Ezgf28cpYXwn+lC6jP8DwKEiXAfN4W
+         io5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HQMY8R3LoWt/DsrAqKQp49rhgXtLc3e3mn4wK30Z9bk=;
+        b=AVhWKFdBRWEDjvfbRO3xxsxDe8sB/Uegj/QLVR7IMofCQAq+oJCQVcodjNAbJt62rF
+         riGWrBSgMGl6TYfgV8bP3v1gYtwRCrasapvPKcye/w6iulRRaz2DP3STxSIoicExkh6T
+         P4ehpk7OiTA2/tOjwB0yGfPMl3BkKzhhVP8mWB4SJiq4mEuALq7fvwANNIXUDwxpxhQp
+         8jou18OnQghK/VIpO4cjVP8v9aHaF6oUuKuIxDMGbv+sqTBqmcoHa5ZgnPqrn8h7ONG+
+         XSo0q72vxnUoVT8RqMx86QMMGtg59QDPMDt3rrWwpIbw3b7jHW2Rqj/OfXw0WRW+L0tS
+         eYEw==
+X-Gm-Message-State: APjAAAVMoc06JGNqLYJkgqZJRuoWXhAnhqo0/Bk331j6a+glBc7D2Ssc
+        m6mYXtVeiLsVdbNrSp9MsxnN0hsYYsGIqBat6QERbQ==
+X-Google-Smtp-Source: APXvYqzbmu2DObIlWLfaO9ELFQorRtShpVBsWWzBcZIoobIaBkYXNLSVmLfU7WKSlp/DDnONAcCNR9yJlu88wu2FxpQ=
+X-Received: by 2002:a2e:9e03:: with SMTP id e3mr1170522ljk.186.1578440764122;
+ Tue, 07 Jan 2020 15:46:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200107175222.6B5052073D@mail.kernel.org>
+References: <1576475925-20601-1-git-send-email-daidavid1@codeaurora.org>
+In-Reply-To: <1576475925-20601-1-git-send-email-daidavid1@codeaurora.org>
+From:   Evan Green <evgreen@google.com>
+Date:   Tue, 7 Jan 2020 15:45:27 -0800
+Message-ID: <CAE=gft6sxsZfvPZZXKqbEMjCH_hGKXp_1MS3qTAz6hmMPfn09A@mail.gmail.com>
+Subject: Re: [PATCH v1 0/4] Split SDM845 interconnect nodes and consolidate
+ RPMh support
+To:     David Dai <daidavid1@codeaurora.org>
+Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, sboyd@kernel.org,
+        Lina Iyer <ilina@codeaurora.org>,
+        Sean Sweeney <seansw@qti.qualcomm.com>,
+        Alex Elder <elder@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-pm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 07, 2020 at 09:52:21AM -0800, Stephen Boyd wrote:
-> Quoting Brian Masney (2020-01-07 04:03:17)
-> > On Sun, Jan 05, 2020 at 12:35:33AM -0800, Stephen Boyd wrote:
-> > > Quoting Brian Masney (2019-12-04 16:25:00)
-> > > > +examples:
-> > > > +  - |
-> > > > +    #include <dt-bindings/clock/qcom,mmcc-msm8974.h>
-> > > > +    #include <dt-bindings/gpio/gpio.h>
-> > > > +
-> > > > +    vibrator {
-> > > > +        compatible = "clk-vibrator";
-> > > > +
-> > > > +        vcc-supply = <&pm8941_l19>;
-> > > > +
-> > > > +        clocks = <&mmcc CAMSS_GP1_CLK>;
-> > > > +        clock-names = "core";
-> > > > +        clock-frequency = <24000>;
-> > > > +
-> > > > +        enable-gpios = <&msmgpio 60 GPIO_ACTIVE_HIGH>;
-> > > > +
-> > > > +        pinctrl-names = "default";
-> > > > +        pinctrl-0 = <&vibrator_pin>;
-> > > 
-> > > I'm still trying to wrap my head around this. I think we can have a pwm
-> > > provider in a clk controller node (so imagine &mmcc has #pwm-cells) and
-> > > then this 'clk-vibrator' binding wouldn't exist? Instead we would have
-> > > some sort of binding for a device that expects a pwm and whatever else
-> > > is required, like the enable gpio and power supply. Is there an actual
-> > > hardware block that is this way? Does it have a real product id and is
-> > > made by some company? Right now this looks a little too generic to not
-> > > just be a catch-all for something that buzzes.
-> > 
-> > So have some of the Qualcomm clocks like this one register with both the
-> > clk and the pwm frameworks? I feel that approach would better represent
-> > the hardware in device tree.
-> 
-> That is one option. Or another option would be to have another node that
-> "adapts" a clk signal to a pwm provider. Similar to how we adapt a gpio
-> to make a clk gate or mux. Something like:
-> 
-> 	gcc: clock-controller@f00d {
-> 		reg = <0xf00d 0xd00d>;
-> 		#clock-cells = <1>;
-> 	};
-> 
-> 
-> 	pwm {
-> 		compatible = "pwm-clk";
-> 		#pwm-cells = <0>;
-> 		clocks = <&gcc 45>;
-> 		assigned-clocks = <&gcc 45>;
-> 		assigned-clock-rates = <1400000>;
-> 	};
-> 
-> And then the pwm-clk driver would adjust the duty cycle to generate a
-> pwm.
+On Sun, Dec 15, 2019 at 9:59 PM David Dai <daidavid1@codeaurora.org> wrote:
+>
+> While there are no current consumers of the SDM845 interconnect device in
+> devicetree, take this opportunity to redefine the interconnect device nodes
+> as the previous definitions of using a single child node under the apps_rsc
+> device did not accurately capture the description of the hardware.
+> The Network-On-Chip (NoC) interconnect devices should be represented in a
+> manner akin to QCS404 platforms[1] where there is a separation of NoC devices
+> and its RPM/RPMh counterparts.
+>
+> The bcm-voter devices are representing the RPMh devices that the interconnect
+> providers need to communicate with and there can be more than one instance of
+> the Bus Clock Manager (BCM) which can live under different instances of Resource
+> State Coordinators (RSC). There are display use cases where consumers may need
+> to target a different bcm-voter (Some display specific RSC) than the default,
+> and there needs to be a way to represent this connection in devicetree.
 
-OK, that makes sense.
+So for my own understanding, the problem here is that things want to
+vote for interconnect bandwidth within a specific RSC context? Where
+normally the RSC context is simply "Apps@EL1", we might also have
+"Apps@EL3" for trustzone, or in the case we're coding for,
+"display-specific RSC context". I guess this context might stay on
+even if Apps@EL1 votes are entirely discounted or off? So then would
+there be an additional interconnect provider for "display context RSC"
+next to apps_bcm_voter? Would that expose all the same nodes as
+apps_bcm_voter, or a different set of nodes?
 
-I'll pick this up after someone from Qualcomm posts a patch that
-implements the clock duty cycle. I'm willing to do that work if someone
-explains the relationship between the m, n, and d values on these clocks.
-
-Brian
+Assuming it's exposing some of the same nodes as apps_bcm_voter, the
+other way to do this would be increasing #interconnect-cells, and
+putting the RSC context there. Did you choose not to go that way
+because nearly all the clients would end up specifying the same thing
+of "Apps@EL1"?
