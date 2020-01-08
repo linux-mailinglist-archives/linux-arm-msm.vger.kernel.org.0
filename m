@@ -2,124 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BF9D9134A83
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2020 19:34:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26D6A134AE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2020 19:49:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726129AbgAHSea (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jan 2020 13:34:30 -0500
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:34932 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726002AbgAHSea (ORCPT
+        id S1728069AbgAHSs7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jan 2020 13:48:59 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:18010 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727427AbgAHSs7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jan 2020 13:34:30 -0500
-Received: by mail-pj1-f65.google.com with SMTP id s7so1450985pjc.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2020 10:34:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ycpN+XpOcmzf5Fswpp+TY6J3qUdx2wbF41rrLN2Bl/k=;
-        b=Rwnwk7EIjhAbXXR5fDaZqGVQXaJkfD91xDJX/5ih7jqvtCxL1tGSobiOPWVMbpXiTk
-         Xzgcesxc9wIeHKM38Q0U5cYDtg+ME3zIni9jOoWk3bywRrigA+qnq5qtO318U/SBD8UH
-         QbKwQtTfbvV7uC4pI+V48jc4LTI9G5eedlt7U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ycpN+XpOcmzf5Fswpp+TY6J3qUdx2wbF41rrLN2Bl/k=;
-        b=JoQXA7kGjPtT04POA686EIWQGwJ5oHmtQnsb7NqaU6S3dFw6I930x0rsH8Wx6p1cqm
-         B5taYN+ItHr3dw/inU0VCBf12jK6cnuSIuZICbVT64IScuZqJwW7VEri8EMn3lOrwsZd
-         jCk7HywEriw2vWH1uqU5xVjMiUCRowvJfJunxXeQKAvoA6Ap5lySZ1viiL7jE6XB9AZ8
-         WnBxKQrgg2jOXhny/AkKtDhoNjpqNhrUGIZCLO5vK+b2OltP7BOPAo07wkDv1W1Zmlvq
-         RAug+YAcTYjU60JnhANmwdLrO2CNmPBHuU860WxcgliFxmFK0Xh1dm6Ij6xx/72ZaTWM
-         qL3A==
-X-Gm-Message-State: APjAAAXQCZRYuD8Z5wlzGyB6eyRmClKR+bYEf5mSaGeIO0lxf15iVafn
-        tNoR1GA9QZoHUfh5HoHBIdUagA==
-X-Google-Smtp-Source: APXvYqwFFiua/Q28cb39Q52i6MM5ymiTmVYVZBEZ/535aaJp/yYe9FvOHXWjDhnkEmklHYuX2LyxhA==
-X-Received: by 2002:a17:90a:cf07:: with SMTP id h7mr5823396pju.66.1578508469499;
-        Wed, 08 Jan 2020 10:34:29 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id t1sm4695406pgq.23.2020.01.08.10.34.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jan 2020 10:34:28 -0800 (PST)
-Date:   Wed, 8 Jan 2020 10:34:27 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Rocky Liao <rjliao@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] Bluetooth: hci_qca: Add qca_power_on() API to
- support both wcn399x and Rome power up
-Message-ID: <20200108183427.GE89495@google.com>
-References: <20200107052601.32216-1-rjliao@codeaurora.org>
- <20200108090804.22889-1-rjliao@codeaurora.org>
+        Wed, 8 Jan 2020 13:48:59 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1578509338; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=gTr19O6/h1bieTEtOdTwKJcuvZEZhmSsjFCuP6lT+N4=; b=S+juTaNj2fbdEoi+tX1SV3RRMdgXGyfD6wfeMXeUti93FLUSEije0raYr63EXfJ2Z5yiSXvu
+ /igURp9Apn/JgxHmh2r5nB0hXVjCHCTn+cNCsgwdskOvwMHEo8T2fERq7DPcMm+eyBqdWLoX
+ i2tWvxyVTk75ckWHAUOl8dV/9jo=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e162418.7f8a0f7f6d50-smtp-out-n01;
+ Wed, 08 Jan 2020 18:48:56 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 021D2C4479C; Wed,  8 Jan 2020 18:48:55 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B59D8C4479F;
+        Wed,  8 Jan 2020 18:48:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B59D8C4479F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Wed, 8 Jan 2020 11:48:50 -0700
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/3] drm/msm: support firmware-name for zap fw
+Message-ID: <20200108184850.GA13260@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20200108013847.899170-1-robdclark@gmail.com>
+ <20200108013847.899170-2-robdclark@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200108090804.22889-1-rjliao@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200108013847.899170-2-robdclark@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rocky,
-
-On Wed, Jan 08, 2020 at 05:08:02PM +0800, Rocky Liao wrote:
-> This patch adds a unified API qca_power_on() to support both wcn399x and
-> Rome power on. For wcn399x it calls the qca_wcn3990_init() to init the
-> regulators, and for Rome it pulls up the bt_en GPIO to power up the btsoc.
+On Tue, Jan 07, 2020 at 05:38:42PM -0800, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+> Since zap firmware can be device specific, allow for a firmware-name
+> property in the zap node to specify which firmware to load, similarly to
+> the scheme used for dsp/wifi/etc.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 32 ++++++++++++++++++++++---
+>  1 file changed, 29 insertions(+), 3 deletions(-)
 > 
-> Changes in v2: None
-> 
->  drivers/bluetooth/hci_qca.c | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
-> 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index 9392cc7f9908..f6555bd1adbc 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1532,6 +1532,27 @@ static int qca_wcn3990_init(struct hci_uart *hu)
->  	return 0;
->  }
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index 112e8b8a261e..aa8737bd58db 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -26,6 +26,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+>  {
+>  	struct device *dev = &gpu->pdev->dev;
+>  	const struct firmware *fw;
+> +	const char *signed_fwname = NULL;
+>  	struct device_node *np, *mem_np;
+>  	struct resource r;
+>  	phys_addr_t mem_phys;
+> @@ -58,8 +59,33 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
 >  
-> +static int qca_power_on(struct hci_dev *hdev)
-> +{
-> +	struct hci_uart *hu = hci_get_drvdata(hdev);
-> +	enum qca_btsoc_type soc_type = qca_soc_type(hu);
-> +	struct qca_serdev *qcadev;
-> +	int ret = 0;
-> +
-> +	if (qca_is_wcn399x(soc_type)) {
-
-Why not include the qca_regulator_enable() call from qca_open() here?
-It is clearly part of power on.
-
-> +		ret = qca_wcn3990_init(hu);
-> +	} else {
-> +		if (hu->serdev) {
-
-nit: you could save a level of indentation (and IMO improve
-readability) by doing:
-
-     	       if (!hu->serdev)
-	            	return 0;
-
-> +			qcadev = serdev_device_get_drvdata(hu->serdev);
-> +			gpiod_set_value_cansleep(qcadev->bt_en, 1);
-> +			/* Controller needs time to bootup. */
-> +			msleep(150);
+>  	mem_phys = r.start;
+>  
+> -	/* Request the MDT file for the firmware */
+> -	fw = adreno_request_fw(to_adreno_gpu(gpu), fwname);
+> +	/*
+> +	 * Check for a firmware-name property.  This is the new scheme
+> +	 * to handle firmware that may be signed with device specific
+> +	 * keys, allowing us to have a different zap fw path for different
+> +	 * devices.
+> +	 *
+> +	 * If the firmware-name property is found, we bypass the
+> +	 * adreno_request_fw() mechanism, because we don't need to handle
+> +	 * the /lib/firmware/qcom/* vs /lib/firmware/* case.
+> +	 *
+> +	 * If the firmware-name property is not found, for backwards
+> +	 * compatibility we fall back to the fwname from the gpulist
+> +	 * table.
+> +	 */
+> +	of_property_read_string_index(np, "firmware-name", 0, &signed_fwname);
+> +	if (signed_fwname) {
+> +		fwname = signed_fwname;
+> +		ret = request_firmware_direct(&fw, signed_fwname, gpu->dev->dev);
+> +		if (ret) {
+> +			DRM_DEV_ERROR(dev, "could not load signed zap firmware: %d\n", ret);
+> +			fw = ERR_PTR(ret);
 > +		}
+> +	} else {
+> +		/* Request the MDT file for the firmware */
+> +		fw = adreno_request_fw(to_adreno_gpu(gpu), fwname);
 > +	}
 > +
-> +	return ret;
-> +}
-> +
 
-I think common practice would be to combine the 3 patches of this series
-into one. The new function doesn't really add any new functionality, but
-is a refactoring. This is more evident if you see in a single diff that
-the pieces in qca_power_on() are removed elsewhere.
+Since DT seems to be the trend for target specific firmware names I think we
+should plan to quickly deprecate the legacy name and not require new targets to
+set it. If a zap node is going to be opt in then it isn't onerous to ask
+the developer to set the additional property for each target platform.
+
+Jordan
+
+>  	if (IS_ERR(fw)) {
+>  		DRM_DEV_ERROR(dev, "Unable to load %s\n", fwname);
+>  		return PTR_ERR(fw);
+> @@ -95,7 +121,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+>  	 * not.  But since we've already gotten through adreno_request_fw()
+>  	 * we know which of the two cases it is:
+>  	 */
+> -	if (to_adreno_gpu(gpu)->fwloc == FW_LOCATION_LEGACY) {
+> +	if (signed_fwname || (to_adreno_gpu(gpu)->fwloc == FW_LOCATION_LEGACY)) {
+>  		ret = qcom_mdt_load(dev, fw, fwname, pasid,
+>  				mem_region, mem_phys, mem_size, NULL);
+>  	} else {
+> -- 
+> 2.24.1
+> 
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
