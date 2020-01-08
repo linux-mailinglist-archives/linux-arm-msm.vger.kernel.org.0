@@ -2,325 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4022B13456A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2020 15:55:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DE34134664
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2020 16:38:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727841AbgAHOzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jan 2020 09:55:12 -0500
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:25861 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727164AbgAHOzM (ORCPT
+        id S1727542AbgAHPiS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jan 2020 10:38:18 -0500
+Received: from us-smtp-delivery-1.mimecast.com ([207.211.31.120]:44124 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726254AbgAHPiR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jan 2020 09:55:12 -0500
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 08 Jan 2020 20:25:07 +0530
-Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 08 Jan 2020 20:24:44 +0530
-Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
-        id 823253502; Wed,  8 Jan 2020 20:24:42 +0530 (IST)
-From:   Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-To:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
-        robh+dt@kernel.org, mka@chromium.org
-Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 8 Jan 2020 10:38:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1578497897;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=1eGeIWiwUf1mluye9R+kVxpOKPsNVjl3zOy6Wq1gu+k=;
+        b=HIWqvjWtqPUKjjHa4DVnVG8BYlXg/obFZ6lTD6570V1tkX6Y4u9+ai2eLcghtOoWahc0cL
+        caLWvJw8Dvs9xl62uOOJEY9eQcvycJQ0L9w3WwX5V521iEFo6+QOZRjceD2d8YMs9baysy
+        MYLfeaaKlq3dJSGxiv5egJWXop18+3Y=
+Received: from mail-yw1-f69.google.com (mail-yw1-f69.google.com
+ [209.85.161.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-271-xx9RyroMN9250L-EoK7JYQ-1; Wed, 08 Jan 2020 10:38:16 -0500
+X-MC-Unique: xx9RyroMN9250L-EoK7JYQ-1
+Received: by mail-yw1-f69.google.com with SMTP id e128so2503297ywc.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2020 07:38:16 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=1eGeIWiwUf1mluye9R+kVxpOKPsNVjl3zOy6Wq1gu+k=;
+        b=KM3WoG3jscrBQPT0TaBwmSEIXp9P6h3iaMKFyG2AzTp2P7eoh3vHBcpfIMIeep4hR3
+         Hi1CKHCjqVromW15CPG8gfnffV+puFzmbzC6M2/O5X2IHjNwRUR0IMRHTSf1UplXyULe
+         fw5Trh+6Av0Pt5Y++1XU+xf6lnUbPLwUVHNa50CLTZtfAN0IwWjQub6ZUcuBA4IxKpIV
+         tUgfnTABB0Oq0ZlvcJPuKYNEBMCxmbZ2aJAw4DPiAsQD8N2pR7ekgj1mEQNPGnCQOMkE
+         FMGZHO+pLcGyn9NcKIDXxaI3awEi5yjKy+zfV/8nluMiKzQk8QtET5UmtFWyLgNsmeE8
+         oZIg==
+X-Gm-Message-State: APjAAAXrQrty6Zg1aZUDvbMtmZN1OfHOQduqPwgby2Qr8g5m3I4SYMNg
+        aZUirfKCVTmJxsfSVg0KBW+jMr/QKz9JVzsRHn3lJ+FwE7UEzxmb24MtHCtT6c9IQZ79OVF4R4l
+        vwtuxzRjvthhojVURCgtR4CdyrQ==
+X-Received: by 2002:a81:1b45:: with SMTP id b66mr3776946ywb.435.1578497895738;
+        Wed, 08 Jan 2020 07:38:15 -0800 (PST)
+X-Google-Smtp-Source: APXvYqwQZmJI4VQh+Cl1LLv1EgTRLeZDIIYl7gaRjBgl5k3h96bkDfJduVd+FgdSyHJqPABucCPzYg==
+X-Received: by 2002:a81:1b45:: with SMTP id b66mr3776918ywb.435.1578497895426;
+        Wed, 08 Jan 2020 07:38:15 -0800 (PST)
+Received: from trix.remote.csb ([75.142.250.213])
+        by smtp.gmail.com with ESMTPSA id n8sm1583723ywh.75.2020.01.08.07.38.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Jan 2020 07:38:15 -0800 (PST)
+Subject: Re: [PATCH 1/3] drm/msm: support firmware-name for zap fw
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>
-Subject: [PATCH V3] arm64: dts: qcom: sc7180: Add nodes for eMMC and SD card
-Date:   Wed,  8 Jan 2020 20:24:10 +0530
-Message-Id: <1578495250-10672-1-git-send-email-sbhanu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20200108013847.899170-1-robdclark@gmail.com>
+ <20200108013847.899170-2-robdclark@gmail.com>
+From:   Tom Rix <trix@redhat.com>
+Message-ID: <37d0baaa-3f94-9414-88e7-7e849b0c5de5@redhat.com>
+Date:   Wed, 8 Jan 2020 07:38:12 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.0
+MIME-Version: 1.0
+In-Reply-To: <20200108013847.899170-2-robdclark@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
 
-Add sdhc instances for supporting eMMC and SD-card on sc7180.
-The regulators should be in HPM state for proper functionality of
-eMMC and SD-card. Updating corresponding regulators accordingly.
-
-Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
----
-Changes since V2:
-	- Added cmdq register space and support-cqe flag.
-	- Incorporated review comments by Matthias Kaehlcke.
-
-Changes since V1:
-	- Updated the regulator min, max voltages as per
-	  eMMC/SD-card voltage requirements
-	- Enabled IOMMU for eMMC and SD-card.
-	- Added pull and drive strength to SD-card cd-gpio.
-	- Incorporated review comments by Matthias Kaehlcke.
----
- arch/arm64/boot/dts/qcom/sc7180-idp.dts |  47 +++++++---
- arch/arm64/boot/dts/qcom/sc7180.dtsi    | 148 ++++++++++++++++++++++++++++++++
- 2 files changed, 183 insertions(+), 12 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 388f50a..a790d82 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -7,6 +7,7 @@
- 
- /dts-v1/;
- 
-+#include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sc7180.dtsi"
- #include "pm6150.dtsi"
-@@ -101,9 +102,9 @@
- 		};
- 
- 		vreg_l12a_1p8: ldo12 {
--			regulator-min-microvolt = <1696000>;
--			regulator-max-microvolt = <1952000>;
--			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l13a_1p8: ldo13 {
-@@ -143,9 +144,9 @@
- 		};
- 
- 		vreg_l19a_2p9: ldo19 {
--			regulator-min-microvolt = <2696000>;
--			regulator-max-microvolt = <3304000>;
--			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 	};
- 
-@@ -189,9 +190,9 @@
- 		};
- 
- 		vreg_l6c_2p9: ldo6 {
--			regulator-min-microvolt = <2696000>;
--			regulator-max-microvolt = <3304000>;
--			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l7c_3p0: ldo7 {
-@@ -207,9 +208,9 @@
- 		};
- 
- 		vreg_l9c_2p9: ldo9 {
--			regulator-min-microvolt = <2952000>;
--			regulator-max-microvolt = <3304000>;
--			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l10c_3p3: ldo10 {
-@@ -254,6 +255,28 @@
- 	status = "okay";
- };
- 
-+&sdhc_1 {
-+	status = "okay";
-+
-+	pinctrl-names = "default", "sleep";
-+	pinctrl-0 = <&sdc1_on>;
-+	pinctrl-1 = <&sdc1_off>;
-+	vmmc-supply = <&vreg_l19a_2p9>;
-+	vqmmc-supply = <&vreg_l12a_1p8>;
-+};
-+
-+&sdhc_2 {
-+	status = "okay";
-+
-+	pinctrl-names = "default","sleep";
-+	pinctrl-0 = <&sdc2_on>;
-+	pinctrl-1 = <&sdc2_off>;
-+	vmmc-supply  = <&vreg_l9c_2p9>;
-+	vqmmc-supply = <&vreg_l6c_2p9>;
-+
-+	cd-gpios = <&tlmm 69 GPIO_ACTIVE_LOW>;
-+};
-+
- &uart3 {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 3676bfd..525bc02 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -226,6 +226,33 @@
- 			};
- 		};
- 
-+		sdhc_1: sdhci@7c4000 {
-+			compatible = "qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
-+			reg = <0 0x7c4000 0 0x1000>,
-+				<0 0x07c5000 0 0x1000>;
-+			reg-names = "hc_mem", "cqhci_mem";
-+
-+			iommus = <&apps_smmu 0x60 0x0>;
-+			interrupts = <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 644 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hc_irq", "pwr_irq";
-+
-+			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
-+					<&gcc GCC_SDCC1_AHB_CLK>;
-+			clock-names = "core", "iface";
-+
-+			bus-width = <8>;
-+			non-removable;
-+			supports-cqe;
-+
-+			mmc-ddr-1_8v;
-+			mmc-hs200-1_8v;
-+			mmc-hs400-1_8v;
-+			mmc-hs400-enhanced-strobe;
-+
-+			status = "disabled";
-+		};
-+
- 		qupv3_id_0: geniqup@8c0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0 0x008c0000 0 0x6000>;
-@@ -929,6 +956,127 @@
- 					function = "qup15";
- 				};
- 			};
-+
-+			sdc1_on: sdc1-on {
-+				pinconf-clk {
-+					pins = "sdc1_clk";
-+					bias-disable;
-+					drive-strength = <16>;
-+				};
-+
-+				pinconf-cmd {
-+					pins = "sdc1_cmd";
-+					bias-pull-up;
-+					drive-strength = <10>;
-+				};
-+
-+				pinconf-data {
-+					pins = "sdc1_data";
-+					bias-pull-up;
-+					drive-strength = <10>;
-+				};
-+
-+				pinconf-rclk {
-+					pins = "sdc1_rclk";
-+					bias-pull-down;
-+				};
-+			};
-+
-+			sdc1_off: sdc1-off {
-+				pinconf-clk {
-+					pins = "sdc1_clk";
-+					bias-disable;
-+					drive-strength = <2>;
-+				};
-+
-+				pinconf-cmd {
-+					pins = "sdc1_cmd";
-+					bias-pull-up;
-+					drive-strength = <2>;
-+				};
-+
-+				pinconf-data {
-+					pins = "sdc1_data";
-+					bias-pull-up;
-+					drive-strength = <2>;
-+				};
-+
-+				pinconf-rclk {
-+					pins = "sdc1_rclk";
-+					bias-pull-down;
-+				};
-+			};
-+
-+			sdc2_on: sdc2-on {
-+				pinconf-clk {
-+					pins = "sdc2_clk";
-+					bias-disable;
-+					drive-strength = <16>;
-+				};
-+
-+				pinconf-cmd {
-+					pins = "sdc2_cmd";
-+					bias-pull-up;
-+					drive-strength = <10>;
-+				};
-+
-+				pinconf-data {
-+					pins = "sdc2_data";
-+					bias-pull-up;
-+					drive-strength = <10>;
-+				};
-+
-+				pinconf-sd-cd {
-+					pins = "gpio69";
-+					bias-pull-up;
-+					drive-strength = <2>;
-+				};
-+			};
-+
-+			sdc2_off: sdc2-off {
-+				pinconf-clk {
-+					pins = "sdc2_clk";
-+					bias-disable;
-+					drive-strength = <2>;
-+				};
-+
-+				pinconf-cmd {
-+					pins = "sdc2_cmd";
-+					bias-pull-up;
-+					drive-strength = <2>;
-+				};
-+
-+				pinconf-data {
-+					pins = "sdc2_data";
-+					bias-pull-up;
-+					drive-strength = <2>;
-+				};
-+
-+				pinconf-sd-cd {
-+					pins = "gpio69";
-+					bias-disable;
-+					drive-strength = <2>;
-+				};
-+			};
-+		};
-+
-+		sdhc_2: sdhci@8804000 {
-+			compatible = "qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
-+			reg = <0 0x08804000 0 0x1000>;
-+			reg-names = "hc_mem";
-+
-+			iommus = <&apps_smmu 0x80 0>;
-+			interrupts = <GIC_SPI 204 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hc_irq", "pwr_irq";
-+
-+			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
-+					<&gcc GCC_SDCC2_AHB_CLK>;
-+			clock-names = "core", "iface";
-+
-+			bus-width = <4>;
-+
-+			status = "disabled";
- 		};
- 
- 		qspi: spi@88dc000 {
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+On 1/7/20 5:38 PM, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+>
+> Since zap firmware can be device specific, allow for a firmware-name
+> property in the zap node to specify which firmware to load, similarly to
+> the scheme used for dsp/wifi/etc.
+>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 32 ++++++++++++++++++++++---
+>  1 file changed, 29 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index 112e8b8a261e..aa8737bd58db 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -26,6 +26,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+>  {
+>  	struct device *dev = &gpu->pdev->dev;
+>  	const struct firmware *fw;
+> +	const char *signed_fwname = NULL;
+>  	struct device_node *np, *mem_np;
+>  	struct resource r;
+>  	phys_addr_t mem_phys;
+> @@ -58,8 +59,33 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+>  
+>  	mem_phys = r.start;
+>  
+> -	/* Request the MDT file for the firmware */
+> -	fw = adreno_request_fw(to_adreno_gpu(gpu), fwname);
+> +	/*
+> +	 * Check for a firmware-name property.  This is the new scheme
+> +	 * to handle firmware that may be signed with device specific
+> +	 * keys, allowing us to have a different zap fw path for different
+> +	 * devices.
+> +	 *
+> +	 * If the firmware-name property is found, we bypass the
+> +	 * adreno_request_fw() mechanism, because we don't need to handle
+> +	 * the /lib/firmware/qcom/* vs /lib/firmware/* case.
+> +	 *
+> +	 * If the firmware-name property is not found, for backwards
+> +	 * compatibility we fall back to the fwname from the gpulist
+> +	 * table.
+> +	 */
+> +	of_property_read_string_index(np, "firmware-name", 0, &signed_fwname);
+> +	if (signed_fwname) {
+> +		fwname = signed_fwname;
+> +		ret = request_firmware_direct(&fw, signed_fwname, gpu->dev->dev);
+> +		if (ret) {
+> +			DRM_DEV_ERROR(dev, "could not load signed zap firmware: %d\n", ret);
+Could adreno_request_fw be called with fwname if request_firmware_direct fails ?
+> +			fw = ERR_PTR(ret);
+> +		}
+> +	} else {
+> +		/* Request the MDT file for the firmware */
+> +		fw = adreno_request_fw(to_adreno_gpu(gpu), fwname);
+> +	}
+> +
+>  	if (IS_ERR(fw)) {
+>  		DRM_DEV_ERROR(dev, "Unable to load %s\n", fwname);
+>  		return PTR_ERR(fw);
+> @@ -95,7 +121,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+>  	 * not.  But since we've already gotten through adreno_request_fw()
+>  	 * we know which of the two cases it is:
+>  	 */
+> -	if (to_adreno_gpu(gpu)->fwloc == FW_LOCATION_LEGACY) {
+> +	if (signed_fwname || (to_adreno_gpu(gpu)->fwloc == FW_LOCATION_LEGACY)) {
+>  		ret = qcom_mdt_load(dev, fw, fwname, pasid,
+>  				mem_region, mem_phys, mem_size, NULL);
+>  	} else {
 
