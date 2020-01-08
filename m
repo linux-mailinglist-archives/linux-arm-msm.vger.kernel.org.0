@@ -2,100 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AB3B6133B36
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2020 06:34:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EBA5133B73
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2020 06:53:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726131AbgAHFem (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jan 2020 00:34:42 -0500
-Received: from aserp2120.oracle.com ([141.146.126.78]:44314 "EHLO
-        aserp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726079AbgAHFem (ORCPT
+        id S1726290AbgAHFxh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jan 2020 00:53:37 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:46378 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726276AbgAHFxg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jan 2020 00:34:42 -0500
-Received: from pps.filterd (aserp2120.oracle.com [127.0.0.1])
-        by aserp2120.oracle.com (8.16.0.27/8.16.0.27) with SMTP id 0085TZAE073063;
-        Wed, 8 Jan 2020 05:34:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : mime-version : content-type; s=corp-2019-08-05;
- bh=Y0nRxvFnlwm/w8fldZ84iPvdgUL+DTApQsSuDHD8AsM=;
- b=mwJJ5uC2acnj6s3YSsWWpSCE0E/pwqD7nT7W7vlTBTU4bbJy4sQT5jxgAiQBiAy5HRF8
- h16OlD44RutT0UJEc9TkA5MRY+Nc8kQWGBFZBgnSDbF8u3AdzSuvdtS3cD4pDQOhbsh1
- yU/YcKhFaERv5vsEROy3/058cY7dtqxzsCa8tBqmSARM9C2t8hvsgoiykhNTkI9Ab0d9
- h9hVDYffOdmIvotqBQqNz6S4vax8RQA1X49q0B/RWpc2XQ2sn+SLW1EQ9JudMEnlnbQt
- eaWcu3ATtTsaOIirb9z5r6LfhoZnZ8p44lwCZfBxR7xMOI5K1GK51TmMzyvGMLWGbnr/ nw== 
-Received: from userp3030.oracle.com (userp3030.oracle.com [156.151.31.80])
-        by aserp2120.oracle.com with ESMTP id 2xajnq1mud-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 08 Jan 2020 05:34:32 +0000
-Received: from pps.filterd (userp3030.oracle.com [127.0.0.1])
-        by userp3030.oracle.com (8.16.0.27/8.16.0.27) with SMTP id 0085YA2c014405;
-        Wed, 8 Jan 2020 05:34:31 GMT
-Received: from aserv0121.oracle.com (aserv0121.oracle.com [141.146.126.235])
-        by userp3030.oracle.com with ESMTP id 2xcjvesuxb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 08 Jan 2020 05:34:31 +0000
-Received: from abhmp0013.oracle.com (abhmp0013.oracle.com [141.146.116.19])
-        by aserv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 0085YTN6010818;
-        Wed, 8 Jan 2020 05:34:29 GMT
-Received: from kili.mountain (/129.205.23.165)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Tue, 07 Jan 2020 21:34:29 -0800
-Date:   Wed, 8 Jan 2020 08:34:18 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     Andy Gross <agross@kernel.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>, Nishanth Menon <nm@ti.com>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org
-Subject: [PATCH] power: avs: qcom-cpr: Fix error code in
- cpr_fuse_corner_init()
-Message-ID: <20200108053418.tjc62uppube6q4q3@kili.mountain>
+        Wed, 8 Jan 2020 00:53:36 -0500
+Received: by mail-pg1-f194.google.com with SMTP id z124so987177pgb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jan 2020 21:53:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YoB041Qi6gAAsKDfeXTiJLvWYKMaZ3RNSLAQlXIIIG0=;
+        b=rmY/HpS/mbpy6xWHZc+XG8LDePEJw8nEDOE0yYUwMpcMbWnwWD4ibVlbu0EtJt9XGY
+         WTpuQENnkbkloGePmvTrH2uDl2i4ocs//5xYYKO8sKEFe0NOUpPL4H9cv36+Fa8Wv+o8
+         73u1xiZnqzTqz5nGn/h2l3h++gMTHvf/Qtf1wA3lblGcMZ9vIHGoEvJhTiocXpKJ45Ma
+         qGZTgblO1msz7vOzp8YrREaSyZ+2UCokkTEp7+vGdJIBFAnzrJfwO1K1VOYPbogtinNp
+         8LCL2gseqtHo1MnNLTdgnZ1qS+wMFzm8MCoHr2YBTHVLTj0+yQg+Qs3d5+d/U5ZDryb0
+         ptVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YoB041Qi6gAAsKDfeXTiJLvWYKMaZ3RNSLAQlXIIIG0=;
+        b=ghGs1sou1cY70cOEwL+wgoGu51Ttu0ZZXSmTPxdw/R2FZPXPf4hDA51FBL4/twzQzx
+         PK68Ae5AjDua+d0miLaGwFDUaMRIQMLeirOYCMrLBJD9n8INVHVJyNLYLuppoIk8g+Rm
+         nLYsM3zuDcoppi6AOBuck77U4BDsR1T+m4buz2WK39CXKRRLmNdHRKPjM933t3iUdMbH
+         wkYExcWwlCcgXjbRKaLv1TO4bBjOZYQiyGNNGEjZX11wxU0YxPLOhreI6K4zI5phpmDX
+         DBuZsjITn9D0UgHmlL+aoq+ikfnE2x+GFyRPI+Rfm0HiRyFm9LGpgtyMpi+z3yMydHrW
+         n3hw==
+X-Gm-Message-State: APjAAAX7detGc4zaaXEq4iHzGQmU3qzLKAFjKgWF7Ph00A0S6hTRNi8p
+        YGsbkuW7olsFIgV7LLIQbUZEnA==
+X-Google-Smtp-Source: APXvYqzw6INjJz8mKK7BZ2+aIxdsMGb+ExuIJpa29ybtjU6VtPqSIZdlwTCJ4IiEtL1Rb8g/wUwGUA==
+X-Received: by 2002:a65:5786:: with SMTP id b6mr3555590pgr.316.1578462816142;
+        Tue, 07 Jan 2020 21:53:36 -0800 (PST)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id b8sm1643971pff.114.2020.01.07.21.53.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jan 2020 21:53:35 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Ohad Ben-Cohen <ohad@wizery.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] remoteproc: qcom: wcnss: Allow specifying firmware-name
+Date:   Tue,  7 Jan 2020 21:52:52 -0800
+Message-Id: <20200108055252.639791-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email haha only kidding
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9493 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1911140001 definitions=main-2001080048
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9493 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
- suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
- lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1911140001
- definitions=main-2001080048
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We're returning the wrong variable.  "ret" isn't initialized.
+Introduce a firmware-name property, in order to be able to support
+device/platform specific firmware for the wireless connectivity
+subsystem; in line with other Qualcomm remoteproc drivers.
 
-Fixes: bf6910abf548 ("power: avs: Add support for CPR (Core Power Reduction)")
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/power/avs/qcom-cpr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/remoteproc/qcom,wcnss-pil.txt     | 6 ++++++
+ drivers/remoteproc/qcom_wcnss.c                           | 8 +++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/avs/qcom-cpr.c b/drivers/power/avs/qcom-cpr.c
-index 9247f53550b3..0321729431a5 100644
---- a/drivers/power/avs/qcom-cpr.c
-+++ b/drivers/power/avs/qcom-cpr.c
-@@ -922,7 +922,7 @@ static int cpr_fuse_corner_init(struct cpr_drv *drv)
- 		uV = cpr_read_fuse_uV(desc, fdata, fuses->init_voltage,
- 				      step_volt, drv);
- 		if (uV < 0)
--			return ret;
-+			return uV;
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
+index d420f84ddfb0..00844a5d2ccf 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
+@@ -34,6 +34,12 @@ on the Qualcomm WCNSS core.
+ 	Definition: should be "wdog", "fatal", optionally followed by "ready",
+ 		    "handover", "stop-ack"
  
- 		fuse->min_uV = fdata->min_uV;
- 		fuse->max_uV = fdata->max_uV;
++- firmware-name:
++	Usage: optional
++	Value type: <string>
++	Definition: must list the relative firmware image path for the
++		    WCNSS core.
++
+ - vddmx-supply:
+ - vddcx-supply:
+ - vddpx-supply:
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index dc135754bb9c..a0468b3cc76f 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -457,6 +457,7 @@ static int wcnss_alloc_memory_region(struct qcom_wcnss *wcnss)
+ 
+ static int wcnss_probe(struct platform_device *pdev)
+ {
++	const char *fw_name = WCNSS_FIRMWARE_NAME;
+ 	const struct wcnss_data *data;
+ 	struct qcom_wcnss *wcnss;
+ 	struct resource *res;
+@@ -474,8 +475,13 @@ static int wcnss_probe(struct platform_device *pdev)
+ 		return -ENXIO;
+ 	}
+ 
++	ret = of_property_read_string(pdev->dev.of_node, "firmware-name",
++				      &fw_name);
++	if (ret < 0 && ret != -EINVAL)
++		return ret;
++
+ 	rproc = rproc_alloc(&pdev->dev, pdev->name, &wcnss_ops,
+-			    WCNSS_FIRMWARE_NAME, sizeof(*wcnss));
++			    fw_name, sizeof(*wcnss));
+ 	if (!rproc) {
+ 		dev_err(&pdev->dev, "unable to allocate remoteproc\n");
+ 		return -ENOMEM;
 -- 
-2.11.0
+2.24.0
 
