@@ -2,148 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 76051134B39
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2020 20:04:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80922134D24
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2020 21:24:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729740AbgAHTEx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jan 2020 14:04:53 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:32922 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728889AbgAHTEw (ORCPT
+        id S1726620AbgAHUYW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jan 2020 15:24:22 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:40429 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726426AbgAHUYW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jan 2020 14:04:52 -0500
-Received: by mail-pl1-f196.google.com with SMTP id ay11so1472813plb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2020 11:04:52 -0800 (PST)
+        Wed, 8 Jan 2020 15:24:22 -0500
+Received: by mail-pg1-f195.google.com with SMTP id k25so2087271pgt.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2020 12:24:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=WuNXLxL+1sMtBQwv2K4eumVoHhxOxma8tmqoVufR3Bo=;
-        b=DXG1ZtsIcjDxidZu/VinHygy2TnOOMWJCkW68fgKSoLzbNQuosPVTfeFICr2WeZO/o
-         jEz4NM8gdLtyyjADFqAgi02ttsRMWhyxHSbz5o4LuO+7Qy+BKExbX7qFidFEVzrX+vZK
-         KCmZzBTJoCG6A7mi/a10GpnVfSa38TbwRFAE5dP+gHSQ8rrsUTznxoim7ZKKbcFH5jgf
-         EpOSKff4YTs5tRjobJ+zZoXvlf/3o0g9v6X+GCj1MkzoIb8HMcjcLlj7XGqVNh8GXcsC
-         LANolYpfTQ6cB62xGw/ttyTOV93kTgQ0xpDe0xCWHoFl4YEWonrWZ0wIMwCzLzJBXHUe
-         FtpQ==
+        bh=UIXqgaiVWae8Bhi+dC+q5rSp1vgGUZgQyrqPawYppjo=;
+        b=V7BfQX1BvUdYAxjWvcUf0XpDhT5nkjUkA7/08jlIQRhx+EBJ7vNuiDz6uNW55ElOpD
+         hsXEXbULovv6CtYsUmmP6cBFmWd6MywDjCJSYYeSc8ucQtBommmqdgUbP6EJ6zN+e1eP
+         dtZfTyZo4b40dD/x8Wkw0t+Dicv6+qPrkDRiqVXQqL1rmT4sV/U77jQgOXrxyZP5vDfp
+         4q5GRwgZS5ACG6mznYllo0kxC96dCRgRlbhgId72HAuWs2GYQim0s3NTfCVKOHLLC0K8
+         LjfoRs4N9OgE7vdhs5A0MOWe13w9B3OJN7hy28OuVnrgbcmXEyDz5l5FySrOn+8tbCBQ
+         CqLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WuNXLxL+1sMtBQwv2K4eumVoHhxOxma8tmqoVufR3Bo=;
-        b=GxbKhm/JAhxMlo/mnBr03adP1oG+YT6R6agL3RyzYB65qQT3qA0xY5SDpdzowfip2b
-         Z2yotZDG8Piv3io5dFv4UKQdi9DDl2eoy1mS2Whf8sXbaFYBBk+fP2YEgq5jiBGwPs0D
-         JBxr2XBB/7WqCVcmpNVRRAyaYc7F3bMRPmJOmLOlC2saN4JvXKI40VPSVyru5CGgDPaA
-         RLmJVejHaqA8XyRQzefUKsAFXWhZKWKWRBPQgLg7oYURQdXNI4XkUEzuea7sFSGjk0Vw
-         SbsH9I7cT+CQfXZzIoeGRGYHTO57XVr/eQvXtJsLTJFeCHmX3Tv4xmT4WaKUL3DxaF5+
-         ezYQ==
-X-Gm-Message-State: APjAAAW5wWgLL9D+NFJq+1+nz5HCDMJfJ2NfI2rBr1RM8nHrfpgnW5EX
-        HldRrLvJew/eVv3f8d0vXT+W6g==
-X-Google-Smtp-Source: APXvYqzdDG6/dcVOe88U3YPEnVAhW9Km4txL2BJeQX8JE8h8UKIkAzsn0ducTYHl8ZhNVbgcVE0nwg==
-X-Received: by 2002:a17:902:b701:: with SMTP id d1mr5876172pls.280.1578510291991;
-        Wed, 08 Jan 2020 11:04:51 -0800 (PST)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id u127sm4731367pfc.95.2020.01.08.11.04.50
+        bh=UIXqgaiVWae8Bhi+dC+q5rSp1vgGUZgQyrqPawYppjo=;
+        b=rRvhUQZYdYgAOzb4lFNEZ3r+hYkWZLvdKu3B0Q4AOefKDdNUPkrX85nbHwfJdJYJvw
+         /hCEdxX1nIwejuAzqVJAcvdYj5w3Lk1sXAA8S+HhdomwIIuJJtj2Ha6zZLOA1h3NS7/w
+         9tBWHPgZgFyyfOeBjnFTTcDS1IE8wF33M3qWfx+0I6DeHlzKX+39gue+Qs9+z3OYyChy
+         MnqYX2xn5b6rAk9/0JhTbRH2/qDBHeExQbofTMzeXaUwt9mU2Al8ehGu09glJSl4PQaT
+         6x+9qa9i1hDUBnpcZJF+yNQO8C/D5PnocBCb0pRBQDzh7LWgpFnhsHJzXhaP3GiRri8N
+         WEgw==
+X-Gm-Message-State: APjAAAUm7AcdLzm9tXkqXqn+Ux1cOVF/PSSlcCviLT/iPGGEkW+76Y9Q
+        axN259uowvOKETjSFUFZe/CTvw==
+X-Google-Smtp-Source: APXvYqx2eKy9DIhvgEVT2MvULvpoa3Atkfrm2Z7BVw2iAsxFD2KZjXe9EH7giHcTvLfHMGKdOcqaGA==
+X-Received: by 2002:a63:1f0c:: with SMTP id f12mr7346558pgf.247.1578515061913;
+        Wed, 08 Jan 2020 12:24:21 -0800 (PST)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id b98sm135319pjc.16.2020.01.08.12.24.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jan 2020 11:04:51 -0800 (PST)
-Date:   Wed, 8 Jan 2020 11:04:48 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
-        devicetree@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/3] drm/msm: support firmware-name for zap fw
-Message-ID: <20200108190448.GI1214176@minitux>
-References: <20200108013847.899170-1-robdclark@gmail.com>
- <20200108013847.899170-2-robdclark@gmail.com>
- <20200108184850.GA13260@jcrouse1-lnx.qualcomm.com>
+        Wed, 08 Jan 2020 12:24:21 -0800 (PST)
+Date:   Wed, 8 Jan 2020 13:24:18 -0700
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Ohad Ben-Cohen <ohad@wizery.com>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] remoteproc: qcom: wcnss: Allow specifying firmware-name
+Message-ID: <20200108202418.GA28145@xps15>
+References: <20200108055252.639791-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200108184850.GA13260@jcrouse1-lnx.qualcomm.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <20200108055252.639791-1-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 08 Jan 10:48 PST 2020, Jordan Crouse wrote:
+Hi Bjorn,
 
-> On Tue, Jan 07, 2020 at 05:38:42PM -0800, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> > 
-> > Since zap firmware can be device specific, allow for a firmware-name
-> > property in the zap node to specify which firmware to load, similarly to
-> > the scheme used for dsp/wifi/etc.
-> > 
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 32 ++++++++++++++++++++++---
-> >  1 file changed, 29 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > index 112e8b8a261e..aa8737bd58db 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > @@ -26,6 +26,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
-> >  {
-> >  	struct device *dev = &gpu->pdev->dev;
-> >  	const struct firmware *fw;
-> > +	const char *signed_fwname = NULL;
-> >  	struct device_node *np, *mem_np;
-> >  	struct resource r;
-> >  	phys_addr_t mem_phys;
-> > @@ -58,8 +59,33 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
-> >  
-> >  	mem_phys = r.start;
-> >  
-> > -	/* Request the MDT file for the firmware */
-> > -	fw = adreno_request_fw(to_adreno_gpu(gpu), fwname);
-> > +	/*
-> > +	 * Check for a firmware-name property.  This is the new scheme
-> > +	 * to handle firmware that may be signed with device specific
-> > +	 * keys, allowing us to have a different zap fw path for different
-> > +	 * devices.
-> > +	 *
-> > +	 * If the firmware-name property is found, we bypass the
-> > +	 * adreno_request_fw() mechanism, because we don't need to handle
-> > +	 * the /lib/firmware/qcom/* vs /lib/firmware/* case.
-> > +	 *
-> > +	 * If the firmware-name property is not found, for backwards
-> > +	 * compatibility we fall back to the fwname from the gpulist
-> > +	 * table.
-> > +	 */
-> > +	of_property_read_string_index(np, "firmware-name", 0, &signed_fwname);
-> > +	if (signed_fwname) {
-> > +		fwname = signed_fwname;
-> > +		ret = request_firmware_direct(&fw, signed_fwname, gpu->dev->dev);
-> > +		if (ret) {
-> > +			DRM_DEV_ERROR(dev, "could not load signed zap firmware: %d\n", ret);
-> > +			fw = ERR_PTR(ret);
-> > +		}
-> > +	} else {
-> > +		/* Request the MDT file for the firmware */
-> > +		fw = adreno_request_fw(to_adreno_gpu(gpu), fwname);
-> > +	}
-> > +
+On Tue, Jan 07, 2020 at 09:52:52PM -0800, Bjorn Andersson wrote:
+> Introduce a firmware-name property, in order to be able to support
+> device/platform specific firmware for the wireless connectivity
+> subsystem; in line with other Qualcomm remoteproc drivers.
 > 
-> Since DT seems to be the trend for target specific firmware names I think we
-> should plan to quickly deprecate the legacy name and not require new targets to
-> set it. If a zap node is going to be opt in then it isn't onerous to ask
-> the developer to set the additional property for each target platform.
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  .../devicetree/bindings/remoteproc/qcom,wcnss-pil.txt     | 6 ++++++
+>  drivers/remoteproc/qcom_wcnss.c                           | 8 +++++++-
+>  2 files changed, 13 insertions(+), 1 deletion(-)
 > 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
+> index d420f84ddfb0..00844a5d2ccf 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
+> @@ -34,6 +34,12 @@ on the Qualcomm WCNSS core.
+>  	Definition: should be "wdog", "fatal", optionally followed by "ready",
+>  		    "handover", "stop-ack"
+>  
+> +- firmware-name:
+> +	Usage: optional
+> +	Value type: <string>
+> +	Definition: must list the relative firmware image path for the
+> +		    WCNSS core.
 
-For the zap specifically I agree that it would be nice to require this
-property, but for non-zap firmware it seems reasonable to continue with
-the existing scheme.
+Perhaps mention that if omitted the firmware name will default to "wcnss.mdt".
 
-Regards,
-Bjorn
+> +
+>  - vddmx-supply:
+>  - vddcx-supply:
+>  - vddpx-supply:
+> diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+> index dc135754bb9c..a0468b3cc76f 100644
+> --- a/drivers/remoteproc/qcom_wcnss.c
+> +++ b/drivers/remoteproc/qcom_wcnss.c
+> @@ -457,6 +457,7 @@ static int wcnss_alloc_memory_region(struct qcom_wcnss *wcnss)
+>  
+>  static int wcnss_probe(struct platform_device *pdev)
+>  {
+> +	const char *fw_name = WCNSS_FIRMWARE_NAME;
+>  	const struct wcnss_data *data;
+>  	struct qcom_wcnss *wcnss;
+>  	struct resource *res;
+> @@ -474,8 +475,13 @@ static int wcnss_probe(struct platform_device *pdev)
+>  		return -ENXIO;
+>  	}
+>  
+> +	ret = of_property_read_string(pdev->dev.of_node, "firmware-name",
+> +				      &fw_name);
+> +	if (ret < 0 && ret != -EINVAL)
+> +		return ret;
+> +
+>  	rproc = rproc_alloc(&pdev->dev, pdev->name, &wcnss_ops,
+> -			    WCNSS_FIRMWARE_NAME, sizeof(*wcnss));
+> +			    fw_name, sizeof(*wcnss));
+>  	if (!rproc) {
+>  		dev_err(&pdev->dev, "unable to allocate remoteproc\n");
+>  		return -ENOMEM;
+
+That is in line with what was done for q6v5_mss and q6v5_pas.  With or without
+the above:
+
+Acked-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+
+> -- 
+> 2.24.0
+> 
