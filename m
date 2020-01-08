@@ -2,92 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3038D133E81
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2020 10:45:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DBA8134019
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2020 12:17:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726186AbgAHJpx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jan 2020 04:45:53 -0500
-Received: from pio-pvt-msa1.bahnhof.se ([79.136.2.40]:46036 "EHLO
-        pio-pvt-msa1.bahnhof.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726087AbgAHJpx (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jan 2020 04:45:53 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by pio-pvt-msa1.bahnhof.se (Postfix) with ESMTP id 2550D3F4AC;
-        Wed,  8 Jan 2020 10:45:49 +0100 (CET)
-Authentication-Results: pio-pvt-msa1.bahnhof.se;
-        dkim=pass (1024-bit key; unprotected) header.d=flawful.org header.i=@flawful.org header.b="hSnh9X1+";
-        dkim-atps=neutral
-X-Virus-Scanned: Debian amavisd-new at bahnhof.se
-X-Spam-Flag: NO
-X-Spam-Score: -2.099
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.099 tagged_above=-999 required=6.31
-        tests=[BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
-        DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, URIBL_BLOCKED=0.001]
-        autolearn=ham autolearn_force=no
-Received: from pio-pvt-msa1.bahnhof.se ([127.0.0.1])
-        by localhost (pio-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 0b6EX6t8R-PL; Wed,  8 Jan 2020 10:45:48 +0100 (CET)
-Received: from flawful.org (ua-84-217-220-205.bbcust.telenor.se [84.217.220.205])
-        (Authenticated sender: mb274189)
-        by pio-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id 29CF53F322;
-        Wed,  8 Jan 2020 10:45:46 +0100 (CET)
-Received: by flawful.org (Postfix, from userid 1001)
-        id BF694234; Wed,  8 Jan 2020 10:45:45 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flawful.org; s=mail;
-        t=1578476745; bh=b8ABfWyk18Jn/VMg7nHgfFeaiagOwhh3UDBYQ/J+09E=;
+        id S1728048AbgAHLRc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jan 2020 06:17:32 -0500
+Received: from mail.kernel.org ([198.145.29.99]:55122 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728045AbgAHLRc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Jan 2020 06:17:32 -0500
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id F144320673;
+        Wed,  8 Jan 2020 11:17:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1578482251;
+        bh=K5a1FOPcyRp0DCp/auw2go40HmDbbxw4Ibqe87jWEbc=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hSnh9X1+rz2qVIYAFOcfVuwVtxldo91kSc4g8LK9aEstmdx7AP7hCJrLIcHtKOOVw
-         BFwBtd0SgGnYsXCvD++zJ/AWkh/PaG1B3baUHRNORGjy1Jdjg3+n0TmenXSkEtVGcf
-         C5foHsAQKMQcRLeA098+/L3Faybs5R/aDOLi+pcA=
-Date:   Wed, 8 Jan 2020 10:45:45 +0100
-From:   Niklas Cassel <nks@flawful.org>
-To:     YueHaibing <yuehaibing@huawei.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        b=THqQZPcVvjC+wUPF3+29t3zF6xnYfYeYidcDePpV7b32VACrK9oGbLXd/UyWldH9t
+         tHrsowP1uTWquWgELlF37kxzuMxK1GRMcPT46tf5+Nxu9L+N4CxGNYaJCSEAmSq31E
+         4F8KHd8A0ugKdG9epSYOsK+CeWK557snvitFzsZA=
+Date:   Wed, 8 Jan 2020 07:24:36 +0100
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-        Nishanth Menon <nm@ti.com>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH -next] power: avs: qcom-cpr: remove duplicated include
- from qcom-cpr.c
-Message-ID: <20200108094545.o5o4tpwt4eu5fpye@flawful.org>
-References: <20200108015849.54289-1-yuehaibing@huawei.com>
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Christian Lamparter <chunkeey@googlemail.com>,
+        linux-usb@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Todd Kjos <tkjos@google.com>,
+        Alistair Delva <adelva@google.com>
+Subject: Re: [PATCH v5 0/4] usb: xhci: Add support for Renesas USB controllers
+Message-ID: <20200108062436.GA2276347@kroah.com>
+References: <20191106083843.1718437-1-vkoul@kernel.org>
+ <CANcMJZDqX6-+naGEbBiyM+1cZS6jfMoP9bm5Uk4ZuP_mw5aNWw@mail.gmail.com>
+ <20200108040707.GU2818@vkoul-mobl>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200108015849.54289-1-yuehaibing@huawei.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
+In-Reply-To: <20200108040707.GU2818@vkoul-mobl>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 08, 2020 at 01:58:49AM +0000, YueHaibing wrote:
-> Remove duplicated include.
+On Wed, Jan 08, 2020 at 09:37:07AM +0530, Vinod Koul wrote:
+> Hi John,
 > 
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-> ---
->  drivers/power/avs/qcom-cpr.c | 1 -
->  1 file changed, 1 deletion(-)
+> On 07-01-20, 11:51, John Stultz wrote:
+> > On Wed, Nov 6, 2019 at 12:40 AM Vinod Koul <vkoul@kernel.org> wrote:
+> > >
+> > > This series add support for Renesas USB controllers uPD720201 and uPD720202.
+> > > These require firmware to be loaded and in case devices have ROM those can
+> > > also be programmed if empty. If ROM is programmed, it runs from ROM as well.
+> > >
+> > > This includes two patches from Christian which supported these controllers
+> > > w/o ROM and later my patches for ROM support and multiple firmware versions.
+> > >
+> > 
+> > Hey Vinod!
+> >    In pushing this series to one of the Android trees for the db845c,
+> > there was some concern raised that this series is adding a lot of
+> > renesas specific logic to the more generic xhci-pci driver. There was
+> > some question if instead that logic should be added to its own
+> > file/module? Do you have any thoughts on this?
 > 
-> diff --git a/drivers/power/avs/qcom-cpr.c b/drivers/power/avs/qcom-cpr.c
-> index 9247f53550b3..9b1d7d919ee9 100644
-> --- a/drivers/power/avs/qcom-cpr.c
-> +++ b/drivers/power/avs/qcom-cpr.c
-> @@ -25,7 +25,6 @@
->  #include <linux/regulator/consumer.h>
->  #include <linux/clk.h>
->  #include <linux/nvmem-consumer.h>
-> -#include <linux/bitops.h>
->  
->  /* Register Offsets for RB-CPR and Bit Definitions */
+> TBH I have not thought about that and in previous post neither Greg or
+> Mathias gave a feedback that this was not acceptable...
 > 
+> We can think about splitting but apart from firmware load there is not
+> much extra functionality that we need to add, the controller behaviour
+> as a standard xhci-pci. So i am not sure if we gain much by splitting.
 > 
+> > Also, It seems there hasn't been much feedback on this for a few
+> > months now. Is there a newer version of the patchset I should sync
+> > with? Do you have plans to resubmit soon?
 > 
+> Well am still waiting for feedback :( I dont have any update on top of
+> this, I can repost but I dont think that really serves a purpose.
+> 
+> I would really like to hear from Greg if this series is acceptable and
+> if not what would he like to see changed.
 
-Thank you for this fix.
+Greg is not the xhci maintainer :)
 
-Acked-by: Niklas Cassel <nks@flawful.org>
+
