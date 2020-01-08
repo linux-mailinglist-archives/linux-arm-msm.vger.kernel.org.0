@@ -2,96 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B93F2134784
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2020 17:17:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ECEA21347E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jan 2020 17:25:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726670AbgAHQRc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jan 2020 11:17:32 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:37399 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728288AbgAHQRa (ORCPT
+        id S1727148AbgAHQZb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jan 2020 11:25:31 -0500
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:41700 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727427AbgAHQZZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jan 2020 11:17:30 -0500
-Received: by mail-ed1-f65.google.com with SMTP id cy15so3045790edb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2020 08:17:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ixNLloMM7MEsta6mQM3CnnoI5zVcxQu1H3iGtxld7Kc=;
-        b=IYN11j2i2b3yDnBf7f+iDcswMuW/81T76Q/ozJTLIk0XuvyeDwwSw3JwBU6setSBRD
-         M4c1qsBA5BaTA+pUkJsOuHyJG1aegZXhnzDCpNvdaeH6L8tysTVA+ymH53FRFXXCzHiU
-         2n23JOOooOkuOKHvlQG7bnkvczZJRKZzfhG/9rjU5yNi33ZDxgUk+NO6iCTaYA+wRK0c
-         cbjaYWyjFQPc3lcQTNCdiE/v9XIjEb7FFN61NZj9FrPgxiYQgO0Y3si9ZNMp7reKiNoz
-         w9To10GYO48mMyUUwaCuHFt/lwb30c2MJRScrjk+wSHxdPfQ1dEvmurQW92dEbBsVYfC
-         nqgg==
+        Wed, 8 Jan 2020 11:25:25 -0500
+Received: by mail-ot1-f67.google.com with SMTP id r27so4110033otc.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2020 08:25:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ixNLloMM7MEsta6mQM3CnnoI5zVcxQu1H3iGtxld7Kc=;
-        b=TflnP68SCAk3Bj/iAVjfQhVoYMVK3YKAh5GIxhwL6s+3ESbWisNGELTJds9WTkNp91
-         7U2CvhDeKyFF2ePOzsBdh5VYhLgexb0p44p6o2hT2NMUUlp2DokPqrtzltjJbtEkxU90
-         YgOExXHdw/3m64tGt3mwEhhcAYUw57he9V6zuyd1z5+6GA2U8g6PBwEfL3vuQFHf0Oo1
-         IC2p7jmt88baFchtxDPl0uT6AzHHO2Nrg4vA/2QK8qc6PfwQQU5OdAj2x7h48Wv6WGvS
-         4/3mMwHMj0H//tLWU+iNP3mFxEB5cef6XWU3ShhVKtR7DUhgjJLo99MlGhWTDmM3yENI
-         dMRA==
-X-Gm-Message-State: APjAAAXKwXTunGk3UxQbHjYcO7yPCBDw7usuaVFIl+OdfCrTfmgAvv8a
-        F2381HOGTP1uySP3IkpFUTrWyg==
-X-Google-Smtp-Source: APXvYqyNCsBoBb6b0+/VFgEFHT6BCXMQhc38kBy0a5iYr3sUoeSElD5NnXUq55ySz//tov60JWmR9g==
-X-Received: by 2002:a17:906:229b:: with SMTP id p27mr5692899eja.21.1578500248323;
-        Wed, 08 Jan 2020 08:17:28 -0800 (PST)
-Received: from [192.168.27.209] ([37.157.136.193])
-        by smtp.googlemail.com with ESMTPSA id dn12sm89884edb.89.2020.01.08.08.17.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jan 2020 08:17:27 -0800 (PST)
-Subject: Re: [PATCH v4 06/12] dt-bindings: media: venus: Convert msm8916 to DT
- schema
-To:     Rob Herring <robh@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        dikshita@codeaurora.org
-References: <20200106154929.4331-1-stanimir.varbanov@linaro.org>
- <20200106154929.4331-7-stanimir.varbanov@linaro.org>
- <20200106220414.GA10744@bogus>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <a224bad9-2eee-a906-80ba-573c1525afb1@linaro.org>
-Date:   Wed, 8 Jan 2020 18:17:25 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Yz35zFP2aSNw0+gIRfSaZMhcsEm+gudXf2tyLjffdvY=;
+        b=SL7mT+MZkpZvA62bHNthgcmmfZnpdqUqNaEcjPfzsCw94QidfgENIcD3pJ8CtPBa1L
+         McpngcFsMXqWDtlUh5qePyHV81mngQP61NO3GQMjlRvDXsgv+ySC6jvx0dljrtRZqSbu
+         WNLZfHW2OnGdi02luaQB8ZV7u+mbqReYySJDRLK0Cf+7/pD6VCCTnad3WVqXN97ybCLm
+         TsZQ71qVStup8lXyzUz+vO7rYBs8UX3CY3NlkHfr2TQBisRChEIV0uedsJc3L4GsHaHm
+         mxcZG25BvxBNhYOzlWX+nlfrOQg86hYzupA8egGtSy8T3a+3+YJI9dlOKhVR77ck1u25
+         I5pw==
+X-Gm-Message-State: APjAAAUGqGYN4WqBLobqbhG/zQ3woZ/in0N77kbjETOu3G09vg+jGQ/X
+        R2EMEJiDGDl07LAC+EJ8+6O82Yg=
+X-Google-Smtp-Source: APXvYqxoj3/EkKPhn5zxkFlO0l+FVsob0zFPmsvpTAk+Mu+nTzVIIO/8KbWfaVWWhy++IGwdP78fuQ==
+X-Received: by 2002:a9d:7c91:: with SMTP id q17mr4902762otn.293.1578500724266;
+        Wed, 08 Jan 2020 08:25:24 -0800 (PST)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id 17sm1245982oty.48.2020.01.08.08.25.22
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jan 2020 08:25:22 -0800 (PST)
+Received: from rob (uid 1000)
+        (envelope-from rob@rob-hp-laptop)
+        id 220333
+        by rob-hp-laptop (DragonFly Mail Agent v0.11);
+        Wed, 08 Jan 2020 10:25:21 -0600
+Date:   Wed, 8 Jan 2020 10:25:21 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Kalle Valo <kvalo@codeaurora.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Andy Gross <agross@kernel.org>, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        ath10k@lists.infradead.org
+Subject: Re: [PATCH 1/2] ath10k: Add optional qdss clk
+Message-ID: <20200108162521.GA23484@bogus>
+References: <20191223054855.3020665-1-bjorn.andersson@linaro.org>
+ <20191223054855.3020665-2-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20200106220414.GA10744@bogus>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191223054855.3020665-2-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
-
-Thanks for the review!
-
-On 1/7/20 12:04 AM, Rob Herring wrote:
-> On Mon,  6 Jan 2020 17:49:23 +0200, Stanimir Varbanov wrote:
->> Convert qcom,msm8916-venus Venus binding to DT schema
->>
->> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> ---
->>  .../bindings/media/qcom,msm8916-venus.yaml    | 119 ++++++++++++++++++
->>  1 file changed, 119 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
->>
+On Sun, 22 Dec 2019 21:48:54 -0800, Bjorn Andersson wrote:
+> The WiFi firmware found on sm8150 requires that the QDSS clock is
+> ticking in order to operate, so add an optional clock to the binding to
+> allow this to be specified in the sm8150 dts and add the clock to the
+> list of clocks in the driver.
 > 
-> Reviewed-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/net/wireless/qcom,ath10k.txt | 2 +-
+>  drivers/net/wireless/ath/ath10k/snoc.c                         | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 > 
 
-I guess you are agree with merging dt-binding patches from this series
-through linux-media tree, right?
-
--- 
-regards,
-Stan
+Acked-by: Rob Herring <robh@kernel.org>
