@@ -2,73 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 11C95135C6E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 16:18:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EEC0A135CC9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 16:32:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731088AbgAIPSD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jan 2020 10:18:03 -0500
-Received: from mail.kernel.org ([198.145.29.99]:39444 "EHLO mail.kernel.org"
+        id S1732393AbgAIPcC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jan 2020 10:32:02 -0500
+Received: from mail.kernel.org ([198.145.29.99]:38670 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727945AbgAIPSD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jan 2020 10:18:03 -0500
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1732374AbgAIPcB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Jan 2020 10:32:01 -0500
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 418E4206ED;
-        Thu,  9 Jan 2020 15:18:01 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 40E992075D;
+        Thu,  9 Jan 2020 15:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1578583082;
-        bh=wwTkulcWNrf8/WnDIcLNGlEiuiK3aNjEJ0Ao6P3jLx8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=V6tQ2nfhWozNQ3WNBxLm/6dfX9TD28B9GdBZdjeTZQ6hOapDoVOaApZajf9G8DOWE
-         +eISC137+7dtioAZSNt3iRl/UVkOQKuB/W8iThl/6EcKMphY/hp2e6LQc+anmIdiEh
-         Ijd6kQgGCuGIeuG2Y5cPSqWBV0qUYoPUkn7Y/UTs=
-Date:   Thu, 9 Jan 2020 15:17:57 +0000
-From:   Will Deacon <will@kernel.org>
-To:     Catalin Marinas <catalin.marinas@arm.com>
-Cc:     Srinivas Ramana <sramana@codeaurora.org>, maz@kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: Set SSBS for user threads while creation
-Message-ID: <20200109151756.GG12236@willie-the-truck>
-References: <1577106146-8999-1-git-send-email-sramana@codeaurora.org>
- <20200102180145.GE27940@arrakis.emea.arm.com>
+        s=default; t=1578583920;
+        bh=Hn4tjjgwi3+in4jXN65JjSaynghmcVXRXyVZVHU3QjE=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ZSQIHVCMCfpRCRvlV7H1IfAqc59b3kdLkhnvouwDuvdeAOhByg1FmPx46KN9AgHws
+         GzYomRmbxTpIsBADwRCUwpn6jgiXMUipwWkV4NRmCsCT5v2iKP1Q5nobXMDufWCV7Z
+         gTJ4/FsVhIvW6L7qtepbFVqHRb395qBcWj/SkAGk=
+Received: by mail-qk1-f180.google.com with SMTP id c16so6316439qko.6;
+        Thu, 09 Jan 2020 07:32:00 -0800 (PST)
+X-Gm-Message-State: APjAAAWU5MNAaKhcNC/YctENhD5o3ugfgZb/9VQ6qdRyhFqBnqyt4+e0
+        yFd42qm7K0eFof88K/0LpTHZVh0LFyV/4CLzsQ==
+X-Google-Smtp-Source: APXvYqz562TZ5Zfx7NktA0xTJngmgvoVxt/eH+oL4dBz+HGBSFqhzyA8cfEzhcZqQUpS3wTBPt+I1VqF9W6GqJf8o/E=
+X-Received: by 2002:a37:a70b:: with SMTP id q11mr9940102qke.393.1578583919273;
+ Thu, 09 Jan 2020 07:31:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200102180145.GE27940@arrakis.emea.arm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <1577165532-28772-1-git-send-email-sthella@codeaurora.org>
+ <20200108163943.GA26863@bogus> <8aeb91730552357db340f8bfb21e6d15@codeaurora.org>
+In-Reply-To: <8aeb91730552357db340f8bfb21e6d15@codeaurora.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Thu, 9 Jan 2020 09:31:46 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqL5Gh2A3KfCgRFv+B50Y4PPF1b+qq8vY6yKhbea6KPAkw@mail.gmail.com>
+Message-ID: <CAL_JsqL5Gh2A3KfCgRFv+B50Y4PPF1b+qq8vY6yKhbea6KPAkw@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: nvmem: add binding for QTI SPMI SDAM
+To:     sthella@codeaurora.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 02, 2020 at 06:01:45PM +0000, Catalin Marinas wrote:
-> On Mon, Dec 23, 2019 at 06:32:26PM +0530, Srinivas Ramana wrote:
-> > Current SSBS implementation takes care of setting the
-> > SSBS bit in start_thread() for user threads. While this works
-> > for tasks launched with fork/clone followed by execve, for cases
-> > where userspace would just call fork (eg, Java applications) this
-> > leaves the SSBS bit unset. This results in performance
-> > regression for such tasks.
-> > 
-> > It is understood that commit cbdf8a189a66 ("arm64: Force SSBS
-> > on context switch") masks this issue, but that was done for a
-> > different reason where heterogeneous CPUs(both SSBS supported
-> > and unsupported) are present. It is appropriate to take care
-> > of the SSBS bit for all threads while creation itself.
-> > 
-> > Fixes: 8f04e8e6e29c ("arm64: ssbd: Add support for PSTATE.SSBS rather than trapping to EL3")
-> > Signed-off-by: Srinivas Ramana <sramana@codeaurora.org>
-> 
-> I suppose the parent process cleared SSBS explicitly. Isn't the child
-> after fork() supposed to be nearly identical to the parent? If we did as
-> you suggest, someone else might complain that SSBS has been set in the
-> child after fork().
+On Thu, Jan 9, 2020 at 4:57 AM <sthella@codeaurora.org> wrote:
+>
+> On 2020-01-08 22:09, Rob Herring wrote:
+> > On Tue, Dec 24, 2019 at 11:02:12AM +0530, Shyam Kumar Thella wrote:
+> >> QTI SDAM allows PMIC peripherals to access the shared memory that is
+> >> available on QTI PMICs. Add documentation for it.
+> >>
+> >> Signed-off-by: Shyam Kumar Thella <sthella@codeaurora.org>
+> >> ---
+> >>  .../devicetree/bindings/nvmem/qcom,spmi-sdam.yaml  | 79
+> >> ++++++++++++++++++++++
+> >>  1 file changed, 79 insertions(+)
+> >>  create mode 100644
+> >> Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+> >>
+> >> diff --git
+> >> a/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+> >> b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+> >> new file mode 100644
+> >> index 0000000..8961a99
+> >> --- /dev/null
+> >> +++ b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+> >> @@ -0,0 +1,79 @@
+> >> +# SPDX-License-Identifier: GPL-2.0
+> >
+> > Dual license new bindings:
+> >
+> > (GPL-2.0-only OR BSD-2-Clause)
+> >
+> > Please spread the word in QCom.
+> Sure. I will add Dual license in next patchset.
+> >
+> >> +%YAML 1.2
+> >> +---
+> >> +$id: http://devicetree.org/schemas/nvmem/qcom,spmi-sdam.yaml#
+> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> >> +
+> >> +title: Qualcomm Technologies, Inc. SPMI SDAM DT bindings
+> >> +
+> >> +maintainers:
+> >> +  - Shyam Kumar Thella <sthella@codeaurora.org>
+> >> +
+> >> +description: |
+> >> +  The SDAM provides scratch register space for the PMIC clients. This
+> >> +  memory can be used by software to store information or communicate
+> >> +  to/from the PBUS.
+> >> +
+> >> +allOf:
+> >> +  - $ref: "nvmem.yaml#"
+> >> +
+> >> +properties:
+> >> +  compatible:
+> >> +    enum:
+> >> +      - qcom,spmi-sdam
+> >> +
+> >> +  reg:
+> >> +    maxItems: 1
+> >> +
+> >> +  "#address-cells":
+> >> +    const: 1
+> >> +
+> >> +  "#size-cells":
+> >> +    const: 1
+> >
+> > ranges? The child addresses should be translateable I assume.
+> The addresses are not memory mapped on the CPU's address domain. They
+> are the SPMI addresses which can be accessed over SPMI controller.
 
-Right, I'd expect the parent SSBS to be inherited when we copy the pstate
-field along with the other regs, and I think this is the correct behaviour.
+Doesn't have to be a CPU address. Are the child offsets within the
+range defined in the parent 'reg'? If so, then it should have
+'ranges'.
 
-Is that broken somehow?
+> >
+> >> +
+> >> +required:
+> >> +  - compatible
+> >> +  - reg
+> >> +
+> >> +patternProperties:
+> >> +  "^.*@[0-9a-f]+$":
+> >> +    type: object
+> >> +
+> >> +    properties:
+> >> +      reg:
+> >> +        maxItems: 1
+> >> +        description:
+> >> +          Offset and size in bytes within the storage device.
+> >> +
+> >> +      bits:
+> >
+> > Needs a type reference.
+> Yes. I will add a reference in the next patch set.
+> >
+> >> +        maxItems: 1
+> >> +        items:
+> >> +          items:
+> >> +            - minimum: 0
+> >> +              maximum: 7
+> >> +              description:
+> >> +                Offset in bit within the address range specified by
+> >> reg.
+> >> +            - minimum: 1
+> >
+> > max is 7?
+> I don't think it is limited to 7 as it is the size within the address
+> range specified by reg. If the address range is more than a byte size
+> can be more.
 
-Will
+Then why is the maximum offset 7?
+
+Rob
