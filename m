@@ -2,133 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 47E4B135012
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 00:44:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C0903135063
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 01:26:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727308AbgAHXoL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jan 2020 18:44:11 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:40070 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726758AbgAHXoL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jan 2020 18:44:11 -0500
-Received: by mail-lj1-f196.google.com with SMTP id u1so5172378ljk.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2020 15:44:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lixom-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=eI6iNLQhWDXGqNquTGe31eFOXNqqPHZNYb8TXGjlONU=;
-        b=Dwcwsf78XGO26u3wmaWKl2UyNG5AobMooKaFwkFb0YniWuQ6+jO6IPByQsXQ2ucOBe
-         WxRS0PAnQHTkCLx4R7SZfKk2/Qvix2xYYVhfu2kt34m9rQMy3eFaxjsxY19jK3zoL3QU
-         Mu6kFNNh8NwDgnsKREO/V7quxv0l7+kEs+IT53qDVZyDCjL3ZM6N3msfTTyBxmrAz6H8
-         1p2TRmUnlh49v8VQgYOmZjfj3t4K27ztPtTKevf4n6YUMnPD91FWd4Md9v4xRRqja67X
-         UeSbU779KNEyGCNi1fzlfCKykUqQa0MWAC25FmAxmswoQ7TyHqhyDjwOgj+mgdSOMrY2
-         VClw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=eI6iNLQhWDXGqNquTGe31eFOXNqqPHZNYb8TXGjlONU=;
-        b=SWmne4xqZGJ+E65JZxgF+7isEWUo82P2ONkk1hKvoKPRWeSeWgREQEG8TJPHpZFJXq
-         PC0YPLG/6HCx3m7GANzD5ewo/t1ldORPKWfmFJLiMJMYFRjeQDhuSUOHoQIk/CmevD3b
-         iO2k6EdyA2OXTfTg0Yoxkl8uFOCIwhAVCqYAmnuiXn4q9LdDmQB93DckEuBFiG/Ng79X
-         mzAA1dHyAoOwUEl9ax6zf/hW/OtwOUWgFEM+lSvvS/giy3Q5f5+mqvMwPn6h8V4PfJju
-         tzSdwmGSWgq0V2SXLIsiM9/FLeXVNm9iK3dyJ/NliWKuyc+yJpZ9oCU5S737IPNfqimX
-         iN6w==
-X-Gm-Message-State: APjAAAWn5QcnLd3XkIrxy/rD//jsO/99Va2XWas6vALYP2wH1aKDQ8iK
-        CohOndSORtsgTyBymiyl+n/1CA==
-X-Google-Smtp-Source: APXvYqxSjCINOfjcSq/Opf15btDPbuxHhfhtkrIWniTi7v1O+ndmQtfv1EYW2gZPaJR8spbk++0hWQ==
-X-Received: by 2002:a2e:9843:: with SMTP id e3mr4490107ljj.45.1578527049321;
-        Wed, 08 Jan 2020 15:44:09 -0800 (PST)
-Received: from localhost (h85-30-9-151.cust.a3fiber.se. [85.30.9.151])
-        by smtp.gmail.com with ESMTPSA id n30sm2409755lfi.54.2020.01.08.15.44.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 Jan 2020 15:44:08 -0800 (PST)
-Date:   Wed, 8 Jan 2020 10:29:40 -0800
-From:   Olof Johansson <olof@lixom.net>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>, arm-soc <arm@kernel.org>,
-        soc@kernel.org, Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Kevin Hilman <khilman@kernel.org>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [GIT PULL] cpuidle/psci updates for v5.6
-Message-ID: <20200108182940.ur6ujed7vz5xyl2t@localhost>
-References: <20200102160820.3572-1-ulf.hansson@linaro.org>
- <20200106172608.63qhvwr5b7jsmxmg@localhost>
- <CAPDyKFq-ueSK2xAOBtec_N95sBVf-Vcm_-xgAhxQUuwAjUzbPw@mail.gmail.com>
- <20200107193844.GE716784@yoga>
+        id S1726654AbgAIA0Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jan 2020 19:26:25 -0500
+Received: from onstation.org ([52.200.56.107]:53880 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726438AbgAIA0Z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Jan 2020 19:26:25 -0500
+Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 0E27B3EE6F;
+        Thu,  9 Jan 2020 00:26:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1578529584;
+        bh=bSP4GLHNIkw9HeeIY0NybAJJvEgnnxZaLRa3yG6+E1Q=;
+        h=From:To:Cc:Subject:Date:From;
+        b=TK7LNbfLzwC1F6wyfJLhAZh/bLnMAMGWyPQ+53Ef9F9qfGO8LdHQdNxZzdN/ApgLQ
+         spnXD0HCF2D5BgqAqnzHtGmbgkilGBxb8HwbfZjcP8Jtx2F3pGL+IMEfcms3ov2jp4
+         CwsIsk1ZiP73Lrd5/c1t4wIJrKy7VCeU3zbrKz+U=
+From:   Brian Masney <masneyb@onstation.org>
+To:     robdclark@gmail.com, bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, joro@8bytes.org, linux-arm-msm@vger.kernel.org,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org
+Subject: [PATCH RFC] ARM: dts: qcom: msm8974: add mdp5 iommu support
+Date:   Wed,  8 Jan 2020 19:26:06 -0500
+Message-Id: <20200109002606.35653-1-masneyb@onstation.org>
+X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200107193844.GE716784@yoga>
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 07, 2020 at 11:38:44AM -0800, Bjorn Andersson wrote:
-> On Tue 07 Jan 11:28 PST 2020, Ulf Hansson wrote:
-> 
-> > On Mon, 6 Jan 2020 at 18:31, Olof Johansson <olof@lixom.net> wrote:
-> > >
-> > > Hi,
-> > >
-> > > On Thu, Jan 02, 2020 at 05:08:20PM +0100, Ulf Hansson wrote:
-> > > > Hi SoC maintainers,
-> > > >
-> > > > Here's a PR with updates for v5.6 for cpuidle/psci for ARM/ARM64.
-> > > >
-> > > > The changes are somewhat sprinkled over a couple of different directories and
-> > > > there is also dts update for MSM8916. The main changes are in drivers/cpuidle/,
-> > > > which have been acked-by Rafael [1] and Sudeep.
-> > > >
-> > > > If you have any further questions, please just tell.
-> > >
-> > > What was the reason to bring in a dts change in this branch?
-> > 
-> > Convenience. But I am not usually sending these PR, so feel free to
-> > tell me to change.
-> > 
-> 
-> The dts files are typically moving a lot, so to reduce the risk of
-> conflicts it's generally better if we take them through the qcom tree.
-> 
-> > > Bindings should be
-> > > stable such that old DT contents still works even if drivers are updated to
-> > > support newer attributes, etc.
-> > 
-> > They already are. No worries!
-> > 
-> > If you want to pick everything else but the DTS patch, that's fine by me.
-> > 
-> 
-> Generally, yes.
-> 
-> > Do you want me to send a new PR?
-> > 
-> 
-> But I'm happy with the dts patch and afaict there's nothing that this
-> will conflict with. So you have my retroactive ack on the patch and
-> lets stick with the current PR.
+This adds preliminary IOMMU support for the MDP5 on msm8974. It appears
+that the qcom-iommu driver in upstream can be used on this SoC. I marked
+this patch as a RFC since the frame buffer becomes corrupted when I boot
+the Nexus 5 phone with this patch:
 
-As long as there's no anticipated changes in DTS that's OK (which is
-why it's good to at least seek the ack from Bjorn in this case).
+https://raw.githubusercontent.com/masneyb/nexus-5-upstream/master/images/broken-mdp5-iommu.jpg
 
-There's one more issue with this pull request -- it's based on
-5.5-rc4. We normally don't move to later -rcs for the base once things
-land (i.e. we're still at -rc2), since it just causes churn.
+A quick note about the ranges of the context banks below: Based on the
+downstream sources, I believe that the memory addresses should be mapped
+out like this:
 
-I'll merge this now anyway, but in the future if you're unsure what to
-use as a base for your topic branches, look at our master branch to see
-where it's at.
+	mdp_iommu: iommu@fd928000 {
+		reg = <0xfd928000 0x8000>;
+		ranges = <0 0xfd930000 0x8000>;
+		...
 
+		iommu-ctx@0 {
+			reg = <0x0 0x1000>;
+			...
+		};
 
--Olof
+		iommu-ctx@1000 {
+			reg = <0x1000 0x1000>;
+			...
+		};
+
+		iommu-ctx@2000 {
+			reg = <0x2000 0x1000>;
+			...
+		};
+	};
+
+However, the qcom-iommu driver in upstream expects the first context
+bank to exist at address 0x1000, and the address space identifier
+(asid) to be greater than 0. See get_asid() and qcom_iommu_of_xlate()
+in the upstream qcom-iommu.c driver. I put in the patch below what the
+driver expects. I modified the driver in my local tree to allow the
+mapping that I have above so that the extra 0x1000 of memory is mapped
+into the global address space and still experience the same screen
+corruption issue.
+
+Downstream MSM 3.4 IOMMU dts snippet for reference:
+https://github.com/AICP/kernel_lge_hammerhead/blob/n7.1/arch/arm/boot/dts/msm-iommu-v1.dtsi#L110
+
+I'm hoping that someone that's more familiar with this hardware has a
+suggestion for something to try.
+
+Signed-off-by: Brian Masney <masneyb@onstation.org>
+---
+ arch/arm/boot/dts/qcom-msm8974.dtsi | 44 +++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+index 4b161b809dd5..2515a3bd4aa7 100644
+--- a/arch/arm/boot/dts/qcom-msm8974.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+@@ -1305,6 +1305,46 @@ etm3_out: endpoint {
+ 			};
+ 		};
+ 
++		mdp_iommu: iommu@fd928000 {
++			compatible = "qcom,msm8974-iommu",
++			             "qcom,msm-iommu-v1";
++			reg = <0xfd928000 0x7000>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			#iommu-cells = <1>;
++			ranges = <0 0xfd92f000 0x9000>;
++
++			clocks = <&mmcc MDSS_AHB_CLK>,
++			         <&mmcc MDSS_AXI_CLK>;
++			clock-names = "iface",
++			              "bus";
++
++			qcom,iommu-secure-id = <1>;
++
++			// mdp_0
++			iommu-ctx@1000 {
++				compatible = "qcom,msm-iommu-v1-ns";
++				reg = <0x1000 0x1000>;
++				interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
++			};
++
++			// mdp_1
++			iommu-ctx@2000 {
++				compatible = "qcom,msm-iommu-v1-sec";
++				reg = <0x2000 0x1000>;
++				interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>,
++				             <GIC_SPI 46 IRQ_TYPE_LEVEL_HIGH>;
++			};
++
++			// mdp_2
++			iommu-ctx@3000 {
++				compatible = "qcom,msm-iommu-v1-sec";
++				reg = <0x3000 0x1000>;
++				interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>,
++				             <GIC_SPI 46 IRQ_TYPE_LEVEL_HIGH>;
++			};
++                };
++
+ 		ocmem@fdd00000 {
+ 			compatible = "qcom,msm8974-ocmem";
+ 			reg = <0xfdd00000 0x2000>,
+@@ -1427,6 +1467,10 @@ mdp: mdp@fd900000 {
+ 				interconnects = <&mmssnoc MNOC_MAS_MDP_PORT0 &bimc BIMC_SLV_EBI_CH0>;
+ 				interconnect-names = "mdp0-mem";
+ 
++				iommus = <&mdp_iommu 1
++				          &mdp_iommu 2
++				          &mdp_iommu 3>;
++
+ 				ports {
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+-- 
+2.24.1
+
