@@ -2,164 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EEC0A135CC9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 16:32:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A44A1360B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 20:05:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732393AbgAIPcC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jan 2020 10:32:02 -0500
-Received: from mail.kernel.org ([198.145.29.99]:38670 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732374AbgAIPcB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jan 2020 10:32:01 -0500
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 40E992075D;
-        Thu,  9 Jan 2020 15:32:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1578583920;
-        bh=Hn4tjjgwi3+in4jXN65JjSaynghmcVXRXyVZVHU3QjE=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=ZSQIHVCMCfpRCRvlV7H1IfAqc59b3kdLkhnvouwDuvdeAOhByg1FmPx46KN9AgHws
-         GzYomRmbxTpIsBADwRCUwpn6jgiXMUipwWkV4NRmCsCT5v2iKP1Q5nobXMDufWCV7Z
-         gTJ4/FsVhIvW6L7qtepbFVqHRb395qBcWj/SkAGk=
-Received: by mail-qk1-f180.google.com with SMTP id c16so6316439qko.6;
-        Thu, 09 Jan 2020 07:32:00 -0800 (PST)
-X-Gm-Message-State: APjAAAWU5MNAaKhcNC/YctENhD5o3ugfgZb/9VQ6qdRyhFqBnqyt4+e0
-        yFd42qm7K0eFof88K/0LpTHZVh0LFyV/4CLzsQ==
-X-Google-Smtp-Source: APXvYqz562TZ5Zfx7NktA0xTJngmgvoVxt/eH+oL4dBz+HGBSFqhzyA8cfEzhcZqQUpS3wTBPt+I1VqF9W6GqJf8o/E=
-X-Received: by 2002:a37:a70b:: with SMTP id q11mr9940102qke.393.1578583919273;
- Thu, 09 Jan 2020 07:31:59 -0800 (PST)
+        id S2388673AbgAITFu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jan 2020 14:05:50 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:34879 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388670AbgAITFu (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Jan 2020 14:05:50 -0500
+Received: by mail-pg1-f196.google.com with SMTP id l24so3665939pgk.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2020 11:05:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=1h4Sxb+MieeqG79O/anoYVYS/Fvr4tCDR567hyL/MDQ=;
+        b=bRVH1qQSZskUEz+xtr6c2b/ZTmZFjHckMpN/4buOyA3qTyL3qAS8SAjyz1nHvNSwNX
+         gv7BaJ67QLuGPMx2E4Sv+mBpaEyTL84RTEo46nKJJbjbWxQ/d0vtDoZUQbXFDhUsucTv
+         tMBAybHqfC2J1ddtlMxt3zCSGBJLBvUUACF9M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=1h4Sxb+MieeqG79O/anoYVYS/Fvr4tCDR567hyL/MDQ=;
+        b=bZim6tTNkXvF5ZiMzTHelhstVbAIAPChRlKiaXraDFVvWnT2jlkY4+QKG8fOhC3V3q
+         noap+T5X1IpZ/l27a8HJAJkkJIrirwSJq+9KiHlwG9eR1byg7X1sGILzerDi3AmI9CmU
+         fkuQKOm5SfJgtb20G0ZpzsbcyotUnahTyTnWt1390ma2rN1Atvq2/w0BhDxgQ3lEgt9l
+         Bbf3jfwKHV1I+qDJ5MlOwhZoX5SGPgXNy/SnqfsCsilwALSmqwzjECKpnOZ3ps03Tw6S
+         CKMqdXYmmeAKP7zSAzlD58vqhHNYXfjEDAaoKjmCjQj5oEXhaNDL3KlCUkgmQdPERH6b
+         1KqQ==
+X-Gm-Message-State: APjAAAUOXmh9LkmL5VRKs7ivXBSgHCSf6nD7h1n9w2PT/A33rRShE/Pb
+        27ziwbMRoUdcznvGKF3BkCfapw==
+X-Google-Smtp-Source: APXvYqyQ1Gl2Z86WpfhnYYq8e2EvQDgDREDXHK237g9+1Jr3wY4KwJDwd1i/LuX+3K+asdWoqU90QQ==
+X-Received: by 2002:a63:e545:: with SMTP id z5mr2490pgj.209.1578596749178;
+        Thu, 09 Jan 2020 11:05:49 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id t1sm8692182pgq.23.2020.01.09.11.05.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Jan 2020 11:05:48 -0800 (PST)
+Date:   Thu, 9 Jan 2020 11:05:47 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rocky Liao <rjliao@codeaurora.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3] Bluetooth: hci_qca: Add qca_power_on() API to support
+ both wcn399x and Rome power up
+Message-ID: <20200109190547.GF89495@google.com>
+References: <20200107052601.32216-1-rjliao@codeaurora.org>
+ <20200109051427.16426-1-rjliao@codeaurora.org>
 MIME-Version: 1.0
-References: <1577165532-28772-1-git-send-email-sthella@codeaurora.org>
- <20200108163943.GA26863@bogus> <8aeb91730552357db340f8bfb21e6d15@codeaurora.org>
-In-Reply-To: <8aeb91730552357db340f8bfb21e6d15@codeaurora.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Thu, 9 Jan 2020 09:31:46 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqL5Gh2A3KfCgRFv+B50Y4PPF1b+qq8vY6yKhbea6KPAkw@mail.gmail.com>
-Message-ID: <CAL_JsqL5Gh2A3KfCgRFv+B50Y4PPF1b+qq8vY6yKhbea6KPAkw@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: nvmem: add binding for QTI SPMI SDAM
-To:     sthella@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200109051427.16426-1-rjliao@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 9, 2020 at 4:57 AM <sthella@codeaurora.org> wrote:
->
-> On 2020-01-08 22:09, Rob Herring wrote:
-> > On Tue, Dec 24, 2019 at 11:02:12AM +0530, Shyam Kumar Thella wrote:
-> >> QTI SDAM allows PMIC peripherals to access the shared memory that is
-> >> available on QTI PMICs. Add documentation for it.
-> >>
-> >> Signed-off-by: Shyam Kumar Thella <sthella@codeaurora.org>
-> >> ---
-> >>  .../devicetree/bindings/nvmem/qcom,spmi-sdam.yaml  | 79
-> >> ++++++++++++++++++++++
-> >>  1 file changed, 79 insertions(+)
-> >>  create mode 100644
-> >> Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-> >>
-> >> diff --git
-> >> a/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-> >> b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-> >> new file mode 100644
-> >> index 0000000..8961a99
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-> >> @@ -0,0 +1,79 @@
-> >> +# SPDX-License-Identifier: GPL-2.0
-> >
-> > Dual license new bindings:
-> >
-> > (GPL-2.0-only OR BSD-2-Clause)
-> >
-> > Please spread the word in QCom.
-> Sure. I will add Dual license in next patchset.
-> >
-> >> +%YAML 1.2
-> >> +---
-> >> +$id: http://devicetree.org/schemas/nvmem/qcom,spmi-sdam.yaml#
-> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> +
-> >> +title: Qualcomm Technologies, Inc. SPMI SDAM DT bindings
-> >> +
-> >> +maintainers:
-> >> +  - Shyam Kumar Thella <sthella@codeaurora.org>
-> >> +
-> >> +description: |
-> >> +  The SDAM provides scratch register space for the PMIC clients. This
-> >> +  memory can be used by software to store information or communicate
-> >> +  to/from the PBUS.
-> >> +
-> >> +allOf:
-> >> +  - $ref: "nvmem.yaml#"
-> >> +
-> >> +properties:
-> >> +  compatible:
-> >> +    enum:
-> >> +      - qcom,spmi-sdam
-> >> +
-> >> +  reg:
-> >> +    maxItems: 1
-> >> +
-> >> +  "#address-cells":
-> >> +    const: 1
-> >> +
-> >> +  "#size-cells":
-> >> +    const: 1
-> >
-> > ranges? The child addresses should be translateable I assume.
-> The addresses are not memory mapped on the CPU's address domain. They
-> are the SPMI addresses which can be accessed over SPMI controller.
+Hi Rocky,
 
-Doesn't have to be a CPU address. Are the child offsets within the
-range defined in the parent 'reg'? If so, then it should have
-'ranges'.
+On Thu, Jan 09, 2020 at 01:14:27PM +0800, Rocky Liao wrote:
+> This patch adds a unified API qca_power_on() to support both wcn399x and
+> Rome power on. For wcn399x it calls the qca_wcn3990_init() to init the
+> regulators, and for Rome it pulls up the bt_en GPIO to power up the btsoc.
+> It also moves all the power up operation from hdev->open() to
+> hdev->setup().
+> 
+> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+> ---
+> 
+> Changes in v2: None
+> Changes in v3:
+>   -combined the changes of patch 2 and 3 into this patch
 
-> >
-> >> +
-> >> +required:
-> >> +  - compatible
-> >> +  - reg
-> >> +
-> >> +patternProperties:
-> >> +  "^.*@[0-9a-f]+$":
-> >> +    type: object
-> >> +
-> >> +    properties:
-> >> +      reg:
-> >> +        maxItems: 1
-> >> +        description:
-> >> +          Offset and size in bytes within the storage device.
-> >> +
-> >> +      bits:
-> >
-> > Needs a type reference.
-> Yes. I will add a reference in the next patch set.
-> >
-> >> +        maxItems: 1
-> >> +        items:
-> >> +          items:
-> >> +            - minimum: 0
-> >> +              maximum: 7
-> >> +              description:
-> >> +                Offset in bit within the address range specified by
-> >> reg.
-> >> +            - minimum: 1
-> >
-> > max is 7?
-> I don't think it is limited to 7 as it is the size within the address
-> range specified by reg. If the address range is more than a byte size
-> can be more.
+it would be better to actually describe what was done, "patch 2 and 3"
+doesn't provide much useful information.
 
-Then why is the maximum offset 7?
+>   -updated the commit message
+> 
+>  drivers/bluetooth/hci_qca.c | 46 ++++++++++++++++++++++++-------------
+>  1 file changed, 30 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+> index 82e4cd4b6663..427e381a08b4 100644
+> --- a/drivers/bluetooth/hci_qca.c
+> +++ b/drivers/bluetooth/hci_qca.c
+> @@ -541,7 +541,6 @@ static int qca_open(struct hci_uart *hu)
+>  {
+>  	struct qca_serdev *qcadev;
+>  	struct qca_data *qca;
+> -	int ret;
+>  
+>  	BT_DBG("hu %p qca_open", hu);
+>  
+> @@ -582,23 +581,10 @@ static int qca_open(struct hci_uart *hu)
+>  	hu->priv = qca;
+>  
+>  	if (hu->serdev) {
+> -
+>  		qcadev = serdev_device_get_drvdata(hu->serdev);
+> -		if (!qca_is_wcn399x(qcadev->btsoc_type)) {
+> -			gpiod_set_value_cansleep(qcadev->bt_en, 1);
+> -			/* Controller needs time to bootup. */
+> -			msleep(150);
+> -		} else {
+> +		if (qca_is_wcn399x(qcadev->btsoc_type)) {
+>  			hu->init_speed = qcadev->init_speed;
+>  			hu->oper_speed = qcadev->oper_speed;
+> -			ret = qca_regulator_enable(qcadev);
+> -			if (ret) {
+> -				destroy_workqueue(qca->workqueue);
+> -				kfree_skb(qca->rx_skb);
+> -				hu->priv = NULL;
+> -				kfree(qca);
+> -				return ret;
+> -			}
+>  		}
+>  	}
+>  
+> @@ -1531,6 +1517,31 @@ static int qca_wcn3990_init(struct hci_uart *hu)
+>  	return 0;
+>  }
+>  
+> +static int qca_power_on(struct hci_dev *hdev)
+> +{
+> +	struct hci_uart *hu = hci_get_drvdata(hdev);
+> +	enum qca_btsoc_type soc_type = qca_soc_type(hu);
+> +	struct qca_serdev *qcadev;
+> +	int ret = 0;
+> +
+> +	/* Non-serdev device usually is powered by external power
+> +	 * and don't need additional action in driver for power on
+> +	 */
+> +	if (!hu->serdev)
+> +		return 0;
+> +
+> +	if (qca_is_wcn399x(soc_type)) {
+> +		ret = qca_wcn3990_init(hu);
 
-Rob
+Since there is no real need to add the qca_regulator_enable() call from
+qca_open() here qca_power_on() is now essentially a fancy wrapper for
+qca_wcn3990_init(), but I guess that's ok.
+
+> +	} else {
+> +		qcadev = serdev_device_get_drvdata(hu->serdev);
+> +		gpiod_set_value_cansleep(qcadev->bt_en, 1);
+> +		/* Controller needs time to bootup. */
+> +		msleep(150);
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+>  static int qca_setup(struct hci_uart *hu)
+>  {
+>  	struct hci_dev *hdev = hu->hdev;
+> @@ -1562,7 +1573,7 @@ static int qca_setup(struct hci_uart *hu)
+>  		set_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks);
+>  		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
+>  		hu->hdev->shutdown = qca_power_off;
+> -		ret = qca_wcn3990_init(hu);
+> +		ret = qca_power_on(hdev);
+>  		if (ret)
+>  			return ret;
+>  
+> @@ -1571,6 +1582,9 @@ static int qca_setup(struct hci_uart *hu)
+>  			return ret;
+>  	} else {
+>  		bt_dev_info(hdev, "ROME setup");
+> +		ret = qca_power_on(hdev);
+> +		if (ret)
+> +			return ret;
+>  		qca_set_speed(hu, QCA_INIT_SPEED);
+>  	}
+
+It would be nice if we could get away with a single qca_power_on() call
+for WCN399x and ROME. How about this before 'if (qca_is_wcn399x(soc_type))':
+
+	bt_dev_info(hdev, "setting up %s",
+		qca_is_wcn399x(soc_type)? "wcn399x" : "ROME");
+
+	ret = qca_power_on(hdev);
+	if (ret)
+		return ret;
+
+
+In any case:
+
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
