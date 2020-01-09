@@ -2,141 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D15F135C0F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 16:00:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE086135C24
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 16:02:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728091AbgAIO7B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jan 2020 09:59:01 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:30904 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730890AbgAIO7A (ORCPT
+        id S1730666AbgAIPCg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jan 2020 10:02:36 -0500
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:45785 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730273AbgAIPCg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jan 2020 09:59:00 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1578581939; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=iSl+LB/3BIrP2Fa1QYnWMrI84wPYNQRIyqOJ3huP4hI=; b=i5f0LcNBz7o2xZXoq4IbKQYH5tD4+iWUDrGSNf3vdHLpnGPWuE0wgJDi/MjIRWezMoMFwfn7
- M3cFfAuneefXF7bmn4v2b9v6cyuFvtx2gzvLI1UvbjkxKnFjz0MGtUtoIzv024CC9rHp51XH
- EFgvgujlAut2wBbfp4X5hIKC7EA=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e173fb1.7fa221314848-smtp-out-n02;
- Thu, 09 Jan 2020 14:58:57 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A9DD4C4479C; Thu,  9 Jan 2020 14:58:57 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.204.79.138] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akdwived)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7A33C433CB;
-        Thu,  9 Jan 2020 14:58:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B7A33C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akdwived@codeaurora.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: Documentation for qcom,eud
-To:     Rob Herring <robh@kernel.org>,
-        Prakruthi Deepak Heragu <pheragu@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ckadabi@codeaurora.org, tsoni@codeaurora.org,
-        bryanh@codeaurora.org, psodagud@codeaurora.org,
-        rnayak@codeaurora.org,
-        Satya Durga Srinivasu Prabhala <satyap@codeaurora.org>
-References: <1542310374-18474-1-git-send-email-pheragu@codeaurora.org>
- <1542310374-18474-2-git-send-email-pheragu@codeaurora.org>
- <20181117144705.GA18155@bogus>
-From:   "Dwivedi, Avaneesh Kumar (avani)" <akdwived@codeaurora.org>
-Message-ID: <7308d80f-7d0c-62bd-5b7d-63813e420c47@codeaurora.org>
-Date:   Thu, 9 Jan 2020 20:28:51 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
+        Thu, 9 Jan 2020 10:02:36 -0500
+Received: by mail-qk1-f193.google.com with SMTP id x1so6173817qkl.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jan 2020 07:02:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=KgOKihYdoC4CM0s9zPjus82QslMOvjX86wrDVhk7G2o=;
+        b=fKs+1GO2+5aT6aceO1g7mI3L0Vn0IDTuHxHeh2xpa0GPewzR9M6AprlTpMcfdMr1CZ
+         m9uoyUmegFuNnt4cZ4rshnZ+oyjwJ5Tfe5hVa4mdH7eQOXLdqw5BqUR2PR/SDxKXIH+O
+         NNNzdnKxBqzOKwel5z8lDDWIK221/IVzMULCZISxDdfv4t61igNkEbst0DIqy0/yUa3+
+         +xJkSLFS9c8FdMmlWKiu5GtDh05xG7ukmM8173miPgkEJF9umfVDZg3MtLjJizlinJak
+         Sd9dTGi4YAL1RRQvteDhWvfQivkk30gO3MWP6pw0wyAEFmGkdnVZNXJ0hBm4YJN176pg
+         /RuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=KgOKihYdoC4CM0s9zPjus82QslMOvjX86wrDVhk7G2o=;
+        b=D61gIVch6s6lGkjkHaJpj6F1Vqb/HUoPEBFJfpFZLAe6Ljey/Wmn0v6A9kH/O81n6a
+         OiZFEeIrUI1rLuoPGEbTgbuEtey7KtMbu0qWdruZvuDNEFMMVuhubbluFYNJKDPHgpJQ
+         bLaIfnCxcCbaEzxmyUVWaQ2zrAoXIwHOmDvD0zvWexX5kU1miSOIKTIzEc6gmmcJMBo4
+         N6Qaae9A/z0enMuJbX+syqCp82ty/q50nlpEp5cJEZq0J+kLd1cX4fjr+zwsmIRL+y0M
+         EjCPD/lG7veSYiP4LyQnm1prOvtoLRKnQO+2DmUxnNBQ59UOVJZ7TvcznvM24Q8Mak4r
+         X2QQ==
+X-Gm-Message-State: APjAAAUlyh1S8bfsTY1q6wVphkSBP+KUG2cY/eTsIb4C6Wl8ZmTaeMaN
+        erKaVJJ3AvsleUpXjkp5L36Naw==
+X-Google-Smtp-Source: APXvYqzcOmSmmGp0IyB+OmY5vvR4WUECK/hFA4F+02h7F7ZjUvpq+2CBXidGjySxIeY6Qr+zCcphyw==
+X-Received: by 2002:a37:9c52:: with SMTP id f79mr9986307qke.371.1578582154995;
+        Thu, 09 Jan 2020 07:02:34 -0800 (PST)
+Received: from [192.168.1.169] (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
+        by smtp.gmail.com with ESMTPSA id n190sm3203309qke.90.2020.01.09.07.02.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 09 Jan 2020 07:02:33 -0800 (PST)
+Subject: Re: [Patch v4 0/7] Introduce Power domain based warming device driver
+To:     rui.zhang@intel.com, ulf.hansson@linaro.org,
+        daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
+        agross@kernel.org
+References: <1574254593-16078-1-git-send-email-thara.gopinath@linaro.org>
+Cc:     amit.kucheria@verdurent.com, mark.rutland@arm.com,
+        rjw@rjwysocki.net, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <5E174086.50004@linaro.org>
+Date:   Thu, 9 Jan 2020 10:02:30 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.1
 MIME-Version: 1.0
-In-Reply-To: <20181117144705.GA18155@bogus>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <1574254593-16078-1-git-send-email-thara.gopinath@linaro.org>
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 11/20/2019 07:56 AM, Thara Gopinath wrote:
+> Certain resources modeled as a generic power domain in linux kernel can be
+> used to warm up the SoC (mx power domain on sdm845) if the temperature
+> falls below certain threshold. These power domains can be considered as
+> thermal warming devices.  (opposite of thermal cooling devices).
+> 
+> In kernel, these warming devices can be modeled as a thermal cooling
+> device. Since linux kernel today has no instance of a resource modeled as
+> a power domain acting as a thermal warming device, a generic power domain
+> based thermal warming device driver that can be used pan-Socs is the
+> approach taken in this patch series. Since thermal warming devices can be
+> thought of as the mirror opposite of thermal cooling devices, this patch
+> series re-uses thermal cooling device framework. To use these power
+> domains as warming devices require further tweaks in the thermal framework
+> which are out of scope of this patch series. These tweaks have been posted
+> as a separate series[1].
+Hi,
 
-On 11/17/2018 8:17 PM, Rob Herring wrote:
-> On Thu, Nov 15, 2018 at 11:32:53AM -0800, Prakruthi Deepak Heragu wrote:
->> Documentation for Embedded USB Debugger (EUD) device tree bindings.
-> I asked questions on v2 which were never answered.
+Can this series be merged ? It has been acked from DT and genpd point of
+view.
 
-HI Rob,
+Warm Regards
+Thara
 
-Can you please review my replies against your comments on patchset v2?
 
->
->> Signed-off-by: Satya Durga Srinivasu Prabhala <satyap@codeaurora.org>
->> Signed-off-by: Prakruthi Deepak Heragu <pheragu@codeaurora.org>
->> ---
->>   .../devicetree/bindings/soc/qcom/qcom,msm-eud.txt  | 43 ++++++++++++++++++++++
->>   1 file changed, 43 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,msm-eud.txt
->>
->> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,msm-eud.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,msm-eud.txt
->> new file mode 100644
->> index 0000000..6d339e7
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,msm-eud.txt
->> @@ -0,0 +1,43 @@
->> +* Qualcomm Technologies Inc Embedded USB Debugger (EUD)
->> +
->> +The EUD (Embedded USB Debugger) is a mini-USB hub implemented
->> +on chip to support the USB-based debug and trace capabilities.
->> +
->> +Required properties:
->> +
->> + - compatible:  Should be "qcom,msm-eud"
->> + - interrupts:  Interrupt number
->> + - reg: Should be address and size of EUD register space
->> +
->> +EUD notifies clients for VBUS attach/detach and charger enable/disable
->> +events. The link between client and EUD is established via a directed
->> +graph. EUD has one endpoint of the graph link mentioning EUD as an
->> +output link and clients of EUD should have the other endpoint of the
->> +graph link as an input link.
->> +
->> +An example for EUD device node:
->> +
->> +	eud: qcom,msm-eud@88e0000 {
->> +		compatible = "qcom,msm-eud";
->> +		interrupts = <GIC_SPI 492 IRQ_TYPE_LEVEL_HIGH>;
->> +		reg = <0x88e0000 0x4000>;
->> +		usb_con: connector {
->> +                compatible = "usb-c-connector";
->> +                label = "USB-C";
->> +                port {
->> +                	    eud_usb_output: endpoint {
->> +                        	    remote-endpoint = <&eud_usb3_input>;
->> +                        };
->> +        	    };
->> +        };
->> +	};
->> +
->> +An example for EUD client:
->> +
->> +	usb3 {
->> +		port {
->> +                eud_usb3_input: endpoint {
->> +                        remote-endpoint = <&eud_usb_output>;
->> +                };
->> +        };
->> +	};
->> -- 
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->>
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project.
