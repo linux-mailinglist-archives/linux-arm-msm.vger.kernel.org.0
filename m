@@ -2,158 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C0903135063
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 01:26:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D68CF1351E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 04:22:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726654AbgAIA0Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jan 2020 19:26:25 -0500
-Received: from onstation.org ([52.200.56.107]:53880 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726438AbgAIA0Z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jan 2020 19:26:25 -0500
-Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        id S1726913AbgAIDW2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jan 2020 22:22:28 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:26831 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727549AbgAIDW1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Jan 2020 22:22:27 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1578540147; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=BguFrLjftiRh3lvAGyn+GztB5Ot8YO0JqHR8r0AJH3E=;
+ b=GjZPdk8K+yoCMPTgPwgl5xDYJWVxVe4U1EAnQOgxaEvDHwcTljHGRQXh/HlAfOjyxbatIaGP
+ w9WOqRUEJ829oUjK1aK1C8Nj2Z+OUwkhs7v0IKd8GXWq0vsXNXkMpeiiikC0jceqqPBAWB9M
+ HBjZ8tmXj6rjTJqPYTAK+dlBWKg=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e169c6e.7f95208c5f10-smtp-out-n03;
+ Thu, 09 Jan 2020 03:22:22 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6464BC4479C; Thu,  9 Jan 2020 03:22:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 0E27B3EE6F;
-        Thu,  9 Jan 2020 00:26:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1578529584;
-        bh=bSP4GLHNIkw9HeeIY0NybAJJvEgnnxZaLRa3yG6+E1Q=;
-        h=From:To:Cc:Subject:Date:From;
-        b=TK7LNbfLzwC1F6wyfJLhAZh/bLnMAMGWyPQ+53Ef9F9qfGO8LdHQdNxZzdN/ApgLQ
-         spnXD0HCF2D5BgqAqnzHtGmbgkilGBxb8HwbfZjcP8Jtx2F3pGL+IMEfcms3ov2jp4
-         CwsIsk1ZiP73Lrd5/c1t4wIJrKy7VCeU3zbrKz+U=
-From:   Brian Masney <masneyb@onstation.org>
-To:     robdclark@gmail.com, bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, joro@8bytes.org, linux-arm-msm@vger.kernel.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org
-Subject: [PATCH RFC] ARM: dts: qcom: msm8974: add mdp5 iommu support
-Date:   Wed,  8 Jan 2020 19:26:06 -0500
-Message-Id: <20200109002606.35653-1-masneyb@onstation.org>
-X-Mailer: git-send-email 2.24.1
+        (Authenticated sender: rjliao)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CF096C43383;
+        Thu,  9 Jan 2020 03:22:21 +0000 (UTC)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
+Date:   Thu, 09 Jan 2020 11:22:21 +0800
+From:   Rocky Liao <rjliao@codeaurora.org>
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-bluetooth-owner@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] Bluetooth: hci_qca: Add qca_power_on() API to
+ support both wcn399x and Rome power up
+In-Reply-To: <20200108183427.GE89495@google.com>
+References: <20200107052601.32216-1-rjliao@codeaurora.org>
+ <20200108090804.22889-1-rjliao@codeaurora.org>
+ <20200108183427.GE89495@google.com>
+Message-ID: <671e08d94aa70dc315fbaae0ba3429e4@codeaurora.org>
+X-Sender: rjliao@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This adds preliminary IOMMU support for the MDP5 on msm8974. It appears
-that the qcom-iommu driver in upstream can be used on this SoC. I marked
-this patch as a RFC since the frame buffer becomes corrupted when I boot
-the Nexus 5 phone with this patch:
+Hi Matt,
 
-https://raw.githubusercontent.com/masneyb/nexus-5-upstream/master/images/broken-mdp5-iommu.jpg
+在 2020-01-09 02:34，Matthias Kaehlcke 写道：
+> Hi Rocky,
+> 
+> On Wed, Jan 08, 2020 at 05:08:02PM +0800, Rocky Liao wrote:
+>> This patch adds a unified API qca_power_on() to support both wcn399x 
+>> and
+>> Rome power on. For wcn399x it calls the qca_wcn3990_init() to init the
+>> regulators, and for Rome it pulls up the bt_en GPIO to power up the 
+>> btsoc.
+>> 
+>> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+>> ---
+>> 
+>> Changes in v2: None
+>> 
+>>  drivers/bluetooth/hci_qca.c | 21 +++++++++++++++++++++
+>>  1 file changed, 21 insertions(+)
+>> 
+>> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+>> index 9392cc7f9908..f6555bd1adbc 100644
+>> --- a/drivers/bluetooth/hci_qca.c
+>> +++ b/drivers/bluetooth/hci_qca.c
+>> @@ -1532,6 +1532,27 @@ static int qca_wcn3990_init(struct hci_uart 
+>> *hu)
+>>  	return 0;
+>>  }
+>> 
+>> +static int qca_power_on(struct hci_dev *hdev)
+>> +{
+>> +	struct hci_uart *hu = hci_get_drvdata(hdev);
+>> +	enum qca_btsoc_type soc_type = qca_soc_type(hu);
+>> +	struct qca_serdev *qcadev;
+>> +	int ret = 0;
+>> +
+>> +	if (qca_is_wcn399x(soc_type)) {
+> 
+> Why not include the qca_regulator_enable() call from qca_open() here?
+> It is clearly part of power on.
+> 
+OK
 
-A quick note about the ranges of the context banks below: Based on the
-downstream sources, I believe that the memory addresses should be mapped
-out like this:
+>> +		ret = qca_wcn3990_init(hu);
+>> +	} else {
+>> +		if (hu->serdev) {
+> 
+> nit: you could save a level of indentation (and IMO improve
+> readability) by doing:
+> 
+>      	       if (!hu->serdev)
+> 	            	return 0;
+> 
+OK
 
-	mdp_iommu: iommu@fd928000 {
-		reg = <0xfd928000 0x8000>;
-		ranges = <0 0xfd930000 0x8000>;
-		...
-
-		iommu-ctx@0 {
-			reg = <0x0 0x1000>;
-			...
-		};
-
-		iommu-ctx@1000 {
-			reg = <0x1000 0x1000>;
-			...
-		};
-
-		iommu-ctx@2000 {
-			reg = <0x2000 0x1000>;
-			...
-		};
-	};
-
-However, the qcom-iommu driver in upstream expects the first context
-bank to exist at address 0x1000, and the address space identifier
-(asid) to be greater than 0. See get_asid() and qcom_iommu_of_xlate()
-in the upstream qcom-iommu.c driver. I put in the patch below what the
-driver expects. I modified the driver in my local tree to allow the
-mapping that I have above so that the extra 0x1000 of memory is mapped
-into the global address space and still experience the same screen
-corruption issue.
-
-Downstream MSM 3.4 IOMMU dts snippet for reference:
-https://github.com/AICP/kernel_lge_hammerhead/blob/n7.1/arch/arm/boot/dts/msm-iommu-v1.dtsi#L110
-
-I'm hoping that someone that's more familiar with this hardware has a
-suggestion for something to try.
-
-Signed-off-by: Brian Masney <masneyb@onstation.org>
----
- arch/arm/boot/dts/qcom-msm8974.dtsi | 44 +++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
-
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 4b161b809dd5..2515a3bd4aa7 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -1305,6 +1305,46 @@ etm3_out: endpoint {
- 			};
- 		};
- 
-+		mdp_iommu: iommu@fd928000 {
-+			compatible = "qcom,msm8974-iommu",
-+			             "qcom,msm-iommu-v1";
-+			reg = <0xfd928000 0x7000>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			#iommu-cells = <1>;
-+			ranges = <0 0xfd92f000 0x9000>;
-+
-+			clocks = <&mmcc MDSS_AHB_CLK>,
-+			         <&mmcc MDSS_AXI_CLK>;
-+			clock-names = "iface",
-+			              "bus";
-+
-+			qcom,iommu-secure-id = <1>;
-+
-+			// mdp_0
-+			iommu-ctx@1000 {
-+				compatible = "qcom,msm-iommu-v1-ns";
-+				reg = <0x1000 0x1000>;
-+				interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
-+			};
-+
-+			// mdp_1
-+			iommu-ctx@2000 {
-+				compatible = "qcom,msm-iommu-v1-sec";
-+				reg = <0x2000 0x1000>;
-+				interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>,
-+				             <GIC_SPI 46 IRQ_TYPE_LEVEL_HIGH>;
-+			};
-+
-+			// mdp_2
-+			iommu-ctx@3000 {
-+				compatible = "qcom,msm-iommu-v1-sec";
-+				reg = <0x3000 0x1000>;
-+				interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>,
-+				             <GIC_SPI 46 IRQ_TYPE_LEVEL_HIGH>;
-+			};
-+                };
-+
- 		ocmem@fdd00000 {
- 			compatible = "qcom,msm8974-ocmem";
- 			reg = <0xfdd00000 0x2000>,
-@@ -1427,6 +1467,10 @@ mdp: mdp@fd900000 {
- 				interconnects = <&mmssnoc MNOC_MAS_MDP_PORT0 &bimc BIMC_SLV_EBI_CH0>;
- 				interconnect-names = "mdp0-mem";
- 
-+				iommus = <&mdp_iommu 1
-+				          &mdp_iommu 2
-+				          &mdp_iommu 3>;
-+
- 				ports {
- 					#address-cells = <1>;
- 					#size-cells = <0>;
--- 
-2.24.1
-
+>> +			qcadev = serdev_device_get_drvdata(hu->serdev);
+>> +			gpiod_set_value_cansleep(qcadev->bt_en, 1);
+>> +			/* Controller needs time to bootup. */
+>> +			msleep(150);
+>> +		}
+>> +	}
+>> +
+>> +	return ret;
+>> +}
+>> +
+> 
+> I think common practice would be to combine the 3 patches of this 
+> series
+> into one. The new function doesn't really add any new functionality, 
+> but
+> is a refactoring. This is more evident if you see in a single diff that
+> the pieces in qca_power_on() are removed elsewhere.
+OK
