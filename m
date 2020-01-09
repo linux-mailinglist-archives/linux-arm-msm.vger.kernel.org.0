@@ -2,101 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 81E7613559C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 10:22:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C7D011355FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 10:42:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729476AbgAIJVi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jan 2020 04:21:38 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:63625 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729311AbgAIJVi (ORCPT
+        id S1728689AbgAIJmf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jan 2020 04:42:35 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:35564 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728635AbgAIJmf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jan 2020 04:21:38 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1578561697; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=HENFk0Bwme4xX25T8XYjrsnqX3dO66gOl56uwR9piXs=; b=S1Slievj2qko2Fc//+wVOdtjw7S77e/95jqfZOszrHklliuX9EJxqxOnkAXPQ+ZSHWW2sBXY
- WKERJj3ZH7+3X8JtOukuF6jo/WqFZLK89DWg8yT4j6gTugrhggRyIvgfqBwCi9zwqMCfMefi
- MGjaJ8hDNXTxaLsUaA6NbR3hkPE=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e16f09f.7f01651f0e30-smtp-out-n02;
- Thu, 09 Jan 2020 09:21:35 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CC6B8C4479F; Thu,  9 Jan 2020 09:21:33 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.201.2.161] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sricharan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0A050C433A2;
-        Thu,  9 Jan 2020 09:21:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0A050C433A2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sricharan@codeaurora.org
-Subject: Re: [PATCH V3 1/5] dt-bindings: pinctrl: qcom: Add ipq6018 pinctrl
- bindings
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, sivaprak@codeaurora.org
-References: <1578052177-6778-1-git-send-email-sricharan@codeaurora.org>
- <1578052177-6778-2-git-send-email-sricharan@codeaurora.org>
- <CACRpkdbjjzwdEgsDV2tGea0t3AMM_FRSd-Um3+2BrYDTGKoNxw@mail.gmail.com>
-From:   Sricharan R <sricharan@codeaurora.org>
-Message-ID: <ca9baad3-8065-4647-c6c5-7449b96f4f71@codeaurora.org>
-Date:   Thu, 9 Jan 2020 14:51:27 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
-MIME-Version: 1.0
-In-Reply-To: <CACRpkdbjjzwdEgsDV2tGea0t3AMM_FRSd-Um3+2BrYDTGKoNxw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Thu, 9 Jan 2020 04:42:35 -0500
+Received: by mail-wm1-f68.google.com with SMTP id p17so2059117wmb.0;
+        Thu, 09 Jan 2020 01:42:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=x/rJsrzAFN1SHOY1ywcZnWjYD9yWmdldMlh5f03XRYg=;
+        b=l7n3Me2CEVGR8p5a6YW0NNtdcTDn9ZDVgj4YDu6Cl4Kif/Plbh9xiOT5YRyZ7xRTe1
+         E5H3y4vlS/PAPJvfMTXpBk7W1aX0vf/JSBniLv5yMnE9WtvQAA5zv0ZjGsDZQO8ZOXs1
+         xmDE5aMNv6e/0tWG4RgYVIqEUor25w0M+2Pch+0E8c45C3X/HU5G+To1CTwW5J3cLYA/
+         SjHjxo84gnQgT16WkbPApY15KlgcBvYHOCTq/SggQUSf2/b9jhpcyvU5VQINfyabWHfH
+         5bJkNepes33nKKUn5T5Ifoke5iVS9EI7IQZKz+z2uv9Js1rr8hlL0ALfEMeOzCIDvr7L
+         pYmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=x/rJsrzAFN1SHOY1ywcZnWjYD9yWmdldMlh5f03XRYg=;
+        b=YcsWhqmgClmQ3y9TPnUyRWASYK16GJunnY4wTe2ksdDPEaLYyejO7hvX5uNI6Lx1YE
+         QHQZ+19gAXrjnMMWw2tuII1FETnkP4zn4GgnhFZw6Jf4wLRw4DG/kjydtDpjnKTtNRgZ
+         wAEemDvvWol8sIbQgfOrfAYYrp+THAj6JBESm8wysZ1NnsfosDZtMv6hZOSnlptVI5sB
+         XfZV4duH1YS0vl+8T23uMFwkQ62q7GAtD1XPQQbYCfdNoN63gNVhS62u4PvDQVslw1ya
+         RSoubQC9QZy2HmQVm3hjSc7QGXF2R9n7hp7EJ/WPFhBcs7oqzzu/I8TBnuJuw8I/hnwW
+         9DqQ==
+X-Gm-Message-State: APjAAAURraVC/jW4ExuYqWiwTTAd3icnf067d9B/DwH/aAMwzX7F7+pa
+        nQ619vgqr3nuNyTrrkeGcbI=
+X-Google-Smtp-Source: APXvYqzutBXNb9l/OLivyPXT06DnycTvFXLnYG/Z5uxCovB+J7j2p4azD6X6kG/WwBfIrjj1YXBhog==
+X-Received: by 2002:a1c:ddd7:: with SMTP id u206mr3920334wmg.159.1578562953501;
+        Thu, 09 Jan 2020 01:42:33 -0800 (PST)
+Received: from localhost.localdomain ([197.254.95.38])
+        by smtp.googlemail.com with ESMTPSA id y7sm3219435wmd.1.2020.01.09.01.42.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jan 2020 01:42:33 -0800 (PST)
+From:   Wambui Karuga <wambui.karugax@gmail.com>
+To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2] drm/msm: use BUG_ON macro for debugging.
+Date:   Thu,  9 Jan 2020 12:42:26 +0300
+Message-Id: <20200109094226.4967-1-wambui.karugax@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Linus,
+As the if statement only checks for the value of the offset_name
+variable, it can be replaced by the more conscise BUG_ON macro for error
+reporting.
 
-On 1/7/2020 5:25 PM, Linus Walleij wrote:
-> On Fri, Jan 3, 2020 at 12:49 PM Sricharan R <sricharan@codeaurora.org> wrote:
-> 
->> Add device tree binding Documentation details for ipq6018
->> pinctrl driver.
->>
->> Co-developed-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
->> Signed-off-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
->> Co-developed-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
->> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
->> Co-developed-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
->> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
->> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
->> ---
->>  [v3] Fixed the example dt node, inherited properties
-> 
-> Once you are done with patches 1 & 2, can I merge these
-> separately to the pinctrl tree?
+v2: format expression to less than 80 characters for each line.
 
-Yeah, that should be fine. Posted a V4 and waiting for approval
-from Rob on the pinctrl bindings for Patch 1.
+Signed-off-by: Wambui Karuga <wambui.karugax@gmail.com>
+---
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-Regards,
- Sricharan
-
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index c7441fb8313e..d1843abc3ac7 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -315,10 +315,8 @@ OUT_PKT7(struct msm_ringbuffer *ring, uint8_t opcode, uint16_t cnt)
+ static inline bool adreno_reg_check(struct adreno_gpu *gpu,
+ 		enum adreno_regs offset_name)
+ {
+-	if (offset_name >= REG_ADRENO_REGISTER_MAX ||
+-			!gpu->reg_offsets[offset_name]) {
+-		BUG();
+-	}
++	BUG_ON(offset_name >= REG_ADRENO_REGISTER_MAX ||
++	       !gpu->reg_offsets[offset_name]);
+ 
+ 	/*
+ 	 * REG_SKIP is a special value that tell us that the register in
 -- 
-"QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+2.17.1
+
