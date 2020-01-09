@@ -2,163 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 05D4C13527E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 06:14:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 449ED1352E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 06:58:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725899AbgAIFOg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jan 2020 00:14:36 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:57139 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725958AbgAIFOg (ORCPT
+        id S1725893AbgAIF6I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jan 2020 00:58:08 -0500
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:39417 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727949AbgAIF6F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jan 2020 00:14:36 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1578546875; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=eS9lCZyPtTj+osj5AKiBGLWtwqWO/aNwkaHwJOw+u/8=; b=ePLyPw4nyCkmxphsQcmjrMaf4tY9PFdiV7pzm5e4rp8PUGxNZACmEhviZh0lKzhISQZMefYb
- rYYMasxCHazkwiNiBlzpLnkwU0L4wtANj+ZdjPqLpDoMlHxf01eV/HrkXY8/WbJXS4EqC1NX
- HnIABdG8OAvmHgguBJ3qA9pa6+c=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e16b6b9.7fe87d1325a8-smtp-out-n02;
- Thu, 09 Jan 2020 05:14:33 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B1596C433CB; Thu,  9 Jan 2020 05:14:33 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from rocky-Inspiron-7590.qca.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rjliao)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5AAECC43383;
-        Thu,  9 Jan 2020 05:14:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5AAECC43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rjliao@codeaurora.org
-From:   Rocky Liao <rjliao@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Rocky Liao <rjliao@codeaurora.org>
-Subject: [PATCH v3] Bluetooth: hci_qca: Add qca_power_on() API to support both wcn399x and Rome power up
-Date:   Thu,  9 Jan 2020 13:14:27 +0800
-Message-Id: <20200109051427.16426-1-rjliao@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200107052601.32216-1-rjliao@codeaurora.org>
-References: <20200107052601.32216-1-rjliao@codeaurora.org>
+        Thu, 9 Jan 2020 00:58:05 -0500
+Received: by mail-vs1-f67.google.com with SMTP id y125so3487008vsb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2020 21:58:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2DjPx1eV8QPqDcx/sjKIxavtaGi+2Rmdyzg645rvwrI=;
+        b=Dh0Q3XCsP8JwuJIY/YsgboRS+BQfU1j6Z3n8g/IjRVnL+ysomvfZeFLXAT/kwIjKnY
+         O9+XWiunCbvfaklvqvMDu+wOpsVlnAIeVGR6lAnUXSulFNCxc8kk5p4QWd7cvUmtp68v
+         eNBWjB+XmNZfoVvnvpBg5rEMLgvomBmINlHg4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2DjPx1eV8QPqDcx/sjKIxavtaGi+2Rmdyzg645rvwrI=;
+        b=WHB2q5Bs5eo2DlPe0C1Fu7JFS8u/1QY0qKr4P28+OBh9YXOP92YmNiqi9Lfl1VZ+Yl
+         ypoeS7FH4298kArAIMMc0HS4NWZgOf80Cv/6ZnWrwmcCHPxux04Bh7W9OTzbRjpj63/g
+         +Svb/Uc/8gSscJYFIkux7lkBpt74d/uf+YeJ7dZK60Xj76fsmh7vheW94py0qMbdeBdv
+         mIt+M9A1TWwFGqnSEPt+v39sOPN75vREBLQphaPlGPer0CYIjMEpCLVTGxxd5P5JuPYm
+         wAWlFyaFaxZQSmqFlaUub+0Xl1teTE1ri9/DkTzHUfDpzZRLu6LpEjTg61RTCmgNDx/h
+         W/IA==
+X-Gm-Message-State: APjAAAWj3JPmLF8LEPqTiPkjJTDpSHV1HO+9oxg/JvwJ/1kNwXMkT+La
+        gnXO6XuozfG4QDbtIxBbJ00IM5+ce2M=
+X-Google-Smtp-Source: APXvYqwurLwK7eeP5DCXAqRjwKsSuUQ9BnirlNNdNGR4aSJi/mv0KaIF4FrroA9V+62KcuLfbf8PQg==
+X-Received: by 2002:a05:6102:1cc:: with SMTP id s12mr5066203vsq.91.1578549483828;
+        Wed, 08 Jan 2020 21:58:03 -0800 (PST)
+Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com. [209.85.222.47])
+        by smtp.gmail.com with ESMTPSA id w4sm1447363vsq.18.2020.01.08.21.58.02
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Jan 2020 21:58:02 -0800 (PST)
+Received: by mail-ua1-f47.google.com with SMTP id 73so2069569uac.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2020 21:58:02 -0800 (PST)
+X-Received: by 2002:ab0:724c:: with SMTP id d12mr5861475uap.0.1578549482261;
+ Wed, 08 Jan 2020 21:58:02 -0800 (PST)
+MIME-Version: 1.0
+References: <20200108133948.1.I35ceb4db3ad8cfab78f7cd51494aeff4891339f5@changeid>
+In-Reply-To: <20200108133948.1.I35ceb4db3ad8cfab78f7cd51494aeff4891339f5@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 8 Jan 2020 21:57:48 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XREb0zf=BxwKF7jGO7fwtwQaO+vR1giodsW+RkHZe_XQ@mail.gmail.com>
+Message-ID: <CAD=FV=XREb0zf=BxwKF7jGO7fwtwQaO+vR1giodsW+RkHZe_XQ@mail.gmail.com>
+Subject: Re: [PATCH] spi: spi-qcom-qspi: Use device managed memory for clk_bulk_data
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>, Mark Brown <broonie@kernel.org>,
+        Girish Mahadevan <girishm@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-spi <linux-spi@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds a unified API qca_power_on() to support both wcn399x and
-Rome power on. For wcn399x it calls the qca_wcn3990_init() to init the
-regulators, and for Rome it pulls up the bt_en GPIO to power up the btsoc.
-It also moves all the power up operation from hdev->open() to
-hdev->setup().
+Hi,
 
-Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
----
+On Wed, Jan 8, 2020 at 1:40 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+>
+> Currrently the memory for the clk_bulk_data of the QSPI controller
+> is allocated with spi_alloc_master(). The bulk data pointer is passed
+> to devm_clk_bulk_get() which saves it in clk_bulk_devres->clks. When
+> the device is removed later devm_clk_bulk_release() is called and
+> uses the bulk data referenced by the pointer to release the clocks.
+> For this driver this results in accessing memory that has already
+> been freed, since the memory allocated with spi_alloc_master() is
+> released by spi_controller_release(), which is called before the
+> managed resources are released.
+>
+> Use device managed memory for the clock bulk data to fix the issue
+> described above.
+>
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+>
+>  drivers/spi/spi-qcom-qspi.c | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
 
-Changes in v2: None
-Changes in v3:
-  -combined the changes of patch 2 and 3 into this patch
-  -updated the commit message
+It's a little ugly, but it seems somewhat same.  Basically we're
+saying that the caller of devm_clk_bulk_get() is in charge of keeping
+the list of clocks readable for the devm free function.  Maybe we
+should also fix devm_clk_bulk_get() to always make a copy of the
+clocks so we can relax this limitation (though that's a lot of extra
+copying for the uncommon case), but even if we do change that your
+change would still be OK.
 
- drivers/bluetooth/hci_qca.c | 46 ++++++++++++++++++++++++-------------
- 1 file changed, 30 insertions(+), 16 deletions(-)
+...so from my point of view:
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 82e4cd4b6663..427e381a08b4 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -541,7 +541,6 @@ static int qca_open(struct hci_uart *hu)
- {
- 	struct qca_serdev *qcadev;
- 	struct qca_data *qca;
--	int ret;
- 
- 	BT_DBG("hu %p qca_open", hu);
- 
-@@ -582,23 +581,10 @@ static int qca_open(struct hci_uart *hu)
- 	hu->priv = qca;
- 
- 	if (hu->serdev) {
--
- 		qcadev = serdev_device_get_drvdata(hu->serdev);
--		if (!qca_is_wcn399x(qcadev->btsoc_type)) {
--			gpiod_set_value_cansleep(qcadev->bt_en, 1);
--			/* Controller needs time to bootup. */
--			msleep(150);
--		} else {
-+		if (qca_is_wcn399x(qcadev->btsoc_type)) {
- 			hu->init_speed = qcadev->init_speed;
- 			hu->oper_speed = qcadev->oper_speed;
--			ret = qca_regulator_enable(qcadev);
--			if (ret) {
--				destroy_workqueue(qca->workqueue);
--				kfree_skb(qca->rx_skb);
--				hu->priv = NULL;
--				kfree(qca);
--				return ret;
--			}
- 		}
- 	}
- 
-@@ -1531,6 +1517,31 @@ static int qca_wcn3990_init(struct hci_uart *hu)
- 	return 0;
- }
- 
-+static int qca_power_on(struct hci_dev *hdev)
-+{
-+	struct hci_uart *hu = hci_get_drvdata(hdev);
-+	enum qca_btsoc_type soc_type = qca_soc_type(hu);
-+	struct qca_serdev *qcadev;
-+	int ret = 0;
-+
-+	/* Non-serdev device usually is powered by external power
-+	 * and don't need additional action in driver for power on
-+	 */
-+	if (!hu->serdev)
-+		return 0;
-+
-+	if (qca_is_wcn399x(soc_type)) {
-+		ret = qca_wcn3990_init(hu);
-+	} else {
-+		qcadev = serdev_device_get_drvdata(hu->serdev);
-+		gpiod_set_value_cansleep(qcadev->bt_en, 1);
-+		/* Controller needs time to bootup. */
-+		msleep(150);
-+	}
-+
-+	return ret;
-+}
-+
- static int qca_setup(struct hci_uart *hu)
- {
- 	struct hci_dev *hdev = hu->hdev;
-@@ -1562,7 +1573,7 @@ static int qca_setup(struct hci_uart *hu)
- 		set_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks);
- 		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
- 		hu->hdev->shutdown = qca_power_off;
--		ret = qca_wcn3990_init(hu);
-+		ret = qca_power_on(hdev);
- 		if (ret)
- 			return ret;
- 
-@@ -1571,6 +1582,9 @@ static int qca_setup(struct hci_uart *hu)
- 			return ret;
- 	} else {
- 		bt_dev_info(hdev, "ROME setup");
-+		ret = qca_power_on(hdev);
-+		if (ret)
-+			return ret;
- 		qca_set_speed(hu, QCA_INIT_SPEED);
- 	}
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+
+-Doug
