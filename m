@@ -2,106 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 449ED1352E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 06:58:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 702191353CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 08:41:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725893AbgAIF6I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jan 2020 00:58:08 -0500
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:39417 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727949AbgAIF6F (ORCPT
+        id S1728220AbgAIHlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jan 2020 02:41:05 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:44153 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728241AbgAIHlF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jan 2020 00:58:05 -0500
-Received: by mail-vs1-f67.google.com with SMTP id y125so3487008vsb.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2020 21:58:04 -0800 (PST)
+        Thu, 9 Jan 2020 02:41:05 -0500
+Received: by mail-ed1-f66.google.com with SMTP id bx28so4762351edb.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2020 23:41:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2DjPx1eV8QPqDcx/sjKIxavtaGi+2Rmdyzg645rvwrI=;
-        b=Dh0Q3XCsP8JwuJIY/YsgboRS+BQfU1j6Z3n8g/IjRVnL+ysomvfZeFLXAT/kwIjKnY
-         O9+XWiunCbvfaklvqvMDu+wOpsVlnAIeVGR6lAnUXSulFNCxc8kk5p4QWd7cvUmtp68v
-         eNBWjB+XmNZfoVvnvpBg5rEMLgvomBmINlHg4=
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Tc2D6Fddcx4jsd+C+veXGGQQuxMll3GdXqPaTOZ3Rv8=;
+        b=QjTTPpKdzKtvc8m2GWDyHtt0EbLVlhhr8Pu5etCFNi+g/bA76m/0AIgVN9cNi8DsHN
+         9EY+zNdSWzPrUt+ii0aUmfHxG109EUt3JrD3RBZMKrx+3AMTf2OJKh/JvPru2ETZXfpZ
+         Bj5qTOA0dLNp5e/aRdDHOHjUlPsxq3poG0thL2F4FH3et14KwMCRCRCsZwzOFulVRzeJ
+         PG6n6n5shWPwGGKyLbzWMsCsHcE1Q+leV47bIKpgge/Y5KWixieuOaUfC954msHUvnGl
+         ry1NiYRy91fBEnsBKR4xLxS4FSD0qbFksu/IalZCkBmb2Gt1ukg/4gwlKX6cMaAFcxWS
+         3IDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2DjPx1eV8QPqDcx/sjKIxavtaGi+2Rmdyzg645rvwrI=;
-        b=WHB2q5Bs5eo2DlPe0C1Fu7JFS8u/1QY0qKr4P28+OBh9YXOP92YmNiqi9Lfl1VZ+Yl
-         ypoeS7FH4298kArAIMMc0HS4NWZgOf80Cv/6ZnWrwmcCHPxux04Bh7W9OTzbRjpj63/g
-         +Svb/Uc/8gSscJYFIkux7lkBpt74d/uf+YeJ7dZK60Xj76fsmh7vheW94py0qMbdeBdv
-         mIt+M9A1TWwFGqnSEPt+v39sOPN75vREBLQphaPlGPer0CYIjMEpCLVTGxxd5P5JuPYm
-         wAWlFyaFaxZQSmqFlaUub+0Xl1teTE1ri9/DkTzHUfDpzZRLu6LpEjTg61RTCmgNDx/h
-         W/IA==
-X-Gm-Message-State: APjAAAWj3JPmLF8LEPqTiPkjJTDpSHV1HO+9oxg/JvwJ/1kNwXMkT+La
-        gnXO6XuozfG4QDbtIxBbJ00IM5+ce2M=
-X-Google-Smtp-Source: APXvYqwurLwK7eeP5DCXAqRjwKsSuUQ9BnirlNNdNGR4aSJi/mv0KaIF4FrroA9V+62KcuLfbf8PQg==
-X-Received: by 2002:a05:6102:1cc:: with SMTP id s12mr5066203vsq.91.1578549483828;
-        Wed, 08 Jan 2020 21:58:03 -0800 (PST)
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com. [209.85.222.47])
-        by smtp.gmail.com with ESMTPSA id w4sm1447363vsq.18.2020.01.08.21.58.02
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Tc2D6Fddcx4jsd+C+veXGGQQuxMll3GdXqPaTOZ3Rv8=;
+        b=olF90uYMUIveGmxPCZxGzvxJ9b0oQbdlFq6dK2TKXcJSKIqa7yVQZfr/QNC+qvtPJi
+         8t2yAZi/3Pyp9Uupt7N2yJyLSFeqj4PaA2midAnTJ4fbT7DYdgcZRX0lrR8a7WcU89cE
+         Nmnk3UgbR4jtT6ZXzOXu20b/TtwjBqZsBl/IYCw7JUqV6jT2xyygCy0sxIvuLnRAVg9A
+         R4UvR/6oMOrQ3qYuO5fygXEvs4hF7npOsK0a1zqWxsLWDWCHuG4Zvjekj3WvhUVHyHY+
+         lOLVxUtXpkgvF7gERGWKTvV/OFmdjVZoQaTgkW8ZArfNijWHhBWQ2ZtT/rxTSthsv+GJ
+         OTlw==
+X-Gm-Message-State: APjAAAWwMIphYxTGk2aX8X9tsMJfGKty8AyNQ03Zq4UrezKj3oTgpvJs
+        7JtXV325BSXdprTAljUOBT6T+Q==
+X-Google-Smtp-Source: APXvYqxexeYCvUclhR2/21VigWRLKTkpkK7LqIRm2opKYvdDcU7Dc38V3W5WB8bMCIHYHs3MIZ3eEw==
+X-Received: by 2002:a17:906:944d:: with SMTP id z13mr9156035ejx.4.1578555662883;
+        Wed, 08 Jan 2020 23:41:02 -0800 (PST)
+Received: from [192.168.1.13] (hst-221-28.medicom.bg. [84.238.221.28])
+        by smtp.googlemail.com with ESMTPSA id m6sm99623ejj.19.2020.01.08.23.41.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jan 2020 21:58:02 -0800 (PST)
-Received: by mail-ua1-f47.google.com with SMTP id 73so2069569uac.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jan 2020 21:58:02 -0800 (PST)
-X-Received: by 2002:ab0:724c:: with SMTP id d12mr5861475uap.0.1578549482261;
- Wed, 08 Jan 2020 21:58:02 -0800 (PST)
+        Wed, 08 Jan 2020 23:41:02 -0800 (PST)
+Subject: Re: [PATCH v4 04/12] v4l: Add source event change for bit-depth
+To:     Hans Verkuil <hverkuil@xs4all.nl>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     Vikash Garodia <vgarodia@codeaurora.org>, dikshita@codeaurora.org
+References: <20200106154929.4331-1-stanimir.varbanov@linaro.org>
+ <20200106154929.4331-5-stanimir.varbanov@linaro.org>
+ <c3b02589-1d7a-a476-7d33-7e555fbe276d@xs4all.nl>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <ae233eb1-69fc-6723-0224-0c1fcf786156@linaro.org>
+Date:   Thu, 9 Jan 2020 09:41:00 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-References: <20200108133948.1.I35ceb4db3ad8cfab78f7cd51494aeff4891339f5@changeid>
-In-Reply-To: <20200108133948.1.I35ceb4db3ad8cfab78f7cd51494aeff4891339f5@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 8 Jan 2020 21:57:48 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XREb0zf=BxwKF7jGO7fwtwQaO+vR1giodsW+RkHZe_XQ@mail.gmail.com>
-Message-ID: <CAD=FV=XREb0zf=BxwKF7jGO7fwtwQaO+vR1giodsW+RkHZe_XQ@mail.gmail.com>
-Subject: Re: [PATCH] spi: spi-qcom-qspi: Use device managed memory for clk_bulk_data
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>, Mark Brown <broonie@kernel.org>,
-        Girish Mahadevan <girishm@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <c3b02589-1d7a-a476-7d33-7e555fbe276d@xs4all.nl>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Hans,
 
-On Wed, Jan 8, 2020 at 1:40 PM Matthias Kaehlcke <mka@chromium.org> wrote:
->
-> Currrently the memory for the clk_bulk_data of the QSPI controller
-> is allocated with spi_alloc_master(). The bulk data pointer is passed
-> to devm_clk_bulk_get() which saves it in clk_bulk_devres->clks. When
-> the device is removed later devm_clk_bulk_release() is called and
-> uses the bulk data referenced by the pointer to release the clocks.
-> For this driver this results in accessing memory that has already
-> been freed, since the memory allocated with spi_alloc_master() is
-> released by spi_controller_release(), which is called before the
-> managed resources are released.
->
-> Use device managed memory for the clock bulk data to fix the issue
-> described above.
->
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
->
->  drivers/spi/spi-qcom-qspi.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
+On 1/8/20 6:09 PM, Hans Verkuil wrote:
+> On 1/6/20 4:49 PM, Stanimir Varbanov wrote:
+>> This event indicate that the source color bit-depth is changed
+>> during run-time. The client must get the new format and re-allocate
+>> buffers for it. This can usually happens with video decoder (encoders)
+>> when the bit-stream color bit-depth is changed from 8 to 10bits
+>> or vice versa.
+>>
+>> Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> ---
+>>  Documentation/media/uapi/v4l/vidioc-dqevent.rst | 8 +++++++-
+>>  Documentation/media/videodev2.h.rst.exceptions  | 1 +
+>>  include/uapi/linux/videodev2.h                  | 1 +
+>>  3 files changed, 9 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/media/uapi/v4l/vidioc-dqevent.rst b/Documentation/media/uapi/v4l/vidioc-dqevent.rst
+>> index 42659a3d1705..fad853d440cf 100644
+>> --- a/Documentation/media/uapi/v4l/vidioc-dqevent.rst
+>> +++ b/Documentation/media/uapi/v4l/vidioc-dqevent.rst
+>> @@ -402,7 +402,13 @@ call.
+>>  	that many Video Capture devices are not able to recover from a temporary
+>>  	loss of signal and so restarting streaming I/O is required in order for
+>>  	the hardware to synchronize to the video signal.
+>> -
+>> +    * - ``V4L2_EVENT_SRC_CH_COLOR_DEPTH``
+>> +      - 0x0002
+>> +      - This event gets triggered when color bit-depth change is detected
+>> +	from a video decoder. Applications will have to query the new pixel
+>> +	format and re-negotiate the queue. In most cases the streaming must be
+>> +	stopped and restarted (:ref:`VIDIOC_STREAMOFF <VIDIOC_STREAMON>`
+>> +	followed by :ref:`VIDIOC_STREAMON <VIDIOC_STREAMON>`).
+> 
+> I think this is too specific for decoders. Something similar to the
+> CH_RESOLUTION description would be more appropriate:
+> 
+>       - This event gets triggered when a color bit-depth change (but not a
+> 	resolution change!) is detected	at an input. This can come from an
 
-It's a little ugly, but it seems somewhat same.  Basically we're
-saying that the caller of devm_clk_bulk_get() is in charge of keeping
-the list of clocks readable for the devm free function.  Maybe we
-should also fix devm_clk_bulk_get() to always make a copy of the
-clocks so we can relax this limitation (though that's a lot of extra
-copying for the uncommon case), but even if we do change that your
-change would still be OK.
+What you mean by "but not a resolution change" here? Resolution change
+and bit-depth change cannot occur on the same time, or something else.
 
-...so from my point of view:
+I would say that for Venus (and probably others) on initialization time
+both could be changed on the same time, because we cannot predict the
+resolution and bit-depth before parsing bitstream headers.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> 	input connector or from a video decoder. Applications will have to query
+> 	the new pixel format and re-negotiate the queue.
+> 
+> 	For stateful decoders follow the guidelines in :ref:`decoder`.
+> 	Video capture devices will in most cases have to stop and restart
+> 	streaming (:ref:`VIDIOC_STREAMOFF <VIDIOC_STREAMON>` followed by
+> 	:ref:`VIDIOC_STREAMON <VIDIOC_STREAMON>`).
+> 
+> And update dev-decoder.rst where needed with this new event flag.
+> 
+> As to your question on irc: once I've acked this patch it can be merged
+> via a venus PR.
+> 
+> Regards,
+> 
+> 	Hans
+> 
+>>  
+>>  Return Value
+>>  ============
+>> diff --git a/Documentation/media/videodev2.h.rst.exceptions b/Documentation/media/videodev2.h.rst.exceptions
+>> index cb6ccf91776e..209709114378 100644
+>> --- a/Documentation/media/videodev2.h.rst.exceptions
+>> +++ b/Documentation/media/videodev2.h.rst.exceptions
+>> @@ -490,6 +490,7 @@ replace define V4L2_EVENT_CTRL_CH_FLAGS ctrl-changes-flags
+>>  replace define V4L2_EVENT_CTRL_CH_RANGE ctrl-changes-flags
+>>  
+>>  replace define V4L2_EVENT_SRC_CH_RESOLUTION src-changes-flags
+>> +replace define V4L2_EVENT_SRC_CH_COLOR_DEPTH src-changes-flags
+>>  
+>>  replace define V4L2_EVENT_MD_FL_HAVE_FRAME_SEQ :c:type:`v4l2_event_motion_det`
+>>  
+>> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+>> index 5f9357dcb060..1d349c9d57a7 100644
+>> --- a/include/uapi/linux/videodev2.h
+>> +++ b/include/uapi/linux/videodev2.h
+>> @@ -2332,6 +2332,7 @@ struct v4l2_event_frame_sync {
+>>  };
+>>  
+>>  #define V4L2_EVENT_SRC_CH_RESOLUTION		(1 << 0)
+>> +#define V4L2_EVENT_SRC_CH_COLOR_DEPTH		(1 << 1)
+>>  
+>>  struct v4l2_event_src_change {
+>>  	__u32 changes;
+>>
+> 
 
--Doug
+-- 
+regards,
+Stan
