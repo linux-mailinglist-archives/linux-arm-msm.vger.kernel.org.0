@@ -2,527 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3659813540B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 09:05:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 15DEB1354EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jan 2020 09:57:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728396AbgAIIFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jan 2020 03:05:47 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:54930 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728397AbgAIIFr (ORCPT
+        id S1728992AbgAII5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jan 2020 03:57:47 -0500
+Received: from lb3-smtp-cloud9.xs4all.net ([194.109.24.30]:37077 "EHLO
+        lb3-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728782AbgAII5r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jan 2020 03:05:47 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1578557145; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=/BvKq9pE7Fj1+zTGCe8LNZdnP9O7gur2I4iwLzFq7EA=; b=FPZYThldFuklPRvcDl6ZIC6FrC6p/pwocHjFvnDgOPH+6PIfa+jRCJFf/CHAienYQXHaE+/8
- iuPH2i7jPWGOR81Xs93KkocvBoco3VFvdbVa8nHxlxH2rTxPH/mBcqkBcWkzRMlQLACUMdie
- W6jvK6FvXq9wMO9kHxVUYBVi+cw=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e16ded8.7fdb1c0f49d0-smtp-out-n02;
- Thu, 09 Jan 2020 08:05:44 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 62F7DC447A9; Thu,  9 Jan 2020 08:05:43 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        UPPERCASE_50_75 autolearn=no autolearn_force=no version=3.4.0
-Received: from srichara1-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sricharan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5D203C447A3;
-        Thu,  9 Jan 2020 08:05:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5D203C447A3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sricharan@codeaurora.org
-From:   Sricharan R <sricharan@codeaurora.org>
-To:     agross@kernel.org, devicetree@vger.kernel.org,
-        linus.walleij@linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-soc@vger.kernel.org, robh+dt@kernel.org,
-        sivaprak@codeaurora.org, sricharan@codeaurora.org, sboyd@kernel.org
-Cc:     Anusha Canchi Ramachandra Rao <anusharao@codeaurora.org>,
-        Abhishek Sahu <absahu@codeaurora.org>
-Subject: [PATCH V2 1/2] clk: qcom: Add DT bindings for ipq6018 gcc clock controller
-Date:   Thu,  9 Jan 2020 13:35:20 +0530
-Message-Id: <1578557121-423-2-git-send-email-sricharan@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1578557121-423-1-git-send-email-sricharan@codeaurora.org>
-References: <1578557121-423-1-git-send-email-sricharan@codeaurora.org>
+        Thu, 9 Jan 2020 03:57:47 -0500
+Received: from [192.168.2.10] ([62.249.185.68])
+        by smtp-cloud9.xs4all.net with ESMTPA
+        id pTdLifcDmT6sRpTdPiJiDr; Thu, 09 Jan 2020 09:57:44 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
+        t=1578560264; bh=Vk/kifmXgDbLQKwwbiuGi3FO7KWx9DtEyC44qbawP/Y=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=oVpiwGh+ljBx8V9cDVtwgSxqDuL4IwsY1hPavlas1AfQQArwIpFQj+Ns9elb3td/c
+         4MxsyDMBK4HzmVD7mQWtpbGuhd8u8hoV/u5ahLCH5rcnv/M8I25xZGgT/5Skj7dxjR
+         OP8z5VZHjKHV4fkeRNKWtMvJdOVqobPxJ8ZlvmHEp+b4Duip/irkJVl5mpPYZFfIza
+         KB0vdWAPjJSRBLNL489+syB+Ky6YtdLIsvDUjraj+TajAJ8g2DZ6CJCpl9YGZjaQYU
+         zG0Rww8xUZXGDeoWa8X+Ge/kVjBKaiy4zs4V87YybYTvDNyZ81agPZ6NvstwuOeEjv
+         r/OrdClh6WiyA==
+Subject: Re: [PATCH v4 04/12] v4l: Add source event change for bit-depth
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     Vikash Garodia <vgarodia@codeaurora.org>, dikshita@codeaurora.org
+References: <20200106154929.4331-1-stanimir.varbanov@linaro.org>
+ <20200106154929.4331-5-stanimir.varbanov@linaro.org>
+ <c3b02589-1d7a-a476-7d33-7e555fbe276d@xs4all.nl>
+ <ae233eb1-69fc-6723-0224-0c1fcf786156@linaro.org>
+From:   Hans Verkuil <hverkuil@xs4all.nl>
+Message-ID: <fb27b5cc-0eef-a7b4-f45b-a3986b77c4c9@xs4all.nl>
+Date:   Thu, 9 Jan 2020 09:57:39 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
+MIME-Version: 1.0
+In-Reply-To: <ae233eb1-69fc-6723-0224-0c1fcf786156@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfEjH4eGnUttPRLLZn2wIUrksqeIOrr79iVk+71v2HW3c1s23i6AUvXDG6nOxpxTCJL8f4vf3BDtJS4BCsbP6tyG3MMiR+gAUSHxms1gbAZE5EBM8Em0m
+ r4JMymfFTlE297FzNwczBZLXuclC8SuwpjsRAzxlCHlqYHPDihNW+ogauozlNVREAhhKrhNSCejCdPwwu6P+1ijYB/01otPI2zGCU3d7X/LsbCY1r6a1u7tS
+ I/rXdzF328DG1xtzEvr78rQW8g2SIO7G+QjnHsG28CQ1h4GDmn7WwHbmLNOVcw3n3iUoKbmjvaKfeMqwNJZVjeOX+j7/7pcXw5rTdfphAPyorS9zxLMQeJnw
+ hpeAi1jV1wJnd3IvkIARRU3t/JEJ3yHx4ra7YajsQUHJ3AKi3IW47BQa6Akl10Li4v5W3ikp
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the compatible strings and the include file for ipq6018
-gcc clock controller.
+On 1/9/20 8:41 AM, Stanimir Varbanov wrote:
+> Hi Hans,
+> 
+> On 1/8/20 6:09 PM, Hans Verkuil wrote:
+>> On 1/6/20 4:49 PM, Stanimir Varbanov wrote:
+>>> This event indicate that the source color bit-depth is changed
+>>> during run-time. The client must get the new format and re-allocate
+>>> buffers for it. This can usually happens with video decoder (encoders)
+>>> when the bit-stream color bit-depth is changed from 8 to 10bits
+>>> or vice versa.
+>>>
+>>> Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+>>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>>> ---
+>>>  Documentation/media/uapi/v4l/vidioc-dqevent.rst | 8 +++++++-
+>>>  Documentation/media/videodev2.h.rst.exceptions  | 1 +
+>>>  include/uapi/linux/videodev2.h                  | 1 +
+>>>  3 files changed, 9 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/Documentation/media/uapi/v4l/vidioc-dqevent.rst b/Documentation/media/uapi/v4l/vidioc-dqevent.rst
+>>> index 42659a3d1705..fad853d440cf 100644
+>>> --- a/Documentation/media/uapi/v4l/vidioc-dqevent.rst
+>>> +++ b/Documentation/media/uapi/v4l/vidioc-dqevent.rst
+>>> @@ -402,7 +402,13 @@ call.
+>>>  	that many Video Capture devices are not able to recover from a temporary
+>>>  	loss of signal and so restarting streaming I/O is required in order for
+>>>  	the hardware to synchronize to the video signal.
+>>> -
+>>> +    * - ``V4L2_EVENT_SRC_CH_COLOR_DEPTH``
+>>> +      - 0x0002
+>>> +      - This event gets triggered when color bit-depth change is detected
+>>> +	from a video decoder. Applications will have to query the new pixel
+>>> +	format and re-negotiate the queue. In most cases the streaming must be
+>>> +	stopped and restarted (:ref:`VIDIOC_STREAMOFF <VIDIOC_STREAMON>`
+>>> +	followed by :ref:`VIDIOC_STREAMON <VIDIOC_STREAMON>`).
+>>
+>> I think this is too specific for decoders. Something similar to the
+>> CH_RESOLUTION description would be more appropriate:
+>>
+>>       - This event gets triggered when a color bit-depth change (but not a
+>> 	resolution change!) is detected	at an input. This can come from an
+> 
+> What you mean by "but not a resolution change" here? Resolution change
+> and bit-depth change cannot occur on the same time, or something else.
 
-Co-developed-by: Anusha Canchi Ramachandra Rao <anusharao@codeaurora.org>
-Signed-off-by: Anusha Canchi Ramachandra Rao <anusharao@codeaurora.org>
-Co-developed-by: Abhishek Sahu <absahu@codeaurora.org>
-Signed-off-by: Abhishek Sahu <absahu@codeaurora.org>
-Co-developed-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Sricharan R <sricharan@codeaurora.org>
----
- .../devicetree/bindings/clock/qcom,gcc.yaml        |   3 +-
- include/dt-bindings/clock/qcom,gcc-ipq6018.h       | 262 +++++++++++++++++++++
- include/dt-bindings/reset/qcom,gcc-ipq6018.h       | 157 ++++++++++++
- 3 files changed, 421 insertions(+), 1 deletion(-)
- create mode 100644 include/dt-bindings/clock/qcom,gcc-ipq6018.h
- create mode 100644 include/dt-bindings/reset/qcom,gcc-ipq6018.h
+What I was trying to say is that a resolution change implies a possible bit-depth
+change as well, whereas V4L2_EVENT_SRC_CH_COLOR_DEPTH is only set if there is
+a bit-depth change but no resolution change.
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-index f2b5cd6..e08e666 100644
---- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-@@ -19,8 +19,9 @@ properties:
-     enum:
-        - qcom,gcc-apq8064
-        - qcom,gcc-apq8084
--       - qcom,gcc-ipq8064
-        - qcom,gcc-ipq4019
-+       - qcom,gcc-ipq6018
-+       - qcom,gcc-ipq8064
-        - qcom,gcc-ipq8074
-        - qcom,gcc-msm8660
-        - qcom,gcc-msm8916
-diff --git a/include/dt-bindings/clock/qcom,gcc-ipq6018.h b/include/dt-bindings/clock/qcom,gcc-ipq6018.h
-new file mode 100644
-index 0000000..6f4be3a
---- /dev/null
-+++ b/include/dt-bindings/clock/qcom,gcc-ipq6018.h
-@@ -0,0 +1,262 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-+ */
-+
-+#ifndef _DT_BINDINGS_CLOCK_IPQ_GCC_6018_H
-+#define _DT_BINDINGS_CLOCK_IPQ_GCC_6018_H
-+
-+#define GPLL0					0
-+#define UBI32_PLL				1
-+#define GPLL6					2
-+#define GPLL4					3
-+#define PCNOC_BFDCD_CLK_SRC			4
-+#define GPLL2					5
-+#define NSS_CRYPTO_PLL				6
-+#define NSS_PPE_CLK_SRC				7
-+#define GCC_XO_CLK_SRC				8
-+#define NSS_CE_CLK_SRC				9
-+#define GCC_SLEEP_CLK_SRC			10
-+#define APSS_AHB_CLK_SRC			11
-+#define NSS_PORT5_RX_CLK_SRC			12
-+#define NSS_PORT5_TX_CLK_SRC			13
-+#define PCIE0_AXI_CLK_SRC			14
-+#define USB0_MASTER_CLK_SRC			15
-+#define APSS_AHB_POSTDIV_CLK_SRC		16
-+#define NSS_PORT1_RX_CLK_SRC			17
-+#define NSS_PORT1_TX_CLK_SRC			18
-+#define NSS_PORT2_RX_CLK_SRC			19
-+#define NSS_PORT2_TX_CLK_SRC			20
-+#define NSS_PORT3_RX_CLK_SRC			21
-+#define NSS_PORT3_TX_CLK_SRC			22
-+#define NSS_PORT4_RX_CLK_SRC			23
-+#define NSS_PORT4_TX_CLK_SRC			24
-+#define NSS_PORT5_RX_DIV_CLK_SRC		25
-+#define NSS_PORT5_TX_DIV_CLK_SRC		26
-+#define APSS_AXI_CLK_SRC			27
-+#define NSS_CRYPTO_CLK_SRC			28
-+#define NSS_PORT1_RX_DIV_CLK_SRC		29
-+#define NSS_PORT1_TX_DIV_CLK_SRC		30
-+#define NSS_PORT2_RX_DIV_CLK_SRC		31
-+#define NSS_PORT2_TX_DIV_CLK_SRC		32
-+#define NSS_PORT3_RX_DIV_CLK_SRC		33
-+#define NSS_PORT3_TX_DIV_CLK_SRC		34
-+#define NSS_PORT4_RX_DIV_CLK_SRC		35
-+#define NSS_PORT4_TX_DIV_CLK_SRC		36
-+#define NSS_UBI0_CLK_SRC			37
-+#define BLSP1_QUP1_I2C_APPS_CLK_SRC		38
-+#define BLSP1_QUP1_SPI_APPS_CLK_SRC		39
-+#define BLSP1_QUP2_I2C_APPS_CLK_SRC		40
-+#define BLSP1_QUP2_SPI_APPS_CLK_SRC		41
-+#define BLSP1_QUP3_I2C_APPS_CLK_SRC		42
-+#define BLSP1_QUP3_SPI_APPS_CLK_SRC		43
-+#define BLSP1_QUP4_I2C_APPS_CLK_SRC		44
-+#define BLSP1_QUP4_SPI_APPS_CLK_SRC		45
-+#define BLSP1_QUP5_I2C_APPS_CLK_SRC		46
-+#define BLSP1_QUP5_SPI_APPS_CLK_SRC		47
-+#define BLSP1_QUP6_I2C_APPS_CLK_SRC		48
-+#define BLSP1_QUP6_SPI_APPS_CLK_SRC		49
-+#define BLSP1_UART1_APPS_CLK_SRC		50
-+#define BLSP1_UART2_APPS_CLK_SRC		51
-+#define BLSP1_UART3_APPS_CLK_SRC		52
-+#define BLSP1_UART4_APPS_CLK_SRC		53
-+#define BLSP1_UART5_APPS_CLK_SRC		54
-+#define BLSP1_UART6_APPS_CLK_SRC		55
-+#define CRYPTO_CLK_SRC				56
-+#define NSS_UBI0_DIV_CLK_SRC			57
-+#define PCIE0_AUX_CLK_SRC			58
-+#define PCIE0_PIPE_CLK_SRC			59
-+#define SDCC1_APPS_CLK_SRC			60
-+#define USB0_AUX_CLK_SRC			61
-+#define USB0_MOCK_UTMI_CLK_SRC			62
-+#define USB0_PIPE_CLK_SRC			63
-+#define USB1_MOCK_UTMI_CLK_SRC			64
-+#define GCC_APSS_AHB_CLK			65
-+#define GCC_APSS_AXI_CLK			66
-+#define GCC_BLSP1_AHB_CLK			67
-+#define GCC_BLSP1_QUP1_I2C_APPS_CLK		68
-+#define GCC_BLSP1_QUP1_SPI_APPS_CLK		69
-+#define GCC_BLSP1_QUP2_I2C_APPS_CLK		70
-+#define GCC_BLSP1_QUP2_SPI_APPS_CLK		71
-+#define GCC_BLSP1_QUP3_I2C_APPS_CLK		72
-+#define GCC_BLSP1_QUP3_SPI_APPS_CLK		73
-+#define GCC_BLSP1_QUP4_I2C_APPS_CLK		74
-+#define GCC_BLSP1_QUP4_SPI_APPS_CLK		75
-+#define GCC_BLSP1_QUP5_I2C_APPS_CLK		76
-+#define GCC_BLSP1_QUP5_SPI_APPS_CLK		77
-+#define GCC_BLSP1_QUP6_I2C_APPS_CLK		78
-+#define GCC_BLSP1_QUP6_SPI_APPS_CLK		79
-+#define GCC_BLSP1_UART1_APPS_CLK		80
-+#define GCC_BLSP1_UART2_APPS_CLK		81
-+#define GCC_BLSP1_UART3_APPS_CLK		82
-+#define GCC_BLSP1_UART4_APPS_CLK		83
-+#define GCC_BLSP1_UART5_APPS_CLK		84
-+#define GCC_BLSP1_UART6_APPS_CLK		85
-+#define GCC_CRYPTO_AHB_CLK			86
-+#define GCC_CRYPTO_AXI_CLK			87
-+#define GCC_CRYPTO_CLK				88
-+#define GCC_XO_CLK				89
-+#define GCC_XO_DIV4_CLK				90
-+#define GCC_MDIO_AHB_CLK			91
-+#define GCC_CRYPTO_PPE_CLK			92
-+#define GCC_NSS_CE_APB_CLK			93
-+#define GCC_NSS_CE_AXI_CLK			94
-+#define GCC_NSS_CFG_CLK				95
-+#define GCC_NSS_CRYPTO_CLK			96
-+#define GCC_NSS_CSR_CLK				97
-+#define GCC_NSS_EDMA_CFG_CLK			98
-+#define GCC_NSS_EDMA_CLK			99
-+#define GCC_NSS_NOC_CLK				100
-+#define GCC_NSS_PORT1_RX_CLK			101
-+#define GCC_NSS_PORT1_TX_CLK			102
-+#define GCC_NSS_PORT2_RX_CLK			103
-+#define GCC_NSS_PORT2_TX_CLK			104
-+#define GCC_NSS_PORT3_RX_CLK			105
-+#define GCC_NSS_PORT3_TX_CLK			106
-+#define GCC_NSS_PORT4_RX_CLK			107
-+#define GCC_NSS_PORT4_TX_CLK			108
-+#define GCC_NSS_PORT5_RX_CLK			109
-+#define GCC_NSS_PORT5_TX_CLK			110
-+#define GCC_NSS_PPE_CFG_CLK			111
-+#define GCC_NSS_PPE_CLK				112
-+#define GCC_NSS_PPE_IPE_CLK			113
-+#define GCC_NSS_PTP_REF_CLK			114
-+#define GCC_NSSNOC_CE_APB_CLK			115
-+#define GCC_NSSNOC_CE_AXI_CLK			116
-+#define GCC_NSSNOC_CRYPTO_CLK			117
-+#define GCC_NSSNOC_PPE_CFG_CLK			118
-+#define GCC_NSSNOC_PPE_CLK			119
-+#define GCC_NSSNOC_QOSGEN_REF_CLK		120
-+#define GCC_NSSNOC_TIMEOUT_REF_CLK		121
-+#define GCC_NSSNOC_UBI0_AHB_CLK			122
-+#define GCC_PORT1_MAC_CLK			123
-+#define GCC_PORT2_MAC_CLK			124
-+#define GCC_PORT3_MAC_CLK			125
-+#define GCC_PORT4_MAC_CLK			126
-+#define GCC_PORT5_MAC_CLK			127
-+#define GCC_UBI0_AHB_CLK			128
-+#define GCC_UBI0_AXI_CLK			129
-+#define GCC_UBI0_CORE_CLK			130
-+#define GCC_PCIE0_AHB_CLK			131
-+#define GCC_PCIE0_AUX_CLK			132
-+#define GCC_PCIE0_AXI_M_CLK			133
-+#define GCC_PCIE0_AXI_S_CLK			134
-+#define GCC_PCIE0_PIPE_CLK			135
-+#define GCC_PRNG_AHB_CLK			136
-+#define GCC_QPIC_AHB_CLK			137
-+#define GCC_QPIC_CLK				138
-+#define GCC_SDCC1_AHB_CLK			139
-+#define GCC_SDCC1_APPS_CLK			140
-+#define GCC_UNIPHY0_AHB_CLK			141
-+#define GCC_UNIPHY0_PORT1_RX_CLK		142
-+#define GCC_UNIPHY0_PORT1_TX_CLK		143
-+#define GCC_UNIPHY0_PORT2_RX_CLK		144
-+#define GCC_UNIPHY0_PORT2_TX_CLK		145
-+#define GCC_UNIPHY0_PORT3_RX_CLK		146
-+#define GCC_UNIPHY0_PORT3_TX_CLK		147
-+#define GCC_UNIPHY0_PORT4_RX_CLK		148
-+#define GCC_UNIPHY0_PORT4_TX_CLK		149
-+#define GCC_UNIPHY0_PORT5_RX_CLK		150
-+#define GCC_UNIPHY0_PORT5_TX_CLK		151
-+#define GCC_UNIPHY0_SYS_CLK			152
-+#define GCC_UNIPHY1_AHB_CLK			153
-+#define GCC_UNIPHY1_PORT5_RX_CLK		154
-+#define GCC_UNIPHY1_PORT5_TX_CLK		155
-+#define GCC_UNIPHY1_SYS_CLK			156
-+#define GCC_USB0_AUX_CLK			157
-+#define GCC_USB0_MASTER_CLK			158
-+#define GCC_USB0_MOCK_UTMI_CLK			159
-+#define GCC_USB0_PHY_CFG_AHB_CLK		160
-+#define GCC_USB0_PIPE_CLK			161
-+#define GCC_USB0_SLEEP_CLK			162
-+#define GCC_USB1_MASTER_CLK			163
-+#define GCC_USB1_MOCK_UTMI_CLK			164
-+#define GCC_USB1_PHY_CFG_AHB_CLK		165
-+#define GCC_USB1_SLEEP_CLK			166
-+#define GP1_CLK_SRC				167
-+#define GP2_CLK_SRC				168
-+#define GP3_CLK_SRC				169
-+#define GCC_GP1_CLK				170
-+#define GCC_GP2_CLK				171
-+#define GCC_GP3_CLK				172
-+#define SYSTEM_NOC_BFDCD_CLK_SRC		173
-+#define GCC_NSSNOC_SNOC_CLK			174
-+#define GCC_UBI0_NC_AXI_CLK			175
-+#define GCC_UBI1_NC_AXI_CLK			176
-+#define GPLL0_MAIN				177
-+#define UBI32_PLL_MAIN				178
-+#define GPLL6_MAIN				179
-+#define GPLL4_MAIN				180
-+#define GPLL2_MAIN				181
-+#define NSS_CRYPTO_PLL_MAIN			182
-+#define GCC_CMN_12GPLL_AHB_CLK			183
-+#define GCC_CMN_12GPLL_SYS_CLK			184
-+#define GCC_SNOC_BUS_TIMEOUT2_AHB_CLK		185
-+#define GCC_SYS_NOC_USB0_AXI_CLK		186
-+#define GCC_SYS_NOC_PCIE0_AXI_CLK		187
-+#define QDSS_TSCTR_CLK_SRC			188
-+#define QDSS_AT_CLK_SRC				189
-+#define GCC_QDSS_AT_CLK				190
-+#define GCC_QDSS_DAP_CLK			191
-+#define ADSS_PWM_CLK_SRC			192
-+#define GCC_ADSS_PWM_CLK			193
-+#define SDCC1_ICE_CORE_CLK_SRC			194
-+#define GCC_SDCC1_ICE_CORE_CLK			195
-+#define GCC_DCC_CLK				196
-+#define PCIE0_RCHNG_CLK_SRC			197
-+#define GCC_PCIE0_AXI_S_BRIDGE_CLK		198
-+#define PCIE0_RCHNG_CLK				199
-+#define UBI32_MEM_NOC_BFDCD_CLK_SRC		200
-+#define WCSS_AHB_CLK_SRC			201
-+#define Q6_AXI_CLK_SRC				202
-+#define GCC_Q6SS_PCLKDBG_CLK			203
-+#define GCC_Q6_TSCTR_1TO2_CLK			204
-+#define GCC_WCSS_CORE_TBU_CLK			205
-+#define GCC_WCSS_AXI_M_CLK			206
-+#define GCC_SYS_NOC_WCSS_AHB_CLK		207
-+#define GCC_Q6_AXIM_CLK				208
-+#define GCC_Q6SS_ATBM_CLK			209
-+#define GCC_WCSS_Q6_TBU_CLK			210
-+#define GCC_Q6_AXIM2_CLK			211
-+#define GCC_Q6_AHB_CLK				212
-+#define GCC_Q6_AHB_S_CLK			213
-+#define GCC_WCSS_DBG_IFC_APB_CLK		214
-+#define GCC_WCSS_DBG_IFC_ATB_CLK		215
-+#define GCC_WCSS_DBG_IFC_NTS_CLK		216
-+#define GCC_WCSS_DBG_IFC_DAPBUS_CLK		217
-+#define GCC_WCSS_DBG_IFC_APB_BDG_CLK		218
-+#define GCC_WCSS_DBG_IFC_ATB_BDG_CLK		219
-+#define GCC_WCSS_DBG_IFC_NTS_BDG_CLK		220
-+#define GCC_WCSS_DBG_IFC_DAPBUS_BDG_CLK		221
-+#define GCC_WCSS_ECAHB_CLK			222
-+#define GCC_WCSS_ACMT_CLK			223
-+#define GCC_WCSS_AHB_S_CLK			224
-+#define GCC_RBCPR_WCSS_CLK			225
-+#define RBCPR_WCSS_CLK_SRC			226
-+#define GCC_RBCPR_WCSS_AHB_CLK			227
-+#define GCC_LPASS_CORE_AXIM_CLK			228
-+#define GCC_LPASS_SNOC_CFG_CLK			229
-+#define GCC_LPASS_Q6_AXIM_CLK			230
-+#define GCC_LPASS_Q6_ATBM_AT_CLK		231
-+#define GCC_LPASS_Q6_PCLKDBG_CLK		232
-+#define GCC_LPASS_Q6SS_TSCTR_1TO2_CLK		233
-+#define GCC_LPASS_Q6SS_TRIG_CLK			234
-+#define GCC_LPASS_TBU_CLK			235
-+#define LPASS_CORE_AXIM_CLK_SRC			236
-+#define LPASS_SNOC_CFG_CLK_SRC			237
-+#define LPASS_Q6_AXIM_CLK_SRC			238
-+#define GCC_PCNOC_LPASS_CLK			239
-+#define GCC_UBI0_UTCM_CLK			240
-+#define SNOC_NSSNOC_BFDCD_CLK_SRC		241
-+#define GCC_SNOC_NSSNOC_CLK			242
-+#define GCC_MEM_NOC_Q6_AXI_CLK			243
-+#define GCC_MEM_NOC_UBI32_CLK			244
-+#define GCC_MEM_NOC_LPASS_CLK			245
-+#define GCC_SNOC_LPASS_CFG_CLK			246
-+#define GCC_SYS_NOC_QDSS_STM_AXI_CLK		247
-+#define GCC_QDSS_STM_CLK			248
-+#define GCC_QDSS_TRACECLKIN_CLK			249
-+#define QDSS_STM_CLK_SRC			250
-+#define QDSS_TRACECLKIN_CLK_SRC			251
-+#define GCC_NSSNOC_ATB_CLK			252
-+#endif
-diff --git a/include/dt-bindings/reset/qcom,gcc-ipq6018.h b/include/dt-bindings/reset/qcom,gcc-ipq6018.h
-new file mode 100644
-index 0000000..02a220a
---- /dev/null
-+++ b/include/dt-bindings/reset/qcom,gcc-ipq6018.h
-@@ -0,0 +1,157 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-+ */
-+
-+#ifndef _DT_BINDINGS_RESET_IPQ_GCC_6018_H
-+#define _DT_BINDINGS_RESET_IPQ_GCC_6018_H
-+
-+#define GCC_BLSP1_BCR				0
-+#define GCC_BLSP1_QUP1_BCR			1
-+#define GCC_BLSP1_UART1_BCR			2
-+#define GCC_BLSP1_QUP2_BCR			3
-+#define GCC_BLSP1_UART2_BCR			4
-+#define GCC_BLSP1_QUP3_BCR			5
-+#define GCC_BLSP1_UART3_BCR			6
-+#define GCC_BLSP1_QUP4_BCR			7
-+#define GCC_BLSP1_UART4_BCR			8
-+#define GCC_BLSP1_QUP5_BCR			9
-+#define GCC_BLSP1_UART5_BCR			10
-+#define GCC_BLSP1_QUP6_BCR			11
-+#define GCC_BLSP1_UART6_BCR			12
-+#define GCC_IMEM_BCR				13
-+#define GCC_SMMU_BCR				14
-+#define GCC_APSS_TCU_BCR			15
-+#define GCC_SMMU_XPU_BCR			16
-+#define GCC_PCNOC_TBU_BCR			17
-+#define GCC_SMMU_CFG_BCR			18
-+#define GCC_PRNG_BCR				19
-+#define GCC_BOOT_ROM_BCR			20
-+#define GCC_CRYPTO_BCR				21
-+#define GCC_WCSS_BCR				22
-+#define GCC_WCSS_Q6_BCR				23
-+#define GCC_NSS_BCR				24
-+#define GCC_SEC_CTRL_BCR			25
-+#define GCC_DDRSS_BCR				26
-+#define GCC_SYSTEM_NOC_BCR			27
-+#define GCC_PCNOC_BCR				28
-+#define GCC_TCSR_BCR				29
-+#define GCC_QDSS_BCR				30
-+#define GCC_DCD_BCR				31
-+#define GCC_MSG_RAM_BCR				32
-+#define GCC_MPM_BCR				33
-+#define GCC_SPDM_BCR				34
-+#define GCC_RBCPR_BCR				35
-+#define GCC_RBCPR_MX_BCR			36
-+#define GCC_TLMM_BCR				37
-+#define GCC_RBCPR_WCSS_BCR			38
-+#define GCC_USB0_PHY_BCR			39
-+#define GCC_USB3PHY_0_PHY_BCR			40
-+#define GCC_USB0_BCR				41
-+#define GCC_USB1_BCR				42
-+#define GCC_QUSB2_0_PHY_BCR			43
-+#define GCC_QUSB2_1_PHY_BCR			44
-+#define GCC_SDCC1_BCR				45
-+#define GCC_SNOC_BUS_TIMEOUT0_BCR		46
-+#define GCC_SNOC_BUS_TIMEOUT1_BCR		47
-+#define GCC_SNOC_BUS_TIMEOUT2_BCR		48
-+#define GCC_PCNOC_BUS_TIMEOUT0_BCR		49
-+#define GCC_PCNOC_BUS_TIMEOUT1_BCR		50
-+#define GCC_PCNOC_BUS_TIMEOUT2_BCR		51
-+#define GCC_PCNOC_BUS_TIMEOUT3_BCR		52
-+#define GCC_PCNOC_BUS_TIMEOUT4_BCR		53
-+#define GCC_PCNOC_BUS_TIMEOUT5_BCR		54
-+#define GCC_PCNOC_BUS_TIMEOUT6_BCR		55
-+#define GCC_PCNOC_BUS_TIMEOUT7_BCR		56
-+#define GCC_PCNOC_BUS_TIMEOUT8_BCR		57
-+#define GCC_PCNOC_BUS_TIMEOUT9_BCR		58
-+#define GCC_UNIPHY0_BCR				59
-+#define GCC_UNIPHY1_BCR				60
-+#define GCC_CMN_12GPLL_BCR			61
-+#define GCC_QPIC_BCR				62
-+#define GCC_MDIO_BCR				63
-+#define GCC_WCSS_CORE_TBU_BCR			64
-+#define GCC_WCSS_Q6_TBU_BCR			65
-+#define GCC_USB0_TBU_BCR			66
-+#define GCC_PCIE0_TBU_BCR			67
-+#define GCC_PCIE0_BCR				68
-+#define GCC_PCIE0_PHY_BCR			69
-+#define GCC_PCIE0PHY_PHY_BCR			70
-+#define GCC_PCIE0_LINK_DOWN_BCR			71
-+#define GCC_DCC_BCR				72
-+#define GCC_APC0_VOLTAGE_DROOP_DETECTOR_BCR	73
-+#define GCC_SMMU_CATS_BCR			74
-+#define GCC_UBI0_AXI_ARES			75
-+#define GCC_UBI0_AHB_ARES			76
-+#define GCC_UBI0_NC_AXI_ARES			77
-+#define GCC_UBI0_DBG_ARES			78
-+#define GCC_UBI0_CORE_CLAMP_ENABLE		79
-+#define GCC_UBI0_CLKRST_CLAMP_ENABLE		80
-+#define GCC_UBI0_UTCM_ARES			81
-+#define GCC_NSS_CFG_ARES			82
-+#define GCC_NSS_NOC_ARES			83
-+#define GCC_NSS_CRYPTO_ARES			84
-+#define GCC_NSS_CSR_ARES			85
-+#define GCC_NSS_CE_APB_ARES			86
-+#define GCC_NSS_CE_AXI_ARES			87
-+#define GCC_NSSNOC_CE_APB_ARES			88
-+#define GCC_NSSNOC_CE_AXI_ARES			89
-+#define GCC_NSSNOC_UBI0_AHB_ARES		90
-+#define GCC_NSSNOC_SNOC_ARES			91
-+#define GCC_NSSNOC_CRYPTO_ARES			92
-+#define GCC_NSSNOC_ATB_ARES			93
-+#define GCC_NSSNOC_QOSGEN_REF_ARES		94
-+#define GCC_NSSNOC_TIMEOUT_REF_ARES		95
-+#define GCC_PCIE0_PIPE_ARES			96
-+#define GCC_PCIE0_SLEEP_ARES			97
-+#define GCC_PCIE0_CORE_STICKY_ARES		98
-+#define GCC_PCIE0_AXI_MASTER_ARES		99
-+#define GCC_PCIE0_AXI_SLAVE_ARES		100
-+#define GCC_PCIE0_AHB_ARES			101
-+#define GCC_PCIE0_AXI_MASTER_STICKY_ARES	102
-+#define GCC_PCIE0_AXI_SLAVE_STICKY_ARES		103
-+#define GCC_PPE_FULL_RESET			104
-+#define GCC_UNIPHY0_SOFT_RESET			105
-+#define GCC_UNIPHY0_XPCS_RESET			106
-+#define GCC_UNIPHY1_SOFT_RESET			107
-+#define GCC_UNIPHY1_XPCS_RESET			108
-+#define GCC_EDMA_HW_RESET			109
-+#define GCC_ADSS_BCR				110
-+#define GCC_NSS_NOC_TBU_BCR			111
-+#define GCC_NSSPORT1_RESET			112
-+#define GCC_NSSPORT2_RESET			113
-+#define GCC_NSSPORT3_RESET			114
-+#define GCC_NSSPORT4_RESET			115
-+#define GCC_NSSPORT5_RESET			116
-+#define GCC_UNIPHY0_PORT1_ARES			117
-+#define GCC_UNIPHY0_PORT2_ARES			118
-+#define GCC_UNIPHY0_PORT3_ARES			119
-+#define GCC_UNIPHY0_PORT4_ARES			120
-+#define GCC_UNIPHY0_PORT5_ARES			121
-+#define GCC_UNIPHY0_PORT_4_5_RESET		122
-+#define GCC_UNIPHY0_PORT_4_RESET		123
-+#define GCC_LPASS_BCR				124
-+#define GCC_UBI32_TBU_BCR			125
-+#define GCC_LPASS_TBU_BCR			126
-+#define GCC_WCSSAON_RESET			127
-+#define GCC_LPASS_Q6_AXIM_ARES			128
-+#define GCC_LPASS_Q6SS_TSCTR_1TO2_ARES		129
-+#define GCC_LPASS_Q6SS_TRIG_ARES		130
-+#define GCC_LPASS_Q6_ATBM_AT_ARES		131
-+#define GCC_LPASS_Q6_PCLKDBG_ARES		132
-+#define GCC_LPASS_CORE_AXIM_ARES		133
-+#define GCC_LPASS_SNOC_CFG_ARES			134
-+#define GCC_WCSS_DBG_ARES			135
-+#define GCC_WCSS_ECAHB_ARES			136
-+#define GCC_WCSS_ACMT_ARES			137
-+#define GCC_WCSS_DBG_BDG_ARES			138
-+#define GCC_WCSS_AHB_S_ARES			139
-+#define GCC_WCSS_AXI_M_ARES			140
-+#define GCC_Q6SS_DBG_ARES			141
-+#define GCC_Q6_AHB_S_ARES			142
-+#define GCC_Q6_AHB_ARES				143
-+#define GCC_Q6_AXIM2_ARES			144
-+#define GCC_Q6_AXIM_ARES			145
-+#define GCC_UBI0_CORE_ARES			146
-+
-+#endif
--- 
-2.7.4
+V4L2_EVENT_SRC_CH_RESOLUTION requires that userspace does a full resync to the
+new format, CH_COLOR_DEPTH implies that only the bit depth changed.
+
+Which actually makes me wonder: is there a difference between the two change flags
+w.r.t. userspace behavior? If there is, then that should be carefully documented,
+if there isn't, then is this new flag really needed?
+
+Regards,
+
+	Hans
+
+> 
+> I would say that for Venus (and probably others) on initialization time
+> both could be changed on the same time, because we cannot predict the
+> resolution and bit-depth before parsing bitstream headers.
+> 
+>> 	input connector or from a video decoder. Applications will have to query
+>> 	the new pixel format and re-negotiate the queue.
+>>
+>> 	For stateful decoders follow the guidelines in :ref:`decoder`.
+>> 	Video capture devices will in most cases have to stop and restart
+>> 	streaming (:ref:`VIDIOC_STREAMOFF <VIDIOC_STREAMON>` followed by
+>> 	:ref:`VIDIOC_STREAMON <VIDIOC_STREAMON>`).
+>>
+>> And update dev-decoder.rst where needed with this new event flag.
+>>
+>> As to your question on irc: once I've acked this patch it can be merged
+>> via a venus PR.
+>>
+>> Regards,
+>>
+>> 	Hans
+>>
+>>>  
+>>>  Return Value
+>>>  ============
+>>> diff --git a/Documentation/media/videodev2.h.rst.exceptions b/Documentation/media/videodev2.h.rst.exceptions
+>>> index cb6ccf91776e..209709114378 100644
+>>> --- a/Documentation/media/videodev2.h.rst.exceptions
+>>> +++ b/Documentation/media/videodev2.h.rst.exceptions
+>>> @@ -490,6 +490,7 @@ replace define V4L2_EVENT_CTRL_CH_FLAGS ctrl-changes-flags
+>>>  replace define V4L2_EVENT_CTRL_CH_RANGE ctrl-changes-flags
+>>>  
+>>>  replace define V4L2_EVENT_SRC_CH_RESOLUTION src-changes-flags
+>>> +replace define V4L2_EVENT_SRC_CH_COLOR_DEPTH src-changes-flags
+>>>  
+>>>  replace define V4L2_EVENT_MD_FL_HAVE_FRAME_SEQ :c:type:`v4l2_event_motion_det`
+>>>  
+>>> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+>>> index 5f9357dcb060..1d349c9d57a7 100644
+>>> --- a/include/uapi/linux/videodev2.h
+>>> +++ b/include/uapi/linux/videodev2.h
+>>> @@ -2332,6 +2332,7 @@ struct v4l2_event_frame_sync {
+>>>  };
+>>>  
+>>>  #define V4L2_EVENT_SRC_CH_RESOLUTION		(1 << 0)
+>>> +#define V4L2_EVENT_SRC_CH_COLOR_DEPTH		(1 << 1)
+>>>  
+>>>  struct v4l2_event_src_change {
+>>>  	__u32 changes;
+>>>
+>>
+> 
+
