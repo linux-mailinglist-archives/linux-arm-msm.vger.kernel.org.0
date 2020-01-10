@@ -2,150 +2,260 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F91F136B6E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2020 11:54:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 494FC136C9C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2020 12:59:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727753AbgAJKyI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jan 2020 05:54:08 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:34509 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727750AbgAJKyI (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jan 2020 05:54:08 -0500
-Received: by mail-ed1-f67.google.com with SMTP id l8so1153826edw.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2020 02:54:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=683GIdX4ExqgOWlzGwnCnJgXWPRG2CE2zHJsuw1s5ls=;
-        b=H4Tlzh2pg0fFdLHuLzlkIhdnf4CpDMxqOgedxrWfrGenE/IU59XNl7FXRi5bQJ/1ga
-         kSD/4M6L0K3TbMwAcDPTSMspdd6HQFIXMtopS+opK+gSLf0qVHYvhMpMNc2LvzCELyUh
-         v9wUmPz9216Cd8HNirKPA2jT8h1deqDZChBwq2fx74ca9pIIpM0fUOoQxWu+nSX+iGsq
-         9Y2BpsqtGfLIpOtwNHPHNIoMLKK80/OPX/jDNB3JzfJ/6ZI5G2wn/oqE3TfAVT//XvLi
-         vJyv1+8nY7K3NdKwJ9PqOqDZvPGPa6YRxlxE6Jdl8UoKlLh4+ihZXloaktSoepfVHWPX
-         pnmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=683GIdX4ExqgOWlzGwnCnJgXWPRG2CE2zHJsuw1s5ls=;
-        b=UuYPqF4Wyvt1y6INRF3seZUPn5w92G6n7VsimJjA2TxijFbeh7JjG8SgxIdh7iIFEY
-         NP25cs9wyRTiu5sqxva00PwQxTOZKZskAHHoJIjsVqzZ+PKfFuGylGG6n99kYRvVaZmB
-         6035eNRHJeweqwdUZiB5eT2ALWExPS9jr7fM1G7/csPU0iky5sN7ncTYHJKHuoLyseEE
-         mIjAvAJfMoa5YgQ+/PoPpFNxyw+qcUDvmTmcsMFt7QuRIjIdx4vKf+6wfvhY0broc+Y0
-         zIRsEyjr/WXCVb/aAAgV25ju/TzBJnQzO8OcrGNdi+kV7EnFwkoyhETYLSO9hJB4hBiu
-         BI+A==
-X-Gm-Message-State: APjAAAWLUAfUyZ8XrDOXyT1ghna0OZvo7ulCe9fC8LfaMQUVovW+cM+y
-        tcruGPdUKNOxOhcAKP4fWT3LR1FH8KE=
-X-Google-Smtp-Source: APXvYqwXi2p9od8RKzdFKvWzNSqewAgaEw93sWpDYWUInbFQeII2xkI489wglJJwYeOqJClu81XBJQ==
-X-Received: by 2002:a17:906:84d7:: with SMTP id f23mr636627ejy.106.1578653646262;
-        Fri, 10 Jan 2020 02:54:06 -0800 (PST)
-Received: from [192.168.27.209] ([37.157.136.193])
-        by smtp.googlemail.com with ESMTPSA id f13sm26014edq.26.2020.01.10.02.54.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Jan 2020 02:54:05 -0800 (PST)
-Subject: Re: [PATCH v4 04/12] v4l: Add source event change for bit-depth
-To:     Hans Verkuil <hverkuil@xs4all.nl>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     Vikash Garodia <vgarodia@codeaurora.org>, dikshita@codeaurora.org
-References: <20200106154929.4331-1-stanimir.varbanov@linaro.org>
- <20200106154929.4331-5-stanimir.varbanov@linaro.org>
- <c3b02589-1d7a-a476-7d33-7e555fbe276d@xs4all.nl>
- <ae233eb1-69fc-6723-0224-0c1fcf786156@linaro.org>
- <fb27b5cc-0eef-a7b4-f45b-a3986b77c4c9@xs4all.nl>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <988e49aa-469d-17a1-ca25-982c63536e6e@linaro.org>
-Date:   Fri, 10 Jan 2020 12:54:03 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        id S1727791AbgAJL7Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jan 2020 06:59:16 -0500
+Received: from mga04.intel.com ([192.55.52.120]:31839 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727710AbgAJL7Q (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 10 Jan 2020 06:59:16 -0500
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 10 Jan 2020 03:59:15 -0800
+X-IronPort-AV: E=Sophos;i="5.69,416,1571727600"; 
+   d="scan'208";a="396419144"
+Received: from jnikula-mobl3.fi.intel.com (HELO localhost) ([10.237.66.161])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 10 Jan 2020 03:59:04 -0800
+From:   Jani Nikula <jani.nikula@linux.intel.com>
+To:     Thomas Zimmermann <tzimmermann@suse.de>, airlied@linux.ie,
+        daniel@ffwll.ch, alexander.deucher@amd.com,
+        christian.koenig@amd.com, David1.Zhou@amd.com,
+        maarten.lankhorst@linux.intel.com, patrik.r.jakobsson@gmail.com,
+        robdclark@gmail.com, sean@poorly.run, benjamin.gaignard@linaro.org,
+        vincent.abriou@st.com, yannick.fertre@st.com,
+        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
+        alexandre.torgue@st.com, eric@anholt.net,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        linux-graphics-maintainer@vmware.com, thellstrom@vmware.com,
+        bskeggs@redhat.com, harry.wentland@amd.com, sunpeng.li@amd.com,
+        joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com
+Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: Re: [PATCH 03/23] drm/i915: Don't use struct drm_driver.get_scanout_position()
+In-Reply-To: <20200110092127.27847-4-tzimmermann@suse.de>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20200110092127.27847-1-tzimmermann@suse.de> <20200110092127.27847-4-tzimmermann@suse.de>
+Date:   Fri, 10 Jan 2020 13:59:01 +0200
+Message-ID: <87eew7o73u.fsf@intel.com>
 MIME-Version: 1.0
-In-Reply-To: <fb27b5cc-0eef-a7b4-f45b-a3986b77c4c9@xs4all.nl>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Hans,
+On Fri, 10 Jan 2020, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+> The callback struct drm_driver.get_scanout_position() is deprecated in
+> favor of struct drm_crtc_helper_funcs.get_scanout_position().
+>
+> i915 doesn't use CRTC helpers. The patch duplicates the caller
+> drm_calc_vbltimestamp_from_scanoutpos() for i915, such that the callback
+> function is not needed.
+>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
+>  drivers/gpu/drm/i915/i915_drv.c |   3 +-
+>  drivers/gpu/drm/i915/i915_irq.c | 117 ++++++++++++++++++++++++++++++--
+>  drivers/gpu/drm/i915/i915_irq.h |   9 +--
+>  3 files changed, 119 insertions(+), 10 deletions(-)
 
-On 1/9/20 10:57 AM, Hans Verkuil wrote:
-> On 1/9/20 8:41 AM, Stanimir Varbanov wrote:
->> Hi Hans,
->>
->> On 1/8/20 6:09 PM, Hans Verkuil wrote:
->>> On 1/6/20 4:49 PM, Stanimir Varbanov wrote:
->>>> This event indicate that the source color bit-depth is changed
->>>> during run-time. The client must get the new format and re-allocate
->>>> buffers for it. This can usually happens with video decoder (encoders)
->>>> when the bit-stream color bit-depth is changed from 8 to 10bits
->>>> or vice versa.
->>>>
->>>> Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
->>>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->>>> ---
->>>>  Documentation/media/uapi/v4l/vidioc-dqevent.rst | 8 +++++++-
->>>>  Documentation/media/videodev2.h.rst.exceptions  | 1 +
->>>>  include/uapi/linux/videodev2.h                  | 1 +
->>>>  3 files changed, 9 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/Documentation/media/uapi/v4l/vidioc-dqevent.rst b/Documentation/media/uapi/v4l/vidioc-dqevent.rst
->>>> index 42659a3d1705..fad853d440cf 100644
->>>> --- a/Documentation/media/uapi/v4l/vidioc-dqevent.rst
->>>> +++ b/Documentation/media/uapi/v4l/vidioc-dqevent.rst
->>>> @@ -402,7 +402,13 @@ call.
->>>>  	that many Video Capture devices are not able to recover from a temporary
->>>>  	loss of signal and so restarting streaming I/O is required in order for
->>>>  	the hardware to synchronize to the video signal.
->>>> -
->>>> +    * - ``V4L2_EVENT_SRC_CH_COLOR_DEPTH``
->>>> +      - 0x0002
->>>> +      - This event gets triggered when color bit-depth change is detected
->>>> +	from a video decoder. Applications will have to query the new pixel
->>>> +	format and re-negotiate the queue. In most cases the streaming must be
->>>> +	stopped and restarted (:ref:`VIDIOC_STREAMOFF <VIDIOC_STREAMON>`
->>>> +	followed by :ref:`VIDIOC_STREAMON <VIDIOC_STREAMON>`).
->>>
->>> I think this is too specific for decoders. Something similar to the
->>> CH_RESOLUTION description would be more appropriate:
->>>
->>>       - This event gets triggered when a color bit-depth change (but not a
->>> 	resolution change!) is detected	at an input. This can come from an
->>
->> What you mean by "but not a resolution change" here? Resolution change
->> and bit-depth change cannot occur on the same time, or something else.
-> 
-> What I was trying to say is that a resolution change implies a possible bit-depth
-> change as well, whereas V4L2_EVENT_SRC_CH_COLOR_DEPTH is only set if there is
-> a bit-depth change but no resolution change.
-> 
-> V4L2_EVENT_SRC_CH_RESOLUTION requires that userspace does a full resync to the
-> new format, CH_COLOR_DEPTH implies that only the bit depth changed.
+Not really enthusiastic about the diffstat in a "cleanup" series.
 
-CH_COLOR_DEPTH implies format re-negotiation as well. In Venus case
-8->10bit change will change the format of OPB buffers (now it is not
-possible because of lack of v4l modifiers) and DPB buffers becomes
-compressed raw buffers (to optimize bandwidth).
+I wonder if you could add a generic helper version of
+drm_calc_vbltimestamp_from_scanoutpos where you pass the
+get_scanout_position function as a parameter. Both
+drm_calc_vbltimestamp_from_scanoutpos and the new
+i915_calc_vbltimestamp_from_scanoutpos would then be fairly thin
+wrappers passing in the relevant get_scanout_position function.
 
-> 
-> Which actually makes me wonder: is there a difference between the two change flags
-> w.r.t. userspace behavior? If there is, then that should be carefully documented,
-> if there isn't, then is this new flag really needed?
+This would reduce the almost identical duplication of the function in
+i915.
 
-Looking into semantics of v4l events, CH_COLOR_DEPTH makes sense because
-it describes what actually changed (similar to CH_RESOLUTION). I would
-say that v4l2_event::type V4L2_EVENT_SOURCE_CHANGE implies format
-re-negotiation and v4l2_event::src_change just informs userland what
-exactly is changed.
+BR,
+Jani.
 
-I'll postpone this patch until we have clear vision what will be the
-usage in user-space.
+>
+> diff --git a/drivers/gpu/drm/i915/i915_drv.c b/drivers/gpu/drm/i915/i915_drv.c
+> index f7385abdd74b..4a0a7fb85c53 100644
+> --- a/drivers/gpu/drm/i915/i915_drv.c
+> +++ b/drivers/gpu/drm/i915/i915_drv.c
+> @@ -2769,8 +2769,7 @@ static struct drm_driver driver = {
+>  	.gem_prime_export = i915_gem_prime_export,
+>  	.gem_prime_import = i915_gem_prime_import,
+>  
+> -	.get_vblank_timestamp = drm_calc_vbltimestamp_from_scanoutpos,
+> -	.get_scanout_position = i915_get_crtc_scanoutpos,
+> +	.get_vblank_timestamp = i915_calc_vbltimestamp_from_scanoutpos,
+>  
+>  	.dumb_create = i915_gem_dumb_create,
+>  	.dumb_map_offset = i915_gem_dumb_mmap_offset,
+> diff --git a/drivers/gpu/drm/i915/i915_irq.c b/drivers/gpu/drm/i915/i915_irq.c
+> index afc6aad9bf8c..99d0c3b0feae 100644
+> --- a/drivers/gpu/drm/i915/i915_irq.c
+> +++ b/drivers/gpu/drm/i915/i915_irq.c
+> @@ -52,6 +52,11 @@
+>  #include "i915_trace.h"
+>  #include "intel_pm.h"
+>  
+> +/* Retry timestamp calculation up to 3 times to satisfy
+> + * drm_timestamp_precision before giving up.
+> + */
+> +#define I915_TIMESTAMP_MAXRETRIES 3
+> +
+>  /**
+>   * DOC: interrupt handling
+>   *
+> @@ -762,10 +767,11 @@ static int __intel_get_crtc_scanline(struct intel_crtc *crtc)
+>  	return (position + crtc->scanline_offset) % vtotal;
+>  }
+>  
+> -bool i915_get_crtc_scanoutpos(struct drm_device *dev, unsigned int index,
+> -			      bool in_vblank_irq, int *vpos, int *hpos,
+> -			      ktime_t *stime, ktime_t *etime,
+> -			      const struct drm_display_mode *mode)
+> +static bool i915_get_crtc_scanoutpos(struct drm_device *dev,
+> +				     unsigned int index, bool in_vblank_irq,
+> +				     int *vpos, int *hpos,
+> +				     ktime_t *stime, ktime_t *etime,
+> +				     const struct drm_display_mode *mode)
+>  {
+>  	struct drm_i915_private *dev_priv = to_i915(dev);
+>  	struct intel_crtc *crtc = to_intel_crtc(drm_crtc_from_index(dev, index));
+> @@ -879,6 +885,109 @@ bool i915_get_crtc_scanoutpos(struct drm_device *dev, unsigned int index,
+>  	return true;
+>  }
+>  
+> +bool i915_calc_vbltimestamp_from_scanoutpos(struct drm_device *dev,
+> +					    unsigned int pipe,
+> +					    int *max_error,
+> +					    ktime_t *vblank_time,
+> +					    bool in_vblank_irq)
+> +{
+> +	struct timespec64 ts_etime, ts_vblank_time;
+> +	ktime_t stime, etime;
+> +	bool vbl_status;
+> +	struct drm_crtc *crtc;
+> +	const struct drm_display_mode *mode;
+> +	struct drm_vblank_crtc *vblank = &dev->vblank[pipe];
+> +	int vpos, hpos, i;
+> +	int delta_ns, duration_ns;
+> +
+> +	crtc = drm_crtc_from_index(dev, pipe);
+> +
+> +	if (pipe >= dev->num_crtcs || !crtc) {
+> +		DRM_ERROR("Invalid crtc %u\n", pipe);
+> +		return false;
+> +	}
+> +
+> +	if (drm_drv_uses_atomic_modeset(dev))
+> +		mode = &vblank->hwmode;
+> +	else
+> +		mode = &crtc->hwmode;
+> +
+> +	/* If mode timing undefined, just return as no-op:
+> +	 * Happens during initial modesetting of a crtc.
+> +	 */
+> +	if (mode->crtc_clock == 0) {
+> +		DRM_DEBUG("crtc %u: Noop due to uninitialized mode.\n", pipe);
+> +		WARN_ON_ONCE(drm_drv_uses_atomic_modeset(dev));
+> +
+> +		return false;
+> +	}
+> +
+> +	/* Get current scanout position with system timestamp.
+> +	 * Repeat query up to DRM_TIMESTAMP_MAXRETRIES times
+> +	 * if single query takes longer than max_error nanoseconds.
+> +	 *
+> +	 * This guarantees a tight bound on maximum error if
+> +	 * code gets preempted or delayed for some reason.
+> +	 */
+> +	for (i = 0; i < I915_TIMESTAMP_MAXRETRIES; i++) {
+> +		/*
+> +		 * Get vertical and horizontal scanout position vpos, hpos,
+> +		 * and bounding timestamps stime, etime, pre/post query.
+> +		 */
+> +		vbl_status = i915_get_crtc_scanoutpos(dev, pipe, in_vblank_irq,
+> +						      &vpos, &hpos, &stime,
+> +						      &etime, mode);
+> +		/* Return as no-op if scanout query unsupported or failed. */
+> +		if (!vbl_status) {
+> +			DRM_DEBUG("crtc %u : scanoutpos query failed.\n",
+> +				  pipe);
+> +			return false;
+> +		}
+> +
+> +		/* Compute uncertainty in timestamp of scanout position query. */
+> +		duration_ns = ktime_to_ns(etime) - ktime_to_ns(stime);
+> +
+> +		/* Accept result with <  max_error nsecs timing uncertainty. */
+> +		if (duration_ns <= *max_error)
+> +			break;
+> +	}
+> +
+> +	/* Noisy system timing? */
+> +	if (i == I915_TIMESTAMP_MAXRETRIES) {
+> +		DRM_DEBUG("crtc %u: Noisy timestamp %d us > %d us [%d reps].\n",
+> +			  pipe, duration_ns/1000, *max_error/1000, i);
+> +	}
+> +
+> +	/* Return upper bound of timestamp precision error. */
+> +	*max_error = duration_ns;
+> +
+> +	/* Convert scanout position into elapsed time at raw_time query
+> +	 * since start of scanout at first display scanline. delta_ns
+> +	 * can be negative if start of scanout hasn't happened yet.
+> +	 */
+> +	delta_ns = div_s64(1000000LL * (vpos * mode->crtc_htotal + hpos),
+> +			   mode->crtc_clock);
+> +
+> +	/* Subtract time delta from raw timestamp to get final
+> +	 * vblank_time timestamp for end of vblank.
+> +	 */
+> +	*vblank_time = ktime_sub_ns(etime, delta_ns);
+> +
+> +	if (!drm_debug_enabled(DRM_UT_VBL))
+> +		return true;
+> +
+> +	ts_etime = ktime_to_timespec64(etime);
+> +	ts_vblank_time = ktime_to_timespec64(*vblank_time);
+> +
+> +	DRM_DEBUG_VBL("crtc %u : v p(%d,%d)@ %lld.%06ld -> %lld.%06ld [e %d us, %d rep]\n",
+> +		      pipe, hpos, vpos,
+> +		      (u64)ts_etime.tv_sec, ts_etime.tv_nsec / 1000,
+> +		      (u64)ts_vblank_time.tv_sec, ts_vblank_time.tv_nsec / 1000,
+> +		      duration_ns / 1000, i);
+> +
+> +	return true;
+> +}
+> +
+>  int intel_get_crtc_scanline(struct intel_crtc *crtc)
+>  {
+>  	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
+> diff --git a/drivers/gpu/drm/i915/i915_irq.h b/drivers/gpu/drm/i915/i915_irq.h
+> index 812c47a9c2d6..5f7b133ce721 100644
+> --- a/drivers/gpu/drm/i915/i915_irq.h
+> +++ b/drivers/gpu/drm/i915/i915_irq.h
+> @@ -101,10 +101,11 @@ void gen8_irq_power_well_post_enable(struct drm_i915_private *dev_priv,
+>  void gen8_irq_power_well_pre_disable(struct drm_i915_private *dev_priv,
+>  				     u8 pipe_mask);
+>  
+> -bool i915_get_crtc_scanoutpos(struct drm_device *dev, unsigned int pipe,
+> -			      bool in_vblank_irq, int *vpos, int *hpos,
+> -			      ktime_t *stime, ktime_t *etime,
+> -			      const struct drm_display_mode *mode);
+> +bool i915_calc_vbltimestamp_from_scanoutpos(struct drm_device *dev,
+> +					    unsigned int pipe,
+> +					    int *max_error,
+> +					    ktime_t *vblank_time,
+> +					    bool in_vblank_irq);
+>  
+>  u32 i915_get_vblank_counter(struct drm_crtc *crtc);
+>  u32 g4x_get_vblank_counter(struct drm_crtc *crtc);
 
 -- 
-regards,
-Stan
+Jani Nikula, Intel Open Source Graphics Center
