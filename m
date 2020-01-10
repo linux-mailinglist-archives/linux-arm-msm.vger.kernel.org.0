@@ -2,157 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 05A15136628
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2020 05:33:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E3C3136745
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2020 07:18:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731403AbgAJEda (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jan 2020 23:33:30 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:17818 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731395AbgAJEd3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jan 2020 23:33:29 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1578630809; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=WfYVZRY7NUJGi0SdNulsMWXe+awHuELnsj9TepITErQ=; b=gzw2tq960tXVHBBE5/Z5bfBSnwn0oxu7ENzJA0YmVJU4QKFIldoqy9JdJ6NRTM12fZRoeD8u
- 0L6LDc3RpgMUNE849BMNDZtJQS2vSZkFyv7EwWMd7JKoBMGX0yJggewTuZ2gO3vB04CSF8AV
- Gttg39Un2/jcyPElM28okqoipvM=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e17fe97.7fc7ecb89ed8-smtp-out-n01;
- Fri, 10 Jan 2020 04:33:27 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E8393C447A4; Fri, 10 Jan 2020 04:33:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from davidai-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1731442AbgAJGS0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jan 2020 01:18:26 -0500
+Received: from mail.kernel.org ([198.145.29.99]:52690 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725797AbgAJGS0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 10 Jan 2020 01:18:26 -0500
+Received: from sol.localdomain (c-24-5-143-220.hsd1.ca.comcast.net [24.5.143.220])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: daidavid1)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2A492C433A2;
-        Fri, 10 Jan 2020 04:33:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2A492C433A2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=daidavid1@codeaurora.org
-From:   David Dai <daidavid1@codeaurora.org>
-To:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org
-Cc:     David Dai <daidavid1@codeaurora.org>, evgreen@google.com,
-        sboyd@kernel.org, ilina@codeaurora.org, seansw@qti.qualcomm.com,
-        elder@linaro.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: [PATCH v2 6/6] arm64: dts: sdm845: Redefine interconnect provider DT nodes
-Date:   Thu,  9 Jan 2020 20:33:04 -0800
-Message-Id: <1578630784-962-7-git-send-email-daidavid1@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1578630784-962-1-git-send-email-daidavid1@codeaurora.org>
-References: <1578630784-962-1-git-send-email-daidavid1@codeaurora.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id 67DDD20673;
+        Fri, 10 Jan 2020 06:18:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1578637104;
+        bh=E83v9s/velUj5ZMKMl2BVwEb+LgFHUZZtzb8Bqy9gU4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=xyN7PM3sGWyQc+Q3C57MHsA5e3wjktENkcTqPjjN48EhTVMfLAOcEH7WXcehyQGC6
+         CqtX3KktH3VHkouuRDRBfqb+OHlpZenFzzhBLqVYkQH/7WfrzKZ0q/vtCiat2KM09/
+         /73s9E3NXSaD1yHiJUh5GvaXRcpQoPXGGxrOfGV8=
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
+        Can Guo <cang@codeaurora.org>,
+        Satya Tangirala <satyat@google.com>,
+        Jaegeuk Kim <jaegeuk@kernel.org>,
+        "Theodore Y . Ts'o" <tytso@mit.edu>
+Subject: [RFC PATCH 0/5] Inline crypto support on DragonBoard 845c
+Date:   Thu,  9 Jan 2020 22:16:29 -0800
+Message-Id: <20200110061634.46742-1-ebiggers@kernel.org>
+X-Mailer: git-send-email 2.24.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the DT nodes for each of the Network-On-Chip interconnect
-buses found on SDM845 based platform and redefine the rsc_hlos
-child node as a bcm-voter device to better represent the hardware.
+Hello,
 
-Signed-off-by: David Dai <daidavid1@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 61 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 58 insertions(+), 3 deletions(-)
+This patchset implements UFS inline crypto support on the DragonBoard
+845c, using the Qualcomm Inline Crypto Engine (ICE) that's present on
+the Snapdragon 845 SoC.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index ddb1f23..7c617a9 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -1364,6 +1364,55 @@
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		mem_noc: interconnect@1380000 {
-+			compatible = "qcom,sdm845-mem-noc";
-+			reg = <0 0x01380000 0 0x27200>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		dc_noc: interconnect@14e0000 {
-+			compatible = "qcom,sdm845-dc-noc";
-+			reg = <0 0x014e0000 0 0x400>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		config_noc: interconnect@1500000 {
-+			compatible = "qcom,sdm845-config-noc";
-+			reg = <0 0x01500000 0 0x5080>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		system_noc: interconnect@1620000 {
-+			compatible = "qcom,sdm845-system-noc";
-+			reg = <0 0x01620000 0 0x18080>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		aggre1_noc: interconnect@16e0000 {
-+			compatible = "qcom,sdm845-aggre1-noc";
-+			reg = <0 0x016e0000 0 0xd080>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		aggre2_noc: interconnect@1700000 {
-+			compatible = "qcom,sdm845-aggre2-noc";
-+			reg = <0 0x01700000 0 0x3b100>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		mmss_noc: interconnect@1740000 {
-+			compatible = "qcom,sdm845-mmss-noc";
-+			reg = <0 0x01740000 0 0x1c1000>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		ufs_mem_hc: ufshc@1d84000 {
- 			compatible = "qcom,sdm845-ufshc", "qcom,ufshc",
- 				     "jedec,ufs-2.0";
-@@ -3100,6 +3149,13 @@
- 			#mbox-cells = <1>;
- 		};
- 
-+		gladiator_noc: interconnect@17900000 {
-+			compatible = "qcom,sdm845-gladiator-noc";
-+			reg = <0 0x17900000 0 0xd080>;
-+			#interconnect-cells = <1>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		apps_rsc: rsc@179c0000 {
- 			label = "apps_rsc";
- 			compatible = "qcom,rpmh-rsc";
-@@ -3174,9 +3230,8 @@
- 				};
- 			};
- 
--			rsc_hlos: interconnect {
--				compatible = "qcom,sdm845-rsc-hlos";
--				#interconnect-cells = <1>;
-+			apps_bcm_voter: bcm-voter {
-+				compatible = "qcom,sdm845-bcm-voter";
- 			};
- 		};
- 
+This is based on top of the patchset "[PATCH v6 0/9] Inline Encryption
+Support" by Satya Tangirala, which adds support for the UFS standard
+inline crypto, the block layer changes needed to use inline crypto, and
+support for inline crypto in fscrypt (ext4 and f2fs encryption).  Link:
+https://lkml.kernel.org/r/20191218145136.172774-1-satyat@google.com
+
+This new patchset is mostly a RFC showing hardware inline crypto working
+on a publicly available development board that runs the mainline Linux
+kernel.  While patches 1-2 could be applied now, patches 3-5 depend on
+the main "Inline Encryption Support" patchset being merged first.
+
+Most of the logic needed to use ICE is already handled by ufshcd-crypto
+and the blk-crypto framework, which are introduced by the "Inline
+Encryption Support" patchset.  Therefore, this new patchset just adds
+the vendor-specific parts.  I also only implemented support for version
+3 of the ICE hardware, which seems to be easier to use than older
+versions; and for now I only implemented UFS support, not eMMC.
+
+Due to these factors, I was able to greatly simplify the driver from the
+vendor's original.  It seems to work fine in some preliminary testing
+with fscrypt, and with a blk-crypto self-test I'm also working on.  But
+I'd appreciate feedback from anyone who may be more familiar with this
+hardware as to whether I might have missed anything important.
+
+This patchset is also available in git at
+https://git.kernel.org/pub/scm/linux/kernel/git/ebiggers/linux.git/tag/?h=db845c-crypto-v1
+
+Eric Biggers (5):
+  firmware: qcom_scm: Add support for programming inline crypto keys
+  arm64: dts: sdm845: add Inline Crypto Engine registers and clock
+  scsi: ufs: add quirk to disable inline crypto support
+  scsi: ufs: add program_key() variant op
+  scsi: ufs-qcom: add Inline Crypto Engine support
+
+ MAINTAINERS                          |   2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi |  13 +-
+ drivers/firmware/qcom_scm-32.c       |  14 ++
+ drivers/firmware/qcom_scm-64.c       |  31 ++++
+ drivers/firmware/qcom_scm.c          |  78 +++++++++
+ drivers/firmware/qcom_scm.h          |   9 +
+ drivers/scsi/ufs/Kconfig             |   1 +
+ drivers/scsi/ufs/Makefile            |   4 +-
+ drivers/scsi/ufs/ufs-qcom-ice.c      | 247 +++++++++++++++++++++++++++
+ drivers/scsi/ufs/ufs-qcom.c          |  14 +-
+ drivers/scsi/ufs/ufs-qcom.h          |  35 ++++
+ drivers/scsi/ufs/ufshcd-crypto.c     |  27 ++-
+ drivers/scsi/ufs/ufshcd.h            |  12 ++
+ include/linux/qcom_scm.h             |  17 ++
+ 14 files changed, 490 insertions(+), 14 deletions(-)
+ create mode 100644 drivers/scsi/ufs/ufs-qcom-ice.c
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.24.1
+
