@@ -2,101 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 59E23136AEA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2020 11:18:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E5D87136AFE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2020 11:24:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727352AbgAJKSW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jan 2020 05:18:22 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:25305 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727364AbgAJKSW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jan 2020 05:18:22 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1578651501; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=Sur98Trxip0lS2J0kZIUVd9Xdj/kghewp4wUiHEmGZQ=; b=KLLxxMFR5GONj1X+vR4pJfymKDSIE/osEx8zgA/gXRtrwjgXJkHOFJFUNlj6uNa2RkJJHA2Y
- M+3vCljs1wfxdCLizf7qjQJN/Gno+h5I6Db7IeCg9DOM45pKcNf/pjCN5PqjJvwfJz+QGHUN
- O3+SXeqMIhh9WwtW8eAeyTWoqX0=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e184f66.7f29f206d960-smtp-out-n02;
- Fri, 10 Jan 2020 10:18:14 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 38DF1C4479C; Fri, 10 Jan 2020 10:18:14 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 67727C433A2;
-        Fri, 10 Jan 2020 10:18:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 67727C433A2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180: Add iommus property to QUP0 and QUP1
-Date:   Fri, 10 Jan 2020 15:48:02 +0530
-Message-Id: <20200110101802.4491-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.24.0
+        id S1727240AbgAJKYS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jan 2020 05:24:18 -0500
+Received: from mga17.intel.com ([192.55.52.151]:12822 "EHLO mga17.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727168AbgAJKYR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 10 Jan 2020 05:24:17 -0500
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 10 Jan 2020 02:24:17 -0800
+X-IronPort-AV: E=Sophos;i="5.69,416,1571727600"; 
+   d="scan'208";a="223700705"
+Received: from jnikula-mobl3.fi.intel.com (HELO localhost) ([10.237.66.161])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 10 Jan 2020 02:24:09 -0800
+From:   Jani Nikula <jani.nikula@linux.intel.com>
+To:     Thomas Zimmermann <tzimmermann@suse.de>, airlied@linux.ie,
+        daniel@ffwll.ch, alexander.deucher@amd.com,
+        christian.koenig@amd.com, David1.Zhou@amd.com,
+        maarten.lankhorst@linux.intel.com, patrik.r.jakobsson@gmail.com,
+        robdclark@gmail.com, sean@poorly.run, benjamin.gaignard@linaro.org,
+        vincent.abriou@st.com, yannick.fertre@st.com,
+        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
+        alexandre.torgue@st.com, eric@anholt.net,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        linux-graphics-maintainer@vmware.com, thellstrom@vmware.com,
+        bskeggs@redhat.com, harry.wentland@amd.com, sunpeng.li@amd.com,
+        joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com
+Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: Re: [PATCH 01/23] drm: Add get_scanout_position() to struct drm_crtc_helper_funcs
+In-Reply-To: <20200110092127.27847-2-tzimmermann@suse.de>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20200110092127.27847-1-tzimmermann@suse.de> <20200110092127.27847-2-tzimmermann@suse.de>
+Date:   Fri, 10 Jan 2020 12:24:06 +0200
+Message-ID: <87muavobi1.fsf@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Define iommus property for QUP0 and QUP1 with the proper SID
-and mask. Below SMMU global faults are seen without this during
-boot and when using i2c touchscreen.
+On Fri, 10 Jan 2020, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+> The new callback get_scanout_position() reads the current location of
+> the scanout process. The operation is currentyl located in struct
+> drm_driver, but really belongs to the CRTC. Drivers will be converted
+> in separate patches.
+>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
+>  drivers/gpu/drm/drm_vblank.c             | 24 ++++++++----
+>  include/drm/drm_drv.h                    |  7 +---
+>  include/drm/drm_modeset_helper_vtables.h | 47 ++++++++++++++++++++++++
+>  3 files changed, 65 insertions(+), 13 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
+> index 1659b13b178c..c12f0b333e14 100644
+> --- a/drivers/gpu/drm/drm_vblank.c
+> +++ b/drivers/gpu/drm/drm_vblank.c
+> @@ -30,6 +30,7 @@
+>  #include <drm/drm_crtc.h>
+>  #include <drm/drm_drv.h>
+>  #include <drm/drm_framebuffer.h>
+> +#include <drm/drm_modeset_helper_vtables.h>
+>  #include <drm/drm_print.h>
+>  #include <drm/drm_vblank.h>
+>  
+> @@ -590,7 +591,7 @@ EXPORT_SYMBOL(drm_calc_timestamping_constants);
+>   * Implements calculation of exact vblank timestamps from given drm_display_mode
+>   * timings and current video scanout position of a CRTC. This can be directly
+>   * used as the &drm_driver.get_vblank_timestamp implementation of a kms driver
+> - * if &drm_driver.get_scanout_position is implemented.
+> + * if &drm_crtc_helper_funcs.get_scanout_position is implemented.
+>   *
+>   * The current implementation only handles standard video modes. For double scan
+>   * and interlaced modes the driver is supposed to adjust the hardware mode
+> @@ -632,8 +633,9 @@ bool drm_calc_vbltimestamp_from_scanoutpos(struct drm_device *dev,
+>  	}
+>  
+>  	/* Scanout position query not supported? Should not happen. */
+> -	if (!dev->driver->get_scanout_position) {
+> -		DRM_ERROR("Called from driver w/o get_scanout_position()!?\n");
+> +	if (!dev->driver->get_scanout_position ||
+> +	    !crtc->helper_private->get_scanout_position) {
 
-QUP0:
-arm-smmu 15000000.iommu: Unexpected global fault, this could be serious
-arm-smmu 15000000.iommu: GFSR 0x00000002, GFSYNR0 0x00000002, GFSYNR1 0x00000043, GFSYNR2 0x00000000
+ITYM s/||/&&/
 
-QUP1:
-arm-smmu 15000000.iommu: Unexpected global fault, this could be serious
-arm-smmu 15000000.iommu: GFSR 0x00000002, GFSYNR0 0x00000002, GFSYNR1 0x000004c3, GFSYNR2 0x00000000
+BR,
+Jani.
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 8011c5fe2a31..01e431f49c18 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -338,6 +338,7 @@ qupv3_id_0: geniqup@8c0000 {
- 			#address-cells = <2>;
- 			#size-cells = <2>;
- 			ranges;
-+			iommus = <&apps_smmu 0x43 0x0>;
- 			status = "disabled";
- 
- 			i2c0: i2c@880000 {
-@@ -546,6 +547,7 @@ qupv3_id_1: geniqup@ac0000 {
- 			#address-cells = <2>;
- 			#size-cells = <2>;
- 			ranges;
-+			iommus = <&apps_smmu 0x4c3 0x0>;
- 			status = "disabled";
- 
- 			i2c6: i2c@a80000 {
+> +		DRM_ERROR("Called from CRTC w/o get_scanout_position()!?\n");
+>  		return false;
+>  	}
+>  
+> @@ -664,11 +666,17 @@ bool drm_calc_vbltimestamp_from_scanoutpos(struct drm_device *dev,
+>  		 * Get vertical and horizontal scanout position vpos, hpos,
+>  		 * and bounding timestamps stime, etime, pre/post query.
+>  		 */
+> -		vbl_status = dev->driver->get_scanout_position(dev, pipe,
+> -							       in_vblank_irq,
+> -							       &vpos, &hpos,
+> -							       &stime, &etime,
+> -							       mode);
+> +		if (crtc->helper_private->get_scanout_position) {
+> +			vbl_status =
+> +				crtc->helper_private->get_scanout_position(
+> +					crtc, in_vblank_irq, &vpos, &hpos,
+> +					&stime, &etime, mode);
+> +		} else {
+> +			vbl_status =
+> +				dev->driver->get_scanout_position(
+> +					dev, pipe, in_vblank_irq, &vpos,
+> +					&hpos, &stime, &etime, mode);
+> +		}
+>  
+>  		/* Return as no-op if scanout query unsupported or failed. */
+>  		if (!vbl_status) {
+> diff --git a/include/drm/drm_drv.h b/include/drm/drm_drv.h
+> index cf13470810a5..d0049e5786fc 100644
+> --- a/include/drm/drm_drv.h
+> +++ b/include/drm/drm_drv.h
+> @@ -362,11 +362,8 @@ struct drm_driver {
+>  	 * True on success, false if a reliable scanout position counter could
+>  	 * not be read out.
+>  	 *
+> -	 * FIXME:
+> -	 *
+> -	 * Since this is a helper to implement @get_vblank_timestamp, we should
+> -	 * move it to &struct drm_crtc_helper_funcs, like all the other
+> -	 * helper-internal hooks.
+> +	 * This is deprecated and should not be used by new drivers.
+> +	 * Use &drm_crtc_helper_funcs.get_scanout_position instead.
+>  	 */
+>  	bool (*get_scanout_position) (struct drm_device *dev, unsigned int pipe,
+>  				      bool in_vblank_irq, int *vpos, int *hpos,
+> diff --git a/include/drm/drm_modeset_helper_vtables.h b/include/drm/drm_modeset_helper_vtables.h
+> index 5a87f1bd7a3f..e398512bfd5f 100644
+> --- a/include/drm/drm_modeset_helper_vtables.h
+> +++ b/include/drm/drm_modeset_helper_vtables.h
+> @@ -450,6 +450,53 @@ struct drm_crtc_helper_funcs {
+>  	 */
+>  	void (*atomic_disable)(struct drm_crtc *crtc,
+>  			       struct drm_crtc_state *old_crtc_state);
+> +
+> +	/**
+> +	 * @get_scanout_position:
+> +	 *
+> +	 * Called by vblank timestamping code.
+> +	 *
+> +	 * Returns the current display scanout position from a CRTC and an
+> +	 * optional accurate ktime_get() timestamp of when the position was
+> +	 * measured. Note that this is a helper callback which is only used
+> +	 * if a driver uses drm_calc_vbltimestamp_from_scanoutpos() for the
+> +	 * @drm_driver.get_vblank_timestamp callback.
+> +	 *
+> +	 * Parameters:
+> +	 *
+> +	 * crtc:
+> +	 *     The CRTC.
+> +	 * in_vblank_irq:
+> +	 *     True when called from drm_crtc_handle_vblank(). Some drivers
+> +	 *     need to apply some workarounds for gpu-specific vblank irq
+> +	 *     quirks if the flag is set.
+> +	 * vpos:
+> +	 *     Target location for current vertical scanout position.
+> +	 * hpos:
+> +	 *     Target location for current horizontal scanout position.
+> +	 * stime:
+> +	 *     Target location for timestamp taken immediately before
+> +	 *     scanout position query. Can be NULL to skip timestamp.
+> +	 * etime:
+> +	 *     Target location for timestamp taken immediately after
+> +	 *     scanout position query. Can be NULL to skip timestamp.
+> +	 * mode:
+> +	 *     Current display timings.
+> +	 *
+> +	 * Returns vpos as a positive number while in active scanout area.
+> +	 * Returns vpos as a negative number inside vblank, counting the number
+> +	 * of scanlines to go until end of vblank, e.g., -1 means "one scanline
+> +	 * until start of active scanout / end of vblank."
+> +	 *
+> +	 * Returns:
+> +	 *
+> +	 * True on success, false if a reliable scanout position counter could
+> +	 * not be read out.
+> +	 */
+> +	bool (*get_scanout_position)(struct drm_crtc *crtc,
+> +				     bool in_vblank_irq, int *vpos, int *hpos,
+> +				     ktime_t *stime, ktime_t *etime,
+> +				     const struct drm_display_mode *mode);
+>  };
+>  
+>  /**
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Jani Nikula, Intel Open Source Graphics Center
