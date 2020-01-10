@@ -2,105 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 137FF137120
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2020 16:26:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F96213741A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2020 17:52:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728289AbgAJP0G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jan 2020 10:26:06 -0500
-Received: from mga01.intel.com ([192.55.52.88]:1918 "EHLO mga01.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728135AbgAJP0G (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jan 2020 10:26:06 -0500
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 10 Jan 2020 07:26:05 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,417,1571727600"; 
-   d="scan'208";a="216694447"
-Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.174])
-  by orsmga008.jf.intel.com with SMTP; 10 Jan 2020 07:25:56 -0800
-Received: by stinkbox (sSMTP sendmail emulation); Fri, 10 Jan 2020 17:25:56 +0200
-Date:   Fri, 10 Jan 2020 17:25:56 +0200
-From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To:     Jani Nikula <jani.nikula@linux.intel.com>
-Cc:     Thomas Zimmermann <tzimmermann@suse.de>, airlied@linux.ie,
-        daniel@ffwll.ch, alexander.deucher@amd.com,
-        christian.koenig@amd.com, David1.Zhou@amd.com,
-        maarten.lankhorst@linux.intel.com, patrik.r.jakobsson@gmail.com,
-        robdclark@gmail.com, sean@poorly.run, benjamin.gaignard@linaro.org,
-        vincent.abriou@st.com, yannick.fertre@st.com,
-        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@st.com, eric@anholt.net,
-        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
-        linux-graphics-maintainer@vmware.com, thellstrom@vmware.com,
-        bskeggs@redhat.com, harry.wentland@amd.com, sunpeng.li@amd.com,
-        joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        nouveau@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 03/23] drm/i915: Don't use struct
- drm_driver.get_scanout_position()
-Message-ID: <20200110152556.GK13686@intel.com>
-References: <20200110092127.27847-1-tzimmermann@suse.de>
- <20200110092127.27847-4-tzimmermann@suse.de>
- <87eew7o73u.fsf@intel.com>
- <761ae94c-aaf1-9167-9c44-06824304fdfd@suse.de>
- <875zhjo1op.fsf@intel.com>
+        id S1728107AbgAJQww (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jan 2020 11:52:52 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:40727 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728492AbgAJQww (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 10 Jan 2020 11:52:52 -0500
+Received: by mail-pj1-f68.google.com with SMTP id bg7so1227793pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2020 08:52:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :references:cc:subject:to:from:user-agent:date;
+        bh=SC0UnYuTvxE5OcA375X4sqDX8RR6HMTTrFTXJph6jSE=;
+        b=lR9Qv/Rh2eYbSmBp73Q6BrJGiZOTHErsCfUcGyDbgXcFuMwI36N47x623pr35oqewC
+         DhPd2mZievnpOgj2/IiBIrrrgWgM/jIO2/qryR72NyThU0yuyTlTTrr0uzsWTYuLb8c5
+         JXTo8xNNKwipDeHFgPXASuqAGBA2+0k71Vr1A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:references:cc:subject:to:from
+         :user-agent:date;
+        bh=SC0UnYuTvxE5OcA375X4sqDX8RR6HMTTrFTXJph6jSE=;
+        b=IIJxIg3Y2TpAs/q2nP77FT/1byx2Uf4j/vqgUHwk6cKI/MpF2HHD2dNozs2Ft6j0Zg
+         3I58Yk7F1n8hr/juJyOsrMHOK56HcD7lRk4mZkGiGc+dBSxdtHN7/FME3R/IZARpuaUN
+         3zBOQd1PHKqDCV1dCoZVqaXIbpu/8Z+lMXDMKiKkwJryQcc5VEMmWCtf0Pn8is0CCFNS
+         9HY/oZa57M603PHiCImMM7ZjIHtQ7f5YFlFHkD2ydJSj+YAJhP4zyXn1FrtGLMOId4as
+         p5DSQEtUdO5t7Pn7m+G2HFa+ghySJ8GDV2zoDoIM9PYxKOxt7VfTOYPjIDFHMEU8awYc
+         eiaA==
+X-Gm-Message-State: APjAAAVSt3+93mfg1Bx3/7tGDOS7FRbUe9T+syVpo9at7FCFcwtpjhYO
+        pAd5FMFNqXX0Vi2h5th0Pu/jxemxQkzdMA==
+X-Google-Smtp-Source: APXvYqxW1qdIS3otqhlBBCjtCjlgjYpsGMdUHQ/sCZODIjnY3CWYaEx8TR2oCPqj2x/eeIHOuztY2Q==
+X-Received: by 2002:a17:902:8541:: with SMTP id d1mr5509047plo.57.1578675171031;
+        Fri, 10 Jan 2020 08:52:51 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id s26sm3533556pfe.166.2020.01.10.08.52.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Jan 2020 08:52:50 -0800 (PST)
+Message-ID: <5e18abe2.1c69fb81.1ab3c.84f9@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <875zhjo1op.fsf@intel.com>
-X-Patchwork-Hint: comment
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1578486581-7540-3-git-send-email-sanm@codeaurora.org>
+References: <1578486581-7540-1-git-send-email-sanm@codeaurora.org> <1578486581-7540-3-git-send-email-sanm@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sc7180: Remove global phy reset in QMP phy
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.8.1
+Date:   Fri, 10 Jan 2020 08:52:49 -0800
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 10, 2020 at 03:56:06PM +0200, Jani Nikula wrote:
-> On Fri, 10 Jan 2020, Thomas Zimmermann <tzimmermann@suse.de> wrote:
-> > Hi
-> >
-> > Am 10.01.20 um 12:59 schrieb Jani Nikula:
-> >> On Fri, 10 Jan 2020, Thomas Zimmermann <tzimmermann@suse.de> wrote:
-> >>> The callback struct drm_driver.get_scanout_position() is deprecated in
-> >>> favor of struct drm_crtc_helper_funcs.get_scanout_position().
-> >>>
-> >>> i915 doesn't use CRTC helpers. The patch duplicates the caller
-> >>> drm_calc_vbltimestamp_from_scanoutpos() for i915, such that the callback
-> >>> function is not needed.
-> >>>
-> >>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> >>> ---
-> >>>  drivers/gpu/drm/i915/i915_drv.c |   3 +-
-> >>>  drivers/gpu/drm/i915/i915_irq.c | 117 ++++++++++++++++++++++++++++++--
-> >>>  drivers/gpu/drm/i915/i915_irq.h |   9 +--
-> >>>  3 files changed, 119 insertions(+), 10 deletions(-)
-> >> 
-> >> Not really enthusiastic about the diffstat in a "cleanup" series.
-> >
-> > Well, the cleanup is about the content of drm_driver :)
-> >
-> >> 
-> >> I wonder if you could add a generic helper version of
-> >> drm_calc_vbltimestamp_from_scanoutpos where you pass the
-> >> get_scanout_position function as a parameter. Both
-> >> drm_calc_vbltimestamp_from_scanoutpos and the new
-> >> i915_calc_vbltimestamp_from_scanoutpos would then be fairly thin
-> >> wrappers passing in the relevant get_scanout_position function.
-> >
-> > Of course. Will be in v2 of the series.
-> 
-> Please give Ville (Cc'd) a moment before sending v2 in case he wants to
-> chime in on this.
+Quoting Sandeep Maheswaram (2020-01-08 04:29:40)
+> Remove global phy reset and do only usb phy reset in QMP phy.
 
-Passing the function pointer was one option I considered for this a while
-back. Can't remeber what other solutions I condsidered. But I guess I
-didn't like any of them enough to make an actual patch.
+Yes that's what this patch does, but you left out the important part:
+Why?
 
--- 
-Ville Syrjälä
-Intel
+>=20
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/q=
+com/sc7180.dtsi
+> index c00c3d4..448ab88 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1072,9 +1072,8 @@
+>                                  <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
+>                         clock-names =3D "aux", "cfg_ahb", "ref", "com_aux=
+";
+> =20
+> -                       resets =3D <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
+> -                                <&gcc GCC_USB3_PHY_PRIM_BCR>;
+> -                       reset-names =3D "phy", "common";
+> +                       resets =3D <&gcc GCC_USB3_PHY_PRIM_BCR>;
+> +                       reset-names =3D "phy";
+> =20
+
+We shouldn't need to modify the DT node for this. The reset still goes
+to this hardware block, so DT should reflect that. Instead, the driver
+shouldn't drive this reset on this SoC.
+
+>                         usb_1_ssphy: phy@88e9200 {
+>                                 reg =3D <0 0x088e9200 0 0x128>,
