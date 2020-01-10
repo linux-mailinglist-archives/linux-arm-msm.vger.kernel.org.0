@@ -2,288 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AFEC5136999
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2020 10:21:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C6975136A8C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2020 11:08:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727223AbgAJJVx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jan 2020 04:21:53 -0500
-Received: from mx2.suse.de ([195.135.220.15]:47018 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727211AbgAJJVw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jan 2020 04:21:52 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 67688B016;
-        Fri, 10 Jan 2020 09:21:50 +0000 (UTC)
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-To:     airlied@linux.ie, daniel@ffwll.ch, alexander.deucher@amd.com,
-        christian.koenig@amd.com, David1.Zhou@amd.com,
-        maarten.lankhorst@linux.intel.com, patrik.r.jakobsson@gmail.com,
-        robdclark@gmail.com, sean@poorly.run, benjamin.gaignard@linaro.org,
-        vincent.abriou@st.com, yannick.fertre@st.com,
-        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@st.com, eric@anholt.net,
-        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
-        linux-graphics-maintainer@vmware.com, thellstrom@vmware.com,
-        bskeggs@redhat.com, harry.wentland@amd.com, sunpeng.li@amd.com,
-        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
-        rodrigo.vivi@intel.com
-Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 23/23] drm: Cleanup VBLANK callbacks in struct drm_driver
-Date:   Fri, 10 Jan 2020 10:21:27 +0100
-Message-Id: <20200110092127.27847-24-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.24.1
-In-Reply-To: <20200110092127.27847-1-tzimmermann@suse.de>
-References: <20200110092127.27847-1-tzimmermann@suse.de>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1727168AbgAJKH7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jan 2020 05:07:59 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:37779 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727315AbgAJKH5 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 10 Jan 2020 05:07:57 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1578650877; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=uwwNlxbaPVAft3MSELUaVehozNoXoPWIw5uWz2i3i8Y=; b=INPkql4aEJU8iKQPlOlA6yBBNImwIqQkQEa7joGmGCLtC7UcYvOkEHN8HIN0E8clQy+IvWsr
+ ppZaC+8qxaOB7oyv8pEKOW0ExdNqOFuAdxe8rHr1Ka/Ws1ZHXmw3b60/7PBvH9Eb4TL41rkJ
+ ry7wgzljcfyIXGOKs89rT2mXPwE=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e184cfb.7f2adb4d4110-smtp-out-n03;
+ Fri, 10 Jan 2020 10:07:55 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A8F97C4479F; Fri, 10 Jan 2020 10:07:55 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from aneelaka-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: aneela)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 27096C433CB;
+        Fri, 10 Jan 2020 10:07:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 27096C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=aneela@codeaurora.org
+From:   Arun Kumar Neelakantam <aneela@codeaurora.org>
+To:     bjorn.andersson@linaro.org, clew@codeaurora.org
+Cc:     Arun Kumar Neelakantam <aneela@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] soc: qcom: aoss: Reduce the AOP ACK wait time
+Date:   Fri, 10 Jan 2020 15:37:40 +0530
+Message-Id: <1578650861-2450-1-git-send-email-aneela@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-All non-legacy users of VBLANK functions in struct drm_driver have been
-converted to use the respective interfaces in struct drm_crtc_funcs. The
-remaining users of VBLANK callbacks in struct drm_driver are legacy drivers
-with userspace modesetting.
+AOP send ACK immediately before wait thread can start waiting.
+In this case the probe call is blocked for default time 1sec and
+causing bootup delay.
 
-There are no users left of get_vblank_timestamp(), so the callback is
-being removed. The other VBLANK callbacks are being moved to the legacy
-section at the end of struct drm_driver.
+Reduce the default wait time to 20ms to avoid delay in IRQ miss case.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
 ---
- drivers/gpu/drm/drm_vblank.c |  39 +++++---------
- include/drm/drm_drv.h        | 101 ++---------------------------------
- 2 files changed, 17 insertions(+), 123 deletions(-)
+ drivers/soc/qcom/qcom_aoss.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
-index 7cf436a4b908..ceff68474d4d 100644
---- a/drivers/gpu/drm/drm_vblank.c
-+++ b/drivers/gpu/drm/drm_vblank.c
-@@ -138,10 +138,9 @@ static u32 __get_vblank_counter(struct drm_device *dev, unsigned int pipe)
+diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+index 006ac40..2cf2393 100644
+--- a/drivers/soc/qcom/qcom_aoss.c
++++ b/drivers/soc/qcom/qcom_aoss.c
+@@ -44,6 +44,8 @@
  
- 		if (crtc->funcs->get_vblank_counter)
- 			return crtc->funcs->get_vblank_counter(crtc);
--	}
--
--	if (dev->driver->get_vblank_counter)
-+	} else if (dev->driver->get_vblank_counter) {
- 		return dev->driver->get_vblank_counter(dev, pipe);
-+	}
+ #define QMP_NUM_COOLING_RESOURCES	2
  
- 	return drm_vblank_no_hw_counter(dev, pipe);
- }
-@@ -334,8 +333,7 @@ u64 drm_crtc_accurate_vblank_count(struct drm_crtc *crtc)
- 	unsigned long flags;
++#define QMP_ACK_TIMEOUT			msecs_to_jiffies(10)
++
+ static bool qmp_cdev_max_state = 1;
  
- 	WARN_ONCE(drm_debug_enabled(DRM_UT_VBL) &&
--		  !crtc->funcs->get_vblank_timestamp &&
--		  !dev->driver->get_vblank_timestamp,
-+		  !crtc->funcs->get_vblank_timestamp,
- 		  "This function requires support for accurate vblank timestamps.");
+ struct qmp_cooling_device {
+@@ -150,7 +152,8 @@ static int qmp_open(struct qmp *qmp)
  
- 	spin_lock_irqsave(&dev->vblank_time_lock, flags);
-@@ -357,13 +355,11 @@ static void __disable_vblank(struct drm_device *dev, unsigned int pipe)
- 		if (WARN_ON(!crtc))
- 			return;
+ 	qmp_kick(qmp);
  
--		if (crtc->funcs->disable_vblank) {
-+		if (crtc->funcs->disable_vblank)
- 			crtc->funcs->disable_vblank(crtc);
--			return;
--		}
-+	} else {
-+		dev->driver->disable_vblank(dev, pipe);
- 	}
--
--	dev->driver->disable_vblank(dev, pipe);
- }
+-	ret = wait_event_timeout(qmp->event, qmp_link_acked(qmp), HZ);
++	ret = wait_event_timeout(qmp->event, qmp_link_acked(qmp),
++				 QMP_ACK_TIMEOUT);
+ 	if (!ret) {
+ 		dev_err(qmp->dev, "ucore didn't ack link\n");
+ 		goto timeout_close_link;
+@@ -160,7 +163,8 @@ static int qmp_open(struct qmp *qmp)
  
- /*
-@@ -791,9 +787,6 @@ drm_get_last_vbltimestamp(struct drm_device *dev, unsigned int pipe,
+ 	qmp_kick(qmp);
  
- 		ret = crtc->funcs->get_vblank_timestamp(crtc, &max_error,
- 							tvblank, in_vblank_irq);
--	} else if (dev->driver->get_vblank_timestamp && (max_error > 0)) {
--		ret = dev->driver->get_vblank_timestamp(dev, pipe, &max_error,
--							tvblank, in_vblank_irq);
- 	}
+-	ret = wait_event_timeout(qmp->event, qmp_ucore_channel_up(qmp), HZ);
++	ret = wait_event_timeout(qmp->event, qmp_ucore_channel_up(qmp),
++				 QMP_ACK_TIMEOUT);
+ 	if (!ret) {
+ 		dev_err(qmp->dev, "ucore didn't open channel\n");
+ 		goto timeout_close_channel;
+@@ -171,7 +175,8 @@ static int qmp_open(struct qmp *qmp)
  
- 	/* GPU high precision timestamp query unsupported or failed.
-@@ -1016,9 +1009,11 @@ static int __enable_vblank(struct drm_device *dev, unsigned int pipe)
+ 	qmp_kick(qmp);
  
- 		if (crtc->funcs->enable_vblank)
- 			return crtc->funcs->enable_vblank(crtc);
-+	} else if (dev->driver->enable_vblank) {
-+		return dev->driver->enable_vblank(dev, pipe);
- 	}
- 
--	return dev->driver->enable_vblank(dev, pipe);
-+	return -EINVAL;
- }
- 
- static int drm_vblank_enable(struct drm_device *dev, unsigned int pipe)
-@@ -1109,13 +1104,10 @@ static bool __vblank_disable_immediate(struct drm_device *dev, unsigned int pipe
- 		return false;
- 
- 	crtc = drm_crtc_from_index(dev, pipe);
--	if (crtc && crtc->funcs->get_vblank_timestamp)
--		return true;
--
--	if (dev->driver->get_vblank_timestamp)
--		return true;
-+	if (!crtc || !crtc->funcs->get_vblank_timestamp)
-+		return false;
- 
--	return false;
-+	return true;
- }
- 
- static void drm_vblank_put(struct drm_device *dev, unsigned int pipe)
-@@ -1798,7 +1790,6 @@ static void drm_handle_vblank_events(struct drm_device *dev, unsigned int pipe)
- 	struct drm_pending_vblank_event *e, *t;
- 	ktime_t now;
- 	u64 seq;
--	bool high_prec;
- 
- 	assert_spin_locked(&dev->event_lock);
- 
-@@ -1818,10 +1809,8 @@ static void drm_handle_vblank_events(struct drm_device *dev, unsigned int pipe)
- 		send_vblank_event(dev, e, seq, now);
- 	}
- 
--	high_prec = crtc->funcs->get_vblank_timestamp ||
--		    dev->driver->get_vblank_timestamp;
--
--	trace_drm_vblank_event(pipe, seq, now, high_prec);
-+	trace_drm_vblank_event(pipe, seq, now,
-+			       crtc->funcs->get_vblank_timestamp != NULL);
- }
- 
- /**
-diff --git a/include/drm/drm_drv.h b/include/drm/drm_drv.h
-index b704e252f3b2..e290b3aca6eb 100644
---- a/include/drm/drm_drv.h
-+++ b/include/drm/drm_drv.h
-@@ -268,104 +268,6 @@ struct drm_driver {
- 	 */
- 	void (*release) (struct drm_device *);
- 
--	/**
--	 * @get_vblank_counter:
--	 *
--	 * Driver callback for fetching a raw hardware vblank counter for the
--	 * CRTC specified with the pipe argument.  If a device doesn't have a
--	 * hardware counter, the driver can simply leave the hook as NULL.
--	 * The DRM core will account for missed vblank events while interrupts
--	 * where disabled based on system timestamps.
--	 *
--	 * Wraparound handling and loss of events due to modesetting is dealt
--	 * with in the DRM core code, as long as drivers call
--	 * drm_crtc_vblank_off() and drm_crtc_vblank_on() when disabling or
--	 * enabling a CRTC.
--	 *
--	 * This is deprecated and should not be used by new drivers.
--	 * Use &drm_crtc_funcs.get_vblank_counter instead.
--	 *
--	 * Returns:
--	 *
--	 * Raw vblank counter value.
--	 */
--	u32 (*get_vblank_counter) (struct drm_device *dev, unsigned int pipe);
--
--	/**
--	 * @enable_vblank:
--	 *
--	 * Enable vblank interrupts for the CRTC specified with the pipe
--	 * argument.
--	 *
--	 * This is deprecated and should not be used by new drivers.
--	 * Use &drm_crtc_funcs.enable_vblank instead.
--	 *
--	 * Returns:
--	 *
--	 * Zero on success, appropriate errno if the given @crtc's vblank
--	 * interrupt cannot be enabled.
--	 */
--	int (*enable_vblank) (struct drm_device *dev, unsigned int pipe);
--
--	/**
--	 * @disable_vblank:
--	 *
--	 * Disable vblank interrupts for the CRTC specified with the pipe
--	 * argument.
--	 *
--	 * This is deprecated and should not be used by new drivers.
--	 * Use &drm_crtc_funcs.disable_vblank instead.
--	 */
--	void (*disable_vblank) (struct drm_device *dev, unsigned int pipe);
--
--	/**
--	 * @get_vblank_timestamp:
--	 *
--	 * Called by drm_get_last_vbltimestamp(). Should return a precise
--	 * timestamp when the most recent VBLANK interval ended or will end.
--	 *
--	 * Specifically, the timestamp in @vblank_time should correspond as
--	 * closely as possible to the time when the first video scanline of
--	 * the video frame after the end of VBLANK will start scanning out,
--	 * the time immediately after end of the VBLANK interval. If the
--	 * @crtc is currently inside VBLANK, this will be a time in the future.
--	 * If the @crtc is currently scanning out a frame, this will be the
--	 * past start time of the current scanout. This is meant to adhere
--	 * to the OpenML OML_sync_control extension specification.
--	 *
--	 * Paramters:
--	 *
--	 * dev:
--	 *     dev DRM device handle.
--	 * pipe:
--	 *     crtc for which timestamp should be returned.
--	 * max_error:
--	 *     Maximum allowable timestamp error in nanoseconds.
--	 *     Implementation should strive to provide timestamp
--	 *     with an error of at most max_error nanoseconds.
--	 *     Returns true upper bound on error for timestamp.
--	 * vblank_time:
--	 *     Target location for returned vblank timestamp.
--	 * in_vblank_irq:
--	 *     True when called from drm_crtc_handle_vblank().  Some drivers
--	 *     need to apply some workarounds for gpu-specific vblank irq quirks
--	 *     if flag is set.
--	 *
--	 * Returns:
--	 *
--	 * True on success, false on failure, which means the core should
--	 * fallback to a simple timestamp taken in drm_crtc_handle_vblank().
--	 *
--	 * FIXME:
--	 *
--	 * We should move this hook to &struct drm_crtc_funcs like all the other
--	 * vblank hooks.
--	 */
--	bool (*get_vblank_timestamp) (struct drm_device *dev, unsigned int pipe,
--				     int *max_error,
--				     ktime_t *vblank_time,
--				     bool in_vblank_irq);
--
- 	/**
- 	 * @irq_handler:
- 	 *
-@@ -720,6 +622,9 @@ struct drm_driver {
- 	int (*dma_ioctl) (struct drm_device *dev, void *data, struct drm_file *file_priv);
- 	int (*dma_quiescent) (struct drm_device *);
- 	int (*context_dtor) (struct drm_device *dev, int context);
-+	u32 (*get_vblank_counter)(struct drm_device *dev, unsigned int pipe);
-+	int (*enable_vblank)(struct drm_device *dev, unsigned int pipe);
-+	void (*disable_vblank)(struct drm_device *dev, unsigned int pipe);
- 	int dev_priv_size;
- };
- 
+-	ret = wait_event_timeout(qmp->event, qmp_mcore_channel_acked(qmp), HZ);
++	ret = wait_event_timeout(qmp->event, qmp_mcore_channel_acked(qmp),
++				 QMP_ACK_TIMEOUT);
+ 	if (!ret) {
+ 		dev_err(qmp->dev, "ucore didn't ack channel\n");
+ 		goto timeout_close_channel;
 -- 
-2.24.1
-
+1.9.1
