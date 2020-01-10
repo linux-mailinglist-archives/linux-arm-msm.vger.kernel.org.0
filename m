@@ -2,110 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C6975136A8C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2020 11:08:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 59E23136AEA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jan 2020 11:18:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727168AbgAJKH7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jan 2020 05:07:59 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:37779 "EHLO
+        id S1727352AbgAJKSW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jan 2020 05:18:22 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:25305 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727315AbgAJKH5 (ORCPT
+        by vger.kernel.org with ESMTP id S1727364AbgAJKSW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jan 2020 05:07:57 -0500
+        Fri, 10 Jan 2020 05:18:22 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1578650877; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=uwwNlxbaPVAft3MSELUaVehozNoXoPWIw5uWz2i3i8Y=; b=INPkql4aEJU8iKQPlOlA6yBBNImwIqQkQEa7joGmGCLtC7UcYvOkEHN8HIN0E8clQy+IvWsr
- ppZaC+8qxaOB7oyv8pEKOW0ExdNqOFuAdxe8rHr1Ka/Ws1ZHXmw3b60/7PBvH9Eb4TL41rkJ
- ry7wgzljcfyIXGOKs89rT2mXPwE=
+ s=smtp; t=1578651501; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=Sur98Trxip0lS2J0kZIUVd9Xdj/kghewp4wUiHEmGZQ=; b=KLLxxMFR5GONj1X+vR4pJfymKDSIE/osEx8zgA/gXRtrwjgXJkHOFJFUNlj6uNa2RkJJHA2Y
+ M+3vCljs1wfxdCLizf7qjQJN/Gno+h5I6Db7IeCg9DOM45pKcNf/pjCN5PqjJvwfJz+QGHUN
+ O3+SXeqMIhh9WwtW8eAeyTWoqX0=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e184cfb.7f2adb4d4110-smtp-out-n03;
- Fri, 10 Jan 2020 10:07:55 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e184f66.7f29f206d960-smtp-out-n02;
+ Fri, 10 Jan 2020 10:18:14 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A8F97C4479F; Fri, 10 Jan 2020 10:07:55 +0000 (UTC)
+        id 38DF1C4479C; Fri, 10 Jan 2020 10:18:14 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from aneelaka-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: aneela)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 27096C433CB;
-        Fri, 10 Jan 2020 10:07:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 27096C433CB
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 67727C433A2;
+        Fri, 10 Jan 2020 10:18:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 67727C433A2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=aneela@codeaurora.org
-From:   Arun Kumar Neelakantam <aneela@codeaurora.org>
-To:     bjorn.andersson@linaro.org, clew@codeaurora.org
-Cc:     Arun Kumar Neelakantam <aneela@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] soc: qcom: aoss: Reduce the AOP ACK wait time
-Date:   Fri, 10 Jan 2020 15:37:40 +0530
-Message-Id: <1578650861-2450-1-git-send-email-aneela@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH] arm64: dts: qcom: sc7180: Add iommus property to QUP0 and QUP1
+Date:   Fri, 10 Jan 2020 15:48:02 +0530
+Message-Id: <20200110101802.4491-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.24.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-AOP send ACK immediately before wait thread can start waiting.
-In this case the probe call is blocked for default time 1sec and
-causing bootup delay.
+Define iommus property for QUP0 and QUP1 with the proper SID
+and mask. Below SMMU global faults are seen without this during
+boot and when using i2c touchscreen.
 
-Reduce the default wait time to 20ms to avoid delay in IRQ miss case.
+QUP0:
+arm-smmu 15000000.iommu: Unexpected global fault, this could be serious
+arm-smmu 15000000.iommu: GFSR 0x00000002, GFSYNR0 0x00000002, GFSYNR1 0x00000043, GFSYNR2 0x00000000
 
-Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
+QUP1:
+arm-smmu 15000000.iommu: Unexpected global fault, this could be serious
+arm-smmu 15000000.iommu: GFSR 0x00000002, GFSYNR0 0x00000002, GFSYNR1 0x000004c3, GFSYNR2 0x00000000
+
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 ---
- drivers/soc/qcom/qcom_aoss.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-index 006ac40..2cf2393 100644
---- a/drivers/soc/qcom/qcom_aoss.c
-+++ b/drivers/soc/qcom/qcom_aoss.c
-@@ -44,6 +44,8 @@
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 8011c5fe2a31..01e431f49c18 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -338,6 +338,7 @@ qupv3_id_0: geniqup@8c0000 {
+ 			#address-cells = <2>;
+ 			#size-cells = <2>;
+ 			ranges;
++			iommus = <&apps_smmu 0x43 0x0>;
+ 			status = "disabled";
  
- #define QMP_NUM_COOLING_RESOURCES	2
+ 			i2c0: i2c@880000 {
+@@ -546,6 +547,7 @@ qupv3_id_1: geniqup@ac0000 {
+ 			#address-cells = <2>;
+ 			#size-cells = <2>;
+ 			ranges;
++			iommus = <&apps_smmu 0x4c3 0x0>;
+ 			status = "disabled";
  
-+#define QMP_ACK_TIMEOUT			msecs_to_jiffies(10)
-+
- static bool qmp_cdev_max_state = 1;
- 
- struct qmp_cooling_device {
-@@ -150,7 +152,8 @@ static int qmp_open(struct qmp *qmp)
- 
- 	qmp_kick(qmp);
- 
--	ret = wait_event_timeout(qmp->event, qmp_link_acked(qmp), HZ);
-+	ret = wait_event_timeout(qmp->event, qmp_link_acked(qmp),
-+				 QMP_ACK_TIMEOUT);
- 	if (!ret) {
- 		dev_err(qmp->dev, "ucore didn't ack link\n");
- 		goto timeout_close_link;
-@@ -160,7 +163,8 @@ static int qmp_open(struct qmp *qmp)
- 
- 	qmp_kick(qmp);
- 
--	ret = wait_event_timeout(qmp->event, qmp_ucore_channel_up(qmp), HZ);
-+	ret = wait_event_timeout(qmp->event, qmp_ucore_channel_up(qmp),
-+				 QMP_ACK_TIMEOUT);
- 	if (!ret) {
- 		dev_err(qmp->dev, "ucore didn't open channel\n");
- 		goto timeout_close_channel;
-@@ -171,7 +175,8 @@ static int qmp_open(struct qmp *qmp)
- 
- 	qmp_kick(qmp);
- 
--	ret = wait_event_timeout(qmp->event, qmp_mcore_channel_acked(qmp), HZ);
-+	ret = wait_event_timeout(qmp->event, qmp_mcore_channel_acked(qmp),
-+				 QMP_ACK_TIMEOUT);
- 	if (!ret) {
- 		dev_err(qmp->dev, "ucore didn't ack channel\n");
- 		goto timeout_close_channel;
+ 			i2c6: i2c@a80000 {
 -- 
-1.9.1
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
