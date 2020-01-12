@@ -2,108 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E130138608
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jan 2020 12:30:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 167701387F2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jan 2020 20:36:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732706AbgALLaS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Jan 2020 06:30:18 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:54718 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732693AbgALLaQ (ORCPT
+        id S1733201AbgALTgv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Jan 2020 14:36:51 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43027 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733146AbgALTgv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Jan 2020 06:30:16 -0500
-Received: by mail-wm1-f66.google.com with SMTP id b19so6560755wmj.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Jan 2020 03:30:15 -0800 (PST)
+        Sun, 12 Jan 2020 14:36:51 -0500
+Received: by mail-ed1-f67.google.com with SMTP id dc19so6598777edb.10;
+        Sun, 12 Jan 2020 11:36:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=KHwbLASHxjGE27Uiky3wxlrPdCw9dEtw2S64/E8yyuc=;
-        b=vjJJu2RVXp0X6oEZP5H5bBX8C4YIBD9gsbjZfzgUFNd+TARl2D3CDJtZyt0rcYYA0N
-         HsWFg5Ab8FSddlpv/cVQ1bwjE4DACclssOIo4SDpoME73MZHM320/dRgXPxdodNTctU/
-         PMARG6KCEn115gWEu57sHns+Y+czGuVKs4e0pHnAdmu58hDzCiaCMjil90+XeFHaJjeZ
-         2CvTrOuVB/05jbG+d4uFQ589Wy/CXM3lyOBbqoD2hItrJcutVaiS/2rzU74p20qqlrWn
-         GVUWTHQBKbSWGpNz/x6S/bjSBClpNMPoCMYTggYIyFayTgzBfc5KxTz4EaLjgudSrbZQ
-         l+Hw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2aCgGAHsmpPiDsI7trI6K+Ww2+Ja2/dxdFxLqxWkQx0=;
+        b=r2dCEqzsrhxk3FPYXVH8+9S25XABFhYimFIGqwl2yYBHJWhvyY+tprWSnDvDZlQWuc
+         TG3E5ATa1lzi1VxtdCbhp15sIpMgWfjF+uSfQdxSsjgHIXLzCu+PEqW2R9wbyKNTGE7F
+         bTBSidsRL88hMuNf75mFto9WLULI3pBShkLD8EBBC1eNlOZaYTbfvWOLL8dQpaw0FXys
+         T9sCrnQA9AeyizDYdasBNHIgVUdeSvz5TQCLUQ7pl2AZLuFbUTtCMpSdfupaR7dRcemv
+         Pk6zUUKj/InhpXAnVm0ErBTF9Lvnh4ZuF0R0ECZADdD8eaaBMeJl+ODFna52ODfNH7EV
+         HqCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=KHwbLASHxjGE27Uiky3wxlrPdCw9dEtw2S64/E8yyuc=;
-        b=bilR11NGXX6gjmWd152fZaT0ZVMMV+U6KPLNExADwyKw7HNBBqSsa42c0622XncEmn
-         CMGYTgv898WDgmEkfuYiknoaRxxBNNuzgbpHeuyrVgb+/PT+JZSgA6gYgDIXyOhsk1V8
-         AGrISg5iRuZw1EWp/0IZJf7J+cCgZW7d0ixrfraJ/BQ1klnGSlSqg1x3cfmnJoJJ1arl
-         2YD+a8dl42xdj8X3bgOARbyX7Bc+axzpgIZdmExbKsYXPQp1gPuO3MOe0PJ2oVB0NYb0
-         cSuOLYrDnVo11jXG+3ghKVv8guQi5ZYWEdDbg4htUiEQAlUaZdqKumuNbfd4LtyPVvID
-         RV5g==
-X-Gm-Message-State: APjAAAUElP3OU4+Twq7XiGcuDmh4MN70sMo1qUzj+sIm/3mNG0s/yYiy
-        HF7DDm7DBOOP4U7Iwptu0ZqFis29tcA=
-X-Google-Smtp-Source: APXvYqysamBkNqIu5nyLG9FpW2nztuJSFajzk43xKKLVsG3seq7LABXj4KAhtOv45hCvJnDDUX/XnA==
-X-Received: by 2002:a7b:cc14:: with SMTP id f20mr14953970wmh.58.1578828614509;
-        Sun, 12 Jan 2020 03:30:14 -0800 (PST)
-Received: from localhost.localdomain (dh207-5-115.xnet.hr. [88.207.5.115])
-        by smtp.googlemail.com with ESMTPSA id y17sm9943045wma.36.2020.01.12.03.30.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Jan 2020 03:30:14 -0800 (PST)
-From:   Robert Marko <robert.marko@sartura.hr>
-To:     lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
-        linux-kernel@vger.kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Robert Marko <robert.marko@sartura.hr>
-Subject: [PATCH 3/3] arm: dts: IPQ4019: add SDHCI VQMMC LDO node
-Date:   Sun, 12 Jan 2020 12:30:03 +0100
-Message-Id: <20200112113003.11110-3-robert.marko@sartura.hr>
-X-Mailer: git-send-email 2.24.1
-In-Reply-To: <20200112113003.11110-1-robert.marko@sartura.hr>
-References: <20200112113003.11110-1-robert.marko@sartura.hr>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2aCgGAHsmpPiDsI7trI6K+Ww2+Ja2/dxdFxLqxWkQx0=;
+        b=e8QYgOov77h/xzhy7hiQxncZulHgGfYIWam3OfxIjMlhAtmKSFsLJv7qQDveJbigJ9
+         13r4nJM2S3WHC/4SrNryUe9KstUnA5Naiwl9ehIR1TQIPkbyZvsnajBDWYI19t1XdUvp
+         DlXUI7Zxyz41ff2fydikKQ1oiPoIap74HOiHBXdMFP+J5y+/6qj14/I9hMpIR0tb1GuQ
+         R9GL4hczl5tRt+STga6bZywlaFw6N6KGewUsSjIdgS3AzakTLYb4C9oTeUq9VjgWtyHB
+         B6GKbrpCb+IOH7LGxPKY/MQlgE5ktQB7jhbaRUlCO0gcn7YxGlxNLsGAj4OJ0sRrGhrp
+         1YtA==
+X-Gm-Message-State: APjAAAV7w6qAD1op8EjGec7CAljuA3KUx2Aj4oziTC8mPwjb+lBGikQX
+        3rEf/cziMyWMvzOqf33ZMLcczU+qMqpbG9rT+EE=
+X-Google-Smtp-Source: APXvYqxfpc4WZmwMOUhRUzssy8Rba2fcFBg3p4r2GJeMannK10uLlFzVxrMktZs94M9toNiBP14FJc16JaJ+wG6de8E=
+X-Received: by 2002:aa7:da18:: with SMTP id r24mr13588531eds.111.1578857808753;
+ Sun, 12 Jan 2020 11:36:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200108013847.899170-1-robdclark@gmail.com> <20200108013847.899170-2-robdclark@gmail.com>
+ <37d0baaa-3f94-9414-88e7-7e849b0c5de5@redhat.com> <CAF6AEGseE9iV1xDd1_hRDiKp0-a1usk+xqnyyqbuphwsvLTZmQ@mail.gmail.com>
+In-Reply-To: <CAF6AEGseE9iV1xDd1_hRDiKp0-a1usk+xqnyyqbuphwsvLTZmQ@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sun, 12 Jan 2020 11:36:37 -0800
+Message-ID: <CAF6AEGsrLKVKgLQW=-gqEsxdds6F-eaMzGq2cgjkXGYbBQ4yWA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] drm/msm: support firmware-name for zap fw
+To:     Tom Rix <trix@redhat.com>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since we now have driver for the SDHCI VQMMC LDO needed
-for I/0 voltage levels lets introduce the necessary node for it.
+On Wed, Jan 8, 2020 at 8:30 AM Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Wed, Jan 8, 2020 at 7:38 AM Tom Rix <trix@redhat.com> wrote:
+> >
+> >
+> > On 1/7/20 5:38 PM, Rob Clark wrote:
+> > > From: Rob Clark <robdclark@chromium.org>
+> > >
+> > > Since zap firmware can be device specific, allow for a firmware-name
+> > > property in the zap node to specify which firmware to load, similarly to
+> > > the scheme used for dsp/wifi/etc.
+> > >
+> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > ---
+> > >  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 32 ++++++++++++++++++++++---
+> > >  1 file changed, 29 insertions(+), 3 deletions(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > > index 112e8b8a261e..aa8737bd58db 100644
+> > > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > > @@ -26,6 +26,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+> > >  {
+> > >       struct device *dev = &gpu->pdev->dev;
+> > >       const struct firmware *fw;
+> > > +     const char *signed_fwname = NULL;
+> > >       struct device_node *np, *mem_np;
+> > >       struct resource r;
+> > >       phys_addr_t mem_phys;
+> > > @@ -58,8 +59,33 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+> > >
+> > >       mem_phys = r.start;
+> > >
+> > > -     /* Request the MDT file for the firmware */
+> > > -     fw = adreno_request_fw(to_adreno_gpu(gpu), fwname);
+> > > +     /*
+> > > +      * Check for a firmware-name property.  This is the new scheme
+> > > +      * to handle firmware that may be signed with device specific
+> > > +      * keys, allowing us to have a different zap fw path for different
+> > > +      * devices.
+> > > +      *
+> > > +      * If the firmware-name property is found, we bypass the
+> > > +      * adreno_request_fw() mechanism, because we don't need to handle
+> > > +      * the /lib/firmware/qcom/* vs /lib/firmware/* case.
+> > > +      *
+> > > +      * If the firmware-name property is not found, for backwards
+> > > +      * compatibility we fall back to the fwname from the gpulist
+> > > +      * table.
+> > > +      */
+> > > +     of_property_read_string_index(np, "firmware-name", 0, &signed_fwname);
+> > > +     if (signed_fwname) {
+> > > +             fwname = signed_fwname;
+> > > +             ret = request_firmware_direct(&fw, signed_fwname, gpu->dev->dev);
+> > > +             if (ret) {
+> > > +                     DRM_DEV_ERROR(dev, "could not load signed zap firmware: %d\n", ret);
+> > Could adreno_request_fw be called with fwname if request_firmware_direct fails ?
+>
+>
+> *possibly*.. initially I avoided this because the failure mode for
+> incorrectly signed firmware was silent and catestrophic.  But Bjorn
+> tells me this has been fixed.. in which case we could try and detect
+> if it is the incorrect fw.  I need to try some experiments to confirm
+> we can detect this case properly.
 
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
----
- arch/arm/boot/dts/qcom-ipq4019.dtsi | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+I've been thinking about fallback to using fwname from the gpulist
+table, but I think I don't really like the idea.
 
-diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-index d2b53e190954..d95aee50454d 100644
---- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-@@ -211,6 +211,28 @@
- 			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		sdhci: sdhci@7824900 {
-+			compatible = "qcom,sdhci-msm-v4";
-+			reg = <0x7824900 0x11c>, <0x7824000 0x800>;
-+			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hc_irq", "pwr_irq";
-+			bus-width = <8>;
-+			clocks = <&gcc GCC_SDCC1_APPS_CLK>, <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_DCD_XO_CLK>;
-+			clock-names = "core", "iface", "xo";
-+			status = "disabled";
-+		};
-+
-+		vqmmc: regulator@1948000 {
-+			compatible = "qcom,vqmmc-ipq4019-regulator";
-+			reg = <0x01948000 0x4>;
-+			regulator-name = "vqmmc";
-+			regulator-min-microvolt = <1500000>;
-+			regulator-max-microvolt = <3000000>;
-+			regulator-always-on;
-+			status = "disabled";
-+		};
-+
- 		blsp_dma: dma@7884000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x07884000 0x23000>;
--- 
-2.24.1
+The failure mode for not falling back to $firmware/qcom/$fwname is
+pretty safe.. you simply don't get gpu accel, but display and
+everything else works, so you can boot up far enough to see what the
+problem is and fix it.  But the failure mode if, with some device's
+scm fw doesn't report incorrectly signed zap fw, is pretty
+catastrophic (insta-reboot, which can be hard to debug on phone/laptop
+without debug uart).
 
+Since we haven't pushed the test-key signed qcom/sdm835/a630_zap.mbn
+to linux-firmware yet, I think this is a good time to make this switch
+for a6xx.
+
+For a530 devices, maybe we hold of adding firmware-name to dt until
+linux-firmware gains a qcom/msm8996/a530_zap.mbn (which would be a
+good time to switch to the packed .mbn instead of split .mdt + .b0*
+files).. or just not specify a firmware-name for device using test-key
+signed zap and fallback to adreno_request_fw() and the existing path.
+
+Fortunately zap is not used prior to a5xx, so we mainly just need to
+care about backwards compat for a530.
+
+BR,
+-R
+
+> BR,
+> -R
+>
+> > > +                     fw = ERR_PTR(ret);
+> > > +             }
+> > > +     } else {
+> > > +             /* Request the MDT file for the firmware */
+> > > +             fw = adreno_request_fw(to_adreno_gpu(gpu), fwname);
+> > > +     }
+> > > +
+> > >       if (IS_ERR(fw)) {
+> > >               DRM_DEV_ERROR(dev, "Unable to load %s\n", fwname);
+> > >               return PTR_ERR(fw);
+> > > @@ -95,7 +121,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+> > >        * not.  But since we've already gotten through adreno_request_fw()
+> > >        * we know which of the two cases it is:
+> > >        */
+> > > -     if (to_adreno_gpu(gpu)->fwloc == FW_LOCATION_LEGACY) {
+> > > +     if (signed_fwname || (to_adreno_gpu(gpu)->fwloc == FW_LOCATION_LEGACY)) {
+> > >               ret = qcom_mdt_load(dev, fw, fwname, pasid,
+> > >                               mem_region, mem_phys, mem_size, NULL);
+> > >       } else {
+> >
