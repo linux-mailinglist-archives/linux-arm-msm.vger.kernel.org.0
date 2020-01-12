@@ -2,188 +2,226 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C5515137A9C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jan 2020 01:31:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28BD1138603
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jan 2020 12:30:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727744AbgAKAbY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jan 2020 19:31:24 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:33235 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727466AbgAKAbX (ORCPT
+        id S1732673AbgALLaN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Jan 2020 06:30:13 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45330 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732676AbgALLaN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jan 2020 19:31:23 -0500
-Received: by mail-pg1-f193.google.com with SMTP id 6so1772783pgk.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jan 2020 16:31:23 -0800 (PST)
+        Sun, 12 Jan 2020 06:30:13 -0500
+Received: by mail-wr1-f68.google.com with SMTP id j42so5763198wrj.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Jan 2020 03:30:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YF+XBwmeW7gMU2m1kq2ajUEOp6kfHK6MdHE8gUKg6T0=;
-        b=iLFlOeIvGtjXQ6QmLDCHibczQzimWNj1FRpWHLj2tvKQwNn1P3PwnzxbZnewZ7juX7
-         UPeLXzmV/MXFgYDr3F1c15g5QD1kfKN+Ac3r8BglOjrUBKbN8Zw6JrWwYElV3jXCVLMY
-         hAhcgNhWTVMkslFFcwspQ/Gmp9tW12Z1uiZs8=
+        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vSm7IjczDllIQBdzJHpYkk9BizbkbQU1pIXfoPgr3P8=;
+        b=jacPjBbxEHLwtLsQ9Yu3llDPqhrqfGzlJ3FxJ1gXzvVFSUDP0GuiKZz+c/haGzZlt7
+         2zm8Uun6TsGs05hO6qtIh1X96cHQ6exFf5bZy3c+WEXbfD7AlsnbWe6rv5bsZZ0U2Qci
+         6IAYwi1BABW56oH8dWWJUTwHPQalXGvzt87MTWxuA2IvFnKZELiJBRoc17sLfiOdX2OD
+         1SkFKAHa9DJ6vd+ucv/MElYfhwEInQUOIHixfnjSOzhhIPxmyAv86DEQ1/K6ojH/VWh/
+         OiYDI3wD6G4XGy2JQpqTPighS9SZ8gJ3XDyZKBfiqat31UHa2cJXvbe/yC8qshJjpPmi
+         46JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YF+XBwmeW7gMU2m1kq2ajUEOp6kfHK6MdHE8gUKg6T0=;
-        b=kdvzIVdhqgaDBiG3qAJfnDaovKmuwxKlHR3SgsBAaG/Q0Sen/F0BBhgj7l2j4DJH2H
-         3J83LN9to+ZO6eUcOqdca2VkgPm0HPT1j2v3ejb05BWKU0LlbSZhIlobPFxJH5LTj88Q
-         9yPGkpppO3Ltm0MLT3CFsfXozMkN7aTDJBR9XTMpZP8v7p/arVHWfbnWGVWsqLTd993W
-         djAGFAJ5oxhh5i6S/40a1YbDInEEgAb+M58cekuVdQkcfVAqy1nN/T1NK2N50u+U+RWd
-         x8zRSYB+QjITqfB5hkWiVSDRrRXW7HrlyatJc5o5bKyBVCJfHeMIBW6Py9TgFeodguYr
-         QltA==
-X-Gm-Message-State: APjAAAXjUirCKehE1Axysc/fnfJ3DQBUYBrGt7AzWWC6ojdE0XLF1zHe
-        CsPtC2wubW5Sd4Ua1+36c0qd8a5tKAc=
-X-Google-Smtp-Source: APXvYqwM49cGGJmod3ZROpphQDvw/toVhkkiCx9OFDSYmtnGWl3HMu87yJxDPHaHnwwBpmFNyCd4XA==
-X-Received: by 2002:a63:4d1b:: with SMTP id a27mr7509254pgb.352.1578702683163;
-        Fri, 10 Jan 2020 16:31:23 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id a18sm4061269pjq.30.2020.01.10.16.31.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Jan 2020 16:31:21 -0800 (PST)
-Date:   Fri, 10 Jan 2020 16:31:20 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Rocky Liao <rjliao@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vSm7IjczDllIQBdzJHpYkk9BizbkbQU1pIXfoPgr3P8=;
+        b=cZlbSpFOlxUyF8NqGRN0TjbLOgEwIGHZvuBnqEpULRwG8lAtSQGjbjdSca2lTTXoog
+         TJdT5GKU/fjJDsoA72eyOsgRL5E978mRgp84IyOsoTGHCKnijtsnehDs+qH6If5fndw7
+         N4Q3U4fEEM+z2GnW6iUkeWdqw0n0dOJXxxpeiWlc3gDkmFblYJ16uYB5bTqT6pA7CnAh
+         Z7uK3xbI1TdmVVz3dg/qKDVmK1uLQA4fPzzsFNyDN0nXH3qIRfe6iZP1zcIutEAIqUVL
+         BBMUMlb3TiRRa2B5GvBo1FxlqFZSF2nQtEgvREG3joieGVw/WI/x+6mlCzKMv9hhdFs7
+         uTXA==
+X-Gm-Message-State: APjAAAVnLx1REqHMfZKekhFn4c1Qnl8ujiKeA5IzaaMsY2AC+VVC8yCS
+        jMgNVsnYDERam7fPYR+jFkvc6A==
+X-Google-Smtp-Source: APXvYqxgvliBKMsfF8PC9AKLAdu/jQnRVrYEIQQcHRWHz3Z+MVgU4zeFYlLobc4BQQBrz7edTCsYKQ==
+X-Received: by 2002:adf:eb8e:: with SMTP id t14mr13088069wrn.384.1578828610872;
+        Sun, 12 Jan 2020 03:30:10 -0800 (PST)
+Received: from localhost.localdomain (dh207-5-115.xnet.hr. [88.207.5.115])
+        by smtp.googlemail.com with ESMTPSA id y17sm9943045wma.36.2020.01.12.03.30.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 12 Jan 2020 03:30:10 -0800 (PST)
+From:   Robert Marko <robert.marko@sartura.hr>
+To:     lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
+        linux-kernel@vger.kernel.org, agross@kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4] Bluetooth: hci_qca: Add qca_power_on() API to support
- both wcn399x and Rome power up
-Message-ID: <20200111003120.GG89495@google.com>
-References: <20200107052601.32216-1-rjliao@codeaurora.org>
- <20200110033214.16327-1-rjliao@codeaurora.org>
+Cc:     Robert Marko <robert.marko@sartura.hr>,
+        Mantas Pucka <mantas@8devices.com>
+Subject: [PATCH 1/3] regulator: add IPQ4019 SDHCI VQMMC LDO driver
+Date:   Sun, 12 Jan 2020 12:30:01 +0100
+Message-Id: <20200112113003.11110-1-robert.marko@sartura.hr>
+X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200110033214.16327-1-rjliao@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rocky,
+This introduces the IPQ4019 VQMMC LDO driver needed for
+the SD/EMMC driver I/O level operation.
+This will enable introducing SD/EMMC support for the built-in controller.
 
-On Fri, Jan 10, 2020 at 11:32:14AM +0800, Rocky Liao wrote:
-> This patch adds a unified API qca_power_on() to support both wcn399x and
-> Rome power on. For wcn399x it calls the qca_wcn3990_init() to init the
-> regulators, and for Rome it pulls up the bt_en GPIO to power up the btsoc.
-> It also moves all the power up operation from hdev->open() to
-> hdev->setup().
-> 
-> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
-> 
-> Changes in v2: None
-> Changes in v3:
->   -moved all the power up operation from open() to setup()
->   -updated the commit message
-> Changes in v4:
->   -made a single call to qca_power_on() in setup()
-> 
-> 
->  drivers/bluetooth/hci_qca.c | 48 +++++++++++++++++++++++--------------
->  1 file changed, 30 insertions(+), 18 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index 82e4cd4b6663..6a67e5489b16 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -541,7 +541,6 @@ static int qca_open(struct hci_uart *hu)
->  {
->  	struct qca_serdev *qcadev;
->  	struct qca_data *qca;
-> -	int ret;
->  
->  	BT_DBG("hu %p qca_open", hu);
->  
-> @@ -582,23 +581,10 @@ static int qca_open(struct hci_uart *hu)
->  	hu->priv = qca;
->  
->  	if (hu->serdev) {
-> -
->  		qcadev = serdev_device_get_drvdata(hu->serdev);
-> -		if (!qca_is_wcn399x(qcadev->btsoc_type)) {
-> -			gpiod_set_value_cansleep(qcadev->bt_en, 1);
-> -			/* Controller needs time to bootup. */
-> -			msleep(150);
-> -		} else {
-> +		if (qca_is_wcn399x(qcadev->btsoc_type)) {
->  			hu->init_speed = qcadev->init_speed;
->  			hu->oper_speed = qcadev->oper_speed;
-> -			ret = qca_regulator_enable(qcadev);
-> -			if (ret) {
-> -				destroy_workqueue(qca->workqueue);
-> -				kfree_skb(qca->rx_skb);
-> -				hu->priv = NULL;
-> -				kfree(qca);
-> -				return ret;
-> -			}
->  		}
->  	}
->  
-> @@ -1531,6 +1517,31 @@ static int qca_wcn3990_init(struct hci_uart *hu)
->  	return 0;
->  }
->  
-> +static int qca_power_on(struct hci_dev *hdev)
-> +{
-> +	struct hci_uart *hu = hci_get_drvdata(hdev);
-> +	enum qca_btsoc_type soc_type = qca_soc_type(hu);
-> +	struct qca_serdev *qcadev;
-> +	int ret = 0;
-> +
-> +	/* Non-serdev device usually is powered by external power
-> +	 * and don't need additional action in driver for power on
-> +	 */
-> +	if (!hu->serdev)
-> +		return 0;
-> +
-> +	if (qca_is_wcn399x(soc_type)) {
-> +		ret = qca_wcn3990_init(hu);
-> +	} else {
-> +		qcadev = serdev_device_get_drvdata(hu->serdev);
-> +		gpiod_set_value_cansleep(qcadev->bt_en, 1);
-> +		/* Controller needs time to bootup. */
-> +		msleep(150);
-> +	}
-> +
-> +	return ret;
-> +}
-> +
->  static int qca_setup(struct hci_uart *hu)
->  {
->  	struct hci_dev *hdev = hu->hdev;
-> @@ -1553,6 +1564,10 @@ static int qca_setup(struct hci_uart *hu)
->  	 */
->  	set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
->  
-> +	ret = qca_power_on(hdev);
-> +	if (ret)
-> +		return ret;
-> +
+Signed-off-by: Mantas Pucka <mantas@8devices.com>
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+---
+ drivers/regulator/Kconfig                   |   7 ++
+ drivers/regulator/Makefile                  |   1 +
+ drivers/regulator/vqmmc-ipq4019-regulator.c | 111 ++++++++++++++++++++
+ 3 files changed, 119 insertions(+)
+ create mode 100644 drivers/regulator/vqmmc-ipq4019-regulator.c
 
-Now if qca_power_on() fails there is no log entry indicating that Bluetooth
-setup was running. That's why I suggested to put this log entry before
-the call, and remove the corresponding entries from the if/else branches:
+diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
+index 3ee63531f6d5..0a91cf1777c5 100644
+--- a/drivers/regulator/Kconfig
++++ b/drivers/regulator/Kconfig
+@@ -1077,6 +1077,13 @@ config REGULATOR_VEXPRESS
+ 	  This driver provides support for voltage regulators available
+ 	  on the ARM Ltd's Versatile Express platform.
+ 
++config REGULATOR_VQMMC_IPQ4019
++	tristate "IPQ4019 VQMMC SD LDO regulator support"
++	depends on ARCH_QCOM
++	help
++	  This driver provides support for the VQMMC LDO I/0
++	  voltage regulator of the IPQ4019 SD/EMMC controller.
++
+ config REGULATOR_WM831X
+ 	tristate "Wolfson Microelectronics WM831x PMIC regulators"
+ 	depends on MFD_WM831X
+diff --git a/drivers/regulator/Makefile b/drivers/regulator/Makefile
+index 2210ba56f9bd..59f124afd5f5 100644
+--- a/drivers/regulator/Makefile
++++ b/drivers/regulator/Makefile
+@@ -132,6 +132,7 @@ obj-$(CONFIG_REGULATOR_TWL4030) += twl-regulator.o twl6030-regulator.o
+ obj-$(CONFIG_REGULATOR_UNIPHIER) += uniphier-regulator.o
+ obj-$(CONFIG_REGULATOR_VCTRL) += vctrl-regulator.o
+ obj-$(CONFIG_REGULATOR_VEXPRESS) += vexpress-regulator.o
++obj-$(CONFIG_REGULATOR_VQMMC_IPQ4019) += vqmmc-ipq4019-regulator.o
+ obj-$(CONFIG_REGULATOR_WM831X) += wm831x-dcdc.o
+ obj-$(CONFIG_REGULATOR_WM831X) += wm831x-isink.o
+ obj-$(CONFIG_REGULATOR_WM831X) += wm831x-ldo.o
+diff --git a/drivers/regulator/vqmmc-ipq4019-regulator.c b/drivers/regulator/vqmmc-ipq4019-regulator.c
+new file mode 100644
+index 000000000000..dae16094d3a2
+--- /dev/null
++++ b/drivers/regulator/vqmmc-ipq4019-regulator.c
+@@ -0,0 +1,111 @@
++// SPDX-License-Identifier: GPL-2.0+
++//
++// Copyright (c) 2019 Mantas Pucka <mantas@8devices.com>
++// Copyright (c) 2019 Robert Marko <robert.marko@sartura.hr>
++//
++// Driver for IPQ4019 SD/MMC controller's I/O LDO voltage regulator
++
++#include <linux/io.h>
++#include <linux/module.h>
++#include <linux/of.h>
++#include <linux/platform_device.h>
++#include <linux/regmap.h>
++#include <linux/regulator/driver.h>
++#include <linux/regulator/machine.h>
++#include <linux/regulator/of_regulator.h>
++
++static const unsigned int ipq4019_vmmc_voltages[] = {
++	1500000, 1800000, 2500000, 3000000,
++};
++
++static struct regulator_ops ipq4019_regulator_voltage_ops = {
++	.list_voltage = regulator_list_voltage_table,
++	.get_voltage_sel = regulator_get_voltage_sel_regmap,
++	.set_voltage_sel = regulator_set_voltage_sel_regmap,
++};
++
++static struct regulator_desc vmmc_regulator = {
++	.name		= "vmmcq",
++	.ops		= &ipq4019_regulator_voltage_ops,
++	.type		= REGULATOR_VOLTAGE,
++	.owner		= THIS_MODULE,
++	.volt_table	= ipq4019_vmmc_voltages,
++	.n_voltages	= ARRAY_SIZE(ipq4019_vmmc_voltages),
++	.vsel_reg	= 0,
++	.vsel_mask	= 0x3,
++};
++
++const struct regmap_config ipq4019_vmmcq_regmap_config = {
++	.reg_bits	= 32,
++	.reg_stride	= 4,
++	.val_bits	= 32,
++};
++
++static int ipq4019_regulator_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct regulator_init_data *init_data;
++	struct regulator_config cfg = {};
++	struct regulator_dev *rdev;
++	struct resource *res;
++	struct regmap *rmap;
++	void __iomem *base;
++
++	init_data = of_get_regulator_init_data(dev, dev->of_node,
++					       &vmmc_regulator);
++	if (!init_data)
++		return -EINVAL;
++
++	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	base = devm_ioremap_resource(dev, res);
++	if (IS_ERR(base))
++		return PTR_ERR(base);
++
++	rmap = devm_regmap_init_mmio(dev, base, &ipq4019_vmmcq_regmap_config);
++	if (IS_ERR(rmap))
++		return PTR_ERR(rmap);
++
++	cfg.dev = dev;
++	cfg.init_data = init_data;
++	cfg.of_node = dev->of_node;
++	cfg.regmap = rmap;
++
++	rdev = devm_regulator_register(dev, &vmmc_regulator, &cfg);
++	if (IS_ERR(rdev)) {
++		dev_err(dev, "Failed to register regulator: %ld\n",
++			PTR_ERR(rdev));
++		return PTR_ERR(rdev);
++	}
++	platform_set_drvdata(pdev, rdev);
++
++	return 0;
++}
++
++static int ipq4019_regulator_remove(struct platform_device *pdev)
++{
++	struct regulator_dev *rdev = platform_get_drvdata(pdev);
++
++	regulator_unregister(rdev);
++
++	return 0;
++}
++
++static const struct of_device_id regulator_ipq4019_of_match[] = {
++	{ .compatible = "qcom,vqmmc-ipq4019-regulator", },
++	{},
++};
++
++static struct platform_driver ipq4019_regulator_driver = {
++	.probe = ipq4019_regulator_probe,
++	.remove = ipq4019_regulator_remove,
++	.driver = {
++		.name = "vqmmc-ipq4019-regulator",
++		.owner = THIS_MODULE,
++		.of_match_table = of_match_ptr(regulator_ipq4019_of_match),
++	},
++};
++module_platform_driver(ipq4019_regulator_driver);
++
++MODULE_LICENSE("GPL");
++MODULE_AUTHOR("Mantas Pucka <mantas@8devices.com>");
++MODULE_DESCRIPTION("IPQ4019 VQMMC voltage regulator");
+-- 
+2.24.1
 
-	bt_dev_info(hdev, "setting up %s",
-		qca_is_wcn399x(soc_type)? "wcn399x" : "ROME");
-
->  	if (qca_is_wcn399x(soc_type)) {
->  		bt_dev_info(hdev, "setting up wcn3990");
->  
-> @@ -1562,9 +1577,6 @@ static int qca_setup(struct hci_uart *hu)
->  		set_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks);
->  		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
->  		hu->hdev->shutdown = qca_power_off;
-> -		ret = qca_wcn3990_init(hu);
-> -		if (ret)
-> -			return ret;
->  
->  		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
->  		if (ret)
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
