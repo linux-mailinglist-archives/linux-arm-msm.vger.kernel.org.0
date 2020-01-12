@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B1388138609
+	by mail.lfdr.de (Postfix) with ESMTP id 3E130138608
 	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jan 2020 12:30:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732695AbgALLaW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Jan 2020 06:30:22 -0500
-Received: from mail-wm1-f47.google.com ([209.85.128.47]:38559 "EHLO
-        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732689AbgALLaO (ORCPT
+        id S1732706AbgALLaS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Jan 2020 06:30:18 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:54718 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732693AbgALLaQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Jan 2020 06:30:14 -0500
-Received: by mail-wm1-f47.google.com with SMTP id u2so6550465wmc.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Jan 2020 03:30:13 -0800 (PST)
+        Sun, 12 Jan 2020 06:30:16 -0500
+Received: by mail-wm1-f66.google.com with SMTP id b19so6560755wmj.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Jan 2020 03:30:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=sartura-hr.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=D0KuYFijWaSqVKsGb6hmrEpwICKO2Gc2adNnWdcjJlw=;
-        b=wsfy+6bDlh8NItsWdLenHANbaQDJ/2Q/5oprrJQtdFmANH1Q3SN8JIOmXYHl5KVUkt
-         Ku23Cv9TL2TMIuPQzIQN24suhDKs+fMn0554AP915uEc6x7fnAbqwXxIkZ93X8zM7DSA
-         zRlCumyKb94KeJv9550up9JEmMdnuY9m94bn4Nfy8PKeGYS7IyYOjM/whydqMV7awaMm
-         YRrxRGxsZF8tkdDeGEakURR4ExAeXl5J985xWbtQtYoPA+OKogpGeS0YT3h8wprVqsnz
-         jEsL7zMl13Awf/ty791Gb70L4rzSHIf9dGU0JuXZ1a8AhtZOEbgkjB970B2pQ2tdI1M4
-         K/Iw==
+        bh=KHwbLASHxjGE27Uiky3wxlrPdCw9dEtw2S64/E8yyuc=;
+        b=vjJJu2RVXp0X6oEZP5H5bBX8C4YIBD9gsbjZfzgUFNd+TARl2D3CDJtZyt0rcYYA0N
+         HsWFg5Ab8FSddlpv/cVQ1bwjE4DACclssOIo4SDpoME73MZHM320/dRgXPxdodNTctU/
+         PMARG6KCEn115gWEu57sHns+Y+czGuVKs4e0pHnAdmu58hDzCiaCMjil90+XeFHaJjeZ
+         2CvTrOuVB/05jbG+d4uFQ589Wy/CXM3lyOBbqoD2hItrJcutVaiS/2rzU74p20qqlrWn
+         GVUWTHQBKbSWGpNz/x6S/bjSBClpNMPoCMYTggYIyFayTgzBfc5KxTz4EaLjgudSrbZQ
+         l+Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=D0KuYFijWaSqVKsGb6hmrEpwICKO2Gc2adNnWdcjJlw=;
-        b=mDNNiUwmyCVVAoHNO6mPskWyvy0j3jSZZjNrvPGpRIsKGqzDNoFBJ/M3eO2l5+Ydea
-         kPKSJ3UnXmc/eF+q64Y94UUR9VJygFfBKGouglbbWkAJ9xwfWTnWLXg2eTyos0SJ5kbO
-         3ztA4HgM1NP5RBXsVA+he0b1WSl5M/nor2mqG8ChqsGKHwq7MY+L341xTYUto4KMZbAH
-         C86lDYz+j8GdXtRFg7HoaplSp68vaehKHPySVHr8xCzaTFvIVtgz1C6kxppmbwfPe1Ut
-         /ddaadiizqBvOtxQGV9feE7DCfLj7p4ttH4igxpwELfrAwjtmcDSJIsVlXmGqgxBwmG9
-         1spw==
-X-Gm-Message-State: APjAAAU0u8bCJMVuDM1UZAd/XX8BU6q2tBVqpWDmZR4uxr3CKW8Txzdd
-        n7gsyc7KluMDrUKmHuAo/fD6jNP7S8o=
-X-Google-Smtp-Source: APXvYqwZGTZ91ANJOl2LHDtI9FWkubYYOQQnYfUMMCvb50Z0DB4yd63j1mXbqM5okBU99AVs/6B90Q==
-X-Received: by 2002:a1c:20d6:: with SMTP id g205mr14679045wmg.38.1578828612726;
-        Sun, 12 Jan 2020 03:30:12 -0800 (PST)
+        bh=KHwbLASHxjGE27Uiky3wxlrPdCw9dEtw2S64/E8yyuc=;
+        b=bilR11NGXX6gjmWd152fZaT0ZVMMV+U6KPLNExADwyKw7HNBBqSsa42c0622XncEmn
+         CMGYTgv898WDgmEkfuYiknoaRxxBNNuzgbpHeuyrVgb+/PT+JZSgA6gYgDIXyOhsk1V8
+         AGrISg5iRuZw1EWp/0IZJf7J+cCgZW7d0ixrfraJ/BQ1klnGSlSqg1x3cfmnJoJJ1arl
+         2YD+a8dl42xdj8X3bgOARbyX7Bc+axzpgIZdmExbKsYXPQp1gPuO3MOe0PJ2oVB0NYb0
+         cSuOLYrDnVo11jXG+3ghKVv8guQi5ZYWEdDbg4htUiEQAlUaZdqKumuNbfd4LtyPVvID
+         RV5g==
+X-Gm-Message-State: APjAAAUElP3OU4+Twq7XiGcuDmh4MN70sMo1qUzj+sIm/3mNG0s/yYiy
+        HF7DDm7DBOOP4U7Iwptu0ZqFis29tcA=
+X-Google-Smtp-Source: APXvYqysamBkNqIu5nyLG9FpW2nztuJSFajzk43xKKLVsG3seq7LABXj4KAhtOv45hCvJnDDUX/XnA==
+X-Received: by 2002:a7b:cc14:: with SMTP id f20mr14953970wmh.58.1578828614509;
+        Sun, 12 Jan 2020 03:30:14 -0800 (PST)
 Received: from localhost.localdomain (dh207-5-115.xnet.hr. [88.207.5.115])
-        by smtp.googlemail.com with ESMTPSA id y17sm9943045wma.36.2020.01.12.03.30.11
+        by smtp.googlemail.com with ESMTPSA id y17sm9943045wma.36.2020.01.12.03.30.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Jan 2020 03:30:12 -0800 (PST)
+        Sun, 12 Jan 2020 03:30:14 -0800 (PST)
 From:   Robert Marko <robert.marko@sartura.hr>
 To:     lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
         linux-kernel@vger.kernel.org, agross@kernel.org,
         linux-arm-msm@vger.kernel.org
 Cc:     Robert Marko <robert.marko@sartura.hr>
-Subject: [PATCH 2/3] dt-bindings: vqmmc-ipq4019-regulator: add binding document
-Date:   Sun, 12 Jan 2020 12:30:02 +0100
-Message-Id: <20200112113003.11110-2-robert.marko@sartura.hr>
+Subject: [PATCH 3/3] arm: dts: IPQ4019: add SDHCI VQMMC LDO node
+Date:   Sun, 12 Jan 2020 12:30:03 +0100
+Message-Id: <20200112113003.11110-3-robert.marko@sartura.hr>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <20200112113003.11110-1-robert.marko@sartura.hr>
 References: <20200112113003.11110-1-robert.marko@sartura.hr>
@@ -63,74 +63,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds bindings for the Qualcomm IPQ4019 VQMMC SD LDO driver.
+Since we now have driver for the SDHCI VQMMC LDO needed
+for I/0 voltage levels lets introduce the necessary node for it.
 
 Signed-off-by: Robert Marko <robert.marko@sartura.hr>
 ---
- .../regulator/vqmmc-ipq4019-regulator.yaml    | 54 +++++++++++++++++++
- 1 file changed, 54 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/regulator/vqmmc-ipq4019-regulator.yaml
+ arch/arm/boot/dts/qcom-ipq4019.dtsi | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/regulator/vqmmc-ipq4019-regulator.yaml b/Documentation/devicetree/bindings/regulator/vqmmc-ipq4019-regulator.yaml
-new file mode 100644
-index 000000000000..d4d9b618d351
---- /dev/null
-+++ b/Documentation/devicetree/bindings/regulator/vqmmc-ipq4019-regulator.yaml
-@@ -0,0 +1,54 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/regulator/vqmmc-ipq4019-regulator.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+index d2b53e190954..d95aee50454d 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+@@ -211,6 +211,28 @@
+ 			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
+ 
++		sdhci: sdhci@7824900 {
++			compatible = "qcom,sdhci-msm-v4";
++			reg = <0x7824900 0x11c>, <0x7824000 0x800>;
++			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hc_irq", "pwr_irq";
++			bus-width = <8>;
++			clocks = <&gcc GCC_SDCC1_APPS_CLK>, <&gcc GCC_SDCC1_AHB_CLK>,
++				 <&gcc GCC_DCD_XO_CLK>;
++			clock-names = "core", "iface", "xo";
++			status = "disabled";
++		};
 +
-+title: Qualcomm IPQ4019 VQMMC SD LDO regulator
++		vqmmc: regulator@1948000 {
++			compatible = "qcom,vqmmc-ipq4019-regulator";
++			reg = <0x01948000 0x4>;
++			regulator-name = "vqmmc";
++			regulator-min-microvolt = <1500000>;
++			regulator-max-microvolt = <3000000>;
++			regulator-always-on;
++			status = "disabled";
++		};
 +
-+maintainers:
-+  - Robert Marko <robert.marko@sartura.hr>
-+
-+properties:
-+  $nodename:
-+    pattern: "regulator(@.*)?$"
-+  compatible:
-+    const: qcom,vqmmc-ipq4019-regulator
-+
-+  regulator-name: true
-+
-+  reg:
-+    maxItems: 1
-+
-+  regulator-min-microvolt:
-+    description: smallest voltage consumers may set
-+
-+  regulator-max-microvolt:
-+    description: largest voltage consumers may set
-+
-+  regulator-always-on:
-+    description: boolean, regulator should never be disabled
-+    type: boolean
-+
-+  additionalProperties: false
-+
-+required:
-+  - compatible
-+  - reg
-+  - regulator-name
-+  - regulator-min-microvolt
-+  - regulator-max-microvolt
-+  - regulator-always-on
-+
-+examples:
-+  - |
-+    regulator@1948000 {
-+      compatible = "qcom,vqmmc-ipq4019-regulator";
-+      reg = <0x01948000 0x4>;
-+      regulator-name = "vqmmc";
-+      regulator-min-microvolt = <1500000>;
-+      regulator-max-microvolt = <3000000>;
-+      regulator-always-on;
-+      status = "disabled";
-+    };
-+...
+ 		blsp_dma: dma@7884000 {
+ 			compatible = "qcom,bam-v1.7.0";
+ 			reg = <0x07884000 0x23000>;
 -- 
 2.24.1
 
