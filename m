@@ -2,333 +2,334 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 75A3A139B4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 22:21:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B41EB139B63
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 22:27:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727053AbgAMVUy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jan 2020 16:20:54 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:39700 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726536AbgAMVUy (ORCPT
+        id S1728799AbgAMV1H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jan 2020 16:27:07 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:45034 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728512AbgAMV1H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jan 2020 16:20:54 -0500
-Received: by mail-ot1-f65.google.com with SMTP id 77so10403456oty.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2020 13:20:53 -0800 (PST)
+        Mon, 13 Jan 2020 16:27:07 -0500
+Received: by mail-qt1-f196.google.com with SMTP id t3so10465338qtr.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2020 13:27:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gcgIXagv9xlLeS1uftnUlf0r/3UfyI9j0EIrXBwdKws=;
+        b=sbEHlL88mPlpn6n70LlQP7W2VtELrkH7ImeUzIwEWDL9yn9gaaGkL8jfRbZR7vsPXC
+         cFpbJgpG7nikKxhg8c7d4FBy0CFRtdt3YoH5kCb383DLWhvan1zP66nrKjkuWirgsOdL
+         H8RjUQJC1eZkgQS7sRa4+r5m2Ru5bxNMR/LEzoaNuGtvwfUo8+tBB4+2P0CQH6Jqhobu
+         7beSPEV1VdCjWpx7xabXxdKPFGXh68Em/woWEjR3Z7QJ9oPx4VkDUNUBbw2657npgOW6
+         4olO0Nb2tGH0VVve8j9s8SYlU9q/zUDuhHhTw3JzQbENufo+DqOsCS0iAKW4uA3ELv82
+         psjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=UkcwH+aLJlMDz8EGk6FkQZlCk8V9rUaFgodvX0X0qKI=;
-        b=c7TNI43ceoq3BM81gkuQy2coPbIJNw55T4kXQUnDOOLWiDBC0mAUVb9/ZB4Igm0lSZ
-         9sEKB1HzfReFQsGOcWkZ5nIlUfOsNvQP3D/T+heM420Whi0g9y0h5mhbzOria6YMrjMG
-         jsBhrkOXrdCOlZGVATVpG3Oy6fjK0Bfro9E/9FqTrUDtcos2WDWGQM22XO+58Pr82twl
-         PDVX9EBdZvnymDlkg+Q6u1m7OQfNsiIOxnAweCKlov6dpMCN2gMS9kKCzXyj6KNmt+QI
-         RGKIBwXwLrlz6saw7zU/zdc+2CLt8ATa2IDZIZtSg7uvU2HZZ5IregK+6y1T9G0B1T+C
-         6wQw==
-X-Gm-Message-State: APjAAAUICDecBzH/X7pzXuFS5+BY3X8Fg6JgCPlhoNoElZhswtBTMnnz
-        TVtE+MEdriKcmytYV5xh9QsL2Po=
-X-Google-Smtp-Source: APXvYqw1lqjoqH1m/UfobMuHcdt7TONctM88ictYsDyWZqTVkWM0//gXre0E2eGLfECxc7WkvWU8GA==
-X-Received: by 2002:a9d:6758:: with SMTP id w24mr15551293otm.155.1578950452346;
-        Mon, 13 Jan 2020 13:20:52 -0800 (PST)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id 6sm3891355oil.43.2020.01.13.13.20.50
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jan 2020 13:20:51 -0800 (PST)
-Received: from rob (uid 1000)
-        (envelope-from rob@rob-hp-laptop)
-        id 221998
-        by rob-hp-laptop (DragonFly Mail Agent v0.11);
-        Mon, 13 Jan 2020 15:20:50 -0600
-Date:   Mon, 13 Jan 2020 15:20:50 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH v3 2/5] dt-bindings: phy: qcom,qusb2: Convert QUSB2 phy
- bindings to yaml
-Message-ID: <20200113212050.GA21793@bogus>
-References: <1578658699-30458-1-git-send-email-sanm@codeaurora.org>
- <1578658699-30458-3-git-send-email-sanm@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gcgIXagv9xlLeS1uftnUlf0r/3UfyI9j0EIrXBwdKws=;
+        b=pNjLcZBKz83cudcDLfbRuBnNfNw3a5LWdY+T8OqPZg46mdC30rQVRPDYW3Aj1cPolA
+         rPoTpGYlw8dQeDwQF7B3YUgsJsk7md6RX1g4gQWOKYJhnaEiv7sc2Rx0JIIb1eoVbQcS
+         WXbLo6PDty18MxcW5fcsEqH+quknUBydNZdMiVIQY7mSbVi4hMTQUv2l4KaeftMUaVW1
+         fff6VfDd5gpsTU91iIvfPh/tGmLMw1DpM5Ghu/t+3F386RpMip12PlE5Gp3A200m9O1Q
+         BZoKB+BhoU98GdK1jte3DwhVTF6HnngjLfspGrEnPQjP7EX6VL04Ly55rL0pHaArbkcc
+         Akjg==
+X-Gm-Message-State: APjAAAUhv05C2IYkFPfnVTZWiFo/tBWhqCZJf4gm7VHESChAB0UMrlsi
+        xd2EPQTHYzsn91KWL/Ep09CcRdV2UtJHp96favyaaQ==
+X-Google-Smtp-Source: APXvYqyM/xikDuCaNzYus/59D6sHaBSDSDCnTVnEruA+p256OWEmOn9Mf67OV2i5zDtjEOlM0GwhnK9DfXdMigBIP8M=
+X-Received: by 2002:ac8:7b9b:: with SMTP id p27mr652514qtu.2.1578950826327;
+ Mon, 13 Jan 2020 13:27:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1578658699-30458-3-git-send-email-sanm@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20191230164441.28375-1-mike.leach@linaro.org> <5948ee00-c3e8-749d-2354-5089b0103cee@infradead.org>
+In-Reply-To: <5948ee00-c3e8-749d-2354-5089b0103cee@infradead.org>
+From:   Mike Leach <mike.leach@linaro.org>
+Date:   Mon, 13 Jan 2020 21:26:55 +0000
+Message-ID: <CAJ9a7VjdnWw1KOiRHLpSRu8kLHfpBEeqh7bQvednE0hDjngYYA@mail.gmail.com>
+Subject: Re: [PATCH v7 13/15] docs: coresight: Update documentation for
+ CoreSight to cover CTI.
+To:     Randy Dunlap <rdunlap@infradead.org>
+Cc:     linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        devicetree@vger.kernel.org,
+        Coresight ML <coresight@lists.linaro.org>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        "Suzuki K. Poulose" <suzuki.poulose@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Maxime Ripard <maxime@cerno.tech>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andy Gross <agross@kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 10, 2020 at 05:48:16PM +0530, Sandeep Maheswaram wrote:
-> Convert QUSB2 phy  bindings to DT schema format using json-schema.
-> 
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> ---
->  .../devicetree/bindings/phy/qcom,qusb2-phy.yaml    | 152 +++++++++++++++++++++
->  .../devicetree/bindings/phy/qcom-qusb2-phy.txt     |  68 ---------
->  2 files changed, 152 insertions(+), 68 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
->  delete mode 100644 Documentation/devicetree/bindings/phy/qcom-qusb2-phy.txt
+Thanks - these will be fixed in v8
 
-Fails 'make dt_binding_check':
+Mike
 
-builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.example.dt.yaml: 
-phy@88e2000: 'vdda-pll-supply' is a required property
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.example.dt.yaml: 
-phy@88e2000: 'vdda-phy-dpdm-supply' is a required property
+On Mon, 30 Dec 2019 at 22:31, Randy Dunlap <rdunlap@infradead.org> wrote:
+>
+> Hi Mike,
+>
+> Just a couple of small nits below.
+>
+>
+> On 12/30/19 8:44 AM, Mike Leach wrote:
+> > Add new document covering CTI / CTM usage in CoreSight.
+> >
+> > Add section in coresight.rst introducing CTI and CTM modules with link
+> > to new document.
+> >
+> > Signed-off-by: Mike Leach <mike.leach@linaro.org>
+> > Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+> > Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> > ---
+> >  .../trace/coresight/coresight-ect.rst         | 211 ++++++++++++++++++
+> >  Documentation/trace/coresight/coresight.rst   |  13 ++
+> >  2 files changed, 224 insertions(+)
+> >  create mode 100644 Documentation/trace/coresight/coresight-ect.rst
+> >
+> > diff --git a/Documentation/trace/coresight/coresight-ect.rst b/Documentation/trace/coresight/coresight-ect.rst
+> > new file mode 100644
+> > index 000000000000..3e06588f24fa
+> > --- /dev/null
+> > +++ b/Documentation/trace/coresight/coresight-ect.rst
+> > @@ -0,0 +1,211 @@
+> > +=============================================
+> > +CoreSight Embedded Cross Trigger (CTI & CTM).
+> > +=============================================
+> > +
+> > +    :Author:   Mike Leach <mike.leach@linaro.org>
+> > +    :Date:     November 2019
+> > +
+> > +Hardware Description
+> > +--------------------
+> > +
+> > +The CoreSight Cross Trigger Interface (CTI) is a hardware device that takes
+> > +individual input and output hardware signals known as triggers to and from
+> > +devices and interconnects them via the Cross Trigger Matrix (CTM) to other
+> > +devices via numbered channels, in order to propagate events between devices.
+> > +
+> > +e.g.::
+> > +
+> > + 0000000  in_trigs  :::::::
+> > + 0 C   0----------->:     :             +======>(other CTI channel IO)
+> > + 0  P  0<-----------:     :             v
+> > + 0   U 0  out_trigs :     : Channels  *****      :::::::
+> > + 0000000            : CTI :<=========>*CTM*<====>: CTI :---+
+> > + #######  in_trigs  :     : (id 0-3)  *****      :::::::   v
+> > + # ETM #----------->:     :                         ^   #######
+> > + #     #<-----------:     :                         +---# ETR #
+> > + ####### out_trigs  :::::::                             #######
+> > +
+> > +The CTI driver enables the programming of the CTI to attach triggers to
+> > +channels. When an input trigger becomes active, the attached channel will
+> > +become active. Any output trigger attached to that channel will also
+> > +become active. The active channel is propagated to other CTIs via the CTM,
+> > +activating connected output triggers there, unless filtered by the CTI
+> > +channel gate.
+> > +
+> > +It is also possible to activate a channel using system software directly
+> > +programming registers in the CTI.
+> > +
+> > +The CTIs are registered by the system to be associated with CPUs and/or other
+> > +CoreSight devices on the trace data path. When these devices are enabled the
+> > +attached CTIs will also be enabled. By default/on power up the CTIs have
+> > +no programmed trigger/channel attachments, so will not affect the system
+> > +until explicitly programmed.
+> > +
+> > +The hardware trigger connections between CTIs and devices is implementation
+> > +defined, unless the CPU/ETM combination is a v8 architecture, in which case
+> > +the connections have an architecturally defined standard layout.
+> > +
+> > +The hardware trigger signals can also be connected to non-CoreSight devices
+> > +(e.g. UART), or be propagated off chip as hardware IO lines.
+> > +
+> > +All the CTI devices are associated with a CTM. On many systems there will be a
+> > +single effective CTM (one CTM, or multiple CTMs all interconnected), but it is
+> > +possible that systems can have nets of CTIs+CTM that are not interconnected by
+> > +a CTM to each other. On these systems a CTM index is declared to associate
+> > +CTI devices that are interconnected via a given CTM.
+> > +
+> > +Sysfs files and directories
+> > +---------------------------
+> > +
+> > +The CTI devices appear on the existing CoreSight bus alongside the other
+> > +CoreSight devices::
+> > +
+> > +    >$ ls /sys/bus/coresight/devices
+> > +     cti_cpu0  cti_cpu2  cti_sys0  etm0  etm2  funnel0  replicator0  tmc_etr0
+> > +     cti_cpu1  cti_cpu3  cti_sys1  etm1  etm3  funnel1  tmc_etf0     tpiu0
+> > +
+> > +The ``cti_cpu<N>`` named CTIs are associated with a CPU, and any ETM used by
+> > +that core. the ``cti_sys<N>`` CTIs are general system infrastructure CTIs that
+>
+>               The
+>
+> > +can be associated with other CoreSight devices, or other system hardware
+> > +capable of generating or using trigger signals.::
+> > +
+> > +  >$ ls /sys/bus/coresight/devices/etm0/cti_cpu0
+> > +  channels  ctmid  enable  nr_trigger_cons mgmt  power  regs  subsystem
+> > +  triggers0 triggers1  uevent
+> > +
+> > +*Key file items are:-*
+> > +   * ``enable``: enables/disables the CTI.
+> > +   * ``ctmid`` : associated CTM - only relevant if system has multiple CTI+CTM
+> > +     clusters that are not interconnected.
+> > +   * ``nr_trigger_cons`` : total connections - triggers<N> directories.
+> > +
+> > +*Sub-directories:-*
+> > +   * ``triggers<N>``: contains list of triggers for an individual connection.
+> > +   * ``channels``: Contains the channel API - CTI main programming interface.
+> > +   * ``regs``: Gives access to the raw programmable CTI regs.
+> > +   * ``mgmt``: the standard CoreSight management registers.
+> > +
+> > +
+> > +triggers<N> directories
+> > +~~~~~~~~~~~~~~~~~~~~~~~
+> > +
+> > +Individual trigger connection information. This describes trigger signals for
+> > +CoreSight and non-CoreSight connections.
+> > +
+> > +Each triggers directory has a set of parameters describing the triggers for
+> > +the connection.
+> > +
+> > +   * ``name`` : name of connection
+> > +   * ``in_signals`` : input trigger signal indexes used in this connection.
+> > +   * ``in_types`` : functional types for in signals.
+> > +   * ``out_signals`` : output trigger signals for this connection.
+> > +   * ``out_types`` : functional types for out signals.
+> > +
+> > +e.g::
+> > +
+> > +    >$ ls ./cti_cpu0/triggers0/
+> > +    in_signals  in_types  name  out_signals  out_types
+> > +    >$ cat ./cti_cpu0/triggers0/name
+> > +    cpu0
+> > +    >$ cat ./cti_cpu0/triggers0/out_signals
+> > +    0-2
+> > +    >$ cat ./cti_cpu0/triggers0/out_types
+> > +    pe_edbgreq pe_dbgrestart pe_ctiirq
+> > +    >$ cat ./cti_cpu0/triggers0/in_signals
+> > +    0-1
+> > +    >$ cat ./cti_cpu0/triggers0/in_types
+> > +    pe_dbgtrigger pe_pmuirq
+> > +
+> > +If a connection has zero signals in either the 'in' or 'out' triggers then
+> > +those parameters will be omitted.
+> > +
+> > +Channels API Directory
+> > +~~~~~~~~~~~~~~~~~~~~~~
+> > +
+> > +This provides an easy way to attach triggers to channels, without needing
+> > +the multiple register operations that are required if manipulating the
+> > +'regs' sub-dir elements directly.
+>
+> spell out: sub-directory
+>
+> > +
+> > +A number of files provide this API::
+> > +
+> > +   >$ ls ./cti_sys0/channels/
+> > +   chan_clear         chan_inuse         chan_xtrigs_view      trigin_detach
+> > +   chan_free          chan_pulse         chan_xtrigs_view_sel  trigout_attach
+> > +   chan_gate_disable  chan_set           trig_filter_enable    trigout_detach
+> > +   chan_gate_enable   chan_xtrigs_reset  trigin_attach         trigout_filtered
+> > +
+> > +Most access to these elements take the form::
+> > +
+> > +  echo <chan> [<trigger>] > /<device_path>/<operation>
+> > +
+> > +where the optional <trigger> is only needed for trigXX_attach | detach
+> > +operations.
+> > +
+> > +e.g.::
+> > +
+> > +   >$ echo 0 1 > ./cti_sys0/channels/trigout_attach
+> > +   >$ echo 0 > ./cti_sys0/channels/chan_set
+> > +
+> > +Attaches trigout(1) to channel(0), then activates channel(0) generating a
+> > +set state on cti_sys0.trigout(1)
+> > +
+> > +
+> > +*API operations*
+> > +
+> > +   * ``trigin_attach, trigout_attach``: Attach a channel to a trigger signal.
+> > +   * ``trigin_detach, trigout_detach``: Detach a channel from a trigger signal.
+> > +   * ``chan_set``: Set the channel - the set state will be propagated around
+> > +     the CTM to other connected devices.
+> > +   * ``chan_clear``: Clear the channel.
+> > +   * ``chan_pulse``: Set the channel for a single CoreSight clock cycle.
+> > +   * ``chan_gate_enable``: Write operation sets the CTI gate to propagate
+> > +     (enable) the channel to other devices. This operation takes a channel
+> > +     number. CTI gate is enabled for all channels by default at power up. Read
+> > +     to list the currently enabled channels on the gate.
+> > +   * ``chan_gate_disable``: Write channel number to disable gate for that
+> > +     channel.
+> > +   * ``chan_inuse``: Show the current channels attached to any signal
+> > +   * ``chan_free``: Show channels with no attached signals.
+> > +   * ``chan_xtrig_view``: write a channel number to select a channel to view,
+> > +     read to show the cross triggers programmed for the selected channel.
+> > +   * ``trig_filter_enable``: Defaults to enabled, disable to allow potentially
+> > +     dangerous output signals to be set.
+> > +   * ``trigout_filtered``: Trigger out signals that are prevented from being
+> > +     set if filtering ``trig_filter_enable`` is enabled. One use is to prevent
+> > +     accidental ``EDBGREQ`` signals stopping a core.
+> > +   * ``chan_xtrigs_reset``: Write 1 to clear all channel / trigger programming.
+> > +     Resets device hardware to default state.
+> > +
+> > +
+> > +The example below attaches input trigger index 1 to channel 2, and output
+> > +trigger index 6 to the same channel. It then examines the state of the
+> > +channel / trigger connections using the appropriate sysfs attributes.
+> > +
+> > +The settings mean that if either input trigger 1, or channel 2 go active then
+> > +trigger out 6 will go active. We then enable the CTI, and use the software
+> > +channel control to activate channel 2. We see the active channel on the
+> > +``choutstatus`` register and the active signal on the ``trigoutstatus``
+> > +register. Finally clearing the channel removes this.
+> > +
+> > +e.g.::
+> > +
+> > +   .../cti_sys0/channels# echo 2 1 > trigin_attach
+> > +   .../cti_sys0/channels# echo 2 6 > trigout_attach
+> > +   .../cti_sys0/channels# cat chan_free
+> > +   0-1,3
+> > +   .../cti_sys0/channels# cat chan_inuse
+> > +   2
+> > +   .../cti_sys0/channels# echo 2 > chan_xtrigs_view
+> > +   .../cti_sys0/channels# cat chan_xtrigs_view
+> > +   [2] IN: 1 OUT: 6
+> > +   .../cti_sys0/# echo 1 > enable
+> > +   .../cti_sys0/channels# echo 2 > chan_set
+> > +   .../cti_sys0/channels# cat ../regs/choutstatus
+> > +   0x4
+> > +   .../cti_sys0/channels# cat ../regs/trigoutstatus
+> > +   0x40
+> > +   .../cti_sys0/channels# echo 2 > chan_clear
+> > +   .../cti_sys0/channels# cat ../regs/trigoutstatus
+> > +   0x0
+> > +   .../cti_sys0/channels# cat ../regs/choutstatus
+> > +   0x0
+>
+>
+> Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+>
+> thanks.
+> --
+> ~Randy
+>
 
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-> new file mode 100644
-> index 0000000..83cd01d
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-> @@ -0,0 +1,152 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/phy/qcom,qusb2-phy.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +
-> +title: Qualcomm QUSB2 phy controller
-> +
-> +maintainers:
-> +  - Manu Gautam <mgautam@codeaurora.org>
-> +
-> +description:
-> +  QUSB2 controller supports LS/FS/HS usb connectivity on Qualcomm chipsets.
-> +
-> +properties:
-> +  compatible:
-> +    anyOf:
 
-anyOf is usually wrong. Use 'oneOf'.
-
-> +      - items:
-> +        - const: qcom,msm8996-qusb2-phy
-> +      - items:
-> +        - const: qcom,msm8998-qusb2-phy
-> +      - items:
-> +        - const: qcom,sc7180-qusb2-phy
-> +      - items:
-> +        - const: qcom,sdm845-qusb2-phy
-
-These 4 can be a single enum. However, you should drop sc7180 and 
-sdm845. Those should match below. (Or drop the below. Just pick which 
-way and fixup any dts files that don't conform.)
-
-> +      - items:
-> +        - enum:
-> +          - qcom,sc7180-qusb2-phy
-> +          - qcom,sdm845-qusb2-phy
-> +        - const: qcom,qusb2-v2-phy
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  "#phy-cells":
-> +    const: 0
-> +
-> +  clocks:
-> +    minItems: 2
-> +    items:
-> +      - description: phy config clock
-> +      - description: 19.2 MHz ref clk
-> +      - description: phy interface clock (Optional)
-> +
-> +  clock-names:
-> +    minItems: 2
-> +    items:
-> +      - const: cfg_ahb
-> +      - const: ref
-> +      - const: iface
-> +
-> +  vdda-pll-supply:
-> +     description:
-> +       Phandle to 1.8V regulator supply to PHY refclk pll block.
-> +
-> +  vdda-phy-dpdm-supply:
-> +     description:
-> +       Phandle to 3.1V regulator supply to Dp/Dm port signals.
-> +
-> +  resets:
-> +    maxItems: 1
-> +
-> +  nvmem-cells:
-> +    maxItems: 1
-> +    description:
-> +        Phandle to nvmem cell that contains 'HS Tx trim'
-> +        tuning parameter value for qusb2 phy.
-> +
-> +  qcom,tcsr-syscon:
-> +    description:
-> +        Phandle to TCSR syscon register region.
-> +    $ref: /schemas/types.yaml#/definitions/cell
-
-s/cell/phandle/
-
-> +
-> +  qcom,imp-res-offset-value:
-> +    description:
-> +        It is a 6 bit value that specifies offset to be
-> +        added to PHY refgen RESCODE via IMP_CTRL1 register. It is a PHY
-> +        tuning parameter that may vary for different boards of same SOC.
-> +        This property is applicable to only QUSB2 v2 PHY.
-> +    allOf:
-> +      - $ref: /schemas/types.yaml#/definitions/uint32
-> +      - minimum: 0
-> +        maximum: 63
-> +        default: 0
-> +
-> +  qcom,hstx-trim-value:
-> +    description:
-> +        It is a 4 bit value that specifies tuning for HSTX
-> +        output current.
-> +        Possible range is - 15mA to 24mA (stepsize of 600 uA).
-> +        See dt-bindings/phy/phy-qcom-qusb2.h for applicable values.
-> +        This property is applicable to only QUSB2 v2 PHY.
-> +    allOf:
-> +      - $ref: /schemas/types.yaml#/definitions/uint32
-> +      - minimum: 0
-> +        maximum: 15
-> +        default: 3
-> +
-> +  qcom,preemphasis-level:
-> +    description:
-> +        It is a 2 bit value that specifies pre-emphasis level.
-> +        Possible range is 0 to 15% (stepsize of 5%).
-> +        See dt-bindings/phy/phy-qcom-qusb2.h for applicable values.
-> +        This property is applicable to only QUSB2 v2 PHY.
-> +    allOf:
-> +      - $ref: /schemas/types.yaml#/definitions/uint32
-> +      - minimum: 0
-> +        maximum: 3
-> +        default: 2
-> +
-> +  qcom,preemphasis-width:
-> +    description:
-> +        It is a 1 bit value that specifies how long the HSTX
-> +        pre-emphasis (specified using qcom,preemphasis-level) must be in
-> +        effect. Duration could be half-bit of full-bit.
-> +        See dt-bindings/phy/phy-qcom-qusb2.h for applicable values.
-> +        This property is applicable to only QUSB2 v2 PHY.
-> +    allOf:
-> +      - $ref: /schemas/types.yaml#/definitions/uint32
-> +      - minimum: 0
-> +        maximum: 1
-> +        default: 0
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - "#phy-cells"
-> +  - clocks
-> +  - clock-names
-> +  - vdda-pll-supply
-> +  - vdda-phy-dpdm-supply
-> +  - resets
-> +
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
-> +    #include <dt-bindings/clock/qcom,rpmh.h>
-> +    usb_1_hsphy: phy@88e2000 {
-> +        compatible = "qcom,sdm845-qusb2-phy";
-> +        reg = <0 0x088e2000 0 0x400>;
-> +        #phy-cells = <0>;
-> +
-> +        clocks = <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-> +                 <&rpmhcc RPMH_CXO_CLK>;
-> +        clock-names = "cfg_ahb", "ref";
-> +
-> +        resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
-> +
-> +        nvmem-cells = <&qusb2p_hstx_trim>;
-> +    };
-> diff --git a/Documentation/devicetree/bindings/phy/qcom-qusb2-phy.txt b/Documentation/devicetree/bindings/phy/qcom-qusb2-phy.txt
-> deleted file mode 100644
-> index fe29f9e..0000000
-> --- a/Documentation/devicetree/bindings/phy/qcom-qusb2-phy.txt
-> +++ /dev/null
-> @@ -1,68 +0,0 @@
-> -Qualcomm QUSB2 phy controller
-> -=============================
-> -
-> -QUSB2 controller supports LS/FS/HS usb connectivity on Qualcomm chipsets.
-> -
-> -Required properties:
-> - - compatible: compatible list, contains
-> -	       "qcom,msm8996-qusb2-phy" for 14nm PHY on msm8996,
-> -	       "qcom,msm8998-qusb2-phy" for 10nm PHY on msm8998,
-> -	       "qcom,sdm845-qusb2-phy" for 10nm PHY on sdm845.
-> -
-> - - reg: offset and length of the PHY register set.
-> - - #phy-cells: must be 0.
-> -
-> - - clocks: a list of phandles and clock-specifier pairs,
-> -	   one for each entry in clock-names.
-> - - clock-names: must be "cfg_ahb" for phy config clock,
-> -			"ref" for 19.2 MHz ref clk,
-> -			"iface" for phy interface clock (Optional).
-> -
-> - - vdda-pll-supply: Phandle to 1.8V regulator supply to PHY refclk pll block.
-> - - vdda-phy-dpdm-supply: Phandle to 3.1V regulator supply to Dp/Dm port signals.
-> -
-> - - resets: Phandle to reset to phy block.
-> -
-> -Optional properties:
-> - - nvmem-cells: Phandle to nvmem cell that contains 'HS Tx trim'
-> -		tuning parameter value for qusb2 phy.
-> -
-> - - qcom,tcsr-syscon: Phandle to TCSR syscon register region.
-> - - qcom,imp-res-offset-value: It is a 6 bit value that specifies offset to be
-> -		added to PHY refgen RESCODE via IMP_CTRL1 register. It is a PHY
-> -		tuning parameter that may vary for different boards of same SOC.
-> -		This property is applicable to only QUSB2 v2 PHY (sdm845).
-> - - qcom,hstx-trim-value: It is a 4 bit value that specifies tuning for HSTX
-> -		output current.
-> -		Possible range is - 15mA to 24mA (stepsize of 600 uA).
-> -		See dt-bindings/phy/phy-qcom-qusb2.h for applicable values.
-> -		This property is applicable to only QUSB2 v2 PHY (sdm845).
-> -		Default value is 22.2mA for sdm845.
-> - - qcom,preemphasis-level: It is a 2 bit value that specifies pre-emphasis level.
-> -		Possible range is 0 to 15% (stepsize of 5%).
-> -		See dt-bindings/phy/phy-qcom-qusb2.h for applicable values.
-> -		This property is applicable to only QUSB2 v2 PHY (sdm845).
-> -		Default value is 10% for sdm845.
-> -- qcom,preemphasis-width: It is a 1 bit value that specifies how long the HSTX
-> -		pre-emphasis (specified using qcom,preemphasis-level) must be in
-> -		effect. Duration could be half-bit of full-bit.
-> -		See dt-bindings/phy/phy-qcom-qusb2.h for applicable values.
-> -		This property is applicable to only QUSB2 v2 PHY (sdm845).
-> -		Default value is full-bit width for sdm845.
-> -
-> -Example:
-> -	hsusb_phy: phy@7411000 {
-> -		compatible = "qcom,msm8996-qusb2-phy";
-> -		reg = <0x7411000 0x180>;
-> -		#phy-cells = <0>;
-> -
-> -		clocks = <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-> -			<&gcc GCC_RX1_USB2_CLKREF_CLK>,
-> -		clock-names = "cfg_ahb", "ref";
-> -
-> -		vdda-pll-supply = <&pm8994_l12>;
-> -		vdda-phy-dpdm-supply = <&pm8994_l24>;
-> -
-> -		resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
-> -		nvmem-cells = <&qusb2p_hstx_trim>;
-> -        };
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+-- 
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
