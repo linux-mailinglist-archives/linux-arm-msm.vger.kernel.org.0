@@ -2,133 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 80D58139799
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 18:25:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A6AB1397A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 18:28:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728733AbgAMRY6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jan 2020 12:24:58 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:46755 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728646AbgAMRY5 (ORCPT
+        id S1728512AbgAMR2g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jan 2020 12:28:36 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:54670 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727331AbgAMR2g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jan 2020 12:24:57 -0500
-Received: by mail-pf1-f194.google.com with SMTP id n9so5160544pff.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2020 09:24:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=U2PWwEEnO5+ksSRfTkvVAkgMJvekPPQPvk+J1MXkAKA=;
-        b=fIDSBdAgWDIiMm+DJrGSk8SNVlkqqoJ/XOYER2KVMmFc85XBWE4fErM4MFi85PEx2h
-         2Igm5N9Sw8crh8PmobTPG1r0fpWIz9heb2tmNk/Svm2Hxp7Nb47ZngRKZ0JeD+DCJpYe
-         WIFC61PxN+EIo3zyUbdFykkit80459ecCP/nPUpBTdSqPxMwyduO8/ncgNndqrYsbPC1
-         NoLgWSqo7mDBTDKENNorvGv4h6vVDgJzKAoIMXvIQgn83zmsnj5pMW78uCuKA/TW3tI6
-         vhcDzEa+PHR4GKZ+CfD6TDAsfauhcAox/mVJ9fH0mfHAYHRllagoSZJb+h8uqcj5WtVS
-         7f6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=U2PWwEEnO5+ksSRfTkvVAkgMJvekPPQPvk+J1MXkAKA=;
-        b=gL/sHTB8mWB16wNFN0asIX6pc9cZEpThPYQC81N3o+Ql+BgZ1tzyebEArwzkSIw7Bh
-         aeQRZdD4KY0GXAZRHmVaU0+YzRavHj7XTNCNFOIXAc80VTIW/Yc1gVoq7x5wAV7sn6vG
-         WUlVLCxGBZQi+oktJfjpraN8mFWKtgevKE6ONZpi3cp5Li47SqzHXtYWl6OsOcvLTqoT
-         W2/RVA2l+JgErR6IWehPhk4umZCXTLvcunSWJlllrCVfgqze+YpqCYnSbzy9g98Yh2fN
-         AeoDMbvGMqIm7oAL28NpyA1aaaIf7aaprtbiaCYOBnGJO0/1nj5P1LQUpm4Am0SlQZn2
-         CnzQ==
-X-Gm-Message-State: APjAAAVfqkudkRh1AqYO3LOD9NRek5flMcFfNqO4UX1RRvAseu3gRbUn
-        pC3oy7NUtLCSKF57Qf0RWp9mHFs+JTc=
-X-Google-Smtp-Source: APXvYqw80f6wRiRP9Dwvx/NTeGY9Bf9oleVCbpo6cpd3kqWBdbqpjm+tTzcPB06sPHd1+r+7vplIzg==
-X-Received: by 2002:aa7:8b17:: with SMTP id f23mr20824919pfd.197.1578936297041;
-        Mon, 13 Jan 2020 09:24:57 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id d26sm13917312pgv.66.2020.01.13.09.24.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jan 2020 09:24:56 -0800 (PST)
-Date:   Mon, 13 Jan 2020 09:24:53 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Arnaud Pouliquen <arnaud.pouliquen@st.com>
-Cc:     Ohad Ben-Cohen <ohad@wizery.com>, linux-kernel@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Suman Anna <s-anna@ti.com>,
-        Fabien DESSENNE <fabien.dessenne@st.com>,
-        linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH v2] rpmsg: core: add API to get MTU
-Message-ID: <20200113172453.GQ738324@yoga>
-References: <20191113172249.32412-1-arnaud.pouliquen@st.com>
+        Mon, 13 Jan 2020 12:28:36 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1578936515; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=ZkDkwamCH7sXxqcGCpxSETq5EQUN29cHRpXs6HQiclE=; b=Ibn3osoV3iQO9FkLETT+lDsuQR6EvtiCUOKS4z1s4sDkpYIoXJfl1PwRKCeeEuHNVDgez79P
+ /TtBCxzXBdbWKZDyzDiLSNIljcqpXGMOxEJtb803Nq4lMYSMffGcUiQJF/lGpQz28Maii82T
+ d7cBBA/JsZW9PqawQlD56SmjpHA=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e1ca8c2.7f25f9061dc0-smtp-out-n01;
+ Mon, 13 Jan 2020 17:28:34 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CB11CC447A6; Mon, 13 Jan 2020 17:28:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AAEE1C43383;
+        Mon, 13 Jan 2020 17:28:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AAEE1C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Mon, 13 Jan 2020 10:28:24 -0700
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Brian Masney <masneyb@onstation.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 1/4] drm/msm: support firmware-name for zap fw (v2)
+Message-ID: <20200113172824.GA26711@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@chromium.org>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        Brian Masney <masneyb@onstation.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20200112195405.1132288-1-robdclark@gmail.com>
+ <20200112195405.1132288-2-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191113172249.32412-1-arnaud.pouliquen@st.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <20200112195405.1132288-2-robdclark@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 13 Nov 09:22 PST 2019, Arnaud Pouliquen wrote:
-
-> Return the rpmsg buffer MTU for sending message, so rpmsg users
-> can split a long message in several sub rpmsg buffers.
+On Sun, Jan 12, 2020 at 11:53:57AM -0800, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
+> Since zap firmware can be device specific, allow for a firmware-name
+> property in the zap node to specify which firmware to load, similarly to
+> the scheme used for dsp/wifi/etc.
+> 
+> v2: only need a single error msg when we can't load from firmware-name
+>     specified path, and fix comment [Bjorn A.]
 
-I won't merge this new api without a client, and I'm still concerned
-about the details.
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 
-> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@st.com>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
->  V1 to V2
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 30 ++++++++++++++++++++++---
+>  1 file changed, 27 insertions(+), 3 deletions(-)
 > 
->   V1 patch:https://lore.kernel.org/patchwork/patch/1124684/
->   - Change patch title,
->   - as not solution today to support MTU on GLINK make ops optional,
->     RPMsg client API returns -ENOTSUPP in this case,
->   - suppress smd and glink patches.
-
-That's ok.
-
-> ---
->  drivers/rpmsg/rpmsg_core.c       | 21 +++++++++++++++++++++
->  drivers/rpmsg/rpmsg_internal.h   |  2 ++
->  drivers/rpmsg/virtio_rpmsg_bus.c | 10 ++++++++++
->  include/linux/rpmsg.h            | 10 ++++++++++
->  4 files changed, 43 insertions(+)
-> 
-> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
-> index e330ec4dfc33..a6ef54c4779a 100644
-> --- a/drivers/rpmsg/rpmsg_core.c
-> +++ b/drivers/rpmsg/rpmsg_core.c
-> @@ -283,6 +283,27 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->  }
->  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index 112e8b8a261e..456bb5af1717 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -26,6 +26,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+>  {
+>  	struct device *dev = &gpu->pdev->dev;
+>  	const struct firmware *fw;
+> +	const char *signed_fwname = NULL;
+>  	struct device_node *np, *mem_np;
+>  	struct resource r;
+>  	phys_addr_t mem_phys;
+> @@ -58,8 +59,31 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
 >  
-> +/**
-> + * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
-> + * @ept: the rpmsg endpoint
-> + *
-> + * This function returns maximum buffer size available for a single message.
-> + *
-> + * Return: the maximum transmission size on success and an appropriate error
-> + * value on failure.
-
-Is the expectation that a call to rpmsg_send() with this size will
-eventually succeed?
-
-> + */
-[..]
-> +static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept)
-> +{
-> +	struct rpmsg_device *rpdev = ept->rpdev;
-> +	struct virtio_rpmsg_channel *vch = to_virtio_rpmsg_channel(rpdev);
+>  	mem_phys = r.start;
+>  
+> -	/* Request the MDT file for the firmware */
+> -	fw = adreno_request_fw(to_adreno_gpu(gpu), fwname);
+> +	/*
+> +	 * Check for a firmware-name property.  This is the new scheme
+> +	 * to handle firmware that may be signed with device specific
+> +	 * keys, allowing us to have a different zap fw path for different
+> +	 * devices.
+> +	 *
+> +	 * If the firmware-name property is found, we bypass the
+> +	 * adreno_request_fw() mechanism, because we don't need to handle
+> +	 * the /lib/firmware/qcom/* vs /lib/firmware/* case.
+> +	 *
+> +	 * If the firmware-name property is not found, for backwards
+> +	 * compatibility we fall back to the fwname from the gpulist
+> +	 * table.
+> +	 */
+> +	of_property_read_string_index(np, "firmware-name", 0, &signed_fwname);
+> +	if (signed_fwname) {
+> +		fwname = signed_fwname;
+> +		ret = request_firmware_direct(&fw, fwname, gpu->dev->dev);
+> +		if (ret)
+> +			fw = ERR_PTR(ret);
+> +	} else {
+> +		/* Request the MDT file from the default location: */
+> +		fw = adreno_request_fw(to_adreno_gpu(gpu), fwname);
+> +	}
 > +
-> +	return vch->vrp->buf_size - sizeof(struct rpmsg_hdr);
+>  	if (IS_ERR(fw)) {
+>  		DRM_DEV_ERROR(dev, "Unable to load %s\n", fwname);
+>  		return PTR_ERR(fw);
+> @@ -95,7 +119,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+>  	 * not.  But since we've already gotten through adreno_request_fw()
+>  	 * we know which of the two cases it is:
+>  	 */
+> -	if (to_adreno_gpu(gpu)->fwloc == FW_LOCATION_LEGACY) {
+> +	if (signed_fwname || (to_adreno_gpu(gpu)->fwloc == FW_LOCATION_LEGACY)) {
+>  		ret = qcom_mdt_load(dev, fw, fwname, pasid,
+>  				mem_region, mem_phys, mem_size, NULL);
+>  	} else {
+> -- 
+> 2.24.1
+> 
 
-I'm still under the impression that the rpmsg protocol doesn't have to
-operate on fixed size messages. Would this then return vrp->num_bufs *
-vrp->buf_size / 2 - sizeof(rpmsg_hdr)?
-
-> +}
-> +
-
-Regards,
-Bjorn
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
