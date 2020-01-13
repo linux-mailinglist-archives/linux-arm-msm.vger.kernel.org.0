@@ -2,231 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A90EA13961B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 17:25:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80D58139799
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 18:25:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728957AbgAMQZd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jan 2020 11:25:33 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:32900 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728951AbgAMQZd (ORCPT
+        id S1728733AbgAMRY6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jan 2020 12:24:58 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:46755 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728646AbgAMRY5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jan 2020 11:25:33 -0500
-Received: by mail-io1-f67.google.com with SMTP id z8so10444911ioh.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2020 08:25:33 -0800 (PST)
+        Mon, 13 Jan 2020 12:24:57 -0500
+Received: by mail-pf1-f194.google.com with SMTP id n9so5160544pff.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2020 09:24:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3UKPRjuLVC7RO4AknJBGHEyZav1jTqAsHZbWbB3QaM8=;
-        b=Mv+nXZxf2F7xE+wuPTov+5KoY4ixZ6no2YUOcBoz/RDoP7uuU4g041P+xKxpcK2T2b
-         mqWwneKicqkxX2VDYaNE1lawqVrL8YFzifprEFFHEhlJnUWQI+5VPqx+BFPRF/IALbS7
-         AmcNEYJwh05KKFtlPP8r1AHvUcD7O0fld9+4k=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=U2PWwEEnO5+ksSRfTkvVAkgMJvekPPQPvk+J1MXkAKA=;
+        b=fIDSBdAgWDIiMm+DJrGSk8SNVlkqqoJ/XOYER2KVMmFc85XBWE4fErM4MFi85PEx2h
+         2Igm5N9Sw8crh8PmobTPG1r0fpWIz9heb2tmNk/Svm2Hxp7Nb47ZngRKZ0JeD+DCJpYe
+         WIFC61PxN+EIo3zyUbdFykkit80459ecCP/nPUpBTdSqPxMwyduO8/ncgNndqrYsbPC1
+         NoLgWSqo7mDBTDKENNorvGv4h6vVDgJzKAoIMXvIQgn83zmsnj5pMW78uCuKA/TW3tI6
+         vhcDzEa+PHR4GKZ+CfD6TDAsfauhcAox/mVJ9fH0mfHAYHRllagoSZJb+h8uqcj5WtVS
+         7f6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3UKPRjuLVC7RO4AknJBGHEyZav1jTqAsHZbWbB3QaM8=;
-        b=gKqLgpGw/k7eO1kySpfQjODz8+N1dWPahuOgLIITrvFoCyilCAn0wbwqhOIyW4FNov
-         iRfjyef9PUtwF890liuCkm8gqLCDJHrYxUmY5vbJm0lTR4FH75T33sSm/otpFptE+To/
-         KNCKPxNYkiqB5Knb0EKTr4C3/KZ3WpRK179ApCXLV0HqHRFRcRPbn9YcBOgoFfGbiUSA
-         YL8FLKyS5XDkBAzzgaYlK//ehio0oha57mZhWQ1p2jRfDD+Dx9r7mfTh2knWmdc9bCNe
-         vJLdajw5vuyNuuCMAPguQ1eeYLUou3SZSSB5LQBiBn2W/dFAi65RbgT69F/l3KhLzZHt
-         M8dg==
-X-Gm-Message-State: APjAAAVQGz7a/q9VedJnPx015rNmksSaf+JL8YTKLWQ3cNRK/SnCeWUT
-        uH3im/3kK8I30ZfNYZU7i6ZJ03cB3ekZu7YwowQALQ==
-X-Google-Smtp-Source: APXvYqyLDLAoShN0kNLQeelFvPXh19MZYXF+kvpTMezYlJSyzsMMSzCxmmBx48UJ+c45QjVTifzbEDrRErpdc9L7aRA=
-X-Received: by 2002:a05:6638:5b6:: with SMTP id b22mr15275153jar.6.1578932732634;
- Mon, 13 Jan 2020 08:25:32 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=U2PWwEEnO5+ksSRfTkvVAkgMJvekPPQPvk+J1MXkAKA=;
+        b=gL/sHTB8mWB16wNFN0asIX6pc9cZEpThPYQC81N3o+Ql+BgZ1tzyebEArwzkSIw7Bh
+         aeQRZdD4KY0GXAZRHmVaU0+YzRavHj7XTNCNFOIXAc80VTIW/Yc1gVoq7x5wAV7sn6vG
+         WUlVLCxGBZQi+oktJfjpraN8mFWKtgevKE6ONZpi3cp5Li47SqzHXtYWl6OsOcvLTqoT
+         W2/RVA2l+JgErR6IWehPhk4umZCXTLvcunSWJlllrCVfgqze+YpqCYnSbzy9g98Yh2fN
+         AeoDMbvGMqIm7oAL28NpyA1aaaIf7aaprtbiaCYOBnGJO0/1nj5P1LQUpm4Am0SlQZn2
+         CnzQ==
+X-Gm-Message-State: APjAAAVfqkudkRh1AqYO3LOD9NRek5flMcFfNqO4UX1RRvAseu3gRbUn
+        pC3oy7NUtLCSKF57Qf0RWp9mHFs+JTc=
+X-Google-Smtp-Source: APXvYqw80f6wRiRP9Dwvx/NTeGY9Bf9oleVCbpo6cpd3kqWBdbqpjm+tTzcPB06sPHd1+r+7vplIzg==
+X-Received: by 2002:aa7:8b17:: with SMTP id f23mr20824919pfd.197.1578936297041;
+        Mon, 13 Jan 2020 09:24:57 -0800 (PST)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id d26sm13917312pgv.66.2020.01.13.09.24.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jan 2020 09:24:56 -0800 (PST)
+Date:   Mon, 13 Jan 2020 09:24:53 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Arnaud Pouliquen <arnaud.pouliquen@st.com>
+Cc:     Ohad Ben-Cohen <ohad@wizery.com>, linux-kernel@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Suman Anna <s-anna@ti.com>,
+        Fabien DESSENNE <fabien.dessenne@st.com>,
+        linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH v2] rpmsg: core: add API to get MTU
+Message-ID: <20200113172453.GQ738324@yoga>
+References: <20191113172249.32412-1-arnaud.pouliquen@st.com>
 MIME-Version: 1.0
-References: <20200113153605.52350-1-brian@brkho.com> <20200113153605.52350-3-brian@brkho.com>
-In-Reply-To: <20200113153605.52350-3-brian@brkho.com>
-From:   Rob Clark <robdclark@chromium.org>
-Date:   Mon, 13 Jan 2020 08:25:21 -0800
-Message-ID: <CAJs_Fx48B-C8GEeAmPaqGAqAOTR2dT0csg8W=TRyULOfy=1=VQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] drm/msm: Add MSM_WAIT_IOVA ioctl
-To:     Brian Ho <brian@brkho.com>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        hoegsberg@chromium.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191113172249.32412-1-arnaud.pouliquen@st.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 13, 2020 at 7:37 AM Brian Ho <brian@brkho.com> wrote:
->
-> Implements an ioctl to wait until a value at a given iova is greater
-> than or equal to a supplied value.
->
-> This will initially be used by turnip (open-source Vulkan driver for
-> QC in mesa) for occlusion queries where the userspace driver can
-> block on a query becoming available before continuing via
-> vkGetQueryPoolResults.
->
-> Signed-off-by: Brian Ho <brian@brkho.com>
+On Wed 13 Nov 09:22 PST 2019, Arnaud Pouliquen wrote:
+
+> Return the rpmsg buffer MTU for sending message, so rpmsg users
+> can split a long message in several sub rpmsg buffers.
+> 
+
+I won't merge this new api without a client, and I'm still concerned
+about the details.
+
+> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@st.com>
 > ---
->  drivers/gpu/drm/msm/msm_drv.c | 63 +++++++++++++++++++++++++++++++++--
->  include/uapi/drm/msm_drm.h    | 13 ++++++++
->  2 files changed, 74 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index c84f0a8b3f2c..dcc46874a5a2 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -36,10 +36,11 @@
->   *           MSM_GEM_INFO ioctl.
->   * - 1.4.0 - softpin, MSM_RELOC_BO_DUMP, and GEM_INFO support to set/get
->   *           GEM object's debug name
-> - * - 1.5.0 - Add SUBMITQUERY_QUERY ioctl
-> + * - 1.5.0 - Add SUBMITQUEUE_QUERY ioctl
-> + * - 1.6.0 - Add WAIT_IOVA ioctl
->   */
->  #define MSM_VERSION_MAJOR      1
-> -#define MSM_VERSION_MINOR      5
-> +#define MSM_VERSION_MINOR      6
->  #define MSM_VERSION_PATCHLEVEL 0
->
->  static const struct drm_mode_config_funcs mode_config_funcs = {
-> @@ -952,6 +953,63 @@ static int msm_ioctl_submitqueue_close(struct drm_device *dev, void *data,
->         return msm_submitqueue_remove(file->driver_priv, id);
+>  V1 to V2
+> 
+>   V1 patch:https://lore.kernel.org/patchwork/patch/1124684/
+>   - Change patch title,
+>   - as not solution today to support MTU on GLINK make ops optional,
+>     RPMsg client API returns -ENOTSUPP in this case,
+>   - suppress smd and glink patches.
+
+That's ok.
+
+> ---
+>  drivers/rpmsg/rpmsg_core.c       | 21 +++++++++++++++++++++
+>  drivers/rpmsg/rpmsg_internal.h   |  2 ++
+>  drivers/rpmsg/virtio_rpmsg_bus.c | 10 ++++++++++
+>  include/linux/rpmsg.h            | 10 ++++++++++
+>  4 files changed, 43 insertions(+)
+> 
+> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+> index e330ec4dfc33..a6ef54c4779a 100644
+> --- a/drivers/rpmsg/rpmsg_core.c
+> +++ b/drivers/rpmsg/rpmsg_core.c
+> @@ -283,6 +283,27 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
 >  }
->
-> +static int msm_ioctl_wait_iova(struct drm_device *dev, void *data,
-> +               struct drm_file *file)
+>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
+>  
+> +/**
+> + * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
+> + * @ept: the rpmsg endpoint
+> + *
+> + * This function returns maximum buffer size available for a single message.
+> + *
+> + * Return: the maximum transmission size on success and an appropriate error
+> + * value on failure.
+
+Is the expectation that a call to rpmsg_send() with this size will
+eventually succeed?
+
+> + */
+[..]
+> +static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept)
 > +{
-> +       struct msm_drm_private *priv = dev->dev_private;
-> +       struct drm_gem_object *obj;
-> +       struct drm_msm_wait_iova *args = data;
-> +       ktime_t timeout = to_ktime(args->timeout);
-> +       unsigned long remaining_jiffies = timeout_to_jiffies(&timeout);
-> +       struct msm_gpu *gpu = priv->gpu;
-> +       void *base_vaddr;
-> +       uint64_t *vaddr;
-> +       int ret;
+> +	struct rpmsg_device *rpdev = ept->rpdev;
+> +	struct virtio_rpmsg_channel *vch = to_virtio_rpmsg_channel(rpdev);
 > +
-> +       if (args->pad)
-> +               return -EINVAL;
-> +
-> +       if (!gpu)
-> +               return 0;
+> +	return vch->vrp->buf_size - sizeof(struct rpmsg_hdr);
 
-hmm, I'm not sure we should return zero in this case.. maybe -ENODEV?
+I'm still under the impression that the rpmsg protocol doesn't have to
+operate on fixed size messages. Would this then return vrp->num_bufs *
+vrp->buf_size / 2 - sizeof(rpmsg_hdr)?
 
-> +
-> +       obj = drm_gem_object_lookup(file, args->handle);
-> +       if (!obj)
-> +               return -ENOENT;
-> +
-> +       base_vaddr = msm_gem_get_vaddr(obj);
-> +       if (IS_ERR(base_vaddr)) {
-> +               ret = PTR_ERR(base_vaddr);
-> +               goto err_put_gem_object;
-> +       }
-> +       if (args->offset + sizeof(*vaddr) > obj->size) {
-> +               ret = -EINVAL;
-> +               goto err_put_vaddr;
-> +       }
-> +
-> +       vaddr = base_vaddr + args->offset;
-> +
-> +       /* Assumes WC mapping */
-> +       ret = wait_event_interruptible_timeout(
-> +                       gpu->event, *vaddr >= args->value, remaining_jiffies);
-> +
-> +       if (ret == 0) {
-> +               ret = -ETIMEDOUT;
-> +               goto err_put_vaddr;
-> +       } else if (ret == -ERESTARTSYS) {
-> +               goto err_put_vaddr;
-> +       }
-
-maybe:
-
- } else {
-   ret = 0;
- }
-
-and then drop the next three lines?
-
-> +
-> +       msm_gem_put_vaddr(obj);
-> +       drm_gem_object_put_unlocked(obj);
-> +       return 0;
-> +
-> +err_put_vaddr:
-> +       msm_gem_put_vaddr(obj);
-> +err_put_gem_object:
-> +       drm_gem_object_put_unlocked(obj);
-> +       return ret;
 > +}
 > +
->  static const struct drm_ioctl_desc msm_ioctls[] = {
->         DRM_IOCTL_DEF_DRV(MSM_GET_PARAM,    msm_ioctl_get_param,    DRM_RENDER_ALLOW),
->         DRM_IOCTL_DEF_DRV(MSM_GEM_NEW,      msm_ioctl_gem_new,      DRM_RENDER_ALLOW),
-> @@ -964,6 +1022,7 @@ static const struct drm_ioctl_desc msm_ioctls[] = {
->         DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_NEW,   msm_ioctl_submitqueue_new,   DRM_RENDER_ALLOW),
->         DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_CLOSE, msm_ioctl_submitqueue_close, DRM_RENDER_ALLOW),
->         DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_QUERY, msm_ioctl_submitqueue_query, DRM_RENDER_ALLOW),
-> +       DRM_IOCTL_DEF_DRV(MSM_WAIT_IOVA, msm_ioctl_wait_iova, DRM_RENDER_ALLOW),
->  };
->
->  static const struct vm_operations_struct vm_ops = {
-> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-> index 0b85ed6a3710..8477f28a4ee1 100644
-> --- a/include/uapi/drm/msm_drm.h
-> +++ b/include/uapi/drm/msm_drm.h
-> @@ -298,6 +298,17 @@ struct drm_msm_submitqueue_query {
->         __u32 pad;
->  };
->
-> +/* This ioctl blocks until the u64 value at bo + offset is greater than or
-> + * equal to the reference value.
-> + */
-> +struct drm_msm_wait_iova {
-> +       __u32 handle;          /* in, GEM handle */
-> +       __u32 pad;
-> +       struct drm_msm_timespec timeout;   /* in */
-> +       __u64 offset;          /* offset into bo */
-> +       __u64 value;           /* reference value */
 
-Maybe we should go ahead and add a __u64 mask;
-
-that would let us wait for 32b values as well, and wait for bits in a bitmask
-
-Other than those minor comments, it looks pretty good to me
-
-BR,
--R
-
-> +};
-> +
->  #define DRM_MSM_GET_PARAM              0x00
->  /* placeholder:
->  #define DRM_MSM_SET_PARAM              0x01
-> @@ -315,6 +326,7 @@ struct drm_msm_submitqueue_query {
->  #define DRM_MSM_SUBMITQUEUE_NEW        0x0A
->  #define DRM_MSM_SUBMITQUEUE_CLOSE      0x0B
->  #define DRM_MSM_SUBMITQUEUE_QUERY      0x0C
-> +#define DRM_MSM_WAIT_IOVA      0x0D
->
->  #define DRM_IOCTL_MSM_GET_PARAM        DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_GET_PARAM, struct drm_msm_param)
->  #define DRM_IOCTL_MSM_GEM_NEW          DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_GEM_NEW, struct drm_msm_gem_new)
-> @@ -327,6 +339,7 @@ struct drm_msm_submitqueue_query {
->  #define DRM_IOCTL_MSM_SUBMITQUEUE_NEW    DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_NEW, struct drm_msm_submitqueue)
->  #define DRM_IOCTL_MSM_SUBMITQUEUE_CLOSE  DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_CLOSE, __u32)
->  #define DRM_IOCTL_MSM_SUBMITQUEUE_QUERY  DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_QUERY, struct drm_msm_submitqueue_query)
-> +#define DRM_IOCTL_MSM_WAIT_IOVA        DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_WAIT_IOVA, struct drm_msm_wait_iova)
->
->  #if defined(__cplusplus)
->  }
-> --
-> 2.25.0.rc1.283.g88dfdc4193-goog
->
+Regards,
+Bjorn
