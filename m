@@ -2,133 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 893B3138D20
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 09:41:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C09D138D9C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 10:21:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728982AbgAMIkq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jan 2020 03:40:46 -0500
-Received: from mail.kernel.org ([198.145.29.99]:43612 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728950AbgAMIkl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jan 2020 03:40:41 -0500
-Received: from localhost.localdomain (unknown [106.200.247.255])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726399AbgAMJVb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jan 2020 04:21:31 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:58694 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725992AbgAMJVb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Jan 2020 04:21:31 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1578907291; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=wxayuM7YhfwYilxsAE0qeMuwKkzeNtCmh0wiR65083c=; b=dga3vaeqHZgNLB0D98JNB4E2pkSdRffgL1i+gs+/9yBaV0T+McyzJWv8RhUbq3xfiOHLuYkp
+ TlhDTNeeNkfI9AsD2I3anhZbjWvX+XIIDTEME8eMFeVAcHPGh5ki0kLiMNgwFeM6jgicE0qx
+ Vo9UywJYYINUVq98Eza5B7VqsCI=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e1c3699.7f2d367b7ce0-smtp-out-n03;
+ Mon, 13 Jan 2020 09:21:29 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id DD089C433CB; Mon, 13 Jan 2020 09:21:28 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from sthella-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2670D207FF;
-        Mon, 13 Jan 2020 08:40:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1578904841;
-        bh=jZl8xgRoQpS61f5V158YZ1RZcDbf9UZ3oLAOvnSRF0I=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=gx4q8ig5vDM0d2EF5D4raTi+e0zPRc+aeDbhl6v7pXyWEqquX6d1RVp4/MQYWUC2r
-         DppAPBRU2dwTWPuHq01nEJ3cxIeKoZFsqvxJEuXOyt2If8+HbgPIEaY5nuUhqn7Cir
-         A69ZYUI/MpQQoTmwhoGNIGTK7Rnbc1ctBrJq8Yus=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Christian Lamparter <chunkeey@googlemail.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v6 5/5] usb: xhci: provide a debugfs hook for erasing rom
-Date:   Mon, 13 Jan 2020 14:10:05 +0530
-Message-Id: <20200113084005.849071-6-vkoul@kernel.org>
-X-Mailer: git-send-email 2.24.1
-In-Reply-To: <20200113084005.849071-1-vkoul@kernel.org>
-References: <20200113084005.849071-1-vkoul@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        (Authenticated sender: sthella)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C16D9C43383;
+        Mon, 13 Jan 2020 09:21:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C16D9C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sthella@codeaurora.org
+From:   Shyam Kumar Thella <sthella@codeaurora.org>
+To:     agross@kernel.org, srinivas.kandagatla@linaro.org,
+        robh+dt@kernel.org, mark.rutland@arm.com
+Cc:     Shyam Kumar Thella <sthella@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v3] dt-bindings: nvmem: add binding for QTI SPMI SDAM
+Date:   Mon, 13 Jan 2020 14:51:11 +0530
+Message-Id: <1578907271-2576-1-git-send-email-sthella@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-run "echo 1 > /sys/kernel/debug/renesas-usb/rom_erase" to erase firmware
-when driver is loaded.
+QTI SDAM allows PMIC peripherals to access the shared memory that is
+available on QTI PMICs. Add documentation for it.
 
-Subsequent init of driver shall reload the firmware
-
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Shyam Kumar Thella <sthella@codeaurora.org>
 ---
- drivers/usb/host/xhci-pci-renesas.c | 35 +++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ .../devicetree/bindings/nvmem/qcom,spmi-sdam.yaml  | 83 ++++++++++++++++++++++
+ 1 file changed, 83 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
 
-diff --git a/drivers/usb/host/xhci-pci-renesas.c b/drivers/usb/host/xhci-pci-renesas.c
-index fe95487ca888..be2e7eff492f 100644
---- a/drivers/usb/host/xhci-pci-renesas.c
-+++ b/drivers/usb/host/xhci-pci-renesas.c
-@@ -2,6 +2,7 @@
- /* Copyright (C) 2019-2020 Linaro Limited */
- 
- #include <linux/acpi.h>
-+#include <linux/debugfs.h>
- #include <linux/firmware.h>
- #include <linux/module.h>
- #include <linux/pci.h>
-@@ -229,6 +230,9 @@ static int renesas_fw_verify(struct pci_dev *dev,
- 
- 	return 0;
- }
+diff --git a/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+new file mode 100644
+index 0000000..f2e640f
+--- /dev/null
++++ b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+@@ -0,0 +1,83 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/nvmem/qcom,spmi-sdam.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+static void debugfs_init(struct pci_dev *pdev);
++title: Qualcomm Technologies, Inc. SPMI SDAM DT bindings
 +
- static int renesas_check_rom_state(struct pci_dev *pdev)
- {
- 	const struct renesas_fw_entry *entry;
-@@ -252,6 +256,7 @@ static int renesas_check_rom_state(struct pci_dev *pdev)
- 		if (version == entry->expected_version) {
- 			dev_dbg(&pdev->dev, "Detected valid ROM version..\n");
- 			valid_version = true;
-+			debugfs_init(pdev);
- 		}
- 	}
- 	if (valid_version == false)
-@@ -536,6 +541,34 @@ static void renesas_rom_erase(struct pci_dev *pdev)
- 	dev_dbg(&pdev->dev, "ROM Erase... Done success\n");
- }
- 
-+static int debugfs_rom_erase(void *data, u64 value)
-+{
-+	struct pci_dev *pdev = data;
++maintainers:
++  - Shyam Kumar Thella <sthella@codeaurora.org>
 +
-+	if (value == 1) {
-+		dev_dbg(&pdev->dev, "Userspace requested ROM erase\n");
-+		renesas_rom_erase(pdev);
-+		return 0;
-+	}
-+	return -EINVAL;
-+}
-+DEFINE_DEBUGFS_ATTRIBUTE(rom_erase_ops, NULL, debugfs_rom_erase, "%llu\n");
++description: |
++  The SDAM provides scratch register space for the PMIC clients. This
++  memory can be used by software to store information or communicate
++  to/from the PBUS.
 +
-+static struct dentry *debugfs_root;
++allOf:
++  - $ref: "nvmem.yaml#"
 +
-+static void debugfs_init(struct pci_dev *pdev)
-+{
-+	debugfs_root = debugfs_create_dir("renesas-usb", NULL);
++properties:
++  compatible:
++    enum:
++      - qcom,spmi-sdam
 +
-+	debugfs_create_file("rom_erase", 0200, debugfs_root,
-+			    pdev, &rom_erase_ops);
-+}
++  reg:
++    maxItems: 1
 +
-+static void debugfs_exit(void)
-+{
-+	debugfs_remove_recursive(debugfs_root);
-+}
++  "#address-cells":
++    const: 1
 +
- static bool renesas_download_rom(struct pci_dev *pdev,
- 				 const u32 *fw, size_t step)
- {
-@@ -889,6 +922,8 @@ static int renesas_xhci_pci_probe(struct pci_dev *dev,
- 
- static void renesas_xhci_pci_remove(struct pci_dev *dev)
- {
-+	debugfs_exit();
++  "#size-cells":
++    const: 1
 +
- 	if (renesas_fw_alive_check(dev)) {
- 		/*
- 		 * bail out early, if this was a renesas device w/o FW.
++  ranges: true
++
++required:
++  - compatible
++  - reg
++
++patternProperties:
++  "^.*@[0-9a-f]+$":
++    type: object
++
++    properties:
++      reg:
++        maxItems: 1
++        description:
++          Offset and size in bytes within the storage device.
++
++      bits:
++        $ref: /schemas/types.yaml#/definitions/uint32-array
++        maxItems: 1
++        items:
++          items:
++            - minimum: 0
++              description:
++                Offset in bit within the address range specified by reg.
++            - minimum: 1
++              description:
++                Size in bit within the address range specified by reg.
++
++    required:
++      - reg
++      - ranges
++
++    additionalProperties: false
++
++examples:
++  - |
++      sdam_1: nvram@b000 {
++         #address-cells = <1>;
++         #size-cells = <1>;
++         compatible = "qcom,spmi-sdam";
++          reg = <0xb000 0x100>;
++          ranges = <0 0xb000 0x100>;
++
++          /* Data cells */
++          restart_reason: restart@50 {
++              reg = <0x50 0x1>;
++              bits = <6 2>;
++          };
++      };
++...
 -- 
-2.24.1
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+ a Linux Foundation Collaborative Project
