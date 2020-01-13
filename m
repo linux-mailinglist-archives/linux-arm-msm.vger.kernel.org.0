@@ -2,127 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A8B3A139A5D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 20:53:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0029F139A79
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 21:03:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726202AbgAMTxy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jan 2020 14:53:54 -0500
-Received: from mail-io1-f66.google.com ([209.85.166.66]:43402 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726435AbgAMTxy (ORCPT
+        id S1728512AbgAMUDP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jan 2020 15:03:15 -0500
+Received: from ste-pvt-msa1.bahnhof.se ([213.80.101.70]:64523 "EHLO
+        ste-pvt-msa1.bahnhof.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727331AbgAMUDO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jan 2020 14:53:54 -0500
-Received: by mail-io1-f66.google.com with SMTP id n21so11148041ioo.10;
-        Mon, 13 Jan 2020 11:53:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3D6RX4kPp465nuJHe6ds/xdvyZ5HgtKM/YNzxn0jjII=;
-        b=J/kbPo/SrAEYmMU5SKc9Pe3Fo1UCIq6ZpVBlUddGtqmBeeYGm7oLDFZTpPQuKRH3ZH
-         cpreVnh46CPFAiwqx2EvSX7ph7khsbPNhsdsiuhKl5FSuyo+XvxKePl5F1KN3Ntnd6+Q
-         L6bSaLM0JbFxajNvCASogHGpSlM6guErzCNz3RwzCoz3bxkJgeRYImTScajEE0k9a1zh
-         IPyuXpyYh++R0NgV9J8u/z8677LvKnlN2j5P7Bi37LqRXkek/+4Y53uSEFUIQut1Y4YT
-         klvh2WoREYD21dIkHbECJiOSXI5LrCFMZK4G/pMafO9UMvNCkj75rSTzlU4Ustexol4t
-         XNMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3D6RX4kPp465nuJHe6ds/xdvyZ5HgtKM/YNzxn0jjII=;
-        b=gxyjH8KAL0+oDzkwIYBvVR2wpcsgkARg6qmgEz2gDntUuvNKiDkz4TOPZJkrUrU4qg
-         bVP3MQjRG+D9kyKnqvhsHxXUdz6wJ3kz1W8txi+ytTDTL9dHuqrUDzPAw11tltB6HSqL
-         ChiAp3DkcK5riy8lqxFJoTMsUJNuEUGRL9UrAxY9viEaT5EHns2qITX0txVZPW3+OTfS
-         cqYk7t7E+QE2viZIshH+LPjZrQ97+77/lBc9Z35y6pxCkaFhAUb7KrDc1EIQRfxMzHLf
-         dCQEq9bIT1qfr2wxhFSUhJwUohQ10w8MuZNeXQfFxMnPKtI37w4jarHGtQ+0fJO552hX
-         HHrA==
-X-Gm-Message-State: APjAAAVqc4Ep4V9SPQxI2FNClDhiEKxJDyBoIh0XrQNCv6JlOjoJN6dj
-        hHX9O1JMu+MblOA1VplxXCPQf0FXP7ATFzoEyMg=
-X-Google-Smtp-Source: APXvYqzP12AUSGR0sHWZXP2iodMl7s4a1LdpmMDxVdXFl+JUn7T+FHyZ5dMVqgdGTFNbL7A9VmBYAGKtlVESJUpDu6o=
-X-Received: by 2002:a6b:6205:: with SMTP id f5mr14478446iog.42.1578945233528;
- Mon, 13 Jan 2020 11:53:53 -0800 (PST)
-MIME-Version: 1.0
-References: <1578646684-17379-1-git-send-email-loic.poulain@linaro.org>
-In-Reply-To: <1578646684-17379-1-git-send-email-loic.poulain@linaro.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Mon, 13 Jan 2020 12:53:42 -0700
-Message-ID: <CAOCk7NrSkaY5xUdA+Q3tCoDv01fVDYpakWmk-RnOuuBKsNN8Jg@mail.gmail.com>
-Subject: Re: [PATCH] tty: serial: msm_serial: RX SW/FIFO mode fallback
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>, linux-serial@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Mon, 13 Jan 2020 15:03:14 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTP id EB1F53F858;
+        Mon, 13 Jan 2020 21:03:11 +0100 (CET)
+Authentication-Results: ste-pvt-msa1.bahnhof.se;
+        dkim=pass (1024-bit key; unprotected) header.d=flawful.org header.i=@flawful.org header.b=gy5tCFd4;
+        dkim-atps=neutral
+X-Virus-Scanned: Debian amavisd-new at bahnhof.se
+X-Spam-Flag: NO
+X-Spam-Score: -2.099
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.099 tagged_above=-999 required=6.31
+        tests=[BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+        DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, URIBL_BLOCKED=0.001]
+        autolearn=ham autolearn_force=no
+Received: from ste-pvt-msa1.bahnhof.se ([127.0.0.1])
+        by localhost (ste-pvt-msa1.bahnhof.se [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id hy1-aEYqDTEn; Mon, 13 Jan 2020 21:03:11 +0100 (CET)
+Received: from flawful.org (ua-84-217-220-205.bbcust.telenor.se [84.217.220.205])
+        (Authenticated sender: mb274189)
+        by ste-pvt-msa1.bahnhof.se (Postfix) with ESMTPA id 8B5223F75E;
+        Mon, 13 Jan 2020 21:03:10 +0100 (CET)
+Received: by flawful.org (Postfix, from userid 1001)
+        id 3F5145C5; Mon, 13 Jan 2020 21:03:09 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flawful.org; s=mail;
+        t=1578945789; bh=dzPHPJdArrjCgbSclNQ4HJU2AzCNI0tuD2yFvZLOYtY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=gy5tCFd4ry+7rnM9/aUIUW8STsRfeL26sNaDIVM7lEvQrK/2gNlgjFlL76Bx+lr/m
+         rLhc0s0l+JeNpbDkVFASWyHY6zddJDarX0MfWqXMaVS8r37fZbDhiP0ZjTXIvVr/aM
+         c7uKWbVQaZUX1TgerqymWm3277f0XOcfkuKlT9LU=
+From:   Niklas Cassel <nks@flawful.org>
+To:     "Rafael J . Wysocki" <rjw@rjwysocki.net>
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Niklas Cassel <nks@flawful.org>
+Subject: [PATCH] power: avs: qcom-cpr: add a printout after the driver has been initialized
+Date:   Mon, 13 Jan 2020 21:02:58 +0100
+Message-Id: <20200113200258.18031-1-nks@flawful.org>
+X-Mailer: git-send-email 2.11.0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 10, 2020 at 1:55 AM Loic Poulain <loic.poulain@linaro.org> wrote:
->
-> During db410c stress test and when the system is low on memory,
-> the UART/console becomes unresponsive and never recover back.
-> This has been narrowed down to the msm_start_rx_dma which does
-> not manage error cases correctly (e.g. dma mapping failure),
-> indeed, when an error happens, dma transfer is simply discarded
-> and so never completed, leading to unconfigured RX path.
->
-> This patch fixes this issue by switching to SW/FIFO mode in case
-> of DMA issue. This mainly consists in resetting the receiver to
-> apply RX BAM/DMA disabling change and re-enabling the RX level
-> and stale interrupts (previously disabled for DMA transfers).
->
-> The DMA will be re-enabled once memory is available since the
-> SW/FIFO read function (msm_handle_rx_dm) retries to start dma
-> on completion.
+In order to easier inform the user that the driver has been initialized
+successfully, add a printout after the driver has been initialized.
 
-Is there a risk of the same thing occurring in the TX path?
+At the same time, remove a dev_dbg() that is now redundant.
 
->
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->  drivers/tty/serial/msm_serial.c | 18 +++++++++++++++++-
->  1 file changed, 17 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-> index 1cbae07..a63b703 100644
-> --- a/drivers/tty/serial/msm_serial.c
-> +++ b/drivers/tty/serial/msm_serial.c
-> @@ -610,7 +610,7 @@ static void msm_start_rx_dma(struct msm_port *msm_port)
->                                    UARTDM_RX_SIZE, dma->dir);
->         ret = dma_mapping_error(uart->dev, dma->phys);
->         if (ret)
-> -               return;
-> +               goto sw_mode;
->
->         dma->desc = dmaengine_prep_slave_single(dma->chan, dma->phys,
->                                                 UARTDM_RX_SIZE, DMA_DEV_TO_MEM,
-> @@ -661,6 +661,22 @@ static void msm_start_rx_dma(struct msm_port *msm_port)
->         return;
->  unmap:
->         dma_unmap_single(uart->dev, dma->phys, UARTDM_RX_SIZE, dma->dir);
-> +
-> +sw_mode:
-> +       /*
-> +        * Switch from DMA to SW/FIFO mode. After clearing Rx BAM (UARTDM_DMEN),
+Signed-off-by: Niklas Cassel <nks@flawful.org>
+---
+ drivers/power/avs/qcom-cpr.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-Where does this clear of UARTDM_DMEN occur?
+diff --git a/drivers/power/avs/qcom-cpr.c b/drivers/power/avs/qcom-cpr.c
+index 9192fb747653..b158a684d05c 100644
+--- a/drivers/power/avs/qcom-cpr.c
++++ b/drivers/power/avs/qcom-cpr.c
+@@ -1547,8 +1547,6 @@ static int cpr_pd_attach_dev(struct generic_pm_domain *domain,
+ 		goto unlock;
+ 	}
+ 
+-	dev_dbg(drv->dev, "number of OPPs: %d\n", drv->num_corners);
+-
+ 	drv->corners = devm_kcalloc(drv->dev, drv->num_corners,
+ 				    sizeof(*drv->corners),
+ 				    GFP_KERNEL);
+@@ -1586,6 +1584,9 @@ static int cpr_pd_attach_dev(struct generic_pm_domain *domain,
+ 				   acc_desc->enable_mask,
+ 				   acc_desc->enable_mask);
+ 
++	dev_info(drv->dev, "driver initialized with %u OPPs\n",
++		 drv->num_corners);
++
+ unlock:
+ 	mutex_unlock(&drv->lock);
+ 
+-- 
+2.24.1
 
-> +        * receiver must be reset.
-> +        */
-> +       msm_write(uart, UART_CR_CMD_RESET_RX, UART_CR);
-> +       msm_write(uart, UART_CR_RX_ENABLE, UART_CR);
-> +
-> +       msm_write(uart, UART_CR_CMD_RESET_STALE_INT, UART_CR);
-> +       msm_write(uart, 0xFFFFFF, UARTDM_DMRX);
-> +       msm_write(uart, UART_CR_CMD_STALE_EVENT_ENABLE, UART_CR);
-> +
-> +       /* Re-enable RX interrupts */
-> +       msm_port->imr |= (UART_IMR_RXLEV | UART_IMR_RXSTALE);
-> +       msm_write(uart, msm_port->imr, UART_IMR);
->  }
->
->  static void msm_stop_rx(struct uart_port *port)
-> --
-> 2.7.4
->
