@@ -2,180 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 41C54139515
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 16:42:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A32C1395AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 17:21:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727323AbgAMPmh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jan 2020 10:42:37 -0500
-Received: from mail.kernel.org ([198.145.29.99]:52398 "EHLO mail.kernel.org"
+        id S1728800AbgAMQVi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jan 2020 11:21:38 -0500
+Received: from mail.kernel.org ([198.145.29.99]:33054 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727286AbgAMPmg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jan 2020 10:42:36 -0500
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+        id S1726567AbgAMQVh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Jan 2020 11:21:37 -0500
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4E45A21739;
-        Mon, 13 Jan 2020 15:42:35 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 1A13B207FD;
+        Mon, 13 Jan 2020 16:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1578930155;
-        bh=RVsyyyEak92HbEk5ozmzJ7WvLdzHYvkt6miQWJICS50=;
+        s=default; t=1578932497;
+        bh=uyuX80zSyZU0zdvqiIzVXq0YSlCSPT17EFubZK/qreU=;
         h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=zsMXx19K/zG854+NtB/NSsH0j0812u2mBkgKLZHL36fLhfQBHrThEZkuTyd99dmPY
-         rmgmR7O0wWFyxqDN1663OT1yr9EMHeTgq0S8YqbPQjjnWSnUyQpgjxAHP5MF8E+Qsy
-         PgeAOpFuIKlp0GsxxajNArfw9mrxd+/ArZxe+g1Y=
-Received: by mail-qk1-f176.google.com with SMTP id x129so8842308qke.8;
-        Mon, 13 Jan 2020 07:42:35 -0800 (PST)
-X-Gm-Message-State: APjAAAUB75kPCkO9P+Z3R9Fm5hpA5I5Sk5KA8v1vdX/Bp4CVVGcYF5Wg
-        BzTH8SPrj5xZ3omss6RCArmJ09jTkAfj7jg2Kg==
-X-Google-Smtp-Source: APXvYqzd0iEA7ClpG/m//hBuec06RmDCtwQlY/Y+ZnupRPmSRvxene/XYpn3ed7tl82meicsVhfecOBtCK0sGE5Gue4=
-X-Received: by 2002:a05:620a:135b:: with SMTP id c27mr15396199qkl.119.1578930154331;
- Mon, 13 Jan 2020 07:42:34 -0800 (PST)
+        b=lgYohJZn7Il6C43tp/6EeaPdCSmjU/5LlT1IA5NZAfd4nxYbth1KhquOZ0SRdvT2D
+         YDob0FIyHlQsGWuDwScuc3L36wNmpNagvrbcnQQWrLDvYhZtUKnf/+h6jXSmt4+HzW
+         JWPzy62MM5dlv0/UTUq6yjv2GgA6ash1qo4YYTfQ=
+Received: by mail-qt1-f178.google.com with SMTP id w47so9574289qtk.4;
+        Mon, 13 Jan 2020 08:21:37 -0800 (PST)
+X-Gm-Message-State: APjAAAW6kYEwH1BIkzMvwMiWXD5wTGxeYKxy0IQJQbsLhnNNGUa7lIhf
+        B+LAlKTvemiO9pUyYxmNHzU8qHdWTpJZ4PTn/A==
+X-Google-Smtp-Source: APXvYqy1aBli8QPGYN67tcxz0ioFkcG7Q8WDfjn/ep7R6JHh30SkhNkJk8G4wwwi/DRECco6JJw0FXj+/6AD7B1/xVo=
+X-Received: by 2002:ac8:1415:: with SMTP id k21mr14844595qtj.300.1578932496310;
+ Mon, 13 Jan 2020 08:21:36 -0800 (PST)
 MIME-Version: 1.0
-References: <1577165532-28772-1-git-send-email-sthella@codeaurora.org>
- <20200108163943.GA26863@bogus> <8aeb91730552357db340f8bfb21e6d15@codeaurora.org>
- <CAL_JsqL5Gh2A3KfCgRFv+B50Y4PPF1b+qq8vY6yKhbea6KPAkw@mail.gmail.com> <b4f2fcc0d0a6724d77947f917f114d80@codeaurora.org>
-In-Reply-To: <b4f2fcc0d0a6724d77947f917f114d80@codeaurora.org>
+References: <1577421760-1174-1-git-send-email-tdas@codeaurora.org>
+ <1577421760-1174-2-git-send-email-tdas@codeaurora.org> <20200104213645.GA25711@bogus>
+ <2d4a70f0-c882-a15b-cfa8-7fefef59f45b@codeaurora.org>
+In-Reply-To: <2d4a70f0-c882-a15b-cfa8-7fefef59f45b@codeaurora.org>
 From:   Rob Herring <robh@kernel.org>
-Date:   Mon, 13 Jan 2020 09:42:22 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqLZN9F9=1sqFkoaWpwNKDOUAgOMrc9cqk-iohMxkeM-8A@mail.gmail.com>
-Message-ID: <CAL_JsqLZN9F9=1sqFkoaWpwNKDOUAgOMrc9cqk-iohMxkeM-8A@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: nvmem: add binding for QTI SPMI SDAM
-To:     Shyam Kumar Thella <sthella@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
+Date:   Mon, 13 Jan 2020 10:21:24 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKiFipqb5KEs2RsyQKcoD78qOw2UvobEmj5=8-Q=qJF3Q@mail.gmail.com>
+Message-ID: <CAL_JsqKiFipqb5KEs2RsyQKcoD78qOw2UvobEmj5=8-Q=qJF3Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] dt-bindings: clock: Add YAML schemas for the QCOM
+ MSS clock bindings
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 10, 2020 at 2:54 AM <sthella@codeaurora.org> wrote:
+On Mon, Jan 13, 2020 at 4:00 AM Taniya Das <tdas@codeaurora.org> wrote:
 >
-> On 2020-01-09 21:01, Rob Herring wrote:
-> > On Thu, Jan 9, 2020 at 4:57 AM <sthella@codeaurora.org> wrote:
-> >>
-> >> On 2020-01-08 22:09, Rob Herring wrote:
-> >> > On Tue, Dec 24, 2019 at 11:02:12AM +0530, Shyam Kumar Thella wrote:
-> >> >> QTI SDAM allows PMIC peripherals to access the shared memory that is
-> >> >> available on QTI PMICs. Add documentation for it.
-> >> >>
-> >> >> Signed-off-by: Shyam Kumar Thella <sthella@codeaurora.org>
-> >> >> ---
-> >> >>  .../devicetree/bindings/nvmem/qcom,spmi-sdam.yaml  | 79
-> >> >> ++++++++++++++++++++++
-> >> >>  1 file changed, 79 insertions(+)
-> >> >>  create mode 100644
-> >> >> Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-> >> >>
-> >> >> diff --git
-> >> >> a/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-> >> >> b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-> >> >> new file mode 100644
-> >> >> index 0000000..8961a99
-> >> >> --- /dev/null
-> >> >> +++ b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-> >> >> @@ -0,0 +1,79 @@
-> >> >> +# SPDX-License-Identifier: GPL-2.0
-> >> >
-> >> > Dual license new bindings:
-> >> >
-> >> > (GPL-2.0-only OR BSD-2-Clause)
-> >> >
-> >> > Please spread the word in QCom.
-> >> Sure. I will add Dual license in next patchset.
-> >> >
-> >> >> +%YAML 1.2
-> >> >> +---
-> >> >> +$id: http://devicetree.org/schemas/nvmem/qcom,spmi-sdam.yaml#
-> >> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> >> +
-> >> >> +title: Qualcomm Technologies, Inc. SPMI SDAM DT bindings
-> >> >> +
-> >> >> +maintainers:
-> >> >> +  - Shyam Kumar Thella <sthella@codeaurora.org>
-> >> >> +
-> >> >> +description: |
-> >> >> +  The SDAM provides scratch register space for the PMIC clients. This
-> >> >> +  memory can be used by software to store information or communicate
-> >> >> +  to/from the PBUS.
-> >> >> +
-> >> >> +allOf:
-> >> >> +  - $ref: "nvmem.yaml#"
-> >> >> +
-> >> >> +properties:
-> >> >> +  compatible:
-> >> >> +    enum:
-> >> >> +      - qcom,spmi-sdam
-> >> >> +
-> >> >> +  reg:
-> >> >> +    maxItems: 1
-> >> >> +
-> >> >> +  "#address-cells":
-> >> >> +    const: 1
-> >> >> +
-> >> >> +  "#size-cells":
-> >> >> +    const: 1
-> >> >
-> >> > ranges? The child addresses should be translateable I assume.
-> >> The addresses are not memory mapped on the CPU's address domain. They
-> >> are the SPMI addresses which can be accessed over SPMI controller.
+> Hi Rob,
+>
+> Thanks for your review.
+>
+> On 1/5/2020 3:06 AM, Rob Herring wrote:
+>
+> >> +description: |
+> >> +  Qualcomm modem clock control module which supports the clocks.
+> >> +
+> >> +properties:
+> >> +  compatible :
 > >
-> > Doesn't have to be a CPU address. Are the child offsets within the
-> > range defined in the parent 'reg'? If so, then it should have
-> > 'ranges'.
-> Yes the child offsets fall within parent reg's address space.
-> I will add ranges in the next patch set.
+> > drop space     ^
 > >
-> >> >
-> >> >> +
-> >> >> +required:
-> >> >> +  - compatible
-> >> >> +  - reg
-> >> >> +
-> >> >> +patternProperties:
-> >> >> +  "^.*@[0-9a-f]+$":
-> >> >> +    type: object
-> >> >> +
-> >> >> +    properties:
-> >> >> +      reg:
-> >> >> +        maxItems: 1
-> >> >> +        description:
-> >> >> +          Offset and size in bytes within the storage device.
-> >> >> +
-> >> >> +      bits:
-> >> >
-> >> > Needs a type reference.
-> >> Yes. I will add a reference in the next patch set.
-> >> >
-> >> >> +        maxItems: 1
-> >> >> +        items:
-> >> >> +          items:
-> >> >> +            - minimum: 0
-> >> >> +              maximum: 7
-> >> >> +              description:
-> >> >> +                Offset in bit within the address range specified by
-> >> >> reg.
-> >> >> +            - minimum: 1
-> >> >
-> >> > max is 7?
-> >> I don't think it is limited to 7 as it is the size within the address
-> >> range specified by reg. If the address range is more than a byte size
-> >> can be more.
+>
+> Will take care in the next patch.
+>
+> >> +    enum:
+> >> +       - qcom,sc7180-mss
+> >> +
+> >> +  '#clock-cells':
+> >> +    const: 1
+> >> +
+> >> +  reg:
+> >> +    maxItems: 1
+> >> +
+> >> +  additionalItems: false
 > >
-> > Then why is the maximum offset 7?
-> I see. Offset can be more than 7 within the address range specified in
-> case
-> of data cells with more than a byte. I will remove maximum in the next
-> patch set.
+> > With the indentation here, you are defining a property. Should be no
+> > indent.
+> >
+>
+> I tried removing the indent too, but I keep getting this error.
+>   Additional properties are not allowed ('additionalItems' was unexpected)
+>
+> Please let me know if I am missing something?
 
-That's the wrong thing to do though. If the offset is more than 7, you
-should just increase 'reg' value. IOW, 'bits' should only be used to
-express bit position up to the minimum alignment of 'reg'. I guess you
-could have an unaligned multi-byte field, so I guess this is fine
-as-is.
+Sorry, I was reading that as 'additionalProperties' which is what you
+want at the top level. Generally, 'additionalItems' is not needed.
 
 Rob
