@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 30735138A2C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 05:29:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F2E7138A36
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 05:32:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387460AbgAME3u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Jan 2020 23:29:50 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:47274 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2387429AbgAME3u (ORCPT
+        id S2387608AbgAMEcT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Jan 2020 23:32:19 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:56997 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2387503AbgAMEcT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Jan 2020 23:29:50 -0500
+        Sun, 12 Jan 2020 23:32:19 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1578889789; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1578889938; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=cWEUzZGYbROCAjIVpa+ULP0drB/k6gLA3a8jSSU7w/8=; b=X3aEggLrMRqLqfjW8xVusvvCh/sFQ3TcQbXX5+s9C74ebx+Zxmv/yxJfvyWJr8SIihNnG3aH
- wG+LtNyZWh8BpaHMu8rb5I5x/jUs/CLasBLJ0PUnYP++tTjn88eXMymTlIcZqsL5kAw5OJYp
- KVgJ/yx285NNE3gQe3ElV+QmxsY=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ bh=l7XrpfhhxOyRvikqVWgTDSMGNKmcEQJIF/TbImSjqFM=; b=pDUOe1TQBrKfEZ7m2qyoCth9lW1HodVzqsJPhPkvdYA9SkUVgXo+u+nZ7jzCdqOJdkRF8TA7
+ CvYXUgU1sVj2NYac9qqWxIBppho6MGwIcKP6ke6PqSBV0A/hA3DCmQk7FVfyXOzAooaQZsJu
+ bAXa2LOO9pUv1acF3D2FwTSUbB4=
+X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e1bf23c.7f2abf7afc00-smtp-out-n01;
- Mon, 13 Jan 2020 04:29:48 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e1bf2cd.7f61a5cfe378-smtp-out-n02;
+ Mon, 13 Jan 2020 04:32:13 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 683C9C4479C; Mon, 13 Jan 2020 04:29:48 +0000 (UTC)
+        id E28BAC433A2; Mon, 13 Jan 2020 04:32:12 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,9 +34,9 @@ Received: from rocky-Inspiron-7590.qca.qualcomm.com (unknown [180.166.53.21])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rjliao)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 01E33C433CB;
-        Mon, 13 Jan 2020 04:29:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 01E33C433CB
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D52DAC433CB;
+        Mon, 13 Jan 2020 04:32:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D52DAC433CB
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rjliao@codeaurora.org
 From:   Rocky Liao <rjliao@codeaurora.org>
@@ -44,9 +44,9 @@ To:     marcel@holtmann.org, johan.hedberg@gmail.com
 Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
         linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Rocky Liao <rjliao@codeaurora.org>
-Subject: [PATCH v4] Bluetooth: hci_qca: Add qca_power_on() API to support both wcn399x and Rome power up
-Date:   Mon, 13 Jan 2020 12:29:42 +0800
-Message-Id: <20200113042942.9526-1-rjliao@codeaurora.org>
+Subject: [PATCH v5] Bluetooth: hci_qca: Add qca_power_on() API to support both wcn399x and Rome power up
+Date:   Mon, 13 Jan 2020 12:30:20 +0800
+Message-Id: <20200113043020.9663-1-rjliao@codeaurora.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200107052601.32216-1-rjliao@codeaurora.org>
 References: <20200107052601.32216-1-rjliao@codeaurora.org>
@@ -71,13 +71,14 @@ Changes in v3:
   -updated the commit message
 Changes in v4:
   -made a single call to qca_power_on() in setup()
+Changes in v5:
+  -modified the debug log location
 
-
- drivers/bluetooth/hci_qca.c | 48 +++++++++++++++++++++++--------------
- 1 file changed, 30 insertions(+), 18 deletions(-)
+ drivers/bluetooth/hci_qca.c | 54 ++++++++++++++++++++++---------------
+ 1 file changed, 33 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 82e4cd4b6663..6a67e5489b16 100644
+index 82e4cd4b6663..992622dc1263 100644
 --- a/drivers/bluetooth/hci_qca.c
 +++ b/drivers/bluetooth/hci_qca.c
 @@ -541,7 +541,6 @@ static int qca_open(struct hci_uart *hu)
@@ -145,18 +146,23 @@ index 82e4cd4b6663..6a67e5489b16 100644
  static int qca_setup(struct hci_uart *hu)
  {
  	struct hci_dev *hdev = hu->hdev;
-@@ -1553,6 +1564,10 @@ static int qca_setup(struct hci_uart *hu)
+@@ -1553,24 +1564,25 @@ static int qca_setup(struct hci_uart *hu)
  	 */
  	set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
+ 
+-	if (qca_is_wcn399x(soc_type)) {
+-		bt_dev_info(hdev, "setting up wcn3990");
++	bt_dev_info(hdev, "setting up %s",
++		qca_is_wcn399x(soc_type) ? "wcn399x" : "ROME");
  
 +	ret = qca_power_on(hdev);
 +	if (ret)
 +		return ret;
 +
- 	if (qca_is_wcn399x(soc_type)) {
- 		bt_dev_info(hdev, "setting up wcn3990");
- 
-@@ -1562,9 +1577,6 @@ static int qca_setup(struct hci_uart *hu)
++	if (qca_is_wcn399x(soc_type)) {
+ 		/* Enable NON_PERSISTENT_SETUP QUIRK to ensure to execute
+ 		 * setup for every hci up.
+ 		 */
  		set_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks);
  		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
  		hu->hdev->shutdown = qca_power_off;
@@ -166,5 +172,11 @@ index 82e4cd4b6663..6a67e5489b16 100644
  
  		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
  		if (ret)
+ 			return ret;
+ 	} else {
+-		bt_dev_info(hdev, "ROME setup");
+ 		qca_set_speed(hu, QCA_INIT_SPEED);
+ 	}
+ 
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
