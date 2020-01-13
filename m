@@ -2,30 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D1813138B27
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 06:47:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 61F96138B2B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 06:49:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726105AbgAMFrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jan 2020 00:47:11 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:17259 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726055AbgAMFrK (ORCPT
+        id S1726804AbgAMFtY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jan 2020 00:49:24 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:36833 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726236AbgAMFtY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jan 2020 00:47:10 -0500
+        Mon, 13 Jan 2020 00:49:24 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1578894429; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1578894563; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=XoJh0IwkIfbUz6r+FYTpWq3eCJJHoLDTCx+9uGqjfVQ=;
- b=KJbgHUT1z+toec04P6b0HUOSGDoPuuoWEgNyNRRSJFfBitEiESFpUpgEiMutagEvAwULadCF
- /aw5UjUBNeXPSfrcUcg3xnOhi3+gWV/+ke75rBJ/tTz9yoRw6Df9o9faFvyzvB/E+bNu/yYY
- +BluCqf+dT0yCoDraDhWjzM1Wbc=
-X-Mailgun-Sending-Ip: 104.130.122.25
+ MIME-Version: Sender; bh=Y6MzJykOUHgXTHH7mFFwvvjU0SWSAQVmVXjDkrqruY8=;
+ b=modq+Zx/VMtbp2dJUw6myVkwXz2T8o8PmWRejx+CWZ+C7DIAYb2LPe+EhOLZZ/hHOWcpnu2+
+ 8aQWsQ0bJNuDhTjYNA2E1vucnz3ba9ta+e3cHX2+Zz8OTIVqe8UAnXTY2LGAviFc6VB9fYw1
+ rokQiq2E8+o5x0vwfu9bjUDUY+o=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e1c045b.7f84b7316308-smtp-out-n02;
- Mon, 13 Jan 2020 05:47:07 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e1c04dd.7f0c87be2110-smtp-out-n01;
+ Mon, 13 Jan 2020 05:49:17 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 74260C4479C; Mon, 13 Jan 2020 05:47:06 +0000 (UTC)
+        id 5535CC447A1; Mon, 13 Jan 2020 05:49:17 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -35,13 +35,13 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D2397C43383;
-        Mon, 13 Jan 2020 05:47:05 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 99864C43383;
+        Mon, 13 Jan 2020 05:49:16 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 13 Jan 2020 11:17:05 +0530
+Date:   Mon, 13 Jan 2020 11:19:16 +0530
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 To:     Rob Herring <robh@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -51,14 +51,14 @@ Cc:     Andy Gross <agross@kernel.org>,
         Stephen Boyd <swboyd@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/3] dt-bindings: watchdog: Add compatible for QCS404,
- SC7180, SDM845, SM8150
-In-Reply-To: <20191219232842.GB22811@bogus>
+        linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: watchdog: Convert QCOM watchdog timer
+ bindings to YAML
+In-Reply-To: <20191219232615.GA22811@bogus>
 References: <cover.1576211720.git.saiprakash.ranjan@codeaurora.org>
- <3f871ae3818b46423430074689e33bc34b28aa1c.1576211720.git.saiprakash.ranjan@codeaurora.org>
- <20191219232842.GB22811@bogus>
-Message-ID: <e06b96fdaa79c7c02b76c788c04fcf7d@codeaurora.org>
+ <0b095b65496073a2ddf9de120f7809619b42cd1c.1576211720.git.saiprakash.ranjan@codeaurora.org>
+ <20191219232615.GA22811@bogus>
+Message-ID: <1602b7831356274792ce5a84fb44d701@codeaurora.org>
 X-Sender: saiprakash.ranjan@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -66,50 +66,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
-
-On 2019-12-20 04:58, Rob Herring wrote:
-> On Fri, Dec 13, 2019 at 10:23:19AM +0530, Sai Prakash Ranjan wrote:
->> Add missing compatible for watchdog timer on QCS404,
->> SC7180, SDM845 and SM8150 SoCs.
+On 2019-12-20 04:56, Rob Herring wrote:
+> On Fri, Dec 13, 2019 at 10:23:18AM +0530, Sai Prakash Ranjan wrote:
+>> Convert QCOM watchdog timer bindings to DT schema format using
+>> json-schema.
 >> 
 >> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 >> ---
->>  .../devicetree/bindings/watchdog/qcom-wdt.yaml       | 12 
->> ++++++++++++
->>  1 file changed, 12 insertions(+)
->> 
+>>  .../devicetree/bindings/watchdog/qcom-wdt.txt | 28 -----------
+>>  .../bindings/watchdog/qcom-wdt.yaml           | 47 
+>> +++++++++++++++++++
+>>  2 files changed, 47 insertions(+), 28 deletions(-)
+>>  delete mode 100644 
+>> Documentation/devicetree/bindings/watchdog/qcom-wdt.txt
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> 
+> 
 >> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml 
 >> b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
->> index 4a42f4261322..ec25ce1c9e2e 100644
->> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+>> new file mode 100644
+>> index 000000000000..4a42f4261322
+>> --- /dev/null
 >> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
->> @@ -12,6 +12,18 @@ maintainers:
->>  properties:
->>    compatible:
->>      oneOf:
->> +      - items:
->> +          - const: qcom,apss-wdt-sc7180
->> +          - const: qcom,kpss-wdt
->> +      - items:
->> +          - const: qcom,apss-wdt-sdm845
->> +          - const: qcom,kpss-wdt
->> +      - items:
->> +          - const: qcom,apss-wdt-sm8150
->> +          - const: qcom,kpss-wdt
->> +      - items:
->> +          - const: qcom,apss-wdt-qcs404
->> +          - const: qcom,kpss-wdt
+>> @@ -0,0 +1,47 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: "http://devicetree.org/schemas/watchdog/qcom-wdt.yaml#"
+>> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+>> +
+>> +title: Qualcomm Krait Processor Sub-system (KPSS) Watchdog timer
+>> +
+>> +maintainers:
+>> +  - Andy Gross <agross@kernel.org>
+>> +
+>> +properties:
+>> +  compatible:
+>> +    oneOf:
+>> +      - const: qcom,kpss-timer
+>> +      - const: qcom,kpss-wdt
+>> +      - const: qcom,kpss-wdt-apq8064
+>> +      - const: qcom,kpss-wdt-ipq4019
+>> +      - const: qcom,kpss-wdt-ipq8064
+>> +      - const: qcom,kpss-wdt-msm8960
+>> +      - const: qcom,scss-timer
 > 
-> This can be one entry:
-> 
-> - items:
->     - enum:
->         - ...
->     - const: qcom,kpss-wdt
+> An 'enum' is better than oneOf+const.
 > 
 
-Will change in next version.
+Will change.
+
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  clocks:
+>> +    maxItems: 1
+>> +
+>> +  timeout-sec:
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +    description:
+>> +      Contains the watchdog timeout in seconds. If unset, the
+>> +      default timeout is 30 seconds.
+> 
+> Include watchdog.yaml and don't redefine this.
+> 
+
+Ok
+
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - clocks
+>> +
+>> +examples:
+>> +  - |
+>> +    watchdog@208a038 {
+>> +      compatible = "qcom,kpss-wdt-ipq8064";
+>> +      reg = <0x0208a038 0x40>;
+>> +      clocks = <&sleep_clk>;
+>> +      timeout-sec = <10>;
+>> +    };
+>> ---
+>> 
+>> I have added Andy as the maintainer here since the get_maintainer 
+>> script
+>> showed him. If he is not happy, then I can change it to Bjorn probably 
+>> and
+>> again if he is not happy ;-) then I will add myself or whoever they 
+>> suggest.
+> 
+> Add yourself.
+> 
+
+Sure will add myself.
+
 
 Thanks,
 Sai
