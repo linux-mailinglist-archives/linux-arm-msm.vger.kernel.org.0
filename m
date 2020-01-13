@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C0E9C139AE3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 21:43:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F597139AE7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jan 2020 21:44:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726536AbgAMUnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jan 2020 15:43:17 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:32973 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726086AbgAMUnR (ORCPT
+        id S1726587AbgAMUoK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jan 2020 15:44:10 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:36047 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726086AbgAMUoJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jan 2020 15:43:17 -0500
-Received: by mail-pl1-f194.google.com with SMTP id ay11so4291276plb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2020 12:43:17 -0800 (PST)
+        Mon, 13 Jan 2020 15:44:09 -0500
+Received: by mail-pg1-f193.google.com with SMTP id k3so5275772pgc.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2020 12:44:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:mime-version:content-disposition
          :user-agent;
-        bh=/wcE+sOMyagMCyC4QZgrH+gZMviyyqGaVgp9gejXTLQ=;
-        b=UCtxwdfu1MOhvv0Dl3SIlKj4WeOKM4Dhn8MRGiZYewOvcSeF4oLUyTjWl0fEsxJ5Le
-         V0EqkGLW8DpL16QvA1DLE9bWuiLJZLfWmQ4c0oL/EBMTEebem4oyZH6jeFP8qa9msM08
-         zCm/AZAF10rP7s6Ii1M/udhohwVFfinDuUwavZgLV9e3JOra26aG7S77LKa1Rt/6ZZ/P
-         QiQTAG2ZD+Q+vPxH+fCknSr+GX6+Fbz3Kzg7yg2i4XocMgX/ImH4q9W0U+d7N43VxRPa
-         bnuln6bVu5rszU8TMXgWH7iXDnYHQeNzxjqwA7PANhz0b1WzwO62znAn6HlMD38qgk9b
-         FJhQ==
+        bh=IS3OPRaipGwb6SDedGmvTz6F6ADZoIh+zjI/wxisAKE=;
+        b=eTWW69nNpsITRLeUbjhj30qR/Go5gQdI5vug5bH7RaFEpcCxLBdlkcMy9xjfvgl9Md
+         WsuPrVhJ8eFnhNESdcvRbbyBppLj5MP+hDi4YDfPIlpedMTf3r2alm2jJ4w/V+cdqk+0
+         YOcOEKDPBI5oLJDItd2sV2gXCAjsA+4RmEv9+FYrf0yS1DwBXMW1YS4z0e6CLFGUQ49x
+         rJ8R6mzOciG6sLVJ832K9Ek18nH8XyFWWjzsS3WKV6/N7Q9cZuYAvVx3ZJUrqxAu61jO
+         /rlkJK1lwhP73pVGH/h67V0xb29G5sgIA4HKw4H4NfX0fve30EzDKb8mPeDahAmovWuk
+         1ZCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
          :content-disposition:user-agent;
-        bh=/wcE+sOMyagMCyC4QZgrH+gZMviyyqGaVgp9gejXTLQ=;
-        b=HQkMTvNr0b7qUJi7/i5CDyhoYbz1K31dFaqMqkqbLVGBE0FZjTeE+tsXfwOWJ6ntSC
-         jNbHIoS57BHofuTZMrGlJILkGMoCR8kNho/7twfEVY2In3uBto+sXg8KPKRum4hdQSLa
-         4MUOcvcDaf7YgkAG+SFvxwLw6qj9SVHQvke04RAxvNiwpnprrKPCyX3jGAENzz8u4UYa
-         NEaHP1h1Bsl8wOWXI0COBgyF74L9ezW0tVQ/HFbp8SUWfHPVJGdek4nP+72HTlN4tYcL
-         FQWuiKmUblpN5IoyLNp+koH1RPa8p12qaR8XCpm9NYr6HSent8EuVSC1JxdafgZ3AT1q
-         ruqA==
-X-Gm-Message-State: APjAAAUligdCkpv495vCiAh8HygND+doe5Rsci54CsBndeN9oPa4Vfgt
-        QAYTSEbMUFuU1Pj3LRFWUtJo5A==
-X-Google-Smtp-Source: APXvYqwUVBNTh02pgToXPNw3Bd2uSFTulE0jmJfktcvwZGZ06jhKFme/S5lzlj1gOTKgRkr7r3GPKQ==
-X-Received: by 2002:a17:902:b187:: with SMTP id s7mr22079286plr.104.1578948196983;
-        Mon, 13 Jan 2020 12:43:16 -0800 (PST)
+        bh=IS3OPRaipGwb6SDedGmvTz6F6ADZoIh+zjI/wxisAKE=;
+        b=Ve/M2x73Z7FVyFb5Cu7kYFkgIfsi0PR+h/lQLj+YQ3DSTvoQifchiklG+mSS49Jfzn
+         mn+CIMkjEpKg9E/FNh8eD2y28X6s+FPAQDYLh/BEdki6panuWoUFVb6PPIUskeFquaLy
+         RYbGebaoasS3DdVMod1JV2sOOHXLRTYIgmeItnSlJP0tJcFtCehuwr39Wu7qf/HqPspg
+         K5GbkDUiDz824G+L+qF3PIcUtAulBP02bkDs0JXdFu9GceT+qwnl6uVuOnDl+vAMh5XH
+         H9LrT+XcNJvcM7aNYolMKYQi07R1bM/NsagAmXLkx+S8KP/wHEnNLl3g4Boqcds1NxsT
+         DuIQ==
+X-Gm-Message-State: APjAAAUNNcIlBird9eYJn2DpP5e9dlsCYpEr8iSO/ikUfiJkV3AnA+jJ
+        vh16hEt0qE4RYsFWICKr/tOTOAGBfr0=
+X-Google-Smtp-Source: APXvYqzBlSY6COwVN91zi0NmCeOSR/L97Fhol7ZFksfge4T8I0sw2EYjN1OsJ2Uxz2CoN1+9+LmVKw==
+X-Received: by 2002:a63:da4d:: with SMTP id l13mr23826999pgj.106.1578948248559;
+        Mon, 13 Jan 2020 12:44:08 -0800 (PST)
 Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id a10sm43484pjq.8.2020.01.13.12.43.15
+        by smtp.gmail.com with ESMTPSA id v8sm14875557pff.151.2020.01.13.12.44.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jan 2020 12:43:16 -0800 (PST)
-Date:   Mon, 13 Jan 2020 12:43:13 -0800
+        Mon, 13 Jan 2020 12:44:08 -0800 (PST)
+Date:   Mon, 13 Jan 2020 12:44:05 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     arm@kernel.org, soc@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -53,9 +53,14 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
         Olof Johansson <olof@lixom.net>,
         Kevin Hilman <khilman@baylibre.com>,
-        Brian Masney <masneyb@onstation.org>
-Subject: [GIT PULL] Qualcomm ARM defconfig updates for v5.6
-Message-ID: <20200113204313.GC3325@yoga>
+        Elliot Berman <eberman@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [GIT PULL] Qualcomm driver updates for v5.6
+Message-ID: <20200113204405.GD3325@yoga>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
@@ -71,22 +76,81 @@ The following changes since commit e42617b825f8073569da76dc4510bfa019b1c35a:
 
 are available in the Git repository at:
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-defconfig-for-5.6
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-for-5.6
 
-for you to fetch changes up to dd973b89ebba7246bb395b89bfec55deee24af2a:
+for you to fetch changes up to 9a434cee773ae15309ac225f27551b5492618e4a:
 
-  ARM: qcom_defconfig: add anx78xx HDMI bridge support (2019-12-10 09:42:50 -0800)
-
-----------------------------------------------------------------
-Qualcomm ARM defconfig updates for v5.6
-
-* Enable anx78xx HDMI bridge driver
-* Enable MSM8974 interconnect provider driver
+  firmware: qcom_scm: Dynamically support SMCCC and legacy conventions (2020-01-07 22:14:43 -0800)
 
 ----------------------------------------------------------------
-Brian Masney (2):
-      ARM: qcom_defconfig: add msm8974 interconnect support
-      ARM: qcom_defconfig: add anx78xx HDMI bridge support
+Qualcomm driver updates for v5.6
 
- arch/arm/configs/qcom_defconfig | 4 ++++
- 1 file changed, 4 insertions(+)
+* SCM major refactoring and cleanup
+* Properly flag active only power domains as active only
+* Add SC7180 and SM8150 RPMH power domains
+* Return EPROBE_DEFER from QMI if packet family is not yet available
+
+----------------------------------------------------------------
+Douglas Anderson (1):
+      soc: qcom: rpmhpd: Set 'active_only' for active only power domains
+
+Elliot Berman (17):
+      firmware: qcom_scm: Rename macros and structures
+      firmware: qcom_scm: Apply consistent naming scheme to command IDs
+      firmware: qcom_scm: Remove unused qcom_scm_get_version
+      firmware: qcom_scm-64: Make SMC macros less magical
+      firmware: qcom_scm-64: Move svc/cmd/owner into qcom_scm_desc
+      firmware: qcom_scm-64: Add SCM results struct
+      firmware: qcom_scm-64: Move SMC register filling to qcom_scm_call_smccc
+      firmware: qcom_scm-64: Improve SMC convention detection
+      firmware: qcom_scm-32: Use SMC arch wrappers
+      firmware: qcom_scm-32: Add funcnum IDs
+      firmware: qcom_scm-32: Use qcom_scm_desc in non-atomic calls
+      firmware: qcom_scm-32: Move SMCCC register filling to qcom_scm_call
+      firmware: qcom_scm-32: Create common legacy atomic call
+      firmware: qcom_scm-32: Add device argument to atomic calls
+      firmware: qcom_scm: Order functions, definitions by service/command
+      firmware: qcom_scm: Remove thin wrappers
+      firmware: qcom_scm: Dynamically support SMCCC and legacy conventions
+
+Jeffrey Hugo (1):
+      soc: qcom: qmi: Return EPROBE_DEFER if no address family
+
+Krzysztof Kozlowski (2):
+      soc: qcom: Fix Kconfig indentation
+      firmware: scm: Add stubs for OCMEM and restore_sec_cfg_available
+
+Sai Prakash Ranjan (1):
+      dt-bindings: msm: Rename cache-controller to system-cache-controller
+
+Sibi Sankar (5):
+      dt-bindings: power: Add rpmh power-domain bindings for SM8150
+      soc: qcom: rpmhpd: Add SM8150 RPMH power-domains
+      dt-bindings: power: Add rpmh power-domain bindings for sc7180
+      soc: qcom: rpmhpd: Add SC7180 RPMH power-domains
+      dt-bindings: power: rpmpd: Convert rpmpd bindings to yaml
+
+ .../devicetree/bindings/arm/msm/qcom,llcc.yaml     |   2 +-
+ .../devicetree/bindings/power/qcom,rpmpd.txt       | 148 ----
+ .../devicetree/bindings/power/qcom,rpmpd.yaml      | 170 ++++
+ drivers/firmware/Kconfig                           |   8 -
+ drivers/firmware/Makefile                          |   5 +-
+ drivers/firmware/qcom_scm-32.c                     | 671 ----------------
+ drivers/firmware/qcom_scm-64.c                     | 579 --------------
+ drivers/firmware/qcom_scm-legacy.c                 | 242 ++++++
+ drivers/firmware/qcom_scm-smc.c                    | 151 ++++
+ drivers/firmware/qcom_scm.c                        | 854 ++++++++++++++++-----
+ drivers/firmware/qcom_scm.h                        | 178 +++--
+ drivers/soc/qcom/Kconfig                           |  30 +-
+ drivers/soc/qcom/qmi_interface.c                   |   8 +-
+ drivers/soc/qcom/rpmhpd.c                          |  56 ++
+ include/dt-bindings/power/qcom-rpmpd.h             |  24 +
+ include/linux/qcom_scm.h                           | 119 +--
+ 16 files changed, 1504 insertions(+), 1741 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/power/qcom,rpmpd.txt
+ create mode 100644 Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+ delete mode 100644 drivers/firmware/qcom_scm-32.c
+ delete mode 100644 drivers/firmware/qcom_scm-64.c
+ create mode 100644 drivers/firmware/qcom_scm-legacy.c
+ create mode 100644 drivers/firmware/qcom_scm-smc.c
+
