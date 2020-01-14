@@ -2,232 +2,312 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 93FB413B605
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 00:41:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBE4313B60A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 00:41:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728656AbgANXlC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jan 2020 18:41:02 -0500
-Received: from fllv0015.ext.ti.com ([198.47.19.141]:39572 "EHLO
-        fllv0015.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728650AbgANXlC (ORCPT
+        id S1728874AbgANXlP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jan 2020 18:41:15 -0500
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:34641 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728880AbgANXlO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jan 2020 18:41:02 -0500
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 00ENesdv035350;
-        Tue, 14 Jan 2020 17:40:54 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1579045254;
-        bh=ie2Vxrz7QQ+MlmI4XvpTQIVsHcPUy091HFySdvO8gsA=;
-        h=Subject:To:CC:References:From:Date:In-Reply-To;
-        b=AjVoG7d3GEoCkbikZNxzCww23Uy9X8v5LtkswhXd9EL4VAoIQKSQT3hk4f6gws5ew
-         JQhKrUU/42asMICpggu1G09crkaZMtjnPQkWOX8aka/6znPEGFFn2qH5e1PH/AjfWz
-         6WvPAvlpUHnZJLjF+TOCpK04bSgjpy3O88t1MXoc=
-Received: from DLEE108.ent.ti.com (dlee108.ent.ti.com [157.170.170.38])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 00ENesmW051846
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 14 Jan 2020 17:40:54 -0600
-Received: from DLEE104.ent.ti.com (157.170.170.34) by DLEE108.ent.ti.com
- (157.170.170.38) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Tue, 14
- Jan 2020 17:40:54 -0600
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE104.ent.ti.com
- (157.170.170.34) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Tue, 14 Jan 2020 17:40:54 -0600
-Received: from [128.247.58.153] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 00ENerel111270;
-        Tue, 14 Jan 2020 17:40:54 -0600
-Subject: Re: [PATCH v2] rpmsg: core: add API to get MTU
-To:     Arnaud POULIQUEN <arnaud.pouliquen@st.com>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
+        Tue, 14 Jan 2020 18:41:14 -0500
+Received: by mail-ot1-f66.google.com with SMTP id a15so14459943otf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2020 15:41:14 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=D7XYS5juFiA+mkmXFcQrSAVcdM9zGgJea2kJ5TJPO6Q=;
+        b=Potc/O1zuSHOXIGX8k4LGtH0jrLuhrjfKFuXCkJZroB80tJ6+cVf7BdAZXicvs74So
+         VOgZ1IQe8JxuQED8Gmf7nQbBKq7c3V4kQG+8Jdt7VAIBYgKOyyivFslH7b/8B0NaR/KM
+         gGIsOHV6auv6wSYfOkRrBCKFuT+l3SNGucRfLFlNnkvFxbqCR83MHdweaK2v00jvepDM
+         Q8uP4ztfnV1hKQ70l4cwE/7hheLD7eLyv1TXNCnXyl0TltOeyioeeMfpP4vrewFn1Ur4
+         vUY0cCFQnwi4NebQGsrig7afn8HoV7vq039JO9AnmV+YQu6ApuaEBFZx3uCH48HxE2J3
+         7HYg==
+X-Gm-Message-State: APjAAAUcAT0DutjwhICo+kqW6cVFQS7J56lkSbkmvXBU4mAwfFAcqVrR
+        3Q1ygnygdVheNHBs9iFzSKZZ94A=
+X-Google-Smtp-Source: APXvYqzlR0y2FGxrP40qoBIJ4+F3vxwle4TVcTZVPiKMcAHygtgmgKcT42lqW1KRUlWlsRXoLdFLUw==
+X-Received: by 2002:a05:6830:1b7b:: with SMTP id d27mr777885ote.78.1579045273234;
+        Tue, 14 Jan 2020 15:41:13 -0800 (PST)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id s145sm5088895oie.44.2020.01.14.15.41.11
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jan 2020 15:41:11 -0800 (PST)
+Received: from rob (uid 1000)
+        (envelope-from rob@rob-hp-laptop)
+        id 2209ae
+        by rob-hp-laptop (DragonFly Mail Agent v0.11);
+        Tue, 14 Jan 2020 17:41:10 -0600
+Date:   Tue, 14 Jan 2020 17:41:10 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-CC:     Fabien DESSENNE <fabien.dessenne@st.com>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-References: <20191113172249.32412-1-arnaud.pouliquen@st.com>
- <f0419672-f1a5-b909-2dff-c611f852919b@st.com>
-From:   Suman Anna <s-anna@ti.com>
-Message-ID: <90bec284-6a99-e75f-1609-de763048a1e2@ti.com>
-Date:   Tue, 14 Jan 2020 17:40:53 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH v2 3/3] dt-bindings: phy: qcom,qmp: Convert QMP phy
+ bindings to yaml
+Message-ID: <20200114234110.GA24051@bogus>
+References: <1578486581-7540-1-git-send-email-sanm@codeaurora.org>
+ <1578486581-7540-4-git-send-email-sanm@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <f0419672-f1a5-b909-2dff-c611f852919b@st.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1578486581-7540-4-git-send-email-sanm@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Arnaud,
-
-On 1/13/20 7:19 AM, Arnaud POULIQUEN wrote:
-> Hi Bjorn, Suman,
+On Wed, Jan 08, 2020 at 05:59:41PM +0530, Sandeep Maheswaram wrote:
+> Convert QMP phy  bindings to DT schema format using json-schema.
 > 
-> Gentleman reminder :)
-
-Thanks for the revised version, and very sorry about the delay.  Only
-one minor nit that you missed from my comments the v6 rpmsg-tty series
-[1], otherwise I am good with the changes. See below.
-
-FWIW, I have already been using this patch on our downstream 2020 LTS
-based kernel and eliminate the the need to expose the virtio_rpmsg's
-rpmsg_hdr to rpmsg client drivers :).
-
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> ---
+>  .../devicetree/bindings/phy/qcom,qmp-phy.yaml      | 201 ++++++++++++++++++
+>  .../devicetree/bindings/phy/qcom-qmp-phy.txt       | 227 ---------------------
+>  2 files changed, 201 insertions(+), 227 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
 > 
-> Thank in advance,
-> 
-> Arnaud
-> 
-> On 11/13/19 6:22 PM, Arnaud Pouliquen wrote:
->> Return the rpmsg buffer MTU for sending message, so rpmsg users
->> can split a long message in several sub rpmsg buffers.
->>
->> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@st.com>
->> ---
->>  V1 to V2
->>
->>   V1 patch:https://lore.kernel.org/patchwork/patch/1124684/
->>   - Change patch title,
->>   - as not solution today to support MTU on GLINK make ops optional,
->>     RPMsg client API returns -ENOTSUPP in this case,
->>   - suppress smd and glink patches.
->> ---
->>  drivers/rpmsg/rpmsg_core.c       | 21 +++++++++++++++++++++
->>  drivers/rpmsg/rpmsg_internal.h   |  2 ++
->>  drivers/rpmsg/virtio_rpmsg_bus.c | 10 ++++++++++
->>  include/linux/rpmsg.h            | 10 ++++++++++
->>  4 files changed, 43 insertions(+)
->>
->> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
->> index e330ec4dfc33..a6ef54c4779a 100644
->> --- a/drivers/rpmsg/rpmsg_core.c
->> +++ b/drivers/rpmsg/rpmsg_core.c
->> @@ -283,6 +283,27 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->>  }
->>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
->>  
->> +/**
->> + * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
->> + * @ept: the rpmsg endpoint
->> + *
->> + * This function returns maximum buffer size available for a single message.
->> + *
->> + * Return: the maximum transmission size on success and an appropriate error
->> + * value on failure.
->> + */
->> +
->> +ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
->> +{
->> +	if (WARN_ON(!ept))
->> +		return -EINVAL;
->> +	if (!ept->ops->get_mtu)
->> +		return -ENOTSUPP;
->> +
->> +	return ept->ops->get_mtu(ept);
->> +}
->> +EXPORT_SYMBOL(rpmsg_get_mtu);
->> +
->>  /*
->>   * match an rpmsg channel with a channel info struct.
->>   * this is used to make sure we're not creating rpmsg devices for channels
->> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
->> index 3fc83cd50e98..0e56e046f5c6 100644
->> --- a/drivers/rpmsg/rpmsg_internal.h
->> +++ b/drivers/rpmsg/rpmsg_internal.h
->> @@ -47,6 +47,7 @@ struct rpmsg_device_ops {
->>   * @trysendto:		see @rpmsg_trysendto(), optional
->>   * @trysend_offchannel:	see @rpmsg_trysend_offchannel(), optional
->>   * @poll:		see @rpmsg_poll(), optional
->> + * @get_mtu:		see @get_mpu(), optional
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+> new file mode 100644
+> index 0000000..6eb00f5
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+> @@ -0,0 +1,201 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/phy/qcom,qmp-phy.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm QMP PHY controller
+> +
+> +maintainers:
+> +  - Manu Gautam <mgautam@codeaurora.org>
+> +
+> +description:
+> +  QMP phy controller supports physical layer functionality for a number of
+> +  controllers on Qualcomm chipsets, such as, PCIe, UFS, and USB.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,ipq8074-qmp-pcie-phy
+> +      - qcom,ipq8074-qmp-pcie-phy
+> +      - qcom,msm8996-qmp-pcie-phy
+> +      - qcom,msm8996-qmp-usb3-phy
+> +      - qcom,msm8998-qmp-usb3-phy
+> +      - qcom,msm8998-qmp-ufs-phy
+> +      - qcom,msm8998-qmp-pcie-phy
+> +      - qcom,sc7180-qmp-usb3-phy
+> +      - qcom,sdm845-qmp-usb3-phy
+> +      - qcom,sdm845-qmp-usb3-uni-phy
+> +      - qcom,sdm845-qmp-ufs-phy
+> +      - qcom,sm8150-qmp-ufs-phy
+> +
+> +  reg:
+> +    minItems: 1
+> +    items:
+> +      - description: Address and length of PHY's common serdes block.
+> +      - description: Address and length of the DP_COM control block.
+> +
+> +  reg-names:
+> +    items:
+> +      - const: reg-base
+> +      - const: dp_com
+> +
+> +  "#clock-cells":
+> +     enum: [ 1, 2 ]
+> +
+> +  "#address-cells":
+> +    enum: [ 1, 2 ]
+> +
+> +  "#size-cells":
+> +    enum: [ 1, 2 ]
+> +
+> +  clocks:
+> +    anyOf:
 
-In the description for the ops, 'mpu' is a typo. My earlier comment was
-essentially,
-%s/see @get_mpu()/see @rpmsg_get_mtu()/
+Should be oneOf rather than anyOf. Did oneOf not work?
 
-regards
-Suman
+> +      - items:
+> +        - description: Phy aux clock.
+> +        - description: Phy config clock.
+> +        - description: 19.2 MHz ref clk.
+> +        - description: Phy common block aux clock.
 
-[1] https://patchwork.kernel.org/patch/11130209/
+These should be indented 2 more spaces.
 
->>   *
->>   * Indirection table for the operations that a rpmsg backend should implement.
->>   * In addition to @destroy_ept, the backend must at least implement @send and
->> @@ -66,6 +67,7 @@ struct rpmsg_endpoint_ops {
->>  			     void *data, int len);
->>  	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
->>  			     poll_table *wait);
->> +	ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
->>  };
->>  
->>  int rpmsg_register_device(struct rpmsg_device *rpdev);
->> diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
->> index 376ebbf880d6..6e48fdf24555 100644
->> --- a/drivers/rpmsg/virtio_rpmsg_bus.c
->> +++ b/drivers/rpmsg/virtio_rpmsg_bus.c
->> @@ -175,6 +175,7 @@ static int virtio_rpmsg_trysendto(struct rpmsg_endpoint *ept, void *data,
->>  				  int len, u32 dst);
->>  static int virtio_rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src,
->>  					   u32 dst, void *data, int len);
->> +static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept);
->>  
->>  static const struct rpmsg_endpoint_ops virtio_endpoint_ops = {
->>  	.destroy_ept = virtio_rpmsg_destroy_ept,
->> @@ -184,6 +185,7 @@ static const struct rpmsg_endpoint_ops virtio_endpoint_ops = {
->>  	.trysend = virtio_rpmsg_trysend,
->>  	.trysendto = virtio_rpmsg_trysendto,
->>  	.trysend_offchannel = virtio_rpmsg_trysend_offchannel,
->> +	.get_mtu = virtio_rpmsg_get_mtu,
->>  };
->>  
->>  /**
->> @@ -699,6 +701,14 @@ static int virtio_rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src,
->>  	return rpmsg_send_offchannel_raw(rpdev, src, dst, data, len, false);
->>  }
->>  
->> +static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept)
->> +{
->> +	struct rpmsg_device *rpdev = ept->rpdev;
->> +	struct virtio_rpmsg_channel *vch = to_virtio_rpmsg_channel(rpdev);
->> +
->> +	return vch->vrp->buf_size - sizeof(struct rpmsg_hdr);
->> +}
->> +
->>  static int rpmsg_recv_single(struct virtproc_info *vrp, struct device *dev,
->>  			     struct rpmsg_hdr *msg, unsigned int len)
->>  {
->> diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
->> index 9fe156d1c018..88d7892ca93d 100644
->> --- a/include/linux/rpmsg.h
->> +++ b/include/linux/rpmsg.h
->> @@ -135,6 +135,8 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->>  __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
->>  			poll_table *wait);
->>  
->> +ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
->> +
->>  #else
->>  
->>  static inline int register_rpmsg_device(struct rpmsg_device *dev)
->> @@ -242,6 +244,14 @@ static inline __poll_t rpmsg_poll(struct rpmsg_endpoint *ept,
->>  	return 0;
->>  }
->>  
->> +static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
->> +{
->> +	/* This shouldn't be possible */
->> +	WARN_ON(1);
->> +
->> +	return -ENXIO;
->> +}
->> +
->>  #endif /* IS_ENABLED(CONFIG_RPMSG) */
->>  
->>  /* use a macro to avoid include chaining to get THIS_MODULE */
->>
+> +      - items:
+> +        - description: Phy aux clock.
+> +        - description: Phy config clock.
+> +        - description: 19.2 MHz ref clk.
 
+This can be dropped if you add 'minItems: 3' to the 1st case.
+
+Then really, you should have an if/then to define which compatibles 
+require 4 items.
+
+> +      - items:
+> +        - description: 19.2 MHz ref clk.
+> +        - description: Phy reference aux clock.
+> +      - items:
+> +        - description: Phy reference aux clock.
+> +
+> +  clock-names:
+> +    anyOf:
+
+oneOf
+
+> +      - items:
+> +        - const: aux
+> +        - const: cfg_ahb
+> +        - const: ref
+> +        - const: com_aux
+
+Indent 2 more...
+
+> +      - items:
+> +        - const: aux
+> +        - const: cfg_ahb
+> +        - const: ref
+> +      - items:
+> +        - const: ref
+> +        - const: ref_aux
+> +      - items:
+> +        - const: ref_aux
+> +
+> +  resets:
+> +    anyOf:
+
+oneOf
+
+> +      - items:
+> +        - description: reset of phy block.
+> +        - description: phy common block reset.
+> +        - description: ahb cfg block reset.
+> +      - items:
+> +        - description: reset of phy block.
+> +        - description: phy common block reset.
+> +      - items:
+> +        - description: ahb cfg block reset.
+> +        - description: PHY reset in the UFS controller.
+> +      - items:
+> +        - description: reset of phy block.
+> +      - items:
+> +        - description: PHY reset in the UFS controller.
+> +
+> +  reset-names:
+> +    anyOf:
+> +      - items:
+> +        - const: phy
+> +        - const: common
+> +        - const: cfg
+> +      - items:
+> +        - const: phy
+> +        - const: common
+> +      - items:
+> +        - const: ahb
+> +        - const: ufsphy
+> +      - items:
+> +        - const: phy
+> +      - items:
+> +        - const: ufsphy
+> +
+> +  vdda-phy-supply:
+> +    description:
+> +        Phandle to a regulator supply to PHY core block.
+> +
+> +  vdda-pll-supply:
+> +    description:
+> +        Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +
+> +  vddp-ref-clk-supply:
+> +    description:
+> +        Phandle to a regulator supply to any specific refclk
+> +        pll block.
+
+You need patternProperties with the child nodes defined.
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - "#clock-cells"
+> +  - "#address-cells"
+> +  - "#size-cells"
+> +  - clocks
+> +  - clock-names
+> +  - resets
+> +  - reset-names
+> +  - vdda-phy-supply
+> +  - vdda-pll-supply
+
+Need a 'additionalProperties: false' here.
+
+> +
+> +if:
+> +  properties:
+> +    compatible:
+> +      contains:
+> +        anyOf:
+> +          - items:
+> +            - const: qcom,sdm845-qmp-usb3-phy
+> +          - items:
+> +            - const: qcom,sc7180-qmp-usb3-phy
+> +then:
+> +  required:
+> +    - reg-names
+> +
+> +#Required nodes:
+> +#Each device node of QMP phy is required to have as many child nodes as
+> +#the number of lanes the PHY has.
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-sc7180.h>
+> +    usb_1_qmpphy: phy-wrapper@88e9000 {
+> +        compatible = "qcom,sc7180-qmp-usb3-phy";
+> +        reg = <0 0x088e9000 0 0x18c>,
+> +              <0 0x088e8000 0 0x38>;
+> +        reg-names = "reg-base", "dp_com";
+> +        #clock-cells = <1>;
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
+> +                 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
+> +                 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
+> +                 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
+> +        clock-names = "aux", "cfg_ahb", "ref", "com_aux";
+> +
+> +        resets = <&gcc GCC_USB3_PHY_PRIM_BCR>;
+> +        reset-names = "phy";
+> +
+> +        vdda-phy-supply = <&vreg_l3c_1p2>;
+> +        vdda-pll-supply = <&vreg_l4a_0p8>;
+> +
+> +        usb_1_ssphy: phy@88e9200 {
+> +            reg = <0 0x088e9200 0 0x128>,
+> +                  <0 0x088e9400 0 0x200>,
+> +                  <0 0x088e9c00 0 0x218>,
+> +                  <0 0x088e9600 0 0x128>,
+> +                  <0 0x088e9800 0 0x200>,
+> +                  <0 0x088e9a00 0 0x18>;
+> +            #clock-cells = <0>;
+> +            #phy-cells = <0>;
+> +            clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> +            clock-names = "pipe0";
+> +            clock-output-names = "usb3_phy_pipe_clk_src";
+> +        };
+> +    };
