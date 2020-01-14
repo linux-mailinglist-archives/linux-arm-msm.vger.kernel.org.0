@@ -2,171 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C033E13B5AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 00:11:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BA97013B5F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 00:36:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728769AbgANXLG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jan 2020 18:11:06 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:54467 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728759AbgANXLG (ORCPT
+        id S1728769AbgANXgX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jan 2020 18:36:23 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:43956 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728650AbgANXgX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jan 2020 18:11:06 -0500
-Received: by mail-pj1-f66.google.com with SMTP id kx11so6402049pjb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2020 15:11:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=CS2jApvFb3S3JDzvv3Eoi/FOtO442LOnLZxI8A+XLvU=;
-        b=L02tMrWZj0xaO61Jny+KX0dMMUNf/Qi1ZERiYigEZzD76rIz/gjTNOLKviF/9STrA3
-         dXJhrhdJ3Ss0R2DI3f/gFnS0EjQNtVIgSKDw8ncpqqQbakkyvMntRS77GWcLfOzr3tBi
-         8P7+TwI6GkNhqGefgxqgGyQZhYTyBT6ZDyE0c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=CS2jApvFb3S3JDzvv3Eoi/FOtO442LOnLZxI8A+XLvU=;
-        b=sPwyCFSqd5CKZ3ImeHX5JdX6cqglwQYo/tE1P62cDUzAUgi6aw4xDwHS3CetzwQsTr
-         Hhtkt6acNaRo9vdJCWSVwx8OWZk8XQB4fomv8V0sAGcwFTPIeyyGAZMwpm3yI23QXGmN
-         TIR4ncnG0oYEbeLu0bTuamfaB0VwUolxPrIFFwsGuCf2PVjDB00PmfqKajMP34jd/PF7
-         x7ux+Jle5aR5PJZEnC0nr5HxBMFRjDStpm3iuYdBvVdC5k+L56S1zoLUwfWibvk6Uw0V
-         4CNjExxpbYJXuUQ6efAw2Zx5zg2kEzq+idTkuV5Ep15JSURA/nSczXE9iJar0cayKZlF
-         5/KA==
-X-Gm-Message-State: APjAAAUHlRQzSPqrKGMXBiS1vv3XQ5MnAYMYqF5sH0zsShAiyx0QaExb
-        6UwnOODbhrfO/Fv7rHn7glZ1EA==
-X-Google-Smtp-Source: APXvYqynG6l761uuqSHEb49BAp2s5XUbDF125f8m/zx3CsoIimwVjlhfUtEyMjC6RefIdJ8xyoPSIg==
-X-Received: by 2002:a17:90a:31cc:: with SMTP id j12mr31131379pjf.103.1579043465324;
-        Tue, 14 Jan 2020 15:11:05 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id z19sm18707231pfn.49.2020.01.14.15.11.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jan 2020 15:11:04 -0800 (PST)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, Thierry Reding <treding@nvidia.com>,
-        Brian Masney <masneyb@onstation.org>,
+        Tue, 14 Jan 2020 18:36:23 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1579044983; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=7+8Ma8yfcl2diOB4I5famBBLS13KA3B5gNUsRjC85BE=; b=tgOcFVfA4qpnrmUsjd7xH5z4P2sUDqkFNJB4mR+hv2pzWC+6fi8zNMZkuZqgBPfnIxzU4bee
+ /ANYff1hnVWZ6QliXsc4eTr8i9rYf/jcdkimnV358QQjZ/E5unIX9XUNjvHJ43QX+Xz4JgtE
+ uqbe9mXmpmFjqEKe7aNS4zTo790=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e1e5076.7fad57bb9960-smtp-out-n02;
+ Tue, 14 Jan 2020 23:36:22 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A47C1C4479F; Tue, 14 Jan 2020 23:36:21 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.46.162.237] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: daidavid1)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6722CC433CB;
+        Tue, 14 Jan 2020 23:36:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6722CC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=daidavid1@codeaurora.org
+Subject: Re: [PATCH v1 0/4] Split SDM845 interconnect nodes and consolidate
+ RPMh support
+To:     Evan Green <evgreen@google.com>
+Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, sboyd@kernel.org,
         Lina Iyer <ilina@codeaurora.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH] gpiolib: Set lockdep class for hierarchical irq domains
-Date:   Tue, 14 Jan 2020 15:11:03 -0800
-Message-Id: <20200114231103.85641-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.25.0.rc1.283.g88dfdc4193-goog
+        Sean Sweeney <seansw@qti.qualcomm.com>,
+        Alex Elder <elder@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-pm@vger.kernel.org
+References: <1576475925-20601-1-git-send-email-daidavid1@codeaurora.org>
+ <CAE=gft6sxsZfvPZZXKqbEMjCH_hGKXp_1MS3qTAz6hmMPfn09A@mail.gmail.com>
+From:   David Dai <daidavid1@codeaurora.org>
+Message-ID: <df9e58ef-7b97-7456-09fb-c13f53207cbb@codeaurora.org>
+Date:   Tue, 14 Jan 2020 15:36:19 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAE=gft6sxsZfvPZZXKqbEMjCH_hGKXp_1MS3qTAz6hmMPfn09A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I see the following lockdep splat in the qcom pinctrl driver when
-attempting to suspend the device.
+Hi Evan,
 
- ============================================
- WARNING: possible recursive locking detected
- 5.4.2 #2 Tainted: G S
- --------------------------------------------
- cat/6536 is trying to acquire lock:
- ffffff814787ccc0 (&irq_desc_lock_class){-.-.}, at: __irq_get_desc_lock+0x64/0x94
+On 1/7/2020 3:45 PM, Evan Green wrote:
+> On Sun, Dec 15, 2019 at 9:59 PM David Dai <daidavid1@codeaurora.org> wrote:
+>> While there are no current consumers of the SDM845 interconnect device in
+>> devicetree, take this opportunity to redefine the interconnect device nodes
+>> as the previous definitions of using a single child node under the apps_rsc
+>> device did not accurately capture the description of the hardware.
+>> The Network-On-Chip (NoC) interconnect devices should be represented in a
+>> manner akin to QCS404 platforms[1] where there is a separation of NoC devices
+>> and its RPM/RPMh counterparts.
+>>
+>> The bcm-voter devices are representing the RPMh devices that the interconnect
+>> providers need to communicate with and there can be more than one instance of
+>> the Bus Clock Manager (BCM) which can live under different instances of Resource
+>> State Coordinators (RSC). There are display use cases where consumers may need
+>> to target a different bcm-voter (Some display specific RSC) than the default,
+>> and there needs to be a way to represent this connection in devicetree.
+> So for my own understanding, the problem here is that things want to
+> vote for interconnect bandwidth within a specific RSC context? Where
+> normally the RSC context is simply "Apps@EL1", we might also have
+> "Apps@EL3" for trustzone, or in the case we're coding for,
+> "display-specific RSC context". I guess this context might stay on
+> even if Apps@EL1 votes are entirely discounted or off?
+That's correct, the state of those votes are tied to the state of that 
+execution environment. So even if the Apps CPU goes into a low power 
+mode, other context specific vote will still stick.
+>   So then would
+> there be an additional interconnect provider for "display context RSC"
+> next to apps_bcm_voter? Would that expose all the same nodes as
+> apps_bcm_voter, or a different set of nodes?
 
- but task is already holding lock:
- ffffff81436740c0 (&irq_desc_lock_class){-.-.}, at: __irq_get_desc_lock+0x64/0x94
+We trim down the topology to what each execution environment needs, so 
+each EE really only "sees" a subset of the entire SoC's topology. In 
+this specific case, the display context RSC would only expose a small 
+subset of the topology that Apps@EL1 would see.
 
- other info that might help us debug this:
-  Possible unsafe locking scenario:
+>
+> Assuming it's exposing some of the same nodes as apps_bcm_voter, the
+> other way to do this would be increasing #interconnect-cells, and
+> putting the RSC context there. Did you choose not to go that way
+> because nearly all the clients would end up specifying the same thing
+> of "Apps@EL1"?
+That's correct, the majority of the consumers will stay with default 
+Apps@EL1 context.
 
-        CPU0
-        ----
-   lock(&irq_desc_lock_class);
-   lock(&irq_desc_lock_class);
-
-  *** DEADLOCK ***
-
-  May be due to missing lock nesting notation
-
- 7 locks held by cat/6536:
-  #0: ffffff8140e0c420 (sb_writers#7){.+.+}, at: vfs_write+0xc8/0x19c
-  #1: ffffff8121eec480 (&of->mutex){+.+.}, at: kernfs_fop_write+0x128/0x1f4
-  #2: ffffff8147cad668 (kn->count#263){.+.+}, at: kernfs_fop_write+0x130/0x1f4
-  #3: ffffffd011446000 (system_transition_mutex){+.+.}, at: pm_suspend+0x108/0x354
-  #4: ffffff814302b970 (&dev->mutex){....}, at: __device_suspend+0x16c/0x420
-  #5: ffffff81436740c0 (&irq_desc_lock_class){-.-.}, at: __irq_get_desc_lock+0x64/0x94
-  #6: ffffff81479b8c10 (&pctrl->lock){....}, at: msm_gpio_irq_set_wake+0x48/0x7c
-
- stack backtrace:
- CPU: 4 PID: 6536 Comm: cat Tainted: G S                5.4.2 #2
- Call trace:
-  dump_backtrace+0x0/0x174
-  show_stack+0x20/0x2c
-  dump_stack+0xdc/0x144
-  __lock_acquire+0x52c/0x2268
-  lock_acquire+0x1dc/0x220
-  _raw_spin_lock_irqsave+0x64/0x80
-  __irq_get_desc_lock+0x64/0x94
-  irq_set_irq_wake+0x40/0x144
-  msm_gpio_irq_set_wake+0x5c/0x7c
-  set_irq_wake_real+0x40/0x5c
-  irq_set_irq_wake+0x70/0x144
-  cros_ec_rtc_suspend+0x38/0x4c
-  platform_pm_suspend+0x34/0x60
-  dpm_run_callback+0x64/0xcc
-  __device_suspend+0x314/0x420
-  dpm_suspend+0xf8/0x298
-  dpm_suspend_start+0x84/0xb4
-  suspend_devices_and_enter+0xbc/0x628
-  pm_suspend+0x214/0x354
-  state_store+0xb0/0x108
-  kobj_attr_store+0x14/0x24
-  sysfs_kf_write+0x4c/0x64
-  kernfs_fop_write+0x158/0x1f4
-  __vfs_write+0x54/0x18c
-  vfs_write+0xdc/0x19c
-  ksys_write+0x7c/0xe4
-  __arm64_sys_write+0x20/0x2c
-  el0_svc_common+0xa8/0x160
-  el0_svc_compat_handler+0x2c/0x38
-  el0_svc_compat+0x8/0x10
-
-This is because the msm_gpio_irq_set_wake() function calls
-irq_set_irq_wake() as a backup in case the irq comes in during the path
-to idle. Given that we're calling irqchip functions from within an
-irqchip we need to set the lockdep class to be different for this child
-controller vs. the default one that the parent irqchip gets.
-
-This used to be done before this driver was converted to hierarchical
-irq domains in commit e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in
-hierarchy") via the gpiochip_irq_map() function. With hierarchical irq
-domains this function has been replaced by
-gpiochip_hierarchy_irq_domain_alloc(). Therefore, set the lockdep class
-like was done previously in the irq domain path so we can avoid this
-lockdep warning.
-
-Fixes: fdd61a013a24 ("gpio: Add support for hierarchical IRQ domains")
-Cc: Thierry Reding <treding@nvidia.com>
-Cc: Brian Masney <masneyb@onstation.org>
-Cc: Lina Iyer <ilina@codeaurora.org>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Maulik Shah <mkshah@codeaurora.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/gpio/gpiolib.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 967371377a9d..dcdbdddb3396 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -2040,6 +2040,7 @@ static int gpiochip_hierarchy_irq_domain_alloc(struct irq_domain *d,
- 				     parent_type);
- 	chip_info(gc, "alloc_irqs_parent for %d parent hwirq %d\n",
- 		  irq, parent_hwirq);
-+	irq_set_lockdep_class(irq, gc->irq.lock_key, gc->irq.request_key);
- 	ret = irq_domain_alloc_irqs_parent(d, irq, 1, &parent_fwspec);
- 	if (ret)
- 		chip_err(gc,
 -- 
-Sent by a computer, using git, on the internet
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
