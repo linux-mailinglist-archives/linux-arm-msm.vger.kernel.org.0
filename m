@@ -2,208 +2,312 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 538A513B0C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2020 18:24:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 974CE13B0E1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2020 18:29:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727285AbgANRYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jan 2020 12:24:36 -0500
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:44240 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726053AbgANRYg (ORCPT
+        id S1728787AbgANR3N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jan 2020 12:29:13 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:34913 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726270AbgANR3N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jan 2020 12:24:36 -0500
-Received: by mail-ed1-f54.google.com with SMTP id bx28so12606383edb.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2020 09:24:34 -0800 (PST)
+        Tue, 14 Jan 2020 12:29:13 -0500
+Received: by mail-lf1-f66.google.com with SMTP id 15so10477270lfr.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2020 09:29:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=ExWR3NxwjvVwqdpV466QGOKUKw0k3X+0mcFDLohXg1g=;
-        b=GMungYyV7wOTX1rYqMyxszAJKBxfaDFoowd6jBU3qd/SoXVT2gyWi88vNMzreXqEzI
-         MykGKkTiCMGxkgixQvVfu0jjVG2khsgWPdCqOeQ8JoFHCI096cGsaey6fTPlGQZNDHee
-         6BUjJ4P7vsBl7iRBMF2jpsZ8aUvOc7zGntT7uZIuj75ZgpXsn1bjX4vFcYiwbl/VYTMY
-         KaY6q21UaeeEvhlINawtnk53OJ3M2A55tDw4S4mWZR/zXCOHPxw7+uQBIfd1bbrElOvC
-         PR9KlYzDyPGfNFgcjU5ukrqZwrrl1M8S6+3ll2H5HdQe8qcjIB/ytkSwuKzOrY6lq+gW
-         jDLg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cOPoDyHHe7c/QrCl65j4vL8tiyrDQaiPvJ1cy+BrJy8=;
+        b=R6l/wPkAwLaqTFmLQ5g4E4C2zNwYsVHlYye65aXueZZG0RJf/bWtt5T90zPqXT9SPJ
+         x2Fyj/sbTy0xpxGqjnCEi9woHbbY8pfBVDGaa/mQoQ3g/IlHZugoHPv5x59825Guaal4
+         tZ+22HyB/vklOnk4e1rDHHMR/yePT3mZPYR6A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=ExWR3NxwjvVwqdpV466QGOKUKw0k3X+0mcFDLohXg1g=;
-        b=lmJqRX7SkK+E1GtPt2JibyvdnGanmLaa7+TYK6BRhKEuV4JK/LouS/NiX4eppjHssa
-         nrrnfoAKb1KNANMTEtDV940BYKWH/UwY6zopcA2QaXfSaPnRqBNA4kGF3bA7q1T0mImp
-         tmNdNUXImquoM+jsP89ZZMn/09V9XkIO+eN8A/OLkjbYVzN7HWgmBO5z3bC/ktkVbYRv
-         LGJDUFOvM4mzAhrd55rdO99saqS6Gj55hCxekBYYTBbl/o86bzmQflv3Fm14OQE1YB3w
-         r54bPNW5sVNRkmLiCvBBFt2rEWvZdqhIQoLDcCkX5gpQPvXQx+qMne0TXAN4syu91e8A
-         HnVg==
-X-Gm-Message-State: APjAAAX9TdlxbH8r6IWGevG4EH3Iq+sIMJV0YkC0WAqebR7UDuZ2NpjW
-        ijGHyRxC6RLHlGRQMgDd9NMkikFiaKfnVq5YWk0RgwdQgUo=
-X-Google-Smtp-Source: APXvYqzWO7+ibk8CIEBmxcVycKOPJOCItIZZ64QfuIQW7YFq6IxmUN7OAtlmZ5SyRx0MBNOpfEQcSQLGHwm58dG9EdE=
-X-Received: by 2002:a50:ce56:: with SMTP id k22mr25259991edj.34.1579022673862;
- Tue, 14 Jan 2020 09:24:33 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cOPoDyHHe7c/QrCl65j4vL8tiyrDQaiPvJ1cy+BrJy8=;
+        b=c8PUmAN0D6RizwW02zSaHpuH5rMTEVSWtgrEI8JhQOOgp868xGfnHE7r1INHTbT2po
+         3SdiQrrf7PMw24+ByArMaDqyQIJnq+xgkzC/gOTGU2gHBCASoXeLWhUPv6I2eoC0iXg7
+         nWr8qZzfD2zdTnz5UsB3W5ItxiN8TKskvUNBQ4Z6I6BfxYLwatYh4PER+uBurwBLmst/
+         mFXOvRL0maeI1VrCiEBigIZerTjhbg2N//nPBafLKQmEpCLvckINl9aJ5agmHjlYCP7c
+         +3JWWbiuba4NVYZhIeeLSajqox25+s6y5ARl2zt3wVa9tHnMl06u49X+mqcNWwPSKb5g
+         IyHQ==
+X-Gm-Message-State: APjAAAXgAY+5P1zOtnoH0Qa5wB8EI/AEtFQjHP94RCpkKWT7kbV9CrTD
+        B+8J8R2XEwOclDm1MTAcEYDKaItfqI8=
+X-Google-Smtp-Source: APXvYqxauT40yyh21JyniAxSLtzLK9EnsGcuVJ7FJHsy01PYAEZeK+/HZtVqfBv9J3yTqx8X6Wg3kw==
+X-Received: by 2002:ac2:5498:: with SMTP id t24mr2543729lfk.84.1579022949232;
+        Tue, 14 Jan 2020 09:29:09 -0800 (PST)
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com. [209.85.208.182])
+        by smtp.gmail.com with ESMTPSA id l64sm7603419lfd.30.2020.01.14.09.29.08
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Jan 2020 09:29:08 -0800 (PST)
+Received: by mail-lj1-f182.google.com with SMTP id h23so15286489ljc.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2020 09:29:08 -0800 (PST)
+X-Received: by 2002:a2e:b017:: with SMTP id y23mr15701704ljk.229.1579022947877;
+ Tue, 14 Jan 2020 09:29:07 -0800 (PST)
 MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 14 Jan 2020 09:24:22 -0800
-Message-ID: <CAF6AEGvv03ifuP0tp7-dmqZtr1iS=s8Vc=az8BNGtEoSMD-dkw@mail.gmail.com>
-Subject: [pull] drm/msm: msm-next for 5.6
-To:     Dave Airlie <airlied@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+References: <20191219054506.20565-1-sibis@codeaurora.org> <20191219054506.20565-3-sibis@codeaurora.org>
+ <CAE=gft56MhTCBX+EQt8=DMdK96Wj8Kg4ww7TbLjj_oON0zbKyw@mail.gmail.com> <4a72f7691f9ee1d887bca9b1109da6df@codeaurora.org>
+In-Reply-To: <4a72f7691f9ee1d887bca9b1109da6df@codeaurora.org>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Tue, 14 Jan 2020 09:28:31 -0800
+X-Gmail-Original-Message-ID: <CAE=gft4Mys6qLVRb9O3YrXhcBM+YQYovHK51ZJRSgSvv3UDpfw@mail.gmail.com>
+Message-ID: <CAE=gft4Mys6qLVRb9O3YrXhcBM+YQYovHK51ZJRSgSvv3UDpfw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] remoteproc: mss: q6v5-mss: Add modem support on SC7180
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben Cohen <ohad@wizery.com>,
+        Mark Rutland <mark.rutland@arm.com>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Jordan Crouse <jcrouse@codeaurora.org>
+        linux-remoteproc@vger.kernel.org,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave,
+On Mon, Jan 13, 2020 at 11:06 PM Sibi Sankar <sibis@codeaurora.org> wrote:
+>
+> Hey Evan,
+>
+> Thanks for the review!
+> sry for the delayed response
+>
+> On 2020-01-08 02:51, Evan Green wrote:
+> > On Wed, Dec 18, 2019 at 9:45 PM Sibi Sankar <sibis@codeaurora.org>
+> > wrote:
+> >>
+> >> Add the out of reset sequence support for modem sub-system on SC7180
+> >> SoCs. It requires access to an additional halt nav register to put
+> >> the modem back into reset.
+> >>
+> >> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> >> ---
+> >>  drivers/remoteproc/qcom_q6v5_mss.c | 199
+> >> ++++++++++++++++++++++++++++-
+> >>  1 file changed, 198 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c
+> >> b/drivers/remoteproc/qcom_q6v5_mss.c
+> >> index 164fc2a53ef11..51f451311f5fc 100644
+> >> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> >> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> >> @@ -68,6 +68,9 @@
+> >>  #define AXI_HALTREQ_REG                        0x0
+> >>  #define AXI_HALTACK_REG                        0x4
+> >>  #define AXI_IDLE_REG                   0x8
+> >> +#define NAV_AXI_HALTREQ_BIT            BIT(0)
+> >> +#define NAV_AXI_HALTACK_BIT            BIT(1)
+> >> +#define NAV_AXI_IDLE_BIT               BIT(2)
+> >>
+> >>  #define HALT_ACK_TIMEOUT_MS            100
+> >>
+> >> @@ -101,9 +104,11 @@
+> >>  #define QDSP6SS_ACC_OVERRIDE_VAL               0x20
+> >>
+> >>  /* QDSP6v65 parameters */
+> >> +#define QDSP6SS_CORE_CBCR              0x20
+> >>  #define QDSP6SS_SLEEP                   0x3C
+> >>  #define QDSP6SS_BOOT_CORE_START         0x400
+> >>  #define QDSP6SS_BOOT_CMD                0x404
+> >> +#define QDSP6SS_BOOT_STATUS            0x408
+> >>  #define SLEEP_CHECK_MAX_LOOPS           200
+> >>  #define BOOT_FSM_TIMEOUT                10000
+> >>
+> >> @@ -131,6 +136,7 @@ struct rproc_hexagon_res {
+> >>         int version;
+> >>         bool need_mem_protection;
+> >>         bool has_alt_reset;
+> >> +       bool has_halt_nav;
+> >>  };
+> >>
+> >>  struct q6v5 {
+> >> @@ -141,9 +147,14 @@ struct q6v5 {
+> >>         void __iomem *rmb_base;
+> >>
+> >>         struct regmap *halt_map;
+> >> +       struct regmap *halt_nav_map;
+> >> +       struct regmap *conn_map;
+> >> +
+> >>         u32 halt_q6;
+> >>         u32 halt_modem;
+> >>         u32 halt_nc;
+> >> +       u32 halt_nav;
+> >> +       u32 conn_box;
+> >>
+> >>         struct reset_control *mss_restart;
+> >>         struct reset_control *pdc_reset;
+> >> @@ -187,6 +198,7 @@ struct q6v5 {
+> >>         struct qcom_sysmon *sysmon;
+> >>         bool need_mem_protection;
+> >>         bool has_alt_reset;
+> >> +       bool has_halt_nav;
+> >>         int mpss_perm;
+> >>         int mba_perm;
+> >>         const char *hexagon_mdt_image;
+> >> @@ -198,6 +210,7 @@ enum {
+> >>         MSS_MSM8974,
+> >>         MSS_MSM8996,
+> >>         MSS_MSM8998,
+> >> +       MSS_SC7180,
+> >>         MSS_SDM845,
+> >>  };
+> >>
+> >> @@ -396,6 +409,18 @@ static int q6v5_reset_assert(struct q6v5 *qproc)
+> >>                 reset_control_assert(qproc->pdc_reset);
+> >>                 ret = reset_control_reset(qproc->mss_restart);
+> >>                 reset_control_deassert(qproc->pdc_reset);
+> >> +       } else if (qproc->has_halt_nav) {
+> >> +               /* SWAR using CONN_BOX_SPARE_0 for pipeline glitch
+> >> issue */
+> >
+> > Can you elaborate more in this comment, or remove it? Right now it
+> > doesn't help me since I don't know what SWAR is, I don't see a
+>
+> SWAR -> software work around
+>
+> I'll have to stop with the dumb
+> abbreviations
 
-This time around:
+heh I've never heard that one before. SWWA?
 
-+ sc7180 display + DSI support
-+ a618 (sc7180) support
-+ more UBWC (bandwidth compression) support
-+ various cleanups to handle devices that use vs don't
-  use zap fw, etc
-+ usual random cleanups and fixes
+>
+> > reference to CONN_BOX_SPARE_0 in the code, I don't know what a
+>
+> conn_box_spare_0 is at an offset
+> 0xb3e4 in the conn_map which is
+> described in the bindings.
+>
+> > CONN_BOX is, and I don't know any details about the glitch issue :)
+>
+> lol, yes I get that the comment does
+> not give details on the glitch. It
+> was targeted towards explaining why
+> there is a deviation in the reset_
+> assert sequence from the other SoCs.
+> If you still feel the comment does
+> not add any value I can get it
+> removed.
 
+Maybe just infusing some of the clarity you described here would be enough.
 
-The following changes since commit fd6988496e79a6a4bdb514a4655d2920209eb85d:
+>
+> >
+> >> +               reset_control_assert(qproc->pdc_reset);
+> >> +               regmap_update_bits(qproc->conn_map, qproc->conn_box,
+> >> +                                  BIT(0), BIT(0));
+> >
+> > Make a register name #define for this bit?
+>
+> we'll have to make one up for it
+> since conn_box_spare_0 does not
+> have any predefined bits and seems
+> to be used to implement some missing
+> functionality.
 
-  Linux 5.5-rc4 (2019-12-29 15:29:16 -0800)
+Hm, so its functionality is controlled by firmware? Or was just
+defined super late in hardware so as to be termed spare through many
+earlier spins of the hardware? Making one up sounds fine, it's just
+nice for readability to get a sense of what exactly this bit is when
+we toggle it.
 
-are available in the Git repository at:
+>
+> >
+> >> +               regmap_update_bits(qproc->halt_nav_map,
+> >> qproc->halt_nav,
+> >> +                                  NAV_AXI_HALTREQ_BIT, 0);
+> >> +               reset_control_assert(qproc->mss_restart);
+> >> +               reset_control_deassert(qproc->pdc_reset);
+> >> +               regmap_update_bits(qproc->conn_map, qproc->conn_box,
+> >> +                                  BIT(0), 0);
+> >> +               ret = reset_control_deassert(qproc->mss_restart);
+> >>         } else {
+> >>                 ret = reset_control_assert(qproc->mss_restart);
+> >>         }
+> >> @@ -413,6 +438,8 @@ static int q6v5_reset_deassert(struct q6v5 *qproc)
+> >>                 ret = reset_control_reset(qproc->mss_restart);
+> >>                 writel(0, qproc->rmb_base + RMB_MBA_ALT_RESET);
+> >>                 reset_control_deassert(qproc->pdc_reset);
+> >> +       } else if (qproc->has_halt_nav) {
+> >> +               ret = reset_control_reset(qproc->mss_restart);
+> >>         } else {
+> >>                 ret = reset_control_deassert(qproc->mss_restart);
+> >>         }
+> >> @@ -499,6 +526,54 @@ static int q6v5proc_reset(struct q6v5 *qproc)
+> >>                         return ret;
+> >>                 }
+> >>
+> >> +               goto pbl_wait;
+> >
+> > Ick, this could benefit from a refactor that pulls those sorta-common
+> > steps "Remove IO clamp" through "Start core execution" into a helper
+> > function and then calls the new function from each case that needs it.
+> >
+> >> +       } else if (qproc->version == MSS_SC7180) {
+> >> +               val = readl(qproc->reg_base + QDSP6SS_SLEEP);
+> >> +               val |= 0x1;
+> >
+> > It'd be nice if there were defines for these magic 0x1 values in this
+> > hunk too.
+> >
+> >> +               writel(val, qproc->reg_base + QDSP6SS_SLEEP);
+> >> +
+> >> +               ret = readl_poll_timeout(qproc->reg_base +
+> >> QDSP6SS_SLEEP,
+> >> +                                        val, !(val & BIT(31)), 1,
+> >> +                                        SLEEP_CHECK_MAX_LOOPS);
+> >> +               if (ret) {
+> >> +                       dev_err(qproc->dev, "QDSP6SS Sleep clock timed
+> >> out\n");
+> >> +                       return -ETIMEDOUT;
+> >> +               }
+> >
+> > This toggling of the sleep bit is the same as sdm845, it could also be
+> > put into a helper function.
+>
+> https://patchwork.kernel.org/patch/11250301/
+> https://patchwork.kernel.org/patch/11250317/
+>
+> I did club ^^ a portion of the out of
+> reset sequence together reducing
+> code duplication initially but that
+> made the entire thing unreadable.
+>
+> The general consensus at that time
+> was to introduce a patch for sc7180
+> that is most readable and have a
+> cleanup later with a lot of helper
+> functions and less branching like
+> you suggested.
 
-  https://gitlab.freedesktop.org/drm/msm.git drm-msm-next-2020-01-14
+Sounds good.
 
-for you to fetch changes up to 5f9935f514d66ddba868e587d9e976a567232547:
+>
+> >
+> >> +
+> >> +               /* Turn on the XO clock needed for PLL setup */
+> >> +               val = readl(qproc->reg_base + QDSP6SS_XO_CBCR);
+> >> +               val |= 0x1;
+> >> +               writel(val, qproc->reg_base + QDSP6SS_XO_CBCR);
+> >> +
+> >> +               ret = readl_poll_timeout(qproc->reg_base +
+> >> QDSP6SS_XO_CBCR,
+> >> +                                        val, !(val & BIT(31)), 1,
+> >> +                                        SLEEP_CHECK_MAX_LOOPS);
+> >
+> > Nit: SLEEP_CHECK_MAX_LOOPS isn't a loop count, it should really have
+> > been named something like SLEEP_CHECK_TIMEOUT_US. Could be done in a
+> > separate change.
+>
+> I'll skip this for now. I'll
+> make sure that this gets named
+> appropriately during the
+> planned refactor.
 
-  drm/msm: Fix error about comments within a comment block (2020-01-13
-16:06:00 -0800)
-
-----------------------------------------------------------------
-Brian Masney (4):
-      dt-bindings: drm/msm/gpu: document second interconnect
-      drm/msm/gpu: add support for ocmem interconnect path
-      drm/msm/a3xx: set interconnect bandwidth vote
-      drm/msm/a4xx: set interconnect bandwidth vote
-
-Douglas Anderson (1):
-      drm/msm: Fix error about comments within a comment block
-
-Drew Davenport (6):
-      drm/msm/dpu: Remove unnecessary NULL checks
-      drm/msm/dpu: Remove unnecessary NULL checks
-      drm/msm/dpu: Remove unnecessary NULL checks
-      drm/msm/dpu: Remove unnecessary NULL check
-      drm/msm/dpu: Remove unreachable code
-      drm/msm/dpu: Remove unnecessary NULL checks
-
-Fabio Estevam (1):
-      drm/msm/adreno: Do not print error on "qcom, gpu-pwrlevels" absence
-
-Fritz Koenig (2):
-      drm/msm/dpu: Add UBWC support for RGB8888 formats
-      drm/msm/dpu: Allow UBWC on NV12
-
-Harigovindan P (2):
-      drm/msm: add DSI support for sc7180
-      drm/msm: update LANE_CTRL register value from default value
-
-John Stultz (1):
-      drm: msm: Quiet down plane errors in atomic_check
-
-Kalyan Thota (4):
-      dt-bindings: msm:disp: add sc7180 DPU variant
-      msm:disp:dpu1: add support for display for SC7180 target
-      msm:disp:dpu1: setup display datapath for SC7180 target
-      msm:disp:dpu1: add mixer selection for display topology
-
-Nathan Chancellor (1):
-      drm: msm: mdp4: Adjust indentation in mdp4_dsi_encoder_enable
-
-Rob Clark (7):
-      drm/msm/dpu: ignore NULL clocks
-      drm/msm/a6xx: restore previous freq on resume
-      drm/msm/adreno: fix zap vs no-zap handling
-      drm/msm/dsi: split clk rate setting and enable
-      drm/msm: support firmware-name for zap fw (v2)
-      drm/msm: allow zapfw to not be specified in gpulist
-      dt-bindings: drm/msm/gpu: Document firmware-name
-
-Sharat Masetty (3):
-      drm: msm: Add 618 gpu to the adreno gpu list
-      drm: msm: a6xx: Add support for A618
-      drm: msm: a6xx: Dump GBIF registers, debugbus in gpu state
-
-Shubhashree Dhar (3):
-      msm: disp: dpu1: add support to access hw irqs regs depending on revision
-      msm:disp:dpu1: add scaler support on SC7180 display
-      msm:disp:dpu1: Fix core clk rate in display driver
-
-Stephan Gerhold (1):
-      drm/msm/dsi: Delay drm_panel_enable() until dsi_mgr_bridge_enable()
-
-Stephen Boyd (1):
-      drm/msm/dpu: Mark various data tables as const
-
-Wambui Karuga (1):
-      drm/msm: use BUG_ON macro for debugging.
-
-zhengbin (4):
-      drm/msm/hdmi: Remove unneeded semicolon
-      drm/msm/mdp5: Remove unneeded semicolon
-      drm/msm/dpu: Remove unneeded semicolon in dpu_plane.c
-      drm/msm/dpu: Remove unneeded semicolon in dpu_encoder.c
-
- .../devicetree/bindings/display/msm/dpu.txt        |   4 +-
- .../devicetree/bindings/display/msm/gpu.txt        |   9 +-
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c              |   8 +
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c              |   8 +
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |  11 +-
- drivers/gpu/drm/msm/adreno/a6xx.xml.h              |  52 ++++-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |  32 ++-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |   3 +
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  81 ++++++-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |   9 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        |  52 ++++-
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h        |  16 +-
- drivers/gpu/drm/msm/adreno/adreno_device.c         |  11 +
- drivers/gpu/drm/msm/adreno/adreno_gpu.c            |  66 ++++--
- drivers/gpu/drm/msm/adreno/adreno_gpu.h            |  17 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |  15 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 186 +++++++---------
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |  73 ++-----
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |  73 +++----
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c        |  18 ++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     | 241 ++++++++++++++++++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  38 ++--
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h  |   4 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  92 +++++++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  26 ++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c  |  22 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h  |   1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |  36 ++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |   8 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c          |  13 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h          |   2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |   8 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h    |   2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c        |   8 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h        |   5 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c        |  27 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |  34 ++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |   6 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c           |   6 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_dsi_encoder.c   |   2 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c           |   2 +-
- drivers/gpu/drm/msm/dsi/dsi.h                      |   2 +
- drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |  24 ++
- drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |   2 +
- drivers/gpu/drm/msm/dsi/dsi_host.c                 |  46 ++--
- drivers/gpu/drm/msm/dsi/dsi_manager.c              |  62 ++++--
- drivers/gpu/drm/msm/hdmi/hdmi_connector.c          |   2 +-
- drivers/gpu/drm/msm/msm_drv.c                      |   4 +-
- drivers/gpu/drm/msm/msm_gpu.h                      |   7 +
- 50 files changed, 1049 insertions(+), 428 deletions(-)
+Thanks!
