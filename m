@@ -2,314 +2,326 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 49C6013B13F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2020 18:45:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4049813B16E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2020 18:55:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728842AbgANRpk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jan 2020 12:45:40 -0500
-Received: from mail-vk1-f225.google.com ([209.85.221.225]:32876 "EHLO
-        mail-vk1-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726450AbgANRpk (ORCPT
+        id S1726491AbgANRzI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jan 2020 12:55:08 -0500
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:39093 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726523AbgANRzI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jan 2020 12:45:40 -0500
-Received: by mail-vk1-f225.google.com with SMTP id i78so3887745vke.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2020 09:45:39 -0800 (PST)
+        Tue, 14 Jan 2020 12:55:08 -0500
+Received: by mail-vs1-f68.google.com with SMTP id y125so8773546vsb.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2020 09:55:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=brkho-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=IEReIqiV9DqHXynuZUoOdv3vrFwkK9mEmA9xvO2qdVM=;
-        b=SQ1M75nBLkNeAmQ+001qHsQS9SIbcVKCV9HenJqQp3MKVoZzELHJnxWUapFur3RI+L
-         rq6nLNQi7kwMMdJao1IyDmEjsL7v9A66vyDeTc8u2bTK1IwiJzxr0NYVwRQ0jJkCTqdf
-         5fNIludEQ3n0pwvnFcOscpzezyNSFqDWmsZYabCFYKpPOjDGrI1VYkNbYcLOTXgbpr37
-         Qjchmk7WHVgMIuy5Ur4J9LtxDlaTQJrsyaomrpalW4Rw4gHSg4rtjCrDnUDReCZn1Ugr
-         qZ30vZL/BcznnOeHZ2MdPbYpJ+uXxe7nRMtLI2bkf/6Hq+Xq3eaCnswrUncykQ817bRg
-         lJvA==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7Jrn5Sa8iiFTwrMlmlHmDfU+9ZYlUjhau9Mnp3Wo+QY=;
+        b=HhobiIe9g3ecP3LijGr0BeCgYxkMFMKYOcohPXy+D6G1nTay+aQiNg2wGW8V7/DRcD
+         LX93cz44ibwJn2xG8cGWLNInOuwPjzQIv5eEFcE0Xh/D9P0ndxwfdObLZkXrFIcitTLh
+         SWUZILFCOjZKCzmfDsfLoOGeS9Kkmq68Im48QQTmnbHmwDpY7IX/wM3Pc2LKWHBxdpEa
+         bzR67oQGvS1lmlseYFl38GFB6pcOM2L+7jNQfGs7/Wf9YXHalU50jK+DMEpJ6RQzMoW2
+         6ouW4MS09ODOoZ3ikbgyNhq9v02kTHm3AG4VnHy+jP5FvQDylJ5Qcj7bTJ8szIhVt9RK
+         wLng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=IEReIqiV9DqHXynuZUoOdv3vrFwkK9mEmA9xvO2qdVM=;
-        b=NGBFYD0+oqfQphx4G0xPW3P/g9IyxR1FHYzktPStlVxFColNbArdfLzrnOefGsltBk
-         v97yUSfiO6HJvFkJD3QlfVaudsiGbB1KeGUsfbwB/6nyb5A3u3KN+Lqrqh6G2kxFPeeW
-         gFpnWxlFQj26GYg39+oS8yAl+8nRwVRN/VvYgfjtpeWX7vksI8X6HjET0+fSJhQxZnri
-         kgRd9gVwsTcXyeUvjim1UJ/wOzrkS2QFV8+yY2B+xmbXjhHlKH0Et5eT0Svi81pJxi7Z
-         tikG0Kr92RVpZ3gmPnE2sWVNR7A0ct9jj16sWSvv3uWn5/mc1ZHpQBuHoQdZ3zXV1Mrq
-         ZqYA==
-X-Gm-Message-State: APjAAAWy+X4hqmUZA6LaeUFRKs6r2qwfIk6ygmsQJH+kH4lIsxkMtM3D
-        NZIsq6wqwxUu35/aYKYusftM6/yYhzrPI7GJ2wz0EUGpHr4rWw==
-X-Google-Smtp-Source: APXvYqz2RK+0iwilGpb6fmKNV1jXJyXQPjjgffnkHiktNmrOjrT2wDcdwuZfAypJn+qxTYbYBqBNC8xYhOxG
-X-Received: by 2002:a05:6122:332:: with SMTP id d18mr11769867vko.89.1579023939106;
-        Tue, 14 Jan 2020 09:45:39 -0800 (PST)
-Received: from google.com ([100.118.32.120])
-        by smtp-relay.gmail.com with ESMTPS id f205sm1505678vka.0.2020.01.14.09.45.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jan 2020 09:45:39 -0800 (PST)
-X-Relaying-Domain: brkho.com
-Date:   Tue, 14 Jan 2020 12:45:22 -0500
-From:   Brian Ho <brian@brkho.com>
-To:     Rob Clark <robdclark@chromium.org>
-Cc:     Kristian Kristensen <hoegsberg@google.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        hoegsberg <hoegsberg@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] drm/msm: Add MSM_WAIT_IOVA ioctl
-Message-ID: <20200114174521.GA239970@google.com>
-References: <20200113153605.52350-1-brian@brkho.com>
- <20200113153605.52350-3-brian@brkho.com>
- <CAJs_Fx48B-C8GEeAmPaqGAqAOTR2dT0csg8W=TRyULOfy=1=VQ@mail.gmail.com>
- <CAOPc6Tn8CWVzcLoJOGmn3CW6B9FMKf_-NzE8TpwDHsPfoQDaQQ@mail.gmail.com>
- <20200113225516.GA157345@google.com>
- <CAJs_Fx5i-cZ0qXk_jNo=JGfZRc7uuvUcTZ2TE1ppuYUfNLymKQ@mail.gmail.com>
- <20200114164034.GA213224@google.com>
- <CAJs_Fx6YN_DFx8y_7PB4kJ7YzmGvgUPE9FaOqTY_kJW7y08LVw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7Jrn5Sa8iiFTwrMlmlHmDfU+9ZYlUjhau9Mnp3Wo+QY=;
+        b=Z7qE1i8KBleiM+V+PPT+MdPE1OHF98Xqp6zcBb72lnRn11NV4ATj6yWPgn+43FCppB
+         aEYdOwbqhafzrp95zbpBph8X/OgP1b3YHXoiLLNEtPx1j3pT18h13btP2m1X7UbsPUoX
+         Htab5d95MAhelSDS5pIu0J14UlivYRc5apXAYWXiU6gkZZXdOscKMuaVyY/coY52LrBL
+         N2Uuxboy5CYJ+7mNG9Uu03R+wRBdZkraJ/YJ0CvhArvmkrJfc4vqvYF6MtKMBn7LaHTk
+         yRle0XqDUO1QmNed5ZN131BDdOwCgkZOQD5Q5FjkwUYte1Axa2dMcTwTaD7gEFD7i94l
+         Xy6Q==
+X-Gm-Message-State: APjAAAWZQQ9EOFkNK5LfPudUcNAeKtc9AO3kJSCliq3jigr2zb73WHJw
+        0E1S/JgLf6F85kahk1vAOzDtuV/FmecezS2FcNuN4w==
+X-Google-Smtp-Source: APXvYqxsvoLx0ArjCX6G7zFtHfviUTO5Vs1jW0CkdQ9t5PBD0y1Q3W3OcnF50SeD3BlhMjo0CVZKuVj4RvirpkOsEb0=
+X-Received: by 2002:a67:cd96:: with SMTP id r22mr1986767vsl.165.1579024506419;
+ Tue, 14 Jan 2020 09:55:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJs_Fx6YN_DFx8y_7PB4kJ7YzmGvgUPE9FaOqTY_kJW7y08LVw@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20191230144402.30195-1-ulf.hansson@linaro.org>
+ <20191230144402.30195-3-ulf.hansson@linaro.org> <CAL_Jsq+cAKEGOMnBwwvLt03zx8Gcxh4ijziaBnnY5TPEG0Mekg@mail.gmail.com>
+In-Reply-To: <CAL_Jsq+cAKEGOMnBwwvLt03zx8Gcxh4ijziaBnnY5TPEG0Mekg@mail.gmail.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 14 Jan 2020 18:54:30 +0100
+Message-ID: <CAPDyKFr_7qmKjpWcFegVBsfKBJePtukuriwW-8KX6c2a24ojEA@mail.gmail.com>
+Subject: Re: [PATCH v5 02/15] dt: psci: Update DT bindings to support
+ hierarchical PSCI states
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+        "open list:THERMAL" <linux-pm@vger.kernel.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Lina Iyer <lina.iyer@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 14, 2020 at 08:48:48AM -0800, Rob Clark wrote:
-> On Tue, Jan 14, 2020 at 8:40 AM Brian Ho <brian@brkho.com> wrote:
+On Mon, 13 Jan 2020 at 20:53, Rob Herring <robh+dt@kernel.org> wrote:
+>
+> On Mon, Dec 30, 2019 at 8:44 AM Ulf Hansson <ulf.hansson@linaro.org> wrote:
 > >
-> > On Mon, Jan 13, 2020 at 03:17:38PM -0800, Rob Clark wrote:
-> > > On Mon, Jan 13, 2020 at 2:55 PM Brian Ho <brian@brkho.com> wrote:
-> > > >
-> > > > On Mon, Jan 13, 2020 at 09:57:43AM -0800, Kristian Kristensen wrote:
-> > > > > On Mon, Jan 13, 2020 at 8:25 AM Rob Clark <robdclark@chromium.org> wrote:
-> > > > >
-> > > > > > On Mon, Jan 13, 2020 at 7:37 AM Brian Ho <brian@brkho.com> wrote:
-> > > > > > >
-> > > > > > > Implements an ioctl to wait until a value at a given iova is greater
-> > > > > > > than or equal to a supplied value.
-> > > > > > >
-> > > > > > > This will initially be used by turnip (open-source Vulkan driver for
-> > > > > > > QC in mesa) for occlusion queries where the userspace driver can
-> > > > > > > block on a query becoming available before continuing via
-> > > > > > > vkGetQueryPoolResults.
-> > > > > > >
-> > > > > > > Signed-off-by: Brian Ho <brian@brkho.com>
-> > > > > > > ---
-> > > > > > >  drivers/gpu/drm/msm/msm_drv.c | 63 +++++++++++++++++++++++++++++++++--
-> > > > > > >  include/uapi/drm/msm_drm.h    | 13 ++++++++
-> > > > > > >  2 files changed, 74 insertions(+), 2 deletions(-)
-> > > > > > >
-> > > > > > > diff --git a/drivers/gpu/drm/msm/msm_drv.c
-> > > > > > b/drivers/gpu/drm/msm/msm_drv.c
-> > > > > > > index c84f0a8b3f2c..dcc46874a5a2 100644
-> > > > > > > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > > > > > > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > > > > > > @@ -36,10 +36,11 @@
-> > > > > > >   *           MSM_GEM_INFO ioctl.
-> > > > > > >   * - 1.4.0 - softpin, MSM_RELOC_BO_DUMP, and GEM_INFO support to set/get
-> > > > > > >   *           GEM object's debug name
-> > > > > > > - * - 1.5.0 - Add SUBMITQUERY_QUERY ioctl
-> > > > > > > + * - 1.5.0 - Add SUBMITQUEUE_QUERY ioctl
-> > > > > > > + * - 1.6.0 - Add WAIT_IOVA ioctl
-> > > > > > >   */
-> > > > > > >  #define MSM_VERSION_MAJOR      1
-> > > > > > > -#define MSM_VERSION_MINOR      5
-> > > > > > > +#define MSM_VERSION_MINOR      6
-> > > > > > >  #define MSM_VERSION_PATCHLEVEL 0
-> > > > > > >
-> > > > > > >  static const struct drm_mode_config_funcs mode_config_funcs = {
-> > > > > > > @@ -952,6 +953,63 @@ static int msm_ioctl_submitqueue_close(struct
-> > > > > > drm_device *dev, void *data,
-> > > > > > >         return msm_submitqueue_remove(file->driver_priv, id);
-> > > > > > >  }
-> > > > > > >
-> > > > > > > +static int msm_ioctl_wait_iova(struct drm_device *dev, void *data,
-> > > > > > > +               struct drm_file *file)
-> > > > > > > +{
-> > > > > > > +       struct msm_drm_private *priv = dev->dev_private;
-> > > > > > > +       struct drm_gem_object *obj;
-> > > > > > > +       struct drm_msm_wait_iova *args = data;
-> > > > > > > +       ktime_t timeout = to_ktime(args->timeout);
-> > > > > > > +       unsigned long remaining_jiffies = timeout_to_jiffies(&timeout);
-> > > > > > > +       struct msm_gpu *gpu = priv->gpu;
-> > > > > > > +       void *base_vaddr;
-> > > > > > > +       uint64_t *vaddr;
-> > > > > > > +       int ret;
-> > > > > > > +
-> > > > > > > +       if (args->pad)
-> > > > > > > +               return -EINVAL;
-> > > > > > > +
-> > > > > > > +       if (!gpu)
-> > > > > > > +               return 0;
-> > > > > >
-> > > > > > hmm, I'm not sure we should return zero in this case.. maybe -ENODEV?
-> > > > > >
-> > > > > > > +
-> > > > > > > +       obj = drm_gem_object_lookup(file, args->handle);
-> > > > > > > +       if (!obj)
-> > > > > > > +               return -ENOENT;
-> > > > > > > +
-> > > > > > > +       base_vaddr = msm_gem_get_vaddr(obj);
-> > > > > > > +       if (IS_ERR(base_vaddr)) {
-> > > > > > > +               ret = PTR_ERR(base_vaddr);
-> > > > > > > +               goto err_put_gem_object;
-> > > > > > > +       }
-> > > > > > > +       if (args->offset + sizeof(*vaddr) > obj->size) {
-> > > > > > > +               ret = -EINVAL;
-> > > > > > > +               goto err_put_vaddr;
-> > > > > > > +       }
-> > > > > > > +
-> > > > > > > +       vaddr = base_vaddr + args->offset;
-> > > > > > > +
-> > > > > > > +       /* Assumes WC mapping */
-> > > > > > > +       ret = wait_event_interruptible_timeout(
-> > > > > > > +                       gpu->event, *vaddr >= args->value,
-> > > > > > remaining_jiffies);
-> > > > > >
-> > > > >
-> > > > > This needs to do the awkward looking
-> > > > >
-> > > > >   (int64_t)(*data - value) >= 0
-> > > > >
-> > > > > to properly handle the wraparound case.
-> > > > >
-> > > >
-> > > > I think this comparison will run into issues if we allow for 64-bit
-> > > > reference values. For example, if value is ULLONG_MAX, and *data
-> > > > starts at 0 on the first comparison, we'll immediately return.
-> > > >
-> > > > It's not too much of an issue in fence_completed (msm_fence.c), but
-> > > > in this ioctl, *data can grow at an arbitrary rate. Are we concerned
-> > > > about this?
-> > > >
-> > > > > > +
-> > > > > > > +       if (ret == 0) {
-> > > > > > > +               ret = -ETIMEDOUT;
-> > > > > > > +               goto err_put_vaddr;
-> > > > > > > +       } else if (ret == -ERESTARTSYS) {
-> > > > > > > +               goto err_put_vaddr;
-> > > > > > > +       }
-> > > > > >
-> > > > > > maybe:
-> > > > > >
-> > > > > >  } else {
-> > > > > >    ret = 0;
-> > > > > >  }
-> > > > > >
-> > > > > > and then drop the next three lines?
-> > > > > >
-> > > > > > > +
-> > > > > > > +       msm_gem_put_vaddr(obj);
-> > > > > > > +       drm_gem_object_put_unlocked(obj);
-> > > > > > > +       return 0;
-> > > > > > > +
-> > > > > > > +err_put_vaddr:
-> > > > > > > +       msm_gem_put_vaddr(obj);
-> > > > > > > +err_put_gem_object:
-> > > > > > > +       drm_gem_object_put_unlocked(obj);
-> > > > > > > +       return ret;
-> > > > > > > +}
-> > > > > > > +
-> > > > > > >  static const struct drm_ioctl_desc msm_ioctls[] = {
-> > > > > > >         DRM_IOCTL_DEF_DRV(MSM_GET_PARAM,    msm_ioctl_get_param,
-> > > > > > DRM_RENDER_ALLOW),
-> > > > > > >         DRM_IOCTL_DEF_DRV(MSM_GEM_NEW,      msm_ioctl_gem_new,
-> > > > > > DRM_RENDER_ALLOW),
-> > > > > > > @@ -964,6 +1022,7 @@ static const struct drm_ioctl_desc msm_ioctls[] = {
-> > > > > > >         DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_NEW,
-> > > > > >  msm_ioctl_submitqueue_new,   DRM_RENDER_ALLOW),
-> > > > > > >         DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_CLOSE,
-> > > > > > msm_ioctl_submitqueue_close, DRM_RENDER_ALLOW),
-> > > > > > >         DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_QUERY,
-> > > > > > msm_ioctl_submitqueue_query, DRM_RENDER_ALLOW),
-> > > > > > > +       DRM_IOCTL_DEF_DRV(MSM_WAIT_IOVA, msm_ioctl_wait_iova,
-> > > > > > DRM_RENDER_ALLOW),
-> > > > > > >  };
-> > > > > > >
-> > > > > > >  static const struct vm_operations_struct vm_ops = {
-> > > > > > > diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-> > > > > > > index 0b85ed6a3710..8477f28a4ee1 100644
-> > > > > > > --- a/include/uapi/drm/msm_drm.h
-> > > > > > > +++ b/include/uapi/drm/msm_drm.h
-> > > > > > > @@ -298,6 +298,17 @@ struct drm_msm_submitqueue_query {
-> > > > > > >         __u32 pad;
-> > > > > > >  };
-> > > > > > >
-> > > > > > > +/* This ioctl blocks until the u64 value at bo + offset is greater than
-> > > > > > or
-> > > > > > > + * equal to the reference value.
-> > > > > > > + */
-> > > > > > > +struct drm_msm_wait_iova {
-> > > > > > > +       __u32 handle;          /* in, GEM handle */
-> > > > > > > +       __u32 pad;
-> > > > > > > +       struct drm_msm_timespec timeout;   /* in */
-> > > > > > > +       __u64 offset;          /* offset into bo */
-> > > > > > > +       __u64 value;           /* reference value */
-> > > > > >
-> > > > > > Maybe we should go ahead and add a __u64 mask;
-> > > > > >
-> > > > > > that would let us wait for 32b values as well, and wait for bits in a
-> > > > > > bitmask
-> > > > > >
-> > > > >
-> > > > > I think we'd be OK to just default to 32 bit values instead, since most of
-> > > > > the CP commands that this is intended to work with (CP_EVENT_WRITE,
-> > > > > CP_WAIT_MEM_GTE etc) operate on 32 bit values. We could move 'value' to the
-> > > > > slot right after 'handle' but then we'd not have any pad/reserved fields.
-> > > > > Maybe we keep 'value' 64 bit but restrict it to 32 bits, with an option to
-> > > > > add a 64 bit flag in 'pad' later on?
-> > > > >
-> > > >
-> > > > FWIW, the current usage of this in my mesa MR uses a 64 bit value.
-> > > > There's no super great reason that the available bit is 64 bits and
-> > > > not 32 bits (I think it made the addressing math a bit simpler), but
-> > > > I'm fine with whatever you all decide on here.
-> > > >
-> > >
-> > > I assume you are waiting for a fence value written w/ CP_EVENT_WRITE?
-> > > Or at least that is what I'd recommend.  That would be 32b
-> > >
-> > > BR,
-> > > -R
-> > >
+> > Update PSCI DT bindings to allow to represent idle states for CPUs and the
+> > CPU topology, by using a hierarchical layout. Primarily this is done by
+> > re-using the existing DT bindings for PM domains [1] and for PM domain idle
+> > states [2].
 > >
-> > So it's actually a little bit different than that. I allocate a bo
-> > for the occlusion query which has an "availability" bit (0 for
-> > unavailable, 1 for available). When the occlusion query ends, we
-> > write the fragments passed value to the bo via CP_EVENT_WRITE and
-> > then wait for that write to complete before setting the available
-> > bit to 1 via a simple CP_MEM_WRITE [1].
+> > Let's also add an example into the document for the PSCI DT bindings, to
+> > clearly show the new hierarchical based layout. The currently supported
+> > flattened layout, is already described in the ARM idle states bindings [3],
+> > so let's leave that as is.
 > >
-> > It's that CP_MEM_WRITE that I plan on waiting on with this new iova
-> > ioctl.
+> > [1] Documentation/devicetree/bindings/power/power_domain.txt
+> > [2] Documentation/devicetree/bindings/power/domain-idle-state.txt
+> > [3] Documentation/devicetree/bindings/arm/idle-states.txt
 > >
-> > [1] https://gitlab.freedesktop.org/mesa/mesa/blob/768106c50a5569796bb6d5e04b5e4d65c1d00ea0/src/freedreno/vulkan/tu_query.c#L529
+> > Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
+> > Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
+> > Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+> > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> > ---
 > >
-> 
-> hmm, interesting.. I had in mind something more like:
-> 
-> https://gitlab.freedesktop.org/drm/msm/blob/msm-next/drivers/gpu/drm/msm/adreno/a6xx_gpu.c#L137
-> 
-> The high bit in the first dword of the packet (which we probably
-> shouldn't open-code) is the "give me an irq after the value in last
-> dword is written to memory"..
-> 
-> (I haven't checked yet whether we can use the "gimme an irq" bit from userspace)
-> 
-> BR,
-> -R
+> > Changes in v5:
+> >         - None.
+>
+> First I'm seeing this as the DT list was not copied. The example has
+> problems when running 'make dt_binding_check':
+>
+> Documentation/devicetree/bindings/arm/psci.example.dt.yaml: cpu@0:
+> compatible: Additional items are not allowed ('arm,armv8' was
+> unexpected)
+> Documentation/devicetree/bindings/arm/psci.example.dt.yaml: cpu@0:
+> compatible: ['arm,cortex-a53', 'arm,armv8'] is too long
+> Documentation/devicetree/bindings/arm/psci.example.dt.yaml: cpu@1:
+> compatible: Additional items are not allowed ('arm,armv8' was
+> unexpected)
+> Documentation/devicetree/bindings/arm/psci.example.dt.yaml: cpu@1:
+> compatible: ['arm,cortex-a57', 'arm,armv8'] is too long
+>
+> 'arm,armv8' is only valid for s/w models.
 
-I see. Let's continue discussing this on the mesa MR because there's
-more context there.
+Perhaps you have a different version of the tools than I have (I have
+tried both on v.5.5-rc5 and todays linux-next), because I can't
+reproduce these errors at my side when running "make
+dt_binding_check".
 
-Regardless of how we end up implementing vkCmdEndQuery, I think it
-will be safe to default to 32 bit values for this ioctl and have a
-flag to use 64 bit instead like Kristian suggested. If that sounds
-good to you, I'll go ahead and make the change for the v2 patch
-series.
+Can you please check again?
+
+>
+> Documentation/devicetree/bindings/arm/psci.example.dt.yaml:
+> idle-states: cluster-retention:compatible:0: 'arm,idle-state' was
+> expected
+> Documentation/devicetree/bindings/arm/psci.example.dt.yaml:
+> idle-states: cluster-power-down:compatible:0: 'arm,idle-state' was
+> expected
+>
+> The last 2 are due to my conversion of the idle-states binding which
+> is in my tree now. Probably need to add 'domain-idle-state' as a
+> compatible at a minimum. It looks like domain-idle-state.txt is pretty
+> much the same as arm/idle-state.txt, so we should perhaps merge them.
+
+Ahh, so maybe *all* of the above problems are caused by conflicts in
+the arm-soc tree with changes from your tree!?
+
+In regards to merging files, I am fine by that if that helps.
+
+>
+> There's some bigger issues though.
+>
+> > ---
+> >  .../devicetree/bindings/arm/cpus.yaml         |  15 +++
+> >  .../devicetree/bindings/arm/psci.yaml         | 104 ++++++++++++++++++
+> >  2 files changed, 119 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
+> > index c23c24ff7575..7a9c3ce2dbef 100644
+> > --- a/Documentation/devicetree/bindings/arm/cpus.yaml
+> > +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
+> > @@ -242,6 +242,21 @@ properties:
+> >
+> >        where voltage is in V, frequency is in MHz.
+> >
+> > +  power-domains:
+> > +    $ref: '/schemas/types.yaml#/definitions/phandle-array'
+> > +    description:
+> > +      List of phandles and PM domain specifiers, as defined by bindings of the
+> > +      PM domain provider (see also ../power_domain.txt).
+> > +
+> > +  power-domain-names:
+> > +    $ref: '/schemas/types.yaml#/definitions/string-array'
+> > +    description:
+> > +      A list of power domain name strings sorted in the same order as the
+> > +      power-domains property.
+> > +
+> > +      For PSCI based platforms, the name corresponding to the index of the PSCI
+> > +      PM domain provider, must be "psci".
+> > +
+> >    qcom,saw:
+> >      $ref: '/schemas/types.yaml#/definitions/phandle'
+> >      description: |
+> > diff --git a/Documentation/devicetree/bindings/arm/psci.yaml b/Documentation/devicetree/bindings/arm/psci.yaml
+> > index 7abdf58b335e..8ef85420b2ab 100644
+> > --- a/Documentation/devicetree/bindings/arm/psci.yaml
+> > +++ b/Documentation/devicetree/bindings/arm/psci.yaml
+> > @@ -102,6 +102,34 @@ properties:
+> >        [1] Kernel documentation - ARM idle states bindings
+> >          Documentation/devicetree/bindings/arm/idle-states.txt
+> >
+> > +  "#power-domain-cells":
+>
+> This is wrong because you are saying the /psci node should have these
+> properties. You need to define the child nodes (at least a pattern you
+> can match on) and put these properties there.
+
+Right, good point.
+
+I searched for some similar examples for how to encode this, but
+couldn't really find something useful. One more thing, it seems like
+this change is also needed for the common power-domain bindings, as
+that also specifies parent/childs domains.
+
+Anyway, I would really appreciate if you can suggest something more
+detailed for you think this should be done!?
+
+>
+> > +    description:
+> > +      The number of cells in a PM domain specifier as per binding in [3].
+> > +      Must be 0 as to represent a single PM domain.
+> > +
+> > +      ARM systems can have multiple cores, sometimes in an hierarchical
+> > +      arrangement. This often, but not always, maps directly to the processor
+> > +      power topology of the system. Individual nodes in a topology have their
+> > +      own specific power states and can be better represented hierarchically.
+> > +
+> > +      For these cases, the definitions of the idle states for the CPUs and the
+> > +      CPU topology, must conform to the binding in [3]. The idle states
+> > +      themselves must conform to the binding in [4] and must specify the
+> > +      arm,psci-suspend-param property.
+> > +
+> > +      It should also be noted that, in PSCI firmware v1.0 the OS-Initiated
+> > +      (OSI) CPU suspend mode is introduced. Using a hierarchical representation
+> > +      helps to implement support for OSI mode and OS implementations may choose
+> > +      to mandate it.
+> > +
+> > +      [3] Documentation/devicetree/bindings/power/power_domain.txt
+> > +      [4] Documentation/devicetree/bindings/power/domain-idle-state.txt
+> > +
+> > +  power-domains:
+> > +    $ref: '/schemas/types.yaml#/definitions/phandle-array'
+> > +    description:
+> > +      List of phandles and PM domain specifiers, as defined by bindings of the
+> > +      PM domain provider.
+>
+> A schema for 'domain-idle-states' property is missing.
+
+Right, let's figure out the best way for how to add that.
+
+>
+> >
+> >  required:
+> >    - compatible
+> > @@ -160,4 +188,80 @@ examples:
+> >        cpu_on = <0x95c10002>;
+> >        cpu_off = <0x95c10001>;
+> >      };
+> > +
+> > +  - |+
+> > +
+> > +    // Case 4: CPUs and CPU idle states described using the hierarchical model.
+> > +
+> > +    cpus {
+> > +      #size-cells = <0>;
+> > +      #address-cells = <1>;
+> > +
+> > +      CPU0: cpu@0 {
+> > +        device_type = "cpu";
+> > +        compatible = "arm,cortex-a53", "arm,armv8";
+> > +        reg = <0x0>;
+> > +        enable-method = "psci";
+> > +        power-domains = <&CPU_PD0>;
+> > +        power-domain-names = "psci";
+> > +      };
+> > +
+> > +      CPU1: cpu@1 {
+> > +        device_type = "cpu";
+> > +        compatible = "arm,cortex-a57", "arm,armv8";
+> > +        reg = <0x100>;
+> > +        enable-method = "psci";
+> > +        power-domains = <&CPU_PD1>;
+> > +        power-domain-names = "psci";
+> > +      };
+> > +
+> > +      idle-states {
+> > +
+> > +        CPU_PWRDN: cpu-power-down {
+> > +          compatible = "arm,idle-state";
+> > +          arm,psci-suspend-param = <0x0000001>;
+> > +          entry-latency-us = <10>;
+> > +          exit-latency-us = <10>;
+> > +          min-residency-us = <100>;
+> > +        };
+> > +
+> > +        CLUSTER_RET: cluster-retention {
+> > +          compatible = "domain-idle-state";
+> > +          arm,psci-suspend-param = <0x1000011>;
+> > +          entry-latency-us = <500>;
+> > +          exit-latency-us = <500>;
+> > +          min-residency-us = <2000>;
+> > +        };
+> > +
+> > +        CLUSTER_PWRDN: cluster-power-down {
+> > +          compatible = "domain-idle-state";
+> > +          arm,psci-suspend-param = <0x1000031>;
+> > +          entry-latency-us = <2000>;
+> > +          exit-latency-us = <2000>;
+> > +          min-residency-us = <6000>;
+> > +        };
+> > +      };
+> > +    };
+> > +
+> > +    psci {
+> > +      compatible = "arm,psci-1.0";
+> > +      method = "smc";
+> > +
+> > +      CPU_PD0: cpu-pd0 {
+> > +        #power-domain-cells = <0>;
+> > +        domain-idle-states = <&CPU_PWRDN>;
+> > +        power-domains = <&CLUSTER_PD>;
+> > +      };
+> > +
+> > +      CPU_PD1: cpu-pd1 {
+> > +        #power-domain-cells = <0>;
+> > +        domain-idle-states =  <&CPU_PWRDN>;
+> > +        power-domains = <&CLUSTER_PD>;
+> > +      };
+> > +
+> > +      CLUSTER_PD: cluster-pd {
+> > +        #power-domain-cells = <0>;
+> > +        domain-idle-states = <&CLUSTER_RET>, <&CLUSTER_PWRDN>;
+> > +      };
+> > +    };
+> >  ...
+> > --
+> > 2.17.1
+> >
+
+Thanks for your feedback!
+
+Kind regards
+Uffe
