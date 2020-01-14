@@ -2,198 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CD0013A258
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2020 08:58:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 844EB13A377
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2020 10:06:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729236AbgANH6A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jan 2020 02:58:00 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:35128 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729205AbgANH57 (ORCPT
+        id S1728797AbgANJGt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jan 2020 04:06:49 -0500
+Received: from mx08-00178001.pphosted.com ([91.207.212.93]:42870 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725842AbgANJGt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jan 2020 02:57:59 -0500
-Received: by mail-pf1-f193.google.com with SMTP id i23so6197166pfo.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2020 23:57:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ub9JDyGMUxQof+H4IEJYhc2XianN2EATxXRgJUWENds=;
-        b=edQveFVNGBmirFSUcumEYH029TCRAajNzFKT/KzPziTWbIDkCUXYB9yzJaZgYw/4uj
-         yxwg6JF698tOKGj+lqOKWp+RJQ2h7YoALN29/Muw1plu6ZbYmzcOnlGI2RSspvswS/Jr
-         MTkWIxB+ujwsTChClg36ilwfvAmzGYvvzMW4bEByT0M+oyC0hJt+SZDoFH2AzfhGATFF
-         AN52UstsBahraPWXjlDPxxQAvmTvbmry7X50zh3KMGSxmvpzGc5pfneT9navMrmBAqMW
-         /iGD0BpXuDtVcxB0tCjCcliVVDOXb6r08uHIUKhRTQxY/H629eycfQNBEpm8eIWbqCoh
-         4dKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ub9JDyGMUxQof+H4IEJYhc2XianN2EATxXRgJUWENds=;
-        b=Qckc+ATbkCIzaaRoftOaAdMUsXUOXGjmmMOZn/EeAN1Zvq0K1BrgoXITF51z6OLs9M
-         NXp+w+VmcRAflrmmoNUZYIs7S2YfCkzXcGuFneDhAJqTSgOS7yPYtasEGt3pVrVhyvnl
-         anCzH3vrs6OCDXUaDPefCsj6DmLv2dmXPSC8nLhiIi342YpXXEstGQ1raPlhapPPqL2u
-         OZkAfUPmpT+sXKGmRgtoxcAUgIyfycOay83joKBuJtXxlqpSj1saXxk41eHw3v6pNH7Z
-         /ygjmjBb8MZBvYQRAzlUycQvP7IQo9aaBuksh0Yi4f1G2LIOp0uj7SQqN4vLAHk0gZ7r
-         j2nQ==
-X-Gm-Message-State: APjAAAVgHaHQprHvaIQp7e5xfy9B/5d8xZ0GOkYsRswdGGW98gpHHVfA
-        rac3HTdSTqvDrwrb0Vsv0ZqefA==
-X-Google-Smtp-Source: APXvYqwPfvh3MFq9kRw0DS1s0ko52noeknCvU4/iqOQN+Ktgm6EgDjVJYUpNyhKEpAdKQm1yj6G2yA==
-X-Received: by 2002:a65:4c82:: with SMTP id m2mr24894429pgt.432.1578988678193;
-        Mon, 13 Jan 2020 23:57:58 -0800 (PST)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id q63sm17349352pfb.149.2020.01.13.23.57.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jan 2020 23:57:57 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     "David S. Miller" <davem@davemloft.net>
-Cc:     Arun Kumar Neelakantam <aneela@codeaurora.org>,
-        Chris Lew <clew@codeaurora.org>, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v4 5/5] net: qrtr: Remove receive worker
-Date:   Mon, 13 Jan 2020 23:57:03 -0800
-Message-Id: <20200114075703.2145718-6-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200114075703.2145718-1-bjorn.andersson@linaro.org>
-References: <20200114075703.2145718-1-bjorn.andersson@linaro.org>
+        Tue, 14 Jan 2020 04:06:49 -0500
+Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 00E92VkQ012743;
+        Tue, 14 Jan 2020 10:06:44 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=STMicroelectronics;
+ bh=jtwGEjUtyuxEZq8hdbqmLv/Jf7tRXlP+PuuoBmxhh+o=;
+ b=CSrmp1u9fXkvyI4/vCQ+5KOO0gZw9Z/uTwtwABr6pdxsZ1jmyEh9v2gQ+0/zGc8juri9
+ 2NDeCMjRgdgOn053FuHQn3xNJ1DmiYc4rFnI5XbAXEKqi15cx+o26HUlSag9j1XxevTP
+ W5gD7z1s4/yUak8bG5kUl3ZaSg91WEWwXjOniE8b8zat6droZlcYopicCHGEHt+7Gxv+
+ tKEzS2bwgK9a+vdiLxW9K+EQwpdCRSUCJ5VeuVlvxBOlR8DLD4TPqllWafqJ38cuGMEN
+ x9pQ+0OqLU7SEW/5Rf2LYxwQDxVq9Sb/po/iINFGAQoaLKuEflxuuPh7SEl28dJrPtsv XA== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com with ESMTP id 2xf7jpcen3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 14 Jan 2020 10:06:44 +0100
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id BD11010002A;
+        Tue, 14 Jan 2020 10:06:39 +0100 (CET)
+Received: from Webmail-eu.st.com (sfhdag3node1.st.com [10.75.127.7])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id A171B211F21;
+        Tue, 14 Jan 2020 10:06:39 +0100 (CET)
+Received: from lmecxl0889.lme.st.com (10.75.127.45) by SFHDAG3NODE1.st.com
+ (10.75.127.7) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Tue, 14 Jan
+ 2020 10:06:39 +0100
+Subject: Re: [PATCH v2] rpmsg: core: add API to get MTU
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     Ohad Ben-Cohen <ohad@wizery.com>, <linux-kernel@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, Suman Anna <s-anna@ti.com>,
+        Fabien DESSENNE <fabien.dessenne@st.com>,
+        <linux-stm32@st-md-mailman.stormreply.com>
+References: <20191113172249.32412-1-arnaud.pouliquen@st.com>
+ <20200113172453.GQ738324@yoga>
+From:   Arnaud POULIQUEN <arnaud.pouliquen@st.com>
+Message-ID: <c6ecd3b6-2a3b-11d8-6d1c-a531c73bc388@st.com>
+Date:   Tue, 14 Jan 2020 10:06:38 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200113172453.GQ738324@yoga>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.75.127.45]
+X-ClientProxiedBy: SFHDAG8NODE2.st.com (10.75.127.23) To SFHDAG3NODE1.st.com
+ (10.75.127.7)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.572
+ definitions=2020-01-14_02:2020-01-13,2020-01-14 signatures=0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rather than enqueuing messages and scheduling a worker to deliver them
-to the individual sockets we can now, thanks to the previous work, move
-this directly into the endpoint callback.
+Hi Bjorn
 
-This saves us a context switch per incoming message and removes the
-possibility of an opportunistic suspend to happen between the message is
-coming from the endpoint until it ends up in the socket's receive
-buffer.
+On 1/13/20 6:24 PM, Bjorn Andersson wrote:
+> On Wed 13 Nov 09:22 PST 2019, Arnaud Pouliquen wrote:
+> 
+>> Return the rpmsg buffer MTU for sending message, so rpmsg users
+>> can split a long message in several sub rpmsg buffers.
+>>
+> 
+> I won't merge this new api without a client, and I'm still concerned
+> about the details.
+The client exists: it is the rpmsg tty that i 've been rying to upstream since for a while.
+https://patchwork.kernel.org/cover/11130213/
+This patch is the result of some comments you did on rpmsg tty thread. 
+Suman was also interested in and request to merge it independently
+(https://lkml.org/lkml/2019/9/3/774).
+That's why i'm trying to do it in 2 steps.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- net/qrtr/qrtr.c | 57 +++++++++++++++----------------------------------
- 1 file changed, 17 insertions(+), 40 deletions(-)
+> 
+>> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@st.com>
+>> ---
+>>  V1 to V2
+>>
+>>   V1 patch:https://lore.kernel.org/patchwork/patch/1124684/
+>>   - Change patch title,
+>>   - as not solution today to support MTU on GLINK make ops optional,
+>>     RPMsg client API returns -ENOTSUPP in this case,
+>>   - suppress smd and glink patches.
+> 
+> That's ok.
+> 
+>> ---
+>>  drivers/rpmsg/rpmsg_core.c       | 21 +++++++++++++++++++++
+>>  drivers/rpmsg/rpmsg_internal.h   |  2 ++
+>>  drivers/rpmsg/virtio_rpmsg_bus.c | 10 ++++++++++
+>>  include/linux/rpmsg.h            | 10 ++++++++++
+>>  4 files changed, 43 insertions(+)
+>>
+>> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+>> index e330ec4dfc33..a6ef54c4779a 100644
+>> --- a/drivers/rpmsg/rpmsg_core.c
+>> +++ b/drivers/rpmsg/rpmsg_core.c
+>> @@ -283,6 +283,27 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
+>>  }
+>>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
+>>  
+>> +/**
+>> + * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
+>> + * @ept: the rpmsg endpoint
+>> + *
+>> + * This function returns maximum buffer size available for a single message.
+>> + *
+>> + * Return: the maximum transmission size on success and an appropriate error
+>> + * value on failure.
+> 
+> Is the expectation that a call to rpmsg_send() with this size will
+> eventually succeed?
+yes, this should be the role of the transport layer
+(e.g. RPMsg VirtIO bus) to ensure this.
 
-diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
-index 8ae301132a54..343a94b64f1c 100644
---- a/net/qrtr/qrtr.c
-+++ b/net/qrtr/qrtr.c
-@@ -119,7 +119,6 @@ static DEFINE_MUTEX(qrtr_port_lock);
-  * @qrtr_tx_flow: tree of qrtr_tx_flow, keyed by node << 32 | port
-  * @qrtr_tx_lock: lock for qrtr_tx_flow inserts
-  * @rx_queue: receive queue
-- * @work: scheduled work struct for recv work
-  * @item: list item for broadcast list
-  */
- struct qrtr_node {
-@@ -132,7 +131,6 @@ struct qrtr_node {
- 	struct mutex qrtr_tx_lock; /* for qrtr_tx_flow */
- 
- 	struct sk_buff_head rx_queue;
--	struct work_struct work;
- 	struct list_head item;
- };
- 
-@@ -157,6 +155,8 @@ static int qrtr_local_enqueue(struct qrtr_node *node, struct sk_buff *skb,
- static int qrtr_bcast_enqueue(struct qrtr_node *node, struct sk_buff *skb,
- 			      int type, struct sockaddr_qrtr *from,
- 			      struct sockaddr_qrtr *to);
-+static struct qrtr_sock *qrtr_port_lookup(int port);
-+static void qrtr_port_put(struct qrtr_sock *ipc);
- 
- /* Release node resources and free the node.
-  *
-@@ -178,7 +178,6 @@ static void __qrtr_node_release(struct kref *kref)
- 	list_del(&node->item);
- 	mutex_unlock(&qrtr_node_lock);
- 
--	cancel_work_sync(&node->work);
- 	skb_queue_purge(&node->rx_queue);
- 
- 	/* Free tx flow counters */
-@@ -422,6 +421,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
- 	struct qrtr_node *node = ep->node;
- 	const struct qrtr_hdr_v1 *v1;
- 	const struct qrtr_hdr_v2 *v2;
-+	struct qrtr_sock *ipc;
- 	struct sk_buff *skb;
- 	struct qrtr_cb *cb;
- 	unsigned int size;
-@@ -486,8 +486,20 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
- 
- 	skb_put_data(skb, data + hdrlen, size);
- 
--	skb_queue_tail(&node->rx_queue, skb);
--	schedule_work(&node->work);
-+	qrtr_node_assign(node, cb->src_node);
-+
-+	if (cb->type == QRTR_TYPE_RESUME_TX) {
-+		qrtr_tx_resume(node, skb);
-+	} else {
-+		ipc = qrtr_port_lookup(cb->dst_port);
-+		if (!ipc)
-+			goto err;
-+
-+		if (sock_queue_rcv_skb(&ipc->sk, skb))
-+			goto err;
-+
-+		qrtr_port_put(ipc);
-+	}
- 
- 	return 0;
- 
-@@ -522,40 +534,6 @@ static struct sk_buff *qrtr_alloc_ctrl_packet(struct qrtr_ctrl_pkt **pkt)
- 	return skb;
- }
- 
--static struct qrtr_sock *qrtr_port_lookup(int port);
--static void qrtr_port_put(struct qrtr_sock *ipc);
--
--/* Handle and route a received packet.
-- *
-- * This will auto-reply with resume-tx packet as necessary.
-- */
--static void qrtr_node_rx_work(struct work_struct *work)
--{
--	struct qrtr_node *node = container_of(work, struct qrtr_node, work);
--	struct sk_buff *skb;
--
--	while ((skb = skb_dequeue(&node->rx_queue)) != NULL) {
--		struct qrtr_sock *ipc;
--		struct qrtr_cb *cb = (struct qrtr_cb *)skb->cb;
--
--		qrtr_node_assign(node, cb->src_node);
--
--		if (cb->type == QRTR_TYPE_RESUME_TX) {
--			qrtr_tx_resume(node, skb);
--		} else {
--			ipc = qrtr_port_lookup(cb->dst_port);
--			if (!ipc) {
--				kfree_skb(skb);
--			} else {
--				if (sock_queue_rcv_skb(&ipc->sk, skb))
--					kfree_skb(skb);
--
--				qrtr_port_put(ipc);
--			}
--		}
--	}
--}
--
- /**
-  * qrtr_endpoint_register() - register a new endpoint
-  * @ep: endpoint to register
-@@ -575,7 +553,6 @@ int qrtr_endpoint_register(struct qrtr_endpoint *ep, unsigned int nid)
- 	if (!node)
- 		return -ENOMEM;
- 
--	INIT_WORK(&node->work, qrtr_node_rx_work);
- 	kref_init(&node->ref);
- 	mutex_init(&node->ep_lock);
- 	skb_queue_head_init(&node->rx_queue);
--- 
-2.24.0
+> 
+>> + */
+> [..]
+>> +static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept)
+>> +{
+>> +	struct rpmsg_device *rpdev = ept->rpdev;
+>> +	struct virtio_rpmsg_channel *vch = to_virtio_rpmsg_channel(rpdev);
+>> +
+>> +	return vch->vrp->buf_size - sizeof(struct rpmsg_hdr);
+> 
+> I'm still under the impression that the rpmsg protocol doesn't have to
+> operate on fixed size messages. Would this then return vrp->num_bufs *
+> vrp->buf_size / 2 - sizeof(rpmsg_hdr)?
+it depends on the transport layer. For RPMsg over virtio, this is the size
+of the payload of a buffer so vrp->buf_size  - sizeof(rpmsg_hdr)
 
+Regards,
+Arnaud
+
+> 
+>> +}
+>> +
+> 
+> Regards,
+> Bjorn
+> 
