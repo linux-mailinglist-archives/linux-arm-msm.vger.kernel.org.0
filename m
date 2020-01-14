@@ -2,377 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B53DF13A23B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2020 08:46:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3ADFC13A249
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2020 08:52:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728877AbgANHqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jan 2020 02:46:36 -0500
-Received: from mx2.suse.de ([195.135.220.15]:39068 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728801AbgANHqg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jan 2020 02:46:36 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 7CCF6AC6E;
-        Tue, 14 Jan 2020 07:46:32 +0000 (UTC)
-Subject: Re: [PATCH 02/23] drm/amdgpu: Convert to struct
- drm_crtc_helper_funcs.get_scanout_position()
-To:     Alex Deucher <alexdeucher@gmail.com>
-Cc:     Dave Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        "Deucher, Alexander" <alexander.deucher@amd.com>,
-        Christian Koenig <christian.koenig@amd.com>,
-        Chunming Zhou <David1.Zhou@amd.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
-        Vincent Abriou <vincent.abriou@st.com>, yannick.fertre@st.com,
-        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@st.com, Eric Anholt <eric@anholt.net>,
-        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>,
-        Thomas Hellstrom <thellstrom@vmware.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        "Wentland, Harry" <harry.wentland@amd.com>,
-        "Leo (Sunpeng) Li" <sunpeng.li@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        amd-gfx list <amd-gfx@lists.freedesktop.org>,
-        Maling list - DRI developers 
-        <dri-devel@lists.freedesktop.org>,
-        nouveau <nouveau@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-References: <20200110092127.27847-1-tzimmermann@suse.de>
- <20200110092127.27847-3-tzimmermann@suse.de>
- <CADnq5_OCsQQ0=Yr6xinWWCursZc0ZGBrNj1=0667kbqE1BorVw@mail.gmail.com>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- mQENBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAG0J1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPokBVAQTAQgAPhYh
- BHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJbOdLgAhsDBQkDwmcABQsJCAcCBhUKCQgLAgQWAgMB
- Ah4BAheAAAoJEGgNwR1TC3ojR80H/jH+vYavwQ+TvO8ksXL9JQWc3IFSiGpuSVXLCdg62AmR
- irxW+qCwNncNQyb9rd30gzdectSkPWL3KSqEResBe24IbA5/jSkPweJasgXtfhuyoeCJ6PXo
- clQQGKIoFIAEv1s8l0ggPZswvCinegl1diyJXUXmdEJRTWYAtxn/atut1o6Giv6D2qmYbXN7
- mneMC5MzlLaJKUtoH7U/IjVw1sx2qtxAZGKVm4RZxPnMCp9E1MAr5t4dP5gJCIiqsdrVqI6i
- KupZstMxstPU//azmz7ZWWxT0JzgJqZSvPYx/SATeexTYBP47YFyri4jnsty2ErS91E6H8os
- Bv6pnSn7eAq5AQ0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRH
- UE9eosYbT6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgT
- RjP+qbU63Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+R
- dhgATnWWGKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zb
- ehDda8lvhFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r
- 12+lqdsAEQEAAYkBPAQYAQgAJhYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJbOdLgAhsMBQkD
- wmcAAAoJEGgNwR1TC3ojpfcIAInwP5OlcEKokTnHCiDTz4Ony4GnHRP2fXATQZCKxmu4AJY2
- h9ifw9Nf2TjCZ6AMvC3thAN0rFDj55N9l4s1CpaDo4J+0fkrHuyNacnT206CeJV1E7NYntxU
- n+LSiRrOdywn6erjxRi9EYTVLCHcDhBEjKmFZfg4AM4GZMWX1lg0+eHbd5oL1as28WvvI/uI
- aMyV8RbyXot1r/8QLlWldU3NrTF5p7TMU2y3ZH2mf5suSKHAMtbE4jKJ8ZHFOo3GhLgjVrBW
- HE9JXO08xKkgD+w6v83+nomsEuf6C6LYrqY/tsZvyEX6zN8CtirPdPWu/VXNRYAl/lat7lSI
- 3H26qrE=
-Message-ID: <7ce3554d-b81e-e3bb-804d-1f69df558596@suse.de>
-Date:   Tue, 14 Jan 2020 08:46:26 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        id S1725956AbgANHwh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jan 2020 02:52:37 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:44469 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728734AbgANHwh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Jan 2020 02:52:37 -0500
+Received: by mail-ed1-f66.google.com with SMTP id bx28so11014026edb.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jan 2020 23:52:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KNSE1PFZJJft7ctjmJInclxLjnHHAsUSvvb0hQe0jR0=;
+        b=sQtIs1WplcQOL39mv+L+1v2hnkUQMZ3wNksQFdduZbipL9LqhjR85m6xqZgMQoXCPI
+         jTfLIQToOtNQnjFp+ru9SfyXcHq0PwHUOh8Vuz+8FCt1fMfBZdidn0sqoidli6b4dF0l
+         F2mE2LBxe7++WTsu5GLzTWtKsrn9RGsjawY36lTPMuewuFoVmjsZZUm8Zijv3i3dZAIy
+         7Q9qx7l/MN9Q1cwdyhfiGafI9BjVyiQlQs2zsc+YX+p1A+MsXXQ+lX+x6kv2OX9mkDLR
+         gC9vjuueregFSOZz0pw8f0pvvBQvIAfjK5dokQnhAwgPZH4HJFFviNW8vVz8eRSX5G2u
+         H6Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KNSE1PFZJJft7ctjmJInclxLjnHHAsUSvvb0hQe0jR0=;
+        b=lYeTpUqz1qGMT/mn7LqV+5pRwE4fm1ZsjsMN0L2uhiYS/fso8S8fsFABxSAKh3+g1U
+         yCliRU9LgihGxaNWaAeaf/W/EP1EeMk3/enb09SwtSH9rwnjh2JmqLAV/rTMrkshL98o
+         qk2opw/9R2EdvrO7v7FeLtW/Ni1xegJhVhV6e9/eGZpeSQ1xLBUEF7Bgi/oRJ2aV34OA
+         +kwJpzB2mdPBHwADPS8HHj6EVZ8npkv/tV4+ICpNLCruiQMZShb0Jy9cb0iIWUlw8/6t
+         zOfZbH+tY66OwnkG5cOpCvEC6XseQ6EaAzCX7c7FlukPr3NdTywpNYry6Y7FgB5Irdhz
+         BmoA==
+X-Gm-Message-State: APjAAAUDgWRi3N2nit0frluxLKyVHBsx8t6LzAoi6T9we+MrMJ0C6y2i
+        Oh1HT7EOTlWhT6liLwAiC6HUcpdOamvBq/qluJJ/gQ==
+X-Google-Smtp-Source: APXvYqymAZSlgEpVYFsdOdZckb4ehuHrVvBiGJjeVudApzthPcsPTNqp0UxnHqFBSQu22E44BtnMpES52qUmo3wJhNI=
+X-Received: by 2002:a05:6402:2037:: with SMTP id ay23mr21785295edb.146.1578988354858;
+ Mon, 13 Jan 2020 23:52:34 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CADnq5_OCsQQ0=Yr6xinWWCursZc0ZGBrNj1=0667kbqE1BorVw@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="ze5gAYUIJh5RqpeP1fLk3HyxsXcvJAdv5"
+References: <1578646684-17379-1-git-send-email-loic.poulain@linaro.org> <CAOCk7NrSkaY5xUdA+Q3tCoDv01fVDYpakWmk-RnOuuBKsNN8Jg@mail.gmail.com>
+In-Reply-To: <CAOCk7NrSkaY5xUdA+Q3tCoDv01fVDYpakWmk-RnOuuBKsNN8Jg@mail.gmail.com>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 14 Jan 2020 08:55:02 +0100
+Message-ID: <CAMZdPi8ih2LukVsGvG_w2HOSZL9DSbYDmD_U=PTnk96vbE=u8g@mail.gmail.com>
+Subject: Re: [PATCH] tty: serial: msm_serial: RX SW/FIFO mode fallback
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, linux-serial@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---ze5gAYUIJh5RqpeP1fLk3HyxsXcvJAdv5
-Content-Type: multipart/mixed; boundary="d8m6vbaJ76KgbPpLDKzJ4x85fVIAmDTHh";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Alex Deucher <alexdeucher@gmail.com>
-Cc: Dave Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
- "Deucher, Alexander" <alexander.deucher@amd.com>,
- Christian Koenig <christian.koenig@amd.com>,
- Chunming Zhou <David1.Zhou@amd.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Benjamin Gaignard <benjamin.gaignard@linaro.org>,
- Vincent Abriou <vincent.abriou@st.com>, yannick.fertre@st.com,
- philippe.cornu@st.com, mcoquelin.stm32@gmail.com, alexandre.torgue@st.com,
- Eric Anholt <eric@anholt.net>, rodrigosiqueiramelo@gmail.com,
- hamohammed.sa@gmail.com,
- VMware Graphics <linux-graphics-maintainer@vmware.com>,
- Thomas Hellstrom <thellstrom@vmware.com>, Ben Skeggs <bskeggs@redhat.com>,
- "Wentland, Harry" <harry.wentland@amd.com>,
- "Leo (Sunpeng) Li" <sunpeng.li@amd.com>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>,
- linux-arm-msm <linux-arm-msm@vger.kernel.org>,
- Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
- amd-gfx list <amd-gfx@lists.freedesktop.org>,
- Maling list - DRI developers <dri-devel@lists.freedesktop.org>,
- nouveau <nouveau@lists.freedesktop.org>,
- freedreno <freedreno@lists.freedesktop.org>
-Message-ID: <7ce3554d-b81e-e3bb-804d-1f69df558596@suse.de>
-Subject: Re: [PATCH 02/23] drm/amdgpu: Convert to struct
- drm_crtc_helper_funcs.get_scanout_position()
-References: <20200110092127.27847-1-tzimmermann@suse.de>
- <20200110092127.27847-3-tzimmermann@suse.de>
- <CADnq5_OCsQQ0=Yr6xinWWCursZc0ZGBrNj1=0667kbqE1BorVw@mail.gmail.com>
-In-Reply-To: <CADnq5_OCsQQ0=Yr6xinWWCursZc0ZGBrNj1=0667kbqE1BorVw@mail.gmail.com>
+On Mon, 13 Jan 2020 at 20:53, Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+>
+> On Fri, Jan 10, 2020 at 1:55 AM Loic Poulain <loic.poulain@linaro.org> wrote:
+> >
+> > During db410c stress test and when the system is low on memory,
+> > the UART/console becomes unresponsive and never recover back.
+> > This has been narrowed down to the msm_start_rx_dma which does
+> > not manage error cases correctly (e.g. dma mapping failure),
+> > indeed, when an error happens, dma transfer is simply discarded
+> > and so never completed, leading to unconfigured RX path.
+> >
+> > This patch fixes this issue by switching to SW/FIFO mode in case
+> > of DMA issue. This mainly consists in resetting the receiver to
+> > apply RX BAM/DMA disabling change and re-enabling the RX level
+> > and stale interrupts (previously disabled for DMA transfers).
+> >
+> > The DMA will be re-enabled once memory is available since the
+> > SW/FIFO read function (msm_handle_rx_dm) retries to start dma
+> > on completion.
+>
+> Is there a risk of the same thing occurring in the TX path?
 
---d8m6vbaJ76KgbPpLDKzJ4x85fVIAmDTHh
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Yes, but the TX case is already handled. If msm_handle_tx_dma fails,
+msm_handle_tx_pio is used to directly write the FIFO.
 
-Hi
+>
+> >
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > ---
+> >  drivers/tty/serial/msm_serial.c | 18 +++++++++++++++++-
+> >  1 file changed, 17 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
+> > index 1cbae07..a63b703 100644
+> > --- a/drivers/tty/serial/msm_serial.c
+> > +++ b/drivers/tty/serial/msm_serial.c
+> > @@ -610,7 +610,7 @@ static void msm_start_rx_dma(struct msm_port *msm_port)
+> >                                    UARTDM_RX_SIZE, dma->dir);
+> >         ret = dma_mapping_error(uart->dev, dma->phys);
+> >         if (ret)
+> > -               return;
+> > +               goto sw_mode;
+> >
+> >         dma->desc = dmaengine_prep_slave_single(dma->chan, dma->phys,
+> >                                                 UARTDM_RX_SIZE, DMA_DEV_TO_MEM,
+> > @@ -661,6 +661,22 @@ static void msm_start_rx_dma(struct msm_port *msm_port)
+> >         return;
+> >  unmap:
+> >         dma_unmap_single(uart->dev, dma->phys, UARTDM_RX_SIZE, dma->dir);
+> > +
+> > +sw_mode:
+> > +       /*
+> > +        * Switch from DMA to SW/FIFO mode. After clearing Rx BAM (UARTDM_DMEN),
+>
+> Where does this clear of UARTDM_DMEN occur?
 
-Am 13.01.20 um 19:52 schrieb Alex Deucher:
-> On Fri, Jan 10, 2020 at 4:21 AM Thomas Zimmermann <tzimmermann@suse.de>=
- wrote:
->>
->> The callback struct drm_driver.get_scanout_position() is deprecated in=
+The DMEN clear occurs on DMA RX completion (msm_complete_tx_dma()) and
+set on DMA
+restart (msm_start_rx_dma). In our case, since DMA start fails, we
+just reset the RX path to
+effectively apply the SW/FIFO mode.
 
->> favor of struct drm_crtc_helper_funcs.get_scanout_position(). Convert
->> amdgpu over.
->>
->=20
-> I would prefer to just change the signature of
-> amdgpu_display_get_crtc_scanoutpos() to match the new API rather than
-> wrapping it again.
+>
+> > +        * receiver must be reset.
+> > +        */
+> > +       msm_write(uart, UART_CR_CMD_RESET_RX, UART_CR);
+> > +       msm_write(uart, UART_CR_RX_ENABLE, UART_CR);
+> > +
+> > +       msm_write(uart, UART_CR_CMD_RESET_STALE_INT, UART_CR);
+> > +       msm_write(uart, 0xFFFFFF, UARTDM_DMRX);
+> > +       msm_write(uart, UART_CR_CMD_STALE_EVENT_ENABLE, UART_CR);
+> > +
+> > +       /* Re-enable RX interrupts */
+> > +       msm_port->imr |= (UART_IMR_RXLEV | UART_IMR_RXSTALE);
+> > +       msm_write(uart, msm_port->imr, UART_IMR);
+> >  }
+> >
+> >  static void msm_stop_rx(struct uart_port *port)
+> > --
+> > 2.7.4
+> >
 
-Will be fixed in v2. I wrapped these functions in amdgpu and radeon to
-avoid changes to other, unreleted callers.
-
-Best regards
-Thomas
-
->=20
-> Alex
->=20
->> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->> ---
->>  drivers/gpu/drm/amd/amdgpu/amdgpu_display.c       | 12 ++++++++++++
->>  drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c           | 11 -----------
->>  drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h          |  5 +++++
->>  drivers/gpu/drm/amd/amdgpu/dce_v10_0.c            |  1 +
->>  drivers/gpu/drm/amd/amdgpu/dce_v11_0.c            |  1 +
->>  drivers/gpu/drm/amd/amdgpu/dce_v6_0.c             |  1 +
->>  drivers/gpu/drm/amd/amdgpu/dce_v8_0.c             |  1 +
->>  drivers/gpu/drm/amd/amdgpu/dce_virtual.c          |  1 +
->>  drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  3 ++-
->>  9 files changed, 24 insertions(+), 12 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c b/drivers/gpu=
-/drm/amd/amdgpu/amdgpu_display.c
->> index 4e699071d144..a1e769d4417d 100644
->> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
->> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
->> @@ -914,3 +914,15 @@ int amdgpu_display_crtc_idx_to_irq_type(struct am=
-dgpu_device *adev, int crtc)
->>                 return AMDGPU_CRTC_IRQ_NONE;
->>         }
->>  }
->> +
->> +bool amdgpu_crtc_get_scanout_position(struct drm_crtc *crtc,
->> +                       bool in_vblank_irq, int *vpos,
->> +                       int *hpos, ktime_t *stime, ktime_t *etime,
->> +                       const struct drm_display_mode *mode)
->> +{
->> +       struct drm_device *dev =3D crtc->dev;
->> +       unsigned int pipe =3D crtc->index;
->> +
->> +       return amdgpu_display_get_crtc_scanoutpos(dev, pipe, 0, vpos, =
-hpos,
->> +                                                 stime, etime, mode);=
-
->> +}
->> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm=
-/amd/amdgpu/amdgpu_drv.c
->> index 3f6f14ce1511..0749285dd1c7 100644
->> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
->> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
->> @@ -1367,16 +1367,6 @@ int amdgpu_file_to_fpriv(struct file *filp, str=
-uct amdgpu_fpriv **fpriv)
->>         return 0;
->>  }
->>
->> -static bool
->> -amdgpu_get_crtc_scanout_position(struct drm_device *dev, unsigned int=
- pipe,
->> -                                bool in_vblank_irq, int *vpos, int *h=
-pos,
->> -                                ktime_t *stime, ktime_t *etime,
->> -                                const struct drm_display_mode *mode)
->> -{
->> -       return amdgpu_display_get_crtc_scanoutpos(dev, pipe, 0, vpos, =
-hpos,
->> -                                                 stime, etime, mode);=
-
->> -}
->> -
->>  static struct drm_driver kms_driver =3D {
->>         .driver_features =3D
->>             DRIVER_USE_AGP | DRIVER_ATOMIC |
->> @@ -1391,7 +1381,6 @@ static struct drm_driver kms_driver =3D {
->>         .enable_vblank =3D amdgpu_enable_vblank_kms,
->>         .disable_vblank =3D amdgpu_disable_vblank_kms,
->>         .get_vblank_timestamp =3D drm_calc_vbltimestamp_from_scanoutpo=
-s,
->> -       .get_scanout_position =3D amdgpu_get_crtc_scanout_position,
->>         .irq_handler =3D amdgpu_irq_handler,
->>         .ioctls =3D amdgpu_ioctls_kms,
->>         .gem_free_object_unlocked =3D amdgpu_gem_object_free,
->> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h b/drivers/gpu/dr=
-m/amd/amdgpu/amdgpu_mode.h
->> index eb9975f4decb..37ba07e2feb5 100644
->> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h
->> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h
->> @@ -612,6 +612,11 @@ void amdgpu_panel_mode_fixup(struct drm_encoder *=
-encoder,
->>                              struct drm_display_mode *adjusted_mode);
->>  int amdgpu_display_crtc_idx_to_irq_type(struct amdgpu_device *adev, i=
-nt crtc);
->>
->> +bool amdgpu_crtc_get_scanout_position(struct drm_crtc *crtc,
->> +                       bool in_vblank_irq, int *vpos,
->> +                       int *hpos, ktime_t *stime, ktime_t *etime,
->> +                       const struct drm_display_mode *mode);
->> +
->>  /* fbdev layer */
->>  int amdgpu_fbdev_init(struct amdgpu_device *adev);
->>  void amdgpu_fbdev_fini(struct amdgpu_device *adev);
->> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c b/drivers/gpu/drm/=
-amd/amdgpu/dce_v10_0.c
->> index 40d2ac723dd6..bdc1e0f036d4 100644
->> --- a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
->> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
->> @@ -2685,6 +2685,7 @@ static const struct drm_crtc_helper_funcs dce_v1=
-0_0_crtc_helper_funcs =3D {
->>         .prepare =3D dce_v10_0_crtc_prepare,
->>         .commit =3D dce_v10_0_crtc_commit,
->>         .disable =3D dce_v10_0_crtc_disable,
->> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
->>  };
->>
->>  static int dce_v10_0_crtc_init(struct amdgpu_device *adev, int index)=
-
->> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c b/drivers/gpu/drm/=
-amd/amdgpu/dce_v11_0.c
->> index 898ef72d423c..0319da5f7bf9 100644
->> --- a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
->> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
->> @@ -2793,6 +2793,7 @@ static const struct drm_crtc_helper_funcs dce_v1=
-1_0_crtc_helper_funcs =3D {
->>         .prepare =3D dce_v11_0_crtc_prepare,
->>         .commit =3D dce_v11_0_crtc_commit,
->>         .disable =3D dce_v11_0_crtc_disable,
->> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
->>  };
->>
->>  static int dce_v11_0_crtc_init(struct amdgpu_device *adev, int index)=
-
->> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c b/drivers/gpu/drm/a=
-md/amdgpu/dce_v6_0.c
->> index db15a112becc..78642c3b14fc 100644
->> --- a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
->> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
->> @@ -2575,6 +2575,7 @@ static const struct drm_crtc_helper_funcs dce_v6=
-_0_crtc_helper_funcs =3D {
->>         .prepare =3D dce_v6_0_crtc_prepare,
->>         .commit =3D dce_v6_0_crtc_commit,
->>         .disable =3D dce_v6_0_crtc_disable,
->> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
->>  };
->>
->>  static int dce_v6_0_crtc_init(struct amdgpu_device *adev, int index)
->> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c b/drivers/gpu/drm/a=
-md/amdgpu/dce_v8_0.c
->> index f06c9022c1fd..1e8d4975435a 100644
->> --- a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
->> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
->> @@ -2593,6 +2593,7 @@ static const struct drm_crtc_helper_funcs dce_v8=
-_0_crtc_helper_funcs =3D {
->>         .prepare =3D dce_v8_0_crtc_prepare,
->>         .commit =3D dce_v8_0_crtc_commit,
->>         .disable =3D dce_v8_0_crtc_disable,
->> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
->>  };
->>
->>  static int dce_v8_0_crtc_init(struct amdgpu_device *adev, int index)
->> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_virtual.c b/drivers/gpu/dr=
-m/amd/amdgpu/dce_virtual.c
->> index e4f94863332c..4b2f915aba47 100644
->> --- a/drivers/gpu/drm/amd/amdgpu/dce_virtual.c
->> +++ b/drivers/gpu/drm/amd/amdgpu/dce_virtual.c
->> @@ -218,6 +218,7 @@ static const struct drm_crtc_helper_funcs dce_virt=
-ual_crtc_helper_funcs =3D {
->>         .prepare =3D dce_virtual_crtc_prepare,
->>         .commit =3D dce_virtual_crtc_commit,
->>         .disable =3D dce_virtual_crtc_disable,
->> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
->>  };
->>
->>  static int dce_virtual_crtc_init(struct amdgpu_device *adev, int inde=
-x)
->> diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drive=
-rs/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
->> index f2db400a3920..39c5cf242c1b 100644
->> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
->> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
->> @@ -4821,7 +4821,8 @@ static bool dm_crtc_helper_mode_fixup(struct drm=
-_crtc *crtc,
->>  static const struct drm_crtc_helper_funcs amdgpu_dm_crtc_helper_funcs=
- =3D {
->>         .disable =3D dm_crtc_helper_disable,
->>         .atomic_check =3D dm_crtc_helper_atomic_check,
->> -       .mode_fixup =3D dm_crtc_helper_mode_fixup
->> +       .mode_fixup =3D dm_crtc_helper_mode_fixup,
->> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
->>  };
->>
->>  static void dm_encoder_helper_disable(struct drm_encoder *encoder)
->> --
->> 2.24.1
->>
->> _______________________________________________
->> amd-gfx mailing list
->> amd-gfx@lists.freedesktop.org
->> https://lists.freedesktop.org/mailman/listinfo/amd-gfx
-
---=20
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
-(HRB 36809, AG N=C3=BCrnberg)
-Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
-
-
---d8m6vbaJ76KgbPpLDKzJ4x85fVIAmDTHh--
-
---ze5gAYUIJh5RqpeP1fLk3HyxsXcvJAdv5
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEchf7rIzpz2NEoWjlaA3BHVMLeiMFAl4dcdIACgkQaA3BHVML
-eiPo7Af+O7W21BgMWX8hYlJvRZd0v8wVkJ9VFqgkW5CUexHacuJB9nJYj0T5UDfp
-xWzweSOva5AeHkINjkXqikFWn841Q16BZ0l+UsC/FCDkfBYQARI1xN7Bi01bL80R
-WGzRUV1ORVxzHbUPCR/+hKbLrqa9fuxbYI1QiLlt7++KfXQu87g4huuTrlviU09w
-EOderXnB9UHC5tLvjshI/C1XoMZGxXWwGz9K4giQrRCNMobz1Ib4MTTbg+yoa9g8
-MhzypABzPbu4+P58gwnwjNINe+nTPC0UmlqMNNGdKlQi22ibaJnmSwYyAhoXQbct
-4U32mjCM8Da9wntcqsgyAPT47BVjZA==
-=8NKQ
------END PGP SIGNATURE-----
-
---ze5gAYUIJh5RqpeP1fLk3HyxsXcvJAdv5--
+Regards,
+Loic
