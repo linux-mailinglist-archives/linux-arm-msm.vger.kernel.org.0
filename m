@@ -2,156 +2,377 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B125F13A156
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2020 08:08:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B53DF13A23B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2020 08:46:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728820AbgANHIZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jan 2020 02:08:25 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:26173 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728874AbgANHIY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jan 2020 02:08:24 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1578985704; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=ZVAjfFnR5g5tt+dHhDf+Jgdpgx3yDYML3pSfUkW0yvY=; b=KQDQR8UvN5BDgkGsqgZ/0LuVte1g3G97rSMWD4mDhUy9pHj3LhCSzPREjQxhQUPDrCnvw/yV
- GyKwwMJwlmxiPtzBVQtGqT4nLStAYp1MF6ZNLPNha6LpBUWAn/IFHjwELbW/QtXzM6ciSk5Z
- eZe75Tf67P9nKt8F5huUZlllihQ=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e1d68e7.7f9d94fbdae8-smtp-out-n03;
- Tue, 14 Jan 2020 07:08:23 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 240D6C433A2; Tue, 14 Jan 2020 07:08:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from sthella-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sthella)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6CEEBC43383;
-        Tue, 14 Jan 2020 07:08:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6CEEBC43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sthella@codeaurora.org
-From:   Shyam Kumar Thella <sthella@codeaurora.org>
-To:     agross@kernel.org, srinivas.kandagatla@linaro.org,
-        robh+dt@kernel.org, mark.rutland@arm.com
-Cc:     Shyam Kumar Thella <sthella@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v5] dt-bindings: nvmem: add binding for QTI SPMI SDAM
-Date:   Tue, 14 Jan 2020 12:38:12 +0530
-Message-Id: <1578985692-20309-1-git-send-email-sthella@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1728877AbgANHqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jan 2020 02:46:36 -0500
+Received: from mx2.suse.de ([195.135.220.15]:39068 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728801AbgANHqg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Jan 2020 02:46:36 -0500
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id 7CCF6AC6E;
+        Tue, 14 Jan 2020 07:46:32 +0000 (UTC)
+Subject: Re: [PATCH 02/23] drm/amdgpu: Convert to struct
+ drm_crtc_helper_funcs.get_scanout_position()
+To:     Alex Deucher <alexdeucher@gmail.com>
+Cc:     Dave Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        "Deucher, Alexander" <alexander.deucher@amd.com>,
+        Christian Koenig <christian.koenig@amd.com>,
+        Chunming Zhou <David1.Zhou@amd.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Vincent Abriou <vincent.abriou@st.com>, yannick.fertre@st.com,
+        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
+        alexandre.torgue@st.com, Eric Anholt <eric@anholt.net>,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        VMware Graphics <linux-graphics-maintainer@vmware.com>,
+        Thomas Hellstrom <thellstrom@vmware.com>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        "Wentland, Harry" <harry.wentland@amd.com>,
+        "Leo (Sunpeng) Li" <sunpeng.li@amd.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        amd-gfx list <amd-gfx@lists.freedesktop.org>,
+        Maling list - DRI developers 
+        <dri-devel@lists.freedesktop.org>,
+        nouveau <nouveau@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <20200110092127.27847-1-tzimmermann@suse.de>
+ <20200110092127.27847-3-tzimmermann@suse.de>
+ <CADnq5_OCsQQ0=Yr6xinWWCursZc0ZGBrNj1=0667kbqE1BorVw@mail.gmail.com>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ mQENBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAG0J1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPokBVAQTAQgAPhYh
+ BHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJbOdLgAhsDBQkDwmcABQsJCAcCBhUKCQgLAgQWAgMB
+ Ah4BAheAAAoJEGgNwR1TC3ojR80H/jH+vYavwQ+TvO8ksXL9JQWc3IFSiGpuSVXLCdg62AmR
+ irxW+qCwNncNQyb9rd30gzdectSkPWL3KSqEResBe24IbA5/jSkPweJasgXtfhuyoeCJ6PXo
+ clQQGKIoFIAEv1s8l0ggPZswvCinegl1diyJXUXmdEJRTWYAtxn/atut1o6Giv6D2qmYbXN7
+ mneMC5MzlLaJKUtoH7U/IjVw1sx2qtxAZGKVm4RZxPnMCp9E1MAr5t4dP5gJCIiqsdrVqI6i
+ KupZstMxstPU//azmz7ZWWxT0JzgJqZSvPYx/SATeexTYBP47YFyri4jnsty2ErS91E6H8os
+ Bv6pnSn7eAq5AQ0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRH
+ UE9eosYbT6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgT
+ RjP+qbU63Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+R
+ dhgATnWWGKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zb
+ ehDda8lvhFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r
+ 12+lqdsAEQEAAYkBPAQYAQgAJhYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJbOdLgAhsMBQkD
+ wmcAAAoJEGgNwR1TC3ojpfcIAInwP5OlcEKokTnHCiDTz4Ony4GnHRP2fXATQZCKxmu4AJY2
+ h9ifw9Nf2TjCZ6AMvC3thAN0rFDj55N9l4s1CpaDo4J+0fkrHuyNacnT206CeJV1E7NYntxU
+ n+LSiRrOdywn6erjxRi9EYTVLCHcDhBEjKmFZfg4AM4GZMWX1lg0+eHbd5oL1as28WvvI/uI
+ aMyV8RbyXot1r/8QLlWldU3NrTF5p7TMU2y3ZH2mf5suSKHAMtbE4jKJ8ZHFOo3GhLgjVrBW
+ HE9JXO08xKkgD+w6v83+nomsEuf6C6LYrqY/tsZvyEX6zN8CtirPdPWu/VXNRYAl/lat7lSI
+ 3H26qrE=
+Message-ID: <7ce3554d-b81e-e3bb-804d-1f69df558596@suse.de>
+Date:   Tue, 14 Jan 2020 08:46:26 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.1
+MIME-Version: 1.0
+In-Reply-To: <CADnq5_OCsQQ0=Yr6xinWWCursZc0ZGBrNj1=0667kbqE1BorVw@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="ze5gAYUIJh5RqpeP1fLk3HyxsXcvJAdv5"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QTI SDAM allows PMIC peripherals to access the shared memory that is
-available on QTI PMICs. Add documentation for it.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--ze5gAYUIJh5RqpeP1fLk3HyxsXcvJAdv5
+Content-Type: multipart/mixed; boundary="d8m6vbaJ76KgbPpLDKzJ4x85fVIAmDTHh";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: Alex Deucher <alexdeucher@gmail.com>
+Cc: Dave Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+ "Deucher, Alexander" <alexander.deucher@amd.com>,
+ Christian Koenig <christian.koenig@amd.com>,
+ Chunming Zhou <David1.Zhou@amd.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+ Vincent Abriou <vincent.abriou@st.com>, yannick.fertre@st.com,
+ philippe.cornu@st.com, mcoquelin.stm32@gmail.com, alexandre.torgue@st.com,
+ Eric Anholt <eric@anholt.net>, rodrigosiqueiramelo@gmail.com,
+ hamohammed.sa@gmail.com,
+ VMware Graphics <linux-graphics-maintainer@vmware.com>,
+ Thomas Hellstrom <thellstrom@vmware.com>, Ben Skeggs <bskeggs@redhat.com>,
+ "Wentland, Harry" <harry.wentland@amd.com>,
+ "Leo (Sunpeng) Li" <sunpeng.li@amd.com>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>,
+ linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+ Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+ amd-gfx list <amd-gfx@lists.freedesktop.org>,
+ Maling list - DRI developers <dri-devel@lists.freedesktop.org>,
+ nouveau <nouveau@lists.freedesktop.org>,
+ freedreno <freedreno@lists.freedesktop.org>
+Message-ID: <7ce3554d-b81e-e3bb-804d-1f69df558596@suse.de>
+Subject: Re: [PATCH 02/23] drm/amdgpu: Convert to struct
+ drm_crtc_helper_funcs.get_scanout_position()
+References: <20200110092127.27847-1-tzimmermann@suse.de>
+ <20200110092127.27847-3-tzimmermann@suse.de>
+ <CADnq5_OCsQQ0=Yr6xinWWCursZc0ZGBrNj1=0667kbqE1BorVw@mail.gmail.com>
+In-Reply-To: <CADnq5_OCsQQ0=Yr6xinWWCursZc0ZGBrNj1=0667kbqE1BorVw@mail.gmail.com>
 
-Signed-off-by: Shyam Kumar Thella <sthella@codeaurora.org>
----
- .../devicetree/bindings/nvmem/qcom,spmi-sdam.yaml  | 84 ++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
+--d8m6vbaJ76KgbPpLDKzJ4x85fVIAmDTHh
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-new file mode 100644
-index 0000000..7bbd4e6
---- /dev/null
-+++ b/Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml
-@@ -0,0 +1,84 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/nvmem/qcom,spmi-sdam.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Technologies, Inc. SPMI SDAM DT bindings
-+
-+maintainers:
-+  - Shyam Kumar Thella <sthella@codeaurora.org>
-+
-+description: |
-+  The SDAM provides scratch register space for the PMIC clients. This
-+  memory can be used by software to store information or communicate
-+  to/from the PBUS.
-+
-+allOf:
-+  - $ref: "nvmem.yaml#"
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,spmi-sdam
-+
-+  reg:
-+    maxItems: 1
-+
-+  "#address-cells":
-+    const: 1
-+
-+  "#size-cells":
-+    const: 1
-+
-+  ranges: true
-+
-+required:
-+  - compatible
-+  - reg
-+  - ranges
-+
-+patternProperties:
-+  "^.*@[0-9a-f]+$":
-+    type: object
-+
-+    properties:
-+      reg:
-+        maxItems: 1
-+        description:
-+          Offset and size in bytes within the storage device.
-+
-+      bits:
-+        $ref: /schemas/types.yaml#/definitions/uint32-array
-+        maxItems: 1
-+        items:
-+          items:
-+            - minimum: 0
-+              maximum: 7
-+              description:
-+                Offset in bit within the address range specified by reg.
-+            - minimum: 1
-+              description:
-+                Size in bit within the address range specified by reg.
-+
-+    required:
-+      - reg
-+
-+    additionalProperties: false
-+
-+examples:
-+  - |
-+      sdam_1: nvram@b000 {
-+          #address-cells = <1>;
-+          #size-cells = <1>;
-+          compatible = "qcom,spmi-sdam";
-+          reg = <0xb000 0x100>;
-+          ranges = <0 0xb000 0x100>;
-+
-+          /* Data cells */
-+          restart_reason: restart@50 {
-+              reg = <0x50 0x1>;
-+              bits = <6 2>;
-+          };
-+      };
-+...
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
- a Linux Foundation Collaborative Project
+Hi
+
+Am 13.01.20 um 19:52 schrieb Alex Deucher:
+> On Fri, Jan 10, 2020 at 4:21 AM Thomas Zimmermann <tzimmermann@suse.de>=
+ wrote:
+>>
+>> The callback struct drm_driver.get_scanout_position() is deprecated in=
+
+>> favor of struct drm_crtc_helper_funcs.get_scanout_position(). Convert
+>> amdgpu over.
+>>
+>=20
+> I would prefer to just change the signature of
+> amdgpu_display_get_crtc_scanoutpos() to match the new API rather than
+> wrapping it again.
+
+Will be fixed in v2. I wrapped these functions in amdgpu and radeon to
+avoid changes to other, unreleted callers.
+
+Best regards
+Thomas
+
+>=20
+> Alex
+>=20
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> ---
+>>  drivers/gpu/drm/amd/amdgpu/amdgpu_display.c       | 12 ++++++++++++
+>>  drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c           | 11 -----------
+>>  drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h          |  5 +++++
+>>  drivers/gpu/drm/amd/amdgpu/dce_v10_0.c            |  1 +
+>>  drivers/gpu/drm/amd/amdgpu/dce_v11_0.c            |  1 +
+>>  drivers/gpu/drm/amd/amdgpu/dce_v6_0.c             |  1 +
+>>  drivers/gpu/drm/amd/amdgpu/dce_v8_0.c             |  1 +
+>>  drivers/gpu/drm/amd/amdgpu/dce_virtual.c          |  1 +
+>>  drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  3 ++-
+>>  9 files changed, 24 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c b/drivers/gpu=
+/drm/amd/amdgpu/amdgpu_display.c
+>> index 4e699071d144..a1e769d4417d 100644
+>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
+>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
+>> @@ -914,3 +914,15 @@ int amdgpu_display_crtc_idx_to_irq_type(struct am=
+dgpu_device *adev, int crtc)
+>>                 return AMDGPU_CRTC_IRQ_NONE;
+>>         }
+>>  }
+>> +
+>> +bool amdgpu_crtc_get_scanout_position(struct drm_crtc *crtc,
+>> +                       bool in_vblank_irq, int *vpos,
+>> +                       int *hpos, ktime_t *stime, ktime_t *etime,
+>> +                       const struct drm_display_mode *mode)
+>> +{
+>> +       struct drm_device *dev =3D crtc->dev;
+>> +       unsigned int pipe =3D crtc->index;
+>> +
+>> +       return amdgpu_display_get_crtc_scanoutpos(dev, pipe, 0, vpos, =
+hpos,
+>> +                                                 stime, etime, mode);=
+
+>> +}
+>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm=
+/amd/amdgpu/amdgpu_drv.c
+>> index 3f6f14ce1511..0749285dd1c7 100644
+>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+>> @@ -1367,16 +1367,6 @@ int amdgpu_file_to_fpriv(struct file *filp, str=
+uct amdgpu_fpriv **fpriv)
+>>         return 0;
+>>  }
+>>
+>> -static bool
+>> -amdgpu_get_crtc_scanout_position(struct drm_device *dev, unsigned int=
+ pipe,
+>> -                                bool in_vblank_irq, int *vpos, int *h=
+pos,
+>> -                                ktime_t *stime, ktime_t *etime,
+>> -                                const struct drm_display_mode *mode)
+>> -{
+>> -       return amdgpu_display_get_crtc_scanoutpos(dev, pipe, 0, vpos, =
+hpos,
+>> -                                                 stime, etime, mode);=
+
+>> -}
+>> -
+>>  static struct drm_driver kms_driver =3D {
+>>         .driver_features =3D
+>>             DRIVER_USE_AGP | DRIVER_ATOMIC |
+>> @@ -1391,7 +1381,6 @@ static struct drm_driver kms_driver =3D {
+>>         .enable_vblank =3D amdgpu_enable_vblank_kms,
+>>         .disable_vblank =3D amdgpu_disable_vblank_kms,
+>>         .get_vblank_timestamp =3D drm_calc_vbltimestamp_from_scanoutpo=
+s,
+>> -       .get_scanout_position =3D amdgpu_get_crtc_scanout_position,
+>>         .irq_handler =3D amdgpu_irq_handler,
+>>         .ioctls =3D amdgpu_ioctls_kms,
+>>         .gem_free_object_unlocked =3D amdgpu_gem_object_free,
+>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h b/drivers/gpu/dr=
+m/amd/amdgpu/amdgpu_mode.h
+>> index eb9975f4decb..37ba07e2feb5 100644
+>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h
+>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h
+>> @@ -612,6 +612,11 @@ void amdgpu_panel_mode_fixup(struct drm_encoder *=
+encoder,
+>>                              struct drm_display_mode *adjusted_mode);
+>>  int amdgpu_display_crtc_idx_to_irq_type(struct amdgpu_device *adev, i=
+nt crtc);
+>>
+>> +bool amdgpu_crtc_get_scanout_position(struct drm_crtc *crtc,
+>> +                       bool in_vblank_irq, int *vpos,
+>> +                       int *hpos, ktime_t *stime, ktime_t *etime,
+>> +                       const struct drm_display_mode *mode);
+>> +
+>>  /* fbdev layer */
+>>  int amdgpu_fbdev_init(struct amdgpu_device *adev);
+>>  void amdgpu_fbdev_fini(struct amdgpu_device *adev);
+>> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c b/drivers/gpu/drm/=
+amd/amdgpu/dce_v10_0.c
+>> index 40d2ac723dd6..bdc1e0f036d4 100644
+>> --- a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
+>> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
+>> @@ -2685,6 +2685,7 @@ static const struct drm_crtc_helper_funcs dce_v1=
+0_0_crtc_helper_funcs =3D {
+>>         .prepare =3D dce_v10_0_crtc_prepare,
+>>         .commit =3D dce_v10_0_crtc_commit,
+>>         .disable =3D dce_v10_0_crtc_disable,
+>> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
+>>  };
+>>
+>>  static int dce_v10_0_crtc_init(struct amdgpu_device *adev, int index)=
+
+>> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c b/drivers/gpu/drm/=
+amd/amdgpu/dce_v11_0.c
+>> index 898ef72d423c..0319da5f7bf9 100644
+>> --- a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
+>> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
+>> @@ -2793,6 +2793,7 @@ static const struct drm_crtc_helper_funcs dce_v1=
+1_0_crtc_helper_funcs =3D {
+>>         .prepare =3D dce_v11_0_crtc_prepare,
+>>         .commit =3D dce_v11_0_crtc_commit,
+>>         .disable =3D dce_v11_0_crtc_disable,
+>> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
+>>  };
+>>
+>>  static int dce_v11_0_crtc_init(struct amdgpu_device *adev, int index)=
+
+>> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c b/drivers/gpu/drm/a=
+md/amdgpu/dce_v6_0.c
+>> index db15a112becc..78642c3b14fc 100644
+>> --- a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
+>> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
+>> @@ -2575,6 +2575,7 @@ static const struct drm_crtc_helper_funcs dce_v6=
+_0_crtc_helper_funcs =3D {
+>>         .prepare =3D dce_v6_0_crtc_prepare,
+>>         .commit =3D dce_v6_0_crtc_commit,
+>>         .disable =3D dce_v6_0_crtc_disable,
+>> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
+>>  };
+>>
+>>  static int dce_v6_0_crtc_init(struct amdgpu_device *adev, int index)
+>> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c b/drivers/gpu/drm/a=
+md/amdgpu/dce_v8_0.c
+>> index f06c9022c1fd..1e8d4975435a 100644
+>> --- a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
+>> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
+>> @@ -2593,6 +2593,7 @@ static const struct drm_crtc_helper_funcs dce_v8=
+_0_crtc_helper_funcs =3D {
+>>         .prepare =3D dce_v8_0_crtc_prepare,
+>>         .commit =3D dce_v8_0_crtc_commit,
+>>         .disable =3D dce_v8_0_crtc_disable,
+>> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
+>>  };
+>>
+>>  static int dce_v8_0_crtc_init(struct amdgpu_device *adev, int index)
+>> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_virtual.c b/drivers/gpu/dr=
+m/amd/amdgpu/dce_virtual.c
+>> index e4f94863332c..4b2f915aba47 100644
+>> --- a/drivers/gpu/drm/amd/amdgpu/dce_virtual.c
+>> +++ b/drivers/gpu/drm/amd/amdgpu/dce_virtual.c
+>> @@ -218,6 +218,7 @@ static const struct drm_crtc_helper_funcs dce_virt=
+ual_crtc_helper_funcs =3D {
+>>         .prepare =3D dce_virtual_crtc_prepare,
+>>         .commit =3D dce_virtual_crtc_commit,
+>>         .disable =3D dce_virtual_crtc_disable,
+>> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
+>>  };
+>>
+>>  static int dce_virtual_crtc_init(struct amdgpu_device *adev, int inde=
+x)
+>> diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drive=
+rs/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+>> index f2db400a3920..39c5cf242c1b 100644
+>> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+>> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+>> @@ -4821,7 +4821,8 @@ static bool dm_crtc_helper_mode_fixup(struct drm=
+_crtc *crtc,
+>>  static const struct drm_crtc_helper_funcs amdgpu_dm_crtc_helper_funcs=
+ =3D {
+>>         .disable =3D dm_crtc_helper_disable,
+>>         .atomic_check =3D dm_crtc_helper_atomic_check,
+>> -       .mode_fixup =3D dm_crtc_helper_mode_fixup
+>> +       .mode_fixup =3D dm_crtc_helper_mode_fixup,
+>> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
+>>  };
+>>
+>>  static void dm_encoder_helper_disable(struct drm_encoder *encoder)
+>> --
+>> 2.24.1
+>>
+>> _______________________________________________
+>> amd-gfx mailing list
+>> amd-gfx@lists.freedesktop.org
+>> https://lists.freedesktop.org/mailman/listinfo/amd-gfx
+
+--=20
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+(HRB 36809, AG N=C3=BCrnberg)
+Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
+
+
+--d8m6vbaJ76KgbPpLDKzJ4x85fVIAmDTHh--
+
+--ze5gAYUIJh5RqpeP1fLk3HyxsXcvJAdv5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEchf7rIzpz2NEoWjlaA3BHVMLeiMFAl4dcdIACgkQaA3BHVML
+eiPo7Af+O7W21BgMWX8hYlJvRZd0v8wVkJ9VFqgkW5CUexHacuJB9nJYj0T5UDfp
+xWzweSOva5AeHkINjkXqikFWn841Q16BZ0l+UsC/FCDkfBYQARI1xN7Bi01bL80R
+WGzRUV1ORVxzHbUPCR/+hKbLrqa9fuxbYI1QiLlt7++KfXQu87g4huuTrlviU09w
+EOderXnB9UHC5tLvjshI/C1XoMZGxXWwGz9K4giQrRCNMobz1Ib4MTTbg+yoa9g8
+MhzypABzPbu4+P58gwnwjNINe+nTPC0UmlqMNNGdKlQi22ibaJnmSwYyAhoXQbct
+4U32mjCM8Da9wntcqsgyAPT47BVjZA==
+=8NKQ
+-----END PGP SIGNATURE-----
+
+--ze5gAYUIJh5RqpeP1fLk3HyxsXcvJAdv5--
