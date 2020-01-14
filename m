@@ -2,153 +2,321 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 844EB13A377
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2020 10:06:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D3FC213A3A1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2020 10:18:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728797AbgANJGt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jan 2020 04:06:49 -0500
-Received: from mx08-00178001.pphosted.com ([91.207.212.93]:42870 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725842AbgANJGt (ORCPT
+        id S1728983AbgANJSa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jan 2020 04:18:30 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:64677 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725820AbgANJSa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jan 2020 04:06:49 -0500
-Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 00E92VkQ012743;
-        Tue, 14 Jan 2020 10:06:44 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=STMicroelectronics;
- bh=jtwGEjUtyuxEZq8hdbqmLv/Jf7tRXlP+PuuoBmxhh+o=;
- b=CSrmp1u9fXkvyI4/vCQ+5KOO0gZw9Z/uTwtwABr6pdxsZ1jmyEh9v2gQ+0/zGc8juri9
- 2NDeCMjRgdgOn053FuHQn3xNJ1DmiYc4rFnI5XbAXEKqi15cx+o26HUlSag9j1XxevTP
- W5gD7z1s4/yUak8bG5kUl3ZaSg91WEWwXjOniE8b8zat6droZlcYopicCHGEHt+7Gxv+
- tKEzS2bwgK9a+vdiLxW9K+EQwpdCRSUCJ5VeuVlvxBOlR8DLD4TPqllWafqJ38cuGMEN
- x9pQ+0OqLU7SEW/5Rf2LYxwQDxVq9Sb/po/iINFGAQoaLKuEflxuuPh7SEl28dJrPtsv XA== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 2xf7jpcen3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Jan 2020 10:06:44 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id BD11010002A;
-        Tue, 14 Jan 2020 10:06:39 +0100 (CET)
-Received: from Webmail-eu.st.com (sfhdag3node1.st.com [10.75.127.7])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id A171B211F21;
-        Tue, 14 Jan 2020 10:06:39 +0100 (CET)
-Received: from lmecxl0889.lme.st.com (10.75.127.45) by SFHDAG3NODE1.st.com
- (10.75.127.7) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Tue, 14 Jan
- 2020 10:06:39 +0100
-Subject: Re: [PATCH v2] rpmsg: core: add API to get MTU
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Ohad Ben-Cohen <ohad@wizery.com>, <linux-kernel@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, Suman Anna <s-anna@ti.com>,
-        Fabien DESSENNE <fabien.dessenne@st.com>,
-        <linux-stm32@st-md-mailman.stormreply.com>
-References: <20191113172249.32412-1-arnaud.pouliquen@st.com>
- <20200113172453.GQ738324@yoga>
-From:   Arnaud POULIQUEN <arnaud.pouliquen@st.com>
-Message-ID: <c6ecd3b6-2a3b-11d8-6d1c-a531c73bc388@st.com>
-Date:   Tue, 14 Jan 2020 10:06:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        Tue, 14 Jan 2020 04:18:30 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1578993509; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=aJ2nPJJ1Z6ch4Jyf2yqJ9egXdRDFuWik+zmMYV1bwf0=; b=KZkuCY4a/6Pvpgs12K/6X0yHCtZOCTpRkbifgfajxxHtGP+fR2+wB373qTrwbPP7PH/BSyZV
+ OeqofsaBRj43HucVVa6Lf92PDtLpx9GvPl0JaoKLkf+TUPcXmSkG9FKeVcp4dJOeFBkGoejb
+ QRRlrkZBlz1BFjVnW94r0X1CB94=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e1d8762.7f8c61513420-smtp-out-n01;
+ Tue, 14 Jan 2020 09:18:26 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CB57DC433CB; Tue, 14 Jan 2020 09:18:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.206.25.140] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vbadigan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4A6A8C43383;
+        Tue, 14 Jan 2020 09:18:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4A6A8C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
+Subject: Re: [PATCH V1] mmc: sdhci-msm: Add CQHCI support for sdhci-msm
+To:     Adrian Hunter <adrian.hunter@intel.com>, ulf.hansson@linaro.org,
+        agross@kernel.org
+Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
+        sayalil@codeaurora.org, cang@codeaurora.org,
+        rampraka@codeaurora.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Ritesh Harjani <riteshh@codeaurora.org>
+References: <1576586233-28443-1-git-send-email-vbadigan@codeaurora.org>
+ <1c6a6749-68c3-ee16-2c1b-e7534dee4791@intel.com>
+ <9720d5fe-1bb0-8a88-1373-935a9abdb9e0@codeaurora.org>
+ <162d9ee1-2acf-f9ca-15e6-e8ab00c5c19e@codeaurora.org>
+ <1a6904aa-c7d3-c64b-c924-ec7b204b5527@intel.com>
+From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Message-ID: <85c4d74f-70c8-13dc-57c4-d22a21883047@codeaurora.org>
+Date:   Tue, 14 Jan 2020 14:48:18 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.1
 MIME-Version: 1.0
-In-Reply-To: <20200113172453.GQ738324@yoga>
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <1a6904aa-c7d3-c64b-c924-ec7b204b5527@intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.45]
-X-ClientProxiedBy: SFHDAG8NODE2.st.com (10.75.127.23) To SFHDAG3NODE1.st.com
- (10.75.127.7)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.572
- definitions=2020-01-14_02:2020-01-13,2020-01-14 signatures=0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn
 
-On 1/13/20 6:24 PM, Bjorn Andersson wrote:
-> On Wed 13 Nov 09:22 PST 2019, Arnaud Pouliquen wrote:
-> 
->> Return the rpmsg buffer MTU for sending message, so rpmsg users
->> can split a long message in several sub rpmsg buffers.
+On 1/13/2020 12:54 PM, Adrian Hunter wrote:
+> On 10/01/20 10:56 am, Veerabhadrarao Badiganti wrote:
+>> On 1/2/2020 5:00 PM, Veerabhadrarao Badiganti wrote:
+>>> On 12/20/2019 7:29 PM, Adrian Hunter wrote:
+>>>> On 17/12/19 2:37 pm, Veerabhadrarao Badiganti wrote:
+>>>>> From: Ritesh Harjani<riteshh@codeaurora.org>
+>>>>>
+>>>>> This adds CQHCI support for sdhci-msm platforms.
+>>>>>
+>>>>> Signed-off-by: Ritesh Harjani<riteshh@codeaurora.org>
+>>>>> Signed-off-by: Veerabhadrarao Badiganti<vbadigan@codeaurora.org>
+>>>>>
+>>>>> ---
+>>>>> This patch is based on RFC patch
+>>>>> https://lkml.org/lkml/2017/8/30/313
+>>>>>
+>>>>> Changes since RFC:
+>>>>>      - Updated settings so that TDLBA won't get reset when
+>>>>>        CQE is enabled.
+>>>>>      - Removed new compatible string and moved to supports-cqe
+>>>>>        dt flag to identify CQE support.
+>>>>>      - Incorporated review comments.
+>>>>>
+>>>>> Tested on: qcs404, sc7180
+>>>>> ---
+>>>>>    drivers/mmc/host/sdhci-msm.c | 115
+>>>>> ++++++++++++++++++++++++++++++++++++++++++-
+>>>>>    1 file changed, 114 insertions(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+>>>>> index 3d0bb5e..a4e3507 100644
+>>>>> --- a/drivers/mmc/host/sdhci-msm.c
+>>>>> +++ b/drivers/mmc/host/sdhci-msm.c
+>>>>> @@ -15,6 +15,7 @@
+>>>>>    #include <linux/regulator/consumer.h>
+>>>>>      #include "sdhci-pltfm.h"
+>>>>> +#include "cqhci.h"
+>>>>>      #define CORE_MCI_VERSION        0x50
+>>>>>    #define CORE_VERSION_MAJOR_SHIFT    28
+>>>>> @@ -122,6 +123,10 @@
+>>>>>    #define msm_host_writel(msm_host, val, host, offset) \
+>>>>>        msm_host->var_ops->msm_writel_relaxed(val, host, offset)
+>>>>>    +/* CQHCI vendor specific registers */
+>>>>> +#define CQHCI_VENDOR_CFG1    0xA00
+>>>>> +#define DISABLE_RST_ON_CMDQ_EN    (0x3 << 13)
+>>>>> +
+>>>>>    struct sdhci_msm_offset {
+>>>>>        u32 core_hc_mode;
+>>>>>        u32 core_mci_data_cnt;
+>>>>> @@ -1567,6 +1572,109 @@ static void sdhci_msm_set_clock(struct
+>>>>> sdhci_host *host, unsigned int clock)
+>>>>>        __sdhci_msm_set_clock(host, clock);
+>>>>>    }
+>>>>> +/*****************************************************************************\
+>>>>>
+>>>>> + * *
+>>>>> + * MSM Command Queue Engine
+>>>>> (CQE)                                            *
+>>>>> + * *
+>>>>> +\*****************************************************************************/
+>>>>>
+>>>>> +
+>>>>> +static u32 sdhci_msm_cqe_irq(struct sdhci_host *host, u32 intmask)
+>>>>> +{
+>>>>> +    int cmd_error = 0;
+>>>>> +    int data_error = 0;
+>>>>> +
+>>>>> +    if (!sdhci_cqe_irq(host, intmask, &cmd_error, &data_error))
+>>>>> +        return intmask;
+>>>>> +
+>>>>> +    cqhci_irq(host->mmc, intmask, cmd_error, data_error);
+>>>>> +    return 0;
+>>>>> +}
+>>>>> +
+>>>>> +void sdhci_msm_cqe_disable(struct mmc_host *mmc, bool recovery)
+>>>>> +{
+>>>>> +    struct sdhci_host *host = mmc_priv(mmc);
+>>>>> +    unsigned long flags;
+>>>>> +    u32 ctrl;
+>>>>> +
+>>>>> +    /*
+>>>>> +     * When CQE is halted, the legacy SDHCI path operates only
+>>>>> +     * on 128bit descriptors in 64bit mode.
+>>>>> +     */
+>>>>> +    if (host->flags & SDHCI_USE_64_BIT_DMA)
+>>>>> +        host->desc_sz = 16;
+>>>> The adma_table_sz depends on desc_sz, so it cannot be changed here.
+>>>> If you do something like below, then you can set desc_sz before calling
+>>>> sdhci_setup_host()
+>>>>
+>>>> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
+>>>> index f4540f9892ce..f1d3b70ff769 100644
+>>>> --- a/drivers/mmc/host/sdhci.c
+>>>> +++ b/drivers/mmc/host/sdhci.c
+>>>> @@ -3825,9 +3825,10 @@ int sdhci_setup_host(struct sdhci_host *host)
+>>>>            void *buf;
+>>>>              if (host->flags & SDHCI_USE_64_BIT_DMA) {
+>>>> +            if (!host->desc_sz)
+>>>> +                host->desc_sz = SDHCI_ADMA2_64_DESC_SZ(host);
+>>>>                host->adma_table_sz = host->adma_table_cnt *
+>>>> -                          SDHCI_ADMA2_64_DESC_SZ(host);
+>>>> -            host->desc_sz = SDHCI_ADMA2_64_DESC_SZ(host);
+>>>> +                          host->desc_sz;
+>>>>            } else {
+>>>>                host->adma_table_sz = host->adma_table_cnt *
+>>>>                              SDHCI_ADMA2_32_DESC_SZ;
+>>> Thanks Adrian for the suggestion. I will add this change.
+>>>
+>>> But even with this change, still i will have to override 'host->desc_sz'
+>>> variable since qcom sdhci controller expects/operates-on
+>>>
+>>> 12-byte descriptor as long was CQE is not enabled. When CQE is enabled, it
+>>> operates only on 16-bype descriptors (even when CQE is halted).
+>>>
+>>> If i fix "host->desc_sz" to 16 then all the data transfer commands during
+>>> card initialization (till CQE is enabled) would fail.
+>>>
+>>> I may have to update as below:
+>>>
+>>>      host->desc_sz = 16;
+>>>
+>>>      sdhci_add_host()  ;
+>>>
+>>>     host->desc_sz = 12;
+>>>
+>>> And then cqhci_host_ops->enable() -> host->desc_sz = 16;
+>>>
+>>> Please let me know if this is fine or if you have any other suggestion to
+>>> support this limitation of qcom controller w.r.t ADMA descriptors with CQE.
+>>>
+>> Hi Adrian,
 >>
-> 
-> I won't merge this new api without a client, and I'm still concerned
-> about the details.
-The client exists: it is the rpmsg tty that i 've been rying to upstream since for a while.
-https://patchwork.kernel.org/cover/11130213/
-This patch is the result of some comments you did on rpmsg tty thread. 
-Suman was also interested in and request to merge it independently
-(https://lkml.org/lkml/2019/9/3/774).
-That's why i'm trying to do it in 2 steps.
+>> Do you have any suggestions on the way to support both the descriptor sizes?
+> How about we have 2 variables: alloc_desc_sz and desc_sz
+> Then, in sdhci_setup_host():
+>
+> 	host->alloc_desc_sz = SDHCI_ADMA2_64/32_DESC_SZ(host);
+> 	host->desc_sz = host->alloc_desc_sz;
+>
+> Then desc_sz can be changed (in between requests) so long as desc_sz <
+> alloc_desc_sz.
 
-> 
->> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@st.com>
->> ---
->>  V1 to V2
+Thanks Adrian.  Then I will update it with two variables.
+
+>>>>> +
+>>>>> +    spin_lock_irqsave(&host->lock, flags);
+>>>>> +
+>>>>> +    /*
+>>>>> +     * During CQE operation command complete bit gets latched.
+>>>>> +     * So s/w should clear command complete interrupt status when CQE is
+>>>>> +     * halted. Otherwise unexpected SDCHI legacy interrupt gets
+>>>>> +     * triggered when CQE is halted.
+>>>>> +     */
+>>>>> +    ctrl = sdhci_readl(host, SDHCI_INT_ENABLE);
+>>>>> +    ctrl |= SDHCI_INT_RESPONSE;
+>>>>> +    sdhci_writel(host,  ctrl, SDHCI_INT_ENABLE);
+>>>>> +    sdhci_writel(host, SDHCI_INT_RESPONSE, SDHCI_INT_STATUS);
+>>>>> +
+>>>>> +    spin_unlock_irqrestore(&host->lock, flags);
+>>>>> +
+>>>>> +    sdhci_cqe_disable(mmc, recovery);
+>>>>> +}
+>>>>> +
+>>>>> +static const struct cqhci_host_ops sdhci_msm_cqhci_ops = {
+>>>>> +    .enable        = sdhci_cqe_enable,
+>>>>> +    .disable    = sdhci_msm_cqe_disable,
+>>>>> +};
+>>>>> +
+>>>>> +static int sdhci_msm_cqe_add_host(struct sdhci_host *host,
+>>>>> +                struct platform_device *pdev)
+>>>>> +{
+>>>>> +    struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>>>>> +    struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>>>>> +    struct cqhci_host *cq_host;
+>>>>> +    bool dma64;
+>>>>> +    int ret;
+>>>>> +
+>>>>> +    ret = sdhci_setup_host(host);
+>>>>> +    if (ret)
+>>>>> +        return ret;
+>>>>> +
+>>>>> +    cq_host = cqhci_pltfm_init(pdev);
+>>>>> +    if (IS_ERR(cq_host)) {
+>>>>> +        ret = PTR_ERR(cq_host);
+>>>>> +        dev_err(&pdev->dev, "cqhci-pltfm init: failed: %d\n", ret);
+>>>>> +        goto cleanup;
+>>>>> +    }
+>>>>> +
+>>>>> +    msm_host->mmc->caps2 |= MMC_CAP2_CQE | MMC_CAP2_CQE_DCMD;
+>>>>> +    cq_host->ops = &sdhci_msm_cqhci_ops;
+>>>>> +
+>>>>> +    dma64 = host->flags & SDHCI_USE_64_BIT_DMA;
+>>>>> +
+>>>>> +    ret = cqhci_init(cq_host, host->mmc, dma64);
+>>>>> +    if (ret) {
+>>>>> +        dev_err(&pdev->dev, "%s: CQE init: failed (%d)\n",
+>>>>> +                mmc_hostname(host->mmc), ret);
+>>>>> +        goto cleanup;
+>>>>> +    }
+>>>>> +
+>>>>> +    /* Disable cqe reset due to cqe enable signal */
+>>>>> +    cqhci_writel(cq_host, cqhci_readl(cq_host, CQHCI_VENDOR_CFG1) |
+>>>>> +               DISABLE_RST_ON_CMDQ_EN, CQHCI_VENDOR_CFG1);
+>>>>> +
+>>>>> +    ret = __sdhci_add_host(host);
+>>>>> +    if (ret)
+>>>>> +        goto cleanup;
+>>>>> +
+>>>>> +    dev_info(&pdev->dev, "%s: CQE init: success\n",
+>>>>> +            mmc_hostname(host->mmc));
+>>>>> +    return ret;
+>>>>> +
+>>>>> +cleanup:
+>>>>> +    sdhci_cleanup_host(host);
+>>>>> +    return ret;
+>>>>> +}
+>>>>> +
+>>>>>    /*
+>>>>>     * Platform specific register write functions. This is so that, if any
+>>>>>     * register write needs to be followed up by platform specific actions,
+>>>>> @@ -1731,6 +1839,7 @@ static void sdhci_msm_set_regulator_caps(struct
+>>>>> sdhci_msm_host *msm_host)
+>>>>>        .set_uhs_signaling = sdhci_msm_set_uhs_signaling,
+>>>>>        .write_w = sdhci_msm_writew,
+>>>>>        .write_b = sdhci_msm_writeb,
+>>>>> +    .irq    = sdhci_msm_cqe_irq,
+>>>>>    };
+>>>>>      static const struct sdhci_pltfm_data sdhci_msm_pdata = {
+>>>>> @@ -1754,6 +1863,7 @@ static int sdhci_msm_probe(struct platform_device
+>>>>> *pdev)
+>>>>>        u8 core_major;
+>>>>>        const struct sdhci_msm_offset *msm_offset;
+>>>>>        const struct sdhci_msm_variant_info *var_info;
+>>>>> +    struct device_node *node = pdev->dev.of_node;
+>>>>>          host = sdhci_pltfm_init(pdev, &sdhci_msm_pdata, sizeof(*msm_host));
+>>>>>        if (IS_ERR(host))
+>>>>> @@ -1952,7 +2062,10 @@ static int sdhci_msm_probe(struct platform_device
+>>>>> *pdev)
+>>>>>        pm_runtime_use_autosuspend(&pdev->dev);
+>>>>>          host->mmc_host_ops.execute_tuning = sdhci_msm_execute_tuning;
+>>>>> -    ret = sdhci_add_host(host);
+>>>>> +    if (of_property_read_bool(node, "supports-cqe"))
+>>>>> +        ret = sdhci_msm_cqe_add_host(host, pdev);
+>>>>> +    else
+>>>>> +        ret = sdhci_add_host(host);
+>>>>>        if (ret)
+>>>>>            goto pm_runtime_disable;
+>>>>>        sdhci_msm_set_regulator_caps(msm_host);
+>>>>>
+>> Thanks
 >>
->>   V1 patch:https://lore.kernel.org/patchwork/patch/1124684/
->>   - Change patch title,
->>   - as not solution today to support MTU on GLINK make ops optional,
->>     RPMsg client API returns -ENOTSUPP in this case,
->>   - suppress smd and glink patches.
-> 
-> That's ok.
-> 
->> ---
->>  drivers/rpmsg/rpmsg_core.c       | 21 +++++++++++++++++++++
->>  drivers/rpmsg/rpmsg_internal.h   |  2 ++
->>  drivers/rpmsg/virtio_rpmsg_bus.c | 10 ++++++++++
->>  include/linux/rpmsg.h            | 10 ++++++++++
->>  4 files changed, 43 insertions(+)
->>
->> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
->> index e330ec4dfc33..a6ef54c4779a 100644
->> --- a/drivers/rpmsg/rpmsg_core.c
->> +++ b/drivers/rpmsg/rpmsg_core.c
->> @@ -283,6 +283,27 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->>  }
->>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
->>  
->> +/**
->> + * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
->> + * @ept: the rpmsg endpoint
->> + *
->> + * This function returns maximum buffer size available for a single message.
->> + *
->> + * Return: the maximum transmission size on success and an appropriate error
->> + * value on failure.
-> 
-> Is the expectation that a call to rpmsg_send() with this size will
-> eventually succeed?
-yes, this should be the role of the transport layer
-(e.g. RPMsg VirtIO bus) to ensure this.
-
-> 
->> + */
-> [..]
->> +static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept)
->> +{
->> +	struct rpmsg_device *rpdev = ept->rpdev;
->> +	struct virtio_rpmsg_channel *vch = to_virtio_rpmsg_channel(rpdev);
->> +
->> +	return vch->vrp->buf_size - sizeof(struct rpmsg_hdr);
-> 
-> I'm still under the impression that the rpmsg protocol doesn't have to
-> operate on fixed size messages. Would this then return vrp->num_bufs *
-> vrp->buf_size / 2 - sizeof(rpmsg_hdr)?
-it depends on the transport layer. For RPMsg over virtio, this is the size
-of the payload of a buffer so vrp->buf_size  - sizeof(rpmsg_hdr)
-
-Regards,
-Arnaud
-
-> 
->> +}
->> +
-> 
-> Regards,
-> Bjorn
-> 
+>> Veera
