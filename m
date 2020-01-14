@@ -2,326 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4049813B16E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2020 18:55:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D287713B19F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jan 2020 19:06:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726491AbgANRzI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jan 2020 12:55:08 -0500
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:39093 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726523AbgANRzI (ORCPT
+        id S1726053AbgANSGG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jan 2020 13:06:06 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:60131 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726270AbgANSGF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jan 2020 12:55:08 -0500
-Received: by mail-vs1-f68.google.com with SMTP id y125so8773546vsb.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2020 09:55:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7Jrn5Sa8iiFTwrMlmlHmDfU+9ZYlUjhau9Mnp3Wo+QY=;
-        b=HhobiIe9g3ecP3LijGr0BeCgYxkMFMKYOcohPXy+D6G1nTay+aQiNg2wGW8V7/DRcD
-         LX93cz44ibwJn2xG8cGWLNInOuwPjzQIv5eEFcE0Xh/D9P0ndxwfdObLZkXrFIcitTLh
-         SWUZILFCOjZKCzmfDsfLoOGeS9Kkmq68Im48QQTmnbHmwDpY7IX/wM3Pc2LKWHBxdpEa
-         bzR67oQGvS1lmlseYFl38GFB6pcOM2L+7jNQfGs7/Wf9YXHalU50jK+DMEpJ6RQzMoW2
-         6ouW4MS09ODOoZ3ikbgyNhq9v02kTHm3AG4VnHy+jP5FvQDylJ5Qcj7bTJ8szIhVt9RK
-         wLng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7Jrn5Sa8iiFTwrMlmlHmDfU+9ZYlUjhau9Mnp3Wo+QY=;
-        b=Z7qE1i8KBleiM+V+PPT+MdPE1OHF98Xqp6zcBb72lnRn11NV4ATj6yWPgn+43FCppB
-         aEYdOwbqhafzrp95zbpBph8X/OgP1b3YHXoiLLNEtPx1j3pT18h13btP2m1X7UbsPUoX
-         Htab5d95MAhelSDS5pIu0J14UlivYRc5apXAYWXiU6gkZZXdOscKMuaVyY/coY52LrBL
-         N2Uuxboy5CYJ+7mNG9Uu03R+wRBdZkraJ/YJ0CvhArvmkrJfc4vqvYF6MtKMBn7LaHTk
-         yRle0XqDUO1QmNed5ZN131BDdOwCgkZOQD5Q5FjkwUYte1Axa2dMcTwTaD7gEFD7i94l
-         Xy6Q==
-X-Gm-Message-State: APjAAAWZQQ9EOFkNK5LfPudUcNAeKtc9AO3kJSCliq3jigr2zb73WHJw
-        0E1S/JgLf6F85kahk1vAOzDtuV/FmecezS2FcNuN4w==
-X-Google-Smtp-Source: APXvYqxsvoLx0ArjCX6G7zFtHfviUTO5Vs1jW0CkdQ9t5PBD0y1Q3W3OcnF50SeD3BlhMjo0CVZKuVj4RvirpkOsEb0=
-X-Received: by 2002:a67:cd96:: with SMTP id r22mr1986767vsl.165.1579024506419;
- Tue, 14 Jan 2020 09:55:06 -0800 (PST)
+        Tue, 14 Jan 2020 13:06:05 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1579025165; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=pFpRqstlJrkjwz5Jitm1T/3UmfsGbLTwe4ukl7K6y3E=; b=B8XDXWrQxxilSrzyUanU2oNudxqfrrQ8vXwgTBI6piLDayBQmENKgdMrPsT7zhHdZ/TJ/SmR
+ F3scw/jmA2j9QFOwWFsF7/pZGuQ5/L+qzeJHH8RTPDjw3n5+JSeIPqHlot3XK3X1khkHaoa/
+ pB4jE5Ehgjn0OW0Ddphm900Bp1Q=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e1e0309.7f3f1fbd0110-smtp-out-n02;
+ Tue, 14 Jan 2020 18:06:01 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B306CC43383; Tue, 14 Jan 2020 18:06:00 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1E93FC433CB;
+        Tue, 14 Jan 2020 18:05:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1E93FC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Tue, 14 Jan 2020 11:05:56 -0700
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Kristian Kristensen <hoegsberg@google.com>
+Cc:     Rob Clark <robdclark@chromium.org>, Brian Ho <brian@brkho.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Kristian Kristensen <hoegsberg@chromium.org>,
+        Sean Paul <sean@poorly.run>
+Subject: Re: [Freedreno] [PATCH 2/2] drm/msm: Add MSM_WAIT_IOVA ioctl
+Message-ID: <20200114180556.GC2371@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Kristian Kristensen <hoegsberg@google.com>,
+        Rob Clark <robdclark@chromium.org>, Brian Ho <brian@brkho.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Kristian Kristensen <hoegsberg@chromium.org>,
+        Sean Paul <sean@poorly.run>
+References: <20200113153605.52350-1-brian@brkho.com>
+ <20200113153605.52350-3-brian@brkho.com>
+ <20200113175148.GC26711@jcrouse1-lnx.qualcomm.com>
+ <CAJs_Fx6AVwA73eN+Rs=GAvBPD1Leq=WKG9w_2hohpzmecK_C_A@mail.gmail.com>
+ <20200114172319.GA2371@jcrouse1-lnx.qualcomm.com>
+ <CAOPc6TnEZY9zxz-JPzh-7awWOtLrP_tiv+Sa0b3gh5HFp09QaA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20191230144402.30195-1-ulf.hansson@linaro.org>
- <20191230144402.30195-3-ulf.hansson@linaro.org> <CAL_Jsq+cAKEGOMnBwwvLt03zx8Gcxh4ijziaBnnY5TPEG0Mekg@mail.gmail.com>
-In-Reply-To: <CAL_Jsq+cAKEGOMnBwwvLt03zx8Gcxh4ijziaBnnY5TPEG0Mekg@mail.gmail.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 14 Jan 2020 18:54:30 +0100
-Message-ID: <CAPDyKFr_7qmKjpWcFegVBsfKBJePtukuriwW-8KX6c2a24ojEA@mail.gmail.com>
-Subject: Re: [PATCH v5 02/15] dt: psci: Update DT bindings to support
- hierarchical PSCI states
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        "open list:THERMAL" <linux-pm@vger.kernel.org>,
-        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Lina Iyer <lina.iyer@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOPc6TnEZY9zxz-JPzh-7awWOtLrP_tiv+Sa0b3gh5HFp09QaA@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 13 Jan 2020 at 20:53, Rob Herring <robh+dt@kernel.org> wrote:
->
-> On Mon, Dec 30, 2019 at 8:44 AM Ulf Hansson <ulf.hansson@linaro.org> wrote:
+On Tue, Jan 14, 2020 at 09:30:00AM -0800, Kristian Kristensen wrote:
+> On Tue, Jan 14, 2020 at 9:23 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
 > >
-> > Update PSCI DT bindings to allow to represent idle states for CPUs and the
-> > CPU topology, by using a hierarchical layout. Primarily this is done by
-> > re-using the existing DT bindings for PM domains [1] and for PM domain idle
-> > states [2].
+> > On Tue, Jan 14, 2020 at 08:52:43AM -0800, Rob Clark wrote:
+> > > On Mon, Jan 13, 2020 at 9:51 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
+> > > >
+> > > > On Mon, Jan 13, 2020 at 10:36:05AM -0500, Brian Ho wrote:
+> > > > > +
+> > > > > +     vaddr = base_vaddr + args->offset;
+> > > > > +
+> > > > > +     /* Assumes WC mapping */
+> > > > > +     ret = wait_event_interruptible_timeout(
+> > > > > +                     gpu->event, *vaddr >= args->value, remaining_jiffies);
+> > > >
+> > > > I feel like a barrier might be needed before checking *vaddr just in case you
+> > > > get the interrupt and wake up the queue before the write posts from the
+> > > > hardware.
+> > > >
+> > >
+> > > if the gpu is doing posted (or cached) writes, I don't think there is
+> > > even a CPU side barrier primitive that could wait for that?  I think
+> > > we rely on the GPU not interrupting the CPU until the write is posted
 > >
-> > Let's also add an example into the document for the PSCI DT bindings, to
-> > clearly show the new hierarchical based layout. The currently supported
-> > flattened layout, is already described in the ARM idle states bindings [3],
-> > so let's leave that as is.
+> > Once the GPU puts the write on the bus then it is up to the whims of the CPU
+> > architecture. If the writes are being done out of order you run a chance of
+> > firing the interrupt and making it all the way to your handler before the writes
+> > catch up.
 > >
-> > [1] Documentation/devicetree/bindings/power/power_domain.txt
-> > [2] Documentation/devicetree/bindings/power/domain-idle-state.txt
-> > [3] Documentation/devicetree/bindings/arm/idle-states.txt
+> > Since you are scheduling and doing a bunch of things in between you probably
+> > don't need to worry but if you start missing events and you don't know why then
+> > this could be why. A rmb() would give you piece of mind at the cost of being
+> > Yet Another Barrier (TM).
+> 
+> Doesn't the fence case do the same thing without a barrier?
+
+We get a free __iormb() and dma_rmb() from every gpu_read() so I think that
+is enough to catch everything up when the interrupt handler reads the status
+register and in most cases we don't check the fence until after that. I'm not
+sure that covers all the possible error cases.  Maybe something to look into?
+
+Also that field is marked as volatile in the struct, but I'm not sure that does
+anything useful.
+
+Jordan
+
+> > > BR,
+> > > -R
+> > > _______________________________________________
+> > > Freedreno mailing list
+> > > Freedreno@lists.freedesktop.org
+> > > https://lists.freedesktop.org/mailman/listinfo/freedreno
 > >
-> > Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
-> > Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
-> > Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-> > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> > ---
-> >
-> > Changes in v5:
-> >         - None.
->
-> First I'm seeing this as the DT list was not copied. The example has
-> problems when running 'make dt_binding_check':
->
-> Documentation/devicetree/bindings/arm/psci.example.dt.yaml: cpu@0:
-> compatible: Additional items are not allowed ('arm,armv8' was
-> unexpected)
-> Documentation/devicetree/bindings/arm/psci.example.dt.yaml: cpu@0:
-> compatible: ['arm,cortex-a53', 'arm,armv8'] is too long
-> Documentation/devicetree/bindings/arm/psci.example.dt.yaml: cpu@1:
-> compatible: Additional items are not allowed ('arm,armv8' was
-> unexpected)
-> Documentation/devicetree/bindings/arm/psci.example.dt.yaml: cpu@1:
-> compatible: ['arm,cortex-a57', 'arm,armv8'] is too long
->
-> 'arm,armv8' is only valid for s/w models.
-
-Perhaps you have a different version of the tools than I have (I have
-tried both on v.5.5-rc5 and todays linux-next), because I can't
-reproduce these errors at my side when running "make
-dt_binding_check".
-
-Can you please check again?
-
->
-> Documentation/devicetree/bindings/arm/psci.example.dt.yaml:
-> idle-states: cluster-retention:compatible:0: 'arm,idle-state' was
-> expected
-> Documentation/devicetree/bindings/arm/psci.example.dt.yaml:
-> idle-states: cluster-power-down:compatible:0: 'arm,idle-state' was
-> expected
->
-> The last 2 are due to my conversion of the idle-states binding which
-> is in my tree now. Probably need to add 'domain-idle-state' as a
-> compatible at a minimum. It looks like domain-idle-state.txt is pretty
-> much the same as arm/idle-state.txt, so we should perhaps merge them.
-
-Ahh, so maybe *all* of the above problems are caused by conflicts in
-the arm-soc tree with changes from your tree!?
-
-In regards to merging files, I am fine by that if that helps.
-
->
-> There's some bigger issues though.
->
-> > ---
-> >  .../devicetree/bindings/arm/cpus.yaml         |  15 +++
-> >  .../devicetree/bindings/arm/psci.yaml         | 104 ++++++++++++++++++
-> >  2 files changed, 119 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > index c23c24ff7575..7a9c3ce2dbef 100644
-> > --- a/Documentation/devicetree/bindings/arm/cpus.yaml
-> > +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > @@ -242,6 +242,21 @@ properties:
-> >
-> >        where voltage is in V, frequency is in MHz.
-> >
-> > +  power-domains:
-> > +    $ref: '/schemas/types.yaml#/definitions/phandle-array'
-> > +    description:
-> > +      List of phandles and PM domain specifiers, as defined by bindings of the
-> > +      PM domain provider (see also ../power_domain.txt).
-> > +
-> > +  power-domain-names:
-> > +    $ref: '/schemas/types.yaml#/definitions/string-array'
-> > +    description:
-> > +      A list of power domain name strings sorted in the same order as the
-> > +      power-domains property.
-> > +
-> > +      For PSCI based platforms, the name corresponding to the index of the PSCI
-> > +      PM domain provider, must be "psci".
-> > +
-> >    qcom,saw:
-> >      $ref: '/schemas/types.yaml#/definitions/phandle'
-> >      description: |
-> > diff --git a/Documentation/devicetree/bindings/arm/psci.yaml b/Documentation/devicetree/bindings/arm/psci.yaml
-> > index 7abdf58b335e..8ef85420b2ab 100644
-> > --- a/Documentation/devicetree/bindings/arm/psci.yaml
-> > +++ b/Documentation/devicetree/bindings/arm/psci.yaml
-> > @@ -102,6 +102,34 @@ properties:
-> >        [1] Kernel documentation - ARM idle states bindings
-> >          Documentation/devicetree/bindings/arm/idle-states.txt
-> >
-> > +  "#power-domain-cells":
->
-> This is wrong because you are saying the /psci node should have these
-> properties. You need to define the child nodes (at least a pattern you
-> can match on) and put these properties there.
-
-Right, good point.
-
-I searched for some similar examples for how to encode this, but
-couldn't really find something useful. One more thing, it seems like
-this change is also needed for the common power-domain bindings, as
-that also specifies parent/childs domains.
-
-Anyway, I would really appreciate if you can suggest something more
-detailed for you think this should be done!?
-
->
-> > +    description:
-> > +      The number of cells in a PM domain specifier as per binding in [3].
-> > +      Must be 0 as to represent a single PM domain.
-> > +
-> > +      ARM systems can have multiple cores, sometimes in an hierarchical
-> > +      arrangement. This often, but not always, maps directly to the processor
-> > +      power topology of the system. Individual nodes in a topology have their
-> > +      own specific power states and can be better represented hierarchically.
-> > +
-> > +      For these cases, the definitions of the idle states for the CPUs and the
-> > +      CPU topology, must conform to the binding in [3]. The idle states
-> > +      themselves must conform to the binding in [4] and must specify the
-> > +      arm,psci-suspend-param property.
-> > +
-> > +      It should also be noted that, in PSCI firmware v1.0 the OS-Initiated
-> > +      (OSI) CPU suspend mode is introduced. Using a hierarchical representation
-> > +      helps to implement support for OSI mode and OS implementations may choose
-> > +      to mandate it.
-> > +
-> > +      [3] Documentation/devicetree/bindings/power/power_domain.txt
-> > +      [4] Documentation/devicetree/bindings/power/domain-idle-state.txt
-> > +
-> > +  power-domains:
-> > +    $ref: '/schemas/types.yaml#/definitions/phandle-array'
-> > +    description:
-> > +      List of phandles and PM domain specifiers, as defined by bindings of the
-> > +      PM domain provider.
->
-> A schema for 'domain-idle-states' property is missing.
-
-Right, let's figure out the best way for how to add that.
-
->
-> >
-> >  required:
-> >    - compatible
-> > @@ -160,4 +188,80 @@ examples:
-> >        cpu_on = <0x95c10002>;
-> >        cpu_off = <0x95c10001>;
-> >      };
-> > +
-> > +  - |+
-> > +
-> > +    // Case 4: CPUs and CPU idle states described using the hierarchical model.
-> > +
-> > +    cpus {
-> > +      #size-cells = <0>;
-> > +      #address-cells = <1>;
-> > +
-> > +      CPU0: cpu@0 {
-> > +        device_type = "cpu";
-> > +        compatible = "arm,cortex-a53", "arm,armv8";
-> > +        reg = <0x0>;
-> > +        enable-method = "psci";
-> > +        power-domains = <&CPU_PD0>;
-> > +        power-domain-names = "psci";
-> > +      };
-> > +
-> > +      CPU1: cpu@1 {
-> > +        device_type = "cpu";
-> > +        compatible = "arm,cortex-a57", "arm,armv8";
-> > +        reg = <0x100>;
-> > +        enable-method = "psci";
-> > +        power-domains = <&CPU_PD1>;
-> > +        power-domain-names = "psci";
-> > +      };
-> > +
-> > +      idle-states {
-> > +
-> > +        CPU_PWRDN: cpu-power-down {
-> > +          compatible = "arm,idle-state";
-> > +          arm,psci-suspend-param = <0x0000001>;
-> > +          entry-latency-us = <10>;
-> > +          exit-latency-us = <10>;
-> > +          min-residency-us = <100>;
-> > +        };
-> > +
-> > +        CLUSTER_RET: cluster-retention {
-> > +          compatible = "domain-idle-state";
-> > +          arm,psci-suspend-param = <0x1000011>;
-> > +          entry-latency-us = <500>;
-> > +          exit-latency-us = <500>;
-> > +          min-residency-us = <2000>;
-> > +        };
-> > +
-> > +        CLUSTER_PWRDN: cluster-power-down {
-> > +          compatible = "domain-idle-state";
-> > +          arm,psci-suspend-param = <0x1000031>;
-> > +          entry-latency-us = <2000>;
-> > +          exit-latency-us = <2000>;
-> > +          min-residency-us = <6000>;
-> > +        };
-> > +      };
-> > +    };
-> > +
-> > +    psci {
-> > +      compatible = "arm,psci-1.0";
-> > +      method = "smc";
-> > +
-> > +      CPU_PD0: cpu-pd0 {
-> > +        #power-domain-cells = <0>;
-> > +        domain-idle-states = <&CPU_PWRDN>;
-> > +        power-domains = <&CLUSTER_PD>;
-> > +      };
-> > +
-> > +      CPU_PD1: cpu-pd1 {
-> > +        #power-domain-cells = <0>;
-> > +        domain-idle-states =  <&CPU_PWRDN>;
-> > +        power-domains = <&CLUSTER_PD>;
-> > +      };
-> > +
-> > +      CLUSTER_PD: cluster-pd {
-> > +        #power-domain-cells = <0>;
-> > +        domain-idle-states = <&CLUSTER_RET>, <&CLUSTER_PWRDN>;
-> > +      };
-> > +    };
-> >  ...
 > > --
-> > 2.17.1
-> >
+> > The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+> > a Linux Foundation Collaborative Project
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
 
-Thanks for your feedback!
-
-Kind regards
-Uffe
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
