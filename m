@@ -2,312 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CFF113C977
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 17:35:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF08D13CAEE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 18:26:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726483AbgAOQfV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jan 2020 11:35:21 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:39413 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726248AbgAOQfV (ORCPT
+        id S1729025AbgAOR0j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jan 2020 12:26:39 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:39703 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728913AbgAOR0j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jan 2020 11:35:21 -0500
-Received: by mail-wm1-f66.google.com with SMTP id 20so583696wmj.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2020 08:35:18 -0800 (PST)
+        Wed, 15 Jan 2020 12:26:39 -0500
+Received: by mail-pl1-f193.google.com with SMTP id g6so7112002plp.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2020 09:26:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=G3peKKo9Fj2JXRqjV+S346995shdYhc2DU+/Vm7c9PM=;
-        b=Pwm5gg+P7kVfnp7IKOmO/1zD5JF+qSs9tSxicwayxI7x6kcG8jCYcXNhf0vgsgfQ5H
-         aJXhTrepHrxMQl5tg7DiYqs8T7XiIncJJFPwROZmmOuzcRX2ux5u5uHrroGpV5qNEU7t
-         AkQd4QPJ9h9ftCBlgtVaVErLZ4UPH11zbx663Twvf/hUig407l3NZWZ5Wum2NzoT3mWr
-         cE4HJdILDa5oZtFtJc6B+xT8Je8A6IdGcrLSlnvQa9vpJDsg0k6uL9NPu0ucusq+22Ju
-         pEt3PLFFDHV1QrcWaMzCjeNY1IrAhsoqQgqqMR5LxIMuUm5mUMYERd8vhWKdKm4CFLqf
-         FTSQ==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=yVipBSsh5+WhhTDox0hQWUQ5mqLsA3VpUlWy4/WLk9c=;
+        b=SzSDkVJOwGN5g11CJ0bvDk2k3o9XkbKQC9adW/cKkYW+Caa8MIMyMc90EM3KsGscep
+         nQJ6pR1CzLyFpvt7g0U8waOuNUa6H/CTufY2GYAc21QbdeqJvkwKk7Z88wCRVZVeGJbL
+         0MJ0AUrpzHmJ6VREswpGP4X5i/CwzQZX9hx5E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=G3peKKo9Fj2JXRqjV+S346995shdYhc2DU+/Vm7c9PM=;
-        b=YvDJdGnvRCygtUHRMFkkxWpW40uh1I1bYVVtHTf7b0hCKldCtsF7qhWQTPVoHrkSyM
-         NJgwWPkhxYbQzwWnm7GDwJ+JJGbsfi0fRwjiv7GFuCTEOIBzYfQ8MnJqiOvevTL4B/RM
-         SPGzsgJAKrIdTehKGl7oiQI7J6mGu05X4HtIpq8ga0/KovBALBRCTqm3ji6eh3tRQgIo
-         H3rj6U4FnXSWi00BHur9cSffBMF6vGKHYihrccewY3Vw1Ftm7kEbIKVOLI077AG/iffd
-         M+4rdokzoNcQ+OenIvfjL17eOmm7rciircwqoQOrpokaCvwacuD17Jc3+SW/yr5CE7U7
-         tNgA==
-X-Gm-Message-State: APjAAAXsOUUkbjv4L2Vx5whrBTs8FQINRIgQlLRtNfRRmwHmbH7P0MkF
-        pwKmlpuUiQcSvulo+PXgKYSP4zLrHkfX047ozGM=
-X-Google-Smtp-Source: APXvYqwImTR8FEOALzWYqtEwSn9SvJgSG5F8jPXosAzYKmsd0e9I0EZIVQ64mxhPlP8iudytSq/xeEqI2i0ikGc9bFU=
-X-Received: by 2002:a1c:f210:: with SMTP id s16mr684657wmc.57.1579106117622;
- Wed, 15 Jan 2020 08:35:17 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=yVipBSsh5+WhhTDox0hQWUQ5mqLsA3VpUlWy4/WLk9c=;
+        b=CHUAVogkyy3OoY68mykRzCndujL3wYsRvPObJTHqH56l4qfKEeguN9q3qfgRqHER7u
+         l3Mce95uNItk6HbXDeL9njs2kEESz1WOGkszIQ58WgPag1VP+z07usyWwL/qrp15dd8Y
+         ahfs9pdeW0L4Xdg2+RY6mxrFsHlHMtgPAGqwdruisXSuVZZfoKxhHZQyHEUHC58YazRS
+         F5qE7TlCzKCpPgMj4jP8zfDpGaSuOiN6toY1Q7D8z3RGkevKqHLJ81PBQWQylubvVrVP
+         alkL1Np04xpUrOGO7JS5439hq1sUAnGO+0Z0uVKsjfXVOtjBZljHBh+6EJeP37guiGmb
+         zYFg==
+X-Gm-Message-State: APjAAAWvt+JTT1P/RUcVw0hHNFm+lVIZK+oUSmbVxhoa3VqI5FYdhsKT
+        TsIiiq5nP7hhMMHIlFuGeeaOig==
+X-Google-Smtp-Source: APXvYqy272HK6rPPL3Qfp/pmCyr1lY9GAJPRpsY3XC0oPfve5oiWbCfSwQWAHq4NCihBDd2WXpNsoQ==
+X-Received: by 2002:a17:90a:868b:: with SMTP id p11mr1090472pjn.60.1579109196890;
+        Wed, 15 Jan 2020 09:26:36 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id y128sm22005122pfg.17.2020.01.15.09.26.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Jan 2020 09:26:35 -0800 (PST)
+Date:   Wed, 15 Jan 2020 09:26:33 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rocky Liao <rjliao@codeaurora.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        hemantg@codeaurora.org
+Subject: Re: [PATCH v4 1/3] Bluetooth: hci_qca: Add QCA Rome power off
+ support to the qca_power_shutdown()
+Message-ID: <20200115172633.GM89495@google.com>
+References: <20191225060317.5258-1-rjliao@codeaurora.org>
+ <20200115085552.11483-1-rjliao@codeaurora.org>
 MIME-Version: 1.0
-References: <20200110092127.27847-1-tzimmermann@suse.de> <20200110092127.27847-3-tzimmermann@suse.de>
- <CADnq5_OCsQQ0=Yr6xinWWCursZc0ZGBrNj1=0667kbqE1BorVw@mail.gmail.com> <352f23e9-b690-375f-005b-e5ea1fb9a0d2@suse.de>
-In-Reply-To: <352f23e9-b690-375f-005b-e5ea1fb9a0d2@suse.de>
-From:   Alex Deucher <alexdeucher@gmail.com>
-Date:   Wed, 15 Jan 2020 11:35:04 -0500
-Message-ID: <CADnq5_MkJy9zNHxeEGOYjvXs8MxuY_kd5_sTP8EWGFEBMpWx6Q@mail.gmail.com>
-Subject: Re: [PATCH 02/23] drm/amdgpu: Convert to struct drm_crtc_helper_funcs.get_scanout_position()
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     Dave Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        "Deucher, Alexander" <alexander.deucher@amd.com>,
-        Christian Koenig <christian.koenig@amd.com>,
-        Chunming Zhou <David1.Zhou@amd.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
-        Vincent Abriou <vincent.abriou@st.com>, yannick.fertre@st.com,
-        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@st.com, Eric Anholt <eric@anholt.net>,
-        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>,
-        Thomas Hellstrom <thellstrom@vmware.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        "Wentland, Harry" <harry.wentland@amd.com>,
-        "Leo (Sunpeng) Li" <sunpeng.li@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        amd-gfx list <amd-gfx@lists.freedesktop.org>,
-        Maling list - DRI developers 
-        <dri-devel@lists.freedesktop.org>,
-        nouveau <nouveau@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200115085552.11483-1-rjliao@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 15, 2020 at 4:41 AM Thomas Zimmermann <tzimmermann@suse.de> wro=
-te:
->
-> Hi
->
-> Am 13.01.20 um 19:52 schrieb Alex Deucher:
-> > On Fri, Jan 10, 2020 at 4:21 AM Thomas Zimmermann <tzimmermann@suse.de>=
- wrote:
-> >>
-> >> The callback struct drm_driver.get_scanout_position() is deprecated in
-> >> favor of struct drm_crtc_helper_funcs.get_scanout_position(). Convert
-> >> amdgpu over.
-> >>
-> >
-> > I would prefer to just change the signature of
-> > amdgpu_display_get_crtc_scanoutpos() to match the new API rather than
-> > wrapping it again.
->
-> While trying to adapt the siganture, I found that
-> amdgpu_display_get_crtc_scanoutpos() requires a flags argument that is
-> not mappable to the callback API. That wrapper function is necessary.
->
+On Wed, Jan 15, 2020 at 04:55:50PM +0800, Rocky Liao wrote:
+> Current qca_power_shutdown() only supports wcn399x, this patch adds Rome
+> power off support to it. For Rome it just needs to pull down the bt_en
+> GPIO to power off it. This patch also replaces all the power off operation
+> in qca_close() with the unified qca_power_shutdown() call.
+> 
+> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+> ---
+> 
+> Changes in v2: None
+> Changes in v3: None
+> Changes in v4:
+>   -rebased the patch with latest code base
+>   -moved the change from qca_power_off() to qca_power_shutdown()
+>   -replaced all the power off operation in qca_close() with
+>    qca_power_shutdown()
+>   -updated commit message
+> 
+>  drivers/bluetooth/hci_qca.c | 28 ++++++++++++++++------------
+>  1 file changed, 16 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+> index 992622dc1263..ecb74965be10 100644
+> --- a/drivers/bluetooth/hci_qca.c
+> +++ b/drivers/bluetooth/hci_qca.c
+> @@ -663,7 +663,6 @@ static int qca_flush(struct hci_uart *hu)
+>  /* Close protocol */
+>  static int qca_close(struct hci_uart *hu)
+>  {
+> -	struct qca_serdev *qcadev;
+>  	struct qca_data *qca = hu->priv;
+>  
+>  	BT_DBG("hu %p qca close", hu);
+> @@ -679,14 +678,7 @@ static int qca_close(struct hci_uart *hu)
+>  	destroy_workqueue(qca->workqueue);
+>  	qca->hu = NULL;
+>  
+> -	if (hu->serdev) {
+> -		qcadev = serdev_device_get_drvdata(hu->serdev);
+> -		if (qca_is_wcn399x(qcadev->btsoc_type))
+> -			qca_power_shutdown(hu);
+> -		else
+> -			gpiod_set_value_cansleep(qcadev->bt_en, 0);
+> -
+> -	}
+> +	qca_power_shutdown(hu);
+>  
+>  	kfree_skb(qca->rx_skb);
+>  
+> @@ -1685,6 +1677,7 @@ static void qca_power_shutdown(struct hci_uart *hu)
+>  	struct qca_serdev *qcadev;
+>  	struct qca_data *qca = hu->priv;
+>  	unsigned long flags;
+> +	enum qca_btsoc_type soc_type = qca_soc_type(hu);
+>  
+>  	qcadev = serdev_device_get_drvdata(hu->serdev);
+>  
+> @@ -1697,11 +1690,22 @@ static void qca_power_shutdown(struct hci_uart *hu)
+>  	qca_flush(hu);
+>  	spin_unlock_irqrestore(&qca->hci_ibs_lock, flags);
+>  
+> -	host_set_baudrate(hu, 2400);
+> -	qca_send_power_pulse(hu, false);
+> -	qca_regulator_disable(qcadev);
+>  	hu->hdev->hw_error = NULL;
+>  	hu->hdev->cmd_timeout = NULL;
 
-No worries.  We can clean them up later.  Wrapping is fine.
+This is now done before the power off and not after, I suppose it doesn't
+make a difference.
 
-Alex
+> +
+> +	/* Non-serdev device usually is powered by external power
+> +	 * and don't need additional action in driver for power down
+> +	 */
+> +	if (!hu->serdev)
+> +		return;
+> +
+> +	if (qca_is_wcn399x(soc_type)) {
+> +		host_set_baudrate(hu, 2400);
+> +		qca_send_power_pulse(hu, false);
+> +		qca_regulator_disable(qcadev);
+> +	} else {
+> +		gpiod_set_value_cansleep(qcadev->bt_en, 0);
+> +	}
+>  }
 
-> Best regards
-> Thomas
->
-> >
-> > Alex
-> >
-> >> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> >> ---
-> >>  drivers/gpu/drm/amd/amdgpu/amdgpu_display.c       | 12 ++++++++++++
-> >>  drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c           | 11 -----------
-> >>  drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h          |  5 +++++
-> >>  drivers/gpu/drm/amd/amdgpu/dce_v10_0.c            |  1 +
-> >>  drivers/gpu/drm/amd/amdgpu/dce_v11_0.c            |  1 +
-> >>  drivers/gpu/drm/amd/amdgpu/dce_v6_0.c             |  1 +
-> >>  drivers/gpu/drm/amd/amdgpu/dce_v8_0.c             |  1 +
-> >>  drivers/gpu/drm/amd/amdgpu/dce_virtual.c          |  1 +
-> >>  drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  3 ++-
-> >>  9 files changed, 24 insertions(+), 12 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c b/drivers/gpu=
-/drm/amd/amdgpu/amdgpu_display.c
-> >> index 4e699071d144..a1e769d4417d 100644
-> >> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-> >> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-> >> @@ -914,3 +914,15 @@ int amdgpu_display_crtc_idx_to_irq_type(struct am=
-dgpu_device *adev, int crtc)
-> >>                 return AMDGPU_CRTC_IRQ_NONE;
-> >>         }
-> >>  }
-> >> +
-> >> +bool amdgpu_crtc_get_scanout_position(struct drm_crtc *crtc,
-> >> +                       bool in_vblank_irq, int *vpos,
-> >> +                       int *hpos, ktime_t *stime, ktime_t *etime,
-> >> +                       const struct drm_display_mode *mode)
-> >> +{
-> >> +       struct drm_device *dev =3D crtc->dev;
-> >> +       unsigned int pipe =3D crtc->index;
-> >> +
-> >> +       return amdgpu_display_get_crtc_scanoutpos(dev, pipe, 0, vpos, =
-hpos,
-> >> +                                                 stime, etime, mode);
-> >> +}
-> >> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm=
-/amd/amdgpu/amdgpu_drv.c
-> >> index 3f6f14ce1511..0749285dd1c7 100644
-> >> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-> >> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-> >> @@ -1367,16 +1367,6 @@ int amdgpu_file_to_fpriv(struct file *filp, str=
-uct amdgpu_fpriv **fpriv)
-> >>         return 0;
-> >>  }
-> >>
-> >> -static bool
-> >> -amdgpu_get_crtc_scanout_position(struct drm_device *dev, unsigned int=
- pipe,
-> >> -                                bool in_vblank_irq, int *vpos, int *h=
-pos,
-> >> -                                ktime_t *stime, ktime_t *etime,
-> >> -                                const struct drm_display_mode *mode)
-> >> -{
-> >> -       return amdgpu_display_get_crtc_scanoutpos(dev, pipe, 0, vpos, =
-hpos,
-> >> -                                                 stime, etime, mode);
-> >> -}
-> >> -
-> >>  static struct drm_driver kms_driver =3D {
-> >>         .driver_features =3D
-> >>             DRIVER_USE_AGP | DRIVER_ATOMIC |
-> >> @@ -1391,7 +1381,6 @@ static struct drm_driver kms_driver =3D {
-> >>         .enable_vblank =3D amdgpu_enable_vblank_kms,
-> >>         .disable_vblank =3D amdgpu_disable_vblank_kms,
-> >>         .get_vblank_timestamp =3D drm_calc_vbltimestamp_from_scanoutpo=
-s,
-> >> -       .get_scanout_position =3D amdgpu_get_crtc_scanout_position,
-> >>         .irq_handler =3D amdgpu_irq_handler,
-> >>         .ioctls =3D amdgpu_ioctls_kms,
-> >>         .gem_free_object_unlocked =3D amdgpu_gem_object_free,
-> >> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h b/drivers/gpu/dr=
-m/amd/amdgpu/amdgpu_mode.h
-> >> index eb9975f4decb..37ba07e2feb5 100644
-> >> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h
-> >> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h
-> >> @@ -612,6 +612,11 @@ void amdgpu_panel_mode_fixup(struct drm_encoder *=
-encoder,
-> >>                              struct drm_display_mode *adjusted_mode);
-> >>  int amdgpu_display_crtc_idx_to_irq_type(struct amdgpu_device *adev, i=
-nt crtc);
-> >>
-> >> +bool amdgpu_crtc_get_scanout_position(struct drm_crtc *crtc,
-> >> +                       bool in_vblank_irq, int *vpos,
-> >> +                       int *hpos, ktime_t *stime, ktime_t *etime,
-> >> +                       const struct drm_display_mode *mode);
-> >> +
-> >>  /* fbdev layer */
-> >>  int amdgpu_fbdev_init(struct amdgpu_device *adev);
-> >>  void amdgpu_fbdev_fini(struct amdgpu_device *adev);
-> >> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c b/drivers/gpu/drm/=
-amd/amdgpu/dce_v10_0.c
-> >> index 40d2ac723dd6..bdc1e0f036d4 100644
-> >> --- a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-> >> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-> >> @@ -2685,6 +2685,7 @@ static const struct drm_crtc_helper_funcs dce_v1=
-0_0_crtc_helper_funcs =3D {
-> >>         .prepare =3D dce_v10_0_crtc_prepare,
-> >>         .commit =3D dce_v10_0_crtc_commit,
-> >>         .disable =3D dce_v10_0_crtc_disable,
-> >> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
-> >>  };
-> >>
-> >>  static int dce_v10_0_crtc_init(struct amdgpu_device *adev, int index)
-> >> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c b/drivers/gpu/drm/=
-amd/amdgpu/dce_v11_0.c
-> >> index 898ef72d423c..0319da5f7bf9 100644
-> >> --- a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
-> >> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
-> >> @@ -2793,6 +2793,7 @@ static const struct drm_crtc_helper_funcs dce_v1=
-1_0_crtc_helper_funcs =3D {
-> >>         .prepare =3D dce_v11_0_crtc_prepare,
-> >>         .commit =3D dce_v11_0_crtc_commit,
-> >>         .disable =3D dce_v11_0_crtc_disable,
-> >> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
-> >>  };
-> >>
-> >>  static int dce_v11_0_crtc_init(struct amdgpu_device *adev, int index)
-> >> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c b/drivers/gpu/drm/a=
-md/amdgpu/dce_v6_0.c
-> >> index db15a112becc..78642c3b14fc 100644
-> >> --- a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-> >> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-> >> @@ -2575,6 +2575,7 @@ static const struct drm_crtc_helper_funcs dce_v6=
-_0_crtc_helper_funcs =3D {
-> >>         .prepare =3D dce_v6_0_crtc_prepare,
-> >>         .commit =3D dce_v6_0_crtc_commit,
-> >>         .disable =3D dce_v6_0_crtc_disable,
-> >> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
-> >>  };
-> >>
-> >>  static int dce_v6_0_crtc_init(struct amdgpu_device *adev, int index)
-> >> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c b/drivers/gpu/drm/a=
-md/amdgpu/dce_v8_0.c
-> >> index f06c9022c1fd..1e8d4975435a 100644
-> >> --- a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-> >> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-> >> @@ -2593,6 +2593,7 @@ static const struct drm_crtc_helper_funcs dce_v8=
-_0_crtc_helper_funcs =3D {
-> >>         .prepare =3D dce_v8_0_crtc_prepare,
-> >>         .commit =3D dce_v8_0_crtc_commit,
-> >>         .disable =3D dce_v8_0_crtc_disable,
-> >> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
-> >>  };
-> >>
-> >>  static int dce_v8_0_crtc_init(struct amdgpu_device *adev, int index)
-> >> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_virtual.c b/drivers/gpu/dr=
-m/amd/amdgpu/dce_virtual.c
-> >> index e4f94863332c..4b2f915aba47 100644
-> >> --- a/drivers/gpu/drm/amd/amdgpu/dce_virtual.c
-> >> +++ b/drivers/gpu/drm/amd/amdgpu/dce_virtual.c
-> >> @@ -218,6 +218,7 @@ static const struct drm_crtc_helper_funcs dce_virt=
-ual_crtc_helper_funcs =3D {
-> >>         .prepare =3D dce_virtual_crtc_prepare,
-> >>         .commit =3D dce_virtual_crtc_commit,
-> >>         .disable =3D dce_virtual_crtc_disable,
-> >> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
-> >>  };
-> >>
-> >>  static int dce_virtual_crtc_init(struct amdgpu_device *adev, int inde=
-x)
-> >> diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drive=
-rs/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-> >> index f2db400a3920..39c5cf242c1b 100644
-> >> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-> >> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-> >> @@ -4821,7 +4821,8 @@ static bool dm_crtc_helper_mode_fixup(struct drm=
-_crtc *crtc,
-> >>  static const struct drm_crtc_helper_funcs amdgpu_dm_crtc_helper_funcs=
- =3D {
-> >>         .disable =3D dm_crtc_helper_disable,
-> >>         .atomic_check =3D dm_crtc_helper_atomic_check,
-> >> -       .mode_fixup =3D dm_crtc_helper_mode_fixup
-> >> +       .mode_fixup =3D dm_crtc_helper_mode_fixup,
-> >> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
-> >>  };
-> >>
-> >>  static void dm_encoder_helper_disable(struct drm_encoder *encoder)
-> >> --
-> >> 2.24.1
-> >>
-> >> _______________________________________________
-> >> amd-gfx mailing list
-> >> amd-gfx@lists.freedesktop.org
-> >> https://lists.freedesktop.org/mailman/listinfo/amd-gfx
->
-> --
-> Thomas Zimmermann
-> Graphics Driver Developer
-> SUSE Software Solutions Germany GmbH
-> Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
-> (HRB 36809, AG N=C3=BCrnberg)
-> Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
->
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
