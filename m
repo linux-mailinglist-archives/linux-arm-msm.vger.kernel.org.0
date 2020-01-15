@@ -2,129 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 357BD13C53D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 15:13:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 61FB313C64B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 15:38:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729288AbgAOONh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jan 2020 09:13:37 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37796 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730390AbgAOONc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jan 2020 09:13:32 -0500
-Received: by mail-wm1-f67.google.com with SMTP id f129so18051201wmf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2020 06:13:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=r9NPS5QGribeTtMFFZTTzMj+ynOYdzhVsWBEen9DiAQ=;
-        b=bgELX9joHOCF4c8wcg5bLvZ9uHtZsi/3FsyK//KbYPrUw6pN7LvXNBNEYrxRO70Rop
-         nn+AUaycmrXtYvRkeR229xqVRDf2p3kJhulb6igviGwnVBB+42wXPIqCsJraKKpEeWJ1
-         CNeSvEpPmTnxXV7Koldzqb7XJl9y2viuiic6LeLAjr+xw2fdEeXszuCLtRfgyLkuHhRt
-         eeMH73fnDAijT9U+X3STFKKzoU1lUx/oEfciCREPiErwhsKX249VKOAmAsMJolHzANSI
-         SdBZfet0PZITXICNmLt778RTkTaL1pspzH57s9CdzN2nlTXpK8PDU5ajo3mSRh7uSy8D
-         LEfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=r9NPS5QGribeTtMFFZTTzMj+ynOYdzhVsWBEen9DiAQ=;
-        b=BBqE8IiHZvoj3+Ox3JjZAo5rWga1qMKrd1uXIreq4jWOA+frfjvDD9Toxxhxw0jN9E
-         HUztTcJKdb+Wm4mDJ43SDuOZIYH1zM0co9YtRrokr047m1ImsQX5wE0pfZ5hC2z4WK/O
-         uqi1GBnJQ4ZVC4ywxxCcaVJ/Z3OOnce2SPTy6uAXzkbDqDoOpE7BfmzBnDvR6pMtqY5g
-         rcrMZV3849t8boQTe92xFJC6h3x40ci+BIl9wI302kjTuy6iQipbA+370R5QixXWhi4c
-         sM+624kIx1fxzCKEVDiQtpe3oiJ05QXfL7/pqF9KsXcAXkXX05XXmJPQp5J1vWB1UJBT
-         Y7yQ==
-X-Gm-Message-State: APjAAAXrow4TjxiN6ZEYQwM/TZjySoksdhDiU/RrDswXd4XCxcsehemT
-        ojbdyVsnt/hsg21t0MCryS/h0jb3fXY=
-X-Google-Smtp-Source: APXvYqw76gxyIdAYFEPqMKjvpzCtwovsDXs6SfcdlT6dpAzF6V+7DXdlLmrcgH28IHX9zjYJMtFEPg==
-X-Received: by 2002:a7b:cc6a:: with SMTP id n10mr35195527wmj.170.1579097610665;
-        Wed, 15 Jan 2020 06:13:30 -0800 (PST)
-Received: from localhost.localdomain ([176.61.57.127])
-        by smtp.gmail.com with ESMTPSA id m21sm23730720wmi.27.2020.01.15.06.13.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2020 06:13:30 -0800 (PST)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        gregkh@linuxfoundation.org, jackp@codeaurora.org, balbi@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org
-Subject: [PATCH 19/19] arm64: dts: qcom: qcs404-evb: Enable primary USB controller
-Date:   Wed, 15 Jan 2020 14:13:33 +0000
-Message-Id: <20200115141333.1222676-20-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200115141333.1222676-1-bryan.odonoghue@linaro.org>
-References: <20200115141333.1222676-1-bryan.odonoghue@linaro.org>
+        id S1726418AbgAOOiN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jan 2020 09:38:13 -0500
+Received: from mga18.intel.com ([134.134.136.126]:12981 "EHLO mga18.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726248AbgAOOiN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Jan 2020 09:38:13 -0500
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 15 Jan 2020 06:38:11 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,322,1574150400"; 
+   d="scan'208";a="273659015"
+Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.174])
+  by FMSMGA003.fm.intel.com with SMTP; 15 Jan 2020 06:37:58 -0800
+Received: by stinkbox (sSMTP sendmail emulation); Wed, 15 Jan 2020 16:37:57 +0200
+Date:   Wed, 15 Jan 2020 16:37:57 +0200
+From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     airlied@linux.ie, daniel@ffwll.ch, alexander.deucher@amd.com,
+        christian.koenig@amd.com, David1.Zhou@amd.com,
+        maarten.lankhorst@linux.intel.com, patrik.r.jakobsson@gmail.com,
+        robdclark@gmail.com, sean@poorly.run, benjamin.gaignard@linaro.org,
+        vincent.abriou@st.com, yannick.fertre@st.com,
+        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
+        alexandre.torgue@st.com, eric@anholt.net,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        linux-graphics-maintainer@vmware.com, thellstrom@vmware.com,
+        bskeggs@redhat.com, harry.wentland@amd.com, sunpeng.li@amd.com,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, linux-arm-msm@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [Intel-gfx] [PATCH v2 02/21] drm: Evaluate struct
+ drm_device.vblank_disable_immediate on each use
+Message-ID: <20200115143757.GZ13686@intel.com>
+References: <20200115121652.7050-1-tzimmermann@suse.de>
+ <20200115121652.7050-3-tzimmermann@suse.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200115121652.7050-3-tzimmermann@suse.de>
+X-Patchwork-Hint: comment
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch enables the primary USB controller which has
+On Wed, Jan 15, 2020 at 01:16:33PM +0100, Thomas Zimmermann wrote:
+> VBLANK interrupts can be disabled immediately or with a delay, where the
+> latter is the default. The former option can be selected by setting
+> get_vblank_timestamp, and enabling vblank_disable_immediate in struct
+> drm_device.
+> 
+> The setup is only evaluated once when DRM initializes VBLANKs. Evaluating
+> the settings on each use of vblank_disable_immediate will allow for easy
+> integration of CRTC VBLANK functions.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
+>  drivers/gpu/drm/drm_vblank.c | 31 ++++++++++++++-----------------
+>  1 file changed, 14 insertions(+), 17 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
+> index 3f1dd54cc8bb..abb085c67d82 100644
+> --- a/drivers/gpu/drm/drm_vblank.c
+> +++ b/drivers/gpu/drm/drm_vblank.c
+> @@ -481,19 +481,6 @@ int drm_vblank_init(struct drm_device *dev, unsigned int num_crtcs)
+>  
+>  	DRM_INFO("Supports vblank timestamp caching Rev 2 (21.10.2013).\n");
+>  
+> -	/* Driver specific high-precision vblank timestamping supported? */
+> -	if (dev->driver->get_vblank_timestamp)
+> -		DRM_INFO("Driver supports precise vblank timestamp query.\n");
+> -	else
+> -		DRM_INFO("No driver support for vblank timestamp query.\n");
+> -
+> -	/* Must have precise timestamping for reliable vblank instant disable */
+> -	if (dev->vblank_disable_immediate && !dev->driver->get_vblank_timestamp) {
+> -		dev->vblank_disable_immediate = false;
+> -		DRM_INFO("Setting vblank_disable_immediate to false because "
+> -			 "get_vblank_timestamp == NULL\n");
+> -	}
 
-- One USB3 SS PHY using gpio-usb-conn
-- One USB2 HS PHY in device mode only and no connector driver
-  associated.
+Which drivers are so broken they set vblank_disable_immediate to true
+without having the vfunc specified? IMO this code should just go away
+(or converted to a WARN).
 
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 29 ++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+> -
+>  	return 0;
+>  
+>  err:
+> @@ -1070,6 +1057,15 @@ int drm_crtc_vblank_get(struct drm_crtc *crtc)
+>  }
+>  EXPORT_SYMBOL(drm_crtc_vblank_get);
+>  
+> +static bool __vblank_disable_immediate(struct drm_device *dev, unsigned int pipe)
+> +{
+> +	if (!dev->vblank_disable_immediate)
+> +		return false;
+> +	if (!dev->driver->get_vblank_timestamp)
+> +		return false;
+> +	return true;
+> +}
+> +
+>  static void drm_vblank_put(struct drm_device *dev, unsigned int pipe)
+>  {
+>  	struct drm_vblank_crtc *vblank = &dev->vblank[pipe];
+> @@ -1086,7 +1082,7 @@ static void drm_vblank_put(struct drm_device *dev, unsigned int pipe)
+>  			return;
+>  		else if (drm_vblank_offdelay < 0)
+>  			vblank_disable_fn(&vblank->disable_timer);
+> -		else if (!dev->vblank_disable_immediate)
+> +		else if (__vblank_disable_immediate(dev, pipe))
+>  			mod_timer(&vblank->disable_timer,
+>  				  jiffies + ((drm_vblank_offdelay * HZ)/1000));
+>  	}
+> @@ -1663,7 +1659,7 @@ int drm_wait_vblank_ioctl(struct drm_device *dev, void *data,
+>  	/* If the counter is currently enabled and accurate, short-circuit
+>  	 * queries to return the cached timestamp of the last vblank.
+>  	 */
+> -	if (dev->vblank_disable_immediate &&
+> +	if (__vblank_disable_immediate(dev, pipe) &&
+>  	    drm_wait_vblank_is_query(vblwait) &&
+>  	    READ_ONCE(vblank->enabled)) {
+>  		drm_wait_vblank_reply(dev, pipe, &vblwait->reply);
+> @@ -1820,7 +1816,7 @@ bool drm_handle_vblank(struct drm_device *dev, unsigned int pipe)
+>  	 * been signaled. The disable has to be last (after
+>  	 * drm_handle_vblank_events) so that the timestamp is always accurate.
+>  	 */
+> -	disable_irq = (dev->vblank_disable_immediate &&
+> +	disable_irq = (__vblank_disable_immediate(dev, pipe) &&
+>  		       drm_vblank_offdelay > 0 &&
+>  		       !atomic_read(&vblank->refcount));
+>  
+> @@ -1893,7 +1889,8 @@ int drm_crtc_get_sequence_ioctl(struct drm_device *dev, void *data,
+>  	pipe = drm_crtc_index(crtc);
+>  
+>  	vblank = &dev->vblank[pipe];
+> -	vblank_enabled = dev->vblank_disable_immediate && READ_ONCE(vblank->enabled);
+> +	vblank_enabled = __vblank_disable_immediate(dev, pipe) &&
+> +			 READ_ONCE(vblank->enabled);
+>  
+>  	if (!vblank_enabled) {
+>  		ret = drm_crtc_vblank_get(crtc);
+> -- 
+> 2.24.1
+> 
+> _______________________________________________
+> Intel-gfx mailing list
+> Intel-gfx@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/intel-gfx
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-index 07d6d793a922..a2cbca3a6124 100644
---- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-@@ -329,6 +329,35 @@ &usb2_phy_sec {
- 	status = "okay";
- };
- 
-+&usb3 {
-+	status = "okay";
-+	dwc3@7580000 {
-+		usb-role-switch;
-+		usb_con: gpio_usb_connector {
-+			compatible = "gpio-usb-b-connector";
-+			label = "USB-C";
-+			id-gpio = <&tlmm 116 GPIO_ACTIVE_HIGH>;
-+			vbus-supply = <&usb3_vbus_reg>;
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&usb3_id_pin>, <&usb3_vbus_pin>;
-+			status = "okay";
-+		};
-+	};
-+};
-+
-+&usb2_phy_prim {
-+	vdd-supply = <&vreg_l4_1p2>;
-+	vdda1p8-supply = <&vreg_l5_1p8>;
-+	vdda3p3-supply = <&vreg_l12_3p3>;
-+	status = "okay";
-+};
-+
-+&usb3_phy {
-+	vdd-supply = <&vreg_l3_1p05>;
-+	vdda1p8-supply = <&vreg_l5_1p8>;
-+	status = "okay";
-+};
-+
- &wifi {
- 	status = "okay";
- 	vdd-0.8-cx-mx-supply = <&vreg_l2_1p275>;
 -- 
-2.24.0
-
+Ville Syrjälä
+Intel
