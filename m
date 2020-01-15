@@ -2,103 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 48A1413CCFB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 20:19:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B98613CE63
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 21:57:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729015AbgAOTTt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jan 2020 14:19:49 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:40865 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728921AbgAOTTt (ORCPT
+        id S1729058AbgAOU5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jan 2020 15:57:21 -0500
+Received: from mail-vs1-f98.google.com ([209.85.217.98]:35583 "EHLO
+        mail-vs1-f98.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726187AbgAOU5U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jan 2020 14:19:49 -0500
-Received: by mail-pg1-f195.google.com with SMTP id k25so8645498pgt.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2020 11:19:48 -0800 (PST)
+        Wed, 15 Jan 2020 15:57:20 -0500
+Received: by mail-vs1-f98.google.com with SMTP id x123so11342596vsc.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2020 12:57:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=y0L/6Kcm1GJKcnyPUoPeqUBC5pfceEUnD+q3JyvYAEE=;
-        b=A4YVAjQsjO9yS+bZ2p+xPTeFVjMqzAsB1haQHadcdWHedJzXAM6Cy6GYdTg9jS3xnB
-         ySSsVnvIo3WyNXb2ttDB6HFq9twxR0X1qjmFtg3RD7vTf9F6+BmwIevAFElHrDLqQ9zD
-         XJeHYsPAqifBydAE1iUwj2tew8zcqf9Tb6fQ1BK+RW5saqvk6Qn10yqHoTfOJoq3AhwL
-         kVt9GKUZtqLY0kkYedefoKWmKule6N33eUfBZqT4RAEA0HyRUewDbdGrqbskFoSCsdIJ
-         MDhHHYM2naLrVzRoZgTt6iOlsGD7mahhutqDgKBq9uusoCVsCClu9Dw5oX4UgOWPyDne
-         Hbzw==
+        d=brkho-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qHyeBb8P8MuXBOujO8Ub/x9es/mztS5rWLEPJQm2/Ko=;
+        b=gemQ994QSr6JkWm5dYBVsYR1LIUE6WIVOW8OxEKlh9bU4AqNaICD0FbZpeOl6z/LAl
+         vuC+aCpJJETBjSq2TECPu90Go2szUdkpo1gjupaHPIGJ9ZZooVYxI71Rirzmg6A4bu1L
+         C/inqb7wdAsLxPei6JNCqpy1b5SAaEnWS23sMH6VFSBAKedca6LycF29bEiadY3uRsC2
+         5pyd9Vh82G2+fmvOBf/aPdjBWU9KkWz+IfbKfdlYWoElECqklH7jr3veHq3W7vdY5cHF
+         /ZlDSYv6Igq7WkuojeDl6YSvE69k3n6aCqYrLg13TbuutyCBl5JkOU/tEG1KzumGXC9M
+         Tfuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=y0L/6Kcm1GJKcnyPUoPeqUBC5pfceEUnD+q3JyvYAEE=;
-        b=oOJIHHVv9OLgEzOqZ6TT8CESUUrODynSnCVEH2SnAP4gd/SwKlErPovfTPmOB642yH
-         lmKvEd47J+qw4ipni3+KTKa0cuhzLkRopCySgbb/hH0AV+iP/sJxoh6k6ME/cLRE4IYq
-         izLKjctj15X8N98DsJz9A8jx7OKL4kl3SOvRtHqGYpZrwwJxRILb67/2vEi30MghPV7X
-         QBOs8nbFhbu2STAodzuESN2N3iQTpFc82AUAYNQ3flIDDrvtIqD1enJHB4L3El5vyTbD
-         BzOoGG8sJhN5dsSd8DLjoKXCga0WQ4HFojNXHTGh2pZItG48KTxyowrAQVrtGFcy5YiC
-         ad2A==
-X-Gm-Message-State: APjAAAUiqucowvLci2TyPHusVnQpdl6p4GBU1Z6A5o+Jq7l8go5arrLQ
-        XSA5UjmYRtVwN6XlRMAokvHkdw==
-X-Google-Smtp-Source: APXvYqxONnTtCwwnSki0/OOTTRl5EWXhbKn6I/OQTaLOzJ8xq81wDXDeIljZnF/OQciErxJzcjfMiA==
-X-Received: by 2002:a63:5442:: with SMTP id e2mr33667216pgm.18.1579115988269;
-        Wed, 15 Jan 2020 11:19:48 -0800 (PST)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id a10sm21968793pgm.81.2020.01.15.11.19.46
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qHyeBb8P8MuXBOujO8Ub/x9es/mztS5rWLEPJQm2/Ko=;
+        b=PHx3x9Nv9RnZVHum2xL8orPNNRDYPw1Kp5CZ6gb/KOqUt9WhPTXH7OIZMOqR8ln3Vn
+         vb2XgZ9qOEL7RW3UFhpu8V3ytLBxtLth7Sx9sPetfhdF2V8DGTxgS26htnBHDzrkBCfP
+         JccXRvSza8WBkKecKeAYfBR6w696nzKTAPYo7lmUk1q27a+aFMfOxriw0MN9VNvsuIhd
+         kuIwwNkxwoJ9QEHbvOrC2e5HSBsxxegSdtjTMdJ0DsPaW+bE+aK58Bai2ZVpH8oQt8/K
+         fNQ64AL7YETaER7d3cs4gN2d3oe2ryTlnOA42oLryn39zoRqxop3n5fs9OXAcQ8ZF2QA
+         o69A==
+X-Gm-Message-State: APjAAAVd9gIqjUjxmunbtflU0U7xcc/RuiDG9AeV4/TZ5nv+FlIAR8Io
+        juAudqFPvciWCbkPnMPlNb86Fb6HdjRA29wn50Ev72wKym/vrQ==
+X-Google-Smtp-Source: APXvYqwa4eobrkUlejkxbm2vmrBfah47TV7vVGHvbgpZIUMZp/IuDRvCLBzND9WHntaSOfLkMYAbMYa3NIun
+X-Received: by 2002:a05:6102:3126:: with SMTP id f6mr5458988vsh.204.1579121838618;
+        Wed, 15 Jan 2020 12:57:18 -0800 (PST)
+Received: from hob1.nyc.corp.google.com ([100.118.32.120])
+        by smtp-relay.gmail.com with ESMTPS id j26sm1472756uak.1.2020.01.15.12.57.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2020 11:19:47 -0800 (PST)
-Date:   Wed, 15 Jan 2020 11:19:45 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Kalle Valo <kvalo@codeaurora.org>
-Cc:     Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
-        netdev@vger.kernel.org, linux-wireless@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, ath10k@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        "David S. Miller" <davem@davemloft.net>
-Subject: Re: [PATCH 0/2] ath10k: Enable QDSS clock on sm8150
-Message-ID: <20200115191945.GM1214176@minitux>
-References: <20191223054855.3020665-1-bjorn.andersson@linaro.org>
- <87zhevsrwk.fsf@codeaurora.org>
- <87r201xf8p.fsf@kamboji.qca.qualcomm.com>
+        Wed, 15 Jan 2020 12:57:18 -0800 (PST)
+X-Relaying-Domain: brkho.com
+From:   Brian Ho <brian@brkho.com>
+To:     freedreno@lists.freedesktop.org
+Cc:     hoegsberg@chromium.org, robdclark@chromium.org,
+        jcrouse@codeaurora.org, Brian Ho <brian@brkho.com>,
+        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU),
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2 0/2] drm/msm: Add the MSM_WAIT_IOVA ioctl
+Date:   Wed, 15 Jan 2020 15:56:47 -0500
+Message-Id: <20200115205649.12971-1-brian@brkho.com>
+X-Mailer: git-send-email 2.25.0.rc1.283.g88dfdc4193-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87r201xf8p.fsf@kamboji.qca.qualcomm.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 15 Jan 01:04 PST 2020, Kalle Valo wrote:
+This patch set implements the MSM_WAIT_IOVA ioctl which lets
+userspace sleep until the value at a given iova reaches a certain
+condition. This is needed in turnip to implement the
+VK_QUERY_RESULT_WAIT_BIT flag for vkGetQueryPoolResults.
 
-> Kalle Valo <kvalo@codeaurora.org> writes:
-> 
-> > Bjorn Andersson <bjorn.andersson@linaro.org> writes:
-> >
-> >> On SM8150 the WiFi firmware depends on the QDSS clock ticking, or the system
-> >> will reset due to an NoC error. So this adds an optional clock to the ath10k
-> >> binding and makes sure it's enabled while the WiFi firmware needs it.
-> >>
-> >> Bjorn Andersson (2):
-> >>   ath10k: Add optional qdss clk
-> >>   arm64: dts: qcom: sm8150: Specify qdss clock for wifi
-> >>
-> >>  .../devicetree/bindings/net/wireless/qcom,ath10k.txt          | 2 +-
-> >>  arch/arm64/boot/dts/qcom/sm8150.dtsi                          | 4 ++--
-> >>  drivers/net/wireless/ath/ath10k/snoc.c                        | 2 +-
-> >>  3 files changed, 4 insertions(+), 4 deletions(-)
-> >
-> > Via which tree are these supposed to go? I'll take patch 1 and arm
-> > mantainers take patch 2, or what?
+First, we add a GPU-wide wait queue that is signaled on all IRQs.
+We can then wait on this wait queue inside MSM_WAIT_IOVA until the
+condition is met.
 
-That sounds good (you take the ath10k and we'll take the dts).
+The corresponding merge request in mesa can be found at:
+https://gitlab.freedesktop.org/mesa/mesa/merge_requests/3279
 
-> 
-> No reply, so I'm planning to take patch 1. Please holler if I
-> misunderstood.
-> 
+Changes in v2:
+    * Updated cleanup logic on error
+    * Added a mask
+    * 32 bit values by default
 
-Sorry.
+Brian Ho (2):
+  drm/msm: Add a GPU-wide wait queue
+  drm/msm: Add MSM_WAIT_IOVA ioctl
 
-Regards,
-Bjorn
+ drivers/gpu/drm/msm/msm_drv.c | 61 +++++++++++++++++++++++++++++++++--
+ drivers/gpu/drm/msm/msm_gpu.c |  4 +++
+ drivers/gpu/drm/msm/msm_gpu.h |  3 ++
+ include/uapi/drm/msm_drm.h    | 14 ++++++++
+ 4 files changed, 80 insertions(+), 2 deletions(-)
+
+-- 
+2.25.0.rc1.283.g88dfdc4193-goog
+
