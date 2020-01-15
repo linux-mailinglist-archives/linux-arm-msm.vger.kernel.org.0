@@ -2,89 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B5FB013B7FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 03:53:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA2CC13B80E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 04:11:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728890AbgAOCxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jan 2020 21:53:16 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:38046 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728879AbgAOCxQ (ORCPT
+        id S1728890AbgAODL2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jan 2020 22:11:28 -0500
+Received: from mail-vk1-f196.google.com ([209.85.221.196]:39876 "EHLO
+        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728879AbgAODL2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jan 2020 21:53:16 -0500
-Received: by mail-pl1-f193.google.com with SMTP id f20so6169224plj.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2020 18:53:16 -0800 (PST)
+        Tue, 14 Jan 2020 22:11:28 -0500
+Received: by mail-vk1-f196.google.com with SMTP id t129so4291742vkg.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2020 19:11:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gF3OskaGa/QxUDmPvNcm3vrogsAuUP5CnJib3LoH51g=;
-        b=Za1FQRu8vQCbZEuyQROhvjusnN9d71flpKqSSPSKtR4Bzt8dgkXG5y3Zu5EsyFvqwp
-         trTwkkKyfs8WjvaK9KWFv525+pwPnLwe7gZ0wJAJUt1h7l8sFCl+WgkLl85yrrzV6lq4
-         fGmzqwTJ6gSJN96h4oStmSNF+ho+Fx8QC51hI=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ztj1hvO+WNVO+LNPV45474E/vfF/Pm9unbmeASb7NPA=;
+        b=fAd2viFGmbBR8ZdFtpgvR+MYV5gshPH+9J4I8bVUF1JSXizaTydbFd3YzCEJG/Uhwm
+         bt5fynuF1MlcRJYnjbuC+1/+Cz2lOaCcPOB05Z/Cm3DK+NnyCS7/OUT+geia3JjtPN8u
+         xya4laWGuWdTzozjuIsMhQ3DFtjoqhCM1CM6A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gF3OskaGa/QxUDmPvNcm3vrogsAuUP5CnJib3LoH51g=;
-        b=iGyn1oHoCcHPJglYbZx0lnzpYRv90A4OIejIbrQ7qZ4FsJuSLARaJRzzKsLzpYa+W3
-         fHNM68x5/1i3seyc7u453/HfctxClysbs1rH/ekQFnJLVhpYeM8VXBtjN/ks1jp1WUKZ
-         GJcnsWVT6WYGNyUGd5dSwcXb+Fh4/Prs1ONkqxdGnNUyIQQVyHOlmlaLhGHAeSQhQ/B9
-         L0Hs1nCoHoa8QIsNiuvbNwPCWh/85jgHQG5sSONZFt6nqg8iucQfRqzDHB/+mgGwfkZ/
-         wUaNSTsbxgOb5aSUELRPW9pZbfR82CaCWumsy8PfFTNdGvaPdm1dXdRihdqUBKdPg3tt
-         86nA==
-X-Gm-Message-State: APjAAAXlVs9O5RBaJfG8HUDIidFreA/lkqmu1BJnhlOB+t87/GPqkdsB
-        uemZxclac3bWUiWZvfnZTOxn8A==
-X-Google-Smtp-Source: APXvYqw6IN6SpZF1hcpAEekWajXfWM2TJNeoGT4lM7BuFEm6giP0KF+P+EuMN/yDfcr2UeiTpHcuOw==
-X-Received: by 2002:a17:90a:8986:: with SMTP id v6mr32404955pjn.90.1579056795960;
-        Tue, 14 Jan 2020 18:53:15 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id w131sm19748652pfc.16.2020.01.14.18.53.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jan 2020 18:53:15 -0800 (PST)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: pm6150: Add label to pwrkey node
-Date:   Tue, 14 Jan 2020 18:53:14 -0800
-Message-Id: <20200115025314.3054-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.25.0.rc1.283.g88dfdc4193-goog
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ztj1hvO+WNVO+LNPV45474E/vfF/Pm9unbmeASb7NPA=;
+        b=XeuTepW3tPDFTci9/cQgWHw2I8OJaljTes11yRO4oOFSCO2IFmYKWonYjfBejBMGbM
+         NIzDWSRKhsgxs2H0iAnEuE7Avng6kNH3dBu7FV1672rRQRfKfvosGE6fE2TpoE7AXP5R
+         tp1pCbIn+vkMDfIAgNvczGA6SaG/e5eLWyMXXmdrYJCUoDu9RBEFa93uybNrDwyHz8ak
+         nzyYI17pBdKkNOaP6KRkIVTVakk8W8u4JJorsk1QRQLiEPKgChoLeGPht4bqFupGg7hs
+         +dRrezQJCdX7j/ssEftbENfOuz9Z2+JUcxi/BfqSafvzC1QcSZG6OGI4i9XZ4w/yLNrt
+         SUVQ==
+X-Gm-Message-State: APjAAAVIyWrl9C40qojLTQhThSpMIBKlfsrvt8s5tm8feyttn3SbtyhG
+        3j2ess0QsZytkoVJArQFI0f9rqaWiDQ=
+X-Google-Smtp-Source: APXvYqw5ARouPcoM6iwS60AKwJ2Vz3QyRCVWkZp3B5WI2Ol2H8JDo2rBB7eACR+OqURmtDDwGJ5TRg==
+X-Received: by 2002:a1f:434b:: with SMTP id q72mr12978338vka.53.1579057887392;
+        Tue, 14 Jan 2020 19:11:27 -0800 (PST)
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com. [209.85.221.182])
+        by smtp.gmail.com with ESMTPSA id i65sm5141766vkb.1.2020.01.14.19.11.26
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Jan 2020 19:11:26 -0800 (PST)
+Received: by mail-vk1-f182.google.com with SMTP id c129so4291085vkh.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2020 19:11:26 -0800 (PST)
+X-Received: by 2002:a1f:c686:: with SMTP id w128mr13064603vkf.34.1579057885834;
+ Tue, 14 Jan 2020 19:11:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200115025314.3054-1-swboyd@chromium.org>
+In-Reply-To: <20200115025314.3054-1-swboyd@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 14 Jan 2020 19:11:31 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=V=Ys+RLHd15+Y9c2Auiytbq821CAXLb-tMe__Rq48uDA@mail.gmail.com>
+Message-ID: <CAD=FV=V=Ys+RLHd15+Y9c2Auiytbq821CAXLb-tMe__Rq48uDA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: pm6150: Add label to pwrkey node
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some platforms don't want to use the pmic power key as the power key
-event. Add a label so platforms can easily reference and mark this node
-as status = "disabled".
+Hi,
 
-Cc: Kiran Gunda <kgunda@codeaurora.org>
-Cc: Rajendra Nayak <rnayak@codeaurora.org>
-Cc: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- arch/arm64/boot/dts/qcom/pm6150.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Tue, Jan 14, 2020 at 6:53 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Some platforms don't want to use the pmic power key as the power key
+> event. Add a label so platforms can easily reference and mark this node
+> as status = "disabled".
+>
+> Cc: Kiran Gunda <kgunda@codeaurora.org>
+> Cc: Rajendra Nayak <rnayak@codeaurora.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/pm6150.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm6150.dtsi b/arch/arm64/boot/dts/qcom/pm6150.dtsi
-index 23534639f455..57af0b4a384d 100644
---- a/arch/arm64/boot/dts/qcom/pm6150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm6150.dtsi
-@@ -20,7 +20,7 @@ pm6150_pon: pon@800 {
- 			mode-bootloader = <0x2>;
- 			mode-recovery = <0x1>;
- 
--			pwrkey {
-+			pm6150_pwrkey: pwrkey {
- 				compatible = "qcom,pm8941-pwrkey";
- 				interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
- 				debounce = <15625>;
--- 
-Sent by a computer, using git, on the internet
-
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
