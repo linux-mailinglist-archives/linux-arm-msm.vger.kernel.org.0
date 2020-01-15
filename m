@@ -2,142 +2,553 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 71AA513C669
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 15:46:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E33013C689
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 15:49:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728915AbgAOOox (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jan 2020 09:44:53 -0500
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:44415 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726562AbgAOOox (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jan 2020 09:44:53 -0500
-Received: by mail-oi1-f196.google.com with SMTP id d62so15535745oia.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2020 06:44:52 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Ky4RIbVWy7rBgUBCjlLOjE84AfoKdzvyQIgA25sSC+w=;
-        b=OdVP4X8nk0+ucW8M9T10cYN0mgIU38GoXYq3lro67rMntyZHKfa3KOcN7VL1ps8XQ9
-         fP1DLUACDE+Ee3WTFU7aCt4RzhnjJfmwHLwO5mYpxOVpHMr3ZcEP1Pe8ZjqiMRl5VfLQ
-         dlZHTWa3mFsG5vx+fLjjYLPYbLCXlvGtRRYWVZDvK7V3agORDUstq/qgnMAtg3uovgKg
-         236qZJ40cBiwoKOzFGblqFFa6yiX190s8JBG2MaCxXyw+pcdDzgYA1JZ0LpD73id9wRT
-         swEuTkSvQCDMC0xNqr4J4vnH1AHKkQfWqale8uWrjd22ToTuiBWs5lv+7C9vTzgv85zl
-         FMQQ==
-X-Gm-Message-State: APjAAAWkyNlzqNrROZ2WXid2xUzTD7dvHaN75t3INxvuDrSuQYZ+x9OK
-        o0p62fJYCKl8yO5rIZq6hOLbPM0=
-X-Google-Smtp-Source: APXvYqy1oBlLEZhX8B2fHJi2cw/Lr8vih9AIIXNeGKSNrSPsuZEa51VYEaiiUeRas12+Cs6wH5RXIA==
-X-Received: by 2002:aca:5588:: with SMTP id j130mr70616oib.122.1579099491976;
-        Wed, 15 Jan 2020 06:44:51 -0800 (PST)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id e65sm6650752otb.62.2020.01.15.06.44.50
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2020 06:44:50 -0800 (PST)
-Received: from rob (uid 1000)
-        (envelope-from rob@rob-hp-laptop)
-        id 22040c
-        by rob-hp-laptop (DragonFly Mail Agent v0.11);
-        Wed, 15 Jan 2020 08:44:49 -0600
-Date:   Wed, 15 Jan 2020 08:44:49 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     David Dai <daidavid1@codeaurora.org>
-Cc:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
-        evgreen@google.com, sboyd@kernel.org, ilina@codeaurora.org,
-        seansw@qti.qualcomm.com, elder@linaro.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v2 2/6] dt-bindings: interconnect: Add YAML schemas for
- QCOM bcm-voter
-Message-ID: <20200115144449.GA5371@bogus>
-References: <1578630784-962-1-git-send-email-daidavid1@codeaurora.org>
- <1578630784-962-3-git-send-email-daidavid1@codeaurora.org>
+        id S1729061AbgAOOtt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jan 2020 09:49:49 -0500
+Received: from mga18.intel.com ([134.134.136.126]:13904 "EHLO mga18.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729058AbgAOOtt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Jan 2020 09:49:49 -0500
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 15 Jan 2020 06:49:47 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,322,1574150400"; 
+   d="scan'208";a="253818572"
+Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.174])
+  by fmsmga001.fm.intel.com with SMTP; 15 Jan 2020 06:49:39 -0800
+Received: by stinkbox (sSMTP sendmail emulation); Wed, 15 Jan 2020 16:49:38 +0200
+Date:   Wed, 15 Jan 2020 16:49:38 +0200
+From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     airlied@linux.ie, daniel@ffwll.ch, alexander.deucher@amd.com,
+        christian.koenig@amd.com, David1.Zhou@amd.com,
+        maarten.lankhorst@linux.intel.com, patrik.r.jakobsson@gmail.com,
+        robdclark@gmail.com, sean@poorly.run, benjamin.gaignard@linaro.org,
+        vincent.abriou@st.com, yannick.fertre@st.com,
+        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
+        alexandre.torgue@st.com, eric@anholt.net,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        linux-graphics-maintainer@vmware.com, thellstrom@vmware.com,
+        bskeggs@redhat.com, harry.wentland@amd.com, sunpeng.li@amd.com,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, linux-arm-msm@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [Intel-gfx] [PATCH v2 03/21] drm: Add get_vblank_timestamp() to
+ struct drm_crtc_funcs
+Message-ID: <20200115144938.GA13686@intel.com>
+References: <20200115121652.7050-1-tzimmermann@suse.de>
+ <20200115121652.7050-4-tzimmermann@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <1578630784-962-3-git-send-email-daidavid1@codeaurora.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200115121652.7050-4-tzimmermann@suse.de>
+X-Patchwork-Hint: comment
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 09, 2020 at 08:33:00PM -0800, David Dai wrote:
-> Add YAML schemas for interconnect bcm-voters found on QCOM RPMh-based
-> SoCs.
+On Wed, Jan 15, 2020 at 01:16:34PM +0100, Thomas Zimmermann wrote:
+> The callback get_vblank_timestamp() is currently located in struct
+> drm_driver, but really belongs into struct drm_crtc_funcs. Add an
+> equivalent there. Driver will be converted in separate patches.
 > 
-> Signed-off-by: David Dai <daidavid1@codeaurora.org>
+> The default implementation is drm_calc_vbltimestamp_from_scanoutpos().
+> The patch adds drm_crtc_vblank_helper_get_vblank_timestamp(), which is
+> an implementation for the CRTC callback.
+> 
+> v2:
+> 	* rename helper to drm_crtc_vblank_helper_get_vblank_timestamp()
+> 	* replace drm_calc_vbltimestamp_from_scanoutpos() with
+> 	  drm_crtc_vblank_helper_get_vblank_timestamp() in docs
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 > ---
->  .../bindings/interconnect/qcom,bcm-voter.yaml      | 45 ++++++++++++++++++++++
->  1 file changed, 45 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
+>  drivers/gpu/drm/drm_vblank.c             | 236 +++++++++++++++++++++--
+>  include/drm/drm_crtc.h                   |  46 ++++-
+>  include/drm/drm_modeset_helper_vtables.h |   4 +-
+>  include/drm/drm_vblank.h                 |  26 ++-
+>  4 files changed, 292 insertions(+), 20 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
-> new file mode 100644
-> index 0000000..a6bdf6e
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
-> @@ -0,0 +1,45 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/interconnect/qcom,bcm-voter.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm BCM-Voter Interconnect
-> +
-> +maintainers:
-> +  - David Dai <daidavid1@codeaurora.org>
-> +
-> +description: |
+> diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
+> index abb085c67d82..1b7af316e6a5 100644
+> --- a/drivers/gpu/drm/drm_vblank.c
+> +++ b/drivers/gpu/drm/drm_vblank.c
+> @@ -333,7 +333,9 @@ u64 drm_crtc_accurate_vblank_count(struct drm_crtc *crtc)
+>  	u64 vblank;
+>  	unsigned long flags;
+>  
+> -	WARN_ONCE(drm_debug_enabled(DRM_UT_VBL) && !dev->driver->get_vblank_timestamp,
+> +	WARN_ONCE(drm_debug_enabled(DRM_UT_VBL) &&
+> +		  !crtc->funcs->get_vblank_timestamp &&
+> +		  !dev->driver->get_vblank_timestamp,
+>  		  "This function requires support for accurate vblank timestamps.");
+>  
+>  	spin_lock_irqsave(&dev->vblank_time_lock, flags);
+> @@ -511,9 +513,9 @@ EXPORT_SYMBOL(drm_crtc_vblank_waitqueue);
+>   *
+>   * Calculate and store various constants which are later needed by vblank and
+>   * swap-completion timestamping, e.g, by
+> - * drm_calc_vbltimestamp_from_scanoutpos(). They are derived from CRTC's true
+> - * scanout timing, so they take things like panel scaling or other adjustments
+> - * into account.
+> + * drm_crtc_vblank_helper_get_vblank_timestamp(). They are derived from
+> + * CRTC's true scanout timing, so they take things like panel scaling or
+> + * other adjustments into account.
+>   */
+>  void drm_calc_timestamping_constants(struct drm_crtc *crtc,
+>  				     const struct drm_display_mode *mode)
+> @@ -577,8 +579,9 @@ EXPORT_SYMBOL(drm_calc_timestamping_constants);
+>   *
+>   * Implements calculation of exact vblank timestamps from given drm_display_mode
+>   * timings and current video scanout position of a CRTC. This can be directly
+> - * used as the &drm_driver.get_vblank_timestamp implementation of a kms driver
+> - * if &drm_crtc_helper_funcs.get_scanout_position is implemented.
+> + * used as the &drm_crtc_funcs.get_vblank_timestamp implementation of a kms
+> + * driver if &drm_crtc_helper_funcs.get_scanout_position or
+> + * &drm_driver.get_scanout_position is implemented.
+>   *
+>   * The current implementation only handles standard video modes. For double scan
+>   * and interlaced modes the driver is supposed to adjust the hardware mode
+> @@ -742,15 +745,22 @@ static bool
+>  drm_get_last_vbltimestamp(struct drm_device *dev, unsigned int pipe,
+>  			  ktime_t *tvblank, bool in_vblank_irq)
+>  {
+> +	struct drm_crtc *crtc = drm_crtc_from_index(dev, pipe);
+>  	bool ret = false;
+>  
+>  	/* Define requested maximum error on timestamps (nanoseconds). */
+>  	int max_error = (int) drm_timestamp_precision * 1000;
+>  
+>  	/* Query driver if possible and precision timestamping enabled. */
+> -	if (dev->driver->get_vblank_timestamp && (max_error > 0))
+> +	if (crtc->funcs->get_vblank_timestamp && (max_error > 0)) {
 
-Don't need '|' unless you need formatting preserved.
+Could drop the superfluous parens while at it.
 
-> +    The Bus Clock Manager (BCM) is a dedicated hardware accelerator
-> +    that manages shared system resources by aggregating requests
-> +    from multiple Resource State Coordinators (RSC). Interconnect
-> +    providers are able to vote for aggregated thresholds values from
-> +    consumers by communicating through their respective RSCs.
+Are all drivers utilizing this guaranteed to have the crtc here?
 
-Indent should be 2 spaces.
+> +		struct drm_crtc *crtc = drm_crtc_from_index(dev, pipe);
+> +
+> +		ret = crtc->funcs->get_vblank_timestamp(crtc, &max_error,
+> +							tvblank, in_vblank_irq);
+> +	} else if (dev->driver->get_vblank_timestamp && (max_error > 0)) {
+>  		ret = dev->driver->get_vblank_timestamp(dev, pipe, &max_error,
+>  							tvblank, in_vblank_irq);
+> +	}
+>  
+>  	/* GPU high precision timestamp query unsupported or failed.
+>  	 * Return current monotonic/gettimeofday timestamp as best estimate.
+> @@ -1059,11 +1069,19 @@ EXPORT_SYMBOL(drm_crtc_vblank_get);
+>  
+>  static bool __vblank_disable_immediate(struct drm_device *dev, unsigned int pipe)
+>  {
+> +	struct drm_crtc *crtc;
+> +
+>  	if (!dev->vblank_disable_immediate)
+>  		return false;
+> -	if (!dev->driver->get_vblank_timestamp)
+> -		return false;
+> -	return true;
+> +
+> +	crtc = drm_crtc_from_index(dev, pipe);
+> +	if (crtc && crtc->funcs->get_vblank_timestamp)
+
+Here you are expecting that the crtc might be NULL.
+
+> +		return true;
+> +
+> +	if (dev->driver->get_vblank_timestamp)
+> +		return true;
+> +
+> +	return false;
+>  }
+>  
+>  static void drm_vblank_put(struct drm_device *dev, unsigned int pipe)
+> @@ -1742,9 +1760,11 @@ int drm_wait_vblank_ioctl(struct drm_device *dev, void *data,
+>  
+>  static void drm_handle_vblank_events(struct drm_device *dev, unsigned int pipe)
+>  {
+> +	struct drm_crtc *crtc = drm_crtc_from_index(dev, pipe);
+>  	struct drm_pending_vblank_event *e, *t;
+>  	ktime_t now;
+>  	u64 seq;
+> +	bool high_prec;
+>  
+>  	assert_spin_locked(&dev->event_lock);
+>  
+> @@ -1764,8 +1784,10 @@ static void drm_handle_vblank_events(struct drm_device *dev, unsigned int pipe)
+>  		send_vblank_event(dev, e, seq, now);
+>  	}
+>  
+> -	trace_drm_vblank_event(pipe, seq, now,
+> -			dev->driver->get_vblank_timestamp != NULL);
+> +	high_prec = crtc->funcs->get_vblank_timestamp ||
+> +		    dev->driver->get_vblank_timestamp;
+
+Here again assuming the crtc can't be NULL.
 
 > +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,sdm845-bcm-voter
+> +	trace_drm_vblank_event(pipe, seq, now, high_prec);
+>  }
+>  
+>  /**
+> @@ -2020,3 +2042,193 @@ int drm_crtc_queue_sequence_ioctl(struct drm_device *dev, void *data,
+>  	kfree(e);
+>  	return ret;
+>  }
 > +
-> +required:
-> +  - compatible
+> +/*
+> + * Helpers for struct drm_crtc_funcs
+> + */
 > +
-> +additionalProperties: false
+> +/**
+> + * drm_crtc_vblank_helper_get_vblank_timestamp_internal - precise vblank
+> + *                                                        timestamp helper
+> + * @dev: DRM device
+> + * @pipe: index of CRTC whose vblank timestamp to retrieve
+> + * @max_error: Desired maximum allowable error in timestamps (nanosecs)
+> + *             On return contains true maximum error of timestamp
+> + * @vblank_time: Pointer to time which should receive the timestamp
+> + * @in_vblank_irq:
+> + *     True when called from drm_crtc_handle_vblank().  Some drivers
+> + *     need to apply some workarounds for gpu-specific vblank irq quirks
+> + *     if flag is set.
+> + * @get_scanout_position:
+> + *     Callback function to retrieve the scanout position. See
+> + *     @struct drm_crtc_helper_funcs.get_scanout_position.
+> + *
+> + * Implements calculation of exact vblank timestamps from given drm_display_mode
+> + * timings and current video scanout position of a CRTC.
+> + *
+> + * The current implementation only handles standard video modes. For double scan
+> + * and interlaced modes the driver is supposed to adjust the hardware mode
+> + * (taken from &drm_crtc_state.adjusted mode for atomic modeset drivers) to
+> + * match the scanout position reported.
+> + *
+> + * Note that atomic drivers must call drm_calc_timestamping_constants() before
+> + * enabling a CRTC. The atomic helpers already take care of that in
+> + * drm_atomic_helper_update_legacy_modeset_state().
+> + *
+> + * Returns:
+> + *
+> + * Returns true on success, and false on failure, i.e. when no accurate
+> + * timestamp could be acquired.
+> + */
+> +bool
+> +drm_crtc_vblank_helper_get_vblank_timestamp_internal(
+> +	struct drm_crtc *crtc, int *max_error, ktime_t *vblank_time,
+> +	bool in_vblank_irq,
+> +	bool (*get_scanout_position)(struct drm_crtc *crtc,
+> +                                     bool in_vblank_irq, int *vpos, int *hpos,
+> +                                     ktime_t *stime, ktime_t *etime,
+> +                                     const struct drm_display_mode *mode))
+> +{
+> +	struct drm_device *dev = crtc->dev;
+> +	unsigned int pipe = crtc->index;
+> +	struct drm_vblank_crtc *vblank = &dev->vblank[pipe];
+> +	struct timespec64 ts_etime, ts_vblank_time;
+> +	ktime_t stime, etime;
+> +	bool vbl_status;
+> +	const struct drm_display_mode *mode;
+> +	int vpos, hpos, i;
+> +	int delta_ns, duration_ns;
 > +
-> +examples:
-> +  - |
-> +    apps_rsc: interconnect@179c0000 {
+> +	if (pipe >= dev->num_crtcs) {
+> +		DRM_ERROR("Invalid crtc %u\n", pipe);
+> +		return false;
+> +	}
+> +
+> +	/* Scanout position query not supported? Should not happen. */
+> +	if (!get_scanout_position) {
+> +		DRM_ERROR("Called from CRTC w/o get_scanout_position()!?\n");
+> +		return false;
+> +	}
+> +
+> +	if (drm_drv_uses_atomic_modeset(dev))
+> +		mode = &vblank->hwmode;
+> +	else
+> +		mode = &crtc->hwmode;
+> +
+> +	/* If mode timing undefined, just return as no-op:
+> +	 * Happens during initial modesetting of a crtc.
+> +	 */
+> +	if (mode->crtc_clock == 0) {
+> +		DRM_DEBUG("crtc %u: Noop due to uninitialized mode.\n", pipe);
+> +		WARN_ON_ONCE(drm_drv_uses_atomic_modeset(dev));
+> +		return false;
+> +	}
+> +
+> +	/* Get current scanout position with system timestamp.
+> +	 * Repeat query up to DRM_TIMESTAMP_MAXRETRIES times
+> +	 * if single query takes longer than max_error nanoseconds.
+> +	 *
+> +	 * This guarantees a tight bound on maximum error if
+> +	 * code gets preempted or delayed for some reason.
+> +	 */
+> +	for (i = 0; i < DRM_TIMESTAMP_MAXRETRIES; i++) {
+> +		/*
+> +		 * Get vertical and horizontal scanout position vpos, hpos,
+> +		 * and bounding timestamps stime, etime, pre/post query.
+> +		 */
+> +		vbl_status = get_scanout_position(crtc, in_vblank_irq, &vpos,
+> +						  &hpos, &stime, &etime, mode);
+> +
+> +		/* Return as no-op if scanout query unsupported or failed. */
+> +		if (!vbl_status) {
+> +			DRM_DEBUG("crtc %u : scanoutpos query failed.\n",
+> +				  pipe);
+> +			return false;
+> +		}
+> +
+> +		/* Compute uncertainty in timestamp of scanout position query. */
+> +		duration_ns = ktime_to_ns(etime) - ktime_to_ns(stime);
+> +
+> +		/* Accept result with <  max_error nsecs timing uncertainty. */
+> +		if (duration_ns <= *max_error)
+> +			break;
+> +	}
+> +
+> +	/* Noisy system timing? */
+> +	if (i == DRM_TIMESTAMP_MAXRETRIES) {
+> +		DRM_DEBUG("crtc %u: Noisy timestamp %d us > %d us [%d reps].\n",
+> +			  pipe, duration_ns/1000, *max_error/1000, i);
+> +	}
+> +
+> +	/* Return upper bound of timestamp precision error. */
+> +	*max_error = duration_ns;
+> +
+> +	/* Convert scanout position into elapsed time at raw_time query
+> +	 * since start of scanout at first display scanline. delta_ns
+> +	 * can be negative if start of scanout hasn't happened yet.
+> +	 */
+> +	delta_ns = div_s64(1000000LL * (vpos * mode->crtc_htotal + hpos),
+> +			   mode->crtc_clock);
+> +
+> +	/* Subtract time delta from raw timestamp to get final
+> +	 * vblank_time timestamp for end of vblank.
+> +	 */
+> +	*vblank_time = ktime_sub_ns(etime, delta_ns);
+> +
+> +	if (!drm_debug_enabled(DRM_UT_VBL))
+> +		return true;
+> +
+> +	ts_etime = ktime_to_timespec64(etime);
+> +	ts_vblank_time = ktime_to_timespec64(*vblank_time);
+> +
+> +	DRM_DEBUG_VBL("crtc %u : v p(%d,%d)@ %lld.%06ld -> %lld.%06ld [e %d us, %d rep]\n",
+> +		      pipe, hpos, vpos,
+> +		      (u64)ts_etime.tv_sec, ts_etime.tv_nsec / 1000,
+> +		      (u64)ts_vblank_time.tv_sec, ts_vblank_time.tv_nsec / 1000,
+> +		      duration_ns / 1000, i);
+> +
+> +	return true;
+> +}
+> +EXPORT_SYMBOL(drm_crtc_vblank_helper_get_vblank_timestamp_internal);
 
-Unit-address should also have 'reg' property.
-
-> +        compatible = "qcom,rpmh-rsc";
-
-Note that once this has a schema, it will be checked, so make sure it's 
-complete.
+This looks like copy paste from the current thing. Why are you 
+duplicating the entire function instead of refactoring what
+we already have?
 
 > +
-> +        apps_bcm_voter: bcm_voter {
-> +            compatible = "qcom,sdm845-bcm-voter";
-> +        };
-> +    };
+> +/**
+> + * drm_crtc_vblank_helper_get_vblank_timestamp - precise vblank timestamp
+> + *                                               helper
+> + * @crtc: CRTC whose vblank timestamp to retrieve
+> + * @max_error: Desired maximum allowable error in timestamps (nanosecs)
+> + *             On return contains true maximum error of timestamp
+> + * @vblank_time: Pointer to time which should receive the timestamp
+> + * @in_vblank_irq:
+> + *     True when called from drm_crtc_handle_vblank().  Some drivers
+> + *     need to apply some workarounds for gpu-specific vblank irq quirks
+> + *     if flag is set.
+> + *
+> + * Implements calculation of exact vblank timestamps from given drm_display_mode
+> + * timings and current video scanout position of a CRTC. This can be directly
+> + * used as the &drm_crtc_funcs.get_vblank_timestamp implementation of a kms
+> + * driver if &drm_crtc_helper_funcs.get_scanout_position is implemented.
+> + *
+> + * The current implementation only handles standard video modes. For double scan
+> + * and interlaced modes the driver is supposed to adjust the hardware mode
+> + * (taken from &drm_crtc_state.adjusted mode for atomic modeset drivers) to
+> + * match the scanout position reported.
+> + *
+> + * Note that atomic drivers must call drm_calc_timestamping_constants() before
+> + * enabling a CRTC. The atomic helpers already take care of that in
+> + * drm_atomic_helper_update_legacy_modeset_state().
+> + *
+> + * Returns:
+> + *
+> + * Returns true on success, and false on failure, i.e. when no accurate
+> + * timestamp could be acquired.
+> + */
+> +bool drm_crtc_vblank_helper_get_vblank_timestamp(struct drm_crtc *crtc,
+> +						 int *max_error,
+> +						 ktime_t *vblank_time,
+> +						 bool in_vblank_irq)
+> +{
+> +	return drm_crtc_vblank_helper_get_vblank_timestamp_internal(
+> +		crtc, max_error, vblank_time, in_vblank_irq,
+> +		crtc->helper_private->get_scanout_position);
+> +}
+> +EXPORT_SYMBOL(drm_crtc_vblank_helper_get_vblank_timestamp);
+> diff --git a/include/drm/drm_crtc.h b/include/drm/drm_crtc.h
+> index 5e9b15a0e8c5..db46abbbf4e7 100644
+> --- a/include/drm/drm_crtc.h
+> +++ b/include/drm/drm_crtc.h
+> @@ -867,6 +867,47 @@ struct drm_crtc_funcs {
+>  	 * new drivers as the replacement of &drm_driver.disable_vblank hook.
+>  	 */
+>  	void (*disable_vblank)(struct drm_crtc *crtc);
 > +
-> +    disp_rsc: interconnect@179d0000 {
-> +        compatible = "qcom,rpmh-rsc";
+> +	/**
+> +	 * @get_vblank_timestamp:
+> +	 *
+> +	 * Called by drm_get_last_vbltimestamp(). Should return a precise
+> +	 * timestamp when the most recent vblank interval ended or will end.
+> +	 *
+> +	 * Specifically, the timestamp in @vblank_time should correspond as
+> +	 * closely as possible to the time when the first video scanline of
+> +	 * the video frame after the end of vblank will start scanning out,
+> +	 * the time immediately after end of the vblank interval. If the
+> +	 * @crtc is currently inside vblank, this will be a time in the future.
+> +	 * If the @crtc is currently scanning out a frame, this will be the
+> +	 * past start time of the current scanout. This is meant to adhere
+> +	 * to the OpenML OML_sync_control extension specification.
+> +	 *
+> +	 * Parameters:
+> +	 *
+> +	 * crtc:
+> +	 *     CRTC for which timestamp should be returned.
+> +	 * max_error:
+> +	 *     Maximum allowable timestamp error in nanoseconds.
+> +	 *     Implementation should strive to provide timestamp
+> +	 *     with an error of at most max_error nanoseconds.
+> +	 *     Returns true upper bound on error for timestamp.
+> +	 * vblank_time:
+> +	 *     Target location for returned vblank timestamp.
+> +	 * in_vblank_irq:
+> +	 *     True when called from drm_crtc_handle_vblank().  Some drivers
+> +	 *     need to apply some workarounds for gpu-specific vblank irq quirks
+> +	 *     if flag is set.
+> +	 *
+> +	 * Returns:
+> +	 *
+> +	 * True on success, false on failure, which means the core should
+> +	 * fallback to a simple timestamp taken in drm_crtc_handle_vblank().
+> +	 */
+> +	bool (*get_vblank_timestamp)(struct drm_crtc *crtc,
+> +				     int *max_error,
+> +				     ktime_t *vblank_time,
+> +				     bool in_vblank_irq);
+>  };
+>  
+>  /**
+> @@ -974,11 +1015,12 @@ struct drm_crtc {
+>  	 * Programmed mode in hw, after adjustments for encoders, crtc, panel
+>  	 * scaling etc. Should only be used by legacy drivers, for high
+>  	 * precision vblank timestamps in
+> -	 * drm_calc_vbltimestamp_from_scanoutpos().
+> +	 * drm_crtc_vblank_helper_get_vblank_timestamp().
+>  	 *
+>  	 * Note that atomic drivers should not use this, but instead use
+>  	 * &drm_crtc_state.adjusted_mode. And for high-precision timestamps
+> -	 * drm_calc_vbltimestamp_from_scanoutpos() used &drm_vblank_crtc.hwmode,
+> +	 * drm_crtc_vblank_helper_get_vblank_timestamp() used
+> +	 * &drm_vblank_crtc.hwmode,
+>  	 * which is filled out by calling drm_calc_timestamping_constants().
+>  	 */
+>  	struct drm_display_mode hwmode;
+> diff --git a/include/drm/drm_modeset_helper_vtables.h b/include/drm/drm_modeset_helper_vtables.h
+> index e398512bfd5f..0afaf58da40d 100644
+> --- a/include/drm/drm_modeset_helper_vtables.h
+> +++ b/include/drm/drm_modeset_helper_vtables.h
+> @@ -459,8 +459,8 @@ struct drm_crtc_helper_funcs {
+>  	 * Returns the current display scanout position from a CRTC and an
+>  	 * optional accurate ktime_get() timestamp of when the position was
+>  	 * measured. Note that this is a helper callback which is only used
+> -	 * if a driver uses drm_calc_vbltimestamp_from_scanoutpos() for the
+> -	 * @drm_driver.get_vblank_timestamp callback.
+> +	 * if a driver uses drm_crtc_vblank_helper_get_vblank_timestamp()
+> +	 * for the @drm_crtc_funcs.get_vblank_timestamp callback.
+>  	 *
+>  	 * Parameters:
+>  	 *
+> diff --git a/include/drm/drm_vblank.h b/include/drm/drm_vblank.h
+> index c16c44052b3d..248fbd5de177 100644
+> --- a/include/drm/drm_vblank.h
+> +++ b/include/drm/drm_vblank.h
+> @@ -174,13 +174,13 @@ struct drm_vblank_crtc {
+>  	unsigned int pipe;
+>  	/**
+>  	 * @framedur_ns: Frame/Field duration in ns, used by
+> -	 * drm_calc_vbltimestamp_from_scanoutpos() and computed by
+> +	 * drm_crtc_vblank_helper_get_vblank_timestamp() and computed by
+>  	 * drm_calc_timestamping_constants().
+>  	 */
+>  	int framedur_ns;
+>  	/**
+>  	 * @linedur_ns: Line duration in ns, used by
+> -	 * drm_calc_vbltimestamp_from_scanoutpos() and computed by
+> +	 * drm_crtc_vblank_helper_get_vblank_timestamp() and computed by
+>  	 * drm_calc_timestamping_constants().
+>  	 */
+>  	int linedur_ns;
+> @@ -190,8 +190,8 @@ struct drm_vblank_crtc {
+>  	 *
+>  	 * Cache of the current hardware display mode. Only valid when @enabled
+>  	 * is set. This is used by helpers like
+> -	 * drm_calc_vbltimestamp_from_scanoutpos(). We can't just access the
+> -	 * hardware mode by e.g. looking at &drm_crtc_state.adjusted_mode,
+> +	 * drm_crtc_vblank_helper_get_vblank_timestamp(). We can't just access
+> +	 * the hardware mode by e.g. looking at &drm_crtc_state.adjusted_mode,
+>  	 * because that one is really hard to get from interrupt context.
+>  	 */
+>  	struct drm_display_mode hwmode;
+> @@ -238,4 +238,22 @@ void drm_calc_timestamping_constants(struct drm_crtc *crtc,
+>  wait_queue_head_t *drm_crtc_vblank_waitqueue(struct drm_crtc *crtc);
+>  void drm_crtc_set_max_vblank_count(struct drm_crtc *crtc,
+>  				   u32 max_vblank_count);
 > +
-> +        disp_bcm_voter: bcm_voter {
-> +            compatible = "qcom,sdm845-bcm-voter";
-> +        };
-> +    };
+> +/*
+> + * Helpers for struct drm_crtc_funcs
+> + */
+> +
+> +bool
+> +drm_crtc_vblank_helper_get_vblank_timestamp_internal(
+> +	struct drm_crtc *crtc, int *max_error, ktime_t *vblank_time,
+> +	bool in_vblank_irq,
+> +	bool (*get_scanout_position)(struct drm_crtc *crtc,
+> +                                     bool in_vblank_irq, int *vpos, int *hpos,
+> +                                     ktime_t *stime, ktime_t *etime,
+> +                                     const struct drm_display_mode *mode));
+
+Ugly alignment. Could maybe add a typedef for the function pointer if it
+otherwise gets super horrible with proper alignment.
+
+> +bool drm_crtc_vblank_helper_get_vblank_timestamp(struct drm_crtc *crtc,
+> +						 int *max_error,
+> +						 ktime_t *vblank_time,
+> +						 bool in_vblank_irq);
+> +
+>  #endif
 > -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> 2.24.1
 > 
+> _______________________________________________
+> Intel-gfx mailing list
+> Intel-gfx@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/intel-gfx
+
+-- 
+Ville Syrjälä
+Intel
