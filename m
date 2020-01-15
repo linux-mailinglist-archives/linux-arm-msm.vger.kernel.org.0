@@ -2,121 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B83913BB94
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 09:56:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A9D713BBD8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 10:04:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729133AbgAOI4K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jan 2020 03:56:10 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:27710 "EHLO
+        id S1729040AbgAOJEb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jan 2020 04:04:31 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:42957 "EHLO
         mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726513AbgAOI4J (ORCPT
+        by vger.kernel.org with ESMTP id S1729048AbgAOJEb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jan 2020 03:56:09 -0500
+        Wed, 15 Jan 2020 04:04:31 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1579078568; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=OccWxJb9txWIb6AmPcxbe0MUAwyb7v5wd/Ik42SRC7Q=; b=gxRzRLltMg0r6uCyzwJ3wvcRPlpBztVMZNhqNTfeCwW/QtuA/lfvJd0i2J3F/TGTr84obvU8
- aOVj+iSVtu9+nrzxKKWxrThef951mDeFF5FGdGgUUZ8CkGalC4aDTkmHaDIs6ySL7vLx6t+Q
- 254QVH+z8uU9oiraOP0/RMdE7Yo=
+ s=smtp; t=1579079070; h=Content-Type: MIME-Version: Message-ID:
+ In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
+ bh=SEmOCijvsdwGF7pEkrg8FPnYkaWi/mjXIm3JEWQ3QPA=; b=s//VdPe036U0D5R/GboAtHSmjvnKmgi85K3lL8AKpFV2mwIgROj9H8buZOLHZ6H22m+sinDZ
+ 01ov9iBcqtxGxfrPgTWZZF48wG6fbO/MOtan2rq6yGB625u9rPS9XL7w1aRqdfFgTuxn5w6S
+ NHxJzh2RXvSCICrsr3ZAPm1xOdY=
 X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e1ed3a6.7f2078f6d3b0-smtp-out-n03;
- Wed, 15 Jan 2020 08:56:06 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e1ed59e.7f1f0790f6f8-smtp-out-n01;
+ Wed, 15 Jan 2020 09:04:30 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 422ADC447A6; Wed, 15 Jan 2020 08:56:05 +0000 (UTC)
+        id EBAE0C447A2; Wed, 15 Jan 2020 09:04:28 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from rocky-Inspiron-7590.qca.qualcomm.com (unknown [180.166.53.21])
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: rjliao)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 22E3DC447AB;
-        Wed, 15 Jan 2020 08:56:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 22E3DC447AB
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E1EFEC43383;
+        Wed, 15 Jan 2020 09:04:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E1EFEC43383
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rjliao@codeaurora.org
-From:   Rocky Liao <rjliao@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bgodavar@codeaurora.org, hemantg@codeaurora.org,
-        Rocky Liao <rjliao@codeaurora.org>
-Subject: [PATCH v4 3/3] Bluetooth: hci_qca: Enable power off/on support during hci down/up for QCA Rome
-Date:   Wed, 15 Jan 2020 16:55:52 +0800
-Message-Id: <20200115085552.11483-3-rjliao@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200115085552.11483-1-rjliao@codeaurora.org>
-References: <20191225060317.5258-1-rjliao@codeaurora.org>
- <20200115085552.11483-1-rjliao@codeaurora.org>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kvalo@codeaurora.org
+From:   Kalle Valo <kvalo@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
+        netdev@vger.kernel.org, linux-wireless@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, ath10k@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        "David S. Miller" <davem@davemloft.net>
+Subject: Re: [PATCH 0/2] ath10k: Enable QDSS clock on sm8150
+References: <20191223054855.3020665-1-bjorn.andersson@linaro.org>
+        <87zhevsrwk.fsf@codeaurora.org>
+Date:   Wed, 15 Jan 2020 11:04:22 +0200
+In-Reply-To: <87zhevsrwk.fsf@codeaurora.org> (Kalle Valo's message of "Fri, 10
+        Jan 2020 09:16:11 +0200")
+Message-ID: <87r201xf8p.fsf@kamboji.qca.qualcomm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch registers hdev->shutdown() callback and also sets
-HCI_QUIRK_NON_PERSISTENT_SETUP for QCA Rome. It will power-off the BT chip
-during hci down and power-on/initialize the chip again during hci up. As
-wcn399x already enabled this, this patch also removed the callback register
-and QUIRK setting in qca_setup() for wcn399x and uniformly do this in the
-probe() routine.
+Kalle Valo <kvalo@codeaurora.org> writes:
 
-Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
----
+> Bjorn Andersson <bjorn.andersson@linaro.org> writes:
+>
+>> On SM8150 the WiFi firmware depends on the QDSS clock ticking, or the system
+>> will reset due to an NoC error. So this adds an optional clock to the ath10k
+>> binding and makes sure it's enabled while the WiFi firmware needs it.
+>>
+>> Bjorn Andersson (2):
+>>   ath10k: Add optional qdss clk
+>>   arm64: dts: qcom: sm8150: Specify qdss clock for wifi
+>>
+>>  .../devicetree/bindings/net/wireless/qcom,ath10k.txt          | 2 +-
+>>  arch/arm64/boot/dts/qcom/sm8150.dtsi                          | 4 ++--
+>>  drivers/net/wireless/ath/ath10k/snoc.c                        | 2 +-
+>>  3 files changed, 4 insertions(+), 4 deletions(-)
+>
+> Via which tree are these supposed to go? I'll take patch 1 and arm
+> mantainers take patch 2, or what?
 
-Changes in v2: None
-Changes in v3: 
-  -moved the quirk and callback register to probe()
-Changes in v4:
-  -rebased the patch with latest code
-  -moved the quirk and callback register to probe() for wcn399x
-  -updated commit message
+No reply, so I'm planning to take patch 1. Please holler if I
+misunderstood.
 
- drivers/bluetooth/hci_qca.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 1139142e8eed..3c6c6bd20177 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1569,12 +1569,7 @@ static int qca_setup(struct hci_uart *hu)
- 		return ret;
- 
- 	if (qca_is_wcn399x(soc_type)) {
--		/* Enable NON_PERSISTENT_SETUP QUIRK to ensure to execute
--		 * setup for every hci up.
--		 */
--		set_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks);
- 		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
--		hu->hdev->shutdown = qca_power_off;
- 
- 		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
- 		if (ret)
-@@ -1813,6 +1808,7 @@ static int qca_init_regulators(struct qca_power *qca,
- static int qca_serdev_probe(struct serdev_device *serdev)
- {
- 	struct qca_serdev *qcadev;
-+	struct hci_dev *hdev;
- 	const struct qca_vreg_data *data;
- 	int err;
- 
-@@ -1881,7 +1877,13 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 			clk_disable_unprepare(qcadev->susclk);
- 	}
- 
--out:	return err;
-+out:
-+	if (!err) {
-+		hdev = qcadev->serdev_hu.hdev;
-+		set_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks);
-+		hdev->shutdown = qca_power_off;
-+	}
-+	return err;
- 
- }
- 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
