@@ -2,77 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CCF713BD4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 11:23:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 89BFA13BE44
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 12:15:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729712AbgAOKXb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jan 2020 05:23:31 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:38210 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729631AbgAOKX2 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jan 2020 05:23:28 -0500
-Received: by mail-lf1-f67.google.com with SMTP id r14so12288320lfm.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2020 02:23:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0kDyGOaxaI1GMqThNHth9V/5VSfUUwVFewl6E0xy0nc=;
-        b=E4jE3An78Ex2CgQPVi5COQjsp0vDCZeW6pA72WOdA+dPszIB5smmk5ZEh4dswC0+er
-         OwY2CCBnl8JnyoX02lSRZpLJK2slg7BhZGnfdOXQwQN9j/Nro48Xxg0+Chv3rwmAm5Mi
-         KXIfKiTiWjOg3GKkjypiRFqPKGBWBOWc3wP5bfSNKDgTRWafDjGWwvNGaXdMMVtZ0pwy
-         viXP7tzxMcPo7JTth0XG6xK5L5A71EcSTOdGLMhHbmfsg7LPtruMwMMJR+kDpLKT8cg2
-         rdPsl9+BkssxuDwNvACevxoT4h3y7ObHKDLDGl8vSgBhdVpG7QIuvsQIP7Z7+oEQnjkR
-         20aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0kDyGOaxaI1GMqThNHth9V/5VSfUUwVFewl6E0xy0nc=;
-        b=i/crVR++4Z5HR/ZT5B0s1MwbWHHsEb7SvBZXOmYP/Kt20ahVb72GKKxwPTi7y3vPRa
-         C4UFzpH9lZMXx3+94W29LokfUkif6FsW7vGkXONo/oetlQua5vh2pbdHtFu5j/F1NTyq
-         06NczcrAGhG+BgyLWXUM0ijXnXcvYfAxFAgTL61HwBWgOS0/SmOA9IK3/rThsMD+6nQh
-         u4ZCBUR/TwUtde0iPKN+YlJSa+saIZZH7ZB/0CySqG4UbqVEbumIW0fNoznPUvW26gl4
-         ydtCjqO7beD1LYW67ej+SbLF0bD6pHs6IWu2O8NqOmL+mtCMOWpDkxaxVekQ30sQmDhS
-         GUlA==
-X-Gm-Message-State: APjAAAXgaJQg5gClx19aC6r9EMeVo+QiNEw2tzxukgpYHwmCGaT6lDC/
-        ZwataPCYJP+1VrCIo0wymGI2smXKAKr0usmQiyIxcTgRaSw=
-X-Google-Smtp-Source: APXvYqzoH/cbCUM9WkqwMpVkWL8950Zqu8b72maR4cxbaUVrgqLDgiiLP876Lez3Tc1YvlB2kW9QJ7yqo7qN1cw9djc=
-X-Received: by 2002:a19:5513:: with SMTP id n19mr4126113lfe.205.1579083806398;
- Wed, 15 Jan 2020 02:23:26 -0800 (PST)
+        id S1729782AbgAOLOn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jan 2020 06:14:43 -0500
+Received: from foss.arm.com ([217.140.110.172]:35200 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726045AbgAOLOn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Jan 2020 06:14:43 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B04FD31B;
+        Wed, 15 Jan 2020 03:14:42 -0800 (PST)
+Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0D2F83F6C4;
+        Wed, 15 Jan 2020 03:14:40 -0800 (PST)
+Subject: Re: [PATCH v8 08/15] coresight: cti: Enable CTI associated with
+ devices.
+To:     Mike Leach <mike.leach@linaro.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        coresight@lists.linaro.org, linux-doc@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, mathieu.poirier@linaro.org,
+        robh+dt@kernel.org, maxime@cerno.tech, liviu.dudau@arm.com,
+        sudeep.holla@arm.com, lorenzo.pieralisi@arm.com, agross@kernel.org,
+        corbet@lwn.net
+References: <20200113213149.25599-1-mike.leach@linaro.org>
+ <20200113213149.25599-9-mike.leach@linaro.org>
+From:   Suzuki Kuruppassery Poulose <suzuki.poulose@arm.com>
+Message-ID: <396fc3a2-083b-29ef-2bb6-2fca066ea0ef@arm.com>
+Date:   Wed, 15 Jan 2020 11:14:39 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.1
 MIME-Version: 1.0
-References: <20200114231103.85641-1-swboyd@chromium.org>
-In-Reply-To: <20200114231103.85641-1-swboyd@chromium.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 15 Jan 2020 11:23:15 +0100
-Message-ID: <CACRpkdbzqeAo9+muiTez3PjSLS3-pCocktFe2Lm8tDMVzSnr4A@mail.gmail.com>
-Subject: Re: [PATCH] gpiolib: Set lockdep class for hierarchical irq domains
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Thierry Reding <treding@nvidia.com>,
-        Brian Masney <masneyb@onstation.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200113213149.25599-9-mike.leach@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 15, 2020 at 12:11 AM Stephen Boyd <swboyd@chromium.org> wrote:
+On 13/01/2020 21:31, Mike Leach wrote:
+> The CoreSight subsystem enables a path of devices from source to sink.
+> Any CTI devices associated with the path devices must be enabled at the
+> same time.
+> 
+> This patch adds an associated coresight_device element to the main
+> coresight device structure, and uses this to create associations between
+> the CTI and other devices based on the device tree data. The associated
+> device element is used to enable CTI in conjunction with the path elements.
+> 
+> CTI devices are reference counted so where a single CTI is associated with
+> multiple elements on the path, it will be enabled on the first associated
+> device enable, and disabled with the last associated device disable.
+> 
+> Signed-off-by: Mike Leach <mike.leach@linaro.org>
+> Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> ---
+>   drivers/hwtracing/coresight/coresight-cti.c   | 129 ++++++++++++++++++
+>   drivers/hwtracing/coresight/coresight-cti.h   |   1 +
+>   .../hwtracing/coresight/coresight-platform.c  |   1 +
+>   drivers/hwtracing/coresight/coresight-priv.h  |  12 ++
+>   drivers/hwtracing/coresight/coresight.c       |  71 +++++++++-
+>   include/linux/coresight.h                     |   4 +
+>   6 files changed, 213 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-cti.c b/drivers/hwtracing/coresight/coresight-cti.c
+> index 77c2af247917..2be1b310e854 100644
+> --- a/drivers/hwtracing/coresight/coresight-cti.c
+> +++ b/drivers/hwtracing/coresight/coresight-cti.c
+> @@ -4,6 +4,7 @@
+>    * Author: Mike Leach <mike.leach@linaro.org>
+>    */
+>   
+> +#include <linux/property.h>
+>   #include "coresight-cti.h"
+>   
+>   /**
+> @@ -440,6 +441,131 @@ int cti_channel_setop(struct device *dev, enum cti_chan_set_op op,
+>   	return err;
+>   }
+>   
+> +/*
+> + * Look for a matching connection device name in the list of connections.
+> + * If found then swap in the csdev name, set trig con association pointer
+> + * and return found.
+> + */
+> +static bool
+> +cti_match_fixup_csdev(struct cti_device *ctidev, const char *node_name,
+> +		      struct coresight_device *csdev)
+> +{
+> +	struct cti_trig_con *trig_con;
 
-> I see the following lockdep splat in the qcom pinctrl driver when
-> attempting to suspend the device.
->
->  ============================================
->  WARNING: possible recursive locking detected
+super minor nit: Please use "struct cti_trig_con *tc;" consistent with
+the naming everywhere else. Helps a lot in reading the code, especially
+which has a lot of different structures.
 
-Thanks Stephen, patch applied!
+> +	const char *csdev_name;
+> +
+> +	list_for_each_entry(trig_con, &ctidev->trig_cons, node) {
+> +		if (trig_con->con_dev_name) {
 
-Yours,
-Linus Walleij
+This was allocated via devm_* and ...
+
+> +			if (!strcmp(node_name, trig_con->con_dev_name)) {
+> +				/* match: so swap in csdev name & dev */
+> +				kfree(trig_con->con_dev_name);
+
+... we free it here using kfree() without devm_ being aware. This could
+cause double-free when the device is removed. This should either be
+devm_kfree() or simply overwritten with the new string and leave
+the device cleanup to free it.
+
+> +				csdev_name = dev_name(&csdev->dev);
+> +				trig_con->con_dev_name =
+> +					kstrdup(csdev_name, GFP_KERNEL);
+
+Please use devm_kstrdup() here on the CTI device to have a consistent
+allocation.
+
+
+> +				trig_con->con_dev = csdev;
+> +				return true;
+> +			}
+> +		}
+> +	}
+> +	return false;
+> +}
+> 
+
+
+> +/*
+> + * Removing the associated devices is easier.
+> + * A CTI will not have a value for csdev->ect_dev.
+> + */
+> +void cti_remove_assoc_from_csdev(struct coresight_device *csdev)
+> +{
+> +	struct cti_drvdata *ctidrv;
+> +	struct cti_trig_con *tc;
+> +	struct cti_device *ctidev;
+> +
+> +	mutex_lock(&ect_mutex);
+> +	if (csdev->ect_dev) {
+> +		ctidrv = csdev_to_cti_drvdata(csdev->ect_dev);
+> +		ctidev = &ctidrv->ctidev;
+> +		list_for_each_entry(tc, &ctidev->trig_cons, node) {
+> +			if (tc->con_dev == csdev->ect_dev) {
+> +				tc->con_dev = NULL;
+
+Should we clear/free the name too ?
+
+> +				break;
+> +			}
+> +		}
+> +		csdev->ect_dev = NULL;
+> +	}
+> +	mutex_unlock(&ect_mutex);
+> +}
+> +EXPORT_SYMBOL_GPL(cti_remove_assoc_from_csdev);
+> +
+
+...
+
+> diff --git a/drivers/hwtracing/coresight/coresight-cti.h b/drivers/hwtracing/coresight/coresight-cti.h
+> index 469a06a1bb78..578d7e9ac67e 100644
+> --- a/drivers/hwtracing/coresight/coresight-cti.h
+> +++ b/drivers/hwtracing/coresight/coresight-cti.h
+> @@ -216,6 +216,7 @@ int cti_channel_setop(struct device *dev, enum cti_chan_set_op op,
+>   		      u32 channel_idx);
+>   struct coresight_platform_data *
+>   coresight_cti_get_platform_data(struct device *dev);
+> +const char *cti_plat_get_node_name(struct fwnode_handle *fwnode);
+>   
+>   /* cti powered and enabled */
+>   static inline bool cti_active(struct cti_config *cfg)
+> diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
+> index 43418a2126ff..421d4fc95f41 100644
+> --- a/drivers/hwtracing/coresight/coresight-platform.c
+> +++ b/drivers/hwtracing/coresight/coresight-platform.c
+> @@ -313,6 +313,7 @@ static int of_get_coresight_platform_data(struct device *dev,
+>   
+>   	return 0;
+>   }
+> +
+
+nit : spurious hunk ?
+
+>   #else
+>   static inline int
+>   of_get_coresight_platform_data(struct device *dev,
+
+Otherwise looks good to me
+
+Suzuki
