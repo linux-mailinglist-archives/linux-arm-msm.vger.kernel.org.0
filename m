@@ -2,154 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B9FEC13B631
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 00:52:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AC2F13B70C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 02:37:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728928AbgANXwq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jan 2020 18:52:46 -0500
-Received: from lelv0143.ext.ti.com ([198.47.23.248]:33188 "EHLO
-        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728899AbgANXwo (ORCPT
+        id S1728880AbgAOBhx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jan 2020 20:37:53 -0500
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:50650 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728844AbgAOBhx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jan 2020 18:52:44 -0500
-Received: from lelv0266.itg.ti.com ([10.180.67.225])
-        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 00ENqbjh091809;
-        Tue, 14 Jan 2020 17:52:37 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1579045957;
-        bh=EV+SZqSB5hyndsCzQOz7pyuWRNEJtahXq1ja5MBaalA=;
-        h=Subject:To:CC:References:From:Date:In-Reply-To;
-        b=p48aSBNtFvdkXakiOwl5Ombj7qIf5gHH/8fzfozIhAOBtFqL7MG1w6SItLYRHH5zb
-         lUQSyhjV8HDlES1Dkoh0wE0GlKeBSPHvWFGyNwhVI3g8Mysyro4OyLsAXd3bi+nSmw
-         71qTjaX7Hn8t+e7JrS65KqkNIUCatrq9syx0eHVU=
-Received: from DLEE109.ent.ti.com (dlee109.ent.ti.com [157.170.170.41])
-        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 00ENqbGl100760
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 14 Jan 2020 17:52:37 -0600
-Received: from DLEE114.ent.ti.com (157.170.170.25) by DLEE109.ent.ti.com
- (157.170.170.41) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Tue, 14
- Jan 2020 17:52:37 -0600
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE114.ent.ti.com
- (157.170.170.25) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Tue, 14 Jan 2020 17:52:37 -0600
-Received: from [128.247.58.153] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 00ENqaHP128032;
-        Tue, 14 Jan 2020 17:52:37 -0600
-Subject: Re: [PATCH v2] rpmsg: core: add API to get MTU
-To:     Arnaud POULIQUEN <arnaud.pouliquen@st.com>,
+        Tue, 14 Jan 2020 20:37:53 -0500
+Received: by mail-pj1-f67.google.com with SMTP id r67so6617526pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jan 2020 17:37:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zdsjxjvH/tUzmnwmoZCV321rPDTpQdI6rQfaTbsVcek=;
+        b=QtF3py1rm3eu6XA5nji+v+VyJkcjLjIc3YXtcyDs5jPzHYtKdo+D4Ih/7ihMTj17pA
+         ByVQfA4PTcgJVCJAg6UrUwuzDis4Ls9IjBJF/FTJyZQpAsyFwAAjPtz+NME9DIVzStb5
+         b1Vr3ZrPcqLk2YVpSdY91aK8x+hpToNe5mfhQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zdsjxjvH/tUzmnwmoZCV321rPDTpQdI6rQfaTbsVcek=;
+        b=E3or6kvYvjbXTGLPb14gT+8DoFrIP5tXzJyvh+S066xH2cSCBO21XCss8BIbJxbK2U
+         XGSZuUoqDClCyuBYnf1BpJOZxc+7lbnK6nssysH1/x3mov2+5/hsp9Uq+cMXfwhI8AHa
+         NxmrxiKF0jVI3u+oqhyMYGIACrRzzPPhCIBlMwzRSUg+BtmYfYuncCSyagdG1uC/MivM
+         Qj1KcHXsI1luXqfPP/rlQln9iKPUZS3ss0ZF2D8W2sgW7NuFYtpMpJ5XG8AlZYnMZ9ah
+         3TrFeqtU0J59FZSZOU0oYnzt7ISX1tX94Wj8lnRhEvxcfw5clpuxkvKl3ccG2+k0u5by
+         76sw==
+X-Gm-Message-State: APjAAAVPVre/PjYoslTZJQWsqCuztpEOPhqiq0yo7qYShwG0ONc2HlXa
+        4aGA9IlMlUZWKiQxb2yNLLPeGA==
+X-Google-Smtp-Source: APXvYqz28WpmXl65RH3fAV23Fy7l4mAowqzKZ18QFkXC1WuOSJjgmtIlb3J9Cy51syq+QYmwbMGRLQ==
+X-Received: by 2002:a17:902:b087:: with SMTP id p7mr30291576plr.10.1579052272503;
+        Tue, 14 Jan 2020 17:37:52 -0800 (PST)
+Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id y76sm19949275pfc.87.2020.01.14.17.37.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jan 2020 17:37:52 -0800 (PST)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Ohad Ben-Cohen <ohad@wizery.com>, <linux-kernel@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Fabien DESSENNE <fabien.dessenne@st.com>,
-        <linux-stm32@st-md-mailman.stormreply.com>
-References: <20191113172249.32412-1-arnaud.pouliquen@st.com>
- <20200113172453.GQ738324@yoga> <c6ecd3b6-2a3b-11d8-6d1c-a531c73bc388@st.com>
-From:   Suman Anna <s-anna@ti.com>
-Message-ID: <c199d1ba-53c4-b79c-1dd0-b01ef12dbb48@ti.com>
-Date:   Tue, 14 Jan 2020 17:52:36 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH] drivers: qcom: rpmh-rsc: Use rcuidle tracepoints for rpmh
+Date:   Tue, 14 Jan 2020 17:37:51 -0800
+Message-Id: <20200115013751.249588-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.25.0.rc1.283.g88dfdc4193-goog
 MIME-Version: 1.0
-In-Reply-To: <c6ecd3b6-2a3b-11d8-6d1c-a531c73bc388@st.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/14/20 3:06 AM, Arnaud POULIQUEN wrote:
-> Hi Bjorn
-> 
-> On 1/13/20 6:24 PM, Bjorn Andersson wrote:
->> On Wed 13 Nov 09:22 PST 2019, Arnaud Pouliquen wrote:
->>
->>> Return the rpmsg buffer MTU for sending message, so rpmsg users
->>> can split a long message in several sub rpmsg buffers.
->>>
->>
->> I won't merge this new api without a client, and I'm still concerned
->> about the details.
-> The client exists: it is the rpmsg tty that i 've been rying to upstream since for a while.
-> https://patchwork.kernel.org/cover/11130213/
-> This patch is the result of some comments you did on rpmsg tty thread. 
-> Suman was also interested in and request to merge it independently
-> (https://lkml.org/lkml/2019/9/3/774).
-> That's why i'm trying to do it in 2 steps.
-> 
->>
->>> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@st.com>
->>> ---
->>>  V1 to V2
->>>
->>>   V1 patch:https://lore.kernel.org/patchwork/patch/1124684/
->>>   - Change patch title,
->>>   - as not solution today to support MTU on GLINK make ops optional,
->>>     RPMsg client API returns -ENOTSUPP in this case,
->>>   - suppress smd and glink patches.
->>
->> That's ok.
->>
->>> ---
->>>  drivers/rpmsg/rpmsg_core.c       | 21 +++++++++++++++++++++
->>>  drivers/rpmsg/rpmsg_internal.h   |  2 ++
->>>  drivers/rpmsg/virtio_rpmsg_bus.c | 10 ++++++++++
->>>  include/linux/rpmsg.h            | 10 ++++++++++
->>>  4 files changed, 43 insertions(+)
->>>
->>> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
->>> index e330ec4dfc33..a6ef54c4779a 100644
->>> --- a/drivers/rpmsg/rpmsg_core.c
->>> +++ b/drivers/rpmsg/rpmsg_core.c
->>> @@ -283,6 +283,27 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->>>  }
->>>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
->>>  
->>> +/**
->>> + * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
->>> + * @ept: the rpmsg endpoint
->>> + *
->>> + * This function returns maximum buffer size available for a single message.
->>> + *
->>> + * Return: the maximum transmission size on success and an appropriate error
->>> + * value on failure.
->>
->> Is the expectation that a call to rpmsg_send() with this size will
->> eventually succeed?
-> yes, this should be the role of the transport layer
-> (e.g. RPMsg VirtIO bus) to ensure this.
-> 
->>
->>> + */
->> [..]
->>> +static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept)
->>> +{
->>> +	struct rpmsg_device *rpdev = ept->rpdev;
->>> +	struct virtio_rpmsg_channel *vch = to_virtio_rpmsg_channel(rpdev);
->>> +
->>> +	return vch->vrp->buf_size - sizeof(struct rpmsg_hdr);
->>
->> I'm still under the impression that the rpmsg protocol doesn't have to
->> operate on fixed size messages. Would this then return vrp->num_bufs *
->> vrp->buf_size / 2 - sizeof(rpmsg_hdr)?
+This tracepoint is hit now that we call into the rpmh code from the cpu
+idle path. Let's move this to be an rcuidle tracepoint so that we avoid
+the RCU idle splat below
 
-There was some discussion in the past to remove the 512 bytes
-hard-coding and replace it with a configurable value, but that is not
-yet done. There was some code restructuring towards the same, but it it
-still fixed atm in virtio_rpmsg transport.
+ =============================
+ WARNING: suspicious RCU usage
+ 5.4.10 #68 Tainted: G S
+ -----------------------------
+ drivers/soc/qcom/trace-rpmh.h:72 suspicious rcu_dereference_check() usage!
 
-> it depends on the transport layer. For RPMsg over virtio, this is the size
-> of the payload of a buffer so vrp->buf_size  - sizeof(rpmsg_hdr)
+ other info that might help us debug this:
 
-The vrp->num_bufs is the number of buffers available in the vring
-transport, vrp->buf_size is the size for each transport buffer, and
-every message includes the rpmsg_hdr structure, so the amount available
-for rpmsg clients is less by that much.
+ RCU used illegally from idle CPU!
+ rcu_scheduler_active = 2, debug_locks = 1
+ RCU used illegally from extended quiescent state!
+ 5 locks held by swapper/2/0:
+  #0: ffffff81745d6ee8 (&(&genpd->slock)->rlock){+.+.}, at: genpd_lock_spin+0x1c/0x2c
+  #1: ffffff81745da6e8 (&(&genpd->slock)->rlock/1){....}, at: genpd_lock_nested_spin+0x24/0x34
+  #2: ffffff8174f2ca20 (&(&genpd->slock)->rlock/2){....}, at: genpd_lock_nested_spin+0x24/0x34
+  #3: ffffff8174f2c300 (&(&drv->client.cache_lock)->rlock){....}, at: rpmh_flush+0x48/0x24c
+  #4: ffffff8174f2c150 (&(&tcs->lock)->rlock){+.+.}, at: rpmh_rsc_write_ctrl_data+0x74/0x270
 
-regards
-Suman
+ stack backtrace:
+ CPU: 2 PID: 0 Comm: swapper/2 Tainted: G S                5.4.10 #68
+ Call trace:
+  dump_backtrace+0x0/0x174
+  show_stack+0x20/0x2c
+  dump_stack+0xc8/0x124
+  lockdep_rcu_suspicious+0xe4/0x104
+  __tcs_buffer_write+0x230/0x2d0
+  rpmh_rsc_write_ctrl_data+0x210/0x270
+  rpmh_flush+0x84/0x24c
+  rpmh_domain_power_off+0x78/0x98
+  _genpd_power_off+0x40/0xc0
+  genpd_power_off+0x168/0x208
+  genpd_power_off+0x1e0/0x208
+  genpd_power_off+0x1e0/0x208
+  genpd_runtime_suspend+0x1ac/0x220
+  __rpm_callback+0x70/0xfc
+  rpm_callback+0x34/0x8c
+  rpm_suspend+0x218/0x4a4
+  __pm_runtime_suspend+0x88/0xac
+  psci_enter_domain_idle_state+0x3c/0xb4
+  cpuidle_enter_state+0xb8/0x284
+  cpuidle_enter+0x38/0x4c
+  call_cpuidle+0x3c/0x68
+  do_idle+0x194/0x260
+  cpu_startup_entry+0x24/0x28
+  secondary_start_kernel+0x150/0x15c
+
+Fixes: a65a397f2451 ("cpuidle: psci: Add support for PM domains by using genpd")
+Reported-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+
+I think the commit that this is "Fixes"ing is a stable commit, but I'm
+not positive.
+
+ drivers/soc/qcom/rpmh-rsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index e278fc11fe5c..b71822131f59 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -277,7 +277,7 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
+ 		write_tcs_cmd(drv, RSC_DRV_CMD_MSGID, tcs_id, j, msgid);
+ 		write_tcs_cmd(drv, RSC_DRV_CMD_ADDR, tcs_id, j, cmd->addr);
+ 		write_tcs_cmd(drv, RSC_DRV_CMD_DATA, tcs_id, j, cmd->data);
+-		trace_rpmh_send_msg(drv, tcs_id, j, msgid, cmd);
++		trace_rpmh_send_msg_rcuidle(drv, tcs_id, j, msgid, cmd);
+ 	}
+ 
+ 	write_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, cmd_complete);
+-- 
+Sent by a computer, using git, on the internet
+
