@@ -2,195 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F2B313BB07
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 09:29:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6F0813BB96
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 09:56:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729238AbgAOI3L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jan 2020 03:29:11 -0500
-Received: from mx08-00178001.pphosted.com ([91.207.212.93]:1040 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729188AbgAOI3G (ORCPT
+        id S1729137AbgAOI4E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jan 2020 03:56:04 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:27172 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729134AbgAOI4E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jan 2020 03:29:06 -0500
-Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 00F8Rn5V008078;
-        Wed, 15 Jan 2020 09:29:00 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=from : to : cc : subject
- : date : message-id : mime-version : content-type; s=STMicroelectronics;
- bh=x+t2q3oFR0/g2C2BlDWSZ5LQ8cOF3XZQewhkJ5cwYOM=;
- b=XmTMhAP5BALer3IXtna0VSBMeosJlsVZHeDd4umTM1DaQgbw75ixQe/EJPR43iAVacNe
- ZTob3sj8auKOmZfRu2ChsRnMvIYJt6Sr3cj/kuJdJoJyLa2qI4d4Bw6r4Aq/sL3nywu+
- s6NQp8yIVOqIGM9fv4vkBj+4mnhdInbd+hqRH0iIeSHyGWgWk7sOgfuXL3CNZBHxurCZ
- z1FLNk5MjzAA/o4gQjl0T4fm8RtEIVawoREl/XH5NR0GbP8BF54vI8cnYUkEUdpEyjM0
- 6XJkAk4eUkIWY/tBSsPT0z/Z+7KxrpNMhWRq4vRBivQgLx6JQu85QQekW719/X1PUXPI YQ== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 2xf78sa27p-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 15 Jan 2020 09:29:00 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 3FF4110002A;
-        Wed, 15 Jan 2020 09:29:00 +0100 (CET)
-Received: from Webmail-eu.st.com (sfhdag3node1.st.com [10.75.127.7])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 2D13A210777;
-        Wed, 15 Jan 2020 09:29:00 +0100 (CET)
-Received: from localhost (10.75.127.44) by SFHDAG3NODE1.st.com (10.75.127.7)
- with Microsoft SMTP Server (TLS) id 15.0.1473.3; Wed, 15 Jan 2020 09:28:59
- +0100
-From:   Arnaud Pouliquen <arnaud.pouliquen@st.com>
-To:     Ohad Ben-Cohen <ohad@wizery.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-CC:     <arnaud.pouliquen@st.com>, Suman Anna <s-anna@ti.com>,
-        Fabien DESSENNE <fabien.dessenne@st.com>,
-        <linux-stm32@st-md-mailman.stormreply.com>
-Subject: [PATCH v3] rpmsg: core: add API to get MTU
-Date:   Wed, 15 Jan 2020 09:27:22 +0100
-Message-ID: <20200115082722.13102-1-arnaud.pouliquen@st.com>
+        Wed, 15 Jan 2020 03:56:04 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1579078563; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=dw3OGlWe85GTH5+3pzosjlG6zFFR0KXM6IS6Rg1yNew=; b=dOlwh97bLWpvV51sm4Xd0EAQUxtGsqT6Wg//+hZ70+5qYacHNh6jri9lLX7OVvIQ8GjmlWl9
+ WM8saYFpEnG32U/THeez/SODHA/sl9JOFw06fPA722rZdKDuOU8dIGpK22xf9gTbH5VOEga+
+ 9lTOu9hMYMoyeDGlo+KPDcke9Tc=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e1ed3a0.7f093b78ff48-smtp-out-n01;
+ Wed, 15 Jan 2020 08:56:00 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 34BDFC447AA; Wed, 15 Jan 2020 08:55:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from rocky-Inspiron-7590.qca.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rjliao)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BFD40C447A6;
+        Wed, 15 Jan 2020 08:55:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BFD40C447A6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rjliao@codeaurora.org
+From:   Rocky Liao <rjliao@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bgodavar@codeaurora.org, hemantg@codeaurora.org,
+        Rocky Liao <rjliao@codeaurora.org>
+Subject: [PATCH v4 1/3] Bluetooth: hci_qca: Add QCA Rome power off support to the qca_power_shutdown()
+Date:   Wed, 15 Jan 2020 16:55:50 +0800
+Message-Id: <20200115085552.11483-1-rjliao@codeaurora.org>
 X-Mailer: git-send-email 2.17.1
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.75.127.44]
-X-ClientProxiedBy: SFHDAG1NODE3.st.com (10.75.127.3) To SFHDAG3NODE1.st.com
- (10.75.127.7)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.572
- definitions=2020-01-14_06:2020-01-14,2020-01-14 signatures=0
+In-Reply-To: <20191225060317.5258-1-rjliao@codeaurora.org>
+References: <20191225060317.5258-1-rjliao@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Return the rpmsg buffer MTU for sending message, so rpmsg users
-can split a long message in several sub rpmsg buffers.
+Current qca_power_shutdown() only supports wcn399x, this patch adds Rome
+power off support to it. For Rome it just needs to pull down the bt_en
+GPIO to power off it. This patch also replaces all the power off operation
+in qca_close() with the unified qca_power_shutdown() call.
 
-Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@st.com>
+Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
 ---
-V2[1] to V3
-  - fix parameter description in rpmsg_device_ops struct
 
-[1]: https://lore.kernel.org/patchwork/patch/1124684/
----
- drivers/rpmsg/rpmsg_core.c       | 21 +++++++++++++++++++++
- drivers/rpmsg/rpmsg_internal.h   |  2 ++
- drivers/rpmsg/virtio_rpmsg_bus.c | 10 ++++++++++
- include/linux/rpmsg.h            | 10 ++++++++++
- 4 files changed, 43 insertions(+)
+Changes in v2: None
+Changes in v3: None
+Changes in v4:
+  -rebased the patch with latest code base
+  -moved the change from qca_power_off() to qca_power_shutdown()
+  -replaced all the power off operation in qca_close() with
+   qca_power_shutdown()
+  -updated commit message
 
-diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
-index e330ec4dfc33..a6ef54c4779a 100644
---- a/drivers/rpmsg/rpmsg_core.c
-+++ b/drivers/rpmsg/rpmsg_core.c
-@@ -283,6 +283,27 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
- }
- EXPORT_SYMBOL(rpmsg_trysend_offchannel);
- 
-+/**
-+ * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
-+ * @ept: the rpmsg endpoint
-+ *
-+ * This function returns maximum buffer size available for a single message.
-+ *
-+ * Return: the maximum transmission size on success and an appropriate error
-+ * value on failure.
-+ */
-+
-+ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
-+{
-+	if (WARN_ON(!ept))
-+		return -EINVAL;
-+	if (!ept->ops->get_mtu)
-+		return -ENOTSUPP;
-+
-+	return ept->ops->get_mtu(ept);
-+}
-+EXPORT_SYMBOL(rpmsg_get_mtu);
-+
- /*
-  * match an rpmsg channel with a channel info struct.
-  * this is used to make sure we're not creating rpmsg devices for channels
-diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
-index 3fc83cd50e98..e6f88ee90ff6 100644
---- a/drivers/rpmsg/rpmsg_internal.h
-+++ b/drivers/rpmsg/rpmsg_internal.h
-@@ -47,6 +47,7 @@ struct rpmsg_device_ops {
-  * @trysendto:		see @rpmsg_trysendto(), optional
-  * @trysend_offchannel:	see @rpmsg_trysend_offchannel(), optional
-  * @poll:		see @rpmsg_poll(), optional
-+ * @get_mtu:		see @rpmsg_get_mtu(), optional
-  *
-  * Indirection table for the operations that a rpmsg backend should implement.
-  * In addition to @destroy_ept, the backend must at least implement @send and
-@@ -66,6 +67,7 @@ struct rpmsg_endpoint_ops {
- 			     void *data, int len);
- 	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
- 			     poll_table *wait);
-+	ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
- };
- 
- int rpmsg_register_device(struct rpmsg_device *rpdev);
-diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
-index 376ebbf880d6..6e48fdf24555 100644
---- a/drivers/rpmsg/virtio_rpmsg_bus.c
-+++ b/drivers/rpmsg/virtio_rpmsg_bus.c
-@@ -175,6 +175,7 @@ static int virtio_rpmsg_trysendto(struct rpmsg_endpoint *ept, void *data,
- 				  int len, u32 dst);
- static int virtio_rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src,
- 					   u32 dst, void *data, int len);
-+static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept);
- 
- static const struct rpmsg_endpoint_ops virtio_endpoint_ops = {
- 	.destroy_ept = virtio_rpmsg_destroy_ept,
-@@ -184,6 +185,7 @@ static const struct rpmsg_endpoint_ops virtio_endpoint_ops = {
- 	.trysend = virtio_rpmsg_trysend,
- 	.trysendto = virtio_rpmsg_trysendto,
- 	.trysend_offchannel = virtio_rpmsg_trysend_offchannel,
-+	.get_mtu = virtio_rpmsg_get_mtu,
- };
- 
- /**
-@@ -699,6 +701,14 @@ static int virtio_rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src,
- 	return rpmsg_send_offchannel_raw(rpdev, src, dst, data, len, false);
- }
- 
-+static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept)
-+{
-+	struct rpmsg_device *rpdev = ept->rpdev;
-+	struct virtio_rpmsg_channel *vch = to_virtio_rpmsg_channel(rpdev);
-+
-+	return vch->vrp->buf_size - sizeof(struct rpmsg_hdr);
-+}
-+
- static int rpmsg_recv_single(struct virtproc_info *vrp, struct device *dev,
- 			     struct rpmsg_hdr *msg, unsigned int len)
+ drivers/bluetooth/hci_qca.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 992622dc1263..ecb74965be10 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -663,7 +663,6 @@ static int qca_flush(struct hci_uart *hu)
+ /* Close protocol */
+ static int qca_close(struct hci_uart *hu)
  {
-diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
-index 9fe156d1c018..88d7892ca93d 100644
---- a/include/linux/rpmsg.h
-+++ b/include/linux/rpmsg.h
-@@ -135,6 +135,8 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
- __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
- 			poll_table *wait);
+-	struct qca_serdev *qcadev;
+ 	struct qca_data *qca = hu->priv;
  
-+ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
+ 	BT_DBG("hu %p qca close", hu);
+@@ -679,14 +678,7 @@ static int qca_close(struct hci_uart *hu)
+ 	destroy_workqueue(qca->workqueue);
+ 	qca->hu = NULL;
+ 
+-	if (hu->serdev) {
+-		qcadev = serdev_device_get_drvdata(hu->serdev);
+-		if (qca_is_wcn399x(qcadev->btsoc_type))
+-			qca_power_shutdown(hu);
+-		else
+-			gpiod_set_value_cansleep(qcadev->bt_en, 0);
+-
+-	}
++	qca_power_shutdown(hu);
+ 
+ 	kfree_skb(qca->rx_skb);
+ 
+@@ -1685,6 +1677,7 @@ static void qca_power_shutdown(struct hci_uart *hu)
+ 	struct qca_serdev *qcadev;
+ 	struct qca_data *qca = hu->priv;
+ 	unsigned long flags;
++	enum qca_btsoc_type soc_type = qca_soc_type(hu);
+ 
+ 	qcadev = serdev_device_get_drvdata(hu->serdev);
+ 
+@@ -1697,11 +1690,22 @@ static void qca_power_shutdown(struct hci_uart *hu)
+ 	qca_flush(hu);
+ 	spin_unlock_irqrestore(&qca->hci_ibs_lock, flags);
+ 
+-	host_set_baudrate(hu, 2400);
+-	qca_send_power_pulse(hu, false);
+-	qca_regulator_disable(qcadev);
+ 	hu->hdev->hw_error = NULL;
+ 	hu->hdev->cmd_timeout = NULL;
 +
- #else
- 
- static inline int register_rpmsg_device(struct rpmsg_device *dev)
-@@ -242,6 +244,14 @@ static inline __poll_t rpmsg_poll(struct rpmsg_endpoint *ept,
- 	return 0;
++	/* Non-serdev device usually is powered by external power
++	 * and don't need additional action in driver for power down
++	 */
++	if (!hu->serdev)
++		return;
++
++	if (qca_is_wcn399x(soc_type)) {
++		host_set_baudrate(hu, 2400);
++		qca_send_power_pulse(hu, false);
++		qca_regulator_disable(qcadev);
++	} else {
++		gpiod_set_value_cansleep(qcadev->bt_en, 0);
++	}
  }
  
-+static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
-+{
-+	/* This shouldn't be possible */
-+	WARN_ON(1);
-+
-+	return -ENXIO;
-+}
-+
- #endif /* IS_ENABLED(CONFIG_RPMSG) */
- 
- /* use a macro to avoid include chaining to get THIS_MODULE */
+ static int qca_power_off(struct hci_dev *hdev)
 -- 
-2.17.1
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
