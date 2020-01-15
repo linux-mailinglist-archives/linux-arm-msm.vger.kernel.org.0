@@ -2,161 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BBDFD13C6DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 16:03:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AAD9413C6F7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 16:08:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728961AbgAOPDw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jan 2020 10:03:52 -0500
-Received: from lb3-smtp-cloud9.xs4all.net ([194.109.24.30]:35947 "EHLO
-        lb3-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726132AbgAOPDw (ORCPT
+        id S1726440AbgAOPIg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jan 2020 10:08:36 -0500
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:51413 "EHLO
+        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726248AbgAOPIg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jan 2020 10:03:52 -0500
-Received: from [IPv6:2001:420:44c1:2577:18d8:d5d6:4408:6200]
- ([IPv6:2001:420:44c1:2577:18d8:d5d6:4408:6200])
-        by smtp-cloud9.xs4all.net with ESMTPA
-        id rkCwiF0uRT6sRrkCziahYK; Wed, 15 Jan 2020 16:03:49 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
-        t=1579100629; bh=11i4n8lMpRQQ+iNfpGyMTy/9CCEdWTY8dDDaQE1zD3Q=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=ehvjUxlN9DHLZT26Nm8j/e9pTwnJ708Ao9NzFX7vTZZR+oFYavJXAVvt0uHI8TKLr
-         fYJ+3/hhOTRhwalGlqcgujswc4QOQJ981VVy56LvSjSM04relL8i+jkH2+64EICpz9
-         eC+DkY4ZTtJWKXoIZn6bq7y/JOCGfwqUETOBr4V4dYocxaQyw0Shn+GJ4zVCv7Dstx
-         oI2gbXPtg5stiw4iz0zls7XxweGscUhETyck6ulTHhe1IulMb7VhdlVR8xHj1OIU6u
-         Rkc8K2yKOyiq/uz4IeDsGqyLCP+/5AFQ+q/AFGJMJL4x8GkhhmtqvzxoptZYy1GLFc
-         iKAxVWZIe4EMQ==
-Subject: Re: [PATCH v4 04/12] v4l: Add source event change for bit-depth
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     Vikash Garodia <vgarodia@codeaurora.org>, dikshita@codeaurora.org
-References: <20200106154929.4331-1-stanimir.varbanov@linaro.org>
- <20200106154929.4331-5-stanimir.varbanov@linaro.org>
- <c3b02589-1d7a-a476-7d33-7e555fbe276d@xs4all.nl>
- <ae233eb1-69fc-6723-0224-0c1fcf786156@linaro.org>
- <fb27b5cc-0eef-a7b4-f45b-a3986b77c4c9@xs4all.nl>
- <988e49aa-469d-17a1-ca25-982c63536e6e@linaro.org>
-From:   Hans Verkuil <hverkuil@xs4all.nl>
-Message-ID: <814252fe-6fa9-595b-92b3-8ef8ef4c0187@xs4all.nl>
-Date:   Wed, 15 Jan 2020 16:03:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        Wed, 15 Jan 2020 10:08:36 -0500
+Received: from lupine.hi.pengutronix.de ([2001:67c:670:100:3ad5:47ff:feaf:1a17] helo=lupine)
+        by metis.ext.pengutronix.de with esmtp (Exim 4.92)
+        (envelope-from <p.zabel@pengutronix.de>)
+        id 1irkHb-0002nq-Ei; Wed, 15 Jan 2020 16:08:35 +0100
+Message-ID: <840f61fac35f28bbbbeed96502c5e351f1c9fefe.camel@pengutronix.de>
+Subject: Re: [PATCH 03/19] phy: qualcomm: Add Synopsys Hi-Speed USB PHY
+ driver
+From:   Philipp Zabel <p.zabel@pengutronix.de>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        gregkh@linuxfoundation.org, jackp@codeaurora.org, balbi@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-kernel@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>
+Date:   Wed, 15 Jan 2020 16:08:34 +0100
+In-Reply-To: <20200115141333.1222676-4-bryan.odonoghue@linaro.org>
+References: <20200115141333.1222676-1-bryan.odonoghue@linaro.org>
+         <20200115141333.1222676-4-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.30.5-1.1 
 MIME-Version: 1.0
-In-Reply-To: <988e49aa-469d-17a1-ca25-982c63536e6e@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfBWwR3P3/GTdqy8WWZYktsN7pov0YuXInaQkeXKFTdtJjYB94dIrU79LS87bnBLAVaI17ogCLgl4PvIlVkJLVGDmgzFgE2nqWrzOxCfUBd2FWeI0i0B5
- 5Gg9u3xLqg0nsuMtEXmT7feKF3uUcpzZAFB4PEKxjt5i3mQ6DCkN5ue7t7yKhil8Wy2Nx5I32oJ1/c8+kOJk26gDE+0BNkhepwCdTZ3CgamFwBHOlHy0nQwg
- ipzeq3DZfq6cgyBEnjhnOOt592HwaZsP283Z0G6ZxRwpHLyq1uSlR7neQqaziq/TeSF230jCKg8yRVNzgilQ/LcvHGBHFiXZtDteK3POlhuJt7rC5iBVueUQ
- Sl9sOzOgcJa9dD+rrETadFh/JqjRMaMOyYrn21MyYt5JW+LzWAGkAdXaOHjEN2siznRW7tjK0je9h27wEKyZjGdXVhfphTVoY0sMSkrHOCY/mwJcWf4Jyf/T
- 0ns+7vFWLWTbByemKeaJcI2RG9iQXipUnNetoNCVFFKW7d0KraJcdVrUTkc=
+X-SA-Exim-Connect-IP: 2001:67c:670:100:3ad5:47ff:feaf:1a17
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/10/20 11:54 AM, Stanimir Varbanov wrote:
-> Hi Hans,
+Hi Bryan,
+
+On Wed, 2020-01-15 at 14:13 +0000, Bryan O'Donoghue wrote:
+> From: Shawn Guo <shawn.guo@linaro.org>
 > 
-> On 1/9/20 10:57 AM, Hans Verkuil wrote:
->> On 1/9/20 8:41 AM, Stanimir Varbanov wrote:
->>> Hi Hans,
->>>
->>> On 1/8/20 6:09 PM, Hans Verkuil wrote:
->>>> On 1/6/20 4:49 PM, Stanimir Varbanov wrote:
->>>>> This event indicate that the source color bit-depth is changed
->>>>> during run-time. The client must get the new format and re-allocate
->>>>> buffers for it. This can usually happens with video decoder (encoders)
->>>>> when the bit-stream color bit-depth is changed from 8 to 10bits
->>>>> or vice versa.
->>>>>
->>>>> Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
->>>>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->>>>> ---
->>>>>  Documentation/media/uapi/v4l/vidioc-dqevent.rst | 8 +++++++-
->>>>>  Documentation/media/videodev2.h.rst.exceptions  | 1 +
->>>>>  include/uapi/linux/videodev2.h                  | 1 +
->>>>>  3 files changed, 9 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/Documentation/media/uapi/v4l/vidioc-dqevent.rst b/Documentation/media/uapi/v4l/vidioc-dqevent.rst
->>>>> index 42659a3d1705..fad853d440cf 100644
->>>>> --- a/Documentation/media/uapi/v4l/vidioc-dqevent.rst
->>>>> +++ b/Documentation/media/uapi/v4l/vidioc-dqevent.rst
->>>>> @@ -402,7 +402,13 @@ call.
->>>>>  	that many Video Capture devices are not able to recover from a temporary
->>>>>  	loss of signal and so restarting streaming I/O is required in order for
->>>>>  	the hardware to synchronize to the video signal.
->>>>> -
->>>>> +    * - ``V4L2_EVENT_SRC_CH_COLOR_DEPTH``
->>>>> +      - 0x0002
->>>>> +      - This event gets triggered when color bit-depth change is detected
->>>>> +	from a video decoder. Applications will have to query the new pixel
->>>>> +	format and re-negotiate the queue. In most cases the streaming must be
->>>>> +	stopped and restarted (:ref:`VIDIOC_STREAMOFF <VIDIOC_STREAMON>`
->>>>> +	followed by :ref:`VIDIOC_STREAMON <VIDIOC_STREAMON>`).
->>>>
->>>> I think this is too specific for decoders. Something similar to the
->>>> CH_RESOLUTION description would be more appropriate:
->>>>
->>>>       - This event gets triggered when a color bit-depth change (but not a
->>>> 	resolution change!) is detected	at an input. This can come from an
->>>
->>> What you mean by "but not a resolution change" here? Resolution change
->>> and bit-depth change cannot occur on the same time, or something else.
->>
->> What I was trying to say is that a resolution change implies a possible bit-depth
->> change as well, whereas V4L2_EVENT_SRC_CH_COLOR_DEPTH is only set if there is
->> a bit-depth change but no resolution change.
->>
->> V4L2_EVENT_SRC_CH_RESOLUTION requires that userspace does a full resync to the
->> new format, CH_COLOR_DEPTH implies that only the bit depth changed.
+> Adds Qualcomm QCS404 Hi-Speed USB PHY driver support. This PHY is usually
+> is usually paired with Synopsys DWC3 USB controllers on Qualcomm SoCs.
 > 
-> CH_COLOR_DEPTH implies format re-negotiation as well. In Venus case
-> 8->10bit change will change the format of OPB buffers (now it is not
-> possible because of lack of v4l modifiers) and DPB buffers becomes
-> compressed raw buffers (to optimize bandwidth).
+> [bod: Updated qcom_snps_hsphy_set_mode to match new method signature
+>       Added disjunct on mode > 0
+>       Removed regulator_set_voltage() in favour of setting floor in dts
+>       Removed 'snps' and '28nm' from driver name]
 > 
->>
->> Which actually makes me wonder: is there a difference between the two change flags
->> w.r.t. userspace behavior? If there is, then that should be carefully documented,
->> if there isn't, then is this new flag really needed?
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Kishon Vijay Abraham I <kishon@ti.com>
+> Cc: Philipp Zabel <p.zabel@pengutronix.de>
+> Cc: Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  drivers/phy/qualcomm/Kconfig                  |  10 +
+>  drivers/phy/qualcomm/Makefile                 |   1 +
+>  drivers/phy/qualcomm/phy-qcom-qcs404-usb-hs.c | 415 ++++++++++++++++++
+>  3 files changed, 426 insertions(+)
+>  create mode 100644 drivers/phy/qualcomm/phy-qcom-qcs404-usb-hs.c
 > 
-> Looking into semantics of v4l events, CH_COLOR_DEPTH makes sense because
-> it describes what actually changed (similar to CH_RESOLUTION). I would
-> say that v4l2_event::type V4L2_EVENT_SOURCE_CHANGE implies format
-> re-negotiation and v4l2_event::src_change just informs userland what
-> exactly is changed.
-> 
-> I'll postpone this patch until we have clear vision what will be the
-> usage in user-space.
-> 
+[...]
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qcs404-usb-hs.c b/drivers/phy/qualcomm/phy-qcom-qcs404-usb-hs.c
+> new file mode 100644
+> index 000000000000..c09b786592b1
+> --- /dev/null
+> +++ b/drivers/phy/qualcomm/phy-qcom-qcs404-usb-hs.c
+> @@ -0,0 +1,415 @@
+[...]
+> +static int qcom_snps_hsphy_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct phy_provider *provider;
+> +	struct hsphy_priv *priv;
+> +	struct phy *phy;
+> +	int ret;
+> +	int i;
+> +
+> +	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+> +	if (!priv)
+> +		return -ENOMEM;
+> +
+> +	priv->base = devm_platform_ioremap_resource(pdev, 0);
+> +	if (IS_ERR(priv->base))
+> +		return PTR_ERR(priv->base);
+> +
+> +	priv->num_clks = ARRAY_SIZE(qcom_snps_hsphy_clks);
+> +	priv->clks = devm_kcalloc(dev, priv->num_clks, sizeof(*priv->clks),
+> +				  GFP_KERNEL);
+> +	if (!priv->clks)
+> +		return -ENOMEM;
+> +
+> +	for (i = 0; i < priv->num_clks; i++)
+> +		priv->clks[i].id = qcom_snps_hsphy_clks[i];
+> +
+> +	ret = devm_clk_bulk_get(dev, priv->num_clks, priv->clks);
+> +	if (ret)
+> +		return ret;
+> +
+> +	priv->phy_reset = devm_reset_control_get(dev, "phy");
 
-My main problem regarding semantics is what should be done if you disconnect
-and reconnect an HDMI (for example) connector. You get a V4L2_EVENT_SOURCE_CHANGE
-when the new signal is detected, but should it just set V4L2_EVENT_SRC_CH_RESOLUTION
-(as it does today), or also V4L2_EVENT_SRC_CH_COLOR_DEPTH?
+Please use devm_reset_control_get_exclusive(). I'd like drivers to
+explicitly state whether they request exclusive or shared control.
 
-In my view V4L2_EVENT_SRC_CH_COLOR_DEPTH only makes sense if the resolution
-stays the same, but only the color depth changes.
+> +	if (IS_ERR(priv->phy_reset))
+> +		return PTR_ERR(priv->phy_reset);
+> +
+> +	priv->por_reset = devm_reset_control_get(dev, "por");
 
-BTW, one thing that will be added here as well in the future is a
-V4L2_EVENT_SRC_CH_COLORIMETRY for when the colorspace etc. information changes,
-but nothing else. In that case there is no need to renegotiate the format etc.,
-it's just the interpretation of the video data that changes.
+Same here.
 
-An alternative approach is to define a V4L2_EVENT_SRC_CH_ALL bit mask, OR-ing
-all the V4L2_EVENT_SRC_CH_* defines, and change all drivers that use
-V4L2_EVENT_SRC_CH_RESOLUTION at the moment to use V4L2_EVENT_SRC_CH_ALL instead,
-and only drivers that detect that only one of these changes took place will
-use a specific V4L2_EVENT_SRC_CH_ flag. This will be primarily codec drivers,
-I believe.
+regards
+Philipp
 
-There aren't that many of those, so this shouldn't be too difficult to do.
-
-Perhaps this is the cleanest approach to this problem...
-
-Regards,
-
-	Hans
