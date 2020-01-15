@@ -2,360 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F4B213BA56
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 08:31:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F20213BA8B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 08:56:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726088AbgAOHb1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jan 2020 02:31:27 -0500
-Received: from mx2.suse.de ([195.135.220.15]:51322 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726075AbgAOHb1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jan 2020 02:31:27 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 0261FAD3C;
-        Wed, 15 Jan 2020 07:31:21 +0000 (UTC)
-Subject: Re: [PATCH 01/23] drm: Add get_scanout_position() to struct
- drm_crtc_helper_funcs
-To:     Yannick FERTRE <yannick.fertre@st.com>,
-        "airlied@linux.ie" <airlied@linux.ie>,
-        "daniel@ffwll.ch" <daniel@ffwll.ch>,
-        "alexander.deucher@amd.com" <alexander.deucher@amd.com>,
-        "christian.koenig@amd.com" <christian.koenig@amd.com>,
-        "David1.Zhou@amd.com" <David1.Zhou@amd.com>,
-        "maarten.lankhorst@linux.intel.com" 
-        <maarten.lankhorst@linux.intel.com>,
-        "patrik.r.jakobsson@gmail.com" <patrik.r.jakobsson@gmail.com>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "sean@poorly.run" <sean@poorly.run>,
-        "benjamin.gaignard@linaro.org" <benjamin.gaignard@linaro.org>,
-        Vincent ABRIOU <vincent.abriou@st.com>,
-        Philippe CORNU <philippe.cornu@st.com>,
-        "mcoquelin.stm32@gmail.com" <mcoquelin.stm32@gmail.com>,
-        Alexandre TORGUE <alexandre.torgue@st.com>,
-        "eric@anholt.net" <eric@anholt.net>,
-        "rodrigosiqueiramelo@gmail.com" <rodrigosiqueiramelo@gmail.com>,
-        "hamohammed.sa@gmail.com" <hamohammed.sa@gmail.com>,
-        "linux-graphics-maintainer@vmware.com" 
-        <linux-graphics-maintainer@vmware.com>,
-        "thellstrom@vmware.com" <thellstrom@vmware.com>,
-        "bskeggs@redhat.com" <bskeggs@redhat.com>,
-        "harry.wentland@amd.com" <harry.wentland@amd.com>,
-        "sunpeng.li@amd.com" <sunpeng.li@amd.com>,
-        "jani.nikula@linux.intel.com" <jani.nikula@linux.intel.com>,
-        "joonas.lahtinen@linux.intel.com" <joonas.lahtinen@linux.intel.com>,
-        "rodrigo.vivi@intel.com" <rodrigo.vivi@intel.com>
-Cc:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
-        "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "nouveau@lists.freedesktop.org" <nouveau@lists.freedesktop.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>
-References: <20200110092127.27847-1-tzimmermann@suse.de>
- <20200110092127.27847-2-tzimmermann@suse.de>
- <921ff745-0f2a-0bb6-c758-07174ac26e40@st.com>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- mQENBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAG0J1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPokBVAQTAQgAPhYh
- BHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJbOdLgAhsDBQkDwmcABQsJCAcCBhUKCQgLAgQWAgMB
- Ah4BAheAAAoJEGgNwR1TC3ojR80H/jH+vYavwQ+TvO8ksXL9JQWc3IFSiGpuSVXLCdg62AmR
- irxW+qCwNncNQyb9rd30gzdectSkPWL3KSqEResBe24IbA5/jSkPweJasgXtfhuyoeCJ6PXo
- clQQGKIoFIAEv1s8l0ggPZswvCinegl1diyJXUXmdEJRTWYAtxn/atut1o6Giv6D2qmYbXN7
- mneMC5MzlLaJKUtoH7U/IjVw1sx2qtxAZGKVm4RZxPnMCp9E1MAr5t4dP5gJCIiqsdrVqI6i
- KupZstMxstPU//azmz7ZWWxT0JzgJqZSvPYx/SATeexTYBP47YFyri4jnsty2ErS91E6H8os
- Bv6pnSn7eAq5AQ0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRH
- UE9eosYbT6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgT
- RjP+qbU63Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+R
- dhgATnWWGKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zb
- ehDda8lvhFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r
- 12+lqdsAEQEAAYkBPAQYAQgAJhYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJbOdLgAhsMBQkD
- wmcAAAoJEGgNwR1TC3ojpfcIAInwP5OlcEKokTnHCiDTz4Ony4GnHRP2fXATQZCKxmu4AJY2
- h9ifw9Nf2TjCZ6AMvC3thAN0rFDj55N9l4s1CpaDo4J+0fkrHuyNacnT206CeJV1E7NYntxU
- n+LSiRrOdywn6erjxRi9EYTVLCHcDhBEjKmFZfg4AM4GZMWX1lg0+eHbd5oL1as28WvvI/uI
- aMyV8RbyXot1r/8QLlWldU3NrTF5p7TMU2y3ZH2mf5suSKHAMtbE4jKJ8ZHFOo3GhLgjVrBW
- HE9JXO08xKkgD+w6v83+nomsEuf6C6LYrqY/tsZvyEX6zN8CtirPdPWu/VXNRYAl/lat7lSI
- 3H26qrE=
-Message-ID: <fdef25cd-8784-c8b5-4cd0-1ffcf5e27695@suse.de>
-Date:   Wed, 15 Jan 2020 08:31:16 +0100
+        id S1726100AbgAOH4w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jan 2020 02:56:52 -0500
+Received: from mx08-00178001.pphosted.com ([91.207.212.93]:9290 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726088AbgAOH4w (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Jan 2020 02:56:52 -0500
+Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 00F7s3i2016770;
+        Wed, 15 Jan 2020 08:56:47 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=STMicroelectronics;
+ bh=+FyPAJhyAahmD983zlanIo1zEgFOFkL6x75eCA0EJng=;
+ b=0Wo1EgMnic89ZQHRLDGCXbtR8D/XkSsw4bkxP9ptbz9xt1DIrf3NVkCCaytJBlBGUWYS
+ EkhnjCOQHer4r9EQWJjDrXyF18qmFSkJfRMi9CfrmlSJYQ+6P97Cu7N/e4W8tefGfDe/
+ 1j70LqQ5wCmDxN/SDraWWF0icMlxpzvXfxVeyiN4+BmLyKJGqu0Q7ZiJ9o2dCySRvwWh
+ nKe1rESm4LZoCYrt8kg8Xw5ESfzs9lA6mOOJDKEKV9StykP+fgZIjwyEfzwZZeM8IPEl
+ 7g2/Qtu8KhgsDWwI5I7T8HFZ2mjbDyoiUt8jQG4CKiPvGAi95JvemqH18Y440E8QMOTl Vg== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com with ESMTP id 2xf78s9vvc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 15 Jan 2020 08:56:47 +0100
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id AF8AB10002A;
+        Wed, 15 Jan 2020 08:56:45 +0100 (CET)
+Received: from Webmail-eu.st.com (sfhdag3node1.st.com [10.75.127.7])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 965FB210F85;
+        Wed, 15 Jan 2020 08:56:45 +0100 (CET)
+Received: from lmecxl0889.lme.st.com (10.75.127.44) by SFHDAG3NODE1.st.com
+ (10.75.127.7) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Wed, 15 Jan
+ 2020 08:56:44 +0100
+Subject: Re: [PATCH v2] rpmsg: core: add API to get MTU
+To:     Suman Anna <s-anna@ti.com>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+CC:     Fabien DESSENNE <fabien.dessenne@st.com>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+References: <20191113172249.32412-1-arnaud.pouliquen@st.com>
+ <f0419672-f1a5-b909-2dff-c611f852919b@st.com>
+ <90bec284-6a99-e75f-1609-de763048a1e2@ti.com>
+From:   Arnaud POULIQUEN <arnaud.pouliquen@st.com>
+Message-ID: <92891482-3d8c-8c4c-9100-bb23d6ac628e@st.com>
+Date:   Wed, 15 Jan 2020 08:56:44 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-In-Reply-To: <921ff745-0f2a-0bb6-c758-07174ac26e40@st.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="dy8utQKQWBe6XuW8macqRBBoPSguKlppq"
+In-Reply-To: <90bec284-6a99-e75f-1609-de763048a1e2@ti.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.75.127.44]
+X-ClientProxiedBy: SFHDAG5NODE3.st.com (10.75.127.15) To SFHDAG3NODE1.st.com
+ (10.75.127.7)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.572
+ definitions=2020-01-14_06:2020-01-14,2020-01-14 signatures=0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---dy8utQKQWBe6XuW8macqRBBoPSguKlppq
-Content-Type: multipart/mixed; boundary="SmewxxS8D8HCScoDniLEP9bGTKtCgtZAO";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Yannick FERTRE <yannick.fertre@st.com>,
- "airlied@linux.ie" <airlied@linux.ie>, "daniel@ffwll.ch" <daniel@ffwll.ch>,
- "alexander.deucher@amd.com" <alexander.deucher@amd.com>,
- "christian.koenig@amd.com" <christian.koenig@amd.com>,
- "David1.Zhou@amd.com" <David1.Zhou@amd.com>,
- "maarten.lankhorst@linux.intel.com" <maarten.lankhorst@linux.intel.com>,
- "patrik.r.jakobsson@gmail.com" <patrik.r.jakobsson@gmail.com>,
- "robdclark@gmail.com" <robdclark@gmail.com>,
- "sean@poorly.run" <sean@poorly.run>,
- "benjamin.gaignard@linaro.org" <benjamin.gaignard@linaro.org>,
- Vincent ABRIOU <vincent.abriou@st.com>,
- Philippe CORNU <philippe.cornu@st.com>,
- "mcoquelin.stm32@gmail.com" <mcoquelin.stm32@gmail.com>,
- Alexandre TORGUE <alexandre.torgue@st.com>, "eric@anholt.net"
- <eric@anholt.net>,
- "rodrigosiqueiramelo@gmail.com" <rodrigosiqueiramelo@gmail.com>,
- "hamohammed.sa@gmail.com" <hamohammed.sa@gmail.com>,
- "linux-graphics-maintainer@vmware.com"
- <linux-graphics-maintainer@vmware.com>,
- "thellstrom@vmware.com" <thellstrom@vmware.com>,
- "bskeggs@redhat.com" <bskeggs@redhat.com>,
- "harry.wentland@amd.com" <harry.wentland@amd.com>,
- "sunpeng.li@amd.com" <sunpeng.li@amd.com>,
- "jani.nikula@linux.intel.com" <jani.nikula@linux.intel.com>,
- "joonas.lahtinen@linux.intel.com" <joonas.lahtinen@linux.intel.com>,
- "rodrigo.vivi@intel.com" <rodrigo.vivi@intel.com>
-Cc: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
- "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
- "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
- "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
- "nouveau@lists.freedesktop.org" <nouveau@lists.freedesktop.org>,
- "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>
-Message-ID: <fdef25cd-8784-c8b5-4cd0-1ffcf5e27695@suse.de>
-Subject: Re: [PATCH 01/23] drm: Add get_scanout_position() to struct
- drm_crtc_helper_funcs
-References: <20200110092127.27847-1-tzimmermann@suse.de>
- <20200110092127.27847-2-tzimmermann@suse.de>
- <921ff745-0f2a-0bb6-c758-07174ac26e40@st.com>
-In-Reply-To: <921ff745-0f2a-0bb6-c758-07174ac26e40@st.com>
+Hi Suman,
 
---SmewxxS8D8HCScoDniLEP9bGTKtCgtZAO
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-
-Hi
-
-Am 14.01.20 um 16:31 schrieb Yannick FERTRE:
-> Thanks for the patch.
->=20
-> Tested-by: Yannick Fertr=C3=A9 <yannick.fertre@st.com>=20
-
-Thanks for testing all these patches.
-
-Best regards
-Thomas
-
->=20
-> BR
-> Yannick Fertr=C3=A9
->=20
->=20
-> On 1/10/20 10:21 AM, Thomas Zimmermann wrote:
->> The new callback get_scanout_position() reads the current location of
->> the scanout process. The operation is currentyl located in struct
->> drm_driver, but really belongs to the CRTC. Drivers will be converted
->> in separate patches.
+On 1/15/20 12:40 AM, Suman Anna wrote:
+> Hi Arnaud,
+> 
+> On 1/13/20 7:19 AM, Arnaud POULIQUEN wrote:
+>> Hi Bjorn, Suman,
 >>
->> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->> ---
->>  drivers/gpu/drm/drm_vblank.c             | 24 ++++++++----
->>  include/drm/drm_drv.h                    |  7 +---
->>  include/drm/drm_modeset_helper_vtables.h | 47 +++++++++++++++++++++++=
-+
->>  3 files changed, 65 insertions(+), 13 deletions(-)
+>> Gentleman reminder :)
+> 
+> Thanks for the revised version, and very sorry about the delay.  Only
+> one minor nit that you missed from my comments the v6 rpmsg-tty series
+> [1], otherwise I am good with the changes. See below.
+> 
+> FWIW, I have already been using this patch on our downstream 2020 LTS
+> based kernel and eliminate the the need to expose the virtio_rpmsg's
+> rpmsg_hdr to rpmsg client drivers :).
+Right  without this API the client needs also to know the RPMSG buffer size to
+compute the MTU.
+> 
 >>
->> diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank=
-=2Ec
->> index 1659b13b178c..c12f0b333e14 100644
->> --- a/drivers/gpu/drm/drm_vblank.c
->> +++ b/drivers/gpu/drm/drm_vblank.c
->> @@ -30,6 +30,7 @@
->>  #include <drm/drm_crtc.h>
->>  #include <drm/drm_drv.h>
->>  #include <drm/drm_framebuffer.h>
->> +#include <drm/drm_modeset_helper_vtables.h>
->>  #include <drm/drm_print.h>
->>  #include <drm/drm_vblank.h>
->> =20
->> @@ -590,7 +591,7 @@ EXPORT_SYMBOL(drm_calc_timestamping_constants);
->>   * Implements calculation of exact vblank timestamps from given drm_d=
-isplay_mode
->>   * timings and current video scanout position of a CRTC. This can be =
-directly
->>   * used as the &drm_driver.get_vblank_timestamp implementation of a k=
-ms driver
->> - * if &drm_driver.get_scanout_position is implemented.
->> + * if &drm_crtc_helper_funcs.get_scanout_position is implemented.
->>   *
->>   * The current implementation only handles standard video modes. For =
-double scan
->>   * and interlaced modes the driver is supposed to adjust the hardware=
- mode
->> @@ -632,8 +633,9 @@ bool drm_calc_vbltimestamp_from_scanoutpos(struct =
-drm_device *dev,
->>  	}
->> =20
->>  	/* Scanout position query not supported? Should not happen. */
->> -	if (!dev->driver->get_scanout_position) {
->> -		DRM_ERROR("Called from driver w/o get_scanout_position()!?\n");
->> +	if (!dev->driver->get_scanout_position ||
->> +	    !crtc->helper_private->get_scanout_position) {
->> +		DRM_ERROR("Called from CRTC w/o get_scanout_position()!?\n");
->>  		return false;
->>  	}
->> =20
->> @@ -664,11 +666,17 @@ bool drm_calc_vbltimestamp_from_scanoutpos(struc=
-t drm_device *dev,
->>  		 * Get vertical and horizontal scanout position vpos, hpos,
->>  		 * and bounding timestamps stime, etime, pre/post query.
->>  		 */
->> -		vbl_status =3D dev->driver->get_scanout_position(dev, pipe,
->> -							       in_vblank_irq,
->> -							       &vpos, &hpos,
->> -							       &stime, &etime,
->> -							       mode);
->> +		if (crtc->helper_private->get_scanout_position) {
->> +			vbl_status =3D
->> +				crtc->helper_private->get_scanout_position(
->> +					crtc, in_vblank_irq, &vpos, &hpos,
->> +					&stime, &etime, mode);
->> +		} else {
->> +			vbl_status =3D
->> +				dev->driver->get_scanout_position(
->> +					dev, pipe, in_vblank_irq, &vpos,
->> +					&hpos, &stime, &etime, mode);
->> +		}
->> =20
->>  		/* Return as no-op if scanout query unsupported or failed. */
->>  		if (!vbl_status) {
->> diff --git a/include/drm/drm_drv.h b/include/drm/drm_drv.h
->> index cf13470810a5..d0049e5786fc 100644
->> --- a/include/drm/drm_drv.h
->> +++ b/include/drm/drm_drv.h
->> @@ -362,11 +362,8 @@ struct drm_driver {
->>  	 * True on success, false if a reliable scanout position counter cou=
-ld
->>  	 * not be read out.
->>  	 *
->> -	 * FIXME:
->> -	 *
->> -	 * Since this is a helper to implement @get_vblank_timestamp, we sho=
-uld
->> -	 * move it to &struct drm_crtc_helper_funcs, like all the other
->> -	 * helper-internal hooks.
->> +	 * This is deprecated and should not be used by new drivers.
->> +	 * Use &drm_crtc_helper_funcs.get_scanout_position instead.
->>  	 */
->>  	bool (*get_scanout_position) (struct drm_device *dev, unsigned int p=
-ipe,
->>  				      bool in_vblank_irq, int *vpos, int *hpos,
->> diff --git a/include/drm/drm_modeset_helper_vtables.h b/include/drm/dr=
-m_modeset_helper_vtables.h
->> index 5a87f1bd7a3f..e398512bfd5f 100644
->> --- a/include/drm/drm_modeset_helper_vtables.h
->> +++ b/include/drm/drm_modeset_helper_vtables.h
->> @@ -450,6 +450,53 @@ struct drm_crtc_helper_funcs {
->>  	 */
->>  	void (*atomic_disable)(struct drm_crtc *crtc,
->>  			       struct drm_crtc_state *old_crtc_state);
->> +
->> +	/**
->> +	 * @get_scanout_position:
->> +	 *
->> +	 * Called by vblank timestamping code.
->> +	 *
->> +	 * Returns the current display scanout position from a CRTC and an
->> +	 * optional accurate ktime_get() timestamp of when the position was
->> +	 * measured. Note that this is a helper callback which is only used
->> +	 * if a driver uses drm_calc_vbltimestamp_from_scanoutpos() for the
->> +	 * @drm_driver.get_vblank_timestamp callback.
->> +	 *
->> +	 * Parameters:
->> +	 *
->> +	 * crtc:
->> +	 *     The CRTC.
->> +	 * in_vblank_irq:
->> +	 *     True when called from drm_crtc_handle_vblank(). Some drivers
->> +	 *     need to apply some workarounds for gpu-specific vblank irq
->> +	 *     quirks if the flag is set.
->> +	 * vpos:
->> +	 *     Target location for current vertical scanout position.
->> +	 * hpos:
->> +	 *     Target location for current horizontal scanout position.
->> +	 * stime:
->> +	 *     Target location for timestamp taken immediately before
->> +	 *     scanout position query. Can be NULL to skip timestamp.
->> +	 * etime:
->> +	 *     Target location for timestamp taken immediately after
->> +	 *     scanout position query. Can be NULL to skip timestamp.
->> +	 * mode:
->> +	 *     Current display timings.
->> +	 *
->> +	 * Returns vpos as a positive number while in active scanout area.
->> +	 * Returns vpos as a negative number inside vblank, counting the num=
-ber
->> +	 * of scanlines to go until end of vblank, e.g., -1 means "one scanl=
-ine
->> +	 * until start of active scanout / end of vblank."
->> +	 *
->> +	 * Returns:
->> +	 *
->> +	 * True on success, false if a reliable scanout position counter cou=
-ld
->> +	 * not be read out.
->> +	 */
->> +	bool (*get_scanout_position)(struct drm_crtc *crtc,
->> +				     bool in_vblank_irq, int *vpos, int *hpos,
->> +				     ktime_t *stime, ktime_t *etime,
->> +				     const struct drm_display_mode *mode);
->>  };
->> =20
->>  /**
->=20
->=20
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
->=20
+>> Thank in advance,
+>>
+>> Arnaud
+>>
+>> On 11/13/19 6:22 PM, Arnaud Pouliquen wrote:
+>>> Return the rpmsg buffer MTU for sending message, so rpmsg users
+>>> can split a long message in several sub rpmsg buffers.
+>>>
+>>> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@st.com>
+>>> ---
+>>>  V1 to V2
+>>>
+>>>   V1 patch:https://lore.kernel.org/patchwork/patch/1124684/
+>>>   - Change patch title,
+>>>   - as not solution today to support MTU on GLINK make ops optional,
+>>>     RPMsg client API returns -ENOTSUPP in this case,
+>>>   - suppress smd and glink patches.
+>>> ---
+>>>  drivers/rpmsg/rpmsg_core.c       | 21 +++++++++++++++++++++
+>>>  drivers/rpmsg/rpmsg_internal.h   |  2 ++
+>>>  drivers/rpmsg/virtio_rpmsg_bus.c | 10 ++++++++++
+>>>  include/linux/rpmsg.h            | 10 ++++++++++
+>>>  4 files changed, 43 insertions(+)
+>>>
+>>> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+>>> index e330ec4dfc33..a6ef54c4779a 100644
+>>> --- a/drivers/rpmsg/rpmsg_core.c
+>>> +++ b/drivers/rpmsg/rpmsg_core.c
+>>> @@ -283,6 +283,27 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
+>>>  }
+>>>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
+>>>  
+>>> +/**
+>>> + * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
+>>> + * @ept: the rpmsg endpoint
+>>> + *
+>>> + * This function returns maximum buffer size available for a single message.
+>>> + *
+>>> + * Return: the maximum transmission size on success and an appropriate error
+>>> + * value on failure.
+>>> + */
+>>> +
+>>> +ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
+>>> +{
+>>> +	if (WARN_ON(!ept))
+>>> +		return -EINVAL;
+>>> +	if (!ept->ops->get_mtu)
+>>> +		return -ENOTSUPP;
+>>> +
+>>> +	return ept->ops->get_mtu(ept);
+>>> +}
+>>> +EXPORT_SYMBOL(rpmsg_get_mtu);
+>>> +
+>>>  /*
+>>>   * match an rpmsg channel with a channel info struct.
+>>>   * this is used to make sure we're not creating rpmsg devices for channels
+>>> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
+>>> index 3fc83cd50e98..0e56e046f5c6 100644
+>>> --- a/drivers/rpmsg/rpmsg_internal.h
+>>> +++ b/drivers/rpmsg/rpmsg_internal.h
+>>> @@ -47,6 +47,7 @@ struct rpmsg_device_ops {
+>>>   * @trysendto:		see @rpmsg_trysendto(), optional
+>>>   * @trysend_offchannel:	see @rpmsg_trysend_offchannel(), optional
+>>>   * @poll:		see @rpmsg_poll(), optional
+>>> + * @get_mtu:		see @get_mpu(), optional
+> 
+> In the description for the ops, 'mpu' is a typo. My earlier comment was
+> essentially,
+> %s/see @get_mpu()/see @rpmsg_get_mtu()/
+Sorry, completly missed it i sent a v3
 
---=20
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
-(HRB 36809, AG N=C3=BCrnberg)
-Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
+Thanks,
+Arnaud
 
-
---SmewxxS8D8HCScoDniLEP9bGTKtCgtZAO--
-
---dy8utQKQWBe6XuW8macqRBBoPSguKlppq
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEchf7rIzpz2NEoWjlaA3BHVMLeiMFAl4ev8cACgkQaA3BHVML
-eiPQPAgAhNBXxz0tZEzNlLqbwwfpcEJrCLZf/o7JVn07uUaHaDDU/MOgY7tyis90
-qcfe1ZSVJsNiKyd81M5WVhxnzywTZbhJOlifgzdF0QJV8j+oPYSoNyUf2FkFdI25
-Z0qCKYBW/07bNezPyl8OWD4teGOvMmQFCM7u6ZmaWL7O0kXgAb18zp2d8gZ47Cua
-eoVZ6Dkz339eNR/o+N13BcSQH0G5WY736lmO/NI3jAkPpdv09v1L1HzNjrbkEGqb
-E5WzMu+rDk0N7MHxa16XNSv9a9WCmLRfeqnQTxmCJ5B/CH5l/OXGFjytPMC9vAjp
-SFw+EjFt/J9IAV9D/CxaWttoRrzadg==
-=NncW
------END PGP SIGNATURE-----
-
---dy8utQKQWBe6XuW8macqRBBoPSguKlppq--
+> 
+> regards
+> Suman
+> 
+> [1] https://patchwork.kernel.org/patch/11130209/
+> 
+>>>   *
+>>>   * Indirection table for the operations that a rpmsg backend should implement.
+>>>   * In addition to @destroy_ept, the backend must at least implement @send and
+>>> @@ -66,6 +67,7 @@ struct rpmsg_endpoint_ops {
+>>>  			     void *data, int len);
+>>>  	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
+>>>  			     poll_table *wait);
+>>> +	ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
+>>>  };
+>>>  
+>>>  int rpmsg_register_device(struct rpmsg_device *rpdev);
+>>> diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
+>>> index 376ebbf880d6..6e48fdf24555 100644
+>>> --- a/drivers/rpmsg/virtio_rpmsg_bus.c
+>>> +++ b/drivers/rpmsg/virtio_rpmsg_bus.c
+>>> @@ -175,6 +175,7 @@ static int virtio_rpmsg_trysendto(struct rpmsg_endpoint *ept, void *data,
+>>>  				  int len, u32 dst);
+>>>  static int virtio_rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src,
+>>>  					   u32 dst, void *data, int len);
+>>> +static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept);
+>>>  
+>>>  static const struct rpmsg_endpoint_ops virtio_endpoint_ops = {
+>>>  	.destroy_ept = virtio_rpmsg_destroy_ept,
+>>> @@ -184,6 +185,7 @@ static const struct rpmsg_endpoint_ops virtio_endpoint_ops = {
+>>>  	.trysend = virtio_rpmsg_trysend,
+>>>  	.trysendto = virtio_rpmsg_trysendto,
+>>>  	.trysend_offchannel = virtio_rpmsg_trysend_offchannel,
+>>> +	.get_mtu = virtio_rpmsg_get_mtu,
+>>>  };
+>>>  
+>>>  /**
+>>> @@ -699,6 +701,14 @@ static int virtio_rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src,
+>>>  	return rpmsg_send_offchannel_raw(rpdev, src, dst, data, len, false);
+>>>  }
+>>>  
+>>> +static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept)
+>>> +{
+>>> +	struct rpmsg_device *rpdev = ept->rpdev;
+>>> +	struct virtio_rpmsg_channel *vch = to_virtio_rpmsg_channel(rpdev);
+>>> +
+>>> +	return vch->vrp->buf_size - sizeof(struct rpmsg_hdr);
+>>> +}
+>>> +
+>>>  static int rpmsg_recv_single(struct virtproc_info *vrp, struct device *dev,
+>>>  			     struct rpmsg_hdr *msg, unsigned int len)
+>>>  {
+>>> diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
+>>> index 9fe156d1c018..88d7892ca93d 100644
+>>> --- a/include/linux/rpmsg.h
+>>> +++ b/include/linux/rpmsg.h
+>>> @@ -135,6 +135,8 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
+>>>  __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
+>>>  			poll_table *wait);
+>>>  
+>>> +ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
+>>> +
+>>>  #else
+>>>  
+>>>  static inline int register_rpmsg_device(struct rpmsg_device *dev)
+>>> @@ -242,6 +244,14 @@ static inline __poll_t rpmsg_poll(struct rpmsg_endpoint *ept,
+>>>  	return 0;
+>>>  }
+>>>  
+>>> +static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
+>>> +{
+>>> +	/* This shouldn't be possible */
+>>> +	WARN_ON(1);
+>>> +
+>>> +	return -ENXIO;
+>>> +}
+>>> +
+>>>  #endif /* IS_ENABLED(CONFIG_RPMSG) */
+>>>  
+>>>  /* use a macro to avoid include chaining to get THIS_MODULE */
+>>>
+> 
