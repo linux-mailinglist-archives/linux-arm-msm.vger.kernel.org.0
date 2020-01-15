@@ -2,177 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AF59E13BE8B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 12:34:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0336613BFEA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 13:17:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729959AbgAOLeS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jan 2020 06:34:18 -0500
-Received: from foss.arm.com ([217.140.110.172]:35458 "EHLO foss.arm.com"
+        id S1730991AbgAOMRH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jan 2020 07:17:07 -0500
+Received: from mx2.suse.de ([195.135.220.15]:37218 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729758AbgAOLeS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jan 2020 06:34:18 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2B12131B;
-        Wed, 15 Jan 2020 03:34:15 -0800 (PST)
-Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7826C3F6C4;
-        Wed, 15 Jan 2020 03:34:13 -0800 (PST)
-Subject: Re: [PATCH v8 09/15] coresight: cti: Add connection information to
- sysfs
-To:     Mike Leach <mike.leach@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        coresight@lists.linaro.org, linux-doc@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, mathieu.poirier@linaro.org,
-        robh+dt@kernel.org, maxime@cerno.tech, liviu.dudau@arm.com,
-        sudeep.holla@arm.com, lorenzo.pieralisi@arm.com, agross@kernel.org,
-        corbet@lwn.net
-References: <20200113213149.25599-1-mike.leach@linaro.org>
- <20200113213149.25599-10-mike.leach@linaro.org>
-From:   Suzuki Kuruppassery Poulose <suzuki.poulose@arm.com>
-Message-ID: <b09888f1-46fc-26af-0c5f-4a071c893397@arm.com>
-Date:   Wed, 15 Jan 2020 11:34:12 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        id S1731449AbgAOMRE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Jan 2020 07:17:04 -0500
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id 06AF5AFC2;
+        Wed, 15 Jan 2020 12:17:00 +0000 (UTC)
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     airlied@linux.ie, daniel@ffwll.ch, alexander.deucher@amd.com,
+        christian.koenig@amd.com, David1.Zhou@amd.com,
+        maarten.lankhorst@linux.intel.com, patrik.r.jakobsson@gmail.com,
+        robdclark@gmail.com, sean@poorly.run, benjamin.gaignard@linaro.org,
+        vincent.abriou@st.com, yannick.fertre@st.com,
+        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
+        alexandre.torgue@st.com, eric@anholt.net,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        linux-graphics-maintainer@vmware.com, thellstrom@vmware.com,
+        bskeggs@redhat.com, harry.wentland@amd.com, sunpeng.li@amd.com,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com
+Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v2 00/21] drm: Clean up VBLANK callbacks in struct drm_driver
+Date:   Wed, 15 Jan 2020 13:16:31 +0100
+Message-Id: <20200115121652.7050-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
-In-Reply-To: <20200113213149.25599-10-mike.leach@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/01/2020 21:31, Mike Leach wrote:
-> Dynamically adds sysfs attributes for all connections defined in the CTI.
-> 
-> Each connection has a triggers<N> sub-directory with name, in_signals,
-> in_types, out_signals and out_types as read-only parameters in the
-> directory. in_ or out_ parameters may be omitted if there are no in or
-> out signals for the connection.
-> 
-> Additionally each device has a nr_cons in the connections sub-directory.
-> 
-> This allows clients to explore the connection and trigger signal details
-> without needing to refer to device tree or specification of the device.
-> 
-> Standardised type information is provided for certain common functions -
-> e.g. snk_full for a trigger from a sink indicating full. Otherwise type
-> defaults to genio.
-> 
-> Signed-off-by: Mike Leach <mike.leach@linaro.org>
-> Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> ---
->   .../hwtracing/coresight/coresight-cti-sysfs.c | 333 +++++++++++++++++-
->   drivers/hwtracing/coresight/coresight-cti.c   |  10 +-
->   drivers/hwtracing/coresight/coresight-cti.h   |   8 +
->   3 files changed, 348 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-cti-sysfs.c b/drivers/hwtracing/coresight/coresight-cti-sysfs.c
-> index 8af1986ed69f..db3395c46f51 100644
-> --- a/drivers/hwtracing/coresight/coresight-cti-sysfs.c
-> +++ b/drivers/hwtracing/coresight/coresight-cti-sysfs.c
-> @@ -8,6 +8,67 @@
->   
->   #include "coresight-cti.h"
->   
+VBLANK handlers in struct drm_driver are deprecated. Only legacy,
+non-KMS drivers are supposed to used them. DRM drivers with kernel
+modesetting are supposed to use VBLANK callbacks of the CRTC
+infrastructure.
 
-> +/*
-> + * Declare the number of static declared attribute groups
-> + * Value includes groups + NULL value at end of table.
-> + */
-> +#define CORESIGHT_CTI_STATIC_GROUPS_MAX 5
-> +
+This patchset converts all DRM drivers to CRTC VBLANK callbacks and
+cleans up struct drm_driver. The remaining VBLANK callbacks in struct
+drm_driver are only used by legacy drivers.
 
-minor nit: see below.
+Patches 1 and 3 prepare the DRM infrastructure. These patches add
+get_scanout_position() to struct drm_crtc_helper_funcs, get_vblank_timestamp()
+to struct drm_crtc_funcs, and add helpers for the new interfaces. Patch 2
+changes the VBLANK code to evaluate vblank_disable_immediate in struct
+drm_device. This simplifies the integration of CRTC VBLANK callbacks in
+patch 3. If necessary, a future patch could move vblank_disable_immedate
+to struct drm_crtc, so that high-precision VBLANKs could be enabled on a
+per-CRTC basis.
 
-> +static struct attribute_group *
-> +cti_create_con_sysfs_group(struct device *dev, struct cti_device *ctidev,
-> +			   int con_idx, struct cti_trig_con *tc)
-> +{
-> +	struct attribute_group *group = NULL;
-> +	int grp_idx;
-> +
-> +	group = devm_kzalloc(dev, sizeof(struct attribute_group), GFP_KERNEL);
-> +	if (!group)
-> +		return NULL;
-> +
-> +	group->name = devm_kasprintf(dev, GFP_KERNEL, "triggers%d", con_idx);
-> +	if (!group->name)
-> +		return NULL;
-> +
-> +	grp_idx = con_idx + CORESIGHT_CTI_STATIC_GROUPS_MAX - 1;
-> +	ctidev->con_groups[grp_idx] = group;
-> +	tc->attr_group = group;
-> +	return group;
-> +}
-> +
+Patches 4 to 20 convert drivers over.
 
-> +	if (tc->con_out->nr_sigs > 0) {
-> +		err = cti_create_con_sysfs_attr(dev, tc,
-> +						CTI_CON_ATTR_TRIGOUT_SIG,
-> +						attr_idx++);
-> +		if (err)
-> +			return err;
-> +
-> +		err = cti_create_con_sysfs_attr(dev, tc,
-> +						CTI_CON_ATTR_TRIGOUT_TYPES,
-> +						attr_idx++);
-> +		if (err)
-> +			return err;
-> +	}
-> +	attr_group->attrs = tc->con_attrs;
-> +	return 0;
-> +}
-> +
-> +/* create the array of group pointers for the CTI sysfs groups */
-> +int cti_create_cons_groups(struct device *dev, struct cti_device *ctidev)
-> +{
-> +	int nr_groups;
-> +
-> +	/* nr groups - dynamic + static + NULL terminator */
+In patch 21, all VBLANK callbacks are removed from struct drm_driver, except
+for get_vblank_counter(), enable_vblank(), and disable_vblank(). These
+interfaces are moved to the legacy section at the end of the structure. Old
+helper code is now unused and being removed as well.
 
-nit: nr_groups = ?
+To cover all affected drivers, I build the patchset in x86, x86-64,
+arm and aarch64. I smoke-tested amdgpu, gma500, i915, radeon and vc4 on
+respective hardware.
 
-> +	nr_groups = ctidev->nr_trig_con + CORESIGHT_CTI_STATIC_GROUPS_MAX;
-> +	ctidev->con_groups = devm_kcalloc(dev, nr_groups,
-> +					  sizeof(struct attribute_group *),
-> +					  GFP_KERNEL);
-> +	if (!ctidev->con_groups)
-> +		return -ENOMEM;
-> +	return 0;
-> +}
+v2:
+	* reorder patches so the i915 can be converted without duplicating
+	  helper code.
+	* merged cleanup patches
+	* changed VBLANK function signatures in amdgpu
 
+Thomas Zimmermann (21):
+  drm: Add get_scanout_position() to struct drm_crtc_helper_funcs
+  drm: Evaluate struct drm_device.vblank_disable_immediate on each use
+  drm: Add get_vblank_timestamp() to struct drm_crtc_funcs
+  drm/amdgpu: Convert to struct
+    drm_crtc_helper_funcs.get_scanout_position()
+  drm/amdgpu: Convert to CRTC VBLANK callbacks
+  drm/gma500: Convert to CRTC VBLANK callbacks
+  drm/i915: Convert to CRTC VBLANK callbacks
+  drm/nouveau: Convert to struct
+    drm_crtc_helper_funcs.get_scanout_position()
+  drm/nouveau: Convert to CRTC VBLANK callbacks
+  drm/radeon: Convert to struct
+    drm_crtc_helper_funcs.get_scanout_position()
+  drm/radeon: Convert to CRTC VBLANK callbacks
+  drm/msm: Convert to struct
+    drm_crtc_helper_funcs.get_scanout_position()
+  drm/msm: Convert to CRTC VBLANK callbacks
+  drm/stm: Convert to struct
+    drm_crtc_helper_funcs.get_scanout_position()
+  drm/stm: Convert to CRTC VBLANK callbacks
+  drm/sti: Convert to CRTC VBLANK callbacks
+  drm/vc4: Convert to struct
+    drm_crtc_helper_funcs.get_scanout_position()
+  drm/vc4: Convert to CRTC VBLANK callbacks
+  drm/vkms: Convert to CRTC VBLANK callbacks
+  drm/vmwgfx: Convert to CRTC VBLANK callbacks
+  drm: Clean-up VBLANK-related callbacks in struct drm_driver
 
-> +/* attribute and group sysfs tables. */
->   static const struct attribute_group coresight_cti_group = {
->   	.attrs = coresight_cti_attrs,
->   };
-> @@ -837,7 +1165,8 @@ static const struct attribute_group coresight_cti_channels_group = {
->   	.name = "channels",
->   };
->   
-> -const struct attribute_group *coresight_cti_groups[] = {
-> +const struct attribute_group *
-> +coresight_cti_groups[CORESIGHT_CTI_STATIC_GROUPS_MAX] = {
->   	&coresight_cti_group,
->   	&coresight_cti_mgmt_group,
->   	&coresight_cti_regs_group,
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h           |   6 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_display.c   |  16 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c       |  15 -
+ drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c       |  21 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h      |   5 +
+ drivers/gpu/drm/amd/amdgpu/dce_v10_0.c        |   5 +
+ drivers/gpu/drm/amd/amdgpu/dce_v11_0.c        |   5 +
+ drivers/gpu/drm/amd/amdgpu/dce_v6_0.c         |   5 +
+ drivers/gpu/drm/amd/amdgpu/dce_v8_0.c         |   5 +
+ drivers/gpu/drm/amd/amdgpu/dce_virtual.c      |   5 +
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  13 +-
+ drivers/gpu/drm/drm_vblank.c                  | 411 ++++++++++--------
+ drivers/gpu/drm/gma500/cdv_intel_display.c    |   3 +
+ drivers/gpu/drm/gma500/psb_drv.c              |   4 -
+ drivers/gpu/drm/gma500/psb_drv.h              |   6 +-
+ drivers/gpu/drm/gma500/psb_intel_display.c    |   3 +
+ drivers/gpu/drm/gma500/psb_irq.c              |  12 +-
+ drivers/gpu/drm/gma500/psb_irq.h              |   7 +-
+ drivers/gpu/drm/i915/display/intel_display.c  |   7 +
+ drivers/gpu/drm/i915/i915_drv.c               |   3 -
+ drivers/gpu/drm/i915/i915_irq.c               |  20 +-
+ drivers/gpu/drm/i915/i915_irq.h               |   6 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      |   2 +
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c     |   2 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c     |  82 ++++
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c      |  95 ----
+ drivers/gpu/drm/msm/msm_drv.c                 |  10 +-
+ drivers/gpu/drm/msm/msm_drv.h                 |   3 +
+ drivers/gpu/drm/nouveau/dispnv04/crtc.c       |   4 +
+ drivers/gpu/drm/nouveau/dispnv50/head.c       |   5 +
+ drivers/gpu/drm/nouveau/nouveau_display.c     |  28 +-
+ drivers/gpu/drm/nouveau/nouveau_display.h     |   6 +-
+ drivers/gpu/drm/nouveau/nouveau_drm.c         |   5 -
+ drivers/gpu/drm/radeon/atombios_crtc.c        |   1 +
+ drivers/gpu/drm/radeon/radeon_display.c       |  25 +-
+ drivers/gpu/drm/radeon/radeon_drv.c           |  18 -
+ drivers/gpu/drm/radeon/radeon_kms.c           |  29 +-
+ drivers/gpu/drm/radeon/radeon_legacy_crtc.c   |   3 +-
+ drivers/gpu/drm/radeon/radeon_mode.h          |   6 +
+ drivers/gpu/drm/sti/sti_crtc.c                |  11 +-
+ drivers/gpu/drm/sti/sti_crtc.h                |   2 -
+ drivers/gpu/drm/sti/sti_drv.c                 |   4 -
+ drivers/gpu/drm/stm/drv.c                     |   2 -
+ drivers/gpu/drm/stm/ltdc.c                    |  66 +--
+ drivers/gpu/drm/stm/ltdc.h                    |   5 -
+ drivers/gpu/drm/vc4/vc4_crtc.c                |  13 +-
+ drivers/gpu/drm/vc4/vc4_drv.c                 |   3 -
+ drivers/gpu/drm/vc4/vc4_drv.h                 |   4 -
+ drivers/gpu/drm/vkms/vkms_crtc.c              |   9 +-
+ drivers/gpu/drm/vkms/vkms_drv.c               |   1 -
+ drivers/gpu/drm/vkms/vkms_drv.h               |   4 -
+ drivers/gpu/drm/vmwgfx/vmwgfx_drv.c           |   3 -
+ drivers/gpu/drm/vmwgfx/vmwgfx_drv.h           |   6 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c           |   6 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c           |   3 +
+ drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c          |   3 +
+ drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c          |   3 +
+ include/drm/drm_crtc.h                        |  46 +-
+ include/drm/drm_drv.h                         | 156 +------
+ include/drm/drm_modeset_helper_vtables.h      |  47 ++
+ include/drm/drm_vblank.h                      |  30 +-
+ 61 files changed, 692 insertions(+), 642 deletions(-)
 
-minor nit: You may as well do :
+--
+2.24.1
 
-corsight_cti_groups[] = {
-   ...
-   ....
-}
-
-#define CORESIGHT_CTI_STATIC_GROUPS_MAX 	\
-		ARRAY_SIZE(coresight_cti_groups) + 1
-
-To avoid hard coding the number 5. Of course that would involve a
-forward declaration, so can ignore it for the time being.
-
-
-With the comment fixed, above:
-
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
