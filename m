@@ -2,18 +2,18 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AEF5A13BFDE
+	by mail.lfdr.de (Postfix) with ESMTP id 303F013BFDD
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 13:17:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731304AbgAOMRF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1731019AbgAOMRF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 15 Jan 2020 07:17:05 -0500
-Received: from mx2.suse.de ([195.135.220.15]:37144 "EHLO mx2.suse.de"
+Received: from mx2.suse.de ([195.135.220.15]:37272 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730939AbgAOMRF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jan 2020 07:17:05 -0500
+        id S1731597AbgAOMRE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Jan 2020 07:17:04 -0500
 X-Virus-Scanned: by amavisd-new at test-mx.suse.de
 Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 051C9AE62;
+        by mx2.suse.de (Postfix) with ESMTP id 05135AD03;
         Wed, 15 Jan 2020 12:17:00 +0000 (UTC)
 From:   Thomas Zimmermann <tzimmermann@suse.de>
 To:     airlied@linux.ie, daniel@ffwll.ch, alexander.deucher@amd.com,
@@ -32,168 +32,110 @@ Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
         Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 01/21] drm: Add get_scanout_position() to struct drm_crtc_helper_funcs
-Date:   Wed, 15 Jan 2020 13:16:32 +0100
-Message-Id: <20200115121652.7050-2-tzimmermann@suse.de>
+Subject: [PATCH v2 02/21] drm: Evaluate struct drm_device.vblank_disable_immediate on each use
+Date:   Wed, 15 Jan 2020 13:16:33 +0100
+Message-Id: <20200115121652.7050-3-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <20200115121652.7050-1-tzimmermann@suse.de>
 References: <20200115121652.7050-1-tzimmermann@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The new callback get_scanout_position() reads the current location of
-the scanout process. The operation is currentyl located in struct
-drm_driver, but really belongs to the CRTC. Drivers will be converted
-in separate patches.
+VBLANK interrupts can be disabled immediately or with a delay, where the
+latter is the default. The former option can be selected by setting
+get_vblank_timestamp, and enabling vblank_disable_immediate in struct
+drm_device.
 
-v2:
-	* fix logical op in drm_calc_vbltimestamp_from_scanoutpos()
+The setup is only evaluated once when DRM initializes VBLANKs. Evaluating
+the settings on each use of vblank_disable_immediate will allow for easy
+integration of CRTC VBLANK functions.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Tested-by: Yannick Fertré <yannick.fertre@st.com>
 ---
- drivers/gpu/drm/drm_vblank.c             | 24 ++++++++----
- include/drm/drm_drv.h                    |  7 +---
- include/drm/drm_modeset_helper_vtables.h | 47 ++++++++++++++++++++++++
- 3 files changed, 65 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/drm_vblank.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
-index 1659b13b178c..3f1dd54cc8bb 100644
+index 3f1dd54cc8bb..abb085c67d82 100644
 --- a/drivers/gpu/drm/drm_vblank.c
 +++ b/drivers/gpu/drm/drm_vblank.c
-@@ -30,6 +30,7 @@
- #include <drm/drm_crtc.h>
- #include <drm/drm_drv.h>
- #include <drm/drm_framebuffer.h>
-+#include <drm/drm_modeset_helper_vtables.h>
- #include <drm/drm_print.h>
- #include <drm/drm_vblank.h>
+@@ -481,19 +481,6 @@ int drm_vblank_init(struct drm_device *dev, unsigned int num_crtcs)
  
-@@ -590,7 +591,7 @@ EXPORT_SYMBOL(drm_calc_timestamping_constants);
-  * Implements calculation of exact vblank timestamps from given drm_display_mode
-  * timings and current video scanout position of a CRTC. This can be directly
-  * used as the &drm_driver.get_vblank_timestamp implementation of a kms driver
-- * if &drm_driver.get_scanout_position is implemented.
-+ * if &drm_crtc_helper_funcs.get_scanout_position is implemented.
-  *
-  * The current implementation only handles standard video modes. For double scan
-  * and interlaced modes the driver is supposed to adjust the hardware mode
-@@ -632,8 +633,9 @@ bool drm_calc_vbltimestamp_from_scanoutpos(struct drm_device *dev,
- 	}
+ 	DRM_INFO("Supports vblank timestamp caching Rev 2 (21.10.2013).\n");
  
- 	/* Scanout position query not supported? Should not happen. */
--	if (!dev->driver->get_scanout_position) {
--		DRM_ERROR("Called from driver w/o get_scanout_position()!?\n");
-+	if (!dev->driver->get_scanout_position &&
-+	    !crtc->helper_private->get_scanout_position) {
-+		DRM_ERROR("Called from CRTC w/o get_scanout_position()!?\n");
- 		return false;
- 	}
+-	/* Driver specific high-precision vblank timestamping supported? */
+-	if (dev->driver->get_vblank_timestamp)
+-		DRM_INFO("Driver supports precise vblank timestamp query.\n");
+-	else
+-		DRM_INFO("No driver support for vblank timestamp query.\n");
+-
+-	/* Must have precise timestamping for reliable vblank instant disable */
+-	if (dev->vblank_disable_immediate && !dev->driver->get_vblank_timestamp) {
+-		dev->vblank_disable_immediate = false;
+-		DRM_INFO("Setting vblank_disable_immediate to false because "
+-			 "get_vblank_timestamp == NULL\n");
+-	}
+-
+ 	return 0;
  
-@@ -664,11 +666,17 @@ bool drm_calc_vbltimestamp_from_scanoutpos(struct drm_device *dev,
- 		 * Get vertical and horizontal scanout position vpos, hpos,
- 		 * and bounding timestamps stime, etime, pre/post query.
- 		 */
--		vbl_status = dev->driver->get_scanout_position(dev, pipe,
--							       in_vblank_irq,
--							       &vpos, &hpos,
--							       &stime, &etime,
--							       mode);
-+		if (crtc->helper_private->get_scanout_position) {
-+			vbl_status =
-+				crtc->helper_private->get_scanout_position(
-+					crtc, in_vblank_irq, &vpos, &hpos,
-+					&stime, &etime, mode);
-+		} else {
-+			vbl_status =
-+				dev->driver->get_scanout_position(
-+					dev, pipe, in_vblank_irq, &vpos,
-+					&hpos, &stime, &etime, mode);
-+		}
+ err:
+@@ -1070,6 +1057,15 @@ int drm_crtc_vblank_get(struct drm_crtc *crtc)
+ }
+ EXPORT_SYMBOL(drm_crtc_vblank_get);
  
- 		/* Return as no-op if scanout query unsupported or failed. */
- 		if (!vbl_status) {
-diff --git a/include/drm/drm_drv.h b/include/drm/drm_drv.h
-index cf13470810a5..d0049e5786fc 100644
---- a/include/drm/drm_drv.h
-+++ b/include/drm/drm_drv.h
-@@ -362,11 +362,8 @@ struct drm_driver {
- 	 * True on success, false if a reliable scanout position counter could
- 	 * not be read out.
- 	 *
--	 * FIXME:
--	 *
--	 * Since this is a helper to implement @get_vblank_timestamp, we should
--	 * move it to &struct drm_crtc_helper_funcs, like all the other
--	 * helper-internal hooks.
-+	 * This is deprecated and should not be used by new drivers.
-+	 * Use &drm_crtc_helper_funcs.get_scanout_position instead.
- 	 */
- 	bool (*get_scanout_position) (struct drm_device *dev, unsigned int pipe,
- 				      bool in_vblank_irq, int *vpos, int *hpos,
-diff --git a/include/drm/drm_modeset_helper_vtables.h b/include/drm/drm_modeset_helper_vtables.h
-index 5a87f1bd7a3f..e398512bfd5f 100644
---- a/include/drm/drm_modeset_helper_vtables.h
-+++ b/include/drm/drm_modeset_helper_vtables.h
-@@ -450,6 +450,53 @@ struct drm_crtc_helper_funcs {
- 	 */
- 	void (*atomic_disable)(struct drm_crtc *crtc,
- 			       struct drm_crtc_state *old_crtc_state);
++static bool __vblank_disable_immediate(struct drm_device *dev, unsigned int pipe)
++{
++	if (!dev->vblank_disable_immediate)
++		return false;
++	if (!dev->driver->get_vblank_timestamp)
++		return false;
++	return true;
++}
 +
-+	/**
-+	 * @get_scanout_position:
-+	 *
-+	 * Called by vblank timestamping code.
-+	 *
-+	 * Returns the current display scanout position from a CRTC and an
-+	 * optional accurate ktime_get() timestamp of when the position was
-+	 * measured. Note that this is a helper callback which is only used
-+	 * if a driver uses drm_calc_vbltimestamp_from_scanoutpos() for the
-+	 * @drm_driver.get_vblank_timestamp callback.
-+	 *
-+	 * Parameters:
-+	 *
-+	 * crtc:
-+	 *     The CRTC.
-+	 * in_vblank_irq:
-+	 *     True when called from drm_crtc_handle_vblank(). Some drivers
-+	 *     need to apply some workarounds for gpu-specific vblank irq
-+	 *     quirks if the flag is set.
-+	 * vpos:
-+	 *     Target location for current vertical scanout position.
-+	 * hpos:
-+	 *     Target location for current horizontal scanout position.
-+	 * stime:
-+	 *     Target location for timestamp taken immediately before
-+	 *     scanout position query. Can be NULL to skip timestamp.
-+	 * etime:
-+	 *     Target location for timestamp taken immediately after
-+	 *     scanout position query. Can be NULL to skip timestamp.
-+	 * mode:
-+	 *     Current display timings.
-+	 *
-+	 * Returns vpos as a positive number while in active scanout area.
-+	 * Returns vpos as a negative number inside vblank, counting the number
-+	 * of scanlines to go until end of vblank, e.g., -1 means "one scanline
-+	 * until start of active scanout / end of vblank."
-+	 *
-+	 * Returns:
-+	 *
-+	 * True on success, false if a reliable scanout position counter could
-+	 * not be read out.
-+	 */
-+	bool (*get_scanout_position)(struct drm_crtc *crtc,
-+				     bool in_vblank_irq, int *vpos, int *hpos,
-+				     ktime_t *stime, ktime_t *etime,
-+				     const struct drm_display_mode *mode);
- };
+ static void drm_vblank_put(struct drm_device *dev, unsigned int pipe)
+ {
+ 	struct drm_vblank_crtc *vblank = &dev->vblank[pipe];
+@@ -1086,7 +1082,7 @@ static void drm_vblank_put(struct drm_device *dev, unsigned int pipe)
+ 			return;
+ 		else if (drm_vblank_offdelay < 0)
+ 			vblank_disable_fn(&vblank->disable_timer);
+-		else if (!dev->vblank_disable_immediate)
++		else if (__vblank_disable_immediate(dev, pipe))
+ 			mod_timer(&vblank->disable_timer,
+ 				  jiffies + ((drm_vblank_offdelay * HZ)/1000));
+ 	}
+@@ -1663,7 +1659,7 @@ int drm_wait_vblank_ioctl(struct drm_device *dev, void *data,
+ 	/* If the counter is currently enabled and accurate, short-circuit
+ 	 * queries to return the cached timestamp of the last vblank.
+ 	 */
+-	if (dev->vblank_disable_immediate &&
++	if (__vblank_disable_immediate(dev, pipe) &&
+ 	    drm_wait_vblank_is_query(vblwait) &&
+ 	    READ_ONCE(vblank->enabled)) {
+ 		drm_wait_vblank_reply(dev, pipe, &vblwait->reply);
+@@ -1820,7 +1816,7 @@ bool drm_handle_vblank(struct drm_device *dev, unsigned int pipe)
+ 	 * been signaled. The disable has to be last (after
+ 	 * drm_handle_vblank_events) so that the timestamp is always accurate.
+ 	 */
+-	disable_irq = (dev->vblank_disable_immediate &&
++	disable_irq = (__vblank_disable_immediate(dev, pipe) &&
+ 		       drm_vblank_offdelay > 0 &&
+ 		       !atomic_read(&vblank->refcount));
  
- /**
+@@ -1893,7 +1889,8 @@ int drm_crtc_get_sequence_ioctl(struct drm_device *dev, void *data,
+ 	pipe = drm_crtc_index(crtc);
+ 
+ 	vblank = &dev->vblank[pipe];
+-	vblank_enabled = dev->vblank_disable_immediate && READ_ONCE(vblank->enabled);
++	vblank_enabled = __vblank_disable_immediate(dev, pipe) &&
++			 READ_ONCE(vblank->enabled);
+ 
+ 	if (!vblank_enabled) {
+ 		ret = drm_crtc_vblank_get(crtc);
 -- 
 2.24.1
 
