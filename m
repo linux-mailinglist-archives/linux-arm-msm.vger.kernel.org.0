@@ -2,19 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DA9E013BFEE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 13:17:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 75ED613BFEB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 13:17:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731301AbgAOMRP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1732769AbgAOMRP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 15 Jan 2020 07:17:15 -0500
-Received: from mx2.suse.de ([195.135.220.15]:37516 "EHLO mx2.suse.de"
+Received: from mx2.suse.de ([195.135.220.15]:37408 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731411AbgAOMRO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1732652AbgAOMRO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 15 Jan 2020 07:17:14 -0500
 X-Virus-Scanned: by amavisd-new at test-mx.suse.de
 Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id B97EFAFC2;
-        Wed, 15 Jan 2020 12:17:12 +0000 (UTC)
+        by mx2.suse.de (Postfix) with ESMTP id 94AEFB04F;
+        Wed, 15 Jan 2020 12:17:13 +0000 (UTC)
 From:   Thomas Zimmermann <tzimmermann@suse.de>
 To:     airlied@linux.ie, daniel@ffwll.ch, alexander.deucher@amd.com,
         christian.koenig@amd.com, David1.Zhou@amd.com,
@@ -32,9 +32,9 @@ Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
         Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 17/21] drm/vc4: Convert to struct drm_crtc_helper_funcs.get_scanout_position()
-Date:   Wed, 15 Jan 2020 13:16:48 +0100
-Message-Id: <20200115121652.7050-18-tzimmermann@suse.de>
+Subject: [PATCH v2 18/21] drm/vc4: Convert to CRTC VBLANK callbacks
+Date:   Wed, 15 Jan 2020 13:16:49 +0100
+Message-Id: <20200115121652.7050-19-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <20200115121652.7050-1-tzimmermann@suse.de>
 References: <20200115121652.7050-1-tzimmermann@suse.de>
@@ -45,76 +45,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The callback struct drm_driver.get_scanout_position() is deprecated in
-favor of struct drm_crtc_helper_funcs.get_scanout_position(). Convert vc4
-over.
+VBLANK callbacks in struct drm_driver are deprecated in favor of
+their equivalents in struct drm_crtc_funcs. Convert vc4 over.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 ---
- drivers/gpu/drm/vc4/vc4_crtc.c | 12 +++++++-----
- drivers/gpu/drm/vc4/vc4_drv.c  |  1 -
- drivers/gpu/drm/vc4/vc4_drv.h  |  4 ----
- 3 files changed, 7 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/vc4/vc4_crtc.c | 1 +
+ drivers/gpu/drm/vc4/vc4_drv.c  | 2 --
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/vc4/vc4_crtc.c b/drivers/gpu/drm/vc4/vc4_crtc.c
-index b00e20f5ce05..f1e7597ea17e 100644
+index f1e7597ea17e..1208258ad3b2 100644
 --- a/drivers/gpu/drm/vc4/vc4_crtc.c
 +++ b/drivers/gpu/drm/vc4/vc4_crtc.c
-@@ -84,13 +84,14 @@ static const struct debugfs_reg32 crtc_regs[] = {
- 	VC4_REG32(PV_HACT_ACT),
+@@ -1031,6 +1031,7 @@ static const struct drm_crtc_funcs vc4_crtc_funcs = {
+ 	.gamma_set = drm_atomic_helper_legacy_gamma_set,
+ 	.enable_vblank = vc4_enable_vblank,
+ 	.disable_vblank = vc4_disable_vblank,
++	.get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
  };
  
--bool vc4_crtc_get_scanoutpos(struct drm_device *dev, unsigned int crtc_id,
--			     bool in_vblank_irq, int *vpos, int *hpos,
--			     ktime_t *stime, ktime_t *etime,
--			     const struct drm_display_mode *mode)
-+static bool vc4_crtc_get_scanout_position(struct drm_crtc *crtc,
-+					  bool in_vblank_irq,
-+					  int *vpos, int *hpos,
-+					  ktime_t *stime, ktime_t *etime,
-+					  const struct drm_display_mode *mode)
- {
-+	struct drm_device *dev = crtc->dev;
- 	struct vc4_dev *vc4 = to_vc4_dev(dev);
--	struct drm_crtc *crtc = drm_crtc_from_index(dev, crtc_id);
- 	struct vc4_crtc *vc4_crtc = to_vc4_crtc(crtc);
- 	u32 val;
- 	int fifo_lines;
-@@ -1039,6 +1040,7 @@ static const struct drm_crtc_helper_funcs vc4_crtc_helper_funcs = {
- 	.atomic_flush = vc4_crtc_atomic_flush,
- 	.atomic_enable = vc4_crtc_atomic_enable,
- 	.atomic_disable = vc4_crtc_atomic_disable,
-+	.get_scanout_position = vc4_crtc_get_scanout_position,
- };
- 
- static const struct vc4_crtc_data pv0_data = {
+ static const struct drm_crtc_helper_funcs vc4_crtc_helper_funcs = {
 diff --git a/drivers/gpu/drm/vc4/vc4_drv.c b/drivers/gpu/drm/vc4/vc4_drv.c
-index 5e6fb6c2307f..e6982a7b0c5e 100644
+index e6982a7b0c5e..76f93b662766 100644
 --- a/drivers/gpu/drm/vc4/vc4_drv.c
 +++ b/drivers/gpu/drm/vc4/vc4_drv.c
-@@ -190,7 +190,6 @@ static struct drm_driver vc4_drm_driver = {
+@@ -190,8 +190,6 @@ static struct drm_driver vc4_drm_driver = {
  	.irq_postinstall = vc4_irq_postinstall,
  	.irq_uninstall = vc4_irq_uninstall,
  
--	.get_scanout_position = vc4_crtc_get_scanoutpos,
- 	.get_vblank_timestamp = drm_calc_vbltimestamp_from_scanoutpos,
- 
+-	.get_vblank_timestamp = drm_calc_vbltimestamp_from_scanoutpos,
+-
  #if defined(CONFIG_DEBUG_FS)
-diff --git a/drivers/gpu/drm/vc4/vc4_drv.h b/drivers/gpu/drm/vc4/vc4_drv.h
-index 6627b20c99e9..f90c0d08e740 100644
---- a/drivers/gpu/drm/vc4/vc4_drv.h
-+++ b/drivers/gpu/drm/vc4/vc4_drv.h
-@@ -743,10 +743,6 @@ void vc4_bo_remove_from_purgeable_pool(struct vc4_bo *bo);
- 
- /* vc4_crtc.c */
- extern struct platform_driver vc4_crtc_driver;
--bool vc4_crtc_get_scanoutpos(struct drm_device *dev, unsigned int crtc_id,
--			     bool in_vblank_irq, int *vpos, int *hpos,
--			     ktime_t *stime, ktime_t *etime,
--			     const struct drm_display_mode *mode);
- void vc4_crtc_handle_vblank(struct vc4_crtc *crtc);
- void vc4_crtc_txp_armed(struct drm_crtc_state *state);
- void vc4_crtc_get_margins(struct drm_crtc_state *state,
+ 	.debugfs_init = vc4_debugfs_init,
+ #endif
 -- 
 2.24.1
 
