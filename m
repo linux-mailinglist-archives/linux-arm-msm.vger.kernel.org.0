@@ -2,203 +2,312 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 47CE413C7CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 16:33:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CFF113C977
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 17:35:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726483AbgAOPc3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jan 2020 10:32:29 -0500
-Received: from lelv0143.ext.ti.com ([198.47.23.248]:54296 "EHLO
-        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726132AbgAOPc3 (ORCPT
+        id S1726483AbgAOQfV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jan 2020 11:35:21 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39413 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726248AbgAOQfV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jan 2020 10:32:29 -0500
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 00FFWMfY033992;
-        Wed, 15 Jan 2020 09:32:22 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1579102342;
-        bh=CIFk2z09Rgz02itwkwKbH7Ge7nfwZT4HXBXZ1Nbl/zo=;
-        h=Subject:To:CC:References:From:Date:In-Reply-To;
-        b=xFnBcx4+Uhej6Vz6Bz7EP8VZvHtQwU2E+pxVoHhvZdfjxQe2spY3EpUs6gyx4hlCA
-         CWmmkcAaYTdlaCpJin0HL1FtiTT2Hyi/S+h6o+lgCP5qQyD/pkNNFTuRqJLwvD66AF
-         +6qtkOI6H19tyqWdxkPSWMDADGscjeTztJXK/LjM=
-Received: from DFLE105.ent.ti.com (dfle105.ent.ti.com [10.64.6.26])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 00FFWM5Q057468
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 15 Jan 2020 09:32:22 -0600
-Received: from DFLE102.ent.ti.com (10.64.6.23) by DFLE105.ent.ti.com
- (10.64.6.26) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Wed, 15
- Jan 2020 09:32:22 -0600
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE102.ent.ti.com
- (10.64.6.23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Wed, 15 Jan 2020 09:32:22 -0600
-Received: from [128.247.58.153] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 00FFWLRR063623;
-        Wed, 15 Jan 2020 09:32:21 -0600
-Subject: Re: [PATCH v3] rpmsg: core: add API to get MTU
-To:     Arnaud Pouliquen <arnaud.pouliquen@st.com>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-CC:     Fabien DESSENNE <fabien.dessenne@st.com>,
-        <linux-stm32@st-md-mailman.stormreply.com>
-References: <20200115082722.13102-1-arnaud.pouliquen@st.com>
-From:   Suman Anna <s-anna@ti.com>
-Message-ID: <744500d3-643e-1446-1606-b4dde313e98f@ti.com>
-Date:   Wed, 15 Jan 2020 09:32:21 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        Wed, 15 Jan 2020 11:35:21 -0500
+Received: by mail-wm1-f66.google.com with SMTP id 20so583696wmj.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2020 08:35:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=G3peKKo9Fj2JXRqjV+S346995shdYhc2DU+/Vm7c9PM=;
+        b=Pwm5gg+P7kVfnp7IKOmO/1zD5JF+qSs9tSxicwayxI7x6kcG8jCYcXNhf0vgsgfQ5H
+         aJXhTrepHrxMQl5tg7DiYqs8T7XiIncJJFPwROZmmOuzcRX2ux5u5uHrroGpV5qNEU7t
+         AkQd4QPJ9h9ftCBlgtVaVErLZ4UPH11zbx663Twvf/hUig407l3NZWZ5Wum2NzoT3mWr
+         cE4HJdILDa5oZtFtJc6B+xT8Je8A6IdGcrLSlnvQa9vpJDsg0k6uL9NPu0ucusq+22Ju
+         pEt3PLFFDHV1QrcWaMzCjeNY1IrAhsoqQgqqMR5LxIMuUm5mUMYERd8vhWKdKm4CFLqf
+         FTSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=G3peKKo9Fj2JXRqjV+S346995shdYhc2DU+/Vm7c9PM=;
+        b=YvDJdGnvRCygtUHRMFkkxWpW40uh1I1bYVVtHTf7b0hCKldCtsF7qhWQTPVoHrkSyM
+         NJgwWPkhxYbQzwWnm7GDwJ+JJGbsfi0fRwjiv7GFuCTEOIBzYfQ8MnJqiOvevTL4B/RM
+         SPGzsgJAKrIdTehKGl7oiQI7J6mGu05X4HtIpq8ga0/KovBALBRCTqm3ji6eh3tRQgIo
+         H3rj6U4FnXSWi00BHur9cSffBMF6vGKHYihrccewY3Vw1Ftm7kEbIKVOLI077AG/iffd
+         M+4rdokzoNcQ+OenIvfjL17eOmm7rciircwqoQOrpokaCvwacuD17Jc3+SW/yr5CE7U7
+         tNgA==
+X-Gm-Message-State: APjAAAXsOUUkbjv4L2Vx5whrBTs8FQINRIgQlLRtNfRRmwHmbH7P0MkF
+        pwKmlpuUiQcSvulo+PXgKYSP4zLrHkfX047ozGM=
+X-Google-Smtp-Source: APXvYqwImTR8FEOALzWYqtEwSn9SvJgSG5F8jPXosAzYKmsd0e9I0EZIVQ64mxhPlP8iudytSq/xeEqI2i0ikGc9bFU=
+X-Received: by 2002:a1c:f210:: with SMTP id s16mr684657wmc.57.1579106117622;
+ Wed, 15 Jan 2020 08:35:17 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20200115082722.13102-1-arnaud.pouliquen@st.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+References: <20200110092127.27847-1-tzimmermann@suse.de> <20200110092127.27847-3-tzimmermann@suse.de>
+ <CADnq5_OCsQQ0=Yr6xinWWCursZc0ZGBrNj1=0667kbqE1BorVw@mail.gmail.com> <352f23e9-b690-375f-005b-e5ea1fb9a0d2@suse.de>
+In-Reply-To: <352f23e9-b690-375f-005b-e5ea1fb9a0d2@suse.de>
+From:   Alex Deucher <alexdeucher@gmail.com>
+Date:   Wed, 15 Jan 2020 11:35:04 -0500
+Message-ID: <CADnq5_MkJy9zNHxeEGOYjvXs8MxuY_kd5_sTP8EWGFEBMpWx6Q@mail.gmail.com>
+Subject: Re: [PATCH 02/23] drm/amdgpu: Convert to struct drm_crtc_helper_funcs.get_scanout_position()
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     Dave Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        "Deucher, Alexander" <alexander.deucher@amd.com>,
+        Christian Koenig <christian.koenig@amd.com>,
+        Chunming Zhou <David1.Zhou@amd.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Vincent Abriou <vincent.abriou@st.com>, yannick.fertre@st.com,
+        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
+        alexandre.torgue@st.com, Eric Anholt <eric@anholt.net>,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        VMware Graphics <linux-graphics-maintainer@vmware.com>,
+        Thomas Hellstrom <thellstrom@vmware.com>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        "Wentland, Harry" <harry.wentland@amd.com>,
+        "Leo (Sunpeng) Li" <sunpeng.li@amd.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        amd-gfx list <amd-gfx@lists.freedesktop.org>,
+        Maling list - DRI developers 
+        <dri-devel@lists.freedesktop.org>,
+        nouveau <nouveau@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/15/20 2:27 AM, Arnaud Pouliquen wrote:
-> Return the rpmsg buffer MTU for sending message, so rpmsg users
-> can split a long message in several sub rpmsg buffers.
-> 
-> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@st.com>
+On Wed, Jan 15, 2020 at 4:41 AM Thomas Zimmermann <tzimmermann@suse.de> wro=
+te:
+>
+> Hi
+>
+> Am 13.01.20 um 19:52 schrieb Alex Deucher:
+> > On Fri, Jan 10, 2020 at 4:21 AM Thomas Zimmermann <tzimmermann@suse.de>=
+ wrote:
+> >>
+> >> The callback struct drm_driver.get_scanout_position() is deprecated in
+> >> favor of struct drm_crtc_helper_funcs.get_scanout_position(). Convert
+> >> amdgpu over.
+> >>
+> >
+> > I would prefer to just change the signature of
+> > amdgpu_display_get_crtc_scanoutpos() to match the new API rather than
+> > wrapping it again.
+>
+> While trying to adapt the siganture, I found that
+> amdgpu_display_get_crtc_scanoutpos() requires a flags argument that is
+> not mappable to the callback API. That wrapper function is necessary.
+>
 
-Acked-by: Suman Anna <s-anna@ti.com>
+No worries.  We can clean them up later.  Wrapping is fine.
 
-regards
-Suman
+Alex
 
-> ---
-> V2[1] to V3
->   - fix parameter description in rpmsg_device_ops struct
-> 
-> [1]: https://lore.kernel.org/patchwork/patch/1124684/
-> ---
->  drivers/rpmsg/rpmsg_core.c       | 21 +++++++++++++++++++++
->  drivers/rpmsg/rpmsg_internal.h   |  2 ++
->  drivers/rpmsg/virtio_rpmsg_bus.c | 10 ++++++++++
->  include/linux/rpmsg.h            | 10 ++++++++++
->  4 files changed, 43 insertions(+)
-> 
-> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
-> index e330ec4dfc33..a6ef54c4779a 100644
-> --- a/drivers/rpmsg/rpmsg_core.c
-> +++ b/drivers/rpmsg/rpmsg_core.c
-> @@ -283,6 +283,27 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->  }
->  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
->  
-> +/**
-> + * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
-> + * @ept: the rpmsg endpoint
-> + *
-> + * This function returns maximum buffer size available for a single message.
-> + *
-> + * Return: the maximum transmission size on success and an appropriate error
-> + * value on failure.
-> + */
-> +
-> +ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
-> +{
-> +	if (WARN_ON(!ept))
-> +		return -EINVAL;
-> +	if (!ept->ops->get_mtu)
-> +		return -ENOTSUPP;
-> +
-> +	return ept->ops->get_mtu(ept);
-> +}
-> +EXPORT_SYMBOL(rpmsg_get_mtu);
-> +
->  /*
->   * match an rpmsg channel with a channel info struct.
->   * this is used to make sure we're not creating rpmsg devices for channels
-> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
-> index 3fc83cd50e98..e6f88ee90ff6 100644
-> --- a/drivers/rpmsg/rpmsg_internal.h
-> +++ b/drivers/rpmsg/rpmsg_internal.h
-> @@ -47,6 +47,7 @@ struct rpmsg_device_ops {
->   * @trysendto:		see @rpmsg_trysendto(), optional
->   * @trysend_offchannel:	see @rpmsg_trysend_offchannel(), optional
->   * @poll:		see @rpmsg_poll(), optional
-> + * @get_mtu:		see @rpmsg_get_mtu(), optional
->   *
->   * Indirection table for the operations that a rpmsg backend should implement.
->   * In addition to @destroy_ept, the backend must at least implement @send and
-> @@ -66,6 +67,7 @@ struct rpmsg_endpoint_ops {
->  			     void *data, int len);
->  	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
->  			     poll_table *wait);
-> +	ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
->  };
->  
->  int rpmsg_register_device(struct rpmsg_device *rpdev);
-> diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
-> index 376ebbf880d6..6e48fdf24555 100644
-> --- a/drivers/rpmsg/virtio_rpmsg_bus.c
-> +++ b/drivers/rpmsg/virtio_rpmsg_bus.c
-> @@ -175,6 +175,7 @@ static int virtio_rpmsg_trysendto(struct rpmsg_endpoint *ept, void *data,
->  				  int len, u32 dst);
->  static int virtio_rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src,
->  					   u32 dst, void *data, int len);
-> +static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept);
->  
->  static const struct rpmsg_endpoint_ops virtio_endpoint_ops = {
->  	.destroy_ept = virtio_rpmsg_destroy_ept,
-> @@ -184,6 +185,7 @@ static const struct rpmsg_endpoint_ops virtio_endpoint_ops = {
->  	.trysend = virtio_rpmsg_trysend,
->  	.trysendto = virtio_rpmsg_trysendto,
->  	.trysend_offchannel = virtio_rpmsg_trysend_offchannel,
-> +	.get_mtu = virtio_rpmsg_get_mtu,
->  };
->  
->  /**
-> @@ -699,6 +701,14 @@ static int virtio_rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src,
->  	return rpmsg_send_offchannel_raw(rpdev, src, dst, data, len, false);
->  }
->  
-> +static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept)
-> +{
-> +	struct rpmsg_device *rpdev = ept->rpdev;
-> +	struct virtio_rpmsg_channel *vch = to_virtio_rpmsg_channel(rpdev);
-> +
-> +	return vch->vrp->buf_size - sizeof(struct rpmsg_hdr);
-> +}
-> +
->  static int rpmsg_recv_single(struct virtproc_info *vrp, struct device *dev,
->  			     struct rpmsg_hdr *msg, unsigned int len)
->  {
-> diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
-> index 9fe156d1c018..88d7892ca93d 100644
-> --- a/include/linux/rpmsg.h
-> +++ b/include/linux/rpmsg.h
-> @@ -135,6 +135,8 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->  __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
->  			poll_table *wait);
->  
-> +ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
-> +
->  #else
->  
->  static inline int register_rpmsg_device(struct rpmsg_device *dev)
-> @@ -242,6 +244,14 @@ static inline __poll_t rpmsg_poll(struct rpmsg_endpoint *ept,
->  	return 0;
->  }
->  
-> +static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
-> +{
-> +	/* This shouldn't be possible */
-> +	WARN_ON(1);
-> +
-> +	return -ENXIO;
-> +}
-> +
->  #endif /* IS_ENABLED(CONFIG_RPMSG) */
->  
->  /* use a macro to avoid include chaining to get THIS_MODULE */
-> 
-
+> Best regards
+> Thomas
+>
+> >
+> > Alex
+> >
+> >> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> >> ---
+> >>  drivers/gpu/drm/amd/amdgpu/amdgpu_display.c       | 12 ++++++++++++
+> >>  drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c           | 11 -----------
+> >>  drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h          |  5 +++++
+> >>  drivers/gpu/drm/amd/amdgpu/dce_v10_0.c            |  1 +
+> >>  drivers/gpu/drm/amd/amdgpu/dce_v11_0.c            |  1 +
+> >>  drivers/gpu/drm/amd/amdgpu/dce_v6_0.c             |  1 +
+> >>  drivers/gpu/drm/amd/amdgpu/dce_v8_0.c             |  1 +
+> >>  drivers/gpu/drm/amd/amdgpu/dce_virtual.c          |  1 +
+> >>  drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  3 ++-
+> >>  9 files changed, 24 insertions(+), 12 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c b/drivers/gpu=
+/drm/amd/amdgpu/amdgpu_display.c
+> >> index 4e699071d144..a1e769d4417d 100644
+> >> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
+> >> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
+> >> @@ -914,3 +914,15 @@ int amdgpu_display_crtc_idx_to_irq_type(struct am=
+dgpu_device *adev, int crtc)
+> >>                 return AMDGPU_CRTC_IRQ_NONE;
+> >>         }
+> >>  }
+> >> +
+> >> +bool amdgpu_crtc_get_scanout_position(struct drm_crtc *crtc,
+> >> +                       bool in_vblank_irq, int *vpos,
+> >> +                       int *hpos, ktime_t *stime, ktime_t *etime,
+> >> +                       const struct drm_display_mode *mode)
+> >> +{
+> >> +       struct drm_device *dev =3D crtc->dev;
+> >> +       unsigned int pipe =3D crtc->index;
+> >> +
+> >> +       return amdgpu_display_get_crtc_scanoutpos(dev, pipe, 0, vpos, =
+hpos,
+> >> +                                                 stime, etime, mode);
+> >> +}
+> >> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm=
+/amd/amdgpu/amdgpu_drv.c
+> >> index 3f6f14ce1511..0749285dd1c7 100644
+> >> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+> >> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+> >> @@ -1367,16 +1367,6 @@ int amdgpu_file_to_fpriv(struct file *filp, str=
+uct amdgpu_fpriv **fpriv)
+> >>         return 0;
+> >>  }
+> >>
+> >> -static bool
+> >> -amdgpu_get_crtc_scanout_position(struct drm_device *dev, unsigned int=
+ pipe,
+> >> -                                bool in_vblank_irq, int *vpos, int *h=
+pos,
+> >> -                                ktime_t *stime, ktime_t *etime,
+> >> -                                const struct drm_display_mode *mode)
+> >> -{
+> >> -       return amdgpu_display_get_crtc_scanoutpos(dev, pipe, 0, vpos, =
+hpos,
+> >> -                                                 stime, etime, mode);
+> >> -}
+> >> -
+> >>  static struct drm_driver kms_driver =3D {
+> >>         .driver_features =3D
+> >>             DRIVER_USE_AGP | DRIVER_ATOMIC |
+> >> @@ -1391,7 +1381,6 @@ static struct drm_driver kms_driver =3D {
+> >>         .enable_vblank =3D amdgpu_enable_vblank_kms,
+> >>         .disable_vblank =3D amdgpu_disable_vblank_kms,
+> >>         .get_vblank_timestamp =3D drm_calc_vbltimestamp_from_scanoutpo=
+s,
+> >> -       .get_scanout_position =3D amdgpu_get_crtc_scanout_position,
+> >>         .irq_handler =3D amdgpu_irq_handler,
+> >>         .ioctls =3D amdgpu_ioctls_kms,
+> >>         .gem_free_object_unlocked =3D amdgpu_gem_object_free,
+> >> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h b/drivers/gpu/dr=
+m/amd/amdgpu/amdgpu_mode.h
+> >> index eb9975f4decb..37ba07e2feb5 100644
+> >> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h
+> >> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h
+> >> @@ -612,6 +612,11 @@ void amdgpu_panel_mode_fixup(struct drm_encoder *=
+encoder,
+> >>                              struct drm_display_mode *adjusted_mode);
+> >>  int amdgpu_display_crtc_idx_to_irq_type(struct amdgpu_device *adev, i=
+nt crtc);
+> >>
+> >> +bool amdgpu_crtc_get_scanout_position(struct drm_crtc *crtc,
+> >> +                       bool in_vblank_irq, int *vpos,
+> >> +                       int *hpos, ktime_t *stime, ktime_t *etime,
+> >> +                       const struct drm_display_mode *mode);
+> >> +
+> >>  /* fbdev layer */
+> >>  int amdgpu_fbdev_init(struct amdgpu_device *adev);
+> >>  void amdgpu_fbdev_fini(struct amdgpu_device *adev);
+> >> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c b/drivers/gpu/drm/=
+amd/amdgpu/dce_v10_0.c
+> >> index 40d2ac723dd6..bdc1e0f036d4 100644
+> >> --- a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
+> >> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
+> >> @@ -2685,6 +2685,7 @@ static const struct drm_crtc_helper_funcs dce_v1=
+0_0_crtc_helper_funcs =3D {
+> >>         .prepare =3D dce_v10_0_crtc_prepare,
+> >>         .commit =3D dce_v10_0_crtc_commit,
+> >>         .disable =3D dce_v10_0_crtc_disable,
+> >> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
+> >>  };
+> >>
+> >>  static int dce_v10_0_crtc_init(struct amdgpu_device *adev, int index)
+> >> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c b/drivers/gpu/drm/=
+amd/amdgpu/dce_v11_0.c
+> >> index 898ef72d423c..0319da5f7bf9 100644
+> >> --- a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
+> >> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
+> >> @@ -2793,6 +2793,7 @@ static const struct drm_crtc_helper_funcs dce_v1=
+1_0_crtc_helper_funcs =3D {
+> >>         .prepare =3D dce_v11_0_crtc_prepare,
+> >>         .commit =3D dce_v11_0_crtc_commit,
+> >>         .disable =3D dce_v11_0_crtc_disable,
+> >> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
+> >>  };
+> >>
+> >>  static int dce_v11_0_crtc_init(struct amdgpu_device *adev, int index)
+> >> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c b/drivers/gpu/drm/a=
+md/amdgpu/dce_v6_0.c
+> >> index db15a112becc..78642c3b14fc 100644
+> >> --- a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
+> >> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
+> >> @@ -2575,6 +2575,7 @@ static const struct drm_crtc_helper_funcs dce_v6=
+_0_crtc_helper_funcs =3D {
+> >>         .prepare =3D dce_v6_0_crtc_prepare,
+> >>         .commit =3D dce_v6_0_crtc_commit,
+> >>         .disable =3D dce_v6_0_crtc_disable,
+> >> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
+> >>  };
+> >>
+> >>  static int dce_v6_0_crtc_init(struct amdgpu_device *adev, int index)
+> >> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c b/drivers/gpu/drm/a=
+md/amdgpu/dce_v8_0.c
+> >> index f06c9022c1fd..1e8d4975435a 100644
+> >> --- a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
+> >> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
+> >> @@ -2593,6 +2593,7 @@ static const struct drm_crtc_helper_funcs dce_v8=
+_0_crtc_helper_funcs =3D {
+> >>         .prepare =3D dce_v8_0_crtc_prepare,
+> >>         .commit =3D dce_v8_0_crtc_commit,
+> >>         .disable =3D dce_v8_0_crtc_disable,
+> >> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
+> >>  };
+> >>
+> >>  static int dce_v8_0_crtc_init(struct amdgpu_device *adev, int index)
+> >> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_virtual.c b/drivers/gpu/dr=
+m/amd/amdgpu/dce_virtual.c
+> >> index e4f94863332c..4b2f915aba47 100644
+> >> --- a/drivers/gpu/drm/amd/amdgpu/dce_virtual.c
+> >> +++ b/drivers/gpu/drm/amd/amdgpu/dce_virtual.c
+> >> @@ -218,6 +218,7 @@ static const struct drm_crtc_helper_funcs dce_virt=
+ual_crtc_helper_funcs =3D {
+> >>         .prepare =3D dce_virtual_crtc_prepare,
+> >>         .commit =3D dce_virtual_crtc_commit,
+> >>         .disable =3D dce_virtual_crtc_disable,
+> >> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
+> >>  };
+> >>
+> >>  static int dce_virtual_crtc_init(struct amdgpu_device *adev, int inde=
+x)
+> >> diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drive=
+rs/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+> >> index f2db400a3920..39c5cf242c1b 100644
+> >> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+> >> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+> >> @@ -4821,7 +4821,8 @@ static bool dm_crtc_helper_mode_fixup(struct drm=
+_crtc *crtc,
+> >>  static const struct drm_crtc_helper_funcs amdgpu_dm_crtc_helper_funcs=
+ =3D {
+> >>         .disable =3D dm_crtc_helper_disable,
+> >>         .atomic_check =3D dm_crtc_helper_atomic_check,
+> >> -       .mode_fixup =3D dm_crtc_helper_mode_fixup
+> >> +       .mode_fixup =3D dm_crtc_helper_mode_fixup,
+> >> +       .get_scanout_position =3D amdgpu_crtc_get_scanout_position,
+> >>  };
+> >>
+> >>  static void dm_encoder_helper_disable(struct drm_encoder *encoder)
+> >> --
+> >> 2.24.1
+> >>
+> >> _______________________________________________
+> >> amd-gfx mailing list
+> >> amd-gfx@lists.freedesktop.org
+> >> https://lists.freedesktop.org/mailman/listinfo/amd-gfx
+>
+> --
+> Thomas Zimmermann
+> Graphics Driver Developer
+> SUSE Software Solutions Germany GmbH
+> Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+> (HRB 36809, AG N=C3=BCrnberg)
+> Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
+>
