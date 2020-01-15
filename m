@@ -2,231 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B7BF13C71B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 16:12:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47CE413C7CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jan 2020 16:33:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729110AbgAOPME (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jan 2020 10:12:04 -0500
-Received: from mga03.intel.com ([134.134.136.65]:21446 "EHLO mga03.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726562AbgAOPMD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jan 2020 10:12:03 -0500
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-X-Amp-File-Uploaded: False
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 15 Jan 2020 07:12:02 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,322,1574150400"; 
-   d="scan'208";a="253890127"
-Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.174])
-  by fmsmga001.fm.intel.com with SMTP; 15 Jan 2020 07:11:54 -0800
-Received: by stinkbox (sSMTP sendmail emulation); Wed, 15 Jan 2020 17:11:53 +0200
-Date:   Wed, 15 Jan 2020 17:11:53 +0200
-From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     airlied@linux.ie, daniel@ffwll.ch, alexander.deucher@amd.com,
-        christian.koenig@amd.com, David1.Zhou@amd.com,
-        maarten.lankhorst@linux.intel.com, patrik.r.jakobsson@gmail.com,
-        robdclark@gmail.com, sean@poorly.run, benjamin.gaignard@linaro.org,
-        vincent.abriou@st.com, yannick.fertre@st.com,
-        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@st.com, eric@anholt.net,
-        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
-        linux-graphics-maintainer@vmware.com, thellstrom@vmware.com,
-        bskeggs@redhat.com, harry.wentland@amd.com, sunpeng.li@amd.com,
-        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
-        rodrigo.vivi@intel.com, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 07/21] drm/i915: Convert to CRTC VBLANK callbacks
-Message-ID: <20200115151153.GB13686@intel.com>
-References: <20200115121652.7050-1-tzimmermann@suse.de>
- <20200115121652.7050-8-tzimmermann@suse.de>
+        id S1726483AbgAOPc3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jan 2020 10:32:29 -0500
+Received: from lelv0143.ext.ti.com ([198.47.23.248]:54296 "EHLO
+        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726132AbgAOPc3 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Jan 2020 10:32:29 -0500
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 00FFWMfY033992;
+        Wed, 15 Jan 2020 09:32:22 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1579102342;
+        bh=CIFk2z09Rgz02itwkwKbH7Ge7nfwZT4HXBXZ1Nbl/zo=;
+        h=Subject:To:CC:References:From:Date:In-Reply-To;
+        b=xFnBcx4+Uhej6Vz6Bz7EP8VZvHtQwU2E+pxVoHhvZdfjxQe2spY3EpUs6gyx4hlCA
+         CWmmkcAaYTdlaCpJin0HL1FtiTT2Hyi/S+h6o+lgCP5qQyD/pkNNFTuRqJLwvD66AF
+         +6qtkOI6H19tyqWdxkPSWMDADGscjeTztJXK/LjM=
+Received: from DFLE105.ent.ti.com (dfle105.ent.ti.com [10.64.6.26])
+        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 00FFWM5Q057468
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Wed, 15 Jan 2020 09:32:22 -0600
+Received: from DFLE102.ent.ti.com (10.64.6.23) by DFLE105.ent.ti.com
+ (10.64.6.26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Wed, 15
+ Jan 2020 09:32:22 -0600
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE102.ent.ti.com
+ (10.64.6.23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
+ Frontend Transport; Wed, 15 Jan 2020 09:32:22 -0600
+Received: from [128.247.58.153] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 00FFWLRR063623;
+        Wed, 15 Jan 2020 09:32:21 -0600
+Subject: Re: [PATCH v3] rpmsg: core: add API to get MTU
+To:     Arnaud Pouliquen <arnaud.pouliquen@st.com>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+CC:     Fabien DESSENNE <fabien.dessenne@st.com>,
+        <linux-stm32@st-md-mailman.stormreply.com>
+References: <20200115082722.13102-1-arnaud.pouliquen@st.com>
+From:   Suman Anna <s-anna@ti.com>
+Message-ID: <744500d3-643e-1446-1606-b4dde313e98f@ti.com>
+Date:   Wed, 15 Jan 2020 09:32:21 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200115121652.7050-8-tzimmermann@suse.de>
-X-Patchwork-Hint: comment
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200115082722.13102-1-arnaud.pouliquen@st.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 15, 2020 at 01:16:38PM +0100, Thomas Zimmermann wrote:
-> VBLANK callbacks in struct drm_driver are deprecated in favor of their
-> equivalents in struct drm_crtc_funcs. Convert i915 over.
+On 1/15/20 2:27 AM, Arnaud Pouliquen wrote:
+> Return the rpmsg buffer MTU for sending message, so rpmsg users
+> can split a long message in several sub rpmsg buffers.
 > 
-> The callback struct drm_driver.get_scanout_position() is deprecated
-> in favor of struct drm_crtc_helper_funcs.get_scanout_position().
-> i915 doesn't use CRTC helpers. Instead pass i915's implementation of
-> get_scanout_position() to DRM core's
-> drm_crtc_vblank_helper_get_vblank_timestamp_internal().
-> 
-> v2:
-> 	* use DRM's implementation of get_vblank_timestamp()
-> 	* simplify function names
-> 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@st.com>
+
+Acked-by: Suman Anna <s-anna@ti.com>
+
+regards
+Suman
+
 > ---
->  drivers/gpu/drm/i915/display/intel_display.c |  7 +++++++
->  drivers/gpu/drm/i915/i915_drv.c              |  3 ---
->  drivers/gpu/drm/i915/i915_irq.c              | 20 +++++++++++++++-----
->  drivers/gpu/drm/i915/i915_irq.h              |  6 ++----
->  4 files changed, 24 insertions(+), 12 deletions(-)
+> V2[1] to V3
+>   - fix parameter description in rpmsg_device_ops struct
 > 
-> diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
-> index 59c375879186..c8f1da845e7d 100644
-> --- a/drivers/gpu/drm/i915/display/intel_display.c
-> +++ b/drivers/gpu/drm/i915/display/intel_display.c
-> @@ -16336,6 +16336,7 @@ static const struct drm_crtc_funcs bdw_crtc_funcs = {
->  	.get_vblank_counter = g4x_get_vblank_counter,
->  	.enable_vblank = bdw_enable_vblank,
->  	.disable_vblank = bdw_disable_vblank,
-> +	.get_vblank_timestamp = i915_crtc_get_vblank_timestamp,
->  };
->  
->  static const struct drm_crtc_funcs ilk_crtc_funcs = {
-> @@ -16344,6 +16345,7 @@ static const struct drm_crtc_funcs ilk_crtc_funcs = {
->  	.get_vblank_counter = g4x_get_vblank_counter,
->  	.enable_vblank = ilk_enable_vblank,
->  	.disable_vblank = ilk_disable_vblank,
-> +	.get_vblank_timestamp = i915_crtc_get_vblank_timestamp,
->  };
->  
->  static const struct drm_crtc_funcs g4x_crtc_funcs = {
-> @@ -16352,6 +16354,7 @@ static const struct drm_crtc_funcs g4x_crtc_funcs = {
->  	.get_vblank_counter = g4x_get_vblank_counter,
->  	.enable_vblank = i965_enable_vblank,
->  	.disable_vblank = i965_disable_vblank,
-> +	.get_vblank_timestamp = i915_crtc_get_vblank_timestamp,
->  };
->  
->  static const struct drm_crtc_funcs i965_crtc_funcs = {
-> @@ -16360,6 +16363,7 @@ static const struct drm_crtc_funcs i965_crtc_funcs = {
->  	.get_vblank_counter = i915_get_vblank_counter,
->  	.enable_vblank = i965_enable_vblank,
->  	.disable_vblank = i965_disable_vblank,
-> +	.get_vblank_timestamp = i915_crtc_get_vblank_timestamp,
->  };
->  
->  static const struct drm_crtc_funcs i915gm_crtc_funcs = {
-> @@ -16368,6 +16372,7 @@ static const struct drm_crtc_funcs i915gm_crtc_funcs = {
->  	.get_vblank_counter = i915_get_vblank_counter,
->  	.enable_vblank = i915gm_enable_vblank,
->  	.disable_vblank = i915gm_disable_vblank,
-> +	.get_vblank_timestamp = i915_crtc_get_vblank_timestamp,
->  };
->  
->  static const struct drm_crtc_funcs i915_crtc_funcs = {
-> @@ -16376,6 +16381,7 @@ static const struct drm_crtc_funcs i915_crtc_funcs = {
->  	.get_vblank_counter = i915_get_vblank_counter,
->  	.enable_vblank = i8xx_enable_vblank,
->  	.disable_vblank = i8xx_disable_vblank,
-> +	.get_vblank_timestamp = i915_crtc_get_vblank_timestamp,
->  };
->  
->  static const struct drm_crtc_funcs i8xx_crtc_funcs = {
-> @@ -16384,6 +16390,7 @@ static const struct drm_crtc_funcs i8xx_crtc_funcs = {
->  	/* no hw vblank counter */
->  	.enable_vblank = i8xx_enable_vblank,
->  	.disable_vblank = i8xx_disable_vblank,
-> +	.get_vblank_timestamp = i915_crtc_get_vblank_timestamp,
->  };
->  
->  static struct intel_crtc *intel_crtc_alloc(void)
-> diff --git a/drivers/gpu/drm/i915/i915_drv.c b/drivers/gpu/drm/i915/i915_drv.c
-> index f7385abdd74b..30b9ba136a81 100644
-> --- a/drivers/gpu/drm/i915/i915_drv.c
-> +++ b/drivers/gpu/drm/i915/i915_drv.c
-> @@ -2769,9 +2769,6 @@ static struct drm_driver driver = {
->  	.gem_prime_export = i915_gem_prime_export,
->  	.gem_prime_import = i915_gem_prime_import,
->  
-> -	.get_vblank_timestamp = drm_calc_vbltimestamp_from_scanoutpos,
-> -	.get_scanout_position = i915_get_crtc_scanoutpos,
-> -
->  	.dumb_create = i915_gem_dumb_create,
->  	.dumb_map_offset = i915_gem_dumb_mmap_offset,
->  
-> diff --git a/drivers/gpu/drm/i915/i915_irq.c b/drivers/gpu/drm/i915/i915_irq.c
-> index afc6aad9bf8c..c39e3ef6e4a2 100644
-> --- a/drivers/gpu/drm/i915/i915_irq.c
-> +++ b/drivers/gpu/drm/i915/i915_irq.c
-> @@ -762,13 +762,15 @@ static int __intel_get_crtc_scanline(struct intel_crtc *crtc)
->  	return (position + crtc->scanline_offset) % vtotal;
+> [1]: https://lore.kernel.org/patchwork/patch/1124684/
+> ---
+>  drivers/rpmsg/rpmsg_core.c       | 21 +++++++++++++++++++++
+>  drivers/rpmsg/rpmsg_internal.h   |  2 ++
+>  drivers/rpmsg/virtio_rpmsg_bus.c | 10 ++++++++++
+>  include/linux/rpmsg.h            | 10 ++++++++++
+>  4 files changed, 43 insertions(+)
+> 
+> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+> index e330ec4dfc33..a6ef54c4779a 100644
+> --- a/drivers/rpmsg/rpmsg_core.c
+> +++ b/drivers/rpmsg/rpmsg_core.c
+> @@ -283,6 +283,27 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
 >  }
+>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
 >  
-> -bool i915_get_crtc_scanoutpos(struct drm_device *dev, unsigned int index,
-> -			      bool in_vblank_irq, int *vpos, int *hpos,
-> -			      ktime_t *stime, ktime_t *etime,
-> -			      const struct drm_display_mode *mode)
-> +static bool i915_get_crtc_scanoutpos(struct drm_crtc *dcrtc,
-
-'struct drm_crtc *_crtc'
-is the style we're going with these days.
-
-> +				     bool in_vblank_irq,
-> +				     int *vpos, int *hpos,
-> +				     ktime_t *stime, ktime_t *etime,
-> +				     const struct drm_display_mode *mode)
->  {
-> +	struct drm_device *dev = dcrtc->dev;
->  	struct drm_i915_private *dev_priv = to_i915(dev);
-> -	struct intel_crtc *crtc = to_intel_crtc(drm_crtc_from_index(dev, index));
-> +	struct intel_crtc *crtc = to_intel_crtc(dcrtc);
->  	enum pipe pipe = crtc->pipe;
->  	int position;
->  	int vbl_start, vbl_end, hsync_start, htotal, vtotal;
-> @@ -879,6 +881,14 @@ bool i915_get_crtc_scanoutpos(struct drm_device *dev, unsigned int index,
->  	return true;
->  }
->  
-> +bool i915_crtc_get_vblank_timestamp(struct drm_crtc *crtc, int *max_error,
-> +				    ktime_t *vblank_time, bool in_vblank_irq)
-
-'intel_crtc_get_vblank_timestamp' pls.
-
-Otherwise lgtm
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-
+> +/**
+> + * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
+> + * @ept: the rpmsg endpoint
+> + *
+> + * This function returns maximum buffer size available for a single message.
+> + *
+> + * Return: the maximum transmission size on success and an appropriate error
+> + * value on failure.
+> + */
+> +
+> +ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
 > +{
-> +	return drm_crtc_vblank_helper_get_vblank_timestamp_internal(
-> +		crtc, max_error, vblank_time, in_vblank_irq,
-> +		i915_get_crtc_scanoutpos);
+> +	if (WARN_ON(!ept))
+> +		return -EINVAL;
+> +	if (!ept->ops->get_mtu)
+> +		return -ENOTSUPP;
+> +
+> +	return ept->ops->get_mtu(ept);
+> +}
+> +EXPORT_SYMBOL(rpmsg_get_mtu);
+> +
+>  /*
+>   * match an rpmsg channel with a channel info struct.
+>   * this is used to make sure we're not creating rpmsg devices for channels
+> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
+> index 3fc83cd50e98..e6f88ee90ff6 100644
+> --- a/drivers/rpmsg/rpmsg_internal.h
+> +++ b/drivers/rpmsg/rpmsg_internal.h
+> @@ -47,6 +47,7 @@ struct rpmsg_device_ops {
+>   * @trysendto:		see @rpmsg_trysendto(), optional
+>   * @trysend_offchannel:	see @rpmsg_trysend_offchannel(), optional
+>   * @poll:		see @rpmsg_poll(), optional
+> + * @get_mtu:		see @rpmsg_get_mtu(), optional
+>   *
+>   * Indirection table for the operations that a rpmsg backend should implement.
+>   * In addition to @destroy_ept, the backend must at least implement @send and
+> @@ -66,6 +67,7 @@ struct rpmsg_endpoint_ops {
+>  			     void *data, int len);
+>  	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
+>  			     poll_table *wait);
+> +	ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
+>  };
+>  
+>  int rpmsg_register_device(struct rpmsg_device *rpdev);
+> diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
+> index 376ebbf880d6..6e48fdf24555 100644
+> --- a/drivers/rpmsg/virtio_rpmsg_bus.c
+> +++ b/drivers/rpmsg/virtio_rpmsg_bus.c
+> @@ -175,6 +175,7 @@ static int virtio_rpmsg_trysendto(struct rpmsg_endpoint *ept, void *data,
+>  				  int len, u32 dst);
+>  static int virtio_rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src,
+>  					   u32 dst, void *data, int len);
+> +static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept);
+>  
+>  static const struct rpmsg_endpoint_ops virtio_endpoint_ops = {
+>  	.destroy_ept = virtio_rpmsg_destroy_ept,
+> @@ -184,6 +185,7 @@ static const struct rpmsg_endpoint_ops virtio_endpoint_ops = {
+>  	.trysend = virtio_rpmsg_trysend,
+>  	.trysendto = virtio_rpmsg_trysendto,
+>  	.trysend_offchannel = virtio_rpmsg_trysend_offchannel,
+> +	.get_mtu = virtio_rpmsg_get_mtu,
+>  };
+>  
+>  /**
+> @@ -699,6 +701,14 @@ static int virtio_rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src,
+>  	return rpmsg_send_offchannel_raw(rpdev, src, dst, data, len, false);
+>  }
+>  
+> +static ssize_t virtio_rpmsg_get_mtu(struct rpmsg_endpoint *ept)
+> +{
+> +	struct rpmsg_device *rpdev = ept->rpdev;
+> +	struct virtio_rpmsg_channel *vch = to_virtio_rpmsg_channel(rpdev);
+> +
+> +	return vch->vrp->buf_size - sizeof(struct rpmsg_hdr);
 > +}
 > +
->  int intel_get_crtc_scanline(struct intel_crtc *crtc)
+>  static int rpmsg_recv_single(struct virtproc_info *vrp, struct device *dev,
+>  			     struct rpmsg_hdr *msg, unsigned int len)
 >  {
->  	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
-> diff --git a/drivers/gpu/drm/i915/i915_irq.h b/drivers/gpu/drm/i915/i915_irq.h
-> index 812c47a9c2d6..53ec921c1c67 100644
-> --- a/drivers/gpu/drm/i915/i915_irq.h
-> +++ b/drivers/gpu/drm/i915/i915_irq.h
-> @@ -101,10 +101,8 @@ void gen8_irq_power_well_post_enable(struct drm_i915_private *dev_priv,
->  void gen8_irq_power_well_pre_disable(struct drm_i915_private *dev_priv,
->  				     u8 pipe_mask);
+> diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
+> index 9fe156d1c018..88d7892ca93d 100644
+> --- a/include/linux/rpmsg.h
+> +++ b/include/linux/rpmsg.h
+> @@ -135,6 +135,8 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
+>  __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
+>  			poll_table *wait);
 >  
-> -bool i915_get_crtc_scanoutpos(struct drm_device *dev, unsigned int pipe,
-> -			      bool in_vblank_irq, int *vpos, int *hpos,
-> -			      ktime_t *stime, ktime_t *etime,
-> -			      const struct drm_display_mode *mode);
-> +bool i915_crtc_get_vblank_timestamp(struct drm_crtc *crtc, int *max_error,
-> +				    ktime_t *vblank_time, bool in_vblank_irq);
+> +ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
+> +
+>  #else
 >  
->  u32 i915_get_vblank_counter(struct drm_crtc *crtc);
->  u32 g4x_get_vblank_counter(struct drm_crtc *crtc);
-> -- 
-> 2.24.1
+>  static inline int register_rpmsg_device(struct rpmsg_device *dev)
+> @@ -242,6 +244,14 @@ static inline __poll_t rpmsg_poll(struct rpmsg_endpoint *ept,
+>  	return 0;
+>  }
+>  
+> +static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
+> +{
+> +	/* This shouldn't be possible */
+> +	WARN_ON(1);
+> +
+> +	return -ENXIO;
+> +}
+> +
+>  #endif /* IS_ENABLED(CONFIG_RPMSG) */
+>  
+>  /* use a macro to avoid include chaining to get THIS_MODULE */
 > 
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
 
--- 
-Ville Syrjälä
-Intel
