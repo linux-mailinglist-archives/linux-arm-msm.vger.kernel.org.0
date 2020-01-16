@@ -2,116 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BC3B413FA22
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 21:04:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0170013FA25
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 21:04:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729593AbgAPUET (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jan 2020 15:04:19 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:55281 "EHLO
+        id S1729431AbgAPUEw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jan 2020 15:04:52 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:29395 "EHLO
         mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729439AbgAPUET (ORCPT
+        by vger.kernel.org with ESMTP id S1727008AbgAPUEv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jan 2020 15:04:19 -0500
+        Thu, 16 Jan 2020 15:04:51 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1579205059; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=apdXuTfZcHlEYeNh8TJF/fU4oRiIjL2uFkcnXyZVlPM=; b=L8r7l1WJuffhe92y+rr1lwJ3EibkH5VHzi+OaP961vLt2OFgkjNNwE5K8MOSlnGLU6NBduMA
- 1/fV1REJl7td/hSMeFaOwhkqlopd4kXMlMTiwd0+S1Hqqv0Sk1DHnBjVUg3SLL4kJ5vmB+5Z
- LXsXgase0xDTw2aSdYaDXd6Qooc=
+ s=smtp; t=1579205091; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=gK7SvK8o2VK467ucgJKt8aMirwDA5UpWtidaibh6gf0=;
+ b=baRcoXVGTQQW8LkSWBbKdMgiHnV09vyN7zudxuIUJa7AmN069aBOdMGShjp3pVLIf7lMUBCP
+ 5qH14+gVaqKuUhGnFqPy9THK096UJzp7t7g0SGZvZK6Lro4H/sMN/CQ/cMH6HiFcdPr+avdf
+ fQ973tPKXw3Br60iCCm+E36P7tE=
 X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e20c1be.7f94b50166c0-smtp-out-n01;
- Thu, 16 Jan 2020 20:04:14 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e20c1dd.7fefd590ca40-smtp-out-n02;
+ Thu, 16 Jan 2020 20:04:45 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 333BDC4479F; Thu, 16 Jan 2020 20:04:13 +0000 (UTC)
+        id 5B721C433CB; Thu, 16 Jan 2020 20:04:44 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED autolearn=ham
+        autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5CAE2C43383;
-        Thu, 16 Jan 2020 20:04:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5CAE2C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E3D65C43383;
+        Thu, 16 Jan 2020 20:04:43 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 17 Jan 2020 01:34:43 +0530
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>,
+To:     Doug Anderson <dianders@chromium.org>,
+        Will Deacon <will@kernel.org>
+Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
         Catalin Marinas <catalin.marinas@arm.com>,
         Marc Zyngier <maz@kernel.org>,
         Andre Przywara <andre.przywara@arm.com>,
         Mark Rutland <mark.rutland@arm.com>,
-        Douglas Anderson <dianders@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv2] arm64: Add KRYO{3,4}XX CPU cores to spectre-v2 safe list
-Date:   Fri, 17 Jan 2020 01:33:53 +0530
-Message-Id: <7a8c9a5a39d9d95b9bfca1de3b1f63489d3a4d2d.1579203281.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.24.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Matthias Kaehlcke <mka@chromium.org>,
+        James Morse <james.morse@arm.com>,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH] arm64: Add KRYO{3,4}XX CPU cores to spectre-v2 safe list
+In-Reply-To: <CAD=FV=WP1T7gGC=m5FOwuLvZdwrg5f7K6tDuYFT=0BgCQMZf7A@mail.gmail.com>
+References: <20200116141912.15465-1-saiprakash.ranjan@codeaurora.org>
+ <20200116153235.GA18909@willie-the-truck>
+ <1a3f9557fa52ce2528630434e9a49d98@codeaurora.org>
+ <CAD=FV=WP1T7gGC=m5FOwuLvZdwrg5f7K6tDuYFT=0BgCQMZf7A@mail.gmail.com>
+Message-ID: <72d92c46e1f87d02f55c5a12dcd25a35@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-KRYO3XX silver CPU cores and KRYO4XX silver, gold CPU cores
-are not affected by Spectre variant 2. Add them to spectre_v2
-safe list to correct ARM_SMCCC_ARCH_WORKAROUND_1 warning and
-vulnerability sysfs value.
+Hi,
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
-Changes since v1:
- - Dropped QCOM_CPU_PART_KRYO_4XX_GOLD as CSV2 is set
----
- arch/arm64/include/asm/cputype.h | 4 ++++
- arch/arm64/kernel/cpu_errata.c   | 2 ++
- 2 files changed, 6 insertions(+)
+On 2020-01-16 23:57, Doug Anderson wrote:
+> Hi,
+> 
+> On Thu, Jan 16, 2020 at 8:11 AM Sai Prakash Ranjan
+> <saiprakash.ranjan@codeaurora.org> wrote:
+>> 
+>> Hi Will,
+>> 
+>> On 2020-01-16 21:02, Will Deacon wrote:
+>> > [+Jeffrey]
+>> >
+>> > On Thu, Jan 16, 2020 at 07:49:12PM +0530, Sai Prakash Ranjan wrote:
+>> >> KRYO3XX silver CPU cores and KRYO4XX silver, gold CPU cores
+>> >> are not affected by Spectre variant 2. Add them to spectre_v2
+>> >> safe list to correct ARM_SMCCC_ARCH_WORKAROUND_1 warning and
+>> >> vulnerability sysfs value.
+>> >>
+>> >> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> >> ---
+>> >>  arch/arm64/include/asm/cputype.h | 6 ++++++
+>> >>  arch/arm64/kernel/cpu_errata.c   | 3 +++
+>> >>  2 files changed, 9 insertions(+)
+>> >>
+>> >> diff --git a/arch/arm64/include/asm/cputype.h
+>> >> b/arch/arm64/include/asm/cputype.h
+>> >> index aca07c2f6e6e..7219cddeba66 100644
+>> >> --- a/arch/arm64/include/asm/cputype.h
+>> >> +++ b/arch/arm64/include/asm/cputype.h
+>> >> @@ -85,6 +85,9 @@
+>> >>  #define QCOM_CPU_PART_FALKOR_V1             0x800
+>> >>  #define QCOM_CPU_PART_FALKOR                0xC00
+>> >>  #define QCOM_CPU_PART_KRYO          0x200
+>> >> +#define QCOM_CPU_PART_KRYO_3XX_SILVER       0x803
+>> >> +#define QCOM_CPU_PART_KRYO_4XX_GOLD 0x804
+>> >> +#define QCOM_CPU_PART_KRYO_4XX_SILVER       0x805
+>> >
+>> > Jeffrey is the only person I know who understands the CPU naming here,
+>> > so
+>> > I've added him in case this needs either renaming or extending to cover
+>> > other CPUs. I wouldn't be at all surprised if we need a function call
+>> > rather than a bunch of table entries...
+>> >
+>> > That said, the internet claims that KRYO4XX gold is based on
+>> > Cortex-A76,
+>> > and so CSV2 should be set...
+>> >
+>> 
+>> Yes the internet claims are true and CSV2 is set. SANITY check logs in
+>> here show ID_PFR0_EL1 - 
+>> https://lore.kernel.org/patchwork/patch/1138457/
+> 
+> I'm probably just being a noob here and am confused, but if CSV2 is
+> set then why do you need your patch at all?  The code I see says that
+> if CSV2 is set then we don't even check the spectre_v2_safe_list().
+> 
 
-diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
-index aca07c2f6e6e..a87a93f67671 100644
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -85,6 +85,8 @@
- #define QCOM_CPU_PART_FALKOR_V1		0x800
- #define QCOM_CPU_PART_FALKOR		0xC00
- #define QCOM_CPU_PART_KRYO		0x200
-+#define QCOM_CPU_PART_KRYO_3XX_SILVER	0x803
-+#define QCOM_CPU_PART_KRYO_4XX_SILVER	0x805
- 
- #define NVIDIA_CPU_PART_DENVER		0x003
- #define NVIDIA_CPU_PART_CARMEL		0x004
-@@ -111,6 +113,8 @@
- #define MIDR_QCOM_FALKOR_V1 MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_FALKOR_V1)
- #define MIDR_QCOM_FALKOR MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_FALKOR)
- #define MIDR_QCOM_KRYO MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO)
-+#define MIDR_QCOM_KRYO_3XX_SILVER MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_3XX_SILVER)
-+#define MIDR_QCOM_KRYO_4XX_SILVER MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_4XX_SILVER)
- #define MIDR_NVIDIA_DENVER MIDR_CPU_MODEL(ARM_CPU_IMP_NVIDIA, NVIDIA_CPU_PART_DENVER)
- #define MIDR_NVIDIA_CARMEL MIDR_CPU_MODEL(ARM_CPU_IMP_NVIDIA, NVIDIA_CPU_PART_CARMEL)
- #define MIDR_FUJITSU_A64FX MIDR_CPU_MODEL(ARM_CPU_IMP_FUJITSU, FUJITSU_CPU_PART_A64FX)
-diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
-index 85f4bec22f6d..d661c7d0e6e2 100644
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -548,6 +548,8 @@ static const struct midr_range spectre_v2_safe_list[] = {
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A55),
- 	MIDR_ALL_VERSIONS(MIDR_BRAHMA_B53),
- 	MIDR_ALL_VERSIONS(MIDR_HISI_TSV110),
-+	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_3XX_SILVER),
-+	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_SILVER),
- 	{ /* sentinel */ }
- };
- 
+I am a noob here and didn't understand what Will meant ;). V2 posted 
+now.
+
+Thanks,
+Sai
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
 of Code Aurora Forum, hosted by The Linux Foundation
