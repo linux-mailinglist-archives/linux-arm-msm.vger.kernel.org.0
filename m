@@ -2,39 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EA6A13F7DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 20:17:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A328213F725
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 20:09:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727029AbgAPQzg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jan 2020 11:55:36 -0500
-Received: from mail.kernel.org ([198.145.29.99]:41000 "EHLO mail.kernel.org"
+        id S2387871AbgAPRAm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jan 2020 12:00:42 -0500
+Received: from mail.kernel.org ([198.145.29.99]:50596 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1733066AbgAPQzf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jan 2020 11:55:35 -0500
+        id S2387865AbgAPRAm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jan 2020 12:00:42 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 71BF22176D;
-        Thu, 16 Jan 2020 16:55:34 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id A1A992467C;
+        Thu, 16 Jan 2020 17:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579193735;
-        bh=ivXiS/0NletdSdpGqEZ6JWiA8+PWPDz+IRO1QapDrGc=;
+        s=default; t=1579194041;
+        bh=BMgFxducrcVlOag3C3yZ/qE15LkMN0Q7yrMo9NxU0wI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=1v6UBU29SX/oyp1Fn+SX21KPD4UG5aDrMwXExm8SUOAPMe8TVlHP/Am7W8CPw3fcm
-         5r+7IxKRPeniSC7aNzNhiovOZAWlwtPV4ZabfkZcYXsS5eJwSF2Jp71Gvs1c3PUe03
-         1Z31PiCrjCLCrv/nU1xlN+I961KHAWeT8oZ30zrE=
+        b=MFwOUWYJc+1/r92V2MhO2Ip3trQVYuETeq3YFVNAqwUleD9qJp1zvJwwIFZCugjqp
+         X/pHBPTByENxqWCi/XmM0SjNg3WzcOWcAQf3G6YK1qKFLlKZCRXC4Kie4RkEZW9CVG
+         tLvKXj2KfwCVYqiRNjaEkhXabx3iZRDItgSpJCPQ=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Colin Ian King <colin.king@canonical.com>,
-        Rob Clark <robdclark@gmail.com>,
+Cc:     Niklas Cassel <niklas.cassel@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Andy Gross <andy.gross@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.19 027/671] drm/msm: fix unsigned comparison with less than zero
-Date:   Thu, 16 Jan 2020 11:44:18 -0500
-Message-Id: <20200116165502.8838-27-sashal@kernel.org>
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 158/671] arm64: dts: msm8916: remove bogus argument to the cpu clock
+Date:   Thu, 16 Jan 2020 11:51:07 -0500
+Message-Id: <20200116165940.10720-41-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200116165502.8838-1-sashal@kernel.org>
-References: <20200116165502.8838-1-sashal@kernel.org>
+In-Reply-To: <20200116165940.10720-1-sashal@kernel.org>
+References: <20200116165940.10720-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -44,39 +46,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Colin Ian King <colin.king@canonical.com>
+From: Niklas Cassel <niklas.cassel@linaro.org>
 
-[ Upstream commit dfdb3be43ef1195c491e6c3760b922acb52e3575 ]
+[ Upstream commit e4f045ef38e61ba37aa4afc916fce4fc1b37aa19 ]
 
-The return from the call to _mixer_stages can be a negative error
-code however this is being assigned to an unsigned variable 'stages'
-hence the check is always false. Fix this by making 'stages' an
-int.
+The apcs node has #clock-cells = <0>, which means that those who
+references it should specify 0 arguments.
 
-Detected by Coccinelle ("Unsigned expression compared with zero:
-stages < 0")
+The apcs reference in the cpu node incorrectly specifies an argument,
+remove this bogus argument.
 
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-Signed-off-by: Colin Ian King <colin.king@canonical.com>
-Signed-off-by: Rob Clark <robdclark@gmail.com>
+Fixes: 65afdf458360 ("arm64: dts: qcom: msm8916: Add CPU frequency scaling support")
+Signed-off-by: Niklas Cassel <niklas.cassel@linaro.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
+Signed-off-by: Andy Gross <andy.gross@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-index 06be7cf7ce50..79bafea66354 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-@@ -310,7 +310,7 @@ static void dpu_hw_ctl_setup_blendstage(struct dpu_hw_ctl *ctx,
- 	u32 mixercfg = 0, mixercfg_ext = 0, mix, ext;
- 	u32 mixercfg_ext2 = 0, mixercfg_ext3 = 0;
- 	int i, j;
--	u8 stages;
-+	int stages;
- 	int pipes_per_stage;
- 
- 	stages = _mixer_stages(ctx->mixer_hw_caps, ctx->mixer_count, lm);
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index 7b32b8990d62..8011e564a234 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -114,7 +114,7 @@
+ 			next-level-cache = <&L2_0>;
+ 			enable-method = "psci";
+ 			cpu-idle-states = <&CPU_SPC>;
+-			clocks = <&apcs 0>;
++			clocks = <&apcs>;
+ 			operating-points-v2 = <&cpu_opp_table>;
+ 			#cooling-cells = <2>;
+ 		};
+@@ -126,7 +126,7 @@
+ 			next-level-cache = <&L2_0>;
+ 			enable-method = "psci";
+ 			cpu-idle-states = <&CPU_SPC>;
+-			clocks = <&apcs 0>;
++			clocks = <&apcs>;
+ 			operating-points-v2 = <&cpu_opp_table>;
+ 			#cooling-cells = <2>;
+ 		};
+@@ -138,7 +138,7 @@
+ 			next-level-cache = <&L2_0>;
+ 			enable-method = "psci";
+ 			cpu-idle-states = <&CPU_SPC>;
+-			clocks = <&apcs 0>;
++			clocks = <&apcs>;
+ 			operating-points-v2 = <&cpu_opp_table>;
+ 			#cooling-cells = <2>;
+ 		};
+@@ -150,7 +150,7 @@
+ 			next-level-cache = <&L2_0>;
+ 			enable-method = "psci";
+ 			cpu-idle-states = <&CPU_SPC>;
+-			clocks = <&apcs 0>;
++			clocks = <&apcs>;
+ 			operating-points-v2 = <&cpu_opp_table>;
+ 			#cooling-cells = <2>;
+ 		};
 -- 
 2.20.1
 
