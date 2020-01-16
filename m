@@ -2,191 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 964B513D09A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 00:18:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F19D13D2AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 04:24:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730385AbgAOXSb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jan 2020 18:18:31 -0500
-Received: from mail-qv1-f67.google.com ([209.85.219.67]:33945 "EHLO
-        mail-qv1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726513AbgAOXSa (ORCPT
+        id S1726552AbgAPDXK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jan 2020 22:23:10 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:28863 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729186AbgAPDXJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jan 2020 18:18:30 -0500
-Received: by mail-qv1-f67.google.com with SMTP id o18so8237746qvf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jan 2020 15:18:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=UpvlowCsrupkOKWs9KxGBnIKBt8PC3L4e1k91b9xY8g=;
-        b=ggiCur99WNdd3h4Jf4LjYSQuVDYl4E6Qhn75niLIA1NPB53AMADsLKzA2B0KWaFAgK
-         WFdXvlt8+DPByk1ih4xrHxBRcbkgz8qO9bswwNFGfsUZbRPo6b31am0pz1xefAjLntlP
-         uS2VLS0/f9yaf0r1KeNFzFOIWhIAWTtphEDLkK0QbnbDqESvryo3WHfDJWJp/YgjeMX8
-         G4rJ5JOftvLz/NJO6YhYNgP5TPucnRvGTEhwzgTGl3mcbiN7czbucknxIere/2OP3t5W
-         X7kxJchchRsKbf3x3F4QS9BWapPAyaftRs+PH7uwnZWV5h0kpf6jYwM0+M6v3GOQosJF
-         H8Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=UpvlowCsrupkOKWs9KxGBnIKBt8PC3L4e1k91b9xY8g=;
-        b=QMN2z/ZRyKhCTyVACenkBw56gYkM3E1ceG4x73ERHh/d0k92iv4gYxcGXAQLF+4MXf
-         9PFWH/rlHvDuaVILo076KzNsjGQ15Bjl+q1cKXQAMgLquldqIjk/55qcR9VtvGMjYWIS
-         tdewdj7fWm+Ro/b6F3BycRrtns1hJXyx0x062i2lli9xTkAJF9LnGnR9HfzQcbBdH0VI
-         0xF60o8cTXUisdmr3z050YMI0OXIN86G67e+8nE/tZyvU2WrNLZSNWeeSc0uHpLbJjRk
-         AIGSMpYhaEXGOApOIpCknx2+O48RpzHpVYpDzqvl3nWjIIep/ip2n5rmKYM4n4f6QQBH
-         MOOQ==
-X-Gm-Message-State: APjAAAUX4HT2GcSHt4mF0yXh/0xA6Gg4LJX8x9WmTFuH8ADi6ndvJ45T
-        7XtPPR4b1jKUWDXcM8KVLDI=
-X-Google-Smtp-Source: APXvYqx/GPl8/eYOnPUqiqDbqgb1g3EZTxvoIVWy4jSW/CyzNiZv5vi33T3StFjkwqyaO4BHiF+Vxw==
-X-Received: by 2002:a05:6214:20c:: with SMTP id i12mr28835407qvt.48.1579130309513;
-        Wed, 15 Jan 2020 15:18:29 -0800 (PST)
-Received: from smtp.gmail.com ([165.204.55.250])
-        by smtp.gmail.com with ESMTPSA id d5sm10518385qtk.96.2020.01.15.15.18.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2020 15:18:28 -0800 (PST)
-Date:   Wed, 15 Jan 2020 18:18:23 -0500
-From:   Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     airlied@linux.ie, daniel@ffwll.ch, alexander.deucher@amd.com,
-        christian.koenig@amd.com, David1.Zhou@amd.com,
-        maarten.lankhorst@linux.intel.com, patrik.r.jakobsson@gmail.com,
-        robdclark@gmail.com, sean@poorly.run, benjamin.gaignard@linaro.org,
-        vincent.abriou@st.com, yannick.fertre@st.com,
-        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@st.com, eric@anholt.net, hamohammed.sa@gmail.com,
-        linux-graphics-maintainer@vmware.com, thellstrom@vmware.com,
-        bskeggs@redhat.com, harry.wentland@amd.com, sunpeng.li@amd.com,
-        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
-        rodrigo.vivi@intel.com, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        nouveau@lists.freedesktop.org
-Subject: Re: [PATCH v2 19/21] drm/vkms: Convert to CRTC VBLANK callbacks
-Message-ID: <20200115231823.v6uyxtgxnfgwmsqq@smtp.gmail.com>
-References: <20200115121652.7050-1-tzimmermann@suse.de>
- <20200115121652.7050-20-tzimmermann@suse.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="mkcm5mxh5ewyz3eu"
-Content-Disposition: inline
-In-Reply-To: <20200115121652.7050-20-tzimmermann@suse.de>
+        Wed, 15 Jan 2020 22:23:09 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1579144988; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=i6cUUbHdFxmyxXtrww4Y2pJJyGUa7lN7JxrT7wp+jjg=; b=NO7D9H6jiVZ6frifuNvXMT4WGm/C0L1CfbuyTI5eFraa3TpEDh8CCi3Y/mrHK8GjB65KBffa
+ w9KgUrJxKqoLMw/5Pd7I/H7QxIsC639NrzSZZp+qee0o0+VqjdOfYSNMMpd3steNOxXfLZ9t
+ R25HoCUxzFCoZ948JMAN19w6Twc=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e1fd71a.7f48c320cc00-smtp-out-n03;
+ Thu, 16 Jan 2020 03:23:06 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id DA8BFC43383; Thu, 16 Jan 2020 03:23:06 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from rocky-Inspiron-7590.qca.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rjliao)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DDB28C433A2;
+        Thu, 16 Jan 2020 03:23:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DDB28C433A2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rjliao@codeaurora.org
+From:   Rocky Liao <rjliao@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bgodavar@codeaurora.org, hemantg@codeaurora.org,
+        Rocky Liao <rjliao@codeaurora.org>
+Subject: [PATCH v5] Bluetooth: hci_qca: Enable power off/on support during hci down/up for QCA Rome
+Date:   Thu, 16 Jan 2020 11:22:54 +0800
+Message-Id: <20200116032254.20549-1-rjliao@codeaurora.org>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20191225060317.5258-1-rjliao@codeaurora.org>
+References: <20191225060317.5258-1-rjliao@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This patch registers hdev->shutdown() callback and also sets
+HCI_QUIRK_NON_PERSISTENT_SETUP for QCA Rome. It will power-off the BT chip
+during hci down and power-on/initialize the chip again during hci up. As
+wcn399x already enabled this, this patch also removed the callback register
+and QUIRK setting in qca_setup() for wcn399x and uniformly do this in the
+probe() routine.
 
---mkcm5mxh5ewyz3eu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+---
 
-Hi,
+Changes in v2: None
+Changes in v3:
+  -moved the quirk and callback register to probe()
+Changes in v4:
+  -rebased the patch with latest code
+  -moved the quirk and callback register to probe() for wcn399x
+  -updated commit message
+Changed in v5:
+  -removed the "out" label and return err when fails
 
-Thanks for the patch, I reviewed and tested it. Everything looks fine
-for VKMS.
+ drivers/bluetooth/hci_qca.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-Reviewed-by: Rodrigo Siqueira <rodrigosiqueira@gmail.com>
-Tested-by: Rodrigo Siqueira <rodrigosiqueira@gmail.com>
-
-On 01/15, Thomas Zimmermann wrote:
-> VBLANK callbacks in struct drm_driver are deprecated in favor of
-> their equivalents in struct drm_crtc_funcs. Convert vkms over.
->=20
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> ---
->  drivers/gpu/drm/vkms/vkms_crtc.c | 9 ++++++---
->  drivers/gpu/drm/vkms/vkms_drv.c  | 1 -
->  drivers/gpu/drm/vkms/vkms_drv.h  | 4 ----
->  3 files changed, 6 insertions(+), 8 deletions(-)
->=20
-> diff --git a/drivers/gpu/drm/vkms/vkms_crtc.c b/drivers/gpu/drm/vkms/vkms=
-_crtc.c
-> index 74f703b8d22a..ac85e17428f8 100644
-> --- a/drivers/gpu/drm/vkms/vkms_crtc.c
-> +++ b/drivers/gpu/drm/vkms/vkms_crtc.c
-> @@ -76,10 +76,12 @@ static void vkms_disable_vblank(struct drm_crtc *crtc)
->  	hrtimer_cancel(&out->vblank_hrtimer);
->  }
-> =20
-> -bool vkms_get_vblank_timestamp(struct drm_device *dev, unsigned int pipe,
-> -			       int *max_error, ktime_t *vblank_time,
-> -			       bool in_vblank_irq)
-> +static bool vkms_get_vblank_timestamp(struct drm_crtc *crtc,
-> +				      int *max_error, ktime_t *vblank_time,
-> +				      bool in_vblank_irq)
->  {
-> +	struct drm_device *dev =3D crtc->dev;
-> +	unsigned int pipe =3D crtc->index;
->  	struct vkms_device *vkmsdev =3D drm_device_to_vkms_device(dev);
->  	struct vkms_output *output =3D &vkmsdev->output;
->  	struct drm_vblank_crtc *vblank =3D &dev->vblank[pipe];
-> @@ -154,6 +156,7 @@ static const struct drm_crtc_funcs vkms_crtc_funcs =
-=3D {
->  	.atomic_destroy_state   =3D vkms_atomic_crtc_destroy_state,
->  	.enable_vblank		=3D vkms_enable_vblank,
->  	.disable_vblank		=3D vkms_disable_vblank,
-> +	.get_vblank_timestamp	=3D vkms_get_vblank_timestamp,
->  	.get_crc_sources	=3D vkms_get_crc_sources,
->  	.set_crc_source		=3D vkms_set_crc_source,
->  	.verify_crc_source	=3D vkms_verify_crc_source,
-> diff --git a/drivers/gpu/drm/vkms/vkms_drv.c b/drivers/gpu/drm/vkms/vkms_=
-drv.c
-> index 25bd7519295f..860de052e820 100644
-> --- a/drivers/gpu/drm/vkms/vkms_drv.c
-> +++ b/drivers/gpu/drm/vkms/vkms_drv.c
-> @@ -103,7 +103,6 @@ static struct drm_driver vkms_driver =3D {
->  	.dumb_create		=3D vkms_dumb_create,
->  	.gem_vm_ops		=3D &vkms_gem_vm_ops,
->  	.gem_free_object_unlocked =3D vkms_gem_free_object,
-> -	.get_vblank_timestamp	=3D vkms_get_vblank_timestamp,
->  	.prime_fd_to_handle	=3D drm_gem_prime_fd_to_handle,
->  	.gem_prime_import_sg_table =3D vkms_prime_import_sg_table,
-> =20
-> diff --git a/drivers/gpu/drm/vkms/vkms_drv.h b/drivers/gpu/drm/vkms/vkms_=
-drv.h
-> index 7d52e24564db..eda04ffba7b1 100644
-> --- a/drivers/gpu/drm/vkms/vkms_drv.h
-> +++ b/drivers/gpu/drm/vkms/vkms_drv.h
-> @@ -111,10 +111,6 @@ struct vkms_gem_object {
->  int vkms_crtc_init(struct drm_device *dev, struct drm_crtc *crtc,
->  		   struct drm_plane *primary, struct drm_plane *cursor);
-> =20
-> -bool vkms_get_vblank_timestamp(struct drm_device *dev, unsigned int pipe,
-> -			       int *max_error, ktime_t *vblank_time,
-> -			       bool in_vblank_irq);
-> -
->  int vkms_output_init(struct vkms_device *vkmsdev, int index);
-> =20
->  struct drm_plane *vkms_plane_init(struct vkms_device *vkmsdev,
-> --=20
-> 2.24.1
->=20
-
---=20
-Rodrigo Siqueira
-Software Engineer, Advanced Micro Devices (AMD)
-https://siqueira.tech
-
---mkcm5mxh5ewyz3eu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEE4tZ+ii1mjMCMQbfkWJzP/comvP8FAl4fnb8ACgkQWJzP/com
-vP/gKw/+MnM27NT0QpqQpa6WMwn9PCq/07UFLOG7BuTGP2CvZOJv8Tma7U6bu9Sf
-Z3IwiMYNJV8FJtwdRd+BTThIYGPTtofxsJ2R3ybhUj/VEeUaEhC2ifzwVrphEePR
-3/b4QFlf/vrMfsdJSOSam6vvaiI+jE4X1ZASrUKbcl5w9KeBhs2VmcwVKmtqQgaD
-YHWIWUwiwsd544GltP+mx7qxZ5+ZHVC+OuJq/GNzhwD9MyXTliBcM6nov+FPV/HE
-aT4WrhBCiDHhISO9sTYPqiV6Vo7XV6sPzDMFncNqueMwP4qQr/mFebxPtlUtPYOO
-jwg0ZTq/6KL+QeJM55Ygg0cvVUvG14G8ZSktb4s7rPRWE4k7/DZWP2w/xP1xVsoP
-H+Q2jvjTV1qu+G2A7vtP2gYBsCx7WoYfIoR045pAIEKEz5FLF38GFY04uS/T0M3u
-eez0yNDC1EojMWeTTPM5Lm7MCUPx7sR6V14gGDDVs/QBmZpgyJkWj4unYBCwk9Ge
-oMSZkUhnnJT4FutLRaJk0awg7iMw7yj4XNJgKB1vEVwS2/RkJ6jrgw/PoihwOBLZ
-Gmm6Ys+btER/e9zHA+u8Z5z0guAkI8r9H8ikMtqSza6RipedsEIrncLV8U2l+hwT
-ooPnCySDn8Xkw985ZR+/UW0I+FjjWDVdn3jmwcyRZ99fksmbvkY=
-=KRlQ
------END PGP SIGNATURE-----
-
---mkcm5mxh5ewyz3eu--
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 1139142e8eed..d6e0c99ee5eb 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1569,12 +1569,7 @@ static int qca_setup(struct hci_uart *hu)
+ 		return ret;
+ 
+ 	if (qca_is_wcn399x(soc_type)) {
+-		/* Enable NON_PERSISTENT_SETUP QUIRK to ensure to execute
+-		 * setup for every hci up.
+-		 */
+-		set_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks);
+ 		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
+-		hu->hdev->shutdown = qca_power_off;
+ 
+ 		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
+ 		if (ret)
+@@ -1813,6 +1808,7 @@ static int qca_init_regulators(struct qca_power *qca,
+ static int qca_serdev_probe(struct serdev_device *serdev)
+ {
+ 	struct qca_serdev *qcadev;
++	struct hci_dev *hdev;
+ 	const struct qca_vreg_data *data;
+ 	int err;
+ 
+@@ -1838,7 +1834,7 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+ 					  data->num_vregs);
+ 		if (err) {
+ 			BT_ERR("Failed to init regulators:%d", err);
+-			goto out;
++			return err;
+ 		}
+ 
+ 		qcadev->bt_power->vregs_on = false;
+@@ -1851,7 +1847,7 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+ 		err = hci_uart_register_device(&qcadev->serdev_hu, &qca_proto);
+ 		if (err) {
+ 			BT_ERR("wcn3990 serdev registration failed");
+-			goto out;
++			return err;
+ 		}
+ 	} else {
+ 		qcadev->btsoc_type = QCA_ROME;
+@@ -1877,12 +1873,18 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+ 			return err;
+ 
+ 		err = hci_uart_register_device(&qcadev->serdev_hu, &qca_proto);
+-		if (err)
++		if (err) {
++			BT_ERR("Rome serdev registration failed");
+ 			clk_disable_unprepare(qcadev->susclk);
++			return err;
++		}
+ 	}
+ 
+-out:	return err;
++	hdev = qcadev->serdev_hu.hdev;
++	set_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks);
++	hdev->shutdown = qca_power_off;
+ 
++	return 0;
+ }
+ 
+ static void qca_serdev_remove(struct serdev_device *serdev)
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
