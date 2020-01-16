@@ -2,109 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 45FFA13F1F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 19:32:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EA6A13F7DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 20:17:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436737AbgAPSb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jan 2020 13:31:29 -0500
-Received: from mail.kernel.org ([198.145.29.99]:38014 "EHLO mail.kernel.org"
+        id S1727029AbgAPQzg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jan 2020 11:55:36 -0500
+Received: from mail.kernel.org ([198.145.29.99]:41000 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2436645AbgAPSb2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jan 2020 13:31:28 -0500
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1733066AbgAPQzf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jan 2020 11:55:35 -0500
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2D86C206D7;
-        Thu, 16 Jan 2020 18:31:25 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 71BF22176D;
+        Thu, 16 Jan 2020 16:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579199487;
-        bh=n9w+eEwrwKaNFIfJ2uLhExYF95MkN3KncmP+Uf276UI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=uxCDOQukU1DhBrpSDVnWCsaQAvjOUjLxlFvtr/Si8XX4qjWwO5+kvOjQYJvYJbUZy
-         wyVyxAbmtbScN9ahtoFyN+Nk/a1IMI8TtLXR2Z6Bq9+SbJFFdjoYIMTVp0RdowTi59
-         bz0/1+mmMQgW+RhvSzbjNRfefuFbK2bFDC9upZ8s=
-Date:   Thu, 16 Jan 2020 18:31:22 +0000
-From:   Will Deacon <will@kernel.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Andre Przywara <andre.przywara@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        James Morse <james.morse@arm.com>
-Subject: Re: [PATCH] arm64: Add KRYO{3,4}XX CPU cores to spectre-v2 safe list
-Message-ID: <20200116183121.GE22420@willie-the-truck>
-References: <20200116141912.15465-1-saiprakash.ranjan@codeaurora.org>
- <20200116153235.GA18909@willie-the-truck>
- <1a3f9557fa52ce2528630434e9a49d98@codeaurora.org>
- <CAD=FV=WP1T7gGC=m5FOwuLvZdwrg5f7K6tDuYFT=0BgCQMZf7A@mail.gmail.com>
+        s=default; t=1579193735;
+        bh=ivXiS/0NletdSdpGqEZ6JWiA8+PWPDz+IRO1QapDrGc=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=1v6UBU29SX/oyp1Fn+SX21KPD4UG5aDrMwXExm8SUOAPMe8TVlHP/Am7W8CPw3fcm
+         5r+7IxKRPeniSC7aNzNhiovOZAWlwtPV4ZabfkZcYXsS5eJwSF2Jp71Gvs1c3PUe03
+         1Z31PiCrjCLCrv/nU1xlN+I961KHAWeT8oZ30zrE=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Colin Ian King <colin.king@canonical.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 4.19 027/671] drm/msm: fix unsigned comparison with less than zero
+Date:   Thu, 16 Jan 2020 11:44:18 -0500
+Message-Id: <20200116165502.8838-27-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200116165502.8838-1-sashal@kernel.org>
+References: <20200116165502.8838-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=WP1T7gGC=m5FOwuLvZdwrg5f7K6tDuYFT=0BgCQMZf7A@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 16, 2020 at 10:27:08AM -0800, Doug Anderson wrote:
-> On Thu, Jan 16, 2020 at 8:11 AM Sai Prakash Ranjan
-> <saiprakash.ranjan@codeaurora.org> wrote:
-> > On 2020-01-16 21:02, Will Deacon wrote:
-> > > On Thu, Jan 16, 2020 at 07:49:12PM +0530, Sai Prakash Ranjan wrote:
-> > >> KRYO3XX silver CPU cores and KRYO4XX silver, gold CPU cores
-> > >> are not affected by Spectre variant 2. Add them to spectre_v2
-> > >> safe list to correct ARM_SMCCC_ARCH_WORKAROUND_1 warning and
-> > >> vulnerability sysfs value.
-> > >>
-> > >> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> > >> ---
-> > >>  arch/arm64/include/asm/cputype.h | 6 ++++++
-> > >>  arch/arm64/kernel/cpu_errata.c   | 3 +++
-> > >>  2 files changed, 9 insertions(+)
-> > >>
-> > >> diff --git a/arch/arm64/include/asm/cputype.h
-> > >> b/arch/arm64/include/asm/cputype.h
-> > >> index aca07c2f6e6e..7219cddeba66 100644
-> > >> --- a/arch/arm64/include/asm/cputype.h
-> > >> +++ b/arch/arm64/include/asm/cputype.h
-> > >> @@ -85,6 +85,9 @@
-> > >>  #define QCOM_CPU_PART_FALKOR_V1             0x800
-> > >>  #define QCOM_CPU_PART_FALKOR                0xC00
-> > >>  #define QCOM_CPU_PART_KRYO          0x200
-> > >> +#define QCOM_CPU_PART_KRYO_3XX_SILVER       0x803
-> > >> +#define QCOM_CPU_PART_KRYO_4XX_GOLD 0x804
-> > >> +#define QCOM_CPU_PART_KRYO_4XX_SILVER       0x805
-> > >
-> > > Jeffrey is the only person I know who understands the CPU naming here,
-> > > so
-> > > I've added him in case this needs either renaming or extending to cover
-> > > other CPUs. I wouldn't be at all surprised if we need a function call
-> > > rather than a bunch of table entries...
-> > >
-> > > That said, the internet claims that KRYO4XX gold is based on
-> > > Cortex-A76,
-> > > and so CSV2 should be set...
-> > >
-> >
-> > Yes the internet claims are true and CSV2 is set. SANITY check logs in
-> > here show ID_PFR0_EL1 - https://lore.kernel.org/patchwork/patch/1138457/
-> 
-> I'm probably just being a noob here and am confused, but if CSV2 is
-> set then why do you need your patch at all?  The code I see says that
-> if CSV2 is set then we don't even check the spectre_v2_safe_list().
+From: Colin Ian King <colin.king@canonical.com>
 
-You're not being a noob at all -- you're making the same point that I was
-trying to make :)
+[ Upstream commit dfdb3be43ef1195c491e6c3760b922acb52e3575 ]
 
-So I think we can take this patch with the KRYO_4XX_GOLD part dropped.
+The return from the call to _mixer_stages can be a negative error
+code however this is being assigned to an unsigned variable 'stages'
+hence the check is always false. Fix this by making 'stages' an
+int.
 
-Will
+Detected by Coccinelle ("Unsigned expression compared with zero:
+stages < 0")
+
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+Signed-off-by: Rob Clark <robdclark@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+index 06be7cf7ce50..79bafea66354 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+@@ -310,7 +310,7 @@ static void dpu_hw_ctl_setup_blendstage(struct dpu_hw_ctl *ctx,
+ 	u32 mixercfg = 0, mixercfg_ext = 0, mix, ext;
+ 	u32 mixercfg_ext2 = 0, mixercfg_ext3 = 0;
+ 	int i, j;
+-	u8 stages;
++	int stages;
+ 	int pipes_per_stage;
+ 
+ 	stages = _mixer_stages(ctx->mixer_hw_caps, ctx->mixer_count, lm);
+-- 
+2.20.1
+
