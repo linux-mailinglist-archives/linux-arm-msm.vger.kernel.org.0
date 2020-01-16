@@ -2,105 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C4BA13F990
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 20:32:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC3B413FA22
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 21:04:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730712AbgAPTcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jan 2020 14:32:36 -0500
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:46527 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729010AbgAPTcg (ORCPT
+        id S1729593AbgAPUET (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jan 2020 15:04:19 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:55281 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729439AbgAPUET (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jan 2020 14:32:36 -0500
-Received: by mail-ot1-f67.google.com with SMTP id r9so20455882otp.13;
-        Thu, 16 Jan 2020 11:32:35 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RxlCLhbJ67g6d1Lku8kWlZFcusZ3prtEclwXhvs0VlY=;
-        b=tAnVKUpgHckYnGCCnQWqILjEdY0RI6BOO9IJNLf4J6r64Tiyv1gMcP3dLdxnmAyrgw
-         IhbBgjuQfoOUsh4EbdGYeZWnNKqrIhijx7VUQtpmPJOECJPZz1x22dJMJQiWDy0ikm/0
-         7tq5JAFrwCYv+zbIiLs3ZAyOEdvMKPxzhkfC3Ok6qoPy3nofuBGMOTyfXszB0SYeV7Pn
-         DUV1hnqS6ikgyKSCy0UzFNuFvIV4oQT/Rzj6H6MpXnRN7ObR2ECmLg8Zt0lcuQch/JN6
-         7OKsEytWDpNhYAQ6UBC2qQU8ya2n4gpMK9EO/3Db6sFWkR2o5VO8iUjlPTIDU4/tys33
-         fFsg==
-X-Gm-Message-State: APjAAAXF3QRGqkKhC8cz9MSCVWRWjGor7Lk+lAylDyM2mcBWOsPo2THW
-        mW/KD+4x3+5P4GrqGWuARg==
-X-Google-Smtp-Source: APXvYqyxmgpxwTv05e9N4FFkdBsR/fQwNWrywFKB3CnoSsw+nSs2rDzXaBnZeNuZ8C1h8ax5pKA9vQ==
-X-Received: by 2002:a9d:7090:: with SMTP id l16mr3443912otj.187.1579203154757;
-        Thu, 16 Jan 2020 11:32:34 -0800 (PST)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id 101sm8049386otj.55.2020.01.16.11.32.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jan 2020 11:32:34 -0800 (PST)
-Received: (nullmailer pid 6992 invoked by uid 1000);
-        Thu, 16 Jan 2020 19:32:33 -0000
-Date:   Thu, 16 Jan 2020 13:32:33 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        gregkh@linuxfoundation.org, jackp@codeaurora.org, balbi@kernel.org,
-        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>,
+        Thu, 16 Jan 2020 15:04:19 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1579205059; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=apdXuTfZcHlEYeNh8TJF/fU4oRiIjL2uFkcnXyZVlPM=; b=L8r7l1WJuffhe92y+rr1lwJ3EibkH5VHzi+OaP961vLt2OFgkjNNwE5K8MOSlnGLU6NBduMA
+ 1/fV1REJl7td/hSMeFaOwhkqlopd4kXMlMTiwd0+S1Hqqv0Sk1DHnBjVUg3SLL4kJ5vmB+5Z
+ LXsXgase0xDTw2aSdYaDXd6Qooc=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e20c1be.7f94b50166c0-smtp-out-n01;
+ Thu, 16 Jan 2020 20:04:14 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 333BDC4479F; Thu, 16 Jan 2020 20:04:13 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5CAE2C43383;
+        Thu, 16 Jan 2020 20:04:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5CAE2C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Andre Przywara <andre.przywara@arm.com>,
         Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH 04/19] dt-bindings: Add Qualcomm USB SuperSpeed PHY
- bindings
-Message-ID: <20200116193233.GA5583@bogus>
-References: <20200115141333.1222676-1-bryan.odonoghue@linaro.org>
- <20200115141333.1222676-5-bryan.odonoghue@linaro.org>
+        Douglas Anderson <dianders@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv2] arm64: Add KRYO{3,4}XX CPU cores to spectre-v2 safe list
+Date:   Fri, 17 Jan 2020 01:33:53 +0530
+Message-Id: <7a8c9a5a39d9d95b9bfca1de3b1f63489d3a4d2d.1579203281.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200115141333.1222676-5-bryan.odonoghue@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 15 Jan 2020 14:13:18 +0000, Bryan O'Donoghue wrote:
-> From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-> 
-> Binding description for Qualcomm's Synopsys 1.0.0 SuperSpeed phy
-> controller embedded in QCS404.
-> 
-> Based on Sriharsha Allenki's <sallenki@codeaurora.org> original
-> definitions.
-> 
-> [bod: converted to yaml format]
-> 
-> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-> Cc: Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Mark Rutland <mark.rutland@arm.com>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  .../devicetree/bindings/qcom,usb-ss.yaml      | 74 +++++++++++++++++++
->  1 file changed, 74 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/qcom,usb-ss.yaml
-> 
+KRYO3XX silver CPU cores and KRYO4XX silver, gold CPU cores
+are not affected by Spectre variant 2. Add them to spectre_v2
+safe list to correct ARM_SMCCC_ARCH_WORKAROUND_1 warning and
+vulnerability sysfs value.
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+Changes since v1:
+ - Dropped QCOM_CPU_PART_KRYO_4XX_GOLD as CSV2 is set
+---
+ arch/arm64/include/asm/cputype.h | 4 ++++
+ arch/arm64/kernel/cpu_errata.c   | 2 ++
+ 2 files changed, 6 insertions(+)
 
-warning: no schema found in file: Documentation/devicetree/bindings/qcom,usb-ss.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/qcom,usb-ss.yaml: ignoring, error parsing file
-Documentation/devicetree/bindings/display/simple-framebuffer.example.dts:21.16-37.11: Warning (chosen_node_is_root): /example-0/chosen: chosen node must be at root node
-Documentation/devicetree/bindings/qcom,usb-ss.yaml:  while scanning a plain scalar
-  in "<unicode string>", line 61, column 11
-found a tab character that violates indentation
-  in "<unicode string>", line 62, column 1
-Documentation/devicetree/bindings/Makefile:12: recipe for target 'Documentation/devicetree/bindings/qcom,usb-ss.example.dts' failed
-make[1]: *** [Documentation/devicetree/bindings/qcom,usb-ss.example.dts] Error 1
-Makefile:1263: recipe for target 'dt_binding_check' failed
-make: *** [dt_binding_check] Error 2
-
-See https://patchwork.ozlabs.org/patch/1223564
-Please check and re-submit.
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index aca07c2f6e6e..a87a93f67671 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -85,6 +85,8 @@
+ #define QCOM_CPU_PART_FALKOR_V1		0x800
+ #define QCOM_CPU_PART_FALKOR		0xC00
+ #define QCOM_CPU_PART_KRYO		0x200
++#define QCOM_CPU_PART_KRYO_3XX_SILVER	0x803
++#define QCOM_CPU_PART_KRYO_4XX_SILVER	0x805
+ 
+ #define NVIDIA_CPU_PART_DENVER		0x003
+ #define NVIDIA_CPU_PART_CARMEL		0x004
+@@ -111,6 +113,8 @@
+ #define MIDR_QCOM_FALKOR_V1 MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_FALKOR_V1)
+ #define MIDR_QCOM_FALKOR MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_FALKOR)
+ #define MIDR_QCOM_KRYO MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO)
++#define MIDR_QCOM_KRYO_3XX_SILVER MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_3XX_SILVER)
++#define MIDR_QCOM_KRYO_4XX_SILVER MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_4XX_SILVER)
+ #define MIDR_NVIDIA_DENVER MIDR_CPU_MODEL(ARM_CPU_IMP_NVIDIA, NVIDIA_CPU_PART_DENVER)
+ #define MIDR_NVIDIA_CARMEL MIDR_CPU_MODEL(ARM_CPU_IMP_NVIDIA, NVIDIA_CPU_PART_CARMEL)
+ #define MIDR_FUJITSU_A64FX MIDR_CPU_MODEL(ARM_CPU_IMP_FUJITSU, FUJITSU_CPU_PART_A64FX)
+diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
+index 85f4bec22f6d..d661c7d0e6e2 100644
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -548,6 +548,8 @@ static const struct midr_range spectre_v2_safe_list[] = {
+ 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A55),
+ 	MIDR_ALL_VERSIONS(MIDR_BRAHMA_B53),
+ 	MIDR_ALL_VERSIONS(MIDR_HISI_TSV110),
++	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_3XX_SILVER),
++	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_SILVER),
+ 	{ /* sentinel */ }
+ };
+ 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
