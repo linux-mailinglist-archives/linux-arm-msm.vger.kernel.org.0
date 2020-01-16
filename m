@@ -2,36 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6025713F482
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 19:50:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FB1213F479
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 19:50:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389598AbgAPRJG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jan 2020 12:09:06 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44170 "EHLO mail.kernel.org"
+        id S2389628AbgAPRJN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jan 2020 12:09:13 -0500
+Received: from mail.kernel.org ([198.145.29.99]:44550 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389592AbgAPRJF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:09:05 -0500
+        id S2389621AbgAPRJM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jan 2020 12:09:12 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 296CF2467A;
-        Thu, 16 Jan 2020 17:09:04 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id B169824689;
+        Thu, 16 Jan 2020 17:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579194545;
-        bh=r0DrHgkZBvNlOmMB5tTdIcsEHUI/GUKp7GMj5WMkOfM=;
+        s=default; t=1579194551;
+        bh=A0akTXP0wq1qRK6lx946EyHFrzIdkzubnRmTcJin7Tc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Zy+quaiaEaSk7R8UlFAvzkYhRBrkEXeId29QAWw9aWBCBUOoNGvkQF4eF26WFPKpQ
-         26ZPgYM0/w9Pn0NbuM76BAeYssWtHkulPT0t5y7+ChGKi4tsmdy8dSITtIv37/VTDb
-         92pQ82gvn4w7OPTGTn90oL8wDZY34YUxnJjDme8Y=
+        b=snpIHbEo7iANy2L6yWKHMerbC2eDrXA+10/IcZvdWpPaVHyogipYnNsb28acGRl2p
+         sB9aaBZr/iUIF5vsfyo2vEPQ1ULvEQf5eGNyBk6tL7femVKHBnZ0bsiMlaHaaVPA4S
+         yZzsOEfCnsNO6irMBpV3g5x4rRaOBcbnx87XFqAQ=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
+Cc:     Nathan Huckleberry <nhuck@google.com>,
+        clang-built-linux@googlegroups.com,
+        Nathan Chancellor <natechancellor@gmail.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.19 430/671] drm/msm/a3xx: remove TPL1 regs from snapshot
-Date:   Thu, 16 Jan 2020 12:01:08 -0500
-Message-Id: <20200116170509.12787-167-sashal@kernel.org>
+        linux-clk@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 434/671] clk: qcom: Fix -Wunused-const-variable
+Date:   Thu, 16 Jan 2020 12:01:12 -0500
+Message-Id: <20200116170509.12787-171-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200116170509.12787-1-sashal@kernel.org>
 References: <20200116170509.12787-1-sashal@kernel.org>
@@ -44,58 +46,96 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+From: Nathan Huckleberry <nhuck@google.com>
 
-[ Upstream commit f47bee2ba447bebc304111c16ef1e1a73a9744dd ]
+[ Upstream commit da642427bd7710ec4f4140f693f59aa8521a358c ]
 
-These regs are write-only, and the hw throws a hissy-fit (ie. reboots)
-when we try to read them for GPU state snapshot, in response to a GPU
-hang.  It is rather impolite when GPU recovery triggers an insta-
-reboot, so lets remove the TPL1 registers from the snapshot.
+Clang produces the following warning
 
-Fixes: 7198e6b03155 drm/msm: add a3xx gpu support
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+drivers/clk/qcom/gcc-msm8996.c:133:32: warning: unused variable
+'gcc_xo_gpll0_gpll2_gpll3_gpll0_early_div_map' [-Wunused-const-variable]
+static const struct
+parent_map gcc_xo_gpll0_gpll2_gpll3_gpll0_early_div_map[] =
+{ ^drivers/clk/qcom/gcc-msm8996.c:141:27: warning: unused variable
+'gcc_xo_gpll0_gpll2_gpll3_gpll0_early_div' [-Wunused-const-variable] static
+const char * const gcc_xo_gpll0_gpll2_gpll3_gpll0_early_div[] = { ^
+drivers/clk/qcom/gcc-msm8996.c:187:32: warning: unused variable
+'gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll4_gpll0_early_div_map'
+[-Wunused-const-variable] static const struct parent_map
+gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll4_gpll0_early_div_map[] = { ^
+drivers/clk/qcom/gcc-msm8996.c:197:27: warning: unused variable
+'gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll4_gpll0_early_div'
+[-Wunused-const-variable] static const char * const
+gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll4_gpll0_early_div[] = {
+
+It looks like these were never used.
+
+Fixes: b1e010c0730a ("clk: qcom: Add MSM8996 Global Clock Control (GCC) driver")
+Cc: clang-built-linux@googlegroups.com
+Link: https://github.com/ClangBuiltLinux/linux/issues/518
+Suggested-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Nathan Huckleberry <nhuck@google.com>
+Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ drivers/clk/qcom/gcc-msm8996.c | 36 ----------------------------------
+ 1 file changed, 36 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-index 669c2d4b070d..5c068301d817 100644
---- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-@@ -395,19 +395,17 @@ static const unsigned int a3xx_registers[] = {
- 	0x2200, 0x2212, 0x2214, 0x2217, 0x221a, 0x221a, 0x2240, 0x227e,
- 	0x2280, 0x228b, 0x22c0, 0x22c0, 0x22c4, 0x22ce, 0x22d0, 0x22d8,
- 	0x22df, 0x22e6, 0x22e8, 0x22e9, 0x22ec, 0x22ec, 0x22f0, 0x22f7,
--	0x22ff, 0x22ff, 0x2340, 0x2343, 0x2348, 0x2349, 0x2350, 0x2356,
--	0x2360, 0x2360, 0x2440, 0x2440, 0x2444, 0x2444, 0x2448, 0x244d,
--	0x2468, 0x2469, 0x246c, 0x246d, 0x2470, 0x2470, 0x2472, 0x2472,
--	0x2474, 0x2475, 0x2479, 0x247a, 0x24c0, 0x24d3, 0x24e4, 0x24ef,
--	0x2500, 0x2509, 0x250c, 0x250c, 0x250e, 0x250e, 0x2510, 0x2511,
--	0x2514, 0x2515, 0x25e4, 0x25e4, 0x25ea, 0x25ea, 0x25ec, 0x25ed,
--	0x25f0, 0x25f0, 0x2600, 0x2612, 0x2614, 0x2617, 0x261a, 0x261a,
--	0x2640, 0x267e, 0x2680, 0x268b, 0x26c0, 0x26c0, 0x26c4, 0x26ce,
--	0x26d0, 0x26d8, 0x26df, 0x26e6, 0x26e8, 0x26e9, 0x26ec, 0x26ec,
--	0x26f0, 0x26f7, 0x26ff, 0x26ff, 0x2740, 0x2743, 0x2748, 0x2749,
--	0x2750, 0x2756, 0x2760, 0x2760, 0x300c, 0x300e, 0x301c, 0x301d,
--	0x302a, 0x302a, 0x302c, 0x302d, 0x3030, 0x3031, 0x3034, 0x3036,
--	0x303c, 0x303c, 0x305e, 0x305f,
-+	0x22ff, 0x22ff, 0x2340, 0x2343, 0x2440, 0x2440, 0x2444, 0x2444,
-+	0x2448, 0x244d, 0x2468, 0x2469, 0x246c, 0x246d, 0x2470, 0x2470,
-+	0x2472, 0x2472, 0x2474, 0x2475, 0x2479, 0x247a, 0x24c0, 0x24d3,
-+	0x24e4, 0x24ef, 0x2500, 0x2509, 0x250c, 0x250c, 0x250e, 0x250e,
-+	0x2510, 0x2511, 0x2514, 0x2515, 0x25e4, 0x25e4, 0x25ea, 0x25ea,
-+	0x25ec, 0x25ed, 0x25f0, 0x25f0, 0x2600, 0x2612, 0x2614, 0x2617,
-+	0x261a, 0x261a, 0x2640, 0x267e, 0x2680, 0x268b, 0x26c0, 0x26c0,
-+	0x26c4, 0x26ce, 0x26d0, 0x26d8, 0x26df, 0x26e6, 0x26e8, 0x26e9,
-+	0x26ec, 0x26ec, 0x26f0, 0x26f7, 0x26ff, 0x26ff, 0x2740, 0x2743,
-+	0x300c, 0x300e, 0x301c, 0x301d, 0x302a, 0x302a, 0x302c, 0x302d,
-+	0x3030, 0x3031, 0x3034, 0x3036, 0x303c, 0x303c, 0x305e, 0x305f,
- 	~0   /* sentinel */
+diff --git a/drivers/clk/qcom/gcc-msm8996.c b/drivers/clk/qcom/gcc-msm8996.c
+index 9a3290fdd01b..bea55c461cee 100644
+--- a/drivers/clk/qcom/gcc-msm8996.c
++++ b/drivers/clk/qcom/gcc-msm8996.c
+@@ -138,22 +138,6 @@ static const char * const gcc_xo_gpll0_gpll4_gpll0_early_div[] = {
+ 	"gpll0_early_div"
  };
  
+-static const struct parent_map gcc_xo_gpll0_gpll2_gpll3_gpll0_early_div_map[] = {
+-	{ P_XO, 0 },
+-	{ P_GPLL0, 1 },
+-	{ P_GPLL2, 2 },
+-	{ P_GPLL3, 3 },
+-	{ P_GPLL0_EARLY_DIV, 6 }
+-};
+-
+-static const char * const gcc_xo_gpll0_gpll2_gpll3_gpll0_early_div[] = {
+-	"xo",
+-	"gpll0",
+-	"gpll2",
+-	"gpll3",
+-	"gpll0_early_div"
+-};
+-
+ static const struct parent_map gcc_xo_gpll0_gpll1_early_div_gpll1_gpll4_gpll0_early_div_map[] = {
+ 	{ P_XO, 0 },
+ 	{ P_GPLL0, 1 },
+@@ -192,26 +176,6 @@ static const char * const gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll2_early_gpll0_early
+ 	"gpll0_early_div"
+ };
+ 
+-static const struct parent_map gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll4_gpll0_early_div_map[] = {
+-	{ P_XO, 0 },
+-	{ P_GPLL0, 1 },
+-	{ P_GPLL2, 2 },
+-	{ P_GPLL3, 3 },
+-	{ P_GPLL1, 4 },
+-	{ P_GPLL4, 5 },
+-	{ P_GPLL0_EARLY_DIV, 6 }
+-};
+-
+-static const char * const gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll4_gpll0_early_div[] = {
+-	"xo",
+-	"gpll0",
+-	"gpll2",
+-	"gpll3",
+-	"gpll1",
+-	"gpll4",
+-	"gpll0_early_div"
+-};
+-
+ static struct clk_fixed_factor xo = {
+ 	.mult = 1,
+ 	.div = 1,
 -- 
 2.20.1
 
