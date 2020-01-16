@@ -2,40 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F71713EACE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 18:46:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EAFA13F04D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 19:21:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729579AbgAPRq0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jan 2020 12:46:26 -0500
-Received: from mail.kernel.org ([198.145.29.99]:39096 "EHLO mail.kernel.org"
+        id S2392529AbgAPSUf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jan 2020 13:20:35 -0500
+Received: from mail.kernel.org ([198.145.29.99]:38616 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406659AbgAPRqY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:46:24 -0500
+        id S2392548AbgAPR2D (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jan 2020 12:28:03 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id AAEE0246D9;
-        Thu, 16 Jan 2020 17:46:21 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4D9BC246D9;
+        Thu, 16 Jan 2020 17:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579196783;
-        bh=TlY7+H+pFZQjyCcJQCbjvS+Mb5wwpsI2xEG8bwG2vNg=;
+        s=default; t=1579195682;
+        bh=eGfSmaZhPTJNhVvCHpO8Z9PmUArk9uxu9PZFZhOuafQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=klPjZohtPJlkbl4UlxBbtHSv18XCf+KW0cL4FoGxp5tvuIC2xOWrx05m2so2d3+4J
-         LvqhhsGnSwStO3FbLv9vRgpe/7zSwUkEHZIm1HhIehSI5UIgfxyZOArexnO8DIzmjc
-         8I95IpnTmT7LwTWcg87a1EW/FrqiMN3VrZGfbG5U=
+        b=RVS2WNlSAKY2G8giMvHpNtWSzPSQVXOLs7eZHVAIOdkSqBtVdN1wF34VS6tvB7zp/
+         gawmHP3Waph/Njb+/I5V+qRBAlJwi5zQs0QgorG2jKG6WaqZMaqnb4AoF+jjOgENFc
+         86m6PRtCaoSOXZlfEPfUj+MkJwgLpJsQal59ug0g=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Hai Li <hali@codeaurora.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, Sean Paul <seanpaul@chromium.org>,
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.4 148/174] drm/msm/dsi: Implement reset correctly
-Date:   Thu, 16 Jan 2020 12:42:25 -0500
-Message-Id: <20200116174251.24326-148-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 236/371] drm/msm/a3xx: remove TPL1 regs from snapshot
+Date:   Thu, 16 Jan 2020 12:21:48 -0500
+Message-Id: <20200116172403.18149-179-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200116174251.24326-1-sashal@kernel.org>
-References: <20200116174251.24326-1-sashal@kernel.org>
+In-Reply-To: <20200116172403.18149-1-sashal@kernel.org>
+References: <20200116172403.18149-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -45,71 +44,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 78e31c42261779a01bc73472d0f65f15378e9de3 ]
+[ Upstream commit f47bee2ba447bebc304111c16ef1e1a73a9744dd ]
 
-On msm8998, vblank timeouts are observed because the DSI controller is not
-reset properly, which ends up stalling the MDP.  This is because the reset
-logic is not correct per the hardware documentation.
+These regs are write-only, and the hw throws a hissy-fit (ie. reboots)
+when we try to read them for GPU state snapshot, in response to a GPU
+hang.  It is rather impolite when GPU recovery triggers an insta-
+reboot, so lets remove the TPL1 registers from the snapshot.
 
-The documentation states that after asserting reset, software should wait
-some time (no indication of how long), or poll the status register until it
-returns 0 before deasserting reset.
-
-wmb() is insufficient for this purpose since it just ensures ordering, not
-timing between writes.  Since asserting and deasserting reset occurs on the
-same register, ordering is already guaranteed by the architecture, making
-the wmb extraneous.
-
-Since we would define a timeout for polling the status register to avoid a
-possible infinite loop, lets just use a static delay of 20 ms, since 16.666
-ms is the time available to process one frame at 60 fps.
-
-Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
-Cc: Hai Li <hali@codeaurora.org>
-Cc: Rob Clark <robdclark@gmail.com>
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Reviewed-by: Sean Paul <sean@poorly.run>
-[seanpaul renamed RESET_DELAY to DSI_RESET_TOGGLE_DELAY_MS]
-Signed-off-by: Sean Paul <seanpaul@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20191011133939.16551-1-jeffrey.l.hugo@gmail.com
+Fixes: 7198e6b03155 drm/msm: add a3xx gpu support
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 4c49868efcda..12ddbbb53107 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -30,6 +30,8 @@
- #include "dsi.xml.h"
- #include "dsi_cfg.h"
+diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+index 7791313405b5..c8671b1578c6 100644
+--- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+@@ -394,19 +394,17 @@ static const unsigned int a3xx_registers[] = {
+ 	0x2200, 0x2212, 0x2214, 0x2217, 0x221a, 0x221a, 0x2240, 0x227e,
+ 	0x2280, 0x228b, 0x22c0, 0x22c0, 0x22c4, 0x22ce, 0x22d0, 0x22d8,
+ 	0x22df, 0x22e6, 0x22e8, 0x22e9, 0x22ec, 0x22ec, 0x22f0, 0x22f7,
+-	0x22ff, 0x22ff, 0x2340, 0x2343, 0x2348, 0x2349, 0x2350, 0x2356,
+-	0x2360, 0x2360, 0x2440, 0x2440, 0x2444, 0x2444, 0x2448, 0x244d,
+-	0x2468, 0x2469, 0x246c, 0x246d, 0x2470, 0x2470, 0x2472, 0x2472,
+-	0x2474, 0x2475, 0x2479, 0x247a, 0x24c0, 0x24d3, 0x24e4, 0x24ef,
+-	0x2500, 0x2509, 0x250c, 0x250c, 0x250e, 0x250e, 0x2510, 0x2511,
+-	0x2514, 0x2515, 0x25e4, 0x25e4, 0x25ea, 0x25ea, 0x25ec, 0x25ed,
+-	0x25f0, 0x25f0, 0x2600, 0x2612, 0x2614, 0x2617, 0x261a, 0x261a,
+-	0x2640, 0x267e, 0x2680, 0x268b, 0x26c0, 0x26c0, 0x26c4, 0x26ce,
+-	0x26d0, 0x26d8, 0x26df, 0x26e6, 0x26e8, 0x26e9, 0x26ec, 0x26ec,
+-	0x26f0, 0x26f7, 0x26ff, 0x26ff, 0x2740, 0x2743, 0x2748, 0x2749,
+-	0x2750, 0x2756, 0x2760, 0x2760, 0x300c, 0x300e, 0x301c, 0x301d,
+-	0x302a, 0x302a, 0x302c, 0x302d, 0x3030, 0x3031, 0x3034, 0x3036,
+-	0x303c, 0x303c, 0x305e, 0x305f,
++	0x22ff, 0x22ff, 0x2340, 0x2343, 0x2440, 0x2440, 0x2444, 0x2444,
++	0x2448, 0x244d, 0x2468, 0x2469, 0x246c, 0x246d, 0x2470, 0x2470,
++	0x2472, 0x2472, 0x2474, 0x2475, 0x2479, 0x247a, 0x24c0, 0x24d3,
++	0x24e4, 0x24ef, 0x2500, 0x2509, 0x250c, 0x250c, 0x250e, 0x250e,
++	0x2510, 0x2511, 0x2514, 0x2515, 0x25e4, 0x25e4, 0x25ea, 0x25ea,
++	0x25ec, 0x25ed, 0x25f0, 0x25f0, 0x2600, 0x2612, 0x2614, 0x2617,
++	0x261a, 0x261a, 0x2640, 0x267e, 0x2680, 0x268b, 0x26c0, 0x26c0,
++	0x26c4, 0x26ce, 0x26d0, 0x26d8, 0x26df, 0x26e6, 0x26e8, 0x26e9,
++	0x26ec, 0x26ec, 0x26f0, 0x26f7, 0x26ff, 0x26ff, 0x2740, 0x2743,
++	0x300c, 0x300e, 0x301c, 0x301d, 0x302a, 0x302a, 0x302c, 0x302d,
++	0x3030, 0x3031, 0x3034, 0x3036, 0x303c, 0x303c, 0x305e, 0x305f,
+ 	~0   /* sentinel */
+ };
  
-+#define DSI_RESET_TOGGLE_DELAY_MS 20
-+
- static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
- {
- 	u32 ver;
-@@ -764,7 +766,7 @@ static void dsi_sw_reset(struct msm_dsi_host *msm_host)
- 	wmb(); /* clocks need to be enabled before reset */
- 
- 	dsi_write(msm_host, REG_DSI_RESET, 1);
--	wmb(); /* make sure reset happen */
-+	msleep(DSI_RESET_TOGGLE_DELAY_MS); /* make sure reset happen */
- 	dsi_write(msm_host, REG_DSI_RESET, 0);
- }
- 
-@@ -1111,7 +1113,7 @@ static void dsi_sw_reset_restore(struct msm_dsi_host *msm_host)
- 
- 	/* dsi controller can only be reset while clocks are running */
- 	dsi_write(msm_host, REG_DSI_RESET, 1);
--	wmb();	/* make sure reset happen */
-+	msleep(DSI_RESET_TOGGLE_DELAY_MS); /* make sure reset happen */
- 	dsi_write(msm_host, REG_DSI_RESET, 0);
- 	wmb();	/* controller out of reset */
- 	dsi_write(msm_host, REG_DSI_CTRL, data0);
 -- 
 2.20.1
 
