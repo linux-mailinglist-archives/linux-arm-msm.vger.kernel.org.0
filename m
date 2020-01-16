@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 08F4713E7CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 18:28:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CAE2813E8CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 18:34:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391677AbgAPR14 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jan 2020 12:27:56 -0500
-Received: from mail.kernel.org ([198.145.29.99]:38266 "EHLO mail.kernel.org"
+        id S1726924AbgAPReR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jan 2020 12:34:17 -0500
+Received: from mail.kernel.org ([198.145.29.99]:42534 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392110AbgAPR1z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:27:55 -0500
+        id S2404324AbgAPRaK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jan 2020 12:30:10 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1C578246EB;
-        Thu, 16 Jan 2020 17:27:53 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5EB6624724;
+        Thu, 16 Jan 2020 17:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579195674;
-        bh=oZRjKA7GGnkS5D3Z+OySvQJHR7OF8LYaprgmuTMpSj0=;
+        s=default; t=1579195809;
+        bh=h5WNL/seNEWA2AWyaIonY+f3tUYc7EjWCdHsYyIlzxc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=st0XS/CsQB3YY4tUoFRsxc0l5o31qvG6+abTFCqybodyOiaMb06D9J642JYzlKJCq
-         KJBgjnQBIE/thyBEvAYScVfgNdH+iyUbiWltfEKx6jljKQqLwZeOvl1yswwgSDj50x
-         EEmzTIES5JykYg68UrolHQEUW66dv/CmPHleSJRc=
+        b=Et4VyQC7xPpUsvLigB2UXCMYDqhfkvkf4qJKOZNRA5o3LutsfYKlk1K11lrMtCa6r
+         Hi+WeuB8ZADMQjRwKCK/RE3kWobeJsiALnBoOh4RBxLCotTS5QKBW2bWxnl1+8MzQP
+         f2Apg7rY9f5njkiugYRJDTQ9gDogIWcXwlp2mxRk=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
+        Hai Li <hali@codeaurora.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, Sean Paul <seanpaul@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.14 230/371] drm/msm/mdp5: Fix mdp5_cfg_init error return
-Date:   Thu, 16 Jan 2020 12:21:42 -0500
-Message-Id: <20200116172403.18149-173-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 322/371] drm/msm/dsi: Implement reset correctly
+Date:   Thu, 16 Jan 2020 12:23:14 -0500
+Message-Id: <20200116172403.18149-265-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200116172403.18149-1-sashal@kernel.org>
 References: <20200116172403.18149-1-sashal@kernel.org>
@@ -47,35 +47,69 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
-[ Upstream commit fc19cbb785d7bbd1a1af26229b5240a3ab332744 ]
+[ Upstream commit 78e31c42261779a01bc73472d0f65f15378e9de3 ]
 
-If mdp5_cfg_init fails because of an unknown major version, a null pointer
-dereference occurs.  This is because the caller of init expects error
-pointers, but init returns NULL on error.  Fix this by returning the
-expected values on error.
+On msm8998, vblank timeouts are observed because the DSI controller is not
+reset properly, which ends up stalling the MDP.  This is because the reset
+logic is not correct per the hardware documentation.
 
-Fixes: 2e362e1772b8 (drm/msm/mdp5: introduce mdp5_cfg module)
+The documentation states that after asserting reset, software should wait
+some time (no indication of how long), or poll the status register until it
+returns 0 before deasserting reset.
+
+wmb() is insufficient for this purpose since it just ensures ordering, not
+timing between writes.  Since asserting and deasserting reset occurs on the
+same register, ordering is already guaranteed by the architecture, making
+the wmb extraneous.
+
+Since we would define a timeout for polling the status register to avoid a
+possible infinite loop, lets just use a static delay of 20 ms, since 16.666
+ms is the time available to process one frame at 60 fps.
+
+Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
+Cc: Hai Li <hali@codeaurora.org>
+Cc: Rob Clark <robdclark@gmail.com>
 Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Sean Paul <sean@poorly.run>
+[seanpaul renamed RESET_DELAY to DSI_RESET_TOGGLE_DELAY_MS]
+Signed-off-by: Sean Paul <seanpaul@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20191011133939.16551-1-jeffrey.l.hugo@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/mdp/mdp5/mdp5_cfg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/mdp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/mdp/mdp5/mdp5_cfg.c
-index 824067d2d427..42f0ecb0cf35 100644
---- a/drivers/gpu/drm/msm/mdp/mdp5/mdp5_cfg.c
-+++ b/drivers/gpu/drm/msm/mdp/mdp5/mdp5_cfg.c
-@@ -635,7 +635,7 @@ struct mdp5_cfg_handler *mdp5_cfg_init(struct mdp5_kms *mdp5_kms,
- 	if (cfg_handler)
- 		mdp5_cfg_destroy(cfg_handler);
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index a9a0b56f1fbc..b9cb7c09e05a 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -34,6 +34,8 @@
+ #include "dsi_cfg.h"
+ #include "msm_kms.h"
  
--	return NULL;
-+	return ERR_PTR(ret);
++#define DSI_RESET_TOGGLE_DELAY_MS 20
++
+ static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
+ {
+ 	u32 ver;
+@@ -906,7 +908,7 @@ static void dsi_sw_reset(struct msm_dsi_host *msm_host)
+ 	wmb(); /* clocks need to be enabled before reset */
+ 
+ 	dsi_write(msm_host, REG_DSI_RESET, 1);
+-	wmb(); /* make sure reset happen */
++	msleep(DSI_RESET_TOGGLE_DELAY_MS); /* make sure reset happen */
+ 	dsi_write(msm_host, REG_DSI_RESET, 0);
  }
  
- static struct mdp5_cfg_platform *mdp5_get_config(struct platform_device *dev)
+@@ -1288,7 +1290,7 @@ static void dsi_sw_reset_restore(struct msm_dsi_host *msm_host)
+ 
+ 	/* dsi controller can only be reset while clocks are running */
+ 	dsi_write(msm_host, REG_DSI_RESET, 1);
+-	wmb();	/* make sure reset happen */
++	msleep(DSI_RESET_TOGGLE_DELAY_MS); /* make sure reset happen */
+ 	dsi_write(msm_host, REG_DSI_RESET, 0);
+ 	wmb();	/* controller out of reset */
+ 	dsi_write(msm_host, REG_DSI_CTRL, data0);
 -- 
 2.20.1
 
