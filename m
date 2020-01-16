@@ -2,41 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F86F13FF16
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2020 00:40:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A44613FF1A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2020 00:40:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391811AbgAPXk1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jan 2020 18:40:27 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:10647 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2391789AbgAPXkV (ORCPT
+        id S2391828AbgAPXka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jan 2020 18:40:30 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:19956 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2391784AbgAPXk3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jan 2020 18:40:21 -0500
+        Thu, 16 Jan 2020 18:40:29 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1579218020; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1579218028; h=References: In-Reply-To: Message-Id: Date:
  Subject: To: From: Sender;
- bh=YiVykgG9A6Hlm306b6on04EBkw0yFtlU5i3mSo6vXOM=; b=VjyAelXxhwDc4pHDtA4m0YolFzbIKpcxWACz70xYJllJkrz0FZYJfsfanWRpVirjaGiaee3c
- ddla0kPJ6J3Fh/iwexVX1+pFASM7akdUsVlg+Kj9d3Bw17RqrPTbQ9V/M1pXGqDBf5+cmUPS
- BHWBDVeoFK7BY7pfHvSde1gUMwE=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ bh=vnfW76og4P166FaRFCS5DFdnKP20j5CY8s+Jpc+JZVI=; b=SotNPGpzjbW1L6e+T2idbk54uDDHIKUuzY9TClzG5OX7Qreml8lJcbIZqhCkNLggtwrTcRl8
+ hM8Md+Z6Mx9B5vR13o03KrAeZkkc6Q3v0xKR3TO5g/Ed7SVSoAVYkeKRv3UVCd/RZ5PnCzYO
+ mZEROX36h9mCHCWwNeF7V3R/3i4=
+X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e20f462.7f9ef66cb180-smtp-out-n01;
- Thu, 16 Jan 2020 23:40:18 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e20f468.7f61aabc0b20-smtp-out-n02;
+ Thu, 16 Jan 2020 23:40:24 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4E3DDC447AF; Thu, 16 Jan 2020 23:40:18 +0000 (UTC)
+        id 80584C447B4; Thu, 16 Jan 2020 23:40:22 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        UPPERCASE_50_75 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from vgutta-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: vgutta)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F2C8EC447AB;
-        Thu, 16 Jan 2020 23:40:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F2C8EC447AB
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 72994C447A5;
+        Thu, 16 Jan 2020 23:40:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 72994C447A5
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vnkgutta@codeaurora.org
 From:   Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
@@ -48,9 +48,9 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org,
         vnkgutta@codeaurora.org, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 5/7] dt-bindings: clock: Add SM8250 GCC clock bindings
-Date:   Thu, 16 Jan 2020 15:39:52 -0800
-Message-Id: <1579217994-22219-6-git-send-email-vnkgutta@codeaurora.org>
+Subject: [PATCH 7/7] arm64: dts: qcom: sm8250: Add sm8250 dts file
+Date:   Thu, 16 Jan 2020 15:39:54 -0800
+Message-Id: <1579217994-22219-8-git-send-email-vnkgutta@codeaurora.org>
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1579217994-22219-1-git-send-email-vnkgutta@codeaurora.org>
 References: <1579217994-22219-1-git-send-email-vnkgutta@codeaurora.org>
@@ -59,307 +59,521 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Taniya Das <tdas@codeaurora.org>
+Add sm8250 devicetree file for SM8250 SoC and SM8250 MTP platform.
+This file adds the basic nodes like cpu, psci and other required
+configuration for booting up to the serial console.
 
-Add device tree bindings for global clock controller on SM8250 SoCs.
-
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
 Signed-off-by: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
 ---
- .../devicetree/bindings/clock/qcom,gcc.yaml        |   1 +
- include/dt-bindings/clock/qcom,gcc-sm8250.h        | 271 +++++++++++++++++++++
- 2 files changed, 272 insertions(+)
- create mode 100644 include/dt-bindings/clock/qcom,gcc-sm8250.h
+ arch/arm64/boot/dts/qcom/Makefile       |   1 +
+ arch/arm64/boot/dts/qcom/sm8250-mtp.dts |  29 ++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi    | 450 ++++++++++++++++++++++++++++++++
+ 3 files changed, 480 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8250.dtsi
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-index 19d0079..e6d586d 100644
---- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-@@ -39,6 +39,7 @@ properties:
-        - qcom,gcc-sdm660
-        - qcom,gcc-sdm845
-        - qcom,gcc-sm8150
-+       - qcom,gcc-sm8250
- 
-   clocks:
-     oneOf:
-diff --git a/include/dt-bindings/clock/qcom,gcc-sm8250.h b/include/dt-bindings/clock/qcom,gcc-sm8250.h
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 973c0f0..c6014c0 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -22,5 +22,6 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-mtp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
 new file mode 100644
-index 0000000..287d5dd
+index 0000000..224d0f1
 --- /dev/null
-+++ b/include/dt-bindings/clock/qcom,gcc-sm8250.h
-@@ -0,0 +1,271 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
++++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+@@ -0,0 +1,29 @@
++// SPDX-License-Identifier: BSD-3-Clause
 +/*
 + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
 + */
 +
-+#ifndef _DT_BINDINGS_CLK_QCOM_GCC_SM8250_H
-+#define _DT_BINDINGS_CLK_QCOM_GCC_SM8250_H
++/dts-v1/;
 +
-+/* GCC clocks */
-+#define GPLL0							0
-+#define GPLL0_OUT_EVEN						1
-+#define GPLL4							2
-+#define GPLL9							3
-+#define GCC_AGGRE_NOC_PCIE_TBU_CLK				4
-+#define GCC_AGGRE_UFS_CARD_AXI_CLK				5
-+#define GCC_AGGRE_UFS_PHY_AXI_CLK				6
-+#define GCC_AGGRE_USB3_PRIM_AXI_CLK				7
-+#define GCC_AGGRE_USB3_SEC_AXI_CLK				8
-+#define GCC_BOOT_ROM_AHB_CLK					9
-+#define GCC_CAMERA_AHB_CLK					10
-+#define GCC_CAMERA_HF_AXI_CLK					11
-+#define GCC_CAMERA_SF_AXI_CLK					12
-+#define GCC_CAMERA_XO_CLK					13
-+#define GCC_CFG_NOC_USB3_PRIM_AXI_CLK				14
-+#define GCC_CFG_NOC_USB3_SEC_AXI_CLK				15
-+#define GCC_CPUSS_AHB_CLK					16
-+#define GCC_CPUSS_AHB_CLK_SRC					17
-+#define GCC_CPUSS_AHB_POSTDIV_CLK_SRC				18
-+#define GCC_CPUSS_DVM_BUS_CLK					19
-+#define GCC_CPUSS_RBCPR_CLK					20
-+#define GCC_DDRSS_GPU_AXI_CLK					21
-+#define GCC_DDRSS_PCIE_SF_TBU_CLK				22
-+#define GCC_DISP_AHB_CLK					23
-+#define GCC_DISP_HF_AXI_CLK					24
-+#define GCC_DISP_SF_AXI_CLK					25
-+#define GCC_DISP_XO_CLK						26
-+#define GCC_GP1_CLK						27
-+#define GCC_GP1_CLK_SRC						28
-+#define GCC_GP2_CLK						29
-+#define GCC_GP2_CLK_SRC						30
-+#define GCC_GP3_CLK						31
-+#define GCC_GP3_CLK_SRC						32
-+#define GCC_GPU_CFG_AHB_CLK					33
-+#define GCC_GPU_GPLL0_CLK_SRC					34
-+#define GCC_GPU_GPLL0_DIV_CLK_SRC				35
-+#define GCC_GPU_IREF_EN						36
-+#define GCC_GPU_MEMNOC_GFX_CLK					37
-+#define GCC_GPU_SNOC_DVM_GFX_CLK				38
-+#define GCC_NPU_AXI_CLK						39
-+#define GCC_NPU_BWMON_AXI_CLK					40
-+#define GCC_NPU_BWMON_CFG_AHB_CLK				41
-+#define GCC_NPU_CFG_AHB_CLK					42
-+#define GCC_NPU_DMA_CLK						43
-+#define GCC_NPU_GPLL0_CLK_SRC					44
-+#define GCC_NPU_GPLL0_DIV_CLK_SRC				45
-+#define GCC_PCIE0_PHY_REFGEN_CLK				46
-+#define GCC_PCIE1_PHY_REFGEN_CLK				47
-+#define GCC_PCIE2_PHY_REFGEN_CLK				48
-+#define GCC_PCIE_0_AUX_CLK					49
-+#define GCC_PCIE_0_AUX_CLK_SRC					50
-+#define GCC_PCIE_0_CFG_AHB_CLK					51
-+#define GCC_PCIE_0_MSTR_AXI_CLK					52
-+#define GCC_PCIE_0_PIPE_CLK					53
-+#define GCC_PCIE_0_SLV_AXI_CLK					54
-+#define GCC_PCIE_0_SLV_Q2A_AXI_CLK				55
-+#define GCC_PCIE_1_AUX_CLK					56
-+#define GCC_PCIE_1_AUX_CLK_SRC					57
-+#define GCC_PCIE_1_CFG_AHB_CLK					58
-+#define GCC_PCIE_1_MSTR_AXI_CLK					59
-+#define GCC_PCIE_1_PIPE_CLK					60
-+#define GCC_PCIE_1_SLV_AXI_CLK					61
-+#define GCC_PCIE_1_SLV_Q2A_AXI_CLK				62
-+#define GCC_PCIE_2_AUX_CLK					63
-+#define GCC_PCIE_2_AUX_CLK_SRC					64
-+#define GCC_PCIE_2_CFG_AHB_CLK					65
-+#define GCC_PCIE_2_MSTR_AXI_CLK					66
-+#define GCC_PCIE_2_PIPE_CLK					67
-+#define GCC_PCIE_2_SLV_AXI_CLK					68
-+#define GCC_PCIE_2_SLV_Q2A_AXI_CLK				69
-+#define GCC_PCIE_MDM_CLKREF_EN					70
-+#define GCC_PCIE_PHY_AUX_CLK					71
-+#define GCC_PCIE_PHY_REFGEN_CLK_SRC				72
-+#define GCC_PCIE_WIFI_CLKREF_EN					73
-+#define GCC_PCIE_WIGIG_CLKREF_EN				74
-+#define GCC_PDM2_CLK						75
-+#define GCC_PDM2_CLK_SRC					76
-+#define GCC_PDM_AHB_CLK						77
-+#define GCC_PDM_XO4_CLK						78
-+#define GCC_PRNG_AHB_CLK					89
-+#define GCC_QMIP_CAMERA_NRT_AHB_CLK				80
-+#define GCC_QMIP_CAMERA_RT_AHB_CLK				81
-+#define GCC_QMIP_DISP_AHB_CLK					82
-+#define GCC_QMIP_VIDEO_CVP_AHB_CLK				83
-+#define GCC_QMIP_VIDEO_VCODEC_AHB_CLK				84
-+#define GCC_QUPV3_WRAP0_CORE_2X_CLK				85
-+#define GCC_QUPV3_WRAP0_CORE_CLK				86
-+#define GCC_QUPV3_WRAP0_S0_CLK					87
-+#define GCC_QUPV3_WRAP0_S0_CLK_SRC				88
-+#define GCC_QUPV3_WRAP0_S1_CLK					89
-+#define GCC_QUPV3_WRAP0_S1_CLK_SRC				90
-+#define GCC_QUPV3_WRAP0_S2_CLK					91
-+#define GCC_QUPV3_WRAP0_S2_CLK_SRC				92
-+#define GCC_QUPV3_WRAP0_S3_CLK					93
-+#define GCC_QUPV3_WRAP0_S3_CLK_SRC				94
-+#define GCC_QUPV3_WRAP0_S4_CLK					95
-+#define GCC_QUPV3_WRAP0_S4_CLK_SRC				96
-+#define GCC_QUPV3_WRAP0_S5_CLK					97
-+#define GCC_QUPV3_WRAP0_S5_CLK_SRC				98
-+#define GCC_QUPV3_WRAP0_S6_CLK					99
-+#define GCC_QUPV3_WRAP0_S6_CLK_SRC				100
-+#define GCC_QUPV3_WRAP0_S7_CLK					101
-+#define GCC_QUPV3_WRAP0_S7_CLK_SRC				102
-+#define GCC_QUPV3_WRAP1_CORE_2X_CLK				103
-+#define GCC_QUPV3_WRAP1_CORE_CLK				104
-+#define GCC_QUPV3_WRAP1_S0_CLK					105
-+#define GCC_QUPV3_WRAP1_S0_CLK_SRC				106
-+#define GCC_QUPV3_WRAP1_S1_CLK					107
-+#define GCC_QUPV3_WRAP1_S1_CLK_SRC				108
-+#define GCC_QUPV3_WRAP1_S2_CLK					109
-+#define GCC_QUPV3_WRAP1_S2_CLK_SRC				110
-+#define GCC_QUPV3_WRAP1_S3_CLK					111
-+#define GCC_QUPV3_WRAP1_S3_CLK_SRC				112
-+#define GCC_QUPV3_WRAP1_S4_CLK					113
-+#define GCC_QUPV3_WRAP1_S4_CLK_SRC				114
-+#define GCC_QUPV3_WRAP1_S5_CLK					115
-+#define GCC_QUPV3_WRAP1_S5_CLK_SRC				116
-+#define GCC_QUPV3_WRAP2_CORE_2X_CLK				117
-+#define GCC_QUPV3_WRAP2_CORE_CLK				118
-+#define GCC_QUPV3_WRAP2_S0_CLK					119
-+#define GCC_QUPV3_WRAP2_S0_CLK_SRC				120
-+#define GCC_QUPV3_WRAP2_S1_CLK					121
-+#define GCC_QUPV3_WRAP2_S1_CLK_SRC				122
-+#define GCC_QUPV3_WRAP2_S2_CLK					123
-+#define GCC_QUPV3_WRAP2_S2_CLK_SRC				124
-+#define GCC_QUPV3_WRAP2_S3_CLK					125
-+#define GCC_QUPV3_WRAP2_S3_CLK_SRC				126
-+#define GCC_QUPV3_WRAP2_S4_CLK					127
-+#define GCC_QUPV3_WRAP2_S4_CLK_SRC				128
-+#define GCC_QUPV3_WRAP2_S5_CLK					129
-+#define GCC_QUPV3_WRAP2_S5_CLK_SRC				130
-+#define GCC_QUPV3_WRAP_0_M_AHB_CLK				131
-+#define GCC_QUPV3_WRAP_0_S_AHB_CLK				132
-+#define GCC_QUPV3_WRAP_1_M_AHB_CLK				133
-+#define GCC_QUPV3_WRAP_1_S_AHB_CLK				134
-+#define GCC_QUPV3_WRAP_2_M_AHB_CLK				135
-+#define GCC_QUPV3_WRAP_2_S_AHB_CLK				136
-+#define GCC_SDCC2_AHB_CLK					137
-+#define GCC_SDCC2_APPS_CLK					138
-+#define GCC_SDCC2_APPS_CLK_SRC					139
-+#define GCC_SDCC4_AHB_CLK					140
-+#define GCC_SDCC4_APPS_CLK					141
-+#define GCC_SDCC4_APPS_CLK_SRC					142
-+#define GCC_SYS_NOC_CPUSS_AHB_CLK				143
-+#define GCC_TSIF_AHB_CLK					144
-+#define GCC_TSIF_INACTIVITY_TIMERS_CLK				145
-+#define GCC_TSIF_REF_CLK					146
-+#define GCC_TSIF_REF_CLK_SRC					147
-+#define GCC_UFS_1X_CLKREF_EN					148
-+#define GCC_UFS_CARD_AHB_CLK					149
-+#define GCC_UFS_CARD_AXI_CLK					150
-+#define GCC_UFS_CARD_AXI_CLK_SRC				151
-+#define GCC_UFS_CARD_ICE_CORE_CLK				152
-+#define GCC_UFS_CARD_ICE_CORE_CLK_SRC				153
-+#define GCC_UFS_CARD_PHY_AUX_CLK				154
-+#define GCC_UFS_CARD_PHY_AUX_CLK_SRC				155
-+#define GCC_UFS_CARD_RX_SYMBOL_0_CLK				156
-+#define GCC_UFS_CARD_RX_SYMBOL_1_CLK				157
-+#define GCC_UFS_CARD_TX_SYMBOL_0_CLK				158
-+#define GCC_UFS_CARD_UNIPRO_CORE_CLK				159
-+#define GCC_UFS_CARD_UNIPRO_CORE_CLK_SRC			160
-+#define GCC_UFS_PHY_AHB_CLK					161
-+#define GCC_UFS_PHY_AXI_CLK					162
-+#define GCC_UFS_PHY_AXI_CLK_SRC					163
-+#define GCC_UFS_PHY_ICE_CORE_CLK				164
-+#define GCC_UFS_PHY_ICE_CORE_CLK_SRC				165
-+#define GCC_UFS_PHY_PHY_AUX_CLK					166
-+#define GCC_UFS_PHY_PHY_AUX_CLK_SRC				167
-+#define GCC_UFS_PHY_RX_SYMBOL_0_CLK				168
-+#define GCC_UFS_PHY_RX_SYMBOL_1_CLK				169
-+#define GCC_UFS_PHY_TX_SYMBOL_0_CLK				170
-+#define GCC_UFS_PHY_UNIPRO_CORE_CLK				171
-+#define GCC_UFS_PHY_UNIPRO_CORE_CLK_SRC				172
-+#define GCC_USB30_PRIM_MASTER_CLK				173
-+#define GCC_USB30_PRIM_MASTER_CLK_SRC				174
-+#define GCC_USB30_PRIM_MOCK_UTMI_CLK				175
-+#define GCC_USB30_PRIM_MOCK_UTMI_CLK_SRC			176
-+#define GCC_USB30_PRIM_MOCK_UTMI_POSTDIV_CLK_SRC		177
-+#define GCC_USB30_PRIM_SLEEP_CLK				178
-+#define GCC_USB30_SEC_MASTER_CLK				179
-+#define GCC_USB30_SEC_MASTER_CLK_SRC				180
-+#define GCC_USB30_SEC_MOCK_UTMI_CLK				181
-+#define GCC_USB30_SEC_MOCK_UTMI_CLK_SRC				182
-+#define GCC_USB30_SEC_MOCK_UTMI_POSTDIV_CLK_SRC			183
-+#define GCC_USB30_SEC_SLEEP_CLK					184
-+#define GCC_USB3_PRIM_PHY_AUX_CLK				185
-+#define GCC_USB3_PRIM_PHY_AUX_CLK_SRC				186
-+#define GCC_USB3_PRIM_PHY_COM_AUX_CLK				187
-+#define GCC_USB3_PRIM_PHY_PIPE_CLK				188
-+#define GCC_USB3_PRIM_PHY_PIPE_CLK_SRC				189
-+#define GCC_USB3_SEC_CLKREF_EN					190
-+#define GCC_USB3_SEC_PHY_AUX_CLK				191
-+#define GCC_USB3_SEC_PHY_AUX_CLK_SRC				192
-+#define GCC_USB3_SEC_PHY_COM_AUX_CLK				193
-+#define GCC_USB3_SEC_PHY_PIPE_CLK				194
-+#define GCC_USB3_SEC_PHY_PIPE_CLK_SRC				195
-+#define GCC_VIDEO_AHB_CLK					196
-+#define GCC_VIDEO_AXI0_CLK					197
-+#define GCC_VIDEO_AXI1_CLK					198
-+#define GCC_VIDEO_XO_CLK					199
++#include "sm8250.dtsi"
 +
-+/* GCC resets */
-+#define GCC_GPU_BCR						0
-+#define GCC_MMSS_BCR						1
-+#define GCC_NPU_BWMON_BCR					2
-+#define GCC_NPU_BCR						3
-+#define GCC_PCIE_0_BCR						4
-+#define GCC_PCIE_0_LINK_DOWN_BCR				5
-+#define GCC_PCIE_0_NOCSR_COM_PHY_BCR				6
-+#define GCC_PCIE_0_PHY_BCR					7
-+#define GCC_PCIE_0_PHY_NOCSR_COM_PHY_BCR			8
-+#define GCC_PCIE_1_BCR						9
-+#define GCC_PCIE_1_LINK_DOWN_BCR				10
-+#define GCC_PCIE_1_NOCSR_COM_PHY_BCR				11
-+#define GCC_PCIE_1_PHY_BCR					12
-+#define GCC_PCIE_1_PHY_NOCSR_COM_PHY_BCR			13
-+#define GCC_PCIE_2_BCR						14
-+#define GCC_PCIE_2_LINK_DOWN_BCR				15
-+#define GCC_PCIE_2_NOCSR_COM_PHY_BCR				16
-+#define GCC_PCIE_2_PHY_BCR					17
-+#define GCC_PCIE_2_PHY_NOCSR_COM_PHY_BCR			18
-+#define GCC_PCIE_PHY_BCR					19
-+#define GCC_PCIE_PHY_CFG_AHB_BCR				20
-+#define GCC_PCIE_PHY_COM_BCR					21
-+#define GCC_PDM_BCR						22
-+#define GCC_PRNG_BCR						23
-+#define GCC_QUPV3_WRAPPER_0_BCR					24
-+#define GCC_QUPV3_WRAPPER_1_BCR					25
-+#define GCC_QUPV3_WRAPPER_2_BCR					26
-+#define GCC_QUSB2PHY_PRIM_BCR					27
-+#define GCC_QUSB2PHY_SEC_BCR					28
-+#define GCC_SDCC2_BCR						29
-+#define GCC_SDCC4_BCR						30
-+#define GCC_TSIF_BCR						31
-+#define GCC_UFS_CARD_BCR					32
-+#define GCC_UFS_PHY_BCR						33
-+#define GCC_USB30_PRIM_BCR					34
-+#define GCC_USB30_SEC_BCR					35
-+#define GCC_USB3_DP_PHY_PRIM_BCR				36
-+#define GCC_USB3_DP_PHY_SEC_BCR					37
-+#define GCC_USB3_PHY_PRIM_BCR					38
-+#define GCC_USB3_PHY_SEC_BCR					39
-+#define GCC_USB3PHY_PHY_PRIM_BCR				40
-+#define GCC_USB3PHY_PHY_SEC_BCR					41
-+#define GCC_USB_PHY_CFG_AHB2PHY_BCR				42
-+#define GCC_VIDEO_AXI0_CLK_ARES					43
-+#define GCC_VIDEO_AXI1_CLK_ARES					44
++/ {
++	model = "Qualcomm Technologies, Inc. SM8250 MTP";
++	compatible = "qcom,sm8250-mtp";
 +
-+/* GCC power domains */
-+#define PCIE_0_GDSC						0
-+#define PCIE_1_GDSC						1
-+#define PCIE_2_GDSC						2
-+#define UFS_CARD_GDSC						3
-+#define UFS_PHY_GDSC						4
-+#define USB30_PRIM_GDSC						5
-+#define USB30_SEC_GDSC						6
-+#define HLOS1_VOTE_MMNOC_MMU_TBU_HF0_GDSC			7
-+#define HLOS1_VOTE_MMNOC_MMU_TBU_HF1_GDSC			8
-+#define HLOS1_VOTE_MMNOC_MMU_TBU_SF0_GDSC			9
-+#define HLOS1_VOTE_MMNOC_MMU_TBU_SF1_GDSC			10
++	aliases {
++		serial0 = &uart2;
++	};
 +
-+#endif
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++};
++
++&qupv3_id_1 {
++	status = "okay";
++};
++
++&uart2 {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+new file mode 100644
+index 0000000..76c0fcd
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -0,0 +1,450 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2020, The Linux Foundation. All rights reserved.
++ */
++
++#include <dt-bindings/interrupt-controller/arm-gic.h>
++#include <dt-bindings/clock/qcom,rpmh.h>
++#include <dt-bindings/soc/qcom,rpmh-rsc.h>
++
++/ {
++	interrupt-parent = <&intc>;
++
++	#address-cells = <2>;
++	#size-cells = <2>;
++
++	chosen { };
++
++	clocks {
++		xo_board: xo-board {
++			compatible = "fixed-clock";
++			#clock-cells = <0>;
++			clock-frequency = <38400000>;
++			clock-output-names = "xo_board";
++		};
++
++		sleep_clk: sleep-clk {
++			compatible = "fixed-clock";
++			clock-frequency = <32000>;
++			#clock-cells = <1>;
++		};
++	};
++
++	cpus {
++		#address-cells = <2>;
++		#size-cells = <0>;
++
++		CPU0: cpu@0 {
++			device_type = "cpu";
++			compatible = "qcom,kryo485";
++			reg = <0x0 0x0>;
++			enable-method = "psci";
++			next-level-cache = <&L2_0>;
++			L2_0: l2-cache {
++			      compatible = "cache";
++			      next-level-cache = <&L3_0>;
++				L3_0: l3-cache {
++				      compatible = "cache";
++				};
++			};
++		};
++
++		CPU1: cpu@100 {
++			device_type = "cpu";
++			compatible = "qcom,kryo485";
++			reg = <0x0 0x100>;
++			enable-method = "psci";
++			next-level-cache = <&L2_100>;
++			L2_100: l2-cache {
++			      compatible = "cache";
++			      next-level-cache = <&L3_0>;
++			};
++		};
++
++		CPU2: cpu@200 {
++			device_type = "cpu";
++			compatible = "qcom,kryo485";
++			reg = <0x0 0x200>;
++			enable-method = "psci";
++			next-level-cache = <&L2_200>;
++			L2_200: l2-cache {
++			      compatible = "cache";
++			      next-level-cache = <&L3_0>;
++			};
++		};
++
++		CPU3: cpu@300 {
++			device_type = "cpu";
++			compatible = "qcom,kryo485";
++			reg = <0x0 0x300>;
++			enable-method = "psci";
++			next-level-cache = <&L2_300>;
++			L2_300: l2-cache {
++			      compatible = "cache";
++			      next-level-cache = <&L3_0>;
++			};
++		};
++
++		CPU4: cpu@400 {
++			device_type = "cpu";
++			compatible = "qcom,kryo485";
++			reg = <0x0 0x400>;
++			enable-method = "psci";
++			next-level-cache = <&L2_400>;
++			L2_400: l2-cache {
++			      compatible = "cache";
++			      next-level-cache = <&L3_0>;
++			};
++		};
++
++		CPU5: cpu@500 {
++			device_type = "cpu";
++			compatible = "qcom,kryo485";
++			reg = <0x0 0x500>;
++			enable-method = "psci";
++			next-level-cache = <&L2_500>;
++			L2_500: l2-cache {
++			      compatible = "cache";
++			      next-level-cache = <&L3_0>;
++			};
++
++		};
++
++		CPU6: cpu@600 {
++			device_type = "cpu";
++			compatible = "qcom,kryo485";
++			reg = <0x0 0x600>;
++			enable-method = "psci";
++			next-level-cache = <&L2_600>;
++			L2_600: l2-cache {
++			      compatible = "cache";
++			      next-level-cache = <&L3_0>;
++			};
++		};
++
++		CPU7: cpu@700 {
++			device_type = "cpu";
++			compatible = "qcom,kryo485";
++			reg = <0x0 0x700>;
++			enable-method = "psci";
++			next-level-cache = <&L2_700>;
++			L2_700: l2-cache {
++			      compatible = "cache";
++			      next-level-cache = <&L3_0>;
++			};
++		};
++	};
++
++	firmware: firmware {
++		scm: scm {
++			compatible = "qcom,scm";
++			#reset-cells = <1>;
++		};
++	};
++
++	tcsr_mutex: hwlock {
++		compatible = "qcom,tcsr-mutex";
++		syscon = <&tcsr_mutex_regs 0 0x1000>;
++		#hwlock-cells = <1>;
++	};
++
++	memory@80000000 {
++		device_type = "memory";
++		/* We expect the bootloader to fill in the size */
++		reg = <0x0 0x80000000 0x0 0x0>;
++	};
++
++	pmu {
++		compatible = "arm,armv8-pmuv3";
++		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_HIGH>;
++	};
++
++	psci {
++		compatible = "arm,psci-1.0";
++		method = "smc";
++	};
++
++	reserved_memory: reserved-memory {
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges;
++
++		hyp_mem: memory@80000000 {
++			reg = <0x0 0x80000000 0x0 0x600000>;
++			no-map;
++		};
++
++		xbl_aop_mem: memory@80700000 {
++			reg = <0x0 0x80700000 0x0 0x160000>;
++			no-map;
++		};
++
++		cmd_db: memory@80860000 {
++			compatible = "qcom,cmd-db";
++			reg = <0x0 0x80860000 0x0 0x20000>;
++			no-map;
++		};
++
++		smem_mem: memory@80900000 {
++			reg = <0x0 0x80900000 0x0 0x200000>;
++			no-map;
++		};
++
++		removed_mem: memory@80b00000 {
++			reg = <0x0 0x80b00000 0x0 0x5300000>;
++			no-map;
++		};
++
++		camera_mem: memory@86200000 {
++			reg = <0x0 0x86200000 0x0 0x500000>;
++			no-map;
++		};
++
++		wlan_mem: memory@86700000 {
++			reg = <0x0 0x86700000 0x0 0x100000>;
++			no-map;
++		};
++
++		ipa_fw_mem: memory@86800000 {
++			reg = <0x0 0x86800000 0x0 0x10000>;
++			no-map;
++		};
++
++		ipa_gsi_mem: memory@86810000 {
++			reg = <0x0 0x86810000 0x0 0xa000>;
++			no-map;
++		};
++
++		gpu_mem: memory@8681a000 {
++			reg = <0x0 0x8681a000 0x0 0x2000>;
++			no-map;
++		};
++
++		npu_mem: memory@86900000 {
++			reg = <0x0 0x86900000 0x0 0x500000>;
++			no-map;
++		};
++
++		video_mem: memory@86e00000 {
++			reg = <0x0 0x86e00000 0x0 0x500000>;
++			no-map;
++		};
++
++		cvp_mem: memory@87300000 {
++			reg = <0x0 0x87300000 0x0 0x500000>;
++			no-map;
++		};
++
++		cdsp_mem: memory@87800000 {
++			reg = <0x0 0x87800000 0x0 0x1400000>;
++			no-map;
++		};
++
++		slpi_mem: memory@88c00000 {
++			reg = <0x0 0x88c00000 0x0 0x1500000>;
++			no-map;
++		};
++
++		adsp_mem: memory@8a100000 {
++			reg = <0x0 0x8a100000 0x0 0x1d00000>;
++			no-map;
++		};
++
++		spss_mem: memory@8be00000 {
++			reg = <0x0 0x8be00000 0x0 0x100000>;
++			no-map;
++		};
++
++		cdsp_secure_heap: memory@8bf00000 {
++			reg = <0x0 0x8bf00000 0x0 0x4600000>;
++			no-map;
++		};
++	};
++
++	smem: qcom,smem {
++		compatible = "qcom,smem";
++		memory-region = <&smem_mem>;
++		hwlocks = <&tcsr_mutex 3>;
++	};
++
++	soc: soc@0 {
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges = <0 0 0 0 0x10 0>;
++		dma-ranges = <0 0 0 0 0x10 0>;
++		compatible = "simple-bus";
++
++		gcc: clock-controller@100000 {
++			compatible = "qcom,gcc-sm8250";
++			reg = <0x0 0x00100000 0x0 0x1f0000>;
++			#clock-cells = <1>;
++			#reset-cells = <1>;
++			#power-domain-cells = <1>;
++			clock-names = "bi_tcxo",
++					"sleep_clk";
++			clocks = <&rpmhcc RPMH_CXO_CLK>,
++				<&sleep_clk>;
++		};
++
++		qupv3_id_1: geniqup@ac0000 {
++			compatible = "qcom,geni-se-qup";
++			reg = <0x0 0x00ac0000 0x0 0x6000>;
++			clock-names = "m-ahb", "s-ahb";
++			clocks = <&gcc 133>,
++				<&gcc 134>;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++			status = "disabled";
++
++			uart2: serial@a90000 {
++				compatible = "qcom,geni-debug-uart";
++				reg = <0x0 0x00a90000 0x0 0x4000>;
++				clock-names = "se";
++				clocks = <&gcc 113>;
++				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
++				status = "disabled";
++			};
++		};
++
++		intc: interrupt-controller@17a00000 {
++			compatible = "arm,gic-v3";
++			#interrupt-cells = <3>;
++			interrupt-controller;
++			reg = <0x0 0x17a00000 0x0 0x10000>,     /* GICD */
++			      <0x0 0x17a60000 0x0 0x100000>;    /* GICR * 8 */
++			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
++		};
++
++		pdc: interrupt-controller@b220000 {
++			compatible = "qcom,sm8250-pdc";
++			reg = <0x0b220000 0x30000>, <0x17c000f0 0x60>;
++			qcom,pdc-ranges = <0 480 94>, <94 609 31>,
++					<125 63 1>, <126 716 12>;
++			#interrupt-cells = <2>;
++			interrupt-parent = <&intc>;
++			interrupt-controller;
++		};
++
++		spmi_bus: qcom,spmi@c440000 {
++			compatible = "qcom,spmi-pmic-arb";
++			reg = <0x0 0x0c440000 0x0 0x0001100>,
++			      <0x0 0x0c600000 0x0 0x2000000>,
++			      <0x0 0x0e600000 0x0 0x0100000>,
++			      <0x0 0x0e700000 0x0 0x00a0000>,
++			      <0x0 0x0c40a000 0x0 0x0026000>;
++			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
++			interrupt-names = "periph_irq";
++			interrupts-extended = <&pdc 1 IRQ_TYPE_LEVEL_HIGH>;
++			qcom,ee = <0>;
++			qcom,channel = <0>;
++			#address-cells = <2>;
++			#size-cells = <0>;
++			interrupt-controller;
++			#interrupt-cells = <4>;
++			cell-index = <0>;
++		};
++
++		apps_rsc: rsc@18200000 {
++			label = "apps_rsc";
++			compatible = "qcom,rpmh-rsc";
++			reg = <0x0 0x18200000 0x0 0x10000>,
++				<0x0 0x18210000 0x0 0x10000>,
++				<0x0 0x18220000 0x0 0x10000>;
++			reg-names = "drv-0", "drv-1", "drv-2";
++			interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
++			qcom,tcs-offset = <0xd00>;
++			qcom,drv-id = <2>;
++			qcom,tcs-config = <ACTIVE_TCS  2>,
++						<SLEEP_TCS   3>,
++						<WAKE_TCS    3>,
++						<CONTROL_TCS 1>;
++
++			rpmhcc: clock-controller {
++				compatible = "qcom,sm8250-rpmh-clk";
++				#clock-cells = <1>;
++				clock-names = "xo";
++				clocks = <&xo_board>;
++			};
++		};
++
++		tcsr_mutex_regs: syscon@1f40000 {
++			compatible = "syscon";
++			reg = <0x0 0x01f40000 0x0 0x40000>;
++		};
++
++		timer@17c20000 {
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++			compatible = "arm,armv7-timer-mem";
++			reg = <0x0 0x17c20000 0x0 0x1000>;
++			clock-frequency = <19200000>;
++
++			frame@17c21000 {
++				frame-number = <0>;
++				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
++					     <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
++				reg = <0x0 0x17c21000 0x0 0x1000>,
++				      <0x0 0x17c22000 0x0 0x1000>;
++			};
++
++			frame@17c23000 {
++				frame-number = <1>;
++				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
++				reg = <0x0 0x17c23000 0x0 0x1000>;
++				status = "disabled";
++			};
++
++			frame@17c25000 {
++				frame-number = <2>;
++				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
++				reg = <0x0 0x17c25000 0x0 0x1000>;
++				status = "disabled";
++			};
++
++			frame@17c27000 {
++				frame-number = <3>;
++				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
++				reg = <0x0 0x17c27000 0x0 0x1000>;
++				status = "disabled";
++			};
++
++			frame@17c29000 {
++				frame-number = <4>;
++				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
++				reg = <0x0 0x17c29000 0x0 0x1000>;
++				status = "disabled";
++			};
++
++			frame@17c2b000 {
++				frame-number = <5>;
++				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
++				reg = <0x0 0x17c2b000 0x0 0x1000>;
++				status = "disabled";
++			};
++
++			frame@17c2d000 {
++				frame-number = <6>;
++				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
++				reg = <0x0 0x17c2d000 0x0 0x1000>;
++				status = "disabled";
++			};
++		};
++
++	};
++
++	timer {
++		compatible = "arm,armv8-timer";
++		interrupts = <GIC_PPI 13
++				(GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
++			     <GIC_PPI 14
++				(GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
++			     <GIC_PPI 11
++				(GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
++			     <GIC_PPI 12
++				(GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
++	};
++};
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
