@@ -2,36 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 453CD13E2EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 17:59:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF32013E2CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 17:58:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387498AbgAPQ5a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jan 2020 11:57:30 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44708 "EHLO mail.kernel.org"
+        id S2387548AbgAPQ5s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jan 2020 11:57:48 -0500
+Received: from mail.kernel.org ([198.145.29.99]:45266 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729290AbgAPQ53 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jan 2020 11:57:29 -0500
+        id S2387544AbgAPQ5r (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jan 2020 11:57:47 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8C0C620730;
-        Thu, 16 Jan 2020 16:57:28 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7113121D56;
+        Thu, 16 Jan 2020 16:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579193849;
-        bh=jcUO4aiGzaGJ0ae33gdIpJzoUiIP1myn1aets66c0us=;
+        s=default; t=1579193866;
+        bh=fwthBG7OPOBCy/tV4b+0DKeAil7BDEj8I5zpXVs/SZM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=l3t1t2Cyo5PvWh41o1h8u/hb61U54iYEFY0WQW1gK2WEz8bpJShDbO+/T7hVHgiiS
-         AcKku1iQyWyFQL6yOxyed2SAkCpaRUsMKPtRHtAVzuJrdedIGWk1PMVMXr9LJWrUEC
-         HDaYRmLSbb9fb4Dk4MMTe5RJUvgcqgnYCLHxlZ2E=
+        b=2dgpnEv0B8LZ+htCJjmls5koZV/N+3kVf3mgVajhcXwOkR00ELgSzZnFyNzdSBFYp
+         /Anl0MSOj0mii4TMLg+QEkszIXW5JTbo8q3CNsUS+2k9sgzY483+WKuJzQCvxwFOV5
+         oaCbB1EbRttQZxgr4NAUcThcqNkQJr4cFyO1LDbM=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Sibi Sankar <sibis@codeaurora.org>,
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Manabu Igusa <migusa@arrowjapan.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <andy.gross@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 101/671] remoteproc: qcom: q6v5-mss: Add missing regulator for MSM8996
-Date:   Thu, 16 Jan 2020 11:45:32 -0500
-Message-Id: <20200116165502.8838-101-sashal@kernel.org>
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 112/671] arm64: dts: apq8016-sbc: Increase load on l11 for SDCARD
+Date:   Thu, 16 Jan 2020 11:45:43 -0500
+Message-Id: <20200116165502.8838-112-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200116165502.8838-1-sashal@kernel.org>
 References: <20200116165502.8838-1-sashal@kernel.org>
@@ -44,38 +46,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sibi Sankar <sibis@codeaurora.org>
+From: Loic Poulain <loic.poulain@linaro.org>
 
-[ Upstream commit 47b874748d500020026ee43b386b5598e20f3a68 ]
+[ Upstream commit af61bef513ba179559e56908b8c465e587bc3890 ]
 
-Add proxy vote for pll supply on MSM8996 SoC.
+In the same way as for msm8974-hammerhead, l11 load, used for SDCARD
+VMMC, needs to be increased in order to prevent any voltage drop issues
+(due to limited current) happening with some SDCARDS or during specific
+operations (e.g. write).
 
-Fixes: 9f058fa2efb1 ("remoteproc: qcom: Add support for mss remoteproc on msm8996")
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+Tested on Dragonboard-410c and DART-SD410 boards.
+
+Fixes: 4c7d53d16d77 (arm64: dts: apq8016-sbc: add regulators support)
+Reported-by: Manabu Igusa <migusa@arrowjapan.com>
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Andy Gross <andy.gross@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_pil.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pil.c b/drivers/remoteproc/qcom_q6v5_pil.c
-index 073747ba8000..cc475dcbf27f 100644
---- a/drivers/remoteproc/qcom_q6v5_pil.c
-+++ b/drivers/remoteproc/qcom_q6v5_pil.c
-@@ -1268,6 +1268,13 @@ static const struct rproc_hexagon_res sdm845_mss = {
+diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+index 78ce3979ef09..f38b815e696d 100644
+--- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
++++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+@@ -630,6 +630,8 @@
+ 	l11 {
+ 		regulator-min-microvolt = <1750000>;
+ 		regulator-max-microvolt = <3337000>;
++		regulator-allow-set-load;
++		regulator-system-load = <200000>;
+ 	};
  
- static const struct rproc_hexagon_res msm8996_mss = {
- 	.hexagon_mba_image = "mba.mbn",
-+	.proxy_supply = (struct qcom_mss_reg_res[]) {
-+		{
-+			.supply = "pll",
-+			.uA = 100000,
-+		},
-+		{}
-+	},
- 	.proxy_clk_names = (char*[]){
- 			"xo",
- 			"pnoc",
+ 	l12 {
 -- 
 2.20.1
 
