@@ -2,140 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FB1213F479
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 19:50:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45FFA13F1F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 19:32:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389628AbgAPRJN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jan 2020 12:09:13 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44550 "EHLO mail.kernel.org"
+        id S2436737AbgAPSb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jan 2020 13:31:29 -0500
+Received: from mail.kernel.org ([198.145.29.99]:38014 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389621AbgAPRJM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:09:12 -0500
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S2436645AbgAPSb2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jan 2020 13:31:28 -0500
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B169824689;
-        Thu, 16 Jan 2020 17:09:10 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2D86C206D7;
+        Thu, 16 Jan 2020 18:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579194551;
-        bh=A0akTXP0wq1qRK6lx946EyHFrzIdkzubnRmTcJin7Tc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=snpIHbEo7iANy2L6yWKHMerbC2eDrXA+10/IcZvdWpPaVHyogipYnNsb28acGRl2p
-         sB9aaBZr/iUIF5vsfyo2vEPQ1ULvEQf5eGNyBk6tL7femVKHBnZ0bsiMlaHaaVPA4S
-         yZzsOEfCnsNO6irMBpV3g5x4rRaOBcbnx87XFqAQ=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Nathan Huckleberry <nhuck@google.com>,
-        clang-built-linux@googlegroups.com,
-        Nathan Chancellor <natechancellor@gmail.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 434/671] clk: qcom: Fix -Wunused-const-variable
-Date:   Thu, 16 Jan 2020 12:01:12 -0500
-Message-Id: <20200116170509.12787-171-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200116170509.12787-1-sashal@kernel.org>
-References: <20200116170509.12787-1-sashal@kernel.org>
+        s=default; t=1579199487;
+        bh=n9w+eEwrwKaNFIfJ2uLhExYF95MkN3KncmP+Uf276UI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=uxCDOQukU1DhBrpSDVnWCsaQAvjOUjLxlFvtr/Si8XX4qjWwO5+kvOjQYJvYJbUZy
+         wyVyxAbmtbScN9ahtoFyN+Nk/a1IMI8TtLXR2Z6Bq9+SbJFFdjoYIMTVp0RdowTi59
+         bz0/1+mmMQgW+RhvSzbjNRfefuFbK2bFDC9upZ8s=
+Date:   Thu, 16 Jan 2020 18:31:22 +0000
+From:   Will Deacon <will@kernel.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Andre Przywara <andre.przywara@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        James Morse <james.morse@arm.com>
+Subject: Re: [PATCH] arm64: Add KRYO{3,4}XX CPU cores to spectre-v2 safe list
+Message-ID: <20200116183121.GE22420@willie-the-truck>
+References: <20200116141912.15465-1-saiprakash.ranjan@codeaurora.org>
+ <20200116153235.GA18909@willie-the-truck>
+ <1a3f9557fa52ce2528630434e9a49d98@codeaurora.org>
+ <CAD=FV=WP1T7gGC=m5FOwuLvZdwrg5f7K6tDuYFT=0BgCQMZf7A@mail.gmail.com>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=WP1T7gGC=m5FOwuLvZdwrg5f7K6tDuYFT=0BgCQMZf7A@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Nathan Huckleberry <nhuck@google.com>
+On Thu, Jan 16, 2020 at 10:27:08AM -0800, Doug Anderson wrote:
+> On Thu, Jan 16, 2020 at 8:11 AM Sai Prakash Ranjan
+> <saiprakash.ranjan@codeaurora.org> wrote:
+> > On 2020-01-16 21:02, Will Deacon wrote:
+> > > On Thu, Jan 16, 2020 at 07:49:12PM +0530, Sai Prakash Ranjan wrote:
+> > >> KRYO3XX silver CPU cores and KRYO4XX silver, gold CPU cores
+> > >> are not affected by Spectre variant 2. Add them to spectre_v2
+> > >> safe list to correct ARM_SMCCC_ARCH_WORKAROUND_1 warning and
+> > >> vulnerability sysfs value.
+> > >>
+> > >> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> > >> ---
+> > >>  arch/arm64/include/asm/cputype.h | 6 ++++++
+> > >>  arch/arm64/kernel/cpu_errata.c   | 3 +++
+> > >>  2 files changed, 9 insertions(+)
+> > >>
+> > >> diff --git a/arch/arm64/include/asm/cputype.h
+> > >> b/arch/arm64/include/asm/cputype.h
+> > >> index aca07c2f6e6e..7219cddeba66 100644
+> > >> --- a/arch/arm64/include/asm/cputype.h
+> > >> +++ b/arch/arm64/include/asm/cputype.h
+> > >> @@ -85,6 +85,9 @@
+> > >>  #define QCOM_CPU_PART_FALKOR_V1             0x800
+> > >>  #define QCOM_CPU_PART_FALKOR                0xC00
+> > >>  #define QCOM_CPU_PART_KRYO          0x200
+> > >> +#define QCOM_CPU_PART_KRYO_3XX_SILVER       0x803
+> > >> +#define QCOM_CPU_PART_KRYO_4XX_GOLD 0x804
+> > >> +#define QCOM_CPU_PART_KRYO_4XX_SILVER       0x805
+> > >
+> > > Jeffrey is the only person I know who understands the CPU naming here,
+> > > so
+> > > I've added him in case this needs either renaming or extending to cover
+> > > other CPUs. I wouldn't be at all surprised if we need a function call
+> > > rather than a bunch of table entries...
+> > >
+> > > That said, the internet claims that KRYO4XX gold is based on
+> > > Cortex-A76,
+> > > and so CSV2 should be set...
+> > >
+> >
+> > Yes the internet claims are true and CSV2 is set. SANITY check logs in
+> > here show ID_PFR0_EL1 - https://lore.kernel.org/patchwork/patch/1138457/
+> 
+> I'm probably just being a noob here and am confused, but if CSV2 is
+> set then why do you need your patch at all?  The code I see says that
+> if CSV2 is set then we don't even check the spectre_v2_safe_list().
 
-[ Upstream commit da642427bd7710ec4f4140f693f59aa8521a358c ]
+You're not being a noob at all -- you're making the same point that I was
+trying to make :)
 
-Clang produces the following warning
+So I think we can take this patch with the KRYO_4XX_GOLD part dropped.
 
-drivers/clk/qcom/gcc-msm8996.c:133:32: warning: unused variable
-'gcc_xo_gpll0_gpll2_gpll3_gpll0_early_div_map' [-Wunused-const-variable]
-static const struct
-parent_map gcc_xo_gpll0_gpll2_gpll3_gpll0_early_div_map[] =
-{ ^drivers/clk/qcom/gcc-msm8996.c:141:27: warning: unused variable
-'gcc_xo_gpll0_gpll2_gpll3_gpll0_early_div' [-Wunused-const-variable] static
-const char * const gcc_xo_gpll0_gpll2_gpll3_gpll0_early_div[] = { ^
-drivers/clk/qcom/gcc-msm8996.c:187:32: warning: unused variable
-'gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll4_gpll0_early_div_map'
-[-Wunused-const-variable] static const struct parent_map
-gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll4_gpll0_early_div_map[] = { ^
-drivers/clk/qcom/gcc-msm8996.c:197:27: warning: unused variable
-'gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll4_gpll0_early_div'
-[-Wunused-const-variable] static const char * const
-gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll4_gpll0_early_div[] = {
-
-It looks like these were never used.
-
-Fixes: b1e010c0730a ("clk: qcom: Add MSM8996 Global Clock Control (GCC) driver")
-Cc: clang-built-linux@googlegroups.com
-Link: https://github.com/ClangBuiltLinux/linux/issues/518
-Suggested-by: Nathan Chancellor <natechancellor@gmail.com>
-Signed-off-by: Nathan Huckleberry <nhuck@google.com>
-Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/clk/qcom/gcc-msm8996.c | 36 ----------------------------------
- 1 file changed, 36 deletions(-)
-
-diff --git a/drivers/clk/qcom/gcc-msm8996.c b/drivers/clk/qcom/gcc-msm8996.c
-index 9a3290fdd01b..bea55c461cee 100644
---- a/drivers/clk/qcom/gcc-msm8996.c
-+++ b/drivers/clk/qcom/gcc-msm8996.c
-@@ -138,22 +138,6 @@ static const char * const gcc_xo_gpll0_gpll4_gpll0_early_div[] = {
- 	"gpll0_early_div"
- };
- 
--static const struct parent_map gcc_xo_gpll0_gpll2_gpll3_gpll0_early_div_map[] = {
--	{ P_XO, 0 },
--	{ P_GPLL0, 1 },
--	{ P_GPLL2, 2 },
--	{ P_GPLL3, 3 },
--	{ P_GPLL0_EARLY_DIV, 6 }
--};
--
--static const char * const gcc_xo_gpll0_gpll2_gpll3_gpll0_early_div[] = {
--	"xo",
--	"gpll0",
--	"gpll2",
--	"gpll3",
--	"gpll0_early_div"
--};
--
- static const struct parent_map gcc_xo_gpll0_gpll1_early_div_gpll1_gpll4_gpll0_early_div_map[] = {
- 	{ P_XO, 0 },
- 	{ P_GPLL0, 1 },
-@@ -192,26 +176,6 @@ static const char * const gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll2_early_gpll0_early
- 	"gpll0_early_div"
- };
- 
--static const struct parent_map gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll4_gpll0_early_div_map[] = {
--	{ P_XO, 0 },
--	{ P_GPLL0, 1 },
--	{ P_GPLL2, 2 },
--	{ P_GPLL3, 3 },
--	{ P_GPLL1, 4 },
--	{ P_GPLL4, 5 },
--	{ P_GPLL0_EARLY_DIV, 6 }
--};
--
--static const char * const gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll4_gpll0_early_div[] = {
--	"xo",
--	"gpll0",
--	"gpll2",
--	"gpll3",
--	"gpll1",
--	"gpll4",
--	"gpll0_early_div"
--};
--
- static struct clk_fixed_factor xo = {
- 	.mult = 1,
- 	.div = 1,
--- 
-2.20.1
-
+Will
