@@ -2,323 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E5F3B13D8DA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 12:21:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7713513DD49
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 15:20:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726045AbgAPLVa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jan 2020 06:21:30 -0500
-Received: from mga01.intel.com ([192.55.52.88]:3856 "EHLO mga01.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726018AbgAPLVa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jan 2020 06:21:30 -0500
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 16 Jan 2020 03:21:29 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,326,1574150400"; 
-   d="scan'208";a="243243120"
-Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.174])
-  by orsmga002.jf.intel.com with SMTP; 16 Jan 2020 03:21:22 -0800
-Received: by stinkbox (sSMTP sendmail emulation); Thu, 16 Jan 2020 13:21:21 +0200
-Date:   Thu, 16 Jan 2020 13:21:21 +0200
-From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     hamohammed.sa@gmail.com, airlied@linux.ie,
-        nouveau@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, alexandre.torgue@st.com,
-        thellstrom@vmware.com, sean@poorly.run,
-        linux-graphics-maintainer@vmware.com, bskeggs@redhat.com,
-        mcoquelin.stm32@gmail.com, sunpeng.li@amd.com,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        rodrigo.vivi@intel.com, vincent.abriou@st.com,
-        rodrigosiqueiramelo@gmail.com, philippe.cornu@st.com,
-        yannick.fertre@st.com, alexander.deucher@amd.com,
-        freedreno@lists.freedesktop.org, christian.koenig@amd.com
-Subject: Re: [Intel-gfx] [PATCH v2 03/21] drm: Add get_vblank_timestamp() to
- struct drm_crtc_funcs
-Message-ID: <20200116112121.GE13686@intel.com>
-References: <20200115121652.7050-1-tzimmermann@suse.de>
- <20200115121652.7050-4-tzimmermann@suse.de>
- <20200115144938.GA13686@intel.com>
- <5ce4974a-8a56-3827-f4a0-b5f74979ef4e@suse.de>
+        id S1726410AbgAPOTe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jan 2020 09:19:34 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:29351 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726084AbgAPOTe (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jan 2020 09:19:34 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1579184373; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=F/smCYCNf+T2ixQGU3VAUh8QI4L0ikLpSfao8JkC1WE=; b=XnuNuet477cSyDCMvYn8OKYOI9ltDh1v5W53iPm+eLmWKTRc4QUNTTILxPKLZgqClP8XUsfd
+ TOsB8hCizOcJlK/oXJ97erHmtrlTIXrZKZ+XRUmV11iIp4UsrkvOv3iHeY1Ep7a4yu0TIWgO
+ QMC0rJPgxNTw0QWTKvskTDlQM+g=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e2070f1.7f57b72bb618-smtp-out-n01;
+ Thu, 16 Jan 2020 14:19:29 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C9729C43383; Thu, 16 Jan 2020 14:19:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        UPPERCASE_50_75 autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0B27DC433CB;
+        Thu, 16 Jan 2020 14:19:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0B27DC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Andre Przywara <andre.przywara@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        James Morse <james.morse@arm.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH] arm64: Add KRYO{3,4}XX CPU cores to spectre-v2 safe list
+Date:   Thu, 16 Jan 2020 19:49:12 +0530
+Message-Id: <20200116141912.15465-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <5ce4974a-8a56-3827-f4a0-b5f74979ef4e@suse.de>
-X-Patchwork-Hint: comment
-User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 16, 2020 at 09:44:55AM +0100, Thomas Zimmermann wrote:
-> Hi
-> 
-> Am 15.01.20 um 15:49 schrieb Ville Syrjälä:
-> > On Wed, Jan 15, 2020 at 01:16:34PM +0100, Thomas Zimmermann wrote:
-<snip>
-> >> @@ -2020,3 +2042,193 @@ int drm_crtc_queue_sequence_ioctl(struct drm_device *dev, void *data,
-> >>  	kfree(e);
-> >>  	return ret;
-> >>  }
-> >> +
-> >> +/*
-> >> + * Helpers for struct drm_crtc_funcs
-> >> + */
-> >> +
-> >> +/**
-> >> + * drm_crtc_vblank_helper_get_vblank_timestamp_internal - precise vblank
-> >> + *                                                        timestamp helper
-> >> + * @dev: DRM device
-> >> + * @pipe: index of CRTC whose vblank timestamp to retrieve
-> >> + * @max_error: Desired maximum allowable error in timestamps (nanosecs)
-> >> + *             On return contains true maximum error of timestamp
-> >> + * @vblank_time: Pointer to time which should receive the timestamp
-> >> + * @in_vblank_irq:
-> >> + *     True when called from drm_crtc_handle_vblank().  Some drivers
-> >> + *     need to apply some workarounds for gpu-specific vblank irq quirks
-> >> + *     if flag is set.
-> >> + * @get_scanout_position:
-> >> + *     Callback function to retrieve the scanout position. See
-> >> + *     @struct drm_crtc_helper_funcs.get_scanout_position.
-> >> + *
-> >> + * Implements calculation of exact vblank timestamps from given drm_display_mode
-> >> + * timings and current video scanout position of a CRTC.
-> >> + *
-> >> + * The current implementation only handles standard video modes. For double scan
-> >> + * and interlaced modes the driver is supposed to adjust the hardware mode
-> >> + * (taken from &drm_crtc_state.adjusted mode for atomic modeset drivers) to
-> >> + * match the scanout position reported.
-> >> + *
-> >> + * Note that atomic drivers must call drm_calc_timestamping_constants() before
-> >> + * enabling a CRTC. The atomic helpers already take care of that in
-> >> + * drm_atomic_helper_update_legacy_modeset_state().
-> >> + *
-> >> + * Returns:
-> >> + *
-> >> + * Returns true on success, and false on failure, i.e. when no accurate
-> >> + * timestamp could be acquired.
-> >> + */
-> >> +bool
-> >> +drm_crtc_vblank_helper_get_vblank_timestamp_internal(
-> >> +	struct drm_crtc *crtc, int *max_error, ktime_t *vblank_time,
-> >> +	bool in_vblank_irq,
-> >> +	bool (*get_scanout_position)(struct drm_crtc *crtc,
-> >> +                                     bool in_vblank_irq, int *vpos, int *hpos,
-> >> +                                     ktime_t *stime, ktime_t *etime,
-> >> +                                     const struct drm_display_mode *mode))
-> >> +{
-> >> +	struct drm_device *dev = crtc->dev;
-> >> +	unsigned int pipe = crtc->index;
-> >> +	struct drm_vblank_crtc *vblank = &dev->vblank[pipe];
-> >> +	struct timespec64 ts_etime, ts_vblank_time;
-> >> +	ktime_t stime, etime;
-> >> +	bool vbl_status;
-> >> +	const struct drm_display_mode *mode;
-> >> +	int vpos, hpos, i;
-> >> +	int delta_ns, duration_ns;
-> >> +
-> >> +	if (pipe >= dev->num_crtcs) {
-> >> +		DRM_ERROR("Invalid crtc %u\n", pipe);
-> >> +		return false;
-> >> +	}
-> >> +
-> >> +	/* Scanout position query not supported? Should not happen. */
-> >> +	if (!get_scanout_position) {
-> >> +		DRM_ERROR("Called from CRTC w/o get_scanout_position()!?\n");
-> >> +		return false;
-> >> +	}
-> >> +
-> >> +	if (drm_drv_uses_atomic_modeset(dev))
-> >> +		mode = &vblank->hwmode;
-> >> +	else
-> >> +		mode = &crtc->hwmode;
-> >> +
-> >> +	/* If mode timing undefined, just return as no-op:
-> >> +	 * Happens during initial modesetting of a crtc.
-> >> +	 */
-> >> +	if (mode->crtc_clock == 0) {
-> >> +		DRM_DEBUG("crtc %u: Noop due to uninitialized mode.\n", pipe);
-> >> +		WARN_ON_ONCE(drm_drv_uses_atomic_modeset(dev));
-> >> +		return false;
-> >> +	}
-> >> +
-> >> +	/* Get current scanout position with system timestamp.
-> >> +	 * Repeat query up to DRM_TIMESTAMP_MAXRETRIES times
-> >> +	 * if single query takes longer than max_error nanoseconds.
-> >> +	 *
-> >> +	 * This guarantees a tight bound on maximum error if
-> >> +	 * code gets preempted or delayed for some reason.
-> >> +	 */
-> >> +	for (i = 0; i < DRM_TIMESTAMP_MAXRETRIES; i++) {
-> >> +		/*
-> >> +		 * Get vertical and horizontal scanout position vpos, hpos,
-> >> +		 * and bounding timestamps stime, etime, pre/post query.
-> >> +		 */
-> >> +		vbl_status = get_scanout_position(crtc, in_vblank_irq, &vpos,
-> >> +						  &hpos, &stime, &etime, mode);
-> >> +
-> >> +		/* Return as no-op if scanout query unsupported or failed. */
-> >> +		if (!vbl_status) {
-> >> +			DRM_DEBUG("crtc %u : scanoutpos query failed.\n",
-> >> +				  pipe);
-> >> +			return false;
-> >> +		}
-> >> +
-> >> +		/* Compute uncertainty in timestamp of scanout position query. */
-> >> +		duration_ns = ktime_to_ns(etime) - ktime_to_ns(stime);
-> >> +
-> >> +		/* Accept result with <  max_error nsecs timing uncertainty. */
-> >> +		if (duration_ns <= *max_error)
-> >> +			break;
-> >> +	}
-> >> +
-> >> +	/* Noisy system timing? */
-> >> +	if (i == DRM_TIMESTAMP_MAXRETRIES) {
-> >> +		DRM_DEBUG("crtc %u: Noisy timestamp %d us > %d us [%d reps].\n",
-> >> +			  pipe, duration_ns/1000, *max_error/1000, i);
-> >> +	}
-> >> +
-> >> +	/* Return upper bound of timestamp precision error. */
-> >> +	*max_error = duration_ns;
-> >> +
-> >> +	/* Convert scanout position into elapsed time at raw_time query
-> >> +	 * since start of scanout at first display scanline. delta_ns
-> >> +	 * can be negative if start of scanout hasn't happened yet.
-> >> +	 */
-> >> +	delta_ns = div_s64(1000000LL * (vpos * mode->crtc_htotal + hpos),
-> >> +			   mode->crtc_clock);
-> >> +
-> >> +	/* Subtract time delta from raw timestamp to get final
-> >> +	 * vblank_time timestamp for end of vblank.
-> >> +	 */
-> >> +	*vblank_time = ktime_sub_ns(etime, delta_ns);
-> >> +
-> >> +	if (!drm_debug_enabled(DRM_UT_VBL))
-> >> +		return true;
-> >> +
-> >> +	ts_etime = ktime_to_timespec64(etime);
-> >> +	ts_vblank_time = ktime_to_timespec64(*vblank_time);
-> >> +
-> >> +	DRM_DEBUG_VBL("crtc %u : v p(%d,%d)@ %lld.%06ld -> %lld.%06ld [e %d us, %d rep]\n",
-> >> +		      pipe, hpos, vpos,
-> >> +		      (u64)ts_etime.tv_sec, ts_etime.tv_nsec / 1000,
-> >> +		      (u64)ts_vblank_time.tv_sec, ts_vblank_time.tv_nsec / 1000,
-> >> +		      duration_ns / 1000, i);
-> >> +
-> >> +	return true;
-> >> +}
-> >> +EXPORT_SYMBOL(drm_crtc_vblank_helper_get_vblank_timestamp_internal);
-> > 
-> > This looks like copy paste from the current thing. Why are you 
-> > duplicating the entire function instead of refactoring what
-> > we already have?
-> 
-> It is copied with a small difference.
-> 
-> The original function is drm_calc_vbltimestamp_from_scanoutpos(). It
-> uses either drm_driver.get_scanout_position() or
-> drm_crtc_helper_funcs.get_scanout_position(). The former receives device
-> pointer and pipe index, the latter receives a pointer to a crtc. (see
-> patch 1)
-> 
-> This function, drm_crtc_vblank_helper_get_vblank_timestamp_internal(),
-> receives a get_scanout_position() as its argument with the same
-> signature as drm_crtc_helper_funcs.get_scanout_position().
-> 
-> The function is exported, so that i915 can use the algorithm and provide
-> it's own implementation of get_scanout_position(). i915 does not use
-> CRTC helpers, and therefore cannot set get_scanout_position() there.
-> 
-> Patch 21, when all drivers have been converted to use the CRTC
-> interface, removes drm_calc_vbltimestamp_from_scanoutpos() entirely.
-> It's only kept around for transitionng the driver over to the new interface.
+KRYO3XX silver CPU cores and KRYO4XX silver, gold CPU cores
+are not affected by Spectre variant 2. Add them to spectre_v2
+safe list to correct ARM_SMCCC_ARCH_WORKAROUND_1 warning and
+vulnerability sysfs value.
 
-All that means reviewing is going to be a bit of a pain. Also the
-history will become more annoying to dig through. Eg. git blame
-can't help us anymore, and when looking through git log one can't
-see the old name of the function from the patch context so need to
-either guess or trawl the logs blindly looking for a similar looking
-function.
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+ arch/arm64/include/asm/cputype.h | 6 ++++++
+ arch/arm64/kernel/cpu_errata.c   | 3 +++
+ 2 files changed, 9 insertions(+)
 
-So would definitely appreciate if you can find a way to refactor this
-properly.
-
-<snip>
-> >>  	struct drm_display_mode hwmode;
-> >> @@ -238,4 +238,22 @@ void drm_calc_timestamping_constants(struct drm_crtc *crtc,
-> >>  wait_queue_head_t *drm_crtc_vblank_waitqueue(struct drm_crtc *crtc);
-> >>  void drm_crtc_set_max_vblank_count(struct drm_crtc *crtc,
-> >>  				   u32 max_vblank_count);
-> >> +
-> >> +/*
-> >> + * Helpers for struct drm_crtc_funcs
-> >> + */
-> >> +
-> >> +bool
-> >> +drm_crtc_vblank_helper_get_vblank_timestamp_internal(
-> >> +	struct drm_crtc *crtc, int *max_error, ktime_t *vblank_time,
-> >> +	bool in_vblank_irq,
-> >> +	bool (*get_scanout_position)(struct drm_crtc *crtc,
-> >> +                                     bool in_vblank_irq, int *vpos, int *hpos,
-> >> +                                     ktime_t *stime, ktime_t *etime,
-> >> +                                     const struct drm_display_mode *mode));
-> > 
-> > Ugly alignment. Could maybe add a typedef for the function pointer if it
-> > otherwise gets super horrible with proper alignment.
-> 
-> Email formatting might add to the ugliness here.
-> 
-> How would this be aligned properly?
-
-Function arguments should be aligned after the '('.
-
-> 
-> I'm slightly reluctent to add a typedef for only this single function
-> and it's caller in i915. Typedefs are a form of code obfuscation IMHO.
-> But if that's the way to go, I won't mind of course.
-
-Yeah, I generally avoid them too. But I tend to have a few exceptions:
-a) when the funciton pointer has to be stuffed into multiple places
-b) exactly this case where the function signature is a horrible
-   mess and it has to be passed to a function
-
-> 
-> Best regards
-> Thomas
-> 
-> > 
-> >> +bool drm_crtc_vblank_helper_get_vblank_timestamp(struct drm_crtc *crtc,
-> >> +						 int *max_error,
-> >> +						 ktime_t *vblank_time,
-> >> +						 bool in_vblank_irq);
-> >> +
-> >>  #endif
-> >> -- 
-> >> 2.24.1
-> >>
-> >> _______________________________________________
-> >> Intel-gfx mailing list
-> >> Intel-gfx@lists.freedesktop.org
-> >> https://lists.freedesktop.org/mailman/listinfo/intel-gfx
-> > 
-> 
-> -- 
-> Thomas Zimmermann
-> Graphics Driver Developer
-> SUSE Software Solutions Germany GmbH
-> Maxfeldstr. 5, 90409 Nürnberg, Germany
-> (HRB 36809, AG Nürnberg)
-> Geschäftsführer: Felix Imendörffer
-> 
-
-
-
-
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index aca07c2f6e6e..7219cddeba66 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -85,6 +85,9 @@
+ #define QCOM_CPU_PART_FALKOR_V1		0x800
+ #define QCOM_CPU_PART_FALKOR		0xC00
+ #define QCOM_CPU_PART_KRYO		0x200
++#define QCOM_CPU_PART_KRYO_3XX_SILVER	0x803
++#define QCOM_CPU_PART_KRYO_4XX_GOLD	0x804
++#define QCOM_CPU_PART_KRYO_4XX_SILVER	0x805
+ 
+ #define NVIDIA_CPU_PART_DENVER		0x003
+ #define NVIDIA_CPU_PART_CARMEL		0x004
+@@ -111,6 +114,9 @@
+ #define MIDR_QCOM_FALKOR_V1 MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_FALKOR_V1)
+ #define MIDR_QCOM_FALKOR MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_FALKOR)
+ #define MIDR_QCOM_KRYO MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO)
++#define MIDR_QCOM_KRYO_3XX_SILVER MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_3XX_SILVER)
++#define MIDR_QCOM_KRYO_4XX_GOLD MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_4XX_GOLD)
++#define MIDR_QCOM_KRYO_4XX_SILVER MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_4XX_SILVER)
+ #define MIDR_NVIDIA_DENVER MIDR_CPU_MODEL(ARM_CPU_IMP_NVIDIA, NVIDIA_CPU_PART_DENVER)
+ #define MIDR_NVIDIA_CARMEL MIDR_CPU_MODEL(ARM_CPU_IMP_NVIDIA, NVIDIA_CPU_PART_CARMEL)
+ #define MIDR_FUJITSU_A64FX MIDR_CPU_MODEL(ARM_CPU_IMP_FUJITSU, FUJITSU_CPU_PART_A64FX)
+diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
+index 85f4bec22f6d..58ba2d1c66a3 100644
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -548,6 +548,9 @@ static const struct midr_range spectre_v2_safe_list[] = {
+ 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A55),
+ 	MIDR_ALL_VERSIONS(MIDR_BRAHMA_B53),
+ 	MIDR_ALL_VERSIONS(MIDR_HISI_TSV110),
++	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_3XX_SILVER),
++	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
++	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_SILVER),
+ 	{ /* sentinel */ }
+ };
+ 
 -- 
-Ville Syrjälä
-Intel
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
