@@ -2,35 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D579913F4FB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 19:53:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B48AD13F4B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jan 2020 19:53:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387649AbgAPSxU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jan 2020 13:53:20 -0500
-Received: from mail.kernel.org ([198.145.29.99]:41602 "EHLO mail.kernel.org"
+        id S2389464AbgAPRIw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jan 2020 12:08:52 -0500
+Received: from mail.kernel.org ([198.145.29.99]:43442 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388563AbgAPRIQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jan 2020 12:08:16 -0500
+        id S2389512AbgAPRIv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jan 2020 12:08:51 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4B15A2467E;
-        Thu, 16 Jan 2020 17:08:15 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0332521D56;
+        Thu, 16 Jan 2020 17:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579194496;
-        bh=3HHfS9JyXTsPeo4L+d32CBBCjD70uuHQHAkyQG+Vet0=;
+        s=default; t=1579194531;
+        bh=Uzv5z87h/1y7qrqArg8niP0Nskd8r1JLkx4WiiPFa4M=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=nsKXi8THRlduP2alsLDLBH4iDyaPv00XqYbBhU1Y5IMtH490i86yo9B7PXt1B+VOv
-         RGkVoFp7/zhGnNIGNR+Bmpga0zDZwks9jJdfxDO2bO2dvk7ymCQVY9Xd7y9TnT0TW6
-         +6bJjPBdwRde+g994qVkXcpYwb7CNTJtiHxlWC/0=
+        b=cPnkHI9ieXdqSLvpXJjywNA2rYo9LuT+0ch+WksvL8FXTA8VWXpuGddKjoxQBWdZ9
+         J6itLK3QHNWln4i+j23M2gIqXZY05e7486SMHAGFZy9sc3gw+8zCCfXsXwX5FMxhxk
+         tWYEMUZDOyCJVpwIGDLrWWs+Rlf+XXzlwzH0aa9U=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Colin Ian King <colin.king@canonical.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 393/671] phy: qcom-qusb2: fix missing assignment of ret when calling clk_prepare_enable
-Date:   Thu, 16 Jan 2020 12:00:31 -0500
-Message-Id: <20200116170509.12787-130-sashal@kernel.org>
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 4.19 419/671] drm/msm/mdp5: Fix mdp5_cfg_init error return
+Date:   Thu, 16 Jan 2020 12:00:57 -0500
+Message-Id: <20200116170509.12787-156-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200116170509.12787-1-sashal@kernel.org>
 References: <20200116170509.12787-1-sashal@kernel.org>
@@ -43,36 +45,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Colin Ian King <colin.king@canonical.com>
+From: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
-[ Upstream commit d98010817a26eba8d4d1e8a639e0b7d7f042308a ]
+[ Upstream commit fc19cbb785d7bbd1a1af26229b5240a3ab332744 ]
 
-The error return from the call to clk_prepare_enable is not being assigned
-to variable ret even though ret is being used to check if the call failed.
-Fix this by adding in the missing assignment.
+If mdp5_cfg_init fails because of an unknown major version, a null pointer
+dereference occurs.  This is because the caller of init expects error
+pointers, but init returns NULL on error.  Fix this by returning the
+expected values on error.
 
-Addresses-Coverity: ("Logically dead code")
-Fixes: 891a96f65ac3 ("phy: qcom-qusb2: Add support for runtime PM")
-Signed-off-by: Colin Ian King <colin.king@canonical.com>
-Signed-off-by: Kishon Vijay Abraham I <kishon@ti.com>
+Fixes: 2e362e1772b8 (drm/msm/mdp5: introduce mdp5_cfg module)
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qusb2.c | 2 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
-index 69c92843eb3b..9b7ae93e9df1 100644
---- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
-@@ -526,7 +526,7 @@ static int __maybe_unused qusb2_phy_runtime_resume(struct device *dev)
- 	}
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+index 824067d2d427..42f0ecb0cf35 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+@@ -635,7 +635,7 @@ struct mdp5_cfg_handler *mdp5_cfg_init(struct mdp5_kms *mdp5_kms,
+ 	if (cfg_handler)
+ 		mdp5_cfg_destroy(cfg_handler);
  
- 	if (!qphy->has_se_clk_scheme) {
--		clk_prepare_enable(qphy->ref_clk);
-+		ret = clk_prepare_enable(qphy->ref_clk);
- 		if (ret) {
- 			dev_err(dev, "failed to enable ref clk, %d\n", ret);
- 			goto disable_ahb_clk;
+-	return NULL;
++	return ERR_PTR(ret);
+ }
+ 
+ static struct mdp5_cfg_platform *mdp5_get_config(struct platform_device *dev)
 -- 
 2.20.1
 
