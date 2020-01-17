@@ -2,47 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 058D6141395
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2020 22:47:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE9751413CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2020 22:59:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729035AbgAQVrC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jan 2020 16:47:02 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:34923 "EHLO
+        id S1729937AbgAQV7w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Jan 2020 16:59:52 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:41910 "EHLO
         mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726587AbgAQVrC (ORCPT
+        with ESMTP id S1729945AbgAQV7w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jan 2020 16:47:02 -0500
-Received: by mail-pl1-f195.google.com with SMTP id g6so10389991plt.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2020 13:47:02 -0800 (PST)
+        Fri, 17 Jan 2020 16:59:52 -0500
+Received: by mail-pl1-f195.google.com with SMTP id t14so2448911plr.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2020 13:59:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=lpIgyl5NCXKJtlVfY6LDVr/laVruYd1wjo/GE/EvpJk=;
-        b=NS/EhPCspDc9BrYLxCDbQc6HGbciz//NMH4L/3A+Fp+eNZn38j6WuZ+ZZUud6V4CBL
-         hv6R4IebxYsKRgwAr6BF5zxIvj6gLzdVCboFtdIXId4AIuc0ro5IJBGobecYx6XvfEL2
-         IpYFTISZskx1s5EmflFSZiHCz1YhmswzGbSFY=
+        bh=wH8/aRr7zW2lkMolzBnmu3ZhKRNwfO3YsG0yBHBthEk=;
+        b=desFXdRa4EW0maDZW25KfYW6BMApAUk5B2ccp7iA5pSZaLzWyGyPvTzn5xdxeMGDCt
+         148AKMVVUeryNxZ4TR53Gcar45Yr1zfzwBXDm8pl9iKVOz/Noaeho/lOLwgV5drJJVhM
+         CDF8TXclk2RjOKFD1j4V6KcM8z7g+erMnzJhk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lpIgyl5NCXKJtlVfY6LDVr/laVruYd1wjo/GE/EvpJk=;
-        b=o8gCgjlCUG+uoaZT765uI+kFTQkOt1FFOtrtTuspYsI5X8+37gOt5FxRT8AW5bjfZf
-         WgF1WFn+gbemKGvu2xsnChhxTZZI3PbPknwsRfP18LXO8X3ozT25Grq430PZ7SpnLJcN
-         syLIT33CZrBENxavd7AH+qm2QX3XNRB8yEwBX3lHWUgPbbN6vGBEv7UCd7jv+Zun0Flf
-         UGoAlCsXiatKoKvJ2ckPXK2GYSMdgx3zjxSpzjWxtIMwwHqlS7i2hYhD7Db/uMhgghkW
-         MjBMvBRmE34dIljaK82xl4Q4Pmb4JrsZ2NrzTl/5G/Hekg62ZZZ+U+7uCd5i8nYeHcwt
-         k2+g==
-X-Gm-Message-State: APjAAAWl51KbIk9zBWdp6lQzbSEDpGbqVgxTq7bW8HOcgC/UfrGcky3G
-        2vtYnQztQUecapKXbnaWQx/1nQ==
-X-Google-Smtp-Source: APXvYqx9BLen4IIYmuKFE1qPi9xL0KYuRvk3pdIuKyhIfjRLB6W+fgmMd+3jUJonjejco6dc9E68ug==
-X-Received: by 2002:a17:90a:5d15:: with SMTP id s21mr8497823pji.114.1579297621658;
-        Fri, 17 Jan 2020 13:47:01 -0800 (PST)
+        bh=wH8/aRr7zW2lkMolzBnmu3ZhKRNwfO3YsG0yBHBthEk=;
+        b=uPJrz7XnLXUibgAar/DR6SqFJ9e5sTJyQ5R1CdbzgAvSR6UE+CuLlbVT/L/UCCGsso
+         DdGWjpK+t8RVBPcszeDfI3q1Y+q4D+hnN6qM/S6NVdujFSS6WDrJeDgUQaD84fb8D1wC
+         VoayYchopVSQaMjvtPSTGQCgREJOR6f7i4IoRc0ryvFoT6zFmcElvDlqhCwD7HSWSLMI
+         561GJc+qWcLa/d3Fj9yFAI0AGeLwQxqacV0hckmAvXc8yKCq//2VtTUyplw4PAQYZNia
+         zlQE3/HAbFAamZNE5aBF5aAGK8mCHP3qA+yYH47lx5Vmz/i9qjdu3mQyeFlZP2q4lZVZ
+         bw5w==
+X-Gm-Message-State: APjAAAVjJpDjUfjyFUVQ3vgNsC7OZ1cngeSpu/l9tdRpWTEunBFc+Yl9
+        Mqa1SaYRMyaKi9CgGLsu62D7SQ==
+X-Google-Smtp-Source: APXvYqx0q2JaM2Mv0/oQbuhdtZgLabKhjJirCj4B6jf+VA1qMGTzLhDDnLc+PpUM6Adq0fzqc2Dc4Q==
+X-Received: by 2002:a17:902:6b4b:: with SMTP id g11mr1443287plt.26.1579298391678;
+        Fri, 17 Jan 2020 13:59:51 -0800 (PST)
 Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id j8sm287874pjb.4.2020.01.17.13.47.00
+        by smtp.gmail.com with ESMTPSA id m22sm30757146pgn.8.2020.01.17.13.59.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Jan 2020 13:47:01 -0800 (PST)
-Date:   Fri, 17 Jan 2020 13:46:59 -0800
+        Fri, 17 Jan 2020 13:59:51 -0800 (PST)
+Date:   Fri, 17 Jan 2020 13:59:49 -0800
 From:   Matthias Kaehlcke <mka@chromium.org>
 To:     Sandeep Maheswaram <sanm@codeaurora.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -54,110 +54,53 @@ Cc:     Andy Gross <agross@kernel.org>,
         Doug Anderson <dianders@chromium.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH v3 4/5] phy: qcom-qusb2: Add support for overriding
- tuning parameters in QUSB2 V2 PHY
-Message-ID: <20200117214659.GR89495@google.com>
+Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sc7180: Update QUSB2 V2 Phy
+ tuning params for SC7180
+Message-ID: <20200117215949.GS89495@google.com>
 References: <1578658699-30458-1-git-send-email-sanm@codeaurora.org>
- <1578658699-30458-5-git-send-email-sanm@codeaurora.org>
+ <1578658699-30458-6-git-send-email-sanm@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1578658699-30458-5-git-send-email-sanm@codeaurora.org>
+In-Reply-To: <1578658699-30458-6-git-send-email-sanm@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, Jan 10, 2020 at 05:48:19PM +0530, Sandeep Maheswaram wrote:
+> Overriding the QUSB2 V2 Phy tuning parameters for SC7180 SOC.
 
-On Fri, Jan 10, 2020 at 05:48:18PM +0530, Sandeep Maheswaram wrote:
-> Add support for overriding tuning parameters in QUSB2 V2 PHY
-> bias-ctrl-value,charge-ctrl-value and hsdisc-trim-value.
-> 
+This patch doesn't set the PHY tuning parameters for the SC7180
+SoC, but for the IDP board, which is based on the SC7180. Please
+reflect this in the commit message (including subject) to avoid
+confusion.
+
 > Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
 > ---
->  drivers/phy/qualcomm/phy-qcom-qusb2.c | 51 +++++++++++++++++++++++++++++++++++
->  1 file changed, 51 insertions(+)
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
-> index db4ae26..d8bed13 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
-> @@ -66,6 +66,14 @@
->  #define IMP_RES_OFFSET_MASK			GENMASK(5, 0)
->  #define IMP_RES_OFFSET_SHIFT			0x0
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index 388f50a..826cf02 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> @@ -276,9 +276,11 @@
+>  	vdda-pll-supply = <&vreg_l11a_1p8>;
+>  	vdda-phy-dpdm-supply = <&vreg_l17a_3p0>;
+>  	qcom,imp-res-offset-value = <8>;
+> -	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
+> -	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
+> +	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_15_PERCENT>;
+>  	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
+> +	qcom,bias-ctrl-value = <0x22>;
+> +	qcom,charge-ctrl-value = <3>;
+> +	qcom,hsdisc-trim-value = <0>;
+>  };
 >  
-> +/* QUSB2PHY_PLL_BIAS_CONTROL_2 register bits */
-> +#define BIAS_CTRL2_RES_OFFSET_MASK		GENMASK(5, 0)
-> +#define BIAS_CTRL2_RES_OFFSET_SHIFT		0x0
-> +
-> +/* QUSB2PHY_CHG_CONTROL_2 register bits */
-> +#define CHG_CTRL2_OFFSET_MASK			GENMASK(5, 4)
-> +#define CHG_CTRL2_OFFSET_SHIFT			0x4
-> +
->  /* QUSB2PHY_PORT_TUNE1 register bits */
->  #define HSTX_TRIM_MASK				GENMASK(7, 4)
->  #define HSTX_TRIM_SHIFT				0x4
-> @@ -73,6 +81,10 @@
->  #define PREEMPHASIS_EN_MASK			GENMASK(1, 0)
->  #define PREEMPHASIS_EN_SHIFT			0x0
->  
-> +/* QUSB2PHY_PORT_TUNE2 register bits */
-> +#define HSDISC_TRIM_MASK			GENMASK(1, 0)
-> +#define HSDISC_TRIM_SHIFT			0x0
-> +
->  #define QUSB2PHY_PLL_ANALOG_CONTROLS_TWO	0x04
->  #define QUSB2PHY_PLL_CLOCK_INVERTERS		0x18c
->  #define QUSB2PHY_PLL_CMODE			0x2c
-> @@ -327,6 +339,12 @@ struct qusb2_phy {
->  	u8 preemphasis_level;
->  	bool override_preemphasis_width;
->  	u8 preemphasis_width;
-> +	bool override_bias_ctrl;
-> +	u8 bias_ctrl_value;
-> +	bool override_charge_ctrl;
-> +	u8 charge_ctrl_value;
-> +	bool override_hsdisc_trim;
-> +	u8 hsdisc_trim_value;
-
-Documentation for the new struct members is missing.
-
-Given the increasing numbers of overrides you could consider to organize
-them in a struct, instead of adding a 'override_' and '_value' to qusb2_phy
-for every param. E.g.:
-
-struct override_param {
-        bool override;
-        u8 value;
-};
-
-struct override_params {
-        struct override_param imp_res_offset;
-        struct override_param hstx_trim;
-        ...
-};
-
-struct qusb2_phy {
-        struct override_params overrides;
-};
-
-
-Or - if you want to take it even further - something along these lines:
-
-struct override_param {
-        const char *dt_property;
-        u32 offset;
-        u8 shift;
-        u8 mask;
-
-        // separate struct, since these are not constant?
-        bool override;
-        u8 value;
-};
-
-struct override_param params[] = {
-        { "qcom,bias-ctrl-value", QUSB2PHY_PLL_BIAS_CONTROL_2, GENMASK(5, 0), 0 },
-        { "qcom,charge-ctrl-value", QUSB2PHY_CHG_CTRL2, GENMASK(5, 4), 4 },
-        ...
-};
+>  &usb_1_qmpphy {
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
