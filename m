@@ -2,274 +2,301 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AD4A8140E81
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2020 17:01:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 69C92140F2C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2020 17:42:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729014AbgAQQBG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jan 2020 11:01:06 -0500
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:42105 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727043AbgAQQBF (ORCPT
+        id S1726684AbgAQQm3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Jan 2020 11:42:29 -0500
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:43687 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726554AbgAQQm3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jan 2020 11:01:05 -0500
-Received: by mail-ot1-f67.google.com with SMTP id 66so22913912otd.9;
-        Fri, 17 Jan 2020 08:01:04 -0800 (PST)
+        Fri, 17 Jan 2020 11:42:29 -0500
+Received: by mail-ua1-f67.google.com with SMTP id o42so9139930uad.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2020 08:42:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nKC6eUY5vTsOPMymTUquWAicdz+g94OsTEZKAbYXx0I=;
+        b=V8WsHLjcgHloIV2lkLUy3cEIChnOKCPz3HD9YygB5nd2CHTKetcsKXB/asLhKmWXvJ
+         8VJSO+lFg1nXbm9D2fjVX5UFMj11yOB/f35l3MiTVIaNMJ/CmIAszK6eHgAfEPtbTlak
+         zIXQzQNH+aVnw64cYLkm2PcHB+sevjXq46lgdzpG4cGLXPdPCzP3T/D5oUU30Cx0aslm
+         6M5V/+RxEEe7pyMj/ERqPjM6xiyMyIZzhrrvO8CiCK9d7l4rB7eDcT0UrScJrB9j/JO/
+         99hGCnkz/jShZgSn0vlSQ+48BUPROxOaG5iOH8I5EmcpzdP/9ChfIp6NCHPjUI9/6KXM
+         IJdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9YjOWHcSUNysBzRxkkQAKtwPDeVJSKmx0cjH2wrLKxw=;
-        b=ECLdQiMrnuGLcgX29WhHE1Ivgl95YfOv+Mli4rfbUiNzcL+Zpwc/gJ3sT+5pqFs4pj
-         ROWhdnyI8VdMhkit+YYmlXUogea10NXZumORuR7xS+I08/aC/xC1KMVn2Ye4dYpXFn1r
-         hcvIEaaIkaq4cqYCs8CH908aKoVAdQjvYFUMLCSFcP+6tRUH/x60TpfvoqxPxkMOkFAQ
-         JjWncLqeX3lM+pb7STv47CnvNhoyAUcqUapHAY7CNvttpTUgylidV9vJMiWadRF3+0rD
-         /y8gWbcx2YDp4u4D5E5fB7h6o7Xy+rHF9Sv3BS3qlU663RrwEDqwpse+F2CwgvB8JrUR
-         2KwA==
-X-Gm-Message-State: APjAAAWXy8QbsZiK7cwlTwPlYGfpUmBw4I/RabJRjXnSQI95YNKCCRKL
-        CJPnqZWpyk616s+lqe813Q==
-X-Google-Smtp-Source: APXvYqwFfZx3DKzassUf5VACYaSuvaH8sPqyiBeyUSATwdh/vzrCN4qR+pmE/W35eZc8PVwt2YBmTw==
-X-Received: by 2002:a05:6830:1047:: with SMTP id b7mr6888607otp.77.1579276864331;
-        Fri, 17 Jan 2020 08:01:04 -0800 (PST)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id g61sm9020936otb.53.2020.01.17.08.01.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2020 08:01:03 -0800 (PST)
-Received: (nullmailer pid 11611 invoked by uid 1000);
-        Fri, 17 Jan 2020 16:01:02 -0000
-Date:   Fri, 17 Jan 2020 10:01:02 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Sricharan R <sricharan@codeaurora.org>
-Cc:     agross@kernel.org, devicetree@vger.kernel.org,
-        linus.walleij@linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-soc@vger.kernel.org,
-        sivaprak@codeaurora.org,
-        Rajkumar Ayyasamy <arajkuma@codeaurora.org>,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-Subject: Re: [PATCH V5 1/5] dt-bindings: pinctrl: qcom: Add ipq6018 pinctrl
- bindings
-Message-ID: <20200117160102.GA16177@bogus>
-References: <1579160701-32408-1-git-send-email-sricharan@codeaurora.org>
- <1579160701-32408-2-git-send-email-sricharan@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nKC6eUY5vTsOPMymTUquWAicdz+g94OsTEZKAbYXx0I=;
+        b=b64VnWB4MAohSPDMhsJmDW4dYdZr9mozb5n/26UU4tgEcZ/yyb0j33wI1NvfTkJ8Rg
+         xBXq8U18clL67swqoPsdGjqnX+/njmu2RqA+dS18Zkt77gckvO0NuZ0EonMJU00gzWGg
+         M4Bf6Qey/WspK1V4WrxBA4NAd5XFXtkWudNXiVoFRedySCo5ZZ7SgNOxEPSNS75jYCdy
+         Iny9SBl/Cnavjp1Li68eTSsSMGpXvdHD0x8FHbeAk/zmUxeue7C6kpqgisS28ILzk0uT
+         fHNWZLQiydM3ffQEuHUpsmiDqT1S8CXw/gGuM0DW0cicu5g5Qc8s1bx6J3UYjUUkTSmz
+         qD4g==
+X-Gm-Message-State: APjAAAXW+uJeGztQgln5+yyEXXX1d/OT9KE8zADsywjC/31Z9odE+5ND
+        Ii6DGQC4aqSKs7UXbhTtXJ8zrnOXTODhkdrMZ70hLg==
+X-Google-Smtp-Source: APXvYqwKrcfodg/4KBzUb0CthN1YcVOLdI/vp7cy9hnS7t23Hd3gfVTXSrxIzQ+aD90+I6xuKoqaz9RR8hf7AAR6lmA=
+X-Received: by 2002:ab0:20a:: with SMTP id 10mr21375446uas.19.1579279347346;
+ Fri, 17 Jan 2020 08:42:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1579160701-32408-2-git-send-email-sricharan@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20191230144402.30195-1-ulf.hansson@linaro.org>
+ <20191230144402.30195-3-ulf.hansson@linaro.org> <CAL_Jsq+cAKEGOMnBwwvLt03zx8Gcxh4ijziaBnnY5TPEG0Mekg@mail.gmail.com>
+ <CAPDyKFr_7qmKjpWcFegVBsfKBJePtukuriwW-8KX6c2a24ojEA@mail.gmail.com> <CAL_JsqJN3UtM9T2D71j+2CORxWjL3s7cjkFX579p85WQuKgPNA@mail.gmail.com>
+In-Reply-To: <CAL_JsqJN3UtM9T2D71j+2CORxWjL3s7cjkFX579p85WQuKgPNA@mail.gmail.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 17 Jan 2020 17:41:50 +0100
+Message-ID: <CAPDyKFq=0Y=79pFzxmnqA=oFbOVVJ9T2UthOie8ok5JTp7ucRw@mail.gmail.com>
+Subject: Re: [PATCH v5 02/15] dt: psci: Update DT bindings to support
+ hierarchical PSCI states
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+        "open list:THERMAL" <linux-pm@vger.kernel.org>,
+        "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Lina Iyer <lina.iyer@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 16, 2020 at 01:14:57PM +0530, Sricharan R wrote:
-> Add device tree binding Documentation details for ipq6018
-> pinctrl driver.
-> 
-> Co-developed-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
-> Signed-off-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
-> Co-developed-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-> Co-developed-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
-> ---
-> [V5]
-> * Addressed review comments from Rob
-> * Ran dt bindings check and no errors were reported
->  .../bindings/pinctrl/qcom,ipq6018-pinctrl.yaml     | 162 +++++++++++++++++++++
->  1 file changed, 162 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
-> new file mode 100644
-> index 0000000..0622258
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
-> @@ -0,0 +1,162 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,ipq6018-pinctrl.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. IPQ6018 TLMM block
-> +
-> +maintainers:
-> +  - Sricharan R <sricharan@codeaurora.org>
-> +
-> +description: |
-> +  This binding describes the Top Level Mode Multiplexer block found in the
-> +  IPQ6018 platform.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,ipq6018-pinctrl
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    description: Specifies the TLMM summary IRQ
-> +    maxItems: 1
-> +
-> +  interrupt-controller: true
-> +
-> +  '#interrupt-cells':
-> +    description:
-> +      Specifies the PIN numbers and Flags, as defined in defined in
-> +      include/dt-bindings/interrupt-controller/irq.h
-> +    const: 2
-> +
-> +  gpio-controller: true
-> +
-> +  '#gpio-cells':
-> +    description: Specifying the pin number and flags, as defined in
-> +      include/dt-bindings/gpio/gpio.h
-> +    const: 2
-> +
-> +  gpio-ranges:
-> +    description: Documentation/devicetree/bindings/gpio/gpio.txt
+On Thu, 16 Jan 2020 at 19:19, Rob Herring <robh+dt@kernel.org> wrote:
+>
+> On Tue, Jan 14, 2020 at 11:55 AM Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> >
+> > On Mon, 13 Jan 2020 at 20:53, Rob Herring <robh+dt@kernel.org> wrote:
+> > >
+> > > On Mon, Dec 30, 2019 at 8:44 AM Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> > > >
+> > > > Update PSCI DT bindings to allow to represent idle states for CPUs and the
+> > > > CPU topology, by using a hierarchical layout. Primarily this is done by
+> > > > re-using the existing DT bindings for PM domains [1] and for PM domain idle
+> > > > states [2].
+> > > >
+> > > > Let's also add an example into the document for the PSCI DT bindings, to
+> > > > clearly show the new hierarchical based layout. The currently supported
+> > > > flattened layout, is already described in the ARM idle states bindings [3],
+> > > > so let's leave that as is.
+> > > >
+> > > > [1] Documentation/devicetree/bindings/power/power_domain.txt
+> > > > [2] Documentation/devicetree/bindings/power/domain-idle-state.txt
+> > > > [3] Documentation/devicetree/bindings/arm/idle-states.txt
+> > > >
+> > > > Co-developed-by: Lina Iyer <lina.iyer@linaro.org>
+> > > > Signed-off-by: Lina Iyer <lina.iyer@linaro.org>
+> > > > Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+> > > > Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> > > > ---
+> > > >
+> > > > Changes in v5:
+> > > >         - None.
+> > >
+> > > First I'm seeing this as the DT list was not copied. The example has
+> > > problems when running 'make dt_binding_check':
+> > >
+> > > Documentation/devicetree/bindings/arm/psci.example.dt.yaml: cpu@0:
+> > > compatible: Additional items are not allowed ('arm,armv8' was
+> > > unexpected)
+> > > Documentation/devicetree/bindings/arm/psci.example.dt.yaml: cpu@0:
+> > > compatible: ['arm,cortex-a53', 'arm,armv8'] is too long
+> > > Documentation/devicetree/bindings/arm/psci.example.dt.yaml: cpu@1:
+> > > compatible: Additional items are not allowed ('arm,armv8' was
+> > > unexpected)
+> > > Documentation/devicetree/bindings/arm/psci.example.dt.yaml: cpu@1:
+> > > compatible: ['arm,cortex-a57', 'arm,armv8'] is too long
+> > >
+> > > 'arm,armv8' is only valid for s/w models.
+> >
+> > Perhaps you have a different version of the tools than I have (I have
+> > tried both on v.5.5-rc5 and todays linux-next), because I can't
+> > reproduce these errors at my side when running "make
+> > dt_binding_check".
+> >
+> > Can you please check again?
+>
+> Are you setting DT_SCHEMA_FILES? If so, then arm/cpus.yaml (or any
+> other schema) isn't loaded and used for validation. That schema is the
+> source of this error.
 
-You can drop the description. Nothing here specific to this binding.
+Yes. Aha, that's why then. Perhaps that needs to be clarified
+somewhere in the documentation of tool.
 
-> +    maxItems: 1
-> +
-> +#PIN CONFIGURATION NODES
-> +patternProperties:
-> +  '.*-pin.*':
+Anyway, I used because it was kind of hard to process all the error
+output one gets when building all yaml files at once.
 
-Ideally, this would be a bit more constrained. Such as '-pin$' or 
-'-pinmux$'.
+>
+> It is failing in my CI job:
+> https://gitlab.com/robherring/linux-dt-bindings/-/jobs/405298185
+>
+> Is dt-schema up to date? Though I can't think of any recent changes
+> that would impact this. This check has been there a while and I fixed
+> all the dts files.
+>
+> Do you see psci.example.dt.yaml getting built?
 
-Note that '-pin' is equivalent to what you have.
+Yes, but with using DT_SCHEMA_FILES.
 
-> +    type: object
-> +    description:
-> +      Pinctrl node's client devices use subnodes for desired pin configuration.
-> +      Client device subnodes use below standard properties.
-> +    allOf:
-> +      - $ref: "/schemas/pinctrl/pincfg-node.yaml"
-> +
-> +    properties:
-> +      pins:
-> +        description:
-> +          List of gpio pins affected by the properties specified in this
-> +          subnode. The valid values are gpio1-80, sdc1_clk, sdc1_cmd,
-> +          sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data, qdsd_cmd, qdsd_data0,
-> +          qdsd_data1, qdsd_data2, qdsd_data3
+Anyway, now I can re-produced the errors, so then I should be able to
+fix them. :-)
 
-Looks like constraints:
+>
+> > > Documentation/devicetree/bindings/arm/psci.example.dt.yaml:
+> > > idle-states: cluster-retention:compatible:0: 'arm,idle-state' was
+> > > expected
+> > > Documentation/devicetree/bindings/arm/psci.example.dt.yaml:
+> > > idle-states: cluster-power-down:compatible:0: 'arm,idle-state' was
+> > > expected
+> > >
+> > > The last 2 are due to my conversion of the idle-states binding which
+> > > is in my tree now. Probably need to add 'domain-idle-state' as a
+> > > compatible at a minimum. It looks like domain-idle-state.txt is pretty
+> > > much the same as arm/idle-state.txt, so we should perhaps merge them.
+> >
+> > Ahh, so maybe *all* of the above problems are caused by conflicts in
+> > the arm-soc tree with changes from your tree!?
+>
+> Shouldn't be. arm/cpus.yaml has been in place for a few cycles now.
+>
+> >
+> > In regards to merging files, I am fine by that if that helps.
+> >
+> > >
+> > > There's some bigger issues though.
+> > >
+> > > > ---
+> > > >  .../devicetree/bindings/arm/cpus.yaml         |  15 +++
+> > > >  .../devicetree/bindings/arm/psci.yaml         | 104 ++++++++++++++++++
+> > > >  2 files changed, 119 insertions(+)
+> > > >
+> > > > diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
+> > > > index c23c24ff7575..7a9c3ce2dbef 100644
+> > > > --- a/Documentation/devicetree/bindings/arm/cpus.yaml
+> > > > +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
+> > > > @@ -242,6 +242,21 @@ properties:
+> > > >
+> > > >        where voltage is in V, frequency is in MHz.
+> > > >
+> > > > +  power-domains:
+> > > > +    $ref: '/schemas/types.yaml#/definitions/phandle-array'
+> > > > +    description:
+> > > > +      List of phandles and PM domain specifiers, as defined by bindings of the
+> > > > +      PM domain provider (see also ../power_domain.txt).
+> > > > +
+> > > > +  power-domain-names:
+> > > > +    $ref: '/schemas/types.yaml#/definitions/string-array'
+> > > > +    description:
+> > > > +      A list of power domain name strings sorted in the same order as the
+> > > > +      power-domains property.
+> > > > +
+> > > > +      For PSCI based platforms, the name corresponding to the index of the PSCI
+> > > > +      PM domain provider, must be "psci".
+> > > > +
+> > > >    qcom,saw:
+> > > >      $ref: '/schemas/types.yaml#/definitions/phandle'
+> > > >      description: |
+> > > > diff --git a/Documentation/devicetree/bindings/arm/psci.yaml b/Documentation/devicetree/bindings/arm/psci.yaml
+> > > > index 7abdf58b335e..8ef85420b2ab 100644
+> > > > --- a/Documentation/devicetree/bindings/arm/psci.yaml
+> > > > +++ b/Documentation/devicetree/bindings/arm/psci.yaml
+> > > > @@ -102,6 +102,34 @@ properties:
+> > > >        [1] Kernel documentation - ARM idle states bindings
+> > > >          Documentation/devicetree/bindings/arm/idle-states.txt
+> > > >
+> > > > +  "#power-domain-cells":
+> > >
+> > > This is wrong because you are saying the /psci node should have these
+> > > properties. You need to define the child nodes (at least a pattern you
+> > > can match on) and put these properties there.
+> >
+> > Right, good point.
+> >
+> > I searched for some similar examples for how to encode this, but
+> > couldn't really find something useful.
+>
+> You need something like:
+>
+> patternProperties:
+>   '^(cluster|cpu)-pd[0-9a-f]+$':
+>     type: object
+>     properties:
+>       ... and then the properties in the child nodes
+>
+> Note that its going to look weird for the 10th PD with 'cpu-pda'. So
+> maybe add a '-'.
+>
 
-items:
-  oneOf:
-    - pattern: "^gpio([1-9]|[1-7][0-9]|80)$"
-    - enum: [ sdc1_clk, sdc1_cmd, ... ]
+Great, I try this! Thanks.
 
-> +        minItems: 1
-> +        maxItems: 4
-> +
-> +      function:
-> +        description:
-> +          Specify the alternative function to be configured for the specified
-> +          pins.
-> +        enum: [ adsp_ext, alsp_int, atest_bbrx0, atest_bbrx1, atest_char,
-> +          atest_char0, atest_char1, atest_char2, atest_char3, atest_combodac,
-> +          atest_gpsadc0, atest_gpsadc1, atest_tsens, atest_wlan0,
-> +          atest_wlan1, backlight_en, bimc_dte0, bimc_dte1, blsp1_i2c,
-> +          blsp2_i2c, blsp3_i2c, blsp4_i2c, blsp5_i2c, blsp6_i2c,  blsp1_spi,
-> +          blsp1_spi_cs1, blsp1_spi_cs2, blsp1_spi_cs3, blsp2_spi,
-> +          blsp2_spi_cs1, blsp2_spi_cs2, blsp2_spi_cs3, blsp3_spi,
-> +          blsp3_spi_cs1, blsp3_spi_cs2, blsp3_spi_cs3, blsp4_spi, blsp5_spi,
-> +          blsp6_spi, blsp1_uart, blsp2_uart, blsp1_uim, blsp2_uim, cam1_rst,
-> +          cam1_standby, cam_mclk0, cam_mclk1, cci_async, cci_i2c, cci_timer0,
-> +          cci_timer1, cci_timer2, cdc_pdm0, codec_mad, dbg_out, display_5v,
-> +          dmic0_clk, dmic0_data, dsi_rst, ebi0_wrcdc, euro_us, ext_lpass,
-> +          flash_strobe, gcc_gp1_clk_a, gcc_gp1_clk_b, gcc_gp2_clk_a,
-> +          gcc_gp2_clk_b, gcc_gp3_clk_a, gcc_gp3_clk_b, gpio, gsm0_tx0,
-> +          gsm0_tx1, gsm1_tx0, gsm1_tx1, gyro_accl, kpsns0, kpsns1, kpsns2,
-> +          ldo_en, ldo_update, mag_int, mdp_vsync, modem_tsync, m_voc,
-> +          nav_pps, nav_tsync, pa_indicator, pbs0, pbs1, pbs2, pri_mi2s,
-> +          pri_mi2s_ws, prng_rosc, pwr_crypto_enabled_a, pwr_crypto_enabled_b,
-> +          pwr_modem_enabled_a,  pwr_modem_enabled_b, pwr_nav_enabled_a,
-> +          pwr_nav_enabled_b, qdss_ctitrig_in_a0, qdss_ctitrig_in_a1,
-> +          qdss_ctitrig_in_b0, qdss_ctitrig_in_b1, qdss_ctitrig_out_a0,
-> +          qdss_ctitrig_out_a1, qdss_ctitrig_out_b0, qdss_ctitrig_out_b1,
-> +          qdss_traceclk_a, qdss_traceclk_b, qdss_tracectl_a, qdss_tracectl_b,
-> +          qdss_tracedata_a, qdss_tracedata_b, reset_n, sd_card, sd_write,
-> +          sec_mi2s, smb_int, ssbi_wtr0, ssbi_wtr1, uim1, uim2, uim3,
-> +          uim_batt, wcss_bt, wcss_fm, wcss_wlan, webcam1_rst ]
-> +
-> +      drive-strength:
-> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
-> +        default: 2
-> +        description:
-> +          Selects the drive strength for the specified pins, in mA.
+> > One more thing, it seems like
+> > this change is also needed for the common power-domain bindings, as
+> > that also specifies parent/childs domains.
+>
+> Normally, we'd have a $ref to power-domain.yaml, but for that to work
+> here, you'll have to expand the node names ($nodename).
 
-> +
-> +      bias-pull-down:
-> +        type: boolean
-> +        description: The specified pin should be configured as pull down.
-> +
-> +      bias-pull-up:
-> +        type: boolean
-> +        description: The specified pin should be configured as pull up.
-> +
-> +      bias-disable:
-> +        type: boolean
-> +        description: The specified pin should be configured as no pull.
-> +
-> +      output-high:
-> +        type: boolean
-> +        description: The specified pin is configured in output mode, driven
-> +          high.
-> +
-> +      output-low:
-> +        type: boolean
-> +        description: The specified pin is configured in output mode, driven
-> +          low.
+Not sure I get that, but interpret this as it's not a good idea to use
+a $ref to power-domain.yaml. Right?
 
-No need to redefine the type and description on these 5 properties. Just 
-a value of 'true' is enough.
+>
+> >
+> > Anyway, I would really appreciate if you can suggest something more
+> > detailed for you think this should be done!?
+> >
+> > >
+> > > > +    description:
+> > > > +      The number of cells in a PM domain specifier as per binding in [3].
+> > > > +      Must be 0 as to represent a single PM domain.
+> > > > +
+> > > > +      ARM systems can have multiple cores, sometimes in an hierarchical
+> > > > +      arrangement. This often, but not always, maps directly to the processor
+> > > > +      power topology of the system. Individual nodes in a topology have their
+> > > > +      own specific power states and can be better represented hierarchically.
+> > > > +
+> > > > +      For these cases, the definitions of the idle states for the CPUs and the
+> > > > +      CPU topology, must conform to the binding in [3]. The idle states
+> > > > +      themselves must conform to the binding in [4] and must specify the
+> > > > +      arm,psci-suspend-param property.
+> > > > +
+> > > > +      It should also be noted that, in PSCI firmware v1.0 the OS-Initiated
+> > > > +      (OSI) CPU suspend mode is introduced. Using a hierarchical representation
+> > > > +      helps to implement support for OSI mode and OS implementations may choose
+> > > > +      to mandate it.
+> > > > +
+> > > > +      [3] Documentation/devicetree/bindings/power/power_domain.txt
+> > > > +      [4] Documentation/devicetree/bindings/power/domain-idle-state.txt
+> > > > +
+> > > > +  power-domains:
+> > > > +    $ref: '/schemas/types.yaml#/definitions/phandle-array'
+> > > > +    description:
+> > > > +      List of phandles and PM domain specifiers, as defined by bindings of the
+> > > > +      PM domain provider.
+> > >
+> > > A schema for 'domain-idle-states' property is missing.
+> >
+> > Right, let's figure out the best way for how to add that.
+>
+> If power-domain.yaml is referenced, then don't need anything else
+> unless you can define the number of phandles (looks like you can't?).
 
-> +
-> +    required:
-> +      - pins
-> +      - function
-> +
-> +    additionalProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - interrupt-controller
-> +  - '#interrupt-cells'
-> +  - gpio-controller
-> +  - '#gpio-cells'
-> +  - gpio-ranges
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +        tlmm: pinctrl@1000000 {
-> +              compatible = "qcom,ipq6018-pinctrl";
-> +              reg = <0x01000000 0x300000>;
-> +              interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +              interrupt-controller;
-> +              #interrupt-cells = <2>;
-> +              gpio-controller;
-> +              #gpio-cells = <2>;
-> +              gpio-ranges = <&tlmm 0 80>;
-> +
-> +              serial3-pinmux {
-> +                      pins = "gpio44", "gpio45";
-> +                      function = "blsp2_uart";
-> +                      drive-strength = <8>;
-> +                      bias-pull-down;
-> +              };
-> +        };
-> -- 
-> 2.7.4
-> 
+The number phandles should be one. At least, I think we can start with
+that and extend the binding if needed.
+
+How would that look like then? Apologize for my ignorance (I really
+need to spend some time learning this better)...
+
+Kind regards
+Uffe
