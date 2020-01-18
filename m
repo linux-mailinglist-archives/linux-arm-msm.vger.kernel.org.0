@@ -2,114 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C2E7314188F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jan 2020 18:02:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ED7D61419A2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jan 2020 21:41:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726490AbgARRCS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Jan 2020 12:02:18 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:37797 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726455AbgARRCS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Jan 2020 12:02:18 -0500
-Received: by mail-wr1-f66.google.com with SMTP id w15so25591207wru.4;
-        Sat, 18 Jan 2020 09:02:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=UVdKI4qzpgYXt1ARI5Pkn0qMmMdORH3SJ+ruk4Mge5o=;
-        b=f77OMoHUjuk/UxCeuv2xlrDIqAhVEcRmw9pCin/HRcvWEDTgjP4u499mvyYNlrNR5J
-         cS0o0sQxngEGmSZF8AzszGBfbAb/J05Z3ns0kIJCGIn3D+3ZoZGQDtViYb7/80dDZjXS
-         qn0udBTgAS0qLBwX9GN+PQREKhRTCtRgFOCEjnRLUnqyKl7QVi7y5CvcqzmWhKAO01y4
-         TdBtIXzYFI3ZzIVzKaH05cnkR3pGtlhqYEK4nC7mvzstWxQbaqTytXmCOUqqaGYEIPhW
-         8rqavzR/ddSGCOqPfKawroyiz6VlJYjaS8MUdM5uh+c7G9R/LZLC70vuwEsvioEvgnIu
-         kJPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=UVdKI4qzpgYXt1ARI5Pkn0qMmMdORH3SJ+ruk4Mge5o=;
-        b=pN6n7/s8UIgAjk9yhDd0kJ2l7SucrktfqEUSdd9Gj31OIJvl29CQgZ8DySHoBQlvK3
-         ka1PzHYmnZAfNxTOnMeHD5HEVx6mq0TtN3CxstCGIiYvg6M3yeKMFt0fV21AWZ1fRPvN
-         2L4WbdARSeufBRADo8vF8FBP8es0BDDNVVmBpKIL0B81ANscBZLgICdoie+tnSBB2k6a
-         EvfkR30S764LvIfsmkIgqDOghFYGvlZV0/G83aFMf8CVu0rFbu8cda4nz7lOpmQwPXZN
-         dwvY4HFKjpavyOWULhvMC6QmmHv1mlPhnB4PeOlpPmT1fNwYUPXyOia/I0rYP7CE+cDB
-         AtMA==
-X-Gm-Message-State: APjAAAVOzU7ueLRp/b+sAT3kP37yqvbgWXL7wHhEX8D6BY5PHqFmxVyB
-        +6ULXl+KjzuHb/cIyaL40Ts=
-X-Google-Smtp-Source: APXvYqz7ImU2NwQQn0UM/ohkl4agpIr6kw0ptBWP3KlQk0db+EE5ZP41NsqYzOa2Lw+G5Pps7GjwVg==
-X-Received: by 2002:adf:fe8c:: with SMTP id l12mr9197083wrr.215.1579366935977;
-        Sat, 18 Jan 2020 09:02:15 -0800 (PST)
-Received: from localhost.localdomain (abag109.neoplus.adsl.tpnet.pl. [83.6.170.109])
-        by smtp.googlemail.com with ESMTPSA id j12sm39896087wrt.55.2020.01.18.09.02.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Jan 2020 09:02:15 -0800 (PST)
-From:   Konrad Dybcio <konradybcio@gmail.com>
-Cc:     Konrad Dybcio <konradybcio@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 1/1] ARM: dts: qcom: msm8974-honami: Add USB node.
-Date:   Sat, 18 Jan 2020 17:55:18 +0100
-Message-Id: <20200118165518.36036-1-konradybcio@gmail.com>
+        id S1726935AbgARUl2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Jan 2020 15:41:28 -0500
+Received: from onstation.org ([52.200.56.107]:39842 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726933AbgARUl1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 18 Jan 2020 15:41:27 -0500
+Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 3EA7F3E8F8;
+        Sat, 18 Jan 2020 20:41:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1579380087;
+        bh=w70lZdIZVmnTV+8m8BSpRyKKax6Xt6F/OwKbi0BD6AY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=TP6xNLqcK1YGG4IdG1i2ZyZb3gJiaPGkeYG1cLqQROIGxEm56OjiZq0suJHn2B66J
+         f9AodHxoM5cVVn0wWUt3ZMxb9EpsrrF4zir3O0MmmG6XkWWrI+C4U6Um0gVSuSEbRH
+         4nT6PkREzMFQfsttyxWvMGm/R006lWERbNCLkwGk=
+From:   Brian Masney <masneyb@onstation.org>
+To:     robdclark@gmail.com
+Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/mdp5: rate limit pp done timeout warnings
+Date:   Sat, 18 Jan 2020 15:41:20 -0500
+Message-Id: <20200118204120.1039774-1-masneyb@onstation.org>
 X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This exact node has been included in Amami DTS
-ever since 2017, turns out it works perfectly
-fine with Honami, as tested with postmarketOS.
+Add rate limiting of the 'pp done time out' warnings since these
+warnings can quickly fill the dmesg buffer.
 
-Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+Signed-off-by: Brian Masney <masneyb@onstation.org>
 ---
- .../dts/qcom-msm8974-sony-xperia-honami.dts   | 25 +++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts
-index 450b8321e0a6..611bae9fe66b 100644
---- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts
-@@ -260,6 +260,31 @@ l24 {
- };
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+index 05cc04f729d6..e1cc541e0ef2 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+@@ -1109,8 +1109,8 @@ static void mdp5_crtc_wait_for_pp_done(struct drm_crtc *crtc)
+ 	ret = wait_for_completion_timeout(&mdp5_crtc->pp_completion,
+ 						msecs_to_jiffies(50));
+ 	if (ret == 0)
+-		dev_warn(dev->dev, "pp done time out, lm=%d\n",
+-			 mdp5_cstate->pipeline.mixer->lm);
++		dev_warn_ratelimited(dev->dev, "pp done time out, lm=%d\n",
++				     mdp5_cstate->pipeline.mixer->lm);
+ }
  
- &soc {
-+	usb@f9a55000 {
-+		status = "ok";
-+
-+		phys = <&usb_hs1_phy>;
-+		phy-select = <&tcsr 0xb000 0>;
-+		extcon = <&smbb>, <&usb_id>;
-+		vbus-supply = <&chg_otg>;
-+
-+		hnp-disable;
-+		srp-disable;
-+		adp-disable;
-+
-+		ulpi {
-+			phy@a {
-+				status = "ok";
-+
-+				v1p8-supply = <&pm8941_l6>;
-+				v3p3-supply = <&pm8941_l24>;
-+
-+				extcon = <&smbb>;
-+				qcom,init-seq = /bits/ 8 <0x1 0x64>;
-+			};
-+		};
-+	};
-+
- 	sdhci@f9824900 {
- 		status = "ok";
- 
+ static void mdp5_crtc_wait_for_flush_done(struct drm_crtc *crtc)
 -- 
 2.24.1
 
