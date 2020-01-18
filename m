@@ -2,105 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CE9751413CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jan 2020 22:59:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C2E7314188F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jan 2020 18:02:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729937AbgAQV7w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jan 2020 16:59:52 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:41910 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729945AbgAQV7w (ORCPT
+        id S1726490AbgARRCS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Jan 2020 12:02:18 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37797 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726455AbgARRCS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jan 2020 16:59:52 -0500
-Received: by mail-pl1-f195.google.com with SMTP id t14so2448911plr.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jan 2020 13:59:52 -0800 (PST)
+        Sat, 18 Jan 2020 12:02:18 -0500
+Received: by mail-wr1-f66.google.com with SMTP id w15so25591207wru.4;
+        Sat, 18 Jan 2020 09:02:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wH8/aRr7zW2lkMolzBnmu3ZhKRNwfO3YsG0yBHBthEk=;
-        b=desFXdRa4EW0maDZW25KfYW6BMApAUk5B2ccp7iA5pSZaLzWyGyPvTzn5xdxeMGDCt
-         148AKMVVUeryNxZ4TR53Gcar45Yr1zfzwBXDm8pl9iKVOz/Noaeho/lOLwgV5drJJVhM
-         CDF8TXclk2RjOKFD1j4V6KcM8z7g+erMnzJhk=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UVdKI4qzpgYXt1ARI5Pkn0qMmMdORH3SJ+ruk4Mge5o=;
+        b=f77OMoHUjuk/UxCeuv2xlrDIqAhVEcRmw9pCin/HRcvWEDTgjP4u499mvyYNlrNR5J
+         cS0o0sQxngEGmSZF8AzszGBfbAb/J05Z3ns0kIJCGIn3D+3ZoZGQDtViYb7/80dDZjXS
+         qn0udBTgAS0qLBwX9GN+PQREKhRTCtRgFOCEjnRLUnqyKl7QVi7y5CvcqzmWhKAO01y4
+         TdBtIXzYFI3ZzIVzKaH05cnkR3pGtlhqYEK4nC7mvzstWxQbaqTytXmCOUqqaGYEIPhW
+         8rqavzR/ddSGCOqPfKawroyiz6VlJYjaS8MUdM5uh+c7G9R/LZLC70vuwEsvioEvgnIu
+         kJPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wH8/aRr7zW2lkMolzBnmu3ZhKRNwfO3YsG0yBHBthEk=;
-        b=uPJrz7XnLXUibgAar/DR6SqFJ9e5sTJyQ5R1CdbzgAvSR6UE+CuLlbVT/L/UCCGsso
-         DdGWjpK+t8RVBPcszeDfI3q1Y+q4D+hnN6qM/S6NVdujFSS6WDrJeDgUQaD84fb8D1wC
-         VoayYchopVSQaMjvtPSTGQCgREJOR6f7i4IoRc0ryvFoT6zFmcElvDlqhCwD7HSWSLMI
-         561GJc+qWcLa/d3Fj9yFAI0AGeLwQxqacV0hckmAvXc8yKCq//2VtTUyplw4PAQYZNia
-         zlQE3/HAbFAamZNE5aBF5aAGK8mCHP3qA+yYH47lx5Vmz/i9qjdu3mQyeFlZP2q4lZVZ
-         bw5w==
-X-Gm-Message-State: APjAAAVjJpDjUfjyFUVQ3vgNsC7OZ1cngeSpu/l9tdRpWTEunBFc+Yl9
-        Mqa1SaYRMyaKi9CgGLsu62D7SQ==
-X-Google-Smtp-Source: APXvYqx0q2JaM2Mv0/oQbuhdtZgLabKhjJirCj4B6jf+VA1qMGTzLhDDnLc+PpUM6Adq0fzqc2Dc4Q==
-X-Received: by 2002:a17:902:6b4b:: with SMTP id g11mr1443287plt.26.1579298391678;
-        Fri, 17 Jan 2020 13:59:51 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id m22sm30757146pgn.8.2020.01.17.13.59.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Jan 2020 13:59:51 -0800 (PST)
-Date:   Fri, 17 Jan 2020 13:59:49 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UVdKI4qzpgYXt1ARI5Pkn0qMmMdORH3SJ+ruk4Mge5o=;
+        b=pN6n7/s8UIgAjk9yhDd0kJ2l7SucrktfqEUSdd9Gj31OIJvl29CQgZ8DySHoBQlvK3
+         ka1PzHYmnZAfNxTOnMeHD5HEVx6mq0TtN3CxstCGIiYvg6M3yeKMFt0fV21AWZ1fRPvN
+         2L4WbdARSeufBRADo8vF8FBP8es0BDDNVVmBpKIL0B81ANscBZLgICdoie+tnSBB2k6a
+         EvfkR30S764LvIfsmkIgqDOghFYGvlZV0/G83aFMf8CVu0rFbu8cda4nz7lOpmQwPXZN
+         dwvY4HFKjpavyOWULhvMC6QmmHv1mlPhnB4PeOlpPmT1fNwYUPXyOia/I0rYP7CE+cDB
+         AtMA==
+X-Gm-Message-State: APjAAAVOzU7ueLRp/b+sAT3kP37yqvbgWXL7wHhEX8D6BY5PHqFmxVyB
+        +6ULXl+KjzuHb/cIyaL40Ts=
+X-Google-Smtp-Source: APXvYqz7ImU2NwQQn0UM/ohkl4agpIr6kw0ptBWP3KlQk0db+EE5ZP41NsqYzOa2Lw+G5Pps7GjwVg==
+X-Received: by 2002:adf:fe8c:: with SMTP id l12mr9197083wrr.215.1579366935977;
+        Sat, 18 Jan 2020 09:02:15 -0800 (PST)
+Received: from localhost.localdomain (abag109.neoplus.adsl.tpnet.pl. [83.6.170.109])
+        by smtp.googlemail.com with ESMTPSA id j12sm39896087wrt.55.2020.01.18.09.02.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Jan 2020 09:02:15 -0800 (PST)
+From:   Konrad Dybcio <konradybcio@gmail.com>
+Cc:     Konrad Dybcio <konradybcio@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sc7180: Update QUSB2 V2 Phy
- tuning params for SC7180
-Message-ID: <20200117215949.GS89495@google.com>
-References: <1578658699-30458-1-git-send-email-sanm@codeaurora.org>
- <1578658699-30458-6-git-send-email-sanm@codeaurora.org>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/1] ARM: dts: qcom: msm8974-honami: Add USB node.
+Date:   Sat, 18 Jan 2020 17:55:18 +0100
+Message-Id: <20200118165518.36036-1-konradybcio@gmail.com>
+X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1578658699-30458-6-git-send-email-sanm@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 10, 2020 at 05:48:19PM +0530, Sandeep Maheswaram wrote:
-> Overriding the QUSB2 V2 Phy tuning parameters for SC7180 SOC.
+This exact node has been included in Amami DTS
+ever since 2017, turns out it works perfectly
+fine with Honami, as tested with postmarketOS.
 
-This patch doesn't set the PHY tuning parameters for the SC7180
-SoC, but for the IDP board, which is based on the SC7180. Please
-reflect this in the commit message (including subject) to avoid
-confusion.
+Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+---
+ .../dts/qcom-msm8974-sony-xperia-honami.dts   | 25 +++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> index 388f50a..826cf02 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> @@ -276,9 +276,11 @@
->  	vdda-pll-supply = <&vreg_l11a_1p8>;
->  	vdda-phy-dpdm-supply = <&vreg_l17a_3p0>;
->  	qcom,imp-res-offset-value = <8>;
-> -	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
-> -	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
-> +	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_15_PERCENT>;
->  	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
-> +	qcom,bias-ctrl-value = <0x22>;
-> +	qcom,charge-ctrl-value = <3>;
-> +	qcom,hsdisc-trim-value = <0>;
->  };
->  
->  &usb_1_qmpphy {
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts
+index 450b8321e0a6..611bae9fe66b 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts
++++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts
+@@ -260,6 +260,31 @@ l24 {
+ };
+ 
+ &soc {
++	usb@f9a55000 {
++		status = "ok";
++
++		phys = <&usb_hs1_phy>;
++		phy-select = <&tcsr 0xb000 0>;
++		extcon = <&smbb>, <&usb_id>;
++		vbus-supply = <&chg_otg>;
++
++		hnp-disable;
++		srp-disable;
++		adp-disable;
++
++		ulpi {
++			phy@a {
++				status = "ok";
++
++				v1p8-supply = <&pm8941_l6>;
++				v3p3-supply = <&pm8941_l24>;
++
++				extcon = <&smbb>;
++				qcom,init-seq = /bits/ 8 <0x1 0x64>;
++			};
++		};
++	};
++
+ 	sdhci@f9824900 {
+ 		status = "ok";
+ 
+-- 
+2.24.1
+
