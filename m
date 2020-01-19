@@ -2,182 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ED25B1419BA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jan 2020 22:02:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3D08141DFB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jan 2020 14:13:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726896AbgARVCe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Jan 2020 16:02:34 -0500
-Received: from onstation.org ([52.200.56.107]:39998 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726846AbgARVCd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Jan 2020 16:02:33 -0500
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726894AbgASNNl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Jan 2020 08:13:41 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:20927 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726860AbgASNNk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 19 Jan 2020 08:13:40 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1579439620; h=Message-Id: Date: Subject: To: From: Sender;
+ bh=FmJHa2FasAfuTkbac3HOfTDpK2WgWNjbFpSdx7jBY20=; b=gODbIcNNx/lz+YK9YEcMMpTLM6iJMz5+xC++ULmoXhuOXatzZWpjjgRGIv6tHOUtiKArTndZ
+ 7TjPFgq7jzjKpKiLLuBfR+1UtOfSXK0A3puB3x6BhREOpW9u+W3+qQY2t6g3AKB3+0+UdQv9
+ Y+SvZ9FCiIwn7PBSe+yrd33NrTQ=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e245602.7f1f8224ff80-smtp-out-n02;
+ Sun, 19 Jan 2020 13:13:38 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9FFB2C4479C; Sun, 19 Jan 2020 13:13:37 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from srichara1-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 9E4E33E8F8;
-        Sat, 18 Jan 2020 21:02:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1579381352;
-        bh=tYvsyrCqD4e+2GQsK+s0EYAl6OMxJfsNFiwg29ZEvyw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=I5eC8C1NA+C2z3nNd5BdQ4GV+pgLF3desVnqrppsiZZdEh8qMr8r0LOBjyvUyNhBW
-         VQRUsOqRNSHYVz5muRR3CQjHUlyL6ujmN31pdDW21ZXSIpzSqBZyrTy3JjvwpCQR91
-         e8BMYCllrp7sei6OAB16UOB4S1EiIBnQdXBnM6XQ=
-Date:   Sat, 18 Jan 2020 16:02:32 -0500
-From:   Brian Masney <masneyb@onstation.org>
-To:     jeffrey.l.hugo@gmail.com, robdclark@gmail.com
-Cc:     freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        sean@poorly.run
-Subject: Re: [PATCH RFC v2] drm/msm/mdp5: enable autorefresh
-Message-ID: <20200118210232.GA32765@onstation.org>
-References: <20191230020053.26016-1-masneyb@onstation.org>
- <20191230020053.26016-2-masneyb@onstation.org>
- <20200101035027.GA9348@onstation.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200101035027.GA9348@onstation.org>
+        (Authenticated sender: sricharan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C75F6C43383;
+        Sun, 19 Jan 2020 13:13:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C75F6C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sricharan@codeaurora.org
+From:   Sricharan R <sricharan@codeaurora.org>
+To:     agross@kernel.org, devicetree@vger.kernel.org,
+        linus.walleij@linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-soc@vger.kernel.org,
+        robh+dt@kernel.org, sivaprak@codeaurora.org,
+        sricharan@codeaurora.org
+Subject: [PATCH V6 0/5] Add minimal boot support for IPQ6018
+Date:   Sun, 19 Jan 2020 18:43:16 +0530
+Message-Id: <1579439601-14810-1-git-send-email-sricharan@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 31, 2019 at 10:50:27PM -0500, Brian Masney wrote:
-> On Sun, Dec 29, 2019 at 09:00:53PM -0500, Brian Masney wrote:
-> > Since the introduction of commit 2d99ced787e3 ("drm/msm: async commit
-> > support"), command-mode panels began throwing the following errors:
-> > 
-> >     msm fd900000.mdss: pp done time out, lm=0
-> > 
-> > Let's fix this by enabling the autorefresh feature that's available in
-> > the MDP starting at version 1.0. This will cause the MDP to
-> > automatically send a frame to the panel every time the panel invokes the
-> > TE signal, which will trigger the PP_DONE IRQ. This requires only
-> > sending a single START signal for command-mode panels.
-> > 
-> > This gives us a counter for command-mode panels that we can use to
-> > implement async commit support for the MDP5 in a follow up patch.
-> > 
-> > Signed-off-by: Brian Masney <masneyb@onstation.org>
-> > Suggested-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-> > Fixes: 2d99ced787e3 ("drm/msm: async commit support")
-> > ---
-> > Changes since v1:
-> > - Send a single start command to kick off the pipeline.
-> > 
-> > The reason I marked this patch as a RFC is that the display during some
-> > small percentage of boots will stop updating after a minute or so, and
-> > the ping pong IRQs stop. Most of the time it works with no issues and I
-> > haven't been able to find a way to reproduce the issue. I tried
-> > suspending the phone by toggling /sys/power/state since I thought that
-> > the issue could potentially be related to power management.
-> 
-> After working to get the IOMMU up on msm8974, I suspect that the issue
-> that I describe above is caused by a device probe deferral, which
-> explains the intermittent nature of what I'm seeing. First driver load
-> sets up the autorefresh registers, sends a single START signal, then a
-> -EPROBE_DEFER is thrown later on. Second driver load lost the state, and
-> sends a second START signal and overloads the DSI.
+The IPQ6018 is Qualcomm\u2019s 802.11ax SoC for Routers,
+Gateways and Access Points.
 
-The issue was not caused by an -EPROBE_DEFER error. The most consistent
-way that I've found to reproduce the issue is to compile the MSM DRM
-driver into the kernel (not as a module), boot the phone, don't change
-the screen contents, and after ~2 minutes the 'pp done time out'
-warnings start. I enabled all DRM debug information and included at the
-bottom of my message the relevant messages from dmesg at the point where
-the IRQs stop.
+This series adds minimal board boot support for ipq6018-cp01 board.
 
-I feel like I'm at a dead end on this since I'm not too familiar with
-this particular hardware and there's no publicly-available documents.
-Unless anyone has any suggestions for other things to try, I'm planning
-to stop looking into this issue and will instead look into getting the
-IOMMU working on this board. I would love to get this fixed though.
+[V6]
+ * Addressed more review comments on pinctrl bindings from Rob.
+ * Patch 4 arm64: dts: Add ipq6018 SoC and CP01 board support has build
+   dependency with,
+	https://lkml.org/lkml/2020/1/9/84
+[V5]
+ * Addressed review comments in pinctrl bindings from Rob.
+ * Ran make dt_binding_check with modified patch.
+ * Added fixed rate clocks in gcc clock controller node.
+ * Patch 4 arm64: dts: Add ipq6018 SoC and CP01 board support has build
+   dependency with,
+        https://lkml.org/lkml/2020/1/9/84
+[v4]
+ * Addressed review comments in pinctrl bindings from Rob.
+ * Ran make dt_binding_check and no issues was reported.
+ * Deleted absahu email id from patch 4, since its bouncing now.
+ * Patch 4 arm64: dts: Add ipq6018 SoC and CP01 board support has build
+   dependency with,
+	https://lkml.org/lkml/2020/1/9/84
 
+[V3]
+ * Removed clock driver and bindings from this patch series, and added them
+   as a different series.
+ * Removed qpic_padN from pinctrl driver.
+ * Addressed review comments in dts, and added the remaining fixed clocks their
+ * Fixed review comments in pinctrl bindings
 
----
-The point in dmesg right before the ping/pong IRQs stop. This sequence
-of messages appears consistently like this prior to this.
+[v2]
+ * Splitted dt bindings  and driver into different patches. Added missing bindings
+   and some style changes.
+ * Added ipq6018 schema
+ * Addressed review comments for gcc clock bindings.
+ * Removed all clk critical flags, removed 1/1 factor clocks, moved to new
+   way of specifying clk parents, and addressed other review comments.
+ * Sorted nodes based on address, name, label. Removed unused clock nodes,
+   Addressed other review comments.
 
-[  128.915574] [drm:mdp5_crtc_vblank_irq] crtc-0: send event: 4c4a50e5                             
-[  128.928610] [drm:dsi_host_irq] isr=0x2000700, id=0                                              
-[  128.945398] [drm:dsi_host_irq] isr=0x2000700, id=0                                              
-[  128.962185] [drm:dsi_host_irq] isr=0x2000700, id=0                                           
-[  128.978974] [drm:dsi_host_irq] isr=0x2000700, id=0                                                        
-[  128.995761] [drm:dsi_host_irq] isr=0x2000700, id=0                                                        
-[  129.015163] [drm:dsi_host_irq] isr=0x2000700, id=0                             
-[  129.031826] [drm:dsi_host_irq] isr=0x2000700, id=0                                           
-[  129.048492] [drm:dsi_host_irq] isr=0x2000700, id=0                                                        
-[  129.065160] [drm:dsi_host_irq] isr=0x2000700, id=0                                                        
-[  129.081826] [drm:dsi_host_irq] isr=0x2000700, id=0                                                        
-[  129.098493] [drm:dsi_host_irq] isr=0x2000700, id=0                                                        
-[  129.115694] [drm:dsi_host_irq] isr=0x2000700, id=0                                                        
-[  129.115787] [drm:drm_atomic_state_init] Allocated atomic state f90dd658                                   
-[  129.115810] [drm:drm_mode_object_get] OBJ ID: 51 (2)                                            
-[  129.115823] [drm:drm_atomic_get_plane_state] Added [PLANE:33:plane-0] d172526a state to f90dd658
-[  129.115836] [drm:drm_mode_object_get] OBJ ID: 52 (1)                                                      
-[  129.115848] [drm:drm_atomic_get_crtc_state] Added [CRTC:50:crtc-0] 00606fa5 state to f90dd658             
-[  129.115858] [drm:drm_mode_object_get] OBJ ID: 556 (1)                                           
-[  129.115878] [drm:drm_atomic_check_only] checking f90dd658                                                 
-[  129.115895] [drm:mdp5_plane_atomic_check] plane-0: check (1 -> 1)                                         
-[  129.115910] [drm:mdp5_crtc_atomic_check] crtc-0: check                                          
-[  129.115921] [drm:mdp5_crtc_atomic_check] crtc-0: assign pipe plane-0 on stage=1                 
-[  129.115932] [drm:drm_atomic_commit] committing f90dd658                                         
-[  129.115957] [drm:msm_framebuffer_prepare] FB[51]: iova[0]: 70101000 (0)                                   
-[  129.116005] [drm:drm_calc_timestamping_constants] crtc 50: hwmode: htotal 1086, vtotal 1926, vdisplay 1920
-[  129.116015] [drm:drm_calc_timestamping_constants] crtc 50: clock 150000 kHz framedur 13944240 linedur 7240
-[  129.116025] [drm:drm_atomic_helper_commit_planes] crtc-0: begin                                           
-[  129.116037] [drm:mdp5_plane_atomic_update] plane-0: update                                                
-[  129.116050] [drm:mdp5_plane_mode_set] plane-0: FB[51] 0,0,1080,1920 -> CRTC[50] 0,0,1080,1920             
-[  129.116061] [drm:mdp5_plane_mode_set] scale config = 0                                                    
-[  129.116085] [drm:mdp5_crtc_atomic_flush] crtc-0: event: 2a2a7209                                          
-[  129.116107] [drm:mdp5_ctl_blend] lm0: blend config = 0x00040000. ext_cfg = 0x00000000                     
-[  129.116117] [drm:crtc_flush] crtc-0: flush=00000840                                                       
-[  129.116983] [drm:mdp5_crtc_vblank_irq] crtc-0: send event: 2a2a7209                                       
-[  129.172473] msm fd900000.mdss: pp done time out, lm=0                                                     
-[  129.172506] [drm:mdp5_plane_cleanup_fb] plane-0: cleanup: FB[51]                                          
-[  129.172525] [drm:drm_mode_object_put.part.0] OBJ ID: 556 (2)                                              
-[  129.172536] [drm:drm_atomic_state_default_clear] Clearing atomic state f90dd658                           
-[  129.172548] [drm:drm_mode_object_put.part.0] OBJ ID: 52 (2)                                               
-[  129.172558] [drm:drm_mode_object_put.part.0] OBJ ID: 51 (3)                                               
-[  129.172569] [drm:__drm_atomic_state_free] Freeing atomic state f90dd658          
+Sricharan R (5):
+  dt-bindings: pinctrl: qcom: Add ipq6018 pinctrl bindings
+  pinctrl: qcom: Add ipq6018 pinctrl driver
+  dt-bindings: qcom: Add ipq6018 bindings
+  arm64: dts: Add ipq6018 SoC and CP01 board support
+  arm64: defconfig: Enable qcom ipq6018 clock and pinctrl
 
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    8 +
+ .../bindings/pinctrl/qcom,ipq6018-pinctrl.yaml     |  174 +++
+ arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+ arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts       |   30 +
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi              |  263 +++++
+ arch/arm64/configs/defconfig                       |    3 +
+ drivers/pinctrl/qcom/Kconfig                       |   10 +
+ drivers/pinctrl/qcom/Makefile                      |    1 +
+ drivers/pinctrl/qcom/pinctrl-ipq6018.c             | 1107 ++++++++++++++++++++
+ 9 files changed, 1597 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq6018.dtsi
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-ipq6018.c
 
-----
-Messages immediately after the last batch above when the ping/pong IRQs
-stop. This sequence of messages appear consistently like this after this
-point.
-
-[  129.322565] [drm:drm_atomic_state_init] Allocated atomic state f90dd658                                   
-[  129.322585] [drm:drm_mode_object_get] OBJ ID: 51 (2)                                                      
-[  129.322597] [drm:drm_atomic_get_plane_state] Added [PLANE:33:plane-0] 13115e01 state to f90dd658          
-[  129.322610] [drm:drm_mode_object_get] OBJ ID: 52 (1)                                            
-[  129.322621] [drm:drm_atomic_get_crtc_state] Added [CRTC:50:crtc-0] 380d863c state to f90dd658   
-[  129.322631] [drm:drm_mode_object_get] OBJ ID: 557 (1)                                                     
-[  129.322644] [drm:drm_atomic_check_only] checking f90dd658                                                 
-[  129.322661] [drm:mdp5_plane_atomic_check] plane-0: check (1 -> 1)                                         
-[  129.322675] [drm:mdp5_crtc_atomic_check] crtc-0: check                                                    
-[  129.322687] [drm:mdp5_crtc_atomic_check] crtc-0: assign pipe plane-0 on stage=1                           
-[  129.322698] [drm:drm_atomic_commit] committing f90dd658                                         
-[  129.322716] [drm:msm_framebuffer_prepare] FB[51]: iova[0]: 70101000 (0)                                   
-[  129.382537] msm fd900000.mdss: pp done time out, lm=0                                                     
-[  129.382577] [drm:drm_calc_timestamping_constants] crtc 50: hwmode: htotal 1086, vtotal 1926, vdisplay 1920
-[  129.382587] [drm:drm_calc_timestamping_constants] crtc 50: clock 150000 kHz framedur 13944240 linedur 7240
-[  129.382598] [drm:drm_atomic_helper_commit_planes] crtc-0: begin                                           
-[  129.382609] [drm:mdp5_plane_atomic_update] plane-0: update                                                
-[  129.382622] [drm:mdp5_plane_mode_set] plane-0: FB[51] 0,0,1080,1920 -> CRTC[50] 0,0,1080,1920             
-[  129.382633] [drm:mdp5_plane_mode_set] scale config = 0                                                    
-[  129.382653] [drm:mdp5_crtc_atomic_flush] crtc-0: event: 0df2511e                                          
-[  129.382677] [drm:mdp5_ctl_blend] lm0: blend config = 0x00040000. ext_cfg = 0x00000000                     
-[  129.382687] [drm:crtc_flush] crtc-0: flush=00000840                                                       
-[  129.385525] [drm:mdp5_crtc_vblank_irq] crtc-0: send event: 0df2511e                                       
-[  129.442536] msm fd900000.mdss: pp done time out, lm=0                                                     
-[  129.442568] [drm:mdp5_plane_cleanup_fb] plane-0: cleanup: FB[51]                                          
-[  129.442586] [drm:drm_mode_object_put.part.0] OBJ ID: 557 (2)                                              
-[  129.442597] [drm:drm_atomic_state_default_clear] Clearing atomic state f90dd658                           
-[  129.442609] [drm:drm_mode_object_put.part.0] OBJ ID: 52 (2)                                               
-[  129.442620] [drm:drm_mode_object_put.part.0] OBJ ID: 51 (3)                                               
-[  129.442630] [drm:__drm_atomic_state_free] Freeing atomic state f90dd658                                   
-
-Brian
+-- 
+1.9.1
