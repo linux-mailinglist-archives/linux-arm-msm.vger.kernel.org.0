@@ -2,136 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5545B142A53
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2020 13:15:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C94C0142AD8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2020 13:30:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727011AbgATMPp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jan 2020 07:15:45 -0500
-Received: from mail-dm6nam11on2042.outbound.protection.outlook.com ([40.107.223.42]:50952
-        "EHLO NAM11-DM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726974AbgATMPp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jan 2020 07:15:45 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GLboq9TEBqpbBECml8csOAI9PMnffLRxQ4s2za3ubDtTj6oKRh72GsMIqYq317uzxXPycE1U3dJPeJ7+85M+XhMC4msNmbQn1y9GK8PVSiazEkrNLqB2fk9bEMlvhpUWjsIUiLb2Xrg+isvDx48sNMXh9072aORl9K0lFQQEi4Lj3Dc2VG4BiUAOSFw5vqZyeTParXTjnIoF1Gah6lXPdanYI0nxptkerZefHISa/WBDhcRhs3LpTPPqtZXOPaXbrkT+x3X7UPePwOFPAnMhp/PMk8sEeqNrsPaeKVtjIonSv7zgYuzWcSI00yaJf6gfnJoaeXr1wed+6wcCVM71xA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=f7fy1tCOU8PFTG2of3luuAICqGoAd2EZhart9NygXOQ=;
- b=F0S0q/xsQY7xN60zSEUV0Qo1TfYmuzCxTzDLxyQAefeWdpGo7L7PECqSgVyDGoG1ZOuAMFjcfmUpHvEXbgDTczaQGtq8XVhKZ1OFAl+UD/Y/tm5yed9Vytxhp42tBWP/cdKTGC+/mHfuzLjXFtViaIMcY0GzulgldADKIx09aAm9xZHb+suMHLj6mc3HyV3td3Az8Ghtan1sbncEJEQk6GZES/PQ7VMv2wZQYBZDi1b8nYAFDxcKV7oHzn5wRXUSEj3AgMFE14nG0jY4dQ0WPV0M1qxQO+gUQFTeFZ0xQu/Z7BXZVw5PDsdSR4ghgq3iNkKDxgu8xyDcmez6FcX5SQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vmware.com; dmarc=pass action=none header.from=vmware.com;
- dkim=pass header.d=vmware.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vmware.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=f7fy1tCOU8PFTG2of3luuAICqGoAd2EZhart9NygXOQ=;
- b=hTm01gaKleZA+5aFMFv3j1XrtEItVw5GEuWBep12NN4fNaVjm8WFjc2r1qfPTM7rlhHpsKZWg4JO8yWNDJD/6r88NKiX2HPBKSf63GgYV9dGVYBYuWl45cmtQNV4Kh5H18XK3LhLfn2iwbNCgenDwxT/wxsKbfHchfZxD+OK2/I=
-Received: from MN2PR05MB6141.namprd05.prod.outlook.com (20.178.241.217) by
- MN2PR05MB6063.namprd05.prod.outlook.com (20.178.241.158) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2665.15; Mon, 20 Jan 2020 12:15:42 +0000
-Received: from MN2PR05MB6141.namprd05.prod.outlook.com
- ([fe80::b4a2:5c46:955a:2850]) by MN2PR05MB6141.namprd05.prod.outlook.com
- ([fe80::b4a2:5c46:955a:2850%7]) with mapi id 15.20.2665.015; Mon, 20 Jan 2020
- 12:15:42 +0000
-From:   Thomas Hellstrom <thellstrom@vmware.com>
-To:     Thomas Zimmermann <tzimmermann@suse.de>,
-        "airlied@linux.ie" <airlied@linux.ie>,
-        "daniel@ffwll.ch" <daniel@ffwll.ch>,
-        "alexander.deucher@amd.com" <alexander.deucher@amd.com>,
-        "christian.koenig@amd.com" <christian.koenig@amd.com>,
-        "David1.Zhou@amd.com" <David1.Zhou@amd.com>,
-        "maarten.lankhorst@linux.intel.com" 
-        <maarten.lankhorst@linux.intel.com>,
-        "patrik.r.jakobsson@gmail.com" <patrik.r.jakobsson@gmail.com>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "sean@poorly.run" <sean@poorly.run>,
-        "benjamin.gaignard@linaro.org" <benjamin.gaignard@linaro.org>,
-        "vincent.abriou@st.com" <vincent.abriou@st.com>,
-        "yannick.fertre@st.com" <yannick.fertre@st.com>,
-        "philippe.cornu@st.com" <philippe.cornu@st.com>,
-        "mcoquelin.stm32@gmail.com" <mcoquelin.stm32@gmail.com>,
-        "alexandre.torgue@st.com" <alexandre.torgue@st.com>,
-        "eric@anholt.net" <eric@anholt.net>,
-        "rodrigosiqueiramelo@gmail.com" <rodrigosiqueiramelo@gmail.com>,
-        "hamohammed.sa@gmail.com" <hamohammed.sa@gmail.com>,
-        Linux-graphics-maintainer <Linux-graphics-maintainer@vmware.com>,
-        "bskeggs@redhat.com" <bskeggs@redhat.com>,
-        "harry.wentland@amd.com" <harry.wentland@amd.com>,
-        "sunpeng.li@amd.com" <sunpeng.li@amd.com>,
-        "jani.nikula@linux.intel.com" <jani.nikula@linux.intel.com>,
-        "joonas.lahtinen@linux.intel.com" <joonas.lahtinen@linux.intel.com>,
-        "rodrigo.vivi@intel.com" <rodrigo.vivi@intel.com>
-CC:     "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
-        "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "nouveau@lists.freedesktop.org" <nouveau@lists.freedesktop.org>
-Subject: Re: [PATCH v3 20/22] drm/vmwgfx: Convert to CRTC VBLANK callbacks
-Thread-Topic: [PATCH v3 20/22] drm/vmwgfx: Convert to CRTC VBLANK callbacks
-Thread-Index: AQHVz2r2D5dcUIrxVEGgJH3SOH/fbg==
-Date:   Mon, 20 Jan 2020 12:15:42 +0000
-Message-ID: <MN2PR05MB6141E734C31A7173C906E76DA1320@MN2PR05MB6141.namprd05.prod.outlook.com>
-References: <20200120082314.14756-1-tzimmermann@suse.de>
- <20200120082314.14756-21-tzimmermann@suse.de>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=thellstrom@vmware.com; 
-x-originating-ip: [155.4.205.35]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 18d5d898-5aeb-4045-abfa-08d79da2787c
-x-ms-traffictypediagnostic: MN2PR05MB6063:|MN2PR05MB6063:
-x-ld-processed: b39138ca-3cee-4b4a-a4d6-cd83d9dd62f0,ExtAddr
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <MN2PR05MB6063E94D6317B4C03CC929CFA1320@MN2PR05MB6063.namprd05.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:353;
-x-forefront-prvs: 0288CD37D9
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(4636009)(376002)(39860400002)(136003)(396003)(366004)(346002)(189003)(199004)(52536014)(7406005)(478600001)(7416002)(2906002)(4326008)(76116006)(91956017)(5660300002)(33656002)(54906003)(8676002)(6506007)(110136005)(8936002)(7696005)(81156014)(81166006)(71200400001)(4744005)(66946007)(186003)(26005)(53546011)(66446008)(64756008)(66556008)(9686003)(66476007)(86362001)(55016002)(316002)(921003)(1121003);DIR:OUT;SFP:1101;SCL:1;SRVR:MN2PR05MB6063;H:MN2PR05MB6141.namprd05.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: vmware.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: gTS13OmDCu41gFeOJ0tL99sairAGpV1UOOw/CeBvo+IGQf0NnmUqrIrLOiaDWdFGsAvaS53eco565ZcX2UgJub7YITDEj2djPc9ULQICtr1hiSYdRkOsgvTqJ6QClY60h9s/8Zwd8idpCxfMwJDUpPhaR4m6XKgX2kkjvwvifq3f8w9rE2qLv2DR/K96eygLDJFqHOAAeO4N5ulsZcSJ4CRKG9CTrORQ6ezmcZrtMueG7/wd1NAg+anMRZEYwoka5ATJUMtZSYr9QzYEHuREpPyXaDavgYU68ovV+oQscWUWDkU7oN0hVjiRSfYuGzVfnTJ0W/Ehve7q5hUXDpaCAn7C3FC5zYA46MYofkMarq3H4l4GmwyxT7atZJPAwm/GBgYB4f3B9rRfDXwfBTyceFBepfLmn4aLv6M3z7Dax+UK+RKbZWUFkqFCJNC1H1Vy2BEsUxGaIiLxPhrGlAkRe/vepjGd8+LTJM3mKCM6vveaSbl4k6jHQuAkY0NJ15BQ
-x-ms-exchange-antispam-messagedata: NnVnI+tyE4XZ6Z0baPJS2ROkhwgUCAnuVHlH4IKdH9Ja6jSOBsq5nwz0lPrfnAFTeb4QoRZm0mwDGV7RrQbhLjeQ2S2WT8Fy+qjQHH79eo/HeMpaPVjvHy72Sl/wxjk2gd57tRJsjPJzyrzL89VodQ==
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S1727580AbgATMa4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jan 2020 07:30:56 -0500
+Received: from mga17.intel.com ([192.55.52.151]:8457 "EHLO mga17.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726626AbgATMaz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Jan 2020 07:30:55 -0500
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 20 Jan 2020 04:30:54 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,342,1574150400"; 
+   d="scan'208";a="399361289"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.167]) ([10.237.72.167])
+  by orsmga005.jf.intel.com with ESMTP; 20 Jan 2020 04:30:51 -0800
+Subject: Re: [PATCH V2 1/2] mmc: sdhci: Let a vendor driver supply and update
+ ADMA descriptor size
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        ulf.hansson@linaro.org
+Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
+        sayalil@codeaurora.org, cang@codeaurora.org,
+        rampraka@codeaurora.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <1579194192-7942-2-git-send-email-vbadigan@codeaurora.org>
+ <1579519045-26467-1-git-send-email-vbadigan@codeaurora.org>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <9cb3dd40-0edd-6e71-bc31-c4bb4a7282c9@intel.com>
+Date:   Mon, 20 Jan 2020 14:29:56 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-X-OriginatorOrg: vmware.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 18d5d898-5aeb-4045-abfa-08d79da2787c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jan 2020 12:15:42.5914
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b39138ca-3cee-4b4a-a4d6-cd83d9dd62f0
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: wGW98KMO66TGAJaYVtYiCVkKqbePUPcT9Y2/2QYzi+dSHKaR8I7uGYZCEQdcVzBqXtnpXKIJCTAiYiC7UiSGnA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR05MB6063
+In-Reply-To: <1579519045-26467-1-git-send-email-vbadigan@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/20/20 9:23 AM, Thomas Zimmermann wrote:=0A=
-> VBLANK callbacks in struct drm_driver are deprecated in favor of=0A=
-> their equivalents in struct drm_crtc_funcs. Convert vmwgfx over.=0A=
->=0A=
-> v2:=0A=
-> 	* remove accidental whitespace fixes=0A=
->=0A=
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>=0A=
-> ---=0A=
->  drivers/gpu/drm/vmwgfx/vmwgfx_drv.c  | 3 ---=0A=
->  drivers/gpu/drm/vmwgfx/vmwgfx_drv.h  | 6 +++---=0A=
->  drivers/gpu/drm/vmwgfx/vmwgfx_kms.c  | 6 +++---=0A=
->  drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c  | 3 +++=0A=
->  drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c | 3 +++=0A=
->  drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c | 3 +++=0A=
->  6 files changed, 15 insertions(+), 9 deletions(-)=0A=
->=0A=
-Acked-by: Thomas Hellstrom <thellstrom@vmware.com>=0A=
-=0A=
-=0A=
+On 20/01/20 1:17 pm, Veerabhadrarao Badiganti wrote:
+> Let a vendor driver supply the maximum descriptor size that it
+> can operate on. ADMA descriptor table would be allocated using this
+> supplied size.
+> If any SD Host controller is of version prior to v4.10 spec
+> but supports 16byte descriptor, this change allows them to supply
+> correct descriptor size for ADMA table allocation.
+> 
+> Also let a vendor driver update the descriptor size by overriding
+> sdhc_host->desc_size if it has to operates on a different descriptor
+> sizes in different conditions.
+
+A couple of minor tweaks below sorry.
+
+> 
+> Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
+> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+> ---
+>  drivers/mmc/host/sdhci.c | 13 +++++++------
+>  drivers/mmc/host/sdhci.h |  3 ++-
+>  2 files changed, 9 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
+> index 3140fe2..44fb446 100644
+> --- a/drivers/mmc/host/sdhci.c
+> +++ b/drivers/mmc/host/sdhci.c
+> @@ -3822,14 +3822,15 @@ int sdhci_setup_host(struct sdhci_host *host)
+>  		void *buf;
+>  
+>  		if (host->flags & SDHCI_USE_64_BIT_DMA) {
+> -			host->adma_table_sz = host->adma_table_cnt *
+> -					      SDHCI_ADMA2_64_DESC_SZ(host);
+> -			host->desc_sz = SDHCI_ADMA2_64_DESC_SZ(host);
+> +			if (!host->alloc_desc_sz)
+> +				host->alloc_desc_sz =
+> +					SDHCI_ADMA2_64_DESC_SZ(host);
+>  		} else {
+> -			host->adma_table_sz = host->adma_table_cnt *
+> -					      SDHCI_ADMA2_32_DESC_SZ;
+> -			host->desc_sz = SDHCI_ADMA2_32_DESC_SZ;
+> +			host->alloc_desc_sz = SDHCI_ADMA2_32_DESC_SZ;
+>  		}
+
+The following is simpler:
+
+		if (!(host->flags & SDHCI_USE_64_BIT_DMA))
+			host->alloc_desc_sz = SDHCI_ADMA2_32_DESC_SZ;
+		else if (!host->alloc_desc_sz)
+			host->alloc_desc_sz = SDHCI_ADMA2_64_DESC_SZ(host);
+
+> +		host->desc_sz = host->alloc_desc_sz;
+> +		host->adma_table_sz = host->adma_table_cnt *
+> +					      host->desc_sz;
+
+Wrap is not needed
+
+>  
+>  		host->align_buffer_sz = SDHCI_MAX_SEGS * SDHCI_ADMA2_ALIGN;
+>  		/*
+> diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
+> index 0ed3e0e..10bda3a 100644
+> --- a/drivers/mmc/host/sdhci.h
+> +++ b/drivers/mmc/host/sdhci.h
+> @@ -554,7 +554,8 @@ struct sdhci_host {
+>  	dma_addr_t adma_addr;	/* Mapped ADMA descr. table */
+>  	dma_addr_t align_addr;	/* Mapped bounce buffer */
+>  
+> -	unsigned int desc_sz;	/* ADMA descriptor size */
+> +	unsigned int desc_sz;	/* ADMA current descriptor size */
+> +	unsigned int alloc_desc_sz;	/* ADMA descr. max size host supports */
+>  
+>  	struct workqueue_struct *complete_wq;	/* Request completion wq */
+>  	struct work_struct	complete_work;	/* Request completion work */
+> 
+
