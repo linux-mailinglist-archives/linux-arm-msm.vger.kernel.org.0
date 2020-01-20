@@ -2,134 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AC0F14318D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2020 19:38:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5899C143221
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2020 20:25:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726282AbgATSiz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jan 2020 13:38:55 -0500
-Received: from foss.arm.com ([217.140.110.172]:35624 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726112AbgATSiz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jan 2020 13:38:55 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D770E31B;
-        Mon, 20 Jan 2020 10:38:53 -0800 (PST)
-Received: from [10.37.12.169] (unknown [10.37.12.169])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B943B3F68E;
-        Mon, 20 Jan 2020 10:38:43 -0800 (PST)
-Subject: Re: [PATCH 1/4] PM / EM: and devices to Energy Model
-To:     Dietmar Eggemann <dietmar.eggemann@arm.com>,
-        Quentin Perret <qperret@google.com>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com, Morten.Rasmussen@arm.com, Chris.Redpath@arm.com,
-        ionela.voinescu@arm.com, javi.merino@arm.com,
-        cw00.choi@samsung.com, b.zolnierkie@samsung.com, rjw@rjwysocki.net,
-        sudeep.holla@arm.com, viresh.kumar@linaro.org, nm@ti.com,
-        sboyd@kernel.org, rui.zhang@intel.com, amit.kucheria@verdurent.com,
-        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, kernel-team@android.com
-References: <20200116152032.11301-1-lukasz.luba@arm.com>
- <20200116152032.11301-2-lukasz.luba@arm.com>
- <20200117105437.GA211774@google.com>
- <40587d98-0e8d-cbac-dbf5-d26501d47a8c@arm.com>
- <20200120150918.GA164543@google.com>
- <8332c4ac-2a7d-1e2d-76e9-7c979a666257@arm.com>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <b02da0ed-9e0b-36db-9813-daa334cbf2ba@arm.com>
-Date:   Mon, 20 Jan 2020 18:38:41 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1726915AbgATTYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jan 2020 14:24:36 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:35097 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726876AbgATTYg (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Jan 2020 14:24:36 -0500
+Received: by mail-pf1-f195.google.com with SMTP id i23so208121pfo.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jan 2020 11:24:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=4BImEj4H53pDmcZg2F5mDuPA97CrTOZdicbRO7KXC2w=;
+        b=SJXgIfvyWUbFDJRJHMl3vakHhpmRchRQnb/4moM5JQQNLQ8WkBRrzsNXOXT3g1+9f3
+         Dil/2snqAtHl+dbIl3dIxmRxJlCT/J3ncCcVoBxSHMv+sGcHeJdWM27DorO68WKGUw3q
+         3IvLHQvLgfHLXf+ZqDOdQ0rDSUMPN1cGv3c0lpq64Bme3saRnIJwJyqVsKxeUKQrVtey
+         8GRoPXQC8glf9a3CT9Loj91qVEq9F3l62U93f6STPGDmhGPEimnpRhFCh/iTtwclzeqr
+         pL9Ww0Bwu3FOv1vKFLRYJVrZS/eu+XLR7jkBoTKFR5eua4hHnWQtEUWSsTusCmfthx79
+         gCvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=4BImEj4H53pDmcZg2F5mDuPA97CrTOZdicbRO7KXC2w=;
+        b=VWTcR+H8bYQ6PNjUfAqFlPd5aOdTgPUCT2y9O/wpJ35TG78CgJATZopEivMedSEpX3
+         Mmz+6Y7WSDmSk+BunfkFLQ1+/vu9fvIQgItgOth77+G6ikr46nrwwciP3zvTQo1XWQxd
+         2VZtakJRIs0opCelfxH+t+qTQlEnL731Jo1KipCicG3njuza/6bh6MvRqpLeDyfo02t8
+         m3QaeP1nlnc8JJXlOBNoGdOSEAhlpCYQXknU8KC7Duo6ncemBYcesb+hFvTMPvvSMsWw
+         R+UdI+egcE7qTrjz4Mfv9hOGWlqRpxcNANRADpuVnOvnJjqUFzcTiv2O5Y/qrdhcvVR7
+         j4OA==
+X-Gm-Message-State: APjAAAVo5hxrK8GBQM2PR8BRc8AWHDqkcKklONc2+Iuu2G617blQOZJK
+        Ef/jsIXTy3ahENU3hIdtMmyu15/LbnA=
+X-Google-Smtp-Source: APXvYqwTpbmTC0/4YIYnBfzFSfiJW1OAQ4LFl8vJvbkCRR0WIbfjOsKAg8PEOBfPpe2u1BHUXs04OQ==
+X-Received: by 2002:a63:1346:: with SMTP id 6mr1251849pgt.111.1579548275691;
+        Mon, 20 Jan 2020 11:24:35 -0800 (PST)
+Received: from yoga (wsip-184-181-24-67.sd.sd.cox.net. [184.181.24.67])
+        by smtp.gmail.com with ESMTPSA id u127sm41991223pfc.95.2020.01.20.11.24.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jan 2020 11:24:35 -0800 (PST)
+Date:   Mon, 20 Jan 2020 11:24:32 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     evgreen@chromium.org, p.zabel@pengutronix.de, ohad@wizery.com,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, agross@kernel.org
+Subject: Re: [PATCH 1/4] remoteproc: qcom: q6v5-mss: Use
+ regmap_read_poll_timeout
+Message-ID: <20200120192432.GJ1511@yoga>
+References: <20200117135130.3605-1-sibis@codeaurora.org>
+ <20200117135130.3605-2-sibis@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <8332c4ac-2a7d-1e2d-76e9-7c979a666257@arm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200117135130.3605-2-sibis@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri 17 Jan 05:51 PST 2020, Sibi Sankar wrote:
 
-
-On 1/20/20 6:27 PM, Dietmar Eggemann wrote:
-> On 20/01/2020 16:09, Quentin Perret wrote:
->> Hey Lukasz,
->>
->> On Monday 20 Jan 2020 at 14:52:07 (+0000), Lukasz Luba wrote:
->>> On 1/17/20 10:54 AM, Quentin Perret wrote:
->>>> Suggested alternative: have two registration functions like so:
->>>>
->>>> 	int em_register_dev_pd(struct device *dev, unsigned int nr_states,
->>>> 			       struct em_data_callback *cb);
->>>> 	int em_register_cpu_pd(cpumask_t *span, unsigned int nr_states,
->>>> 			       struct em_data_callback *cb);
->>>
->>> Interesting, in the internal review Dietmar asked me to remove these two
->>> functions. I had the same idea, which would simplify a bit the
->>> registration and it does not need to check the dev->bus if it is CPU.
->>>
->>> Unfortunately, we would need also two function in drivers/opp/of.c:
->>> dev_pm_opp_of_register_cpu_em(policy->cpus);
->>> and
->>> dev_pm_opp_of_register_dev_em(dev);
->>>
->>> Thus, I have created only one registration function, which you can see
->>> in this patch set.
->>
->> Right, I can see how having a unified API would be appealing, but the
->> OPP dependency is a nono, so we'll need to work around one way or
->> another.
->>
->> FWIW, I don't think having separate APIs for CPUs and other devices is
->> that bad given that we already have entirely different frameworks to
->> drive their respective frequencies. And the _cpu variants are basically
->> just wrappers around the _dev ones, so not too bad either IMO :).
-> 
-> It's true that we need the policy->cpus cpumask only for cpu devices and
-> we have it available when we call em_register_perf_domain()
-> [scmi-cpufreq.c driver] or the OPP wrapper dev_pm_opp_of_register_em()
-> [e.g. cpufreq-dt.c driver].
-> 
-> And we shouldn't make EM code dependent on OPP.
-> 
-> But can't we add 'struct cpumask *mask' as an additional argument to
-> both which can be set to NULL for (devfreq) devices?
-> 
-> We can check in em_register_perf_domain() that we got a valid cpumask
-> for a cpu device and ignore it for (devfreq) devices.
+> Replace the loop for HALT_ACK detection with regmap_read_poll_timeout.
 > 
 
-I think we could avoid this additional argument 'cpumask'. I have
-checked the cpufreq_cpu_get function, which should do be good for this:
+Nice, but we should be able to do the same in q6v5proc_halt_axi_port()?
 
----------->8-------------------------
-static int _get_sharing_cpus(struct device *cpu_dev, struct cpumask *span)
-{
-         struct cpufreq_policy *policy;
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+>  drivers/remoteproc/qcom_q6v5_mss.c | 16 ++++++----------
+>  1 file changed, 6 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index 51f451311f5fc..f20b39c6ff0ed 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -73,6 +73,7 @@
+>  #define NAV_AXI_IDLE_BIT		BIT(2)
+>  
+>  #define HALT_ACK_TIMEOUT_MS		100
+> +#define NAV_HALT_ACK_TIMEOUT_US		200
+>  
+>  /* QDSP6SS_RESET */
+>  #define Q6SS_STOP_CORE			BIT(0)
+> @@ -746,7 +747,6 @@ static void q6v5proc_halt_nav_axi_port(struct q6v5 *qproc,
+>  				       struct regmap *halt_map,
+>  				       u32 offset)
+>  {
+> -	unsigned long timeout;
+>  	unsigned int val;
+>  	int ret;
+>  
+> @@ -760,15 +760,11 @@ static void q6v5proc_halt_nav_axi_port(struct q6v5 *qproc,
+>  			   NAV_AXI_HALTREQ_BIT);
+>  
+>  	/* Wait for halt ack*/
+> -	timeout = jiffies + msecs_to_jiffies(HALT_ACK_TIMEOUT_MS);
+> -	for (;;) {
+> -		ret = regmap_read(halt_map, offset, &val);
+> -		if (ret || (val & NAV_AXI_HALTACK_BIT) ||
+> -		    time_after(jiffies, timeout))
+> -			break;
+> -
+> -		udelay(5);
+> -	}
+> +	ret = regmap_read_poll_timeout(halt_map, offset, val,
+> +				       (val & NAV_AXI_HALTACK_BIT),
+> +				       5, NAV_HALT_ACK_TIMEOUT_US);
+> +	if (ret)
+> +		dev_err(qproc->dev, "nav halt ack timeout\n");
 
-         policy = cpufreq_cpu_get(cpu_dev->id);
-         if (policy) {
-                 cpumask_copy(span, policy->cpus);
-                 cpufreq_cpu_put(policy);
-                 return 0;
-         } else {
-                 return -EINVAL;
-         }
-}
---------------------------8<-------------------------------
-
-It would be a replacement for:
-ret = dev_pm_opp_get_sharing_cpus(dev, span);
+Is there a case where this new print adds value beyond the printout we
+already have for the case of IDLE_BIT not going high? Can we simply
+ignore the return value and skip the print?
 
 Regards,
-Lukasz
+Bjorn
+
+>  
+>  	ret = regmap_read(halt_map, offset, &val);
+>  	if (ret || !(val & NAV_AXI_IDLE_BIT))
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
