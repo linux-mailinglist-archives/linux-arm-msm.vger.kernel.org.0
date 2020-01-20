@@ -2,127 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A4A8142DC1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2020 15:39:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E787142E0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jan 2020 15:52:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726642AbgATOj3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jan 2020 09:39:29 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:28477 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729133AbgATOj3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jan 2020 09:39:29 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1579531168; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=BzDRV7ulYCXM+3B574lgGPBya371clGZvJ4IdiMMJzI=; b=KJm8BTuvbMsRwp9bj8MwsakuRbJZl4kIOkfbWJUuH7wx53z6o1c9SE7vJq2niTsmkIKGFgJb
- rmdz5x9oTFQGBmAn5YDmiDMjXMutv66hVzqZXSZwbbbn2uj49EYt1vuGciBl2L842l7F0pAu
- M+bk2MwtNKj/alo8yLs8Nkikg4k=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e25bb9a.7fd55fd684c8-smtp-out-n01;
- Mon, 20 Jan 2020 14:39:22 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 39AA4C4479C; Mon, 20 Jan 2020 14:39:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from vbadigan-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vbadigan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 28D8AC433CB;
-        Mon, 20 Jan 2020 14:39:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 28D8AC433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
-From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-To:     ulf.hansson@linaro.org, adrian.hunter@intel.com
-Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
-        sayalil@codeaurora.org, cang@codeaurora.org,
-        rampraka@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Subject: [PATCH V3] mmc: sdhci: Let a vendor driver supply and update ADMA descriptor size
-Date:   Mon, 20 Jan 2020 20:08:38 +0530
-Message-Id: <1579531122-28341-1-git-send-email-vbadigan@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1579519045-26467-1-git-send-email-vbadigan@codeaurora.org>
-References: <1579519045-26467-1-git-send-email-vbadigan@codeaurora.org>
+        id S1726901AbgATOwV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jan 2020 09:52:21 -0500
+Received: from foss.arm.com ([217.140.110.172]:33072 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726819AbgATOwV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Jan 2020 09:52:21 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2545930E;
+        Mon, 20 Jan 2020 06:52:20 -0800 (PST)
+Received: from [10.37.12.169] (unknown [10.37.12.169])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D71C33F52E;
+        Mon, 20 Jan 2020 06:52:09 -0800 (PST)
+Subject: Re: [PATCH 1/4] PM / EM: and devices to Energy Model
+To:     Quentin Perret <qperret@google.com>
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com, Morten.Rasmussen@arm.com,
+        Dietmar.Eggemann@arm.com, Chris.Redpath@arm.com,
+        ionela.voinescu@arm.com, javi.merino@arm.com,
+        cw00.choi@samsung.com, b.zolnierkie@samsung.com, rjw@rjwysocki.net,
+        sudeep.holla@arm.com, viresh.kumar@linaro.org, nm@ti.com,
+        sboyd@kernel.org, rui.zhang@intel.com, amit.kucheria@verdurent.com,
+        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
+        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, kernel-team@android.com
+References: <20200116152032.11301-1-lukasz.luba@arm.com>
+ <20200116152032.11301-2-lukasz.luba@arm.com>
+ <20200117105437.GA211774@google.com>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <40587d98-0e8d-cbac-dbf5-d26501d47a8c@arm.com>
+Date:   Mon, 20 Jan 2020 14:52:07 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
+MIME-Version: 1.0
+In-Reply-To: <20200117105437.GA211774@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Let a vendor driver supply the maximum descriptor size that it
-can operate on. ADMA descriptor table would be allocated using this
-supplied size.
-If any SD Host controller is of version prior to v4.10 spec
-but supports 16byte descriptor, this change allows them to supply
-correct descriptor size for ADMA table allocation.
+Hi Quentin,
 
-Also let a vendor driver update the descriptor size by overriding
-sdhc_host->desc_size if it has to operates on a different descriptor
-sizes in different conditions.
+On 1/17/20 10:54 AM, Quentin Perret wrote:
+> Hey Lukasz,
+> 
+> Still reading through this, but with small changes, this looks pretty
+> good to me.
+> 
+> On Thursday 16 Jan 2020 at 15:20:29 (+0000), lukasz.luba@arm.com wrote:
+>> +int em_register_perf_domain(struct device *dev, unsigned int nr_states,
+>> +			struct em_data_callback *cb)
+>>   {
+>>   	unsigned long cap, prev_cap = 0;
+>>   	struct em_perf_domain *pd;
+>> -	int cpu, ret = 0;
+>> +	struct em_device *em_dev;
+>> +	cpumask_t *span = NULL;
+>> +	int cpu, ret;
+>>   
+>> -	if (!span || !nr_states || !cb)
+>> +	if (!dev || !nr_states || !cb || !cb->active_power)
+> 
+> Nit: you check !cb->active_power in em_create_pd() too I think, so only
+> one of the two is needed.
 
-Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
---
-Thanks Adrian.
+good point, thanks
 
-Hi Ulf,
-Can you pick this patch instead of earlier one? This is more clean
-change, sorry for the multiple interations.
-Otherwise let me know, I will make these changes as seperate patch.
----
- drivers/mmc/host/sdhci.c | 16 +++++++---------
- drivers/mmc/host/sdhci.h |  3 ++-
- 2 files changed, 9 insertions(+), 10 deletions(-)
+> 
+>>   		return -EINVAL;
+>>   
+>> -	/*
+>> -	 * Use a mutex to serialize the registration of performance domains and
+>> -	 * let the driver-defined callback functions sleep.
+>> -	 */
+>>   	mutex_lock(&em_pd_mutex);
+>>   
+>> -	for_each_cpu(cpu, span) {
+>> -		/* Make sure we don't register again an existing domain. */
+>> -		if (READ_ONCE(per_cpu(em_data, cpu))) {
+>> +	if (_is_cpu_device(dev)) {
+>> +		span = kzalloc(cpumask_size(), GFP_KERNEL);
+>> +		if (!span) {
+>> +			mutex_unlock(&em_pd_mutex);
+>> +			return -ENOMEM;
+>> +		}
+>> +
+>> +		ret = dev_pm_opp_get_sharing_cpus(dev, span);
+>> +		if (ret)
+>> +			goto free_cpumask;
+> 
+> That I think should be changed. This creates some dependency on PM_OPP
+> for the EM framework. And in fact, the reason we came up with PM_EM was
+> precisely to not depend on PM_OPP which was deemed too Arm-specific.
+> 
+> Suggested alternative: have two registration functions like so:
+> 
+> 	int em_register_dev_pd(struct device *dev, unsigned int nr_states,
+> 			       struct em_data_callback *cb);
+> 	int em_register_cpu_pd(cpumask_t *span, unsigned int nr_states,
+> 			       struct em_data_callback *cb);
 
-diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-index 3140fe2..7a7a18e 100644
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -3821,15 +3821,13 @@ int sdhci_setup_host(struct sdhci_host *host)
- 		dma_addr_t dma;
- 		void *buf;
- 
--		if (host->flags & SDHCI_USE_64_BIT_DMA) {
--			host->adma_table_sz = host->adma_table_cnt *
--					      SDHCI_ADMA2_64_DESC_SZ(host);
--			host->desc_sz = SDHCI_ADMA2_64_DESC_SZ(host);
--		} else {
--			host->adma_table_sz = host->adma_table_cnt *
--					      SDHCI_ADMA2_32_DESC_SZ;
--			host->desc_sz = SDHCI_ADMA2_32_DESC_SZ;
--		}
-+		if (!(host->flags & SDHCI_USE_64_BIT_DMA))
-+			host->alloc_desc_sz = SDHCI_ADMA2_32_DESC_SZ;
-+		else if (!host->alloc_desc_sz)
-+			host->alloc_desc_sz = SDHCI_ADMA2_64_DESC_SZ(host);
-+
-+		host->desc_sz = host->alloc_desc_sz;
-+		host->adma_table_sz = host->adma_table_cnt * host->desc_sz;
- 
- 		host->align_buffer_sz = SDHCI_MAX_SEGS * SDHCI_ADMA2_ALIGN;
- 		/*
-diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
-index 0ed3e0e..10bda3a 100644
---- a/drivers/mmc/host/sdhci.h
-+++ b/drivers/mmc/host/sdhci.h
-@@ -554,7 +554,8 @@ struct sdhci_host {
- 	dma_addr_t adma_addr;	/* Mapped ADMA descr. table */
- 	dma_addr_t align_addr;	/* Mapped bounce buffer */
- 
--	unsigned int desc_sz;	/* ADMA descriptor size */
-+	unsigned int desc_sz;	/* ADMA current descriptor size */
-+	unsigned int alloc_desc_sz;	/* ADMA descr. max size host supports */
- 
- 	struct workqueue_struct *complete_wq;	/* Request completion wq */
- 	struct work_struct	complete_work;	/* Request completion work */
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
+Interesting, in the internal review Dietmar asked me to remove these two
+functions. I had the same idea, which would simplify a bit the
+registration and it does not need to check the dev->bus if it is CPU.
+
+Unfortunately, we would need also two function in drivers/opp/of.c:
+dev_pm_opp_of_register_cpu_em(policy->cpus);
+and
+dev_pm_opp_of_register_dev_em(dev);
+
+Thus, I have created only one registration function, which you can see
+in this patch set.
+
+What do you think Dietmar?
+
+> 
+> where em_register_cpu_pd() does the CPU-specific work and then calls
+> em_register_dev_pd() (instead of having that big if (_is_cpu_device(dev))
+> as you currently have). Would that work ?
+
+Yes, I think you made a good point with this OPP dependency, which we
+could avoid when we implement these two registration functions.
+
+> 
+> Another possibility would be to query CPUFreq instead of PM_OPP to get
+> the mask, but I'd need to look again at the driver registration path in
+> CPUFreq to see if the policy masks have been populated when we enter
+> PM_EM ... I am not sure if this is the case, but it's worth having a
+> look too.
+
+The policy mask is populated, our registration function is called at
+the end of the init code of CPUfreq drivers. I will check this option.
+
+> 
+> Thanks,
+> Quentin
+> 
+
+Thank you for your comments.
+
+Regards,
+Lukasz
