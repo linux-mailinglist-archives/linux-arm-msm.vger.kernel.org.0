@@ -2,109 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C2C91445E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2020 21:26:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E7EF144613
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2020 21:49:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729049AbgAUU0t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jan 2020 15:26:49 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:34295 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729022AbgAUU0t (ORCPT
+        id S1728829AbgAUUte (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jan 2020 15:49:34 -0500
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:36303 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728682AbgAUUte (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jan 2020 15:26:49 -0500
-Received: by mail-ot1-f65.google.com with SMTP id a15so4223513otf.1;
-        Tue, 21 Jan 2020 12:26:48 -0800 (PST)
+        Tue, 21 Jan 2020 15:49:34 -0500
+Received: by mail-vs1-f67.google.com with SMTP id u14so2811077vsu.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2020 12:49:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=huthel+GYazN/w+4NQrVBhFyJ8fOofBu6y0OM4VOExE=;
-        b=PHdZxySBOGJu7nX6RrERvEBIImUuFC/XREChIwjJBVH6I3HeBwsIte6IjFrJ9ELLa1
-         Qg5xgcZjhbOF1bAOKsO7Zr707BmrE/UC6dye60kLEGB2AjjhtUwItD4ab1EF5u7dZkQH
-         C6KwCyaugo88wM1E0+V3xUQr6LocpLkh0DaAC6jRm0S/BzVb9J5CLpb68ZHuIK2h5Ho7
-         Ejg5fWMGFDypMLYYaXUQyGcwFz4eofDNZuHoNtAOPbGwXHSCwUqrrvVjblJaUPRxfLjj
-         N9fF7KNdh3zm3B0Qw4FGBokbMD/EgMI8kYr8A/0xw/kZsivJ0byKuSwul60o0coObFUI
-         aaSw==
+        bh=EBEGZV2vj1MH0BvdgXGZZpVTB7oeQn2dvK8l+QN95lQ=;
+        b=TMX1B8aJ0mdwyfWvhX3zw7IXUIZkSTpKbZyScUvStUxTx7Q9NKUZgT4sgEcmjjrk9P
+         2nWvtVgAI4y13hFYT0QIelOR0ot1cS9WHWuxz0H09Ufx1/J8l3vCTMoXRTejA2iZxByt
+         eTrt6dXm8H8h/06oBVvjTXLs7kgKY1Sdpq/Sk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=huthel+GYazN/w+4NQrVBhFyJ8fOofBu6y0OM4VOExE=;
-        b=eJsJ9s8cbigBVRgBtnfMi1GyV0JBQvmGGXVDLV7ld95uz16cKBVImvZq8Js84lHntX
-         fUjhULa9EIsVD16NGoWvBfdmGa8WPYrpB8o4k5ZgVi0SpTa+64LEIwRLxmsCpQ8/pITZ
-         CJIcZqoSiBjFhb3D2OKduZVU0aZ9KX5y334OHTgmeguOOYGnTg/ZJK4YdR/8E1xEvHPv
-         70Ql1LTWJzaPNLRhdsdxfeniZtfRlWmGT+Yo2Y0pHtetFnGUBzx4vFx409vBXKHoM4/Q
-         UXccYYZkwigff9BJ9FK5BtPk7KSpJhiQzJRLyGmCeo1txZa1zOPwZvePZ8/DM/Jtg7+C
-         dgZw==
-X-Gm-Message-State: APjAAAVIGlNTmPsaI7iWhE7PQU+oJSzxC+/No6c48ytzm6zd4a7vGrjD
-        XIKqfoOIsWhoRjQYPQsL9qXUEjLXrs1J+nHZvi+hgjTH
-X-Google-Smtp-Source: APXvYqxVkIScTalyju4KUbjWgD8VE3P18faAzgbh803zzoaKztEzIC61Wcs20g50NLKutuaplTw4pq6DW7NdAMgnvFU=
-X-Received: by 2002:a9d:6b03:: with SMTP id g3mr4900385otp.200.1579638408335;
- Tue, 21 Jan 2020 12:26:48 -0800 (PST)
+        bh=EBEGZV2vj1MH0BvdgXGZZpVTB7oeQn2dvK8l+QN95lQ=;
+        b=iNFbi392QO0llzxMJKLcOoyLfCLPI/QyTQQaR/Z8DtfksA543c0/pARK4Y/GyuKQyb
+         f8kNBUyViVeESlfYafpfXCoCVavlL7Y/XtLDl20ytNMzSXe7/OypLlezFCIyOD0wN2gd
+         GxNKSP7celUcYqNQZvRaFyBXPzKKjH2ZYQlFW1PGF+4FTt4hR5/oxL7BUc14BtbyKDcF
+         SIJQA4KlGsWpGBIH+f0PplDcDiUl+lraUYPTJcT0zrtJ0Xki1D6y8YhtgQUxM05720at
+         ibZ4nWgA1ne6R41TE/O3fWkHeH39R9ITuY9wWmmovFtzY7tVt0e1mZl8GtoTMhTQmOUR
+         jNuw==
+X-Gm-Message-State: APjAAAW2pQ2x0ddarFLALm/z9axzjrFvSKAwwpXTB4Lw+bbAsPZPruVk
+        TQXLcf+E5/j8nAda1ZoxjLrrg/aJ3p0=
+X-Google-Smtp-Source: APXvYqxcDbQDZ2ojf0AyGlPcWsHy0pg7pgjOcZEy+oGDz32DMnX1o5qX5DtKK5yvrmkz/7Ha2rrqnw==
+X-Received: by 2002:a67:6842:: with SMTP id d63mr476309vsc.171.1579639772778;
+        Tue, 21 Jan 2020 12:49:32 -0800 (PST)
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com. [209.85.217.54])
+        by smtp.gmail.com with ESMTPSA id k6sm9208813vsc.26.2020.01.21.12.49.31
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jan 2020 12:49:31 -0800 (PST)
+Received: by mail-vs1-f54.google.com with SMTP id u14so2811024vsu.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2020 12:49:31 -0800 (PST)
+X-Received: by 2002:a67:e342:: with SMTP id s2mr473558vsm.198.1579639771288;
+ Tue, 21 Jan 2020 12:49:31 -0800 (PST)
 MIME-Version: 1.0
-References: <20200113084005.849071-1-vkoul@kernel.org> <CANcMJZC1w+J=cdp0OiR5XDn9fFSPht70Jaf9F5S5BryFxVXVoQ@mail.gmail.com>
- <CAAd0S9Aaw8G+=EivfC-g4Lt3Xf_kpjFh6WwQk2E8pFxJUmteKQ@mail.gmail.com> <20200121064608.GA2841@vkoul-mobl>
-In-Reply-To: <20200121064608.GA2841@vkoul-mobl>
-From:   Christian Lamparter <chunkeey@gmail.com>
-Date:   Tue, 21 Jan 2020 21:26:34 +0100
-Message-ID: <CAAd0S9Dd7Ygx7TgV3E_A6z29efG7jsE1-xy48_cHotroWuk_ZA@mail.gmail.com>
-Subject: Re: [PATCH v6 0/5] usb: xhci: Add support for Renesas USB controllers
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
+References: <20200121171806.9933-1-swboyd@chromium.org>
+In-Reply-To: <20200121171806.9933-1-swboyd@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 21 Jan 2020 12:49:18 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=UAvQYemJonDhs3d700XYP7o5shgTwyMo1exzRCaapkXA@mail.gmail.com>
+Message-ID: <CAD=FV=UAvQYemJonDhs3d700XYP7o5shgTwyMo1exzRCaapkXA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845: Disable pwrkey on Cheza
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        USB list <linux-usb@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+Hi,
 
-On Tue, Jan 21, 2020 at 7:46 AM Vinod Koul <vkoul@kernel.org> wrote:
+On Tue, Jan 21, 2020 at 9:18 AM Stephen Boyd <swboyd@chromium.org> wrote:
 >
-> hey Christian,
+> We don't use the power key from the PMIC on Cheza. Disable this node so
+> that we don't probe the driver for this device.
 >
-> On 13-01-20, 21:33, Christian Lamparter wrote:
-> > On Mon, Jan 13, 2020 at 9:10 PM John Stultz <john.stultz@linaro.org> wrote:
-> > >
-> > > On Mon, Jan 13, 2020 at 12:42 AM Vinod Koul <vkoul@kernel.org> wrote:
-> > > >
-> > > > This series add support for Renesas USB controllers uPD720201 and uPD720202.
-> > > > These require firmware to be loaded and in case devices have ROM those can
-> > > > also be programmed if empty. If ROM is programmed, it runs from ROM as well.
-> > > >
-> > > > This includes two patches from Christian which supported these controllers
-> > > > w/o ROM and later my patches for ROM support and multiple firmware versions,
-> > > > debugfs hook for rom erase and export of xhci-pci functions.
-> > > >
-> > >
-> > > Thanks so much for updating these! They are working ok for me in my
-> > > testing on db845c.
-> > >
-> > > Tested-by: John Stultz <john.stultz@linaro.org>
-> >
-> > Nice! I'll definitely give this series another try on my WNDR4700 too
-> > (PowerPC Arch)
-> > this weekend.
-> >
-> > and from me: Thanks!
->
-> Did you get around to test these?
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/pm8998.dtsi       | 2 +-
+>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 4 ++++
+>  2 files changed, 5 insertions(+), 1 deletion(-)
 
-Not yet, I was too optimistic that I could get current linux-usb with the
-patches running on the WNDR4700 (due to APM82181) over the
-weekend. Do you think that It still counts, if I'm going with 5.4.11 on
-OpenWrt instead? Because then I just swap out the old patches from
-my OpenWrt APM821XX branch:
-<https://git.openwrt.org/?p=openwrt/staging/chunkeey.git;a=commit;h=4dd6f62a36a3724f0363d639cd9e29e04d7b62c0>
-
-and don't have to figure out what broke with linux-usb on the APM821xx.
-
-Cheers,
-Christian
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
