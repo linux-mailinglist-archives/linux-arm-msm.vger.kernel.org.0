@@ -2,65 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1305E1443C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2020 18:57:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FDC01443FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2020 19:04:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729261AbgAUR47 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jan 2020 12:56:59 -0500
-Received: from mail-lj1-f177.google.com ([209.85.208.177]:42710 "EHLO
-        mail-lj1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729081AbgAUR47 (ORCPT
+        id S1729134AbgAUSEi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jan 2020 13:04:38 -0500
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:38555 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728829AbgAUSEi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jan 2020 12:56:59 -0500
-Received: by mail-lj1-f177.google.com with SMTP id y4so3747503ljj.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2020 09:56:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=Dtjxy4V8iMdKsTS3omab5QTxeR6ImV0PnIjkiqN86Ns=;
-        b=YUVpfkhwgb76WoKE91HN0MgJTuTW+QE9y8oHcsLTo8H9A8D0gLTJNOQbuRVnKYgo/T
-         wZd1bo7UMykZtlcP+CNh0QSWaLWZO81MbfRGCFcb/I7aU/3aKmRkXPwZu/Mq6cpa9cl2
-         qHE2p8b5ceL+pcYeAxCMkL+f7NqomU1oXrsXR77dGvd2dcwm5vUPQ87K6eFdr/j6ymZ6
-         1dqAQgYzRwynfiIBpPYqQz7Tlg8oTdUeWNmuWzRCo19Jn3qDz2r6Lj8+McBQdxKC6G5l
-         NLnlFd3QA0vVVN4C78yxB3mE9wI/w3chQZ8etMJ7yOYflwaI/frpuaSWReb8UXASMqk4
-         CaHA==
+        Tue, 21 Jan 2020 13:04:38 -0500
+Received: by mail-oi1-f194.google.com with SMTP id l9so3444652oii.5;
+        Tue, 21 Jan 2020 10:04:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=Dtjxy4V8iMdKsTS3omab5QTxeR6ImV0PnIjkiqN86Ns=;
-        b=MR781s7yUUfWnZtTbyJgMqQwJMVnU0TJST53os/eVXw2UK3c+WT7hIYgFVZeAjWrvE
-         BlywpyjHP67Mmhx1CJk68m/SuxfhAfIELjINwE+eD9eURTpM0OraFCxMVhjIwgi79JFq
-         n1GmEL1KZnuOC9uXKC9D1jsA7VpXb5vAAaqKe+LqAxX0HodYkhrrGt51KS9mYW6gYddj
-         Uob0LfV4ss/wDNo3+bfUIfzMfVyaGjiPrkv/vS/nhE3gONgLPIgPIRxnAxy1/u8froPB
-         nL4JjwYuwGi2CKJS2Ivew20nP5wSQ8X5CXUJgDBsKwgbn9f1Uqqb0p/jaoVW61ReGjY4
-         LGAA==
-X-Gm-Message-State: APjAAAX6BvGdrPqo83IhBTc/GX124ufCGqWac8GsYbC88xc2pyb9gma5
-        KIQPsKgxpaYTTYELdaDiSrZaFo10u4wI5SAF7CU=
-X-Google-Smtp-Source: APXvYqxSv5i0WMPayQ77EYLZgOuJdR/XSWZ0Zpf13WpaGfVP94kf5S4rOxJEj6zrbZYuwrc13dZ1G31JXPhJSO1VtnA=
-X-Received: by 2002:a2e:7e05:: with SMTP id z5mr15778225ljc.99.1579629417352;
- Tue, 21 Jan 2020 09:56:57 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5AOc1fVDSObIakXLqV48NhVm6z9cVbBEAMQpRuKiW50=;
+        b=mu0BSfSIm7zEE2Lc55hQxXG3Q60EEz3iM4Kxy5Vij9LAMf9KOBcfld2nlbTCheKGJA
+         x3yRkM44/ifHS1F0nr+EagFu9nINrVltIcNpcLdRvTtQkI1CZa35BpV9BvIfxHCMemJ8
+         yDE9AMdfMIiCR00geQZ3oW97FPQyS//AyNkc7+IRWU5tHbcoX73/jTaJmcTfE3G08u87
+         cPOkcBVsM/DSfLMm17DK3hfxP4AkpbteHWLPN5xlm2Ifz+2vcAtUH1mYvC5SITTX+aA/
+         A/k09na8six6Ieu4khiLvakNwAJNvAAWFcAdA2KG8XNkDRrpCCzrVPuNaKScI3r0yFUj
+         Rm2Q==
+X-Gm-Message-State: APjAAAXm4WEXWtk2Ez307aVqq59/XhZMEpoyQvi0zOqF4f6da7yKkLcW
+        YkZ2md0JAnxfqyCAAA1hSF10zTI=
+X-Google-Smtp-Source: APXvYqxJ2H+vZyDN3gmn4pC4D+ZcrNIsyxhR4/L25BmvN4Dqt/xngylC9DS3CsGIERCxiizPEYHg3w==
+X-Received: by 2002:aca:503:: with SMTP id 3mr3791581oif.24.1579629877653;
+        Tue, 21 Jan 2020 10:04:37 -0800 (PST)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id l17sm6793267otj.21.2020.01.21.10.04.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jan 2020 10:04:37 -0800 (PST)
+Received: (nullmailer pid 7135 invoked by uid 1000);
+        Tue, 21 Jan 2020 18:04:36 -0000
+Date:   Tue, 21 Jan 2020 12:04:36 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        gregkh@linuxfoundation.org, jackp@codeaurora.org, balbi@kernel.org,
+        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
+        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v2 04/19] dt-bindings: Add Qualcomm USB SuperSpeed PHY
+ bindings
+Message-ID: <20200121180436.GA6701@bogus>
+References: <20200120163116.1197682-1-bryan.odonoghue@linaro.org>
+ <20200120163116.1197682-5-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-Received: by 2002:a05:651c:200f:0:0:0:0 with HTTP; Tue, 21 Jan 2020 09:56:54
- -0800 (PST)
-Reply-To: rita56j@gmail.com
-From:   Rita Johnson <rtita2johnson@gmail.com>
-Date:   Tue, 21 Jan 2020 18:56:54 +0100
-Message-ID: <CAG9ib+DaqAY4SN7dYyTKgCqNbDvTmquSp5WcCvW-vnTC5DLwzQ@mail.gmail.com>
-Subject: Dear beloved,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200120163116.1197682-5-bryan.odonoghue@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
--- 
-Hello
-My name is Mrs Rita Johnson,I want to donate my fund USd $8.6m to you
-on charity name to help the poor people.As soon as i read from you i
-will give more details on how to achieve this goal and get this fund
-transfer to your bank account.
+On Mon, 20 Jan 2020 16:31:01 +0000, Bryan O'Donoghue wrote:
+> From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> 
+> Binding description for Qualcomm's Synopsys 1.0.0 SuperSpeed phy
+> controller embedded in QCS404.
+> 
+> Based on Sriharsha Allenki's <sallenki@codeaurora.org> original
+> definitions.
+> 
+> [bod: converted to yaml format]
+> 
+> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+> Cc: Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Mark Rutland <mark.rutland@arm.com>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  .../devicetree/bindings/phy/qcom,usb-ss.yaml  | 75 +++++++++++++++++++
+>  1 file changed, 75 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-ss.yaml
+> 
 
-Regards
-Mrs Rita Johnson
+My bot found errors running 'make dt_binding_check' on your patch:
+
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,usb-ss.example.dt.yaml: usb3-phy@78000: clock-names:2: 'sleep' was expected
+
+See https://patchwork.ozlabs.org/patch/1226060
+Please check and re-submit.
