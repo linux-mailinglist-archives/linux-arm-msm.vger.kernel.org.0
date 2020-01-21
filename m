@@ -2,250 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 19348144822
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 00:16:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AEB614483D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 00:26:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725933AbgAUXQU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jan 2020 18:16:20 -0500
-Received: from mail-pf1-f174.google.com ([209.85.210.174]:34766 "EHLO
-        mail-pf1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727847AbgAUXQT (ORCPT
+        id S1725933AbgAUX0B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jan 2020 18:26:01 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:40680 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726407AbgAUX0B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jan 2020 18:16:19 -0500
-Received: by mail-pf1-f174.google.com with SMTP id i6so2293301pfc.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2020 15:16:19 -0800 (PST)
+        Tue, 21 Jan 2020 18:26:01 -0500
+Received: by mail-pg1-f194.google.com with SMTP id k25so2363001pgt.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2020 15:26:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:from:cc:subject:to:user-agent:date;
-        bh=gk/+cR1Uh1x2DHe/9AsJJHsSZHNN3UqDGvYH0Xb+zh8=;
-        b=O79JN3kfznrn5eDqAjPiKLeDDyICkKbjMMxe1z4CkxRlkDvUL25WwtzsL8ATud3/0S
-         vIkxXjbW39ptw0hpyird4o0jXonSy2LL5ov8w4SvjmdmvVKMK3OEfiUeikilFqXoamkO
-         A8UZj9KyXGoRqivE5Z0YbU+yLPIi0wgQyo89E=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fya0ETVWBsK5/pHiMBVCMTG0c4UO4fQFq/uw5FrlvKc=;
+        b=Gp5wngKjd2Dgmx6PzdIbrPwECnkAIVJNxGqMuUZzr0rEYmuit8y4Ot3ttQpAgp6Qu9
+         Y+8x+QpVRIjrcp+dLI7QD1Q2c+d26pgEFtZDDWI9hmaiADhtbThpYjB+9sOW1dZRNHfr
+         GCpZ+g0VIXXuBQVaqRK4xqCvhSkOZDkyGzqwo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:from:cc:subject:to
-         :user-agent:date;
-        bh=gk/+cR1Uh1x2DHe/9AsJJHsSZHNN3UqDGvYH0Xb+zh8=;
-        b=K6On29OqPwxXgbTgvO/sf8BlwtTtrKo0nefbTJJaPi3qnp67bXU4/oTKFZVclTdVGM
-         ipV11bltQwoNKPUJtthbfD//hPCIoEgOK4H2/TICSmU9+4h89hth5kmyaD+oJcVQOd9j
-         GZIkqx+nhNL6bgzOxKsOEvJGz65sxOrmAnRLTXfQHts9AZRwXa4Hpfk+fmkeZjyZ2c8M
-         AYt5DCzAH86LPakia5t0zqbZaziIygxIJctRZ0/AUizV1R0oPFwmaVnt0V2YenhbMh4F
-         SlzbWX11i4qrLmNTAojxyaF8rsIfXqeCl9PwrnLA3qhJGF9caPY2eeavdidKOnJv725F
-         keyw==
-X-Gm-Message-State: APjAAAXOmMQ6ahYFLrMd8VHBhLvQ/X5yzHQ8P0jPDp4ZCKxG7hFObRme
-        3ByK0m/CN2jMJvpq/5Vam4Vy0Q==
-X-Google-Smtp-Source: APXvYqzc5YyY9m9Z4aytEaUg9NesrLmumCIMVJQdqT2tTi4c8P468lTNoYuY+PzXEggedpkJhGWNrQ==
-X-Received: by 2002:a63:d66:: with SMTP id 38mr7812028pgn.233.1579648578855;
-        Tue, 21 Jan 2020 15:16:18 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id u20sm41961955pgf.29.2020.01.21.15.16.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jan 2020 15:16:18 -0800 (PST)
-Message-ID: <5e278642.1c69fb81.5a8db.80b4@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fya0ETVWBsK5/pHiMBVCMTG0c4UO4fQFq/uw5FrlvKc=;
+        b=oc9986KjhNNh8hYVaFCCdJp4DsFghHRwGvEDnPQ7tolyLlzyAGeGjkl5zMRTu0hy0x
+         m0KkJfUsEfLjyA+84gyyBLpl4+mg7lN9vIavhexkjdkcU2xjr/cP6nwRB43Uuyo8c6DZ
+         D1jeqZe6KvV3AKMBJUlBySGuZaSunnbOV64y0tMU2J84kDHWDnPU7nRlpeiv0KD2ABT4
+         bIDbe8oUpEt4yiP1gP2yhW4ONgKl1teLLwUQjGJJq8SKENYz5WXZkWBhWOGWSaERLC4+
+         Zy0Popd2k/LwDsXmsflzpE5i+uVmWRbv4JFPkhDu09g3A+aVeXCNngNC3ObQ9YsdbK3A
+         Am5A==
+X-Gm-Message-State: APjAAAVcFtrKGFW2rUOdrSvuwIYMS0oTaDiNcBoj5aSezJ3Ja6+oX7Eo
+        fwyYr873AHAWpAHxBjeDYDUJ/A==
+X-Google-Smtp-Source: APXvYqz3gfa3kyqLCQlJ5AYjH73VwhxuTnQbPEn6gYN0WLEi7728RPbNIzLfMAiZi11SXMIUjQjs0w==
+X-Received: by 2002:a62:e40e:: with SMTP id r14mr6686924pfh.115.1579649160249;
+        Tue, 21 Jan 2020 15:26:00 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id 7sm45548660pfx.52.2020.01.21.15.25.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jan 2020 15:25:59 -0800 (PST)
+Date:   Tue, 21 Jan 2020 15:25:58 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+Cc:     ulf.hansson@linaro.org, adrian.hunter@intel.com,
+        asutoshd@codeaurora.org, stummala@codeaurora.org,
+        vbadigan@codeaurora.org, sayalil@codeaurora.org,
+        cang@codeaurora.org, rampraka@codeaurora.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Subject: Re: [PATCH V1] mmc: sdhci-msm: Add system suspend/resume callbacks
+Message-ID: <20200121232558.GV89495@google.com>
+References: <1579617022-13031-1-git-send-email-sbhanu@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1579621928-18619-1-git-send-email-harigovi@codeaurora.org>
-References: <1579621928-18619-1-git-send-email-harigovi@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Harigovindan P <harigovi@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        kalyan_t@codeaurora.org, nganji@codeaurora.org
-Subject: Re: [v1] arm64: dts: sc7180: add display dt nodes
-To:     Harigovindan P <harigovi@codeaurora.org>,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-User-Agent: alot/0.8.1
-Date:   Tue, 21 Jan 2020 15:16:17 -0800
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1579617022-13031-1-git-send-email-sbhanu@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Harigovindan P (2020-01-21 07:52:08)
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/q=
-com/sc7180.dtsi
-> old mode 100644
-> new mode 100755
-> index 8011c5f..963f5c1
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -1151,6 +1151,131 @@
->                         };
->                 };
-> =20
-> +               mdss: mdss@ae00000 {
+Hi Shaik,
 
-Is there a better node name for this? display-subsystem perhaps?
+On Tue, Jan 21, 2020 at 08:00:22PM +0530, Shaik Sajida Bhanu wrote:
+> Add system suspend/resume callbacks to sdhci-msm platform driver.
+> 
+> Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 47 ++++++++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 45 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 71f29ba..4984857 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -2028,9 +2028,52 @@ static __maybe_unused int sdhci_msm_runtime_resume(struct device *dev)
+>  	return 0;
+>  }
+>  
+> +static int sdhci_msm_suspend(struct device *dev)
+> +{
+> +	struct sdhci_host *host = dev_get_drvdata(dev);
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +	int ret = 0;
 
-> +                       compatible =3D "qcom,sc7180-mdss";
-> +                       reg =3D <0 0x0ae00000 0 0x1000>;
-> +                       reg-names =3D "mdss";
-> +
-> +                       power-domains =3D <&dispcc MDSS_GDSC>;
-> +
-> +                       clocks =3D <&gcc GCC_DISP_AHB_CLK>,
-> +                                <&gcc GCC_DISP_HF_AXI_CLK>,
-> +                                <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> +                       clock-names =3D "iface", "gcc_bus", "core";
-> +
-> +                       assigned-clocks =3D <&dispcc DISP_CC_MDSS_MDP_CLK=
->;
-> +                       assigned-clock-rates =3D <300000000>;
-> +
-> +                       interrupts =3D <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-> +                       interrupt-controller;
-> +                       #interrupt-cells =3D <1>;
-> +
-> +                       iommus =3D <&apps_smmu 0x800 0x2>;
-> +
-> +                       #address-cells =3D <2>;
-> +                       #size-cells =3D <2>;
-> +                       ranges;
-> +
-> +                       mdss_mdp: mdp@ae01000 {
-
-Is there a better node name for this? display-controller perhaps? Also,
-first reg property is supposed to be the one after the @ sign. In this
-case that would be ae00000.
-
-> +                               compatible =3D "qcom,sc7180-dpu";
-> +                               reg =3D <0 0x0ae00000 0 0x1000>,
-> +                                     <0 0x0ae01000 0 0x8f000>,
-> +                                     <0 0x0aeb0000 0 0x2008>,
-> +                                     <0 0x0af03000 0 0x16>;
-> +                               reg-names =3D "mdss","mdp", "vbif", "disp=
-_cc";
-
-                                                    ^
-Nitpick: Add a space here after the comma.
+initialization is not needed.
 
 > +
-> +                               clocks =3D <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_ROT_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_MDP_LUT_CL=
-K>,
-> +                                        <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> +                               clock-names =3D "iface", "rot", "lut", "c=
-ore",
-> +                                               "vsync";
+> +	if (host->mmc->caps2 & MMC_CAP2_CQE) {
+> +		ret = cqhci_suspend(host->mmc);
+> +		if (ret)
+> +			return ret;
+> +	}
+> +
+> +	disable_irq(msm_host->pwr_irq);
+> +	ret = sdhci_suspend_host(host);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return sdhci_msm_runtime_suspend(dev);
+> +}
+> +
+> +static int sdhci_msm_resume(struct device *dev)
+> +{
+> +	struct sdhci_host *host = dev_get_drvdata(dev);
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +	int ret = 0;
 
-Nitpick: Tabbing seems weird here. The clocks property is aligned but
-not the clock-names.
+initialization is not needed.
 
-> +                               assigned-clocks =3D <&dispcc DISP_CC_MDSS=
-_MDP_CLK>,
-> +                                                 <&dispcc DISP_CC_MDSS_V=
-SYNC_CLK>;
-> +                               assigned-clock-rates =3D <300000000>,
-> +                                                      <19200000>;
+> +	ret = sdhci_msm_runtime_resume(dev);
+> +	if (ret)
+> +		return ret;
 > +
-> +                               interrupt-parent =3D <&mdss>;
-> +                               interrupts =3D <0 IRQ_TYPE_LEVEL_HIGH>;
+> +	ret = sdhci_resume_host(host);
+> +	if (ret < 0)
+> +		return ret;
+> +	enable_irq(msm_host->pwr_irq);
 > +
-> +                               ports {
-> +                                       #address-cells =3D <1>;
-> +                                       #size-cells =3D <0>;
+> +	if (host->mmc->caps2 & MMC_CAP2_CQE)
+> +		ret = cqhci_resume(host->mmc);
 > +
-> +                                       port@0 {
-> +                                               reg =3D <0>;
-> +                                               dpu_intf1_out: endpoint {
-> +                                                       remote-endpoint =
-=3D <&dsi0_in>;
-> +                                               };
-> +                                       };
-> +                               };
-> +                       };
+> +	return ret;
+> +}
 > +
-> +                       dsi0: qcom,mdss_dsi_ctrl0@ae94000 {
-
-Is there a better node name for this? dsi-controller perhaps?
-
-> +                               compatible =3D "qcom,mdss-dsi-ctrl";
-> +                               reg =3D <0 0x0ae94000 0 0x400>;
-> +                               reg-names =3D "dsi_ctrl";
-> +
-> +                               interrupt-parent =3D <&mdss>;
-> +                               interrupts =3D <4 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +                               clocks =3D <&dispcc DISP_CC_MDSS_BYTE0_CL=
-K>,
-> +                                       <&dispcc DISP_CC_MDSS_BYTE0_INTF_=
-CLK>,
-> +                                       <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
-> +                                       <&dispcc DISP_CC_MDSS_ESC0_CLK>,
-> +                                       <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                                       <&gcc GCC_DISP_HF_AXI_CLK>;
-> +                               clock-names =3D "byte",
-> +                                              "byte_intf",
-> +                                              "pixel",
-> +                                              "core",
-> +                                              "iface",
-> +                                              "bus";
-
-Nitpick: Tabbing is all of here too.
-
-> +
-> +                               phys =3D <&dsi0_phy>;
-> +                               phy-names =3D "dsi";
-> +
-> +                               #address-cells =3D <1>;
-> +                               #size-cells =3D <0>;
-> +
-> +                               ports {
-> +                                       #address-cells =3D <1>;
-> +                                       #size-cells =3D <0>;
-> +
-> +                                       port@0 {
-> +                                               reg =3D <0>;
-> +                                               dsi0_in: endpoint {
-> +                                                       remote-endpoint =
-=3D <&dpu_intf1_out>;
-> +                                               };
-> +                                       };
-> +
-> +                                       port@1 {
-> +                                               reg =3D <1>;
-> +                                               dsi0_out: endpoint {
-> +                                               };
-> +                                       };
-> +                               };
-> +                       };
-> +
-> +                       dsi0_phy: dsi-phy0@ae94400 {
-
-Just call it 'dsi-phy' or 'phy' please. The address differentiates it and
-the phandle can call it 0.
-
-> +                               compatible =3D "qcom,dsi-phy-10nm";
-> +                               reg =3D <0 0x0ae94400 0 0x200>,
-> +                                     <0 0x0ae94600 0 0x280>,
-> +                                     <0 0x0ae94a00 0 0x1e0>;
-> +                               reg-names =3D "dsi_phy",
-> +                                           "dsi_phy_lane",
-> +                                           "dsi_pll";
-> +
-> +                               #clock-cells =3D <1>;
-> +                               #phy-cells =3D <0>;
-> +
-> +                               clocks =3D <&dispcc DISP_CC_MDSS_AHB_CLK>;
-
-Do you need the XO or reference clk here too? So that the PLL can generate =
-a clk with
-the reference clk?
-
-> +                               clock-names =3D "iface";
-> +
-
-Nitpick: Why the extra newline? Please remove.
-
-> +                       };
-> +               };
-> +
->                 pdc: interrupt-controller@b220000 {
->                         compatible =3D "qcom,sc7180-pdc", "qcom,pdc";
->                         reg =3D <0 0x0b220000 0 0x30000>;
+>  static const struct dev_pm_ops sdhci_msm_pm_ops = {
+> -	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+> -				pm_runtime_force_resume)
+> +	SET_SYSTEM_SLEEP_PM_OPS(sdhci_msm_suspend,
+> +				sdhci_msm_resume)
+>  	SET_RUNTIME_PM_OPS(sdhci_msm_runtime_suspend,
+>  			   sdhci_msm_runtime_resume,
+>  			   NULL)
