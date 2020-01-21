@@ -2,69 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A67A143FE9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2020 15:47:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 97DBD144101
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2020 16:53:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727255AbgAUOrs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jan 2020 09:47:48 -0500
-Received: from foss.arm.com ([217.140.110.172]:44246 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726968AbgAUOrr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jan 2020 09:47:47 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4EECE30E;
-        Tue, 21 Jan 2020 06:47:47 -0800 (PST)
-Received: from [10.1.196.37] (e121345-lin.cambridge.arm.com [10.1.196.37])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5EBF93F52E;
-        Tue, 21 Jan 2020 06:47:46 -0800 (PST)
-Subject: Re: [PATCH v3 2/5] iommu/arm-smmu: Add support for split pagetables
-To:     Jordan Crouse <jcrouse@codeaurora.org>,
-        iommu@lists.linux-foundation.org
-Cc:     will@kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Joerg Roedel <joro@8bytes.org>
-References: <1576514271-15687-1-git-send-email-jcrouse@codeaurora.org>
- <1576514271-15687-3-git-send-email-jcrouse@codeaurora.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <03d68ca6-254d-227f-e428-b85f6f4d7981@arm.com>
-Date:   Tue, 21 Jan 2020 14:47:44 +0000
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <1576514271-15687-3-git-send-email-jcrouse@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+        id S1729043AbgAUPwf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jan 2020 10:52:35 -0500
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:65260 "EHLO
+        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728186AbgAUPwf (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Jan 2020 10:52:35 -0500
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Jan 2020 21:22:32 +0530
+Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 21 Jan 2020 21:22:12 +0530
+Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
+        id 5306B2762; Tue, 21 Jan 2020 21:22:11 +0530 (IST)
+From:   Harigovindan P <harigovi@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Harigovindan P <harigovi@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        kalyan_t@codeaurora.org, nganji@codeaurora.org
+Subject: [v1] arm64: dts: sc7180: add display dt nodes
+Date:   Tue, 21 Jan 2020 21:22:08 +0530
+Message-Id: <1579621928-18619-1-git-send-email-harigovi@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Oh, one more thing...
+Add display, DSI hardware DT nodes for sc7180.
 
-On 16/12/2019 4:37 pm, Jordan Crouse wrote:
-[...]
-> @@ -651,6 +659,7 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
->   	enum io_pgtable_fmt fmt;
->   	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
->   	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
-> +	u32 quirks = 0;
->   
->   	mutex_lock(&smmu_domain->init_mutex);
->   	if (smmu_domain->smmu)
-> @@ -719,6 +728,8 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
->   		oas = smmu->ipa_size;
->   		if (cfg->fmt == ARM_SMMU_CTX_FMT_AARCH64) {
->   			fmt = ARM_64_LPAE_S1;
-> +			if (smmu_domain->split_pagetables)
-> +				quirks |= IO_PGTABLE_QUIRK_ARM_TTBR1;
+Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+---
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 125 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 125 insertions(+)
+ mode change 100644 => 100755 arch/arm64/boot/dts/qcom/sc7180.dtsi
 
-To avoid me forgetting and questioning it again in future, I'd recommend 
-sticking a comment somewhere near here that we don't reduce cfg->ias in 
-this case because we're currently assuming SEP_UPSTREAM.
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+old mode 100644
+new mode 100755
+index 8011c5f..963f5c1
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -1151,6 +1151,131 @@
+ 			};
+ 		};
+ 
++		mdss: mdss@ae00000 {
++			compatible = "qcom,sc7180-mdss";
++			reg = <0 0x0ae00000 0 0x1000>;
++			reg-names = "mdss";
++
++			power-domains = <&dispcc MDSS_GDSC>;
++
++			clocks = <&gcc GCC_DISP_AHB_CLK>,
++				 <&gcc GCC_DISP_HF_AXI_CLK>,
++				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
++			clock-names = "iface", "gcc_bus", "core";
++
++			assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
++			assigned-clock-rates = <300000000>;
++
++			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-controller;
++			#interrupt-cells = <1>;
++
++			iommus = <&apps_smmu 0x800 0x2>;
++
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++
++			mdss_mdp: mdp@ae01000 {
++				compatible = "qcom,sc7180-dpu";
++				reg = <0 0x0ae00000 0 0x1000>,
++				      <0 0x0ae01000 0 0x8f000>,
++				      <0 0x0aeb0000 0 0x2008>,
++				      <0 0x0af03000 0 0x16>;
++				reg-names = "mdss","mdp", "vbif", "disp_cc";
++
++				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&dispcc DISP_CC_MDSS_ROT_CLK>,
++					 <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
++					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
++					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++				clock-names = "iface", "rot", "lut", "core",
++						"vsync";
++				assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
++						  <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++				assigned-clock-rates = <300000000>,
++						       <19200000>;
++
++				interrupt-parent = <&mdss>;
++				interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++						dpu_intf1_out: endpoint {
++							remote-endpoint = <&dsi0_in>;
++						};
++					};
++				};
++			};
++
++			dsi0: qcom,mdss_dsi_ctrl0@ae94000 {
++				compatible = "qcom,mdss-dsi-ctrl";
++				reg = <0 0x0ae94000 0 0x400>;
++				reg-names = "dsi_ctrl";
++
++				interrupt-parent = <&mdss>;
++				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
++
++				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
++					<&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
++					<&dispcc DISP_CC_MDSS_PCLK0_CLK>,
++					<&dispcc DISP_CC_MDSS_ESC0_CLK>,
++					<&dispcc DISP_CC_MDSS_AHB_CLK>,
++					<&gcc GCC_DISP_HF_AXI_CLK>;
++				clock-names = "byte",
++                                              "byte_intf",
++                                              "pixel",
++                                              "core",
++                                              "iface",
++                                              "bus";
++
++				phys = <&dsi0_phy>;
++				phy-names = "dsi";
++
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++						dsi0_in: endpoint {
++							remote-endpoint = <&dpu_intf1_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++						dsi0_out: endpoint {
++						};
++					};
++				};
++			};
++
++			dsi0_phy: dsi-phy0@ae94400 {
++				compatible = "qcom,dsi-phy-10nm";
++				reg = <0 0x0ae94400 0 0x200>,
++				      <0 0x0ae94600 0 0x280>,
++				      <0 0x0ae94a00 0 0x1e0>;
++				reg-names = "dsi_phy",
++					    "dsi_phy_lane",
++					    "dsi_pll";
++
++				#clock-cells = <1>;
++				#phy-cells = <0>;
++
++				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>;
++				clock-names = "iface";
++
++			};
++		};
++
+ 		pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,sc7180-pdc", "qcom,pdc";
+ 			reg = <0 0x0b220000 0 0x30000>;
+-- 
+2.7.4
 
-Robin.
-
->   		} else if (cfg->fmt == ARM_SMMU_CTX_FMT_AARCH32_L) {
->   			fmt = ARM_32_LPAE_S1;
->   			ias = min(ias, 32UL);
