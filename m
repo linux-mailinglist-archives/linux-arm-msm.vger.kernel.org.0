@@ -2,94 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DCA8F14446C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2020 19:38:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94FED1444A5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2020 19:55:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729261AbgAUSis (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jan 2020 13:38:48 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:45070 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729081AbgAUSis (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jan 2020 13:38:48 -0500
-Received: by mail-pl1-f193.google.com with SMTP id b22so1689366pls.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2020 10:38:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:subject:cc:to:from:user-agent:date;
-        bh=WxV6dyVTVKbwDTmHI1PEXvBt0/vhMfR4VpCjB4pvFvc=;
-        b=lZ+0PgQlkA83kPsDqHEx2g3dps1viqHOORC844RNZ+tHapd3BQc+nmgo4t8nSae01E
-         xDpqcE2e1iX2owmIN7FWLTcTYZu0/l3O0xpT/YopxdT2mWlNypPECQspMPm9KU2drTTu
-         mp71fiR7tsMS/3H97dHAyUorzIKI3EwsmTZJA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:subject:cc:to:from
-         :user-agent:date;
-        bh=WxV6dyVTVKbwDTmHI1PEXvBt0/vhMfR4VpCjB4pvFvc=;
-        b=m8WK2KqDJ2s38XIUetW/IBLH12eAak0a+H7kfIq5rxjLAJ7q1Sun/0JnW8ph2e8F8h
-         jxeT0/8GB2JlabrHiiXGb8+yx2WPpNPlbM2uE0DPh7v/qk6Zm41BLJZWHPhD9hCC/5Ot
-         hvdJqJBdbUn3fjeEIhxjJC3h7ha02jY5fOs9+L8OSwBEbBrhWntJ2QWKPCgDsEyqFcUW
-         oqSeVJyus/KKetgfKQaSz3/2UdxzJkJ9RrKMZ+0xPUZBsJVBmARc1nKUV9xcBXb2SPAG
-         cEJcdqKQjD8V0+ZmCW7kJGaSl5bmGIHVLI0M5eOedF5SHZTXZ+BD54E/4as/YPhozEXR
-         DFZQ==
-X-Gm-Message-State: APjAAAU5PDJW3lMyfg+CrDfB/0/bQECy7iW3HBt4axHc6X7W8QDzhDfJ
-        YX50uAu+iJzzKF/tMeNIwNnRMSBkok0RXQ==
-X-Google-Smtp-Source: APXvYqxWT3/UBuZQoVoxdqELNaCNFWPct/1TYX2wzaBljeyZhH2i9hUMGIUjJWCMLn58ARqKvTTnOw==
-X-Received: by 2002:a17:90a:e2ce:: with SMTP id fr14mr6675221pjb.99.1579631927609;
-        Tue, 21 Jan 2020 10:38:47 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id i3sm45853513pfo.72.2020.01.21.10.38.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jan 2020 10:38:47 -0800 (PST)
-Message-ID: <5e274537.1c69fb81.a77e7.08fd@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        id S1729099AbgAUSzE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jan 2020 13:55:04 -0500
+Received: from foss.arm.com ([217.140.110.172]:47514 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729080AbgAUSzD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Jan 2020 13:55:03 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5481D1FB;
+        Tue, 21 Jan 2020 10:55:03 -0800 (PST)
+Received: from [10.1.196.37] (e121345-lin.cambridge.arm.com [10.1.196.37])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5A2343F6C4;
+        Tue, 21 Jan 2020 10:55:02 -0800 (PST)
+Subject: Re: [PATCH v3 2/5] iommu/arm-smmu: Add support for split pagetables
+To:     iommu@lists.linux-foundation.org, will@kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Joerg Roedel <joro@8bytes.org>
+References: <1576514271-15687-1-git-send-email-jcrouse@codeaurora.org>
+ <1576514271-15687-3-git-send-email-jcrouse@codeaurora.org>
+ <a38fe02a-4f84-f032-8c9d-4ecf72a87a55@arm.com>
+ <20200121171127.GA5025@jcrouse1-lnx.qualcomm.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <0bd9df86-887b-ce94-432e-0cc7fb7cc897@arm.com>
+Date:   Tue, 21 Jan 2020 18:54:59 +0000
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200121183519.GP1511@yoga>
-References: <20200121180950.36959-1-swboyd@chromium.org> <20200121183519.GP1511@yoga>
-Subject: Re: [PATCH] pinctrl: qcom: Don't lock around irq_set_irq_wake()
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.8.1
-Date:   Tue, 21 Jan 2020 10:38:46 -0800
+In-Reply-To: <20200121171127.GA5025@jcrouse1-lnx.qualcomm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2020-01-21 10:35:19)
-> On Tue 21 Jan 10:09 PST 2020, Stephen Boyd wrote:
->=20
-> >   __vfs_write+0x54/0x18c
-> >   vfs_write+0xe4/0x1a4
-> >   ksys_write+0x7c/0xe4
-> >   __arm64_sys_write+0x20/0x2c
-> >   el0_svc_common+0xa8/0x160
-> >   el0_svc_handler+0x7c/0x98
-> >   el0_svc+0x8/0xc
-> >=20
-> > Fixes: f365be092572 ("pinctrl: Add Qualcomm TLMM driver")
->=20
-> This lock used to protect the wake_irqs bitmap, and although your change
-> indicates that the locking was wrong before this point I think the fixes
-> should be:
->=20
-> Fixes: 6aced33f4974 ("pinctrl: msm: drop wake_irqs bitmap")
->=20
->=20
-> Either way, the patch looks good.
->=20
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->=20
+On 21/01/2020 5:11 pm, Jordan Crouse wrote:
+[...]
+>> I'm looking at iommu_aux_attach_device() and friends, and it appears pretty
+>> achievable to hook that up in a workable manner, even if it's just routed
+>> straight through to the impl to only work within qcom-specific parameters to
+>> begin with. I figure the first aux_attach_dev sanity-checks that the main
+>> domain is using TTBR1 with a compatible split, sets TTBR0 and updates the
+>> merged TCR value at that point. For subsequent calls it shouldn't need to do
+>> much more than sanity-check that a new aux domain has the same parameters as
+>> the existing one(s) (and again, such checks could potentially even start out
+>> as just "this is OK by construction" comments). I guess we'd probably want a
+>> count of the number of 'live' aux domains so we can simply disable TTBR0 on
+>> the final aux_detach_dev without having to keep detailed track of whatever
+>> the GPU has actually context switched in the hardware. Can you see any holes
+>> in that idea?
+> 
+> Let me repeat this back just to be sure we're on the same page. When the quirk
+> is enabled on the primary domain, we'll set up TTBR1 and leave TTBR0 disabled.
+> Then, when the first aux domain is attached we will set up that io_ptgable
+> to enable TTBR0 and then let the GPU do what the GPU does until the last aux is
+> detached and we can switch off TTBR0 again.
+> 
+> I like this. I'll have to do a bit more exploration because the original aux
+> design assumed that we didn't need to touch the hardware and I'm not sure if
+> there are any resource contention issues between the primary domain and the aux
+> domain. Luckily, these should be solvable if they exist (and the original design
+> didn't take into account the TLB flush problem so this was likely something we
+> had to do anyway).
 
-Ok. Thanks for fixing the Fixes tag.
+Yeah, sounds like you've got it (somehow I'd completely forgotten that 
+you'd already prototyped the aux domain part, and I only re-read the 
+cover letter after sending that review...). TBH it's not massively 
+different, just being a bit more honest about the intermediate hardware 
+state. As long as we can rely on all aux domains being equivalent and 
+the GPU never writing nonsense to TTBR0, then all arm-smmu really wants 
+to care about is whether there's *something* live or not at any given 
+time, so attach (with quirk) does:
 
+	TTBR1 = primary_domain->ttbr
+	TCR = primary_domain->tcr | EPD0
+
+then attach_aux comes along and adds:
+
+	TTBR0 = aux_domain->ttbr
+	TCR = primary_doman->tcr | aux_domain->tcr
+
+such that arm-smmu can be happy that TTBR0 is always pointing at *some* 
+valid pagetable from that point on regardless of what subsequently 
+happens underneath, and nobody need touch TCR until the party's 
+completely over.
+
+>> I haven't thought it through in detail, but it also feels like between
+>> aux_attach_dev and/or the TTBR1 quirk in attach_dev there ought to be enough
+>> information to influence the context bank allocation or shuffle any existing
+>> domains such that you can ensure that the right thing ends up in magic
+>> context 0 when it needs to be. That could be a pretty neat and robust way to
+>> finally put that to bed.
+> 
+> I'll try to wrap my brain around this as well. Seems like we could do a magic
+> swizzle of the SID mappings but I'm not sure how we could safely pull that off
+> on an existing domain. Maybe I'm overthinking it.
+
+What I'm imagining isn't all that far from how we do normal domain 
+attach, except instead of setting up the newly-allocated context for a 
+new domain you simply clone the existing context into it, and instead of 
+having a given device's set of Stream IDs to retarget you'd just scan 
+though the S2CRs checking cbndx and rewriting as appropriate. Then 
+finally rewrite domain->cfg.cbndx and the old context is all yours.
+
+> I'll spin up a new copy of the TTBR1 quirk patch and revive the aux domain stuff
+> and then we can go from there.
+
+Sounds good, thanks!
+
+Robin.
