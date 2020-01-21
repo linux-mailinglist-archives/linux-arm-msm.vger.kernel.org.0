@@ -2,94 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 18A30143B0F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2020 11:34:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F028143B60
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jan 2020 11:49:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728792AbgAUKeT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jan 2020 05:34:19 -0500
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:41842 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727220AbgAUKeT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jan 2020 05:34:19 -0500
-Received: by mail-oi1-f193.google.com with SMTP id i1so2066946oie.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2020 02:34:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=a0MVgCnluJiMvFhGYkbzOfOm4vvDltuuGX2V8bpoeSQ=;
-        b=I9D+koBskXL5blj9fOtJPHzQsoaNLIUHVie3LbW4BdqtIgVyV6TWic+D3oDuT1dNAi
-         kqSHTeU5fBGb/sm5z0GwKrw/tJV9oiL5HWXlm2MCDA2JDHqQRQGEVJkBUbNDljOIzGTi
-         CIAV+RpE6mdzABSRh2A0/73T55d4QY7nZuZdv6w71dAtYPsKX9itDvrONiDM1ydxgD7m
-         GwkKwqRHovulmCn4b8C3G590wJ9IkvPpXUf0Jg/AHViwyKXlQdYKLIeXZ/VyeBYXvQ+v
-         WvB40Yf8lCByo21io7yVLDgS+PBnki+gIqW/ojvdG43QHR3QQnL7fouRQTji/BumOhVo
-         VhHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=a0MVgCnluJiMvFhGYkbzOfOm4vvDltuuGX2V8bpoeSQ=;
-        b=pAVBLHcblOw/BSuNO3wiZPqNuj/kOGklM2pfuXdWDJyJqXVcnUswabrmBKwhiCP8GX
-         bnZiqJPSDdLvdmRKcrpBF7yHHUlbpkACtTowknG99Ht7RaTEyJN810gO1hfWmCDCpHJI
-         KB3Wf8FfskHPEQnnBZeR/HIe4zS20zKy2Qyncs4Ti6O+mfH4PD6noAln/gAxzSLgyCtx
-         OY44vrmdywuOeVi0Nu9cFbJTyj020VJb/pp2FJAHBWi7RQKKOe62jisvuthyNpFdAUvp
-         LPSXhE16HAkQuszTPMxGWpiG5uEGcB6g0na2KpIxaGMfkO1Q3ISjOf+jae3Apuu97IkK
-         CQHQ==
-X-Gm-Message-State: APjAAAWU1I6k33/usM9Wl3KIM26A7Wt3DazZ6HShAJQm7dZ24RaA59my
-        m+5+nE3yACdhuYsT7do03UEZ6KsdiFaj0d5YyvphEQ==
-X-Google-Smtp-Source: APXvYqwxCUTgHCfeET2MXXcfDwKd6srogmeuOy//4ezAASWynGRuaiNf2uhm9j68C5vLFw/71bSa27wWojHBc3Cz0J8=
-X-Received: by 2002:aca:4106:: with SMTP id o6mr2431621oia.173.1579602858490;
- Tue, 21 Jan 2020 02:34:18 -0800 (PST)
+        id S1729147AbgAUKtc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jan 2020 05:49:32 -0500
+Received: from foss.arm.com ([217.140.110.172]:41480 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728792AbgAUKtc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Jan 2020 05:49:32 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 553431FB;
+        Tue, 21 Jan 2020 02:49:31 -0800 (PST)
+Received: from [10.37.12.169] (unknown [10.37.12.169])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 61FC23F6C4;
+        Tue, 21 Jan 2020 02:49:21 -0800 (PST)
+Subject: Re: [PATCH 1/4] PM / EM: and devices to Energy Model
+To:     Quentin Perret <qperret@google.com>
+Cc:     Dietmar Eggemann <dietmar.eggemann@arm.com>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com, Morten.Rasmussen@arm.com, Chris.Redpath@arm.com,
+        ionela.voinescu@arm.com, javi.merino@arm.com,
+        cw00.choi@samsung.com, b.zolnierkie@samsung.com, rjw@rjwysocki.net,
+        sudeep.holla@arm.com, viresh.kumar@linaro.org, nm@ti.com,
+        sboyd@kernel.org, rui.zhang@intel.com, amit.kucheria@verdurent.com,
+        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
+        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, patrick.bellasi@matbug.net
+References: <20200116152032.11301-1-lukasz.luba@arm.com>
+ <20200116152032.11301-2-lukasz.luba@arm.com>
+ <17b77e0c-9455-0479-d37b-c57717c784c7@arm.com>
+ <20200120152804.GB164543@google.com>
+ <453034e5-f7b9-20f7-4e26-5d0d7164edd1@arm.com>
+ <20200121100854.GB157387@google.com>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <5621c137-7057-1d5c-646a-95707105df25@arm.com>
+Date:   Tue, 21 Jan 2020 10:49:19 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-References: <20200112113003.11110-1-robert.marko@sartura.hr>
- <20200112113003.11110-2-robert.marko@sartura.hr> <20200113144101.GM3897@sirena.org.uk>
-In-Reply-To: <20200113144101.GM3897@sirena.org.uk>
-From:   Robert Marko <robert.marko@sartura.hr>
-Date:   Tue, 21 Jan 2020 11:34:07 +0100
-Message-ID: <CA+HBbNEBxw5B2gxJLv6sKrqszymg_ccbW6syZRiEivk+dpFpzA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] dt-bindings: vqmmc-ipq4019-regulator: add binding document
-To:     Mark Brown <broonie@kernel.org>
-Cc:     lgirdwood@gmail.com, robh+dt@kernel.org,
-        linux-kernel@vger.kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200121100854.GB157387@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 13, 2020 at 3:41 PM Mark Brown <broonie@kernel.org> wrote:
->
-> On Sun, Jan 12, 2020 at 12:30:02PM +0100, Robert Marko wrote:
->
-> > +  regulator-min-microvolt:
-> > +    description: smallest voltage consumers may set
-> > +
-> > +  regulator-max-microvolt:
-> > +    description: largest voltage consumers may set
->
-> Why are these explicitly specified in this binding?
-You are right, I can simply include them from regulator.yaml
->
-> > +  regulator-always-on:
-> > +    description: boolean, regulator should never be disabled
-> > +    type: boolean
->
-> If it's not physically possible to disable the regulator then
-> specifying this property is redundant so...
-Yes, regulator cant be turned off.
->
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - regulator-name
-> > +  - regulator-min-microvolt
-> > +  - regulator-max-microvolt
-> > +  - regulator-always-on
->
-> ...requiring it doesn't seem useful.  All the other
-> regulator-specific properties shouldn't be required either,
-> unless the user specifies a voltage range we won't allow changes
-> at all which should be safe and the name is purely cosmetic.
-Are bindings even required at all here then?
+
+
+On 1/21/20 10:08 AM, Quentin Perret wrote:
+> On Monday 20 Jan 2020 at 16:20:49 (+0000), Lukasz Luba wrote:
+>> On 1/20/20 3:28 PM, Quentin Perret wrote:
+>>> Agreed, this looks a bit confusing. It should be trivial to make
+>>> em_dev_get() (or whatever we end up calling it) work for CPUs too,
+>>> though. And we could always have a em_cpu_get(int cpu) API that is a
+>>> basically a wrapper around em_dev_get() for convenience.
+>>
+>> The problem not only here is that we have a CPU index 'int cpu'
+>> and if we ask for device like:
+>>
+>> struct device *dev = get_cpu_device(cpu);
+>>
+>> It might be not the same device that was used during the
+>> registration, when we had i.e. 4 CPUs for the same policy:
+>>
+>> int cpu_id = cpumask_first(policy->cpus);
+>> struct device *cpu_dev = get_cpu_device(cpu_id);
+>> em_register_perf_domain(cpu_dev, nr_opp, &em_cb);
+>>
+>> That's why the em_cpu_get() is different than em_get_pd(), mainly by:
+>> if (cpumask_test_cpu(cpu, em_span_cpus(em_pd)))
+>>
+>> It won't be simple wrapper, let me think how it could be handled
+>> differently than it is now.
+> 
+> Right so I suppose the easiest solution would be to do the opposite of
+> my first suggestion. That is, make em_get_pd() call em_cpu_get() if the
+> device is a CPU device, or proceed to the PD list iteration for other
+> devices. And em_cpu_get() can remain as you originally suggested (that
+> is, iterate over the PDs and test the mask).
+
+Exactly, something like:
+---------------------------->8-------------------------
+288 struct em_perf_domain *em_get_pd(struct device *dev)
+289 {
+290         struct em_device *em_dev;
+291
+292         if (IS_ERR_OR_NULL(dev))
+293                 return NULL;
+294
+295         if (_is_cpu_device(dev))
+296                 return em_cpu_get(dev->id);
+....
+------------------------8<-----------------------------
+
+> 
+> That should ensure em_get_pd() always works, em_cpu_get() is still there
+> handy for the scheduler and such, and the two EM lookup functions (for
+> CPUs or for devices) are kept cleanly separated.
+> 
+> Thoughts ?
+
+Agree. Then we can have these two functions and em_get_pd() will also
+work fine.
+
+> 
+> Thanks,
+> Quentin
+> 
+
+Regards,
+Lukasz
