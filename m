@@ -2,112 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C3C1A144902
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 01:39:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 32B5B144949
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 02:21:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728609AbgAVAjk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jan 2020 19:39:40 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:38652 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728665AbgAVAjg (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jan 2020 19:39:36 -0500
-Received: by mail-pg1-f193.google.com with SMTP id a33so2459237pgm.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jan 2020 16:39:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=SZpsgyfgTg+rpsMj6itxLgYi2Mi1dgKH1+oFAHOSpN0=;
-        b=NB2RKMZ732XQsFQzHnptmiW/oQQJiXyVAjkEF036D2HE3q2YoBbmXEgYZzaGw+929X
-         2G3IGNXCqyCJSaKhFRl6T1hSSMtaMMR92nET1Q+81VUvLfg5cocDznowLKLoCv1ccSYa
-         /G/1JLcEfeEmMFFXVyWT1i/qUs/jjo1/nUE8EFldsZAltWDW7NZKjW5RgtWGDQ2WBS6F
-         28Qu7gE6FEgGwPmZRbTuA3i1Kh9KzpFZVc8E2DqP/+rWFNozXZ1K3GxLu5izOQItNkBY
-         PpGn4PSUL4xDq6Do9KPt/QAPC2G/7+aLE35bi9+lGyTwVZTS8lfdakpulElBh3L8GLM9
-         d2Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SZpsgyfgTg+rpsMj6itxLgYi2Mi1dgKH1+oFAHOSpN0=;
-        b=PJ4usDbDXRidw8je1ZHE0s1NZdG+q/k0Uk+7vhK33/TZYIoj8lN00TGGkqpCqpQoiH
-         OPFiOeeXAd9S79UsuZYLoYlZxz3UWp7Fzy9qkvJ57HsK4uO7+UW/WbgVCaoU+uoF+lqd
-         HHTNtnUs4Sf/fTPmvunRWh8/1toB9GaicYlE0u6svvGncOyUIk/UzlcA0aSeWORXTl+F
-         tu/D1kM3jAl0ZBDR71Lac+ut6gpCvt5OOAV+eLMtlWTCulzkI5+FTU93uUuNwxC168Uo
-         lzPU9uJxA81xGTSMOo7dBwK1neKmQz/9Kv11JEKU9w3LOw3lyZe3+eb7+sJxrvR4tGCW
-         X+fg==
-X-Gm-Message-State: APjAAAWwdc5vxs3+4khrzy7E4APGWB6YFgwKfZV3uJv7FRMTpDVhlwwK
-        nUufBdFdE2CnaeQ4LdwyGaQR7A==
-X-Google-Smtp-Source: APXvYqwkN7biw9CpP0gW6qNJiifMwMv8JHW7EU+oQ5nGJ68k+VE9SDpQSxt9ZMLwqEZrqnOdhWikiQ==
-X-Received: by 2002:a65:48cb:: with SMTP id o11mr8418173pgs.313.1579653575886;
-        Tue, 21 Jan 2020 16:39:35 -0800 (PST)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id o19sm736501pjr.2.2020.01.21.16.39.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jan 2020 16:39:35 -0800 (PST)
-Date:   Tue, 21 Jan 2020 16:39:32 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Chen Zhou <chenzhou10@huawei.com>
-Cc:     agross@kernel.org, lee.jones@linaro.org,
-        daniel.thompson@linaro.org, jingoohan1@gmail.com,
-        b.zolnierkie@samsung.com, kgunda@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-fbdev@vger.kernel.org, linux-kernel@vger.kernel.org
+        id S1728829AbgAVBVg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jan 2020 20:21:36 -0500
+Received: from szxga05-in.huawei.com ([45.249.212.191]:9230 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1728750AbgAVBVg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Jan 2020 20:21:36 -0500
+Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.60])
+        by Forcepoint Email with ESMTP id 21D28D385F13DB2499EC;
+        Wed, 22 Jan 2020 09:21:33 +0800 (CST)
+Received: from [127.0.0.1] (10.177.131.64) by DGGEMS402-HUB.china.huawei.com
+ (10.3.19.202) with Microsoft SMTP Server id 14.3.439.0; Wed, 22 Jan 2020
+ 09:21:29 +0800
 Subject: Re: [PATCH -next] backlight: qcom-wled: fix unsigned comparison to
  zero
-Message-ID: <20200122003932.GA3948@builder>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 References: <20200120130143.35363-1-chenzhou10@huawei.com>
+ <20200122003932.GA3948@builder>
+CC:     <agross@kernel.org>, <lee.jones@linaro.org>,
+        <daniel.thompson@linaro.org>, <jingoohan1@gmail.com>,
+        <b.zolnierkie@samsung.com>, <kgunda@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linux-fbdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+From:   Chen Zhou <chenzhou10@huawei.com>
+Message-ID: <a497400e-b734-9346-5ce8-292e051f611a@huawei.com>
+Date:   Wed, 22 Jan 2020 09:21:26 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200120130143.35363-1-chenzhou10@huawei.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <20200122003932.GA3948@builder>
+Content-Type: text/plain; charset="windows-1252"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.177.131.64]
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 20 Jan 05:01 PST 2020, Chen Zhou wrote:
+Hi Bjorn,
 
-> Fixes coccicheck warning:
-> ./drivers/video/backlight/qcom-wled.c:1104:5-15:
-> 	WARNING: Unsigned expression compared with zero: string_len > 0
+On 2020/1/22 8:39, Bjorn Andersson wrote:
+> On Mon 20 Jan 05:01 PST 2020, Chen Zhou wrote:
 > 
-> The unsigned variable string_len is assigned a return value from the call
-> to wled_configure, which may return negative error code.
+>> Fixes coccicheck warning:
+>> ./drivers/video/backlight/qcom-wled.c:1104:5-15:
+>> 	WARNING: Unsigned expression compared with zero: string_len > 0
+>>
+>> The unsigned variable string_len is assigned a return value from the call
+>> to wled_configure, which may return negative error code.
+>>
+> 
+> Afaict string_len is the return value of
+> of_property_count_elems_of_size(), rather than wled_configure(). (And
+> please append () to function names to make it even more obvious)
+> 
+> Except for that your patch looks good, so please update the commit
+> message and add my Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> Regards,
+> Bjorn
+
+Thanks for your review, i will fix this in next version.
+
+Thanks,
+Chen Zhou
+
+> 
+>> Fixes: 775d2ffb4af6 ("backlight: qcom-wled: Restructure the driver for WLED3")
+>> Signed-off-by: Chen Zhou <chenzhou10@huawei.com>
+>> ---
+>>  drivers/video/backlight/qcom-wled.c | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+>> index d46052d..3d276b3 100644
+>> --- a/drivers/video/backlight/qcom-wled.c
+>> +++ b/drivers/video/backlight/qcom-wled.c
+>> @@ -956,8 +956,8 @@ static int wled_configure(struct wled *wled, int version)
+>>  	struct wled_config *cfg = &wled->cfg;
+>>  	struct device *dev = wled->dev;
+>>  	const __be32 *prop_addr;
+>> -	u32 size, val, c, string_len;
+>> -	int rc, i, j;
+>> +	u32 size, val, c;
+>> +	int rc, i, j, string_len;
+>>  
+>>  	const struct wled_u32_opts *u32_opts = NULL;
+>>  	const struct wled_u32_opts wled3_opts[] = {
+>> -- 
+>> 2.7.4
+>>
+> 
+> .
 > 
 
-Afaict string_len is the return value of
-of_property_count_elems_of_size(), rather than wled_configure(). (And
-please append () to function names to make it even more obvious)
-
-Except for that your patch looks good, so please update the commit
-message and add my Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
-> Fixes: 775d2ffb4af6 ("backlight: qcom-wled: Restructure the driver for WLED3")
-> Signed-off-by: Chen Zhou <chenzhou10@huawei.com>
-> ---
->  drivers/video/backlight/qcom-wled.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-> index d46052d..3d276b3 100644
-> --- a/drivers/video/backlight/qcom-wled.c
-> +++ b/drivers/video/backlight/qcom-wled.c
-> @@ -956,8 +956,8 @@ static int wled_configure(struct wled *wled, int version)
->  	struct wled_config *cfg = &wled->cfg;
->  	struct device *dev = wled->dev;
->  	const __be32 *prop_addr;
-> -	u32 size, val, c, string_len;
-> -	int rc, i, j;
-> +	u32 size, val, c;
-> +	int rc, i, j, string_len;
->  
->  	const struct wled_u32_opts *u32_opts = NULL;
->  	const struct wled_u32_opts wled3_opts[] = {
-> -- 
-> 2.7.4
-> 
