@@ -2,30 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 061A6144BA7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 07:18:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB5C1144BD1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 07:38:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726164AbgAVGSc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jan 2020 01:18:32 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:48265 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725871AbgAVGSc (ORCPT
+        id S1726026AbgAVGiR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jan 2020 01:38:17 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:25344 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726016AbgAVGiR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jan 2020 01:18:32 -0500
+        Wed, 22 Jan 2020 01:38:17 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1579673911; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1579675096; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=0+6tDurQN9muJjME2SB8JDmDEo2i43PbGdo2TM5ZOM0=;
- b=KVewppSfONRx4hTygehPj+nGYSZt9iCcEB3VgFDzqeZ9WdtaPrNQlf5AhFg1/sQDxYn35+uJ
- JR8Z2O1pGGCGYvtQ1x7H+K0px8MoULolA+2ONocuk1oUVb0E90VVSNbs2jk3UZheTDSaxqkX
- nyoV48aIRktBQg8ESvLsl311y84=
-X-Mailgun-Sending-Ip: 104.130.122.25
+ MIME-Version: Sender; bh=BTMKD1kC1hneaJuLFHdKQBVHUfBZ4mFs37EkrltHpA8=;
+ b=DbgiU9UjrV5d3f7N+DkeQ0gJGxxU7I+C6WGhIy83Pw/qw8s53yGYofMXC3SlkNi7g9K193QV
+ 34iD4wf5qn38xw+VTHaZ1xiket+h2X/AsM5O+HduB0aC1uchECxcMvQPepk/BpAYhivZeSx/
+ o8zZYDAxxhrEqzpKN8/6f4DpgyM=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e27e936.7fd4bfa57928-smtp-out-n01;
- Wed, 22 Jan 2020 06:18:30 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e27edd7.7f0d7ee9f810-smtp-out-n02;
+ Wed, 22 Jan 2020 06:38:15 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A7D16C447A4; Wed, 22 Jan 2020 06:18:29 +0000 (UTC)
+        id 896FBC447A1; Wed, 22 Jan 2020 06:38:14 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -35,25 +35,30 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E2A53C43383;
-        Wed, 22 Jan 2020 06:18:28 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E8A42C433CB;
+        Wed, 22 Jan 2020 06:38:13 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 22 Jan 2020 11:48:28 +0530
+Date:   Wed, 22 Jan 2020 12:08:13 +0530
 From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     evgreen@chromium.org, p.zabel@pengutronix.de, ohad@wizery.com,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, agross@kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH 1/4] remoteproc: qcom: q6v5-mss: Use
- regmap_read_poll_timeout
-In-Reply-To: <20200120192432.GJ1511@yoga>
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Ohad Ben Cohen <ohad@wizery.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org,
+        LKML <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-remoteproc-owner@vger.kernel.org
+Subject: Re: [PATCH 2/4] remoteproc: qcom: q6v5-mss: Improve readability
+ across clk handling
+In-Reply-To: <CAE=gft4Erwjgvj18DuiJaTEUz=1DwzSBtiCTU0QuoGO1+kzsNg@mail.gmail.com>
 References: <20200117135130.3605-1-sibis@codeaurora.org>
- <20200117135130.3605-2-sibis@codeaurora.org> <20200120192432.GJ1511@yoga>
-Message-ID: <ff6e50e7ab706dcab05d579df8201864@codeaurora.org>
+ <20200117135130.3605-3-sibis@codeaurora.org>
+ <CAE=gft4Erwjgvj18DuiJaTEUz=1DwzSBtiCTU0QuoGO1+kzsNg@mail.gmail.com>
+Message-ID: <4663ec41c6e8dec0a2504aa1ddcf838d@codeaurora.org>
 X-Sender: sibis@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -61,86 +66,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Bjorn,
+Hey Evan,
 
 Thanks for the review!
 
-On 2020-01-21 00:54, Bjorn Andersson wrote:
-> On Fri 17 Jan 05:51 PST 2020, Sibi Sankar wrote:
-> 
->> Replace the loop for HALT_ACK detection with regmap_read_poll_timeout.
-
-sry missed it, will include it
-in the next re-spin
-
+On 2020-01-22 00:52, Evan Green wrote:
+> On Fri, Jan 17, 2020 at 5:51 AM Sibi Sankar <sibis@codeaurora.org> 
+> wrote:
 >> 
-> 
-> Nice, but we should be able to do the same in q6v5proc_halt_axi_port()?
-> 
+>> Define CLKEN and CLKOFF for improving readability of Q6SS clock
+>> handling.
+>> 
 >> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
->> ---
->>  drivers/remoteproc/qcom_q6v5_mss.c | 16 ++++++----------
->>  1 file changed, 6 insertions(+), 10 deletions(-)
->> 
->> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c 
->> b/drivers/remoteproc/qcom_q6v5_mss.c
->> index 51f451311f5fc..f20b39c6ff0ed 100644
->> --- a/drivers/remoteproc/qcom_q6v5_mss.c
->> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
->> @@ -73,6 +73,7 @@
->>  #define NAV_AXI_IDLE_BIT		BIT(2)
->> 
->>  #define HALT_ACK_TIMEOUT_MS		100
->> +#define NAV_HALT_ACK_TIMEOUT_US		200
->> 
->>  /* QDSP6SS_RESET */
->>  #define Q6SS_STOP_CORE			BIT(0)
->> @@ -746,7 +747,6 @@ static void q6v5proc_halt_nav_axi_port(struct q6v5 
->> *qproc,
->>  				       struct regmap *halt_map,
->>  				       u32 offset)
->>  {
->> -	unsigned long timeout;
->>  	unsigned int val;
->>  	int ret;
->> 
->> @@ -760,15 +760,11 @@ static void q6v5proc_halt_nav_axi_port(struct 
->> q6v5 *qproc,
->>  			   NAV_AXI_HALTREQ_BIT);
->> 
->>  	/* Wait for halt ack*/
->> -	timeout = jiffies + msecs_to_jiffies(HALT_ACK_TIMEOUT_MS);
->> -	for (;;) {
->> -		ret = regmap_read(halt_map, offset, &val);
->> -		if (ret || (val & NAV_AXI_HALTACK_BIT) ||
->> -		    time_after(jiffies, timeout))
->> -			break;
->> -
->> -		udelay(5);
->> -	}
->> +	ret = regmap_read_poll_timeout(halt_map, offset, val,
->> +				       (val & NAV_AXI_HALTACK_BIT),
->> +				       5, NAV_HALT_ACK_TIMEOUT_US);
->> +	if (ret)
->> +		dev_err(qproc->dev, "nav halt ack timeout\n");
 > 
-> Is there a case where this new print adds value beyond the printout we
-> already have for the case of IDLE_BIT not going high? Can we simply
-> ignore the return value and skip the print?
+> It took me awhile to wrap my head around how this new define,
+> Q6SS_CBCR_TIMEOUT_US, sometimes replaces HALT_CHECK_MAX_LOOPS and
+> sometimes replaces SLEEP_CHECK_MAX_LOOPS. I guess they're conceptually
+> different but set to the same value for now? And you've fixed up a
+> place where the wrong one was used? If you thought the distinction was
+> meaningless I'd also be fine merging these two defines into one.
 
-yes we can skip the print
+They really aren't that different
+both are Clks with the same timeout
+the previous naming was just plain
+bad.
 
+SLEEP_CHECK_MAX_LOOPS was used
+probably because it was referring
+to QDSP6SS_SLEEP CBCRs timeout.
+HALT_CHECK_MAX_LOOOPS seems to
+taken directly from CAF code. So
+we should be fine with merging
+the two defines into one.
+
+> Either way, assuming the above is intentional, this looks ok to me.
+> Thanks for renaming that define.
 > 
-> Regards,
-> Bjorn
-> 
->> 
->>  	ret = regmap_read(halt_map, offset, &val);
->>  	if (ret || !(val & NAV_AXI_IDLE_BIT))
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
+> Reviewed-by: Evan Green <evgreen@chromium.org>
 
 -- 
 Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
