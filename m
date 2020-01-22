@@ -2,232 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FB3A145C48
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 20:10:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D3F3145C5D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 20:20:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725933AbgAVTKO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jan 2020 14:10:14 -0500
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:34002 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729016AbgAVTKN (ORCPT
+        id S1725933AbgAVTUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jan 2020 14:20:21 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:34260 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725884AbgAVTUV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jan 2020 14:10:13 -0500
-Received: by mail-lj1-f194.google.com with SMTP id z22so295357ljg.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2020 11:10:11 -0800 (PST)
+        Wed, 22 Jan 2020 14:20:21 -0500
+Received: by mail-pj1-f68.google.com with SMTP id s94so90928pjc.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2020 11:20:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vPRCyAuhv6MvH7lOVEnGwpZ6VZYmbly5SpGfPGCHS28=;
-        b=iVrlchTLfSXTK6dYiD8parogXIGI4Q2ZORX0agr/qP1LRr7ixYyqRkgYR3n1USDguX
-         CCbDtBrT1yWkz1w9CxBZ2zAwmVcTArj6zsCsiW1NfCpTzlfd1fjYTLc5jqWS8yat8Vuo
-         ZWON36Bodoybf0dIPHxpQgp0EtPwsD/4ht1S4=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=mpnp2dBUwgiSXJqBkhUdFPkzPC82dAX2Dn/bzDab9OI=;
+        b=TwoKubR7jNDC4FclY67lUleRt7BkY0+OB6iyNEzor/uNZSPiIrXIXbVINxc/qzjB2/
+         orFLFxkbQBij/x+q2bSzp8dFpk6zF/y2rOm3kjZKMPKMe9foOSjjaogA/6DtOoLLoPDo
+         CfJcIuhiXScG3eQdaxDxRwz8XaAJgBAUkgMuvw3WKcPAzFEzATmkX+2hI57agzEyDhYe
+         Zl7X2nlFkxbyzB3rhlRCBTg24HqN6LGz740918w1ctTE460zXSILedH6AE2gmqgvj0md
+         42Ihe9mcJaSvEd0ZCW01Xs7bOgTgfuvM03QU36WVyywF3QvGmk6wgRAZsqc98UC63LXM
+         d2iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vPRCyAuhv6MvH7lOVEnGwpZ6VZYmbly5SpGfPGCHS28=;
-        b=AQpnk8eWCiI9KYgBeSFteco+/1Wa3JynDbX2jH4dLkAQQBYehlZPBO8dCUkdm9p6Xh
-         oKKYbOKotbG9ICK7mg9llmcV1lhS+OFxLs4J2btHb/kyyIeT5DgwQphRvXfTxDowIrjW
-         r/+ToylCAis+dk6Uc0QhO4KaErNMbj01E1LeUIExqQXya7D9A1a6b3e0W/vo3ZrBKpoc
-         6UNEhfVMlR1sqv7YveemEqv55qksQBY5HjECNZUNKa+J6EsxG4KILmbDKvSEXrfMFmfu
-         /kZdj7sDzwhp4nMIZlK1S58EtHKNdtogl4lueeyod44J3806liyOyTKkrZ/0kHF1o3K/
-         3r0Q==
-X-Gm-Message-State: APjAAAX8cC3LU17Xkel6PfAtEoSMz8wlxIuyYkA9R5cQNbmqyE3O5+Bw
-        QlKLJKbeeUvFLMB4o5twxdKRPIeMO2s=
-X-Google-Smtp-Source: APXvYqx71nKVe1wrHeuovKZIhZkve2+Lx/AQLuqV3tbfgLE7es5taB0ns/q8o1D+ocC1NzwFfVNvEQ==
-X-Received: by 2002:a2e:9041:: with SMTP id n1mr19721496ljg.133.1579720210427;
-        Wed, 22 Jan 2020 11:10:10 -0800 (PST)
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com. [209.85.167.46])
-        by smtp.gmail.com with ESMTPSA id a9sm21256280lfk.23.2020.01.22.11.10.08
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jan 2020 11:10:09 -0800 (PST)
-Received: by mail-lf1-f46.google.com with SMTP id z26so400148lfg.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2020 11:10:08 -0800 (PST)
-X-Received: by 2002:ac2:523c:: with SMTP id i28mr2558095lfl.104.1579720207926;
- Wed, 22 Jan 2020 11:10:07 -0800 (PST)
-MIME-Version: 1.0
-References: <20200109211215.18930-1-sibis@codeaurora.org> <20200109211215.18930-3-sibis@codeaurora.org>
- <CAE=gft7ZUTiGrvsaqfrVv-bH3w75as7G1UJRn3aJs3ECqodpQg@mail.gmail.com>
- <dad8936ba4444c3377d777cbbb879dc3@codeaurora.org> <03f83755-bdcc-dc39-0eae-08414751be57@linaro.org>
- <CAE=gft6NMD7+Bt0ab8tnb8r2DjPkb2si7+0-R+f=SYk2YMCX0A@mail.gmail.com> <169aa5fbe68fb7163166d1789bbf1761@codeaurora.org>
-In-Reply-To: <169aa5fbe68fb7163166d1789bbf1761@codeaurora.org>
-From:   Evan Green <evgreen@chromium.org>
-Date:   Wed, 22 Jan 2020 11:09:31 -0800
-X-Gmail-Original-Message-ID: <CAE=gft5483pptiytdfqpGbrpy4OkwRpJvGyDo5pC5YUQTaQjRQ@mail.gmail.com>
-Message-ID: <CAE=gft5483pptiytdfqpGbrpy4OkwRpJvGyDo5pC5YUQTaQjRQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/4] interconnect: qcom: Add OSM L3 interconnect
- provider support
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=mpnp2dBUwgiSXJqBkhUdFPkzPC82dAX2Dn/bzDab9OI=;
+        b=C6Qqo1Cgcjk5gB3uLzzvMl+l71xS7ksRxRCNU0oaQQbW4eRhjgFhxH6JQACk/iy5Xe
+         oDVcpjUSI9gt0tS9IsOMsh2XOZYd6bxAeim0E13VvA6+Qk1vQJZOt1fSVkimeJsSM/zH
+         oTER7uJVPIghyEQpqHodyDSAurquaim8RkhX8lmqyz9eM/VLMg9iK4BTB+HBNMs1j0im
+         t6h0ug8z+OS9Eh/8syBKHMHMKRD8l3+rVsLao3iKy4FuF3aAG9hIi/LORwq7oPffw0aS
+         FvtYxi/Z1vFNKP7bmLj/Fz174k0Fd+LYJjwV5ZMaG6RYVSPLsRwEQQo9CKRCkqRg71xo
+         8ULw==
+X-Gm-Message-State: APjAAAUECOFAGoBANdD8JFC0HQcUr8BWOYuf/95ENe/qHxFaVDo/UwDa
+        tr5C6/baP0SplbYN/f4AelD8cg==
+X-Google-Smtp-Source: APXvYqxspwypdYRSl7cOxJoNSmsNgl+draPEhXEg+oHAk4xjoVtPB+jwjiWlRB4uz0kbtwFrb1BI9Q==
+X-Received: by 2002:a17:902:7291:: with SMTP id d17mr12134051pll.227.1579720820090;
+        Wed, 22 Jan 2020 11:20:20 -0800 (PST)
+Received: from ripper (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id a15sm49191872pfh.169.2020.01.22.11.20.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jan 2020 11:20:19 -0800 (PST)
+Date:   Wed, 22 Jan 2020 11:19:46 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        David Dai <daidavid1@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-remoteproc <linux-remoteproc@vger.kernel.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>
+Subject: Re: [PATCH v2 2/8] remoteproc: qcom: Introduce driver to store pil
+ info in IMEM
+Message-ID: <20200122191946.GA3261042@ripper>
+References: <20191227053215.423811-1-bjorn.andersson@linaro.org>
+ <20191227053215.423811-3-bjorn.andersson@linaro.org>
+ <20200110211846.GA11555@xps15>
+ <20200122020234.GT1511@yoga>
+ <CANLsYkykgpLAQqG3Tk73HFR9+Uadr2caiBx-6op5Cyv4BBcPFA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANLsYkykgpLAQqG3Tk73HFR9+Uadr2caiBx-6op5Cyv4BBcPFA@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 22, 2020 at 10:05 AM Sibi Sankar <sibis@codeaurora.org> wrote:
->
-> On 2020-01-22 22:18, Evan Green wrote:
-> > On Wed, Jan 22, 2020 at 12:20 AM Georgi Djakov
-> > <georgi.djakov@linaro.org> wrote:
-> >>
-> >> On 1/22/20 08:45, Sibi Sankar wrote:
-> >> > Hey Evan,
-> >> >
-> >> > Thanks for the review!
-> >> >
-> >> > On 2020-01-22 03:03, Evan Green wrote:
-> >> >> On Thu, Jan 9, 2020 at 1:12 PM Sibi Sankar <sibis@codeaurora.org> wrote:
-> >> >>>
-> >> >>> On some Qualcomm SoCs, Operating State Manager (OSM) controls the
-> >> >>> resources of scaling L3 caches. Add a driver to handle bandwidth
-> >> >>> requests to OSM L3 from CPU on SDM845 SoCs.
-> >> >>>
-> >> >>> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> >> >>> ---
-> >> >>>  drivers/interconnect/qcom/Kconfig  |   7 +
-> >> >>>  drivers/interconnect/qcom/Makefile |   2 +
-> >> >>>  drivers/interconnect/qcom/osm-l3.c | 267 +++++++++++++++++++++++++++++
-> >> >>>  3 files changed, 276 insertions(+)
-> >> >>>  create mode 100644 drivers/interconnect/qcom/osm-l3.c
-> >> >>>
-> >> >>> diff --git a/drivers/interconnect/qcom/Kconfig
-> >> >>> b/drivers/interconnect/qcom/Kconfig
-> >> >>> index a9bbbdf7400f9..b94d28e7bf700 100644
-> >> >>> --- a/drivers/interconnect/qcom/Kconfig
-> >> >>> +++ b/drivers/interconnect/qcom/Kconfig
-> >> >>> @@ -14,6 +14,13 @@ config INTERCONNECT_QCOM_MSM8974
-> >> >>>          This is a driver for the Qualcomm Network-on-Chip on msm8974-based
-> >> >>>          platforms.
-> >> >>>
-> >> >>> +config INTERCONNECT_QCOM_OSM_L3
-> >> >>> +       tristate "Qualcomm OSM L3 interconnect driver"
-> >> >>> +       depends on INTERCONNECT_QCOM || COMPILE_TEST
-> >> >>> +       help
-> >> >>> +         Say y here to support the Operating State Manager (OSM) interconnect
-> >> >>> +         driver which controls the scaling of L3 caches on Qualcomm SoCs.
-> >> >>> +
-> >> >>>  config INTERCONNECT_QCOM_QCS404
-> >> >>>         tristate "Qualcomm QCS404 interconnect driver"
-> >> >>>         depends on INTERCONNECT_QCOM
-> >> >>> diff --git a/drivers/interconnect/qcom/Makefile
-> >> >>> b/drivers/interconnect/qcom/Makefile
-> >> >>> index 55ec3c5c89dbd..89fecbd1257c7 100644
-> >> >>> --- a/drivers/interconnect/qcom/Makefile
-> >> >>> +++ b/drivers/interconnect/qcom/Makefile
-> >> >>> @@ -1,5 +1,6 @@
-> >> >>>  # SPDX-License-Identifier: GPL-2.0
-> >> >>>
-> >> >>> +icc-osm-l3-objs                                := osm-l3.o
-> >> >>>  qnoc-msm8974-objs                      := msm8974.o
-> >> >>>  qnoc-qcs404-objs                       := qcs404.o
-> >> >>>  qnoc-sc7180-objs                       := sc7180.o
-> >> >>> @@ -12,6 +13,7 @@ icc-smd-rpm-objs                      := smd-rpm.o
-> >> >>>  obj-$(CONFIG_INTERCONNECT_QCOM_BCM_VOTER) += icc-bcm-voter.o
-> >> >>>  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8916) += qnoc-msm8916.o
-> >> >>>  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8974) += qnoc-msm8974.o
-> >> >>> +obj-$(CONFIG_INTERCONNECT_QCOM_OSM_L3) += icc-osm-l3.o
-> >> >>>  obj-$(CONFIG_INTERCONNECT_QCOM_QCS404) += qnoc-qcs404.o
-> >> >>>  obj-$(CONFIG_INTERCONNECT_QCOM_RPMH) += icc-rpmh.o
-> >> >>>  obj-$(CONFIG_INTERCONNECT_QCOM_SC7180) += qnoc-sc7180.o
-> >> >>> diff --git a/drivers/interconnect/qcom/osm-l3.c
-> >> >>> b/drivers/interconnect/qcom/osm-l3.c
-> >> >>> new file mode 100644
-> >> >>> index 0000000000000..7fde53c70081e
-> >> >>> --- /dev/null
-> >> >>> +++ b/drivers/interconnect/qcom/osm-l3.c
-> >> >>> @@ -0,0 +1,267 @@
-> >> >>> +// SPDX-License-Identifier: GPL-2.0
-> >> >>> +/*
-> >> >>> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-> >> >>> + *
-> >> >>> + */
-> >> >>> +
-> >> >>> +#include <dt-bindings/interconnect/qcom,osm-l3.h>
-> >> >>> +#include <linux/bitfield.h>
-> >> >>> +#include <linux/clk.h>
-> >> >>> +#include <linux/interconnect-provider.h>
-> >> >>> +#include <linux/io.h>
-> >> >>> +#include <linux/kernel.h>
-> >> >>> +#include <linux/module.h>
-> >> >>> +#include <linux/of_device.h>
-> >> >>> +#include <linux/of_platform.h>
-> >> >>> +#include <linux/platform_device.h>
-> >> >>> +
-> >> >>> +#define LUT_MAX_ENTRIES                        40U
-> >> >>> +#define LUT_SRC                                GENMASK(31, 30)
-> >> >>> +#define LUT_L_VAL                      GENMASK(7, 0)
-> >> >>> +#define LUT_ROW_SIZE                   32
-> >> >>> +#define CLK_HW_DIV                     2
-> >> >>> +
-> >> >>> +/* Register offsets */
-> >> >>> +#define REG_ENABLE                     0x0
-> >> >>> +#define REG_FREQ_LUT                   0x110
-> >> >>> +#define REG_PERF_STATE                 0x920
-> >> >>> +
-> >> >>> +#define OSM_L3_MAX_LINKS               1
-> >> >>> +#define SDM845_MAX_RSC_NODES           130
-> >> >>
-> >> >> I'm nervous this define is going to fall out of date with
-> >> >> qcom,sdm845.h. I'm worried someone will end up adding a few more nodes
-> >> >> that were always there but previously hidden from Linux. Can we put
-> >> >> this define in include/dt-bindings/interconnect/qcom,sdm845.h, so at
-> >> >> least when that happens they'll come face to face with this define?
-> >> >> The same comment goes for the SC7180 define in patch 4.
-> >> >
-> >> > Yeah both solution require manual
-> >> > intervention how about we just go
-> >> > with what I proposed below.
-> >> >
-> >> >>
-> >> >> On second thought, this trick only works once. Are we sure there
-> >> >> aren't going to be other drivers that might want to tag on
-> >> >> interconnect nodes as well? How about instead we just add the enum
-> >> >> values below in qcom,sdm845.h as defines?
-> >> >
-> >> > Georgi/Evan,
-> >> > Since qcom,sdm845.h is specific to
-> >> > bindings shouldn't I just create a
-> >> > .h file with all the enums so that
-> >> > it can used across all icc providers
-> >> > on SDM845?
-> >>
-> >> This sounds good to me, unless Evan has any objections.
-> >
-> > So is this a new .h file with all the node numbers from qcom,sdm845.h
-> > and your new couple of nodes here? That would be fine with me.
-> >
-> > Or is it a .h file with only your two new node numbers? My worry there
-> > is when there are two or three other drivers like this one, it will be
-> > difficult to follow the total order of nodes as "base provider', "L3
-> > driver", "new driver 1", "new driver 2".... any thoughts on how we
-> > might address that?
->
-> the relative provider numbers from
-> qcom,sdm845.h have no useful meaning
-> for other icc providers. However the
-> enum defined in the sdm845.c which are
-> the node ids are needed and should be
-> sufficient to add/link to any icc node
-> across icc providers. So introducing a
-> sdm845.h with all the enumbs global node
-> ids is what I am proposing to do.
+On Wed 22 Jan 11:04 PST 2020, Mathieu Poirier wrote:
 
-Sibi and
-I chatted
-offline. I
-am on
-board!
+> On Tue, 21 Jan 2020 at 19:02, Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Fri 10 Jan 13:18 PST 2020, Mathieu Poirier wrote:
+> > > On Thu, Dec 26, 2019 at 09:32:09PM -0800, Bjorn Andersson wrote:
+> > [..]
+> > > > diff --git a/drivers/remoteproc/qcom_pil_info.c b/drivers/remoteproc/qcom_pil_info.c
+> > > > new file mode 100644
+> > > > index 000000000000..b0897ae9eae5
+> > > > --- /dev/null
+> > > > +++ b/drivers/remoteproc/qcom_pil_info.c
+> > > > @@ -0,0 +1,150 @@
+> > > > +// SPDX-License-Identifier: GPL-2.0-only
+> > > > +/*
+> > > > + * Copyright (c) 2019 Linaro Ltd.
+> > > > + */
+> > > > +#include <linux/module.h>
+> > > > +#include <linux/kernel.h>
+> > > > +#include <linux/of.h>
+> > > > +#include <linux/platform_device.h>
+> > > > +#include <linux/mutex.h>
+> > > > +#include <linux/regmap.h>
+> > > > +#include <linux/mfd/syscon.h>
+> > > > +#include <linux/slab.h>
+> > >
+> > > These should be in alphabetical order if there is no depencencies
+> > > between them, something checkpatch complains about.
+> > >
+> >
+> > Of course.
+> >
+> > > > +
+> > > > +struct pil_reloc_entry {
+> > > > +   char name[8];
+> > >
+> > > Please add a #define for the name length and reuse it in qcom_pil_info_store()
+> > >
+> >
+> > Ok
+> >
+> > [..]
+> > > > +void qcom_pil_info_store(const char *image, phys_addr_t base, size_t size)
+> > > > +{
+> > > > +   struct pil_reloc_entry *entry;
+> > > > +   int idx = -1;
+> > > > +   int i;
+> > > > +
+> > > > +   mutex_lock(&reloc_mutex);
+> > > > +   if (!_reloc)
+> > >
+> > > Since it is available, I would use function qcom_pil_info_available().  Also
+> > > checkpatch complains about indentation problems related to the 'if' condition
+> > > but I can't see what makes it angry.
+> > >
+> >
+> > Sure thing, and I'll double check the indentation.
+> >
+> > > > +           goto unlock;
+> > > > +
+> > > > +   for (i = 0; i < PIL_INFO_ENTRIES; i++) {
+> > > > +           if (!_reloc->entries[i].name[0]) {
+> > > > +                   if (idx == -1)
+> > > > +                           idx = i;
+> > > > +                   continue;
+> > > > +           }
+> > > > +
+> > > > +           if (!strncmp(_reloc->entries[i].name, image, 8)) {
+> > > > +                   idx = i;
+> > > > +                   goto found;
+> > > > +           }
+> > > > +   }
+> > > > +
+> > > > +   if (idx == -1) {
+> > > > +           dev_warn(_reloc->dev, "insufficient PIL info slots\n");
+> > > > +           goto unlock;
+> > >
+> > > Given how this function is used in the next patch I think an error should be
+> > > reported to the caller.
+> > >
+> >
+> > Just to clarify, certain global errors will cause the entire device to
+> > be reset and allow memory contents to be extracted for analysis in post
+> > mortem tools. This patch ensures that this information contains
+> > (structured) information about where each remote processor is loaded.
+> > Afaict the purpose of propagating errors from this function would be for
+> > the caller to abort the launching of a remote processor.
+> >
+> > I think it's better to take the risk of having insufficient data for the
+> > post mortem tools than to fail booting a remote processor for a reason
+> > that won't affect normal operation.
+> 
+> I understand the reasoning.  In that case it is probably best to let
+> the caller decide what to do with the returned error than deal with it
+> locally, especially since this is an exported function.  When using
+> qcom_pil_info_store(), I would write a comment that justifies the
+> reason for ignoring the return value (what you have above is quite
+> good).  Otherwise it is just a matter of time before automated tools
+> pickup on the anomaly and send patches to fix it.
+> 
+
+You're right, moving the decision to the remoteproc drivers will result
+in the decision being implemented in the right place. I will respin it
+accordingly.
+
+Thanks!
+Bjorn
