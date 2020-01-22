@@ -2,61 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A688C144CFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 09:11:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 524DF144D26
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 09:20:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725970AbgAVILE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jan 2020 03:11:04 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38235 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725883AbgAVILE (ORCPT
+        id S1729108AbgAVIUH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jan 2020 03:20:07 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:56109 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726219AbgAVIUE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jan 2020 03:11:04 -0500
-Received: by mail-wm1-f66.google.com with SMTP id u2so6117441wmc.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2020 00:11:02 -0800 (PST)
+        Wed, 22 Jan 2020 03:20:04 -0500
+Received: by mail-wm1-f65.google.com with SMTP id q9so5803188wmj.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2020 00:20:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=yzwUgPfTsZjNhbzkAMeFUhcszle/0vrYiw5ZjCc0qF4=;
-        b=TnzHga9S8h9Be3FoO1XWiv2DIzQOGFACQRd/yosgjSomuSRrdsUstes76PRPXV3SXa
-         lPpZVH/VQVCSFumMyVuxJ+sj0AJi6QS3t1SNnynz5KV1aRgUnTiooAID1E5jY+Jr/Nco
-         6J5N3+JDV6lmdl37FTwvPbcDNXDe5c5ud8XHGmniqTO1JQCteJVUMxSs/fm/0f38AEtH
-         kmEscUWZa169QPhWsZBGusDalxGDNLC9SYLysnov7GYfFnakaP/bXli0ISTfKEtKOscE
-         sxksTJP3Uub69bRrC8BEiwBqcIq6j/AbthaYwg6gh/KIRQP5H4FBXy/HKVALdEw1XYvi
-         8S0w==
+        bh=M+iOlDTH3ew9FlBT8LllWQrwpgclA7C5MSbbYFNG6t0=;
+        b=r2bIq1DKmQiUPmT41X6TDYq4i6tmVUjwmxNm0uuwSbeHCz2ACOktDXUiJG2zZYqJ9y
+         3g3FQRJk8CuD6VceKXeYIavP5D8Wy8NNhuopNYauZsS5DQJ07PMGupr4yuftpf0shcbt
+         RbxhotiKll1zyVtETV4J1ejviHIaLihWA0z0paqojTBy4QnOrskzeSWL4qbT+A+tCcao
+         dS0UK0h2IHji3vkKRQzj1I/QXTfCOTp8pdehCNgmVO1pxWe7vEIYBnhEuiIinqJHMR/a
+         NF137O6cOdxbGKd70wjUBFv3dUvPDyiUvuOq4wOW1UqMIW+Qck2XDr+ZeHeGm6h2BPjl
+         SJfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=yzwUgPfTsZjNhbzkAMeFUhcszle/0vrYiw5ZjCc0qF4=;
-        b=O4YoCKySn/Q9n0ZDne94vL072X0rk1AeThEUVTPv7/uRrhsarQ4jYJobmVBAeIsKV4
-         7rIsPJJ49ltK18+W32rx9gsRUNm3txCTlxQVM/iNmSmfbxrnBcue1V6lBxBEuHJEDOGl
-         OzjQ0Y/XsbV2/Z+J7mNOMWPQnux6nqwvIRRM6Kd0dwWuZNXP4cVYvhRnLoo53ZH0Plb6
-         wlED3wFCgfL35JZAiNhUGA/QFue+JF+k1A1AJ/DPH028E31rE949hMXp6x+/TDF2LJyL
-         +O/TVeiq18LBFvk3qjBJ4uG040HcS0oQMZOv69DY+FxJQ920JMLBE+Qbyf3sHi45n1fN
-         odcw==
-X-Gm-Message-State: APjAAAX8/4Q8my59nnttxdx0PGhM3/YbNmCZkBDNeMk7LMtVIo0DANau
-        Zlldk4APw5RfAWIXtGMbd2gzsg==
-X-Google-Smtp-Source: APXvYqzzRzEr6jwcqUDFihYrTdelVgzN2tvwvMTiwlHnUIRZtbYeZLQz/sMz+0jB+J5904ICya9/MA==
-X-Received: by 2002:a7b:ce8b:: with SMTP id q11mr1622019wmj.100.1579680661316;
-        Wed, 22 Jan 2020 00:11:01 -0800 (PST)
+        bh=M+iOlDTH3ew9FlBT8LllWQrwpgclA7C5MSbbYFNG6t0=;
+        b=bbDX/enn4iFWe8q8T6Dx2wklemo288G2l6LalDpkcPA3hO4Kwzy0Br75ed9IoLhSj2
+         H3BWGiCucn3NVFlbCLw91Gv7TXP94yg9NE5uCksTJf1E2VWK+/L1s+TI+1pL8uTvSq+q
+         1biIl5gT0PLU1jyeROglqlTO/6e0UwqOvfMCVrqtAApQLJ9zYV+PYnHVibirQQTkNEHs
+         rvNtuFiwU4NeUuxDX+0jt84CJ/RGnYGnXG0O5VNWDWsUZXj1tfz32QPJ7DH2XVJTpzLE
+         Ecs3wUMBMJ27p5bZBJsrQVlVvPPivfM/QKWtD4/GUhqxPrTKa8g0IcBYf3wdaMd4nXDH
+         7xWw==
+X-Gm-Message-State: APjAAAXoGc9MRZO6nchrynDVX0uWTVInMObb52MdtJmrMdvc96/uA+xK
+        atdkdM3idtE49Ts8rjArWxIO+Q==
+X-Google-Smtp-Source: APXvYqxlSKg5k7xwSMOzY0s0isT4HpPGdB0mVsgMKOxhoZAnTU+kWDcfGhKQ2E2qyqHzYOpNchy7cQ==
+X-Received: by 2002:a05:600c:108a:: with SMTP id e10mr1603881wmd.38.1579681201241;
+        Wed, 22 Jan 2020 00:20:01 -0800 (PST)
 Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id o4sm56013442wrw.97.2020.01.22.00.11.00
+        by smtp.googlemail.com with ESMTPSA id a9sm2739774wmm.15.2020.01.22.00.20.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Jan 2020 00:11:00 -0800 (PST)
+        Wed, 22 Jan 2020 00:20:00 -0800 (PST)
 Subject: Re: [PATCH v4 2/4] interconnect: qcom: Add OSM L3 interconnect
  provider support
-To:     Sibi Sankar <sibis@codeaurora.org>, robh+dt@kernel.org,
-        evgreen@chromium.org
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, mark.rutland@arm.com,
-        daidavid1@codeaurora.org, saravanak@google.com,
-        viresh.kumar@linaro.org
+To:     Sibi Sankar <sibis@codeaurora.org>,
+        Evan Green <evgreen@chromium.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        David Dai <daidavid1@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>
 References: <20200109211215.18930-1-sibis@codeaurora.org>
  <20200109211215.18930-3-sibis@codeaurora.org>
+ <CAE=gft7ZUTiGrvsaqfrVv-bH3w75as7G1UJRn3aJs3ECqodpQg@mail.gmail.com>
+ <dad8936ba4444c3377d777cbbb879dc3@codeaurora.org>
 From:   Georgi Djakov <georgi.djakov@linaro.org>
 Openpgp: preference=signencrypt
 Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
@@ -102,373 +110,140 @@ Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
  7ayYJIXFqjl/X0KBcCbiAl4vbdBw1bqFnO4zd1lMXKVoa29UHqby4MPbQhjWNVv9kqp8A39+
  E9xw890l1xdERkjVKX6IEJu2hf7X3MMl9tOjBK6MvdOUxvh1bNNmXh7OlBL1MpJYY/ydIm3B
  KEmKjLDvB0pePJkdTw==
-Message-ID: <543ac242-236a-ead9-c2fb-4e3b47544c5b@linaro.org>
-Date:   Wed, 22 Jan 2020 10:10:59 +0200
+Message-ID: <03f83755-bdcc-dc39-0eae-08414751be57@linaro.org>
+Date:   Wed, 22 Jan 2020 10:19:58 +0200
 MIME-Version: 1.0
-In-Reply-To: <20200109211215.18930-3-sibis@codeaurora.org>
+In-Reply-To: <dad8936ba4444c3377d777cbbb879dc3@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sibi,
-
-Thanks for working on this!
-
-On 1/9/20 23:12, Sibi Sankar wrote:
-> On some Qualcomm SoCs, Operating State Manager (OSM) controls the
-> resources of scaling L3 caches. Add a driver to handle bandwidth
-> requests to OSM L3 from CPU on SDM845 SoCs.
+On 1/22/20 08:45, Sibi Sankar wrote:
+> Hey Evan,
 > 
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> ---
->  drivers/interconnect/qcom/Kconfig  |   7 +
->  drivers/interconnect/qcom/Makefile |   2 +
->  drivers/interconnect/qcom/osm-l3.c | 267 +++++++++++++++++++++++++++++
->  3 files changed, 276 insertions(+)
->  create mode 100644 drivers/interconnect/qcom/osm-l3.c
+> Thanks for the review!
 > 
-> diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
-> index a9bbbdf7400f9..b94d28e7bf700 100644
-> --- a/drivers/interconnect/qcom/Kconfig
-> +++ b/drivers/interconnect/qcom/Kconfig
-> @@ -14,6 +14,13 @@ config INTERCONNECT_QCOM_MSM8974
->  	 This is a driver for the Qualcomm Network-on-Chip on msm8974-based
->  	 platforms.
->  
-> +config INTERCONNECT_QCOM_OSM_L3
-> +	tristate "Qualcomm OSM L3 interconnect driver"
-> +	depends on INTERCONNECT_QCOM || COMPILE_TEST
-> +	help
-> +	  Say y here to support the Operating State Manager (OSM) interconnect
-> +	  driver which controls the scaling of L3 caches on Qualcomm SoCs.
-> +
->  config INTERCONNECT_QCOM_QCS404
->  	tristate "Qualcomm QCS404 interconnect driver"
->  	depends on INTERCONNECT_QCOM
-> diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
-> index 55ec3c5c89dbd..89fecbd1257c7 100644
-> --- a/drivers/interconnect/qcom/Makefile
-> +++ b/drivers/interconnect/qcom/Makefile
-> @@ -1,5 +1,6 @@
->  # SPDX-License-Identifier: GPL-2.0
->  
-> +icc-osm-l3-objs				:= osm-l3.o
->  qnoc-msm8974-objs			:= msm8974.o
->  qnoc-qcs404-objs			:= qcs404.o
->  qnoc-sc7180-objs			:= sc7180.o
-> @@ -12,6 +13,7 @@ icc-smd-rpm-objs			:= smd-rpm.o
->  obj-$(CONFIG_INTERCONNECT_QCOM_BCM_VOTER) += icc-bcm-voter.o
->  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8916) += qnoc-msm8916.o
->  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8974) += qnoc-msm8974.o
-> +obj-$(CONFIG_INTERCONNECT_QCOM_OSM_L3) += icc-osm-l3.o
->  obj-$(CONFIG_INTERCONNECT_QCOM_QCS404) += qnoc-qcs404.o
->  obj-$(CONFIG_INTERCONNECT_QCOM_RPMH) += icc-rpmh.o
->  obj-$(CONFIG_INTERCONNECT_QCOM_SC7180) += qnoc-sc7180.o
-> diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-> new file mode 100644
-> index 0000000000000..7fde53c70081e
-> --- /dev/null
-> +++ b/drivers/interconnect/qcom/osm-l3.c
-> @@ -0,0 +1,267 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-
-You will need to update the year.
-
-> + *
-> + */
-> +
-> +#include <dt-bindings/interconnect/qcom,osm-l3.h>
-
-Please move this below the other linux/ headers.
-
-> +#include <linux/bitfield.h>
-> +#include <linux/clk.h>
-> +#include <linux/interconnect-provider.h>
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include <linux/of_platform.h>
-
-Is this used?
-
-> +#include <linux/platform_device.h>
-> +
-> +#define LUT_MAX_ENTRIES			40U
-> +#define LUT_SRC				GENMASK(31, 30)
-> +#define LUT_L_VAL			GENMASK(7, 0)
-> +#define LUT_ROW_SIZE			32
-> +#define CLK_HW_DIV			2
-> +
-> +/* Register offsets */
-> +#define REG_ENABLE			0x0
-> +#define REG_FREQ_LUT			0x110
-> +#define REG_PERF_STATE			0x920
-> +
-> +#define OSM_L3_MAX_LINKS		1
-> +#define SDM845_MAX_RSC_NODES		130
-
-This looks fragile.
-
-> +
-> +#define to_qcom_provider(_provider) \
-> +	container_of(_provider, struct qcom_osm_l3_icc_provider, provider)
-> +
-> +enum {
-> +	SDM845_MASTER_OSM_L3_APPS = SDM845_MAX_RSC_NODES + 1,
-> +	SDM845_SLAVE_OSM_L3,
-> +};
-> +
-> +struct qcom_osm_l3_icc_provider {
-> +	void __iomem *base;
-> +	unsigned int max_state;
-> +	unsigned long lut_tables[LUT_MAX_ENTRIES];
-> +	struct icc_provider provider;
-> +};
-> +
-> +/**
-> + * struct qcom_icc_node - Qualcomm specific interconnect nodes
-> + * @name: the node name used in debugfs
-> + * @links: an array of nodes where we can go next while traversing
-> + * @id: a unique node identifier
-> + * @num_links: the total number of @links
-> + * @buswidth: width of the interconnect between a node and the bus
-> + */
-> +struct qcom_icc_node {
-> +	const char *name;
-> +	u16 links[OSM_L3_MAX_LINKS];
-> +	u16 id;
-> +	u16 num_links;
-> +	u16 buswidth;
-> +};
-> +
-> +struct qcom_icc_desc {
-> +	struct qcom_icc_node **nodes;
-> +	size_t num_nodes;
-> +};
-> +
-> +#define DEFINE_QNODE(_name, _id, _buswidth, ...)			\
-> +		static struct qcom_icc_node _name = {			\
-> +		.name = #_name,						\
-> +		.id = _id,						\
-> +		.buswidth = _buswidth,					\
-> +		.num_links = ARRAY_SIZE(((int[]){ __VA_ARGS__ })),	\
-> +		.links = { __VA_ARGS__ },				\
-> +	}
-> +
-> +DEFINE_QNODE(sdm845_osm_apps_l3, SDM845_MASTER_OSM_L3_APPS, 16, SDM845_SLAVE_OSM_L3);
-> +DEFINE_QNODE(sdm845_osm_l3, SDM845_SLAVE_OSM_L3, 16);
-> +
-> +static struct qcom_icc_node *sdm845_osm_l3_nodes[] = {
-> +	[MASTER_OSM_L3_APPS] = &sdm845_osm_apps_l3,
-> +	[SLAVE_OSM_L3] = &sdm845_osm_l3,
-> +};
-> +
-> +static struct qcom_icc_desc sdm845_icc_osm_l3 = {
-> +	.nodes = sdm845_osm_l3_nodes,
-> +	.num_nodes = ARRAY_SIZE(sdm845_osm_l3_nodes),
-> +};
-> +
-> +static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
-> +{
-> +	struct qcom_osm_l3_icc_provider *qp;
-> +	struct icc_provider *provider;
-> +	struct qcom_icc_node *qn;
-> +	struct icc_node *n;
-> +	unsigned int index;
-> +	u32 agg_peak = 0;
-> +	u32 agg_avg = 0;
-> +	u64 rate;
-> +
-> +	qn = src->data;
-> +	provider = src->provider;
-> +	qp = to_qcom_provider(provider);
-> +
-> +	list_for_each_entry(n, &provider->nodes, node_list)
-> +		provider->aggregate(n, 0, n->avg_bw, n->peak_bw,
-> +				    &agg_avg, &agg_peak);
-> +
-> +	rate = max(agg_avg, agg_peak);
-> +	rate = icc_units_to_bps(rate);
-> +	do_div(rate, qn->buswidth);
-> +
-> +	for (index = 0; index < qp->max_state - 1; index++) {
-> +		if (qp->lut_tables[index] >= rate)
-> +			break;
-> +	}
-> +
-> +	writel_relaxed(index, qp->base + REG_PERF_STATE);
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_osm_l3_remove(struct platform_device *pdev)
-> +{
-> +	struct qcom_osm_l3_icc_provider *qp = platform_get_drvdata(pdev);
-> +
-> +	icc_nodes_remove(&qp->provider);
-> +	return icc_provider_del(&qp->provider);
-> +}
-> +
-> +static int qcom_osm_l3_probe(struct platform_device *pdev)
-> +{
-> +	u32 info, src, lval, i, prev_freq = 0, freq;
-> +	static unsigned long hw_rate, xo_rate;
-> +	struct qcom_osm_l3_icc_provider *qp;
-> +	const struct qcom_icc_desc *desc;
-> +	struct icc_onecell_data *data;
-> +	struct icc_provider *provider;
-> +	struct qcom_icc_node **qnodes;
-> +	struct icc_node *node;
-> +	size_t num_nodes;
-> +	struct clk *clk;
-> +	int ret;
-> +
-> +	clk = clk_get(&pdev->dev, "xo");
-> +	if (IS_ERR(clk))
-> +		return PTR_ERR(clk);
-> +
-> +	xo_rate = clk_get_rate(clk);
-> +	clk_put(clk);
-> +
-> +	clk = clk_get(&pdev->dev, "alternate");
-> +	if (IS_ERR(clk))
-> +		return PTR_ERR(clk);
-> +
-> +	hw_rate = clk_get_rate(clk) / CLK_HW_DIV;
-> +	clk_put(clk);
-> +
-> +	qp = devm_kzalloc(&pdev->dev, sizeof(*qp), GFP_KERNEL);
-> +	if (!qp)
-> +		return -ENOMEM;
-> +
-> +	qp->base = devm_platform_ioremap_resource(pdev, 0);
-> +	if (IS_ERR(qp->base))
-> +		return PTR_ERR(qp->base);
-> +
-> +	/* HW should be in enabled state to proceed */
-> +	if (!(readl_relaxed(qp->base + REG_ENABLE) & 0x1)) {
-> +		dev_err(&pdev->dev, "error hardware not enabled\n");
-> +		return -ENODEV;
-> +	}
-> +
-> +	for (i = 0; i < LUT_MAX_ENTRIES; i++) {
-> +		info = readl_relaxed(qp->base + REG_FREQ_LUT +
-> +				     i * LUT_ROW_SIZE);
-> +		src = FIELD_GET(LUT_SRC, info);
-> +		lval = FIELD_GET(LUT_L_VAL, info);
-> +		if (src)
-> +			freq = xo_rate * lval;
-> +		else
-> +			freq = hw_rate;
-> +
-> +		/* Two of the same frequencies signify end of table */
-> +		if (i > 0 && prev_freq == freq)
-> +			break;
-> +
-> +		dev_dbg(&pdev->dev, "index=%d freq=%d\n", i, freq);
-> +
-> +		qp->lut_tables[i] = freq;
-> +		prev_freq = freq;
-> +	}
-> +	qp->max_state = i;
-> +
-> +	desc = of_device_get_match_data(&pdev->dev);
-> +	if (!desc)
-> +		return -EINVAL;
-> +
-> +	qnodes = desc->nodes;
-> +	num_nodes = desc->num_nodes;
-> +
-> +	data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), GFP_KERNEL);
-> +	if (!data)
-> +		return -ENOMEM;
-> +
-> +	provider = &qp->provider;
-> +	provider->dev = &pdev->dev;
-> +	provider->set = qcom_icc_set;
-> +	provider->aggregate = icc_std_aggregate;
-> +	provider->xlate = of_icc_xlate_onecell;
-> +	INIT_LIST_HEAD(&provider->nodes);
-> +	provider->data = data;
-> +
-> +	ret = icc_provider_add(provider);
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "error adding interconnect provider\n");
-> +		return ret;
-> +	}
-> +
-> +	for (i = 0; i < num_nodes; i++) {
-> +		size_t j;
-> +
-> +		node = icc_node_create(qnodes[i]->id);
-> +		if (IS_ERR(node)) {
-> +			ret = PTR_ERR(node);
-> +			goto err;
-> +		}
-> +
-> +		node->name = qnodes[i]->name;
-> +		node->data = qnodes[i];
-> +		icc_node_add(node, provider);
-> +
-> +		dev_dbg(&pdev->dev, "registered node %p %s %d\n", node,
-> +			qnodes[i]->name, node->id);
-
-Not sure how useful is this, but maybe it would be more appropriate to move it
-to the framework instead of duplicating it in all the drivers. Please remove it.
-
-> +
-> +		for (j = 0; j < qnodes[i]->num_links; j++)
-> +			icc_link_create(node, qnodes[i]->links[j]);
-> +
-> +		data->nodes[i] = node;
-> +	}
-> +	data->num_nodes = num_nodes;
-> +
-> +	platform_set_drvdata(pdev, qp);
-> +
-> +	return ret;
-
-Just return 0.
-
-> +err:
-> +	qcom_osm_l3_remove(pdev);
-
-I am afraid that this will not work. This function is using
-platform_get_drvdata(), but the data is set after all the nodes
-and links are created.
-
-> +	return ret;
-> +}
-> +
-> +static const struct of_device_id osm_l3_of_match[] = {
-> +	{ .compatible = "qcom,sdm845-osm-l3", .data = &sdm845_icc_osm_l3 },
-> +	{ },
-
-The comma is not needed.
-
-> +};
-> +MODULE_DEVICE_TABLE(of, osm_l3_of_match);
-> +
-> +static struct platform_driver osm_l3_driver = {
-> +	.probe = qcom_osm_l3_probe,
-> +	.remove = qcom_osm_l3_remove,
-> +	.driver = {
-> +		.name = "osm-l3",
-> +		.of_match_table = osm_l3_of_match,
-> +	},
-> +};
-> +module_platform_driver(osm_l3_driver);
-> +
-> +MODULE_DESCRIPTION("Qualcomm OSM L3 interconnect driver");
-> +MODULE_LICENSE("GPL v2");
+> On 2020-01-22 03:03, Evan Green wrote:
+>> On Thu, Jan 9, 2020 at 1:12 PM Sibi Sankar <sibis@codeaurora.org> wrote:
+>>>
+>>> On some Qualcomm SoCs, Operating State Manager (OSM) controls the
+>>> resources of scaling L3 caches. Add a driver to handle bandwidth
+>>> requests to OSM L3 from CPU on SDM845 SoCs.
+>>>
+>>> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>>> ---
+>>>  drivers/interconnect/qcom/Kconfig  |   7 +
+>>>  drivers/interconnect/qcom/Makefile |   2 +
+>>>  drivers/interconnect/qcom/osm-l3.c | 267 +++++++++++++++++++++++++++++
+>>>  3 files changed, 276 insertions(+)
+>>>  create mode 100644 drivers/interconnect/qcom/osm-l3.c
+>>>
+>>> diff --git a/drivers/interconnect/qcom/Kconfig
+>>> b/drivers/interconnect/qcom/Kconfig
+>>> index a9bbbdf7400f9..b94d28e7bf700 100644
+>>> --- a/drivers/interconnect/qcom/Kconfig
+>>> +++ b/drivers/interconnect/qcom/Kconfig
+>>> @@ -14,6 +14,13 @@ config INTERCONNECT_QCOM_MSM8974
+>>>          This is a driver for the Qualcomm Network-on-Chip on msm8974-based
+>>>          platforms.
+>>>
+>>> +config INTERCONNECT_QCOM_OSM_L3
+>>> +       tristate "Qualcomm OSM L3 interconnect driver"
+>>> +       depends on INTERCONNECT_QCOM || COMPILE_TEST
+>>> +       help
+>>> +         Say y here to support the Operating State Manager (OSM) interconnect
+>>> +         driver which controls the scaling of L3 caches on Qualcomm SoCs.
+>>> +
+>>>  config INTERCONNECT_QCOM_QCS404
+>>>         tristate "Qualcomm QCS404 interconnect driver"
+>>>         depends on INTERCONNECT_QCOM
+>>> diff --git a/drivers/interconnect/qcom/Makefile
+>>> b/drivers/interconnect/qcom/Makefile
+>>> index 55ec3c5c89dbd..89fecbd1257c7 100644
+>>> --- a/drivers/interconnect/qcom/Makefile
+>>> +++ b/drivers/interconnect/qcom/Makefile
+>>> @@ -1,5 +1,6 @@
+>>>  # SPDX-License-Identifier: GPL-2.0
+>>>
+>>> +icc-osm-l3-objs                                := osm-l3.o
+>>>  qnoc-msm8974-objs                      := msm8974.o
+>>>  qnoc-qcs404-objs                       := qcs404.o
+>>>  qnoc-sc7180-objs                       := sc7180.o
+>>> @@ -12,6 +13,7 @@ icc-smd-rpm-objs                      := smd-rpm.o
+>>>  obj-$(CONFIG_INTERCONNECT_QCOM_BCM_VOTER) += icc-bcm-voter.o
+>>>  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8916) += qnoc-msm8916.o
+>>>  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8974) += qnoc-msm8974.o
+>>> +obj-$(CONFIG_INTERCONNECT_QCOM_OSM_L3) += icc-osm-l3.o
+>>>  obj-$(CONFIG_INTERCONNECT_QCOM_QCS404) += qnoc-qcs404.o
+>>>  obj-$(CONFIG_INTERCONNECT_QCOM_RPMH) += icc-rpmh.o
+>>>  obj-$(CONFIG_INTERCONNECT_QCOM_SC7180) += qnoc-sc7180.o
+>>> diff --git a/drivers/interconnect/qcom/osm-l3.c
+>>> b/drivers/interconnect/qcom/osm-l3.c
+>>> new file mode 100644
+>>> index 0000000000000..7fde53c70081e
+>>> --- /dev/null
+>>> +++ b/drivers/interconnect/qcom/osm-l3.c
+>>> @@ -0,0 +1,267 @@
+>>> +// SPDX-License-Identifier: GPL-2.0
+>>> +/*
+>>> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+>>> + *
+>>> + */
+>>> +
+>>> +#include <dt-bindings/interconnect/qcom,osm-l3.h>
+>>> +#include <linux/bitfield.h>
+>>> +#include <linux/clk.h>
+>>> +#include <linux/interconnect-provider.h>
+>>> +#include <linux/io.h>
+>>> +#include <linux/kernel.h>
+>>> +#include <linux/module.h>
+>>> +#include <linux/of_device.h>
+>>> +#include <linux/of_platform.h>
+>>> +#include <linux/platform_device.h>
+>>> +
+>>> +#define LUT_MAX_ENTRIES                        40U
+>>> +#define LUT_SRC                                GENMASK(31, 30)
+>>> +#define LUT_L_VAL                      GENMASK(7, 0)
+>>> +#define LUT_ROW_SIZE                   32
+>>> +#define CLK_HW_DIV                     2
+>>> +
+>>> +/* Register offsets */
+>>> +#define REG_ENABLE                     0x0
+>>> +#define REG_FREQ_LUT                   0x110
+>>> +#define REG_PERF_STATE                 0x920
+>>> +
+>>> +#define OSM_L3_MAX_LINKS               1
+>>> +#define SDM845_MAX_RSC_NODES           130
+>>
+>> I'm nervous this define is going to fall out of date with
+>> qcom,sdm845.h. I'm worried someone will end up adding a few more nodes
+>> that were always there but previously hidden from Linux. Can we put
+>> this define in include/dt-bindings/interconnect/qcom,sdm845.h, so at
+>> least when that happens they'll come face to face with this define?
+>> The same comment goes for the SC7180 define in patch 4.
 > 
+> Yeah both solution require manual
+> intervention how about we just go
+> with what I proposed below.
+> 
+>>
+>> On second thought, this trick only works once. Are we sure there
+>> aren't going to be other drivers that might want to tag on
+>> interconnect nodes as well? How about instead we just add the enum
+>> values below in qcom,sdm845.h as defines?
+> 
+> Georgi/Evan,
+> Since qcom,sdm845.h is specific to
+> bindings shouldn't I just create a
+> .h file with all the enums so that
+> it can used across all icc providers
+> on SDM845?
+
+This sounds good to me, unless Evan has any objections.
 
 Thanks,
 Georgi
