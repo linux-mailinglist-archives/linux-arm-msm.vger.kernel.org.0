@@ -2,90 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BEE0144D95
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 09:24:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DAC14144F3A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 10:36:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729157AbgAVIYb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jan 2020 03:24:31 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:54758 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729147AbgAVIYb (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jan 2020 03:24:31 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1579681470; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=nD1uDpoY7on6/qYV0kLzeZEptmi3C0Urt07mALi0s8k=; b=Wui+LGphn+mABh89XdojXbRNTJRVAcJMKVB14bsO+K9juJ3vf/OKLE61ILht2ZvO/6hyPj6U
- FjPK5dUtMCmfpw5niq29owuOU/jipkzf2T+HbhneRAMXcwJwZS6K14LaARrHxtt9dp6wqEQz
- yUBNJpFeL9j8QIAgHdjtdwjPspU=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e2806bb.7f195737fc00-smtp-out-n02;
- Wed, 22 Jan 2020 08:24:27 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C7B28C433CB; Wed, 22 Jan 2020 08:24:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from aneelaka-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: aneela)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 30FB2C433A2;
-        Wed, 22 Jan 2020 08:24:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 30FB2C433A2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=aneela@codeaurora.org
-From:   Arun Kumar Neelakantam <aneela@codeaurora.org>
-To:     bjorn.andersson@linaro.org, clew@codeaurora.org
-Cc:     Arun Kumar Neelakantam <aneela@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] soc: qcom: aoss: Read back before triggering the IRQ
-Date:   Wed, 22 Jan 2020 13:54:13 +0530
-Message-Id: <1579681454-1229-1-git-send-email-aneela@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        id S1730061AbgAVJfw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jan 2020 04:35:52 -0500
+Received: from foss.arm.com ([217.140.110.172]:53370 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730480AbgAVJfw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 22 Jan 2020 04:35:52 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1ADEE1FB;
+        Wed, 22 Jan 2020 01:35:51 -0800 (PST)
+Received: from [10.37.12.190] (unknown [10.37.12.190])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 19A903F68E;
+        Wed, 22 Jan 2020 01:35:38 -0800 (PST)
+Subject: Re: [PATCH 3/4] thermal: devfreq_cooling: Refactor code and switch to
+ use Energy Model
+To:     Steven Rostedt <rostedt@goodmis.org>
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com, Morten.Rasmussen@arm.com,
+        Dietmar.Eggemann@arm.com, Chris.Redpath@arm.com,
+        ionela.voinescu@arm.com, javi.merino@arm.com,
+        cw00.choi@samsung.com, b.zolnierkie@samsung.com, rjw@rjwysocki.net,
+        sudeep.holla@arm.com, viresh.kumar@linaro.org, nm@ti.com,
+        sboyd@kernel.org, rui.zhang@intel.com, amit.kucheria@verdurent.com,
+        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        qperret@google.com, bsegall@google.com, mgorman@suse.de,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
+        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, patrick.bellasi@matbug.net
+References: <20200116152032.11301-1-lukasz.luba@arm.com>
+ <20200116152032.11301-4-lukasz.luba@arm.com>
+ <20200121121124.1a1f3175@gandalf.local.home>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <6c4c5ac6-2d80-694e-866b-21fe5ef1853f@arm.com>
+Date:   Wed, 22 Jan 2020 09:35:36 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
+MIME-Version: 1.0
+In-Reply-To: <20200121121124.1a1f3175@gandalf.local.home>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In some device memory used by msm_qmp, there can be an early ack of a
-write to memory succeeding. This may cause the outgoing interrupt to be
-triggered before the msgram reflects the write.
 
-Add a readback to ensure the data is flushed to device memory before
-triggering the ipc interrupt.
 
-Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
----
- drivers/soc/qcom/qcom_aoss.c | 4 ++++
- 1 file changed, 4 insertions(+)
+On 1/21/20 5:11 PM, Steven Rostedt wrote:
+> On Thu, 16 Jan 2020 15:20:31 +0000
+> lukasz.luba@arm.com wrote:
+> 
+>> diff --git a/include/trace/events/thermal.h b/include/trace/events/thermal.h
+>> index 135e5421f003..8a5f04888abd 100644
+>> --- a/include/trace/events/thermal.h
+>> +++ b/include/trace/events/thermal.h
+>> @@ -153,31 +153,30 @@ TRACE_EVENT(thermal_power_cpu_limit,
+>>   TRACE_EVENT(thermal_power_devfreq_get_power,
+>>   	TP_PROTO(struct thermal_cooling_device *cdev,
+>>   		 struct devfreq_dev_status *status, unsigned long freq,
+>> -		u32 dynamic_power, u32 static_power, u32 power),
+>> +		u32 power),
+>>   
+>> -	TP_ARGS(cdev, status,  freq, dynamic_power, static_power, power),
+>> +	TP_ARGS(cdev, status,  freq, power),
+>>   
+>>   	TP_STRUCT__entry(
+>>   		__string(type,         cdev->type    )
+>>   		__field(unsigned long, freq          )
+>> -		__field(u32,           load          )
+>> -		__field(u32,           dynamic_power )
+>> -		__field(u32,           static_power  )
+>> +		__field(u32,           busy_time)
+>> +		__field(u32,           total_time)
+>>   		__field(u32,           power)
+>>   	),
+>>   
+>>   	TP_fast_assign(
+>>   		__assign_str(type, cdev->type);
+>>   		__entry->freq = freq;
+>> -		__entry->load = (100 * status->busy_time) / status->total_time;
+>> -		__entry->dynamic_power = dynamic_power;
+>> -		__entry->static_power = static_power;
+>> +		__entry->busy_time = status->busy_time;
+>> +		__entry->total_time = status->total_time;
+>>   		__entry->power = power;
+>>   	),
+>>   
+>> -	TP_printk("type=%s freq=%lu load=%u dynamic_power=%u static_power=%u power=%u",
+>> +	TP_printk("type=%s freq=%lu load=%u power=%u",
+>>   		__get_str(type), __entry->freq,
+>> -		__entry->load, __entry->dynamic_power, __entry->static_power,
+>> +		__entry->total_time == 0 ? 0 :
+>> +			(100 * __entry->busy_time) / __entry->total_time,
+>>   		__entry->power)
+>>   );
+>>   
+> 
+> Tracing updates look fine to me. Having the division on the output
+> makes more sense.
+> 
+> Reviewed-by: Steven Rostedt (VMware) <rostedt@goodmis.org> # for tracing code
+> 
+> -- Steve
+> 
 
-diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-index fe79661..f43a2e0 100644
---- a/drivers/soc/qcom/qcom_aoss.c
-+++ b/drivers/soc/qcom/qcom_aoss.c
-@@ -225,6 +225,7 @@ static bool qmp_message_empty(struct qmp *qmp)
- static int qmp_send(struct qmp *qmp, const void *data, size_t len)
- {
- 	long time_left;
-+	size_t tlen;
- 	int ret;
- 
- 	if (WARN_ON(len + sizeof(u32) > qmp->size))
-@@ -239,6 +240,9 @@ static int qmp_send(struct qmp *qmp, const void *data, size_t len)
- 	__iowrite32_copy(qmp->msgram + qmp->offset + sizeof(u32),
- 			 data, len / sizeof(u32));
- 	writel(len, qmp->msgram + qmp->offset);
-+
-+	/* Read back len to confirm data written in message RAM */
-+	tlen = readl(qmp->msgram + qmp->offset);
- 	qmp_kick(qmp);
- 
- 	time_left = wait_event_interruptible_timeout(qmp->event,
--- 
-1.9.1
+Thank you Steven, I will include it in the next version with a proper
+label.
+
+Regards,
+Lukasz
