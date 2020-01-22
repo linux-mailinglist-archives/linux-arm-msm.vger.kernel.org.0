@@ -2,123 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DAC14144F3A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 10:36:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8151314532B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 11:55:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730061AbgAVJfw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jan 2020 04:35:52 -0500
-Received: from foss.arm.com ([217.140.110.172]:53370 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730480AbgAVJfw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jan 2020 04:35:52 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1ADEE1FB;
-        Wed, 22 Jan 2020 01:35:51 -0800 (PST)
-Received: from [10.37.12.190] (unknown [10.37.12.190])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 19A903F68E;
-        Wed, 22 Jan 2020 01:35:38 -0800 (PST)
-Subject: Re: [PATCH 3/4] thermal: devfreq_cooling: Refactor code and switch to
- use Energy Model
-To:     Steven Rostedt <rostedt@goodmis.org>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com, Morten.Rasmussen@arm.com,
-        Dietmar.Eggemann@arm.com, Chris.Redpath@arm.com,
-        ionela.voinescu@arm.com, javi.merino@arm.com,
-        cw00.choi@samsung.com, b.zolnierkie@samsung.com, rjw@rjwysocki.net,
-        sudeep.holla@arm.com, viresh.kumar@linaro.org, nm@ti.com,
-        sboyd@kernel.org, rui.zhang@intel.com, amit.kucheria@verdurent.com,
-        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        qperret@google.com, bsegall@google.com, mgorman@suse.de,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
-        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, patrick.bellasi@matbug.net
-References: <20200116152032.11301-1-lukasz.luba@arm.com>
- <20200116152032.11301-4-lukasz.luba@arm.com>
- <20200121121124.1a1f3175@gandalf.local.home>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <6c4c5ac6-2d80-694e-866b-21fe5ef1853f@arm.com>
-Date:   Wed, 22 Jan 2020 09:35:36 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1727022AbgAVKzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jan 2020 05:55:47 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36331 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729108AbgAVKzo (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 22 Jan 2020 05:55:44 -0500
+Received: by mail-wm1-f65.google.com with SMTP id p17so6674423wma.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2020 02:55:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=yy5Pm6Chzs3nZ800EbMSsW7jSH1HwjtkYzsQKIFnm8w=;
+        b=rocHCsiCeMC1gpXVMEd5t5GK6MZu9gxeI/GUSwU8+8FCQI16R2LHI3G4MWOh1lr3g3
+         i1wiLGTmuLwe05mlGIErWGWzGoqLVAABV3NaILq2JqpGu7mjVMG0VWhHTkzHQYAGnHNW
+         w5UKpjmG4Gd1NbGZRzJrNdIP/C0xnSuRunOmteVNAKpUcHu5mklqKMhQn+wY5GlzLYaj
+         zeQwQ2vkEOUjwaMVA0Tjz2cECH5crF8FweVqeBt52Eur64fEAaeJKGW7XhCjUe0/IUTI
+         B/X/CNzrO1eWv0TSaH0s7OQ+Zv9Ob8TeRHde5yOBtBPlR1dWivNW/PIeEIc/nhgezLE8
+         ju5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yy5Pm6Chzs3nZ800EbMSsW7jSH1HwjtkYzsQKIFnm8w=;
+        b=pD9uTkvKmLKCmd602XWjUW2isHBigV/JIoMGaNnwTwkPH8bIyHC5XXgR9QtEE4nNJ8
+         jNUEnuGRIaT8i7gN9GPVz8d02rc7J1qqRNQYg7uCPJm4BCJi5XVn5pBz1e0ag2lN1nzw
+         4YSzW/YhBy72JZUeKL24fPq8Hbu8q+CZvRMiryBWyAliLPVkGj+ALNzkKdxyVeCTFYin
+         V6UQJl++026/NWTrcbiOQ3vDkgtUTlVpaQfApb7fNG6nTP4g0uQcazh4WVGFMkJICKdl
+         m4K7iHPLmLxpqsrnIwptsW4OnJB09p9vNb3KDV25orvhMubqIN72QbTbfkheuldOFLcb
+         /Bvw==
+X-Gm-Message-State: APjAAAWnx8hVDjpi4/t+Cx4hkLPv9sBae9gWFF4ubNHYMMxmX974erHw
+        8KoJnl3ZOl/kK5XM2FN1rZ6EQQ==
+X-Google-Smtp-Source: APXvYqzNbQ3MeYMpzTRW08neyXYjeyY3mAyF76V58Qsal/cqNuXZMYb5EXT6tBXSUfJrJImtvdHofw==
+X-Received: by 2002:a7b:cb91:: with SMTP id m17mr2227038wmi.146.1579690542801;
+        Wed, 22 Jan 2020 02:55:42 -0800 (PST)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
+        by smtp.gmail.com with ESMTPSA id z133sm1370588wmb.7.2020.01.22.02.55.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jan 2020 02:55:42 -0800 (PST)
+Date:   Wed, 22 Jan 2020 10:55:40 +0000
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Chen Zhou <chenzhou10@huawei.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        lee.jones@linaro.org, jingoohan1@gmail.com,
+        b.zolnierkie@samsung.com, kgunda@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-fbdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH -next v2] backlight: qcom-wled: fix unsigned comparison
+ to zero
+Message-ID: <20200122105540.w5vrvs34zxmhkjae@holly.lan>
+References: <20200122013240.132861-1-chenzhou10@huawei.com>
 MIME-Version: 1.0
-In-Reply-To: <20200121121124.1a1f3175@gandalf.local.home>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200122013240.132861-1-chenzhou10@huawei.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Jan 22, 2020 at 09:32:40AM +0800, Chen Zhou wrote:
+> Fixes coccicheck warning:
+> ./drivers/video/backlight/qcom-wled.c:1104:5-15:
+> 	WARNING: Unsigned expression compared with zero: string_len > 0
+> 
+> The unsigned variable string_len is assigned a return value from the call
+> to of_property_count_elems_of_size(), which may return negative error code.
+> 
+> Fixes: 775d2ffb4af6 ("backlight: qcom-wled: Restructure the driver for WLED3")
+> Signed-off-by: Chen Zhou <chenzhou10@huawei.com>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
 
-On 1/21/20 5:11 PM, Steven Rostedt wrote:
-> On Thu, 16 Jan 2020 15:20:31 +0000
-> lukasz.luba@arm.com wrote:
+> ---
 > 
->> diff --git a/include/trace/events/thermal.h b/include/trace/events/thermal.h
->> index 135e5421f003..8a5f04888abd 100644
->> --- a/include/trace/events/thermal.h
->> +++ b/include/trace/events/thermal.h
->> @@ -153,31 +153,30 @@ TRACE_EVENT(thermal_power_cpu_limit,
->>   TRACE_EVENT(thermal_power_devfreq_get_power,
->>   	TP_PROTO(struct thermal_cooling_device *cdev,
->>   		 struct devfreq_dev_status *status, unsigned long freq,
->> -		u32 dynamic_power, u32 static_power, u32 power),
->> +		u32 power),
->>   
->> -	TP_ARGS(cdev, status,  freq, dynamic_power, static_power, power),
->> +	TP_ARGS(cdev, status,  freq, power),
->>   
->>   	TP_STRUCT__entry(
->>   		__string(type,         cdev->type    )
->>   		__field(unsigned long, freq          )
->> -		__field(u32,           load          )
->> -		__field(u32,           dynamic_power )
->> -		__field(u32,           static_power  )
->> +		__field(u32,           busy_time)
->> +		__field(u32,           total_time)
->>   		__field(u32,           power)
->>   	),
->>   
->>   	TP_fast_assign(
->>   		__assign_str(type, cdev->type);
->>   		__entry->freq = freq;
->> -		__entry->load = (100 * status->busy_time) / status->total_time;
->> -		__entry->dynamic_power = dynamic_power;
->> -		__entry->static_power = static_power;
->> +		__entry->busy_time = status->busy_time;
->> +		__entry->total_time = status->total_time;
->>   		__entry->power = power;
->>   	),
->>   
->> -	TP_printk("type=%s freq=%lu load=%u dynamic_power=%u static_power=%u power=%u",
->> +	TP_printk("type=%s freq=%lu load=%u power=%u",
->>   		__get_str(type), __entry->freq,
->> -		__entry->load, __entry->dynamic_power, __entry->static_power,
->> +		__entry->total_time == 0 ? 0 :
->> +			(100 * __entry->busy_time) / __entry->total_time,
->>   		__entry->power)
->>   );
->>   
+> changes in v2:
+> - fix commit message description.
 > 
-> Tracing updates look fine to me. Having the division on the output
-> makes more sense.
+> ---
+>  drivers/video/backlight/qcom-wled.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> Reviewed-by: Steven Rostedt (VMware) <rostedt@goodmis.org> # for tracing code
+> diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+> index d46052d..3d276b3 100644
+> --- a/drivers/video/backlight/qcom-wled.c
+> +++ b/drivers/video/backlight/qcom-wled.c
+> @@ -956,8 +956,8 @@ static int wled_configure(struct wled *wled, int version)
+>  	struct wled_config *cfg = &wled->cfg;
+>  	struct device *dev = wled->dev;
+>  	const __be32 *prop_addr;
+> -	u32 size, val, c, string_len;
+> -	int rc, i, j;
+> +	u32 size, val, c;
+> +	int rc, i, j, string_len;
+>  
+>  	const struct wled_u32_opts *u32_opts = NULL;
+>  	const struct wled_u32_opts wled3_opts[] = {
+> -- 
+> 2.7.4
 > 
-> -- Steve
-> 
-
-Thank you Steven, I will include it in the next version with a proper
-label.
-
-Regards,
-Lukasz
