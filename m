@@ -2,48 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C4437145ED3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jan 2020 23:57:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D8DF145EF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 00:09:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726054AbgAVW5B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jan 2020 17:57:01 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:15350 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726004AbgAVW5B (ORCPT
+        id S1726194AbgAVXJY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jan 2020 18:09:24 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:36414 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726135AbgAVXJX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jan 2020 17:57:01 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1579733820; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=6Q/w18BMl3i2dx6uQiAibJyd6QCMOZQF1sn6sEp4QGs=;
- b=ogr2HarqSxYqEvO7krzqXXkkw4gZZlJs3Dy8nWflkqkDRyAEHOCZtXA4ManKkuTPu8HdLgG3
- kJK4F2srg5VYA5CMVy5bWZ56ySLCEzGS8XW9pSWKbSJy25TiP1LCleM7UbhbqQ91oDS7xnbu
- XVVPWevg1AwCbQZSptktRMsWvIg=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e28d33b.7fb4aaa301b8-smtp-out-n01;
- Wed, 22 Jan 2020 22:56:59 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EDEE5C447A1; Wed, 22 Jan 2020 22:56:57 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rishabhb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EE3ADC433CB;
-        Wed, 22 Jan 2020 22:56:56 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 22 Jan 2020 14:56:56 -0800
-From:   rishabhb@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+        Wed, 22 Jan 2020 18:09:23 -0500
+Received: by mail-pl1-f196.google.com with SMTP id a6so472170plm.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jan 2020 15:09:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=nKS4ZgdlHHnHLUwY8RgxlpKouMlIJtGCSDCXGaIr8ik=;
+        b=u0DNfOwoANhlQX2iaeD/Rd1l0fTDY4rKp4scoyXbG98q2ezDtpsrnZotpTkejKufHl
+         213geWr0bo/PO/QkXs5pRtXn2ip2IYPuJXb1OlBnJG/6dkuwFvfFcelM/oPNa2rQX9a5
+         6kcnY4VZ9X9Ksld/4jx/0Prah4EUh5Cn5r/LMI5xE7VPe/vFWQrqreNjrRmY+f8uFdp/
+         iwvhHDsL/nuBiSi6QOdcjq7gG01NwHlIYdenXFTDWv5lAS7lFb+NGjoP3XSRn78at3vV
+         a19LK+/DlB2vCPQA99d3CM6LGuAJa1QUyPYJyJw8w2jOEZ25TngUfrOV97VxujoVh8Eb
+         ueDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=nKS4ZgdlHHnHLUwY8RgxlpKouMlIJtGCSDCXGaIr8ik=;
+        b=BXNeOszQRTqNzV88DmtO2O90c8zaBvUZ9B76/OoxzXXZibH9SKeg7Dz4xyFOcVAEhF
+         hH8OE3AzK9j6nyLO9trFeLbm3FfFSz2txn9un6PK9TD2bTgtXv7wtDIEnM87KOVHmVdM
+         FgvE51gbebcH9Lqssh+jG8Aba5kGjTBkkvSKElLTsZpm6fj6leIatEztGjwv2kBXX+NS
+         b88FBUQRvYpiVMUd9sOMzzycERycTRvOFr8lkE+1kEX1udyR3VzwufP0d7kZExFwoXcG
+         5WROd9/dc7UEukiVGDCrTaVnU9njlkOZwlkV51apZfDX/73yMonIXwjwpJ+I/R3hUrtM
+         gCgg==
+X-Gm-Message-State: APjAAAXzt2Q0pwtYyjbsQRTHnxjzNMFqj69HnLaSI3EHSkr9ggbbZdYV
+        f/ZFs0A8UGddzwLnPaoZzt2AUQ==
+X-Google-Smtp-Source: APXvYqyBFXtJqp1jOWq2KNpdMpTmjOylVfH3v84i0J511zxYJkbS9tWibL8rKRyReKS3P6Lcs4fWfw==
+X-Received: by 2002:a17:902:704b:: with SMTP id h11mr13773573plt.147.1579734563159;
+        Wed, 22 Jan 2020 15:09:23 -0800 (PST)
+Received: from ripper (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id g18sm14101pfi.80.2020.01.22.15.09.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jan 2020 15:09:22 -0800 (PST)
+Date:   Wed, 22 Jan 2020 15:08:49 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     rishabhb@codeaurora.org
 Cc:     Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
         Ohad Ben-Cohen <ohad@wizery.com>,
@@ -52,241 +56,48 @@ Cc:     Rob Herring <robh+dt@kernel.org>,
         Sibi Sankar <sibis@codeaurora.org>
 Subject: Re: [PATCH v2 2/8] remoteproc: qcom: Introduce driver to store pil
  info in IMEM
-In-Reply-To: <20191227053215.423811-3-bjorn.andersson@linaro.org>
+Message-ID: <20200122230849.GC3261042@ripper>
 References: <20191227053215.423811-1-bjorn.andersson@linaro.org>
  <20191227053215.423811-3-bjorn.andersson@linaro.org>
-Message-ID: <60c10082ba90fbba0f056df8575d205f@codeaurora.org>
-X-Sender: rishabhb@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+ <60c10082ba90fbba0f056df8575d205f@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <60c10082ba90fbba0f056df8575d205f@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2019-12-26 21:32, Bjorn Andersson wrote:
-> A region in IMEM is used to communicate load addresses of remoteproc to
-> post mortem debug tools. Implement a driver that can be used to store
-> this information in order to enable these tools to process collected
-> ramdumps.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> Changes since v1:
-> - Added helper to probe defer clients
-> - Fixed logical bug in slot scan
-> - Added SPDX header in header file
-> 
->  drivers/remoteproc/Kconfig         |   3 +
->  drivers/remoteproc/Makefile        |   1 +
->  drivers/remoteproc/qcom_pil_info.c | 150 +++++++++++++++++++++++++++++
->  drivers/remoteproc/qcom_pil_info.h |   8 ++
->  4 files changed, 162 insertions(+)
->  create mode 100644 drivers/remoteproc/qcom_pil_info.c
->  create mode 100644 drivers/remoteproc/qcom_pil_info.h
-> 
-> diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
-> index 94afdde4bc9f..0798602e355a 100644
-> --- a/drivers/remoteproc/Kconfig
-> +++ b/drivers/remoteproc/Kconfig
-> @@ -85,6 +85,9 @@ config KEYSTONE_REMOTEPROC
->  	  It's safe to say N here if you're not interested in the Keystone
->  	  DSPs or just want to use a bare minimum kernel.
-> 
-> +config QCOM_PIL_INFO
-> +	tristate
-> +
->  config QCOM_RPROC_COMMON
->  	tristate
-> 
-> diff --git a/drivers/remoteproc/Makefile b/drivers/remoteproc/Makefile
-> index 00f09e658cb3..c1b46e9033cb 100644
-> --- a/drivers/remoteproc/Makefile
-> +++ b/drivers/remoteproc/Makefile
-> @@ -14,6 +14,7 @@ obj-$(CONFIG_OMAP_REMOTEPROC)		+= omap_remoteproc.o
->  obj-$(CONFIG_WKUP_M3_RPROC)		+= wkup_m3_rproc.o
->  obj-$(CONFIG_DA8XX_REMOTEPROC)		+= da8xx_remoteproc.o
->  obj-$(CONFIG_KEYSTONE_REMOTEPROC)	+= keystone_remoteproc.o
-> +obj-$(CONFIG_QCOM_PIL_INFO)		+= qcom_pil_info.o
->  obj-$(CONFIG_QCOM_RPROC_COMMON)		+= qcom_common.o
->  obj-$(CONFIG_QCOM_Q6V5_COMMON)		+= qcom_q6v5.o
->  obj-$(CONFIG_QCOM_Q6V5_ADSP)		+= qcom_q6v5_adsp.o
-> diff --git a/drivers/remoteproc/qcom_pil_info.c
-> b/drivers/remoteproc/qcom_pil_info.c
-> new file mode 100644
-> index 000000000000..b0897ae9eae5
-> --- /dev/null
-> +++ b/drivers/remoteproc/qcom_pil_info.c
-> @@ -0,0 +1,150 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2019 Linaro Ltd.
-> + */
-> +#include <linux/module.h>
-> +#include <linux/kernel.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/mutex.h>
-> +#include <linux/regmap.h>
-> +#include <linux/mfd/syscon.h>
-> +#include <linux/slab.h>
-> +
-> +struct pil_reloc_entry {
-> +	char name[8];
-> +	__le64 base;
-> +	__le32 size;
-> +} __packed;
-> +
-> +#define PIL_INFO_SIZE	200
-> +#define PIL_INFO_ENTRIES (PIL_INFO_SIZE / sizeof(struct 
-> pil_reloc_entry))
-> +
-> +struct pil_reloc {
-> +	struct device *dev;
-> +	struct regmap *map;
-> +	u32 offset;
-> +	int val_bytes;
-> +
-> +	struct pil_reloc_entry entries[PIL_INFO_ENTRIES];
-> +};
-> +
-> +static struct pil_reloc *_reloc;
-> +static DEFINE_MUTEX(reloc_mutex);
-> +
-> +/**
-> + * qcom_pil_info_store() - store PIL information of image in IMEM
-> + * @image:	name of the image
-> + * @base:	base address of the loaded image
-> + * @size:	size of the loaded image
-> + */
-> +void qcom_pil_info_store(const char *image, phys_addr_t base, size_t 
-> size)
-> +{
-> +	struct pil_reloc_entry *entry;
-> +	int idx = -1;
-> +	int i;
-> +
-> +	mutex_lock(&reloc_mutex);
-> +	if (!_reloc)
-> +		goto unlock;
-> +
-> +	for (i = 0; i < PIL_INFO_ENTRIES; i++) {
-> +		if (!_reloc->entries[i].name[0]) {
-> +			if (idx == -1)
-> +				idx = i;
-> +			continue;
-> +		}
-> +
-> +		if (!strncmp(_reloc->entries[i].name, image, 8)) {
-> +			idx = i;
-> +			goto found;
-> +		}
-> +	}
-> +
-> +	if (idx == -1) {
-> +		dev_warn(_reloc->dev, "insufficient PIL info slots\n");
-> +		goto unlock;
-> +	}
-> +
-> +found:
-> +	entry = &_reloc->entries[idx];
-> +	stracpy(entry->name, image);
-> +	entry->base = base;
-> +	entry->size = size;
-> +
-> +	regmap_bulk_write(_reloc->map, _reloc->offset + idx * sizeof(*entry),
-> +			  entry, sizeof(*entry) / _reloc->val_bytes);
-> +
-> +unlock:
-> +	mutex_unlock(&reloc_mutex);
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_pil_info_store);
-> +
-> +/**
-> + * qcom_pil_info_available() - query if the pil info is probed
-> + *
-> + * Return: boolean indicating if the pil info device is probed
-> + */
-> +bool qcom_pil_info_available(void)
-> +{
-> +	return !!_reloc;
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_pil_info_available);
-> +
-> +static int pil_reloc_probe(struct platform_device *pdev)
-> +{
-> +	struct pil_reloc *reloc;
-> +
-> +	reloc = devm_kzalloc(&pdev->dev, sizeof(*reloc), GFP_KERNEL);
-> +	if (!reloc)
-> +		return -ENOMEM;
-> +
-> +	reloc->dev = &pdev->dev;
-> +	reloc->map = syscon_node_to_regmap(pdev->dev.parent->of_node);
-If there are multiple entries like "pil-reloc" in the imem node
-mapping the entire imem multiple times may not work. Is there a way
-we can somehow just iomap the required region for pil?
-> +	if (IS_ERR(reloc->map))
-> +		return PTR_ERR(reloc->map);
-> +
-> +	if (of_property_read_u32(pdev->dev.of_node, "offset", 
-> &reloc->offset))
-> +		return -EINVAL;
-> +
-> +	reloc->val_bytes = regmap_get_val_bytes(reloc->map);
-> +	if (reloc->val_bytes < 0)
-> +		return -EINVAL;
-> +
-> +	regmap_bulk_write(reloc->map, reloc->offset, reloc->entries,
-> +			  sizeof(reloc->entries) / reloc->val_bytes);
-> +
-> +	mutex_lock(&reloc_mutex);
-> +	_reloc = reloc;
-> +	mutex_unlock(&reloc_mutex);
-> +
-> +	return 0;
-> +}
-> +
-> +static int pil_reloc_remove(struct platform_device *pdev)
-> +{
-> +	mutex_lock(&reloc_mutex);
-> +	_reloc = NULL;
-> +	mutex_unlock(&reloc_mutex);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct of_device_id pil_reloc_of_match[] = {
-> +	{ .compatible = "qcom,pil-reloc-info" },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(of, pil_reloc_of_match);
-> +
-> +static struct platform_driver pil_reloc_driver = {
-> +	.probe = pil_reloc_probe,
-> +	.remove = pil_reloc_remove,
-> +	.driver = {
-> +		.name = "qcom-pil-reloc-info",
-> +		.of_match_table = pil_reloc_of_match,
-> +	},
-> +};
-> +module_platform_driver(pil_reloc_driver);
-> +
-> +MODULE_DESCRIPTION("Qualcomm PIL relocation info");
-> +MODULE_LICENSE("GPL v2");
-> diff --git a/drivers/remoteproc/qcom_pil_info.h
-> b/drivers/remoteproc/qcom_pil_info.h
-> new file mode 100644
-> index 000000000000..0372602fae1d
-> --- /dev/null
-> +++ b/drivers/remoteproc/qcom_pil_info.h
-> @@ -0,0 +1,8 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +#ifndef __QCOM_PIL_INFO_H__
-> +#define __QCOM_PIL_INFO_H__
-> +
-> +void qcom_pil_info_store(const char *image, phys_addr_t base, size_t 
-> size);
-> +bool qcom_pil_info_available(void);
-> +
-> +#endif
+On Wed 22 Jan 14:56 PST 2020, rishabhb@codeaurora.org wrote:
+> On 2019-12-26 21:32, Bjorn Andersson wrote:
+> > diff --git a/drivers/remoteproc/qcom_pil_info.c
+[..]
+> > +static int pil_reloc_probe(struct platform_device *pdev)
+> > +{
+> > +	struct pil_reloc *reloc;
+> > +
+> > +	reloc = devm_kzalloc(&pdev->dev, sizeof(*reloc), GFP_KERNEL);
+> > +	if (!reloc)
+> > +		return -ENOMEM;
+> > +
+> > +	reloc->dev = &pdev->dev;
+> > +	reloc->map = syscon_node_to_regmap(pdev->dev.parent->of_node);
+> If there are multiple entries like "pil-reloc" in the imem node
+> mapping the entire imem multiple times may not work. Is there a way
+> we can somehow just iomap the required region for pil?
+
+With the entire imem being represented as a syscon this will be
+ioremapped once and all callers of syscon_node_to_regmap() (or one of
+the other syscon getters) will get a regmap back that reference this one
+mapping.
+
+So doing it this way allow us to "map" sections of imem that is smaller
+than PAGE_SIZE.
+
+
+That said, it means that all imem users/clients should access imem
+through this syscon regmap.
+
+Regards,
+Bjorn
