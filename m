@@ -2,42 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D233146B37
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 15:25:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E3103146B40
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 15:26:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728205AbgAWOZ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jan 2020 09:25:27 -0500
-Received: from mail.kernel.org ([198.145.29.99]:58846 "EHLO mail.kernel.org"
+        id S1728998AbgAWO0c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jan 2020 09:26:32 -0500
+Received: from mail.kernel.org ([198.145.29.99]:59770 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727307AbgAWOZ1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jan 2020 09:25:27 -0500
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+        id S1727022AbgAWO0b (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Jan 2020 09:26:31 -0500
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B8CFD21734;
-        Thu, 23 Jan 2020 14:25:26 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id CB12F214AF;
+        Thu, 23 Jan 2020 14:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579789526;
-        bh=Mid7wwxrormhKshzFlUiug8dVX89zkFmDSctaANPz6s=;
+        s=default; t=1579789590;
+        bh=tIH9kVRmgiCYBq9n+Cjnfq7nueNr9o74AznFkX77aT4=;
         h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=mN+Yg1bkK8s9gy4zwqCBJ33ZQ/2FjNwIuadnHyXJd8EBzcYrU4T7iJE9oDgiWWSdn
-         JJ6zaeEi+gI+JiO5S/IpiYjHHGQzkhAVyMwEkAmdf1coHTLHEIfOy+jQuOADUS48/7
-         djKZvBdGyBCNh14jPLQfv6YqC2y1fFrCkzZxez8A=
-Received: by mail-qv1-f54.google.com with SMTP id z3so1578806qvn.0;
-        Thu, 23 Jan 2020 06:25:26 -0800 (PST)
-X-Gm-Message-State: APjAAAXr/dGaz/gMLQz48da6CfzV+Rl2fuJFssU7e9ts96UVt0sfbEzl
-        0Ya0dbBB3NKwSAiS7Kihmd3U1Zqdoa+wfdtjow==
-X-Google-Smtp-Source: APXvYqzyQ+SPWtLpn5s7OjjaW4VKnEaZWKD3iKQxa66ZmFcjyh5Fzw122sdqbgqFER2YlH8IqdmgJFsQ4Ryo7VOstC4=
-X-Received: by 2002:a0c:f6cd:: with SMTP id d13mr15908067qvo.20.1579789525873;
- Thu, 23 Jan 2020 06:25:25 -0800 (PST)
+        b=2p4yKzn+otgAbcdUHW6Kv9RnLk/uAfkbpbQIsBtd5yGQgND7M/frK+w3C7D1rw+G1
+         BRlBGHkY9MfnDt4TeorwfZ6Eznq9/sU0oPOWAOAYDiNdkH//EdFOBN2Y2i1D7uGTnk
+         LC9ZsE7FLtaIUZll34KhW+GKFuZVbRhOzGJRuu6Q=
+Received: by mail-qk1-f177.google.com with SMTP id c17so3547913qkg.7;
+        Thu, 23 Jan 2020 06:26:30 -0800 (PST)
+X-Gm-Message-State: APjAAAV0fuFfP0FYyySTSg9hxBM1iWn7O6HadRGBvVqaE63l8A59TgBk
+        jMKEJffERTNeReRqtRrqdX1ZNrT4bpRChxfAsg==
+X-Google-Smtp-Source: APXvYqxbguRq1iMCSZT45I7kt/wqfNAl2jdrS71ZmilC4ian7XhK+X38BybkHT5YPoQ7j39q2+2CCOdSWxcAgD8tFxU=
+X-Received: by 2002:ae9:f205:: with SMTP id m5mr16251977qkg.152.1579789590015;
+ Thu, 23 Jan 2020 06:26:30 -0800 (PST)
 MIME-Version: 1.0
-References: <20200122134639.11735-1-dafna.hirschfeld@collabora.com>
-In-Reply-To: <20200122134639.11735-1-dafna.hirschfeld@collabora.com>
+References: <20200122135741.12123-1-dafna.hirschfeld@collabora.com>
+In-Reply-To: <20200122135741.12123-1-dafna.hirschfeld@collabora.com>
 From:   Rob Herring <robh+dt@kernel.org>
-Date:   Thu, 23 Jan 2020 08:25:14 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqLbXr77VmNPWSN7jMt-309_YYuRp=nYV2cp=3SPihcC+w@mail.gmail.com>
-Message-ID: <CAL_JsqLbXr77VmNPWSN7jMt-309_YYuRp=nYV2cp=3SPihcC+w@mail.gmail.com>
-Subject: Re: [PATCH] dt-binding: fix compilation error of the example in qcom,gcc.yaml
+Date:   Thu, 23 Jan 2020 08:26:19 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJKX3fFQCtH0+Hfkfx09Oz72TJFNm6FRdtGu4P4W0gjTQ@mail.gmail.com>
+Message-ID: <CAL_JsqJKX3fFQCtH0+Hfkfx09Oz72TJFNm6FRdtGu4P4W0gjTQ@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: fix warnings in validation of qcom,gcc.yaml
 To:     Dafna Hirschfeld <dafna.hirschfeld@collabora.com>
 Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Andy Gross <agross@kernel.org>,
@@ -56,41 +56,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 22, 2020 at 7:46 AM Dafna Hirschfeld
+On Wed, Jan 22, 2020 at 7:57 AM Dafna Hirschfeld
 <dafna.hirschfeld@collabora.com> wrote:
 >
-> Running `make dt_binging_check`, gives the error:
+> The last example in qcom,gcc.yaml set 'sleep' as the second
+> value of 'clock-names'. According to the schema is should
+> be 'sleep_clk'. Fix the example to conform the schema.
+> This fixes a warning when validating the schema:
+> "clock-names:  ... is not valid under any of the given schemas"
 >
-> DTC     Documentation/devicetree/bindings/clock/qcom,gcc.example.dt.yaml
-> Error: Documentation/devicetree/bindings/clock/qcom,gcc.example.dts:111.28-29 syntax error
-> FATAL ERROR: Unable to parse input tree
->
-> This is because the last example uses the macro RPM_SMD_XO_CLK_SRC which
-> is defined in qcom,rpmcc.h but the include of this header is missing.
-> Add the include to fix the error.
->
+> Signed-off-by: Dafna Hirschfeld <dafna.hirschfeld@collabora.com>
 
 Fixes: d109ea0970cf ("dt-bindings: clock: Document external clocks for
 MSM8998 gcc")
 Acked-by: Rob Herring <robh@kernel.org>
-
-> Signed-off-by: Dafna Hirschfeld <dafna.hirschfeld@collabora.com>
-> ---
->  Documentation/devicetree/bindings/clock/qcom,gcc.yaml | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-> index 19d00794fe7d..50ff07f80acb 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-> @@ -220,6 +220,7 @@ examples:
->
->    # Example of MSM8998 GCC:
->    - |
-> +    #include <dt-bindings/clock/qcom,rpmcc.h>
->      clock-controller@100000 {
->        compatible = "qcom,gcc-msm8998";
->        #clock-cells = <1>;
-> --
-> 2.17.1
->
