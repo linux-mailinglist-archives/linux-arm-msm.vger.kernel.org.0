@@ -2,119 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 41DBE147088
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 19:14:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04E171470F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 19:41:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728665AbgAWSOF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jan 2020 13:14:05 -0500
-Received: from mail.kernel.org ([198.145.29.99]:32776 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727278AbgAWSOF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jan 2020 13:14:05 -0500
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 193C32077C;
-        Thu, 23 Jan 2020 18:14:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579803244;
-        bh=khqNxXYOqxvr10GxSY4pK/rC4A5nXWgtbLtZjysW0tM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=m6asSqk7k53NoVQqWZp5O/KT6yAK5dk9u05Hvx1NArYa4VN2Z0doJqdrcwhL1Z/4Q
-         jiNGysgPQaUqeME0aWbfKEsBmsVQPpFzRFpZo+v9QP5m2NMrYl9w4V2uGXE81Xw42q
-         BOh2rwfoJKb26w5YmE4sZdY5MEaK63DADyxq11Lk=
-Date:   Thu, 23 Jan 2020 19:14:02 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        arnd@arndb.de, smohanad@codeaurora.org, kvalo@codeaurora.org,
-        bjorn.andersson@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 02/16] bus: mhi: core: Add support for registering MHI
- controllers
-Message-ID: <20200123181402.GA1897633@kroah.com>
-References: <20200123111836.7414-1-manivannan.sadhasivam@linaro.org>
- <20200123111836.7414-3-manivannan.sadhasivam@linaro.org>
- <c8fdf0b0-eaec-9672-4f43-f0254d6dbf0e@codeaurora.org>
+        id S1728792AbgAWSld (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jan 2020 13:41:33 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:44809 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727022AbgAWSld (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Jan 2020 13:41:33 -0500
+Received: by mail-pf1-f194.google.com with SMTP id 62so1921405pfu.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2020 10:41:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=j0uL3hKYvtloUNrrY22cT3PaCoUxzpbH8NZr/Q8o0KA=;
+        b=CXNEFTP2R4F8SHBCz2/5Zzdx0sFdYTih2TDfK4G9t9F6FHZEmAQKe0jRZsvWKlCcZm
+         GsCdp4VMOvYqWBylaMYFz3jK3aq5yW7KLIk9EOW1a+lhEGwwJc5UTxUJw4vSEFwE3swT
+         5fpKlAPcs1LsnegZtNxXem+dbUFnvIaJ2Yw4bNrTE5ryTxqMyHEiBhBrmnGjzJulXbM4
+         pU2tl6X779VkXBEvQvwcJO9VT38bD2quKReEXD+esMMg1qNlTCjuwBlnXoboXpi5UAJd
+         1Sp1m/j9HlOv1HBL4587gw6zAFpwao4JsPMNwWlunVSVhcrE8gzHY1z0Q8W5h1bl5RYV
+         Av7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=j0uL3hKYvtloUNrrY22cT3PaCoUxzpbH8NZr/Q8o0KA=;
+        b=Lafja59hIVabQBuhvhD3NfHh4WwkLnazXXOrX06wU5LONU5wArCVVpc47cRLRbYr3c
+         wqJHT6UmJbRK8A/tBEtWZEPpXytZqgj0wb1rQDcUTJoziLhOxli2I6cNod0y7O5MdPpm
+         WQEKTdUGfhyUuTmCo1G37TW6WnaUD6LCSE6ODDd1Mh57MD4wPTMcTDkg6lbqk9QfETFQ
+         DjtSWb1u9iQTJtfgM7ygo46HV2S8VMbh6IkpDqauIn9NaxT0kdvIjuEYvnZXi+cfEKok
+         AfKc5Ku41T1BIktG7l+KVR2uovUnO7coU5UV8r4kyFmGeRbMCgH6OY2YTr9gOKaXCIqO
+         KEKQ==
+X-Gm-Message-State: APjAAAUKqqID6L+GhC2FdXrF4GXbxsC2xX1dAO0EYvsTLY2gBi02zyoW
+        sPXm62OzQ3gc/Jbn+/uRVoKsug==
+X-Google-Smtp-Source: APXvYqx+qa1v2W0iU2GnJArGqft14UWP8j2yatf2YzptCIB13C6YZQGrwUgPc9NPu/VFtVapmAU0PA==
+X-Received: by 2002:a63:1807:: with SMTP id y7mr182102pgl.94.1579804892350;
+        Thu, 23 Jan 2020 10:41:32 -0800 (PST)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id g24sm3547441pfk.92.2020.01.23.10.41.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jan 2020 10:41:31 -0800 (PST)
+Date:   Thu, 23 Jan 2020 10:41:29 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Harigovindan P <harigovi@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        kalyan_t@codeaurora.org, nganji@codeaurora.org
+Subject: Re: [v2] arm64: dts: sc7180: add display dt nodes
+Message-ID: <20200123184129.GW1511@yoga>
+References: <1579781700-7253-1-git-send-email-harigovi@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c8fdf0b0-eaec-9672-4f43-f0254d6dbf0e@codeaurora.org>
+In-Reply-To: <1579781700-7253-1-git-send-email-harigovi@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 23, 2020 at 10:05:50AM -0700, Jeffrey Hugo wrote:
-> On 1/23/2020 4:18 AM, Manivannan Sadhasivam wrote:
-> > This commit adds support for registering MHI controller drivers with
-> > the MHI stack. MHI controller drivers manages the interaction with the
-> > MHI client devices such as the external modems and WiFi chipsets. They
-> > are also the MHI bus master in charge of managing the physical link
-> > between the host and client device.
-> > 
-> > This is based on the patch submitted by Sujeev Dias:
-> > https://lkml.org/lkml/2018/7/9/987
-> > 
-> > Signed-off-by: Sujeev Dias <sdias@codeaurora.org>
-> > Signed-off-by: Siddartha Mohanadoss <smohanad@codeaurora.org>
-> > [jhugo: added static config for controllers and fixed several bugs]
-> > Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
-> > [mani: removed DT dependency, splitted and cleaned up for upstream]
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >   drivers/bus/Kconfig             |   1 +
-> >   drivers/bus/Makefile            |   3 +
-> >   drivers/bus/mhi/Kconfig         |  14 +
-> >   drivers/bus/mhi/Makefile        |   2 +
-> >   drivers/bus/mhi/core/Makefile   |   3 +
-> >   drivers/bus/mhi/core/init.c     | 404 +++++++++++++++++++++++++++++
-> >   drivers/bus/mhi/core/internal.h | 169 ++++++++++++
-> >   include/linux/mhi.h             | 438 ++++++++++++++++++++++++++++++++
-> >   include/linux/mod_devicetable.h |  12 +
-> >   9 files changed, 1046 insertions(+)
-> >   create mode 100644 drivers/bus/mhi/Kconfig
-> >   create mode 100644 drivers/bus/mhi/Makefile
-> >   create mode 100644 drivers/bus/mhi/core/Makefile
-> >   create mode 100644 drivers/bus/mhi/core/init.c
-> >   create mode 100644 drivers/bus/mhi/core/internal.h
-> >   create mode 100644 include/linux/mhi.h
-> > 
-> > diff --git a/drivers/bus/Kconfig b/drivers/bus/Kconfig
-> > index 50200d1c06ea..383934e54786 100644
-> > --- a/drivers/bus/Kconfig
-> > +++ b/drivers/bus/Kconfig
-> > @@ -202,5 +202,6 @@ config DA8XX_MSTPRI
-> >   	  peripherals.
-> >   source "drivers/bus/fsl-mc/Kconfig"
-> > +source "drivers/bus/mhi/Kconfig"
-> >   endmenu
-> > diff --git a/drivers/bus/Makefile b/drivers/bus/Makefile
-> > index 1320bcf9fa9d..05f32cd694a4 100644
-> > --- a/drivers/bus/Makefile
-> > +++ b/drivers/bus/Makefile
-> > @@ -34,3 +34,6 @@ obj-$(CONFIG_UNIPHIER_SYSTEM_BUS)	+= uniphier-system-bus.o
-> >   obj-$(CONFIG_VEXPRESS_CONFIG)	+= vexpress-config.o
-> >   obj-$(CONFIG_DA8XX_MSTPRI)	+= da8xx-mstpri.o
-> > +
-> > +# MHI
-> > +obj-$(CONFIG_MHI_BUS)		+= mhi/
-> > diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
-> > new file mode 100644
-> > index 000000000000..a8bd9bd7db7c
-> > --- /dev/null
-> > +++ b/drivers/bus/mhi/Kconfig
-> > @@ -0,0 +1,14 @@
-> > +# SPDX-License-Identifier: GPL-2.0
+On Thu 23 Jan 04:15 PST 2020, Harigovindan P wrote:
+
+> Add display, DSI hardware DT nodes for sc7180.
 > 
-> first time I noticed this, although I suspect this will need to be corrected
-> "everywhere" -
-> Per the SPDX website, the "GPL-2.0" label is deprecated.  It's replacement
-> is "GPL-2.0-only".
-> I think all instances should be updated to "GPL-2.0-only"
+> Changes in v1:
+> 	-Added display DT nodes for sc7180
+> Changes in v2:
+> 	-Renamed node names
+> 	-Corrected code alignments
+> 	-Removed extra new line
 
-No, it is fine, please read Documentation/process/license-rules.rst
+Please keep the changelist after the '---' for the dts patches.
 
-thanks,
+> 
+> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  57 +++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 125 ++++++++++++++++++++++++++++++++
+>  2 files changed, 182 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index 388f50a..f410614 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> @@ -232,6 +232,50 @@
+>  	};
+>  };
+>  
+> +&dsi_controller {
+> +	status = "okay";
+> +
+> +	vdda-supply = <&vreg_l3c_1p2>;
+> +
+> +	panel@0 {
+> +		compatible = "visionox,rm69299-1080p-display";
+> +		reg = <0>;
+> +
+> +		vdda-supply = <&vreg_l8c_1p8>;
+> +		vdd3p3-supply = <&vreg_l18a_2p8>;
+> +
+> +		pinctrl-names = "default", "suspend";
+> +		pinctrl-0 = <&disp_pins_default>;
+> +		pinctrl-1 = <&disp_pins_default>;
+> +
+> +		reset-gpios = <&pm6150l_gpio 3 0>;
 
-greg k-h
+Please replace the 0 here with GPIO_ACTIVE_HIGH
+
+> +
+> +		ports {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			port@0 {
+> +				reg = <0>;
+> +				panel0_in: endpoint {
+> +					remote-endpoint = <&dsi0_out>;
+> +				};
+> +			};
+> +		};
+> +	};
+[..]
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 3bc3f64..81c3aab 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1184,6 +1184,131 @@
+>  			#power-domain-cells = <1>;
+>  		};
+>  
+> +		display_subsystem: mdss@ae00000 {
+
+It was the name, not the label, that Stephen asked you to make generic.
+
+> +			compatible = "qcom,sc7180-mdss";
+> +			reg = <0 0x0ae00000 0 0x1000>;
+> +			reg-names = "mdss";
+> +
+[..]
+> +			display_controller: mdp@ae00000 {
+
+mdp: display-controller@ae00000 {
+
+[..]
+> +			};
+> +
+> +			dsi_controller: qcom,mdss_dsi_ctrl0@ae94000 {
+
+In particular you shouldn't have qcom, in the node name.
+
+[..]
+> +
+> +			dsi_phy: dsi-phy0@ae94400 {
+
+phy@ae94400
+
+Regards,
+Bjorn
