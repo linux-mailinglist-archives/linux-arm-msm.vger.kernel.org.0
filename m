@@ -2,115 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C3160147394
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 23:07:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 758521473F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 23:41:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727312AbgAWWHw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jan 2020 17:07:52 -0500
-Received: from mail.kernel.org ([198.145.29.99]:52962 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726232AbgAWWHw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jan 2020 17:07:52 -0500
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1729274AbgAWWlE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jan 2020 17:41:04 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:27909 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728665AbgAWWlD (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Jan 2020 17:41:03 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1579819262; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=sUyB0PskpQ3/B86Mj3Is2hoJIkdFr0MzGEv+qQmoFWc=; b=f08raNJZFYwkzySv3LqWVSza0/YFavqQVnLLJwt6hEbLcCzNQpbom9K21UXDO5oG3VJ5US3Y
+ USoY56qV0FfUaq95y9QXZkan/iuij6WqZESL+D5HuYo6Bsm3XVfwc1Foj5Bpdd2Q329LWFAP
+ nun4g4/PLuNKzhi2f8wNt9SHwiU=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e2a20f9.7f734713f308-smtp-out-n02;
+ Thu, 23 Jan 2020 22:40:57 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 82468C447A4; Thu, 23 Jan 2020 22:40:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 792EB21734;
-        Thu, 23 Jan 2020 22:07:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579817270;
-        bh=QlwrFB/8SQuEz72x5eJ/IwwmULMw3LNCA6dsBx7N75U=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=JLUm1d1nZ3Ot8n7cZT2wO+oEqAb8ecDHj+2YmMHmDw461svQo2lhvJ8Uie/M/2Ehu
-         +Y3C5f3ghUA5lmBaBkWnqUrJX1zjMmBmygXBa4uk6NeZgnanX2J0A4u+9eLTLJ1dbJ
-         XVTjHfUYxMyDGpA8yfTM9lNlWLjr1lGuHwZxSzd4=
-Received: by mail-qt1-f182.google.com with SMTP id e12so22326qto.2;
-        Thu, 23 Jan 2020 14:07:50 -0800 (PST)
-X-Gm-Message-State: APjAAAXC71H3286DlFJoP8L+yz9WmJl21/aiFDKE47olirPLj933HVxe
-        v+nS8TU9T9ukTSDxyGqDklCi0rwaJeJ4EXib9Q==
-X-Google-Smtp-Source: APXvYqxzfWxfFKwXzKXbl8qhH8ZiP9eveL4Sd9dFSyn/yz3xnENA89DFYjvHnIiSUkXEweXnfPoeCbjrCT3FHrpjlZI=
-X-Received: by 2002:ac8:59:: with SMTP id i25mr419976qtg.110.1579817269622;
- Thu, 23 Jan 2020 14:07:49 -0800 (PST)
-MIME-Version: 1.0
-References: <20191227053215.423811-1-bjorn.andersson@linaro.org>
- <20191227053215.423811-2-bjorn.andersson@linaro.org> <20200104213804.GA30385@bogus>
- <20200104221752.GW549437@yoga>
-In-Reply-To: <20200104221752.GW549437@yoga>
-From:   Rob Herring <robh@kernel.org>
-Date:   Thu, 23 Jan 2020 16:07:38 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqJEq-eX-LoRiHHot8De4RbRS4-Np+hisTk4TWpehqsRwg@mail.gmail.com>
-Message-ID: <CAL_JsqJEq-eX-LoRiHHot8De4RbRS4-Np+hisTk4TWpehqsRwg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/8] dt-bindings: remoteproc: Add Qualcomm PIL info binding
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Mark Rutland <mark.rutland@arm.com>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM" 
-        <linux-remoteproc@vger.kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 009CFC43383;
+        Thu, 23 Jan 2020 22:40:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 009CFC43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=abhinavk@codeaurora.org
+From:   Abhinav Kumar <abhinavk@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Uma Shankar <uma.shankar@intel.com>, linux-arm-msm@vger.kernel.org,
+        robdclark@gmail.com, seanpaul@chromium.org, nganji@codeaurora.org,
+        aravindh@codeaurora.org, adelva@google.com,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Subject: [PATCH] drm: Parse Colorimetry data block from EDID
+Date:   Thu, 23 Jan 2020 14:40:45 -0800
+Message-Id: <1579819245-21913-1-git-send-email-abhinavk@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jan 4, 2020 at 3:17 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Sat 04 Jan 13:38 PST 2020, Rob Herring wrote:
->
-> > On Thu, Dec 26, 2019 at 09:32:08PM -0800, Bjorn Andersson wrote:
-> > > Add a devicetree binding for the Qualcomm periperal image loader
-> > > relocation info region found in the IMEM.
-> > >
-> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > ---
-> > >
-> > > Changes since v1:
-> > > - New patch
-> > >
-> > >  .../bindings/remoteproc/qcom,pil-info.yaml    | 35 +++++++++++++++++++
-> > >  1 file changed, 35 insertions(+)
-> > >  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
-> > > new file mode 100644
-> > > index 000000000000..715945c683ed
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
-> > > @@ -0,0 +1,35 @@
-> > > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> > > +%YAML 1.2
-> > > +---
-> > > +$id: "http://devicetree.org/schemas/remoteproc/qcom,pil-info.yaml#"
-> > > +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> > > +
-> > > +title: Qualcomm peripheral image loader relocation info binding
-> > > +
-> > > +description:
-> > > +  This document defines the binding for describing the Qualcomm peripheral
-> > > +  image loader relocation memory region, in IMEM, which is used for post mortem
-> > > +  debugging of remoteprocs.
-> > > +
-> > > +maintainers:
-> > > +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > +
-> > > +properties:
-> > > +  compatible:
-> > > +    const: qcom,pil-reloc-info
-> > > +
-> > > +  offset:
-> > > +    $ref: /schemas/types.yaml#/definitions/uint32
-> > > +    description: Offset in the register map for the memory region
-> >
-> > Why not use 'reg' instead?
-> >
->
-> Because we have one prior example of subdevice of "imem", which is
-> compatible "syscon-reboot-mode" and that binding uses "offset".
+From: Uma Shankar <uma.shankar@intel.com>
 
-Not that I'm proposing this, but nothing should prevent both from coexisting.
+CEA 861.3 spec adds colorimetry data block for HDMI.
+Parsing the block to get the colorimetry data from
+panel.
 
-Rob
+This was posted by Uma Shankar at
+https://patchwork.kernel.org/patch/10861327/
+
+Modified by Abhinav Kumar:
+- Use macros to distinguish the bit fields for clarity
+
+Signed-off-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+---
+ drivers/gpu/drm/drm_edid.c  | 54 +++++++++++++++++++++++++++++++++++++++++++++
+ include/drm/drm_connector.h |  3 +++
+ include/drm/drm_edid.h      | 11 +++++++++
+ 3 files changed, 68 insertions(+)
+
+diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+index 99769d6..148bfa4 100644
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -3136,6 +3136,7 @@ static int drm_cvt_modes(struct drm_connector *connector,
+ #define VIDEO_BLOCK     0x02
+ #define VENDOR_BLOCK    0x03
+ #define SPEAKER_BLOCK	0x04
++#define COLORIMETRY_DATA_BLOCK		0x5
+ #define HDR_STATIC_METADATA_BLOCK	0x6
+ #define USE_EXTENDED_TAG 0x07
+ #define EXT_VIDEO_CAPABILITY_BLOCK 0x00
+@@ -4199,6 +4200,57 @@ static void fixup_detailed_cea_mode_clock(struct drm_display_mode *mode)
+ 	mode->clock = clock;
+ }
+ 
++static bool cea_db_is_hdmi_colorimetry_data_block(const u8 *db)
++{
++	if (cea_db_tag(db) != USE_EXTENDED_TAG)
++		return false;
++
++	if (db[1] != COLORIMETRY_DATA_BLOCK)
++		return false;
++
++	if (cea_db_payload_len(db) < 2)
++		return false;
++
++	return true;
++}
++
++static void
++drm_parse_colorimetry_data_block(struct drm_connector *connector, const u8 *db)
++{
++	struct drm_hdmi_info *info = &connector->display_info.hdmi;
++
++	/* As per CEA 861-G spec */
++	/* Byte 3 Bit 0: xvYCC_601 */
++	if (db[2] & BIT(0))
++		info->colorimetry |= DRM_EDID_CLRMETRY_xvYCC_601;
++	/* Byte 3 Bit 1: xvYCC_709 */
++	if (db[2] & BIT(1))
++		info->colorimetry |= DRM_EDID_CLRMETRY_xvYCC_709;
++	/* Byte 3 Bit 2: sYCC_601 */
++	if (db[2] & BIT(2))
++		info->colorimetry |= DRM_EDID_CLRMETRY_sYCC_601;
++	/* Byte 3 Bit 3: ADBYCC_601 */
++	if (db[2] & BIT(3))
++		info->colorimetry |= DRM_EDID_CLRMETRY_ADBYCC_601;
++	/* Byte 3 Bit 4: ADB_RGB */
++	if (db[2] & BIT(4))
++		info->colorimetry |= DRM_EDID_CLRMETRY_ADB_RGB;
++	/* Byte 3 Bit 5: BT2020_CYCC */
++	if (db[2] & BIT(5))
++		info->colorimetry |= DRM_EDID_CLRMETRY_BT2020_CYCC;
++	/* Byte 3 Bit 6: BT2020_YCC */
++	if (db[2] & BIT(6))
++		info->colorimetry |= DRM_EDID_CLRMETRY_BT2020_YCC;
++	/* Byte 3 Bit 7: BT2020_RGB */
++	if (db[2] & BIT(7))
++		info->colorimetry |= DRM_EDID_CLRMETRY_BT2020_RGB;
++	/* Byte 4 Bit 7: DCI-P3 */
++	if (db[3] & BIT(7))
++		info->colorimetry |= DRM_EDID_CLRMETRY_DCI_P3;
++
++	DRM_DEBUG_KMS("Supported Colorimetry 0x%x\n", info->colorimetry);
++}
++
+ static bool cea_db_is_hdmi_hdr_metadata_block(const u8 *db)
+ {
+ 	if (cea_db_tag(db) != USE_EXTENDED_TAG)
+@@ -4877,6 +4929,8 @@ static void drm_parse_cea_ext(struct drm_connector *connector,
+ 			drm_parse_vcdb(connector, db);
+ 		if (cea_db_is_hdmi_hdr_metadata_block(db))
+ 			drm_parse_hdr_metadata_block(connector, db);
++		if (cea_db_is_hdmi_colorimetry_data_block(db))
++			drm_parse_colorimetry_data_block(connector, db);
+ 	}
+ }
+ 
+diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
+index 2219109..a996ee3 100644
+--- a/include/drm/drm_connector.h
++++ b/include/drm/drm_connector.h
+@@ -207,6 +207,9 @@ struct drm_hdmi_info {
+ 
+ 	/** @y420_dc_modes: bitmap of deep color support index */
+ 	u8 y420_dc_modes;
++
++	/* @colorimetry: bitmap of supported colorimetry modes */
++	u16 colorimetry;
+ };
+ 
+ /**
+diff --git a/include/drm/drm_edid.h b/include/drm/drm_edid.h
+index f0b03d4..6168c1c 100644
+--- a/include/drm/drm_edid.h
++++ b/include/drm/drm_edid.h
+@@ -224,6 +224,17 @@ struct detailed_timing {
+ 				    DRM_EDID_YCBCR420_DC_36 | \
+ 				    DRM_EDID_YCBCR420_DC_30)
+ 
++/* Supported Colorimetry from colorimetry data block */
++#define DRM_EDID_CLRMETRY_xvYCC_601   (1 << 0)
++#define DRM_EDID_CLRMETRY_xvYCC_709   (1 << 1)
++#define DRM_EDID_CLRMETRY_sYCC_601    (1 << 2)
++#define DRM_EDID_CLRMETRY_ADBYCC_601  (1 << 3)
++#define DRM_EDID_CLRMETRY_ADB_RGB     (1 << 4)
++#define DRM_EDID_CLRMETRY_BT2020_CYCC (1 << 5)
++#define DRM_EDID_CLRMETRY_BT2020_YCC  (1 << 6)
++#define DRM_EDID_CLRMETRY_BT2020_RGB  (1 << 7)
++#define DRM_EDID_CLRMETRY_DCI_P3      (1 << 15)
++
+ /* ELD Header Block */
+ #define DRM_ELD_HEADER_BLOCK_SIZE	4
+ 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
