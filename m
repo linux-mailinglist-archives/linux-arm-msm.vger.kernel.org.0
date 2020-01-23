@@ -2,126 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AC931468BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 14:10:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F0ADA1468C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 14:12:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727312AbgAWNKY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jan 2020 08:10:24 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:36474 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726871AbgAWNKY (ORCPT
+        id S1726796AbgAWNM5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jan 2020 08:12:57 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:29324 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726227AbgAWNM5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jan 2020 08:10:24 -0500
-Received: by mail-pj1-f66.google.com with SMTP id n59so1288855pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2020 05:10:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=w+K4QUYUUumgx2GBrpHxL9/aHJwsZb+ZQPrV+qlnlsY=;
-        b=NoDXl5cZHlHa7TPuIuglrvunhuT/l5kgyUDrQ5dtVKFmNDn3ABmeQkUL2uaEz5zojz
-         c9JoLAZP+HCaGSAxx2WC6Olqu7T79PFnjmJdmsZXp0xJ4E+GYMYrMWcJXuqD5IR0BiX1
-         DRSI9g9mxIpy7SgiuT5aLgz1GPoeHc/9z51XSWVAM6GUdTXDgyuriL1jpEWafCwn3DBH
-         0Eg+hR6gJ5tpwtZLHDPMzXi4ocL1DmiQ1+EyFkGtw2PotA2jZvtcxzrDSSSJevyrcd0V
-         NDDDhHAhH3YU3JQ3R3IL20jVTotLAtCuC1EpogjgjNLSWtZtcFfSkvjcV95uqbebKmQ5
-         T3hA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=w+K4QUYUUumgx2GBrpHxL9/aHJwsZb+ZQPrV+qlnlsY=;
-        b=Brv6W68XEVyMEU4eQIGc3l6CLBN0n33aAD8E5qW74Z+BGLlUqJ3i3baNhEc25e+8NG
-         +iWBGiwblx35SHbB1PmI6fvRcq3+M+pl5+hmhdYn9LJrsYElK+UMPz2NfTQF1V/5en1k
-         2YHf0vF/WqpVkTJMjy+PIq+/eqNF9CGPIWxCWSN2aqmj3o6Lbjcag4hMnyT5CNbQdX/b
-         mwKtSi2ARuM35w28gabpNb9srRq7tL1AOBIh5LV50ILxjY00zC53p1lhD5q6JNBmtqnq
-         v15VICkK9r2UWp+HNcGnxzJEbwratQcZBnQZ31HcvP8yNWq7LTJOHa0txxTZK3ZhuJAr
-         B0ew==
-X-Gm-Message-State: APjAAAUXfTGalXXTP9QLguzlZW5xucT3tf2C3w8LZXZTUpQ8q79jOaZy
-        lfGCWTLTLejuKePAgXlgbeGW
-X-Google-Smtp-Source: APXvYqwYB6HGPHkP0BoBZT/vXkHibew8dpcXweBvnxZwYg9fCHBovirZGC4X+wUlr0VhE+o03fJZcA==
-X-Received: by 2002:a17:902:8e8c:: with SMTP id bg12mr16253851plb.101.1579785023754;
-        Thu, 23 Jan 2020 05:10:23 -0800 (PST)
-Received: from mani ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id a69sm2943318pfa.129.2020.01.23.05.10.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 23 Jan 2020 05:10:23 -0800 (PST)
-Date:   Thu, 23 Jan 2020 18:40:15 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     gregkh <gregkh@linuxfoundation.org>, smohanad@codeaurora.org,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        hemantk@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>
-Subject: Re: [PATCH 01/16] docs: Add documentation for MHI bus
-Message-ID: <20200123131015.GA11366@mani>
-References: <20200123111836.7414-1-manivannan.sadhasivam@linaro.org>
- <20200123111836.7414-2-manivannan.sadhasivam@linaro.org>
- <CAK8P3a3Nxr3yqDjZDV1b0e0mdWEEsktwrmKXxZgsnq7Kv82mhw@mail.gmail.com>
+        Thu, 23 Jan 2020 08:12:57 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1579785176; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=dJUiHDrAH4zx5c0H7WtmCINZ82HtU0D5rEpE/ztuV5w=; b=s8tF6A1LwpTicYfTnmXRve/k3WLeJQjpu0jML7yZ2+bbqyNrlYNi2R461UP2xowkPW0cqO7B
+ VawTBXJ3DfSNkdFcbfAoqREn02HOvgu1K1IbVhPe1LChVcbL1E8VHb0ntaudO5VCF9EjZ/V+
+ Uu/l2UuFSGz4vVYyTewlivhz71M=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e299bd7.7f52251e85e0-smtp-out-n01;
+ Thu, 23 Jan 2020 13:12:55 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1F44BC433A2; Thu, 23 Jan 2020 13:12:55 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 796A8C43383;
+        Thu, 23 Jan 2020 13:12:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 796A8C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org, evgreen@chromium.org,
+        p.zabel@pengutronix.de
+Cc:     ohad@wizery.com, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        agross@kernel.org, Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v2 0/2] Improve general readability of MSS on SC7180
+Date:   Thu, 23 Jan 2020 18:42:34 +0530
+Message-Id: <20200123131236.1078-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.22.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAK8P3a3Nxr3yqDjZDV1b0e0mdWEEsktwrmKXxZgsnq7Kv82mhw@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 23, 2020 at 01:58:22PM +0100, Arnd Bergmann wrote:
-> On Thu, Jan 23, 2020 at 12:18 PM Manivannan Sadhasivam
-> <manivannan.sadhasivam@linaro.org> wrote:
-> > +============
-> > +MHI Topology
-> > +============
-> > +
-> > +This document provides information about the MHI topology modeling and
-> > +representation in the kernel.
-> > +
-> > +MHI Controller
-> > +--------------
-> > +
-> > +MHI controller driver manages the interaction with the MHI client devices
-> > +such as the external modems and WiFi chipsets. It is also the MHI bus master
-> > +which is in charge of managing the physical link between the host and device.
-> > +It is however not involved in the actual data transfer as the data transfer
-> > +is taken care by the physical bus such as PCIe. Each controller driver exposes
-> > +channels and events based on the client device type.
-> > +
-> > +Below are the roles of the MHI controller driver:
-> > +
-> > +* Turns on the physical bus and establishes the link to the device
-> > +* Configures IRQs, SMMU, and IOMEM
-> > +* Allocates struct mhi_controller and registers with the MHI bus framework
-> > +  with channel and event configurations using mhi_register_controller.
-> > +* Initiates power on and shutdown sequence
-> > +* Initiates suspend and resume power management operations of the device.
-> 
-> I don't see any callers of mhi_register_controller(). Did I just miss it or did
-> you not post one? I'm particularly interested in where the configuration comes
-> from, is this hardcoded in the driver, or parsed from firmware or from registers
-> in the hardware itself?
-> 
+This series aims to improve the general readability of the mss reset
+sequence on SC7180 SoCs. No functional change intended.
 
-I have not included the controller driver in this patchset. But you can take a
-look at the ath11k controller driver here:
-https://git.linaro.org/people/manivannan.sadhasivam/linux.git/tree/drivers/net/wireless/ath/ath11k/mhi.c?h=ath11k-qca6390-mhi#n13
+v2:
+ * Use regmap_read_poll_timeout for halt_nav and halt_axi
+ * Redefine CONN_BOX_SPARE_0 to AXI_GATING_VALID_OVERRIDE
+ * Update more details about pipeline glitch issue
+ * Drop 2,3 patches from v1
 
-So the configuration comes from the static structures defined in the controller
-driver. Earlier revision derived the configuration from devicetree but there are
-many cases where this MHI bus is being used in non DT environments like x86.
-So inorder to be platform agnostic, we chose static declaration method.
+Sibi Sankar (2):
+  remoteproc: qcom: q6v5-mss: Use regmap_read_poll_timeout
+  remoteproc: qcom: q6v5-mss: Improve readability of reset_assert
 
-In future we can add DT/ACPI support for the applicable parameters.
+ drivers/remoteproc/qcom_q6v5_mss.c | 42 ++++++++++++++----------------
+ 1 file changed, 19 insertions(+), 23 deletions(-)
 
-I will include the link to this controller driver in the cover letter of future
-iterations.
-
-Thanks,
-Mani
-
->         Arnd
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
