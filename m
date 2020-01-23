@@ -2,164 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 04E171470F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 19:41:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 787B714719C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 20:16:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728792AbgAWSld (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jan 2020 13:41:33 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:44809 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727022AbgAWSld (ORCPT
+        id S1728809AbgAWTQj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jan 2020 14:16:39 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:38464 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728709AbgAWTQj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jan 2020 13:41:33 -0500
-Received: by mail-pf1-f194.google.com with SMTP id 62so1921405pfu.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2020 10:41:32 -0800 (PST)
+        Thu, 23 Jan 2020 14:16:39 -0500
+Received: by mail-pg1-f193.google.com with SMTP id a33so1858151pgm.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2020 11:16:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=j0uL3hKYvtloUNrrY22cT3PaCoUxzpbH8NZr/Q8o0KA=;
-        b=CXNEFTP2R4F8SHBCz2/5Zzdx0sFdYTih2TDfK4G9t9F6FHZEmAQKe0jRZsvWKlCcZm
-         GsCdp4VMOvYqWBylaMYFz3jK3aq5yW7KLIk9EOW1a+lhEGwwJc5UTxUJw4vSEFwE3swT
-         5fpKlAPcs1LsnegZtNxXem+dbUFnvIaJ2Yw4bNrTE5ryTxqMyHEiBhBrmnGjzJulXbM4
-         pU2tl6X779VkXBEvQvwcJO9VT38bD2quKReEXD+esMMg1qNlTCjuwBlnXoboXpi5UAJd
-         1Sp1m/j9HlOv1HBL4587gw6zAFpwao4JsPMNwWlunVSVhcrE8gzHY1z0Q8W5h1bl5RYV
-         Av7A==
+        bh=6wtdQZE06z+aORJTnpPZKoEwjECFJKRvpZenOyG2pbs=;
+        b=fTwlNQnSmBYcTlW2X4DkUAm58zuHxoeu1OEc1vVlBWKcW7LfEspLDnJ4HX4efyba1l
+         uObRu4eaRbt9SL8oC69dLx0ZzK8f0kGqGgDXBigb4khY/TnOqcOfpmpj0x3bKD/JteV6
+         Jwk1lWXngMbf/5avCtsxAskWpmpWiUPoVg32g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=j0uL3hKYvtloUNrrY22cT3PaCoUxzpbH8NZr/Q8o0KA=;
-        b=Lafja59hIVabQBuhvhD3NfHh4WwkLnazXXOrX06wU5LONU5wArCVVpc47cRLRbYr3c
-         wqJHT6UmJbRK8A/tBEtWZEPpXytZqgj0wb1rQDcUTJoziLhOxli2I6cNod0y7O5MdPpm
-         WQEKTdUGfhyUuTmCo1G37TW6WnaUD6LCSE6ODDd1Mh57MD4wPTMcTDkg6lbqk9QfETFQ
-         DjtSWb1u9iQTJtfgM7ygo46HV2S8VMbh6IkpDqauIn9NaxT0kdvIjuEYvnZXi+cfEKok
-         AfKc5Ku41T1BIktG7l+KVR2uovUnO7coU5UV8r4kyFmGeRbMCgH6OY2YTr9gOKaXCIqO
-         KEKQ==
-X-Gm-Message-State: APjAAAUKqqID6L+GhC2FdXrF4GXbxsC2xX1dAO0EYvsTLY2gBi02zyoW
-        sPXm62OzQ3gc/Jbn+/uRVoKsug==
-X-Google-Smtp-Source: APXvYqx+qa1v2W0iU2GnJArGqft14UWP8j2yatf2YzptCIB13C6YZQGrwUgPc9NPu/VFtVapmAU0PA==
-X-Received: by 2002:a63:1807:: with SMTP id y7mr182102pgl.94.1579804892350;
-        Thu, 23 Jan 2020 10:41:32 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g24sm3547441pfk.92.2020.01.23.10.41.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2020 10:41:31 -0800 (PST)
-Date:   Thu, 23 Jan 2020 10:41:29 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Harigovindan P <harigovi@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        kalyan_t@codeaurora.org, nganji@codeaurora.org
-Subject: Re: [v2] arm64: dts: sc7180: add display dt nodes
-Message-ID: <20200123184129.GW1511@yoga>
-References: <1579781700-7253-1-git-send-email-harigovi@codeaurora.org>
+        bh=6wtdQZE06z+aORJTnpPZKoEwjECFJKRvpZenOyG2pbs=;
+        b=mAvfruo5JhGIVUhc/y3oZutQc8uU2C1POU4MFOkgYCWDrOEFUDekT2U25CkWLwLMuL
+         kZqpx8jyRj/UaYrilQIEcCB7+yiUGxMQHxQcoQ0f62CdeoZEaORS1vG9E+oZ4rodhyAy
+         2VzrzzQA+JMzvVN/icaVWHUax7iGXQNJ9UrhBqB+FxtXXWaCrTlu98oS0Q6V2jp50nOj
+         tycGmPZ5g6O+/g0Ee2MVcY6xb5ty8HWCIk41saBBFnbvuHNfp/oX1GJloNoR7u2OYb4T
+         Y0goc9boscbstjp3bArjt1Ear3eIsKvQLZSKVQi4H7+cSnMB13TtcZo7KZnRbrLmhOKt
+         nCXA==
+X-Gm-Message-State: APjAAAW3mZvsWWgdEDwH5CYmQZoPNl1uhG7bjQCvomQtOK9WNYInsVwm
+        tqu3aiomMHpTPTPXflunNOXezA==
+X-Google-Smtp-Source: APXvYqw0a9ZjVf1aQi0SykCpNbX3nRr/2knF42uGFzUQInRewtmQbXeOhyiUEjTVPoGuKU6GqXuSJg==
+X-Received: by 2002:a65:4d0b:: with SMTP id i11mr336402pgt.340.1579806998644;
+        Thu, 23 Jan 2020 11:16:38 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id w8sm3323441pfn.186.2020.01.23.11.16.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jan 2020 11:16:38 -0800 (PST)
+Date:   Thu, 23 Jan 2020 11:16:36 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>
+Subject: Re: [PATCH] drm/msm: Fix a6xx GMU shutdown sequence
+Message-ID: <20200123191636.GY89495@google.com>
+References: <1579797756-10292-1-git-send-email-jcrouse@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1579781700-7253-1-git-send-email-harigovi@codeaurora.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <1579797756-10292-1-git-send-email-jcrouse@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 23 Jan 04:15 PST 2020, Harigovindan P wrote:
+Hi Jordan,
 
-> Add display, DSI hardware DT nodes for sc7180.
+On Thu, Jan 23, 2020 at 09:42:36AM -0700, Jordan Crouse wrote:
+> Commit e812744c5f95 ("drm: msm: a6xx: Add support for A618") missed
+> updating the VBIF flush in a6xx_gmu_shutdown and instead
+> inserted the new sequence into a6xx_pm_suspend along with a redundant
+> GMU idle.
 > 
-> Changes in v1:
-> 	-Added display DT nodes for sc7180
-> Changes in v2:
-> 	-Renamed node names
-> 	-Corrected code alignments
-> 	-Removed extra new line
-
-Please keep the changelist after the '---' for the dts patches.
-
+> Move a6xx_bus_clear_pending_transactions to a6xx_gmu.c and use it in
+> the appropriate place in the shutdown routine and remove the redundant
+> idle call.
 > 
-> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  57 +++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 125 ++++++++++++++++++++++++++++++++
->  2 files changed, 182 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> index 388f50a..f410614 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> @@ -232,6 +232,50 @@
->  	};
->  };
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 36 +++++++++++++++++++++++++----
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 43 -----------------------------------
+>  2 files changed, 31 insertions(+), 48 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index 983afea..f371227 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>
+> ...
+>
+>  /* Gracefully try to shut down the GMU and by extension the GPU */
+>  static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
+>  {
+> @@ -819,11 +849,7 @@ static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
+>  			return;
+>  		}
 >  
-> +&dsi_controller {
-> +	status = "okay";
-> +
-> +	vdda-supply = <&vreg_l3c_1p2>;
-> +
-> +	panel@0 {
-> +		compatible = "visionox,rm69299-1080p-display";
-> +		reg = <0>;
-> +
-> +		vdda-supply = <&vreg_l8c_1p8>;
-> +		vdd3p3-supply = <&vreg_l18a_2p8>;
-> +
-> +		pinctrl-names = "default", "suspend";
-> +		pinctrl-0 = <&disp_pins_default>;
-> +		pinctrl-1 = <&disp_pins_default>;
-> +
-> +		reset-gpios = <&pm6150l_gpio 3 0>;
+> -		/* Clear the VBIF pipe before shutting down */
+> -		gpu_write(gpu, REG_A6XX_VBIF_XIN_HALT_CTRL0, 0xf);
+> -		spin_until((gpu_read(gpu, REG_A6XX_VBIF_XIN_HALT_CTRL1) & 0xf)
+> -			== 0xf);
+> -		gpu_write(gpu, REG_A6XX_VBIF_XIN_HALT_CTRL0, 0);
+> +		a6xx_bus_clear_pending_transactions(adreno_gpu);
 
-Please replace the 0 here with GPIO_ACTIVE_HIGH
-
-> +
-> +		ports {
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +			port@0 {
-> +				reg = <0>;
-> +				panel0_in: endpoint {
-> +					remote-endpoint = <&dsi0_out>;
-> +				};
-> +			};
-> +		};
-> +	};
-[..]
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 3bc3f64..81c3aab 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -1184,6 +1184,131 @@
->  			#power-domain-cells = <1>;
->  		};
->  
-> +		display_subsystem: mdss@ae00000 {
-
-It was the name, not the label, that Stephen asked you to make generic.
-
-> +			compatible = "qcom,sc7180-mdss";
-> +			reg = <0 0x0ae00000 0 0x1000>;
-> +			reg-names = "mdss";
-> +
-[..]
-> +			display_controller: mdp@ae00000 {
-
-mdp: display-controller@ae00000 {
-
-[..]
-> +			};
-> +
-> +			dsi_controller: qcom,mdss_dsi_ctrl0@ae94000 {
-
-In particular you shouldn't have qcom, in the node name.
-
-[..]
-> +
-> +			dsi_phy: dsi-phy0@ae94400 {
-
-phy@ae94400
-
-Regards,
-Bjorn
+With this the variable 'gpu' isn't used anymore in a6xx_gmu_shutdown(),
+please remove it.
