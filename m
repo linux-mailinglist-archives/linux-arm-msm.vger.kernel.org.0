@@ -2,171 +2,266 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C430146A2B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 15:00:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 061E0146A9B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 15:02:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728811AbgAWOAI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jan 2020 09:00:08 -0500
-Received: from mx2.suse.de ([195.135.220.15]:44532 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728904AbgAWOAI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jan 2020 09:00:08 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id BA1C0B283;
-        Thu, 23 Jan 2020 14:00:06 +0000 (UTC)
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-To:     airlied@linux.ie, daniel@ffwll.ch, alexander.deucher@amd.com,
-        christian.koenig@amd.com, David1.Zhou@amd.com,
-        maarten.lankhorst@linux.intel.com, patrik.r.jakobsson@gmail.com,
-        robdclark@gmail.com, sean@poorly.run, benjamin.gaignard@linaro.org,
-        vincent.abriou@st.com, yannick.fertre@st.com,
-        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@st.com, eric@anholt.net,
-        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
-        linux-graphics-maintainer@vmware.com, thellstrom@vmware.com,
-        bskeggs@redhat.com, harry.wentland@amd.com, sunpeng.li@amd.com,
-        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
-        rodrigo.vivi@intel.com
-Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
-        <ville.syrjala@linux.intel.com>
-Subject: [PATCH v4 22/22] drm: Remove legacy version of get_scanout_position()
-Date:   Thu, 23 Jan 2020 14:59:43 +0100
-Message-Id: <20200123135943.24140-23-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.24.1
-In-Reply-To: <20200123135943.24140-1-tzimmermann@suse.de>
-References: <20200123135943.24140-1-tzimmermann@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726590AbgAWOCE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jan 2020 09:02:04 -0500
+Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:12702 "EHLO
+        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726771AbgAWOCE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Jan 2020 09:02:04 -0500
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 23 Jan 2020 19:32:01 +0530
+Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 23 Jan 2020 19:31:41 +0530
+Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
+        id 1332A286A; Thu, 23 Jan 2020 19:31:39 +0530 (IST)
+From:   Harigovindan P <harigovi@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Harigovindan P <harigovi@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        kalyan_t@codeaurora.org, nganji@codeaurora.org
+Subject: [v2] arm64: dts: sc7180: add display dt nodes
+Date:   Thu, 23 Jan 2020 19:31:38 +0530
+Message-Id: <1579788098-22565-1-git-send-email-harigovi@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The legacy version of get_scanout_position() was only useful while
-drivers still used drm_driver.get_scanout_position(). With no such
-drivers left, the related typedef and code can be removed
+Add display, DSI hardware DT nodes for sc7180.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Changes in v1:
+	-Added display DT nodes for sc7180
+Changes in v2:
+	-Renamed node names
+	-Corrected code alignments
+	-Removed extra new line
+	-Added DISP AHB clock for register access
+	under display_subsystem node for global settings
+
+Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
 ---
- drivers/gpu/drm/drm_vblank.c    | 27 +++++++--------------------
- drivers/gpu/drm/i915/i915_irq.c |  2 +-
- include/drm/drm_vblank.h        | 12 +-----------
- 3 files changed, 9 insertions(+), 32 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts |  57 +++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7180.dtsi    | 125 ++++++++++++++++++++++++++++++++
+ 2 files changed, 182 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
-index 90d62430a6ae..ab0a0fca589a 100644
---- a/drivers/gpu/drm/drm_vblank.c
-+++ b/drivers/gpu/drm/drm_vblank.c
-@@ -576,9 +576,6 @@ EXPORT_SYMBOL(drm_calc_timestamping_constants);
-  * @get_scanout_position:
-  *     Callback function to retrieve the scanout position. See
-  *     @struct drm_crtc_helper_funcs.get_scanout_position.
-- * @get_scanout_position_legacy:
-- *     Callback function to retrieve the scanout position. See
-- *     @struct drm_driver.get_scanout_position.
-  *
-  * Implements calculation of exact vblank timestamps from given drm_display_mode
-  * timings and current video scanout position of a CRTC.
-@@ -601,8 +598,7 @@ bool
- drm_crtc_vblank_helper_get_vblank_timestamp_internal(
- 	struct drm_crtc *crtc, int *max_error, ktime_t *vblank_time,
- 	bool in_vblank_irq,
--	drm_vblank_get_scanout_position_func get_scanout_position,
--	drm_vblank_get_scanout_position_legacy_func get_scanout_position_legacy)
-+	drm_vblank_get_scanout_position_func get_scanout_position)
- {
- 	struct drm_device *dev = crtc->dev;
- 	unsigned int pipe = crtc->index;
-@@ -620,7 +616,7 @@ drm_crtc_vblank_helper_get_vblank_timestamp_internal(
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+index 388f50a..f410614 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+@@ -232,6 +232,50 @@
+ 	};
+ };
  
- 	/* Scanout position query not supported? Should not happen. */
--	if (!get_scanout_position && !get_scanout_position_legacy) {
-+	if (!get_scanout_position) {
- 		DRM_ERROR("Called from CRTC w/o get_scanout_position()!?\n");
- 		return false;
- 	}
-@@ -651,19 +647,10 @@ drm_crtc_vblank_helper_get_vblank_timestamp_internal(
- 		 * Get vertical and horizontal scanout position vpos, hpos,
- 		 * and bounding timestamps stime, etime, pre/post query.
- 		 */
--		if (get_scanout_position) {
--			vbl_status = get_scanout_position(crtc,
--							  in_vblank_irq,
--							  &vpos, &hpos,
--							  &stime, &etime,
--							  mode);
--		} else {
--			vbl_status = get_scanout_position_legacy(dev, pipe,
--								 in_vblank_irq,
--								 &vpos, &hpos,
--								 &stime, &etime,
--								 mode);
--		}
-+		vbl_status = get_scanout_position(crtc, in_vblank_irq,
-+						  &vpos, &hpos,
-+						  &stime, &etime,
-+						  mode);
++&dsi_controller {
++	status = "okay";
++
++	vdda-supply = <&vreg_l3c_1p2>;
++
++	panel@0 {
++		compatible = "visionox,rm69299-1080p-display";
++		reg = <0>;
++
++		vdda-supply = <&vreg_l8c_1p8>;
++		vdd3p3-supply = <&vreg_l18a_2p8>;
++
++		pinctrl-names = "default", "suspend";
++		pinctrl-0 = <&disp_pins_default>;
++		pinctrl-1 = <&disp_pins_default>;
++
++		reset-gpios = <&pm6150l_gpio 3 0>;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			port@0 {
++				reg = <0>;
++				panel0_in: endpoint {
++					remote-endpoint = <&dsi0_out>;
++				};
++			};
++		};
++	};
++
++	ports {
++		port@1 {
++			endpoint {
++				remote-endpoint = <&panel0_in>;
++				data-lanes = <0 1 2 3>;
++			};
++		};
++	};
++};
++
++&dsi_phy {
++	status = "okay";
++};
++
+ &qspi {
+ 	status = "okay";
+ 	pinctrl-names = "default";
+@@ -289,6 +333,19 @@
  
- 		/* Return as no-op if scanout query unsupported or failed. */
- 		if (!vbl_status) {
-@@ -755,7 +742,7 @@ bool drm_crtc_vblank_helper_get_vblank_timestamp(struct drm_crtc *crtc,
- {
- 	return drm_crtc_vblank_helper_get_vblank_timestamp_internal(
- 		crtc, max_error, vblank_time, in_vblank_irq,
--		crtc->helper_private->get_scanout_position, NULL);
-+		crtc->helper_private->get_scanout_position);
- }
- EXPORT_SYMBOL(drm_crtc_vblank_helper_get_vblank_timestamp);
+ /* PINCTRL - additions to nodes defined in sc7180.dtsi */
  
-diff --git a/drivers/gpu/drm/i915/i915_irq.c b/drivers/gpu/drm/i915/i915_irq.c
-index 29bf847999f5..3245f7c5c84f 100644
---- a/drivers/gpu/drm/i915/i915_irq.c
-+++ b/drivers/gpu/drm/i915/i915_irq.c
-@@ -886,7 +886,7 @@ bool intel_crtc_get_vblank_timestamp(struct drm_crtc *crtc, int *max_error,
- {
- 	return drm_crtc_vblank_helper_get_vblank_timestamp_internal(
- 		crtc, max_error, vblank_time, in_vblank_irq,
--		i915_get_crtc_scanoutpos, NULL);
-+		i915_get_crtc_scanoutpos);
- }
++&pm6150l_gpio {
++	disp_pins {
++		disp_pins_default: disp_pins_default{
++			pins = "gpio3";
++			function = "func1";
++			qcom,drive-strength = <2>;
++			power-source = <0>;
++			bias-disable;
++			output-low;
++		};
++	};
++};
++
+ &qspi_clk {
+ 	pinconf {
+ 		pins = "gpio63";
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 3bc3f64..81c3aab 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -1184,6 +1184,131 @@
+ 			#power-domain-cells = <1>;
+ 		};
  
- int intel_get_crtc_scanline(struct intel_crtc *crtc)
-diff --git a/include/drm/drm_vblank.h b/include/drm/drm_vblank.h
-index 87fcf4034d1f..5ef94137fe75 100644
---- a/include/drm/drm_vblank.h
-+++ b/include/drm/drm_vblank.h
-@@ -246,22 +246,12 @@ typedef bool (*drm_vblank_get_scanout_position_func)(struct drm_crtc *crtc,
- 						     ktime_t *etime,
- 						     const struct drm_display_mode *mode);
- 
--typedef bool (*drm_vblank_get_scanout_position_legacy_func)(struct drm_device *dev,
--							    unsigned int pipe,
--							    bool in_vblank_irq,
--							    int *vpos,
--							    int *hpos,
--							    ktime_t *stime,
--							    ktime_t *etime,
--							    const struct drm_display_mode *mode);
--
- bool
- drm_crtc_vblank_helper_get_vblank_timestamp_internal(struct drm_crtc *crtc,
- 						     int *max_error,
- 						     ktime_t *vblank_time,
- 						     bool in_vblank_irq,
--						     drm_vblank_get_scanout_position_func get_scanout_position,
--						     drm_vblank_get_scanout_position_legacy_func get_scanout_position_legacy);
-+						     drm_vblank_get_scanout_position_func get_scanout_position);
- bool drm_crtc_vblank_helper_get_vblank_timestamp(struct drm_crtc *crtc,
- 						 int *max_error,
- 						 ktime_t *vblank_time,
++		display_subsystem: mdss@ae00000 {
++			compatible = "qcom,sc7180-mdss";
++			reg = <0 0x0ae00000 0 0x1000>;
++			reg-names = "mdss";
++
++			power-domains = <&dispcc MDSS_GDSC>;
++
++			clocks = <&gcc GCC_DISP_AHB_CLK>,
++				 <&gcc GCC_DISP_HF_AXI_CLK>,
++				 <&dispcc DISP_CC_MDSS_AHB_CLK>,
++				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
++			clock-names = "iface", "gcc_bus", "ahb", "core";
++
++			assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
++			assigned-clock-rates = <300000000>;
++
++			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-controller;
++			#interrupt-cells = <1>;
++
++			iommus = <&apps_smmu 0x800 0x2>;
++
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++
++			display_controller: mdp@ae00000 {
++				compatible = "qcom,sc7180-dpu";
++				reg = <0 0x0ae00000 0 0x1000>,
++				      <0 0x0ae01000 0 0x8f000>,
++				      <0 0x0aeb0000 0 0x2008>,
++				      <0 0x0af03000 0 0x16>;
++				reg-names = "mdss", "mdp", "vbif", "disp_cc";
++
++				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&dispcc DISP_CC_MDSS_ROT_CLK>,
++					 <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
++					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
++					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++				clock-names = "iface", "rot", "lut", "core",
++					      "vsync";
++				assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
++						  <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++				assigned-clock-rates = <300000000>,
++						       <19200000>;
++
++				interrupt-parent = <&display_subsystem>;
++				interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++						dpu_intf1_out: endpoint {
++							remote-endpoint = <&dsi0_in>;
++						};
++					};
++				};
++			};
++
++			dsi_controller: qcom,mdss_dsi_ctrl0@ae94000 {
++				compatible = "qcom,mdss-dsi-ctrl";
++				reg = <0 0x0ae94000 0 0x400>;
++				reg-names = "dsi_ctrl";
++
++				interrupt-parent = <&display_subsystem>;
++				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
++
++				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
++					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
++					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
++					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
++					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&gcc GCC_DISP_HF_AXI_CLK>;
++				clock-names = "byte",
++					      "byte_intf",
++					      "pixel",
++					      "core",
++					      "iface",
++					      "bus";
++
++				phys = <&dsi_phy>;
++				phy-names = "dsi";
++
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++						dsi0_in: endpoint {
++							remote-endpoint = <&dpu_intf1_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++						dsi0_out: endpoint {
++						};
++					};
++				};
++			};
++
++			dsi_phy: dsi-phy0@ae94400 {
++				compatible = "qcom,dsi-phy-10nm";
++				reg = <0 0x0ae94400 0 0x200>,
++				      <0 0x0ae94600 0 0x280>,
++				      <0 0x0ae94a00 0 0x1e0>;
++				reg-names = "dsi_phy",
++					    "dsi_phy_lane",
++					    "dsi_pll";
++
++				#clock-cells = <1>;
++				#phy-cells = <0>;
++
++				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>;
++				clock-names = "iface";
++			};
++		};
++
+ 		pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,sc7180-pdc", "qcom,pdc";
+ 			reg = <0 0x0b220000 0 0x30000>;
 -- 
-2.24.1
+2.7.4
 
