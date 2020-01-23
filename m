@@ -2,147 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C36FD146BD7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 15:53:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E940C146CCD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 16:29:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728779AbgAWOw7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jan 2020 09:52:59 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:17567 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728057AbgAWOw6 (ORCPT
+        id S1726792AbgAWP3o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jan 2020 10:29:44 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:46599 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726771AbgAWP3n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jan 2020 09:52:58 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1579791177; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=Gao3gfWhHq8szcjw/lY/yOEX3GT5FaSQZyPjtB7KPM4=; b=N4PtjPwY+p0B9eBE3X2OTYxKXc/IlXrTW/VPGMtWNPjC256VORTKvSJmu2fOqdnk2SNz8fiw
- kts8CBYGac03Fk0NcZPE7S5m1u9aEnlHzPDju63Q221E7yyftI2J4kDFuExduN0gZTf+2Co1
- tK4CcXuv/bzppksSI0XX9MgZEcA=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e29b33d.7f87d178df48-smtp-out-n01;
- Thu, 23 Jan 2020 14:52:45 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 38106C447A1; Thu, 23 Jan 2020 14:52:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DBFB0C447A4;
-        Thu, 23 Jan 2020 14:52:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DBFB0C447A4
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH 01/16] docs: Add documentation for MHI bus
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>
-Cc:     gregkh <gregkh@linuxfoundation.org>, smohanad@codeaurora.org,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        hemantk@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>
-References: <20200123111836.7414-1-manivannan.sadhasivam@linaro.org>
- <20200123111836.7414-2-manivannan.sadhasivam@linaro.org>
- <CAK8P3a3Nxr3yqDjZDV1b0e0mdWEEsktwrmKXxZgsnq7Kv82mhw@mail.gmail.com>
- <20200123131015.GA11366@mani>
- <CAK8P3a1z7mVEpxbk47Q3A-tLDhqHUid2_S4tE3NQuf_2_UCOcg@mail.gmail.com>
- <20200123133010.GB11366@mani>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <466ac855-b326-2125-77e5-6e0dcc2c2c35@codeaurora.org>
-Date:   Thu, 23 Jan 2020 07:52:41 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        Thu, 23 Jan 2020 10:29:43 -0500
+Received: by mail-lj1-f195.google.com with SMTP id m26so3861265ljc.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2020 07:29:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hGe3quY2eM1LzswjO8uadoKz/qhRhLC7XH0fyTRmfIQ=;
+        b=kZmmZcLnBB/6+OoVmRStZyaY1vZDgraq1Y4osCxfYnkug17wt3Z8H7PIJcN2GPBnAp
+         O0y/+danf2adTO4N/3uPwFTKZzZ2XAMHrI/QYZ38X+z7i/93sU/f9DCLtKHS1qbH0ik/
+         0xhEeXZuAqhiMcAQ4VVYtrCesIN7j+KIF/yvhL5M2iAbnatzBMsy7SG/ES0Je+8g8MSN
+         2U4SMVkgzo63Ujfmq9u8ijkiLagrv3K5UcwkMELrv/DtlHlY7mzMuKxDd3CRu87y6Dcc
+         txdy/ilpzlbJBlJ1LdvNMA+whtA/9m/033U+eBsfZMA3X/vbeOOq8PNOxNn+GOvzC0yj
+         6d8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hGe3quY2eM1LzswjO8uadoKz/qhRhLC7XH0fyTRmfIQ=;
+        b=DcWqpC2BQVtUmi3KXkWIT60QmV8l0NFnpaVibkZ/6zyC4exXc4kT5EMN8ZCPIBUdjz
+         09PZScU1qJ1qhkyggM/yQxxltGOChHFEhPDPtvOpdqf4gJan0jzhWBkckd7bOdXyhGOd
+         /Z+Ks9j//6LsOoNg8XWcFETOVm2/h/WObzDXOSzmM+L7lYc4bo0jiBMeSBNBaRHB62Ew
+         T91tkALGufZhKm3ZB0NFxgzj4ZS1F5lXRfr72Z/WEA8NngwB/GAylyAHZVxwca3YiKZj
+         b1aqrqi2YZhh3v0A8Ux30NjBBIceA/V2EDjLWDK9hEuRQ0hrcvOSSVGVsoQwaPm3Lfe9
+         tRUA==
+X-Gm-Message-State: APjAAAXnDuhgEDe29JJcTE4KeVDWcSfEFbf84vGYLkXwFxB+3maD0G6I
+        9VKwIJSVlqxkIjqY3r8BU14bKBui9z7uo37L6nQLDw==
+X-Google-Smtp-Source: APXvYqyAo9QbCuj1ZRrdrCnwV0MRmiJ9cmkQGRldVrsy7R8hyn9coEr4fEciRA8CmIrO6Wc8kC6OmN+1PfuydxcHueI=
+X-Received: by 2002:a05:651c:111c:: with SMTP id d28mr24180974ljo.32.1579793382400;
+ Thu, 23 Jan 2020 07:29:42 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20200123133010.GB11366@mani>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20200121183748.68662-1-swboyd@chromium.org>
+In-Reply-To: <20200121183748.68662-1-swboyd@chromium.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Thu, 23 Jan 2020 16:29:31 +0100
+Message-ID: <CACRpkdbgfNuJCgOWMBGwf1FoF+9cpQACnGH7Uon5Y6X+kN+x_w@mail.gmail.com>
+Subject: Re: [PATCH] spmi: pmic-arb: Set lockdep class for hierarchical irq domains
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/23/2020 6:30 AM, Manivannan Sadhasivam wrote:
-> On Thu, Jan 23, 2020 at 02:19:51PM +0100, Arnd Bergmann wrote:
->> On Thu, Jan 23, 2020 at 2:10 PM Manivannan Sadhasivam
->> <manivannan.sadhasivam@linaro.org> wrote:
->>>
->>> On Thu, Jan 23, 2020 at 01:58:22PM +0100, Arnd Bergmann wrote:
->>>> On Thu, Jan 23, 2020 at 12:18 PM Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
->>>>
->>>> I don't see any callers of mhi_register_controller(). Did I just miss it or did
->>>> you not post one? I'm particularly interested in where the configuration comes
->>>> from, is this hardcoded in the driver, or parsed from firmware or from registers
->>>> in the hardware itself?
->>>>
->>>
->>> I have not included the controller driver in this patchset. But you can take a
->>> look at the ath11k controller driver here:
->>> https://git.linaro.org/people/manivannan.sadhasivam/linux.git/tree/drivers/net/wireless/ath/ath11k/mhi.c?h=ath11k-qca6390-mhi#n13
->>>
->>> So the configuration comes from the static structures defined in the controller
->>> driver. Earlier revision derived the configuration from devicetree but there are
->>> many cases where this MHI bus is being used in non DT environments like x86.
->>> So inorder to be platform agnostic, we chose static declaration method.
->>>
->>> In future we can add DT/ACPI support for the applicable parameters.
->>
->> What determines the configuration? Is this always something that is fixed
->> in hardware, or can some of the properties be changed based on what
->> firmware runs the device?
->>
-> 
-> AFAIK, these configurations are fixed in hardware (this could come from
-> the firmware I'm not sure but they don't change with firmware revisions
-> for sure)
-> 
-> The reason for defining in the driver itself implies that these don't
-> change. But I'll confirm this with Qcom folks.
-> 
-> Thanks,
-> Mani
-> 
->> If this is determined by the firmware, maybe the configuration would also
->> need to be loaded from the file that contains the firmware, which in turn
->> could be a blob in DT.
->>
->>       Arnd
+On Tue, Jan 21, 2020 at 7:37 PM Stephen Boyd <swboyd@chromium.org> wrote:
 
-We can't derive the configuration from hardware, and its something that 
-is currently a priori known since the host (linux) needs to initialize 
-the hardware with the configuration before it can communicate with the 
-device (ie the on device FW).
+> I see the following lockdep splat in the qcom pinctrl driver when
+> attempting to suspend the device.
+>
+>  WARNING: possible recursive locking detected
+>  5.4.11 #3 Tainted: G        W
+>  --------------------------------------------
+>  cat/3074 is trying to acquire lock:
+>  ffffff81f49804c0 (&irq_desc_lock_class){-.-.}, at: __irq_get_desc_lock+0x64/0x94
+>
+>  but task is already holding lock:
+>  ffffff81f1cc10c0 (&irq_desc_lock_class){-.-.}, at: __irq_get_desc_lock+0x64/0x94
+>
+>  other info that might help us debug this:
+>   Possible unsafe locking scenario:
+>
+>         CPU0
+>         ----
+>    lock(&irq_desc_lock_class);
+>    lock(&irq_desc_lock_class);
+>
+>   *** DEADLOCK ***
+>
+>   May be due to missing lock nesting notation
+>
+>  6 locks held by cat/3074:
+>   #0: ffffff81f01d9420 (sb_writers#7){.+.+}, at: vfs_write+0xd0/0x1a4
+>   #1: ffffff81bd7d2080 (&of->mutex){+.+.}, at: kernfs_fop_write+0x12c/0x1fc
+>   #2: ffffff81f4c322f0 (kn->count#337){.+.+}, at: kernfs_fop_write+0x134/0x1fc
+>   #3: ffffffe411a41d60 (system_transition_mutex){+.+.}, at: pm_suspend+0x108/0x348
+>   #4: ffffff81f1c5e970 (&dev->mutex){....}, at: __device_suspend+0x168/0x41c
+>   #5: ffffff81f1cc10c0 (&irq_desc_lock_class){-.-.}, at: __irq_get_desc_lock+0x64/0x94
+>
+>  stack backtrace:
+>  CPU: 5 PID: 3074 Comm: cat Tainted: G        W         5.4.11 #3
+>  Hardware name: Google Cheza (rev3+) (DT)
+>  Call trace:
+>   dump_backtrace+0x0/0x174
+>   show_stack+0x20/0x2c
+>   dump_stack+0xc8/0x124
+>   __lock_acquire+0x460/0x2388
+>   lock_acquire+0x1cc/0x210
+>   _raw_spin_lock_irqsave+0x64/0x80
+>   __irq_get_desc_lock+0x64/0x94
+>   irq_set_irq_wake+0x40/0x144
+>   qpnpint_irq_set_wake+0x28/0x34
+>   set_irq_wake_real+0x40/0x5c
+>   irq_set_irq_wake+0x70/0x144
+>   pm8941_pwrkey_suspend+0x34/0x44
+>   platform_pm_suspend+0x34/0x60
+>   dpm_run_callback+0x64/0xcc
+>   __device_suspend+0x310/0x41c
+>   dpm_suspend+0xf8/0x298
+>   dpm_suspend_start+0x84/0xb4
+>   suspend_devices_and_enter+0xbc/0x620
+>   pm_suspend+0x210/0x348
+>   state_store+0xb0/0x108
+>   kobj_attr_store+0x14/0x24
+>   sysfs_kf_write+0x4c/0x64
+>   kernfs_fop_write+0x15c/0x1fc
+>   __vfs_write+0x54/0x18c
+>   vfs_write+0xe4/0x1a4
+>   ksys_write+0x7c/0xe4
+>   __arm64_sys_write+0x20/0x2c
+>   el0_svc_common+0xa8/0x160
+>   el0_svc_handler+0x7c/0x98
+>   el0_svc+0x8/0xc
+>
+> Set a lockdep class when we map the irq so that irq_set_wake() doesn't
+> warn about a lockdep bug that doesn't exist.
+>
+> Fixes: 12a9eeaebba3 ("spmi: pmic-arb: convert to v2 irq interfaces to support hierarchical IRQ chips")
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Brian Masney <masneyb@onstation.org>
+> Cc: Lina Iyer <ilina@codeaurora.org>
+> Cc: Maulik Shah <mkshah@codeaurora.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-99% of the time the configuration is fixed, however there have been 
-instances where features have been added on the device, which result in 
-new channels, which then impact the configuration.  In the cases I'm 
-aware of this, both sides were updated in lockstep.  I don't know how 
-upstream would handle it.  I'm thinking we can ignore that case until it 
-comes up.
+LGTM
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-DT/ACPI is tricky, since the cases where we want this currently are 
-essentially standalone PCI(e) cards.  Those are likely to be on systems 
-which don't support DT (ie x86), and there really isn't a place in ACPI 
-to put PCI(e) device configuration information, since its supposed to be 
-a discoverable bus.
-
-There are hardware limitations to the configuration, and that varies 
-from device to device.  Since the host (linux) programs the 
-configuration into the hardware, its possible for an invalid 
-configuration to be programed, but I would expect that in the majority 
-of cases (ie programming a channel that the device FW doesn't know 
-about), there is no adverse impact.
-
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Yours,
+Linus Walleij
