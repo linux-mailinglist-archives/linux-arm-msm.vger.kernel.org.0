@@ -2,110 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E7D81468CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 14:13:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DE091468FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 14:25:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726240AbgAWNND (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jan 2020 08:13:03 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:48460 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728811AbgAWNND (ORCPT
+        id S1726885AbgAWNZM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jan 2020 08:25:12 -0500
+Received: from mout.kundenserver.de ([212.227.17.24]:35401 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726170AbgAWNZM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jan 2020 08:13:03 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1579785182; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=HQkB2ZhFnCLma0netfVRRuYUjdLJFslhBm5LAJ36CLI=; b=QeFapJ65gZwGDXUaX9JW4M+mbC1Fh+AchvZtKZbECfHpEcPKmKIHwQtEWITUN62vqXSFu8Sz
- ZBfJjxFdC4kVEQWfusPIS4vkCEcKxrCqbwScTWQy4qUzqcBMy37F9JLHzEdjWQ050MlW74Wj
- IC8mwWOIS5dGjq4j/spxEri0CeU=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e299bdd.7fa62d251420-smtp-out-n02;
- Thu, 23 Jan 2020 13:13:01 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DFEC2C433CB; Thu, 23 Jan 2020 13:13:00 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5A88AC447A1;
-        Thu, 23 Jan 2020 13:12:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5A88AC447A1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org, evgreen@chromium.org,
-        p.zabel@pengutronix.de
-Cc:     ohad@wizery.com, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH v2 2/2] remoteproc: qcom: q6v5-mss: Improve readability of reset_assert
-Date:   Thu, 23 Jan 2020 18:42:36 +0530
-Message-Id: <20200123131236.1078-3-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.22.1
-In-Reply-To: <20200123131236.1078-1-sibis@codeaurora.org>
-References: <20200123131236.1078-1-sibis@codeaurora.org>
+        Thu, 23 Jan 2020 08:25:12 -0500
+Received: from mail-qk1-f176.google.com ([209.85.222.176]) by
+ mrelayeu.kundenserver.de (mreue108 [212.227.15.145]) with ESMTPSA (Nemesis)
+ id 1Mn2iP-1jMHj53AIx-00kBHr; Thu, 23 Jan 2020 14:20:08 +0100
+Received: by mail-qk1-f176.google.com with SMTP id k6so3348095qki.5;
+        Thu, 23 Jan 2020 05:20:08 -0800 (PST)
+X-Gm-Message-State: APjAAAV+he4/YELK87zcK3qDC4gL1opJQhJ9ou7biac8+Hgl9gt7QT17
+        JtOg9eK1GTi1Ojc8RoZaZcyeQ2eH8unV0xkEaKA=
+X-Google-Smtp-Source: APXvYqwXq+DG32RN0wO1YrRms+3/K/FWivCk9LXncsUkH+wak60+fKaX9yKo9/wDoFA2a+wGHM6SlVs6Zvrtlwwp8iQ=
+X-Received: by 2002:a05:620a:a5b:: with SMTP id j27mr15758197qka.286.1579785607406;
+ Thu, 23 Jan 2020 05:20:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200123111836.7414-1-manivannan.sadhasivam@linaro.org>
+ <20200123111836.7414-2-manivannan.sadhasivam@linaro.org> <CAK8P3a3Nxr3yqDjZDV1b0e0mdWEEsktwrmKXxZgsnq7Kv82mhw@mail.gmail.com>
+ <20200123131015.GA11366@mani>
+In-Reply-To: <20200123131015.GA11366@mani>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Thu, 23 Jan 2020 14:19:51 +0100
+X-Gmail-Original-Message-ID: <CAK8P3a1z7mVEpxbk47Q3A-tLDhqHUid2_S4tE3NQuf_2_UCOcg@mail.gmail.com>
+Message-ID: <CAK8P3a1z7mVEpxbk47Q3A-tLDhqHUid2_S4tE3NQuf_2_UCOcg@mail.gmail.com>
+Subject: Re: [PATCH 01/16] docs: Add documentation for MHI bus
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     gregkh <gregkh@linuxfoundation.org>, smohanad@codeaurora.org,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        hemantk@codeaurora.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Provags-ID: V03:K1:FsPfcXjctBLIl0UBnWJI/axGoELjFyVvQ6i8JJEgDPFI2tdlxeM
+ 5/YASmkVHUUUEGp5wNLo3TYnrWhqnQo1sEUgwtvGS1SAV6MWJ49Uv8X1sz5nNUbm5bDx17Y
+ gRefQDoE0YI63JpufjN4tam/BPPjDOfPso5pcz9LyFu2TVMHynxKXycb/u5v7xCVLGPOg4d
+ pVsxFrSXdgPVTV+LXQTzg==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:P3xBzKHLjv4=:crL5yWVDiooFTsRz2e7AkE
+ uWhr71cxWy8I18TaME+GtvLxEyH0dTnToxxM4HJrj+7EKcqvS9VZ3u92wqlnCEg14GF5vuGts
+ NkjTQcDuBwAQvLK2xMF5uZa8O4RIMtfX7/GpPcNou2JEb9DRA0jg8bvb+GK7/CUHhM/qa/54C
+ +WSisnS0LEo+FsjdVBJ8eLZwYcPfCe0HJckylQvbG9vKqb12HKLmeYYC+Alx9UJkEabXhbXTi
+ 2RKtQhLVhEmOXtfgq3dw1B/xGLDATCoTWcxD8BmGsh7n766rYaBslQ3BzIN9Q4uprxmFD+nlF
+ vynmOos3UG0Edbg56b3+mSiEy6ROQBMs6EeNYhyxB1scpVIvflp9mKD/h4cYnUsGXsc1kKf8z
+ 16zLrawvJ71v5A4FRz5NOot8KDCDUF1aCuxMX7USWAPzEZlR8u7tF+wPntxFu9ZbJC7OWfezC
+ MzjDRphNLDbofl8PZ+7i7Hh+2TJ2A+sQTCBXADR7Z0JKwR0y6vlLJPTdjnhnIyBPTrXlsfDKm
+ lb81xJmBZy2SzqrHTSgfQMNtdFbeM6EzfM6G/jqILbs+U5FjXz6BeaFbxXwMAH360fYqWtQrt
+ PxNPW2NMSeOn0nRGq3vvW3BhukKgJWwJh7Fm0pYieExJaljf5B7St3zf12+JH0ENwsOOHgYun
+ aEYkRUrk5b7p2sLFFC0TQVq/X0A/Sb9JwNiwUyNZcuLtiwFoWVkWiZyg347GQ4yeY16CYmmxp
+ fdwHN7Sm4BS6Ipdrh1BnB0eAi3LxdonoTqIni/+G/iU5Ruu4Fdj71PLWXiCtDZwvjFiC3tdPJ
+ zQTHkNL1AlIU8FD7uQ0W9vlAsNJRfpEOm82zNRgybmZnZOMojc=
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Define AXI_GATING_VALID_OVERRIDE and fixup comments to improve readability
-of Q6 modem reset sequence on SC7180 SoCs.
+On Thu, Jan 23, 2020 at 2:10 PM Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> wrote:
+>
+> On Thu, Jan 23, 2020 at 01:58:22PM +0100, Arnd Bergmann wrote:
+> > On Thu, Jan 23, 2020 at 12:18 PM Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
+> >
+> > I don't see any callers of mhi_register_controller(). Did I just miss it or did
+> > you not post one? I'm particularly interested in where the configuration comes
+> > from, is this hardcoded in the driver, or parsed from firmware or from registers
+> > in the hardware itself?
+> >
+>
+> I have not included the controller driver in this patchset. But you can take a
+> look at the ath11k controller driver here:
+> https://git.linaro.org/people/manivannan.sadhasivam/linux.git/tree/drivers/net/wireless/ath/ath11k/mhi.c?h=ath11k-qca6390-mhi#n13
+>
+> So the configuration comes from the static structures defined in the controller
+> driver. Earlier revision derived the configuration from devicetree but there are
+> many cases where this MHI bus is being used in non DT environments like x86.
+> So inorder to be platform agnostic, we chose static declaration method.
+>
+> In future we can add DT/ACPI support for the applicable parameters.
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
- drivers/remoteproc/qcom_q6v5_mss.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+What determines the configuration? Is this always something that is fixed
+in hardware, or can some of the properties be changed based on what
+firmware runs the device?
 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index 89ab96c21a44a..a1cc9cbe038f1 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -71,6 +71,7 @@
- #define NAV_AXI_HALTREQ_BIT		BIT(0)
- #define NAV_AXI_HALTACK_BIT		BIT(1)
- #define NAV_AXI_IDLE_BIT		BIT(2)
-+#define AXI_GATING_VALID_OVERRIDE	BIT(0)
- 
- #define HALT_ACK_TIMEOUT_US		100000
- #define NAV_HALT_ACK_TIMEOUT_US		200
-@@ -415,16 +416,24 @@ static int q6v5_reset_assert(struct q6v5 *qproc)
- 		ret = reset_control_reset(qproc->mss_restart);
- 		reset_control_deassert(qproc->pdc_reset);
- 	} else if (qproc->has_halt_nav) {
--		/* SWAR using CONN_BOX_SPARE_0 for pipeline glitch issue */
-+		/*
-+		 * When the AXI pipeline is being reset with the Q6 modem partly
-+		 * operational there is possibility of AXI valid signal to
-+		 * glitch, leading to spurious transactions and Q6 hangs. A work
-+		 * around is employed by asserting the AXI_GATING_VALID_OVERRIDE
-+		 * BIT before triggering Q6 MSS reset. Both the HALTREQ and
-+		 * AXI_GATING_VALID_OVERRIDE are withdrawn post MSS assert
-+		 * followed by a MSS deassert, while holding the PDC reset.
-+		 */
- 		reset_control_assert(qproc->pdc_reset);
- 		regmap_update_bits(qproc->conn_map, qproc->conn_box,
--				   BIT(0), BIT(0));
-+				   AXI_GATING_VALID_OVERRIDE, 1);
- 		regmap_update_bits(qproc->halt_nav_map, qproc->halt_nav,
- 				   NAV_AXI_HALTREQ_BIT, 0);
- 		reset_control_assert(qproc->mss_restart);
- 		reset_control_deassert(qproc->pdc_reset);
- 		regmap_update_bits(qproc->conn_map, qproc->conn_box,
--				   BIT(0), 0);
-+				   AXI_GATING_VALID_OVERRIDE, 0);
- 		ret = reset_control_deassert(qproc->mss_restart);
- 	} else {
- 		ret = reset_control_assert(qproc->mss_restart);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+If this is determined by the firmware, maybe the configuration would also
+need to be loaded from the file that contains the firmware, which in turn
+could be a blob in DT.
+
+     Arnd
