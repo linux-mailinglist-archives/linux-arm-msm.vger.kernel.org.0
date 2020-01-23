@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F8E714740F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 23:54:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE970147417
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 23:55:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729154AbgAWWyY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jan 2020 17:54:24 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:46795 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729259AbgAWWyV (ORCPT
+        id S1729505AbgAWWzT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jan 2020 17:55:19 -0500
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:41448 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729259AbgAWWzT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jan 2020 17:54:21 -0500
-Received: by mail-lf1-f67.google.com with SMTP id z26so3551802lfg.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2020 14:54:20 -0800 (PST)
+        Thu, 23 Jan 2020 17:55:19 -0500
+Received: by mail-lf1-f65.google.com with SMTP id m30so3570678lfp.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2020 14:55:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=4i0xRegMdNqxOxG+y1FBl3qD0d4qg24N4qcbY2rQ3vQ=;
-        b=h6fTyk31IwwLg8KNhheI3woUC/D2zkf8XziVhs7JXsImTaRLC2DXm9BJAE6u+BMgjK
-         73MNy0gWxtpbOyDwxzvluEvf+NqpO/USzFZ726Oz2yVqZNBJk/Lpps9OfFcYEj6AfB9L
-         o1Gs5eQMBdoRwGanZpLB0BWUuybs52+Nj83ZM=
+        bh=RvfS7+Fsc/eieI6rBQof74MincBvvBD6LwXZdidYyBU=;
+        b=YYLLczpgQOlnXOLDv9csihbQn/ZgD2WlgEYBHaHRdjKx5jpKdyDfOIAnJF3cacZIZ4
+         XbTvtmZ6TFJInnwglMMY1JvFSvkXTeZVaWWfa6k5uqO5AL+KoYg6m2clDBwRj0W37QMh
+         2FRuAAV4AkTDaT1s4pP0s85aSMcd3qlTQpQsg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=4i0xRegMdNqxOxG+y1FBl3qD0d4qg24N4qcbY2rQ3vQ=;
-        b=mS8AKHBLfi2xaV2Azq4ooDQEhQWlykscsfy/WB72Ql2B0ebOMHCEml6PnJmz1xKJ9W
-         xaBgx3IBccBBcGealTZgC9Nvdzb6NNbQklABCCayOWOdo4ocBXufzOWIJ6M/ZZ5HJx79
-         A6iAAuq6+ShSKcr4juEBi1TPzZJ1+iRzbY0bX1p8yFMJPg21jZgeSxyFkrpXZUyk1YH4
-         XcZZWlLdVnUApO9xglpnw67CK0XhLzw1vtSP/HA2AL3rKJ1ZuJVYhO//p8FCtJH3aa2P
-         0zJUQQDTzxRgE266NATpcIN2D+BAcQg/KRbWWb7G7MafImE3fekUAQ67ji0JSbYbu/Qp
-         4RLQ==
-X-Gm-Message-State: APjAAAUhSr64p1O3IUfqa7U2Upy/BetgqtyRd2X/XYbfF44WHX/3IPQy
-        cA+k5Vooy/nDVFtSjUFXM23r29DsoHk=
-X-Google-Smtp-Source: APXvYqwy+2f5Bbzm48UA9BV1C6423p5XkMvIcvxRCFWqa3AAicMGL8eXqfo2prgS8Vs2Pcpw0l5NeQ==
-X-Received: by 2002:a19:3f07:: with SMTP id m7mr36305lfa.61.1579820059253;
-        Thu, 23 Jan 2020 14:54:19 -0800 (PST)
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com. [209.85.167.44])
-        by smtp.gmail.com with ESMTPSA id l16sm1515235lfh.74.2020.01.23.14.54.17
+        bh=RvfS7+Fsc/eieI6rBQof74MincBvvBD6LwXZdidYyBU=;
+        b=VU6685IJ7+rmKolEea8eUGbmUchu+0NGWMMhOkbyQcedOUeCRDwtESKuiYjsv3WbAN
+         vPuR+w7NF0++lzh36H4ERT6L16wHSHJLDA9pL4Xl+hsqhWacYLwr3G8FbSr4Qeo6jqL8
+         VfS35wRouxqnfr0Iy2EZEnoZj4cDY+kBr2XfwRu52ahbziG8+NPmACaQSjzmh4A2iBpb
+         plUSoJJPxxifDx6RH8EoCx7IkAD2P71NLbc70YH9a5ewG2bI1wZD2kjdiMTWIk4yaf/H
+         Oa6Coq0Zt8hLnrxSibBtJYHeX0IPW4z7Xs/Wc4L17LFegdfkGA4lsqrmLXu8TlV4mw7n
+         znsQ==
+X-Gm-Message-State: APjAAAW4hLP5v1T8IfH6aOOIP7SSGV6UHrqrQNH3v2iiK/kDCYsFv8Xp
+        wwszjZgYS380I+gY/fPV7JYGokBdHP0=
+X-Google-Smtp-Source: APXvYqzqdwRrRAqkn1Wi/sIRtbY2yEUIuC3P2/5sSQFRVRn1UuDH3ikThYlUS6+Ri5qxm2mYdpsR0g==
+X-Received: by 2002:a19:3f07:: with SMTP id m7mr37468lfa.61.1579820116834;
+        Thu, 23 Jan 2020 14:55:16 -0800 (PST)
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com. [209.85.167.41])
+        by smtp.gmail.com with ESMTPSA id j16sm2023639ljh.35.2020.01.23.14.55.15
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jan 2020 14:54:18 -0800 (PST)
-Received: by mail-lf1-f44.google.com with SMTP id z18so3609917lfe.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2020 14:54:17 -0800 (PST)
-X-Received: by 2002:a05:6512:2035:: with SMTP id s21mr31943lfs.99.1579820057323;
- Thu, 23 Jan 2020 14:54:17 -0800 (PST)
+        Thu, 23 Jan 2020 14:55:16 -0800 (PST)
+Received: by mail-lf1-f41.google.com with SMTP id f24so3601897lfh.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2020 14:55:15 -0800 (PST)
+X-Received: by 2002:a19:c205:: with SMTP id l5mr31538lfc.159.1579820115268;
+ Thu, 23 Jan 2020 14:55:15 -0800 (PST)
 MIME-Version: 1.0
-References: <20200123131236.1078-1-sibis@codeaurora.org> <20200123131236.1078-2-sibis@codeaurora.org>
-In-Reply-To: <20200123131236.1078-2-sibis@codeaurora.org>
+References: <20200123131236.1078-1-sibis@codeaurora.org> <20200123131236.1078-3-sibis@codeaurora.org>
+In-Reply-To: <20200123131236.1078-3-sibis@codeaurora.org>
 From:   Evan Green <evgreen@chromium.org>
-Date:   Thu, 23 Jan 2020 14:53:41 -0800
-X-Gmail-Original-Message-ID: <CAE=gft7sztBTs4mhF2X0eKnjJNBBRxXP5VOr4rsAw=SOYDi4jg@mail.gmail.com>
-Message-ID: <CAE=gft7sztBTs4mhF2X0eKnjJNBBRxXP5VOr4rsAw=SOYDi4jg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] remoteproc: qcom: q6v5-mss: Use regmap_read_poll_timeout
+Date:   Thu, 23 Jan 2020 14:54:39 -0800
+X-Gmail-Original-Message-ID: <CAE=gft7H6-jAfPAqeU74D1VPS81vLPgQ6w+JO09C4w1bzwYduw@mail.gmail.com>
+Message-ID: <CAE=gft7H6-jAfPAqeU74D1VPS81vLPgQ6w+JO09C4w1bzwYduw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] remoteproc: qcom: q6v5-mss: Improve readability of reset_assert
 To:     Sibi Sankar <sibis@codeaurora.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Philipp Zabel <p.zabel@pengutronix.de>,
@@ -71,8 +71,11 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Thu, Jan 23, 2020 at 5:13 AM Sibi Sankar <sibis@codeaurora.org> wrote:
 >
-> Replace the loop for HALT_ACK detection with regmap_read_poll_timeout.
+> Define AXI_GATING_VALID_OVERRIDE and fixup comments to improve readability
+> of Q6 modem reset sequence on SC7180 SoCs.
 >
 > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+
+Very nice, thank you!
 
 Reviewed-by: Evan Green <evgreen@chromium.org>
