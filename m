@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 503D214668E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 12:20:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3381A146692
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 12:20:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729199AbgAWLTU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jan 2020 06:19:20 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:37278 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726194AbgAWLTS (ORCPT
+        id S1729221AbgAWLT0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jan 2020 06:19:26 -0500
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:56181 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729222AbgAWLTW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jan 2020 06:19:18 -0500
-Received: by mail-pj1-f66.google.com with SMTP id m13so1147205pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2020 03:19:17 -0800 (PST)
+        Thu, 23 Jan 2020 06:19:22 -0500
+Received: by mail-pj1-f67.google.com with SMTP id d5so1060936pjz.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Jan 2020 03:19:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7x+RRKDQ+82parLCWdi8TmyvsjI5/vfpTHYZFDjvwR0=;
-        b=MRgTl5Az91oaXaAfTU5deBxF8g2k5XHvtJaXQ+EN7dKBk1Uc0L5q82PJ1x30tnNWLE
-         Zqr5fsErGMdPAPvzB4uKOd5B4sr+7iTtaYEFkpsRPk1zfHiuz/Sxp0eG1DiiBElWTh4u
-         qfS+mKVIKDnnHmyBju6wRBo7vb5YAORb5AmAJryn2JeQ1WPpyzKHGLKfIcROg0frNRuF
-         t41IhPywJo42L91rHKmBOq4zXYnINIVqGnno61NDZWOvn3SMJXNi7PIPw8D+au+H3/fj
-         q2lFVgqH+bX8ymuD9fsSGb8ts7BHMt8OHiJvY2f6+g49oTRKIRZ49ESm1ioOfyzSIfZM
-         cmDA==
+        bh=TL5jPJyaHOJr3n0Nwsyj6BmbowZte59fMzKq9fzNWO8=;
+        b=Ap2kkLw1nD5gWSCMNLiT5U/DYidI0VYk2gTPlZLRYT7AKABhBjrzESQnYPIn+KPV66
+         2RAXmiKOP6xByvwtR6jArZoVFQoxdBx8pasdoVmgg4xvpbUKACXUQcsSDO6K9nYo7B+r
+         OR5PglW4ei8pEPdYMjRak1DRNFxHLZjYkq5kGTOvteDlVLePTy/YohMAjOrFW05SHRAz
+         rh2WAtWxG01VWX3HsiOFftSyZF38utBEjvM9I7o5KSP8VLL4X8l6+/J9Tau1w3eEtHTC
+         1uXw4IrNtTwna2eSMItkAdTjzJR/+wXzs2XRSUvqlmQhNcefLwobT7atoYvndJj6fvI/
+         M5Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=7x+RRKDQ+82parLCWdi8TmyvsjI5/vfpTHYZFDjvwR0=;
-        b=PFr7NtCI7/Yq/+l1jm/DcnCV5k0qrc+Vwu0e49FDQf9QxT0IEdxKnAXbgL2b5+ACR1
-         /sDDpihNNDOWZWsljZAdvywxh5G/fFJSXoMa3f4wZ89b8H7o4fBEoH2QGJRDNeB/7YgG
-         cuie2mVEfeSZe6yabWw8CbfYSTRvObV76SH38nUg/flRi+txgRTjH2rCQudexAOvah8o
-         j/yyZDaTbBDiKdMLTI/P4WT15g5z0qSG07uWgtki9qYnqPB3FKF03H5iKw9k/JAWp2KE
-         3L9DjDUYUek6Gg28bLzHCnV77Pznh1rzD+7G1GDRUl6TYaKRxTrryUFHEHCM6H+soZiO
-         m98w==
-X-Gm-Message-State: APjAAAVZPvdCjWvKnqzvZcjnjRX5L6iMiWp2GeJIfqHMQ8Q6h/gSnmg8
-        ZUrE+yGW3FY+zlCe/AZ0h3fJ
-X-Google-Smtp-Source: APXvYqwXpk3yf/PGAa/Oqsk5+ZlEbUjkByryMmw7NQA+qPRKaJEQIhmL9OAtaJDbSjnd7nAsh/iTQw==
-X-Received: by 2002:a17:902:fe0d:: with SMTP id g13mr2067516plj.124.1579778357255;
-        Thu, 23 Jan 2020 03:19:17 -0800 (PST)
+        bh=TL5jPJyaHOJr3n0Nwsyj6BmbowZte59fMzKq9fzNWO8=;
+        b=uF8BnrkV1BE2smfg/xiOVG+vnzm9Ucfnnp7bVh745afpmD8hyb3+pXa3Wo9KPrBUm2
+         vaTlxSpKaed7aOPN/9drVNjUTyDUPA8ehIHv5QgXgmyK/A/b3vSWpojzGLrtXN1L6pgz
+         nMhyo4uB4Pqi1GHC/JLCZ86hI82VQKrd9WhfLG4YZjCCywgkVbCasEX9tHoH+Pr3daf+
+         CVwrwNjETzRe2cwnDOjIFwc+Im7dTIbw15NYVdpHhpf8Ql0ZIE+MZ5Y01TFePD7hg1Cy
+         MV/YWVW9oNfmrBDLD978bM8bVgy/gQUCgzUs2XaEeLPiL+/V823y9KDQ+ZMriAfeabYk
+         6Yjg==
+X-Gm-Message-State: APjAAAXYTHPEjUVKpqfElMs8BA/bHsuNfYY2WS1zdTrRE8bq02MtV7y0
+        9TyP97DAMCXGKjq7LM0jttCo
+X-Google-Smtp-Source: APXvYqzvpOc4E9Xr9lz74dvzCDzRuNcXZjG6RNcSlyc42+bxZlmgMdCZtrl0dgS1kD5izq1033Cnqw==
+X-Received: by 2002:a17:90a:f998:: with SMTP id cq24mr3850341pjb.6.1579778360622;
+        Thu, 23 Jan 2020 03:19:20 -0800 (PST)
 Received: from localhost.localdomain ([103.59.133.81])
-        by smtp.googlemail.com with ESMTPSA id y6sm2627559pgc.10.2020.01.23.03.19.14
+        by smtp.googlemail.com with ESMTPSA id y6sm2627559pgc.10.2020.01.23.03.19.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2020 03:19:16 -0800 (PST)
+        Thu, 23 Jan 2020 03:19:20 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     gregkh@linuxfoundation.org, arnd@arndb.de
 Cc:     smohanad@codeaurora.org, jhugo@codeaurora.org,
@@ -51,9 +51,9 @@ Cc:     smohanad@codeaurora.org, jhugo@codeaurora.org,
         hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 09/16] bus: mhi: core: Add support for downloading RDDM image during panic
-Date:   Thu, 23 Jan 2020 16:48:29 +0530
-Message-Id: <20200123111836.7414-10-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 10/16] bus: mhi: core: Add support for processing events from client device
+Date:   Thu, 23 Jan 2020 16:48:30 +0530
+Message-Id: <20200123111836.7414-11-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200123111836.7414-1-manivannan.sadhasivam@linaro.org>
 References: <20200123111836.7414-1-manivannan.sadhasivam@linaro.org>
@@ -62,370 +62,631 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MHI protocol supports downloading RDDM (RAM Dump) image from the
-device through BHIE. This is useful to debugging as the RDDM image
-can capture the firmware state.
+This commit adds support for processing the MHI data and control
+events from the client device. The client device can report various
+events such as EE events, state change events by interrupting the
+host through IRQ and adding events to the event rings allocated by
+the host during initialization.
 
 This is based on the patch submitted by Sujeev Dias:
-https://lkml.org/lkml/2018/7/9/989
+https://lkml.org/lkml/2018/7/9/988
 
 Signed-off-by: Sujeev Dias <sdias@codeaurora.org>
 Signed-off-by: Siddartha Mohanadoss <smohanad@codeaurora.org>
 [mani: splitted the data transfer patch and cleaned up for upstream]
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/bus/mhi/core/boot.c     | 153 ++++++++++++++++++++++++++++++++
- drivers/bus/mhi/core/init.c     |  38 ++++++++
- drivers/bus/mhi/core/internal.h |   2 +
- drivers/bus/mhi/core/pm.c       |  31 +++++++
- include/linux/mhi.h             |  24 +++++
- 5 files changed, 248 insertions(+)
+ drivers/bus/mhi/core/init.c     |  19 ++
+ drivers/bus/mhi/core/internal.h |  10 +
+ drivers/bus/mhi/core/main.c     | 471 ++++++++++++++++++++++++++++++++
+ include/linux/mhi.h             |  15 +
+ 4 files changed, 515 insertions(+)
 
-diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
-index 36956fb6eff2..facfec26eca1 100644
---- a/drivers/bus/mhi/core/boot.c
-+++ b/drivers/bus/mhi/core/boot.c
-@@ -20,6 +20,159 @@
- #include <linux/wait.h>
- #include "internal.h"
- 
-+/* Setup RDDM vector table for RDDM transfer and program RXVEC */
-+void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
-+		      struct image_info *img_info)
-+{
-+	struct mhi_buf *mhi_buf = img_info->mhi_buf;
-+	struct bhi_vec_entry *bhi_vec = img_info->bhi_vec;
-+	void __iomem *base = mhi_cntrl->bhie;
-+	u32 sequence_id;
-+	unsigned int i;
-+
-+	for (i = 0; i < img_info->entries - 1; i++, mhi_buf++, bhi_vec++) {
-+		bhi_vec->dma_addr = mhi_buf->dma_addr;
-+		bhi_vec->size = mhi_buf->len;
-+	}
-+
-+	dev_dbg(mhi_cntrl->dev, "BHIe programming for RDDM\n");
-+
-+	mhi_write_reg(mhi_cntrl, base, BHIE_RXVECADDR_HIGH_OFFS,
-+		      upper_32_bits(mhi_buf->dma_addr));
-+
-+	mhi_write_reg(mhi_cntrl, base, BHIE_RXVECADDR_LOW_OFFS,
-+		      lower_32_bits(mhi_buf->dma_addr));
-+
-+	mhi_write_reg(mhi_cntrl, base, BHIE_RXVECSIZE_OFFS, mhi_buf->len);
-+	sequence_id = prandom_u32() & BHIE_RXVECSTATUS_SEQNUM_BMSK;
-+
-+	if (unlikely(!sequence_id))
-+		sequence_id = 1;
-+
-+	mhi_write_reg_field(mhi_cntrl, base, BHIE_RXVECDB_OFFS,
-+			    BHIE_RXVECDB_SEQNUM_BMSK, BHIE_RXVECDB_SEQNUM_SHFT,
-+			    sequence_id);
-+
-+	dev_dbg(mhi_cntrl->dev, "Address: %p and len: 0x%lx sequence: %u\n",
-+		&mhi_buf->dma_addr, mhi_buf->len, sequence_id);
-+}
-+
-+/* Collect RDDM buffer during kernel panic */
-+static int __mhi_download_rddm_in_panic(struct mhi_controller *mhi_cntrl)
-+{
-+	int ret;
-+	u32 rx_status;
-+	enum mhi_ee_type ee;
-+	const u32 delayus = 2000;
-+	u32 retry = (mhi_cntrl->timeout_ms * 1000) / delayus;
-+	const u32 rddm_timeout_us = 200000;
-+	int rddm_retry = rddm_timeout_us / delayus;
-+	void __iomem *base = mhi_cntrl->bhie;
-+
-+	dev_dbg(mhi_cntrl->dev,
-+		"Entered with pm_state:%s dev_state:%s ee:%s\n",
-+		to_mhi_pm_state_str(mhi_cntrl->pm_state),
-+		TO_MHI_STATE_STR(mhi_cntrl->dev_state),
-+		TO_MHI_EXEC_STR(mhi_cntrl->ee));
-+
-+	/*
-+	 * This should only be executing during a kernel panic, we expect all
-+	 * other cores to shutdown while we're collecting RDDM buffer. After
-+	 * returning from this function, we expect the device to reset.
-+	 *
-+	 * Normaly, we read/write pm_state only after grabbing the
-+	 * pm_lock, since we're in a panic, skipping it. Also there is no
-+	 * gurantee that this state change would take effect since
-+	 * we're setting it w/o grabbing pm_lock
-+	 */
-+	mhi_cntrl->pm_state = MHI_PM_LD_ERR_FATAL_DETECT;
-+	/* update should take the effect immediately */
-+	smp_wmb();
-+
-+	/*
-+	 * Make sure device is not already in RDDM. In case the device asserts
-+	 * and a kernel panic follows, device will already be in RDDM.
-+	 * Do not trigger SYS ERR again and proceed with waiting for
-+	 * image download completion.
-+	 */
-+	ee = mhi_get_exec_env(mhi_cntrl);
-+	if (ee != MHI_EE_RDDM) {
-+		dev_dbg(mhi_cntrl->dev,
-+			"Trigger device into RDDM mode using SYS ERR\n");
-+		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_SYS_ERR);
-+
-+		dev_dbg(mhi_cntrl->dev, "Waiting for device to enter RDDM\n");
-+		while (rddm_retry--) {
-+			ee = mhi_get_exec_env(mhi_cntrl);
-+			if (ee == MHI_EE_RDDM)
-+				break;
-+
-+			udelay(delayus);
-+		}
-+
-+		if (rddm_retry <= 0) {
-+			/* Hardware reset so force device to enter RDDM */
-+			dev_dbg(mhi_cntrl->dev,
-+				"Did not enter RDDM, do a host req reset\n");
-+			mhi_write_reg(mhi_cntrl, mhi_cntrl->regs,
-+				      MHI_SOC_RESET_REQ_OFFSET,
-+				      MHI_SOC_RESET_REQ);
-+			udelay(delayus);
-+		}
-+
-+		ee = mhi_get_exec_env(mhi_cntrl);
-+	}
-+
-+	dev_dbg(mhi_cntrl->dev,
-+		"Waiting for image download completion, current EE: %s\n",
-+		TO_MHI_EXEC_STR(ee));
-+
-+	while (retry--) {
-+		ret = mhi_read_reg_field(mhi_cntrl, base, BHIE_RXVECSTATUS_OFFS,
-+					 BHIE_RXVECSTATUS_STATUS_BMSK,
-+					 BHIE_RXVECSTATUS_STATUS_SHFT,
-+					 &rx_status);
-+		if (ret)
-+			return -EIO;
-+
-+		if (rx_status == BHIE_RXVECSTATUS_STATUS_XFER_COMPL)
-+			return 0;
-+
-+		udelay(delayus);
-+	}
-+
-+	ee = mhi_get_exec_env(mhi_cntrl);
-+	ret = mhi_read_reg(mhi_cntrl, base, BHIE_RXVECSTATUS_OFFS, &rx_status);
-+
-+	dev_err(mhi_cntrl->dev, "Did not complete RDDM transfer\n");
-+	dev_err(mhi_cntrl->dev, "Current EE: %s\n", TO_MHI_EXEC_STR(ee));
-+	dev_err(mhi_cntrl->dev, "RXVEC_STATUS: 0x%x\n", rx_status);
-+
-+	return -EIO;
-+}
-+
-+/* Download RDDM image from device */
-+int mhi_download_rddm_img(struct mhi_controller *mhi_cntrl, bool in_panic)
-+{
-+	void __iomem *base = mhi_cntrl->bhie;
-+	u32 rx_status;
-+
-+	if (in_panic)
-+		return __mhi_download_rddm_in_panic(mhi_cntrl);
-+
-+	/* Wait for the image download to complete */
-+	wait_event_timeout(mhi_cntrl->state_event,
-+			   mhi_read_reg_field(mhi_cntrl, base,
-+					      BHIE_RXVECSTATUS_OFFS,
-+					      BHIE_RXVECSTATUS_STATUS_BMSK,
-+					      BHIE_RXVECSTATUS_STATUS_SHFT,
-+					      &rx_status) || rx_status,
-+			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
-+
-+	return (rx_status == BHIE_RXVECSTATUS_STATUS_XFER_COMPL) ? 0 : -EIO;
-+}
-+EXPORT_SYMBOL_GPL(mhi_download_rddm_img);
-+
- /* Download AMSS image to device */
- static int mhi_fw_load_amss(struct mhi_controller *mhi_cntrl,
- 			    const struct mhi_buf *mhi_buf)
 diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 2f06bf958f58..f54429c9b7fc 100644
+index f54429c9b7fc..c946693bdae4 100644
 --- a/drivers/bus/mhi/core/init.c
 +++ b/drivers/bus/mhi/core/init.c
-@@ -830,6 +830,7 @@ EXPORT_SYMBOL_GPL(mhi_unregister_controller);
- int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
- {
- 	int ret;
-+	u32 bhie_off;
+@@ -534,6 +534,19 @@ static int parse_ev_cfg(struct mhi_controller *mhi_cntrl,
  
- 	mutex_lock(&mhi_cntrl->pm_mutex);
+ 		mhi_event->data_type = event_cfg->data_type;
  
-@@ -837,12 +838,44 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
- 	if (ret)
- 		goto error_dev_ctxt;
- 
-+	/*
-+	 * Allocate RDDM table if specified, this table is for debugging purpose
-+	 */
-+	if (mhi_cntrl->rddm_size) {
-+		mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
-+				     mhi_cntrl->rddm_size);
-+
-+		/*
-+		 * This controller supports RDDM, so we need to manually clear
-+		 * BHIE RX registers since POR values are undefined.
-+		 */
-+		ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->regs, BHIEOFF,
-+				   &bhie_off);
-+		if (ret) {
-+			dev_err(mhi_cntrl->dev, "Error getting BHIE offset\n");
-+			goto bhie_error;
++		switch (mhi_event->data_type) {
++		case MHI_ER_DATA:
++			mhi_event->process_event = mhi_process_data_event_ring;
++			break;
++		case MHI_ER_CTRL:
++			mhi_event->process_event = mhi_process_ctrl_ev_ring;
++			break;
++		default:
++			dev_err(mhi_cntrl->dev,
++				"Event Ring type not supported\n");
++			goto error_ev_cfg;
 +		}
 +
-+		memset_io(mhi_cntrl->regs + bhie_off + BHIE_RXVECADDR_LOW_OFFS,
-+			  0, BHIE_RXVECSTATUS_OFFS - BHIE_RXVECADDR_LOW_OFFS +
-+			  4);
-+
-+		if (mhi_cntrl->rddm_image)
-+			mhi_rddm_prepare(mhi_cntrl, mhi_cntrl->rddm_image);
-+	}
-+
- 	mhi_cntrl->pre_init = true;
+ 		mhi_event->hw_ring = event_cfg->hardware_event;
+ 		if (mhi_event->hw_ring)
+ 			mhi_cntrl->hw_ev_rings++;
+@@ -768,6 +781,12 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
  
- 	mutex_unlock(&mhi_cntrl->pm_mutex);
- 
- 	return 0;
- 
-+bhie_error:
-+	if (mhi_cntrl->rddm_image) {
-+		mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->rddm_image);
-+		mhi_cntrl->rddm_image = NULL;
-+	}
-+
- error_dev_ctxt:
- 	mutex_unlock(&mhi_cntrl->pm_mutex);
- 
-@@ -857,6 +890,11 @@ void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
- 		mhi_cntrl->fbc_image = NULL;
+ 		mhi_event->mhi_cntrl = mhi_cntrl;
+ 		spin_lock_init(&mhi_event->lock);
++		if (mhi_event->data_type == MHI_ER_CTRL)
++			tasklet_init(&mhi_event->task, mhi_ctrl_ev_task,
++				     (ulong)mhi_event);
++		else
++			tasklet_init(&mhi_event->task, mhi_ev_task,
++				     (ulong)mhi_event);
  	}
  
-+	if (mhi_cntrl->rddm_image) {
-+		mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->rddm_image);
-+		mhi_cntrl->rddm_image = NULL;
-+	}
-+
- 	mhi_deinit_dev_ctxt(mhi_cntrl);
- 	mhi_cntrl->pre_init = false;
- }
+ 	mhi_chan = mhi_cntrl->mhi_chan;
 diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-index eab9c051ca5e..889e91bcb2f8 100644
+index 889e91bcb2f8..314d0909c372 100644
 --- a/drivers/bus/mhi/core/internal.h
 +++ b/drivers/bus/mhi/core/internal.h
-@@ -626,6 +626,8 @@ int mhi_init_dev_ctxt(struct mhi_controller *mhi_cntrl);
- void mhi_deinit_dev_ctxt(struct mhi_controller *mhi_cntrl);
- int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl);
- void mhi_deinit_free_irq(struct mhi_controller *mhi_cntrl);
-+void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
-+		      struct image_info *img_info);
+@@ -500,6 +500,8 @@ struct mhi_buf_info {
+ 	void *wp;
+ 	size_t len;
+ 	void *cb_buf;
++	bool used; /* Indicates whether the buffer is used or not */
++	bool pre_mapped; /* Already pre-mapped by client */
+ 	enum dma_data_direction dir;
+ };
  
- /* Memory allocation methods */
- static inline void *mhi_alloc_coherent(struct mhi_controller *mhi_cntrl,
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index b67ae2455fc5..0bdc667830f0 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -453,6 +453,16 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
- 
- 	/* We must notify MHI control driver so it can clean up first */
- 	if (transition_state == MHI_PM_SYS_ERR_PROCESS) {
-+		/*
-+		 * If controller supports RDDM, we do not process
-+		 * SYS error state, instead we will jump directly
-+		 * to RDDM state
-+		 */
-+		if (mhi_cntrl->rddm_image) {
-+			dev_dbg(mhi_cntrl->dev,
-+				 "Controller supports RDDM, so skip SYS_ERR\n");
-+			return;
-+		}
- 		mhi_cntrl->status_cb(mhi_cntrl, mhi_cntrl->priv_data,
- 				     MHI_CB_SYS_ERROR);
- 	}
-@@ -901,3 +911,24 @@ int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
- 	return (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -EIO;
+@@ -652,6 +654,14 @@ static inline void mhi_free_coherent(struct mhi_controller *mhi_cntrl,
+ 	dma_free_coherent(mhi_cntrl->dev, size, vaddr, dma_handle);
  }
- EXPORT_SYMBOL(mhi_sync_power_up);
+ 
++/* Event processing methods */
++void mhi_ctrl_ev_task(unsigned long data);
++void mhi_ev_task(unsigned long data);
++int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
++				struct mhi_event *mhi_event, u32 event_quota);
++int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
++			     struct mhi_event *mhi_event, u32 event_quota);
 +
-+int mhi_force_rddm_mode(struct mhi_controller *mhi_cntrl)
+ /* ISR handlers */
+ irqreturn_t mhi_irq_handler(int irq_number, void *dev);
+ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *dev);
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index 453feba8f02a..8450c74b4525 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -149,6 +149,16 @@ static void *mhi_to_virtual(struct mhi_ring *ring, dma_addr_t addr)
+ 	return (addr - ring->iommu_base) + ring->base;
+ }
+ 
++static void mhi_del_ring_element(struct mhi_controller *mhi_cntrl,
++				 struct mhi_ring *ring)
 +{
++	ring->rp += ring->el_size;
++	if (ring->rp >= (ring->base + ring->len))
++		ring->rp = ring->base;
++	/* smp update */
++	smp_wmb();
++}
++
+ int mhi_destroy_device(struct device *dev, void *data)
+ {
+ 	struct mhi_device *mhi_dev;
+@@ -337,3 +347,464 @@ irqreturn_t mhi_intvec_handler(int irq_number, void *dev)
+ 
+ 	return IRQ_WAKE_THREAD;
+ }
++
++static void mhi_recycle_ev_ring_element(struct mhi_controller *mhi_cntrl,
++					struct mhi_ring *ring)
++{
++	dma_addr_t ctxt_wp;
++
++	/* Update the WP */
++	ring->wp += ring->el_size;
++	ctxt_wp = *ring->ctxt_wp + ring->el_size;
++
++	if (ring->wp >= (ring->base + ring->len)) {
++		ring->wp = ring->base;
++		ctxt_wp = ring->iommu_base;
++	}
++
++	*ring->ctxt_wp = ctxt_wp;
++
++	/* Update the RP */
++	ring->rp += ring->el_size;
++	if (ring->rp >= (ring->base + ring->len))
++		ring->rp = ring->base;
++
++	/* Update to all cores */
++	smp_wmb();
++}
++
++static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
++			    struct mhi_tre *event,
++			    struct mhi_chan *mhi_chan)
++{
++	struct mhi_ring *buf_ring, *tre_ring;
++	u32 ev_code;
++	struct mhi_result result;
++	unsigned long flags = 0;
++
++	ev_code = MHI_TRE_GET_EV_CODE(event);
++	buf_ring = &mhi_chan->buf_ring;
++	tre_ring = &mhi_chan->tre_ring;
++
++	result.transaction_status = (ev_code == MHI_EV_CC_OVERFLOW) ?
++		-EOVERFLOW : 0;
++
++	/*
++	 * If it's a DB Event then we need to grab the lock
++	 * with preemption disabled and as a write because we
++	 * have to update db register and there are chances that
++	 * another thread could be doing the same.
++	 */
++	if (ev_code >= MHI_EV_CC_OOB)
++		write_lock_irqsave(&mhi_chan->lock, flags);
++	else
++		read_lock_bh(&mhi_chan->lock);
++
++	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED)
++		goto end_process_tx_event;
++
++	switch (ev_code) {
++	case MHI_EV_CC_OVERFLOW:
++	case MHI_EV_CC_EOB:
++	case MHI_EV_CC_EOT:
++	{
++		dma_addr_t ptr = MHI_TRE_GET_EV_PTR(event);
++		struct mhi_tre *local_rp, *ev_tre;
++		void *dev_rp;
++		struct mhi_buf_info *buf_info;
++		u16 xfer_len;
++
++		/* Get the TRB this event points to */
++		ev_tre = mhi_to_virtual(tre_ring, ptr);
++
++		/* device rp after servicing the TREs */
++		dev_rp = ev_tre + 1;
++		if (dev_rp >= (tre_ring->base + tre_ring->len))
++			dev_rp = tre_ring->base;
++
++		result.dir = mhi_chan->dir;
++
++		/* local rp */
++		local_rp = tre_ring->rp;
++		while (local_rp != dev_rp) {
++			buf_info = buf_ring->rp;
++			/* if it's last tre get len from the event */
++			if (local_rp == ev_tre)
++				xfer_len = MHI_TRE_GET_EV_LEN(event);
++			else
++				xfer_len = buf_info->len;
++
++			result.buf_addr = buf_info->cb_buf;
++			result.bytes_xferd = xfer_len;
++			mhi_del_ring_element(mhi_cntrl, buf_ring);
++			mhi_del_ring_element(mhi_cntrl, tre_ring);
++			local_rp = tre_ring->rp;
++
++			/* notify client */
++			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
++
++			if (mhi_chan->dir == DMA_TO_DEVICE)
++				atomic_dec(&mhi_cntrl->pending_pkts);
++		}
++		break;
++	} /* CC_EOT */
++	case MHI_EV_CC_OOB:
++	case MHI_EV_CC_DB_MODE:
++	{
++		unsigned long flags;
++
++		mhi_chan->db_cfg.db_mode = 1;
++		read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
++		if (tre_ring->wp != tre_ring->rp &&
++		    MHI_DB_ACCESS_VALID(mhi_cntrl)) {
++			mhi_ring_chan_db(mhi_cntrl, mhi_chan);
++		}
++		read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
++		break;
++	}
++	case MHI_EV_CC_BAD_TRE:
++	default:
++		dev_err(mhi_cntrl->dev, "Unknown event 0x%x\n", ev_code);
++		break;
++	} /* switch(MHI_EV_READ_CODE(EV_TRB_CODE,event)) */
++
++end_process_tx_event:
++	if (ev_code >= MHI_EV_CC_OOB)
++		write_unlock_irqrestore(&mhi_chan->lock, flags);
++	else
++		read_unlock_bh(&mhi_chan->lock);
++
++	return 0;
++}
++
++static int parse_rsc_event(struct mhi_controller *mhi_cntrl,
++			   struct mhi_tre *event,
++			   struct mhi_chan *mhi_chan)
++{
++	struct mhi_ring *buf_ring, *tre_ring;
++	struct mhi_buf_info *buf_info;
++	struct mhi_result result;
++	int ev_code;
++	u32 cookie; /* offset to local descriptor */
++	u16 xfer_len;
++
++	buf_ring = &mhi_chan->buf_ring;
++	tre_ring = &mhi_chan->tre_ring;
++
++	ev_code = MHI_TRE_GET_EV_CODE(event);
++	cookie = MHI_TRE_GET_EV_COOKIE(event);
++	xfer_len = MHI_TRE_GET_EV_LEN(event);
++
++	/* Received out of bound cookie */
++	WARN_ON(cookie >= buf_ring->len);
++
++	buf_info = buf_ring->base + cookie;
++
++	result.transaction_status = (ev_code == MHI_EV_CC_OVERFLOW) ?
++		-EOVERFLOW : 0;
++	result.bytes_xferd = xfer_len;
++	result.buf_addr = buf_info->cb_buf;
++	result.dir = mhi_chan->dir;
++
++	read_lock_bh(&mhi_chan->lock);
++
++	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED)
++		goto end_process_rsc_event;
++
++	WARN_ON(!buf_info->used);
++
++	/* notify the client */
++	mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
++
++	/*
++	 * Note: We're arbitrarily incrementing RP even though, completion
++	 * packet we processed might not be the same one, reason we can do this
++	 * is because device guaranteed to cache descriptors in order it
++	 * receive, so even though completion event is different we can re-use
++	 * all descriptors in between.
++	 * Example:
++	 * Transfer Ring has descriptors: A, B, C, D
++	 * Last descriptor host queue is D (WP) and first descriptor
++	 * host queue is A (RP).
++	 * The completion event we just serviced is descriptor C.
++	 * Then we can safely queue descriptors to replace A, B, and C
++	 * even though host did not receive any completions.
++	 */
++	mhi_del_ring_element(mhi_cntrl, tre_ring);
++	buf_info->used = false;
++
++end_process_rsc_event:
++	read_unlock_bh(&mhi_chan->lock);
++
++	return 0;
++}
++
++static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
++				       struct mhi_tre *tre)
++{
++	dma_addr_t ptr = MHI_TRE_GET_EV_PTR(tre);
++	struct mhi_cmd *cmd_ring = &mhi_cntrl->mhi_cmd[PRIMARY_CMD_RING];
++	struct mhi_ring *mhi_ring = &cmd_ring->ring;
++	struct mhi_tre *cmd_pkt;
++	struct mhi_chan *mhi_chan;
++	u32 chan;
++
++	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
++
++	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
++	mhi_chan = &mhi_cntrl->mhi_chan[chan];
++	write_lock_bh(&mhi_chan->lock);
++	mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
++	complete(&mhi_chan->completion);
++	write_unlock_bh(&mhi_chan->lock);
++
++	mhi_del_ring_element(mhi_cntrl, mhi_ring);
++}
++
++int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
++			     struct mhi_event *mhi_event,
++			     u32 event_quota)
++{
++	struct mhi_tre *dev_rp, *local_rp;
++	struct mhi_ring *ev_ring = &mhi_event->ring;
++	struct mhi_event_ctxt *er_ctxt =
++		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
++	int count = 0;
++	u32 chan;
++	struct mhi_chan *mhi_chan;
++
++	/*
++	 * This is a quick check to avoid unnecessary event processing
++	 * in case MHI is already in error state, but it's still possible
++	 * to transition to error state while processing events
++	 */
++	if (unlikely(MHI_EVENT_ACCESS_INVALID(mhi_cntrl->pm_state)))
++		return -EIO;
++
++	dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
++	local_rp = ev_ring->rp;
++
++	while (dev_rp != local_rp) {
++		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
++
++		switch (type) {
++		case MHI_PKT_TYPE_BW_REQ_EVENT:
++		{
++			struct mhi_link_info *link_info;
++
++			link_info = &mhi_cntrl->mhi_link_info;
++			write_lock_irq(&mhi_cntrl->pm_lock);
++			link_info->target_link_speed =
++				MHI_TRE_GET_EV_LINKSPEED(local_rp);
++			link_info->target_link_width =
++				MHI_TRE_GET_EV_LINKWIDTH(local_rp);
++			write_unlock_irq(&mhi_cntrl->pm_lock);
++			dev_dbg(mhi_cntrl->dev, "Received BW_REQ event\n");
++			mhi_cntrl->status_cb(mhi_cntrl, mhi_cntrl->priv_data,
++					     MHI_CB_BW_REQ);
++			break;
++		}
++		case MHI_PKT_TYPE_STATE_CHANGE_EVENT:
++		{
++			enum mhi_state new_state;
++
++			new_state = MHI_TRE_GET_EV_STATE(local_rp);
++
++			dev_dbg(mhi_cntrl->dev,
++				 "State change event to state: %s\n",
++				 TO_MHI_STATE_STR(new_state));
++
++			switch (new_state) {
++			case MHI_STATE_M0:
++				mhi_pm_m0_transition(mhi_cntrl);
++				break;
++			case MHI_STATE_M1:
++				mhi_pm_m1_transition(mhi_cntrl);
++				break;
++			case MHI_STATE_M3:
++				mhi_pm_m3_transition(mhi_cntrl);
++				break;
++			case MHI_STATE_SYS_ERR:
++			{
++				enum mhi_pm_state new_state;
++
++				dev_dbg(mhi_cntrl->dev,
++					 "System error detected\n");
++				write_lock_irq(&mhi_cntrl->pm_lock);
++				new_state = mhi_tryset_pm_state(mhi_cntrl,
++							MHI_PM_SYS_ERR_DETECT);
++				write_unlock_irq(&mhi_cntrl->pm_lock);
++				if (new_state == MHI_PM_SYS_ERR_DETECT)
++					schedule_work(&mhi_cntrl->syserr_worker);
++				break;
++			}
++			default:
++				dev_err(mhi_cntrl->dev, "Invalid state: %s\n",
++					TO_MHI_STATE_STR(new_state));
++			}
++
++			break;
++		}
++		case MHI_PKT_TYPE_CMD_COMPLETION_EVENT:
++			mhi_process_cmd_completion(mhi_cntrl, local_rp);
++			break;
++		case MHI_PKT_TYPE_EE_EVENT:
++		{
++			enum dev_st_transition st = DEV_ST_TRANSITION_MAX;
++			enum mhi_ee_type event = MHI_TRE_GET_EV_EXECENV(local_rp);
++
++			dev_dbg(mhi_cntrl->dev, "Received EE event: %s\n",
++				 TO_MHI_EXEC_STR(event));
++			switch (event) {
++			case MHI_EE_SBL:
++				st = DEV_ST_TRANSITION_SBL;
++				break;
++			case MHI_EE_WFW:
++			case MHI_EE_AMSS:
++				st = DEV_ST_TRANSITION_MISSION_MODE;
++				break;
++			case MHI_EE_RDDM:
++				mhi_cntrl->status_cb(mhi_cntrl,
++						     mhi_cntrl->priv_data,
++						     MHI_CB_EE_RDDM);
++				write_lock_irq(&mhi_cntrl->pm_lock);
++				mhi_cntrl->ee = event;
++				write_unlock_irq(&mhi_cntrl->pm_lock);
++				wake_up_all(&mhi_cntrl->state_event);
++				break;
++			default:
++				dev_err(mhi_cntrl->dev,
++					"Unhandled EE event: 0x%x\n", type);
++			}
++			if (st != DEV_ST_TRANSITION_MAX)
++				mhi_queue_state_transition(mhi_cntrl, st);
++
++			break;
++		}
++		case MHI_PKT_TYPE_TX_EVENT:
++			chan = MHI_TRE_GET_EV_CHID(local_rp);
++			mhi_chan = &mhi_cntrl->mhi_chan[chan];
++			parse_xfer_event(mhi_cntrl, local_rp, mhi_chan);
++			event_quota--;
++			break;
++		default:
++			dev_err(mhi_cntrl->dev, "Unhandled event type: %d\n",
++				type);
++			break;
++		}
++
++		mhi_recycle_ev_ring_element(mhi_cntrl, ev_ring);
++		local_rp = ev_ring->rp;
++		dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
++		count++;
++	}
++
++	read_lock_bh(&mhi_cntrl->pm_lock);
++	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
++		mhi_ring_er_db(mhi_event);
++	read_unlock_bh(&mhi_cntrl->pm_lock);
++
++	return count;
++}
++
++int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
++				struct mhi_event *mhi_event,
++				u32 event_quota)
++{
++	struct mhi_tre *dev_rp, *local_rp;
++	struct mhi_ring *ev_ring = &mhi_event->ring;
++	struct mhi_event_ctxt *er_ctxt =
++		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
++	int count = 0;
++	u32 chan;
++	struct mhi_chan *mhi_chan;
++
++	if (unlikely(MHI_EVENT_ACCESS_INVALID(mhi_cntrl->pm_state)))
++		return -EIO;
++
++	dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
++	local_rp = ev_ring->rp;
++
++	while (dev_rp != local_rp && event_quota > 0) {
++		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
++
++		chan = MHI_TRE_GET_EV_CHID(local_rp);
++		mhi_chan = &mhi_cntrl->mhi_chan[chan];
++
++		if (likely(type == MHI_PKT_TYPE_TX_EVENT)) {
++			parse_xfer_event(mhi_cntrl, local_rp, mhi_chan);
++			event_quota--;
++		} else if (type == MHI_PKT_TYPE_RSC_TX_EVENT) {
++			parse_rsc_event(mhi_cntrl, local_rp, mhi_chan);
++			event_quota--;
++		}
++
++		mhi_recycle_ev_ring_element(mhi_cntrl, ev_ring);
++		local_rp = ev_ring->rp;
++		dev_rp = mhi_to_virtual(ev_ring, er_ctxt->rp);
++		count++;
++	}
++	read_lock_bh(&mhi_cntrl->pm_lock);
++	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
++		mhi_ring_er_db(mhi_event);
++	read_unlock_bh(&mhi_cntrl->pm_lock);
++
++	return count;
++}
++
++void mhi_ev_task(unsigned long data)
++{
++	struct mhi_event *mhi_event = (struct mhi_event *)data;
++	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
++
++	/* process all pending events */
++	spin_lock_bh(&mhi_event->lock);
++	mhi_event->process_event(mhi_cntrl, mhi_event, U32_MAX);
++	spin_unlock_bh(&mhi_event->lock);
++}
++
++void mhi_ctrl_ev_task(unsigned long data)
++{
++	struct mhi_event *mhi_event = (struct mhi_event *)data;
++	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
++	enum mhi_state state;
++	enum mhi_pm_state pm_state = 0;
 +	int ret;
 +
-+	/* Check if device is already in RDDM */
-+	if (mhi_cntrl->ee == MHI_EE_RDDM)
-+		return 0;
++	/*
++	 * We can check PM state w/o a lock here because there is no way
++	 * PM state can change from reg access valid to no access while this
++	 * thread being executed.
++	 */
++	if (!MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
++		/*
++		 * We may have a pending event but not allowed to
++		 * process it since we are probably in a suspended state,
++		 * so trigger a resume.
++		 */
++		mhi_cntrl->runtime_get(mhi_cntrl, mhi_cntrl->priv_data);
++		mhi_cntrl->runtime_put(mhi_cntrl, mhi_cntrl->priv_data);
 +
-+	dev_dbg(mhi_cntrl->dev, "Triggering SYS_ERR to force RDDM state\n");
-+	mhi_set_mhi_state(mhi_cntrl, MHI_STATE_SYS_ERR);
++		return;
++	}
 +
-+	/* Wait for RDDM event */
-+	ret = wait_event_timeout(mhi_cntrl->state_event,
-+				 mhi_cntrl->ee == MHI_EE_RDDM,
-+				 msecs_to_jiffies(mhi_cntrl->timeout_ms));
-+	ret = ret ? 0 : -EIO;
++	/* Process ctrl events events */
++	ret = mhi_event->process_event(mhi_cntrl, mhi_event, U32_MAX);
 +
-+	return ret;
++	/*
++	 * We received an IRQ but no events to process, maybe device went to
++	 * SYS_ERR state? Check the state to confirm.
++	 */
++	if (!ret) {
++		write_lock_irq(&mhi_cntrl->pm_lock);
++		state = mhi_get_mhi_state(mhi_cntrl);
++		if (state == MHI_STATE_SYS_ERR) {
++			dev_dbg(mhi_cntrl->dev, "System error detected\n");
++			pm_state = mhi_tryset_pm_state(mhi_cntrl,
++						       MHI_PM_SYS_ERR_DETECT);
++		}
++		write_unlock_irq(&mhi_cntrl->pm_lock);
++		if (pm_state == MHI_PM_SYS_ERR_DETECT)
++			schedule_work(&mhi_cntrl->syserr_worker);
++	}
 +}
-+EXPORT_SYMBOL_GPL(mhi_force_rddm_mode);
 diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index 04c500323214..1b018e0d04f4 100644
+index 1b018e0d04f4..3e8f797c4c51 100644
 --- a/include/linux/mhi.h
 +++ b/include/linux/mhi.h
-@@ -290,9 +290,11 @@ struct mhi_controller_config {
-  * @fw_image: Firmware image name for normal booting
-  * @edl_image: Firmware image name for emergency download mode
-  * @fbc_download: MHI host needs to do complete image transfer
-+ * @rddm_size: RAM dump size that host should allocate for debugging purpose
-  * @sbl_size: SBL image size
-  * @seg_len: BHIe vector size
-  * @fbc_image: Points to firmware image buffer
-+ * @rddm_image: Points to RAM dump buffer
-  * @max_chan: Maximum number of channels the controller supports
-  * @mhi_chan: Points to the channel configuration table
-  * @lpm_chans: List of channels that require LPM notifications
-@@ -356,9 +358,11 @@ struct mhi_controller {
- 	const char *fw_image;
- 	const char *edl_image;
- 	bool fbc_download;
-+	size_t rddm_size;
- 	size_t sbl_size;
- 	size_t seg_len;
- 	struct image_info *fbc_image;
-+	struct image_info *rddm_image;
- 	u32 max_chan;
- 	struct mhi_chan *mhi_chan;
- 	struct list_head lpm_chans;
-@@ -583,4 +587,24 @@ void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful);
+@@ -31,6 +31,7 @@ struct mhi_buf_info;
+  * @MHI_CB_EE_MISSION_MODE: MHI device entered Mission Mode exec env
+  * @MHI_CB_SYS_ERROR: MHI device entered error state (may recover)
+  * @MHI_CB_FATAL_ERROR: MHI device entered fatal error state
++ * @MHI_CB_BW_REQ: Received a bandwidth switch request from device
   */
- void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl);
+ enum mhi_callback {
+ 	MHI_CB_IDLE,
+@@ -41,6 +42,7 @@ enum mhi_callback {
+ 	MHI_CB_EE_MISSION_MODE,
+ 	MHI_CB_SYS_ERROR,
+ 	MHI_CB_FATAL_ERROR,
++	MHI_CB_BW_REQ,
+ };
+ 
+ /**
+@@ -94,6 +96,16 @@ struct image_info {
+ 	u32 entries;
+ };
  
 +/**
-+ * mhi_download_rddm_img - Download ramdump image from device for
-+ *                         debugging purpose.
-+ * @mhi_cntrl: MHI controller
-+ * @in_panic: Download rddm image during kernel panic
++ * struct mhi_link_info - BW requirement
++ * target_link_speed - Link speed as defined by TLS bits in LinkControl reg
++ * target_link_width - Link width as defined by NLW bits in LinkStatus reg
 + */
-+int mhi_download_rddm_img(struct mhi_controller *mhi_cntrl, bool in_panic);
++struct mhi_link_info {
++	unsigned int target_link_speed;
++	unsigned int target_link_width;
++};
 +
-+/**
-+ * mhi_force_rddm_mode - Force device into rddm mode
-+ * @mhi_cntrl: MHI controller
-+ */
-+int mhi_force_rddm_mode(struct mhi_controller *mhi_cntrl);
+ /**
+  * enum mhi_ee_type - Execution environment types
+  * @MHI_EE_PBL: Primary Bootloader
+@@ -321,6 +333,7 @@ struct mhi_controller_config {
+  * @pending_pkts: Pending packets for the controller
+  * @transition_list: List of MHI state transitions
+  * @wlock: Lock for protecting device wakeup
++ * @mhi_link_info: Device bandwidth info
+  * @M0: M0 state counter for debugging
+  * @M2: M2 state counter for debugging
+  * @M3: M3 state counter for debugging
+@@ -392,6 +405,8 @@ struct mhi_controller {
+ 	struct list_head transition_list;
+ 	spinlock_t transition_lock;
+ 	spinlock_t wlock;
++	struct mhi_link_info mhi_link_info;
 +
-+/**
-+ * mhi_get_mhi_state - Get MHI state of the device
-+ * @mhi_cntrl: MHI controller
-+ */
-+enum mhi_state mhi_get_mhi_state(struct mhi_controller *mhi_cntrl);
-+
- #endif /* _MHI_H_ */
+ 	u32 M0, M2, M3, M3_FAST;
+ 	struct work_struct st_worker;
+ 	struct work_struct fw_worker;
 -- 
 2.17.1
 
