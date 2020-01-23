@@ -2,185 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B251F14700A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 18:50:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 41DBE147088
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jan 2020 19:14:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728927AbgAWRt4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jan 2020 12:49:56 -0500
-Received: from mx08-00178001.pphosted.com ([91.207.212.93]:1053 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727022AbgAWRt4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jan 2020 12:49:56 -0500
-Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 00NHeEXV029160;
-        Thu, 23 Jan 2020 18:49:46 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=STMicroelectronics;
- bh=6fSPNr7rvrjO4ZCLWwcFOZUjczpj72PXNX0gM6nq77o=;
- b=KYkxkhMnXTqD/v/s98CtEe/GlzEiOZzcfaKd3Oh/xzmYDtcMGC6yfg/5+chJ1F6JLkZp
- ZztGvxVwE3kZaAVVvYfuyyy8z6HrlWD1X1S3dMugzHufz33qhTU8n8D/MzmvIoAf+p0v
- frMXu0IoXvwD/UBUrUHomL2wWwB4KgxfcBmXVvQsWqBgxlV0gCzKBKwk8gchcv4ETaXi
- V1Vz3H2EGr92mv5vi7HWMQcTREJVAh7PkUIXowDpoMKs5vFhjMlhK/TItkQHhXn1v+1N
- wgjiio1S2VFOT1Ah9RmyGMFL0oyl7pRVHYR3U7vs8aVaNTenA4oeGh/eWIrSH3oQayPs 8A== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 2xkr1ebr35-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 23 Jan 2020 18:49:46 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 1681D100034;
-        Thu, 23 Jan 2020 18:49:46 +0100 (CET)
-Received: from Webmail-eu.st.com (sfhdag3node1.st.com [10.75.127.7])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id ED9502C6A66;
-        Thu, 23 Jan 2020 18:49:45 +0100 (CET)
-Received: from lmecxl0889.lme.st.com (10.75.127.47) by SFHDAG3NODE1.st.com
- (10.75.127.7) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 23 Jan
- 2020 18:49:44 +0100
-Subject: Re: [PATCH v2 7/8] remoteproc: qcom: q6v5: Add common panic handler
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-remoteproc <linux-remoteproc@vger.kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>
-References: <20191227053215.423811-1-bjorn.andersson@linaro.org>
- <20191227053215.423811-8-bjorn.andersson@linaro.org>
- <20200110212806.GD11555@xps15> <20200122193936.GB3261042@ripper>
- <CANLsYkx-C9U4W3R3Xo6t3BJBM4UK_i3zuwzhnXMMEQ0-ur+8Kg@mail.gmail.com>
- <20200123171524.GV1511@yoga>
-From:   Arnaud POULIQUEN <arnaud.pouliquen@st.com>
-Message-ID: <8d92c4b5-4238-23d2-50fc-1a5bdfc2c67b@st.com>
-Date:   Thu, 23 Jan 2020 18:49:44 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        id S1728665AbgAWSOF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jan 2020 13:14:05 -0500
+Received: from mail.kernel.org ([198.145.29.99]:32776 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727278AbgAWSOF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Jan 2020 13:14:05 -0500
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 193C32077C;
+        Thu, 23 Jan 2020 18:14:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1579803244;
+        bh=khqNxXYOqxvr10GxSY4pK/rC4A5nXWgtbLtZjysW0tM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=m6asSqk7k53NoVQqWZp5O/KT6yAK5dk9u05Hvx1NArYa4VN2Z0doJqdrcwhL1Z/4Q
+         jiNGysgPQaUqeME0aWbfKEsBmsVQPpFzRFpZo+v9QP5m2NMrYl9w4V2uGXE81Xw42q
+         BOh2rwfoJKb26w5YmE4sZdY5MEaK63DADyxq11Lk=
+Date:   Thu, 23 Jan 2020 19:14:02 +0100
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        arnd@arndb.de, smohanad@codeaurora.org, kvalo@codeaurora.org,
+        bjorn.andersson@linaro.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 02/16] bus: mhi: core: Add support for registering MHI
+ controllers
+Message-ID: <20200123181402.GA1897633@kroah.com>
+References: <20200123111836.7414-1-manivannan.sadhasivam@linaro.org>
+ <20200123111836.7414-3-manivannan.sadhasivam@linaro.org>
+ <c8fdf0b0-eaec-9672-4f43-f0254d6dbf0e@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20200123171524.GV1511@yoga>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.47]
-X-ClientProxiedBy: SFHDAG3NODE1.st.com (10.75.127.7) To SFHDAG3NODE1.st.com
- (10.75.127.7)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.572
- definitions=2020-01-23_10:2020-01-23,2020-01-23 signatures=0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c8fdf0b0-eaec-9672-4f43-f0254d6dbf0e@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn, Mathieu
+On Thu, Jan 23, 2020 at 10:05:50AM -0700, Jeffrey Hugo wrote:
+> On 1/23/2020 4:18 AM, Manivannan Sadhasivam wrote:
+> > This commit adds support for registering MHI controller drivers with
+> > the MHI stack. MHI controller drivers manages the interaction with the
+> > MHI client devices such as the external modems and WiFi chipsets. They
+> > are also the MHI bus master in charge of managing the physical link
+> > between the host and client device.
+> > 
+> > This is based on the patch submitted by Sujeev Dias:
+> > https://lkml.org/lkml/2018/7/9/987
+> > 
+> > Signed-off-by: Sujeev Dias <sdias@codeaurora.org>
+> > Signed-off-by: Siddartha Mohanadoss <smohanad@codeaurora.org>
+> > [jhugo: added static config for controllers and fixed several bugs]
+> > Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> > [mani: removed DT dependency, splitted and cleaned up for upstream]
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >   drivers/bus/Kconfig             |   1 +
+> >   drivers/bus/Makefile            |   3 +
+> >   drivers/bus/mhi/Kconfig         |  14 +
+> >   drivers/bus/mhi/Makefile        |   2 +
+> >   drivers/bus/mhi/core/Makefile   |   3 +
+> >   drivers/bus/mhi/core/init.c     | 404 +++++++++++++++++++++++++++++
+> >   drivers/bus/mhi/core/internal.h | 169 ++++++++++++
+> >   include/linux/mhi.h             | 438 ++++++++++++++++++++++++++++++++
+> >   include/linux/mod_devicetable.h |  12 +
+> >   9 files changed, 1046 insertions(+)
+> >   create mode 100644 drivers/bus/mhi/Kconfig
+> >   create mode 100644 drivers/bus/mhi/Makefile
+> >   create mode 100644 drivers/bus/mhi/core/Makefile
+> >   create mode 100644 drivers/bus/mhi/core/init.c
+> >   create mode 100644 drivers/bus/mhi/core/internal.h
+> >   create mode 100644 include/linux/mhi.h
+> > 
+> > diff --git a/drivers/bus/Kconfig b/drivers/bus/Kconfig
+> > index 50200d1c06ea..383934e54786 100644
+> > --- a/drivers/bus/Kconfig
+> > +++ b/drivers/bus/Kconfig
+> > @@ -202,5 +202,6 @@ config DA8XX_MSTPRI
+> >   	  peripherals.
+> >   source "drivers/bus/fsl-mc/Kconfig"
+> > +source "drivers/bus/mhi/Kconfig"
+> >   endmenu
+> > diff --git a/drivers/bus/Makefile b/drivers/bus/Makefile
+> > index 1320bcf9fa9d..05f32cd694a4 100644
+> > --- a/drivers/bus/Makefile
+> > +++ b/drivers/bus/Makefile
+> > @@ -34,3 +34,6 @@ obj-$(CONFIG_UNIPHIER_SYSTEM_BUS)	+= uniphier-system-bus.o
+> >   obj-$(CONFIG_VEXPRESS_CONFIG)	+= vexpress-config.o
+> >   obj-$(CONFIG_DA8XX_MSTPRI)	+= da8xx-mstpri.o
+> > +
+> > +# MHI
+> > +obj-$(CONFIG_MHI_BUS)		+= mhi/
+> > diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
+> > new file mode 100644
+> > index 000000000000..a8bd9bd7db7c
+> > --- /dev/null
+> > +++ b/drivers/bus/mhi/Kconfig
+> > @@ -0,0 +1,14 @@
+> > +# SPDX-License-Identifier: GPL-2.0
+> 
+> first time I noticed this, although I suspect this will need to be corrected
+> "everywhere" -
+> Per the SPDX website, the "GPL-2.0" label is deprecated.  It's replacement
+> is "GPL-2.0-only".
+> I think all instances should be updated to "GPL-2.0-only"
 
-On 1/23/20 6:15 PM, Bjorn Andersson wrote:
-> On Thu 23 Jan 09:01 PST 2020, Mathieu Poirier wrote:
-> 
->> On Wed, 22 Jan 2020 at 12:40, Bjorn Andersson
->> <bjorn.andersson@linaro.org> wrote:
->>>
->>> On Fri 10 Jan 13:28 PST 2020, Mathieu Poirier wrote:
->>>
->>>> On Thu, Dec 26, 2019 at 09:32:14PM -0800, Bjorn Andersson wrote:
->>>>> Add a common panic handler that invokes a stop request and sleep enough
->>>>> to let the remoteproc flush it's caches etc in order to aid post mortem
->>>>> debugging.
->>>>>
->>>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->>>>> ---
->>>>>
->>>>> Changes since v1:
->>>>> - None
->>>>>
->>>>>  drivers/remoteproc/qcom_q6v5.c | 19 +++++++++++++++++++
->>>>>  drivers/remoteproc/qcom_q6v5.h |  1 +
->>>>>  2 files changed, 20 insertions(+)
->>>>>
->>>>> diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
->>>>> index cb0f4a0be032..17167c980e02 100644
->>>>> --- a/drivers/remoteproc/qcom_q6v5.c
->>>>> +++ b/drivers/remoteproc/qcom_q6v5.c
->>>>> @@ -6,6 +6,7 @@
->>>>>   * Copyright (C) 2014 Sony Mobile Communications AB
->>>>>   * Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
->>>>>   */
->>>>> +#include <linux/delay.h>
->>>>>  #include <linux/kernel.h>
->>>>>  #include <linux/platform_device.h>
->>>>>  #include <linux/interrupt.h>
->>>>> @@ -15,6 +16,8 @@
->>>>>  #include <linux/remoteproc.h>
->>>>>  #include "qcom_q6v5.h"
->>>>>
->>>>> +#define Q6V5_PANIC_DELAY_MS        200
->>>>> +
->>>>>  /**
->>>>>   * qcom_q6v5_prepare() - reinitialize the qcom_q6v5 context before start
->>>>>   * @q6v5:  reference to qcom_q6v5 context to be reinitialized
->>>>> @@ -162,6 +165,22 @@ int qcom_q6v5_request_stop(struct qcom_q6v5 *q6v5)
->>>>>  }
->>>>>  EXPORT_SYMBOL_GPL(qcom_q6v5_request_stop);
->>>>>
->>>>> +/**
->>>>> + * qcom_q6v5_panic() - panic handler to invoke a stop on the remote
->>>>> + * @q6v5:  reference to qcom_q6v5 context
->>>>> + *
->>>>> + * Set the stop bit and sleep in order to allow the remote processor to flush
->>>>> + * its caches etc for post mortem debugging.
->>>>> + */
->>>>> +void qcom_q6v5_panic(struct qcom_q6v5 *q6v5)
->>>>> +{
->>>>> +   qcom_smem_state_update_bits(q6v5->state,
->>>>> +                               BIT(q6v5->stop_bit), BIT(q6v5->stop_bit));
->>>>> +
->>>>> +   mdelay(Q6V5_PANIC_DELAY_MS);
->>>>
->>>> I really wonder if the delay should be part of the remoteproc core and
->>>> configurable via device tree.  Wanting the remote processor to flush its caches
->>>> is likely something other vendors will want when dealing with a kernel panic.
->>>> It would be nice to see if other people have an opinion on this topic.  If not
->>>> then we can keep the delay here and move it to the core if need be.
->>>>
->>>
->>> I gave this some more thought and what we're trying to achieve is to
->>> signal the remote processors about the panic and then give them time to
->>> react, but per the proposal (and Qualcomm downstream iirc) we will do
->>> this for each remote processor, one by one.
->>>
->>> So in the typical case of a Qualcomm platform with 4-5 remoteprocs we'll
->>> end up giving the first one a whole second to react and the last one
->>> "only" 200ms.
->>>
->>> Moving the delay to the core by iterating over rproc_list calling
->>> panic() and then delaying would be cleaner imo.
->>
->> I agree.
->>
->>>
->>> It might be nice to make this configurable in DT, but I agree that it
->>> would be nice to hear from others if this would be useful.
->>
->> I think the delay has to be configurable via DT if we move this to the
->> core.  The binding can be optional and default to 200ms if not
->> present.
->>
-> 
-> How about I make the panic() return the required delay and then we let
-> the core sleep for MAX() of the returned durations? That way the default
-> is still a property of the remoteproc drivers - and 200ms seems rather
-> arbitrary to put in the core, even as a default.
+No, it is fine, please read Documentation/process/license-rules.rst
 
-I agree with Bjorn, the delay should be provided by the platform.
-But in this case i wonder if it is simpler to just let the platform take care it?
-For instance for stm32mp1 the stop corresponds to the reset on the remote processor core. To inform the coprocessor about an imminent shutdown we use a signal relying on a mailbox (cf. stm32_rproc_stop).  
-In this case we would need a delay between the signal and the reset, but not after (no cache management).
+thanks,
 
-Regards,
-Arnaud
-> 
-> Regards,
-> Bjorn
-> 
+greg k-h
