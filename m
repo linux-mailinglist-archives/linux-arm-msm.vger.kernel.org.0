@@ -2,599 +2,720 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 783B7149150
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 23:50:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D7633149159
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 23:51:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729182AbgAXWt7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jan 2020 17:49:59 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:42498 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729146AbgAXWt7 (ORCPT
+        id S1729163AbgAXWvY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jan 2020 17:51:24 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:16191 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729110AbgAXWvX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jan 2020 17:49:59 -0500
-Received: by mail-pl1-f194.google.com with SMTP id p9so1367463plk.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2020 14:49:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=EgqWJkEpLVYGyKpU+xrqhy//8DzmxmYYXy8tMaN6GH0=;
-        b=eLUKClckTYSZLmuejE1LRT/yGkzydaTAfiTDlnGwMDL1wKeMNCkbhtMyQhf9A9e026
-         ZtxSeHC5OAcn9Exa+SZoq+6L+vQ4mHt5WdR0iM/bCH18D1wwFwJO7lNAMjEfGT2W5Hjs
-         sG501oFFbKPCDaRVqa5dUbTuoJj1gxws35ivlF9GDtFOA0VnTr21fCINVVC2TSNsz6ba
-         QwgKpISPWhLtnR/t+6UaSyonFjDRaKNsQo0j5KeR2ZbdtBdk/cbesOLGGFNM4A9N5rnL
-         YJ/0j9Fy84ALdW2mJ7YsqbLhthk33UQWKt75FhUTuUMr/wPrZBGTRDQaqQbGskcQZlkE
-         F+Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EgqWJkEpLVYGyKpU+xrqhy//8DzmxmYYXy8tMaN6GH0=;
-        b=G71AkEpmLdJvhPLt0h5PJCvXp3ogeojDlJBHf0qIw2kMALEskF/hkJvO1RE+UZJVfx
-         H7wqt3maGztq4pnKdsT26AvdBW+QaNxwJ3nL8Sw2+eGDpudLuO/7xnT9sZ20rj5jObw2
-         YkM0oLgut4cvjm71QIOnRD1nzZFde4/7kG7FoIhv86BgAMeZOWkPVhf/0mBywjltCwNB
-         Dy2+jlPTGMlZVBEjVUsXfRG9lhBU13yEkIFF+xqCi7S0quCZZDiET6jgtFMqkNdq/BoT
-         z4YF3YJ6qydW8uxwBA1yqXmTSUEFoEEQNJliHy+wXRJLSEFIU5PYd+eMbmJ9o365Tus0
-         4FYQ==
-X-Gm-Message-State: APjAAAXDNH5V6AbS4gp+NursFE7TMZvQeLxhDpIdGh1zc7iaR8rgSDr0
-        tAwAl7f946wtODeIe3XMwD8wzg==
-X-Google-Smtp-Source: APXvYqzgujk2dTz+s3gSdkYHlNVhLUE7NIGThk0o9uWLACP5UmLwsE9GyqQq7WdFwACNQ1aHYVm6NQ==
-X-Received: by 2002:a17:90a:2e84:: with SMTP id r4mr1728028pjd.64.1579906198476;
-        Fri, 24 Jan 2020 14:49:58 -0800 (PST)
-Received: from yoga (pat_11.qualcomm.com. [192.35.156.11])
-        by smtp.gmail.com with ESMTPSA id y14sm30538pfn.184.2020.01.24.14.49.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jan 2020 14:49:57 -0800 (PST)
-Date:   Fri, 24 Jan 2020 14:49:55 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
-Cc:     agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        robh+dt@kernel.org, mark.rutland@arm.com, vinod.koul@linaro.org,
-        psodagud@codeaurora.org, tsoni@codeaurora.org,
-        jshriram@codeaurora.org, tdas@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v2 7/7] arm64: dts: qcom: sm8250: Add sm8250 dts file
-Message-ID: <20200124224955.GA1511@yoga>
-References: <1579905147-12142-1-git-send-email-vnkgutta@codeaurora.org>
- <1579905147-12142-8-git-send-email-vnkgutta@codeaurora.org>
+        Fri, 24 Jan 2020 17:51:23 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1579906282; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=0v+4OKKwczZQYTVh1eJpjiuh3YoneOCdAWb3vln6+3s=; b=gD6ncaTMbBJnXJFxayrXdLJvGVhfW8w1R5i8i6/cyLaggMRgpDDFL7jBPK/grK5Ql4PDV+ll
+ Fy3RW8QRUphu3bVKeVCwwwFuXgB/QJNT9PMH6FyqdVxkb/bQVwjlk0f/p0RSGaJx1ve7VHmD
+ wuwnnwM7JltWWAQVlzciRsReS3o=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e2b74e5.7feba2a8f810-smtp-out-n02;
+ Fri, 24 Jan 2020 22:51:17 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1F313C43383; Fri, 24 Jan 2020 22:51:16 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 71D38C43383;
+        Fri, 24 Jan 2020 22:51:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 71D38C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH 05/16] bus: mhi: core: Add support for ringing
+ channel/event ring doorbells
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        gregkh@linuxfoundation.org, arnd@arndb.de
+Cc:     smohanad@codeaurora.org, kvalo@codeaurora.org,
+        bjorn.andersson@linaro.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200123111836.7414-1-manivannan.sadhasivam@linaro.org>
+ <20200123111836.7414-6-manivannan.sadhasivam@linaro.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <beadf428-82db-c89f-22bc-983d7b907bb3@codeaurora.org>
+Date:   Fri, 24 Jan 2020 15:51:12 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1579905147-12142-8-git-send-email-vnkgutta@codeaurora.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <20200123111836.7414-6-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 24 Jan 14:32 PST 2020, Venkata Narendra Kumar Gutta wrote:
-
-> Add sm8250 devicetree file for SM8250 SoC and SM8250 MTP platform.
-> This file adds the basic nodes like cpu, psci and other required
-> configuration for booting up to the serial console.
+On 1/23/2020 4:18 AM, Manivannan Sadhasivam wrote:
+> This commit adds support for ringing channel and event ring doorbells
+> by MHI host. The MHI host can use the channel and event ring doorbells
+> for notifying the client device about processing transfer and event
+> rings which it has queued using MMIO registers.
 > 
-
-Thanks Narendra, this looks good.
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Waiting for the clock patches to land before I can pick this up.
-
-Regards,
-Bjorn
-
-> Signed-off-by: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+> This is based on the patch submitted by Sujeev Dias:
+> https://lkml.org/lkml/2018/7/9/989
+> 
+> Signed-off-by: Sujeev Dias <sdias@codeaurora.org>
+> Signed-off-by: Siddartha Mohanadoss <smohanad@codeaurora.org>
+> [mani: splitted from pm patch and cleaned up for upstream]
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile       |   1 +
->  arch/arm64/boot/dts/qcom/sm8250-mtp.dts |  29 ++
->  arch/arm64/boot/dts/qcom/sm8250.dtsi    | 450 ++++++++++++++++++++++++++++++++
->  3 files changed, 480 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm8250-mtp.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sm8250.dtsi
+>   drivers/bus/mhi/core/init.c     | 140 ++++++++++++++++
+>   drivers/bus/mhi/core/internal.h | 275 ++++++++++++++++++++++++++++++++
+>   drivers/bus/mhi/core/main.c     | 118 ++++++++++++++
+>   include/linux/mhi.h             |   5 +
+>   4 files changed, 538 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 973c0f0..c6014c0 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -22,5 +22,6 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-mtp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-> new file mode 100644
-> index 0000000..224d0f1
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-> @@ -0,0 +1,29 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sm8250.dtsi"
-> +
-> +/ {
-> +	model = "Qualcomm Technologies, Inc. SM8250 MTP";
-> +	compatible = "qcom,sm8250-mtp";
-> +
-> +	aliases {
-> +		serial0 = &uart2;
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index 60dcf2ad3a5f..588166b588b4 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -19,6 +19,136 @@
+>   #include <linux/wait.h>
+>   #include "internal.h"
+>   
+> +int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
+> +{
+> +	u32 val;
+> +	int i, ret;
+> +	struct mhi_chan *mhi_chan;
+> +	struct mhi_event *mhi_event;
+> +	void __iomem *base = mhi_cntrl->regs;
+> +	struct {
+> +		u32 offset;
+> +		u32 mask;
+> +		u32 shift;
+> +		u32 val;
+> +	} reg_info[] = {
+> +		{
+> +			CCABAP_HIGHER, U32_MAX, 0,
+> +			upper_32_bits(mhi_cntrl->mhi_ctxt->chan_ctxt_addr),
+> +		},
+> +		{
+> +			CCABAP_LOWER, U32_MAX, 0,
+> +			lower_32_bits(mhi_cntrl->mhi_ctxt->chan_ctxt_addr),
+> +		},
+> +		{
+> +			ECABAP_HIGHER, U32_MAX, 0,
+> +			upper_32_bits(mhi_cntrl->mhi_ctxt->er_ctxt_addr),
+> +		},
+> +		{
+> +			ECABAP_LOWER, U32_MAX, 0,
+> +			lower_32_bits(mhi_cntrl->mhi_ctxt->er_ctxt_addr),
+> +		},
+> +		{
+> +			CRCBAP_HIGHER, U32_MAX, 0,
+> +			upper_32_bits(mhi_cntrl->mhi_ctxt->cmd_ctxt_addr),
+> +		},
+> +		{
+> +			CRCBAP_LOWER, U32_MAX, 0,
+> +			lower_32_bits(mhi_cntrl->mhi_ctxt->cmd_ctxt_addr),
+> +		},
+> +		{
+> +			MHICFG, MHICFG_NER_MASK, MHICFG_NER_SHIFT,
+> +			mhi_cntrl->total_ev_rings,
+> +		},
+> +		{
+> +			MHICFG, MHICFG_NHWER_MASK, MHICFG_NHWER_SHIFT,
+> +			mhi_cntrl->hw_ev_rings,
+> +		},
+> +		{
+> +			MHICTRLBASE_HIGHER, U32_MAX, 0,
+> +			upper_32_bits(mhi_cntrl->iova_start),
+> +		},
+> +		{
+> +			MHICTRLBASE_LOWER, U32_MAX, 0,
+> +			lower_32_bits(mhi_cntrl->iova_start),
+> +		},
+> +		{
+> +			MHIDATABASE_HIGHER, U32_MAX, 0,
+> +			upper_32_bits(mhi_cntrl->iova_start),
+> +		},
+> +		{
+> +			MHIDATABASE_LOWER, U32_MAX, 0,
+> +			lower_32_bits(mhi_cntrl->iova_start),
+> +		},
+> +		{
+> +			MHICTRLLIMIT_HIGHER, U32_MAX, 0,
+> +			upper_32_bits(mhi_cntrl->iova_stop),
+> +		},
+> +		{
+> +			MHICTRLLIMIT_LOWER, U32_MAX, 0,
+> +			lower_32_bits(mhi_cntrl->iova_stop),
+> +		},
+> +		{
+> +			MHIDATALIMIT_HIGHER, U32_MAX, 0,
+> +			upper_32_bits(mhi_cntrl->iova_stop),
+> +		},
+> +		{
+> +			MHIDATALIMIT_LOWER, U32_MAX, 0,
+> +			lower_32_bits(mhi_cntrl->iova_stop),
+> +		},
+> +		{ 0, 0, 0 }
 > +	};
 > +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
+> +	dev_dbg(mhi_cntrl->dev, "Initializing MHI registers\n");
+> +
+> +	/* Read channel db offset */
+> +	ret = mhi_read_reg_field(mhi_cntrl, base, CHDBOFF, CHDBOFF_CHDBOFF_MASK,
+> +				 CHDBOFF_CHDBOFF_SHIFT, &val);
+> +	if (ret) {
+> +		dev_err(mhi_cntrl->dev, "Unable to read CHDBOFF register\n");
+> +		return -EIO;
+> +	}
+> +
+> +	/* Setup wake db */
+> +	mhi_cntrl->wake_db = base + val + (8 * MHI_DEV_WAKE_DB);
+> +	mhi_write_reg(mhi_cntrl, mhi_cntrl->wake_db, 4, 0);
+> +	mhi_write_reg(mhi_cntrl, mhi_cntrl->wake_db, 0, 0);
+> +	mhi_cntrl->wake_set = false;
+> +
+> +	/* Setup channel db address for each channel in tre_ring */
+> +	mhi_chan = mhi_cntrl->mhi_chan;
+> +	for (i = 0; i < mhi_cntrl->max_chan; i++, val += 8, mhi_chan++)
+> +		mhi_chan->tre_ring.db_addr = base + val;
+> +
+> +	/* Read event ring db offset */
+> +	ret = mhi_read_reg_field(mhi_cntrl, base, ERDBOFF, ERDBOFF_ERDBOFF_MASK,
+> +				 ERDBOFF_ERDBOFF_SHIFT, &val);
+> +	if (ret) {
+> +		dev_err(mhi_cntrl->dev, "Unable to read ERDBOFF register\n");
+> +		return -EIO;
+> +	}
+> +
+> +	/* Setup event db address for each ev_ring */
+> +	mhi_event = mhi_cntrl->mhi_event;
+> +	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, val += 8, mhi_event++) {
+> +		if (mhi_event->offload_ev)
+> +			continue;
+> +
+> +		mhi_event->ring.db_addr = base + val;
+> +	}
+> +
+> +	/* Setup DB register for primary CMD rings */
+> +	mhi_cntrl->mhi_cmd[PRIMARY_CMD_RING].ring.db_addr = base + CRDB_LOWER;
+> +
+> +	/* Write to MMIO registers */
+> +	for (i = 0; reg_info[i].offset; i++)
+> +		mhi_write_reg_field(mhi_cntrl, base, reg_info[i].offset,
+> +				    reg_info[i].mask, reg_info[i].shift,
+> +				    reg_info[i].val);
+> +
+> +	return 0;
+> +}
+> +
+>   static int parse_ev_cfg(struct mhi_controller *mhi_cntrl,
+>   			struct mhi_controller_config *config)
+>   {
+> @@ -63,6 +193,11 @@ static int parse_ev_cfg(struct mhi_controller *mhi_cntrl,
+>   		if (MHI_INVALID_BRSTMODE(mhi_event->db_cfg.brstmode))
+>   			goto error_ev_cfg;
+>   
+> +		if (mhi_event->db_cfg.brstmode == MHI_DB_BRST_ENABLE)
+> +			mhi_event->db_cfg.process_db = mhi_db_brstmode;
+> +		else
+> +			mhi_event->db_cfg.process_db = mhi_db_brstmode_disable;
+> +
+>   		mhi_event->data_type = event_cfg->data_type;
+>   
+>   		mhi_event->hw_ring = event_cfg->hardware_event;
+> @@ -194,6 +329,11 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
+>   			}
+>   		}
+>   
+> +		if (mhi_chan->db_cfg.brstmode == MHI_DB_BRST_ENABLE)
+> +			mhi_chan->db_cfg.process_db = mhi_db_brstmode;
+> +		else
+> +			mhi_chan->db_cfg.process_db = mhi_db_brstmode_disable;
+> +
+>   		mhi_chan->configured = true;
+>   
+>   		if (mhi_chan->lpm_notify)
+> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+> index ea7f1d7b0129..a4d10916984a 100644
+> --- a/drivers/bus/mhi/core/internal.h
+> +++ b/drivers/bus/mhi/core/internal.h
+> @@ -9,6 +9,255 @@
+>   
+>   extern struct bus_type mhi_bus_type;
+>   
+> +/* MHI MMIO register mapping */
+> +#define PCI_INVALID_READ(val) (val == U32_MAX)
+> +
+> +#define MHIREGLEN (0x0)
+> +#define MHIREGLEN_MHIREGLEN_MASK (0xFFFFFFFF)
+> +#define MHIREGLEN_MHIREGLEN_SHIFT (0)
+> +
+> +#define MHIVER (0x8)
+> +#define MHIVER_MHIVER_MASK (0xFFFFFFFF)
+> +#define MHIVER_MHIVER_SHIFT (0)
+> +
+> +#define MHICFG (0x10)
+> +#define MHICFG_NHWER_MASK (0xFF000000)
+> +#define MHICFG_NHWER_SHIFT (24)
+> +#define MHICFG_NER_MASK (0xFF0000)
+> +#define MHICFG_NER_SHIFT (16)
+> +#define MHICFG_NHWCH_MASK (0xFF00)
+> +#define MHICFG_NHWCH_SHIFT (8)
+> +#define MHICFG_NCH_MASK (0xFF)
+> +#define MHICFG_NCH_SHIFT (0)
+> +
+> +#define CHDBOFF (0x18)
+> +#define CHDBOFF_CHDBOFF_MASK (0xFFFFFFFF)
+> +#define CHDBOFF_CHDBOFF_SHIFT (0)
+> +
+> +#define ERDBOFF (0x20)
+> +#define ERDBOFF_ERDBOFF_MASK (0xFFFFFFFF)
+> +#define ERDBOFF_ERDBOFF_SHIFT (0)
+> +
+> +#define BHIOFF (0x28)
+> +#define BHIOFF_BHIOFF_MASK (0xFFFFFFFF)
+> +#define BHIOFF_BHIOFF_SHIFT (0)
+> +
+> +#define BHIEOFF (0x2C)
+> +#define BHIEOFF_BHIEOFF_MASK (0xFFFFFFFF)
+> +#define BHIEOFF_BHIEOFF_SHIFT (0)
+> +
+> +#define DEBUGOFF (0x30)
+> +#define DEBUGOFF_DEBUGOFF_MASK (0xFFFFFFFF)
+> +#define DEBUGOFF_DEBUGOFF_SHIFT (0)
+> +
+> +#define MHICTRL (0x38)
+> +#define MHICTRL_MHISTATE_MASK (0x0000FF00)
+> +#define MHICTRL_MHISTATE_SHIFT (8)
+> +#define MHICTRL_RESET_MASK (0x2)
+> +#define MHICTRL_RESET_SHIFT (1)
+> +
+> +#define MHISTATUS (0x48)
+> +#define MHISTATUS_MHISTATE_MASK (0x0000FF00)
+> +#define MHISTATUS_MHISTATE_SHIFT (8)
+> +#define MHISTATUS_SYSERR_MASK (0x4)
+> +#define MHISTATUS_SYSERR_SHIFT (2)
+> +#define MHISTATUS_READY_MASK (0x1)
+> +#define MHISTATUS_READY_SHIFT (0)
+> +
+> +#define CCABAP_LOWER (0x58)
+> +#define CCABAP_LOWER_CCABAP_LOWER_MASK (0xFFFFFFFF)
+> +#define CCABAP_LOWER_CCABAP_LOWER_SHIFT (0)
+> +
+> +#define CCABAP_HIGHER (0x5C)
+> +#define CCABAP_HIGHER_CCABAP_HIGHER_MASK (0xFFFFFFFF)
+> +#define CCABAP_HIGHER_CCABAP_HIGHER_SHIFT (0)
+> +
+> +#define ECABAP_LOWER (0x60)
+> +#define ECABAP_LOWER_ECABAP_LOWER_MASK (0xFFFFFFFF)
+> +#define ECABAP_LOWER_ECABAP_LOWER_SHIFT (0)
+> +
+> +#define ECABAP_HIGHER (0x64)
+> +#define ECABAP_HIGHER_ECABAP_HIGHER_MASK (0xFFFFFFFF)
+> +#define ECABAP_HIGHER_ECABAP_HIGHER_SHIFT (0)
+> +
+> +#define CRCBAP_LOWER (0x68)
+> +#define CRCBAP_LOWER_CRCBAP_LOWER_MASK (0xFFFFFFFF)
+> +#define CRCBAP_LOWER_CRCBAP_LOWER_SHIFT (0)
+> +
+> +#define CRCBAP_HIGHER (0x6C)
+> +#define CRCBAP_HIGHER_CRCBAP_HIGHER_MASK (0xFFFFFFFF)
+> +#define CRCBAP_HIGHER_CRCBAP_HIGHER_SHIFT (0)
+> +
+> +#define CRDB_LOWER (0x70)
+> +#define CRDB_LOWER_CRDB_LOWER_MASK (0xFFFFFFFF)
+> +#define CRDB_LOWER_CRDB_LOWER_SHIFT (0)
+> +
+> +#define CRDB_HIGHER (0x74)
+> +#define CRDB_HIGHER_CRDB_HIGHER_MASK (0xFFFFFFFF)
+> +#define CRDB_HIGHER_CRDB_HIGHER_SHIFT (0)
+> +
+> +#define MHICTRLBASE_LOWER (0x80)
+> +#define MHICTRLBASE_LOWER_MHICTRLBASE_LOWER_MASK (0xFFFFFFFF)
+> +#define MHICTRLBASE_LOWER_MHICTRLBASE_LOWER_SHIFT (0)
+> +
+> +#define MHICTRLBASE_HIGHER (0x84)
+> +#define MHICTRLBASE_HIGHER_MHICTRLBASE_HIGHER_MASK (0xFFFFFFFF)
+> +#define MHICTRLBASE_HIGHER_MHICTRLBASE_HIGHER_SHIFT (0)
+> +
+> +#define MHICTRLLIMIT_LOWER (0x88)
+> +#define MHICTRLLIMIT_LOWER_MHICTRLLIMIT_LOWER_MASK (0xFFFFFFFF)
+> +#define MHICTRLLIMIT_LOWER_MHICTRLLIMIT_LOWER_SHIFT (0)
+> +
+> +#define MHICTRLLIMIT_HIGHER (0x8C)
+> +#define MHICTRLLIMIT_HIGHER_MHICTRLLIMIT_HIGHER_MASK (0xFFFFFFFF)
+> +#define MHICTRLLIMIT_HIGHER_MHICTRLLIMIT_HIGHER_SHIFT (0)
+> +
+> +#define MHIDATABASE_LOWER (0x98)
+> +#define MHIDATABASE_LOWER_MHIDATABASE_LOWER_MASK (0xFFFFFFFF)
+> +#define MHIDATABASE_LOWER_MHIDATABASE_LOWER_SHIFT (0)
+> +
+> +#define MHIDATABASE_HIGHER (0x9C)
+> +#define MHIDATABASE_HIGHER_MHIDATABASE_HIGHER_MASK (0xFFFFFFFF)
+> +#define MHIDATABASE_HIGHER_MHIDATABASE_HIGHER_SHIFT (0)
+> +
+> +#define MHIDATALIMIT_LOWER (0xA0)
+> +#define MHIDATALIMIT_LOWER_MHIDATALIMIT_LOWER_MASK (0xFFFFFFFF)
+> +#define MHIDATALIMIT_LOWER_MHIDATALIMIT_LOWER_SHIFT (0)
+> +
+> +#define MHIDATALIMIT_HIGHER (0xA4)
+> +#define MHIDATALIMIT_HIGHER_MHIDATALIMIT_HIGHER_MASK (0xFFFFFFFF)
+> +#define MHIDATALIMIT_HIGHER_MHIDATALIMIT_HIGHER_SHIFT (0)
+> +
+> +/* Host request register */
+> +#define MHI_SOC_RESET_REQ_OFFSET (0xB0)
+> +#define MHI_SOC_RESET_REQ BIT(0)
+> +
+> +/* MHI BHI offfsets */
+> +#define BHI_BHIVERSION_MINOR (0x00)
+> +#define BHI_BHIVERSION_MAJOR (0x04)
+> +#define BHI_IMGADDR_LOW (0x08)
+> +#define BHI_IMGADDR_HIGH (0x0C)
+> +#define BHI_IMGSIZE (0x10)
+> +#define BHI_RSVD1 (0x14)
+> +#define BHI_IMGTXDB (0x18)
+> +#define BHI_TXDB_SEQNUM_BMSK (0x3FFFFFFF)
+> +#define BHI_TXDB_SEQNUM_SHFT (0)
+> +#define BHI_RSVD2 (0x1C)
+> +#define BHI_INTVEC (0x20)
+> +#define BHI_RSVD3 (0x24)
+> +#define BHI_EXECENV (0x28)
+> +#define BHI_STATUS (0x2C)
+> +#define BHI_ERRCODE (0x30)
+> +#define BHI_ERRDBG1 (0x34)
+> +#define BHI_ERRDBG2 (0x38)
+> +#define BHI_ERRDBG3 (0x3C)
+> +#define BHI_SERIALNU (0x40)
+> +#define BHI_SBLANTIROLLVER (0x44)
+> +#define BHI_NUMSEG (0x48)
+> +#define BHI_MSMHWID(n) (0x4C + (0x4 * n))
+> +#define BHI_OEMPKHASH(n) (0x64 + (0x4 * n))
+> +#define BHI_RSVD5 (0xC4)
+> +#define BHI_STATUS_MASK (0xC0000000)
+> +#define BHI_STATUS_SHIFT (30)
+> +#define BHI_STATUS_ERROR (3)
+> +#define BHI_STATUS_SUCCESS (2)
+> +#define BHI_STATUS_RESET (0)
+> +
+> +/* MHI BHIE offsets */
+> +#define BHIE_MSMSOCID_OFFS (0x0000)
+> +#define BHIE_TXVECADDR_LOW_OFFS (0x002C)
+> +#define BHIE_TXVECADDR_HIGH_OFFS (0x0030)
+> +#define BHIE_TXVECSIZE_OFFS (0x0034)
+> +#define BHIE_TXVECDB_OFFS (0x003C)
+> +#define BHIE_TXVECDB_SEQNUM_BMSK (0x3FFFFFFF)
+> +#define BHIE_TXVECDB_SEQNUM_SHFT (0)
+> +#define BHIE_TXVECSTATUS_OFFS (0x0044)
+> +#define BHIE_TXVECSTATUS_SEQNUM_BMSK (0x3FFFFFFF)
+> +#define BHIE_TXVECSTATUS_SEQNUM_SHFT (0)
+> +#define BHIE_TXVECSTATUS_STATUS_BMSK (0xC0000000)
+> +#define BHIE_TXVECSTATUS_STATUS_SHFT (30)
+> +#define BHIE_TXVECSTATUS_STATUS_RESET (0x00)
+> +#define BHIE_TXVECSTATUS_STATUS_XFER_COMPL (0x02)
+> +#define BHIE_TXVECSTATUS_STATUS_ERROR (0x03)
+> +#define BHIE_RXVECADDR_LOW_OFFS (0x0060)
+> +#define BHIE_RXVECADDR_HIGH_OFFS (0x0064)
+> +#define BHIE_RXVECSIZE_OFFS (0x0068)
+> +#define BHIE_RXVECDB_OFFS (0x0070)
+> +#define BHIE_RXVECDB_SEQNUM_BMSK (0x3FFFFFFF)
+> +#define BHIE_RXVECDB_SEQNUM_SHFT (0)
+> +#define BHIE_RXVECSTATUS_OFFS (0x0078)
+> +#define BHIE_RXVECSTATUS_SEQNUM_BMSK (0x3FFFFFFF)
+> +#define BHIE_RXVECSTATUS_SEQNUM_SHFT (0)
+> +#define BHIE_RXVECSTATUS_STATUS_BMSK (0xC0000000)
+> +#define BHIE_RXVECSTATUS_STATUS_SHFT (30)
+> +#define BHIE_RXVECSTATUS_STATUS_RESET (0x00)
+> +#define BHIE_RXVECSTATUS_STATUS_XFER_COMPL (0x02)
+> +#define BHIE_RXVECSTATUS_STATUS_ERROR (0x03)
+> +
+> +struct mhi_event_ctxt {
+> +	u32 reserved : 8;
+> +	u32 intmodc : 8;
+> +	u32 intmodt : 16;
+> +	u32 ertype;
+> +	u32 msivec;
+> +
+> +	u64 rbase __packed __aligned(4);
+> +	u64 rlen __packed __aligned(4);
+> +	u64 rp __packed __aligned(4);
+> +	u64 wp __packed __aligned(4);
+> +};
+
+This is the struct that is shared with the device, correct?  Surely it 
+needs to be packed then?  Seems like you'd expect some padding between 
+msivec and rbase on a 64-bit system otherwise, which is probably not 
+intended.
+
+Also I strongly dislike bitfields in structures which are shared with 
+another system since the C specification doesn't define how they are 
+implemented, therefore you can run into issues where different compilers 
+decide to implement the actual backing memory differently.  I know its 
+less convinent, but I would prefer the use of bitmasks for these fields.
+
+Same comments for the next two structs following this.
+
+> +
+> +struct mhi_chan_ctxt {
+> +	u32 chstate : 8;
+> +	u32 brstmode : 2;
+> +	u32 pollcfg : 6;
+> +	u32 reserved : 16;
+> +	u32 chtype;
+> +	u32 erindex;
+> +
+> +	u64 rbase __packed __aligned(4);
+> +	u64 rlen __packed __aligned(4);
+> +	u64 rp __packed __aligned(4);
+> +	u64 wp __packed __aligned(4);
 > +};
 > +
-> +&qupv3_id_1 {
-> +	status = "okay";
+> +struct mhi_cmd_ctxt {
+> +	u32 reserved0;
+> +	u32 reserved1;
+> +	u32 reserved2;
+> +
+> +	u64 rbase __packed __aligned(4);
+> +	u64 rlen __packed __aligned(4);
+> +	u64 rp __packed __aligned(4);
+> +	u64 wp __packed __aligned(4);
 > +};
 > +
-> +&uart2 {
-> +	status = "okay";
+> +struct mhi_ctxt {
+> +	struct mhi_event_ctxt *er_ctxt;
+> +	struct mhi_chan_ctxt *chan_ctxt;
+> +	struct mhi_cmd_ctxt *cmd_ctxt;
+> +	dma_addr_t er_ctxt_addr;
+> +	dma_addr_t chan_ctxt_addr;
+> +	dma_addr_t cmd_ctxt_addr;
 > +};
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> new file mode 100644
-> index 0000000..f63df12
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -0,0 +1,450 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-> + */
 > +
-> +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/clock/qcom,rpmh.h>
-> +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +
-> +/ {
-> +	interrupt-parent = <&intc>;
-> +
-> +	#address-cells = <2>;
-> +	#size-cells = <2>;
-> +
-> +	chosen { };
-> +
-> +	clocks {
-> +		xo_board: xo-board {
-> +			compatible = "fixed-clock";
-> +			#clock-cells = <0>;
-> +			clock-frequency = <38400000>;
-> +			clock-output-names = "xo_board";
-> +		};
-> +
-> +		sleep_clk: sleep-clk {
-> +			compatible = "fixed-clock";
-> +			#clock-cells = <0>;
-> +			clock-frequency = <32000>;
-> +		};
-> +	};
-> +
-> +	cpus {
-> +		#address-cells = <2>;
-> +		#size-cells = <0>;
-> +
-> +		CPU0: cpu@0 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo485";
-> +			reg = <0x0 0x0>;
-> +			enable-method = "psci";
-> +			next-level-cache = <&L2_0>;
-> +			L2_0: l2-cache {
-> +			      compatible = "cache";
-> +			      next-level-cache = <&L3_0>;
-> +				L3_0: l3-cache {
-> +				      compatible = "cache";
-> +				};
-> +			};
-> +		};
-> +
-> +		CPU1: cpu@100 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo485";
-> +			reg = <0x0 0x100>;
-> +			enable-method = "psci";
-> +			next-level-cache = <&L2_100>;
-> +			L2_100: l2-cache {
-> +			      compatible = "cache";
-> +			      next-level-cache = <&L3_0>;
-> +			};
-> +		};
-> +
-> +		CPU2: cpu@200 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo485";
-> +			reg = <0x0 0x200>;
-> +			enable-method = "psci";
-> +			next-level-cache = <&L2_200>;
-> +			L2_200: l2-cache {
-> +			      compatible = "cache";
-> +			      next-level-cache = <&L3_0>;
-> +			};
-> +		};
-> +
-> +		CPU3: cpu@300 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo485";
-> +			reg = <0x0 0x300>;
-> +			enable-method = "psci";
-> +			next-level-cache = <&L2_300>;
-> +			L2_300: l2-cache {
-> +			      compatible = "cache";
-> +			      next-level-cache = <&L3_0>;
-> +			};
-> +		};
-> +
-> +		CPU4: cpu@400 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo485";
-> +			reg = <0x0 0x400>;
-> +			enable-method = "psci";
-> +			next-level-cache = <&L2_400>;
-> +			L2_400: l2-cache {
-> +			      compatible = "cache";
-> +			      next-level-cache = <&L3_0>;
-> +			};
-> +		};
-> +
-> +		CPU5: cpu@500 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo485";
-> +			reg = <0x0 0x500>;
-> +			enable-method = "psci";
-> +			next-level-cache = <&L2_500>;
-> +			L2_500: l2-cache {
-> +			      compatible = "cache";
-> +			      next-level-cache = <&L3_0>;
-> +			};
-> +
-> +		};
-> +
-> +		CPU6: cpu@600 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo485";
-> +			reg = <0x0 0x600>;
-> +			enable-method = "psci";
-> +			next-level-cache = <&L2_600>;
-> +			L2_600: l2-cache {
-> +			      compatible = "cache";
-> +			      next-level-cache = <&L3_0>;
-> +			};
-> +		};
-> +
-> +		CPU7: cpu@700 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo485";
-> +			reg = <0x0 0x700>;
-> +			enable-method = "psci";
-> +			next-level-cache = <&L2_700>;
-> +			L2_700: l2-cache {
-> +			      compatible = "cache";
-> +			      next-level-cache = <&L3_0>;
-> +			};
-> +		};
-> +	};
-> +
-> +	firmware: firmware {
-> +		scm: scm {
-> +			compatible = "qcom,scm";
-> +			#reset-cells = <1>;
-> +		};
-> +	};
-> +
-> +	tcsr_mutex: hwlock {
-> +		compatible = "qcom,tcsr-mutex";
-> +		syscon = <&tcsr_mutex_regs 0 0x1000>;
-> +		#hwlock-cells = <1>;
-> +	};
-> +
-> +	memory@80000000 {
-> +		device_type = "memory";
-> +		/* We expect the bootloader to fill in the size */
-> +		reg = <0x0 0x80000000 0x0 0x0>;
-> +	};
-> +
-> +	pmu {
-> +		compatible = "arm,armv8-pmuv3";
-> +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_HIGH>;
-> +	};
-> +
-> +	psci {
-> +		compatible = "arm,psci-1.0";
-> +		method = "smc";
-> +	};
-> +
-> +	reserved_memory: reserved-memory {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		hyp_mem: memory@80000000 {
-> +			reg = <0x0 0x80000000 0x0 0x600000>;
-> +			no-map;
-> +		};
-> +
-> +		xbl_aop_mem: memory@80700000 {
-> +			reg = <0x0 0x80700000 0x0 0x160000>;
-> +			no-map;
-> +		};
-> +
-> +		cmd_db: memory@80860000 {
-> +			compatible = "qcom,cmd-db";
-> +			reg = <0x0 0x80860000 0x0 0x20000>;
-> +			no-map;
-> +		};
-> +
-> +		smem_mem: memory@80900000 {
-> +			reg = <0x0 0x80900000 0x0 0x200000>;
-> +			no-map;
-> +		};
-> +
-> +		removed_mem: memory@80b00000 {
-> +			reg = <0x0 0x80b00000 0x0 0x5300000>;
-> +			no-map;
-> +		};
-> +
-> +		camera_mem: memory@86200000 {
-> +			reg = <0x0 0x86200000 0x0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		wlan_mem: memory@86700000 {
-> +			reg = <0x0 0x86700000 0x0 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		ipa_fw_mem: memory@86800000 {
-> +			reg = <0x0 0x86800000 0x0 0x10000>;
-> +			no-map;
-> +		};
-> +
-> +		ipa_gsi_mem: memory@86810000 {
-> +			reg = <0x0 0x86810000 0x0 0xa000>;
-> +			no-map;
-> +		};
-> +
-> +		gpu_mem: memory@8681a000 {
-> +			reg = <0x0 0x8681a000 0x0 0x2000>;
-> +			no-map;
-> +		};
-> +
-> +		npu_mem: memory@86900000 {
-> +			reg = <0x0 0x86900000 0x0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		video_mem: memory@86e00000 {
-> +			reg = <0x0 0x86e00000 0x0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		cvp_mem: memory@87300000 {
-> +			reg = <0x0 0x87300000 0x0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		cdsp_mem: memory@87800000 {
-> +			reg = <0x0 0x87800000 0x0 0x1400000>;
-> +			no-map;
-> +		};
-> +
-> +		slpi_mem: memory@88c00000 {
-> +			reg = <0x0 0x88c00000 0x0 0x1500000>;
-> +			no-map;
-> +		};
-> +
-> +		adsp_mem: memory@8a100000 {
-> +			reg = <0x0 0x8a100000 0x0 0x1d00000>;
-> +			no-map;
-> +		};
-> +
-> +		spss_mem: memory@8be00000 {
-> +			reg = <0x0 0x8be00000 0x0 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		cdsp_secure_heap: memory@8bf00000 {
-> +			reg = <0x0 0x8bf00000 0x0 0x4600000>;
-> +			no-map;
-> +		};
-> +	};
-> +
-> +	smem {
-> +		compatible = "qcom,smem";
-> +		memory-region = <&smem_mem>;
-> +		hwlocks = <&tcsr_mutex 3>;
-> +	};
-> +
-> +	soc: soc@0 {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges = <0 0 0 0 0x10 0>;
-> +		dma-ranges = <0 0 0 0 0x10 0>;
-> +		compatible = "simple-bus";
-> +
-> +		gcc: clock-controller@100000 {
-> +			compatible = "qcom,gcc-sm8250";
-> +			reg = <0x0 0x00100000 0x0 0x1f0000>;
-> +			#clock-cells = <1>;
-> +			#reset-cells = <1>;
-> +			#power-domain-cells = <1>;
-> +			clock-names = "bi_tcxo",
-> +					"sleep_clk";
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +				<&sleep_clk>;
-> +		};
-> +
-> +		qupv3_id_1: geniqup@ac0000 {
-> +			compatible = "qcom,geni-se-qup";
-> +			reg = <0x0 0x00ac0000 0x0 0x6000>;
-> +			clock-names = "m-ahb", "s-ahb";
-> +			clocks = <&gcc 133>,
-> +				<&gcc 134>;
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +			status = "disabled";
-> +
-> +			uart2: serial@a90000 {
-> +				compatible = "qcom,geni-debug-uart";
-> +				reg = <0x0 0x00a90000 0x0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc 113>;
-> +				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
-> +				status = "disabled";
-> +			};
-> +		};
-> +
-> +		intc: interrupt-controller@17a00000 {
-> +			compatible = "arm,gic-v3";
-> +			#interrupt-cells = <3>;
-> +			interrupt-controller;
-> +			reg = <0x0 0x17a00000 0x0 0x10000>,     /* GICD */
-> +			      <0x0 0x17a60000 0x0 0x100000>;    /* GICR * 8 */
-> +			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
-> +		};
-> +
-> +		pdc: interrupt-controller@b220000 {
-> +			compatible = "qcom,sm8250-pdc";
-> +			reg = <0x0b220000 0x30000>, <0x17c000f0 0x60>;
-> +			qcom,pdc-ranges = <0 480 94>, <94 609 31>,
-> +					<125 63 1>, <126 716 12>;
-> +			#interrupt-cells = <2>;
-> +			interrupt-parent = <&intc>;
-> +			interrupt-controller;
-> +		};
-> +
-> +		spmi_bus: qcom,spmi@c440000 {
-> +			compatible = "qcom,spmi-pmic-arb";
-> +			reg = <0x0 0x0c440000 0x0 0x0001100>,
-> +			      <0x0 0x0c600000 0x0 0x2000000>,
-> +			      <0x0 0x0e600000 0x0 0x0100000>,
-> +			      <0x0 0x0e700000 0x0 0x00a0000>,
-> +			      <0x0 0x0c40a000 0x0 0x0026000>;
-> +			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
-> +			interrupt-names = "periph_irq";
-> +			interrupts-extended = <&pdc 1 IRQ_TYPE_LEVEL_HIGH>;
-> +			qcom,ee = <0>;
-> +			qcom,channel = <0>;
-> +			#address-cells = <2>;
-> +			#size-cells = <0>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <4>;
-> +			cell-index = <0>;
-> +		};
-> +
-> +		apps_rsc: rsc@18200000 {
-> +			label = "apps_rsc";
-> +			compatible = "qcom,rpmh-rsc";
-> +			reg = <0x0 0x18200000 0x0 0x10000>,
-> +				<0x0 0x18210000 0x0 0x10000>,
-> +				<0x0 0x18220000 0x0 0x10000>;
-> +			reg-names = "drv-0", "drv-1", "drv-2";
-> +			interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>,
-> +					<GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>,
-> +					<GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
-> +			qcom,tcs-offset = <0xd00>;
-> +			qcom,drv-id = <2>;
-> +			qcom,tcs-config = <ACTIVE_TCS  2>,
-> +						<SLEEP_TCS   3>,
-> +						<WAKE_TCS    3>,
-> +						<CONTROL_TCS 1>;
-> +
-> +			rpmhcc: clock-controller {
-> +				compatible = "qcom,sm8250-rpmh-clk";
-> +				#clock-cells = <1>;
-> +				clock-names = "xo";
-> +				clocks = <&xo_board>;
-> +			};
-> +		};
-> +
-> +		tcsr_mutex_regs: syscon@1f40000 {
-> +			compatible = "syscon";
-> +			reg = <0x0 0x01f40000 0x0 0x40000>;
-> +		};
-> +
-> +		timer@17c20000 {
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +			compatible = "arm,armv7-timer-mem";
-> +			reg = <0x0 0x17c20000 0x0 0x1000>;
-> +			clock-frequency = <19200000>;
-> +
-> +			frame@17c21000 {
-> +				frame-number = <0>;
-> +				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
-> +					     <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
-> +				reg = <0x0 0x17c21000 0x0 0x1000>,
-> +				      <0x0 0x17c22000 0x0 0x1000>;
-> +			};
-> +
-> +			frame@17c23000 {
-> +				frame-number = <1>;
-> +				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
-> +				reg = <0x0 0x17c23000 0x0 0x1000>;
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@17c25000 {
-> +				frame-number = <2>;
-> +				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
-> +				reg = <0x0 0x17c25000 0x0 0x1000>;
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@17c27000 {
-> +				frame-number = <3>;
-> +				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
-> +				reg = <0x0 0x17c27000 0x0 0x1000>;
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@17c29000 {
-> +				frame-number = <4>;
-> +				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
-> +				reg = <0x0 0x17c29000 0x0 0x1000>;
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@17c2b000 {
-> +				frame-number = <5>;
-> +				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
-> +				reg = <0x0 0x17c2b000 0x0 0x1000>;
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@17c2d000 {
-> +				frame-number = <6>;
-> +				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
-> +				reg = <0x0 0x17c2d000 0x0 0x1000>;
-> +				status = "disabled";
-> +			};
-> +		};
-> +
-> +	};
-> +
-> +	timer {
-> +		compatible = "arm,armv8-timer";
-> +		interrupts = <GIC_PPI 13
-> +				(GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 14
-> +				(GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 11
-> +				(GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 12
-> +				(GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
-> +	};
+> +struct mhi_tre {
+> +	u64 ptr;
+> +	u32 dword[2];
 > +};
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> +
+> +struct bhi_vec_entry {
+> +	u64 dma_addr;
+> +	u64 size;
+> +};
+> +
+> +enum mhi_cmd_type {
+> +	MHI_CMD_NOP = 1,
+> +	MHI_CMD_RESET_CHAN = 16,
+> +	MHI_CMD_STOP_CHAN = 17,
+> +	MHI_CMD_START_CHAN = 18,
+> +};
+> +
+>   /* MHI transfer completion events */
+>   enum mhi_ev_ccs {
+>   	MHI_EV_CC_INVALID = 0x0,
+> @@ -37,6 +286,7 @@ enum mhi_ch_state {
+>   #define NR_OF_CMD_RINGS			1
+>   #define CMD_EL_PER_RING			128
+>   #define PRIMARY_CMD_RING		0
+> +#define MHI_DEV_WAKE_DB			127
+>   #define MHI_MAX_MTU			0xffff
+>   
+>   enum mhi_er_type {
+> @@ -167,4 +417,29 @@ static inline void mhi_dealloc_device(struct mhi_controller *mhi_cntrl,
+>   int mhi_destroy_device(struct device *dev, void *data);
+>   void mhi_create_devices(struct mhi_controller *mhi_cntrl);
+>   
+> +/* Register access methods */
+> +void mhi_db_brstmode(struct mhi_controller *mhi_cntrl, struct db_cfg *db_cfg,
+> +		     void __iomem *db_addr, dma_addr_t db_val);
+> +void mhi_db_brstmode_disable(struct mhi_controller *mhi_cntrl,
+> +			     struct db_cfg *db_mode, void __iomem *db_addr,
+> +			     dma_addr_t db_val);
+> +int __must_check mhi_read_reg(struct mhi_controller *mhi_cntrl,
+> +			      void __iomem *base, u32 offset, u32 *out);
+> +int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
+> +				    void __iomem *base, u32 offset, u32 mask,
+> +				    u32 shift, u32 *out);
+> +void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem *base,
+> +		   u32 offset, u32 val);
+> +void mhi_write_reg_field(struct mhi_controller *mhi_cntrl, void __iomem *base,
+> +			 u32 offset, u32 mask, u32 shift, u32 val);
+> +void mhi_ring_er_db(struct mhi_event *mhi_event);
+> +void mhi_write_db(struct mhi_controller *mhi_cntrl, void __iomem *db_addr,
+> +		  dma_addr_t db_val);
+> +void mhi_ring_cmd_db(struct mhi_controller *mhi_cntrl, struct mhi_cmd *mhi_cmd);
+> +void mhi_ring_chan_db(struct mhi_controller *mhi_cntrl,
+> +		      struct mhi_chan *mhi_chan);
+> +
+> +/* Initialization methods */
+> +int mhi_init_mmio(struct mhi_controller *mhi_cntrl);
+> +
+>   #endif /* _MHI_INT_H */
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index 216fd8691140..134ef9b2cc78 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -17,6 +17,124 @@
+>   #include <linux/slab.h>
+>   #include "internal.h"
+>   
+> +int __must_check mhi_read_reg(struct mhi_controller *mhi_cntrl,
+> +			      void __iomem *base, u32 offset, u32 *out)
+> +{
+> +	u32 tmp = readl_relaxed(base + offset);
+> +
+> +	/* If there is any unexpected value, query the link status */
+> +	if (PCI_INVALID_READ(tmp) &&
+> +	    mhi_cntrl->link_status(mhi_cntrl, mhi_cntrl->priv_data))
+> +		return -EIO;
+> +
+> +	*out = tmp;
+> +
+> +	return 0;
+> +}
+> +
+> +int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
+> +				    void __iomem *base, u32 offset,
+> +				    u32 mask, u32 shift, u32 *out)
+> +{
+> +	u32 tmp;
+> +	int ret;
+> +
+> +	ret = mhi_read_reg(mhi_cntrl, base, offset, &tmp);
+> +	if (ret)
+> +		return ret;
+> +
+> +	*out = (tmp & mask) >> shift;
+> +
+> +	return 0;
+> +}
+> +
+> +void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem *base,
+> +		   u32 offset, u32 val)
+> +{
+> +	writel_relaxed(val, base + offset);
+> +}
+> +
+> +void mhi_write_reg_field(struct mhi_controller *mhi_cntrl, void __iomem *base,
+> +			 u32 offset, u32 mask, u32 shift, u32 val)
+> +{
+> +	int ret;
+> +	u32 tmp;
+> +
+> +	ret = mhi_read_reg(mhi_cntrl, base, offset, &tmp);
+> +	if (ret)
+> +		return;
+> +
+> +	tmp &= ~mask;
+> +	tmp |= (val << shift);
+> +	mhi_write_reg(mhi_cntrl, base, offset, tmp);
+> +}
+> +
+> +void mhi_write_db(struct mhi_controller *mhi_cntrl, void __iomem *db_addr,
+> +		  dma_addr_t db_val)
+> +{
+> +	mhi_write_reg(mhi_cntrl, db_addr, 4, upper_32_bits(db_val));
+> +	mhi_write_reg(mhi_cntrl, db_addr, 0, lower_32_bits(db_val));
+> +}
+> +
+> +void mhi_db_brstmode(struct mhi_controller *mhi_cntrl,
+> +		     struct db_cfg *db_cfg,
+> +		     void __iomem *db_addr,
+> +		     dma_addr_t db_val)
+> +{
+> +	if (db_cfg->db_mode) {
+> +		db_cfg->db_val = db_val;
+> +		mhi_write_db(mhi_cntrl, db_addr, db_val);
+> +		db_cfg->db_mode = 0;
+> +	}
+> +}
+> +
+> +void mhi_db_brstmode_disable(struct mhi_controller *mhi_cntrl,
+> +			     struct db_cfg *db_cfg,
+> +			     void __iomem *db_addr,
+> +			     dma_addr_t db_val)
+> +{
+> +	db_cfg->db_val = db_val;
+> +	mhi_write_db(mhi_cntrl, db_addr, db_val);
+> +}
+> +
+> +void mhi_ring_er_db(struct mhi_event *mhi_event)
+> +{
+> +	struct mhi_ring *ring = &mhi_event->ring;
+> +
+> +	mhi_event->db_cfg.process_db(mhi_event->mhi_cntrl, &mhi_event->db_cfg,
+> +				     ring->db_addr, *ring->ctxt_wp);
+> +}
+> +
+> +void mhi_ring_cmd_db(struct mhi_controller *mhi_cntrl, struct mhi_cmd *mhi_cmd)
+> +{
+> +	dma_addr_t db;
+> +	struct mhi_ring *ring = &mhi_cmd->ring;
+> +
+> +	db = ring->iommu_base + (ring->wp - ring->base);
+> +	*ring->ctxt_wp = db;
+> +	mhi_write_db(mhi_cntrl, ring->db_addr, db);
+> +}
+> +
+> +void mhi_ring_chan_db(struct mhi_controller *mhi_cntrl,
+> +		      struct mhi_chan *mhi_chan)
+> +{
+> +	struct mhi_ring *ring = &mhi_chan->tre_ring;
+> +	dma_addr_t db;
+> +
+> +	db = ring->iommu_base + (ring->wp - ring->base);
+> +	*ring->ctxt_wp = db;
+> +	mhi_chan->db_cfg.process_db(mhi_cntrl, &mhi_chan->db_cfg,
+> +				    ring->db_addr, db);
+> +}
+> +
+> +enum mhi_ee_type mhi_get_exec_env(struct mhi_controller *mhi_cntrl)
+> +{
+> +	u32 exec;
+> +	int ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_EXECENV, &exec);
+> +
+> +	return (ret) ? MHI_EE_MAX : exec;
+> +}
+> +
+>   int mhi_destroy_device(struct device *dev, void *data)
+>   {
+>   	struct mhi_device *mhi_dev;
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index cb6ddd23463c..d08f212cdfd0 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -246,6 +246,8 @@ struct mhi_controller_config {
+>    * @dev_id: Device ID of the controller
+>    * @bus_id: Physical bus instance used by the controller
+>    * @regs: Base address of MHI MMIO register space
+> + * @bhi: Points to base of MHI BHI register space
+> + * @wake_db: MHI WAKE doorbell register address
+>    * @iova_start: IOMMU starting address for data
+>    * @iova_stop: IOMMU stop address for data
+>    * @fw_image: Firmware image name for normal booting
+> @@ -306,6 +308,9 @@ struct mhi_controller {
+>   	u32 dev_id;
+>   	u32 bus_id;
+>   	void __iomem *regs;
+> +	void __iomem *bhi;
+> +	void __iomem *wake_db;
+> +
+>   	dma_addr_t iova_start;
+>   	dma_addr_t iova_stop;
+>   	const char *fw_image;
+> 
+
+
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
