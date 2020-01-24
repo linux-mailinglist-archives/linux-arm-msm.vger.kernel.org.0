@@ -2,106 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 66FC0148B70
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 16:46:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 95FC8148CC2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 18:10:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389240AbgAXPqX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jan 2020 10:46:23 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:41015 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389064AbgAXPqX (ORCPT
+        id S1730546AbgAXRKV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jan 2020 12:10:21 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:35054 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726454AbgAXRKV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jan 2020 10:46:23 -0500
-Received: by mail-ed1-f67.google.com with SMTP id c26so2746842eds.8;
-        Fri, 24 Jan 2020 07:46:21 -0800 (PST)
+        Fri, 24 Jan 2020 12:10:21 -0500
+Received: by mail-pl1-f196.google.com with SMTP id g6so1057303plt.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2020 09:10:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NE3aiQszngEl/i5B8XOMfRsuYNGxae+vatiEahI26NA=;
-        b=lIrmGPVnZYQWikeBK2Um2t6CV95XnstHmc5/hdWTSBbcqQ5CgqFjEZepUwga1V8uRE
-         /yIPlBlghAA0djsFM9c/79B9/OelTnjo4mPQFTiPVic680JSOYl0MfWimcYzxZb+fvSS
-         pWMl3Vpoz9TJubn9J3NhtNc1Dap4gYAHQ6QKkcmaXMadMPdwnzOvZkPr+hx+x+DGsBg/
-         tt7Oosf1IH49+t9BdjO/G7jTkIxdZjHAPoaEEV2TUbni/W9/8YAyaryMhyP90vq9GaJG
-         JydbbXuvS/h++l/QYitW4TBCw2bfKOkgdP4WXwAuEpRXwjZAZ6r0ZjG+xf23U4SGGRM2
-         UqbA==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/UDl2CSs5NDCzyt6gqztK0kBwmmG9JqPSbLXXLuCYQc=;
+        b=OepOlltd59Y9qm/dr5uznRyVYp96+QSX+Ko/beCmCsK4pzEiLys0PO+iX7DII6WrvE
+         u9bfWm3llOdotGn/DEWDYNhyXiV8tedVVaFMMCiUrdkcKEwYqHfNqT43Vd0fxtPeI1lj
+         K34aK6l5Vw/MytdkDVxDFK4QU4pQdLj/WojyVvWNsLeIONOiaZHbiNtXvJBOVnBoAu8k
+         2cZER4I0YvITci2FJ+Nml01O7jv1XreUCh0X7o01Sh+bx1YIGC81MHp5yk2Ro8tL0/Yr
+         qV/ZOg6wR8KIw9qFVhpa+69tz1DbrGDAf7TZoIY6TUfJJpz9Axrxk9Oxb53tAt6xTDeX
+         /rUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NE3aiQszngEl/i5B8XOMfRsuYNGxae+vatiEahI26NA=;
-        b=Zl1dd1aYWr+3271/v4ahjB9S7an+gqFp/BOm7eN1umgasuxgBfKkLnPWDfRL4HUj6E
-         O9CDDZ/la2zC4O8n/t6zVznBIovLXrVRpubnpcYy/mjYc0XrQTqaV3fn0QKeZpLuOl8Z
-         gwNC8uzuHdanE4gVxfp3Tkc6tgWClqxYpSWnWq6O+0qEkrn7vtakRfPahVJr4WSLFsMO
-         Cd3qVQMKQbh0QXaayxQd299ncf9/9PuP85OsS4CTXqvJnTChqM0JdrwiUGbFNLmjbF71
-         J3w7t9WCexCakAjnflWRxRCkOPt934s4dbZ/5vAHkk6lCujYQovtsxjIF59CqEs29R5E
-         e0Dg==
-X-Gm-Message-State: APjAAAURW/VYSZbjaZnj2iRIriXX/38YacbeADJ4wKErVjtABcYIl8Kn
-        0sDaIxYmOfRetneNqDEStF0V1abTPMBZVSfaRVk/Oy9X
-X-Google-Smtp-Source: APXvYqzr/miwHthTdWEaxos07mltjrS+dD/PMEyGO+b11mE7lhcZWdZO16H3hMQzHIhR1oyFyPiQgLEeiW1joLnTaMA=
-X-Received: by 2002:a17:906:a44d:: with SMTP id cb13mr3333605ejb.258.1579880780744;
- Fri, 24 Jan 2020 07:46:20 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/UDl2CSs5NDCzyt6gqztK0kBwmmG9JqPSbLXXLuCYQc=;
+        b=ejl4rJAMU8Ee86O3rm9AUAkhXvh53hU3DIsm2740mYCKCMcaOVoRraInodPQRTe11b
+         V9uMiw1lNsewkvktn+9mwVrNGjx/P1XvGB86JmDdYrgT7MSmMqqh2T59LXcevMko3FPo
+         lJAALbEKiEKIIXeicXGnRc5DWYZ1txNN8kqbMgwKduq47NSGIVQDBQwnaZFVQSoGEzaU
+         t2NgqoNA8C7Q6RPluBdcdrOfFWkPjF3WisyffGbt2Cg5PYwYArnKub5SAH20WFkASUF6
+         GGj5AITDfvjiJS/C5FC6lzcaGgz3DJoJX7m02OPzarOOWQm9vtJ5EtI4bo7MZNXBd5F5
+         zb7A==
+X-Gm-Message-State: APjAAAVEkZms+Eq/f6Oxn+dpSz9V1JU98wB1ytznGw4UYQwwXDbCeYxD
+        zEhzukjMETaRmXYmOKrmnrjUlg==
+X-Google-Smtp-Source: APXvYqzTd8zB8kpOgWNAOAiG+sv7OMOPcpm851dd0SMNeuw7808uPdsRExDiKP+nAwXwjVbeL/zTRw==
+X-Received: by 2002:a17:902:bb93:: with SMTP id m19mr4660798pls.310.1579885820596;
+        Fri, 24 Jan 2020 09:10:20 -0800 (PST)
+Received: from yoga (pat_11.qualcomm.com. [192.35.156.11])
+        by smtp.gmail.com with ESMTPSA id b19sm6995961pfo.56.2020.01.24.09.10.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jan 2020 09:10:19 -0800 (PST)
+Date:   Fri, 24 Jan 2020 09:10:17 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Niklas Cassel <nks@flawful.org>
+Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] power: avs: qcom-cpr: add a printout after the driver
+ has been initialized
+Message-ID: <20200124171017.GY1511@yoga>
+References: <20200113200258.18031-1-nks@flawful.org>
 MIME-Version: 1.0
-References: <1579868411-20837-1-git-send-email-akhilpo@codeaurora.org>
-In-Reply-To: <1579868411-20837-1-git-send-email-akhilpo@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 24 Jan 2020 07:46:09 -0800
-Message-ID: <CAF6AEGtgbNSMnX3Bd6HKoEhViwKj64YkDPkATiqHAY87_gpT2w@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH] drm/msm/a6xx: Correct the highestbank configuration
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        dri-devel@freedesktop.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200113200258.18031-1-nks@flawful.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 24, 2020 at 5:50 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
->
-> Highest bank bit configuration is different for a618 gpu. Update
-> it with the correct configuration which is the reset value incidentally.
->
-> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+On Mon 13 Jan 12:02 PST 2020, Niklas Cassel wrote:
 
-Thanks, this fixes the UBWC issues on a618
+> In order to easier inform the user that the driver has been initialized
+> successfully, add a printout after the driver has been initialized.
+> 
+> At the same time, remove a dev_dbg() that is now redundant.
+> 
 
-Fixes: e812744c5f95 ("drm: msm: a6xx: Add support for A618")
-Reviewed-by: Rob Clark <robdclark@gmail.com>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+> Signed-off-by: Niklas Cassel <nks@flawful.org>
 > ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index daf0780..536d196 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -470,10 +470,12 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
->         /* Select CP0 to always count cycles */
->         gpu_write(gpu, REG_A6XX_CP_PERFCTR_CP_SEL_0, PERF_CP_ALWAYS_COUNT);
->
-> -       gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL, 2 << 1);
-> -       gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, 2 << 1);
-> -       gpu_write(gpu, REG_A6XX_SP_NC_MODE_CNTL, 2 << 1);
-> -       gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL, 2 << 21);
-> +       if (adreno_is_a630(adreno_gpu)) {
-> +               gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL, 2 << 1);
-> +               gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, 2 << 1);
-> +               gpu_write(gpu, REG_A6XX_SP_NC_MODE_CNTL, 2 << 1);
-> +               gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL, 2 << 21);
-> +       }
->
->         /* Enable fault detection */
->         gpu_write(gpu, REG_A6XX_RBBM_INTERFACE_HANG_INT_CNTL,
-> --
-> 2.7.4
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+>  drivers/power/avs/qcom-cpr.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/power/avs/qcom-cpr.c b/drivers/power/avs/qcom-cpr.c
+> index 9192fb747653..b158a684d05c 100644
+> --- a/drivers/power/avs/qcom-cpr.c
+> +++ b/drivers/power/avs/qcom-cpr.c
+> @@ -1547,8 +1547,6 @@ static int cpr_pd_attach_dev(struct generic_pm_domain *domain,
+>  		goto unlock;
+>  	}
+>  
+> -	dev_dbg(drv->dev, "number of OPPs: %d\n", drv->num_corners);
+> -
+>  	drv->corners = devm_kcalloc(drv->dev, drv->num_corners,
+>  				    sizeof(*drv->corners),
+>  				    GFP_KERNEL);
+> @@ -1586,6 +1584,9 @@ static int cpr_pd_attach_dev(struct generic_pm_domain *domain,
+>  				   acc_desc->enable_mask,
+>  				   acc_desc->enable_mask);
+>  
+> +	dev_info(drv->dev, "driver initialized with %u OPPs\n",
+> +		 drv->num_corners);
+> +
+>  unlock:
+>  	mutex_unlock(&drv->lock);
+>  
+> -- 
+> 2.24.1
+> 
