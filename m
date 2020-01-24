@@ -2,73 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D6158148D43
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 18:51:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A156E148D54
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 19:00:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390811AbgAXRvN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jan 2020 12:51:13 -0500
-Received: from mail.kernel.org ([198.145.29.99]:37690 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2390609AbgAXRvM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jan 2020 12:51:12 -0500
-Received: from localhost (unknown [84.241.198.31])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 99C9F2071A;
-        Fri, 24 Jan 2020 17:51:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1579888272;
-        bh=9hbmPEgHXRr8v1nxwUdlwfTPAg3pc8TX2Au28qS0i4g=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=FH87yV97mOBhgZ9nhlA0nI77nM+HmKCJm2gdezoEjwtiTfgad6yje5Dm+Y8ZfS0Yh
-         uiAdMxo9t220kz/g7dT/vZWIUqdwT4tBqoy7e3o2zocmzigWn1lhe3d9NoioWnG2x+
-         ZR+KaaZ+Y4gAg9mX/WOsFMXYmAsiuT30T/8UpJF4=
-Date:   Fri, 24 Jan 2020 18:47:07 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        arnd@arndb.de, smohanad@codeaurora.org, kvalo@codeaurora.org,
-        bjorn.andersson@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 02/16] bus: mhi: core: Add support for registering MHI
- controllers
-Message-ID: <20200124174707.GB3417153@kroah.com>
-References: <20200123111836.7414-1-manivannan.sadhasivam@linaro.org>
- <20200123111836.7414-3-manivannan.sadhasivam@linaro.org>
- <20200124082939.GA2921617@kroah.com>
- <42c79181-9d97-3542-c6b0-1e37f9b2ff39@codeaurora.org>
+        id S2391080AbgAXSAb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jan 2020 13:00:31 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:34305 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391076AbgAXSAa (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 24 Jan 2020 13:00:30 -0500
+Received: by mail-pl1-f196.google.com with SMTP id q13so1109363pls.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2020 10:00:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=V3/kmAeSuC3sr4iKKxqSQnU5UfmqOHV5XbVRzlbVZFI=;
+        b=iGSYliDary7R2pl7OCfhsXq+Em5luh+C+cI5B+8AJAZeQ7+C9ga4wkRG/0fT7h4e/T
+         vggRat7t16Pbg5udZSI5WYWVWv1vl+X+VohIXGCp4lV279h7Z8yjUPybmxl3ZN3mUkym
+         Wp8WcvdeuVroMK3DHipmcIaXQEbymI4WR8SM69W3dHOMlzlVOi2LThZPEOUvNO2/bJBn
+         aYQI8lic7G7yttjhPQoLUIHX1szhtyrOz1OjAfvug4bK9DATLG9k662ebLD+xsEAcCp0
+         34IqjhHCqgWbkanVMWpPp0rjzwPQxLSYt5NCKijxkZ4R0zrtgTSLe1uOsQTcxEVR0RcW
+         yUvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=V3/kmAeSuC3sr4iKKxqSQnU5UfmqOHV5XbVRzlbVZFI=;
+        b=EB0JcFTTbdkUklLmA0zi0J/X1Phaz/RG8qToMAOCgFM4m8KOryg6HYCdskmmqsVKBy
+         9FfJO2ehwRPYXplrpfQwVmvidLoc0NAdfN8UhX2YYni9C5Y1l4mMtftbItGmCCZwGiBy
+         4TpX+I4TcdLCw6y6Mt1lZaAfOqPDHv9Aaz4KJ1tKCzjOZNB3sBy1v7I4NDyXC1tvdBwB
+         H9gHdzBSIjTl/BQz/9Vuk5zIvFbQfiJcCKDgxSfRgfnou6AEKtPVVJN2leejMY3hG1JC
+         vZnJOP7gaADUAYfTPFWrRXs9CXd2wMIQWhOpykKzAEi6GAHG6IJbko+UpAWQwB8FMoSy
+         GN4A==
+X-Gm-Message-State: APjAAAXe77Y96CDeohEkGO896HIM56yA9M6sMajU5mnR8/8obje1tKRj
+        J4P3Nlbl9igUfdMdPaNJ6am79w==
+X-Google-Smtp-Source: APXvYqze6jA2/EZ5hFHAvx6eSRiUEQ9hQhLVH+5Tih9/Dt6jQ0LxF9rMGHt4XeLB/5F4K+0Syrl9Ow==
+X-Received: by 2002:a17:902:264:: with SMTP id 91mr4608821plc.271.1579888830159;
+        Fri, 24 Jan 2020 10:00:30 -0800 (PST)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id 2sm7216682pgo.79.2020.01.24.10.00.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jan 2020 10:00:29 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     Taniya Das <tdas@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] clk: qcom: rpmh: Sort OF match table
+Date:   Fri, 24 Jan 2020 09:59:34 -0800
+Message-Id: <20200124175934.3937473-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <42c79181-9d97-3542-c6b0-1e37f9b2ff39@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 24, 2020 at 07:24:43AM -0700, Jeffrey Hugo wrote:
-> > > +/**
-> > > + * struct mhi_result - Completed buffer information
-> > > + * @buf_addr: Address of data buffer
-> > > + * @dir: Channel direction
-> > > + * @bytes_xfer: # of bytes transferred
-> > > + * @transaction_status: Status of last transaction
-> > > + */
-> > > +struct mhi_result {
-> > > +	void *buf_addr;
-> > 
-> > Why void *?
-> 
-> Because its not possible to resolve this more clearly.  The client provides
-> the buffer and knows what the structure is.  The bus does not. Its just an
-> opaque pointer (hence void *) to the bus, and the client needs to decode it.
-> This is the struct that is handed to the client to allow them to decode the
-> activity (either a received buf, or a confirmation that a transmitted buf
-> has been consumed).
+sc7180 was added to the end of the match table, sort the table.
 
-Then shouldn't this be a "u8 *" instead as you are saying how many bytes
-are here?
+Fixes: eee28109f871 ("clk: qcom: clk-rpmh: Add support for RPMHCC for SC7180")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/clk/qcom/clk-rpmh.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-thanks,
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index 593bfa455768..98a118c1e244 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -487,9 +487,9 @@ static int clk_rpmh_probe(struct platform_device *pdev)
+ }
+ 
+ static const struct of_device_id clk_rpmh_match_table[] = {
++	{ .compatible = "qcom,sc7180-rpmh-clk", .data = &clk_rpmh_sc7180},
+ 	{ .compatible = "qcom,sdm845-rpmh-clk", .data = &clk_rpmh_sdm845},
+ 	{ .compatible = "qcom,sm8150-rpmh-clk", .data = &clk_rpmh_sm8150},
+-	{ .compatible = "qcom,sc7180-rpmh-clk", .data = &clk_rpmh_sc7180},
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, clk_rpmh_match_table);
+-- 
+2.24.0
 
-greg k-h
