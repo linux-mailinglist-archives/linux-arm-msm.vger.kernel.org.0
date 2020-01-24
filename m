@@ -2,134 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A733D147EED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 11:43:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D92B148231
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 12:26:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729575AbgAXKnh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jan 2020 05:43:37 -0500
-Received: from mx08-00178001.pphosted.com ([91.207.212.93]:10374 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725843AbgAXKnh (ORCPT
+        id S2403909AbgAXL0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jan 2020 06:26:08 -0500
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:37074 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403903AbgAXL0H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jan 2020 05:43:37 -0500
-Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 00OAgYob031905;
-        Fri, 24 Jan 2020 11:43:11 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : content-transfer-encoding : mime-version; s=STMicroelectronics;
- bh=s3pHyhv0PCh8sGshQz4ekk+q5dFM8CCywPBYtm+/lFk=;
- b=Q895OI1PxaXKzyB4WQkmpaCqTe5YYRiCFMNVMh01mF9MgV34HkyeopJI/vg0wKczHnww
- KodFj26mp+PN+dfkv82AQFe1tX12CYnVNthQyTGovap02fSzk+hrNuCMwb1DEKBIRXyH
- hNJsT0q4g1PHNBJDHvW45jEF4WTDGeMETyaBqWb7gUmjTJCbvlm+rlxnnnCamVFMHJ/q
- TkvkZBE0ZGPd6y2IIrlKU0J9N5DscQGOcHaTw4v7XXmn2xD047fUap8zIGJP96isgVXH
- GBSi0bIl1dWfNqE28Z2utR0kFohbQOlAw8iu26/RLQWO5LkOEJXdtd9JjHTQUIVyLDVD gg== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 2xkr1efg3g-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 24 Jan 2020 11:43:10 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 3943910002A;
-        Fri, 24 Jan 2020 11:43:05 +0100 (CET)
-Received: from Webmail-eu.st.com (sfhdag3node2.st.com [10.75.127.8])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 1E97F220316;
-        Fri, 24 Jan 2020 11:43:05 +0100 (CET)
-Received: from SFHDAG6NODE3.st.com (10.75.127.18) by SFHDAG3NODE2.st.com
- (10.75.127.8) with Microsoft SMTP Server (TLS) id 15.0.1347.2; Fri, 24 Jan
- 2020 11:43:04 +0100
-Received: from SFHDAG6NODE3.st.com ([fe80::d04:5337:ab17:b6f6]) by
- SFHDAG6NODE3.st.com ([fe80::d04:5337:ab17:b6f6%20]) with mapi id
- 15.00.1473.003; Fri, 24 Jan 2020 11:43:04 +0100
-From:   Philippe CORNU <philippe.cornu@st.com>
-To:     Thomas Zimmermann <tzimmermann@suse.de>,
-        "airlied@linux.ie" <airlied@linux.ie>,
-        "daniel@ffwll.ch" <daniel@ffwll.ch>,
-        "alexander.deucher@amd.com" <alexander.deucher@amd.com>,
-        "christian.koenig@amd.com" <christian.koenig@amd.com>,
-        "David1.Zhou@amd.com" <David1.Zhou@amd.com>,
-        "maarten.lankhorst@linux.intel.com" 
-        <maarten.lankhorst@linux.intel.com>,
-        "patrik.r.jakobsson@gmail.com" <patrik.r.jakobsson@gmail.com>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "sean@poorly.run" <sean@poorly.run>,
-        "benjamin.gaignard@linaro.org" <benjamin.gaignard@linaro.org>,
-        Vincent ABRIOU <vincent.abriou@st.com>,
-        Yannick FERTRE <yannick.fertre@st.com>,
-        "mcoquelin.stm32@gmail.com" <mcoquelin.stm32@gmail.com>,
-        Alexandre TORGUE <alexandre.torgue@st.com>,
-        "eric@anholt.net" <eric@anholt.net>,
-        "rodrigosiqueiramelo@gmail.com" <rodrigosiqueiramelo@gmail.com>,
-        "hamohammed.sa@gmail.com" <hamohammed.sa@gmail.com>,
-        "linux-graphics-maintainer@vmware.com" 
-        <linux-graphics-maintainer@vmware.com>,
-        "thellstrom@vmware.com" <thellstrom@vmware.com>,
-        "bskeggs@redhat.com" <bskeggs@redhat.com>,
-        "harry.wentland@amd.com" <harry.wentland@amd.com>,
-        "sunpeng.li@amd.com" <sunpeng.li@amd.com>,
-        "jani.nikula@linux.intel.com" <jani.nikula@linux.intel.com>,
-        "joonas.lahtinen@linux.intel.com" <joonas.lahtinen@linux.intel.com>,
-        "rodrigo.vivi@intel.com" <rodrigo.vivi@intel.com>
-CC:     "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
-        "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "nouveau@lists.freedesktop.org" <nouveau@lists.freedesktop.org>
-Subject: Re: [PATCH v4 15/22] drm/stm: Convert to CRTC VBLANK callbacks
-Thread-Topic: [PATCH v4 15/22] drm/stm: Convert to CRTC VBLANK callbacks
-Thread-Index: AQHV0fVoJhPO6GURiEmbInh/nWrCgaf5kW4A
-Date:   Fri, 24 Jan 2020 10:43:04 +0000
-Message-ID: <40c4b198-0796-631e-b533-494822af9c47@st.com>
-References: <20200123135943.24140-1-tzimmermann@suse.de>
- <20200123135943.24140-16-tzimmermann@suse.de>
-In-Reply-To: <20200123135943.24140-16-tzimmermann@suse.de>
-Accept-Language: fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.75.127.49]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <DB2A5D2782CBB040AC5BB0FB174AA7FD@st.com>
-Content-Transfer-Encoding: base64
+        Fri, 24 Jan 2020 06:26:07 -0500
+Received: by mail-vs1-f66.google.com with SMTP id x18so991292vsq.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2020 03:26:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qOVhDHhFnWlF9FUDYt4fHzJxv54r3t+l/PCp99DTE8g=;
+        b=NYKCSRmcwL0rUYuSrq1VwqQIZNkH8SN4ZZ5A3TVgdm0R/hzjxs4JbX4+0Xo1fPtoEK
+         Boro/o30ULd+1byBxjrU4znPuo8TBltkqrjDBAyQPY5P64Cm6yEqQsW9rdt/FiIivoge
+         xNiLEFsa+a+xuUZKanzlEL9L4mq7FBszDsnVxA0NHy/bbQ1ledvMcfTbS7Cx1Ie8xYhd
+         xywqDQPVluykgE5NIUtBJ4PZuMAVVt8C3VEt1J/fpG3rHwplTsZigeaYJAjhnnJWXv/w
+         o5chQJC0l067hVa3y5r6STGGstb17hwZbqJqG4+NMJjxHrMzOWP03vf6irmD5Wh9H6PO
+         u5lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qOVhDHhFnWlF9FUDYt4fHzJxv54r3t+l/PCp99DTE8g=;
+        b=dXQLwy7Sa6ArFyNPVBdCORxZNtir2LH0z1X4JSGZd1EbUFM+4vWXhy/oA+MIey+FZl
+         AaPnWOQBqIEK8IYzeezLDPJWXSCOgmICSg5Wzp9fNDvZZ88UgakbXwz3WzaEf8xb+zuh
+         5srFZf7iT+TmXhf+h0HkIgs1qZmh35h4HEE+5IxYOnMrf1XZRB7ej3nraTfZeFaW+Q2I
+         9dUz6Ki7efWPROgzUHHQtrga/4Wcf8+DdCU9SepLPfAvg3gF8/pKcrBQ/XTTAIhlSmM3
+         7PLXYeyYs/Mc97PJedhacEa5+hMIzSeXUpUdiWqvrkpWsC+LPjaXJI+crMYTIdQWBH9O
+         eD6A==
+X-Gm-Message-State: APjAAAUb+y4nhWgJ2h5SNb1fKduY2nQxS/MuR7XA1kkXqZ8vEf5vfG50
+        MNOb18aMXEaLm9/fBhoqTPaiKziRs9QJnbS8lYPEhw==
+X-Google-Smtp-Source: APXvYqy+M1uWEEV6pkXqgm2LjH+aSiRVIOkGsD38hn1CYw56gxSpzMyk8WBJG4wPxzVUnYw/JZBSj3WLKNpHRR+pQOk=
+X-Received: by 2002:a67:79cd:: with SMTP id u196mr1862322vsc.191.1579865166014;
+ Fri, 24 Jan 2020 03:26:06 -0800 (PST)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.572
- definitions=2020-01-24_02:2020-01-24,2020-01-24 signatures=0
+References: <1579519045-26467-1-git-send-email-vbadigan@codeaurora.org> <1579531122-28341-1-git-send-email-vbadigan@codeaurora.org>
+In-Reply-To: <1579531122-28341-1-git-send-email-vbadigan@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 24 Jan 2020 12:25:30 +0100
+Message-ID: <CAPDyKFpiMU5PdUOP-VZEXT_Rsot9LfHmWp4ZTBC5oboWXiWsDA@mail.gmail.com>
+Subject: Re: [PATCH V3] mmc: sdhci: Let a vendor driver supply and update ADMA
+ descriptor size
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Sahitya Tummala <stummala@codeaurora.org>,
+        Sayali Lokhande <sayalil@codeaurora.org>, cang@codeaurora.org,
+        Ram Prakash Gupta <rampraka@codeaurora.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-RGVhciBUaG9tYXMsDQpUaGFuayB5b3UgZm9yIHlvdXIgcGF0Y2gsDQpGb3IgdGhpcyBzdG0gcGFy
-dCwNCkFja2VkLWJ5OiBQaGlsaXBwZSBDb3JudSA8cGhpbGlwcGUuY29ybnVAc3QuY29tPg0KDQpQ
-aGlsaXBwZSA6LSkNCg0KT24gMS8yMy8yMCAyOjU5IFBNLCBUaG9tYXMgWmltbWVybWFubiB3cm90
-ZToNCj4gVkJMQU5LIGNhbGxiYWNrcyBpbiBzdHJ1Y3QgZHJtX2RyaXZlciBhcmUgZGVwcmVjYXRl
-ZCBpbiBmYXZvciBvZg0KPiB0aGVpciBlcXVpdmFsZW50cyBpbiBzdHJ1Y3QgZHJtX2NydGNfZnVu
-Y3MuIENvbnZlcnQgc3RtIG92ZXIuDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBUaG9tYXMgWmltbWVy
-bWFubiA8dHppbW1lcm1hbm5Ac3VzZS5kZT4NCj4gVGVzdGVkLWJ5OiBZYW5uaWNrIEZlcnRyw6kg
-PHlhbm5pY2suZmVydHJlQHN0LmNvbT4NCj4gLS0tDQo+ICAgZHJpdmVycy9ncHUvZHJtL3N0bS9k
-cnYuYyAgfCAxIC0NCj4gICBkcml2ZXJzL2dwdS9kcm0vc3RtL2x0ZGMuYyB8IDEgKw0KPiAgIDIg
-ZmlsZXMgY2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDEgZGVsZXRpb24oLSkNCj4gDQo+IGRpZmYg
-LS1naXQgYS9kcml2ZXJzL2dwdS9kcm0vc3RtL2Rydi5jIGIvZHJpdmVycy9ncHUvZHJtL3N0bS9k
-cnYuYw0KPiBpbmRleCA0ODY5ODU2MDQxMDkuLmVhOWZjYmRjNjhiMyAxMDA2NDQNCj4gLS0tIGEv
-ZHJpdmVycy9ncHUvZHJtL3N0bS9kcnYuYw0KPiArKysgYi9kcml2ZXJzL2dwdS9kcm0vc3RtL2Ry
-di5jDQo+IEBAIC03Miw3ICs3Miw2IEBAIHN0YXRpYyBzdHJ1Y3QgZHJtX2RyaXZlciBkcnZfZHJp
-dmVyID0gew0KPiAgIAkuZ2VtX3ByaW1lX3ZtYXAgPSBkcm1fZ2VtX2NtYV9wcmltZV92bWFwLA0K
-PiAgIAkuZ2VtX3ByaW1lX3Z1bm1hcCA9IGRybV9nZW1fY21hX3ByaW1lX3Z1bm1hcCwNCj4gICAJ
-LmdlbV9wcmltZV9tbWFwID0gZHJtX2dlbV9jbWFfcHJpbWVfbW1hcCwNCj4gLQkuZ2V0X3ZibGFu
-a190aW1lc3RhbXAgPSBkcm1fY2FsY192Ymx0aW1lc3RhbXBfZnJvbV9zY2Fub3V0cG9zLA0KPiAg
-IH07DQo+ICAgDQo+ICAgc3RhdGljIGludCBkcnZfbG9hZChzdHJ1Y3QgZHJtX2RldmljZSAqZGRl
-dikNCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvZ3B1L2RybS9zdG0vbHRkYy5jIGIvZHJpdmVycy9n
-cHUvZHJtL3N0bS9sdGRjLmMNCj4gaW5kZXggOGI2ZDFhMjI1MmUzLi5lZTJhOGNhYzU5Y2IgMTAw
-NjQ0DQo+IC0tLSBhL2RyaXZlcnMvZ3B1L2RybS9zdG0vbHRkYy5jDQo+ICsrKyBiL2RyaXZlcnMv
-Z3B1L2RybS9zdG0vbHRkYy5jDQo+IEBAIC03MjIsNiArNzIyLDcgQEAgc3RhdGljIGNvbnN0IHN0
-cnVjdCBkcm1fY3J0Y19mdW5jcyBsdGRjX2NydGNfZnVuY3MgPSB7DQo+ICAgCS5hdG9taWNfZGVz
-dHJveV9zdGF0ZSA9IGRybV9hdG9taWNfaGVscGVyX2NydGNfZGVzdHJveV9zdGF0ZSwNCj4gICAJ
-LmVuYWJsZV92YmxhbmsgPSBsdGRjX2NydGNfZW5hYmxlX3ZibGFuaywNCj4gICAJLmRpc2FibGVf
-dmJsYW5rID0gbHRkY19jcnRjX2Rpc2FibGVfdmJsYW5rLA0KPiArCS5nZXRfdmJsYW5rX3RpbWVz
-dGFtcCA9IGRybV9jcnRjX3ZibGFua19oZWxwZXJfZ2V0X3ZibGFua190aW1lc3RhbXAsDQo+ICAg
-CS5nYW1tYV9zZXQgPSBkcm1fYXRvbWljX2hlbHBlcl9sZWdhY3lfZ2FtbWFfc2V0LA0KPiAgIH07
-DQo+ICAgDQo+IA==
+On Mon, 20 Jan 2020 at 15:39, Veerabhadrarao Badiganti
+<vbadigan@codeaurora.org> wrote:
+>
+> Let a vendor driver supply the maximum descriptor size that it
+> can operate on. ADMA descriptor table would be allocated using this
+> supplied size.
+> If any SD Host controller is of version prior to v4.10 spec
+> but supports 16byte descriptor, this change allows them to supply
+> correct descriptor size for ADMA table allocation.
+>
+> Also let a vendor driver update the descriptor size by overriding
+> sdhc_host->desc_size if it has to operates on a different descriptor
+> sizes in different conditions.
+>
+> Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
+> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+> Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+> --
+> Thanks Adrian.
+>
+> Hi Ulf,
+> Can you pick this patch instead of earlier one? This is more clean
+> change, sorry for the multiple interations.
+> Otherwise let me know, I will make these changes as seperate patch.
+
+Alright, I have replaced the previous version with this one.
+
+Kind regards
+Uffe
+
+
+> ---
+>  drivers/mmc/host/sdhci.c | 16 +++++++---------
+>  drivers/mmc/host/sdhci.h |  3 ++-
+>  2 files changed, 9 insertions(+), 10 deletions(-)
+>
+> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
+> index 3140fe2..7a7a18e 100644
+> --- a/drivers/mmc/host/sdhci.c
+> +++ b/drivers/mmc/host/sdhci.c
+> @@ -3821,15 +3821,13 @@ int sdhci_setup_host(struct sdhci_host *host)
+>                 dma_addr_t dma;
+>                 void *buf;
+>
+> -               if (host->flags & SDHCI_USE_64_BIT_DMA) {
+> -                       host->adma_table_sz = host->adma_table_cnt *
+> -                                             SDHCI_ADMA2_64_DESC_SZ(host);
+> -                       host->desc_sz = SDHCI_ADMA2_64_DESC_SZ(host);
+> -               } else {
+> -                       host->adma_table_sz = host->adma_table_cnt *
+> -                                             SDHCI_ADMA2_32_DESC_SZ;
+> -                       host->desc_sz = SDHCI_ADMA2_32_DESC_SZ;
+> -               }
+> +               if (!(host->flags & SDHCI_USE_64_BIT_DMA))
+> +                       host->alloc_desc_sz = SDHCI_ADMA2_32_DESC_SZ;
+> +               else if (!host->alloc_desc_sz)
+> +                       host->alloc_desc_sz = SDHCI_ADMA2_64_DESC_SZ(host);
+> +
+> +               host->desc_sz = host->alloc_desc_sz;
+> +               host->adma_table_sz = host->adma_table_cnt * host->desc_sz;
+>
+>                 host->align_buffer_sz = SDHCI_MAX_SEGS * SDHCI_ADMA2_ALIGN;
+>                 /*
+> diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
+> index 0ed3e0e..10bda3a 100644
+> --- a/drivers/mmc/host/sdhci.h
+> +++ b/drivers/mmc/host/sdhci.h
+> @@ -554,7 +554,8 @@ struct sdhci_host {
+>         dma_addr_t adma_addr;   /* Mapped ADMA descr. table */
+>         dma_addr_t align_addr;  /* Mapped bounce buffer */
+>
+> -       unsigned int desc_sz;   /* ADMA descriptor size */
+> +       unsigned int desc_sz;   /* ADMA current descriptor size */
+> +       unsigned int alloc_desc_sz;     /* ADMA descr. max size host supports */
+>
+>         struct workqueue_struct *complete_wq;   /* Request completion wq */
+>         struct work_struct      complete_work;  /* Request completion work */
+> --
+> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
