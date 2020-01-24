@@ -2,46 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 17F3A14912A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 23:43:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 23E20149130
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 23:43:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387486AbgAXWn1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jan 2020 17:43:27 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:39383 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387470AbgAXWnZ (ORCPT
+        id S2387488AbgAXWnj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jan 2020 17:43:39 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:44980 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387480AbgAXWn0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jan 2020 17:43:25 -0500
-Received: by mail-pl1-f195.google.com with SMTP id g6so1364323plp.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2020 14:43:25 -0800 (PST)
+        Fri, 24 Jan 2020 17:43:26 -0500
+Received: by mail-pf1-f193.google.com with SMTP id 62so1783067pfu.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2020 14:43:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KgDJnseYnz4OU4RUOTS2EdiEuy4zgbQiW3cvu5KP3Bs=;
-        b=GAuRxrEUmOh1B/lYq8pdQNa2Ca4EhT9saJERWCzXtmnE8VntcFpUki5UHOAstOSmkP
-         i3VSpJxMwUeIIc7K/XYK2OAzVhsmxra6igc8yt7Vhaank8vcIRJ707V1CsdHroQBquV5
-         JeoMA39mKgXUxpl9qyig7L7KuxfJoMVrluNXs=
+        bh=Bui28Vv12xUmXWYpC+BbDFYgTGPFUNN9TS7e8X83ptU=;
+        b=nJUnCZVZFNjMZvgzvmEPCuW8bMgT93sV0s2dZgIYVCytFK0KhhjowkK2AosMIsSyay
+         KmsdEYHy/oKz+S9r2Kkijver4P7gSJN8tLFftGYIKJ/WG2/GJaPtQiiz5n4FA8uhSKE1
+         yjW6QAW2ZhSfO7AVaFhdvXiXxzrTqDyFmvByI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=KgDJnseYnz4OU4RUOTS2EdiEuy4zgbQiW3cvu5KP3Bs=;
-        b=TOo61Qn9KuAHW8dSN8QK+gjoenu2Jg44cl17pvE5HDmlaHRJ/GxTxCnwC5d6aTbAKj
-         FpMMqyjW5gwOtlZ8fbCWqlEGgaiUIY2Vh+MF0VYzyeCuJu4iPoQfUFOnsLh5LUrU62YS
-         fkLyA8TR7P/h4BI/JXV1G3elGhYhzOr2voQc+LBAzN+8uTs36i5P12SVdgLZ+5A9GbVN
-         M6Zk2UmTFwd3ulPnaXm+L7Zd2b22I+4r7TxYAE57eVOQpdpelTGdbB5gc6oJQ7SXxmrZ
-         A53UXeLDp44F3tvLVqMpvDFGEeWlfGzM6ur/E4v7lgZwApJhLFpyHT/7diXvswDktvC7
-         ROXA==
-X-Gm-Message-State: APjAAAWyzsIb0nILxNZmJ9htZ1j3VJSfOqyEt8iqbjS6h3bHKgiKJERn
-        JrKe9x7jA0v24mL3pJp08qyCMw==
-X-Google-Smtp-Source: APXvYqxPaY2TkvBXDFF6hVUkaUSUdjm0Pk7pvufJGy0X/2Yc03N2ElivrqXa01QJ+81P7T4JRLsCFA==
-X-Received: by 2002:a17:902:aa45:: with SMTP id c5mr5882411plr.305.1579905804708;
-        Fri, 24 Jan 2020 14:43:24 -0800 (PST)
+        bh=Bui28Vv12xUmXWYpC+BbDFYgTGPFUNN9TS7e8X83ptU=;
+        b=nnmuYIu81HUIhPAfUfHxklQ+t+YHuiiRKCtYVcyOsismfdGkZdgARmK85MiJvDfELW
+         Kkiu8kiatf4sI4wNjjsUe7izBLkArPQZjBaGzFLO1f58Zt1CyDlxs2BkWS9LZ3dLskAt
+         RVqqyZXmAgsO0IPA7xA4BVptxd+BYp5RnJXUQx2si6WiY3JwXKvDvC0tO4iF8/YA8ZQp
+         CQkjZDQ0XFxa1wcalVjTNyndMMJhKwAyO9lAJXkNfOEaq92c8iha6suXjMwi09q0+6dQ
+         0UhApgzPxK2Xny62+ZlhLuHvQ4Egl0WJVz4sKmiX+xCqria7lCBOgqylCyWRAceNbsdR
+         X04Q==
+X-Gm-Message-State: APjAAAXQiDXBPTFibxb46+zph506J67BpQvVysAvCranLIIpNoeIn3nr
+        uzgYsCDFuHwIWpd/470zn5LC2A==
+X-Google-Smtp-Source: APXvYqzS9tPcZFwCykAq9Smp2Jxt5RR3eG4xljjcnI1eH/vNH2TY407AdxHLUd4cuuKsTLeq6urYLw==
+X-Received: by 2002:a62:ddd0:: with SMTP id w199mr5272391pff.1.1579905805722;
+        Fri, 24 Jan 2020 14:43:25 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id o2sm7690948pjo.26.2020.01.24.14.43.23
+        by smtp.gmail.com with ESMTPSA id o2sm7690948pjo.26.2020.01.24.14.43.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jan 2020 14:43:24 -0800 (PST)
+        Fri, 24 Jan 2020 14:43:25 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -52,12 +52,10 @@ Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
         mka@chromium.org, kalyan_t@codeaurora.org,
         Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org,
         hoegsberg@chromium.org, Douglas Anderson <dianders@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>
-Subject: [PATCH v2 08/10] dt-bindings: clock: Cleanup qcom,videocc bindings for sdm845/sc7180
-Date:   Fri, 24 Jan 2020 14:42:23 -0800
-Message-Id: <20200124144154.v2.8.I27bbd90045f38cd3218c259526409d52a48efb35@changeid>
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
+Subject: [PATCH v2 09/10] arm64: dts: qcom: sdm845: Add the missing clock on the videocc
+Date:   Fri, 24 Jan 2020 14:42:24 -0800
+Message-Id: <20200124144154.v2.9.Id0599319487f075808baba7cba02c4c3c486dc80@changeid>
 X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
 In-Reply-To: <20200124224225.22547-1-dianders@chromium.org>
 References: <20200124224225.22547-1-dianders@chromium.org>
@@ -68,58 +66,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This makes the qcom,videocc bindings match the recent changes to the
-dispcc and gpucc.  Unlike the recent changes to those files, this one
-doesn't really have any functional change.  It:
+We're transitioning over to requiring the Qualcomm Video Clock
+Controller to specify all the input clocks.  Let's add the one input
+clock for the videocc for sdm845.
 
-1. Adds a description for the XO clock.  Not terribly important but
-   nice if it cleanly matches its cousins.
-
-2. Updates the example to use the symbolic name for the RPMH clock and
-   also show that the real devices are currently using 2 address cells
-   / size cells and fixes the spacing on the closing brace.
+NOTE: Until the Linux driver for sdm845's video is updated, this clock
+will not actually be used in Linux.  It will continue to use global
+clock names to match things up.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
 
 Changes in v2:
-- Patch ("dt-bindings: clock: Cleanup qcom,videocc") new for v2.
+- Patch ("arm64: dts: qcom: sdm845: Add...videocc") new for v2.
 
- .../devicetree/bindings/clock/qcom,videocc.yaml        | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
-index 43cfc893a8d1..745928dc0fcb 100644
---- a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
-@@ -20,7 +20,8 @@ properties:
-       - qcom,sdm845-videocc
- 
-   clocks:
--    maxItems: 1
-+    items:
-+      - description: Board XO source
- 
-   clock-names:
-     items:
-@@ -50,13 +51,14 @@ required:
- examples:
-   # Example of VIDEOCC with clock node properties for SDM845:
-   - |
-+    #include <dt-bindings/clock/qcom,rpmh.h>
-     clock-controller@ab00000 {
-       compatible = "qcom,sdm845-videocc";
--      reg = <0xab00000 0x10000>;
--      clocks = <&rpmhcc 0>;
-+      reg = <0 0x0ab00000 0 0x10000>;
-+      clocks = <&rpmhcc RPMH_CXO_CLK>;
-       clock-names = "xo";
-       #clock-cells = <1>;
-       #reset-cells = <1>;
-       #power-domain-cells = <1>;
--     };
-+    };
- ...
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index e624c91dbd6d..8c41e25bd4a8 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -2605,6 +2605,8 @@ video-core1 {
+ 		videocc: clock-controller@ab00000 {
+ 			compatible = "qcom,sdm845-videocc";
+ 			reg = <0 0x0ab00000 0 0x10000>;
++			clocks = <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "xo";
+ 			#clock-cells = <1>;
+ 			#power-domain-cells = <1>;
+ 			#reset-cells = <1>;
 -- 
 2.25.0.341.g760bfbb309-goog
 
