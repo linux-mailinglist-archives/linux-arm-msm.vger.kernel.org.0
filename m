@@ -2,278 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 02EF91484EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 13:07:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F8BE148517
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 13:21:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730056AbgAXMHR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jan 2020 07:07:17 -0500
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:6146 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729396AbgAXMHQ (ORCPT
+        id S1730676AbgAXMVq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jan 2020 07:21:46 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:62171 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729631AbgAXMVq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jan 2020 07:07:16 -0500
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 24 Jan 2020 17:36:37 +0530
-Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 24 Jan 2020 17:36:16 +0530
-Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
-        id 512901E24; Fri, 24 Jan 2020 17:36:15 +0530 (IST)
-From:   Harigovindan P <harigovi@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Harigovindan P <harigovi@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        kalyan_t@codeaurora.org, nganji@codeaurora.org
-Subject: [v3] arm64: dts: sc7180: add display dt nodes
-Date:   Fri, 24 Jan 2020 17:36:12 +0530
-Message-Id: <1579867572-17188-1-git-send-email-harigovi@codeaurora.org>
+        Fri, 24 Jan 2020 07:21:46 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1579868505; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=F1LWU1oX1nibhhy7cGSDGcWE9ft9GXYa7Jl4DQRxQjA=; b=Xp2iQJPwjA+HVrkkRxJSAlWw0fAX7EEDo73h1qXuH/nKtJBu00T8mDCraB/9ZC8iZvcFr/RQ
+ Ia5zuSeXbZopEtS1khJOFO0f5IIN6hk6g0CD22W2vnCqtd2grl2v/sGwNWzsYVpmbM0+Olnl
+ 5Yq8SXjwovQID1TaMYrY7GmAlyM=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e2ae159.7fdff4753df8-smtp-out-n03;
+ Fri, 24 Jan 2020 12:21:45 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 18286C4479F; Fri, 24 Jan 2020 12:21:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from akhilpo-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6DF1CC433CB;
+        Fri, 24 Jan 2020 12:21:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6DF1CC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akhilpo@codeaurora.org
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+To:     freedreno@lists.freedesktop.org
+Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jcrouse@codeaurora.org,
+        smasetty@codeaurora.org
+Subject: [PATCH] drm/msm/a6xx: Correct the highestbank configuration
+Date:   Fri, 24 Jan 2020 17:50:11 +0530
+Message-Id: <1579868411-20837-1-git-send-email-akhilpo@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add display, DSI hardware DT nodes for sc7180.
+Highest bank bit configuration is different for a618 gpu. Update
+it with the correct configuration which is the reset value incidentally.
 
-Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
 ---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-Changes in v1:
-	-Added display DT nodes for sc7180
-Changes in v2:
-	-Renamed node names
-	-Corrected code alignments
-	-Removed extra new line
-	-Added DISP AHB clock for register access
-	under display_subsystem node for global settings
-Changes in v3:
-	-Modified node names
-	-Modified hard coded values
-	-Removed mdss reg entry
-
- arch/arm64/boot/dts/qcom/sc7180-idp.dts |  58 +++++++++++++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi    | 124 ++++++++++++++++++++++++++++++++
- 2 files changed, 182 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 388f50a..c77aab7 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -7,6 +7,7 @@
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index daf0780..536d196 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -470,10 +470,12 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
+ 	/* Select CP0 to always count cycles */
+ 	gpu_write(gpu, REG_A6XX_CP_PERFCTR_CP_SEL_0, PERF_CP_ALWAYS_COUNT);
  
- /dts-v1/;
+-	gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL, 2 << 1);
+-	gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, 2 << 1);
+-	gpu_write(gpu, REG_A6XX_SP_NC_MODE_CNTL, 2 << 1);
+-	gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL, 2 << 21);
++	if (adreno_is_a630(adreno_gpu)) {
++		gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL, 2 << 1);
++		gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, 2 << 1);
++		gpu_write(gpu, REG_A6XX_SP_NC_MODE_CNTL, 2 << 1);
++		gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL, 2 << 21);
++	}
  
-+#include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sc7180.dtsi"
- #include "pm6150.dtsi"
-@@ -232,6 +233,50 @@
- 	};
- };
- 
-+&dsi_controller {
-+	status = "okay";
-+
-+	vdda-supply = <&vreg_l3c_1p2>;
-+
-+	panel@0 {
-+		compatible = "visionox,rm69299-1080p-display";
-+		reg = <0>;
-+
-+		vdda-supply = <&vreg_l8c_1p8>;
-+		vdd3p3-supply = <&vreg_l18a_2p8>;
-+
-+		pinctrl-names = "default", "suspend";
-+		pinctrl-0 = <&disp_pins_default>;
-+		pinctrl-1 = <&disp_pins_default>;
-+
-+		reset-gpios = <&pm6150l_gpio 3 GPIO_ACTIVE_HIGH>;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			port@0 {
-+				reg = <0>;
-+				panel0_in: endpoint {
-+					remote-endpoint = <&dsi0_out>;
-+				};
-+			};
-+		};
-+	};
-+
-+	ports {
-+		port@1 {
-+			endpoint {
-+				remote-endpoint = <&panel0_in>;
-+				data-lanes = <0 1 2 3>;
-+			};
-+		};
-+	};
-+};
-+
-+&dsi_phy {
-+	status = "okay";
-+};
-+
- &qspi {
- 	status = "okay";
- 	pinctrl-names = "default";
-@@ -289,6 +334,19 @@
- 
- /* PINCTRL - additions to nodes defined in sc7180.dtsi */
- 
-+&pm6150l_gpio {
-+	disp_pins {
-+		disp_pins_default: disp_pins_default{
-+			pins = "gpio3";
-+			function = "func1";
-+			qcom,drive-strength = <2>;
-+			power-source = <0>;
-+			bias-disable;
-+			output-low;
-+		};
-+	};
-+};
-+
- &qspi_clk {
- 	pinconf {
- 		pins = "gpio63";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 3bc3f64..3ebc45b 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1184,6 +1184,130 @@
- 			#power-domain-cells = <1>;
- 		};
- 
-+		mdss: display_subsystem@ae00000 {
-+			compatible = "qcom,sc7180-mdss";
-+			reg = <0 0x0ae00000 0 0x1000>;
-+			reg-names = "mdss";
-+
-+			power-domains = <&dispcc MDSS_GDSC>;
-+
-+			clocks = <&gcc GCC_DISP_AHB_CLK>,
-+				 <&gcc GCC_DISP_HF_AXI_CLK>,
-+				 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
-+			clock-names = "iface", "gcc_bus", "ahb", "core";
-+
-+			assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
-+			assigned-clock-rates = <300000000>;
-+
-+			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-controller;
-+			#interrupt-cells = <1>;
-+
-+			iommus = <&apps_smmu 0x800 0x2>;
-+
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+
-+			mdp: display_controller@ae01000 {
-+				compatible = "qcom,sc7180-dpu";
-+				reg = <0 0x0ae01000 0 0x8f000>,
-+				      <0 0x0aeb0000 0 0x2008>,
-+				      <0 0x0af03000 0 0x16>;
-+				reg-names = "mdp", "vbif", "disp_cc";
-+
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&dispcc DISP_CC_MDSS_ROT_CLK>,
-+					 <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
-+					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
-+					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-+				clock-names = "iface", "rot", "lut", "core",
-+					      "vsync";
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
-+						  <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-+				assigned-clock-rates = <300000000>,
-+						       <19200000>;
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						dpu_intf1_out: endpoint {
-+							remote-endpoint = <&dsi0_in>;
-+						};
-+					};
-+				};
-+			};
-+
-+			dsi_controller: dsi_controller@ae94000 {
-+				compatible = "qcom,mdss-dsi-ctrl";
-+				reg = <0 0x0ae94000 0 0x400>;
-+				reg-names = "dsi_ctrl";
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
-+					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
-+					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
-+					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
-+					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&gcc GCC_DISP_HF_AXI_CLK>;
-+				clock-names = "byte",
-+					      "byte_intf",
-+					      "pixel",
-+					      "core",
-+					      "iface",
-+					      "bus";
-+
-+				phys = <&dsi_phy>;
-+				phy-names = "dsi";
-+
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						dsi0_in: endpoint {
-+							remote-endpoint = <&dpu_intf1_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						dsi0_out: endpoint {
-+						};
-+					};
-+				};
-+			};
-+
-+			dsi_phy: dsi_phy@ae94400 {
-+				compatible = "qcom,dsi-phy-10nm";
-+				reg = <0 0x0ae94400 0 0x200>,
-+				      <0 0x0ae94600 0 0x280>,
-+				      <0 0x0ae94a00 0 0x1e0>;
-+				reg-names = "dsi_phy",
-+					    "dsi_phy_lane",
-+					    "dsi_pll";
-+
-+				#clock-cells = <1>;
-+				#phy-cells = <0>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>;
-+				clock-names = "iface";
-+			};
-+		};
-+
- 		pdc: interrupt-controller@b220000 {
- 			compatible = "qcom,sc7180-pdc", "qcom,pdc";
- 			reg = <0 0x0b220000 0 0x30000>;
+ 	/* Enable fault detection */
+ 	gpu_write(gpu, REG_A6XX_RBBM_INTERFACE_HANG_INT_CNTL,
 -- 
 2.7.4
-
