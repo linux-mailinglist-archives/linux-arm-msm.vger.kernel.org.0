@@ -2,193 +2,313 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E33451489B6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 15:37:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2E92148A96
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 15:52:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730910AbgAXOgu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jan 2020 09:36:50 -0500
-Received: from mga17.intel.com ([192.55.52.151]:47412 "EHLO mga17.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387620AbgAXOgn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jan 2020 09:36:43 -0500
-X-Amp-Result: UNSCANNABLE
-X-Amp-File-Uploaded: False
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 24 Jan 2020 06:36:41 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,358,1574150400"; 
-   d="scan'208";a="230314446"
-Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.174])
-  by orsmga006.jf.intel.com with SMTP; 24 Jan 2020 06:36:37 -0800
-Received: by stinkbox (sSMTP sendmail emulation); Fri, 24 Jan 2020 16:36:36 +0200
-Date:   Fri, 24 Jan 2020 16:36:36 +0200
-From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To:     Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, adelva@google.com,
-        linux-arm-msm@vger.kernel.org, seanpaul@chromium.org,
-        aravindh@codeaurora.org, Uma Shankar <uma.shankar@intel.com>
-Subject: Re: [PATCH] drm: Parse Colorimetry data block from EDID
-Message-ID: <20200124143636.GY13686@intel.com>
-References: <1579819245-21913-1-git-send-email-abhinavk@codeaurora.org>
+        id S1730028AbgAXOwP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jan 2020 09:52:15 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:35927 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729928AbgAXOwP (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 24 Jan 2020 09:52:15 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1579877534; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=qnTdKurql8lb6CMF2cfZ4H6NoG57pVvtuHeYNDi3fMk=;
+ b=rX4uiwRi/gWVXpNvOekFFlhlhD1EWeC7hGDC6Aeuv8G0P/gD6JWfIHDFHU/1+trZzHwK7hM8
+ Z3AdRCNfSsiI4rER4Ku+8OIjDs5KGf1vDIQ3/Qcn57izAWD+SnwfGjIkelnlf4xHxjvyrdCP
+ Y/6HVm30dkBBc/BrKetIZGknm8A=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e2b049d.7fd3d0ae4a78-smtp-out-n03;
+ Fri, 24 Jan 2020 14:52:13 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id DD2CDC447A5; Fri, 24 Jan 2020 14:52:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0FFFAC43383;
+        Fri, 24 Jan 2020 14:52:10 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1579819245-21913-1-git-send-email-abhinavk@codeaurora.org>
-X-Patchwork-Hint: comment
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Date:   Fri, 24 Jan 2020 20:22:10 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     James Morse <james.morse@arm.com>
+Cc:     Borislav Petkov <bp@alien8.de>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Tony Luck <tony.luck@intel.com>,
+        Robert Richter <rrichter@marvell.com>,
+        linux-edac@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>, tsoni@codeaurora.org,
+        psodagud@codeaurora.org, baicar@os.amperecomputing.com
+Subject: Re: [PATCH 2/2] drivers: edac: Add EDAC support for Kryo CPU caches
+In-Reply-To: <04481690-028d-eb74-081d-aebb3ca9b037@arm.com>
+References: <cover.1575529553.git.saiprakash.ranjan@codeaurora.org>
+ <0101016ed57a6559-46c6c649-db28-4945-a11c-7441b8e9ac5b-000000@us-west-2.amazonses.com>
+ <20191230115030.GA30767@zn.tnic>
+ <585db411bc542bf3f326627b7390e0ca@codeaurora.org>
+ <04481690-028d-eb74-081d-aebb3ca9b037@arm.com>
+Message-ID: <afa66fb5cb2f28765b03d26dba9bb217@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 23, 2020 at 02:40:45PM -0800, Abhinav Kumar wrote:
-> From: Uma Shankar <uma.shankar@intel.com>
-> 
-> CEA 861.3 spec adds colorimetry data block for HDMI.
-> Parsing the block to get the colorimetry data from
-> panel.
+Hi James,
 
-Why?
+On 2020-01-16 00:19, James Morse wrote:
+> Hi guys,
+> 
+> (CC: +Tyler)
+> 
+> On 13/01/2020 05:44, Sai Prakash Ranjan wrote:
+>> On 2019-12-30 17:20, Borislav Petkov wrote:
+>>> On Thu, Dec 05, 2019 at 09:53:18AM +0000, Sai Prakash Ranjan wrote:
+>>>> Kryo{3,4}XX CPU cores implement RAS extensions to support
+>>>> Error Correcting Code(ECC). Currently all Kryo{3,4}XX CPU
+>>>> cores (gold/silver a.k.a big/LITTLE) support ECC via RAS.
+>>> 
+>>> via RAS what? ARM64_RAS_EXTN?
+>>> 
+>>> In any case, this needs James to look at and especially if there's 
+>>> some
+>>> ARM-generic functionality in there which should be shared, of course.
+> 
+>> Yes it is ARM64_RAS_EXTN and I have been hoping if James can provide 
+>> the feedback,
+>> it has been some time now since I posted this out.
+> 
+> Sorry, I was out of the office for most of November/December, and I'm
+> slowly catching up...
+> 
+> 
+>>>> +
+>>>> +config EDAC_QCOM_KRYO_POLL
+>>>> +    depends on EDAC_QCOM_KRYO
+>>>> +    bool "Poll on Kryo ECC registers"
+>>>> +    help
+>>>> +      This option chooses whether or not you want to poll on the 
+>>>> Kryo ECC
+>>>> +      registers. When this is enabled, the polling rate can be set 
+>>>> as a
+>>>> +      module parameter. By default, it will call the polling 
+>>>> function every
+>>>> +      second.
+>>> 
+>>> Why is this a separate option and why should people use that?
+>>> 
+>>> Can the polling/irq be switched automatically?
+> 
+>> No it cannot be switched automatically. It is used in case some SoCs 
+>> do not support an irq
+>> based mechanism for EDAC.
+>> But I am contradicting myself because I am telling that atleast one 
+>> interrupt should be
+>> specified in bindings,
+>> so it is best if I drop this polling option for now.
+> 
+> For now, sure. But I think this will come back for systems with
+> embarrassing amounts of
+> RAM that would rather scrub the errors than take a flood of IRQs. I'd
+> like this to be
+> controllable from user-space.
+> 
+
+Ok so we should have an option to switch between polling and irq.
 
 > 
-> This was posted by Uma Shankar at
-> https://patchwork.kernel.org/patch/10861327/
+>>>> diff --git a/drivers/edac/Makefile b/drivers/edac/Makefile
+>>>> index d77200c9680b..29edcfa6ec0e 100644
+>>>> --- a/drivers/edac/Makefile
+>>>> +++ b/drivers/edac/Makefile
+>>>> @@ -85,5 +85,6 @@ obj-$(CONFIG_EDAC_SYNOPSYS)        += 
+>>>> synopsys_edac.o
+>>>>  obj-$(CONFIG_EDAC_XGENE)        += xgene_edac.o
+>>>>  obj-$(CONFIG_EDAC_TI)            += ti_edac.o
+>>>>  obj-$(CONFIG_EDAC_QCOM)            += qcom_edac.o
+>>>> +obj-$(CONFIG_EDAC_QCOM_KRYO)        += qcom_kryo_edac.o
+>>> 
+>>> What is the difference between this new driver and the qcom_edac one? 
+>>> Can
+>>> functionality be shared?
 > 
-> Modified by Abhinav Kumar:
-> - Use macros to distinguish the bit fields for clarity
+> High-level story time:
+> Until the 'v8.2' revision of the 'v8' Arm-architecture (the 64bit
+> one), arm didn't
+> describe how RAS should work. Partners implemented what they needed,
+> and we ended up with
+> this collection of drivers because they were all different.
 > 
-> Signed-off-by: Uma Shankar <uma.shankar@intel.com>
-> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
-> ---
->  drivers/gpu/drm/drm_edid.c  | 54 +++++++++++++++++++++++++++++++++++++++++++++
->  include/drm/drm_connector.h |  3 +++
->  include/drm/drm_edid.h      | 11 +++++++++
->  3 files changed, 68 insertions(+)
+> v8.2 fixed all this, the good news is once its done, we should never
+> need another edac
+> driver. (at least, not for SoCs built for v8.2). The downside is there
+> is quite a lot in
+> there, and we need to cover ACPI machines as well as DT.
 > 
-> diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
-> index 99769d6..148bfa4 100644
-> --- a/drivers/gpu/drm/drm_edid.c
-> +++ b/drivers/gpu/drm/drm_edid.c
-> @@ -3136,6 +3136,7 @@ static int drm_cvt_modes(struct drm_connector *connector,
->  #define VIDEO_BLOCK     0x02
->  #define VENDOR_BLOCK    0x03
->  #define SPEAKER_BLOCK	0x04
-> +#define COLORIMETRY_DATA_BLOCK		0x5
->  #define HDR_STATIC_METADATA_BLOCK	0x6
->  #define USE_EXTENDED_TAG 0x07
->  #define EXT_VIDEO_CAPABILITY_BLOCK 0x00
-> @@ -4199,6 +4200,57 @@ static void fixup_detailed_cea_mode_clock(struct drm_display_mode *mode)
->  	mode->clock = clock;
->  }
->  
-> +static bool cea_db_is_hdmi_colorimetry_data_block(const u8 *db)
-> +{
-> +	if (cea_db_tag(db) != USE_EXTENDED_TAG)
-> +		return false;
-> +
-> +	if (db[1] != COLORIMETRY_DATA_BLOCK)
-> +		return false;
-> +
-> +	if (cea_db_payload_len(db) < 2)
-> +		return false;
-> +
-> +	return true;
-> +}
-> +
-> +static void
-> +drm_parse_colorimetry_data_block(struct drm_connector *connector, const u8 *db)
-> +{
-> +	struct drm_hdmi_info *info = &connector->display_info.hdmi;
-> +
-> +	/* As per CEA 861-G spec */
-> +	/* Byte 3 Bit 0: xvYCC_601 */
-> +	if (db[2] & BIT(0))
-> +		info->colorimetry |= DRM_EDID_CLRMETRY_xvYCC_601;
-> +	/* Byte 3 Bit 1: xvYCC_709 */
-> +	if (db[2] & BIT(1))
-> +		info->colorimetry |= DRM_EDID_CLRMETRY_xvYCC_709;
-> +	/* Byte 3 Bit 2: sYCC_601 */
-> +	if (db[2] & BIT(2))
-> +		info->colorimetry |= DRM_EDID_CLRMETRY_sYCC_601;
-> +	/* Byte 3 Bit 3: ADBYCC_601 */
-> +	if (db[2] & BIT(3))
-> +		info->colorimetry |= DRM_EDID_CLRMETRY_ADBYCC_601;
-> +	/* Byte 3 Bit 4: ADB_RGB */
-> +	if (db[2] & BIT(4))
-> +		info->colorimetry |= DRM_EDID_CLRMETRY_ADB_RGB;
-> +	/* Byte 3 Bit 5: BT2020_CYCC */
-> +	if (db[2] & BIT(5))
-> +		info->colorimetry |= DRM_EDID_CLRMETRY_BT2020_CYCC;
-> +	/* Byte 3 Bit 6: BT2020_YCC */
-> +	if (db[2] & BIT(6))
-> +		info->colorimetry |= DRM_EDID_CLRMETRY_BT2020_YCC;
-> +	/* Byte 3 Bit 7: BT2020_RGB */
-> +	if (db[2] & BIT(7))
-> +		info->colorimetry |= DRM_EDID_CLRMETRY_BT2020_RGB;
-> +	/* Byte 4 Bit 7: DCI-P3 */
-> +	if (db[3] & BIT(7))
-> +		info->colorimetry |= DRM_EDID_CLRMETRY_DCI_P3;
-> +
-> +	DRM_DEBUG_KMS("Supported Colorimetry 0x%x\n", info->colorimetry);
-> +}
-> +
->  static bool cea_db_is_hdmi_hdr_metadata_block(const u8 *db)
->  {
->  	if (cea_db_tag(db) != USE_EXTENDED_TAG)
-> @@ -4877,6 +4929,8 @@ static void drm_parse_cea_ext(struct drm_connector *connector,
->  			drm_parse_vcdb(connector, db);
->  		if (cea_db_is_hdmi_hdr_metadata_block(db))
->  			drm_parse_hdr_metadata_block(connector, db);
-> +		if (cea_db_is_hdmi_colorimetry_data_block(db))
-> +			drm_parse_colorimetry_data_block(connector, db);
->  	}
->  }
->  
-> diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
-> index 2219109..a996ee3 100644
-> --- a/include/drm/drm_connector.h
-> +++ b/include/drm/drm_connector.h
-> @@ -207,6 +207,9 @@ struct drm_hdmi_info {
->  
->  	/** @y420_dc_modes: bitmap of deep color support index */
->  	u8 y420_dc_modes;
-> +
-> +	/* @colorimetry: bitmap of supported colorimetry modes */
-> +	u16 colorimetry;
->  };
->  
->  /**
-> diff --git a/include/drm/drm_edid.h b/include/drm/drm_edid.h
-> index f0b03d4..6168c1c 100644
-> --- a/include/drm/drm_edid.h
-> +++ b/include/drm/drm_edid.h
-> @@ -224,6 +224,17 @@ struct detailed_timing {
->  				    DRM_EDID_YCBCR420_DC_36 | \
->  				    DRM_EDID_YCBCR420_DC_30)
->  
-> +/* Supported Colorimetry from colorimetry data block */
-> +#define DRM_EDID_CLRMETRY_xvYCC_601   (1 << 0)
-> +#define DRM_EDID_CLRMETRY_xvYCC_709   (1 << 1)
-> +#define DRM_EDID_CLRMETRY_sYCC_601    (1 << 2)
-> +#define DRM_EDID_CLRMETRY_ADBYCC_601  (1 << 3)
-> +#define DRM_EDID_CLRMETRY_ADB_RGB     (1 << 4)
-> +#define DRM_EDID_CLRMETRY_BT2020_CYCC (1 << 5)
-> +#define DRM_EDID_CLRMETRY_BT2020_YCC  (1 << 6)
-> +#define DRM_EDID_CLRMETRY_BT2020_RGB  (1 << 7)
-> +#define DRM_EDID_CLRMETRY_DCI_P3      (1 << 15)
-> +
->  /* ELD Header Block */
->  #define DRM_ELD_HEADER_BLOCK_SIZE	4
->  
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+
+That is true but the qcom_edac one which is merged is for LLC(system 
+cache) which is a QCOM IP.
+
+>> qcom_edac driver is for QCOM system cache(last level cache), it should 
+>> be renamed to
+>> qcom_llcc_edac.c.
+>> This new driver is for QCOM Kryo CPU core caches(L1,L2,L3).
+>> 
+>> Functionality cannot be shared as these two are different IP blocks 
+>> and best kept separate.
+> 
+> The qcom_edac will be Qualcomm's pre-v8.2 support.
+> This series is about the v8.2 support which all looks totally
+> different to Linux.
+> 
+
+As said before qcom_edac is for LLC which is not available on all SoCs.
+QCOM's pre v8.2 support is not upstreamed.
+
+> 
+>>>> + * ARM Cortex-A55, Cortex-A75, Cortex-A76 TRM Chapter B3.3
+>>> 
+>>> Chapter? Where? URL?
+>>> 
+>> 
+>> I chose this because these TRMs are openly available and if you search 
+>> for these above
+>> terms like
+>> "Cortex-A76 TRM Chapter B3.3" in google, then the first search result 
+>> will be the TRM pdf,
+>> otherwise
+>> I would have to specify the long URL for the pdf and we do not know 
+>> how long that URL link
+>> will be active.
+> 
+> These are SoC/CPU specific. Using these we can't solve the whole 
+> problem.
+> 
+> The architecture all those should fit into is here:
+> https://static.docs.arm.com/ddi0587/cb/2019_07_05_DD_0587_C_b.pdf
+> (or https://developer.arm.com/docs/ and look for 'RAS')
+> 
+> ... and the arm-arm.
+> 
+
+Thanks for the link.
+
+> 
+>>>> +static void dump_syndrome_reg(int error_type, int level,
+>>>> +                  u64 errxstatus, u64 errxmisc,
+>>>> +                  struct edac_device_ctl_info *edev_ctl)
+>>>> +{
+>>>> +    char msg[KRYO_EDAC_MSG_MAX];
+>>>> +    const char *error_msg;
+>>>> +    int cpu;
+>>>> +
+>>>> +    cpu = raw_smp_processor_id();
+>>> 
+>>> Why raw_?
+>>> 
+>> 
+>> Because we will be calling smp_processor_id in preemptible context and 
+>> if we enable
+>> CONFIG_DEBUG_PREEMPT,
+>> we would get a nice backtrace.
+>> 
+>> [    3.747468] BUG: using smp_processor_id() in preemptible [00000000] 
+>> code: swapper/0/1
+>> [    3.755527] caller is qcom_kryo_edac_probe+0x138/0x2b8
+>> [    3.760819] CPU: 2 PID: 1 Comm: swapper/0 Tainted: G 
+>> S               
+>> 5.4.0-rc7-next-20191113-00009-g8666855d6a5b-dirty #107
+>> [    3.772323] Hardware name: Qualcomm Technologies, Inc. SM8150 MTP 
+>> (DT)
+>> [    3.779030] Call trace:
+>> [    3.781556]  dump_backtrace+0x0/0x158
+>> [    3.785331]  show_stack+0x14/0x20
+>> [    3.788741]  dump_stack+0xb0/0xf4
+>> [    3.792164]  debug_smp_processor_id+0xd8/0xe0
+>> [    3.796639]  qcom_kryo_edac_probe+0x138/0x2b8
+>> [    3.801116]  platform_drv_probe+0x50/0xa8
+>> [    3.805236]  really_probe+0x108/0x360
+>> [    3.808999]  driver_probe_device+0x58/0x100
+>> [    3.813304]  device_driver_attach+0x6c/0x78
+>> [    3.817606]  __driver_attach+0xb0/0xf0
+>> [    3.821459]  bus_for_each_dev+0x68/0xc8
+>> [    3.825407]  driver_attach+0x20/0x28
+>> [    3.829083]  bus_add_driver+0x160/0x1f0
+>> [    3.833030]  driver_register+0x60/0x110
+>> [    3.836976]  __platform_driver_register+0x40/0x48
+>> [    3.841813]  qcom_kryo_edac_driver_init+0x18/0x20
+>> [    3.846645]  do_one_initcall+0x58/0x1a0
+>> [    3.850596]  kernel_init_freeable+0x19c/0x240
+>> [    3.855075]  kernel_init+0x10/0x108
+>> [    3.858665]  ret_from_fork+0x10/0x1c
+> 
+> and raw_ stops the backtrace? You are still preemptible. The problem
+> still exists, you've
+> just suppressed the warning.
+> 
+> At any time in dump_syndrome_reg(), you could get an interrupt and
+> another task gets
+> scheduled. Later your thread is started on another cpu... but not the
+> one whose cpu number
+> you read from smp_processor_id(). Whatever you needed it for, might
+> have the wrong value.
+> 
+
+Ok will correct this.
+
+> 
+>>>> +static int kryo_l1_l2_setup_irq(struct platform_device *pdev,
+>>>> +                struct edac_device_ctl_info *edev_ctl)
+>>>> +{
+>>>> +    int cpu, errirq, faultirq, ret;
+>>>> +
+>>>> +    edac_dev = devm_alloc_percpu(&pdev->dev, *edac_dev);
+>>>> +    if (!edac_dev)
+>>>> +        return -ENOMEM;
+>>>> +
+>>>> +    for_each_possible_cpu(cpu) {
+>>>> +        preempt_disable();
+>>>> +        per_cpu(edac_dev, cpu) = edev_ctl;
+>>>> +        preempt_enable();
+>>>> +    }
+>>> 
+>>> That sillyness doesn't belong here, if at all.
+> 
+>> Sorry but I do not understand the sillyness here. Could you please 
+>> explain?
+> 
+> preempt_disable() prevents another task being scheduled instead of
+> you, avoiding the risk
+> that you get scheduled on another cpu. In this case it doesn't matter
+> which cpu you are
+> running on as you aren't accessing _this_ cpu's edac_dev, you are
+> accessing each one in a
+> loop.
+> 
+
+Thanks for the explanation James, now I get the sillyness.
+
+Thanks,
+Sai
 
 -- 
-Ville Syrj�l�
-Intel
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
