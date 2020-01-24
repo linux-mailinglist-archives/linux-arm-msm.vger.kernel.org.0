@@ -2,92 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5398A148D59
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 19:02:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29FCB148D68
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jan 2020 19:04:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390827AbgAXSCD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jan 2020 13:02:03 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:37120 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390362AbgAXSCD (ORCPT
+        id S2390635AbgAXSEV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jan 2020 13:04:21 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:31338 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2389638AbgAXSEV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jan 2020 13:02:03 -0500
-Received: by mail-pl1-f193.google.com with SMTP id c23so1106246plz.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2020 10:02:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=G5fEZ2U0+CDS0hG812zeGyRQK6DtCt/mFqHvclq9uxI=;
-        b=Zlwl7Z+1c2DrxDJdXvTPzh7C0sA9dUNpKWhqDlfwFbHqka9y984PM3S5s3ev0wosoc
-         PQ8FlrOzjsxrL8BtP75O/HDz4gBnX4lSw2p3h0IBOxR7SIMbih5TDY0/HuTx3vH2ssJk
-         eBcePQIzQNCu358CeCSHEs0rLSHQa5zJc3yOwPTIFN3lpzuZw9BVBalrOrRGjdj7uJtr
-         NqbK+wD5RG6DYmdbkmaWnDarITmrhdLgEPPn1x85FLPuzsV6b+MoxvTbEQyvxNa6Q7Vj
-         /0CYcxglHG6XJrXuHosf/q1Cghr2kT1EvIar+xrMhuFbfb29sbUnQf8/spqMFtoTyhvF
-         p8Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=G5fEZ2U0+CDS0hG812zeGyRQK6DtCt/mFqHvclq9uxI=;
-        b=bqL7FEgVy7/kjdB1ACU8r1YR0iclrro2RpteCHK7j7KQQTCy4G6UqjkJuro9aV6EHh
-         IEGN/gsnRqjsgpJtfIMgrwWoNVpR+wYMigUTu7uOdEgxKh1603/bU6i9gtyZlZZHyOE5
-         gkU5i49v9RvfVPTHw5ebAU0gQyzpYv8ViWlcNI7xHdgnn6t1GU8JDnutIBpV65geDn7n
-         WbdvSIEmGjUcOFw7mj9brdI5on9dvwUj2bQ2CiOs+qJC/2scvfQfgHf9tCk6Jpmjog6J
-         aNl497m8nkKoZo0r1ugs8Iurv/VTLGEJeaa7E3wynezUFXV141XvfRN89er1h2kSYYfB
-         n2Rw==
-X-Gm-Message-State: APjAAAWumIkyYJBko+Lsd4sKBaTww9tTeKG7y4ugqORuxcqJMWoI5GBC
-        dI3TQ2Us8ZQ7+VqwuV5Tn/3oFg==
-X-Google-Smtp-Source: APXvYqwBEJkZ8Vl8tLg9tesk9zn7tQ3YoyossHKjnx3jILJeNULNqlWCDh10GhwkawsZ99tjJSIQMw==
-X-Received: by 2002:a17:902:b788:: with SMTP id e8mr4897986pls.1.1579888922548;
-        Fri, 24 Jan 2020 10:02:02 -0800 (PST)
-Received: from ripper (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id z6sm6617298pfa.155.2020.01.24.10.02.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jan 2020 10:02:01 -0800 (PST)
-Date:   Fri, 24 Jan 2020 10:01:27 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     agross@kernel.org, devicetree@vger.kernel.org,
-        jshriram@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mark.rutland@arm.com, mturquette@baylibre.com,
-        psodagud@codeaurora.org, robh+dt@kernel.org, tdas@codeaurora.org,
-        tsoni@codeaurora.org, vinod.koul@linaro.org,
-        vnkgutta@codeaurora.org
-Subject: Re: [PATCH 2/7] clk: qcom: rpmh: Add support for RPMH clocks on
- SM8250
-Message-ID: <20200124180127.GO1908628@ripper>
-References: <1579217994-22219-1-git-send-email-vnkgutta@codeaurora.org>
- <1579217994-22219-3-git-send-email-vnkgutta@codeaurora.org>
- <20200123064614.78346217F4@mail.kernel.org>
+        Fri, 24 Jan 2020 13:04:21 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1579889060; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=416kvB4U9ycPEsCjzKp6t1KyF47gVJDFFssMCwP38sU=; b=N0KlBEcGfouLTXF9RGr7Ic3LHYPqiRoWxl9Pr0EkjYtuW8ZLdSHgzD2Y36J6/17Pq70b3+sF
+ l+S2Cn1CaKB1MLP5hEy9LjgsUrDuGAyXJGXtRW7GFwgL89BbcN9aLCj4Y9OvgjI5IG0MwJsv
+ p29l5zSCved04euqgkHwrkmYN/Y=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e2b319d.7f93eb3337a0-smtp-out-n03;
+ Fri, 24 Jan 2020 18:04:13 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 39907C4479C; Fri, 24 Jan 2020 18:04:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.46.161.159] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: asutoshd)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D98B8C43383;
+        Fri, 24 Jan 2020 18:04:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D98B8C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=asutoshd@codeaurora.org
+Subject: Re: [PATCH v4 7/8] scsi: ufs-qcom: Delay specific time before gate
+ ref clk
+To:     Can Guo <cang@codeaurora.org>, nguyenb@codeaurora.org,
+        hongwus@codeaurora.org, rnayak@codeaurora.org,
+        linux-scsi@vger.kernel.org, kernel-team@android.com,
+        saravanak@google.com, salyzyn@google.com
+Cc:     Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Pedro Sousa <pedrom.sousa@synopsys.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <1579764349-15578-1-git-send-email-cang@codeaurora.org>
+ <1579764349-15578-8-git-send-email-cang@codeaurora.org>
+From:   "Asutosh Das (asd)" <asutoshd@codeaurora.org>
+Message-ID: <e95f2818-041f-2df9-e86c-f433e45fe2df@codeaurora.org>
+Date:   Fri, 24 Jan 2020 10:04:10 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200123064614.78346217F4@mail.kernel.org>
+In-Reply-To: <1579764349-15578-8-git-send-email-cang@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 22 Jan 22:46 PST 2020, Stephen Boyd wrote:
-
-> Quoting Venkata Narendra Kumar Gutta (2020-01-16 15:39:49)
-> > @@ -490,6 +512,7 @@ static int clk_rpmh_probe(struct platform_device *pdev)
-> >         { .compatible = "qcom,sdm845-rpmh-clk", .data = &clk_rpmh_sdm845},
-> >         { .compatible = "qcom,sm8150-rpmh-clk", .data = &clk_rpmh_sm8150},
-> >         { .compatible = "qcom,sc7180-rpmh-clk", .data = &clk_rpmh_sc7180},
-> > +       { .compatible = "qcom,sm8250-rpmh-clk",  .data = &clk_rpmh_sm8250},
+On 1/22/2020 11:25 PM, Can Guo wrote:
+> After enter hibern8, as UFS JEDEC ver 3.0 requires, a specific gating wait
+> time is required before disable the device reference clock. If it is not
+> specified, use the old delay.
 > 
-> We should sort this on compatible.
+> Signed-off-by: Can Guo <cang@codeaurora.org>
+> ---
+
+Reviewed-by: Asutosh Das <asutoshd@codeaurora.org>
+
+>   drivers/scsi/ufs/ufs-qcom.c | 13 ++++++++++---
+>   1 file changed, 10 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+> index 85d7c17..3b5b2d9 100644
+> --- a/drivers/scsi/ufs/ufs-qcom.c
+> +++ b/drivers/scsi/ufs/ufs-qcom.c
+> @@ -833,6 +833,8 @@ static int ufs_qcom_bus_register(struct ufs_qcom_host *host)
+>   
+>   static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
+>   {
+> +	unsigned long gating_wait;
+> +
+>   	if (host->dev_ref_clk_ctrl_mmio &&
+>   	    (enable ^ host->is_dev_ref_clk_enabled)) {
+>   		u32 temp = readl_relaxed(host->dev_ref_clk_ctrl_mmio);
+> @@ -845,11 +847,16 @@ static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
+>   		/*
+>   		 * If we are here to disable this clock it might be immediately
+>   		 * after entering into hibern8 in which case we need to make
+> -		 * sure that device ref_clk is active at least 1us after the
+> +		 * sure that device ref_clk is active for specific time after
+>   		 * hibern8 enter.
+>   		 */
+> -		if (!enable)
+> -			udelay(1);
+> +		if (!enable) {
+> +			gating_wait = host->hba->dev_info.clk_gating_wait_us;
+> +			if (!gating_wait)
+> +				udelay(1);
+> +			else
+> +				usleep_range(gating_wait, gating_wait + 10);
+> +		}
+>   
+>   		writel_relaxed(temp, host->dev_ref_clk_ctrl_mmio);
+>   
 > 
 
-Yes we should, in case this was a request I sent out a patch for this:
-https://lore.kernel.org/linux-arm-msm/20200124175934.3937473-1-bjorn.andersson@linaro.org/
 
-Regards,
-Bjorn
-
-> >         { }
-> >  };
-> >  MODULE_DEVICE_TABLE(of, clk_rpmh_match_table);
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+Linux Foundation Collaborative Project
