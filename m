@@ -2,144 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AB89B149247
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2020 01:13:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B7DD51493B0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2020 06:32:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729605AbgAYANb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jan 2020 19:13:31 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:40086 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729147AbgAYANa (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jan 2020 19:13:30 -0500
-Received: by mail-pf1-f193.google.com with SMTP id q8so1881723pfh.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jan 2020 16:13:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZQFMTxiNgAgnz1mNYc286/lpApTLDKm8nfS5t4xRGVQ=;
-        b=ZdPzzyLrulvX84FmYk6lsY9KOu6xBA6x7gnH3/2Qd1Dd618dAgooxJg2C6/RggRPH8
-         YF76CL9KxybJgPwiHAz6wmbZ9LUVoqX1GxJMsQvVKq03ntc34SDSZGTUizaapPsWNBJm
-         F6RHFi2vkt7awrI1Ub7ZsI/zpzgsjGBmGF/1Z1rb01Qt5AfFg4G411crVS4lDp/juuXZ
-         KtmB+9AQ8Yk/L1xP51oMkfxDxO8yAhYxYhZLM5+o728dF+NL1WhlzjQiLEWqu48lJ7Oh
-         p1O71HCXl8MuBihZgD4fcMM0+IEUTMUH9m7W9YKYgtlCjkvr5M3oVM9+8iWJ15qeLyED
-         Txfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZQFMTxiNgAgnz1mNYc286/lpApTLDKm8nfS5t4xRGVQ=;
-        b=P0gwjME9J+NCkIgeUuDGDX6P4FqZTOK6JqcjOdsnRI27a7ivHIz96pkkAKI2TylCD0
-         SNOMMDEuJS6CgH5zYIOY9Dr34TWiBOv6UrHUBtu2Hxjq6QcpCHVJ6JE8zTt4HdqQbFXc
-         Qt82BAeBRbOnRo5eXdVqGRF0K/0HWCIRx3VRVFN1HwSd+VcwM0tcPqv6IF6nzz4YBfZL
-         +3SjzSZEvOl3qPsDQg2ZZMFXWqpSRz/9ritkKrWQnK0EDP+XTB4mjROvHXjWewKy4AiC
-         XBWTwKKnIVKZuzI5scPVdcXSetFZFGzZQhcQSeaWuN/Ji0iQZOMJfXN3Zft+U9hEuNxr
-         Xs9Q==
-X-Gm-Message-State: APjAAAXxQc1eMNR8zWSYcOiDEoU2ccq9rySENTF/0hVeOGQCfYnvj14O
-        0V3x86a1aVnWkIMOPVBbk9rtZg==
-X-Google-Smtp-Source: APXvYqwyxBFc6HeLCoHjBbDosTlm+VwZ7yjixgLlOB3waOs9pwiyvAfqnA6s76uFYVX/JVCnglRvgA==
-X-Received: by 2002:a63:941:: with SMTP id 62mr7304358pgj.203.1579911210111;
-        Fri, 24 Jan 2020 16:13:30 -0800 (PST)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id a185sm8063323pge.15.2020.01.24.16.13.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jan 2020 16:13:29 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v3] arm64: dts: qcom: msm8996: Use generic QMP driver for UFS
-Date:   Fri, 24 Jan 2020 16:12:34 -0800
-Message-Id: <20200125001234.435384-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.24.0
+        id S1725874AbgAYFcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Jan 2020 00:32:43 -0500
+Received: from mail.kernel.org ([198.145.29.99]:41362 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725781AbgAYFcn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 25 Jan 2020 00:32:43 -0500
+Received: from localhost (unknown [122.181.212.88])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 684802071A;
+        Sat, 25 Jan 2020 05:32:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1579930362;
+        bh=Xx1+ur3lE4Jj0egyyY3++sVwcP+whPpqBcx5ffuZgco=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hkAK80tJX2RXuqEgaPCwRlVALqppsoJhph8gwLLvbs57xpHmFALaItpbJMHfDXE7B
+         3nypie7ulbvbPqSvvplfzmJLRZc7/e/d2oGlSgVnDIXWFU428WAdcwlA031Mh+q90j
+         WACEOdJ+4YVtjkDPyyQknJKvQHT534Wt8qQl38d0=
+Date:   Sat, 25 Jan 2020 11:02:37 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Christian Lamparter <chunkeey@gmail.com>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        USB list <linux-usb@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v6 0/5] usb: xhci: Add support for Renesas USB controllers
+Message-ID: <20200125053237.GG2841@vkoul-mobl>
+References: <20200113084005.849071-1-vkoul@kernel.org>
+ <20200121064608.GA2841@vkoul-mobl>
+ <CAAd0S9Dd7Ygx7TgV3E_A6z29efG7jsE1-xy48_cHotroWuk_ZA@mail.gmail.com>
+ <5878067.luYmtVZgP3@debian64>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5878067.luYmtVZgP3@debian64>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-With support for the MSM8996 UFS PHY added to the common QMP driver,
-migrate the DTS to use the common QMP binding.
+On 24-01-20, 22:38, Christian Lamparter wrote:
+> On Tuesday, 21 January 2020 21:26:34 CET Christian Lamparter wrote:
+> > Hello,
+> > 
+> > On Tue, Jan 21, 2020 at 7:46 AM Vinod Koul <vkoul@kernel.org> wrote:
+> > >
+> > > hey Christian,
+> > >
+> > > On 13-01-20, 21:33, Christian Lamparter wrote:
+> > > > On Mon, Jan 13, 2020 at 9:10 PM John Stultz <john.stultz@linaro.org> wrote:
+> > > > >
+> > > > > On Mon, Jan 13, 2020 at 12:42 AM Vinod Koul <vkoul@kernel.org> wrote:
+> > > > > >
+> > > > > > This series add support for Renesas USB controllers uPD720201 and uPD720202.
+> > > > > > These require firmware to be loaded and in case devices have ROM those can
+> > > > > > also be programmed if empty. If ROM is programmed, it runs from ROM as well.
+> > > > > >
+> > > > > > This includes two patches from Christian which supported these controllers
+> > > > > > w/o ROM and later my patches for ROM support and multiple firmware versions,
+> > > > > > debugfs hook for rom erase and export of xhci-pci functions.
+> > > > > >
+> > > > >
+> > > > > Thanks so much for updating these! They are working ok for me in my
+> > > > > testing on db845c.
+> > > > >
+> > > > > Tested-by: John Stultz <john.stultz@linaro.org>
+> > > >
+> > > > Nice! I'll definitely give this series another try on my WNDR4700 too
+> > > > (PowerPC Arch)
+> > > > this weekend.
+> > > >
+> > > > and from me: Thanks!
+> > >
+> > > Did you get around to test these?
+> > 
+> > Not yet, I was too optimistic that I could get current linux-usb with the
+> > patches running on the WNDR4700 (due to APM82181) over the
+> > weekend. Do you think that It still counts, if I'm going with 5.4.11 on
+> > OpenWrt instead? Because then I just swap out the old patches from
+> > my OpenWrt APM821XX branch:
+> > <https://git.openwrt.org/?p=openwrt/staging/chunkeey.git;a=commit;h=4dd6f62a36a3724f0363d639cd9e29e04d7b62c0>
+> > 
+> > and don't have to figure out what broke with linux-usb on the APM821xx.
+> 
+> I could get 5.4.11 to boot on the Netgear WNDR4700 :-).
+> (This has a APM82181 SoC (PowerPC 464))
+> 
+> Here's faillog from the "plain xhci-pci" driver: 
+> 
+> [  375.481868] xhci_hcd 0000:45:00.0: xHCI Host Controller
+> [  375.487149] xhci_hcd 0000:45:00.0: new USB bus registered, assigned bus number 1
+> [  385.494590] xhci_hcd 0000:45:00.0: can't setup: -110
+> [  385.499558] xhci_hcd 0000:45:00.0: USB bus 1 deregistered
+> [  385.504963] xhci_hcd 0000:45:00.0: init 0000:45:00.0 fail, -110
+> [  385.510889] xhci_hcd: probe of 0000:45:00.0 failed with error -110
+> 
+> (Notice how it gets stuck for 10 seconds there).
+> 
+> And this is the successlog from the xhci-pci-renesas module
+> 
+> [  391.555559] renesas xhci 0000:45:00.0: xHCI Host Controller
+> [  391.561171] renesas xhci 0000:45:00.0: new USB bus registered, assigned bus number 1
+> [  391.575068] renesas xhci 0000:45:00.0: hcc params 0x014051cf hci version 0x100 quirks 0x0000000101000090
+> [  391.586750] hub 1-0:1.0: USB hub found
+> [  391.592601] hub 1-0:1.0: 2 ports detected
+> [  391.597199] renesas xhci 0000:45:00.0: xHCI Host Controller
+> [  391.602797] renesas xhci 0000:45:00.0: new USB bus registered, assigned bus number 2
+> [  391.610537] renesas xhci 0000:45:00.0: Host supports USB 3.0 SuperSpeed
+> [  391.617719] usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
+> [  391.626495] hub 2-0:1.0: USB hub found
+> [  391.630570] hub 2-0:1.0: 2 ports detected
+> 
+> this is when I added the usb 3.0-stick:
+> 
+> [  775.403928] usb 2-2: new SuperSpeed Gen 1 USB device number 3 using renesas xhci
+> [  775.432684] usb-storage 2-2:1.0: USB Mass Storage device detected
+> [  775.439238] scsi host1: usb-storage 2-2:1.0
+> [  776.482556] scsi 1:0:0:0: Direct-Access     SanDisk  Ultra            1.00 PQ: 0 ANSI: 6
+> [  776.492181] sd 1:0:0:0: [sda] 60063744 512-byte logical blocks: (30.8 GB/28.6 GiB)
+> [  776.501193] sd 1:0:0:0: [sda] Write Protect is off
+> [  776.507047] sd 1:0:0:0: [sda] Write cache: disabled, read cache: enabled, doesn't support DPO or FUA
+> [  776.524893]  sda: sda1 sda2
+> [  776.531062] sd 1:0:0:0: [sda] Attached SCSI removable disk
+> 
+> root@(none):/dev# hdparm -t /dev/sda
+> 
+> /dev/sda:
+>  Timing buffered disk reads: 466 MB in  3.01 seconds = 154.98 MB/sec
+> 
+> and this is the log from my usb 2.0-memorystick:
+> 
+> [ 1187.113650] usb 2-2: USB disconnect, device number 3
+> [ 1195.867397] usb 1-2: new high-speed USB device number 2 using renesas xhci
+> [ 1195.895171] usb-storage 1-2:1.0: USB Mass Storage device detected
+> [ 1195.901848] scsi host1: usb-storage 1-2:1.0
+> [ 1196.962583] scsi 1:0:0:0: Direct-Access     SanDisk  Cruzer Blade     1.00 PQ: 0 ANSI: 6
+> [ 1196.978772] sd 1:0:0:0: [sda] 30031872 512-byte logical blocks: (15.4 GB/14.3 GiB)
+> [ 1196.988529] sd 1:0:0:0: [sda] Write Protect is off
+> [ 1196.994498] sd 1:0:0:0: [sda] Write cache: disabled, read cache: enabled, doesn't support DPO or FUA
+> [ 1197.020407]  sda: sda1
+> [ 1197.030458] sd 1:0:0:0: [sda] Attached SCSI removable disk
+> 
+> root@(none):/dev# hdparm -t /dev/sda
+> 
+> /dev/sda:
+>  Timing buffered disk reads:  64 MB in  3.01 seconds =  21.28 MB/sec
+> 
+> These speeds for usb3 and usb2 are within what the device can do.
+> So, everything is working fine with the v6.
+> 
+> Tested-by: Christian Lamparter <chunkeey@gmail.com>
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+Thanks a lot Christian for again testing this.
 
-Depends on https://lore.kernel.org/linux-arm-msm/20200125000803.435264-1-bjorn.andersson@linaro.org/
+Mathias, any comments on this series..?
 
-Changes since v2:
-- Rebased patch
-
- arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi |  6 -----
- arch/arm64/boot/dts/qcom/msm8996.dtsi        | 25 +++++++++++++-------
- 2 files changed, 17 insertions(+), 14 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-index fff6115f2670..af87350b5547 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-@@ -999,13 +999,7 @@ &ufsphy {
- 
- 	vdda-phy-supply = <&vreg_l28a_0p925>;
- 	vdda-pll-supply = <&vreg_l12a_1p8>;
--
--	vdda-phy-max-microamp = <18380>;
--	vdda-pll-max-microamp = <9440>;
--
- 	vddp-ref-clk-supply = <&vreg_l25a_1p2>;
--	vddp-ref-clk-max-microamp = <100>;
--	vddp-ref-clk-always-on;
- };
- 
- &ufshc {
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 30cdbbe43d6c..a599761228a7 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -885,7 +885,7 @@ ufshc: ufshc@624000 {
- 			reg = <0x00624000 0x2500>;
- 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
- 
--			phys = <&ufsphy>;
-+			phys = <&ufsphy_lane>;
- 			phy-names = "ufsphy";
- 
- 			power-domains = <&gcc UFS_GDSC>;
-@@ -937,16 +937,25 @@ ufs_variant {
- 		};
- 
- 		ufsphy: phy@627000 {
--			compatible = "qcom,msm8996-ufs-phy-qmp-14nm";
--			reg = <0x00627000 0xda8>;
--			reg-names = "phy_mem";
--			#phy-cells = <0>;
-+			compatible = "qcom,msm8996-qmp-ufs-phy";
-+			reg = <0x00627000 0x1c4>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
-+
-+			clocks = <&gcc GCC_UFS_CLKREF_CLK>;
-+			clock-names = "ref";
- 
--			clock-names = "ref_clk_src", "ref_clk";
--			clocks = <&rpmcc RPM_SMD_LN_BB_CLK>,
--				 <&gcc GCC_UFS_CLKREF_CLK>;
- 			resets = <&ufshc 0>;
-+			reset-names = "ufsphy";
- 			status = "disabled";
-+
-+			ufsphy_lane: lanes@627400 {
-+				reg = <0x627400 0x12c>,
-+				      <0x627600 0x200>,
-+				      <0x627c00 0x1b4>;
-+				#phy-cells = <0>;
-+			};
- 		};
- 
- 		camss: camss@a00000 {
 -- 
-2.24.0
-
+~Vinod
