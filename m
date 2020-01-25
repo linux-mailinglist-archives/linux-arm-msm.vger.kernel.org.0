@@ -2,243 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C179614964D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2020 16:39:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FB9C149740
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Jan 2020 19:47:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726191AbgAYPjh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 25 Jan 2020 10:39:37 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:23645 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726240AbgAYPjh (ORCPT
+        id S1726454AbgAYSrW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Jan 2020 13:47:22 -0500
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:37538 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726338AbgAYSrW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 25 Jan 2020 10:39:37 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1579966776; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=skCcqIIjztoVbtXxG3qEzRzmN8kZaLooAbtOL8xQJ9A=; b=kpnZEPwOQx38FNJKMC6URdVsJllzmRp6TvBuYKcpGhhflcqTr1kPHmQPavDa2BmyzzOIyNEV
- WUauuccAv1FhViaMG1AlXZZudADEk9vBUAJ0KDb3bgN04wxmG58iDWBWu3MluuPoyMoJFyZw
- roOCnGJujKpveYHqezp2lt7AMgU=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e2c6134.7f0607d6db20-smtp-out-n01;
- Sat, 25 Jan 2020 15:39:32 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CCB22C433A2; Sat, 25 Jan 2020 15:39:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.43.137] (unknown [106.209.170.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 36334C43383;
-        Sat, 25 Jan 2020 15:39:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 36334C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add cpuidle low power states
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org,
-        swboyd@chromium.org, evgreen@chromium.org, dianders@chromium.org,
-        devicetree@vger.kernel.org
-References: <1572408318-28681-1-git-send-email-mkshah@codeaurora.org>
- <1572408318-28681-2-git-send-email-mkshah@codeaurora.org>
- <20200121234452.GW89495@google.com>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <948c046a-5e95-104c-0bc0-f3615edddeca@codeaurora.org>
-Date:   Sat, 25 Jan 2020 21:09:27 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        Sat, 25 Jan 2020 13:47:22 -0500
+Received: by mail-oi1-f194.google.com with SMTP id z64so2908469oia.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Jan 2020 10:47:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Dwr5wEgyI6r7yMWIPAUlrmvqitDKlBJiaf02I2Mddbw=;
+        b=M7+EYbDAe3hHS/gXFtMoBskrcNWGl7KRIzDqMSKUk3pTmT79Tbb2Sj/AlYKEf8a09x
+         Q4oQwMnvh0oRsRhcqYGtcv6jC2jVTWHC9sibHNmv3nR8BJoiIt0hBV/svDPQSlZOgkNS
+         YUKmk9cb0HtS0U3Vb74DcvWyhBL6WVvbO0Gje/q9qgWSEJtFfsnQfPAZXr4vTko16Qyz
+         Gg7RKBZ9NRE74JElsPyCIzU1lrjg6Ab0pPuhHDQcjbi2av0LygJhPcGHEadQTbyZJ7eW
+         +Jgb8642Ryl6lZ1Jy/qiEqyv/3pXA6geJCEXJsADkd2fQJMiM8sX1VT91fAlPQhn44PK
+         ytdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Dwr5wEgyI6r7yMWIPAUlrmvqitDKlBJiaf02I2Mddbw=;
+        b=XMElupM2vw48F9wmhZ5gs8/avjlc4PL/5w0F2XhbOtbBKeKbkiyjaB7I+2CapkYqks
+         emm/VQMhF7rgCW84seun6V0AmF8B0NebIAO5L+dWHdSy1SMM7K9515YFWTAP7PfMBAoo
+         xQ57jNr22f0HPdp9FqMPSXFtETEnRbwTIDWlczzF/0HawmpGYf/yvmJlPCeinLXrdD63
+         K4eTiat59yE/EULY9u0h1rJpiGPSH65xQoHW6sQQDPLSuEjAHf6sgZtIHFV8SBQI+O+J
+         sdiSrEfJTGKRKPC+yymECa2YEWCJcO0KImm9aFzzG63wAyyeJYO6q0tuwGQ/YptKvQvl
+         vcrg==
+X-Gm-Message-State: APjAAAUi7B8TJvz1mC/wMiXM+d/k6S+w9IRAT419+W0VCvxDek3kAfPc
+        U1U2MMZWNWZWeEHdR6YZ2wdclBU9rtvmO6GBDS026g==
+X-Google-Smtp-Source: APXvYqzh6zwF4V/4YC8nD0Z2BwGlUY2V6zx66khSkcx5xyg4E6vBVGg2CySKloqHurCXKSqwt/0CuBMYclaiMu3Wj2M=
+X-Received: by 2002:aca:1c0d:: with SMTP id c13mr2963496oic.44.1579978041452;
+ Sat, 25 Jan 2020 10:47:21 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20200121234452.GW89495@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+References: <20200106135715.1159420-1-robert.marko@sartura.hr>
+In-Reply-To: <20200106135715.1159420-1-robert.marko@sartura.hr>
+From:   Robert Marko <robert.marko@sartura.hr>
+Date:   Sat, 25 Jan 2020 19:47:10 +0100
+Message-ID: <CA+HBbNEjV=4GcEqXwm3A_v9nVWvVbVA9FyGvL3qYra1-Geppxw@mail.gmail.com>
+Subject: Re: [PATCH] ARM: qcom: Add support for IPQ40xx
+To:     agross@kernel.org, linux@armlinux.org.uk, arnd@arndb.de,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Cc:     Christian Lamparter <chunkeey@gmail.com>,
+        John Crispin <john@phrozen.org>,
+        Luka Perkov <luka.perkov@sartura.hr>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+Any issues that are preventing merging of this patch?
 
-Yes, i will post new version very soon.
+Cheers
 
-Thanks,
-
-Maulik
-
-
-On 1/22/2020 5:14 AM, Matthias Kaehlcke wrote:
-> Hi Maulik,
+On Mon, Jan 6, 2020 at 2:57 PM Robert Marko <robert.marko@sartura.hr> wrote:
 >
-> what is the state of this patch? Sudeep and Stephen had comments requesting
-> minor changes, do you plan to send a v2 soon?
+> From: Christian Lamparter <chunkeey@gmail.com>
 >
-> Thanks
+> Add support for the Qualcomm IPQ40xx SoC in Kconfig.
+> Also add its appropriate textofs.
 >
-> Matthias
+> Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
+> Signed-off-by: John Crispin <john@phrozen.org>
+> Tested-by: Robert Marko <robert.marko@sartura.hr>
+> Cc: Luka Perkov <luka.perkov@sartura.hr>
+> ---
+>  arch/arm/Makefile          | 1 +
+>  arch/arm/mach-qcom/Kconfig | 5 +++++
+>  2 files changed, 6 insertions(+)
 >
-> On Wed, Oct 30, 2019 at 09:35:18AM +0530, Maulik Shah wrote:
->> Add device bindings for cpuidle states for cpu devices.
->>
->> Cc: devicetree@vger.kernel.org
->> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7180.dtsi | 78 ++++++++++++++++++++++++++++++++++++
->>   1 file changed, 78 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> index fceac50..69d5e2c 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> @@ -70,6 +70,9 @@
->>   			compatible = "arm,armv8";
->>   			reg = <0x0 0x0>;
->>   			enable-method = "psci";
->> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
->> +					   &LITTLE_CPU_SLEEP_1
->> +					   &CLUSTER_SLEEP_0>;
->>   			next-level-cache = <&L2_0>;
->>   			L2_0: l2-cache {
->>   				compatible = "cache";
->> @@ -85,6 +88,9 @@
->>   			compatible = "arm,armv8";
->>   			reg = <0x0 0x100>;
->>   			enable-method = "psci";
->> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
->> +					   &LITTLE_CPU_SLEEP_1
->> +					   &CLUSTER_SLEEP_0>;
->>   			next-level-cache = <&L2_100>;
->>   			L2_100: l2-cache {
->>   				compatible = "cache";
->> @@ -97,6 +103,9 @@
->>   			compatible = "arm,armv8";
->>   			reg = <0x0 0x200>;
->>   			enable-method = "psci";
->> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
->> +					   &LITTLE_CPU_SLEEP_1
->> +					   &CLUSTER_SLEEP_0>;
->>   			next-level-cache = <&L2_200>;
->>   			L2_200: l2-cache {
->>   				compatible = "cache";
->> @@ -109,6 +118,9 @@
->>   			compatible = "arm,armv8";
->>   			reg = <0x0 0x300>;
->>   			enable-method = "psci";
->> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
->> +					   &LITTLE_CPU_SLEEP_1
->> +					   &CLUSTER_SLEEP_0>;
->>   			next-level-cache = <&L2_300>;
->>   			L2_300: l2-cache {
->>   				compatible = "cache";
->> @@ -121,6 +133,9 @@
->>   			compatible = "arm,armv8";
->>   			reg = <0x0 0x400>;
->>   			enable-method = "psci";
->> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
->> +					   &LITTLE_CPU_SLEEP_1
->> +					   &CLUSTER_SLEEP_0>;
->>   			next-level-cache = <&L2_400>;
->>   			L2_400: l2-cache {
->>   				compatible = "cache";
->> @@ -133,6 +148,9 @@
->>   			compatible = "arm,armv8";
->>   			reg = <0x0 0x500>;
->>   			enable-method = "psci";
->> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
->> +					   &LITTLE_CPU_SLEEP_1
->> +					   &CLUSTER_SLEEP_0>;
->>   			next-level-cache = <&L2_500>;
->>   			L2_500: l2-cache {
->>   				compatible = "cache";
->> @@ -145,6 +163,9 @@
->>   			compatible = "arm,armv8";
->>   			reg = <0x0 0x600>;
->>   			enable-method = "psci";
->> +			cpu-idle-states = <&BIG_CPU_SLEEP_0
->> +					   &BIG_CPU_SLEEP_1
->> +					   &CLUSTER_SLEEP_0>;
->>   			next-level-cache = <&L2_600>;
->>   			L2_600: l2-cache {
->>   				compatible = "cache";
->> @@ -157,12 +178,69 @@
->>   			compatible = "arm,armv8";
->>   			reg = <0x0 0x700>;
->>   			enable-method = "psci";
->> +			cpu-idle-states = <&BIG_CPU_SLEEP_0
->> +					   &BIG_CPU_SLEEP_1
->> +					   &CLUSTER_SLEEP_0>;
->>   			next-level-cache = <&L2_700>;
->>   			L2_700: l2-cache {
->>   				compatible = "cache";
->>   				next-level-cache = <&L3_0>;
->>   			};
->>   		};
->> +
->> +		idle-states {
->> +			entry-method = "psci";
->> +
->> +			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
->> +				compatible = "arm,idle-state";
->> +				idle-state-name = "little-power-down";
->> +				arm,psci-suspend-param = <0x40000003>;
->> +				entry-latency-us = <350>;
->> +				exit-latency-us = <461>;
->> +				min-residency-us = <1890>;
->> +				local-timer-stop;
->> +			};
->> +
->> +			LITTLE_CPU_SLEEP_1: cpu-sleep-0-1 {
->> +				compatible = "arm,idle-state";
->> +				idle-state-name = "little-rail-power-down";
->> +				arm,psci-suspend-param = <0x40000004>;
->> +				entry-latency-us = <360>;
->> +				exit-latency-us = <531>;
->> +				min-residency-us = <3934>;
->> +				local-timer-stop;
->> +			};
->> +
->> +			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
->> +				compatible = "arm,idle-state";
->> +				idle-state-name = "big-power-down";
->> +				arm,psci-suspend-param = <0x40000003>;
->> +				entry-latency-us = <264>;
->> +				exit-latency-us = <621>;
->> +				min-residency-us = <952>;
->> +				local-timer-stop;
->> +			};
->> +
->> +			BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
->> +				compatible = "arm,idle-state";
->> +				idle-state-name = "big-rail-power-down";
->> +				arm,psci-suspend-param = <0x40000004>;
->> +				entry-latency-us = <702>;
->> +				exit-latency-us = <1061>;
->> +				min-residency-us = <4488>;
->> +				local-timer-stop;
->> +			};
->> +
->> +			CLUSTER_SLEEP_0: cluster-sleep-0 {
->> +				compatible = "arm,idle-state";
->> +				idle-state-name = "cluster-power-down";
->> +				arm,psci-suspend-param = <0x400000F4>;
->> +				entry-latency-us = <3263>;
->> +				exit-latency-us = <6562>;
->> +				min-residency-us = <9987>;
->> +				local-timer-stop;
->> +			};
->> +		};
->>   	};
->>   
->>   	memory@80000000 {
->> -- 
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
->> of Code Aurora Forum, hosted by The Linux Foundation
->>
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+> diff --git a/arch/arm/Makefile b/arch/arm/Makefile
+> index db857d07114f..3db642722af0 100644
+> --- a/arch/arm/Makefile
+> +++ b/arch/arm/Makefile
+> @@ -152,6 +152,7 @@ textofs-$(CONFIG_PM_H1940)      := 0x00108000
+>  ifeq ($(CONFIG_ARCH_SA1100),y)
+>  textofs-$(CONFIG_SA1111) := 0x00208000
+>  endif
+> +textofs-$(CONFIG_ARCH_IPQ40XX) := 0x00208000
+>  textofs-$(CONFIG_ARCH_MSM8X60) := 0x00208000
+>  textofs-$(CONFIG_ARCH_MSM8960) := 0x00208000
+>  textofs-$(CONFIG_ARCH_MESON) := 0x00208000
+> diff --git a/arch/arm/mach-qcom/Kconfig b/arch/arm/mach-qcom/Kconfig
+> index ecbf3c4eb878..1772eccb5caf 100644
+> --- a/arch/arm/mach-qcom/Kconfig
+> +++ b/arch/arm/mach-qcom/Kconfig
+> @@ -12,6 +12,11 @@ menuconfig ARCH_QCOM
+>
+>  if ARCH_QCOM
+>
+> +config ARCH_IPQ40XX
+> +       bool "Enable support for IPQ40XX"
+> +       select CLKSRC_QCOM
+> +       select HAVE_ARM_ARCH_TIMER
+> +
+>  config ARCH_MSM8X60
+>         bool "Enable support for MSM8X60"
+>         select CLKSRC_QCOM
+> --
+> 2.24.1
+>
