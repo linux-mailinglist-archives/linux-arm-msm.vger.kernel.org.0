@@ -2,82 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6755C14AA8A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2020 20:34:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7916214AACC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2020 21:04:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725893AbgA0TeE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jan 2020 14:34:04 -0500
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:46469 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725845AbgA0TeD (ORCPT
+        id S1725845AbgA0UEK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jan 2020 15:04:10 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:32249 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726210AbgA0UEK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jan 2020 14:34:03 -0500
-Received: by mail-oi1-f195.google.com with SMTP id 13so7783374oij.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2020 11:34:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Vi3znK4M/L38LjlEaKaHj2yaEFa3g1d9LhMbXW3eU04=;
-        b=Q+ALqENAORH6FKmlwrvBXtKFn1lyKPj73FS7X5tQY9DQw//UMU2wZiC+udqXCXe1De
-         19Kypdq+hd8o+Zpx2PkyKw+IUjM7G1Nr3fJq7fuID+lhlXknSduex+GsvYQCS9kyAMxq
-         9gUesq7TDXXr2KAg2psuUIlAFooVnLNt29Y8ZlahIMbin+cIpKABUO/1tPDpeXKKYLrM
-         wnKdlqZvKNbG6EbNUyySF5HEuCVj4biDxTZFlp/toxSShPfcs0ZZqa3f/RvdDgGgS8S/
-         UnWf1VkUCDxWWZo+vpUGKF01oXt1xdMkmREHJloetd2V+7r792Dz+oSTMcUeQphw4T6i
-         ucvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Vi3znK4M/L38LjlEaKaHj2yaEFa3g1d9LhMbXW3eU04=;
-        b=q4Ozcjtuxn1k7ShGrI0ee6QuP55EeJ0PwxojaaQxTYzu2fq+H77Z/MMxESaTXNJbhY
-         1g05GFnSqeup1VBxjOgsqnNiPXznb9vKl2dm28hYUiObKHIIHW+ZqW2L5mYIoYPLW02E
-         miUzvfoBkqA9bP2Ot3astGEjmLdQ8hcW9j2L1hzAUkoofXuOLQFDB0JFK3pLFyhHU12c
-         /LrwobiwNk6e36WF45CrhSBgKkobcFIkPGZ+oBjiLcEGpA7R99SPrHqoyojbCitp3Fut
-         Z/4Pk81Ai4LqcAWEMdG/JtNhnxHIZBy8IJLCqU5s8CGIijxKeyLjmADpvnwc2R7aSloG
-         3jGQ==
-X-Gm-Message-State: APjAAAVJpYaO5dRbfduBtJxlrxgsvjld9h1sn9u5eifFU6UrrpcD4PFC
-        +bEQUBRRfnXndWKnrsuZfj7aWDuzx9tCc9fZpUkKR1IVSMY=
-X-Google-Smtp-Source: APXvYqzpfueLXjE7Jm+XdTZZtc2Xor31Svv/xlpuCRvdcTCjbtaZGJl+v5b1dUGWdiURPpr0be3NTLeOcBjincf2jV8=
-X-Received: by 2002:aca:5083:: with SMTP id e125mr475991oib.96.1580153643282;
- Mon, 27 Jan 2020 11:34:03 -0800 (PST)
+        Mon, 27 Jan 2020 15:04:10 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1580155449; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=QQkEgPnxmrptI1lZyJpzKW7DPznWJqntmF4wRA+2Cmo=; b=uDW3f815jlbxsMk5BjSCNPTxO/IPU4zXNsnX+wTGDrSieu0ZEUPSIKHgsWuA1I85TxLdkQQN
+ RtaUFH7omfegt6WolxXxU2SCXKJrHJxxUechpI84Rf8pSa+K6cEpFIVPVsLMWV85TliIWmTI
+ vSmUdvuDdyLJK8l9M/f5pgr0SMo=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e2f4235.7fc27dbecf80-smtp-out-n03;
+ Mon, 27 Jan 2020 20:04:05 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 65019C447A3; Mon, 27 Jan 2020 20:04:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 88E2DC433CB;
+        Mon, 27 Jan 2020 20:03:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 88E2DC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        georgi.djakov@linaro.org, saravanak@google.com
+Cc:     nm@ti.com, bjorn.andersson@linaro.org, agross@kernel.org,
+        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org, mka@chromium.org,
+        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
+        ulf.hansson@linaro.org, Sibi Sankar <sibis@codeaurora.org>
+Subject: [RFC v3 00/10] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
+Date:   Tue, 28 Jan 2020 01:33:40 +0530
+Message-Id: <20200127200350.24465-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.22.1
 MIME-Version: 1.0
-References: <20200106153711.1282414-1-robert.marko@sartura.hr> <85e05bdd-6f33-2f05-6c32-9892203da9e6@phrozen.org>
-In-Reply-To: <85e05bdd-6f33-2f05-6c32-9892203da9e6@phrozen.org>
-From:   Robert Marko <robert.marko@sartura.hr>
-Date:   Mon, 27 Jan 2020 20:33:52 +0100
-Message-ID: <CA+HBbNHBsxwTLTmk8Yk1tBPiQBxpNDrU3=+sXJw8HLjkS4QnzA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] phy: add driver for Qualcomm IPQ40xx USB PHY
-To:     John Crispin <john@phrozen.org>
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        Luka Perkov <luka.perkov@sartura.hr>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 27, 2020 at 10:43 AM John Crispin <john@phrozen.org> wrote:
->
-> On 06/01/2020 16:37, Robert Marko wrote:
-> > +#define PHY_CTRL0_ADDR       0x000
-> > +#define PHY_CTRL1_ADDR       0x004
-> > +#define PHY_CTRL2_ADDR       0x008
-> > +#define PHY_CTRL3_ADDR       0x00C
-> > +#define PHY_CTRL4_ADDR       0x010
-> > +#define PHY_MISC_ADDR        0x024
-> > +#define PHY_IPG_ADDR 0x030
-> > +
-> > +#define PHY_CTRL0_VAL        0xA4600015
-> > +#define PHY_CTRL1_VAL        0x09500000
-> > +#define PHY_CTRL2_VAL        0x00058180
-> > +#define PHY_CTRL3_VAL        0x6DB6DCD6
-> > +#define PHY_CTRL4_VAL        0x836DB6DB
-> > +#define PHY_MISC_VAL 0x3803FB0C
-> > +#define PHY_IPG_VAL  0x47323232
->
-> looks like this was some cruft from silicon bringup days, current mass
-> production silicon has these values as power-on defaults. please resend
-> with the register writes and defines simply removed.
->         John
-Done
+This RFC series aims to extend cpu based scaling support to L3/DDR on
+SDM845 and SC7180 SoCs.
+
+Patches [1-3] - Blacklist SDM845 and SC7180 in cpufreq-dt-platdev
+Patches [5-7] - Hack in a way to add/remove multiple opp tables to
+                a single device. I am yet to fix the debugfs to
+		support multiple opp_tables per device but wanted to
+		send what was working upstream to get an idea if multiple
+		opp tables per device is a feature that will be useful
+		upstream.
+Patches [9-10] - Add the cpu/cpu-ddr/cpu-l3 opp tables for SDM845
+                 and SC7180 SoCs.
+
+v3:
+ * Migrated to using Saravana's opp-kBps bindings [1]
+ * Fixed some misc comments from Rajendra
+ * Added support for SC7180
+
+v2:
+ * Incorporated Viresh's comments from:
+ https://lore.kernel.org/lkml/20190410102429.r6j6brm5kspmqxc3@vireshk-i7/
+ https://lore.kernel.org/lkml/20190410112516.gnh77jcwawvld6et@vireshk-i7/
+ * Dropped cpufreq-map passive governor
+
+Git-branch: https://github.com/QuinAsura/linux/tree/lnext-012420
+
+Some alternate ways of hosting the opp-tables:
+https://github.com/QuinAsura/linux/commit/50b92bfaadc8f9a0d1e12249646e018bd6d1a9d3
+https://github.com/QuinAsura/linux/commit/3d23d1eefd16ae6d9e3ef91e93e78749d8844e98
+Viresh didn't really like ^^ bindings and they dont really scale well. Just
+including them here for completeness.
+
+Depends on the following series:
+[1] https://patchwork.kernel.org/cover/11277199/
+[2] https://patchwork.kernel.org/cover/11055499/ 
+[3] https://patchwork.kernel.org/cover/11326381/
+
+Sibi Sankar (10):
+  arm64: dts: qcom: sdm845: Add SoC compatible to MTP
+  cpufreq: blacklist SDM845 in cpufreq-dt-platdev
+  cpufreq: blacklist SC7180 in cpufreq-dt-platdev
+  OPP: Add and export helper to update voltage
+  opp: of: export _opp_of_get_opp_desc_node
+  opp: Allow multiple opp_tables to be mapped to a single device
+  opp: Remove multiple attached opp tables from a device
+  cpufreq: qcom: Update the bandwidth levels on frequency change
+  arm64: dts: qcom: sdm845: Add cpu OPP tables
+  arm64: dts: qcom: sc7180: Add cpu OPP tables
+
+ arch/arm64/boot/dts/qcom/sc7180.dtsi    | 287 +++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm845-mtp.dts |   2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi    | 453 ++++++++++++++++++++++++
+ drivers/cpufreq/cpufreq-dt-platdev.c    |   2 +
+ drivers/cpufreq/qcom-cpufreq-hw.c       | 246 +++++++++++--
+ drivers/opp/core.c                      | 111 +++++-
+ drivers/opp/of.c                        |   3 +-
+ drivers/opp/opp.h                       |   2 +
+ include/linux/pm_opp.h                  |  10 +
+ 9 files changed, 1083 insertions(+), 33 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
