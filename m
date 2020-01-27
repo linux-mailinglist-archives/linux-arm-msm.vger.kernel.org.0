@@ -2,127 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 96D5D14AC9A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2020 00:27:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B879D14ACA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2020 00:40:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726083AbgA0X1g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jan 2020 18:27:36 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:45552 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726080AbgA0X1f (ORCPT
+        id S1726080AbgA0XkZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jan 2020 18:40:25 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:51821 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725955AbgA0XkZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jan 2020 18:27:35 -0500
-Received: by mail-pg1-f193.google.com with SMTP id b9so5936367pgk.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2020 15:27:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=hwrToBDFY4HIyFLVjgz55WQA/wuDwI/+ZrtWoDNgqy8=;
-        b=P7/Ol9VFJBuzQj3BmDZ7XheRs5xTuuwbS3UWi5CNkSUsTkwKfcix4/o2R+Uqg5Z+S7
-         bgnUa/54hKHdlkuF9qEt8rIwaLxRSrCEDlNlgmuGNNmsaZgbmaHRHhCCy7vdag57HgjB
-         cw4veg02KHYv1G0VjBjblOt60y/D7hKBbXeNw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=hwrToBDFY4HIyFLVjgz55WQA/wuDwI/+ZrtWoDNgqy8=;
-        b=CIXc0ugTua78dpMMNyjIWy1DfLCcIYjFuBUgPSdJLaasrRH1zyqgyZRItYOfsVkfi+
-         bV0LyAFukMNqOcKaAODZBz0stDqrpBYGgMyuC0bpuMDWgodXI8dm4i3Zb8OT/Ye2gjF2
-         VdiqRwadP7kTGoBmQjYd15BFKiabwOm87LoguTFym0klLXvjZXP/iuKiHe8mqfhyOvYB
-         2usbxTvdN1L+G4PlVtwi1/UmO//z5yIu4aLwurl+Pv8Ahbfzt/SDXs0bQNX33qQp98+v
-         HFaa/00Wc1j7QC1TcJj9XFFDLP/YvMGo07E3rLoXW7EvRa5nh3mjj5J6vsLrBlyCbyWy
-         QgGQ==
-X-Gm-Message-State: APjAAAVx1DxZvSgqPBDWyhyAgmyzyXiLjL17OASuU1CgxKPfrBh++mdN
-        nFMD66gA0FJsn/6o/3+hpxNVX+jTX68=
-X-Google-Smtp-Source: APXvYqzBa+ZBcDQ+dqyhCzSfqudbD6GhoALp9yymRH4pSJpi2ADb/wQQOBTsiGcGP/atIwo/qfxDjQ==
-X-Received: by 2002:a62:cd86:: with SMTP id o128mr1017346pfg.187.1580167655327;
-        Mon, 27 Jan 2020 15:27:35 -0800 (PST)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id r2sm17236619pgv.16.2020.01.27.15.27.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2020 15:27:34 -0800 (PST)
-Date:   Mon, 27 Jan 2020 15:27:33 -0800
-From:   Kees Cook <keescook@chromium.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>,
-        Joel Fernandes <joel@joelfernandes.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>
-Subject: Re: [PATCH] pstore: Fix printing of duplicate boot messages to
- console
-Message-ID: <202001271525.E6EB4FDD6@keescook>
-References: <20200123160031.9853-1-saiprakash.ranjan@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200123160031.9853-1-saiprakash.ranjan@codeaurora.org>
+        Mon, 27 Jan 2020 18:40:25 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1580168423; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=d74wUAmSb8IYWC70SlwNLpBtbPMqEnwBpMkYDFfe8U0=; b=UEpn94dLdSCNhQstTs+8RvufcfSwiviFVbByiCna73//K3IWhvSH0T3nKlMW4LVMKkYz+SUA
+ QL13DzT6Mo2cdTbaIlOMcHTvSUuecDQljkH8vDEvcpiHIaTrO9F5vt8YZ1xmGdibEZWaRrmQ
+ aXKeN1FCRx3Uj6kHIVpNyNc95so=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e2f74dd.7f06fc97fce0-smtp-out-n01;
+ Mon, 27 Jan 2020 23:40:13 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B3A52C4479C; Mon, 27 Jan 2020 23:40:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 827AAC43383;
+        Mon, 27 Jan 2020 23:40:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 827AAC43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=abhinavk@codeaurora.org
+From:   Abhinav Kumar <abhinavk@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Uma Shankar <uma.shankar@intel.com>, linux-arm-msm@vger.kernel.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        nganji@codeaurora.org, aravindh@codeaurora.org, adelva@google.com,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Subject: [PATCH v2] drm: Parse Colorimetry data block from EDID
+Date:   Mon, 27 Jan 2020 15:40:06 -0800
+Message-Id: <1580168406-23808-1-git-send-email-abhinavk@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 23, 2020 at 09:30:31PM +0530, Sai Prakash Ranjan wrote:
-> Since commit f92b070f2dc8 ("printk: Do not miss new messages
-> when replaying the log"), CON_PRINTBUFFER flag causes the
-> duplicate boot messages to be printed on the console when
-> PSTORE_CONSOLE and earlycon (boot console) is enabled.
-> Pstore console registers to boot console when earlycon is
-> enabled during pstore_register_console as a part of ramoops
-> initialization in postcore_initcall and the printk core
-> checks for CON_PRINTBUFFER flag and replays the log buffer
-> to registered console (in this case pstore console which
-> just registered to boot console) causing duplicate messages
-> to be printed. Remove the CON_PRINTBUFFER flag from pstore
-> console since pstore is not concerned with the printing of
-> buffer to console but with writing of the buffer to the
-> backend.
+From: Uma Shankar <uma.shankar@intel.com>
 
-I agree this patch isn't the solution, but I'm trying to understand
-where better logic could be added. Is the issue that printk sees both
-earlycon and CON_PRINTBUFFER active? Can we add a new CON_* flag that
-means "not actually printing anything"? (Or maybe a new flag for
-non-printing to replace CON_PRINTBUFFER that lets pstore still work?)
+CEA 861.3 spec adds colorimetry data block for HDMI.
+Parsing the block to get the colorimetry data from
+panel.
 
--Kees
+This was posted by Uma Shankar at
+https://patchwork.kernel.org/patch/10861327/
 
-> 
-> Console log with earlycon and pstore console enabled:
-> 
-> [    0.008342] Console: colour dummy device 80x25
-> [    0.000000] Booting Linux on physical CPU 0x0000000000 [0x51df805e]
-> ...
-> [    1.244049] hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
-> [    0.000000] Booting Linux on physical CPU 0x0000000000 [0x51df805e]
-> 
-> Fixes: f92b070f2dc8 ("printk: Do not miss new messages when replaying the log")
-> Reported-by: Douglas Anderson <dianders@chromium.org>
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> ---
->  fs/pstore/platform.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/fs/pstore/platform.c b/fs/pstore/platform.c
-> index d896457e7c11..271b00db0973 100644
-> --- a/fs/pstore/platform.c
-> +++ b/fs/pstore/platform.c
-> @@ -505,7 +505,7 @@ static void pstore_console_write(struct console *con, const char *s, unsigned c)
->  static struct console pstore_console = {
->  	.name	= "pstore",
->  	.write	= pstore_console_write,
-> -	.flags	= CON_PRINTBUFFER | CON_ENABLED | CON_ANYTIME,
-> +	.flags	= CON_ENABLED | CON_ANYTIME,
->  	.index	= -1,
->  };
->  
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
+Modified by Abhinav Kumar:
+- Use macros to distinguish the bit fields for clarity
 
+Changes in v2:
+- Use the drm_edid.h macros in drm_edid.c (Stephen Boyd)
+
+Signed-off-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+---
+ drivers/gpu/drm/drm_edid.c  | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ include/drm/drm_connector.h |  3 +++
+ include/drm/drm_edid.h      | 14 ++++++++++++++
+ 3 files changed, 62 insertions(+)
+
+diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+index 99769d6..9a82fb8 100644
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -3136,6 +3136,7 @@ static int drm_cvt_modes(struct drm_connector *connector,
+ #define VIDEO_BLOCK     0x02
+ #define VENDOR_BLOCK    0x03
+ #define SPEAKER_BLOCK	0x04
++#define COLORIMETRY_DATA_BLOCK		0x5
+ #define HDR_STATIC_METADATA_BLOCK	0x6
+ #define USE_EXTENDED_TAG 0x07
+ #define EXT_VIDEO_CAPABILITY_BLOCK 0x00
+@@ -4199,6 +4200,48 @@ static void fixup_detailed_cea_mode_clock(struct drm_display_mode *mode)
+ 	mode->clock = clock;
+ }
+ 
++static bool cea_db_is_hdmi_colorimetry_data_block(const u8 *db)
++{
++	if (cea_db_tag(db) != USE_EXTENDED_TAG)
++		return false;
++
++	if (db[1] != COLORIMETRY_DATA_BLOCK)
++		return false;
++
++	if (cea_db_payload_len(db) < 2)
++		return false;
++
++	return true;
++}
++
++static void
++drm_parse_colorimetry_data_block(struct drm_connector *connector, const u8 *db)
++{
++	struct drm_hdmi_info *info = &connector->display_info.hdmi;
++
++	if (db[2] & DRM_EDID_CLRMETRY_xvYCC_601)
++		info->colorimetry |= DRM_EDID_CLRMETRY_xvYCC_601;
++	if (db[2] & DRM_EDID_CLRMETRY_xvYCC_709)
++		info->colorimetry |= DRM_EDID_CLRMETRY_xvYCC_709;
++	if (db[2] & DRM_EDID_CLRMETRY_sYCC_601)
++		info->colorimetry |= DRM_EDID_CLRMETRY_sYCC_601;
++	if (db[2] & DRM_EDID_CLRMETRY_ADBYCC_601)
++		info->colorimetry |= DRM_EDID_CLRMETRY_ADBYCC_601;
++	if (db[2] & DRM_EDID_CLRMETRY_ADB_RGB)
++		info->colorimetry |= DRM_EDID_CLRMETRY_ADB_RGB;
++	if (db[2] & DRM_EDID_CLRMETRY_BT2020_CYCC)
++		info->colorimetry |= DRM_EDID_CLRMETRY_BT2020_CYCC;
++	if (db[2] & DRM_EDID_CLRMETRY_BT2020_YCC)
++		info->colorimetry |= DRM_EDID_CLRMETRY_BT2020_YCC;
++	if (db[2] & DRM_EDID_CLRMETRY_BT2020_RGB)
++		info->colorimetry |= DRM_EDID_CLRMETRY_BT2020_RGB;
++	/* Byte 4 Bit 7: DCI-P3 */
++	if (db[3] & BIT(7))
++		info->colorimetry |= DRM_EDID_CLRMETRY_DCI_P3;
++
++	DRM_DEBUG_KMS("Supported Colorimetry 0x%x\n", info->colorimetry);
++}
++
+ static bool cea_db_is_hdmi_hdr_metadata_block(const u8 *db)
+ {
+ 	if (cea_db_tag(db) != USE_EXTENDED_TAG)
+@@ -4877,6 +4920,8 @@ static void drm_parse_cea_ext(struct drm_connector *connector,
+ 			drm_parse_vcdb(connector, db);
+ 		if (cea_db_is_hdmi_hdr_metadata_block(db))
+ 			drm_parse_hdr_metadata_block(connector, db);
++		if (cea_db_is_hdmi_colorimetry_data_block(db))
++			drm_parse_colorimetry_data_block(connector, db);
+ 	}
+ }
+ 
+diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
+index 2219109..a996ee3 100644
+--- a/include/drm/drm_connector.h
++++ b/include/drm/drm_connector.h
+@@ -207,6 +207,9 @@ struct drm_hdmi_info {
+ 
+ 	/** @y420_dc_modes: bitmap of deep color support index */
+ 	u8 y420_dc_modes;
++
++	/* @colorimetry: bitmap of supported colorimetry modes */
++	u16 colorimetry;
+ };
+ 
+ /**
+diff --git a/include/drm/drm_edid.h b/include/drm/drm_edid.h
+index f0b03d4..4f22f22 100644
+--- a/include/drm/drm_edid.h
++++ b/include/drm/drm_edid.h
+@@ -224,6 +224,20 @@ struct detailed_timing {
+ 				    DRM_EDID_YCBCR420_DC_36 | \
+ 				    DRM_EDID_YCBCR420_DC_30)
+ 
++/*
++ * Supported Colorimetry from colorimetry data block
++ * as per CEA 861-G spec
++ */
++#define DRM_EDID_CLRMETRY_xvYCC_601   (1 << 0)
++#define DRM_EDID_CLRMETRY_xvYCC_709   (1 << 1)
++#define DRM_EDID_CLRMETRY_sYCC_601    (1 << 2)
++#define DRM_EDID_CLRMETRY_ADBYCC_601  (1 << 3)
++#define DRM_EDID_CLRMETRY_ADB_RGB     (1 << 4)
++#define DRM_EDID_CLRMETRY_BT2020_CYCC (1 << 5)
++#define DRM_EDID_CLRMETRY_BT2020_YCC  (1 << 6)
++#define DRM_EDID_CLRMETRY_BT2020_RGB  (1 << 7)
++#define DRM_EDID_CLRMETRY_DCI_P3      (1 << 15)
++
+ /* ELD Header Block */
+ #define DRM_ELD_HEADER_BLOCK_SIZE	4
+ 
 -- 
-Kees Cook
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
