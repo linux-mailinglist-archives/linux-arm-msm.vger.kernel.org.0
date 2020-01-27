@@ -2,84 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 43C3014A766
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2020 16:41:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D48D14A802
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2020 17:25:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729402AbgA0PlQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jan 2020 10:41:16 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:36436 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729133AbgA0PlQ (ORCPT
+        id S1726885AbgA0QZm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jan 2020 11:25:42 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:37421 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726871AbgA0QZl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jan 2020 10:41:16 -0500
-Received: by mail-ot1-f65.google.com with SMTP id g15so8795436otp.3;
-        Mon, 27 Jan 2020 07:41:15 -0800 (PST)
+        Mon, 27 Jan 2020 11:25:41 -0500
+Received: by mail-pg1-f195.google.com with SMTP id q127so5406199pga.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2020 08:25:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AETTwMBW1K6QIrQVON3rToRwyIKW9SZw4dAWXXfxxIQ=;
+        b=SSPGMkhcg/9PUEynqidYuSP3yImPLsIF0VEkjnYfGxegxHZYeafBU/aC87Hn79uJC9
+         EBVXL8aVbo+SfESMN5nfxwDx102EQIGK/SYxSIzGYcn3sBiIo8fGtdst1wuCOuOR0RXI
+         jKkgzLl91xKXawlXJkk/ZclgLnsYths3wEGQ8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SSAka/+unOWdID+dlGzjX+fU3/o5RpQNSVZW5gnH3WE=;
-        b=UlpyH7xThF7e1EYysadA9L2V2vXr1nkFatKIQ1TjP1FT7lrVkoQECL2VLMmtvuUyqo
-         /BP3SYJtFyM1F7siuTvj0ObQJvpQOv0REFnWioXRqT3LmfAnnzj75RDKpvWw2Sgt61Uv
-         0pL84X3+nLckUa3XUxiTdAs78pBmaZUs9puqxwO6NLiwkrWp3tl3iGAY4OMiKUcDprCH
-         wJAQri32q/ZlrEQJ/55TsOwlXfn/E71LE1i4egik3xto7O8AQ3obrNNQgw8yJBG81Ql4
-         V7MrQYqIz7jR2Tpy8202RYjwt1Gjk0n/HIbeORciom35cemdbTxZAviF04SD0FiceZxA
-         cbPA==
-X-Gm-Message-State: APjAAAVS6urqASPpWWr7gDyz2cXmCIV2neyciQpo1jbTo93AIZ2Mj8vJ
-        er3GwspdAzwM1xRG7ZCtqg==
-X-Google-Smtp-Source: APXvYqyFSBoR7e0fQ95loR0phVN8/LbKEX99IjMFvGvg6Ft5a0R3Rhk1dKI6rdHuGUXnQJKSH+UUPA==
-X-Received: by 2002:a9d:68d1:: with SMTP id i17mr12360581oto.367.1580139675043;
-        Mon, 27 Jan 2020 07:41:15 -0800 (PST)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id l207sm247662oih.25.2020.01.27.07.41.13
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AETTwMBW1K6QIrQVON3rToRwyIKW9SZw4dAWXXfxxIQ=;
+        b=o7svPIE0MpSa27XBA0lWHbBrpCCw2lekalFokEcqbrfV0RBPJbzSwXhRXJArlYI1Ro
+         RZojo4dlMxSnHCvJtfKL0UVmA4PXGTqb9TpoIHTtsLk1QfqLhspiKsWiMiHccnlKYCyu
+         drGIQcjAH+2D3gcI4eHGIlyYPb+5MvyJl9xx/2jnmcgFweu0fVJQ6SBCJ2JndzQWs0ux
+         YEhYyaqFu8P94VUtkntXNKwXbe86vjgm+tFt/jvA6Xz/ZnlaHJt5F7WPXRz7+2Y3n6o2
+         pu+sya8abdkj3Bji1ueGRMnSiCsd/RFUZLYgDvR5zkkLzD4FUjL+nLMgJxbI0vATORCo
+         QKHQ==
+X-Gm-Message-State: APjAAAVNsA+7+BcfESugxG3rVxL/txB7kWcN7dS+mynEQcglhGVlezMf
+        VwMxKzLX2t5lsdCNa03+6zysfw==
+X-Google-Smtp-Source: APXvYqxlebiuUFEHjfubvnlKDauUXcLhX/iKJ6unhIbyMgvVa8vTxmVSqa4anG4aFFAUBvpxV2N5AQ==
+X-Received: by 2002:a63:3196:: with SMTP id x144mr19921682pgx.319.1580142341192;
+        Mon, 27 Jan 2020 08:25:41 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id r14sm16133264pfh.10.2020.01.27.08.25.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2020 07:41:14 -0800 (PST)
-Received: (nullmailer pid 6960 invoked by uid 1000);
-        Mon, 27 Jan 2020 15:41:13 -0000
-Date:   Mon, 27 Jan 2020 09:41:13 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Sricharan R <sricharan@codeaurora.org>
-Cc:     agross@kernel.org, devicetree@vger.kernel.org,
-        linus.walleij@linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-soc@vger.kernel.org,
-        robh+dt@kernel.org, sivaprak@codeaurora.org,
-        sricharan@codeaurora.org,
-        Rajkumar Ayyasamy <arajkuma@codeaurora.org>,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-Subject: Re: [PATCH V6 1/5] dt-bindings: pinctrl: qcom: Add ipq6018 pinctrl
- bindings
-Message-ID: <20200127154113.GA6904@bogus>
-References: <1579439601-14810-1-git-send-email-sricharan@codeaurora.org>
- <1579439601-14810-2-git-send-email-sricharan@codeaurora.org>
+        Mon, 27 Jan 2020 08:25:40 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <andy.gross@linaro.org>
+Cc:     mka@chromium.org, vbadigan@codeaurora.org,
+        Douglas Anderson <dianders@chromium.org>,
+        devicetree@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Subject: [PATCH] arm64: dts: qcom: qcs404: Fix sdhci compat string
+Date:   Mon, 27 Jan 2020 08:23:48 -0800
+Message-Id: <20200127082331.1.I402470e4a162d69fde47ee2ea708b15bde9751f9@changeid>
+X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1579439601-14810-2-git-send-email-sricharan@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 19 Jan 2020 18:43:17 +0530, Sricharan R wrote:
-> Add device tree binding Documentation details for ipq6018
-> pinctrl driver.
-> 
-> Co-developed-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
-> Signed-off-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
-> Co-developed-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-> Co-developed-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
-> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> ---
-> [V6] 
->   * Addressed review comments form Rob.
->  .../bindings/pinctrl/qcom,ipq6018-pinctrl.yaml     | 153 +++++++++++++++++++++
->  1 file changed, 153 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
-> 
+As per the bindings, the SDHCI controller should have a SoC-specific
+compatible string in addition to the generic version-based one.  Add
+it.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Fixes: 7241ab944da3 ("arm64: dts: qcom: qcs404: Add sdcc1 node")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index 4ee1e3d5f123..1eea06435779 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -685,7 +685,7 @@ pcie_phy: phy@7786000 {
+ 		};
+ 
+ 		sdcc1: sdcc@7804000 {
+-			compatible = "qcom,sdhci-msm-v5";
++			compatible = "qcom,qcs404-sdhci", "qcom,sdhci-msm-v5";
+ 			reg = <0x07804000 0x1000>, <0x7805000 0x1000>;
+ 			reg-names = "hc_mem", "cmdq_mem";
+ 
+-- 
+2.25.0.341.g760bfbb309-goog
+
