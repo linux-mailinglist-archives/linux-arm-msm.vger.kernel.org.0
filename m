@@ -2,96 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 766CD14A8B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2020 18:08:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA0CE14A946
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2020 18:53:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726565AbgA0RIF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jan 2020 12:08:05 -0500
-Received: from mail-vk1-f195.google.com ([209.85.221.195]:46351 "EHLO
-        mail-vk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725893AbgA0RIF (ORCPT
+        id S1725972AbgA0Rxh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jan 2020 12:53:37 -0500
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:46964 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725828AbgA0Rxg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jan 2020 12:08:05 -0500
-Received: by mail-vk1-f195.google.com with SMTP id u6so2763624vkn.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2020 09:08:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bOiV8nj2HZ+JtKcIVA5xQdznkVK/jM8PnqE9J+mRXqQ=;
-        b=YrB//b92fTsHkMw3bXM25KI/RYWOU7ymbAeVsjo+vGfk3HbEiKFvFYtASMzcTT0lUM
-         dyv2seW78v0VKay+qVrhTS3Jpn7Y7unPJ29rR2HvbrOOrPCQzDq7qdIqyFckjEDe7+Ap
-         aFRB4NmCvhUk0h4tMLr2fD0rmlmi8+LY4yxVs=
+        Mon, 27 Jan 2020 12:53:36 -0500
+Received: by mail-ot1-f66.google.com with SMTP id g64so9228083otb.13;
+        Mon, 27 Jan 2020 09:53:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bOiV8nj2HZ+JtKcIVA5xQdznkVK/jM8PnqE9J+mRXqQ=;
-        b=A6FQTWdcQmUDdYxlXhzINWT8TEYwKQ+S3Y9S77yk3tneTpB3w6hfe2+TkNagLBJM28
-         tDNKGxKNXCl9A6vnv/G6vwgdgpS6jr6rrBi0PSYCczCdtBnNq1Jj25mj1ilKmhRO3fVV
-         jOIulEFUO9dnJSjck2D0P9NCEVmywdCxrh2g9tIMdepxsRXyX9azhSeRcJiQ87xm778+
-         MWQyQlD8e+NFqYaa2hHIwyKI78pXw5el4fVpHZwcMOGEZRU25LD+811JNm9CnyXgLCXx
-         PZBv/Tc4xetNfRVLz2QjYISts8sWEnUC9H5lxXpnVm/AVaKdiTtRfIb4B4FIiBLC9Fih
-         Vgdg==
-X-Gm-Message-State: APjAAAXVk84yGTsjMZRt2taysYcP6SKGdUpDFOI/KBvy7/mz/PD921u+
-        k4JomHOTHIEouwxYkY1UgYf9wouTsGo=
-X-Google-Smtp-Source: APXvYqyqPPruuet2D89Kwd3VpQVP6YzfWnSxkUV6FtUVvJVNQzeVRnOmuPkpZ0/EVL+o9X7VDDiBfA==
-X-Received: by 2002:a05:6122:2dc:: with SMTP id k28mr10155323vki.70.1580144883359;
-        Mon, 27 Jan 2020 09:08:03 -0800 (PST)
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com. [209.85.217.50])
-        by smtp.gmail.com with ESMTPSA id w1sm3680879uaj.12.2020.01.27.09.08.02
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Jan 2020 09:08:02 -0800 (PST)
-Received: by mail-vs1-f50.google.com with SMTP id t12so6108306vso.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2020 09:08:02 -0800 (PST)
-X-Received: by 2002:a67:1ec5:: with SMTP id e188mr4925367vse.169.1580144881597;
- Mon, 27 Jan 2020 09:08:01 -0800 (PST)
-MIME-Version: 1.0
-References: <20200127082331.1.I402470e4a162d69fde47ee2ea708b15bde9751f9@changeid>
- <20200127170457.GK2841@vkoul-mobl>
-In-Reply-To: <20200127170457.GK2841@vkoul-mobl>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 27 Jan 2020 09:07:49 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XKHy6FmkeyCNB+vb7Ws=uZWOQ-QpYOKPJZg9PhFcJf5A@mail.gmail.com>
-Message-ID: <CAD=FV=XKHy6FmkeyCNB+vb7Ws=uZWOQ-QpYOKPJZg9PhFcJf5A@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: qcs404: Fix sdhci compat string
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ZwdeJdNohgFWX1mFD2UjbBw/HXmaaN29rT20q0J8HBI=;
+        b=o7j6tNstDjVdxALJYsnH829D1SY/1ZujhSjShSls0By67cFDORF72V233vGpe0KGnc
+         1dS1EM+OdQJ0v2dG1AGYAZcfFdJbsvaLGTagtCoBGmTMvr/CmRsezXuEAywfckMRcjZ8
+         yhkwkWiIPRS6qmu0pFb4nXSxMZkh5of+HCIXBfY+pKb2vMjMgES+/y9xHukxI2ADOM7R
+         BwvE85tbvy6KoFn74oPf3u9CSPVTZrYeNK1rA3PF2yHH43zyPmyKzVymlJfqd4gVfRPT
+         8PJfw1SI5eQptPK+KQO02v4eq6/3O5UfYsuN6kieOA5vWXzAac0FcnX61Ev6adFoHVWR
+         g4mw==
+X-Gm-Message-State: APjAAAWErxZASChI2BlTdkuLPtz3kxihB/7j3VyXuPKq507h83vy3PNo
+        nfK7XHvoRz1qhv9Ao736PBoaCns=
+X-Google-Smtp-Source: APXvYqwdUCJv6mpkyNlq5MZ9t+xypOOB3E8o5xFdi8iB2ko7UaxiRDFXUY5FgcV40zfXH9dcLvJ12Q==
+X-Received: by 2002:a9d:53c2:: with SMTP id i2mr12346342oth.43.1580147616069;
+        Mon, 27 Jan 2020 09:53:36 -0800 (PST)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id n64sm4379460otn.35.2020.01.27.09.53.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jan 2020 09:53:35 -0800 (PST)
+Received: (nullmailer pid 30258 invoked by uid 1000);
+        Mon, 27 Jan 2020 17:53:34 -0000
+Date:   Mon, 27 Jan 2020 11:53:34 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        gregkh@linuxfoundation.org, jackp@codeaurora.org, balbi@kernel.org,
+        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
+        Sriharsha Allenki <sallenki@codeaurora.org>,
+        Anu Ramanathan <anur@codeaurora.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
         Mark Rutland <mark.rutland@arm.com>,
-        Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 02/19] dt-bindings: phy: Add Qualcomm Synopsys
+ Hi-Speed USB PHY binding
+Message-ID: <20200127175334.GA12315@bogus>
+References: <20200122185610.131930-1-bryan.odonoghue@linaro.org>
+ <20200122185610.131930-3-bryan.odonoghue@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200122185610.131930-3-bryan.odonoghue@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed, Jan 22, 2020 at 06:55:53PM +0000, Bryan O'Donoghue wrote:
+> From: Sriharsha Allenki <sallenki@codeaurora.org>
+> 
+> Adds bindings for QCS404 USB PHY supporting Low-Speed, Full-Speed and
+> Hi-Speed USB connectivity on Qualcomm chipsets.
+> 
+> [bod: Converted to YAML. Changed name dropping snps, 28nm components]
+> 
+> Signed-off-by: Sriharsha Allenki <sallenki@codeaurora.org>
+> Signed-off-by: Anu Ramanathan <anur@codeaurora.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Kishon Vijay Abraham I <kishon@ti.com>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Mark Rutland <mark.rutland@arm.com>
+> Cc: Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Cc: devicetree@vger.kernel.org
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  .../bindings/phy/qcom,qcs404-usb-hs.yaml      | 77 +++++++++++++++++++
+>  1 file changed, 77 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,qcs404-usb-hs.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,qcs404-usb-hs.yaml b/Documentation/devicetree/bindings/phy/qcom,qcs404-usb-hs.yaml
+> new file mode 100644
+> index 000000000000..d71beb822ae2
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,qcs404-usb-hs.yaml
+> @@ -0,0 +1,77 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/phy/qcom,qcs404-usb-hs.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm Synopsys QCS-404 High-Speed PHY
+> +
+> +maintainers:
+> +  - Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> +
+> +description: |
+> +  Qualcomm QCS-404 Low-Speed, Full-Speed, Hi-Speed USB PHY
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,qcs404-usb-hsphy
+> +
+> +  reg:
+> +    maxItems: 1
+> +    description: USB PHY base address and length of the register map.
+> +
+> +  "#phy-cells":
+> +    const: 0
+> +    description: Should be 0. See phy/phy-bindings.txt for details.
+> +
+> +  clocks:
+> +    minItems: 3
+> +    maxItems: 3
+> +    description: phandles to rpmcc ref clock, PHY AHB clock, rentention clock.
+> +
+> +  clock-names:
+> +    items:
+> +      - const: ref
+> +      - const: phy
+> +      - const: sleep
+> +
+> +  resets:
+> +    items:
+> +      - description: PHY core reset
+> +      - description: POR reset
+> +
+> +  reset-names:
+> +    items:
+> +      - const: phy
+> +      - const: por
+> +
+> +  vdd-supply:
+> +    maxItems: 1
 
-On Mon, Jan 27, 2020 at 9:05 AM Vinod Koul <vkoul@kernel.org> wrote:
->
-> On 27-01-20, 08:23, Douglas Anderson wrote:
-> > As per the bindings, the SDHCI controller should have a SoC-specific
-> > compatible string in addition to the generic version-based one.  Add
-> > it.
->
-> Thanks for spotting it Doug, Btw did some script catch it or manual
-> inspection?
->
->
-> Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Supplies are always 1 entry, so drop this.
 
-It probably would have been spotted by "make dtbs_check", but I wasn't
-running that in this case.  I just happened to notice it while
-chatting with someone at Qualcomm about whether
-<https://crrev.com/c/2022985> was correct (still waiting for a
-response on that).
+> +    description: phandle to the regulator VDD supply node.
+> +
+> +  vdda1p8-supply:
+> +    maxItems: 1
+> +    description: phandle to the regulator 1.8V supply node.
+> +
+> +  vdda3p3-supply:
+> +    maxItems: 1
+> +    description: phandle to the regulator 3.3V supply node.
 
--Doug
+No required properties?
+
+Add:
+
+additionalProperties: false
+
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-qcs404.h>
+> +    #include <dt-bindings/clock/qcom,rpmcc.h>
+> +    usb2_phy_prim: phy@7a000 {
+> +        compatible = "qcom,qcs404-usb-hsphy";
+> +        reg = <0x0007a000 0x200>;
+> +        #phy-cells = <0>;
+> +        clocks = <&rpmcc RPM_SMD_LN_BB_CLK>,
+> +                 <&gcc GCC_USB_HS_PHY_CFG_AHB_CLK>,
+> +                 <&gcc GCC_USB2A_PHY_SLEEP_CLK>;
+> +        clock-names = "ref", "phy", "sleep";
+> +        resets = <&gcc GCC_USB_HS_PHY_CFG_AHB_BCR>,
+> +                 <&gcc GCC_USB2A_PHY_BCR>;
+> +        reset-names = "phy", "por";
+> +    };
+> +...
+> -- 
+> 2.25.0
+> 
