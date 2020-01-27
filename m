@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 067F714AB89
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2020 22:22:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B757B14AB8D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2020 22:23:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726080AbgA0VWx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jan 2020 16:22:53 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35446 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725946AbgA0VWx (ORCPT
+        id S1726164AbgA0VXi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jan 2020 16:23:38 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41503 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725955AbgA0VXi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jan 2020 16:22:53 -0500
-Received: by mail-wm1-f66.google.com with SMTP id b2so143120wma.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2020 13:22:50 -0800 (PST)
+        Mon, 27 Jan 2020 16:23:38 -0500
+Received: by mail-wr1-f67.google.com with SMTP id c9so13413829wrw.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2020 13:23:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=sartura-hr.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=EhwCmtaQ5z38Dh4LdrIcWd+8GWIRdht98z03oyUG448=;
-        b=sB5h7Yg0LGkjWOuzFeE9UadeN0i28fRgEyEjqjQXBpduzqX6FEjBYcVLdTjDsrMlpm
-         dLDZNvQoh6PUfmW9jDtFeqC66guLyrQniKRkSn8Uiab3DHETfoo5HubICmJE3Abb2I7g
-         y6eHJW9LrgffvAda1voafFlQ6r0+3RcmIOmy4T/YUnywnEXMYXPh3OROhESH6xFh69Ba
-         oSPLNxHcnD3x8g1AcUEV70WHW02ERA0qeMjN6a6PO2yd0eAC3l75HUSlzblpidnFmb4V
-         /blCU/fo5Ec4ZURi/nHoqmvP9pXX27uFCdoiyrA6KBSAfqywORQWpalIsQif1jbQrbRi
-         X8TQ==
+        b=dc0JpbzHkLWFZLI6cymH+jYc48XC8MqFWSaxuOfQNXWOaw/J9PpQOLuFx0aPb2IO4I
+         +ljmqyeR7r9Rl7c05fLorZjVI9Vb83AC5hY0AS8bmO1aw/sS34IA455Fqg9gh3V5hU6f
+         l1h2XNGy9IMhjl8GSpIb0ZPOhJ5/rS4kfhIof06AIxM26MHh7ccv+B8Yz1HEH5srAmVN
+         NTPelK406BAfNPUvt1CMrpe8o6oHYtaKc+fr5VQf4nZqjlvWfQ+UhMQ4SYJ83mwcwjtv
+         usqWoloAAhjmVcEF8c0kslXTpiFCJ/ceFSqVZHLXl1EO9k6ezXkfk0OvdURCOD7Wtsfa
+         P2rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=EhwCmtaQ5z38Dh4LdrIcWd+8GWIRdht98z03oyUG448=;
-        b=Wp0nwB0xI65hq/YrZ24zgFUUtatbU4MPeVUPxtsYhB19sFS1GdaA1KrQuucRnxp/f4
-         HY9tBjtQgDIuBnge85VgtV1s3719kBf5PxG2+DsJI3mb8ukeba0Rgf0JwqoTx6csc0Hw
-         wD2tOnv/WjNyVikRwoUmPV584NIheXLwK0BiYhnU5jC8q1hMWA1PkL80Xj7WUgjni2vb
-         H9rcI/ReMzdsPqr2ultLCeO0v/otzqobOOGADtYxTSOVmFwFP8z/+k8qQo13z4sLpNXI
-         tjImrUk1JEv4rhL++5vvjj4COlmnTiAZMp+P6E2Ul4NS6rk9ke/7AtNU6Q3A83JsRgBq
-         zI5A==
-X-Gm-Message-State: APjAAAVyuwT3+Eqhv1OS0bM15MB4lmCg31OaxWRlzv+oUD82prjwKEsN
-        6ZI3NfYbHwcQp5pWXBiID7gWew==
-X-Google-Smtp-Source: APXvYqx5VTrxUWqNnJHDUbZRaBhuz7drrwpq/K7IYc5ZyyTjX+WyHZIYm0GwiDmVLjRJSPTCdtj54w==
-X-Received: by 2002:a05:600c:218a:: with SMTP id e10mr647065wme.6.1580160170086;
-        Mon, 27 Jan 2020 13:22:50 -0800 (PST)
+        b=iBjpnNBZbZHyMdJabUXKfOqMuZ07s+5+CYqScgYPpR6kppHX2PyIrMEV5NnyUvVwQw
+         xLEuU+3EP5b1imJNy8wCCjzd5+MDpEuerpwjq4NRoK/OXZaatUbO/lGt7PloAb1bRSzy
+         /eF99oQ4uUzfcP0aU8YcllaV6ouTp1Gddz6mJoWJf4p5Go4SNnsFPdHOEGuHPwYkjSTU
+         /k5eIMDqxUBpUu1zREZfJGHeSLGc6a5pFM0retQo7tIBOv/wtTaM/eU6FdW0lTe2IRmP
+         O6EQ4r2ZoOJlM205sxJ/0ADQxZRHLNfDedtFBpU8bQpG+j101X3Rd/6n6ZyTUPQg8OVY
+         /8Ow==
+X-Gm-Message-State: APjAAAU/52cWHSA22VhCYVBTSeH6othgns070aNLcp9jocH8aJF1EWr+
+        YdGdJpaK9MioXVGEAMdf/3sFsg==
+X-Google-Smtp-Source: APXvYqxfunh+7XkHCNhCvBuUhm/9NGIGOPJHkKISVi7t2PppMB5vSe/78PKvWMHaSgAbN0f+MX7Zmg==
+X-Received: by 2002:adf:9c8f:: with SMTP id d15mr25284756wre.390.1580160216081;
+        Mon, 27 Jan 2020 13:23:36 -0800 (PST)
 Received: from localhost.localdomain ([188.252.202.167])
-        by smtp.googlemail.com with ESMTPSA id n14sm110646wmi.26.2020.01.27.13.22.48
+        by smtp.googlemail.com with ESMTPSA id x132sm683120wmg.0.2020.01.27.13.23.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2020 13:22:49 -0800 (PST)
+        Mon, 27 Jan 2020 13:23:35 -0800 (PST)
 From:   Robert Marko <robert.marko@sartura.hr>
 To:     john@phrozen.org, agross@kernel.org, linux-arm-msm@vger.kernel.org
 Cc:     Robert Marko <robert.marko@sartura.hr>,
         Luka Perkov <luka.perkov@sartura.hr>
-Subject: [PATCH 1/3] phy:  add driver for Qualcomm IPQ40xx USB PHY
-Date:   Mon, 27 Jan 2020 22:22:07 +0100
-Message-Id: <20200127212208.1544052-1-robert.marko@sartura.hr>
+Subject: [PATCH v3 1/3] phy:  add driver for Qualcomm IPQ40xx USB PHY
+Date:   Mon, 27 Jan 2020 22:23:18 +0100
+Message-Id: <20200127212319.1544222-1-robert.marko@sartura.hr>
 X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
