@@ -2,201 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 22B1A14A9E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2020 19:37:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 760E414A9F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jan 2020 19:43:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725975AbgA0ShK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jan 2020 13:37:10 -0500
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:33551 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725845AbgA0ShK (ORCPT
+        id S1725893AbgA0Snu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jan 2020 13:43:50 -0500
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:38904 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725845AbgA0Snu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jan 2020 13:37:10 -0500
-Received: by mail-ot1-f67.google.com with SMTP id b18so9435917otp.0;
-        Mon, 27 Jan 2020 10:37:09 -0800 (PST)
+        Mon, 27 Jan 2020 13:43:50 -0500
+Received: by mail-oi1-f196.google.com with SMTP id l9so7664757oii.5;
+        Mon, 27 Jan 2020 10:43:49 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ICbHNu8A8bhtHhbDmOEUiiPxJXfKbGBYxDSRbSQX0RY=;
-        b=YnhwovSt6nMZcfBIAlSB/OOvkCQpvZ6uCfXBz9p2YZWKrJNIgvy8hpudxyDNlzpWgY
-         +5iInSP2a3TpJph476NzZHbNJCLeQbwCJCLdi4ZQCQWaH9QfMykrVIdAklyIgB72aibr
-         FGHwxIfqTL0WanfBiulyo4tgDSu54JMcJJgl0oQh//ZEmIwOu1hWpXVm0QuqcocBInOj
-         8gt4VL1s9EB9xjry4jf3nEYkRO40nE3BUbuQJkaY1aOQP3QR0Whypk1uboTlUAX39iQt
-         0avjLD6TX1HhrN86IBXejOGp2O9K+c3xyrKOWZ+LXkLLwlFhJ6SJQ8ESx4jBfSUUBCtg
-         lw5g==
-X-Gm-Message-State: APjAAAUehnzP09OEm4NWtsw44tGj094U26DvDuW+q6BEVpVXKmFLxeGR
-        8Oa1dF0cX8tV311uD0WKyA==
-X-Google-Smtp-Source: APXvYqwSDqquahahc9sOyi2lephhmCMoBVLnIhn0uYN4vGwsUQ+3EqQqmFeOu1agpR051zgktNiaNA==
-X-Received: by 2002:a05:6830:124b:: with SMTP id s11mr13094651otp.333.1580150227768;
-        Mon, 27 Jan 2020 10:37:07 -0800 (PST)
+        bh=kuhUPMd+zYAgWz6fKJAfj/zyuyEErCMf41bcAyXMeG8=;
+        b=GvO/IGeMEQ/n6o1TDVcm7TOkp9xkm6akeyOZuxAnzMZT1NTci+tftLDBp3efhM9Wm1
+         yCSDN7gOptxoRjPjFUbCk2MdcNB9tG+AexGSrddHULfMuwXeSy8Ey9OmvXQxt+d65EU7
+         Sm9uXUhVwsk6cSeOPd9Yr4dwnXzwHAo5nse/ef1qUTjxs5es/HJTUI5V3MNnKPeiF0NT
+         JblVvtqVC2yN+dCSL5VUOpnqbtzuYqJtl/c77iI5J2vCk4CkRD2+zH3cc3nlmv1F0rwq
+         pCtnF3+uSENCR3cR760yD9UdNGV4OBpnxS8WfM229cJh/Ik9ptYtDDQDpss0g9mirZ0u
+         Gxgg==
+X-Gm-Message-State: APjAAAUGShexsL4LAkPwZqY8pLxcPHU4xRbOi5KHtF5jAFGSak7zx6uG
+        Ht7bMGMM3xslshOJvZJdDjIemyk=
+X-Google-Smtp-Source: APXvYqwIL62yTsib7ww0bYJgMGDd0XRUETmkoyWk4Mw/rwMUqd3hSP/eIsHvDGeYCHovkA1uBnb0dQ==
+X-Received: by 2002:a05:6808:9ba:: with SMTP id e26mr295469oig.81.1580150629151;
+        Mon, 27 Jan 2020 10:43:49 -0800 (PST)
 Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id d11sm5793736otl.31.2020.01.27.10.37.06
+        by smtp.gmail.com with ESMTPSA id t21sm4326765otr.42.2020.01.27.10.43.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2020 10:37:06 -0800 (PST)
-Received: (nullmailer pid 26821 invoked by uid 1000);
-        Mon, 27 Jan 2020 18:37:05 -0000
-Date:   Mon, 27 Jan 2020 12:37:05 -0600
+        Mon, 27 Jan 2020 10:43:48 -0800 (PST)
+Received: (nullmailer pid 3867 invoked by uid 1000);
+        Mon, 27 Jan 2020 18:43:47 -0000
+Date:   Mon, 27 Jan 2020 12:43:47 -0600
 From:   Rob Herring <robh@kernel.org>
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         gregkh@linuxfoundation.org, jackp@codeaurora.org, balbi@kernel.org,
         bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>,
         Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 04/19] dt-bindings: Add Qualcomm USB SuperSpeed PHY
- bindings
-Message-ID: <20200127183705.GA30702@bogus>
+Subject: Re: [PATCH v3 06/19] dt-bindings: usb: dwc3: Add a
+ gpio-usb-connector description
+Message-ID: <20200127184347.GA27080@bogus>
 References: <20200122185610.131930-1-bryan.odonoghue@linaro.org>
- <20200122185610.131930-5-bryan.odonoghue@linaro.org>
+ <20200122185610.131930-7-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200122185610.131930-5-bryan.odonoghue@linaro.org>
+In-Reply-To: <20200122185610.131930-7-bryan.odonoghue@linaro.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 22, 2020 at 06:55:55PM +0000, Bryan O'Donoghue wrote:
-> From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+On Wed, Jan 22, 2020 at 06:55:57PM +0000, Bryan O'Donoghue wrote:
+> A USB connector should be a child node of the USB controller
+> connector/usb-connector.txt. This patch adds a property
+> "gpio_usb_connector" which declares a connector child device. Code in the
+> DWC3 driver will then
 > 
-> Binding description for Qualcomm's Synopsys 1.0.0 SuperSpeed phy
-> controller embedded in QCS404.
+> - Search for "gpio_usb_controller"
+> - Do an of_platform_populate() if found
 > 
-> Based on Sriharsha Allenki's <sallenki@codeaurora.org> original
-> definitions.
+> This will have the effect of making the declared node a child of the USB
+> controller and will make sure that USB role-switch events detected with the
+> gpio_usb_controller driver propagate into the DWC3 controller code
+> appropriately.
+
+This is all driver specifics. This is a binding patch.
+
 > 
-> [bod: converted to yaml format]
-> 
-> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
-> Cc: Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > Cc: Rob Herring <robh+dt@kernel.org>
 > Cc: Mark Rutland <mark.rutland@arm.com>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>
+> Cc: linux-usb@vger.kernel.org
 > Cc: devicetree@vger.kernel.org
 > Cc: linux-kernel@vger.kernel.org
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  .../bindings/phy/intel,lgm-emmc-phy.yaml      | 56 --------------
+>  Documentation/devicetree/bindings/usb/dwc3.txt | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/usb/dwc3.txt b/Documentation/devicetree/bindings/usb/dwc3.txt
+> index 66780a47ad85..b019bd472f83 100644
+> --- a/Documentation/devicetree/bindings/usb/dwc3.txt
+> +++ b/Documentation/devicetree/bindings/usb/dwc3.txt
+> @@ -108,6 +108,9 @@ Optional properties:
+>  			When just one value, which means INCRX burst mode enabled. When
+>  			more than one value, which means undefined length INCR burst type
+>  			enabled. The values can be 1, 4, 8, 16, 32, 64, 128 and 256.
+> + - gpio_usb_connector: Declares a USB connector named 'gpio_usb_connector' as a
+> +		       child node of the DWC3 block. Use when modelling a USB
+> +		       connector based on the gpio-usb-b-connector driver.
 
-Working around errors? Should be fixed now, but not yet in linux-next.
+Should be just 'connector'. That's already implicitly allowed for any 
+USB controller, so you don't really need a binding change. And the 
+specific type of connector is outside the scope of the DWC3 binding.
 
->  .../devicetree/bindings/phy/qcom,usb-ss.yaml  | 75 +++++++++++++++++++
->  2 files changed, 75 insertions(+), 56 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/phy/intel,lgm-emmc-phy.yaml
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-ss.yaml
+>  
+>   - in addition all properties from usb-xhci.txt from the current directory are
+>     supported as well
+> @@ -121,4 +124,12 @@ dwc3@4a030000 {
+>  	interrupts = <0 92 4>
+>  	usb-phy = <&usb2_phy>, <&usb3,phy>;
+>  	snps,incr-burst-type-adjustment = <1>, <4>, <8>, <16>;
+> +	usb_con: gpio_usb_connector {
+> +		compatible = "gpio-usb-b-connector";
+> +		id-gpio = <&tlmm 116 GPIO_ACTIVE_HIGH>;
+> +		vbus-gpio = <&pms405_gpios 12 GPIO_ACTIVE_HIGH>;
 
+*-gpios is the preferred form and should be what's documented.
 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-ss.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-ss.yaml
-> new file mode 100644
-> index 000000000000..3325b2f2e6a8
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-ss.yaml
-> @@ -0,0 +1,75 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/phy/qcom,usb-ss.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +
-> +title: Qualcomm Synopsys 1.0.0 SuperSpeed USB PHY
-> +
-> +maintainers:
-> +  - Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> +
-> +description: |
-> +  Qualcomm Synopsys 1.0.0 SuperSpeed USB PHY
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,usb-ssphy
-
-Should be SoC specific.
-
-> +
-> +  reg:
-> +    maxItems: 1
-> +    description: USB PHY base address and length of the register map.
-
-Can drop this. Doesn't really add anything.
-
-> +
-> +  "#phy-cells":
-> +    const: 0
-> +    description: Should be 0. See phy/phy-bindings.txt for details.
-
-'Should be 0' is already expressed by the schema. The remaining 
-reference isn't needed.
-
-> +
-> +  clocks:
-> +    maxItems: 3
-> +    minItems: 3
-> +    description: phandles for rpmcc clock, PHY AHB clock, SuperSpeed pipe clock.
-
-Split the description into 3 entries of 'items'. With that, 
-minItems/maxItems is implicit.
-
-> +
-> +  clock-names:
-> +    items:
-> +      - const: ref
-> +      - const: phy
-
-'ahb' seems like a better name.
-
-> +      - const: pipe
-> +
-> +  vdd-supply:
-> +    maxItems: 1
-
-Drop.
-
-> +    description: phandle to the regulator VDD supply node.
-> +
-> +  vdda1p8-supply:
-> +    maxItems: 1
-
-Drop.
-
-> +    description: phandle to the regulator 1.8V supply node.
-> +
-> +  resets:
-> +    items:
-> +      - description: COM reset
-> +      - description: PHY reset line
-> +
-> +  reset-names:
-> +    items:
-> +      - const: com
-> +      - const: phy
-
-required and additionalProperties needed.
-
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-qcs404.h>
-> +    #include <dt-bindings/clock/qcom,rpmcc.h>
-> +    usb3_phy: usb3-phy@78000 {
-> +        compatible = "qcom,usb-ssphy";
-> +        reg = <0x78000 0x400>;
-> +        #phy-cells = <0>;
-> +        clocks = <&rpmcc RPM_SMD_LN_BB_CLK>,
-> +                 <&gcc GCC_USB_HS_PHY_CFG_AHB_CLK>,
-> +                 <&gcc GCC_USB3_PHY_PIPE_CLK>;
-> +        clock-names = "ref", "phy", "pipe";
-> +        resets = <&gcc GCC_USB3_PHY_BCR>,
-> +                 <&gcc GCC_USB3PHY_PHY_BCR>;
-> +        reset-names = "com", "phy";
-> +        vdd-supply = <&vreg_l3_1p05>;
-> +        vdda1p8-supply = <&vreg_l5_1p8>;
-> +    };
-> +...
+> +		vbus-supply = <&usb3_vbus_reg>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&usb3_id_pin>, <&usb3_vbus_pin>;
+> +	};
+>  };
 > -- 
 > 2.25.0
 > 
