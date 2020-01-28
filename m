@@ -2,88 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E6F5814ACAC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2020 00:42:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A89714AEB1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2020 05:37:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726443AbgA0Xm1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jan 2020 18:42:27 -0500
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:36984 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725955AbgA0Xm1 (ORCPT
+        id S1726541AbgA1Ehn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jan 2020 23:37:43 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:33456 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726294AbgA1Ehn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jan 2020 18:42:27 -0500
-Received: by mail-pj1-f65.google.com with SMTP id m13so176202pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jan 2020 15:42:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4jR3NEZ7x+Jvx3U2TQ49TKGsznRacov85tgmCkWAaLs=;
-        b=KEEfsaPzSnHMeqMLqqLF/rKhOnk1MsLgBr28dnqCs8OF9PTkJ+kGeggRfhXfPW8AdM
-         5ignS2E0kGnVhslgsBP8y2I9j5uYqsgB/RjhpdR6fqQN3cHxjGgEp3OwCIYullOj2y5g
-         x1loPleyzV88AC/BVEIpNRNXMByZ94VY3QKAjX6PPGnMgCchseaNbLqYu9raH41h6jxu
-         qxpD3/1hqBM5jHPTxqKIHNdcOObFQsr7HrQo6E8lr2n1h2riX6kKDEq+FcaDAZLdUIYd
-         BGbZf2NJM0rhl/BD/e5neNmcLeRSrbC4bnz9hgkuxwxL4j2O4bk1WtwRxabeG082RSm9
-         ZDuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4jR3NEZ7x+Jvx3U2TQ49TKGsznRacov85tgmCkWAaLs=;
-        b=r1t8b0k4yZGvQZ2l1If7+cPR1m1AJF+cMA2ODwPo+Y2mDbrZvZ6Tjm75/eBYmcEGqG
-         HOYwSd2bUmjgW36TtNhbDLjrV4UvQpJvlZKMJHpRvrR3wSbHWBwfHsSiZJ7EXciuJ6uy
-         Q/NOa97lmBr8umKYv5+yLgO6NLmijSiSXe7SglNoNyvVui4jd+xwOx3rdtLu6jPxVBKT
-         VhY1i2FOuvC81Q/zfB1xT8R4s8HFnq1qQXfs4n/MsKCt6EHeBphRc1cN/+1Vel6rZ2Ur
-         JO6jlw2F++T3BhewYgNkQPvINE5n9q09QA3Z7M7LbukGiydx/LBS2+5Cg3YgRNzgNGhw
-         sO7Q==
-X-Gm-Message-State: APjAAAVylnHOGM64MHQru7ZN04tI8wCck9FXIvR8u/2CBEddWaCpSFz3
-        3cLOoP/aHTX9aaQBtWlLzWwzYQ==
-X-Google-Smtp-Source: APXvYqz6tLIUsXV5Wb/Oi6Sc3Ql3UOYy6wK2oscK/U9I/+KHFO2ncIizEywoPt17c47xcms2lkjbpA==
-X-Received: by 2002:a17:90a:3aaf:: with SMTP id b44mr1344980pjc.9.1580168546572;
-        Mon, 27 Jan 2020 15:42:26 -0800 (PST)
-Received: from yoga (pat_11.qualcomm.com. [192.35.156.11])
-        by smtp.gmail.com with ESMTPSA id p18sm325420pjo.3.2020.01.27.15.42.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2020 15:42:26 -0800 (PST)
-Date:   Mon, 27 Jan 2020 15:42:23 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, ath10k@lists.infradead.org
-Subject: Re: [PATCH 0/2] ath10k: Enable QDSS clock on sm8150
-Message-ID: <20200127234223.GA202699@yoga>
-References: <20191223054855.3020665-1-bjorn.andersson@linaro.org>
- <20200127184037.3BFB620CC7@mail.kernel.org>
+        Mon, 27 Jan 2020 23:37:43 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1580186262; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=EMyuxGTBTqb30uThFFXytXZbzDR4BNQzD4LZIR4IaFo=; b=uBKveEqUAi3Ca6dMXo5pEmzi6FUbM1rfrH2KVlT2vhG5gLT+PGyxdJqkEMjiajs3mZyCPQ2t
+ xIncIITWgMamd2r2cQXRq+Bu0k85I+PJWVnIqz4T+scSzSDGKrwgEn/s+9aN0i4QSObYmZQ1
+ EdQacGwmlPwP6ymde/MUPyEQG4Q=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e2fba96.7f32b04147d8-smtp-out-n03;
+ Tue, 28 Jan 2020 04:37:42 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 16A18C433CB; Tue, 28 Jan 2020 04:37:41 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.201.2.161] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sricharan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 71116C43383;
+        Tue, 28 Jan 2020 04:37:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 71116C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sricharan@codeaurora.org
+Subject: Re: [PATCH V6 1/5] dt-bindings: pinctrl: qcom: Add ipq6018 pinctrl
+ bindings
+To:     Rob Herring <robh@kernel.org>
+Cc:     devicetree@vger.kernel.org,
+        Rajkumar Ayyasamy <arajkuma@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linus.walleij@linaro.org,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        linux-gpio@vger.kernel.org, agross@kernel.org,
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
+        sivaprak@codeaurora.org, linux-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <1579439601-14810-1-git-send-email-sricharan@codeaurora.org>
+ <1579439601-14810-2-git-send-email-sricharan@codeaurora.org>
+ <20200127154113.GA6904@bogus>
+From:   Sricharan R <sricharan@codeaurora.org>
+Message-ID: <422e31d0-f67f-3b10-5d8f-ccc9d6f7dc70@codeaurora.org>
+Date:   Tue, 28 Jan 2020 10:07:32 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200127184037.3BFB620CC7@mail.kernel.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <20200127154113.GA6904@bogus>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 27 Jan 10:40 PST 2020, Stephen Boyd wrote:
+Hi,
 
-> Quoting Bjorn Andersson (2019-12-22 21:48:53)
-> > On SM8150 the WiFi firmware depends on the QDSS clock ticking, or the system
-> > will reset due to an NoC error. So this adds an optional clock to the ath10k
-> > binding and makes sure it's enabled while the WiFi firmware needs it.
+On 1/27/2020 9:11 PM, Rob Herring wrote:
+> On Sun, 19 Jan 2020 18:43:17 +0530, Sricharan R wrote:
+>> Add device tree binding Documentation details for ipq6018
+>> pinctrl driver.
+>>
+>> Co-developed-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
+>> Signed-off-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
+>> Co-developed-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+>> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+>> Co-developed-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+>> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+>> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
+>> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+>> ---
+>> [V6] 
+>>   * Addressed review comments form Rob.
+>>  .../bindings/pinctrl/qcom,ipq6018-pinctrl.yaml     | 153 +++++++++++++++++++++
+>>  1 file changed, 153 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
+>>
 > 
-> Hopefully this isn't a requirement in production firmware? Seems
-> wasteful to keep the debug clk enabled in the field when nobody is
-> debugging anything.
-> 
+> Reviewed-by: Rob Herring <robh@kernel.org>
+Thanks Rob.
 
-I'm confused about this as well, but I'm told that it was fixed
-post-8150.
+Hi Linus,
+   The pinctrl driver can now be pulled in.
 
 Regards,
-Bjorn
+ Sricharan
+
+-- 
+"QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
