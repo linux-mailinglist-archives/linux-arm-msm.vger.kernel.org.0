@@ -2,156 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 91BB414C11C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2020 20:36:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 51AA314C143
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2020 20:53:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726422AbgA1TgN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jan 2020 14:36:13 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:24313 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726234AbgA1TgN (ORCPT
+        id S1726393AbgA1Tx0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jan 2020 14:53:26 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:46660 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726346AbgA1Tx0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jan 2020 14:36:13 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580240172; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=eD6pavUpVIfzOBxAZx81/D8x7XfFjDmVXln2oUQASnk=; b=gitTvH0wEdQRmWMe6sqB9aBwSLud1sFGpCA57v+aYqsPYlJA+jK1Z4fFyBh2rYTys7PgO25Q
- YcnuJDvCUzn3SVhu5Maa97q6P/VUv6BIVBb13qRkW14DdQQYvHJRYBItxyVcTcAbGzX0V5Ha
- ReN3R77PbkFkS/xbXYe0AtoosI4=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e308d28.7f228a1fd308-smtp-out-n03;
- Tue, 28 Jan 2020 19:36:08 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 59CEDC447A1; Tue, 28 Jan 2020 19:36:07 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EE3CEC4479C;
-        Tue, 28 Jan 2020 19:36:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EE3CEC4479C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH 08/16] bus: mhi: core: Add support for downloading
- firmware over BHIe
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        gregkh@linuxfoundation.org, arnd@arndb.de
-Cc:     smohanad@codeaurora.org, kvalo@codeaurora.org,
-        bjorn.andersson@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200123111836.7414-1-manivannan.sadhasivam@linaro.org>
- <20200123111836.7414-9-manivannan.sadhasivam@linaro.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <00e3d4f8-89ab-79f0-7094-90cc6d85fa41@codeaurora.org>
-Date:   Tue, 28 Jan 2020 12:36:04 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        Tue, 28 Jan 2020 14:53:26 -0500
+Received: by mail-pg1-f194.google.com with SMTP id z124so7543163pgb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2020 11:53:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fd0Bf5ciOLDTzu4NvqY5lz18CA8ytAWcDkClCt4wOyA=;
+        b=VzBbyfrXVyTu7+qADXfLaD3EjrI4fRju5zzq6rggViLj1t/lQA5k01gHSHLjHTTFQD
+         1W4boLRmulXdcHOS3sn7t2I4ZwVPsNWq2uq9VvKzMNc/jboiF6Mml59qVjX5mB5mZQaL
+         ZOuCxQKhPWuI9boE0o/Y/80zNA7ioPQIGtPa4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fd0Bf5ciOLDTzu4NvqY5lz18CA8ytAWcDkClCt4wOyA=;
+        b=IXLZco2WchBQc7T7JqvEJ36C5qBtQszF8NKyRbgSt8E1ST9laCzzup4Gz87B9SZdrW
+         DneQj7eGDOSjKwpjxF/05klSWi57pTFhvzFhoW3fwhwhzSIaZHrbT95w6LK9U2iwmH1H
+         5NjlBX3crsT1AoaK3xWIZGZHGkARejNeneKT8B2D4Oo98pZpt9DjI7qMfqmsw1So8u+s
+         2pXMhIpHkqZKB7MvqFOlGR33/dhFnBvHRYmDQpdhJLQlmC3Jhiiji9aWTD/HDdw2tNfl
+         KuGJaRSUH/SMr46nAssbPbaNirItLvAjeLfjQtOkYblnAFwuQUyyKFFTM2jHndYrSMxd
+         yJwg==
+X-Gm-Message-State: APjAAAVDTarD/5Es3HWphN2TrGorvbmp1yapVC8U8jLFvQb8bD/vzK/9
+        2sNyRRrCbI0g9A30l/liO7DEOv+LOCE=
+X-Google-Smtp-Source: APXvYqxnNBwdER95BEHw3GteU6AfO0/0iBE9siRHXhDTs3M6ALIsjR66bbcQH9s8Amw+OkFTtECJBw==
+X-Received: by 2002:a65:484d:: with SMTP id i13mr27036413pgs.32.1580241205473;
+        Tue, 28 Jan 2020 11:53:25 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id w3sm20442356pgj.48.2020.01.28.11.53.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jan 2020 11:53:24 -0800 (PST)
+Date:   Tue, 28 Jan 2020 11:53:23 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Harigovindan P <harigovi@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        kalyan_t@codeaurora.org, nganji@codeaurora.org
+Subject: Re: [v1] arm64: dts: sc7180: add dsi controller and phy entries for
+ idp dts
+Message-ID: <20200128195323.GC46072@google.com>
+References: <1580218617-30293-1-git-send-email-harigovi@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20200123111836.7414-9-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1580218617-30293-1-git-send-email-harigovi@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/23/2020 4:18 AM, Manivannan Sadhasivam wrote:
-> MHI supports downloading the device firmware over BHI/BHIe (Boot Host
-> Interface) protocol. Hence, this commit adds necessary helpers, which
-> will be called during device power up stage.
+Hi,
+
+On Tue, Jan 28, 2020 at 07:06:57PM +0530, Harigovindan P wrote:
+> Adding dsi controller and phy entries for idp dt.
 > 
-> This is based on the patch submitted by Sujeev Dias:
-> https://lkml.org/lkml/2018/7/9/989
-> 
-> Signed-off-by: Sujeev Dias <sdias@codeaurora.org>
-> Signed-off-by: Siddartha Mohanadoss <smohanad@codeaurora.org>
-> [mani: splitted the data transfer patch and cleaned up for upstream]
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
 > ---
->   drivers/bus/mhi/core/boot.c     | 268 ++++++++++++++++++++++++++++++++
->   drivers/bus/mhi/core/init.c     |   1 +
->   drivers/bus/mhi/core/internal.h |   1 +
->   3 files changed, 270 insertions(+)
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 56 +++++++++++++++++++++++++++++++++
+>  1 file changed, 56 insertions(+)
 > 
-> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
-> index 0996f18c4281..36956fb6eff2 100644
-> --- a/drivers/bus/mhi/core/boot.c
-> +++ b/drivers/bus/mhi/core/boot.c
-> @@ -20,6 +20,121 @@
->   #include <linux/wait.h>
->   #include "internal.h"
->   
-> +/* Download AMSS image to device */
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index 388f50a..9f42367 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> @@ -7,6 +7,7 @@
+>  
+>  /dts-v1/;
+>  
+> +#include <dt-bindings/gpio/gpio.h>
+>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>  #include "sc7180.dtsi"
+>  #include "pm6150.dtsi"
+> @@ -232,6 +233,50 @@
+>  	};
+>  };
+>  
+> +&dsi_controller {
+> +	status = "okay";
+> +
+> +	vdda-supply = <&vreg_l3c_1p2>;
+> +
+> +	panel@0 {
+> +		compatible = "visionox,rm69299-1080p-display";
 
-Nit: I don't feel like this comment really adds any value.  I feel like 
-it either should have more content, or be removed.  What do you think?
-> +static int mhi_fw_load_amss(struct mhi_controller *mhi_cntrl,
-> +			    const struct mhi_buf *mhi_buf)
-> +{
+This depends on the series "Add support for rm69299 Visionox panel
+driver and add devicetree bindings for visionox panel"
+(https://patchwork.kernel.org/cover/11320773/) which hasn't landed
+IIUC. This should be mentioned after '---'.
 
+> +		reg = <0>;
+> +
+> +		vdda-supply = <&vreg_l8c_1p8>;
+> +		vdd3p3-supply = <&vreg_l18a_2p8>;
+> +
+> +		pinctrl-names = "default", "suspend";
+> +		pinctrl-0 = <&disp_pins_default>;
+> +		pinctrl-1 = <&disp_pins_default>;
 
-> +/* Download SBL image to device */
+Is there a point for listing a suspend configuration if it is the same
+as the default?
 
-Same here.  Comment seems self evident from the function name.
-> +static int mhi_fw_load_sbl(struct mhi_controller *mhi_cntrl,
-> +			   dma_addr_t dma_addr,
-> +			   size_t size)
-> +{
-> +	u32 tx_status, val, session_id;
-> +	int i, ret;
-> +	void __iomem *base = mhi_cntrl->bhi;
-> +	rwlock_t *pm_lock = &mhi_cntrl->pm_lock;
-> +	struct {
-> +		char *name;
-> +		u32 offset;
-> +	} error_reg[] = {
-> +		{ "ERROR_CODE", BHI_ERRCODE },
-> +		{ "ERROR_DBG1", BHI_ERRDBG1 },
-> +		{ "ERROR_DBG2", BHI_ERRDBG2 },
-> +		{ "ERROR_DBG3", BHI_ERRDBG3 },
-> +		{ NULL },
+> +		reset-gpios = <&pm6150l_gpio 3 GPIO_ACTIVE_HIGH>;
+> +
+> +		ports {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			port@0 {
+> +				reg = <0>;
+> +				panel0_in: endpoint {
+> +					remote-endpoint = <&dsi0_out>;
+
+The 'dsi0_out' node is added by 'arm64: dts: sc7180: add display dt nodes'
+(https://patchwork.kernel.org/patch/11354253/), which has not landed. So
+either you should list it as dependency below the commit message, or
+(probably better) send the two patches in the same series.
+
+> +				};
+> +			};
+> +		};
 > +	};
 > +
-> +	read_lock_bh(pm_lock);
-> +	if (!MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
-> +		read_unlock_bh(pm_lock);
-> +		goto invalid_pm_state;
-> +	}
+> +	ports {
+> +		port@1 {
+> +			endpoint {
+> +				remote-endpoint = <&panel0_in>;
+> +				data-lanes = <0 1 2 3>;
+> +			};
+> +		};
+> +	};
+> +};
 > +
-> +	/* Start SBL download via BHI protocol */
+> +&dsi_phy {
 
-I'm wondering, what do you think about having a debug level message here 
-that SBL is being loaded?  I think it would be handy for looking into 
-the device state.
+Also this node does not exist yet, it also depends on the patch mentioned
+above.
 
-> +	mhi_write_reg(mhi_cntrl, base, BHI_STATUS, 0);
-> +	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_HIGH,
-> +		      upper_32_bits(dma_addr));
-> +	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_LOW,
-> +		      lower_32_bits(dma_addr));
-> +	mhi_write_reg(mhi_cntrl, base, BHI_IMGSIZE, size);
-> +	session_id = prandom_u32() & BHI_TXDB_SEQNUM_BMSK;
-> +	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, session_id);
-> +	read_unlock_bh(pm_lock);
+> +	status = "okay";
+> +};
 > +
-> +
-> +static void mhi_firmware_copy(struct mhi_controller *mhi_cntrl,
-> +			      const struct firmware *firmware,
-> +			      struct image_info *img_info)
+>  &qspi {
+>  	status = "okay";
+>  	pinctrl-names = "default";
+> @@ -289,6 +334,17 @@
+>  
+>  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
+>  
+> +&pm6150l_gpio {
+> +	disp_pins_default: disp-pins-default{
 
-Perhaps its just me, but the parameters on the second and third lines do 
-not look aligned in the style used in the rest of the file.
+nit: missing blank before curly brace
 
+If there is no suspend configuration you can get rid of the 'default'
+suffix.
 
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Since this is only a single pin I would suggest to use a name that
+describes the function of the pin or the name used in the schematic
+instead of 'disp-pins'.
+
+Thanks
+
+Matthias
