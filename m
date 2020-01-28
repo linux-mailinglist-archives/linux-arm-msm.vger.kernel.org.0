@@ -2,155 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AB97714C23F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2020 22:33:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A7A814C279
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2020 23:00:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726276AbgA1Vdj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jan 2020 16:33:39 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:42823 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726257AbgA1Vdj (ORCPT
+        id S1726266AbgA1WAr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jan 2020 17:00:47 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:15103 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726257AbgA1WAj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jan 2020 16:33:39 -0500
-Received: by mail-pf1-f193.google.com with SMTP id 4so7320737pfz.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jan 2020 13:33:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=D93qg7I5NNh/8e4hQJWbpnFpKCbeO/Ttui56ffqiZTg=;
-        b=h7HEAtKfC8YtOpbUNz4JcbPJLQ9R0tRkhJT0Xz4y1caufdhxfslHtDbgu4Q6NZ7NFg
-         hCcaewMS6vIHJNWgLRDhdUnObVfyvaFqfcTLHUjT7t+IIdeBtSPuo5yN/+BtXMzXIqTU
-         Z5vnBwe74qeouZZGYlgUL0Rt8GXTNlFceIT5g=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=D93qg7I5NNh/8e4hQJWbpnFpKCbeO/Ttui56ffqiZTg=;
-        b=mkz6WQ2EK5QqrHAfzn1r1X2ziYLGzJijcT45l9+ojGn7xHsbp5QIVJpLL040zjF4rR
-         O44x7nxR36xEPuVc5E3kxRWi2YddMR6hjWah7Zm8Rr+T70FsehS3rjMxdPohQCJCbUDo
-         R3KoqZoWvgwYmULkjD7Sea68eSEjrGg7OgpgZsAytu6+G6f7ekET0R9CpM/D1YyEaBLm
-         TjoJqmN47Z95BjMdY54ZyoC5ucLB3lFtR8G/zhyjkJULib70j9zN5bm1E47DXO42T5y1
-         V6yOc/RJnFD65bvfJCw8mSpsfDsGnN5GXsS26vjjptTvj+ZA9GeJ3RCrrnIjMHMbWSzJ
-         VtBg==
-X-Gm-Message-State: APjAAAWy+Yy38uMezece0a+21/O0/ULg+nS5V17rJ/ga7rhMBqRj+3qq
-        E6UnipZH+eI41YqwxF+OgMnFdw==
-X-Google-Smtp-Source: APXvYqwf375WULCwusJ+w2WqIGyFQJ+5ywUjjXQdIANwh3dUOfwZ6FjWrb2H7osbTGz/zBDh8QCbOA==
-X-Received: by 2002:a63:a707:: with SMTP id d7mr26553134pgf.93.1580247218923;
-        Tue, 28 Jan 2020 13:33:38 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id g10sm26067pgh.35.2020.01.28.13.33.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Jan 2020 13:33:38 -0800 (PST)
-Date:   Tue, 28 Jan 2020 13:33:36 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
-        georgi.djakov@linaro.org, saravanak@google.com, nm@ti.com,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dianders@chromium.org,
-        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
-        ulf.hansson@linaro.org
-Subject: Re: [RFC v3 04/10] OPP: Add and export helper to update voltage
-Message-ID: <20200128213336.GH46072@google.com>
-References: <20200127200350.24465-1-sibis@codeaurora.org>
- <20200127200350.24465-5-sibis@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200127200350.24465-5-sibis@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        Tue, 28 Jan 2020 17:00:39 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1580248838; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Mf6gK8Pui4SYiZYwgie2fpyV4QvxBlRoxDwIb21t6R0=; b=cTtOAObTzso2VFF5OMRg4MkjhB2JCC52OFc+Hjjq7xgMjQNFPlGa210qs0hFK534XTOGHqoD
+ qTU1sSyeN2wgS5MKbG1bThOXUWKx8bCo2RSq9mYiJV1nXmAgXT5G6cTO7rEaWitOpo1Wzyj3
+ 7vY+ru8NDm5NN9NRV/JuIuxbjkE=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e30af04.7fa9e5dc7880-smtp-out-n02;
+ Tue, 28 Jan 2020 22:00:36 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4BE32C447B3; Tue, 28 Jan 2020 22:00:34 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 914EAC43383;
+        Tue, 28 Jan 2020 22:00:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 914EAC43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     iommu@lists.linux-foundation.org
+Cc:     robin.murphy@arm.com, will@kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, Sean Paul <sean@poorly.run>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, Sam Ravnborg <sam@ravnborg.org>,
+        Fritz Koenig <frkoenig@google.com>,
+        David Airlie <airlied@linux.ie>,
+        Wambui Karuga <wambui.karugax@gmail.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Allison Randal <allison@lohutok.net>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Wen Yang <wen.yang99@zte.com.cn>,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Enrico Weigelt <info@metux.net>,
+        zhengbin <zhengbin13@huawei.com>, linux-kernel@vger.kernel.org,
+        Brian Masney <masneyb@onstation.org>,
+        Drew Davenport <ddavenport@chromium.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Ben Dooks <ben.dooks@codethink.co.uk>,
+        Daniel Vetter <daniel@ffwll.ch>
+Subject: [PATCH v5 0/5] iommu/arm-smmu: Split pagetable support for arm-smmu-v2
+Date:   Tue, 28 Jan 2020 15:00:14 -0700
+Message-Id: <1580248819-12644-1-git-send-email-jcrouse@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sibi,
+This is another iteration for the split pagetable support based on the
+suggestions from Robin and Will [1].
 
-On Tue, Jan 28, 2020 at 01:33:44AM +0530, Sibi Sankar wrote:
-> Add and export 'dev_pm_opp_update_voltage' to find and update voltage
-> of an opp for a given frequency. This will be useful to update the opps
-> with voltages read back from firmware.
-> 
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> ---
->  drivers/opp/core.c     | 55 ++++++++++++++++++++++++++++++++++++++++++
->  include/linux/pm_opp.h | 10 ++++++++
->  2 files changed, 65 insertions(+)
-> 
-> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-> index 9aa2a44a5d638..f241e83ec926a 100644
-> --- a/drivers/opp/core.c
-> +++ b/drivers/opp/core.c
-> @@ -2503,6 +2503,61 @@ int dev_pm_opp_disable(struct device *dev, unsigned long freq)
->  }
->  EXPORT_SYMBOL_GPL(dev_pm_opp_disable);
->  
-> +/**
-> + * dev_pm_opp_update_voltage() - Find and update voltage
+Background: In order to support per-context pagetables the GPU needs to enable
+split tables so that we can store global buffers in the TTBR1 space leaving the
+GPU free to program the TTBR0 register with the address of a context specific
+pagetable.
 
-The comment should mention that this is done for an OPP.
+If the DOMAIN_ATTR_SPLIT_TABLES attribute is set on the domain before attaching,
+the context bank assigned to the domain will be programmed to allow translations
+in the TTBR1 space. Translations in the TTBR0 region will be disallowed because,
+as Robin pointe out, having a un-programmed TTBR0 register is dangerous.
 
-Maybe omit the 'find' part here and just say 'Update the voltage of
-an OPP'?
+The driver can determine if TTBR1 was successfully programmed by querying
+DOMAIN_ATTR_SPLIT_TABLES after attaching. The domain geometry will also be
+updated to reflect the virtual address space for the TTBR1 range.
 
-> + * @dev:	device for which we do this operation
-> + * @freq:	OPP frequency to update voltage
-> + * @u_volt:	voltage requested for this opp
-> + *
-> + * Find and update voltage of a disabled opp corresponding to the given
-> + * frequency. This is useful only for devices with single power supply.
-> + *
-> + * Return: 0 if modification was successful or a negative error value.
-> + */
-> +int dev_pm_opp_update_voltage(struct device *dev, unsigned long freq,
-> +			      unsigned long u_volt)
-> +{
-> +	struct dev_pm_opp *opp = ERR_PTR(-ENODEV);
+Upcoming changes will allow auxiliary domains to be attached to the device which
+will enable and program TTBR0.
 
-initialization is not needed
+This patchset is based on top of linux-next-20200127.
 
-> +	struct opp_table *opp_table;
-> +	unsigned long tol;
-> +	int ret = 0;
-> +
-> +	/* Find the opp_table */
+Change log:
 
-Drop the comment, it's obvious from the code.
+v4: Only program TTBR1 when split pagetables are requested. TTBR0 will be
+enabled later when an auxiliary domain is attached
+v3: Remove the implementation specific and make split pagetable support
+part of the generic configuration
 
-> +	opp_table = _find_opp_table(dev);
-> +	if (IS_ERR(opp_table)) {
-> +		ret = PTR_ERR(opp_table);
-> +		dev_err(dev, "%s: OPP table not found (%d)\n", __func__, ret);
-> +		return PTR_ERR(opp_table);
+[1] https://lists.linuxfoundation.org/pipermail/iommu/2020-January/041373.html
 
-  		return ret;
+Jordan Crouse (5):
+  iommu: Add DOMAIN_ATTR_SPLIT_TABLES
+  iommu/arm-smmu: Add support for TTBR1
+  drm/msm: Attach the IOMMU device during initialization
+  drm/msm: Refactor address space initialization
+  drm/msm/a6xx: Support split pagetables
 
-> +	}
-> +
-> +	opp = dev_pm_opp_find_freq_exact(dev, freq, false);
-> +	if (IS_ERR(opp)) {
-> +		ret = PTR_ERR(opp);
-> +		goto put_table;
-> +	}
-> +
-> +	mutex_lock(&opp_table->lock);
-> +
-> +	/* update only if the opp is disabled */
-> +	if (opp->available) {
-> +		ret = -EBUSY;
-> +		goto unlock;
-> +	}
-> +
-> +	tol = u_volt * opp_table->voltage_tolerance_v1 / 100;
-> +	opp->supplies[0].u_volt_min = u_volt - tol;
-> +	opp->supplies[0].u_volt = u_volt;
-> +	opp->supplies[0].u_volt_min = u_volt + tol;
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.c    | 16 ++++++++++
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c    |  1 +
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c    |  1 +
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c    |  1 +
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c    | 51 ++++++++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c  | 23 ++++++++++----
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h  |  8 +++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 18 ++++-------
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 18 +++++------
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c |  4 ---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 18 +++++------
+ drivers/gpu/drm/msm/msm_drv.h            |  8 ++---
+ drivers/gpu/drm/msm/msm_gem_vma.c        | 36 ++++------------------
+ drivers/gpu/drm/msm/msm_gpu.c            | 49 ++----------------------------
+ drivers/gpu/drm/msm/msm_gpu.h            |  4 +--
+ drivers/gpu/drm/msm/msm_gpummu.c         |  6 ----
+ drivers/gpu/drm/msm/msm_iommu.c          | 18 ++++++-----
+ drivers/gpu/drm/msm/msm_mmu.h            |  1 -
+ drivers/iommu/arm-smmu.c                 | 48 +++++++++++++++++++++++++-----
+ drivers/iommu/arm-smmu.h                 | 22 ++++++++++----
+ include/linux/iommu.h                    |  2 ++
+ 21 files changed, 198 insertions(+), 155 deletions(-)
 
-  			.u_volt_max =
-
-I suppose the assignments need to be done for all possible supplies,
-i.e. 0 to (opp_table->regulator_count - 1).
+-- 
+2.7.4
