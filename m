@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9649814AF42
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2020 06:55:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4015114AF47
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2020 06:58:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725797AbgA1Fzn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jan 2020 00:55:43 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:18290 "EHLO
+        id S1725829AbgA1F6S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jan 2020 00:58:18 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:46563 "EHLO
         mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725822AbgA1Fzm (ORCPT
+        by vger.kernel.org with ESMTP id S1725791AbgA1F6S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jan 2020 00:55:42 -0500
+        Tue, 28 Jan 2020 00:58:18 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580190941; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1580191097; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=7yuJtQMSotzKOG8RHo+lGNABe4+fukiXNr3ICAFp3V0=; b=kmbl0E+mCFmi0y3G+Nnhmel+sZ5a/5pb7A2b91kN1pkngvEiX5ZXg15S7vlkhV6lxRu4Nnpa
- Wf7Ak3PQKQhyfGBL4btOdNXtEYsD1NzX8nU6Za6aiMCtA1fzexwoAoAdlX14LjrW4yEELdap
- pqf2RoNwLfzBaD3gach4bUNiBZQ=
+ Subject: Sender; bh=xEMzgt/quh6QS5imm/Ss06fNSr9xLLI+rH8MSsl9UWU=; b=Dol1ECKdn1xITK6rYY9t9LmZtGPgKsxlLPUbX63v/OtSV+Fc1SaSJGOBXwfFa5cu23jWXPDt
+ jz3e6iCWZXyNu4sE7ezfGQEsF4n2tRXd7thEnO1HuKJKTbRpTW5zw7q4uQV5prgwzVappT9U
+ o9JQd39ygDLi263FtzU9T8iOtX0=
 X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e2fccdc.7f97f7973260-smtp-out-n03;
- Tue, 28 Jan 2020 05:55:40 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e2fcd78.7fe99340fa78-smtp-out-n01;
+ Tue, 28 Jan 2020 05:58:16 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D8F49C447A3; Tue, 28 Jan 2020 05:55:38 +0000 (UTC)
+        id 7E81EC433CB; Tue, 28 Jan 2020 05:58:16 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,12 +34,12 @@ Received: from [10.206.28.9] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcom
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 47132C43383;
-        Tue, 28 Jan 2020 05:55:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 47132C43383
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1D0AAC447A2;
+        Tue, 28 Jan 2020 05:58:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1D0AAC447A2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v2 07/10] clk: qcom: Fix sc7180 gpucc parent data
+Subject: Re: [PATCH v2 10/10] arm64: dts: sc7180: Add clock controller nodes
 To:     Douglas Anderson <dianders@chromium.org>,
         Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -48,18 +48,17 @@ Cc:     Jeffrey Hugo <jhugo@codeaurora.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, harigovi@codeaurora.org,
         mka@chromium.org, kalyan_t@codeaurora.org,
         Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org,
-        hoegsberg@chromium.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org
+        hoegsberg@chromium.org, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>
 References: <20200124224225.22547-1-dianders@chromium.org>
- <20200124144154.v2.7.I3bf44e33f4dc7ecca10a50dbccb7dc082894fa59@changeid>
+ <20200124144154.v2.10.I1a4b93fb005791e29a9dcf288fc8bd459a555a59@changeid>
 From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <6e585554-d0bd-39d7-2150-e7968dd51fb3@codeaurora.org>
-Date:   Tue, 28 Jan 2020 11:25:30 +0530
+Message-ID: <eeef68f4-127e-6d28-4a79-c1464a10c7db@codeaurora.org>
+Date:   Tue, 28 Jan 2020 11:28:08 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.4.1
 MIME-Version: 1.0
-In-Reply-To: <20200124144154.v2.7.I3bf44e33f4dc7ecca10a50dbccb7dc082894fa59@changeid>
+In-Reply-To: <20200124144154.v2.10.I1a4b93fb005791e29a9dcf288fc8bd459a555a59@changeid>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -70,71 +69,101 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi Doug,
 
-Thanks for your patch. But as mentioned earlier we really want to avoid 
-updating the auto generated code.
+Thanks for the patch.
 
 On 1/25/2020 4:12 AM, Douglas Anderson wrote:
-> The bindings file (qcom,gpucc.yaml) does not agree with the names we
-> use for input clocks.  Fix us.  This takes into account the changes in
-> the recent patch ("dt-bindings: clock: Fix qcom,gpucc bindings for
-> sdm845/sc7180/msm8998"), but even without that patch the names in the
-> driver were still not right.
+> From: Taniya Das <tdas@codeaurora.org>
 > 
-> Since we didn't add the "test" clock to the bindings (apparently it's
-> never used), kill it from the driver.  If someone has a use for it we
-> should add it to the bindings and bring it back.
+> Add the display, video & graphics clock controller nodes supported on
+> SC7180.
 > 
-> Instead of updating the size of the array now that the test clock is
-> gone, switch to using the less error-prone ARRAY_SIZE.  Not sure why
-> it didn't always use that.
+> NOTE: the dispcc needs input clocks from various PHYs that aren't in
+> the device tree yet.  For now we'll leave these stubbed out with <0>,
+> which is apparently the magic way to do this.  These clocks aren't
+> really "optional" and this stubbing out method is apparently the best
+> way to handle it.
 > 
-> Fixes: 745ff069a49c ("clk: qcom: Add graphics clock controller driver for SC7180")
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
 > 
 > Changes in v2:
-> - Patch ("clk: qcom: Fix sc7180 gpucc parent data") new for v2.
+> - Added includes
+> - Changed various parent names to match bindings / driver
 > 
->   drivers/clk/qcom/gpucc-sc7180.c | 11 +++++------
->   1 file changed, 5 insertions(+), 6 deletions(-)
+>   arch/arm64/boot/dts/qcom/sc7180.dtsi | 41 ++++++++++++++++++++++++++++
+>   1 file changed, 41 insertions(+)
 > 
-> diff --git a/drivers/clk/qcom/gpucc-sc7180.c b/drivers/clk/qcom/gpucc-sc7180.c
-> index ec61194cceaf..da56506036e2 100644
-> --- a/drivers/clk/qcom/gpucc-sc7180.c
-> +++ b/drivers/clk/qcom/gpucc-sc7180.c
-> @@ -47,7 +47,7 @@ static struct clk_alpha_pll gpu_cc_pll1 = {
->   		.hw.init = &(struct clk_init_data){
->   			.name = "gpu_cc_pll1",
->   			.parent_data =  &(const struct clk_parent_data){
-> -				.fw_name = "bi_tcxo",
-> +				.fw_name = "xo",
->   			},
->   			.num_parents = 1,
->   			.ops = &clk_alpha_pll_fabia_ops,
-> @@ -64,11 +64,10 @@ static const struct parent_map gpu_cc_parent_map_0[] = {
->   };
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 8011c5fe2a31..ee3b4bade66b 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -5,7 +5,9 @@
+>    * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+>    */
 >   
->   static const struct clk_parent_data gpu_cc_parent_data_0[] = {
-> -	{ .fw_name = "bi_tcxo" },
-> +	{ .fw_name = "xo" },
->   	{ .hw = &gpu_cc_pll1.clkr.hw },
-> -	{ .fw_name = "gcc_gpu_gpll0_clk_src" },
-> -	{ .fw_name = "gcc_gpu_gpll0_div_clk_src" },
-> -	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-> +	{ .fw_name = "gpll0" },
-> +	{ .fw_name = "gpll0_div" },
->   };
+> +#include <dt-bindings/clock/qcom,dispcc-sc7180.h>
+>   #include <dt-bindings/clock/qcom,gcc-sc7180.h>
+> +#include <dt-bindings/clock/qcom,gpucc-sc7180.h>
+
+My bad, but we are still missing the videocc header. I could send across 
+the new patch.
+>   #include <dt-bindings/clock/qcom,rpmh.h>
+>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>   #include <dt-bindings/phy/phy-qcom-qusb2.h>
+> @@ -1039,6 +1041,18 @@ pinmux {
+>   			};
+>   		};
 >   
->   static const struct freq_tbl ftbl_gpu_cc_gmu_clk_src[] = {
-> @@ -86,7 +85,7 @@ static struct clk_rcg2 gpu_cc_gmu_clk_src = {
->   	.clkr.hw.init = &(struct clk_init_data){
->   		.name = "gpu_cc_gmu_clk_src",
->   		.parent_data = gpu_cc_parent_data_0,
-> -		.num_parents = 5,
-> +		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_0),
->   		.flags = CLK_SET_RATE_PARENT,
->   		.ops = &clk_rcg2_shared_ops,
->   	},
+> +		gpucc: clock-controller@5090000 {
+> +			compatible = "qcom,sc7180-gpucc";
+> +			reg = <0 0x05090000 0 0x9000>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
+> +				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
+> +			clock-names = "xo", "gpll0", "gpll0_div";
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+>   		qspi: spi@88dc000 {
+>   			compatible = "qcom,qspi-v1";
+>   			reg = <0 0x088dc000 0 0x600>;
+> @@ -1151,6 +1165,33 @@ usb_1_dwc3: dwc3@a600000 {
+>   			};
+>   		};
+>   
+> +		videocc: clock-controller@ab00000 {
+> +			compatible = "qcom,sc7180-videocc";
+> +			reg = <0 0x0ab00000 0 0x10000>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>;
+> +			clock-names = "xo";
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		dispcc: clock-controller@af00000 {
+> +			compatible = "qcom,sc7180-dispcc";
+> +			reg = <0 0x0af00000 0 0x200000>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
+> +				 <0>,
+> +				 <0>,
+> +				 <0>,
+> +				 <0>;
+> +			clock-names = "xo", "gpll0",
+> +				      "dsi_phy_pll_byte", "dsi_phy_pll_pixel",
+> +				      "dp_phy_pll_link", "dp_phy_pll_vco_div";
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+>   		pdc: interrupt-controller@b220000 {
+>   			compatible = "qcom,sc7180-pdc", "qcom,pdc";
+>   			reg = <0 0x0b220000 0 0x30000>;
 > 
 
 -- 
