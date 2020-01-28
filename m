@@ -2,107 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 65F9614B2A5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2020 11:34:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B845F14B4D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2020 14:25:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725926AbgA1KeD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jan 2020 05:34:03 -0500
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:30986 "EHLO
+        id S1726107AbgA1NZN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jan 2020 08:25:13 -0500
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:10099 "EHLO
         alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725901AbgA1KeC (ORCPT
+        by vger.kernel.org with ESMTP id S1725852AbgA1NZN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jan 2020 05:34:02 -0500
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 28 Jan 2020 16:03:59 +0530
-Received: from pillair-linux.qualcomm.com ([10.204.116.193])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 28 Jan 2020 16:03:50 +0530
-Received: by pillair-linux.qualcomm.com (Postfix, from userid 452944)
-        id 65A5D392C; Tue, 28 Jan 2020 16:03:48 +0530 (IST)
-From:   Rakesh Pillai <pillair@codeaurora.org>
-To:     devicetree@vger.kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Rakesh Pillai <pillair@codeaurora.org>
-Subject: [PATCH v4] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node
-Date:   Tue, 28 Jan 2020 16:03:37 +0530
-Message-Id: <1580207617-818-1-git-send-email-pillair@codeaurora.org>
+        Tue, 28 Jan 2020 08:25:13 -0500
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 28 Jan 2020 18:55:08 +0530
+Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 28 Jan 2020 18:54:48 +0530
+Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
+        id D02882830; Tue, 28 Jan 2020 18:54:46 +0530 (IST)
+From:   Harigovindan P <harigovi@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Harigovindan P <harigovi@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        kalyan_t@codeaurora.org, nganji@codeaurora.org
+Subject: [v4] arm64: dts: sc7180: add display dt nodes
+Date:   Tue, 28 Jan 2020 18:54:44 +0530
+Message-Id: <1580217884-21932-1-git-send-email-harigovi@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for the ath10k SNOC platform driver probe
-and add resources required for WCN3990 on sc7180 soc.
+Add display, DSI hardware DT nodes for sc7180.
 
-Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180-idp.dts |  5 +++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi    | 28 ++++++++++++++++++++++++++++
- 2 files changed, 33 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 189254f..151b489 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -248,6 +248,11 @@
- 	status = "okay";
- };
- 
-+&wifi {
-+	status = "okay";
-+	qcom,msa-fixed-perm;
-+};
-+
- /* PINCTRL - additions to nodes defined in sc7180.dtsi */
- 
- &qup_i2c2_default {
+Changes in v1:
+	-Added display DT nodes for sc7180
+Changes in v2:
+	-Renamed node names
+	-Corrected code alignments
+	-Removed extra new line
+	-Added DISP AHB clock for register access
+	under display_subsystem node for global settings
+Changes in v3:
+	-Modified node names
+	-Modified hard coded values
+	-Removed mdss reg entry
+Changes in v4:
+	-Reverting mdp node name
+	-Setting status to disabled in main SOC dtsi file
+	-Replacing _ to - for node names
+	-Adding clock dependency patch link
+	-Splitting idp dt file to a separate patch
+
+This patch has dependency on the below series
+https://lkml.org/lkml/2019/12/27/73
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 128 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 128 insertions(+)
+
 diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 666e9b9..7efb97f 100644
+index 3bc3f64..c3883af 100644
 --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -42,6 +42,12 @@
- 			compatible = "qcom,cmd-db";
- 			no-map;
+@@ -1184,6 +1184,134 @@
+ 			#power-domain-cells = <1>;
  		};
-+
-+		wlan_fw_mem: memory@93900000 {
-+			compatible = "removed-dma-pool";
-+			no-map;
-+			reg = <0 0x93900000 0 0x200000>;
-+		};
- 	};
  
- 	cpus {
-@@ -1119,6 +1125,28 @@
- 				#clock-cells = <1>;
- 			};
- 		};
++		mdss: mdss@ae00000 {
++			compatible = "qcom,sc7180-mdss";
++			reg = <0 0x0ae00000 0 0x1000>;
++			reg-names = "mdss";
 +
-+		wifi: wifi@18800000 {
-+			compatible = "qcom,wcn3990-wifi";
-+			reg = <0 0x18800000 0 0x800000>;
-+			reg-names = "membase";
-+			iommus = <&apps_smmu 0xC0 0x1>;
-+			interrupts =
-+				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
-+				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
-+				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
-+				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
-+				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
-+				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
-+				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
-+				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
-+				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
-+				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
-+				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
-+				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
-+			memory-region = <&wlan_fw_mem>;
-+			status = "disabled";
++			power-domains = <&dispcc MDSS_GDSC>;
++
++			clocks = <&gcc GCC_DISP_AHB_CLK>,
++				 <&gcc GCC_DISP_HF_AXI_CLK>,
++				 <&dispcc DISP_CC_MDSS_AHB_CLK>,
++				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
++			clock-names = "iface", "gcc_bus", "ahb", "core";
++
++			assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
++			assigned-clock-rates = <300000000>;
++
++			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-controller;
++			#interrupt-cells = <1>;
++
++			iommus = <&apps_smmu 0x800 0x2>;
++
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++
++			mdss_mdp: mdp@ae01000 {
++				compatible = "qcom,sc7180-dpu";
++				reg = <0 0x0ae01000 0 0x8f000>,
++				      <0 0x0aeb0000 0 0x2008>,
++				      <0 0x0af03000 0 0x16>;
++				reg-names = "mdp", "vbif", "disp_cc";
++
++				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&dispcc DISP_CC_MDSS_ROT_CLK>,
++					 <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
++					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
++					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++				clock-names = "iface", "rot", "lut", "core",
++					      "vsync";
++				assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
++						  <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++				assigned-clock-rates = <300000000>,
++						       <19200000>;
++
++				interrupt-parent = <&mdss>;
++				interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++						dpu_intf1_out: endpoint {
++							remote-endpoint = <&dsi0_in>;
++						};
++					};
++				};
++			};
++
++			dsi_controller: dsi-controller@ae94000 {
++				compatible = "qcom,mdss-dsi-ctrl";
++				reg = <0 0x0ae94000 0 0x400>;
++				reg-names = "dsi_ctrl";
++
++				interrupt-parent = <&mdss>;
++				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
++
++				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
++					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
++					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
++					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
++					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&gcc GCC_DISP_HF_AXI_CLK>;
++				clock-names = "byte",
++					      "byte_intf",
++					      "pixel",
++					      "core",
++					      "iface",
++					      "bus";
++
++				phys = <&dsi_phy>;
++				phy-names = "dsi";
++
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				status = "disabled";
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++						dsi0_in: endpoint {
++							remote-endpoint = <&dpu_intf1_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++						dsi0_out: endpoint {
++						};
++					};
++				};
++			};
++
++			dsi_phy: dsi-phy@ae94400 {
++				compatible = "qcom,dsi-phy-10nm";
++				reg = <0 0x0ae94400 0 0x200>,
++				      <0 0x0ae94600 0 0x280>,
++				      <0 0x0ae94a00 0 0x1e0>;
++				reg-names = "dsi_phy",
++					    "dsi_phy_lane",
++					    "dsi_pll";
++
++				#clock-cells = <1>;
++				#phy-cells = <0>;
++
++				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>;
++				clock-names = "iface";
++
++				status = "disabled";
++			};
 +		};
- 	};
- 
- 	timer {
++
+ 		pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,sc7180-pdc", "qcom,pdc";
+ 			reg = <0 0x0b220000 0 0x30000>;
 -- 
 2.7.4
 
