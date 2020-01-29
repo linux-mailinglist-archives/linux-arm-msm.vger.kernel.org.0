@@ -2,107 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 88C1B14C6B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 08:00:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B47B014C76B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 09:25:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726037AbgA2HAm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jan 2020 02:00:42 -0500
-Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:61989 "EHLO
-        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726020AbgA2HAm (ORCPT
+        id S1726116AbgA2IZn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jan 2020 03:25:43 -0500
+Received: from mail-yb1-f196.google.com ([209.85.219.196]:34247 "EHLO
+        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726091AbgA2IZm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jan 2020 02:00:42 -0500
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 29 Jan 2020 12:30:39 +0530
-Received: from pillair-linux.qualcomm.com ([10.204.116.193])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 29 Jan 2020 12:30:28 +0530
-Received: by pillair-linux.qualcomm.com (Postfix, from userid 452944)
-        id 892CA3930; Wed, 29 Jan 2020 12:30:27 +0530 (IST)
-From:   Rakesh Pillai <pillair@codeaurora.org>
-To:     devicetree@vger.kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Wed, 29 Jan 2020 03:25:42 -0500
+Received: by mail-yb1-f196.google.com with SMTP id w17so8341946ybm.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2020 00:25:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Kih+TB9JP3PedQhp/1CUreRPEItaPe2QPQz29F9tWDc=;
+        b=Zo0D/9Q0JQHqmfuylFPaI2+qH2RjwZzwG4K152c5478sSjjcwX16A0/NJcorfJ9iDx
+         bf8aor95/I4UP6Fc6h/0NB8NbUx2e+R1UOAILFIzAFKl27BxiikZR1CoUV3e9kHoVGNf
+         gkhykrsUC6XYxDCPa7Y3PoN6FiedgCpcGjqxOqDzSqiSnzN5+WTS+YZuVXYb9JwtXbsG
+         /qQ2OV38+RlT/YzUgiW6c5unXTOd84tK+8cGKIT3k+v9hBXU5/pAUC/lCk1COC9bWHdA
+         PwLBvI/BiMPzC+fMF9l6KijnjBJS2nW7xcQyxWyq8HFS2hr2aErWCcHOvCXtlbWtqQcR
+         rWGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Kih+TB9JP3PedQhp/1CUreRPEItaPe2QPQz29F9tWDc=;
+        b=bxbGMLWEJ9hxCbpiiygvBtjiZe0tnMKv/cXmB3zpwR/RvvZlnMb1/qnmYGJgn6w5uJ
+         46Y0rxjEz+6yKAAC2JuL2j+j9QPP8TSfy3O4WfGtTTykUWG4C36dx7bvInnNZPtoMq/U
+         5m2HLt5AqiRsN/O576wt3h9xtl/MEarpam7uiL/y1RyysRkuLllASHVI8e/wYwi4bUhb
+         dt6yfZkVIsWlf7mQRQ2GWwPpgmUxleCCAkvuuwzC2C8b/sGfg7Txf8/LrPQuY9CgGjvO
+         KHQxe7iCPDMWqcZMWnOJphCPC5S8KTIKoveBdA2oyhGjb6NpWIyMNnzgFqx7IEs8kMrE
+         BezA==
+X-Gm-Message-State: APjAAAXoEsKnCPJTK2JcgFX0uFN0XWVb20Yg05S/6ADnY9iNjKWhWshU
+        FZHafDCRjW6pW4UStUeDoetw30WAmjaFMHjomVw=
+X-Google-Smtp-Source: APXvYqzYYS+fbLJS92hXCLIiPAKjDMfVajoV30W9JVMhPXXe6xeykGWBSC5YEHENiobwTVVUd7ZcBIkpRfTJyb1W+VQ=
+X-Received: by 2002:a25:b950:: with SMTP id s16mr18652397ybm.147.1580286341707;
+ Wed, 29 Jan 2020 00:25:41 -0800 (PST)
+MIME-Version: 1.0
+References: <20200123135943.24140-1-tzimmermann@suse.de> <20200123135943.24140-9-tzimmermann@suse.de>
+In-Reply-To: <20200123135943.24140-9-tzimmermann@suse.de>
+From:   Ben Skeggs <skeggsb@gmail.com>
+Date:   Wed, 29 Jan 2020 18:25:30 +1000
+Message-ID: <CACAvsv5vN1FJOF0EuxEwqa4_=ptfK2xTyvRpPrBaS8ac0MvC4w@mail.gmail.com>
+Subject: Re: [PATCH v4 08/22] drm/nouveau: Convert to struct drm_crtc_helper_funcs.get_scanout_position()
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     Dave Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        David1.Zhou@amd.com, maarten.lankhorst@linux.intel.com,
+        patrik.r.jakobsson@gmail.com, Rob Clark <robdclark@gmail.com>,
+        sean@poorly.run, benjamin.gaignard@linaro.org,
+        vincent.abriou@st.com, yannick.fertre@st.com,
+        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
+        alexandre.torgue@st.com, eric@anholt.net,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        linux-graphics-maintainer@vmware.com, thellstrom@vmware.com,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Harry Wentland <harry.wentland@amd.com>, sunpeng.li@amd.com,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com,
         linux-arm-msm@vger.kernel.org,
-        Rakesh Pillai <pillair@codeaurora.org>
-Subject: [PATCH v5] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node
-Date:   Wed, 29 Jan 2020 12:30:23 +0530
-Message-Id: <1580281223-2759-1-git-send-email-pillair@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        intel-gfx <intel-gfx@lists.freedesktop.org>,
+        amd-gfx mailing list <amd-gfx@lists.freedesktop.org>,
+        ML dri-devel <dri-devel@lists.freedesktop.org>,
+        ML nouveau <nouveau@lists.freedesktop.org>,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for the ath10k SNOC platform driver probe
-and add resources required for WCN3990 on sc7180 soc.
+On Fri, 24 Jan 2020 at 00:00, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+>
+> The callback struct drm_driver.get_scanout_position() is deprecated in
+> favor of struct drm_crtc_helper_funcs.get_scanout_position(). Convert
+> nouveau over.
+>
+> v4:
+>         * add argument names in function declaration
+>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Ben Skeggs <bskeggs@redhat.com>
 
-Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7180-idp.dts |  5 +++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi    | 28 ++++++++++++++++++++++++++++
- 2 files changed, 33 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 388f50a..167f68ac 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -287,6 +287,11 @@
- 	vdda-pll-supply = <&vreg_l4a_0p8>;
- };
- 
-+&wifi {
-+	status = "okay";
-+	qcom,msa-fixed-perm;
-+};
-+
- /* PINCTRL - additions to nodes defined in sc7180.dtsi */
- 
- &qspi_clk {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 8011c5f..0a00c94 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -75,6 +75,12 @@
- 			reg = <0x0 0x80900000 0x0 0x200000>;
- 			no-map;
- 		};
-+
-+		wlan_fw_mem: memory@93900000 {
-+			compatible = "removed-dma-pool";
-+			no-map;
-+			reg = <0 0x93900000 0 0x200000>;
-+		};
- 	};
- 
- 	cpus {
-@@ -1490,6 +1496,28 @@
- 
- 			#freq-domain-cells = <1>;
- 		};
-+
-+		wifi: wifi@18800000 {
-+			compatible = "qcom,wcn3990-wifi";
-+			reg = <0 0x18800000 0 0x800000>;
-+			reg-names = "membase";
-+			iommus = <&apps_smmu 0xc0 0x1>;
-+			interrupts =
-+				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
-+				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
-+				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
-+				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
-+				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
-+				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
-+				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
-+				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
-+				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
-+				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
-+				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
-+				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
-+			memory-region = <&wlan_fw_mem>;
-+			status = "disabled";
-+		};
- 	};
- 
- 	thermal-zones {
--- 
-2.7.4
-
+> ---
+>  drivers/gpu/drm/nouveau/dispnv04/crtc.c   |  1 +
+>  drivers/gpu/drm/nouveau/dispnv50/head.c   |  1 +
+>  drivers/gpu/drm/nouveau/nouveau_display.c | 14 +++-----------
+>  drivers/gpu/drm/nouveau/nouveau_display.h |  7 ++++---
+>  drivers/gpu/drm/nouveau/nouveau_drm.c     |  1 -
+>  5 files changed, 9 insertions(+), 15 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/nouveau/dispnv04/crtc.c b/drivers/gpu/drm/nouveau/dispnv04/crtc.c
+> index 37c50ea8f847..17e9d1c078a0 100644
+> --- a/drivers/gpu/drm/nouveau/dispnv04/crtc.c
+> +++ b/drivers/gpu/drm/nouveau/dispnv04/crtc.c
+> @@ -1258,6 +1258,7 @@ static const struct drm_crtc_helper_funcs nv04_crtc_helper_funcs = {
+>         .mode_set_base = nv04_crtc_mode_set_base,
+>         .mode_set_base_atomic = nv04_crtc_mode_set_base_atomic,
+>         .disable = nv_crtc_disable,
+> +       .get_scanout_position = nouveau_display_scanoutpos,
+>  };
+>
+>  static const uint32_t modeset_formats[] = {
+> diff --git a/drivers/gpu/drm/nouveau/dispnv50/head.c b/drivers/gpu/drm/nouveau/dispnv50/head.c
+> index d9d64602947d..41852dd8fdbd 100644
+> --- a/drivers/gpu/drm/nouveau/dispnv50/head.c
+> +++ b/drivers/gpu/drm/nouveau/dispnv50/head.c
+> @@ -413,6 +413,7 @@ nv50_head_atomic_check(struct drm_crtc *crtc, struct drm_crtc_state *state)
+>  static const struct drm_crtc_helper_funcs
+>  nv50_head_help = {
+>         .atomic_check = nv50_head_atomic_check,
+> +       .get_scanout_position = nouveau_display_scanoutpos,
+>  };
+>
+>  static void
+> diff --git a/drivers/gpu/drm/nouveau/nouveau_display.c b/drivers/gpu/drm/nouveau/nouveau_display.c
+> index 53f9bceaf17a..86f99dc8fcef 100644
+> --- a/drivers/gpu/drm/nouveau/nouveau_display.c
+> +++ b/drivers/gpu/drm/nouveau/nouveau_display.c
+> @@ -136,21 +136,13 @@ nouveau_display_scanoutpos_head(struct drm_crtc *crtc, int *vpos, int *hpos,
+>  }
+>
+>  bool
+> -nouveau_display_scanoutpos(struct drm_device *dev, unsigned int pipe,
+> +nouveau_display_scanoutpos(struct drm_crtc *crtc,
+>                            bool in_vblank_irq, int *vpos, int *hpos,
+>                            ktime_t *stime, ktime_t *etime,
+>                            const struct drm_display_mode *mode)
+>  {
+> -       struct drm_crtc *crtc;
+> -
+> -       list_for_each_entry(crtc, &dev->mode_config.crtc_list, head) {
+> -               if (nouveau_crtc(crtc)->index == pipe) {
+> -                       return nouveau_display_scanoutpos_head(crtc, vpos, hpos,
+> -                                                              stime, etime);
+> -               }
+> -       }
+> -
+> -       return false;
+> +       return nouveau_display_scanoutpos_head(crtc, vpos, hpos,
+> +                                              stime, etime);
+>  }
+>
+>  static void
+> diff --git a/drivers/gpu/drm/nouveau/nouveau_display.h b/drivers/gpu/drm/nouveau/nouveau_display.h
+> index 6e8e66882e45..26d34f1a77da 100644
+> --- a/drivers/gpu/drm/nouveau/nouveau_display.h
+> +++ b/drivers/gpu/drm/nouveau/nouveau_display.h
+> @@ -63,9 +63,10 @@ int  nouveau_display_suspend(struct drm_device *dev, bool runtime);
+>  void nouveau_display_resume(struct drm_device *dev, bool runtime);
+>  int  nouveau_display_vblank_enable(struct drm_device *, unsigned int);
+>  void nouveau_display_vblank_disable(struct drm_device *, unsigned int);
+> -bool  nouveau_display_scanoutpos(struct drm_device *, unsigned int,
+> -                                bool, int *, int *, ktime_t *,
+> -                                ktime_t *, const struct drm_display_mode *);
+> +bool nouveau_display_scanoutpos(struct drm_crtc *crtc,
+> +                               bool in_vblank_irq, int *vpos, int *hpos,
+> +                               ktime_t *stime, ktime_t *etime,
+> +                               const struct drm_display_mode *mode);
+>
+>  int  nouveau_display_dumb_create(struct drm_file *, struct drm_device *,
+>                                  struct drm_mode_create_dumb *args);
+> diff --git a/drivers/gpu/drm/nouveau/nouveau_drm.c b/drivers/gpu/drm/nouveau/nouveau_drm.c
+> index b65ae817eabf..fcc036a08965 100644
+> --- a/drivers/gpu/drm/nouveau/nouveau_drm.c
+> +++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+> @@ -1122,7 +1122,6 @@ driver_stub = {
+>
+>         .enable_vblank = nouveau_display_vblank_enable,
+>         .disable_vblank = nouveau_display_vblank_disable,
+> -       .get_scanout_position = nouveau_display_scanoutpos,
+>         .get_vblank_timestamp = drm_calc_vbltimestamp_from_scanoutpos,
+>
+>         .ioctls = nouveau_ioctls,
+> --
+> 2.24.1
+>
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
