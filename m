@@ -2,169 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B6CF514C2FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jan 2020 23:34:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1EB914C438
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 01:51:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726211AbgA1WeX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jan 2020 17:34:23 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:18111 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726257AbgA1WeW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jan 2020 17:34:22 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580250861; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=KPGUQcF0y0b6zGbjLTPz7+ZC/IF0jWlRKWGLcU9qULU=; b=GAxMA2UXnNQlP5lRnFqDsROmj628lTCmEYQyAhLi9zZT9+99J0gSXjfGaRWei95uWGqsrX35
- z81CaO0ZLDUsmKqHP9DpJLJ3/lb82AMC7dM+FGGreAXjtA6e6iTPnpFF5n+MVqaxYx8KbUfB
- zAwr+ddjWh8l+NkTuz61My9E3Vc=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e30b6e0.7f304b6e1ea0-smtp-out-n02;
- Tue, 28 Jan 2020 22:34:08 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 59979C433A2; Tue, 28 Jan 2020 22:34:07 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1726599AbgA2Avx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jan 2020 19:51:53 -0500
+Received: from mail.kernel.org ([198.145.29.99]:42008 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726383AbgA2Avx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Jan 2020 19:51:53 -0500
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D9F38C43383;
-        Tue, 28 Jan 2020 22:34:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D9F38C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     iommu@lists.linux-foundation.org, Rob Clark <robdclark@gmail.com>
-Cc:     robin.murphy@arm.com, will@kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Joerg Roedel <joro@8bytes.org>
-Subject: [RFC PATCH v1] iommu/arm-smmu: Allow domains to choose a context bank
-Date:   Tue, 28 Jan 2020 15:33:43 -0700
-Message-Id: <1580250823-30739-1-git-send-email-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        by mail.kernel.org (Postfix) with ESMTPSA id 2A3ED205F4;
+        Wed, 29 Jan 2020 00:51:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1580259112;
+        bh=j1KaIgCWyPkhoeweQVCLM1MOQ4TTXHNJJ7NyK8FDKzc=;
+        h=In-Reply-To:References:From:Subject:To:Cc:Date:From;
+        b=emMgcth/oMiYw97T/4qUT4slXu93GuyAmROoYdoS11nZuNxhoPm+FNQ/XTvljlFvj
+         V4aFuB/HySQ42ffPm0be0TQLeUE01jS6CGhP7QITc/NeD/E18Hw6mkqlwE3c0UsLSg
+         oXsvjSZDHNst6L9jxA0OV+DEWqIwXmD5reKhQjhM=
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200124144154.v2.5.If590c468722d2985cea63adf60c0d2b3098f37d9@changeid>
+References: <20200124224225.22547-1-dianders@chromium.org> <20200124144154.v2.5.If590c468722d2985cea63adf60c0d2b3098f37d9@changeid>
+From:   Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH v2 05/10] clk: qcom: Fix sc7180 dispcc parent data
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Herring <robh@kernel.org>
+Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, harigovi@codeaurora.org,
+        mka@chromium.org, kalyan_t@codeaurora.org,
+        Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org,
+        hoegsberg@chromium.org, Douglas Anderson <dianders@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-kernel@vger.kernel.org
+User-Agent: alot/0.8.1
+Date:   Tue, 28 Jan 2020 16:51:51 -0800
+Message-Id: <20200129005152.2A3ED205F4@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Domains which are being set up for split pagetables usually want to be
-on a specific context bank for hardware reasons. Force the context
-bank for domains with the split-pagetable quirk to context bank 0.
-If context bank 0 is taken, move that context bank to another unused
-bank and rewrite the stream matching registers accordingly.
+Quoting Douglas Anderson (2020-01-24 14:42:20)
+>=20
+> diff --git a/drivers/clk/qcom/dispcc-sc7180.c b/drivers/clk/qcom/dispcc-s=
+c7180.c
+> index 30c1e25d3edb..380eca3f847d 100644
+> --- a/drivers/clk/qcom/dispcc-sc7180.c
+> +++ b/drivers/clk/qcom/dispcc-sc7180.c
+> @@ -76,40 +76,32 @@ static struct clk_alpha_pll_postdiv disp_cc_pll0_out_=
+even =3D {
+> =20
+>  static const struct parent_map disp_cc_parent_map_0[] =3D {
+>         { P_BI_TCXO, 0 },
+> -       { P_CORE_BI_PLL_TEST_SE, 7 },
+>  };
+> =20
+>  static const struct clk_parent_data disp_cc_parent_data_0[] =3D {
+> -       { .fw_name =3D "bi_tcxo" },
+> -       { .fw_name =3D "core_bi_pll_test_se", .name =3D "core_bi_pll_test=
+_se" },
+> +       { .fw_name =3D "xo" },
 
-This is be used by [1] and [2] to leave context bank 0 open so that
-the Adreno GPU can program it.
+If we can make the binding match the code here and keep saying "bi_tcxo"
+then that is preferred. That way we don't have to see bi_tcxo changing
+and qcom folks are happy to keep the weird name. The name in the binding
+is really up to the binding writer.
 
-[1] https://lists.linuxfoundation.org/pipermail/iommu/2020-January/041438.html
-[2] https://lists.linuxfoundation.org/pipermail/iommu/2020-January/041444.html
+>  };
+> =20
+>  static const struct parent_map disp_cc_parent_map_1[] =3D {
+>         { P_BI_TCXO, 0 },
+>         { P_DP_PHY_PLL_LINK_CLK, 1 },
+>         { P_DP_PHY_PLL_VCO_DIV_CLK, 2 },
+> -       { P_CORE_BI_PLL_TEST_SE, 7 },
+>  };
+[...]
+> @@ -203,7 +188,7 @@ static struct clk_rcg2 disp_cc_mdss_dp_aux_clk_src =
+=3D {
+>         .clkr.hw.init =3D &(struct clk_init_data){
+>                 .name =3D "disp_cc_mdss_dp_aux_clk_src",
+>                 .parent_data =3D disp_cc_parent_data_0,
+> -               .num_parents =3D 2,
+> +               .num_parents =3D ARRAY_SIZE(disp_cc_parent_data_0),
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
+Can you split this ARRAY_SIZE() stuff to another patch? That will keep
+focus on what's relevant here without distracting from the patch
+contents. I know that parent array size is changing, but I don't want it
+to be changing this line too.
 
- drivers/iommu/arm-smmu.c | 63 +++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 59 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-index 85a6773..799a254 100644
---- a/drivers/iommu/arm-smmu.c
-+++ b/drivers/iommu/arm-smmu.c
-@@ -254,6 +254,43 @@ static int __arm_smmu_alloc_bitmap(unsigned long *map, int start, int end)
- 	return idx;
- }
- 
-+static void arm_smmu_write_s2cr(struct arm_smmu_device *smmu, int idx);
-+
-+static int __arm_smmu_alloc_cb(struct arm_smmu_device *smmu, int start,
-+		int target)
-+{
-+	int new, i;
-+
-+       /* Allocate a new context bank id */
-+	new = __arm_smmu_alloc_bitmap(smmu->context_map, start,
-+		smmu->num_context_banks);
-+
-+	if (new < 0)
-+		return new;
-+
-+	/* If no target is set or we actually got the bank index we wanted */
-+	if (target == -1 || new == target)
-+		return new;
-+
-+	/* Copy the context configuration to the new index */
-+	memcpy(&smmu->cbs[new], &smmu->cbs[target], sizeof(*smmu->cbs));
-+	smmu->cbs[new].cfg->cbndx = new;
-+
-+	/* FIXME: Do we need locking here? */
-+	for (i = 0; i < smmu->num_mapping_groups; i++) {
-+		if (smmu->s2crs[i].cbndx == target) {
-+			smmu->s2crs[i].cbndx = new;
-+			arm_smmu_write_s2cr(smmu, i);
-+		}
-+	}
-+
-+	/*
-+	 * FIXME: Does getting here imply that 'target' is already set in the
-+	 * context_map?
-+	 */
-+	return target;
-+}
-+
- static void __arm_smmu_free_bitmap(unsigned long *map, int idx)
- {
- 	clear_bit(idx, map);
-@@ -770,6 +807,7 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
- 	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
- 	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
- 	unsigned long quirks = 0;
-+	int forcecb = -1;
- 
- 	mutex_lock(&smmu_domain->init_mutex);
- 	if (smmu_domain->smmu)
-@@ -844,8 +882,25 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
- 			 * SEP_UPSTREAM so we don't need to reduce the size of
- 			 * the ias to account for the sign extension bit
- 			 */
--			if (smmu_domain->split_pagetables)
--				quirks |= IO_PGTABLE_QUIRK_ARM_TTBR1;
-+			if (smmu_domain->split_pagetables) {
-+				/*
-+				 * If split pagetables are enabled, assume that
-+				 * the user's intent is to use per-instance
-+				 * pagetables which, at least on a QCOM target,
-+				 * means that this domain should be on context
-+				 * bank 0.
-+				 */
-+
-+				/*
-+				 * If we can't force to context bank 0 then
-+				 * don't bother enabling split pagetables which
-+				 * then would not allow aux domains
-+				 */
-+				if (start == 0) {
-+					forcecb = 0;
-+					quirks |= IO_PGTABLE_QUIRK_ARM_TTBR1;
-+				}
-+			}
- 		} else if (cfg->fmt == ARM_SMMU_CTX_FMT_AARCH32_L) {
- 			fmt = ARM_32_LPAE_S1;
- 			ias = min(ias, 32UL);
-@@ -883,8 +938,8 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
- 		ret = -EINVAL;
- 		goto out_unlock;
- 	}
--	ret = __arm_smmu_alloc_bitmap(smmu->context_map, start,
--				      smmu->num_context_banks);
-+
-+	ret = __arm_smmu_alloc_cb(smmu, start, forcecb);
- 	if (ret < 0)
- 		goto out_unlock;
- 
--- 
-2.7.4
+>                 .ops =3D &clk_rcg2_ops,
+>         },
+>  };
