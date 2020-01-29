@@ -2,71 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2445314CBCC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 14:53:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A418A14CC0D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 15:05:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726801AbgA2Nwc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jan 2020 08:52:32 -0500
-Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:11989 "EHLO
-        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726768AbgA2Nwc (ORCPT
+        id S1726622AbgA2OF0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jan 2020 09:05:26 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:64227 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726177AbgA2OF0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jan 2020 08:52:32 -0500
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 29 Jan 2020 19:22:26 +0530
-Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 29 Jan 2020 19:22:12 +0530
-Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
-        id 33B2F257F; Wed, 29 Jan 2020 19:22:11 +0530 (IST)
-From:   Sandeep Maheswaram <sanm@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: [PATCH v4 8/8] arm64: dts: qcom: sc7180: Update QUSB2 V2 Phy params for SC7180 IDP device
-Date:   Wed, 29 Jan 2020 19:21:59 +0530
-Message-Id: <1580305919-30946-9-git-send-email-sanm@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1580305919-30946-1-git-send-email-sanm@codeaurora.org>
-References: <1580305919-30946-1-git-send-email-sanm@codeaurora.org>
+        Wed, 29 Jan 2020 09:05:26 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1580306726; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=OYXu3ND/s2/4ySCf9M0xA490SGByupUTGY02AD+jy9Y=;
+ b=Rq4ociqvGLBy+XQB407jR/wWcgTnFxWhlwk0oRFzn4LXsjdPS74X44f+PCpMUk5/9QrpsK4x
+ rkt63+ET2rHL61I6pGGhKhrau6c4Z4qqG1wj9to7xpPgVB/BRprduF3dkR4N2rx7txFCpQHY
+ 26unx+kUD7W/wMKmvjzPmomb7NQ=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e319124.7fede9397650-smtp-out-n02;
+ Wed, 29 Jan 2020 14:05:24 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 20A7AC447A4; Wed, 29 Jan 2020 14:05:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 44569C433CB;
+        Wed, 29 Jan 2020 14:05:21 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 29 Jan 2020 19:35:21 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        georgi.djakov@linaro.org, saravanak@google.com, nm@ti.com,
+        bjorn.andersson@linaro.org, agross@kernel.org,
+        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org,
+        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
+        ulf.hansson@linaro.org
+Subject: Re: [RFC v3 09/10] arm64: dts: qcom: sdm845: Add cpu OPP tables
+In-Reply-To: <20200129012411.GI46072@google.com>
+References: <20200127200350.24465-1-sibis@codeaurora.org>
+ <20200127200350.24465-10-sibis@codeaurora.org>
+ <20200129012411.GI46072@google.com>
+Message-ID: <4f2b98a1dae3bc737a43a1e46255657b@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Overriding the QUSB2 V2 Phy tuning parameters for SC7180 IDP device.
+Hey Matthias,
 
-Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7180-idp.dts | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Thanks for the review!
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 388f50a..826cf02 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -276,9 +276,11 @@
- 	vdda-pll-supply = <&vreg_l11a_1p8>;
- 	vdda-phy-dpdm-supply = <&vreg_l17a_3p0>;
- 	qcom,imp-res-offset-value = <8>;
--	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
--	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
-+	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_15_PERCENT>;
- 	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
-+	qcom,bias-ctrl-value = <0x22>;
-+	qcom,charge-ctrl-value = <3>;
-+	qcom,hsdisc-trim-value = <0>;
- };
- 
- &usb_1_qmpphy {
+On 2020-01-29 06:54, Matthias Kaehlcke wrote:
+> Hi Sibi,
+> 
+> On Tue, Jan 28, 2020 at 01:33:49AM +0530, Sibi Sankar wrote:
+>> Add OPP tables required to scale DDR/L3 per freq-domain on SDM845 
+>> SoCs.
+>> 
+>> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 453 
+>> +++++++++++++++++++++++++++
+>>  1 file changed, 453 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>> index c036bab49fc03..8cb976118407b 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>> @@ -199,6 +199,12 @@
+>>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>>  			#cooling-cells = <2>;
+>>  			next-level-cache = <&L2_0>;
+>> +			operating-points-v2 = <&cpu0_opp_table>,
+>> +					      <&cpu0_ddr_bw_opp_table>,
+>> +					      <&cpu0_l3_bw_opp_table>;
+>> +			interconnects = <&gladiator_noc MASTER_APPSS_PROC &mem_noc 
+>> SLAVE_EBI1>,
+>> +					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+> 
+> This apparently depends on the 'Split SDM845 interconnect nodes and
+> consolidate RPMh support' series
+> (https://patchwork.kernel.org/project/linux-arm-msm/list/?series=226281),
+> which isn't mentioned in the cover letter.
+> 
+> I also couldn't find a patch on the lists that adds the 'osm_l3'
+> interconnect node for SDM845. The same is true for SC7180 (next
+> patch of this series). These patches may be available in custom trees,
+> but that isn't really helpful for upstream review.
+
+yeah I missed adding the interconnect
+refactor dependency and the nodes.
+
+> 
+> I would suggest to focus on landing the dependencies of this series,
+> before proceding with it (or at least most of them), there are plenty
+> and without the dependencies this series isn't going to land, it also
+> makes it hard for testers and reviewers to get all the pieces
+
+yes I understand but wanted the series
+out asap because since there are a few
+points where we still havn't reached
+a consensus on.
+
+> together. In particular the last post of the series 'Add
+> required-opps support to devfreq passive gov'
+> (https://patchwork.kernel.org/cover/11055499/) is from July 2019 ...
+
+https://lore.kernel.org/lkml/CAGTfZH37ALwUHd8SpRRrBzZ6x1-++YtzS60_yRQvN-TN6rOzaA@mail.gmail.com/
+
+The pending patch for lazy linking
+was posted a while back. Now that
+it has a tested-by, majority of the
+series should go in since the devfreq
+maintainers wanted the series pulled
+in.
+
+> 
+> Thanks
+> 
+> Matthias
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
