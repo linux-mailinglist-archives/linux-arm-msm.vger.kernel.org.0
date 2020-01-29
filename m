@@ -2,39 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E9B914C84F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 10:46:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A3FDB14C9E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 12:49:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726069AbgA2Jq4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jan 2020 04:46:56 -0500
-Received: from foss.arm.com ([217.140.110.172]:38660 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726010AbgA2Jq4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jan 2020 04:46:56 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9C2011FB;
-        Wed, 29 Jan 2020 01:46:55 -0800 (PST)
-Received: from [10.37.12.123] (unknown [10.37.12.123])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2C0A23F52E;
-        Wed, 29 Jan 2020 01:46:46 -0800 (PST)
-Subject: Re: [RFC v3 00/10] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
-To:     Sibi Sankar <sibis@codeaurora.org>, viresh.kumar@linaro.org,
-        sboyd@kernel.org, georgi.djakov@linaro.org, saravanak@google.com
-Cc:     nm@ti.com, bjorn.andersson@linaro.org, agross@kernel.org,
-        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dianders@chromium.org, mka@chromium.org,
-        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
-        ulf.hansson@linaro.org
-References: <20200127200350.24465-1-sibis@codeaurora.org>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <88b3885a-5ddd-b942-c5a5-d560b2f196bd@arm.com>
-Date:   Wed, 29 Jan 2020 09:46:44 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1726271AbgA2LtI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jan 2020 06:49:08 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:36550 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726067AbgA2LtH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 Jan 2020 06:49:07 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1580298547; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=7ZWaYAxSy8lntsFBFvZAXk81ogRHgObujRrr9xFKq2Y=; b=liVCWbvmRyTwj+zwnwxWtNY0yl5/YifaHdvrgNuvHMFsUG9corVLboCM+gJpFVTYODvAoQnx
+ B514r6iotRJAGmOe7hBjGmyEBG3UQ9jDQaIL3O0E3nRhoEcCTx2oaG/75NGl20XYJBByFqTR
+ VTkBbyx0+r9zZ4Xv6EHjEu+bc4U=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e31712a.7f4c2c332c38-smtp-out-n01;
+ Wed, 29 Jan 2020 11:48:58 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AC7E8C4479F; Wed, 29 Jan 2020 11:48:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.204.79.159] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sramana)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 40D9EC43383;
+        Wed, 29 Jan 2020 11:48:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 40D9EC43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sramana@codeaurora.org
+Subject: Re: [PATCH] arm64: Set SSBS for user threads while creation
+To:     Catalin Marinas <catalin.marinas@arm.com>
+Cc:     will@kernel.org, maz@kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <1577106146-8999-1-git-send-email-sramana@codeaurora.org>
+ <20200102180145.GE27940@arrakis.emea.arm.com>
+From:   Srinivas Ramana <sramana@codeaurora.org>
+Message-ID: <0c5cd234-5cfb-d093-06e4-a0edb5c68bf8@codeaurora.org>
+Date:   Wed, 29 Jan 2020 17:18:53 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.1
 MIME-Version: 1.0
-In-Reply-To: <20200127200350.24465-1-sibis@codeaurora.org>
+In-Reply-To: <20200102180145.GE27940@arrakis.emea.arm.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -43,78 +61,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sibi,
+On 1/2/2020 11:31 PM, Catalin Marinas wrote:
+> On Mon, Dec 23, 2019 at 06:32:26PM +0530, Srinivas Ramana wrote:
+>> Current SSBS implementation takes care of setting the
+>> SSBS bit in start_thread() for user threads. While this works
+>> for tasks launched with fork/clone followed by execve, for cases
+>> where userspace would just call fork (eg, Java applications) this
+>> leaves the SSBS bit unset. This results in performance
+>> regression for such tasks.
+>>
+>> It is understood that commit cbdf8a189a66 ("arm64: Force SSBS
+>> on context switch") masks this issue, but that was done for a
+>> different reason where heterogeneous CPUs(both SSBS supported
+>> and unsupported) are present. It is appropriate to take care
+>> of the SSBS bit for all threads while creation itself.
+>>
+>> Fixes: 8f04e8e6e29c ("arm64: ssbd: Add support for PSTATE.SSBS rather than trapping to EL3")
+>> Signed-off-by: Srinivas Ramana <sramana@codeaurora.org>
+> 
+> I suppose the parent process cleared SSBS explicitly. Isn't the child
 
-In my opinion this solution depends on not always true assumption that
-CPUFreq notification chain will be triggered when there is a frequency
-switch. Extending devfreq governor (as in one of the dependent patch
-series that you have referred) by attaching to this notification
-chain makes sense only when the SchedUtil and fast_switch is not in use.
-The Schedutil CPUFreq governor might use the fast_switch from this
-driver and the notifications will not be triggered. I have also
-commented patch 08/10 which tries to disable it.
+Actually we observe that parent(in case of android, zygote that launches 
+the app) does have SSBS bit set. However child doesn't have the bit set.
 
-Regards,
-Lukasz
+> after fork() supposed to be nearly identical to the parent? If we did as
+> you suggest, someone else might complain that SSBS has been set in the
+> child after fork().
 
-On 1/27/20 8:03 PM, Sibi Sankar wrote:
-> This RFC series aims to extend cpu based scaling support to L3/DDR on
-> SDM845 and SC7180 SoCs.
+I am also wondering why would a userspace process clear SSBS bit loosing 
+the performance benefit.
 > 
-> Patches [1-3] - Blacklist SDM845 and SC7180 in cpufreq-dt-platdev
-> Patches [5-7] - Hack in a way to add/remove multiple opp tables to
->                  a single device. I am yet to fix the debugfs to
-> 		support multiple opp_tables per device but wanted to
-> 		send what was working upstream to get an idea if multiple
-> 		opp tables per device is a feature that will be useful
-> 		upstream.
-> Patches [9-10] - Add the cpu/cpu-ddr/cpu-l3 opp tables for SDM845
->                   and SC7180 SoCs.
+> I think the fix is for user space to set SSBS in the child if it no
+> longer needs it.
 > 
-> v3:
->   * Migrated to using Saravana's opp-kBps bindings [1]
->   * Fixed some misc comments from Rajendra
->   * Added support for SC7180
-> 
-> v2:
->   * Incorporated Viresh's comments from:
->   https://lore.kernel.org/lkml/20190410102429.r6j6brm5kspmqxc3@vireshk-i7/
->   https://lore.kernel.org/lkml/20190410112516.gnh77jcwawvld6et@vireshk-i7/
->   * Dropped cpufreq-map passive governor
-> 
-> Git-branch: https://github.com/QuinAsura/linux/tree/lnext-012420
-> 
-> Some alternate ways of hosting the opp-tables:
-> https://github.com/QuinAsura/linux/commit/50b92bfaadc8f9a0d1e12249646e018bd6d1a9d3
-> https://github.com/QuinAsura/linux/commit/3d23d1eefd16ae6d9e3ef91e93e78749d8844e98
-> Viresh didn't really like ^^ bindings and they dont really scale well. Just
-> including them here for completeness.
-> 
-> Depends on the following series:
-> [1] https://patchwork.kernel.org/cover/11277199/
-> [2] https://patchwork.kernel.org/cover/11055499/
-> [3] https://patchwork.kernel.org/cover/11326381/
-> 
-> Sibi Sankar (10):
->    arm64: dts: qcom: sdm845: Add SoC compatible to MTP
->    cpufreq: blacklist SDM845 in cpufreq-dt-platdev
->    cpufreq: blacklist SC7180 in cpufreq-dt-platdev
->    OPP: Add and export helper to update voltage
->    opp: of: export _opp_of_get_opp_desc_node
->    opp: Allow multiple opp_tables to be mapped to a single device
->    opp: Remove multiple attached opp tables from a device
->    cpufreq: qcom: Update the bandwidth levels on frequency change
->    arm64: dts: qcom: sdm845: Add cpu OPP tables
->    arm64: dts: qcom: sc7180: Add cpu OPP tables
-> 
->   arch/arm64/boot/dts/qcom/sc7180.dtsi    | 287 +++++++++++++++
->   arch/arm64/boot/dts/qcom/sdm845-mtp.dts |   2 +-
->   arch/arm64/boot/dts/qcom/sdm845.dtsi    | 453 ++++++++++++++++++++++++
->   drivers/cpufreq/cpufreq-dt-platdev.c    |   2 +
->   drivers/cpufreq/qcom-cpufreq-hw.c       | 246 +++++++++++--
->   drivers/opp/core.c                      | 111 +++++-
->   drivers/opp/of.c                        |   3 +-
->   drivers/opp/opp.h                       |   2 +
->   include/linux/pm_opp.h                  |  10 +
->   9 files changed, 1083 insertions(+), 33 deletions(-)
-> 
+
+Sorry for the late response on this.
+
+Thanks,
+-- Srinivas R
+
+
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation
+Center, Inc., is a member of Code Aurora Forum, a Linux Foundation
+Collaborative Project
