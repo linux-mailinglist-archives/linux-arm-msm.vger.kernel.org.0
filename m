@@ -2,106 +2,912 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 18C8814D233
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 21:58:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A517A14D26D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 22:24:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726830AbgA2U6y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jan 2020 15:58:54 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:33060 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726672AbgA2U6y (ORCPT
+        id S1726485AbgA2VYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jan 2020 16:24:03 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:41194 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726251AbgA2VYA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jan 2020 15:58:54 -0500
-Received: by mail-pg1-f193.google.com with SMTP id 6so444402pgk.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2020 12:58:54 -0800 (PST)
+        Wed, 29 Jan 2020 16:24:00 -0500
+Received: by mail-pl1-f196.google.com with SMTP id t14so448875plr.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2020 13:23:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=UoMAzn/099CvNvcShTE0fqakA9YvEbTZbA/yOdNPeow=;
-        b=DquI3KoXfcdwBJ3y7b80B31FvtkFeKlD1KIQaJ2I79W1Os4hdnhEFGXWl0HK9kPGhJ
-         LsORtAnSvWwEXshGIH/dAoH9VMRgrJ6LxINyGGrpB1IC7rT84Ig6sYmN/XPt96k9hq0l
-         HoZUtz+lLd+TGSEU11nBcpCVypQCqLpDTmqr8=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=W5KC8Z7HMhK/E1CyRd5toGvARm6DXMH7VEhu4e6BzBA=;
+        b=W90e6FF6TB7mehBUfJ5IMLPpfaMokgEbytw5t+EgNsLr43YL1c+8uiGDtmGCHoJTVW
+         ZP+mKlckA9Ek6VCoQEetpPe1c9dml9mbvE6yoXy2DpZVW0Oges3G1tp+m6WUmlHS4u3q
+         Nj3pmghwNj6Pnuu1s3yR9QjFXcduSxwJ5pVRE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=UoMAzn/099CvNvcShTE0fqakA9YvEbTZbA/yOdNPeow=;
-        b=i4ldxfesgKmftOOtwx4cUXXkkSmL5tWQ9q7GhLwlbXKKBWNszNDimMMgHxmKh0JWPi
-         r3/ScMBxFqDd/E8Vg690vaaH/IPFbEul7vnroSdzlCwvdoY8yzOeMrYzDPv+TQ62m5iL
-         LCe7X5p5cgpcCGSUWjA9Ow/SizDNMh8LYxG6ouWg+GtoiCwCj/3T2sFmXBF24rbwI7AM
-         iHdAy55qFJ7HaiMslNYQztp6zIBL50+e5cCkvY8F1W6udIl2HQQKd7OYuv2JkF7n7xwO
-         iUlwqIyIokKm9Mf/ivlOkEFr/2NapFaMbOb7ojWhruRI6BF4bRImYTf/8W5Os2QJmoUN
-         57bw==
-X-Gm-Message-State: APjAAAUB0WmwchsSnA8uFWJBEHo25fhYGo01c+WUj8e/JeFbZzl/juCZ
-        9HaKK5sVZM6ou8FaqCaq6VldZZHLV+I=
-X-Google-Smtp-Source: APXvYqwjnqHvrvMkWU2n+NRKl9k2drCHiF4vLcBdGx+Z7bM/W2rp1iRPMu9xJw3rFRmv7O7yIBxJ1g==
-X-Received: by 2002:a62:6c6:: with SMTP id 189mr1469295pfg.224.1580331533751;
-        Wed, 29 Jan 2020 12:58:53 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id e6sm3748856pfh.32.2020.01.29.12.58.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jan 2020 12:58:53 -0800 (PST)
-Date:   Wed, 29 Jan 2020 12:58:52 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=W5KC8Z7HMhK/E1CyRd5toGvARm6DXMH7VEhu4e6BzBA=;
+        b=DamfNDl84e/EIxTWHWtoSTm/78MIseoxhN4mJ0jl8I0DokqrNnMyyFxRCHYSezgPaj
+         Luzx4aBgR+DUpKUK6uoFXQ+tsyKHZb5kjmTveKqT7iYruQcK35mTqLKa2XdlQa5tN1FO
+         4hlzEHbsqmYmt1iY5RCnSuGd62DGCKNNAXzuNKj8p+5Ynphh9+9xTW6fIF/MyNQOer3T
+         ULn/NdNvSDd/8jLNgpvSVSxRa4WpJYiETPtQMfHjNVlnxDR4bGHDeoiCGaTjGb/3j3XK
+         rYmAknLPm4S75Y/x0OSGX5GBfaFSL+NhcJq6KeouVnriEOnFbeEUc6H2+RZVJ0gZZvDL
+         hmBw==
+X-Gm-Message-State: APjAAAWjmQIbbDWDEihryH+z2omxtG81MCuhpD4/XhezBBzuqO+UREkt
+        Vg9xTOWI36trbT9GHLz6wY75PQ==
+X-Google-Smtp-Source: APXvYqzNxJX/Gn6pHqu1jXH52eLiiX+dgxhCxi2U7+s7VzSJSHWCrEkJ6fQMbUbJwWkM7KWv9eOZzQ==
+X-Received: by 2002:a17:90a:7784:: with SMTP id v4mr1903930pjk.134.1580333038399;
+        Wed, 29 Jan 2020 13:23:58 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id j38sm3728424pgj.27.2020.01.29.13.23.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jan 2020 13:23:57 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>
+Cc:     tdas@codeaurora.org, jhugo@codeaurora.org, absahu@codeaurora.org,
+        sivaprak@codeaurora.org, anusharao@codeaurora.org,
+        sricharan@codeaurora.org, Douglas Anderson <dianders@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 2/8] dt-bindings: phy: qcom,qusb2: Add compatibles for
- QUSB2 V2 phy and SC7180
-Message-ID: <20200129205852.GH71044@google.com>
-References: <1580305919-30946-1-git-send-email-sanm@codeaurora.org>
- <1580305919-30946-3-git-send-email-sanm@codeaurora.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org
+Subject: [PATCH] dt-bindings: clk: qcom: Fix self-validation, split, and clean cruft
+Date:   Wed, 29 Jan 2020 13:23:25 -0800
+Message-Id: <20200129132313.1.I4452dc951d7556ede422835268742b25a18b356b@changeid>
+X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1580305919-30946-3-git-send-email-sanm@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 29, 2020 at 07:21:53PM +0530, Sandeep Maheswaram wrote:
-> Add compatibles for generic QUSB2 V2 phy which can be used for
-> sdm845 and sc7180.
-> 
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml | 15 +++++++++++----
->  1 file changed, 11 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-> index 90b3cc6..43082c8 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-> @@ -15,10 +15,17 @@ description:
->  
->  properties:
->    compatible:
-> -    enum:
-> -      - qcom,msm8996-qusb2-phy
-> -      - qcom,msm8998-qusb2-phy
-> -      - qcom,sdm845-qusb2-phy
-> +    oneOf:
-> +      - items:
-> +        - enum:
-> +          - qcom,msm8996-qusb2-phy
-> +          - qcom,msm8998-qusb2-phy
-> +          - qcom,qusb2-v2-phy
-> +      - items:
-> +        - enum:
-> +          - qcom,sc7180-qusb2-phy
-> +          - qcom,sdm845-qusb2-phy
-> +        - const: qcom,qusb2-v2-phy
->    reg:
->      maxItems: 1
+The 'qcom,gcc.yaml' file failed self-validation (dt_binding_check)
+because it required a property to be either (3 entries big),
+(3 entries big), or (7 entries big), but not more than one of those
+things.  That didn't make a ton of sense.
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+This patch splits all of the exceptional device trees (AKA those that
+would have needed if/then/else rules) from qcom,gcc.yaml.  It also
+cleans up some cruft found while doing that.
+
+After this lands, this worked for me atop clk-next:
+  for f in \
+    Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml \
+    Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml \
+    Documentation/devicetree/bindings/clock/qcom,gcc-msm8996.yaml \
+    Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.yaml \
+    Documentation/devicetree/bindings/clock/qcom,gcc-qcs404.yaml \
+    Documentation/devicetree/bindings/clock/qcom,gcc-sc7180.yaml \
+    Documentation/devicetree/bindings/clock/qcom,gcc-sm8150.yaml \
+    Documentation/devicetree/bindings/clock/qcom,gcc.yaml; do \
+      ARCH=arm64 make dt_binding_check DT_SCHEMA_FILES=$f; \
+      ARCH=arm64 make dtbs_check DT_SCHEMA_FILES=$f; \
+  done
+
+Arbitrary decisions made (yell if you want changed):
+- Left all the older devices (where clocks / clock-names weren't
+  specified) in a single file.
+- Didn't make clocks "required" for msm8996/msm8998 but left them as
+  listed.  This seems a little weird but means I didn't need to open a
+  whole different can of worms.  It matches the old binding for
+  msm8996 and doesn't match the binding (but matches the dts) for
+  msm8998.
+
+Misc cleanups as part of this patch:
+- sm8150 was claimed to be same set of clocks as sc7180, but driver
+  and dts appear to say that "bi_tcxo_ao" doesn't exist.  Fixed.
+- In "apq8064", "#thermal-sensor-cells" was missing the "#".
+- Got rid of "|" at the end of top description since spacing doesn't
+  matter.
+- Changed indentation to consistently 2 spaces (it was 3 in some
+  places).
+- Added period at the end of protected-clocks description.
+- No space before ":".
+- Updated sc7180/sm8150 example to use the 'qcom,rpmh.h' include.
+- Updated sc7180/sm8150 example to use larger address/size cells as
+  per reality.
+- Updated sc7180/sm8150 example to point to the sleep_clk rather than
+  <0>.
+- Made it so that gcc-ipq8074 didn't require #power-domain-cells since
+  actual dts didn't have it and I got no hits from:
+    git grep _GDSC include/dt-bindings/clock/qcom,gcc-ipq8074.h
+- Made it so that gcc-qcs404 didn't require #power-domain-cells since
+  actual dts didn't have it and I got no hits from:
+    git grep _GDSC include/dt-bindings/clock/qcom,gcc-qcs404.h
+
+Noticed, but not done in this patch (volunteers needed):
+- Add "aud_ref_clk" to sm8150 bindings / dts even though I found a
+  reference to it in "gcc-sm8150.c".
+- Fix node name in actual ipq8074 to be "clock-controller" (it's gcc).
+- Since the example doesn't need phandes to exist, in msm8998 could
+  just make up places providing some of the clocks currently bogused
+  out with <0>.
+
+Fixes: ab91f72e018a ("clk: qcom: gcc-msm8996: Fix parent for CLKREF clocks")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+
+ .../bindings/clock/qcom,gcc-apq8064.yaml      |  81 +++++++
+ .../bindings/clock/qcom,gcc-ipq8074.yaml      |  48 ++++
+ .../bindings/clock/qcom,gcc-msm8996.yaml      |  65 ++++++
+ .../bindings/clock/qcom,gcc-msm8998.yaml      |  88 ++++++++
+ .../bindings/clock/qcom,gcc-qcs404.yaml       |  48 ++++
+ .../bindings/clock/qcom,gcc-sc7180.yaml       |  72 ++++++
+ .../bindings/clock/qcom,gcc-sm8150.yaml       |  69 ++++++
+ .../devicetree/bindings/clock/qcom,gcc.yaml   | 212 ++----------------
+ 8 files changed, 489 insertions(+), 194 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8996.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-qcs404.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sc7180.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm8150.yaml
+
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+new file mode 100644
+index 000000000000..c09497881cd2
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+@@ -0,0 +1,81 @@
++# SPDX-License-Identifier: GPL-2.0-only
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/bindings/clock/qcom,gcc-apq8064.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Global Clock & Reset Controller Binding for APQ8064
++
++maintainers:
++  - Stephen Boyd <sboyd@kernel.org>
++  - Taniya Das <tdas@codeaurora.org>
++
++description:
++  Qualcomm global clock control module which supports the clocks, resets and
++  power domains on APQ8064.
++
++properties:
++  compatible:
++    const: qcom,gcc-apq8064
++
++  '#clock-cells':
++    const: 1
++
++  '#reset-cells':
++    const: 1
++
++  '#power-domain-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++  nvmem-cells:
++    minItems: 1
++    maxItems: 2
++    description:
++      Qualcomm TSENS (thermal sensor device) on some devices can
++      be part of GCC and hence the TSENS properties can also be part
++      of the GCC/clock-controller node.
++      For more details on the TSENS properties please refer
++      Documentation/devicetree/bindings/thermal/qcom-tsens.txt
++
++  nvmem-cell-names:
++    minItems: 1
++    maxItems: 2
++    description:
++      Names for each nvmem-cells specified.
++    items:
++      - const: calib
++      - const: calib_backup
++
++  '#thermal-sensor-cells':
++    const: 1
++
++  protected-clocks:
++    description:
++      Protected clock specifier list as per common clock binding.
++
++required:
++  - compatible
++  - reg
++  - '#clock-cells'
++  - '#reset-cells'
++  - '#power-domain-cells'
++  - nvmem-cells
++  - nvmem-cell-names
++  - '#thermal-sensor-cells'
++
++examples:
++  - |
++    clock-controller@900000 {
++      compatible = "qcom,gcc-apq8064";
++      reg = <0x00900000 0x4000>;
++      nvmem-cells = <&tsens_calib>, <&tsens_backup>;
++      nvmem-cell-names = "calib", "calib_backup";
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++      #thermal-sensor-cells = <1>;
++    };
++...
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml
+new file mode 100644
+index 000000000000..1c6461c52a47
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml
+@@ -0,0 +1,48 @@
++# SPDX-License-Identifier: GPL-2.0-only
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/bindings/clock/qcom,gcc-ipq8074.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Global Clock & Reset Controller Bindingfor IPQ8074
++
++maintainers:
++  - Stephen Boyd <sboyd@kernel.org>
++  - Taniya Das <tdas@codeaurora.org>
++
++description:
++  Qualcomm global clock control module which supports the clocks, resets and
++  power domains on IPQ8074.
++
++properties:
++  compatible:
++    const: qcom,gcc-ipq8074
++
++  '#clock-cells':
++    const: 1
++
++  '#reset-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++  protected-clocks:
++    description:
++      Protected clock specifier list as per common clock binding.
++
++required:
++  - compatible
++  - reg
++  - '#clock-cells'
++  - '#reset-cells'
++
++examples:
++  - |
++    clock-controller@1800000 {
++      compatible = "qcom,gcc-ipq8074";
++      reg = <0x01800000 0x80000>;
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++    };
++...
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8996.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8996.yaml
+new file mode 100644
+index 000000000000..32782e648c7e
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8996.yaml
+@@ -0,0 +1,65 @@
++# SPDX-License-Identifier: GPL-2.0-only
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/bindings/clock/qcom,gcc-msm8996.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Global Clock & Reset Controller Binding for MSM8996
++
++maintainers:
++  - Stephen Boyd <sboyd@kernel.org>
++  - Taniya Das <tdas@codeaurora.org>
++
++description:
++  Qualcomm global clock control module which supports the clocks, resets and
++  power domains on MSM8996.
++
++properties:
++  compatible:
++    const: qcom,gcc-msm8996
++
++  clocks:
++    items:
++      - description: XO source
++      - description: Second XO source
++      - description: Sleep clock source
++
++  clock-names:
++    items:
++      - const: cxo
++      - const: cxo2
++      - const: sleep_clk
++
++  '#clock-cells':
++    const: 1
++
++  '#reset-cells':
++    const: 1
++
++  '#power-domain-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++  protected-clocks:
++    description:
++      Protected clock specifier list as per common clock binding.
++
++required:
++  - compatible
++  - reg
++  - '#clock-cells'
++  - '#reset-cells'
++  - '#power-domain-cells'
++
++examples:
++  - |
++    clock-controller@300000 {
++      compatible = "qcom,gcc-msm8996";
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++      reg = <0x300000 0x90000>;
++    };
++...
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.yaml
+new file mode 100644
+index 000000000000..75c0ee208965
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.yaml
+@@ -0,0 +1,88 @@
++# SPDX-License-Identifier: GPL-2.0-only
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/bindings/clock/qcom,gcc-msm8998.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Global Clock & Reset Controller Binding for MSM8998
++
++maintainers:
++  - Stephen Boyd <sboyd@kernel.org>
++  - Taniya Das <tdas@codeaurora.org>
++
++description:
++  Qualcomm global clock control module which supports the clocks, resets and
++  power domains on MSM8998.
++
++properties:
++  compatible:
++    const: qcom,gcc-msm8998
++
++  clocks:
++    items:
++      - description: Board XO source
++      - description: Sleep clock source
++      - description: USB 3.0 phy pipe clock
++      - description: UFS phy rx symbol clock for pipe 0
++      - description: UFS phy rx symbol clock for pipe 1
++      - description: UFS phy tx symbol clock
++      - description: PCIE phy pipe clock
++
++  clock-names:
++    items:
++      - const: xo
++      - const: sleep_clk
++      - const: usb3_pipe
++      - const: ufs_rx_symbol0
++      - const: ufs_rx_symbol1
++      - const: ufs_tx_symbol0
++      - const: pcie0_pipe
++
++  '#clock-cells':
++    const: 1
++
++  '#reset-cells':
++    const: 1
++
++  '#power-domain-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++  protected-clocks:
++    description:
++      Protected clock specifier list as per common clock binding.
++
++required:
++  - compatible
++  - reg
++  - '#clock-cells'
++  - '#reset-cells'
++  - '#power-domain-cells'
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,rpmcc.h>
++    clock-controller@100000 {
++      compatible = "qcom,gcc-msm8998";
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++      reg = <0x00100000 0xb0000>;
++      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
++               <&sleep>,
++               <0>,
++               <0>,
++               <0>,
++               <0>,
++               <0>;
++      clock-names = "xo",
++                    "sleep_clk",
++                    "usb3_pipe",
++                    "ufs_rx_symbol0",
++                    "ufs_rx_symbol1",
++                    "ufs_tx_symbol0",
++                    "pcie0_pipe";
++    };
++...
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-qcs404.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-qcs404.yaml
+new file mode 100644
+index 000000000000..f881cbeab594
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-qcs404.yaml
+@@ -0,0 +1,48 @@
++# SPDX-License-Identifier: GPL-2.0-only
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/bindings/clock/qcom,gcc-qcs404.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Global Clock & Reset Controller Bindingfor QCS404
++
++maintainers:
++  - Stephen Boyd <sboyd@kernel.org>
++  - Taniya Das <tdas@codeaurora.org>
++
++description:
++  Qualcomm global clock control module which supports the clocks, resets and
++  power domains on QCS404.
++
++properties:
++  compatible:
++    const: qcom,gcc-qcs404
++
++  '#clock-cells':
++    const: 1
++
++  '#reset-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++  protected-clocks:
++    description:
++      Protected clock specifier list as per common clock binding.
++
++required:
++  - compatible
++  - reg
++  - '#clock-cells'
++  - '#reset-cells'
++
++examples:
++  - |
++    clock-controller@1800000 {
++      compatible = "qcom,gcc-qcs404";
++      reg = <0x01800000 0x80000>;
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++    };
++...
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sc7180.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sc7180.yaml
+new file mode 100644
+index 000000000000..b6a27da0c9b9
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sc7180.yaml
+@@ -0,0 +1,72 @@
++# SPDX-License-Identifier: GPL-2.0-only
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/bindings/clock/qcom,gcc-sc7180.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Global Clock & Reset Controller Binding for SC7180
++
++maintainers:
++  - Stephen Boyd <sboyd@kernel.org>
++  - Taniya Das <tdas@codeaurora.org>
++
++description:
++  Qualcomm global clock control module which supports the clocks, resets and
++  power domains on SC7180.
++
++properties:
++  compatible:
++    const: qcom,gcc-sc7180
++
++  clocks:
++    items:
++      - description: Board XO source
++      - description: Board active XO source
++      - description: Sleep clock source
++
++  clock-names:
++    items:
++      - const: bi_tcxo
++      - const: bi_tcxo_ao
++      - const: sleep_clk
++
++  '#clock-cells':
++    const: 1
++
++  '#reset-cells':
++    const: 1
++
++  '#power-domain-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++  protected-clocks:
++    description:
++      Protected clock specifier list as per common clock binding.
++
++required:
++  - compatible
++  - clocks
++  - clock-names
++  - reg
++  - '#clock-cells'
++  - '#reset-cells'
++  - '#power-domain-cells'
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    clock-controller@100000 {
++      compatible = "qcom,gcc-sc7180";
++      reg = <0 0x00100000 0 0x1f0000>;
++      clocks = <&rpmhcc RPMH_CXO_CLK>,
++               <&rpmhcc RPMH_CXO_CLK_A>,
++               <&sleep_clk>;
++      clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++...
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sm8150.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sm8150.yaml
+new file mode 100644
+index 000000000000..ca581b2e3286
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sm8150.yaml
+@@ -0,0 +1,69 @@
++# SPDX-License-Identifier: GPL-2.0-only
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/bindings/clock/qcom,gcc-sm8150.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Global Clock & Reset Controller Binding for SM8150
++
++maintainers:
++  - Stephen Boyd <sboyd@kernel.org>
++  - Taniya Das <tdas@codeaurora.org>
++
++description:
++  Qualcomm global clock control module which supports the clocks, resets and
++  power domains on SM8150.
++
++properties:
++  compatible:
++    const: qcom,gcc-sm8150
++
++  clocks:
++    items:
++      - description: Board XO source
++      - description: Sleep clock source
++
++  clock-names:
++    items:
++      - const: bi_tcxo
++      - const: sleep_clk
++
++  '#clock-cells':
++    const: 1
++
++  '#reset-cells':
++    const: 1
++
++  '#power-domain-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++  protected-clocks:
++    description:
++      Protected clock specifier list as per common clock binding.
++
++required:
++  - compatible
++  - clocks
++  - clock-names
++  - reg
++  - '#clock-cells'
++  - '#reset-cells'
++  - '#power-domain-cells'
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    clock-controller@100000 {
++      compatible = "qcom,gcc-sm8150";
++      reg = <0 0x00100000 0 0x1f0000>;
++      clocks = <&rpmhcc RPMH_CXO_CLK>,
++               <&sleep_clk>;
++      clock-names = "bi_tcxo", "sleep_clk";
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++...
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+index cac1150c9292..a891e5a37369 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+@@ -10,81 +10,28 @@ maintainers:
+   - Stephen Boyd <sboyd@kernel.org>
+   - Taniya Das <tdas@codeaurora.org>
+ 
+-description: |
++description:
+   Qualcomm global clock control module which supports the clocks, resets and
+   power domains.
+ 
+ properties:
+-  compatible :
++  compatible:
+     enum:
+-       - qcom,gcc-apq8064
+-       - qcom,gcc-apq8084
+-       - qcom,gcc-ipq4019
+-       - qcom,gcc-ipq6018
+-       - qcom,gcc-ipq8064
+-       - qcom,gcc-ipq8074
+-       - qcom,gcc-msm8660
+-       - qcom,gcc-msm8916
+-       - qcom,gcc-msm8960
+-       - qcom,gcc-msm8974
+-       - qcom,gcc-msm8974pro
+-       - qcom,gcc-msm8974pro-ac
+-       - qcom,gcc-msm8994
+-       - qcom,gcc-msm8996
+-       - qcom,gcc-msm8998
+-       - qcom,gcc-mdm9615
+-       - qcom,gcc-qcs404
+-       - qcom,gcc-sc7180
+-       - qcom,gcc-sdm630
+-       - qcom,gcc-sdm660
+-       - qcom,gcc-sdm845
+-       - qcom,gcc-sm8150
+-
+-  clocks:
+-    oneOf:
+-      #qcom,gcc-sm8150
+-      #qcom,gcc-sc7180
+-      - items:
+-        - description: Board XO source
+-        - description: Board active XO source
+-        - description: Sleep clock source
+-      #qcom,gcc-msm8996
+-      - items:
+-        - description: XO source
+-        - description: Second XO source
+-        - description: Sleep clock source
+-      #qcom,gcc-msm8998
+-      - items:
+-        - description: Board XO source
+-        - description: Sleep clock source
+-        - description: USB 3.0 phy pipe clock
+-        - description: UFS phy rx symbol clock for pipe 0
+-        - description: UFS phy rx symbol clock for pipe 1
+-        - description: UFS phy tx symbol clock
+-        - description: PCIE phy pipe clock
+-
+-  clock-names:
+-    oneOf:
+-      #qcom,gcc-sm8150
+-      #qcom,gcc-sc7180
+-      - items:
+-        - const: bi_tcxo
+-        - const: bi_tcxo_ao
+-        - const: sleep_clk
+-      #qcom,gcc-msm8996
+-      - items:
+-        - const: cxo
+-        - const: cxo2
+-        - const: sleep_clk
+-      #qcom,gcc-msm8998
+-      - items:
+-        - const: xo
+-        - const: sleep_clk
+-        - const: usb3_pipe
+-        - const: ufs_rx_symbol0
+-        - const: ufs_rx_symbol1
+-        - const: ufs_tx_symbol0
+-        - const: pcie0_pipe
++      - qcom,gcc-apq8084
++      - qcom,gcc-ipq4019
++      - qcom,gcc-ipq6018
++      - qcom,gcc-ipq8064
++      - qcom,gcc-msm8660
++      - qcom,gcc-msm8916
++      - qcom,gcc-msm8960
++      - qcom,gcc-msm8974
++      - qcom,gcc-msm8974pro
++      - qcom,gcc-msm8974pro-ac
++      - qcom,gcc-msm8994
++      - qcom,gcc-mdm9615
++      - qcom,gcc-sdm630
++      - qcom,gcc-sdm660
++      - qcom,gcc-sdm845
+ 
+   '#clock-cells':
+     const: 1
+@@ -98,31 +45,9 @@ properties:
+   reg:
+     maxItems: 1
+ 
+-  nvmem-cells:
+-    minItems: 1
+-    maxItems: 2
+-    description:
+-      Qualcomm TSENS (thermal sensor device) on some devices can
+-      be part of GCC and hence the TSENS properties can also be part
+-      of the GCC/clock-controller node.
+-      For more details on the TSENS properties please refer
+-      Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+-
+-  nvmem-cell-names:
+-    minItems: 1
+-    maxItems: 2
+-    description:
+-      Names for each nvmem-cells specified.
+-    items:
+-      - const: calib
+-      - const: calib_backup
+-
+-  'thermal-sensor-cells':
+-    const: 1
+-
+   protected-clocks:
+     description:
+-       Protected clock specifier list as per common clock binding
++      Protected clock specifier list as per common clock binding.
+ 
+ required:
+   - compatible
+@@ -131,33 +56,6 @@ required:
+   - '#reset-cells'
+   - '#power-domain-cells'
+ 
+-if:
+-  properties:
+-    compatible:
+-      contains:
+-        const: qcom,gcc-apq8064
+-
+-then:
+-  required:
+-    - nvmem-cells
+-    - nvmem-cell-names
+-    - '#thermal-sensor-cells'
+-
+-else:
+-  if:
+-    properties:
+-      compatible:
+-        contains:
+-          enum:
+-            - qcom,gcc-msm8998
+-            - qcom,gcc-sm8150
+-            - qcom,gcc-sc7180
+-  then:
+-    required:
+-       - clocks
+-       - clock-names
+-
+-
+ examples:
+   # Example for GCC for MSM8960:
+   - |
+@@ -168,78 +66,4 @@ examples:
+       #reset-cells = <1>;
+       #power-domain-cells = <1>;
+     };
+-
+-
+-  # Example of GCC with TSENS properties:
+-  - |
+-    clock-controller@900000 {
+-      compatible = "qcom,gcc-apq8064";
+-      reg = <0x00900000 0x4000>;
+-      nvmem-cells = <&tsens_calib>, <&tsens_backup>;
+-      nvmem-cell-names = "calib", "calib_backup";
+-      #clock-cells = <1>;
+-      #reset-cells = <1>;
+-      #power-domain-cells = <1>;
+-      #thermal-sensor-cells = <1>;
+-    };
+-
+-  # Example of GCC with protected-clocks properties:
+-  - |
+-    clock-controller@100000 {
+-      compatible = "qcom,gcc-sdm845";
+-      reg = <0x100000 0x1f0000>;
+-      protected-clocks = <187>, <188>, <189>, <190>, <191>;
+-      #clock-cells = <1>;
+-      #reset-cells = <1>;
+-      #power-domain-cells = <1>;
+-    };
+-
+-  # Example of GCC with clock node properties for SM8150:
+-  - |
+-    clock-controller@100000 {
+-      compatible = "qcom,gcc-sm8150";
+-      reg = <0x00100000 0x1f0000>;
+-      clocks = <&rpmhcc 0>, <&rpmhcc 1>, <&sleep_clk>;
+-      clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
+-      #clock-cells = <1>;
+-      #reset-cells = <1>;
+-      #power-domain-cells = <1>;
+-     };
+-
+-  # Example of GCC with clock nodes properties for SC7180:
+-  - |
+-    clock-controller@100000 {
+-      compatible = "qcom,gcc-sc7180";
+-      reg = <0x100000 0x1f0000>;
+-      clocks = <&rpmhcc 0>, <&rpmhcc 1>, <0>;
+-      clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
+-      #clock-cells = <1>;
+-      #reset-cells = <1>;
+-      #power-domain-cells = <1>;
+-    };
+-
+-  # Example of MSM8998 GCC:
+-  - |
+-    #include <dt-bindings/clock/qcom,rpmcc.h>
+-    clock-controller@100000 {
+-      compatible = "qcom,gcc-msm8998";
+-      #clock-cells = <1>;
+-      #reset-cells = <1>;
+-      #power-domain-cells = <1>;
+-      reg = <0x00100000 0xb0000>;
+-      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+-               <&sleep>,
+-               <0>,
+-               <0>,
+-               <0>,
+-               <0>,
+-               <0>;
+-      clock-names = "xo",
+-                    "sleep_clk",
+-                    "usb3_pipe",
+-                    "ufs_rx_symbol0",
+-                    "ufs_rx_symbol1",
+-                    "ufs_tx_symbol0",
+-                    "pcie0_pipe";
+-    };
+ ...
+-- 
+2.25.0.341.g760bfbb309-goog
+
