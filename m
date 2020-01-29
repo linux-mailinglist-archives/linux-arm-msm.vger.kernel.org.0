@@ -2,162 +2,232 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D91F14D04B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 19:18:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BFD314D1BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 21:08:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727395AbgA2SSU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jan 2020 13:18:20 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:45594 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727290AbgA2SSU (ORCPT
+        id S1727112AbgA2UIN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jan 2020 15:08:13 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:42010 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726259AbgA2UIN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jan 2020 13:18:20 -0500
-Received: by mail-pf1-f195.google.com with SMTP id 2so39837pfg.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2020 10:18:20 -0800 (PST)
+        Wed, 29 Jan 2020 15:08:13 -0500
+Received: by mail-pg1-f193.google.com with SMTP id s64so349028pgb.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2020 12:08:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=f7H8V33x8TSaOVVVtMrepShUU/hwcU6izxAXRT/mzfw=;
-        b=Vqr407+sv8WoZA1hzU5mx0uQKQWeEp/YlSdH1oWaQDmhjqHhxJIIfJOA/76vIGcYsU
-         v9lMc8lNDWj3kScIP4wQyHM8vvhSsGhdGhsnCqwRmBC2eRPg9JWFto0TAy1RHnGlaNMr
-         X2FaZkAIJyYtpCubCxug3D9XiHEOQr9QUg4To=
+        bh=pNbYTl5D7tyyPadQOvtvEgIuY7oo9N5/84ZV6aPiL+A=;
+        b=CCXGcuD7tYKTGjAOzvqSlDukmhV+suyVJ8/fo6Ofb2snrXaxvbPe50iXKIEn4DoXs1
+         SYXrZmgfnc1pzPOh3c/hA1vdTE90X4nqGQ3iqYOAdvXdyIY0mJgjXdMMN2mzJ6RD4swD
+         OFOzy5Z45DcYxSXQcniIQD+vgzNd4uRqvU6nY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=f7H8V33x8TSaOVVVtMrepShUU/hwcU6izxAXRT/mzfw=;
-        b=g+LuzO9dHwg/Pu3GwPC2PPfEosPoytnlyDNnkZLBQXJ1lMUydXKadgH6jUJG8dg0Nz
-         Sv+lzQm2sxs4LMrsXz1sjX9puUiG4fFaUkCEO2xrxdN1jY7Vpl3OcxwC0X0agvyH/mDF
-         ictqOuCFTGVghQ7q3GAAGXtJ+zUTm/JvGjjIFPOQe00i5ZFseciS75EQ1EejhGo2EFzl
-         mUYXw5/N/QI6aIa3tl5zu2EV/GCWfky3z7n/u3X0wQ7JWH0TjqpxQmhO44qC25lMKa1K
-         jHsd45nFFTErbbxgPi6O/4PLQFkgG5FCIfdDqabHW+azQd+KdwZeBYh6HWhodfjnLQKh
-         6pQA==
-X-Gm-Message-State: APjAAAUnyIZexw7SX5JcLtmBJCZWQQek2fV27b9ZODZQdpCFz7B9bhqO
-        yyMlkR7v5kel5zHDQn982vDjvw==
-X-Google-Smtp-Source: APXvYqx20g2qD4qMi2aZtS1b5wov2GagAFH0c6dk7k38lCVp0fm4wKaqKecYBrirjd8drUcktw0P5A==
-X-Received: by 2002:a65:66c8:: with SMTP id c8mr335019pgw.161.1580321899818;
-        Wed, 29 Jan 2020 10:18:19 -0800 (PST)
+        bh=pNbYTl5D7tyyPadQOvtvEgIuY7oo9N5/84ZV6aPiL+A=;
+        b=uY3WZSI1DvRc8/qpoZj2B+Ium0vyLWgnef68UWz7n/Jz75/RDrrV71dnmpfkxTwS9U
+         i54Su0ElonOedeyAFM5IeEsxPMYnd2iAIj2UzEjgp/ssrBZIWRW6bYQpUTok33PxqBLa
+         Qms8cW75MkT4RmkIrxXgUaROtOqoj9+heJZnAhOTMA1EWepH9xP0T3Qrbyv9H1gDk0xH
+         FXJ552904HT7ybTxiHtMlswKPNuVYoP/CNdAsmL/3EYlYIAnJYVdIP7bxf/STuM/1yYL
+         MgY9aAqGTA9ZKzYJigFZQlKApsAfUjhR53wsWGEsX6ism2DRCUSIOP8Qld81FpCveDOn
+         wOHQ==
+X-Gm-Message-State: APjAAAUKoaj/8LoShdJNkYWgaH6SiP6LvyZStWN+YGrRDahl5XeJe+yQ
+        ZzwgOGZKcMeKpbdXq4RmsHkvyg==
+X-Google-Smtp-Source: APXvYqwNqzfWZk6lufqk30dH9ILXdft34mJBC++saewCuU8HaAWZPqlMhBVOnbVwcO2EyAR+4k9I8g==
+X-Received: by 2002:a62:1548:: with SMTP id 69mr1273817pfv.239.1580328492369;
+        Wed, 29 Jan 2020 12:08:12 -0800 (PST)
 Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id m71sm6735468pje.0.2020.01.29.10.18.18
+        by smtp.gmail.com with ESMTPSA id o184sm3588727pgo.62.2020.01.29.12.08.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jan 2020 10:18:19 -0800 (PST)
-Date:   Wed, 29 Jan 2020 10:18:17 -0800
+        Wed, 29 Jan 2020 12:08:11 -0800 (PST)
+Date:   Wed, 29 Jan 2020 12:08:10 -0800
 From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
-        georgi.djakov@linaro.org, saravanak@google.com, nm@ti.com,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dianders@chromium.org,
-        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
-        ulf.hansson@linaro.org
-Subject: Re: [RFC v3 09/10] arm64: dts: qcom: sdm845: Add cpu OPP tables
-Message-ID: <20200129181817.GA71044@google.com>
-References: <20200127200350.24465-1-sibis@codeaurora.org>
- <20200127200350.24465-10-sibis@codeaurora.org>
- <20200129012411.GI46072@google.com>
- <4f2b98a1dae3bc737a43a1e46255657b@codeaurora.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 1/8] dt-bindings: phy: qcom,qusb2: Convert QUSB2 phy
+ bindings to yaml
+Message-ID: <20200129200810.GB71044@google.com>
+References: <1580305919-30946-1-git-send-email-sanm@codeaurora.org>
+ <1580305919-30946-2-git-send-email-sanm@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <4f2b98a1dae3bc737a43a1e46255657b@codeaurora.org>
+In-Reply-To: <1580305919-30946-2-git-send-email-sanm@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sibi,
+Hi Sandeep,
 
-On Wed, Jan 29, 2020 at 07:35:21PM +0530, Sibi Sankar wrote:
-> Hey Matthias,
+On Wed, Jan 29, 2020 at 07:21:52PM +0530, Sandeep Maheswaram wrote:
+> Convert QUSB2 phy  bindings to DT schema format using json-schema.
 > 
-> Thanks for the review!
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> ---
+>  .../devicetree/bindings/phy/qcom,qusb2-phy.yaml    | 142 +++++++++++++++++++++
+>  .../devicetree/bindings/phy/qcom-qusb2-phy.txt     |  68 ----------
+>  2 files changed, 142 insertions(+), 68 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/phy/qcom-qusb2-phy.txt
 > 
-> On 2020-01-29 06:54, Matthias Kaehlcke wrote:
-> > Hi Sibi,
-> > 
-> > On Tue, Jan 28, 2020 at 01:33:49AM +0530, Sibi Sankar wrote:
-> > > Add OPP tables required to scale DDR/L3 per freq-domain on SDM845
-> > > SoCs.
-> > > 
-> > > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sdm845.dtsi | 453
-> > > +++++++++++++++++++++++++++
-> > >  1 file changed, 453 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > index c036bab49fc03..8cb976118407b 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > @@ -199,6 +199,12 @@
-> > >  			qcom,freq-domain = <&cpufreq_hw 0>;
-> > >  			#cooling-cells = <2>;
-> > >  			next-level-cache = <&L2_0>;
-> > > +			operating-points-v2 = <&cpu0_opp_table>,
-> > > +					      <&cpu0_ddr_bw_opp_table>,
-> > > +					      <&cpu0_l3_bw_opp_table>;
-> > > +			interconnects = <&gladiator_noc MASTER_APPSS_PROC &mem_noc
-> > > SLAVE_EBI1>,
-> > > +					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
-> > 
-> > This apparently depends on the 'Split SDM845 interconnect nodes and
-> > consolidate RPMh support' series
-> > (https://patchwork.kernel.org/project/linux-arm-msm/list/?series=226281),
-> > which isn't mentioned in the cover letter.
-> > 
-> > I also couldn't find a patch on the lists that adds the 'osm_l3'
-> > interconnect node for SDM845. The same is true for SC7180 (next
-> > patch of this series). These patches may be available in custom trees,
-> > but that isn't really helpful for upstream review.
-> 
-> yeah I missed adding the interconnect
-> refactor dependency and the nodes.
-> 
-> > 
-> > I would suggest to focus on landing the dependencies of this series,
-> > before proceding with it (or at least most of them), there are plenty
-> > and without the dependencies this series isn't going to land, it also
-> > makes it hard for testers and reviewers to get all the pieces
-> 
-> yes I understand but wanted the series
-> out asap because since there are a few
-> points where we still havn't reached
-> a consensus on.
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
+> new file mode 100644
+> index 0000000..90b3cc6
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
+> @@ -0,0 +1,142 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/phy/qcom,qusb2-phy.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm QUSB2 phy controller
+> +
+> +maintainers:
+> +  - Manu Gautam <mgautam@codeaurora.org>
+> +
+> +description:
+> +  QUSB2 controller supports LS/FS/HS usb connectivity on Qualcomm chipsets.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,msm8996-qusb2-phy
+> +      - qcom,msm8998-qusb2-phy
+> +      - qcom,sdm845-qusb2-phy
 
-Ok, I just wanted to make sure we are not burning the limited
-maintainer/reviewer bandwidth on code with hard dependencies on
-things that aren't moving forward.
+If you wanted to maintain the comments from the .txt file you could add
+them after the compatible string (e.g.
+Documentation/devicetree/bindings/pwm/pwm-samsung.yaml)
 
-> > together. In particular the last post of the series 'Add
-> > required-opps support to devfreq passive gov'
-> > (https://patchwork.kernel.org/cover/11055499/) is from July 2019 ...
-> 
-> https://lore.kernel.org/lkml/CAGTfZH37ALwUHd8SpRRrBzZ6x1-++YtzS60_yRQvN-TN6rOzaA@mail.gmail.com/
-> 
-> The pending patch for lazy linking
-> was posted a while back. Now that
-> it has a tested-by, majority of the
-> series should go in since the devfreq
-> maintainers wanted the series pulled
-> in.
+> +  reg:
+> +    maxItems: 1
+> +
+> +  "#phy-cells":
+> +    const: 0
+> +
+> +  clocks:
+> +    minItems: 2
 
-Thanks for the clarification. For reference the post is
-https://patchwork.kernel.org/patch/11048277/#23020727
+       maxItems: 3 ?
 
-It sems the series will require at least another re-spin:
+> +    items:
+> +      - description: phy config clock
+> +      - description: 19.2 MHz ref clk
+> +      - description: phy interface clock (Optional)
+> +
+> +  clock-names:
+> +    minItems: 2
 
-  "So once that's (lazy linking) added, I should be able to drop a few
-  patches in this series, do some minor updates and then this will be
-  good to go."
+       maxItems: 3 ?
 
-  https://patchwork.kernel.org/cover/11055499/#23001445
+> +    items:
+> +      - const: cfg_ahb
+> +      - const: ref
+> +      - const: iface
+> +
+> +  vdda-pll-supply:
+> +     description:
+> +       Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +
+> +  vdda-phy-dpdm-supply:
+> +     description:
+> +       Phandle to 3.1V regulator supply to Dp/Dm port signals.
+> +
+> +  resets:
+> +    maxItems: 1
 
-So it looks like we are waiting for the lazy linking patch to
-land in the PM/Linus' tree and then a re-spin of the 'Add
-required-opps support to devfreq passive gov' series.
+       description:
+         Phandle to reset to phy block.
+
+> +
+> +  nvmem-cells:
+> +    maxItems: 1
+> +    description:
+> +        Phandle to nvmem cell that contains 'HS Tx trim'
+> +        tuning parameter value for qusb2 phy.
+> +
+> +  qcom,tcsr-syscon:
+> +    description:
+> +        Phandle to TCSR syscon register region.
+> +    $ref: /schemas/types.yaml#/definitions/cell
+> +
+> +  qcom,imp-res-offset-value:
+> +    description:
+> +        It is a 6 bit value that specifies offset to be
+> +        added to PHY refgen RESCODE via IMP_CTRL1 register. It is a PHY
+> +        tuning parameter that may vary for different boards of same SOC.
+> +        This property is applicable to only QUSB2 v2 PHY.
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> +      - minimum: 0
+> +        maximum: 63
+> +        default: 0
+> +
+> +  qcom,hstx-trim-value:
+> +    description:
+> +        It is a 4 bit value that specifies tuning for HSTX
+> +        output current.
+> +        Possible range is - 15mA to 24mA (stepsize of 600 uA).
+> +        See dt-bindings/phy/phy-qcom-qusb2.h for applicable values.
+> +        This property is applicable to only QUSB2 v2 PHY.
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> +      - minimum: 0
+> +        maximum: 15
+> +        default: 3
+> +
+> +  qcom,preemphasis-level:
+> +    description:
+> +        It is a 2 bit value that specifies pre-emphasis level.
+> +        Possible range is 0 to 15% (stepsize of 5%).
+> +        See dt-bindings/phy/phy-qcom-qusb2.h for applicable values.
+> +        This property is applicable to only QUSB2 v2 PHY.
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> +      - minimum: 0
+> +        maximum: 3
+> +        default: 2
+> +
+> +  qcom,preemphasis-width:
+> +    description:
+> +        It is a 1 bit value that specifies how long the HSTX
+> +        pre-emphasis (specified using qcom,preemphasis-level) must be in
+> +        effect. Duration could be half-bit of full-bit.
+> +        See dt-bindings/phy/phy-qcom-qusb2.h for applicable values.
+> +        This property is applicable to only QUSB2 v2 PHY.
+> +    allOf:
+> +      - $ref: /schemas/types.yaml#/definitions/uint32
+> +      - minimum: 0
+> +        maximum: 1
+> +        default: 0
+
+I think you could put the properties that are only applicable for QUSB2
+v2 PHY into a block like this and remove the 'This property is
+applicable to only QUSB2 v2 PHY.' comment from the property description:
+
+if:
+  properties:
+    compatible:
+      contains:
+        const: qcom,sdm845-qusb2-phy
+then:
+  qcom,imp-res-offset-value:
+    ...
+
+
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
