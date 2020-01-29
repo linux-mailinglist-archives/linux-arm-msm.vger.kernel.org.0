@@ -2,170 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7955114CDCB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 16:48:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 998F214CE0D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 17:13:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726666AbgA2Prz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jan 2020 10:47:55 -0500
-Received: from foss.arm.com ([217.140.110.172]:42856 "EHLO foss.arm.com"
+        id S1726733AbgA2QNr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jan 2020 11:13:47 -0500
+Received: from mail.kernel.org ([198.145.29.99]:37306 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726551AbgA2Prz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jan 2020 10:47:55 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9CE1431B;
-        Wed, 29 Jan 2020 07:47:54 -0800 (PST)
-Received: from [10.37.12.80] (unknown [10.37.12.80])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D53613F52E;
-        Wed, 29 Jan 2020 07:47:44 -0800 (PST)
-Subject: Re: [RFC v3 00/10] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
-        georgi.djakov@linaro.org, saravanak@google.com, nm@ti.com,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dianders@chromium.org, mka@chromium.org,
-        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
-        ulf.hansson@linaro.org, linux-arm-msm-owner@vger.kernel.org
-References: <20200127200350.24465-1-sibis@codeaurora.org>
- <88b3885a-5ddd-b942-c5a5-d560b2f196bd@arm.com>
- <57f9a785d93193719ee0b91e43d0922f@codeaurora.org>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <a87feb0c-3a34-9070-0b4d-ce31a41136b4@arm.com>
-Date:   Wed, 29 Jan 2020 15:47:40 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1726679AbgA2QNq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 Jan 2020 11:13:46 -0500
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id E7BB32070E;
+        Wed, 29 Jan 2020 16:13:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1580314426;
+        bh=e1Wn9NnIjMDIS6BdQ81ViUrFBu9BQanXV+r3mteDX/8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=NDoLZjcmTgTmmUvwERtMDcO6tlEHh3Q96S5jpo96owMURxgnSb9sBIeTNQPAGKcHp
+         cE+e+lfn02eON+YzD4l3aiAm9xF6mEaBfMtZRHuJc8Dcam+do9KbQWv8q8T5EnlvSV
+         qZ8ZLXHEB8aAb5Urm61xCkyDmLnJNpzsG8g8fJLI=
+Date:   Wed, 29 Jan 2020 16:13:41 +0000
+From:   Will Deacon <will@kernel.org>
+To:     Srinivas Ramana <sramana@codeaurora.org>
+Cc:     Catalin Marinas <catalin.marinas@arm.com>, maz@kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] arm64: Set SSBS for user threads while creation
+Message-ID: <20200129161341.GA32275@willie-the-truck>
+References: <1577106146-8999-1-git-send-email-sramana@codeaurora.org>
+ <20200102180145.GE27940@arrakis.emea.arm.com>
+ <0c5cd234-5cfb-d093-06e4-a0edb5c68bf8@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <57f9a785d93193719ee0b91e43d0922f@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0c5cd234-5cfb-d093-06e4-a0edb5c68bf8@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 1/29/20 2:37 PM, Sibi Sankar wrote:
-> Hey Lukasz,
-> Thanks for taking time to review
-> the series!
+On Wed, Jan 29, 2020 at 05:18:53PM +0530, Srinivas Ramana wrote:
+> On 1/2/2020 11:31 PM, Catalin Marinas wrote:
+> > On Mon, Dec 23, 2019 at 06:32:26PM +0530, Srinivas Ramana wrote:
+> > > Current SSBS implementation takes care of setting the
+> > > SSBS bit in start_thread() for user threads. While this works
+> > > for tasks launched with fork/clone followed by execve, for cases
+> > > where userspace would just call fork (eg, Java applications) this
+> > > leaves the SSBS bit unset. This results in performance
+> > > regression for such tasks.
+> > > 
+> > > It is understood that commit cbdf8a189a66 ("arm64: Force SSBS
+> > > on context switch") masks this issue, but that was done for a
+> > > different reason where heterogeneous CPUs(both SSBS supported
+> > > and unsupported) are present. It is appropriate to take care
+> > > of the SSBS bit for all threads while creation itself.
+> > > 
+> > > Fixes: 8f04e8e6e29c ("arm64: ssbd: Add support for PSTATE.SSBS rather than trapping to EL3")
+> > > Signed-off-by: Srinivas Ramana <sramana@codeaurora.org>
+> > 
+> > I suppose the parent process cleared SSBS explicitly. Isn't the child
 > 
-> On 2020-01-29 15:16, Lukasz Luba wrote:
->> Hi Sibi,
->>
->> In my opinion this solution depends on not always true assumption that
->> CPUFreq notification chain will be triggered when there is a frequency
-> 
-> This series does not create any
-> devfreq devices nor use the cpufreq
-> notification chain. It just relies
-> on the opening up of required-opps
-> from being exclusive to gen-pd using
-> patches 1,2,3 from patch series[1].
-> With the fast path disabled and
-> schedutil enabled, this series will
-> not miss any cpufreq changes.
+> Actually we observe that parent(in case of android, zygote that launches the
+> app) does have SSBS bit set. However child doesn't have the bit set.
 
-Thank you Sibi for clarifying this. I spotted in patch 08/10
-that the fast_switch is removed and the normal path is in use,
-which also triggers the notification chain in CPUFreq. Then maybe other
-machinery which you have put in your 'depends on' list accidentally
-works thanks to this.
+On which SoC? Your commit message talks about heterogeneous systems (wrt
+SSBS) as though they don't apply in your case. Could you provide us with
+a reproducer?
 
+> > after fork() supposed to be nearly identical to the parent? If we did as
+> > you suggest, someone else might complain that SSBS has been set in the
+> > child after fork().
 > 
-> [1] https://patchwork.kernel.org/cover/11055499/
-> 
->> switch. Extending devfreq governor (as in one of the dependent patch
->> series that you have referred) by attaching to this notification
->> chain makes sense only when the SchedUtil and fast_switch is not in use.
-> 
-> fast_switch and cpu notifier chains
-> are mutually exclusive but schedutil
-> will still operate in the slow path
-> IIRC.
+> I am also wondering why would a userspace process clear SSBS bit loosing the
+> performance benefit.
 
-True, SchedUtil would work in slow_path. The driver and SoC support
-'fast_switch', your solution when is properly initialized, disables it.
-I would suggest to put this information in the commit message.
-I don't know the side effects on the performance, though. The other
-side effect would be: the CPUFreq notifications will be triggered.
+I guess it could happen during sigreturn if the signal handler wasn't
+careful about preserving bits in pstate, although it doesn't feel like
+something you'd regularly run into.
 
-The fast_switch is now the preferred way, any new ideas should
-consider also this path.
+But hang on a sec -- it looks like the context switch logic in
+cbdf8a189a66 actually does the wrong thing for systems where all of the
+CPUs implement SSBS. I don't think it explains the behaviour you're seeing,
+but I do think it could end up in situations where SSBS is unexpectedly
+*set*.
 
-> 
->> The Schedutil CPUFreq governor might use the fast_switch from this
->> driver and the notifications will not be triggered. I have also
->> commented patch 08/10 which tries to disable it.
->>
->> Regards,
->> Lukasz
->>
->> On 1/27/20 8:03 PM, Sibi Sankar wrote:
->>> This RFC series aims to extend cpu based scaling support to L3/DDR on
->>> SDM845 and SC7180 SoCs.
->>>
->>> Patches [1-3] - Blacklist SDM845 and SC7180 in cpufreq-dt-platdev
->>> Patches [5-7] - Hack in a way to add/remove multiple opp tables to
->>>                  a single device. I am yet to fix the debugfs to
->>>         support multiple opp_tables per device but wanted to
->>>         send what was working upstream to get an idea if multiple
->>>         opp tables per device is a feature that will be useful
->>>         upstream.
->>> Patches [9-10] - Add the cpu/cpu-ddr/cpu-l3 opp tables for SDM845
->>>                   and SC7180 SoCs.
->>>
->>> v3:
->>>   * Migrated to using Saravana's opp-kBps bindings [1]
->>>   * Fixed some misc comments from Rajendra
->>>   * Added support for SC7180
->>>
->>> v2:
->>>   * Incorporated Viresh's comments from:
->>> https://lore.kernel.org/lkml/20190410102429.r6j6brm5kspmqxc3@vireshk-i7/
->>> https://lore.kernel.org/lkml/20190410112516.gnh77jcwawvld6et@vireshk-i7/
->>>   * Dropped cpufreq-map passive governor
->>>
->>> Git-branch: https://github.com/QuinAsura/linux/tree/lnext-012420
->>>
->>> Some alternate ways of hosting the opp-tables:
->>> https://github.com/QuinAsura/linux/commit/50b92bfaadc8f9a0d1e12249646e018bd6d1a9d3 
->>>
->>> https://github.com/QuinAsura/linux/commit/3d23d1eefd16ae6d9e3ef91e93e78749d8844e98 
->>>
->>> Viresh didn't really like ^^ bindings and they dont really scale 
->>> well. Just
->>> including them here for completeness.
->>>
->>> Depends on the following series:
->>> [1] https://patchwork.kernel.org/cover/11277199/
->>> [2] https://patchwork.kernel.org/cover/11055499/
->>> [3] https://patchwork.kernel.org/cover/11326381/
->>>
->>> Sibi Sankar (10):
->>>    arm64: dts: qcom: sdm845: Add SoC compatible to MTP
->>>    cpufreq: blacklist SDM845 in cpufreq-dt-platdev
->>>    cpufreq: blacklist SC7180 in cpufreq-dt-platdev
->>>    OPP: Add and export helper to update voltage
->>>    opp: of: export _opp_of_get_opp_desc_node
->>>    opp: Allow multiple opp_tables to be mapped to a single device
->>>    opp: Remove multiple attached opp tables from a device
->>>    cpufreq: qcom: Update the bandwidth levels on frequency change
->>>    arm64: dts: qcom: sdm845: Add cpu OPP tables
->>>    arm64: dts: qcom: sc7180: Add cpu OPP tables
->>>
->>>   arch/arm64/boot/dts/qcom/sc7180.dtsi    | 287 +++++++++++++++
->>>   arch/arm64/boot/dts/qcom/sdm845-mtp.dts |   2 +-
->>>   arch/arm64/boot/dts/qcom/sdm845.dtsi    | 453 ++++++++++++++++++++++++
->>>   drivers/cpufreq/cpufreq-dt-platdev.c    |   2 +
->>>   drivers/cpufreq/qcom-cpufreq-hw.c       | 246 +++++++++++--
->>>   drivers/opp/core.c                      | 111 +++++-
->>>   drivers/opp/of.c                        |   3 +-
->>>   drivers/opp/opp.h                       |   2 +
->>>   include/linux/pm_opp.h                  |  10 +
->>>   9 files changed, 1083 insertions(+), 33 deletions(-)
->>>
-> 
+Diff below.
+
+Will
+
+--->8
+
+diff --git a/arch/arm64/kernel/process.c b/arch/arm64/kernel/process.c
+index bbb0f0c145f6..e38284c9fb7b 100644
+--- a/arch/arm64/kernel/process.c
++++ b/arch/arm64/kernel/process.c
+@@ -466,6 +466,13 @@ static void ssbs_thread_switch(struct task_struct *next)
+ 	if (unlikely(next->flags & PF_KTHREAD))
+ 		return;
+ 
++	/*
++	 * If all CPUs implement the SSBS instructions, then we just
++	 * need to context-switch the PSTATE field.
++	 */
++	if (cpu_have_feature(cpu_feature(SSBS)))
++		return;
++
+ 	/* If the mitigation is enabled, then we leave SSBS clear. */
+ 	if ((arm64_get_ssbd_state() == ARM64_SSBD_FORCE_ENABLE) ||
+ 	    test_tsk_thread_flag(next, TIF_SSBD))
