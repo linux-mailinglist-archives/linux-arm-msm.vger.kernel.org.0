@@ -2,207 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E26B714C770
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 09:26:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4526A14C7B2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jan 2020 09:55:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726091AbgA2I0C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jan 2020 03:26:02 -0500
-Received: from mail-yb1-f195.google.com ([209.85.219.195]:40421 "EHLO
-        mail-yb1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726068AbgA2I0C (ORCPT
+        id S1726068AbgA2Iz1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jan 2020 03:55:27 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:53382 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726482AbgA2Iz1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jan 2020 03:26:02 -0500
-Received: by mail-yb1-f195.google.com with SMTP id l197so8308691ybf.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jan 2020 00:26:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sgF2vmhz2T7IeFLxb2F117QIdy1NFOJJsX193BxkqOw=;
-        b=dSNO9wjN2SsIBCH49OqTw/A/PZDqYOhzfrV2bZZqib4KDx0TSD+ni80dMEBk59atxI
-         N/H3dy3x9h6l8+GyOFyfyhKzsiNKl92xMtTEqSEvQxQktrQ/g/i3fyKSkV2XlzQQXedG
-         9RYuTGVZ9dltnlbFbN6Z3xrsbt26kFKGreKDHGEtBdu6kUzxb3/R+7WvQ27byrztsof5
-         a0pOa1tq1O25hD0B/wAnZTeTU3TVu/K3D3pFDFgILT8dfi6xdRkVpw0ZGqusli/vHMMs
-         JiOgO4MTQ5p4pkgqTFjrlq6i2a3O0xfuYOgtw/7CZftq7P3zwKz8rTO3xrog1fcCGHJk
-         6nug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sgF2vmhz2T7IeFLxb2F117QIdy1NFOJJsX193BxkqOw=;
-        b=mPD2MQHIeeypw5IIKnQDKiddjadsXGLPxinybgpzaEVzv/GMV/O/n+dC4din+W19u/
-         jTB87tSE6cl5XeyXEUlaHZTmlt1pVhCD9Pm+iv5Ys/gYIlXNlPGzvmUnmakPAIia4IIu
-         fMtqoKj1PzJWMdH6rN2LVt2RMIfcLVApL1pUFFT7bSZj/LC6o84eq/CvwhidoG8tzNwX
-         3omYgwT48vPUr2O64ehY3mySOErtAO6F1qjzCZLjT2M36miRZI24eE54u8Mfirzgx3Vv
-         bhucXWX6LJRBRQrA1DzKzsE6TbgMeMuWJd28E2cL8E4kd40Qs/XnHNRq/aQhBMN7890C
-         cmFA==
-X-Gm-Message-State: APjAAAW/14asWwZTCujFidu+CwDXBWG/59Ql/z7g1fv78HY5z+8+wBeD
-        nXgMRo9oCuN0Nfr7287PrZH3AgfPhJAscyDKXcc=
-X-Google-Smtp-Source: APXvYqyVyK9PjCztHzRXzGqMcg86H7OYSIU9PnLCzOGfOIj82VVVgpuSOxqUS6U+h720ew60ng17+3R2jqUohlRgOEg=
-X-Received: by 2002:a25:69c9:: with SMTP id e192mr19401976ybc.162.1580286361002;
- Wed, 29 Jan 2020 00:26:01 -0800 (PST)
+        Wed, 29 Jan 2020 03:55:27 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1580288126; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=m1aJ2Qp8X5dBwtzaU0ERZTgZJkpnmU03rRacyFrY9dI=;
+ b=EKeIdXiRssKjwnUmIcrFxx2QTFH2kBa43PEHOXFvVLAODnff1hjPjnfDxyI7njT3BChWMlHk
+ 8/d3o5Ww+4xVy09KEYQQmhTUJckzN3TMCYrrRLokur3Cwq5e+e7NmD0Z+E26JpjAQEHPcviH
+ 1YyZpPvKyv4fWCiHmThkBvnQ5AY=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e31487b.7fbb18ae20a0-smtp-out-n03;
+ Wed, 29 Jan 2020 08:55:23 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3CB9DC4479F; Wed, 29 Jan 2020 08:55:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: harigovi)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 756B2C433CB;
+        Wed, 29 Jan 2020 08:55:22 +0000 (UTC)
 MIME-Version: 1.0
-References: <20200123135943.24140-1-tzimmermann@suse.de> <20200123135943.24140-10-tzimmermann@suse.de>
-In-Reply-To: <20200123135943.24140-10-tzimmermann@suse.de>
-From:   Ben Skeggs <skeggsb@gmail.com>
-Date:   Wed, 29 Jan 2020 18:25:49 +1000
-Message-ID: <CACAvsv4Yp99w845A8kERpnx+mSax16PLzEBx-uEpZyfAoLu_Qg@mail.gmail.com>
-Subject: Re: [PATCH v4 09/22] drm/nouveau: Convert to CRTC VBLANK callbacks
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     Dave Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        David1.Zhou@amd.com, maarten.lankhorst@linux.intel.com,
-        patrik.r.jakobsson@gmail.com, Rob Clark <robdclark@gmail.com>,
-        sean@poorly.run, benjamin.gaignard@linaro.org,
-        vincent.abriou@st.com, yannick.fertre@st.com,
-        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@st.com, eric@anholt.net,
-        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
-        linux-graphics-maintainer@vmware.com, thellstrom@vmware.com,
-        Ben Skeggs <bskeggs@redhat.com>,
-        Harry Wentland <harry.wentland@amd.com>, sunpeng.li@amd.com,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com,
-        linux-arm-msm@vger.kernel.org,
-        intel-gfx <intel-gfx@lists.freedesktop.org>,
-        amd-gfx mailing list <amd-gfx@lists.freedesktop.org>,
-        ML dri-devel <dri-devel@lists.freedesktop.org>,
-        ML nouveau <nouveau@lists.freedesktop.org>,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 29 Jan 2020 14:25:22 +0530
+From:   harigovi@codeaurora.org
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        kalyan_t@codeaurora.org, nganji@codeaurora.org
+Subject: Re: [v4] arm64: dts: sc7180: add display dt nodes
+In-Reply-To: <20200128203222.GD46072@google.com>
+References: <1580217884-21932-1-git-send-email-harigovi@codeaurora.org>
+ <20200128203222.GD46072@google.com>
+Message-ID: <e9b02cfe89db7b8624bdce56c3f9ceef@codeaurora.org>
+X-Sender: harigovi@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 24 Jan 2020 at 00:00, Thomas Zimmermann <tzimmermann@suse.de> wrote:
->
-> VBLANK callbacks in struct drm_driver are deprecated in favor of
-> their equivalents in struct drm_crtc_funcs. Convert nouvean over.
->
-> v4:
->         * add argument names in function declaration
->
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Ben Skeggs <bskeggs@redhat.com>
+On 2020-01-29 02:02, Matthias Kaehlcke wrote:
+> Hi,
+> 
+> On Tue, Jan 28, 2020 at 06:54:44PM +0530, Harigovindan P wrote:
+>> Add display, DSI hardware DT nodes for sc7180.
+>> 
+>> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+>> ---
+>> 
+>> Changes in v1:
+>> 	-Added display DT nodes for sc7180
+>> Changes in v2:
+>> 	-Renamed node names
+>> 	-Corrected code alignments
+>> 	-Removed extra new line
+>> 	-Added DISP AHB clock for register access
+>> 	under display_subsystem node for global settings
+>> Changes in v3:
+>> 	-Modified node names
+>> 	-Modified hard coded values
+>> 	-Removed mdss reg entry
+>> Changes in v4:
+>> 	-Reverting mdp node name
+>> 	-Setting status to disabled in main SOC dtsi file
+>> 	-Replacing _ to - for node names
+>> 	-Adding clock dependency patch link
+>> 	-Splitting idp dt file to a separate patch
+>> 
+>> This patch has dependency on the below series
+>> https://lkml.org/lkml/2019/12/27/73
+>>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 128 
+>> +++++++++++++++++++++++++++++++++++
+>>  1 file changed, 128 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> index 3bc3f64..c3883af 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> @@ -1184,6 +1184,134 @@
+>>  			#power-domain-cells = <1>;
+>>  		};
+>> 
+>> +		mdss: mdss@ae00000 {
+>> +			compatible = "qcom,sc7180-mdss";
+>> +			reg = <0 0x0ae00000 0 0x1000>;
+>> +			reg-names = "mdss";
+>> +
+>> +			power-domains = <&dispcc MDSS_GDSC>;
+>> +
+>> +			clocks = <&gcc GCC_DISP_AHB_CLK>,
+>> +				 <&gcc GCC_DISP_HF_AXI_CLK>,
+>> +				 <&dispcc DISP_CC_MDSS_AHB_CLK>,
+>> +				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
+>> +			clock-names = "iface", "gcc_bus", "ahb", "core";
+>> +
+>> +			assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
+>> +			assigned-clock-rates = <300000000>;
+>> +
+>> +			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+>> +			interrupt-controller;
+>> +			#interrupt-cells = <1>;
+>> +
+>> +			iommus = <&apps_smmu 0x800 0x2>;
+>> +
+>> +			#address-cells = <2>;
+>> +			#size-cells = <2>;
+>> +			ranges;
+>> +
+>> +			mdss_mdp: mdp@ae01000 {
+>> +				compatible = "qcom,sc7180-dpu";
+>> +				reg = <0 0x0ae01000 0 0x8f000>,
+>> +				      <0 0x0aeb0000 0 0x2008>,
+>> +				      <0 0x0af03000 0 0x16>;
+>> +				reg-names = "mdp", "vbif", "disp_cc";
+>> +
+>> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+>> +					 <&dispcc DISP_CC_MDSS_ROT_CLK>,
+>> +					 <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
+>> +					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
+>> +					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+>> +				clock-names = "iface", "rot", "lut", "core",
+>> +					      "vsync";
+>> +				assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
+>> +						  <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+>> +				assigned-clock-rates = <300000000>,
+>> +						       <19200000>;
+> 
+> The clock rate for DISP_CC_MDSS_MDP_CLK is already specified in the
+> parent node, do we really want/need to specify it twice?
 
-> ---
->  drivers/gpu/drm/nouveau/dispnv04/crtc.c   |  3 +++
->  drivers/gpu/drm/nouveau/dispnv50/head.c   |  4 ++++
->  drivers/gpu/drm/nouveau/nouveau_display.c | 14 ++------------
->  drivers/gpu/drm/nouveau/nouveau_display.h |  4 ++--
->  drivers/gpu/drm/nouveau/nouveau_drm.c     |  4 ----
->  5 files changed, 11 insertions(+), 18 deletions(-)
->
-> diff --git a/drivers/gpu/drm/nouveau/dispnv04/crtc.c b/drivers/gpu/drm/nouveau/dispnv04/crtc.c
-> index 17e9d1c078a0..1f08de4241e0 100644
-> --- a/drivers/gpu/drm/nouveau/dispnv04/crtc.c
-> +++ b/drivers/gpu/drm/nouveau/dispnv04/crtc.c
-> @@ -1248,6 +1248,9 @@ static const struct drm_crtc_funcs nv04_crtc_funcs = {
->         .set_config = drm_crtc_helper_set_config,
->         .page_flip = nv04_crtc_page_flip,
->         .destroy = nv_crtc_destroy,
-> +       .enable_vblank = nouveau_display_vblank_enable,
-> +       .disable_vblank = nouveau_display_vblank_disable,
-> +       .get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
->  };
->
->  static const struct drm_crtc_helper_funcs nv04_crtc_helper_funcs = {
-> diff --git a/drivers/gpu/drm/nouveau/dispnv50/head.c b/drivers/gpu/drm/nouveau/dispnv50/head.c
-> index 41852dd8fdbd..8f6455697ba7 100644
-> --- a/drivers/gpu/drm/nouveau/dispnv50/head.c
-> +++ b/drivers/gpu/drm/nouveau/dispnv50/head.c
-> @@ -29,6 +29,7 @@
->
->  #include <drm/drm_atomic_helper.h>
->  #include <drm/drm_crtc_helper.h>
-> +#include <drm/drm_vblank.h>
->  #include "nouveau_connector.h"
->  void
->  nv50_head_flush_clr(struct nv50_head *head,
-> @@ -482,6 +483,9 @@ nv50_head_func = {
->         .page_flip = drm_atomic_helper_page_flip,
->         .atomic_duplicate_state = nv50_head_atomic_duplicate_state,
->         .atomic_destroy_state = nv50_head_atomic_destroy_state,
-> +       .enable_vblank = nouveau_display_vblank_enable,
-> +       .disable_vblank = nouveau_display_vblank_disable,
-> +       .get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
->  };
->
->  struct nv50_head *
-> diff --git a/drivers/gpu/drm/nouveau/nouveau_display.c b/drivers/gpu/drm/nouveau/nouveau_display.c
-> index 86f99dc8fcef..700817dc4fa0 100644
-> --- a/drivers/gpu/drm/nouveau/nouveau_display.c
-> +++ b/drivers/gpu/drm/nouveau/nouveau_display.c
-> @@ -54,15 +54,10 @@ nouveau_display_vblank_handler(struct nvif_notify *notify)
->  }
->
->  int
-> -nouveau_display_vblank_enable(struct drm_device *dev, unsigned int pipe)
-> +nouveau_display_vblank_enable(struct drm_crtc *crtc)
->  {
-> -       struct drm_crtc *crtc;
->         struct nouveau_crtc *nv_crtc;
->
-> -       crtc = drm_crtc_from_index(dev, pipe);
-> -       if (!crtc)
-> -               return -EINVAL;
-> -
->         nv_crtc = nouveau_crtc(crtc);
->         nvif_notify_get(&nv_crtc->vblank);
->
-> @@ -70,15 +65,10 @@ nouveau_display_vblank_enable(struct drm_device *dev, unsigned int pipe)
->  }
->
->  void
-> -nouveau_display_vblank_disable(struct drm_device *dev, unsigned int pipe)
-> +nouveau_display_vblank_disable(struct drm_crtc *crtc)
->  {
-> -       struct drm_crtc *crtc;
->         struct nouveau_crtc *nv_crtc;
->
-> -       crtc = drm_crtc_from_index(dev, pipe);
-> -       if (!crtc)
-> -               return;
-> -
->         nv_crtc = nouveau_crtc(crtc);
->         nvif_notify_put(&nv_crtc->vblank);
->  }
-> diff --git a/drivers/gpu/drm/nouveau/nouveau_display.h b/drivers/gpu/drm/nouveau/nouveau_display.h
-> index 26d34f1a77da..de004018ab5c 100644
-> --- a/drivers/gpu/drm/nouveau/nouveau_display.h
-> +++ b/drivers/gpu/drm/nouveau/nouveau_display.h
-> @@ -61,8 +61,8 @@ int  nouveau_display_init(struct drm_device *dev, bool resume, bool runtime);
->  void nouveau_display_fini(struct drm_device *dev, bool suspend, bool runtime);
->  int  nouveau_display_suspend(struct drm_device *dev, bool runtime);
->  void nouveau_display_resume(struct drm_device *dev, bool runtime);
-> -int  nouveau_display_vblank_enable(struct drm_device *, unsigned int);
-> -void nouveau_display_vblank_disable(struct drm_device *, unsigned int);
-> +int  nouveau_display_vblank_enable(struct drm_crtc *crtc);
-> +void nouveau_display_vblank_disable(struct drm_crtc *crtc);
->  bool nouveau_display_scanoutpos(struct drm_crtc *crtc,
->                                 bool in_vblank_irq, int *vpos, int *hpos,
->                                 ktime_t *stime, ktime_t *etime,
-> diff --git a/drivers/gpu/drm/nouveau/nouveau_drm.c b/drivers/gpu/drm/nouveau/nouveau_drm.c
-> index fcc036a08965..6b1629c14dd7 100644
-> --- a/drivers/gpu/drm/nouveau/nouveau_drm.c
-> +++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
-> @@ -1120,10 +1120,6 @@ driver_stub = {
->         .debugfs_init = nouveau_drm_debugfs_init,
->  #endif
->
-> -       .enable_vblank = nouveau_display_vblank_enable,
-> -       .disable_vblank = nouveau_display_vblank_disable,
-> -       .get_vblank_timestamp = drm_calc_vbltimestamp_from_scanoutpos,
-> -
->         .ioctls = nouveau_ioctls,
->         .num_ioctls = ARRAY_SIZE(nouveau_ioctls),
->         .fops = &nouveau_driver_fops,
-> --
-> 2.24.1
->
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+Hi,
+
+The parent device ( MDSS ) configures global HW settings which needs MDP 
+CLK to be turned on with a default rate.
+mdp device handles the composition, and it will compute the frequency 
+needed as per the layer stack in the composition, hence we can have 
+multiple rates on the CLK.
