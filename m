@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ED22314DA75
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jan 2020 13:12:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C448914DAFC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jan 2020 13:50:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727197AbgA3MMj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jan 2020 07:12:39 -0500
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:40136 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727074AbgA3MMj (ORCPT
+        id S1727197AbgA3MuE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jan 2020 07:50:04 -0500
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:34355 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726902AbgA3MuE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jan 2020 07:12:39 -0500
-Received: by mail-vs1-f66.google.com with SMTP id g23so1885041vsr.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jan 2020 04:12:36 -0800 (PST)
+        Thu, 30 Jan 2020 07:50:04 -0500
+Received: by mail-ua1-f67.google.com with SMTP id 1so1113176uao.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jan 2020 04:50:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=2oMFpwjVb7wHknI2AwAM6qt6edMX0VsMEB2cb5KoudE=;
-        b=uAP5UuS4nIhlNl+uJgWtgeb+MNtWmxGmJMOxQsRCl4Q9yMSxy60q9sCVp/DRW8tQMa
-         Y+2hLuAKNhZQnwTfrPNBSXYztdD/VLz9pvr8tN2OJsf2ru4JJ6m2Amolz5Kdovm7Uby5
-         XlL7EAljqelhyzvHARieiDGh+zy7mQe95Fe1EjaUd02aoY3UztDQQt9IzZjMB71prQzc
-         uKrpjECcLv/idYjwYFmKes1cNBP1EcpZxzrtRyV850R8AVN92NKMDWO/0YV8ipY3vfaX
-         IWXSfPpq4y6bB8KjyYMuJMAwLnOnT+Rr/Sg2Wx4xc78rtJsGVABh0pe6WdnShctT2M8L
-         FP2w==
+        bh=cnMkth7hV/dDIq+IhUJB/NKhjbFoKZU6UHmqdZyzOvk=;
+        b=iQ6sBgIOXFS+YVl144eNLc5JpHouW0m9Ee9ZuD1cG7XWSQpQUoXytyz8oSzkhZCStz
+         RZTGG/UeztBrkUBjBdU05mofzifuN+nig9XaIVD2qP13ClQ5vzEm8mV0oGvgEyJ8eYhX
+         /R9MYyfdejs+BAuK4dUK30jQUu74dDMfXqdAEp8GqbsFavOT/fcqJUZjdg3rJ8H7uw1G
+         OrSnyslcxopXLgogDTR1IOuPbWj5/+AkuPooBC+mX2YegTo7ytERWHloqLQz77bLGvR/
+         NeytO+8XzWfdENLpEts8kMEcNEHT/deUH8fwgQT339wOF7PF+oQBJr8l+TeJna6WzcGB
+         15Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=2oMFpwjVb7wHknI2AwAM6qt6edMX0VsMEB2cb5KoudE=;
-        b=S/S0TALNgdymQHTtfT3HuF0sGvMZTeBKGf0rCIBt/2pkc2IOWPPqO/OeuyXU2mPqhD
-         BYME7742Mjiw8Gslq26lsnJ8RGt7wyt5ls92MVgQADvAwqK80GYtIj4t8rzMsSioOlRz
-         Jl7aPo87GEmJQFnZbFVSnV19g7FEdfltLSc8rgoa3YVr7FenuiULeaGqiMkGUa7tbQBN
-         84tM+cBhLpGHGaIqzKpJesE200m+Oo7BSz7vIWF5G6xHexuZw1oBW8KA0gxW8txrWmFv
-         HhNNlA3AKWrArPPRIUV5XgZ2WfCy7yACzs8VBlMQNCncXrrFmNl9E8lb79KWtKl3gP0m
-         c3lg==
-X-Gm-Message-State: APjAAAVghHmSTmLXVm0WoyyAaRJl6ucmkoeBMwF8tvI8BaoN9WgoaVH/
-        7moFLg3kWfEmEWtKpJWWJG1ZEUzznktqj8Fqj31Qvg==
-X-Google-Smtp-Source: APXvYqzIJN47kZl0erjghOvF7Xbi6btHuqe0G5exgzJNifWuD2wfvuXxX58uiGX8x9Y0uShbRP2pDgMMbmlbadc2sXo=
-X-Received: by 2002:a05:6102:535:: with SMTP id m21mr2631714vsa.95.1580386356212;
- Thu, 30 Jan 2020 04:12:36 -0800 (PST)
+        bh=cnMkth7hV/dDIq+IhUJB/NKhjbFoKZU6UHmqdZyzOvk=;
+        b=F++UKKGMFTeAPBF2Wa+EiWK372IeCIJxmnxyaAXilKQP2IVv3y6wgGHPu7j7z0WJvt
+         Ak6MLYSCWdS8IW6LykzF/TRujKS0R4HNcOrIHgTpnGRLf06jorcrCDZzsUuRfdimi6kl
+         wex+wNL6FCIj/2bbdUp/HFOJQPFg8jbv7pT6EQg96p6E5AlRvyyUL8uyR1PDUdktsibi
+         KChpPzXYOy0bFyXEDOEXTyYahk85cVMUG9kWxg6DK6SPbEJ1Xh/IurVOfuFA7+QLBhkf
+         MQfAMJ19p6TctTIOmZ/zURhCVQlI6qh/IvnJ+7OBgfIec1UALRGz9L7E54kp9/RPf9HP
+         3m0Q==
+X-Gm-Message-State: APjAAAV+zVBfhny1oS/pGp84QW8J2TcwLjhvLG0nnktftZpPYhNRrWoT
+        Rrc7ZR7Ke/V/411M2AMd9AjPhyX4GZM5aBnGQADHNzxAdjI=
+X-Google-Smtp-Source: APXvYqzLFBjElA1AVzS3KAO1ZGYE8/2SstCFpuQS0BXBp8tlomfa/2p+73irPnPNVb+1+IYb+1jx8pAZxBMw4U6rzlY=
+X-Received: by 2002:ab0:b94:: with SMTP id c20mr2456278uak.67.1580388603038;
+ Thu, 30 Jan 2020 04:50:03 -0800 (PST)
 MIME-Version: 1.0
 References: <cover.1577976221.git.amit.kucheria@linaro.org>
- <a63edff9a3c02a542d36fdd28fe774a5c3bf3b8d.1577976221.git.amit.kucheria@linaro.org>
- <20200102195537.GE988120@minitux>
-In-Reply-To: <20200102195537.GE988120@minitux>
+ <0a969ecd48910dac4da81581eff45b5e579b2bfc.1577976221.git.amit.kucheria@linaro.org>
+ <20200102192925.GC988120@minitux>
+In-Reply-To: <20200102192925.GC988120@minitux>
 From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Thu, 30 Jan 2020 17:42:25 +0530
-Message-ID: <CAHLCerMk=cHjOTkZo34oeoT-BA_YBz=uZS4MK3b9Z8KKzpnnkQ@mail.gmail.com>
-Subject: Re: [PATCH v3 6/9] drivers: thermal: tsens: Add watchdog support
+Date:   Thu, 30 Jan 2020 18:19:52 +0530
+Message-ID: <CAHLCerM-zB=7P4Si88Hhyt8J7ojPGa6J9SmwTm8d8Jh3syiMtQ@mail.gmail.com>
+Subject: Re: [PATCH v3 4/9] drivers: thermal: tsens: Release device in success path
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     LKML <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -62,94 +62,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 3, 2020 at 1:25 AM Bjorn Andersson
+On Fri, Jan 3, 2020 at 12:59 AM Bjorn Andersson
 <bjorn.andersson@linaro.org> wrote:
 >
 > On Thu 02 Jan 06:54 PST 2020, Amit Kucheria wrote:
-> [..]
-> > diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
-> > index 4cf550766cf6..ecbc722eb348 100644
-> > --- a/drivers/thermal/qcom/tsens-common.c
-> > +++ b/drivers/thermal/qcom/tsens-common.c
-> > @@ -377,6 +377,24 @@ irqreturn_t tsens_critical_irq_thread(int irq, void *data)
-> >       struct tsens_irq_data d;
-> >       unsigned long flags;
-> >       int temp, ret, i;
-> > +     u32 wdog_status, wdog_count;
-> > +
-> > +     if (priv->feat->has_watchdog) {
-> > +             /* Watchdog is present only on v2.3+ */
 >
-> Please omit this comment, you're carrying the motivation for this
-> decision when you set has_watchdog already.
+> > We don't currently call put_device in case of successfully initialising
+> > the device.
+> >
+> > Allow control to fall through so we can use same code for success and
+> > error paths to put_device.
+> >
+>
+> Given the relationship between priv->dev and op I think this wouldn't be
+> a problem in practice, but there's two devm_ioremap_resource() done on
+> op->dev in this function. So you're depending on op->dev to stick
+> around, but with this patch you're no longer expressing that dependency.
+>
+> That said, it looks iffy to do devm_ioremap_resource() on op->dev and
+> then create a regmap on priv->dev using that resource. So I think it
+> would be better to do platform_get_source() on op, and then
+> devm_ioremap_resource() on priv->dev, in which case the regmap backing
+> memory will be related to the same struct device as the regmap and it
+> makes perfect sense to put_device() the op->dev when you're done
+> inspecting it's resources.
+>
+
+Indeed, thanks for reviewing.
 
 Will fix.
 
->
-> > +             ret = regmap_field_read(priv->rf[WDOG_BARK_STATUS], &wdog_status);
-> > +             if (ret)
-> > +                     return ret;
-> > +
-> > +             /* Clear WDOG interrupt */
-> > +             regmap_field_write(priv->rf[WDOG_BARK_CLEAR], 1);
-> > +             regmap_field_write(priv->rf[WDOG_BARK_CLEAR], 0);
->
-> Are you sure you need to zero the clear register?
-
-Yes, the corresponding downstream code is as follows:
-                       /*
-                         * Clear watchdog interrupt and
-                         * increment global wd count
-                         */
-                        writel_relaxed(wd_mask | TSENS_TM_CRITICAL_WD_BARK,
-                                (TSENS_TM_CRITICAL_INT_CLEAR
-                                (tm->tsens_tm_addr)));
-                        writel_relaxed(wd_mask & ~(TSENS_TM_CRITICAL_WD_BARK),
-                                (TSENS_TM_CRITICAL_INT_CLEAR
-                                (tm->tsens_tm_addr)));
-
-
-> > +
-> > +             ret = regmap_field_read(priv->rf[WDOG_BARK_COUNT], &wdog_count);
-> > +             if (ret)
-> > +                     return ret;
-> > +             if (wdog_count)
-> > +                     dev_dbg(priv->dev, "%s: watchdog count: %d\n", __func__, wdog_count);
-> > +     }
+> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > ---
+> >  drivers/thermal/qcom/tsens-common.c | 2 --
+> >  1 file changed, 2 deletions(-)
 > >
-> [..]
-> > @@ -793,6 +815,22 @@ int __init init_common(struct tsens_priv *priv)
-> >               }
-> >       }
-> >
-> > +     if (tsens_version(priv) > VER_1_X &&  ver_minor > 2) {
-> > +             /* Watchdog is present only on v2.3+ */
-> > +             priv->feat->has_watchdog = 1;
-> > +             for (i = WDOG_BARK_STATUS; i <= CC_MON_MASK; i++) {
-> > +                     priv->rf[i] = devm_regmap_field_alloc(dev, priv->tm_map,
-> > +                                                           priv->fields[i]);
-> > +                     if (IS_ERR(priv->rf[i])) {
-> > +                             ret = PTR_ERR(priv->rf[i]);
-> > +                             goto err_put_device;
-> > +                     }
-> > +             }
-> > +             /* Enable WDOG and disable cycle completion monitoring */
->
-> Commit message says you're not enabling it. Should this say "WDOG is
-> already configured, unmask the bark" or something along those lines?
-
-Will reword
-
->
-> > +             regmap_field_write(priv->rf[WDOG_BARK_MASK], 0);
-> > +             regmap_field_write(priv->rf[CC_MON_MASK], 1);
-> > +     }
-> > +
-> >       spin_lock_init(&priv->ul_lock);
+> > diff --git a/drivers/thermal/qcom/tsens-common.c b/drivers/thermal/qcom/tsens-common.c
+> > index 1cbc5a6e5b4f..e84e94a6f1a7 100644
+> > --- a/drivers/thermal/qcom/tsens-common.c
+> > +++ b/drivers/thermal/qcom/tsens-common.c
+> > @@ -687,8 +687,6 @@ int __init init_common(struct tsens_priv *priv)
 > >       tsens_enable_irq(priv);
 > >       tsens_debug_init(op);
->
-> Regards,
-> Bjorn
-
-Thanks for the review.
+> >
+> > -     return 0;
+> > -
+> >  err_put_device:
+> >       put_device(&op->dev);
+> >       return ret;
+> > --
+> > 2.20.1
+> >
