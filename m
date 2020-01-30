@@ -2,394 +2,269 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 113AB14D879
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jan 2020 10:59:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C411514D882
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jan 2020 11:00:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727024AbgA3J7I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jan 2020 04:59:08 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:18727 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726882AbgA3J7I (ORCPT
+        id S1726967AbgA3KA1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jan 2020 05:00:27 -0500
+Received: from mx08-00178001.pphosted.com ([91.207.212.93]:7296 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726893AbgA3KA1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jan 2020 04:59:08 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580378347; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=MsDqUXNhgi/pGVglPl0+siEgxBm4piy6438Dt0VgT4E=; b=FdQX3skbLuY5fAIldufNqp1CbC6p0hcsARqYD3CN3vPgATnMuzO+mEQmYwf2oY/IR7EYcqkf
- 7hJRbipLI4xMFXfllk0BWV9INryJW+lKrYHPZauXYmilE/4v4Gwur9gkWVKG5tDstEQ5FEVk
- eU//aMHwN0VnsZA06wW3worgUC0=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e32a8e8.7ff1f36d71b8-smtp-out-n01;
- Thu, 30 Jan 2020 09:59:04 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 29A39C433A2; Thu, 30 Jan 2020 09:59:04 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from akashast-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 77060C43383;
-        Thu, 30 Jan 2020 09:58:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 77060C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-From:   Akash Asthana <akashast@codeaurora.org>
-To:     robh+dt@kernel.org, agross@kernel.org, mark.rutland@arm.com
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
-        rojay@codeaurora.org, c_skakit@codeaurora.org,
-        Akash Asthana <akashast@codeaurora.org>
-Subject: [PATCH V3] dt-bindings: geni-se: Convert QUP geni-se bindings to YAML
-Date:   Thu, 30 Jan 2020 15:28:42 +0530
-Message-Id: <1580378322-32729-1-git-send-email-akashast@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Thu, 30 Jan 2020 05:00:27 -0500
+Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 00U9vUEL009871;
+        Thu, 30 Jan 2020 11:00:14 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=STMicroelectronics;
+ bh=83piUCyi5cY/Ri6y2b7iI9qZlnP4hgj7C7S5t82mr8Y=;
+ b=cq8dGT/aa7wy3v1l+5VrG0lfurJQuid5Ax4OcUDRx1QmUCnrg5L+Un9AxF+TeiT0qxa6
+ cyHfhtP77yOijGl51c3IKfqFygt6saHjHrK9jlbziW9TMZqDfkY8f+oxUEuypMY+nXKv
+ Yr601ynjB0Ygx938/hhjtqUw8cOeOLBHLS47bOXRnYzi3v1nBjr4XHgjCEH0CKyEJVMF
+ HNNcZvlErv61jXMJurmC86rpMOehzYVy4bXRpLuJ8whIjaTsgIrlpoNH+grb4GkJTenW
+ ZbCi7/mxAS/N3cdn1D/0yceoNbghkJZklaUrBA1D7h1jfw46gB8kMr5FQTvXq3EMi03U gQ== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com with ESMTP id 2xrbpb7ue9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 30 Jan 2020 11:00:14 +0100
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id BDB56100038;
+        Thu, 30 Jan 2020 11:00:13 +0100 (CET)
+Received: from Webmail-eu.st.com (sfhdag3node1.st.com [10.75.127.7])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 8A4D52AF167;
+        Thu, 30 Jan 2020 11:00:13 +0100 (CET)
+Received: from lmecxl0889.lme.st.com (10.75.127.46) by SFHDAG3NODE1.st.com
+ (10.75.127.7) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 30 Jan
+ 2020 11:00:12 +0100
+Subject: Re: [PATCH v2 7/8] remoteproc: qcom: q6v5: Add common panic handler
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-remoteproc <linux-remoteproc@vger.kernel.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>
+References: <20191227053215.423811-1-bjorn.andersson@linaro.org>
+ <20191227053215.423811-8-bjorn.andersson@linaro.org>
+ <20200110212806.GD11555@xps15> <20200122193936.GB3261042@ripper>
+ <CANLsYkx-C9U4W3R3Xo6t3BJBM4UK_i3zuwzhnXMMEQ0-ur+8Kg@mail.gmail.com>
+ <20200123171524.GV1511@yoga> <8d92c4b5-4238-23d2-50fc-1a5bdfc2c67b@st.com>
+ <CANLsYkyhGjrxGiYqtCijwQiMOnvGdpXNKJ0XpxXsFYe=XEY0ZQ@mail.gmail.com>
+ <d1f632b2-dff3-401d-f8f5-2d41d1589c79@st.com> <20200129201546.GA31696@xps15>
+From:   Arnaud POULIQUEN <arnaud.pouliquen@st.com>
+Message-ID: <4e7aae03-95ce-6786-a62b-139546b17e27@st.com>
+Date:   Thu, 30 Jan 2020 11:00:12 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <20200129201546.GA31696@xps15>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.75.127.46]
+X-ClientProxiedBy: SFHDAG5NODE3.st.com (10.75.127.15) To SFHDAG3NODE1.st.com
+ (10.75.127.7)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.572
+ definitions=2020-01-30_02:2020-01-28,2020-01-30 signatures=0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert QUP geni-se bindings to DT schema format using json-schema.
 
-Signed-off-by: Akash Asthana <akashast@codeaurora.org>
----
-Changes in V2:
- - As per Stephen's comment corrected defintion of interrupts for UART node.
-   Any valid UART node must contain atleast 1 interrupts.
 
-Changes in V3:
- - As per Rob's comment, added number of reg entries for reg property.
- - As per Rob's comment, corrected unit address to hex.
- - As per Rob's comment, created a pattern which matches everything common
-   to geni based I2C, SPI and UART controller and then one pattern  for each.
- - As per Rob's comment, restored original example.
+On 1/29/20 9:15 PM, Mathieu Poirier wrote:
+> On Mon, Jan 27, 2020 at 10:46:05AM +0100, Arnaud POULIQUEN wrote:
+>>
+>>
+>> On 1/24/20 7:44 PM, Mathieu Poirier wrote:
+>>> On Thu, 23 Jan 2020 at 10:49, Arnaud POULIQUEN <arnaud.pouliquen@st.com> wrote:
+>>>>
+>>>> Hi Bjorn, Mathieu
+>>>>
+>>>> On 1/23/20 6:15 PM, Bjorn Andersson wrote:
+>>>>> On Thu 23 Jan 09:01 PST 2020, Mathieu Poirier wrote:
+>>>>>
+>>>>>> On Wed, 22 Jan 2020 at 12:40, Bjorn Andersson
+>>>>>> <bjorn.andersson@linaro.org> wrote:
+>>>>>>>
+>>>>>>> On Fri 10 Jan 13:28 PST 2020, Mathieu Poirier wrote:
+>>>>>>>
+>>>>>>>> On Thu, Dec 26, 2019 at 09:32:14PM -0800, Bjorn Andersson wrote:
+>>>>>>>>> Add a common panic handler that invokes a stop request and sleep enough
+>>>>>>>>> to let the remoteproc flush it's caches etc in order to aid post mortem
+>>>>>>>>> debugging.
+>>>>>>>>>
+>>>>>>>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>>>>>>>> ---
+>>>>>>>>>
+>>>>>>>>> Changes since v1:
+>>>>>>>>> - None
+>>>>>>>>>
+>>>>>>>>>  drivers/remoteproc/qcom_q6v5.c | 19 +++++++++++++++++++
+>>>>>>>>>  drivers/remoteproc/qcom_q6v5.h |  1 +
+>>>>>>>>>  2 files changed, 20 insertions(+)
+>>>>>>>>>
+>>>>>>>>> diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+>>>>>>>>> index cb0f4a0be032..17167c980e02 100644
+>>>>>>>>> --- a/drivers/remoteproc/qcom_q6v5.c
+>>>>>>>>> +++ b/drivers/remoteproc/qcom_q6v5.c
+>>>>>>>>> @@ -6,6 +6,7 @@
+>>>>>>>>>   * Copyright (C) 2014 Sony Mobile Communications AB
+>>>>>>>>>   * Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
+>>>>>>>>>   */
+>>>>>>>>> +#include <linux/delay.h>
+>>>>>>>>>  #include <linux/kernel.h>
+>>>>>>>>>  #include <linux/platform_device.h>
+>>>>>>>>>  #include <linux/interrupt.h>
+>>>>>>>>> @@ -15,6 +16,8 @@
+>>>>>>>>>  #include <linux/remoteproc.h>
+>>>>>>>>>  #include "qcom_q6v5.h"
+>>>>>>>>>
+>>>>>>>>> +#define Q6V5_PANIC_DELAY_MS        200
+>>>>>>>>> +
+>>>>>>>>>  /**
+>>>>>>>>>   * qcom_q6v5_prepare() - reinitialize the qcom_q6v5 context before start
+>>>>>>>>>   * @q6v5:  reference to qcom_q6v5 context to be reinitialized
+>>>>>>>>> @@ -162,6 +165,22 @@ int qcom_q6v5_request_stop(struct qcom_q6v5 *q6v5)
+>>>>>>>>>  }
+>>>>>>>>>  EXPORT_SYMBOL_GPL(qcom_q6v5_request_stop);
+>>>>>>>>>
+>>>>>>>>> +/**
+>>>>>>>>> + * qcom_q6v5_panic() - panic handler to invoke a stop on the remote
+>>>>>>>>> + * @q6v5:  reference to qcom_q6v5 context
+>>>>>>>>> + *
+>>>>>>>>> + * Set the stop bit and sleep in order to allow the remote processor to flush
+>>>>>>>>> + * its caches etc for post mortem debugging.
+>>>>>>>>> + */
+>>>>>>>>> +void qcom_q6v5_panic(struct qcom_q6v5 *q6v5)
+>>>>>>>>> +{
+>>>>>>>>> +   qcom_smem_state_update_bits(q6v5->state,
+>>>>>>>>> +                               BIT(q6v5->stop_bit), BIT(q6v5->stop_bit));
+>>>>>>>>> +
+>>>>>>>>> +   mdelay(Q6V5_PANIC_DELAY_MS);
+>>>>>>>>
+>>>>>>>> I really wonder if the delay should be part of the remoteproc core and
+>>>>>>>> configurable via device tree.  Wanting the remote processor to flush its caches
+>>>>>>>> is likely something other vendors will want when dealing with a kernel panic.
+>>>>>>>> It would be nice to see if other people have an opinion on this topic.  If not
+>>>>>>>> then we can keep the delay here and move it to the core if need be.
+>>>>>>>>
+>>>>>>>
+>>>>>>> I gave this some more thought and what we're trying to achieve is to
+>>>>>>> signal the remote processors about the panic and then give them time to
+>>>>>>> react, but per the proposal (and Qualcomm downstream iirc) we will do
+>>>>>>> this for each remote processor, one by one.
+>>>>>>>
+>>>>>>> So in the typical case of a Qualcomm platform with 4-5 remoteprocs we'll
+>>>>>>> end up giving the first one a whole second to react and the last one
+>>>>>>> "only" 200ms.
+>>>>>>>
+>>>>>>> Moving the delay to the core by iterating over rproc_list calling
+>>>>>>> panic() and then delaying would be cleaner imo.
+>>>>>>
+>>>>>> I agree.
+>>>>>>
+>>>>>>>
+>>>>>>> It might be nice to make this configurable in DT, but I agree that it
+>>>>>>> would be nice to hear from others if this would be useful.
+>>>>>>
+>>>>>> I think the delay has to be configurable via DT if we move this to the
+>>>>>> core.  The binding can be optional and default to 200ms if not
+>>>>>> present.
+>>>>>>
+>>>>>
+>>>>> How about I make the panic() return the required delay and then we let
+>>>>> the core sleep for MAX() of the returned durations?
+>>>
+>>> I like it.
+>>>
+>>>> That way the default
+>>>>> is still a property of the remoteproc drivers - and 200ms seems rather
+>>>>> arbitrary to put in the core, even as a default.
+>>>>
+>>>> I agree with Bjorn, the delay should be provided by the platform.
+>>>> But in this case i wonder if it is simpler to just let the platform take care it?
+>>>
+>>> If I understand you correctly, that is what Bjorn's original
+>>> implementation was doing and it had drawbacks.
+>> Yes, 
+>> Please tell me if i missed something, the only drawback seems mentioned is the accumulative delay.
+> 
+> Yes, that is correct.
+> 
+>> Could you elaborate how to implement the delay in remote proc core for multi rproc instance.
+>> Here is my view:
+>> To optimize the delay it would probably be necessary to compute:
+>> - the delay based on an initial date,
+>> - the delay requested by each rproc instance,
+>> - the delay elapsed in each rproc panic ops.
+>> Feasible but not straight forward... 
+>> So I suppose that you are thinking about a solution based on the store of the max delay that would be applied after last panic() return?
+> 
+> Yes
+> 
+>> anyway, how do you determine the last rproc instance? seems that a prerequisite would be that the panic ops is mandatory... 
+> 
+> Each ->panic() should return the amount of time to way or 0 if no delay is
+> required.  If an rpoc doesn't implement ->panic() then it is treated as 0.
+> From there wait for the maximum time that was collected.
+> 
+> It would be possible to do something more complicated like taking timestamps
+> everytime a ->panic() returns and optimize the time to wait for but that may be
+> for a future set.  The first implementation could go with an simple heuristic as
+> detailed above.
+Seems reasonable. 
+A last point. i don't know if the case is realistic so i prefer to mention it:
+we can imagine that a rproc platform driver already manages a panic (for instance a video decoder driver that uses a coprocessor).
+In this case there is a risk that the rproc is remove during the panic. 
+Depending on the panic sequence ordering this could generate a side effect (no delay as last rproc panic ops could be never called).
+But seems not too tricky to take it into account in remoteproc core.
+> 
+>>
+>> I'm not familiar with panic mechanism, but how panic ops are scheduled in SMP? Does panics ops would be treated in parallel (using msleep instead of mdelay)?
+>> In this case delays could not be cumulative...
+> 
+> The processor that triggered the panic sequentially runs the notifier registered
+> with the panic_notifier_list.  Other processors are instructed to take
+> themselves offline.  As such there won't be multiple ->panic() running
+> concurrently. 
+Thank you for that explanation!
 
- .../devicetree/bindings/soc/qcom/qcom,geni-se.txt  |  94 ---------
- .../devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 211 +++++++++++++++++++++
- 2 files changed, 211 insertions(+), 94 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.txt
- create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.txt
-deleted file mode 100644
-index dab7ca9..0000000
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.txt
-+++ /dev/null
-@@ -1,94 +0,0 @@
--Qualcomm Technologies, Inc. GENI Serial Engine QUP Wrapper Controller
--
--Generic Interface (GENI) based Qualcomm Universal Peripheral (QUP) wrapper
--is a programmable module for supporting a wide range of serial interfaces
--like UART, SPI, I2C, I3C, etc. A single QUP module can provide upto 8 Serial
--Interfaces, using its internal Serial Engines. The GENI Serial Engine QUP
--Wrapper controller is modeled as a node with zero or more child nodes each
--representing a serial engine.
--
--Required properties:
--- compatible:		Must be "qcom,geni-se-qup".
--- reg:			Must contain QUP register address and length.
--- clock-names:		Must contain "m-ahb" and "s-ahb".
--- clocks:		AHB clocks needed by the device.
--
--Required properties if child node exists:
--- #address-cells: 	Must be <1> for Serial Engine Address
--- #size-cells: 		Must be <1> for Serial Engine Address Size
--- ranges: 		Must be present
--
--Properties for children:
--
--A GENI based QUP wrapper controller node can contain 0 or more child nodes
--representing serial devices.  These serial devices can be a QCOM UART, I2C
--controller, SPI controller, or some combination of aforementioned devices.
--Please refer below the child node definitions for the supported serial
--interface protocols.
--
--Qualcomm Technologies Inc. GENI Serial Engine based I2C Controller
--
--Required properties:
--- compatible:		Must be "qcom,geni-i2c".
--- reg: 			Must contain QUP register address and length.
--- interrupts: 		Must contain I2C interrupt.
--- clock-names: 		Must contain "se".
--- clocks: 		Serial engine core clock needed by the device.
--- #address-cells:	Must be <1> for I2C device address.
--- #size-cells:		Must be <0> as I2C addresses have no size component.
--
--Optional property:
--- clock-frequency:	Desired I2C bus clock frequency in Hz.
--			When missing default to 100000Hz.
--
--Child nodes should conform to I2C bus binding as described in i2c.txt.
--
--Qualcomm Technologies Inc. GENI Serial Engine based UART Controller
--
--Required properties:
--- compatible:		Must be "qcom,geni-debug-uart" or "qcom,geni-uart".
--- reg: 			Must contain UART register location and length.
--- interrupts: 		Must contain UART core interrupts.
--- clock-names:		Must contain "se".
--- clocks:		Serial engine core clock needed by the device.
--
--Qualcomm Technologies Inc. GENI Serial Engine based SPI Controller
--node binding is described in
--Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt.
--
--Example:
--	geniqup@8c0000 {
--		compatible = "qcom,geni-se-qup";
--		reg = <0x8c0000 0x6000>;
--		clock-names = "m-ahb", "s-ahb";
--		clocks = <&clock_gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
--			<&clock_gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
--		#address-cells = <1>;
--		#size-cells = <1>;
--		ranges;
--
--		i2c0: i2c@a94000 {
--			compatible = "qcom,geni-i2c";
--			reg = <0xa94000 0x4000>;
--			interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
--			clock-names = "se";
--			clocks = <&clock_gcc GCC_QUPV3_WRAP0_S5_CLK>;
--			pinctrl-names = "default", "sleep";
--			pinctrl-0 = <&qup_1_i2c_5_active>;
--			pinctrl-1 = <&qup_1_i2c_5_sleep>;
--			#address-cells = <1>;
--			#size-cells = <0>;
--		};
--
--		uart0: serial@a88000 {
--			compatible = "qcom,geni-debug-uart";
--			reg = <0xa88000 0x7000>;
--			interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
--			clock-names = "se";
--			clocks = <&clock_gcc GCC_QUPV3_WRAP0_S0_CLK>;
--			pinctrl-names = "default", "sleep";
--			pinctrl-0 = <&qup_1_uart_3_active>;
--			pinctrl-1 = <&qup_1_uart_3_sleep>;
--		};
--
--	}
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-new file mode 100644
-index 0000000..3c5a603
---- /dev/null
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-@@ -0,0 +1,211 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: GENI Serial Engine QUP Wrapper Controller
-+
-+maintainers:
-+ - Mukesh Savaliya <msavaliy@codeaurora.org>
-+ - Akash Asthana <akashast@codeaurora.org>
-+
-+description: |
-+ Generic Interface (GENI) based Qualcomm Universal Peripheral (QUP) wrapper
-+ is a programmable module for supporting a wide range of serial interfaces
-+ like UART, SPI, I2C, I3C, etc. A single QUP module can provide upto 8 Serial
-+ Interfaces, using its internal Serial Engines. The GENI Serial Engine QUP
-+ Wrapper controller is modeled as a node with zero or more child nodes each
-+ representing a serial engine.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,geni-se-qup
-+
-+  reg:
-+    description: QUP wrapper common register address and length.
-+    maxItems: 1
-+
-+  clock-names:
-+    items:
-+      - const: m-ahb
-+      - const: s-ahb
-+
-+  clocks:
-+    minItems: 2
-+    maxItems: 2
-+    items:
-+      - description: Master AHB Clock
-+      - description: Slave AHB Clock
-+
-+  "#address-cells":
-+     const: 2
-+
-+  "#size-cells":
-+     const: 2
-+
-+  ranges: true
-+
-+required:
-+  - compatible
-+  - reg
-+  - clock-names
-+  - clocks
-+  - "#address-cells"
-+  - "#size-cells"
-+  - ranges
-+
-+patternProperties:
-+  "^.*@[0-9a-f]+$":
-+    type: object
-+    description: Common properties for GENI Serial Engine based I2C, SPI and
-+                 UART controller.
-+
-+    properties:
-+      reg:
-+        description: GENI Serial Engine register address and length.
-+        maxItems: 1
-+
-+      clock-names:
-+        const: se
-+
-+      clocks:
-+        description: Serial engine core clock needed by the device.
-+        maxItems: 1
-+
-+    required:
-+      - reg
-+      - clock-names
-+      - clocks
-+
-+  "spi@[0-9a-f]+$":
-+    type: object
-+    description: GENI serial engine based SPI controller. SPI in master mode
-+                 supports up to 50MHz, up to four chip selects, programmable
-+                 data path from 4 bits to 32 bits and numerous protocol
-+                 variants.
-+    allOf:
-+      - $ref: /spi/spi-controller.yaml#
-+
-+    properties:
-+      compatible:
-+        enum:
-+          - qcom,geni-spi
-+
-+      interrupts:
-+        maxItems: 1
-+
-+      "#address-cells":
-+         const: 1
-+
-+      "#size-cells":
-+         const: 0
-+
-+    required:
-+      - compatible
-+      - interrupts
-+      - "#address-cells"
-+      - "#size-cells"
-+
-+  "i2c@[0-9a-f]+$":
-+    type: object
-+    description: GENI serial engine based I2C controller.
-+    allOf:
-+      - $ref: /schemas/i2c/i2c-controller.yaml#
-+
-+    properties:
-+      compatible:
-+        enum:
-+          - qcom,geni-i2c
-+
-+      interrupts:
-+        maxItems: 1
-+
-+      "#address-cells":
-+         const: 1
-+
-+      "#size-cells":
-+         const: 0
-+
-+      clock-frequency:
-+        description: Desired I2C bus clock frequency in Hz.
-+        default: 100000
-+
-+    required:
-+      - compatible
-+      - interrupts
-+      - "#address-cells"
-+      - "#size-cells"
-+
-+  "serial@[0-9a-f]+$":
-+    type: object
-+    description: GENI Serial Engine based UART Controller.
-+    allOf:
-+      - $ref: /schemas/serial.yaml#
-+
-+    properties:
-+      compatible:
-+        enum:
-+          - qcom,geni-uart
-+          - qcom,geni-debug-uart
-+
-+      interrupts:
-+        minItems: 1
-+        maxItems: 2
-+        items:
-+          - description: UART core irq
-+          - description: Wakeup irq (RX GPIO)
-+
-+    required:
-+      - compatible
-+      - interrupts
-+
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    soc: soc@0 {
-+        #address-cells = <2>;
-+        #size-cells = <2>;
-+
-+        geniqup@8c0000 {
-+            compatible = "qcom,geni-se-qup";
-+            reg = <0 0x008c0000 0 0x6000>;
-+            clock-names = "m-ahb", "s-ahb";
-+            clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
-+                <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
-+            #address-cells = <2>;
-+            #size-cells = <2>;
-+            ranges;
-+
-+            i2c0: i2c@a94000 {
-+                compatible = "qcom,geni-i2c";
-+                reg = <0 0xa94000 0 0x4000>;
-+                interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
-+                clock-names = "se";
-+                clocks = <&gcc GCC_QUPV3_WRAP0_S5_CLK>;
-+                pinctrl-names = "default", "sleep";
-+                pinctrl-0 = <&qup_1_i2c_5_active>;
-+                pinctrl-1 = <&qup_1_i2c_5_sleep>;
-+                #address-cells = <1>;
-+                #size-cells = <0>;
-+            };
-+
-+            uart0: serial@a88000 {
-+                compatible = "qcom,geni-uart";
-+                reg = <0 0xa88000 0 0x7000>;
-+                interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
-+                clock-names = "se";
-+                clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
-+                pinctrl-names = "default", "sleep";
-+                pinctrl-0 = <&qup_1_uart_3_active>;
-+                pinctrl-1 = <&qup_1_uart_3_sleep>;
-+            };
-+        };
-+    };
-+
-+...
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+Regards,
+Arnaud
+> 
+>>
+>>>
+>>>> For instance for stm32mp1 the stop corresponds to the reset on the remote processor core. To inform the coprocessor about an imminent shutdown we use a signal relying on a mailbox (cf. stm32_rproc_stop).
+>>>> In this case we would need a delay between the signal and the reset, but not after (no cache management).
+>>>
+>>> Here I believe you are referring to the upper limit of 500ms that is
+>>> needed for the mbox_send_message() in stm32_rproc_stop() to complete.
+>>> Since that is a blocking call I think it would fit with Bjorn's
+>>> proposal above if a value of '0' is returned by rproc->ops->panic().
+>>> That would mean no further delays are needed (because the blocking
+>>> mbox_send_message() would have done the job already).  Let me know if
+>>> I'm in the weeds.
+>> Yes you are :), this is what i thought, if delay implemented in core.
+> 
+> Not sure I understand your last reply but I _think_ we are saying the same
+> thing.
+> 
+>>
+>> Regards,
+>> Arnaud
+>>
+>>>
+>>>>
+>>>> Regards,
+>>>> Arnaud
+>>>>>
+>>>>> Regards,
+>>>>> Bjorn
+>>>>>
