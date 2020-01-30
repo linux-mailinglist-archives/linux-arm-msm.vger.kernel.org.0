@@ -2,61 +2,261 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EEA414D9EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jan 2020 12:40:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D81514DA64
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jan 2020 13:07:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726949AbgA3LkN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jan 2020 06:40:13 -0500
-Received: from foss.arm.com ([217.140.110.172]:51404 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726873AbgA3LkM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jan 2020 06:40:12 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1DF96328;
-        Thu, 30 Jan 2020 03:40:12 -0800 (PST)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 734143F67D;
-        Thu, 30 Jan 2020 03:40:09 -0800 (PST)
-Date:   Thu, 30 Jan 2020 11:40:04 +0000
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Matthias Kaehlcke <mka@chromium.org>,
-        Sibi Sankar <sibis@codeaurora.org>
-Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
-        georgi.djakov@linaro.org, saravanak@google.com, nm@ti.com,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dianders@chromium.org,
-        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
-        ulf.hansson@linaro.org, Sudeep Holla <sudeep.holla@arm.com>
-Subject: Re: [RFC v3 02/10] cpufreq: blacklist SDM845 in cpufreq-dt-platdev
-Message-ID: <20200130114004.GA56122@bogus>
-References: <20200127200350.24465-1-sibis@codeaurora.org>
- <20200127200350.24465-3-sibis@codeaurora.org>
- <20200128204423.GF46072@google.com>
+        id S1726980AbgA3MHe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jan 2020 07:07:34 -0500
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:38325 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727197AbgA3MHc (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 30 Jan 2020 07:07:32 -0500
+Received: by mail-vs1-f67.google.com with SMTP id r18so1891607vso.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jan 2020 04:07:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LrkIvDvrNXYWHApNqe3t61PUBGUIMYiDzggTQKjPxz0=;
+        b=sFCCJFuWVSJeb5LMccXSELteBog3WeJAUjCP+M82bP5zcHgntWGf5eu98A+9HO4iFJ
+         EVae15g3toaBDW44ND2EmfOMpKAofWS2XSfbVZqumZz75g0tE/wFnhbhXoEK+taNV2rS
+         SyThsNgOT8H+jCROTyAg+K8vldBOLi7c4uKFAfH5MoC3IPUm7gfj27eynoDP5fLBcjhq
+         oN/b4IZIGWABAUkVieVZJf5KFiHIof+0F1rGynGFjyIc9NQvdA+/tG8caQNmZ0p8x87t
+         TW2VnuZcxFyn0EGijnwVueGbH5xMXJXm4UqLC3dF6hams4bXmHIPPiKeQjXhcMew4Jzd
+         uR2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LrkIvDvrNXYWHApNqe3t61PUBGUIMYiDzggTQKjPxz0=;
+        b=neYUcpQZkiUKc663lLZjezcYLKuYBHEuO4qc8V/2gEG9TXgPxJ3PTwxGIE9oexrgJy
+         uKYjzVaejYuOv3EP8iSzK4daBSbISaiOcEtWghpPHBPSxmzuk94pryxqRN+7lqnq37xy
+         UiR+t620zc+65wTBkBINHfSFS08mPhwQnlehAVE5XPJkU/k/CzQEv3hPtnDXZGV+riqg
+         19RE868AC1DjntdBf7XzRZuz1EY3gDqoSwy52XuJ9G+ko/WRsY69MCVvdrT0zM4Dbjbw
+         UoL3jnP6UhOv31y4E4WPtZiAIZQK/yL0kYKZPVlARub5pBGmw5XdqRy9VRsRFHl1ncUb
+         BaPg==
+X-Gm-Message-State: APjAAAX+Iv9piifAiZHRPxbNHl8ELDwD64/N8fpLCHQQ/eWcbnfnu1g4
+        VbMN8qoywcCBJEzOApd+I3b1A2kvduq0mGrooIoHmg==
+X-Google-Smtp-Source: APXvYqxtqo70QcFPYTVimXTCqifsu0/mGCuNJFYaeYoR46HT/Z2WmXrOgW+KG0m7N8gxKtPkObLWWEYYt7WL1psSR8c=
+X-Received: by 2002:a67:e99a:: with SMTP id b26mr2815388vso.27.1580386049096;
+ Thu, 30 Jan 2020 04:07:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200128204423.GF46072@google.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <cover.1577976221.git.amit.kucheria@linaro.org>
+ <9e3527ac0f6baa64aeda8eb634ca5020ea7478e5.1577976221.git.amit.kucheria@linaro.org>
+ <20200102194552.GD988120@minitux>
+In-Reply-To: <20200102194552.GD988120@minitux>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Thu, 30 Jan 2020 17:37:18 +0530
+Message-ID: <CAHLCerO0B5pfWVxZ=3NzCYX3uL_6vS=jF9uxu0=XNgJoLOmpoQ@mail.gmail.com>
+Subject: Re: [PATCH v3 5/9] drivers: thermal: tsens: Add critical interrupt support
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>, sivaa@codeaurora.org,
+        Andy Gross <agross@kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 28, 2020 at 12:44:23PM -0800, Matthias Kaehlcke wrote:
-> On Tue, Jan 28, 2020 at 01:33:42AM +0530, Sibi Sankar wrote:
-> > Add SDM845 to cpufreq-dt-platdev blacklist.
+On Fri, Jan 3, 2020 at 1:15 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 >
-> nit: you could mention that cpufreq is handled by the
-> 'qcom-cpufreq-hw' driver.
+> On Thu 02 Jan 06:54 PST 2020, Amit Kucheria wrote:
+> [..]
+> > @@ -189,6 +197,9 @@ static void tsens_set_interrupt_v1(struct tsens_priv *priv, u32 hw_id,
+> >       case LOWER:
+> >               index = LOW_INT_CLEAR_0 + hw_id;
+> >               break;
+> > +     case CRITICAL:
+> > +             /* No critical interrupts before v2 */
+> > +             break;
 >
+> You need to break harder, right now you're just attempting to write
+> "enable" to VER_MAJOR in this case.
 
-IIUC, these platforms get the OPP table from the firmware and there shouldn't
-be OPP entries in the DT. If not, why not fix that to avoid more confusion.
-Can we make cpu0_node_has_opp_v2_prop return false in short.
+Will fix.
 
---
-Regards,
-Sudeep
+>
+> >       }
+> >       regmap_field_write(priv->rf[index], enable ? 0 : 1);
+> >  }
+> [..]
+> > @@ -321,6 +357,64 @@ static inline u32 masked_irq(u32 hw_id, u32 mask, enum tsens_ver ver)
+> >       return 0;
+> >  }
+> >
+> > +/**
+> > + * tsens_critical_irq_thread - Threaded interrupt handler for critical interrupts
+>
+> () on the function name to denote it being a function.
+
+Will fix.
+
+>
+> > + * @irq: irq number
+> > + * @data: tsens controller private data
+> > + *
+> > + * Check all sensors to find ones that violated their critical threshold limits.
+> > + * Clear and then re-enable the interrupt.
+> > + *
+> > + * The level-triggered interrupt might deassert if the temperature returned to
+> > + * within the threshold limits by the time the handler got scheduled. We
+> > + * consider the irq to have been handled in that case.
+> > + *
+> > + * Return: IRQ_HANDLED
+> > + */
+> > +irqreturn_t tsens_critical_irq_thread(int irq, void *data)
+> > +{
+> > +     struct tsens_priv *priv = data;
+> > +     struct tsens_irq_data d;
+> > +     unsigned long flags;
+> > +     int temp, ret, i;
+> > +
+> > +     for (i = 0; i < priv->num_sensors; i++) {
+> > +             const struct tsens_sensor *s = &priv->sensor[i];
+> > +             u32 hw_id = s->hw_id;
+> > +
+> > +             if (IS_ERR(s->tzd))
+> > +                     continue;
+> > +             if (!tsens_threshold_violated(priv, hw_id, &d))
+> > +                     continue;
+> > +             ret = get_temp_tsens_valid(s, &temp);
+> > +             if (ret) {
+> > +                     dev_err(priv->dev, "[%u] %s: error reading sensor\n", hw_id, __func__);
+> > +                     continue;
+> > +             }
+> > +
+> > +             spin_lock_irqsave(&priv->ul_lock, flags);
+>
+> You meant crit_lock here?
+
+Good catch, will fix.
+
+>
+> But perhaps more importantly, why do you need a lock here?
+
+I'm reading and changing interrupt state registers in this section and
+there can be multiple interrupts occurring simultaneously. Without a
+lock, the interrupt threads could potentially stomp over each other's
+register state.
+
+Having said that, I think I found a potential problem in porting the
+downstream driver code. Basically, we only need critical interrupt to
+enable watchdog support. The critical interrupt HW line can be
+asserted by watchdog and by actual critical interrupts. One to one
+mapping of tsens critical interrupts to trip type CRITICAL in Linux
+leads to a HW shutdown. And we can use the trip type PASSIVE with
+multiple ranges of temperatures to handle several levels of trip.
+
+So I'll change the code below to mask the critical interrupts in the
+event it is triggered and only use the irq thread to handle watchdog
+interrupts.
+
+> > +
+> > +             tsens_read_irq_state(priv, hw_id, s, &d);
+> > +
+> > +             if (d.crit_viol &&
+> > +                 !masked_irq(hw_id, d.crit_irq_mask, tsens_version(priv))) {
+> > +                     tsens_set_interrupt(priv, hw_id, CRITICAL, false);
+> > +                     if (d.crit_thresh > temp) {
+> > +                             dev_dbg(priv->dev, "[%u] %s: re-arm upper\n",
+> > +                                     hw_id, __func__);
+> > +                     } else {
+> > +                             dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
+> > +                                     hw_id, __func__, temp);
+> > +                     }
+> > +                     tsens_set_interrupt(priv, hw_id, CRITICAL, true);
+> > +             }
+> > +
+> > +             spin_unlock_irqrestore(&priv->crit_lock, flags);
+> > +     }
+> > +
+> > +     return IRQ_HANDLED;
+> > +}
+> [..]
+> > @@ -125,6 +125,28 @@ static int tsens_register(struct tsens_priv *priv)
+> >               goto err_put_device;
+> >       }
+> >
+> > +     if (priv->feat->crit_int) {
+> > +             irq_crit = platform_get_irq_byname(pdev, "critical");
+> > +             if (irq_crit < 0) {
+> > +                     ret = irq_crit;
+> > +                     /* For old DTs with no IRQ defined */
+> > +                     if (irq_crit == -ENXIO)
+> > +                             ret = 0;
+> > +                     goto err_crit_int;
+> > +             }
+> > +             ret = devm_request_threaded_irq(&pdev->dev, irq_crit,
+> > +                                             NULL, tsens_critical_irq_thread,
+> > +                                             IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+>
+> You should omit the IRQF_TRIGGER_HIGH here, it will be provided by the
+> system configuration (DT).
+
+Will fix.
+
+>
+> > +                                             dev_name(&pdev->dev), priv);
+> > +             if (ret) {
+> > +                     dev_err(&pdev->dev, "%s: failed to get critical irq\n", __func__);
+> > +                     goto err_crit_int;
+> > +             }
+> > +
+> > +             enable_irq_wake(irq_crit);
+> > +     }
+> > +
+> > +err_crit_int:
+> >       enable_irq_wake(irq);
+> >
+> >  err_put_device:
+> > diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+> [..]
+> > @@ -460,6 +526,8 @@ struct tsens_context {
+> >   * @srot_map: pointer to SROT register address space
+> >   * @tm_offset: deal with old device trees that don't address TM and SROT
+> >   *             address space separately
+> > + * @ul_lock: lock while processing upper/lower threshold interrupts
+>
+> This looks like an unrelated fixup to a previous patch? Please keep it
+> separate.
+
+Will remove.
+
+
+> > + * @crit_lock: lock while processing critical threshold interrupts
+> >   * @rf: array of regmap_fields used to store value of the field
+> >   * @ctx: registers to be saved and restored during suspend/resume
+> >   * @feat: features of the IP
+> > @@ -479,6 +547,9 @@ struct tsens_priv {
+> >       /* lock for upper/lower threshold interrupts */
+> >       spinlock_t                      ul_lock;
+> >
+> > +     /* lock for critical threshold interrupts */
+> > +     spinlock_t                      crit_lock;
+>
+> You're lacking a spin_lock_init() of this.
+
+Will fix.
+
+> > +
+> >       struct regmap_field             *rf[MAX_REGFIELDS];
+> >       struct tsens_context            ctx;
+> >       struct tsens_features           *feat;
+> > @@ -500,6 +571,7 @@ int tsens_enable_irq(struct tsens_priv *priv);
+> >  void tsens_disable_irq(struct tsens_priv *priv);
+> >  int tsens_set_trips(void *_sensor, int low, int high);
+> >  irqreturn_t tsens_irq_thread(int irq, void *data);
+> > +irqreturn_t tsens_critical_irq_thread(int irq, void *data);
+>
+> I think you should squash tsens.c and tsens-common.c into one file, so
+> you don't need to keep adding these extern declarations for every
+> function - separate of this series of course.
+
+Agreed. The separation no longer makes sense.
+
+Thanks for the review.
