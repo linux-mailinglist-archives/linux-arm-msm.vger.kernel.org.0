@@ -2,122 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6ED7414DF97
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jan 2020 18:05:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28D6D14E078
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jan 2020 19:04:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727193AbgA3RFf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jan 2020 12:05:35 -0500
-Received: from mga09.intel.com ([134.134.136.24]:16487 "EHLO mga09.intel.com"
+        id S1727877AbgA3SEG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jan 2020 13:04:06 -0500
+Received: from mail.kernel.org ([198.145.29.99]:37226 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727158AbgA3RFf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jan 2020 12:05:35 -0500
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 30 Jan 2020 09:05:17 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,382,1574150400"; 
-   d="scan'208";a="309759519"
-Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.170]) ([10.237.72.170])
-  by orsmga001.jf.intel.com with ESMTP; 30 Jan 2020 09:05:13 -0800
-Subject: Re: [PATCH v6 0/5] usb: xhci: Add support for Renesas USB controllers
-To:     Vinod Koul <vkoul@kernel.org>,
-        Christian Lamparter <chunkeey@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        USB list <linux-usb@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>
-References: <20200113084005.849071-1-vkoul@kernel.org>
- <20200121064608.GA2841@vkoul-mobl>
- <CAAd0S9Dd7Ygx7TgV3E_A6z29efG7jsE1-xy48_cHotroWuk_ZA@mail.gmail.com>
- <5878067.luYmtVZgP3@debian64> <20200125053237.GG2841@vkoul-mobl>
-From:   Mathias Nyman <mathias.nyman@linux.intel.com>
-Message-ID: <64340358-6682-4ae0-9c06-d72d5a4ff259@linux.intel.com>
-Date:   Thu, 30 Jan 2020 19:07:25 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1727562AbgA3SEG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 30 Jan 2020 13:04:06 -0500
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6771A2083E;
+        Thu, 30 Jan 2020 18:04:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1580407444;
+        bh=5yHwrQFHCXUraRoBoPvM90g2hzTie2ri7LV0EmXvjHs=;
+        h=In-Reply-To:References:Subject:To:From:Cc:Date:From;
+        b=NblkosR0aWZAMoy5Rk+3hxRNUHdZ1BP20Y56+j0OhnsFTQeefp4TuVkKE38/Yzc52
+         KlzCDoC1ltnEUWv6OhLFwXKCojYC7iPYlPHgXK+r4/1rhOEDazG0CH62O/l+hJI1q8
+         /ZDxGLXQuqXzCXlFhBy0OTXGrAH/+Gsz0FMWo4ZQ=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20200125053237.GG2841@vkoul-mobl>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200129152458.v2.1.I4452dc951d7556ede422835268742b25a18b356b@changeid>
+References: <20200129152458.v2.1.I4452dc951d7556ede422835268742b25a18b356b@changeid>
+Subject: Re: [PATCH v2] dt-bindings: clk: qcom: Fix self-validation, split, and clean cruft
+To:     Douglas Anderson <dianders@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     tdas@codeaurora.org, jhugo@codeaurora.org, absahu@codeaurora.org,
+        sivaprak@codeaurora.org, anusharao@codeaurora.org,
+        sricharan@codeaurora.org, Douglas Anderson <dianders@chromium.org>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, linux-clk@vger.kernel.org
+User-Agent: alot/0.8.1
+Date:   Thu, 30 Jan 2020 10:04:03 -0800
+Message-Id: <20200130180404.6771A2083E@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25.1.2020 7.32, Vinod Koul wrote:
->>>>>>
->>>>>> On Mon, Jan 13, 2020 at 12:42 AM Vinod Koul <vkoul@kernel.org> wrote:
->>>>>>>
->>>>>>> This series add support for Renesas USB controllers uPD720201 and uPD720202.
->>>>>>> These require firmware to be loaded and in case devices have ROM those can
->>>>>>> also be programmed if empty. If ROM is programmed, it runs from ROM as well.
->>>>>>>
->>>>>>> This includes two patches from Christian which supported these controllers
->>>>>>> w/o ROM and later my patches for ROM support and multiple firmware versions,
->>>>>>> debugfs hook for rom erase and export of xhci-pci functions.
->>>>>>>
-...
-> 
-> Mathias, any comments on this series..?
-> 
+Quoting Douglas Anderson (2020-01-29 15:25:06)
+> The 'qcom,gcc.yaml' file failed self-validation (dt_binding_check)
+> because it required a property to be either (3 entries big),
+> (3 entries big), or (7 entries big), but not more than one of those
+> things.  That didn't make a ton of sense.
+>=20
+> This patch splits all of the exceptional device trees (AKA those that
+> would have needed if/then/else rules) from qcom,gcc.yaml.  It also
+> cleans up some cruft found while doing that.
+>=20
+> After this lands, this worked for me atop clk-next with just the known
+> error about msm8998:
+>   for f in \
+>     Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml \
+>     Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml \
+>     Documentation/devicetree/bindings/clock/qcom,gcc-msm8996.yaml \
+>     Documentation/devicetree/bindings/clock/qcom,gcc-msm8998.yaml \
+>     Documentation/devicetree/bindings/clock/qcom,gcc-qcs404.yaml \
+>     Documentation/devicetree/bindings/clock/qcom,gcc-sc7180.yaml \
+>     Documentation/devicetree/bindings/clock/qcom,gcc-sm8150.yaml \
+>     Documentation/devicetree/bindings/clock/qcom,gcc.yaml; do \
+>       ARCH=3Darm64 make dtbs_check DT_SCHEMA_FILES=3D$f; \
+>   done
+>=20
+> I then picked this patch atop linux-next (next-20200129) and ran:
+>   # Delete broken yaml:
+>   rm Documentation/devicetree/bindings/pci/intel-gw-pcie.yaml
+>   ARCH=3Darm64 make dt_binding_check | grep 'clock/qcom'
+> ...and that didn't seem to indicate problems.
+>=20
+> Arbitrary decisions made (yell if you want changed):
+> - Left all the older devices (where clocks / clock-names weren't
+>   specified) in a single file.
+> - Didn't make clocks "required" for msm8996 but left them as listed.
+>   This seems a little weird but it matches the old binding.
+>=20
+> Misc cleanups as part of this patch:
+> - sm8150 was claimed to be same set of clocks as sc7180, but driver
+>   and dts appear to say that "bi_tcxo_ao" doesn't exist.  Fixed.
 
-Hi Vinod
+Someone will probably want to change this at some point.=20
 
-Sorry about the delay.
+> - In "apq8064", "#thermal-sensor-cells" was missing the "#".
+> - Got rid of "|" at the end of top description since spacing doesn't
+>   matter.
+> - Changed indentation to consistently 2 spaces (it was 3 in some
+>   places).
+> - Added period at the end of protected-clocks description.
+> - No space before ":".
+> - Updated sc7180/sm8150 example to use the 'qcom,rpmh.h' include.
+> - Updated sc7180/sm8150 example to use larger address/size cells as
+>   per reality.
+> - Updated sc7180/sm8150 example to point to the sleep_clk rather than
+>   <0>.
+> - Made it so that gcc-ipq8074 didn't require #power-domain-cells since
+>   actual dts didn't have it and I got no hits from:
+>     git grep _GDSC include/dt-bindings/clock/qcom,gcc-ipq8074.h
+> - Made it so that gcc-qcs404 didn't require #power-domain-cells since
+>   actual dts didn't have it and I got no hits from:
+>     git grep _GDSC include/dt-bindings/clock/qcom,gcc-qcs404.h
+>=20
+> Noticed, but not done in this patch (volunteers needed):
+> - Add "aud_ref_clk" to sm8150 bindings / dts even though I found a
+>   reference to it in "gcc-sm8150.c".
+> - Fix node name in actual ipq8074 to be "clock-controller" (it's gcc).
+> - Since the example doesn't need phandes to exist, in msm8998 could
+>   just make up places providing some of the clocks currently bogused
+>   out with <0>.
+> - On msm8998 clocks are listed as required but current dts doesn't
+>   have them.
+>=20
+> Fixes: ab91f72e018a ("clk: qcom: gcc-msm8996: Fix parent for CLKREF clock=
+s")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> ---
+>=20
+> Changes in v2:
+> - Clocks are required for msm8998; note that current dts is broken.
+> - Drop description for 'gcc-apq8064' nvmem-cell-names.
+> - Commit message now describes running dt_binding_check differently.
+> - Added Rob's review tag.
+>=20
+>  .../bindings/clock/qcom,gcc-apq8064.yaml      |  79 +++++++
+>  .../bindings/clock/qcom,gcc-ipq8074.yaml      |  48 ++++
+>  .../bindings/clock/qcom,gcc-msm8996.yaml      |  65 ++++++
+>  .../bindings/clock/qcom,gcc-msm8998.yaml      |  90 ++++++++
+>  .../bindings/clock/qcom,gcc-qcs404.yaml       |  48 ++++
+>  .../bindings/clock/qcom,gcc-sc7180.yaml       |  72 ++++++
+>  .../bindings/clock/qcom,gcc-sm8150.yaml       |  69 ++++++
+>  .../devicetree/bindings/clock/qcom,gcc.yaml   | 212 ++----------------
+>  8 files changed, 489 insertions(+), 194 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-apq8=
+064.yaml
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-ipq8=
+074.yaml
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8=
+996.yaml
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8=
+998.yaml
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-qcs4=
+04.yaml
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sc71=
+80.yaml
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm81=
+50.yaml
+>=20
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yam=
+l b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+> new file mode 100644
+> index 000000000000..a386cfd27793
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+> @@ -0,0 +1,79 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/bindings/clock/qcom,gcc-apq8064.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Global Clock & Reset Controller Binding for APQ8064
+> +
+> +maintainers:
+> +  - Stephen Boyd <sboyd@kernel.org>
+> +  - Taniya Das <tdas@codeaurora.org>
+> +
+> +description:
+> +  Qualcomm global clock control module which supports the clocks, resets=
+ and
+> +  power domains on APQ8064.
 
-Maybe a firmware loading driver like this that wraps the xhci pci driver could
-work.
+It would be great if this could also point to the
+include/dt-bindings/clock/qcom,apq8064.h file here. If you don't resend
+this patch then I will try to remember to make this addition to the
+binding docs.
 
-One benefit is that we could skip searching for the right firmware name based
-on PCI ID. Each of these Renesas controllers now have their own pci_device_id
-entry in the pci_ids[] table, and could have the supported firmware name(s)
-in .driver_data. This way we wouldn't need to add the renesas_fw_table[] or
-maybe even the renesas_needs_fw_dl() function in this series.
-
-I realize this can't be easily changed because usb_hcd_pci_probe() takes the
-pci_device_id pointer as an argument, and expects id.driver_data to be a
-HC driver pointer.
-
-So this turns out to be a question for Greg and Alan:
-
-Would it make sense to change usb_hcd_pci_probe() to take a HC driver pointer
-as an argument instead of a pointer to pci_device_id?
-pci_device_id pointer is only used to extract the HC driver handle.
-This way the driver_data could be used for, well, driver data.
-
-Heikki actually suggested this some time ago to me, back then the idea was to
-improve xhci quirks code by using driver_data for quirk flags instead of
-finding and setting them later.
-
-There are a few other opens regarding this series. Mostly because I'm not (yet)
-familiar with all the details, so I'll just just list them here.
-
-- Is it really enough to add the Renesas driver to Makefile before xhci-pci
-   driver to make sure it gets matched and probed based on vendor/device id
-   before xhci-pci driver is matched and probed based on pci class?
-   What if the Renesas driver is a module and xhci-pci compiled in?
-
-- Previously probe didn't return before hcd's were added and everything set up.
-   Now with request_firmware_nowait() probe returns early successfully, and the
-   old xhci_pci_probe() which sets up everything is called later by the request
-   firmware callback. So there could be whole new set of races possible.
-   For example pci remove can be called mid firmware loading, or when the old
-   xhci_pci_probe is still setting up things.
-
-   I understood that a synchronous request_firmware() in probe has its own
-   issues, not sure if there is a good solution for this.
-
-- Before the firmware is written to the controller the firmware version is
-   compared against a hardcoded number in the drivers renesas_fw_table[].
-   This means new firmware versions can't be supported without patching the driver.
-   Is this intentional?
-
-- Mathias
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,gcc-apq8064
+> +
+> +  '#clock-cells':
+> +    const: 1
+> +
+> +  '#reset-cells':
+> +    const: 1
+> +
+> +  '#power-domain-cells':
+> +    const: 1
+> +
+> +  reg:
+> +    maxItems: 1
+> +
