@@ -2,138 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 876FA14E4BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jan 2020 22:19:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC3CA14E4E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jan 2020 22:38:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727191AbgA3VTV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jan 2020 16:19:21 -0500
-Received: from mail-ua1-f68.google.com ([209.85.222.68]:37491 "EHLO
-        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727485AbgA3VTV (ORCPT
+        id S1727566AbgA3ViR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jan 2020 16:38:17 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:40731 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727161AbgA3ViQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jan 2020 16:19:21 -0500
-Received: by mail-ua1-f68.google.com with SMTP id h32so1751609uah.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jan 2020 13:19:20 -0800 (PST)
+        Thu, 30 Jan 2020 16:38:16 -0500
+Received: by mail-pl1-f194.google.com with SMTP id y1so1838804plp.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jan 2020 13:38:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tKb9L35tQcyRyNMGKuAJ6Ea5QSPI1QLK9JjZ13bjSck=;
-        b=XucHTUJGVqo+dvrOVctD99spVTAWc6/H5Ie5rc4c68sI8IZEdOO3i5dcSPJG7jTxwY
-         yYLYXQG/Yetkj67ZkEKuFz/saEg5P6jcccVihpjXHkMTowW/qlFnfCP9iRao5tWTSGR6
-         76NU6QGK2oEpbP+jc2q8UeV0uStilfnAYz9Fs=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=EwmsKAAR9EZeJAmAlDaaBhS2SFQYknZY+oQh1g/QCAE=;
+        b=P4GDqsD+SXwiCy9JUOoM9+wWOVmgS78wb+4/C1tpIyPq02GJCeJnxqEEgOF3HbYOlI
+         BYIwnDL/eJZrdTMcTFAD2q8tKn8VMgc3cJuZ7114rYY2Q4jvFczsJKWtGD8/t3cEmejm
+         KdnUWk62kKdW/GP9ZbtOEViVs9kyEz+QAaIfs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tKb9L35tQcyRyNMGKuAJ6Ea5QSPI1QLK9JjZ13bjSck=;
-        b=cT9rfPE0YA+JyE1wfJS49NhPisSkauCKVjF68TIb/ESZ8jC7z9154hTdpuaMOE3f+N
-         kUuzZFrooJGoj4Frf9T36D8VNEvk2pv9s50ZIfhiYz7f+GCh+pUVAj0fUBb8VQUADCcL
-         8unCJoC1miFcRAOUU7fGYjs8/WyIlpif1Mta7cm5Aa6zRq3+ATqA5RHHKf8PNd6DrSV1
-         rpXtV+PbZ98WhwkT2mR1VWZHXmNCnrYqhtinTwL8niJL8qCDrE2X+hi+hJf43nC88EwC
-         uS5LKtSotAt3MpQLgFEi1v1EMt4V4Tv5+lQ5W3Vm3smkYRvoHdAJx2EBI9vK+O2G43bt
-         UZYA==
-X-Gm-Message-State: APjAAAXNqqOyEJJXzxZhQ0iSbs9wT+jK24p1tBlyxgi5yjDHvTuFKihT
-        McWe7MpZT5mTr1KU8lWa0om4aqCUulU=
-X-Google-Smtp-Source: APXvYqyy1KAPGWsNgkc1V4klrQv5jWFor+40/Ehq1m5m68rwVQc9OmH5fcxJCuPNsggLarNKAe+wtg==
-X-Received: by 2002:ab0:21cb:: with SMTP id u11mr3877253uan.16.1580419159309;
-        Thu, 30 Jan 2020 13:19:19 -0800 (PST)
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com. [209.85.217.48])
-        by smtp.gmail.com with ESMTPSA id o36sm1522547uao.15.2020.01.30.13.19.18
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=EwmsKAAR9EZeJAmAlDaaBhS2SFQYknZY+oQh1g/QCAE=;
+        b=JZzS9apZ+Ei723j/nuiHjhKZ/NzizhDKkLboVv95qXsDdqMxxPsIU84b4qHoIwuTni
+         A64Iwf05V2tzv87OCf8SEbaLAMT159a2RDHPRRpcOV/Y1r6Ye6GFBtw3Kcm4JHuCUMz2
+         PmygLL+/G8LUtSbpjHMI7A1dvb7qWKT4Q2mVsg6q2nz9m5VwujyVBZFsJJJQv0vUjyZt
+         ftxDpvRn9TRkduZV4FsW3Sc7cZhlQk2DRfZ4q9/yhckSmys2qD8FD5o5MBKXcQT4PyDt
+         MA7pO8pmLWgrZSHKQeInZ7n0hiW8zQPqUVwHYVToDnDlouqtp73OykLPKH38HjLlRsqh
+         d0Jw==
+X-Gm-Message-State: APjAAAXPNI5dX4aIHWvwckc4A68I5WHcJ2QQ2JmwAoxoDRiGdyce6eG8
+        xtJc9g5+ldk9sSGof3BvvctJSg==
+X-Google-Smtp-Source: APXvYqxnGY0DZfQrEhOfeE54gwV7TiIH7kOdxAYEFz+gCUTbzfGMuGMB3HDD6dI8E1dq8Lsjv2ux8Q==
+X-Received: by 2002:a17:90a:a409:: with SMTP id y9mr8265577pjp.119.1580420294561;
+        Thu, 30 Jan 2020 13:38:14 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id w8sm7883326pfj.20.2020.01.30.13.38.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jan 2020 13:19:18 -0800 (PST)
-Received: by mail-vs1-f48.google.com with SMTP id 7so3025255vsr.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jan 2020 13:19:18 -0800 (PST)
-X-Received: by 2002:a67:fa1a:: with SMTP id i26mr4644896vsq.169.1580419157458;
- Thu, 30 Jan 2020 13:19:17 -0800 (PST)
+        Thu, 30 Jan 2020 13:38:13 -0800 (PST)
+Date:   Thu, 30 Jan 2020 13:38:12 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Pradeep P V K <ppvk@codeaurora.org>
+Cc:     adrian.hunter@intel.com, georgi.djakov@linaro.org,
+        robh+dt@kernel.org, ulf.hansson@linaro.org,
+        asutoshd@codeaurora.org, vbadigan@codeaurora.org,
+        stummala@codeaurora.org, sayalil@codeaurora.org,
+        rampraka@codeaurora.org, sboyd@kernel.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, linux-mmc-owner@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>
+Subject: Re: [RFC-v2 0/2] Add Support for SDHC bus bandwidth voting
+Message-ID: <20200130213812.GK71044@google.com>
+References: <1573220319-4287-1-git-send-email-ppvk@codeaurora.org>
 MIME-Version: 1.0
-References: <20200124224225.22547-1-dianders@chromium.org> <20200124144154.v2.5.If590c468722d2985cea63adf60c0d2b3098f37d9@changeid>
- <20200129005152.2A3ED205F4@mail.kernel.org>
-In-Reply-To: <20200129005152.2A3ED205F4@mail.kernel.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 30 Jan 2020 13:19:05 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=WKDC-58Muq4-TWLZ3V20eQURm7cELMik1FfjcKBnpr7w@mail.gmail.com>
-Message-ID: <CAD=FV=WKDC-58Muq4-TWLZ3V20eQURm7cELMik1FfjcKBnpr7w@mail.gmail.com>
-Subject: Re: [PATCH v2 05/10] clk: qcom: Fix sc7180 dispcc parent data
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Harigovindan P <harigovi@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>, kalyan_t@codeaurora.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1573220319-4287-1-git-send-email-ppvk@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Pradeep,
 
-On Tue, Jan 28, 2020 at 4:51 PM Stephen Boyd <sboyd@kernel.org> wrote:
->
-> Quoting Douglas Anderson (2020-01-24 14:42:20)
-> >
-> > diff --git a/drivers/clk/qcom/dispcc-sc7180.c b/drivers/clk/qcom/dispcc-sc7180.c
-> > index 30c1e25d3edb..380eca3f847d 100644
-> > --- a/drivers/clk/qcom/dispcc-sc7180.c
-> > +++ b/drivers/clk/qcom/dispcc-sc7180.c
-> > @@ -76,40 +76,32 @@ static struct clk_alpha_pll_postdiv disp_cc_pll0_out_even = {
-> >
-> >  static const struct parent_map disp_cc_parent_map_0[] = {
-> >         { P_BI_TCXO, 0 },
-> > -       { P_CORE_BI_PLL_TEST_SE, 7 },
-> >  };
-> >
-> >  static const struct clk_parent_data disp_cc_parent_data_0[] = {
-> > -       { .fw_name = "bi_tcxo" },
-> > -       { .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-> > +       { .fw_name = "xo" },
->
-> If we can make the binding match the code here and keep saying "bi_tcxo"
-> then that is preferred. That way we don't have to see bi_tcxo changing
-> and qcom folks are happy to keep the weird name. The name in the binding
-> is really up to the binding writer.
+what is the status of this series, do you plan to send v3 soon or
+is it abandonded?
 
-v3 is now out and it still says "bi_tcxo" and generally uses the
-"internal" name.  The big exception is msm8998's gpucc.  It seems like
-a whole bunch of work has been done to move that over to more "purist"
-(AKA logical) names and I didn't want to undo that work.  If we should
-move msm8998 to match everyone else then hopefully someone can do it
-as a followup patch?
+Thanks
 
+Matthias
 
-> >  };
-> >
-> >  static const struct parent_map disp_cc_parent_map_1[] = {
-> >         { P_BI_TCXO, 0 },
-> >         { P_DP_PHY_PLL_LINK_CLK, 1 },
-> >         { P_DP_PHY_PLL_VCO_DIV_CLK, 2 },
-> > -       { P_CORE_BI_PLL_TEST_SE, 7 },
-> >  };
-> [...]
-> > @@ -203,7 +188,7 @@ static struct clk_rcg2 disp_cc_mdss_dp_aux_clk_src = {
-> >         .clkr.hw.init = &(struct clk_init_data){
-> >                 .name = "disp_cc_mdss_dp_aux_clk_src",
-> >                 .parent_data = disp_cc_parent_data_0,
-> > -               .num_parents = 2,
-> > +               .num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
->
-> Can you split this ARRAY_SIZE() stuff to another patch? That will keep
-> focus on what's relevant here without distracting from the patch
-> contents. I know that parent array size is changing, but I don't want it
-> to be changing this line too.
-
-It has been done.
-
--Doug
+On Fri, Nov 08, 2019 at 07:08:37PM +0530, Pradeep P V K wrote:
+> Vote for the MSM bus bandwidth required by SDHC driver
+> based on the clock speed and bus width of the card.
+> Otherwise, the system clocks may run at minimum clock
+> speed and thus affecting the performance.
+> 
+> Adapt to the new ICB framework for bus bandwidth voting.
+> 
+> This requires the source/destination port ids.
+> Also this requires a tuple of values.
+> 
+> The tuple is for two different paths - from SDHC master
+> to BIMC slave. The other is from CPU master to SDHC slave.
+> This tuple consists of the average and peak bandwidth.
+> 
+> This change is based on Georgi Djakov [RFC]
+> (https://lkml.org/lkml/2018/10/11/499)
+> 
+> ---
+> changed since v1:
+> * Addressed all the Review comments.
+> * Minor code rebasing.
+> 
+> Pradeep P V K (2):
+>   dt-bindings: mmc: sdhci-msm: Add Bus BW vote supported strings
+>   mmc: sdhci-msm: Add support for bus bandwidth voting
+> 
+>  .../devicetree/bindings/mmc/sdhci-msm.txt          |  32 ++
+>  drivers/mmc/host/sdhci-msm.c                       | 366 ++++++++++++++++++++-
+>  2 files changed, 395 insertions(+), 3 deletions(-)
+> 
+> -- 
+> 1.9.1
+> 
