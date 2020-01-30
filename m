@@ -2,46 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F38814E47F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jan 2020 22:13:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC16D14E49F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jan 2020 22:13:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727878AbgA3VNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jan 2020 16:13:01 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:43172 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727874AbgA3VNA (ORCPT
+        id S1727860AbgA3VNj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jan 2020 16:13:39 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:35204 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727869AbgA3VNA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 30 Jan 2020 16:13:00 -0500
-Received: by mail-pl1-f193.google.com with SMTP id p11so1816821plq.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jan 2020 13:12:59 -0800 (PST)
+Received: by mail-pl1-f194.google.com with SMTP id g6so1829476plt.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jan 2020 13:13:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hdWC3RQmqbqeEYneGWU8AA2fWnLGYvTK7uGX6EESI4I=;
-        b=dy/9ETdzg2IbK5MHT6jzlfGoU65H981Bgza6oumaV2dvTW7WTD77C+7h450M+iIWG1
-         frkj33KT7yrQ36Ltw7P3SKdZOsWRKWFowFU/X5e7C9Lk3ymX/hw31CTNdHl3u+JD80Kk
-         fq/0dG4QyBkNXq4+c3RN+kXkwoIZhHvdlRtSA=
+        bh=u0d18Tiuc91wq0r+MI9js+qIt5jAuoFT35gTcYK6AC4=;
+        b=klIlRQrEupGrGJaAibFlNRXGEU7pN3PEjN1xY78etxsnqd1dBV7gc6YiaviQykxEdF
+         ysJqNmaWiu1wXQhyiujlYkHDnH51ZWAE6MF1vFwS3I0V+VUEzXFv7rtUBjewDYfHKU1h
+         1TeVPKXD8wMWBFYZSy2SlgTdHFsDDjZzzmp3Y=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hdWC3RQmqbqeEYneGWU8AA2fWnLGYvTK7uGX6EESI4I=;
-        b=QOK9iSvmTKNmbp76NtRG1pWq258/7jvFf/4sq37j1C4pI2w8jktAnonujUunqV03cv
-         KcoWxGJIxWYQcLOkhShFMkDuScBLUNaNOCZRBzvDnE8P62D2qCRCmfq/AKvOouapXFif
-         dsHlxSu2LaptnL4JfQn5F0iMn2Gs8KyUQYUh+SnYmZxR+4OUUkhSZPkSjIpq3rYbIMSp
-         RoYDfonKmT2OYHENlmUkMR8KV0YRXfmF9FYzRcdWvDWYeggAsf3ZIftnTSkDw42RKBHg
-         p6jCQEnT4yyn6qs0aGiyp7uDEvoCefOpB8Dwyxqs7KAOWTyxXprWkxBNIO+JWD/iJI3N
-         z6Mw==
-X-Gm-Message-State: APjAAAU2cJvty/35cMSoex8y6otv+GnN8fxn7abw2wupjfk3hBV52ed/
-        mohNRmXgCXQFi3Jy42EWMyXR/w==
-X-Google-Smtp-Source: APXvYqzgj3qg6+ijNWRHM27hvrG2XLl3NbrODk5PrDiJH+sgQRp3aGWygTi6vlVx1xdxxUa8jCdRkA==
-X-Received: by 2002:a17:90a:9c1:: with SMTP id 59mr8088935pjo.65.1580418778610;
-        Thu, 30 Jan 2020 13:12:58 -0800 (PST)
+        bh=u0d18Tiuc91wq0r+MI9js+qIt5jAuoFT35gTcYK6AC4=;
+        b=KFYq9dNwaNU5v4h2kxACkEfZSx4yzUAjXBGpM5bUn/2imVaqay/YU69z7JB/xxKqcB
+         KKAaVe1Jezf/ZsvLpMWzsc3x+RYvZYy8nJm09Phht5xvlx3xwsmGFc435fV7FVY1EH9m
+         XzoZ9o/a455okbDmHUEykcAr+3XrXKdFs1Kn2ZH7Tv1Zb83Cpw6sCVJZRNy+t2cWL4OD
+         fnkQN2d4fUYZ4Y+36wt6GoCa0VeBjR9eibdwcKqTzZ9mBy8Fu+knLGsMcEZTcD957MB7
+         gnA7GJIMtORZno6adX3qwZuk8IBoVDoyCQ8rZotNwfbC73TQQZ+6uxmKaPUkqb5Mig5C
+         dL1Q==
+X-Gm-Message-State: APjAAAV/vvPyoLbBRB0ja+VNHYrxWWAUX9uIcAtXNSmjOFkx4uwqOyov
+        N9TD7BV7ndJqV0d7HnTLrT2N9Q==
+X-Google-Smtp-Source: APXvYqygb69oTlZosR/4ds61je0W4fNhc+VglR47ec88QD802ZBNusUvY9xwHsgh2q0Dk9KdFc80dA==
+X-Received: by 2002:a17:90a:3a86:: with SMTP id b6mr8102846pjc.96.1580418779627;
+        Thu, 30 Jan 2020 13:12:59 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id ci5sm4343871pjb.5.2020.01.30.13.12.57
+        by smtp.gmail.com with ESMTPSA id ci5sm4343871pjb.5.2020.01.30.13.12.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jan 2020 13:12:58 -0800 (PST)
+        Thu, 30 Jan 2020 13:12:59 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -53,10 +53,12 @@ Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
         kalyan_t@codeaurora.org, Mark Rutland <mark.rutland@arm.com>,
         linux-clk@vger.kernel.org, hoegsberg@chromium.org,
         Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-Subject: [PATCH v3 08/15] arm64: dts: qcom: sdm845: Add missing clocks / fix names on the gpucc
-Date:   Thu, 30 Jan 2020 13:12:24 -0800
-Message-Id: <20200130131220.v3.8.If8596faf02408cef4bb9f52296b911eb9ba49287@changeid>
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v3 09/15] clk: qcom: Get rid of the test clock for gpucc-sc7180
+Date:   Thu, 30 Jan 2020 13:12:25 -0800
+Message-Id: <20200130131220.v3.9.I6d5276b768f6593053be036a3e70cce298d39f0c@changeid>
 X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
 In-Reply-To: <20200130211231.224656-1-dianders@chromium.org>
 References: <20200130211231.224656-1-dianders@chromium.org>
@@ -67,49 +69,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We're transitioning over to requiring the Qualcomm GPU Clock
-Controller to specify all the input clocks.  Let's add them for
-sdm845.
+The test clock isn't in the bindings and apparently it's not used by
+anyone upstream.  Remove it.
 
-As part of this we've decided that the xo clock should be referred to
-in the bindings as "bi_tcxo".  Change the dts.
-
-NOTE: Until the Linux driver for sdm845's gpucc is updated, these
-clocks will not actually be used in Linux.  It will continue to use
-global clock names to match things up.  Of course, Linux didn't use
-the old "xo" clock anyway.
-
+Suggested-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
 
 Changes in v3:
-- Unlike in v2, use internal name instead of purist name.
+- Patch ("clk: qcom: Get rid of the test...gpucc-sc7180") split out for v3.
 
-Changes in v2:
-- Patch ("arm64: dts: qcom: sdm845: Add...gpucc") new for v2.
+Changes in v2: None
 
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gpucc-sc7180.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 0985813fee50..35d7fcbda43c 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -1903,8 +1903,12 @@ gpucc: clock-controller@5090000 {
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
--			clocks = <&rpmhcc RPMH_CXO_CLK>;
--			clock-names = "xo";
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
-+				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
-+			clock-names = "bi_tcxo",
-+				      "gcc_gpu_gpll0_clk_src",
-+				      "gcc_gpu_gpll0_div_clk_src";
- 		};
+diff --git a/drivers/clk/qcom/gpucc-sc7180.c b/drivers/clk/qcom/gpucc-sc7180.c
+index ec61194cceaf..c88f00125775 100644
+--- a/drivers/clk/qcom/gpucc-sc7180.c
++++ b/drivers/clk/qcom/gpucc-sc7180.c
+@@ -60,7 +60,6 @@ static const struct parent_map gpu_cc_parent_map_0[] = {
+ 	{ P_GPU_CC_PLL1_OUT_MAIN, 3 },
+ 	{ P_GPLL0_OUT_MAIN, 5 },
+ 	{ P_GPLL0_OUT_MAIN_DIV, 6 },
+-	{ P_CORE_BI_PLL_TEST_SE, 7 },
+ };
  
- 		stm@6002000 {
+ static const struct clk_parent_data gpu_cc_parent_data_0[] = {
+@@ -68,7 +67,6 @@ static const struct clk_parent_data gpu_cc_parent_data_0[] = {
+ 	{ .hw = &gpu_cc_pll1.clkr.hw },
+ 	{ .fw_name = "gcc_gpu_gpll0_clk_src" },
+ 	{ .fw_name = "gcc_gpu_gpll0_div_clk_src" },
+-	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
+ };
+ 
+ static const struct freq_tbl ftbl_gpu_cc_gmu_clk_src[] = {
+@@ -86,7 +84,7 @@ static struct clk_rcg2 gpu_cc_gmu_clk_src = {
+ 	.clkr.hw.init = &(struct clk_init_data){
+ 		.name = "gpu_cc_gmu_clk_src",
+ 		.parent_data = gpu_cc_parent_data_0,
+-		.num_parents = 5,
++		.num_parents = 4,
+ 		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_rcg2_shared_ops,
+ 	},
 -- 
 2.25.0.341.g760bfbb309-goog
 
