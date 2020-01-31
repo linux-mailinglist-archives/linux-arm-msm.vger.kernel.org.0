@@ -2,96 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CE07714E64B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 01:03:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D7A614E6C7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 02:06:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727686AbgAaADA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jan 2020 19:03:00 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42810 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727646AbgAaAC7 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jan 2020 19:02:59 -0500
-Received: by mail-wr1-f67.google.com with SMTP id k11so6385173wrd.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jan 2020 16:02:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:in-reply-to:references:date:message-id
-         :mime-version;
-        bh=uvb7UjEoJ5QUo55mMIeV2X7P8y9RLioRyMnghzSVrBk=;
-        b=CxlznEqw9in4pGeFI7tiEkzvUBjjWH4ADeBPph8G4+G9QoHFQIJpjSfkOWvoW8WmES
-         bO53NJg/itV1GXV6G1yDZaoJifzMxdIbQ0wmIZIrxg+0qfokN/yScPANJDpTfiYXHCP0
-         VfNqWMyA5ZH6AI7fP9FDpdvUrFP1BlPUqjKbnX7z4kOScVC9S2PYgtG0SZdLk1zt4mlZ
-         qbbFtJUU7oesuCNJ1/a/WEQhVtZmiHwYOpaZQyxhOMQQvZPIOyUem+cP6jJRZVfZ7pqa
-         v8E1I660ZqgFJlEUdtNXhUzypivyNkoXWANhh9KC2NBUAXZeuegEtQCG+n3497o2pVyA
-         iIWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
-         :message-id:mime-version;
-        bh=uvb7UjEoJ5QUo55mMIeV2X7P8y9RLioRyMnghzSVrBk=;
-        b=SLSDHWM8sRY/KRcwjv+WpOb2Jxslqk1s3yKX/2YY0D6YAKDQlLUcvx04SQfs5FGI2l
-         6AOpbL33Z3yzMOZUGPzxXvYAFRROxlF8mV890Rzixlw1tnebtl/0Q237Fojx+TutUIuB
-         PAhVDUIVhjoyc8NJl998u57OGu3fsGdIP6SNmGfNzbfJkynYX3vG5h7W2L9bms4yxpRn
-         oQJ7pBS3gl+Ubt4Ccpr6P5WQ+ey/3Ln5DYHJfwR4AJXMncFOM7gzgJQpk5UlFdSdG9/Q
-         Pgq5dpkZaHLdddgTTgAJxFbX76/MAPv1EtbLVN3ILzx0mwIqU2rtxOXAw0VxBYkmQVBp
-         Q2mA==
-X-Gm-Message-State: APjAAAW601ID37F+GYUs92D6ObN6eKRdSaXazAk0mPsVNXYgvXE7x+6p
-        2Qp/kSTM3WLmwuij7sYSBJfb4g==
-X-Google-Smtp-Source: APXvYqwPQPgXUHuMLzMgsVSYsqPcB8oArAwwWFAqxt/Aw9EdJlzgNWxKIbSrHog58z2yHs7ryG8BfQ==
-X-Received: by 2002:a5d:6b03:: with SMTP id v3mr7812645wrw.289.1580428976708;
-        Thu, 30 Jan 2020 16:02:56 -0800 (PST)
-Received: from localhost (c-71-197-186-152.hsd1.wa.comcast.net. [71.197.186.152])
-        by smtp.gmail.com with ESMTPSA id g2sm9292932wrw.76.2020.01.30.16.02.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 30 Jan 2020 16:02:56 -0800 (PST)
-From:   Kevin Hilman <khilman@baylibre.com>
-To:     Nathan Chancellor <natechancellor@gmail.com>,
-        Niklas Cassel <niklas.cassel@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>, Nishanth Menon <nm@ti.com>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, clang-built-linux@googlegroups.com,
-        Nathan Chancellor <natechancellor@gmail.com>
-Subject: Re: [PATCH] power: avs: qcom-cpr: Avoid clang -Wsometimes-uninitialized in cpr_scale
-In-Reply-To: <20200130014130.51313-1-natechancellor@gmail.com>
-References: <20200130014130.51313-1-natechancellor@gmail.com>
-Date:   Thu, 30 Jan 2020 16:02:53 -0800
-Message-ID: <7hk158xzki.fsf@baylibre.com>
+        id S1727677AbgAaBGz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jan 2020 20:06:55 -0500
+Received: from mail.kernel.org ([198.145.29.99]:37398 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727648AbgAaBGz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 30 Jan 2020 20:06:55 -0500
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3336320678;
+        Fri, 31 Jan 2020 01:06:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1580432814;
+        bh=jsJEjfvvosoNzF+1nP8nbj7092fwdtBhOz2X+N5rSYc=;
+        h=In-Reply-To:References:Subject:To:From:Cc:Date:From;
+        b=EAVQXk1uO5WynQ7Wtd1arSl2mIu7+KTMUvTyGUtP+CBTahefWsrjBU/w5+WVG5pbJ
+         6oeJf0VKlrt/bX9mb5sNu4yXZTeLRu/m8+rnihFdYrPqyT+y1zbbhNQrvRbDOAHQvT
+         kM55lR9ogO4s8yk5mrgvNveWr+uooWYXRl/S1ipM=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20191209195749.868-1-tiny.windzz@gmail.com>
+References: <20191209195749.868-1-tiny.windzz@gmail.com>
+Subject: Re: [PATCH 01/17] clk: sunxi: sunxi-ng: convert to devm_platform_ioremap_resource
+To:     Eugeniy.Paltsev@synopsys.com, Yangtao Li <tiny.windzz@gmail.com>,
+        afaerber@suse.de, agross@kernel.org, aisheng.dong@nxp.com,
+        allison@lohutok.net, chunhui.dai@mediatek.com,
+        cw00.choi@samsung.com, daniel.baluta@nxp.com, dinguyen@kernel.org,
+        emilio@elopez.com.ar, festevam@gmail.com, geert+renesas@glider.be,
+        gregkh@linuxfoundation.org, heiko@sntech.de, jcmvbkbc@gmail.com,
+        john@phrozen.org, jonathanh@nvidia.com, kernel@pengutronix.de,
+        kgene@kernel.org, krzk@kernel.org, kstewart@linuxfoundation.org,
+        linux-imx@nxp.com, manivannan.sadhasivam@linaro.org,
+        matthias.bgg@gmail.com, miquel.raynal@bootlin.com,
+        mripard@kernel.org, mturquette@baylibre.com, nsekhar@ti.com,
+        palmer@sifive.com, paul.walmsley@sifive.com,
+        pdeschrijver@nvidia.com, pgaikwad@nvidia.com, rfontana@redhat.com,
+        robh@kernel.org, s.hauer@pengutronix.de, s.nawrocki@samsung.com,
+        shawnguo@kernel.org, swinslow@gmail.com, t-kristo@ti.com,
+        tglx@linutronix.de, thierry.reding@gmail.com,
+        tomasz.figa@gmail.com, wangyan.wang@mediatek.com,
+        weiyongjun1@huawei.com, wens@csie.org
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-tegra@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        Yangtao Li <tiny.windzz@gmail.com>
+User-Agent: alot/0.8.1
+Date:   Thu, 30 Jan 2020 17:06:53 -0800
+Message-Id: <20200131010654.3336320678@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Nathan Chancellor <natechancellor@gmail.com> writes:
+Quoting Yangtao Li (2019-12-09 11:57:33)
+> Use devm_platform_ioremap_resource() to simplify code.
+>=20
+> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
 
-> Clang warns (trimmed for brevity):
->
-> ../drivers/power/avs/qcom-cpr.c:570:13: warning: variable 'reg_mask' is
-> used uninitialized whenever 'if' condition is false
-> [-Wsometimes-uninitialized]
->
-> ../drivers/power/avs/qcom-cpr.c:520:13: warning: variable 'new_uV' is
-> used uninitialized whenever 'if' condition is false
-> [-Wsometimes-uninitialized]
->
-> Due to the fact that Clang's static analysis happens before any
-> optimization passes are taken into account, it cannot see that both
-> branches in the if statement must be taken because dir cannot be
-> something other than UP or DOWN due to the check at the top of this
-> function. Change the else if condition to else to fix this false
-> positive.
->
-> Fixes: bf6910abf548 ("power: avs: Add support for CPR (Core Power Reduction)")
-> Link: https://github.com/ClangBuiltLinux/linux/issues/840
-> Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Please add a cover letter, resend this series picking up any acks and
+dropping any patches that were rejected by maintainers of the drivers.
+There was significant discussion on one patch that was rejected, so I'll
+only pick up patches for the next cycle that are acked/reviewed-by
+relevant folks.
 
-Acked-by: Kevin Hilman <khilman@baylibre.com>
-
-Rafael, feel free to queue directly.
-
-Kevin
