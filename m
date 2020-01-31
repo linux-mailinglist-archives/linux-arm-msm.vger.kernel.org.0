@@ -2,128 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A58914F2F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 20:51:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6422E14F384
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 22:01:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726065AbgAaTvg convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Jan 2020 14:51:36 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:44735 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726055AbgAaTvg (ORCPT
+        id S1726109AbgAaVBo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Jan 2020 16:01:44 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:15748 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726105AbgAaVBo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Jan 2020 14:51:36 -0500
-Received: from marcel-macpro.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id ECE1CCECE8;
-        Fri, 31 Jan 2020 21:00:54 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Re: [PATCH v2 1/2] Bluetooth: hci_qca: Enable clocks required for BT
- SOC
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1580456335-7317-1-git-send-email-gubbaven@codeaurora.org>
-Date:   Fri, 31 Jan 2020 20:51:33 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        robh@kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        tientzu@chromium.org, seanpaul@chromium.org, rjliao@codeaurora.org,
-        yshavit@google.com
-Content-Transfer-Encoding: 8BIT
-Message-Id: <543135AD-707A-4945-A67D-8912D1C35EED@holtmann.org>
-References: <1580456335-7317-1-git-send-email-gubbaven@codeaurora.org>
-To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-X-Mailer: Apple Mail (2.3608.60.0.2.5)
+        Fri, 31 Jan 2020 16:01:44 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1580504503; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=2o/MGv2EXSkD4CZhOwtBopRl7G1ZLM64R+tPgX8YM3c=;
+ b=uIgml6b3zmlfYsJzhG7f765X/sjEKSAYh2sbdCRtNll99+h3yspuQe8wAxPz0Fs8RtdO9Zz0
+ 1es960OejvN2MwG+bO7Re1NKqwJPyuTQx3p2G75XIg78o2t29jWOTEM01GLLnqHMnlGjuCjO
+ fnUnX0KDVlgon/0FOpxjR9N1fb0=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e3495b3.7fc5a960bbc8-smtp-out-n02;
+ Fri, 31 Jan 2020 21:01:39 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3223CC4479F; Fri, 31 Jan 2020 21:01:39 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5CFE2C433CB;
+        Fri, 31 Jan 2020 21:01:38 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 31 Jan 2020 13:01:38 -0800
+From:   abhinavk@codeaurora.org
+To:     dri-devel@lists.freedesktop.org
+Cc:     adelva@google.com, linux-arm-msm@vger.kernel.org,
+        swboyd@chromium.org, seanpaul@chromium.org,
+        aravindh@codeaurora.org, Uma Shankar <uma.shankar@intel.com>
+Subject: Re: [PATCH v2] drm: Parse Colorimetry data block from EDID
+In-Reply-To: <1580168406-23808-1-git-send-email-abhinavk@codeaurora.org>
+References: <1580168406-23808-1-git-send-email-abhinavk@codeaurora.org>
+Message-ID: <90542e32913e315bae02865e1d18a622@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Venkata,
+Hi Steven
 
-> Instead of relying on other subsytem to turn ON clocks
-> required for BT SoC to operate, voting them from the driver.
+Any further comments on this change?
+
+Thanks
+
+Abhinav
+On 2020-01-27 15:40, Abhinav Kumar wrote:
+> From: Uma Shankar <uma.shankar@intel.com>
 > 
-> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+> CEA 861.3 spec adds colorimetry data block for HDMI.
+> Parsing the block to get the colorimetry data from
+> panel.
+> 
+> This was posted by Uma Shankar at
+> https://patchwork.kernel.org/patch/10861327/
+> 
+> Modified by Abhinav Kumar:
+> - Use macros to distinguish the bit fields for clarity
+> 
+> Changes in v2:
+> - Use the drm_edid.h macros in drm_edid.c (Stephen Boyd)
+> 
+> Signed-off-by: Uma Shankar <uma.shankar@intel.com>
+> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
 > ---
-> v2:
->   * addressed forward declarations
->   * updated with devm_clk_get_optional()
+>  drivers/gpu/drm/drm_edid.c  | 45 
+> +++++++++++++++++++++++++++++++++++++++++++++
+>  include/drm/drm_connector.h |  3 +++
+>  include/drm/drm_edid.h      | 14 ++++++++++++++
+>  3 files changed, 62 insertions(+)
 > 
-> ---
-> drivers/bluetooth/hci_qca.c | 25 +++++++++++++++++++++++++
-> 1 file changed, 25 insertions(+)
+> diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+> index 99769d6..9a82fb8 100644
+> --- a/drivers/gpu/drm/drm_edid.c
+> +++ b/drivers/gpu/drm/drm_edid.c
+> @@ -3136,6 +3136,7 @@ static int drm_cvt_modes(struct drm_connector 
+> *connector,
+>  #define VIDEO_BLOCK     0x02
+>  #define VENDOR_BLOCK    0x03
+>  #define SPEAKER_BLOCK	0x04
+> +#define COLORIMETRY_DATA_BLOCK		0x5
+>  #define HDR_STATIC_METADATA_BLOCK	0x6
+>  #define USE_EXTENDED_TAG 0x07
+>  #define EXT_VIDEO_CAPABILITY_BLOCK 0x00
+> @@ -4199,6 +4200,48 @@ static void
+> fixup_detailed_cea_mode_clock(struct drm_display_mode *mode)
+>  	mode->clock = clock;
+>  }
 > 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index d6e0c99..73706f3 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1738,6 +1738,15 @@ static int qca_power_off(struct hci_dev *hdev)
-> 	return 0;
-> }
-> 
-> +static int qca_setup_clock(struct clk *clk, bool enable)
+> +static bool cea_db_is_hdmi_colorimetry_data_block(const u8 *db)
 > +{
-> +	if (enable)
-> +		return clk_prepare_enable(clk);
+> +	if (cea_db_tag(db) != USE_EXTENDED_TAG)
+> +		return false;
 > +
-> +	clk_disable_unprepare(clk);
-> +	return 0;
+> +	if (db[1] != COLORIMETRY_DATA_BLOCK)
+> +		return false;
+> +
+> +	if (cea_db_payload_len(db) < 2)
+> +		return false;
+> +
+> +	return true;
 > +}
 > +
-
-this function is pointless and it just complicated the code.
-
-> static int qca_regulator_enable(struct qca_serdev *qcadev)
-> {
-> 	struct qca_power *power = qcadev->bt_power;
-> @@ -1755,6 +1764,13 @@ static int qca_regulator_enable(struct qca_serdev *qcadev)
-> 
-> 	power->vregs_on = true;
-> 
-> +	ret = qca_setup_clock(qcadev->susclk, true);
-
-	ret = clk_prepare_enable(qcadev->susclk);
-
-> +	if (ret) {
-> +		/* Turn off regulators to overcome power leakage */
-> +		qca_regulator_disable(qcadev);
-> +		return ret;
-> +	}
+> +static void
+> +drm_parse_colorimetry_data_block(struct drm_connector *connector, 
+> const u8 *db)
+> +{
+> +	struct drm_hdmi_info *info = &connector->display_info.hdmi;
 > +
-> 	return 0;
-> }
-> 
-> @@ -1773,6 +1789,9 @@ static void qca_regulator_disable(struct qca_serdev *qcadev)
-> 
-> 	regulator_bulk_disable(power->num_vregs, power->vreg_bulk);
-> 	power->vregs_on = false;
+> +	if (db[2] & DRM_EDID_CLRMETRY_xvYCC_601)
+> +		info->colorimetry |= DRM_EDID_CLRMETRY_xvYCC_601;
+> +	if (db[2] & DRM_EDID_CLRMETRY_xvYCC_709)
+> +		info->colorimetry |= DRM_EDID_CLRMETRY_xvYCC_709;
+> +	if (db[2] & DRM_EDID_CLRMETRY_sYCC_601)
+> +		info->colorimetry |= DRM_EDID_CLRMETRY_sYCC_601;
+> +	if (db[2] & DRM_EDID_CLRMETRY_ADBYCC_601)
+> +		info->colorimetry |= DRM_EDID_CLRMETRY_ADBYCC_601;
+> +	if (db[2] & DRM_EDID_CLRMETRY_ADB_RGB)
+> +		info->colorimetry |= DRM_EDID_CLRMETRY_ADB_RGB;
+> +	if (db[2] & DRM_EDID_CLRMETRY_BT2020_CYCC)
+> +		info->colorimetry |= DRM_EDID_CLRMETRY_BT2020_CYCC;
+> +	if (db[2] & DRM_EDID_CLRMETRY_BT2020_YCC)
+> +		info->colorimetry |= DRM_EDID_CLRMETRY_BT2020_YCC;
+> +	if (db[2] & DRM_EDID_CLRMETRY_BT2020_RGB)
+> +		info->colorimetry |= DRM_EDID_CLRMETRY_BT2020_RGB;
+> +	/* Byte 4 Bit 7: DCI-P3 */
+> +	if (db[3] & BIT(7))
+> +		info->colorimetry |= DRM_EDID_CLRMETRY_DCI_P3;
 > +
-> +	if (qcadev->susclk)
-> +		qca_setup_clock(qcadev->susclk, false);
-
-		clk_disable_unprepare(qcadev->susclk);
-
-> }
-> 
-> static int qca_init_regulators(struct qca_power *qca,
-> @@ -1839,6 +1858,12 @@ static int qca_serdev_probe(struct serdev_device *serdev)
-> 
-> 		qcadev->bt_power->vregs_on = false;
-> 
-> +		qcadev->susclk = devm_clk_get_optional(&serdev->dev, NULL);
-> +		if (IS_ERR(qcadev->susclk)) {
-> +			dev_err(&serdev->dev, "failed to acquire clk\n");
-> +			return PTR_ERR(qcadev->susclk);
-> +		}
+> +	DRM_DEBUG_KMS("Supported Colorimetry 0x%x\n", info->colorimetry);
+> +}
 > +
-> 		device_property_read_u32(&serdev->dev, "max-speed",
-> 					 &qcadev->oper_speed);
-> 		if (!qcadev->oper_speed)
-
-Regards
-
-Marcel
-
+>  static bool cea_db_is_hdmi_hdr_metadata_block(const u8 *db)
+>  {
+>  	if (cea_db_tag(db) != USE_EXTENDED_TAG)
+> @@ -4877,6 +4920,8 @@ static void drm_parse_cea_ext(struct
+> drm_connector *connector,
+>  			drm_parse_vcdb(connector, db);
+>  		if (cea_db_is_hdmi_hdr_metadata_block(db))
+>  			drm_parse_hdr_metadata_block(connector, db);
+> +		if (cea_db_is_hdmi_colorimetry_data_block(db))
+> +			drm_parse_colorimetry_data_block(connector, db);
+>  	}
+>  }
+> 
+> diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
+> index 2219109..a996ee3 100644
+> --- a/include/drm/drm_connector.h
+> +++ b/include/drm/drm_connector.h
+> @@ -207,6 +207,9 @@ struct drm_hdmi_info {
+> 
+>  	/** @y420_dc_modes: bitmap of deep color support index */
+>  	u8 y420_dc_modes;
+> +
+> +	/* @colorimetry: bitmap of supported colorimetry modes */
+> +	u16 colorimetry;
+>  };
+> 
+>  /**
+> diff --git a/include/drm/drm_edid.h b/include/drm/drm_edid.h
+> index f0b03d4..4f22f22 100644
+> --- a/include/drm/drm_edid.h
+> +++ b/include/drm/drm_edid.h
+> @@ -224,6 +224,20 @@ struct detailed_timing {
+>  				    DRM_EDID_YCBCR420_DC_36 | \
+>  				    DRM_EDID_YCBCR420_DC_30)
+> 
+> +/*
+> + * Supported Colorimetry from colorimetry data block
+> + * as per CEA 861-G spec
+> + */
+> +#define DRM_EDID_CLRMETRY_xvYCC_601   (1 << 0)
+> +#define DRM_EDID_CLRMETRY_xvYCC_709   (1 << 1)
+> +#define DRM_EDID_CLRMETRY_sYCC_601    (1 << 2)
+> +#define DRM_EDID_CLRMETRY_ADBYCC_601  (1 << 3)
+> +#define DRM_EDID_CLRMETRY_ADB_RGB     (1 << 4)
+> +#define DRM_EDID_CLRMETRY_BT2020_CYCC (1 << 5)
+> +#define DRM_EDID_CLRMETRY_BT2020_YCC  (1 << 6)
+> +#define DRM_EDID_CLRMETRY_BT2020_RGB  (1 << 7)
+> +#define DRM_EDID_CLRMETRY_DCI_P3      (1 << 15)
+> +
+>  /* ELD Header Block */
+>  #define DRM_ELD_HEADER_BLOCK_SIZE	4
