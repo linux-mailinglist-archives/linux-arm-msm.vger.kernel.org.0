@@ -2,125 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A934914EDC1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 14:46:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 556E714EDD6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 14:50:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728686AbgAaNq1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Jan 2020 08:46:27 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:39870 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728659AbgAaNq1 (ORCPT
+        id S1728683AbgAaNuT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Jan 2020 08:50:19 -0500
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:55032 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728500AbgAaNuT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Jan 2020 08:46:27 -0500
-Received: by mail-lj1-f196.google.com with SMTP id o15so1610897ljg.6;
-        Fri, 31 Jan 2020 05:46:26 -0800 (PST)
+        Fri, 31 Jan 2020 08:50:19 -0500
+Received: by mail-pj1-f65.google.com with SMTP id dw13so2849774pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2020 05:50:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:in-reply-to:references:date:message-id
-         :mime-version;
-        bh=RtkEzH/NPfYvzoCEvzwW4b1vZP1InjqaI4R/KSdo5KQ=;
-        b=fJFfy2OOqxLRHf3Ca3QBpFs9KusTaAadFCN5plMI7Cy+oTqL9mEK2iSVEH2zyna+zN
-         Qj5hVhJsi7lx9Fq9mFo7XDD/7aHKDaF2EvZBPsFPawHYiRecw5fxzaS0iL58ne4TIHD/
-         sEwDSy2g0W4B1YzyfWf7uox3YN7Cze0xhZxM75/V0NfyKnJ2NZJxesqvOy/et0APYdum
-         uhbwSFbJHo19lRo6MCeD4KUAiMNkjEHR0QEePfse/gP9qfb2WWCFb694UlJhXj5+yU/Y
-         ePoBxOIVa8KTW8+TB1tj3gwGeByx91Ko+5dig4g9xMLknkt9dFrXZ0itfIHvArct+4eS
-         QRWw==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=juqgOO2FL60raSBrCGSqEUGB0rKVEh3eeYHpqpHB/eU=;
+        b=s5ARJ9CROh+uPH+LpnaPq04a3AKX183oEk1aHAqV044nv5oq4gkZP3SJPiaQu6FKEV
+         RY95MNXwujsxWQ1Hs3pUSWPGtKLJj2OPxWlKcMLU36fkCTlxloTvPFuSfz1TZLTYKGfg
+         Uo7TWRmJIHs8dNdw0NA6rcjroWvpgUptSbY2E9DKQ0BpJ5aN5R6SxMQ0UaFIL+xBbOSb
+         PZmr+r5xlURUYBhI3ykB/bWWtRqljNdoC/ACSf8uXvcqJvSoyZ6yAPg7kcpS/amwyB6e
+         I9xvGciuu/O4+ZVmVmwwDuC5vgnZ8Nkwx/+HdDv+12/UCr/wucVqj95fH7BdN9sCW6GH
+         Es0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
-         :date:message-id:mime-version;
-        bh=RtkEzH/NPfYvzoCEvzwW4b1vZP1InjqaI4R/KSdo5KQ=;
-        b=qfrFmwKc2VyPxWHoSSeuadOl3eTGCGjuoHwAtMxVbjA37V9sK8NHeglkYjHlF372kT
-         f3q5VWCAhWz7GWGBTG15YIk4hVWhmF3oPzAVpEUV7dqP43Vb9KNQgNLgf76w6GVwzDwh
-         moCJPAaDk0U6Wl+KKqIUezCzE5nZZ+XMsd/B7/eAYDEkR5pBLhGlr5tOYl2ezhYmOx8/
-         yHdHqG1d+V43CEc6gz6XdgWfWmOcF+4g8ungpOqoKfSsWjaaW+vnOfDuKlG7KaMu09Ig
-         6/noYA/d35KEP/tE2dBMFcHs95HKCpi105P5hYrnj7vUod1zTgcqQpLqLD+lgG7G60Zf
-         nGGQ==
-X-Gm-Message-State: APjAAAVKDA4G3nRIdV5hyTepxdn71JKHebJuPtpaiQuMCx3/JSdQNAth
-        mPd0jX1Nr/hCNqpaCLRIedXSsfZ4yVMyLw==
-X-Google-Smtp-Source: APXvYqzmafVK+vxqbcreyk5cvKHFyCBbYzHnCP72ObvJwaKm+HnF4zBgOkUAaElpKT7ExDPjdlGiCA==
-X-Received: by 2002:a2e:870b:: with SMTP id m11mr5993120lji.93.1580478385082;
-        Fri, 31 Jan 2020 05:46:25 -0800 (PST)
-Received: from saruman (88-113-215-33.elisa-laajakaista.fi. [88.113.215.33])
-        by smtp.gmail.com with ESMTPSA id b4sm4631642lfo.48.2020.01.31.05.46.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 31 Jan 2020 05:46:24 -0800 (PST)
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        gregkh@linuxfoundation.org, jackp@codeaurora.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-kernel@vger.kernel.org, John Stultz <john.stultz@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        ShuFan Lee <shufan_lee@richtek.com>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Chunfeng Yun <chunfeng.yun@mediatek.com>,
-        Yu Chen <chenyu56@huawei.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Jun Li <lijun.kernel@gmail.com>,
-        Valentin Schneider <valentin.schneider@arm.com>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 10/19] usb: dwc3: Add support for role-switch-default-mode binding
-In-Reply-To: <9b95478d-5ac7-3dfa-a70e-1dd881bd5b2c@linaro.org>
-References: <20200122185610.131930-1-bryan.odonoghue@linaro.org> <20200122185610.131930-11-bryan.odonoghue@linaro.org> <87o8uj7nzj.fsf@kernel.org> <9b95478d-5ac7-3dfa-a70e-1dd881bd5b2c@linaro.org>
-Date:   Fri, 31 Jan 2020 15:46:19 +0200
-Message-ID: <87d0az7n84.fsf@kernel.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=juqgOO2FL60raSBrCGSqEUGB0rKVEh3eeYHpqpHB/eU=;
+        b=eI8rPJupXChexO6brB9TohhTD1b6Sgp7is1ZrLlBTpSm8v5zkvhbw4JEZMe7NsIA7z
+         hqUPLOi5WyAHIjm4iUc60bKIsylmvdV1+A5GRCcP4awfjp07MD+02atek1iAqZi4wMRD
+         34Gn4UhRl8JAbcpmzbrdzTr52Zw0IigNyyjK24CAKE2t6GLnP7bbXXHDReaa2dqtPJo4
+         yy0IaXKh/kDxk2eOMMqZkujSVZSIaMyjYU5fe1JStMOhaThaLrXJ0GMBVxvO1eA2UTIf
+         ux0spUoz7tnctHiCQJtOlHgo1YI99pWhRS63YyhcEvQW0v5AImDVpdrvtE+AqBnOgPqV
+         mCVA==
+X-Gm-Message-State: APjAAAWtivSq80KgaKeL5ZXH5X6fSuFGuhXvdafSbHWuYCPjnz6Mkbsy
+        hiyTUOqtNM+Jp3ZWdBK7yCgiUQUP6Z7U
+X-Google-Smtp-Source: APXvYqw3EYs11DXI0HUsb1OWhGJCrOfXuIxlhqTyTsaQA7mAoTeMiD9UttuANRhz6VzuDOlO3NO1UQ==
+X-Received: by 2002:a17:90a:bd97:: with SMTP id z23mr5184198pjr.19.1580478618523;
+        Fri, 31 Jan 2020 05:50:18 -0800 (PST)
+Received: from localhost.localdomain ([103.59.133.81])
+        by smtp.googlemail.com with ESMTPSA id p3sm10625632pfg.184.2020.01.31.05.50.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jan 2020 05:50:17 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     gregkh@linuxfoundation.org, arnd@arndb.de
+Cc:     smohanad@codeaurora.org, jhugo@codeaurora.org,
+        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
+        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 00/16] Add MHI bus support
+Date:   Fri, 31 Jan 2020 19:19:53 +0530
+Message-Id: <20200131135009.31477-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-        micalg=pgp-sha256; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Hello,
 
+This is the second attempt at adding the MHI (Modem Host Interface) bus
+interface to Linux kernel. MHI is a communication protocol used by the
+host processors to control and communicate with modems over a high
+speed peripheral bus or shared memory. The MHI protocol has been
+designed and developed by Qualcomm Innovation Center, Inc., for use
+in their modems.
 
-Hi,
+The first submission was made by Sujeev Dias of Qualcomm:
 
-Bryan O'Donoghue <bryan.odonoghue@linaro.org> writes:
->> Bryan O'Donoghue <bryan.odonoghue@linaro.org> writes:
->>> From: John Stultz <john.stultz@linaro.org>
->>>
->>> Support the new role-switch-default-mode binding for configuring
->>> the default role the controller assumes as when the usb role is
->>> USB_ROLE_NONE
->>=20
->> per specification, device is supposed to be the default role. Why isn't
->> that working for you?
->
-> Speaking for myself - its only the role-switch logic I need. This patch=20
-> seemed to go along with the the role-switch stuff but, now that you ask,=
-=20
-> this series can probably do without it.
+https://lkml.org/lkml/2018/4/26/1159
+https://lkml.org/lkml/2018/7/9/987
 
-Oh, cool. Then we can defer this until we find an actual use for it :-)
+This series addresses most of the review comments by Greg and Arnd for
+the initial patchset. Furthermore, in order to ease the review process
+I've splitted the patches logically and dropped few of them which were
+not required for this initial submission.
 
-=2D-=20
-balbi
+Below is the high level changelog:
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+1. Removed all DT related code
+2. Got rid of pci specific struct members from top level mhi structs
+3. Moved device specific callbacks like ul_xfer() to driver struct. It
+   doesn’t make sense to have callbacks in device struct as suggested by
+   Greg
+4. Used priv data of `struct device` instead of own priv data in
+   `mhi_device` as suggested by Greg. This will allow us to use
+    dev_set{get}_drvdata() APIs in client drivers
+5. Removed all debugfs related code
+6. Changes to the APIs to look uniform
+7. Converted the documentation to .rst and placed in its own subdirectory
+8. Changes to the MHI device naming
+9. Converted all uppercase variable names to appropriate lowercase ones
+10. Removed custom debug code and used the dev_* ones where applicable
+11. Dropped timesync, DTR, UCI, and Qcom controller related codes
+12. Added QRTR client driver patch
+13. Added modalias support for the MHI stack as well as client driver for
+    autoloading of modules (client drivers) by udev once the MHI devices
+    are created
 
------BEGIN PGP SIGNATURE-----
+This series includes the MHI stack as well as the QRTR client driver which
+falls under the networking subsystem.
 
-iQIzBAEBCAAdFiEElLzh7wn96CXwjh2IzL64meEamQYFAl40L6sACgkQzL64meEa
-mQYaog/9F0ihBA8UNMURPG5FuCJ3t472XX/LTvkLpJQrdf9SBtq24F0n7qIahs98
-/7bZqioMyHxQioP9i+c0bbvdXu43cpaVA4wq1RMJUjl1MFs4fUOiRGK6w/cYI6zq
-FzP5+pGVY5X+AZoxffzCQCw5yjTzLHs2wD3ml5+mTrcQy2Lv8Om7Ldzp7lmAbGP/
-zzeCO+HoPoTK6NHPkDdloaiY8YT6lMYZpttIOY37sxzUEdjkDQwzZEPFrMa/cHW4
-4xY7tuMundNoxlM9HfkYA5yb/2GnwIARNElH2JF2ALuM5QJ3sGwQjfSFIBKW2wcx
-Ooo12pWMydg11wvXh8ZeQCUGlKdzArDCx5rlxk1ne8JtK9qFfS5Zt7wcds86Y/3t
-mXTZKjsLWNfHeFWaONGqfFDNW5ysCxy3QsnRocCZzeFG7foGMGF1wlln8j0OUfby
-1wY//IZLI9RqAofKk3ZnbN7tlcE1j84HZqUJ6yjSYLkfIWobRtqjJF2KocMqkucG
-LckF6wBNb2TZL3THLbizMxofEc/+3nUW3xvRJe17aBfsjbKA1eOx1WmQY+G8EXLN
-pGRN4YWQtIIlxX2P9IrQFIoLvnx4rr6AGNv8/SKL9wVBACfmUEs4sr9x9m2Qi8+4
-OqIL1C2W04SJjR2opFGtQ1/S/BBH88RRpMk1XfuiMEpg+r/f0MM=
-=SEQ9
------END PGP SIGNATURE-----
---=-=-=--
+The reference controller implementation is here:
+https://git.linaro.org/people/manivannan.sadhasivam/linux.git/tree/drivers/net/wireless/ath/ath11k/mhi.c?h=ath11k-qca6390-mhi
+It will be submitted later along with ath11k patches.
+
+Following developers deserve explicit acknowledgements for their
+contributions to the MHI code:
+
+Sujeev Dias
+Siddartha Mohanadoss
+Hemant Kumar
+Jeff Hugo
+
+Thanks,
+Mani
+
+Changes in v2:
+
+* Added put_device to mhi_dealloc_device
+* Removed unused members from struct mhi_controller
+* Removed the atomicity of dev_wake in struct mhi_device as it is not required
+* Reordered MHI structs to avoid holes
+* Used struct device name for the controller device
+* Marked the required and optional mhi_controller members for helping the
+  controller driver implementation
+* Cleanups to the MHI doc
+* Removed _relaxed variants and used readl/writel
+* Added comments for MHI specific acronyms
+* Removed the usage of bitfields and used bitmasks for mhi_event_ctxt and
+  mhi_chan_ctxt
+* Used __64/__u32 types for structures representing hw states
+* Added Hemant as a co-maintainer of MHI bus. He is from the MHI team of
+  Qualcomm and he will take up reviews and if possible, maintainership
+  in future.
+
+Manivannan Sadhasivam (16):
+  docs: Add documentation for MHI bus
+  bus: mhi: core: Add support for registering MHI controllers
+  bus: mhi: core: Add support for registering MHI client drivers
+  bus: mhi: core: Add support for creating and destroying MHI devices
+  bus: mhi: core: Add support for ringing channel/event ring doorbells
+  bus: mhi: core: Add support for PM state transitions
+  bus: mhi: core: Add support for basic PM operations
+  bus: mhi: core: Add support for downloading firmware over BHIe
+  bus: mhi: core: Add support for downloading RDDM image during panic
+  bus: mhi: core: Add support for processing events from client device
+  bus: mhi: core: Add support for data transfer
+  bus: mhi: core: Add uevent support for module autoloading
+  MAINTAINERS: Add entry for MHI bus
+  net: qrtr: Add MHI transport layer
+  net: qrtr: Do not depend on ARCH_QCOM
+  soc: qcom: Do not depend on ARCH_QCOM for QMI helpers
+
+ Documentation/index.rst           |    1 +
+ Documentation/mhi/index.rst       |   18 +
+ Documentation/mhi/mhi.rst         |  218 ++++
+ Documentation/mhi/topology.rst    |   60 ++
+ MAINTAINERS                       |   10 +
+ drivers/bus/Kconfig               |    1 +
+ drivers/bus/Makefile              |    3 +
+ drivers/bus/mhi/Kconfig           |   14 +
+ drivers/bus/mhi/Makefile          |    2 +
+ drivers/bus/mhi/core/Makefile     |    3 +
+ drivers/bus/mhi/core/boot.c       |  508 ++++++++++
+ drivers/bus/mhi/core/init.c       | 1301 ++++++++++++++++++++++++
+ drivers/bus/mhi/core/internal.h   |  699 +++++++++++++
+ drivers/bus/mhi/core/main.c       | 1576 +++++++++++++++++++++++++++++
+ drivers/bus/mhi/core/pm.c         |  967 ++++++++++++++++++
+ drivers/soc/qcom/Kconfig          |    1 -
+ include/linux/mhi.h               |  661 ++++++++++++
+ include/linux/mod_devicetable.h   |   13 +
+ net/qrtr/Kconfig                  |    8 +-
+ net/qrtr/Makefile                 |    2 +
+ net/qrtr/mhi.c                    |  207 ++++
+ scripts/mod/devicetable-offsets.c |    3 +
+ scripts/mod/file2alias.c          |   10 +
+ 23 files changed, 6284 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/mhi/index.rst
+ create mode 100644 Documentation/mhi/mhi.rst
+ create mode 100644 Documentation/mhi/topology.rst
+ create mode 100644 drivers/bus/mhi/Kconfig
+ create mode 100644 drivers/bus/mhi/Makefile
+ create mode 100644 drivers/bus/mhi/core/Makefile
+ create mode 100644 drivers/bus/mhi/core/boot.c
+ create mode 100644 drivers/bus/mhi/core/init.c
+ create mode 100644 drivers/bus/mhi/core/internal.h
+ create mode 100644 drivers/bus/mhi/core/main.c
+ create mode 100644 drivers/bus/mhi/core/pm.c
+ create mode 100644 include/linux/mhi.h
+ create mode 100644 net/qrtr/mhi.c
+
+-- 
+2.17.1
+
