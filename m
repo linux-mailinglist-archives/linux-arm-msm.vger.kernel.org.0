@@ -2,92 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E3AF114EDF4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 14:51:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EC0C14EE5A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 15:24:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729157AbgAaNvU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Jan 2020 08:51:20 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:53707 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729148AbgAaNvR (ORCPT
+        id S1728825AbgAaOYd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Jan 2020 09:24:33 -0500
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:46789 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728730AbgAaOYd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Jan 2020 08:51:17 -0500
-Received: by mail-pj1-f66.google.com with SMTP id n96so2856239pjc.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2020 05:51:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vVMDDP45gEarE2ftOW97e9LLiKh1M1ITIXoxyhoFdNU=;
-        b=diJWGYEbpsbtiXdDmfNYGwEIlgVaXgkPL9C4gv2LukE/uuAlqIHy/JWsv9fS87BvQy
-         4aRTS3l3bYhN+uszlO/yWEnG4k9Uu89b61jze3JH3pK0p46+2ZKcYTiSv8Oo8pd9SSXq
-         tIByh3ZDXvYK9DlrN0rCXR2IrdFbBirxOWn1YNKT+ZCd4wqe3OtgV/ORtuEcuZ0wi4Tp
-         dUE0SwHK3+/dv1baqE/WH4bHEpVHLa7cWDEE0snHIg4P61VowA4bvkIGPrIQge+YgVGL
-         7izMQFEktr5GflPUrtbeGFwNc1pmwswm7puAiOLBaQW+n+Nq+eEUPyGxvfJF/RJKsPae
-         SosA==
+        Fri, 31 Jan 2020 09:24:33 -0500
+Received: by mail-ot1-f67.google.com with SMTP id g64so6648164otb.13;
+        Fri, 31 Jan 2020 06:24:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=vVMDDP45gEarE2ftOW97e9LLiKh1M1ITIXoxyhoFdNU=;
-        b=NjQH19OJ4lnaXVZZGs0mYjEKk0lzZ8iln8sXN3l7CP1AclE6F6+BOCLwYrLGQkAKbb
-         87rchGWzP5z82sWO2ZGOxdS+GJvIRsKfUI6Ai5VupUCBrFQW+wJrSsWnHJZJ0UNquMT0
-         ZrF/3Rd9WZ7OLlrL/p6gH4or0ZOqS9kuuLG84BR0RaVIZFfZQm4ZmsSlbQP4MhIUXgyB
-         P7lnl3t/emi+dUomfpyioexZqivdnpYB3uPNqFqyPKoPyNjMTwoxe+pwLuaVbg4vHHuH
-         eW1+sW8kYS2uo9ssBJke8YxEQxmKC/fPTwGJd6E0vVN+3fUrZc54MORx+hux8Icn0xpR
-         ueBw==
-X-Gm-Message-State: APjAAAXGjXJ8HEsqdB5Pq+8Lan0yfefWnC3ZzP90kMAnVykHavLuXFXU
-        35OZbyns2clKYX6BpvGYJPXH
-X-Google-Smtp-Source: APXvYqz/u1NsnI6hz7lxTDEFV1Ba73K2JOoIozinOTTVBHFU9EDn3x9/2F/xM4BofZ2Utu4S/5UaPw==
-X-Received: by 2002:a17:902:8485:: with SMTP id c5mr10353463plo.330.1580478675836;
-        Fri, 31 Jan 2020 05:51:15 -0800 (PST)
-Received: from localhost.localdomain ([103.59.133.81])
-        by smtp.googlemail.com with ESMTPSA id p3sm10625632pfg.184.2020.01.31.05.51.12
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=uuOjFG9xzi/UCtL9OZpkiDb03tcQtH0JcN37yDUJ4M8=;
+        b=r13E1IeuTeLq0/bEUVaeLF+rS9dAzx7FeLSSrix7uFH5JIlbWDfJfOLGv7RpwRd/N6
+         yupm5NpJD/xlEY5eY0ho3WzuIA3ulm7cnpDahiHrLN9wRK+s4DfWj5TOtaIs36S+MGPW
+         qUzWCCpl2161GLrdPtzSCDFLzB3HEEnYicyfy27f9m/dbegVv7jgreBQhkV5Z60ZXjya
+         4NUeu93NHiRoeS7kf2Stgh4jDFnBb46Oa0Aoiuixx3BHz8PX9nX0UQOMxdeCGOiaT6Rb
+         PI/SV2CDMxEA3mtTCVjpb1vOCksm+0VZ89waUB2RDHjAW0rOtoOHPVSw0JAKD63PkItz
+         yKmw==
+X-Gm-Message-State: APjAAAWtBk4hsMvJd0WaRsYu2taZMzsjmepFGD7k09p6I961i/KCCl3P
+        +uFyV3/OGT/1iFzMfvRdCA==
+X-Google-Smtp-Source: APXvYqw1PGBub02UGDuqudnzKJy1HY8sizU4AhKy/SeKQ9FJhf2gfnVy/TBaUTwmPAfTgya8WLaYVA==
+X-Received: by 2002:a9d:6a90:: with SMTP id l16mr7377981otq.353.1580480670866;
+        Fri, 31 Jan 2020 06:24:30 -0800 (PST)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id y6sm3045689oti.44.2020.01.31.06.24.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jan 2020 05:51:15 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     gregkh@linuxfoundation.org, arnd@arndb.de
-Cc:     smohanad@codeaurora.org, jhugo@codeaurora.org,
-        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Subject: [PATCH v2 16/16] soc: qcom: Do not depend on ARCH_QCOM for QMI helpers
-Date:   Fri, 31 Jan 2020 19:20:09 +0530
-Message-Id: <20200131135009.31477-17-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200131135009.31477-1-manivannan.sadhasivam@linaro.org>
-References: <20200131135009.31477-1-manivannan.sadhasivam@linaro.org>
+        Fri, 31 Jan 2020 06:24:30 -0800 (PST)
+Received: (nullmailer pid 6089 invoked by uid 1000);
+        Fri, 31 Jan 2020 14:24:29 -0000
+Date:   Fri, 31 Jan 2020 08:24:29 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     robh+dt@kernel.org, agross@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
+        rojay@codeaurora.org, c_skakit@codeaurora.org,
+        Akash Asthana <akashast@codeaurora.org>
+Subject: Re: [PATCH V3] dt-bindings: geni-se: Convert QUP geni-se bindings to
+ YAML
+Message-ID: <20200131142429.GA5642@bogus>
+References: <1580378322-32729-1-git-send-email-akashast@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1580378322-32729-1-git-send-email-akashast@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QMI helpers are not always used by Qualcomm platforms. One of the
-exceptions is the external modems available in near future. As a
-side effect of removing the dependency, it is also going to loose
-COMPILE_TEST build coverage.
+On Thu, 30 Jan 2020 15:28:42 +0530, Akash Asthana wrote:
+> Convert QUP geni-se bindings to DT schema format using json-schema.
+> 
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> ---
+> Changes in V2:
+>  - As per Stephen's comment corrected defintion of interrupts for UART node.
+>    Any valid UART node must contain atleast 1 interrupts.
+> 
+> Changes in V3:
+>  - As per Rob's comment, added number of reg entries for reg property.
+>  - As per Rob's comment, corrected unit address to hex.
+>  - As per Rob's comment, created a pattern which matches everything common
+>    to geni based I2C, SPI and UART controller and then one pattern  for each.
+>  - As per Rob's comment, restored original example.
+> 
+>  .../devicetree/bindings/soc/qcom/qcom,geni-se.txt  |  94 ---------
+>  .../devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 211 +++++++++++++++++++++
+>  2 files changed, 211 insertions(+), 94 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.txt
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+> 
 
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/soc/qcom/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+My bot found errors running 'make dt_binding_check' on your patch:
 
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 79d826553ac8..ca057bc9aae6 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -88,7 +88,6 @@ config QCOM_PM
- 
- config QCOM_QMI_HELPERS
- 	tristate
--	depends on ARCH_QCOM || COMPILE_TEST
- 	depends on NET
- 
- config QCOM_RMTFS_MEM
--- 
-2.17.1
+warning: no schema found in file: Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml: ignoring, error in schema: properties: clocks: minItems
+Documentation/devicetree/bindings/display/simple-framebuffer.example.dts:21.16-37.11: Warning (chosen_node_is_root): /example-0/chosen: chosen node must be at root node
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml: properties:clocks:minItems: False schema does not allow 2
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml: properties:clocks:maxItems: False schema does not allow 2
+Documentation/devicetree/bindings/Makefile:12: recipe for target 'Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.example.dts' failed
+make[1]: *** [Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.example.dts] Error 1
+Makefile:1263: recipe for target 'dt_binding_check' failed
+make: *** [dt_binding_check] Error 2
 
+See https://patchwork.ozlabs.org/patch/1231351
+Please check and re-submit.
