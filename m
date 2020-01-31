@@ -2,73 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D7A614E6C7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 02:06:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5505714E7F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 05:43:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727677AbgAaBGz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jan 2020 20:06:55 -0500
-Received: from mail.kernel.org ([198.145.29.99]:37398 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727648AbgAaBGz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jan 2020 20:06:55 -0500
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727981AbgAaEnt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jan 2020 23:43:49 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:40564 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728005AbgAaEnt (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 30 Jan 2020 23:43:49 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1580445828; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Ll0wcKc1k7IzcI6Q0ZHQPG6BHe+VN/nY0QZPu5GmLGY=; b=kBN2T6XTaIW43e+mNE5Nb4494r4H7yZAzewy5zVaiqrpWcNW+zVDUOER97ZiRXe0wtuCqLsk
+ tVbzXJLaR7yo82Tn2lBGhjrnYgW8yW0ZBNWu+lMzx49XJaTZrD4HUZ6dDU449Fr5msieIfOa
+ BgwMad295hRXN2e4eJ5W8Rar2M4=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e33b082.7f8d58e4b180-smtp-out-n02;
+ Fri, 31 Jan 2020 04:43:46 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B7A2DC433A2; Fri, 31 Jan 2020 04:43:46 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from akdwived-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3336320678;
-        Fri, 31 Jan 2020 01:06:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1580432814;
-        bh=jsJEjfvvosoNzF+1nP8nbj7092fwdtBhOz2X+N5rSYc=;
-        h=In-Reply-To:References:Subject:To:From:Cc:Date:From;
-        b=EAVQXk1uO5WynQ7Wtd1arSl2mIu7+KTMUvTyGUtP+CBTahefWsrjBU/w5+WVG5pbJ
-         6oeJf0VKlrt/bX9mb5sNu4yXZTeLRu/m8+rnihFdYrPqyT+y1zbbhNQrvRbDOAHQvT
-         kM55lR9ogO4s8yk5mrgvNveWr+uooWYXRl/S1ipM=
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20191209195749.868-1-tiny.windzz@gmail.com>
-References: <20191209195749.868-1-tiny.windzz@gmail.com>
-Subject: Re: [PATCH 01/17] clk: sunxi: sunxi-ng: convert to devm_platform_ioremap_resource
-To:     Eugeniy.Paltsev@synopsys.com, Yangtao Li <tiny.windzz@gmail.com>,
-        afaerber@suse.de, agross@kernel.org, aisheng.dong@nxp.com,
-        allison@lohutok.net, chunhui.dai@mediatek.com,
-        cw00.choi@samsung.com, daniel.baluta@nxp.com, dinguyen@kernel.org,
-        emilio@elopez.com.ar, festevam@gmail.com, geert+renesas@glider.be,
-        gregkh@linuxfoundation.org, heiko@sntech.de, jcmvbkbc@gmail.com,
-        john@phrozen.org, jonathanh@nvidia.com, kernel@pengutronix.de,
-        kgene@kernel.org, krzk@kernel.org, kstewart@linuxfoundation.org,
-        linux-imx@nxp.com, manivannan.sadhasivam@linaro.org,
-        matthias.bgg@gmail.com, miquel.raynal@bootlin.com,
-        mripard@kernel.org, mturquette@baylibre.com, nsekhar@ti.com,
-        palmer@sifive.com, paul.walmsley@sifive.com,
-        pdeschrijver@nvidia.com, pgaikwad@nvidia.com, rfontana@redhat.com,
-        robh@kernel.org, s.hauer@pengutronix.de, s.nawrocki@samsung.com,
-        shawnguo@kernel.org, swinslow@gmail.com, t-kristo@ti.com,
-        tglx@linutronix.de, thierry.reding@gmail.com,
-        tomasz.figa@gmail.com, wangyan.wang@mediatek.com,
-        weiyongjun1@huawei.com, wens@csie.org
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-tegra@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        Yangtao Li <tiny.windzz@gmail.com>
-User-Agent: alot/0.8.1
-Date:   Thu, 30 Jan 2020 17:06:53 -0800
-Message-Id: <20200131010654.3336320678@mail.kernel.org>
+        (Authenticated sender: akdwived)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C87ADC43383;
+        Fri, 31 Jan 2020 04:43:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C87ADC43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akdwived@codeaurora.org
+From:   Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>
+To:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, ckadabi@codeaurora.org,
+        tsoni@codeaurora.org, bryanh@codeaurora.org,
+        psodagud@codeaurora.org, rnayak@codeaurora.org,
+        satyap@codeaurora.org, pheragu@codeaurora.org,
+        Avaneesh Kumar Dwivedi <akdwived@codeaurora.org>
+Subject: [PATCH v4 0/2] Add Embedded USB Debugger (EUD) driver
+Date:   Fri, 31 Jan 2020 10:13:29 +0530
+Message-Id: <1580445811-15948-1-git-send-email-akdwived@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Yangtao Li (2019-12-09 11:57:33)
-> Use devm_platform_ioremap_resource() to simplify code.
->=20
-> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
+This is a series of patches that implements a driver for the control
+peripheral, EUD (Embedded USB Debugger). The EUD is a mini-USB hub 
+implemented on chip to support the USB-based debug and trace capabilities.
+Apart from debug capabilities, EUD has a control peripheral. Control 
+Peripheral is on when EUD is on and gets signals like USB attach, pet EUD,
+charge phone etc. EUD driver listens to events like USB attach or detach 
+and charger enable or disable and then notifies the USB driver or PMIC 
+driver respectively about these events via EXTCON. At regular intervals, 
+the EUD driver receives an interrupt to pet the driver indicating that 
+the software is functional.
 
-Please add a cover letter, resend this series picking up any acks and
-dropping any patches that were rejected by maintainers of the drivers.
-There was significant discussion on one patch that was rejected, so I'll
-only pick up patches for the next cycle that are acked/reviewed-by
-relevant folks.
+Changes since v3:
+- Remove power supply type check in the enable path of EUD
+- Use default attribute group to create sysfs attribute
+- Updated the dt-binding
+Changes since v2:
+- Remove module_param and add sysfs support instead
+- Simplify if-else condition
+- Change if-elseif to switch case
+- Return -ENOMEM
+- Got rid of unnecessary checks in sysfs store function
+- Updated the dt-binding
+Changes since v1:
+- Remove EUD_NR as it is an unused macro
+Changes since v0:
+- Remove select SERIAL_CORE from Kconfig as this patch doesn't involve
+  anything related to serial console
+- Changed the dt-bindings to remove extcon and replace it with graphs
+  to represent a connection with client
 
+Avaneesh Kumar Dwivedi (2):
+  dt-bindings: Documentation for qcom,eud
+  Embedded USB Debugger (EUD) driver
+
+ Documentation/ABI/stable/sysfs-driver-msm-eud      |   5 +
+ .../devicetree/bindings/soc/qcom/qcom,msm-eud.txt  |  43 +++
+ drivers/soc/qcom/Kconfig                           |  12 +
+ drivers/soc/qcom/Makefile                          |   1 +
+ drivers/soc/qcom/eud.c                             | 329 +++++++++++++++++++++
+ 5 files changed, 390 insertions(+)
+ create mode 100644 Documentation/ABI/stable/sysfs-driver-msm-eud
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,msm-eud.txt
+ create mode 100644 drivers/soc/qcom/eud.c
+
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project.
