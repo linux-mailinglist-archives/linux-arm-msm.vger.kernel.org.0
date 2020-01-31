@@ -2,95 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A08014EC9E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 13:44:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6323714ED25
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 14:22:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728566AbgAaMo1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Jan 2020 07:44:27 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:45650 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728527AbgAaMo1 (ORCPT
+        id S1728613AbgAaNWx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Jan 2020 08:22:53 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:35099 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728566AbgAaNWx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Jan 2020 07:44:27 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580474666; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=Y9uezJFvTZwab5W/ghxsm4kRJLfaW5nZezC8D4k+Dew=; b=grV8PVvfIua28cU0tJh4YpM5zxZzJygQfR3Njr+MAv5v/DKxkXjdEvs/lpyFqzkx9fqeY98T
- iEGk2RnpBQdjk8qcBG3ZB0+L66M2fCJpHiVlaL546Zw+OcN0Dysl4MIjLz3tn5dlD3LrhtsD
- hjWsnOeKDyhXBhKaknhIBzUQRNY=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e342124.7f4e4dd12c00-smtp-out-n02;
- Fri, 31 Jan 2020 12:44:20 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E0967C433A2; Fri, 31 Jan 2020 12:44:19 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from snaseem-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: snaseem)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 529F0C43383;
-        Fri, 31 Jan 2020 12:44:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 529F0C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=snaseem@codeaurora.org
-From:   Shadab Naseem <snaseem@codeaurora.org>
-To:     srinivas.kandagatla@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        neeraju@codeaurora.org, Shadab Naseem <snaseem@codeaurora.org>
-Subject: [PATCH] nvmem: core: Fix msb clearing bits
-Date:   Fri, 31 Jan 2020 18:13:55 +0530
-Message-Id: <1580474635-11965-1-git-send-email-snaseem@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Fri, 31 Jan 2020 08:22:53 -0500
+Received: by mail-lf1-f66.google.com with SMTP id z18so4871300lfe.2;
+        Fri, 31 Jan 2020 05:22:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:in-reply-to:references:date:message-id
+         :mime-version;
+        bh=R/r0MkhJmy8WKxVLMV0Jvzi1Aq0WoGmSqQ5lRPedXO4=;
+        b=pIaT0b9Qd+4jkE1fkwMkX4pZO0yQhKJOO71b2et3q1rT1iC/jQjRwWfwU/AXqWwB3p
+         ENbCxggJF2BGfFYIpwRDYUm1bGTiWPbvrsaEpYZmpDEQB4zOIFPsxngQ/6H6M2USTVtf
+         Vve+M/a+QXj9ZHXDq0iQXpLrsy1bkhIKW91in13kumaND7ifTb2VIjQRfD8vT+Mda02I
+         XLQWhJ6v/rI8gZmlPw9/viYAdoUB6EeAn5qw5JLd+WNaoQTLSjKeuz9ULalWUglV8Zba
+         f2+8HvwfV/XW0XZEeotpLoBjkKuCZpUYFljUlZm2OiN7ZNtF74No0tJpuoYnHnRgXqne
+         Nfaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
+         :date:message-id:mime-version;
+        bh=R/r0MkhJmy8WKxVLMV0Jvzi1Aq0WoGmSqQ5lRPedXO4=;
+        b=JHV+bV9El2QOETV5Zrc8Iu1te/4Z1IJpyCthKH6FAF5fVnJi3rCcoSn79CQMm9a9/m
+         klFmfsmVYhR18MkNHZsv+vHHhVRAIwqlYba9fpyBHe1RNwukWD3T/pBOZ6OKDXYbbH9h
+         CgV9qmKuCGeGvJmn2gesiAmIruMYSftaDEYgYY0WS2Pmx3MlxD++YPh8SJp2FjJjZMnO
+         sLIMhyC9li8L95Rze/kHGt1nBSx4AHImXToE0/0UZ/YAgm1bwNQ7pNpOVV7OourpkZb6
+         VgfNcuiiTogHuWElmaU3vfH8NoH7H2o1Be/rOrQVkhF/1JwX9HbEnFjmUDFMmf8lSPaH
+         dYEw==
+X-Gm-Message-State: APjAAAV25EeMAj8sxfL8RhDK7+m2XCO4bLMs1Bu/o7hukL76a9HQWQ7g
+        mglGrIeCu8ybWd7Zbu7dJEof31r+MYz/Ng==
+X-Google-Smtp-Source: APXvYqzWwcCbOKCFh1HsdRYKRkmzRO5iaW1wDQodZvRcZcxHxE/w0zpfSzIX/lAO18wKHHtdYGphEQ==
+X-Received: by 2002:a19:dc14:: with SMTP id t20mr5415708lfg.47.1580476970640;
+        Fri, 31 Jan 2020 05:22:50 -0800 (PST)
+Received: from saruman (88-113-215-33.elisa-laajakaista.fi. [88.113.215.33])
+        by smtp.gmail.com with ESMTPSA id d22sm4593737lfi.49.2020.01.31.05.22.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 31 Jan 2020 05:22:49 -0800 (PST)
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        gregkh@linuxfoundation.org, jackp@codeaurora.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 06/19] dt-bindings: usb: dwc3: Add a gpio-usb-connector description
+In-Reply-To: <20200122185610.131930-7-bryan.odonoghue@linaro.org>
+References: <20200122185610.131930-1-bryan.odonoghue@linaro.org> <20200122185610.131930-7-bryan.odonoghue@linaro.org>
+Date:   Fri, 31 Jan 2020 15:22:44 +0200
+Message-ID: <87zhe37obf.fsf@kernel.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When clearing the msb bits of the resultant buffer, it is
-masked with the modulo of the number of bits needed with
-respect to the BITS_PER_BYTE. To mask out the buffer,
-it is passed though GENMASK of the remainder of the bits
-starting from zeroth bit. This case is valid if nbits is not
-a multiple of BITS_PER_BYTE and you are actually creating
-a GENMASK. If the nbits coming is a multiple of BITS_PER_BYTE,
-it would pass a negative value to the high bit number of
-GENMASK with zero as the lower bit number.
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-As per the definition of the GENMASK, the higher bit number (h)
-is right operand for bitwise right shift. If the value of the
-right operand is negative or is greater or equal to the number
-of bits in the promoted left operand, the behavior is undefined.
-So passing a negative value to GENMASK could behave differently
-across architecture, specifically between 64 and 32 bit.
-Also, on passing the hard-coded negative value as GENMASK(-1, 0)
-is giving compiler warning for shift-count-overflow.
-Hence making a check for clearing the MSB if the nbits are not
-a multiple of BITS_PER_BYTE.
 
-Signed-off-by: Shadab Naseem <snaseem@codeaurora.org>
----
- drivers/nvmem/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Hi,
 
-diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
-index 1e4a798..23c1547 100644
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -926,7 +926,8 @@ static void nvmem_shift_read_buffer_in_place(struct nvmem_cell *cell, void *buf)
- 		*p-- = 0;
- 
- 	/* clear msb bits if any leftover in the last byte */
--	*p &= GENMASK((cell->nbits%BITS_PER_BYTE) - 1, 0);
-+	if (cell->nbits%BITS_PER_BYTE)
-+		*p &= GENMASK((cell->nbits%BITS_PER_BYTE) - 1, 0);
- }
- 
- static int __nvmem_cell_read(struct nvmem_device *nvmem,
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
-member of the Code Aurora Forum, hosted by The Linux Foundation
+Bryan O'Donoghue <bryan.odonoghue@linaro.org> writes:
+
+> A USB connector should be a child node of the USB controller
+> connector/usb-connector.txt. This patch adds a property
+> "gpio_usb_connector" which declares a connector child device. Code in the
+> DWC3 driver will then
+>
+> - Search for "gpio_usb_controller"
+> - Do an of_platform_populate() if found
+>
+> This will have the effect of making the declared node a child of the USB
+> controller and will make sure that USB role-switch events detected with t=
+he
+> gpio_usb_controller driver propagate into the DWC3 controller code
+> appropriately.
+>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Mark Rutland <mark.rutland@arm.com>
+> Cc: linux-usb@vger.kernel.org
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+I'm assuming this will go together with the rest of the series:
+
+Acked-by: Felipe Balbi <balbi@kernel.org>
+
+=2D-=20
+balbi
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEElLzh7wn96CXwjh2IzL64meEamQYFAl40KiQACgkQzL64meEa
+mQYVaBAAx9WmHAADAAgq27OlaDx5snDPwLIuAOLo7kYBkfcIatnvmX3XLlgEk2+T
+92MrgOmZVnbwpdtEManQBiY9UvQQ61VT7ixFNRbODPcruGlszZWsKWts4Ejr3LF6
+7Nc6IIe/Xjkzw+aYR+8mugwLFc+/jMi/4cLBD4bCviLJMF1y0+aMhrqvPtwtuwm2
+WcTcSByy706oswRV32NwB8jUPcNHKEs9QodVF4e7QVPgscl5pIqfe+jA6L19/HQ+
+NqB8jFvFT3ZQmvhAU8PRLd0R3+XNpDHek4RS4StzDzeyF5YiJJx7JmuQv8r+ddtJ
+OGKN5q5Q7eH89m91d5YUU9TDvI9DA0vtjDXPn6skjtXajq8boXg8fNMXrJU//f7S
+lkbwCiOYQ7rsIWf0e/LWc+aPE4wogqKQf64fmZCZSV82uQf3bVdyGp6R2iArKLLA
+B8nQNe6sWdZy8DG004QW+AV+OCvxiqNhUGyqqRNQWxZyg3FRtuXBri9yTFUBUUPE
+8O7R9Sj2Bjqbs3isf2TQ6e2h/GfHfIE/otHSSnEPfdKu7wVfZlukskyjU4C5sXBR
+LkpRupe6gzbS2qts4lPthcExdjMR76HWmsBWhINXOUxCj+p3WqEoliR7/riGbYnx
+Y1Q1HP8oc8AtJC7ekoq5UJx2yxuQZsJIHuSUSU6xsTlAQf6uQGU=
+=UWt1
+-----END PGP SIGNATURE-----
+--=-=-=--
