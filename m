@@ -2,64 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 00E4F14ED37
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 14:26:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C72C14ED4F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 14:30:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728693AbgAaN0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Jan 2020 08:26:08 -0500
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:39755 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728514AbgAaN0I (ORCPT
+        id S1728840AbgAaNaB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Jan 2020 08:30:01 -0500
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:41332 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728782AbgAaNaA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Jan 2020 08:26:08 -0500
-Received: by mail-lj1-f194.google.com with SMTP id o15so1543740ljg.6;
-        Fri, 31 Jan 2020 05:26:06 -0800 (PST)
+        Fri, 31 Jan 2020 08:30:00 -0500
+Received: by mail-lf1-f67.google.com with SMTP id m30so4859416lfp.8;
+        Fri, 31 Jan 2020 05:29:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:in-reply-to:references:date:message-id
          :mime-version;
-        bh=/c35QZGHP3wzzfzd1x43843LuPeL6Rq45DIdrlBE0UY=;
-        b=T4xSWxnjzqX2zDS6cCDbw6N2RoWYe98ru0BPySY459U+cLF+D9giJ3Zpxynhzwtklw
-         pUzktittY81x8Opy7kDWJJQo5aLueGP54C6qhI+NHtGJAJsIStOU72QeMyDHsSwQq/Or
-         sam9rYaci06x5JamRVye0+sd9y+lCQWgzFrRdQnEhVako++K7NAVS6HwTILcHNRI+HOo
-         VdBIGa3jYCks0GPGUd83QsBFt+XWGDbd0deEQe41AeRXuFN0k7Id3PwkIddyTS2l7m9f
-         8JhJDAhefkSBm31P85wfEU6vUtVN2hD6vF+O9TUm9x9R9x74wsjOi2BHAFMYAGLC7N4u
-         reHg==
+        bh=7nCtx9E1R22cOlqOHkg/lsnX7MOdIFOpv9Kqo050/84=;
+        b=r6JeGB4WafMEddCLgZJJXZWwy3zgazET9jMPTcaJdAZM4Smttk8qoFY79S6u5M7wJo
+         MW5sF9EIB8ilFF+u539gPebTmswV0n7ugnt3nee5p+N6sXg/i39tj/kx8xnyq1bESCvv
+         FsgFReIcpd+8XKJoAQiwLITwa3GY5W9HASB/PIRMDca9zjdLfFuRvUrVpvWaigcpddgr
+         OVXZCNa7ZiUo0+SokoBIxKs7VZFdM6x02FfoZVQGUnXSDPqzI8o68qdrzZThLDFFgzEU
+         WfeMs+WXquRWOzup0QzBMYCP4yW0FnT8/VDvMHuBkL9VUpEOsLs/MHo0u20hbZBX/Mtp
+         NKpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
          :date:message-id:mime-version;
-        bh=/c35QZGHP3wzzfzd1x43843LuPeL6Rq45DIdrlBE0UY=;
-        b=LYV/Ak9ecq6drsNVFDep88NB3KMfqYhFgqOsRPkFtGerE4IOcDYu3Amu/Oj5EnsNvy
-         ySzEQnG2SvK6JYHoZMuEZXqX8MXhHLozYBdXXRFXmzj/x+BbwNoEJoUHQyVsvqiG2cY6
-         6Sv/Gi63JS3j/drFQ1WO6DvksqKkNRDuUJPHI0BaH1uW63uzK4WLReOt7fDuQzd240AY
-         7JNt4skCZbTcWNhFA2zJwcLYw4Q6O5ga172dvhDYigGF1cooA+l7Dolo9IQZVOTnmYQB
-         RBcFNOdF298STbioixBbfWUhaC4NBNig/6e7X+OnLQFGMkZiXKDNIbYrL+QVZjtUopox
-         KFJw==
-X-Gm-Message-State: APjAAAXtSur+ufUk5yd16FVp/+p398JOw6/0+3msDoGFmwm2lvFNenfD
-        8UwoRQGG0AyfaEMFha6LxH4=
-X-Google-Smtp-Source: APXvYqw90RofYlxPiJVaN+aei/fYQnEBbO7MgOQGhH7P77f9LVAoMdiw8xCvvvGQofPiEQv/1/CitA==
-X-Received: by 2002:a2e:5304:: with SMTP id h4mr5953525ljb.75.1580477166093;
-        Fri, 31 Jan 2020 05:26:06 -0800 (PST)
+        bh=7nCtx9E1R22cOlqOHkg/lsnX7MOdIFOpv9Kqo050/84=;
+        b=FVldo5wx0TPbSwYpBv24HhmkgIrczHJc3waCnhTwmq/M7hGQ0Aq5z8D2YNntQaRPip
+         Mgab2OsGyUGJXTM0LU/t6u2ZYac+c1jMU8SXxkRuPp/ZXv2jjDStBKoX5pitIg+fJfYs
+         dFqIZXGK7mSiwefdsVIWyDh3WA81Vt0DkenmIANBZagnfb5Wy1j1s32GYxDc85OZIPqT
+         VPBTo2mETNDoUVPt7gJv8DWwdnWn/W18AUZ1VjLU1sAtZQnDIqbfxD4I1KE2y5v1oANR
+         05T56sFQKdxjEzzB/II4kOZkloc11PNN3fbCCC1xv8Q85WOuU5UQBXocll9hFsLjHGd7
+         gXng==
+X-Gm-Message-State: APjAAAVQQ/qqjyPsx487e/g1ePNIcFgpo9Qt6PAwGTmVBtJqdU8+c85L
+        1mOixQDK/XLoTDwzbgDQHyc=
+X-Google-Smtp-Source: APXvYqw9Y+k0ca1hl88/2I68pFz4/fGlwLZ4mcQ5yslVZts2CAyWoPoJd6N5Bvdw9QY3sICSZXiezg==
+X-Received: by 2002:ac2:5596:: with SMTP id v22mr5487593lfg.200.1580477397793;
+        Fri, 31 Jan 2020 05:29:57 -0800 (PST)
 Received: from saruman (88-113-215-33.elisa-laajakaista.fi. [88.113.215.33])
-        by smtp.gmail.com with ESMTPSA id t21sm4568925ljh.14.2020.01.31.05.26.04
+        by smtp.gmail.com with ESMTPSA id q13sm5583986ljj.63.2020.01.31.05.29.56
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 31 Jan 2020 05:26:05 -0800 (PST)
+        Fri, 31 Jan 2020 05:29:57 -0800 (PST)
 From:   Felipe Balbi <balbi@kernel.org>
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         gregkh@linuxfoundation.org, jackp@codeaurora.org,
         bjorn.andersson@linaro.org
-Cc:     linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Subject: Re: [PATCH v3 09/19] usb: dwc3: qcom: Override VBUS when using gpio_usb_connector
-In-Reply-To: <20200122185610.131930-10-bryan.odonoghue@linaro.org>
-References: <20200122185610.131930-1-bryan.odonoghue@linaro.org> <20200122185610.131930-10-bryan.odonoghue@linaro.org>
-Date:   Fri, 31 Jan 2020 15:26:00 +0200
-Message-ID: <87tv4b7o5z.fsf@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, John Stultz <john.stultz@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        ShuFan Lee <shufan_lee@richtek.com>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Chunfeng Yun <chunfeng.yun@mediatek.com>,
+        Yu Chen <chenyu56@huawei.com>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Jun Li <lijun.kernel@gmail.com>,
+        Valentin Schneider <valentin.schneider@arm.com>,
+        devicetree@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v3 10/19] usb: dwc3: Add support for role-switch-default-mode binding
+In-Reply-To: <20200122185610.131930-11-bryan.odonoghue@linaro.org>
+References: <20200122185610.131930-1-bryan.odonoghue@linaro.org> <20200122185610.131930-11-bryan.odonoghue@linaro.org>
+Date:   Fri, 31 Jan 2020 15:29:52 +0200
+Message-ID: <87o8uj7nzj.fsf@kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; boundary="=-=-=";
         micalg=pgp-sha256; protocol="application/pgp-signature"
@@ -76,29 +85,14 @@ Content-Transfer-Encoding: quoted-printable
 Hi,
 
 Bryan O'Donoghue <bryan.odonoghue@linaro.org> writes:
-
-> Using the gpio_usb_connector driver also means that we are not supplying
-> VBUS via the SoC but by an external PMIC directly.
+> From: John Stultz <john.stultz@linaro.org>
 >
-> This patch searches for a gpio_usb_connector as a child node of the core
-> DWC3 block and if found switches on the VBUS over-ride, leaving it up to
-> the role-switching code in gpio-usb-connector to switch off and on VBUS.
->
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Lee Jones <lee.jones@linaro.org>
-> Cc: Felipe Balbi <balbi@kernel.org>
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: Philipp Zabel <p.zabel@pengutronix.de>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-usb@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
+> Support the new role-switch-default-mode binding for configuring
+> the default role the controller assumes as when the usb role is
+> USB_ROLE_NONE
 
-assuming it'll go with the rest of the series:
-
-Acked-by: Felipe Balbi <balbi@kernel.org>
+per specification, device is supposed to be the default role. Why isn't
+that working for you?
 
 =2D-=20
 balbi
@@ -108,18 +102,18 @@ Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEElLzh7wn96CXwjh2IzL64meEamQYFAl40KugACgkQzL64meEa
-mQbYqw/7Bn/YEhhlrjS0YkABiFc7jMoQ1ZBEdVYhumTL+cT9lRX/km55RWMG482d
-FFHJPEjuZsbl2VeBe93sKDGDwk7cQw+Eo1MODT4weYuZ8SSgbEJfehXZF0+QetqY
-TTC6ry7PKj4TSLizmUmT7nrkWulBJzn1Wa8F72XnEsRfr60fTMj9E6wwfd3qpc+m
-C1Ui5p0MRlTNiQyEaz04Upw+W8Gwzg1Q5nWrbr5/YT+MwQTxLtpCiOWfwRM3E88O
-MrGpJnY4q4V/kYANenNfo8LsaORfszmEpktvpm5dTBu1AyIPH/keDh600/3tABXq
-3ScLhi9qSt/ueJ4JXUyl1VQdhCvqn31ZVw1d6z/khV436eHy5QSeHuChzbO4r822
-b2BjacWzYJBv8cPwWzo61MldMFmGmAJICO8j8YtXrjQJmvxcXQb0/uO9ez/TScz2
-grZWvs/CyXEgqzb8aHCz0GNgwriksnpCC7XWAe4phiVdEGsvfdAvQhzZ2xuG46/L
-flhgGQaHaHSL9ganqsO/VX9piC75i181K76NlF21iv69UKTOFkoKlj8o1pjMqXUw
-8kwDycZ+kRUUx+qCEN8VuK67Ow6yBK0LiSKDeqCP+lRWMREAY/dST7QEn83AhOjA
-0VLYDVj0F1D6bx261TiaCC7AwmnSfL8FzhHoxexubdf3gyckpB8=
-=kQ6p
+iQIzBAEBCAAdFiEElLzh7wn96CXwjh2IzL64meEamQYFAl40K9AACgkQzL64meEa
+mQbgJQ//TZGlvG3P1aWp5ikix5NKdKJ2sn7Oz9CZMoAkeF04sOAHSwiD+hcm8jMP
+7iN/2N/pkzajnK8rltb/GI2AfoTeHWPkOzg4uC6+lqOAfg8n1axLg8uj1nVyO07Z
+7yJMhTaRmOO7moEJVk7T+pCNpz+YMb53EV9vcH5n8tqNq/0rmNa86quWooJdSrEe
+2tYX/ZHmMx0LtZ00ki/EtGAqywOnwCk1XkrNa4mcFUaysjtuEaNjxid6dQnVJjjr
+R0VhJPqNQgc/20eQslhaTR9ln45B3d31k9NhEgt9KykSdaC/MtvuTr9fBqhaxvUO
+YlFCL0wvU6Or+YyALv67Kh1CP3NySUwICvkPCyOX06cXFKwFMDJc7sUsckcdhgXh
+X3rjmnjLAkH0mTZK+dn5Q8lzRkcDADmgf19vMTyn9QKio1X5+pswDZErD7gNS/Ho
+/VLig6h+0dc3z2VDHBGPuXcpgSfuETZoGXTA6Xgk7zNbNFq0RWODlT6foxcLyPSO
+8sUDoWyZDGXCPykmjpEEs2/0hrsQAJiZxnf47tJ5Kif9AsUQuD5I6+ZVK/EDTqq0
+3L48JMX2WryTWlbGCwYCSohEhB9bEJijE6tYAzshlQQh/72yelzOBEHUpSWpRw4u
+iqd+eKlALpvs4lm544oI8eWplPd6xoFccGwO5s+eY5jSIyKaf3k=
+=N9RZ
 -----END PGP SIGNATURE-----
 --=-=-=--
