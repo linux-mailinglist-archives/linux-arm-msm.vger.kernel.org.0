@@ -2,113 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C875514F4CF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 23:36:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E61814F4E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jan 2020 23:38:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726668AbgAaWga (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Jan 2020 17:36:30 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:32935 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726670AbgAaWga (ORCPT
+        id S1726225AbgAaWia (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Jan 2020 17:38:30 -0500
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:42065 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726246AbgAaWi3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Jan 2020 17:36:30 -0500
-Received: by mail-pl1-f193.google.com with SMTP id ay11so3332411plb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2020 14:36:29 -0800 (PST)
+        Fri, 31 Jan 2020 17:38:29 -0500
+Received: by mail-vs1-f66.google.com with SMTP id b79so5389594vsd.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2020 14:38:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=x9bjOIz1ZoWIt3WH97jOSDUlwhKrTSs9Z8cHSgbUrkY=;
-        b=hbj+68nhZTVhE7I5O0WiC8/gmPXXA2ajfPWRycFgp38z3tUZtkqjW79aSvtSlD/HLj
-         5gJdZSoT1e8wOmxDCdIPQsxE6H12Y3VYCzrTWMoePrF4SzUrYe5fxQY1DgkYSg+wgNp4
-         J2RD4T441ME7ha7dC4p7qD/I6bCN4kFDGrTtU=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=A/QwXMv8QAmipbLMot4MaxUhNNvwb0UK1sNHG1c0AVY=;
+        b=n+bPBIjWQxxmXcyNtF2EyFmopFozDQdpVp68Vj3mgGrFckg86ApNTNEWR0uFO0/7DG
+         vyaxvdDQ9kAE++SLmKRA5v1t6u/ZjszK4NJAbdXgkmSgqli8p4OjpqQKtuJ6Scaf7brq
+         ZmpnT/9SmPlPX8EFH7dJW+bzBbfm/BGo+QXbg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=x9bjOIz1ZoWIt3WH97jOSDUlwhKrTSs9Z8cHSgbUrkY=;
-        b=FmJt03nDgJdxISnoxFsP+ytWnTLlRowyQTb0VVzGGctEJK2AzQdkdCtOeF17n2ZJX1
-         RNv6DdPIDlpzuUz+/9SBiV/RMDIxlzxCHWl0HcPadUdKLHRmXVDfb+6Jl4qQhSP34ApK
-         RSIFhXb2B9vEw19Hl1y/CdcSJgcH3VqlLv8iZm/zsNFtcgCUrHmMDd3oshBFS5weDAOJ
-         LkLrxlkW8wqXI3CW6VdMXQJS5ygq2nXnvvC212INW8VzoE+l8kg1JDwRbGVYdVgdBhkv
-         y0/+DpJeIQijMPKc5/YxrHd0HsTIIytiQyu9FA92LdXugd8p5qCbA+XV7xTFm24Cnpw9
-         0dgg==
-X-Gm-Message-State: APjAAAUagZngR+pCgR6LOXPN64eLtoYDLL1KXx+Ynp3Z4oj0cSxqZEbq
-        HcWGrEz/Eoj5e3TheanAm5vvog==
-X-Google-Smtp-Source: APXvYqwjuzhS3BpKt6xGsva6ZfgbAYrcRNVn+3vmUXd3bKzT1b/K98vAVksO/LvuPRUEO+sF5cmBLA==
-X-Received: by 2002:a17:90a:a78b:: with SMTP id f11mr15273352pjq.8.1580510188785;
-        Fri, 31 Jan 2020 14:36:28 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id a9sm11359539pfo.35.2020.01.31.14.36.27
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=A/QwXMv8QAmipbLMot4MaxUhNNvwb0UK1sNHG1c0AVY=;
+        b=M9HwJ5qwnNmT6Z7YSpiwQKsXaJH3Kdgq/yx45atHrBowiExKCFdqz5p7rSzvpfwzt7
+         Za4Sevok4tlKQ/FuZ6Iu1v8esulI7OupIliY3NYQgAnlxQNIuSWApQunqUz+IiyGbWWm
+         OkMJxsQ9LBDHIW/c0B2FMrdSxBGoAwN4ySeb4bfuceckit0tsJc6bc5zyVQgCh749l4E
+         8RXux3+qyhLwyzZ1G4hPGTMbPdW5BDSUg8TcCZbz3d79j/FKITIjtg/xZGgX+CHu5rJc
+         nhRTdKE2REggBIAK601QcaEoBQadD7UCmxCNcJVCF3L3Q0xkOEBNJWWk3+VwAXu/yljU
+         g/hA==
+X-Gm-Message-State: APjAAAUjw+xacdILvBscrbq3gR/twiijj3EaAUkUeO7/iQPyi++eQRON
+        3aDDavnStoML4pab3WWUh3ZJMveq9iQ=
+X-Google-Smtp-Source: APXvYqyUyw1z7Nsyp3IfPh0n0vcF4km3YQay8qXWKEXIA+nRF3m8BdrYRol0unySv3trAizFSo08xA==
+X-Received: by 2002:a67:c90d:: with SMTP id w13mr8031476vsk.164.1580510307861;
+        Fri, 31 Jan 2020 14:38:27 -0800 (PST)
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com. [209.85.221.174])
+        by smtp.gmail.com with ESMTPSA id o16sm2643657vsa.3.2020.01.31.14.38.25
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 Jan 2020 14:36:28 -0800 (PST)
-Date:   Fri, 31 Jan 2020 14:36:26 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        robh@kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        tientzu@chromium.org, seanpaul@chromium.org, rjliao@codeaurora.org,
-        yshavit@google.com, Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] dt-bindings: net: bluetooth: Add device tree
- bindings for QTI chip WCN3991
-Message-ID: <20200131223626.GA237926@google.com>
-References: <1580456335-7317-1-git-send-email-gubbaven@codeaurora.org>
- <1580456335-7317-2-git-send-email-gubbaven@codeaurora.org>
+        Fri, 31 Jan 2020 14:38:26 -0800 (PST)
+Received: by mail-vk1-f174.google.com with SMTP id t129so2541537vkg.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jan 2020 14:38:25 -0800 (PST)
+X-Received: by 2002:a1f:a9d0:: with SMTP id s199mr7858217vke.40.1580510305500;
+ Fri, 31 Jan 2020 14:38:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1580456335-7317-2-git-send-email-gubbaven@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <1579774675-20235-1-git-send-email-kalyan_t@codeaurora.org>
+In-Reply-To: <1579774675-20235-1-git-send-email-kalyan_t@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 31 Jan 2020 14:38:14 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XnS893yXNcm6RKV_3Do5b8hR2=nj=Y03Ymw7fbU+Zwng@mail.gmail.com>
+Message-ID: <CAD=FV=XnS893yXNcm6RKV_3Do5b8hR2=nj=Y03Ymw7fbU+Zwng@mail.gmail.com>
+Subject: Re: [PATCH] msm:disp:dpu1: add UBWC support for display on SC7180
+To:     Kalyan Thota <kalyan_t@codeaurora.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Harigovindan P <harigovi@codeaurora.org>,
+        travitej@codeaurora.org, nganji@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ DT folks
+Hi,
 
-On Fri, Jan 31, 2020 at 01:08:55PM +0530, Venkata Lakshmi Narayana Gubba wrote:
-> Add compatible string for the Qualcomm WCN3991 Bluetooth controller
-> 
-> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+On Thu, Jan 23, 2020 at 2:19 AM Kalyan Thota <kalyan_t@codeaurora.org> wrote:
+>
+> Add UBWC global configuration for display on
+> SC7180 target.
+>
+> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
 > ---
->  Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
-> index 68b67d9..e72045d 100644
-> --- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
-> +++ b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
-> @@ -11,6 +11,7 @@ Required properties:
->   - compatible: should contain one of the following:
->     * "qcom,qca6174-bt"
->     * "qcom,wcn3990-bt"
-> +   * "qcom,wcn3991-bt"
->     * "qcom,wcn3998-bt"
->  
->  Optional properties for compatible string qcom,qca6174-bt:
-> @@ -30,6 +31,7 @@ Optional properties for compatible string qcom,wcn399x-bt:
->  
->   - max-speed: see Documentation/devicetree/bindings/serial/slave-device.txt
->   - firmware-name: specify the name of nvm firmware to load
-> + - clocks: clock provided to the controller
->  
->  Examples:
->  
-> @@ -56,5 +58,6 @@ serial@898000 {
->  		vddch0-supply = <&vreg_l25a_3p3>;
->  		max-speed = <3200000>;
->  		firmware-name = "crnv21.bin";
-> +		clocks = <&rpmhcc>;
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c | 58 +++++++++++++++++++++++++++++++-
+>  1 file changed, 57 insertions(+), 1 deletion(-)
 
-That specifies a clock controller, not a clock.
+I didn't do any sort of review of this patch, but I can say that
+without it the screen on my sc7180-based device is super glitchy and
+when I add this patch in the glitchies are gone.  Thus:
 
-For a device with the SC7180 SoC we use this:
+Tested-by: Douglas Anderson <dianders@chromium.org>
 
-		clocks = <&rpmhcc RPMH_RF_CLK2>;
+...one note is that the subject of this patch seems a bit
+non-standard.  I would have expected a tag more like "drm/msm/dpu:"
+instead of "msm:disp:dpu1:".  Presumably if the maintainer cares when
+landing he/she could fix that up, but something to think about for
+future patches.
 
->  	};
->  };
+-Doug
