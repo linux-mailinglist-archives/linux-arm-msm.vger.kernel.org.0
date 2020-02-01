@@ -2,85 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7ADF714F50A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2020 00:00:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EC70014F7BA
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Feb 2020 13:22:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726322AbgAaXAf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Jan 2020 18:00:35 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:48403 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726246AbgAaXAe (ORCPT
+        id S1726491AbgBAMWE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Feb 2020 07:22:04 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:51538 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726480AbgBAMWE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Jan 2020 18:00:34 -0500
+        Sat, 1 Feb 2020 07:22:04 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580511634; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=i3PwaHsN67/54M0kZuRccV6gcxHouSS2QlRHmHVgiq8=; b=vpLl3arbncTzJFjt1EE/v8aikA5KX1CvztYAtwEj1syhvrYkbKBS+pTmTaDcEVQTTjzehpTO
- G1A4joXSXSmFbKCsVw5iYVqice+PP417jk5asNDoATjCTJMid3VmrUbeSGctzqpHx9TZepFR
- ZD/B2ed8bOcSoqaziAxkDGvDQfQ=
-X-Mailgun-Sending-Ip: 104.130.122.25
+ s=smtp; t=1580559723; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=6g00UFIo11fls4SoPhp5QqjHM3g8x0gvkFYVg+qT4ts=;
+ b=CYdXjjbbpgbV037mWp+PbSVoH8nEGHUhs5imYhzHNzafEdj/sxq1sxr/SDmkADcyGJQcLUGM
+ WCshLP7vkG8GFeFwqY80TeBO+fy7kNNhyHr3yl6hk8oKi8PnA/euWB/LTteErIXukeObjShh
+ CiISwdUx/wqdEVQQ3Pe1GIbKbZk=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e34b186.7f3e2a97c378-smtp-out-n01;
- Fri, 31 Jan 2020 23:00:22 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e356d6a.7f4c17c37570-smtp-out-n02;
+ Sat, 01 Feb 2020 12:22:02 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EE445C447A1; Fri, 31 Jan 2020 23:00:20 +0000 (UTC)
+        id 4A140C447A5; Sat,  1 Feb 2020 12:22:00 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B74EFC433A2;
-        Fri, 31 Jan 2020 23:00:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B74EFC433A2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v2 03/16] bus: mhi: core: Add support for registering MHI
- client drivers
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        gregkh@linuxfoundation.org, arnd@arndb.de
-Cc:     smohanad@codeaurora.org, kvalo@codeaurora.org,
-        bjorn.andersson@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200131135009.31477-1-manivannan.sadhasivam@linaro.org>
- <20200131135009.31477-4-manivannan.sadhasivam@linaro.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <0af134d9-6df6-e79b-cab2-1f96b16323c4@codeaurora.org>
-Date:   Fri, 31 Jan 2020 16:00:18 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8C0D8C433A2;
+        Sat,  1 Feb 2020 12:21:59 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20200131135009.31477-4-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Sat, 01 Feb 2020 17:51:59 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Matthias Kaehlcke <mka@chromium.org>, viresh.kumar@linaro.org,
+        sboyd@kernel.org, georgi.djakov@linaro.org, saravanak@google.com,
+        nm@ti.com, bjorn.andersson@linaro.org, agross@kernel.org,
+        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org,
+        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
+        ulf.hansson@linaro.org, linux-kernel-owner@vger.kernel.org
+Subject: Re: [RFC v3 02/10] cpufreq: blacklist SDM845 in cpufreq-dt-platdev
+In-Reply-To: <20200130114004.GA56122@bogus>
+References: <20200127200350.24465-1-sibis@codeaurora.org>
+ <20200127200350.24465-3-sibis@codeaurora.org>
+ <20200128204423.GF46072@google.com> <20200130114004.GA56122@bogus>
+Message-ID: <b886c49e4bdab4054d08f10b0d8fa763@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/31/2020 6:49 AM, Manivannan Sadhasivam wrote:
-> This commit adds support for registering MHI client drivers with the
-> MHI stack. MHI client drivers binds to one or more MHI devices inorder
-> to sends and receive the upper-layer protocol packets like IP packets,
-> modem control messages, and diagnostics messages over MHI bus.
-> 
-> This is based on the patch submitted by Sujeev Dias:
-> https://lkml.org/lkml/2018/7/9/987
-> 
-> Signed-off-by: Sujeev Dias <sdias@codeaurora.org>
-> Signed-off-by: Siddartha Mohanadoss <smohanad@codeaurora.org>
-> [mani: splitted and cleaned up for upstream]
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Hey Sudeep,
 
-Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
-Tested-by: Jeffrey Hugo <jhugo@codeaurora.org>
+Thanks for the review!
+
+On 2020-01-30 17:10, Sudeep Holla wrote:
+> On Tue, Jan 28, 2020 at 12:44:23PM -0800, Matthias Kaehlcke wrote:
+>> On Tue, Jan 28, 2020 at 01:33:42AM +0530, Sibi Sankar wrote:
+>> > Add SDM845 to cpufreq-dt-platdev blacklist.
+>> 
+>> nit: you could mention that cpufreq is handled by the
+>> 'qcom-cpufreq-hw' driver.
+>> 
+> 
+> IIUC, these platforms get the OPP table from the firmware and there 
+> shouldn't
+> be OPP entries in the DT. If not, why not fix that to avoid more 
+> confusion.
+> Can we make cpu0_node_has_opp_v2_prop return false in short.
+
+The entire point of the series is to
+define a way of identifying required
+opp-kBps values for L3/DDR at different
+cpu frequencies. The required-opps is
+chosen as the way of showcasing the
+dependencies. Hence the need to for a
+superset cpu opp-table consisting of
+all possible cpu freq values supported
+by the family of SoCs and enabling only
+the opps that are supported by the board
+from the values read back from firmware.
+
+> 
+> --
+> Regards,
+> Sudeep
 
 -- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
