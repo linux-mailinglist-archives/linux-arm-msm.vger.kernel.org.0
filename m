@@ -2,348 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 39866151137
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 21:42:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10190151145
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 21:48:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726369AbgBCUmf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Feb 2020 15:42:35 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40154 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725372AbgBCUmf (ORCPT
+        id S1726369AbgBCUsz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Feb 2020 15:48:55 -0500
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:43501 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725372AbgBCUsy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Feb 2020 15:42:35 -0500
-Received: by mail-wr1-f68.google.com with SMTP id t3so130776wru.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2020 12:42:30 -0800 (PST)
+        Mon, 3 Feb 2020 15:48:54 -0500
+Received: by mail-vs1-f65.google.com with SMTP id 7so9859368vsr.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2020 12:48:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=kzlJFFaD07r1rSVSfJW74lHsWleRykLVi2lypDCCujU=;
-        b=hqhPOmaq4Q0ocbcPBXrM5vPpLy9AsXTC6lDDsOKX08OYoX3DqYcSVzV2aLM3qGuV5/
-         +ibvKXMm9H/DsOrP92SDQZLTOqo1xnipz0oRzL6iHh7e6PCxwUTb12aniMkqRRMo4+Am
-         N8bI2NhK/6CxFWKUWlfPvRgJlAGnoe761yaG2dprsiBzByqOClKGAJT4bRsM3CkDWNoH
-         dONhghq22ShADwsahLLGltJ2DXE/mOOA7sxFeapuIRKZR8hl4VP0yI2JtiAb1l47OqYM
-         BLn97YbXRSY17GXBTvFRtQxlLhfiQZMawKPGxD4D+zy1R+AbUDHbLWlzNuqAPyuBhCEp
-         MkXg==
+        bh=d+JwFHbchxJ0gg1my7n1CXaZxr3hxuHVj1YoJC44SlE=;
+        b=SCEVhtfbAbnwghXPkv1qNGhfhx7+ObPqKjLQOZh9HGoAf2EoYmD7XqBz5PP5nVTOwt
+         Xg77qSn8dKpq9fyJTZ4fb1ysvbU8U7zW7weoRKoHtZ2yFgzJ9Fc4br1YZ49aI0X7k802
+         OZYYW2/7BmFempKoaKOmfRN2mU09LOD5o4jC0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=kzlJFFaD07r1rSVSfJW74lHsWleRykLVi2lypDCCujU=;
-        b=pmvPDyyqFP+aIevtawFjmktUvaOulfMfMcDi3ohAJYVVZmFgjcLdHa/wQCFJzbOfLp
-         k53scAtEpKYP4BVa2tEiLrjgVAQLR/JNNpb7XRYuFaaiP2WBAE70aAGVbhAye3hyF+OY
-         IsxOop1rNWYmCE06r5IgwCdpDCKQaTjNstaQlhQ9hIRKDVCwWAGFpMDPOgrtIZaXe8ER
-         we7/gmkS5cT+r6y1JBt3XvNN2wuZ6FIf+fHUycby+7U++WZd/ZWNhlB48Q/lbTG1YjTu
-         vavMNBgmy0UhcaBP6r1F3V3+GL0qxrO0v6MbL3rBuhTWPcpuhTH+cqbY1lUvPz1B1ETf
-         5nRA==
-X-Gm-Message-State: APjAAAWHQeovlCFN7NxzSq0V4h7ZKbNCVU59yCybJoztdqlFvMPLYGfY
-        FJVcKCSeOy13cmDKl24HQY4at8NEIWnojsHukRA=
-X-Google-Smtp-Source: APXvYqwa0813ELVjcYzyEmJrNB03hNWfizoiM4FJwty/sLjp/+bC7+JcuEWxCHY2C7bhHs0oYZhEtnsD53UVmhKVglQ=
-X-Received: by 2002:a5d:51c8:: with SMTP id n8mr15116368wrv.111.1580762549913;
- Mon, 03 Feb 2020 12:42:29 -0800 (PST)
+        bh=d+JwFHbchxJ0gg1my7n1CXaZxr3hxuHVj1YoJC44SlE=;
+        b=gbHiSfPC3xxvM2XnZupAkfuBH6gRAFVmOua7Gbfn+T/G9hmAGQEkQCZDq0wT5BNr6o
+         ddCaSQzhkJsdJLC9MQNP8fDhMXLnuPfsk8iwGb61gf0xUEVwHoH69rJFg7A8eEvZXNpt
+         xBHFI583k+arGg2lY83Nwq3+pH4nelQtH9AliGUV8OEg7d9BdA96zPirF/OHBflC0nW+
+         KCnNWBoE/Zn044ftOqeFu+/Ojqh/4/h2ofvlZffz5L+5so4lweW5d+2Q4nmhqe4zPNqe
+         KnP5uhjgmgay88RTcEKGre2FFjaSKDJf0E1FkjrvZBnN0r7pfgXAkQOXDLrLlGvsQfi1
+         NUfQ==
+X-Gm-Message-State: APjAAAWW+nmHD8E+j+KV37eEUsquRYnijsgIcAjv5qbWCkyzxB/SXqJT
+        8C4gh6ZPtr3996L6MzqN4Y5R4BoMyu4=
+X-Google-Smtp-Source: APXvYqyNrK1ilvT+mHjwvkcxuMscnajFBciubajZiLimBA6j/YOHMZnEUXdbeHp4twgItGPesXz+lA==
+X-Received: by 2002:a67:6746:: with SMTP id b67mr16710120vsc.193.1580762933174;
+        Mon, 03 Feb 2020 12:48:53 -0800 (PST)
+Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com. [209.85.222.42])
+        by smtp.gmail.com with ESMTPSA id f9sm1029060vkl.21.2020.02.03.12.48.51
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Feb 2020 12:48:52 -0800 (PST)
+Received: by mail-ua1-f42.google.com with SMTP id 1so5900105uao.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2020 12:48:51 -0800 (PST)
+X-Received: by 2002:ab0:2006:: with SMTP id v6mr14461189uak.22.1580762931322;
+ Mon, 03 Feb 2020 12:48:51 -0800 (PST)
 MIME-Version: 1.0
-References: <20200123135943.24140-1-tzimmermann@suse.de> <20200123135943.24140-6-tzimmermann@suse.de>
-In-Reply-To: <20200123135943.24140-6-tzimmermann@suse.de>
-From:   Alex Deucher <alexdeucher@gmail.com>
-Date:   Mon, 3 Feb 2020 15:42:18 -0500
-Message-ID: <CADnq5_N2+b2n_w7tTmQxFCkAHNrM=L8w3Mihg+QBASzx8R6L2A@mail.gmail.com>
-Subject: Re: [PATCH v4 05/22] drm/amdgpu: Convert to CRTC VBLANK callbacks
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     Dave Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        "Deucher, Alexander" <alexander.deucher@amd.com>,
-        Christian Koenig <christian.koenig@amd.com>,
-        Chunming Zhou <David1.Zhou@amd.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
-        Vincent Abriou <vincent.abriou@st.com>, yannick.fertre@st.com,
-        philippe.cornu@st.com, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@st.com, Eric Anholt <eric@anholt.net>,
-        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>,
-        Thomas Hellstrom <thellstrom@vmware.com>,
-        Ben Skeggs <bskeggs@redhat.com>,
-        "Wentland, Harry" <harry.wentland@amd.com>,
-        "Leo (Sunpeng) Li" <sunpeng.li@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+References: <20200203183149.73842-1-dianders@chromium.org> <20200203193027.62BD22080D@mail.kernel.org>
+ <CAD=FV=X2K-Qr17qXgG1Ng8MpZQogagBqMwWu=D2OpQf+ZskBPw@mail.gmail.com> <20200203200443.GN3948@builder>
+In-Reply-To: <20200203200443.GN3948@builder>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 3 Feb 2020 12:48:39 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=VQyTHYizfzMwjAaRbmQ4zvFFzdfgGiVkLQU+b+pFVnzg@mail.gmail.com>
+Message-ID: <CAD=FV=VQyTHYizfzMwjAaRbmQ4zvFFzdfgGiVkLQU+b+pFVnzg@mail.gmail.com>
+Subject: Re: [PATCH v4 00/15] clk: qcom: Fix parenting for dispcc/gpucc/videocc
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        amd-gfx list <amd-gfx@lists.freedesktop.org>,
-        Maling list - DRI developers 
-        <dri-devel@lists.freedesktop.org>,
-        nouveau <nouveau@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>
+        Harigovindan P <harigovi@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Matthias Kaehlcke <mka@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 23, 2020 at 9:00 AM Thomas Zimmermann <tzimmermann@suse.de> wrote:
->
-> VBLANK callbacks in struct drm_driver are deprecated in favor of
-> their equivalents in struct drm_crtc_funcs. Convert amdgpu over.
->
-> v2:
->         * don't wrap existing functions; change signature instead
->
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Hi,
 
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+On Mon, Feb 3, 2020 at 12:04 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Mon 03 Feb 11:41 PST 2020, Doug Anderson wrote:
+>
+> > Hi,
+> >
+> > On Mon, Feb 3, 2020 at 11:30 AM Stephen Boyd <sboyd@kernel.org> wrote:
+> > >
+> > > Quoting Douglas Anderson (2020-02-03 10:31:33)
+> > > >
+> > > >  .../devicetree/bindings/clock/qcom,gpucc.yaml | 72 --------------
+> > > >  ...om,dispcc.yaml => qcom,msm8998-gpucc.yaml} | 33 +++----
+> > > >  .../bindings/clock/qcom,sc7180-dispcc.yaml    | 84 ++++++++++++++++
+> > > >  .../bindings/clock/qcom,sc7180-gpucc.yaml     | 72 ++++++++++++++
+> > > >  .../bindings/clock/qcom,sc7180-videocc.yaml   | 63 ++++++++++++
+> > > >  .../bindings/clock/qcom,sdm845-dispcc.yaml    | 99 +++++++++++++++++++
+> > > >  .../bindings/clock/qcom,sdm845-gpucc.yaml     | 72 ++++++++++++++
+> > > >  ...,videocc.yaml => qcom,sdm845-videocc.yaml} | 27 ++---
+> > > >  arch/arm64/boot/dts/qcom/sc7180.dtsi          | 47 +++++++++
+> > > >  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 28 +++++-
+> > >
+> > > I don't want to take patches touching dts/qcom/. These aren't necessary
+> > > to merge right now, correct? Or at least, they can go via arm-soc tree?
+> >
+> > Right.  They can go later.
+> >
+> > Specifically for sdm845 until the sdm845 patches lands the old dts
+> > trees will yell about the missing clocks, but it's not like they will
+> > compile fail.  Also the bindings themselves will validate fine.
+> > There's no other way forward, though, and the old bindings caused
+> > similar yells.
+> >
+>
+> Can you please help me parse this, will old DT cause complaints or will
+> it fail to boot?
 
-> ---
->  drivers/gpu/drm/amd/amdgpu/amdgpu.h           |  6 +++---
->  drivers/gpu/drm/amd/amdgpu/amdgpu_display.c   |  4 ++--
->  drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c       |  4 ----
->  drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c       | 21 +++++++++++--------
->  drivers/gpu/drm/amd/amdgpu/dce_v10_0.c        |  4 ++++
->  drivers/gpu/drm/amd/amdgpu/dce_v11_0.c        |  4 ++++
->  drivers/gpu/drm/amd/amdgpu/dce_v6_0.c         |  4 ++++
->  drivers/gpu/drm/amd/amdgpu/dce_v8_0.c         |  4 ++++
->  drivers/gpu/drm/amd/amdgpu/dce_virtual.c      |  4 ++++
->  .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 10 +++++----
->  10 files changed, 43 insertions(+), 22 deletions(-)
+Sorry, let me try to be more clear:
+
+a) Without my series: "make dtbs_check" limited to the bindings files
+I'm touching yells.  Examples:
+
+.../msm8998-mtp.dt.yaml: clock-controller@5065000: clock-names:1:
+'gpll0_main' was expected
+
+.../sdm845-mtp.dt.yaml: clock-controller@af00000: 'clocks' is a
+required property
+.../sdm845-mtp.dt.yaml: clock-controller@af00000: 'clock-names' is a
+required property
+
+.../sdm845-mtp.dt.yaml: clock-controller@ab00000: 'clocks' is a
+required property
+.../sdm845-mtp.dt.yaml: clock-controller@ab00000: 'clock-names' is a
+required property
+
+
+b) With just the bindings from my series, "make dtbs_check" yells, but
+yells about different things.  The "gpll0_main" one goes away but this
+one is new:
+
+.../sdm845-mtp.dt.yaml: clock-controller@5090000: clock-names:0:
+'bi_tcxo' was expected
+.../sdm845-mtp.dt.yaml: clock-controller@5090000: clock-names: ['xo']
+is too short
+.../sdm845-mtp.dt.yaml: clock-controller@5090000: clocks: [[26, 0]] is too short
+
+
+c) With just the "dts" from my series, you'll again get different
+yells from "make dtbs_check".  I won't bother listing them, but they
+are similar to the above.
+
+
+d) With everything from my series, the "make dtbs_check" limited to
+the bindings files I'm touching is clean.
+
+---
+
+* sdm845's ability to boot is unaffected by this series.  I have
+tested booting sdm845 after this series and it's fine.  Since nothing
+in this series touches the sdm845 clock drivers (only the bindings and
+the dts) that means that the new dts must work with the existing
+drivers.  You can land the sdm845 dts any time after Stephen and Rob
+are happy with the bindings.
+
+* It should be fine to land the sc7180 dts file without waiting for
+the driver change.  The dts here will work with both the
+dispcc/gpucc/videocc that's in clk-next and also the one that results
+from applying all of my patches.
+
+
+> > For sc7180 there's no usage of any of these clocks and this adds the
+> > first usage, so definitely no problem there.
+> >
+> > Once you've landed then Bjorn or Andy can pick up the dts.
+> >
 >
-> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-> index f42e8d467c12..2319fdfc42e5 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-> @@ -1191,9 +1191,9 @@ void amdgpu_driver_postclose_kms(struct drm_device *dev,
->  int amdgpu_device_ip_suspend(struct amdgpu_device *adev);
->  int amdgpu_device_suspend(struct drm_device *dev, bool fbcon);
->  int amdgpu_device_resume(struct drm_device *dev, bool fbcon);
-> -u32 amdgpu_get_vblank_counter_kms(struct drm_device *dev, unsigned int pipe);
-> -int amdgpu_enable_vblank_kms(struct drm_device *dev, unsigned int pipe);
-> -void amdgpu_disable_vblank_kms(struct drm_device *dev, unsigned int pipe);
-> +u32 amdgpu_get_vblank_counter_kms(struct drm_crtc *crtc);
-> +int amdgpu_enable_vblank_kms(struct drm_crtc *crtc);
-> +void amdgpu_disable_vblank_kms(struct drm_crtc *crtc);
->  long amdgpu_kms_compat_ioctl(struct file *filp, unsigned int cmd,
->                              unsigned long arg);
->
-> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-> index a1e769d4417d..ad9c9546a64f 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-> @@ -99,7 +99,7 @@ static void amdgpu_display_flip_work_func(struct work_struct *__work)
->              & (DRM_SCANOUTPOS_VALID | DRM_SCANOUTPOS_IN_VBLANK)) ==
->             (DRM_SCANOUTPOS_VALID | DRM_SCANOUTPOS_IN_VBLANK) &&
->             (int)(work->target_vblank -
-> -                 amdgpu_get_vblank_counter_kms(adev->ddev, amdgpu_crtc->crtc_id)) > 0) {
-> +                 amdgpu_get_vblank_counter_kms(crtc)) > 0) {
->                 schedule_delayed_work(&work->flip_work, usecs_to_jiffies(1000));
->                 return;
->         }
-> @@ -219,7 +219,7 @@ int amdgpu_display_crtc_page_flip_target(struct drm_crtc *crtc,
->         if (!adev->enable_virtual_display)
->                 work->base = amdgpu_bo_gpu_offset(new_abo);
->         work->target_vblank = target - (uint32_t)drm_crtc_vblank_count(crtc) +
-> -               amdgpu_get_vblank_counter_kms(dev, work->crtc_id);
-> +               amdgpu_get_vblank_counter_kms(crtc);
->
->         /* we borrow the event spin lock for protecting flip_wrok */
->         spin_lock_irqsave(&crtc->dev->event_lock, flags);
-> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-> index 955b78f1bba4..bc2fa428013f 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-> @@ -1388,10 +1388,6 @@ static struct drm_driver kms_driver = {
->         .postclose = amdgpu_driver_postclose_kms,
->         .lastclose = amdgpu_driver_lastclose_kms,
->         .unload = amdgpu_driver_unload_kms,
-> -       .get_vblank_counter = amdgpu_get_vblank_counter_kms,
-> -       .enable_vblank = amdgpu_enable_vblank_kms,
-> -       .disable_vblank = amdgpu_disable_vblank_kms,
-> -       .get_vblank_timestamp = drm_calc_vbltimestamp_from_scanoutpos,
->         .irq_handler = amdgpu_irq_handler,
->         .ioctls = amdgpu_ioctls_kms,
->         .gem_free_object_unlocked = amdgpu_gem_object_free,
-> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-> index 60591dbc2097..98c196de27a4 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-> @@ -1110,14 +1110,15 @@ void amdgpu_driver_postclose_kms(struct drm_device *dev,
->  /**
->   * amdgpu_get_vblank_counter_kms - get frame count
->   *
-> - * @dev: drm dev pointer
-> - * @pipe: crtc to get the frame count from
-> + * @crtc: crtc to get the frame count from
->   *
->   * Gets the frame count on the requested crtc (all asics).
->   * Returns frame count on success, -EINVAL on failure.
->   */
-> -u32 amdgpu_get_vblank_counter_kms(struct drm_device *dev, unsigned int pipe)
-> +u32 amdgpu_get_vblank_counter_kms(struct drm_crtc *crtc)
->  {
-> +       struct drm_device *dev = crtc->dev;
-> +       unsigned int pipe = crtc->index;
->         struct amdgpu_device *adev = dev->dev_private;
->         int vpos, hpos, stat;
->         u32 count;
-> @@ -1177,14 +1178,15 @@ u32 amdgpu_get_vblank_counter_kms(struct drm_device *dev, unsigned int pipe)
->  /**
->   * amdgpu_enable_vblank_kms - enable vblank interrupt
->   *
-> - * @dev: drm dev pointer
-> - * @pipe: crtc to enable vblank interrupt for
-> + * @crtc: crtc to enable vblank interrupt for
->   *
->   * Enable the interrupt on the requested crtc (all asics).
->   * Returns 0 on success, -EINVAL on failure.
->   */
-> -int amdgpu_enable_vblank_kms(struct drm_device *dev, unsigned int pipe)
-> +int amdgpu_enable_vblank_kms(struct drm_crtc *crtc)
->  {
-> +       struct drm_device *dev = crtc->dev;
-> +       unsigned int pipe = crtc->index;
->         struct amdgpu_device *adev = dev->dev_private;
->         int idx = amdgpu_display_crtc_idx_to_irq_type(adev, pipe);
->
-> @@ -1194,13 +1196,14 @@ int amdgpu_enable_vblank_kms(struct drm_device *dev, unsigned int pipe)
->  /**
->   * amdgpu_disable_vblank_kms - disable vblank interrupt
->   *
-> - * @dev: drm dev pointer
-> - * @pipe: crtc to disable vblank interrupt for
-> + * @crtc: crtc to disable vblank interrupt for
->   *
->   * Disable the interrupt on the requested crtc (all asics).
->   */
-> -void amdgpu_disable_vblank_kms(struct drm_device *dev, unsigned int pipe)
-> +void amdgpu_disable_vblank_kms(struct drm_crtc *crtc)
->  {
-> +       struct drm_device *dev = crtc->dev;
-> +       unsigned int pipe = crtc->index;
->         struct amdgpu_device *adev = dev->dev_private;
->         int idx = amdgpu_display_crtc_idx_to_irq_type(adev, pipe);
->
-> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-> index bdc1e0f036d4..2512e7ebfedf 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-> @@ -2494,6 +2494,10 @@ static const struct drm_crtc_funcs dce_v10_0_crtc_funcs = {
->         .set_config = amdgpu_display_crtc_set_config,
->         .destroy = dce_v10_0_crtc_destroy,
->         .page_flip_target = amdgpu_display_crtc_page_flip_target,
-> +       .get_vblank_counter = amdgpu_get_vblank_counter_kms,
-> +       .enable_vblank = amdgpu_enable_vblank_kms,
-> +       .disable_vblank = amdgpu_disable_vblank_kms,
-> +       .get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
->  };
->
->  static void dce_v10_0_crtc_dpms(struct drm_crtc *crtc, int mode)
-> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
-> index 0319da5f7bf9..0dde22db9848 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
-> @@ -2573,6 +2573,10 @@ static const struct drm_crtc_funcs dce_v11_0_crtc_funcs = {
->         .set_config = amdgpu_display_crtc_set_config,
->         .destroy = dce_v11_0_crtc_destroy,
->         .page_flip_target = amdgpu_display_crtc_page_flip_target,
-> +       .get_vblank_counter = amdgpu_get_vblank_counter_kms,
-> +       .enable_vblank = amdgpu_enable_vblank_kms,
-> +       .disable_vblank = amdgpu_disable_vblank_kms,
-> +       .get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
->  };
->
->  static void dce_v11_0_crtc_dpms(struct drm_crtc *crtc, int mode)
-> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-> index 78642c3b14fc..84219534bd38 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-> @@ -2388,6 +2388,10 @@ static const struct drm_crtc_funcs dce_v6_0_crtc_funcs = {
->         .set_config = amdgpu_display_crtc_set_config,
->         .destroy = dce_v6_0_crtc_destroy,
->         .page_flip_target = amdgpu_display_crtc_page_flip_target,
-> +       .get_vblank_counter = amdgpu_get_vblank_counter_kms,
-> +       .enable_vblank = amdgpu_enable_vblank_kms,
-> +       .disable_vblank = amdgpu_disable_vblank_kms,
-> +       .get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
->  };
->
->  static void dce_v6_0_crtc_dpms(struct drm_crtc *crtc, int mode)
-> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-> index 1e8d4975435a..3a640702d7d1 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-> @@ -2395,6 +2395,10 @@ static const struct drm_crtc_funcs dce_v8_0_crtc_funcs = {
->         .set_config = amdgpu_display_crtc_set_config,
->         .destroy = dce_v8_0_crtc_destroy,
->         .page_flip_target = amdgpu_display_crtc_page_flip_target,
-> +       .get_vblank_counter = amdgpu_get_vblank_counter_kms,
-> +       .enable_vblank = amdgpu_enable_vblank_kms,
-> +       .disable_vblank = amdgpu_disable_vblank_kms,
-> +       .get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
->  };
->
->  static void dce_v8_0_crtc_dpms(struct drm_crtc *crtc, int mode)
-> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_virtual.c b/drivers/gpu/drm/amd/amdgpu/dce_virtual.c
-> index 4b2f915aba47..5707e4ad1a62 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/dce_virtual.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/dce_virtual.c
-> @@ -123,6 +123,10 @@ static const struct drm_crtc_funcs dce_virtual_crtc_funcs = {
->         .set_config = amdgpu_display_crtc_set_config,
->         .destroy = dce_virtual_crtc_destroy,
->         .page_flip_target = amdgpu_display_crtc_page_flip_target,
-> +       .get_vblank_counter = amdgpu_get_vblank_counter_kms,
-> +       .enable_vblank = amdgpu_enable_vblank_kms,
-> +       .disable_vblank = amdgpu_disable_vblank_kms,
-> +       .get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
->  };
->
->  static void dce_virtual_crtc_dpms(struct drm_crtc *crtc, int mode)
-> diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-> index 3b68cddc4c81..42acb7775ee7 100644
-> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-> @@ -383,8 +383,8 @@ static void dm_pflip_high_irq(void *interrupt_params)
->          * of pageflip completion, so last_flip_vblank is the forbidden count
->          * for queueing new pageflips if vsync + VRR is enabled.
->          */
-> -       amdgpu_crtc->last_flip_vblank = amdgpu_get_vblank_counter_kms(adev->ddev,
-> -                                                       amdgpu_crtc->crtc_id);
-> +       amdgpu_crtc->last_flip_vblank =
-> +               amdgpu_get_vblank_counter_kms(&amdgpu_crtc->base);
->
->         amdgpu_crtc->pflip_status = AMDGPU_FLIP_NONE;
->         spin_unlock_irqrestore(&adev->ddev->event_lock, flags);
-> @@ -4266,8 +4266,10 @@ static const struct drm_crtc_funcs amdgpu_dm_crtc_funcs = {
->         .set_crc_source = amdgpu_dm_crtc_set_crc_source,
->         .verify_crc_source = amdgpu_dm_crtc_verify_crc_source,
->         .get_crc_sources = amdgpu_dm_crtc_get_crc_sources,
-> +       .get_vblank_counter = amdgpu_get_vblank_counter_kms,
->         .enable_vblank = dm_enable_vblank,
->         .disable_vblank = dm_disable_vblank,
-> +       .get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
->  };
->
->  static enum drm_connector_status
-> @@ -6478,7 +6480,7 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
->                          * clients using the GLX_OML_sync_control extension or
->                          * DRI3/Present extension with defined target_msc.
->                          */
-> -                       last_flip_vblank = amdgpu_get_vblank_counter_kms(dm->ddev, acrtc_attach->crtc_id);
-> +                       last_flip_vblank = amdgpu_get_vblank_counter_kms(pcrtc);
->                 }
->                 else {
->                         /* For variable refresh rate mode only:
-> @@ -6507,7 +6509,7 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
->                          & (DRM_SCANOUTPOS_VALID | DRM_SCANOUTPOS_IN_VBLANK)) ==
->                         (DRM_SCANOUTPOS_VALID | DRM_SCANOUTPOS_IN_VBLANK) &&
->                         (int)(target_vblank -
-> -                         amdgpu_get_vblank_counter_kms(dm->ddev, acrtc_attach->crtc_id)) > 0)) {
-> +                         amdgpu_get_vblank_counter_kms(pcrtc)) > 0)) {
->                         usleep_range(1000, 1100);
->                 }
->
-> --
-> 2.24.1
->
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+> Do I need to apply these after Stephen picks the driver patches? Or are
+> they simply nop until the driver patches lands?
+
+The sdm845 patches are a nop until some future patch changes the Linux
+driver to start using them.  I don't know of anyone planning to do
+that.  The only real result from an sdm845 perspective will be making
+things "more correct" from a dts standpoint and keeping "make
+dtbs_check" happier.
+
+The sc7180 patches are OK to land even without the driver.  They're
+not a nop and I've actually validated that I can bring the display/gpu
+up with them (even without the driver changes) on my downstream
+kernel.
+
+---
+
+Sorry it's so confusing.  Happy to try to clarify more if the above is
+still too hard to follow.
+
+-Doug
