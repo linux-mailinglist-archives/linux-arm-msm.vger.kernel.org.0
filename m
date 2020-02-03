@@ -2,127 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 026BA15026D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 09:23:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BCB7150335
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 10:18:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726653AbgBCIXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Feb 2020 03:23:09 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:38592 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725973AbgBCIXI (ORCPT
+        id S1727977AbgBCJS2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Feb 2020 04:18:28 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:13666 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727509AbgBCJSX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Feb 2020 03:23:08 -0500
+        Mon, 3 Feb 2020 04:18:23 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580718188; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=RSjEiJ0ttdkS4GFK/NmrKRk8pctFGBmoDIg5s6bhlOg=;
- b=opXWPMPto1E6NrMBKIJrw5Axiw1BgUNbzi5qrBS3lz0tA56K9AJFw7J0q+9KFcOSy45sUfve
- HmYnTHsSeCUHoDLJfIsg6yyA01BeL7TCY1KMKlg5jEa/jagImR1tB8lB2pqcpD2p/AuY5Ebp
- k9SAGC6GQWwI1++4kme2Irzmisk=
-X-Mailgun-Sending-Ip: 104.130.122.25
+ s=smtp; t=1580721502; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=V6FoCxGrBr7oU+TorbvPQcsJfcHy1g9aO5Idf/SlwlI=; b=DYXbThD7sru5Up4HQ7XXKCgEmAmk8MqyDh4ZqH++fVJ3n6TR930LfAgZSLskXWx/5vMSYHN6
+ et846m10Y8rLkfKEXy6ZZ/iM79r/SdAOIkgmVkv6Zwf9RjZpd1EJr+QOAUnFzdHxNYN2w8N8
+ GIsbKb+3uwGc6WYg5nOhmwulQtM=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e37d86a.7fc837d1c3e8-smtp-out-n03;
- Mon, 03 Feb 2020 08:23:06 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e37e55a.7fdd1b216dc0-smtp-out-n02;
+ Mon, 03 Feb 2020 09:18:18 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C5B3FC447A0; Mon,  3 Feb 2020 08:23:05 +0000 (UTC)
+        id 89FFEC447A4; Mon,  3 Feb 2020 09:18:17 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: gubbaven)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1FD62C43383;
-        Mon,  3 Feb 2020 08:23:05 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 03 Feb 2020 13:53:05 +0530
-From:   gubbaven@codeaurora.org
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        robh@kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        tientzu@chromium.org, seanpaul@chromium.org, rjliao@codeaurora.org,
-        yshavit@google.com, Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] dt-bindings: net: bluetooth: Add device tree
- bindings for QTI chip WCN3991
-In-Reply-To: <20200131223626.GA237926@google.com>
-References: <1580456335-7317-1-git-send-email-gubbaven@codeaurora.org>
- <1580456335-7317-2-git-send-email-gubbaven@codeaurora.org>
- <20200131223626.GA237926@google.com>
-Message-ID: <3a9f33a4e8e6f2ac2ebd286e31e5836f@codeaurora.org>
-X-Sender: gubbaven@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        (Authenticated sender: cang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0F4D9C447AA;
+        Mon,  3 Feb 2020 09:18:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0F4D9C447AA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=cang@codeaurora.org
+From:   Can Guo <cang@codeaurora.org>
+To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        hongwus@codeaurora.org, rnayak@codeaurora.org,
+        linux-scsi@vger.kernel.org, kernel-team@android.com,
+        saravanak@google.com, salyzyn@google.com, cang@codeaurora.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v5 4/8] scsi: ufs-qcom: Adjust bus bandwidth voting and unvoting
+Date:   Mon,  3 Feb 2020 01:17:46 -0800
+Message-Id: <1580721472-10784-5-git-send-email-cang@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1580721472-10784-1-git-send-email-cang@codeaurora.org>
+References: <1580721472-10784-1-git-send-email-cang@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+The bus bandwidth voting is required to be done before the bus clocks
+are enabled, and the unvoting is required to be done only after the bus
+clocks are disabled.
 
-On 2020-02-01 04:06, Matthias Kaehlcke wrote:
-> + DT folks
-> 
-> On Fri, Jan 31, 2020 at 01:08:55PM +0530, Venkata Lakshmi Narayana 
-> Gubba wrote:
->> Add compatible string for the Qualcomm WCN3991 Bluetooth controller
->> 
->> Signed-off-by: Venkata Lakshmi Narayana Gubba 
->> <gubbaven@codeaurora.org>
->> ---
->>  Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt | 3 +++
->>  1 file changed, 3 insertions(+)
->> 
->> diff --git 
->> a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt 
->> b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
->> index 68b67d9..e72045d 100644
->> --- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
->> +++ b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
->> @@ -11,6 +11,7 @@ Required properties:
->>   - compatible: should contain one of the following:
->>     * "qcom,qca6174-bt"
->>     * "qcom,wcn3990-bt"
->> +   * "qcom,wcn3991-bt"
->>     * "qcom,wcn3998-bt"
->> 
->>  Optional properties for compatible string qcom,qca6174-bt:
->> @@ -30,6 +31,7 @@ Optional properties for compatible string 
->> qcom,wcn399x-bt:
->> 
->>   - max-speed: see 
->> Documentation/devicetree/bindings/serial/slave-device.txt
->>   - firmware-name: specify the name of nvm firmware to load
->> + - clocks: clock provided to the controller
->> 
->>  Examples:
->> 
->> @@ -56,5 +58,6 @@ serial@898000 {
->>  		vddch0-supply = <&vreg_l25a_3p3>;
->>  		max-speed = <3200000>;
->>  		firmware-name = "crnv21.bin";
->> +		clocks = <&rpmhcc>;
-> 
-> That specifies a clock controller, not a clock.
-> 
-> For a device with the SC7180 SoC we use this:
-> 
-> 		clocks = <&rpmhcc RPMH_RF_CLK2>;
+Signed-off-by: Can Guo <cang@codeaurora.org>
+---
+ drivers/scsi/ufs/ufs-qcom.c | 57 +++++++++++++++++++++++++++++++--------------
+ 1 file changed, 39 insertions(+), 18 deletions(-)
 
-[Venkata] :
-
-Sure, we will update in next patch set.
-> 
->>  	};
->>  };
-
-Regards,
-Venkata.
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index c69c29a1c..85d7c17 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -38,7 +38,6 @@ enum {
+ 
+ static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
+ 
+-static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote);
+ static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
+ static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
+ 						       u32 clk_cycles);
+@@ -674,7 +673,7 @@ static void ufs_qcom_get_speed_mode(struct ufs_pa_layer_attr *p, char *result)
+ 	}
+ }
+ 
+-static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote)
++static int __ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote)
+ {
+ 	int err = 0;
+ 
+@@ -705,7 +704,7 @@ static int ufs_qcom_update_bus_bw_vote(struct ufs_qcom_host *host)
+ 
+ 	vote = ufs_qcom_get_bus_vote(host, mode);
+ 	if (vote >= 0)
+-		err = ufs_qcom_set_bus_vote(host, vote);
++		err = __ufs_qcom_set_bus_vote(host, vote);
+ 	else
+ 		err = vote;
+ 
+@@ -716,6 +715,35 @@ static int ufs_qcom_update_bus_bw_vote(struct ufs_qcom_host *host)
+ 	return err;
+ }
+ 
++static int ufs_qcom_set_bus_vote(struct ufs_hba *hba, bool on)
++{
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++	int vote, err;
++
++	/*
++	 * In case ufs_qcom_init() is not yet done, simply ignore.
++	 * This ufs_qcom_set_bus_vote() shall be called from
++	 * ufs_qcom_init() after init is done.
++	 */
++	if (!host)
++		return 0;
++
++	if (on) {
++		vote = host->bus_vote.saved_vote;
++		if (vote == host->bus_vote.min_bw_vote)
++			ufs_qcom_update_bus_bw_vote(host);
++	} else {
++		vote = host->bus_vote.min_bw_vote;
++	}
++
++	err = __ufs_qcom_set_bus_vote(host, vote);
++	if (err)
++		dev_err(hba->dev, "%s: set bus vote failed %d\n",
++				 __func__, err);
++
++	return err;
++}
++
+ static ssize_t
+ show_ufs_to_mem_max_bus_bw(struct device *dev, struct device_attribute *attr,
+ 			char *buf)
+@@ -792,7 +820,7 @@ static int ufs_qcom_update_bus_bw_vote(struct ufs_qcom_host *host)
+ 	return 0;
+ }
+ 
+-static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote)
++static int ufs_qcom_set_bus_vote(struct ufs_hba *host, bool on)
+ {
+ 	return 0;
+ }
+@@ -1030,8 +1058,7 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
+ 				 enum ufs_notify_change_status status)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+-	int err;
+-	int vote = 0;
++	int err = 0;
+ 
+ 	/*
+ 	 * In case ufs_qcom_init() is not yet done, simply ignore.
+@@ -1041,28 +1068,21 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
+ 	if (!host)
+ 		return 0;
+ 
+-	if (on && (status == POST_CHANGE)) {
++	if (on && (status == PRE_CHANGE)) {
++		err = ufs_qcom_set_bus_vote(hba, true);
++	} else if (on && (status == POST_CHANGE)) {
+ 		/* enable the device ref clock for HS mode*/
+ 		if (ufshcd_is_hs_mode(&hba->pwr_info))
+ 			ufs_qcom_dev_ref_clk_ctrl(host, true);
+-		vote = host->bus_vote.saved_vote;
+-		if (vote == host->bus_vote.min_bw_vote)
+-			ufs_qcom_update_bus_bw_vote(host);
+-
+ 	} else if (!on && (status == PRE_CHANGE)) {
+ 		if (!ufs_qcom_is_link_active(hba)) {
+ 			/* disable device ref_clk */
+ 			ufs_qcom_dev_ref_clk_ctrl(host, false);
+ 		}
+-
+-		vote = host->bus_vote.min_bw_vote;
++	} else if (!on && (status == POST_CHANGE)) {
++		err = ufs_qcom_set_bus_vote(hba, false);
+ 	}
+ 
+-	err = ufs_qcom_set_bus_vote(host, vote);
+-	if (err)
+-		dev_err(hba->dev, "%s: set bus vote failed %d\n",
+-				__func__, err);
+-
+ 	return err;
+ }
+ 
+@@ -1238,6 +1258,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+ 	ufs_qcom_set_caps(hba);
+ 	ufs_qcom_advertise_quirks(hba);
+ 
++	ufs_qcom_set_bus_vote(hba, true);
+ 	ufs_qcom_setup_clocks(hba, true, POST_CHANGE);
+ 
+ 	if (hba->dev->id < MAX_UFS_QCOM_HOSTS)
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
