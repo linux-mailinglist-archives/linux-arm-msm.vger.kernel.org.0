@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 80A5A150475
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 11:41:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B2722150461
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 11:41:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727044AbgBCKlO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Feb 2020 05:41:14 -0500
+        id S1727102AbgBCKlL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Feb 2020 05:41:11 -0500
 Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:14206 "EHLO
         alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727196AbgBCKlO (ORCPT
+        by vger.kernel.org with ESMTP id S1726100AbgBCKlL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Feb 2020 05:41:14 -0500
+        Mon, 3 Feb 2020 05:41:11 -0500
 Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
   by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 03 Feb 2020 16:11:08 +0530
 Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
   by ironmsg02-blr.qualcomm.com with ESMTP; 03 Feb 2020 16:10:45 +0530
 Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
-        id 8A536212C4; Mon,  3 Feb 2020 16:10:43 +0530 (IST)
+        id A6A1E21187; Mon,  3 Feb 2020 16:10:43 +0530 (IST)
 From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
 To:     marcel@holtmann.org, johan.hedberg@gmail.com
 Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
@@ -27,70 +27,54 @@ Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
         seanpaul@chromium.org, rjliao@codeaurora.org, yshavit@google.com,
         devicetree@vger.kernel.org,
         Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Subject: [PATCH v3 1/2] Bluetooth: hci_qca: Enable clocks required for BT SOC
-Date:   Mon,  3 Feb 2020 16:10:40 +0530
-Message-Id: <1580726441-1100-1-git-send-email-gubbaven@codeaurora.org>
+Subject: [PATCH v3 2/2] dt-bindings: net: bluetooth: Add device tree bindings for QTI chip WCN3991
+Date:   Mon,  3 Feb 2020 16:10:41 +0530
+Message-Id: <1580726441-1100-2-git-send-email-gubbaven@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1580726441-1100-1-git-send-email-gubbaven@codeaurora.org>
+References: <1580726441-1100-1-git-send-email-gubbaven@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Instead of relying on other subsytem to turn ON clocks
-required for BT SoC to operate, voting them from the driver.
+Add compatible string for the Qualcomm WCN3991 Bluetooth controller
 
 Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
 ---
 v3:
-  *Removed the function qca_setup_clock() 
-  *For enabling and disabling clocks, directly called the functions 
-   clk_prepare_enable and clk_disable_unprepare respectively. 
-
+  *Updated clocks with <&rpmhcc RPMH_RF_CLK2>  
 ---
- drivers/bluetooth/hci_qca.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index d6e0c99..eacc65b 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1755,6 +1755,13 @@ static int qca_regulator_enable(struct qca_serdev *qcadev)
+diff --git a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
+index 68b67d9..beca646 100644
+--- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
++++ b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.txt
+@@ -11,6 +11,7 @@ Required properties:
+  - compatible: should contain one of the following:
+    * "qcom,qca6174-bt"
+    * "qcom,wcn3990-bt"
++   * "qcom,wcn3991-bt"
+    * "qcom,wcn3998-bt"
  
- 	power->vregs_on = true;
+ Optional properties for compatible string qcom,qca6174-bt:
+@@ -30,6 +31,7 @@ Optional properties for compatible string qcom,wcn399x-bt:
  
-+	ret = clk_prepare_enable(qcadev->susclk);
-+	if (ret) {
-+		/* Turn off regulators to overcome power leakage */
-+		qca_regulator_disable(qcadev);
-+		return ret;
-+	}
-+
- 	return 0;
- }
+  - max-speed: see Documentation/devicetree/bindings/serial/slave-device.txt
+  - firmware-name: specify the name of nvm firmware to load
++ - clocks: clock provided to the controller
  
-@@ -1773,6 +1780,9 @@ static void qca_regulator_disable(struct qca_serdev *qcadev)
+ Examples:
  
- 	regulator_bulk_disable(power->num_vregs, power->vreg_bulk);
- 	power->vregs_on = false;
-+
-+	if (qcadev->susclk)
-+		clk_disable_unprepare(qcadev->susclk);
- }
- 
- static int qca_init_regulators(struct qca_power *qca,
-@@ -1839,6 +1849,12 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 
- 		qcadev->bt_power->vregs_on = false;
- 
-+		qcadev->susclk = devm_clk_get_optional(&serdev->dev, NULL);
-+		if (IS_ERR(qcadev->susclk)) {
-+			dev_err(&serdev->dev, "failed to acquire clk\n");
-+			return PTR_ERR(qcadev->susclk);
-+		}
-+
- 		device_property_read_u32(&serdev->dev, "max-speed",
- 					 &qcadev->oper_speed);
- 		if (!qcadev->oper_speed)
+@@ -56,5 +58,6 @@ serial@898000 {
+ 		vddch0-supply = <&vreg_l25a_3p3>;
+ 		max-speed = <3200000>;
+ 		firmware-name = "crnv21.bin";
++		clocks = <&rpmhcc RPMH_RF_CLK2>;
+ 	};
+ };
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
 of Code Aurora Forum, hosted by The Linux Foundation
