@@ -2,83 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1220B150404
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 11:16:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80A5A150475
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 11:41:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727843AbgBCKQZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Feb 2020 05:16:25 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:42121 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727797AbgBCKQZ (ORCPT
+        id S1727044AbgBCKlO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Feb 2020 05:41:14 -0500
+Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:14206 "EHLO
+        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727196AbgBCKlO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Feb 2020 05:16:25 -0500
-Received: by mail-pf1-f193.google.com with SMTP id 4so7319604pfz.9;
-        Mon, 03 Feb 2020 02:16:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8nl2L3p+Ia4E1khnSMhXa3k44nb4cAKeLzB5j1ho5Q4=;
-        b=ZF3Cwe+sUYE/i8Qd+9liOcZE8JWFZGEMtPrwkoS1cGWyMawyyFgATWcYlWjBxAqEqq
-         tRDzgljJg8FGaiOrfG5tKK/V0wdjrc6M2I/P/8HTV9tVbb6VCwHEFipv+e5xBIr1oxah
-         xSYw4D2HCz/TnZpDHZgdhUi/PVnYEGD1lmOHdRdtTTGiriUGs3QyHv/iDBRK7DbZ/7Ct
-         TGJ5G/HsZGNhKmZk2X5cpqLRfhlxRoNFdx1dqnA0OQN+8TRW5d10ZKN68x3mNulewkrB
-         PX2dL/54OVKP0Wfyb7XGq7knytMTBazsqEsnWID/YCxW5RFcupMs+akZrLcirdB6Y0um
-         PbYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8nl2L3p+Ia4E1khnSMhXa3k44nb4cAKeLzB5j1ho5Q4=;
-        b=jlpccHfOyPQO+naiQ1BE7WWr2x8x3QASoklvPnPr3JxHQeeIZgjA0CfcAE0mVgjE03
-         EEdMblLRRIg+dkhQIwaC0i36NR6evk2JLGXkI7w/KpNuzAcQG4wa1WHodSUpzc3YwNwn
-         7AZcHfJ4IeFdCbp0h7ZGIfSNddYGvyPhJTl1AyXpKt5mA6LZdFYYDEwS738W110PBkXh
-         2kVQXQSaUdChktx0iuPAUjGYZHvbeORXM0Sff3pQ1v++Q55HGPBnbh+EvoqHKc5C/Dr2
-         QUXwWU8iugoZwvLqLSxOzf/NDP3oemb0ka3O5tQrzLG3S/19N5ckMR+Exhof7VeJSQf7
-         Fr5g==
-X-Gm-Message-State: APjAAAWe93lhyYWvlONL2Go+AA2ozVjuqw5FZ1tZVef8h3ReSKIkzt8r
-        r2rSeks2yktdDnFOLMTIsC7pdtF/k3P1dOZW86Q=
-X-Google-Smtp-Source: APXvYqxWutW6pKCGPRKsawlK4lEy7F/4S4tpTZWWYsSKci14dTcyHaWg7CkfIalOcAc/wZQfNq+VazwrNRo8lQ+vWD8=
-X-Received: by 2002:a65:4685:: with SMTP id h5mr25618513pgr.203.1580724984426;
- Mon, 03 Feb 2020 02:16:24 -0800 (PST)
-MIME-Version: 1.0
-References: <20200131135009.31477-1-manivannan.sadhasivam@linaro.org> <20200131135009.31477-14-manivannan.sadhasivam@linaro.org>
-In-Reply-To: <20200131135009.31477-14-manivannan.sadhasivam@linaro.org>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Mon, 3 Feb 2020 12:16:16 +0200
-Message-ID: <CAHp75Vc2Nf9N0cPBmrqb_xZQG-=eczd=gdZxsfXv6OtZ=ysP6w@mail.gmail.com>
-Subject: Re: [PATCH v2 13/16] MAINTAINERS: Add entry for MHI bus
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>, smohanad@codeaurora.org,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Mon, 3 Feb 2020 05:41:14 -0500
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 03 Feb 2020 16:11:08 +0530
+Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 03 Feb 2020 16:10:45 +0530
+Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
+        id 8A536212C4; Mon,  3 Feb 2020 16:10:43 +0530 (IST)
+From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, robh@kernel.org,
+        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        bgodavar@codeaurora.org, tientzu@chromium.org,
+        seanpaul@chromium.org, rjliao@codeaurora.org, yshavit@google.com,
+        devicetree@vger.kernel.org,
+        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+Subject: [PATCH v3 1/2] Bluetooth: hci_qca: Enable clocks required for BT SOC
+Date:   Mon,  3 Feb 2020 16:10:40 +0530
+Message-Id: <1580726441-1100-1-git-send-email-gubbaven@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 31, 2020 at 3:53 PM Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> Add MAINTAINERS entry for MHI bus.
+Instead of relying on other subsytem to turn ON clocks
+required for BT SoC to operate, voting them from the driver.
 
-> +MHI BUS
-> +M:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> +M:     Hemant Kumar <hemantk@codeaurora.org>
-> +L:     linux-arm-msm@vger.kernel.org
-> +T:     git git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git
-> +S:     Maintained
-> +F:     drivers/bus/mhi/
-> +F:     include/linux/mhi.h
-> +F:     Documentation/mhi/
+Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+---
+v3:
+  *Removed the function qca_setup_clock() 
+  *For enabling and disabling clocks, directly called the functions 
+   clk_prepare_enable and clk_disable_unprepare respectively. 
 
-Had you run parse-maintainers.pl afterwards to see if everything is okay?
+---
+ drivers/bluetooth/hci_qca.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index d6e0c99..eacc65b 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1755,6 +1755,13 @@ static int qca_regulator_enable(struct qca_serdev *qcadev)
+ 
+ 	power->vregs_on = true;
+ 
++	ret = clk_prepare_enable(qcadev->susclk);
++	if (ret) {
++		/* Turn off regulators to overcome power leakage */
++		qca_regulator_disable(qcadev);
++		return ret;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -1773,6 +1780,9 @@ static void qca_regulator_disable(struct qca_serdev *qcadev)
+ 
+ 	regulator_bulk_disable(power->num_vregs, power->vreg_bulk);
+ 	power->vregs_on = false;
++
++	if (qcadev->susclk)
++		clk_disable_unprepare(qcadev->susclk);
+ }
+ 
+ static int qca_init_regulators(struct qca_power *qca,
+@@ -1839,6 +1849,12 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+ 
+ 		qcadev->bt_power->vregs_on = false;
+ 
++		qcadev->susclk = devm_clk_get_optional(&serdev->dev, NULL);
++		if (IS_ERR(qcadev->susclk)) {
++			dev_err(&serdev->dev, "failed to acquire clk\n");
++			return PTR_ERR(qcadev->susclk);
++		}
++
+ 		device_property_read_u32(&serdev->dev, "max-speed",
+ 					 &qcadev->oper_speed);
+ 		if (!qcadev->oper_speed)
 -- 
-With Best Regards,
-Andy Shevchenko
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
