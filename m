@@ -2,110 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 61F7C15033A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 10:18:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6861415035D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 10:29:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727913AbgBCJSg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Feb 2020 04:18:36 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:26135 "EHLO
+        id S1727450AbgBCJ3f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Feb 2020 04:29:35 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:23493 "EHLO
         mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727451AbgBCJSg (ORCPT
+        by vger.kernel.org with ESMTP id S1726244AbgBCJ3c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Feb 2020 04:18:36 -0500
+        Mon, 3 Feb 2020 04:29:32 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580721515; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=PjSdqThfMBqN89hJKhdFpE8OgLWVWPGGj3rPbJUMbqQ=; b=IySFDjG3PtAlWPG8rGGkAFkZ3vc56k328nTMqczC41roshVkv4y8WtuTz0LmhNxqV4+SIr83
- 8FN5Rx11/waQd7U+7gcHw7geiKox3e2d1Y3x2K5LH5PsadYJcB3diuS3cugaFfUVdAwjU9dd
- ArH9dJSud4TzaNNZyt+OvuCPuF0=
+ s=smtp; t=1580722171; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=rVTQT/UDQokSpeOaMvofAY/Lfmv4L1fEaVGMooR99N0=;
+ b=rkwAAsMuCfF9gbAAV5YpB/mjJVo/JP5JEhmi4kMZgUHBVgQMsu6Ohq4r3GTjZGTrcYG5un05
+ GD3vW8m4y2P3AfAGNU790jqzZhufiR6fd0QHN/5UJ2koNfrVP97mYmIGD32U18kDVrhO+Qbf
+ PrxhHxLWjdCczv87n58OHPeHbcc=
 X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e37e567.7fa2593048b8-smtp-out-n01;
- Mon, 03 Feb 2020 09:18:31 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e37e7fa.7f8e35731ab0-smtp-out-n01;
+ Mon, 03 Feb 2020 09:29:30 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BF062C447B1; Mon,  3 Feb 2020 09:18:30 +0000 (UTC)
+        id 6FB93C447A2; Mon,  3 Feb 2020 09:29:29 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: cang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E81F0C447A3;
-        Mon,  3 Feb 2020 09:18:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E81F0C447A3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=cang@codeaurora.org
-From:   Can Guo <cang@codeaurora.org>
-To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
-        hongwus@codeaurora.org, rnayak@codeaurora.org,
-        linux-scsi@vger.kernel.org, kernel-team@android.com,
-        saravanak@google.com, salyzyn@google.com, cang@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v5 7/8] scsi: ufs-qcom: Delay specific time before gate ref clk
-Date:   Mon,  3 Feb 2020 01:17:49 -0800
-Message-Id: <1580721472-10784-8-git-send-email-cang@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1580721472-10784-1-git-send-email-cang@codeaurora.org>
-References: <1580721472-10784-1-git-send-email-cang@codeaurora.org>
+        (Authenticated sender: gubbaven)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B58EBC433CB;
+        Mon,  3 Feb 2020 09:29:28 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 03 Feb 2020 14:59:28 +0530
+From:   gubbaven@codeaurora.org
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, robh@kernel.org,
+        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        bgodavar@codeaurora.org, tientzu@chromium.org,
+        seanpaul@chromium.org, rjliao@codeaurora.org, yshavit@google.com
+Subject: Re: [PATCH v3] Bluetooth: hci_qca:Removed the function
+ qca_setup_clock()
+In-Reply-To: <1580717149-7609-1-git-send-email-gubbaven@codeaurora.org>
+References: <1580717149-7609-1-git-send-email-gubbaven@codeaurora.org>
+Message-ID: <fb372af8420a7af076ffbb5f44542497@codeaurora.org>
+X-Sender: gubbaven@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-After enter hibern8, as UFS JEDEC ver 3.0 requires, a specific gating wait
-time is required before disable the device reference clock. If it is not
-specified, use the old delay.
+Please discard this.I will be sending another patch set.
 
-Signed-off-by: Can Guo <cang@codeaurora.org>
-Reviewed-by: Asutosh Das <asutoshd@codeaurora.org>
----
- drivers/scsi/ufs/ufs-qcom.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+Regards,
+Venkata.
 
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index 85d7c17..3b5b2d9 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -833,6 +833,8 @@ static int ufs_qcom_bus_register(struct ufs_qcom_host *host)
- 
- static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
- {
-+	unsigned long gating_wait;
-+
- 	if (host->dev_ref_clk_ctrl_mmio &&
- 	    (enable ^ host->is_dev_ref_clk_enabled)) {
- 		u32 temp = readl_relaxed(host->dev_ref_clk_ctrl_mmio);
-@@ -845,11 +847,16 @@ static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
- 		/*
- 		 * If we are here to disable this clock it might be immediately
- 		 * after entering into hibern8 in which case we need to make
--		 * sure that device ref_clk is active at least 1us after the
-+		 * sure that device ref_clk is active for specific time after
- 		 * hibern8 enter.
- 		 */
--		if (!enable)
--			udelay(1);
-+		if (!enable) {
-+			gating_wait = host->hba->dev_info.clk_gating_wait_us;
-+			if (!gating_wait)
-+				udelay(1);
-+			else
-+				usleep_range(gating_wait, gating_wait + 10);
-+		}
- 
- 		writel_relaxed(temp, host->dev_ref_clk_ctrl_mmio);
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+On 2020-02-03 13:35, Venkata Lakshmi Narayana Gubba wrote:
+> For enabling and disabling clocks, directly called the functions
+> clk_prepare_enable() and clk_disable_unprepare() respectively.
+> 
+> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+> ---
+>  drivers/bluetooth/hci_qca.c | 13 ++-----------
+>  1 file changed, 2 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+> index 73706f3..eacc65b 100644
+> --- a/drivers/bluetooth/hci_qca.c
+> +++ b/drivers/bluetooth/hci_qca.c
+> @@ -1738,15 +1738,6 @@ static int qca_power_off(struct hci_dev *hdev)
+>  	return 0;
+>  }
+> 
+> -static int qca_setup_clock(struct clk *clk, bool enable)
+> -{
+> -	if (enable)
+> -		return clk_prepare_enable(clk);
+> -
+> -	clk_disable_unprepare(clk);
+> -	return 0;
+> -}
+> -
+>  static int qca_regulator_enable(struct qca_serdev *qcadev)
+>  {
+>  	struct qca_power *power = qcadev->bt_power;
+> @@ -1764,7 +1755,7 @@ static int qca_regulator_enable(struct qca_serdev 
+> *qcadev)
+> 
+>  	power->vregs_on = true;
+> 
+> -	ret = qca_setup_clock(qcadev->susclk, true);
+> +	ret = clk_prepare_enable(qcadev->susclk);
+>  	if (ret) {
+>  		/* Turn off regulators to overcome power leakage */
+>  		qca_regulator_disable(qcadev);
+> @@ -1791,7 +1782,7 @@ static void qca_regulator_disable(struct
+> qca_serdev *qcadev)
+>  	power->vregs_on = false;
+> 
+>  	if (qcadev->susclk)
+> -		qca_setup_clock(qcadev->susclk, false);
+> +		clk_disable_unprepare(qcadev->susclk);
+>  }
+> 
+>  static int qca_init_regulators(struct qca_power *qca,
