@@ -2,92 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C42EA1512D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 00:18:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 72A8C151338
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 00:31:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727190AbgBCXSC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Feb 2020 18:18:02 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:42189 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727129AbgBCXSB (ORCPT
+        id S1726331AbgBCXbo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Feb 2020 18:31:44 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:38455 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726287AbgBCXbo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Feb 2020 18:18:01 -0500
-Received: by mail-pl1-f193.google.com with SMTP id e8so3834202plt.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2020 15:18:01 -0800 (PST)
+        Mon, 3 Feb 2020 18:31:44 -0500
+Received: by mail-pg1-f194.google.com with SMTP id a33so8681477pgm.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2020 15:31:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=RqNKomRHGUMd4Df0efkiIUfGHrYX0nBtYzK6IBMjZdo=;
-        b=e0WOg1iPXlJr/czyGRfDodZEJ4Svzd9PEGVfDy2NWGnz2ImNYsb1U24hkGoS3vS4Wi
-         /ybmFAUocTyETD+5Tc8D/YiFCzxPufobrMNghviISjhpuhTCar66ltyzh9OHjrrlZmDh
-         fkGGleJrOJlAVHtG7ncDd5ZSav79f6SoOxNRTtPvlPawTupm8RY6TqvgI7NzQrpOvBHe
-         ymFtWIyAbgLKMDdTW/QShBruQkzAswxUpxPH9TES+B7fKDCSKIlAyqAlKRIYT/L1YiMZ
-         fWqQRqzJWAUBhKlHYJRaYKnKYeA9HgEFarcDRly+r8/xyqtwaK6cEDqc77ob8XMNT9mD
-         x+aQ==
+         :content-disposition:in-reply-to:user-agent;
+        bh=XGNxCxtoGDp+8cXtqCNq+umjrj7BBwnr/1CarpNQDow=;
+        b=Zf4BLBA33ovQTs19yyX6WoAUz8Zzi5NHrDyFtSRCEdaayqM1QIHAMeKBKdVu0zrOXq
+         KnrsACkNHOl7zushehwUJ5H8+RYQpP0PpBZ/ieM61RhlNMZuzQRlnWZLJMcJj7BabDq5
+         iNKAuTtqGwnSBcvmGAkIbyKMP3snJQAwnqzKlQ/3SsK0kcA9n3nSHC5F2klihcWk2j5q
+         Jb3wGG1CcJVnP1nuv3Kn7xF54yrSTJc8ceuwTNYEP8eRCvP9OP+10TZKUeV96hc7Op9+
+         DhDt0we2rYE0t+hXRF3YKUtbQi8ZupPG30e+jGMJ33SovSUXMtzRvEK0E14Ekxsjzb+i
+         P8Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=RqNKomRHGUMd4Df0efkiIUfGHrYX0nBtYzK6IBMjZdo=;
-        b=aNoPl4w2El1+fji+DZKS7gQqOPQGtAbok14cVdM57/NPAJ6hOTdi+E/HwPkusoJjev
-         TCF3sOK6xfMXegCLlDEJaItuMRetd+qN7l1TcOYRF4CCHCS56v+xOG05cnGonkKa+6FZ
-         5wl2a4teZ96sxQUFcrHOA3XWfU0pHQ2vt+jnSX5fOgTCKc/v0uLsYekoUOOdORvgWH4a
-         ByURSW16yMye7FtmzcaEpq7kSzYAnDLwe9qcwAUY0ViW0tNVxDR96obUzhj424Qo6NCA
-         sju7UbvuCv+hMl79JMCWByABjj/lg45OJzev6J+AHGlLPZBI9vzybjGBN5vbnbXcoBIC
-         wtuw==
-X-Gm-Message-State: APjAAAXsMhd3UrsMnwHCHqlJgI51re+bjLxn8l+Y7VpY9N8bDoFjTVbY
-        TYoEo/Xu0ZcUsCCVhszR1s/A9g==
-X-Google-Smtp-Source: APXvYqwK5DVqb9y9JJvL9zF2H008zA4E5okWxzY8QvFo4wwP7jZRsCC5h+petZ2QkXz3kvh6SCx+Uw==
-X-Received: by 2002:a17:90a:9f04:: with SMTP id n4mr1926471pjp.76.1580771880976;
-        Mon, 03 Feb 2020 15:18:00 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id r145sm22021763pfr.5.2020.02.03.15.17.59
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XGNxCxtoGDp+8cXtqCNq+umjrj7BBwnr/1CarpNQDow=;
+        b=Xiz14OCt9+gjWqerPGXzmHdEuiFj2Z1wYNfGRy4la5w7rdnlzClYRjOn/87NGOjzaU
+         za+xWGDR/xFZe6vQ1Q0vb8eNFl56zDUjUQmIfF1iTO9F1CgtBFyA72VA6ZGUlgicFeWq
+         Evwz0dii78oIJRhnvbPjDoA334R2k7WDjO7sk5+VROhrQsthiAnuGAFH1B90oLaeI4DF
+         H1O3T6GgtdyDLem6dY8jDEwEU3ULus0vzjZOrLXIFmv94R7R2+eDjkFHGpEmPgJd4GX1
+         Y99Us3G6yBk7rZYqG30UkgaWOGtbaFo8A+14/trCEGabJi1c6ABRaeVAbp4vbMmiiv4e
+         VZbw==
+X-Gm-Message-State: APjAAAVHSciePufXo37TES+UmljAtqSyGsuvMq928RsePHwTfOLAalRq
+        DVSrMdDO5Jfp9XpdBf4objVrQw==
+X-Google-Smtp-Source: APXvYqyCCGOrUZ9ASeMIJ6mqBRwpGQqSbvV3UlCvjqN3zMfGsZDYOyhgRD7u3sbBrwMLEggMT+Q29w==
+X-Received: by 2002:a63:7053:: with SMTP id a19mr26365083pgn.377.1580772703136;
+        Mon, 03 Feb 2020 15:31:43 -0800 (PST)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id m101sm557380pje.13.2020.02.03.15.31.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2020 15:18:00 -0800 (PST)
-Date:   Mon, 3 Feb 2020 15:17:57 -0800
+        Mon, 03 Feb 2020 15:31:42 -0800 (PST)
+Date:   Mon, 3 Feb 2020 15:31:40 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Harigovindan P <harigovi@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Matthias Kaehlcke <mka@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH v4 00/15] clk: qcom: Fix parenting for
- dispcc/gpucc/videocc
-Message-ID: <20200203231757.GM2514@yoga>
-References: <20200203183149.73842-1-dianders@chromium.org>
- <20200203193027.62BD22080D@mail.kernel.org>
- <CAD=FV=X2K-Qr17qXgG1Ng8MpZQogagBqMwWu=D2OpQf+ZskBPw@mail.gmail.com>
- <20200203200443.GN3948@builder>
- <CAD=FV=VQyTHYizfzMwjAaRbmQ4zvFFzdfgGiVkLQU+b+pFVnzg@mail.gmail.com>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        robdclark@chromium.org, linux-arm-msm@vger.kernel.org,
+        seanpaul@chromium.org, Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Jonas Karlman <jonas@kwiboo.se>, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
+Subject: Re: [PATCH v3 1/9] drm/bridge: ti-sn65dsi86: Split the setting of
+ the dp and dsi rates
+Message-ID: <20200203233140.GA311651@builder>
+References: <20191218223530.253106-1-dianders@chromium.org>
+ <20191218143416.v3.1.Icb765d5799e9651e5249c0c27627ba33a9e411cf@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAD=FV=VQyTHYizfzMwjAaRbmQ4zvFFzdfgGiVkLQU+b+pFVnzg@mail.gmail.com>
+In-Reply-To: <20191218143416.v3.1.Icb765d5799e9651e5249c0c27627ba33a9e411cf@changeid>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 03 Feb 12:48 PST 2020, Doug Anderson wrote:
-[..]
-> Sorry it's so confusing.  Happy to try to clarify more if the above is
-> still too hard to follow.
-> 
+On Wed 18 Dec 14:35 PST 2019, Douglas Anderson wrote:
 
-Thanks for the clarification! I will pick up the dts patches
+> These two things were in one function.  Split into two.  This looks
+> like it's duplicating some code, but don't worry.  This is is just in
+> preparation for future changes.
+> 
+> This is intended to have zero functional change and will just make
+> future patches easier to understand.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Tested-by: Rob Clark <robdclark@gmail.com>
+> Reviewed-by: Rob Clark <robdclark@gmail.com>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
 Bjorn
+
+> ---
+> 
+> Changes in v3: None
+> Changes in v2: None
+> 
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 33 +++++++++++++++++++--------
+>  1 file changed, 23 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> index 43abf01ebd4c..2fb9370a76e6 100644
+> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> @@ -417,6 +417,24 @@ static void ti_sn_bridge_set_refclk_freq(struct ti_sn_bridge *pdata)
+>  			   REFCLK_FREQ(i));
+>  }
+>  
+> +static void ti_sn_bridge_set_dsi_rate(struct ti_sn_bridge *pdata)
+> +{
+> +	unsigned int bit_rate_mhz, clk_freq_mhz;
+> +	unsigned int val;
+> +	struct drm_display_mode *mode =
+> +		&pdata->bridge.encoder->crtc->state->adjusted_mode;
+> +
+> +	/* set DSIA clk frequency */
+> +	bit_rate_mhz = (mode->clock / 1000) *
+> +			mipi_dsi_pixel_format_to_bpp(pdata->dsi->format);
+> +	clk_freq_mhz = bit_rate_mhz / (pdata->dsi->lanes * 2);
+> +
+> +	/* for each increment in val, frequency increases by 5MHz */
+> +	val = (MIN_DSI_CLK_FREQ_MHZ / 5) +
+> +		(((clk_freq_mhz - MIN_DSI_CLK_FREQ_MHZ) / 5) & 0xFF);
+> +	regmap_write(pdata->regmap, SN_DSIA_CLK_FREQ_REG, val);
+> +}
+> +
+>  /**
+>   * LUT index corresponds to register value and
+>   * LUT values corresponds to dp data rate supported
+> @@ -426,22 +444,16 @@ static const unsigned int ti_sn_bridge_dp_rate_lut[] = {
+>  	0, 1620, 2160, 2430, 2700, 3240, 4320, 5400
+>  };
+>  
+> -static void ti_sn_bridge_set_dsi_dp_rate(struct ti_sn_bridge *pdata)
+> +static void ti_sn_bridge_set_dp_rate(struct ti_sn_bridge *pdata)
+>  {
+> -	unsigned int bit_rate_mhz, clk_freq_mhz, dp_rate_mhz;
+> -	unsigned int val, i;
+> +	unsigned int bit_rate_mhz, dp_rate_mhz;
+> +	unsigned int i;
+>  	struct drm_display_mode *mode =
+>  		&pdata->bridge.encoder->crtc->state->adjusted_mode;
+>  
+>  	/* set DSIA clk frequency */
+>  	bit_rate_mhz = (mode->clock / 1000) *
+>  			mipi_dsi_pixel_format_to_bpp(pdata->dsi->format);
+> -	clk_freq_mhz = bit_rate_mhz / (pdata->dsi->lanes * 2);
+> -
+> -	/* for each increment in val, frequency increases by 5MHz */
+> -	val = (MIN_DSI_CLK_FREQ_MHZ / 5) +
+> -		(((clk_freq_mhz - MIN_DSI_CLK_FREQ_MHZ) / 5) & 0xFF);
+> -	regmap_write(pdata->regmap, SN_DSIA_CLK_FREQ_REG, val);
+>  
+>  	/* set DP data rate */
+>  	dp_rate_mhz = ((bit_rate_mhz / pdata->dsi->lanes) * DP_CLK_FUDGE_NUM) /
+> @@ -510,7 +522,8 @@ static void ti_sn_bridge_enable(struct drm_bridge *bridge)
+>  			   val);
+>  
+>  	/* set dsi/dp clk frequency value */
+> -	ti_sn_bridge_set_dsi_dp_rate(pdata);
+> +	ti_sn_bridge_set_dsi_rate(pdata);
+> +	ti_sn_bridge_set_dp_rate(pdata);
+>  
+>  	/* enable DP PLL */
+>  	regmap_write(pdata->regmap, SN_PLL_ENABLE_REG, 1);
+> -- 
+> 2.24.1.735.g03f4e72817-goog
+> 
