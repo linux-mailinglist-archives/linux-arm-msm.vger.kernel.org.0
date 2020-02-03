@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 51374151358
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 00:37:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F24FE15135F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 00:39:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727119AbgBCXhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Feb 2020 18:37:17 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:43606 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726287AbgBCXhQ (ORCPT
+        id S1727177AbgBCXjH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Feb 2020 18:39:07 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:37899 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726984AbgBCXjH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Feb 2020 18:37:16 -0500
-Received: by mail-pl1-f196.google.com with SMTP id p11so6464065plq.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2020 15:37:14 -0800 (PST)
+        Mon, 3 Feb 2020 18:39:07 -0500
+Received: by mail-pg1-f195.google.com with SMTP id a33so8689236pgm.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2020 15:39:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=BAkzT/j0lERasGuOtU/7cTy/icSeee5cB98kOksn4lw=;
-        b=MIlVCggmlu0Y79t/0IYRlqNSRtlu000Et3fAkLKNIg5Bp1Y23ifkAX8CbdwKQpuCHN
-         43gzBj7uiRV2TQtZbY8WZsYKQrCjb1OzSmdhtEim6ibxCmWmEst9Z1Gm1u3cSNhmRAvm
-         bXo4kkDYCbQ6Hr0gqdZbHeZLYz8WdEst1/W5ErTTs5OEdRR44UgUHDXDALA5YAZp8hw5
-         MoDzjvRZBJQb/k7CcSi6pmHoshHf1KWDXb0RZ23QiO5Ze75TP5dnO8DqeP8Ex3DnGelh
-         IGdWlBxvHSpBv+5UQO9hg4IT9VYIsjNPftobMKFO12q4tUDHuKZQzkdrY1kWxyABxKGu
-         h+0g==
+        bh=yw2JA/6AXwF+6u8uNVr/YyXYYHJ8klG+TzKG0d9b16Q=;
+        b=ue0DVmxjJvkuQVa0LhJ+216bR3UWp4VHUBpSBdIy6xpQBmjvSqkBYXi1YWlRNkl3jv
+         Wo+YTkHsG/7aFVNT+Lkpqcqzd7En3WdUy/hpxXAVM4ZaXCwqdiaKulu7Hj0ieRF6xFoi
+         n867VxVwHjui6lBCAs2clAbLG+8qHJtXOXrDCwfC/+s3WpwuPEF8ipKd8HodlVbz2qJo
+         NbicofDd+5ti86vjkN9MY4jmo0/G/IBinNEouvxiCoJ81PArcUTZLMya5Ws9M9f1B+9z
+         dZpe9EgERXKsKT7ptP5WnKcD2E2WVrVdVvltY44f0sZCxt8CwSzOz8MUHwhs8kzyQzbQ
+         Mmhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=BAkzT/j0lERasGuOtU/7cTy/icSeee5cB98kOksn4lw=;
-        b=P/Ulfip9NM7vIHlL8aweRQ8LlNmf9BL8uMAm/xKgPOHbMfFfybvIJyyiY1yOT3Qstx
-         6+NUmjTl6c2L7bv6poqYfcIjoWxhpCCgxDs0089NggC7YFxD0Fa9xliisiIgrXmhTXrf
-         wWqCY8qqQm/7kriR9G+V4OJTVn77i+EPynw3/ouQ2H/PYVwwKeyTYWGRVBQLZqYzLDoq
-         5E9rXNgkc6vd9MabNNfz7ys96fF8vPTrvt3IWRjx5er2/Og2calitjmsYVZK/JGe2s6j
-         VVhqDr+e1feTXpueWS7RZpXfHstYtGGKBr0E0lSXsuUcizWNJyrySDo56Yix1uBgPZFl
-         aaWg==
-X-Gm-Message-State: APjAAAXhheLsb0g7KsGaQUHfRuQbfipDlVJeHZssqJHt1y+ynNV8p9vE
-        vSb6chwni63tkvWsfOzjztp4Cg==
-X-Google-Smtp-Source: APXvYqy+qax4nYLUgQgeWMjozPgWVALRDlz+HY/G1hWpsRQf6U8ihJmcG7nhL7bTAUJcC72lnp8Hug==
-X-Received: by 2002:a17:902:467:: with SMTP id 94mr26827760ple.267.1580773034415;
-        Mon, 03 Feb 2020 15:37:14 -0800 (PST)
+        bh=yw2JA/6AXwF+6u8uNVr/YyXYYHJ8klG+TzKG0d9b16Q=;
+        b=hysrZLORNE6+2e9OJJHvhyB+94wRHrUzkdzZG3XYKShwQyJ/P5g+uWncgamo4mkNJx
+         D0GDqe6vcDvIkicQ15FewvNcISkn0Ayy2h4t69uemIUyB4psAV9oeqtJpPnCDp3kZrBH
+         F5KAT68ysTPfND46bDJ6dSXCDwGN8ODBQp3HB9DqU0jGHBkCzT6DRtpQ1V3eImRagBtu
+         0jf+8xJjMf/KbLGEPSQOBBxQ0D1SjDTCO/CAYpgYE2e/9JpndsLaAPfp93HPSq5iOU2d
+         xL/gX2STNxCSkj/X1klWwXM60YjzGQUAcHm25nfogZPtqVT9Q42tseSe72uVTnNaCI5O
+         MMdA==
+X-Gm-Message-State: APjAAAWk81h6W01Y22MyzaEzLvT3KA71jUW0yGNOq4yqv5rRcjuJFvzj
+        2okThpjdHa0RlOepWpsDcn1AnA==
+X-Google-Smtp-Source: APXvYqxOoFk3CyqcPGJfbhnecTv/NZMWeZNBLC2qjizan1SzjZNjXWy0WgOLL1Q4sNdufGFAOQs10w==
+X-Received: by 2002:a62:e40e:: with SMTP id r14mr27073983pfh.115.1580773144397;
+        Mon, 03 Feb 2020 15:39:04 -0800 (PST)
 Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id e16sm20752673pgk.77.2020.02.03.15.37.13
+        by smtp.gmail.com with ESMTPSA id z14sm20152891pgj.43.2020.02.03.15.39.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2020 15:37:13 -0800 (PST)
-Date:   Mon, 3 Feb 2020 15:37:11 -0800
+        Mon, 03 Feb 2020 15:39:03 -0800 (PST)
+Date:   Mon, 3 Feb 2020 15:39:01 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Douglas Anderson <dianders@chromium.org>
 Cc:     Andrzej Hajda <a.hajda@samsung.com>,
@@ -58,14 +58,15 @@ Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
         Jernej Skrabec <jernej.skrabec@siol.net>,
         Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-Subject: Re: [PATCH v3 6/9] drm/bridge: ti-sn65dsi86: Use 18-bit DP if we can
-Message-ID: <20200203233711.GF311651@builder>
+Subject: Re: [PATCH v3 7/9] drm/bridge: ti-sn65dsi86: Group DP link training
+ bits in a function
+Message-ID: <20200203233901.GG311651@builder>
 References: <20191218223530.253106-1-dianders@chromium.org>
- <20191218143416.v3.6.Iaf8d698f4e5253d658ae283d2fd07268076a7c27@changeid>
+ <20191218143416.v3.7.I1fc75ad11db9048ef08cfe1ab7322753d9a219c7@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191218143416.v3.6.Iaf8d698f4e5253d658ae283d2fd07268076a7c27@changeid>
+In-Reply-To: <20191218143416.v3.7.I1fc75ad11db9048ef08cfe1ab7322753d9a219c7@changeid>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -74,20 +75,13 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Wed 18 Dec 14:35 PST 2019, Douglas Anderson wrote:
 
-> The current bridge driver always forced us to use 24 bits per pixel
-> over the DP link.  This is a waste if you are hooked up to a panel
-> that only supports 6 bits per color or fewer, since in that case you
-> ran run at 18 bits per pixel and thus end up at a lower DP clock rate.
-
-s/ran/can/
-
-> 
-> Let's support this.
-> 
-> While at it, let's clean up the math in the function to avoid rounding
-> errors (and round in the correct direction when we have to round).
-> Numbers are sufficiently small (because mode->clock is in kHz) that we
-> don't need to worry about integer overflow.
+> We'll re-organize the ti_sn_bridge_enable() function a bit to group
+> together all the parts relating to link training and split them into a
+> sub-function.  This is not intended to have any functional change and
+> is in preparation for trying link training several times at different
+> rates.  One small side effect here is that if link training fails
+> we'll now leave the DP PLL disabled, but that seems like a sane thing
+> to do.
 > 
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > Tested-by: Rob Clark <robdclark@gmail.com>
@@ -100,74 +94,122 @@ Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > Changes in v3: None
 > Changes in v2: None
 > 
->  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 27 ++++++++++++++++++---------
->  1 file changed, 18 insertions(+), 9 deletions(-)
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 86 ++++++++++++++++-----------
+>  1 file changed, 52 insertions(+), 34 deletions(-)
 > 
 > diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> index 0fc9e97b2d98..d5990a0947b9 100644
+> index d5990a0947b9..48fb4dc72e1c 100644
 > --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
 > +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> @@ -51,6 +51,7 @@
->  #define SN_ENH_FRAME_REG			0x5A
->  #define  VSTREAM_ENABLE				BIT(3)
->  #define SN_DATA_FORMAT_REG			0x5B
-> +#define  BPP_18_RGB				BIT(0)
->  #define SN_HPD_DISABLE_REG			0x5C
->  #define  HPD_DISABLE				BIT(0)
->  #define SN_AUX_WDATA_REG(x)			(0x64 + (x))
-> @@ -436,6 +437,14 @@ static void ti_sn_bridge_set_dsi_rate(struct ti_sn_bridge *pdata)
->  	regmap_write(pdata->regmap, SN_DSIA_CLK_FREQ_REG, val);
+> @@ -530,6 +530,46 @@ static unsigned int ti_sn_get_max_lanes(struct ti_sn_bridge *pdata)
+>  	return data & DP_LANE_COUNT_MASK;
 >  }
 >  
-> +static unsigned int ti_sn_bridge_get_bpp(struct ti_sn_bridge *pdata)
+> +static int ti_sn_link_training(struct ti_sn_bridge *pdata)
 > +{
-> +	if (pdata->connector.display_info.bpc <= 6)
-> +		return 18;
-> +	else
-> +		return 24;
+> +	unsigned int val;
+> +	int ret;
+> +
+> +	/* set dp clk frequency value */
+> +	ti_sn_bridge_set_dp_rate(pdata);
+> +
+> +	/* enable DP PLL */
+> +	regmap_write(pdata->regmap, SN_PLL_ENABLE_REG, 1);
+> +
+> +	ret = regmap_read_poll_timeout(pdata->regmap, SN_DPPLL_SRC_REG, val,
+> +				       val & DPPLL_SRC_DP_PLL_LOCK, 1000,
+> +				       50 * 1000);
+> +	if (ret) {
+> +		DRM_ERROR("DP_PLL_LOCK polling failed (%d)\n", ret);
+> +		goto exit;
+> +	}
+> +
+> +	/* Semi auto link training mode */
+> +	regmap_write(pdata->regmap, SN_ML_TX_MODE_REG, 0x0A);
+> +	ret = regmap_read_poll_timeout(pdata->regmap, SN_ML_TX_MODE_REG, val,
+> +				       val == ML_TX_MAIN_LINK_OFF ||
+> +				       val == ML_TX_NORMAL_MODE, 1000,
+> +				       500 * 1000);
+> +	if (ret) {
+> +		DRM_ERROR("Training complete polling failed (%d)\n", ret);
+> +	} else if (val == ML_TX_MAIN_LINK_OFF) {
+> +		DRM_ERROR("Link training failed, link is off\n");
+> +		ret = -EIO;
+> +	}
+> +
+> +exit:
+> +	/* Disable the PLL if we failed */
+> +	if (ret)
+> +		regmap_write(pdata->regmap, SN_PLL_ENABLE_REG, 0);
+> +
+> +	return ret;
 > +}
 > +
->  /**
->   * LUT index corresponds to register value and
->   * LUT values corresponds to dp data rate supported
-> @@ -447,21 +456,17 @@ static const unsigned int ti_sn_bridge_dp_rate_lut[] = {
->  
->  static void ti_sn_bridge_set_dp_rate(struct ti_sn_bridge *pdata)
+>  static void ti_sn_bridge_enable(struct drm_bridge *bridge)
 >  {
-> -	unsigned int bit_rate_mhz, dp_rate_mhz;
-> +	unsigned int bit_rate_khz, dp_rate_mhz;
->  	unsigned int i;
->  	struct drm_display_mode *mode =
->  		&pdata->bridge.encoder->crtc->state->adjusted_mode;
->  
-> -	/*
-> -	 * Calculate minimum bit rate based on our pixel clock.  At
-> -	 * the moment this driver never sets the DP_18BPP_EN bit in
-> -	 * register 0x5b so we hardcode 24bpp.
-> -	 */
-> -	bit_rate_mhz = (mode->clock / 1000) * 24;
-> +	/* Calculate minimum bit rate based on our pixel clock. */
-> +	bit_rate_khz = mode->clock * ti_sn_bridge_get_bpp(pdata);
->  
->  	/* Calculate minimum DP data rate, taking 80% as per DP spec */
-> -	dp_rate_mhz = ((bit_rate_mhz / pdata->dp_lanes) * DP_CLK_FUDGE_NUM) /
-> -							DP_CLK_FUDGE_DEN;
-> +	dp_rate_mhz = DIV_ROUND_UP(bit_rate_khz * DP_CLK_FUDGE_NUM,
-> +				   1000 * pdata->dp_lanes * DP_CLK_FUDGE_DEN);
->  
->  	for (i = 1; i < ARRAY_SIZE(ti_sn_bridge_dp_rate_lut) - 1; i++)
->  		if (ti_sn_bridge_dp_rate_lut[i] > dp_rate_mhz)
-> @@ -550,6 +555,10 @@ static void ti_sn_bridge_enable(struct drm_bridge *bridge)
+>  	struct ti_sn_bridge *pdata = bridge_to_ti_sn_bridge(bridge);
+> @@ -555,29 +595,8 @@ static void ti_sn_bridge_enable(struct drm_bridge *bridge)
 >  	regmap_update_bits(pdata->regmap, SN_DSI_LANES_REG,
 >  			   CHA_DSI_LANES_MASK, val);
 >  
+> -	/* Set the DP output format (18 bpp or 24 bpp) */
+> -	val = (ti_sn_bridge_get_bpp(pdata) == 18) ? BPP_18_RGB : 0;
+> -	regmap_update_bits(pdata->regmap, SN_DATA_FORMAT_REG, BPP_18_RGB, val);
+> -
+> -	/* DP lane config */
+> -	val = DP_NUM_LANES(min(pdata->dp_lanes, 3));
+> -	regmap_update_bits(pdata->regmap, SN_SSC_CONFIG_REG, DP_NUM_LANES_MASK,
+> -			   val);
+> -
+> -	/* set dsi/dp clk frequency value */
+> +	/* set dsi clk frequency value */
+>  	ti_sn_bridge_set_dsi_rate(pdata);
+> -	ti_sn_bridge_set_dp_rate(pdata);
+> -
+> -	/* enable DP PLL */
+> -	regmap_write(pdata->regmap, SN_PLL_ENABLE_REG, 1);
+> -
+> -	ret = regmap_read_poll_timeout(pdata->regmap, SN_DPPLL_SRC_REG, val,
+> -				       val & DPPLL_SRC_DP_PLL_LOCK, 1000,
+> -				       50 * 1000);
+> -	if (ret) {
+> -		DRM_ERROR("DP_PLL_LOCK polling failed (%d)\n", ret);
+> -		return;
+> -	}
+>  
+>  	/**
+>  	 * The SN65DSI86 only supports ASSR Display Authentication method and
+> @@ -588,19 +607,18 @@ static void ti_sn_bridge_enable(struct drm_bridge *bridge)
+>  	drm_dp_dpcd_writeb(&pdata->aux, DP_EDP_CONFIGURATION_SET,
+>  			   DP_ALTERNATE_SCRAMBLER_RESET_ENABLE);
+>  
+> -	/* Semi auto link training mode */
+> -	regmap_write(pdata->regmap, SN_ML_TX_MODE_REG, 0x0A);
+> -	ret = regmap_read_poll_timeout(pdata->regmap, SN_ML_TX_MODE_REG, val,
+> -				       val == ML_TX_MAIN_LINK_OFF ||
+> -				       val == ML_TX_NORMAL_MODE, 1000,
+> -				       500 * 1000);
+> -	if (ret) {
+> -		DRM_ERROR("Training complete polling failed (%d)\n", ret);
+> -		return;
+> -	} else if (val == ML_TX_MAIN_LINK_OFF) {
+> -		DRM_ERROR("Link training failed, link is off\n");
 > +	/* Set the DP output format (18 bpp or 24 bpp) */
 > +	val = (ti_sn_bridge_get_bpp(pdata) == 18) ? BPP_18_RGB : 0;
 > +	regmap_update_bits(pdata->regmap, SN_DATA_FORMAT_REG, BPP_18_RGB, val);
 > +
->  	/* DP lane config */
->  	val = DP_NUM_LANES(min(pdata->dp_lanes, 3));
->  	regmap_update_bits(pdata->regmap, SN_SSC_CONFIG_REG, DP_NUM_LANES_MASK,
+> +	/* DP lane config */
+> +	val = DP_NUM_LANES(min(pdata->dp_lanes, 3));
+> +	regmap_update_bits(pdata->regmap, SN_SSC_CONFIG_REG, DP_NUM_LANES_MASK,
+> +			   val);
+> +
+> +	ret = ti_sn_link_training(pdata);
+> +	if (ret)
+>  		return;
+> -	}
+>  
+>  	/* config video parameters */
+>  	ti_sn_bridge_set_video_timings(pdata);
 > -- 
 > 2.24.1.735.g03f4e72817-goog
 > 
