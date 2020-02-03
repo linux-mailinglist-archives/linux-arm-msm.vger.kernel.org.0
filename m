@@ -2,118 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AF1DD14FB87
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Feb 2020 06:07:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DDCCF150166
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 06:31:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726248AbgBBFHe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Feb 2020 00:07:34 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:12731 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725962AbgBBFHe (ORCPT
+        id S1727311AbgBCFbl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Feb 2020 00:31:41 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:52392 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725999AbgBCFbl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Feb 2020 00:07:34 -0500
+        Mon, 3 Feb 2020 00:31:41 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580620054; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=a3q2yNezV9J75HysFSuPYt/Ll9TEKYNx0uEo7VSRjw8=;
- b=tPTiNf+WM9PIMRzeHFys/HG0ZnVE39mpBJi6Y/p3rNha18M7tQlOF0IYwGVUYeJ7wTyq4GO+
- 60n7H/dsmeLoN1/OFXHd6iJefwRICponE6nx9dCpXcuzJmckh8jRDrimvQh/DEucf/aNmCx6
- 9ZHZtd+RB0cNu7AvKYCGENu/Rjo=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ s=smtp; t=1580707901; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=fMjyZYf8lGbJRVxTH0yxxpHhc+wrv0FP/6oQmOaQ8KE=; b=a7XkaTRPnLzsfQ/hHHoJacdwzr+9dJ0s86Wd/RRKXj5UwHNqRhZozgDcFa+N/i/g8FiEaQ/3
+ NIqBr/M6MVuV0q6TdAAO/nbG64pvwp8dwjaLwexrW/esuB+JCnnJeHb6/asCegtrXJ5qGI33
+ qIXKmicPYnhsACMXNkL/NJnobhU=
+X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e365914.7f0ac4cc0538-smtp-out-n01;
- Sun, 02 Feb 2020 05:07:32 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e37b036.7f86f1d818b8-smtp-out-n02;
+ Mon, 03 Feb 2020 05:31:34 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 35617C4479C; Sun,  2 Feb 2020 05:07:31 +0000 (UTC)
+        id 8D339C447A3; Mon,  3 Feb 2020 05:31:34 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 90505C433CB;
-        Sun,  2 Feb 2020 05:07:30 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Sun, 02 Feb 2020 10:37:30 +0530
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 649A7C433CB;
+        Mon,  3 Feb 2020 05:31:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 649A7C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Guenter Roeck <linux@roeck-us.net>,
         Matthias Kaehlcke <mka@chromium.org>,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCHv2 1/2] dt-bindings: watchdog: Convert QCOM watchdog timer
- bindings to YAML
-In-Reply-To: <5e36535e.1c69fb81.510f6.ba36@mx.google.com>
-References: <cover.1580570160.git.saiprakash.ranjan@codeaurora.org>
- <2edca4b54ee6b33493e0427c17de983d3ce3012f.1580570160.git.saiprakash.ranjan@codeaurora.org>
- <5e36535e.1c69fb81.510f6.ba36@mx.google.com>
-Message-ID: <a50468262ed81ca927214db39a0306a3@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        linux-arm-msm@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH] dt-bindings: watchdog: Add optional interrupts property
+Date:   Mon,  3 Feb 2020 11:01:15 +0530
+Message-Id: <3726ea2e21cffd2f9667aaa0430003b2407ed74f.1580632081.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.24.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-02-02 10:13, Stephen Boyd wrote:
-> Quoting Sai Prakash Ranjan (2020-02-01 07:29:48)
->> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml 
->> b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
->> new file mode 100644
->> index 000000000000..5448cc537a03
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
->> @@ -0,0 +1,44 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/watchdog/qcom-wdt.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Krait Processor Sub-system (KPSS) Watchdog timer
->> +
->> +maintainers:
->> +  - Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> +
->> +allOf:
->> +  - $ref: watchdog.yaml#
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,kpss-timer
->> +      - qcom,kpss-wdt
->> +      - qcom,kpss-wdt-apq8064
->> +      - qcom,kpss-wdt-ipq4019
->> +      - qcom,kpss-wdt-ipq8064
->> +      - qcom,kpss-wdt-msm8960
->> +      - qcom,scss-timer
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  clocks:
->> +    maxItems: 1
-> 
-> By the way, I would expect the watchdog to have an interrupt property.
-> Not sure why it isn't described in the existing binding.
-> 
+Add optional interrupts property for specifying pre-timeout (bark)
+interrupt on QCOM SoCs.
 
-Yes it should be an optional property now that bark interrupt support 
-has been added. I will add that in a separate patch.
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+ Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
+diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+index 7180c64f54fb..e55aa7f3b08a 100644
+--- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
++++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+@@ -34,6 +34,9 @@ properties:
+   clocks:
+     maxItems: 1
+ 
++  interrupts:
++    maxItems: 1
++
+ required:
+   - compatible
+   - reg
+---
+
+This patch to be applied on top of 2 patches here:
+ - https://lore.kernel.org/patchwork/cover/1188497/
+
+--
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
