@@ -2,140 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 33E4E151097
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 20:56:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E9B31510BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 21:04:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726018AbgBCT4g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Feb 2020 14:56:36 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:33588 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727090AbgBCT4f (ORCPT
+        id S1726884AbgBCUEr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Feb 2020 15:04:47 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:43533 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726853AbgBCUEr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Feb 2020 14:56:35 -0500
-Received: by mail-pl1-f194.google.com with SMTP id ay11so6276557plb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2020 11:56:35 -0800 (PST)
+        Mon, 3 Feb 2020 15:04:47 -0500
+Received: by mail-pf1-f193.google.com with SMTP id s1so8100773pfh.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2020 12:04:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=I9M9LmaClASV810rGLEc15NYOwGjgzBVPDmw7qIokss=;
-        b=i8my4THGhNGBApfbRpArFdahLO9sBtkHhFpuR70QqVUpG+FWx6DjxhgZFgtqUjPq66
-         0WjH3gKJsCUoMQ7ipT4Q6vIUrwvHLMZegZ57wQNOVbfSJw10ePd/SDUsGr8EfwLgdLes
-         O1I5F4wUR6GK7SPeit5DL2B1y2AggMl1HENdWpde9tuqtecoVfBt8So/j2u0G7u8EZfR
-         WYQYc36PsFqwUCzYk02g3sEuETt3YnBJz//qWShRmOEl+XNkJSTTaMuyvrqaQ9VzdhG4
-         G4T5lN2PKz67M00tNgzdZDVf/jY5dCXi1XUxh9mJ4TXXDeM4IET4KW97tkT7EWyzm5Xj
-         ceqg==
+        bh=QjkulTeybGn9hNr5RiBCHxoPg8v6iMLSI5yxep0HG28=;
+        b=P3ZrHiZJfNNMAoSNpfqY0kRzBLBThgv6uhIlB0hQnndEa8t4ACeotN76+b92LOyAR1
+         /AHTa0vrCdE936p8ODrCDeKIbImfC5Y3nIfpqYVyhF+ME6XxIWACUy+MVd2nb50JnKmC
+         btOtt92Dso9wsr0VBbaSqkpCsYFhVmmKv8HY8yfGOKeSyFk3sjsuPnDDAsDdmIKl9hcv
+         TDBgcvO09BtD+D3AsjhB/K7X3lo40cs7TLmyTKtscF4WfwQzE2pG++6iNIWdA9cJmxOi
+         fFejvfq/sedP1cHmT19AgmFUudrvBpGoQwk9ziMIEKhRAK+K5Zg7cWypjXTXEdwkvD29
+         6jHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=I9M9LmaClASV810rGLEc15NYOwGjgzBVPDmw7qIokss=;
-        b=pl9wwIktdX/AoTQT7RNz7weuO5pBf+nK6Es1V4jm68WBR7yD+v+0M5F540NDwaBYWb
-         kzAwe3p8qS0CtlY82V3xMWy9yDJcTjQA/MlAetlMnPPvOywz6FqXbP+7NHOUYLdVqsrW
-         VrnvFA7hYJyfQyB+vFG3JYNh3mokSlb9HyIU5yve8dItawiPG0okP94aIqWJeH1Y6g2z
-         2bH8cDqRgtUHzhTWUm/k9yIalo7FIT28pWlyv3kTrWNXER6ISpP7fAVi7P0dqkCo8CB2
-         zxRaG1zuErUyGe+bjqoW/i7YeTquratE9G4IeiTKU97dUAWFj/4ns3KI4jnN1tRUbCEq
-         0V7A==
-X-Gm-Message-State: APjAAAUD7ZanSbXSonF9o3UrPWw1nXZW/7wLOTs9MvRQDC+pfXoR6xp2
-        ROP5PlIQbvEVNq5hkdXYnM9ujQ==
-X-Google-Smtp-Source: APXvYqz5H17S9JQ02+kNOTj+0Wz6oywPwLIaMN2k+bOpSmvpM87PMUZNYn/QrD1GELPMKLvJrVCm/Q==
-X-Received: by 2002:a17:90b:941:: with SMTP id dw1mr784516pjb.21.1580759795145;
-        Mon, 03 Feb 2020 11:56:35 -0800 (PST)
+        bh=QjkulTeybGn9hNr5RiBCHxoPg8v6iMLSI5yxep0HG28=;
+        b=WlGbsMzkw4TAyCfj81yTgdtO786IuxhYIds66OOrvtJE4mIwfx8pn5sIGlmR9nkgNQ
+         XWvc26qVJaJe5I1rCgw/vq1XSEgg7MSpFE4rQSLwenma+1wAGLaZoAGp3XjJVsTTWP4e
+         wjgn5Cs2hlgLBieUhby2hW6CTtsQLE0hFhLuzjNPV0Wpu/59HpJw0wzYgyVZ0xhYm4lx
+         KmdK9M4JECMgp6+BaLd4pjmGUkS7gcWgo3Kwlbu0iSlJ5udgPfNfW2DKbvIZ9feYfDGU
+         UgecgjWE41bheSTyFgO8bbt9S8BLQyjPmg2ZrpnrxlufNY45iPrqsgXEtkeqLxw7SIUa
+         9RBg==
+X-Gm-Message-State: APjAAAVcNK3Xm1sYgTAdSp6hcKPgSgZJbj4I+4XrvXlOvs71kSBgLfnu
+        RNmRF5PMehHvAuJOr7LIAtkNFw==
+X-Google-Smtp-Source: APXvYqxSX3IT/Y4QU0IY3LL1ZOt6lUaeo4Pou0WcpI4oIESu5GLix0UbJ3MWDPLyKtppw2IV0Fskdw==
+X-Received: by 2002:a62:1a16:: with SMTP id a22mr26237902pfa.34.1580760286486;
+        Mon, 03 Feb 2020 12:04:46 -0800 (PST)
 Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id o29sm21978029pfp.124.2020.02.03.11.56.33
+        by smtp.gmail.com with ESMTPSA id s14sm5229407pgv.74.2020.02.03.12.04.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2020 11:56:34 -0800 (PST)
-Date:   Mon, 3 Feb 2020 11:56:32 -0800
+        Mon, 03 Feb 2020 12:04:45 -0800 (PST)
+Date:   Mon, 3 Feb 2020 12:04:43 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        robh@kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        tientzu@chromium.org, seanpaul@chromium.org, rjliao@codeaurora.org,
-        yshavit@google.com
-Subject: Re: [PATCH v2 1/2] Bluetooth: hci_qca: Enable clocks required for BT
- SOC
-Message-ID: <20200203195632.GM3948@builder>
-References: <1580456335-7317-1-git-send-email-gubbaven@codeaurora.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Harigovindan P <harigovi@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Matthias Kaehlcke <mka@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH v4 00/15] clk: qcom: Fix parenting for
+ dispcc/gpucc/videocc
+Message-ID: <20200203200443.GN3948@builder>
+References: <20200203183149.73842-1-dianders@chromium.org>
+ <20200203193027.62BD22080D@mail.kernel.org>
+ <CAD=FV=X2K-Qr17qXgG1Ng8MpZQogagBqMwWu=D2OpQf+ZskBPw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1580456335-7317-1-git-send-email-gubbaven@codeaurora.org>
+In-Reply-To: <CAD=FV=X2K-Qr17qXgG1Ng8MpZQogagBqMwWu=D2OpQf+ZskBPw@mail.gmail.com>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 30 Jan 23:38 PST 2020, Venkata Lakshmi Narayana Gubba wrote:
+On Mon 03 Feb 11:41 PST 2020, Doug Anderson wrote:
 
-> Instead of relying on other subsytem to turn ON clocks
-> required for BT SoC to operate, voting them from the driver.
+> Hi,
 > 
-> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-> ---
-> v2:
->    * addressed forward declarations
->    * updated with devm_clk_get_optional()
->  
-> ---
->  drivers/bluetooth/hci_qca.c | 25 +++++++++++++++++++++++++
->  1 file changed, 25 insertions(+)
+> On Mon, Feb 3, 2020 at 11:30 AM Stephen Boyd <sboyd@kernel.org> wrote:
+> >
+> > Quoting Douglas Anderson (2020-02-03 10:31:33)
+> > >
+> > >  .../devicetree/bindings/clock/qcom,gpucc.yaml | 72 --------------
+> > >  ...om,dispcc.yaml => qcom,msm8998-gpucc.yaml} | 33 +++----
+> > >  .../bindings/clock/qcom,sc7180-dispcc.yaml    | 84 ++++++++++++++++
+> > >  .../bindings/clock/qcom,sc7180-gpucc.yaml     | 72 ++++++++++++++
+> > >  .../bindings/clock/qcom,sc7180-videocc.yaml   | 63 ++++++++++++
+> > >  .../bindings/clock/qcom,sdm845-dispcc.yaml    | 99 +++++++++++++++++++
+> > >  .../bindings/clock/qcom,sdm845-gpucc.yaml     | 72 ++++++++++++++
+> > >  ...,videocc.yaml => qcom,sdm845-videocc.yaml} | 27 ++---
+> > >  arch/arm64/boot/dts/qcom/sc7180.dtsi          | 47 +++++++++
+> > >  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 28 +++++-
+> >
+> > I don't want to take patches touching dts/qcom/. These aren't necessary
+> > to merge right now, correct? Or at least, they can go via arm-soc tree?
 > 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index d6e0c99..73706f3 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1738,6 +1738,15 @@ static int qca_power_off(struct hci_dev *hdev)
->  	return 0;
->  }
->  
-> +static int qca_setup_clock(struct clk *clk, bool enable)
-> +{
-> +	if (enable)
-> +		return clk_prepare_enable(clk);
-> +
-> +	clk_disable_unprepare(clk);
-> +	return 0;
-> +}
+> Right.  They can go later.
+> 
+> Specifically for sdm845 until the sdm845 patches lands the old dts
+> trees will yell about the missing clocks, but it's not like they will
+> compile fail.  Also the bindings themselves will validate fine.
+> There's no other way forward, though, and the old bindings caused
+> similar yells.
+> 
 
-As Marcel requested, inline these.
+Can you please help me parse this, will old DT cause complaints or will
+it fail to boot?
 
-> +
->  static int qca_regulator_enable(struct qca_serdev *qcadev)
->  {
->  	struct qca_power *power = qcadev->bt_power;
-> @@ -1755,6 +1764,13 @@ static int qca_regulator_enable(struct qca_serdev *qcadev)
->  
->  	power->vregs_on = true;
->  
-> +	ret = qca_setup_clock(qcadev->susclk, true);
-> +	if (ret) {
-> +		/* Turn off regulators to overcome power leakage */
+> For sc7180 there's no usage of any of these clocks and this adds the
+> first usage, so definitely no problem there.
+> 
+> Once you've landed then Bjorn or Andy can pick up the dts.
+> 
 
-You can omit this comment as well, as the name of the function you call
-is aptly named.
-
-> +		qca_regulator_disable(qcadev);
-> +		return ret;
-
-Just return ret below instead.
-
-> +	}
-> +
->  	return 0;
->  }
->  
-> @@ -1773,6 +1789,9 @@ static void qca_regulator_disable(struct qca_serdev *qcadev)
->  
->  	regulator_bulk_disable(power->num_vregs, power->vreg_bulk);
->  	power->vregs_on = false;
-> +
-> +	if (qcadev->susclk)
-
-In the enable path you (correctly) rely on passing NULL to the clock
-code, so do the same here.
+Do I need to apply these after Stephen picks the driver patches? Or are
+they simply nop until the driver patches lands?
 
 Regards,
 Bjorn
