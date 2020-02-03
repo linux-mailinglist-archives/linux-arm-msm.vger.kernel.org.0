@@ -2,116 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6861415035D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 10:29:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1220B150404
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Feb 2020 11:16:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727450AbgBCJ3f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Feb 2020 04:29:35 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:23493 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726244AbgBCJ3c (ORCPT
+        id S1727843AbgBCKQZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Feb 2020 05:16:25 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:42121 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727797AbgBCKQZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Feb 2020 04:29:32 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580722171; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=rVTQT/UDQokSpeOaMvofAY/Lfmv4L1fEaVGMooR99N0=;
- b=rkwAAsMuCfF9gbAAV5YpB/mjJVo/JP5JEhmi4kMZgUHBVgQMsu6Ohq4r3GTjZGTrcYG5un05
- GD3vW8m4y2P3AfAGNU790jqzZhufiR6fd0QHN/5UJ2koNfrVP97mYmIGD32U18kDVrhO+Qbf
- PrxhHxLWjdCczv87n58OHPeHbcc=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e37e7fa.7f8e35731ab0-smtp-out-n01;
- Mon, 03 Feb 2020 09:29:30 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6FB93C447A2; Mon,  3 Feb 2020 09:29:29 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: gubbaven)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B58EBC433CB;
-        Mon,  3 Feb 2020 09:29:28 +0000 (UTC)
+        Mon, 3 Feb 2020 05:16:25 -0500
+Received: by mail-pf1-f193.google.com with SMTP id 4so7319604pfz.9;
+        Mon, 03 Feb 2020 02:16:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8nl2L3p+Ia4E1khnSMhXa3k44nb4cAKeLzB5j1ho5Q4=;
+        b=ZF3Cwe+sUYE/i8Qd+9liOcZE8JWFZGEMtPrwkoS1cGWyMawyyFgATWcYlWjBxAqEqq
+         tRDzgljJg8FGaiOrfG5tKK/V0wdjrc6M2I/P/8HTV9tVbb6VCwHEFipv+e5xBIr1oxah
+         xSYw4D2HCz/TnZpDHZgdhUi/PVnYEGD1lmOHdRdtTTGiriUGs3QyHv/iDBRK7DbZ/7Ct
+         TGJ5G/HsZGNhKmZk2X5cpqLRfhlxRoNFdx1dqnA0OQN+8TRW5d10ZKN68x3mNulewkrB
+         PX2dL/54OVKP0Wfyb7XGq7knytMTBazsqEsnWID/YCxW5RFcupMs+akZrLcirdB6Y0um
+         PbYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8nl2L3p+Ia4E1khnSMhXa3k44nb4cAKeLzB5j1ho5Q4=;
+        b=jlpccHfOyPQO+naiQ1BE7WWr2x8x3QASoklvPnPr3JxHQeeIZgjA0CfcAE0mVgjE03
+         EEdMblLRRIg+dkhQIwaC0i36NR6evk2JLGXkI7w/KpNuzAcQG4wa1WHodSUpzc3YwNwn
+         7AZcHfJ4IeFdCbp0h7ZGIfSNddYGvyPhJTl1AyXpKt5mA6LZdFYYDEwS738W110PBkXh
+         2kVQXQSaUdChktx0iuPAUjGYZHvbeORXM0Sff3pQ1v++Q55HGPBnbh+EvoqHKc5C/Dr2
+         QUXwWU8iugoZwvLqLSxOzf/NDP3oemb0ka3O5tQrzLG3S/19N5ckMR+Exhof7VeJSQf7
+         Fr5g==
+X-Gm-Message-State: APjAAAWe93lhyYWvlONL2Go+AA2ozVjuqw5FZ1tZVef8h3ReSKIkzt8r
+        r2rSeks2yktdDnFOLMTIsC7pdtF/k3P1dOZW86Q=
+X-Google-Smtp-Source: APXvYqxWutW6pKCGPRKsawlK4lEy7F/4S4tpTZWWYsSKci14dTcyHaWg7CkfIalOcAc/wZQfNq+VazwrNRo8lQ+vWD8=
+X-Received: by 2002:a65:4685:: with SMTP id h5mr25618513pgr.203.1580724984426;
+ Mon, 03 Feb 2020 02:16:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 03 Feb 2020 14:59:28 +0530
-From:   gubbaven@codeaurora.org
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, robh@kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bgodavar@codeaurora.org, tientzu@chromium.org,
-        seanpaul@chromium.org, rjliao@codeaurora.org, yshavit@google.com
-Subject: Re: [PATCH v3] Bluetooth: hci_qca:Removed the function
- qca_setup_clock()
-In-Reply-To: <1580717149-7609-1-git-send-email-gubbaven@codeaurora.org>
-References: <1580717149-7609-1-git-send-email-gubbaven@codeaurora.org>
-Message-ID: <fb372af8420a7af076ffbb5f44542497@codeaurora.org>
-X-Sender: gubbaven@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20200131135009.31477-1-manivannan.sadhasivam@linaro.org> <20200131135009.31477-14-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20200131135009.31477-14-manivannan.sadhasivam@linaro.org>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Mon, 3 Feb 2020 12:16:16 +0200
+Message-ID: <CAHp75Vc2Nf9N0cPBmrqb_xZQG-=eczd=gdZxsfXv6OtZ=ysP6w@mail.gmail.com>
+Subject: Re: [PATCH v2 13/16] MAINTAINERS: Add entry for MHI bus
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>, smohanad@codeaurora.org,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Please discard this.I will be sending another patch set.
+On Fri, Jan 31, 2020 at 3:53 PM Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> wrote:
+>
+> Add MAINTAINERS entry for MHI bus.
 
-Regards,
-Venkata.
+> +MHI BUS
+> +M:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> +M:     Hemant Kumar <hemantk@codeaurora.org>
+> +L:     linux-arm-msm@vger.kernel.org
+> +T:     git git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git
+> +S:     Maintained
+> +F:     drivers/bus/mhi/
+> +F:     include/linux/mhi.h
+> +F:     Documentation/mhi/
 
-On 2020-02-03 13:35, Venkata Lakshmi Narayana Gubba wrote:
-> For enabling and disabling clocks, directly called the functions
-> clk_prepare_enable() and clk_disable_unprepare() respectively.
-> 
-> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-> ---
->  drivers/bluetooth/hci_qca.c | 13 ++-----------
->  1 file changed, 2 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index 73706f3..eacc65b 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1738,15 +1738,6 @@ static int qca_power_off(struct hci_dev *hdev)
->  	return 0;
->  }
-> 
-> -static int qca_setup_clock(struct clk *clk, bool enable)
-> -{
-> -	if (enable)
-> -		return clk_prepare_enable(clk);
-> -
-> -	clk_disable_unprepare(clk);
-> -	return 0;
-> -}
-> -
->  static int qca_regulator_enable(struct qca_serdev *qcadev)
->  {
->  	struct qca_power *power = qcadev->bt_power;
-> @@ -1764,7 +1755,7 @@ static int qca_regulator_enable(struct qca_serdev 
-> *qcadev)
-> 
->  	power->vregs_on = true;
-> 
-> -	ret = qca_setup_clock(qcadev->susclk, true);
-> +	ret = clk_prepare_enable(qcadev->susclk);
->  	if (ret) {
->  		/* Turn off regulators to overcome power leakage */
->  		qca_regulator_disable(qcadev);
-> @@ -1791,7 +1782,7 @@ static void qca_regulator_disable(struct
-> qca_serdev *qcadev)
->  	power->vregs_on = false;
-> 
->  	if (qcadev->susclk)
-> -		qca_setup_clock(qcadev->susclk, false);
-> +		clk_disable_unprepare(qcadev->susclk);
->  }
-> 
->  static int qca_init_regulators(struct qca_power *qca,
+Had you run parse-maintainers.pl afterwards to see if everything is okay?
+
+-- 
+With Best Regards,
+Andy Shevchenko
