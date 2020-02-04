@@ -2,120 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F2BD4151DE9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 17:11:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C59C4151DED
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 17:11:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727308AbgBDQLa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Feb 2020 11:11:30 -0500
-Received: from mail-ua1-f68.google.com ([209.85.222.68]:43746 "EHLO
-        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727310AbgBDQLa (ORCPT
+        id S1727361AbgBDQLu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 11:11:50 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:38386 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727317AbgBDQLu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 11:11:30 -0500
-Received: by mail-ua1-f68.google.com with SMTP id o42so6921611uad.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 08:11:29 -0800 (PST)
+        Tue, 4 Feb 2020 11:11:50 -0500
+Received: by mail-pg1-f193.google.com with SMTP id a33so9877409pgm.5;
+        Tue, 04 Feb 2020 08:11:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3Wna36vo5UJeWT90pPlyYZdqk7kd5cJ0fLDcJ01xAb0=;
-        b=A21gEwgiD1x55Cgg9LjGfwbgFr/pS5Aa5glZkaPN7ewWZr/AH0Ut8TFTqMXagzixII
-         y8sWSkkrWyr8VTB+HQi587L2bzikWmqncXEqczU4GRd//Y2QP4QzAqDdpemle9Gx7TmS
-         ZqhPoj2VUI2qjwzncsxNVVYt7jOZQPsWfcsuHdfqNnAylB0pHJwSk9FNSlSYg8DDtG9E
-         YbxGiVEcPl2GkyvB4xTgsGSkrhVY1V5NiWFIFA7qflV7rgMwWepSjz71KmQFVPppN+Ea
-         FXtbPXPIhygSTNxHKTu2nZ/U1sjRvLcmKrstFw5MmhQbKI+Vh7JXa5PgOzWZ3VVtVcMX
-         79Pg==
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=V+cYisoVlXbzdOPJU0/EsbztEMzDD+Up0QG4aFr1054=;
+        b=rzuIGOuXeVMHS9+5/ZQUK+GuPFPAqjQYrt1KaJe7BViMSvaMtB/rPi3jZQqK/bQoNb
+         f6YHmX8AyGwL4fkzSHxtelhZtKB8lMaCSjYJMaINeD+zD3+MkXMD4cpTWVv9GE1Yp2ur
+         GqUArcEF8ZMRhhIu/x74f+Ku723UfjvVlCS9AjP+9B5dYE2cLJUR7RaPLUhO7BAMYAnT
+         +2hYledcrYI2Szo7SWCshIy2q6VrWm6DpNSQ9/L92bVUif2c6vsqx/4qIhctY2xtaukl
+         gRwVNyZ1Q1kOGyaxqoXEUaPZHzh9QuV2c5iOwXb9NozbqdCWn/pjWEXwc74R/d7guyVk
+         efdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3Wna36vo5UJeWT90pPlyYZdqk7kd5cJ0fLDcJ01xAb0=;
-        b=P0LMua13Z5tDw9zeFeTFVQ3TCX/yADfva1HW5tS/Wf/NFJ7ZOoJHm+OTbR418n67Nx
-         lnbdmOfgY/YSrdt5BseayP0xO+lXe2bFk+90sFzlCCmNZ1J3VpWkp3IFIeFCVWt6sQjA
-         ar5nSU+V+o/4WLiPWviwkW+x60/pzlSnnPTi6nFb3hNJwjuCwm6dFxdVBL0SK4+RNk7S
-         AqFm1wMTQz4nB/x4D7AnTyEwhU5vf6alEUpkYxOOhXCLnEziJjhmhEOn0skLNALZpnro
-         S6i6XiSmKbdrQ9KzW5lGjuMUIQ4h0oJQbqzAH38hLkK9KoK7nK/zyTfC6387M88seDeQ
-         IlSA==
-X-Gm-Message-State: APjAAAXxkh/SVELLMCqSqd61NibJHFXPvRNDCn44iq+p8dL4FrCUXdQT
-        erEC6XC4YUAarhWdbIRiUsoGvAT3Ds6TqnhqRi60hQ==
-X-Google-Smtp-Source: APXvYqxOPdcglcZaUAT0pZaljv73i4NlWwFKpThbuWemE8YWkXfRhT7zfpj0xd/OaNAUkecAe3IzrKUUtxl5vdmvEEc=
-X-Received: by 2002:ab0:e16:: with SMTP id g22mr17400525uak.129.1580832689305;
- Tue, 04 Feb 2020 08:11:29 -0800 (PST)
-MIME-Version: 1.0
-References: <1574254593-16078-1-git-send-email-thara.gopinath@linaro.org> <1574254593-16078-3-git-send-email-thara.gopinath@linaro.org>
-In-Reply-To: <1574254593-16078-3-git-send-email-thara.gopinath@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 4 Feb 2020 17:10:53 +0100
-Message-ID: <CAPDyKFqdyvvFCQ-vJU=0xBV0OKik3pBvX33H-mb=i9_TSU8QLw@mail.gmail.com>
-Subject: Re: [Patch v4 2/7] soc: qcom: rpmhpd: Introduce function to retrieve
- power domain performance state count
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     Eduardo Valentin <edubezval@gmail.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=V+cYisoVlXbzdOPJU0/EsbztEMzDD+Up0QG4aFr1054=;
+        b=pTDB0yhQEw5pMaf2b5N7XtQoCLS+dDoWr4fCFpRNZsSGB+D/DmHU8ZaBavrNrTNSbx
+         XNa7iD+6gb1JsdPLS4bst6TBevbbwsqHpkhut6MbD+Xd2EGBIjkReXcxq36ALsZKd4LF
+         dCmJsG9g4FHip5KH4Ih5/YgXEraizLKWcdVcNjXmQIX06/Yt2T8ns8qgo/slrKFPpNUR
+         kIkgDf49YUw2ba7YRLwFI/oA7cNOQ2oYXET8XB2J0OXwOF7rWBXJH0vYkTGgoBnAfknC
+         6M2andJ+5gYUzqkfy1Skc48c80Iy6BmdDNO1l6cZjkWehZ/HPOuthfizccRLgsXb6SKS
+         nxGg==
+X-Gm-Message-State: APjAAAVPbAo8Pz97DJeutOdYPe0iSl9uPM8omCWXecwHd4IeLnIGARQS
+        0oveSwJJ667MQTPPA+uZ4x4=
+X-Google-Smtp-Source: APXvYqxD05ec97YIo/YDmjZyz3awYH68AxoOhXx83xhb+6X3R2RNb0Brkqm9D/3kOUQYRhFvuM/Dbg==
+X-Received: by 2002:a62:3304:: with SMTP id z4mr30093384pfz.79.1580832709903;
+        Tue, 04 Feb 2020 08:11:49 -0800 (PST)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id o9sm21675657pfg.130.2020.02.04.08.11.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 04 Feb 2020 08:11:49 -0800 (PST)
+Date:   Tue, 4 Feb 2020 08:11:48 -0800
+From:   Guenter Roeck <linux@roeck-us.net>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/3] Documentation: watchdog: qcom-wdt: add new
+ no-pretimeout option
+Message-ID: <20200204161148.GC17320@roeck-us.net>
+References: <20200204152104.13278-1-ansuelsmth@gmail.com>
+ <20200204152104.13278-3-ansuelsmth@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200204152104.13278-3-ansuelsmth@gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 20 Nov 2019 at 13:56, Thara Gopinath <thara.gopinath@linaro.org> wrote:
->
-> Populate .get_performace_state_count in genpd ops to retrieve the count of
-> performance states supported by a rpmh power domain.
->
-> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-
-Apologize for the delays! Re-kicking reviews now, I will provide
-further comments later today or tomorrow.
-
-For this one:
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-
-Kind regards
-Uffe
-
-
+On Tue, Feb 04, 2020 at 04:21:03PM +0100, Ansuel Smith wrote:
+> Add description for new no-pretimeout function to force legacy
+> probe if any interrupt is defined.
+> 
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 > ---
->  drivers/soc/qcom/rpmhpd.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-> index 5741ec3..9d37534 100644
-> --- a/drivers/soc/qcom/rpmhpd.c
-> +++ b/drivers/soc/qcom/rpmhpd.c
-> @@ -285,6 +285,13 @@ static unsigned int rpmhpd_get_performance_state(struct generic_pm_domain *genpd
->         return dev_pm_opp_get_level(opp);
->  }
->
-> +static int rpmhpd_performance_states_count(struct generic_pm_domain *domain)
-> +{
-> +       struct rpmhpd *pd = domain_to_rpmhpd(domain);
-> +
-> +       return pd->level_count;
-> +}
-> +
->  static int rpmhpd_update_level_mapping(struct rpmhpd *rpmhpd)
->  {
->         int i;
-> @@ -373,6 +380,8 @@ static int rpmhpd_probe(struct platform_device *pdev)
->                 rpmhpds[i]->pd.power_on = rpmhpd_power_on;
->                 rpmhpds[i]->pd.set_performance_state = rpmhpd_set_performance_state;
->                 rpmhpds[i]->pd.opp_to_performance_state = rpmhpd_get_performance_state;
-> +               rpmhpds[i]->pd.get_performance_state_count =
-> +                                       rpmhpd_performance_states_count;
->                 pm_genpd_init(&rpmhpds[i]->pd, NULL, true);
->
->                 data->domains[i] = &rpmhpds[i]->pd;
-> --
-> 2.1.4
->
+>  Documentation/devicetree/bindings/watchdog/qcom-wdt.txt | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.txt b/Documentation/devicetree/bindings/watchdog/qcom-wdt.txt
+> index 33081bd33637..01978bff74ee 100644
+> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.txt
+> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.txt
+> @@ -14,6 +14,8 @@ Required properties :
+>  Optional properties :
+>  - timeout-sec : shall contain the default watchdog timeout in seconds,
+>                  if unset, the default timeout is 30 seconds
+> +- no-pretimeout : shall be set if the platform have some interrupts
+> +                  defined in the node but doesn't support pretimeout
+
+As mentioned in the other patch, why specify an interrupt in the first
+place in that situation ?
+
+Guenter
