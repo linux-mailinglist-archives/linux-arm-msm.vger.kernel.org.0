@@ -2,120 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B6DC151F8E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 18:37:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F036151FA1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 18:41:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727451AbgBDRhV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Feb 2020 12:37:21 -0500
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:35275 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727310AbgBDRhV (ORCPT
+        id S1727382AbgBDRlB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 12:41:01 -0500
+Received: from mail-vk1-f193.google.com ([209.85.221.193]:40081 "EHLO
+        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727442AbgBDRlB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 12:37:21 -0500
-Received: by mail-pj1-f65.google.com with SMTP id q39so1697915pjc.0;
-        Tue, 04 Feb 2020 09:37:20 -0800 (PST)
+        Tue, 4 Feb 2020 12:41:01 -0500
+Received: by mail-vk1-f193.google.com with SMTP id c129so5417297vkh.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 09:41:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=jRjcj/VJ7A9kdBwbhVlZG6Ayb9eCm4/PVayam2B0eBA=;
-        b=uoR4KL1uKqJBStzO/JDHuWnpa9mC8rix26XYVdaBr7Cz4mZHfyWGsbeE/myQHlJrHt
-         n8xWVieFoqAuXS206uRM5MRyF7VuWhT5wn5+nCZE/bGlW4q6B6aiHuJ38KZonamd74UK
-         cuQpOLzpsssvZJ3b/haYr2Isl6OSaObekItK7GQ1LjlRj2ExvuaTl9/tmeNvzhGCyics
-         l2KukTfliq10pu6rH9qwwsfFf9qcemhoNIRWsxEruiZtk7pOM/lgpA4lqsQH1bQ6qWeO
-         7ax/oNGGb83hnH1dJ4GR/jMU3hhb5+vWLl5XyPBROBDDqR74dtitpmudcz1qTjCn+4WG
-         b98Q==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yoiAXhoixmdJYs8LD0r9kQphcdYUs7qTHA0kGn1fjD8=;
+        b=ziMjW1G2ZC36prlStBh0BoqSZzrOzkvJgh4cxQJxzi2UYxeh0U6jYD3ceYaUFbxW/1
+         b/0ePQTGd+lyMBeZqKeC+hxGtEkgpE8EH6Y2lxFMYCqrv3Ak4nk42IGHFOldLsCDBsae
+         40BgwcClVqsWD2sMrahZCAeYJeX4pCF94iZDkyUXuVDghCn/cjfqG/vLYIBWmkBikA9A
+         eRyRF06XfBOXrwxWbGj01NEg1HYXx3jibtOA0Q8TgAXWtmUJtRWBcjd9p7DDi/LBAckX
+         sqg7bIML+x1oxWc2FraBge5N9fzLy5A/TX2gVJmTuwEDW/TJgkzZtOYi0HKw+k5Ll1XH
+         YlWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jRjcj/VJ7A9kdBwbhVlZG6Ayb9eCm4/PVayam2B0eBA=;
-        b=rPKtbRlK9Ty4KwIj8+hO0m46QjJ7j6OzJ8ev0zuPzWG1U6tuRkHn0z6x/dJBIUbHdM
-         pJ4mE6gTgig5S/VjZy7n9u7IGfFSCx4dPqHyhUQJwhDoTNiqrAlmjY7s2jJfdQ9DzWSR
-         cvOhu49JE84hoGYXp7wEnuuBXwR0OZiOP0/W6G6JhIcZKM4FkWSE0TihbObCYuPzzu8d
-         9vt21I7pEASIDG5G5zjN275xEKOyez5ArFPY0U5q77RMBmsgeqY7DbzDe5l5ArLuGwUw
-         dQcY9bC3QzYVwRqaVZAWBI4187KHGUQfsEOChFGZx1cft1SHPKcPlSwzb4rtqMyIFHM1
-         7u5Q==
-X-Gm-Message-State: APjAAAURDxP+EwKT0OIy78I247vCgVAIY9RZ/R3eygqehiB2fZLzlLtB
-        ARItaxuAwCAWopuaPMIJsUc=
-X-Google-Smtp-Source: APXvYqy6Ik6qvV/q2oAsdNHITnU5LJJgHVNqOLjxz2QEyJpacbCpvipKCoB3ARIs8wV1gX86K67MYQ==
-X-Received: by 2002:a17:902:740c:: with SMTP id g12mr32145514pll.166.1580837840541;
-        Tue, 04 Feb 2020 09:37:20 -0800 (PST)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id x197sm25258520pfc.1.2020.02.04.09.37.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 04 Feb 2020 09:37:19 -0800 (PST)
-Date:   Tue, 4 Feb 2020 09:37:18 -0800
-From:   Guenter Roeck <linux@roeck-us.net>
-To:     ansuelsmth@gmail.com
-Cc:     'Andy Gross' <agross@kernel.org>,
-        'Bjorn Andersson' <bjorn.andersson@linaro.org>,
-        'Wim Van Sebroeck' <wim@linux-watchdog.org>,
-        'Rob Herring' <robh+dt@kernel.org>,
-        'Mark Rutland' <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: R: R: [PATCH 1/3] watchdog: qcom-wdt: add option to skip
- pretimeout
-Message-ID: <20200204173718.GA10098@roeck-us.net>
-References: <20200204152104.13278-1-ansuelsmth@gmail.com>
- <20200204160824.GA17320@roeck-us.net>
- <035201d5db76$78f56670$6ae03350$@gmail.com>
- <20200204162516.GA22814@roeck-us.net>
- <035f01d5db80$d2ed1fb0$78c75f10$@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yoiAXhoixmdJYs8LD0r9kQphcdYUs7qTHA0kGn1fjD8=;
+        b=HGz7CakKbrfH07ib4rpzIIL9dfvpcbmJyI/65H2Bkc2KvwRvCXlE2lhrtqK/Mq0fuE
+         t9lPlFIyL0GNN3zUFIA+uYZKOwcQU22E6sbVRjxAdbjom9COkqAr0cNt48UeSBWc6DAk
+         WHGjIi7veaOr6yjSbGDbVtgh+wV5Besn1CG1n+rpw2RK8CB+t7/03Z2uzXsHmmqQax+j
+         elXqpX38BDOjEQbvHWXvqdtaIy6tBOjbsxasoYT8RIsI2tjm0itJLhiBUK7LzZsj2RbG
+         weX9HLgbIIO92Se8Icr5VjYbxh1EkwbOFYg4YQPxiLgGz35gYpL8fk+Y5UfDWqvuRm5h
+         2Pog==
+X-Gm-Message-State: APjAAAVjfgABxalyKiEeWwdLPQOqhq/Z1LJI5PC7zU0PEWffnPAQBcEA
+        tT6eMBomjKgU3U1URL7j6gylPZ8f+rVyvxEbWT4ryA==
+X-Google-Smtp-Source: APXvYqxED+wsvoC+QCgQxKOUzWUnXH8k+A/0E762um0DhW/ZNecciMz+Dh5mSPvBTLSIOsbmDHFEDhbxvV++vZ1id2Y=
+X-Received: by 2002:a1f:94c1:: with SMTP id w184mr19267627vkd.43.1580838060111;
+ Tue, 04 Feb 2020 09:41:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <035f01d5db80$d2ed1fb0$78c75f10$@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <1574254593-16078-1-git-send-email-thara.gopinath@linaro.org> <1574254593-16078-6-git-send-email-thara.gopinath@linaro.org>
+In-Reply-To: <1574254593-16078-6-git-send-email-thara.gopinath@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 4 Feb 2020 18:40:24 +0100
+Message-ID: <CAPDyKFopiajhFymXo3q558AYBkdDYzU6Ye9HU9XSdN4r8j+qaw@mail.gmail.com>
+Subject: Re: [Patch v4 5/7] soc: qcom: Extend RPMh power controller driver to
+ register warming devices.
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     Eduardo Valentin <edubezval@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 04, 2020 at 06:30:40PM +0100, ansuelsmth@gmail.com wrote:
-> > On Tue, Feb 04, 2020 at 05:16:34PM +0100, ansuelsmth@gmail.com wrote:
-> > > If something like this is used, msm-timer require interrupts. Without
-> this
-> > > configuration, the device is unbootable as the system froze on system
-> > > bootup.
-> > >
-> > > timer@200a000 {
-> > > 			compatible = "qcom,kpss-timer", "qcom,msm-timer";
-> > > 			interrupts = <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(2) |
-> > > 						 IRQ_TYPE_EDGE_RISING)>,
-> > > 				     <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(2) |
-> > > 						 IRQ_TYPE_EDGE_RISING)>,
-> > > 				     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(2) |
-> > > 						 IRQ_TYPE_EDGE_RISING)>,
-> > > 				     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(2) |
-> > > 						 IRQ_TYPE_EDGE_RISING)>,
-> > > 				     <GIC_PPI 5 (GIC_CPU_MASK_SIMPLE(2) |
-> > > 						 IRQ_TYPE_EDGE_RISING)>;
-> > > 			no-pretimeout;
-> > > 			reg = <0x0200a000 0x100>;
-> > > 			clock-frequency = <25000000>,
-> > > 					  <32768>;
-> > > 			clocks = <&sleep_clk>;
-> > > 			clock-names = "sleep";
-> > > 			cpu-offset = <0x80000>;
-> > > 		};
-> > >
-> > 
-> > I think this is all wrong; the new property shows up in a node which
-> > is completely unrelated to a watchdog. Maybe it wasn't such a good idea
-> > to tie the watchdog to the timer node. At the very least, the situation
-> > should be handled in the driver via of_table flags. If the situation can't
-> > be handled that way, something is even more wrong. In that case it might
-> > be better to revert commit 36375491a439 until that is sorted out properly.
-> > 
-> > Guenter
-> > 
-> 
-> So pretimeout should be enabled only for kpss-wdt and disabled with a flag 
-> in the of_table of the driver?
-> 
+On Wed, 20 Nov 2019 at 13:56, Thara Gopinath <thara.gopinath@linaro.org> wrote:
+>
+> RPMh power control hosts power domains that can be used as
+> thermal warming devices. Register these power domains
+> with the generic power domain warming device thermal framework.
+>
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+> ---
+> v3->v4:
+>         - Introduce a boolean value is_warming_dev in rpmhpd structure to
+>           indicate if a generic power domain can be used as a warming
+>           device or not.With this change, device tree no longer has to
+>           specify which power domain inside the rpmh power domain provider
+>           is a warming device.
+>         - Move registering of warming devices into a late initcall to
+>           ensure that warming devices are registerd after thermal
+>           framework is initialized.
+>
+>  drivers/soc/qcom/rpmhpd.c | 38 +++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 37 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+> index 9d37534..5666d1f 100644
+> --- a/drivers/soc/qcom/rpmhpd.c
+> +++ b/drivers/soc/qcom/rpmhpd.c
+> @@ -11,6 +11,7 @@
+>  #include <linux/of_device.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/pm_opp.h>
+> +#include <linux/pwr_domain_warming.h>
+>  #include <soc/qcom/cmd-db.h>
+>  #include <soc/qcom/rpmh.h>
+>  #include <dt-bindings/power/qcom-rpmpd.h>
+> @@ -48,6 +49,7 @@ struct rpmhpd {
+>         bool            enabled;
+>         const char      *res_name;
+>         u32             addr;
+> +       bool            is_warming_dev;
+>  };
+>
+>  struct rpmhpd_desc {
+> @@ -55,6 +57,8 @@ struct rpmhpd_desc {
+>         size_t num_pds;
+>  };
+>
+> +const struct rpmhpd_desc *global_desc;
+> +
+>  static DEFINE_MUTEX(rpmhpd_lock);
+>
+>  /* SDM845 RPMH powerdomains */
+> @@ -89,6 +93,7 @@ static struct rpmhpd sdm845_mx = {
+>         .pd = { .name = "mx", },
+>         .peer = &sdm845_mx_ao,
+>         .res_name = "mx.lvl",
+> +       .is_warming_dev = true,
+>  };
+>
+>  static struct rpmhpd sdm845_mx_ao = {
+> @@ -396,7 +401,14 @@ static int rpmhpd_probe(struct platform_device *pdev)
+>                                                &rpmhpds[i]->pd);
+>         }
+>
+> -       return of_genpd_add_provider_onecell(pdev->dev.of_node, data);
+> +       ret = of_genpd_add_provider_onecell(pdev->dev.of_node, data);
+> +
+> +       if (ret)
+> +               return ret;
+> +
+> +       global_desc = desc;
 
-Correct, if that is the determining factor.
+I assume this works fine, for now.
 
-Guenter
+Although, nothing prevents this driver from being probed for two
+different compatibles for the same platform. Thus the global_desc
+could be overwritten with the last one being probed, so then how do
+you know which one to use?
+
+> +
+> +       return 0;
+>  }
+>
+>  static struct platform_driver rpmhpd_driver = {
+> @@ -413,3 +425,27 @@ static int __init rpmhpd_init(void)
+>         return platform_driver_register(&rpmhpd_driver);
+>  }
+>  core_initcall(rpmhpd_init);
+> +
+> +static int __init rpmhpd_init_warming_device(void)
+> +{
+> +       size_t num_pds;
+> +       struct rpmhpd **rpmhpds;
+> +       int i;
+> +
+> +       if (!global_desc)
+> +               return -EINVAL;
+> +
+> +       rpmhpds = global_desc->rpmhpds;
+> +       num_pds = global_desc->num_pds;
+> +
+> +       if (!of_find_property(rpmhpds[0]->dev->of_node, "#cooling-cells", NULL))
+> +               return 0;
+> +
+> +       for (i = 0; i < num_pds; i++)
+> +               if (rpmhpds[i]->is_warming_dev)
+> +                       pwr_domain_warming_register(rpmhpds[i]->dev,
+> +                                                   rpmhpds[i]->res_name, i);
+> +
+> +       return 0;
+> +}
+> +late_initcall(rpmhpd_init_warming_device);
+
+For the record, there are limitations with this approach, for example
+you can't deal with -EPROBE_DEFER.
+
+On the other hand, I don't have anything better to suggest, from the
+top of my head. So, feel free to add:
+
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+
+Kind regards
+Uffe
