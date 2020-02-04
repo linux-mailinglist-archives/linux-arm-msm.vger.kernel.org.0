@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C824151FA6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 18:41:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C30F6151FA8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 18:42:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727514AbgBDRlQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Feb 2020 12:41:16 -0500
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:37538 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727490AbgBDRlQ (ORCPT
+        id S1727468AbgBDRmB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 12:42:01 -0500
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:41579 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727423AbgBDRmB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 12:41:16 -0500
-Received: by mail-ua1-f65.google.com with SMTP id h32so7058321uah.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 09:41:14 -0800 (PST)
+        Tue, 4 Feb 2020 12:42:01 -0500
+Received: by mail-vs1-f67.google.com with SMTP id k188so11873734vsc.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 09:42:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=vtZzN8vcOcMPvNvqvRcWKk5U95hQVMr3boYd7IrlDrY=;
-        b=CFu0cZpe3C4v90cEH3brWH9RBZtbMCvv87Hp8m8LxZvjSzaP1oI5PiQDko9Q3u3Nla
-         qp8ZOZUYKDhQAsXxwy0U59Ya2N4eQuhNncoPY0EVDh7RlLprTJNdDfmooEQI7oSj9WuQ
-         JCO7V2PxVzQgg1CY3YvL1RuWl44dRoyiRibazjslnRvAL6Vq1eJrwfAi0S31AUrHMb81
-         GTZvXC+k/1+vTHJb9VrijEBJAplPs0bYkzgjAqZOuSarQhpWw4FX7QA3r0hd2lFWDwxZ
-         dLXWSo+CnGlxn1LuH28qxWJNQHjq8gBMjBcUXSdGNoaoZ7ln3lxVaQI7KmrQS7O+B2AO
-         aCgQ==
+        bh=fjuC2Q+emYlj3liTOkhD1vT9STVKFzAaIxRG9/y4iLc=;
+        b=ZuVKoRBbN2IxVALm7ARFmbp19wHiGrM2qMixN5b4MYb4oB/R0B4QxZnKEsVDmmofqR
+         k6mxVSRfB+v3QsTaNfp4d6f2d3SZKhLpXl6Hm+50L7unNYEavzkC7D1Vb+hxcJnl1XjB
+         QTb9FHxN3Z5Ir9DhS+5rxFnyeR7o736FgGuvc0YfEMjG29aUhUBV+k2y0wujIwgSne3f
+         uK8i6oC22/ss2UONJtnI1p28HhBfD511L4euVCxYWTq8RzETezIQ1LsGHo/qNrTPoRWQ
+         vMx4uVGYS8OZd11dPpszNxE+L9thfWUIopzVtFD7rkWgvJHuiRaLDzl04JIisQeay7/p
+         yL8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=vtZzN8vcOcMPvNvqvRcWKk5U95hQVMr3boYd7IrlDrY=;
-        b=gVGlISukQsAsD1LIZLDtuZgjmHezqLzRj2he3ROQnAqX8wPFOpUfknRZxJ7XKFXdHm
-         /CzVubvmQQ5TP+A3KCtMxFXKJUWUKc28XDeNdAlevmS4SC9kOVFi1ik+wy7l/euSY/io
-         o+04qXI8zq1t3fGLGHJu1VYzYeZ5OhrqjyBcj9m4QM/4VIQ012xoYAx3XErAqD3msUzq
-         GsIN0SinQ/Lyhqc4FGyImwXOY1lSRRXArRn2sXj8Rf9mZFEb/OICXQD1V87Iid02CUHh
-         TbNydudDC3hUBtvJv/Wlsi1YCVPeQwJ8YbuZHhVwRPwEOE3BZ9OIALAmF9me9h9epsut
-         xp8g==
-X-Gm-Message-State: APjAAAU1zJaX9ynLSb6H7W9OH0SMSCDLyw6cIrH4UAKbPadmp2yEraIp
-        lIP2mnlRGJO5jgpfqGOZ/DfA5ShRYdnTkQLCDIZwgA==
-X-Google-Smtp-Source: APXvYqw6qGPNw10G3tsi0hqyqX4GroK9qi863aHaak5Mc0Sb8sOVpn/K2Ca35mj+Hcb9Ls8zP92QGhu4mCP5pdaUmD4=
-X-Received: by 2002:ab0:7802:: with SMTP id x2mr13726087uaq.100.1580838073804;
- Tue, 04 Feb 2020 09:41:13 -0800 (PST)
+        bh=fjuC2Q+emYlj3liTOkhD1vT9STVKFzAaIxRG9/y4iLc=;
+        b=QpCCWoaPcZ7ZeA/mwi4R+tDVEtOSByYrvJfZgGpmpOiP3syuoLlNaBGlxCSGZPQG9A
+         nLjPLriMa+Nqg4BgL7nw7kUE2LlOnVq8sj+3dVjtw2E4md+1l43AZeOXZJNZeAe6v/WD
+         Jk5d5v0CsBHJ+/T3wGR9XZHBUpFmswn1IgJ8aMJef/vlLu1t4O5s49Jo7xKJhH9ouZdr
+         E7ZwIJ1T2W5LD4Zt+K19MD5bMcwJQwIOkAYKCWGU0L0w1VmEs1OYsjrm/5eNVbw6H0p9
+         Jnocrp0ezsRe9zY+YEY7d2N3SZIHpsLKwHyk1Om/rfcPooANlmJ9W+lPziRSL+3j+xNm
+         Gq9w==
+X-Gm-Message-State: APjAAAWvxTOIefy8N/jGdd52/6jizdlMdOus0HFa//btQe7cItBO+iHu
+        zMwVoeW5Ia678Q3RnJAgQPKoAG3Oc2NgGZje1qqWz+Az
+X-Google-Smtp-Source: APXvYqyjrOIcbN1CA5AmmX2fCOqRAU7O978JET53Jj4/L8pqQCnTpNTrAge1isc2vOAXGGZ0K3lgeSxX/nKsE/f0Vpk=
+X-Received: by 2002:a67:ee02:: with SMTP id f2mr18787393vsp.165.1580838120569;
+ Tue, 04 Feb 2020 09:42:00 -0800 (PST)
 MIME-Version: 1.0
-References: <1574254593-16078-1-git-send-email-thara.gopinath@linaro.org> <1574254593-16078-8-git-send-email-thara.gopinath@linaro.org>
-In-Reply-To: <1574254593-16078-8-git-send-email-thara.gopinath@linaro.org>
+References: <1574254593-16078-1-git-send-email-thara.gopinath@linaro.org> <1574254593-16078-7-git-send-email-thara.gopinath@linaro.org>
+In-Reply-To: <1574254593-16078-7-git-send-email-thara.gopinath@linaro.org>
 From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 4 Feb 2020 18:40:37 +0100
-Message-ID: <CAPDyKFrRJ35hjpQfuup5Up1P433efusCgiKtza1A3o0ajsXkfg@mail.gmail.com>
-Subject: Re: [Patch v4 7/7] arm64: dts: qcom: Indicate rpmhpd hosts a power
- domain that can be used as a warming device.
+Date:   Tue, 4 Feb 2020 18:41:24 +0100
+Message-ID: <CAPDyKFrZ9QM9L4OEFuseRTC+mBqourv11Rcu3Ua95ZPKoNFgng@mail.gmail.com>
+Subject: Re: [Patch v4 6/7] dt-bindings: soc: qcom: Extend RPMh power
+ controller binding to describe thermal warming device
 To:     Thara Gopinath <thara.gopinath@linaro.org>
 Cc:     Eduardo Valentin <edubezval@gmail.com>,
         Zhang Rui <rui.zhang@intel.com>,
@@ -70,8 +70,9 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Wed, 20 Nov 2019 at 13:57, Thara Gopinath <thara.gopinath@linaro.org> wrote:
 >
-> RPMh hosts mx power domain that can be used to warm up the SoC.  Indicate
-> this by using #cooling-cells property.
+> RPMh power controller hosts mx domain that can be used as thermal warming
+> device. Add #cooling-cells property to the power domain provider node to
+> indicate this.
 >
 > Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 
@@ -80,7 +81,6 @@ Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 Kind regards
 Uffe
 
-
 > ---
 > v3->v4:
 >         - Removed subnode to indicate that mx power domain is a warming
@@ -88,21 +88,25 @@ Uffe
 >           provider property to indicate if the provider hosts a power
 >           domain that can be used as a warming device.
 >
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 +
->  1 file changed, 1 insertion(+)
+>  Documentation/devicetree/bindings/power/qcom,rpmpd.txt | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 23260a0..71d6f91 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -3118,6 +3118,7 @@
->                         rpmhpd: power-controller {
->                                 compatible = "qcom,sdm845-rpmhpd";
->                                 #power-domain-cells = <1>;
-> +                               #cooling-cells = <2>;
->                                 operating-points-v2 = <&rpmhpd_opp_table>;
+> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
+> index bc75bf4..a193d33 100644
+> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
+> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.txt
+> @@ -19,6 +19,11 @@ Required Properties:
+>  Refer to <dt-bindings/power/qcom-rpmpd.h> for the level values for
+>  various OPPs for different platforms as well as Power domain indexes
 >
->                                 rpmhpd_opp_table: opp-table {
+> +Optional Properties
+> + - #cooling-cells: must be 2
+> +       RPMh also hosts power domains that can behave as thermal warming
+> +       device. If so, indicate this by specifying #cooling-cells.
+> +
+>  Example: rpmh power domain controller and OPP table
+>
+>  #include <dt-bindings/power/qcom-rpmhpd.h>
 > --
 > 2.1.4
 >
