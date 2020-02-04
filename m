@@ -2,128 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FF68151C77
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 15:44:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EDDDC151D0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 16:21:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727275AbgBDOo1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Feb 2020 09:44:27 -0500
-Received: from mail-il1-f196.google.com ([209.85.166.196]:42600 "EHLO
-        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727258AbgBDOo1 (ORCPT
+        id S1727311AbgBDPVa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 10:21:30 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36029 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727305AbgBDPVa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 09:44:27 -0500
-Received: by mail-il1-f196.google.com with SMTP id x2so16046234ila.9;
-        Tue, 04 Feb 2020 06:44:26 -0800 (PST)
+        Tue, 4 Feb 2020 10:21:30 -0500
+Received: by mail-wm1-f66.google.com with SMTP id p17so4165824wma.1;
+        Tue, 04 Feb 2020 07:21:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pBPgZrCmoCK+adPpBYU1UgcBrMjDVFByBZS7ldjpSQg=;
-        b=E4Xyb8LiS6clI+5dqopwS6OxlDQ+b2NTz73F0W4FBbpOs3EEVtrxId487UD5r2m8PL
-         HI1VKjnvEvRLgZHOARQnfMSd/8EYJBGf4HCw7TL3k5RWfK7MXwYBuwxzq5oPF2t+Rlj9
-         cUlguf56kwFgdu16U9HCo7Ywnsgeo7Xa2Q1TAIEEfAB1KOl0uPL6ce+TmnvfJ75C01BO
-         RchsaGygoM1zofuLrx75cI9PGtpn83vxqyx0smAb8D/AtI1SrGB5Pqmu2TmrDqxnnizT
-         dI4bdSBfpQFHNjxcIIqJ3ELyp8k9XQolPw6DnXnPyk1BG6S3YqzNa0SvghlBrEvh2FXT
-         sJEQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GhE5FW40OPB90pmIillZl/71nzFIm2pOC803DrZ4Spw=;
+        b=Z4H66yf0ClAGZ9BU9Y1LjQyl8Ns+xdotOdY3OLtZcf7OMRs2jRCAc1RFWdkKqv3Ge4
+         ajcwLi6kYGhEeQEv+X6c7uZtL310AGgjRwH6joEcoR56RGRNSK9Zbo4BSrecXFNUtu/d
+         RGpAhtm/ChL1jX7kNaOHhr8V9w+ZcV6fyjNiNrq89p85D84E4jNAiyLZgHmP2dX0dm3u
+         0PGue8Tk4zklj0ulPaa0t/GTe13hxoLZ9qpLakHhxydDCDRhEEpPxAKBB2MX0UxGyx86
+         VkkyldEAOrIbz6m9zM4Eg8UFJeCOkWi5K8QYFUBUDuOS35wYEL+OGy3HXpB6k2vMxFop
+         FGYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pBPgZrCmoCK+adPpBYU1UgcBrMjDVFByBZS7ldjpSQg=;
-        b=AYMbwMH/Q1DIJy0ycjinSs7YJKKru+fceutNU3pNlIdXfVG7Aa75Hw1igVxEtYMjGC
-         ih0Csee6t2eVn6voFXYqZ/AMoiGUM6mWz6IOH00INlHuewMwMNSN0BLiBbZ+UTAEMa3W
-         qGQhXFSqa73OhS1TH6V6kwq1/+cWM5Lk6YoODA79fWvpya40pybmSF+toQgCFcJ6cp1C
-         KWSMhS+6gcBWpp1i3YL6E1iBfJTYRkoTWxxYmsGBVHc5fl2WVNdzPkY3YXyO+diLYPCr
-         lbLUPc8mLSR0I1OO7p6Vr4hfuQBTDKYnLcZTtJmJvPpE772+NXs+HCV0wGGoXhbD+oyR
-         4i5A==
-X-Gm-Message-State: APjAAAXeHiZwKdYYYg3C4NuEaTn2h92+wdT3DzB988zWZVCv97QZU3tv
-        ymCyk6otkg0dkSiemRWtv0uHWEXFi8zmB5/WP5Y=
-X-Google-Smtp-Source: APXvYqwK9TpjhX0h1rx34qAMHunSgEc+MuYa+gdNBn5BAmQldz1Y+KTnEKcwvvlYqWn8uE+Twe4govU8jiD5qoDHMWo=
-X-Received: by 2002:a92:5e8b:: with SMTP id f11mr27598714ilg.178.1580827466019;
- Tue, 04 Feb 2020 06:44:26 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GhE5FW40OPB90pmIillZl/71nzFIm2pOC803DrZ4Spw=;
+        b=qZr5YYNB96MVATmMITWbK06SIoLbRDVI0ZOiDW5qflbAGfY8MzLTCJsMTtq6KFa92X
+         G3JpP1+QVa6rfeVBP6cmE68hasAjIbobhenNL51Y9J1j+GY3Yn2lhgyYDADAKSqP5LmM
+         AP2iSoC3lxot8W+QQ2pWzGj9vpSaFmlGtbcHtM/BU9p0dTIkMqzWL0YU5E8maZMIa2Oc
+         gsPENnYyO7D07sX2B2vfWb7Fo4q2JJ1/+bf49jZACYblie+TNO7JeiKN9o+uXBxDyB98
+         iiNRRVbUUI/diYNVViS917JsgTdLA+tTob/Fcmnu7TO+uhRVVAzRSl/ZStIT4baAzLtA
+         HzZQ==
+X-Gm-Message-State: APjAAAXo5DAQZF0aUTI4kUdyYZEOEkIuQzkW5nLj5V3pLOTrOmSEKy0h
+        E3S1h2z39vrk6S4VjltXnco=
+X-Google-Smtp-Source: APXvYqxj2GHvAQRiTyHO73SCccCsAxR0kmLAN3Xf1aA64me3ICvJ8h71Ene7V4cxj8rM4pJPz1nACw==
+X-Received: by 2002:a7b:c4c3:: with SMTP id g3mr6184072wmk.131.1580829687814;
+        Tue, 04 Feb 2020 07:21:27 -0800 (PST)
+Received: from Ansuel-XPS.localdomain (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
+        by smtp.googlemail.com with ESMTPSA id x10sm29902174wrv.60.2020.02.04.07.21.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Feb 2020 07:21:27 -0800 (PST)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] watchdog: qcom-wdt: add option to skip pretimeout
+Date:   Tue,  4 Feb 2020 16:21:01 +0100
+Message-Id: <20200204152104.13278-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-References: <1580825737-27189-1-git-send-email-harigovi@codeaurora.org>
-In-Reply-To: <1580825737-27189-1-git-send-email-harigovi@codeaurora.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Tue, 4 Feb 2020 07:44:14 -0700
-Message-ID: <CAOCk7NoAY7QaoBufG=JOR54PocdtrMsxUh9HmdWEwQ4zSG5MDg@mail.gmail.com>
-Subject: Re: [Freedreno] [v1] dt-bindings: msm:disp: update dsi and dpu bindings
-To:     Harigovindan P <harigovi@codeaurora.org>
-Cc:     "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        DTML <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>, nganji@codeaurora.org,
-        Sean Paul <seanpaul@chromium.org>, kalyan_t@codeaurora.org,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 4, 2020 at 7:15 AM Harigovindan P <harigovi@codeaurora.org> wrote:
->
-> Updating bindings of dsi and dpu by adding and removing certain
-> properties.
->
-> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
-> ---
->
-> Changes in v1:
->         - Adding "ahb" clock as a required property.
->         - Adding "bus", "rot", "lut" as optional properties for sc7180 device.
->         - Removing properties from dsi bindings that are unused.
->         - Removing power-domain property since DSI is the child node of MDSS
->           and it will inherit supply from its parent.
->
->  Documentation/devicetree/bindings/display/msm/dpu.txt | 7 +++++++
->  Documentation/devicetree/bindings/display/msm/dsi.txt | 5 -----
->  2 files changed, 7 insertions(+), 5 deletions(-)
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt b/Documentation/devicetree/bindings/display/msm/dsi.txt
-> index af95586..61d659a 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dsi.txt
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi.txt
-> @@ -8,13 +8,10 @@ Required properties:
->  - reg-names: The names of register regions. The following regions are required:
->    * "dsi_ctrl"
->  - interrupts: The interrupt signal from the DSI block.
-> -- power-domains: Should be <&mmcc MDSS_GDSC>.
->  - clocks: Phandles to device clocks.
->  - clock-names: the following clocks are required:
-> -  * "mdp_core"
->    * "iface"
->    * "bus"
-> -  * "core_mmss"
+Some platform like ipq806x doesn't support pretimeout.
+As the driver check if there are available interrupts and ipq806x
+use msm-timer that require interrupts, the watchdog fail to probe
+as request_irq tries to use a ppi interrupt. Add an option to skip
+pretimeout setup and use the normal watchdog probe.
 
-Why do you think these are unused?  I see them used in the driver, and
-as far as I can tell these get routed to the hardware, therefore they
-should be described in DT.
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+---
+ drivers/watchdog/qcom-wdt.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
->    * "byte"
->    * "pixel"
->    * "core"
-> @@ -156,7 +153,6 @@ Example:
->                         "core",
->                         "core_mmss",
->                         "iface",
-> -                       "mdp_core",
->                         "pixel";
->                 clocks =
->                         <&mmcc MDSS_AXI_CLK>,
-> @@ -164,7 +160,6 @@ Example:
->                         <&mmcc MDSS_ESC0_CLK>,
->                         <&mmcc MMSS_MISC_AHB_CLK>,
->                         <&mmcc MDSS_AHB_CLK>,
-> -                       <&mmcc MDSS_MDP_CLK>,
->                         <&mmcc MDSS_PCLK0_CLK>;
->
->                 assigned-clocks =
-> --
-> 2.7.4
->
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
+index a494543d3ae1..e689e97e883e 100644
+--- a/drivers/watchdog/qcom-wdt.c
++++ b/drivers/watchdog/qcom-wdt.c
+@@ -189,6 +189,7 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+ 	u32 percpu_offset;
+ 	int irq, ret;
+ 	struct clk *clk;
++	bool nopretimeout;
+ 
+ 	regs = of_device_get_match_data(dev);
+ 	if (!regs) {
+@@ -204,6 +205,8 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+ 	if (!res)
+ 		return -ENOMEM;
+ 
++	nopretimeout = of_property_read_bool(np, "no-pretimeout");
++
+ 	/* We use CPU0's DGT for the watchdog */
+ 	if (of_property_read_u32(np, "cpu-offset", &percpu_offset))
+ 		percpu_offset = 0;
+@@ -247,7 +250,7 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+ 
+ 	/* check if there is pretimeout support */
+ 	irq = platform_get_irq(pdev, 0);
+-	if (irq > 0) {
++	if (!nopretimeout && irq > 0) {
+ 		ret = devm_request_irq(dev, irq, qcom_wdt_isr,
+ 				       IRQF_TRIGGER_RISING,
+ 				       "wdt_bark", &wdt->wdd);
+-- 
+2.24.0
+
