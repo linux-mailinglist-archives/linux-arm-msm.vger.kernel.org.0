@@ -2,116 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 37DED151C46
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 15:34:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FF68151C77
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 15:44:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727276AbgBDOeO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Feb 2020 09:34:14 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:25425 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727257AbgBDOeN (ORCPT
+        id S1727275AbgBDOo1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 09:44:27 -0500
+Received: from mail-il1-f196.google.com ([209.85.166.196]:42600 "EHLO
+        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727258AbgBDOo1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 09:34:13 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580826853; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To: From:
- Subject: Sender; bh=LOayz92CiS3mJzv9h9nepoJ7jN0NsDcY/StZV7GTdyM=; b=l6INJAjiq2YDaEXkpFGD8yu8cc+5VNEJFmGbXE2Hb21VeGZrLioiF7A8MGUAZUDGn07tdCfV
- 5oi083RXWvzSMm+99Ty+t9R/2quldTmu80n71G7rsLxbcvtNPulFQXy6Sv/BoomTiRjbTyym
- XH4FllJgw7mgldVdfo2flW0DqoA=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e3980df.7f0a627aa298-smtp-out-n03;
- Tue, 04 Feb 2020 14:34:07 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DEE0CC447A6; Tue,  4 Feb 2020 14:34:06 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.5] (unknown [122.164.174.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sricharan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7EBEEC447A2;
-        Tue,  4 Feb 2020 14:34:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7EBEEC447A2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sricharan@codeaurora.org
-Subject: Re: [PATCH V6 1/5] dt-bindings: pinctrl: qcom: Add ipq6018 pinctrl
- bindings
-From:   Sricharan R <sricharan@codeaurora.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     devicetree@vger.kernel.org,
-        Rajkumar Ayyasamy <arajkuma@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linus.walleij@linaro.org,
-        linux-kernel@vger.kernel.org,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
-        linux-gpio@vger.kernel.org, robh+dt@kernel.org, agross@kernel.org,
-        sivaprak@codeaurora.org, linux-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <1579439601-14810-1-git-send-email-sricharan@codeaurora.org>
- <1579439601-14810-2-git-send-email-sricharan@codeaurora.org>
- <20200127154113.GA6904@bogus>
- <422e31d0-f67f-3b10-5d8f-ccc9d6f7dc70@codeaurora.org>
- <9acb9b69-fd44-57db-e974-9fee5a1d871f@codeaurora.org>
-Message-ID: <11ad212e-5c6a-968b-33ca-977c8596ef6a@codeaurora.org>
-Date:   Tue, 4 Feb 2020 20:03:57 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.2
+        Tue, 4 Feb 2020 09:44:27 -0500
+Received: by mail-il1-f196.google.com with SMTP id x2so16046234ila.9;
+        Tue, 04 Feb 2020 06:44:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pBPgZrCmoCK+adPpBYU1UgcBrMjDVFByBZS7ldjpSQg=;
+        b=E4Xyb8LiS6clI+5dqopwS6OxlDQ+b2NTz73F0W4FBbpOs3EEVtrxId487UD5r2m8PL
+         HI1VKjnvEvRLgZHOARQnfMSd/8EYJBGf4HCw7TL3k5RWfK7MXwYBuwxzq5oPF2t+Rlj9
+         cUlguf56kwFgdu16U9HCo7Ywnsgeo7Xa2Q1TAIEEfAB1KOl0uPL6ce+TmnvfJ75C01BO
+         RchsaGygoM1zofuLrx75cI9PGtpn83vxqyx0smAb8D/AtI1SrGB5Pqmu2TmrDqxnnizT
+         dI4bdSBfpQFHNjxcIIqJ3ELyp8k9XQolPw6DnXnPyk1BG6S3YqzNa0SvghlBrEvh2FXT
+         sJEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pBPgZrCmoCK+adPpBYU1UgcBrMjDVFByBZS7ldjpSQg=;
+        b=AYMbwMH/Q1DIJy0ycjinSs7YJKKru+fceutNU3pNlIdXfVG7Aa75Hw1igVxEtYMjGC
+         ih0Csee6t2eVn6voFXYqZ/AMoiGUM6mWz6IOH00INlHuewMwMNSN0BLiBbZ+UTAEMa3W
+         qGQhXFSqa73OhS1TH6V6kwq1/+cWM5Lk6YoODA79fWvpya40pybmSF+toQgCFcJ6cp1C
+         KWSMhS+6gcBWpp1i3YL6E1iBfJTYRkoTWxxYmsGBVHc5fl2WVNdzPkY3YXyO+diLYPCr
+         lbLUPc8mLSR0I1OO7p6Vr4hfuQBTDKYnLcZTtJmJvPpE772+NXs+HCV0wGGoXhbD+oyR
+         4i5A==
+X-Gm-Message-State: APjAAAXeHiZwKdYYYg3C4NuEaTn2h92+wdT3DzB988zWZVCv97QZU3tv
+        ymCyk6otkg0dkSiemRWtv0uHWEXFi8zmB5/WP5Y=
+X-Google-Smtp-Source: APXvYqwK9TpjhX0h1rx34qAMHunSgEc+MuYa+gdNBn5BAmQldz1Y+KTnEKcwvvlYqWn8uE+Twe4govU8jiD5qoDHMWo=
+X-Received: by 2002:a92:5e8b:: with SMTP id f11mr27598714ilg.178.1580827466019;
+ Tue, 04 Feb 2020 06:44:26 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <9acb9b69-fd44-57db-e974-9fee5a1d871f@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1580825737-27189-1-git-send-email-harigovi@codeaurora.org>
+In-Reply-To: <1580825737-27189-1-git-send-email-harigovi@codeaurora.org>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Tue, 4 Feb 2020 07:44:14 -0700
+Message-ID: <CAOCk7NoAY7QaoBufG=JOR54PocdtrMsxUh9HmdWEwQ4zSG5MDg@mail.gmail.com>
+Subject: Re: [Freedreno] [v1] dt-bindings: msm:disp: update dsi and dpu bindings
+To:     Harigovindan P <harigovi@codeaurora.org>
+Cc:     "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        DTML <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>, nganji@codeaurora.org,
+        Sean Paul <seanpaul@chromium.org>, kalyan_t@codeaurora.org,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Linus,
+On Tue, Feb 4, 2020 at 7:15 AM Harigovindan P <harigovi@codeaurora.org> wrote:
+>
+> Updating bindings of dsi and dpu by adding and removing certain
+> properties.
+>
+> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+> ---
+>
+> Changes in v1:
+>         - Adding "ahb" clock as a required property.
+>         - Adding "bus", "rot", "lut" as optional properties for sc7180 device.
+>         - Removing properties from dsi bindings that are unused.
+>         - Removing power-domain property since DSI is the child node of MDSS
+>           and it will inherit supply from its parent.
+>
+>  Documentation/devicetree/bindings/display/msm/dpu.txt | 7 +++++++
+>  Documentation/devicetree/bindings/display/msm/dsi.txt | 5 -----
+>  2 files changed, 7 insertions(+), 5 deletions(-)
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt b/Documentation/devicetree/bindings/display/msm/dsi.txt
+> index af95586..61d659a 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dsi.txt
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi.txt
+> @@ -8,13 +8,10 @@ Required properties:
+>  - reg-names: The names of register regions. The following regions are required:
+>    * "dsi_ctrl"
+>  - interrupts: The interrupt signal from the DSI block.
+> -- power-domains: Should be <&mmcc MDSS_GDSC>.
+>  - clocks: Phandles to device clocks.
+>  - clock-names: the following clocks are required:
+> -  * "mdp_core"
+>    * "iface"
+>    * "bus"
+> -  * "core_mmss"
 
-On 2/4/2020 7:34 PM, Sricharan R wrote:
-> Hi Rob,
-> 
-> On 1/28/2020 10:07 AM, Sricharan R wrote:
->> Hi,
->>
->> On 1/27/2020 9:11 PM, Rob Herring wrote:
->>> On Sun, 19 Jan 2020 18:43:17 +0530, Sricharan R wrote:
->>>> Add device tree binding Documentation details for ipq6018
->>>> pinctrl driver.
->>>>
->>>> Co-developed-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
->>>> Signed-off-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
->>>> Co-developed-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
->>>> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
->>>> Co-developed-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
->>>> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
->>>> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
->>>> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
->>>> ---
->>>> [V6] 
->>>>   * Addressed review comments form Rob.
->>>>  .../bindings/pinctrl/qcom,ipq6018-pinctrl.yaml     | 153 +++++++++++++++++++++
->>>>  1 file changed, 153 insertions(+)
->>>>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
->>>>
->>>
->>> Reviewed-by: Rob Herring <robh@kernel.org>
->> Thanks Rob.
->>
->> Hi Linus,
->>    The pinctrl driver can now be pulled in.
-> 
-> Any chance this can be taken for 5.6 ?
-> 
+Why do you think these are unused?  I see them used in the driver, and
+as far as I can tell these get routed to the hardware, therefore they
+should be described in DT.
 
-Can the pinctrl driver be taken for 5.6 by any chance ?
-
-Regards,
- Sricharan
-
--- 
-"QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+>    * "byte"
+>    * "pixel"
+>    * "core"
+> @@ -156,7 +153,6 @@ Example:
+>                         "core",
+>                         "core_mmss",
+>                         "iface",
+> -                       "mdp_core",
+>                         "pixel";
+>                 clocks =
+>                         <&mmcc MDSS_AXI_CLK>,
+> @@ -164,7 +160,6 @@ Example:
+>                         <&mmcc MDSS_ESC0_CLK>,
+>                         <&mmcc MMSS_MISC_AHB_CLK>,
+>                         <&mmcc MDSS_AHB_CLK>,
+> -                       <&mmcc MDSS_MDP_CLK>,
+>                         <&mmcc MDSS_PCLK0_CLK>;
+>
+>                 assigned-clocks =
+> --
+> 2.7.4
+>
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
