@@ -2,303 +2,340 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CD4AA1520DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 20:14:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CD3D1520E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 20:17:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727308AbgBDTOL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Feb 2020 14:14:11 -0500
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:42078 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727331AbgBDTOK (ORCPT
+        id S1727445AbgBDTQ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 14:16:59 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:34754 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727441AbgBDTQ7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 14:14:10 -0500
-Received: by mail-vs1-f65.google.com with SMTP id b79so12101032vsd.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 11:14:10 -0800 (PST)
+        Tue, 4 Feb 2020 14:16:59 -0500
+Received: by mail-pl1-f193.google.com with SMTP id j7so7674969plt.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 11:16:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=c05eGhfP62oyJ4uJzi+JFgkkWqqqI9hWVBoKeCjxm4w=;
-        b=AZCPqV89v+hOzNtfW2saXZP0Q0an/t7IFjgge833KWWdrveSw7azdc6LDMxtiZJlJl
-         e8z5D6BlfIf8VfNzB2FQSUlkfkMVb6p3A2wpczyjxmVzvbV84dk2tbFhyF/lLh+K21yA
-         Uz0UcBE3wLwBuTZqVZiA41SK93XAiADvPM6X0=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=W1wcilSgrxUwNyDkmRA8zgvL1nIio1mEmUwbkIUQrHk=;
+        b=SoxGt9ASdhe5sc9SpZw9PIvbnBdjDHZds/mhcPKOzKH896YzUke1evhK+kEk0fjBKA
+         6w4xNDvcc4zN7vQjYk+OniGdaNYEzh/WVacvJCSODMzk1DxHVPQa4ArkvdD77nxKjxzk
+         +7LNN7UVIjDKm+pllZmVoL2MsntDQTVyHSWhU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=c05eGhfP62oyJ4uJzi+JFgkkWqqqI9hWVBoKeCjxm4w=;
-        b=pBwuIkdPvKq2ulvpnNeWl4B8U6mJdi+GHOB1el3XLXJ9UY+cCkccVZHyOfROsaj4Dh
-         umlnuF/TblE/ChXEWn7N3QnfWuIg5sMgg+sLQL4whmX9UM2DzasIFvL3y6AQeTJV15IM
-         shawNMgPv9Hu/mZCnOMq85soy4Yc7wWrDtOWb07XCX9fQYBNqt1Xkbv52nLC8ArNw7tp
-         tznbfN4XxenTyFuBfli7uRo23IM7ioLUtCeLkRpuOPfT8RPXhMjfuIftWdJ3UtBaAViQ
-         sR7IZjx0JeUAseFhaxBBPZYSKYaovzAwU7VcemeV1Ar15bfrdkqJI9GzYERMfkoiBPLY
-         7fBg==
-X-Gm-Message-State: APjAAAWOCPydqzfUdwIq/+CIZ3suAJ0HylcSSAneTRsICLPkq4S40+ku
-        7WDAWMmWpe3D7AMDCO+gtVJNAxnAmeI=
-X-Google-Smtp-Source: APXvYqyakXP82rkUbmYBTl/D1JySDbCe/6lARep6iTQLpr4jV/1H2XZ3VmLVCnuKAtPIP9klkxzuxw==
-X-Received: by 2002:ab0:6902:: with SMTP id b2mr18280508uas.32.1580843648632;
-        Tue, 04 Feb 2020 11:14:08 -0800 (PST)
-Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com. [209.85.217.42])
-        by smtp.gmail.com with ESMTPSA id h139sm7565291vke.34.2020.02.04.11.14.07
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=W1wcilSgrxUwNyDkmRA8zgvL1nIio1mEmUwbkIUQrHk=;
+        b=EavDQz96BtC9cHdSl+Gx+I8a+aR3/Nsq+qOw1JF4T7T4pqYyjlDEqAddVOSBgXMfK4
+         4wqLd9Lt9QO8nEjOMbaRRym6vDBCsYko3tZ182xfziJoZTnBmkFtG8OnklmHu9bMMzxE
+         hWfhFCUNPkQh35ia1pKxpdBUMfC2jgs3oxYRQoHlfxLx0oRMnmMKQeC2DHav7bYmgKAI
+         X10W6a9TXuwY+rT0tcjoQvtaH6en+GcNI4pR46Af+MCnepj6DvcRmiuuB51fli2idn1K
+         XNRbkM6R/3kioLfgp93Oh3vM51VLn05DxG+Er9LwUstjp1yCXLVNbdtbmVRbO4TZG9tA
+         zyag==
+X-Gm-Message-State: APjAAAWNwCT/1kxYxbh2IHMlUOJLE4pPZk7KADwPQx7AGEa4htOjshsz
+        ZYg2eIj1WYbF+73f+3HyTHLxzg==
+X-Google-Smtp-Source: APXvYqw+Yj75FBNghysCRCoo5nclHW8kiQn8xW/MDy/p0VVTQc28JWc2QmqUHNRsCtY+9i1efuOlIw==
+X-Received: by 2002:a17:902:ab8f:: with SMTP id f15mr22445085plr.280.1580843817180;
+        Tue, 04 Feb 2020 11:16:57 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id r26sm23905200pga.55.2020.02.04.11.16.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Feb 2020 11:14:07 -0800 (PST)
-Received: by mail-vs1-f42.google.com with SMTP id t12so12107548vso.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 11:14:07 -0800 (PST)
-X-Received: by 2002:ab0:30c2:: with SMTP id c2mr18396778uam.8.1580843646821;
- Tue, 04 Feb 2020 11:14:06 -0800 (PST)
+        Tue, 04 Feb 2020 11:16:56 -0800 (PST)
+Date:   Tue, 4 Feb 2020 11:16:54 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Chandana Kishori Chiluveru <cchiluve@codeaurora.org>,
+        balbi@kernel.org, Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        linux-usb@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH V3 2/3] usb: dwc3: qcom: Add interconnect support in dwc3
+ driver
+Message-ID: <20200204191654.GA18972@google.com>
+References: <1568718649-20124-1-git-send-email-cchiluve@codeaurora.org>
+ <1568718649-20124-3-git-send-email-cchiluve@codeaurora.org>
+ <CAE=gft4ZM3H2eODOwdpOC5tBkRV9BBHPnya_rOy3mNmqH2Y3+Q@mail.gmail.com>
 MIME-Version: 1.0
-References: <1580825707-27115-1-git-send-email-harigovi@codeaurora.org>
-In-Reply-To: <1580825707-27115-1-git-send-email-harigovi@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 4 Feb 2020 11:13:54 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=U5DPxR54YM38w4_QVp24VorQ2eYDGq2GXScAs9APTygA@mail.gmail.com>
-Message-ID: <CAD=FV=U5DPxR54YM38w4_QVp24VorQ2eYDGq2GXScAs9APTygA@mail.gmail.com>
-Subject: Re: [v5] arm64: dts: sc7180: add display dt nodes
-To:     Harigovindan P <harigovi@codeaurora.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>, nganji@codeaurora.org,
-        Taniya Das <tdas@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE=gft4ZM3H2eODOwdpOC5tBkRV9BBHPnya_rOy3mNmqH2Y3+Q@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue, Feb 04, 2020 at 11:05:41AM -0800, Evan Green wrote:
+> Hi Chandana,
+> Are you going to spin this series? My comments are below, I see
+> Matthias also has comments. Please CC us both on the next spin.
 
-On Tue, Feb 4, 2020 at 6:15 AM Harigovindan P <harigovi@codeaurora.org> wrote:
->
-> Add display, DSI hardware DT nodes for sc7180.
->
-> Co-developed-by: Kalyan Thota <kalyan_t@codeaurora.org>
-> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
-> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
-> ---
->
-> Changes in v1:
->         - Added display DT nodes for sc7180
-> Changes in v2:
->         - Renamed node names
->         - Corrected code alignments
->         - Removed extra new line
->         - Added DISP AHB clock for register access
->           under display_subsystem node for global settings
-> Changes in v3:
->         - Modified node names
->         - Modified hard coded values
->         - Removed mdss reg entry
-> Changes in v4:
->         - Reverting mdp node name
->         - Setting status to disabled in main SOC dtsi file
->         - Replacing _ to - for node names
->         - Adding clock dependency patch link
->         - Splitting idp dt file to a separate patch
-> Changes in v5:
->         - Renaming "gcc_bus" to "bus" as per bindings (Doug Anderson)
->         - Making status as disabled for mdss and mdss_mdp by default (Doug Anderson)
->         - Removing "disp_cc" register space (Doug Anderson)
->         - Renaming "dsi_controller" to "dsi" as per bindings (Doug Anderson)
->         - Providing "ref" clk for dsi_phy (Doug Anderson)
->         - Sorting mdss node before dispcc (Doug Anderson)
->
-> This patch has dependency on the below series
-> https://lkml.org/lkml/2019/12/27/73
+v4 was actually posted a few days later:
 
-You should have probably pointed to [1] which is a much newer version.
+https://patchwork.kernel.org/project/linux-usb/list/?series=176783
 
+I also missed it since neither linux-arm-msm@ nor myself are in cc.
 
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 136 ++++++++++++++++++++++++++++++++++-
->  1 file changed, 134 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index bd2584d..3ac1b87 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -1173,13 +1173,145 @@
->                         #power-domain-cells = <1>;
->                 };
->
-> +               mdss: mdss@ae00000 {
-> +                       compatible = "qcom,sc7180-mdss";
-> +                       reg = <0 0x0ae00000 0 0x1000>;
-> +                       reg-names = "mdss";
-> +
-> +                       power-domains = <&dispcc MDSS_GDSC>;
-> +
-> +                       clocks = <&gcc GCC_DISP_AHB_CLK>,
-> +                                <&gcc GCC_DISP_HF_AXI_CLK>,
-> +                                <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                                <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> +                       clock-names = "iface", "bus", "ahb", "core";
-> +
-> +                       assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> +                       assigned-clock-rates = <300000000>;
-> +
-> +                       interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-> +                       interrupt-controller;
-> +                       #interrupt-cells = <1>;
-> +
-> +                       iommus = <&apps_smmu 0x800 0x2>;
-> +
-> +                       #address-cells = <2>;
-> +                       #size-cells = <2>;
-> +                       ranges;
-> +
-> +                       status = "disabled";
-> +
-> +                       mdp: mdp@ae01000 {
-> +                               compatible = "qcom,sc7180-dpu";
-> +                               reg = <0 0x0ae01000 0 0x8f000>,
-> +                                     <0 0x0aeb0000 0 0x2008>;
-> +                               reg-names = "mdp", "vbif";
-> +
-> +                               clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_ROT_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> +                               clock-names = "iface", "rot", "lut", "core",
-> +                                             "vsync";
-> +                               assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> +                                                 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> +                               assigned-clock-rates = <300000000>,
-> +                                                      <19200000>;
-> +
-> +                               interrupt-parent = <&mdss>;
-> +                               interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +                               status = "disabled";
-> +
-> +                               ports {
-> +                                       #address-cells = <1>;
-> +                                       #size-cells = <0>;
-> +
-> +                                       port@0 {
-> +                                               reg = <0>;
-> +                                               dpu_intf1_out: endpoint {
-> +                                                       remote-endpoint = <&dsi0_in>;
-> +                                               };
-> +                                       };
-> +                               };
-> +                       };
-> +
-> +                       dsi0: dsi@ae94000 {
-> +                               compatible = "qcom,mdss-dsi-ctrl";
-> +                               reg = <0 0x0ae94000 0 0x400>;
-> +                               reg-names = "dsi_ctrl";
-> +
-> +                               interrupt-parent = <&mdss>;
-> +                               interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +                               clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_ESC0_CLK>,
-> +                                        <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                                        <&gcc GCC_DISP_HF_AXI_CLK>;
-> +                               clock-names = "byte",
-> +                                             "byte_intf",
-> +                                             "pixel",
-> +                                             "core",
-> +                                             "iface",
-> +                                             "bus";
-> +
-> +                               phys = <&dsi_phy>;
-> +                               phy-names = "dsi";
-> +
-> +                               #address-cells = <1>;
-> +                               #size-cells = <0>;
-> +
-> +                               status = "disabled";
-> +
-> +                               ports {
-> +                                       #address-cells = <1>;
-> +                                       #size-cells = <0>;
-> +
-> +                                       port@0 {
-> +                                               reg = <0>;
-> +                                               dsi0_in: endpoint {
-> +                                                       remote-endpoint = <&dpu_intf1_out>;
-> +                                               };
-> +                                       };
-> +
-> +                                       port@1 {
-> +                                               reg = <1>;
-> +                                               dsi0_out: endpoint {
-> +                                               };
-> +                                       };
-> +                               };
-> +                       };
-> +
-> +                       dsi_phy: dsi-phy@ae94400 {
-> +                               compatible = "qcom,dsi-phy-10nm";
-> +                               reg = <0 0x0ae94400 0 0x200>,
-> +                                     <0 0x0ae94600 0 0x280>,
-> +                                     <0 0x0ae94a00 0 0x1e0>;
-> +                               reg-names = "dsi_phy",
-> +                                           "dsi_phy_lane",
-> +                                           "dsi_pll";
-> +
-> +                               #clock-cells = <1>;
-> +                               #phy-cells = <0>;
-> +
-> +                               clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                                        <&rpmhcc RPMH_CXO_CLK>;
-> +                               clock-names = "iface", "ref";
-> +
-> +                               status = "disabled";
-> +                       };
-> +               };
-> +
->                 dispcc: clock-controller@af00000 {
->                         compatible = "qcom,sc7180-dispcc";
->                         reg = <0 0x0af00000 0 0x200000>;
->                         clocks = <&rpmhcc RPMH_CXO_CLK>,
->                                  <&gcc GCC_DISP_GPLL0_CLK_SRC>,
-> -                                <0>,
-> -                                <1>,
-> +                                <&dsi_phy 0>,
-> +                                <&dsi_phy 1>,
->                                  <0>,
->                                  <0>;
->                         clock-names = "xo", "gpll0",
-
-Thanks for adding this bit in v5.  What you end up with is good, but
-I'm slightly confused by your baseline and that makes it hard for git
-to automatically apply your patch.  Specifically:
-
-* I don't think I ever sent out a patch where "<1>" was a
-bogus/placeholder phandle.  Where did you get that from?
-* On the newest version of my patch [1] the clock names were
-"bi_tcxo", "gcc_disp_gpll0_clk_src", etc.  Not "xo", "gpll0", ....
-Presumably you're applying atop an older version?
-
-NOTE: it's not actually that hard to resolve this manually, so unless
-Bjorn / Andy requests it you probably don't need a v6.  How I applied
-it if it's helpful [2].
-
-
-I see that you're working to fix the bindings [3].  Seems like that
-still needs to be spun a bit more, but I think in general I'm
-convinced that what you're got in the dts is OK for sc7180 while that
-spins.  It's not like the bindings were in amazing shape to start
-with.  Thus:
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Tested-by: Douglas Anderson <dianders@chromium.org>
-
-[1] https://lore.kernel.org/r/20200203103049.v4.15.I1a4b93fb005791e29a9dcf288fc8bd459a555a59@changeid
-[2] https://crrev.com/c/2020394/4
-[3] https://lore.kernel.org/r/1580825737-27189-1-git-send-email-harigovi@codeaurora.org
-
-
-
--Doug
+> On Tue, Sep 17, 2019 at 4:11 AM Chandana Kishori Chiluveru
+> <cchiluve@codeaurora.org> wrote:
+> >
+> > Add interconnect support in dwc3-qcom driver to vote for bus
+> > bandwidth.
+> >
+> > This requires for two different paths - from USB master to
+> > DDR slave. The other is from APPS master to USB slave.
+> >
+> > Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+> > ---
+> >  drivers/usb/dwc3/dwc3-qcom.c | 145 ++++++++++++++++++++++++++++++++++++++++++-
+> >  1 file changed, 143 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> > index 184df4d..2a2f5af 100644
+> > --- a/drivers/usb/dwc3/dwc3-qcom.c
+> > +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> > @@ -12,6 +12,7 @@
+> >  #include <linux/module.h>
+> >  #include <linux/kernel.h>
+> >  #include <linux/extcon.h>
+> > +#include <linux/interconnect.h>
+> >  #include <linux/of_platform.h>
+> >  #include <linux/platform_device.h>
+> >  #include <linux/phy/phy.h>
+> > @@ -59,8 +60,13 @@ struct dwc3_qcom {
+> >         enum usb_dr_mode        mode;
+> >         bool                    is_suspended;
+> >         bool                    pm_suspended;
+> > +       struct icc_path         *usb_ddr_icc_path;
+> > +       struct icc_path         *apps_usb_icc_path;
+> >  };
+> >
+> > +static int dwc3_qcom_interconnect_enable(struct dwc3_qcom *qcom);
+> > +static int dwc3_qcom_interconnect_disable(struct dwc3_qcom *qcom);
+> 
+> Is there any reason you didn't just define these functions earlier?
+> 
+> > +
+> >  static inline void dwc3_qcom_setbits(void __iomem *base, u32 offset, u32 val)
+> >  {
+> >         u32 reg;
+> > @@ -222,7 +228,7 @@ static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
+> >  static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
+> >  {
+> >         u32 val;
+> > -       int i;
+> > +       int i, ret;
+> >
+> >         if (qcom->is_suspended)
+> >                 return 0;
+> > @@ -234,6 +240,10 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
+> >         for (i = qcom->num_clocks - 1; i >= 0; i--)
+> >                 clk_disable_unprepare(qcom->clks[i]);
+> >
+> > +       ret = dwc3_qcom_interconnect_disable(qcom);
+> > +       if (ret)
+> > +               dev_warn(qcom->dev, "failed to disable interconnect %d\n", ret);
+> 
+> Shouldn't you propagate the failure if this doesn't work?
+> 
+> > +
+> >         qcom->is_suspended = true;
+> >         dwc3_qcom_enable_interrupts(qcom);
+> >
+> > @@ -259,6 +269,10 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
+> >                 }
+> >         }
+> >
+> > +       ret = dwc3_qcom_interconnect_enable(qcom);
+> > +       if (ret)
+> > +               dev_warn(qcom->dev, "failed to enable interconnect %d\n", ret);
+> 
+> Same here, isn't this important? In theory, if you cannot enable
+> bandwidth to the device, you aren't really allowed to touch it (with
+> odd exceptions for boot proxy votes, which might now be gone).
+> 
+> > +
+> >         /* Clear existing events from PHY related to L2 in/out */
+> >         dwc3_qcom_setbits(qcom->qscratch_base, PWR_EVNT_IRQ_STAT_REG,
+> >                           PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
+> > @@ -268,6 +282,124 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
+> >         return 0;
+> >  }
+> >
+> > +/* Interconnect path bandwidths in MBps */
+> > +#define USB_MEMORY_AVG_HS_BW MBps_to_icc(240)
+> > +#define USB_MEMORY_PEAK_HS_BW MBps_to_icc(700)
+> > +#define USB_MEMORY_AVG_SS_BW  MBps_to_icc(1000)
+> > +#define USB_MEMORY_PEAK_SS_BW MBps_to_icc(2500)
+> > +#define APPS_USB_AVG_BW 0
+> > +#define APPS_USB_PEAK_BW MBps_to_icc(40)
+> 
+> Can you share at all how these numbers were arrived at? I thought HS
+> for instance was 480MB/s.
+> 
+> > +
+> > +/**
+> > + * dwc3_qcom_interconnect_init() - Get interconnect path handles
+> > + * @qcom:                      Pointer to the concerned usb core.
+> > + *
+> > + */
+> > +static int dwc3_qcom_interconnect_init(struct dwc3_qcom *qcom)
+> > +{
+> > +       struct device *dev = qcom->dev;
+> > +       int ret;
+> > +
+> > +       qcom->usb_ddr_icc_path = of_icc_get(dev, "usb-ddr");
+> > +       if (IS_ERR(qcom->usb_ddr_icc_path)) {
+> > +               dev_err(dev, "Error: (%ld) failed getting usb-ddr path\n",
+> > +                       PTR_ERR(qcom->usb_ddr_icc_path));
+> > +               return PTR_ERR(qcom->usb_ddr_icc_path);
+> > +       }
+> > +
+> > +       qcom->apps_usb_icc_path = of_icc_get(dev, "apps-usb");
+> > +       if (IS_ERR(qcom->apps_usb_icc_path)) {
+> > +               dev_err(dev, "Error: (%ld) failed getting apps-usb path\n",
+> > +                               PTR_ERR(qcom->apps_usb_icc_path));
+> 
+> You're leaking usb_ddr_icc_path here.
+> 
+> > +               return PTR_ERR(qcom->apps_usb_icc_path);
+> > +       }
+> > +
+> > +       ret = dwc3_qcom_interconnect_enable(qcom);
+> > +       if (ret) {
+> > +               dev_err(dev, "failed to enable interconnect %d\n", ret);
+> > +               return ret;
+> > +       }
+> > +
+> > +       return 0;
+> > +}
+> > +
+> > +/**
+> > + * dwc3_qcom_interconnect_exit() - Release interconnect path handles
+> > + * @qcom:                      Pointer to the concerned usb core.
+> > + *
+> > + * This function is used to release interconnect path handle.
+> > + */
+> > +static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
+> > +{
+> > +       icc_put(qcom->usb_ddr_icc_path);
+> > +       icc_put(qcom->apps_usb_icc_path);
+> > +}
+> > +
+> > +/* Currently we only use bandwidth level, so just "enable" interconnects */
+> > +static int dwc3_qcom_interconnect_enable(struct dwc3_qcom *qcom)
+> > +{
+> > +       struct dwc3 *dwc;
+> > +       int ret;
+> > +
+> > +       dwc = platform_get_drvdata(qcom->dwc3);
+> > +       if (!dwc) {
+> > +               dev_err(qcom->dev, "Failed to get dwc3 device\n");
+> > +               return -EPROBE_DEFER;
+> > +       }
+> > +
+> > +       if (dwc->maximum_speed == USB_SPEED_SUPER) {
+> > +               ret = icc_set_bw(qcom->usb_ddr_icc_path,
+> > +                       USB_MEMORY_AVG_SS_BW, USB_MEMORY_PEAK_SS_BW);
+> > +               if (ret)
+> > +                       return ret;
+> > +       } else {
+> > +               ret = icc_set_bw(qcom->usb_ddr_icc_path,
+> > +                       USB_MEMORY_AVG_HS_BW, USB_MEMORY_PEAK_HS_BW);
+> > +               if (ret)
+> > +                       return ret;
+> > +       }
+> > +
+> > +       ret = icc_set_bw(qcom->apps_usb_icc_path,
+> > +               APPS_USB_AVG_BW, APPS_USB_PEAK_BW);
+> > +       if (ret)
+> > +               goto err_disable_mem_path;
+> > +
+> > +       return 0;
+> > +
+> > +err_disable_mem_path:
+> > +       icc_set_bw(qcom->usb_ddr_icc_path, 0, 0);
+> > +
+> > +       return ret;
+> > +}
+> > +
+> > +/* To disable an interconnect, we just set its bandwidth to 0 */
+> > +static int dwc3_qcom_interconnect_disable(struct dwc3_qcom *qcom)
+> > +{
+> > +       struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+> > +       int ret;
+> > +
+> > +       ret = icc_set_bw(qcom->usb_ddr_icc_path, 0, 0);
+> > +       if (ret)
+> > +               return ret;
+> > +
+> > +       ret = icc_set_bw(qcom->apps_usb_icc_path, 0, 0);
+> > +       if (ret)
+> > +               goto err_reenable_memory_path;
+> > +
+> > +       return 0;
+> > +
+> > +       /* Re-enable things in the event of an error */
+> > +err_reenable_memory_path:
+> > +       if (dwc->maximum_speed == USB_SPEED_SUPER)
+> > +               icc_set_bw(qcom->usb_ddr_icc_path,
+> > +                       USB_MEMORY_AVG_SS_BW, USB_MEMORY_PEAK_SS_BW);
+> > +       else
+> > +               icc_set_bw(qcom->usb_ddr_icc_path,
+> > +                       USB_MEMORY_AVG_HS_BW, USB_MEMORY_PEAK_HS_BW);
+> 
+> Yeah, this is weird. If you're failing to clear your votes, things are
+> in a pretty broken state, and these calls to re-enable bandwidth have
+> almost no chance of succeeding. Maybe just return failure here.
+> 
+> > +
+> > +       return ret;
+> > +}
+> > +
+> >  static irqreturn_t qcom_dwc3_resume_irq(int irq, void *data)
+> >  {
+> >         struct dwc3_qcom *qcom = data;
+> > @@ -494,6 +626,12 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+> >                 goto depopulate;
+> >         }
+> >
+> > +       ret = dwc3_qcom_interconnect_init(qcom);
+> > +       if (ret) {
+> > +               dev_err(dev, "failed to init interconnect handles %d\n", ret);
+> > +               goto depopulate;
+> > +       }
+> > +
+> >         qcom->mode = usb_get_dr_mode(&qcom->dwc3->dev);
+> >
+> >         /* enable vbus override for device mode */
+> > @@ -503,7 +641,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+> >         /* register extcon to override sw_vbus on Vbus change later */
+> >         ret = dwc3_qcom_register_extcon(qcom);
+> >         if (ret)
+> > -               goto depopulate;
+> > +               goto interconnect_exit;
+> >
+> >         device_init_wakeup(&pdev->dev, 1);
+> >         qcom->is_suspended = false;
+> > @@ -513,6 +651,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+> >
+> >         return 0;
+> >
+> > +interconnect_exit:
+> > +       dwc3_qcom_interconnect_exit(qcom);
+> >  depopulate:
+> >         of_platform_depopulate(&pdev->dev);
+> >  clk_disable:
+> > @@ -540,6 +680,7 @@ static int dwc3_qcom_remove(struct platform_device *pdev)
+> >         }
+> >         qcom->num_clocks = 0;
+> >
+> > +       dwc3_qcom_interconnect_exit(qcom);
+> >         reset_control_assert(qcom->resets);
+> >
+> >         pm_runtime_allow(dev);
+> > --
+> > Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+> > is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+> >
