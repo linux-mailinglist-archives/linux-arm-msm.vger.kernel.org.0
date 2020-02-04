@@ -2,117 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D034A151753
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 10:04:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1441151AD3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 13:53:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726329AbgBDJEy convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Tue, 4 Feb 2020 04:04:54 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:33201 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726362AbgBDJEy (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 04:04:54 -0500
-Received: from marcel-macbook.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 379BFCED24;
-        Tue,  4 Feb 2020 10:14:13 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Re: [PATCH v2 1/2] Bluetooth: hci_qca: Enable clocks required for BT
- SOC
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200203195632.GM3948@builder>
-Date:   Tue, 4 Feb 2020 10:04:51 +0100
-Cc:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        robh@kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        tientzu@chromium.org, seanpaul@chromium.org, rjliao@codeaurora.org,
-        yshavit@google.com
-Content-Transfer-Encoding: 8BIT
-Message-Id: <FA054FF0-C1EF-4749-96C3-A86ECD064FE9@holtmann.org>
-References: <1580456335-7317-1-git-send-email-gubbaven@codeaurora.org>
- <20200203195632.GM3948@builder>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-X-Mailer: Apple Mail (2.3608.60.0.2.5)
+        id S1727236AbgBDMx2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 07:53:28 -0500
+Received: from foss.arm.com ([217.140.110.172]:36642 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727197AbgBDMx2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 4 Feb 2020 07:53:28 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4F0DA30E;
+        Tue,  4 Feb 2020 04:53:27 -0800 (PST)
+Received: from [10.1.30.218] (e107114-lin.cambridge.arm.com [10.1.30.218])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7048A3F52E;
+        Tue,  4 Feb 2020 04:53:25 -0800 (PST)
+From:   Valentin Schneider <valentin.schneider@arm.com>
+Subject: Suspect broken frequency transitions on SDM845
+To:     linux-kernel <linux-kernel@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rjw@rjwysocki.net,
+        viresh.kumar@linaro.org, Ionela Voinescu <ionela.voinescu@arm.com>,
+        Quentin Perret <qperret@google.com>
+Message-ID: <eb8c48fb-c9b1-79c1-21b3-cd41ea37e2c6@arm.com>
+Date:   Tue, 4 Feb 2020 13:53:23 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Hi folks,
 
->> Instead of relying on other subsytem to turn ON clocks
->> required for BT SoC to operate, voting them from the driver.
->> 
->> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
->> ---
->> v2:
->>   * addressed forward declarations
->>   * updated with devm_clk_get_optional()
->> 
->> ---
->> drivers/bluetooth/hci_qca.c | 25 +++++++++++++++++++++++++
->> 1 file changed, 25 insertions(+)
->> 
->> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
->> index d6e0c99..73706f3 100644
->> --- a/drivers/bluetooth/hci_qca.c
->> +++ b/drivers/bluetooth/hci_qca.c
->> @@ -1738,6 +1738,15 @@ static int qca_power_off(struct hci_dev *hdev)
->> 	return 0;
->> }
->> 
->> +static int qca_setup_clock(struct clk *clk, bool enable)
->> +{
->> +	if (enable)
->> +		return clk_prepare_enable(clk);
->> +
->> +	clk_disable_unprepare(clk);
->> +	return 0;
->> +}
-> 
-> As Marcel requested, inline these.
-> 
->> +
->> static int qca_regulator_enable(struct qca_serdev *qcadev)
->> {
->> 	struct qca_power *power = qcadev->bt_power;
->> @@ -1755,6 +1764,13 @@ static int qca_regulator_enable(struct qca_serdev *qcadev)
->> 
->> 	power->vregs_on = true;
->> 
->> +	ret = qca_setup_clock(qcadev->susclk, true);
->> +	if (ret) {
->> +		/* Turn off regulators to overcome power leakage */
-> 
-> You can omit this comment as well, as the name of the function you call
-> is aptly named.
-> 
->> +		qca_regulator_disable(qcadev);
->> +		return ret;
-> 
-> Just return ret below instead.
-> 
->> +	}
->> +
->> 	return 0;
->> }
->> 
->> @@ -1773,6 +1789,9 @@ static void qca_regulator_disable(struct qca_serdev *qcadev)
->> 
->> 	regulator_bulk_disable(power->num_vregs, power->vreg_bulk);
->> 	power->vregs_on = false;
->> +
->> +	if (qcadev->susclk)
-> 
-> In the enable path you (correctly) rely on passing NULL to the clock
-> code, so do the same here.
+We have a simple sanity test that asserts higher frequency leads to more
+work done. It's fairly straightforward - we use the userspace governor,
+go through increasing frequencies, run sysbench each time and assert the
+values we get are increasing monotonically. We do that for one CPU of each
+"type" (i.e. once for a LITTLE and once for a big).
 
-I already pushed the patch, but I am happy to accept a cleanup patch.
+We've been getting some sporadic failures on the big CPUs of a Pixel3
+running mainline [1], here is an example of a correct run (CPU4):
 
-Regards
+| frequency (kHz) | sysbench events |
+|-----------------+-----------------|
+|          825600 |             236 |
+|         1286400 |             369 |
+|         1689600 |             483 |
+|         2092800 |             600 |
+|         2476800 |             711 |
 
-Marcel
+and here is a failed one (still CPU4):
 
+| frequency (kHz) | sysbench events |
+|-----------------+-----------------|
+|          825600 |             234 |
+|         1286400 |             369 |
+|         1689600 |             449 |
+|         2092800 |             600 |
+|         2476800 |             355 |
+
+
+We've encountered something like this in the past with the exact same
+test on h960 [2] but it is much harder to reproduce reliably this time
+around.
+
+I haven't found much time to dig into this; I did get a run of ~100 
+iterations with about ~15 failures, but nothing cpufreq related showed up in
+dmesg. I briefly suspected fast-switch, but it's only used by schedutil, so
+in this test I would expect the frequency transition to be complete before we
+even try to start executing sysbench.
+
+If anyone has the time and will to look into this, that would be much
+appreciated.
+
+[1]: https://git.linaro.org/people/amit.pundir/linux.git/log/?h=blueline-mainline-tracking
+[2]: https://lore.kernel.org/lkml/d3ede0ab-b635-344c-faba-a9b1531b7f05@arm.com/
+
+Cheers,
+Valentin
