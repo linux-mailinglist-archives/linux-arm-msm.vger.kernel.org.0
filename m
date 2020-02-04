@@ -2,78 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2814D152198
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 21:53:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9495815219E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 21:56:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727480AbgBDUxS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Feb 2020 15:53:18 -0500
-Received: from mail-lf1-f50.google.com ([209.85.167.50]:39827 "EHLO
-        mail-lf1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727493AbgBDUxS (ORCPT
+        id S1727389AbgBDU4E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 15:56:04 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:45542 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727387AbgBDU4E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 15:53:18 -0500
-Received: by mail-lf1-f50.google.com with SMTP id t23so13194638lfk.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 12:53:17 -0800 (PST)
+        Tue, 4 Feb 2020 15:56:04 -0500
+Received: by mail-pf1-f196.google.com with SMTP id 2so10068666pfg.12;
+        Tue, 04 Feb 2020 12:56:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sbz0NUtHrX5+9NCsIDjLoROPzOMAU3z/LAiNTsiqUwg=;
-        b=sWGJ+dSvvG9wR5X2wfuBksFQwQ1k25rl4PoAGW6Nps+GvZgn9DNv/c9hWCi1pooqpu
-         UTO1G7fAFOaZxR1wRCykcXsF9vfPFRpfRclIPkP0AM1ZUNLcH54PJeMOsP/T6yXdjK7U
-         vsyMZHM6IdxshvjEHx84YdlFOE07VSRLyB5B1Y/6LXkVD8Ll1K4xM1oC6nqYIDNmqfPG
-         UisvXMHp1x3bMAv6AgwMHVMqwxVtfQ8V84+joKMBZJaRdKdSLFALGa9ur7+3Vib19Wg6
-         h9HXZJx6IOC5DfXq1FARoy+Zc2MRCZP+GV31VVpkW71G6W/ZmmM2vpx5D36IxWVkptwo
-         V6ng==
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=jaUUzB+UxjCXzrbLEVpX7Zlu1vPsN1wJxV2IaOILUwg=;
+        b=WWGXLoFPAv/r+9B6aVx14gDtbdffHMhe/KZzz/WPOVxF60Tz9czgYeH03JhgxENl7g
+         Vl4xRHlJyaP/2x2UbN2yhlfIE0mgTXk7D5baimNUVXv7dRCj5UeIuuGntRQiwQ0xFwJM
+         6hqN6+Gr9zKqvNTMGztY+ycY3wRfSz65ZjqXgY1lYW43kT4szY+pTLUtoGB70THCtnul
+         j50hw0r23kfwsmI1i7NkcZRo9YXmzd0anIzQ3M/JoupmyurW/lv6DujmxdzqHdSMQ3Uo
+         1waRzekwZh++PiTo0TIYAS9diRXtssT6tDii77/EkaHY+h4vfhIMIvofDyMCvU9mE8VT
+         yzcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sbz0NUtHrX5+9NCsIDjLoROPzOMAU3z/LAiNTsiqUwg=;
-        b=ZXmLsae0JN0jTFcKW5RjOQ64DU9hNP1MnJDWKOVgn4ESLFdaai3TOPWBLcVds+g+SB
-         KLokg/geAKV6AoOobR66lpxvWqAfmXbr00yWVWA/zCSCUnUpX+YrcMF9louyYcmyHE97
-         nwX1oe/zDoJIO1BMNu5S59sVrGYuSFvtkm//5Mrx2bsdN1JsCygyqvHZoUEMao5k6VVN
-         jbMVYidKJ52RDejSkJtF5Bl3Brn9L/wiHyh4wzgI3WCC/D4MTK6vD0H/HHh4+LgH9iiV
-         Uh4yUvhp9VpBtLiDrRRWGIl8fqn3CZ9dAEOKWjB9ARV7QpfuzfPlgydqhp5NPBhp1fCQ
-         cPNA==
-X-Gm-Message-State: APjAAAW5zn1cFQA/KpIOKR/DbEfObTwOuNDlxqc1DGvKN4zf1/RocRJC
-        vEIVcTIPaItTI1bhyPRanmwYPIz6eU1E/+TZaXryIQ==
-X-Google-Smtp-Source: APXvYqyk4OpeIu64Tg6Fe/5AKMjkzII/My9BHyYTGERDiPWWOItOV4ENUVCRLLVVu3ZLXvwnpG8fcGNPOaN/ndDek84=
-X-Received: by 2002:a19:dc1e:: with SMTP id t30mr15812680lfg.34.1580849595879;
- Tue, 04 Feb 2020 12:53:15 -0800 (PST)
-MIME-Version: 1.0
-References: <1577782737-32068-1-git-send-email-okukatla@codeaurora.org> <1577782737-32068-4-git-send-email-okukatla@codeaurora.org>
-In-Reply-To: <1577782737-32068-4-git-send-email-okukatla@codeaurora.org>
-From:   Evan Green <evgreen@google.com>
-Date:   Tue, 4 Feb 2020 12:52:39 -0800
-Message-ID: <CAE=gft7Ypxp6yokyqc3fzG+JaVv_eRjNaYoiiHAFTpjo0hVVRQ@mail.gmail.com>
-Subject: Re: [V2, 3/3] arm64: dts: sc7180: Add interconnect provider DT nodes
-To:     Odelu Kukatla <okukatla@codeaurora.org>
-Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
-        David Dai <daidavid1@codeaurora.org>,
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=jaUUzB+UxjCXzrbLEVpX7Zlu1vPsN1wJxV2IaOILUwg=;
+        b=tKqrn3B5ob8j+qy7X+5TFkZiPVo2yOhjjrV0LFDAAgncdoILF+ApfgNEOjvKCtGwWw
+         W7xiSVTjXGVZs2CB3rmlj4JKLgZf6oZtClA+9BcD5fLra0cDT1vvw9M5roMN3C+0MU0t
+         G3Zkg293dxyqfDYAgD9LzBz2tiADL9gPV5nm8hujw93R/8Lz9Zoxr2ruzymdKi9zFT+M
+         kpfT3PZwLzWP5B3bN2dlxKxvuic9iuLlQntq0GFspAEU9EI4VlVpVFKZWsn9fZqL/uG8
+         g8MtNSKjU99hLQp9YfRwMiMpEAgc0Q0UvbcZVJaphD0IggAEi2ckKo4sTrg6twdpb0UQ
+         jXIA==
+X-Gm-Message-State: APjAAAUHtNs7NMbWvWrU7KjNcmgFDmQUho8UDIqjDR8Bje/zzMIM5IZ9
+        HGClg1oUblEDTPSCmwn/+Kc=
+X-Google-Smtp-Source: APXvYqze7R6WVyDrE/sy8mZfQEUfRLUMf1lk4FdTnlbTg6eEj0iWGb2RYODq2ZXmMSu6LO6Qjbesrg==
+X-Received: by 2002:a63:cd03:: with SMTP id i3mr12783611pgg.257.1580849761959;
+        Tue, 04 Feb 2020 12:56:01 -0800 (PST)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id z16sm24985860pff.125.2020.02.04.12.56.00
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 04 Feb 2020 12:56:01 -0800 (PST)
+Date:   Tue, 4 Feb 2020 12:55:59 -0800
+From:   Guenter Roeck <linux@roeck-us.net>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        sboyd@kernel.org, Lina Iyer <ilina@codeaurora.org>,
-        Sean Sweeney <seansw@qti.qualcomm.com>,
-        Alex Elder <elder@linaro.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] watchdog: qcom-wdt: disable pretimeout on timer
+ platform
+Message-ID: <20200204205559.GA28502@roeck-us.net>
+References: <20200204195648.23350-1-ansuelsmth@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200204195648.23350-1-ansuelsmth@gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 31, 2019 at 1:00 AM Odelu Kukatla <okukatla@codeaurora.org> wrote:
->
-> Add the DT nodes for the network-on-chip interconnect buses found
-> on sc7180-based platforms.
-> ---
+On Tue, Feb 04, 2020 at 08:56:48PM +0100, Ansuel Smith wrote:
+> Some platform like ipq806x doesn't support pretimeout and define
+> some interrupts used by qcom,msm-timer. Change the driver to check
+> and use pretimeout only on qcom,kpss-wdt as it's the only platform
+> that actually supports it.
+> 
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 
-Hi Odelu,
-Are you going to spin this series?
--Evan
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+
+> ---
+>  drivers/watchdog/qcom-wdt.c | 31 +++++++++++++++++++++++--------
+>  1 file changed, 23 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
+> index a494543d3ae1..d13c75028985 100644
+> --- a/drivers/watchdog/qcom-wdt.c
+> +++ b/drivers/watchdog/qcom-wdt.c
+> @@ -40,6 +40,11 @@ static const u32 reg_offset_data_kpss[] = {
+>  	[WDT_BITE_TIME] = 0x14,
+>  };
+>  
+> +struct qcom_wdt_match_data {
+> +	const u32 *offset;
+> +	bool pretimeout;
+> +};
+> +
+>  struct qcom_wdt {
+>  	struct watchdog_device	wdd;
+>  	unsigned long		rate;
+> @@ -179,19 +184,29 @@ static void qcom_clk_disable_unprepare(void *data)
+>  	clk_disable_unprepare(data);
+>  }
+>  
+> +static const struct qcom_wdt_match_data match_data_apcs_tmr = {
+> +	.offset = reg_offset_data_apcs_tmr,
+> +	.pretimeout = false,
+> +};
+> +
+> +static const struct qcom_wdt_match_data match_data_kpss = {
+> +	.offset = reg_offset_data_kpss,
+> +	.pretimeout = true,
+> +};
+> +
+>  static int qcom_wdt_probe(struct platform_device *pdev)
+>  {
+>  	struct device *dev = &pdev->dev;
+>  	struct qcom_wdt *wdt;
+>  	struct resource *res;
+>  	struct device_node *np = dev->of_node;
+> -	const u32 *regs;
+> +	const struct qcom_wdt_match_data *data;
+>  	u32 percpu_offset;
+>  	int irq, ret;
+>  	struct clk *clk;
+>  
+> -	regs = of_device_get_match_data(dev);
+> -	if (!regs) {
+> +	data = of_device_get_match_data(dev);
+> +	if (!data) {
+>  		dev_err(dev, "Unsupported QCOM WDT module\n");
+>  		return -ENODEV;
+>  	}
+> @@ -247,7 +262,7 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+>  
+>  	/* check if there is pretimeout support */
+>  	irq = platform_get_irq(pdev, 0);
+> -	if (irq > 0) {
+> +	if (data->pretimeout && irq > 0) {
+>  		ret = devm_request_irq(dev, irq, qcom_wdt_isr,
+>  				       IRQF_TRIGGER_RISING,
+>  				       "wdt_bark", &wdt->wdd);
+> @@ -267,7 +282,7 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+>  	wdt->wdd.min_timeout = 1;
+>  	wdt->wdd.max_timeout = 0x10000000U / wdt->rate;
+>  	wdt->wdd.parent = dev;
+> -	wdt->layout = regs;
+> +	wdt->layout = data->offset;
+>  
+>  	if (readl(wdt_addr(wdt, WDT_STS)) & 1)
+>  		wdt->wdd.bootstatus = WDIOF_CARDRESET;
+> @@ -311,9 +326,9 @@ static int __maybe_unused qcom_wdt_resume(struct device *dev)
+>  static SIMPLE_DEV_PM_OPS(qcom_wdt_pm_ops, qcom_wdt_suspend, qcom_wdt_resume);
+>  
+>  static const struct of_device_id qcom_wdt_of_table[] = {
+> -	{ .compatible = "qcom,kpss-timer", .data = reg_offset_data_apcs_tmr },
+> -	{ .compatible = "qcom,scss-timer", .data = reg_offset_data_apcs_tmr },
+> -	{ .compatible = "qcom,kpss-wdt", .data = reg_offset_data_kpss },
+> +	{ .compatible = "qcom,kpss-timer", .data = &match_data_apcs_tmr },
+> +	{ .compatible = "qcom,scss-timer", .data = &match_data_apcs_tmr },
+> +	{ .compatible = "qcom,kpss-wdt", .data = &match_data_kpss },
+>  	{ },
+>  };
+>  MODULE_DEVICE_TABLE(of, qcom_wdt_of_table);
+> -- 
+> 2.24.0
+> 
