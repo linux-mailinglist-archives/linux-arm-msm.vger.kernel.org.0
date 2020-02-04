@@ -2,123 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6894B152193
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 21:49:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2814D152198
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 21:53:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727446AbgBDUth (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Feb 2020 15:49:37 -0500
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:34095 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727387AbgBDUth (ORCPT
+        id S1727480AbgBDUxS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 15:53:18 -0500
+Received: from mail-lf1-f50.google.com ([209.85.167.50]:39827 "EHLO
+        mail-lf1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727493AbgBDUxS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 15:49:37 -0500
-Received: by mail-vs1-f67.google.com with SMTP id g15so12420587vsf.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 12:49:36 -0800 (PST)
+        Tue, 4 Feb 2020 15:53:18 -0500
+Received: by mail-lf1-f50.google.com with SMTP id t23so13194638lfk.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 12:53:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=JDMn7tspiLbabREBPncdwnRL1LH/yW4VpIem+eMXcdY=;
-        b=Jvi8QbyK+alPjB3i+rU2Ydb52K2Cr2ER4rlq6Ohk4VOaRNp3T+BkEDdEzkvR4yW9F0
-         +3q3G2bto22tSH/jvMKXTBNdgwvUKeL72DKrAg8Lrd7M0vBvUcj6nT1GAMCxqtVlvVMD
-         J97ugqLNv8AVmQrF7E6TIbQNA8POEkoe1hiak=
+        bh=sbz0NUtHrX5+9NCsIDjLoROPzOMAU3z/LAiNTsiqUwg=;
+        b=sWGJ+dSvvG9wR5X2wfuBksFQwQ1k25rl4PoAGW6Nps+GvZgn9DNv/c9hWCi1pooqpu
+         UTO1G7fAFOaZxR1wRCykcXsF9vfPFRpfRclIPkP0AM1ZUNLcH54PJeMOsP/T6yXdjK7U
+         vsyMZHM6IdxshvjEHx84YdlFOE07VSRLyB5B1Y/6LXkVD8Ll1K4xM1oC6nqYIDNmqfPG
+         UisvXMHp1x3bMAv6AgwMHVMqwxVtfQ8V84+joKMBZJaRdKdSLFALGa9ur7+3Vib19Wg6
+         h9HXZJx6IOC5DfXq1FARoy+Zc2MRCZP+GV31VVpkW71G6W/ZmmM2vpx5D36IxWVkptwo
+         V6ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=JDMn7tspiLbabREBPncdwnRL1LH/yW4VpIem+eMXcdY=;
-        b=DlZAayOQx1ET4QO5MxplH5/hmf8yO5PQVNPGT4OQe5F4X3QEd/WGmoLtYEn47II16L
-         ilzisFxcnrAa4iIZzEv/aUDR9J6mI5y1OyrS4tnZzYlshocfzbTSYIdwhPQ2QnJ1zxp2
-         L8/dU54/4CBFmY5kf1EjJwQB4UBg2g3iuz7qFZQoyJuqHQjWEIAyYYPGfEtmIcVUCA1V
-         DnvSDET6x4nLvdY8iXgriXD2Xtulj2tkpn87MbaIFgpbTfJroLU4VSdhVeuN8q4Y99Ya
-         cIGhVIQFzha9Hjd2GkGS3Zk4Edh4mEDYvQHvmUouy/Xc3Sqx1mTZW3B56x6xizgpGap+
-         LO3A==
-X-Gm-Message-State: APjAAAWC3mcOoQPDf+tBKLmB8X5PBlQqC8neqC2NFWSxvxjJT1s37LDY
-        0Rnm1qibtG/DWrx4VD03y1ThC8JlFk8=
-X-Google-Smtp-Source: APXvYqw0Ey9E8ohqPmTMm5GyRl0tVCyNbefgXyCdoVs2HwbCXiNb+Mqa90P+GWu9di7o50CZBCzgSg==
-X-Received: by 2002:a67:ec03:: with SMTP id d3mr19782901vso.152.1580849375806;
-        Tue, 04 Feb 2020 12:49:35 -0800 (PST)
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com. [209.85.221.181])
-        by smtp.gmail.com with ESMTPSA id 110sm7057456uav.18.2020.02.04.12.49.34
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Feb 2020 12:49:34 -0800 (PST)
-Received: by mail-vk1-f181.google.com with SMTP id m195so5598017vkh.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 12:49:34 -0800 (PST)
-X-Received: by 2002:ac5:c807:: with SMTP id y7mr18261663vkl.92.1580849373967;
- Tue, 04 Feb 2020 12:49:33 -0800 (PST)
+        bh=sbz0NUtHrX5+9NCsIDjLoROPzOMAU3z/LAiNTsiqUwg=;
+        b=ZXmLsae0JN0jTFcKW5RjOQ64DU9hNP1MnJDWKOVgn4ESLFdaai3TOPWBLcVds+g+SB
+         KLokg/geAKV6AoOobR66lpxvWqAfmXbr00yWVWA/zCSCUnUpX+YrcMF9louyYcmyHE97
+         nwX1oe/zDoJIO1BMNu5S59sVrGYuSFvtkm//5Mrx2bsdN1JsCygyqvHZoUEMao5k6VVN
+         jbMVYidKJ52RDejSkJtF5Bl3Brn9L/wiHyh4wzgI3WCC/D4MTK6vD0H/HHh4+LgH9iiV
+         Uh4yUvhp9VpBtLiDrRRWGIl8fqn3CZ9dAEOKWjB9ARV7QpfuzfPlgydqhp5NPBhp1fCQ
+         cPNA==
+X-Gm-Message-State: APjAAAW5zn1cFQA/KpIOKR/DbEfObTwOuNDlxqc1DGvKN4zf1/RocRJC
+        vEIVcTIPaItTI1bhyPRanmwYPIz6eU1E/+TZaXryIQ==
+X-Google-Smtp-Source: APXvYqyk4OpeIu64Tg6Fe/5AKMjkzII/My9BHyYTGERDiPWWOItOV4ENUVCRLLVVu3ZLXvwnpG8fcGNPOaN/ndDek84=
+X-Received: by 2002:a19:dc1e:: with SMTP id t30mr15812680lfg.34.1580849595879;
+ Tue, 04 Feb 2020 12:53:15 -0800 (PST)
 MIME-Version: 1.0
-References: <20200203183149.73842-1-dianders@chromium.org> <20200203103049.v4.11.I27bbd90045f38cd3218c259526409d52a48efb35@changeid>
- <20200204174900.45A5420674@mail.kernel.org>
-In-Reply-To: <20200204174900.45A5420674@mail.kernel.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 4 Feb 2020 12:49:23 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=VaK6faWiAC1CHd081UzWCLEE42dHBq22ZyaSaUu8CXhA@mail.gmail.com>
-Message-ID: <CAD=FV=VaK6faWiAC1CHd081UzWCLEE42dHBq22ZyaSaUu8CXhA@mail.gmail.com>
-Subject: Re: [PATCH v4 11/15] dt-bindings: clock: Cleanup qcom,videocc
- bindings for sdm845/sc7180
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+References: <1577782737-32068-1-git-send-email-okukatla@codeaurora.org> <1577782737-32068-4-git-send-email-okukatla@codeaurora.org>
+In-Reply-To: <1577782737-32068-4-git-send-email-okukatla@codeaurora.org>
+From:   Evan Green <evgreen@google.com>
+Date:   Tue, 4 Feb 2020 12:52:39 -0800
+Message-ID: <CAE=gft7Ypxp6yokyqc3fzG+JaVv_eRjNaYoiiHAFTpjo0hVVRQ@mail.gmail.com>
+Subject: Re: [V2, 3/3] arm64: dts: sc7180: Add interconnect provider DT nodes
+To:     Odelu Kukatla <okukatla@codeaurora.org>
+Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
+        David Dai <daidavid1@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Harigovindan P <harigovi@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Matthias Kaehlcke <mka@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        sboyd@kernel.org, Lina Iyer <ilina@codeaurora.org>,
+        Sean Sweeney <seansw@qti.qualcomm.com>,
+        Alex Elder <elder@linaro.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Tue, Feb 4, 2020 at 9:49 AM Stephen Boyd <sboyd@kernel.org> wrote:
+On Tue, Dec 31, 2019 at 1:00 AM Odelu Kukatla <okukatla@codeaurora.org> wrote:
 >
-> Quoting Douglas Anderson (2020-02-03 10:31:44)
-> > This makes the qcom,videocc bindings match the recent changes to the
-> > dispcc and gpucc.
-> >
-> > 1. Switched to using "bi_tcxo" instead of "xo".
-> >
-> > 2. Adds a description for the XO clock.  Not terribly important but
-> >    nice if it cleanly matches its cousins.
-> >
-> > 3. Updates the example to use the symbolic name for the RPMH clock and
-> >    also show that the real devices are currently using 2 address cells
-> >    / size cells and fixes the spacing on the closing brace.
-> >
-> > 4. Split into 2 files.  In this case they could probably share one
-> >    file, but let's be consistent.
-> >
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> >
-> > Changes in v4:
-> > - Added Rob's review tag.
->
-> I don't see it. I guess I should add it?
+> Add the DT nodes for the network-on-chip interconnect buses found
+> on sc7180-based platforms.
+> ---
 
-Whoops.  I knew I'd mess something like this up.  Looks like it got
-pushed without his tag but I don't think it's a big deal.  For
-reference, he added his tag in:
-
-https://lore.kernel.org/r/CAL_Jsq+_2E-bAbP9F6VYkWRp0crEyRGa5peuwP58-PZniVny7w@mail.gmail.com
-
-I did manage to remove the "/bindings" from the ID as he requested, so
-at least I didn't mess up the important part...
-
--Doug
-
-
--Doug
+Hi Odelu,
+Are you going to spin this series?
+-Evan
