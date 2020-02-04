@@ -2,85 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BEF141515C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 07:14:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C6B11515F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 07:27:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726684AbgBDGOt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Feb 2020 01:14:49 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:53706 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726898AbgBDGOr (ORCPT
+        id S1727176AbgBDG0r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 01:26:47 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:34695 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727002AbgBDG0r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 01:14:47 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580796886; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=lNM+zgIvhfpI499FSDfrS0zI/QLrGsHmRXdvT8JZSSM=; b=VirK9VEWnALt6ZSRh9n7yJuiPYdXVGhfh7MWqzdXtvEbMNg9B4wz4oCww5Y7zm8Fxw6GAJV7
- 0uADWcMSKOTMZVvb+j12K0x/JC+6rEawkouc1JVzbYJpH9ePFUv2ldGMTGx89jNPRUlJTH4J
- GiIQljFExYvEWGi2D2TVv3mDieE=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e390bd4.7f592b9f2810-smtp-out-n03;
- Tue, 04 Feb 2020 06:14:44 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 454EDC447A3; Tue,  4 Feb 2020 06:14:43 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 232CDC447A1;
-        Tue,  4 Feb 2020 06:14:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 232CDC447A1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, evgreen@chromium.org, dianders@chromium.org,
-        rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH 3/3] soc: qcom: rpmh: Invalidate sleep and wake TCS before flushing new data
-Date:   Tue,  4 Feb 2020 11:43:51 +0530
-Message-Id: <1580796831-18996-4-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1580796831-18996-1-git-send-email-mkshah@codeaurora.org>
-References: <1580796831-18996-1-git-send-email-mkshah@codeaurora.org>
+        Tue, 4 Feb 2020 01:26:47 -0500
+Received: by mail-pg1-f194.google.com with SMTP id j4so9147241pgi.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2020 22:26:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UAbfKGPHFp5dpRo9OZT4gAhZKpnQ/tm30dsERIZmLtY=;
+        b=DV7FYFA2zBtXcTFpKCZDOUo3/HxELPWgA+S/mT54nl7QsTiXhHGgURm3VYtveFUo11
+         ugOwDhpr0mzpA1VVN8VABVuM/l0cY6+AooZ5Lwof2mdePv9dA1Gn+d3CG0TkRtAwegeE
+         SrH8WppssxK7l8z6QIjBzaCrQ8uYxARt0YE3DNjW02z6Ix2panbgKJwAixdOPD3FTRtA
+         Q7fJ5OwZgkMrwfROygPTiEVCs/uyeQPRoxnLgw++QTw0HfmsIVCiJuzfjsEyP468HHNP
+         ZGo5Feeuzh/YqEoWfIWGwVvjp8bblLsJnI/Z/D/lOCRb3yeu1+rJ0QLIPclkbScg7FQY
+         wJzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UAbfKGPHFp5dpRo9OZT4gAhZKpnQ/tm30dsERIZmLtY=;
+        b=qHzDchtS9WC7pYgL7F/oOICG8w+b99Wlf/TdoZgIlquPbiTQytWCENgIjHQxlI+dnR
+         cAOknv0QCAlOLlJTdLraiWBE5gxiZCaojpCVASzH6BXN/sNnzGWfJDaIAc4wv49WxZqu
+         0C41ySD9RL3ZPo59L3k67iE2z0hTM5tBzic+r4XbxFbYd8SwC5PsQ0ibsqUNBQ0IONEJ
+         18ez+pcW4jDjxF5Q3wGNk+MnjeCvQfnHPXWKJeYSNy0FyzLMkX3DJfMV3B6lPpQVHd4R
+         yMIvZ4p1E4o6OF620Gqm7ED0oxacHmGnQmhB3XJPg4bIPh0HX7Xj7I9qMGtkP9Vby1am
+         3YnQ==
+X-Gm-Message-State: APjAAAXM2ui21wKnQ6aGj35kwcYWxHYsgKfV3MMW2ocuwqooBEI7IGaT
+        2HzJdcTg1fUcxXso4ZeKDghozQ==
+X-Google-Smtp-Source: APXvYqznRtyL0JVHhck6+gFYGWEaG3OcRjT8/aSbV6eXxQXW03/6Bi4PbIcny8W7vDKPM4kYe+O+fQ==
+X-Received: by 2002:a62:4ecc:: with SMTP id c195mr29519240pfb.158.1580797605299;
+        Mon, 03 Feb 2020 22:26:45 -0800 (PST)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id l69sm6901897pgd.1.2020.02.03.22.26.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Feb 2020 22:26:44 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Sibi Sankar <sibis@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: [PATCH v3 0/2] remoteproc: mss: Improve mem_assign and firmware load
+Date:   Mon,  3 Feb 2020 22:26:39 -0800
+Message-Id: <20200204062641.393949-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.23.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-TCSes have previously programmed data when rpmh_flush is called.
-This can cause old data to trigger along with newly flushed.
+Two things came up in the effort of figuring out why the modem crashed the
+entire system when being restarted; the first one solves the actual problem, in
+that it's not possible to reclaim the main modem firmware region unless the
+modem subsystem is running - causing the crash.
 
-Fix this by cleaning sleep and wake TCSes before new data is flushed.
+The second patch aligns the firmware loading process to that of the downstream
+driver, which seems to be a requirement in 8974 as well.
 
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
----
- drivers/soc/qcom/rpmh.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Bjorn Andersson (2):
+  remoteproc: qcom_q6v5_mss: Don't reassign mpss region on shutdown
+  remoteproc: qcom_q6v5_mss: Validate each segment during loading
 
-diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-index 04c7805..5ae1b91 100644
---- a/drivers/soc/qcom/rpmh.c
-+++ b/drivers/soc/qcom/rpmh.c
-@@ -475,6 +475,10 @@ int rpmh_flush(const struct device *dev)
- 		return 0;
- 	}
- 
-+	do {
-+		ret = rpmh_rsc_invalidate(ctrlr_to_drv(ctrlr));
-+	} while (ret == -EAGAIN);
-+
- 	/* First flush the cached batch requests */
- 	ret = flush_batch(ctrlr);
- 	if (ret)
+ drivers/remoteproc/qcom_q6v5_mss.c | 95 +++++++++++++++++++-----------
+ 1 file changed, 62 insertions(+), 33 deletions(-)
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.23.0
+
