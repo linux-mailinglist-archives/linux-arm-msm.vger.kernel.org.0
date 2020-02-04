@@ -2,159 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EE1D2152154
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 20:57:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6894B152193
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 21:49:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727466AbgBDT5E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Feb 2020 14:57:04 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46741 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727450AbgBDT5E (ORCPT
+        id S1727446AbgBDUth (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 15:49:37 -0500
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:34095 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727387AbgBDUth (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 14:57:04 -0500
-Received: by mail-wr1-f67.google.com with SMTP id z7so24596825wrl.13;
-        Tue, 04 Feb 2020 11:57:00 -0800 (PST)
+        Tue, 4 Feb 2020 15:49:37 -0500
+Received: by mail-vs1-f67.google.com with SMTP id g15so12420587vsf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 12:49:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=K+yNaJp7oUZoKhcclI8Dxuk5xvWQ6/1nUWlWmNYelU0=;
-        b=uXAnnJyOP3XxbaFXyIjwMr/FV8i/RpKXVy2RiVCpSLtnNyTqPeIFDZRRue+N0MZBU0
-         VcTurBFWNZJ4CJMSjwV55oquji6gpM6krYS/OvlNS5a7zmBy4HlpgVjXlQm8xkEqlihi
-         Jd+kXnkQnb3USQ3SC/KeOd92X+zxtTp6dThrLWPx6wUN7kHYro3z01pYcKl52kGB9Cac
-         lhbg8e2VAB4kLuG7N0Y/Hn+LwTsIEJWad645iKYAc8SpAegb0Uvo+WloIG5nPwOjH79O
-         dWR3P8WAi775jXVu9D5FtzyM8WB4jTcWRGbMFH1haEIUxGnDkN8aoRxRX8TP2cbZ+VLx
-         +RpA==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JDMn7tspiLbabREBPncdwnRL1LH/yW4VpIem+eMXcdY=;
+        b=Jvi8QbyK+alPjB3i+rU2Ydb52K2Cr2ER4rlq6Ohk4VOaRNp3T+BkEDdEzkvR4yW9F0
+         +3q3G2bto22tSH/jvMKXTBNdgwvUKeL72DKrAg8Lrd7M0vBvUcj6nT1GAMCxqtVlvVMD
+         J97ugqLNv8AVmQrF7E6TIbQNA8POEkoe1hiak=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=K+yNaJp7oUZoKhcclI8Dxuk5xvWQ6/1nUWlWmNYelU0=;
-        b=agRP0pbHno2LtoCKkQ9plNKVM2WZySnEBetr3/u0OYkzPHTeTtCd/H53xl+1BDfsZS
-         szB8+rYpYsvhTjEOV6CM/0fZZGMX212eNGIxzXQnxUwB/idivKCMBpjo2BeHgn8SdLtj
-         b8Iz9xNqWfkxUVNUaEYn6ikHPDYNxQ3010VCVhGD0qj+qUQtuCVJzqKMcEmDvhpcbmIG
-         31g4TqOAKpLePj5Nxp666JIjqq3mYgfQTerwqgYvZ13tEhcFOZ/OfxVtB5fIO6tRiXEI
-         IzIBthqTAWAIbYr3w02IW3p/dS0kGRBt+wQVWtsCY5GJHtqJnlKx26viHwMZ8TN/qf/D
-         atuQ==
-X-Gm-Message-State: APjAAAV/1OR4/ej3MaRwfwEndykFha5tKig3jMEcuqgWqKNuWCAzDKXo
-        tQeYti5Ytvkte9EGECaOgo8=
-X-Google-Smtp-Source: APXvYqyQx0W0FqnaW4/+81tXXRCLubnvr11FkS+hNIAt/oe7kUrrRQ2gZyVssaB/xpy/R9AFRNQ7hg==
-X-Received: by 2002:a5d:5221:: with SMTP id i1mr22164042wra.44.1580846220291;
-        Tue, 04 Feb 2020 11:57:00 -0800 (PST)
-Received: from Ansuel-XPS.localdomain (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
-        by smtp.googlemail.com with ESMTPSA id z6sm29710177wrw.36.2020.02.04.11.56.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Feb 2020 11:56:59 -0800 (PST)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] watchdog: qcom-wdt: disable pretimeout on timer platform
-Date:   Tue,  4 Feb 2020 20:56:48 +0100
-Message-Id: <20200204195648.23350-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.24.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JDMn7tspiLbabREBPncdwnRL1LH/yW4VpIem+eMXcdY=;
+        b=DlZAayOQx1ET4QO5MxplH5/hmf8yO5PQVNPGT4OQe5F4X3QEd/WGmoLtYEn47II16L
+         ilzisFxcnrAa4iIZzEv/aUDR9J6mI5y1OyrS4tnZzYlshocfzbTSYIdwhPQ2QnJ1zxp2
+         L8/dU54/4CBFmY5kf1EjJwQB4UBg2g3iuz7qFZQoyJuqHQjWEIAyYYPGfEtmIcVUCA1V
+         DnvSDET6x4nLvdY8iXgriXD2Xtulj2tkpn87MbaIFgpbTfJroLU4VSdhVeuN8q4Y99Ya
+         cIGhVIQFzha9Hjd2GkGS3Zk4Edh4mEDYvQHvmUouy/Xc3Sqx1mTZW3B56x6xizgpGap+
+         LO3A==
+X-Gm-Message-State: APjAAAWC3mcOoQPDf+tBKLmB8X5PBlQqC8neqC2NFWSxvxjJT1s37LDY
+        0Rnm1qibtG/DWrx4VD03y1ThC8JlFk8=
+X-Google-Smtp-Source: APXvYqw0Ey9E8ohqPmTMm5GyRl0tVCyNbefgXyCdoVs2HwbCXiNb+Mqa90P+GWu9di7o50CZBCzgSg==
+X-Received: by 2002:a67:ec03:: with SMTP id d3mr19782901vso.152.1580849375806;
+        Tue, 04 Feb 2020 12:49:35 -0800 (PST)
+Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com. [209.85.221.181])
+        by smtp.gmail.com with ESMTPSA id 110sm7057456uav.18.2020.02.04.12.49.34
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Feb 2020 12:49:34 -0800 (PST)
+Received: by mail-vk1-f181.google.com with SMTP id m195so5598017vkh.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 12:49:34 -0800 (PST)
+X-Received: by 2002:ac5:c807:: with SMTP id y7mr18261663vkl.92.1580849373967;
+ Tue, 04 Feb 2020 12:49:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+References: <20200203183149.73842-1-dianders@chromium.org> <20200203103049.v4.11.I27bbd90045f38cd3218c259526409d52a48efb35@changeid>
+ <20200204174900.45A5420674@mail.kernel.org>
+In-Reply-To: <20200204174900.45A5420674@mail.kernel.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 4 Feb 2020 12:49:23 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=VaK6faWiAC1CHd081UzWCLEE42dHBq22ZyaSaUu8CXhA@mail.gmail.com>
+Message-ID: <CAD=FV=VaK6faWiAC1CHd081UzWCLEE42dHBq22ZyaSaUu8CXhA@mail.gmail.com>
+Subject: Re: [PATCH v4 11/15] dt-bindings: clock: Cleanup qcom,videocc
+ bindings for sdm845/sc7180
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Harigovindan P <harigovi@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Matthias Kaehlcke <mka@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some platform like ipq806x doesn't support pretimeout and define
-some interrupts used by qcom,msm-timer. Change the driver to check
-and use pretimeout only on qcom,kpss-wdt as it's the only platform
-that actually supports it.
+Hi,
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- drivers/watchdog/qcom-wdt.c | 31 +++++++++++++++++++++++--------
- 1 file changed, 23 insertions(+), 8 deletions(-)
+On Tue, Feb 4, 2020 at 9:49 AM Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> Quoting Douglas Anderson (2020-02-03 10:31:44)
+> > This makes the qcom,videocc bindings match the recent changes to the
+> > dispcc and gpucc.
+> >
+> > 1. Switched to using "bi_tcxo" instead of "xo".
+> >
+> > 2. Adds a description for the XO clock.  Not terribly important but
+> >    nice if it cleanly matches its cousins.
+> >
+> > 3. Updates the example to use the symbolic name for the RPMH clock and
+> >    also show that the real devices are currently using 2 address cells
+> >    / size cells and fixes the spacing on the closing brace.
+> >
+> > 4. Split into 2 files.  In this case they could probably share one
+> >    file, but let's be consistent.
+> >
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+> >
+> > Changes in v4:
+> > - Added Rob's review tag.
+>
+> I don't see it. I guess I should add it?
 
-diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
-index a494543d3ae1..d13c75028985 100644
---- a/drivers/watchdog/qcom-wdt.c
-+++ b/drivers/watchdog/qcom-wdt.c
-@@ -40,6 +40,11 @@ static const u32 reg_offset_data_kpss[] = {
- 	[WDT_BITE_TIME] = 0x14,
- };
- 
-+struct qcom_wdt_match_data {
-+	const u32 *offset;
-+	bool pretimeout;
-+};
-+
- struct qcom_wdt {
- 	struct watchdog_device	wdd;
- 	unsigned long		rate;
-@@ -179,19 +184,29 @@ static void qcom_clk_disable_unprepare(void *data)
- 	clk_disable_unprepare(data);
- }
- 
-+static const struct qcom_wdt_match_data match_data_apcs_tmr = {
-+	.offset = reg_offset_data_apcs_tmr,
-+	.pretimeout = false,
-+};
-+
-+static const struct qcom_wdt_match_data match_data_kpss = {
-+	.offset = reg_offset_data_kpss,
-+	.pretimeout = true,
-+};
-+
- static int qcom_wdt_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct qcom_wdt *wdt;
- 	struct resource *res;
- 	struct device_node *np = dev->of_node;
--	const u32 *regs;
-+	const struct qcom_wdt_match_data *data;
- 	u32 percpu_offset;
- 	int irq, ret;
- 	struct clk *clk;
- 
--	regs = of_device_get_match_data(dev);
--	if (!regs) {
-+	data = of_device_get_match_data(dev);
-+	if (!data) {
- 		dev_err(dev, "Unsupported QCOM WDT module\n");
- 		return -ENODEV;
- 	}
-@@ -247,7 +262,7 @@ static int qcom_wdt_probe(struct platform_device *pdev)
- 
- 	/* check if there is pretimeout support */
- 	irq = platform_get_irq(pdev, 0);
--	if (irq > 0) {
-+	if (data->pretimeout && irq > 0) {
- 		ret = devm_request_irq(dev, irq, qcom_wdt_isr,
- 				       IRQF_TRIGGER_RISING,
- 				       "wdt_bark", &wdt->wdd);
-@@ -267,7 +282,7 @@ static int qcom_wdt_probe(struct platform_device *pdev)
- 	wdt->wdd.min_timeout = 1;
- 	wdt->wdd.max_timeout = 0x10000000U / wdt->rate;
- 	wdt->wdd.parent = dev;
--	wdt->layout = regs;
-+	wdt->layout = data->offset;
- 
- 	if (readl(wdt_addr(wdt, WDT_STS)) & 1)
- 		wdt->wdd.bootstatus = WDIOF_CARDRESET;
-@@ -311,9 +326,9 @@ static int __maybe_unused qcom_wdt_resume(struct device *dev)
- static SIMPLE_DEV_PM_OPS(qcom_wdt_pm_ops, qcom_wdt_suspend, qcom_wdt_resume);
- 
- static const struct of_device_id qcom_wdt_of_table[] = {
--	{ .compatible = "qcom,kpss-timer", .data = reg_offset_data_apcs_tmr },
--	{ .compatible = "qcom,scss-timer", .data = reg_offset_data_apcs_tmr },
--	{ .compatible = "qcom,kpss-wdt", .data = reg_offset_data_kpss },
-+	{ .compatible = "qcom,kpss-timer", .data = &match_data_apcs_tmr },
-+	{ .compatible = "qcom,scss-timer", .data = &match_data_apcs_tmr },
-+	{ .compatible = "qcom,kpss-wdt", .data = &match_data_kpss },
- 	{ },
- };
- MODULE_DEVICE_TABLE(of, qcom_wdt_of_table);
--- 
-2.24.0
+Whoops.  I knew I'd mess something like this up.  Looks like it got
+pushed without his tag but I don't think it's a big deal.  For
+reference, he added his tag in:
 
+https://lore.kernel.org/r/CAL_Jsq+_2E-bAbP9F6VYkWRp0crEyRGa5peuwP58-PZniVny7w@mail.gmail.com
+
+I did manage to remove the "/bindings" from the ID as he requested, so
+at least I didn't mess up the important part...
+
+-Doug
+
+
+-Doug
