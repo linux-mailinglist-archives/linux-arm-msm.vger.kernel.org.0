@@ -2,107 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C720F151399
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 01:21:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B6B315139E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 01:22:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726561AbgBDAVV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Feb 2020 19:21:21 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:40892 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726853AbgBDAVV (ORCPT
+        id S1726474AbgBDAWM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Feb 2020 19:22:12 -0500
+Received: from mail-ua1-f65.google.com ([209.85.222.65]:46159 "EHLO
+        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727044AbgBDAWL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Feb 2020 19:21:21 -0500
-Received: by mail-ot1-f65.google.com with SMTP id i6so15475211otr.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2020 16:21:21 -0800 (PST)
+        Mon, 3 Feb 2020 19:22:11 -0500
+Received: by mail-ua1-f65.google.com with SMTP id l6so6061396uap.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2020 16:22:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=LPuXmrJI40A2Un1MmFXL7OHrwiIKEbtwiS4nTQZEtlw=;
-        b=Sqy4Qf7TbtVRb9AKX7R0QHMGO6MbjHFjRhrNLCVULzUn/tmym5SloAoPUq1SLwktqL
-         YfDK2SvCgqu1fkHcx0lbvUks2URnH9G99ch0qldrHccgrrXWifX1cpgNKWL3di2+l5qG
-         Iwa5jrVHUpE4EDrYxjMPzWGaWAWHjMLWl631queL7ztP48d4tpQc/xVcRzYnMe81w7uC
-         4hxAPoC0OgBYxmSUgZWTss5WoM88w5zWJpgZGqSN5GUyK+Gqf6JeoJvJ0WVhmy55jGIu
-         VOwXEJfrLuQ1xyydF5FCEOXUqw/PKDYZA6sbjwFeJXBDWoNWiF1G1cD7YnRP7AONLW+P
-         e5fg==
+        bh=6JzKdfECxoshT8PyZexTPl31WOYvekoaoJj1TOgyVRs=;
+        b=VkXItU6SO3y2jWpMgCyH42sXvEkyaTeh7YrrJfXF10BOcoXkCJ07Xp/sSFGgoieUEN
+         +V5ilf5JGQ2XKWjmGM25z+sABorUTNDDAdbRINCgG1mOjZ8gzmi8zvvFPMBq73lJfdmx
+         XeN3dmpIlgZJwRgq3xz1Ifi9Gfj4iWJZ4xreI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=LPuXmrJI40A2Un1MmFXL7OHrwiIKEbtwiS4nTQZEtlw=;
-        b=Ld+OLtkggdxUBjyvqaHvA4XQUHnj0W55WRN8LRByVBTuHjeWEqt4oNUfIbErNz9uj0
-         Ko81agdLz8JnfrjMTNvHKe0xpaeN5/fsWdXO8Cpxj8AjoJEZgyag6ZWLyA0+AW1ifQnH
-         ChA760WnxXLL+XY+G/HM9lJUW79YSUm/Pg9WAGKUeeHJp6n/H5EVN93Mdo6mpvU5iRyP
-         sBx6zrLpAHqmt/nVS6f5wrWZtvpYGWR8eSdGi9eZ0JosAa52nNftn7WUDM0hWpugPBKy
-         RpEXdzXc7aQQzKYyG433MxHt8fUzS7kS7V63gDLNxX8C8LktFZH4+RAEgmWApr6WzaLT
-         Bn9Q==
-X-Gm-Message-State: APjAAAWsvcxgV9KU6AwtINbiy4W9HxU8vf17EL8k+wz3Jb5aMzjZoUXI
-        3XED2RUMYDIiOlNToNPciCtG7YQuZvv2UK9zvN6WYo9c
-X-Google-Smtp-Source: APXvYqz/YSe/X4e5btHvwVXt9j0h9vzKao0F/dYt5ZLOc7r211EAvVVKoCb8baK3UiKvJDxzD5l048nUmNuGreHgVVI=
-X-Received: by 2002:a05:6830:1094:: with SMTP id y20mr19728104oto.12.1580775680897;
- Mon, 03 Feb 2020 16:21:20 -0800 (PST)
+        bh=6JzKdfECxoshT8PyZexTPl31WOYvekoaoJj1TOgyVRs=;
+        b=YQs9RR2lFKQGMTz3IqZZ7ZEDOyIDmvhxXk8iK59rtGHEDR8iTeuMuKgL0Nbrtgflww
+         yXB5djyTRMb/6MIk3l6SKsSyxrbC706d/2bipGkcMRLtm5mw6Dcd02JA1u9QSdAZ7kV2
+         VGnZMdYmtA97KDnzYlwZ2EaVuXIqnDFgc/tpliSkmgnMcBdV1FazpXiouvk3Tpek+Wgs
+         OAxy24kR94XlDbEtiylIvlkhNLAR1AtGWe/Po6s9FzrmCHm8HtPm+V3QTWK2qvjhMsib
+         SJgnSDffKvJqTmmwzUTOIvVKPQuRWE7iyn+J90zWj8+zxKBqh7uh6XY/lRHXRYXTOEpE
+         3Apg==
+X-Gm-Message-State: APjAAAUgIla42eiOGn8Z2PWTdeElhIyChIdfeKl59jnRUbOd00+46QBJ
+        d/huk3wqGlIQRxND3YjZvTjGjZ7R9rM=
+X-Google-Smtp-Source: APXvYqzAMMESgerDIPuuobDgMMq5T82MGdyE0moZfG1Dr85KiFOwlIPHvZYOhvqrx4eYYIPzFyP4Jw==
+X-Received: by 2002:ab0:7651:: with SMTP id s17mr11116483uaq.29.1580775730358;
+        Mon, 03 Feb 2020 16:22:10 -0800 (PST)
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com. [209.85.217.52])
+        by smtp.gmail.com with ESMTPSA id p4sm5784819vsg.10.2020.02.03.16.22.09
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Feb 2020 16:22:09 -0800 (PST)
+Received: by mail-vs1-f52.google.com with SMTP id r18so10236074vso.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Feb 2020 16:22:09 -0800 (PST)
+X-Received: by 2002:a67:fbcb:: with SMTP id o11mr16294171vsr.109.1580775728583;
+ Mon, 03 Feb 2020 16:22:08 -0800 (PST)
 MIME-Version: 1.0
-References: <1579763945-10478-1-git-send-email-smasetty@codeaurora.org> <1579763945-10478-2-git-send-email-smasetty@codeaurora.org>
-In-Reply-To: <1579763945-10478-2-git-send-email-smasetty@codeaurora.org>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Mon, 3 Feb 2020 16:21:09 -0800
-Message-ID: <CALAqxLU9-4YEF8mTjuPF+LBJH8fFw_OfrdT7JtTqib127RRaEA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] drm: msm: a6xx: Add support for A618
-To:     Sharat Masetty <smasetty@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@freedesktop.org, lkml <linux-kernel@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
+References: <20191218223530.253106-1-dianders@chromium.org>
+ <20191218143416.v3.6.Iaf8d698f4e5253d658ae283d2fd07268076a7c27@changeid> <20200203233711.GF311651@builder>
+In-Reply-To: <20200203233711.GF311651@builder>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 3 Feb 2020 16:21:53 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=VTKfv93BiNRYBxWg8o8YKrQy3Z85MzR8XFr=GCS5xhdg@mail.gmail.com>
+Message-ID: <CAD=FV=VTKfv93BiNRYBxWg8o8YKrQy3Z85MzR8XFr=GCS5xhdg@mail.gmail.com>
+Subject: Re: [PATCH v3 6/9] drm/bridge: ti-sn65dsi86: Use 18-bit DP if we can
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        LKML <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        David Airlie <airlied@linux.ie>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 22, 2020 at 11:19 PM Sharat Masetty <smasetty@codeaurora.org> wrote:
+Andrzej / Neil,
+
+On Mon, Feb 3, 2020 at 3:37 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 >
-> This patch adds support for enabling Graphics Bus Interface(GBIF)
-> used in multiple A6xx series chipets. Also makes changes to the
-> PDC/RSC sequencing specifically required for A618. This is needed
-> for proper interfacing with RPMH.
+> On Wed 18 Dec 14:35 PST 2019, Douglas Anderson wrote:
 >
-> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
-> ---
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index dc8ec2c..2ac9a51 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -378,6 +378,18 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
->         struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->         int ret;
+> > The current bridge driver always forced us to use 24 bits per pixel
+> > over the DP link.  This is a waste if you are hooked up to a panel
+> > that only supports 6 bits per color or fewer, since in that case you
+> > ran run at 18 bits per pixel and thus end up at a lower DP clock rate.
 >
-> +       /*
-> +        * During a previous slumber, GBIF halt is asserted to ensure
-> +        * no further transaction can go through GPU before GPU
-> +        * headswitch is turned off.
-> +        *
-> +        * This halt is deasserted once headswitch goes off but
-> +        * incase headswitch doesn't goes off clear GBIF halt
-> +        * here to ensure GPU wake-up doesn't fail because of
-> +        * halted GPU transactions.
-> +        */
-> +       gpu_write(gpu, REG_A6XX_GBIF_HALT, 0x0);
-> +
->         /* Make sure the GMU keeps the GPU on while we set it up */
->         a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET);
->
+> s/ran/can/
 
-So I already brought this up on #freedreno but figured I'd follow up
-on the list.
+I'm going to make the assumption that you can fix this typo when
+applying the patch and I'm not planning to send a v4.  If that's not a
+good assumption then please yell.
 
-With linus/master, I'm seeing hard crashes (into usb crash mode) with
-the db845c, which I isolated down to this patch, and then to the chunk
-above.
+Thanks!
 
-Dropping the gpu_write line above gets things booting again for me.
-
-Let me know if there are any follow on patches I can help validate.
-
-thanks
--john
+-Doug
