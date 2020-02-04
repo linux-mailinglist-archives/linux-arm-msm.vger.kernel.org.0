@@ -2,157 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 66F7B151E0B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 17:16:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 059E4151E37
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 17:23:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727457AbgBDQQk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Feb 2020 11:16:40 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:55226 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727318AbgBDQQk (ORCPT
+        id S1727334AbgBDQXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 11:23:09 -0500
+Received: from mail-vk1-f196.google.com ([209.85.221.196]:35331 "EHLO
+        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727290AbgBDQXI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 11:16:40 -0500
-Received: by mail-wm1-f66.google.com with SMTP id g1so3931194wmh.4;
-        Tue, 04 Feb 2020 08:16:39 -0800 (PST)
+        Tue, 4 Feb 2020 11:23:08 -0500
+Received: by mail-vk1-f196.google.com with SMTP id o187so5342271vka.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 08:23:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:content-language
-         :thread-index;
-        bh=SXm3XL3dA+/VBPTJD5LXtGXc0xkjEsC/eMsEFI2RJnI=;
-        b=GZvXZumMysVKyH3+4yFvO8jSBxnPFKNXUpo1/Fgq41/5lQrRGqyKhpspC0vNYPWDRo
-         B4rvjpTQGdo8W8S6XHF+utg3n0Joq2soyocY3IMqk8y4YXF5VDgmVn2mH2eevjyuB1dQ
-         It4XVGrYBVGQyPGcpYM+IUvqaF+manJgRebB5SF8/3yFcBYsAMQzTf4fxUXNMFSd8y1A
-         W6r3kdho9GKjRHbWrjFSt8RjQ042sAuGTYcE8NOpyVXs2Klt1naHxVPayUqGl8qh8FS5
-         CQKnqZaLhooYKLUo6l4D5h0M88AVXOY8D5c/KvFAI90phdMpYYP5kTGtWdruwX0pM31T
-         Fx7A==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Ea6CDByKgSbDMkqbEgMOnAWDJppEuzPTacXPBXjbpgg=;
+        b=lXCbSwzxafLM6raSAdWogoEHnO/mTBZD3bcocFBdYquY+ylaHskUaAIPOpm5ZF4vfe
+         5G+IMeYmCFkLMv2064sPCqXmUD5JjEVGGnhFN4QptJL9Ffy0ppVxkro0Qb+pTTlyo3gX
+         qzYbZsN7wrNsiOQKPuhW3cv1pUnsW9CbWE53RSyVpL9YQITT1a+Rfr0M1d1LwwgDrf0C
+         RT04I35DZYseJxv8/qZx96j89aQhI8gcRQTByB5eGO1Pxz+rB1R7rZH5FEhk+VualXt7
+         eB/RTzHU+uERuUQ1xAP7Xf7Q4fdYZwhhSYjJ1HdbJ4kTHqHylJaNzyc1oFsXNYNAGzLl
+         Oz+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:content-language
-         :thread-index;
-        bh=SXm3XL3dA+/VBPTJD5LXtGXc0xkjEsC/eMsEFI2RJnI=;
-        b=cj4t6ZCNlxFuhNEQ57m4tf5mFF2F1CfVANWcocAdlNUXcuYGmxe7YadUM1aHXrn0Tj
-         FS84eF1DsQP9z2ihRSPB7WflcfR855hDAj3G/ipDwn5xMqPymdVBLHmKXV1o5DkQSnKE
-         3wA1Vs6onmQNmgUnDk0Kzr9MqB5dMoStqRYzsQfdtyjXxLvo/E2uDODI8M9/qozbjBJ+
-         NdcJXFZoPckODzvtZ/qGlVi23fsghWFN+pVIIONEz2qtEL/QMwcm9+/KlUfOAiHx37bU
-         vxYvEluYa4T5wjo2qK6N0zMeOjJ6RtkYlLOobCuv5kFGfUtuRG7nhnK8M5RWZkWCcUKP
-         DbAQ==
-X-Gm-Message-State: APjAAAWhAJegdEiuEHgFDIOI2q3KW4oiXMtlsgaSA2i2f7ufHYGSzkr1
-        ywz/i05CJsRKb5KPCCQECsw=
-X-Google-Smtp-Source: APXvYqy8EwE7BuzVxXfZC2hABmQrghLVi0aOkNSWaMucsFv9DSaW1miCEOeS8WT8Sq5bgp3n81GVog==
-X-Received: by 2002:a1c:1bcd:: with SMTP id b196mr6645639wmb.54.1580832998607;
-        Tue, 04 Feb 2020 08:16:38 -0800 (PST)
-Received: from AnsuelXPS (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
-        by smtp.gmail.com with ESMTPSA id n16sm31045987wro.88.2020.02.04.08.16.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Feb 2020 08:16:37 -0800 (PST)
-From:   <ansuelsmth@gmail.com>
-To:     "'Guenter Roeck'" <linux@roeck-us.net>
-Cc:     "'Andy Gross'" <agross@kernel.org>,
-        "'Bjorn Andersson'" <bjorn.andersson@linaro.org>,
-        "'Wim Van Sebroeck'" <wim@linux-watchdog.org>,
-        "'Rob Herring'" <robh+dt@kernel.org>,
-        "'Mark Rutland'" <mark.rutland@arm.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20200204152104.13278-1-ansuelsmth@gmail.com> <20200204160824.GA17320@roeck-us.net>
-In-Reply-To: <20200204160824.GA17320@roeck-us.net>
-Subject: R: [PATCH 1/3] watchdog: qcom-wdt: add option to skip pretimeout
-Date:   Tue, 4 Feb 2020 17:16:34 +0100
-Message-ID: <035201d5db76$78f56670$6ae03350$@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ea6CDByKgSbDMkqbEgMOnAWDJppEuzPTacXPBXjbpgg=;
+        b=Z7rzRFkoEYGida7Ap5YoCYYxkj4paeTVLa+i5ZtYZBlyVu2xA9KOguL9pxIxfz6iF5
+         Q3+RhJoesyjZ7/PDdYs1/46rJJM7vhp2MwefTqLj1DUZBVwCTkI4XXswnmXy8HIxYZEe
+         ZworqKkNSJsPL2P1a3tr+3dGmonutYSNIJd8UKg/hj8gKP5QqRtWyBNs7VOji6AAaGQf
+         Ym78mIsG1OczQkdf8oT0d9iC8WtkD3s0TLP9lEsW7l9UY0z3620ZGIs0Q+nbm6lBFEtn
+         +SfpP4GPqMNOjwo1YEXKN5YVEFh3bwRCRU6+3HVQQ56+cCtuwm3Ih7vXFZ4uHkn79yDB
+         97kw==
+X-Gm-Message-State: APjAAAV5UOziSwxhftTOKlR1Jcwa0/irRb4Qip2CN5/Gh4gVDpi48zSQ
+        F8gZAo2Amgyw+ez0VO7Www74hRwNulQLKOETt7WYzg==
+X-Google-Smtp-Source: APXvYqxWM9fd6TMYJGwvNp5QFj5S6ty/tZWeIxo/riCcbo9OzCBtnZc9dh8yM76cDOmNEVNYb5HxComQmEn6RDn1Zd0=
+X-Received: by 2002:a1f:914b:: with SMTP id t72mr18118471vkd.101.1580833387699;
+ Tue, 04 Feb 2020 08:23:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: it
-Thread-Index: AQHIAHuJN4fpJ8MkOCYMUgPEMn1OlAJOMHpaqBR5SfA=
+References: <1574254593-16078-1-git-send-email-thara.gopinath@linaro.org> <1574254593-16078-4-git-send-email-thara.gopinath@linaro.org>
+In-Reply-To: <1574254593-16078-4-git-send-email-thara.gopinath@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 4 Feb 2020 17:22:31 +0100
+Message-ID: <CAPDyKFozvt-LdxwkCB9C+t-mR-CZ37HigsB88z9Tj_SzKfRBLg@mail.gmail.com>
+Subject: Re: [Patch v4 3/7] thermal: core: Allow cooling devices to register a parent.
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     Eduardo Valentin <edubezval@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If something like this is used, msm-timer require interrupts. Without this
-configuration, the device is unbootable as the system froze on system
-bootup.
+On Wed, 20 Nov 2019 at 13:56, Thara Gopinath <thara.gopinath@linaro.org> wrote:
+>
+> With introduction of power domain warming devices, devices that control the
+> power domain are registered as the parent of the cooling device so that the
+> device-genpd hierarchy in kernel is maintained intact. To enable this,
+> introduce a new API thermal_of_cooling_device_parent_register that takes a
+> parent device pointer as input. Also, modify
+> __thermal_cooling_device_register to register parent of a newly created
+> cooling device, if specified.
 
-timer@200a000 {
-			compatible = "qcom,kpss-timer", "qcom,msm-timer";
-			interrupts = <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(2) |
-						 IRQ_TYPE_EDGE_RISING)>,
-				     <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(2) |
-						 IRQ_TYPE_EDGE_RISING)>,
-				     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(2) |
-						 IRQ_TYPE_EDGE_RISING)>,
-				     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(2) |
-						 IRQ_TYPE_EDGE_RISING)>,
-				     <GIC_PPI 5 (GIC_CPU_MASK_SIMPLE(2) |
-						 IRQ_TYPE_EDGE_RISING)>;
-			no-pretimeout;
-			reg = <0x0200a000 0x100>;
-			clock-frequency = <25000000>,
-					  <32768>;
-			clocks = <&sleep_clk>;
-			clock-names = "sleep";
-			cpu-offset = <0x80000>;
-		};
+I am not sure I understand the reasons why you need this, can you
+please elaborate?
 
-> On Tue, Feb 04, 2020 at 04:21:01PM +0100, Ansuel Smith wrote:
-> > Some platform like ipq806x doesn't support pretimeout.
-> > As the driver check if there are available interrupts and ipq806x
-> > use msm-timer that require interrupts, the watchdog fail to probe
-> > as request_irq tries to use a ppi interrupt. Add an option to skip
-> > pretimeout setup and use the normal watchdog probe.
-> >
-> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > ---
-> >  drivers/watchdog/qcom-wdt.c | 5 ++++-
-> >  1 file changed, 4 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
-> > index a494543d3ae1..e689e97e883e 100644
-> > --- a/drivers/watchdog/qcom-wdt.c
-> > +++ b/drivers/watchdog/qcom-wdt.c
-> > @@ -189,6 +189,7 @@ static int qcom_wdt_probe(struct platform_device
-> *pdev)
-> >  	u32 percpu_offset;
-> >  	int irq, ret;
-> >  	struct clk *clk;
-> > +	bool nopretimeout;
-> >
-> >  	regs = of_device_get_match_data(dev);
-> >  	if (!regs) {
-> > @@ -204,6 +205,8 @@ static int qcom_wdt_probe(struct platform_device
-> *pdev)
-> >  	if (!res)
-> >  		return -ENOMEM;
-> >
-> > +	nopretimeout = of_property_read_bool(np, "no-pretimeout");
-> > +
-> >  	/* We use CPU0's DGT for the watchdog */
-> >  	if (of_property_read_u32(np, "cpu-offset", &percpu_offset))
-> >  		percpu_offset = 0;
-> > @@ -247,7 +250,7 @@ static int qcom_wdt_probe(struct platform_device
-> *pdev)
-> >
-> >  	/* check if there is pretimeout support */
-> >  	irq = platform_get_irq(pdev, 0);
-> > -	if (irq > 0) {
-> > +	if (!nopretimeout && irq > 0) {
-> 
-> That is unnecessary; such platforms should simply not provide an
-interrupt.
-> Or, in other words, what is the point of assigning an interrupt to be used
-> for pretimeout if the platform doesn't support it ? And then to add yet
-> another attribute to tell the driver not to use it ?
-> 
-> Guenter
-> 
-> >  		ret = devm_request_irq(dev, irq, qcom_wdt_isr,
-> >  				       IRQF_TRIGGER_RISING,
-> >  				       "wdt_bark", &wdt->wdd);
-> > --
-> > 2.24.0
-> >
+I remember we talked about using a "parent" device to deal with device
+attaching to PM domains (genpd). However, since the DT bindings for
+"warming devices" was concluded to consist by a single property
+("#cooling-cells") as a part of the PM domain provider node, this
+seems not to be needed.
 
+By looking at patch 4/7, you are attaching devices via
+of_genpd_add_device() and I don't see any need for using a "parent" in
+there.
+
+Can $subject patch be dropped or what am I missing?
+
+Kind regards
+Uffe
+
+>
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+> ---
+>  drivers/thermal/thermal_core.c | 22 +++++++++++++++++++---
+>  include/linux/thermal.h        | 15 +++++++++++++++
+>  2 files changed, 34 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+> index d4481cc..912ba75 100644
+> --- a/drivers/thermal/thermal_core.c
+> +++ b/drivers/thermal/thermal_core.c
+> @@ -947,6 +947,7 @@ static void bind_cdev(struct thermal_cooling_device *cdev)
+>   */
+>  static struct thermal_cooling_device *
+>  __thermal_cooling_device_register(struct device_node *np,
+> +                                 struct device *parent,
+>                                   const char *type, void *devdata,
+>                                   const struct thermal_cooling_device_ops *ops)
+>  {
+> @@ -979,6 +980,8 @@ __thermal_cooling_device_register(struct device_node *np,
+>         cdev->ops = ops;
+>         cdev->updated = false;
+>         cdev->device.class = &thermal_class;
+> +       if (parent)
+> +               cdev->device.parent = parent;
+>         cdev->devdata = devdata;
+>         thermal_cooling_device_setup_sysfs(cdev);
+>         dev_set_name(&cdev->device, "cooling_device%d", cdev->id);
+> @@ -1024,7 +1027,8 @@ struct thermal_cooling_device *
+>  thermal_cooling_device_register(const char *type, void *devdata,
+>                                 const struct thermal_cooling_device_ops *ops)
+>  {
+> -       return __thermal_cooling_device_register(NULL, type, devdata, ops);
+> +       return __thermal_cooling_device_register(NULL, NULL, type,
+> +                                                devdata, ops);
+>  }
+>  EXPORT_SYMBOL_GPL(thermal_cooling_device_register);
+>
+> @@ -1048,10 +1052,22 @@ thermal_of_cooling_device_register(struct device_node *np,
+>                                    const char *type, void *devdata,
+>                                    const struct thermal_cooling_device_ops *ops)
+>  {
+> -       return __thermal_cooling_device_register(np, type, devdata, ops);
+> +       return __thermal_cooling_device_register(np, NULL, type, devdata, ops);
+>  }
+>  EXPORT_SYMBOL_GPL(thermal_of_cooling_device_register);
+>
+> +struct thermal_cooling_device *
+> +thermal_of_cooling_device_parent_register(struct device_node *np,
+> +                                         struct device *parent,
+> +                                         const char *type, void *devdata,
+> +                                         const struct
+> +                                         thermal_cooling_device_ops *ops)
+> +{
+> +       return __thermal_cooling_device_register(np, parent, type,
+> +                                                devdata, ops);
+> +}
+> +EXPORT_SYMBOL_GPL(thermal_of_cooling_device_parent_register);
+> +
+>  static void thermal_cooling_device_release(struct device *dev, void *res)
+>  {
+>         thermal_cooling_device_unregister(
+> @@ -1088,7 +1104,7 @@ devm_thermal_of_cooling_device_register(struct device *dev,
+>         if (!ptr)
+>                 return ERR_PTR(-ENOMEM);
+>
+> -       tcd = __thermal_cooling_device_register(np, type, devdata, ops);
+> +       tcd = __thermal_cooling_device_register(np, NULL, type, devdata, ops);
+>         if (IS_ERR(tcd)) {
+>                 devres_free(ptr);
+>                 return tcd;
+> diff --git a/include/linux/thermal.h b/include/linux/thermal.h
+> index e45659c..ac5f268 100644
+> --- a/include/linux/thermal.h
+> +++ b/include/linux/thermal.h
+> @@ -448,6 +448,11 @@ struct thermal_cooling_device *
+>  thermal_of_cooling_device_register(struct device_node *np, const char *, void *,
+>                                    const struct thermal_cooling_device_ops *);
+>  struct thermal_cooling_device *
+> +thermal_of_cooling_device_parent_register(struct device_node *np,
+> +                                         struct device *parent,
+> +                                         const char *, void *, const struct
+> +                                         thermal_cooling_device_ops *);
+> +struct thermal_cooling_device *
+>  devm_thermal_of_cooling_device_register(struct device *dev,
+>                                 struct device_node *np,
+>                                 char *type, void *devdata,
+> @@ -508,6 +513,16 @@ static inline struct thermal_cooling_device *
+>  thermal_of_cooling_device_register(struct device_node *np,
+>         char *type, void *devdata, const struct thermal_cooling_device_ops *ops)
+>  { return ERR_PTR(-ENODEV); }
+> +
+> +static inline struct thermal_cooling_device *
+> +thermal_of_cooling_device_parent_register(struct device_node *np,
+> +                                         struct device *parent,
+> +                                         const char *, void *, const struct
+> +                                         thermal_cooling_device_ops *)
+> +{
+> +       return ERR_PTR(-ENODEV);
+> +}
+> +
+>  static inline struct thermal_cooling_device *
+>  devm_thermal_of_cooling_device_register(struct device *dev,
+>                                 struct device_node *np,
+> --
+> 2.1.4
+>
