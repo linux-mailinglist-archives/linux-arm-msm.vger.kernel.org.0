@@ -2,106 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 31A5C151B25
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 14:21:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AE6C151BD3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 15:04:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727197AbgBDNV3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Feb 2020 08:21:29 -0500
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:7394 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727168AbgBDNV3 (ORCPT
+        id S1727207AbgBDOEp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 09:04:45 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:61922 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727304AbgBDOEp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 08:21:29 -0500
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 04 Feb 2020 18:48:35 +0530
-Received: from pillair-linux.qualcomm.com ([10.204.116.193])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 04 Feb 2020 18:48:26 +0530
-Received: by pillair-linux.qualcomm.com (Postfix, from userid 452944)
-        id C315A3963; Tue,  4 Feb 2020 18:48:24 +0530 (IST)
-From:   Rakesh Pillai <pillair@codeaurora.org>
-To:     devicetree@vger.kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Rakesh Pillai <pillair@codeaurora.org>
-Subject: [PATCH v6] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node
-Date:   Tue,  4 Feb 2020 18:48:20 +0530
-Message-Id: <1580822300-4491-1-git-send-email-pillair@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Tue, 4 Feb 2020 09:04:45 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1580825085; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To: From:
+ Subject: Sender; bh=AYVm5lWqfJDQUHSM0JeCo9evaNtbla9UOu0fjh+4k6g=; b=RNLP6cXlsbGgFrPavL6tIaEquJl+WUnJTMiez4MfvOtJKgVihkeE9FFK9nq3QK2rks6eMn07
+ HW4sLl/MeY75uOAsuMV5yufnU9az8JQq5d7XStZtjSnurSskiv4MVCmZa2FbfUFWv8PXAtnM
+ gAfyyumQQ9xmuJJA0xKeACp7Uaw=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e3979f9.7f4c1731c340-smtp-out-n02;
+ Tue, 04 Feb 2020 14:04:41 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9CFD0C447A2; Tue,  4 Feb 2020 14:04:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.1.5] (unknown [122.164.174.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sricharan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1AD5AC433CB;
+        Tue,  4 Feb 2020 14:04:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1AD5AC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sricharan@codeaurora.org
+Subject: Re: [PATCH V6 1/5] dt-bindings: pinctrl: qcom: Add ipq6018 pinctrl
+ bindings
+From:   Sricharan R <sricharan@codeaurora.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     devicetree@vger.kernel.org,
+        Rajkumar Ayyasamy <arajkuma@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linus.walleij@linaro.org,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        linux-gpio@vger.kernel.org, agross@kernel.org,
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
+        sivaprak@codeaurora.org, linux-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <1579439601-14810-1-git-send-email-sricharan@codeaurora.org>
+ <1579439601-14810-2-git-send-email-sricharan@codeaurora.org>
+ <20200127154113.GA6904@bogus>
+ <422e31d0-f67f-3b10-5d8f-ccc9d6f7dc70@codeaurora.org>
+Message-ID: <9acb9b69-fd44-57db-e974-9fee5a1d871f@codeaurora.org>
+Date:   Tue, 4 Feb 2020 19:34:32 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
+MIME-Version: 1.0
+In-Reply-To: <422e31d0-f67f-3b10-5d8f-ccc9d6f7dc70@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for the ath10k SNOC platform driver probe
-and add resources required for WCN3990 on sc7180 soc.
+Hi Rob,
 
-Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7180-idp.dts |  5 +++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27 +++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+On 1/28/2020 10:07 AM, Sricharan R wrote:
+> Hi,
+> 
+> On 1/27/2020 9:11 PM, Rob Herring wrote:
+>> On Sun, 19 Jan 2020 18:43:17 +0530, Sricharan R wrote:
+>>> Add device tree binding Documentation details for ipq6018
+>>> pinctrl driver.
+>>>
+>>> Co-developed-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
+>>> Signed-off-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
+>>> Co-developed-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+>>> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+>>> Co-developed-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+>>> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+>>> Signed-off-by: Sricharan R <sricharan@codeaurora.org>
+>>> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+>>> ---
+>>> [V6] 
+>>>   * Addressed review comments form Rob.
+>>>  .../bindings/pinctrl/qcom,ipq6018-pinctrl.yaml     | 153 +++++++++++++++++++++
+>>>  1 file changed, 153 insertions(+)
+>>>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
+>>>
+>>
+>> Reviewed-by: Rob Herring <robh@kernel.org>
+> Thanks Rob.
+> 
+> Hi Linus,
+>    The pinctrl driver can now be pulled in.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 388f50a..167f68ac 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -287,6 +287,11 @@
- 	vdda-pll-supply = <&vreg_l4a_0p8>;
- };
- 
-+&wifi {
-+	status = "okay";
-+	qcom,msa-fixed-perm;
-+};
-+
- /* PINCTRL - additions to nodes defined in sc7180.dtsi */
- 
- &qspi_clk {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 8011c5f..e3e8610 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -75,6 +75,11 @@
- 			reg = <0x0 0x80900000 0x0 0x200000>;
- 			no-map;
- 		};
-+
-+		wlan_fw_mem: memory@93900000 {
-+			reg = <0 0x93900000 0 0x200000>;
-+			no-map;
-+		};
- 	};
- 
- 	cpus {
-@@ -1490,6 +1495,28 @@
- 
- 			#freq-domain-cells = <1>;
- 		};
-+
-+		wifi: wifi@18800000 {
-+			compatible = "qcom,wcn3990-wifi";
-+			reg = <0 0x18800000 0 0x800000>;
-+			reg-names = "membase";
-+			iommus = <&apps_smmu 0xc0 0x1>;
-+			interrupts =
-+				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
-+				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
-+				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
-+				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
-+				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
-+				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
-+				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
-+				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
-+				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
-+				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
-+				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
-+				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
-+			memory-region = <&wlan_fw_mem>;
-+			status = "disabled";
-+		};
- 	};
- 
- 	thermal-zones {
+Any chance this can be taken for 5.6 ?
+
+Regards,
+ Sricharan
+
 -- 
-2.7.4
-
+"QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
