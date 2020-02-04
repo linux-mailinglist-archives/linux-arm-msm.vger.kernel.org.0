@@ -2,183 +2,360 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F8A9151E62
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 17:37:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4849B151E93
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Feb 2020 17:55:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727296AbgBDQhP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Feb 2020 11:37:15 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:16797 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727388AbgBDQhP (ORCPT
+        id S1727348AbgBDQzf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 11:55:35 -0500
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:40864 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727351AbgBDQzb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 11:37:15 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580834234; h=Content-Transfer-Encoding: Content-Type:
- MIME-Version: Message-ID: Date: Subject: In-Reply-To: References: Cc:
- To: From: Sender; bh=agoXjFrnTmxkOUbSigXOO4ODx6+TcOAJBzPUjhLzlBM=; b=d+oSMv8hHDjbHLuwjkBIKcjvQ3rrYid8JLBs6IVkyKUUnegBuNT9x9WS/CeWJZ4ZdNybl+3L
- 2j8ADFfnHNaz/OKgeVDWgQes0HBNdtQMu2bRXhRBDDvheV2DObBuuqJ47n9ZVOBvk5d9fSCf
- WdJO2dCPvauVcMvWSydULkRe+TM=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e399db6.7fd838397030-smtp-out-n03;
- Tue, 04 Feb 2020 16:37:10 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3EFD8C447A1; Tue,  4 Feb 2020 16:37:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: *
-X-Spam-Status: No, score=1.5 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_DBL_ABUSE_MALW autolearn=no autolearn_force=no version=3.4.0
-Received: from Pillair (unknown [183.83.68.224])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 68156C43383;
-        Tue,  4 Feb 2020 16:37:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 68156C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=pillair@codeaurora.org
-From:   <pillair@codeaurora.org>
-To:     "'Bjorn Andersson'" <bjorn.andersson@linaro.org>
-Cc:     <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <1580281223-2759-1-git-send-email-pillair@codeaurora.org> <20200203173500.GB3948@builder>
-In-Reply-To: <20200203173500.GB3948@builder>
-Subject: RE: [PATCH v5] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node
-Date:   Tue, 4 Feb 2020 22:07:02 +0530
-Message-ID: <000001d5db79$5814edb0$083ec910$@codeaurora.org>
+        Tue, 4 Feb 2020 11:55:31 -0500
+Received: by mail-vs1-f67.google.com with SMTP id g23so11782627vsr.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Feb 2020 08:55:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XUjD6ac/EaT+lGT7eSKAmx3Er9MO9GxqK/XPb/0Kz6g=;
+        b=TpzPX4qKTAfk6jEFddBbQJJsXBm3xgfK1iNnrLoI53d8NuCbdkCyIXLQijPcVpunej
+         qvN8AChgUXm1ZTiPxxaZWWgWMPNI3NAD/NljTVvLbudY744LGW2q0ARYqZ0M+PXPtbDA
+         MzHRUDHSfrryFPjOMZgdotsAeDBiv/EGF/II163+qaqtibP6/uMzOdv9ZvMO7ypN6Kf2
+         weRrqz8UvLg80XqAYxjcAX+Kk+qntiuiirUS+4MRx37r9eNx2LrhVlNeFXHbpxPCsI99
+         6exF/7A/o2NeAOjjpTocrikF5j9Rp9WsbUFCxyl16h1QGnRF9g4R9CiiXEcVwAEAAeC1
+         abOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XUjD6ac/EaT+lGT7eSKAmx3Er9MO9GxqK/XPb/0Kz6g=;
+        b=en5JwIqjJfaq4jU909utk0mizwpe3b7ESEqZceRWVcMOCU01DNXm9RQIBPn+ttrYAU
+         XbJCEKqKwMnJ5zr9afP8s/wt7pVoHeHGrdI9JHUbhw3vSl/1pbBsAjJq1KoKmNFe6M81
+         FsidaaNnJVmGkM1LOwlrcPs/F6z4YH1kumXmzF5UuaB5aRFuxp+TiddpJw7AuKD94uJ2
+         WxF81inDbT+wl4RU8A26kOtnKoNwYocWG5ceZsibj6BiJH0w9BPTvpzFo0PPIEl2xzhB
+         x8WX+axER6RpNGq8KA5OqJSZhmBF0sadeHbjnCerhoodaTvchwDjhxsyLXUzM+AgHXuo
+         KUzw==
+X-Gm-Message-State: APjAAAUTeWJmiwRzK0gKB/sI51STGqhTbCecjemgoLFGra2ub5WEEG/9
+        M6W44aj7zoT9QDzQkqRo6jsaG8FIZofg4qJv0UpG4A==
+X-Google-Smtp-Source: APXvYqwSaVitwwf1ehbPdCyP+smP//5/6VZe3PHw+2z03X/gDmwArhYFkiF1LJElSJkmnouRWcMfscUnsjty5roYi5o=
+X-Received: by 2002:a67:5e45:: with SMTP id s66mr18889703vsb.200.1580835329380;
+ Tue, 04 Feb 2020 08:55:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHPh76zXXDoz9WIzFQCmi0NWmaUmALbmOLiqAEGNCA=
-Content-Language: en-us
+References: <1574254593-16078-1-git-send-email-thara.gopinath@linaro.org> <1574254593-16078-5-git-send-email-thara.gopinath@linaro.org>
+In-Reply-To: <1574254593-16078-5-git-send-email-thara.gopinath@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 4 Feb 2020 17:54:52 +0100
+Message-ID: <CAPDyKFqBusMHWNHBCMXx6TxFO=8B6ytoyvvSfi14Z=-ahBDV5A@mail.gmail.com>
+Subject: Re: [Patch v4 4/7] thermal: Add generic power domain warming device driver.
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     Eduardo Valentin <edubezval@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
-I have addressed your comments and sent out the v6 for this patch.
+On Wed, 20 Nov 2019 at 13:56, Thara Gopinath <thara.gopinath@linaro.org> wrote:
+>
+> Resources modeled as power domains in linux kenrel can  be used to warm the
+> SoC(eg. mx power domain on sdm845).  To support this feature, introduce a
+> generic power domain warming device driver that can be plugged into the
+> thermal framework (The thermal framework itself requires further
+> modifiction to support a warming device in place of a cooling device.
+> Those extensions are not introduced in this patch series).
+>
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+> ---
+> v3->v4:
+>         - Removed late_init hook pd_warming_device_ops.
+>         - Use of_genpd_add_device instead of pm_genpd_add_device to attach
+>           device to the generic power domain.
+>         - Use thermal_of_cooling_device_parent_register to register the
+>           cooling device so that the device with genpd attached can be
+>           made parent of the cooling device.
+>         - With above changes, remove reference to generic_pm_domain in
+>           pd_warming_device.
+>
+>  drivers/thermal/Kconfig              |  10 +++
+>  drivers/thermal/Makefile             |   2 +
+>  drivers/thermal/pwr_domain_warming.c | 138 +++++++++++++++++++++++++++++++++++
+>  include/linux/pwr_domain_warming.h   |  29 ++++++++
 
-Thanks,
-Rakesh Pillai.
+Not sure about what the thermal maintainers think about the naming
+here. In the end, it's their call.
 
-> -----Original Message-----
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Sent: Monday, February 3, 2020 11:05 PM
-> To: Rakesh Pillai <pillair@codeaurora.org>
-> Cc: devicetree@vger.kernel.org; linux-arm-kernel@lists.infradead.org;
-linux-
-> kernel@vger.kernel.org; linux-arm-msm@vger.kernel.org
-> Subject: Re: [PATCH v5] arm64: dts: qcom: sc7180: Add WCN3990 WLAN
-> module device node
-> 
-> On Tue 28 Jan 23:00 PST 2020, Rakesh Pillai wrote:
-> 
-> > Add device node for the ath10k SNOC platform driver probe
-> > and add resources required for WCN3990 on sc7180 soc.
-> >
-> > Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  5 +++++
-> >  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 28
-> ++++++++++++++++++++++++++++
-> >  2 files changed, 33 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > index 388f50a..167f68ac 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > @@ -287,6 +287,11 @@
-> >  	vdda-pll-supply = <&vreg_l4a_0p8>;
-> >  };
-> >
-> > +&wifi {
-> > +	status = "okay";
-> > +	qcom,msa-fixed-perm;
-> > +};
-> > +
-> >  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
-> >
-> >  &qspi_clk {
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > index 8011c5f..0a00c94 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > @@ -75,6 +75,12 @@
-> >  			reg = <0x0 0x80900000 0x0 0x200000>;
-> >  			no-map;
-> >  		};
-> > +
-> > +		wlan_fw_mem: memory@93900000 {
-> > +			compatible = "removed-dma-pool";
-> 
-> Sorry for not spotting this earlier, the "removed-dma-pool" compatible
-> is a downstream thing and isn't defined upstream.
-> 
-> > +                     no-map;
-> > +                     reg = <0 0x93900000 0 0x200000>;
-> 
-> If you swap the order of no-map and reg in this node it will look like
-> all the others.
-> 
-> 
-> Apart from that the patch looks good.
-> 
-> Regards,
-> Bjorn
-> 
-> > +		};
-> >  	};
-> >
-> >  	cpus {
-> > @@ -1490,6 +1496,28 @@
-> >
-> >  			#freq-domain-cells = <1>;
-> >  		};
-> > +
-> > +		wifi: wifi@18800000 {
-> > +			compatible = "qcom,wcn3990-wifi";
-> > +			reg = <0 0x18800000 0 0x800000>;
-> > +			reg-names = "membase";
-> > +			iommus = <&apps_smmu 0xc0 0x1>;
-> > +			interrupts =
-> > +				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0
-> */ >,
-> > +				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1
-> */ >,
-> > +				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2
-> */ >,
-> > +				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3
-> */ >,
-> > +				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4
-> */ >,
-> > +				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5
-> */ >,
-> > +				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6
-> */ >,
-> > +				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7
-> */ >,
-> > +				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8
-> */ >,
-> > +				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9
-> */ >,
-> > +				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10
-> */>,
-> > +				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11
-> */>;
-> > +			memory-region = <&wlan_fw_mem>;
-> > +			status = "disabled";
-> > +		};
-> >  	};
-> >
-> >  	thermal-zones {
-> > --
-> > 2.7.4
-> >
+However, normally we use "pm_domain_*", rather than "pwr_domain_*",
+but maybe just "pd_*" is sufficient here.
+
+>  4 files changed, 179 insertions(+)
+>  create mode 100644 drivers/thermal/pwr_domain_warming.c
+>  create mode 100644 include/linux/pwr_domain_warming.h
+>
+> diff --git a/drivers/thermal/Kconfig b/drivers/thermal/Kconfig
+> index 001a21a..0c5c93e 100644
+> --- a/drivers/thermal/Kconfig
+> +++ b/drivers/thermal/Kconfig
+> @@ -187,6 +187,16 @@ config DEVFREQ_THERMAL
+>
+>           If you want this support, you should say Y here.
+>
+> +config PWR_DOMAIN_WARMING_THERMAL
+> +       bool "Power Domain based warming device"
+> +       depends on PM_GENERIC_DOMAINS_OF
+> +       help
+> +         This implements the generic power domain based warming
+> +         mechanism through increasing the performance state of
+> +         a power domain.
+> +
+> +         If you want this support, you should say Y here.
+> +
+>  config THERMAL_EMULATION
+>         bool "Thermal emulation mode support"
+>         help
+> diff --git a/drivers/thermal/Makefile b/drivers/thermal/Makefile
+> index 74a37c7..382c64a 100644
+> --- a/drivers/thermal/Makefile
+> +++ b/drivers/thermal/Makefile
+> @@ -27,6 +27,8 @@ thermal_sys-$(CONFIG_CLOCK_THERMAL)   += clock_cooling.o
+>  # devfreq cooling
+>  thermal_sys-$(CONFIG_DEVFREQ_THERMAL) += devfreq_cooling.o
+>
+> +thermal_sys-$(CONFIG_PWR_DOMAIN_WARMING_THERMAL)       += pwr_domain_warming.o
+> +
+>  # platform thermal drivers
+>  obj-y                          += broadcom/
+>  obj-$(CONFIG_THERMAL_MMIO)             += thermal_mmio.o
+> diff --git a/drivers/thermal/pwr_domain_warming.c b/drivers/thermal/pwr_domain_warming.c
+> new file mode 100644
+> index 0000000..40162b9
+> --- /dev/null
+> +++ b/drivers/thermal/pwr_domain_warming.c
+> @@ -0,0 +1,138 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2019, Linaro Ltd
+> + */
+> +#include <linux/err.h>
+> +#include <linux/kernel.h>
+> +#include <linux/init.h>
+> +#include <linux/of_device.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/module.h>
+> +#include <linux/pm_runtime.h>
+> +#include <linux/slab.h>
+> +#include <linux/pwr_domain_warming.h>
+> +
+> +struct pd_warming_device {
+> +       struct thermal_cooling_device *cdev;
+> +       struct device dev;
+> +       int max_state;
+> +       int cur_state;
+> +       bool runtime_resumed;
+> +};
+> +
+> +static int pd_wdev_get_max_state(struct thermal_cooling_device *cdev,
+> +                                unsigned long *state)
+> +{
+> +       struct pd_warming_device *pd_wdev = cdev->devdata;
+> +
+> +       *state = pd_wdev->max_state;
+> +       return 0;
+> +}
+> +
+> +static int pd_wdev_get_cur_state(struct thermal_cooling_device *cdev,
+> +                                unsigned long *state)
+> +{
+> +       struct pd_warming_device *pd_wdev = cdev->devdata;
+> +
+> +       *state = dev_pm_genpd_get_performance_state(&pd_wdev->dev);
+> +
+> +       return 0;
+> +}
+> +
+> +static int pd_wdev_set_cur_state(struct thermal_cooling_device *cdev,
+> +                                unsigned long state)
+> +{
+> +       struct pd_warming_device *pd_wdev = cdev->devdata;
+> +       struct device *dev = &pd_wdev->dev;
+> +       int ret;
+> +
+> +       ret = dev_pm_genpd_set_performance_state(dev, state);
+> +
+> +       if (ret)
+> +               return ret;
+> +
+> +       if (state && !pd_wdev->runtime_resumed) {
+> +               ret = pm_runtime_get_sync(dev);
+> +               pd_wdev->runtime_resumed = true;
+> +       } else if (!state && pd_wdev->runtime_resumed) {
+> +               ret = pm_runtime_put(dev);
+> +               pd_wdev->runtime_resumed = false;
+> +       }
+> +
+> +       return ret;
+> +}
+> +
+> +static struct thermal_cooling_device_ops pd_warming_device_ops = {
+> +       .get_max_state  = pd_wdev_get_max_state,
+> +       .get_cur_state  = pd_wdev_get_cur_state,
+> +       .set_cur_state  = pd_wdev_set_cur_state,
+> +};
+> +
+> +struct thermal_cooling_device *
+> +pwr_domain_warming_register(struct device *parent, char *pd_name, int pd_id)
+
+Maybe rename this to: thermal_of_pd_warming_register()
+
+Moreover, I think you could replace the "struct device *parent", with
+a "struct device_node *node" as in-parameter. That's all you need,
+right?
+
+> +{
+> +       struct pd_warming_device *pd_wdev;
+> +       struct of_phandle_args pd_args;
+> +       int ret;
+> +
+> +       pd_wdev = kzalloc(sizeof(*pd_wdev), GFP_KERNEL);
+> +       if (!pd_wdev)
+> +               return ERR_PTR(-ENOMEM);
+> +
+> +       dev_set_name(&pd_wdev->dev, "%s_warming_dev", pd_name);
+
+Perhaps skip the in-param *pd_name and make use of the suggested
+"struct device_node *node", the index and something with "warming...",
+when setting the name.
+
+Just an idea, as to simplify for the caller.
+
+> +       pd_wdev->dev.parent = parent;
+
+This isn't needed, I think.
+
+> +
+> +       ret = device_register(&pd_wdev->dev);
+> +       if (ret)
+> +               goto error;
+> +
+> +       pd_args.np = parent->of_node;
+> +       pd_args.args[0] = pd_id;
+> +       pd_args.args_count = 1;
+> +
+> +       ret = of_genpd_add_device(&pd_args, &pd_wdev->dev);
+> +
+
+White space.
+
+> +       if (ret)
+> +               goto error;
+> +
+> +       ret = dev_pm_genpd_performance_state_count(&pd_wdev->dev);
+> +       if (ret < 0)
+> +               goto error;
+> +
+> +       pd_wdev->max_state = ret - 1;
+> +       pm_runtime_enable(&pd_wdev->dev);
+> +       pd_wdev->runtime_resumed = false;
+> +
+> +       pd_wdev->cdev = thermal_of_cooling_device_parent_register
+> +                                       (NULL, parent, pd_name, pd_wdev,
+> +                                        &pd_warming_device_ops);
+
+As stated in patch3, I don't get it why you need to use this new API
+for "parents".
+
+> +       if (IS_ERR(pd_wdev->cdev)) {
+> +               pr_err("unable to register %s cooling device\n", pd_name);
+> +               pm_runtime_disable(&pd_wdev->dev);
+> +               ret = PTR_ERR(pd_wdev->cdev);
+> +               goto error;
+> +       }
+> +
+> +       return pd_wdev->cdev;
+> +error:
+> +       put_device(&pd_wdev->dev);
+
+If device_register() succeeds you need to call device_unregister(),
+rather than put_device() as a part of the error handling.
+
+> +       kfree(pd_wdev);
+
+You need a ->release() callback to manage kfree(), after you called
+device_register().
+
+> +       return ERR_PTR(ret);
+
+Another thing is missing in the error path, which is to remove the
+device for the genpd. I think calling pm_genpd_remove_device() should
+work fine here.
+
+> +}
+> +EXPORT_SYMBOL_GPL(pwr_domain_warming_register);
+> +
+> +void pwr_domain_warming_unregister(struct thermal_cooling_device *cdev)
+> +{
+> +       struct pd_warming_device *pd_wdev = cdev->devdata;
+> +       struct device *dev = &pd_wdev->dev;
+> +
+> +       if (pd_wdev->runtime_resumed) {
+> +               dev_pm_genpd_set_performance_state(dev, 0);
+> +               pm_runtime_put(dev);
+> +               pd_wdev->runtime_resumed = false;
+> +       }
+> +       pm_runtime_disable(dev);
+> +       thermal_cooling_device_unregister(cdev);
+> +       kfree(pd_wdev);
+> +}
+> +EXPORT_SYMBOL_GPL(pwr_domain_warming_unregister);
+> diff --git a/include/linux/pwr_domain_warming.h b/include/linux/pwr_domain_warming.h
+> new file mode 100644
+> index 0000000..cb6550d
+> --- /dev/null
+> +++ b/include/linux/pwr_domain_warming.h
+> @@ -0,0 +1,29 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2019, Linaro Ltd.
+> + */
+> +#ifndef __PWR_DOMAIN_WARMING_H__
+> +#define __PWR_DOMAIN_WARMING_H__
+> +
+> +#include <linux/pm_domain.h>
+> +#include <linux/thermal.h>
+> +
+> +#ifdef CONFIG_PWR_DOMAIN_WARMING_THERMAL
+> +struct thermal_cooling_device *
+> +pwr_domain_warming_register(struct device *parent, char *pd_name, int pd_id);
+> +
+> +void pwr_domain_warming_unregister(struct thermal_cooling_device *cdev);
+> +
+> +#else
+> +static inline struct thermal_cooling_device *
+> +pwr_domain_warming_register(struct device *parent, char *pd_name, int pd_id)
+> +{
+> +       return ERR_PTR(-ENOSYS);
+> +}
+> +
+> +static inline void
+> +pwr_domain_warming_unregister(struct thermal_cooling_device *cdev)
+> +{
+> +}
+> +#endif /* CONFIG_PWR_DOMAIN_WARMING_THERMAL */
+> +#endif /* __PWR_DOMAIN_WARMING_H__ */
+> --
+> 2.1.4
+>
+
+Kind regards
+Uffe
