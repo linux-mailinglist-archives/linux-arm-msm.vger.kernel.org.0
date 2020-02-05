@@ -2,217 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D5841524C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2020 03:17:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 86373152588
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2020 05:14:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727714AbgBECRH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Feb 2020 21:17:07 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:54285 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727140AbgBECRH (ORCPT
+        id S1727834AbgBEEOu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Feb 2020 23:14:50 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:26982 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727832AbgBEEOu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Feb 2020 21:17:07 -0500
+        Tue, 4 Feb 2020 23:14:50 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580869026; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1580876089; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=akJYwzCLbXwxHJd1f8VdXmC7moR+0lxrjFJgFgP3xb8=; b=LWBK3zEVRIz7WyAxr5AfV5Rx1yl0aVDCPaBFJVG+8GHO3e0XPIALycBv2dWyFH/z1k38Omcf
- lQ5UEwoO6ybjcv1YlKxo2T/iighvPvVUgBEMB0X2GdCcwURRUJYoO3sQzhvBhsrgwOfVo1XR
- cWED0iMPedELYvUY/3M56JvvXkA=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ Subject: Sender; bh=mFggojvO9f3G3VuMRvXmpQHB4tK1ztWgPh7NXm+Cy0E=; b=ZQuQ1C27F+8ut8zo5hq5HUC3WnyEZhLcarH6grWzN84+YL7EBGXEPtJcfj5iQX5i0I6iMPGI
+ ab53tQxencJ8EOrkAJyDN9Duf2S1rwa5vww/yfrq6IFiqdtJVRNWo9l3nbSTJZTMSHlwaK4i
+ I4lDnzsdY+zYB/PuAmtvsWApSCc=
+X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e3a25a2.7effbbc058b8-smtp-out-n02;
- Wed, 05 Feb 2020 02:17:06 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e3a4138.7f291dc1b768-smtp-out-n03;
+ Wed, 05 Feb 2020 04:14:48 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DC71DC447A3; Wed,  5 Feb 2020 02:17:03 +0000 (UTC)
+        id 2855EC433CB; Wed,  5 Feb 2020 04:14:47 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.71.154.194] (i-global254.qualcomm.com [199.106.103.254])
+Received: from [10.206.13.37] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: asutoshd)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 208A9C43383;
-        Wed,  5 Feb 2020 02:17:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 208A9C43383
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 87064C43383;
+        Wed,  5 Feb 2020 04:14:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 87064C43383
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=asutoshd@codeaurora.org
-Subject: Re: [PATCH v5 4/8] scsi: ufs-qcom: Adjust bus bandwidth voting and
- unvoting
-To:     Can Guo <cang@codeaurora.org>, nguyenb@codeaurora.org,
-        hongwus@codeaurora.org, rnayak@codeaurora.org,
-        linux-scsi@vger.kernel.org, kernel-team@android.com,
-        saravanak@google.com, salyzyn@google.com
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1580721472-10784-1-git-send-email-cang@codeaurora.org>
- <1580721472-10784-5-git-send-email-cang@codeaurora.org>
-From:   "Asutosh Das (asd)" <asutoshd@codeaurora.org>
-Message-ID: <ca9e97dc-0328-884e-0236-91c9f9ea9f41@codeaurora.org>
-Date:   Tue, 4 Feb 2020 18:17:01 -0800
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [PATCH 1/3] soc: qcom: rpmh: Update dirty flag only when data
+ changes
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
+References: <1580796831-18996-1-git-send-email-mkshah@codeaurora.org>
+ <1580796831-18996-2-git-send-email-mkshah@codeaurora.org>
+ <CAE=gft6DCqmX8=cHWXNeOjSTuRHL23t7+b_GZOrvUJAPfhVD8A@mail.gmail.com>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <d95de83d-fbda-5ebf-1b87-126c19f4d604@codeaurora.org>
+Date:   Wed, 5 Feb 2020 09:44:41 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.4.2
 MIME-Version: 1.0
-In-Reply-To: <1580721472-10784-5-git-send-email-cang@codeaurora.org>
+In-Reply-To: <CAE=gft6DCqmX8=cHWXNeOjSTuRHL23t7+b_GZOrvUJAPfhVD8A@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/3/2020 1:17 AM, Can Guo wrote:
-> The bus bandwidth voting is required to be done before the bus clocks
-> are enabled, and the unvoting is required to be done only after the bus
-> clocks are disabled.
-> 
-> Signed-off-by: Can Guo <cang@codeaurora.org>
-> ---
 
-Reviewed-by: Asutosh Das <asutoshd@codeaurora.org>
+On 2/5/2020 6:05 AM, Evan Green wrote:
+> On Mon, Feb 3, 2020 at 10:14 PM Maulik Shah <mkshah@codeaurora.org> wrote:
+>> Currently rpmh ctrlr dirty flag is set for all cases regardless
+>> of data is really changed or not.
+>>
+>> Add changes to update it when data is updated to new values.
+>>
+>> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+>> ---
+>>   drivers/soc/qcom/rpmh.c | 15 +++++++++++----
+>>   1 file changed, 11 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+>> index 035091f..c3d6f00 100644
+>> --- a/drivers/soc/qcom/rpmh.c
+>> +++ b/drivers/soc/qcom/rpmh.c
+>> @@ -139,20 +139,27 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
+>>   existing:
+>>          switch (state) {
+>>          case RPMH_ACTIVE_ONLY_STATE:
+>> -               if (req->sleep_val != UINT_MAX)
+>> +               if (req->sleep_val != UINT_MAX) {
+>>                          req->wake_val = cmd->data;
+>> +                       ctrlr->dirty = true;
+>> +               }
+> Don't you need to set dirty = true for ACTIVE_ONLY state always? The
+> conditional is just saying "if nobody set a sleep vote, then maintain
+> this vote when we wake back up".
 
->   drivers/scsi/ufs/ufs-qcom.c | 57 +++++++++++++++++++++++++++++++--------------
->   1 file changed, 39 insertions(+), 18 deletions(-)
-> 
-> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> index c69c29a1c..85d7c17 100644
-> --- a/drivers/scsi/ufs/ufs-qcom.c
-> +++ b/drivers/scsi/ufs/ufs-qcom.c
-> @@ -38,7 +38,6 @@ enum {
->   
->   static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
->   
-> -static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote);
->   static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
->   static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
->   						       u32 clk_cycles);
-> @@ -674,7 +673,7 @@ static void ufs_qcom_get_speed_mode(struct ufs_pa_layer_attr *p, char *result)
->   	}
->   }
->   
-> -static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote)
-> +static int __ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote)
->   {
->   	int err = 0;
->   
-> @@ -705,7 +704,7 @@ static int ufs_qcom_update_bus_bw_vote(struct ufs_qcom_host *host)
->   
->   	vote = ufs_qcom_get_bus_vote(host, mode);
->   	if (vote >= 0)
-> -		err = ufs_qcom_set_bus_vote(host, vote);
-> +		err = __ufs_qcom_set_bus_vote(host, vote);
->   	else
->   		err = vote;
->   
-> @@ -716,6 +715,35 @@ static int ufs_qcom_update_bus_bw_vote(struct ufs_qcom_host *host)
->   	return err;
->   }
->   
-> +static int ufs_qcom_set_bus_vote(struct ufs_hba *hba, bool on)
-> +{
-> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> +	int vote, err;
-> +
-> +	/*
-> +	 * In case ufs_qcom_init() is not yet done, simply ignore.
-> +	 * This ufs_qcom_set_bus_vote() shall be called from
-> +	 * ufs_qcom_init() after init is done.
-> +	 */
-> +	if (!host)
-> +		return 0;
-> +
-> +	if (on) {
-> +		vote = host->bus_vote.saved_vote;
-> +		if (vote == host->bus_vote.min_bw_vote)
-> +			ufs_qcom_update_bus_bw_vote(host);
-> +	} else {
-> +		vote = host->bus_vote.min_bw_vote;
-> +	}
-> +
-> +	err = __ufs_qcom_set_bus_vote(host, vote);
-> +	if (err)
-> +		dev_err(hba->dev, "%s: set bus vote failed %d\n",
-> +				 __func__, err);
-> +
-> +	return err;
-> +}
-> +
->   static ssize_t
->   show_ufs_to_mem_max_bus_bw(struct device *dev, struct device_attribute *attr,
->   			char *buf)
-> @@ -792,7 +820,7 @@ static int ufs_qcom_update_bus_bw_vote(struct ufs_qcom_host *host)
->   	return 0;
->   }
->   
-> -static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote)
-> +static int ufs_qcom_set_bus_vote(struct ufs_hba *host, bool on)
->   {
->   	return 0;
->   }
-> @@ -1030,8 +1058,7 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
->   				 enum ufs_notify_change_status status)
->   {
->   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> -	int err;
-> -	int vote = 0;
-> +	int err = 0;
->   
->   	/*
->   	 * In case ufs_qcom_init() is not yet done, simply ignore.
-> @@ -1041,28 +1068,21 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
->   	if (!host)
->   		return 0;
->   
-> -	if (on && (status == POST_CHANGE)) {
-> +	if (on && (status == PRE_CHANGE)) {
-> +		err = ufs_qcom_set_bus_vote(hba, true);
-> +	} else if (on && (status == POST_CHANGE)) {
->   		/* enable the device ref clock for HS mode*/
->   		if (ufshcd_is_hs_mode(&hba->pwr_info))
->   			ufs_qcom_dev_ref_clk_ctrl(host, true);
-> -		vote = host->bus_vote.saved_vote;
-> -		if (vote == host->bus_vote.min_bw_vote)
-> -			ufs_qcom_update_bus_bw_vote(host);
-> -
->   	} else if (!on && (status == PRE_CHANGE)) {
->   		if (!ufs_qcom_is_link_active(hba)) {
->   			/* disable device ref_clk */
->   			ufs_qcom_dev_ref_clk_ctrl(host, false);
->   		}
-> -
-> -		vote = host->bus_vote.min_bw_vote;
-> +	} else if (!on && (status == POST_CHANGE)) {
-> +		err = ufs_qcom_set_bus_vote(hba, false);
->   	}
->   
-> -	err = ufs_qcom_set_bus_vote(host, vote);
-> -	if (err)
-> -		dev_err(hba->dev, "%s: set bus vote failed %d\n",
-> -				__func__, err);
-> -
->   	return err;
->   }
->   
-> @@ -1238,6 +1258,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->   	ufs_qcom_set_caps(hba);
->   	ufs_qcom_advertise_quirks(hba);
->   
-> +	ufs_qcom_set_bus_vote(hba, true);
->   	ufs_qcom_setup_clocks(hba, true, POST_CHANGE);
->   
->   	if (hba->dev->id < MAX_UFS_QCOM_HOSTS)
-> 
+The ACTIVE_ONLY vote is cached as wake_val to be apply when wakeup happens.
 
+In case value didn't change,wake_val is still same as older value and 
+there is no need to mark the entire cache as dirty.
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-Linux Foundation Collaborative Project
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
