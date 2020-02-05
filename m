@@ -2,185 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 74FC61535D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2020 18:01:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ACD0F153743
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2020 19:08:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727081AbgBERBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Feb 2020 12:01:40 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:57211 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727054AbgBERBj (ORCPT
+        id S1727199AbgBESIK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Feb 2020 13:08:10 -0500
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:36703 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727079AbgBESIJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Feb 2020 12:01:39 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580922098; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=7DUhFiRSM+eRxfIS8UQQZG95uYXWL3eYV9xeTSLQqKg=; b=PTz0lOqHWNJsbrvzANXCuJidZ9X4rCIL2M290EhJjLqg4/QzCnGMVmK8vq/ERtwgqZ1nc5fh
- RoZBtIn6J/Ce7OSUfLfIYT00DcwH3Ncm/5lRx2KraJLUpJbzacVM0MFLJaFvoj0Ti+rUZPqs
- JcjE1bRc70PR3w1uiAWFDdbqGwU=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e3af4e9.7f4300106068-smtp-out-n03;
- Wed, 05 Feb 2020 17:01:29 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 919E8C447A1; Wed,  5 Feb 2020 17:01:28 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EF247C43383;
-        Wed,  5 Feb 2020 17:01:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EF247C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Sharat Masetty <smasetty@codeaurora.org>, dianders@chromium.org,
-        Sean Paul <sean@poorly.run>, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>
-Subject: [PATCH] drm/msm/a6xx: Update the GMU bus tables for sc7180
-Date:   Wed,  5 Feb 2020 10:01:21 -0700
-Message-Id: <1580922081-25177-1-git-send-email-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Wed, 5 Feb 2020 13:08:09 -0500
+Received: by mail-lf1-f65.google.com with SMTP id f24so2164469lfh.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Feb 2020 10:08:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xxM2KM7SFU0OuxVauJZTx1kXhl4JXfEt7TGRJvg/kq4=;
+        b=WP7q3SuitLJAbKGWLEGzBmTKDcmmUlPnu/WjZqrW3AduihyetE/g/gczvYpfzautL6
+         18mEc2wQE2TWpn0PWNlNcERY3LsWVlL/rX6rAqCMX+/x9U55YT9RwSnLBHIaK7t5IRl+
+         RRgU60ChxJtJzE81ltKegxet7Bbww509GWpFc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xxM2KM7SFU0OuxVauJZTx1kXhl4JXfEt7TGRJvg/kq4=;
+        b=W3Bq8vinoyWNrzFwRnPL5vrjjTxAkq3Mi8Yln4BOl4TWOGETAyW+68ZlhcPVC0zgCY
+         I0OtTCXljw+Fx+z7E9Zsf8GzTwqRBvqBci44YrqGcwtT3cvLy85JJI7WgdSSCjk2dWSj
+         W72nnGWKvxCTFTtByT63SXvQEcJE2wta1WWcBZ+ZLyPjzP5yv5uaa+HnSpAPVYZumfij
+         7XDFoXb6QbegFQyEgVEJwhYVOjguvS8df9xZxflvNcPasURJVRanjjkErXbBCA3RdnRS
+         QwwOui3PqWosmZplHj+SLBy7a5zSn6+uwcWk56myVaFxQccxzGq7vUDJBiGwLU80VNhe
+         xkpA==
+X-Gm-Message-State: APjAAAWMH9HZryg1KEYGPMN3YlxCT/1Gj1FbQyxR8ShikUb+Ri6QTddc
+        WlebpxyNRpA1wVta1gwUX2Qh1Wl84po=
+X-Google-Smtp-Source: APXvYqyIF2VuBMxwXsL5DeOe0PTxnpj4qhU+Dz3O6h55pqzaL5xy4oPT/nqcfvvKfHpx+rE4QaJD8w==
+X-Received: by 2002:ac2:58cf:: with SMTP id u15mr18405993lfo.62.1580926087606;
+        Wed, 05 Feb 2020 10:08:07 -0800 (PST)
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com. [209.85.167.50])
+        by smtp.gmail.com with ESMTPSA id d4sm108161lfn.42.2020.02.05.10.08.06
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Feb 2020 10:08:06 -0800 (PST)
+Received: by mail-lf1-f50.google.com with SMTP id y19so2148880lfl.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Feb 2020 10:08:06 -0800 (PST)
+X-Received: by 2002:a19:c205:: with SMTP id l5mr18197762lfc.159.1580926086038;
+ Wed, 05 Feb 2020 10:08:06 -0800 (PST)
+MIME-Version: 1.0
+References: <1580796831-18996-1-git-send-email-mkshah@codeaurora.org>
+ <1580796831-18996-2-git-send-email-mkshah@codeaurora.org> <CAE=gft6DCqmX8=cHWXNeOjSTuRHL23t7+b_GZOrvUJAPfhVD8A@mail.gmail.com>
+ <d95de83d-fbda-5ebf-1b87-126c19f4d604@codeaurora.org>
+In-Reply-To: <d95de83d-fbda-5ebf-1b87-126c19f4d604@codeaurora.org>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Wed, 5 Feb 2020 10:07:29 -0800
+X-Gmail-Original-Message-ID: <CAE=gft7ESnpS8bYg4hmoAUtsuLiyek1D-AYEL+LWUKe=KubAJw@mail.gmail.com>
+Message-ID: <CAE=gft7ESnpS8bYg4hmoAUtsuLiyek1D-AYEL+LWUKe=KubAJw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] soc: qcom: rpmh: Update dirty flag only when data changes
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixup the GMU bus table values for the sc7180 target.
+On Tue, Feb 4, 2020 at 8:14 PM Maulik Shah <mkshah@codeaurora.org> wrote:
+>
+>
+> On 2/5/2020 6:05 AM, Evan Green wrote:
+> > On Mon, Feb 3, 2020 at 10:14 PM Maulik Shah <mkshah@codeaurora.org> wrote:
+> >> Currently rpmh ctrlr dirty flag is set for all cases regardless
+> >> of data is really changed or not.
+> >>
+> >> Add changes to update it when data is updated to new values.
+> >>
+> >> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> >> ---
+> >>   drivers/soc/qcom/rpmh.c | 15 +++++++++++----
+> >>   1 file changed, 11 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+> >> index 035091f..c3d6f00 100644
+> >> --- a/drivers/soc/qcom/rpmh.c
+> >> +++ b/drivers/soc/qcom/rpmh.c
+> >> @@ -139,20 +139,27 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
+> >>   existing:
+> >>          switch (state) {
+> >>          case RPMH_ACTIVE_ONLY_STATE:
+> >> -               if (req->sleep_val != UINT_MAX)
+> >> +               if (req->sleep_val != UINT_MAX) {
+> >>                          req->wake_val = cmd->data;
+> >> +                       ctrlr->dirty = true;
+> >> +               }
+> > Don't you need to set dirty = true for ACTIVE_ONLY state always? The
+> > conditional is just saying "if nobody set a sleep vote, then maintain
+> > this vote when we wake back up".
+>
+> The ACTIVE_ONLY vote is cached as wake_val to be apply when wakeup happens.
+>
+> In case value didn't change,wake_val is still same as older value and
+> there is no need to mark the entire cache as dirty.
+>
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
+Ah, I see it now. We don't actually cache active_only votes anywhere,
+since they're one time requests. The sleep/wake votes seem to be the
+only thing that gets cached.
 
- drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 85 ++++++++++++++++++++++++-----------
- 1 file changed, 60 insertions(+), 25 deletions(-)
+I was thinking it might be safer to also set dirty = true just after
+list_add_tail, since in the non-existing case this is a new batch that
+RPMh has never seen before and should always be written. But I suppose
+your checks here should cover that case, since sleep_val and wake_val
+are initialized to UINT_MAX. If you think the code might evolve, it
+might still be nice to add it.
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-index eda11ab..e450e0b 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-@@ -7,6 +7,7 @@
- 
- #include "a6xx_gmu.h"
- #include "a6xx_gmu.xml.h"
-+#include "a6xx_gpu.h"
- 
- #define HFI_MSG_ID(val) [val] = #val
- 
-@@ -216,48 +217,82 @@ static int a6xx_hfi_send_perf_table(struct a6xx_gmu *gmu)
- 		NULL, 0);
- }
- 
--static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
-+static void a618_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
- {
--	struct a6xx_hfi_msg_bw_table msg = { 0 };
-+	/* Send a single "off" entry since the 618 GMU doesn't do bus scaling */
-+	msg->bw_level_num = 1;
-+
-+	msg->ddr_cmds_num = 3;
-+	msg->ddr_wait_bitmask = 0x01;
-+
-+	msg->ddr_cmds_addrs[0] = 0x50000;
-+	msg->ddr_cmds_addrs[1] = 0x5003c;
-+	msg->ddr_cmds_addrs[2] = 0x5000c;
-+
-+	msg->ddr_cmds_data[0][0] =  0x40000000;
-+	msg->ddr_cmds_data[0][1] =  0x40000000;
-+	msg->ddr_cmds_data[0][2] =  0x40000000;
- 
- 	/*
--	 * The sdm845 GMU doesn't do bus frequency scaling on its own but it
--	 * does need at least one entry in the list because it might be accessed
--	 * when the GMU is shutting down. Send a single "off" entry.
-+	 * These are the CX (CNOC) votes - these are used by the GMU but the
-+	 * votes are known and fixed for the target
- 	 */
-+	msg->cnoc_cmds_num = 1;
-+	msg->cnoc_wait_bitmask = 0x01;
-+
-+	msg->cnoc_cmds_addrs[0] = 0x5007c;
-+	msg->cnoc_cmds_data[0][0] =  0x40000000;
-+	msg->cnoc_cmds_data[1][0] =  0x60000001;
-+}
- 
--	msg.bw_level_num = 1;
-+static void a6xx_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
-+{
-+	/* Send a single "off" entry since the 630 GMU doesn't do bus scaling */
-+	msg->bw_level_num = 1;
- 
--	msg.ddr_cmds_num = 3;
--	msg.ddr_wait_bitmask = 0x07;
-+	msg->ddr_cmds_num = 3;
-+	msg->ddr_wait_bitmask = 0x07;
- 
--	msg.ddr_cmds_addrs[0] = 0x50000;
--	msg.ddr_cmds_addrs[1] = 0x5005c;
--	msg.ddr_cmds_addrs[2] = 0x5000c;
-+	msg->ddr_cmds_addrs[0] = 0x50000;
-+	msg->ddr_cmds_addrs[1] = 0x5005c;
-+	msg->ddr_cmds_addrs[2] = 0x5000c;
- 
--	msg.ddr_cmds_data[0][0] =  0x40000000;
--	msg.ddr_cmds_data[0][1] =  0x40000000;
--	msg.ddr_cmds_data[0][2] =  0x40000000;
-+	msg->ddr_cmds_data[0][0] =  0x40000000;
-+	msg->ddr_cmds_data[0][1] =  0x40000000;
-+	msg->ddr_cmds_data[0][2] =  0x40000000;
- 
- 	/*
- 	 * These are the CX (CNOC) votes.  This is used but the values for the
- 	 * sdm845 GMU are known and fixed so we can hard code them.
- 	 */
- 
--	msg.cnoc_cmds_num = 3;
--	msg.cnoc_wait_bitmask = 0x05;
-+	msg->cnoc_cmds_num = 3;
-+	msg->cnoc_wait_bitmask = 0x05;
- 
--	msg.cnoc_cmds_addrs[0] = 0x50034;
--	msg.cnoc_cmds_addrs[1] = 0x5007c;
--	msg.cnoc_cmds_addrs[2] = 0x5004c;
-+	msg->cnoc_cmds_addrs[0] = 0x50034;
-+	msg->cnoc_cmds_addrs[1] = 0x5007c;
-+	msg->cnoc_cmds_addrs[2] = 0x5004c;
- 
--	msg.cnoc_cmds_data[0][0] =  0x40000000;
--	msg.cnoc_cmds_data[0][1] =  0x00000000;
--	msg.cnoc_cmds_data[0][2] =  0x40000000;
-+	msg->cnoc_cmds_data[0][0] =  0x40000000;
-+	msg->cnoc_cmds_data[0][1] =  0x00000000;
-+	msg->cnoc_cmds_data[0][2] =  0x40000000;
-+
-+	msg->cnoc_cmds_data[1][0] =  0x60000001;
-+	msg->cnoc_cmds_data[1][1] =  0x20000001;
-+	msg->cnoc_cmds_data[1][2] =  0x60000001;
-+}
-+
-+
-+static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
-+{
-+	struct a6xx_hfi_msg_bw_table msg = { 0 };
-+	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
-+	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
- 
--	msg.cnoc_cmds_data[1][0] =  0x60000001;
--	msg.cnoc_cmds_data[1][1] =  0x20000001;
--	msg.cnoc_cmds_data[1][2] =  0x60000001;
-+	if (adreno_is_a618(adreno_gpu))
-+		a618_build_bw_table(&msg);
-+	else
-+		a6xx_build_bw_table(&msg);
- 
- 	return a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_BW_TABLE, &msg, sizeof(msg),
- 		NULL, 0);
--- 
-2.7.4
+While I'm looking at that, why do we have this needless INIT_LIST_HEAD?
+        INIT_LIST_HEAD(&req->list);
+        list_add_tail(&req->list, &ctrlr->cache);
+
+-Evan
+
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
