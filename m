@@ -2,119 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FB291526C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2020 08:20:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 17CF8152752
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2020 09:03:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726386AbgBEHUQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Feb 2020 02:20:16 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:14426 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725793AbgBEHUQ (ORCPT
+        id S1726490AbgBEIDv convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Wed, 5 Feb 2020 03:03:51 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:46938 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725906AbgBEIDv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Feb 2020 02:20:16 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580887215; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=7DffYjVGVCcrqC/qHz0LpV46gTFSwzkl9c+dLx2G4uU=;
- b=kHTBbewSiNEWXCRhfYIP0Nd7T9OWbKHZJA5KBuBtmw8bZNZ5tw+9rM/XWMe8d1M/KuORL8+h
- a8rhl59/8hmB6h67jCCUp3WGwbI8Nzc85R0rPSIcPSdpZbhlRg1EJCi32irg3tbYVOa6hovE
- c3X9I2iY7oHlnuiSWgUDPTQp6Z0=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e3a6cab.7f4ebfd908f0-smtp-out-n02;
- Wed, 05 Feb 2020 07:20:11 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 94D74C447A1; Wed,  5 Feb 2020 07:20:11 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: hongwus)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C75AFC433CB;
-        Wed,  5 Feb 2020 07:20:10 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 05 Feb 2020 15:20:10 +0800
-From:   hongwus@codeaurora.org
-To:     Can Guo <cang@codeaurora.org>
-Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
-        rnayak@codeaurora.org, linux-scsi@vger.kernel.org,
-        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 7/8] scsi: ufs-qcom: Delay specific time before gate
- ref clk
-In-Reply-To: <1580721472-10784-8-git-send-email-cang@codeaurora.org>
-References: <1580721472-10784-1-git-send-email-cang@codeaurora.org>
- <1580721472-10784-8-git-send-email-cang@codeaurora.org>
-Message-ID: <537a8695bcadd7d5686a6b6e3c04f2af@codeaurora.org>
-X-Sender: hongwus@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Wed, 5 Feb 2020 03:03:51 -0500
+Received: from marcel-macpro.fritz.box (p4FEFC5A7.dip0.t-ipconnect.de [79.239.197.167])
+        by mail.holtmann.org (Postfix) with ESMTPSA id AA2E6CECC4;
+        Wed,  5 Feb 2020 09:13:10 +0100 (CET)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: [PATCH v1] Bluetooth: hci_qca: Bug fixes while collecting
+ controller memory dump
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <CANFp7mXgvfQGw0bc0dwNXg9KME1XD1zYGtPdEFWbM20NJpKtzQ@mail.gmail.com>
+Date:   Wed, 5 Feb 2020 09:03:48 +0100
+Cc:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
+        robh@kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        tientzu@chromium.org, seanpaul@chromium.org, rjliao@codeaurora.org,
+        Yoni Shavit <yshavit@google.com>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <340089F1-166F-4C7C-8CB1-2D37DF11701E@holtmann.org>
+References: <1580832929-2067-1-git-send-email-gubbaven@codeaurora.org>
+ <CANFp7mXgvfQGw0bc0dwNXg9KME1XD1zYGtPdEFWbM20NJpKtzQ@mail.gmail.com>
+To:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-02-03 17:17, Can Guo wrote:
-> After enter hibern8, as UFS JEDEC ver 3.0 requires, a specific gating 
-> wait
-> time is required before disable the device reference clock. If it is 
-> not
-> specified, use the old delay.
-> 
-> Signed-off-by: Can Guo <cang@codeaurora.org>
-> Reviewed-by: Asutosh Das <asutoshd@codeaurora.org>
-> ---
->  drivers/scsi/ufs/ufs-qcom.c | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> index 85d7c17..3b5b2d9 100644
-> --- a/drivers/scsi/ufs/ufs-qcom.c
-> +++ b/drivers/scsi/ufs/ufs-qcom.c
-> @@ -833,6 +833,8 @@ static int ufs_qcom_bus_register(struct 
-> ufs_qcom_host *host)
-> 
->  static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool 
-> enable)
->  {
-> +	unsigned long gating_wait;
-> +
->  	if (host->dev_ref_clk_ctrl_mmio &&
->  	    (enable ^ host->is_dev_ref_clk_enabled)) {
->  		u32 temp = readl_relaxed(host->dev_ref_clk_ctrl_mmio);
-> @@ -845,11 +847,16 @@ static void ufs_qcom_dev_ref_clk_ctrl(struct
-> ufs_qcom_host *host, bool enable)
->  		/*
->  		 * If we are here to disable this clock it might be immediately
->  		 * after entering into hibern8 in which case we need to make
-> -		 * sure that device ref_clk is active at least 1us after the
-> +		 * sure that device ref_clk is active for specific time after
->  		 * hibern8 enter.
->  		 */
-> -		if (!enable)
-> -			udelay(1);
-> +		if (!enable) {
-> +			gating_wait = host->hba->dev_info.clk_gating_wait_us;
-> +			if (!gating_wait)
-> +				udelay(1);
-> +			else
-> +				usleep_range(gating_wait, gating_wait + 10);
-> +		}
-> 
->  		writel_relaxed(temp, host->dev_ref_clk_ctrl_mmio);
+Hi Abhishek,
 
+> Per our earlier review on chromium gerrit:
+> https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/1992966
+> 
+> I'm not too keen on the change from mutex to spinlock because it's
+> made the code more complex.
+> 
+> Also, it has been a couple weeks since my last review and I've lost
+> the context of what order of events are supposed to happen (making
+> reviewing the sequencing hard).
+> 
+> Good case:
+> 
+> Memdump event from firmware
+> Some number of memdump events with seq #
+> Hw error event
+> Reset
+> 
+> Timeout case:
+> 
+> Memdump event from firmware
+> Some number of memdump events with seq #
+> Timeout schedules hw_error_event
+> hw_error_event clears the memdump activity
+> reset
+> 
+> Software memdump:
+> 
+> hw_error_event sends memdump command to firmware and waits for completion
+> memdump event with seq#
+> hw error event
+> reset
+> 
+> Does this look right? Could you add this to either the commit message
+> or as a comment in one of the functions so that it's easier to
+> understand what is the expected order of events.
+> 
+> On Tue, Feb 4, 2020 at 8:16 AM Venkata Lakshmi Narayana Gubba
+> <gubbaven@codeaurora.org> wrote:
+>> 
+>> This patch will fix the below issues
+>>   1.Fixed race conditions while accessing memory dump state flags.
+>>   2.Updated with actual context of timer in hci_memdump_timeout()
+>>   3.Updated injecting hardware error event if the dumps failed to receive.
+>>   4.Once timeout is triggered, stopping the memory dump collections.
+>> 
+>> Fixes: d841502c79e3 ("Bluetooth: hci_qca: Collect controller memory dump during SSR")
+>> Reported-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+>> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+>> ---
+>> drivers/bluetooth/hci_qca.c | 104 ++++++++++++++++++++++++++++++++++++++------
+>> 1 file changed, 90 insertions(+), 14 deletions(-)
+>> 
+>> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+>> index eacc65b..ea956c3 100644
+>> --- a/drivers/bluetooth/hci_qca.c
+>> +++ b/drivers/bluetooth/hci_qca.c
+>> @@ -69,7 +69,8 @@ enum qca_flags {
+>>        QCA_IBS_ENABLED,
+>>        QCA_DROP_VENDOR_EVENT,
+>>        QCA_SUSPENDING,
+>> -       QCA_MEMDUMP_COLLECTION
+>> +       QCA_MEMDUMP_COLLECTION,
+>> +       QCA_HW_ERROR_EVENT
+>> };
+>> 
+>> 
+>> @@ -150,6 +151,7 @@ struct qca_data {
+>>        struct completion drop_ev_comp;
+>>        wait_queue_head_t suspend_wait_q;
+>>        enum qca_memdump_states memdump_state;
+>> +       spinlock_t hci_memdump_lock;
+> In an earlier revision of this patch, you had this lock as a mutex.
+> Why change it from mutex to spinlock_t? I think this has made your
+> change more complex since you have to unlock during the middle of an
+> operation more often (i.e. since it can block)
 
-Reviewed-by: Hongwu Su <hongwus@codeaurora.org>
+I agree that we should try to keep a mutex since all event processing in Bluetooth core happens in a workqueue anyway.
+
+Regards
+
+Marcel
+
