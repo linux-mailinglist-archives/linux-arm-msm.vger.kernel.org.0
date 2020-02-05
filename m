@@ -2,41 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B87B015269D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2020 08:02:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B747B15269B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Feb 2020 08:02:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727979AbgBEHCH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Feb 2020 02:02:07 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:23308 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727836AbgBEHCH (ORCPT
+        id S1727985AbgBEHCG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Feb 2020 02:02:06 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:34155 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727963AbgBEHCF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Feb 2020 02:02:07 -0500
+        Wed, 5 Feb 2020 02:02:05 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1580886126; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1580886124; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=895Q+fKggWhwkwgRG0plgGxTflX/NjId+yNJ80pnPq4=; b=IS4bELlcImLEBTTUh369saWPhC50KAXvMhppI28M0sddY9nbZH2SrB2M4pON+O5htSwDMMNT
- aXNjbmu7tvt+zWTPcRfqAK386lJlBqLhgfR/UuypH1GAk0y5MPVB4euhdtAs0wDVlNrnwL77
- eJcw0jsQByJ4P2gvkM1CF28l32Q=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ bh=yCDeCdgKA3IXNoyqrtgJmGy4KgKCgByY8yGLh4PgpZg=; b=K+sNEX44F9VKaV08ekYi6aZt4/PKf8iej+pOo/NbemWRwi9wI4ltxhXfvESN4RV30S+td2gz
+ McHLNtWJpXdE74rKSIrNAn8PSJk49mipDjDlypcXT27Q28WYBRhTZrStJyVoWxaDQB6B2UNI
+ BgiwkXrYx5roMHCX53lRN28l+24=
+X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e3a6863.7f66726cb458-smtp-out-n03;
- Wed, 05 Feb 2020 07:01:55 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e3a6868.7ff88db7a9d0-smtp-out-n03;
+ Wed, 05 Feb 2020 07:02:00 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B3F83C433CB; Wed,  5 Feb 2020 07:01:55 +0000 (UTC)
+        id 2017DC447A5; Wed,  5 Feb 2020 07:02:00 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
+        autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from smasetty-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: smasetty)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3AA49C43383;
-        Wed,  5 Feb 2020 07:01:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3AA49C43383
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 129F6C433CB;
+        Wed,  5 Feb 2020 07:01:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 129F6C433CB
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
 From:   Sharat Masetty <smasetty@codeaurora.org>
@@ -44,10 +44,10 @@ To:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
 Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
         jcrouse@codeaurora.org, mka@chromium.org, dianders@chromium.org,
-        Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v4 2/3] clk: qcom: gpucc: Add support for GX GDSC for SC7180
-Date:   Wed,  5 Feb 2020 12:31:36 +0530
-Message-Id: <1580886097-6312-3-git-send-email-smasetty@codeaurora.org>
+        Sharat Masetty <smasetty@codeaurora.org>
+Subject: [PATCH v4 3/3] arm64: dts: qcom: sc7180: Add A618 gpu dt blob
+Date:   Wed,  5 Feb 2020 12:31:37 +0530
+Message-Id: <1580886097-6312-4-git-send-email-smasetty@codeaurora.org>
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1580886097-6312-1-git-send-email-smasetty@codeaurora.org>
 References: <1580886097-6312-1-git-send-email-smasetty@codeaurora.org>
@@ -56,68 +56,126 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Taniya Das <tdas@codeaurora.org>
+This patch adds the required dt nodes and properties
+to enabled A618 GPU.
 
- Most of the time the CPU should not be touching the GX domain on the
- GPU
- except for a very special use case when the CPU needs to force the GX
- headswitch off. Add a dummy enable function for the GX gdsc to simulate
- success so that the pm_runtime reference counting is correct.
-
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
+Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
 ---
- drivers/clk/qcom/gpucc-sc7180.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 102 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 102 insertions(+)
 
-diff --git a/drivers/clk/qcom/gpucc-sc7180.c b/drivers/clk/qcom/gpucc-sc7180.c
-index ec61194..3b29f19 100644
---- a/drivers/clk/qcom/gpucc-sc7180.c
-+++ b/drivers/clk/qcom/gpucc-sc7180.c
-@@ -172,8 +172,45 @@ enum {
- 	.flags = VOTABLE,
- };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index f3fcc5c..63fff15 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -1043,6 +1043,108 @@
+ 			};
+ 		};
  
-+/*
-+ * On SC7180 the GPU GX domain is *almost* entirely controlled by the GMU
-+ * running in the CX domain so the CPU doesn't need to know anything about the
-+ * GX domain EXCEPT....
-+ *
-+ * Hardware constraints dictate that the GX be powered down before the CX. If
-+ * the GMU crashes it could leave the GX on. In order to successfully bring back
-+ * the device the CPU needs to disable the GX headswitch. There being no sane
-+ * way to reach in and touch that register from deep inside the GPU driver we
-+ * need to set up the infrastructure to be able to ensure that the GPU can
-+ * ensure that the GX is off during this super special case. We do this by
-+ * defining a GX gdsc with a dummy enable function and a "default" disable
-+ * function.
-+ *
-+ * This allows us to attach with genpd_dev_pm_attach_by_name() in the GPU
-+ * driver. During power up, nothing will happen from the CPU (and the GMU will
-+ * power up normally but during power down this will ensure that the GX domain
-+ * is *really* off - this gives us a semi standard way of doing what we need.
-+ */
-+static int gx_gdsc_enable(struct generic_pm_domain *domain)
-+{
-+	/* Do nothing but give genpd the impression that we were successful */
-+	return 0;
-+}
++		gpu: gpu@5000000 {
++			compatible = "qcom,adreno-618.0", "qcom,adreno";
++			#stream-id-cells = <16>;
++			reg = <0 0x05000000 0 0x40000>, <0 0x0509e000 0 0x1000>,
++				<0 0x05061000 0 0x800>;
++			reg-names = "kgsl_3d0_reg_memory", "cx_mem", "cx_dbgc";
++			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
++			iommus = <&adreno_smmu 0>;
++			operating-points-v2 = <&gpu_opp_table>;
++			qcom,gmu = <&gmu>;
 +
-+static struct gdsc gx_gdsc = {
-+	.gdscr = 0x100c,
-+	.clamp_io_ctrl = 0x1508,
-+	.pd = {
-+		.name = "gpu_gx_gdsc",
-+		.power_on = gx_gdsc_enable,
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = CLAMP_IO,
-+};
++			gpu_opp_table: opp-table {
++				compatible = "operating-points-v2";
 +
- static struct gdsc *gpu_cc_sc7180_gdscs[] = {
- 	[CX_GDSC] = &cx_gdsc,
-+	[GX_GDSC] = &gx_gdsc,
- };
- 
- static struct clk_regmap *gpu_cc_sc7180_clocks[] = {
++				opp-800000000 {
++					opp-hz = /bits/ 64 <800000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
++				};
++
++				opp-650000000 {
++					opp-hz = /bits/ 64 <650000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
++				};
++
++				opp-565000000 {
++					opp-hz = /bits/ 64 <565000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
++				};
++
++				opp-430000000 {
++					opp-hz = /bits/ 64 <430000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
++				};
++
++				opp-355000000 {
++					opp-hz = /bits/ 64 <355000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
++				};
++
++				opp-267000000 {
++					opp-hz = /bits/ 64 <267000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
++				};
++
++				opp-180000000 {
++					opp-hz = /bits/ 64 <180000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
++				};
++			};
++		};
++
++		adreno_smmu: iommu@5040000 {
++			compatible = "qcom,sc7180-smmu-v2", "qcom,smmu-v2";
++			reg = <0 0x05040000 0 0x10000>;
++			#iommu-cells = <1>;
++			#global-interrupts = <2>;
++			interrupts = <GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 231 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 364 IRQ_TYPE_EDGE_RISING>,
++					<GIC_SPI 365 IRQ_TYPE_EDGE_RISING>,
++					<GIC_SPI 366 IRQ_TYPE_EDGE_RISING>,
++					<GIC_SPI 367 IRQ_TYPE_EDGE_RISING>,
++					<GIC_SPI 368 IRQ_TYPE_EDGE_RISING>,
++					<GIC_SPI 369 IRQ_TYPE_EDGE_RISING>,
++					<GIC_SPI 370 IRQ_TYPE_EDGE_RISING>,
++					<GIC_SPI 371 IRQ_TYPE_EDGE_RISING>;
++			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
++				<&gcc GCC_GPU_CFG_AHB_CLK>,
++				<&gcc GCC_DDRSS_GPU_AXI_CLK>;
++
++			clock-names = "bus", "iface", "mem_iface_clk";
++			power-domains = <&gpucc CX_GDSC>;
++		};
++
++		gmu: gmu@506a000 {
++			compatible="qcom,adreno-gmu-618.0", "qcom,adreno-gmu";
++			reg = <0 0x0506a000 0 0x31000>, <0 0x0b290000 0 0x10000>,
++				<0 0x0b490000 0 0x10000>;
++			reg-names = "gmu", "gmu_pdc", "gmu_pdc_seq";
++			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
++				   <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hfi", "gmu";
++			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
++			       <&gpucc GPU_CC_CXO_CLK>,
++			       <&gcc GCC_DDRSS_GPU_AXI_CLK>,
++			       <&gcc GCC_GPU_MEMNOC_GFX_CLK>;
++			clock-names = "gmu", "cxo", "axi", "memnoc";
++			power-domains = <&gpucc CX_GDSC>, <&gpucc GX_GDSC>;
++			power-domain-names = "cx", "gx";
++			iommus = <&adreno_smmu 5>;
++			operating-points-v2 = <&gmu_opp_table>;
++
++			gmu_opp_table: opp-table {
++				compatible = "operating-points-v2";
++
++				opp-200000000 {
++					opp-hz = /bits/ 64 <200000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
++				};
++			};
++		};
++
+ 		gpucc: clock-controller@5090000 {
+ 			compatible = "qcom,sc7180-gpucc";
+ 			reg = <0 0x05090000 0 0x9000>;
 -- 
 1.9.1
