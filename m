@@ -2,129 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 13BFB154BA5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2020 20:08:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 42D6A154BB4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2020 20:12:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727939AbgBFTIG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Feb 2020 14:08:06 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:35788 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727479AbgBFTIG (ORCPT
+        id S1727897AbgBFTMl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Feb 2020 14:12:41 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:36058 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727479AbgBFTMl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Feb 2020 14:08:06 -0500
-Received: by mail-pl1-f193.google.com with SMTP id g6so2718900plt.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2020 11:08:06 -0800 (PST)
+        Thu, 6 Feb 2020 14:12:41 -0500
+Received: by mail-io1-f68.google.com with SMTP id d15so7494129iog.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2020 11:12:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=message-id:mime-version:content-transfer-encoding:in-reply-to
-         :references:subject:cc:to:from:user-agent:date;
-        bh=Yu2QDav0lMyEABQNSAjZtJUdEYaLbzOvrURQHYilMW0=;
-        b=VRaRJW1YHC6Yz1ba1KM+r2rAH78IAw4ECZ8uW10SXwNAHIWn7E+yTg0EHguOn/zRrt
-         eMFPYSqUTeNMXsykpLoM4IV2tVHk0/uMr4OaXPJV8mcVbWOk0QE8XuGjrvBHau/XzuTz
-         tHhIdvSd9A1QlCqSpwFwRf2PLIPuBTZQ+KwDc=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ru+inu1PmEIJ9vDnJLv1Qr4gQtvZqrjXnMpeSc0T07w=;
+        b=dOu8k7co1W3I1l1ud/O4tNq6yrR8hg9NmPtIwy/s1Z6lQY342ZljFEmid3M8nHnKoE
+         o6EgzYmkeJe2Zuz2J3Vz99vNyFGmG5pEZQddN+ZtJBEGBSrIGW1REL64YKWw0eC4HOF2
+         8IkPafFKv5Gs9Dp6vgisxTnweTLTpT+i5SCPo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:mime-version
-         :content-transfer-encoding:in-reply-to:references:subject:cc:to:from
-         :user-agent:date;
-        bh=Yu2QDav0lMyEABQNSAjZtJUdEYaLbzOvrURQHYilMW0=;
-        b=h/CLbcpkJ7o8ihvRD7Wy58U4QJX2wA52CkPTgmYec7QwE3HfQ7gmiZY77i5pgU7NqF
-         XHVysbUhjF484Y95AuF44j5aevG+hKAeVm1SMlHSSOdOwPwIVZkXu+VtbtgFSUr0o4LY
-         9EhqYfxNG2Lzy7G2rwis8HRR5eLhIPNTwBkXNiW8enXPiL/AR7whuGKlSAmDMY/5jf0U
-         3blF6wHxDmcA+EJAFdqT4pWME8qf19FqfzAQBgW5DA/MMq219fTueqqOXWOTsW2Son6M
-         wNWdFhNxEgGpSBGtPW9JhFc4lm990V27ghqbQSIeQm55VbhWDEe6X8WIGnRzW8fq7/XV
-         glrw==
-X-Gm-Message-State: APjAAAVY7Yvovn6kdtazOE0ZFjVVqst/NinqkhZ+ObZUU1c8OOF81MqM
-        RHmZZYIs3nOFwsbKWLvBZAGE9A==
-X-Google-Smtp-Source: APXvYqw4FzuijgYSawjl5c7tObZjQNWODBQFdG4z93eiZtWw8Kfhehai1gG8W0VsIPSAuMTH3ojcqQ==
-X-Received: by 2002:a17:902:9691:: with SMTP id n17mr5606416plp.304.1581016085712;
-        Thu, 06 Feb 2020 11:08:05 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id q28sm145590pfl.153.2020.02.06.11.08.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Feb 2020 11:08:05 -0800 (PST)
-Message-ID: <5e3c6415.1c69fb81.11c79.08a6@mx.google.com>
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ru+inu1PmEIJ9vDnJLv1Qr4gQtvZqrjXnMpeSc0T07w=;
+        b=LyKREeYuY3q/Bxg/Lnr2tHM4jMPqGw+bUM8lBx0vuJINHoDKib9CHMtQhZHm9NAGB7
+         23CG7e0pN23qU50rXSo4M4QBqbYcOnl82kJvitAe910dn3CBgqmqNd7BZSk1xYa+HVS0
+         sV1ZtTthiopQKN8kTGfgfM49pTl95Aom6711/gQD32gK9AbxT6fl+ju26XD0G99Z1/K0
+         fWmb0vhz5mk1ns0pgiCAiheU14vL5znKQ3JKnvKdepfklns5DrwTwJW/l53bkdbpDCdw
+         G4fL9ymlXu7HZRbZzi4Pp4ZDhFzHKS95fzEd9Xr297Y01gmWfXZ/O/Dg2G1v2wOHNp+9
+         Q4ng==
+X-Gm-Message-State: APjAAAVvgtYyT2Md6kM6xgxbOrA3nThyPH2VDcIlLOyymsut4xr83w+i
+        EladIoUqyP7p6/qSTezVaqmOkW60DRA=
+X-Google-Smtp-Source: APXvYqwxoXAldB0vq70+bzz6L3a6ziGgheri1F4WRoS3GwgGdLPFFA0mxv7DhP3o75LMid7o4keW/A==
+X-Received: by 2002:a6b:6604:: with SMTP id a4mr35471728ioc.300.1581016358420;
+        Thu, 06 Feb 2020 11:12:38 -0800 (PST)
+Received: from mail-il1-f182.google.com (mail-il1-f182.google.com. [209.85.166.182])
+        by smtp.gmail.com with ESMTPSA id 75sm218023ila.61.2020.02.06.11.12.36
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Feb 2020 11:12:38 -0800 (PST)
+Received: by mail-il1-f182.google.com with SMTP id t17so6118887ilm.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2020 11:12:36 -0800 (PST)
+X-Received: by 2002:a92:508:: with SMTP id q8mr5345001ile.187.1581016355450;
+ Thu, 06 Feb 2020 11:12:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1580997328-16365-2-git-send-email-kgunda@codeaurora.org>
-References: <1580997328-16365-1-git-send-email-kgunda@codeaurora.org> <1580997328-16365-2-git-send-email-kgunda@codeaurora.org>
-Subject: Re: [PATCH V3 2/2] mfd: qcom-spmi-pmic: Add support for pm6150 and pm6150l
-Cc:     rnayak@codeaurora.org, Kiran Gunda <kgunda@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.8.1
-Date:   Thu, 06 Feb 2020 11:08:04 -0800
+References: <1580935697-28195-1-git-send-email-jcrouse@codeaurora.org> <CAF6AEGv9jVEO=QDY3DWts3w9aPxQ6fSBt2nydoqWdf5JenK=jA@mail.gmail.com>
+In-Reply-To: <CAF6AEGv9jVEO=QDY3DWts3w9aPxQ6fSBt2nydoqWdf5JenK=jA@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 6 Feb 2020 11:12:23 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=U7iWY1z5mwS0FyHyAA5EoFkAYzL-HKRaFMbRkMu6ffkg@mail.gmail.com>
+Message-ID: <CAD=FV=U7iWY1z5mwS0FyHyAA5EoFkAYzL-HKRaFMbRkMu6ffkg@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm: Fix a6xx GMU shutdown sequence
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Daniel Vetter <daniel@ffwll.ch>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kiran Gunda (2020-02-06 05:55:27)
-> Add the compatibles and PMIC ids for pm6150 and pm6150l PMICs
-> found on SC7180 based platforms
->=20
-> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 2 ++
->  drivers/mfd/qcom-spmi-pmic.c                              | 4 ++++
->  2 files changed, 6 insertions(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/=
-Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> index affc169..36f0795 100644
-> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> @@ -46,6 +46,8 @@ properties:
->        - qcom,pm8998
->        - qcom,pmi8998
->        - qcom,pm8005
-> +      - qcom,pm6150
-> +      - qcom,pm6150l
->        - qcom,spmi-pmic
+Hi,
 
-Maybe the yaml binding needs to say this is sorted in subtype id in a
-comment.
+On Wed, Feb 5, 2020 at 1:00 PM Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Wed, Feb 5, 2020 at 12:48 PM Jordan Crouse <jcrouse@codeaurora.org> wrote:
+> >
+> > Commit e812744c5f95 ("drm: msm: a6xx: Add support for A618") missed
+> > updating the VBIF flush in a6xx_gmu_shutdown and instead
+> > inserted the new sequence into a6xx_pm_suspend along with a redundant
+> > GMU idle.
+> >
+> > Move a6xx_bus_clear_pending_transactions to a6xx_gmu.c and use it in
+> > the appropriate place in the shutdown routine and remove the redundant
+> > idle call.
+> >
+> > v2: Remove newly unused variable that was triggering a warning
+> >
+> > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+>
+> Reviewed-by: Rob Clark <robdclark@gmail.com>
 
-	# Sorted based on subtype ID the device reports
+Without this patch I'm seeing some really bad behavior where the whole
+system will pause for a bit, especially if it has been idle.  After
+this patch things are much better.  Thus:
 
-Or we should sort this list in the binding and sort the compatible
-string table in the driver with a comment that it's sorted based on
-subtype id.
+Fixes: e812744c5f95 ("drm: msm: a6xx: Add support for A618")
+Tested-by: Douglas Anderson <dianders@chromium.org>
 
-> =20
->    reg:
-> diff --git a/drivers/mfd/qcom-spmi-pmic.c b/drivers/mfd/qcom-spmi-pmic.c
-> index 1df1a27..5bfeec8 100644
-> --- a/drivers/mfd/qcom-spmi-pmic.c
-> +++ b/drivers/mfd/qcom-spmi-pmic.c
-> @@ -36,6 +36,8 @@
->  #define PM8998_SUBTYPE         0x14
->  #define PMI8998_SUBTYPE                0x15
->  #define PM8005_SUBTYPE         0x18
-> +#define PM6150L_SUBTYPE                0x1F
-> +#define PM6150_SUBTYPE         0x28
-> =20
->  static const struct of_device_id pmic_spmi_id_table[] =3D {
->         { .compatible =3D "qcom,spmi-pmic", .data =3D (void *)COMMON_SUBT=
-YPE },
-> @@ -57,6 +59,8 @@ static const struct of_device_id pmic_spmi_id_table[] =
-=3D {
->         { .compatible =3D "qcom,pm8998",    .data =3D (void *)PM8998_SUBT=
-YPE },
->         { .compatible =3D "qcom,pmi8998",   .data =3D (void *)PMI8998_SUB=
-TYPE },
->         { .compatible =3D "qcom,pm8005",    .data =3D (void *)PM8005_SUBT=
-YPE },
-> +       { .compatible =3D "qcom,pm6150l",   .data =3D (void *)PM6150L_SUB=
-TYPE },
-> +       { .compatible =3D "qcom,pm6150",    .data =3D (void *)PM6150_SUBT=
-YPE },
->         { }
->  };
+-Doug
