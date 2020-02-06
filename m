@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EFCA1540BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2020 09:56:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EF0B1540EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2020 10:12:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728196AbgBFI4U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Feb 2020 03:56:20 -0500
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:32768 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727895AbgBFI4U (ORCPT
+        id S1727980AbgBFJM1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Feb 2020 04:12:27 -0500
+Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:3864 "EHLO
+        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727848AbgBFJM1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Feb 2020 03:56:20 -0500
+        Thu, 6 Feb 2020 04:12:27 -0500
 Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 Feb 2020 14:26:18 +0530
+  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 Feb 2020 14:42:24 +0530
 Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 06 Feb 2020 14:26:17 +0530
+  by ironmsg02-blr.qualcomm.com with ESMTP; 06 Feb 2020 14:42:04 +0530
 Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
-        id A3A8428E6; Thu,  6 Feb 2020 14:26:16 +0530 (IST)
+        id 54F7C28E6; Thu,  6 Feb 2020 14:42:03 +0530 (IST)
 From:   Harigovindan P <harigovi@codeaurora.org>
 To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
@@ -25,68 +25,47 @@ Cc:     Harigovindan P <harigovi@codeaurora.org>,
         linux-kernel@vger.kernel.org, robdclark@gmail.com,
         seanpaul@chromium.org, hoegsberg@chromium.org,
         kalyan_t@codeaurora.org, nganji@codeaurora.org
-Subject: [v1] drm/msm/dsi: save pll state before dsi host is powered off
-Date:   Thu,  6 Feb 2020 14:26:15 +0530
-Message-Id: <1580979375-17161-1-git-send-email-harigovi@codeaurora.org>
+Subject: [v1] drm/msm/dsi/pll: call vco set rate explicitly
+Date:   Thu,  6 Feb 2020 14:42:01 +0530
+Message-Id: <1580980321-19256-1-git-send-email-harigovi@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Save pll state before dsi host is powered off. Without this change
-some register values gets resetted.
+For a given byte clock, if VCO recalc value is exactly same as
+vco set rate value, vco_set_rate does not get called assuming
+VCO is already set to required value. But Due to GDSC toggle,
+VCO values are erased in the HW. To make sure VCO is programmed
+correctly, we forcefully call set_rate from vco_prepare.
 
 Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
 ---
 
 Changes in v1:
-	- Saving pll state before dsi host is powered off.
-	- Removed calling of save state in msm_dsi_phy_disable since everything
-	would be resetted and it would save only resetted values.
+	- Calling set rate from vco_prepare
 
- drivers/gpu/drm/msm/dsi/dsi_manager.c | 5 +++++
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 4 ----
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-index 104115d..a987efe 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-@@ -506,6 +506,7 @@ static void dsi_mgr_bridge_post_disable(struct drm_bridge *bridge)
- 	struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
- 	struct mipi_dsi_host *host = msm_dsi->host;
- 	struct drm_panel *panel = msm_dsi->panel;
-+	struct msm_dsi_pll *src_pll;
- 	bool is_dual_dsi = IS_DUAL_DSI();
- 	int ret;
+diff --git a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
+index 1c89454..6ac04fc 100644
+--- a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
++++ b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
+@@ -411,6 +411,12 @@ static int dsi_pll_10nm_vco_prepare(struct clk_hw *hw)
+ 	if (pll_10nm->slave)
+ 		dsi_pll_enable_pll_bias(pll_10nm->slave);
  
-@@ -539,6 +540,10 @@ static void dsi_mgr_bridge_post_disable(struct drm_bridge *bridge)
- 								id, ret);
- 	}
- 
-+	/* Save PLL status if it is a clock source */
-+	src_pll = msm_dsi_phy_get_pll(msm_dsi->phy);
-+	msm_dsi_pll_save_state(src_pll);
++	rc = dsi_pll_10nm_vco_set_rate(hw,pll_10nm->vco_current_rate, 0);
++	if (rc) {
++		pr_err("vco_set_rate failed, rc=%d\n", rc);
++		return rc;
++	}
 +
- 	ret = msm_dsi_host_power_off(host);
- 	if (ret)
- 		pr_err("%s: host %d power off failed,%d\n", __func__, id, ret);
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index b0cfa67..f509ebd 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -724,10 +724,6 @@ void msm_dsi_phy_disable(struct msm_dsi_phy *phy)
- 	if (!phy || !phy->cfg->ops.disable)
- 		return;
- 
--	/* Save PLL status if it is a clock source */
--	if (phy->usecase != MSM_DSI_PHY_SLAVE)
--		msm_dsi_pll_save_state(phy->pll);
--
- 	phy->cfg->ops.disable(phy);
- 
- 	dsi_phy_regulator_disable(phy);
+ 	/* Start PLL */
+ 	pll_write(pll_10nm->phy_cmn_mmio + REG_DSI_10nm_PHY_CMN_PLL_CNTRL,
+ 		  0x01);
 -- 
 2.7.4
 
