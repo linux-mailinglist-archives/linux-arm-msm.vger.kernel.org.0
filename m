@@ -2,113 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 478BB154D2A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2020 21:46:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C9F5154D60
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2020 21:47:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728064AbgBFUpv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Feb 2020 15:45:51 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:46713 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728048AbgBFUps (ORCPT
+        id S1727919AbgBFUqu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Feb 2020 15:46:50 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:33075 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728193AbgBFUqT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Feb 2020 15:45:48 -0500
-Received: by mail-pg1-f195.google.com with SMTP id z124so3324194pgb.13;
-        Thu, 06 Feb 2020 12:45:47 -0800 (PST)
+        Thu, 6 Feb 2020 15:46:19 -0500
+Received: by mail-pg1-f193.google.com with SMTP id 6so3358617pgk.0;
+        Thu, 06 Feb 2020 12:46:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uZYjSiH3XWQR1AQ+aOWLLH8qNKRv66c457dG/e/iBCQ=;
-        b=UF4+CyhutzVFPw0k6MR5n67PJV8ObSkvgKMLBZNgL4Hqag/Li6qmWuzRYCSe5Mokvo
-         NWvSKbispsN6Z8Oiv52WGe2/Z/3R3Vj4m4H8UDqZfNaB+lMWbLyILmGF/ou+lYvhdcfG
-         qTWvEN9rnGTEw/pp6p3vTTwWuGwxAAj1Lwqf5cXierJIgc+ikuRWCM4S4CnOsUtSBgl1
-         3Zm2VMYMfStvdWcbICdAXZlNVPSijcJyLnY05XEgtDRJb+FM2EQQO9+tQkuCVUD0CgqY
-         exu8nDdHQr3gKn5L/Auf3exwmuxDTKZFrc6pVgHja3fe0fRMBTc5y/cZuF2iAGXSGSiR
-         tECg==
-X-Gm-Message-State: APjAAAVhq7XccHBAa6tYO0e2Jg7kBs4rCleq5nPx440tYqxwnjZTHvSi
-        5GsK9r2jHekkMWoVoxgupeW36Rhu8A==
-X-Google-Smtp-Source: APXvYqyt3hO12aCjMUyuWWO34YNsjGU2LbcEANvSDEEpEsNJVU3KoZRM/djs0hF17wMFMbFXcsWVRw==
-X-Received: by 2002:a63:9313:: with SMTP id b19mr5458024pge.273.1581021947057;
-        Thu, 06 Feb 2020 12:45:47 -0800 (PST)
+        bh=OMFNCbQ2YO6A1Z0/9//8yj3l6sKmNNuU0vkSgP75wls=;
+        b=pAgicw6kLfYLDepjVg5ydX2FNhYma5pLivSQyzTRebhtAqH5eEcBepMKR/4XzxKaZp
+         LK5O4beOkYjO8iRXVshWXTleNGwJrqPlyyAeiRHlgb0MEWOgibL6lxt+99ppdxWqsknf
+         3ML6TcXgx89/U3G3o9FGxWRcZQSxpmulfMCh6rWpF636clareLNIdoP6JM7TgZKgY5Jv
+         KmHxYORz6oCT7S+W3YRhOwbekgFe9gu/Rh7LVt167o/MXdCRs4gHfh3wRWPUoRwMORbh
+         aazkeItuZi+9rXd1+dd+27uslySWkiyAROeQv/8QYgXgxZrbPD5igAad05lI7g1yhKtj
+         TlGw==
+X-Gm-Message-State: APjAAAVLjM3ky8I6xwTFmPOtpb68h0IhwuSTZNk1k07sj2WJT5iC6MJj
+        atfJFTpOfg1KSPgXsjFK0Q==
+X-Google-Smtp-Source: APXvYqwH78fxlFILftQEY20o54bUm9mztPia+dIoyrhMNnALF+J3ZEFdR49H/rI11iwOjeJV6j3e4w==
+X-Received: by 2002:aa7:86c2:: with SMTP id h2mr5915628pfo.45.1581021978524;
+        Thu, 06 Feb 2020 12:46:18 -0800 (PST)
 Received: from rob-hp-laptop (63-158-47-182.dia.static.qwest.net. [63.158.47.182])
-        by smtp.gmail.com with ESMTPSA id hg11sm170432pjb.14.2020.02.06.12.45.45
+        by smtp.gmail.com with ESMTPSA id w11sm292136pfn.4.2020.02.06.12.46.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Feb 2020 12:45:46 -0800 (PST)
-Received: (nullmailer pid 17814 invoked by uid 1000);
-        Thu, 06 Feb 2020 17:34:10 -0000
-Date:   Thu, 6 Feb 2020 17:34:10 +0000
+        Thu, 06 Feb 2020 12:46:18 -0800 (PST)
+Received: (nullmailer pid 9330 invoked by uid 1000);
+        Thu, 06 Feb 2020 18:38:08 -0000
+Date:   Thu, 6 Feb 2020 18:38:08 +0000
 From:   Rob Herring <robh@kernel.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Mark Rutland <mark.rutland@arm.com>,
+        Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
         Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 2/8] dt-bindings: phy: qcom,qusb2: Add compatibles for
- QUSB2 V2 phy and SC7180
-Message-ID: <20200206173409.GA8698@bogus>
-References: <1580305919-30946-1-git-send-email-sanm@codeaurora.org>
- <1580305919-30946-3-git-send-email-sanm@codeaurora.org>
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCHv2 2/2] dt-bindings: watchdog: Add compatible for QCS404,
+ SC7180, SDM845, SM8150
+Message-ID: <20200206183808.GA5019@bogus>
+References: <cover.1580570160.git.saiprakash.ranjan@codeaurora.org>
+ <ff71077aa09c489b2b072c6f5605dccb96f60051.1580570160.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1580305919-30946-3-git-send-email-sanm@codeaurora.org>
+In-Reply-To: <ff71077aa09c489b2b072c6f5605dccb96f60051.1580570160.git.saiprakash.ranjan@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 29, 2020 at 07:21:53PM +0530, Sandeep Maheswaram wrote:
-> Add compatibles for generic QUSB2 V2 phy which can be used for
-> sdm845 and sc7180.
+On Sat, Feb 01, 2020 at 08:59:49PM +0530, Sai Prakash Ranjan wrote:
+> Add missing compatible for watchdog timer on QCS404,
+> SC7180, SDM845 and SM8150 SoCs.
+
+That's not what the commit does. You are changing what's valid.
+
+One string was valid, now 2 are required.
+
 > 
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 > ---
->  Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml | 15 +++++++++++----
->  1 file changed, 11 insertions(+), 4 deletions(-)
+>  .../bindings/watchdog/qcom-wdt.yaml           | 21 ++++++++++++-------
+>  1 file changed, 13 insertions(+), 8 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-> index 90b3cc6..43082c8 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-> @@ -15,10 +15,17 @@ description:
+> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> index 5448cc537a03..7180c64f54fb 100644
+> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> @@ -14,14 +14,19 @@ allOf:
 >  
 >  properties:
 >    compatible:
 > -    enum:
-> -      - qcom,msm8996-qusb2-phy
-> -      - qcom,msm8998-qusb2-phy
-> -      - qcom,sdm845-qusb2-phy
-> +    oneOf:
-> +      - items:
-
-You can omit 'items' here.
-
-> +        - enum:
-> +          - qcom,msm8996-qusb2-phy
-> +          - qcom,msm8998-qusb2-phy
-> +          - qcom,qusb2-v2-phy
-
-This should not be valid alone. An SoC specific compatible is required.
-
-> +      - items:
-> +        - enum:
-> +          - qcom,sc7180-qusb2-phy
-> +          - qcom,sdm845-qusb2-phy
-> +        - const: qcom,qusb2-v2-phy
-
-Is your intention that qcom,sdm845-qusb2-phy alone is no longer valid? 
-
-Rob
-
+> -      - qcom,kpss-timer
+> -      - qcom,kpss-wdt
+> -      - qcom,kpss-wdt-apq8064
+> -      - qcom,kpss-wdt-ipq4019
+> -      - qcom,kpss-wdt-ipq8064
+> -      - qcom,kpss-wdt-msm8960
+> -      - qcom,scss-timer
+> +    items:
+> +      - enum:
+> +          - qcom,apss-wdt-qcs404
+> +          - qcom,apss-wdt-sc7180
+> +          - qcom,apss-wdt-sdm845
+> +          - qcom,apss-wdt-sm8150
+> +          - qcom,kpss-timer
+> +          - qcom,kpss-wdt-apq8064
+> +          - qcom,kpss-wdt-ipq4019
+> +          - qcom,kpss-wdt-ipq8064
+> +          - qcom,kpss-wdt-msm8960
+> +          - qcom,scss-timer
+> +      - const: qcom,kpss-wdt
+>  
 >    reg:
 >      maxItems: 1
->  
 > -- 
 > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 > of Code Aurora Forum, hosted by The Linux Foundation
