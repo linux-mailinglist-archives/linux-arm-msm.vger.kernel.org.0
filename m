@@ -2,193 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4611515409F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2020 09:46:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 77E761540AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Feb 2020 09:52:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728079AbgBFIqM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Feb 2020 03:46:12 -0500
-Received: from mail-vk1-f193.google.com ([209.85.221.193]:43306 "EHLO
-        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727864AbgBFIqM (ORCPT
+        id S1728022AbgBFIw1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Feb 2020 03:52:27 -0500
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:33807 "EHLO
+        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727778AbgBFIw1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Feb 2020 03:46:12 -0500
-Received: by mail-vk1-f193.google.com with SMTP id m195so1385134vkh.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2020 00:46:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8SHAgobSEb546iBt5cNLjHLEI9u6dAs7lm7+/SJg7Jk=;
-        b=pbRhghe/7yBE+QvA+2niPDdMyXYY6Uxi+o3Wd1l4gPLoxZLbexr+qrjM5w3ZoBCt71
-         uNDS8Nkfc/dCOTAbqlK5ZmkYXagP5tP0mwoqBLCpzy5mw3Zrd6Yszfho47x35dVGJIMF
-         T7lfuzUC2HyXaoiJSSCiTovaSnpG0sTVbJUOkRbDo6wjoeJTjoRdEv6O4dISSBEqm4k/
-         7eaw08U4iH2SVIe8cr/3jE7QnA7VEoatzdj2wy7igjBZ0nMLOHbzwuwkmSJR/pev96bN
-         UTINzh3dw4ubVF2YD3m7ZZecM9W0CbXKJHw3zXH5OC5JyhUNglK1iD7WsOafjQms2sux
-         jR2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8SHAgobSEb546iBt5cNLjHLEI9u6dAs7lm7+/SJg7Jk=;
-        b=IZksu89mxBv35ITLjBV2Suv89f3DINLyLlvHyI5WrMBcT8OfMdvmUtQgvagWmUb2b1
-         4XuMCez6oYO+woXo2FL/1yQC1g6VURdLlzbeDosuF4JotAssQQm/qPx0U4IaVDaMS5IX
-         P6Qoq1lXm0W3aMEPI88HSgnLcAGx2onATBE2GvLoxcsob3nXX+Ptrsum3WL1PDtmiP/g
-         t53/Vf6tvOOkjUyREPcEc2cXNB2jMTZzL42SWGBS6IeNuojP6a98Y7oi38wh0KOyuu0x
-         /dx5aw0jTgq7cSc/uaoGORCOUde/upybcF1CbZkEsqLF2s6bIxTTf8GAVSi5riERHC11
-         cTIQ==
-X-Gm-Message-State: APjAAAUTpwsL4HS98CvRkVHGYvOAp7PUyO/d9kU7bLUX+a6q7QPAi2ft
-        lOBRyBO0rPxQJQORGJuDZt/XB3cgbfLv8pD0hu8CnQ==
-X-Google-Smtp-Source: APXvYqyhaBupFPdxR9GuF8DCLqL3bWPkA59GP7Uflc2DvigCdd8wZzZQzSTTp4q1qRVGG3M64NLke2IWZ0RBxoBZK38=
-X-Received: by 2002:ac5:c844:: with SMTP id g4mr1195612vkm.25.1580978770270;
- Thu, 06 Feb 2020 00:46:10 -0800 (PST)
-MIME-Version: 1.0
-References: <1580736940-6985-1-git-send-email-mkshah@codeaurora.org>
- <1580736940-6985-6-git-send-email-mkshah@codeaurora.org> <20200203170832.GA38466@bogus>
- <0d7f7ade-3a1e-5428-d851-f1a886f58712@codeaurora.org> <20200204152132.GA44858@bogus>
- <6ff7c82d-4204-a339-4070-0154ab4515f1@codeaurora.org> <20200205140603.GB38466@bogus>
- <CAPDyKFoyepN2VX4COMomp1e9dXPozzrgCdcy0paee2jp8Wm3YA@mail.gmail.com> <20200205161816.GD38466@bogus>
-In-Reply-To: <20200205161816.GD38466@bogus>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 6 Feb 2020 09:45:34 +0100
-Message-ID: <CAPDyKFqaA7oN2+oLS=Puw+jQXke_ErGQAWYuTuU-6PS7mo5YbQ@mail.gmail.com>
-Subject: Re: [PATCH v3 5/7] drivers: firmware: psci: Add hierarchical domain
- idle states converter
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Content-Type: text/plain; charset="UTF-8"
+        Thu, 6 Feb 2020 03:52:27 -0500
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 Feb 2020 14:22:24 +0530
+Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 06 Feb 2020 14:22:02 +0530
+Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
+        id 2DE7628E6; Thu,  6 Feb 2020 14:22:02 +0530 (IST)
+From:   Harigovindan P <harigovi@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Harigovindan P <harigovi@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        kalyan_t@codeaurora.org, nganji@codeaurora.org
+Subject: [v1] drm/msm/dsi: save pll state before dsi host is powered off
+Date:   Thu,  6 Feb 2020 14:21:54 +0530
+Message-Id: <1580979114-16447-1-git-send-email-harigovi@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 5 Feb 2020 at 17:18, Sudeep Holla <sudeep.holla@arm.com> wrote:
->
-> On Wed, Feb 05, 2020 at 04:55:17PM +0100, Ulf Hansson wrote:
-> > On Wed, 5 Feb 2020 at 15:06, Sudeep Holla <sudeep.holla@arm.com> wrote:
-> > >
-> > > On Wed, Feb 05, 2020 at 05:53:00PM +0530, Maulik Shah wrote:
-> > > >
-> > > > On 2/4/2020 8:51 PM, Sudeep Holla wrote:
-> > > > > On Tue, Feb 04, 2020 at 10:22:42AM +0530, Maulik Shah wrote:
-> > > > > > On 2/3/2020 10:38 PM, Sudeep Holla wrote:
-> > > > > > > On Mon, Feb 03, 2020 at 07:05:38PM +0530, Maulik Shah wrote:
-> > > > > > > > From: Ulf Hansson <ulf.hansson@linaro.org>
-> > > > > > > >
-> > > > > > > > If the hierarchical CPU topology is used, but the OS initiated mode isn't
-> > > > > > > > supported, we need to rely solely on the regular cpuidle framework to
-> > > > > > > > manage the idle state selection, rather than using genpd and its
-> > > > > > > > governor.
-> > > > > > > >
-> > > > > > > > For this reason, introduce a new PSCI DT helper function,
-> > > > > > > > psci_dt_pm_domains_parse_states(), which parses and converts the
-> > > > > > > > hierarchically described domain idle states from DT, into regular flattened
-> > > > > > > > cpuidle states. The converted states are added to the existing cpuidle
-> > > > > > > > driver's array of idle states, which make them available for cpuidle.
-> > > > > > > >
-> > > > > > > And what's the main motivation for this if OSI is not supported in the
-> > > > > > > firmware ?
-> > > > > > Hi Sudeep,
-> > > > > >
-> > > > > > Main motivation is to do last-man activities before the CPU cluster can
-> > > > > > enter a deep idle state.
-> > > > > >
-> > > > > Details on those last-man activities will help the discussion. Basically
-> > > > > I am wondering what they are and why they need to done in OSPM ?
-> > > >
-> > > > Hi Sudeep,
-> > > >
-> > > > there are cases like,
-> > > >
-> > > > Last cpu going to deepest idle mode need to lower various resoruce
-> > > > requirements (for eg DDR freq).
-> > > >
-> > >
-> > > In PC mode, only PSCI implementation knows the last man and there shouldn't
-> > > be any notion of it in OS. If you need it, you may need OSI. You are still
-> > > mixing up the things. NACK for any such approach, sorry.
-> >
-> > Sudeep, I don't quite agree with your NACK to this. At least not yet. :-)
-> >
->
-> OK, I am not surprised :-)
+Save pll state before dsi host is powered off. Without this change
+some register values gets resetted.
 
-Apologize for troubling you again. :-)
+Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+---
 
->
-> > I do agree that the best suited solution seems to be OSI, as to
-> > support this kind of SoC requirements.
-> >
->
-> That's the main point. We need to draw some line as what we want to do
-> with PC and OSI mode. If we plan to take up all last man responsibility
-> in the kernel, what's the point in not supporting OSI in the firmware
-> then ? I can't buy it yet.
->
-> > However, if for some reason the PC mode is being used, we could still
-> > allow Linux to control "last-man activities" as it knows what each CPU
-> > has voted for when going idle. Yes, the PSCI FW decides in the end,
-> > but that doesn't really matter. Or is there another technical reason
-> > to why you object?
-> >
->
-> Precisely, FW decides and let it. Just because we can do in the kernel
-> doesn't mean we must do it. It's clear in the spec and doing it in the
-> kernel will be sub-optimal if PSCI f/w aborted entering the deeper
-> state that required some action in the first place.
+Changes in v1:
+	- Saving pll state before dsi host is powered off.
+	- Removed calling of save state in post_disable since everything
+	would be resetted and it would save only resetted values.
 
-Yes, it may be suboptimal for PC-mode.
+ drivers/gpu/drm/msm/dsi/dsi_manager.c | 5 +++++
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 4 ----
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-On the other hand, we already fire CPU PM notifiers while exit/enter
-idle states (except for WFI). Those may also be suboptimal for kind of
-the similar reasons.
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+index 104115d..a987efe 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+@@ -506,6 +506,7 @@ static void dsi_mgr_bridge_post_disable(struct drm_bridge *bridge)
+ 	struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
+ 	struct mipi_dsi_host *host = msm_dsi->host;
+ 	struct drm_panel *panel = msm_dsi->panel;
++	struct msm_dsi_pll *src_pll;
+ 	bool is_dual_dsi = IS_DUAL_DSI();
+ 	int ret;
+ 
+@@ -539,6 +540,10 @@ static void dsi_mgr_bridge_post_disable(struct drm_bridge *bridge)
+ 								id, ret);
+ 	}
+ 
++	/* Save PLL status if it is a clock source */
++	src_pll = msm_dsi_phy_get_pll(msm_dsi->phy);
++	msm_dsi_pll_save_state(src_pll);
++
+ 	ret = msm_dsi_host_power_off(host);
+ 	if (ret)
+ 		pr_err("%s: host %d power off failed,%d\n", __func__, id, ret);
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+index b0cfa67..f509ebd 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+@@ -724,10 +724,6 @@ void msm_dsi_phy_disable(struct msm_dsi_phy *phy)
+ 	if (!phy || !phy->cfg->ops.disable)
+ 		return;
+ 
+-	/* Save PLL status if it is a clock source */
+-	if (phy->usecase != MSM_DSI_PHY_SLAVE)
+-		msm_dsi_pll_save_state(phy->pll);
+-
+ 	phy->cfg->ops.disable(phy);
+ 
+ 	dsi_phy_regulator_disable(phy);
+-- 
+2.7.4
 
-Maybe it's not the best argument, but it sounds like allowing us to
-control cluster power on/off notifications for last-man activities,
-would just conform to the similar behaviour we already have. No?
-
->
-> > As a matter of fact, if we allow support for PC mode with
-> > "last-man-activities", it would allow us to make a fair
-> > performance/energy comparison between the two PSCI CPU suspend modes,
-> > for the same SoC. I would be thrilled about looking into doing such
-> > tests, I bet you are as well!?
-> >
->
-> I was, but not anymore, especially if we want such changes in the kernel
-> to do so.
->
-> Just use OSI as that was the point of adding all these after years of
-> discussion claiming it's more optimal compared to PC. Now telling that
-> you need more changes to compare it with PC just doesn't make any sense
-> at all to me.
-
-Fair enough.
-
-I was just pondering over if there are other reasons to why we may want this.
-
-One other thing that could be problematic to support, is when are
-other resources, I/O controllers for example, sharing the same power
-rail as a cluster. When such controller is in use, idle states of the
-cluster must be prevented. Without using genpd to model the CPU
-topology, it may be difficult to deal with this.
-
-Of course, using PC mode when trying to deal with this
-platform/board-requirement would also be suboptimal. In other words,
-your argument about when using OSI vs PC mode, still stands.
-
-Kind regards
-Uffe
