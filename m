@@ -2,120 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 538F515524A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 07:10:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B64D015527C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 07:41:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726451AbgBGGK4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Feb 2020 01:10:56 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:40409 "EHLO
+        id S1726607AbgBGGlM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 01:41:12 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:17404 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726587AbgBGGKz (ORCPT
+        by vger.kernel.org with ESMTP id S1726587AbgBGGlL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Feb 2020 01:10:55 -0500
+        Fri, 7 Feb 2020 01:41:11 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581055855; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1581057671; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=9dWo6uK9jKsDwewb71Iojt0lLBywexIt8UvMHWOd8gc=;
- b=FIhapa/PnmiAkkjHq4G/8ziMmeYhJkEvaWhBwyny2AhURKQ6mLr22gMF+PAMp7J/0IqxExqu
- EVYvaD3URjup2djeHt2IQP3vV7b9EdEN15q7Uzh/6ApnCVFQgcIGMq3bngy6nJ/luc7n6YCm
- TesmAiagWPhsLGyvb9YCDiYAEHI=
+ MIME-Version: Sender; bh=YcmWYUVZoZZ5xp+hXjD/DbuPvpwvOawaFCYTP2ks1V4=;
+ b=BJfiyr4WQ8vfrVQa24l9Ix26sXTZqFNCdMMKwGpDHlYWFv6jN4qnLLtxV01suGzs6g6xlUxv
+ yzuh2pj9X9FkXk8dNihM6KIYctABzwHYrhgYUQ0FTniBhJBnTUeuGhDaBsKMNWILh4bZaRca
+ Wg4uR2lNmBacd/D2TGTfD7L2HvQ=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e3cff6a.7f53327aeb58-smtp-out-n03;
- Fri, 07 Feb 2020 06:10:50 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e3d0681.7f79dcb39dc0-smtp-out-n02;
+ Fri, 07 Feb 2020 06:41:05 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 24B6BC4479C; Fri,  7 Feb 2020 06:10:50 +0000 (UTC)
+        id 74596C43383; Fri,  7 Feb 2020 06:41:04 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A6F35C43383;
-        Fri,  7 Feb 2020 06:10:49 +0000 (UTC)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E2126C433CB;
+        Fri,  7 Feb 2020 06:41:03 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 07 Feb 2020 11:40:49 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree-owner@vger.kernel.org
-Subject: Re: [PATCHv2 2/2] dt-bindings: watchdog: Add compatible for QCS404,
- SC7180, SDM845, SM8150
-In-Reply-To: <20200206183808.GA5019@bogus>
-References: <cover.1580570160.git.saiprakash.ranjan@codeaurora.org>
- <ff71077aa09c489b2b072c6f5605dccb96f60051.1580570160.git.saiprakash.ranjan@codeaurora.org>
- <20200206183808.GA5019@bogus>
-Message-ID: <f26464226f74dffe2db0583b9482a489@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
+Date:   Fri, 07 Feb 2020 12:11:03 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Rakesh Pillai <pillair@codeaurora.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH v6] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module
+ device node
+In-Reply-To: <1580822300-4491-1-git-send-email-pillair@codeaurora.org>
+References: <1580822300-4491-1-git-send-email-pillair@codeaurora.org>
+Message-ID: <0ae6edd12623c35600d598a219322f44@codeaurora.org>
+X-Sender: sibis@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+Hey Rakesh,
 
-On 2020-02-07 00:08, Rob Herring wrote:
-> On Sat, Feb 01, 2020 at 08:59:49PM +0530, Sai Prakash Ranjan wrote:
->> Add missing compatible for watchdog timer on QCS404,
->> SC7180, SDM845 and SM8150 SoCs.
+On 2020-02-04 18:48, Rakesh Pillai wrote:
+> Add device node for the ath10k SNOC platform driver probe
+> and add resources required for WCN3990 on sc7180 soc.
 > 
-> That's not what the commit does. You are changing what's valid.
+> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  5 +++++
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27 
+> +++++++++++++++++++++++++++
+>  2 files changed, 32 insertions(+)
 > 
-> One string was valid, now 2 are required.
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index 388f50a..167f68ac 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> @@ -287,6 +287,11 @@
+>  	vdda-pll-supply = <&vreg_l4a_0p8>;
+>  };
 > 
+> +&wifi {
+> +	status = "okay";
 
-Does this look good?
+I can see that wlan needs to
+add the SIDs 0xc2, 0xc3 as well.
+Without that I expect wlan will
+not come up.
 
-diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml 
-b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-index 46d6aad5786a..3378244b67cd 100644
---- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-+++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-@@ -14,19 +14,22 @@ allOf:
+> +	qcom,msa-fixed-perm;
 
-  properties:
-    compatible:
--    items:
-+    oneOf:
-        - enum:
-            - qcom,apss-wdt-qcs404
-            - qcom,apss-wdt-sc7180
-            - qcom,apss-wdt-sdm845
-            - qcom,apss-wdt-sm8150
--          - qcom,kpss-timer
--          - qcom,kpss-wdt
-            - qcom,kpss-wdt-apq8064
-            - qcom,kpss-wdt-ipq4019
-            - qcom,kpss-wdt-ipq8064
-            - qcom,kpss-wdt-msm8960
-+          - qcom,kpss-timer
-+          - qcom,kpss-wdt
-            - qcom,scss-timer
-+      - const: qcom,kpss-timer
-+      - const: qcom,kpss-wdt
-+      - const: qcom,scss-timer
+are you sure this is required when
+used in conjunction with coreboot?
 
-    reg:
-      maxItems: 1
-
-Thanks,
-Sai
+> +};
+> +
+>  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
+> 
+>  &qspi_clk {
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 8011c5f..e3e8610 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -75,6 +75,11 @@
+>  			reg = <0x0 0x80900000 0x0 0x200000>;
+>  			no-map;
+>  		};
+> +
+> +		wlan_fw_mem: memory@93900000 {
+> +			reg = <0 0x93900000 0 0x200000>;
+> +			no-map;
+> +		};
+>  	};
+> 
+>  	cpus {
+> @@ -1490,6 +1495,28 @@
+> 
+>  			#freq-domain-cells = <1>;
+>  		};
+> +
+> +		wifi: wifi@18800000 {
+> +			compatible = "qcom,wcn3990-wifi";
+> +			reg = <0 0x18800000 0 0x800000>;
+> +			reg-names = "membase";
+> +			iommus = <&apps_smmu 0xc0 0x1>;
+> +			interrupts =
+> +				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
+> +				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
+> +				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
+> +				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
+> +				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
+> +				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
+> +				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
+> +				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
+> +				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
+> +				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
+> +				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
+> +				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
+> +			memory-region = <&wlan_fw_mem>;
+> +			status = "disabled";
+> +		};
+>  	};
+> 
+>  	thermal-zones {
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
