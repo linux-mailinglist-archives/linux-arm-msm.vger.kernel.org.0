@@ -2,72 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F68D155FBB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 21:40:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CA87155FF8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 21:43:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727118AbgBGUkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Feb 2020 15:40:22 -0500
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:33911 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727018AbgBGUkW (ORCPT
+        id S1727442AbgBGUn0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 15:43:26 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:17791 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727012AbgBGUnZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Feb 2020 15:40:22 -0500
-Received: by mail-oi1-f195.google.com with SMTP id l136so3315572oig.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2020 12:40:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=8cDRXBFOpE9J1p6S5H+HXSQg9q3m7pUJ3iUuQ5MPcDc=;
-        b=G3vURSQOvSfym6GqL5qCR0Eef9YA9bo0RtU0UNSHZ0P154liq6nj0pP6gcjlFqJJPA
-         pKRQnkScBgv932UZHHNblcbuEqzuQEzPM4yp7Nm998F2nvPItHJ3Ww86OtAhmrCQq+nI
-         pKIm6N7lKoBlralx8ETPINJ1E+AnXPlOwJdNOgmWsgIaWAQBcgIsfne+6cMtPhGZTouS
-         KhX63qJv3f3PpVpkavcRkfRhDEkZgWtVbogMANo4KNIi2bptCtgkKE6QGBA7TGY3eShL
-         Az3jTVCoxKK0zJncfJ0H2PBVgz1Pz/iWQoEx1CaAejuBuCcK+rZ/kN/STxyjt5y3quR3
-         S7Lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=8cDRXBFOpE9J1p6S5H+HXSQg9q3m7pUJ3iUuQ5MPcDc=;
-        b=G+1zpFj0n2bDO4SkwwpWvt1rKjkpqaDDu7MqAONZ4LinwOXH9p4bAwcDTaOV0LTCLL
-         vUB49Czdb++7gMo3ZiqE/IIYYkEVrdTCHwi0WXGUYuluvo9l54IcCKVDqHzqqiiyeUEN
-         RtELIl8UX8Y9PWhZ5r27w8FDKxpCFGZQhassoMIKggFo2Tp34qCAqumuc5sAZGqV9Q2a
-         J9n1fFhx7WGuxeQkloNuqvjNsOf5iTnwEtvcygTHeEqSzcFGd2OF2MSyDVJlYM93MOHn
-         YVsGRRPpXsGVR/v40Lp6jo3fkWLVMeoNrDwqeaiwxdXtZepfPkQCJi5Quwtuslm2+bjH
-         HvuQ==
-X-Gm-Message-State: APjAAAUZFYPrF+TYo8JtoD4xl9NyZUq6BwWk1EoZ3K7VIEn8Wj1Cwdoy
-        hJqfUf8Pyv/f5gXqGDKsUUAefIH9mglZfUq5VYA=
-X-Google-Smtp-Source: APXvYqzN7ajbuLnyLYQwurekLKD61VAgl70puXn2VR1xZnNL2UAjutIg/nsSAZ38o1qV0L9IzzdWg9SxMg/UJXSMP94=
-X-Received: by 2002:aca:c691:: with SMTP id w139mr3358062oif.17.1581108021108;
- Fri, 07 Feb 2020 12:40:21 -0800 (PST)
+        Fri, 7 Feb 2020 15:43:25 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1581108205; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=RSf3QhfauvaQZ3vgECy5h0hwpHIoKPQESdoOHFRylBE=; b=waELrOMfcdj55HHipiCVtzzuWJXi7KyvT/46uccCIdtVib4P99MUKWOUb4osIE2T1X/cWBV8
+ Cx80u+0klK3yJMtwHCM69pj+xxhBoeYwveuKR/LwhUT8e2MTrPpjxI63HtAtCCVTP5fXR/Kk
+ aqd0oWIdMpQhxNMj41JolQ1iK0M=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e3dcbe8.7f8e37061030-smtp-out-n01;
+ Fri, 07 Feb 2020 20:43:20 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C49D1C43383; Fri,  7 Feb 2020 20:43:19 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jackp)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 11BC5C433CB;
+        Fri,  7 Feb 2020 20:43:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 11BC5C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jackp@codeaurora.org
+Date:   Fri, 7 Feb 2020 12:43:15 -0800
+From:   Jack Pham <jackp@codeaurora.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        gregkh@linuxfoundation.org, balbi@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Subject: Re: [PATCH v5 09/18] usb: dwc3: qcom: Add support for usb-conn-gpio
+ connectors
+Message-ID: <20200207204315.GA18464@jackp-linux.qualcomm.com>
+References: <20200207201654.641525-1-bryan.odonoghue@linaro.org>
+ <20200207201654.641525-10-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-Received: by 2002:a4a:d508:0:0:0:0:0 with HTTP; Fri, 7 Feb 2020 12:40:20 -0800 (PST)
-Reply-To: auch197722@gmail.com
-From:   "Mr. Theophilus Odadudu" <cristinamedina0010@gmail.com>
-Date:   Fri, 7 Feb 2020 15:40:20 -0500
-Message-ID: <CAPNvSTib=Bg9sRNNHErSAmBj=QFzRMn8DZQEN5XBwkcVkSHcMw@mail.gmail.com>
-Subject: LETTER OF INQUIRY
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200207201654.641525-10-bryan.odonoghue@linaro.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Good Day,
+Hi Bryan,
 
-I work as a clerk in a Bank here in Nigeria, I have a very
-confidential Business Proposition for you. There is a said amount of
-money floating in the bank unclaimed, belonging to the bank Foreign
-customer who die with his family in the Ethiopian Airline crash of
-March 11, 2019.
+On Fri, Feb 07, 2020 at 08:16:45PM +0000, Bryan O'Donoghue wrote:
+> This patch adds a routine to find a usb-conn-gpio in the main DWC3 code.
+> This will be useful in a subsequent patch where we will reuse the current
+> extcon VBUS notifier with usb-conn-gpio.
+> 
+> ---
+>  drivers/usb/dwc3/dwc3-qcom.c | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 261af9e38ddd..fc66ca3316ef 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -550,6 +550,21 @@ static const struct dwc3_acpi_pdata sdm845_acpi_pdata = {
+>  	.ss_phy_irq_index = 2
+>  };
+>  
+> +static bool dwc3_qcom_find_gpio_usb_connector(struct platform_device *pdev)
 
-I seek your good collaboration to move the fund for our benefit. we
-have agreed that 40% be yours once you help claim.
+Why not just squash this patch into "[PATCH v5 12/18] usb: dwc3: qcom:
+Enable gpio-usb-conn based role-switching" where it is actually used?
 
-Do get back to with 1) Your Full Name: (2) Residential Address: (3)
-Phone, Mobile  (4) Scan Copy of Your ID. to apply for claims of the
-funds.
-
-Regards
-Theophilus Odadudu
+Jack
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
