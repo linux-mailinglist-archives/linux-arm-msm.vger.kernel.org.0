@@ -2,210 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 26A2815604D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 21:59:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BD401560B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 22:25:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727496AbgBGU6p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Feb 2020 15:58:45 -0500
-Received: from mail.serbinski.com ([162.218.126.2]:46960 "EHLO
-        mail.serbinski.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727071AbgBGU6o (ORCPT
+        id S1727341AbgBGVY4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 16:24:56 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:34872 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727129AbgBGVY4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Feb 2020 15:58:44 -0500
-Received: from localhost (unknown [127.0.0.1])
-        by mail.serbinski.com (Postfix) with ESMTP id 53BA1D00725;
-        Fri,  7 Feb 2020 20:50:42 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at serbinski.com
-Received: from mail.serbinski.com ([127.0.0.1])
-        by localhost (mail.serbinski.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id Wy_gu-ayd8MR; Fri,  7 Feb 2020 15:50:34 -0500 (EST)
-Received: from anet (ipagstaticip-7ac5353e-e7de-3a0d-ff65-4540e9bc137f.sdsl.bell.ca [142.112.15.192])
-        (using TLSv1 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mail.serbinski.com (Postfix) with ESMTPSA id 135DFD00716;
-        Fri,  7 Feb 2020 15:50:28 -0500 (EST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.serbinski.com 135DFD00716
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=serbinski.com;
-        s=default; t=1581108628;
-        bh=K2MdRRtZpB4Txo2PfziKzlrlKIrsC2ebzByAwXpZmVk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=2smk52nQv3+OTl3zpA97hLFp9Fba8Ay/u/4sP4/D3VrcWlKlOZ+tnUOAMETCd3m2V
-         Pd12mwqhEn1Ri/o1P2FuW64VysYKAXnq4yFuQ2w8TQ3gdZJYpqoZd5BxTmhD2+bXFM
-         /9+l6xqTRyCZusnujvfxQg5JA7UZ6l45YxWqNLwQ=
-From:   Adam Serbinski <adam@serbinski.com>
-To:     Mark Brown <broonie@kernel.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Adam Serbinski <adam@serbinski.com>,
-        Andy Gross <agross@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Patrick Lai <plai@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 8/8] ASoC: qcom: apq8096: add kcontrols to set PCM rate
-Date:   Fri,  7 Feb 2020 15:50:13 -0500
-Message-Id: <20200207205013.12274-9-adam@serbinski.com>
-X-Mailer: git-send-email 2.21.1
-In-Reply-To: <20200207205013.12274-1-adam@serbinski.com>
-References: <20200207205013.12274-1-adam@serbinski.com>
+        Fri, 7 Feb 2020 16:24:56 -0500
+Received: by mail-wr1-f66.google.com with SMTP id w12so583406wrt.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2020 13:24:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Z63nmHRlBmWLm42TGgaeYFUrGEwxVh8/NUBVm4zNBBY=;
+        b=UnkFtEoPtv3cND7lEewEyQP0UM1oP9UfH5z42CIQeluCCqWuhqoqakKxsGPiFr4gzM
+         T8TYI2CNT4uAJ5B7Pku3n5hY02jhoB1HFyMW1+w3uLN8NN2gI4KnpZDXPtk/p3nfNT+9
+         3lenpitfS/UjIw0y6a3gaRxR8KysD/U2e9ESrz/wdKidkvtqQ0gfvgwx4tb9YccBjGPY
+         FtaRRbanhmtQJl0KiqWfdiONHnYqJNCXJP0m1YKquzKhhHpoBJPuWj++cAHAvzTLmwqC
+         qq5HNi6B65jj0fCY9WoADo6mWpCCGiGf5o6G3H0LnrNy0Fu6SF/FhRc6J+gzS35yhwmt
+         n63g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Z63nmHRlBmWLm42TGgaeYFUrGEwxVh8/NUBVm4zNBBY=;
+        b=PvLAhV5zMQiW5HSy88QZpZLXLxdR8fy65oAw5mFAcBYGTdfzTvCMszSjEST1N2KnbI
+         es7gxQkTbVA3ccAjUm1TQHmdbRU75k+Nff+cnX/Vo7UKAzpWnJKOjST01h3K89xZ4W0d
+         CHLex02d7H3tG3tXvAKOPtyUKig60BBvf0XTinmPE1Qmt9W4VsdanrFlvFOX1xEQyotw
+         AILKc692OpMuae9+X/ma0z6HKha1P8jMHOFc+XcDI3PJikrlBvgHIS/VFUBOV+Krf37Y
+         wwEHlrMy+/0cBR+WG1waNOO967ieXFXay3df8rMN4OUYqA7vCCw9cRYtVpiK/dcm1pgE
+         s/iQ==
+X-Gm-Message-State: APjAAAXo25BH4WawKm4tzjxkUwYCch4CSpqcTVx26h9uLEBbB632FsDt
+        vO0W1GCxLpQOAj9SyCcbWOJRSA==
+X-Google-Smtp-Source: APXvYqxhjdrSLmr5eYFYl8KoH8+86JTXvqpPSIgO2DOaDze3FoHSCBDTDC4Y6agRQ/Te8jWRoF2QAQ==
+X-Received: by 2002:adf:eb51:: with SMTP id u17mr1019344wrn.29.1581110694446;
+        Fri, 07 Feb 2020 13:24:54 -0800 (PST)
+Received: from [192.168.0.38] ([176.61.57.127])
+        by smtp.gmail.com with ESMTPSA id e6sm4742647wme.3.2020.02.07.13.24.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Feb 2020 13:24:53 -0800 (PST)
+Subject: Re: [PATCH v5 09/18] usb: dwc3: qcom: Add support for usb-conn-gpio
+ connectors
+To:     Jack Pham <jackp@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        gregkh@linuxfoundation.org, balbi@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+References: <20200207201654.641525-1-bryan.odonoghue@linaro.org>
+ <20200207201654.641525-10-bryan.odonoghue@linaro.org>
+ <20200207204315.GA18464@jackp-linux.qualcomm.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Message-ID: <c1fab2e5-a11d-2f08-92a0-59c075153ed5@linaro.org>
+Date:   Fri, 7 Feb 2020 21:24:58 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200207204315.GA18464@jackp-linux.qualcomm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This makes it possible for the backend sample rate to be
-set to 8000 or 16000 Hz, depending on the needs of the HFP
-call being set up.
+On 07/02/2020 20:43, Jack Pham wrote:
+> Hi Bryan,
+> 
+> On Fri, Feb 07, 2020 at 08:16:45PM +0000, Bryan O'Donoghue wrote:
+>> This patch adds a routine to find a usb-conn-gpio in the main DWC3 code.
+>> This will be useful in a subsequent patch where we will reuse the current
+>> extcon VBUS notifier with usb-conn-gpio.
+>>
+>> ---
+>>   drivers/usb/dwc3/dwc3-qcom.c | 15 +++++++++++++++
+>>   1 file changed, 15 insertions(+)
+>>
+>> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+>> index 261af9e38ddd..fc66ca3316ef 100644
+>> --- a/drivers/usb/dwc3/dwc3-qcom.c
+>> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+>> @@ -550,6 +550,21 @@ static const struct dwc3_acpi_pdata sdm845_acpi_pdata = {
+>>   	.ss_phy_irq_index = 2
+>>   };
+>>   
+>> +static bool dwc3_qcom_find_gpio_usb_connector(struct platform_device *pdev)
+> 
+> Why not just squash this patch into "[PATCH v5 12/18] usb: dwc3: qcom:
+> Enable gpio-usb-conn based role-switching" where it is actually used?
 
-Signed-off-by: Adam Serbinski <adam@serbinski.com>
-CC: Andy Gross <agross@kernel.org>
-CC: Mark Rutland <mark.rutland@arm.com>
-CC: Liam Girdwood <lgirdwood@gmail.com>
-CC: Patrick Lai <plai@codeaurora.org>
-CC: Banajit Goswami <bgoswami@codeaurora.org>
-CC: Jaroslav Kysela <perex@perex.cz>
-CC: Takashi Iwai <tiwai@suse.com>
-CC: alsa-devel@alsa-project.org
-CC: linux-arm-msm@vger.kernel.org
-CC: devicetree@vger.kernel.org
-CC: linux-kernel@vger.kernel.org
+IMO its best practice to have smaller patches.
+
+This one adds the routine.
+12/18 uses the routine but also
+
+- Triggers a notifer role-switch binding
+- Adds an if/else for extcon
+
+Believe it or not I had an internal debate about splitting #12 into two 
+patches !
+
 ---
- sound/soc/qcom/apq8096.c | 92 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 90 insertions(+), 2 deletions(-)
-
-diff --git a/sound/soc/qcom/apq8096.c b/sound/soc/qcom/apq8096.c
-index 1edcaa15234f..882f2c456321 100644
---- a/sound/soc/qcom/apq8096.c
-+++ b/sound/soc/qcom/apq8096.c
-@@ -16,6 +16,9 @@
- #define MI2S_BCLK_RATE			1536000
- #define PCM_BCLK_RATE			1024000
- 
-+static int pri_pcm_sample_rate = 16000;
-+static int quat_pcm_sample_rate = 16000;
-+
- static int msm_snd_hw_params(struct snd_pcm_substream *substream,
- 			     struct snd_pcm_hw_params *params)
- {
-@@ -33,10 +36,15 @@ static int msm_snd_hw_params(struct snd_pcm_substream *substream,
- 	switch (cpu_dai->id) {
- 	case PRIMARY_PCM_RX:
- 	case PRIMARY_PCM_TX:
-+		rate->min = pri_pcm_sample_rate;
-+		rate->max = pri_pcm_sample_rate;
-+		channels->min = 1;
-+		channels->max = 1;
-+		break;
- 	case QUATERNARY_PCM_RX:
- 	case QUATERNARY_PCM_TX:
--		rate->min = 16000;
--		rate->max = 16000;
-+		rate->min = quat_pcm_sample_rate;
-+		rate->max = quat_pcm_sample_rate;
- 		channels->min = 1;
- 		channels->max = 1;
- 		break;
-@@ -121,6 +129,83 @@ static struct snd_soc_ops apq8096_ops = {
- 	.startup = msm_snd_startup,
- };
- 
-+static char const *pcm_sample_rate_text[] = {"8 kHz", "16 kHz"};
-+static const struct soc_enum pcm_snd_enum =
-+		SOC_ENUM_SINGLE_EXT(2, pcm_sample_rate_text);
-+
-+static int get_sample_rate_idx(int sample_rate)
-+{
-+	int sample_rate_idx = 0;
-+
-+	switch (sample_rate) {
-+	case 8000:
-+		sample_rate_idx = 0;
-+		break;
-+	case 16000:
-+	default:
-+		sample_rate_idx = 1;
-+		break;
-+	}
-+
-+	return sample_rate_idx;
-+}
-+
-+static int pri_pcm_sample_rate_get(struct snd_kcontrol *kcontrol,
-+				   struct snd_ctl_elem_value *ucontrol)
-+{
-+	ucontrol->value.integer.value[0] =
-+		get_sample_rate_idx(pri_pcm_sample_rate);
-+	return 0;
-+}
-+
-+static int quat_pcm_sample_rate_get(struct snd_kcontrol *kcontrol,
-+				    struct snd_ctl_elem_value *ucontrol)
-+{
-+	ucontrol->value.integer.value[0] =
-+		get_sample_rate_idx(quat_pcm_sample_rate);
-+	return 0;
-+}
-+
-+static int get_sample_rate(int idx)
-+{
-+	int sample_rate_val = 0;
-+
-+	switch (idx) {
-+	case 0:
-+		sample_rate_val = 8000;
-+		break;
-+	case 1:
-+	default:
-+		sample_rate_val = 16000;
-+		break;
-+	}
-+
-+	return sample_rate_val;
-+}
-+
-+static int pri_pcm_sample_rate_put(struct snd_kcontrol *kcontrol,
-+				   struct snd_ctl_elem_value *ucontrol)
-+{
-+	pri_pcm_sample_rate =
-+		get_sample_rate(ucontrol->value.integer.value[0]);
-+	return 0;
-+}
-+
-+static int quat_pcm_sample_rate_put(struct snd_kcontrol *kcontrol,
-+				    struct snd_ctl_elem_value *ucontrol)
-+{
-+	quat_pcm_sample_rate =
-+		get_sample_rate(ucontrol->value.integer.value[0]);
-+	return 0;
-+}
-+
-+static const struct snd_kcontrol_new card_controls[] = {
-+	SOC_ENUM_EXT("PRI_PCM SampleRate", pcm_snd_enum,
-+		     pri_pcm_sample_rate_get, pri_pcm_sample_rate_put),
-+	SOC_ENUM_EXT("QUAT_PCM SampleRate", pcm_snd_enum,
-+		     quat_pcm_sample_rate_get, quat_pcm_sample_rate_put),
-+};
-+
- static int apq8096_init(struct snd_soc_pcm_runtime *rtd)
- {
- 	struct snd_soc_dai *codec_dai = rtd->codec_dai;
-@@ -182,6 +267,9 @@ static int apq8096_platform_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_card_register;
- 
-+	snd_soc_add_card_controls(card, card_controls,
-+				  ARRAY_SIZE(card_controls));
-+
- 	return 0;
- 
- err_card_register:
--- 
-2.21.1
+bod
 
