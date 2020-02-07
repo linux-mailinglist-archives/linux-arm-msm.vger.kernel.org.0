@@ -2,195 +2,266 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id ABFF615508E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 03:10:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C4D51155234
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 06:57:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726597AbgBGCKm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Feb 2020 21:10:42 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:45654 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727303AbgBGCKm (ORCPT
+        id S1726626AbgBGF5x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 00:57:53 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:17315 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726587AbgBGF5w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Feb 2020 21:10:42 -0500
-Received: by mail-pl1-f193.google.com with SMTP id b22so334104pls.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2020 18:10:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VAVIgonuO8Se46gM7TZHTGf57NWCjrEw0kdtkxk5MAE=;
-        b=P4AOt3BEooB/Tl2yVFKs/aOaf7TB1El8Spw0tkjNqk3twBAiqGjaXOoPeTtXQVUxdT
-         ZMYIBvYisCX4bq647fel1qHETgRGizKCZNToQr12BPkRqDpwh/0K/Lxnz2XI+1t8iczU
-         7Skc40j2Cfuts85/L2UYUJMYFjmU6BghrUCGHfVnEic8jEDI5SdEgVz7OPbPVkbWRXJu
-         y6+w7DVRp1DrnTegZOOtEpVugQuadMsFfG4NHu7BSfWTkN0h5IHUkAUOHBui+JyaLVu7
-         fUrXlSmLx+bUmvQfeSq57HR28DuYA7x43c1P9pyJ+Js6an7c14BmLjje22xeAygRfrWF
-         5Hfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VAVIgonuO8Se46gM7TZHTGf57NWCjrEw0kdtkxk5MAE=;
-        b=Fi+vvkWHIsIfBAwr2C1Qvjbqa5F4JyGjRDowDkHNvY6usnrZlFXrKvZ6EN/QxoM4ll
-         U1DJTWYt9EJP8oErAKCmrY35ULWyiTd+ld65dIlOlsTeIrLSNc/Ue2mqjU7VWHek7iOE
-         jZeHZyUJijpusuk7OuXceFXx+/qflkvSzH6G0NBqpeISXIDrv+L6xrOhmXBkgM1I2Q0b
-         mhyZWcgHhK3Ok/aeiCXnZ6yJ3Xwm5FQ29lrOX7fJHgDJjTSf0tvbKzW7q7CVTwp+CPgn
-         K4FKZ4HEvSQk4vxUuQBGWmn4zfipYRdOS2jXUCFAgFR4o/icuzhIXg4kR6SyKz4VIRXD
-         0LhQ==
-X-Gm-Message-State: APjAAAW1OMw5f/mDs9EfsLS1PpWuKBzaBsDYTVPuCUOCNUAieDMoUQnL
-        81UbtuVvfqlFzCX8PTLWlLNNkg==
-X-Google-Smtp-Source: APXvYqxmK8qkuBX/sQUDFfMFTA273uD7ksjAb7W/MTTcJT3HbgiQmZkV0nRTdxURNo1wEcX7IkPOqQ==
-X-Received: by 2002:a17:90a:fa94:: with SMTP id cu20mr1022281pjb.114.1581041440028;
-        Thu, 06 Feb 2020 18:10:40 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id k4sm693173pfg.40.2020.02.06.18.10.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Feb 2020 18:10:39 -0800 (PST)
-Date:   Thu, 6 Feb 2020 18:10:36 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Can Guo <cang@codeaurora.org>
-Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
-        hongwus@codeaurora.org, rnayak@codeaurora.org,
-        linux-scsi@vger.kernel.org, kernel-team@android.com,
-        saravanak@google.com, salyzyn@google.com,
-        Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v7 7/8] scsi: ufs-qcom: Delay specific time before gate
- ref clk
-Message-ID: <20200207021036.GT2514@yoga>
-References: <1580978008-9327-1-git-send-email-cang@codeaurora.org>
- <1580978008-9327-8-git-send-email-cang@codeaurora.org>
- <20200206203336.GQ2514@yoga>
- <9de3632cf0c65347684b8c5f4f3c63b3@codeaurora.org>
+        Fri, 7 Feb 2020 00:57:52 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1581055071; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=oImciDU87n0xS5Y1LqO5F4996XPNzKk5xGwYO+ozzeY=;
+ b=UK8FOQBrvya6aiNKoBRn5zsFQumgsJpj6LbaL7oC6aeiapQN7x4VRP0SZEl63Li6GgfA5Qir
+ tir8MuUHeHppNoKLS6li5VJb3/030zkur/HoAPA0ggiBCGk/nLY3Vlnwcx1KWcORmpE/kUeK
+ JQEMpPEXlzHKjUxwPEhEcBW1UWU=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e3cfc5e.7fc5a03c2998-smtp-out-n02;
+ Fri, 07 Feb 2020 05:57:50 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A741EC433A2; Fri,  7 Feb 2020 05:57:50 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BA404C433CB;
+        Fri,  7 Feb 2020 05:57:49 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9de3632cf0c65347684b8c5f4f3c63b3@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 07 Feb 2020 11:27:49 +0530
+From:   kgunda@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        rnayak@codeaurora.org, linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH V3 1/2] mfd: qcom-spmi-pmic: Convert bindings to .yaml
+ format
+In-Reply-To: <5e3c63d0.1c69fb81.c2bba.0957@mx.google.com>
+References: <1580997328-16365-1-git-send-email-kgunda@codeaurora.org>
+ <5e3c63d0.1c69fb81.c2bba.0957@mx.google.com>
+Message-ID: <b638e342aae1f6866cad33ff408f2894@codeaurora.org>
+X-Sender: kgunda@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 06 Feb 17:09 PST 2020, Can Guo wrote:
-
-> On 2020-02-07 04:33, Bjorn Andersson wrote:
-> > On Thu 06 Feb 00:33 PST 2020, Can Guo wrote:
-> > 
-> > > After enter hibern8, as UFS JEDEC ver 3.0 requires, a specific
-> > > gating wait
-> > > time is required before disable the device reference clock. If it is
-> > > not
-> > > specified, use the old delay.
-> > > 
-> > > Signed-off-by: Can Guo <cang@codeaurora.org>
-> > > Reviewed-by: Asutosh Das <asutoshd@codeaurora.org>
-> > > Reviewed-by: Hongwu Su <hongwus@codeaurora.org>
-> > > ---
-> > >  drivers/scsi/ufs/ufs-qcom.c | 22 +++++++++++++++++++---
-> > >  1 file changed, 19 insertions(+), 3 deletions(-)
-> > > 
-> > > diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> > > index 85d7c17..39eefa4 100644
-> > > --- a/drivers/scsi/ufs/ufs-qcom.c
-> > > +++ b/drivers/scsi/ufs/ufs-qcom.c
-> > > @@ -833,6 +833,8 @@ static int ufs_qcom_bus_register(struct
-> > > ufs_qcom_host *host)
-> > > 
-> > >  static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host,
-> > > bool enable)
-> > >  {
-> > > +	unsigned long gating_wait;
-> > > +
-> > >  	if (host->dev_ref_clk_ctrl_mmio &&
-> > >  	    (enable ^ host->is_dev_ref_clk_enabled)) {
-> > >  		u32 temp = readl_relaxed(host->dev_ref_clk_ctrl_mmio);
-> > > @@ -845,11 +847,25 @@ static void ufs_qcom_dev_ref_clk_ctrl(struct
-> > > ufs_qcom_host *host, bool enable)
-> > >  		/*
-> > >  		 * If we are here to disable this clock it might be immediately
-> > >  		 * after entering into hibern8 in which case we need to make
-> > > -		 * sure that device ref_clk is active at least 1us after the
-> > > +		 * sure that device ref_clk is active for specific time after
-> > >  		 * hibern8 enter.
-> > >  		 */
-> > > -		if (!enable)
-> > > -			udelay(1);
-> > > +		if (!enable) {
-> > > +			gating_wait = host->hba->dev_info.clk_gating_wait_us;
-> > > +			if (!gating_wait) {
-> > 
-> > Afaict this can't happen, because in patch 6 you check for gating_wait
-> > being 0 and if so set it to 0xff.
-> > 
+On 2020-02-07 00:36, Stephen Boyd wrote:
+> Quoting Kiran Gunda (2020-02-06 05:55:26)
+>> Convert the bindings from .txt to .yaml format.
+>> 
+>> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+>> ---
 > 
-> Sorry, I was intended to give clk_gating_wait_us values only if it is
-> a UFS3.0 device. I will revise patch 6/8.
+> Did something change? Is there a cover letter?
 > 
-
-Okay, sounds good.
-
-> > > +				udelay(1);
-> > > +			} else {
-> > > +				/*
-> > > +				 * bRefClkGatingWaitTime defines the minimum
-> > > +				 * time for which the reference clock is
-> > > +				 * required by device during transition from
-> > > +				 * HS-MODE to LS-MODE or HIBERN8 state. Give it
-> > > +				 * more time to be on the safe side.
-> > > +				 */
-> > > +				gating_wait += 10;
-> > > +				usleep_range(gating_wait, gating_wait + 10);
-> > 
-> > I presume there's no strong requirement on the max, so how about using a
-> > substantially larger max - say 1k, or 10k - to allow the usleep_range()
-> > to do it's job?
-> > 
-> > 
-> > PS. Please include linux-arm-msm@ on all the patches in the series, not
-> > just two of them.
-> > 
-> > Regards,
-> > Bjorn
-> > 
+Other than converting the bindings to .yaml not much changed from the 
+previous post.
+I will log the per patch changes in next post.
+>> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml 
+>> b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+>> new file mode 100644
+>> index 0000000..affc169
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+>> @@ -0,0 +1,115 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/bindings/mfd/qcom,spmi-pmic.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm SPMI PMICs multi-function device bindings
+>> +
+>> +maintainers:
+>> +  - Lee Jones <lee.jones@linaro.org>
+>> +  - Stephen Boyd <sboyd@codeaurora.org>
 > 
-> bRefClkGatingWaitTime, as vendor defined in their device attribute is
-> usually
-> around 50~100, 1k or 10k delay makes it too large. usleep_range() works well
-> so long as the delay is within (10us - 20ms), so I added 10 to make sure it
-> is
-> above 10us.
+> Please change this to sboyd@kernel.org
 > 
-
-I meant specifically the second parameter, i.e:
-  usleep_range(bRefClkGatingWaitTime + 10, bRefClkGatingWaitTime + 1000);
-
-As you're not guaranteed an upper bound of this sleep anyway you might
-as well give usleep_range() a window of a millisecond (or more) to give
-it the flexibility of matching other timer events.
-
-The only drawback with this is that you might "waste" a millisecond.
-
-Regards,
-Bjorn
-
-> SLEEPING FOR ~USECS OR SMALL MSECS ( 10us - 20ms):
-> 	* Use usleep_range
-> https://www.kernel.org/doc/Documentation/timers/timers-howto.txt
+Sorry for that. I will change it in next post.
+>> +
+>> +description: |
+>> +  The Qualcomm SPMI series presently includes PM8941, PM8841 and 
+>> PMA8084
+>> +  PMICs.  These PMICs use a QPNP scheme through SPMI interface.
 > 
-> Thanks,
+> This first sentence will need continual updating. Please drop it.
 > 
-> Can Guo.
+Sure. Will do it in next post.
+>> +  QPNP is effectively a partitioning scheme for dividing the SPMI 
+>> extended
+>> +  register space up into logical pieces, and set of fixed register
+>> +  locations/definitions within these regions, with some of these 
+>> regions
+>> +  specifically used for interrupt handling.
+>> +
+>> +  The QPNP PMICs are used with the Qualcomm Snapdragon series SoCs, 
+>> and are
+>> +  interfaced to the chip via the SPMI (System Power Management 
+>> Interface) bus.
+>> +  Support for multiple independent functions are implemented by 
+>> splitting the
+>> +  16-bit SPMI slave address space into 256 smaller fixed-size 
+>> regions, 256 bytes
+>> +  each. A function can consume one or more of these fixed-size 
+>> register regions.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,pm8941
+>> +      - qcom,pm8841
+>> +      - qcom,pma8084
+>> +      - qcom,pm8019
+>> +      - qcom,pm8226
+>> +      - qcom,pm8110
+>> +      - qcom,pma8084
+>> +      - qcom,pmi8962
+>> +      - qcom,pmd9635
+>> +      - qcom,pm8994
+>> +      - qcom,pmi8994
+>> +      - qcom,pm8916
+>> +      - qcom,pm8004
+>> +      - qcom,pm8909
+>> +      - qcom,pm8950
+>> +      - qcom,pmi8950
+>> +      - qcom,pm8998
+>> +      - qcom,pmi8998
+>> +      - qcom,pm8005
+>> +      - qcom,spmi-pmic
 > 
-> > > +			}
-> > > +		}
-> > > 
-> > >  		writel_relaxed(temp, host->dev_ref_clk_ctrl_mmio);
-> > > 
-> > > --
-> > > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
-> > > Forum,
-> > > a Linux Foundation Collaborative Project
+> I think we want qcom,spmi-pmic to be there always. To do that we need 
+> it
+> to look like:
+> 
+>   compatible:
+>     items:
+>       enum:
+>         - qcom,pm8941
+>         ...
+>       enum:
+>         - qcom,spmi-pmic
+> 
+Ok.. I will do it next post.
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +    description:
+>> +      Specifies the SPMI USID slave address for this device.
+>> +      For more information see 
+>> Documentation/devicetree/bindings/spmi/spmi.txt
+>> +
+>> +patternProperties:
+>> +  "^.*@[0-9a-f]+$":
+>> +    type: object
+>> +    description:
+>> +      Each child node of SPMI slave id represents a function of the 
+>> PMIC. In the
+>> +      example below the rtc device node represents a peripheral of 
+>> pm8941
+>> +      SID = 0. The regulator device node represents a peripheral of 
+>> pm8941 SID = 1.
+>> +
+>> +    properties:
+>> +      compatible:
+>> +        description:
+>> +          Compatible of the PMIC device.
+>> +
+>> +      interrupts:
+>> +        maxItems: 2
+>> +        description:
+>> +          Interrupts are specified as a 4-tuple. For more information
+>> +          see 
+>> Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
+> 
+> Just make this bindings/spmi/qcom,spmi-pmic-arb.txt so that  we don't
+> have to worry about it.
+Ok. Will do it in next post.
+  Why is max items 2? Isn't it 4?
+Correct. It should be 4. I will correct it.
+Is this property
+> supposed to be specified at all?
+> 
+The interrupts are used by many of the PMIC devices. I think better to 
+mention it.
+>> +
+>> +      interrupt-names:
+>> +        description:
+>> +          Corresponding interrupt name to the interrupts property
+> 
+> Does this need to be specified either?
+> 
+The interrupts are used by many of the PMIC devices. I think better to 
+mention it.
+>> +
+>> +    required:
+>> +      - compatible
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +
+>> +examples:
+>> +  - |
+>> +    spmi {
+>> +        compatible = "qcom,spmi-pmic-arb";
+>> +        #address-cells = <2>;
+>> +        #size-cells = <0>;
+>> +
+>> +       pm8941@0 {
+> 
+> pmic@0
+> 
+Ok. Will address in next series.
+>> +         compatible = "qcom,pm8941";
+>> +         reg = <0x0 0x0>;
+> 
+> Why not include the header file to get the SPMI_USID macro?
+> 
+Ok. I will include it in next post.
+>> +
+>> +         rtc {
+>> +           compatible = "qcom,rtc";
+>> +           interrupts = <0x0 0x61 0x1 0x1>;
+>> +           interrupt-names = "alarm";
+>> +         };
+>> +       };
+>> +
+>> +       pm8941@1 {
+> 
+> pmic@1
+> 
+Ok. Will address in next series.
+>> +         compatible = "qcom,pm8941";
+>> +         reg = <0x1 0x0>;
+>> +
+>> +         regulator {
+>> +           compatible = "qcom,regulator";
+>> +           regulator-name = "8941_boost";
+>> +         };
+>> +       };
+>> +    };
+>> +...
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>>  a Linux Foundation Collaborative Project
