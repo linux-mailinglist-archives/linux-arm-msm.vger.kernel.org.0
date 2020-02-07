@@ -2,173 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5307E154FE5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 02:09:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 07AC7155019
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 02:59:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726597AbgBGBJn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Feb 2020 20:09:43 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:16825 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726778AbgBGBJn (ORCPT
+        id S1727317AbgBGB7K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Feb 2020 20:59:10 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:36573 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726597AbgBGB7J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Feb 2020 20:09:43 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581037783; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=xylf21tQ/JOS5H4BtABwYa4jpJVYq9qvknGFCyM7akU=;
- b=U+bi/oT9Y8y7reR+WkOrQf6i9bz/FgpSB3FDh5h+4CgFoLZZ5JE6n/YVSzJMqQcaDfrlEsIQ
- OjKwa4GPjpqljOQymLccKq8aL1FsdB/3GaBtBEw9r1pLUu3yPn/lBiOYNkTctgVDehLgdm9y
- xiq0+COnqi6dv8MTyt1Mvs2BKmM=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e3cb8d2.7fc8407b2ab0-smtp-out-n03;
- Fri, 07 Feb 2020 01:09:38 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1CA3DC447A1; Fri,  7 Feb 2020 01:09:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: cang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 337AAC43383;
-        Fri,  7 Feb 2020 01:09:36 +0000 (UTC)
+        Thu, 6 Feb 2020 20:59:09 -0500
+Received: by mail-wr1-f66.google.com with SMTP id z3so795981wru.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Feb 2020 17:59:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=qsI/xaPXMqNdKm9K1igbwkE2PA4fRpWtUntr4tiEc9c=;
+        b=PTe8riw6U8bDW2BD/CxQgvv/9t4tl0U1Prhqr54tyU/g1/UMk7Tqd6sniHUl/w5azG
+         H8Sfs1vXxDHfScvBYzbH4HTjk/PsxN4+jnzWHUs0YqYitvkT29Mm1h8bZ+IoSP+mSsS+
+         p5KXsB/qvGU5nAqs+s042/nU8m6svRfIqTQFa0X3sGQcx9cnwhkhtQTF4CNHa20FGdsb
+         /4obbf3seLL+I6G2XzsD4dHF7SRF+TLHNPZ/655SBBGozgcrpXmDL98qLHnaNTxsX+WW
+         4qf8GdIzwWSBBzA0HzLJ7Crhh483zO4XdjGz923Zg0yV3A1qzKcmuAS3wQ+0cusp00by
+         SpDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=qsI/xaPXMqNdKm9K1igbwkE2PA4fRpWtUntr4tiEc9c=;
+        b=qKPDv9Iksh4vFClyhO0JqYiQgQN6mLtsGfz+m+LLf5MGgxkGrdzTiWbNDOw9IsGt3i
+         xueEUkgD8tyoxVb+h9iwSJsifWYhBEA5qWM7eP1fBQIVnTVuaeGl+h1mWla7b/8Uuqcc
+         oIVk+Ntp3shmoRs+aWse0bl85JQR/psfIbhSsHh0+813ak4TA8/oFgqU+fkjAJsHPtcu
+         BNghAZaGbqoxqZ+BAPPHYNR5F0hrRlgyw4MjXyAuhaOZEpgNUZQQNahM3SxXAgjAlmuC
+         RmHZFCwsrqv2CKCOGRB+iFwCzm0VjLONtTJInTFS/KU4PuuBbXFVB1ARz3Z034+wA2kH
+         YZBw==
+X-Gm-Message-State: APjAAAW8DnkdFD/3b4agwFOoAGV1/ldM+SenyP/oeNPoKKdwUgxTIAvP
+        tC9dB82R5RpsrycuiLBe5CoSYR0Qg7c=
+X-Google-Smtp-Source: APXvYqwPD2xq9B+Yz+WYnoPdj9yJUADJMolqYgcUq0fL+IXijMX6pa9HamJKV5V3OS6P4C32RhJO1w==
+X-Received: by 2002:a5d:5263:: with SMTP id l3mr1162751wrc.405.1581040747220;
+        Thu, 06 Feb 2020 17:59:07 -0800 (PST)
+Received: from localhost.localdomain ([176.61.57.127])
+        by smtp.gmail.com with ESMTPSA id a62sm1490095wmh.33.2020.02.06.17.59.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Feb 2020 17:59:06 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        gregkh@linuxfoundation.org, jackp@codeaurora.org, balbi@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-kernel@vger.kernel.org,
+        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v4 01/18] dt-bindings: phy: remove qcom-dwc3-usb-phy
+Date:   Fri,  7 Feb 2020 01:58:50 +0000
+Message-Id: <20200207015907.242991-2-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.25.0
+In-Reply-To: <20200207015907.242991-1-bryan.odonoghue@linaro.org>
+References: <20200207015907.242991-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 07 Feb 2020 09:09:36 +0800
-From:   Can Guo <cang@codeaurora.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
-        hongwus@codeaurora.org, rnayak@codeaurora.org,
-        linux-scsi@vger.kernel.org, kernel-team@android.com,
-        saravanak@google.com, salyzyn@google.com,
-        Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v7 7/8] scsi: ufs-qcom: Delay specific time before gate
- ref clk
-In-Reply-To: <20200206203336.GQ2514@yoga>
-References: <1580978008-9327-1-git-send-email-cang@codeaurora.org>
- <1580978008-9327-8-git-send-email-cang@codeaurora.org>
- <20200206203336.GQ2514@yoga>
-Message-ID: <9de3632cf0c65347684b8c5f4f3c63b3@codeaurora.org>
-X-Sender: cang@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-02-07 04:33, Bjorn Andersson wrote:
-> On Thu 06 Feb 00:33 PST 2020, Can Guo wrote:
-> 
->> After enter hibern8, as UFS JEDEC ver 3.0 requires, a specific gating 
->> wait
->> time is required before disable the device reference clock. If it is 
->> not
->> specified, use the old delay.
->> 
->> Signed-off-by: Can Guo <cang@codeaurora.org>
->> Reviewed-by: Asutosh Das <asutoshd@codeaurora.org>
->> Reviewed-by: Hongwu Su <hongwus@codeaurora.org>
->> ---
->>  drivers/scsi/ufs/ufs-qcom.c | 22 +++++++++++++++++++---
->>  1 file changed, 19 insertions(+), 3 deletions(-)
->> 
->> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
->> index 85d7c17..39eefa4 100644
->> --- a/drivers/scsi/ufs/ufs-qcom.c
->> +++ b/drivers/scsi/ufs/ufs-qcom.c
->> @@ -833,6 +833,8 @@ static int ufs_qcom_bus_register(struct 
->> ufs_qcom_host *host)
->> 
->>  static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, 
->> bool enable)
->>  {
->> +	unsigned long gating_wait;
->> +
->>  	if (host->dev_ref_clk_ctrl_mmio &&
->>  	    (enable ^ host->is_dev_ref_clk_enabled)) {
->>  		u32 temp = readl_relaxed(host->dev_ref_clk_ctrl_mmio);
->> @@ -845,11 +847,25 @@ static void ufs_qcom_dev_ref_clk_ctrl(struct 
->> ufs_qcom_host *host, bool enable)
->>  		/*
->>  		 * If we are here to disable this clock it might be immediately
->>  		 * after entering into hibern8 in which case we need to make
->> -		 * sure that device ref_clk is active at least 1us after the
->> +		 * sure that device ref_clk is active for specific time after
->>  		 * hibern8 enter.
->>  		 */
->> -		if (!enable)
->> -			udelay(1);
->> +		if (!enable) {
->> +			gating_wait = host->hba->dev_info.clk_gating_wait_us;
->> +			if (!gating_wait) {
-> 
-> Afaict this can't happen, because in patch 6 you check for gating_wait
-> being 0 and if so set it to 0xff.
-> 
+From: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
 
-Sorry, I was intended to give clk_gating_wait_us values only if it is
-a UFS3.0 device. I will revise patch 6/8.
+This binding is not used by any driver.
 
->> +				udelay(1);
->> +			} else {
->> +				/*
->> +				 * bRefClkGatingWaitTime defines the minimum
->> +				 * time for which the reference clock is
->> +				 * required by device during transition from
->> +				 * HS-MODE to LS-MODE or HIBERN8 state. Give it
->> +				 * more time to be on the safe side.
->> +				 */
->> +				gating_wait += 10;
->> +				usleep_range(gating_wait, gating_wait + 10);
-> 
-> I presume there's no strong requirement on the max, so how about using 
-> a
-> substantially larger max - say 1k, or 10k - to allow the usleep_range()
-> to do it's job?
-> 
-> 
-> PS. Please include linux-arm-msm@ on all the patches in the series, not
-> just two of them.
-> 
-> Regards,
-> Bjorn
-> 
+Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>
+Cc: Jorge Ramirez-Ortiz <jorge.ramirez.ortiz@gmail.com>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+ .../bindings/phy/qcom-dwc3-usb-phy.txt        | 37 -------------------
+ 1 file changed, 37 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/phy/qcom-dwc3-usb-phy.txt
 
-bRefClkGatingWaitTime, as vendor defined in their device attribute is 
-usually
-around 50~100, 1k or 10k delay makes it too large. usleep_range() works 
-well
-so long as the delay is within (10us - 20ms), so I added 10 to make sure 
-it is
-above 10us.
+diff --git a/Documentation/devicetree/bindings/phy/qcom-dwc3-usb-phy.txt b/Documentation/devicetree/bindings/phy/qcom-dwc3-usb-phy.txt
+deleted file mode 100644
+index a1697c27aecd..000000000000
+--- a/Documentation/devicetree/bindings/phy/qcom-dwc3-usb-phy.txt
++++ /dev/null
+@@ -1,37 +0,0 @@
+-Qualcomm DWC3 HS AND SS PHY CONTROLLER
+---------------------------------------
+-
+-DWC3 PHY nodes are defined to describe on-chip Synopsis Physical layer
+-controllers.  Each DWC3 PHY controller should have its own node.
+-
+-Required properties:
+-- compatible: should contain one of the following:
+-	- "qcom,dwc3-hs-usb-phy" for High Speed Synopsis PHY controller
+-	- "qcom,dwc3-ss-usb-phy" for Super Speed Synopsis PHY controller
+-- reg: offset and length of the DWC3 PHY controller register set
+-- #phy-cells: must be zero
+-- clocks: a list of phandles and clock-specifier pairs, one for each entry in
+-  clock-names.
+-- clock-names: Should contain "ref" for the PHY reference clock
+-
+-Optional clocks:
+-  "xo"		External reference clock
+-
+-Example:
+-		phy@100f8800 {
+-			compatible = "qcom,dwc3-hs-usb-phy";
+-			reg = <0x100f8800 0x30>;
+-			clocks = <&gcc USB30_0_UTMI_CLK>;
+-			clock-names = "ref";
+-			#phy-cells = <0>;
+-
+-		};
+-
+-		phy@100f8830 {
+-			compatible = "qcom,dwc3-ss-usb-phy";
+-			reg = <0x100f8830 0x30>;
+-			clocks = <&gcc USB30_0_MASTER_CLK>;
+-			clock-names = "ref";
+-			#phy-cells = <0>;
+-
+-		};
+-- 
+2.25.0
 
-SLEEPING FOR ~USECS OR SMALL MSECS ( 10us - 20ms):
-	* Use usleep_range
-https://www.kernel.org/doc/Documentation/timers/timers-howto.txt
-
-Thanks,
-
-Can Guo.
-
->> +			}
->> +		}
->> 
->>  		writel_relaxed(temp, host->dev_ref_clk_ctrl_mmio);
->> 
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
