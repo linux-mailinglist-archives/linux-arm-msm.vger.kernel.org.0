@@ -2,104 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F05F7155609
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 11:50:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 158B9155688
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 12:20:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726674AbgBGKum (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Feb 2020 05:50:42 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35452 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726860AbgBGKum (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Feb 2020 05:50:42 -0500
-Received: by mail-wr1-f68.google.com with SMTP id w12so2119617wrt.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2020 02:50:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=s3siQdVwUR2AQJspUWLBveOF5d5gEtnXKp3bye6ABQ0=;
-        b=NMvwM94IBWfiDjGgUZiNve+xmIFm23S+iTOyrmyZM9GuK6WJKYkzqVTZJ7+iQZ2X7D
-         OGtNV09th4X3ZMgbmqTATg10cOtTsMEWpetXpUYb7Un0PDB2tNTuqDQnScsZa7s0r1B3
-         QQTfMIJmn/RizMM77L/r2T/NYEzO9Je5nsOy/gHqmYoNQ0lzYKJKD1iIeDlvZ4IQIm2t
-         wP76v1J7+wMS9t9Y1SWnJdb/cABuV21q+UBcwjCWKzoNwTDsGLoJwKQPV6wbK+w7CYKK
-         FLW7l9Cuu8NWv613/cmq0CdBqzxphpbfMUICsxEnY9aOiYhCNA6MSewcADdE8FlnfxXz
-         nrZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=s3siQdVwUR2AQJspUWLBveOF5d5gEtnXKp3bye6ABQ0=;
-        b=ea5mTPYNiMf27Jt1/Z/3ZphG3CvRswJMAProcgPFoJyL11ifGkilQ9UnvaHsAtmdii
-         0P89Ycx1LZSFNfDg8xAouxVuVR/0zZamfVtjz5tPeCoHq+3QYQmqoxjyQkRfc140P/az
-         7V8eGdCPaYQcrViAO1GwqVZkOn3qz9Uy0T3Hwc822WWk0I+vu6Rt1pNpZVm22wkh3Qut
-         JaEntQq15Idd2O4MPI1BxctR8nlX9Mje5dj9/OZi+gCrI8m9IOEqiGEtr62EHoUPSmO7
-         rS9/q1Q8p05FuC7B3GQaItnEMC4w1GOgTIAno/0SkSFNwAjtBIUzNpdERVCIcKk8Mkpq
-         fqNw==
-X-Gm-Message-State: APjAAAXJJKjHv5W2O2FJ6XohQv8yjsRppGuYuL3Dga36DcqOjJTm9Ngn
-        TK3jSQE8lZxNg8Q1q10IwdeXPg==
-X-Google-Smtp-Source: APXvYqz2kV1/VNj2vtLrqOvcxHp2oruPVYMQmZgXomeA4NxtqVu+akd5vZjo2btRinJtOKthW1IARg==
-X-Received: by 2002:adf:ee01:: with SMTP id y1mr4305931wrn.152.1581072640457;
-        Fri, 07 Feb 2020 02:50:40 -0800 (PST)
-Received: from [192.168.0.38] ([176.61.57.127])
-        by smtp.gmail.com with ESMTPSA id y185sm3050539wmg.2.2020.02.07.02.50.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Feb 2020 02:50:39 -0800 (PST)
-Subject: Re: [PATCH v4 09/18] usb: dwc3: qcom: Override VBUS when using
- gpio_usb_connector
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     Jack Pham <jackp@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        gregkh@linuxfoundation.org, balbi@kernel.org,
-        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
+        id S1726890AbgBGLUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 06:20:22 -0500
+Received: from foss.arm.com ([217.140.110.172]:39116 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726674AbgBGLUW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 7 Feb 2020 06:20:22 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0771D328;
+        Fri,  7 Feb 2020 03:20:22 -0800 (PST)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CA4093F68E;
+        Fri,  7 Feb 2020 03:20:19 -0800 (PST)
+Date:   Fri, 7 Feb 2020 11:20:14 +0000
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
         Andy Gross <agross@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Manu Gautam <mgautam@codeaurora.org>
-References: <20200207015907.242991-1-bryan.odonoghue@linaro.org>
- <20200207015907.242991-10-bryan.odonoghue@linaro.org>
- <20200207080729.GA30341@jackp-linux.qualcomm.com>
- <2bd67925-14cf-5851-14a2-c51a065fac6c@linaro.org>
-Message-ID: <453bfea7-4085-1a24-84ad-30c7671665e7@linaro.org>
-Date:   Fri, 7 Feb 2020 10:50:45 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.2
+        David Brown <david.brown@linaro.org>,
+        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>, lsrao@codeaurora.org,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Sudeep Holla <sudeep.holla@arm.com>
+Subject: Re: [PATCH v3 5/7] drivers: firmware: psci: Add hierarchical domain
+ idle states converter
+Message-ID: <20200207111955.GA40103@bogus>
+References: <1580736940-6985-6-git-send-email-mkshah@codeaurora.org>
+ <20200203170832.GA38466@bogus>
+ <0d7f7ade-3a1e-5428-d851-f1a886f58712@codeaurora.org>
+ <20200204152132.GA44858@bogus>
+ <6ff7c82d-4204-a339-4070-0154ab4515f1@codeaurora.org>
+ <20200205140603.GB38466@bogus>
+ <CAPDyKFoyepN2VX4COMomp1e9dXPozzrgCdcy0paee2jp8Wm3YA@mail.gmail.com>
+ <20200205161816.GD38466@bogus>
+ <CAPDyKFqaA7oN2+oLS=Puw+jQXke_ErGQAWYuTuU-6PS7mo5YbQ@mail.gmail.com>
+ <20200206204514.GB8107@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <2bd67925-14cf-5851-14a2-c51a065fac6c@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200206204514.GB8107@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/02/2020 10:36, Bryan O'Donoghue wrote:
-> On 07/02/2020 08:07, Jack Pham wrote:
->> Could the usb_role_switch class somehow be enhanced to support chaining
->> multiple "consumers" to support this case? Such that when the gpio-b
->> driver calls set_role() it could get handled both by drd.c and
->> dwc3-qcom.c?
-> 
-> It is probably necessary eventually, but, per my reading of the 
-> documents and working with the hardware, I couldn't justify the 
-> additional work.
-> 
-> However if you think this patchset needs the toggle, I can look into 
-> getting the indicator to toggle here too.
-> 
-> We'd need to add some sort of linked list of notifiers to the role 
-> switching logic and toggle them in order.
-> 
-> Similar to what is done in extcon now for the various notifer hooks.
+On Thu, Feb 06, 2020 at 01:45:14PM -0700, Lina Iyer wrote:
+> On Thu, Feb 06 2020 at 01:46 -0700, Ulf Hansson wrote:
+> > On Wed, 5 Feb 2020 at 17:18, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> > > 
+> > > On Wed, Feb 05, 2020 at 04:55:17PM +0100, Ulf Hansson wrote:
+> > > > On Wed, 5 Feb 2020 at 15:06, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> > > > >
+> > > > > On Wed, Feb 05, 2020 at 05:53:00PM +0530, Maulik Shah wrote:
+> > > > > >
+> > > > > > On 2/4/2020 8:51 PM, Sudeep Holla wrote:
+> > > > > > > On Tue, Feb 04, 2020 at 10:22:42AM +0530, Maulik Shah wrote:
+> > > > > > > > On 2/3/2020 10:38 PM, Sudeep Holla wrote:
+> > > > > > > > > On Mon, Feb 03, 2020 at 07:05:38PM +0530, Maulik Shah wrote:
+> > > > > > > > > > From: Ulf Hansson <ulf.hansson@linaro.org>
+> > > > > > > > > >
+> > > I was, but not anymore, especially if we want such changes in the kernel
+> > > to do so.
+> > > 
+> > > Just use OSI as that was the point of adding all these after years of
+> > > discussion claiming it's more optimal compared to PC. Now telling that
+> > > you need more changes to compare it with PC just doesn't make any sense
+> > > at all to me.
+> > 
+> > Fair enough.
+> > 
+> > I was just pondering over if there are other reasons to why we may want this.
+> > 
+> > One other thing that could be problematic to support, is when are
+> > other resources, I/O controllers for example, sharing the same power
+> > rail as a cluster. When such controller is in use, idle states of the
+> > cluster must be prevented. Without using genpd to model the CPU
+> > topology, it may be difficult to deal with this.
+> > 
+> > Of course, using PC mode when trying to deal with this
+> > platform/board-requirement would also be suboptimal. In other words,
+> > your argument about when using OSI vs PC mode, still stands.
+> > 
+> I understand the arguments for using PC vs OSI and agree with it. But
+> what in PSCI is against Linux knowing when the last core is powering
+> down when the PSCI is configured to do only Platform Cordinated.
 
-Maybe I'm wrong...
+Nothing :D. But knowing the evolution and reasons for adding OSI in the
+PSCI specification and having argued about benefits of OSI over PC for
+years and finally when we have it in mainline, this argument of using
+PC for exact reasons why OSI evolved is something I can't understand
+and I am confused.
 
-Looking a bit closer at the role-switch code it might be possible to 
-register multiple devices _as-is_ so long as you have a pointer to the 
-relevant parent...
+> There should not be any objection to drivers knowing when all the cores
+> are powered down, be it reference counting CPU PM notifications or using
+> a cleaner approach like this where GendPD framwork does everything
+> cleanly and gives a nice callback. ARM architecture allows for different
+> aspects of CPU access be handled at different levels. I see this as an
+> extension of that approach.
+>
 
----
-bod
+One thing that was repeatedly pointed out during OSI patch review was no
+extra overhead for PC mode where firmware can make decisions. So, just
+use OSI now and let us be done with this discussion of OSI vs PC. If PC
+is what you think you need for future, we can revert all OSI changes and
+start discussing again :-)
 
+--
+Regards,
+Sudeep
