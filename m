@@ -2,175 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 344F11555A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 11:27:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 61EA31555D9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 11:36:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726860AbgBGK14 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Feb 2020 05:27:56 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:42157 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726587AbgBGK14 (ORCPT
+        id S1727071AbgBGKg2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 05:36:28 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41692 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727101AbgBGKgY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Feb 2020 05:27:56 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581071275; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=SXtKwR+Qh4XdJBE5iN9hKj4xfIJl9gq5XMMKEVbj36E=; b=RrUF7JI3v4GIQ3eEv0lfsui/zvxpboylk5Ru0ehvNPSWL0kDMzf7nVFw+RH3fS2gWM0GJhDt
- RsXBS4sfPhS3LsUKFbRzU1lQolBsZvDIHAMbXEtA6vVmESqmRWoqzR2mSenQefGGKM2C5iH4
- U5JEH642Z7qLkToEwIonGdBW8es=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e3d3ba9.7f531d0fc298-smtp-out-n03;
- Fri, 07 Feb 2020 10:27:53 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 224F0C4479C; Fri,  7 Feb 2020 10:27:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.206.28.9] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4EDA4C433CB;
-        Fri,  7 Feb 2020 10:27:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4EDA4C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v3 1/3] dt-bindings: clock: Add YAML schemas for the QCOM
- MSS clock bindings
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh@kernel.org, robh+dt@kernel.org,
-        linux-kernel-owner@vger.kernel.org
-References: <1580357923-19783-1-git-send-email-tdas@codeaurora.org>
- <1580357923-19783-2-git-send-email-tdas@codeaurora.org>
- <8d29b13e5444676df46b2479a1f48e36@codeaurora.org>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <ca500b7e-2a58-8e72-255c-8a5c68cfaed4@codeaurora.org>
-Date:   Fri, 7 Feb 2020 15:57:45 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+        Fri, 7 Feb 2020 05:36:24 -0500
+Received: by mail-wr1-f65.google.com with SMTP id c9so2022157wrw.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2020 02:36:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=sn5h5DpGbd8+ZmTL8RoxDdNLMcTt2Q/GmoXxRFRhYZ4=;
+        b=xxefUEoJ55N2q6kJa5HQBj15P61j2yMGG17XMWMMEmgTH1f/4klD4aNsN1sBXI82lF
+         qDuqPNIC2EzNseh100O8cRxpiXhcmJDpDh+JAYjhH8Zswb4vSgNj40x5gw67rOGpB4Zk
+         jCDZ/e/9dBvCkOI87A4DSSRSOHpktR+qIZNKmvegzplgJDrp1XhX+uFIZ9Qobt0uxjJp
+         SlhBztEWSyDgCekgExzQkrYdXaL/OQ76oZZmThPqacnX8p9P/adh0somG3Rpi4J5uho5
+         ZPdcvd2Hxo3+KRtpRAkoKOVQHCavj2iCjNQ7iiScADUDAz+MW+dv/cr9UzvRuHQNxSOo
+         tTYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=sn5h5DpGbd8+ZmTL8RoxDdNLMcTt2Q/GmoXxRFRhYZ4=;
+        b=dCjDrNGzEfEbXW9DCl1d8SFOXJ/JS25wBEj80sHSdhQm8XKCGM1N0/OXlCkwVg9FSR
+         MaH98qUMntuPnVGZiGAQ1z326OSX98O00/uG+JqXulEy8LuirKGCvnHLi4Eztq/eQ6dE
+         aOIXPi1/YmWsiFjnf27kgiEIaJcYUY077ZmwAlx3NpIbSxt2Z/bVUetd/rrbnP+m1Ssv
+         ZkfO1K7AqWgN8VUBXd32Jsr06Cfo3U8p23wr5V2IjFEmgc5F4y4gM0FOAT7hrQhxFJGn
+         COtbRHD0j9CQr/ZbWIRwit14Wx+cMizX3hEA0a4zwn7Sxm0fQ1RXh2QxszhjNDy82ozs
+         xT6g==
+X-Gm-Message-State: APjAAAU5Jlqq3igciGujU6LNjA0wT4VEUMtCLsq2VBVg1WxP1gkmpoDp
+        Gxzt+8fSB58Q/MtU6RHGj9EC3iuKIbU=
+X-Google-Smtp-Source: APXvYqwX0rfF4tDD9dKkruRXKTI/i+SuzeYV0gAc0ED0XkpRqN+W0PcRXINPtXXany8omDCEQEDm4Q==
+X-Received: by 2002:a05:6000:50:: with SMTP id k16mr3835414wrx.145.1581071781853;
+        Fri, 07 Feb 2020 02:36:21 -0800 (PST)
+Received: from [192.168.0.38] ([176.61.57.127])
+        by smtp.gmail.com with ESMTPSA id i3sm3109938wrc.6.2020.02.07.02.36.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Feb 2020 02:36:21 -0800 (PST)
+Subject: Re: [PATCH v4 09/18] usb: dwc3: qcom: Override VBUS when using
+ gpio_usb_connector
+To:     Jack Pham <jackp@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        gregkh@linuxfoundation.org, balbi@kernel.org,
+        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Manu Gautam <mgautam@codeaurora.org>
+References: <20200207015907.242991-1-bryan.odonoghue@linaro.org>
+ <20200207015907.242991-10-bryan.odonoghue@linaro.org>
+ <20200207080729.GA30341@jackp-linux.qualcomm.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Message-ID: <2bd67925-14cf-5851-14a2-c51a065fac6c@linaro.org>
+Date:   Fri, 7 Feb 2020 10:36:26 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.4.2
 MIME-Version: 1.0
-In-Reply-To: <8d29b13e5444676df46b2479a1f48e36@codeaurora.org>
+In-Reply-To: <20200207080729.GA30341@jackp-linux.qualcomm.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2/7/2020 12:57 PM, Sibi Sankar wrote:
-> Hey Taniya,
+On 07/02/2020 08:07, Jack Pham wrote:
+> Hi Bryan,
 > 
-> On 2020-01-30 09:48, Taniya Das wrote:
->> The Modem Subsystem clock provider have a bunch of generic properties
->> that are needed in a device tree. Add a YAML schemas for those.
+> On Fri, Feb 07, 2020 at 01:58:58AM +0000, Bryan O'Donoghue wrote:
+>> Using the gpio_usb_connector driver also means that we are not supplying
+>> VBUS via the SoC but by an external PMIC directly.
 >>
->> Signed-off-by: Taniya Das <tdas@codeaurora.org>
->> ---
->>  .../devicetree/bindings/clock/qcom,mss.yaml        | 58 
->> ++++++++++++++++++++++
->>  1 file changed, 58 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,mss.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,mss.yaml
->> b/Documentation/devicetree/bindings/clock/qcom,mss.yaml
->> new file mode 100644
->> index 0000000..ebb04e1
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/clock/qcom,mss.yaml
->> @@ -0,0 +1,58 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/bindings/clock/qcom,mss.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Modem Clock Controller Binding
->> +
->> +maintainers:
->> +  - Taniya Das <tdas@codeaurora.org>
->> +
->> +description: |
->> +  Qualcomm modem clock control module which supports the clocks.
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +       - qcom,sc7180-mss
->> +
->> +  clocks:
->> +    minItems: 1
->> +    maxItems: 3
->> +    items:
->> +      - description: gcc_mss_mfab_axi clock from GCC
->> +      - description: gcc_mss_nav_axi clock from GCC
+>> This patch searches for a gpio_usb_connector as a child node of the core
+>> DWC3 block and if found switches on the VBUS over-ride, leaving it up to
+>> the role-switching code in gpio-usb-connector to switch off and on VBUS.
+>   
+> <snip>
 > 
-> we don't seem to be referencing the
-> mss_mfab_axi and mss_nav_axi in the
-> mss clk driver though, do we really
-> need them in bindings? If we dont
-> can we drop the clock-names as well.
+>>   static int dwc3_qcom_probe(struct platform_device *pdev)
+>>   {
+>>   	struct device_node	*np = pdev->dev.of_node;
+>> @@ -557,7 +572,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>>   	struct dwc3_qcom	*qcom;
+>>   	struct resource		*res, *parent_res = NULL;
+>>   	int			ret, i;
+>> -	bool			ignore_pipe_clk;
+>> +	bool			ignore_pipe_clk, gpio_usb_conn;
+>>   
+>>   	qcom = devm_kzalloc(&pdev->dev, sizeof(*qcom), GFP_KERNEL);
+>>   	if (!qcom)
+>> @@ -649,9 +664,10 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>>   	}
+>>   
+>>   	qcom->mode = usb_get_dr_mode(&qcom->dwc3->dev);
+>> +	gpio_usb_conn = dwc3_qcom_find_gpio_usb_connector(qcom->dwc3);
+>>   
+>> -	/* enable vbus override for device mode */
+>> -	if (qcom->mode == USB_DR_MODE_PERIPHERAL)
+>> +	/* enable vbus override for device mode or GPIO USB connector mode */
+>> +	if (qcom->mode == USB_DR_MODE_PERIPHERAL || gpio_usb_conn)
+>>   		dwc3_qcom_vbus_overrride_enable(qcom, true);
+> 
+> This doesn't seem right. It looks like you are doing the vbus_override
+> only once on probe() and keeping it that way regardless of the dynamic
+> state of the connector, i.e. even after VBUS is physically removed
+> and/or ID pin is low.
 > 
 
-They are linked as parent for the clocks. So we need them.
-+			.parent_data = &(const struct clk_parent_data){
-+				.fw_name = "gcc_mss_nav_axi_clk",
-+			},
+Hmm, I don't see anything much in the documentation that flags why we 
+want or need to toggle this.
 
->> +      - description: gcc_mss_cfg_ahb clock from GCC
->> +
->> +  clock-names:
->> +    items:
->> +      - const: gcc_mss_mfab_axis_clk
->> +      - const: gcc_mss_nav_axi_clk
->> +      - const: cfg_clk
->> +
->> +  '#clock-cells':
->> +    const: 1
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - clocks
->> +  - '#clock-cells'
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  # Example of MSS with clock nodes properties for SC7180:
->> +  - |
->> +    clock-controller@41a8000 {
->> +      compatible = "qcom,sc7180-mss";
->> +      reg = <0x041a8000 0x8000>;
->> +      clocks = <&gcc 126>, <&gcc 127>, <&gcc 125>;
->> +      clock-names = "gcc_mss_mfab_axis_clk", "gcc_mss_nav_axi_clk", 
->> "cfg_clk";
->> +      #clock-cells = <1>;
->> +    };
->> +...
->> -- 
->> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
->> of the Code Aurora Forum, hosted by the  Linux Foundation.
+>>   	/* register extcon to override sw_vbus on Vbus change later */
 > 
+> As suggested by this comment, if you look at the extcon handling, it
+> intercepts the VBUS state toggling in dwc3_qcom_vbus_notifier() and
+> calls vbus_override() accordingly. That way it should only be true when
+> the role==USB_ROLE_DEVICE and disabled otherwise (USB_ROLE_HOST/NONE).
+> 
+> To me the gpio-b connector + usb-role-switch is attempting to be an
+> alternative to extcon. But to correctly mimic the vbus_override()
+> behavior I think we need a way to intercept when the connector child
+> driver calls usb_role_switch_set_role() to the dwc3 device, but somehow
+> be able to do it from up here in the parent/glue layer. Unfortunately I
+> don't have a good idea of how to do that, short of shoehorning an
+> "upcall" notification from drd.c to the glue, something I don't think
+> Felipe would be a fan of.
+> 
+> Could the usb_role_switch class somehow be enhanced to support chaining
+> multiple "consumers" to support this case? Such that when the gpio-b
+> driver calls set_role() it could get handled both by drd.c and
+> dwc3-qcom.c?
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
+It is probably necessary eventually, but, per my reading of the 
+documents and working with the hardware, I couldn't justify the 
+additional work.
 
---
+However if you think this patchset needs the toggle, I can look into 
+getting the indicator to toggle here too.
+
+We'd need to add some sort of linked list of notifiers to the role 
+switching logic and toggle them in order.
+
+Similar to what is done in extcon now for the various notifer hooks.
+
+---
+bod
