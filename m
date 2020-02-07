@@ -2,154 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B272155B8A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 17:15:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D1A28155F59
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 21:19:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727018AbgBGQPx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Feb 2020 11:15:53 -0500
-Received: from foss.arm.com ([217.140.110.172]:41724 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726951AbgBGQPx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Feb 2020 11:15:53 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7D8771FB;
-        Fri,  7 Feb 2020 08:15:52 -0800 (PST)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 184913F68E;
-        Fri,  7 Feb 2020 08:15:49 -0800 (PST)
-Date:   Fri, 7 Feb 2020 16:15:47 +0000
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>, lsrao@codeaurora.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Sudeep Holla <sudeep.holla@arm.com>
-Subject: Re: [PATCH v3 5/7] drivers: firmware: psci: Add hierarchical domain
- idle states converter
-Message-ID: <20200207161547.GB8342@bogus>
-References: <6ff7c82d-4204-a339-4070-0154ab4515f1@codeaurora.org>
- <20200205140603.GB38466@bogus>
- <CAPDyKFoyepN2VX4COMomp1e9dXPozzrgCdcy0paee2jp8Wm3YA@mail.gmail.com>
- <20200205161816.GD38466@bogus>
- <CAPDyKFqaA7oN2+oLS=Puw+jQXke_ErGQAWYuTuU-6PS7mo5YbQ@mail.gmail.com>
- <20200206204514.GB8107@codeaurora.org>
- <20200207111955.GA40103@bogus>
- <CAPDyKFp-zvD1iFcpRaTFiuazxYmLEx0Czf3=TZJxjSCDmmPsvA@mail.gmail.com>
- <20200207144850.GA18655@e121166-lin.cambridge.arm.com>
- <CAPDyKFoZ+QQFdG3yQ5wGpg2Z5c9WksUhresGz02o3HVrGt1UhQ@mail.gmail.com>
+        id S1727499AbgBGUQz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 15:16:55 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:50571 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727341AbgBGUQw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 7 Feb 2020 15:16:52 -0500
+Received: by mail-wm1-f66.google.com with SMTP id a5so3855938wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2020 12:16:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4wW2T2Hf0VfuSYnJQMUU+IIJaZFO8kXPo9LciCrLguQ=;
+        b=nJRE5Oqg80/6zlUNLtjSSi5V0IhlQuxcxDib7pTKZi3Czuw3lN22oJ97lXCcigyQbX
+         ksmmt1T6Ynvcj39HiMiD4CsmQQH7KeluVEAjxEwvCgh9V75Xz4X2G+2kjxtMmQyF10kv
+         TEzK3FKN7vZjDSropS8pxWCxUsCpAY+p9AU0N8nEf+p95VpqjNaGU238Jy0fEHICosr1
+         B9+R0pCEFIG0G+XjH1qOhvW7Z0o+GlYKKwRbmpdIksvbT0egR+hZ0ZdK8EXN7n7s+/lm
+         rl1ND+S585EteurjK1j5MiUxGZA0tP3B09qnlMUSmwKr+KGJ6dKffTTmJkILnlxNMLnT
+         8mqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4wW2T2Hf0VfuSYnJQMUU+IIJaZFO8kXPo9LciCrLguQ=;
+        b=q7BYe0Y0nWK19S1Wx3QcueDtg+1gTPUIMu+XwcnSVO+mBCexNPqzRvK+rB64c9mRdh
+         aC1D2kvcue4CL9rwRlw4GciSjSaPcXpNHxrlCCDAosIOh0o3+lVc0KgChuQcqrWXUOwE
+         M8QtlaqR4tVMGT2ZIaIpSZr3HmWO8qvOZ4cwWzHrtz5zKCYI4JD9LFbdMd37ES3pZv8c
+         /0HTsVF6+kmkCMiuXhOOmrd8bbVpHU86UqQtL0v6WvWSAAGcy3ml78oNKUMqRYst7T16
+         dOqei/lZwjWCAToT2kcZ6bvXxXrDDepg0T5m4W+pZ5BG3BIx1/FEjrs0XFs2cDstwrZ9
+         u/QQ==
+X-Gm-Message-State: APjAAAXwf6QZ6oKfiqAKtAT8dnkbhNebidoWk64V7VbJWAbiozIwVWBW
+        u67SakhYYDYDuv8+2q00VwafsqPzNOc=
+X-Google-Smtp-Source: APXvYqxLoLnAheBAIMTB5ALNDAeFHFdgKeOOSwJyrZY832oHFlYsuJKyZc3qvvxRv88E9Q1d3EFJ7w==
+X-Received: by 2002:a1c:1fc5:: with SMTP id f188mr24171wmf.55.1581106609635;
+        Fri, 07 Feb 2020 12:16:49 -0800 (PST)
+Received: from localhost.localdomain ([176.61.57.127])
+        by smtp.gmail.com with ESMTPSA id h2sm5018542wrt.45.2020.02.07.12.16.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Feb 2020 12:16:48 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        gregkh@linuxfoundation.org, jackp@codeaurora.org, balbi@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org
+Cc:     linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v5 00/18] Enable Qualcomm QCS 404 HS/SS USB
+Date:   Fri,  7 Feb 2020 20:16:36 +0000
+Message-Id: <20200207201654.641525-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFoZ+QQFdG3yQ5wGpg2Z5c9WksUhresGz02o3HVrGt1UhQ@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 07, 2020 at 04:52:52PM +0100, Ulf Hansson wrote:
-> On Fri, 7 Feb 2020 at 15:48, Lorenzo Pieralisi
-> <lorenzo.pieralisi@arm.com> wrote:
-> >
-> > On Fri, Feb 07, 2020 at 01:32:28PM +0100, Ulf Hansson wrote:
-> > > [...]
-> > >
-> > > > > I understand the arguments for using PC vs OSI and agree with it. But
-> > > > > what in PSCI is against Linux knowing when the last core is powering
-> > > > > down when the PSCI is configured to do only Platform Cordinated.
-> > > >
-> > > > Nothing :D. But knowing the evolution and reasons for adding OSI in the
-> > > > PSCI specification and having argued about benefits of OSI over PC for
-> > > > years and finally when we have it in mainline, this argument of using
-> > > > PC for exact reasons why OSI evolved is something I can't understand
-> > > > and I am confused.
-> > > >
-> > > > > There should not be any objection to drivers knowing when all the cores
-> > > > > are powered down, be it reference counting CPU PM notifications or using
-> > > > > a cleaner approach like this where GendPD framwork does everything
-> > > > > cleanly and gives a nice callback. ARM architecture allows for different
-> > > > > aspects of CPU access be handled at different levels. I see this as an
-> > > > > extension of that approach.
-> > > > >
-> > > >
-> > > > One thing that was repeatedly pointed out during OSI patch review was no
-> > > > extra overhead for PC mode where firmware can make decisions. So, just
-> > > > use OSI now and let us be done with this discussion of OSI vs PC. If PC
-> > > > is what you think you need for future, we can revert all OSI changes and
-> > > > start discussing again :-)
-> > >
-> > > Just to make it clear, I fully agree with you in regards to overhead
-> > > for PC-mode. This is especially critical for ARM SoCs with lots of
-> > > cores, I assume.
-> > >
-> > > However, the overhead you refer to, is *only* going to be present in
-> > > case when the DTS has the hierarchical CPU topology description with
-> > > "power-domains". Because, that is *optional* to use, I am expecting
-> > > only those SoC/platforms that needs to manage last-man activities to
-> > > use this layout, the others will remain unaffected.
-> >
-> > In PC mode not only there is no need but it is wrong to manage
-> > any last-man activity in the kernel. I wonder why we are still
-> > talking about this to be honest.
->
-> I guess the discussion is here because there is a use case to consider now.
->
+V1:
+This series enables the Primary and Secondary USB controllers on the
+QCS404, associated PHYs, role-switching and DTS descriptions.
 
-If this is what Bjorn presented in his email, I have responded to that.
-If it's any different, please let us know the complete details.
+The series takes in a number of patches worked on by a number of people
+over the past few years from downstream, through to previous upstream
+submissions for both of these interfaces. Additional work has been done to
+enable USB role-switching.
 
-> For sure, we agree on what is the best solution. But this is rather
-> about what can we do to improve the current situation, if we should do
-> anything.
->
+1. USB SS
+   - extcon has been dropped in favour of gpio-usb-conn as discussed and
+     agreed previously by Jorge, Bjorn, Stephen Boyd and Jack Pham [1].
 
-Sure, and I haven't found a reason to do that in OSPM yet(as part of the
-discussion in this thread)
+   - Regulator API has been updated following suggestions from Bjorn.
+   
+   - Sanitzation of the DT compatible name - dropped "snps" entirely
+     from the name - it made almost no sense to me and doesn't appear
+     consistent with similar naming conventions for Snopsys based IP.
 
-> >
-> > Code to handle PSCI platform coordinated mode has been/is in
-> > the kernel today and that's all is needed according to the PSCI
-> > specifications.
->
-> PSCI specifies CPU power management, not SoC power management. If
-> these things were completely decoupled, I would agree with you, but
-> that's not the case. Maybe SCMI, etc, helps with this in future.
->
+2. USB HS
+   - Regulator API changes here.
+   - Dropped "snps" from the namespace for similar reasons as above.
+   - Dropped "28nm" from the namespace, looked superfluous.
+   - Changed "High-Speed" to "Hi-Speed".
+   - [2]
 
-Why does that not work even if they are not decoupled. The IO/device
-that share with CPU votes from OSPM and the CPU/Cluster from PSCI in
-PC mode. There is no argument there, but why it needs to be done in OSPM
-is the objection here.
+3. DWC3 Role switching
+   - At the time usb-gpio-conn was discussed it was mentioned that
+     role-switching was absent from the DWC3 driver.
+   - John Stultz has some patches in-flight for that, that I've included in
+     this series for completeness.
+   - Adds my SoB to relevant patches.
+   - Drops gerrit ChangeId.
 
-> Anyway, my fear is that not many ARM vendors implements OSI support,
-> but still they have "last-man-activities" to deal with. This is not
-> only QCOM.
->
+4. DWC3 usb-gpio-conn
+   Needs to be a child node of the DWC3 driver so some code and DT binding
+   is required for that.
 
-I am interested to hear from them. And the same question to same too as
-above.
+5. QCOM-DWC3
+   Since we are role-switching with an external PMIC supplying VBUS we want
+   to skip past toggling VBUS from QCOM-DWC3 controlled registers, so a
+   patch is added to the qcom-dwc3 driver to do that.
 
-> I guess an option would be to add OSI support to the public ARM
-> Trusted Firmware, then we could more easily point to that - rather
-> than trying to mitigate the problem on the kernel side.
->
+References:
 
-I would say go for it. But don't mix responsibility of OSPM in PC vs OSI.
-We have discussed this for years and I hope this discussion ends ASAP.
-I don't see any point in dragging this any further.
+1: USB SS PHY for Qualcomm's QCS404
+https://lwn.net/ml/devicetree/20190207111734.24171-1-jorge.ramirez-ortiz@linaro.org/
 
---
-Regards,
-Sudeep
+2: Add Synopsys High-Speed USB PHY driver for Qualcomm SoCs
+https://lore.kernel.org/linux-arm-msm/20181127100722.9993-3-shawn.guo@linaro.org/
+
+https://www.spinics.net/lists/linux-usb/msg190003.html
+
+V2:
+- Fixes yaml error - Rob's YAML robot
+- Exclusive control of reset in PHY drivers - Philipp Zabel
+
+V3:
+- Fixes typo generating YAML warning - Rob's YAML robot
+
+V4:
+
+https://lore.kernel.org/linux-arm-msm/20200122185610.131930-1-bryan.odonoghue@linaro.org/
+
+- Churn names of PHYs - Rob Herring
+  Rob questioned the name of the SuperSpeed PHY in V3.
+  Looking at available data 
+
+  usb-hs-28nm - There are two possible PHYs on 28nm litho node
+		so it makes sense to name the PHY relating to its relevant
+		litho node.
+
+  usb-ss - This is not litho node dependent and is used on  multiple SoCs
+	   and litho nodes.
+
+- Drop default mode for role switching - Felipe Balbi
+  Felipe asked if the default mode for role switching was
+  required and the answer is no. It makes no difference
+  becuase the USB ID pin ultimately dictates the mode of operation.
+
+- Change "gpio_usb_connector" to "connector" - Rob
+  This was a minor change in terms of DTS but, means I need to look for the
+  DTS compatible string as opposed to a label given in the DTS.
+  No matter what the name of the label, this is he right thing to do.
+
+- Used IS_ENABLED() - Felipe
+  The logic is the same but IS_ENABLED() is used now.
+
+- Retained example of USB connector in dwc.txt - Rob, Felipe
+  Rob pointed out adding the connector was redundant as the documentation
+  already implies it.
+  Felipe seemed in favour of I think adding the example.
+  I've dropped the documentation of the connector and kept the example.
+  https://lore.kernel.org/linux-arm-msm/20200122185610.131930-7-bryan.odonoghue@linaro.org/
+
+- Added example of usb-role-switch in dwc3.txt - BOD
+  
+- Incorporated various inputs from Rob on DTS/YAML
+  - Added required:
+  - Added additionalProperties:
+  - Renamed "phy" clock to "ahb"
+  - maxItems dropped as indicated
+
+V5:
+- https://lkml.org/lkml/2020/2/6/913
+
+- Adds a notifier to DWC3 - BOD
+  This is done in order to allow propagation of role-switch events from the
+  DWC3 core to an associated binding layer.
+
+- Re-use the existent EXTCON VBUS power lane toggle logic - Jack Pham
+  Jack flagged this for inclusion and as a result we need to make a
+  small change to the qcom binding layer.
+
+- Squash DTS changes - BOD
+  I've squashed down some of the DTS changes to stop the patch count in
+  this series going  up any further.
+
+Bjorn Andersson (1):
+  arm64: dts: qcom: qcs404: Add USB devices and PHYs
+
+Bryan O'Donoghue (11):
+  dt-bindings: usb: dwc3: Add a gpio-usb-connector example
+  dt-bindings: usb: dwc3: Add a usb-role-switch to the example
+  usb: dwc3: qcom: Add support for usb-conn-gpio connectors
+  usb: dwc3: Add support for usb-conn-gpio connectors
+  usb: dwc3: Add support for a role-switch notifier
+  usb: dwc3: qcom: Enable gpio-usb-conn based role-switching
+  arm64: dts: qcom: qcs404-evb: Define VBUS pins
+  arm64: dts: qcom: qcs404-evb: Define USB ID pin
+  arm64: dts: qcom: qcs404-evb: Describe external VBUS regulator
+  arm64: dts: qcom: qcs404-evb: Raise vreg_l12_3p3 minimum voltage
+  arm64: dts: qcom: qcs404-evb: Enable USB controllers
+
+Jorge Ramirez-Ortiz (3):
+  dt-bindings: phy: remove qcom-dwc3-usb-phy
+  dt-bindings: Add Qualcomm USB SuperSpeed PHY bindings
+  phy: qualcomm: usb: Add SuperSpeed PHY driver
+
+Shawn Guo (1):
+  phy: qualcomm: Add Synopsys 28nm Hi-Speed USB PHY driver
+
+Sriharsha Allenki (1):
+  dt-bindings: phy: Add Qualcomm Synopsys Hi-Speed USB PHY binding
+
+Yu Chen (1):
+  usb: dwc3: Registering a role switch in the DRD code.
+
+ .../bindings/phy/qcom,usb-hs-28nm.yaml        |  90 ++++
+ .../devicetree/bindings/phy/qcom,usb-ss.yaml  |  83 ++++
+ .../bindings/phy/qcom-dwc3-usb-phy.txt        |  37 --
+ .../devicetree/bindings/usb/dwc3.txt          |   9 +
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi      |  90 +++-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          | 100 +++++
+ drivers/phy/qualcomm/Kconfig                  |  20 +
+ drivers/phy/qualcomm/Makefile                 |   2 +
+ drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c   | 415 ++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-usb-ss.c        | 246 +++++++++++
+ drivers/usb/dwc3/core.h                       |  22 +
+ drivers/usb/dwc3/drd.c                        | 117 ++++-
+ drivers/usb/dwc3/dwc3-qcom.c                  |  31 +-
+ 13 files changed, 1221 insertions(+), 41 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-hs-28nm.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-ss.yaml
+ delete mode 100644 Documentation/devicetree/bindings/phy/qcom-dwc3-usb-phy.txt
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-usb-ss.c
+
+-- 
+2.25.0
+
