@@ -2,117 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 84B6A1557CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 13:33:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E92C1557E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 13:38:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726936AbgBGMdG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Feb 2020 07:33:06 -0500
-Received: from mail-vk1-f196.google.com ([209.85.221.196]:47021 "EHLO
-        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726674AbgBGMdF (ORCPT
+        id S1727028AbgBGMit (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 07:38:49 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:21078 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726894AbgBGMir (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Feb 2020 07:33:05 -0500
-Received: by mail-vk1-f196.google.com with SMTP id u6so526018vkn.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2020 04:33:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=twtq6AmHtqUnVlUAbKpPEtdoaGtXpV1mwpVd5YJVSts=;
-        b=xQu4+EHhFRFlnyvW2p6/S1UWGhxtBGS4fkV0O7245rLUTBWSZvPWZKXPUskfY9lmzB
-         /lYHVNze4GDXh8V7W6x/9Q87cQvSAQN/S7uhG3OKqECw9APIZb+tVpRLEdqDHOjulxP4
-         jsJRZM+UltT5+fAa6eGFN6V5fJ46cZObhVP+0Q4clWGOSXhq2UjqPSk1vwrUOlM378lL
-         n/6hrRitZK+mXiy0qV3jQw4/rw9Svw0kusMJ4FHVzCxj/RaI5u6TKP+af/SWu0iISJto
-         gOThRm2CG7TEFmsCSeHCLsUXNkqkhr2NDvglKf7D4TDAOtktXxk6C1tGWiJVGRT1uC+L
-         pi8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=twtq6AmHtqUnVlUAbKpPEtdoaGtXpV1mwpVd5YJVSts=;
-        b=TprS/UiDRTgx3GvbxoQukev3NjGHyjATbza2dSb/QtujQq7s9q2/6scHHyZ8y8leY2
-         CujlNo8M1isalWIUqnWxun714GUMmLWMMKCMWyvetu7uWneZQLASm3lxzTCJE/0r7ZJa
-         QL5UOls25SFdZgXFqhKTW+UrmRZ40ZzzzoVZIEs8+bc1YbnoAzAs1iUb1sK3CYUTOSF5
-         hIrZ7dZ0881brwMUhXcXgxxDDHzXgv2GoGrzY0mfYYNKe9uPfTccDh9qsZU431GeYg/f
-         trpdXJFZ3gBiKKNP55GnlSLNaVEXIdSf38gCIadOMhaD/fTTY8Tlr+gRXLsUXCTBeWL/
-         Bm5w==
-X-Gm-Message-State: APjAAAVKttTy11XPTb0vze3Bw4Kcga9RYCR8AoQNFby0MHP38D33L/1x
-        KWdgazPUkE50t1rjMTo115X5Qc5fUr9tyzNFAMPN1A==
-X-Google-Smtp-Source: APXvYqwd2iUAO56g39Z3AI5rVCzQsHgInfZfT32zsa4e7crxd9R36HCQB4/vaaZN1zLJ9dnGC8jrHT52+51jJ+OU93Y=
-X-Received: by 2002:ac5:c844:: with SMTP id g4mr4661734vkm.25.1581078784950;
- Fri, 07 Feb 2020 04:33:04 -0800 (PST)
+        Fri, 7 Feb 2020 07:38:47 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1581079127; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=qzairh/+yw4wEAbV6wFRDDG7JyWfCMeJmBCkct0T2fc=;
+ b=NuQrFZpGIKOuQmEoftcoyryS4+SijH9xufSEDft/iRkKx4hyAzEIxmtOvJo3R2qS/zWyLjoa
+ ZRMCV7e/SZCA+7wj8IKYw862XlexJWfPNyy94+G7FrKcasVoMgI2kMrso6Psz7On7a2wwZBh
+ zD82bJfj99flF00FTExlWeBzCN0=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e3d5a50.7f5eb23fa5e0-smtp-out-n01;
+ Fri, 07 Feb 2020 12:38:40 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 61BBAC433A2; Fri,  7 Feb 2020 12:38:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: harigovi)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E5976C43383;
+        Fri,  7 Feb 2020 12:38:39 +0000 (UTC)
 MIME-Version: 1.0
-References: <1580736940-6985-6-git-send-email-mkshah@codeaurora.org>
- <20200203170832.GA38466@bogus> <0d7f7ade-3a1e-5428-d851-f1a886f58712@codeaurora.org>
- <20200204152132.GA44858@bogus> <6ff7c82d-4204-a339-4070-0154ab4515f1@codeaurora.org>
- <20200205140603.GB38466@bogus> <CAPDyKFoyepN2VX4COMomp1e9dXPozzrgCdcy0paee2jp8Wm3YA@mail.gmail.com>
- <20200205161816.GD38466@bogus> <CAPDyKFqaA7oN2+oLS=Puw+jQXke_ErGQAWYuTuU-6PS7mo5YbQ@mail.gmail.com>
- <20200206204514.GB8107@codeaurora.org> <20200207111955.GA40103@bogus>
-In-Reply-To: <20200207111955.GA40103@bogus>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 7 Feb 2020 13:32:28 +0100
-Message-ID: <CAPDyKFp-zvD1iFcpRaTFiuazxYmLEx0Czf3=TZJxjSCDmmPsvA@mail.gmail.com>
-Subject: Re: [PATCH v3 5/7] drivers: firmware: psci: Add hierarchical domain
- idle states converter
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Lina Iyer <ilina@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>, lsrao@codeaurora.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 07 Feb 2020 18:08:39 +0530
+From:   harigovi@codeaurora.org
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        DTML <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>, nganji@codeaurora.org,
+        Sean Paul <seanpaul@chromium.org>, kalyan_t@codeaurora.org,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>
+Subject: Re: [Freedreno] [v1] drm/msm/dsi/pll: call vco set rate explicitly
+In-Reply-To: <CAOCk7Nr9n-xLtWq=LEM-QFhJcY+QOuzazsoi-yjErA9od2Jwmw@mail.gmail.com>
+References: <1580980321-19256-1-git-send-email-harigovi@codeaurora.org>
+ <CAOCk7Nr9n-xLtWq=LEM-QFhJcY+QOuzazsoi-yjErA9od2Jwmw@mail.gmail.com>
+Message-ID: <2f5abc857910f70faa119fea5bda81d7@codeaurora.org>
+X-Sender: harigovi@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[...]
+On 2020-02-06 20:29, Jeffrey Hugo wrote:
+> On Thu, Feb 6, 2020 at 2:13 AM Harigovindan P <harigovi@codeaurora.org> 
+> wrote:
+>> 
+>> For a given byte clock, if VCO recalc value is exactly same as
+>> vco set rate value, vco_set_rate does not get called assuming
+>> VCO is already set to required value. But Due to GDSC toggle,
+>> VCO values are erased in the HW. To make sure VCO is programmed
+>> correctly, we forcefully call set_rate from vco_prepare.
+> 
+> Is this specific to certain SoCs? I don't think I've observed this.
 
-> > I understand the arguments for using PC vs OSI and agree with it. But
-> > what in PSCI is against Linux knowing when the last core is powering
-> > down when the PSCI is configured to do only Platform Cordinated.
->
-> Nothing :D. But knowing the evolution and reasons for adding OSI in the
-> PSCI specification and having argued about benefits of OSI over PC for
-> years and finally when we have it in mainline, this argument of using
-> PC for exact reasons why OSI evolved is something I can't understand
-> and I am confused.
->
-> > There should not be any objection to drivers knowing when all the cores
-> > are powered down, be it reference counting CPU PM notifications or using
-> > a cleaner approach like this where GendPD framwork does everything
-> > cleanly and gives a nice callback. ARM architecture allows for different
-> > aspects of CPU access be handled at different levels. I see this as an
-> > extension of that approach.
-> >
->
-> One thing that was repeatedly pointed out during OSI patch review was no
-> extra overhead for PC mode where firmware can make decisions. So, just
-> use OSI now and let us be done with this discussion of OSI vs PC. If PC
-> is what you think you need for future, we can revert all OSI changes and
-> start discussing again :-)
-
-Just to make it clear, I fully agree with you in regards to overhead
-for PC-mode. This is especially critical for ARM SoCs with lots of
-cores, I assume.
-
-However, the overhead you refer to, is *only* going to be present in
-case when the DTS has the hierarchical CPU topology description with
-"power-domains". Because, that is *optional* to use, I am expecting
-only those SoC/platforms that needs to manage last-man activities to
-use this layout, the others will remain unaffected.
-
-That said, does that address your concern?
-
-Kind regards
-Uffe
+As far as Qualcomm SOCs are concerned, since pll is analog and the value 
+is directly read from hardware if we get recalc value same as set rate 
+value, the vco_set_rate will not be invoked. We checked in our idp 
+device which has the same SOC but it works there since the rates are 
+different.
