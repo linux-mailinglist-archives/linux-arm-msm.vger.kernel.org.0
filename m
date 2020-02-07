@@ -2,114 +2,254 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CCDD7155754
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 13:05:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8546615574C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 13:04:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726867AbgBGMFY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Feb 2020 07:05:24 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:16437 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726897AbgBGMFX (ORCPT
+        id S1726894AbgBGMEj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 07:04:39 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:34972 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726890AbgBGMEi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Feb 2020 07:05:23 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581077123; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=hWmlFBsM4U/DDRAOyION49Dndp398XL993b80Izz4ng=; b=hZcMJs1a2wghn/rFm4xvYPBpzYY32/ea/EaqTOACHLLTwyDesuLzo7VVR3rLGxFscAbahI6l
- 8T/6+08qEwkTkl1q5GLXEJTGsgGLzGy0xldPESiCCqvcV7JHizbQJa52DqcU0XEgmwL1TAuD
- bjniFSDUXqLR7hlQQ/UqKfR8Gmg=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e3d527b.7f59189786f8-smtp-out-n02;
- Fri, 07 Feb 2020 12:05:15 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7E583C447AE; Fri,  7 Feb 2020 12:05:15 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from vbadigan-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vbadigan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3FDC7C433CB;
-        Fri,  7 Feb 2020 12:05:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3FDC7C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
-From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-To:     ulf.hansson@linaro.org, adrian.hunter@intel.com
-Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
-        sayalil@codeaurora.org, cang@codeaurora.org,
-        rampraka@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Ritesh Harjani <riteshh@codeaurora.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH V2] mmc: sdhci-msm: Don't enable PWRSAVE_DLL for certain sdhc hosts
-Date:   Fri,  7 Feb 2020 17:34:28 +0530
-Message-Id: <1581077075-26011-1-git-send-email-vbadigan@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1581062518-11655-1-git-send-email-vbadigan@codeaurora.org>
-References: <1581062518-11655-1-git-send-email-vbadigan@codeaurora.org>
+        Fri, 7 Feb 2020 07:04:38 -0500
+Received: by mail-wm1-f67.google.com with SMTP id b17so2523842wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2020 04:04:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=R5h5Hhfr0C30ek8CnrJ517u633l7rUglq+J5+Ky2pSU=;
+        b=TSdbH1Lsaj15vZh5emaVkjGWlxSCoTfeQeU3gLRTOwpLcnalRwRfArvK9g5tD84AOV
+         WzchK0g1R/Nf9Yh7XJ7gZdrKTnE5132QPOMWe1IMFEW1YVOlkqSD6Xq/h4ebN0X5R1uF
+         xgcBnxLit2Kbh011VO7HArzZ+pDTDnOJQNDegC5p9Ccon1asad7i++4EikadZCvIR67P
+         F4kWIKeFyJtka5J2x1HDSTUR1ygNZKGeEVglBen++7LlgN7+Uo89775vErlaxUjeRIlh
+         BbFXlo3pol7vA/SyXDgkEsk6a8HQehBiLNeUS7zEhsloDDmBcf0aVwezLGxLuJJLzy5L
+         0U7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=R5h5Hhfr0C30ek8CnrJ517u633l7rUglq+J5+Ky2pSU=;
+        b=ZM+fAq3n87kMrGzhF3QoHdP3/oIzkf6Dxm98uFXXAmzX9lrjPc7cAzhBCyTRrJ3bNR
+         3J40o3gfxg2KJrFvQ3m6O3sdQtFtLbF5ua4zKOidUb5xl3jpn2ZwqkQFQTwrC1ZHWF9X
+         3e40k+GkhBnFkeTnAOthWHSCawGlueNyzy+qU20KPtPSnpCAs8WxaW2r7ZLpn+YhTWe2
+         Qr4LJaJAiUxjKh1s7AaoKyca0vXUA2hZjQyJAZTcdvYxVUyZPgPp6HXLsVgwnPU2OWXd
+         94ODDYTEb9XlCCFudGFSjZM/Tc/rFi+n7L1b6ZRpaWqaV8k8w3iHVH6XxA0heLBQAaCh
+         bf2Q==
+X-Gm-Message-State: APjAAAVGx3+Mly5Qlz1wlZop0I+A+YD5oLLLhDZxLZP/h7rwajdwNxpl
+        NBQdyT2BvPrrZmxf6Noq2B0fnA==
+X-Google-Smtp-Source: APXvYqwtC2bAQXniWiUc5oiGG0sJlgv9qLGg10xcRaZ8yTuXclNOUd0zGaxgEu16v3Q2wEfpyVEgZw==
+X-Received: by 2002:a7b:cf01:: with SMTP id l1mr4060275wmg.86.1581077074857;
+        Fri, 07 Feb 2020 04:04:34 -0800 (PST)
+Received: from google.com ([2a00:79e0:d:110:d6cc:2030:37c1:9964])
+        by smtp.gmail.com with ESMTPSA id e18sm3052153wrw.70.2020.02.07.04.04.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Feb 2020 04:04:33 -0800 (PST)
+Date:   Fri, 7 Feb 2020 12:04:30 +0000
+From:   Quentin Perret <qperret@google.com>
+To:     lukasz.luba@arm.com
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com, Morten.Rasmussen@arm.com,
+        Dietmar.Eggemann@arm.com, Chris.Redpath@arm.com,
+        ionela.voinescu@arm.com, javi.merino@arm.com,
+        cw00.choi@samsung.com, b.zolnierkie@samsung.com, rjw@rjwysocki.net,
+        sudeep.holla@arm.com, viresh.kumar@linaro.org, nm@ti.com,
+        sboyd@kernel.org, rui.zhang@intel.com, amit.kucheria@verdurent.com,
+        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, festevam@gmail.com,
+        kernel@pengutronix.de, khilman@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
+        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net
+Subject: Re: [PATCH v2 1/4] PM / EM: add devices to Energy Model
+Message-ID: <20200207120430.GA242912@google.com>
+References: <20200206134640.11367-1-lukasz.luba@arm.com>
+ <20200206134640.11367-2-lukasz.luba@arm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200206134640.11367-2-lukasz.luba@arm.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Ritesh Harjani <riteshh@codeaurora.org>
+On Thursday 06 Feb 2020 at 13:46:37 (+0000), lukasz.luba@arm.com wrote:
+>  2. Core APIs
+> @@ -70,14 +72,16 @@ CONFIG_ENERGY_MODEL must be enabled to use the EM framework.
+>  Drivers are expected to register performance domains into the EM framework by
+>  calling the following API::
+>  
+> -  int em_register_perf_domain(cpumask_t *span, unsigned int nr_states,
+> -			      struct em_data_callback *cb);
+> +  int em_register_perf_domain(struct device *dev, unsigned int nr_states,
+> +		struct em_data_callback *cb, cpumask_t *cpus);
+>  
+> -Drivers must specify the CPUs of the performance domains using the cpumask
+> +Drivers must specify the device pointer of the performance domains as first
 
-SDHC core with new 14lpp and later tech DLL should not enable
-PWRSAVE_DLL since such controller's internal gating cannot meet
-following MCLK requirement:
-When MCLK is gated OFF, it is not gated for less than 0.5us and MCLK
-must be switched on for at-least 1us before DATA starts coming.
+I find this sentence a little odd no?
 
-Adding support for this requirement.
+>  argument, and provide a callback function returning <frequency, power> tuples
+> -for each capacity state. The callback function provided by the driver is free
+> +for each performance state. The callback function provided by the driver is free
+>  to fetch data from any relevant location (DT, firmware, ...), and by any mean
+> -deemed necessary. See Section 3. for an example of driver implementing this
+> +deemed necessary. For other devices than CPUs the last argumant must be set to
 
-Signed-off-by: Ritesh Harjani <riteshh@codeaurora.org>
-Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
---
+s/argumant/argument
 
-Changes since V1:
-  Condition was not correct in V1, which is corrected in V2
+> +NULL. Only for CPUfreq drivers it is obligatory to specify the cpumask.
 
---
----
- drivers/mmc/host/sdhci-msm.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+Please note that as of today nothing mandates the caller to be a CPUFreq
+driver -- it could be anything in theory. I'd say 'only for CPU devices'
+instead.
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index c3a160c..aa5b610 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -977,9 +977,21 @@ static int sdhci_msm_cm_dll_sdc4_calibration(struct sdhci_host *host)
- 		goto out;
- 	}
- 
--	config = readl_relaxed(host->ioaddr + msm_offset->core_vendor_spec3);
--	config |= CORE_PWRSAVE_DLL;
--	writel_relaxed(config, host->ioaddr + msm_offset->core_vendor_spec3);
-+	/*
-+	 * Set CORE_PWRSAVE_DLL bit in CORE_VENDOR_SPEC3.
-+	 * When MCLK is gated OFF, it is not gated for less than 0.5us
-+	 * and MCLK must be switched on for at-least 1us before DATA
-+	 * starts coming. Controllers with 14lpp and later tech DLL cannot
-+	 * guarantee above requirement. So PWRSAVE_DLL should not be
-+	 * turned on for host controllers using this DLL.
-+	 */
-+	if (!msm_host->use_14lpp_dll_reset) {
-+		config = readl_relaxed(host->ioaddr +
-+				msm_offset->core_vendor_spec3);
-+		config |= CORE_PWRSAVE_DLL;
-+		writel_relaxed(config, host->ioaddr +
-+				msm_offset->core_vendor_spec3);
-+	}
- 
- 	/*
- 	 * Drain writebuffer to ensure above DLL calibration
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
+<snip>
+> @@ -24,51 +27,65 @@ struct em_cap_state {
+>  
+>  /**
+>   * em_perf_domain - Performance domain
+> - * @table:		List of capacity states, in ascending order
+> - * @nr_cap_states:	Number of capacity states
+> - * @cpus:		Cpumask covering the CPUs of the domain
+> + * @table:		List of performance states, in ascending order
+> + * @nr_perf_states:	Number of performance states
+> + * @priv:		In case of EM for CPU device it is a Cpumask
+> + *			covering the CPUs of the domain
+
+Could you turn @priv back into 'unsigned long priv[0];' and keep the
+allocation as it is today ? That is, append the cpumask to the struct.
+
+This empty pointer for non-CPU devices is just wasted space, and pointer
+chasing isn't good for your caches. Given that you pre-allocate the pd
+in em_create_pd() you could just have a special case for CPUs there I
+suppose. And _is_cpu_em() will have to check the bus like you did in v1.
+
+>   *
+> - * A "performance domain" represents a group of CPUs whose performance is
+> - * scaled together. All CPUs of a performance domain must have the same
+> - * micro-architecture. Performance domains often have a 1-to-1 mapping with
+> - * CPUFreq policies.
+> + * In case of CPU device, a "performance domain" represents a group of CPUs
+> + * whose performance is scaled together. All CPUs of a performance domain
+> + * must have the same micro-architecture. Performance domains often have
+> + * a 1-to-1 mapping with CPUFreq policies.
+> + * In case of other devices the 'priv' field is unused.
+>   */
+>  struct em_perf_domain {
+> -	struct em_cap_state *table;
+> -	int nr_cap_states;
+> -	unsigned long cpus[0];
+> +	struct em_perf_state *table;
+> +	int nr_perf_states;
+> +	void *priv;
+>  };
+
+<snip>
+>  struct em_data_callback {
+>  	/**
+> -	 * active_power() - Provide power at the next capacity state of a CPU
+> -	 * @power	: Active power at the capacity state in mW (modified)
+> -	 * @freq	: Frequency at the capacity state in kHz (modified)
+> -	 * @cpu		: CPU for which we do this operation
+> +	 * active_power() - Provide power at the next performance state of a
+> +	 *		    device
+> +	 * @power	: Active power at the performance state in mW (modified)
+> +	 * @freq	: Frequency at the performance state in kHz (modified)
+> +	 * @dev		: Device for which we do this operation (can be a CPU)
+>  	 *
+> -	 * active_power() must find the lowest capacity state of 'cpu' above
+> +	 * active_power() must find the lowest performance state of 'dev' above
+>  	 * 'freq' and update 'power' and 'freq' to the matching active power
+>  	 * and frequency.
+>  	 *
+> -	 * The power is the one of a single CPU in the domain, expressed in
+> -	 * milli-watts. It is expected to fit in the [0, EM_CPU_MAX_POWER]
+> -	 * range.
+> +	 * In case of CPUs, the power is the one of a single CPU in the domain,
+> +	 * expressed in milli-watts. It is expected to fit in the
+> +	 * [0, EM_MAX_POWER] range.
+>  	 *
+>  	 * Return 0 on success.
+>  	 */
+> -	int (*active_power)(unsigned long *power, unsigned long *freq, int cpu);
+> +	int (*active_power)(unsigned long *power, unsigned long *freq,
+> +			    struct device *dev);
+
+Given that you've made explicit in the doc of struct em_perf_state that
+'power' can be a 'total' value (static + dynamic), this could be renamed
+I suppose.
+
+<snip>
+>  /**
+>   * em_cpu_get() - Return the performance domain for a CPU
+>   * @cpu : CPU to find the performance domain for
+>   *
+> - * Return: the performance domain to which 'cpu' belongs, or NULL if it doesn't
+> + * Returns the performance domain to which 'cpu' belongs, or NULL if it doesn't
+>   * exist.
+>   */
+>  struct em_perf_domain *em_cpu_get(int cpu)
+>  {
+> -	return READ_ONCE(per_cpu(em_data, cpu));
+
+Since CPU perf domains are guaranteed to never go away, it'd be safe to
+keep that per-CPU variable and avoid the locking and list manipulation
+below. No strong opinion, though.
+
+> +	struct em_device *em_dev;
+> +
+> +	mutex_lock(&em_pd_mutex);
+> +
+> +	if (list_empty(&em_pd_dev_list))
+> +		goto unlock;
+> +
+> +	list_for_each_entry(em_dev, &em_pd_dev_list, em_dev_list) {
+> +		if (!_is_cpu_em(em_dev->em_pd))
+> +			continue;
+> +
+> +		if (cpumask_test_cpu(cpu, em_span_cpus(em_dev->em_pd))) {
+> +			mutex_unlock(&em_pd_mutex);
+> +			return em_dev->em_pd;
+> +		}
+> +	}
+> +
+> +unlock:
+> +	mutex_unlock(&em_pd_mutex);
+> +	return NULL;
+>  }
+>  EXPORT_SYMBOL_GPL(em_cpu_get);
+
+<snip>
+>  /**
+> - * em_register_perf_domain() - Register the Energy Model of a performance domain
+> - * @span	: Mask of CPUs in the performance domain
+> - * @nr_states	: Number of capacity states to register
+> + * em_register_perf_domain() - Register the Energy Model (EM) of a performance
+> + *		domain for the device
+> + * @dev		: Device for which the EM is to register
+> + * @nr_states	: Number of performance states to register
+>   * @cb		: Callback functions providing the data of the Energy Model
+> + * @cpus	: Pointer to cpumask_t, which in case of a CPU device is
+> + *		obligatory. It can be taken from i.e. 'policy->cpus'. For other
+
+It should be policy->related_cpus actually (or 'real_cpus' even) -- PM_EM
+ignores hotplug ATM. Perhaps we should document that somewhere ...
+
+> + *		type of devices this should be set to NULL.
+>   *
+>   * Create Energy Model tables for a performance domain using the callbacks
+>   * defined in cb.
+> @@ -196,63 +361,129 @@ EXPORT_SYMBOL_GPL(em_cpu_get);
+
+Thanks,
+Quentin
