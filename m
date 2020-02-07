@@ -2,30 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B64D015527C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 07:41:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EED9215528B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 07:46:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726607AbgBGGlM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Feb 2020 01:41:12 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:17404 "EHLO
+        id S1726798AbgBGGqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 01:46:53 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:20423 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726587AbgBGGlL (ORCPT
+        by vger.kernel.org with ESMTP id S1726136AbgBGGqw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Feb 2020 01:41:11 -0500
+        Fri, 7 Feb 2020 01:46:52 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581057671; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1581058011; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=YcmWYUVZoZZ5xp+hXjD/DbuPvpwvOawaFCYTP2ks1V4=;
- b=BJfiyr4WQ8vfrVQa24l9Ix26sXTZqFNCdMMKwGpDHlYWFv6jN4qnLLtxV01suGzs6g6xlUxv
- yzuh2pj9X9FkXk8dNihM6KIYctABzwHYrhgYUQ0FTniBhJBnTUeuGhDaBsKMNWILh4bZaRca
- Wg4uR2lNmBacd/D2TGTfD7L2HvQ=
+ MIME-Version: Sender; bh=oRZTjl7wX0gMUshuocGpEAyXrjo3f1MY/QRXGnPUZTI=;
+ b=JbvPcJAoUmLm0nEX/uYRSbM1PpTptKjWK+AnfBiQRRLNetL3p50GPl0xAt8jTIahV/xQ581/
+ /MI/tRIDTvvOZjCJc1N5OVjYWsAU1fzxYE4qzvSaSM+LPxGkFcRuLDRs0quwHxND1tDJx60q
+ RwV/s0GWA0BEVMSf2hAqnBgkB2A=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e3d0681.7f79dcb39dc0-smtp-out-n02;
- Fri, 07 Feb 2020 06:41:05 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e3d07d8.7fa318378110-smtp-out-n03;
+ Fri, 07 Feb 2020 06:46:48 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 74596C43383; Fri,  7 Feb 2020 06:41:04 +0000 (UTC)
+        id 4E60BC447A0; Fri,  7 Feb 2020 06:46:47 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,118 +34,217 @@ X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E2126C433CB;
-        Fri,  7 Feb 2020 06:41:03 +0000 (UTC)
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5FFD8C43383;
+        Fri,  7 Feb 2020 06:46:46 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 07 Feb 2020 12:11:03 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Rakesh Pillai <pillair@codeaurora.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+Date:   Fri, 07 Feb 2020 12:16:46 +0530
+From:   kgunda@codeaurora.org
+To:     Rob Herring <robh@kernel.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, rnayak@codeaurora.org,
         linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH v6] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module
- device node
-In-Reply-To: <1580822300-4491-1-git-send-email-pillair@codeaurora.org>
-References: <1580822300-4491-1-git-send-email-pillair@codeaurora.org>
-Message-ID: <0ae6edd12623c35600d598a219322f44@codeaurora.org>
-X-Sender: sibis@codeaurora.org
+Subject: Re: [PATCH V3 1/2] mfd: qcom-spmi-pmic: Convert bindings to .yaml
+ format
+In-Reply-To: <20200206220638.GA28227@bogus>
+References: <1580997328-16365-1-git-send-email-kgunda@codeaurora.org>
+ <5e3c63d0.1c69fb81.c2bba.0957@mx.google.com> <20200206220638.GA28227@bogus>
+Message-ID: <1d7e38197bcaec99dd4e669b5dc8e31c@codeaurora.org>
+X-Sender: kgunda@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Rakesh,
-
-On 2020-02-04 18:48, Rakesh Pillai wrote:
-> Add device node for the ath10k SNOC platform driver probe
-> and add resources required for WCN3990 on sc7180 soc.
+On 2020-02-07 03:36, Rob Herring wrote:
+> On Thu, Feb 06, 2020 at 11:06:55AM -0800, Stephen Boyd wrote:
+>> Quoting Kiran Gunda (2020-02-06 05:55:26)
+>> > Convert the bindings from .txt to .yaml format.
+>> >
+>> > Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+>> > ---
+>> 
+>> Did something change? Is there a cover letter?
+>> 
+>> > diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+>> > new file mode 100644
+>> > index 0000000..affc169
+>> > --- /dev/null
+>> > +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+>> > @@ -0,0 +1,115 @@
+>> > +# SPDX-License-Identifier: GPL-2.0-only
+>> > +%YAML 1.2
+>> > +---
+>> > +$id: http://devicetree.org/schemas/bindings/mfd/qcom,spmi-pmic.yaml#
+>> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> > +
+>> > +title: Qualcomm SPMI PMICs multi-function device bindings
+>> > +
+>> > +maintainers:
+>> > +  - Lee Jones <lee.jones@linaro.org>
+>> > +  - Stephen Boyd <sboyd@codeaurora.org>
+>> 
+>> Please change this to sboyd@kernel.org
 > 
-> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-idp.dts |  5 +++++
->  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 27 
-> +++++++++++++++++++++++++++
->  2 files changed, 32 insertions(+)
+> Should be the h/w owner, not applier of changes.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> index 388f50a..167f68ac 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> @@ -287,6 +287,11 @@
->  	vdda-pll-supply = <&vreg_l4a_0p8>;
->  };
+Ok.. I will remove it in next post.
+>> 
+>> > +
+>> > +description: |
+>> > +  The Qualcomm SPMI series presently includes PM8941, PM8841 and PMA8084
+>> > +  PMICs.  These PMICs use a QPNP scheme through SPMI interface.
+>> 
+>> This first sentence will need continual updating. Please drop it.
+>> 
+>> > +  QPNP is effectively a partitioning scheme for dividing the SPMI extended
+>> > +  register space up into logical pieces, and set of fixed register
+>> > +  locations/definitions within these regions, with some of these regions
+>> > +  specifically used for interrupt handling.
+>> > +
+>> > +  The QPNP PMICs are used with the Qualcomm Snapdragon series SoCs, and are
+>> > +  interfaced to the chip via the SPMI (System Power Management Interface) bus.
+>> > +  Support for multiple independent functions are implemented by splitting the
+>> > +  16-bit SPMI slave address space into 256 smaller fixed-size regions, 256 bytes
+>> > +  each. A function can consume one or more of these fixed-size register regions.
+>> > +
+>> > +properties:
+>> > +  compatible:
+>> > +    enum:
+>> > +      - qcom,pm8941
+>> > +      - qcom,pm8841
+>> > +      - qcom,pma8084
+>> > +      - qcom,pm8019
+>> > +      - qcom,pm8226
+>> > +      - qcom,pm8110
+>> > +      - qcom,pma8084
+>> > +      - qcom,pmi8962
+>> > +      - qcom,pmd9635
+>> > +      - qcom,pm8994
+>> > +      - qcom,pmi8994
+>> > +      - qcom,pm8916
+>> > +      - qcom,pm8004
+>> > +      - qcom,pm8909
+>> > +      - qcom,pm8950
+>> > +      - qcom,pmi8950
+>> > +      - qcom,pm8998
+>> > +      - qcom,pmi8998
+>> > +      - qcom,pm8005
+>> > +      - qcom,spmi-pmic
+>> 
+>> I think we want qcom,spmi-pmic to be there always. To do that we need 
+>> it
+>> to look like:
+>> 
+>>   compatible:
+>>     items:
+>>       enum:
+>>         - qcom,pm8941
+>>         ...
+>>       enum:
+>>         - qcom,spmi-pmic
 > 
-> +&wifi {
-> +	status = "okay";
-
-I can see that wlan needs to
-add the SIDs 0xc2, 0xc3 as well.
-Without that I expect wlan will
-not come up.
-
-> +	qcom,msa-fixed-perm;
-
-are you sure this is required when
-used in conjunction with coreboot?
-
-> +};
-> +
->  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
+> Yes, but missing '-' before the enum's.
 > 
->  &qspi_clk {
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 8011c5f..e3e8610 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -75,6 +75,11 @@
->  			reg = <0x0 0x80900000 0x0 0x200000>;
->  			no-map;
->  		};
-> +
-> +		wlan_fw_mem: memory@93900000 {
-> +			reg = <0 0x93900000 0 0x200000>;
-> +			no-map;
-> +		};
->  	};
+Will add it in next post
+>> 
+>> > +
+>> > +  reg:
+>> > +    maxItems: 1
+>> > +    description:
+>> > +      Specifies the SPMI USID slave address for this device.
+>> > +      For more information see Documentation/devicetree/bindings/spmi/spmi.txt
+>> > +
+>> > +patternProperties:
+>> > +  "^.*@[0-9a-f]+$":
 > 
->  	cpus {
-> @@ -1490,6 +1495,28 @@
+> You are going to need to define the specific child nodes with the
+> schemas for them, but a SPMI bus schema may be useful.
 > 
->  			#freq-domain-cells = <1>;
->  		};
-> +
-> +		wifi: wifi@18800000 {
-> +			compatible = "qcom,wcn3990-wifi";
-> +			reg = <0 0x18800000 0 0x800000>;
-> +			reg-names = "membase";
-> +			iommus = <&apps_smmu 0xc0 0x1>;
-> +			interrupts =
-> +				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
-> +				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
-> +				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
-> +				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
-> +				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
-> +				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
-> +				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
-> +				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
-> +				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
-> +				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
-> +				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
-> +				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
-> +			memory-region = <&wlan_fw_mem>;
-> +			status = "disabled";
-> +		};
->  	};
-> 
->  	thermal-zones {
-
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+Ok.. I will add it in next post.
+>> > +    type: object
+>> > +    description:
+>> > +      Each child node of SPMI slave id represents a function of the PMIC. In the
+>> > +      example below the rtc device node represents a peripheral of pm8941
+>> > +      SID = 0. The regulator device node represents a peripheral of pm8941 SID = 1.
+>> > +
+>> > +    properties:
+>> > +      compatible:
+>> > +        description:
+>> > +          Compatible of the PMIC device.
+>> > +
+>> > +      interrupts:
+>> > +        maxItems: 2
+>> > +        description:
+>> > +          Interrupts are specified as a 4-tuple. For more information
+>> > +          see Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
+>> 
+>> Just make this bindings/spmi/qcom,spmi-pmic-arb.txt so that  we don't
+>> have to worry about it. Why is max items 2? Isn't it 4? Is this 
+>> property
+>> supposed to be specified at all?
+>> 
+>> > +
+>> > +      interrupt-names:
+>> > +        description:
+>> > +          Corresponding interrupt name to the interrupts property
+>> 
+>> Does this need to be specified either?
+>> 
+>> > +
+>> > +    required:
+>> > +      - compatible
+>> > +
+>> > +required:
+>> > +  - compatible
+>> > +  - reg
+>> > +
+>> > +examples:
+>> > +  - |
+>> > +    spmi {
+>> > +        compatible = "qcom,spmi-pmic-arb";
+>> > +        #address-cells = <2>;
+>> > +        #size-cells = <0>;
+>> > +
+>> > +       pm8941@0 {
+>> 
+>> pmic@0
+>> 
+>> > +         compatible = "qcom,pm8941";
+>> > +         reg = <0x0 0x0>;
+>> 
+>> Why not include the header file to get the SPMI_USID macro?
+>> 
+>> > +
+>> > +         rtc {
+>> > +           compatible = "qcom,rtc";
+>> > +           interrupts = <0x0 0x61 0x1 0x1>;
+>> > +           interrupt-names = "alarm";
+>> > +         };
+>> > +       };
+>> > +
+>> > +       pm8941@1 {
+>> 
+>> pmic@1
+>> 
+>> > +         compatible = "qcom,pm8941";
+>> > +         reg = <0x1 0x0>;
+>> > +
+>> > +         regulator {
+>> > +           compatible = "qcom,regulator";
+>> > +           regulator-name = "8941_boost";
+>> > +         };
+>> > +       };
+>> > +    };
+>> > +...
+>> > --
+>> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> >  a Linux Foundation Collaborative Project
