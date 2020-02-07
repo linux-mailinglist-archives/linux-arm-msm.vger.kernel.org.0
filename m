@@ -2,125 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DC531555EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 11:41:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F05F7155609
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 11:50:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727154AbgBGKlR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Feb 2020 05:41:17 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:60826 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726951AbgBGKlR (ORCPT
+        id S1726674AbgBGKum (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 05:50:42 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35452 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726860AbgBGKum (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Feb 2020 05:41:17 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581072076; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=hLgWxsUO0f7PfEGVtDAhwFiQbp4XE3t/VhLuSCZCzBA=; b=glNHT850+x2LiwZ9ub83QoTBbyLaO4HCXV8YsY1PUXqMAj3o+l3X57ED1x5DSw1tZNEGo07U
- W2QM9Dl2X3uRCf4V9/6uFGXGvO60QRXbf0O59KH194vfvy4Qi5G5pwZybiAmeb1ZfvY7yj23
- 4L4cVYN/C3ouofGGudYkzjPKQDc=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e3d3ec8.7f4ec8e2ded8-smtp-out-n02;
- Fri, 07 Feb 2020 10:41:12 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 94106C43383; Fri,  7 Feb 2020 10:41:12 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4D3B3C433CB;
-        Fri,  7 Feb 2020 10:41:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4D3B3C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-From:   Taniya Das <tdas@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>,
-        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>,
-        robh@kernel.org
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v1 2/2]  clk: qcom: gpucc: Add support for GX GDSC for SC7180
-Date:   Fri,  7 Feb 2020 16:09:19 +0530
-Message-Id: <1581071959-29492-2-git-send-email-tdas@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1581071959-29492-1-git-send-email-tdas@codeaurora.org>
-References: <1581071959-29492-1-git-send-email-tdas@codeaurora.org>
+        Fri, 7 Feb 2020 05:50:42 -0500
+Received: by mail-wr1-f68.google.com with SMTP id w12so2119617wrt.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2020 02:50:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=s3siQdVwUR2AQJspUWLBveOF5d5gEtnXKp3bye6ABQ0=;
+        b=NMvwM94IBWfiDjGgUZiNve+xmIFm23S+iTOyrmyZM9GuK6WJKYkzqVTZJ7+iQZ2X7D
+         OGtNV09th4X3ZMgbmqTATg10cOtTsMEWpetXpUYb7Un0PDB2tNTuqDQnScsZa7s0r1B3
+         QQTfMIJmn/RizMM77L/r2T/NYEzO9Je5nsOy/gHqmYoNQ0lzYKJKD1iIeDlvZ4IQIm2t
+         wP76v1J7+wMS9t9Y1SWnJdb/cABuV21q+UBcwjCWKzoNwTDsGLoJwKQPV6wbK+w7CYKK
+         FLW7l9Cuu8NWv613/cmq0CdBqzxphpbfMUICsxEnY9aOiYhCNA6MSewcADdE8FlnfxXz
+         nrZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=s3siQdVwUR2AQJspUWLBveOF5d5gEtnXKp3bye6ABQ0=;
+        b=ea5mTPYNiMf27Jt1/Z/3ZphG3CvRswJMAProcgPFoJyL11ifGkilQ9UnvaHsAtmdii
+         0P89Ycx1LZSFNfDg8xAouxVuVR/0zZamfVtjz5tPeCoHq+3QYQmqoxjyQkRfc140P/az
+         7V8eGdCPaYQcrViAO1GwqVZkOn3qz9Uy0T3Hwc822WWk0I+vu6Rt1pNpZVm22wkh3Qut
+         JaEntQq15Idd2O4MPI1BxctR8nlX9Mje5dj9/OZi+gCrI8m9IOEqiGEtr62EHoUPSmO7
+         rS9/q1Q8p05FuC7B3GQaItnEMC4w1GOgTIAno/0SkSFNwAjtBIUzNpdERVCIcKk8Mkpq
+         fqNw==
+X-Gm-Message-State: APjAAAXJJKjHv5W2O2FJ6XohQv8yjsRppGuYuL3Dga36DcqOjJTm9Ngn
+        TK3jSQE8lZxNg8Q1q10IwdeXPg==
+X-Google-Smtp-Source: APXvYqz2kV1/VNj2vtLrqOvcxHp2oruPVYMQmZgXomeA4NxtqVu+akd5vZjo2btRinJtOKthW1IARg==
+X-Received: by 2002:adf:ee01:: with SMTP id y1mr4305931wrn.152.1581072640457;
+        Fri, 07 Feb 2020 02:50:40 -0800 (PST)
+Received: from [192.168.0.38] ([176.61.57.127])
+        by smtp.gmail.com with ESMTPSA id y185sm3050539wmg.2.2020.02.07.02.50.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Feb 2020 02:50:39 -0800 (PST)
+Subject: Re: [PATCH v4 09/18] usb: dwc3: qcom: Override VBUS when using
+ gpio_usb_connector
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     Jack Pham <jackp@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        gregkh@linuxfoundation.org, balbi@kernel.org,
+        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Manu Gautam <mgautam@codeaurora.org>
+References: <20200207015907.242991-1-bryan.odonoghue@linaro.org>
+ <20200207015907.242991-10-bryan.odonoghue@linaro.org>
+ <20200207080729.GA30341@jackp-linux.qualcomm.com>
+ <2bd67925-14cf-5851-14a2-c51a065fac6c@linaro.org>
+Message-ID: <453bfea7-4085-1a24-84ad-30c7671665e7@linaro.org>
+Date:   Fri, 7 Feb 2020 10:50:45 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
+MIME-Version: 1.0
+In-Reply-To: <2bd67925-14cf-5851-14a2-c51a065fac6c@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
- Most of the time the CPU should not be touching the GX domain on the
- GPU
- except for a very special use case when the CPU needs to force the GX
- headswitch off. Add a dummy enable function for the GX gdsc to simulate
- success so that the pm_runtime reference counting is correct.
+On 07/02/2020 10:36, Bryan O'Donoghue wrote:
+> On 07/02/2020 08:07, Jack Pham wrote:
+>> Could the usb_role_switch class somehow be enhanced to support chaining
+>> multiple "consumers" to support this case? Such that when the gpio-b
+>> driver calls set_role() it could get handled both by drd.c and
+>> dwc3-qcom.c?
+> 
+> It is probably necessary eventually, but, per my reading of the 
+> documents and working with the hardware, I couldn't justify the 
+> additional work.
+> 
+> However if you think this patchset needs the toggle, I can look into 
+> getting the indicator to toggle here too.
+> 
+> We'd need to add some sort of linked list of notifiers to the role 
+> switching logic and toggle them in order.
+> 
+> Similar to what is done in extcon now for the various notifer hooks.
 
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
+Maybe I'm wrong...
+
+Looking a bit closer at the role-switch code it might be possible to 
+register multiple devices _as-is_ so long as you have a pointer to the 
+relevant parent...
+
 ---
- drivers/clk/qcom/gpucc-sc7180.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+bod
 
-diff --git a/drivers/clk/qcom/gpucc-sc7180.c b/drivers/clk/qcom/gpucc-sc7180.c
-index ec61194..3b29f19 100644
---- a/drivers/clk/qcom/gpucc-sc7180.c
-+++ b/drivers/clk/qcom/gpucc-sc7180.c
-@@ -172,8 +172,45 @@ static struct gdsc cx_gdsc = {
- 	.flags = VOTABLE,
- };
-
-+/*
-+ * On SC7180 the GPU GX domain is *almost* entirely controlled by the GMU
-+ * running in the CX domain so the CPU doesn't need to know anything about the
-+ * GX domain EXCEPT....
-+ *
-+ * Hardware constraints dictate that the GX be powered down before the CX. If
-+ * the GMU crashes it could leave the GX on. In order to successfully bring back
-+ * the device the CPU needs to disable the GX headswitch. There being no sane
-+ * way to reach in and touch that register from deep inside the GPU driver we
-+ * need to set up the infrastructure to be able to ensure that the GPU can
-+ * ensure that the GX is off during this super special case. We do this by
-+ * defining a GX gdsc with a dummy enable function and a "default" disable
-+ * function.
-+ *
-+ * This allows us to attach with genpd_dev_pm_attach_by_name() in the GPU
-+ * driver. During power up, nothing will happen from the CPU (and the GMU will
-+ * power up normally but during power down this will ensure that the GX domain
-+ * is *really* off - this gives us a semi standard way of doing what we need.
-+ */
-+static int gx_gdsc_enable(struct generic_pm_domain *domain)
-+{
-+	/* Do nothing but give genpd the impression that we were successful */
-+	return 0;
-+}
-+
-+static struct gdsc gx_gdsc = {
-+	.gdscr = 0x100c,
-+	.clamp_io_ctrl = 0x1508,
-+	.pd = {
-+		.name = "gpu_gx_gdsc",
-+		.power_on = gx_gdsc_enable,
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = CLAMP_IO,
-+};
-+
- static struct gdsc *gpu_cc_sc7180_gdscs[] = {
- 	[CX_GDSC] = &cx_gdsc,
-+	[GX_GDSC] = &gx_gdsc,
- };
-
- static struct clk_regmap *gpu_cc_sc7180_clocks[] = {
---
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-of the Code Aurora Forum, hosted by the  Linux Foundation.
