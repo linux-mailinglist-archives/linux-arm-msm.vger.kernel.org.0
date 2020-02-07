@@ -2,30 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EED9215528B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 07:46:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C44B1552E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 08:24:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726798AbgBGGqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Feb 2020 01:46:53 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:20423 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726136AbgBGGqw (ORCPT
+        id S1726752AbgBGHYh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 02:24:37 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:40831 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726573AbgBGHYh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Feb 2020 01:46:52 -0500
+        Fri, 7 Feb 2020 02:24:37 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581058011; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1581060277; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=oRZTjl7wX0gMUshuocGpEAyXrjo3f1MY/QRXGnPUZTI=;
- b=JbvPcJAoUmLm0nEX/uYRSbM1PpTptKjWK+AnfBiQRRLNetL3p50GPl0xAt8jTIahV/xQ581/
- /MI/tRIDTvvOZjCJc1N5OVjYWsAU1fzxYE4qzvSaSM+LPxGkFcRuLDRs0quwHxND1tDJx60q
- RwV/s0GWA0BEVMSf2hAqnBgkB2A=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ MIME-Version: Sender; bh=yvIzAXlCUWtw8UVrvAHXcMI4NqUI2Q/iSLZWcJmbwuM=;
+ b=ijnchf30+AuZYBL9mOG4y73grg69atAGooxW68htfd0RUDHgQROJ6jsa2FqmCpV3bFNx3E1g
+ Lvt2MA3W/9wSZFmETlIzEEgaz+CEwqSK334qZi0yNORDLSWOCDIjhkBO9ynfvaov2fftOA8W
+ igNGPqEQtzXPmd4hy4QSm1ETodE=
+X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e3d07d8.7fa318378110-smtp-out-n03;
- Fri, 07 Feb 2020 06:46:48 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e3d10ac.7f2e68c81340-smtp-out-n03;
+ Fri, 07 Feb 2020 07:24:28 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4E60BC447A0; Fri,  7 Feb 2020 06:46:47 +0000 (UTC)
+        id 04C79C4479C; Fri,  7 Feb 2020 07:24:27 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,217 +34,81 @@ X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: kgunda)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5FFD8C43383;
-        Fri,  7 Feb 2020 06:46:46 +0000 (UTC)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 04154C433CB;
+        Fri,  7 Feb 2020 07:24:26 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 07 Feb 2020 12:16:46 +0530
-From:   kgunda@codeaurora.org
-To:     Rob Herring <robh@kernel.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, rnayak@codeaurora.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH V3 1/2] mfd: qcom-spmi-pmic: Convert bindings to .yaml
- format
-In-Reply-To: <20200206220638.GA28227@bogus>
-References: <1580997328-16365-1-git-send-email-kgunda@codeaurora.org>
- <5e3c63d0.1c69fb81.c2bba.0957@mx.google.com> <20200206220638.GA28227@bogus>
-Message-ID: <1d7e38197bcaec99dd4e669b5dc8e31c@codeaurora.org>
-X-Sender: kgunda@codeaurora.org
+Date:   Fri, 07 Feb 2020 12:54:25 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?Q?Michael_Turquette_=C2=A0?= <mturquette@baylibre.com>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org,
+        linux-kernel-owner@vger.kernel.org
+Subject: Re: [PATCH v3 0/3] Add modem Clock controller (MSS CC) driver for
+ SC7180
+In-Reply-To: <1580357923-19783-1-git-send-email-tdas@codeaurora.org>
+References: <1580357923-19783-1-git-send-email-tdas@codeaurora.org>
+Message-ID: <ba110478a0dba14e12665d7060712f4c@codeaurora.org>
+X-Sender: sibis@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-02-07 03:36, Rob Herring wrote:
-> On Thu, Feb 06, 2020 at 11:06:55AM -0800, Stephen Boyd wrote:
->> Quoting Kiran Gunda (2020-02-06 05:55:26)
->> > Convert the bindings from .txt to .yaml format.
->> >
->> > Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
->> > ---
->> 
->> Did something change? Is there a cover letter?
->> 
->> > diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
->> > new file mode 100644
->> > index 0000000..affc169
->> > --- /dev/null
->> > +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
->> > @@ -0,0 +1,115 @@
->> > +# SPDX-License-Identifier: GPL-2.0-only
->> > +%YAML 1.2
->> > +---
->> > +$id: http://devicetree.org/schemas/bindings/mfd/qcom,spmi-pmic.yaml#
->> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> > +
->> > +title: Qualcomm SPMI PMICs multi-function device bindings
->> > +
->> > +maintainers:
->> > +  - Lee Jones <lee.jones@linaro.org>
->> > +  - Stephen Boyd <sboyd@codeaurora.org>
->> 
->> Please change this to sboyd@kernel.org
+On 2020-01-30 09:48, Taniya Das wrote:
+> [v3]
+>   * Add clocks/clock-names required for the MSS clock controller.
+>   * Add pm_ops to enable/disable the required dependent clock.
+>   * Add parent_data for the MSS clocks.
+>   * Update the GCC MSS clocks from _CBCR to _CLK.
 > 
-> Should be the h/w owner, not applier of changes.
+> [v2]
+>   * Update the license for the documentation and fix minor comments in 
+> the
+>     YAML bindings.
 > 
-Ok.. I will remove it in next post.
->> 
->> > +
->> > +description: |
->> > +  The Qualcomm SPMI series presently includes PM8941, PM8841 and PMA8084
->> > +  PMICs.  These PMICs use a QPNP scheme through SPMI interface.
->> 
->> This first sentence will need continual updating. Please drop it.
->> 
->> > +  QPNP is effectively a partitioning scheme for dividing the SPMI extended
->> > +  register space up into logical pieces, and set of fixed register
->> > +  locations/definitions within these regions, with some of these regions
->> > +  specifically used for interrupt handling.
->> > +
->> > +  The QPNP PMICs are used with the Qualcomm Snapdragon series SoCs, and are
->> > +  interfaced to the chip via the SPMI (System Power Management Interface) bus.
->> > +  Support for multiple independent functions are implemented by splitting the
->> > +  16-bit SPMI slave address space into 256 smaller fixed-size regions, 256 bytes
->> > +  each. A function can consume one or more of these fixed-size register regions.
->> > +
->> > +properties:
->> > +  compatible:
->> > +    enum:
->> > +      - qcom,pm8941
->> > +      - qcom,pm8841
->> > +      - qcom,pma8084
->> > +      - qcom,pm8019
->> > +      - qcom,pm8226
->> > +      - qcom,pm8110
->> > +      - qcom,pma8084
->> > +      - qcom,pmi8962
->> > +      - qcom,pmd9635
->> > +      - qcom,pm8994
->> > +      - qcom,pmi8994
->> > +      - qcom,pm8916
->> > +      - qcom,pm8004
->> > +      - qcom,pm8909
->> > +      - qcom,pm8950
->> > +      - qcom,pmi8950
->> > +      - qcom,pm8998
->> > +      - qcom,pmi8998
->> > +      - qcom,pm8005
->> > +      - qcom,spmi-pmic
->> 
->> I think we want qcom,spmi-pmic to be there always. To do that we need 
->> it
->> to look like:
->> 
->>   compatible:
->>     items:
->>       enum:
->>         - qcom,pm8941
->>         ...
->>       enum:
->>         - qcom,spmi-pmic
+> [v1]
+>   * Add driver support for Modem clock controller for SC7180 and also
+>     update device tree bindings for the various clocks supported in the
+>     clock controller.
 > 
-> Yes, but missing '-' before the enum's.
+> Taniya Das (3):
+>   dt-bindings: clock: Add YAML schemas for the QCOM MSS clock bindings
+>   dt-bindings: clock: Introduce QCOM Modem clock bindings
+>   clk: qcom: Add modem clock controller driver for SC7180
+
+Tested-by: Sibi Sankar <sibis@codeaurora.org>
+
 > 
-Will add it in next post
->> 
->> > +
->> > +  reg:
->> > +    maxItems: 1
->> > +    description:
->> > +      Specifies the SPMI USID slave address for this device.
->> > +      For more information see Documentation/devicetree/bindings/spmi/spmi.txt
->> > +
->> > +patternProperties:
->> > +  "^.*@[0-9a-f]+$":
+>  .../devicetree/bindings/clock/qcom,mss.yaml        |  58 +++++++++
+>  drivers/clk/qcom/Kconfig                           |   9 ++
+>  drivers/clk/qcom/Makefile                          |   1 +
+>  drivers/clk/qcom/gcc-sc7180.c                      |  70 ++++++++++
+>  drivers/clk/qcom/mss-sc7180.c                      | 143 
+> +++++++++++++++++++++
+>  include/dt-bindings/clock/qcom,gcc-sc7180.h        |   5 +
+>  include/dt-bindings/clock/qcom,mss-sc7180.h        |  12 ++
+>  7 files changed, 298 insertions(+)
+>  create mode 100644 
+> Documentation/devicetree/bindings/clock/qcom,mss.yaml
+>  create mode 100644 drivers/clk/qcom/mss-sc7180.c
+>  create mode 100644 include/dt-bindings/clock/qcom,mss-sc7180.h
 > 
-> You are going to need to define the specific child nodes with the
-> schemas for them, but a SPMI bus schema may be useful.
-> 
-Ok.. I will add it in next post.
->> > +    type: object
->> > +    description:
->> > +      Each child node of SPMI slave id represents a function of the PMIC. In the
->> > +      example below the rtc device node represents a peripheral of pm8941
->> > +      SID = 0. The regulator device node represents a peripheral of pm8941 SID = 1.
->> > +
->> > +    properties:
->> > +      compatible:
->> > +        description:
->> > +          Compatible of the PMIC device.
->> > +
->> > +      interrupts:
->> > +        maxItems: 2
->> > +        description:
->> > +          Interrupts are specified as a 4-tuple. For more information
->> > +          see Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
->> 
->> Just make this bindings/spmi/qcom,spmi-pmic-arb.txt so that  we don't
->> have to worry about it. Why is max items 2? Isn't it 4? Is this 
->> property
->> supposed to be specified at all?
->> 
->> > +
->> > +      interrupt-names:
->> > +        description:
->> > +          Corresponding interrupt name to the interrupts property
->> 
->> Does this need to be specified either?
->> 
->> > +
->> > +    required:
->> > +      - compatible
->> > +
->> > +required:
->> > +  - compatible
->> > +  - reg
->> > +
->> > +examples:
->> > +  - |
->> > +    spmi {
->> > +        compatible = "qcom,spmi-pmic-arb";
->> > +        #address-cells = <2>;
->> > +        #size-cells = <0>;
->> > +
->> > +       pm8941@0 {
->> 
->> pmic@0
->> 
->> > +         compatible = "qcom,pm8941";
->> > +         reg = <0x0 0x0>;
->> 
->> Why not include the header file to get the SPMI_USID macro?
->> 
->> > +
->> > +         rtc {
->> > +           compatible = "qcom,rtc";
->> > +           interrupts = <0x0 0x61 0x1 0x1>;
->> > +           interrupt-names = "alarm";
->> > +         };
->> > +       };
->> > +
->> > +       pm8941@1 {
->> 
->> pmic@1
->> 
->> > +         compatible = "qcom,pm8941";
->> > +         reg = <0x1 0x0>;
->> > +
->> > +         regulator {
->> > +           compatible = "qcom,regulator";
->> > +           regulator-name = "8941_boost";
->> > +         };
->> > +       };
->> > +    };
->> > +...
->> > --
->> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> >  a Linux Foundation Collaborative Project
+> --
+> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a 
+> member
+> of the Code Aurora Forum, hosted by the  Linux Foundation.
+
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
