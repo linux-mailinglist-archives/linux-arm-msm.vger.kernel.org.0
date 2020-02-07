@@ -2,90 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A6F5155A4B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 16:04:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F0AC2155B2A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Feb 2020 16:53:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727305AbgBGPED (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Feb 2020 10:04:03 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:39742 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727011AbgBGPEC (ORCPT
+        id S1726988AbgBGPxa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 10:53:30 -0500
+Received: from mail-vk1-f193.google.com ([209.85.221.193]:41310 "EHLO
+        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726954AbgBGPx3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Feb 2020 10:04:02 -0500
-Received: by mail-wm1-f65.google.com with SMTP id c84so3116741wme.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2020 07:04:00 -0800 (PST)
+        Fri, 7 Feb 2020 10:53:29 -0500
+Received: by mail-vk1-f193.google.com with SMTP id p191so712586vkf.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2020 07:53:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=HMDl4o3rW3O7+RqgrNRzbPCmWSYVjKzp9g+zOGkOoBI=;
-        b=OLbktre1TzHCgrai9hwALDQn2A4u4gf0naTmEJy2ZnmfGcxLqcW7A2TEK1xrf9O0M4
-         fIx+Hn8OCOImGceqIpPjyscBlxiiuc+0rH2ANPM4DOaUx7ymHXGVPogah36x+V/YL2jV
-         ly3BaYvHJaQZwxtd7nlNRbCxWLdzLqaM2f8J3ANZLgQmvEA5ZGDIpcE7bVESnhQS62F8
-         VlY4+SqhM3NyqvQI6NrXFGfKCtgHSi8MSzn0X2lL5qKTjrE4qTk4O4rBX8a4KoZKTiSH
-         ya9HuqrGuVpThRONAHxuhpTe9cGvpsY9/RRJ3KhxWmOA7R0jeRXMMwBR2EopsDAaNcpc
-         8peQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=95ygi45qtZTOWH+UKxvi28hwPyGfXfy4ZjYmQW0i/SI=;
+        b=j75d0oaRHNtEC+MzXfW9/nEOcgNA3FX81yhp5QL/gzqPhUE9bPTWd7pIxDD2tJdnoD
+         lFmTVekPy83AuHK4oQrEsq7ftUURUTxJ9cHEJpWShoUGKC0ikjyESDkEfo8X9qs8uQ0m
+         1osZusZiWV377s0jr3USuUDihezOV+4A9lYiyNvEx56g8jrfZqDXuQScNUWvqEMIT7fG
+         AWvRwjQUiCGGUaGqNp3SB61dlAhcik3Tclg3r5SvBOBcgCOvcp5gOxIg56wQNV83RPMG
+         Jpw/4RXYPSqBvoXTgAIiHft1h8B9m9pNJxvFxh4+uP1R3i6r3x+T6WF6k6axZtfvLetf
+         apYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=HMDl4o3rW3O7+RqgrNRzbPCmWSYVjKzp9g+zOGkOoBI=;
-        b=V1R4KqfJhsmz9qHsYsbVGqd+vHvltZgqs1t6cGlG3RXs+IIHG9hoD+4ixG+qCVe3ZW
-         6DIElVLupFWcGoqxdA48yxOhUnVNaXver34AslH2KWIz6T9PeAIie0LP4Q0XWRayhr0A
-         /DA5HbCG7NMZbLeSgTaYdz8cgzi0POEImoQ9l31j/YNueiyjvIBhsqV0Ci90fxV5Mkrz
-         csDXLi2DfCK1166wGGHzgP0QSC7m+aBTQeJz1rvOg/bqJTpnYKVY4qZ7pcws62vyzw4X
-         r4Qp9Hc+F/Fgx6YSANXM6h77cnMmWSkkUbhvNf9czi7d4aZ8e1BfqfNCT1alqQZ92I6f
-         iGnQ==
-X-Gm-Message-State: APjAAAWgBm/ulqnflisbvqhdiUAbQZoQGI20LF01SAkNG1jRrMagbHmb
-        aasVOFi65CuiVslBzBjV9Z5u8A==
-X-Google-Smtp-Source: APXvYqzzyoqr1jCZCY/KRGQTW/dpbRzFbFLZJzXLdYAJxgaeh9DBWl2aUOBeJTHhN609Fk1V+Qu7Xg==
-X-Received: by 2002:a05:600c:2207:: with SMTP id z7mr4863923wml.138.1581087840050;
-        Fri, 07 Feb 2020 07:04:00 -0800 (PST)
-Received: from [192.168.0.38] ([176.61.57.127])
-        by smtp.gmail.com with ESMTPSA id d9sm3591225wrx.94.2020.02.07.07.03.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Feb 2020 07:03:59 -0800 (PST)
-Subject: Re: [PATCH v4 09/18] usb: dwc3: qcom: Override VBUS when using
- gpio_usb_connector
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     Jack Pham <jackp@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        gregkh@linuxfoundation.org, balbi@kernel.org,
-        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Manu Gautam <mgautam@codeaurora.org>
-References: <20200207015907.242991-1-bryan.odonoghue@linaro.org>
- <20200207015907.242991-10-bryan.odonoghue@linaro.org>
- <20200207080729.GA30341@jackp-linux.qualcomm.com>
- <2bd67925-14cf-5851-14a2-c51a065fac6c@linaro.org>
- <453bfea7-4085-1a24-84ad-30c7671665e7@linaro.org>
-Message-ID: <832a97f1-e138-5b2a-755a-c551f7264cbd@linaro.org>
-Date:   Fri, 7 Feb 2020 15:04:05 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=95ygi45qtZTOWH+UKxvi28hwPyGfXfy4ZjYmQW0i/SI=;
+        b=M5UfZLSEqtU6zxIFr9nM2I5PBv5wJLxLQO00rdzeQXA6KqtbHWWRG12Am7HuZFBSHI
+         zL80oNVz+wzbIhqT8T9azoNhemOYHYBFLxt/I+8q8Y1X/kxQwG10MyTXZR/6nuS3MQnW
+         6qi9z8TkFRqVGXhYmWP0Sn/yOOTjgq2BZVVmzczHWOU49gypei2+Q0uIONwohZAYmyeB
+         QvF7Kx17nAKUwmVtAj6DE1NXwnjDFdao1sEQOthV9/Kbq4/QndQ49glYTI21HzMAcprP
+         34Rc7bijFz8eP6Ro68ca1k/WGk2VvjY2SJMonA8XtDYR3yiq7XIdFqYfdA6n5leU4kaF
+         oamg==
+X-Gm-Message-State: APjAAAVYjNy/s8FmpiyoE2v+tuRjlEWduYgT3Q0BHz+Au2oie1XBGgPN
+        ddcWSU/fQZOssgwQOjamfTuYYmLZeT4+yqdPEiRTqw==
+X-Google-Smtp-Source: APXvYqwFFtbUIctx3YdFoC4QriFsEms4xU7w6LquZ748k027glxZE0QklHy04PJmF/kHORQ6R34TsyT2ppLdjjIsU0w=
+X-Received: by 2002:a1f:434b:: with SMTP id q72mr5084872vka.53.1581090808740;
+ Fri, 07 Feb 2020 07:53:28 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <453bfea7-4085-1a24-84ad-30c7671665e7@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <0d7f7ade-3a1e-5428-d851-f1a886f58712@codeaurora.org>
+ <20200204152132.GA44858@bogus> <6ff7c82d-4204-a339-4070-0154ab4515f1@codeaurora.org>
+ <20200205140603.GB38466@bogus> <CAPDyKFoyepN2VX4COMomp1e9dXPozzrgCdcy0paee2jp8Wm3YA@mail.gmail.com>
+ <20200205161816.GD38466@bogus> <CAPDyKFqaA7oN2+oLS=Puw+jQXke_ErGQAWYuTuU-6PS7mo5YbQ@mail.gmail.com>
+ <20200206204514.GB8107@codeaurora.org> <20200207111955.GA40103@bogus>
+ <CAPDyKFp-zvD1iFcpRaTFiuazxYmLEx0Czf3=TZJxjSCDmmPsvA@mail.gmail.com> <20200207144850.GA18655@e121166-lin.cambridge.arm.com>
+In-Reply-To: <20200207144850.GA18655@e121166-lin.cambridge.arm.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 7 Feb 2020 16:52:52 +0100
+Message-ID: <CAPDyKFoZ+QQFdG3yQ5wGpg2Z5c9WksUhresGz02o3HVrGt1UhQ@mail.gmail.com>
+Subject: Re: [PATCH v3 5/7] drivers: firmware: psci: Add hierarchical domain
+ idle states converter
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>, lsrao@codeaurora.org,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/02/2020 10:50, Bryan O'Donoghue wrote:
-> 
-> Maybe I'm wrong...
-> 
-> Looking a bit closer at the role-switch code it might be possible to 
-> register multiple devices _as-is_ so long as you have a pointer to the 
-> relevant parent...
+On Fri, 7 Feb 2020 at 15:48, Lorenzo Pieralisi
+<lorenzo.pieralisi@arm.com> wrote:
+>
+> On Fri, Feb 07, 2020 at 01:32:28PM +0100, Ulf Hansson wrote:
+> > [...]
+> >
+> > > > I understand the arguments for using PC vs OSI and agree with it. But
+> > > > what in PSCI is against Linux knowing when the last core is powering
+> > > > down when the PSCI is configured to do only Platform Cordinated.
+> > >
+> > > Nothing :D. But knowing the evolution and reasons for adding OSI in the
+> > > PSCI specification and having argued about benefits of OSI over PC for
+> > > years and finally when we have it in mainline, this argument of using
+> > > PC for exact reasons why OSI evolved is something I can't understand
+> > > and I am confused.
+> > >
+> > > > There should not be any objection to drivers knowing when all the cores
+> > > > are powered down, be it reference counting CPU PM notifications or using
+> > > > a cleaner approach like this where GendPD framwork does everything
+> > > > cleanly and gives a nice callback. ARM architecture allows for different
+> > > > aspects of CPU access be handled at different levels. I see this as an
+> > > > extension of that approach.
+> > > >
+> > >
+> > > One thing that was repeatedly pointed out during OSI patch review was no
+> > > extra overhead for PC mode where firmware can make decisions. So, just
+> > > use OSI now and let us be done with this discussion of OSI vs PC. If PC
+> > > is what you think you need for future, we can revert all OSI changes and
+> > > start discussing again :-)
+> >
+> > Just to make it clear, I fully agree with you in regards to overhead
+> > for PC-mode. This is especially critical for ARM SoCs with lots of
+> > cores, I assume.
+> >
+> > However, the overhead you refer to, is *only* going to be present in
+> > case when the DTS has the hierarchical CPU topology description with
+> > "power-domains". Because, that is *optional* to use, I am expecting
+> > only those SoC/platforms that needs to manage last-man activities to
+> > use this layout, the others will remain unaffected.
+>
+> In PC mode not only there is no need but it is wrong to manage
+> any last-man activity in the kernel. I wonder why we are still
+> talking about this to be honest.
 
-Soo... its possible to create a new role-switch device relatively easily 
-@usb_role_switch_register() but, the drivers calling the role-switch 
-callback have a 1:1 mapping between role-switch call and receiver.
+I guess the discussion is here because there is a use case to consider now.
 
-Doing something inside DWC3 <=> DWC3::QCOM looks like less of a rewrite.
+For sure, we agree on what is the best solution. But this is rather
+about what can we do to improve the current situation, if we should do
+anything.
+
+>
+> Code to handle PSCI platform coordinated mode has been/is in
+> the kernel today and that's all is needed according to the PSCI
+> specifications.
+
+PSCI specifies CPU power management, not SoC power management. If
+these things were completely decoupled, I would agree with you, but
+that's not the case. Maybe SCMI, etc, helps with this in future.
+
+Anyway, my fear is that not many ARM vendors implements OSI support,
+but still they have "last-man-activities" to deal with. This is not
+only QCOM.
+
+I guess an option would be to add OSI support to the public ARM
+Trusted Firmware, then we could more easily point to that - rather
+than trying to mitigate the problem on the kernel side.
+
+Kind regards
+Uffe
