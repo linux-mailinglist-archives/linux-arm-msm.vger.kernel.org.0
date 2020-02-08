@@ -2,86 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 664701561DA
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2020 01:15:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A5B571561ED
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2020 01:28:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727130AbgBHAPb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Feb 2020 19:15:31 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:56847 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726995AbgBHAP3 (ORCPT
+        id S1726995AbgBHA2e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 19:28:34 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:44972 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727309AbgBHA2e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Feb 2020 19:15:29 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581120928; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=VpG+eyST5RsmDX3zT2VkIqnC3NB2/2TQvTi2z4BmXLc=; b=eFZdr7fz9e7Oc+tKeNqeu1aZLoklQ9oVJ/IorD2fSvFi6SKm/yRUZXCCTElGipTw2IJSCQRZ
- 7PrqwF8nYnhL15y0rRXizXA/dNLaitKltOJgMUuwvX3e9SgHhO28rJ0CdgrUMphRpsqFE3Nl
- 0Vg/DaIfEbvnrg56pVzIjrvhuHY=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e3dfd9a.7f86edca7a40-smtp-out-n02;
- Sat, 08 Feb 2020 00:15:22 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B2837C447A1; Sat,  8 Feb 2020 00:15:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jackp)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B9E0BC433CB;
-        Sat,  8 Feb 2020 00:15:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B9E0BC433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jackp@codeaurora.org
-Date:   Fri, 7 Feb 2020 16:15:20 -0800
-From:   Jack Pham <jackp@codeaurora.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+        Fri, 7 Feb 2020 19:28:34 -0500
+Received: by mail-wr1-f66.google.com with SMTP id m16so865744wrx.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2020 16:28:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=soWAD8UNijAJb7SHutHwxxBAWeNh89k1vOpxcKcfupY=;
+        b=Rq+8kIqJ3e0cTG7areebQpeL5NmWDETx87Z+Q1RTs2pwBS4e/iV+ReWWbbHTpVeu21
+         WMZ2Wa/qaTVJjkCRtipWIGitiWe2oOoMBC/KOTmy+Q/SyHJifvj+Ha6QylV0/rdL+blZ
+         0eSV4GNC0CRK0KSmfg5R7a4YqXnHBbAl3uTP4DJhsmp0o0NH/SJ5GaBav64HSV4+jvzs
+         BOXXS/o+/sDYGH27Jd4xZzTz5Sni46L0o/CDmLhRU1PsfPA2iGOvrowtImgQxuACpsav
+         sMIzLkn9ba+aBiF5ZnRKDVb1+3Wvc7mVYU1P/Rr6ncewadY1QNMyGKHvnivi5mr5B4MB
+         BnsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=soWAD8UNijAJb7SHutHwxxBAWeNh89k1vOpxcKcfupY=;
+        b=rmCtO5Yf+tdjYw9Bc+7bAynX68MFlVJEVbvnAtJ09OdUIJ1oEJgom2+5MnEU7noinw
+         FikEMb4ezRix4perC84IElPqGBvi/zFEF3qT8/y2Kp/8gyV4SBp6BwnGuU0FC+OjSbL7
+         vPZLhiK1DrLbAE0sxX9g/kIbzNrx09vBv7ytYZT7FL3i/k1P8AbfE4JnMZOcCKF00uw5
+         j0VChdXT6EcJmK2SrKdIEik4QGkUJRVavsx+6mbWTGx4US4nLOnNsusoV5RtD5rbO0YL
+         IlOh2hskmw1vGv2M91Q02IcXUENRb6glqS8OTHEbqJrtu5g9sUTkOdybWIWMibbkyE+w
+         cXSQ==
+X-Gm-Message-State: APjAAAUVs1nnXaYQSuKVOLuANcQNlYvbeZuzccdCpPbeCqCrvrG4LEZn
+        dRwl5jmNISDglyQd+GyTRlYKTg==
+X-Google-Smtp-Source: APXvYqwpCvKOJ+uTpFQDfPG7Et4tMAqIsOquaCQjzGt7yEWxxkI5+rj4ldwoYGEx1NnuOzKik7RqTQ==
+X-Received: by 2002:adf:ab14:: with SMTP id q20mr1592820wrc.274.1581121710957;
+        Fri, 07 Feb 2020 16:28:30 -0800 (PST)
+Received: from [192.168.0.38] ([176.61.57.127])
+        by smtp.gmail.com with ESMTPSA id h17sm5668150wrs.18.2020.02.07.16.28.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Feb 2020 16:28:29 -0800 (PST)
+Subject: Re: [PATCH v5 11/18] usb: dwc3: Add support for a role-switch
+ notifier
+To:     Jack Pham <jackp@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         gregkh@linuxfoundation.org, balbi@kernel.org,
         bjorn.andersson@linaro.org, robh@kernel.org,
         linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Lee Jones <lee.jones@linaro.org>,
         Philipp Zabel <p.zabel@pengutronix.de>
-Subject: Re: [PATCH v5 11/18] usb: dwc3: Add support for a role-switch
- notifier
-Message-ID: <20200208001520.GB18464@jackp-linux.qualcomm.com>
 References: <20200207201654.641525-1-bryan.odonoghue@linaro.org>
  <20200207201654.641525-12-bryan.odonoghue@linaro.org>
+ <20200208001520.GB18464@jackp-linux.qualcomm.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Message-ID: <9e653a9a-2fc4-645c-ac33-d9826a7ecbd9@linaro.org>
+Date:   Sat, 8 Feb 2020 00:28:33 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200207201654.641525-12-bryan.odonoghue@linaro.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20200208001520.GB18464@jackp-linux.qualcomm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bryan,
-
-On Fri, Feb 07, 2020 at 08:16:47PM +0000, Bryan O'Donoghue wrote:
-> Role-switching is a 1:1 mapping between a producer and a consumer. For DWC3
-> we have some vendor specific wrappers, notably the qcom wrapper that want
-> to toggle some PHY related bits on a USB role switch.
+On 08/02/2020 00:15, Jack Pham wrote:
+> Hi Bryan,
 > 
-> This patch adds a role-switch notifier to the dwc3 drd code. When the USB
-> role-switch set() routine runs, the notifier will fire passing the notified
-> mode to the consumer, thus allowing vendor specific fix-ups to toggle from
-> the role-switching events.
+> On Fri, Feb 07, 2020 at 08:16:47PM +0000, Bryan O'Donoghue wrote:
+>> Role-switching is a 1:1 mapping between a producer and a consumer. For DWC3
+>> we have some vendor specific wrappers, notably the qcom wrapper that want
+>> to toggle some PHY related bits on a USB role switch.
+>>
+>> This patch adds a role-switch notifier to the dwc3 drd code. When the USB
+>> role-switch set() routine runs, the notifier will fire passing the notified
+>> mode to the consumer, thus allowing vendor specific fix-ups to toggle from
+>> the role-switching events.
+> 
+> Neat! This could work. But let's see if Felipe likes this approach.
+> 
+> If you need, here's a
+> 
+> Reviewed-by: Jack Pham <jackp@codeaurora.org>
 
-Neat! This could work. But let's see if Felipe likes this approach.
-
-If you need, here's a
-
-Reviewed-by: Jack Pham <jackp@codeaurora.org>
-
-Jack
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Appreciated
