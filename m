@@ -2,90 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4487015619D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2020 00:49:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 111821561CE
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Feb 2020 01:11:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727032AbgBGXtu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Feb 2020 18:49:50 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41634 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727065AbgBGXtu (ORCPT
+        id S1727075AbgBHALA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Feb 2020 19:11:00 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:59889 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727065AbgBHAK7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Feb 2020 18:49:50 -0500
-Received: by mail-wr1-f65.google.com with SMTP id c9so835219wrw.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Feb 2020 15:49:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=KfDASmZsnfGOH8NUUmiKPl3PBbXCb2LGn10+n0ncVHA=;
-        b=wtVdWw5Um8em6bZABj9trIml1d9jnPfQQwbNchYwkCuu5B/1w0+CA7CIAWyzlVKZRz
-         yyHm6nKo7sL7zCLRH62eCvwBgQo/8X7U6W6RcLZyP0IuPXnj2LH82wV5SD0nNMHA58Ny
-         KGwn6gmTmpdPr4QArp7Q89S3JNtQ5ODHlNjitPKvnXmLhxKSAxWYldLCXewQWkTQNj98
-         SGZyVDKQXPLdALdTT87Xd2FwCxMiYzjgZppRmLMljtIewnjlvqQT2qaZPpZa6oWsUEGo
-         wbmGvEs+qLLDNx30pq6Nk4VYc4yi0DEgH6yr6eXyieVmo5wOTmzntZshKj/TRjFt1Nb2
-         FQOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=KfDASmZsnfGOH8NUUmiKPl3PBbXCb2LGn10+n0ncVHA=;
-        b=uB44r4NTyvDWZck8wtSofQPh8ATlyfOgwINbEHEOfxaWWPG6ybt4s0Mw8R83iTIo+5
-         wZqaD4AuvJjCRQU+5hZuF6B1nX6QxNRTLQY6TDh1oAiJZ4GtVU6K+YGiapnOAnCW3z3O
-         nMBo3T0MFQwR3O2Wlq1F67wPlzC89tjrLdTBKW3gq4BQEH2+KKTn9VH5g7F4pasFSk8M
-         K3Soj9e1xmWPYPKXotjzemmxgigXRuzVwZg35ni/1qgO/hX6ewVJSJNJt7A97bsoqO6c
-         jes1cB5O2BYo9uf2zv1Trh1UsWD1VTDMRKFrABo2eSjtCvgacpMHZQXmiMHeAOYyzUKQ
-         wEGw==
-X-Gm-Message-State: APjAAAVvk+jhWXRaxti4kcApUSsr2OzoBatVuxHlMgM6vFFnolMbGc5z
-        h4blQu3i/ccVcupiA01++qy+HA==
-X-Google-Smtp-Source: APXvYqzTspi8f0hdsjZLazh9HFZc9VWwl0L0B3CqmgqqmchS7DnHA0IA+4HzYnMXOFF2Rf1kby3KXQ==
-X-Received: by 2002:a5d:5647:: with SMTP id j7mr1398932wrw.265.1581119388067;
-        Fri, 07 Feb 2020 15:49:48 -0800 (PST)
-Received: from [192.168.0.38] ([176.61.57.127])
-        by smtp.gmail.com with ESMTPSA id t9sm5117292wmj.28.2020.02.07.15.49.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Feb 2020 15:49:47 -0800 (PST)
-Subject: Re: [PATCH v5 10/18] usb: dwc3: Add support for usb-conn-gpio
- connectors
-To:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        gregkh@linuxfoundation.org, jackp@codeaurora.org, balbi@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org
-Cc:     linux-kernel@vger.kernel.org, John Stultz <john.stultz@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        ShuFan Lee <shufan_lee@richtek.com>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Chunfeng Yun <chunfeng.yun@mediatek.com>,
-        Yu Chen <chenyu56@huawei.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Jun Li <lijun.kernel@gmail.com>,
-        Valentin Schneider <valentin.schneider@arm.com>,
-        devicetree@vger.kernel.org
-References: <20200207201654.641525-1-bryan.odonoghue@linaro.org>
- <20200207201654.641525-11-bryan.odonoghue@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Message-ID: <18f8d6ab-e17f-390a-9160-2b67716e4cf9@linaro.org>
-Date:   Fri, 7 Feb 2020 23:49:51 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.2
+        Fri, 7 Feb 2020 19:10:59 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1581120659; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=mBHOswO4oUaWR11Gs/cziyPwcq8fjMTZ4et+RwKy2M8=;
+ b=cbrCyqF4hYdKW0HCfFZ88D+BIfB5VuABO4XD0Pl1tL5UegT+/V8B0tEALYPbWNkjtppgHO1j
+ 1NjSDESIxujfv1F7wEpyXn5RK2FWQKJo7u7s0jcyWsmjDd5+5n2uPBJNk6NjqqlTToTNUXu/
+ ML7xc4j1wU1VIKr5Lyq75R/ic4k=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e3dfc91.7f06759743e8-smtp-out-n02;
+ Sat, 08 Feb 2020 00:10:57 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E2D65C433A2; Sat,  8 Feb 2020 00:10:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: cang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B6BFFC43383;
+        Sat,  8 Feb 2020 00:10:55 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20200207201654.641525-11-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Sat, 08 Feb 2020 08:10:55 +0800
+From:   Can Guo <cang@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        hongwus@codeaurora.org, rnayak@codeaurora.org,
+        linux-scsi@vger.kernel.org, kernel-team@android.com,
+        saravanak@google.com, salyzyn@google.com,
+        Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v7 7/8] scsi: ufs-qcom: Delay specific time before gate
+ ref clk
+In-Reply-To: <20200207021036.GT2514@yoga>
+References: <1580978008-9327-1-git-send-email-cang@codeaurora.org>
+ <1580978008-9327-8-git-send-email-cang@codeaurora.org>
+ <20200206203336.GQ2514@yoga>
+ <9de3632cf0c65347684b8c5f4f3c63b3@codeaurora.org>
+ <20200207021036.GT2514@yoga>
+Message-ID: <745307fd2a9e2e25f4fb2dd2c985e680@codeaurora.org>
+X-Sender: cang@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/02/2020 20:16, Bryan O'Donoghue wrote:
-> A device node label gpio_usb_connector is used to identify
-> a usb-conn-gpio as a child of the USB interface.
+On 2020-02-07 10:10, Bjorn Andersson wrote:
+> On Thu 06 Feb 17:09 PST 2020, Can Guo wrote:
+> 
+>> On 2020-02-07 04:33, Bjorn Andersson wrote:
+>> > On Thu 06 Feb 00:33 PST 2020, Can Guo wrote:
+>> >
+>> > > After enter hibern8, as UFS JEDEC ver 3.0 requires, a specific
+>> > > gating wait
+>> > > time is required before disable the device reference clock. If it is
+>> > > not
+>> > > specified, use the old delay.
+>> > >
+>> > > Signed-off-by: Can Guo <cang@codeaurora.org>
+>> > > Reviewed-by: Asutosh Das <asutoshd@codeaurora.org>
+>> > > Reviewed-by: Hongwu Su <hongwus@codeaurora.org>
+>> > > ---
+>> > >  drivers/scsi/ufs/ufs-qcom.c | 22 +++++++++++++++++++---
+>> > >  1 file changed, 19 insertions(+), 3 deletions(-)
+>> > >
+>> > > diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+>> > > index 85d7c17..39eefa4 100644
+>> > > --- a/drivers/scsi/ufs/ufs-qcom.c
+>> > > +++ b/drivers/scsi/ufs/ufs-qcom.c
+>> > > @@ -833,6 +833,8 @@ static int ufs_qcom_bus_register(struct
+>> > > ufs_qcom_host *host)
+>> > >
+>> > >  static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host,
+>> > > bool enable)
+>> > >  {
+>> > > +	unsigned long gating_wait;
+>> > > +
+>> > >  	if (host->dev_ref_clk_ctrl_mmio &&
+>> > >  	    (enable ^ host->is_dev_ref_clk_enabled)) {
+>> > >  		u32 temp = readl_relaxed(host->dev_ref_clk_ctrl_mmio);
+>> > > @@ -845,11 +847,25 @@ static void ufs_qcom_dev_ref_clk_ctrl(struct
+>> > > ufs_qcom_host *host, bool enable)
+>> > >  		/*
+>> > >  		 * If we are here to disable this clock it might be immediately
+>> > >  		 * after entering into hibern8 in which case we need to make
+>> > > -		 * sure that device ref_clk is active at least 1us after the
+>> > > +		 * sure that device ref_clk is active for specific time after
+>> > >  		 * hibern8 enter.
+>> > >  		 */
+>> > > -		if (!enable)
+>> > > -			udelay(1);
+>> > > +		if (!enable) {
+>> > > +			gating_wait = host->hba->dev_info.clk_gating_wait_us;
+>> > > +			if (!gating_wait) {
+>> >
+>> > Afaict this can't happen, because in patch 6 you check for gating_wait
+>> > being 0 and if so set it to 0xff.
+>> >
+>> 
+>> Sorry, I was intended to give clk_gating_wait_us values only if it is
+>> a UFS3.0 device. I will revise patch 6/8.
+>> 
+> 
+> Okay, sounds good.
+> 
+>> > > +				udelay(1);
+>> > > +			} else {
+>> > > +				/*
+>> > > +				 * bRefClkGatingWaitTime defines the minimum
+>> > > +				 * time for which the reference clock is
+>> > > +				 * required by device during transition from
+>> > > +				 * HS-MODE to LS-MODE or HIBERN8 state. Give it
+>> > > +				 * more time to be on the safe side.
+>> > > +				 */
+>> > > +				gating_wait += 10;
+>> > > +				usleep_range(gating_wait, gating_wait + 10);
+>> >
+>> > I presume there's no strong requirement on the max, so how about using a
+>> > substantially larger max - say 1k, or 10k - to allow the usleep_range()
+>> > to do it's job?
+>> >
+>> >
+>> > PS. Please include linux-arm-msm@ on all the patches in the series, not
+>> > just two of them.
+>> >
+>> > Regards,
+>> > Bjorn
+>> >
+>> 
+>> bRefClkGatingWaitTime, as vendor defined in their device attribute is
+>> usually
+>> around 50~100, 1k or 10k delay makes it too large. usleep_range() 
+>> works well
+>> so long as the delay is within (10us - 20ms), so I added 10 to make 
+>> sure it
+>> is
+>> above 10us.
+>> 
+> 
+> I meant specifically the second parameter, i.e:
+>   usleep_range(bRefClkGatingWaitTime + 10, bRefClkGatingWaitTime + 
+> 1000);
+> 
+> As you're not guaranteed an upper bound of this sleep anyway you might
+> as well give usleep_range() a window of a millisecond (or more) to give
+> it the flexibility of matching other timer events.
+> 
+> The only drawback with this is that you might "waste" a millisecond.
+> 
+> Regards,
+> Bjorn
+> 
 
-This bit of the git log is stale now.
+Hi Bjorn,
 
-Needs updating
+Device ref clk gate/ungate can happen very frequently if clk gating is
+enabled. The "wasted" milliseconds might be accumulated to affect
+read/write latency, i.e:
+
+If read/write requests come, clk ungate kicks start, it flushes ongoing
+gate work if any, if we "waste" a millisecond here, the read/write
+requests will be delayed a millisecond. I am not sure how much it may
+impact the overall performance in a long term test.
+
+Thanks,
+
+Can Guo.
+
+>> SLEEPING FOR ~USECS OR SMALL MSECS ( 10us - 20ms):
+>> 	* Use usleep_range
+>> https://www.kernel.org/doc/Documentation/timers/timers-howto.txt
+>> 
+>> Thanks,
+>> 
+>> Can Guo.
+>> 
+>> > > +			}
+>> > > +		}
+>> > >
+>> > >  		writel_relaxed(temp, host->dev_ref_clk_ctrl_mmio);
+>> > >
+>> > > --
+>> > > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
+>> > > Forum,
+>> > > a Linux Foundation Collaborative Project
