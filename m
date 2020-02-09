@@ -2,197 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AEAE1569AD
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2020 09:31:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A05F2156B26
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Feb 2020 16:48:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726005AbgBIIbo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Feb 2020 03:31:44 -0500
-Received: from asavdk3.altibox.net ([109.247.116.14]:41096 "EHLO
-        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725911AbgBIIbn (ORCPT
+        id S1727874AbgBIPsc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Feb 2020 10:48:32 -0500
+Received: from mail.serbinski.com ([162.218.126.2]:32884 "EHLO
+        mail.serbinski.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727828AbgBIPsa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Feb 2020 03:31:43 -0500
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Sun, 9 Feb 2020 10:48:30 -0500
+Received: from localhost (unknown [127.0.0.1])
+        by mail.serbinski.com (Postfix) with ESMTP id 861D7D00700;
+        Sun,  9 Feb 2020 15:48:29 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at serbinski.com
+Received: from mail.serbinski.com ([127.0.0.1])
+        by localhost (mail.serbinski.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id lcSDXKU_nL2R; Sun,  9 Feb 2020 10:48:23 -0500 (EST)
+Received: from anet (23-233-80-73.cpe.pppoe.ca [23.233.80.73])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by asavdk3.altibox.net (Postfix) with ESMTPS id 843EF20022;
-        Sun,  9 Feb 2020 09:31:39 +0100 (CET)
-Date:   Sun, 9 Feb 2020 09:31:38 +0100
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Harigovindan P <harigovi@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        sean@poorly.run, seanpaul@chromium.org
-Subject: Re: [PATCHv3 1/2] dt-bindings: display: add visionox rm69299 panel
- variant
-Message-ID: <20200209083138.GC5321@ravnborg.org>
-References: <1580907990-32108-1-git-send-email-harigovi@codeaurora.org>
- <1580907990-32108-2-git-send-email-harigovi@codeaurora.org>
+        by mail.serbinski.com (Postfix) with ESMTPSA id D36A2D00716;
+        Sun,  9 Feb 2020 10:48:09 -0500 (EST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.serbinski.com D36A2D00716
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=serbinski.com;
+        s=default; t=1581263289;
+        bh=+zB4LnN9LLpPdhU7E7/M9daLcjy7QRsA3nLhYSVC610=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=lnVf5zihzXXmqGAdeUCWgq53i5PiqyLPm1d4RtuXtQ2fYNZ0W9+yuDbaaVxcns6nO
+         H6f/mlBFE6sn5DoBh25bAHN/BPZrlzhq7aHNnw9M85EXayD/sUNVxysoAffz9o+GGc
+         dp+uvPpBThdF5kEtzk33qDa30Skas0vaaxANHxdI=
+From:   Adam Serbinski <adam@serbinski.com>
+To:     Mark Brown <broonie@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Adam Serbinski <adam@serbinski.com>,
+        Andy Gross <agross@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Patrick Lai <plai@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/8] ASoC: qdsp6: db820c: Add support for external and bluetooth audio
+Date:   Sun,  9 Feb 2020 10:47:40 -0500
+Message-Id: <20200209154748.3015-1-adam@serbinski.com>
+X-Mailer: git-send-email 2.21.1
+In-Reply-To: <20200207205013.12274-1-adam@serbinski.com>
+References: <20200207205013.12274-1-adam@serbinski.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1580907990-32108-2-git-send-email-harigovi@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=eMA9ckh1 c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=LpQP-O61AAAA:8
-        a=gEfo2CItAAAA:8 a=rUAlzMgn7VfAsfAmY-cA:9 a=2aNtAtRbR_R-ZWdM:21
-        a=at3rOJuKAjAUH52G:21 a=CjuIK1q_8ugA:10 a=pioyyrs4ZptJ924tMmac:22
-        a=sptkURWiP4Gy88Gu7hUp:22
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Harigovindan
+Changes from V1:
 
-On Wed, Feb 05, 2020 at 06:36:29PM +0530, Harigovindan P wrote:
-> Add bindings for visionox rm69299 panel.
-> 
-> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
-> ---
-> 
-> Changes in v1:
-> 	- Added a compatible string to support sc7180 panel version.
-> Changes in v2:
-> 	- Removed unwanted properties from description.
-> 	- Creating source files without execute permissions(Rob Herring).
-> Changes in v3:
-> 	- Changing txt file into yaml
-Thanks for changing to DT Schema.
+	Rename patch:
+		from: dts: msm8996/db820c: enable primary pcm and quaternary i2s
+		to: dts: qcom: db820c: Enable primary PCM and quaternary I2S
 
+CC: Andy Gross <agross@kernel.org>
+CC: Mark Rutland <mark.rutland@arm.com>
+CC: Liam Girdwood <lgirdwood@gmail.com>
+CC: Patrick Lai <plai@codeaurora.org>
+CC: Banajit Goswami <bgoswami@codeaurora.org>
+CC: Jaroslav Kysela <perex@perex.cz>
+CC: Takashi Iwai <tiwai@suse.com>
+CC: alsa-devel@alsa-project.org
+CC: linux-arm-msm@vger.kernel.org
+CC: devicetree@vger.kernel.org
+CC: linux-kernel@vger.kernel.org
 
-> 
->  .../bindings/display/visionox,rm69299.yaml         | 109 +++++++++++++++++++++
->  1 file changed, 109 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/visionox,rm69299.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/display/visionox,rm69299.yaml b/Documentation/devicetree/bindings/display/visionox,rm69299.yaml
-> new file mode 100644
-> index 0000000..bfcd46d
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/visionox,rm69299.yaml
+Adam Serbinski (8):
+  ASoC: qdsp6: dt-bindings: Add q6afe pcm dt binding
+  ASoC: qdsp6: q6afe: add support to pcm ports
+  ASoC: qdsp6: q6afe-dai: add support to pcm port dais
+  ASoC: qdsp6: q6routing: add pcm port routing
+  ASoC: qcom: apq8096: add support for primary and quaternary I2S/PCM
+  ASoC: qcom/common: Use snd-soc-dummy-dai when codec is not specified
+  arm64: dts: qcom: db820c: Enable primary PCM and quaternary I2S
+  ASoC: qcom: apq8096: add kcontrols to set PCM rate
 
-This is a binding for a panel - and thus belongs in the panel/
-directory.
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 113 +++++++++
+ arch/arm64/boot/dts/qcom/msm8996-pins.dtsi   | 162 ++++++++++++
+ include/dt-bindings/sound/qcom,q6afe.h       |   8 +
+ sound/soc/qcom/apq8096.c                     | 172 +++++++++++--
+ sound/soc/qcom/common.c                      |  22 +-
+ sound/soc/qcom/qdsp6/q6afe-dai.c             | 198 ++++++++++++++-
+ sound/soc/qcom/qdsp6/q6afe.c                 | 246 +++++++++++++++++++
+ sound/soc/qcom/qdsp6/q6afe.h                 |   9 +-
+ sound/soc/qcom/qdsp6/q6routing.c             |  44 ++++
+ 9 files changed, 953 insertions(+), 21 deletions(-)
 
-> @@ -0,0 +1,109 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-The preferred license for new bindings are (GPL-2.0-only or BSD-2-Clause)
+-- 
+2.21.1
 
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/visionox,rm69299.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Visionox model RM69299 Panels Device Tree Bindings
-> +
-> +maintainers:
-> +  - Harigovindan P <harigovi@codeaurora.org>
-> +  - Kalyan Thota <kalyan_t@codeaurora.org>
-> +  - Vishnuvardhan Prodduturi <vproddut@codeaurora.org>
-> +
-> +description:
-> +  This binding is for display panels using a Visionox RM692999 panel.
-> +
-
-Use:
-allOf:
-  - $ref: panel-common.yaml#
-
-Then you have access to all properties described there.
-
-
-> +patternProperties:
-> +  "^(panel|panel-dsi)@[0-9]$":
-> +    type: object
-> +    description:
-> +      A node containing the panel or bridge description as documented in
-> +      Documentation/devicetree/bindings/display/mipi-dsi-bus.txt
-
-The panel shall not document the parent node.
-See how other panels do it.
-In general - start with the compatible.
-
-This will also simplify your list of required properties.
-
-> +    properties:
-> +      compatible:
-> +        const: visionox,rm69299-1080p-display
-> +
-> +      reg:
-> +        maxItems: 1
-> +
-> +      vdda-supply:
-> +        description:
-> +          Phandle of the regulator that provides the vdda supply voltage.
-> +
-> +      vdd3p3-supply:
-> +        description:
-> +          Phandle of the regulator that provides the vdd3p3 supply voltage.
-> +
-> +      pinctrl-names:
-> +        items:
-> +          - const: default
-> +          - const: suspend
-> +
-> +      pinctrl-0:
-> +        items:
-> +          - const: Display default pin
-> +          - const: Display default pin
-
-pinctrl are not needed for the panel. They belong to the display driver.
-
-> +
-> +      ports:
-> +        type: object
-> +        description:
-> +          A node containing DSI input & output port nodes with endpoint
-> +          definitions as documented in
-> +          Documentation/devicetree/bindings/media/video-interfaces.txt
-> +          Documentation/devicetree/bindings/graph.txt
-> +        properties:
-> +          port@0:
-> +            type: object
-> +            description:
-> +              DSI input port node.
-> +
-A
-       port: true
-should do the trick here.
-
-
-
-
-> +      "#address-cells":
-> +        const: 1
-> +
-> +      "#size-cells":
-> +        const: 0
-Not required.
-> +
-> +required:
-> +  - "#address-cells"
-> +  - "#size-cells"
-> +  - compatible
-> +  - reg
-> +  - vdda-supply
-> +  - vdd3p3-supply
-> +  - pinctrl-names
-> +  - pinctrl-0
-> +  - pinctrl-1
-> +  - reset-gpios
-
-reset-gpios are not documented in the above.
-
-Add
-      reset-gpios: true
-
-
-Please give it a spin more.
-And preferably give it a "make dt_binding_check" whirl.
-If you cannot get this part working I can do so for you in next
-reviision.
-
-	Sam
