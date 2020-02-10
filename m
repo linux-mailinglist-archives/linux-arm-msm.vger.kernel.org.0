@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E716157BB0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 14:32:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 05556157C04
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 14:34:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727723AbgBJNbq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Feb 2020 08:31:46 -0500
-Received: from foss.arm.com ([217.140.110.172]:33622 "EHLO foss.arm.com"
+        id S1731427AbgBJNeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Feb 2020 08:34:20 -0500
+Received: from foss.arm.com ([217.140.110.172]:33724 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729392AbgBJNbq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Feb 2020 08:31:46 -0500
+        id S1727960AbgBJNeT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Feb 2020 08:34:19 -0500
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C1FB71FB;
-        Mon, 10 Feb 2020 05:31:45 -0800 (PST)
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 96CA41FB;
+        Mon, 10 Feb 2020 05:34:18 -0800 (PST)
 Received: from localhost (unknown [10.37.6.21])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 467A93F68E;
-        Mon, 10 Feb 2020 05:31:45 -0800 (PST)
-Date:   Mon, 10 Feb 2020 13:31:43 +0000
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1B98A3F68E;
+        Mon, 10 Feb 2020 05:34:17 -0800 (PST)
+Date:   Mon, 10 Feb 2020 13:34:16 +0000
 From:   Mark Brown <broonie@kernel.org>
 To:     Adam Serbinski <adam@serbinski.com>
 Cc:     Srini Kandagatla <srinivas.kandagatla@linaro.org>,
@@ -32,16 +32,17 @@ Cc:     Srini Kandagatla <srinivas.kandagatla@linaro.org>,
         Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/8] ASoC: qdsp6: q6afe: add support to pcm ports
-Message-ID: <20200210133143.GG7685@sirena.org.uk>
+Subject: Re: [PATCH v2 3/8] ASoC: qdsp6: q6afe-dai: add support to pcm port
+ dais
+Message-ID: <20200210133416.GH7685@sirena.org.uk>
 References: <20200207205013.12274-1-adam@serbinski.com>
  <20200209154748.3015-1-adam@serbinski.com>
- <20200209154748.3015-3-adam@serbinski.com>
+ <20200209154748.3015-4-adam@serbinski.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="JkW1gnuWHDypiMFO"
+        protocol="application/pgp-signature"; boundary="rCwQ2Y43eQY6RBgR"
 Content-Disposition: inline
-In-Reply-To: <20200209154748.3015-3-adam@serbinski.com>
+In-Reply-To: <20200209154748.3015-4-adam@serbinski.com>
 X-Cookie: Avoid gunfire in the bathroom tonight.
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -50,74 +51,62 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---JkW1gnuWHDypiMFO
+--rCwQ2Y43eQY6RBgR
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sun, Feb 09, 2020 at 10:47:42AM -0500, Adam Serbinski wrote:
+On Sun, Feb 09, 2020 at 10:47:43AM -0500, Adam Serbinski wrote:
 
-> =20
-> +#define AFE_API_VERSION_PCM_CONFIG	0x1
-> +/* Enumeration for the auxiliary PCM synchronization signal
-> + * provided by an external source.
-> + */
+> +static int q6pcm_hw_params(struct snd_pcm_substream *substream,
+> +			   struct snd_pcm_hw_params *params,
+> +			   struct snd_soc_dai *dai)
+> +{
+> +	struct q6afe_dai_data *dai_data = dev_get_drvdata(dai->dev);
+> +	struct q6afe_pcm_cfg *pcm = &dai_data->port_config[dai->id].pcm_cfg;
 > +
-> +#define AFE_PORT_PCM_SYNC_SRC_EXTERNAL 0x0
-> +/*	Enumeration for the auxiliary PCM synchronization signal
-> + * provided by an internal source.
-> + */
-
-This is a *weird* commenting style for these #defines and it's not
-consistent within the block, I'm seeing at least 3 different styles.
-
-> +/*  Payload of the #AFE_PARAM_ID_PCM_CONFIG command's
-> + * (PCM configuration parameter).
-> + */
+> +	pcm->sample_rate = params_rate(params);
 > +
-> +struct afe_param_id_pcm_cfg {
 
-Similar weird commenting here, please follow coding-style.rst.
+This and set_fmt() don't do any validation of the value being set.
 
-> +	switch (cfg->fmt & SND_SOC_DAIFMT_MASTER_MASK) {
-> +	case SND_SOC_DAIFMT_CBS_CFS:
-> +		pcfg->pcm_cfg.sync_src =3D AFE_PORT_PCM_SYNC_SRC_INTERNAL;
-> +		break;
-> +	case SND_SOC_DAIFMT_CBM_CFM:
-> +		/* CPU is slave */
-> +		pcfg->pcm_cfg.sync_src =3D AFE_PORT_PCM_SYNC_SRC_EXTERNAL;
-> +		break;
-> +	default:
-> +		break;
-> +	}
+>  static const struct snd_soc_dai_ops q6tdm_ops = {
+>  	.prepare	= q6afe_dai_prepare,
+>  	.shutdown	= q6afe_dai_shutdown,
+> -	.set_sysclk	= q6afe_mi2s_set_sysclk,
+> +	.set_sysclk	= q6afe_tdm_set_sysclk,
+>  	.set_tdm_slot     = q6tdm_set_tdm_slot,
+>  	.set_channel_map  = q6tdm_set_channel_map,
+>  	.hw_params        = q6tdm_hw_params,
 
-Why is this not returning an error on unsupported values?
+This looks like a separate bug fix that should be split out?
 
-> +
-> +	switch (cfg->sample_rate) {
-> +	case 8000:
-> +		pcfg->pcm_cfg.frame_setting =3D AFE_PORT_PCM_BITS_PER_FRAME_128;
-> +		break;
-> +	case 16000:
-> +		pcfg->pcm_cfg.frame_setting =3D AFE_PORT_PCM_BITS_PER_FRAME_64;
-> +		break;
-> +	}
+> +	}, {
+> +		.playback = {
+> +			.stream_name = "Primary PCM Playback",
+> +			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000,
+> +			.formats = SNDRV_PCM_FMTBIT_S16_LE |
+> +				   SNDRV_PCM_FMTBIT_S24_LE,
+> +			.rate_min =     8000,
+> +			.rate_max =     16000,
+> +		},
 
-Same here.
+It is surprising to see rate_min and rate_max specified when we're not
+using _KNOT, and again there's weird formatting here with the tabs
+before the rate values.
 
---JkW1gnuWHDypiMFO
+--rCwQ2Y43eQY6RBgR
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl5BWz8ACgkQJNaLcl1U
-h9COgAf/dQvwNK7v2nSAj2+698541KzAw+rU1oHMPrfL47b7+8WMLtY8dn2B7TiM
-1dBCzYpTotvmbnXSoGQMztG89ws70Csele03jew7S8MfRuwnrbAEbp3mR8KW+ylI
-GkjNxUGHH97SWdkJ92q3bH4wkRJVAtS6nAudxv7So3vi1WNmGGLgwCODlKzLII1j
-7mmUkvhMwjqGBxqOrIifT7yTlnqCZyIHKqUQk7xIPO+on5jZ0QVvB9HZ5xISM1HV
-/3it4Gmoc3P5bGf+N9Y0UF3Bc11Wgaq7+XXSMccyUv7Ze5h3ZtTGUidbeWsYNfGf
-vBl163xXITHNtKVJSYgNX1CAKUV9OQ==
-=kiNx
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl5BW9cACgkQJNaLcl1U
+h9Dh8wf9GPgsAk8A8fx5UolrgGZJ4NvmqNg6lr8kiZW80V0qguFTuNNYITV/GtSe
+3hR5xFD6RWuu3W60mOEK6zra9dWXC++UUK9zROYY3AHiDqmJAfsPQRx9Pi6SoJSf
+sHWco6VGMY308dMXp9ebWYAWHYjTHE/oKkbuCcjmwg/4qdgknwITb45vKDsGOk7U
+KDq0QvV0RUTw3jtXPiwP93+UGwFOVHTnGPkYQVQPQiUi2N9/f41iWwry69B09wOW
+GT/OYTl2NMH+pjmW+/XWcPwhp2cVaJa7c8v4JNl8QvYgIyEzyYwY945J7AxzhzXT
+o4oM+MZSKad4PBHQ3/tbxddygF5rKg==
+=fc13
 -----END PGP SIGNATURE-----
 
---JkW1gnuWHDypiMFO--
+--rCwQ2Y43eQY6RBgR--
