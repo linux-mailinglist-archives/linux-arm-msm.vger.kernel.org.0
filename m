@@ -2,180 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 456F6156FFA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 08:41:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5533A1572DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 11:31:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726968AbgBJHlW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Feb 2020 02:41:22 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:32146 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726118AbgBJHlW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Feb 2020 02:41:22 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581320481; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=yCDeCdgKA3IXNoyqrtgJmGy4KgKCgByY8yGLh4PgpZg=; b=eJVDeVhDwrV4dp5jY+r+8uVQ4MlxkO0+Oh5/OjcSfX1EjCXn9uxO6dv816nnX6qf4Jd4rgcC
- Zq1TyB0Sz68kGNi+yad0IsUDouEvDj0bmDZnIIMI/d3szMOmn4wigjJ7vDyhGZkcZmiBM4xF
- 7NbJbBaox1LMRQMCGKSj2Sbzsuw=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e410920.7fbbe469ee30-smtp-out-n01;
- Mon, 10 Feb 2020 07:41:20 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 90120C433A2; Mon, 10 Feb 2020 07:41:19 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from smasetty-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: smasetty)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B2044C447A3;
-        Mon, 10 Feb 2020 07:41:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B2044C447A3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
-From:   Sharat Masetty <smasetty@codeaurora.org>
-To:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        jcrouse@codeaurora.org, mka@chromium.org, dianders@chromium.org,
-        Sharat Masetty <smasetty@codeaurora.org>
-Subject: [PATCH v6] arm64: dts: qcom: sc7180: Add A618 gpu dt blob
-Date:   Mon, 10 Feb 2020 13:11:05 +0530
-Message-Id: <1581320465-15854-2-git-send-email-smasetty@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1581320465-15854-1-git-send-email-smasetty@codeaurora.org>
-References: <1581320465-15854-1-git-send-email-smasetty@codeaurora.org>
+        id S1727079AbgBJKbP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Feb 2020 05:31:15 -0500
+Received: from foss.arm.com ([217.140.110.172]:58676 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726961AbgBJKbP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Feb 2020 05:31:15 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8A2B61FB;
+        Mon, 10 Feb 2020 02:31:14 -0800 (PST)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7566A3F68F;
+        Mon, 10 Feb 2020 02:31:12 -0800 (PST)
+Date:   Mon, 10 Feb 2020 10:31:10 +0000
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>, lsrao@codeaurora.org,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Subject: Re: [PATCH v3 5/7] drivers: firmware: psci: Add hierarchical domain
+ idle states converter
+Message-ID: <20200210103110.GB19089@bogus>
+References: <CAPDyKFoyepN2VX4COMomp1e9dXPozzrgCdcy0paee2jp8Wm3YA@mail.gmail.com>
+ <20200205161816.GD38466@bogus>
+ <CAPDyKFqaA7oN2+oLS=Puw+jQXke_ErGQAWYuTuU-6PS7mo5YbQ@mail.gmail.com>
+ <20200206204514.GB8107@codeaurora.org>
+ <20200207111955.GA40103@bogus>
+ <CAPDyKFp-zvD1iFcpRaTFiuazxYmLEx0Czf3=TZJxjSCDmmPsvA@mail.gmail.com>
+ <20200207144850.GA18655@e121166-lin.cambridge.arm.com>
+ <CAPDyKFoZ+QQFdG3yQ5wGpg2Z5c9WksUhresGz02o3HVrGt1UhQ@mail.gmail.com>
+ <20200207161547.GB8342@bogus>
+ <CAPDyKFpzr4MA4XuNqCX1jwAzZataVwbVKvADiy39hq=UgDB4tg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFpzr4MA4XuNqCX1jwAzZataVwbVKvADiy39hq=UgDB4tg@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds the required dt nodes and properties
-to enabled A618 GPU.
+On Sat, Feb 08, 2020 at 11:25:18AM +0100, Ulf Hansson wrote:
+> On Fri, 7 Feb 2020 at 17:15, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> >
+> > On Fri, Feb 07, 2020 at 04:52:52PM +0100, Ulf Hansson wrote:
+> > > On Fri, 7 Feb 2020 at 15:48, Lorenzo Pieralisi
+> > > <lorenzo.pieralisi@arm.com> wrote:
+> > > >
+> > > > On Fri, Feb 07, 2020 at 01:32:28PM +0100, Ulf Hansson wrote:
+> > > > > [...]
+> > > > >
+> > > > > > > I understand the arguments for using PC vs OSI and agree with it. But
+> > > > > > > what in PSCI is against Linux knowing when the last core is powering
+> > > > > > > down when the PSCI is configured to do only Platform Cordinated.
+> > > > > >
+> > > > > > Nothing :D. But knowing the evolution and reasons for adding OSI in the
+> > > > > > PSCI specification and having argued about benefits of OSI over PC for
+> > > > > > years and finally when we have it in mainline, this argument of using
+> > > > > > PC for exact reasons why OSI evolved is something I can't understand
+> > > > > > and I am confused.
+> > > > > >
+> > > > > > > There should not be any objection to drivers knowing when all the cores
+> > > > > > > are powered down, be it reference counting CPU PM notifications or using
+> > > > > > > a cleaner approach like this where GendPD framwork does everything
+> > > > > > > cleanly and gives a nice callback. ARM architecture allows for different
+> > > > > > > aspects of CPU access be handled at different levels. I see this as an
+> > > > > > > extension of that approach.
+> > > > > > >
+> > > > > >
+> > > > > > One thing that was repeatedly pointed out during OSI patch review was no
+> > > > > > extra overhead for PC mode where firmware can make decisions. So, just
+> > > > > > use OSI now and let us be done with this discussion of OSI vs PC. If PC
+> > > > > > is what you think you need for future, we can revert all OSI changes and
+> > > > > > start discussing again :-)
+> > > > >
+> > > > > Just to make it clear, I fully agree with you in regards to overhead
+> > > > > for PC-mode. This is especially critical for ARM SoCs with lots of
+> > > > > cores, I assume.
+> > > > >
+> > > > > However, the overhead you refer to, is *only* going to be present in
+> > > > > case when the DTS has the hierarchical CPU topology description with
+> > > > > "power-domains". Because, that is *optional* to use, I am expecting
+> > > > > only those SoC/platforms that needs to manage last-man activities to
+> > > > > use this layout, the others will remain unaffected.
+> > > >
+> > > > In PC mode not only there is no need but it is wrong to manage
+> > > > any last-man activity in the kernel. I wonder why we are still
+> > > > talking about this to be honest.
+> > >
+> > > I guess the discussion is here because there is a use case to consider now.
+> > >
+> >
+> > If this is what Bjorn presented in his email, I have responded to that.
+> > If it's any different, please let us know the complete details.
+> >
+> > > For sure, we agree on what is the best solution. But this is rather
+> > > about what can we do to improve the current situation, if we should do
+> > > anything.
+> > >
+> >
+> > Sure, and I haven't found a reason to do that in OSPM yet(as part of the
+> > discussion in this thread)
+> >
+> > > >
+> > > > Code to handle PSCI platform coordinated mode has been/is in
+> > > > the kernel today and that's all is needed according to the PSCI
+> > > > specifications.
+> > >
+> > > PSCI specifies CPU power management, not SoC power management. If
+> > > these things were completely decoupled, I would agree with you, but
+> > > that's not the case. Maybe SCMI, etc, helps with this in future.
+> > >
+> >
+> > Why does that not work even if they are not decoupled. The IO/device
+> > that share with CPU votes from OSPM and the CPU/Cluster from PSCI in
+> > PC mode. There is no argument there, but why it needs to be done in OSPM
+> > is the objection here.
+>
+> That implies the votes from I/O devices needs to reach the FW
+> immediately when the vote is done. No caching or other optimizations
+> can be done at OSPM.
+>
+> In principle, the FW needs to have an always up to date view of the
+> votes, etc. That sounds highly inefficient, both from energy and
+> latency point of view, at least in my opinion.
+>
 
-Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 102 +++++++++++++++++++++++++++++++++++
- 1 file changed, 102 insertions(+)
+Sorry but I need to re-iterate, use OSI if you need all those fancy
+caching and other optimizations.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index f3fcc5c..63fff15 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1043,6 +1043,108 @@
- 			};
- 		};
- 
-+		gpu: gpu@5000000 {
-+			compatible = "qcom,adreno-618.0", "qcom,adreno";
-+			#stream-id-cells = <16>;
-+			reg = <0 0x05000000 0 0x40000>, <0 0x0509e000 0 0x1000>,
-+				<0 0x05061000 0 0x800>;
-+			reg-names = "kgsl_3d0_reg_memory", "cx_mem", "cx_dbgc";
-+			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
-+			iommus = <&adreno_smmu 0>;
-+			operating-points-v2 = <&gpu_opp_table>;
-+			qcom,gmu = <&gmu>;
-+
-+			gpu_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-800000000 {
-+					opp-hz = /bits/ 64 <800000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
-+				};
-+
-+				opp-650000000 {
-+					opp-hz = /bits/ 64 <650000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-+				};
-+
-+				opp-565000000 {
-+					opp-hz = /bits/ 64 <565000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-+				};
-+
-+				opp-430000000 {
-+					opp-hz = /bits/ 64 <430000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+				};
-+
-+				opp-355000000 {
-+					opp-hz = /bits/ 64 <355000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-+				};
-+
-+				opp-267000000 {
-+					opp-hz = /bits/ 64 <267000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+				};
-+
-+				opp-180000000 {
-+					opp-hz = /bits/ 64 <180000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-+				};
-+			};
-+		};
-+
-+		adreno_smmu: iommu@5040000 {
-+			compatible = "qcom,sc7180-smmu-v2", "qcom,smmu-v2";
-+			reg = <0 0x05040000 0 0x10000>;
-+			#iommu-cells = <1>;
-+			#global-interrupts = <2>;
-+			interrupts = <GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 231 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 364 IRQ_TYPE_EDGE_RISING>,
-+					<GIC_SPI 365 IRQ_TYPE_EDGE_RISING>,
-+					<GIC_SPI 366 IRQ_TYPE_EDGE_RISING>,
-+					<GIC_SPI 367 IRQ_TYPE_EDGE_RISING>,
-+					<GIC_SPI 368 IRQ_TYPE_EDGE_RISING>,
-+					<GIC_SPI 369 IRQ_TYPE_EDGE_RISING>,
-+					<GIC_SPI 370 IRQ_TYPE_EDGE_RISING>,
-+					<GIC_SPI 371 IRQ_TYPE_EDGE_RISING>;
-+			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-+				<&gcc GCC_GPU_CFG_AHB_CLK>,
-+				<&gcc GCC_DDRSS_GPU_AXI_CLK>;
-+
-+			clock-names = "bus", "iface", "mem_iface_clk";
-+			power-domains = <&gpucc CX_GDSC>;
-+		};
-+
-+		gmu: gmu@506a000 {
-+			compatible="qcom,adreno-gmu-618.0", "qcom,adreno-gmu";
-+			reg = <0 0x0506a000 0 0x31000>, <0 0x0b290000 0 0x10000>,
-+				<0 0x0b490000 0 0x10000>;
-+			reg-names = "gmu", "gmu_pdc", "gmu_pdc_seq";
-+			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
-+				   <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hfi", "gmu";
-+			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
-+			       <&gpucc GPU_CC_CXO_CLK>,
-+			       <&gcc GCC_DDRSS_GPU_AXI_CLK>,
-+			       <&gcc GCC_GPU_MEMNOC_GFX_CLK>;
-+			clock-names = "gmu", "cxo", "axi", "memnoc";
-+			power-domains = <&gpucc CX_GDSC>, <&gpucc GX_GDSC>;
-+			power-domain-names = "cx", "gx";
-+			iommus = <&adreno_smmu 5>;
-+			operating-points-v2 = <&gmu_opp_table>;
-+
-+			gmu_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-200000000 {
-+					opp-hz = /bits/ 64 <200000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-+				};
-+			};
-+		};
-+
- 		gpucc: clock-controller@5090000 {
- 			compatible = "qcom,sc7180-gpucc";
- 			reg = <0 0x05090000 0 0x9000>;
--- 
-1.9.1
+> >
+> > > Anyway, my fear is that not many ARM vendors implements OSI support,
+> > > but still they have "last-man-activities" to deal with. This is not
+> > > only QCOM.
+> > >
+> >
+> > I am interested to hear from them. And the same question to same too as
+> > above.
+>
+> I have been talking to some of them. But, yes, we need to hear more from them.
+>
+> >
+> > > I guess an option would be to add OSI support to the public ARM
+> > > Trusted Firmware, then we could more easily point to that - rather
+> > > than trying to mitigate the problem on the kernel side.
+> > >
+> >
+> > I would say go for it. But don't mix responsibility of OSPM in PC vs OSI.
+> > We have discussed this for years and I hope this discussion ends ASAP.
+> > I don't see any point in dragging this any further.
+>
+> Okay.
+>
+
+I keep saying that but still responding to the discussions. I must stop ;-)
+
+--
+Regards,
+Sudeep
