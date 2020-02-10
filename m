@@ -2,138 +2,241 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 666CC1573BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 12:56:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 41ADF15742F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 13:09:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727481AbgBJL4Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Feb 2020 06:56:25 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:23958 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727363AbgBJL4Z (ORCPT
+        id S1727541AbgBJMJN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Feb 2020 07:09:13 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37271 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727508AbgBJMHW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Feb 2020 06:56:25 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581335784; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: Cc: To: References:
- Subject: Sender; bh=msK0pnyL6OkobNKSG9pUtr6X/d0ixckiXExfRYSIcCI=; b=FrNwtwVdS1NCi2k0WuVv0hhrsXAkivhYvu0tpruwVZZ+ztXtSKViMMjqd/JP0YnyMwGNdnqX
- SQjvFs4I/OVc9OfHa+pQfmHOaT7TsUDgdCatURVWiO7b2NUYpTlQY1XtPCQty9IGBFDgiqbW
- Jfkmc9cSe7qxnL5rXPztWaHYh90=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e4144e6.7ff4d49b7b58-smtp-out-n01;
- Mon, 10 Feb 2020 11:56:22 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1BA03C4479C; Mon, 10 Feb 2020 11:56:21 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.252.218.68] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: gkohli)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CA6BBC43383;
-        Mon, 10 Feb 2020 11:56:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CA6BBC43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=gkohli@codeaurora.org
-Subject: Query: Regarding Notifier chain callback debugging or profiling
-References: <82d5b63e-4ae6-fb5f-8a1c-2d5755db2638@codeaurora.org>
-To:     akpm@linux-foundation.org,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Greg KH <gregkh@linuxfoundation.org>, tglx@linutronix.de
-Cc:     linux-arm-msm@vger.kernel.org, neeraju@codeaurora.org
-From:   Gaurav Kohli <gkohli@codeaurora.org>
-X-Forwarded-Message-Id: <82d5b63e-4ae6-fb5f-8a1c-2d5755db2638@codeaurora.org>
-Message-ID: <6e077b43-6c9e-3f4e-e079-db438e36a4eb@codeaurora.org>
-Date:   Mon, 10 Feb 2020 17:26:16 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.2
+        Mon, 10 Feb 2020 07:07:22 -0500
+Received: by mail-wr1-f68.google.com with SMTP id w15so7356000wru.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2020 04:07:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cwDqJHYNy9ODGtAc7zVOiX4sHY2EsNNBx139E9UVCFc=;
+        b=Qmh+fBOYUhXRdvaeYsmKK/L5yJkilbghazwNRowLmwHOlutll5G7zkcVjRDJ+jE3mJ
+         /ddXxZjK3ayaSnyc4XH6e2Ak9EcRd1mNs3F4OmISRVgqQxlsRuov8DTF4SNzFxzcqX6p
+         ABKb9YDGjuVqK805NlNui7ns55sJAqBLe1z4Att+Sp5YHtCY7yB6Qvf+xhGBOirvzEnc
+         XbU2Imz3DQLfGNHRUISPtFGbUYSvDWR6DYQACtWicuD2kP1SMubR0ufz/NKpRoEk93I5
+         nB6MQPCbC+OqYfL1iIlsYcJIN0LB/OkvPlNKKX/hC+XjEHlKxOG+p6R1vMbZQ/DcV46b
+         7tEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cwDqJHYNy9ODGtAc7zVOiX4sHY2EsNNBx139E9UVCFc=;
+        b=AiHHaA175+bhLG8202fmMALb88TcMzsbDqdmTjQKqYIQ0lhmpEJZcqzsSZJs2Q3PE1
+         AzEKOEZTdEb31X8szpWav5aZvrl7idVTjh1ZBaJAd839w9pqJlq77srToVkcAdKABaMm
+         ZsvFf9l26f9iVhUdEaeefavXr4DwOSjdSJpjjlwYYvsSDApfiU+19lVUv8C2VUaToyby
+         tLahkvkwHkWb1vYtzT5H0M9e6/rQBhar9QAKI7WLnBJi4o55zpyeJg1JmQ/AJcDTCLFk
+         lSAyUA8xvoLmOc0+pyXKGuWLAxh3eMqgrqeQ7z/pPzxdMdBPwxutsvaJ4RQ3Ot98F7Vb
+         KQgA==
+X-Gm-Message-State: APjAAAWo+OA65cKitQHNQt6sUwCmg515CmfX73j4enWcu6ImNYLR0qe4
+        rupSSkYxEunpcdin/EOLhOXFXgGnW4Q=
+X-Google-Smtp-Source: APXvYqzOqR1B50QqzTWC1cZv7iOPsJ5D2uXA85PZ9Qjd1d/E/2iMzcmdsaByx9muUv1WB9NwL5NFGg==
+X-Received: by 2002:adf:f20b:: with SMTP id p11mr1557563wro.195.1581336439081;
+        Mon, 10 Feb 2020 04:07:19 -0800 (PST)
+Received: from localhost.localdomain ([176.61.57.127])
+        by smtp.gmail.com with ESMTPSA id i204sm293124wma.44.2020.02.10.04.07.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Feb 2020 04:07:18 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        gregkh@linuxfoundation.org, jackp@codeaurora.org, balbi@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org
+Cc:     linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v6 00/18] Enable Qualcomm QCS 404 HS/SS USB
+Date:   Mon, 10 Feb 2020 12:07:05 +0000
+Message-Id: <20200210120723.91794-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-In-Reply-To: <82d5b63e-4ae6-fb5f-8a1c-2d5755db2638@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+V1:
+This series enables the Primary and Secondary USB controllers on the
+QCS404, associated PHYs, role-switching and DTS descriptions.
 
-In Linux kernel, everywhere we are using notification chains to notify 
-for any kernel events, But we don't have any debugging or profiling 
-mechanism to know which callback is taking time or currently we are 
-stuck on which call back(without dumps it is difficult to say for last 
-problem)
+The series takes in a number of patches worked on by a number of people
+over the past few years from downstream, through to previous upstream
+submissions for both of these interfaces. Additional work has been done to
+enable USB role-switching.
 
-Below are the few ways, which we can implement to profile callback on 
-need basis:
+1. USB SS
+   - extcon has been dropped in favour of gpio-usb-conn as discussed and
+     agreed previously by Jorge, Bjorn, Stephen Boyd and Jack Pham [1].
 
-1) Use trace event before and after callback:
+   - Regulator API has been updated following suggestions from Bjorn.
+   
+   - Sanitzation of the DT compatible name - dropped "snps" entirely
+     from the name - it made almost no sense to me and doesn't appear
+     consistent with similar naming conventions for Snopsys based IP.
 
-static int notifier_call_chain(struct notifier_block **nl,
-                                unsigned long val, void *v,
-                                int nr_to_call, int *nr_calls)
-{
-         int ret = NOTIFY_DONE;
-         struct notifier_block *nb, *next_nb;
+2. USB HS
+   - Regulator API changes here.
+   - Dropped "snps" from the namespace for similar reasons as above.
+   - Dropped "28nm" from the namespace, looked superfluous.
+   - Changed "High-Speed" to "Hi-Speed".
+   - [2]
 
+3. DWC3 Role switching
+   - At the time usb-gpio-conn was discussed it was mentioned that
+     role-switching was absent from the DWC3 driver.
+   - John Stultz has some patches in-flight for that, that I've included in
+     this series for completeness.
+   - Adds my SoB to relevant patches.
+   - Drops gerrit ChangeId.
 
-+		trace_event for entry of callback
-                 ret = nb->notifier_call(nb, val, v);
-+		trace_event for exit of callback
+4. DWC3 usb-gpio-conn
+   Needs to be a child node of the DWC3 driver so some code and DT binding
+   is required for that.
 
-         }
-         return ret;
-}
+5. QCOM-DWC3
+   Since we are role-switching with an external PMIC supplying VBUS we want
+   to skip past toggling VBUS from QCOM-DWC3 controlled registers, so a
+   patch is added to the qcom-dwc3 driver to do that.
 
-2) Or use pr_debug instead of trace_event
+References:
 
-3) Both of the above approach has certain problems, like it will dump 
-callback for each notifier chain, which might flood trace buffer or dmesg.
+1: USB SS PHY for Qualcomm's QCS404
+https://lwn.net/ml/devicetree/20190207111734.24171-1-jorge.ramirez-ortiz@linaro.org/
 
-So we can use bool variable to control that and dump the required 
-notification chain only.
+2: Add Synopsys High-Speed USB PHY driver for Qualcomm SoCs
+https://lore.kernel.org/linux-arm-msm/20181127100722.9993-3-shawn.guo@linaro.org/
 
-Some thing like below we can use:
+https://www.spinics.net/lists/linux-usb/msg190003.html
 
-  struct srcu_notifier_head {
-         struct mutex mutex;
-         struct srcu_struct srcu;
-         struct notifier_block __rcu *head;
-+       bool debug_callback;
-  };
+V2:
+- Fixes yaml error - Rob's YAML robot
+- Exclusive control of reset in PHY drivers - Philipp Zabel
 
+V3:
+- Fixes typo generating YAML warning - Rob's YAML robot
 
-  static int notifier_call_chain(struct notifier_block **nl,
-                                unsigned long val, void *v,
--                              int nr_to_call, int *nr_calls)
-+                              int nr_to_call, int *nr_calls, bool 
-debug_callback)
-  {
-         int ret = NOTIFY_DONE;
-         struct notifier_block *nb, *next_nb;
-@@ -526,6 +526,7 @@ void srcu_init_notifier_head(struct 
-srcu_notifier_head *nh)
-         if (init_srcu_struct(&nh->srcu) < 0)
-                 BUG();
-         nh->head = NULL;
-+       nh->debug_callback = false; -> by default it would be false for 
-every notifier chain.
+V4:
 
-4) we can also think of something pre and post function, before and 
-after each callback, And we can enable only for those who wants to profile.
+https://lore.kernel.org/linux-arm-msm/20200122185610.131930-1-bryan.odonoghue@linaro.org/
 
-Please let us what approach we can use, or please suggest some debugging 
-mechanism for the same.
+- Churn names of PHYs - Rob Herring
+  Rob questioned the name of the SuperSpeed PHY in V3.
+  Looking at available data 
 
-Regards
-Gaurav
+  usb-hs-28nm - There are two possible PHYs on 28nm litho node
+		so it makes sense to name the PHY relating to its relevant
+		litho node.
+
+  usb-ss - This is not litho node dependent and is used on  multiple SoCs
+	   and litho nodes.
+
+- Drop default mode for role switching - Felipe Balbi
+  Felipe asked if the default mode for role switching was
+  required and the answer is no. It makes no difference
+  becuase the USB ID pin ultimately dictates the mode of operation.
+
+- Change "gpio_usb_connector" to "connector" - Rob
+  This was a minor change in terms of DTS but, means I need to look for the
+  DTS compatible string as opposed to a label given in the DTS.
+  No matter what the name of the label, this is he right thing to do.
+
+- Used IS_ENABLED() - Felipe
+  The logic is the same but IS_ENABLED() is used now.
+
+- Retained example of USB connector in dwc.txt - Rob, Felipe
+  Rob pointed out adding the connector was redundant as the documentation
+  already implies it.
+  Felipe seemed in favour of I think adding the example.
+  I've dropped the documentation of the connector and kept the example.
+  https://lore.kernel.org/linux-arm-msm/20200122185610.131930-7-bryan.odonoghue@linaro.org/
+
+- Added example of usb-role-switch in dwc3.txt - BOD
+  
+- Incorporated various inputs from Rob on DTS/YAML
+  - Added required:
+  - Added additionalProperties:
+  - Renamed "phy" clock to "ahb"
+  - maxItems dropped as indicated
+
+V5:
+- https://lkml.org/lkml/2020/2/6/913
+
+- Adds a notifier to DWC3 - BOD
+  This is done in order to allow propagation of role-switch events from the
+  DWC3 core to an associated binding layer.
+
+- Re-use the existent EXTCON VBUS power lane toggle logic - Jack Pham
+  Jack flagged this for inclusion and as a result we need to make a
+  small change to the qcom binding layer.
+
+- Squash DTS changes - BOD
+  I've squashed down some of the DTS changes to stop the patch count in
+  this series going  up any further.
+
+V6:
+- https://lkml.org/lkml/2020/2/7/632
+
+- Add RB Jack Pham patch # 11
+
+- Fix a stale description in git log patch # 10
+
+Bjorn Andersson (1):
+  arm64: dts: qcom: qcs404: Add USB devices and PHYs
+
+Bryan O'Donoghue (11):
+  dt-bindings: usb: dwc3: Add a gpio-usb-connector example
+  dt-bindings: usb: dwc3: Add a usb-role-switch to the example
+  usb: dwc3: qcom: Add support for usb-conn-gpio connectors
+  usb: dwc3: Add support for usb-conn-gpio connectors
+  usb: dwc3: Add support for a role-switch notifier
+  usb: dwc3: qcom: Enable gpio-usb-conn based role-switching
+  arm64: dts: qcom: qcs404-evb: Define VBUS pins
+  arm64: dts: qcom: qcs404-evb: Define USB ID pin
+  arm64: dts: qcom: qcs404-evb: Describe external VBUS regulator
+  arm64: dts: qcom: qcs404-evb: Raise vreg_l12_3p3 minimum voltage
+  arm64: dts: qcom: qcs404-evb: Enable USB controllers
+
+Jorge Ramirez-Ortiz (3):
+  dt-bindings: phy: remove qcom-dwc3-usb-phy
+  dt-bindings: Add Qualcomm USB SuperSpeed PHY bindings
+  phy: qualcomm: usb: Add SuperSpeed PHY driver
+
+Shawn Guo (1):
+  phy: qualcomm: Add Synopsys 28nm Hi-Speed USB PHY driver
+
+Sriharsha Allenki (1):
+  dt-bindings: phy: Add Qualcomm Synopsys Hi-Speed USB PHY binding
+
+Yu Chen (1):
+  usb: dwc3: Registering a role switch in the DRD code.
+
+ .../bindings/phy/qcom,usb-hs-28nm.yaml        |  90 ++++
+ .../devicetree/bindings/phy/qcom,usb-ss.yaml  |  83 ++++
+ .../bindings/phy/qcom-dwc3-usb-phy.txt        |  37 --
+ .../devicetree/bindings/usb/dwc3.txt          |   9 +
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi      |  90 +++-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          | 100 +++++
+ drivers/phy/qualcomm/Kconfig                  |  20 +
+ drivers/phy/qualcomm/Makefile                 |   2 +
+ drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c   | 415 ++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-usb-ss.c        | 246 +++++++++++
+ drivers/usb/dwc3/core.h                       |  22 +
+ drivers/usb/dwc3/drd.c                        | 117 ++++-
+ drivers/usb/dwc3/dwc3-qcom.c                  |  31 +-
+ 13 files changed, 1221 insertions(+), 41 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-hs-28nm.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-ss.yaml
+ delete mode 100644 Documentation/devicetree/bindings/phy/qcom-dwc3-usb-phy.txt
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-usb-ss.c
 
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center,
-Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+2.25.0
+
