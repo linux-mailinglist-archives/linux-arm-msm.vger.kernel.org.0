@@ -2,60 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B4C6415741E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 13:09:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C84F15741F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 13:09:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727575AbgBJMIh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1727518AbgBJMIh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 10 Feb 2020 07:08:37 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:45314 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727639AbgBJMHb (ORCPT
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43524 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727658AbgBJMHb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 10 Feb 2020 07:07:31 -0500
-Received: by mail-wr1-f68.google.com with SMTP id g3so6265903wrs.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2020 04:07:30 -0800 (PST)
+Received: by mail-wr1-f66.google.com with SMTP id r11so4102834wrq.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2020 04:07:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YJAqrsEVC7Ekr/URFS4yzXVcz6M9nFcDb80ARG3rIgM=;
-        b=PfNkBn3UuJhxiOWb3aj4wanPHWVp9XtdYGN6NfAJMzbkSIF7NAJJIkFo8FA3S+b3MO
-         NQYy6aWz3Lbj6qi4fnoYiLuBQ5ZhsZt0kZP9fpcUGZ6vRj4POlPeYmyzVnr4PfxXJqN1
-         Ph374vpGJQNTy4aTV32qf/DbA93ofj0hP05aLqPbTKLwLldShTVGENfn1YeqG1WK7qLS
-         B+Tfc3+JvFIa5QFi+ntyAJ+dlKXkUzTeQHOxnyxV+QmiyskZVvAoG95heAPIjp78HFDt
-         uJprhIxDJNU93xzVP2cgua4XG581nXWaagdVQznhNxz9I+2Nfjn6Lm6b3I6865eVPwlr
-         nacg==
+        bh=sAZggOAZ6xTvR/9Em9hZggbtITo/icBMwG27JPLcFiE=;
+        b=XTzUDkmnbPj0IoK9amAX6spUdlbSIt3KVYgLP+tAes9DHuSa0JhZVv7m5ADkp0OLol
+         G1fkdH2iT6XiJss2LrU5a9RnJodoju4Y4LaroD95Hk4TuSoXNFiWbE+V/JmV4/vwasHa
+         PXkZNN+LEHubDvlaVApQBDF2QsenojKtQ0EtzikbFcFU0zwEr2O54jPVtDCy9GUh9U7o
+         yTP2lugfbrXUoZ8Z17rO7wDGbW3C90e0DV7JZb2glm3Erdve7fD1eG9SLeKtMJzx15Ec
+         bb8uHJrjfAdE6mZlON/QhUwtIw/ZgEElUt14pZrddLqOmiZxhBSYqVK1DSXG6tA0DS3J
+         nthA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YJAqrsEVC7Ekr/URFS4yzXVcz6M9nFcDb80ARG3rIgM=;
-        b=U4ovjVFpDUOut+B/kgK907gP/SUhXzZRZL15+R7E/YT6YAeihjVtDiho0RwcEvC+q+
-         cotmoMGmI8kZkUUx/6FOX5y8iDZRw2tUudeKapBdjGmglgx08h+CZx/bbaWugR4IccpI
-         YyPDu756SuJqyESVR++Oz4A2ypjeJ0xmDBsY6Lm6ynIRl2y5g/psI3iVI2GUb7/B204p
-         e23vugMkOJzbf+98PuhYREzw5lwIpQj1NI63RJB03MU2wSTwLji0zk5OtxV9ClGJ8Qpr
-         nrcRKrrSS9YS+sbadbo1BhWp2HEAPG9Bqndw1GZP0Ke87QkCmNGywZ0NDoZe1dr0BBYw
-         jf4g==
-X-Gm-Message-State: APjAAAU3lszwv1uELbifsrm1JlekHtFluIei6e58PaO6Rnm4FB90C5u2
-        R6FkOblxS04SB+GyHI1xdfrFiouY5dA=
-X-Google-Smtp-Source: APXvYqwSKDoRdPspygko2oEkUZgUoMMd2zIHMed2NPqd2qqb2IGVmkSGSqG6xQbYjovFrI/O1hlrZA==
-X-Received: by 2002:adf:f58c:: with SMTP id f12mr1655330wro.22.1581336449216;
-        Mon, 10 Feb 2020 04:07:29 -0800 (PST)
+        bh=sAZggOAZ6xTvR/9Em9hZggbtITo/icBMwG27JPLcFiE=;
+        b=NRyugxDwHVNw4x2sAoEO/5gQ54zbyEHYf31Kh5xGqcPMO6WpidHGJb60sMJ1su791S
+         vqyrXi1ZFeuyEWUh1PZuzcrgOSMoa/nkSDZ//2DZ18UmW8LZ/8E437F8GhTYIlm6kNEP
+         2Vzd38+eD2Uq2YKTmprWruQVwu/XM0kj4SUqgtcGzdoolJPy4m4+ktfOzJ6WPwtWdNml
+         W7jCdOIddHGpRxurq4oVGOrR3EAYzlzOzOJTQ3RDEMYEsETsU84InYEdbqhWqRflz3zh
+         TEI5WAvRa36bNimz5T8z0IrEo7Y0g+AfX5K0K9cZmpo01wMJ11FnD78y+YCNIHQJuzTm
+         kRHA==
+X-Gm-Message-State: APjAAAXzciF/LMoKhS98Tr1PNgwfsofHfqIc7Alwwsjhv/htI0YAZL6w
+        5BuzcvFt32CxS74kFkUcqoEOWntbgaM=
+X-Google-Smtp-Source: APXvYqycAs9QarMt0Y2CIE0MxQVa0WvHnitaTbz3sEDCZy+B3A49xgI2KKPFN6cjNH3Juhp05DS4HQ==
+X-Received: by 2002:adf:e692:: with SMTP id r18mr1644895wrm.413.1581336450290;
+        Mon, 10 Feb 2020 04:07:30 -0800 (PST)
 Received: from localhost.localdomain ([176.61.57.127])
-        by smtp.gmail.com with ESMTPSA id i204sm293124wma.44.2020.02.10.04.07.27
+        by smtp.gmail.com with ESMTPSA id i204sm293124wma.44.2020.02.10.04.07.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Feb 2020 04:07:27 -0800 (PST)
+        Mon, 10 Feb 2020 04:07:29 -0800 (PST)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         gregkh@linuxfoundation.org, jackp@codeaurora.org, balbi@kernel.org,
         bjorn.andersson@linaro.org, robh@kernel.org
 Cc:     linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org
-Subject: [PATCH v6 07/18] dt-bindings: usb: dwc3: Add a gpio-usb-connector example
-Date:   Mon, 10 Feb 2020 12:07:12 +0000
-Message-Id: <20200210120723.91794-8-bryan.odonoghue@linaro.org>
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v6 08/18] dt-bindings: usb: dwc3: Add a usb-role-switch to the example
+Date:   Mon, 10 Feb 2020 12:07:13 +0000
+Message-Id: <20200210120723.91794-9-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200210120723.91794-1-bryan.odonoghue@linaro.org>
 References: <20200210120723.91794-1-bryan.odonoghue@linaro.org>
@@ -66,43 +64,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A USB connector should be a child node of the USB controller
-connector/usb-connector.txt. This patch adds an example of how to do this
-to the dwc3 binding descriptions.
+This patch adds usb-role-switch to the example dwc3 given in the file.
 
-It is necessary to declare a connector as a child-node of a USB controller
-for role-switching to work, so this example should be helpful to others
-implementing that.
+Documentation/devicetree/bindings/usb/generic.txt makes this a valid
+declaration for dwc3 this patch gives an example of how to use it.
 
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: linux-usb@vger.kernel.org
-Cc: devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Acked-by: Felipe Balbi <balbi@kernel.org>
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- Documentation/devicetree/bindings/usb/dwc3.txt | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ Documentation/devicetree/bindings/usb/dwc3.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/Documentation/devicetree/bindings/usb/dwc3.txt b/Documentation/devicetree/bindings/usb/dwc3.txt
-index 66780a47ad85..4e1e4afccee6 100644
+index 4e1e4afccee6..8c6c7b355356 100644
 --- a/Documentation/devicetree/bindings/usb/dwc3.txt
 +++ b/Documentation/devicetree/bindings/usb/dwc3.txt
-@@ -121,4 +121,12 @@ dwc3@4a030000 {
+@@ -121,6 +121,7 @@ dwc3@4a030000 {
  	interrupts = <0 92 4>
  	usb-phy = <&usb2_phy>, <&usb3,phy>;
  	snps,incr-burst-type-adjustment = <1>, <4>, <8>, <16>;
-+
-+	usb_con: connector {
-+		compatible = "gpio-usb-b-connector";
-+		id-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
-+		vbus-supply = <&usb3_vbus_reg>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&usb3_id_pin>, <&usb3_vbus_pin>;
-+	};
- };
++	usb-role-switch;
+ 
+ 	usb_con: connector {
+ 		compatible = "gpio-usb-b-connector";
 -- 
 2.25.0
 
