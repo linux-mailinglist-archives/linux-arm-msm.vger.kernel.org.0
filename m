@@ -2,115 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AE27158498
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 22:14:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E6081584A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 22:21:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727056AbgBJVOA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Feb 2020 16:14:00 -0500
-Received: from mail.serbinski.com ([162.218.126.2]:47700 "EHLO
-        mail.serbinski.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727003AbgBJVOA (ORCPT
+        id S1727003AbgBJVVo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Feb 2020 16:21:44 -0500
+Received: from mail-vk1-f195.google.com ([209.85.221.195]:37249 "EHLO
+        mail-vk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727435AbgBJVVo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Feb 2020 16:14:00 -0500
-Received: from localhost (unknown [127.0.0.1])
-        by mail.serbinski.com (Postfix) with ESMTP id 61398D006F9;
-        Mon, 10 Feb 2020 21:13:58 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at serbinski.com
-Received: from mail.serbinski.com ([127.0.0.1])
-        by localhost (mail.serbinski.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id Zu_DfRZFKs-n; Mon, 10 Feb 2020 16:13:52 -0500 (EST)
-Received: from mail.serbinski.com (localhost [127.0.0.1])
-        by mail.serbinski.com (Postfix) with ESMTP id 9949FD00693;
-        Mon, 10 Feb 2020 16:13:52 -0500 (EST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.serbinski.com 9949FD00693
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=serbinski.com;
-        s=default; t=1581369232;
-        bh=I3EkcQkTwwd2J+O4KVzA9fWCbXcpR3MPvY39AeBuXPc=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=WOvn/ALSo44nlC/+0cDovkez1JTNslVLaIIbhuvoM+/3oa4nBGa1pnceTS0UoWX6c
-         08w+kT2ztltcs1aFhDmLxRRrQlebR647uWLrm5h5kITpI1/Gl9QgmcVGSIoIFTvokp
-         NeLvnj41zH+LetieRTbae51hBYAK18UL2QF9t+xE=
+        Mon, 10 Feb 2020 16:21:44 -0500
+Received: by mail-vk1-f195.google.com with SMTP id b2so1718954vkk.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2020 13:21:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Fk9bdz/2mbXx6dTdvB7EEtvMRvBXPbEaBb56NU9MXvk=;
+        b=oFCfjcLi6FTB8phhz5e5PNBQQK1bvPyU+YLtRi18QmAAzEqnY924oe7J71K/fOfGTo
+         f3gOueqJgdm+vMwJlqJZAnePuZYODm8ZnNni3gHBsL0HBvBbjC8WPRyY4Q5Y++YUloN/
+         CR4c3SmRF9iN7SCYbKhjCYcimn+OrtHdACBgs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Fk9bdz/2mbXx6dTdvB7EEtvMRvBXPbEaBb56NU9MXvk=;
+        b=rKGANrDLmG737mD+aJJIQ9cNkrJ/BFhqKMAsWkYhvt8zrfFh443a5wgVJ9gCGh6rkt
+         G7j4BfS8UCksjL2jsuJS4kuOi8lfyswqARC19h7yBOEMgZ3HrLqLbRlO9xO3H4SrCHN5
+         sHeFktcRm7kVMb4ps3kB74nIEqITBDB2JDOhZUJWGrbuTqIcZQSEfQnrlzIo6KCTYfkU
+         0OTD1WgyqCnySiEs3DmCunqrg+6cV/zAho9u6PELQQDhRC+ZoQgHwcW26LwcEcdhjwOP
+         EXV9hiY2VgtJnbcVQQUcOdEFlorHD9aAMLXei/xj3KyoB1VrumlOVFsTc9abCZeGHInA
+         lazA==
+X-Gm-Message-State: APjAAAVfra3xbt4EEqQAORdE0tYg8OECkOKbDofCwXKHYhWFja/ZcqvB
+        A23Y/em/fbi7+99CdcwI8CpzcwfpiGA=
+X-Google-Smtp-Source: APXvYqyE6QalbpnYndjLSU8VzX6JbqRJ1eNKQSdxwiAOWfz3JBK1svsyQLFpYV1LjIO3EU6bAWkYQw==
+X-Received: by 2002:a1f:9d16:: with SMTP id g22mr2246197vke.22.1581369702680;
+        Mon, 10 Feb 2020 13:21:42 -0800 (PST)
+Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com. [209.85.221.175])
+        by smtp.gmail.com with ESMTPSA id 110sm443823uav.18.2020.02.10.13.21.41
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Feb 2020 13:21:41 -0800 (PST)
+Received: by mail-vk1-f175.google.com with SMTP id t129so2280381vkg.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2020 13:21:41 -0800 (PST)
+X-Received: by 2002:a1f:ee45:: with SMTP id m66mr2278489vkh.75.1581369701330;
+ Mon, 10 Feb 2020 13:21:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 10 Feb 2020 16:13:52 -0500
-From:   Adam Serbinski <adam@serbinski.com>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+References: <1581320465-15854-1-git-send-email-smasetty@codeaurora.org> <1581320465-15854-2-git-send-email-smasetty@codeaurora.org>
+In-Reply-To: <1581320465-15854-2-git-send-email-smasetty@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 10 Feb 2020 13:21:30 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=VH4954bnD_PzOhFPaYRto5sRVCCuOHgm67=uz5Be_b0Q@mail.gmail.com>
+Message-ID: <CAD=FV=VH4954bnD_PzOhFPaYRto5sRVCCuOHgm67=uz5Be_b0Q@mail.gmail.com>
+Subject: Re: [PATCH v6] arm64: dts: qcom: sc7180: Add A618 gpu dt blob
+To:     Sharat Masetty <smasetty@codeaurora.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, dri-devel@freedesktop.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Patrick Lai <plai@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 8/8] ASoC: qcom: apq8096: add kcontrols to set PCM rate
-In-Reply-To: <20200210200839.GG14166@sirena.org.uk>
-References: <20200207205013.12274-1-adam@serbinski.com>
- <20200209154748.3015-1-adam@serbinski.com>
- <20200209154748.3015-9-adam@serbinski.com>
- <20200210133636.GJ7685@sirena.org.uk>
- <18057b47c76d350f8380f277713e0936@serbinski.com>
- <20200210182609.GA14166@sirena.org.uk>
- <f88d21773f47f5a543a17ad07d66f9b7@serbinski.com>
- <20200210200839.GG14166@sirena.org.uk>
-User-Agent: Roundcube Webmail/1.4-beta
-Message-ID: <7c57801d8f671c40d4c6094e5ce89681@serbinski.com>
-X-Sender: adam@serbinski.com
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-02-10 15:08, Mark Brown wrote:
-> On Mon, Feb 10, 2020 at 03:00:55PM -0500, Adam Serbinski wrote:
->> On 2020-02-10 13:26, Mark Brown wrote:
-> 
->> > To repeat my comment on another patch in the series there should still
->> > be some representation of the DAI for this device in the kernel.
-> 
->> Respectfully, I'm not sure I understand what it is that you are 
->> suggesting.
-> 
->> Is it your intention to suggest that instead of adding controls to the
->> machine driver, I should instead write a codec driver to contain those
->> controls?
-> 
-> I have already separately said that you should write a CODEC driver for
-> this CODEC.  I'm saying that this seems like the sort of thing that
-> might fit in that CODEC driver.
+Hi,
 
-I see. My initial thought with respect to the codec driver would be just 
-to use bt-sco.c, which is a dummy codec. I can certainly implement a new 
-codec driver.
+On Sun, Feb 9, 2020 at 11:41 PM Sharat Masetty <smasetty@codeaurora.org> wrote:
+>
+> This patch adds the required dt nodes and properties
+> to enabled A618 GPU.
+>
+> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
 
->> Or is it your intention to suggest that something within the kernel is
->> already aware of the rate to be set, and it is that which should set 
->> the
->> rate rather than a control?
-> 
-> That would be one example of how such a CODEC driver could be
-> configured, and is how other baseband/BT devices have ended up going
-> (see cx20442.c for example).
+In v4 I added my tags [1].  Please keep them for future patches unless
+something major changes.  AKA:
 
-I am not aware of how this could be done for bluetooth, since the value 
-still has to originate from userspace. The driver you referred to 
-supports only a single sample rate, whereas for bluetooth, 2 sample 
-rates are required, and nothing in the kernel is aware of the 
-appropriate rate, at least in the case of the qca6174a I'm working with 
-right now, or for that matter, TI Wilink 8, which I've also worked with.
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
 
-My concern with implementing this in a new codec driver, is that this 
-codec driver will be bound to qdsp6, since its purpose is to work around 
-a characteristic of this DSP. Under simple-card, for instance, it would 
-be redundant, since in that case, the parameters userspace uses to open 
-the pcm will be propagated to the port. But under qdsp6, userspace could 
-open the pcm at 44.1 kHz, yet the backend port is still set to 8 or 16 
-kHz, and the DSP resamples between them, so the sole purpose of this 
-change is to allow userspace to deliver the required sample rate to the 
-back end of qdsp6.
+
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 102 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 102 insertions(+)
+
+Just to summarize where we are:
+
+* As per my notes in v3 and v4 [1], this can't land until
+"mem_iface_clk" is in the bindings.  Please post a patch for this and
+reply with a link here so others can follow the disucssion.
+
+* This also can't land until the gpucc bindings change from Taniya
+recently [2] lands.
+
+...so we're in limbo waiting for the bindings to be resolved, but
+otherwise this patch looks good.
+
+
+[1] https://lore.kernel.org/r/CAD=FV=UEQ0mOXuDrSZrcJ8g6jb0eLf1Ttn+Mn7T6d2TpCMUcuA@mail.gmail.com
+[2] https://lore.kernel.org/r/1581307266-26989-1-git-send-email-tdas@codeaurora.org
+
+
+-Doug
