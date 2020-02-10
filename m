@@ -2,147 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 635921573FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 13:07:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB6B815745E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 13:17:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727452AbgBJMHx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Feb 2020 07:07:53 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:37942 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727782AbgBJMHo (ORCPT
+        id S1727499AbgBJMQy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Feb 2020 07:16:54 -0500
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:38246 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727481AbgBJMQy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Feb 2020 07:07:44 -0500
-Received: by mail-wr1-f67.google.com with SMTP id y17so7338636wrh.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2020 04:07:43 -0800 (PST)
+        Mon, 10 Feb 2020 07:16:54 -0500
+Received: by mail-lj1-f194.google.com with SMTP id w1so6881857ljh.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2020 04:16:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=dlgrD1ImLwD8i7swr2073g2/em63RPZPKMG2q6/uiVU=;
-        b=uUWsD3xXPNWZCRZzUdS2YN/EuB9ZtVVSLw6IxS8dRj1eSMq7dCiwtNaRO+3bT5nc+D
-         VghAfZAv1tc8NYEvA4SjVupe3sQsVYzxaOi+k8q1lKOMZzSF5tGH6QGGiXWc/t+BAEBD
-         18koliwiRZIaIF6BamDEYehIJHr/8LNtGVTkC3nuWVTMroC3pz/I2CUuVfEPopMQDDTH
-         pQ4RIcaVXpcuLU3PcoHXlBuAEhkF79HpHzioumIlF4YrwZ3BoF+9L3aOGftaH5kKHKVo
-         CfO5vp7Mmuf6KzjbAvH7O6Owyj/owr3ggtFigip/ke8qLI/W6F6O78AlDfTzGozIfff/
-         HrVQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5eNKpJ2fOcGBtGtaR8Z4oVHkb0yJESxOKFA1w5bh9mI=;
+        b=c4g/qmSJa+Zgs+tSzZ3ZyL/oTotOrfULMTCq28gIA0dCPIk6IMicB0Xdx1KXC0vHYX
+         72e3w63wcv++46B4aggJMG906r2Eq+FocNhKmUpJB8iXNaCjGZEZH8ayiC1+jfBb8XoM
+         RhB5NgbXoJsMfbSjUc7nJyDL1tmfVTvfi0rQ4ZABt70Bwvm1ijpW3wjpcnldrhxVZ5ON
+         13uzzmW+HcRijNOakWc2VAa7hfY2cKIHmjlF6GEacp3Ia1zdJb5UgVEfv0ala0R9IWKw
+         oDsbmTa2nIF4meyGlF90+niDgxTmBImsbWjlrblZVL7fogD54a56l5yPmV4s8S0G4YWZ
+         jIXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=dlgrD1ImLwD8i7swr2073g2/em63RPZPKMG2q6/uiVU=;
-        b=QEI28mXS0ZTPpFu3jCrOLs+sr6XeK0C7+twzonqFGU6fVabGVE/2sgUKyqSplANkpT
-         4Ks0FNmVtygV+qa5uotpDp4bHOYdxb8iQ74Bo9+coV9U8rZAfugbbRPnjbMWKN/pTMbH
-         +iSQa+TGtzHMiSrPHMWhWk9ScFzLzKj1jKAzuQwWYj5ACu12u7XSR5YiiE05919VdvSR
-         G/fui6FljzQYwwz2sfneWw2uoy7JtwfdXA/gKwk/RPbzEUaYQnTD78/qiA5a6oO2ViS5
-         vb+guIT+6u1C5+b8rLca7/Ik2yRhYM+sE5mLhwWKY1+Y8uWUfcPjf6ckJlG2JD6BfFQH
-         F3Lg==
-X-Gm-Message-State: APjAAAViuASO4DzA5f9KLtiGTNGe9fam05YquzlApjqba6DxhiIpohbe
-        41iMMDM0hOTHqn/ZQ1sb2yfrb+MKuVo=
-X-Google-Smtp-Source: APXvYqwTicbL22mHDUW1ie+v1PtpkNYflJpxuGDJn6zmsXhpmjJ4NFJzieYb8MQk8zXmSUJGKLMw9A==
-X-Received: by 2002:adf:f10b:: with SMTP id r11mr1633083wro.307.1581336462595;
-        Mon, 10 Feb 2020 04:07:42 -0800 (PST)
-Received: from localhost.localdomain ([176.61.57.127])
-        by smtp.gmail.com with ESMTPSA id i204sm293124wma.44.2020.02.10.04.07.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Feb 2020 04:07:42 -0800 (PST)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        gregkh@linuxfoundation.org, jackp@codeaurora.org, balbi@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org
-Cc:     linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org
-Subject: [PATCH v6 18/18] arm64: dts: qcom: qcs404-evb: Enable USB controllers
-Date:   Mon, 10 Feb 2020 12:07:23 +0000
-Message-Id: <20200210120723.91794-19-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200210120723.91794-1-bryan.odonoghue@linaro.org>
-References: <20200210120723.91794-1-bryan.odonoghue@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5eNKpJ2fOcGBtGtaR8Z4oVHkb0yJESxOKFA1w5bh9mI=;
+        b=h7mgejo+V0uXCkHVSRj9t4u/9rqjTJm/SkeultzLSe0rG8T6xmUEI+K2mk6BC//4z8
+         J8Isp6r/gCdQGPyRQ0qWfQAeri2pa7cWOMw9Sp5MkFAv2S1aWyIrjJj1HE/SzB8ZD7Hs
+         bdiECewgaUpszf5m1piNchTkvsOxGEIHd5YWlQUt8GpjAQwE76hwsqXEMsyggDjmleZg
+         XbnGGtOxdIwKBe97DPgZfpk+oAZQazkQUU19xurNPLLtnw1YSaGOjCGKt9gBqyX/JUpk
+         xnRpercjnSeoqZXkvwZauR0wuP3Eg5tvUYBHAACmc4UdpnyIaAfz/TOG6vtFOA4HLpk9
+         mBQQ==
+X-Gm-Message-State: APjAAAU9Sz+1GxcYrELHtJXYYHeubGc6GzMxhGEEiVGY0KlK38qN64/J
+        8f//qUiKOuZjiH/2/TkUl8dW0aW5fro42ubTwPcqgSYEi+M=
+X-Google-Smtp-Source: APXvYqzchaI6Ddw8rsOxi5Vl/xPWG4XzJNN6ePO5E7X7GzlxqdBVj/iltqYp7aDCuyqtYEEnbSvJYrZLpfE4pup6RD8=
+X-Received: by 2002:a05:651c:1bb:: with SMTP id c27mr759792ljn.277.1581337012690;
+ Mon, 10 Feb 2020 04:16:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200121183748.68662-1-swboyd@chromium.org>
+In-Reply-To: <20200121183748.68662-1-swboyd@chromium.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 10 Feb 2020 13:16:41 +0100
+Message-ID: <CACRpkdY_bB2Y5Y-ShW2YRAsRb4TQ2vQPagwtjEsMMqeCO1-sNw@mail.gmail.com>
+Subject: Re: [PATCH] spmi: pmic-arb: Set lockdep class for hierarchical irq domains
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch enables the primary and secondary USB controllers on the
-qcs404-evb.
+On Tue, Jan 21, 2020 at 7:37 PM Stephen Boyd <swboyd@chromium.org> wrote:
 
-Primary:
-The primary USB controller has
+> I see the following lockdep splat in the qcom pinctrl driver when
+> attempting to suspend the device.
+>
+>  WARNING: possible recursive locking detected
+>  5.4.11 #3 Tainted: G        W
+>  --------------------------------------------
+>  cat/3074 is trying to acquire lock:
+>  ffffff81f49804c0 (&irq_desc_lock_class){-.-.}, at: __irq_get_desc_lock+0x64/0x94
+>
+>  but task is already holding lock:
+>  ffffff81f1cc10c0 (&irq_desc_lock_class){-.-.}, at: __irq_get_desc_lock+0x64/0x94
+>
+>  other info that might help us debug this:
+>   Possible unsafe locking scenario:
+>
+>         CPU0
+>         ----
+>    lock(&irq_desc_lock_class);
+>    lock(&irq_desc_lock_class);
+>
+>   *** DEADLOCK ***
+>
+>   May be due to missing lock nesting notation
+>
+>  6 locks held by cat/3074:
+>   #0: ffffff81f01d9420 (sb_writers#7){.+.+}, at: vfs_write+0xd0/0x1a4
+>   #1: ffffff81bd7d2080 (&of->mutex){+.+.}, at: kernfs_fop_write+0x12c/0x1fc
+>   #2: ffffff81f4c322f0 (kn->count#337){.+.+}, at: kernfs_fop_write+0x134/0x1fc
+>   #3: ffffffe411a41d60 (system_transition_mutex){+.+.}, at: pm_suspend+0x108/0x348
+>   #4: ffffff81f1c5e970 (&dev->mutex){....}, at: __device_suspend+0x168/0x41c
+>   #5: ffffff81f1cc10c0 (&irq_desc_lock_class){-.-.}, at: __irq_get_desc_lock+0x64/0x94
+>
+>  stack backtrace:
+>  CPU: 5 PID: 3074 Comm: cat Tainted: G        W         5.4.11 #3
+>  Hardware name: Google Cheza (rev3+) (DT)
+>  Call trace:
+>   dump_backtrace+0x0/0x174
+>   show_stack+0x20/0x2c
+>   dump_stack+0xc8/0x124
+>   __lock_acquire+0x460/0x2388
+>   lock_acquire+0x1cc/0x210
+>   _raw_spin_lock_irqsave+0x64/0x80
+>   __irq_get_desc_lock+0x64/0x94
+>   irq_set_irq_wake+0x40/0x144
+>   qpnpint_irq_set_wake+0x28/0x34
+>   set_irq_wake_real+0x40/0x5c
+>   irq_set_irq_wake+0x70/0x144
+>   pm8941_pwrkey_suspend+0x34/0x44
+>   platform_pm_suspend+0x34/0x60
+>   dpm_run_callback+0x64/0xcc
+>   __device_suspend+0x310/0x41c
+>   dpm_suspend+0xf8/0x298
+>   dpm_suspend_start+0x84/0xb4
+>   suspend_devices_and_enter+0xbc/0x620
+>   pm_suspend+0x210/0x348
+>   state_store+0xb0/0x108
+>   kobj_attr_store+0x14/0x24
+>   sysfs_kf_write+0x4c/0x64
+>   kernfs_fop_write+0x15c/0x1fc
+>   __vfs_write+0x54/0x18c
+>   vfs_write+0xe4/0x1a4
+>   ksys_write+0x7c/0xe4
+>   __arm64_sys_write+0x20/0x2c
+>   el0_svc_common+0xa8/0x160
+>   el0_svc_handler+0x7c/0x98
+>   el0_svc+0x8/0xc
+>
+> Set a lockdep class when we map the irq so that irq_set_wake() doesn't
+> warn about a lockdep bug that doesn't exist.
+>
+> Fixes: 12a9eeaebba3 ("spmi: pmic-arb: convert to v2 irq interfaces to support hierarchical IRQ chips")
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Brian Masney <masneyb@onstation.org>
+> Cc: Lina Iyer <ilina@codeaurora.org>
+> Cc: Maulik Shah <mkshah@codeaurora.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-- One USB3 SS PHY using gpio-usb-conn
-- One USB2 HS PHY in device mode only and no connector driver
-  associated.
+Applied for fixes in the GPIO tree!
 
-Secondary:
-The second DWC3 controller which has one USB Hi-Speed PHY attached to it.
-
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 40 ++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-index 0fff50f755ef..4045d3000da6 100644
---- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-@@ -318,6 +318,46 @@ pinconf {
- 	};
- };
- 
-+&usb2 {
-+	status = "okay";
-+};
-+
-+&usb2_phy_sec {
-+	vdd-supply = <&vreg_l4_1p2>;
-+	vdda1p8-supply = <&vreg_l5_1p8>;
-+	vdda3p3-supply = <&vreg_l12_3p3>;
-+	status = "okay";
-+};
-+
-+&usb3 {
-+	status = "okay";
-+	dwc3@7580000 {
-+		usb-role-switch;
-+		usb_con: connector {
-+			compatible = "gpio-usb-b-connector";
-+			label = "USB-C";
-+			id-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
-+			vbus-supply = <&usb3_vbus_reg>;
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&usb3_id_pin>, <&usb3_vbus_pin>;
-+			status = "okay";
-+		};
-+	};
-+};
-+
-+&usb2_phy_prim {
-+	vdd-supply = <&vreg_l4_1p2>;
-+	vdda1p8-supply = <&vreg_l5_1p8>;
-+	vdda3p3-supply = <&vreg_l12_3p3>;
-+	status = "okay";
-+};
-+
-+&usb3_phy {
-+	vdd-supply = <&vreg_l3_1p05>;
-+	vdda1p8-supply = <&vreg_l5_1p8>;
-+	status = "okay";
-+};
-+
- &wifi {
- 	status = "okay";
- 	vdd-0.8-cx-mx-supply = <&vreg_l2_1p275>;
--- 
-2.25.0
-
+Thanks
+Linus Walleij
