@@ -2,99 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CB29C15841B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 21:09:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D1D0515848C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 22:06:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727029AbgBJUIn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Feb 2020 15:08:43 -0500
-Received: from foss.arm.com ([217.140.110.172]:38402 "EHLO foss.arm.com"
+        id S1727003AbgBJVG3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Feb 2020 16:06:29 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53364 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727003AbgBJUIm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Feb 2020 15:08:42 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DF8D431B;
-        Mon, 10 Feb 2020 12:08:41 -0800 (PST)
-Received: from localhost (unknown [10.37.6.21])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 614613F68F;
-        Mon, 10 Feb 2020 12:08:41 -0800 (PST)
-Date:   Mon, 10 Feb 2020 20:08:39 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Adam Serbinski <adam@serbinski.com>
-Cc:     Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Patrick Lai <plai@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 8/8] ASoC: qcom: apq8096: add kcontrols to set PCM rate
-Message-ID: <20200210200839.GG14166@sirena.org.uk>
-References: <20200207205013.12274-1-adam@serbinski.com>
- <20200209154748.3015-1-adam@serbinski.com>
- <20200209154748.3015-9-adam@serbinski.com>
- <20200210133636.GJ7685@sirena.org.uk>
- <18057b47c76d350f8380f277713e0936@serbinski.com>
- <20200210182609.GA14166@sirena.org.uk>
- <f88d21773f47f5a543a17ad07d66f9b7@serbinski.com>
+        id S1726563AbgBJVG3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Feb 2020 16:06:29 -0500
+Received: from localhost (unknown [104.132.1.111])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 73EA62070A;
+        Mon, 10 Feb 2020 21:06:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1581368787;
+        bh=uLvsMBamxl2KTvlOyvRsZVnGkJTHyVYl/OKcBJKdPKU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=EUoC4sZww89l9jJuV3GAG1Ckn+Dmdbd3OlNQU9vVyO4+YCHV49rei7SFrvlSTh68Q
+         mCXZMauf7a3AcATxwMbEAspKYaH1yoEtEOeiWwrWmF1RfjwsvSTVQmm3u1D2J7VJQA
+         y85moC0t1Tqb/usChNLQc0dxCKa0swIyt3l5taa8=
+Date:   Mon, 10 Feb 2020 13:06:26 -0800
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Gaurav Kohli <gkohli@codeaurora.org>
+Cc:     akpm@linux-foundation.org,
+        linux-kernel <linux-kernel@vger.kernel.org>, tglx@linutronix.de,
+        linux-arm-msm@vger.kernel.org, neeraju@codeaurora.org
+Subject: Re: Query: Regarding Notifier chain callback debugging or profiling
+Message-ID: <20200210210626.GA1373304@kroah.com>
+References: <82d5b63e-4ae6-fb5f-8a1c-2d5755db2638@codeaurora.org>
+ <6e077b43-6c9e-3f4e-e079-db438e36a4eb@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="OFj+1YLvsEfSXdCH"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f88d21773f47f5a543a17ad07d66f9b7@serbinski.com>
-X-Cookie: No lifeguard on duty.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <6e077b43-6c9e-3f4e-e079-db438e36a4eb@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Feb 10, 2020 at 05:26:16PM +0530, Gaurav Kohli wrote:
+> Hi,
+> 
+> In Linux kernel, everywhere we are using notification chains to notify for
+> any kernel events, But we don't have any debugging or profiling mechanism to
+> know which callback is taking time or currently we are stuck on which call
+> back(without dumps it is difficult to say for last problem)
 
---OFj+1YLvsEfSXdCH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Callbacks are a mess, I agree.
 
-On Mon, Feb 10, 2020 at 03:00:55PM -0500, Adam Serbinski wrote:
-> On 2020-02-10 13:26, Mark Brown wrote:
+> Below are the few ways, which we can implement to profile callback on need
+> basis:
+> 
+> 1) Use trace event before and after callback:
+> 
+> static int notifier_call_chain(struct notifier_block **nl,
+>                                unsigned long val, void *v,
+>                                int nr_to_call, int *nr_calls)
+> {
+>         int ret = NOTIFY_DONE;
+>         struct notifier_block *nb, *next_nb;
+> 
+> 
+> +		trace_event for entry of callback
+>                 ret = nb->notifier_call(nb, val, v);
+> +		trace_event for exit of callback
 
-> > To repeat my comment on another patch in the series there should still
-> > be some representation of the DAI for this device in the kernel.
+Ick.
 
-> Respectfully, I'm not sure I understand what it is that you are suggesting.
+>         }
+>         return ret;
+> }
+> 
+> 2) Or use pr_debug instead of trace_event
+> 
+> 3) Both of the above approach has certain problems, like it will dump
+> callback for each notifier chain, which might flood trace buffer or dmesg.
+> 
+> So we can use bool variable to control that and dump the required
+> notification chain only.
+> 
+> Some thing like below we can use:
+> 
+>  struct srcu_notifier_head {
+>         struct mutex mutex;
+>         struct srcu_struct srcu;
+>         struct notifier_block __rcu *head;
+> +       bool debug_callback;
+>  };
+> 
+> 
+>  static int notifier_call_chain(struct notifier_block **nl,
+>                                unsigned long val, void *v,
+> -                              int nr_to_call, int *nr_calls)
+> +                              int nr_to_call, int *nr_calls, bool
+> debug_callback)
+>  {
+>         int ret = NOTIFY_DONE;
+>         struct notifier_block *nb, *next_nb;
+> @@ -526,6 +526,7 @@ void srcu_init_notifier_head(struct srcu_notifier_head
+> *nh)
+>         if (init_srcu_struct(&nh->srcu) < 0)
+>                 BUG();
+>         nh->head = NULL;
+> +       nh->debug_callback = false; -> by default it would be false for
+> every notifier chain.
+> 
+> 4) we can also think of something pre and post function, before and after
+> each callback, And we can enable only for those who wants to profile.
+> 
+> Please let us what approach we can use, or please suggest some debugging
+> mechanism for the same.
 
-> Is it your intention to suggest that instead of adding controls to the
-> machine driver, I should instead write a codec driver to contain those
-> controls?
+Why not just pay attention to the specific notifier you want?  Trace
+when the specific blocking_notifier_call_chain() is called.
 
-I have already separately said that you should write a CODEC driver for
-this CODEC.  I'm saying that this seems like the sort of thing that
-might fit in that CODEC driver.
+What specific notifier call chain is causing you problems that you need
+to debug?
 
-> Or is it your intention to suggest that something within the kernel is
-> already aware of the rate to be set, and it is that which should set the
-> rate rather than a control?
+thanks,
 
-That would be one example of how such a CODEC driver could be
-configured, and is how other baseband/BT devices have ended up going
-(see cx20442.c for example).
-
---OFj+1YLvsEfSXdCH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl5BuEcACgkQJNaLcl1U
-h9DMaQf9GjP0HkMcqo5yI64nvRK1tv1Ea9AL0H1Mlyqry7AQgS5d1PcRXiYU9MOj
-9eMHwbPyh02erDpaLNZLuawcksp7JmDypG7Wj6ZAw6FUh3YnybFjq+pao5SBb/e4
-4xvGxokT0mYhgXkBOL8l+Rarkz4HHmnsuag1YeGP82F8ZnCpDH0mzO4D005vA83D
-Xlv0KtbReo0N2zuM8ElShKIiIBaO4gnvsU6Mxf4PaOhPTYh3Q7ubtB4zJ/+JJh7/
-O+q5EyXDZnXR+FK65tdzGg3UaaQwGyaAAEhdW8A5u48uxnidwWTKM0QE+eHolHL4
-5vpjCOhUsJOeS+8qXyfakKzjpY2E1w==
-=02k4
------END PGP SIGNATURE-----
-
---OFj+1YLvsEfSXdCH--
+greg k-h
