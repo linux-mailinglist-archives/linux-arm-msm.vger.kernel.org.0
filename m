@@ -2,81 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 08F7C157460
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 13:17:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D083157464
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 13:18:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727417AbgBJMRu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Feb 2020 07:17:50 -0500
-Received: from foss.arm.com ([217.140.110.172]:59632 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727003AbgBJMRu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Feb 2020 07:17:50 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9F32D1FB;
-        Mon, 10 Feb 2020 04:17:49 -0800 (PST)
-Received: from localhost (unknown [10.37.6.21])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2383B3F6CF;
-        Mon, 10 Feb 2020 04:17:48 -0800 (PST)
-Date:   Mon, 10 Feb 2020 12:17:47 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Adam Serbinski <adam@serbinski.com>
-Cc:     Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Patrick Lai <plai@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/8] ASoC: qdsp6: db820c: Add support for external and
- bluetooth audio
-Message-ID: <20200210121747.GB7685@sirena.org.uk>
-References: <20200207205013.12274-1-adam@serbinski.com>
- <20200209154748.3015-1-adam@serbinski.com>
+        id S1727029AbgBJMS2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Feb 2020 07:18:28 -0500
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:45246 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727008AbgBJMS2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Feb 2020 07:18:28 -0500
+Received: by mail-lf1-f67.google.com with SMTP id 203so4006335lfa.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2020 04:18:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HRc8fo3vz8PCS1Yui1Bgio/cnoEmzs/JvTxaOe6eVas=;
+        b=GUpjT9gHuQx2gQlQVFcoYwwo7YeMBzcjPIF7A+HVsnA+0I9rO3R8a0Eyxx60R5i3Im
+         AA77t2iY2P0+4ZeNr+LGv/BxOH2W63DqpCcMOaulkrQaFtm9mENZPAwDjxM52WHVBAru
+         1+IZrr1Or5ixBjrOhR+Tl644dSDbKaowXjR0k7uETEMHl9DjlloiXa+QIxHffLJ8gwQF
+         npLg1Yp8d5fxcv5ZBoF9cZnuJAm0fbLm5oA+cIaVA/UV7c1O5FkfBmQWxlapSxPU0rqc
+         UQaso90wxPeeHl1d2l0mV95dNxUDSm0IJcG+c1JzXIu3GxZW5QAokIUI3b0f+FnzUF0H
+         PRsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HRc8fo3vz8PCS1Yui1Bgio/cnoEmzs/JvTxaOe6eVas=;
+        b=K8sBvWYPZRqkQ8OngXN+8CaRGv4o1/SZqOdNwvyiRQ0ifiiC08G9S/Ho/kVsJ3ZYTm
+         evnFpx3bi6Mv79PcUem915pacPVUneWmjCunww6abEmSeeWOgtT47b3DBmSYsbVvQRrm
+         WtGT01GGphrxPTJI+EHI6d6oyID0trIOR6r2hMAb09NkjY1eO9Uw0+0lU5OW8C14QDyq
+         sLMABqIICKmf2UxN+ok/FiO8nkFPGsLu8sKuLeV9czmqD/k3gHP224i2LehGBol7w2R+
+         F924G5cbZE9c/BhDJ/FfYiSLSj1gcwTdZLihbuFzUgHZQLTp8u0s9frnFrGTB/dC48ZD
+         0i1w==
+X-Gm-Message-State: APjAAAXND5pWvwqHlt7Bbs0YUTYCVPoeo9Vg2f0nkoSGYapXMhbMxGsU
+        xVbTeriSNQCumpHI99mvOkUAn3cRWaishcLDBVgKoQ==
+X-Google-Smtp-Source: APXvYqw9v3mzj35qFJVR63kJU8jEJlDWyo91EsiOJGUIDkaX08FbvJDH5iQCPLZy99seAO1pGZP0RFPsAW/1pkLCgTo=
+X-Received: by 2002:a19:850a:: with SMTP id h10mr650759lfd.89.1581337106340;
+ Mon, 10 Feb 2020 04:18:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="f2QGlHpHGjS2mn6Y"
-Content-Disposition: inline
-In-Reply-To: <20200209154748.3015-1-adam@serbinski.com>
-X-Cookie: Avoid gunfire in the bathroom tonight.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20200121183748.68662-1-swboyd@chromium.org> <CACRpkdbgfNuJCgOWMBGwf1FoF+9cpQACnGH7Uon5Y6X+kN+x_w@mail.gmail.com>
+ <5e29f186.1c69fb81.61d8.83b9@mx.google.com> <CAD=FV=W=NjMf5UqpSaY-VZfE013Ut=qe2EgSY2UErXM3eqpsGQ@mail.gmail.com>
+In-Reply-To: <CAD=FV=W=NjMf5UqpSaY-VZfE013Ut=qe2EgSY2UErXM3eqpsGQ@mail.gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 10 Feb 2020 13:18:15 +0100
+Message-ID: <CACRpkdZDYT4m4i0cbuLRbr4H4sJPHjpf7hirMf1LkNttyuKWGA@mail.gmail.com>
+Subject: Re: [PATCH] spmi: pmic-arb: Set lockdep class for hierarchical irq domains
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM <linux-gpio@vger.kernel.org>, Douglas Anderson
+        <dianders@chromium.org>, Brian Masney <masneyb@onstation.org>, Lina Iyer
+        <ilina@codeaurora.org>, Maulik Shah <mkshah@codeaurora.org>, Bjorn
+        Andersson" <bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Feb 3, 2020 at 8:02 PM Doug Anderson <dianders@chromium.org> wrote:
+> On Thu, Jan 23, 2020 at 11:18 AM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > Quoting Linus Walleij (2020-01-23 07:29:31)
 
---f2QGlHpHGjS2mn6Y
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > > > Fixes: 12a9eeaebba3 ("spmi: pmic-arb: convert to v2 irq interfaces to support hierarchical IRQ chips")
+> > > > Cc: Douglas Anderson <dianders@chromium.org>
+> > > > Cc: Brian Masney <masneyb@onstation.org>
+> > > > Cc: Lina Iyer <ilina@codeaurora.org>
+> > > > Cc: Maulik Shah <mkshah@codeaurora.org>
+> > > > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > >
+> > > LGTM
+> > > Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+> >
+> > Thanks. I was hoping you would apply it given that the commit it's
+> > fixing was applied by you. I can send it to Gregkh or have some qcom
+> > person pick it up though if you prefer.
+>
+> It appears that the commit this is Fixing is now in Linus's tree but
+> Stephen's fix is still nowhere to be found.  Any update on what the
+> plan is?
 
-On Sun, Feb 09, 2020 at 10:47:40AM -0500, Adam Serbinski wrote:
-> Changes from V1:
->=20
-> 	Rename patch:
-> 		from: dts: msm8996/db820c: enable primary pcm and quaternary i2s
+I just applied the patch, it's a simple solution :D
 
-Please don't send new serieses in reply to old ones, it can make it
-confusing what's going on and what the current version is.
+I was just worried whether I have jurisdiction over driver/spmi
+but let's hope noone gets angry.
 
---f2QGlHpHGjS2mn6Y
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl5BSeoACgkQJNaLcl1U
-h9AXcwf+JotBidwYRMp5BFxzyJd8AsD5K/bwUTlXwbhHdclwaupF2z3h0gGO18p0
-tWogxstUFEdCAZVVYrkvF/+ft2+uTGq97dzwYNvmElu+aVxxCTpVFcPqmmupQs2Q
-fbOxU0/JFCUjSeZtMd38eqINLOYZw2sAYdeBPpVA131kMdj4fG2G6Xc488cjr2Im
-NijwBF7pTlc8patTM6m7FSMtfSHu9w9S7OEMC4TVA2rpdOCkINXatLaW8rMcf4WF
-EnrKOYYrkNAb72uiwyhWDqVUcneFDq/dooPTA2pT3SZdV+FFW0eZ6XpLTYXepk1v
-u9vqNNjvnMKE2W46nfIEdkuTS8D17A==
-=uHcF
------END PGP SIGNATURE-----
-
---f2QGlHpHGjS2mn6Y--
+Yours,
+Linus Walleij
