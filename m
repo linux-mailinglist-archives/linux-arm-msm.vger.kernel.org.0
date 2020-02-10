@@ -2,70 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CCF5156FA1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 07:38:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 76058157000
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 08:41:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726968AbgBJGiG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Feb 2020 01:38:06 -0500
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:24904 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726061AbgBJGiF (ORCPT
+        id S1727429AbgBJHla (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Feb 2020 02:41:30 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:10132 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726796AbgBJHl2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Feb 2020 01:38:05 -0500
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 10 Feb 2020 12:07:17 +0530
-Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 10 Feb 2020 12:06:50 +0530
-Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
-        id 26F542198; Mon, 10 Feb 2020 12:06:49 +0530 (IST)
-From:   Sandeep Maheswaram <sanm@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: [PATCH v4 2/2] dt-bindings: usb: qcom,dwc3: Add compatible for SC7180
-Date:   Mon, 10 Feb 2020 12:06:45 +0530
-Message-Id: <1581316605-29202-3-git-send-email-sanm@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1581316605-29202-1-git-send-email-sanm@codeaurora.org>
-References: <1581316605-29202-1-git-send-email-sanm@codeaurora.org>
+        Mon, 10 Feb 2020 02:41:28 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1581320487; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=uQ1CFdzgmAFqyyBigIzwbQQb6E7RnAIID7E2Ta0bdUY=; b=OjR2hfzmY7mJrdlZ8VNRmzdVMPPeYav0q07VsCgR2aD8GD/TJzc25psDs9XOF5/p2DNIbir1
+ YQql+KBR3BaoyJW2NlIy0dFYkd5GelXeWy2ZrBKXM+q8WDGy54KaDeNxbKPhSk7hl07P5fmk
+ upneVSrMiaCKXVDKxEddz26PY9E=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e41091c.7fb6bfac7ab0-smtp-out-n03;
+ Mon, 10 Feb 2020 07:41:16 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 88CB8C447A0; Mon, 10 Feb 2020 07:41:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from smasetty-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: smasetty)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D078FC43383;
+        Mon, 10 Feb 2020 07:41:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D078FC43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
+From:   Sharat Masetty <smasetty@codeaurora.org>
+To:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        jcrouse@codeaurora.org, mka@chromium.org, dianders@chromium.org,
+        Sharat Masetty <smasetty@codeaurora.org>
+Subject: [PATCH v6]  sc7180: Add A618 GPU bindings
+Date:   Mon, 10 Feb 2020 13:11:04 +0530
+Message-Id: <1581320465-15854-1-git-send-email-smasetty@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add compatible for SC7180 in usb dwc3 bindings.
+I used this branch qcom/arm64-for-5.6-to-be-rebased as suggested by Matthias.
+This patch needs the clock patches and the clock patches have not yet landed, so
+please apply the following series and patches in order
 
-Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Acked-by: Rob Herring <robh@kernel.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
----
- Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
- 1 file changed, 1 insertion(+)
+a) All patches from https://patchwork.kernel.org/project/linux-clk/list/?series=203517&state=%2a&archive=both
+b) Patches 1 and 2 from https://patchwork.kernel.org/project/linux-clk/list/?series=203527&archive=both&state=%2a
+c) All patches from https://patchwork.kernel.org/project/linux-clk/list/?series=221739&archive=both&state=%2a
+d) https://lore.kernel.org/linux-arm-msm/20200124144154.v2.10.I1a4b93fb005791e29a9dcf288fc8bd459a555a59%40changeid/raw
+e) https://patchwork.kernel.org/project/linux-clk/list/?series=238893
+f) This patch "arm64: dts: qcom: sc7180: Add A618 gpu dt blob"
 
-diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-index 0353401..4a36ab5 100644
---- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-+++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-@@ -15,6 +15,7 @@ properties:
-       - enum:
-           - qcom,msm8996-dwc3
-           - qcom,msm8998-dwc3
-+          - qcom,sc7180-dwc3
-           - qcom,sdm845-dwc3
-       - const: qcom,dwc3
- 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+v3: Addressed review comments from previous submits. Also removed the
+interconnect bindings from this patch and I will submit as a new patch with its
+dependencies listed. Also I will be sending a new patch for updating the
+bindings documentation.
 
+v4: Add GX_GDSC power domain binding for GMU
+
+v5: Change to a dummy GX_GDSC binding for faster landing
+
+v6: Rebased changes on top of Taniyas lastet post((e) in the list above) and
+adding back the GX_GDSC binding.
+
+Sharat Masetty (1):
+  arm64: dts: qcom: sc7180: Add A618 gpu dt blob
+
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 102 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 102 insertions(+)
+
+--
+1.9.1
