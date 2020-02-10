@@ -2,128 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E774156E51
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 05:02:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 67B4E156EEF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 06:56:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727363AbgBJEBl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Feb 2020 23:01:41 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:23753 "EHLO
-        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727600AbgBJEBa (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Feb 2020 23:01:30 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581307290; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=nuFRyhIBkVDe0JP4Oh2NubiW+KhLVN+bmhurfBCuLWc=; b=KZb7lPQj4B98AQlu4MfBBJjGhEHiCqIvlvGy87aDiFfjgLsRBoXwF7sYeaviH02gGXhb+u9B
- Tbau2eweHwRZ+46VzlJI/pDWPm/xOUoJYPbowI9RE/kkYxk8DG5OLl/eX5auPUGHrmEZvtvn
- YUqM/lfxGva/xNj7YlrXlskI9kQ=
-X-Mailgun-Sending-Ip: 104.130.122.25
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e40d596.7f8d7d4a06c0-smtp-out-n01;
- Mon, 10 Feb 2020 04:01:26 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 39CC0C4479D; Mon, 10 Feb 2020 04:01:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from tdas-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1726118AbgBJF4p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Feb 2020 00:56:45 -0500
+Received: from mail.kernel.org ([198.145.29.99]:59808 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726061AbgBJF4o (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Feb 2020 00:56:44 -0500
+Received: from localhost (unknown [106.201.32.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7DA1EC4479D;
-        Mon, 10 Feb 2020 04:01:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7DA1EC4479D
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-From:   Taniya Das <tdas@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>,
-        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>,
-        robh@kernel.org
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v2 2/2] clk: qcom: gpucc: Add support for GX GDSC for SC7180
-Date:   Mon, 10 Feb 2020 09:31:06 +0530
-Message-Id: <1581307266-26989-2-git-send-email-tdas@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1581307266-26989-1-git-send-email-tdas@codeaurora.org>
-References: <1581307266-26989-1-git-send-email-tdas@codeaurora.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id 38D9820661;
+        Mon, 10 Feb 2020 05:56:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1581314203;
+        bh=y8WJhCtjiUgmevlVF8bPnBitNPUgs1QbeGeB5mZDx5k=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=qybtcXfORlwW2sh851QqwW7QwgE5offrIYVPKCK2+7adJuA1yK91UDooJSTbdTcnu
+         HzEtBE8FJiRh7dcx3mo1l1uLAU0Uv1Yd1jRmHZ79h8DlfuxjWUzJtc0+CcLzY3VKMd
+         3oB7ywD7EfdHX6SY79BNWygygdYv7V9/ohuCm3LE=
+Date:   Mon, 10 Feb 2020 11:26:38 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, jshriram@codeaurora.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mark.rutland@arm.com,
+        mturquette@baylibre.com, psodagud@codeaurora.org,
+        robh+dt@kernel.org, tdas@codeaurora.org, tsoni@codeaurora.org,
+        vnkgutta@codeaurora.org
+Subject: Re: [PATCH v2 4/7] clk: qcom: clk-alpha-pll: Add support for
+ controlling Lucid PLLs
+Message-ID: <20200210055638.GT2618@vkoul-mobl>
+References: <1579905147-12142-1-git-send-email-vnkgutta@codeaurora.org>
+ <1579905147-12142-5-git-send-email-vnkgutta@codeaurora.org>
+ <20200205193353.2BDCC20720@mail.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200205193353.2BDCC20720@mail.kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Most of the time the CPU should not be touching the GX domain on the
-GPU except for a very special use case when the CPU needs to force the
-GX headswitch off. Add the GX domain for that use case.  As part of
-this add a dummy enable function for the GX gdsc to simulate success
-so that the pm_runtime reference counting is correct.  This matches
-what was done in sdm845 in commit 85a3d920d30a ("clk: qcom: Add a
-dummy enable function for GX gdsc").
+On 05-02-20, 11:33, Stephen Boyd wrote:
+> Quoting Venkata Narendra Kumar Gutta (2020-01-24 14:32:24)
+> > diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+> > index 1b073b2..4258ab0 100644
+> > --- a/drivers/clk/qcom/clk-alpha-pll.c
+> > +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> > @@ -1367,3 +1388,172 @@ static int clk_alpha_pll_postdiv_fabia_set_rate(struct clk_hw *hw,
+> >         .set_rate = clk_alpha_pll_postdiv_fabia_set_rate,
+> >  };
+> >  EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_fabia_ops);
+> > +
+> > +void clk_lucid_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+> 
+> Can we get some kernel documentation for this function?
 
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
----
- drivers/clk/qcom/gpucc-sc7180.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+Okay adding
 
-diff --git a/drivers/clk/qcom/gpucc-sc7180.c b/drivers/clk/qcom/gpucc-sc7180.c
-index a96c0b9..7b656b6 100644
---- a/drivers/clk/qcom/gpucc-sc7180.c
-+++ b/drivers/clk/qcom/gpucc-sc7180.c
-@@ -170,8 +170,45 @@ static struct gdsc cx_gdsc = {
- 	.flags = VOTABLE,
- };
+> > +{
+> > +       if (config->l)
+> > +               regmap_write(regmap, PLL_L_VAL(pll), config->l);
+> > +
+> > +       regmap_write(regmap, PLL_CAL_L_VAL(pll), LUCID_PLL_CAL_VAL);
+> > +
+> > +       if (config->alpha)
+> > +               regmap_write(regmap, PLL_ALPHA_VAL(pll), config->alpha);
+> > +
+> > +       if (config->config_ctl_val)
+> > +               regmap_write(regmap, PLL_CONFIG_CTL(pll),
+> > +                            config->config_ctl_val);
+> > +
+> > +       if (config->config_ctl_hi_val)
+> > +               regmap_write(regmap, PLL_CONFIG_CTL_U(pll),
+> > +                            config->config_ctl_hi_val);
+> > +
+> > +       if (config->config_ctl_hi1_val)
+> > +               regmap_write(regmap, PLL_CONFIG_CTL_U1(pll),
+> > +                            config->config_ctl_hi1_val);
+> > +
+> > +       if (config->user_ctl_val)
+> > +               regmap_write(regmap, PLL_USER_CTL(pll),
+> > +                            config->user_ctl_val);
+> > +
+> > +       if (config->user_ctl_hi_val)
+> > +               regmap_write(regmap, PLL_USER_CTL_U(pll),
+> > +                            config->user_ctl_hi_val);
+> > +
+> > +       if (config->user_ctl_hi1_val)
+> > +               regmap_write(regmap, PLL_USER_CTL_U1(pll),
+> > +                            config->user_ctl_hi1_val);
+> > +
+> > +       if (config->test_ctl_val)
+> > +               regmap_write(regmap, PLL_TEST_CTL(pll),
+> > +                            config->test_ctl_val);
+> > +
+> > +       if (config->test_ctl_hi_val)
+> > +               regmap_write(regmap, PLL_TEST_CTL_U(pll),
+> > +                            config->test_ctl_hi_val);
+> > +
+> > +       if (config->test_ctl_hi1_val)
+> > +               regmap_write(regmap, PLL_TEST_CTL_U1(pll),
+> > +                            config->test_ctl_hi1_val);
+> > +
+> > +       regmap_update_bits(regmap, PLL_MODE(pll), PLL_UPDATE_BYPASS,
+> > +                          PLL_UPDATE_BYPASS);
+> > +
+> > +       /* Disable PLL output */
+> > +       regmap_update_bits(regmap, PLL_MODE(pll),  PLL_OUTCTRL, 0);
+> > +
+> > +       /* Set operation mode to OFF */
+> > +       regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
+> > +
+> > +       /* PLL should be in OFF mode before continuing */
+> > +       wmb();
+> 
+> How does the write above overtake the write below? This barrier looks
+> wrong.
 
-+/*
-+ * On SC7180 the GPU GX domain is *almost* entirely controlled by the GMU
-+ * running in the CX domain so the CPU doesn't need to know anything about the
-+ * GX domain EXCEPT....
-+ *
-+ * Hardware constraints dictate that the GX be powered down before the CX. If
-+ * the GMU crashes it could leave the GX on. In order to successfully bring back
-+ * the device the CPU needs to disable the GX headswitch. There being no sane
-+ * way to reach in and touch that register from deep inside the GPU driver we
-+ * need to set up the infrastructure to be able to ensure that the GPU can
-+ * ensure that the GX is off during this super special case. We do this by
-+ * defining a GX gdsc with a dummy enable function and a "default" disable
-+ * function.
-+ *
-+ * This allows us to attach with genpd_dev_pm_attach_by_name() in the GPU
-+ * driver. During power up, nothing will happen from the CPU (and the GMU will
-+ * power up normally but during power down this will ensure that the GX domain
-+ * is *really* off - this gives us a semi standard way of doing what we need.
-+ */
-+static int gx_gdsc_enable(struct generic_pm_domain *domain)
-+{
-+	/* Do nothing but give genpd the impression that we were successful */
-+	return 0;
-+}
-+
-+static struct gdsc gx_gdsc = {
-+	.gdscr = 0x100c,
-+	.clamp_io_ctrl = 0x1508,
-+	.pd = {
-+		.name = "gx_gdsc",
-+		.power_on = gx_gdsc_enable,
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = CLAMP_IO,
-+};
-+
- static struct gdsc *gpu_cc_sc7180_gdscs[] = {
- 	[CX_GDSC] = &cx_gdsc,
-+	[GX_GDSC] = &gx_gdsc,
- };
+I think you are correct, it doesnt :), so removing this
 
- static struct clk_regmap *gpu_cc_sc7180_clocks[] = {
---
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-of the Code Aurora Forum, hosted by the  Linux Foundation.
+> > +static int alpha_pll_lucid_prepare(struct clk_hw *hw)
+> > +{
+> > +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+> > +       u32 regval;
+> > +       int ret;
+> > +
+> > +       /* Return early if calibration is not needed. */
+> > +       regmap_read(pll->clkr.regmap, PLL_STATUS(pll), &regval);
+> > +       if (regval & LUCID_PCAL_DONE)
+> > +               return 0;
+> > +
+> > +       ret = clk_trion_pll_enable(hw);
+> > +       if (ret)
+> > +               return ret;
+> > +
+> > +       clk_trion_pll_disable(hw);
+> > +
+> > +       return 0;
+> 
+> Can you write this like:
+> 
+> 	/* On/off to calibrate */
+> 	ret = clk_trion_pll_enable(hw);
+> 	if (!ret)
+> 		clk_trion_pll_disable(hw);
+> 
+> 	return ret;
+
+Looks better, updated now.
+
+> > +static int alpha_pll_lucid_set_rate(struct clk_hw *hw, unsigned long rate,
+> > +                                   unsigned long prate)
+> > +{
+> > +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+> > +       unsigned long rrate;
+> > +       u32 regval, l, alpha_width = pll_alpha_width(pll);
+> > +       u64 a;
+> > +       int ret;
+> > +
+> > +       rrate = alpha_pll_round_rate(rate, prate, &l, &a, alpha_width);
+> > +
+> > +       /*
+> > +        * Due to a limited number of bits for fractional rate programming, the
+> > +        * rounded up rate could be marginally higher than the requested rate.
+> > +        */
+> > +       if (rrate > (rate + PLL_RATE_MARGIN) || rrate < rate) {
+> 
+> Any chance this can be pushed into the alpha_pll_round_rate() API? It's
+> duplicated in this driver.
+
+Yes here and couple of fabia pll functions. Said that I see
+alpha_pll_round_rate() is also invoked two places,
+alpha_pll_fabia_set_rate() and __clk_alpha_pll_set_rate(), so should we
+let these two also be updated, if you are okay with that I will update
+this
+
+> > +       regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
+> > +       regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
+> > +
+> > +       /* Latch the PLL input */
+> > +       ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll),
+> > +                                PLL_UPDATE, PLL_UPDATE);
+> > +       if (ret)
+> > +               return ret;
+> > +
+> > +       /* Wait for 2 reference cycles before checking the ACK bit. */
+> 
+> Are reference cycles 2 * 1 / 19.2MHz?
+
+Will check and update on this
+
+> 
+> > +       udelay(1);
+> > +       regmap_read(pll->clkr.regmap, PLL_MODE(pll), &regval);
+> > +       if (!(regval & ALPHA_PLL_ACK_LATCH)) {
+> > +               WARN(1, "PLL latch failed. Output may be unstable!\n");
+> 
+> Do we need a big WARN stack for this? How about pr_warn() instead?
+
+Nope :), will move to a warn print :)
+
+-- 
+~Vinod
