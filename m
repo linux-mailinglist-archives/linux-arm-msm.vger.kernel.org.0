@@ -2,95 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D083157464
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 13:18:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E716157BB0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 14:32:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727029AbgBJMS2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Feb 2020 07:18:28 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:45246 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727008AbgBJMS2 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Feb 2020 07:18:28 -0500
-Received: by mail-lf1-f67.google.com with SMTP id 203so4006335lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2020 04:18:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HRc8fo3vz8PCS1Yui1Bgio/cnoEmzs/JvTxaOe6eVas=;
-        b=GUpjT9gHuQx2gQlQVFcoYwwo7YeMBzcjPIF7A+HVsnA+0I9rO3R8a0Eyxx60R5i3Im
-         AA77t2iY2P0+4ZeNr+LGv/BxOH2W63DqpCcMOaulkrQaFtm9mENZPAwDjxM52WHVBAru
-         1+IZrr1Or5ixBjrOhR+Tl644dSDbKaowXjR0k7uETEMHl9DjlloiXa+QIxHffLJ8gwQF
-         npLg1Yp8d5fxcv5ZBoF9cZnuJAm0fbLm5oA+cIaVA/UV7c1O5FkfBmQWxlapSxPU0rqc
-         UQaso90wxPeeHl1d2l0mV95dNxUDSm0IJcG+c1JzXIu3GxZW5QAokIUI3b0f+FnzUF0H
-         PRsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HRc8fo3vz8PCS1Yui1Bgio/cnoEmzs/JvTxaOe6eVas=;
-        b=K8sBvWYPZRqkQ8OngXN+8CaRGv4o1/SZqOdNwvyiRQ0ifiiC08G9S/Ho/kVsJ3ZYTm
-         evnFpx3bi6Mv79PcUem915pacPVUneWmjCunww6abEmSeeWOgtT47b3DBmSYsbVvQRrm
-         WtGT01GGphrxPTJI+EHI6d6oyID0trIOR6r2hMAb09NkjY1eO9Uw0+0lU5OW8C14QDyq
-         sLMABqIICKmf2UxN+ok/FiO8nkFPGsLu8sKuLeV9czmqD/k3gHP224i2LehGBol7w2R+
-         F924G5cbZE9c/BhDJ/FfYiSLSj1gcwTdZLihbuFzUgHZQLTp8u0s9frnFrGTB/dC48ZD
-         0i1w==
-X-Gm-Message-State: APjAAAXND5pWvwqHlt7Bbs0YUTYCVPoeo9Vg2f0nkoSGYapXMhbMxGsU
-        xVbTeriSNQCumpHI99mvOkUAn3cRWaishcLDBVgKoQ==
-X-Google-Smtp-Source: APXvYqw9v3mzj35qFJVR63kJU8jEJlDWyo91EsiOJGUIDkaX08FbvJDH5iQCPLZy99seAO1pGZP0RFPsAW/1pkLCgTo=
-X-Received: by 2002:a19:850a:: with SMTP id h10mr650759lfd.89.1581337106340;
- Mon, 10 Feb 2020 04:18:26 -0800 (PST)
+        id S1727723AbgBJNbq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Feb 2020 08:31:46 -0500
+Received: from foss.arm.com ([217.140.110.172]:33622 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729392AbgBJNbq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Feb 2020 08:31:46 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C1FB71FB;
+        Mon, 10 Feb 2020 05:31:45 -0800 (PST)
+Received: from localhost (unknown [10.37.6.21])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 467A93F68E;
+        Mon, 10 Feb 2020 05:31:45 -0800 (PST)
+Date:   Mon, 10 Feb 2020 13:31:43 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Adam Serbinski <adam@serbinski.com>
+Cc:     Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Patrick Lai <plai@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/8] ASoC: qdsp6: q6afe: add support to pcm ports
+Message-ID: <20200210133143.GG7685@sirena.org.uk>
+References: <20200207205013.12274-1-adam@serbinski.com>
+ <20200209154748.3015-1-adam@serbinski.com>
+ <20200209154748.3015-3-adam@serbinski.com>
 MIME-Version: 1.0
-References: <20200121183748.68662-1-swboyd@chromium.org> <CACRpkdbgfNuJCgOWMBGwf1FoF+9cpQACnGH7Uon5Y6X+kN+x_w@mail.gmail.com>
- <5e29f186.1c69fb81.61d8.83b9@mx.google.com> <CAD=FV=W=NjMf5UqpSaY-VZfE013Ut=qe2EgSY2UErXM3eqpsGQ@mail.gmail.com>
-In-Reply-To: <CAD=FV=W=NjMf5UqpSaY-VZfE013Ut=qe2EgSY2UErXM3eqpsGQ@mail.gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 10 Feb 2020 13:18:15 +0100
-Message-ID: <CACRpkdZDYT4m4i0cbuLRbr4H4sJPHjpf7hirMf1LkNttyuKWGA@mail.gmail.com>
-Subject: Re: [PATCH] spmi: pmic-arb: Set lockdep class for hierarchical irq domains
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM <linux-gpio@vger.kernel.org>, Douglas Anderson
-        <dianders@chromium.org>, Brian Masney <masneyb@onstation.org>, Lina Iyer
-        <ilina@codeaurora.org>, Maulik Shah <mkshah@codeaurora.org>, Bjorn
-        Andersson" <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="JkW1gnuWHDypiMFO"
+Content-Disposition: inline
+In-Reply-To: <20200209154748.3015-3-adam@serbinski.com>
+X-Cookie: Avoid gunfire in the bathroom tonight.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 3, 2020 at 8:02 PM Doug Anderson <dianders@chromium.org> wrote:
-> On Thu, Jan 23, 2020 at 11:18 AM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > Quoting Linus Walleij (2020-01-23 07:29:31)
 
-> > > > Fixes: 12a9eeaebba3 ("spmi: pmic-arb: convert to v2 irq interfaces to support hierarchical IRQ chips")
-> > > > Cc: Douglas Anderson <dianders@chromium.org>
-> > > > Cc: Brian Masney <masneyb@onstation.org>
-> > > > Cc: Lina Iyer <ilina@codeaurora.org>
-> > > > Cc: Maulik Shah <mkshah@codeaurora.org>
-> > > > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > >
-> > > LGTM
-> > > Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-> >
-> > Thanks. I was hoping you would apply it given that the commit it's
-> > fixing was applied by you. I can send it to Gregkh or have some qcom
-> > person pick it up though if you prefer.
->
-> It appears that the commit this is Fixing is now in Linus's tree but
-> Stephen's fix is still nowhere to be found.  Any update on what the
-> plan is?
+--JkW1gnuWHDypiMFO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I just applied the patch, it's a simple solution :D
+On Sun, Feb 09, 2020 at 10:47:42AM -0500, Adam Serbinski wrote:
 
-I was just worried whether I have jurisdiction over driver/spmi
-but let's hope noone gets angry.
+> =20
+> +#define AFE_API_VERSION_PCM_CONFIG	0x1
+> +/* Enumeration for the auxiliary PCM synchronization signal
+> + * provided by an external source.
+> + */
+> +
+> +#define AFE_PORT_PCM_SYNC_SRC_EXTERNAL 0x0
+> +/*	Enumeration for the auxiliary PCM synchronization signal
+> + * provided by an internal source.
+> + */
 
-Yours,
-Linus Walleij
+This is a *weird* commenting style for these #defines and it's not
+consistent within the block, I'm seeing at least 3 different styles.
+
+> +/*  Payload of the #AFE_PARAM_ID_PCM_CONFIG command's
+> + * (PCM configuration parameter).
+> + */
+> +
+> +struct afe_param_id_pcm_cfg {
+
+Similar weird commenting here, please follow coding-style.rst.
+
+> +	switch (cfg->fmt & SND_SOC_DAIFMT_MASTER_MASK) {
+> +	case SND_SOC_DAIFMT_CBS_CFS:
+> +		pcfg->pcm_cfg.sync_src =3D AFE_PORT_PCM_SYNC_SRC_INTERNAL;
+> +		break;
+> +	case SND_SOC_DAIFMT_CBM_CFM:
+> +		/* CPU is slave */
+> +		pcfg->pcm_cfg.sync_src =3D AFE_PORT_PCM_SYNC_SRC_EXTERNAL;
+> +		break;
+> +	default:
+> +		break;
+> +	}
+
+Why is this not returning an error on unsupported values?
+
+> +
+> +	switch (cfg->sample_rate) {
+> +	case 8000:
+> +		pcfg->pcm_cfg.frame_setting =3D AFE_PORT_PCM_BITS_PER_FRAME_128;
+> +		break;
+> +	case 16000:
+> +		pcfg->pcm_cfg.frame_setting =3D AFE_PORT_PCM_BITS_PER_FRAME_64;
+> +		break;
+> +	}
+
+Same here.
+
+--JkW1gnuWHDypiMFO
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl5BWz8ACgkQJNaLcl1U
+h9COgAf/dQvwNK7v2nSAj2+698541KzAw+rU1oHMPrfL47b7+8WMLtY8dn2B7TiM
+1dBCzYpTotvmbnXSoGQMztG89ws70Csele03jew7S8MfRuwnrbAEbp3mR8KW+ylI
+GkjNxUGHH97SWdkJ92q3bH4wkRJVAtS6nAudxv7So3vi1WNmGGLgwCODlKzLII1j
+7mmUkvhMwjqGBxqOrIifT7yTlnqCZyIHKqUQk7xIPO+on5jZ0QVvB9HZ5xISM1HV
+/3it4Gmoc3P5bGf+N9Y0UF3Bc11Wgaq7+XXSMccyUv7Ze5h3ZtTGUidbeWsYNfGf
+vBl163xXITHNtKVJSYgNX1CAKUV9OQ==
+=kiNx
+-----END PGP SIGNATURE-----
+
+--JkW1gnuWHDypiMFO--
