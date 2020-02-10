@@ -2,228 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 166A5157FAD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 17:24:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8856A158101
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Feb 2020 18:13:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727910AbgBJQYE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Feb 2020 11:24:04 -0500
-Received: from zimbra2.kalray.eu ([92.103.151.219]:58898 "EHLO
-        zimbra2.kalray.eu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727942AbgBJQYB (ORCPT
+        id S1727937AbgBJRNh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Feb 2020 12:13:37 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:41339 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727934AbgBJRNh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Feb 2020 11:24:01 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra2.kalray.eu (Postfix) with ESMTP id 26B4627E081F;
-        Mon, 10 Feb 2020 17:24:00 +0100 (CET)
-Received: from zimbra2.kalray.eu ([127.0.0.1])
-        by localhost (zimbra2.kalray.eu [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id ka-xYB4Qjh8D; Mon, 10 Feb 2020 17:23:59 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra2.kalray.eu (Postfix) with ESMTP id A3D3127E082F;
-        Mon, 10 Feb 2020 17:23:59 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zimbra2.kalray.eu A3D3127E082F
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kalray.eu;
-        s=32AE1B44-9502-11E5-BA35-3734643DEF29; t=1581351839;
-        bh=z6MmYl/QLmO+1QqqDgCxFlby/GTqJm7qWVYW4F1t4MI=;
-        h=From:To:Date:Message-Id;
-        b=BKKqKiRwIB/AH5bPU9pVOJNsbBNTy4KJ42FxZX5KPMEbO7Q2Zv2ZUW49vkG+RryUx
-         ayxhRlIGgJFWKOuZZfNMtMUsKZayZJaNQU+HAjEmkV6CcFff5iBXEHESY298cTR58G
-         hRfrJmpdZJw6m3U5vVVsbNP6r59m/xJLm5gzIfyQ=
-X-Virus-Scanned: amavisd-new at zimbra2.kalray.eu
-Received: from zimbra2.kalray.eu ([127.0.0.1])
-        by localhost (zimbra2.kalray.eu [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id TUIlXYFIWjcm; Mon, 10 Feb 2020 17:23:59 +0100 (CET)
-Received: from triton.lin.mbt.kalray.eu (unknown [192.168.37.25])
-        by zimbra2.kalray.eu (Postfix) with ESMTPSA id 85BDD27E07D3;
-        Mon, 10 Feb 2020 17:23:59 +0100 (CET)
-From:   Clement Leger <cleger@kalray.eu>
-To:     Ohad Ben-Cohen <ohad@wizery.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        linux-remoteproc@vger.kernel.org
-Cc:     Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Patrice Chotard <patrice.chotard@st.com>,
-        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Arnaud Pouliquen <arnaud.pouliquen@st.com>,
-        Loic PALLARDY <loic.pallardy@st.com>, s-anna <s-anna@ti.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Clement Leger <cleger@kalray.eu>
-Subject: [PATCH v4 5/5] remoteproc: Adapt coredump to generate correct elf type
-Date:   Mon, 10 Feb 2020 17:22:09 +0100
-Message-Id: <20200210162209.23149-6-cleger@kalray.eu>
-X-Mailer: git-send-email 2.15.0.276.g89ea799
-In-Reply-To: <20200210162209.23149-1-cleger@kalray.eu>
-References: <527785289.2852303.1581062223707.JavaMail.zimbra@kalray.eu>
- <20200210162209.23149-1-cleger@kalray.eu>
+        Mon, 10 Feb 2020 12:13:37 -0500
+Received: by mail-wr1-f66.google.com with SMTP id c9so8762785wrw.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Feb 2020 09:13:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=DSU+tE7/gI2emqC2rIzadepHX0f2kKadx71NAW+DB9c=;
+        b=mJ2x+0R0KG/zW9mIk2M541OD92fCUzci3ZA329+8cFqWKkKoiYinhkyd1Jrxr6rS6o
+         XzAdYkfUKOg8fLKFIuQLVAtDlVky8uxBVPPeEZVK1N4BX2ybShGvTRvZtumVm6OHfrIq
+         XOyc0/kGBjxkdPEt41xI+CVY3WQM0UQtYwmrQNC4kp/zAVMslhWKnjTJJnInArcQwtls
+         fY1X5FX7K14iEp44Q/RVA8efFh5NjzSaBfQwNJHRMeMzB57wlDqxplKrCv/I8BdpZTyG
+         XZlOO4zgEJC4kThvpMC/eudPXsSHKe0GwibyEQECmv0IJxekTVidJ9XRo8VGQxZmcClm
+         /FZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=DSU+tE7/gI2emqC2rIzadepHX0f2kKadx71NAW+DB9c=;
+        b=UwVClpochbLbzlcVcyRYzhUcPzrIhgx6gmhC6YQKNbtrJmcsLzwULKR2qBdVuI0csx
+         ciVzijXzURRYqiseZPpU7hxS2LHfSIXYtt+2NQx7EvzaIm0rGmQKJVF6qy+JGV2+A+du
+         ty3jn+akskK7O/1Ehz9JTJc3Kufq2C2gWJqTq5iv2B6+VUWBjqkmaDh7+PZEe5SXf1W7
+         5a2t6hS1yUBA35GdRKmx+3KQ6yXfgY2HP9uyQiZDgKI/kM92R077nlX0udWZVVsrlF5r
+         IshMsIJ34/GopwO/Uol5s/BDlpeicp4VC0S0XVjZuxz2JzvVm6i89kIb0oiMtoi8EdgO
+         JQKA==
+X-Gm-Message-State: APjAAAV9BuDxcO29kL4Vqkm5+S75LGUhR/qeMfWMIMWO602qR7BRCZIS
+        Ba8sXdlrlUEUDmZ6deogYCknGw==
+X-Google-Smtp-Source: APXvYqygfM/XPvD44FZpBV06QPyRiPM1bpOlyzUpNUVyAgaDXnrZJoL6ryy34a3DovTGrMav5A6R7w==
+X-Received: by 2002:adf:dfc8:: with SMTP id q8mr3005070wrn.135.1581354814017;
+        Mon, 10 Feb 2020 09:13:34 -0800 (PST)
+Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
+        by smtp.googlemail.com with ESMTPSA id d22sm1344739wmd.39.2020.02.10.09.13.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 10 Feb 2020 09:13:33 -0800 (PST)
+Subject: Re: [PATCH v2 3/8] ASoC: qdsp6: q6afe-dai: add support to pcm port
+ dais
+To:     Adam Serbinski <adam@serbinski.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Patrick Lai <plai@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200207205013.12274-1-adam@serbinski.com>
+ <20200209154748.3015-1-adam@serbinski.com>
+ <20200209154748.3015-4-adam@serbinski.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <d0437f6d-84c8-e1cd-b6f5-c1009e00245d@linaro.org>
+Date:   Mon, 10 Feb 2020 17:13:32 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <20200209154748.3015-4-adam@serbinski.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that remoteproc can load an elf64, coredump elf class should be
-the same as the loaded elf class. In order to do that, add a
-elf_class field to rproc with default values. If an elf is loaded
-successfully, these fields will be updated with the loaded elf class.
-Then, the coredump core code has been modified to use the generic elf
-macro in order to create an elf file with correct class.
+Few minor comments
 
-Signed-off-by: Clement Leger <cleger@kalray.eu>
----
- drivers/remoteproc/remoteproc_core.c       | 67 ++++++++++++++++--------------
- drivers/remoteproc/remoteproc_elf_loader.c |  3 ++
- include/linux/remoteproc.h                 |  1 +
- 3 files changed, 39 insertions(+), 32 deletions(-)
+On 09/02/2020 15:47, Adam Serbinski wrote:
+> This patch adds support of AFE DAI for PCM port.
+> 
+> Signed-off-by: Adam Serbinski <adam@serbinski.com>
+> CC: Andy Gross <agross@kernel.org>
+> CC: Mark Rutland <mark.rutland@arm.com>
+> CC: Liam Girdwood <lgirdwood@gmail.com>
+> CC: Patrick Lai <plai@codeaurora.org>
+> CC: Banajit Goswami <bgoswami@codeaurora.org>
+> CC: Jaroslav Kysela <perex@perex.cz>
+> CC: Takashi Iwai <tiwai@suse.com>
+> CC: alsa-devel@alsa-project.org
+> CC: linux-arm-msm@vger.kernel.org
+> CC: devicetree@vger.kernel.org
+> CC: linux-kernel@vger.kernel.org
+> ---
+>   sound/soc/qcom/qdsp6/q6afe-dai.c | 198 ++++++++++++++++++++++++++++++-
+>   1 file changed, 197 insertions(+), 1 deletion(-)
+> 
+> diff --git a/sound/soc/qcom/qdsp6/q6afe-dai.c b/sound/soc/qcom/qdsp6/q6afe-dai.c
+> index c1a7624eaf17..23b29591ef47 100644
+> --- a/sound/soc/qcom/qdsp6/q6afe-dai.c
+> +++ b/sound/soc/qcom/qdsp6/q6afe-dai.c
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index 9e6d3c6a60ee..ce70656ae150 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -38,6 +38,7 @@
- #include <linux/platform_device.h>
- 
- #include "remoteproc_internal.h"
-+#include "remoteproc_elf_helpers.h"
- 
- #define HIGH_BITS_MASK 0xFFFFFFFF00000000ULL
- 
-@@ -1564,20 +1565,21 @@ EXPORT_SYMBOL(rproc_coredump_add_custom_segment);
- static void rproc_coredump(struct rproc *rproc)
- {
- 	struct rproc_dump_segment *segment;
--	struct elf32_phdr *phdr;
--	struct elf32_hdr *ehdr;
-+	void *phdr;
-+	void *ehdr;
- 	size_t data_size;
- 	size_t offset;
- 	void *data;
- 	void *ptr;
-+	u8 class = rproc->elf_class;
- 	int phnum = 0;
- 
- 	if (list_empty(&rproc->dump_segments))
- 		return;
- 
--	data_size = sizeof(*ehdr);
-+	data_size = elf_size_of_hdr(class);
- 	list_for_each_entry(segment, &rproc->dump_segments, node) {
--		data_size += sizeof(*phdr) + segment->size;
-+		data_size += elf_size_of_phdr(class) + segment->size;
- 
- 		phnum++;
- 	}
-@@ -1588,33 +1590,33 @@ static void rproc_coredump(struct rproc *rproc)
- 
- 	ehdr = data;
- 
--	memset(ehdr, 0, sizeof(*ehdr));
--	memcpy(ehdr->e_ident, ELFMAG, SELFMAG);
--	ehdr->e_ident[EI_CLASS] = ELFCLASS32;
--	ehdr->e_ident[EI_DATA] = ELFDATA2LSB;
--	ehdr->e_ident[EI_VERSION] = EV_CURRENT;
--	ehdr->e_ident[EI_OSABI] = ELFOSABI_NONE;
--	ehdr->e_type = ET_CORE;
--	ehdr->e_machine = EM_NONE;
--	ehdr->e_version = EV_CURRENT;
--	ehdr->e_entry = rproc->bootaddr;
--	ehdr->e_phoff = sizeof(*ehdr);
--	ehdr->e_ehsize = sizeof(*ehdr);
--	ehdr->e_phentsize = sizeof(*phdr);
--	ehdr->e_phnum = phnum;
--
--	phdr = data + ehdr->e_phoff;
--	offset = ehdr->e_phoff + sizeof(*phdr) * ehdr->e_phnum;
-+	memset(ehdr, 0, elf_size_of_hdr(class));
-+	/* e_ident field is common for both elf32 and elf64 */
-+	elf_hdr_init_ident(ehdr, class);
-+
-+	elf_hdr_set_e_type(class, ehdr, ET_CORE);
-+	elf_hdr_set_e_machine(class, ehdr, EM_NONE);
-+	elf_hdr_set_e_version(class, ehdr, EV_CURRENT);
-+	elf_hdr_set_e_entry(class, ehdr, rproc->bootaddr);
-+	elf_hdr_set_e_phoff(class, ehdr, elf_size_of_hdr(class));
-+	elf_hdr_set_e_ehsize(class, ehdr, elf_size_of_hdr(class));
-+	elf_hdr_set_e_phentsize(class, ehdr, elf_size_of_phdr(class));
-+	elf_hdr_set_e_phnum(class, ehdr, phnum);
-+
-+	phdr = data + elf_hdr_get_e_phoff(class, ehdr);
-+	offset = elf_hdr_get_e_phoff(class, ehdr);
-+	offset += elf_size_of_phdr(class) * elf_hdr_get_e_phnum(class, ehdr);
-+
- 	list_for_each_entry(segment, &rproc->dump_segments, node) {
--		memset(phdr, 0, sizeof(*phdr));
--		phdr->p_type = PT_LOAD;
--		phdr->p_offset = offset;
--		phdr->p_vaddr = segment->da;
--		phdr->p_paddr = segment->da;
--		phdr->p_filesz = segment->size;
--		phdr->p_memsz = segment->size;
--		phdr->p_flags = PF_R | PF_W | PF_X;
--		phdr->p_align = 0;
-+		memset(phdr, 0, elf_size_of_phdr(class));
-+		elf_phdr_set_p_type(class, phdr, PT_LOAD);
-+		elf_phdr_set_p_offset(class, phdr, offset);
-+		elf_phdr_set_p_vaddr(class, phdr, segment->da);
-+		elf_phdr_set_p_paddr(class, phdr, segment->da);
-+		elf_phdr_set_p_filesz(class, phdr, segment->size);
-+		elf_phdr_set_p_memsz(class, phdr, segment->size);
-+		elf_phdr_set_p_flags(class, phdr, PF_R | PF_W | PF_X);
-+		elf_phdr_set_p_align(class, phdr, 0);
- 
- 		if (segment->dump) {
- 			segment->dump(rproc, segment, data + offset);
-@@ -1630,8 +1632,8 @@ static void rproc_coredump(struct rproc *rproc)
- 			}
- 		}
- 
--		offset += phdr->p_filesz;
--		phdr++;
-+		offset += elf_phdr_get_p_filesz(class, phdr);
-+		phdr += elf_size_of_phdr(class);
- 	}
- 
- 	dev_coredumpv(&rproc->dev, data, data_size, GFP_KERNEL);
-@@ -2029,6 +2031,7 @@ struct rproc *rproc_alloc(struct device *dev, const char *name,
- 	rproc->name = name;
- 	rproc->priv = &rproc[1];
- 	rproc->auto_boot = true;
-+	rproc->elf_class = ELFCLASS32;
- 
- 	device_initialize(&rproc->dev);
- 	rproc->dev.parent = dev;
-diff --git a/drivers/remoteproc/remoteproc_elf_loader.c b/drivers/remoteproc/remoteproc_elf_loader.c
-index 2ffb02a2ee36..07712a541ea6 100644
---- a/drivers/remoteproc/remoteproc_elf_loader.c
-+++ b/drivers/remoteproc/remoteproc_elf_loader.c
-@@ -220,6 +220,9 @@ int rproc_elf_load_segments(struct rproc *rproc, const struct firmware *fw)
- 			memset(ptr + filesz, 0, memsz - filesz);
- 	}
- 
-+	if (ret == 0)
-+		rproc->elf_class = class;
-+
- 	return ret;
- }
- EXPORT_SYMBOL(rproc_elf_load_segments);
-diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-index 82cebca9344c..113e356ce56a 100644
---- a/include/linux/remoteproc.h
-+++ b/include/linux/remoteproc.h
-@@ -514,6 +514,7 @@ struct rproc {
- 	bool auto_boot;
- 	struct list_head dump_segments;
- 	int nb_vdev;
-+	int elf_class;
- };
- 
- /**
--- 
-2.15.0.276.g89ea799
+...
 
+> +static int q6afe_tdm_set_sysclk(struct snd_soc_dai *dai,
+> +		int clk_id, unsigned int freq, int dir)
+> +{
+
+Why are we adding exactly duplicate function of q6afe_mi2s_set_sysclk here?
+
+> +	struct q6afe_dai_data *dai_data = dev_get_drvdata(dai->dev);
+> +	struct q6afe_port *port = dai_data->port[dai->id];
+> +
+> +	switch (clk_id) {
+> +	case LPAIF_DIG_CLK:
+> +		return q6afe_port_set_sysclk(port, clk_id, 0, 5, freq, dir);
+> +	case LPAIF_BIT_CLK:
+> +	case LPAIF_OSR_CLK:
+> +		return q6afe_port_set_sysclk(port, clk_id,
+> +					     Q6AFE_LPASS_CLK_SRC_INTERNAL,
+> +					     Q6AFE_LPASS_CLK_ROOT_DEFAULT,
+> +					     freq, dir);
+>   	case Q6AFE_LPASS_CLK_ID_PRI_TDM_IBIT ... Q6AFE_LPASS_CLK_ID_QUIN_TDM_EBIT:
+>   		return q6afe_port_set_sysclk(port, clk_id,
+>   					     Q6AFE_LPASS_CLK_ATTRIBUTE_INVERT_COUPLE_NO,
+> @@ -468,6 +520,11 @@ static const struct snd_soc_dapm_route q6afe_dapm_routes[] = {
+>   	{"Tertiary MI2S Playback", NULL, "TERT_MI2S_RX"},
+>   	{"Quaternary MI2S Playback", NULL, "QUAT_MI2S_RX"},
+>   
+> +	{"Primary PCM Playback", NULL, "PRI_PCM_RX"},
+> +	{"Secondary PCM Playback", NULL, "SEC_PCM_RX"},
+> +	{"Tertiary PCM Playback", NULL, "TERT_PCM_RX"},
+> +	{"Quaternary PCM Playback", NULL, "QUAT_PCM_RX"},
+> +
+>   	{"Primary TDM0 Playback", NULL, "PRIMARY_TDM_RX_0"},
+>   	{"Primary TDM1 Playback", NULL, "PRIMARY_TDM_RX_1"},
+>   	{"Primary TDM2 Playback", NULL, "PRIMARY_TDM_RX_2"},
+> @@ -562,6 +619,11 @@ static const struct snd_soc_dapm_route q6afe_dapm_routes[] = {
+>   	{"PRI_MI2S_TX", NULL, "Primary MI2S Capture"},
+>   	{"SEC_MI2S_TX", NULL, "Secondary MI2S Capture"},
+>   	{"QUAT_MI2S_TX", NULL, "Quaternary MI2S Capture"},
+> +
+> +	{"PRI_PCM_TX", NULL, "Primary PCM Capture"},
+> +	{"SEC_PCM_TX", NULL, "Secondary PCM Capture"},
+> +	{"TERT_PCM_TX", NULL, "Tertiary PCM Capture"},
+> +	{"QUAT_PCM_TX", NULL, "Quaternary PCM Capture"},
+>   };
+>   
+
+...
+
+>   
+> +	SND_SOC_DAPM_AIF_IN("QUAT_PCM_RX", NULL,
+> +			    0, 0, 0, 0),
+
+This can be in single line, same for below
+
+
+> +	SND_SOC_DAPM_AIF_OUT("QUAT_PCM_TX", NULL,
+> +			     0, 0, 0, 0),
+> +	SND_SOC_DAPM_AIF_IN("TERT_PCM_RX", NULL,
+> +			    0, 0, 0, 0),
+> +	SND_SOC_DAPM_AIF_OUT("TERT_PCM_TX", NULL,
+> +			     0, 0, 0, 0),
+> +	SND_SOC_DAPM_AIF_IN("SEC_PCM_RX", NULL,
+> +			    0, 0, 0, 0),
+> +	SND_SOC_DAPM_AIF_OUT("SEC_PCM_TX", NULL,
+> +			     0, 0, 0, 0),
+> +	SND_SOC_DAPM_AIF_IN("PRI_PCM_RX", NULL,
+> +			    0, 0, 0, 0),
+> +	SND_SOC_DAPM_AIF_OUT("PRI_PCM_TX", NULL,
+> +			     0, 0, 0, 0),
+> +
