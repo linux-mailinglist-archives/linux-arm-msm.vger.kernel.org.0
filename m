@@ -2,133 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C96E715940F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2020 16:57:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AFFC715941E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2020 17:00:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728519AbgBKP5l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Feb 2020 10:57:41 -0500
-Received: from mx07-00178001.pphosted.com ([62.209.51.94]:19470 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728389AbgBKP5l (ORCPT
+        id S1729352AbgBKP77 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Feb 2020 10:59:59 -0500
+Received: from mail-io1-f66.google.com ([209.85.166.66]:44370 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728389AbgBKP77 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Feb 2020 10:57:41 -0500
-Received: from pps.filterd (m0046037.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 01BFgiWh005066;
-        Tue, 11 Feb 2020 16:57:24 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=STMicroelectronics;
- bh=bbFYX6l2oHqcB37HwIrG102ruoCSat6PEqciFlehfTo=;
- b=PKySJ8G8AbrJ4k583iDjQs5mLCntymoL0h/H00hNilX+pwgwuQ2Y3AM2dzjvJS4kEKof
- wBxUShCEKlPOAdYvT0452DmMw1ng8n4h3Ey9HKxwVYVoHS7i0vq5YJjaGQM29EzKMfSe
- otegXhwK+aJeZ5YCKBCW0OlkS94QYtBbrNzBEk9IAqCC0znPOihKq2852TEwpMu3UxO0
- 09yiRVJk7CfMny2D48ELea1BddTYrDxvAfSp+56dgCNXgxmhqC78b5AqSgUA3WIZ8Y0v
- mVnb2rdOAdOXi77/pkSBhz7PZTqFBFMl5NvtUiIgB+RzLYWOE+NnzeJnPTw8cupkUu0a zw== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 2y1urh6kvb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 11 Feb 2020 16:57:24 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 9A09910003B;
-        Tue, 11 Feb 2020 16:57:19 +0100 (CET)
-Received: from Webmail-eu.st.com (sfhdag3node1.st.com [10.75.127.7])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 7B11D2C2801;
-        Tue, 11 Feb 2020 16:57:19 +0100 (CET)
-Received: from lmecxl0889.lme.st.com (10.75.127.44) by SFHDAG3NODE1.st.com
- (10.75.127.7) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Tue, 11 Feb
- 2020 16:57:18 +0100
-Subject: Re: [PATCH v4 0/5] remoteproc: Add elf64 support
-To:     Clement Leger <cleger@kalray.eu>, Ohad Ben-Cohen <ohad@wizery.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        <linux-remoteproc@vger.kernel.org>
-CC:     Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Patrice Chotard <patrice.chotard@st.com>,
-        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Loic PALLARDY <loic.pallardy@st.com>, s-anna <s-anna@ti.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-References: <527785289.2852303.1581062223707.JavaMail.zimbra@kalray.eu>
- <20200210162209.23149-1-cleger@kalray.eu>
-From:   Arnaud POULIQUEN <arnaud.pouliquen@st.com>
-Message-ID: <5b8045be-0942-2ecf-5dba-dad58071f6af@st.com>
-Date:   Tue, 11 Feb 2020 16:57:18 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        Tue, 11 Feb 2020 10:59:59 -0500
+Received: by mail-io1-f66.google.com with SMTP id z16so12269527iod.11;
+        Tue, 11 Feb 2020 07:59:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9yyotndcLhvUKHC5GDiLNlYrWJmGfmUU1jrbauqKqrw=;
+        b=bRMRCR8oY9RFO5yYVwxFSVaEFSLu7eMobI6WkVrdMWmn1fF8mC2oPP75BDVReMKHqO
+         gOvFHPKRuWxVGzMpbjPO51vL3zSa9cEcp7Ee8VO6wdUEnmQEFzeHboPSV8H9e0zTJyA1
+         dDtUnOLnqTac3hlWF0mQTuuvRrgT9AdhG3ac0Nm6oi9FS6C/Hkd4N0/lisIHAXHz0CM5
+         hhKN8NCyUijGCoarBqU6EDfcDs+aqYuxXP55PX2TJHSBqxawBE7l5pqd2Ag+cYxxRdug
+         pkHH2hk1S8foGsylqyDjG/ITdVfSI4bKw8CuAbD9eLi/+BJmRgqz8N9zb2Y8I6wPBdm7
+         5XJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9yyotndcLhvUKHC5GDiLNlYrWJmGfmUU1jrbauqKqrw=;
+        b=UHL1zcYpJeVNwhzYIrK+KxEo+z+uD0M3avBCgSODrXHDDzh5hDHS65v5hrJCA9K7+v
+         Leah0ii1aJxMWhh9t/IWlCWy9KrV6RoFYece9XK3qhEbJnjb16oCIuAMMVf+NznSTSTe
+         /8t6Z0bUyMAM+LAMpI2RhQQ6C56gk6KzXvu5Fn9tklk9cTTduD86nRYpIyBESPbBy2Az
+         iS39Ir00qBt1qKUJE4AEDMWWVC/JvD4qtogIum7/sd+e1Sv1nZf2EntAYLBcX0+JAaTa
+         MpRObGYi617C5ac9OjWSkBXUkBhYV2ba9g0yZnwVILaozurgCGc1hUYAheYkxUdObSen
+         593g==
+X-Gm-Message-State: APjAAAXeX7fYFglcteHtImqWBJu7chpOLUmDk9xwMbF+Z6WGAF+v27mC
+        EBm1MygcXaPkTYdyDCuvNHDKHUisRB3/ZUHRPfo=
+X-Google-Smtp-Source: APXvYqzRgDSxtpGoPVVkFNDjDpnOEbay2M89fpnAYpRCiHPDQf41hjNJcWT+m5zGf6F3a1WQILXy8TFaYzj1gZKv58U=
+X-Received: by 2002:a6b:6205:: with SMTP id f5mr14270198iog.42.1581436797145;
+ Tue, 11 Feb 2020 07:59:57 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20200210162209.23149-1-cleger@kalray.eu>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.44]
-X-ClientProxiedBy: SFHDAG8NODE2.st.com (10.75.127.23) To SFHDAG3NODE1.st.com
- (10.75.127.7)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.572
- definitions=2020-02-11_04:2020-02-10,2020-02-11 signatures=0
+References: <1580980321-19256-1-git-send-email-harigovi@codeaurora.org>
+ <CAOCk7Nr9n-xLtWq=LEM-QFhJcY+QOuzazsoi-yjErA9od2Jwmw@mail.gmail.com>
+ <2f5abc857910f70faa119fea5bda81d7@codeaurora.org> <CAOCk7NoCH9p9gOd7as=ty-EMeerAAhQtKZa8f2wZrDeV2LtGrw@mail.gmail.com>
+ <1d201377996e16ce25acb640867e1214@codeaurora.org> <CAF6AEGu8265DWN-XABwR1N-124m1j=EkgeNDEWZ16TVpSCZSZw@mail.gmail.com>
+In-Reply-To: <CAF6AEGu8265DWN-XABwR1N-124m1j=EkgeNDEWZ16TVpSCZSZw@mail.gmail.com>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Tue, 11 Feb 2020 08:59:46 -0700
+Message-ID: <CAOCk7NrH6hWiHL29_DozXcXrXhkCaZ6LTCtJUrvqtXc=nQuLrg@mail.gmail.com>
+Subject: Re: [Freedreno] [v1] drm/msm/dsi/pll: call vco set rate explicitly
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Harigovindan P <harigovi@codeaurora.org>,
+        DTML <devicetree@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        nganji@codeaurora.org, Sean Paul <seanpaul@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Clement,
+On Tue, Feb 11, 2020 at 8:44 AM Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Mon, Feb 10, 2020 at 9:58 PM <harigovi@codeaurora.org> wrote:
+> >
+> > On 2020-02-07 19:40, Jeffrey Hugo wrote:
+> > > On Fri, Feb 7, 2020 at 5:38 AM <harigovi@codeaurora.org> wrote:
+> > >>
+> > >> On 2020-02-06 20:29, Jeffrey Hugo wrote:
+> > >> > On Thu, Feb 6, 2020 at 2:13 AM Harigovindan P <harigovi@codeaurora.org>
+> > >> > wrote:
+> > >> >>
+> > >> >> For a given byte clock, if VCO recalc value is exactly same as
+> > >> >> vco set rate value, vco_set_rate does not get called assuming
+> > >> >> VCO is already set to required value. But Due to GDSC toggle,
+> > >> >> VCO values are erased in the HW. To make sure VCO is programmed
+> > >> >> correctly, we forcefully call set_rate from vco_prepare.
+> > >> >
+> > >> > Is this specific to certain SoCs? I don't think I've observed this.
+> > >>
+> > >> As far as Qualcomm SOCs are concerned, since pll is analog and the
+> > >> value
+> > >> is directly read from hardware if we get recalc value same as set rate
+> > >> value, the vco_set_rate will not be invoked. We checked in our idp
+> > >> device which has the same SOC but it works there since the rates are
+> > >> different.
+> > >
+> > > This doesn't seem to be an answer to my question.  What Qualcomm SoCs
+> > > does this issue apply to?  Everything implementing the 10nm pll?  One
+> > > specific SoC?  I don't believe I've seen this on MSM8998, nor SDM845,
+> > > so I'm interested to know what is the actual impact here.  I don't see
+> > > an "IDP" SoC in the IP catalog, so I really have no idea what you are
+> > > referring to.
+> >
+> >
+> > This is not 10nm specific. It is applicable for other nms also.
+> > Its specific to the frequency being set. If vco_recalc returns the same
+> > value as being set by vco_set_rate,
+> > vco_set_rate will not be invoked second time onwards.
+> >
+> > For example: Lets take below devices:
+> >
+> > Cheza is based on SDM845 which is 10nm only.
+> > Clk frequency:206016
+> > dsi_pll_10nm_vco_set_rate - DSI PLL0 rate=1236096000
+> > dsi_pll_10nm_vco_recalc_rate - DSI PLL0 returning vco rate = 1236095947
+> >
+> > Trogdor is based on sc7180 which is also 10nm.
+> > Clk frequency:69300
+> > dsi_pll_10nm_vco_set_rate - DSI PLL0 rate=1663200000
+> > dsi_pll_10nm_vco_recalc_rate - DSI PLL0 returning vco rate = 1663200000
+> >
+> > In same trogdor device, we slightly changed the clock frequency and the
+> > values actually differ which will not cause any issue.
+> > Clk frequency:69310
+> > dsi_pll_10nm_vco_set_rate - DSI PLL0 rate=1663440000
+> > dsi_pll_10nm_vco_recalc_rate - DSI PLL0 returning vco rate = 1663439941
+>
+>
+> tbh, loosing state when power is off is kind of the behavior that I'd
+> expect.  It kinda makes me wonder if things are not getting powered
+> off all the way on some SoCs?
+>
+> jhugo, are you worried that this patch will cause problems on other
+> users of the 10nm pll?
 
-I tested the series on the stm32 platform for remote proc firmwre load: no regression found.
-I do not test the da_to_va feature as not implemented on stm32 platform.
+Essentially yes.  Conceptually it doesn't seem like this change should
+cause any harm, however -
 
-Regards,
-Arnaud
+This sounds like we are trying to work around the clk framework, which
+seems wrong.  It feels like we should be able to set a clk flag for
+this and make the framework deal with it.
 
+Also, this fix is 10nm specific, yet this issue affects all
+implementations?  Seems like this should perhaps be in common code so
+that we don't need to play whack-a-mole by fixing every implementation
+piecemeal.
 
-
-On 2/10/20 5:22 PM, Clement Leger wrote:
-> This serie add support for elf64 in remoteproc (elf loader, coredump). 
-> First two patches modifies the type of len argument (in da_to_va) and
-> boot_addr in order to allow loading elf64 segment with a u64 size
-> and a u64 entry point.
-> Next patch introduce a set of macros to access elf64 and elf32
-> transparently.
-> Last two patches are the actual modification in the elf loader and
-> remoteproc coredump support to add elf64 support.
-> 
-> Changes from V3:
->  - Adapt coredump to elf64 file format
->  - Rename remoteproc_elf_loader.h to remoteproc_elf_helpers.h
->  - Update copyright year in remoteproc_elf_helpers.h
->  - Rename macros elf_hdr_* to elf_get_hdr_* for coherency with elf_hdr_set_*
->  - Split elf64 loader patch in 3:
->    - boot_addr u64 change
->    - remoteproc_elf_helpers.h creation
->    - elf64 loading
-> 
-> Clement Leger (5):
->   remoteproc: Use u64 len for da_to_va
->   remoteproc: Use u64 type for boot_addr
->   remoteproc: Add elf helpers to access elf64 and elf32 fields
->   remoteproc: Add elf64 support in elf loader
->   remoteproc: Adapt coredump to generate correct elf type
-> 
->  Documentation/remoteproc.txt                |   2 +-
->  drivers/remoteproc/imx_rproc.c              |  11 +-
->  drivers/remoteproc/keystone_remoteproc.c    |   4 +-
->  drivers/remoteproc/qcom_q6v5_adsp.c         |   2 +-
->  drivers/remoteproc/qcom_q6v5_mss.c          |   2 +-
->  drivers/remoteproc/qcom_q6v5_pas.c          |   2 +-
->  drivers/remoteproc/qcom_q6v5_wcss.c         |   2 +-
->  drivers/remoteproc/qcom_wcnss.c             |   2 +-
->  drivers/remoteproc/remoteproc_core.c        |  69 +++++++------
->  drivers/remoteproc/remoteproc_elf_helpers.h |  95 ++++++++++++++++++
->  drivers/remoteproc/remoteproc_elf_loader.c  | 150 ++++++++++++++++++----------
->  drivers/remoteproc/remoteproc_internal.h    |   4 +-
->  drivers/remoteproc/st_remoteproc.c          |   2 +-
->  drivers/remoteproc/st_slim_rproc.c          |   4 +-
->  drivers/remoteproc/wkup_m3_rproc.c          |   4 +-
->  include/linux/remoteproc.h                  |   7 +-
->  16 files changed, 252 insertions(+), 110 deletions(-)
->  create mode 100644 drivers/remoteproc/remoteproc_elf_helpers.h
-> 
+Finally, the PLLs are notorious for not taking a configuration unless
+they are running.  I admit, I haven't looked at this patch in detail
+to determine if that is the case here, but there doesn't seem to be
+any indication from the commit test or a comment that doing so is
+actually valid in all cases.
