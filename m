@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A7CF1588E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2020 04:41:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 85F811588F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2020 04:41:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727821AbgBKDlS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Feb 2020 22:41:18 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:36999 "EHLO
+        id S1728072AbgBKDld (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Feb 2020 22:41:33 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:18649 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728010AbgBKDlS (ORCPT
+        by vger.kernel.org with ESMTP id S1728113AbgBKDlc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Feb 2020 22:41:18 -0500
+        Mon, 10 Feb 2020 22:41:32 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581392477; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1581392492; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=3/48n1gR/RS6VRzUyW5fg5Jwqf70bUotZeT6AogJpew=; b=mptF2oMxSJVZgqG8cj9mG+g8w6oqAJc880IL1Qvdp4q3pr2doMFK1aDfH01JpdKa7GV9nDSk
- KNDbXoTmD3CY9qGMxZdExb5K51dLt/FYUPmrpFkuxWcwTRVeWVf6BBX986XLMVisKUum0YYC
- RZjKcK6O+anNLccIZV3qiFJWW8c=
+ bh=c6+KThHyJTaUW7p9HtxxGeAiZNKSUAk916YtKObcJ8w=; b=M1SwIRt1/d/7fjxz72j9kQrW0VV4Ckwbh6cHs9lwydkOX/ss+rwIpeDI/frnXDJd87E7tig2
+ QKDYoJGNOiPYy3TVDm8MGSAjo812boOUjqxC5oa7c4yQ1QQXq6EKfUUIPkW0GTY3WgpKTEb4
+ N+AMeJBypP8LmcKuf3YxmjJdiaQ=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e422258.7f2e3bef66c0-smtp-out-n03;
- Tue, 11 Feb 2020 03:41:12 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e42226b.7fa0ed5bad50-smtp-out-n02;
+ Tue, 11 Feb 2020 03:41:31 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B0564C447A0; Tue, 11 Feb 2020 03:41:10 +0000 (UTC)
+        id A16B1C447B9; Tue, 11 Feb 2020 03:41:29 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,9 +34,9 @@ Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.10
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: cang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1F0C4C4479F;
-        Tue, 11 Feb 2020 03:41:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1F0C4C4479F
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 94629C447A5;
+        Tue, 11 Feb 2020 03:41:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 94629C447A5
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=cang@codeaurora.org
 From:   Can Guo <cang@codeaurora.org>
@@ -52,9 +52,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         "Martin K. Petersen" <martin.petersen@oracle.com>,
         linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v10 3/7] scsi: ufs-qcom: Adjust bus bandwidth voting and unvoting
-Date:   Mon, 10 Feb 2020 19:40:46 -0800
-Message-Id: <1581392451-28743-4-git-send-email-cang@codeaurora.org>
+Subject: [PATCH v10 7/7] scsi: ufs-qcom: Delay specific time before gate ref clk
+Date:   Mon, 10 Feb 2020 19:40:50 -0800
+Message-Id: <1581392451-28743-8-git-send-email-cang@codeaurora.org>
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1581392451-28743-1-git-send-email-cang@codeaurora.org>
 References: <1581392451-28743-1-git-send-email-cang@codeaurora.org>
@@ -63,158 +63,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The bus bandwidth voting is required to be done before the bus clocks
-are enabled, and the unvoting is required to be done only after the bus
-clocks are disabled.
+After enter hibern8, as UFS JEDEC ver 3.0 requires, a specific gating wait
+time is required before disable the device reference clock. If it is not
+specified, use the old delay.
 
 Signed-off-by: Can Guo <cang@codeaurora.org>
 Reviewed-by: Asutosh Das <asutoshd@codeaurora.org>
 Reviewed-by: Hongwu Su <hongwus@codeaurora.org>
 ---
- drivers/scsi/ufs/ufs-qcom.c | 78 ++++++++++++++++++++++++++++++---------------
- 1 file changed, 53 insertions(+), 25 deletions(-)
+ drivers/scsi/ufs/ufs-qcom.c | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index c69c29a1c..4ce293f 100644
+index 4ce293f..d593523 100644
 --- a/drivers/scsi/ufs/ufs-qcom.c
 +++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -38,7 +38,6 @@ enum {
- 
- static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
- 
--static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote);
- static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
- static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
- 						       u32 clk_cycles);
-@@ -674,7 +673,7 @@ static void ufs_qcom_get_speed_mode(struct ufs_pa_layer_attr *p, char *result)
- 	}
- }
- 
--static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote)
-+static int __ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote)
- {
- 	int err = 0;
- 
-@@ -705,7 +704,7 @@ static int ufs_qcom_update_bus_bw_vote(struct ufs_qcom_host *host)
- 
- 	vote = ufs_qcom_get_bus_vote(host, mode);
- 	if (vote >= 0)
--		err = ufs_qcom_set_bus_vote(host, vote);
-+		err = __ufs_qcom_set_bus_vote(host, vote);
- 	else
- 		err = vote;
- 
-@@ -716,6 +715,35 @@ static int ufs_qcom_update_bus_bw_vote(struct ufs_qcom_host *host)
- 	return err;
- }
- 
-+static int ufs_qcom_set_bus_vote(struct ufs_hba *hba, bool on)
-+{
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+	int vote, err;
+@@ -845,11 +845,27 @@ static void ufs_qcom_dev_ref_clk_ctrl(struct ufs_qcom_host *host, bool enable)
+ 		/*
+ 		 * If we are here to disable this clock it might be immediately
+ 		 * after entering into hibern8 in which case we need to make
+-		 * sure that device ref_clk is active at least 1us after the
++		 * sure that device ref_clk is active for specific time after
+ 		 * hibern8 enter.
+ 		 */
+-		if (!enable)
+-			udelay(1);
++		if (!enable) {
++			unsigned long gating_wait;
 +
-+	/*
-+	 * In case ufs_qcom_init() is not yet done, simply ignore.
-+	 * This ufs_qcom_set_bus_vote() shall be called from
-+	 * ufs_qcom_init() after init is done.
-+	 */
-+	if (!host)
-+		return 0;
-+
-+	if (on) {
-+		vote = host->bus_vote.saved_vote;
-+		if (vote == host->bus_vote.min_bw_vote)
-+			ufs_qcom_update_bus_bw_vote(host);
-+	} else {
-+		vote = host->bus_vote.min_bw_vote;
-+	}
-+
-+	err = __ufs_qcom_set_bus_vote(host, vote);
-+	if (err)
-+		dev_err(hba->dev, "%s: set bus vote failed %d\n",
-+				 __func__, err);
-+
-+	return err;
-+}
-+
- static ssize_t
- show_ufs_to_mem_max_bus_bw(struct device *dev, struct device_attribute *attr,
- 			char *buf)
-@@ -792,7 +820,7 @@ static int ufs_qcom_update_bus_bw_vote(struct ufs_qcom_host *host)
- 	return 0;
- }
- 
--static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote)
-+static int ufs_qcom_set_bus_vote(struct ufs_hba *host, bool on)
- {
- 	return 0;
- }
-@@ -1030,8 +1058,7 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
- 				 enum ufs_notify_change_status status)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
--	int err;
--	int vote = 0;
-+	int err = 0;
- 
- 	/*
- 	 * In case ufs_qcom_init() is not yet done, simply ignore.
-@@ -1041,28 +1068,28 @@ static int ufs_qcom_setup_clocks(struct ufs_hba *hba, bool on,
- 	if (!host)
- 		return 0;
- 
--	if (on && (status == POST_CHANGE)) {
--		/* enable the device ref clock for HS mode*/
--		if (ufshcd_is_hs_mode(&hba->pwr_info))
--			ufs_qcom_dev_ref_clk_ctrl(host, true);
--		vote = host->bus_vote.saved_vote;
--		if (vote == host->bus_vote.min_bw_vote)
--			ufs_qcom_update_bus_bw_vote(host);
--
--	} else if (!on && (status == PRE_CHANGE)) {
--		if (!ufs_qcom_is_link_active(hba)) {
--			/* disable device ref_clk */
--			ufs_qcom_dev_ref_clk_ctrl(host, false);
-+	switch (status) {
-+	case PRE_CHANGE:
-+		if (on) {
-+			err = ufs_qcom_set_bus_vote(hba, true);
-+		} else {
-+			if (!ufs_qcom_is_link_active(hba)) {
-+				/* disable device ref_clk */
-+				ufs_qcom_dev_ref_clk_ctrl(host, false);
++			gating_wait = host->hba->dev_info.clk_gating_wait_us;
++			if (!gating_wait) {
++				udelay(1);
++			} else {
++				/*
++				 * bRefClkGatingWaitTime defines the minimum
++				 * time for which the reference clock is
++				 * required by device during transition from
++				 * HS-MODE to LS-MODE or HIBERN8 state. Give it
++				 * more delay to be on the safe side.
++				 */
++				gating_wait += 10;
++				usleep_range(gating_wait, gating_wait + 10);
 +			}
- 		}
--
--		vote = host->bus_vote.min_bw_vote;
-+		break;
-+	case POST_CHANGE:
-+		if (on) {
-+			/* enable the device ref clock for HS mode*/
-+			if (ufshcd_is_hs_mode(&hba->pwr_info))
-+				ufs_qcom_dev_ref_clk_ctrl(host, true);
-+		} else {
-+			err = ufs_qcom_set_bus_vote(hba, false);
 +		}
-+		break;
- 	}
  
--	err = ufs_qcom_set_bus_vote(host, vote);
--	if (err)
--		dev_err(hba->dev, "%s: set bus vote failed %d\n",
--				__func__, err);
--
- 	return err;
- }
+ 		writel_relaxed(temp, host->dev_ref_clk_ctrl_mmio);
  
-@@ -1238,6 +1265,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
- 	ufs_qcom_set_caps(hba);
- 	ufs_qcom_advertise_quirks(hba);
- 
-+	ufs_qcom_set_bus_vote(hba, true);
- 	ufs_qcom_setup_clocks(hba, true, POST_CHANGE);
- 
- 	if (hba->dev->id < MAX_UFS_QCOM_HOSTS)
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
