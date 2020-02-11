@@ -2,141 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 73E5C158D9D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2020 12:38:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 40DB5158DA6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2020 12:43:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727728AbgBKLie (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Feb 2020 06:38:34 -0500
-Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:42884 "EHLO
-        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727770AbgBKLid (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Feb 2020 06:38:33 -0500
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 11 Feb 2020 17:07:58 +0530
-Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 11 Feb 2020 17:07:38 +0530
-Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
-        id 5290D1CC5; Tue, 11 Feb 2020 17:07:37 +0530 (IST)
-From:   Harigovindan P <harigovi@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Harigovindan P <harigovi@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        kalyan_t@codeaurora.org, nganji@codeaurora.org
-Subject: [v2] arm64: dts: sc7180: add dsi controller and phy entries for idp dts
-Date:   Tue, 11 Feb 2020 17:07:35 +0530
-Message-Id: <20200211113735.6840-1-harigovi@codeaurora.org>
-X-Mailer: git-send-email 2.25.0
+        id S1728407AbgBKLm7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Feb 2020 06:42:59 -0500
+Received: from foss.arm.com ([217.140.110.172]:44432 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727770AbgBKLm7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 11 Feb 2020 06:42:59 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4F48231B;
+        Tue, 11 Feb 2020 03:42:58 -0800 (PST)
+Received: from localhost (unknown [10.37.6.21])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C78C33F6CF;
+        Tue, 11 Feb 2020 03:42:57 -0800 (PST)
+Date:   Tue, 11 Feb 2020 11:42:56 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Adam Serbinski <adam@serbinski.com>
+Cc:     Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Patrick Lai <plai@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 8/8] ASoC: qcom: apq8096: add kcontrols to set PCM rate
+Message-ID: <20200211114256.GC4543@sirena.org.uk>
+References: <20200207205013.12274-1-adam@serbinski.com>
+ <20200209154748.3015-1-adam@serbinski.com>
+ <20200209154748.3015-9-adam@serbinski.com>
+ <20200210133636.GJ7685@sirena.org.uk>
+ <18057b47c76d350f8380f277713e0936@serbinski.com>
+ <20200210182609.GA14166@sirena.org.uk>
+ <f88d21773f47f5a543a17ad07d66f9b7@serbinski.com>
+ <20200210200839.GG14166@sirena.org.uk>
+ <7c57801d8f671c40d4c6094e5ce89681@serbinski.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ctP54qlpMx3WjD+/"
+Content-Disposition: inline
+In-Reply-To: <7c57801d8f671c40d4c6094e5ce89681@serbinski.com>
+X-Cookie: Hire the morally handicapped.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Adding dsi controller and phy entries for idp dt.
 
-Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
----
+--ctP54qlpMx3WjD+/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Changes in v1:
-	- Added dsi controller and dsi phy entries for idp dts
+On Mon, Feb 10, 2020 at 04:13:52PM -0500, Adam Serbinski wrote:
 
-Changes in v2:
-	- Adding dependency patchwork series
-	- Removing suspend configuration
-	- Adding blank before curly brace
+> I am not aware of how this could be done for bluetooth, since the value
+> still has to originate from userspace. The driver you referred to supports
+> only a single sample rate, whereas for bluetooth, 2 sample rates are
+> required, and nothing in the kernel is aware of the appropriate rate, at
+> least in the case of the qca6174a I'm working with right now, or for that
+> matter, TI Wilink 8, which I've also worked with.
 
-This patch depends on following patchwork series:
+There's generic support in the CODEC<->CODEC link code for setting the
+DAI configuration from userspace.
 
-https://patchwork.kernel.org/patch/11364687/
-https://patchwork.kernel.org/patch/11366303/
+--ctP54qlpMx3WjD+/
+Content-Type: application/pgp-signature; name="signature.asc"
 
- arch/arm64/boot/dts/qcom/sc7180-idp.dts | 55 +++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+-----BEGIN PGP SIGNATURE-----
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 388f50ad4fde..6ccf8c3603ab 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -7,6 +7,7 @@
- 
- /dts-v1/;
- 
-+#include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sc7180.dtsi"
- #include "pm6150.dtsi"
-@@ -232,6 +233,49 @@ vreg_bob: bob {
- 	};
- };
- 
-+&dsi0 {
-+	status = "okay";
-+
-+	vdda-supply = <&vreg_l3c_1p2>;
-+
-+	panel@0 {
-+		compatible = "visionox,rm69299-1080p-display";
-+		reg = <0>;
-+
-+		vdda-supply = <&vreg_l8c_1p8>;
-+		vdd3p3-supply = <&vreg_l18a_2p8>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&disp_pins>;
-+
-+		reset-gpios = <&pm6150l_gpio 3 GPIO_ACTIVE_HIGH>;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			port@0 {
-+				reg = <0>;
-+				panel0_in: endpoint {
-+					remote-endpoint = <&dsi0_out>;
-+				};
-+			};
-+		};
-+	};
-+
-+	ports {
-+		port@1 {
-+			endpoint {
-+				remote-endpoint = <&panel0_in>;
-+				data-lanes = <0 1 2 3>;
-+			};
-+		};
-+	};
-+};
-+
-+&dsi_phy {
-+	status = "okay";
-+};
-+
- &qspi {
- 	status = "okay";
- 	pinctrl-names = "default";
-@@ -289,6 +333,17 @@ &usb_1_qmpphy {
- 
- /* PINCTRL - additions to nodes defined in sc7180.dtsi */
- 
-+&pm6150l_gpio {
-+	disp_pins: disp-pins {
-+		pins = "gpio3";
-+		function = "func1";
-+		qcom,drive-strength = <2>;
-+		power-source = <0>;
-+		bias-disable;
-+		output-low;
-+	};
-+};
-+
- &qspi_clk {
- 	pinconf {
- 		pins = "gpio63";
--- 
-2.25.0
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl5Ckz8ACgkQJNaLcl1U
+h9ALGQf/Ss3ZIdJmQ7t1NLJpgkPvfgCHptgk+NO5wYCwd0pQJbzaflRdG45mcDPG
+bQRKfEaZEqvPWxASdTQTiFdmJg6zLqlvkQYPcor4DCPcB1bCkPS9hkeOSUxXSsOa
+ICLmJPQyoUqNyb6pHa6ghgfdVRPIr+GWPn0Zob/QpwybzWKBA7VHKmTEnxGDIq0z
+pLzYVaV03fmVkJUowVTUdZ40LP8mjTWVcXnk/NzM1qEs3T39Q6DmAUyR7IemHBBf
+wJr/MPk4Nr/9nPsmtD+5eJIG6m68tUximFPFeYIfid+WrHlY68RVcpgOBUG4LuvT
+ENG+UsqfuA8Olmmq+tnZG3Imx6tmzg==
+=pysG
+-----END PGP SIGNATURE-----
 
+--ctP54qlpMx3WjD+/--
