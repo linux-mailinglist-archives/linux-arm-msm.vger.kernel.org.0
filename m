@@ -2,98 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C0751598E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2020 19:41:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9BDD1598E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2020 19:42:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730464AbgBKSli (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Feb 2020 13:41:38 -0500
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:51654 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728375AbgBKSli (ORCPT
+        id S1728862AbgBKSmk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Feb 2020 13:42:40 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:40463 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729433AbgBKSmk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Feb 2020 13:41:38 -0500
-Received: by mail-pj1-f67.google.com with SMTP id fa20so1709506pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2020 10:41:38 -0800 (PST)
+        Tue, 11 Feb 2020 13:42:40 -0500
+Received: by mail-io1-f68.google.com with SMTP id x1so12907260iop.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2020 10:42:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=xu7EuHlbPmEdsWxeqhcpcHFWwOAxYugDEE3/io8b6Ag=;
-        b=IAx8P+TswPBtEzqo31P99hOqElFCCby5txh+Oscc2zELCGSh+V8oy9xOqlpkGbH7Ef
-         UFy/In+m0b4c3AGRoJGmixJlOzszq2Anj2nYT4LB+CjyumYjiOR9OwKa5M5eVJ9yrCQj
-         LsYE2AgdmmEVKL+ctWTreHKJiTPUspZyAsVoLnq2QY8iA6BJoabhj2etPGc+26+Xoe6H
-         rBe3EuzUVbQp45qhLda9c913cu/r8Soi8GmTUZ114PwZD/pP2wONUEpfJh8PHRkdLViT
-         HKNiH6pd0H7IQUZacCiMT5n8woKav6OgIXxSTJQ+VvypXnIouZyZPQeAplbzEnWV4EGm
-         0QAA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Tb6kXJT2IPt0OzdthJIyzIwD+V8Zde13ETSgdH0IZ40=;
+        b=zQBE1Fk+YV6ZOEET9w+OD3R7NhX3F43AMNwTH3W4y72xDmECkuQrSvqQj5gWLm5NRJ
+         ba61XeL5xmSzXqBz+u4El1iNtDATvmwfAnV7g0MA9asd4/ET4MQCQoQSJq6e8jHRDqBO
+         o/8t16A73pSr813cJ8lHzakkPwNqn7bUKyTI6rhFojrYMzsTsu+SIN8tJXGuh3wR+TpA
+         NMg1g9zy7/Ek+Cw2iF48WNVEsUUSgOcmDeosaUegjmWowtZDxU56TCiwwNsyctpk0DJa
+         fCEAoi4FYx7wMvIBlyFm5VP+S32fy9h9m1COnI8sh305XvseBd6OXIvJBWkWJpiCEpAK
+         6wig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xu7EuHlbPmEdsWxeqhcpcHFWwOAxYugDEE3/io8b6Ag=;
-        b=CklSM+6Ky97O4jDV/pcwFsuuANEnwgTrbomFfzc+YQYPMLuSqu2f7io5PFlTMbbksP
-         5H+00EXyt4yyRIgJzML7DP3rUdK5OoMMtLqA+xtEthvxBqX2gm7797H9O9+KjL2d38vj
-         u+i0T/uqkxuKxFsXBF0ooWK5HnFD2BobjA473GtABaIFk5/B6MIOYLyxBj6smZ5CrWN0
-         dlRKTQyNMjsUBNt91+LwUDkTut/WzoCo6QK961IgsRmuKkQIS6XlpIDwXg08D8Lf7JYz
-         Pkju0Todt6B8SxB8hvs1tIqE2XaOTkLWRH8glbOpuP6v8Ot3I1uGY4l13HygA0Z/HPC4
-         JhdA==
-X-Gm-Message-State: APjAAAUR1JWii8M+udQCYVjVv7IVz9PZgAsD2VOR1NzdCULYSA71RC8x
-        QNvuY4lt7oVcvVS8ht/opsVj
-X-Google-Smtp-Source: APXvYqyCbupqRjFu0F6Wmci9gu6Qa/pIo2z9Yh3R6s5WBj8zjYf0kfRk0xoYd4RlP8k7jZYwU+Q/oA==
-X-Received: by 2002:a17:90a:a881:: with SMTP id h1mr5209231pjq.50.1581446497757;
-        Tue, 11 Feb 2020 10:41:37 -0800 (PST)
-Received: from Mani-XPS-13-9360 ([2409:4072:638b:7653:754d:196d:c455:1f88])
-        by smtp.gmail.com with ESMTPSA id q66sm5543024pfq.27.2020.02.11.10.41.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 11 Feb 2020 10:41:37 -0800 (PST)
-Date:   Wed, 12 Feb 2020 00:11:30 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     arnd@arndb.de, smohanad@codeaurora.org, jhugo@codeaurora.org,
-        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 02/16] bus: mhi: core: Add support for registering MHI
- controllers
-Message-ID: <20200211184130.GA11908@Mani-XPS-13-9360>
-References: <20200131135009.31477-1-manivannan.sadhasivam@linaro.org>
- <20200131135009.31477-3-manivannan.sadhasivam@linaro.org>
- <20200206165755.GB3894455@kroah.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Tb6kXJT2IPt0OzdthJIyzIwD+V8Zde13ETSgdH0IZ40=;
+        b=W5OG2WwMdqvy6z8LkiThMlzhmZ3DC4Hqc8pQCos7pqMYacIyZLaMg5oPm49VCH7B78
+         9JSWQAgiTa4nFWvCyOaPOkfVw9NQYKR6PAWyt8Wrmq8vF1ju5oW4VS5BZL0VoUSnCQln
+         zzcUL8r/2DNcCD/JcNjSVgYfrXVrEkgeP5L3PENnJCo3hYNdacLbZKi4DOtE6+qXyKet
+         s+vZXZQRJjJtroCrnVbUIDNeNcomJuJa9rt3habpJqNenuVnjEwLymdzWihakTf4QQpa
+         YXr+K+s9PFuu0HTBmvOA4fHfNnr1/0NDWj2Xzi6qwNQclyX+KJvb7+WINhF9HXChp61w
+         yKkQ==
+X-Gm-Message-State: APjAAAXN3rS97IL2FWgbfAjd+64vRYQws5o5439c6jcYQ9mXmw8+e3nu
+        vxqyoIO7FijPhFP1b1wL2WKFB92+4Kkrw6duuquKDg==
+X-Google-Smtp-Source: APXvYqye9IvbqDD5VFHUvUHHYimyx5TYHJqSTs2p4McDlYyzMSbvgCTZJANcgR4hgrFbeGHQEL0LI+OvORy5yN2Z4x0=
+X-Received: by 2002:a02:cc41:: with SMTP id i1mr15412023jaq.71.1581446558643;
+ Tue, 11 Feb 2020 10:42:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200206165755.GB3894455@kroah.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <20200204062641.393949-1-bjorn.andersson@linaro.org>
+ <20200204062641.393949-2-bjorn.andersson@linaro.org> <20200210230548.GA20652@xps15>
+ <20200211011601.GD3261042@ripper>
+In-Reply-To: <20200211011601.GD3261042@ripper>
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+Date:   Tue, 11 Feb 2020 11:42:27 -0700
+Message-ID: <CANLsYkzzxW46Kawx2LcDbqD2A_bXXf6bJTkYA7=V37E-3p4Row@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] remoteproc: qcom_q6v5_mss: Don't reassign mpss
+ region on shutdown
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Ohad Ben-Cohen <ohad@wizery.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-remoteproc <linux-remoteproc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        "# 4 . 7" <stable@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
+On Mon, 10 Feb 2020 at 18:16, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Mon 10 Feb 15:05 PST 2020, Mathieu Poirier wrote:
+>
+> > Hi Bjorn,
+> >
+> > On Mon, Feb 03, 2020 at 10:26:40PM -0800, Bjorn Andersson wrote:
+> > > Trying to reclaim mpss memory while the mba is not running causes the
+> > > system to crash on devices with security fuses blown, so leave it
+> > > assigned to the remote on shutdown and recover it on a subsequent boot.
+> > >
+> > > Fixes: 6c5a9dc2481b ("remoteproc: qcom: Make secure world call for mem ownership switch")
+> > > Cc: stable@vger.kernel.org
+> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > ---
+> > >
+> > > Changes since v2:
+> > > - The assignment of mpss memory back to Linux is rejected in the coredump case
+> > >   on production devices, so check the return value of q6v5_xfer_mem_ownership()
+> > >   before attempting to memcpy() the data.
+> > >
+> > >  drivers/remoteproc/qcom_q6v5_mss.c | 23 +++++++++++++----------
+> > >  1 file changed, 13 insertions(+), 10 deletions(-)
+> > >
+> > > diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> > > index 471128a2e723..25c03a26bf88 100644
+> > > --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> > > +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> > > @@ -887,11 +887,6 @@ static void q6v5_mba_reclaim(struct q6v5 *qproc)
+> > >             writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
+> > >     }
+> > >
+> > > -   ret = q6v5_xfer_mem_ownership(qproc, &qproc->mpss_perm,
+> > > -                                 false, qproc->mpss_phys,
+> > > -                                 qproc->mpss_size);
+> > > -   WARN_ON(ret);
+> > > -
+> > >     q6v5_reset_assert(qproc);
+> > >
+> > >     q6v5_clk_disable(qproc->dev, qproc->reset_clks,
+> > > @@ -981,6 +976,10 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+> > >                     max_addr = ALIGN(phdr->p_paddr + phdr->p_memsz, SZ_4K);
+> > >     }
+> > >
+> > > +   /* Try to reset ownership back to Linux */
+> > > +   q6v5_xfer_mem_ownership(qproc, &qproc->mpss_perm, false,
+> > > +                           qproc->mpss_phys, qproc->mpss_size);
+> >
+> > Would you mind adding more chatter here, something like what is mentioned in the
+> > changelog?  That way I anyone trying to review this code doesn't have to suffer
+> > through the same mental gymnastic.
+> >
+>
+> Sure thing, as this patch shows this dynamic wasn't clear - and this
+> patch is based on my observations. With it we no longer crash the entire
+> system by hitting a security violation during a crash, but there's still
+> some details that I'm uncertain about.
+>
+> > > +
+> > >     mpss_reloc = relocate ? min_addr : qproc->mpss_phys;
+> > >     qproc->mpss_reloc = mpss_reloc;
+> > >     /* Load firmware segments */
+> > > @@ -1070,8 +1069,16 @@ static void qcom_q6v5_dump_segment(struct rproc *rproc,
+> > >     void *ptr = rproc_da_to_va(rproc, segment->da, segment->size);
+> > >
+> > >     /* Unlock mba before copying segments */
+> > > -   if (!qproc->dump_mba_loaded)
+> > > +   if (!qproc->dump_mba_loaded) {
+> > >             ret = q6v5_mba_load(qproc);
+> > > +           if (!ret) {
+> > > +                   /* Try to reset ownership back to Linux */
+> > > +                   ret = q6v5_xfer_mem_ownership(qproc, &qproc->mpss_perm,
+> > > +                                                 false,
+> > > +                                                 qproc->mpss_phys,
+> > > +                                                 qproc->mpss_size);
+> > > +           }
+> >
+> > I'm a bit puzzled here as to why a different reclaim strategy is needed.  It is
+> > clear to me that if q6v5_mba_load() returns 0 then the MBA is running and we can
+> > safely reclaim ownership of the memory.  But is it absolutely needed when we
+> > know that 1) the MCU has crashed and 2) said memory will be reclaimed in
+> > q6v5_mpss_load()?
+> >
+>
+> The ownership transfer here is a jump into secure world, which somehow
+> together with the firmware running on the modem processor will update
+> the access permissions for the mpss memory region.
+>
+> As we enter this function the recovery handling in the core has just
+> stopped the remote processor, so we know it's off. As such we must first
+> boot the remote processor again, in order to reclaim the access to the
+> mpss memory region.
+>
+> New in this revision is the fact that this operation might actually be
+> rejected (e.g. on end-user hardware).
+>
+> So we need to guard the memcpy below on either of these cases, as unless
+> we've successfully booted the modem processor and gotten permission to
+> read the mpss memory this operation will trigger a security violation
+> and the device will reboot.
+>
+> > If so I think an explanation in the code is needed.
+> >
+>
+> Makes sense, I will formulate above explanation into a comment. As well
+> as review the other callers of q6v5_xfer_mem_ownership().
+>
+> > I also assume there is no way to know if the mba is running, hence not taking
+> > any chance.  If that's the case it would be nice to add that to the comment in
+> > q6v5_mpss_load().
+> >
+>
+> We know that we enter q6v5_mpss_load() with the modem processor just
+> booted, but the memory assignment is there to handle the case where the
+> mpss memory region for some reason was left in the hands on the modem.
+> I will have to do some more digging to figure out if this is a valid
+> scenario or not.
 
-On Thu, Feb 06, 2020 at 05:57:55PM +0100, Greg KH wrote:
-> On Fri, Jan 31, 2020 at 07:19:55PM +0530, Manivannan Sadhasivam wrote:
-> > --- /dev/null
-> > +++ b/drivers/bus/mhi/core/init.c
-> > @@ -0,0 +1,407 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +/*
-> > + * Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
-> > + *
-> > + */
-> > +
-> > +#define dev_fmt(fmt) "MHI: " fmt
-> 
-> This should not be needed, right?  The bus/device name should give you
-> all you need here from what I can tell.  So why is this needed?
-> 
+I'm really happy that you're also not sure about this patch... I spent
+hours (no joke) trying to figure out the workflow and logic of using
+q6v5_xfer_mem_ownership() and even then I'm ambivalent...  Carefully
+understanding and documenting the scenarios we trying to handle will
+go a long way in terms of future stability of the system.
 
-The log will have only the device name as like PCI-E. But that won't specify
-where the error is coming from. Having "MHI" prefix helps the users to
-quickly identify that the error is coming from MHI stack.
-
-Thanks,
-Mani
-
-> thanks,
-> 
-> greg k-h
+>
+> Thanks for your review Mathieu!
+>
+> Regards,
+> Bjorn
+>
+> > Thanks,
+> > Mathieu
+> >
+> > > +   }
+> > >
+> > >     if (!ptr || ret)
+> > >             memset(dest, 0xff, segment->size);
+> > > @@ -1123,10 +1130,6 @@ static int q6v5_start(struct rproc *rproc)
+> > >     return 0;
+> > >
+> > >  reclaim_mpss:
+> > > -   xfermemop_ret = q6v5_xfer_mem_ownership(qproc, &qproc->mpss_perm,
+> > > -                                           false, qproc->mpss_phys,
+> > > -                                           qproc->mpss_size);
+> > > -   WARN_ON(xfermemop_ret);
+> > >     q6v5_mba_reclaim(qproc);
+> > >
+> > >     return ret;
+> > > --
+> > > 2.23.0
+> > >
