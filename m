@@ -2,169 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1970E15886F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2020 03:51:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 734CC15888D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2020 04:09:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727855AbgBKCvI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Feb 2020 21:51:08 -0500
-Received: from mail25.static.mailgun.info ([104.130.122.25]:49490 "EHLO
+        id S1727806AbgBKDJ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Feb 2020 22:09:28 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:22119 "EHLO
         mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727857AbgBKCvE (ORCPT
+        by vger.kernel.org with ESMTP id S1727791AbgBKDJ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Feb 2020 21:51:04 -0500
+        Mon, 10 Feb 2020 22:09:28 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581389463; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=DwinruQUTHVtb433tEVtKSujUuJq0mr9jS6Gc9Jj1Ik=; b=c/krmNxlI01+nkypTIL5AX2nk6L3Wz269H/M6bbFda8dXcR6NVwiBkVhl3dtYEH3tCSHq6ap
- FyFb4iqV5Tt8ePRBn92K6aiJKg8ib2WGZL5vYfsa3pOcwMciJlCiZdyvTdJtgeIpLVw4vDrq
- CONw/RStHZ14E585fYAdd1FMMD0=
+ s=smtp; t=1581390567; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=HsvS9IisJNr6LFW0Rz9Jhtw9mscMxCPE5oiz7HZbtQU=;
+ b=kLBCUpkmUL1gxNy8GQKK5CUDeU4fKbQS+kxBHG7fBR3fwgavsuL94yBfj7r4Cf7FtrMGX9GW
+ fDKR+ZgSAajLTS1EkJvCoU4jHyW/fJ46bQiByy887mGwq7049sJ/xMooiEo0YyL9NG/bNj+e
+ XW0+VHPqGtB5MTQvkmlZcDFxyH8=
 X-Mailgun-Sending-Ip: 104.130.122.25
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e421696.7fa215564b90-smtp-out-n01;
- Tue, 11 Feb 2020 02:51:02 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e421ae4.7f5080f63a40-smtp-out-n03;
+ Tue, 11 Feb 2020 03:09:24 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DC8E7C4479D; Tue, 11 Feb 2020 02:51:00 +0000 (UTC)
+        id A9208C4479C; Tue, 11 Feb 2020 03:09:24 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.206.28.9] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4AE8FC43383;
-        Tue, 11 Feb 2020 02:50:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4AE8FC43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v2 2/2] clk: qcom: gpucc: Add support for GX GDSC for
- SC7180
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh@kernel.org>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>
-References: <1581307266-26989-1-git-send-email-tdas@codeaurora.org>
- <1581307266-26989-2-git-send-email-tdas@codeaurora.org>
- <CAD=FV=VqRAVZ19gSbtxbmdRCBbPRr+CMxWVR29diWtfX5mL3jw@mail.gmail.com>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <9ac184a0-03a7-1354-1f18-890f3b66cdcb@codeaurora.org>
-Date:   Tue, 11 Feb 2020 08:20:53 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.2
+        (Authenticated sender: hongwus)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AC3D3C43383;
+        Tue, 11 Feb 2020 03:09:23 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=VqRAVZ19gSbtxbmdRCBbPRr+CMxWVR29diWtfX5mL3jw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Tue, 11 Feb 2020 11:09:23 +0800
+From:   hongwus@codeaurora.org
+To:     Can Guo <cang@codeaurora.org>
+Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        rnayak@codeaurora.org, linux-scsi@vger.kernel.org,
+        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v9 3/7] scsi: ufs-qcom: Adjust bus bandwidth voting and
+ unvoting
+In-Reply-To: <1581388671-18078-4-git-send-email-cang@codeaurora.org>
+References: <1581388671-18078-1-git-send-email-cang@codeaurora.org>
+ <1581388671-18078-4-git-send-email-cang@codeaurora.org>
+Message-ID: <c0fdc3e7f3457544c987d296c3a26e35@codeaurora.org>
+X-Sender: hongwus@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Doug,
+Hi Can,
 
-On 2/10/2020 11:19 PM, Doug Anderson wrote:
-> Hi,
-> 
-> On Sun, Feb 9, 2020 at 8:01 PM Taniya Das <tdas@codeaurora.org> wrote:
->>
->> Most of the time the CPU should not be touching the GX domain on the
->> GPU except for a very special use case when the CPU needs to force the
->> GX headswitch off. Add the GX domain for that use case.  As part of
->> this add a dummy enable function for the GX gdsc to simulate success
->> so that the pm_runtime reference counting is correct.  This matches
->> what was done in sdm845 in commit 85a3d920d30a ("clk: qcom: Add a
->> dummy enable function for GX gdsc").
->>
->> Signed-off-by: Taniya Das <tdas@codeaurora.org>
->> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> 
-> For future reference, if you have someone's tag in your commit message
-> it's nice to CC them on the email.
-> 
-> 
 
-My bad my miss.
+On 2020-02-11 10:37, Can Guo wrote:
+> The bus bandwidth voting is required to be done before the bus clocks
+> are enabled, and the unvoting is required to be done only after the bus
+> clocks are disabled.
+> 
+> Signed-off-by: Can Guo <cang@codeaurora.org>
+> Reviewed-by: Asutosh Das <asutoshd@codeaurora.org>
+> ---
+>  drivers/scsi/ufs/ufs-qcom.c | 78 
+> ++++++++++++++++++++++++++++++---------------
+>  1 file changed, 53 insertions(+), 25 deletions(-)
+> 
+> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+> index c69c29a1c..ded08fb 100644
+> --- a/drivers/scsi/ufs/ufs-qcom.c
+> +++ b/drivers/scsi/ufs/ufs-qcom.c
+> @@ -38,7 +38,6 @@ enum {
+> 
+>  static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
+> 
+> -static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int 
+> vote);
+>  static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host 
+> *host);
+>  static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba 
+> *hba,
+>  						       u32 clk_cycles);
+> @@ -674,7 +673,7 @@ static void ufs_qcom_get_speed_mode(struct
+> ufs_pa_layer_attr *p, char *result)
+>  	}
+>  }
+> 
+> -static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote)
+> +static int __ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int 
+> vote)
+>  {
+>  	int err = 0;
+> 
+> @@ -705,7 +704,7 @@ static int ufs_qcom_update_bus_bw_vote(struct
+> ufs_qcom_host *host)
+> 
+>  	vote = ufs_qcom_get_bus_vote(host, mode);
+>  	if (vote >= 0)
+> -		err = ufs_qcom_set_bus_vote(host, vote);
+> +		err = __ufs_qcom_set_bus_vote(host, vote);
+>  	else
+>  		err = vote;
+> 
+> @@ -716,6 +715,35 @@ static int ufs_qcom_update_bus_bw_vote(struct
+> ufs_qcom_host *host)
+>  	return err;
+>  }
+> 
+> +static int ufs_qcom_set_bus_vote(struct ufs_hba *hba, bool on)
+> +{
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +	int vote, err;
+> +
+> +	/*
+> +	 * In case ufs_qcom_init() is not yet done, simply ignore.
+> +	 * This ufs_qcom_set_bus_vote() shall be called from
+> +	 * ufs_qcom_init() after init is done.
+> +	 */
+> +	if (!host)
+> +		return 0;
+> +
+> +	if (on) {
+> +		vote = host->bus_vote.saved_vote;
+> +		if (vote == host->bus_vote.min_bw_vote)
+> +			ufs_qcom_update_bus_bw_vote(host);
+> +	} else {
+> +		vote = host->bus_vote.min_bw_vote;
+> +	}
+> +
+> +	err = __ufs_qcom_set_bus_vote(host, vote);
+> +	if (err)
+> +		dev_err(hba->dev, "%s: set bus vote failed %d\n",
+> +				 __func__, err);
+> +
+> +	return err;
+> +}
+> +
+>  static ssize_t
+>  show_ufs_to_mem_max_bus_bw(struct device *dev, struct device_attribute 
+> *attr,
+>  			char *buf)
+> @@ -792,7 +820,7 @@ static int ufs_qcom_update_bus_bw_vote(struct
+> ufs_qcom_host *host)
+>  	return 0;
+>  }
+> 
+> -static int ufs_qcom_set_bus_vote(struct ufs_qcom_host *host, int vote)
+> +static int ufs_qcom_set_bus_vote(struct ufs_hba *host, bool on)
+>  {
+>  	return 0;
+>  }
+> @@ -1030,8 +1058,7 @@ static int ufs_qcom_setup_clocks(struct ufs_hba
+> *hba, bool on,
+>  				 enum ufs_notify_change_status status)
+>  {
+>  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> -	int err;
+> -	int vote = 0;
+> +	int err = 0;
+> 
+>  	/*
+>  	 * In case ufs_qcom_init() is not yet done, simply ignore.
+> @@ -1041,28 +1068,28 @@ static int ufs_qcom_setup_clocks(struct
+> ufs_hba *hba, bool on,
+>  	if (!host)
+>  		return 0;
+> 
+> -	if (on && (status == POST_CHANGE)) {
+> -		/* enable the device ref clock for HS mode*/
+> -		if (ufshcd_is_hs_mode(&hba->pwr_info))
+> -			ufs_qcom_dev_ref_clk_ctrl(host, true);
+> -		vote = host->bus_vote.saved_vote;
+> -		if (vote == host->bus_vote.min_bw_vote)
+> -			ufs_qcom_update_bus_bw_vote(host);
+> -
+> -	} else if (!on && (status == PRE_CHANGE)) {
+> -		if (!ufs_qcom_is_link_active(hba)) {
+> -			/* disable device ref_clk */
+> -			ufs_qcom_dev_ref_clk_ctrl(host, false);
+> +	switch(status) {
+> +	case PRE_CHANGE:
+> +		if (on) {
+> +			err = ufs_qcom_set_bus_vote(hba, true);
+> +		} else {
+> +			if (!ufs_qcom_is_link_active(hba)) {
+> +				/* disable device ref_clk */
+> +				ufs_qcom_dev_ref_clk_ctrl(host, false);
+> +			}
+>  		}
+> -
+> -		vote = host->bus_vote.min_bw_vote;
+> +		break;
+> +	case POST_CHANGE:
+> +		if (on) {
+> +			/* enable the device ref clock for HS mode*/
+> +			if (ufshcd_is_hs_mode(&hba->pwr_info))
+> +				ufs_qcom_dev_ref_clk_ctrl(host, true);
+> +		} else {
+> +			err = ufs_qcom_set_bus_vote(hba, false);
+> +		}
+> +		break;
+>  	}
+> 
+> -	err = ufs_qcom_set_bus_vote(host, vote);
+> -	if (err)
+> -		dev_err(hba->dev, "%s: set bus vote failed %d\n",
+> -				__func__, err);
+> -
+>  	return err;
+>  }
+> 
+> @@ -1238,6 +1265,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+>  	ufs_qcom_set_caps(hba);
+>  	ufs_qcom_advertise_quirks(hba);
+> 
+> +	ufs_qcom_set_bus_vote(hba, true);
+>  	ufs_qcom_setup_clocks(hba, true, POST_CHANGE);
+> 
+>  	if (hba->dev->id < MAX_UFS_QCOM_HOSTS)
 
->> ---
->>   drivers/clk/qcom/gpucc-sc7180.c | 37 +++++++++++++++++++++++++++++++++++++
->>   1 file changed, 37 insertions(+)
->>
->> diff --git a/drivers/clk/qcom/gpucc-sc7180.c b/drivers/clk/qcom/gpucc-sc7180.c
->> index a96c0b9..7b656b6 100644
->> --- a/drivers/clk/qcom/gpucc-sc7180.c
->> +++ b/drivers/clk/qcom/gpucc-sc7180.c
->> @@ -170,8 +170,45 @@ static struct gdsc cx_gdsc = {
->>          .flags = VOTABLE,
->>   };
->>
->> +/*
->> + * On SC7180 the GPU GX domain is *almost* entirely controlled by the GMU
->> + * running in the CX domain so the CPU doesn't need to know anything about the
->> + * GX domain EXCEPT....
->> + *
->> + * Hardware constraints dictate that the GX be powered down before the CX. If
->> + * the GMU crashes it could leave the GX on. In order to successfully bring back
->> + * the device the CPU needs to disable the GX headswitch. There being no sane
->> + * way to reach in and touch that register from deep inside the GPU driver we
->> + * need to set up the infrastructure to be able to ensure that the GPU can
->> + * ensure that the GX is off during this super special case. We do this by
->> + * defining a GX gdsc with a dummy enable function and a "default" disable
->> + * function.
->> + *
->> + * This allows us to attach with genpd_dev_pm_attach_by_name() in the GPU
->> + * driver. During power up, nothing will happen from the CPU (and the GMU will
->> + * power up normally but during power down this will ensure that the GX domain
->> + * is *really* off - this gives us a semi standard way of doing what we need.
->> + */
->> +static int gx_gdsc_enable(struct generic_pm_domain *domain)
->> +{
->> +       /* Do nothing but give genpd the impression that we were successful */
->> +       return 0;
->> +}
->> +
->> +static struct gdsc gx_gdsc = {
->> +       .gdscr = 0x100c,
->> +       .clamp_io_ctrl = 0x1508,
->> +       .pd = {
->> +               .name = "gx_gdsc",
->> +               .power_on = gx_gdsc_enable,
->> +       },
->> +       .pwrsts = PWRSTS_OFF_ON,
->> +       .flags = CLAMP_IO,
-> 
-> In my previous reply [1], I asked about these flags and if it was
-> intentional that they were different from sdm845.  I did see a private
-> response, but no public one.  In the future note that it's good to
-> reply publicly so everyone understands what happened.  In this case, I
-> was told "the GDSC's on 845 and SC7180 are different and hence the
-> change in flags is expected".  That answers my question and thus I'm
-> fine with my tag being here.  It also looks like you took my other
-> review feedback on v1, which is nice.
-> 
-> 
-> -Doug
-> 
 
-I am unable to respond to the other thread, thus we put out the reply.
+   Please add space after switch.
++    switch(status) {
++    case PRE_CHANGE
 
-> 
-> [1] https://lore.kernel.org/r/CAD=FV=V6yM7UJwu0ZLPCqmDgV9FS4=g+wcLg0TV51b72zvWT9Q@mail.gmail.com
-> 
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
-
---
+Reviewed-by: Hongwu Su <hongwus@codeaurora.org>
