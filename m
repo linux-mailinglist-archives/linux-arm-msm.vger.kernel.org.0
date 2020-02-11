@@ -2,107 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CBD2159637
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2020 18:33:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D256159875
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2020 19:24:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729470AbgBKRda (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Feb 2020 12:33:30 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:39179 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729031AbgBKRd1 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Feb 2020 12:33:27 -0500
-Received: by mail-pf1-f196.google.com with SMTP id 84so5814697pfy.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2020 09:33:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=lH4EbrzVbu3CvaS8sns78JlEG0bpnC0mv7bE+liJ2nA=;
-        b=RH32kiQsCKo1Gs+FkFdDvj1Kq3PKeLTjbRXjVS542Tg6Gb8IzEOXCl8KrAydPkosHL
-         SYGwlAdLYd5do6FGm6AtvSvYjLsBhTB3Zd2J02IAI1lWNxUZQ/5+ah4appWH9FO9tCfN
-         4dmS1PhdaopzWfZZudmSODT/lwSAYlGW8ZyJE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lH4EbrzVbu3CvaS8sns78JlEG0bpnC0mv7bE+liJ2nA=;
-        b=ZgdpobSW/PmKUjcctKAhNntghDmJz8jXTteESJr/a2cGqH5++fhZlh9S0CV45tgWIz
-         bsqllTu9Y6csypmuG+ugjSs2fEoRDR8hxecK15BmyGhZgMkdbhZViIIIovlbO+bfqewu
-         qeSGBcPvGDQFZ7LkArO8PYphpjRu3cbBdBC+w4GU44yXbzrOuHfQ6BKhq5vkMl4jLTj9
-         WfyeP+8FZE99AG01kLNptMDoleoV84L2EzQ2UxX0Q21Ts9SSaFPgv/zUhWaikksWrgw4
-         mjwdkugKvhtpyB4s9sCL0q2SUO3nRozcCtawQNHlOSjZ2555MYJBsu58s8MsjmSRkeeo
-         DyYA==
-X-Gm-Message-State: APjAAAULtVDKfgJKAnbhix8lFtSVMPOx4uoai6jvS1IMviQ1ZwY/0zna
-        giOPmMGjv28tPQZ5NWV068sQWQ==
-X-Google-Smtp-Source: APXvYqxk99B0t8EHkrjFPb34havVNfFdZ7CHuqxMGO1VQir/2llQ9LuL+WBmfTO4aiFx3jXiqWC3cg==
-X-Received: by 2002:a63:6c82:: with SMTP id h124mr7923471pgc.328.1581442405558;
-        Tue, 11 Feb 2020 09:33:25 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id c26sm5104896pfj.8.2020.02.11.09.33.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Feb 2020 09:33:25 -0800 (PST)
-Date:   Tue, 11 Feb 2020 09:33:23 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, hemantg@codeaurora.org,
-        robh+dt@kernel.org, mark.rutland@arm.com, gubbaven@codeaurora.org
-Subject: Re: [PATCH v1] arm64: dts: qcom: sc7180: Add node for bluetooth soc
- wcn3990
-Message-ID: <20200211173323.GE18972@google.com>
-References: <20200211121612.29075-1-bgodavar@codeaurora.org>
+        id S1730230AbgBKSYr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Feb 2020 13:24:47 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53262 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729169AbgBKSYr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 11 Feb 2020 13:24:47 -0500
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 95D8F21569;
+        Tue, 11 Feb 2020 18:24:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1581445486;
+        bh=15RkB8/lsxkdGVyrfUT3PmibNwKSs3pakIPq9O2QKGA=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=A8Zqm6fJP2FLzduLIBDokEhN/2d/UrH1tTPxjD5ihd4BFsmr4U+TmlhZKIyLl5OeE
+         y8tyZK1Z+LwxdaT3JO7a63fwdEV45iurNjgynCzt3Az2dG8qrc/SS5bt9W9L6m3vm8
+         E4RlmQ+12GEi7n7znDshSniOcw1AMCbrmborQU5w=
+Received: by mail-qv1-f52.google.com with SMTP id m5so5451862qvv.4;
+        Tue, 11 Feb 2020 10:24:46 -0800 (PST)
+X-Gm-Message-State: APjAAAVWVPt0aQfAjtZ+25pKee02DYuBkCsSHZvoTSb/5yltM791ECxQ
+        DVFgRweIAJZ8wRqtiX/KlHfI0kJzeI87u4hfPw==
+X-Google-Smtp-Source: APXvYqxfEK6hEL7IX2KvoJP4sjzXqu7vc6OB5e1z94Q1gXnPXU2WIumcI1fS/UN5s1vfda4olh8aSlNY95DTbeSQkqo=
+X-Received: by 2002:a05:6214:11ac:: with SMTP id u12mr4114530qvv.85.1581445485691;
+ Tue, 11 Feb 2020 10:24:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200211121612.29075-1-bgodavar@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <cover.1580570160.git.saiprakash.ranjan@codeaurora.org>
+ <ff71077aa09c489b2b072c6f5605dccb96f60051.1580570160.git.saiprakash.ranjan@codeaurora.org>
+ <20200206183808.GA5019@bogus> <f26464226f74dffe2db0583b9482a489@codeaurora.org>
+In-Reply-To: <f26464226f74dffe2db0583b9482a489@codeaurora.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Tue, 11 Feb 2020 12:24:34 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKeytW=k5efjcfcuK6vbGggdO9nVdwq7YGNtMpzPQHWMg@mail.gmail.com>
+Message-ID: <CAL_JsqKeytW=k5efjcfcuK6vbGggdO9nVdwq7YGNtMpzPQHWMg@mail.gmail.com>
+Subject: Re: [PATCHv2 2/2] dt-bindings: watchdog: Add compatible for QCS404,
+ SC7180, SDM845, SM8150
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree-owner@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 11, 2020 at 05:46:12PM +0530, Balakrishna Godavarthi wrote:
+On Fri, Feb 7, 2020 at 12:10 AM Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> Hi Rob,
+>
+> On 2020-02-07 00:08, Rob Herring wrote:
+> > On Sat, Feb 01, 2020 at 08:59:49PM +0530, Sai Prakash Ranjan wrote:
+> >> Add missing compatible for watchdog timer on QCS404,
+> >> SC7180, SDM845 and SM8150 SoCs.
+> >
+> > That's not what the commit does. You are changing what's valid.
+> >
+> > One string was valid, now 2 are required.
+> >
+>
+> Does this look good?
 
-> subject: arm64: dts: qcom: sc7180: Add node for bluetooth soc wcn3990
+No. First of all, what's the base for the diff? It's not what you
+originally had nor incremental on top of this patch.
 
-Preferably say in the subjct that the node is added for the IDP board.
+Second, a value of 'qcom,kpss-timer' or 'qcom,kpss-wdt' or
+'qcom,scss-timer' will fail validation because 2 clauses of 'oneOf'
+will be true.
 
-> Add node for bluetooth soc wcn3990.
-> 
-> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> index 388f50ad4fde..19f82ddc1f09 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> @@ -19,6 +19,7 @@
->  	aliases {
->  		hsuart0 = &uart3;
->  		serial0 = &uart8;
-> +		bluetooth0 = &bluetooth;
->  	};
->  
->  	chosen {
-> @@ -256,6 +257,16 @@
->  
->  &uart3 {
->  	status = "okay";
-
-nit: add a blank line
-
-> +	bluetooth: wcn3990-bt {
-> +		compatible = "qcom,wcn3990-bt";
-> +		vddio-supply = <&vreg_l10a_1p8>;
-> +		vddxo-supply = <&vreg_l1c_1p8>;
-> +		vddrf-supply = <&vreg_l2c_1p3>;
-> +		vddch0-supply = <&vreg_l10c_3p3>;
-> +		max-speed = <3200000>;
-> +		clocks = <&rpmhcc RPMH_RF_CLK2>;
-> +		status = "okay";
-
-status is not needed here AFAIK.
+>
+> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> index 46d6aad5786a..3378244b67cd 100644
+> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> @@ -14,19 +14,22 @@ allOf:
+>
+>   properties:
+>     compatible:
+> -    items:
+> +    oneOf:
+>         - enum:
+>             - qcom,apss-wdt-qcs404
+>             - qcom,apss-wdt-sc7180
+>             - qcom,apss-wdt-sdm845
+>             - qcom,apss-wdt-sm8150
+> -          - qcom,kpss-timer
+> -          - qcom,kpss-wdt
+>             - qcom,kpss-wdt-apq8064
+>             - qcom,kpss-wdt-ipq4019
+>             - qcom,kpss-wdt-ipq8064
+>             - qcom,kpss-wdt-msm8960
+> +          - qcom,kpss-timer
+> +          - qcom,kpss-wdt
+>             - qcom,scss-timer
+> +      - const: qcom,kpss-timer
+> +      - const: qcom,kpss-wdt
+> +      - const: qcom,scss-timer
+>
+>     reg:
+>       maxItems: 1
+>
+> Thanks,
+> Sai
+>
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
+> member
+> of Code Aurora Forum, hosted by The Linux Foundation
