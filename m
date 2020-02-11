@@ -2,51 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B07E158DD2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2020 12:59:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF38D158E13
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Feb 2020 13:13:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728128AbgBKL7K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Feb 2020 06:59:10 -0500
-Received: from foss.arm.com ([217.140.110.172]:44626 "EHLO foss.arm.com"
+        id S1728652AbgBKMNa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Feb 2020 07:13:30 -0500
+Received: from onstation.org ([52.200.56.107]:58246 "EHLO onstation.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727669AbgBKL7K (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Feb 2020 06:59:10 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BF5131FB;
-        Tue, 11 Feb 2020 03:59:09 -0800 (PST)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DC8A93F6CF;
-        Tue, 11 Feb 2020 03:59:07 -0800 (PST)
-Date:   Tue, 11 Feb 2020 11:59:03 +0000
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Mike Leach <mike.leach@linaro.org>
-Cc:     linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        coresight@lists.linaro.org, linux-doc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, mathieu.poirier@linaro.org,
-        suzuki.poulose@arm.com, robh+dt@kernel.org, maxime@cerno.tech,
-        liviu.dudau@arm.com, lorenzo.pieralisi@arm.com, agross@kernel.org,
-        corbet@lwn.net, Sudeep Holla <sudeep.holla@arm.com>
-Subject: Re: [PATCH v9 11/15] dt-bindings: arm: Juno platform - add CTI
- entries to device tree.
-Message-ID: <20200211115852.GA52147@bogus>
-References: <20200210213924.20037-1-mike.leach@linaro.org>
- <20200210213924.20037-12-mike.leach@linaro.org>
+        id S1728635AbgBKMNa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 11 Feb 2020 07:13:30 -0500
+Received: from localhost.localdomain (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 513463E955;
+        Tue, 11 Feb 2020 12:13:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1581423209;
+        bh=Yaag2vNG13oaTjnQhFARRRVSPgpOAMZBTu/94Jo7vwE=;
+        h=From:To:Cc:Subject:Date:From;
+        b=aUXniMUDkl5e2GeGgFVmFYepCVWDbUUVUpMWyyBptqL+TKp9kxYQ+2a42wzSbF3M4
+         vCnE7bjI6l51LscHQgEO5w4c2mr4YGELt41I7LMRyAjho9RbftX5PwMavr6aav6KeU
+         aB4imnNm65+zEaUi7r9Vs4fzNhauSTjWGFwiWXTc=
+From:   Brian Masney <masneyb@onstation.org>
+To:     dmitry.torokhov@gmail.com
+Cc:     linux-input@vger.kernel.org, sboyd@kernel.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 0/2] Input: remove msm-vibrator driver and bindings
+Date:   Tue, 11 Feb 2020 07:13:16 -0500
+Message-Id: <20200211121318.144067-1-masneyb@onstation.org>
+X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200210213924.20037-12-mike.leach@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 10, 2020 at 09:39:20PM +0000, Mike Leach wrote:
-> Add in CTI entries for Juno r0, r1 and r2 to device tree entries.
->
+Here's a small patch series that removes the msm-vibrator driver and
+bindings. These two patches are broken out from this patch series:
 
-I can take this patch alone unless you have plans to take all in go.
+https://lore.kernel.org/lkml/20191205002503.13088-5-masneyb@onstation.org/
 
---
-Regards,
-Sudeep
+In a nutshell, I'm waiting for someone from Qualcomm to either post a
+patch to support setting the clock duty cycle or someone to post
+information about the m,n,d registers for the clocks. Once that's done,
+no other changes should be needed in the input subsystem.
+
+In the mean time, the msm-vibrator driver needs to be removed from
+upstream.
+
+Changes since v1:
+- Updated commit messages to remove references to clk-vibrator.
+
+Brian Masney (2):
+  dt-bindings: Input: remove msm-vibrator
+  Input: remove msm-vibrator driver
+
+ .../bindings/input/msm-vibrator.txt           |  36 ---
+ drivers/input/misc/Kconfig                    |  10 -
+ drivers/input/misc/Makefile                   |   1 -
+ drivers/input/misc/msm-vibrator.c             | 281 ------------------
+ 4 files changed, 328 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/input/msm-vibrator.txt
+ delete mode 100644 drivers/input/misc/msm-vibrator.c
+
+-- 
+2.24.1
+
