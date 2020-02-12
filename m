@@ -2,116 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 56A5C15A139
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2020 07:23:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 159CC15A149
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2020 07:31:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728196AbgBLGXc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Feb 2020 01:23:32 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:61611 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728085AbgBLGXc (ORCPT
+        id S1728109AbgBLGb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Feb 2020 01:31:58 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:37269 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727893AbgBLGb6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Feb 2020 01:23:32 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581488612; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=+MeToIl2UVuSzBxG95x4EhHM10yDLWzdMfdITlc4I5M=;
- b=sBHFiUbRflwVLY9WfiA05vJhgWgoJlPgwY4Q+PIyaKLbQFyCT+8pKgt2LrtyGuSyhx1/1rAz
- ISYAZW1aQzByk/YQD1k9D0QDM68t6NS9xK2skrvnh4z2zK9ic858wDyYeSBRnGMJugVF0zT2
- i1tlx/He40f68zSq89Bmu3OagbY=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e4399e3.7fc9851bf618-smtp-out-n02;
- Wed, 12 Feb 2020 06:23:31 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 803D0C433A2; Wed, 12 Feb 2020 06:23:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bgodavar)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BA43CC43383;
-        Wed, 12 Feb 2020 06:23:29 +0000 (UTC)
+        Wed, 12 Feb 2020 01:31:58 -0500
+Received: by mail-pl1-f195.google.com with SMTP id c23so567737plz.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2020 22:31:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=F5k8IJZMK/nJH3dj+UN04HFPptBmFYQ7C5BtIcmZek0=;
+        b=UakYPEeNTs9w07NmJnHfIv49QPaAus+cJ3pOa2Iwbn3RDrKxNv1gtczYgPdMXdoy8+
+         8rJrmqryb5R4tSr5uRKRdBrLLjVWj2oGtrEmYm8sqCmlWvP5t/f4N3K1cR1UNTJbi9p4
+         hfoM09VYb9ouO9I3XsIDL3L+jQx6oDeqnC4fkzxfA3pjGHWTV/6KfHD5CUpvbkjcncIG
+         xCNFIHwLfK5siX/ywTFhPH9Zh0EK1fT6opNKNCTn5BvcMo03SpHBFsIx0+S6WZf8Xflb
+         o9F8f2ptFpzVMPESj/J2Qt3T58HbnD4cL5wt9NwUQR0x7nd2boWNz7mXIOr81LQYWXmk
+         +G4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=F5k8IJZMK/nJH3dj+UN04HFPptBmFYQ7C5BtIcmZek0=;
+        b=IrJesUyzu9ekn0i/TqQ6FNd5gt7JD6YETWH0jbihag+QLHQlqMEKtlqNNqm0FO80Pb
+         Y+UuxrIRsVCVADRtnWEfgPm6HJ7lU/9xu/ChIF8PKb0iBEkSCej39UbQG58/rmi1A9pI
+         kFx74dr86RsEp4FAc7GiPXmis6lJClAiCWFyRuHBt9X8XYGR1mdL9dbeZEKUSXAXG+MT
+         qH9ga+9K8ky2Lz4A66xZk34eewG1KHbgp/MK+3qMRLlC0si2PMHurj1WlRqv0nrgjijL
+         NMHtpjW/EV7QSo/dRGh+jlbW6uAOeFQYVZeWR4yHQqDyaPBTD6XBnvzb7IsGo+B/Qe2+
+         5nXQ==
+X-Gm-Message-State: APjAAAXI0RgvJ+K7U0oS8f+jhg0pqKUCbHhrqY04ADyrUL9aFQsl4tK/
+        PwtG6tiaQW7jBB4ITCWPLvhxUD1dUos=
+X-Google-Smtp-Source: APXvYqxqBFIjlK2CH6hHv/Pfjn8B3oh3xX5ZsrKSB1m0GcV7iChIZoGq8iMbPygRkv3wUCesoiddkA==
+X-Received: by 2002:a17:902:262:: with SMTP id 89mr6945138plc.67.1581489117661;
+        Tue, 11 Feb 2020 22:31:57 -0800 (PST)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id y64sm6043527pgb.25.2020.02.11.22.31.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Feb 2020 22:31:56 -0800 (PST)
+Date:   Tue, 11 Feb 2020 22:31:54 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Arun Kumar Neelakantam <aneela@codeaurora.org>
+Cc:     clew@codeaurora.org, Andy Gross <agross@kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] soc: qcom: aoss: Use wake_up_all() instead of
+ wake_up_interruptible_all()
+Message-ID: <20200212063154.GO3948@builder>
+References: <1579681417-1155-1-git-send-email-aneela@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 12 Feb 2020 11:53:29 +0530
-From:   bgodavar@codeaurora.org
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, hemantg@codeaurora.org,
-        robh+dt@kernel.org, mark.rutland@arm.com, gubbaven@codeaurora.org
-Subject: Re: [PATCH v1] arm64: dts: qcom: sc7180: Add node for bluetooth soc
- wcn3990
-In-Reply-To: <20200211173323.GE18972@google.com>
-References: <20200211121612.29075-1-bgodavar@codeaurora.org>
- <20200211173323.GE18972@google.com>
-Message-ID: <bacac82fbdfcc920e5982c5e1c629549@codeaurora.org>
-X-Sender: bgodavar@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1579681417-1155-1-git-send-email-aneela@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+On Wed 22 Jan 00:23 PST 2020, Arun Kumar Neelakantam wrote:
 
+> During the probe the task is waiting in TASK_UNINTERRUPTIBLE state which
+> cannot be woken-up by wake_up_interruptible_all() function.
+> 
+> Use wake_up_all() to wake-up both TASK_UNINTERRUPTIBLE and
+> TASK_INTERRUPTIBLE state tasks.
+> 
+> Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
 
-On 2020-02-11 23:03, Matthias Kaehlcke wrote:
-> On Tue, Feb 11, 2020 at 05:46:12PM +0530, Balakrishna Godavarthi wrote:
-> 
->> subject: arm64: dts: qcom: sc7180: Add node for bluetooth soc wcn3990
-> 
-> Preferably say in the subjct that the node is added for the IDP board.
-> 
-[Bala]: will update
+Applied
 
->> Add node for bluetooth soc wcn3990.
->> 
->> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
->> ---
->>  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 11 +++++++++++
->>  1 file changed, 11 insertions(+)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts 
->> b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> index 388f50ad4fde..19f82ddc1f09 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> @@ -19,6 +19,7 @@
->>  	aliases {
->>  		hsuart0 = &uart3;
->>  		serial0 = &uart8;
->> +		bluetooth0 = &bluetooth;
->>  	};
->> 
->>  	chosen {
->> @@ -256,6 +257,16 @@
->> 
->>  &uart3 {
->>  	status = "okay";
-> 
-> nit: add a blank line
-> 
+Regards,
+Bjorn
 
-[Bala]: will update
-
->> +	bluetooth: wcn3990-bt {
->> +		compatible = "qcom,wcn3990-bt";
->> +		vddio-supply = <&vreg_l10a_1p8>;
->> +		vddxo-supply = <&vreg_l1c_1p8>;
->> +		vddrf-supply = <&vreg_l2c_1p3>;
->> +		vddch0-supply = <&vreg_l10c_3p3>;
->> +		max-speed = <3200000>;
->> +		clocks = <&rpmhcc RPMH_RF_CLK2>;
->> +		status = "okay";
+> ---
+>  drivers/soc/qcom/qcom_aoss.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> status is not needed here AFAIK.
-[Bala]: true, will update
+> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+> index 006ac40..fe79661 100644
+> --- a/drivers/soc/qcom/qcom_aoss.c
+> +++ b/drivers/soc/qcom/qcom_aoss.c
+> @@ -200,7 +200,7 @@ static irqreturn_t qmp_intr(int irq, void *data)
+>  {
+>  	struct qmp *qmp = data;
+>  
+> -	wake_up_interruptible_all(&qmp->event);
+> +	wake_up_all(&qmp->event);
+>  
+>  	return IRQ_HANDLED;
+>  }
+> -- 
+> 1.9.1
