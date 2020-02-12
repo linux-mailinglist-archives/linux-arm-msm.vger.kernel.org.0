@@ -2,109 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 572AA15A14F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2020 07:32:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C43A915A20E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2020 08:32:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728267AbgBLGcT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Feb 2020 01:32:19 -0500
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:37236 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728085AbgBLGcT (ORCPT
+        id S1728295AbgBLHcL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Feb 2020 02:32:11 -0500
+Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:55792 "EHLO
+        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728192AbgBLHcL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Feb 2020 01:32:19 -0500
-Received: by mail-pj1-f65.google.com with SMTP id m13so444020pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Feb 2020 22:32:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=GxlpTDEfBiM+Lrd0uvS3F76lPFNbhk2ZRTz1WbZMTKk=;
-        b=TMKHfvTsUQifq2CQtrudVlOCHAb6Nb3YWpNg08b0/IQTbPlQ2PKKni61zTK9j5Mk84
-         oQP70mkWXnUPl4dg5H034uLrOnMW6yrX34706D9q4jZGFIFPklsDBDkrnbRSOGwhsPD0
-         WxO2AkIDFE/R9gBECZ7Ie8yAQM/zjZ0DbIC4bZGXL0v71JZ2vPuo7Txnp5MC87+yzYyh
-         EMuYoA0OxXqdOKtY5ELEJiWYkuWOKFpz42kTjEdrmf5ckuwTfd3lJZAqFiT795n5bKIt
-         Kl1ZoAjIBP6XszFNdxZGE/4Bct120kWwS60sUYNP776KQWhQRohjaGdbPS/HCswyB9un
-         o2PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=GxlpTDEfBiM+Lrd0uvS3F76lPFNbhk2ZRTz1WbZMTKk=;
-        b=JDvX7x4ri18YCwPKvxR2HUbUav1g5ZTzKv808cBH6ztzi1Wkvvtjuf9n5vxZtnxBFB
-         WNCw758Sm6E+plqY7PEdh0SXVbt1oB6BjUDRbt/v7aztMZV65tKUeUtLfJQzMPXwRd3/
-         RhOk/477PXPdPmhCfhSEKAo8BSLrBe2bBbfRPxwtgSkjd6zy0VOQj9NdNChVZ2abSEgS
-         W1PEtVTK4HykJ7fzrzeLdljXeRKZ7MvlA6pZJYH5YdqLZPWngkOhOwCbQAC4kU7+mekH
-         1cyJFpL55leyACnWZXv6S+iqh2Atg1o8wmdIRYO21p11ySseUqrh1TVkyRYvdQole2DC
-         XmTQ==
-X-Gm-Message-State: APjAAAWPyHcbm3d/yrHNf+n/p5S/ZvZCuIjCSEaGNrmT4qhzp80Lrnr6
-        MByGbPH/i/5cBp0a2pBDPAPCdw==
-X-Google-Smtp-Source: APXvYqyuNc53YydyhfeNo07pFeihlSSJpWGZufskCNWU36ELfymOGkx94tkF5kfiAO+eA+pvfrTyRA==
-X-Received: by 2002:a17:902:8d83:: with SMTP id v3mr7040485plo.282.1581489136996;
-        Tue, 11 Feb 2020 22:32:16 -0800 (PST)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id l26sm6309608pgn.46.2020.02.11.22.32.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2020 22:32:16 -0800 (PST)
-Date:   Tue, 11 Feb 2020 22:32:14 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Arun Kumar Neelakantam <aneela@codeaurora.org>
-Cc:     clew@codeaurora.org, Andy Gross <agross@kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] soc: qcom: aoss: Read back before triggering the IRQ
-Message-ID: <20200212063214.GP3948@builder>
-References: <1579681454-1229-1-git-send-email-aneela@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1579681454-1229-1-git-send-email-aneela@codeaurora.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+        Wed, 12 Feb 2020 02:32:11 -0500
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 12 Feb 2020 13:02:07 +0530
+Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 12 Feb 2020 13:01:34 +0530
+Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
+        id 077043609; Wed, 12 Feb 2020 13:01:32 +0530 (IST)
+From:   Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
+        robh+dt@kernel.org, mka@chromium.org
+Cc:     asutoshd@codeaurora.org, swboyd@google.com,
+        stummala@codeaurora.org, sayalil@codeaurora.org,
+        cang@codeaurora.org, vbadigan@codeaurora.org,
+        rampraka@codeaurora.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org,
+        Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+Subject: [PATCH V3] mmc: sdhci-msm: Update system suspend/resume callbacks of sdhci-msm platform driver
+Date:   Wed, 12 Feb 2020 13:01:13 +0530
+Message-Id: <1581492673-27295-1-git-send-email-sbhanu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 22 Jan 00:24 PST 2020, Arun Kumar Neelakantam wrote:
+The existing suspend/resume callbacks of sdhci-msm driver are just
+gating/un-gating the clocks. During suspend cycle more can be done
+like disabling controller, disabling card detection, enabling wake-up events.
 
-> In some device memory used by msm_qmp, there can be an early ack of a
-> write to memory succeeding. This may cause the outgoing interrupt to be
-> triggered before the msgram reflects the write.
-> 
-> Add a readback to ensure the data is flushed to device memory before
-> triggering the ipc interrupt.
-> 
-> Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
+So updating the system pm callbacks for performing these extra
+actions besides controlling the clocks.
 
-Applied
+Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
 
-Thanks,
-Bjorn
+Changes since V2:
+    Removed disabling/enabling pwr-irq from system pm ops.
 
-> ---
->  drivers/soc/qcom/qcom_aoss.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-> index fe79661..f43a2e0 100644
-> --- a/drivers/soc/qcom/qcom_aoss.c
-> +++ b/drivers/soc/qcom/qcom_aoss.c
-> @@ -225,6 +225,7 @@ static bool qmp_message_empty(struct qmp *qmp)
->  static int qmp_send(struct qmp *qmp, const void *data, size_t len)
->  {
->  	long time_left;
-> +	size_t tlen;
->  	int ret;
->  
->  	if (WARN_ON(len + sizeof(u32) > qmp->size))
-> @@ -239,6 +240,9 @@ static int qmp_send(struct qmp *qmp, const void *data, size_t len)
->  	__iowrite32_copy(qmp->msgram + qmp->offset + sizeof(u32),
->  			 data, len / sizeof(u32));
->  	writel(len, qmp->msgram + qmp->offset);
-> +
-> +	/* Read back len to confirm data written in message RAM */
-> +	tlen = readl(qmp->msgram + qmp->offset);
->  	qmp_kick(qmp);
->  
->  	time_left = wait_event_interruptible_timeout(qmp->event,
-> -- 
-> 1.9.1
+Changes since V1:
+    Invoking pm_runtime_force_suspend/resume instead of
+    sdhci_msm_runtime_suepend/resume.
+---
+ drivers/mmc/host/sdhci-msm.c | 41 +++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 39 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index c3a160c..fcff3e8 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -2159,9 +2159,46 @@ static __maybe_unused int sdhci_msm_runtime_resume(struct device *dev)
+ 	return 0;
+ }
+ 
++static int sdhci_msm_suspend(struct device *dev)
++{
++	struct sdhci_host *host = dev_get_drvdata(dev);
++	int ret;
++
++	if (host->mmc->caps2 & MMC_CAP2_CQE) {
++		ret = cqhci_suspend(host->mmc);
++		if (ret)
++			return ret;
++	}
++
++	ret = sdhci_suspend_host(host);
++	if (ret)
++		return ret;
++
++	return pm_runtime_force_suspend(dev);
++}
++
++static int sdhci_msm_resume(struct device *dev)
++{
++	struct sdhci_host *host = dev_get_drvdata(dev);
++	int ret;
++
++	ret = pm_runtime_force_resume(dev);
++	if (ret)
++		return ret;
++
++	ret = sdhci_resume_host(host);
++	if (ret < 0)
++		return ret;
++
++	if (host->mmc->caps2 & MMC_CAP2_CQE)
++		ret = cqhci_resume(host->mmc);
++
++	return ret;
++}
++
+ static const struct dev_pm_ops sdhci_msm_pm_ops = {
+-	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+-				pm_runtime_force_resume)
++	SET_SYSTEM_SLEEP_PM_OPS(sdhci_msm_suspend,
++				sdhci_msm_resume)
+ 	SET_RUNTIME_PM_OPS(sdhci_msm_runtime_suspend,
+ 			   sdhci_msm_runtime_resume,
+ 			   NULL)
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
