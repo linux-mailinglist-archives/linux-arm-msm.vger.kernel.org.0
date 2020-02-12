@@ -2,142 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B25B15AE68
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2020 18:10:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFC0015AF0C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2020 18:50:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728794AbgBLRKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Feb 2020 12:10:17 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:42855 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728793AbgBLRKR (ORCPT
+        id S1726728AbgBLRuW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Feb 2020 12:50:22 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39275 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727264AbgBLRuW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Feb 2020 12:10:17 -0500
-Received: by mail-lj1-f195.google.com with SMTP id d10so3184375ljl.9;
-        Wed, 12 Feb 2020 09:10:16 -0800 (PST)
+        Wed, 12 Feb 2020 12:50:22 -0500
+Received: by mail-wr1-f66.google.com with SMTP id y11so3471495wrt.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2020 09:50:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=OuX98j86Ch4dS0yCqSb2Pt9fzt9ip/SvY8mHAnanoTo=;
-        b=l1kW+okFviwV/mK0Skm3CDhTFSoJMBfU0JWqem3hWGTPh3M6Naixosu1yxCTeNkLNo
-         ZH+TSDvbR8uFQoaPxnhGt3s1zV4j8aF8fvXKtvdjj/1fXby4OdEJ0uyHHTQIcOn8h0Od
-         n545f8ZDX7dKRK3b9Hse2+ZtovEqYTBGh8PD66yue374DPsVvONYdpj5T0jej5Fh7JAe
-         z8xOxtPh7gAxKQbzbVIgxI8z+iV71+Yke/nbvVieHnVE+m901tjmN6LFEUDzystKAqRy
-         7neMz8Cs+0oVupEAx2jVhEWbSjZgx+OjDb1VZmUzAkaEml66oOdrF9N6Z3uTMOVb1TyO
-         w3oA==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=mm3jma36b/b+ELTjp5Jw7M207elFeYTYodXaMvbkdAI=;
+        b=ZgHCac9miLHfWYJfQHMOZFAxMnJfl/reXqQz0dlAexFjqEsrjFn1GH8G0+SEDUsoRr
+         axhjHLNjcrXBtBEyv84ObuVroBNkvi0BDE/IZZTLOlCChVSYk/P2P/lhsmC8lKr31nq5
+         kbmMLhF803xX9Nge3DEzcZzbnXLk6KqC4T4qUyKsAu5yKdJbBWE3JUFUTqQdCjEKGK2k
+         5I7uTR/Wr7FqZRjk30fhIpdXuNvmcJFUzAIvY1WOWvsIHsAuHfj9EU0Sr+4CEEAr4St4
+         yxUJ6zGPHnaCscVwAKfBAtXqCMf9rkc/Znm01klwyOpB/88oiws9NsN7lzqcxo9vpVhD
+         2CpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=OuX98j86Ch4dS0yCqSb2Pt9fzt9ip/SvY8mHAnanoTo=;
-        b=EVCXXPhVR7NT5/y1g7Dt3knxkJb6Bf3/TFxkj/w5xaQVOnk1qd9ZALFLzR3z9vf9jL
-         2f2WLA7OJsnZa2Xz6Ep4wI7PK7Y9f/I5o/sl9lltUW3evdW6MYFtJe0t9fEXOiVPxpjr
-         sni1SlYHTGArgQBnLUHjQL2acVD7/npAphtgMw9JvgOwhm7fEBVsMWCIeFLUyorhJ5dD
-         15eI989v/BB8rCwprpTIJpUd0rL0DEgVEmXv/NMPJ1GnPTCfcqz7Xr+bce71W8HEPGZB
-         ybsxCgpKHB3Z6iO4NRyza/jz3Q55lm++8aUoYNBIfPplFWAnwwJluPMXtIRIMfCirVrU
-         kapg==
-X-Gm-Message-State: APjAAAUuvYVqD2cQIKEO1kvtahkP+2kIvO6Pbk2VB06JFt0VToynngUb
-        inrX3r9EAHE70ThXTN3k+Ts=
-X-Google-Smtp-Source: APXvYqwINlL4Q1/ftB7u6oRHMKGAOyh2CjdjmuZXbCSU0F46RUl1Q1a3ffsj0VUCpFxDNoLY1EVa1Q==
-X-Received: by 2002:a05:651c:414:: with SMTP id 20mr7963298lja.165.1581527415378;
-        Wed, 12 Feb 2020 09:10:15 -0800 (PST)
-Received: from emb-minnehanov-OptiPlex-7060.collabio.net ([77.244.21.162])
-        by smtp.gmail.com with ESMTPSA id b20sm607955ljp.20.2020.02.12.09.10.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Feb 2020 09:10:14 -0800 (PST)
-From:   Alexey Minnekhanov <alexey.min@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org,
-        Alexey Minnekhanov <alexey.min@gmail.com>
-Subject: [PATCH 5/5] arm64: dts: qcom: Add Xiaomi Redmi Note 7 (lavender)
-Date:   Wed, 12 Feb 2020 20:09:16 +0300
-Message-Id: <20200212170916.7494-6-alexey.min@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200212170916.7494-1-alexey.min@gmail.com>
-References: <20200212170916.7494-1-alexey.min@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=mm3jma36b/b+ELTjp5Jw7M207elFeYTYodXaMvbkdAI=;
+        b=ZeKIBwD11nnpMOnJD8EaLrqtS87VVVQAoj1iJ7eEQCMCnX/RsKaImCVvGW/5x6E3XQ
+         XLIRzNQ+EQievNj6B2L9vhnSCBowrSREfo5lYPvjA/kJ8hqrSJqpulxqcdl/7Zi2Z+iy
+         WfMmqfjsKaSCoiWE/RhmB/ApA0l3nEDQygOhXPh7h97TOq1iROtxdEVB9TUn5bpTuG8/
+         LKNs/h7xxKb57+elPG643dQcPH1e8QhA4pBbLLoFi8NmZ9Vz9LsqVnSQAn+G95MSx4KI
+         3+RXr13Ck35GK2OWN137EIDHImN6nHjB2wogqnzNkor+A0fLJMtsKY6bRPJuP2Vr2hkC
+         2EwQ==
+X-Gm-Message-State: APjAAAVc2qdYozqDQEia9p9z9pHpUQkanyDElgd0mBbgVfQxeodIEp0H
+        CiWV2Wg5MaEl1x21mtyYWIDfiA==
+X-Google-Smtp-Source: APXvYqzjPVGSMO8FIf7L7OzFeikklYCuAjeWL7Ht7r4GxKgXZLVhnVeCWTf1XOcYrxbEaR4dgYsulQ==
+X-Received: by 2002:adf:c453:: with SMTP id a19mr16551495wrg.341.1581529819344;
+        Wed, 12 Feb 2020 09:50:19 -0800 (PST)
+Received: from localhost.localdomain ([172.94.87.18])
+        by smtp.gmail.com with ESMTPSA id b11sm1492536wrx.89.2020.02.12.09.50.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 12 Feb 2020 09:50:18 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        anibal.limon@linaro.org, Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH] remoteproc: qcom: wcnss: Add iris completion barrier
+Date:   Wed, 12 Feb 2020 18:54:03 +0100
+Message-Id: <1581530043-12112-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This adds the initial device tree support for Xiaomi
-Redmi Note 7 (lavender) phone. It is based on SDM660
-SoC. Currently it can be booted into initrd with a
-shell over UART and you can get kernel boot logs
-from a pstore-ramoops.
+There is no guarantee that the iris pointer will be assigned before
+remoteproc subsystem starts the wcnss rproc, actually it depends how
+fast rproc subsystem is able to get the firmware to trigger the start.
 
-Signed-off-by: Alexey Minnekhanov <alexey.min@gmail.com>
+This leads to sporadic wifi/bluetooth initialization issue on db410c
+with the following output:
+ remoteproc remoteproc1: powering up a204000.wcnss
+ remoteproc remoteproc1: Booting fw image qcom/msm8916/wcnss.mdt...
+ qcom-wcnss-pil a204000.wcnss: no iris registered
+ remoteproc remoteproc1: can't start rproc a204000.wcnss: -22
+
+This patch introduces a 'iris_assigned' completion barrier to fix
+this issue. Maybe not the most elegant way, but it does the trick.
+
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/Makefile             |  1 +
- .../boot/dts/qcom/sdm660-xiaomi-lavender.dts  | 42 +++++++++++++++++++
- 2 files changed, 43 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+ drivers/remoteproc/qcom_wcnss.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 973c0f079659..a61b1089bd9a 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -15,6 +15,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-hp-envy-x2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-lenovo-miix-630.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm660-xiaomi-lavender.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-new file mode 100644
-index 000000000000..676efba0e16b
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-@@ -0,0 +1,42 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2020, Alexey Minnekhanov <alexey.min@gmail.com>
-+ */
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index a0468b3..c888282 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -84,6 +84,7 @@ struct qcom_wcnss {
+ 
+ 	struct completion start_done;
+ 	struct completion stop_done;
++	struct completion iris_assigned;
+ 
+ 	phys_addr_t mem_phys;
+ 	phys_addr_t mem_reloc;
+@@ -138,6 +139,7 @@ void qcom_wcnss_assign_iris(struct qcom_wcnss *wcnss,
+ 
+ 	wcnss->iris = iris;
+ 	wcnss->use_48mhz_xo = use_48mhz_xo;
++	complete(&wcnss->iris_assigned);
+ 
+ 	mutex_unlock(&wcnss->iris_lock);
+ }
+@@ -213,6 +215,10 @@ static int wcnss_start(struct rproc *rproc)
+ 	struct qcom_wcnss *wcnss = (struct qcom_wcnss *)rproc->priv;
+ 	int ret;
+ 
++	/* Grant some time for iris registration */
++	wait_for_completion_timeout(&wcnss->iris_assigned,
++				    msecs_to_jiffies(5000));
 +
-+/dts-v1/;
-+
-+#include "sdm660.dtsi"
-+
-+/ {
-+	model = "Xiaomi Redmi Note 7";
-+	compatible = "xiaomi,lavender", "qcom,sdm660";
-+
-+	aliases {
-+		serial0 = &blsp1_uart2;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		ramoops@a0000000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0xa0000000 0x0 0x400000>;
-+			console-size = <0x20000>;
-+			record-size = <0x20000>;
-+			ftrace-size = <0x0>;
-+			pmsg-size = <0x20000>;
-+		};
-+	};
-+};
-+
-+&blsp1_uart2 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart_console_active>;
-+};
+ 	mutex_lock(&wcnss->iris_lock);
+ 	if (!wcnss->iris) {
+ 		dev_err(wcnss->dev, "no iris registered\n");
+@@ -494,6 +500,7 @@ static int wcnss_probe(struct platform_device *pdev)
+ 
+ 	init_completion(&wcnss->start_done);
+ 	init_completion(&wcnss->stop_done);
++	init_completion(&wcnss->iris_assigned);
+ 
+ 	mutex_init(&wcnss->iris_lock);
+ 
 -- 
-2.20.1
+2.7.4
 
