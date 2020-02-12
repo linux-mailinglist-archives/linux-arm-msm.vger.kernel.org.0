@@ -2,137 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B22B15AC66
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2020 16:53:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 33EEA15AC74
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2020 16:54:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728422AbgBLPxM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Feb 2020 10:53:12 -0500
-Received: from foss.arm.com ([217.140.110.172]:34472 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728052AbgBLPxM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Feb 2020 10:53:12 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2AD72328;
-        Wed, 12 Feb 2020 07:53:11 -0800 (PST)
-Received: from [10.1.194.46] (e113632-lin.cambridge.arm.com [10.1.194.46])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A7BEF3F68F;
-        Wed, 12 Feb 2020 07:53:09 -0800 (PST)
-Subject: Re: Suspect broken frequency transitions on SDM845
-From:   Valentin Schneider <valentin.schneider@arm.com>
-To:     linux-kernel <linux-kernel@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rjw@rjwysocki.net,
-        viresh.kumar@linaro.org, Ionela Voinescu <ionela.voinescu@arm.com>,
-        Quentin Perret <qperret@google.com>,
-        Lukasz Luba <lukasz.luba@arm.com>
-References: <eb8c48fb-c9b1-79c1-21b3-cd41ea37e2c6@arm.com>
-Message-ID: <c46e07df-b01a-4ff5-19c7-9b70063f1665@arm.com>
-Date:   Wed, 12 Feb 2020 15:53:08 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1728245AbgBLPyr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Feb 2020 10:54:47 -0500
+Received: from mail27.static.mailgun.info ([104.130.122.27]:56449 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728605AbgBLPyo (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Feb 2020 10:54:44 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1581522883; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=5GXYmuEvVBgrpfgyHmVLvKxCJbgXZCJNez/OEN+oLSs=; b=kvSUNg+nvKju4c+Q6KrClvqbYpFxpC3BgTtB2vDBlDftihOM5H7F9QCTkmGJZ6eEktnmDU7S
+ T/NMsBquYASR9IBNeSfB2cSiYldgyUitQrJJC0cKeaBUElnYT8u3xpochzKXiRBHybwoSFxE
+ K8gPUZiAcSXZ00GVXgLOoxSj9hU=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e441fb6.7ff518051768-smtp-out-n03;
+ Wed, 12 Feb 2020 15:54:30 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8043EC4479D; Wed, 12 Feb 2020 15:54:30 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from bgodavar-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bgodavar)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A1EE1C43383;
+        Wed, 12 Feb 2020 15:54:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A1EE1C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=bgodavar@codeaurora.org
+From:   Balakrishna Godavarthi <bgodavar@codeaurora.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     mka@chromium.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        hemantg@codeaurora.org, robh+dt@kernel.org, mark.rutland@arm.com,
+        gubbaven@codeaurora.org,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>
+Subject: [PATCH v2] arm64: dts: qcom: sc7180: Add node for bluetooth soc wcn3990
+Date:   Wed, 12 Feb 2020 21:24:19 +0530
+Message-Id: <20200212155419.20741-1-bgodavar@codeaurora.org>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-In-Reply-To: <eb8c48fb-c9b1-79c1-21b3-cd41ea37e2c6@arm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/02/2020 12:53, Valentin Schneider wrote:
-> We've been getting some sporadic failures on the big CPUs of a Pixel3
-> running mainline [1], here is an example of a correct run (CPU4):
-> 
-> | frequency (kHz) | sysbench events |
-> |-----------------+-----------------|
-> |          825600 |             236 |
-> |         1286400 |             369 |
-> |         1689600 |             483 |
-> |         2092800 |             600 |
-> |         2476800 |             711 |
-> 
-> and here is a failed one (still CPU4):
-> 
-> | frequency (kHz) | sysbench events |
-> |-----------------+-----------------|
-> |          825600 |             234 |
-> |         1286400 |             369 |
-> |         1689600 |             449 |
-> |         2092800 |             600 |
-> |         2476800 |             355 |
-> 
-> 
-> We've encountered something like this in the past with the exact same
-> test on h960 [2] but it is much harder to reproduce reliably this time
-> around.
-> 
-> I haven't found much time to dig into this; I did get a run of ~100 
-> iterations with about ~15 failures, but nothing cpufreq related showed up in
-> dmesg. I briefly suspected fast-switch, but it's only used by schedutil, so
-> in this test I would expect the frequency transition to be complete before we
-> even try to start executing sysbench.
-> 
+Add bluetooth SoC node for SC7180 IDP board.
 
-I've been adding some more debug stuff in that test case following some of
-Lukasz' recommendations, and I still don't find anything that would
-explain what I'm seeing.
+Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+---
+v2:
+  * updated commit text
+  * removed status form dts node
+---
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-The raw output of the test is:
-
-        CPU0:
-            300000: 61
-            576000: 114
-            825600: 172
-            1056000: 221
-            1324800: 278
-            1612800: 339
-        CPU4:
-            825600: 236
-            1286400: 368
-            1689600: 479
-            2092800: 420 <---}
-            2476800: 339 <---} Both of these are not monotonically increasing...
-
-
-/sys/kernel/debug/clk/clk_summary doesn't seem to include CPU clocks, or
-doesn't get updated because I see no diff from one frequency to another
-(even between lowest & highest tested frequency)
-
-
-/sys/devices/system/cpu/cpu*/cpufreq/stats/time_in_state does get updated,
-and seems to hint that I am getting the frequency I'm asking for:
-
-  [2020-02-12 14:48:21,706] 2476800 39544
-  [2020-02-12 14:48:23,929] 2476800 39745
-
-There's about ~10% (200ms) missing here, but that shouldn't lead to about
-half the expected performance (I get ~710 "score" out of that 2.477GHz freq
-on non-failing runs).
-
-
-I also made sure to read back
-  /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq
-and I do see the value I've asked for.
-
-
-Finally, I also probed the thermal state via
-  /sys/class/thermal/cooling_device*/cur_state
-and they are *always* 0 (i.e., no throttling) right after finishing the
-execution of the benchmark, which should be close to the "hottest" point.
-
-
-So AFAICT there is nothing on the cpufreq side that hints at a slow or
-unsuccessful frequency transition. Can FW mess about frequencies without
-notifying the kernel?
-
-> If anyone has the time and will to look into this, that would be much
-> appreciated.
-> 
-> [1]: https://git.linaro.org/people/amit.pundir/linux.git/log/?h=blueline-mainline-tracking
-> [2]: https://lore.kernel.org/lkml/d3ede0ab-b635-344c-faba-a9b1531b7f05@arm.com/
-> 
-> Cheers,
-> Valentin
-> 
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+index 388f50ad4fde..7a50a439b6f3 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+@@ -19,6 +19,7 @@
+ 	aliases {
+ 		hsuart0 = &uart3;
+ 		serial0 = &uart8;
++		bluetooth0 = &bluetooth;
+ 	};
+ 
+ 	chosen {
+@@ -256,6 +257,16 @@
+ 
+ &uart3 {
+ 	status = "okay";
++
++	bluetooth: wcn3990-bt {
++		compatible = "qcom,wcn3990-bt";
++		vddio-supply = <&vreg_l10a_1p8>;
++		vddxo-supply = <&vreg_l1c_1p8>;
++		vddrf-supply = <&vreg_l2c_1p3>;
++		vddch0-supply = <&vreg_l10c_3p3>;
++		max-speed = <3200000>;
++		clocks = <&rpmhcc RPMH_RF_CLK2>;
++	};
+ };
+ 
+ &uart8 {
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
