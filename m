@@ -2,95 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E98415A729
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2020 11:57:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 007BB15A744
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2020 12:01:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727572AbgBLK4t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Feb 2020 05:56:49 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:45597 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726135AbgBLK4s (ORCPT
+        id S1727007AbgBLLB4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Feb 2020 06:01:56 -0500
+Received: from mail.serbinski.com ([162.218.126.2]:46110 "EHLO
+        mail.serbinski.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726351AbgBLLB4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Feb 2020 05:56:48 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581505007; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=TjtUiZ8AZKDj9nYoSWQ3/cgkK6mw6KArwXSKQ2bbv/4=; b=nzniWBDHF8Q1zdwA/YsOvl0pzHLqD8q2fOcw1m6D6A7p8S0IqQ+zB9oy2UJd1w/x9ZRjJ32j
- /NUmkpGWBnL6tPF9LqAu/MMKIiHVRrj4NWUuecu1pQHT6K4hTmsvXlzsZMyHRnpdXiXY/aTq
- 5UVrF+omumx5qLhSesUHus9CT34=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e43d9ef.7ffa6786fab0-smtp-out-n01;
- Wed, 12 Feb 2020 10:56:47 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B0CC3C447A3; Wed, 12 Feb 2020 10:56:46 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 647A0C4479F;
-        Wed, 12 Feb 2020 10:56:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 647A0C4479F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH 2/2] soc: qcom: rpmh-rsc: Log interrupt status when TCS is busy
-Date:   Wed, 12 Feb 2020 16:26:12 +0530
-Message-Id: <1581504972-22632-3-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1581504972-22632-1-git-send-email-mkshah@codeaurora.org>
-References: <1581504972-22632-1-git-send-email-mkshah@codeaurora.org>
+        Wed, 12 Feb 2020 06:01:56 -0500
+Received: from localhost (unknown [127.0.0.1])
+        by mail.serbinski.com (Postfix) with ESMTP id 5B51AD006F9;
+        Wed, 12 Feb 2020 11:01:54 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at serbinski.com
+Received: from mail.serbinski.com ([127.0.0.1])
+        by localhost (mail.serbinski.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id hCMGVnst3C2i; Wed, 12 Feb 2020 06:01:46 -0500 (EST)
+Received: from mail.serbinski.com (localhost [127.0.0.1])
+        by mail.serbinski.com (Postfix) with ESMTP id 70D9CD00693;
+        Wed, 12 Feb 2020 06:01:46 -0500 (EST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.serbinski.com 70D9CD00693
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=serbinski.com;
+        s=default; t=1581505306;
+        bh=qDlickU02ZsMirNi7OvLtFkUvQ/GB+12rPSlCDuRsos=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=MhWhH9Rd+rlN4TPPcXlLIQdva3asJcljwG91E8xKi1vAtOWnGBoigWmwSGU2pqXFw
+         nO4KBxhsAJhSkDSF7B4k82VppgYouU7aODtGzgJqcFM21xggXNK3kELA1LjPP1QRMh
+         2MDK689fN1KtIpvfYwCymniyKta3p2T8JI6bdK8M=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 12 Feb 2020 06:01:46 -0500
+From:   Adam Serbinski <adam@serbinski.com>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Patrick Lai <plai@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 6/6] ASoC: qdsp6: dt-bindings: Add q6afe pcm dt binding
+ documentation
+In-Reply-To: <579e0ae1-f257-7af3-eac9-c8e3ab3b52c7@linaro.org>
+References: <20200212015222.8229-1-adam@serbinski.com>
+ <20200212015222.8229-7-adam@serbinski.com>
+ <579e0ae1-f257-7af3-eac9-c8e3ab3b52c7@linaro.org>
+User-Agent: Roundcube Webmail/1.4-beta
+Message-ID: <2989c09149976a28d13d4b4eb10b7c7e@serbinski.com>
+X-Sender: adam@serbinski.com
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Lina Iyer <ilina@codeaurora.org>
+On 2020-02-12 04:59, Srinivas Kandagatla wrote:
+> On 12/02/2020 01:52, Adam Serbinski wrote:
+>> This patch adds documentation of bindings required for PCM ports on 
+>> AFE.
+>> 
+>> Signed-off-by: Adam Serbinski <adam@serbinski.com>
+>> CC: Andy Gross <agross@kernel.org>
+>> CC: Mark Rutland <mark.rutland@arm.com>
+>> CC: Liam Girdwood <lgirdwood@gmail.com>
+>> CC: Patrick Lai <plai@codeaurora.org>
+>> CC: Banajit Goswami <bgoswami@codeaurora.org>
+>> CC: Jaroslav Kysela <perex@perex.cz>
+>> CC: Takashi Iwai <tiwai@suse.com>
+>> CC: alsa-devel@alsa-project.org
+>> CC: linux-arm-msm@vger.kernel.org
+>> CC: devicetree@vger.kernel.org
+>> CC: linux-kernel@vger.kernel.org
+>> ---
+>>   .../devicetree/bindings/sound/qcom,q6afe.txt  | 42 
+>> +++++++++++++++++++
+>>   1 file changed, 42 insertions(+)
+>> 
+>> diff --git a/Documentation/devicetree/bindings/sound/qcom,q6afe.txt 
+>> b/Documentation/devicetree/bindings/sound/qcom,q6afe.txt
+>> index d74888b9f1bb..6b1b17d31a2a 100644
+>> --- a/Documentation/devicetree/bindings/sound/qcom,q6afe.txt
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,q6afe.txt
+>> @@ -51,6 +51,24 @@ configuration of each dai. Must contain the 
+>> following properties.
+>>   	Definition: Must be list of serial data lines used by this dai.
+>>   	should be one or more of the 0-3 sd lines.
+>>   + - qcom,pcm-quantype
+>> +	Usage: required for pcm interface
+>> +	Value type: <u32>
+>> +	Definition: PCM quantization type
+>> +		0 - ALAW, no padding
+>> +		1 - MULAW, no padding
+>> +		2 - Linear, no padding
+>> +		3 - ALAW, padding
+>> +		4 - MULAW, padding
+>> +		5 - Linear, padding
+>> +
+>> + - qcom,pcm-slot-mapping
+>> +	Usage: required for pcm interface
+> 
+> Are these not specific to 8k and 16k mode ?
+> We should probably list values for both modes here.
 
-To debug issues when TCS is busy, report interrupt status as well. If
-the interrupt line is pending at GIC, then Linux was too busy to process
-the interrupt and if not pending then AOSS was too busy to handle the
-request.
+No, this is just the offset that the audio sample is placed in with 
+respect to a maximum of 4 slots, 16 bits wide, beginning with the sync 
+pulse.
 
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
----
- drivers/soc/qcom/rpmh-rsc.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+When switching between 8 and 16k sample rate, it is just the sync pulse 
+rate that is changed. The audio sample will be delivered in the same 
+slot, just at a different frequency.
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index 3595e4d..1dc05c3 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -421,8 +421,14 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
- 	do {
- 		ret = tcs_write(drv, msg);
- 		if (ret == -EBUSY) {
--			pr_info_ratelimited("DRV:%s TCS Busy, retrying RPMH message send: addr=%#x\n",
--					    drv->name, msg->cmds[0].addr);
-+			bool irq_sts;
-+
-+			irq_get_irqchip_state(drv->irq, IRQCHIP_STATE_PENDING,
-+					      &irq_sts);
-+			pr_info_ratelimited("DRV:%s TCS Busy, retrying RPMH message send: addr=%#x interrupt status=%s\n",
-+					    drv->name, msg->cmds[0].addr,
-+					    irq_sts ?
-+					    "PENDING" : "NOT PENDING");
- 			udelay(10);
- 		}
- 	} while (ret == -EBUSY);
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+
+>> +	Value type: <prop-encoded-array>
+>> +	Definition: Slot mapping for audio channels. Array size is the 
+>> number
+>> +		of slots, minimum 1, maximum 4. The value is 0 for no mapping
+>> +		to the slot, or the channel number from 1 to 32.
+>> +
+>>    - qcom,tdm-sync-mode:
+>>   	Usage: required for tdm interface
+>>   	Value type: <prop-encoded-array>
+>> @@ -174,5 +192,29 @@ q6afe@4 {
+>>   			reg = <23>;
+>>   			qcom,sd-lines = <1>;
+>>   		};
+>> +
+>> +		pri-pcm-rx@105 {
+>> +			reg = <105>;
+>> +			qcom,pcm-quantype = <2>;
+>> +			qcom,pcm-slot-mapping = <1>;
+>> +		};
+>> +
+>> +		pri-pcm-tx@106 {
+>> +			reg = <106>;
+>> +			qcom,pcm-quantype = <2>;
+>> +			qcom,pcm-slot-mapping = <1>;
+>> +		};
+>> +
+>> +		quat-pcm-rx@111 {
+>> +			reg = <111>;
+>> +			qcom,pcm-quantype = <5>;
+>> +			qcom,pcm-slot-mapping = <0 0 1>;
+>> +		};
+>> +
+>> +		quat-pcm-tx@112 {
+>> +			reg = <112>;
+>> +			qcom,pcm-quantype = <5>;
+>> +			qcom,pcm-slot-mapping = <0 0 1>;
+>> +		};
+>>   	};
+>>   };
+>> 
