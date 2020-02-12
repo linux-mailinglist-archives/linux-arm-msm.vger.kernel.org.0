@@ -2,115 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AFBF615B469
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 00:04:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 342FF15B466
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 00:04:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729313AbgBLXEq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Feb 2020 18:04:46 -0500
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:46175 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729133AbgBLXEq (ORCPT
+        id S1729225AbgBLXEk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Feb 2020 18:04:40 -0500
+Received: from mail-pj1-f45.google.com ([209.85.216.45]:39516 "EHLO
+        mail-pj1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729197AbgBLXEk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Feb 2020 18:04:46 -0500
-Received: by mail-vs1-f66.google.com with SMTP id t12so2344612vso.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2020 15:04:44 -0800 (PST)
+        Wed, 12 Feb 2020 18:04:40 -0500
+Received: by mail-pj1-f45.google.com with SMTP id e9so1521820pjr.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2020 15:04:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rZc6YtKm0NgqfqELl0Ged7y550Im2QjkLBOstVaWr/E=;
-        b=B/RnOoigo7Do72Ok+CIzPjCgyPH4qvuU85m2AGDbWVIlI2aVD4kshxqVkcOHxItPAP
-         lhsMokayGGzLw6FPwokLCGD22QDsalq8UCou/e6YKFTLfhT74HnB6cCK3tKn8UojpvHb
-         7jh2/BPTkwQWMPDnpUknof63iws9HXf5zTXJY=
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=PhL4y2Ns/NFToQF8DJTrK0HgwaVtHS/iKBzX00SobGg=;
+        b=etSOx2QQEAZg4TSjUxAks7fbX9BcsRkiVRRMYr6FIwMR3psVVZ5yLkRbRsEvo+digw
+         xIvPLGAyoOVYrzyaTe6ptofGbcLLTD8Tqobl/9QXZJhfW6O2F2FEKHl1Pwa0mrPViUMW
+         YdFchCgHQPcm64dUWuclWZGdJc2pBos0E7WUQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rZc6YtKm0NgqfqELl0Ged7y550Im2QjkLBOstVaWr/E=;
-        b=OAb1FgkYCyQ4PWWsypx3+hAT+VtZXwglSMY7LhYT8aqYVRB9Q5oJPr7SWR2P+cPwxy
-         ALnM4VViW7wVucZCTyZ0FrMdnO4FtwjvgU0S3JX8rnB4qFcFJ3aIW4TGinMjueokJemr
-         W6aPqWiWhe86Hrwj78ZgT6zr/Xax8if50A2zY2DIc1npaXtiIre8h5KH5oU9vYK08tzE
-         1Tw3c55KqyUhEToTodWvcCByupV7wjYgXjEunm7p+vGCzEmMEgsWoPEfXHEccwyaxmdp
-         vEhj4ZH1qwF/5HKuH1VE7edbSetkPbNVoG+klwd87X6dcKBlNpj40YYeDhw0GmdAZzP4
-         9A0A==
-X-Gm-Message-State: APjAAAXznrIgE0qTUWlMH7EtZnIEi3bzWUsGAYfgxZtUBQjkHp7UfX9z
-        Bi+6wgTHZ/w4GhY23MKAZ0UmsA1ucA4=
-X-Google-Smtp-Source: APXvYqz4F55DMDS5x1hUCYVTkA8DwP5KHDThFI2ynFsPAcMhePrEoofuyrZJ8Lj6ktpmKXRzv2ataQ==
-X-Received: by 2002:a05:6102:405:: with SMTP id d5mr13455974vsq.94.1581548683815;
-        Wed, 12 Feb 2020 15:04:43 -0800 (PST)
-Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com. [209.85.221.178])
-        by smtp.gmail.com with ESMTPSA id c2sm228003uan.14.2020.02.12.15.04.42
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Feb 2020 15:04:43 -0800 (PST)
-Received: by mail-vk1-f178.google.com with SMTP id p191so1036768vkf.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2020 15:04:42 -0800 (PST)
-X-Received: by 2002:a1f:a9d0:: with SMTP id s199mr582450vke.40.1581548682205;
- Wed, 12 Feb 2020 15:04:42 -0800 (PST)
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=PhL4y2Ns/NFToQF8DJTrK0HgwaVtHS/iKBzX00SobGg=;
+        b=PLfHdf0E3UeAtcj+u8NgKRaGdU+AZ15u5cDpB5/OZXvbe8jSP828L5he0A2CmY9VKI
+         GjIon9me2obiHANrRLOsLp8agRd/sdoBavIvCRN48v72KDT3mSD6+CAljSB1i5WDWWN3
+         T9FO6vpANHnu0Omr6ExIYtB4GRzKnYF17daTD224q+YID26KS2NGLvyBDiwNII9DzTtu
+         YEYq3Me3qIPpS89Zxi+ar1MXIrXHrYghYsOIDOd8IOm9TLy+cSkNIUULGtTx8Y3o4ynm
+         RoIfcfe/sY1MCYZmG2l7VPiS2yDnu8PxvDqO4Savu1A70IxEybDSMTZQyvrUTfHealTy
+         1NEA==
+X-Gm-Message-State: APjAAAWaSvwK4q/N2C25OqJUxE0n54ZPfqg/2ABur1u+qT4tjFo5rETu
+        Yo0wh0aaqypCaKqn+gKe1s9kWw==
+X-Google-Smtp-Source: APXvYqzxgU+5yuNF5Rv0HXS9zL8x4pILgTjsHg6W5JxhCX4rgS04HgMQN0+uAntRPS6fbBe1asYfFA==
+X-Received: by 2002:a17:902:59cd:: with SMTP id d13mr10720820plj.146.1581548679950;
+        Wed, 12 Feb 2020 15:04:39 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id v5sm191562pgc.11.2020.02.12.15.04.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Feb 2020 15:04:39 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20191218223530.253106-1-dianders@chromium.org>
- <20191218143416.v3.6.Iaf8d698f4e5253d658ae283d2fd07268076a7c27@changeid>
- <20200203233711.GF311651@builder> <CAD=FV=VTKfv93BiNRYBxWg8o8YKrQy3Z85MzR8XFr=GCS5xhdg@mail.gmail.com>
-In-Reply-To: <CAD=FV=VTKfv93BiNRYBxWg8o8YKrQy3Z85MzR8XFr=GCS5xhdg@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 12 Feb 2020 15:04:30 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XPscj+bDBjxqBSudj77WeAjCvmOYcOu27jk4gqiCcWcA@mail.gmail.com>
-Message-ID: <CAD=FV=XPscj+bDBjxqBSudj77WeAjCvmOYcOu27jk4gqiCcWcA@mail.gmail.com>
-Subject: Re: [PATCH v3 6/9] drm/bridge: ti-sn65dsi86: Use 18-bit DP if we can
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        LKML <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200205065421.9426-1-swboyd@chromium.org>
+References: <20200205065421.9426-1-swboyd@chromium.org>
+Subject: Re: [PATCH] clk: qcom: alpha-pll: Make error prints more informative
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
+        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Date:   Wed, 12 Feb 2020 15:04:38 -0800
+Message-ID: <158154867848.184098.3370579513642470683@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Andrzej / Neil,
+Quoting Stephen Boyd (2020-02-04 22:54:21)
+> I recently ran across this printk error message spewing in my logs
+>=20
+>  Call set rate on the PLL with rounded rates!
+>=20
+> and I had no idea what clk that was or what rate was failing to round
+> properly. Make the printk more informative by telling us what went wrong
+> and also add the name of the clk that's failing to change rate.
+> Furthermore, update the other printks in this file with the clk name
+> each time so we know what clk we're talking about.
+>=20
+> Cc: Taniya Das <tdas@codeaurora.org>
+> Cc: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
 
-On Mon, Feb 3, 2020 at 4:21 PM Doug Anderson <dianders@chromium.org> wrote:
->
-> Andrzej / Neil,
->
-> On Mon, Feb 3, 2020 at 3:37 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Wed 18 Dec 14:35 PST 2019, Douglas Anderson wrote:
-> >
-> > > The current bridge driver always forced us to use 24 bits per pixel
-> > > over the DP link.  This is a waste if you are hooked up to a panel
-> > > that only supports 6 bits per color or fewer, since in that case you
-> > > ran run at 18 bits per pixel and thus end up at a lower DP clock rate.
-> >
-> > s/ran/can/
->
-> I'm going to make the assumption that you can fix this typo when
-> applying the patch and I'm not planning to send a v4.  If that's not a
-> good assumption then please yell.
-
-With -rc1 released, it seems like it might be a nice time to land this
-series.  Do you happen to know if there is anything outstanding?  Is
-one of you two the right person to land this series, or should I be
-asking someone else?  I can see if I can find someone to take them
-through drm-misc if there's nobody else?
-
-It's not massively crazy urgent or anything, but the patches have been
-floating for quite some time now and it'd be nice to know what the
-plan was.  I also have another patch I'd like to post up but was
-hoping to get this series resolved first.
-
-Thanks much!
-
--Doug
+Applied to clk-next
