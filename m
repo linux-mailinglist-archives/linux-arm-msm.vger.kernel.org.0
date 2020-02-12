@@ -2,109 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 86D6615A81B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2020 12:43:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 32D9615A878
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Feb 2020 13:00:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727007AbgBLLnn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Feb 2020 06:43:43 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:40461 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727111AbgBLLnn (ORCPT
+        id S1728099AbgBLMAX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Feb 2020 07:00:23 -0500
+Received: from mail27.static.mailgun.info ([104.130.122.27]:27104 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727007AbgBLMAW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Feb 2020 06:43:43 -0500
-Received: by mail-wm1-f65.google.com with SMTP id t14so1945209wmi.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2020 03:43:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=KOvpD7jZ6dU2lykqqwZ1WffWjcj24MrFs0WAUYdtKH4=;
-        b=lDfQr6Liipb++iFWX6iJLPM9MLax/98YrjUMx2NSCP8nRQEJxYPjeazAW44phauv1J
-         zDMSgxErIqX4lltTO8KyGkxULwpxH6e9bJjady6qCsW+AebfdzEjQF+Mcss/P6lo3+OS
-         FF91PfU0aV/URWm4wh3GjSVnh613RzCiGx7tWGzzdRYi6ewXTPYxFjEv1efuDc7Jqwge
-         zn5xpPgaLdj2zpQqUiy9CKCUKgX907JZl8MXHgLWLPzbAIeBDfLt3go9I+tWL4EHPVdP
-         006LMBAjbJpqTAWatWWABjuhtYLmX8EQ7svmcDYwPWKzjX5P+6qeN/fAarriHxmM6Zfn
-         q7rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=KOvpD7jZ6dU2lykqqwZ1WffWjcj24MrFs0WAUYdtKH4=;
-        b=KyPhRufX9t1wp3uEjaRtZs4QPoeGA/W6DB2fPLZ07sdj8/LvGL6C5bytQX6YSpiEUL
-         x5NRZlJCOwU4YtrQssswWSX/yGc/WSexX8Zbsv396uNn2oxFPKuXCk3Do9BgSri2OjiR
-         bAnNjomGuRaA4v8NwGQ7HW8RcQ0BPcl+ePFUq5tcJZWesJRfUzodp3ElfWwdI52Nehzh
-         Qvdcaf/9/7h3D8TWVfMRNaCn2K6Q6PC6hG0Jj1RauvTwiW6NpgtFyAuZe54uM+w7WQWW
-         xcJnjBVJ6zPlVah6CeiXQXHZfruKFDr0cRsYwZCo12PBsi7bfdMUEAoV7j+VIIhhAEpZ
-         ztsw==
-X-Gm-Message-State: APjAAAVtJYP+adQ8WXfBT9C/Y57SlOZI83sbDQeHM/LHmc7ONEtueGGw
-        8C1goTjVr2t3ro/ayygw3eyYM9WNi2k=
-X-Google-Smtp-Source: APXvYqzE17zeWea41ReY8EYtUfOouJpQCc5O05qfY1oQPGPCmX9DhPfP9NiRKKy53KgUTk1hUJxU6A==
-X-Received: by 2002:a05:600c:2046:: with SMTP id p6mr11846557wmg.167.1581507821024;
-        Wed, 12 Feb 2020 03:43:41 -0800 (PST)
-Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.googlemail.com with ESMTPSA id q130sm473499wme.19.2020.02.12.03.43.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Feb 2020 03:43:38 -0800 (PST)
-Subject: Re: [PATCH v3 6/6] ASoC: qdsp6: dt-bindings: Add q6afe pcm dt binding
- documentation
-To:     Adam Serbinski <adam@serbinski.com>
-Cc:     Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 12 Feb 2020 07:00:22 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1581508822; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=RLVnJC/Yp3dxGv33CP0wjpJhPdl/x7brvP9Cxn1hiIY=; b=CWwuR3L1t/UWQrVwFI3jYRUMXViwx+y1tAO0szD8ZFkwqQKR6LIwg3dTEaWjuYur8HGOezAl
+ bvnnQMVXEPT9VWiePwrmiRyWXFu5iuasGBHxRMCdl/aeK0hSjSZmvowHbFHzIvJ8DYvDldv8
+ Yg2AE+9Zxmt9DwLPfGp4qi94b+g=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e43e8c7.7fe49e644fb8-smtp-out-n03;
+ Wed, 12 Feb 2020 12:00:07 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7C3D9C447A3; Wed, 12 Feb 2020 12:00:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.206.25.140] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vbadigan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8FAFEC433A2;
+        Wed, 12 Feb 2020 12:00:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8FAFEC433A2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
+Subject: Re: [PATCH V1] dt-bindings: mmc: sdhci-msm: Add CQE reg map
+To:     Doug Anderson <dianders@google.com>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Sahitya Tummala <stummala@codeaurora.org>,
+        Sayali Lokhande <sayalil@codeaurora.org>, cang@codeaurora.org,
+        Ram Prakash Gupta <rampraka@codeaurora.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Patrick Lai <plai@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20200212015222.8229-1-adam@serbinski.com>
- <20200212015222.8229-7-adam@serbinski.com>
- <579e0ae1-f257-7af3-eac9-c8e3ab3b52c7@linaro.org>
- <2989c09149976a28d13d4b4eb10b7c7e@serbinski.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <b5c1328a-e3ca-826d-9ff0-f2bbce24ac22@linaro.org>
-Date:   Wed, 12 Feb 2020 11:43:37 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+References: <1581434955-11087-1-git-send-email-vbadigan@codeaurora.org>
+ <CAD=FV=X6-aWM_fSfLE0ySuM04FvQCTKpM-A87k3xMXBMRzNXFQ@mail.gmail.com>
+From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Message-ID: <1e3f8fc3-dde9-5aaf-12a9-0eb0bc5ceb83@codeaurora.org>
+Date:   Wed, 12 Feb 2020 17:30:00 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
 MIME-Version: 1.0
-In-Reply-To: <2989c09149976a28d13d4b4eb10b7c7e@serbinski.com>
+In-Reply-To: <CAD=FV=X6-aWM_fSfLE0ySuM04FvQCTKpM-A87k3xMXBMRzNXFQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 12/02/2020 11:01, Adam Serbinski wrote:
->>>
->>> +
->>> + - qcom,pcm-slot-mapping
->>> +    Usage: required for pcm interface
+On 2/11/2020 10:12 PM, Doug Anderson wrote:
+> Hi,
+>
+> On Tue, Feb 11, 2020 at 7:29 AM Veerabhadrarao Badiganti
+> <vbadigan@codeaurora.org> wrote:
+>> CQE feature has been enabled on sdhci-msm. Add CQE reg map
+>> that needs to be supplied for supporting CQE feature.
 >>
->> Are these not specific to 8k and 16k mode ?
->> We should probably list values for both modes here.
-> 
-> No, this is just the offset that the audio sample is placed in with 
-> respect to a maximum of 4 slots, 16 bits wide, beginning with the sync 
-> pulse.
+>> Change-Id: I788c4bd5b7cbca16bc1030a410cc5550ed7204e1
+>> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+>> ---
+>>   Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+>> index 7ee639b..eaa0998 100644
+>> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+>> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+>> @@ -27,6 +27,11 @@ Required properties:
+>>   - reg: Base address and length of the register in the following order:
+>>          - Host controller register map (required)
+>>          - SD Core register map (required for msm-v4 and below)
+>> +       - CQE register map (Optional, needed only for eMMC and msm-v4.2 above)
+> I did a quick search and it appears that SD cards implementing 6.0 of
+> the spec can also use CQE.  Is that correct?  If so, maybe remove the
+> part about "eMMC"?
+On qcom platforms, only SDHC instance meant for eMMC has the CQE support.
+So mentioned that its needed only for eMMC.
+>
+> Maybe also change "needed" to "useful" to make it clear that this
+> entry isn't actually required for all msm-v4.2 controllers?
+sure.
+>
+>> +- reg-names: When CQE register map is supplied, below reg-names are required
+>> +       - "hc_mem" for Host controller register map
+>> +       - "core_mem" for SD cpre regoster map
+> s/regoster/register
+>
+>
+>> +       - "cqhci_mem" for CQE register map
+> I'm at least slightly confused.  You say that reg-names are there only
+> if CQE register map is supplied.  ...and that requires 4.2 and above.
+> ...but "core_mem" is only there on 4.0 and below.  So there should
+> never be a "core_mem" entry?
+core_mem is present till <v5.0
+cqhci_mem is present on >=v4.2
+Say, for version v4.2 both are present; .... and for v5.0 only cqhci_mem 
+is present.
 
+Both hc reg-map and core reg-map are being accessed through index.
+So no need to list the reg names 'hc_mem' & 'core_mem' in general.
 
-That's not true atleast by the QDSP documentation,
-according to it we will use more slots to transfer at higher sample 
-rate. ex:
-16 kHz data can be transferred using 8 kHz samples in two
-slots.
+But coming to cqhci reg-map we can't access it with fixed index, since 
+its index varies between 1/2
+based on controller version.
 
-Also there are 32 slots for each of 4 supported channels for PCM AFE port.
+So we are accessing it through reg-names. Since reg-names has to be 
+associated with corresponding
+reg maps, other two reg-names (hc_mem & core_mem) also need to br listed 
+when cqhci_mem is listed.
 
-
-> 
-> When switching between 8 and 16k sample rate, it is just the sync pulse 
-> rate that is changed. The audio sample will be delivered in the same 
-> slot, just at a different frequency.
+That is the reason, I mentioned it like these are needed only cqe reg 
+map is supplied.
+If it is creating confusion, i will remove that statement.
+> Trying to specify that sanely in free-form text seems like it's gonna
+> be hard and not worth it.  You should probably transition to yaml
+> first?
+>
+>
+> I will also note that Rob isn't a huge fan of "reg-names".  In a
+> different conversation I think you mentioned you had a reason for
+> having it.  I guess just be prepared to defend yourself against Rob if
+> you feel strongly about keeping reg-names.
+Sure. Its the same reason mentioned in above comment.
+>
+> -Doug
