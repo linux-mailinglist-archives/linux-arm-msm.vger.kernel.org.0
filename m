@@ -2,122 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5044C15B5C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 01:23:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 006E415B5E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 01:36:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729152AbgBMAXR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Feb 2020 19:23:17 -0500
-Received: from gateway24.websitewelcome.com ([192.185.51.202]:47139 "EHLO
-        gateway24.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729132AbgBMAXR (ORCPT
+        id S1729313AbgBMAgs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Feb 2020 19:36:48 -0500
+Received: from userp2130.oracle.com ([156.151.31.86]:57024 "EHLO
+        userp2130.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729190AbgBMAgr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Feb 2020 19:23:17 -0500
-X-Greylist: delayed 1441 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Feb 2020 19:23:16 EST
-Received: from cm14.websitewelcome.com (cm14.websitewelcome.com [100.42.49.7])
-        by gateway24.websitewelcome.com (Postfix) with ESMTP id F3FB9280C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Feb 2020 17:59:14 -0600 (CST)
-Received: from gator4166.hostgator.com ([108.167.133.22])
-        by cmsmtp with SMTP
-        id 21uUjml4kXVkQ21uUjAqT5; Wed, 12 Feb 2020 17:59:14 -0600
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=embeddedor.com; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=/+tuQXIxcgFaHv6yXlJ1vmExFRnqlxjpnHGOi7H52Tg=; b=po54q2qUsGuaR0K/Wp1vdgTtMA
-        4bqd8irT0krgOs1LiVOytLou0n39j7GCldKLTSLj6DB8xRasxdqlbzlvZ/wM0Ot48ApyfidA0/eia
-        9RyncvjU45xE4mXrHLV+xgyGS7BHwgOkZXHN6UeIJipMGwoTDuTt8BVpDfl0NDdNze/ehwnqtYx3K
-        de9oaVhsFhgDoaqFVR1fCyQtua/pXXF3Vt/YlzvAfrS8PAP9RFHY0PF9B3hsI0AWl5zhrvN3iv+/+
-        zQzkd5wMRVzV26FryXUDqCLpFKO+D/chlpNGqp2oO49IH7uivTKFJ1eqwHJCfNJhWzhr6t02Hy2J3
-        17O01tGQ==;
-Received: from [200.68.141.42] (port=17873 helo=embeddedor)
-        by gator4166.hostgator.com with esmtpa (Exim 4.92)
-        (envelope-from <gustavo@embeddedor.com>)
-        id 1j21uT-003MB9-45; Wed, 12 Feb 2020 17:59:13 -0600
-Date:   Wed, 12 Feb 2020 17:59:11 -0600
-From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-To:     Andy Gross <agross@kernel.org>,
+        Wed, 12 Feb 2020 19:36:47 -0500
+Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
+        by userp2130.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 01D0WdCG162252;
+        Thu, 13 Feb 2020 00:36:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : references : date : in-reply-to : message-id : mime-version :
+ content-type; s=corp-2020-01-29;
+ bh=lOJCfJT2udTX7MkccrkOVv4P5oDuCzc4Q2DUeaZKbrE=;
+ b=Dlpe4f+H1r69N2rHehey7P0mPaXk15GrcsiDJG8KtBhrwPkNR/gwBuqms/rlhA9BH8Di
+ MiMf8gAZ1BI+KuVATAeoHT9oZdnO7dIgCifpFmoNHfIuqzMIYdyUdaUcftZo8/ex2DeG
+ kkAg/vdDYwie3Ik8Z/+5qMF4rk5kZQAZs6ZmJlLvvo0qE+EOARETZ7iI7yaLx4TS74Li
+ bWk1jWtJBWaLKdTtK5y0cpcKqK3H1Hlalulh2K2O+eqN/6zynqqDI3MBsOpvCXLrRoHU
+ RZyr1AiYWimZPCDsP7+g5xCZn0gPTpoG42P8r+fxM7PM1zXmaRsnUkwNBljOOKRceFJp BQ== 
+Received: from userp3030.oracle.com (userp3030.oracle.com [156.151.31.80])
+        by userp2130.oracle.com with ESMTP id 2y2k88eg7q-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Thu, 13 Feb 2020 00:36:26 +0000
+Received: from pps.filterd (userp3030.oracle.com [127.0.0.1])
+        by userp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 01D0X9n8114293;
+        Thu, 13 Feb 2020 00:36:26 GMT
+Received: from aserv0121.oracle.com (aserv0121.oracle.com [141.146.126.235])
+        by userp3030.oracle.com with ESMTP id 2y4kah7bbs-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Thu, 13 Feb 2020 00:36:26 +0000
+Received: from abhmp0018.oracle.com (abhmp0018.oracle.com [141.146.116.24])
+        by aserv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 01D0aLRc024911;
+        Thu, 13 Feb 2020 00:36:23 GMT
+Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Wed, 12 Feb 2020 16:36:21 -0800
+To:     Can Guo <cang@codeaurora.org>
+Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        hongwus@codeaurora.org, rnayak@codeaurora.org,
+        linux-scsi@vger.kernel.org, kernel-team@android.com,
+        saravanak@google.com, salyzyn@google.com,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Subject: [PATCH] mfd: pm8xxx: Replace zero-length array with flexible-array
- member
-Message-ID: <20200212235911.GA20179@embeddedor.com>
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Pedro Sousa <sousa@synopsys.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        linux-kernel@vger.kernel.org (open list)
+Subject: Re: [PATCH v1 2/2] scsi: ufs: Select INITIAL ADAPT type for HS Gear4
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+Organization: Oracle Corporation
+References: <1581485910-8307-1-git-send-email-cang@codeaurora.org>
+        <1581485910-8307-3-git-send-email-cang@codeaurora.org>
+Date:   Wed, 12 Feb 2020 19:36:16 -0500
+In-Reply-To: <1581485910-8307-3-git-send-email-cang@codeaurora.org> (Can Guo's
+        message of "Tue, 11 Feb 2020 21:38:29 -0800")
+Message-ID: <yq1k14rs4qn.fsf@oracle.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.92 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 200.68.141.42
-X-Source-L: No
-X-Exim-ID: 1j21uT-003MB9-45
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (embeddedor) [200.68.141.42]:17873
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 14
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9529 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 spamscore=0 bulkscore=0
+ suspectscore=0 mlxscore=0 malwarescore=0 adultscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2001150001
+ definitions=main-2002130003
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9529 signatures=668685
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 lowpriorityscore=0
+ suspectscore=0 bulkscore=0 phishscore=0 mlxlogscore=999 mlxscore=0
+ malwarescore=0 impostorscore=0 clxscore=1011 spamscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2001150001 definitions=main-2002130003
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The current codebase makes use of the zero-length array language
-extension to the C90 standard, but the preferred mechanism to declare
-variable-length types such as these ones is a flexible array member[1][2],
-introduced in C99:
 
-struct foo {
-        int stuff;
-        struct boo array[];
-};
+Can,
 
-By making use of the mechanism above, we will get a compiler warning
-in case the flexible array does not occur last in the structure, which
-will help us prevent some kind of undefined behavior bugs from being
-inadvertently introduced[3] to the codebase from now on.
+> ADAPT is added specifically for HS Gear4 mode only, select INITIAL
+> ADAPT before do power mode change to G4 and select NO ADAPT before
+> switch to non-G4 modes.
 
-Also, notice that, dynamic memory allocations won't be affected by
-this change:
+Applied to 5.7/scsi-queue, thanks!
 
-"Flexible array members have incomplete type, and so the sizeof operator
-may not be applied. As a quirk of the original implementation of
-zero-length arrays, sizeof evaluates to zero."[1]
-
-This issue was found with the help of Coccinelle.
-
-[1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
-[2] https://github.com/KSPP/linux/issues/21
-[3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
-
-Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
----
- drivers/mfd/qcom-pm8xxx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
-index 29133326c6fd..acd172ddcbd6 100644
---- a/drivers/mfd/qcom-pm8xxx.c
-+++ b/drivers/mfd/qcom-pm8xxx.c
-@@ -76,7 +76,7 @@ struct pm_irq_chip {
- 	unsigned int		num_masters;
- 	const struct pm_irq_data *pm_irq_data;
- 	/* MUST BE AT THE END OF THIS STRUCT */
--	u8			config[0];
-+	u8			config[];
- };
- 
- static int pm8xxx_read_block_irq(struct pm_irq_chip *chip, unsigned int bp,
 -- 
-2.23.0
-
+Martin K. Petersen	Oracle Linux Engineering
