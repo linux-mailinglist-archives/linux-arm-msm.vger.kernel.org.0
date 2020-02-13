@@ -2,189 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D354215BC13
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 10:51:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D39115BC33
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 10:55:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729422AbgBMJvS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Feb 2020 04:51:18 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:36086 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729440AbgBMJvS (ORCPT
+        id S1729440AbgBMJzp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Feb 2020 04:55:45 -0500
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:33713 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729657AbgBMJzj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Feb 2020 04:51:18 -0500
-Received: by mail-wm1-f66.google.com with SMTP id p17so5845627wma.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2020 01:51:15 -0800 (PST)
+        Thu, 13 Feb 2020 04:55:39 -0500
+Received: by mail-lj1-f196.google.com with SMTP id y6so5864355lji.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2020 01:55:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:autocrypt:organization:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=AxRD0g14NHM/J+SpVc2fYE9H/KcEvjTrbN0nCouyCsM=;
-        b=hy+stD4V0kXZJPfTU0Nn+l2s+wDkYgqxGPqzozxsujvZ+E/agL7fX1mDreRFlJU4gk
-         eQxb6SKyH4/7IkkJWLpesPXM2EjMAR02BuP3ik6d9s5+8+9OpYcMi2uhW5nb0aPmiIAy
-         jJHGiPg96o08787+h2J9YhdbqqmU/E13bKOdhQOnlXF/NqAJLKJH5ZrTObpaALi4UI3i
-         +jKLolHkAJiJCJQ53wfMvingbzAOiuKK0OfHfr7Irvx7JZlnUWe6jin7PGJCx+cOq6K/
-         Hw51JS0i1zBLDscNLNuIHCCkW8MRI8dkleqmg2f95tY4R8ZCMF4iGkj4IBnc4ALAQcha
-         UFog==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=KVPyYo0pJTGCUkEFsuiM96kKjpjdNQqLwNQNRYIv3YU=;
+        b=GGLXKhFvfIi4xDE8UvvxTqrcs6o0ExnNkRLNQouavkV55412qBGknsUHssh6E4HZ0z
+         ewmMjouol7CTrlsClIn1v88r+olp7jgWbJYRwUUM2eSkDNnNq+l0rTg7crP0aF44IOvN
+         Wt4dfTaeTtmMhgWfIsJTgnBeNRTN2OiPi8mmlavk5ko/079b7+NC0MhLhjUJqMsWmKEk
+         6ssDJuF2OtWBELDqJ8nN/Gul1ZURIf5bsteC0HyNhNY8b01teE7RPm9F/lB7XvYRSVC+
+         iXmieVrDtBuhPhhXhQ4VzgqOwPJp98p9tYEyo1jPtzFyDKoKM6I4hTk3gNGnyJh5eySp
+         Yuww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
-         :organization:message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=AxRD0g14NHM/J+SpVc2fYE9H/KcEvjTrbN0nCouyCsM=;
-        b=r/IXkfYzOdxt2ud93qCvla8A976AdAcIA9yZSpRKdWPyHqPI8eEc6bSlqvvJB0uxH/
-         6Jaynf4XKhpXZ1MGYbxDg2CGrpz+Mw3aF/LGUxJs/+3sfRA5gW1Dd9DOv9x1JMXLJoTZ
-         d8lmPgZv6Cn/R5CU8mdwoaWSyoqU1aM6gymlUzRTniq9L0NEFx5Azti3MC1Efqk9WJ9o
-         Fh4XDz7n8bn5Q85i7GC/VmtKdkbN/HQxzRCBvSnKdgOVmlIYRlMgi6+phj8hrOLQ3mua
-         zxpPvBsSURzGq39JI4MHavWuYdN15K3eUUyd2U/VJxx05MsLjqlJcDxA7rmnYtYY53LN
-         bLhQ==
-X-Gm-Message-State: APjAAAWht6HxikhmFR1W/kJ+2vjDbtY4PQIoHJB7w0K109M9/wqpXkQ7
-        V3OsCdCjlOv2Lbg3Gxr6nNDu8g==
-X-Google-Smtp-Source: APXvYqw+4XV1nmLfa4ZQ62WE/lPnKl10ITfo8G7sqKFHuuRT3ZVYYLrerYuZnS+Vmzdlh8DBIsgueg==
-X-Received: by 2002:a7b:cc97:: with SMTP id p23mr4842060wma.89.1581587474908;
-        Thu, 13 Feb 2020 01:51:14 -0800 (PST)
-Received: from [10.1.3.173] (laubervilliers-658-1-213-31.w90-63.abo.wanadoo.fr. [90.63.244.31])
-        by smtp.gmail.com with ESMTPSA id q130sm2496895wme.19.2020.02.13.01.51.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Feb 2020 01:51:13 -0800 (PST)
-Subject: Re: [PATCH v3 0/9] drm/bridge: ti-sn65dsi86: Improve support for AUO
- B116XAK01 + other DP
-To:     Douglas Anderson <dianders@chromium.org>,
-        Andrzej Hajda <a.hajda@samsung.com>
-Cc:     robdclark@chromium.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, seanpaul@chromium.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonas Karlman <jonas@kwiboo.se>, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-References: <20191218223530.253106-1-dianders@chromium.org>
-From:   Neil Armstrong <narmstrong@baylibre.com>
-Autocrypt: addr=narmstrong@baylibre.com; prefer-encrypt=mutual; keydata=
- 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
- BSwxi7g3Mu7u5kUByanqHyA=
-Organization: Baylibre
-Message-ID: <6c592da1-c3fd-5ed8-64ef-ce4b63bf0364@baylibre.com>
-Date:   Thu, 13 Feb 2020 10:51:13 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
-MIME-Version: 1.0
-In-Reply-To: <20191218223530.253106-1-dianders@chromium.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=KVPyYo0pJTGCUkEFsuiM96kKjpjdNQqLwNQNRYIv3YU=;
+        b=a6CrHSZHQzyzLMTM5s1LZgT/GWAX1uEUrvzrf5ihjnoRWDVV7psA8gGq67217K4kKv
+         dwrEH9ucH59lkUqUn8CsTcF0cjc2LaYw9hy8189+pC+xSr/Xg1i5k/c8i5nKEtHSPC+k
+         O+76VGJ88PXb2r0mJ75RLHMFhSJOl3dkBuSlaemUZMHEDFVJoCOkAmYIuqICPI100ezF
+         j5McebZ8hAlyXl//kDlN8wtx4qlvJuvM9D0mDo4J9h9GN13p0sExSvt03Rgraz8mmOWp
+         xTm90CNVDi8kItu6oK7lkYVq+bnljPn4awdpXWP3YW67LnrGtxevdOp/AUsxTwIpg6jo
+         8z1g==
+X-Gm-Message-State: APjAAAXkM251DLlcmUV9+YRBpWTKhSEROd7nufSOnzi5dSMZNxiCOmzV
+        b+JLPxjsXgy3ejo/dehh5IKrIg==
+X-Google-Smtp-Source: APXvYqz7QQxIxHUlskZ0NzCArlLosaGbwrV2OU/si4MoNKHi3oir3CxiMvlT7K0HiQQGlWku23mvtA==
+X-Received: by 2002:a2e:a37c:: with SMTP id i28mr10413925ljn.118.1581587736280;
+        Thu, 13 Feb 2020 01:55:36 -0800 (PST)
+Received: from localhost.localdomain ([94.155.124.210])
+        by smtp.gmail.com with ESMTPSA id v5sm1090684ljk.67.2020.02.13.01.55.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Feb 2020 01:55:35 -0800 (PST)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        stable@vger.kernel.org
+Subject: [PATCH] venus: cache vb payload to be used by clock scaling
+Date:   Thu, 13 Feb 2020 11:55:14 +0200
+Message-Id: <20200213095514.30290-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/12/2019 23:35, Douglas Anderson wrote:
-> This series contains a pile of patches that was created to support
-> hooking up the AUO B116XAK01 panel to the eDP side of the bridge.  In
-> general it should be useful for hooking up a wider variety of DP
-> panels to the bridge, especially those with lower resolution and lower
-> bits per pixel.
-> 
-> The overall result of this series:
-> * Allows panels with fewer than 4 DP lanes hooked up to work.
-> * Optimizes the link rate for panels with 6 bpp.
-> * Supports trying more than one link rate when training if the main
->   link rate didn't work.
-> * Avoids invalid link rates.
-> 
-> It's not expected that this series will break any existing users but
-> testing is always good.
-> 
-> To support the AUO B116XAK01, we could actually stop at the ("Use
-> 18-bit DP if we can") patch since that causes the panel to run at a
-> link rate of 1.62 which works.  The patches to try more than one link
-> rate were all developed prior to realizing that I could just use
-> 18-bit mode and were validated with that patch reverted.
-> 
-> These patches were tested on sdm845-cheza atop mainline as of
-> 2019-12-13 and also on another board (the one with AUO B116XAK01) atop
-> a downstream kernel tree.
-> 
-> This patch series doesn't do anything to optimize the MIPI link and
-> only focuses on the DP link.  For instance, it's left as an exercise
-> to the reader to see if we can use the 666-packed mode on the MIPI
-> link and save some power (because we could lower the clock rate).
-> 
-> I am nowhere near a display expert and my knowledge of DP and MIPI is
-> pretty much zero.  If something about this patch series smells wrong,
-> it probably is.  Please let know and I'll try to fix it.
-> 
-> Changes in v3:
-> - Init rate_valid table, don't rely on stack being 0 (oops).
-> - Rename rate_times_200khz to rate_per_200khz.
-> - Loop over the ti_sn_bridge_dp_rate_lut table, making code smaller.
-> - Use 'true' instead of 1 for bools.
-> - Added note to commit message noting DP 1.4+ isn't well tested.
-> 
-> Changes in v2:
-> - Squash in maybe-uninitialized fix from Rob Clark.
-> - Patch ("Avoid invalid rates") replaces ("Skip non-standard DP rates")
-> 
-> Douglas Anderson (9):
->   drm/bridge: ti-sn65dsi86: Split the setting of the dp and dsi rates
->   drm/bridge: ti-sn65dsi86: zero is never greater than an unsigned int
->   drm/bridge: ti-sn65dsi86: Don't use MIPI variables for DP link
->   drm/bridge: ti-sn65dsi86: Config number of DP lanes Mo' Betta
->   drm/bridge: ti-sn65dsi86: Read num lanes from the DP sink
->   drm/bridge: ti-sn65dsi86: Use 18-bit DP if we can
->   drm/bridge: ti-sn65dsi86: Group DP link training bits in a function
->   drm/bridge: ti-sn65dsi86: Train at faster rates if slower ones fail
->   drm/bridge: ti-sn65dsi86: Avoid invalid rates
-> 
->  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 259 +++++++++++++++++++++-----
->  1 file changed, 216 insertions(+), 43 deletions(-)
-> 
+Instead of iterate over previously queued buffers in clock
+scaling code do cache the payload in instance context structure
+for later use when calculating new clock rate.
 
-Applied to drm-misc-next
+This will avoid to use spin locks during buffer list iteration
+in clock_scaling.
+
+This fixes following kernel Oops:
+
+ Unable to handle kernel paging request at virtual address deacfffffffffd6c
+ Mem abort info:
+   ESR = 0x96000004
+   EC = 0x25: DABT (current EL), IL = 32 bits
+   SET = 0, FnV = 0
+   EA = 0, S1PTW = 0
+ Data abort info:
+   ISV = 0, ISS = 0x00000004
+   CM = 0, WnR = 0
+ [deacfffffffffd6c] address between user and kernel address ranges
+ Internal error: Oops: 96000004 [#1] PREEMPT SMP
+ CPU: 7 PID: 5763 Comm: V4L2DecoderThre Tainted: G S      W         5.4.11 #8
+ pstate: 20400009 (nzCv daif +PAN -UAO)
+ pc : load_scale_v4+0x4c/0x2bc [venus_core]
+ lr : session_process_buf+0x18c/0x1c0 [venus_core]
+ sp : ffffffc01376b8d0
+ x29: ffffffc01376b8d0 x28: ffffff80cf1b0220
+ x27: ffffffc01376bba0 x26: ffffffd8f562b2d8
+ x25: ffffff80cf1b0220 x24: 0000000000000005
+ x23: ffffffd8f5620d98 x22: ffffff80ca01c800
+ x21: ffffff80cf1b0000 x20: ffffff8149490080
+ x19: ffffff8174b2c010 x18: 0000000000000000
+ x17: 0000000000000000 x16: ffffffd96ee3a0dc
+ x15: 0000000000000026 x14: 0000000000000026
+ x13: 00000000000055ac x12: 0000000000000001
+ x11: deacfffffffffd6c x10: dead000000000100
+ x9 : ffffff80ca01cf28 x8 : 0000000000000026
+ x7 : 0000000000000000 x6 : ffffff80cdd899c0
+ x5 : ffffff80cdd899c0 x4 : 0000000000000008
+ x3 : ffffff80ca01cf28 x2 : ffffff80ca01cf28
+ x1 : ffffff80d47ffc00 x0 : ffffff80cf1b0000
+ Call trace:
+  load_scale_v4+0x4c/0x2bc [venus_core]
+  session_process_buf+0x18c/0x1c0 [venus_core]
+  venus_helper_vb2_buf_queue+0x7c/0xf0 [venus_core]
+  __enqueue_in_driver+0xe4/0xfc [videobuf2_common]
+  vb2_core_qbuf+0x15c/0x338 [videobuf2_common]
+  vb2_qbuf+0x78/0xb8 [videobuf2_v4l2]
+  v4l2_m2m_qbuf+0x80/0xf8 [v4l2_mem2mem]
+  v4l2_m2m_ioctl_qbuf+0x2c/0x38 [v4l2_mem2mem]
+  v4l_qbuf+0x48/0x58
+  __video_do_ioctl+0x2b0/0x39c
+  video_usercopy+0x394/0x710
+  video_ioctl2+0x38/0x48
+  v4l2_ioctl+0x6c/0x80
+  do_video_ioctl+0xb00/0x2874
+  v4l2_compat_ioctl32+0x5c/0xcc
+  __se_compat_sys_ioctl+0x100/0x2074
+  __arm64_compat_sys_ioctl+0x20/0x2c
+  el0_svc_common+0xa4/0x154
+  el0_svc_compat_handler+0x2c/0x38
+  el0_svc_compat+0x8/0x10
+ Code: eb0a013f 54000200 aa1f03e8 d10e514b (b940016c)
+ ---[ end trace e11304b46552e0b9 ]---
+
+Cc: stable@vger.kernel.org # v5.5+
+Fixes: c0e284ccfeda ("media: venus: Update clock scaling")
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+ drivers/media/platform/qcom/venus/core.h    |  1 +
+ drivers/media/platform/qcom/venus/helpers.c | 20 +++++++++++++-------
+ 2 files changed, 14 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 11585fb3cae3..2f661af7f873 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -344,6 +344,7 @@ struct venus_inst {
+ 	unsigned int subscriptions;
+ 	int buf_count;
+ 	struct venus_ts_metadata tss[VIDEO_MAX_FRAME];
++	unsigned long payloads[VIDEO_MAX_FRAME];
+ 	u64 fps;
+ 	struct v4l2_fract timeperframe;
+ 	const struct venus_format *fmt_out;
+diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+index a172f1ac0b35..32f8fb8d7f33 100644
+--- a/drivers/media/platform/qcom/venus/helpers.c
++++ b/drivers/media/platform/qcom/venus/helpers.c
+@@ -544,18 +544,13 @@ static int scale_clocks_v4(struct venus_inst *inst)
+ 	struct venus_core *core = inst->core;
+ 	const struct freq_tbl *table = core->res->freq_tbl;
+ 	unsigned int num_rows = core->res->freq_tbl_size;
+-	struct v4l2_m2m_ctx *m2m_ctx = inst->m2m_ctx;
+ 	struct device *dev = core->dev;
+ 	unsigned long freq = 0, freq_core1 = 0, freq_core2 = 0;
+ 	unsigned long filled_len = 0;
+-	struct venus_buffer *buf, *n;
+-	struct vb2_buffer *vb;
+ 	int i, ret;
+ 
+-	v4l2_m2m_for_each_src_buf_safe(m2m_ctx, buf, n) {
+-		vb = &buf->vb.vb2_buf;
+-		filled_len = max(filled_len, vb2_get_plane_payload(vb, 0));
+-	}
++	for (i = 0; i < inst->num_input_bufs; i++)
++		filled_len = max(filled_len, inst->payloads[i]);
+ 
+ 	if (inst->session_type == VIDC_SESSION_TYPE_DEC && !filled_len)
+ 		return 0;
+@@ -1289,6 +1284,15 @@ int venus_helper_vb2_buf_prepare(struct vb2_buffer *vb)
+ }
+ EXPORT_SYMBOL_GPL(venus_helper_vb2_buf_prepare);
+ 
++static void cache_payload(struct venus_inst *inst, struct vb2_buffer *vb)
++{
++	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
++	unsigned int idx = vbuf->vb2_buf.index;
++
++	if (vbuf->vb2_buf.type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
++		inst->payloads[idx] = vb2_get_plane_payload(vb, 0);
++}
++
+ void venus_helper_vb2_buf_queue(struct vb2_buffer *vb)
+ {
+ 	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+@@ -1300,6 +1304,8 @@ void venus_helper_vb2_buf_queue(struct vb2_buffer *vb)
+ 
+ 	v4l2_m2m_buf_queue(m2m_ctx, vbuf);
+ 
++	cache_payload(inst, vb);
++
+ 	if (inst->session_type == VIDC_SESSION_TYPE_ENC &&
+ 	    !(inst->streamon_out && inst->streamon_cap))
+ 		goto unlock;
+-- 
+2.17.1
+
