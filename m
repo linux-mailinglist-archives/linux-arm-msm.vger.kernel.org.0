@@ -2,112 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CA4A15CD20
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 22:20:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 929F015CD3D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 22:30:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728569AbgBMVUM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Feb 2020 16:20:12 -0500
-Received: from mail-io1-f68.google.com ([209.85.166.68]:46727 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728323AbgBMVUL (ORCPT
+        id S1728483AbgBMVaO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Feb 2020 16:30:14 -0500
+Received: from mail-pg1-f201.google.com ([209.85.215.201]:50436 "EHLO
+        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728017AbgBMVaO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Feb 2020 16:20:11 -0500
-Received: by mail-io1-f68.google.com with SMTP id t26so8142898ioi.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2020 13:20:11 -0800 (PST)
+        Thu, 13 Feb 2020 16:30:14 -0500
+Received: by mail-pg1-f201.google.com with SMTP id q4so4591152pgr.17
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2020 13:30:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XdJ6+t4v4gVXqPsGTcbuSZf1Op16CguWcTM5QAh4j/U=;
-        b=G8gmToLcQ2GFr3Y2iihCmtCqN880870+huCEXmbYkzc4kqMgx0DFgLVf5owrVKSJdq
-         T3sspw4dUH7dRtfq9qK3Qtdzlr+Nb0VYW7gEpcEfpIt8Gd+hdNvImZiiLO8JBTuO5YSL
-         sreEu0f5mc5VYvgSHI+8Ev87E0/UEmAAPbAkPYxidgPRv004E2tMNAjyhda7MAgYCXT1
-         2aZVYqkV9bX95wSXGhBaPQGklVhYvTs8xDjAQysaq2BiTprcXDrAzcZRPNAfTdznNcUL
-         4fMWBQSb7pJOAG/mGsA1C0PCEItW30l/7m6RmU9E6fipvpS1pL2Aq2QkeWwu939nvHov
-         LDdQ==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=Zm5HmfQ08ScCng/zTBgIQ4r/Dsxq2SkuLGsGUlmZSkY=;
+        b=FZy9rV7Klz9GDbl/2sdmUC/UJ/RAnihDFexPPquCcX7fA5myeQhOvB6yQbtB0DYzp8
+         AHlnNLF6EHrPz+sdVv3oBVeJEE/PAosTHcZxnAOFF39O1ISUEyz4Bu5wHyGQyD3S+uyi
+         Xec11iom33bDLtPhPCkzUgrbPooIQTdUE5E0+48ajYN1svFa7eX66g8+tdvllvLmCG8l
+         RtBr0LKPOaY2xzET9klNKXlSJerTWzW4dunSlsqhSTzYLPx1WDhQNnw/cgkDSie6oN3c
+         i06hiDP+jTigYs154mYeCq/yJK6n0w0H7S+QxdocB+QGVn69vSYW5Dj53FNUykILtAK+
+         6/XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XdJ6+t4v4gVXqPsGTcbuSZf1Op16CguWcTM5QAh4j/U=;
-        b=oZxmnBWvAyFefr3MJWUwcR8SOoGt3+EtQUauPUBLM49nrPTmKFIUzS3kQVKBRkQGuW
-         0rLZ4gX3ZXVAewiqNvjl6isPhilwIV/s/ChZz2ny+6o2bvpqeCu1JXRZnyLy2q9HI1Rp
-         xxHSZKfKV8agy9z5hHSTL5exqoOZXpwrTtJewZPDlYgfRlACqFbvIHf4f3R++cv6R1qi
-         dWuYUEX8KkkMaaaQIQtjXWhyl6VwWgwqMPy20nuvyREh+iMXzBU+mGtU+EqSPOSgfAs9
-         VLotY8tM9bSIIIZS6UwxWp0lGLtJg8DmG9Trt8wfRQzob9DwOOO3Ez3yEjC44s2ZCXWS
-         AYRg==
-X-Gm-Message-State: APjAAAW+6XNl4aQ2Pq36zVJGwoMM/2bhxF8ARMgP4SXMa3WVD42es80/
-        0nub0D6Q9ThZWF61Vl9xJndDKKdGTyf31FzlDjMEvA==
-X-Google-Smtp-Source: APXvYqyAYEUq6eh8DqbFibK/wL7zPASyagcfAHQ0v8tMT+756eMpAPKA3VbtFHzpcWobjF8F0ZqDqoo+BtMlz0XOUZk=
-X-Received: by 2002:a5d:8cc4:: with SMTP id k4mr21678723iot.2.1581628810752;
- Thu, 13 Feb 2020 13:20:10 -0800 (PST)
-MIME-Version: 1.0
-References: <20200213200137.745029-1-robdclark@gmail.com>
-In-Reply-To: <20200213200137.745029-1-robdclark@gmail.com>
-From:   Sean Paul <sean@poorly.run>
-Date:   Thu, 13 Feb 2020 16:19:35 -0500
-Message-ID: <CAMavQK+8un0eD1X2n+ej3oViqCP1q0bLPAV=B9XqNd906MXkSA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: fix BGR565 vs RGB565 confusion
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Fritz Koenig <frkoenig@google.com>,
-        Nathan Huckleberry <nhuck@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=Zm5HmfQ08ScCng/zTBgIQ4r/Dsxq2SkuLGsGUlmZSkY=;
+        b=Uzve3smm48/irGnrD0G9V21HVxmv7+AnBBxQwG+gm2LseGTl1IN/A02fdKpHTfYDGi
+         graqUWuRZnMFlilLZtPSSobwZ01uanIleDycR4PcqTrLH2hN4sHr6ReN3JJFl5MLgiyc
+         4injqmryOCpWOKvFt1+h+se0l4Z+fYuMgxzxSl7HFYm9KvIEdBEwYubBFzlt3XJRT1RS
+         v+bAV5dGqk4ad8wFjLHVEafpgAB/43MYU5pMGllc9qAEaZryBDPKyRhMrAkD7rVfwY/k
+         azCD2gPmRlJp5yeBkCWtjobYqMBEiD5M4JWHLcQJw/Go9iFsytD1LIyxzbcoEAA4paZy
+         +4sw==
+X-Gm-Message-State: APjAAAUkKU48/u4eEkJvqW/WhMLn0i7sXojn0iKU5uSyOYw+oIf1a+SQ
+        Aroih+waZHW8YgQUAY5g61QIS015qICiXtc=
+X-Google-Smtp-Source: APXvYqxrnq4hOQ9yBYQtQJnm2++rP8XeKrGAyPFqtvw14576pDXWbHeTVzEyW97kxq423Tf9eiilGCGhoMx0u0yE
+X-Received: by 2002:a63:2309:: with SMTP id j9mr20056541pgj.54.1581629413468;
+ Thu, 13 Feb 2020 13:30:13 -0800 (PST)
+Date:   Thu, 13 Feb 2020 13:30:07 -0800
+Message-Id: <20200213213007.17023-1-jkardatzke@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.25.0.265.gbab2e86ba0-goog
+Subject: [PATCH] media: venus: support frame rate control
+From:   Jeffrey Kardatzke <jkardatzke@google.com>
+To:     linux-media@vger.kernel.org
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "Mauro Carvalho Chehab )" <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Kardatzke <jkardatzke@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 13, 2020 at 3:03 PM Rob Clark <robdclark@gmail.com> wrote:
->
-> From: Rob Clark <robdclark@chromium.org>
->
-> The component order between the two was swapped, resulting in incorrect
-> color when games with 565 visual hit the overlay path instead of GPU
-> composition.
->
-> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+Frame rate control is always enabled in this driver, so make it silently
+support the V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE.
 
-Reviewed-by: Sean Paul <seanpaul@chromium.org>
+Signed-off-by: Jeffrey Kardatzke <jkardatzke@google.com>
+---
+ drivers/media/platform/qcom/venus/venc_ctrls.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> index 24ab6249083a..6f420cc73dbd 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> @@ -255,13 +255,13 @@ static const struct dpu_format dpu_format_map[] = {
->
->         INTERLEAVED_RGB_FMT(RGB565,
->                 0, COLOR_5BIT, COLOR_6BIT, COLOR_5BIT,
-> -               C2_R_Cr, C0_G_Y, C1_B_Cb, 0, 3,
-> +               C1_B_Cb, C0_G_Y, C2_R_Cr, 0, 3,
->                 false, 2, 0,
->                 DPU_FETCH_LINEAR, 1),
->
->         INTERLEAVED_RGB_FMT(BGR565,
->                 0, COLOR_5BIT, COLOR_6BIT, COLOR_5BIT,
-> -               C1_B_Cb, C0_G_Y, C2_R_Cr, 0, 3,
-> +               C2_R_Cr, C0_G_Y, C1_B_Cb, 0, 3,
->                 false, 2, 0,
->                 DPU_FETCH_LINEAR, 1),
->
-> --
-> 2.24.1
->
+diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+index 877c0b3299e9..9ede692f77c5 100644
+--- a/drivers/media/platform/qcom/venus/venc_ctrls.c
++++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+@@ -199,6 +199,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+ 		}
+ 		mutex_unlock(&inst->lock);
+ 		break;
++	case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
++		// Silently ignore, it's always enabled.
++		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+@@ -351,6 +354,9 @@ int venc_ctrl_init(struct venus_inst *inst)
+ 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+ 			  V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME, 0, 0, 0, 0);
+ 
++	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
++			  V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE, 0, 1, 1, 1);
++
+ 	ret = inst->ctrl_handler.error;
+ 	if (ret)
+ 		goto err;
+-- 
+2.25.0.225.g125e21ebc7-goog
+
