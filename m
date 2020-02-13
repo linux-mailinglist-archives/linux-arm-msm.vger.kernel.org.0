@@ -2,72 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 92E6515BB68
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 10:17:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D354215BC13
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 10:51:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729531AbgBMJRN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Feb 2020 04:17:13 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:36053 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729822AbgBMJRN (ORCPT
+        id S1729422AbgBMJvS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Feb 2020 04:51:18 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36086 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729440AbgBMJvS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Feb 2020 04:17:13 -0500
-Received: by mail-wm1-f68.google.com with SMTP id p17so5715992wma.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2020 01:17:12 -0800 (PST)
+        Thu, 13 Feb 2020 04:51:18 -0500
+Received: by mail-wm1-f66.google.com with SMTP id p17so5845627wma.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2020 01:51:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=baylibre-com.20150623.gappssmtp.com; s=20150623;
         h=subject:to:cc:references:from:autocrypt:organization:message-id
          :date:user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=s0nJLegmENJqGnZxFH2aSyGNIie7HinZt9lTXluX3zE=;
-        b=Z4W3BNb76naKlShTOjloflPdjUeW9GEFzG7ddHzrI1jEWDhuqP8z0Oy/0EmfC6FcUp
-         AtBJvIgdMak0IzEhfvs3l5lncpDs0pNwjNZQqYdh3SrwxmCEArj8wQTNtY7IBcI4PeDh
-         CJ+plRweDpdDwCBOmp/Sa7PCs2EwNEHBFV3xDerXa0S0eiuJjd++d4pcLNxjt2vB1NJE
-         Gda8rhmXH1mV+YUba8cwaMIrvtSvc0Mh607/HgSvrjfdLVUjtshu4tRwgFYQ/s9lzYit
-         f9WEaYfNnWUGpt7kgC27vAg4NDAtBnXZYr3GnBcqFamwFJfDzUx8nmAcjRN0KhiE7dVw
-         xuHw==
+        bh=AxRD0g14NHM/J+SpVc2fYE9H/KcEvjTrbN0nCouyCsM=;
+        b=hy+stD4V0kXZJPfTU0Nn+l2s+wDkYgqxGPqzozxsujvZ+E/agL7fX1mDreRFlJU4gk
+         eQxb6SKyH4/7IkkJWLpesPXM2EjMAR02BuP3ik6d9s5+8+9OpYcMi2uhW5nb0aPmiIAy
+         jJHGiPg96o08787+h2J9YhdbqqmU/E13bKOdhQOnlXF/NqAJLKJH5ZrTObpaALi4UI3i
+         +jKLolHkAJiJCJQ53wfMvingbzAOiuKK0OfHfr7Irvx7JZlnUWe6jin7PGJCx+cOq6K/
+         Hw51JS0i1zBLDscNLNuIHCCkW8MRI8dkleqmg2f95tY4R8ZCMF4iGkj4IBnc4ALAQcha
+         UFog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:autocrypt
          :organization:message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=s0nJLegmENJqGnZxFH2aSyGNIie7HinZt9lTXluX3zE=;
-        b=d0G2r7ZaMvwRarde6N6cSFX1J2bVUVwCVxhtqrPCeyVNdy6qH+j0JtEpq91ctH4pnF
-         h96rfRBCCbJjmglW1bpJjnzOMSVBrc/X1DzExBHcSyUXT0+SqwQNc0IpjO4fLKZo0ocj
-         qVX536UQOAWjVKAA/FKr0I4XQOu9/jvodx/+kO5+pJAzCPEC3hdR4LuJnKN9NPJTOkyW
-         scs0feXUBiDDolGXAE/PdUnZ5lg8vK33kghUbwVATBVDTI9BFl0ekEJ1J3EgaevbUtc5
-         ArvpMrR5/igxbzh9yZl3jH1xrsNMfPYIrgSXVBacEYMauRjoA/Pv30b8/45oJMF1oFfr
-         wd2w==
-X-Gm-Message-State: APjAAAVPq/eNpwM83V6AwcdDAPnsKd9/eONIaYiPaqF4+guD3Q11bIB4
-        8SyrgJGMPIto7r9EBRwP0klcow==
-X-Google-Smtp-Source: APXvYqzManbD640lysqRJErl6dcCNzLPec15u5TDII3UVcFO8k/dCSge2GuDJRRfkqrGbnsYEP6msQ==
-X-Received: by 2002:a1c:9cce:: with SMTP id f197mr4885130wme.133.1581585431410;
-        Thu, 13 Feb 2020 01:17:11 -0800 (PST)
+        bh=AxRD0g14NHM/J+SpVc2fYE9H/KcEvjTrbN0nCouyCsM=;
+        b=r/IXkfYzOdxt2ud93qCvla8A976AdAcIA9yZSpRKdWPyHqPI8eEc6bSlqvvJB0uxH/
+         6Jaynf4XKhpXZ1MGYbxDg2CGrpz+Mw3aF/LGUxJs/+3sfRA5gW1Dd9DOv9x1JMXLJoTZ
+         d8lmPgZv6Cn/R5CU8mdwoaWSyoqU1aM6gymlUzRTniq9L0NEFx5Azti3MC1Efqk9WJ9o
+         Fh4XDz7n8bn5Q85i7GC/VmtKdkbN/HQxzRCBvSnKdgOVmlIYRlMgi6+phj8hrOLQ3mua
+         zxpPvBsSURzGq39JI4MHavWuYdN15K3eUUyd2U/VJxx05MsLjqlJcDxA7rmnYtYY53LN
+         bLhQ==
+X-Gm-Message-State: APjAAAWht6HxikhmFR1W/kJ+2vjDbtY4PQIoHJB7w0K109M9/wqpXkQ7
+        V3OsCdCjlOv2Lbg3Gxr6nNDu8g==
+X-Google-Smtp-Source: APXvYqw+4XV1nmLfa4ZQ62WE/lPnKl10ITfo8G7sqKFHuuRT3ZVYYLrerYuZnS+Vmzdlh8DBIsgueg==
+X-Received: by 2002:a7b:cc97:: with SMTP id p23mr4842060wma.89.1581587474908;
+        Thu, 13 Feb 2020 01:51:14 -0800 (PST)
 Received: from [10.1.3.173] (laubervilliers-658-1-213-31.w90-63.abo.wanadoo.fr. [90.63.244.31])
-        by smtp.gmail.com with ESMTPSA id g25sm13242512wmh.3.2020.02.13.01.17.10
+        by smtp.gmail.com with ESMTPSA id q130sm2496895wme.19.2020.02.13.01.51.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Feb 2020 01:17:10 -0800 (PST)
-Subject: Re: [PATCH v3 6/9] drm/bridge: ti-sn65dsi86: Use 18-bit DP if we can
-To:     Doug Anderson <dianders@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thu, 13 Feb 2020 01:51:13 -0800 (PST)
+Subject: Re: [PATCH v3 0/9] drm/bridge: ti-sn65dsi86: Improve support for AUO
+ B116XAK01 + other DP
+To:     Douglas Anderson <dianders@chromium.org>,
         Andrzej Hajda <a.hajda@samsung.com>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <seanpaul@chromium.org>,
+Cc:     robdclark@chromium.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, seanpaul@chromium.org,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        LKML <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
+        Jonas Karlman <jonas@kwiboo.se>, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
         Jernej Skrabec <jernej.skrabec@siol.net>,
         Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
 References: <20191218223530.253106-1-dianders@chromium.org>
- <20191218143416.v3.6.Iaf8d698f4e5253d658ae283d2fd07268076a7c27@changeid>
- <20200203233711.GF311651@builder>
- <CAD=FV=VTKfv93BiNRYBxWg8o8YKrQy3Z85MzR8XFr=GCS5xhdg@mail.gmail.com>
- <CAD=FV=XPscj+bDBjxqBSudj77WeAjCvmOYcOu27jk4gqiCcWcA@mail.gmail.com>
 From:   Neil Armstrong <narmstrong@baylibre.com>
 Autocrypt: addr=narmstrong@baylibre.com; prefer-encrypt=mutual; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -119,12 +111,12 @@ Autocrypt: addr=narmstrong@baylibre.com; prefer-encrypt=mutual; keydata=
  zR8QplXA5kogS4kLe/7/JmlDMO8Zgm9vKLHSUeesLOrjdZ59EcjldNNBszRZQgEhwaarfz46
  BSwxi7g3Mu7u5kUByanqHyA=
 Organization: Baylibre
-Message-ID: <5764c198-ca2a-ed21-809e-33a883b77565@baylibre.com>
-Date:   Thu, 13 Feb 2020 10:17:10 +0100
+Message-ID: <6c592da1-c3fd-5ed8-64ef-ce4b63bf0364@baylibre.com>
+Date:   Thu, 13 Feb 2020 10:51:13 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.4.1
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=XPscj+bDBjxqBSudj77WeAjCvmOYcOu27jk4gqiCcWcA@mail.gmail.com>
+In-Reply-To: <20191218223530.253106-1-dianders@chromium.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -133,47 +125,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 18/12/2019 23:35, Douglas Anderson wrote:
+> This series contains a pile of patches that was created to support
+> hooking up the AUO B116XAK01 panel to the eDP side of the bridge.  In
+> general it should be useful for hooking up a wider variety of DP
+> panels to the bridge, especially those with lower resolution and lower
+> bits per pixel.
+> 
+> The overall result of this series:
+> * Allows panels with fewer than 4 DP lanes hooked up to work.
+> * Optimizes the link rate for panels with 6 bpp.
+> * Supports trying more than one link rate when training if the main
+>   link rate didn't work.
+> * Avoids invalid link rates.
+> 
+> It's not expected that this series will break any existing users but
+> testing is always good.
+> 
+> To support the AUO B116XAK01, we could actually stop at the ("Use
+> 18-bit DP if we can") patch since that causes the panel to run at a
+> link rate of 1.62 which works.  The patches to try more than one link
+> rate were all developed prior to realizing that I could just use
+> 18-bit mode and were validated with that patch reverted.
+> 
+> These patches were tested on sdm845-cheza atop mainline as of
+> 2019-12-13 and also on another board (the one with AUO B116XAK01) atop
+> a downstream kernel tree.
+> 
+> This patch series doesn't do anything to optimize the MIPI link and
+> only focuses on the DP link.  For instance, it's left as an exercise
+> to the reader to see if we can use the 666-packed mode on the MIPI
+> link and save some power (because we could lower the clock rate).
+> 
+> I am nowhere near a display expert and my knowledge of DP and MIPI is
+> pretty much zero.  If something about this patch series smells wrong,
+> it probably is.  Please let know and I'll try to fix it.
+> 
+> Changes in v3:
+> - Init rate_valid table, don't rely on stack being 0 (oops).
+> - Rename rate_times_200khz to rate_per_200khz.
+> - Loop over the ti_sn_bridge_dp_rate_lut table, making code smaller.
+> - Use 'true' instead of 1 for bools.
+> - Added note to commit message noting DP 1.4+ isn't well tested.
+> 
+> Changes in v2:
+> - Squash in maybe-uninitialized fix from Rob Clark.
+> - Patch ("Avoid invalid rates") replaces ("Skip non-standard DP rates")
+> 
+> Douglas Anderson (9):
+>   drm/bridge: ti-sn65dsi86: Split the setting of the dp and dsi rates
+>   drm/bridge: ti-sn65dsi86: zero is never greater than an unsigned int
+>   drm/bridge: ti-sn65dsi86: Don't use MIPI variables for DP link
+>   drm/bridge: ti-sn65dsi86: Config number of DP lanes Mo' Betta
+>   drm/bridge: ti-sn65dsi86: Read num lanes from the DP sink
+>   drm/bridge: ti-sn65dsi86: Use 18-bit DP if we can
+>   drm/bridge: ti-sn65dsi86: Group DP link training bits in a function
+>   drm/bridge: ti-sn65dsi86: Train at faster rates if slower ones fail
+>   drm/bridge: ti-sn65dsi86: Avoid invalid rates
+> 
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 259 +++++++++++++++++++++-----
+>  1 file changed, 216 insertions(+), 43 deletions(-)
+> 
 
-On 13/02/2020 00:04, Doug Anderson wrote:
-> Andrzej / Neil,
-> 
-> On Mon, Feb 3, 2020 at 4:21 PM Doug Anderson <dianders@chromium.org> wrote:
->>
->> Andrzej / Neil,
->>
->> On Mon, Feb 3, 2020 at 3:37 PM Bjorn Andersson
->> <bjorn.andersson@linaro.org> wrote:
->>>
->>> On Wed 18 Dec 14:35 PST 2019, Douglas Anderson wrote:
->>>
->>>> The current bridge driver always forced us to use 24 bits per pixel
->>>> over the DP link.  This is a waste if you are hooked up to a panel
->>>> that only supports 6 bits per color or fewer, since in that case you
->>>> ran run at 18 bits per pixel and thus end up at a lower DP clock rate.
->>>
->>> s/ran/can/
->>
->> I'm going to make the assumption that you can fix this typo when
->> applying the patch and I'm not planning to send a v4.  If that's not a
->> good assumption then please yell.
-> 
-> With -rc1 released, it seems like it might be a nice time to land this
-> series.  Do you happen to know if there is anything outstanding?  Is
-> one of you two the right person to land this series, or should I be
-> asking someone else?  I can see if I can find someone to take them
-> through drm-misc if there's nobody else?
-> 
-> It's not massively crazy urgent or anything, but the patches have been
-> floating for quite some time now and it'd be nice to know what the
-> plan was.  I also have another patch I'd like to post up but was
-> hoping to get this series resolved first.
-> 
-> Thanks much!
-> 
-> -Doug
-> 
-
-I will push it shortly, seems everything is fine and reviewed.
-
-Neil
+Applied to drm-misc-next
