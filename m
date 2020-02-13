@@ -2,136 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1271315BD38
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 12:00:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 96BD815BD57
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 12:08:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729466AbgBMLAI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Feb 2020 06:00:08 -0500
-Received: from foss.arm.com ([217.140.110.172]:44918 "EHLO foss.arm.com"
+        id S1729526AbgBMLIv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Feb 2020 06:08:51 -0500
+Received: from foss.arm.com ([217.140.110.172]:45056 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726232AbgBMLAI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Feb 2020 06:00:08 -0500
+        id S1729466AbgBMLIv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Feb 2020 06:08:51 -0500
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 46A8F1FB;
-        Thu, 13 Feb 2020 03:00:07 -0800 (PST)
-Received: from [192.168.0.7] (unknown [172.31.20.19])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 875E83F6CF;
-        Thu, 13 Feb 2020 03:00:00 -0800 (PST)
-Subject: Re: [PATCH v2 1/4] PM / EM: add devices to Energy Model
-To:     lukasz.luba@arm.com, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com
-Cc:     Morten.Rasmussen@arm.com, Chris.Redpath@arm.com,
-        ionela.voinescu@arm.com, javi.merino@arm.com,
-        cw00.choi@samsung.com, b.zolnierkie@samsung.com, rjw@rjwysocki.net,
-        sudeep.holla@arm.com, viresh.kumar@linaro.org, nm@ti.com,
-        sboyd@kernel.org, rui.zhang@intel.com, amit.kucheria@verdurent.com,
-        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        rostedt@goodmis.org, qperret@google.com, bsegall@google.com,
-        mgorman@suse.de, shawnguo@kernel.org, s.hauer@pengutronix.de,
-        festevam@gmail.com, kernel@pengutronix.de, khilman@kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net
-References: <20200206134640.11367-1-lukasz.luba@arm.com>
- <20200206134640.11367-2-lukasz.luba@arm.com>
-From:   Dietmar Eggemann <dietmar.eggemann@arm.com>
-Message-ID: <62a54ec9-0491-367d-0a36-7ea32c449acc@arm.com>
-Date:   Thu, 13 Feb 2020 11:59:59 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 83A291FB;
+        Thu, 13 Feb 2020 03:08:48 -0800 (PST)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9CBC73F6CF;
+        Thu, 13 Feb 2020 03:08:46 -0800 (PST)
+Date:   Thu, 13 Feb 2020 11:08:41 +0000
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Mike Leach <mike.leach@linaro.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        devicetree@vger.kernel.org,
+        Coresight ML <coresight@lists.linaro.org>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "Suzuki K. Poulose" <suzuki.poulose@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, maxime@cerno.tech,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Andy Gross <agross@kernel.org>, Jon Corbet <corbet@lwn.net>
+Subject: Re: [PATCH v9 11/15] dt-bindings: arm: Juno platform - add CTI
+ entries to device tree.
+Message-ID: <20200213110841.GA26385@bogus>
+References: <20200210213924.20037-1-mike.leach@linaro.org>
+ <20200210213924.20037-12-mike.leach@linaro.org>
+ <20200211115852.GA52147@bogus>
+ <CANLsYkxOK+21JutM7ryz1ux0gHBTa51q5r-9i18kFLvMKouShA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20200206134640.11367-2-lukasz.luba@arm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANLsYkxOK+21JutM7ryz1ux0gHBTa51q5r-9i18kFLvMKouShA@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/02/2020 14:46, lukasz.luba@arm.com wrote:
-> From: Lukasz Luba <lukasz.luba@arm.com>
+On Wed, Feb 12, 2020 at 03:12:21PM -0700, Mathieu Poirier wrote:
+> On Tue, 11 Feb 2020 at 04:59, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> >
+> > On Mon, Feb 10, 2020 at 09:39:20PM +0000, Mike Leach wrote:
+> > > Add in CTI entries for Juno r0, r1 and r2 to device tree entries.
+> > >
+> >
+> > I can take this patch alone unless you have plans to take all in go.
+> 
+> Please hang on to it for the moment.  I'll get back to you if/when we
+> decide to move forward with this set.
+> 
 
-[..]
+Perfect, I will wait until you prod me again :)
 
-> @@ -26,7 +28,7 @@ framework, and interested clients reading the data from it::
-
-s/::/: ?
-
->         | Thermal (IPA) |  | Scheduler (EAS) |  |     Other     |
->         +---------------+  +-----------------+  +---------------+
->                 |                   | em_pd_energy()    |
-> -               |                   | em_cpu_get()      |
-> +               |  em_get_pd()      | em_cpu_get()      |
->                 +---------+         |         +---------+
-
-em_get_pd() and em_cpu_get()? Why not em_pd_get()? em_cpu_get() is a
-specific em_get_pd(). right?
-
-[...]
-
-> @@ -85,13 +89,20 @@ API.
->  2.3 Accessing performance domains
->  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->  
-> +There is two API functions which provide the access to the energy model:
-> +em_cpu_get() which takes CPU id as an argument and em_get_pd() with device
-> +pointer as an argument. It depends on the subsystem which interface it is
-> +going to use, but in case of CPU devices both functions return the same
-> +performance domain.
-
-There is probably a reason why we need this specific function for CPU
-devices? The reason should be described. People might ask why
-em_get_pd() is not sufficient.
-
-[...]
-
-> - * A "performance domain" represents a group of CPUs whose performance is
-> - * scaled together. All CPUs of a performance domain must have the same
-> - * micro-architecture. Performance domains often have a 1-to-1 mapping with
-> - * CPUFreq policies.
-> + * In case of CPU device, a "performance domain" represents a group of CPUs
-> + * whose performance is scaled together. All CPUs of a performance domain
-> + * must have the same micro-architecture. Performance domains often have
-> + * a 1-to-1 mapping with CPUFreq policies.
-> + * In case of other devices the 'priv' field is unused.
->   */
->  struct em_perf_domain {
-> -	struct em_cap_state *table;
-> -	int nr_cap_states;
-> -	unsigned long cpus[0];
-> +	struct em_perf_state *table;
-> +	int nr_perf_states;
-> +	void *priv;
-
-In case you go back to the variable length field plus type field to
-distingush EM devices, keep cpus[0] as the name.
-
-[..]
-
->  /**
-> - * em_pd_energy() - Estimates the energy consumed by the CPUs of a perf. domain
-> + * em_pd_energy() - Estimates the energy consumed by the CPUs of a perf.
-> +			domain
-
-Why this change?
-
-[...]
-
-> @@ -141,12 +210,12 @@ static struct em_perf_domain *em_create_pd(cpumask_t *span, int nr_states,
->  		 */
->  		opp_eff = freq / power;
->  		if (opp_eff >= prev_opp_eff)
-> -			pr_warn("pd%d: hertz/watts ratio non-monotonically decreasing: em_cap_state %d >= em_cap_state%d\n",
-> -					cpu, i, i - 1);
-> +			dev_warn(dev, "energy_model: hertz/watts ratio non-monotonically decreasing: em_perf_state %d >= em_perf_state%d\n",
-
-s/energy_model/EM ?
-
-[...]
+-- 
+Regards,
+Sudeep
