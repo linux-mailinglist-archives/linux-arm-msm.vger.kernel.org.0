@@ -2,328 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 84A4D15C60D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 17:11:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AB92915C675
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 17:12:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729203AbgBMP4i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Feb 2020 10:56:38 -0500
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:41882 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728894AbgBMP4i (ORCPT
+        id S1728363AbgBMQAu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Feb 2020 11:00:50 -0500
+Received: from mx07-00178001.pphosted.com ([62.209.51.94]:35790 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729065AbgBMQAt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Feb 2020 10:56:38 -0500
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 13 Feb 2020 21:26:33 +0530
-Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 13 Feb 2020 21:26:07 +0530
-Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
-        id 7B6F3214B1; Thu, 13 Feb 2020 21:26:06 +0530 (IST)
-From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, robh@kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bgodavar@codeaurora.org, tientzu@chromium.org,
-        seanpaul@chromium.org, rjliao@codeaurora.org, yshavit@google.com,
-        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Subject: [PATCH v3] Bluetooth: hci_qca: Bug fixes while collecting controller memory dump
-Date:   Thu, 13 Feb 2020 21:26:04 +0530
-Message-Id: <1581609364-21824-1-git-send-email-gubbaven@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Thu, 13 Feb 2020 11:00:49 -0500
+Received: from pps.filterd (m0046668.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 01DFmigN024413;
+        Thu, 13 Feb 2020 17:00:38 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=STMicroelectronics;
+ bh=DYnVX283FjeehaiMYw7D2LGyBDeji4OjGpp51jTXiO4=;
+ b=S/8jWHIUylpqJEa1qXlj6F2AcCbNxY15hZ1G7c+8gejvbkbJG7D+dNDLMyoCN+cnymgH
+ pz2TzUc21fvajmkGbLuVoBcJ45xUdslz88swYSif12pr81hnMAU386FFq1gx/9QSUcC4
+ oYG3+WRMUv+J9FJ/OPfbSvPt9PgPpm4Tr5f1V7s8RdkFdVAY/6Z9ZYhYyM77+/iCw+FX
+ YuAzQX2efOZHkbjqDz0/FRADmazI2FMKxKMIf22tGvFW06yP970g8wSECrjEYNZOMEJL
+ hHxqAAi2DCbWN7e/m8PoEUIehy8QFOIIkT9y6ItZwmCfaamD7PKYMTrY3oZwKzWBBLvm OQ== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com with ESMTP id 2y1ufhpae8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 13 Feb 2020 17:00:38 +0100
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 8CDAB100034;
+        Thu, 13 Feb 2020 17:00:37 +0100 (CET)
+Received: from Webmail-eu.st.com (sfhdag3node1.st.com [10.75.127.7])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 714FE2BAEF4;
+        Thu, 13 Feb 2020 17:00:37 +0100 (CET)
+Received: from lmecxl0889.lme.st.com (10.75.127.46) by SFHDAG3NODE1.st.com
+ (10.75.127.7) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 13 Feb
+ 2020 17:00:36 +0100
+Subject: Re: [PATCH v3 6/8] remoteproc: Introduce "panic" callback in ops
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>
+CC:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Sibi Sankar <sibis@codeaurora.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>
+References: <20200211005059.1377279-1-bjorn.andersson@linaro.org>
+ <20200211005059.1377279-7-bjorn.andersson@linaro.org>
+From:   Arnaud POULIQUEN <arnaud.pouliquen@st.com>
+Message-ID: <d40e2d7a-19ae-0acf-dc73-f2edb8cb3c32@st.com>
+Date:   Thu, 13 Feb 2020 17:00:36 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <20200211005059.1377279-7-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.75.127.46]
+X-ClientProxiedBy: SFHDAG3NODE1.st.com (10.75.127.7) To SFHDAG3NODE1.st.com
+ (10.75.127.7)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.572
+ definitions=2020-02-13_05:2020-02-12,2020-02-13 signatures=0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch will fix the below issues
-   1.Fixed race conditions while accessing memory dump state flags.
-   2.Updated with actual context of timer in hci_memdump_timeout()
-   3.Updated injecting hardware error event if the dumps failed to receive.
-   4.Once timeout is triggered, stopping the memory dump collections.
 
-Possible scenarios while collecting memory dump:
+On 2/11/20 1:50 AM, Bjorn Andersson wrote:
+> Introduce a "panic" function in the remoteproc ops table, to allow
+> remoteproc instances to perform operations needed in order to aid in
+> post mortem system debugging, such as flushing caches etc, when the
+> kernel panics. The function can return a number of milliseconds needed
+> by the remote to "settle" and the core will wait the longest returned
+> duration before returning from the panic handler.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Changes since v2:
+> - Replace per-rproc notifier callback with one generic
+> - Move the mdelay() from the individual drivers to the core and sleep the
+>   longest returned duration. Drivers that doesn't need a delay can return 0.
+> - Unregister the notifier on exit
+> 
+>  drivers/remoteproc/remoteproc_core.c | 46 ++++++++++++++++++++++++++++
+>  include/linux/remoteproc.h           |  3 ++
+>  2 files changed, 49 insertions(+)
+> 
+> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+> index 097f33e4f1f3..8b6932027d36 100644
+> --- a/drivers/remoteproc/remoteproc_core.c
+> +++ b/drivers/remoteproc/remoteproc_core.c
+> @@ -16,6 +16,7 @@
+>  
+>  #define pr_fmt(fmt)    "%s: " fmt, __func__
+>  
+> +#include <linux/delay.h>
+>  #include <linux/kernel.h>
+>  #include <linux/module.h>
+>  #include <linux/device.h>
+> @@ -43,6 +44,7 @@
+>  
+>  static DEFINE_MUTEX(rproc_list_mutex);
+>  static LIST_HEAD(rproc_list);
+> +static struct notifier_block rproc_panic_nb;
+>  
+>  typedef int (*rproc_handle_resource_t)(struct rproc *rproc,
+>  				 void *, int offset, int avail);
+> @@ -2216,10 +2218,53 @@ void rproc_report_crash(struct rproc *rproc, enum rproc_crash_type type)
+>  }
+>  EXPORT_SYMBOL(rproc_report_crash);
+>  
+> +static int rproc_panic_handler(struct notifier_block *nb, unsigned long event,
+> +			       void *ptr)
+> +{
+> +	unsigned int longest = 0;
+> +	struct rproc *rproc;
+> +	unsigned int d;
+> +	int locked;
+> +
+> +	locked = mutex_trylock(&rproc_list_mutex);
+> +	if (!locked) {
+> +		pr_err("Failed to acquire rproc list lock, won't call panic functions\n");
+> +		return NOTIFY_DONE;
+> +	}
+As consequence the panic is not handled for all rproc instance if the mutex is locked.
+it seems to me that the first solution with the delay side effect is more safety...
 
-Scenario 1:
-
-Memdump event from firmware
-Some number of memdump events with seq #
-Hw error event
-Reset
-
-Scenario 2:
-
-Memdump event from firmware
-Some number of memdump events with seq #
-Timeout schedules hw_error_event if hw error event is not received already
-hw_error_event clears the memdump activity
-reset
-
-Scenario 3:
-
-hw_error_event sends memdump command to firmware and waits for completion
-Some number of memdump events with seq #
-hw error event
-reset
-
-Fixes: d841502c79e3 ("Bluetooth: hci_qca: Collect controller memory dump during SSR")
-Reported-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
----
-v3:
-  * Removed memdump_timer completely.
-  * Used delayed work queue.
---- 
- drivers/bluetooth/hci_qca.c | 101 +++++++++++++++++++++++++++++---------------
- 1 file changed, 67 insertions(+), 34 deletions(-)
-
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index eacc65b..9cae5fe 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -29,6 +29,7 @@
- #include <linux/platform_device.h>
- #include <linux/regulator/consumer.h>
- #include <linux/serdev.h>
-+#include <linux/mutex.h>
- #include <asm/unaligned.h>
- 
- #include <net/bluetooth/bluetooth.h>
-@@ -69,7 +70,8 @@ enum qca_flags {
- 	QCA_IBS_ENABLED,
- 	QCA_DROP_VENDOR_EVENT,
- 	QCA_SUSPENDING,
--	QCA_MEMDUMP_COLLECTION
-+	QCA_MEMDUMP_COLLECTION,
-+	QCA_HW_ERROR_EVENT
- };
- 
- 
-@@ -138,18 +140,19 @@ struct qca_data {
- 	u32 tx_idle_delay;
- 	struct timer_list wake_retrans_timer;
- 	u32 wake_retrans;
--	struct timer_list memdump_timer;
- 	struct workqueue_struct *workqueue;
- 	struct work_struct ws_awake_rx;
- 	struct work_struct ws_awake_device;
- 	struct work_struct ws_rx_vote_off;
- 	struct work_struct ws_tx_vote_off;
- 	struct work_struct ctrl_memdump_evt;
-+	struct delayed_work ctrl_memdump_timeout;
- 	struct qca_memdump_data *qca_memdump;
- 	unsigned long flags;
- 	struct completion drop_ev_comp;
- 	wait_queue_head_t suspend_wait_q;
- 	enum qca_memdump_states memdump_state;
-+	struct mutex hci_memdump_lock;
- 
- 	/* For debugging purpose */
- 	u64 ibs_sent_wacks;
-@@ -522,23 +525,28 @@ static void hci_ibs_wake_retrans_timeout(struct timer_list *t)
- 		hci_uart_tx_wakeup(hu);
- }
- 
--static void hci_memdump_timeout(struct timer_list *t)
-+
-+static void qca_controller_memdump_timeout(struct work_struct *work)
- {
--	struct qca_data *qca = from_timer(qca, t, tx_idle_timer);
-+	struct qca_data *qca = container_of(work, struct qca_data,
-+					ctrl_memdump_timeout.work);
- 	struct hci_uart *hu = qca->hu;
--	struct qca_memdump_data *qca_memdump = qca->qca_memdump;
--	char *memdump_buf = qca_memdump->memdump_buf_tail;
--
--	bt_dev_err(hu->hdev, "clearing allocated memory due to memdump timeout");
--	/* Inject hw error event to reset the device and driver. */
--	hci_reset_dev(hu->hdev);
--	vfree(memdump_buf);
--	kfree(qca_memdump);
--	qca->memdump_state = QCA_MEMDUMP_TIMEOUT;
--	del_timer(&qca->memdump_timer);
--	cancel_work_sync(&qca->ctrl_memdump_evt);
-+
-+	mutex_lock(&qca->hci_memdump_lock);
-+	if (test_bit(QCA_MEMDUMP_COLLECTION, &qca->flags)) {
-+		qca->memdump_state = QCA_MEMDUMP_TIMEOUT;
-+		if (!test_bit(QCA_HW_ERROR_EVENT, &qca->flags)) {
-+			/* Inject hw error event to reset the device
-+			 * and driver.
-+			 */
-+			hci_reset_dev(hu->hdev);
-+		}
-+	}
-+
-+	mutex_unlock(&qca->hci_memdump_lock);
- }
- 
-+
- /* Initialize protocol */
- static int qca_open(struct hci_uart *hu)
- {
-@@ -558,6 +566,7 @@ static int qca_open(struct hci_uart *hu)
- 	skb_queue_head_init(&qca->tx_wait_q);
- 	skb_queue_head_init(&qca->rx_memdump_q);
- 	spin_lock_init(&qca->hci_ibs_lock);
-+	mutex_init(&qca->hci_memdump_lock);
- 	qca->workqueue = alloc_ordered_workqueue("qca_wq", 0);
- 	if (!qca->workqueue) {
- 		BT_ERR("QCA Workqueue not initialized properly");
-@@ -570,6 +579,8 @@ static int qca_open(struct hci_uart *hu)
- 	INIT_WORK(&qca->ws_rx_vote_off, qca_wq_serial_rx_clock_vote_off);
- 	INIT_WORK(&qca->ws_tx_vote_off, qca_wq_serial_tx_clock_vote_off);
- 	INIT_WORK(&qca->ctrl_memdump_evt, qca_controller_memdump);
-+	INIT_DELAYED_WORK(&qca->ctrl_memdump_timeout,
-+			  qca_controller_memdump_timeout);
- 	init_waitqueue_head(&qca->suspend_wait_q);
- 
- 	qca->hu = hu;
-@@ -596,7 +607,6 @@ static int qca_open(struct hci_uart *hu)
- 
- 	timer_setup(&qca->tx_idle_timer, hci_ibs_tx_idle_timeout, 0);
- 	qca->tx_idle_delay = IBS_HOST_TX_IDLE_TIMEOUT_MS;
--	timer_setup(&qca->memdump_timer, hci_memdump_timeout, 0);
- 
- 	BT_DBG("HCI_UART_QCA open, tx_idle_delay=%u, wake_retrans=%u",
- 	       qca->tx_idle_delay, qca->wake_retrans);
-@@ -677,7 +687,6 @@ static int qca_close(struct hci_uart *hu)
- 	skb_queue_purge(&qca->rx_memdump_q);
- 	del_timer(&qca->tx_idle_timer);
- 	del_timer(&qca->wake_retrans_timer);
--	del_timer(&qca->memdump_timer);
- 	destroy_workqueue(qca->workqueue);
- 	qca->hu = NULL;
- 
-@@ -963,11 +972,20 @@ static void qca_controller_memdump(struct work_struct *work)
- 
- 	while ((skb = skb_dequeue(&qca->rx_memdump_q))) {
- 
-+		mutex_lock(&qca->hci_memdump_lock);
-+		/* Skip processing the received packets if timeout detected. */
-+		if (qca->memdump_state == QCA_MEMDUMP_TIMEOUT) {
-+			mutex_unlock(&qca->hci_memdump_lock);
-+			return;
-+		}
-+
- 		if (!qca_memdump) {
- 			qca_memdump = kzalloc(sizeof(struct qca_memdump_data),
- 					      GFP_ATOMIC);
--			if (!qca_memdump)
-+			if (!qca_memdump) {
-+				mutex_unlock(&qca->hci_memdump_lock);
- 				return;
-+			}
- 
- 			qca->qca_memdump = qca_memdump;
- 		}
-@@ -992,13 +1010,15 @@ static void qca_controller_memdump(struct work_struct *work)
- 			if (!(dump_size)) {
- 				bt_dev_err(hu->hdev, "Rx invalid memdump size");
- 				kfree_skb(skb);
-+				mutex_unlock(&qca->hci_memdump_lock);
- 				return;
- 			}
- 
- 			bt_dev_info(hu->hdev, "QCA collecting dump of size:%u",
- 				    dump_size);
--			mod_timer(&qca->memdump_timer, (jiffies +
--				  msecs_to_jiffies(MEMDUMP_TIMEOUT_MS)));
-+			queue_delayed_work(qca->workqueue,
-+					   &qca->ctrl_memdump_timeout,
-+					msecs_to_jiffies(MEMDUMP_TIMEOUT_MS));
- 
- 			skb_pull(skb, sizeof(dump_size));
- 			memdump_buf = vmalloc(dump_size);
-@@ -1016,6 +1036,7 @@ static void qca_controller_memdump(struct work_struct *work)
- 			kfree(qca_memdump);
- 			kfree_skb(skb);
- 			qca->qca_memdump = NULL;
-+			mutex_unlock(&qca->hci_memdump_lock);
- 			return;
- 		}
- 
-@@ -1046,16 +1067,20 @@ static void qca_controller_memdump(struct work_struct *work)
- 			memdump_buf = qca_memdump->memdump_buf_head;
- 			dev_coredumpv(&hu->serdev->dev, memdump_buf,
- 				      qca_memdump->received_dump, GFP_KERNEL);
--			del_timer(&qca->memdump_timer);
-+			cancel_delayed_work(&qca->ctrl_memdump_timeout);
- 			kfree(qca->qca_memdump);
- 			qca->qca_memdump = NULL;
- 			qca->memdump_state = QCA_MEMDUMP_COLLECTED;
-+			clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
- 		}
-+
-+		mutex_unlock(&qca->hci_memdump_lock);
- 	}
- 
- }
- 
--int qca_controller_memdump_event(struct hci_dev *hdev, struct sk_buff *skb)
-+static int qca_controller_memdump_event(struct hci_dev *hdev,
-+					struct sk_buff *skb)
- {
- 	struct hci_uart *hu = hci_get_drvdata(hdev);
- 	struct qca_data *qca = hu->priv;
-@@ -1406,30 +1431,21 @@ static void qca_wait_for_dump_collection(struct hci_dev *hdev)
- {
- 	struct hci_uart *hu = hci_get_drvdata(hdev);
- 	struct qca_data *qca = hu->priv;
--	struct qca_memdump_data *qca_memdump = qca->qca_memdump;
--	char *memdump_buf = NULL;
- 
- 	wait_on_bit_timeout(&qca->flags, QCA_MEMDUMP_COLLECTION,
- 			    TASK_UNINTERRUPTIBLE, MEMDUMP_TIMEOUT_MS);
- 
- 	clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
--	if (qca->memdump_state == QCA_MEMDUMP_IDLE) {
--		bt_dev_err(hu->hdev, "Clearing the buffers due to timeout");
--		if (qca_memdump)
--			memdump_buf = qca_memdump->memdump_buf_tail;
--		vfree(memdump_buf);
--		kfree(qca_memdump);
--		qca->memdump_state = QCA_MEMDUMP_TIMEOUT;
--		del_timer(&qca->memdump_timer);
--		cancel_work_sync(&qca->ctrl_memdump_evt);
--	}
- }
- 
- static void qca_hw_error(struct hci_dev *hdev, u8 code)
- {
- 	struct hci_uart *hu = hci_get_drvdata(hdev);
- 	struct qca_data *qca = hu->priv;
-+	struct qca_memdump_data *qca_memdump = qca->qca_memdump;
-+	char *memdump_buf = NULL;
- 
-+	set_bit(QCA_HW_ERROR_EVENT, &qca->flags);
- 	bt_dev_info(hdev, "mem_dump_status: %d", qca->memdump_state);
- 
- 	if (qca->memdump_state == QCA_MEMDUMP_IDLE) {
-@@ -1449,6 +1465,23 @@ static void qca_hw_error(struct hci_dev *hdev, u8 code)
- 		bt_dev_info(hdev, "waiting for dump to complete");
- 		qca_wait_for_dump_collection(hdev);
- 	}
-+
-+	if (qca->memdump_state != QCA_MEMDUMP_COLLECTED) {
-+		bt_dev_err(hu->hdev, "clearing allocated memory due to memdump timeout");
-+		mutex_lock(&qca->hci_memdump_lock);
-+		if (qca_memdump)
-+			memdump_buf = qca_memdump->memdump_buf_head;
-+		vfree(memdump_buf);
-+		kfree(qca_memdump);
-+		qca->qca_memdump = NULL;
-+		qca->memdump_state = QCA_MEMDUMP_TIMEOUT;
-+		cancel_delayed_work(&qca->ctrl_memdump_timeout);
-+		skb_queue_purge(&qca->rx_memdump_q);
-+		mutex_unlock(&qca->hci_memdump_lock);
-+		cancel_work_sync(&qca->ctrl_memdump_evt);
-+	}
-+
-+	clear_bit(QCA_HW_ERROR_EVENT, &qca->flags);
- }
- 
- static void qca_cmd_timeout(struct hci_dev *hdev)
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
-
+> +
+> +	list_for_each_entry(rproc, &rproc_list, node) {
+> +		if (!rproc->ops->panic || rproc->state != RPROC_RUNNING)
+> +			continue;
+> +
+> +		d = rproc->ops->panic(rproc);
+> +		if (d > longest)
+> +			longest = d;
+> +	}
+> +
+> +	mutex_unlock(&rproc_list_mutex);
+> +
+> +	/* Delay panic for the longest requested duration */
+> +	mdelay(longest);
+> +
+> +	return NOTIFY_DONE;
+> +}
+> +
+> +static void __init rproc_init_panic(void)
+> +{
+> +	rproc_panic_nb.notifier_call = rproc_panic_handler;
+> +	atomic_notifier_chain_register(&panic_notifier_list, &rproc_panic_nb);
+> +}
+> +
+> +static void __exit rproc_exit_panic(void)
+> +{
+> +	atomic_notifier_chain_unregister(&panic_notifier_list, &rproc_panic_nb);
+> +}
+> +
+>  static int __init remoteproc_init(void)
+>  {
+>  	rproc_init_sysfs();
+>  	rproc_init_debugfs();
+> +	rproc_init_panic();
+>  
+>  	return 0;
+>  }
+> @@ -2229,6 +2274,7 @@ static void __exit remoteproc_exit(void)
+>  {
+>  	ida_destroy(&rproc_dev_index);
+>  
+> +	rproc_exit_panic();
+>  	rproc_exit_debugfs();
+>  	rproc_exit_sysfs();
+>  }
+> diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+> index 16ad66683ad0..14f05f26cbcd 100644
+> --- a/include/linux/remoteproc.h
+> +++ b/include/linux/remoteproc.h
+> @@ -369,6 +369,8 @@ enum rsc_handling_status {
+>   *			expects to find it
+>   * @sanity_check:	sanity check the fw image
+>   * @get_boot_addr:	get boot address to entry point specified in firmware
+> + * @panic:	optional callback to react to system panic, core will delay
+> + *		panic at least the returned number of milliseconds
+>   */
+>  struct rproc_ops {
+>  	int (*start)(struct rproc *rproc);
+> @@ -383,6 +385,7 @@ struct rproc_ops {
+>  	int (*load)(struct rproc *rproc, const struct firmware *fw);
+>  	int (*sanity_check)(struct rproc *rproc, const struct firmware *fw);
+>  	u32 (*get_boot_addr)(struct rproc *rproc, const struct firmware *fw);
+> +	unsigned int (*panic)(struct rproc *rproc);
+>  };
+>  
+>  /**
+> 
