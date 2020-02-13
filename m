@@ -2,106 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A04815BD90
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 12:20:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 38D6115C144
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 16:20:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729544AbgBMLUJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Feb 2020 06:20:09 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:62799 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729532AbgBMLUJ (ORCPT
+        id S1727763AbgBMPUY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Feb 2020 10:20:24 -0500
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:52801 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725781AbgBMPUY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Feb 2020 06:20:09 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581592809; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=gPFSRWjhwAw28i80R20gawLJ6dnAWyyyj5ws/7ZwfPY=; b=V9CRb3abcZMiFEvDhJr7kZR9vP7RvW7Dwxu3TCobPwfWM2E1ql3wR4jl/Kreqt/Njsf2eLJH
- kUGnbBiKTBJMUQ6FTBFQUPfsftmP/ojcKNhVejI3WhBBHADabSl/gb/bjnjg58KDNRVdbNcI
- OSiw4bP/qW+q4fncr3375uAzfss=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e4530e1.7fb06d7da928-smtp-out-n01;
- Thu, 13 Feb 2020 11:20:01 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5F17FC447A0; Thu, 13 Feb 2020 11:20:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from bgodavar-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bgodavar)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EAFD7C43383;
-        Thu, 13 Feb 2020 11:19:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EAFD7C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=bgodavar@codeaurora.org
-From:   Balakrishna Godavarthi <bgodavar@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Thu, 13 Feb 2020 10:20:24 -0500
+Received: by mail-pj1-f65.google.com with SMTP id ep11so2517909pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2020 07:20:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=aAFiSr4SyAhq9M+d4Wm2KbZuHqn84PAHjUeDlIWTta8=;
+        b=EsoTXbhpR3vS790bdPXs7IDHK2ZoygezwT8Xa8p+uBNPUrb2AHA/yOFrs4qZCvZC2k
+         jQgJCvMdio7UZkVy9pO0rauTGoM2QKItjO1X7KOs7gmMP1M3wv6wTSGufseMBDtD1i6k
+         FKCqLfIr/rveDg6jyxsALom60n/OCwVN0nVYGeI7A4Lwds5bfBkxcKz+WHUKGYRLQ/Za
+         Wadf0C8gxrlNzVqnyzsXHWu3YS+zBiacWCnchwIHjIW7s2vuBCrEdWLd8Bd7Zyj2abBI
+         CejlVUJZqZQa81viz0l10LzLIC3jPqEX7U+lzc8HrlmR7c/xZO/JgYVbMH/1foku80KC
+         ZeZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=aAFiSr4SyAhq9M+d4Wm2KbZuHqn84PAHjUeDlIWTta8=;
+        b=eDym9CfKh9U/LTCGbYhStOKeCwOOQSnfw/JXbp3l1ibC4aeltim0LkCjhvvnVUtYTX
+         wng3CcKuRa/RPDxu5+PNBbfe+tdMlcEHa8gyC9jPxuHl9o3Qzo06xpxzBj844iLblR8Y
+         /NcudRMY1jzox9QAeY6H6CQmlpEV/qIcY/FY1bDau49LFaIeaPNppiXbmNn+YPaAtQUz
+         kmsUOxuNbIDlgwjEhEaOaxc/wFOtlkDrdT3gvM5lSdpkD5JikT15+C08vy0nYhDh4//Q
+         8PrhMD/TvZnbSAcm95E3qVJyC9vGYzodapL7ZyzPLyykbcW3+g8z8+WU/O/Mhh6ycCAF
+         vOdQ==
+X-Gm-Message-State: APjAAAWOIT/HxGKF18gj6MS7AQNFD9YhvlYDqmyMpXApi4fuAIc5S5/r
+        aR1UJ6eU2eKW4MdyfisUamGr
+X-Google-Smtp-Source: APXvYqzZFf08bYh7LWgG7o2bIBCeY0g8Ylgi3mcUEIWAD6iIMr/8vOmlSfQgaTbqrVC28KmJPvRpRw==
+X-Received: by 2002:a17:90a:930f:: with SMTP id p15mr6048297pjo.0.1581607222003;
+        Thu, 13 Feb 2020 07:20:22 -0800 (PST)
+Received: from mani ([103.59.133.81])
+        by smtp.gmail.com with ESMTPSA id a10sm3665189pgm.81.2020.02.13.07.20.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 13 Feb 2020 07:20:21 -0800 (PST)
+Date:   Thu, 13 Feb 2020 20:50:13 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     arnd@arndb.de, smohanad@codeaurora.org, jhugo@codeaurora.org,
+        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
+        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     mka@chromium.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        hemantg@codeaurora.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        gubbaven@codeaurora.org,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Matthias Kaehlcke <matthias@chromium.org>
-Subject: [PATCH v3] arm64: dts: qcom: sc7180: Add bluetooth node on SC7180 IDP board
-Date:   Thu, 13 Feb 2020 16:49:34 +0530
-Message-Id: <20200213111934.6205-1-bgodavar@codeaurora.org>
-X-Mailer: git-send-email 2.22.0
+Subject: Re: [PATCH v2 02/16] bus: mhi: core: Add support for registering MHI
+ controllers
+Message-ID: <20200213152013.GB15010@mani>
+References: <20200131135009.31477-1-manivannan.sadhasivam@linaro.org>
+ <20200131135009.31477-3-manivannan.sadhasivam@linaro.org>
+ <20200206165755.GB3894455@kroah.com>
+ <20200211184130.GA11908@Mani-XPS-13-9360>
+ <20200211192055.GA1962867@kroah.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200211192055.GA1962867@kroah.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add bluetooth SoC WCN3990 node for SC7180 IDP board.
+On Tue, Feb 11, 2020 at 11:20:55AM -0800, Greg KH wrote:
+> On Wed, Feb 12, 2020 at 12:11:30AM +0530, Manivannan Sadhasivam wrote:
+> > Hi Greg,
+> > 
+> > On Thu, Feb 06, 2020 at 05:57:55PM +0100, Greg KH wrote:
+> > > On Fri, Jan 31, 2020 at 07:19:55PM +0530, Manivannan Sadhasivam wrote:
+> > > > --- /dev/null
+> > > > +++ b/drivers/bus/mhi/core/init.c
+> > > > @@ -0,0 +1,407 @@
+> > > > +// SPDX-License-Identifier: GPL-2.0
+> > > > +/*
+> > > > + * Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
+> > > > + *
+> > > > + */
+> > > > +
+> > > > +#define dev_fmt(fmt) "MHI: " fmt
+> > > 
+> > > This should not be needed, right?  The bus/device name should give you
+> > > all you need here from what I can tell.  So why is this needed?
+> > > 
+> > 
+> > The log will have only the device name as like PCI-E. But that won't specify
+> > where the error is coming from. Having "MHI" prefix helps the users to
+> > quickly identify that the error is coming from MHI stack.
+> 
+> If the driver binds properly to the device, the name of the driver will
+> be there in the message, so I suggest using that please.
+> 
+> No need for this prefix...
+> 
 
-Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
-Reviewed-by: Matthias Kaehlcke <matthias@chromium.org>
----
-v3:
-  * Updated subject.
-  * added reviewed by tag
-v2:
-  * updated commit text
-  * removed status form dts node
----
- arch/arm64/boot/dts/qcom/sc7180-idp.dts | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+So the driver name will be in the log but that won't help identifying where
+the log is coming from. This is more important for MHI since it reuses the
+`struct device` of the transport device like PCI-E. For instance, below is
+the log without MHI prefix:
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 388f50ad4fde..d76e83c0a8e1 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -17,6 +17,7 @@
- 	compatible = "qcom,sc7180-idp", "qcom,sc7180";
- 
- 	aliases {
-+		bluetooth0 = &bluetooth;
- 		hsuart0 = &uart3;
- 		serial0 = &uart8;
- 	};
-@@ -256,6 +257,16 @@
- 
- &uart3 {
- 	status = "okay";
-+
-+	bluetooth: wcn3990-bt {
-+		compatible = "qcom,wcn3990-bt";
-+		vddio-supply = <&vreg_l10a_1p8>;
-+		vddxo-supply = <&vreg_l1c_1p8>;
-+		vddrf-supply = <&vreg_l2c_1p3>;
-+		vddch0-supply = <&vreg_l10c_3p3>;
-+		max-speed = <3200000>;
-+		clocks = <&rpmhcc RPMH_RF_CLK2>;
-+	};
- };
- 
- &uart8 {
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+[   47.355582] ath11k_pci 0000:01:00.0: Requested to power on
+[   47.355724] ath11k_pci 0000:01:00.0: Power on setup success
+
+As you can see, this gives the assumption that the log is coming from the
+ath11k_pci driver. But the reality is, it is coming from MHI bus.
+
+With the prefix added, we will get below:
+
+[   47.355582] ath11k_pci 0000:01:00.0: MHI: Requested to power on
+[   47.355724] ath11k_pci 0000:01:00.0: MHI: Power on setup success
+
+IMO, the prefix will give users a clear idea of logs and that will be very
+useful for debugging.
+
+Hope this clarifies.
+
+Thanks,
+Mani
+
+> thanks,
+> 
+> greg k-h
