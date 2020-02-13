@@ -2,375 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D646915BB2F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 10:08:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92E6515BB68
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 10:17:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729636AbgBMJIG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Feb 2020 04:08:06 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:53527 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729551AbgBMJIF (ORCPT
+        id S1729531AbgBMJRN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Feb 2020 04:17:13 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:36053 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729822AbgBMJRN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Feb 2020 04:08:05 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581584885; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=uNf6vVapQCg3D5lsFZcvKZjpP9dTesFvM5nY+NiQhdg=;
- b=ap9EV01xwkbPdNgH0Y/TgGWufsqW4j4mFbejIkFM5+fyjXxbeqoFab7FhsvJ1p1ZyaoBoiUY
- VCJelT9DEm7TMumUNU5C1gW+G8aQVos2GdSgRu8ikP+4XRJIr1iukA2Qxx3tMEdGOUShiWUX
- yHG++oHtBHeOG9sSPoBCgu3aoIA=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e4511f0.7f5db6faadc0-smtp-out-n02;
- Thu, 13 Feb 2020 09:08:00 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D1045C447A0; Thu, 13 Feb 2020 09:07:58 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: gubbaven)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7AF57C43383;
-        Thu, 13 Feb 2020 09:07:57 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 13 Feb 2020 14:37:57 +0530
-From:   gubbaven@codeaurora.org
-To:     Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
+        Thu, 13 Feb 2020 04:17:13 -0500
+Received: by mail-wm1-f68.google.com with SMTP id p17so5715992wma.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2020 01:17:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:autocrypt:organization:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=s0nJLegmENJqGnZxFH2aSyGNIie7HinZt9lTXluX3zE=;
+        b=Z4W3BNb76naKlShTOjloflPdjUeW9GEFzG7ddHzrI1jEWDhuqP8z0Oy/0EmfC6FcUp
+         AtBJvIgdMak0IzEhfvs3l5lncpDs0pNwjNZQqYdh3SrwxmCEArj8wQTNtY7IBcI4PeDh
+         CJ+plRweDpdDwCBOmp/Sa7PCs2EwNEHBFV3xDerXa0S0eiuJjd++d4pcLNxjt2vB1NJE
+         Gda8rhmXH1mV+YUba8cwaMIrvtSvc0Mh607/HgSvrjfdLVUjtshu4tRwgFYQ/s9lzYit
+         f9WEaYfNnWUGpt7kgC27vAg4NDAtBnXZYr3GnBcqFamwFJfDzUx8nmAcjRN0KhiE7dVw
+         xuHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
+         :organization:message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=s0nJLegmENJqGnZxFH2aSyGNIie7HinZt9lTXluX3zE=;
+        b=d0G2r7ZaMvwRarde6N6cSFX1J2bVUVwCVxhtqrPCeyVNdy6qH+j0JtEpq91ctH4pnF
+         h96rfRBCCbJjmglW1bpJjnzOMSVBrc/X1DzExBHcSyUXT0+SqwQNc0IpjO4fLKZo0ocj
+         qVX536UQOAWjVKAA/FKr0I4XQOu9/jvodx/+kO5+pJAzCPEC3hdR4LuJnKN9NPJTOkyW
+         scs0feXUBiDDolGXAE/PdUnZ5lg8vK33kghUbwVATBVDTI9BFl0ekEJ1J3EgaevbUtc5
+         ArvpMrR5/igxbzh9yZl3jH1xrsNMfPYIrgSXVBacEYMauRjoA/Pv30b8/45oJMF1oFfr
+         wd2w==
+X-Gm-Message-State: APjAAAVPq/eNpwM83V6AwcdDAPnsKd9/eONIaYiPaqF4+guD3Q11bIB4
+        8SyrgJGMPIto7r9EBRwP0klcow==
+X-Google-Smtp-Source: APXvYqzManbD640lysqRJErl6dcCNzLPec15u5TDII3UVcFO8k/dCSge2GuDJRRfkqrGbnsYEP6msQ==
+X-Received: by 2002:a1c:9cce:: with SMTP id f197mr4885130wme.133.1581585431410;
+        Thu, 13 Feb 2020 01:17:11 -0800 (PST)
+Received: from [10.1.3.173] (laubervilliers-658-1-213-31.w90-63.abo.wanadoo.fr. [90.63.244.31])
+        by smtp.gmail.com with ESMTPSA id g25sm13242512wmh.3.2020.02.13.01.17.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Feb 2020 01:17:10 -0800 (PST)
+Subject: Re: [PATCH v3 6/9] drm/bridge: ti-sn65dsi86: Use 18-bit DP if we can
+To:     Doug Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andrzej Hajda <a.hajda@samsung.com>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
         LKML <linux-kernel@vger.kernel.org>,
-        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
-        robh@kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        Claire Chang <tientzu@chromium.org>,
-        Sean Paul <seanpaul@chromium.org>, rjliao@codeaurora.org,
-        Yoni Shavit <yshavit@google.com>
-Subject: Re: [PATCH v2] Bluetooth: hci_qca: Bug fixes while collecting
- controller memory dump
-In-Reply-To: <CANFp7mVGurJ0LG9X9EDoT0j25SoJgXeXpWvAVDymhWYVb3nnbw@mail.gmail.com>
-References: <1581522508-31337-1-git-send-email-gubbaven@codeaurora.org>
- <CANFp7mVGurJ0LG9X9EDoT0j25SoJgXeXpWvAVDymhWYVb3nnbw@mail.gmail.com>
-Message-ID: <a3e713f2663bffbb71400563ba6d3735@codeaurora.org>
-X-Sender: gubbaven@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        David Airlie <airlied@linux.ie>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
+References: <20191218223530.253106-1-dianders@chromium.org>
+ <20191218143416.v3.6.Iaf8d698f4e5253d658ae283d2fd07268076a7c27@changeid>
+ <20200203233711.GF311651@builder>
+ <CAD=FV=VTKfv93BiNRYBxWg8o8YKrQy3Z85MzR8XFr=GCS5xhdg@mail.gmail.com>
+ <CAD=FV=XPscj+bDBjxqBSudj77WeAjCvmOYcOu27jk4gqiCcWcA@mail.gmail.com>
+From:   Neil Armstrong <narmstrong@baylibre.com>
+Autocrypt: addr=narmstrong@baylibre.com; prefer-encrypt=mutual; keydata=
+ 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
+ BSwxi7g3Mu7u5kUByanqHyA=
+Organization: Baylibre
+Message-ID: <5764c198-ca2a-ed21-809e-33a883b77565@baylibre.com>
+Date:   Thu, 13 Feb 2020 10:17:10 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <CAD=FV=XPscj+bDBjxqBSudj77WeAjCvmOYcOu27jk4gqiCcWcA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Abhishek,
+Hi,
 
-Sure I will update and post next patch set.
+On 13/02/2020 00:04, Doug Anderson wrote:
+> Andrzej / Neil,
+> 
+> On Mon, Feb 3, 2020 at 4:21 PM Doug Anderson <dianders@chromium.org> wrote:
+>>
+>> Andrzej / Neil,
+>>
+>> On Mon, Feb 3, 2020 at 3:37 PM Bjorn Andersson
+>> <bjorn.andersson@linaro.org> wrote:
+>>>
+>>> On Wed 18 Dec 14:35 PST 2019, Douglas Anderson wrote:
+>>>
+>>>> The current bridge driver always forced us to use 24 bits per pixel
+>>>> over the DP link.  This is a waste if you are hooked up to a panel
+>>>> that only supports 6 bits per color or fewer, since in that case you
+>>>> ran run at 18 bits per pixel and thus end up at a lower DP clock rate.
+>>>
+>>> s/ran/can/
+>>
+>> I'm going to make the assumption that you can fix this typo when
+>> applying the patch and I'm not planning to send a v4.  If that's not a
+>> good assumption then please yell.
+> 
+> With -rc1 released, it seems like it might be a nice time to land this
+> series.  Do you happen to know if there is anything outstanding?  Is
+> one of you two the right person to land this series, or should I be
+> asking someone else?  I can see if I can find someone to take them
+> through drm-misc if there's nobody else?
+> 
+> It's not massively crazy urgent or anything, but the patches have been
+> floating for quite some time now and it'd be nice to know what the
+> plan was.  I also have another patch I'd like to post up but was
+> hoping to get this series resolved first.
+> 
+> Thanks much!
+> 
+> -Doug
+> 
 
-Regards,
-Lakshmi Narayana.
-On 2020-02-12 22:27, Abhishek Pandit-Subedi wrote:
-> Hi Venkata,
-> 
-> I would suggest removing the memdump_timer entirely and making the
-> ctrl_memdump_timeout into struct delayed_work.
-> 
-> Instead of using mod_timer to get the callback ready, you would
-> instead call `queue_delayed_work(qca->workqueue,
-> &qca->ctrl_memdump_timeout, MEMDUMP_TIMEOUT_MS);` and instead of
-> del_timer, you would instead
-> `cancel_delayed_work(&qca->ctrl_memdump_timeout)` if mutex is held or
-> `cancel_delayed_work_sync(&qca->ctrl_memdump_timeout)` if mutex is not
-> held.
-> 
-> Other than that, everything else looks good to me.
-> 
-> On Wed, Feb 12, 2020 at 7:51 AM Venkata Lakshmi Narayana Gubba
-> <gubbaven@codeaurora.org> wrote:
->> 
->> This patch will fix the below issues
->>    1.Fixed race conditions while accessing memory dump state flags.
->>    2.Updated with actual context of timer in hci_memdump_timeout()
->>    3.Updated injecting hardware error event if the dumps failed to 
->> receive.
->>    4.Once timeout is triggered, stopping the memory dump collections.
->> 
->> Possible scenarios while collecting memory dump:
->> 
->> Scenario 1:
->> 
->> Memdump event from firmware
->> Some number of memdump events with seq #
->> Hw error event
->> Reset
->> 
->> Scenario 2:
->> 
->> Memdump event from firmware
->> Some number of memdump events with seq #
->> Timeout schedules hw_error_event if hw error event is not received 
->> already
->> hw_error_event clears the memdump activity
->> reset
->> 
->> Scenario 3:
->> 
->> hw_error_event sends memdump command to firmware and waits for 
->> completion
->> Some number of memdump events with seq #
->> hw error event
->> reset
->> 
->> Fixes: d841502c79e3 ("Bluetooth: hci_qca: Collect controller memory 
->> dump during SSR")
->> Reported-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
->> Signed-off-by: Venkata Lakshmi Narayana Gubba 
->> <gubbaven@codeaurora.org>
->> ---
->>  drivers/bluetooth/hci_qca.c | 96 
->> ++++++++++++++++++++++++++++++++-------------
->>  1 file changed, 69 insertions(+), 27 deletions(-)
->> 
->> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
->> index eacc65b..80ee838 100644
->> --- a/drivers/bluetooth/hci_qca.c
->> +++ b/drivers/bluetooth/hci_qca.c
->> @@ -29,6 +29,7 @@
->>  #include <linux/platform_device.h>
->>  #include <linux/regulator/consumer.h>
->>  #include <linux/serdev.h>
->> +#include <linux/mutex.h>
->>  #include <asm/unaligned.h>
->> 
->>  #include <net/bluetooth/bluetooth.h>
->> @@ -69,7 +70,8 @@ enum qca_flags {
->>         QCA_IBS_ENABLED,
->>         QCA_DROP_VENDOR_EVENT,
->>         QCA_SUSPENDING,
->> -       QCA_MEMDUMP_COLLECTION
->> +       QCA_MEMDUMP_COLLECTION,
->> +       QCA_HW_ERROR_EVENT
->>  };
->> 
->> 
->> @@ -145,11 +147,13 @@ struct qca_data {
->>         struct work_struct ws_rx_vote_off;
->>         struct work_struct ws_tx_vote_off;
->>         struct work_struct ctrl_memdump_evt;
->> +       struct work_struct ctrl_memdump_timeout;
->>         struct qca_memdump_data *qca_memdump;
->>         unsigned long flags;
->>         struct completion drop_ev_comp;
->>         wait_queue_head_t suspend_wait_q;
->>         enum qca_memdump_states memdump_state;
->> +       struct mutex hci_memdump_lock;
->> 
->>         /* For debugging purpose */
->>         u64 ibs_sent_wacks;
->> @@ -524,21 +528,33 @@ static void hci_ibs_wake_retrans_timeout(struct 
->> timer_list *t)
->> 
->>  static void hci_memdump_timeout(struct timer_list *t)
->>  {
->> -       struct qca_data *qca = from_timer(qca, t, tx_idle_timer);
->> -       struct hci_uart *hu = qca->hu;
->> -       struct qca_memdump_data *qca_memdump = qca->qca_memdump;
->> -       char *memdump_buf = qca_memdump->memdump_buf_tail;
->> -
->> -       bt_dev_err(hu->hdev, "clearing allocated memory due to memdump 
->> timeout");
->> -       /* Inject hw error event to reset the device and driver. */
->> -       hci_reset_dev(hu->hdev);
->> -       vfree(memdump_buf);
->> -       kfree(qca_memdump);
->> -       qca->memdump_state = QCA_MEMDUMP_TIMEOUT;
->> +       struct qca_data *qca = from_timer(qca, t, memdump_timer);
->> +
->> +       queue_work(qca->workqueue, &qca->ctrl_memdump_timeout);
->>         del_timer(&qca->memdump_timer);
->> -       cancel_work_sync(&qca->ctrl_memdump_evt);
->>  }
->> 
->> +static void qca_controller_memdump_timeout(struct work_struct *work)
->> +{
->> +       struct qca_data *qca = container_of(work, struct qca_data,
->> +                                       ctrl_memdump_timeout);
->> +       struct hci_uart *hu = qca->hu;
->> +
->> +       mutex_lock(&qca->hci_memdump_lock);
->> +       if (test_bit(QCA_MEMDUMP_COLLECTION, &qca->flags)) {
->> +               qca->memdump_state = QCA_MEMDUMP_TIMEOUT;
->> +               if (!test_bit(QCA_HW_ERROR_EVENT, &qca->flags)) {
->> +                       /* Inject hw error event to reset the device
->> +                        * and driver.
->> +                        */
->> +                       hci_reset_dev(hu->hdev);
->> +               }
->> +       }
->> +
->> +       mutex_unlock(&qca->hci_memdump_lock);
->> +}
->> +
->> +
->>  /* Initialize protocol */
->>  static int qca_open(struct hci_uart *hu)
->>  {
->> @@ -558,6 +574,7 @@ static int qca_open(struct hci_uart *hu)
->>         skb_queue_head_init(&qca->tx_wait_q);
->>         skb_queue_head_init(&qca->rx_memdump_q);
->>         spin_lock_init(&qca->hci_ibs_lock);
->> +       mutex_init(&qca->hci_memdump_lock);
->>         qca->workqueue = alloc_ordered_workqueue("qca_wq", 0);
->>         if (!qca->workqueue) {
->>                 BT_ERR("QCA Workqueue not initialized properly");
->> @@ -570,6 +587,7 @@ static int qca_open(struct hci_uart *hu)
->>         INIT_WORK(&qca->ws_rx_vote_off, 
->> qca_wq_serial_rx_clock_vote_off);
->>         INIT_WORK(&qca->ws_tx_vote_off, 
->> qca_wq_serial_tx_clock_vote_off);
->>         INIT_WORK(&qca->ctrl_memdump_evt, qca_controller_memdump);
->> +       INIT_WORK(&qca->ctrl_memdump_timeout, 
->> qca_controller_memdump_timeout);
->>         init_waitqueue_head(&qca->suspend_wait_q);
->> 
->>         qca->hu = hu;
->> @@ -963,11 +981,20 @@ static void qca_controller_memdump(struct 
->> work_struct *work)
->> 
->>         while ((skb = skb_dequeue(&qca->rx_memdump_q))) {
->> 
->> +               mutex_lock(&qca->hci_memdump_lock);
->> +               /* Skip processing the received packets if timeout 
->> detected. */
->> +               if (qca->memdump_state == QCA_MEMDUMP_TIMEOUT) {
->> +                       mutex_unlock(&qca->hci_memdump_lock);
->> +                       return;
->> +               }
->> +
->>                 if (!qca_memdump) {
->>                         qca_memdump = kzalloc(sizeof(struct 
->> qca_memdump_data),
->>                                               GFP_ATOMIC);
->> -                       if (!qca_memdump)
->> +                       if (!qca_memdump) {
->> +                               mutex_unlock(&qca->hci_memdump_lock);
->>                                 return;
->> +                       }
->> 
->>                         qca->qca_memdump = qca_memdump;
->>                 }
->> @@ -992,6 +1019,7 @@ static void qca_controller_memdump(struct 
->> work_struct *work)
->>                         if (!(dump_size)) {
->>                                 bt_dev_err(hu->hdev, "Rx invalid 
->> memdump size");
->>                                 kfree_skb(skb);
->> +                               mutex_unlock(&qca->hci_memdump_lock);
->>                                 return;
->>                         }
->> 
->> @@ -1016,6 +1044,7 @@ static void qca_controller_memdump(struct 
->> work_struct *work)
->>                         kfree(qca_memdump);
->>                         kfree_skb(skb);
->>                         qca->qca_memdump = NULL;
->> +                       mutex_unlock(&qca->hci_memdump_lock);
->>                         return;
->>                 }
->> 
->> @@ -1050,12 +1079,16 @@ static void qca_controller_memdump(struct 
->> work_struct *work)
->>                         kfree(qca->qca_memdump);
->>                         qca->qca_memdump = NULL;
->>                         qca->memdump_state = QCA_MEMDUMP_COLLECTED;
->> +                       clear_bit(QCA_MEMDUMP_COLLECTION, 
->> &qca->flags);
->>                 }
->> +
->> +               mutex_unlock(&qca->hci_memdump_lock);
->>         }
->> 
->>  }
->> 
->> -int qca_controller_memdump_event(struct hci_dev *hdev, struct sk_buff 
->> *skb)
->> +static int qca_controller_memdump_event(struct hci_dev *hdev,
->> +                                       struct sk_buff *skb)
->>  {
->>         struct hci_uart *hu = hci_get_drvdata(hdev);
->>         struct qca_data *qca = hu->priv;
->> @@ -1406,30 +1439,21 @@ static void 
->> qca_wait_for_dump_collection(struct hci_dev *hdev)
->>  {
->>         struct hci_uart *hu = hci_get_drvdata(hdev);
->>         struct qca_data *qca = hu->priv;
->> -       struct qca_memdump_data *qca_memdump = qca->qca_memdump;
->> -       char *memdump_buf = NULL;
->> 
->>         wait_on_bit_timeout(&qca->flags, QCA_MEMDUMP_COLLECTION,
->>                             TASK_UNINTERRUPTIBLE, MEMDUMP_TIMEOUT_MS);
->> 
->>         clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
->> -       if (qca->memdump_state == QCA_MEMDUMP_IDLE) {
->> -               bt_dev_err(hu->hdev, "Clearing the buffers due to 
->> timeout");
->> -               if (qca_memdump)
->> -                       memdump_buf = qca_memdump->memdump_buf_tail;
->> -               vfree(memdump_buf);
->> -               kfree(qca_memdump);
->> -               qca->memdump_state = QCA_MEMDUMP_TIMEOUT;
->> -               del_timer(&qca->memdump_timer);
->> -               cancel_work_sync(&qca->ctrl_memdump_evt);
->> -       }
->>  }
->> 
->>  static void qca_hw_error(struct hci_dev *hdev, u8 code)
->>  {
->>         struct hci_uart *hu = hci_get_drvdata(hdev);
->>         struct qca_data *qca = hu->priv;
->> +       struct qca_memdump_data *qca_memdump = qca->qca_memdump;
->> +       char *memdump_buf = NULL;
->> 
->> +       set_bit(QCA_HW_ERROR_EVENT, &qca->flags);
->>         bt_dev_info(hdev, "mem_dump_status: %d", qca->memdump_state);
->> 
->>         if (qca->memdump_state == QCA_MEMDUMP_IDLE) {
->> @@ -1449,6 +1473,24 @@ static void qca_hw_error(struct hci_dev *hdev, 
->> u8 code)
->>                 bt_dev_info(hdev, "waiting for dump to complete");
->>                 qca_wait_for_dump_collection(hdev);
->>         }
->> +
->> +       if (qca->memdump_state != QCA_MEMDUMP_COLLECTED) {
->> +               bt_dev_err(hu->hdev, "clearing allocated memory due to 
->> memdump timeout");
->> +               mutex_lock(&qca->hci_memdump_lock);
->> +               if (qca_memdump)
->> +                       memdump_buf = qca_memdump->memdump_buf_head;
->> +               vfree(memdump_buf);
->> +               kfree(qca_memdump);
->> +               qca->qca_memdump = NULL;
->> +               qca->memdump_state = QCA_MEMDUMP_TIMEOUT;
->> +               del_timer(&qca->memdump_timer);
->> +               skb_queue_purge(&qca->rx_memdump_q);
->> +               mutex_unlock(&qca->hci_memdump_lock);
->> +               cancel_work_sync(&qca->ctrl_memdump_timeout);
->> +               cancel_work_sync(&qca->ctrl_memdump_evt);
->> +       }
->> +
->> +       clear_bit(QCA_HW_ERROR_EVENT, &qca->flags);
->>  }
->> 
->>  static void qca_cmd_timeout(struct hci_dev *hdev)
->> --
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
->> member
->> of Code Aurora Forum, hosted by The Linux Foundation
->> 
-> 
-> Thanks
-> Abhishek
+I will push it shortly, seems everything is fine and reviewed.
+
+Neil
