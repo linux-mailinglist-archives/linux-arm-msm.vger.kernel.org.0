@@ -2,93 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DF9915CABA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 19:53:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DCDB15CB23
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 20:26:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728223AbgBMSxI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Feb 2020 13:53:08 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:35487 "EHLO
+        id S1728627AbgBMT0e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Feb 2020 14:26:34 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:47079 "EHLO
         mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728222AbgBMSxI (ORCPT
+        with ESMTP id S1728621AbgBMT0c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Feb 2020 13:53:08 -0500
-Received: by mail-pg1-f195.google.com with SMTP id v23so192333pgk.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2020 10:53:07 -0800 (PST)
+        Thu, 13 Feb 2020 14:26:32 -0500
+Received: by mail-pg1-f195.google.com with SMTP id b35so3490396pgm.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2020 11:26:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Z5vHe2AowREqzAqOW6YaBuKUxPqz6MPlaKgwHeJebmE=;
-        b=SY+Nz1MHBZwExWD4owfVmV3PKG8yw31q8mvMuM6QeqDDRkCgPfGDToBxCoXtzv381u
-         Sx9OA5EBZVY/H1Uo5+oKZzHTqqH/JIXslPIK3cdn+q7Y+hFEI6WH4T6ux2goMg2iLmsd
-         h6xM/VP8wbKEKFo6Pm9jYseBTiXldmQTfj/fc=
+         :content-disposition:in-reply-to;
+        bh=oH47U6dVilmFVsgLaUcqMonw11ZBismPGb+DPyC9Qjw=;
+        b=DXO4fw78ecATFY1qi1857mdha/eTvTl3CNuC5fuI6H2JM+CXb6/ZCOym3sxgVzPdMA
+         EI7//m/LWCbvFiQJQh1O7c72nwkOvtg0bGeJvmVF+9uv5ZCyssMjVnR1IWy0fw39/NuK
+         1PrexqGGkHRoMJ9kY0B3dQn0EhWWs4ZuxYCXnaNIc3+MkKPHdU+ufVh5X7fCr8BZCSGM
+         /we/r2FwhBJFJ64mvlvP4ebliuFrCk2ZRvMZmAwM2b92V4PgMfcFEO5CdXvvH9H/Vbwy
+         Y/aFKIYNni0475hVC0EaUbif6N3KO8hbL13rekzoj6DPy7RkOLXuUUVbHYfXUlDdnC1j
+         DmKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Z5vHe2AowREqzAqOW6YaBuKUxPqz6MPlaKgwHeJebmE=;
-        b=f0RCmBz7VExJVfKnsEGCnN5KrKb2e6+AACGpMbcy1N0HCNVWkz2PvyeRR+saSYv18T
-         41yJ2dOJTKn/QD7xYgsp7n7K6aGrJI5Q4skXh3R6fEaBct7yBo3jriDOHg8cPnxTfEUO
-         KC1n0vhIykUmgCQjjenew+cSe/1e9klePZr8r32v+/tXQzTIwQfjxbmM+oyhcYDmXo+U
-         raojzP8apAHIPKoVQSFF24obeYTtnjupKPuZynX707r1bPaXenJhD0ic1RUrYH9QsCn7
-         ieAKcWXbJlkkid3+L/U73aJOyG5NaSh+EjJK7Eve9xIglrw7HSvrG7lWhkk46iyvDTHu
-         rC/Q==
-X-Gm-Message-State: APjAAAVRrLeqZh0a8uOmtu95jsc+LsYZi6q/F0v8pSQj5cGEgoIUAPNr
-        uozQMy3IG6gG9NT3p1E78Ebc8/RUSgc=
-X-Google-Smtp-Source: APXvYqxHhXqcb5J9cFkzWat6D++pep33cBNsqaKAX+B6vNPEnsssomZ/y+j9r5yiKu81pnWzZrJ16w==
-X-Received: by 2002:a63:c14b:: with SMTP id p11mr15832742pgi.290.1581619987489;
-        Thu, 13 Feb 2020 10:53:07 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id s14sm3897124pgv.74.2020.02.13.10.53.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Feb 2020 10:53:06 -0800 (PST)
-Date:   Thu, 13 Feb 2020 10:53:05 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+         :mime-version:content-disposition:in-reply-to;
+        bh=oH47U6dVilmFVsgLaUcqMonw11ZBismPGb+DPyC9Qjw=;
+        b=AETmJY4Yk/OUAp2RwFHW0eWvt2zwX/kLBrHih5lBUwPCeJJwX7M3fiE+x0F31gaX5E
+         IGppSe+BzUd1CZn57cb8X7RR9w7Nkl/EVeOIhVxRgHfiox7hdr7K06+ca8k24gTZiqOA
+         eOKQ6zL2kG9Gvws2bVjHkIWh0+XgmZ2e/B3s2Ft5ff1QIzrUsmEf182MG/8VeyS8R3V7
+         Zumt48fRzR5SuRvlJTHjHyEE5gQaQ8gcGq+A6xiM6hHnFAJZYLAIjM/G4k3eLh/Ai7fa
+         vAV/WO1c4+A7yoB2jshEpjba92lGbJ7whRAXN7Vo2QQNtYwo5GGWglikH/3e08HiUY5h
+         iMPQ==
+X-Gm-Message-State: APjAAAUTWzbff4pq8cX6RXhywp30gNHYBqJSgineonB2EoQAjkjj6tJV
+        yJrD5cP6FfkhWVEhgL34CDA7GavFJ04=
+X-Google-Smtp-Source: APXvYqwOR7c/DNAxOXKiWnEw00nczvKJ/1Zdi0Od8v7HRY7xMcRpoGaa+BxDISCHpCjw8BXko2JvUQ==
+X-Received: by 2002:a63:5fcf:: with SMTP id t198mr19442029pgb.383.1581621990306;
+        Thu, 13 Feb 2020 11:26:30 -0800 (PST)
+Received: from tuxbook-pro (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id w11sm4015613pgh.5.2020.02.13.11.26.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Feb 2020 11:26:29 -0800 (PST)
+Date:   Thu, 13 Feb 2020 11:26:27 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Matthias Kaehlcke <mka@chromium.org>
 Cc:     Dikshita Agarwal <dikshita@codeaurora.org>,
         linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, vgarodia@codeaurora.org
 Subject: Re: [PATCH V4 0/4] Enable video on sc7180
-Message-ID: <20200213185305.GF50449@google.com>
+Message-ID: <20200213192627.GA1455@tuxbook-pro>
 References: <1579006416-11599-1-git-send-email-dikshita@codeaurora.org>
  <20200203180240.GD3948@builder>
+ <20200213185305.GF50449@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200203180240.GD3948@builder>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200213185305.GF50449@google.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+On Thu 13 Feb 10:53 PST 2020, Matthias Kaehlcke wrote:
 
-On Mon, Feb 03, 2020 at 10:02:40AM -0800, Bjorn Andersson wrote:
-> On Tue 14 Jan 04:53 PST 2020, Dikshita Agarwal wrote:
+> Hi Bjorn,
 > 
-> > Hello,
+> On Mon, Feb 03, 2020 at 10:02:40AM -0800, Bjorn Andersson wrote:
+> > On Tue 14 Jan 04:53 PST 2020, Dikshita Agarwal wrote:
 > > 
-> > Changes since v3:
+> > > Hello,
+> > > 
+> > > Changes since v3:
+> > > 
+> > >   - addressed DT and DT schema review comments.
+> > > 
+> > >   - renamed DT schema file.
+> > > 
+> > > v3 can be found at [1].
+> > > These changes depend on patch series [2] - [6].
+> > > 
+> > > Thanks,
+> > > Dikshita
+> > > 
 > > 
-> >   - addressed DT and DT schema review comments.
-> > 
-> >   - renamed DT schema file.
-> > 
-> > v3 can be found at [1].
-> > These changes depend on patch series [2] - [6].
-> > 
-> > Thanks,
-> > Dikshita
-> > 
+> > Picked up the dts patches for 5.7, with Stan's acks
 > 
-> Picked up the dts patches for 5.7, with Stan's acks
+> I can't seem to find the patches in the QCOM repo, neither in
+> 'arm64-for-5.7' nor 'for-next'. Am I looking at the wrong place or
+> maybe you forget to push these?
+> 
 
-I can't seem to find the patches in the QCOM repo, neither in
-'arm64-for-5.7' nor 'for-next'. Am I looking at the wrong place or
-maybe you forget to push these?
+Thanks for the question Matthias, I was looking for this email as I
+rebased onto v5.6-rc1 earlier this week, but got distracted.
 
-Thanks
+I pulled them in, but in the rebase I realized that we don't have the
+interconnects in place, so in it's current form these patches doesn't
+compile.
 
-Matthias
+Seems we're waiting for rather trivial respin of
+https://lore.kernel.org/linux-arm-msm/1577782737-32068-1-git-send-email-okukatla@codeaurora.org/
+to get this settled.
+
+Regards,
+Bjorn
