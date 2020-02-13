@@ -2,119 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EB4515C740
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 17:13:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4577515C613
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Feb 2020 17:11:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728908AbgBMQIj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Feb 2020 11:08:39 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:39559 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728218AbgBMPXB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Feb 2020 10:23:01 -0500
-Received: by mail-pl1-f194.google.com with SMTP id g6so2466984plp.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2020 07:23:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=mG5Pj3Ga2qn/6UPh/hiM2vYUP7QMzFr/lGer+oLepCc=;
-        b=ojjKqoJqn3YNbRS9pIbai3sOzbP1aYkgdpr7OpIR1y2+KaxVGpme9iesoJCJU3SRhU
-         HAfQ/pbQUu2k4NcORvH4RHD/TgpX9EwAE3ASjn75CwsQ6aifFHMjui0B/keNeiEfBYAm
-         9VxkhZ441f/jNEys8dffVo1BnGSySP3/lfTo111fQACZ4xowTWKgUHPWcGpSloattgia
-         zE46NmTrTYDxxlLpkEth0WCXUsAzom8BBeNY/XXQAwBpEzm6aNRbYbNJ8efaNmdblTej
-         qEP6ATS99mxjh7IbNgoJcGNL4co6kAqB61eQiK4MdYk2h3VWemMGVBmIpbBfcQdfTTz9
-         T1SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mG5Pj3Ga2qn/6UPh/hiM2vYUP7QMzFr/lGer+oLepCc=;
-        b=JU6Nnyzz/MDjWgAhdRiUKQMzUnXWqd2lc6NUyD2lX734i8VApG1UiDfJDNV7QuH4JK
-         uHglezieDvUVw17+5EHb3OYj3fl6GwS813+niqKi13CFgzv9PRzZZfOYDeX/SGrWmPYu
-         r50cmawEkaWzVYk268+AqF3FN3lcYHak1sCME4g8VetHItPx44Qb7ogKVhVSJ48Mw8GA
-         22JgW8duQkVbf+W39GxcKFf/Holbn6JXEhOKJqhja6VJjOtLSPH57mjFMZ8F0qf3J1mQ
-         FaL2m2tnwlYJj4RHm45Av7p8C4Vkb8/k2FDVXJc6finlhz1L2cosPQFemXPhKbd6u3S4
-         nsLg==
-X-Gm-Message-State: APjAAAUATEM2TsrcgviBhYSklgrrER389rz4H6Bv5mmAEi+HP2/+KuOF
-        JPOj8uEFE8vaaeAlfZSOJ6S6
-X-Google-Smtp-Source: APXvYqyFO7tCYmZ8k+SqmOtcnU6W7tN/B4ksrngWczKUIT1JduB/3SDAP6TvrlAIs6RKKyY3gUuZ5Q==
-X-Received: by 2002:a17:902:a58a:: with SMTP id az10mr28645091plb.20.1581607380940;
-        Thu, 13 Feb 2020 07:23:00 -0800 (PST)
-Received: from mani ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id n2sm3561515pgn.71.2020.02.13.07.22.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Feb 2020 07:23:00 -0800 (PST)
-Date:   Thu, 13 Feb 2020 20:52:55 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     arnd@arndb.de, smohanad@codeaurora.org, jhugo@codeaurora.org,
-        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 02/16] bus: mhi: core: Add support for registering MHI
- controllers
-Message-ID: <20200213152255.GC15010@mani>
-References: <20200131135009.31477-1-manivannan.sadhasivam@linaro.org>
- <20200131135009.31477-3-manivannan.sadhasivam@linaro.org>
- <20200206165606.GA3894455@kroah.com>
- <20200211191147.GB11908@Mani-XPS-13-9360>
- <20200211192236.GB1962867@kroah.com>
+        id S1728357AbgBMP4u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Feb 2020 10:56:50 -0500
+Received: from foss.arm.com ([217.140.110.172]:47890 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727973AbgBMPZZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Feb 2020 10:25:25 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3E55A328;
+        Thu, 13 Feb 2020 07:25:24 -0800 (PST)
+Received: from [10.37.12.116] (unknown [10.37.12.116])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 130463F68E;
+        Thu, 13 Feb 2020 07:25:13 -0800 (PST)
+Subject: Re: [PATCH v2 1/4] PM / EM: add devices to Energy Model
+To:     Dietmar Eggemann <dietmar.eggemann@arm.com>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com
+Cc:     Morten.Rasmussen@arm.com, Chris.Redpath@arm.com,
+        ionela.voinescu@arm.com, javi.merino@arm.com,
+        cw00.choi@samsung.com, b.zolnierkie@samsung.com, rjw@rjwysocki.net,
+        sudeep.holla@arm.com, viresh.kumar@linaro.org, nm@ti.com,
+        sboyd@kernel.org, rui.zhang@intel.com, amit.kucheria@verdurent.com,
+        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        rostedt@goodmis.org, qperret@google.com, bsegall@google.com,
+        mgorman@suse.de, shawnguo@kernel.org, s.hauer@pengutronix.de,
+        festevam@gmail.com, kernel@pengutronix.de, khilman@kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
+        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net
+References: <20200206134640.11367-1-lukasz.luba@arm.com>
+ <20200206134640.11367-2-lukasz.luba@arm.com>
+ <62a54ec9-0491-367d-0a36-7ea32c449acc@arm.com>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <6b1921bb-42c8-999f-abfa-5682e73015d5@arm.com>
+Date:   Thu, 13 Feb 2020 15:25:11 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200211192236.GB1962867@kroah.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <62a54ec9-0491-367d-0a36-7ea32c449acc@arm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
 
-On Tue, Feb 11, 2020 at 11:22:36AM -0800, Greg KH wrote:
-> On Wed, Feb 12, 2020 at 12:41:47AM +0530, Manivannan Sadhasivam wrote:
-> > Hi Greg,
-> > 
-> > On Thu, Feb 06, 2020 at 05:56:06PM +0100, Greg KH wrote:
-> > > On Fri, Jan 31, 2020 at 07:19:55PM +0530, Manivannan Sadhasivam wrote:
-> > > > +static void mhi_release_device(struct device *dev)
-> > > > +{
-> > > > +	struct mhi_device *mhi_dev = to_mhi_device(dev);
-> > > > +
-> > > > +	if (mhi_dev->ul_chan)
-> > > > +		mhi_dev->ul_chan->mhi_dev = NULL;
-> > > 
-> > > That looks really odd.  Why didn't you just drop the reference you
-> > > should have grabbed here for this pointer?  You did properly increment
-> > > it when you saved it, right?  :)
-> > > 
-> > 
-> > Well, there is no reference count (kref) exist for mhi_dev.
-> 
-> Then something is wrong with your model :(
-> 
-> You can't save pointers off to things without reference counting, that
-> is going to cause you real problems.  See the coding style document for
-> all the details.
-> 
-> > And we really needed to NULL the mhi_dev to avoid any dangling
-> > reference to it.
-> 
-> Again, that's not how to do this correctly.
-> 
-> > The reason for not having kref is that, each mhi_dev will be used by
-> > maximum of 2 channels only. So thought that refcounting is not needed.
-> > Please correct me if I'm wrong.
-> 
-> Please read section 11 of Documentation/process/coding-style.rst
-> 
 
-I have fixed it and will send the next iteration soon.
-
-Thanks,
-Mani
-
-> thanks,
+On 2/13/20 10:59 AM, Dietmar Eggemann wrote:
+> On 06/02/2020 14:46, lukasz.luba@arm.com wrote:
+>> From: Lukasz Luba <lukasz.luba@arm.com>
 > 
-> greg k-h
+> [..]
+> 
+>> @@ -26,7 +28,7 @@ framework, and interested clients reading the data from it::
+> 
+> s/::/: ?
+> 
+>>          | Thermal (IPA) |  | Scheduler (EAS) |  |     Other     |
+>>          +---------------+  +-----------------+  +---------------+
+>>                  |                   | em_pd_energy()    |
+>> -               |                   | em_cpu_get()      |
+>> +               |  em_get_pd()      | em_cpu_get()      |
+>>                  +---------+         |         +---------+
+> 
+> em_get_pd() and em_cpu_get()? Why not em_pd_get()? em_cpu_get() is a
+> specific em_get_pd(). right?
+
+Yes. I will rename 'em_get_pd' to 'em_pd_get'
+
+> 
+> [...]
+> 
+>> @@ -85,13 +89,20 @@ API.
+>>   2.3 Accessing performance domains
+>>   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>   
+>> +There is two API functions which provide the access to the energy model:
+>> +em_cpu_get() which takes CPU id as an argument and em_get_pd() with device
+>> +pointer as an argument. It depends on the subsystem which interface it is
+>> +going to use, but in case of CPU devices both functions return the same
+>> +performance domain.
+> 
+> There is probably a reason why we need this specific function for CPU
+> devices? The reason should be described. People might ask why
+> em_get_pd() is not sufficient.
+
+True, good point. I will extend the comment in em_cpu_get().
+
+> 
+> [...]
+> 
+>> - * A "performance domain" represents a group of CPUs whose performance is
+>> - * scaled together. All CPUs of a performance domain must have the same
+>> - * micro-architecture. Performance domains often have a 1-to-1 mapping with
+>> - * CPUFreq policies.
+>> + * In case of CPU device, a "performance domain" represents a group of CPUs
+>> + * whose performance is scaled together. All CPUs of a performance domain
+>> + * must have the same micro-architecture. Performance domains often have
+>> + * a 1-to-1 mapping with CPUFreq policies.
+>> + * In case of other devices the 'priv' field is unused.
+>>    */
+>>   struct em_perf_domain {
+>> -	struct em_cap_state *table;
+>> -	int nr_cap_states;
+>> -	unsigned long cpus[0];
+>> +	struct em_perf_state *table;
+>> +	int nr_perf_states;
+>> +	void *priv;
+> 
+> In case you go back to the variable length field plus type field to
+> distingush EM devices, keep cpus[0] as the name.
+
+OK, I will.
+
+> 
+> [..]
+> 
+>>   /**
+>> - * em_pd_energy() - Estimates the energy consumed by the CPUs of a perf. domain
+>> + * em_pd_energy() - Estimates the energy consumed by the CPUs of a perf.
+>> +			domain
+> 
+> Why this change?
+
+hmmm, that's odd, maybe there was 'device' then I changed it back to
+'CPUs' but forgot to move the 'domain' to the old place.
+
+> 
+> [...]
+> 
+>> @@ -141,12 +210,12 @@ static struct em_perf_domain *em_create_pd(cpumask_t *span, int nr_states,
+>>   		 */
+>>   		opp_eff = freq / power;
+>>   		if (opp_eff >= prev_opp_eff)
+>> -			pr_warn("pd%d: hertz/watts ratio non-monotonically decreasing: em_cap_state %d >= em_cap_state%d\n",
+>> -					cpu, i, i - 1);
+>> +			dev_warn(dev, "energy_model: hertz/watts ratio non-monotonically decreasing: em_perf_state %d >= em_perf_state%d\n",
+> 
+> s/energy_model/EM ?
+
+OK, I will rename them in all places.
+
+Thank you for the review.
+
+Regards,
+Lukasz
