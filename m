@@ -2,113 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E44315D2B5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 08:17:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 116ED15D30E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 08:44:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726048AbgBNHRT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Feb 2020 02:17:19 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:59310 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728881AbgBNHRS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Feb 2020 02:17:18 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581664638; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=sP5WtyrgrEHAKWYiObPllSAd3IaK/BsaP+Vmqe+1xh0=; b=r0exidjXFJx22G1awATevnJ9uTJOn/ozJ7Rl72fW744FN4FGu7eY9hHYFUXIZqYTr9rv+Xio
- 1JGt+1RNC1mYmJDVML4HI4Et901sj2YWgo89OeAJXjx6AJXvkCs53vO7RLedQoyL/nzHoYPr
- sYOMQRptMLkkPJV2E4Z0/TjxoOI=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e46497e.7f0e2ee3a810-smtp-out-n03;
- Fri, 14 Feb 2020 07:17:18 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 119E6C4479D; Fri, 14 Feb 2020 07:17:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.204.79.15] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1729004AbgBNHoI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Feb 2020 02:44:08 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53084 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729007AbgBNHoI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 Feb 2020 02:44:08 -0500
+Received: from localhost.localdomain (unknown [106.201.58.38])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: mojha)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4164BC4479F;
-        Fri, 14 Feb 2020 07:17:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4164BC4479F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mojha@codeaurora.org
-Subject: Re: [PATCH] nvmem: core: Fix msb clearing bits
-To:     Shadab Naseem <snaseem@codeaurora.org>,
-        srinivas.kandagatla@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        neeraju@codeaurora.org
-References: <1580474635-11965-1-git-send-email-snaseem@codeaurora.org>
-From:   Mukesh Ojha <mojha@codeaurora.org>
-Message-ID: <06a518e3-cff4-e2e0-2a4b-f4bfa2c6dcdc@codeaurora.org>
-Date:   Fri, 14 Feb 2020 12:46:56 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.2
+        by mail.kernel.org (Postfix) with ESMTPSA id 01D28217F4;
+        Fri, 14 Feb 2020 07:44:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1581666247;
+        bh=r9zsX8XEd5qvEkHa91w0t4J/RKl8sONWqH+tDi0ymqs=;
+        h=From:To:Cc:Subject:Date:From;
+        b=GcEmMQZylBRtSRVfyitzOcTSaKFgAMjy26oQgjgyR6KDKSD9fgHWi8755hIlKRE0S
+         JEQhB1aVVBhfeUq33cr1ojO0MKYXvmJ0ZYvf5oGs9LAkZF1eg04ot5NaczXyb+vUxS
+         XhA55DgrGY5B9e2c7tNFwKf1bP7g9DUXuMzsOJTc=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Yuji Sasaki <sasakiy@chromium.org>,
+        Andy Gross <agross@kernel.org>, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH] spi: qup: call spi_qup_pm_resume_runtime before suspending
+Date:   Fri, 14 Feb 2020 13:13:40 +0530
+Message-Id: <20200214074340.2286170-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
-In-Reply-To: <1580474635-11965-1-git-send-email-snaseem@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Yuji Sasaki <sasakiy@chromium.org>
 
-On 1/31/2020 6:13 PM, Shadab Naseem wrote:
-> When clearing the msb bits of the resultant buffer, it is
-> masked with the modulo of the number of bits needed with
-> respect to the BITS_PER_BYTE. To mask out the buffer,
-> it is passed though GENMASK of the remainder of the bits
-> starting from zeroth bit. This case is valid if nbits is not
-> a multiple of BITS_PER_BYTE and you are actually creating
-> a GENMASK. If the nbits coming is a multiple of BITS_PER_BYTE,
-> it would pass a negative value to the high bit number of
-> GENMASK with zero as the lower bit number.
->
-> As per the definition of the GENMASK, the higher bit number (h)
-> is right operand for bitwise right shift. If the value of the
-> right operand is negative or is greater or equal to the number
-> of bits in the promoted left operand, the behavior is undefined.
-> So passing a negative value to GENMASK could behave differently
-> across architecture, specifically between 64 and 32 bit.
-> Also, on passing the hard-coded negative value as GENMASK(-1, 0)
-> is giving compiler warning for shift-count-overflow.
-> Hence making a check for clearing the MSB if the nbits are not
-> a multiple of BITS_PER_BYTE.
->
-> Signed-off-by: Shadab Naseem <snaseem@codeaurora.org>
-> ---
->   drivers/nvmem/core.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
-> index 1e4a798..23c1547 100644
-> --- a/drivers/nvmem/core.c
-> +++ b/drivers/nvmem/core.c
-> @@ -926,7 +926,8 @@ static void nvmem_shift_read_buffer_in_place(struct nvmem_cell *cell, void *buf)
->   		*p-- = 0;
->   
->   	/* clear msb bits if any leftover in the last byte */
-> -	*p &= GENMASK((cell->nbits%BITS_PER_BYTE) - 1, 0);
-> +	if (cell->nbits%BITS_PER_BYTE)
-> +		*p &= GENMASK((cell->nbits%BITS_PER_BYTE) - 1, 0);
+spi_qup_suspend() will cause synchronous external abort when
+runtime suspend is enabled and applied, as it tries to
+access SPI controller register while clock is already disabled
+in spi_qup_pm_suspend_runtime().
 
+Signed-off-by: Yuji sasaki <sasakiy@chromium.org>
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/spi/spi-qup.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-LGTM..
+diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
+index dd3434a407ea..a364b99497e2 100644
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -1217,6 +1217,11 @@ static int spi_qup_suspend(struct device *device)
+ 	struct spi_qup *controller = spi_master_get_devdata(master);
+ 	int ret;
+ 
++	if (pm_runtime_suspended(device)) {
++		ret = spi_qup_pm_resume_runtime(device);
++		if (ret)
++			return ret;
++	}
+ 	ret = spi_master_suspend(master);
+ 	if (ret)
+ 		return ret;
+@@ -1225,10 +1230,8 @@ static int spi_qup_suspend(struct device *device)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (!pm_runtime_suspended(device)) {
+-		clk_disable_unprepare(controller->cclk);
+-		clk_disable_unprepare(controller->iclk);
+-	}
++	clk_disable_unprepare(controller->cclk);
++	clk_disable_unprepare(controller->iclk);
+ 	return 0;
+ }
+ 
+-- 
+2.24.1
 
-Reviewed-by: mojha@codeaurora.org
-
-
-Thanks
-Mukesh
-
->   }
->   
->   static int __nvmem_cell_read(struct nvmem_device *nvmem,
