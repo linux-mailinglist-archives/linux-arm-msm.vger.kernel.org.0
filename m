@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C16B815D3C4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 09:25:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9393A15D3BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 09:25:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728997AbgBNIZt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Feb 2020 03:25:49 -0500
+        id S1728864AbgBNIZm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Feb 2020 03:25:42 -0500
 Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:45291 "EHLO
         alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728859AbgBNIZp (ORCPT
+        by vger.kernel.org with ESMTP id S1728783AbgBNIZm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Feb 2020 03:25:45 -0500
+        Fri, 14 Feb 2020 03:25:42 -0500
 Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Feb 2020 13:55:34 +0530
+  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Feb 2020 13:55:35 +0530
 Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 14 Feb 2020 13:55:05 +0530
+  by ironmsg01-blr.qualcomm.com with ESMTP; 14 Feb 2020 13:55:06 +0530
 Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
-        id 6474F25BF; Fri, 14 Feb 2020 13:55:04 +0530 (IST)
+        id 6A7E625C0; Fri, 14 Feb 2020 13:55:05 +0530 (IST)
 From:   Sandeep Maheswaram <sanm@codeaurora.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -33,49 +33,52 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         Manu Gautam <mgautam@codeaurora.org>,
         Chandana Kishori Chiluveru <cchiluve@codeaurora.org>,
         Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: [PATCH v5 0/3] ADD interconnect support for Qualcomm DWC3 driver
-Date:   Fri, 14 Feb 2020 13:54:41 +0530
-Message-Id: <1581668684-4182-1-git-send-email-sanm@codeaurora.org>
+Subject: [PATCH v5 1/3] dt-bindings: usb: qcom,dwc3: Introduce interconnect properties for Qualcomm DWC3 driver
+Date:   Fri, 14 Feb 2020 13:54:42 +0530
+Message-Id: <1581668684-4182-2-git-send-email-sanm@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1581668684-4182-1-git-send-email-sanm@codeaurora.org>
+References: <1581668684-4182-1-git-send-email-sanm@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This path series aims to add interconnect support in
-dwc3-qcom driver on SDM845 SoCs.
+Add documentation for the interconnects and interconnect-names
+properties for USB.
 
-Changes from v4 -> v5
-  > [PATCH 1/3] Added the interconnect properties in yaml. This patch depends
-    on series https://patchwork.kernel.org/cover/11372641/.
-  > [PATCH 2/3] Fixed review comments from Matthias in DWC3 driver.
-  > [PATCH 3/3] Modified as per the new interconnect nodes in sdm845. Depends
-    on series https://patchwork.kernel.org/cover/11372211/. 
+Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+---
+ Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-
-Changes from v3 -> v4
-  > Fixed review comments from Matthias
-  > [PATCH 1/3] and [PATCH 3/3] remains unchanged
-
-Changes from v2 -> v3
-  > Fixed review comments from Matthias and Manu
-  > changed the functions prefix from usb_* to dwc3_qcom_*
-
-Changes since V1:
-  > Comments by Georgi Djakov on "[PATCH 2/3]" addressed
-  > [PATCH 1/3] and [PATCH 3/3] remains unchanged
-
-Sandeep Maheswaram (3):
-  dt-bindings: usb: qcom,dwc3: Introduce interconnect properties for
-    Qualcomm DWC3 driver
-  usb: dwc3: qcom: Add interconnect support in dwc3 driver
-  arm64: dts: sdm845: Add interconnect properties for USB
-
- .../devicetree/bindings/usb/qcom,dwc3.yaml         |  16 +++
- arch/arm64/boot/dts/qcom/sdm845.dtsi               |  12 ++
- drivers/usb/dwc3/dwc3-qcom.c                       | 135 ++++++++++++++++++++-
- 3 files changed, 161 insertions(+), 2 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+index 4a36ab5..236877e 100644
+--- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+@@ -68,6 +68,22 @@ properties:
+   resets:
+     maxItems: 1
+ 
++  interconnects:
++    description:
++      Pairs of phandles and interconnect provider specifiers
++      to denote the edge source and destination ports of
++      the interconnect path. Please refer to
++      Documentation/devicetree/bindings/interconnect/
++      for more details.
++
++  interconnect-names:
++    description:
++      List of interconnect path name strings sorted in the same
++      order as the interconnects property. Consumer drivers will use
++      interconnect-names to match interconnect paths with interconnect
++      specifiers. Please refer to Documentation/devicetree/bindings/
++      interconnect/ for more details.
++
+   interrupts:
+     items:
+       - description: The interrupt that is asserted
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
