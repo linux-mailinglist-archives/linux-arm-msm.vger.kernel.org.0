@@ -2,36 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 50E6315F1C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 19:08:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2056D15F1F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 19:08:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731745AbgBNPzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Feb 2020 10:55:21 -0500
-Received: from mail.kernel.org ([198.145.29.99]:36318 "EHLO mail.kernel.org"
+        id S2388053AbgBNSFJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Feb 2020 13:05:09 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36352 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731742AbgBNPzU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Feb 2020 10:55:20 -0500
+        id S1731747AbgBNPzW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 Feb 2020 10:55:22 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 672A724681;
-        Fri, 14 Feb 2020 15:55:19 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9583F2467C;
+        Fri, 14 Feb 2020 15:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1581695720;
-        bh=0riOLmm1KUbfHFuWluYYO4aIPkUq6Iig7m88Ct78IjQ=;
+        s=default; t=1581695721;
+        bh=kMUw6Js6eknNyxk3vBQwSZ6XBHAU+POFf0euwGKYmW0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=iVcyqGGA+QCFTfTqO8ZOw3q5Hdeosy8CJhkhKRe1Fg/Z+VdqBVkVlBZuIOuDk+CyR
-         pIjPxxvRPox+Pub1eVnkwLhJVRgNBVZd8Z03mlyCZ37R+s//NNfQ5bbF8PxsGfOe70
-         W/mv1oBT05gQNAAAUcWanomrj/uTjTPT0vKr2Fgw=
+        b=e5sI7m4UzBvMArqAgdYCvP7YfD71LsPN0r696bYz+Qvw4HNrrypJvIFEoTMNNEwGQ
+         5kc4ZoufsqFM9DQdUxknT7wp+uJLvI3MYP7NTzxzOcNF6OM7b4UamIrQYKI9REWl1Y
+         xXkWsRS2bJ4ypkSXtURIoH6tzJkAfM6IQFTvIgtQ=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.5 297/542] arm64: dts: qcom: msm8998-mtp: Add alias for blsp1_uart3
-Date:   Fri, 14 Feb 2020 10:44:49 -0500
-Message-Id: <20200214154854.6746-297-sashal@kernel.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.5 298/542] soc: qcom: rpmhpd: Set 'active_only' for active only power domains
+Date:   Fri, 14 Feb 2020 10:44:50 -0500
+Message-Id: <20200214154854.6746-298-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200214154854.6746-1-sashal@kernel.org>
 References: <20200214154854.6746-1-sashal@kernel.org>
@@ -44,40 +45,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit c9ec155b5962233aff3df65210bd6a4788dee21c ]
+[ Upstream commit 5d0d4d42bed0090d3139e7c5ca1587d76d48add6 ]
 
-The msm_serial driver has a predefined set of uart ports defined, which
-is allocated either by reading aliases or if no match is found a simple
-counter, starting at index 0. But there's no logic in place to prevent
-these two allocation mechanism from colliding. As a result either none
-or all of the active msm_serial instances must be listed as aliases.
+The 'active_only' attribute was accidentally never set to true for any
+power domains meaning that all the code handling this attribute was
+dead.
 
-Define blsp1_uart3 as "serial1" to mitigate this problem.
+NOTE that the RPM power domain code (as opposed to the RPMh one) gets
+this right.
 
-Fixes: 4cffb9f2c700 ("arm64: dts: qcom: msm8998-mtp: Enable bluetooth")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Link: https://lore.kernel.org/r/20191119011823.379100-1-bjorn.andersson@linaro.org
+Acked-by: Rajendra Nayak <rnayak@codeaurora.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Fixes: 279b7e8a62cc ("soc: qcom: rpmhpd: Add RPMh power domain driver")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20190214173633.211000-1-dianders@chromium.org
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/soc/qcom/rpmhpd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
-index 5f101a20a20a2..e08fcb426bbf8 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
-@@ -9,6 +9,7 @@
- / {
- 	aliases {
- 		serial0 = &blsp2_uart1;
-+		serial1 = &blsp1_uart3;
- 	};
+diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+index 5741ec3fa814c..51850cc68b701 100644
+--- a/drivers/soc/qcom/rpmhpd.c
++++ b/drivers/soc/qcom/rpmhpd.c
+@@ -93,6 +93,7 @@ static struct rpmhpd sdm845_mx = {
  
- 	chosen {
+ static struct rpmhpd sdm845_mx_ao = {
+ 	.pd = { .name = "mx_ao", },
++	.active_only = true,
+ 	.peer = &sdm845_mx,
+ 	.res_name = "mx.lvl",
+ };
+@@ -107,6 +108,7 @@ static struct rpmhpd sdm845_cx = {
+ 
+ static struct rpmhpd sdm845_cx_ao = {
+ 	.pd = { .name = "cx_ao", },
++	.active_only = true,
+ 	.peer = &sdm845_cx,
+ 	.parent = &sdm845_mx_ao.pd,
+ 	.res_name = "cx.lvl",
 -- 
 2.20.1
 
