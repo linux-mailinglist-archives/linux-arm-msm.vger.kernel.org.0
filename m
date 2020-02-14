@@ -2,88 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B6AFD15D562
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 11:20:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0179E15D665
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 12:16:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729014AbgBNKUI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Feb 2020 05:20:08 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:41070 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729026AbgBNKUI (ORCPT
+        id S1729070AbgBNLQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Feb 2020 06:16:00 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:49390 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727965AbgBNLP7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Feb 2020 05:20:08 -0500
-Received: by mail-lj1-f193.google.com with SMTP id h23so10106235ljc.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2020 02:20:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=a84WNLM8wHkd5zEtxHoEDgoCVKtrYjUViLHMY7hthbM=;
-        b=Gj6tG+Qt7ycjUY4Q2ZAXyamt4t4+IDdww3s8W9LBz0qskerpmAwDH4ozKfHDaq9+3B
-         OawNf6cyiZJ4cMn5p8gXDPXDqWERgdiSM4tHnRLkyR1BUTncMg0AiBKlUIaPCigS/w+I
-         hHKj4YQAuRVNwLKDQMYcjNrsrORFZTl2NSe3GktvgggquQuVYglQ5uJOIzdg0855ye+C
-         6uwaU4LtSMjMvgAJUzlgFZBaaBewg04d5gKNDb91yAuw834QulLqP095JhQvZkZMzb4Q
-         LdxB4L75YeD1jYbj+FRGGS3MFhhk6pwX/YoqCFfWzKu8x9R/PPKVWxQx7lYFPIbCtrq7
-         Zx/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=a84WNLM8wHkd5zEtxHoEDgoCVKtrYjUViLHMY7hthbM=;
-        b=HwU8OBOGuS6NE9hiqPuaovEweIe8pSVTcdiuk4QiZZpoirxqz95ckM8Fcd9skLGKZF
-         Y7u4nCJ3zwzNX1kx211mJN91GzuJrFf7EuVN8Y+Y+YnRtkYZHeFYd2xHDuJ5dKcrI5ed
-         KnSSSfiFRm8ixM3jWFbwObuF15YJWjhUzMV8yww7WIm7vk2nAip1N63H2pMZk+FUGVcF
-         Y/WRHxBsBd5uD/VrRUqLf2aO9KBNx+ADJMkgc/a2jRUEhAqTHZRvnkMtlNjMAsTLTu7c
-         RlWqmajdJ00TxVOngeLPbfQlSROsuMAMI7yYnjUJDXT3tBJdc/H/wjhX5f1C8wR+s3EV
-         pOYQ==
-X-Gm-Message-State: APjAAAWDLcPbj4QyrxnkqhF/A89BPAaOErTkV7tyTnlynRQ2Czgohlyn
-        oFM0u3inX/+wf9yvyuvLyt0cLhN37qIZlZ/Y+w0xOA==
-X-Google-Smtp-Source: APXvYqxqN7AMNMFOzd2fYojplBnENxRnOLrJhK/Z0n4uE8TLS7K1XSLI5bd514akMiltxuCr4HE2d8mGerIytGW52qo=
-X-Received: by 2002:a2e:b6ce:: with SMTP id m14mr1526961ljo.99.1581675606201;
- Fri, 14 Feb 2020 02:20:06 -0800 (PST)
+        Fri, 14 Feb 2020 06:15:59 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1581678959; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=lHXeqJrR7yd+a5wBDJp8eDtnwzucK8RD4X4JzVufeqY=; b=qKxjPhlor72l0OJgIu32XNVC6n2vmhPxgVByGK4exeGH3W6g0xXeh5W8m35/tDKbWTNyASAf
+ PhwZGJ4pvzPUeczcV7jtbydGd9ffTL3FGuT6uazl3lkd8giR++PaixgzWbdlF5Yvb18BdF0e
+ s/+8NDkH4tLIZwqPf0zZxc9X76s=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e468162.7fb777f08bc8-smtp-out-n03;
+ Fri, 14 Feb 2020 11:15:46 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 79BE4C4479D; Fri, 14 Feb 2020 11:15:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.102] (unknown [49.207.63.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DC07AC433A2;
+        Fri, 14 Feb 2020 11:15:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DC07AC433A2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sc7180: Add dynamic CPU power
+ coefficients
+To:     agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org
+References: <1578393926-5052-1-git-send-email-rnayak@codeaurora.org>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <c0efc029-456d-42bc-aa0f-2c05bdf4bd3c@codeaurora.org>
+Date:   Fri, 14 Feb 2020 16:45:38 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
 MIME-Version: 1.0
-References: <1579439601-14810-1-git-send-email-sricharan@codeaurora.org>
-In-Reply-To: <1579439601-14810-1-git-send-email-sricharan@codeaurora.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 14 Feb 2020 11:19:55 +0100
-Message-ID: <CACRpkdZ1G-Rks+-JrY-bN6A1YpQGqRBoDKS5kYn9BfdWqYjXSQ@mail.gmail.com>
-Subject: Re: [PATCH V6 0/5] Add minimal boot support for IPQ6018
-To:     Sricharan R <sricharan@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, sivaprak@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1578393926-5052-1-git-send-email-rnayak@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jan 19, 2020 at 2:13 PM Sricharan R <sricharan@codeaurora.org> wrote:
 
-> The IPQ6018 is Qualcomm\u2019s 802.11ax SoC for Routers,
-> Gateways and Access Points.
->
-> This series adds minimal board boot support for ipq6018-cp01 board.
->
-> [V6]
->  * Addressed more review comments on pinctrl bindings from Rob.
->  * Patch 4 arm64: dts: Add ipq6018 SoC and CP01 board support has build
->    dependency with,
->         https://lkml.org/lkml/2020/1/9/84
 
-I have applied patches 1 & 2 and the remaining patches can be
-applied to the ARM SoC-relavent tree (Bjorn can handle this I think?)
+On 1/7/2020 4:15 PM, Rajendra Nayak wrote:
+> Add dynamic power coefficients for Silver and Gold CPUs on
+> SC7180 SoC.
+> 
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
 
-I am sorry it didn't make it into v5.6, this is caused by the bottleneck
-for YAML schema review, we would appreciate more people
-participating in writing and reviewing new schemas, we are currently
-in a bit of learning phase.
+Andy/Bjorn, can we pull this series in for 5.7?
+Its essential to get EAS function on sc7180 devices.
 
-Yours,
-Linus Walleij
+>   arch/arm64/boot/dts/qcom/sc7180.dtsi | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 8011c5f..fb78bb8 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -86,6 +86,7 @@
+>   			compatible = "arm,armv8";
+>   			reg = <0x0 0x0>;
+>   			enable-method = "psci";
+> +			dynamic-power-coefficient = <100>;
+>   			next-level-cache = <&L2_0>;
+>   			#cooling-cells = <2>;
+>   			qcom,freq-domain = <&cpufreq_hw 0>;
+> @@ -103,6 +104,7 @@
+>   			compatible = "arm,armv8";
+>   			reg = <0x0 0x100>;
+>   			enable-method = "psci";
+> +			dynamic-power-coefficient = <100>;
+>   			next-level-cache = <&L2_100>;
+>   			#cooling-cells = <2>;
+>   			qcom,freq-domain = <&cpufreq_hw 0>;
+> @@ -117,6 +119,7 @@
+>   			compatible = "arm,armv8";
+>   			reg = <0x0 0x200>;
+>   			enable-method = "psci";
+> +			dynamic-power-coefficient = <100>;
+>   			next-level-cache = <&L2_200>;
+>   			#cooling-cells = <2>;
+>   			qcom,freq-domain = <&cpufreq_hw 0>;
+> @@ -131,6 +134,7 @@
+>   			compatible = "arm,armv8";
+>   			reg = <0x0 0x300>;
+>   			enable-method = "psci";
+> +			dynamic-power-coefficient = <100>;
+>   			next-level-cache = <&L2_300>;
+>   			#cooling-cells = <2>;
+>   			qcom,freq-domain = <&cpufreq_hw 0>;
+> @@ -145,6 +149,7 @@
+>   			compatible = "arm,armv8";
+>   			reg = <0x0 0x400>;
+>   			enable-method = "psci";
+> +			dynamic-power-coefficient = <100>;
+>   			next-level-cache = <&L2_400>;
+>   			#cooling-cells = <2>;
+>   			qcom,freq-domain = <&cpufreq_hw 0>;
+> @@ -159,6 +164,7 @@
+>   			compatible = "arm,armv8";
+>   			reg = <0x0 0x500>;
+>   			enable-method = "psci";
+> +			dynamic-power-coefficient = <100>;
+>   			next-level-cache = <&L2_500>;
+>   			#cooling-cells = <2>;
+>   			qcom,freq-domain = <&cpufreq_hw 0>;
+> @@ -173,6 +179,7 @@
+>   			compatible = "arm,armv8";
+>   			reg = <0x0 0x600>;
+>   			enable-method = "psci";
+> +			dynamic-power-coefficient = <405>;
+>   			next-level-cache = <&L2_600>;
+>   			#cooling-cells = <2>;
+>   			qcom,freq-domain = <&cpufreq_hw 1>;
+> @@ -187,6 +194,7 @@
+>   			compatible = "arm,armv8";
+>   			reg = <0x0 0x700>;
+>   			enable-method = "psci";
+> +			dynamic-power-coefficient = <405>;
+>   			next-level-cache = <&L2_700>;
+>   			#cooling-cells = <2>;
+>   			qcom,freq-domain = <&cpufreq_hw 1>;
+> 
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
