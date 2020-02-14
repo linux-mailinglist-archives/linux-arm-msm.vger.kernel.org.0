@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CBFB15D552
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 11:16:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E701F15D55A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 11:17:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729098AbgBNKQv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Feb 2020 05:16:51 -0500
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:39548 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729064AbgBNKQv (ORCPT
+        id S1729155AbgBNKRr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Feb 2020 05:17:47 -0500
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:43694 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729020AbgBNKRr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Feb 2020 05:16:51 -0500
-Received: by mail-lf1-f66.google.com with SMTP id t23so6399553lfk.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2020 02:16:49 -0800 (PST)
+        Fri, 14 Feb 2020 05:17:47 -0500
+Received: by mail-lj1-f196.google.com with SMTP id a13so10100672ljm.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2020 02:17:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=vmPFCYNd1b2Z269i3yTjn10KuJ/1yAN0FqONO4h3pYM=;
-        b=C7y7H4jylEuEqMnGjgmT+H0M+h+femEJMIBzMgfB7vWd7xinxGtIWg5hjzVf97k5By
-         81ichhlUxUcuE+gpzED+ObhW/gJUHJCXo9IIp0boG22bOraAX3BiBoHIYn9P8GpiYb8Y
-         QRQCmU1ymbZCh4V933PSIeteImHsjiS8L3DcSHjmaCO869J2GUR2ocJ3uJW3Vy0CZvjo
-         /SYd2V8GNZmLcti0/RWd8v9JbipZczwBq2DRNBnUskpwoxjESHOuZtbINP1ZI+8y/1XW
-         kLzA7hV1HtTwhzhSMGIt+CelSr4UakLg/+G+0mSoxzCNAUYw2DrXYG8T4gXZjRjCKV+S
-         m9MQ==
+        bh=v8ypgl7dFd+FN00YxlfzHIJKl3YchrCCrbKgFjCVTDU=;
+        b=MNxQ+HuCDY088dTom9PFOh4rxyHd576KmzzMsyWnYhyp0UpgWA19L6Nitp2AQc9dOy
+         Karscw08YlX4Dg1W61ESUi5f/31NGIDZm4EqIus9tIQf+O5M28Y0jyTAuo9dR1Y0H0rz
+         2AVAJRbtO9yn7RjFNZXS30hjpVKDSBST7Y0jgBDL2snZDVKS2dRMHy3QacypQ2LxKwZV
+         trk4g/jfx145+VkRAcZ465GPkGogpEK8AuFur1fwyfBP6l7dThSPi/EbX65bqU7Qi44y
+         VyHWfpFOgYhi74jRlwh6ixM7165ALYt30ELZoP2vcFxOIAzfaRAipnLZObe3Kz/Jmo8W
+         S6uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=vmPFCYNd1b2Z269i3yTjn10KuJ/1yAN0FqONO4h3pYM=;
-        b=B0WW/kIWCN8/Nf9D9SwKOBUgbMJznUQYlvaO7xf3R/JE2O3QgYmGSm+DrYgyK76/pq
-         JxEqEuX4kAurFOFabIMjZ4ux3FsYpG//ogpkDYvKtJgFrUDzqDK+n+c7/UmvWHL+ajfT
-         lrlUsW8XX+5WFNcdh09BwOS68FK0n4aFr0xvm5UI46RdU5tVWI+I1Z+9SO52c1afAe8F
-         LvjdpFyokT4/ulon6pql7hTJxRunyqC87a+YxiAiCnt2SgYkIK+GitaourOCcd/+GG+c
-         j7Gu2YH2I88x/fv7ihPnOYEWrbSJMDhpAQo6CI8g0Cbr+14qxDioqn9a8B4Jiill9ofO
-         9zFw==
-X-Gm-Message-State: APjAAAUl7s/nbRnCdhHyQUuCMy+oR6qJTKeYUV+zsdmksR/FMybOCgdr
-        +shUPKTwggqWKeKIVYtA4RtU20r3VTDEyUiP3CPKQg==
-X-Google-Smtp-Source: APXvYqy3A2UvE/PunEwc9b95paj1uRKlANgXjihOMn+iQGFlsaa0yHC/L21T4dFZZ7k9amkC+MY+YUVX95o0/o8skaU=
-X-Received: by 2002:a19:dc14:: with SMTP id t20mr1309882lfg.47.1581675408867;
- Fri, 14 Feb 2020 02:16:48 -0800 (PST)
+        bh=v8ypgl7dFd+FN00YxlfzHIJKl3YchrCCrbKgFjCVTDU=;
+        b=Efbv8gU7YdDNODF686Gt1qwpFZG+KOfpBiN49er+NZdDpkWiIzw6n382kEUC34/BA/
+         6HLBD4Ckxvqf5nZLhGJH8wqWaQU1z8MzZX2wahmvrtLueMK8r9vj+dDKe0mX9p5ajMEM
+         n9/Xy/qLQUmidHKhMYCsS3njhEqfpiZoFTh9WRbgU/Ejo+Gl8BB2y8uolnHgikc2uDtc
+         UYPQ4ghKpCt6OStvwG4168wW9ee3jWdMSQfFwWf6FmEGaPyJ0wfPQGn0GG6UKW3CwVG7
+         Q6RmgXo2Mt+Bmd6tgkYUVRj9RWRMpDf9hnYAKV8kRomeJJSefpRrdZtc0Gzr0VRUtLeF
+         A+2w==
+X-Gm-Message-State: APjAAAVIpM/BuCQNpU6RGtxQycCBKWmVBaFSbbNHFNAyB3i7kLAhSUuA
+        3pZ0HiLgx6AeUSyCM+Vfp7LLp3ex7nKvaltiNmfnbA==
+X-Google-Smtp-Source: APXvYqyC9kNfFIiiOrwmF4acw1MAKutkTjdFGe1E/MwMDJJksNCwGjs1TmU24KDB/f98Aqw0M3pRNognuV+WdjgeGVA=
+X-Received: by 2002:a2e:9013:: with SMTP id h19mr1678145ljg.223.1581675465087;
+ Fri, 14 Feb 2020 02:17:45 -0800 (PST)
 MIME-Version: 1.0
-References: <1579439601-14810-1-git-send-email-sricharan@codeaurora.org> <1579439601-14810-2-git-send-email-sricharan@codeaurora.org>
-In-Reply-To: <1579439601-14810-2-git-send-email-sricharan@codeaurora.org>
+References: <1579439601-14810-1-git-send-email-sricharan@codeaurora.org> <1579439601-14810-3-git-send-email-sricharan@codeaurora.org>
+In-Reply-To: <1579439601-14810-3-git-send-email-sricharan@codeaurora.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 14 Feb 2020 11:16:37 +0100
-Message-ID: <CACRpkda8XLZxqH9CROHUYpaq8z+z2zsdg8pyzqQ9DfavGMy6QQ@mail.gmail.com>
-Subject: Re: [PATCH V6 1/5] dt-bindings: pinctrl: qcom: Add ipq6018 pinctrl bindings
+Date:   Fri, 14 Feb 2020 11:17:34 +0100
+Message-ID: <CACRpkdY-O3es1xcPxnb+3KKucUFx95WDXawnKeq1fo0rX9N+3A@mail.gmail.com>
+Subject: Re: [PATCH V6 2/5] pinctrl: qcom: Add ipq6018 pinctrl driver
 To:     Sricharan R <sricharan@codeaurora.org>
 Cc:     Andy Gross <agross@kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
@@ -68,8 +68,8 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Sun, Jan 19, 2020 at 2:13 PM Sricharan R <sricharan@codeaurora.org> wrote:
 
-> Add device tree binding Documentation details for ipq6018
-> pinctrl driver.
+> Add initial pinctrl driver to support pin configuration with
+> pinctrl framework for ipq6018.
 >
 > Co-developed-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
 > Signed-off-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
@@ -77,12 +77,10 @@ On Sun, Jan 19, 2020 at 2:13 PM Sricharan R <sricharan@codeaurora.org> wrote:
 > Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
 > Co-developed-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
 > Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > Signed-off-by: Sricharan R <sricharan@codeaurora.org>
-> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> ---
-> [V6]
 
-Patch applied  for v5.7 with Rob's Review tag.
+Patch applied for v5.7.
 
 Yours,
 Linus Walleij
