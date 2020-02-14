@@ -2,122 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 37B3415D1A9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 06:31:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E44315D2B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 08:17:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725777AbgBNFbg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Feb 2020 00:31:36 -0500
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:38584 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725765AbgBNFbg (ORCPT
+        id S1726048AbgBNHRT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Feb 2020 02:17:19 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:59310 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728881AbgBNHRS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Feb 2020 00:31:36 -0500
-Received: by mail-pj1-f65.google.com with SMTP id j17so3443144pjz.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2020 21:31:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YdqrLZVIKkHcEkn+zhvQwPNs8H6GA9I6SUHidN4E340=;
-        b=Ci47GPh4Cs+sq3SNG5sbvk0b3C1x2gsg/VKR5MjnIsgZAFd+aCcm7tjveuVzwDpQtr
-         LHnevje4mPZsv+muBZCNruOAyiGHhSimhKO4PS3kc0LUbbCYgzL8KFOU0x3qUjeGU3Kf
-         0y/eHfQBzb7a6MIbbz8XOy+suHzKZxYx5C6B7lgM1K1Q6TtaIYykGpjGwb5aZ6NPEmqc
-         patkW8o/aBYaTwkdqH6o0Oo5NUj4yzCwZecduucHqQbKHEGGFwsegSok/DDBRmNgZapW
-         pT+rvYEVS69CP63n+xf33k4FmO9z3fP+zp0h8i4xGYNJ2yivPgX8TAj42dLyNkJ1RBtz
-         dJ1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YdqrLZVIKkHcEkn+zhvQwPNs8H6GA9I6SUHidN4E340=;
-        b=R/HhV48AIh1ywsodNItsXAHl6G1QN/A/gLowx0GBFErqV/DY2LfjajLvIaxZbqsqYC
-         Ubaq6MqtYTvZwXYn3W8vud5QfaZtGlVeNde0Ctx+f51nMtR1Rpx62rRBD8DzAXdg9jyx
-         MgozNj9MxqIF5RTWr94+vC7v4SiNMu9wgWVCOPp8X+ZOV4CO3eVV/3wzcCmriGW/BwnR
-         eeFG9hRLUZBK8fyh9xWI9P2TN+gFgYK3/U42LOBZSBI8gZf9oVuvJZFlwbYwEkuITW9S
-         Sw+O0ahr6zyIiLaprpCDZ4WoZiDMj3yDQi5BiZK56XugyC24bElBxBh/WUMY/FLQgTsG
-         X8zg==
-X-Gm-Message-State: APjAAAU+vAJfLQ0Gkv9fGnFyEH3cGL/6oHNiwKchmRdSmv01PYUqmFDq
-        MG5cg7yPyg3HVW8kF8JatHYhurEnygw=
-X-Google-Smtp-Source: APXvYqysymrbCVfw+33GsQE95mppqlPT8olpDd2YiCPAlZ81G3bDAgPaNfEXQdRpmnJUNYDGFxv6mg==
-X-Received: by 2002:a17:902:9042:: with SMTP id w2mr1575102plz.269.1581658295695;
-        Thu, 13 Feb 2020 21:31:35 -0800 (PST)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id k9sm4313340pjo.19.2020.02.13.21.31.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Feb 2020 21:31:35 -0800 (PST)
-Date:   Thu, 13 Feb 2020 21:31:33 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: msm8916: Properly deal with ETMv4 power
- management
-Message-ID: <20200214053133.GW3948@builder>
-References: <20200211183011.24720-1-mathieu.poirier@linaro.org>
+        Fri, 14 Feb 2020 02:17:18 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1581664638; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=sP5WtyrgrEHAKWYiObPllSAd3IaK/BsaP+Vmqe+1xh0=; b=r0exidjXFJx22G1awATevnJ9uTJOn/ozJ7Rl72fW744FN4FGu7eY9hHYFUXIZqYTr9rv+Xio
+ 1JGt+1RNC1mYmJDVML4HI4Et901sj2YWgo89OeAJXjx6AJXvkCs53vO7RLedQoyL/nzHoYPr
+ sYOMQRptMLkkPJV2E4Z0/TjxoOI=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e46497e.7f0e2ee3a810-smtp-out-n03;
+ Fri, 14 Feb 2020 07:17:18 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 119E6C4479D; Fri, 14 Feb 2020 07:17:17 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.204.79.15] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mojha)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4164BC4479F;
+        Fri, 14 Feb 2020 07:17:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4164BC4479F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mojha@codeaurora.org
+Subject: Re: [PATCH] nvmem: core: Fix msb clearing bits
+To:     Shadab Naseem <snaseem@codeaurora.org>,
+        srinivas.kandagatla@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        neeraju@codeaurora.org
+References: <1580474635-11965-1-git-send-email-snaseem@codeaurora.org>
+From:   Mukesh Ojha <mojha@codeaurora.org>
+Message-ID: <06a518e3-cff4-e2e0-2a4b-f4bfa2c6dcdc@codeaurora.org>
+Date:   Fri, 14 Feb 2020 12:46:56 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200211183011.24720-1-mathieu.poirier@linaro.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <1580474635-11965-1-git-send-email-snaseem@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 11 Feb 10:30 PST 2020, Mathieu Poirier wrote:
 
-> Properly deal with ETMv4 power management by adding the
-> "coresight-loses-context-with-cpu" property.  Otherwise tracer
-> configuration is lost when CPUs enter deep idle states, resulting
-> in the failure of the trace session.
-> 
-> Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-
-Applied
-
-Thanks,
-Bjorn
-
+On 1/31/2020 6:13 PM, Shadab Naseem wrote:
+> When clearing the msb bits of the resultant buffer, it is
+> masked with the modulo of the number of bits needed with
+> respect to the BITS_PER_BYTE. To mask out the buffer,
+> it is passed though GENMASK of the remainder of the bits
+> starting from zeroth bit. This case is valid if nbits is not
+> a multiple of BITS_PER_BYTE and you are actually creating
+> a GENMASK. If the nbits coming is a multiple of BITS_PER_BYTE,
+> it would pass a negative value to the high bit number of
+> GENMASK with zero as the lower bit number.
+>
+> As per the definition of the GENMASK, the higher bit number (h)
+> is right operand for bitwise right shift. If the value of the
+> right operand is negative or is greater or equal to the number
+> of bits in the promoted left operand, the behavior is undefined.
+> So passing a negative value to GENMASK could behave differently
+> across architecture, specifically between 64 and 32 bit.
+> Also, on passing the hard-coded negative value as GENMASK(-1, 0)
+> is giving compiler warning for shift-count-overflow.
+> Hence making a check for clearing the MSB if the nbits are not
+> a multiple of BITS_PER_BYTE.
+>
+> Signed-off-by: Shadab Naseem <snaseem@codeaurora.org>
 > ---
->  arch/arm64/boot/dts/qcom/msm8916.dtsi | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> index 8686e101905c..846c5b4a53e8 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> @@ -1363,6 +1363,7 @@
->  
->  			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
->  			clock-names = "apb_pclk", "atclk";
-> +			arm,coresight-loses-context-with-cpu;
->  
->  			cpu = <&CPU0>;
->  
-> @@ -1381,6 +1382,7 @@
->  
->  			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
->  			clock-names = "apb_pclk", "atclk";
-> +			arm,coresight-loses-context-with-cpu;
->  
->  			cpu = <&CPU1>;
->  
-> @@ -1399,6 +1401,7 @@
->  
->  			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
->  			clock-names = "apb_pclk", "atclk";
-> +			arm,coresight-loses-context-with-cpu;
->  
->  			cpu = <&CPU2>;
->  
-> @@ -1417,6 +1420,7 @@
->  
->  			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
->  			clock-names = "apb_pclk", "atclk";
-> +			arm,coresight-loses-context-with-cpu;
->  
->  			cpu = <&CPU3>;
->  
-> -- 
-> 2.20.1
-> 
+>   drivers/nvmem/core.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+> index 1e4a798..23c1547 100644
+> --- a/drivers/nvmem/core.c
+> +++ b/drivers/nvmem/core.c
+> @@ -926,7 +926,8 @@ static void nvmem_shift_read_buffer_in_place(struct nvmem_cell *cell, void *buf)
+>   		*p-- = 0;
+>   
+>   	/* clear msb bits if any leftover in the last byte */
+> -	*p &= GENMASK((cell->nbits%BITS_PER_BYTE) - 1, 0);
+> +	if (cell->nbits%BITS_PER_BYTE)
+> +		*p &= GENMASK((cell->nbits%BITS_PER_BYTE) - 1, 0);
+
+
+LGTM..
+
+Reviewed-by: mojha@codeaurora.org
+
+
+Thanks
+Mukesh
+
+>   }
+>   
+>   static int __nvmem_cell_read(struct nvmem_device *nvmem,
