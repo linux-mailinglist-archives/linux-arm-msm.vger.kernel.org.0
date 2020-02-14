@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1577C15E166
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 17:18:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DAB915E2B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 17:25:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392742AbgBNQSQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Feb 2020 11:18:16 -0500
-Received: from mail.kernel.org ([198.145.29.99]:50140 "EHLO mail.kernel.org"
+        id S2406008AbgBNQYw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Feb 2020 11:24:52 -0500
+Received: from mail.kernel.org ([198.145.29.99]:33700 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392736AbgBNQSO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Feb 2020 11:18:14 -0500
+        id S2405999AbgBNQYv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 Feb 2020 11:24:51 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2C94124708;
-        Fri, 14 Feb 2020 16:18:13 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 90AA8247AC;
+        Fri, 14 Feb 2020 16:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1581697094;
-        bh=KOCqnSRue2jZuqWvcRXRfvOeXREYntooj2FRF/DbVq4=;
+        s=default; t=1581697490;
+        bh=+4Sh4W9Ou5A62S+AACM+nRArbTPrXUh5TK3knHdufww=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=1XK6RrdODcDXwxbpdbGbN7mThVfYFdGMwJRwksCtxWXlpfmxhXxGNZN1d1fvFovjy
-         mcH5gCSt2rQyqtN+ydSYU1t1AJxRc7fKj23AXQvZwy+4Wt7mmvGKJb/aczlVSh+bvZ
-         J28342vcthJ5ric1JInf6E9HXJRvcWKtC3jMwayk=
+        b=lAiHmMNQ4I++EgQC1lC+NkIT0EjfoJTtHQP2jTp54begpKsL3NJDHwMFnQqWzX8c3
+         hO7MSsKFfLInyix5pmfJUd3Bn/1o5x3AlVBziwa/Nr4iq2y1W8Jw11v51NqG2xUBNx
+         TLmYprbVhxwFRpxvdn/Dg9KTL7lIt3oS7HPWp5JU=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Douglas Anderson <dianders@chromium.org>,
@@ -30,12 +30,12 @@ Cc:     Douglas Anderson <dianders@chromium.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 045/186] clk: qcom: rcg2: Don't crash if our parent can't be found; return an error
-Date:   Fri, 14 Feb 2020 11:14:54 -0500
-Message-Id: <20200214161715.18113-45-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.4 020/100] clk: qcom: rcg2: Don't crash if our parent can't be found; return an error
+Date:   Fri, 14 Feb 2020 11:23:04 -0500
+Message-Id: <20200214162425.21071-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200214161715.18113-1-sashal@kernel.org>
-References: <20200214161715.18113-1-sashal@kernel.org>
+In-Reply-To: <20200214162425.21071-1-sashal@kernel.org>
+References: <20200214162425.21071-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -94,10 +94,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+)
 
 diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index a93439242565d..d3953ea69fda4 100644
+index 350a01f748706..8b549ece9f13c 100644
 --- a/drivers/clk/qcom/clk-rcg2.c
 +++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -210,6 +210,9 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
+@@ -194,6 +194,9 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw,
  
  	clk_flags = clk_hw_get_flags(hw);
  	p = clk_hw_get_parent_by_index(hw, index);
