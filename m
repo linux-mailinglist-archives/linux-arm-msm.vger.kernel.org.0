@@ -2,87 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 116ED15D30E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 08:44:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C16B815D3C4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 09:25:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729004AbgBNHoI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Feb 2020 02:44:08 -0500
-Received: from mail.kernel.org ([198.145.29.99]:53084 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729007AbgBNHoI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Feb 2020 02:44:08 -0500
-Received: from localhost.localdomain (unknown [106.201.58.38])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 01D28217F4;
-        Fri, 14 Feb 2020 07:44:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1581666247;
-        bh=r9zsX8XEd5qvEkHa91w0t4J/RKl8sONWqH+tDi0ymqs=;
-        h=From:To:Cc:Subject:Date:From;
-        b=GcEmMQZylBRtSRVfyitzOcTSaKFgAMjy26oQgjgyR6KDKSD9fgHWi8755hIlKRE0S
-         JEQhB1aVVBhfeUq33cr1ojO0MKYXvmJ0ZYvf5oGs9LAkZF1eg04ot5NaczXyb+vUxS
-         XhA55DgrGY5B9e2c7tNFwKf1bP7g9DUXuMzsOJTc=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
+        id S1728997AbgBNIZt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Feb 2020 03:25:49 -0500
+Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:45291 "EHLO
+        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728859AbgBNIZp (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 Feb 2020 03:25:45 -0500
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Feb 2020 13:55:34 +0530
+Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 14 Feb 2020 13:55:05 +0530
+Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
+        id 6474F25BF; Fri, 14 Feb 2020 13:55:04 +0530 (IST)
+From:   Sandeep Maheswaram <sanm@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yuji Sasaki <sasakiy@chromium.org>,
-        Andy Gross <agross@kernel.org>, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH] spi: qup: call spi_qup_pm_resume_runtime before suspending
-Date:   Fri, 14 Feb 2020 13:13:40 +0530
-Message-Id: <20200214074340.2286170-1-vkoul@kernel.org>
-X-Mailer: git-send-email 2.24.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: [PATCH v5 0/3] ADD interconnect support for Qualcomm DWC3 driver
+Date:   Fri, 14 Feb 2020 13:54:41 +0530
+Message-Id: <1581668684-4182-1-git-send-email-sanm@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Yuji Sasaki <sasakiy@chromium.org>
+This path series aims to add interconnect support in
+dwc3-qcom driver on SDM845 SoCs.
 
-spi_qup_suspend() will cause synchronous external abort when
-runtime suspend is enabled and applied, as it tries to
-access SPI controller register while clock is already disabled
-in spi_qup_pm_suspend_runtime().
+Changes from v4 -> v5
+  > [PATCH 1/3] Added the interconnect properties in yaml. This patch depends
+    on series https://patchwork.kernel.org/cover/11372641/.
+  > [PATCH 2/3] Fixed review comments from Matthias in DWC3 driver.
+  > [PATCH 3/3] Modified as per the new interconnect nodes in sdm845. Depends
+    on series https://patchwork.kernel.org/cover/11372211/. 
 
-Signed-off-by: Yuji sasaki <sasakiy@chromium.org>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/spi/spi-qup.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
-index dd3434a407ea..a364b99497e2 100644
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -1217,6 +1217,11 @@ static int spi_qup_suspend(struct device *device)
- 	struct spi_qup *controller = spi_master_get_devdata(master);
- 	int ret;
- 
-+	if (pm_runtime_suspended(device)) {
-+		ret = spi_qup_pm_resume_runtime(device);
-+		if (ret)
-+			return ret;
-+	}
- 	ret = spi_master_suspend(master);
- 	if (ret)
- 		return ret;
-@@ -1225,10 +1230,8 @@ static int spi_qup_suspend(struct device *device)
- 	if (ret)
- 		return ret;
- 
--	if (!pm_runtime_suspended(device)) {
--		clk_disable_unprepare(controller->cclk);
--		clk_disable_unprepare(controller->iclk);
--	}
-+	clk_disable_unprepare(controller->cclk);
-+	clk_disable_unprepare(controller->iclk);
- 	return 0;
- }
- 
+Changes from v3 -> v4
+  > Fixed review comments from Matthias
+  > [PATCH 1/3] and [PATCH 3/3] remains unchanged
+
+Changes from v2 -> v3
+  > Fixed review comments from Matthias and Manu
+  > changed the functions prefix from usb_* to dwc3_qcom_*
+
+Changes since V1:
+  > Comments by Georgi Djakov on "[PATCH 2/3]" addressed
+  > [PATCH 1/3] and [PATCH 3/3] remains unchanged
+
+Sandeep Maheswaram (3):
+  dt-bindings: usb: qcom,dwc3: Introduce interconnect properties for
+    Qualcomm DWC3 driver
+  usb: dwc3: qcom: Add interconnect support in dwc3 driver
+  arm64: dts: sdm845: Add interconnect properties for USB
+
+ .../devicetree/bindings/usb/qcom,dwc3.yaml         |  16 +++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |  12 ++
+ drivers/usb/dwc3/dwc3-qcom.c                       | 135 ++++++++++++++++++++-
+ 3 files changed, 161 insertions(+), 2 deletions(-)
+
 -- 
-2.24.1
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
