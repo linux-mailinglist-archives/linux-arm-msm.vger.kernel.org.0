@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C4C2E15DC41
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 16:53:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA09D15DCAA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 16:56:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730849AbgBNPvp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Feb 2020 10:51:45 -0500
-Received: from mail.kernel.org ([198.145.29.99]:56882 "EHLO mail.kernel.org"
+        id S1731395AbgBNPyC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Feb 2020 10:54:02 -0500
+Received: from mail.kernel.org ([198.145.29.99]:33624 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730847AbgBNPvo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Feb 2020 10:51:44 -0500
+        id S1731385AbgBNPyC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 Feb 2020 10:54:02 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 108A224686;
-        Fri, 14 Feb 2020 15:51:42 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6465B2465D;
+        Fri, 14 Feb 2020 15:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1581695504;
-        bh=xzcDHUr0AgOeeRhMZggU0VLWyxXQOHzz4fX3m50JerA=;
+        s=default; t=1581695641;
+        bh=L39ewZIAQLtVWClce3+6QIzm4nk1mjYhAteFKAvrzdY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=j80lsGFn8D5uyG60r7xR9LEQlxbqB9ZGC6+GIv+cU9dneXVOnFkyXpyvFrTDaNQd8
-         TQ+ICBRNyDJESXVv3vYSDXdOxzYH3Ss3GpMSxxzz+SerkzpG2QG/JjF/ygYCgbznPW
-         4xyWcDycFNfiS7ELqGfjOAqYnUOf1LUijfnYVGlk=
+        b=VewLqZUvU+hrGGXd9aWmgEBS/nMQ7hQKMmP8HMQTc6mVkhV6GT714hy4SKZFlnshX
+         v00R/36KJOJ9F85sIy8v7+M3jDJPh+W0plGc2NRAAO98e5YjCBeeR7ibKKkLtnxdEW
+         y4kPcBSQ8rpQjpJJlICb9uoLzGZSJCWHWBnYUnc0=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.5 130/542] clk: qcom: rcg2: Don't crash if our parent can't be found; return an error
-Date:   Fri, 14 Feb 2020 10:42:02 -0500
-Message-Id: <20200214154854.6746-130-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.5 236/542] clk: qcom: smd: Add missing bimc clock
+Date:   Fri, 14 Feb 2020 10:43:48 -0500
+Message-Id: <20200214154854.6746-236-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200214154854.6746-1-sashal@kernel.org>
 References: <20200214154854.6746-1-sashal@kernel.org>
@@ -45,68 +45,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
-[ Upstream commit 908b050114d8fefdddc57ec9fbc213c3690e7f5f ]
+[ Upstream commit 87ec9adcca71801a44ddb311185b17df09839ab5 ]
 
-When I got my clock parenting slightly wrong I ended up with a crash
-that looked like this:
+It turns out booting the modem is dependent on a bimc vote from Linux on
+msm8998.  To make the modem happy, add the bimc clock to rely on the
+default vote from rpmcc.  Once we have interconnect support, bimc should
+be controlled properly.
 
-  Unable to handle kernel NULL pointer dereference at virtual
-  address 0000000000000000
-  ...
-  pc : clk_hw_get_rate+0x14/0x44
-  ...
-  Call trace:
-   clk_hw_get_rate+0x14/0x44
-   _freq_tbl_determine_rate+0x94/0xfc
-   clk_rcg2_determine_rate+0x2c/0x38
-   clk_core_determine_round_nolock+0x4c/0x88
-   clk_core_round_rate_nolock+0x6c/0xa8
-   clk_core_round_rate_nolock+0x9c/0xa8
-   clk_core_set_rate_nolock+0x70/0x180
-   clk_set_rate+0x3c/0x6c
-   of_clk_set_defaults+0x254/0x360
-   platform_drv_probe+0x28/0xb0
-   really_probe+0x120/0x2dc
-   driver_probe_device+0x64/0xfc
-   device_driver_attach+0x4c/0x6c
-   __driver_attach+0xac/0xc0
-   bus_for_each_dev+0x84/0xcc
-   driver_attach+0x2c/0x38
-   bus_add_driver+0xfc/0x1d0
-   driver_register+0x64/0xf8
-   __platform_driver_register+0x4c/0x58
-   msm_drm_register+0x5c/0x60
-   ...
-
-It turned out that clk_hw_get_parent_by_index() was returning NULL and
-we weren't checking.  Let's check it so that we don't crash.
-
-Fixes: ac269395cdd8 ("clk: qcom: Convert to clk_hw based provider APIs")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-Link: https://lkml.kernel.org/r/20200203103049.v4.1.I7487325fe8e701a68a07d3be8a6a4b571eca9cfa@changeid
+Fixes: 6131dc81211c ("clk: qcom: smd: Add support for MSM8998 rpm clocks")
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Link: https://lkml.kernel.org/r/20191217165409.4919-1-jeffrey.l.hugo@gmail.com
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rcg2.c | 3 +++
+ drivers/clk/qcom/clk-smd-rpm.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index 5e0f7d8f168dd..cecdb07ce13ba 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -217,6 +217,9 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
+diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+index 930fa4a4c52a8..e5c3db11bf26c 100644
+--- a/drivers/clk/qcom/clk-smd-rpm.c
++++ b/drivers/clk/qcom/clk-smd-rpm.c
+@@ -648,6 +648,7 @@ static const struct rpm_smd_clk_desc rpm_clk_qcs404 = {
+ };
  
- 	clk_flags = clk_hw_get_flags(hw);
- 	p = clk_hw_get_parent_by_index(hw, index);
-+	if (!p)
-+		return -EINVAL;
-+
- 	if (clk_flags & CLK_SET_RATE_PARENT) {
- 		rate = f->freq;
- 		if (f->pre_div) {
+ /* msm8998 */
++DEFINE_CLK_SMD_RPM(msm8998, bimc_clk, bimc_a_clk, QCOM_SMD_RPM_MEM_CLK, 0);
+ DEFINE_CLK_SMD_RPM(msm8998, pcnoc_clk, pcnoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 0);
+ DEFINE_CLK_SMD_RPM(msm8998, snoc_clk, snoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 1);
+ DEFINE_CLK_SMD_RPM(msm8998, cnoc_clk, cnoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 2);
+@@ -671,6 +672,8 @@ DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8998, rf_clk2_pin, rf_clk2_a_pin, 5);
+ DEFINE_CLK_SMD_RPM_XO_BUFFER(msm8998, rf_clk3, rf_clk3_a, 6);
+ DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8998, rf_clk3_pin, rf_clk3_a_pin, 6);
+ static struct clk_smd_rpm *msm8998_clks[] = {
++	[RPM_SMD_BIMC_CLK] = &msm8998_bimc_clk,
++	[RPM_SMD_BIMC_A_CLK] = &msm8998_bimc_a_clk,
+ 	[RPM_SMD_PCNOC_CLK] = &msm8998_pcnoc_clk,
+ 	[RPM_SMD_PCNOC_A_CLK] = &msm8998_pcnoc_a_clk,
+ 	[RPM_SMD_SNOC_CLK] = &msm8998_snoc_clk,
 -- 
 2.20.1
 
