@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E6BAE15F230
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 19:09:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 50E6315F1C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 19:08:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392475AbgBNSHm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Feb 2020 13:07:42 -0500
-Received: from mail.kernel.org ([198.145.29.99]:34650 "EHLO mail.kernel.org"
+        id S1731745AbgBNPzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Feb 2020 10:55:21 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36318 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731534AbgBNPy3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Feb 2020 10:54:29 -0500
+        id S1731742AbgBNPzU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 Feb 2020 10:55:20 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D0F8B222C4;
-        Fri, 14 Feb 2020 15:54:27 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 672A724681;
+        Fri, 14 Feb 2020 15:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1581695668;
-        bh=CVfVA6v89yNedy4aQtUH/s74q22YyBh8hOOT8Sme+v8=;
+        s=default; t=1581695720;
+        bh=0riOLmm1KUbfHFuWluYYO4aIPkUq6Iig7m88Ct78IjQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=UZOkG9aKTnt0LTypyrpCz65/JAPQFti0huxbPWrZyifiJ3Grropt2Rr55nM/2dK5M
-         WM/y8etsLG56hxSriZCBJdMrwHIHuuO7dHiOBXmfkmpwFVBXNzoeor34Ygc0kQX0Ru
-         nCVuddO9SX41WcrNtJByAARFmz9jV/s1WIW0UGKk=
+        b=iVcyqGGA+QCFTfTqO8ZOw3q5Hdeosy8CJhkhKRe1Fg/Z+VdqBVkVlBZuIOuDk+CyR
+         pIjPxxvRPox+Pub1eVnkwLhJVRgNBVZd8Z03mlyCZ37R+s//NNfQ5bbF8PxsGfOe70
+         W/mv1oBT05gQNAAAUcWanomrj/uTjTPT0vKr2Fgw=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.5 257/542] clk: qcom: Add missing msm8998 gcc_bimc_gfx_clk
-Date:   Fri, 14 Feb 2020 10:44:09 -0500
-Message-Id: <20200214154854.6746-257-sashal@kernel.org>
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.5 297/542] arm64: dts: qcom: msm8998-mtp: Add alias for blsp1_uart3
+Date:   Fri, 14 Feb 2020 10:44:49 -0500
+Message-Id: <20200214154854.6746-297-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200214154854.6746-1-sashal@kernel.org>
 References: <20200214154854.6746-1-sashal@kernel.org>
@@ -44,66 +44,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-[ Upstream commit db2c7c0a04b11753f5741d00b784b5380ddeee72 ]
+[ Upstream commit c9ec155b5962233aff3df65210bd6a4788dee21c ]
 
-gcc_bimc_gfx_clk is a required clock for booting the GPU and GPU SMMU.
+The msm_serial driver has a predefined set of uart ports defined, which
+is allocated either by reading aliases or if no match is found a simple
+counter, starting at index 0. But there's no logic in place to prevent
+these two allocation mechanism from colliding. As a result either none
+or all of the active msm_serial instances must be listed as aliases.
 
-Fixes: 4807c71cc688 (arm64: dts: Add msm8998 SoC and MTP board support)
-Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Link: https://lkml.kernel.org/r/20191217164913.4783-1-jeffrey.l.hugo@gmail.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Define blsp1_uart3 as "serial1" to mitigate this problem.
+
+Fixes: 4cffb9f2c700 ("arm64: dts: qcom: msm8998-mtp: Enable bluetooth")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Link: https://lore.kernel.org/r/20191119011823.379100-1-bjorn.andersson@linaro.org
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-msm8998.c               | 14 ++++++++++++++
- include/dt-bindings/clock/qcom,gcc-msm8998.h |  1 +
- 2 files changed, 15 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/qcom/gcc-msm8998.c b/drivers/clk/qcom/gcc-msm8998.c
-index cf31b5d03270f..df1d7056436cd 100644
---- a/drivers/clk/qcom/gcc-msm8998.c
-+++ b/drivers/clk/qcom/gcc-msm8998.c
-@@ -1996,6 +1996,19 @@ static struct clk_branch gcc_gp3_clk = {
- 	},
- };
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+index 5f101a20a20a2..e08fcb426bbf8 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998-mtp.dtsi
+@@ -9,6 +9,7 @@
+ / {
+ 	aliases {
+ 		serial0 = &blsp2_uart1;
++		serial1 = &blsp1_uart3;
+ 	};
  
-+static struct clk_branch gcc_bimc_gfx_clk = {
-+	.halt_reg = 0x46040,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x46040,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_bimc_gfx_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_gpu_bimc_gfx_clk = {
- 	.halt_reg = 0x71010,
- 	.halt_check = BRANCH_HALT,
-@@ -2810,6 +2823,7 @@ static struct clk_regmap *gcc_msm8998_clocks[] = {
- 	[GCC_GP1_CLK] = &gcc_gp1_clk.clkr,
- 	[GCC_GP2_CLK] = &gcc_gp2_clk.clkr,
- 	[GCC_GP3_CLK] = &gcc_gp3_clk.clkr,
-+	[GCC_BIMC_GFX_CLK] = &gcc_bimc_gfx_clk.clkr,
- 	[GCC_GPU_BIMC_GFX_CLK] = &gcc_gpu_bimc_gfx_clk.clkr,
- 	[GCC_GPU_BIMC_GFX_SRC_CLK] = &gcc_gpu_bimc_gfx_src_clk.clkr,
- 	[GCC_GPU_CFG_AHB_CLK] = &gcc_gpu_cfg_ahb_clk.clkr,
-diff --git a/include/dt-bindings/clock/qcom,gcc-msm8998.h b/include/dt-bindings/clock/qcom,gcc-msm8998.h
-index de1d8a1f59665..63e02dc32a0bb 100644
---- a/include/dt-bindings/clock/qcom,gcc-msm8998.h
-+++ b/include/dt-bindings/clock/qcom,gcc-msm8998.h
-@@ -182,6 +182,7 @@
- #define GCC_MSS_GPLL0_DIV_CLK_SRC				173
- #define GCC_MSS_SNOC_AXI_CLK					174
- #define GCC_MSS_MNOC_BIMC_AXI_CLK				175
-+#define GCC_BIMC_GFX_CLK					176
- 
- #define PCIE_0_GDSC						0
- #define UFS_GDSC						1
+ 	chosen {
 -- 
 2.20.1
 
