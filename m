@@ -2,97 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 332C215D147
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 05:57:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A3F6415D14B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Feb 2020 05:58:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728760AbgBNE5a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Feb 2020 23:57:30 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:34126 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727965AbgBNE5a (ORCPT
+        id S1728763AbgBNE6T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Feb 2020 23:58:19 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:54616 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728754AbgBNE6T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Feb 2020 23:57:30 -0500
-Received: by mail-pl1-f196.google.com with SMTP id j7so3267586plt.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2020 20:57:28 -0800 (PST)
+        Thu, 13 Feb 2020 23:58:19 -0500
+Received: by mail-pj1-f68.google.com with SMTP id dw13so3341836pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Feb 2020 20:58:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Oqu5dByWhUsTcLbgcHAaKlo5En4mZCmBir5nj2HwpTQ=;
-        b=n6O7ZelHX94glmhMjMGvdu56eA+DSlizoPxIXZLUVpsrCpmVn2xEDa13FbDci4mmIo
-         O4TunmsnYP8BRWDvd43t/Rlm2N/Em8bUnefMdgm4geuy52pDrI6FGNvj1u5VXLIB8We0
-         z4yLTL1SriLEkPDLq7igHvNi0ZZiapI7YYoC5TgxoAYRTA0oRPSYO+RKtrSvHvoxmGde
-         j0YyHt32uqWIWm68GGAvKCsK/bsvT8UhZjgM3ZfZE+iJ+qjHid2rJh6SYaXARRS7vmj9
-         bExIEZfPoQ1tVT/ADiwz7/VTj2ennHgpqLMXWmqDXT1jkPmxeM1rNNSX7ZrS/bDQZwcc
-         Podg==
+        bh=PKVY1vLFLeMqrxzisPDGi9WSqjXkmoLHrmJtuhSeWpA=;
+        b=MKa4T1e2BYLw/Ugb3oAmoOd2/+jxBGU41Nm0g2vInEcGYPpAVF4qjcghbG3fkw0HXN
+         B8DztKpHj8V6pZpHQYtyOIIrsJjCaE41e1kJW6DZWot3yv33XpMaDhJJYgKnZiTeDeqX
+         9lhaDMVq4ps4dz1y5d1jLUP4gervls7YSjpNd5WTZAWENA13FnBpMtV3n7mm2DtQPZJS
+         E+KE9/BAMpJZm741V0hwE6uCsNJYKEByXbqrXPw1LSoSDMn8bdWu52TpIGL4csxp77Ub
+         tHY9EzmdRmSEUhMeV6RKEX4BiRH4F+rJ6+bcxuVYAdVDe0iUA/S/rGGKUekxwRq7mZEk
+         2vHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Oqu5dByWhUsTcLbgcHAaKlo5En4mZCmBir5nj2HwpTQ=;
-        b=nEdTXPrfjJu6/KpmGi6lIVX6uDLuaH+Pgtm1pVN9WE13KADj3ve3y1r9ZZ4iin8P1E
-         DZYJJuU5lHrWnw+MX64eCPCR96uuq456Sy5oUgVei1w0l6w1k0VlwQsWFFJU6BfUsPYK
-         eQLlGaacSZJ6+aVCrpXDR3lOnwBry8GSMiqzhkL+7WKj3tNO5+ofekj1m4c/hPoD8anY
-         DH/84t5Gq1R5zD6FlMqHr8OTzsgfxW5BmdmoZzqXoKmlHHRSVovp9z/1xxCgWnBMZVk5
-         v42tBT0opPcN2iTzTKxufEpHT5syVar0FqgO4Bd9c6EUmQ4JBGzeV6HE8adQ1dfpo6BH
-         92bw==
-X-Gm-Message-State: APjAAAViwNtNfIGybNgnnhbh2E0MEevoPDlbwU6gJcXIfVWX2DpSXAtX
-        MgjYY0vE312qbg63QqokLgtCYA==
-X-Google-Smtp-Source: APXvYqx6c/Oq/DJ+FfuRU2+zRP3Vq4zxWIgDCs7lRWP4DFiGtsIUPqxp5yIiKXI3eP7QrubZEYnL/A==
-X-Received: by 2002:a17:902:a711:: with SMTP id w17mr1520750plq.152.1581656248269;
-        Thu, 13 Feb 2020 20:57:28 -0800 (PST)
+        bh=PKVY1vLFLeMqrxzisPDGi9WSqjXkmoLHrmJtuhSeWpA=;
+        b=KI2CnUcqRI7jJ1iWABcw6oQ3fT5BFgctwrJ5NMB7bweW9YFpSqKHxM9Y84VQUgkRGc
+         b8DhJYs3ns/suOIVa9W52TfHQjeeQyvKPfEaNhYbLDkvjPwYlrjRF9dlk5JLWtZBzfVk
+         ImsaT3udvjLnvb6HJpzuYh+9w0UN3oo0dLAYMtHBerD8FFf77CEQHPRmyfGcQH8sVl1X
+         iEDN03PBzYn+w/GryZkCSvW6JqkZBG5XOapY8L5plZ6Z6bryl7veovcT0R+7ACqMje0x
+         15bH+g365BBR+wG5riOC85Go1qlh98RUlTk88g8iyAACcoesqVXy50ePLnOzAuM7VHn3
+         CX6w==
+X-Gm-Message-State: APjAAAWdq+S5hFchTss9/9mthV0y+VZ2F8kctdrVMjqR72zR2LNWsfLy
+        l8yS+LxKeRYkGty0Gdwwk+1sYA==
+X-Google-Smtp-Source: APXvYqxkZrLSarCDLnWJ9dsKIOTgEPrBqxnrfmJEwDBKM4wR5889OJKHFcPcKBnjFWQUIaFaaOLQog==
+X-Received: by 2002:a17:902:426:: with SMTP id 35mr1467333ple.302.1581656298355;
+        Thu, 13 Feb 2020 20:58:18 -0800 (PST)
 Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g24sm5030467pfk.92.2020.02.13.20.57.27
+        by smtp.gmail.com with ESMTPSA id a21sm4992409pgd.12.2020.02.13.20.58.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Feb 2020 20:57:27 -0800 (PST)
-Date:   Thu, 13 Feb 2020 20:57:25 -0800
+        Thu, 13 Feb 2020 20:58:17 -0800 (PST)
+Date:   Thu, 13 Feb 2020 20:58:15 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Ohad Ben-Cohen <ohad@wizery.com>, Andy Gross <agross@kernel.org>,
+Cc:     Mark Rutland <mark.rutland@arm.com>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Sibi Sankar <sibis@codeaurora.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Sibi Sankar <sibis@codeaurora.org>,
         Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Subject: Re: [PATCH v3 2/8] remoteproc: qcom: Introduce driver to store pil
- info in IMEM
-Message-ID: <20200214045725.GT3948@builder>
+Subject: Re: [PATCH v3 1/8] dt-bindings: remoteproc: Add Qualcomm PIL info
+ binding
+Message-ID: <20200214045815.GU3948@builder>
 References: <20200211005059.1377279-1-bjorn.andersson@linaro.org>
- <20200211005059.1377279-3-bjorn.andersson@linaro.org>
- <158164774404.184098.8855626264878132058@swboyd.mtv.corp.google.com>
+ <20200211005059.1377279-2-bjorn.andersson@linaro.org>
+ <158164708228.184098.14137448846934888082@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <158164774404.184098.8855626264878132058@swboyd.mtv.corp.google.com>
+In-Reply-To: <158164708228.184098.14137448846934888082@swboyd.mtv.corp.google.com>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 13 Feb 18:35 PST 2020, Stephen Boyd wrote:
-> Quoting Bjorn Andersson (2020-02-10 16:50:53)
-> > diff --git a/drivers/remoteproc/qcom_pil_info.c b/drivers/remoteproc/qcom_pil_info.c
-[..]
-> > +       mutex_lock(&reloc_mutex);
-> > +       _reloc = reloc;
-> > +       mutex_unlock(&reloc_mutex);
+On Thu 13 Feb 18:24 PST 2020, Stephen Boyd wrote:
+
+> Quoting Bjorn Andersson (2020-02-10 16:50:52)
+> > diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
+> > new file mode 100644
+> > index 000000000000..8386a4da6030
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
+> > @@ -0,0 +1,42 @@
+> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/remoteproc/qcom,pil-info.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm peripheral image loader relocation info binding
+> > +
+> > +maintainers:
+> > +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> > +
+> > +description:
+> > +  This document defines the binding for describing the Qualcomm peripheral
 > 
-> Ah ok, I see that mutex is protecting the pointer used for everything.
-> Ignore the comment above. But also, why not have every remoteproc device
-> point at some imem and then search through the imem for the name? Then
-> we don't need this driver or a lock that synchronizes these things.
-> Ideally we could dedicate a place in imem for each remoteproc and not
-> even have to search it for the string to update. Is that possible? Then
-> it becomes even simpler because the DT binding can point directly at the
-> address to write. It's not like the various images are changing that
-> much to the point where this location in imem is actually changing,
-> right?
+> Maybe drop "This document defines the binding for describing".
 > 
 
-I will check to see if these entries needs to be packed in the beginning
-of the array, otherwise this sounds like a good idea to simplify things.
+Sounds reasonable.
 
-Regards,
+> > +  image loader relocation memory region, in IMEM, which is used for post mortem
+> > +  debugging of remoteprocs.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: qcom,pil-reloc-info
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +
+> > +examples:
+> > +  - |
+> > +    imem@146bf000 {
+> > +      compatible = "syscon", "simple-mfd";
+> > +      reg = <0 0x146bf000 0 0x1000>;
+> > +
+> > +      #address-cells = <1>;
+> > +      #size-cells = <1>;
+> > +
+> > +      pil-reloc {
+> 
+> Should that be pil-reloc@94c?
+> 
+
+Yes it should.
+
+Thanks,
 Bjorn
+
+> > +        compatible ="qcom,pil-reloc-info";
+> > +        reg = <0x94c 200>;
+> > +      };
+> > +    };
