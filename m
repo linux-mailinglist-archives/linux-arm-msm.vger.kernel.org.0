@@ -2,114 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B05DF15FCED
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2020 06:36:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1182F15FD5B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2020 08:33:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725774AbgBOFgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Feb 2020 00:36:10 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:35753 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725822AbgBOFgK (ORCPT
+        id S1726028AbgBOHd0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Feb 2020 02:33:26 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:34886 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725974AbgBOHd0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Feb 2020 00:36:10 -0500
-Received: by mail-pg1-f193.google.com with SMTP id v23so2721105pgk.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2020 21:36:10 -0800 (PST)
+        Sat, 15 Feb 2020 02:33:26 -0500
+Received: by mail-pg1-f195.google.com with SMTP id v23so2838098pgk.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Feb 2020 23:33:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=umSLSqFdcTUcW15IlOni/Tuec1i7imfq7Q7J9RYYX4g=;
-        b=cIxrqNRp65WCtK+fiYn9g3PVPZKXWCeUB0uFKNIzbK215QX3Al36Ke7lSPKliczQPG
-         zRn7Bi6DqLKPjlqWNiNyIv1hfnOjroG9dJAo7zBVoxdcOscAu96nnIAHZ0M1KbXjm0Sl
-         ZR04ZlFB/h9Rx1G6+2XpmHZ6qc00E2hKTf9RBjGMhvM/S7iYiuAY2TTttm/rFAuLs3bq
-         Tl4EPCrQfsVTe0Oz0o9vN+XxWzhv+LiQ+CYz/xTgBuLMVClebtR7iuNxNAyHBtWlm0Wp
-         bHYgpgS19tzczImghBSGzs7yS4YbFHy+7+42F6gNr1Xyalax7P6gX0gNY6JBKTkCYKiJ
-         SqhA==
+        bh=j2dlqe8IHtaY+LXzB/pHVq0hnRV+mre/jg+PwqEvcS8=;
+        b=AWIz6DVLJIdQMqoVfz3wRh+Vy3/YO6Rj8qdKR2ACR5688rL4INQjtCNtispusY7Ghb
+         l+/zlkPJOyc9OvjpGe49NyVv5RN8BXhSxij1ywTbneVx/yeJdoAa72TerVGYvsoeQ21Z
+         pVzSt2aZvqMDeByl6BvVzbktr7TDkoQelaONUM1M9diTwokpM62mCAkUc9qZB47sT9xJ
+         dVUf2Wv+swFD0uj4xCzd/YNgHJKupqzR3fKOVgabOZbexx6idJNwtj3FU8ZjZu25PoY5
+         ebMGD+wkA41u48Ku7MC8KpJuVLez9j01fvFOUtnauOxGJopZHIA9iFIcVof484y/BJJP
+         71sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=umSLSqFdcTUcW15IlOni/Tuec1i7imfq7Q7J9RYYX4g=;
-        b=sa2nPj5D7s/ybrrDDrPwC+EfG5bwd3qUs54R1gZjEHlkZYMV7V2pgVPTMiievIy/H7
-         3D8LiJYepnnAlKNWzpz5opS+NJB1UQupQSe9OoAULvE+FT2DzDnWB3T3DulbHJYwnWvJ
-         VPY2+O/90tB6jgQ3LzwV8XKLiHHl2ftBAknwhmg8CrxN0rYlcUGrMXGUmujf2shPB9iR
-         8KYD1SHYZde2h0BU9KUlP0sdP/m8/V7Bz2X4An3ISktcC4M5ZpZge4Iwicp/YWeKzGYL
-         IuVGt4hEHSa92kMxKIbmIpMboICZB2QxxmOYFRTfgk4/f7XBpxfNsA8mPvIJhvoRODjp
-         rhlA==
-X-Gm-Message-State: APjAAAUYsNGgUGQJRtpCsgzZRAFD2zmN3uWlctoDQZiRz7LPqCS3D4ja
-        Mg2xkJ70W6mZLbC9qAVFXi8tJQ==
-X-Google-Smtp-Source: APXvYqzk4mzSWnD3eisseNOAoKEFSWYJ3iXu/MnMV3x1ieUnd9jyOy7C/UGmCSr9X/1fRkBJKg6m3w==
-X-Received: by 2002:a62:6842:: with SMTP id d63mr6945184pfc.113.1581744969478;
-        Fri, 14 Feb 2020 21:36:09 -0800 (PST)
+        bh=j2dlqe8IHtaY+LXzB/pHVq0hnRV+mre/jg+PwqEvcS8=;
+        b=R79lJuJXOFaSJ26zDQSCp7oKp4m4Ms3Ngylf262Y1ZgClUNvtEQWVsMkM0Yf/1kqt2
+         ZRkb0erBcoC75QuF11s+eD1W9hyPNgUufbCecHM760ENYEstz/RW11tA/d0fNTEt5p2j
+         LeBLdEiGU8HW+2PzmdE6VqwoaJeddGuqsjPwc2tBFfO3ImyQ+XCw1XjhhjkctxlyMSi7
+         pc6Q17k9QfTiVhWFb1sL3TilwRd3/IZaxOVBjbKYA06w+SbJpX9nnU+teprk9Ik1XVPU
+         LbsEUJAUBgxNM3/OO/dPDJnUGWRkNoQpkIDPyjTLKipAh2UkfodFvAOfHR3MrTuExqxy
+         Ztrw==
+X-Gm-Message-State: APjAAAUmvKWXKiKcREMc8UDQLbhK4XkJWIohezDrsne9/GWKHuNuulli
+        kfXJOul2TbfseHRwAi699bHfd2WRhWQ=
+X-Google-Smtp-Source: APXvYqwzKt7r8ABDtNBtoVyypViXPLxmsWx0rlgyfwfvOampDMUmR5cQA/VWM5u3tqLUqTrYXWhqjg==
+X-Received: by 2002:a63:df0a:: with SMTP id u10mr7715505pgg.282.1581752005210;
+        Fri, 14 Feb 2020 23:33:25 -0800 (PST)
 Received: from ripper (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id q12sm8411743pfh.158.2020.02.14.21.36.07
+        by smtp.gmail.com with ESMTPSA id t16sm9912477pgo.80.2020.02.14.23.33.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Feb 2020 21:36:08 -0800 (PST)
-Date:   Fri, 14 Feb 2020 21:35:17 -0800
+        Fri, 14 Feb 2020 23:33:24 -0800 (PST)
+Date:   Fri, 14 Feb 2020 23:32:33 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Cc:     mazziesaccount@gmail.com, Linus Walleij <linus.walleij@linaro.org>,
-        Eric Anholt <eric@anholt.net>,
-        Stefan Wahren <wahrenst@gmx.net>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Sean Wang <sean.wang@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Patrice Chotard <patrice.chotard@st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Andy Gross <agross@kernel.org>, linux-gpio@vger.kernel.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-oxnas@groups.io,
-        linux-rockchip@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] pinctrl: Use new GPIO_LINE_DIRECTION
-Message-ID: <20200215053517.GN955802@ripper>
-References: <20191112141819.GA22076@localhost.localdomain>
+To:     Mike Tipton <mdtipton@codeaurora.org>
+Cc:     sboyd@kernel.org, tdas@codeaurora.org, mturquette@baylibre.com,
+        agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: clk-rpmh: Wait for completion when enabling
+ clocks
+Message-ID: <20200215073233.GR955802@ripper>
+References: <20200215021232.1149-1-mdtipton@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191112141819.GA22076@localhost.localdomain>
+In-Reply-To: <20200215021232.1149-1-mdtipton@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 12 Nov 06:18 PST 2019, Matti Vaittinen wrote:
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> index 763da0be10d6..8844ca1261d5 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -485,8 +485,8 @@ static int msm_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
->  
->  	val = msm_readl_ctl(pctrl, g);
->  
-> -	/* 0 = output, 1 = input */
-> -	return val & BIT(g->oe_bit) ? 0 : 1;
-> +	return val & BIT(g->oe_bit) ? GPIO_LINE_DIRECTION_OUT :
-> +				      GPIO_LINE_DIRECTION_IN;
+On Fri 14 Feb 18:12 PST 2020, Mike Tipton wrote:
 
-For pinctrl-msm:
+> The current implementation always uses rpmh_write_async, which doesn't
+> wait for completion. That's fine for disable requests since there's no
+> immediate need for the clocks and they can be disabled in the
+> background. However, for enable requests we need to ensure the clocks
+> are actually enabled before returning to the client. Otherwise, clients
+> can end up accessing their HW before the necessary clocks are enabled,
+> which can lead to bus errors.
+> 
+> Use the synchronous version of this API (rpmh_write) for enable requests
+> in the active set to ensure completion.
+> 
+> Completion isn't required for sleep/wake sets, since they don't take
+> effect until after we enter sleep. All rpmh requests are automatically
+> flushed prior to entering sleep.
+> 
+> Fixes: 9c7e47025a6b ("clk: qcom: clk-rpmh: Add QCOM RPMh clock driver")
+> Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
+
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
->  }
 
 Regards,
 Bjorn
+
+> ---
+>  drivers/clk/qcom/clk-rpmh.c | 18 ++++++++++++++++--
+>  1 file changed, 16 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+> index 12bd8715dece..3137595a736b 100644
+> --- a/drivers/clk/qcom/clk-rpmh.c
+> +++ b/drivers/clk/qcom/clk-rpmh.c
+> @@ -143,6 +143,19 @@ static inline bool has_state_changed(struct clk_rpmh *c, u32 state)
+>  		!= (c->aggr_state & BIT(state));
+>  }
+>  
+> +static int clk_rpmh_send(struct clk_rpmh *c, enum rpmh_state state,
+> +			 struct tcs_cmd *cmd, bool wait_for_completion)
+> +{
+> +	int ret;
+> +
+> +	if (wait_for_completion)
+> +		ret = rpmh_write(c->dev, state, cmd, 1);
+> +	else
+> +		ret = rpmh_write_async(c->dev, state, cmd, 1);
+> +
+> +	return ret;
+> +}
+> +
+>  static int clk_rpmh_send_aggregate_command(struct clk_rpmh *c)
+>  {
+>  	struct tcs_cmd cmd = { 0 };
+> @@ -159,7 +172,8 @@ static int clk_rpmh_send_aggregate_command(struct clk_rpmh *c)
+>  			if (cmd_state & BIT(state))
+>  				cmd.data = on_val;
+>  
+> -			ret = rpmh_write_async(c->dev, state, &cmd, 1);
+> +			ret = clk_rpmh_send(c, state, &cmd,
+> +				cmd_state && state == RPMH_ACTIVE_ONLY_STATE);
+>  			if (ret) {
+>  				dev_err(c->dev, "set %s state of %s failed: (%d)\n",
+>  					!state ? "sleep" :
+> @@ -267,7 +281,7 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
+>  	cmd.addr = c->res_addr;
+>  	cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
+>  
+> -	ret = rpmh_write_async(c->dev, RPMH_ACTIVE_ONLY_STATE, &cmd, 1);
+> +	ret = clk_rpmh_send(c, RPMH_ACTIVE_ONLY_STATE, &cmd, enable);
+>  	if (ret) {
+>  		dev_err(c->dev, "set active state of %s failed: (%d)\n",
+>  			c->res_name, ret);
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
