@@ -2,115 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 56F5615FD75
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Feb 2020 09:22:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18EF2160378
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Feb 2020 11:28:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725852AbgBOIW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Feb 2020 03:22:57 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:46660 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725844AbgBOIW5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Feb 2020 03:22:57 -0500
-Received: by mail-pl1-f195.google.com with SMTP id y8so4705298pll.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Feb 2020 00:22:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=0spaYH0ADp0qufyMkPzIr0zJX5UW/R3Bl86KIjrIE3g=;
-        b=cNiXTnq/ZysqrqN+L0bb4uuDBpKi6RL6SX8F/UXQfXgdu0t1jfNLgRPf2E0nMtz6jF
-         uIEXhcdX3ranCPg4GUu42t+5dfiVrHmzXAJxgOhjW70r5O5zMcjb7L0LG6nrjhfIsfGV
-         hGKX1LX2tBJ6eYZU/CPKmqjkqFl4AhycNfRNlM51SYFHd0xziNB3ghim5ThSkliPpTkY
-         uglEqPv6cjZ/DjOvM2353jueiMkgKTsJPi81LJQnQ8GO80pR4rIe4qGlTX+7AkLW8zXN
-         Gp5NwwouNIMkZxdjVKzHmw7tHnWMN3ow4eVHoxQd1kWWOfh1fr332vldzxbJdamMwTJK
-         BQNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=0spaYH0ADp0qufyMkPzIr0zJX5UW/R3Bl86KIjrIE3g=;
-        b=lg9Bd3McBgGq2pORDxDOLfKe1E1JKbdC9CumFhYo1M9sAFkB/WCZOhDy5pDDdKeUUg
-         YHTnteQEtSv5NhVjPV5o6EqwPo+uTx5Ok2AHUl727i6UW9NbaEW18ojqWwMSs8bSacVg
-         5HnbzNe7AA5GcN92lCkjB/8KepZsWahR3SWz6WND6FSdCOwnT5nk4TxxZsPQj8sdSlPy
-         xr7/eMiw3u3G79KNdPhUjj18z0EHxTOr2pogzXCGsavF6fPSpbFFoeD1ovJLFO2subUA
-         gMNMP04ihpp1sN1/DAFh52MVu7A3o8Y5uVATco0yOQYhgJgb4pl3m8lJcHR/c7KpgLS3
-         KpWA==
-X-Gm-Message-State: APjAAAUWtAM2zqKI4eKWPCYpsD47ZeYId1/64t9JxXclNQlkRkDocjZO
-        vX3lYPsgieS2kwwce/7YjiU=
-X-Google-Smtp-Source: APXvYqyvdofB46rBfH8rpZDr6Uk3RdVWgvts94GuwwIMeCYDrsJpTbIZ5NeTP/vWifQ8XWvpiSr0SQ==
-X-Received: by 2002:a17:90a:8042:: with SMTP id e2mr8360683pjw.16.1581754976543;
-        Sat, 15 Feb 2020 00:22:56 -0800 (PST)
-Received: from localhost ([43.224.245.179])
-        by smtp.gmail.com with ESMTPSA id e10sm9628155pgt.78.2020.02.15.00.22.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 15 Feb 2020 00:22:55 -0800 (PST)
-From:   qiwuchen55@gmail.com
-To:     sboyd@kernel.org, allison@lohutok.net, gregkh@linuxfoundation.org,
-        linus.walleij@linaro.org, tglx@linutronix.de
-Cc:     linux-arm-msm@vger.kernel.org, chenqiwu <chenqiwu@xiaomi.com>
-Subject: [PATCH] spmi: pmic-arb: convert to devm_platform_ioremap_resource_byname()
-Date:   Sat, 15 Feb 2020 16:22:47 +0800
-Message-Id: <1581754967-27090-1-git-send-email-qiwuchen55@gmail.com>
-X-Mailer: git-send-email 1.9.1
+        id S1727329AbgBPK2E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Feb 2020 05:28:04 -0500
+Received: from mail.kernel.org ([198.145.29.99]:44172 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725951AbgBPK2E (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 16 Feb 2020 05:28:04 -0500
+Received: from localhost.localdomain (unknown [122.178.194.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 889F820857;
+        Sun, 16 Feb 2020 10:27:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1581848883;
+        bh=tFdLIRrPeGwxnZkYfT0YOBqyS7GHpTVYWDvgSynC27M=;
+        h=From:To:Cc:Subject:Date:From;
+        b=2Hg5+89t9fa2SU6yNsw+x3xqSTqi1E91mWoyMdZG8M3PKQgwr0tfD+7WK+CfIDzLs
+         E1k7KDr5x85RclQv9oSo8XbGsCAVqC2rwFKSaRPhv4fWWE1t2ynN6D9XpC+bnGHzr8
+         rR7hCGZnwgSFZe8BanZKfeTGV0OJkJDPHGI3LDjU=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        psodagud@codeaurora.org, tsoni@codeaurora.org,
+        jshriram@codeaurora.org, tdas@codeaurora.org,
+        vnkgutta@codeaurora.org
+Subject: [PATCH v3 0/5] Add clock drivers for SM8250 SoC
+Date:   Sun, 16 Feb 2020 15:57:20 +0530
+Message-Id: <20200216102725.2629155-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.24.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: chenqiwu <chenqiwu@xiaomi.com>
+This series adds clock drivers support for SM8250 SoC.  As part of the
+device tree, the sm8250 dts file has basic nodes like CPU, PSCI, intc, timer
+and clock controller.
 
-Use devm_platform_ioremap_resource_byname() instead of calling
-platform_get_resource_byname() and devm_ioremap_resource() separately
-to simplify the code.
+Required clock controller driver and RPMH cloks are added to
+support peripherals like USB.
 
-Signed-off-by: chenqiwu <chenqiwu@xiaomi.com>
----
- drivers/spmi/spmi-pmic-arb.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+All this configuration is added to support SM8250 to boot up to the
+serial console.
 
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index de844b4..c65815c 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -1203,17 +1203,15 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 		else
- 			pmic_arb->ver_ops = &pmic_arb_v5;
- 
--		res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
--						   "obsrvr");
--		pmic_arb->rd_base = devm_ioremap_resource(&ctrl->dev, res);
-+		pmic_arb->rd_base =
-+			devm_platform_ioremap_resource_byname(pdev, "obsrvr");
- 		if (IS_ERR(pmic_arb->rd_base)) {
- 			err = PTR_ERR(pmic_arb->rd_base);
- 			goto err_put_ctrl;
- 		}
- 
--		res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
--						   "chnls");
--		pmic_arb->wr_base = devm_ioremap_resource(&ctrl->dev, res);
-+		pmic_arb->wr_base =
-+			devm_platform_ioremap_resource_byname(pdev, "chnls");
- 		if (IS_ERR(pmic_arb->wr_base)) {
- 			err = PTR_ERR(pmic_arb->wr_base);
- 			goto err_put_ctrl;
-@@ -1223,15 +1221,13 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 	dev_info(&ctrl->dev, "PMIC arbiter version %s (0x%x)\n",
- 		 pmic_arb->ver_ops->ver_str, hw_ver);
- 
--	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "intr");
--	pmic_arb->intr = devm_ioremap_resource(&ctrl->dev, res);
-+	pmic_arb->intr = devm_platform_ioremap_resource_byname(pdev, "intr");
- 	if (IS_ERR(pmic_arb->intr)) {
- 		err = PTR_ERR(pmic_arb->intr);
- 		goto err_put_ctrl;
- 	}
- 
--	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "cnfg");
--	pmic_arb->cnfg = devm_ioremap_resource(&ctrl->dev, res);
-+	pmic_arb->cnfg = devm_platform_ioremap_resource_byname(pdev, "cnfg");
- 	if (IS_ERR(pmic_arb->cnfg)) {
- 		err = PTR_ERR(pmic_arb->cnfg);
- 		goto err_put_ctrl;
+Changes in v3:
+- Dropped accepted patches by Steve
+- Split the common rename patch to rename and refactor patches
+- Rebase on clk/clk-qcom and move yaml binding to .../bindings/clock/qcom,gcc-sm8250.yaml
+- Fix comments form Steve on gcc-sm8250 clk driver
+
+Taniya Das (5):
+  clk: qcom: clk-alpha-pll: Use common names for defines
+  clk: qcom: clk-alpha-pll: Refactor trion PLL
+  clk: qcom: clk-alpha-pll: Add support for controlling Lucid PLLs
+  dt-bindings: clock: Add SM8250 GCC clock bindings
+  clk: qcom: gcc: Add global clock controller driver for SM8250
+
+ .../bindings/clock/qcom,gcc-sm8250.yaml       |   72 +
+ drivers/clk/qcom/Kconfig                      |    7 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-alpha-pll.c              |  264 +-
+ drivers/clk/qcom/clk-alpha-pll.h              |   12 +
+ drivers/clk/qcom/gcc-sm8250.c                 | 3690 +++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sm8250.h   |  271 ++
+ 7 files changed, 4268 insertions(+), 49 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sm8250.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-sm8250.h
+
 -- 
-1.9.1
+2.24.1
 
