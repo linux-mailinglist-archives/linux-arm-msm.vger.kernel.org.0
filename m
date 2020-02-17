@@ -2,80 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 74B81161808
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 17:35:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06678161838
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 17:48:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729126AbgBQQfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Feb 2020 11:35:19 -0500
-Received: from foss.arm.com ([217.140.110.172]:38312 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728540AbgBQQfS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Feb 2020 11:35:18 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2CF86328;
-        Mon, 17 Feb 2020 08:35:18 -0800 (PST)
-Received: from localhost (unknown [10.37.6.21])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A27B73F68F;
-        Mon, 17 Feb 2020 08:35:17 -0800 (PST)
-Date:   Mon, 17 Feb 2020 16:35:16 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, mka@chromium.org,
-        dianders@chromium.org
-Subject: Re: [PATCH 5/6] spi: spi-qcom-qspi: Add interconnect support
-Message-ID: <20200217163516.GR9304@sirena.org.uk>
-References: <1581946205-27189-1-git-send-email-akashast@codeaurora.org>
- <1581946205-27189-6-git-send-email-akashast@codeaurora.org>
+        id S1728589AbgBQQsC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Feb 2020 11:48:02 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:36459 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728024AbgBQQsC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Feb 2020 11:48:02 -0500
+Received: by mail-pg1-f193.google.com with SMTP id d9so9491920pgu.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2020 08:48:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+dYalRSbOahcygIG/bZllcSeh3ymAP3k2AyUse0dYCI=;
+        b=mII34r67/bufhqQd9dQqCetitoqHTrrbW8vRZnRPg1PwUkd8tJ+8Mr9084zNVxlzib
+         3eua/qF0W6iJnkf8IokoO56nKIcoKjslAX9TSz5rfujDwzvMlTseZms//itB13ofLcD3
+         gL0Dp869sIiemJpyWxNXuX29oPqTYwUI3cKdOe61cmflx30o1nNgxDBvbsbfdUGqTZPB
+         Nfik4yKH5vQA0JpniYGamAhEIzL74N6Jzkw/EPnT0elR5oLnt8gx35VUnFNEiRDpZQJe
+         kObADUG9G7Zf+mudNN4VvOfvQW5u6eiA9TQFXxT7Zjt/wW3+whiNuUBf5NKoD2Sbkbuh
+         OClQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+dYalRSbOahcygIG/bZllcSeh3ymAP3k2AyUse0dYCI=;
+        b=oC3JblQY1ypnEcwjAS2Djh00ZeLb4vw4Z9HHnndgaqL5Q+Zhap/uXbmeophkkDweTj
+         covduzjb/3HDQegKoncLwcQ3T//HJ18iRFqxvCglP5qtYnR7x7Ym7dSV13YprZ4zUoHE
+         Qn/jZfIymRC21IYE5yYliuANxnsK/FIwvgsHqQiI687PQ5m1y3/y3Gx1Rex0aUDF/Jid
+         6cv0yIxYTR3l4sLyRQxXLvGp4FT5inB7Uci6SAbxCTK9iO6gf87vQtezShfwLbepUsj/
+         cOhzYOMBIr/NDC31qMbqEwjbxrwfHMTqIqC1vxdBqPGfw0SoFkdwbOS/yWJRJmWGXvoD
+         wmTA==
+X-Gm-Message-State: APjAAAU1AYQ9WS3jCUFxIh1ItgVTtPv0GA33+TVWndmBha+GaeqH5B0e
+        tR0BCTPmbp3u4JelXHdsVw6M
+X-Google-Smtp-Source: APXvYqww9hFwhQhDFppuNnetXE1spR5nHeV2J6H2V98O42q2hVUMGmmNA52WaqDLYhTNvRfQi+jCEA==
+X-Received: by 2002:a17:90a:30e8:: with SMTP id h95mr21154101pjb.30.1581958081234;
+        Mon, 17 Feb 2020 08:48:01 -0800 (PST)
+Received: from Mani-XPS-13-9360 ([2409:4072:48d:3349:2df9:3778:ccac:a356])
+        by smtp.gmail.com with ESMTPSA id ev5sm19278pjb.4.2020.02.17.08.47.55
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 17 Feb 2020 08:48:00 -0800 (PST)
+Date:   Mon, 17 Feb 2020 22:17:51 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     gregkh <gregkh@linuxfoundation.org>, smohanad@codeaurora.org,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        hemantk@codeaurora.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 11/16] bus: mhi: core: Add support for data transfer
+Message-ID: <20200217164751.GA7305@Mani-XPS-13-9360>
+References: <20200131135009.31477-1-manivannan.sadhasivam@linaro.org>
+ <20200131135009.31477-12-manivannan.sadhasivam@linaro.org>
+ <CAK8P3a1DOta5Uj3dNFWVqwgyPKs0cQsoymXE7svcOZoPiY+YGw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="7L9kolmstoDTZ4pm"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1581946205-27189-6-git-send-email-akashast@codeaurora.org>
-X-Cookie: There was a phone call for you.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CAK8P3a1DOta5Uj3dNFWVqwgyPKs0cQsoymXE7svcOZoPiY+YGw@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Arnd,
 
---7L9kolmstoDTZ4pm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Mon, Feb 17, 2020 at 05:13:37PM +0100, Arnd Bergmann wrote:
+> On Fri, Jan 31, 2020 at 2:51 PM Manivannan Sadhasivam
+> <manivannan.sadhasivam@linaro.org> wrote:
+> 
+> > @@ -648,6 +715,31 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
+> >                 mhi_chan->db_cfg.pollcfg = ch_cfg->pollcfg;
+> >                 mhi_chan->xfer_type = ch_cfg->data_type;
+> >
+> > +               switch (mhi_chan->xfer_type) {
+> > +               case MHI_BUF_RAW:
+> > +                       mhi_chan->gen_tre = mhi_gen_tre;
+> > +                       mhi_chan->queue_xfer = mhi_queue_buf;
+> > +                       break;
+> > +               case MHI_BUF_SKB:
+> > +                       mhi_chan->queue_xfer = mhi_queue_skb;
+> > +                       break;
+> > +               case MHI_BUF_SCLIST:
+> > +                       mhi_chan->gen_tre = mhi_gen_tre;
+> > +                       mhi_chan->queue_xfer = mhi_queue_sclist;
+> > +                       break;
+> > +               case MHI_BUF_NOP:
+> > +                       mhi_chan->queue_xfer = mhi_queue_nop;
+> > +                       break;
+> > +               case MHI_BUF_DMA:
+> > +               case MHI_BUF_RSC_DMA:
+> > +                       mhi_chan->queue_xfer = mhi_queue_dma;
+> > +                       break;
+> > +               default:
+> > +                       dev_err(mhi_cntrl->dev,
+> > +                               "Channel datatype not supported\n");
+> > +                       goto error_chan_cfg;
+> > +               }
+> > +
+> 
+> While looking through the driver to see how the DMA gets handled, I came
+> across the multitude of mhi_queue_* functions, which seems like a
+> layering violation to me, given that they are all implemented by the
+> core code as well, and the client driver needs to be aware of
+> which one to call. Are you able to lift these out of the common interface
+> and make the client driver call these directly, or maybe provide a direct
+> interface based on mhi_buf_info to replace these?
+> 
 
-On Mon, Feb 17, 2020 at 07:00:04PM +0530, Akash Asthana wrote:
-> Get the interconnect paths for QSPI device and vote according to the
-> current bus speed of the driver.
+It sounds reasonable to me. Let me discuss this internally with Qcom guys to
+see if they have any objections.
 
-Acked-by: Mark Brown <broonie@kernel.org>
+Thanks,
+Mani
 
-> +	/* Set BW quota for CPU as driver supports FIFO mode only */
-> +	ctrl->avg_bw_cpu = Bps_to_icc(speed_hz);
-> +	ctrl->peak_bw_cpu = Bps_to_icc(2 * speed_hz);
-
-These peak numbers seem like you're just guessing and should perhaps be
-handled more gracefully by the core (eg, assuming twice the average if
-no explicit peak is provided).
-
---7L9kolmstoDTZ4pm
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl5KwMMACgkQJNaLcl1U
-h9BYdwf9Hw50ELkLWJ2LbQDxFVRGURfX2RoGEMty2qsXnVdvgKQXlcZbSHBe+PfX
-NEA5WNsaeDwLlEpZF6AoaylbTSoooNOqTuyDcMgsBCjfPR/DdWuyRURjhNaJtOHr
-PauHaxThkjOihnc3zuFds8TSzCdcOya7BzWJIwW3SxYwjo3reYSjb9j1Lq3x20/T
-PjrqpFbyn+R2lIja7tpkI6tAE+O4U0KjX+RQLqqTuwjVF6VZRMKncWaHR1d7mR4g
-dQkuKAuB8MXYUrSnHpQ7l+XzvxtmayVECYnE18PXy8qfifJ0GOTc2hgPy5EqoPjU
-KCzWIif4ie3eJS/Ofimq2SLzfdKhQg==
-=lNdK
------END PGP SIGNATURE-----
-
---7L9kolmstoDTZ4pm--
+>       Arnd
