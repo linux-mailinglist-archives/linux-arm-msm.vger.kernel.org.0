@@ -2,72 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 46D5B1617F4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 17:31:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2D2E1617F9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 17:32:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728873AbgBQQbz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Feb 2020 11:31:55 -0500
-Received: from foss.arm.com ([217.140.110.172]:38272 "EHLO foss.arm.com"
+        id S1728935AbgBQQcJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Feb 2020 11:32:09 -0500
+Received: from mail.kernel.org ([198.145.29.99]:38404 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727922AbgBQQbz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Feb 2020 11:31:55 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5ECE130E;
-        Mon, 17 Feb 2020 08:31:54 -0800 (PST)
-Received: from localhost (unknown [10.37.6.21])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D4AD13F68F;
-        Mon, 17 Feb 2020 08:31:53 -0800 (PST)
-Date:   Mon, 17 Feb 2020 16:31:52 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, wsa@the-dreams.de,
-        mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, mka@chromium.org,
-        dianders@chromium.org
-Subject: Re: [PATCH 4/6] spi: spi-geni-qcom: Add interconnect support
-Message-ID: <20200217163152.GQ9304@sirena.org.uk>
-References: <1581946205-27189-1-git-send-email-akashast@codeaurora.org>
- <1581946205-27189-5-git-send-email-akashast@codeaurora.org>
+        id S1727922AbgBQQcI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Feb 2020 11:32:08 -0500
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8FBD1214D8;
+        Mon, 17 Feb 2020 16:32:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1581957128;
+        bh=G2x/hcIZgjfTD4IZeUf1w/CuOjyhAfKvMkN8o462eUM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=IfnA7PO4kayrrGf+qoG8q7MueEM8YAJjHbLMpu6oF71uhHKdiXw/N+KO7nHYgsITU
+         uM1bJ3Dpidm1ApH93bTg0vqxwbURCFIYmczuHu6Q8/diHDy2FSj6YxhH3OqQu78lZD
+         kEy7z3Np1frMm8ob6jmyBGWMGsK1L/weyN55VUMg=
+Date:   Mon, 17 Feb 2020 17:32:05 +0100
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        smohanad@codeaurora.org, Jeffrey Hugo <jhugo@codeaurora.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        hemantk@codeaurora.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 02/16] bus: mhi: core: Add support for registering MHI
+ controllers
+Message-ID: <20200217163205.GE1502885@kroah.com>
+References: <20200211192055.GA1962867@kroah.com>
+ <20200213152013.GB15010@mani>
+ <20200213153418.GA3623121@kroah.com>
+ <20200213154809.GA26953@mani>
+ <20200213155302.GA3635465@kroah.com>
+ <20200217052743.GA4809@Mani-XPS-13-9360>
+ <20200217115930.GA218071@kroah.com>
+ <20200217130419.GA13993@Mani-XPS-13-9360>
+ <20200217141503.GA1110972@kroah.com>
+ <CAK8P3a28cZzOD7NfjBR=g6fADGgqwE7PFgOJrh6fph3QmDhKGQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9+VnUxDxRuy97YQ+"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1581946205-27189-5-git-send-email-akashast@codeaurora.org>
-X-Cookie: There was a phone call for you.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CAK8P3a28cZzOD7NfjBR=g6fADGgqwE7PFgOJrh6fph3QmDhKGQ@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Feb 17, 2020 at 05:04:52PM +0100, Arnd Bergmann wrote:
+> On Mon, Feb 17, 2020 at 3:15 PM Greg KH <gregkh@linuxfoundation.org> wrote:
+> > On Mon, Feb 17, 2020 at 06:34:19PM +0530, Manivannan Sadhasivam wrote:
+> > > On Mon, Feb 17, 2020 at 12:59:30PM +0100, Greg KH wrote:
+> > > ```
+> > > struct mhi_device *mhi_alloc_device(struct mhi_controller *mhi_cntrl)
+> > > {
+> > > ...
+> > > dev->parent = mhi_cntrl->dev;
+> > > ...
+> > > ```
+> > >
+> > > Hence, having the parent dev pointer really helps.
+> >
+> > Yes, saving the parent device is fine, but you should be doing your own
+> > dma calls using _your_ device, not the parents.  Only mess with the
+> > parent pointer if you need to do something "normal" for a parent.
+> 
+> The MHI device is not involved in DMA at all, as it is not a DMA master,
+> and has no knowledge of the memory management or whether there
+> is any DMA at all. I think it is the right abstraction for an MHI driver to
+> pass kernel pointers into the subsystem interfaces, which then get
+> mapped by the bus driver that owns the DMA master.
+> 
+> This is similar to how e.g. USB drivers pass data into the USB core
+> interfaces, which then get the HCI driver to map/unmap it into the
+> DMA masters.
 
---9+VnUxDxRuy97YQ+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Ok, then this needs to be named a whole lot better than the original
+"dev" name had it.  Heck, even "parent" does not show that type of
+representation, make it "controller" or something else a whole lot more
+descriptive of what it really is please.
 
-On Mon, Feb 17, 2020 at 07:00:03PM +0530, Akash Asthana wrote:
-> Get the interconnect paths for SPI based Serial Engine device
-> and vote according to the current bus speed of the driver.
+thanks,
 
-Acked-by: Mark Brown <broonie@kernel.org>
-
---9+VnUxDxRuy97YQ+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl5Kv/cACgkQJNaLcl1U
-h9C0DAf/ZL04JTosjXBLegMQrmn9rjYoKyenucR6bwhVK2SMK73TkxGKO7vjD/vN
-it0Qg/z04vrqX/4Z6Nfbcmt0Y7T8RGK9YxWMGU7mVyup19Dqm0wYFc5qkBV2h3DY
-k9/tUYoYmc6hddevcpgWwG38oU0eJJ9UoWVWvkOfCXK4VmjYnyxdUTcG4oRfDUFZ
-rTjQlYIfYaqZJebjxTYB6cst1z2cvQ3ccOIYLH5PM5Z9V5BUx7mqz6ZsXQ/8qWZG
-mVsA6RTuTPKlRsa3Fw++Y6QSIO4r4wLH96Z2JA7Dl8wVzofTtbrSFuel93qWz0Ny
-e/uNxPQ+GY/Nx19wFOrfJ1ErkNi0pg==
-=f/E0
------END PGP SIGNATURE-----
-
---9+VnUxDxRuy97YQ+--
+greg k-h
