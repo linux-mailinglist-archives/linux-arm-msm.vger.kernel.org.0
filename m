@@ -2,150 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 625EC160DE8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 10:01:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BA96160ED1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 10:38:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728611AbgBQJBO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Feb 2020 04:01:14 -0500
-Received: from alexa-out-blr-01.qualcomm.com ([103.229.18.197]:38503 "EHLO
-        alexa-out-blr-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728563AbgBQJBN (ORCPT
+        id S1728950AbgBQJhS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Feb 2020 04:37:18 -0500
+Received: from mail27.static.mailgun.info ([104.130.122.27]:12533 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729004AbgBQJhR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Feb 2020 04:01:13 -0500
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by alexa-out-blr-01.qualcomm.com with ESMTP/TLS/AES256-SHA; 17 Feb 2020 14:29:05 +0530
-Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 17 Feb 2020 14:28:45 +0530
-Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
-        id E92BA24EF; Mon, 17 Feb 2020 14:28:43 +0530 (IST)
-From:   Harigovindan P <harigovi@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Harigovindan P <harigovi@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        kalyan_t@codeaurora.org, nganji@codeaurora.org
-Subject: [v3] arm64: dts: sc7180: add nodes for idp display
-Date:   Mon, 17 Feb 2020 14:28:42 +0530
-Message-Id: <20200217085842.28333-1-harigovi@codeaurora.org>
-X-Mailer: git-send-email 2.25.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Mon, 17 Feb 2020 04:37:17 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1581932237; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=4CNshD0mMpQN0gvohEbak0pxOwTgkDq4jEBZ/deNQBI=; b=UcbBfG1TkHM/4d9cxtD10CV0cqCmw+ASu/iD6/d3eAn4VUwjz9Aoe2rKRaHUIsShJLTkV+Ef
+ Syz2vOxttbgOsAZ6feRXxyXCvxIFrInwTCnYzaIgGai7ot73J+ZAGhEI8t20FsFBEoDRBa2J
+ C1ABcJ3+1bLOszE10sOFhcrAM70=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e4a5ecc.7fb8060fc8b8-smtp-out-n03;
+ Mon, 17 Feb 2020 09:37:16 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5F077C447A0; Mon, 17 Feb 2020 09:37:16 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from akashast-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5221DC433A2;
+        Mon, 17 Feb 2020 09:37:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5221DC433A2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+From:   Akash Asthana <akashast@codeaurora.org>
+To:     robh+dt@kernel.org, agross@kernel.org, mark.rutland@arm.com
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
+        rojay@codeaurora.org, skakit@codeaurora.org, swboyd@chromium.org,
+        Akash Asthana <akashast@codeaurora.org>
+Subject: [PATCH V4 0/3] Convert QUP bindings to YAML and add ICC, pin swap doc
+Date:   Mon, 17 Feb 2020 15:06:49 +0530
+Message-Id: <1581932212-19469-1-git-send-email-akashast@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add nodes for IDP display. The display is Visionox RM69299.
+Changes in V4:
+ - Add interconnect binding patch.
+ - Add UART pin swap binding patch.
 
-Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
----
+Akash Asthana (3):
+  dt-bindings: geni-se: Convert QUP geni-se bindings to YAML
+  dt-bindings: geni-se: Add interconnect binding for GENI QUP
+  dt-bindings: geni-se: Add binding for UART pin swap
 
-Changes in v2:
-	- Adding dependency patchwork series
-	- Removing suspend configuration
-	- Adding blank before space curly brace
-Changes in v3:
-	- Updating status for mdp and mdss node to get the
-	display working
-	- Change in commit text
+ .../devicetree/bindings/soc/qcom/qcom,geni-se.txt  |  94 ---------
+ .../devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 227 +++++++++++++++++++++
+ 2 files changed, 227 insertions(+), 94 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.txt
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
 
-This patch depends on following patchwork series:
-
-https://patchwork.kernel.org/patch/11364687/
-https://patchwork.kernel.org/patch/11366303/
-
- arch/arm64/boot/dts/qcom/sc7180-idp.dts | 63 +++++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 388f50ad4fde..349db8fe78a5 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -7,6 +7,7 @@
- 
- /dts-v1/;
- 
-+#include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sc7180.dtsi"
- #include "pm6150.dtsi"
-@@ -232,6 +233,57 @@ vreg_bob: bob {
- 	};
- };
- 
-+&dsi0 {
-+	status = "okay";
-+
-+	vdda-supply = <&vreg_l3c_1p2>;
-+
-+	panel@0 {
-+		compatible = "visionox,rm69299-1080p-display";
-+		reg = <0>;
-+
-+		vdda-supply = <&vreg_l8c_1p8>;
-+		vdd3p3-supply = <&vreg_l18a_2p8>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&disp_pins>;
-+
-+		reset-gpios = <&pm6150l_gpio 3 GPIO_ACTIVE_HIGH>;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			port@0 {
-+				reg = <0>;
-+				panel0_in: endpoint {
-+					remote-endpoint = <&dsi0_out>;
-+				};
-+			};
-+		};
-+	};
-+
-+	ports {
-+		port@1 {
-+			endpoint {
-+				remote-endpoint = <&panel0_in>;
-+				data-lanes = <0 1 2 3>;
-+			};
-+		};
-+	};
-+};
-+
-+&dsi_phy {
-+	status = "okay";
-+};
-+
-+&mdp {
-+	status = "okay";
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
- &qspi {
- 	status = "okay";
- 	pinctrl-names = "default";
-@@ -289,6 +341,17 @@ &usb_1_qmpphy {
- 
- /* PINCTRL - additions to nodes defined in sc7180.dtsi */
- 
-+&pm6150l_gpio {
-+	disp_pins: disp-pins {
-+		pins = "gpio3";
-+		function = "func1";
-+		qcom,drive-strength = <2>;
-+		power-source = <0>;
-+		bias-disable;
-+		output-low;
-+	};
-+};
-+
- &qspi_clk {
- 	pinconf {
- 		pins = "gpio63";
 -- 
-2.25.0
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
