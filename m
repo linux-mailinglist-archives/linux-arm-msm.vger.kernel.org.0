@@ -2,58 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 204F91616DC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 17:00:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D3A21616F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 17:05:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728627AbgBQQAY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Feb 2020 11:00:24 -0500
-Received: from mail.kernel.org ([198.145.29.99]:52746 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726779AbgBQQAX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Feb 2020 11:00:23 -0500
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D0AD4206F4;
-        Mon, 17 Feb 2020 16:00:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1581955223;
-        bh=+1rWFt0BhZpC3SqXwAi480o2XZY5N6loZqRsLUur/2Q=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=GIvncg8510kdf/ZqImAIxa0tFU+rfCmL5UIF7dAymDeFQigHY0/phCF+Qyxk/flPd
-         Ul52S3a5DBsdrBqoRd0aHHiAJGHJ57BR6jWHYg/47PH2ZTrCMRK2O1kopxl/r0p7s4
-         0ouE1j3OFyX2Blg5hH1SOJNyVjx+98GRo8on33ts=
-Date:   Mon, 17 Feb 2020 17:00:21 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, wsa@the-dreams.de,
-        broonie@kernel.org, mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, mka@chromium.org,
-        dianders@chromium.org
-Subject: Re: [PATCH 2/6] tty: serial: qcom_geni_serial: Add interconnect
- support
-Message-ID: <20200217160021.GA1484698@kroah.com>
-References: <1581946205-27189-1-git-send-email-akashast@codeaurora.org>
- <1581946205-27189-3-git-send-email-akashast@codeaurora.org>
+        id S1729599AbgBQQFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Feb 2020 11:05:11 -0500
+Received: from mout.kundenserver.de ([212.227.126.135]:59565 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726420AbgBQQFL (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Feb 2020 11:05:11 -0500
+Received: from mail-qt1-f178.google.com ([209.85.160.178]) by
+ mrelayeu.kundenserver.de (mreue010 [212.227.15.129]) with ESMTPSA (Nemesis)
+ id 1Mow06-1joHJD2KlS-00qT1W; Mon, 17 Feb 2020 17:05:09 +0100
+Received: by mail-qt1-f178.google.com with SMTP id d9so12334823qte.12;
+        Mon, 17 Feb 2020 08:05:09 -0800 (PST)
+X-Gm-Message-State: APjAAAUoQQwJMf2dXaaZYP93Gx2Ancv6n/rct8kYpzn8ZcHu/7IvS++x
+        tv3G4cxeX7TujOwecoAtRCGlxuo5Oh7uOMbN4XQ=
+X-Google-Smtp-Source: APXvYqxR24d1UtkEhBOIjI9aHRGcs1xpyahscZCl+fB1o0U8N/KlSf87IhKTr7k/p9r//9AkSP/9yAzwmpTx4NajwIA=
+X-Received: by 2002:ac8:3a27:: with SMTP id w36mr13631805qte.204.1581955508158;
+ Mon, 17 Feb 2020 08:05:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1581946205-27189-3-git-send-email-akashast@codeaurora.org>
+References: <20200206165755.GB3894455@kroah.com> <20200211184130.GA11908@Mani-XPS-13-9360>
+ <20200211192055.GA1962867@kroah.com> <20200213152013.GB15010@mani>
+ <20200213153418.GA3623121@kroah.com> <20200213154809.GA26953@mani>
+ <20200213155302.GA3635465@kroah.com> <20200217052743.GA4809@Mani-XPS-13-9360>
+ <20200217115930.GA218071@kroah.com> <20200217130419.GA13993@Mani-XPS-13-9360> <20200217141503.GA1110972@kroah.com>
+In-Reply-To: <20200217141503.GA1110972@kroah.com>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Mon, 17 Feb 2020 17:04:52 +0100
+X-Gmail-Original-Message-ID: <CAK8P3a28cZzOD7NfjBR=g6fADGgqwE7PFgOJrh6fph3QmDhKGQ@mail.gmail.com>
+Message-ID: <CAK8P3a28cZzOD7NfjBR=g6fADGgqwE7PFgOJrh6fph3QmDhKGQ@mail.gmail.com>
+Subject: Re: [PATCH v2 02/16] bus: mhi: core: Add support for registering MHI controllers
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        smohanad@codeaurora.org, Jeffrey Hugo <jhugo@codeaurora.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        hemantk@codeaurora.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Provags-ID: V03:K1:GvetXQ1OAzDvj5SppjdPFV439MHs3fEPj9TeHxR24yoiKphxOX2
+ uHGdyqyI5bLLcHmRqNGAxXX6RzeVtYJiMbT8YhKNpxrtMUlRyLL5OmM6vrzFcbNURakv59l
+ 9krdacVpdGMz/w1+Aixbvu1bRVk9ObqstejLWHqvfAgkZF6irhJLQIkzr8l1Mrv3hUYZt2P
+ 74X5aymaVfF8LGIWUgKgQ==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:n1DQm7201AY=:N5S/ucW8WbB14HphQWJRNn
+ jvfBvMZbFdh4xbiOqjuvMVRAA//XwYwTO3l4uflqGdn4Q3ZSQD8bZcO2wTHPLdac2QRnYEXut
+ k44OvEEjS3c6aq0eWAd8tiBVWFpMNyl1OY/shQVpWMG7mmz8nomTZ/XzItexzEArhpzuwAaWA
+ n9oXoKYbRDP3KmkCDZ1R/jK3I/lhz+UXCtWKiMKELSoLurAm+qnd7TuUjyPKbeuhTaM0Zj2O8
+ mi2Mv3u4GHTAIKulNBQjsHWhJ1rjgwyi7nVN5NOvQbYn15ruQVriMwGILqrOZwRPNBrkuaPaQ
+ WpRxeEGBFGvZm44OJmJq7BTfsfIYv+pYYCe3uL14sIn3IRPW3TV6KdtM73M+Zj2dx6OfWrRWU
+ fDmN0vKzYM41lxIHkJA6oXune3WR8HzuemmaBWTwS9uoVoTOCcPGy21nVveWJo/D8KG772Jc6
+ 39q8I7W2z30Da0i/EnACNGgt5GBeRu6RUODxXbV8+vQ7wVx6c+wwGw124rHZIj04Th+HxkfuE
+ r2loZgHtofv5BQWWSs+z6+XqU/aYuan/98Wd9Z/zQeAc43cDzlcTY0okjbvtSgT0gHasV/2o2
+ iAAWA26cYM38fKD3ew/6CYTLFhBOMrhoG6mUQdGilUE4Vgf93704/P1lXeE9SMRCm99rFB4w3
+ imB7KKYpaclouM+xua1PLBYUZq9yc7j5DhiwnB9KSANffZkNOOlF+nAr8g0zUA1bxKbLw//1A
+ 5FtX4G8S0jaOKUXDKFrgqsZA0pQD//aGEs1Brl7vPSy/wUKP77dE+KqfHdHRyXPCVeeA/Gqma
+ vG0Kbn6p3LOt3HlkusN22cpPjH7l7YqFY45fIW2k2X+a5hcZYE=
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 17, 2020 at 07:00:01PM +0530, Akash Asthana wrote:
-> Get the interconnect paths for Uart based Serial Engine device
-> and vote according to the baud rate requirement of the driver.
-> 
-> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> ---
->  drivers/tty/serial/qcom_geni_serial.c | 84 ++++++++++++++++++++++++++++++-----
->  1 file changed, 74 insertions(+), 10 deletions(-)
+On Mon, Feb 17, 2020 at 3:15 PM Greg KH <gregkh@linuxfoundation.org> wrote:
+> On Mon, Feb 17, 2020 at 06:34:19PM +0530, Manivannan Sadhasivam wrote:
+> > On Mon, Feb 17, 2020 at 12:59:30PM +0100, Greg KH wrote:
+> > ```
+> > struct mhi_device *mhi_alloc_device(struct mhi_controller *mhi_cntrl)
+> > {
+> > ...
+> > dev->parent = mhi_cntrl->dev;
+> > ...
+> > ```
+> >
+> > Hence, having the parent dev pointer really helps.
+>
+> Yes, saving the parent device is fine, but you should be doing your own
+> dma calls using _your_ device, not the parents.  Only mess with the
+> parent pointer if you need to do something "normal" for a parent.
 
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The MHI device is not involved in DMA at all, as it is not a DMA master,
+and has no knowledge of the memory management or whether there
+is any DMA at all. I think it is the right abstraction for an MHI driver to
+pass kernel pointers into the subsystem interfaces, which then get
+mapped by the bus driver that owns the DMA master.
+
+This is similar to how e.g. USB drivers pass data into the USB core
+interfaces, which then get the HCI driver to map/unmap it into the
+DMA masters.
+
+      Arnd
