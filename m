@@ -2,239 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F222B161049
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 11:42:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 05138161150
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 12:45:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725972AbgBQKmU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Feb 2020 05:42:20 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:46828 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729299AbgBQKmU (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Feb 2020 05:42:20 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581936139; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=9eyK9s5QcOQNlzTcBcw9+PasjfwqMuF96kLGC5PXg0c=;
- b=UV1+NkWgYH7OaS1Cg+CREukzgkuOl6AodKYVoawWrVUJRavDrjaAgWR7kIYXRkRTvKOP+ceC
- X3laOSYkC76QVy5tA4W6hKW/zIXPA9drzaSz5TYcxdEs8E93wDEoaRbUaS8uwEhPaEs30poT
- T9hG+wKl/QGf2G16z/vvcFOWW14=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e4a6dfe.7f32ddc08ea0-smtp-out-n03;
- Mon, 17 Feb 2020 10:42:06 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0FD30C4479F; Mon, 17 Feb 2020 10:42:05 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1728650AbgBQLpT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Feb 2020 06:45:19 -0500
+Received: from mail.kernel.org ([198.145.29.99]:49712 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728272AbgBQLpS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Feb 2020 06:45:18 -0500
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: harigovi)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D7EABC43383;
-        Mon, 17 Feb 2020 10:42:03 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 18926206F4;
+        Mon, 17 Feb 2020 11:45:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1581939917;
+        bh=zO5Udwwv9Ys92RX9T3qjhKgUMcbRBeZRM6/lvx7ptII=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=AzvzfXY28ydxqigdCRiIzStIgFcQIJmRtvivUVuRXF+Zmx4oTcTA1CEC0nEUTtdvl
+         IKAxHRuR9106n+epZ3vTD/rCDHb9ozJVqZIzwcWTGt4X3u+0Rn282PFthTVXcW8v5S
+         gqTEjt3GRaVBlHtqjV/5jdMxiMfCBKBzzmBdaox4=
+Date:   Mon, 17 Feb 2020 12:45:15 +0100
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     arnd@arndb.de, smohanad@codeaurora.org, jhugo@codeaurora.org,
+        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
+        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 02/16] bus: mhi: core: Add support for registering MHI
+ controllers
+Message-ID: <20200217114515.GA154666@kroah.com>
+References: <20200131135009.31477-1-manivannan.sadhasivam@linaro.org>
+ <20200131135009.31477-3-manivannan.sadhasivam@linaro.org>
+ <20200206165755.GB3894455@kroah.com>
+ <20200211184130.GA11908@Mani-XPS-13-9360>
+ <20200211192055.GA1962867@kroah.com>
+ <20200213152013.GB15010@mani>
+ <20200213153418.GA3623121@kroah.com>
+ <20200213154809.GA26953@mani>
+ <20200213155302.GA3635465@kroah.com>
+ <20200217052743.GA4809@Mani-XPS-13-9360>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 17 Feb 2020 16:12:03 +0530
-From:   harigovi@codeaurora.org
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        DTML <devicetree@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        lkml <linux-kernel@vger.kernel.org>, nganji@codeaurora.org,
-        Sean Paul <seanpaul@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Subject: Re: [Freedreno] [v1] drm/msm/dsi/pll: call vco set rate explicitly
-In-Reply-To: <CAF6AEGv2Ymn+4uDXsO2-P+HR9dpOotB=NRMSEsBu8_uOCJ2vBQ@mail.gmail.com>
-References: <1580980321-19256-1-git-send-email-harigovi@codeaurora.org>
- <CAOCk7Nr9n-xLtWq=LEM-QFhJcY+QOuzazsoi-yjErA9od2Jwmw@mail.gmail.com>
- <2f5abc857910f70faa119fea5bda81d7@codeaurora.org>
- <CAOCk7NoCH9p9gOd7as=ty-EMeerAAhQtKZa8f2wZrDeV2LtGrw@mail.gmail.com>
- <1d201377996e16ce25acb640867e1214@codeaurora.org>
- <CAF6AEGu8265DWN-XABwR1N-124m1j=EkgeNDEWZ16TVpSCZSZw@mail.gmail.com>
- <CAOCk7NrH6hWiHL29_DozXcXrXhkCaZ6LTCtJUrvqtXc=nQuLrg@mail.gmail.com>
- <CAF6AEGvLOWKVCjjmqranEi9TKOpMM+BPK199wQ7f=Ez491uhcA@mail.gmail.com>
- <CAOCk7NrifMkwartV4rj_v_V4=EHeSkmb28tdBUrxoPHVSX5G5Q@mail.gmail.com>
- <CAF6AEGv2Ymn+4uDXsO2-P+HR9dpOotB=NRMSEsBu8_uOCJ2vBQ@mail.gmail.com>
-Message-ID: <500fec9adf6c8f8102d0e92535166007@codeaurora.org>
-X-Sender: harigovi@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200217052743.GA4809@Mani-XPS-13-9360>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-02-12 10:40, Rob Clark wrote:
-> On Tue, Feb 11, 2020 at 8:05 PM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> 
-> wrote:
->> 
->> On Tue, Feb 11, 2020 at 5:28 PM Rob Clark <robdclark@gmail.com> wrote:
->> >
->> > On Tue, Feb 11, 2020 at 7:59 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
->> > >
->> > > On Tue, Feb 11, 2020 at 8:44 AM Rob Clark <robdclark@gmail.com> wrote:
->> > > >
->> > > > On Mon, Feb 10, 2020 at 9:58 PM <harigovi@codeaurora.org> wrote:
->> > > > >
->> > > > > On 2020-02-07 19:40, Jeffrey Hugo wrote:
->> > > > > > On Fri, Feb 7, 2020 at 5:38 AM <harigovi@codeaurora.org> wrote:
->> > > > > >>
->> > > > > >> On 2020-02-06 20:29, Jeffrey Hugo wrote:
->> > > > > >> > On Thu, Feb 6, 2020 at 2:13 AM Harigovindan P <harigovi@codeaurora.org>
->> > > > > >> > wrote:
->> > > > > >> >>
->> > > > > >> >> For a given byte clock, if VCO recalc value is exactly same as
->> > > > > >> >> vco set rate value, vco_set_rate does not get called assuming
->> > > > > >> >> VCO is already set to required value. But Due to GDSC toggle,
->> > > > > >> >> VCO values are erased in the HW. To make sure VCO is programmed
->> > > > > >> >> correctly, we forcefully call set_rate from vco_prepare.
->> > > > > >> >
->> > > > > >> > Is this specific to certain SoCs? I don't think I've observed this.
->> > > > > >>
->> > > > > >> As far as Qualcomm SOCs are concerned, since pll is analog and the
->> > > > > >> value
->> > > > > >> is directly read from hardware if we get recalc value same as set rate
->> > > > > >> value, the vco_set_rate will not be invoked. We checked in our idp
->> > > > > >> device which has the same SOC but it works there since the rates are
->> > > > > >> different.
->> > > > > >
->> > > > > > This doesn't seem to be an answer to my question.  What Qualcomm SoCs
->> > > > > > does this issue apply to?  Everything implementing the 10nm pll?  One
->> > > > > > specific SoC?  I don't believe I've seen this on MSM8998, nor SDM845,
->> > > > > > so I'm interested to know what is the actual impact here.  I don't see
->> > > > > > an "IDP" SoC in the IP catalog, so I really have no idea what you are
->> > > > > > referring to.
->> > > > >
->> > > > >
->> > > > > This is not 10nm specific. It is applicable for other nms also.
->> > > > > Its specific to the frequency being set. If vco_recalc returns the same
->> > > > > value as being set by vco_set_rate,
->> > > > > vco_set_rate will not be invoked second time onwards.
->> > > > >
->> > > > > For example: Lets take below devices:
->> > > > >
->> > > > > Cheza is based on SDM845 which is 10nm only.
->> > > > > Clk frequency:206016
->> > > > > dsi_pll_10nm_vco_set_rate - DSI PLL0 rate=1236096000
->> > > > > dsi_pll_10nm_vco_recalc_rate - DSI PLL0 returning vco rate = 1236095947
->> > > > >
->> > > > > Trogdor is based on sc7180 which is also 10nm.
->> > > > > Clk frequency:69300
->> > > > > dsi_pll_10nm_vco_set_rate - DSI PLL0 rate=1663200000
->> > > > > dsi_pll_10nm_vco_recalc_rate - DSI PLL0 returning vco rate = 1663200000
->> > > > >
->> > > > > In same trogdor device, we slightly changed the clock frequency and the
->> > > > > values actually differ which will not cause any issue.
->> > > > > Clk frequency:69310
->> > > > > dsi_pll_10nm_vco_set_rate - DSI PLL0 rate=1663440000
->> > > > > dsi_pll_10nm_vco_recalc_rate - DSI PLL0 returning vco rate = 1663439941
->> > > >
->> > > >
->> > > > tbh, loosing state when power is off is kind of the behavior that I'd
->> > > > expect.  It kinda makes me wonder if things are not getting powered
->> > > > off all the way on some SoCs?
->> > > >
->> > > > jhugo, are you worried that this patch will cause problems on other
->> > > > users of the 10nm pll?
->> > >
->> > > Essentially yes.  Conceptually it doesn't seem like this change should
->> > > cause any harm, however -
->> > >
->> > > This sounds like we are trying to work around the clk framework, which
->> > > seems wrong.  It feels like we should be able to set a clk flag for
->> > > this and make the framework deal with it.
->> > >
->> > > Also, this fix is 10nm specific, yet this issue affects all
->> > > implementations?  Seems like this should perhaps be in common code so
->> > > that we don't need to play whack-a-mole by fixing every implementation
->> > > piecemeal.
->> > >
->> > > Finally, the PLLs are notorious for not taking a configuration unless
->> > > they are running.  I admit, I haven't looked at this patch in detail
->> > > to determine if that is the case here, but there doesn't seem to be
->> > > any indication from the commit test or a comment that doing so is
->> > > actually valid in all cases.
->> >
->> > I'm not obviously seeing a clk-provider flag for this.. although I
->> > won't claim to be a clk expert so maybe I'm looking for the wrong
->> > thing..
->> >
->> > On a more practical level, I'd kinda like to get some sort of fix for
->> > v5.6, as currently suspend/resume doesn't work (or at least the
->> > display does not survive) on trogdor, which is a bit annoying.  It
->> > sounds a bit like cheza was just getting lucky (because of rate
->> > rounding?)  I'm not sure if it is the same situation on other sdm850
->> > devices (yoga c630) or sdm835 devices (are they using the 10mm pll as
->> > well?).
->> 
->> sdm835 is the first implementation of the 10nm PLL.  Pretty much
->> everything after (including sdm845/850) also uses the 10nm PLL.
->> 
->> >  I will confess to not really testing s/r on the yoga c630,
->> > although maybe someone else has (Bjorn?).
->> >
->> > Possibly this should be pushed up to the clk framework, although not
->> > sure if it has a good way to realize the clk provider has lost power?
->> > But that sounds like a better thing for v5.7 than v5.6-rc fixes.. ofc
->> > if there is a better way that I'm not seeing, I'm all ears.
->> 
->> There is a suspend/resume sequence in the HPG where VCO isn't lost,
->> but that assumes the GDSC isn't turned off.  If GDSC is turned off,
->> then we need to go through the entire power-up sequence again.  Feels
->> like this should be plumbed into runtime PM based on the
->> suspend/resume usecase, but that's probably more complicated then this
->> change.
+On Mon, Feb 17, 2020 at 10:57:43AM +0530, Manivannan Sadhasivam wrote:
+> Hi Greg,
 > 
-> since gdsc is modelled as genpd, that seems to (afaict) happen all
-> outside the scope of what the driver knows about.. (but I may be
-> overlooking something)
+> On Thu, Feb 13, 2020 at 07:53:02AM -0800, Greg KH wrote:
+> > On Thu, Feb 13, 2020 at 09:18:09PM +0530, Manivannan Sadhasivam wrote:
+> > > Hi Greg,
+> > > 
+> > > On Thu, Feb 13, 2020 at 07:34:18AM -0800, Greg KH wrote:
+> > > > On Thu, Feb 13, 2020 at 08:50:13PM +0530, Manivannan Sadhasivam wrote:
+> > > > > On Tue, Feb 11, 2020 at 11:20:55AM -0800, Greg KH wrote:
+> > > > > > On Wed, Feb 12, 2020 at 12:11:30AM +0530, Manivannan Sadhasivam wrote:
+> > > > > > > Hi Greg,
+> > > > > > > 
+> > > > > > > On Thu, Feb 06, 2020 at 05:57:55PM +0100, Greg KH wrote:
+> > > > > > > > On Fri, Jan 31, 2020 at 07:19:55PM +0530, Manivannan Sadhasivam wrote:
+> > > > > > > > > --- /dev/null
+> > > > > > > > > +++ b/drivers/bus/mhi/core/init.c
+> > > > > > > > > @@ -0,0 +1,407 @@
+> > > > > > > > > +// SPDX-License-Identifier: GPL-2.0
+> > > > > > > > > +/*
+> > > > > > > > > + * Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
+> > > > > > > > > + *
+> > > > > > > > > + */
+> > > > > > > > > +
+> > > > > > > > > +#define dev_fmt(fmt) "MHI: " fmt
+> > > > > > > > 
+> > > > > > > > This should not be needed, right?  The bus/device name should give you
+> > > > > > > > all you need here from what I can tell.  So why is this needed?
+> > > > > > > > 
+> > > > > > > 
+> > > > > > > The log will have only the device name as like PCI-E. But that won't specify
+> > > > > > > where the error is coming from. Having "MHI" prefix helps the users to
+> > > > > > > quickly identify that the error is coming from MHI stack.
+> > > > > > 
+> > > > > > If the driver binds properly to the device, the name of the driver will
+> > > > > > be there in the message, so I suggest using that please.
+> > > > > > 
+> > > > > > No need for this prefix...
+> > > > > > 
+> > > > > 
+> > > > > So the driver name will be in the log but that won't help identifying where
+> > > > > the log is coming from. This is more important for MHI since it reuses the
+> > > > > `struct device` of the transport device like PCI-E. For instance, below is
+> > > > > the log without MHI prefix:
+> > > > > 
+> > > > > [   47.355582] ath11k_pci 0000:01:00.0: Requested to power on
+> > > > > [   47.355724] ath11k_pci 0000:01:00.0: Power on setup success
+> > > > > 
+> > > > > As you can see, this gives the assumption that the log is coming from the
+> > > > > ath11k_pci driver. But the reality is, it is coming from MHI bus.
+> > > > 
+> > > > Then you should NOT be trying to "reuse" a struct device.
+> > > > 
+> > > > > With the prefix added, we will get below:
+> > > > > 
+> > > > > [   47.355582] ath11k_pci 0000:01:00.0: MHI: Requested to power on
+> > > > > [   47.355724] ath11k_pci 0000:01:00.0: MHI: Power on setup success
+> > > > > 
+> > > > > IMO, the prefix will give users a clear idea of logs and that will be very
+> > > > > useful for debugging.
+> > > > > 
+> > > > > Hope this clarifies.
+> > > > 
+> > > > Don't try to reuse struct devices, if you are a bus, have your own
+> > > > devices as that's the correct way to do things.
+> > > > 
+> > > 
+> > > I assumed that the buses relying on a different physical interface for the
+> > > actual communication can reuse the `struct device`. I can see that the MOXTET
+> > > bus driver already doing it. It reuses the `struct device` of SPI.
+> > 
+> > How can you reuse anything?
+> > 
+> > > And this assumption has deep rooted in MHI bus design.
+> > 
+> > Maybe I do not understand what this is at all, but a device can only be
+> > on one "bus" at a time.  How is that being broken here?
+> > 
 > 
->> Looking at the HPG for the power up sequence, it seems like we should
->> be setting the bias in the middle of the dsi_pll_commit(), so the
->> order of operations is slight off, however I somewhat doubt that will
->> have a meaningful impact and it does seem like this change is in line
->> with the spirit of the HPG.
->> 
->> It wasn't clear to me from the commit message what usecase triggered
->> this.  You've made it clear that its suspend/resume (it would be good
->> if that was mentioned) and that its impacting an actual target.  To
->> me, the current description seemed more theoretical and didn't
->> describe the impact that was being addressed.  Overall, it really
->> didn't answer the "why should I care if I have this change" question.
->> 
->> Right now, I think my concerns are cosmetic, therefore I don't have
->> reservations about it being picked up.  If you like:
->> 
->> Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+> Let me share some insight on how it is being used:
 > 
+> The MHI bus sits on top of the actual physical bus like PCI-E and requires
+> the physical bus for doing activities like allocating I/O virtual address,
+> runtime PM etc... The part which gets tied to the PCI-E from MHI is called MHI
+> controller driver. This MHI controller driver is also the actual PCI-E driver
+> managing the device.
 > 
-> hmm, yeah, I guess the commit msg didn't really make that clear.. at
-> any rate, I want to see a clean solution pursued in the long run, but
-> in the short term I also want to get things working (at least if it
-> doesn't break any other users).  So I don't want to land this patch at
-> the expense of follow-up for a cleaner solution.. but like I said, I
-> would like to get s/r working for now.  So I guess I'd like to see
-> some commitment from the display team to follow-up to improve this in
-> the next cycle.  And suggestions welcome about how the clk framework
-> could make this easier.
+> For instance, we have QCA6390 PCI-E WLAN device. For this device, there is a
+> ath11k PCI-E driver and the same driver also registers as a MHI controller and
+> acts as a MHI controller driver. This is where I referred to reusing the PCI-E
+> struct device. It's not that MHI bus itself is reusing the PCI-E struct device
+> but we need the PCI-E device pointer to do above mentioned IOVA, PM operations
+> in some places. One of the usage is below:
 > 
-> BR,
-> -R
+> ```
+> void *buf = dma_alloc_coherent(mhi_cntrl->dev, size, dma_handle, gfp);
+> ```
+> 
+> There was some discussion about it here: https://lkml.org/lkml/2020/1/27/21
+> 
+> The MHI bus itself has the struct device and it is the child of the physical
+> bus (PCI-E in this case).
+> 
+> Now coming to your actual question of why using a custom "MHI" prefix for
+> dev_ APIs. I agree that if we use the struct device of MHI bus it is not at all
+> needed. The fact that we are using "mhi_cntrl->dev" (which points to PCI-E dev)
+> is what confusing and it can be avoided.
 
-we had an initial discussion with the clock team, currently there is no 
-ready made clock provider flag to help in the above scenario.
-however we are planning to have further discussions for a cleaner fix, 
-can we open a new issue to track the discussions and design and close 
-the current one ?
+You should also rename "dev" there, as that is really a "pci device".
+So use the real pci device and name it as "parent_pci" or something like
+that, so we know just by looking at it as to what it really is.
 
+Especially as traditionally "->dev" is the device structure for _this_
+device, not another one.
 
+thanks,
 
+greg k-h
