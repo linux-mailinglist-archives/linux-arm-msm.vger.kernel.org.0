@@ -2,123 +2,239 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CCD99160FB2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 11:15:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F222B161049
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 11:42:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729045AbgBQKPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Feb 2020 05:15:10 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:43172 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729052AbgBQKPK (ORCPT
+        id S1725972AbgBQKmU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Feb 2020 05:42:20 -0500
+Received: from mail27.static.mailgun.info ([104.130.122.27]:46828 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729299AbgBQKmU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Feb 2020 05:15:10 -0500
-Received: by mail-ed1-f68.google.com with SMTP id dc19so19975020edb.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2020 02:15:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ITFb8L5DSsMxg9jB22o0lWJvDZuM6JEd6aFvL/faZ20=;
-        b=Tc37W/dcRFvEaw5SUUfljM2gXORiwGMatrDI535QpyCb1XVbzavym+gTI6mk2u3INm
-         a8P/TUWnck2kQsVMSGD/fz6b7igk1TjhQk1mYMCvXM1jJAK7/jp0rndHwnSZgV3NEm1h
-         SOsEOE0OYjb0FyOxzlbxpzK6EuITAgOTwCp0WR2AaIIF466+YbNduFyOR5PeHdwXT0zZ
-         u6eLT4+arHzirhsvQQXMJSbM5yemeStR9ECetDD4czGNLQpbSBRF0ru69/PT+zXA8BUp
-         LgdoDNdw1v5yM+bDn+PY4BDXW1zitDweXatBylJMw8kjThJkseOBkdTOWJVxY+K1T9eD
-         UiKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ITFb8L5DSsMxg9jB22o0lWJvDZuM6JEd6aFvL/faZ20=;
-        b=hffdwMTiNiTGaM0cJ3FykhoHNApraSYNWnluJEA78hWfM56pq013v+S2SYUbWkQ29A
-         QeFG0KRUgieC3bF2sCalB101FKE347gdUwqq+8JYGpnO/zBX3eBfqhfw5U0vXIKdud9M
-         nWjXAYYbDHJ0r06jEFjbW9LXmya5zJ0M0naAxy9epAn4ZPoOpqPZFWQ+yj0gPnxbcnjL
-         ZXhjzlocT463Skl/fYMOlO7UQgtZIRl8bbMWsdif2gPBNX2NnQcXzdnFIf9KGSprr5PI
-         sQPwsipSUWjWhLUb8pj4r8dKEfHBe+xxkZWcTrI2AI+pUqiXYx8EWWrOwj9UKpI56HFX
-         zYpg==
-X-Gm-Message-State: APjAAAUmdNwgWsOLzXCNZmcftKeOaOYDsPzM8aFF8kW8P8pAcQn17vcO
-        FoWWa9f0ZC89pOryI5NqafLK4A==
-X-Google-Smtp-Source: APXvYqwJr4dk7coEDW+rWoqenoO/7AFXgQjgp/QFLtrfGG97zeRM1owWs4FxfqUHlPTTZzvK8wuU2Q==
-X-Received: by 2002:a17:906:2651:: with SMTP id i17mr13819564ejc.246.1581934506821;
-        Mon, 17 Feb 2020 02:15:06 -0800 (PST)
-Received: from [192.168.27.209] ([94.155.124.210])
-        by smtp.googlemail.com with ESMTPSA id m5sm437327ede.10.2020.02.17.02.15.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Feb 2020 02:15:06 -0800 (PST)
-Subject: Re: [PATCH] media: venus: support frame rate control
-To:     Jeffrey Kardatzke <jkardatzke@google.com>,
-        linux-media@vger.kernel.org
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "Mauro Carvalho Chehab )" <mchehab@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200213213007.17023-1-jkardatzke@google.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <b471217a-1877-eaed-55c2-084f4b126bb4@linaro.org>
-Date:   Mon, 17 Feb 2020 12:15:05 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        Mon, 17 Feb 2020 05:42:20 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1581936139; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=9eyK9s5QcOQNlzTcBcw9+PasjfwqMuF96kLGC5PXg0c=;
+ b=UV1+NkWgYH7OaS1Cg+CREukzgkuOl6AodKYVoawWrVUJRavDrjaAgWR7kIYXRkRTvKOP+ceC
+ X3laOSYkC76QVy5tA4W6hKW/zIXPA9drzaSz5TYcxdEs8E93wDEoaRbUaS8uwEhPaEs30poT
+ T9hG+wKl/QGf2G16z/vvcFOWW14=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e4a6dfe.7f32ddc08ea0-smtp-out-n03;
+ Mon, 17 Feb 2020 10:42:06 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0FD30C4479F; Mon, 17 Feb 2020 10:42:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: harigovi)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D7EABC43383;
+        Mon, 17 Feb 2020 10:42:03 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20200213213007.17023-1-jkardatzke@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Mon, 17 Feb 2020 16:12:03 +0530
+From:   harigovi@codeaurora.org
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        DTML <devicetree@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        lkml <linux-kernel@vger.kernel.org>, nganji@codeaurora.org,
+        Sean Paul <seanpaul@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Subject: Re: [Freedreno] [v1] drm/msm/dsi/pll: call vco set rate explicitly
+In-Reply-To: <CAF6AEGv2Ymn+4uDXsO2-P+HR9dpOotB=NRMSEsBu8_uOCJ2vBQ@mail.gmail.com>
+References: <1580980321-19256-1-git-send-email-harigovi@codeaurora.org>
+ <CAOCk7Nr9n-xLtWq=LEM-QFhJcY+QOuzazsoi-yjErA9od2Jwmw@mail.gmail.com>
+ <2f5abc857910f70faa119fea5bda81d7@codeaurora.org>
+ <CAOCk7NoCH9p9gOd7as=ty-EMeerAAhQtKZa8f2wZrDeV2LtGrw@mail.gmail.com>
+ <1d201377996e16ce25acb640867e1214@codeaurora.org>
+ <CAF6AEGu8265DWN-XABwR1N-124m1j=EkgeNDEWZ16TVpSCZSZw@mail.gmail.com>
+ <CAOCk7NrH6hWiHL29_DozXcXrXhkCaZ6LTCtJUrvqtXc=nQuLrg@mail.gmail.com>
+ <CAF6AEGvLOWKVCjjmqranEi9TKOpMM+BPK199wQ7f=Ez491uhcA@mail.gmail.com>
+ <CAOCk7NrifMkwartV4rj_v_V4=EHeSkmb28tdBUrxoPHVSX5G5Q@mail.gmail.com>
+ <CAF6AEGv2Ymn+4uDXsO2-P+HR9dpOotB=NRMSEsBu8_uOCJ2vBQ@mail.gmail.com>
+Message-ID: <500fec9adf6c8f8102d0e92535166007@codeaurora.org>
+X-Sender: harigovi@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeff,
-
-Thanks for the patch!
-
-On 2/13/20 11:30 PM, Jeffrey Kardatzke wrote:
-> Frame rate control is always enabled in this driver, so make it silently
-> support the V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE.
+On 2020-02-12 10:40, Rob Clark wrote:
+> On Tue, Feb 11, 2020 at 8:05 PM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> 
+> wrote:
+>> 
+>> On Tue, Feb 11, 2020 at 5:28 PM Rob Clark <robdclark@gmail.com> wrote:
+>> >
+>> > On Tue, Feb 11, 2020 at 7:59 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+>> > >
+>> > > On Tue, Feb 11, 2020 at 8:44 AM Rob Clark <robdclark@gmail.com> wrote:
+>> > > >
+>> > > > On Mon, Feb 10, 2020 at 9:58 PM <harigovi@codeaurora.org> wrote:
+>> > > > >
+>> > > > > On 2020-02-07 19:40, Jeffrey Hugo wrote:
+>> > > > > > On Fri, Feb 7, 2020 at 5:38 AM <harigovi@codeaurora.org> wrote:
+>> > > > > >>
+>> > > > > >> On 2020-02-06 20:29, Jeffrey Hugo wrote:
+>> > > > > >> > On Thu, Feb 6, 2020 at 2:13 AM Harigovindan P <harigovi@codeaurora.org>
+>> > > > > >> > wrote:
+>> > > > > >> >>
+>> > > > > >> >> For a given byte clock, if VCO recalc value is exactly same as
+>> > > > > >> >> vco set rate value, vco_set_rate does not get called assuming
+>> > > > > >> >> VCO is already set to required value. But Due to GDSC toggle,
+>> > > > > >> >> VCO values are erased in the HW. To make sure VCO is programmed
+>> > > > > >> >> correctly, we forcefully call set_rate from vco_prepare.
+>> > > > > >> >
+>> > > > > >> > Is this specific to certain SoCs? I don't think I've observed this.
+>> > > > > >>
+>> > > > > >> As far as Qualcomm SOCs are concerned, since pll is analog and the
+>> > > > > >> value
+>> > > > > >> is directly read from hardware if we get recalc value same as set rate
+>> > > > > >> value, the vco_set_rate will not be invoked. We checked in our idp
+>> > > > > >> device which has the same SOC but it works there since the rates are
+>> > > > > >> different.
+>> > > > > >
+>> > > > > > This doesn't seem to be an answer to my question.  What Qualcomm SoCs
+>> > > > > > does this issue apply to?  Everything implementing the 10nm pll?  One
+>> > > > > > specific SoC?  I don't believe I've seen this on MSM8998, nor SDM845,
+>> > > > > > so I'm interested to know what is the actual impact here.  I don't see
+>> > > > > > an "IDP" SoC in the IP catalog, so I really have no idea what you are
+>> > > > > > referring to.
+>> > > > >
+>> > > > >
+>> > > > > This is not 10nm specific. It is applicable for other nms also.
+>> > > > > Its specific to the frequency being set. If vco_recalc returns the same
+>> > > > > value as being set by vco_set_rate,
+>> > > > > vco_set_rate will not be invoked second time onwards.
+>> > > > >
+>> > > > > For example: Lets take below devices:
+>> > > > >
+>> > > > > Cheza is based on SDM845 which is 10nm only.
+>> > > > > Clk frequency:206016
+>> > > > > dsi_pll_10nm_vco_set_rate - DSI PLL0 rate=1236096000
+>> > > > > dsi_pll_10nm_vco_recalc_rate - DSI PLL0 returning vco rate = 1236095947
+>> > > > >
+>> > > > > Trogdor is based on sc7180 which is also 10nm.
+>> > > > > Clk frequency:69300
+>> > > > > dsi_pll_10nm_vco_set_rate - DSI PLL0 rate=1663200000
+>> > > > > dsi_pll_10nm_vco_recalc_rate - DSI PLL0 returning vco rate = 1663200000
+>> > > > >
+>> > > > > In same trogdor device, we slightly changed the clock frequency and the
+>> > > > > values actually differ which will not cause any issue.
+>> > > > > Clk frequency:69310
+>> > > > > dsi_pll_10nm_vco_set_rate - DSI PLL0 rate=1663440000
+>> > > > > dsi_pll_10nm_vco_recalc_rate - DSI PLL0 returning vco rate = 1663439941
+>> > > >
+>> > > >
+>> > > > tbh, loosing state when power is off is kind of the behavior that I'd
+>> > > > expect.  It kinda makes me wonder if things are not getting powered
+>> > > > off all the way on some SoCs?
+>> > > >
+>> > > > jhugo, are you worried that this patch will cause problems on other
+>> > > > users of the 10nm pll?
+>> > >
+>> > > Essentially yes.  Conceptually it doesn't seem like this change should
+>> > > cause any harm, however -
+>> > >
+>> > > This sounds like we are trying to work around the clk framework, which
+>> > > seems wrong.  It feels like we should be able to set a clk flag for
+>> > > this and make the framework deal with it.
+>> > >
+>> > > Also, this fix is 10nm specific, yet this issue affects all
+>> > > implementations?  Seems like this should perhaps be in common code so
+>> > > that we don't need to play whack-a-mole by fixing every implementation
+>> > > piecemeal.
+>> > >
+>> > > Finally, the PLLs are notorious for not taking a configuration unless
+>> > > they are running.  I admit, I haven't looked at this patch in detail
+>> > > to determine if that is the case here, but there doesn't seem to be
+>> > > any indication from the commit test or a comment that doing so is
+>> > > actually valid in all cases.
+>> >
+>> > I'm not obviously seeing a clk-provider flag for this.. although I
+>> > won't claim to be a clk expert so maybe I'm looking for the wrong
+>> > thing..
+>> >
+>> > On a more practical level, I'd kinda like to get some sort of fix for
+>> > v5.6, as currently suspend/resume doesn't work (or at least the
+>> > display does not survive) on trogdor, which is a bit annoying.  It
+>> > sounds a bit like cheza was just getting lucky (because of rate
+>> > rounding?)  I'm not sure if it is the same situation on other sdm850
+>> > devices (yoga c630) or sdm835 devices (are they using the 10mm pll as
+>> > well?).
+>> 
+>> sdm835 is the first implementation of the 10nm PLL.  Pretty much
+>> everything after (including sdm845/850) also uses the 10nm PLL.
+>> 
+>> >  I will confess to not really testing s/r on the yoga c630,
+>> > although maybe someone else has (Bjorn?).
+>> >
+>> > Possibly this should be pushed up to the clk framework, although not
+>> > sure if it has a good way to realize the clk provider has lost power?
+>> > But that sounds like a better thing for v5.7 than v5.6-rc fixes.. ofc
+>> > if there is a better way that I'm not seeing, I'm all ears.
+>> 
+>> There is a suspend/resume sequence in the HPG where VCO isn't lost,
+>> but that assumes the GDSC isn't turned off.  If GDSC is turned off,
+>> then we need to go through the entire power-up sequence again.  Feels
+>> like this should be plumbed into runtime PM based on the
+>> suspend/resume usecase, but that's probably more complicated then this
+>> change.
 > 
-> Signed-off-by: Jeffrey Kardatzke <jkardatzke@google.com>
-> ---
->  drivers/media/platform/qcom/venus/venc_ctrls.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+> since gdsc is modelled as genpd, that seems to (afaict) happen all
+> outside the scope of what the driver knows about.. (but I may be
+> overlooking something)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> index 877c0b3299e9..9ede692f77c5 100644
-> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> @@ -199,6 +199,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
->  		}
->  		mutex_unlock(&inst->lock);
->  		break;
-> +	case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
-> +		// Silently ignore, it's always enabled.
-
-Please, use C comments and follow the kernel coding style.
-
-I wonder shouldn't it be better to add rc_enable field in struct
-venc_controls and give the user choice to disable the rate control? We
-can keep the default to be "enabled".
-
-> +		break;
->  	default:
->  		return -EINVAL;
->  	}
-> @@ -351,6 +354,9 @@ int venc_ctrl_init(struct venus_inst *inst)
->  	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
->  			  V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME, 0, 0, 0, 0);
->  
-> +	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-> +			  V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE, 0, 1, 1, 1);
-> +
-
-you forgot to increment the number of controls in the call to
-v4l2_ctrl_handler_init.
-
->  	ret = inst->ctrl_handler.error;
->  	if (ret)
->  		goto err;
+>> Looking at the HPG for the power up sequence, it seems like we should
+>> be setting the bias in the middle of the dsi_pll_commit(), so the
+>> order of operations is slight off, however I somewhat doubt that will
+>> have a meaningful impact and it does seem like this change is in line
+>> with the spirit of the HPG.
+>> 
+>> It wasn't clear to me from the commit message what usecase triggered
+>> this.  You've made it clear that its suspend/resume (it would be good
+>> if that was mentioned) and that its impacting an actual target.  To
+>> me, the current description seemed more theoretical and didn't
+>> describe the impact that was being addressed.  Overall, it really
+>> didn't answer the "why should I care if I have this change" question.
+>> 
+>> Right now, I think my concerns are cosmetic, therefore I don't have
+>> reservations about it being picked up.  If you like:
+>> 
+>> Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 > 
+> 
+> hmm, yeah, I guess the commit msg didn't really make that clear.. at
+> any rate, I want to see a clean solution pursued in the long run, but
+> in the short term I also want to get things working (at least if it
+> doesn't break any other users).  So I don't want to land this patch at
+> the expense of follow-up for a cleaner solution.. but like I said, I
+> would like to get s/r working for now.  So I guess I'd like to see
+> some commitment from the display team to follow-up to improve this in
+> the next cycle.  And suggestions welcome about how the clk framework
+> could make this easier.
+> 
+> BR,
+> -R
 
--- 
-regards,
-Stan
+we had an initial discussion with the clock team, currently there is no 
+ready made clock provider flag to help in the above scenario.
+however we are planning to have further discussions for a cleaner fix, 
+can we open a new issue to track the discussions and design and close 
+the current one ?
+
+
+
