@@ -2,195 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 54DB0161450
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 15:15:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 624E616160A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 16:25:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726823AbgBQOPI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Feb 2020 09:15:08 -0500
-Received: from mail.kernel.org ([198.145.29.99]:47296 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726760AbgBQOPI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Feb 2020 09:15:08 -0500
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C13582072C;
-        Mon, 17 Feb 2020 14:15:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1581948906;
-        bh=Shzw2PTES55J4aj4NRVAVAR0mDFpO/yXwhg/BA3New8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=agxYjoaTMIx4QSUJkwvv8MhTusnIBnnCedYHzmDEUNi5CKlrXnBoRuDID8xa6TAqP
-         Q8IDa3RkIorYx34BUiDpPSazOoAtzeRKci9O/P6niZAcDzS9ZS8xcCalVxF/pYZAxh
-         y2kVs1Ht6KrytMcnUWmxzv55Vt2Vg7AkSsJnwv7s=
-Date:   Mon, 17 Feb 2020 15:15:03 +0100
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     arnd@arndb.de, smohanad@codeaurora.org, jhugo@codeaurora.org,
-        kvalo@codeaurora.org, bjorn.andersson@linaro.org,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 02/16] bus: mhi: core: Add support for registering MHI
- controllers
-Message-ID: <20200217141503.GA1110972@kroah.com>
-References: <20200206165755.GB3894455@kroah.com>
- <20200211184130.GA11908@Mani-XPS-13-9360>
- <20200211192055.GA1962867@kroah.com>
- <20200213152013.GB15010@mani>
- <20200213153418.GA3623121@kroah.com>
- <20200213154809.GA26953@mani>
- <20200213155302.GA3635465@kroah.com>
- <20200217052743.GA4809@Mani-XPS-13-9360>
- <20200217115930.GA218071@kroah.com>
- <20200217130419.GA13993@Mani-XPS-13-9360>
+        id S1728124AbgBQPZF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Feb 2020 10:25:05 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38485 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726397AbgBQPZE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Feb 2020 10:25:04 -0500
+Received: by mail-wr1-f66.google.com with SMTP id y17so20205814wrh.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2020 07:25:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:autocrypt:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=1NzMH/9EC7li2bGicgTPFAtZ3/NH66Utjge6Qs2QOo0=;
+        b=ZL1GqfQga8cUY7xe8Nwmv/q0yHaf77lGF+6A7Lh4oH046Ako/UCO6m0eTX7nFp9tdC
+         zCRtixLBOgPoTCOKEjTG9q9sC3LLDr7qgCcIRaUmmVRCr7iex5/6irjkQYToWRU34924
+         uG3H6vGAh+4+h/R+SjFFfiLuiYK8mSjGM6YlKPZAVViIZhl5Z+vSdUZZUIj9l4ZfjU2y
+         hlW49OjvVb/7zwnTIzXofpC1Y7Ip8SCtNtdQQ2FHW9q3NvhNpmXCnomKKPYG3obIZOYj
+         GAITrceqA9e9EafxpoX4I1bdd5dB6VatRxbunl9IsW2oxflVLfAG7zt7kGxetOxQG44Y
+         3xRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=1NzMH/9EC7li2bGicgTPFAtZ3/NH66Utjge6Qs2QOo0=;
+        b=ampF4akG+Q+eOgI42rcg0Chekiv7D9dWt9jmO9ACw7YD58XSr7PjxtfGTHYpL3YXwp
+         0kRvfJVmwpwKCnYoly35QrYxKlQ3KhtQMv1FWqQSTy2rRB+jXzovjTFBAhqWK6LpdkEC
+         RUPv1n19VW/AiuJHtFgSGNmyr4yzJYGDJ/sh1wo8e+q1/K3yuolJAI8Ih75oxkowCSX4
+         MlnXShuSEe1fOKq/sdbC1RZSbSGEaICH8q3PuPBdPuneK+Bq2ovDN2+mM4Wq+ek5qFKA
+         Cyt2Ltr8N+LIKky1yMqfdu/8VeZGwarKMUVOGujVMnDgfgAaQzGta+5hrP+zN4IxbiT3
+         Uy6w==
+X-Gm-Message-State: APjAAAWLZZ+INzZE7uMyJST85TxKuLtK6ETxw8CXeGVTLrCf++gSH0Ix
+        CNxiYfh6e17I9EMHqpoDjRzGpg==
+X-Google-Smtp-Source: APXvYqyPFhYXkn2wxinFTcX98OVgWXoHnv1SBFpxpXjWL+gInm18pqo22Po9uktE9XT4QaNLUBMopQ==
+X-Received: by 2002:adf:e8ca:: with SMTP id k10mr21599304wrn.50.1581953102210;
+        Mon, 17 Feb 2020 07:25:02 -0800 (PST)
+Received: from ?IPv6:2a01:e34:ed2f:f020:9dbe:964b:c22d:ab7e? ([2a01:e34:ed2f:f020:9dbe:964b:c22d:ab7e])
+        by smtp.googlemail.com with ESMTPSA id m68sm952887wme.48.2020.02.17.07.25.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Feb 2020 07:25:01 -0800 (PST)
+Subject: Re: [PATCH v4 0/7] thermal: tsens: Handle critical interrupts
+To:     Amit Kucheria <amit.kucheria@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bjorn.andersson@linaro.org, swboyd@chromium.org,
+        sivaa@codeaurora.org, Andy Gross <agross@kernel.org>
+Cc:     Amit Kucheria <amit.kucheria@verdurent.com>,
+        linux-pm@vger.kernel.org
+References: <cover.1580390127.git.amit.kucheria@linaro.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Autocrypt: addr=daniel.lezcano@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <9d4f69cd-fb00-6216-5621-fa6d5b42ce19@linaro.org>
+Date:   Mon, 17 Feb 2020 16:25:00 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200217130419.GA13993@Mani-XPS-13-9360>
+In-Reply-To: <cover.1580390127.git.amit.kucheria@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 17, 2020 at 06:34:19PM +0530, Manivannan Sadhasivam wrote:
-> On Mon, Feb 17, 2020 at 12:59:30PM +0100, Greg KH wrote:
-> > On Mon, Feb 17, 2020 at 10:57:43AM +0530, Manivannan Sadhasivam wrote:
-> > > Hi Greg,
-> > > 
-> > > On Thu, Feb 13, 2020 at 07:53:02AM -0800, Greg KH wrote:
-> > > > On Thu, Feb 13, 2020 at 09:18:09PM +0530, Manivannan Sadhasivam wrote:
-> > > > > Hi Greg,
-> > > > > 
-> > > > > On Thu, Feb 13, 2020 at 07:34:18AM -0800, Greg KH wrote:
-> > > > > > On Thu, Feb 13, 2020 at 08:50:13PM +0530, Manivannan Sadhasivam wrote:
-> > > > > > > On Tue, Feb 11, 2020 at 11:20:55AM -0800, Greg KH wrote:
-> > > > > > > > On Wed, Feb 12, 2020 at 12:11:30AM +0530, Manivannan Sadhasivam wrote:
-> > > > > > > > > Hi Greg,
-> > > > > > > > > 
-> > > > > > > > > On Thu, Feb 06, 2020 at 05:57:55PM +0100, Greg KH wrote:
-> > > > > > > > > > On Fri, Jan 31, 2020 at 07:19:55PM +0530, Manivannan Sadhasivam wrote:
-> > > > > > > > > > > --- /dev/null
-> > > > > > > > > > > +++ b/drivers/bus/mhi/core/init.c
-> > > > > > > > > > > @@ -0,0 +1,407 @@
-> > > > > > > > > > > +// SPDX-License-Identifier: GPL-2.0
-> > > > > > > > > > > +/*
-> > > > > > > > > > > + * Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
-> > > > > > > > > > > + *
-> > > > > > > > > > > + */
-> > > > > > > > > > > +
-> > > > > > > > > > > +#define dev_fmt(fmt) "MHI: " fmt
-> > > > > > > > > > 
-> > > > > > > > > > This should not be needed, right?  The bus/device name should give you
-> > > > > > > > > > all you need here from what I can tell.  So why is this needed?
-> > > > > > > > > > 
-> > > > > > > > > 
-> > > > > > > > > The log will have only the device name as like PCI-E. But that won't specify
-> > > > > > > > > where the error is coming from. Having "MHI" prefix helps the users to
-> > > > > > > > > quickly identify that the error is coming from MHI stack.
-> > > > > > > > 
-> > > > > > > > If the driver binds properly to the device, the name of the driver will
-> > > > > > > > be there in the message, so I suggest using that please.
-> > > > > > > > 
-> > > > > > > > No need for this prefix...
-> > > > > > > > 
-> > > > > > > 
-> > > > > > > So the driver name will be in the log but that won't help identifying where
-> > > > > > > the log is coming from. This is more important for MHI since it reuses the
-> > > > > > > `struct device` of the transport device like PCI-E. For instance, below is
-> > > > > > > the log without MHI prefix:
-> > > > > > > 
-> > > > > > > [   47.355582] ath11k_pci 0000:01:00.0: Requested to power on
-> > > > > > > [   47.355724] ath11k_pci 0000:01:00.0: Power on setup success
-> > > > > > > 
-> > > > > > > As you can see, this gives the assumption that the log is coming from the
-> > > > > > > ath11k_pci driver. But the reality is, it is coming from MHI bus.
-> > > > > > 
-> > > > > > Then you should NOT be trying to "reuse" a struct device.
-> > > > > > 
-> > > > > > > With the prefix added, we will get below:
-> > > > > > > 
-> > > > > > > [   47.355582] ath11k_pci 0000:01:00.0: MHI: Requested to power on
-> > > > > > > [   47.355724] ath11k_pci 0000:01:00.0: MHI: Power on setup success
-> > > > > > > 
-> > > > > > > IMO, the prefix will give users a clear idea of logs and that will be very
-> > > > > > > useful for debugging.
-> > > > > > > 
-> > > > > > > Hope this clarifies.
-> > > > > > 
-> > > > > > Don't try to reuse struct devices, if you are a bus, have your own
-> > > > > > devices as that's the correct way to do things.
-> > > > > > 
-> > > > > 
-> > > > > I assumed that the buses relying on a different physical interface for the
-> > > > > actual communication can reuse the `struct device`. I can see that the MOXTET
-> > > > > bus driver already doing it. It reuses the `struct device` of SPI.
-> > > > 
-> > > > How can you reuse anything?
-> > > > 
-> > > > > And this assumption has deep rooted in MHI bus design.
-> > > > 
-> > > > Maybe I do not understand what this is at all, but a device can only be
-> > > > on one "bus" at a time.  How is that being broken here?
-> > > > 
-> > > 
-> > > Let me share some insight on how it is being used:
-> > > 
-> > > The MHI bus sits on top of the actual physical bus like PCI-E and requires
-> > > the physical bus for doing activities like allocating I/O virtual address,
-> > > runtime PM etc... The part which gets tied to the PCI-E from MHI is called MHI
-> > > controller driver. This MHI controller driver is also the actual PCI-E driver
-> > > managing the device.
-> > > 
-> > > For instance, we have QCA6390 PCI-E WLAN device. For this device, there is a
-> > > ath11k PCI-E driver and the same driver also registers as a MHI controller and
-> > > acts as a MHI controller driver. This is where I referred to reusing the PCI-E
-> > > struct device. It's not that MHI bus itself is reusing the PCI-E struct device
-> > > but we need the PCI-E device pointer to do above mentioned IOVA, PM operations
-> > > in some places. One of the usage is below:
-> > > 
-> > > ```
-> > > void *buf = dma_alloc_coherent(mhi_cntrl->dev, size, dma_handle, gfp);
-> > > ```
-> > 
-> > Wait, why do you need to call this with the parent dev?  Why not with
-> > your struct device?  What does the parent pointer have that yours does
-> > not?  Is it not correctly having whatever dma attributes the parent has
-> > set properly for your device as well?  If not, why not just fix that and
-> > then _your_ device can be doing the allocation?
-> > 
-> 
-> This is _one_ of the usecases of the parent dev. We are also using it to manage
-> the runtime PM operations of the physical device (pcie) when the MHI stack goes
-> into respective states. For instance,
-> 
-> ```
->         if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state)) {
->                 mhi_cntrl->runtime_get(mhi_cntrl);
->                 mhi_cntrl->runtime_put(mhi_cntrl);
->         }
-> ```
-> 
-> These runtime_put() and runtime_get() are the callbacks to be provided by the
-> controller drivers for managing its runtime PM states.
-> 
-> Also, the MHI devices for the channels will be created later on after the
-> controller probe, so at that time we need this parent dev to set the MHI device
-> parent:
-> 
-> ```
-> struct mhi_device *mhi_alloc_device(struct mhi_controller *mhi_cntrl)
-> {
-> ...
-> dev->parent = mhi_cntrl->dev;
-> ...
-> ```
-> 
-> Hence, having the parent dev pointer really helps.
 
-Yes, saving the parent device is fine, but you should be doing your own
-dma calls using _your_ device, not the parents.  Only mess with the
-parent pointer if you need to do something "normal" for a parent.
+Hi Amit,
 
-thanks,
+can you respin the series against v5.6-rc2?
 
-greg k-h
+Thanks
+
+  -- Daniel
+
+
+On 30/01/2020 14:27, Amit Kucheria wrote:
+> TSENS IP v2.x supports critical interrupts and v2.3+ adds watchdog support
+> in case the FSM is stuck. Enable support in the driver.
+> 
+> This series was generated on top of linux-next from 20200130 to integrate
+> some patches that that are queued currently.
+> 
+> Changes from v3:
+> - Remove the DTS changes that are already queued
+> - Fix review comments by Bjorn
+> - Fixup patch description to clarify that we don't use TSENS critical
+>   interrupts in Linux, but need it for the watchdog support that uses the
+>   same HW irq line.
+> - Separate kernel-doc fixes into a separate patch.
+> 
+> Changes from v2:
+> - Handle old DTBs w/o critical irq in the same way as fix sent for 5.5
+> 
+> Changes from v1:
+> - Make tsens_features non-const to allow run time detection of features
+> - Pass tsens_sensor around as a const
+> - Fix a bug to release dev pointer in success path
+> - Address review comments from Bjorn and Stephen (thanks for the review)
+> - Add msm8998 and msm8996 DTSI changes for critical interrupts
+> 
+> 
+> 
+> Amit Kucheria (7):
+>   drivers: thermal: tsens: Pass around struct tsens_sensor as a constant
+>   drivers: thermal: tsens: use simpler variables
+>   drivers: thermal: tsens: Release device in success path
+>   drivers: thermal: tsens: Add critical interrupt support
+>   drivers: thermal: tsens: Add watchdog support
+>   drivers: thermal: tsens: kernel-doc fixup
+>   drivers: thermal: tsens: Remove unnecessary irq flag
+> 
+>  drivers/thermal/qcom/tsens-8960.c   |   2 +-
+>  drivers/thermal/qcom/tsens-common.c | 191 ++++++++++++++++++++++++----
+>  drivers/thermal/qcom/tsens-v2.c     |  18 ++-
+>  drivers/thermal/qcom/tsens.c        |  26 +++-
+>  drivers/thermal/qcom/tsens.h        |  94 +++++++++++++-
+>  5 files changed, 300 insertions(+), 31 deletions(-)
+> 
+
+
+-- 
+ <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
+
