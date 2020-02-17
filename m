@@ -2,86 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 698E7160F3B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 10:50:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CCD99160FB2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 11:15:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728988AbgBQJuX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Feb 2020 04:50:23 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:37451 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729051AbgBQJuW (ORCPT
+        id S1729045AbgBQKPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Feb 2020 05:15:10 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:43172 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729052AbgBQKPK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Feb 2020 04:50:22 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581933022; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=TmZ0MaXtT3lJp8LRCBLmspS+LPQtb3tysf9sUdB/Lyc=; b=bftkfTi/MmUBnXC7o6YHypV8WagXXcMUvnRKddSpT7/vjnX5sj+n/w6L4/pCwTS2BH0ay2Vb
- z1rUyEeiahZa2/f6wlsviMHQ5r85LPOZSrvadEmfEXqh9UY/D3QmuXmlQ3s7gbKwBrTsR+9w
- 7Q8fG+7PYx1Y2AR+PMKQT3VPkQQ=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e4a61d3.7f0ec86d86c0-smtp-out-n02;
- Mon, 17 Feb 2020 09:50:11 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F2088C4479C; Mon, 17 Feb 2020 09:50:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from akashast-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 46BFEC43383;
-        Mon, 17 Feb 2020 09:50:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 46BFEC43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-From:   Akash Asthana <akashast@codeaurora.org>
-To:     robh+dt@kernel.org, agross@kernel.org, mark.rutland@arm.com
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
-        rojay@codeaurora.org, skakit@codeaurora.org, swboyd@chromium.org,
-        Akash Asthana <akashast@codeaurora.org>
-Subject: [PATCH 2/2] dt-bindings: spi: Add interconnect binding for QSPI
-Date:   Mon, 17 Feb 2020 15:19:34 +0530
-Message-Id: <1581932974-21654-3-git-send-email-akashast@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1581932974-21654-1-git-send-email-akashast@codeaurora.org>
-References: <1581932974-21654-1-git-send-email-akashast@codeaurora.org>
+        Mon, 17 Feb 2020 05:15:10 -0500
+Received: by mail-ed1-f68.google.com with SMTP id dc19so19975020edb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2020 02:15:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ITFb8L5DSsMxg9jB22o0lWJvDZuM6JEd6aFvL/faZ20=;
+        b=Tc37W/dcRFvEaw5SUUfljM2gXORiwGMatrDI535QpyCb1XVbzavym+gTI6mk2u3INm
+         a8P/TUWnck2kQsVMSGD/fz6b7igk1TjhQk1mYMCvXM1jJAK7/jp0rndHwnSZgV3NEm1h
+         SOsEOE0OYjb0FyOxzlbxpzK6EuITAgOTwCp0WR2AaIIF466+YbNduFyOR5PeHdwXT0zZ
+         u6eLT4+arHzirhsvQQXMJSbM5yemeStR9ECetDD4czGNLQpbSBRF0ru69/PT+zXA8BUp
+         LgdoDNdw1v5yM+bDn+PY4BDXW1zitDweXatBylJMw8kjThJkseOBkdTOWJVxY+K1T9eD
+         UiKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ITFb8L5DSsMxg9jB22o0lWJvDZuM6JEd6aFvL/faZ20=;
+        b=hffdwMTiNiTGaM0cJ3FykhoHNApraSYNWnluJEA78hWfM56pq013v+S2SYUbWkQ29A
+         QeFG0KRUgieC3bF2sCalB101FKE347gdUwqq+8JYGpnO/zBX3eBfqhfw5U0vXIKdud9M
+         nWjXAYYbDHJ0r06jEFjbW9LXmya5zJ0M0naAxy9epAn4ZPoOpqPZFWQ+yj0gPnxbcnjL
+         ZXhjzlocT463Skl/fYMOlO7UQgtZIRl8bbMWsdif2gPBNX2NnQcXzdnFIf9KGSprr5PI
+         sQPwsipSUWjWhLUb8pj4r8dKEfHBe+xxkZWcTrI2AI+pUqiXYx8EWWrOwj9UKpI56HFX
+         zYpg==
+X-Gm-Message-State: APjAAAUmdNwgWsOLzXCNZmcftKeOaOYDsPzM8aFF8kW8P8pAcQn17vcO
+        FoWWa9f0ZC89pOryI5NqafLK4A==
+X-Google-Smtp-Source: APXvYqwJr4dk7coEDW+rWoqenoO/7AFXgQjgp/QFLtrfGG97zeRM1owWs4FxfqUHlPTTZzvK8wuU2Q==
+X-Received: by 2002:a17:906:2651:: with SMTP id i17mr13819564ejc.246.1581934506821;
+        Mon, 17 Feb 2020 02:15:06 -0800 (PST)
+Received: from [192.168.27.209] ([94.155.124.210])
+        by smtp.googlemail.com with ESMTPSA id m5sm437327ede.10.2020.02.17.02.15.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Feb 2020 02:15:06 -0800 (PST)
+Subject: Re: [PATCH] media: venus: support frame rate control
+To:     Jeffrey Kardatzke <jkardatzke@google.com>,
+        linux-media@vger.kernel.org
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "Mauro Carvalho Chehab )" <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200213213007.17023-1-jkardatzke@google.com>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <b471217a-1877-eaed-55c2-084f4b126bb4@linaro.org>
+Date:   Mon, 17 Feb 2020 12:15:05 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <20200213213007.17023-1-jkardatzke@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add documentation for the interconnect and interconnect-names
-properties for QSPI.
+Hi Jeff,
 
-Signed-off-by: Akash Asthana <akashast@codeaurora.org>
----
- Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Thanks for the patch!
 
-diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
-index 977070a..b58bd73 100644
---- a/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
-+++ b/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
-@@ -47,6 +47,14 @@ properties:
-   "#size-cells":
-     const: 0
- 
-+  interconnects:
-+    maxItems: 2
-+
-+  interconnect-names:
-+    items:
-+      - const: qspi-config
-+      - const: qspi-memory
-+
- required:
-   - compatible
-   - reg
+On 2/13/20 11:30 PM, Jeffrey Kardatzke wrote:
+> Frame rate control is always enabled in this driver, so make it silently
+> support the V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE.
+> 
+> Signed-off-by: Jeffrey Kardatzke <jkardatzke@google.com>
+> ---
+>  drivers/media/platform/qcom/venus/venc_ctrls.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> index 877c0b3299e9..9ede692f77c5 100644
+> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
+> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> @@ -199,6 +199,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+>  		}
+>  		mutex_unlock(&inst->lock);
+>  		break;
+> +	case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
+> +		// Silently ignore, it's always enabled.
+
+Please, use C comments and follow the kernel coding style.
+
+I wonder shouldn't it be better to add rc_enable field in struct
+venc_controls and give the user choice to disable the rate control? We
+can keep the default to be "enabled".
+
+> +		break;
+>  	default:
+>  		return -EINVAL;
+>  	}
+> @@ -351,6 +354,9 @@ int venc_ctrl_init(struct venus_inst *inst)
+>  	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+>  			  V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME, 0, 0, 0, 0);
+>  
+> +	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+> +			  V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE, 0, 1, 1, 1);
+> +
+
+you forgot to increment the number of controls in the call to
+v4l2_ctrl_handler_init.
+
+>  	ret = inst->ctrl_handler.error;
+>  	if (ret)
+>  		goto err;
+> 
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+regards,
+Stan
