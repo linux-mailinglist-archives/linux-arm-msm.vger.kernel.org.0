@@ -2,29 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 764D2160EE6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 10:38:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 478E5160F32
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Feb 2020 10:50:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728955AbgBQJh7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Feb 2020 04:37:59 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:12533 "EHLO
+        id S1728928AbgBQJty (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Feb 2020 04:49:54 -0500
+Received: from mail27.static.mailgun.info ([104.130.122.27]:11246 "EHLO
         mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728951AbgBQJh7 (ORCPT
+        by vger.kernel.org with ESMTP id S1728967AbgBQJtx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Feb 2020 04:37:59 -0500
+        Mon, 17 Feb 2020 04:49:53 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1581932278; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=sp3nER5d7DpoIBi+qgPu/aRrDAAEwkrgkD04urVyEG0=; b=CfvLWEugE5qd+BhD/SOMTSls4J6NpE9qKyX/7CnqKmG6hXWnhz7ysRmUIm3wJkUSdpc5L3hq
- aak4vPG4LRznfkxecJkt3Zyh/GTmHXXuM2zW6erpBnpSo80B9ltN7Iv3zJAmAJ3OgX38OAVG
- mYugX+94dQ1KSEztFtjcnO1RBLE=
+ s=smtp; t=1581932993; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=g//IW0nJXQeUIbmBoJDPkGdvKWYJPRzClQ8OWjgSwlw=; b=HRFD5yYhNY46TcDa1yS5z7JXiWg6+xYrZnig6CDJYXei3DFCCBYMkOn4XoYCUbEKKcUcPIew
+ jAGcoXI3KJdlMalUg4kIZw97ruumOk6lLOtLQTR/yHisZ1v0FBoPUDHDg2MeOwMG0WDoKLzq
+ fKvqBPDHkUQLQSnV4F1/QUICZQM=
 X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e4a5ef6.7fc044ff6340-smtp-out-n01;
- Mon, 17 Feb 2020 09:37:58 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e4a61be.7fb7bc9d4340-smtp-out-n02;
+ Mon, 17 Feb 2020 09:49:50 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 50C85C447B6; Mon, 17 Feb 2020 09:37:53 +0000 (UTC)
+        id 2621CC447A2; Mon, 17 Feb 2020 09:49:50 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,9 +33,9 @@ Received: from akashast-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-O
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 22874C447AC;
-        Mon, 17 Feb 2020 09:37:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 22874C447AC
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5A027C43383;
+        Mon, 17 Feb 2020 09:49:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5A027C43383
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
 From:   Akash Asthana <akashast@codeaurora.org>
@@ -45,43 +44,24 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
         rojay@codeaurora.org, skakit@codeaurora.org, swboyd@chromium.org,
         Akash Asthana <akashast@codeaurora.org>
-Subject: [PATCH V4 3/3] dt-bindings: geni-se: Add binding for UART pin swap
-Date:   Mon, 17 Feb 2020 15:06:52 +0530
-Message-Id: <1581932212-19469-4-git-send-email-akashast@codeaurora.org>
+Subject: [PATCH 0/2] Convert QSPI binding to YAML and add interconnect doc
+Date:   Mon, 17 Feb 2020 15:19:32 +0530
+Message-Id: <1581932974-21654-1-git-send-email-akashast@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1581932212-19469-1-git-send-email-akashast@codeaurora.org>
-References: <1581932212-19469-1-git-send-email-akashast@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add documentation to support RX/TX/CTS/RTS pin swap in HW.
+Akash Asthana (2):
+  dt-bindings: spi: Convert QSPI bindings to YAML
+  dt-bindings: spi: Add interconnect binding for QSPI
 
-Signed-off-by: Akash Asthana <akashast@codeaurora.org>
----
- Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ .../devicetree/bindings/spi/qcom,spi-qcom-qspi.txt | 36 --------
+ .../bindings/spi/qcom,spi-qcom-qspi.yaml           | 97 ++++++++++++++++++++++
+ 2 files changed, 97 insertions(+), 36 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.txt
+ create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-index 11530df..7e4b9af 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-@@ -165,6 +165,15 @@ patternProperties:
-           - description: UART core irq
-           - description: Wakeup irq (RX GPIO)
- 
-+      rx-tx-swap:
-+        description: RX and TX pins are swap.
-+
-+      cts-rts-swap:
-+        description: CTS and RTS pins are swap.
-+
-+      rx-tx-cts-rts-swap:
-+        description: RX-TX and CTS-RTS both pairs are swap.
-+
-     required:
-       - compatible
-       - interrupts
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
