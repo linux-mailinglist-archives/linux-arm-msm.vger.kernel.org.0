@@ -2,62 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CDCF162DF3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2020 19:13:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD489162DEF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2020 19:13:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726339AbgBRSM4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Feb 2020 13:12:56 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:42451 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726799AbgBRSMy (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Feb 2020 13:12:54 -0500
-Received: by mail-pl1-f193.google.com with SMTP id e8so8385415plt.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2020 10:12:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=oLeONphgN8bI3yXOD6b6adnLltoiWoWgl8XWN+7QgxY=;
-        b=VFZj2SsqMCbIShucyuZlAHB1hbUvkl/E0khDnin9ueeSQG3ICe56NLzND/ROolqv75
-         PZZ9/TYDfmZ9pqyrg0NxDm8rItdRvQFa7QGeBPRtCKN1XuOk6ngqul1pfAFXiY1bXifU
-         SXBqfoKKQP3z7DfVjxeiRZPKL/YfhK57cBLYhoPLyaOUvYLFEaQU7v4eMLtWgO9RlyuM
-         9jLWV6VYMNO14UpvFfy6IFOmnxkaTmtdqRSjbrOfkaDevdhUYK0q6V0aLEj1F23fyCPA
-         t41CTKy627ZQrELEExiV+bG7DcAUzoygNamg/ZgSVmVbjBF58ki6jVazVq3iLe/oIQ/y
-         7z7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=oLeONphgN8bI3yXOD6b6adnLltoiWoWgl8XWN+7QgxY=;
-        b=SxKUr104GZmL/Oi6LoFv8T7zb//Gb462AK6lrSzv3mexbLosCrPrztg8llvtao3dBm
-         dR9YENrMi2qH+G8qTGsuMlVnnwG0VP5/TO3N4M1jGsHbgfMRvXcbuIZtRs8oXBoKsT/c
-         57jgOl78xO1JcSg1jmIa3wQwBTt6e3G5t/W1coJk5BFldVq0+++HG+CDSa+9hNacxZYj
-         y+cSps7gEpAz7JW6n33E0ZmPy6Pn3/VwiF4Q8JRPnymVpXCx/o5rGkU2/hJb03WgEpb0
-         7QWBOmomD0YtaM5nw/e/8bfTV1sqn/wg0Wa1a2PfRIpfEYRacHIw5JZOMFg+1MG1ItAZ
-         JUow==
-X-Gm-Message-State: APjAAAWL2SnXyF4l2NADtXtW1h5NJAt4mgGVvOnlbBc+y5NbOxG6+zkB
-        th3eOw8F9AfoYMbRzZSSsNc83A==
-X-Google-Smtp-Source: APXvYqxiNPa/1gH9eAM7SpBofRF5udb8qqSPMvgm5ozyIY2/qfio9pHlLjFssqaOxPtTkBAL38KDCw==
-X-Received: by 2002:a17:90a:cb11:: with SMTP id z17mr4153616pjt.122.1582049572841;
-        Tue, 18 Feb 2020 10:12:52 -0800 (PST)
-Received: from localhost ([103.195.202.120])
-        by smtp.gmail.com with ESMTPSA id t66sm5185236pgb.91.2020.02.18.10.12.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Feb 2020 10:12:51 -0800 (PST)
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
-        swboyd@chromium.org, sivaa@codeaurora.org,
-        Andy Gross <agross@kernel.org>
-Cc:     Amit Kucheria <amit.kucheria@verdurent.com>,
-        linux-pm@vger.kernel.org
-Subject: [PATCH v5 8/8] drivers: thermal: tsens: Remove unnecessary irq flag
-Date:   Tue, 18 Feb 2020 23:42:12 +0530
-Message-Id: <d3e1c0f148d46e395a0886d9028df0faf8e9f9bb.1582048155.git.amit.kucheria@linaro.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <cover.1582048155.git.amit.kucheria@linaro.org>
-References: <cover.1582048155.git.amit.kucheria@linaro.org>
+        id S1726734AbgBRSMu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Feb 2020 13:12:50 -0500
+Received: from foss.arm.com ([217.140.110.172]:57990 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726770AbgBRSMu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 Feb 2020 13:12:50 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9FE9D101E;
+        Tue, 18 Feb 2020 10:12:49 -0800 (PST)
+Received: from e121345-lin.cambridge.arm.com (e121345-lin.cambridge.arm.com [10.1.196.37])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 82C723F73B;
+        Tue, 18 Feb 2020 10:12:48 -0800 (PST)
+From:   Robin Murphy <robin.murphy@arm.com>
+To:     joro@8bytes.org, robdclark@gmail.com
+Cc:     iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, stephan@gerhold.net,
+        linux-arm-msm@vger.kernel.org,
+        Brian Masney <masneyb@onstation.org>,
+        Naresh Kamboju <naresh.kamboju@linaro.org>
+Subject: [PATCH] iommu/qcom: Fix bogus detach logic
+Date:   Tue, 18 Feb 2020 18:12:41 +0000
+Message-Id: <be92829c6e5467634b109add002351e6cf9e18d2.1582049382.git.robin.murphy@arm.com>
+X-Mailer: git-send-email 2.23.0.dirty
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -65,28 +35,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IRQF_TRIGGER_HIGH is already specified through devicetree interrupts
-property. Remove it from code.
+Currently, the implementation of qcom_iommu_domain_free() is guaranteed
+to do one of two things: WARN() and leak everything, or dereference NULL
+and crash. That alone is terrible, but in fact the whole idea of trying
+to track the liveness of a domain via the qcom_domain->iommu pointer as
+a sanity check is full of fundamentally flawed assumptions. Make things
+robust and actually functional by not trying to be quite so clever.
 
-Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reported-by: Brian Masney <masneyb@onstation.org>
+Tested-by: Brian Masney <masneyb@onstation.org>
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Fixes: 0ae349a0f33f ("iommu/qcom: Add qcom_iommu")
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
 ---
- drivers/thermal/qcom/tsens.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/qcom_iommu.c | 28 ++++++++++++----------------
+ 1 file changed, 12 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 5b003d598234..9ee00c67144c 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -118,7 +118,7 @@ static int tsens_register(struct tsens_priv *priv)
+diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
+index 39759db4f003..4328da0b0a9f 100644
+--- a/drivers/iommu/qcom_iommu.c
++++ b/drivers/iommu/qcom_iommu.c
+@@ -344,21 +344,19 @@ static void qcom_iommu_domain_free(struct iommu_domain *domain)
+ {
+ 	struct qcom_iommu_domain *qcom_domain = to_qcom_iommu_domain(domain);
  
- 	ret = devm_request_threaded_irq(&pdev->dev, irq,
- 					NULL, tsens_irq_thread,
--					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+					IRQF_ONESHOT,
- 					dev_name(&pdev->dev), priv);
- 	if (ret) {
- 		dev_err(&pdev->dev, "%s: failed to get irq\n", __func__);
+-	if (WARN_ON(qcom_domain->iommu))    /* forgot to detach? */
+-		return;
+-
+ 	iommu_put_dma_cookie(domain);
+ 
+-	/* NOTE: unmap can be called after client device is powered off,
+-	 * for example, with GPUs or anything involving dma-buf.  So we
+-	 * cannot rely on the device_link.  Make sure the IOMMU is on to
+-	 * avoid unclocked accesses in the TLB inv path:
+-	 */
+-	pm_runtime_get_sync(qcom_domain->iommu->dev);
+-
+-	free_io_pgtable_ops(qcom_domain->pgtbl_ops);
+-
+-	pm_runtime_put_sync(qcom_domain->iommu->dev);
++	if (qcom_domain->iommu) {
++		/*
++		 * NOTE: unmap can be called after client device is powered
++		 * off, for example, with GPUs or anything involving dma-buf.
++		 * So we cannot rely on the device_link.  Make sure the IOMMU
++		 * is on to avoid unclocked accesses in the TLB inv path:
++		 */
++		pm_runtime_get_sync(qcom_domain->iommu->dev);
++		free_io_pgtable_ops(qcom_domain->pgtbl_ops);
++		pm_runtime_put_sync(qcom_domain->iommu->dev);
++	}
+ 
+ 	kfree(qcom_domain);
+ }
+@@ -404,7 +402,7 @@ static void qcom_iommu_detach_dev(struct iommu_domain *domain, struct device *de
+ 	struct qcom_iommu_domain *qcom_domain = to_qcom_iommu_domain(domain);
+ 	unsigned i;
+ 
+-	if (!qcom_domain->iommu)
++	if (WARN_ON(!qcom_domain->iommu))
+ 		return;
+ 
+ 	pm_runtime_get_sync(qcom_iommu->dev);
+@@ -417,8 +415,6 @@ static void qcom_iommu_detach_dev(struct iommu_domain *domain, struct device *de
+ 		ctx->domain = NULL;
+ 	}
+ 	pm_runtime_put_sync(qcom_iommu->dev);
+-
+-	qcom_domain->iommu = NULL;
+ }
+ 
+ static int qcom_iommu_map(struct iommu_domain *domain, unsigned long iova,
 -- 
-2.20.1
+2.23.0.dirty
 
