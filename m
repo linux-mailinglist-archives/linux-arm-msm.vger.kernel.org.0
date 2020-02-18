@@ -2,104 +2,221 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 83BAD161F7E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2020 04:19:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B2B65161F8F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2020 04:36:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726237AbgBRDTZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Feb 2020 22:19:25 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:42482 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726293AbgBRDTZ (ORCPT
+        id S1726283AbgBRDgh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Feb 2020 22:36:37 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:46927 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726267AbgBRDgh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Feb 2020 22:19:25 -0500
-Received: by mail-pf1-f196.google.com with SMTP id 4so9893739pfz.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2020 19:19:24 -0800 (PST)
+        Mon, 17 Feb 2020 22:36:37 -0500
+Received: by mail-pl1-f194.google.com with SMTP id y8so7492155pll.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2020 19:36:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=BjESBNNd4zA4/xXm+Fx/7whm6bU5Bz00evekQd0atG0=;
-        b=dPNOklRfcHZVXvg7ClWdTf50p7mBZKJAOS/1kBxt364yg0SJ9NR2pVzUhYQuie/Vhb
-         mMRua+uI+pbN+WPIdh+Sp/JKzbQwQLrs9Jtmznr471cIt8KfuuFsaGh2Gy2t0OS/5MI9
-         GmmZaMoaQ6ayO1vMiuBacWdRTEHEfEsjEktWphi9e+nTd8RtfLmsxK3SN1sQg+eHMq/D
-         bx4wl0/OdxKOkFPybOPCCuqlMZJQCovzuLYDT5vsmpJbFgIfr53TcRdhQkTmunM9b088
-         WJB9Sd0BOYjxO1iOl71fPb6cCIGNn0KD0MoMnnBDIvAbMnHa5BWc7ROU1gsbb92mq4Ar
-         vzRw==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=GMlJ1wWVUDMxi0nbbeWDMhla9tCgEqbpniqRdViRdjM=;
+        b=HvA8KqO/Q+e62pyy3c/LrFlI13Vd1UgjV3Xh3lSYxPoYeie1cpgAvFezOmsQ8R32FH
+         RUs0eYuFZrcMK3A6AIN2F2BuVYF/wc3ITrfXd+mdRbmFEG45e6/omlE4/qPamdiY29/5
+         wCaQoKvaBKteTXLGiOAEpC8Bkpzt/QD5tftixp7769SJjmAm8oZ1+bJY86scYP8fH6c7
+         9kMfs4F4pZBjh2l9n7fhjJ/fGl+ddp1y81BL5KTVW0NUfPNY7tO7XPtW73f5tNw3IBXF
+         JKkcQwX8TKoJkp/jd82z6F1qvnXGFjEti7EghzCwdIfNq+g/cs8AAGe/k/oFM+qVh5xS
+         Igrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=BjESBNNd4zA4/xXm+Fx/7whm6bU5Bz00evekQd0atG0=;
-        b=dvLJN5L4nmwLpt0Q06pQKtRUe2F5ziYHix91dPHsSixF5/RaKe0V9IfKsD8ei1Idng
-         5jcKm3gmgBUbiSsA9+6AmIMtCeQGqCjlWKVu77maxK0dxZJeNvgxV3wE/kkcKrgdLW/i
-         C32rwC0CiV6UiZfP98XudgPTMNZBDG6wfUliObaJ/nJo3izF4BIRMBo000oPuG1DLnDV
-         Cti6k2w62rxvz1oadgPnf5jqDO3MhCeOTHJVMNhTgPtA2KlIRZJF3Za2E4Gg5XiZdQ1v
-         +sy7cInmj6/efZ8wBNt7vMmD0/PUQPQBY7qBXUmGLucHxNGMezvV5IQdX/Foxd4ecK9Y
-         q5GA==
-X-Gm-Message-State: APjAAAVy9R97TTYWRyR5OEqHser7kpbMwl2L4r94j4GP5R8Qz02/DNKN
-        NDiN/K42qWkxcBPIuQ+LI69D4g==
-X-Google-Smtp-Source: APXvYqxYWtCDEG+AexP7+FJdG6S5k/Ny4QSg9Cetbw2G9McmCV5S+hbhBPCqRdjRY+7F1vGcUuaOLA==
-X-Received: by 2002:a63:8b44:: with SMTP id j65mr20230161pge.272.1581995964276;
-        Mon, 17 Feb 2020 19:19:24 -0800 (PST)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=GMlJ1wWVUDMxi0nbbeWDMhla9tCgEqbpniqRdViRdjM=;
+        b=kqJjB2iTPPKjw1O0O1W+2KfMBj5lt7SJ1Zi+75789DbZGu5Nsdt2CflP1nHqpRXDzj
+         RAk/eqBQHJnIE97ye7VZwdU/QKgt6ziL0slY3zH11imy57cg3ZPYHqrDY937H/quMV7X
+         8LxSvmrVeHL9TbCFFW0sc/8x2ZuV9H829YUMSOYo8YnGkmjWjCv+E05V2yRHTzEYSXt/
+         lLNPc7CBotdD+02PebGKWC6cGA76xnePyH5VJYbCAS0QshFW2ciX+HF/1TmZGRBH+dH9
+         XSRufSVZ9rPNX2XSUA1+yNCeOl+BqboiLrYz9aROq2ZRN+hiLgs9ct5fVmPo5m9Nsx/Q
+         ve7g==
+X-Gm-Message-State: APjAAAUkQXeItUefV7jzhj4CQJ/sUMxx/1j13jmUvJjiMRXenkr6783G
+        luukeHZWPk+t83B0QqKDHQtskg==
+X-Google-Smtp-Source: APXvYqxUnEE6mqEu7xwgGEga0icooVySyy93QsCESjYnuqA5ZoqA++5NWN7QeLrYVw72C/KwTJHppA==
+X-Received: by 2002:a17:902:6b03:: with SMTP id o3mr18219766plk.331.1581996996682;
+        Mon, 17 Feb 2020 19:36:36 -0800 (PST)
 Received: from ripper (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id t28sm1773258pfq.122.2020.02.17.19.19.22
+        by smtp.gmail.com with ESMTPSA id a10sm2321969pgm.81.2020.02.17.19.36.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Feb 2020 19:19:23 -0800 (PST)
-Date:   Mon, 17 Feb 2020 19:18:30 -0800
+        Mon, 17 Feb 2020 19:36:35 -0800 (PST)
+Date:   Mon, 17 Feb 2020 19:35:42 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org, wsa@the-dreams.de,
-        broonie@kernel.org, mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, mka@chromium.org,
-        dianders@chromium.org
-Subject: Re: [PATCH 6/6] arm64: dts: sc7180: Add interconnect for QUP and QSPI
-Message-ID: <20200218031830.GX955802@ripper>
-References: <1581946205-27189-1-git-send-email-akashast@codeaurora.org>
- <1581946205-27189-7-git-send-email-akashast@codeaurora.org>
+To:     "Dwivedi, Avaneesh Kumar (avani)" <akdwived@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ckadabi@codeaurora.org, tsoni@codeaurora.org,
+        bryanh@codeaurora.org, psodagud@codeaurora.org,
+        rnayak@codeaurora.org, satyap@codeaurora.org,
+        pheragu@codeaurora.org
+Subject: Re: [PATCH v4 2/2] Embedded USB Debugger (EUD) driver
+Message-ID: <20200218033542.GY955802@ripper>
+References: <1580445811-15948-1-git-send-email-akdwived@codeaurora.org>
+ <1580445811-15948-3-git-send-email-akdwived@codeaurora.org>
+ <20200203193533.GL3948@builder>
+ <5808f959-f0fc-85be-4bfa-980b5311adeb@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <1581946205-27189-7-git-send-email-akashast@codeaurora.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5808f959-f0fc-85be-4bfa-980b5311adeb@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 17 Feb 05:30 PST 2020, Akash Asthana wrote:
+On Sun 16 Feb 06:14 PST 2020, Dwivedi, Avaneesh Kumar (avani) wrote:
 
-> Add interconnect ports for GENI QUPs and QSPI to set bus capabilities.
+> Thank you very much Bjorn for your comments, will address them and post
+> latest patchset soon.
 > 
-> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> ---
-> Note:
->  - This patch depends on series https://patchwork.kernel.org/cover/11313817/
->    [Add SC7180 interconnect provider driver]. It won't compile without that.
-> 
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 199 +++++++++++++++++++++++++++++++++++
->  1 file changed, 199 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index cc5a94f..04569c9 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -352,6 +352,14 @@
->  				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
->  				#address-cells = <1>;
->  				#size-cells = <0>;
-> +				interconnects = <&qup_virt MASTER_QUP_CORE_0
-> +						&qup_virt SLAVE_QUP_CORE_0>,
-> +						<&gem_noc MASTER_APPSS_PROC
-> +						&config_noc SLAVE_QUP_0>,
-> +						<&aggre1_noc MASTER_QUP_0
-> +						&mc_virt SLAVE_EBI1>;
+> On 2/4/2020 1:05 AM, Bjorn Andersson wrote:
+> > On Thu 30 Jan 20:43 PST 2020, Avaneesh Kumar Dwivedi wrote:
+[..]
+> > > diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> > > index d0a73e7..6b7c9d0 100644
+> > > --- a/drivers/soc/qcom/Kconfig
+> > > +++ b/drivers/soc/qcom/Kconfig
+> > > @@ -202,4 +202,16 @@ config QCOM_APR
+> > >   	  application processor and QDSP6. APR is
+> > >   	  used by audio driver to configure QDSP6
+> > >   	  ASM, ADM and AFE modules.
+> > > +
+> > > +config QCOM_EUD
+> > Please aim for keeping the sort order in this file (ignore QCOM_APR
+> > which obviously is in the wrong place)
+> Please help to elaborate more, do you mean adding configs in alphabetical
+> order?
 
-Please ignore the 80-char "limit" and write this as:
-				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-						<&gem_noc ...>,
-						<&aggre1_noc ...>;
+Yes, we want to maintain alphabetical sort order of the config options
+in the Kconfig file. Unfortunately I must have missed this as I picked
+up QCOM_APR - hence my ask to add you entry further up, even if the
+order isn't perfect...
+
+> > 
+> > > +       tristate "QTI Embedded USB Debugger (EUD)"
+> > > +       depends on ARCH_QCOM
+> > > +       help
+> > > +         The Embedded USB Debugger (EUD) driver is a driver for the
+> > > +         control peripheral which waits on events like USB attach/detach
+> > > +         and charger enable/disable. The control peripheral further helps
+> > > +         support the USB-based debug and trace capabilities.
+> > > +         This module enables support for Qualcomm Technologies, Inc.
+> > > +         Embedded USB Debugger (EUD).
+> > > +         If unsure, say N.
+> > >   endmenu
+[..]
+> > > +static ssize_t enable_store(struct device *dev,
+> > > +				struct device_attribute *attr,
+> > > +				const char *buf, size_t count)
+> > > +{
+> > > +	struct eud_chip *chip = dev_get_drvdata(dev);
+> > > +	int enable = 0;
+> > You shouldn't need to initialize this as you're checking the return
+> > value of sscanf().
+> OK
+> > 
+> > > +	int ret = 0;
+> > > +
+> > > +	if (sscanf(buf, "%du", &enable) != 1)
+> > > +		return -EINVAL;
+> > > +
+> > > +	if (enable == EUD_ENABLE_CMD)
+> > > +		ret = enable_eud(chip);
+> > If ret is !0 you should probably return that, rather than count...
+> ok
+> > 
+> > > +	else if (enable == EUD_DISABLE_CMD)
+> > > +		disable_eud(chip);
+> > > +	if (!ret)
+> > ...and then you don't need this check, or initialize ret to 0 above.
+> ok
+> > 
+> > > +		chip->enable = enable;
+> > So if I write 42 to "enable" nothing will change in the hardware, but
+> > chip->enable will be 42...
+> will change enable struct member to bool?
+> > 
+
+The problem I meant was hat if buf is "42", then you will hit the
+following code path:
+
+int ret = 0;
+sscanf(buf, "%du", &enable);
+chip->enable = 42;
+
+As enable isn't 1 or 0, neither conditional path is taken, but you still
+store the value in chip->enable.
+
+Changing enable to bool won't change this problem, adding an else and
+returning -EINVAL; would.
+
+> > > +	return count;
+> > > +}
+> > > +
+> > > +static DEVICE_ATTR_RW(enable);
+[..]
+> > > +static int msm_eud_probe(struct platform_device *pdev)
+> > > +{
+> > > +	struct eud_chip *chip;
+> > > +	struct resource *res;
+> > > +	int ret;
+> > > +
+> > > +	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
+> > > +	if (!chip)
+> > > +		return -ENOMEM;
+> > > +
+> > > +	chip->dev = &pdev->dev;
+> > > +	platform_set_drvdata(pdev, chip);
+> > > +
+> > > +	chip->extcon = devm_extcon_dev_allocate(&pdev->dev, eud_extcon_cable);
+> > Aren't we moving away from extcon in favor of the usb role switching
+> > thing?
+> 
+> i could see that usb role switch has been implemented for c type connector
+> and that connector is modeled as child of usb controller, but EUD is not a
+> true connector, it intercepts PHY signals and reroute it to USB controller
+> as per EUD Command issued by debug appliaction
+> 
+> i am not sure if i need to implement EUD DT node as child of usb controller,
+> if i do so, as per my understanding EUD driver need to set USB controller
+> mode(host or device mode) by calling usb role switch API's, please let me
+> know if my understanding is correct?
+> 
+
+I don't know how to properly represent this, but I would like the USB
+guys to chime in before merging something.
+
+> > 
+> > > +	if (IS_ERR(chip->extcon))
+> > > +		return PTR_ERR(chip->extcon);
+> > > +
+[..]
+> > > +static const struct of_device_id msm_eud_dt_match[] = {
+> > > +	{.compatible = "qcom,msm-eud"},
+> > Is this the one and only, past and future, version of the EUD hardware
+> > block? Or do we need this compatible to be more specific?
+> EUD h/w  IP is Qualcomm IP, As of now this is only hw IP available, if
+> future version of EUD IP comes, we can modify and add support then?
+
+You can add additional compatibles, but you can't change this one as
+existing devicetree files must continue to function.
+
+If you have a number of platforms that works with this very same
+implementation then you could make the binding require a specific
+platform and qcom,msm-eud (although qcom,eud should be enough?) and then
+keep the implementation as is.
+
+I.e. dt would say:
+	compatible = "qcom,sc7180-eud", "qcom,eud";
+
+And driver would match on the latter only, for now.
 
 Regards,
 Bjorn
