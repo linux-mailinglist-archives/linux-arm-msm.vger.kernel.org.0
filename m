@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B268E161F62
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2020 04:16:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 83BAD161F7E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2020 04:19:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726291AbgBRDQt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Feb 2020 22:16:49 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:45656 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726292AbgBRDQt (ORCPT
+        id S1726237AbgBRDTZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Feb 2020 22:19:25 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:42482 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726293AbgBRDTZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Feb 2020 22:16:49 -0500
-Received: by mail-pg1-f193.google.com with SMTP id b9so10084813pgk.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2020 19:16:47 -0800 (PST)
+        Mon, 17 Feb 2020 22:19:25 -0500
+Received: by mail-pf1-f196.google.com with SMTP id 4so9893739pfz.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2020 19:19:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Lp6OSmTRLCqfi5BhjnFMlMrx72P+jKr8FBe8dShD2R8=;
-        b=M8WOKochwtBszNFCXZwUFkbzgoZRD0smFNoAGmQYNGouJMZzhV6D/EVITlDF0UOqew
-         jBkF7SZkLllgcoKeliFCPla8SrwqgKIHQdmT0oGjXWPlmFYyvkOz1Xm5aY8zNTlkiohM
-         HI4Vhf5Rb/s5M17r6dwlpXPhtjjWsvsqYQDz2oMe2AEFSxpBJ+ktrielEyzBWmntaSsr
-         umC8wZQFLv24ZKgR1WB4HndF6bm0Dl3WSDzhxvNwzQbiUYx80KFIMyb2679oU4nstwQC
-         kbkmwTATHR7GRCwlvPYyBhNhXAXIp5SfQdpgFpS0C+1SjOwcJhovJInCLQwwySNfFEfR
-         wEaw==
+        bh=BjESBNNd4zA4/xXm+Fx/7whm6bU5Bz00evekQd0atG0=;
+        b=dPNOklRfcHZVXvg7ClWdTf50p7mBZKJAOS/1kBxt364yg0SJ9NR2pVzUhYQuie/Vhb
+         mMRua+uI+pbN+WPIdh+Sp/JKzbQwQLrs9Jtmznr471cIt8KfuuFsaGh2Gy2t0OS/5MI9
+         GmmZaMoaQ6ayO1vMiuBacWdRTEHEfEsjEktWphi9e+nTd8RtfLmsxK3SN1sQg+eHMq/D
+         bx4wl0/OdxKOkFPybOPCCuqlMZJQCovzuLYDT5vsmpJbFgIfr53TcRdhQkTmunM9b088
+         WJB9Sd0BOYjxO1iOl71fPb6cCIGNn0KD0MoMnnBDIvAbMnHa5BWc7ROU1gsbb92mq4Ar
+         vzRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Lp6OSmTRLCqfi5BhjnFMlMrx72P+jKr8FBe8dShD2R8=;
-        b=fqyejVMfBhdYzW6qitN5N0iRF0opYCye7G0PY33n9CGWLyhKM9eQ1omT8bRE66N+2v
-         wWJFWRzQJR0cfPw3pyukJr5/Vl/fz7/TSFucQYUWnCZf3HQLdnbH1WTrhTFLD/HyvlSt
-         7v1/FgT/PWuclbaC2jjpaaUEra0TkdqdRJtqAARpT6uwAZc2u5pqsKIuF6AhYd7rOvYG
-         9TLsIWgVmurZhZsvE92tQy5YtD6xlql8J4yCLS/ELzq0pxgQL2NjvYwcZDg36doDE+Xc
-         ly8HNIsgjP2/DddafG4ojxyKRCOXaZYGBj1hozccCPY4q6pSP/CqFyE7jJOfp7NzYx+r
-         UH7w==
-X-Gm-Message-State: APjAAAUWY6VhTr4EG6wRFV1QYCEV2PdFcDJyQ/aM/9AOcWEidrGfLyFk
-        H4FwZI55AKzJhEowRceE8/rjwA==
-X-Google-Smtp-Source: APXvYqyYc2H4rV7vFvtMggYau/pIWH/xpTlVzjRrwANOQDmMvP5PlGvNp0vByiYBMGSzrHY6mSDrig==
-X-Received: by 2002:a62:ac03:: with SMTP id v3mr19202293pfe.17.1581995807019;
-        Mon, 17 Feb 2020 19:16:47 -0800 (PST)
+        bh=BjESBNNd4zA4/xXm+Fx/7whm6bU5Bz00evekQd0atG0=;
+        b=dvLJN5L4nmwLpt0Q06pQKtRUe2F5ziYHix91dPHsSixF5/RaKe0V9IfKsD8ei1Idng
+         5jcKm3gmgBUbiSsA9+6AmIMtCeQGqCjlWKVu77maxK0dxZJeNvgxV3wE/kkcKrgdLW/i
+         C32rwC0CiV6UiZfP98XudgPTMNZBDG6wfUliObaJ/nJo3izF4BIRMBo000oPuG1DLnDV
+         Cti6k2w62rxvz1oadgPnf5jqDO3MhCeOTHJVMNhTgPtA2KlIRZJF3Za2E4Gg5XiZdQ1v
+         +sy7cInmj6/efZ8wBNt7vMmD0/PUQPQBY7qBXUmGLucHxNGMezvV5IQdX/Foxd4ecK9Y
+         q5GA==
+X-Gm-Message-State: APjAAAVy9R97TTYWRyR5OEqHser7kpbMwl2L4r94j4GP5R8Qz02/DNKN
+        NDiN/K42qWkxcBPIuQ+LI69D4g==
+X-Google-Smtp-Source: APXvYqxYWtCDEG+AexP7+FJdG6S5k/Ny4QSg9Cetbw2G9McmCV5S+hbhBPCqRdjRY+7F1vGcUuaOLA==
+X-Received: by 2002:a63:8b44:: with SMTP id j65mr20230161pge.272.1581995964276;
+        Mon, 17 Feb 2020 19:19:24 -0800 (PST)
 Received: from ripper (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id m71sm981448pje.0.2020.02.17.19.16.45
+        by smtp.gmail.com with ESMTPSA id t28sm1773258pfq.122.2020.02.17.19.19.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Feb 2020 19:16:46 -0800 (PST)
-Date:   Mon, 17 Feb 2020 19:15:52 -0800
+        Mon, 17 Feb 2020 19:19:23 -0800 (PST)
+Date:   Mon, 17 Feb 2020 19:18:30 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Akash Asthana <akashast@codeaurora.org>
 Cc:     gregkh@linuxfoundation.org, agross@kernel.org, wsa@the-dreams.de,
@@ -55,15 +55,14 @@ Cc:     gregkh@linuxfoundation.org, agross@kernel.org, wsa@the-dreams.de,
         mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
         linux-serial@vger.kernel.org, mka@chromium.org,
         dianders@chromium.org
-Subject: Re: [PATCH 2/6] tty: serial: qcom_geni_serial: Add interconnect
- support
-Message-ID: <20200218031552.GW955802@ripper>
+Subject: Re: [PATCH 6/6] arm64: dts: sc7180: Add interconnect for QUP and QSPI
+Message-ID: <20200218031830.GX955802@ripper>
 References: <1581946205-27189-1-git-send-email-akashast@codeaurora.org>
- <1581946205-27189-3-git-send-email-akashast@codeaurora.org>
+ <1581946205-27189-7-git-send-email-akashast@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1581946205-27189-3-git-send-email-akashast@codeaurora.org>
+In-Reply-To: <1581946205-27189-7-git-send-email-akashast@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -71,190 +70,36 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Mon 17 Feb 05:30 PST 2020, Akash Asthana wrote:
 
-> Get the interconnect paths for Uart based Serial Engine device
-> and vote according to the baud rate requirement of the driver.
+> Add interconnect ports for GENI QUPs and QSPI to set bus capabilities.
 > 
 > Signed-off-by: Akash Asthana <akashast@codeaurora.org>
 > ---
->  drivers/tty/serial/qcom_geni_serial.c | 84 ++++++++++++++++++++++++++++++-----
->  1 file changed, 74 insertions(+), 10 deletions(-)
+> Note:
+>  - This patch depends on series https://patchwork.kernel.org/cover/11313817/
+>    [Add SC7180 interconnect provider driver]. It won't compile without that.
 > 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index 191abb1..a8fb2b7 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -174,6 +174,35 @@ static struct qcom_geni_serial_port qcom_geni_console_port = {
->  	},
->  };
->  
-> +static int geni_serial_icc_get(struct geni_se *se)
-> +{
-> +	if (!se)
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 199 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 199 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index cc5a94f..04569c9 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -352,6 +352,14 @@
+>  				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				interconnects = <&qup_virt MASTER_QUP_CORE_0
+> +						&qup_virt SLAVE_QUP_CORE_0>,
+> +						<&gem_noc MASTER_APPSS_PROC
+> +						&config_noc SLAVE_QUP_0>,
+> +						<&aggre1_noc MASTER_QUP_0
+> +						&mc_virt SLAVE_EBI1>;
 
-If se == NULL the kernel has already oopsed as it dereferenced port->se
-a few lines before calling this function.
-
-> +		return -EINVAL;
-> +
-> +	se->icc_path[GENI_TO_CORE] = of_icc_get(se->dev, "qup-core");
-> +	if (IS_ERR(se->icc_path[GENI_TO_CORE]))
-> +		return PTR_ERR(se->icc_path[GENI_TO_CORE]);
-> +
-> +	se->icc_path[CPU_TO_GENI] = of_icc_get(se->dev, "qup-config");
-> +	if (IS_ERR(se->icc_path[CPU_TO_GENI])) {
-> +		icc_put(se->icc_path[GENI_TO_CORE]);
-> +		se->icc_path[GENI_TO_CORE] = NULL;
-
-You're going to fail probe when this happens, so why the need to reset
-this path?
-
-> +		return PTR_ERR(se->icc_path[CPU_TO_GENI]);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +void geni_serial_icc_put(struct geni_se *se)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < ARRAY_SIZE(se->icc_path); i++) {
-> +		icc_put(se->icc_path[i]);
-
-In geni_serial_icc_get() you hard open code this loop, so why not do the
-same here, to maintain some symmetry.
-
-> +		se->icc_path[i] = NULL;
-
-Again, what's the purpose of this clear?
-
-> +	}
-> +}
-> +
->  static int qcom_geni_serial_request_port(struct uart_port *uport)
->  {
->  	struct platform_device *pdev = to_platform_device(uport->dev);
-> @@ -949,6 +978,12 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
->  	ser_clk_cfg = SER_CLK_EN;
->  	ser_clk_cfg |= clk_div << CLK_DIV_SHFT;
->  
-> +	/* Put BW vote only on CPU path as driver supports FIFO mode only */
-> +	port->se.avg_bw_cpu = Bps_to_icc(baud);
-> +	port->se.peak_bw_cpu = Bps_to_icc(2 * baud);
-> +	icc_set_bw(port->se.icc_path[CPU_TO_GENI], port->se.avg_bw_cpu,
-> +			port->se.peak_bw_cpu);
-> +
->  	/* parity */
->  	tx_trans_cfg = readl(uport->membase + SE_UART_TX_TRANS_CFG);
->  	tx_parity_cfg = readl(uport->membase + SE_UART_TX_PARITY_CFG);
-> @@ -1179,11 +1214,20 @@ static void qcom_geni_serial_pm(struct uart_port *uport,
->  	if (old_state == UART_PM_STATE_UNDEFINED)
->  		old_state = UART_PM_STATE_OFF;
->  
-> -	if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF)
-> +	if (new_state == UART_PM_STATE_ON && old_state == UART_PM_STATE_OFF) {
-> +		/* Put BW vote for core clocks and CPU */
-> +		icc_set_bw(port->se.icc_path[GENI_TO_CORE],
-> +			port->se.avg_bw_core, port->se.peak_bw_core);
-> +		icc_set_bw(port->se.icc_path[CPU_TO_GENI], port->se.avg_bw_cpu,
-> +			port->se.peak_bw_cpu);
->  		geni_se_resources_on(&port->se);
-> -	else if (new_state == UART_PM_STATE_OFF &&
-> -			old_state == UART_PM_STATE_ON)
-> +	} else if (new_state == UART_PM_STATE_OFF &&
-> +			old_state == UART_PM_STATE_ON) {
->  		geni_se_resources_off(&port->se);
-> +		/* Remove BW vote from core clocks and CPU */
-> +		icc_set_bw(port->se.icc_path[GENI_TO_CORE], 0, 0);
-> +		icc_set_bw(port->se.icc_path[CPU_TO_GENI], 0, 0);
-> +	}
->  }
->  
->  static const struct uart_ops qcom_geni_console_pops = {
-> @@ -1274,15 +1318,30 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->  	port->rx_fifo_depth = DEF_FIFO_DEPTH_WORDS;
->  	port->tx_fifo_width = DEF_FIFO_WIDTH_BITS;
->  
-> +	ret = geni_serial_icc_get(&port->se);
-> +	if (ret)
-> +		return ret;
-> +	/* Set the bus quota to a reasonable value */
-> +	port->se.avg_bw_core = console ? Bps_to_icc(1000) :
-> +		Bps_to_icc(CORE_2X_50_MHZ);
-> +	port->se.peak_bw_core = console ? Bps_to_icc(1000) :
-> +		Bps_to_icc(CORE_2X_100_MHZ);
-> +	port->se.avg_bw_cpu = Bps_to_icc(1000);
-> +	port->se.avg_bw_cpu = Bps_to_icc(1000);
-> +
->  	port->name = devm_kasprintf(uport->dev, GFP_KERNEL,
->  			"qcom_geni_serial_%s%d",
->  			uart_console(uport) ? "console" : "uart", uport->line);
-> -	if (!port->name)
-> -		return -ENOMEM;
-> +	if (!port->name) {
-> +		ret = -ENOMEM;
-> +		goto geni_serial_put_icc;
-
-Rather than reworking the error handling like this, please introduce a
-devm_icc_get() function in the interconnect API.
+Please ignore the 80-char "limit" and write this as:
+				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
+						<&gem_noc ...>,
+						<&aggre1_noc ...>;
 
 Regards,
 Bjorn
-
-> +	}
->  
->  	irq = platform_get_irq(pdev, 0);
-> -	if (irq < 0)
-> -		return irq;
-> +	if (irq < 0) {
-> +		ret = irq;
-> +		goto geni_serial_put_icc;
-> +	}
->  	uport->irq = irq;
->  	uport->has_sysrq = IS_ENABLED(CONFIG_SERIAL_QCOM_GENI_CONSOLE);
->  
-> @@ -1295,7 +1354,7 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->  
->  	ret = uart_add_one_port(drv, uport);
->  	if (ret)
-> -		return ret;
-> +		goto geni_serial_put_icc;
->  
->  	irq_set_status_flags(uport->irq, IRQ_NOAUTOEN);
->  	ret = devm_request_irq(uport->dev, uport->irq, qcom_geni_serial_isr,
-> @@ -1303,7 +1362,7 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->  	if (ret) {
->  		dev_err(uport->dev, "Failed to get IRQ ret %d\n", ret);
->  		uart_remove_one_port(drv, uport);
-> -		return ret;
-> +		goto geni_serial_put_icc;
->  	}
->  
->  	/*
-> @@ -1320,11 +1379,15 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->  		if (ret) {
->  			device_init_wakeup(&pdev->dev, false);
->  			uart_remove_one_port(drv, uport);
-> -			return ret;
-> +			goto geni_serial_put_icc;
->  		}
->  	}
->  
->  	return 0;
-> +
-> +geni_serial_put_icc:
-> +	geni_serial_icc_put(&port->se);
-> +	return ret;
->  }
->  
->  static int qcom_geni_serial_remove(struct platform_device *pdev)
-> @@ -1335,6 +1398,7 @@ static int qcom_geni_serial_remove(struct platform_device *pdev)
->  	dev_pm_clear_wake_irq(&pdev->dev);
->  	device_init_wakeup(&pdev->dev, false);
->  	uart_remove_one_port(drv, &port->uport);
-> +	geni_serial_icc_put(&port->se);
->  
->  	return 0;
->  }
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
