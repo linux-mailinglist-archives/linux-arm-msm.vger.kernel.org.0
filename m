@@ -2,77 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BC1401636C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 00:03:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B1D01636D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 00:05:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727843AbgBRXDY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Feb 2020 18:03:24 -0500
-Received: from mail-ot1-f48.google.com ([209.85.210.48]:37802 "EHLO
-        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727298AbgBRXDX (ORCPT
+        id S1727680AbgBRXFY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Feb 2020 18:05:24 -0500
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:39967 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727620AbgBRXFY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Feb 2020 18:03:23 -0500
-Received: by mail-ot1-f48.google.com with SMTP id w23so4848298otj.4;
-        Tue, 18 Feb 2020 15:03:23 -0800 (PST)
+        Tue, 18 Feb 2020 18:05:24 -0500
+Received: by mail-ot1-f68.google.com with SMTP id i6so21274942otr.7;
+        Tue, 18 Feb 2020 15:05:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/OUq9HnmLC39bwvwK3zdiIFd4Xyuiy+9BAYMbBqnLpE=;
-        b=MgtEsQ+Ssn4TX8RppXL48ogPVzvABz4sDdawibTmYecoHm0CAAyxHsPZdWA35z6f6r
-         HZUN+NqnyfJ7N6XBktGP3vdtKDmR9bzTryA1tOeVpZW43HkSf7Wh1jSoYl9XcVePXEMw
-         kOXeA2yB8BDR1PuVCNj4N/Cug52MWLjtOe2s0FYUM/1r3I0525uFod+90Ick2fB6yWxt
-         Gx6+yvguvS4RiSLIqwUDFg3UPeHaAaZxya0kCQEHiHJpSN31eSozJaYNR6v/4GM+k0ER
-         goAaHFwOWc90u8I221bvUkqc50W3C7GgXH23nMX9Fo47KvLrGqcenz2546DbuqV1cMZs
-         iHxg==
-X-Gm-Message-State: APjAAAVp7OHXzGz2DiJHj1yit7zs45bPaDHuI7lsc/M2XRQDhxYomsHi
-        ZvTT9MV0NyPE8p7SJbdXKw==
-X-Google-Smtp-Source: APXvYqxCzDLHXIGYjFlzG6Q6f8GZsOXUYoDWJm6RVL1HBDpxsnxGVcSPSLKELpFB+g2wI947gkqZiA==
-X-Received: by 2002:a9d:64ca:: with SMTP id n10mr17626635otl.325.1582067002984;
-        Tue, 18 Feb 2020 15:03:22 -0800 (PST)
+        bh=w2EcdlURUzJKHBNWUdDOALtxzfR4B8GgFlWJfo/dmD0=;
+        b=p4d3puxL7vUHz4GPoTzi/iSUoWTtFBz/0Z8GgRi3ABltUEXjKvKttaxZZ+g211ZO0T
+         mereHiho1UXL77GC6coQgjMqRewqQ6sHF6in90QpX862wEojaEw57LLLUDcW5TTPirIj
+         rXe/bsY0R70+fKBTFOAZaH8YoNmPinpBP6OPJjwUyOXpeAARJIxsez8iDEWnKMHBrxoP
+         Rs/bYoJsN4+1c1XVCB3IcySs7KtbTIMFT24TGKQqRRzwGdYFqS2YQY28moJsck1lL06J
+         TQ8/vXobgee1LJoI1ht7LmYvqfVRPKoDKYvWnoVW/eRL0cr79xzgk91V+KCsig2GopU6
+         46Fg==
+X-Gm-Message-State: APjAAAWX8ycdGkdgsInZVFBOoRhMnq+luRxYuxPjzaa07uBkqlXRfmVA
+        pBM/GwJ41KHxFRb8VcBtqg==
+X-Google-Smtp-Source: APXvYqyWplF0Lnn+5ZNu2xJG1KG9O3+iFZPKpArIM6LfKcbh5DT0UUiuTRHX54g7nU6r4GVVD8HnXQ==
+X-Received: by 2002:a05:6830:10d5:: with SMTP id z21mr18171992oto.30.1582067122268;
+        Tue, 18 Feb 2020 15:05:22 -0800 (PST)
 Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id w8sm1822780ote.80.2020.02.18.15.03.21
+        by smtp.gmail.com with ESMTPSA id p83sm100471oia.51.2020.02.18.15.05.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Feb 2020 15:03:22 -0800 (PST)
-Received: (nullmailer pid 11058 invoked by uid 1000);
-        Tue, 18 Feb 2020 23:03:21 -0000
-Date:   Tue, 18 Feb 2020 17:03:21 -0600
+        Tue, 18 Feb 2020 15:05:21 -0800 (PST)
+Received: (nullmailer pid 14096 invoked by uid 1000);
+        Tue, 18 Feb 2020 23:05:20 -0000
+Date:   Tue, 18 Feb 2020 17:05:20 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Guenter Roeck <linux@roeck-us.net>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Mark Rutland <mark.rutland@arm.com>,
         Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: Re: [PATCHv3 2/2] dt-bindings: watchdog: Add compatible for QCS404,
- SC7180, SDM845, SM8150
-Message-ID: <20200218230321.GA10954@bogus>
-References: <cover.1581459151.git.saiprakash.ranjan@codeaurora.org>
- <a8bd3f4062fd7bb45aeab5aa55f6f31c14c69a96.1581459151.git.saiprakash.ranjan@codeaurora.org>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: Re: [PATCH v3 2/4] dt-bindings: phy: qcom,qmp: Add support for SC7180
+Message-ID: <20200218230520.GA14038@bogus>
+References: <1581506488-26881-1-git-send-email-sanm@codeaurora.org>
+ <1581506488-26881-3-git-send-email-sanm@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a8bd3f4062fd7bb45aeab5aa55f6f31c14c69a96.1581459151.git.saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <1581506488-26881-3-git-send-email-sanm@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 12 Feb 2020 03:54:30 +0530, Sai Prakash Ranjan wrote:
-> Add missing compatible for watchdog timer on QCS404,
-> SC7180, SDM845 and SM8150 SoCs.
+On Wed, 12 Feb 2020 16:51:26 +0530, Sandeep Maheswaram wrote:
+> Add compatible for SC7180 in qmp phy bindings.
 > 
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
 > ---
->  Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
+>  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
