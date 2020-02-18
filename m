@@ -2,110 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AD489162DEF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2020 19:13:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C734162DF9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2020 19:13:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726734AbgBRSMu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Feb 2020 13:12:50 -0500
-Received: from foss.arm.com ([217.140.110.172]:57990 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726770AbgBRSMu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Feb 2020 13:12:50 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9FE9D101E;
-        Tue, 18 Feb 2020 10:12:49 -0800 (PST)
-Received: from e121345-lin.cambridge.arm.com (e121345-lin.cambridge.arm.com [10.1.196.37])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 82C723F73B;
-        Tue, 18 Feb 2020 10:12:48 -0800 (PST)
-From:   Robin Murphy <robin.murphy@arm.com>
-To:     joro@8bytes.org, robdclark@gmail.com
-Cc:     iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, stephan@gerhold.net,
-        linux-arm-msm@vger.kernel.org,
-        Brian Masney <masneyb@onstation.org>,
-        Naresh Kamboju <naresh.kamboju@linaro.org>
-Subject: [PATCH] iommu/qcom: Fix bogus detach logic
-Date:   Tue, 18 Feb 2020 18:12:41 +0000
-Message-Id: <be92829c6e5467634b109add002351e6cf9e18d2.1582049382.git.robin.murphy@arm.com>
-X-Mailer: git-send-email 2.23.0.dirty
+        id S1726422AbgBRSNH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Feb 2020 13:13:07 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:53648 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726444AbgBRSND (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 Feb 2020 13:13:03 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1582049583; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=0c1mjaoinwfnnDHt6xgGoo8PceKhGgd93L7iJhOjAzw=; b=YfU1BjIDUk93sqTSIEtLvdgQODlrZiLupN73myKqRnRk27/YyUrE9MO50Xd5SDBzK5J/Sae4
+ KRMuT5t1TbSr7lmiNFNS0vdABm/Ynezdl22dyGaY5jOnEdbLkf9DWvkhZvfVjP4SVizaJplP
+ CTssGNgQq8dCLNvXOTm/LNz8ADw=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e4c2925.7fc52b12a1f0-smtp-out-n03;
+ Tue, 18 Feb 2020 18:12:53 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C2D45C447AF; Tue, 18 Feb 2020 18:12:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.107] (unknown [183.83.146.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C1A07C447AA;
+        Tue, 18 Feb 2020 18:12:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C1A07C447AA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+Subject: Re: [PATCH v3 1/3] dt-bindings: clock: Add YAML schemas for the QCOM
+ MSS clock bindings
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org
+References: <1580357923-19783-1-git-send-email-tdas@codeaurora.org>
+ <1580357923-19783-2-git-send-email-tdas@codeaurora.org>
+ <20200130180637.9E02D206F0@mail.kernel.org>
+From:   Taniya Das <tdas@codeaurora.org>
+Message-ID: <6ea1e6a5-4942-5dba-4e91-28275db00153@codeaurora.org>
+Date:   Tue, 18 Feb 2020 23:42:41 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200130180637.9E02D206F0@mail.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, the implementation of qcom_iommu_domain_free() is guaranteed
-to do one of two things: WARN() and leak everything, or dereference NULL
-and crash. That alone is terrible, but in fact the whole idea of trying
-to track the liveness of a domain via the qcom_domain->iommu pointer as
-a sanity check is full of fundamentally flawed assumptions. Make things
-robust and actually functional by not trying to be quite so clever.
+Thanks Stephen.
+Will address the comments in the next patch series.
 
-Reported-by: Brian Masney <masneyb@onstation.org>
-Tested-by: Brian Masney <masneyb@onstation.org>
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Fixes: 0ae349a0f33f ("iommu/qcom: Add qcom_iommu")
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
----
- drivers/iommu/qcom_iommu.c | 28 ++++++++++++----------------
- 1 file changed, 12 insertions(+), 16 deletions(-)
+On 1/30/2020 11:36 PM, Stephen Boyd wrote:
+> Quoting Taniya Das (2020-01-29 20:18:41)
+>> The Modem Subsystem clock provider have a bunch of generic properties
+>> that are needed in a device tree. Add a YAML schemas for those.
+>>
+>> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+>> ---
+>>   .../devicetree/bindings/clock/qcom,mss.yaml        | 58 ++++++++++++++++++++++
+> 
+> Please rename to qcom,sc7180-mss.yaml
+> 
+>>   1 file changed, 58 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,mss.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,mss.yaml b/Documentation/devicetree/bindings/clock/qcom,mss.yaml
+>> new file mode 100644
+>> index 0000000..ebb04e1
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,mss.yaml
+>> @@ -0,0 +1,58 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/bindings/clock/qcom,mss.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Modem Clock Controller Binding
+>> +
+>> +maintainers:
+>> +  - Taniya Das <tdas@codeaurora.org>
+>> +
+>> +description: |
+>> +  Qualcomm modem clock control module which supports the clocks.
+> 
+> Can you point to the header file from here?
+> include/dt-bindings/clock/qcom,sc7180-mss.h I guess.
+> 
 
-diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
-index 39759db4f003..4328da0b0a9f 100644
---- a/drivers/iommu/qcom_iommu.c
-+++ b/drivers/iommu/qcom_iommu.c
-@@ -344,21 +344,19 @@ static void qcom_iommu_domain_free(struct iommu_domain *domain)
- {
- 	struct qcom_iommu_domain *qcom_domain = to_qcom_iommu_domain(domain);
- 
--	if (WARN_ON(qcom_domain->iommu))    /* forgot to detach? */
--		return;
--
- 	iommu_put_dma_cookie(domain);
- 
--	/* NOTE: unmap can be called after client device is powered off,
--	 * for example, with GPUs or anything involving dma-buf.  So we
--	 * cannot rely on the device_link.  Make sure the IOMMU is on to
--	 * avoid unclocked accesses in the TLB inv path:
--	 */
--	pm_runtime_get_sync(qcom_domain->iommu->dev);
--
--	free_io_pgtable_ops(qcom_domain->pgtbl_ops);
--
--	pm_runtime_put_sync(qcom_domain->iommu->dev);
-+	if (qcom_domain->iommu) {
-+		/*
-+		 * NOTE: unmap can be called after client device is powered
-+		 * off, for example, with GPUs or anything involving dma-buf.
-+		 * So we cannot rely on the device_link.  Make sure the IOMMU
-+		 * is on to avoid unclocked accesses in the TLB inv path:
-+		 */
-+		pm_runtime_get_sync(qcom_domain->iommu->dev);
-+		free_io_pgtable_ops(qcom_domain->pgtbl_ops);
-+		pm_runtime_put_sync(qcom_domain->iommu->dev);
-+	}
- 
- 	kfree(qcom_domain);
- }
-@@ -404,7 +402,7 @@ static void qcom_iommu_detach_dev(struct iommu_domain *domain, struct device *de
- 	struct qcom_iommu_domain *qcom_domain = to_qcom_iommu_domain(domain);
- 	unsigned i;
- 
--	if (!qcom_domain->iommu)
-+	if (WARN_ON(!qcom_domain->iommu))
- 		return;
- 
- 	pm_runtime_get_sync(qcom_iommu->dev);
-@@ -417,8 +415,6 @@ static void qcom_iommu_detach_dev(struct iommu_domain *domain, struct device *de
- 		ctx->domain = NULL;
- 	}
- 	pm_runtime_put_sync(qcom_iommu->dev);
--
--	qcom_domain->iommu = NULL;
- }
- 
- static int qcom_iommu_map(struct iommu_domain *domain, unsigned long iova,
+will add the same.
+
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +       - qcom,sc7180-mss
+>> +
+>> +  clocks:
+>> +    minItems: 1
+>> +    maxItems: 3
+> 
+> Why is it optional? Don't these all go there?
+> 
+
+Yes, moved them to required.
+
+>> +    items:
+>> +      - description: gcc_mss_mfab_axi clock from GCC
+>> +      - description: gcc_mss_nav_axi clock from GCC
+>> +      - description: gcc_mss_cfg_ahb clock from GCC
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: gcc_mss_mfab_axis_clk
+>> +      - const: gcc_mss_nav_axi_clk
+>> +      - const: cfg_clk
+> 
+> Do these really need _clk at the end? Seems redundant.
+> 
+Removed _clk.
+
+>> +
+>> +  '#clock-cells':
+>> +    const: 1
+>> +
+
 -- 
-2.23.0.dirty
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
 
+--
