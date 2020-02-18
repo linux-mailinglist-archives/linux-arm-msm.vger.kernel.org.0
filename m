@@ -2,110 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A90F162F63
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2020 20:07:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5116D162F74
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2020 20:10:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726380AbgBRTHf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Feb 2020 14:07:35 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:46007 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726283AbgBRTHf (ORCPT
+        id S1726567AbgBRTKD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Feb 2020 14:10:03 -0500
+Received: from mail-yb1-f194.google.com ([209.85.219.194]:42030 "EHLO
+        mail-yb1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726296AbgBRTKA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Feb 2020 14:07:35 -0500
-Received: by mail-pl1-f194.google.com with SMTP id b22so8440087pls.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2020 11:07:35 -0800 (PST)
+        Tue, 18 Feb 2020 14:10:00 -0500
+Received: by mail-yb1-f194.google.com with SMTP id z125so11015695ybf.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2020 11:09:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=XDlxGgCpGeqU3KzfKq+0G+pODQzyu67LnVcRDv+D+D4=;
-        b=bBlb7kK0umzlqU+tMcH3s28HrHzKVOWGYgR0f+WFk8H08TYaiaZTu70twpujC0wnlL
-         jvPAxB/i9TZ8TfXzYS00HfBLRn4AaFjHwPpED0345d9rY2hlt8VFBYtOMONkmQRbfwLa
-         SfRGM16Ck3w2GMG+0yDfUWHKyfaxFrHzkq4HA=
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qeorF66mv+JIUZaS3AMTj0IO3heKZoxThrG2n1kjzlk=;
+        b=qovnlbRzx1igvMhQ565tAtQyznXMVvWct8U3SM+uDqfBD+an3ZUGaGISXXwSKPLzct
+         +zNBofzSkFBSOxRiwEdzL2UaCSfHcM5C9S28iYYxgdrmFS5/B/c+6l7RaN1pUv4hmuAf
+         HwTTGHPL6ycfmMXT49g9KAyAC8eK3Sgpo1sc+U4NeycTx7FbdvgmawefXXz2PjRfSUFG
+         9X6KECg1/SMI/2ueQDdsMdC9d6Pw3N1in+woa6r46IPw10tV4502oQ2vgdoZ7wnJm9yq
+         TF6o/PGgGCpiWbeBbLXN+sjR2hbtKM5BMPLdd4glb3igGjA+YMuUwbYgbXJcdtipl+Jk
+         7RSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XDlxGgCpGeqU3KzfKq+0G+pODQzyu67LnVcRDv+D+D4=;
-        b=oZ7a6OJY5oXKENAeaCLWqFpi3rtTksrFzy/hDppt3p05sZS1mKXbzlI9uDQyiBA3z4
-         jQMgX8tmqBZWjILTa8RzOoRNgYTnYBtXU032W9NgPIjn4VjAsBR/uapPvHh4GNaDqr7G
-         HM9lfKPsDna7AxaQRvKWoh3coGR6GS6fprE7BhtGdVWZvyNfEpRUyb9VERBtZFhnI731
-         Wiz6GPtmXC06PiUymYqeYckyu21HcoMIEfg17HZKi6CRfqZwbRsj825+vjveI1lxFQTq
-         b+t7jBXpW+fp6UWQWb+KDutEekwlQ7rCmro7NaDYJmwkO2Fde0MeKv6N8nJUcueacGuR
-         rhMQ==
-X-Gm-Message-State: APjAAAU5E+65cPfgHeYawrYt4R2F4u5P00FXYCnfQsEGqRbHWhKlUe2Q
-        0i1qYrqnELBgBTL5Tmt4V649ew==
-X-Google-Smtp-Source: APXvYqzQ9M1KsgU04ibpPhVZLv0ZY49qRY006V1Xcr4FsYN69DcQUVER/9RLVtPWkxP6bYsZHXAfTA==
-X-Received: by 2002:a17:902:b718:: with SMTP id d24mr22854885pls.80.1582052854867;
-        Tue, 18 Feb 2020 11:07:34 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id q25sm5175786pfg.41.2020.02.18.11.07.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Feb 2020 11:07:33 -0800 (PST)
-Date:   Tue, 18 Feb 2020 11:07:31 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Akash Asthana <akashast@codeaurora.org>
-Cc:     robh+dt@kernel.org, agross@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
-        rojay@codeaurora.org, skakit@codeaurora.org, swboyd@chromium.org
-Subject: Re: [PATCH V4 3/3] dt-bindings: geni-se: Add binding for UART pin
- swap
-Message-ID: <20200218190731.GC15781@google.com>
-References: <1581932212-19469-1-git-send-email-akashast@codeaurora.org>
- <1581932212-19469-4-git-send-email-akashast@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qeorF66mv+JIUZaS3AMTj0IO3heKZoxThrG2n1kjzlk=;
+        b=O1WXxvr3L1TJqUAem0eKxtVEEcw2V6KrqmlUMq29j4MVtPttKDMkGj2U8xseXjFMqB
+         J6C0eYlW1LE4mo+E25msW0lPJfvOlT6/JXckMkD84cXPRkdBhnXo1EYWxVFq0Vwmc7dx
+         5UPMKxH2WmTLFuPgI+e/4fLflB3rsLCPJwGu8MsC0Sg8da6TFdx7LjdRp4UM643FG3xS
+         y4cFHEulsGbbTp00wTaC3VmDCkcvqmoDCXzneY3svIDvmWJM7hTPxNBXTm1OCBQXNYh1
+         /bKiiEw2szoIsD3PH0RO62ES0/bia2yrwqrM+x55BwYlmGsR/KzVCxKoRzCI+7ZJfY/i
+         fFGg==
+X-Gm-Message-State: APjAAAU9NIuMBqXj8kxXdCw8A3vxz6oBY3E9r7NAcNk+cjdgudo3OLWi
+        0+6WNm6Ly5wNFExMsLAPSLVRLnBWGe6I3IQFgif3
+X-Google-Smtp-Source: APXvYqxuLKYpUsudTRTHEte6C+QLhn15lQclX2NB6yo8irU6bb8VPo0z7TLRbjilvL/j3ceFV3crupN0fqGL5aYCifc=
+X-Received: by 2002:a25:5ed6:: with SMTP id s205mr3646063ybb.190.1582052998643;
+ Tue, 18 Feb 2020 11:09:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1581932212-19469-4-git-send-email-akashast@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20200213213007.17023-1-jkardatzke@google.com> <b471217a-1877-eaed-55c2-084f4b126bb4@linaro.org>
+In-Reply-To: <b471217a-1877-eaed-55c2-084f4b126bb4@linaro.org>
+From:   Jeffrey Kardatzke <jkardatzke@google.com>
+Date:   Tue, 18 Feb 2020 11:09:47 -0800
+Message-ID: <CA+ddPcPjtv_9s4+t_1jkoGSZihVu2cVLyW102WuoLMy-RGkKPw@mail.gmail.com>
+Subject: Re: [PATCH] media: venus: support frame rate control
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        "Mauro Carvalho Chehab )" <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Akash,
+Sorry for the duplicate, accidentally used HTML format and it got
+bounced from the mailing lists so resending.
 
-I didn't see a patch that implements the binding, did you post it?
+On Mon, Feb 17, 2020 at 2:15 AM Stanimir Varbanov
+<stanimir.varbanov@linaro.org> wrote:
+>
+> Hi Jeff,
+>
+> Thanks for the patch!
+>
+> On 2/13/20 11:30 PM, Jeffrey Kardatzke wrote:
+> > Frame rate control is always enabled in this driver, so make it silently
+> > support the V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE.
+> >
+> > Signed-off-by: Jeffrey Kardatzke <jkardatzke@google.com>
+> > ---
+> >  drivers/media/platform/qcom/venus/venc_ctrls.c | 6 ++++++
+> >  1 file changed, 6 insertions(+)
+> >
+> > diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> > index 877c0b3299e9..9ede692f77c5 100644
+> > --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
+> > +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> > @@ -199,6 +199,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+> >               }
+> >               mutex_unlock(&inst->lock);
+> >               break;
+> > +     case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
+> > +             // Silently ignore, it's always enabled.
+>
+> Please, use C comments and follow the kernel coding style.
 
-
-On Mon, Feb 17, 2020 at 03:06:52PM +0530, Akash Asthana wrote:
-> Add documentation to support RX/TX/CTS/RTS pin swap in HW.
-> 
-> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-> index 11530df..7e4b9af 100644
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-> @@ -165,6 +165,15 @@ patternProperties:
->            - description: UART core irq
->            - description: Wakeup irq (RX GPIO)
->  
-> +      rx-tx-swap:
-> +        description: RX and TX pins are swap.
-
-s/swap/swapped/
-
-> +
-> +      cts-rts-swap:
-> +        description: CTS and RTS pins are swap.
-
-s/swap/swapped/
-
-> +
-> +      rx-tx-cts-rts-swap:
-> +        description: RX-TX and CTS-RTS both pairs are swap.
-
-I don't think this option adds much value, if both pairs are swapped
-the above two properties can be set.
-
-> +
->      required:
->        - compatible
->        - interrupts
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+OK, hopefully I've got that now. I didn't see any issues aside from
+the comment style though.
+I'll upload a new patch shortly.
+>
+>
+> I wonder shouldn't it be better to add rc_enable field in struct
+> venc_controls and give the user choice to disable the rate control? We
+> can keep the default to be "enabled".
+>
+That'd be fine. Is there a way to actually disable the rate control though?
+>
+> > +             break;
+> >       default:
+> >               return -EINVAL;
+> >       }
+> > @@ -351,6 +354,9 @@ int venc_ctrl_init(struct venus_inst *inst)
+> >       v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+> >                         V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME, 0, 0, 0, 0);
+> >
+> > +     v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+> > +                       V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE, 0, 1, 1, 1);
+> > +
+>
+> you forgot to increment the number of controls in the call to
+> v4l2_ctrl_handler_init.
+>
+Done, thanks.
+>
+> >       ret = inst->ctrl_handler.error;
+> >       if (ret)
+> >               goto err;
+> >
+>
+> --
+> regards,
+> Stan
