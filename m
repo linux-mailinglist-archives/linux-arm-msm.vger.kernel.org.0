@@ -2,135 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D0F21162F66
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2020 20:08:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A90F162F63
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2020 20:07:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726346AbgBRTI0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Feb 2020 14:08:26 -0500
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.53]:33355 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726283AbgBRTIZ (ORCPT
+        id S1726380AbgBRTHf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Feb 2020 14:07:35 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:46007 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726283AbgBRTHf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Feb 2020 14:08:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1582052903;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=5D52tt6mIQclXNRsDvAzprjKbRWFDl8iC2bcJ4uR/M8=;
-        b=QeusGr3hyRAy+NNbAnV+yGPPsKnCbCapk9q1OP+/VfCPfkSZX1+ui9ECGjJn08jTim
-        5784A21RoeK3uEz6njMV5XEhihCB4jpmQZKcK1K/WHTdIzijllnbLblhd3m3INrVd5cm
-        b460hMGPjD9wZMEFxLPQrT3L48BDNoMMglIr9ftCenJFFBR5Ivk2T7zZ//Q7r4NTUASl
-        1DynCkqQcUolZ+570uVY+vPSEy9CyHlIcqYIQTbHQdKBD9t1pCsOU39Ep3zNu4KKoJaj
-        SwK2xBicQKLjEgjxV7Lfx3F+jI8EOFUQC02Howf8CjXJD1tMo1rpyAgjxC3hN+ENxbhP
-        iNQw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8b7Ic/NaIo="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 46.1.12 DYNA|AUTH)
-        with ESMTPSA id a01fe9w1IJ5Mm3U
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Tue, 18 Feb 2020 20:05:22 +0100 (CET)
-Date:   Tue, 18 Feb 2020 20:05:16 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     joro@8bytes.org, robdclark@gmail.com,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Brian Masney <masneyb@onstation.org>,
-        Naresh Kamboju <naresh.kamboju@linaro.org>
-Subject: Re: [PATCH] iommu/qcom: Fix bogus detach logic
-Message-ID: <20200218190516.GA19773@gerhold.net>
-References: <be92829c6e5467634b109add002351e6cf9e18d2.1582049382.git.robin.murphy@arm.com>
+        Tue, 18 Feb 2020 14:07:35 -0500
+Received: by mail-pl1-f194.google.com with SMTP id b22so8440087pls.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2020 11:07:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=XDlxGgCpGeqU3KzfKq+0G+pODQzyu67LnVcRDv+D+D4=;
+        b=bBlb7kK0umzlqU+tMcH3s28HrHzKVOWGYgR0f+WFk8H08TYaiaZTu70twpujC0wnlL
+         jvPAxB/i9TZ8TfXzYS00HfBLRn4AaFjHwPpED0345d9rY2hlt8VFBYtOMONkmQRbfwLa
+         SfRGM16Ck3w2GMG+0yDfUWHKyfaxFrHzkq4HA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XDlxGgCpGeqU3KzfKq+0G+pODQzyu67LnVcRDv+D+D4=;
+        b=oZ7a6OJY5oXKENAeaCLWqFpi3rtTksrFzy/hDppt3p05sZS1mKXbzlI9uDQyiBA3z4
+         jQMgX8tmqBZWjILTa8RzOoRNgYTnYBtXU032W9NgPIjn4VjAsBR/uapPvHh4GNaDqr7G
+         HM9lfKPsDna7AxaQRvKWoh3coGR6GS6fprE7BhtGdVWZvyNfEpRUyb9VERBtZFhnI731
+         Wiz6GPtmXC06PiUymYqeYckyu21HcoMIEfg17HZKi6CRfqZwbRsj825+vjveI1lxFQTq
+         b+t7jBXpW+fp6UWQWb+KDutEekwlQ7rCmro7NaDYJmwkO2Fde0MeKv6N8nJUcueacGuR
+         rhMQ==
+X-Gm-Message-State: APjAAAU5E+65cPfgHeYawrYt4R2F4u5P00FXYCnfQsEGqRbHWhKlUe2Q
+        0i1qYrqnELBgBTL5Tmt4V649ew==
+X-Google-Smtp-Source: APXvYqzQ9M1KsgU04ibpPhVZLv0ZY49qRY006V1Xcr4FsYN69DcQUVER/9RLVtPWkxP6bYsZHXAfTA==
+X-Received: by 2002:a17:902:b718:: with SMTP id d24mr22854885pls.80.1582052854867;
+        Tue, 18 Feb 2020 11:07:34 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id q25sm5175786pfg.41.2020.02.18.11.07.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Feb 2020 11:07:33 -0800 (PST)
+Date:   Tue, 18 Feb 2020 11:07:31 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     robh+dt@kernel.org, agross@kernel.org, mark.rutland@arm.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
+        rojay@codeaurora.org, skakit@codeaurora.org, swboyd@chromium.org
+Subject: Re: [PATCH V4 3/3] dt-bindings: geni-se: Add binding for UART pin
+ swap
+Message-ID: <20200218190731.GC15781@google.com>
+References: <1581932212-19469-1-git-send-email-akashast@codeaurora.org>
+ <1581932212-19469-4-git-send-email-akashast@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <be92829c6e5467634b109add002351e6cf9e18d2.1582049382.git.robin.murphy@arm.com>
+In-Reply-To: <1581932212-19469-4-git-send-email-akashast@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 18, 2020 at 06:12:41PM +0000, Robin Murphy wrote:
-> Currently, the implementation of qcom_iommu_domain_free() is guaranteed
-> to do one of two things: WARN() and leak everything, or dereference NULL
-> and crash. That alone is terrible, but in fact the whole idea of trying
-> to track the liveness of a domain via the qcom_domain->iommu pointer as
-> a sanity check is full of fundamentally flawed assumptions. Make things
-> robust and actually functional by not trying to be quite so clever.
+Hi Akash,
+
+I didn't see a patch that implements the binding, did you post it?
+
+
+On Mon, Feb 17, 2020 at 03:06:52PM +0530, Akash Asthana wrote:
+> Add documentation to support RX/TX/CTS/RTS pin swap in HW.
 > 
-> Reported-by: Brian Masney <masneyb@onstation.org>
-> Tested-by: Brian Masney <masneyb@onstation.org>
-> Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-> Fixes: 0ae349a0f33f ("iommu/qcom: Add qcom_iommu")
-> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-
-This fixes the warning reported by Naresh Kamboju [1] for me. Thank you!
-
-Tested-by: Stephan Gerhold <stephan@gerhold.net>
-
-[1]: https://lore.kernel.org/linux-arm-msm/CA+G9fYtScOpkLvx=__gP903uJ2v87RwZgkAuL6RpF9_DTDs9Zw@mail.gmail.com/
-
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
 > ---
->  drivers/iommu/qcom_iommu.c | 28 ++++++++++++----------------
->  1 file changed, 12 insertions(+), 16 deletions(-)
+>  Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 > 
-> diff --git a/drivers/iommu/qcom_iommu.c b/drivers/iommu/qcom_iommu.c
-> index 39759db4f003..4328da0b0a9f 100644
-> --- a/drivers/iommu/qcom_iommu.c
-> +++ b/drivers/iommu/qcom_iommu.c
-> @@ -344,21 +344,19 @@ static void qcom_iommu_domain_free(struct iommu_domain *domain)
->  {
->  	struct qcom_iommu_domain *qcom_domain = to_qcom_iommu_domain(domain);
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+> index 11530df..7e4b9af 100644
+> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+> @@ -165,6 +165,15 @@ patternProperties:
+>            - description: UART core irq
+>            - description: Wakeup irq (RX GPIO)
 >  
-> -	if (WARN_ON(qcom_domain->iommu))    /* forgot to detach? */
-> -		return;
-> -
->  	iommu_put_dma_cookie(domain);
->  
-> -	/* NOTE: unmap can be called after client device is powered off,
-> -	 * for example, with GPUs or anything involving dma-buf.  So we
-> -	 * cannot rely on the device_link.  Make sure the IOMMU is on to
-> -	 * avoid unclocked accesses in the TLB inv path:
-> -	 */
-> -	pm_runtime_get_sync(qcom_domain->iommu->dev);
-> -
-> -	free_io_pgtable_ops(qcom_domain->pgtbl_ops);
-> -
-> -	pm_runtime_put_sync(qcom_domain->iommu->dev);
-> +	if (qcom_domain->iommu) {
-> +		/*
-> +		 * NOTE: unmap can be called after client device is powered
-> +		 * off, for example, with GPUs or anything involving dma-buf.
-> +		 * So we cannot rely on the device_link.  Make sure the IOMMU
-> +		 * is on to avoid unclocked accesses in the TLB inv path:
-> +		 */
-> +		pm_runtime_get_sync(qcom_domain->iommu->dev);
-> +		free_io_pgtable_ops(qcom_domain->pgtbl_ops);
-> +		pm_runtime_put_sync(qcom_domain->iommu->dev);
-> +	}
->  
->  	kfree(qcom_domain);
->  }
-> @@ -404,7 +402,7 @@ static void qcom_iommu_detach_dev(struct iommu_domain *domain, struct device *de
->  	struct qcom_iommu_domain *qcom_domain = to_qcom_iommu_domain(domain);
->  	unsigned i;
->  
-> -	if (!qcom_domain->iommu)
-> +	if (WARN_ON(!qcom_domain->iommu))
->  		return;
->  
->  	pm_runtime_get_sync(qcom_iommu->dev);
-> @@ -417,8 +415,6 @@ static void qcom_iommu_detach_dev(struct iommu_domain *domain, struct device *de
->  		ctx->domain = NULL;
->  	}
->  	pm_runtime_put_sync(qcom_iommu->dev);
-> -
-> -	qcom_domain->iommu = NULL;
->  }
->  
->  static int qcom_iommu_map(struct iommu_domain *domain, unsigned long iova,
+> +      rx-tx-swap:
+> +        description: RX and TX pins are swap.
+
+s/swap/swapped/
+
+> +
+> +      cts-rts-swap:
+> +        description: CTS and RTS pins are swap.
+
+s/swap/swapped/
+
+> +
+> +      rx-tx-cts-rts-swap:
+> +        description: RX-TX and CTS-RTS both pairs are swap.
+
+I don't think this option adds much value, if both pairs are swapped
+the above two properties can be set.
+
+> +
+>      required:
+>        - compatible
+>        - interrupts
 > -- 
-> 2.23.0.dirty
-> 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
