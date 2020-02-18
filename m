@@ -2,154 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6044F16208E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2020 06:51:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6766162163
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Feb 2020 08:12:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726206AbgBRFvy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Feb 2020 00:51:54 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:43684 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725939AbgBRFvx (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Feb 2020 00:51:53 -0500
-Received: by mail-pg1-f194.google.com with SMTP id u12so10026689pgb.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Feb 2020 21:51:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ce8OOkWfjw5jVWk59ugGKRVgBYm6HB1xi8c9ebl4I5g=;
-        b=p6vDnXRx8Lt2QQo5iqGpTCkRuqfGnM9Rzn4zwWMk7BAnTDsm2IuHaKSL+naL4/1bWQ
-         UgCdjP0L3Sx5n7jcE6joCY05E56kEA4db4MeGbgQKlZVvY6bY5mp8BrsWvQr91/J/bXO
-         e6vZ1jKdUPOeNcGUUa2lFF3PlWw9z5rSHfv9uhTF5Z1n4/YuLqmNK9iYaCs/7JN3Bhwt
-         hUpaQ4z7bhBFfF1cV46ZbGoL2Pon2s2SKtpRLShSoT0kSlMYPAydUkyFvtavUjiwvyeI
-         ja/KrwKZds8ZNePpKfIC69786U+lrT52WmnnOBfNX2pgUIyEsPv5Uu/G1ieaWVjLt3Jl
-         uouw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ce8OOkWfjw5jVWk59ugGKRVgBYm6HB1xi8c9ebl4I5g=;
-        b=GGqjD75JEksNqwbnGJl6yBKK2QMz28w/Jl9IudlFlcyq4GQtDi8GycwFs+DvWBrRqK
-         ktH20yvw3c/mvFrEkCCQU9v7vNgz2NhzgCzcVgvbTP83JrKiTuIIvdnsnhMfIp6Sf3tl
-         gBQ9QBxXbPG3wbdyhVdmEyQ1UrooNlviuKbbBJ/olseDFgcMpeXNvBrvY5JuEfF5HGko
-         snuJE80k9HZFPJz4IwXevOQddf4s8A20QO5HYgCzOAYU81ooSrPE59TbZVtFUhv3+wkf
-         2OaUjV/Rx8Jf51zDQi8SrA4av1V0dFWrveHfwr9JtaW59aBvR5xxBssb01h1M3SN5Q9V
-         XbdA==
-X-Gm-Message-State: APjAAAXVVlI0FvDXv+obLseT7yeIOfNsVu0DXuXio6Gkc6pgPmvXtZRU
-        jlt0IDNXKpBjd59323mgAqoQ
-X-Google-Smtp-Source: APXvYqzzaktP/1JoWkazaAtmfHhtnCI9qNbQsjBJVhjflRxwYgzm6RzkNTTDQxlbQc3moXEw4befNw==
-X-Received: by 2002:a63:7ce:: with SMTP id 197mr10404414pgh.429.1582005111632;
-        Mon, 17 Feb 2020 21:51:51 -0800 (PST)
-Received: from Mani-XPS-13-9360 ([2409:4072:604:4c69:39d7:c38:1134:8ea0])
-        by smtp.gmail.com with ESMTPSA id b4sm2431774pfd.18.2020.02.17.21.51.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 17 Feb 2020 21:51:50 -0800 (PST)
-Date:   Tue, 18 Feb 2020 11:21:42 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     gregkh <gregkh@linuxfoundation.org>, smohanad@codeaurora.org,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        hemantk@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 11/16] bus: mhi: core: Add support for data transfer
-Message-ID: <20200218055142.GA29573@Mani-XPS-13-9360>
-References: <20200131135009.31477-1-manivannan.sadhasivam@linaro.org>
- <20200131135009.31477-12-manivannan.sadhasivam@linaro.org>
- <CAK8P3a1DOta5Uj3dNFWVqwgyPKs0cQsoymXE7svcOZoPiY+YGw@mail.gmail.com>
- <20200217164751.GA7305@Mani-XPS-13-9360>
+        id S1726174AbgBRHMU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Feb 2020 02:12:20 -0500
+Received: from mga09.intel.com ([134.134.136.24]:61168 "EHLO mga09.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726072AbgBRHMU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 Feb 2020 02:12:20 -0500
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 17 Feb 2020 23:12:19 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,455,1574150400"; 
+   d="scan'208";a="268657151"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.167]) ([10.237.72.167])
+  by fmsmga002.fm.intel.com with ESMTP; 17 Feb 2020 23:12:15 -0800
+Subject: Re: [PATCH V2] mmc: sdhci-msm: Don't enable PWRSAVE_DLL for certain
+ sdhc hosts
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        ulf.hansson@linaro.org
+Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
+        sayalil@codeaurora.org, cang@codeaurora.org,
+        rampraka@codeaurora.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Ritesh Harjani <riteshh@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <1581062518-11655-1-git-send-email-vbadigan@codeaurora.org>
+ <1581077075-26011-1-git-send-email-vbadigan@codeaurora.org>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <64ca4304-faab-cc82-0c7b-24a7f504bbd7@intel.com>
+Date:   Tue, 18 Feb 2020 09:11:18 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200217164751.GA7305@Mani-XPS-13-9360>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <1581077075-26011-1-git-send-email-vbadigan@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Arnd,
-
-On Mon, Feb 17, 2020 at 10:17:51PM +0530, Manivannan Sadhasivam wrote:
-> Hi Arnd,
+On 7/02/20 2:04 pm, Veerabhadrarao Badiganti wrote:
+> From: Ritesh Harjani <riteshh@codeaurora.org>
 > 
-> On Mon, Feb 17, 2020 at 05:13:37PM +0100, Arnd Bergmann wrote:
-> > On Fri, Jan 31, 2020 at 2:51 PM Manivannan Sadhasivam
-> > <manivannan.sadhasivam@linaro.org> wrote:
-> > 
-> > > @@ -648,6 +715,31 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
-> > >                 mhi_chan->db_cfg.pollcfg = ch_cfg->pollcfg;
-> > >                 mhi_chan->xfer_type = ch_cfg->data_type;
-> > >
-> > > +               switch (mhi_chan->xfer_type) {
-> > > +               case MHI_BUF_RAW:
-> > > +                       mhi_chan->gen_tre = mhi_gen_tre;
-> > > +                       mhi_chan->queue_xfer = mhi_queue_buf;
-> > > +                       break;
-> > > +               case MHI_BUF_SKB:
-> > > +                       mhi_chan->queue_xfer = mhi_queue_skb;
-> > > +                       break;
-> > > +               case MHI_BUF_SCLIST:
-> > > +                       mhi_chan->gen_tre = mhi_gen_tre;
-> > > +                       mhi_chan->queue_xfer = mhi_queue_sclist;
-> > > +                       break;
-> > > +               case MHI_BUF_NOP:
-> > > +                       mhi_chan->queue_xfer = mhi_queue_nop;
-> > > +                       break;
-> > > +               case MHI_BUF_DMA:
-> > > +               case MHI_BUF_RSC_DMA:
-> > > +                       mhi_chan->queue_xfer = mhi_queue_dma;
-> > > +                       break;
-> > > +               default:
-> > > +                       dev_err(mhi_cntrl->dev,
-> > > +                               "Channel datatype not supported\n");
-> > > +                       goto error_chan_cfg;
-> > > +               }
-> > > +
-> > 
-> > While looking through the driver to see how the DMA gets handled, I came
-> > across the multitude of mhi_queue_* functions, which seems like a
-> > layering violation to me, given that they are all implemented by the
-> > core code as well, and the client driver needs to be aware of
-> > which one to call. Are you able to lift these out of the common interface
-> > and make the client driver call these directly, or maybe provide a direct
-> > interface based on mhi_buf_info to replace these?
-> > 
+> SDHC core with new 14lpp and later tech DLL should not enable
+> PWRSAVE_DLL since such controller's internal gating cannot meet
+> following MCLK requirement:
+> When MCLK is gated OFF, it is not gated for less than 0.5us and MCLK
+> must be switched on for at-least 1us before DATA starts coming.
 > 
-> It sounds reasonable to me. Let me discuss this internally with Qcom guys to
-> see if they have any objections.
+> Adding support for this requirement.
+> 
+> Signed-off-by: Ritesh Harjani <riteshh@codeaurora.org>
+> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+
+> --
+> 
+> Changes since V1:
+>   Condition was not correct in V1, which is corrected in V2
+> 
+> --
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 18 +++++++++++++++---
+>  1 file changed, 15 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index c3a160c..aa5b610 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -977,9 +977,21 @@ static int sdhci_msm_cm_dll_sdc4_calibration(struct sdhci_host *host)
+>  		goto out;
+>  	}
+>  
+> -	config = readl_relaxed(host->ioaddr + msm_offset->core_vendor_spec3);
+> -	config |= CORE_PWRSAVE_DLL;
+> -	writel_relaxed(config, host->ioaddr + msm_offset->core_vendor_spec3);
+> +	/*
+> +	 * Set CORE_PWRSAVE_DLL bit in CORE_VENDOR_SPEC3.
+> +	 * When MCLK is gated OFF, it is not gated for less than 0.5us
+> +	 * and MCLK must be switched on for at-least 1us before DATA
+> +	 * starts coming. Controllers with 14lpp and later tech DLL cannot
+> +	 * guarantee above requirement. So PWRSAVE_DLL should not be
+> +	 * turned on for host controllers using this DLL.
+> +	 */
+> +	if (!msm_host->use_14lpp_dll_reset) {
+> +		config = readl_relaxed(host->ioaddr +
+> +				msm_offset->core_vendor_spec3);
+> +		config |= CORE_PWRSAVE_DLL;
+> +		writel_relaxed(config, host->ioaddr +
+> +				msm_offset->core_vendor_spec3);
+> +	}
+>  
+>  	/*
+>  	 * Drain writebuffer to ensure above DLL calibration
 > 
 
-I looked into this in detail and found that the queue_xfer callbacks are tied
-to the MHI channels. For instance, the callback gets attached to ul_chan (uplink
-channel) and dl_chan (downlink channel) during controller registration. And
-when the device driver calls the callback, the MHI stack calls respective queue
-function for the relevant channel. For instance,
-
-```
-int mhi_queue_transfer(struct mhi_device *mhi_dev,
-                       enum dma_data_direction dir, void *buf, size_t len,
-                       enum mhi_flags mflags)
-{
-        if (dir == DMA_TO_DEVICE)
-                return mhi_dev->ul_chan->queue_xfer(mhi_dev, mhi_dev->ul_chan,
-                                                    buf, len, mflags);
-        else
-                return mhi_dev->dl_chan->queue_xfer(mhi_dev, mhi_dev->dl_chan,
-                                                    buf, len, mflags);
-}
-```
-
-If we use the direct queue API's this will become hard to handle. So, I'll keep
-it as it is.
-
-Thanks,
-Mani
-
-> Thanks,
-> Mani
-> 
-> >       Arnd
