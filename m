@@ -2,91 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 039DC1645F5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 14:49:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AB23164A97
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 17:37:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727495AbgBSNtf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Feb 2020 08:49:35 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:26240 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726788AbgBSNtf (ORCPT
+        id S1726948AbgBSQhS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Feb 2020 11:37:18 -0500
+Received: from mail-yw1-f65.google.com ([209.85.161.65]:38069 "EHLO
+        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726797AbgBSQhS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Feb 2020 08:49:35 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582120175; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=nlOJ2QjC76fp//IJNgKlJ1in/DYwlbd9Ta/pZD7AXdY=; b=eWU2Onnn1AsrQ+041+29v7u78pF5evyL9tBYjye8p/xYVlmajmUo/eR4wGLMuWfYHC7IaqaH
- Ym0IwMdMJoPUgRWO8Zx2GxtTDZj62XkZD2sg8GhpyB4UWbhT5h5Kz/Woj+gQnRGU7+e7FANt
- Z5yUFyEZ8x4CpnFrt04nGKmd7+E=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e4d3ce1.7fe2ec9228f0-smtp-out-n01;
- Wed, 19 Feb 2020 13:49:21 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4EA97C447A0; Wed, 19 Feb 2020 13:49:20 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.252.222.65] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 555F8C43383;
-        Wed, 19 Feb 2020 13:49:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 555F8C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH 6/6] arm64: dts: sc7180: Add interconnect for QUP and QSPI
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     gregkh@linuxfoundation.org, agross@kernel.org, wsa@the-dreams.de,
-        broonie@kernel.org, mark.rutland@arm.com, robh+dt@kernel.org,
-        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, mka@chromium.org,
-        dianders@chromium.org
-References: <1581946205-27189-1-git-send-email-akashast@codeaurora.org>
- <1581946205-27189-7-git-send-email-akashast@codeaurora.org>
- <20200218031830.GX955802@ripper>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <f82a28c7-63a4-b0e8-3902-5614dfed0f78@codeaurora.org>
-Date:   Wed, 19 Feb 2020 19:19:11 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        Wed, 19 Feb 2020 11:37:18 -0500
+Received: by mail-yw1-f65.google.com with SMTP id 10so376326ywv.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2020 08:37:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Xtlz+dlJikUb4ZnNucrBnixJNmT9nKl8DYS8PWnrPks=;
+        b=UFmYVY80kD8Zpa0fkSTywbUnughoihSs+csgeDuTp+c/g/itb9Gfh2GXQv2waX1obE
+         o8fIcHknv6cYoBq6n9E4Op23peq0J2ac2B0Imhbsw9i3LJdcWwvR96hOFpUgKnvwxecE
+         A0WaXCr8X3lRnsiND4fpQMFQKauoE328soDOxzUj2XrZNdEE4/Cnsbw1TQyiNFJI/0K8
+         tiHcJj5I17xBtRqVehSpsTF2O1MIoCVxu+whM5mGowf/wCmH3aCYqmpuV7B/ap6QeqoH
+         cP7PI7a4cqJQ5/Ls9HL7wPfVopzr4qtBJDae0A9gyMal+67BDkKh3mqcJZb2FQ9ryoTN
+         ECnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Xtlz+dlJikUb4ZnNucrBnixJNmT9nKl8DYS8PWnrPks=;
+        b=Y9GpjpeXqT2wS+EGLAqH+bXveRGSq8zfS7dIbPztf3jVBizk2JXynD/Y3wvapcQLMZ
+         sfU2jIqsir1SyZWCSw2fhTgqryE7MH88oQ076OixDn3WISRHaPkxSFRaWqCapyMkgcOE
+         2QPQRmqmbj675xl6CUsNWEEfxxSjSNb4ORJZKhm7XFlhHu3laKJrd6N83Xa+dUkaCx5/
+         LzOs5/Rt6zvwsnE8looiePxpCLmryevbfb3IYXEORtKOboDWN0aU+PreXz9IeXYh67Wr
+         zM4bNODPQsbSxHant+8wTbjWTX+wlwcRYv5B8TeuuFF6m1nYOvdJITZUbJ5MZB0JZvmp
+         UEvg==
+X-Gm-Message-State: APjAAAV5JqcrrZepKcojL8Mq6uj77WfxJS66gRpOqmYMG5qKo5b4mzN0
+        gO2PxkcyGQwTTeFhWiqkpdGVBoRKRuRRsuSvrxLs
+X-Google-Smtp-Source: APXvYqw+sWWLtoya0aqsby68wILs0otsorSLejO/NcRgvSQt3H6dM5w4m5mdB8kR65XJF2pW3FvouYM/9lWgkilCLFQ=
+X-Received: by 2002:a0d:e155:: with SMTP id k82mr20972841ywe.168.1582130237017;
+ Wed, 19 Feb 2020 08:37:17 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20200218031830.GX955802@ripper>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <20200213213007.17023-1-jkardatzke@google.com> <b471217a-1877-eaed-55c2-084f4b126bb4@linaro.org>
+ <CA+ddPcPjtv_9s4+t_1jkoGSZihVu2cVLyW102WuoLMy-RGkKPw@mail.gmail.com> <b0c8653a-314e-bab9-9dc8-8c33b8d1efc9@linaro.org>
+In-Reply-To: <b0c8653a-314e-bab9-9dc8-8c33b8d1efc9@linaro.org>
+From:   Jeffrey Kardatzke <jkardatzke@google.com>
+Date:   Wed, 19 Feb 2020 08:37:05 -0800
+Message-ID: <CA+ddPcMWK58QvnAeonWTO0Zg5DvFyEoCfX0=VJuxev8EbU++PQ@mail.gmail.com>
+Subject: Re: [PATCH] media: venus: support frame rate control
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        "Mauro Carvalho Chehab )" <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Got it, thanks. I'll submit a new patch with that.
 
->> +				interconnects = <&qup_virt MASTER_QUP_CORE_0
->> +						&qup_virt SLAVE_QUP_CORE_0>,
->> +						<&gem_noc MASTER_APPSS_PROC
->> +						&config_noc SLAVE_QUP_0>,
->> +						<&aggre1_noc MASTER_QUP_0
->> +						&mc_virt SLAVE_EBI1>;
-> Please ignore the 80-char "limit" and write this as:
-> 				interconnects = <&qup_virt MASTER_QUP_CORE_0 &qup_virt SLAVE_QUP_CORE_0>,
-> 						<&gem_noc ...>,
-> 						<&aggre1_noc ...>;
+On Tue, Feb 18, 2020 at 11:56 PM Stanimir Varbanov
+<stanimir.varbanov@linaro.org> wrote:
 >
-> Regards,
-> Bjorn
+> Hi Jeff,
+>
+> On 2/18/20 9:09 PM, Jeffrey Kardatzke wrote:
+> > Sorry for the duplicate, accidentally used HTML format and it got
+> > bounced from the mailing lists so resending.
+> >
+> > On Mon, Feb 17, 2020 at 2:15 AM Stanimir Varbanov
+> > <stanimir.varbanov@linaro.org> wrote:
+> >>
+> >> Hi Jeff,
+> >>
+> >> Thanks for the patch!
+> >>
+> >> On 2/13/20 11:30 PM, Jeffrey Kardatzke wrote:
+> >>> Frame rate control is always enabled in this driver, so make it silently
+> >>> support the V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE.
+> >>>
+> >>> Signed-off-by: Jeffrey Kardatzke <jkardatzke@google.com>
+> >>> ---
+> >>>  drivers/media/platform/qcom/venus/venc_ctrls.c | 6 ++++++
+> >>>  1 file changed, 6 insertions(+)
+> >>>
+> >>> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> >>> index 877c0b3299e9..9ede692f77c5 100644
+> >>> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
+> >>> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> >>> @@ -199,6 +199,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+> >>>               }
+> >>>               mutex_unlock(&inst->lock);
+> >>>               break;
+> >>> +     case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
+> >>> +             // Silently ignore, it's always enabled.
+> >>
+> >> Please, use C comments and follow the kernel coding style.
+> >
+> > OK, hopefully I've got that now. I didn't see any issues aside from
+> > the comment style though.
+> > I'll upload a new patch shortly.
+> >>
+> >>
+> >> I wonder shouldn't it be better to add rc_enable field in struct
+> >> venc_controls and give the user choice to disable the rate control? We
+> >> can keep the default to be "enabled".
+> >>
+> > That'd be fine. Is there a way to actually disable the rate control though?
+>
+> The rate control property values are here [1], and [2] is where we set
+> the control.
+>
+> --
+> regards,
+> Stan
+>
+> [1]
+> https://elixir.bootlin.com/linux/v5.6-rc2/source/drivers/media/platform/qcom/venus/hfi_helper.h#L229
+> [2]
+> https://elixir.bootlin.com/linux/v5.6-rc2/source/drivers/media/platform/qcom/venus/venc.c#L734
 
-ok
 
-Regards,
-
-Akash
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+Jeffrey Kardatzke
+jkardatzke@google.com
+Google, Inc.
