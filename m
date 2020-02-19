@@ -2,131 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 60D05163759
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 00:38:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E5BF5163BD0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 05:05:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726795AbgBRXiu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Feb 2020 18:38:50 -0500
-Received: from mail-ua1-f66.google.com ([209.85.222.66]:38834 "EHLO
-        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726422AbgBRXit (ORCPT
+        id S1726477AbgBSEFm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Feb 2020 23:05:42 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:43771 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726439AbgBSEFl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Feb 2020 18:38:49 -0500
-Received: by mail-ua1-f66.google.com with SMTP id c7so8152181uaf.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2020 15:38:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=STt86kT4bIomqkWX7kK7v+xFHLMvCO0zF5ALqd2qVx8=;
-        b=qEnT1vFyTK7eaXgmzlPUVdSAiKuY8xrrhI2Z2il5i3x7u9Z7eNdil1N1YK972yxMRU
-         Pq78PZY4iyE1lERtE9Hg+RF6s4AqyI/aQwUvXJaSi/DX6ynP108DL6EM2AAM/m+Wlgto
-         uVeV8DkZZosrpYDwWPGEed5Wpa5dYDqsSwV7iUsiWgK/dp0dhLryM2ZTaA6ZKxcMyV91
-         iQaP5QHBD3eYnG0G1xEmbvx51wYfPBg3bTGCeLLx1XCmFelc4Ffn50OaJ16U1eyXIi5n
-         BvDbb/QmBS9VRVql8KDQppgQ4hYqVLsmxksGE6ChdCphxutANv0fX0iRWPSvyS2E8kB1
-         3Alw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=STt86kT4bIomqkWX7kK7v+xFHLMvCO0zF5ALqd2qVx8=;
-        b=FbAqa0MYSgi/Pi7xTNRWeuA65edvjl1nsS/d+Mmc3e2U3JcG5ZSHlH4sVem3/aHVlb
-         Y9n4tYGGmYO604LFp/5F/ZzF+QebgLtZx2a03F1XvYPVVU1zjUamC2Eqhs+YIFXTZ1TF
-         nkS0td+9VoI1z6tz8Vncq0DyOk6iPU7GAhfR98L4/+KpupaxAGvln8vZgQplaWd5NVgM
-         JbNVLVz3VSJ0gDoQ2HqXWz1z4unoiAmbRx/G26SB/fCtyAFi1DiH1zi1tzDSMgxKdorR
-         mO3Q9Fo2qxU6qCCG8A8C/cjWNpX/KbCEdGx0EdN7kzPj1utfRuiR7HgSte+c2In0V21D
-         sGqw==
-X-Gm-Message-State: APjAAAUI8LswcresAlBsFQAUlWTTbvBaEsH07I8oXYa4MA3cqikCXlpo
-        hKko9uadre83/VuP+Wzxzp1M1AevDl87yHnuCg9A/A==
-X-Google-Smtp-Source: APXvYqw9nAEG4kehq3otvKosRpBxqlAYUQpULzm3ZrGhrEPplUrNSJAyvqsnKDebS1ASeoR3ujqz2wpKnBvfEneuHNE=
-X-Received: by 2002:ab0:20a:: with SMTP id 10mr11762057uas.19.1582069128757;
- Tue, 18 Feb 2020 15:38:48 -0800 (PST)
+        Tue, 18 Feb 2020 23:05:41 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1582085141; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=+nsWEw7MESnefNMMm2RBSNdOC+YsR66U1WOkwwi4ZtI=; b=luCGDQ5twcqFHeGbcqp8MFHXF7rxS7n4ZCnj99/aykUJC7ZmSZR6kxLv6Wwp2wsymCL7lLk9
+ TCMuY0rYdQuZslgMkj2zDDyt1qpqeh9UkNYBM90KcS7LwS0t67/8k60nC07yi/NZCEyxDEzR
+ Z20TmXm/hTutvgM2a7HeDjDh/wI=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e4cb410.7fc9a17ff110-smtp-out-n02;
+ Wed, 19 Feb 2020 04:05:36 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 59C2CC4479F; Wed, 19 Feb 2020 04:05:35 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.206.28.9] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 020BFC43383;
+        Wed, 19 Feb 2020 04:05:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 020BFC43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+Subject: Re: [PATCH v4 3/5] dt-bindings: clock: Add YAML schemas for the QCOM
+ MSS clock bindings
+To:     Rob Herring <robh@kernel.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh+dt@kernel.org
+References: <1582049733-17050-1-git-send-email-tdas@codeaurora.org>
+ <1582049733-17050-4-git-send-email-tdas@codeaurora.org>
+ <20200218230026.GA3778@bogus>
+From:   Taniya Das <tdas@codeaurora.org>
+Message-ID: <6298769e-09bc-eb69-bf72-5aedd0e87f16@codeaurora.org>
+Date:   Wed, 19 Feb 2020 09:35:28 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-References: <1581062518-11655-1-git-send-email-vbadigan@codeaurora.org> <1581077075-26011-1-git-send-email-vbadigan@codeaurora.org>
-In-Reply-To: <1581077075-26011-1-git-send-email-vbadigan@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 19 Feb 2020 00:38:12 +0100
-Message-ID: <CAPDyKFo8eDAwE70FNhsiZ6mRRKi6gkx+VtmJ9SJ0mAWuVFjKzA@mail.gmail.com>
-Subject: Re: [PATCH V2] mmc: sdhci-msm: Don't enable PWRSAVE_DLL for certain
- sdhc hosts
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Sahitya Tummala <stummala@codeaurora.org>,
-        Sayali Lokhande <sayalil@codeaurora.org>, cang@codeaurora.org,
-        Ram Prakash Gupta <rampraka@codeaurora.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Ritesh Harjani <riteshh@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200218230026.GA3778@bogus>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 7 Feb 2020 at 13:05, Veerabhadrarao Badiganti
-<vbadigan@codeaurora.org> wrote:
->
-> From: Ritesh Harjani <riteshh@codeaurora.org>
->
-> SDHC core with new 14lpp and later tech DLL should not enable
-> PWRSAVE_DLL since such controller's internal gating cannot meet
-> following MCLK requirement:
-> When MCLK is gated OFF, it is not gated for less than 0.5us and MCLK
-> must be switched on for at-least 1us before DATA starts coming.
->
-> Adding support for this requirement.
->
-> Signed-off-by: Ritesh Harjani <riteshh@codeaurora.org>
-> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Hi Rob,
 
-Applied for next, thanks!
+On 2/19/2020 4:30 AM, Rob Herring wrote:
+> On Tue, 18 Feb 2020 23:45:31 +0530, Taniya Das wrote:
+>> The Modem Subsystem clock provider have a bunch of generic properties
+>> that are needed in a device tree. Add a YAML schemas for those.
+>>
+>> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+>> ---
+>>   .../devicetree/bindings/clock/qcom,sc7180-mss.yaml | 62 ++++++++++++++++++++++
+>>   1 file changed, 62 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml
+>>
+> 
+> My bot found errors running 'make dt_binding_check' on your patch:
+> 
+> Error: Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dts:21.26-27 syntax error
+> FATAL ERROR: Unable to parse input tree
+> scripts/Makefile.lib:300: recipe for target 'Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dt.yaml' failed
+> make[1]: *** [Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dt.yaml] Error 1
+> Makefile:1263: recipe for target 'dt_binding_check' failed
+> make: *** [dt_binding_check] Error 2
+> 
+> See https://patchwork.ozlabs.org/patch/1240251
+> Please check and re-submit.
+> 
 
-Kind regards
-Uffe
+I did see the same issue and then when I re-ordered by patches
+dt-bindings: clock: Add support for Modem clocks in GCC (dependent) on 
+this binding patch, I no longer encountered the issue.
+https://patchwork.kernel.org/patch/11389243/
 
+Please let me know.
 
-> --
->
-> Changes since V1:
->   Condition was not correct in V1, which is corrected in V2
->
-> --
-> ---
->  drivers/mmc/host/sdhci-msm.c | 18 +++++++++++++++---
->  1 file changed, 15 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index c3a160c..aa5b610 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -977,9 +977,21 @@ static int sdhci_msm_cm_dll_sdc4_calibration(struct sdhci_host *host)
->                 goto out;
->         }
->
-> -       config = readl_relaxed(host->ioaddr + msm_offset->core_vendor_spec3);
-> -       config |= CORE_PWRSAVE_DLL;
-> -       writel_relaxed(config, host->ioaddr + msm_offset->core_vendor_spec3);
-> +       /*
-> +        * Set CORE_PWRSAVE_DLL bit in CORE_VENDOR_SPEC3.
-> +        * When MCLK is gated OFF, it is not gated for less than 0.5us
-> +        * and MCLK must be switched on for at-least 1us before DATA
-> +        * starts coming. Controllers with 14lpp and later tech DLL cannot
-> +        * guarantee above requirement. So PWRSAVE_DLL should not be
-> +        * turned on for host controllers using this DLL.
-> +        */
-> +       if (!msm_host->use_14lpp_dll_reset) {
-> +               config = readl_relaxed(host->ioaddr +
-> +                               msm_offset->core_vendor_spec3);
-> +               config |= CORE_PWRSAVE_DLL;
-> +               writel_relaxed(config, host->ioaddr +
-> +                               msm_offset->core_vendor_spec3);
-> +       }
->
->         /*
->          * Drain writebuffer to ensure above DLL calibration
-> --
-> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
+
+--
