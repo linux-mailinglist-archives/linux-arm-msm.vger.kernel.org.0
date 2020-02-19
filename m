@@ -2,108 +2,377 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E5BF5163BD0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 05:05:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A95A7163D0D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 07:27:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726477AbgBSEFm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Feb 2020 23:05:42 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:43771 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726439AbgBSEFl (ORCPT
+        id S1726163AbgBSG1x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Feb 2020 01:27:53 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:7671 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726121AbgBSG1x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Feb 2020 23:05:41 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582085141; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=+nsWEw7MESnefNMMm2RBSNdOC+YsR66U1WOkwwi4ZtI=; b=luCGDQ5twcqFHeGbcqp8MFHXF7rxS7n4ZCnj99/aykUJC7ZmSZR6kxLv6Wwp2wsymCL7lLk9
- TCMuY0rYdQuZslgMkj2zDDyt1qpqeh9UkNYBM90KcS7LwS0t67/8k60nC07yi/NZCEyxDEzR
- Z20TmXm/hTutvgM2a7HeDjDh/wI=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e4cb410.7fc9a17ff110-smtp-out-n02;
- Wed, 19 Feb 2020 04:05:36 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 59C2CC4479F; Wed, 19 Feb 2020 04:05:35 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.206.28.9] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 020BFC43383;
-        Wed, 19 Feb 2020 04:05:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 020BFC43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v4 3/5] dt-bindings: clock: Add YAML schemas for the QCOM
- MSS clock bindings
-To:     Rob Herring <robh@kernel.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh+dt@kernel.org
-References: <1582049733-17050-1-git-send-email-tdas@codeaurora.org>
- <1582049733-17050-4-git-send-email-tdas@codeaurora.org>
- <20200218230026.GA3778@bogus>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <6298769e-09bc-eb69-bf72-5aedd0e87f16@codeaurora.org>
-Date:   Wed, 19 Feb 2020 09:35:28 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
-MIME-Version: 1.0
-In-Reply-To: <20200218230026.GA3778@bogus>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Wed, 19 Feb 2020 01:27:53 -0500
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 18 Feb 2020 22:27:51 -0800
+Received: from sivaprak-linux.qualcomm.com ([10.201.3.202])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP; 18 Feb 2020 22:27:48 -0800
+Received: by sivaprak-linux.qualcomm.com (Postfix, from userid 459349)
+        id 7FC7221495; Wed, 19 Feb 2020 11:57:46 +0530 (IST)
+From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sivaprak@codeaurora.org
+Subject: [PATCH] arm64: dts: ipq6018: Add a few device nodes
+Date:   Wed, 19 Feb 2020 11:57:35 +0530
+Message-Id: <1582093655-9673-1-git-send-email-sivaprak@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+add i2c, spi, crypto, rng, watchdog, peripheral nodes, also add
+support for wcss Q6 remoteproc driver and enable hw mutex, smem,
+mailbox, smp2p and rpmsg drivers
 
-On 2/19/2020 4:30 AM, Rob Herring wrote:
-> On Tue, 18 Feb 2020 23:45:31 +0530, Taniya Das wrote:
->> The Modem Subsystem clock provider have a bunch of generic properties
->> that are needed in a device tree. Add a YAML schemas for those.
->>
->> Signed-off-by: Taniya Das <tdas@codeaurora.org>
->> ---
->>   .../devicetree/bindings/clock/qcom,sc7180-mss.yaml | 62 ++++++++++++++++++++++
->>   1 file changed, 62 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml
->>
-> 
-> My bot found errors running 'make dt_binding_check' on your patch:
-> 
-> Error: Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dts:21.26-27 syntax error
-> FATAL ERROR: Unable to parse input tree
-> scripts/Makefile.lib:300: recipe for target 'Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dt.yaml' failed
-> make[1]: *** [Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dt.yaml] Error 1
-> Makefile:1263: recipe for target 'dt_binding_check' failed
-> make: *** [dt_binding_check] Error 2
-> 
-> See https://patchwork.ozlabs.org/patch/1240251
-> Please check and re-submit.
-> 
+Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+---
+This patch depends on Sricharan's ipq60xx dts patch
+https://patchwork.kernel.org/patch/11340681/
+ arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts |  34 ++++
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 228 +++++++++++++++++++++++++++
+ 2 files changed, 262 insertions(+)
 
-I did see the same issue and then when I re-ordered by patches
-dt-bindings: clock: Add support for Modem clocks in GCC (dependent) on 
-this binding patch, I no longer encountered the issue.
-https://patchwork.kernel.org/patch/11389243/
-
-Please let me know.
-
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+index 897b4b2..b31117a 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
++++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+@@ -28,3 +28,37 @@
+ 	pinctrl-names = "default";
+ 	status = "ok";
+ };
++
++&i2c_1 {
++	pinctrl-0 = <&i2c_1_pins>;
++	pinctrl-names = "default";
++	status = "ok";
++};
++
++&spi_0 {
++	cs-select = <0>;
++	status = "ok";
++
++	m25p80@0 {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		reg = <0>;
++		compatible = "n25q128a11";
++		spi-max-frequency = <50000000>;
++	};
++};
++
++&tlmm {
++	i2c_1_pins: i2c-1-pins {
++		pins = "gpio42", "gpio43";
++		function = "blsp2_i2c";
++		drive-strength = <8>;
++	};
++
++	spi_0_pins: spi-0-pins {
++		pins = "gpio38", "gpio39", "gpio40", "gpio41";
++		function = "blsp0_spi";
++		drive-strength = <8>;
++		bias-pull-down;
++	};
++};
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+index 0fb44e5..5d4dfb8 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+@@ -7,6 +7,7 @@
+ 
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
++#include <dt-bindings/reset/qcom,gcc-ipq6018.h>
+ 
+ / {
+ 	#address-cells = <2>;
+@@ -69,6 +70,12 @@
+ 		};
+ 	};
+ 
++	firmware {
++		scm {
++			compatible = "qcom,scm";
++		};
++	};
++
+ 	pmuv8: pmu {
+ 		compatible = "arm,cortex-a53-pmu";
+ 		interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(4) |
+@@ -89,6 +96,22 @@
+ 			reg = <0x0 0x48500000 0x0 0x00200000>;
+ 			no-map;
+ 		};
++
++		smem_region: memory@4aa00000 {
++			reg = <0x0 0x4aa00000 0x0 0x00100000>;
++			no-map;
++		};
++
++		q6_region: memory@4ab00000 {
++			reg = <0x0 0x4ab00000 0x0 0x02800000>;
++			no-map;
++		};
++	};
++
++	smem {
++		compatible = "qcom,smem";
++		memory-region = <&smem_region>;
++		hwlocks = <&tcsr_mutex 0>;
+ 	};
+ 
+ 	soc: soc {
+@@ -98,6 +121,36 @@
+ 		dma-ranges;
+ 		compatible = "simple-bus";
+ 
++		rng: qrng@e1000 {
++			compatible = "qcom,prng-ee";
++			reg = <0xe3000 0x1000>;
++			clocks = <&gcc GCC_PRNG_AHB_CLK>;
++			clock-names = "core";
++		};
++
++		cryptobam: dma@704000 {
++			compatible = "qcom,bam-v1.7.0";
++			reg = <0x00704000 0x20000>;
++			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_CRYPTO_AHB_CLK>;
++			clock-names = "bam_clk";
++			#dma-cells = <1>;
++			qcom,ee = <1>;
++			qcom,controlled-remotely = <1>;
++			qcom,config-pipe-trust-reg = <0>;
++		};
++
++		crypto: crypto@73a000 {
++			compatible = "qcom,crypto-v5.1";
++			reg = <0x0073a000 0x6000>;
++			clocks = <&gcc GCC_CRYPTO_AHB_CLK>,
++				<&gcc GCC_CRYPTO_AXI_CLK>,
++				<&gcc GCC_CRYPTO_CLK>;
++			clock-names = "iface", "bus", "core";
++			dmas = <&cryptobam 2>, <&cryptobam 3>;
++			dma-names = "rx", "tx";
++		};
++
+ 		tlmm: pinctrl@1000000 {
+ 			compatible = "qcom,ipq6018-pinctrl";
+ 			reg = <0x01000000 0x300000>;
+@@ -125,6 +178,26 @@
+ 			#reset-cells = <1>;
+ 		};
+ 
++		tcsr_mutex_regs: syscon@1905000 {
++			compatible = "syscon";
++			reg = <0x01905000 0x8000>;
++		};
++
++		tcsr_q6: syscon@1945000 {
++			compatible = "syscon";
++			reg = <0x01945000 0xe000>;
++		};
++
++		blsp_dma: dma@7884000 {
++			compatible = "qcom,bam-v1.7.0";
++			reg = <0x07884000 0x2b000>;
++			interrupts = <GIC_SPI 238 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "bam_clk";
++			#dma-cells = <1>;
++			qcom,ee = <0>;
++		};
++
+ 		blsp1_uart3: serial@78b1000 {
+ 			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+ 			reg = <0x078b1000 0x200>;
+@@ -135,6 +208,66 @@
+ 			status = "disabled";
+ 		};
+ 
++		spi_0: spi@78b5000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0x078b5000 0x600>;
++			interrupts = <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>;
++			spi-max-frequency = <50000000>;
++			clocks = <&gcc GCC_BLSP1_QUP1_SPI_APPS_CLK>,
++				<&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp_dma 12>, <&blsp_dma 13>;
++			dma-names = "tx", "rx";
++			status = "disabled";
++		};
++
++		spi_1: spi@78b6000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0x078b6000 0x600>;
++			interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
++			spi-max-frequency = <50000000>;
++			clocks = <&gcc GCC_BLSP1_QUP2_SPI_APPS_CLK>,
++				<&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp_dma 14>, <&blsp_dma 15>;
++			dma-names = "tx", "rx";
++			status = "disabled";
++		};
++
++		i2c_0: i2c@78b6000 {
++			compatible = "qcom,i2c-qup-v2.2.1";
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0x078b6000 0x600>;
++			interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_AHB_CLK>,
++				<&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>;
++			clock-names = "iface", "core";
++			clock-frequency  = <400000>;
++			dmas = <&blsp_dma 15>, <&blsp_dma 14>;
++			dma-names = "rx", "tx";
++			status = "disabled";
++		};
++
++		i2c_1: i2c@78b7000 { /* BLSP1 QUP2 */
++			compatible = "qcom,i2c-qup-v2.2.1";
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0x078b7000 0x600>;
++			interrupts = <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_AHB_CLK>,
++				<&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>;
++			clock-names = "iface", "core";
++			clock-frequency  = <400000>;
++			dmas = <&blsp_dma 17>, <&blsp_dma 16>;
++			dma-names = "rx", "tx";
++			status = "disabled";
++		};
++
+ 		intc: interrupt-controller@b000000 {
+ 			compatible = "qcom,msm-qgic2";
+ 			interrupt-controller;
+@@ -146,6 +279,21 @@
+ 			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
+ 
++		watchdog@b017000 {
++			compatible = "qcom,kpss-wdt";
++			interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>;
++			reg = <0x0b017000 0x40>;
++			clocks = <&sleep_clk>;
++			timeout-sec = <10>;
++		};
++
++		apcs_glb: mailbox@b111000 {
++			compatible = "qcom,ipq8074-apcs-apps-global";
++			reg = <0x0b111000 0xc>;
++
++			#mbox-cells = <1>;
++		};
++
+ 		timer {
+ 			compatible = "arm,armv8-timer";
+ 			interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+@@ -213,5 +361,85 @@
+ 			};
+ 		};
+ 
++		q6v5_wcss: q6v5_wcss@cd00000 {
++			compatible = "qcom,ipq8074-wcss-pil";
++			reg = <0x0cd00000 0x4040>,
++				<0x004ab000 0x20>;
++			reg-names = "qdsp6",
++				    "rmb";
++			qca,auto-restart;
++			qca,extended-intc;
++			interrupts-extended = <&intc GIC_SPI 325 IRQ_TYPE_EDGE_RISING>,
++					      <&wcss_smp2p_in 0 0>,
++					      <&wcss_smp2p_in 1 0>,
++					      <&wcss_smp2p_in 2 0>,
++					      <&wcss_smp2p_in 3 0>;
++			interrupt-names = "wdog",
++					  "fatal",
++					  "ready",
++					  "handover",
++					  "stop-ack";
++
++			resets = <&gcc GCC_WCSSAON_RESET>,
++				 <&gcc GCC_WCSS_BCR>,
++				 <&gcc GCC_WCSS_Q6_BCR>;
++
++			reset-names = "wcss_aon_reset",
++				      "wcss_reset",
++				      "wcss_q6_reset";
++
++			clocks = <&gcc GCC_PRNG_AHB_CLK>;
++			clock-names = "prng";
++
++			qcom,halt-regs = <&tcsr_q6 0xa000 0xd000 0x0>;
++
++			qcom,smem-states = <&wcss_smp2p_out 0>,
++					   <&wcss_smp2p_out 1>;
++			qcom,smem-state-names = "shutdown",
++						"stop";
++
++			memory-region = <&q6_region>;
++
++			glink-edge {
++				interrupts = <GIC_SPI 321 IRQ_TYPE_EDGE_RISING>;
++				qcom,remote-pid = <1>;
++				mboxes = <&apcs_glb 8>;
++
++				rpm_requests {
++					qcom,glink-channels = "IPCRTR";
++				};
++			};
++		};
++
++	};
++
++	tcsr_mutex: tcsr-mutex {
++		compatible = "qcom,tcsr-mutex";
++		syscon = <&tcsr_mutex_regs 0 0x80>;
++		#hwlock-cells = <1>;
++	};
++
++	wcss: wcss-smp2p {
++		compatible = "qcom,smp2p";
++		qcom,smem = <435>, <428>;
++
++		interrupt-parent = <&intc>;
++		interrupts = <GIC_SPI 322 IRQ_TYPE_EDGE_RISING>;
++
++		mboxes = <&apcs_glb 9>;
++
++		qcom,local-pid = <0>;
++		qcom,remote-pid = <1>;
++
++		wcss_smp2p_out: master-kernel {
++			qcom,entry-name = "master-kernel";
++			#qcom,smem-state-cells = <1>;
++		};
++
++		wcss_smp2p_in: slave-kernel {
++			qcom,entry-name = "slave-kernel";
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
+ 	};
+ };
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
+2.7.4
 
---
