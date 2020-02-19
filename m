@@ -2,128 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FC81163E4E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 08:57:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2520A1640AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 10:45:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726636AbgBSH4c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Feb 2020 02:56:32 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:39732 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726569AbgBSH4c (ORCPT
+        id S1726270AbgBSJpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Feb 2020 04:45:08 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:26424 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726297AbgBSJpI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Feb 2020 02:56:32 -0500
-Received: by mail-ed1-f67.google.com with SMTP id m13so28039872edb.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2020 23:56:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Q3+DgOutnfX7SsA3bKGScs4wmPyXe9VReVvuWS0M6eg=;
-        b=B9VOqdReReZ1UeU791Rw1WlZRkQMxOMH6TE0rvZjCfwjN+5+ngZKvK/2vWeKPsgu1H
-         WresiCidvXZl/lPZ3JAHrOVFjVeEVJgAg0DRYc5zt6o8PsAzA5tFX6WkErNRD2yX4SLB
-         4uAaPOMgTexnB1rhFyLRX014eJi1auuXLhhMfMou7yd2UwKjZ6Uf1JVJiQJkm3HJD0HY
-         A+v3aoFgp6011VlLTNW47C0ebBYxxZ90iLj86hn+EAGee2LEfaUMGIUlUnGeqnOAHEqs
-         3nANbPVRpgxZokwGanYa2uaA8BX0zdb96rGRENEnAd0NpFcRNg9hRQbtLxCXcbjWvbnw
-         EK9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Q3+DgOutnfX7SsA3bKGScs4wmPyXe9VReVvuWS0M6eg=;
-        b=LJHpiKFXG4e6y84MH2h0m5ht8jqBcrcI7zfV70F2kRuDrNlGr1n1m5VPDWjfRYRMJ2
-         RAQwrldqiiePsA6gWCFSGCLal9RBdhhYV7JLEGNWiaPE/g16f4WmTYRHGm3g1oAzl6dN
-         0pXzL3VI+Llamt0uJstv9DEUcQA8u+p6EWOLNcUldrzwYH8vgyLEQcOpgjTGPh6RAq+L
-         eTsApLj9OQRkzucJ8nOPf294ksAB1biS9qeQcj/rDNR2GFMBVlsbqsqCHSyr5dBo6ILg
-         GWWBz+XFOrvi60FjylPxtkNwLpgy4y2T+wLUm8PaL+Fswf45oa56YECVizjbJaeeDdUI
-         I/3Q==
-X-Gm-Message-State: APjAAAW3dR+qZ/ameQT5R3o5SX9uRf+2pA0rPhUNWlA2eXzzGMQqKX07
-        VoG+vNXLO99w7WeS4GTzOPLVaA==
-X-Google-Smtp-Source: APXvYqzY1Ka4YmzayW0U4GzuX30KYCpJuQ7CVEnrnpvxHGnfC9YVDEwp3qO0A8Qn44H3AwHFDmYMjQ==
-X-Received: by 2002:a17:906:e296:: with SMTP id gg22mr23367427ejb.7.1582098989740;
-        Tue, 18 Feb 2020 23:56:29 -0800 (PST)
-Received: from [192.168.27.209] ([94.155.124.210])
-        by smtp.googlemail.com with ESMTPSA id qh18sm35942ejb.23.2020.02.18.23.56.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Feb 2020 23:56:28 -0800 (PST)
-Subject: Re: [PATCH] media: venus: support frame rate control
-To:     Jeffrey Kardatzke <jkardatzke@google.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-media@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        "Mauro Carvalho Chehab )" <mchehab@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200213213007.17023-1-jkardatzke@google.com>
- <b471217a-1877-eaed-55c2-084f4b126bb4@linaro.org>
- <CA+ddPcPjtv_9s4+t_1jkoGSZihVu2cVLyW102WuoLMy-RGkKPw@mail.gmail.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <b0c8653a-314e-bab9-9dc8-8c33b8d1efc9@linaro.org>
-Date:   Wed, 19 Feb 2020 09:56:27 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
-MIME-Version: 1.0
-In-Reply-To: <CA+ddPcPjtv_9s4+t_1jkoGSZihVu2cVLyW102WuoLMy-RGkKPw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Wed, 19 Feb 2020 04:45:08 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1582105507; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=VAvh5XCQx9dzzw+9nGUpw/8x4szB+5O8PLNIQXRSMas=; b=OGXdVyAlL1FU0A3H0SrDMmjHBJbGl8sxIVxy+ywCrOdb1mm6ONGPXld229TA2pY24QGK3RG8
+ n0uTScYa9YaCzDs35+9kqy0+lDz8kh4qB6murtHoH+83u0X6U3w58ogNNFms3/XQnylkPitj
+ YBtJRoiAVLmBGQG79SB/w4qKrws=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e4d039d.7f1099010490-smtp-out-n02;
+ Wed, 19 Feb 2020 09:45:01 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BD918C43383; Wed, 19 Feb 2020 09:45:01 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from vbadigan-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vbadigan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BB876C433A2;
+        Wed, 19 Feb 2020 09:44:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BB876C433A2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
+From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+To:     ulf.hansson@linaro.org, robh+dt@kernel.org
+Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
+        sayalil@codeaurora.org, cang@codeaurora.org,
+        rampraka@codeaurora.org, dianders@google.com,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Allison Randal <allison@lohutok.net>,
+        Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH V2] mmc: mmc_test: Pass different sg lists for non-blocking requests
+Date:   Wed, 19 Feb 2020 15:14:31 +0530
+Message-Id: <1582105474-27866-1-git-send-email-vbadigan@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1581413771-18005-1-git-send-email-vbadigan@codeaurora.org>
+References: <1581413771-18005-1-git-send-email-vbadigan@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeff,
+Supply a separate sg list for each of the request in non-blocking
+IO test cases where two requests will be issued at same time.
 
-On 2/18/20 9:09 PM, Jeffrey Kardatzke wrote:
-> Sorry for the duplicate, accidentally used HTML format and it got
-> bounced from the mailing lists so resending.
-> 
-> On Mon, Feb 17, 2020 at 2:15 AM Stanimir Varbanov
-> <stanimir.varbanov@linaro.org> wrote:
->>
->> Hi Jeff,
->>
->> Thanks for the patch!
->>
->> On 2/13/20 11:30 PM, Jeffrey Kardatzke wrote:
->>> Frame rate control is always enabled in this driver, so make it silently
->>> support the V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE.
->>>
->>> Signed-off-by: Jeffrey Kardatzke <jkardatzke@google.com>
->>> ---
->>>  drivers/media/platform/qcom/venus/venc_ctrls.c | 6 ++++++
->>>  1 file changed, 6 insertions(+)
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
->>> index 877c0b3299e9..9ede692f77c5 100644
->>> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
->>> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
->>> @@ -199,6 +199,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
->>>               }
->>>               mutex_unlock(&inst->lock);
->>>               break;
->>> +     case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
->>> +             // Silently ignore, it's always enabled.
->>
->> Please, use C comments and follow the kernel coding style.
-> 
-> OK, hopefully I've got that now. I didn't see any issues aside from
-> the comment style though.
-> I'll upload a new patch shortly.
->>
->>
->> I wonder shouldn't it be better to add rc_enable field in struct
->> venc_controls and give the user choice to disable the rate control? We
->> can keep the default to be "enabled".
->>
-> That'd be fine. Is there a way to actually disable the rate control though?
+Otherwise, sg memory may get unmapped when a request is done while
+same memory is being accessed by controller from the other request,
+and it leads to iommu errors with below call stack:
 
-The rate control property values are here [1], and [2] is where we set
-the control.
+	__arm_lpae_unmap+0x2e0/0x478
+	arm_lpae_unmap+0x54/0x70
+	arm_smmu_unmap+0x64/0xa4
+	__iommu_unmap+0xb8/0x1f0
+	iommu_unmap_fast+0x38/0x48
+	__iommu_dma_unmap+0x88/0x108
+	iommu_dma_unmap_sg+0x90/0xa4
+	sdhci_post_req+0x5c/0x78
+	mmc_test_start_areq+0x10c/0x120 [mmc_test]
+	mmc_test_area_io_seq+0x150/0x264 [mmc_test]
+	mmc_test_rw_multiple+0x174/0x1c0 [mmc_test]
+	mmc_test_rw_multiple_sg_len+0x44/0x6c [mmc_test]
+	mmc_test_profile_sglen_wr_nonblock_perf+0x6c/0x94 [mmc_test]
+	mtf_test_write+0x238/0x3cc [mmc_test]
 
+Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+
+---
+Changes since V1:
+	- Freeing-up sg_areq memory.
+	- Added check to ensure sg length is equal for both the sg-lists
+	  supplied in case of non-blocking requests.
+---
+ drivers/mmc/core/mmc_test.c | 42 ++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 36 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/mmc/core/mmc_test.c b/drivers/mmc/core/mmc_test.c
+index 492dd45..f8f884a 100644
+--- a/drivers/mmc/core/mmc_test.c
++++ b/drivers/mmc/core/mmc_test.c
+@@ -71,6 +71,7 @@ struct mmc_test_mem {
+  * @sg_len: length of currently mapped scatterlist @sg
+  * @mem: allocated memory
+  * @sg: scatterlist
++ * @sg_areq: scatterlist for non-blocking request
+  */
+ struct mmc_test_area {
+ 	unsigned long max_sz;
+@@ -82,6 +83,7 @@ struct mmc_test_area {
+ 	unsigned int sg_len;
+ 	struct mmc_test_mem *mem;
+ 	struct scatterlist *sg;
++	struct scatterlist *sg_areq;
+ };
+ 
+ /**
+@@ -836,7 +838,9 @@ static int mmc_test_start_areq(struct mmc_test_card *test,
+ }
+ 
+ static int mmc_test_nonblock_transfer(struct mmc_test_card *test,
+-				      struct scatterlist *sg, unsigned sg_len,
++				      struct scatterlist *sg,
++				      struct scatterlist *sg_areq,
++				      unsigned int sg_len,
+ 				      unsigned dev_addr, unsigned blocks,
+ 				      unsigned blksz, int write, int count)
+ {
+@@ -867,6 +871,7 @@ static int mmc_test_nonblock_transfer(struct mmc_test_card *test,
+ 			prev_mrq = &rq2->mrq;
+ 
+ 		swap(mrq, prev_mrq);
++		swap(sg, sg_areq);
+ 		dev_addr += blocks;
+ 	}
+ 
+@@ -1396,10 +1401,11 @@ static int mmc_test_no_highmem(struct mmc_test_card *test)
+  * Map sz bytes so that it can be transferred.
+  */
+ static int mmc_test_area_map(struct mmc_test_card *test, unsigned long sz,
+-			     int max_scatter, int min_sg_len)
++			     int max_scatter, int min_sg_len, bool nonblock)
+ {
+ 	struct mmc_test_area *t = &test->area;
+ 	int err;
++	unsigned int sg_len = 0;
+ 
+ 	t->blocks = sz >> 9;
+ 
+@@ -1411,6 +1417,22 @@ static int mmc_test_area_map(struct mmc_test_card *test, unsigned long sz,
+ 		err = mmc_test_map_sg(t->mem, sz, t->sg, 1, t->max_segs,
+ 				      t->max_seg_sz, &t->sg_len, min_sg_len);
+ 	}
++
++	if (err || !nonblock)
++		goto err;
++
++	if (max_scatter) {
++		err = mmc_test_map_sg_max_scatter(t->mem, sz, t->sg_areq,
++						  t->max_segs, t->max_seg_sz,
++						  &sg_len);
++	} else {
++		err = mmc_test_map_sg(t->mem, sz, t->sg_areq, 1, t->max_segs,
++				      t->max_seg_sz, &sg_len, min_sg_len);
++	}
++	if (!err && sg_len != t->sg_len)
++		err = -EINVAL;
++
++err:
+ 	if (err)
+ 		pr_info("%s: Failed to map sg list\n",
+ 		       mmc_hostname(test->card->host));
+@@ -1458,15 +1480,16 @@ static int mmc_test_area_io_seq(struct mmc_test_card *test, unsigned long sz,
+ 			sz = max_tfr;
+ 	}
+ 
+-	ret = mmc_test_area_map(test, sz, max_scatter, min_sg_len);
++	ret = mmc_test_area_map(test, sz, max_scatter, min_sg_len, nonblock);
+ 	if (ret)
+ 		return ret;
+ 
+ 	if (timed)
+ 		ktime_get_ts64(&ts1);
+ 	if (nonblock)
+-		ret = mmc_test_nonblock_transfer(test, t->sg, t->sg_len,
+-				 dev_addr, t->blocks, 512, write, count);
++		ret = mmc_test_nonblock_transfer(test, t->sg, t->sg_areq,
++				 t->sg_len, dev_addr, t->blocks, 512, write,
++				 count);
+ 	else
+ 		for (i = 0; i < count && ret == 0; i++) {
+ 			ret = mmc_test_area_transfer(test, dev_addr, write);
+@@ -1525,6 +1548,7 @@ static int mmc_test_area_cleanup(struct mmc_test_card *test)
+ 	struct mmc_test_area *t = &test->area;
+ 
+ 	kfree(t->sg);
++	kfree(t->sg_areq);
+ 	mmc_test_free_mem(t->mem);
+ 
+ 	return 0;
+@@ -1584,6 +1608,12 @@ static int mmc_test_area_init(struct mmc_test_card *test, int erase, int fill)
+ 		goto out_free;
+ 	}
+ 
++	t->sg_areq = kmalloc_array(t->max_segs, sizeof(*t->sg), GFP_KERNEL);
++	if (!t->sg_areq) {
++		ret = -ENOMEM;
++		goto out_free;
++	}
++
+ 	t->dev_addr = mmc_test_capacity(test->card) / 2;
+ 	t->dev_addr -= t->dev_addr % (t->max_sz >> 9);
+ 
+@@ -2468,7 +2498,7 @@ static int __mmc_test_cmds_during_tfr(struct mmc_test_card *test,
+ 	if (!(test->card->host->caps & MMC_CAP_CMD_DURING_TFR))
+ 		return RESULT_UNSUP_HOST;
+ 
+-	ret = mmc_test_area_map(test, sz, 0, 0);
++	ret = mmc_test_area_map(test, sz, 0, 0, use_areq);
+ 	if (ret)
+ 		return ret;
+ 
 -- 
-regards,
-Stan
-
-[1]
-https://elixir.bootlin.com/linux/v5.6-rc2/source/drivers/media/platform/qcom/venus/hfi_helper.h#L229
-[2]
-https://elixir.bootlin.com/linux/v5.6-rc2/source/drivers/media/platform/qcom/venus/venc.c#L734
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
