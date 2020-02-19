@@ -2,136 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D468164E37
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 19:58:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DA2A164F92
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 21:08:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726645AbgBSS6l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Feb 2020 13:58:41 -0500
-Received: from nbd.name ([46.4.11.11]:57748 "EHLO nbd.name"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726609AbgBSS6l (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Feb 2020 13:58:41 -0500
-Received: from [2a04:4540:1400:dd00:2cb7:e0af:5551:a051]
-        by ds12 with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.89)
-        (envelope-from <john@phrozen.org>)
-        id 1j4UYQ-00057x-UZ; Wed, 19 Feb 2020 19:58:39 +0100
-Subject: Re: [PATCH] clk: qcom: clk-rpm: add missing rpm clk for ipq806x
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200219185226.1236-1-ansuelsmth@gmail.com>
-From:   John Crispin <john@phrozen.org>
-Message-ID: <3c2bdeaf-c54b-142b-367e-6573de700803@phrozen.org>
-Date:   Wed, 19 Feb 2020 19:58:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+        id S1727161AbgBSUIb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Feb 2020 15:08:31 -0500
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:45377 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727035AbgBSUIb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 19 Feb 2020 15:08:31 -0500
+Received: by mail-ot1-f67.google.com with SMTP id 59so1368409otp.12;
+        Wed, 19 Feb 2020 12:08:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=nXxtRM6f2jt8ayWG1c/acsbNLpFxWVreueJEPdmTXOo=;
+        b=HoX5TEXOyJef6vEvLY011bvOl/RQLcliPl5ZdJzR37bmX0HGHB3YxeNErAIMYayFHz
+         oLf9ZMkDRHqAnkNgtRYp83pQJ1eRmL67434gxV37HTg4hqyjY0YuELxBGBCebWgO26WT
+         3SzkOn2ITuugibAem/aClId2oJW2CgZGEUEMb0jaelLGNJH0fV/g9JmXW9KBIOWQgEJQ
+         P+3JAkQGkZQS+wlxozKalCu3qk2BTxRHbIELQC5MZiIUs+24Yl7cc+1UpNZpAcyhJ0l6
+         bM35fn92iiQ/osefNw1pFOmx37rywrix6EY93tZ7cEM9MaCKypNEGW2FrG9RCu6fx8U0
+         UwBw==
+X-Gm-Message-State: APjAAAWqlGw/ZbrvfM6DWKntuFD3WLtDqmeZC4IzsljPyhJDUiRZpDfW
+        NDabsSFCc8D39bRQeg0fUw==
+X-Google-Smtp-Source: APXvYqyoLoGDEXegS/LPzNhi25kf+RBpBzucu+O+846cQ9H0W1aDtu/TkotCfT99oMMTTJ6zWGpszA==
+X-Received: by 2002:a05:6830:139a:: with SMTP id d26mr21679753otq.75.1582142908897;
+        Wed, 19 Feb 2020 12:08:28 -0800 (PST)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id x22sm263707otk.23.2020.02.19.12.08.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Feb 2020 12:08:28 -0800 (PST)
+Received: (nullmailer pid 20348 invoked by uid 1000);
+        Wed, 19 Feb 2020 20:08:27 -0000
+Date:   Wed, 19 Feb 2020 14:08:27 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Cc:     ulf.hansson@linaro.org, asutoshd@codeaurora.org,
+        stummala@codeaurora.org, sayalil@codeaurora.org,
+        cang@codeaurora.org, rampraka@codeaurora.org, dianders@google.com,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Mark Rutland <mark.rutland@arm.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Subject: Re: [PATCH V2] dt-bindings: mmc: sdhci-msm: Add CQE reg map
+Message-ID: <20200219200827.GA17094@bogus>
+References: <1581434955-11087-1-git-send-email-vbadigan@codeaurora.org>
+ <1581680753-9067-1-git-send-email-vbadigan@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20200219185226.1236-1-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1581680753-9067-1-git-send-email-vbadigan@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/02/2020 19:52, Ansuel Smith wrote:
-> Add missing definition of rpm clk for ipq806x soc
+On Fri, Feb 14, 2020 at 05:15:52PM +0530, Veerabhadrarao Badiganti wrote:
+> CQE feature has been enabled on sdhci-msm. Add CQE reg map
+> that needs to be supplied for supporting CQE feature.
 > 
-> Signed-off-by: John Crispin <john@phrozen.org>
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-Thanks for sending this upstream,
-Acked-by: John Crispin <john@phrozen.org>
-
+> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
 > ---
->   .../devicetree/bindings/clock/qcom,rpmcc.txt  |  1 +
->   drivers/clk/qcom/clk-rpm.c                    | 35 +++++++++++++++++++
->   include/dt-bindings/clock/qcom,rpmcc.h        |  4 +++
->   3 files changed, 40 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt b/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
-> index 944719bd586f..dd0def465c79 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
-> +++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
-> @@ -16,6 +16,7 @@ Required properties :
->   			"qcom,rpmcc-msm8974", "qcom,rpmcc"
->   			"qcom,rpmcc-apq8064", "qcom,rpmcc"
->   			"qcom,rpmcc-msm8996", "qcom,rpmcc"
-> +			"qcom,rpmcc-ipq806x", "qcom,rpmcc"
->   			"qcom,rpmcc-msm8998", "qcom,rpmcc"
->   			"qcom,rpmcc-qcs404", "qcom,rpmcc"
->   
-> diff --git a/drivers/clk/qcom/clk-rpm.c b/drivers/clk/qcom/clk-rpm.c
-> index 9e3110a71f12..f71d228fd6bd 100644
-> --- a/drivers/clk/qcom/clk-rpm.c
-> +++ b/drivers/clk/qcom/clk-rpm.c
-> @@ -543,10 +543,45 @@ static const struct rpm_clk_desc rpm_clk_apq8064 = {
->   	.num_clks = ARRAY_SIZE(apq8064_clks),
->   };
->   
-> +/* ipq806x */
-> +DEFINE_CLK_RPM(ipq806x, afab_clk, afab_a_clk, QCOM_RPM_APPS_FABRIC_CLK);
-> +DEFINE_CLK_RPM(ipq806x, cfpb_clk, cfpb_a_clk, QCOM_RPM_CFPB_CLK);
-> +DEFINE_CLK_RPM(ipq806x, daytona_clk, daytona_a_clk, QCOM_RPM_DAYTONA_FABRIC_CLK);
-> +DEFINE_CLK_RPM(ipq806x, ebi1_clk, ebi1_a_clk, QCOM_RPM_EBI1_CLK);
-> +DEFINE_CLK_RPM(ipq806x, sfab_clk, sfab_a_clk, QCOM_RPM_SYS_FABRIC_CLK);
-> +DEFINE_CLK_RPM(ipq806x, sfpb_clk, sfpb_a_clk, QCOM_RPM_SFPB_CLK);
-> +DEFINE_CLK_RPM(ipq806x, nss_fabric_0_clk, nss_fabric_0_a_clk, QCOM_RPM_NSS_FABRIC_0_CLK);
-> +DEFINE_CLK_RPM(ipq806x, nss_fabric_1_clk, nss_fabric_1_a_clk, QCOM_RPM_NSS_FABRIC_1_CLK);
-> +
-> +static struct clk_rpm *ipq806x_clks[] = {
-> +	[RPM_APPS_FABRIC_CLK] = &ipq806x_afab_clk,
-> +	[RPM_APPS_FABRIC_A_CLK] = &ipq806x_afab_a_clk,
-> +	[RPM_CFPB_CLK] = &ipq806x_cfpb_clk,
-> +	[RPM_CFPB_A_CLK] = &ipq806x_cfpb_a_clk,
-> +	[RPM_DAYTONA_FABRIC_CLK] = &ipq806x_daytona_clk,
-> +	[RPM_DAYTONA_FABRIC_A_CLK] = &ipq806x_daytona_a_clk,
-> +	[RPM_EBI1_CLK] = &ipq806x_ebi1_clk,
-> +	[RPM_EBI1_A_CLK] = &ipq806x_ebi1_a_clk,
-> +	[RPM_SYS_FABRIC_CLK] = &ipq806x_sfab_clk,
-> +	[RPM_SYS_FABRIC_A_CLK] = &ipq806x_sfab_a_clk,
-> +	[RPM_SFPB_CLK] = &ipq806x_sfpb_clk,
-> +	[RPM_SFPB_A_CLK] = &ipq806x_sfpb_a_clk,
-> +	[RPM_NSS_FABRIC_0_CLK] = &ipq806x_nss_fabric_0_clk,
-> +	[RPM_NSS_FABRIC_0_A_CLK] = &ipq806x_nss_fabric_0_a_clk,
-> +	[RPM_NSS_FABRIC_1_CLK] = &ipq806x_nss_fabric_1_clk,
-> +	[RPM_NSS_FABRIC_1_A_CLK] = &ipq806x_nss_fabric_1_a_clk,
-> +};
-> +
-> +static const struct rpm_clk_desc rpm_clk_ipq806x = {
-> +	.clks = ipq806x_clks,
-> +	.num_clks = ARRAY_SIZE(ipq806x_clks),
-> +};
-> +
->   static const struct of_device_id rpm_clk_match_table[] = {
->   	{ .compatible = "qcom,rpmcc-msm8660", .data = &rpm_clk_msm8660 },
->   	{ .compatible = "qcom,rpmcc-apq8060", .data = &rpm_clk_msm8660 },
->   	{ .compatible = "qcom,rpmcc-apq8064", .data = &rpm_clk_apq8064 },
-> +	{ .compatible = "qcom,rpmcc-ipq806x", .data = &rpm_clk_ipq806x },
->   	{ }
->   };
->   MODULE_DEVICE_TABLE(of, rpm_clk_match_table);
-> diff --git a/include/dt-bindings/clock/qcom,rpmcc.h b/include/dt-bindings/clock/qcom,rpmcc.h
-> index 8e3095720552..ae74c43c485d 100644
-> --- a/include/dt-bindings/clock/qcom,rpmcc.h
-> +++ b/include/dt-bindings/clock/qcom,rpmcc.h
-> @@ -37,6 +37,10 @@
->   #define RPM_XO_A0				27
->   #define RPM_XO_A1				28
->   #define RPM_XO_A2				29
-> +#define RPM_NSS_FABRIC_0_CLK			30
-> +#define RPM_NSS_FABRIC_0_A_CLK			31
-> +#define RPM_NSS_FABRIC_1_CLK			32
-> +#define RPM_NSS_FABRIC_1_A_CLK			33
->   
->   /* SMD RPM clocks */
->   #define RPM_SMD_XO_CLK_SRC				0
+> Changes since V1:
+> 	- Updated description for more clarity & Fixed typos.
+> ---
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
 > 
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> index 7ee639b..ad0ee83 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> @@ -26,7 +26,13 @@ Required properties:
+>  
+>  - reg: Base address and length of the register in the following order:
+>  	- Host controller register map (required)
+> -	- SD Core register map (required for msm-v4 and below)
+> +	- SD Core register map (required for controllers earlier than msm-v5)
+> +	- CQE register map (Optional, CQE support is present on SDHC instance meant
+> +	                    for eMMC and version v4.2 and above)
+> +- reg-names: When CQE register map is supplied, below reg-names are required
+> +	- "hc_mem" for Host controller register map
+> +	- "core_mem" for SD core register map
+> +	- "cqhci_mem" for CQE register map
 
+'_mem' is redundant, so drop.
+
+>  - interrupts: Should contain an interrupt-specifiers for the interrupts:
+>  	- Host controller interrupt (required)
+>  - pinctrl-names: Should contain only one value - "default".
+> -- 
+> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
+> 
