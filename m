@@ -2,116 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B7754164C7B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 18:50:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E782A164D2E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 19:00:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726609AbgBSRuW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Feb 2020 12:50:22 -0500
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:40432 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726582AbgBSRuW (ORCPT
+        id S1726593AbgBSSAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Feb 2020 13:00:12 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:37088 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726582AbgBSSAL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Feb 2020 12:50:22 -0500
-Received: by mail-pj1-f65.google.com with SMTP id 12so370414pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2020 09:50:22 -0800 (PST)
+        Wed, 19 Feb 2020 13:00:11 -0500
+Received: by mail-wm1-f65.google.com with SMTP id a6so1673128wme.2;
+        Wed, 19 Feb 2020 10:00:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=Z7a7oA5rHpxM92NoMV2XbtQ4b8rn3jd4JC722SrafmQ=;
-        b=fOhn+mov0gBaTRqLZ28SsD4CaCbe4sYywxzU+0IQdXyYqPRfDWIHD0a6QUaOAOvzcO
-         +twk639IUbq5BbbwJlBgLtSPQl3/KPAompTFw5Vek33dwfaGACR7YQMl/X0TM7bcrb45
-         J+EeoyrNddqMnQYwbeNYcnQyugCFOVIR3Lthg=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wh9nIcj0w2M3FqQot+njucHn0Ra0ZI6Wx7pQ2i4JMoY=;
+        b=HUJdLC5hopKYknC4eZLjSnebhG/JcwdeTl3Xb5S6oKAqHmzxMjL00GkwJpHWhibfAS
+         5X//CwXj0lCgW2hszTgKl1wgOgNJqU8yRvBb+K0UPYC2XWghy31Ob/rzOxrm5SPIBZgK
+         rZuMJtRzlwEG2e/EsEforx/60C+nVb4BIjE1/zxhyyk7dcmoOLx9twQ2+dLv3ovAUDZk
+         XTwGCDrxKvTgivsXyU007uY7gNFao085ZI1nJZKNTuNOn+BEQ+voSgqF7LFwBn8ppgdB
+         4TsIaF/O4RLjAiLWr6jLtI7SonSaeqXpValX1FqtQZ8Iam46oaCY+aW4dsCFXLXdKeXL
+         LULQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=Z7a7oA5rHpxM92NoMV2XbtQ4b8rn3jd4JC722SrafmQ=;
-        b=Yyd7Wa3Yc64cEmXDUm2knEUC/yfaB/fcYOMIlfkiQytFqdp5tX4S3QjGN5F5cYhKed
-         KEXGRvqB+xNT8sV/pIjvz55w9nuE01a33f+pNd0ukDWA4yu+VOWZ5J7zuAS4HYXeClDx
-         lg9Pq2uYg5aQMlsf+2QsJJfZoywMKOOD9pQctotb+hLqnm0HyhYJGcoLqaIEmI8br+zm
-         Wd+0+2rBVe6Hsu+9TWd97z1m56OnvEX+f3bzpAjiOronBea9WoJNd0lv8RREwrlADHp1
-         5bsTCgI3DAjIAmI9rRzAkWZLbY29S+bWHtxqOx/cMHC6fllWWCeKOQTuRak7hjMfzvjJ
-         +T4g==
-X-Gm-Message-State: APjAAAXJGKHGctlofqiPoIXZwVqx7bbjwNL3WIdgA4BxzSSgO4Hnf5DU
-        bMZU90CkQ3V3JGvnPurHaKQQnQ==
-X-Google-Smtp-Source: APXvYqx2fiqjZ6AKNyrvLHc9HhmGOYJRsA7+KslntBNJvlRCCgTz4zgI0jq4BtqJ1jnmFpB76/+gpA==
-X-Received: by 2002:a17:902:d898:: with SMTP id b24mr27181684plz.133.1582134621518;
-        Wed, 19 Feb 2020 09:50:21 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id q7sm321684pgk.62.2020.02.19.09.50.20
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wh9nIcj0w2M3FqQot+njucHn0Ra0ZI6Wx7pQ2i4JMoY=;
+        b=IwC/eeUgLD5uQHjmTzv9ELcN96yipgasmp0tfjcJLFTdAx+fKKxFa/okm0jttOuJgI
+         Vjb1S02I53Het5C4aQVjbq8EjFwRybGR1buLCYfWcRdhLNd+F+RlwQ4aqPFmvbr3Zw8I
+         xX5LXu2b5NHDUzHFTucF6ZaRB/p6X2HhlDT9lTA0v54ABgvS3MX4pXkJf2gqWZz2yp9X
+         1q7v2AOHMtHgIfk69m6u2dAvFlDlp6LP/fynxaD6ZUEZWnkdvkV+/9qFKsv5L5t5BSXW
+         cdIhR+RocnGPZeDpys9z0hD5O2vKb9p81G48SE816eDkzZ//56MfraP3xiRstisdTVHL
+         y+vg==
+X-Gm-Message-State: APjAAAXUL8NiCVdBQqTJxaMKhGgKGO+mcGN+vggzf3V4l+zYRNDMpQjO
+        O10gVCpFOxNolce3+m+j4S0=
+X-Google-Smtp-Source: APXvYqwWSiOJ5tvblLJlOInc5jk1+KI712XO9RsPsQ8tcWz2r4+JQJ9HYITKEe0Hd1mulV68sNDT6Q==
+X-Received: by 2002:a1c:7915:: with SMTP id l21mr10859413wme.112.1582135209882;
+        Wed, 19 Feb 2020 10:00:09 -0800 (PST)
+Received: from Ansuel-XPS.localdomain ([5.170.105.173])
+        by smtp.googlemail.com with ESMTPSA id v5sm674946wrv.86.2020.02.19.10.00.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2020 09:50:20 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        Wed, 19 Feb 2020 10:00:09 -0800 (PST)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Ram Chandra Jangir <rjangir@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] ipq8064: pinctrl: Fixed missing RGMII pincontrol definitions
+Date:   Wed, 19 Feb 2020 18:59:39 +0100
+Message-Id: <20200219175940.744-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <254d7b003fdcd6f5fc0c45ab75b4b5f2@codeaurora.org>
-References: <1581415982-8793-1-git-send-email-skakit@codeaurora.org> <158154775640.184098.13898240474253130921@swboyd.mtv.corp.google.com> <254d7b003fdcd6f5fc0c45ab75b4b5f2@codeaurora.org>
-Subject: Re: [PATCH] tty: serial: qcom_geni_serial: Fix RX cancel command failure
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     gregkh@linuxfoundation.org, mgautam@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        akashast@codeaurora.org, rojay@codeaurora.org
-To:     skakit@codeaurora.org
-Date:   Wed, 19 Feb 2020 09:50:19 -0800
-Message-ID: <158213461988.184098.7165493520823815160@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+Content-Transfer-Encoding: 8bit
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting skakit@codeaurora.org (2020-02-14 05:17:01)
-> On 2020-02-13 04:19, Stephen Boyd wrote:
-> >     driver_probe_device+0x70/0x140
-> >     __driver_attach_async_helper+0x7c/0xa8
-> >     async_run_entry_fn+0x60/0x178
-> >     process_one_work+0x33c/0x640
-> >     worker_thread+0x2a0/0x470
-> >     kthread+0x128/0x138
-> >     ret_from_fork+0x10/0x18
-> >    Code: 1aca096a 911e0129 b940012b 7100054a (b800450b)
-> I think the most probable explanation of the crash is, set_termios call=20
-> is starting RX engine and RX engine is sampling some garbage data from=20
-> line, and by the time startup is called, we have few data to read.
-> How frequently you are able to see this crash? because internally we are =
+Add missing gpio definition for mdio and rgmii2.
 
-> unable to reproduce it.
+Signed-off-by: Ram Chandra Jangir <rjangir@codeaurora.org>
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+---
+ drivers/pinctrl/qcom/pinctrl-ipq8064.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-How is set_termios involved? Is that starting the RX side before
-uart_startup() is called? Sorry I haven't looked into the code flow very
-deeply here.
+diff --git a/drivers/pinctrl/qcom/pinctrl-ipq8064.c b/drivers/pinctrl/qcom/pinctrl-ipq8064.c
+index c2fb1ddf2f22..ac717ee38416 100644
+--- a/drivers/pinctrl/qcom/pinctrl-ipq8064.c
++++ b/drivers/pinctrl/qcom/pinctrl-ipq8064.c
+@@ -299,7 +299,7 @@ static const char * const gpio_groups[] = {
+ };
+ 
+ static const char * const mdio_groups[] = {
+-	"gpio0", "gpio1", "gpio10", "gpio11",
++	"gpio0", "gpio1", "gpio2", "gpio10", "gpio11", "gpio66",
+ };
+ 
+ static const char * const mi2s_groups[] = {
+@@ -403,8 +403,8 @@ static const char * const usb2_hsic_groups[] = {
+ };
+ 
+ static const char * const rgmii2_groups[] = {
+-	"gpio27", "gpio28", "gpio29", "gpio30", "gpio31", "gpio32",
+-	"gpio51", "gpio52", "gpio59", "gpio60", "gpio61", "gpio62",
++	"gpio2", "gpio27", "gpio28", "gpio29", "gpio30", "gpio31", "gpio32",
++	"gpio51", "gpio52", "gpio59", "gpio60", "gpio61", "gpio62", "gpio66",
+ };
+ 
+ static const char * const sata_groups[] = {
+@@ -539,7 +539,7 @@ static const struct msm_function ipq8064_functions[] = {
+ static const struct msm_pingroup ipq8064_groups[] = {
+ 	PINGROUP(0, mdio, NA, NA, NA, NA, NA, NA, NA, NA, NA),
+ 	PINGROUP(1, mdio, NA, NA, NA, NA, NA, NA, NA, NA, NA),
+-	PINGROUP(2, gsbi5_spi_cs3, NA, NA, NA, NA, NA, NA, NA, NA, NA),
++	PINGROUP(2, gsbi5_spi_cs3, rgmii2, mdio, NA, NA, NA, NA, NA, NA, NA),
+ 	PINGROUP(3, pcie1_rst, pcie1_prsnt, pdm, NA, NA, NA, NA, NA, NA, NA),
+ 	PINGROUP(4, pcie1_pwren_n, pcie1_pwren, NA, NA, NA, NA, NA, NA, NA, NA),
+ 	PINGROUP(5, pcie1_clk_req, pcie1_pwrflt, NA, NA, NA, NA, NA, NA, NA, NA),
+@@ -603,7 +603,7 @@ static const struct msm_pingroup ipq8064_groups[] = {
+ 	PINGROUP(63, pcie3_rst, NA, NA, NA, NA, NA, NA, NA, NA, NA),
+ 	PINGROUP(64, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA),
+ 	PINGROUP(65, pcie3_clk_req, NA, NA, NA, NA, NA, NA, NA, NA, NA),
+-	PINGROUP(66, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA),
++	PINGROUP(66, rgmii2, mdio, NA, NA, NA, NA, NA, NA, NA, NA),
+ 	PINGROUP(67, usb2_hsic, NA, NA, NA, NA, NA, NA, NA, NA, NA),
+ 	PINGROUP(68, usb2_hsic, NA, NA, NA, NA, NA, NA, NA, NA, NA),
+ 	SDC_PINGROUP(sdc3_clk, 0x204a, 14, 6),
+-- 
+2.25.0
 
-It seems to happen when the bluetooth driver probes so maybe constantly
-adding and removing the hci_uart module will cause this to happen for
-you? I also run the kernel with many debug options enabled, so maybe try
-enabling all the debug stuff? I see it randomly right now so I'm not
-sure.
-
-> >=20
-> >=20
-> > This seems to be the problematic line. We didn't call handle_rx() from
-> > the stop_rx() path before. And this qcom_geni_serial_stop_rx() function
-> > is called from qcom_geni_serial_startup(), but most importantly, we=20
-> > call
-> > into this function from startup before we allocate memory for the
-> > port->rx_fifo member (see the devm_kcalloc() later in
-> > qcom_geni_serial_port_setup() and see how it's after we stop rx).
-> >=20
-> > Why do we need to flush the rx buffer by reading it into the software
-> > buffer? Can't we simply ack any outstanding RX interrupts in the
-> > hardware when we're stopping receive?
-> We can't simply ack RX_LAST interrupt, there is a sticky bit that get=20
-> set on HW level(not exposed to SW) with RX last interrupt. The only way=20
-> to clear it is flush out RX FIFO HW buffer. The sticky bit can create=20
-> problem for future transfers if remained uncleared.
-> How about we allocate buffer to port->rx_fifo in probe itself?
-
-Ok. If we have to read the rx fifo to flush the buffer then perhaps
-write another function that qcom_geni_serial_stop_rx() can use to
-indicate that it wants to throw away whatever is in the rx fifo? Or
-adjust handle_rx() to check for a NULL fifo pointer and throw it away in
-that case? When we're setting up this device I don't understand why we
-would want to read anything out of the rx fifo that was there before the
-driver started.
