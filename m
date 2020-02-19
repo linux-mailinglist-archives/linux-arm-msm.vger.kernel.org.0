@@ -2,816 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FF2D164C56
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 18:43:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B7754164C7B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 18:50:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726677AbgBSRnQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Feb 2020 12:43:16 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:33046 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726762AbgBSRnN (ORCPT
+        id S1726609AbgBSRuW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Feb 2020 12:50:22 -0500
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:40432 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726582AbgBSRuW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Feb 2020 12:43:13 -0500
-Received: by mail-io1-f67.google.com with SMTP id z8so1524517ioh.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2020 09:43:13 -0800 (PST)
+        Wed, 19 Feb 2020 12:50:22 -0500
+Received: by mail-pj1-f65.google.com with SMTP id 12so370414pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2020 09:50:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=mrXEj2PJlu+l+Mv8TBp0HHGrRMadtJAnNxexO0DUVkQ=;
-        b=DXFOIbw8AOp+RLHzW2iEmJc5no7yLEskToWfJkoBPA7KtvH/UqUbu6FWbN7Nm7GM14
-         8x8FYnt9NHII+BBNNHviKpn9WHCpIXMRFIQvf698bdnECiTeUsJ5MHwesnqKL4L16dBm
-         ZLmQosXDSkcKkSCAjoqyfwFuhqTSBJy/XlMug=
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=Z7a7oA5rHpxM92NoMV2XbtQ4b8rn3jd4JC722SrafmQ=;
+        b=fOhn+mov0gBaTRqLZ28SsD4CaCbe4sYywxzU+0IQdXyYqPRfDWIHD0a6QUaOAOvzcO
+         +twk639IUbq5BbbwJlBgLtSPQl3/KPAompTFw5Vek33dwfaGACR7YQMl/X0TM7bcrb45
+         J+EeoyrNddqMnQYwbeNYcnQyugCFOVIR3Lthg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=mrXEj2PJlu+l+Mv8TBp0HHGrRMadtJAnNxexO0DUVkQ=;
-        b=SBPwanMOyduJi5rl4g1/HrIVG+kGgKiTqu/ys/hnetSeSoUU8k12h2WoQa6UPUKyeU
-         QjZHCvLZ05487pYa6BVMDXi4j2ATDmNjV0knqjAWY5JWeIov9nK/eTkGlJbPZI23VMOw
-         tOQ0XMmMLAU0Zmk3JK132olfVo6Igcst9zihH0GCDXuKI+00k1wd2fmu0TxXjqTawYTE
-         cQM9wEEbxW6Xr0ml/3EPvKQCLoMdsFYsI5hRPPKT0v4M7H98UiZeokK6C74Au0P7eCLX
-         bZE+aFvs30BNCjBdnHEOCQLTTC3gJFGNbXH7dNCdlkMCpx96W9dhw7myl7AqYtr4eIhg
-         rrOQ==
-X-Gm-Message-State: APjAAAULMA4T/6P6NKj8Gyq6Q1tgSUsyH9n/I5IWh+t5ZNcX7o86QYub
-        +ybAR+0xPHNwX/HSwpkaPlmhNA==
-X-Google-Smtp-Source: APXvYqwDV5cpXJAFaWfwW5wKVw9A/fLU/gk0gZceL+S5v8n/JjtdysekiBtB9B4VT04H/8uYmAkBUg==
-X-Received: by 2002:a05:6602:2209:: with SMTP id n9mr6235488ion.62.1582134192441;
-        Wed, 19 Feb 2020 09:43:12 -0800 (PST)
-Received: from ddavenport4.bld.corp.google.com ([2620:15c:183:0:92f:a80a:519d:f777])
-        by smtp.gmail.com with ESMTPSA id a21sm60355ioh.29.2020.02.19.09.43.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 19 Feb 2020 09:43:11 -0800 (PST)
-From:   Drew Davenport <ddavenport@chromium.org>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Drew Davenport <ddavenport@chromium.org>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Allison Randal <allison@lohutok.net>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Fritz Koenig <frkoenig@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, zhengbin <zhengbin13@huawei.com>
-Subject: [PATCH 4/4] drm/msm/dpu: Track resources in global state
-Date:   Wed, 19 Feb 2020 10:42:27 -0700
-Message-Id: <20200219104148.4.I1c945b56a579b35955bea6c26e88086c6e91a17a@changeid>
-X-Mailer: git-send-email 2.24.1
-In-Reply-To: <20200219104148.1.I0183a464f2788d41e6902f3535941f69c594b4c1@changeid>
-References: <20200219104148.1.I0183a464f2788d41e6902f3535941f69c594b4c1@changeid>
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=Z7a7oA5rHpxM92NoMV2XbtQ4b8rn3jd4JC722SrafmQ=;
+        b=Yyd7Wa3Yc64cEmXDUm2knEUC/yfaB/fcYOMIlfkiQytFqdp5tX4S3QjGN5F5cYhKed
+         KEXGRvqB+xNT8sV/pIjvz55w9nuE01a33f+pNd0ukDWA4yu+VOWZ5J7zuAS4HYXeClDx
+         lg9Pq2uYg5aQMlsf+2QsJJfZoywMKOOD9pQctotb+hLqnm0HyhYJGcoLqaIEmI8br+zm
+         Wd+0+2rBVe6Hsu+9TWd97z1m56OnvEX+f3bzpAjiOronBea9WoJNd0lv8RREwrlADHp1
+         5bsTCgI3DAjIAmI9rRzAkWZLbY29S+bWHtxqOx/cMHC6fllWWCeKOQTuRak7hjMfzvjJ
+         +T4g==
+X-Gm-Message-State: APjAAAXJGKHGctlofqiPoIXZwVqx7bbjwNL3WIdgA4BxzSSgO4Hnf5DU
+        bMZU90CkQ3V3JGvnPurHaKQQnQ==
+X-Google-Smtp-Source: APXvYqx2fiqjZ6AKNyrvLHc9HhmGOYJRsA7+KslntBNJvlRCCgTz4zgI0jq4BtqJ1jnmFpB76/+gpA==
+X-Received: by 2002:a17:902:d898:: with SMTP id b24mr27181684plz.133.1582134621518;
+        Wed, 19 Feb 2020 09:50:21 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id q7sm321684pgk.62.2020.02.19.09.50.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Feb 2020 09:50:20 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <254d7b003fdcd6f5fc0c45ab75b4b5f2@codeaurora.org>
+References: <1581415982-8793-1-git-send-email-skakit@codeaurora.org> <158154775640.184098.13898240474253130921@swboyd.mtv.corp.google.com> <254d7b003fdcd6f5fc0c45ab75b4b5f2@codeaurora.org>
+Subject: Re: [PATCH] tty: serial: qcom_geni_serial: Fix RX cancel command failure
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     gregkh@linuxfoundation.org, mgautam@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        akashast@codeaurora.org, rojay@codeaurora.org
+To:     skakit@codeaurora.org
+Date:   Wed, 19 Feb 2020 09:50:19 -0800
+Message-ID: <158213461988.184098.7165493520823815160@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move mapping of resources to encoder ids from the resource manager to a
-new dpu_global_state struct. Store this struct in global atomic state.
+Quoting skakit@codeaurora.org (2020-02-14 05:17:01)
+> On 2020-02-13 04:19, Stephen Boyd wrote:
+> >     driver_probe_device+0x70/0x140
+> >     __driver_attach_async_helper+0x7c/0xa8
+> >     async_run_entry_fn+0x60/0x178
+> >     process_one_work+0x33c/0x640
+> >     worker_thread+0x2a0/0x470
+> >     kthread+0x128/0x138
+> >     ret_from_fork+0x10/0x18
+> >    Code: 1aca096a 911e0129 b940012b 7100054a (b800450b)
+> I think the most probable explanation of the crash is, set_termios call=20
+> is starting RX engine and RX engine is sampling some garbage data from=20
+> line, and by the time startup is called, we have few data to read.
+> How frequently you are able to see this crash? because internally we are =
 
-Before this patch, atomic test would be performed by modifying global
-state (resource manager), and backing out any changes if the test fails.
-By using drm atomic global state, this is not necessary as any changes
-to the global state will be discarded if the test fails.
+> unable to reproduce it.
 
-Signed-off-by: Drew Davenport <ddavenport@chromium.org>
----
+How is set_termios involved? Is that starting the RX side before
+uart_startup() is called? Sorry I haven't looked into the code flow very
+deeply here.
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  65 +++++------
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  84 ++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  26 +++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 121 ++++++++++----------
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |  22 ++--
- 5 files changed, 207 insertions(+), 111 deletions(-)
+It seems to happen when the bluetooth driver probes so maybe constantly
+adding and removing the hci_uart module will cause this to happen for
+you? I also run the kernel with many debug options enabled, so maybe try
+enabling all the debug stuff? I see it randomly right now so I'm not
+sure.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 6cadeff456f09..5afde2e7fef08 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -164,7 +164,6 @@ enum dpu_enc_rc_states {
-  *				clks and resources after IDLE_TIMEOUT time.
-  * @vsync_event_work:		worker to handle vsync event for autorefresh
-  * @topology:                   topology of the display
-- * @mode_set_complete:          flag to indicate modeset completion
-  * @idle_timeout:		idle timeout duration in milliseconds
-  */
- struct dpu_encoder_virt {
-@@ -202,7 +201,6 @@ struct dpu_encoder_virt {
- 	struct delayed_work delayed_off_work;
- 	struct kthread_work vsync_event_work;
- 	struct msm_display_topology topology;
--	bool mode_set_complete;
- 
- 	u32 idle_timeout;
- };
-@@ -563,6 +561,7 @@ static int dpu_encoder_virt_atomic_check(
- 	const struct drm_display_mode *mode;
- 	struct drm_display_mode *adj_mode;
- 	struct msm_display_topology topology;
-+	struct dpu_global_state *global_state;
- 	int i = 0;
- 	int ret = 0;
- 
-@@ -579,6 +578,7 @@ static int dpu_encoder_virt_atomic_check(
- 	dpu_kms = to_dpu_kms(priv->kms);
- 	mode = &crtc_state->mode;
- 	adj_mode = &crtc_state->adjusted_mode;
-+	global_state = dpu_kms_get_existing_global_state(dpu_kms);
- 	trace_dpu_enc_atomic_check(DRMID(drm_enc));
- 
- 	/*
-@@ -610,17 +610,15 @@ static int dpu_encoder_virt_atomic_check(
- 
- 	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
- 
--	/* Reserve dynamic resources now. Indicating AtomicTest phase */
-+	/* Reserve dynamic resources now. */
- 	if (!ret) {
- 		/*
- 		 * Avoid reserving resources when mode set is pending. Topology
- 		 * info may not be available to complete reservation.
- 		 */
--		if (drm_atomic_crtc_needs_modeset(crtc_state)
--				&& dpu_enc->mode_set_complete) {
--			ret = dpu_rm_reserve(&dpu_kms->rm, drm_enc, crtc_state,
--					     topology, true);
--			dpu_enc->mode_set_complete = false;
-+		if (drm_atomic_crtc_needs_modeset(crtc_state)) {
-+			ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
-+					drm_enc, crtc_state, topology);
- 		}
- 	}
- 
-@@ -957,12 +955,13 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
- 	struct drm_connector *conn = NULL, *conn_iter;
- 	struct drm_crtc *drm_crtc;
- 	struct dpu_crtc_state *cstate;
-+	struct dpu_global_state *global_state;
- 	struct msm_display_topology topology;
- 	struct dpu_hw_blk *hw_pp[MAX_CHANNELS_PER_ENC];
- 	struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
- 	struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
- 	int num_lm, num_ctl, num_pp;
--	int i, j, ret;
-+	int i, j;
- 
- 	if (!drm_enc) {
- 		DPU_ERROR("invalid encoder\n");
-@@ -976,6 +975,12 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
- 	dpu_kms = to_dpu_kms(priv->kms);
- 	connector_list = &dpu_kms->dev->mode_config.connector_list;
- 
-+	global_state = dpu_kms_get_existing_global_state(dpu_kms);
-+	if (IS_ERR_OR_NULL(global_state)) {
-+		DPU_ERROR("Failed to get global state");
-+		return;
-+	}
-+
- 	trace_dpu_enc_mode_set(DRMID(drm_enc));
- 
- 	list_for_each_entry(conn_iter, connector_list, head)
-@@ -996,21 +1001,14 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
- 
- 	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
- 
--	/* Reserve dynamic resources now. Indicating non-AtomicTest phase */
--	ret = dpu_rm_reserve(&dpu_kms->rm, drm_enc, drm_crtc->state,
--			     topology, false);
--	if (ret) {
--		DPU_ERROR_ENC(dpu_enc,
--				"failed to reserve hw resources, %d\n", ret);
--		return;
--	}
--
--	num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, drm_enc->base.id,
--		DPU_HW_BLK_PINGPONG, hw_pp, ARRAY_SIZE(hw_pp));
--	num_ctl = dpu_rm_get_assigned_resources(&dpu_kms->rm, drm_enc->base.id,
--		DPU_HW_BLK_CTL, hw_ctl, ARRAY_SIZE(hw_ctl));
--	num_lm = dpu_rm_get_assigned_resources(&dpu_kms->rm, drm_enc->base.id,
--		DPU_HW_BLK_LM, hw_lm, ARRAY_SIZE(hw_lm));
-+	/* Query resource that have been reserved in atomic check step. */
-+	num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-+		drm_enc->base.id, DPU_HW_BLK_PINGPONG, hw_pp,
-+		ARRAY_SIZE(hw_pp));
-+	num_ctl = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-+		drm_enc->base.id, DPU_HW_BLK_CTL, hw_ctl, ARRAY_SIZE(hw_ctl));
-+	num_lm = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-+		drm_enc->base.id, DPU_HW_BLK_LM, hw_lm, ARRAY_SIZE(hw_lm));
- 
- 	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
- 		dpu_enc->hw_pp[i] = i < num_pp ? to_dpu_hw_pingpong(hw_pp[i])
-@@ -1035,21 +1033,21 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
- 		if (!dpu_enc->hw_pp[i]) {
- 			DPU_ERROR_ENC(dpu_enc,
- 				"no pp block assigned at idx: %d\n", i);
--			goto error;
-+			return;
- 		}
- 
- 		if (!hw_ctl[i]) {
- 			DPU_ERROR_ENC(dpu_enc,
- 				"no ctl block assigned at idx: %d\n", i);
--			goto error;
-+			return;
- 		}
- 
- 		phys->hw_pp = dpu_enc->hw_pp[i];
- 		phys->hw_ctl = to_dpu_hw_ctl(hw_ctl[i]);
- 
- 		num_blk = dpu_rm_get_assigned_resources(&dpu_kms->rm,
--			drm_enc->base.id, DPU_HW_BLK_INTF, hw_blk,
--			ARRAY_SIZE(hw_blk));
-+			global_state, drm_enc->base.id, DPU_HW_BLK_INTF,
-+			hw_blk, ARRAY_SIZE(hw_blk));
- 		for (j = 0; j < num_blk; j++) {
- 			struct dpu_hw_intf *hw_intf;
- 
-@@ -1061,18 +1059,13 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
- 		if (!phys->hw_intf) {
- 			DPU_ERROR_ENC(dpu_enc,
- 				      "no intf block assigned at idx: %d\n", i);
--				goto error;
-+			return;
- 		}
- 
- 		phys->connector = conn->state->connector;
- 		if (phys->ops.mode_set)
- 			phys->ops.mode_set(phys, mode, adj_mode);
- 	}
--
--	dpu_enc->mode_set_complete = true;
--
--error:
--	dpu_rm_release(&dpu_kms->rm, drm_enc);
- }
- 
- static void _dpu_encoder_virt_enable_helper(struct drm_encoder *drm_enc)
-@@ -1169,6 +1162,7 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
- 	struct dpu_encoder_virt *dpu_enc = NULL;
- 	struct msm_drm_private *priv;
- 	struct dpu_kms *dpu_kms;
-+	struct dpu_global_state *global_state;
- 	int i = 0;
- 
- 	if (!drm_enc) {
-@@ -1187,6 +1181,7 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
- 
- 	priv = drm_enc->dev->dev_private;
- 	dpu_kms = to_dpu_kms(priv->kms);
-+	global_state = dpu_kms_get_existing_global_state(dpu_kms);
- 
- 	trace_dpu_enc_disable(DRMID(drm_enc));
- 
-@@ -1216,7 +1211,7 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
- 
- 	DPU_DEBUG_ENC(dpu_enc, "encoder disabled\n");
- 
--	dpu_rm_release(&dpu_kms->rm, drm_enc);
-+	dpu_rm_release(global_state, drm_enc);
- 
- 	mutex_unlock(&dpu_enc->enc_lock);
- }
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index cb08fafb1dc14..59d42ff9da645 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -228,6 +228,85 @@ static int dpu_kms_debugfs_init(struct msm_kms *kms, struct drm_minor *minor)
- }
- #endif
- 
-+/* Global/shared object state funcs */
-+
-+/*
-+ * This is a helper that returns the private state currently in operation.
-+ * Note that this would return the "old_state" if called in the atomic check
-+ * path, and the "new_state" after the atomic swap has been done.
-+ */
-+struct dpu_global_state *
-+dpu_kms_get_existing_global_state(struct dpu_kms *dpu_kms)
-+{
-+	return to_dpu_global_state(dpu_kms->global_state.state);
-+}
-+
-+/*
-+ * This acquires the modeset lock set aside for global state, creates
-+ * a new duplicated private object state.
-+ */
-+struct dpu_global_state *dpu_kms_get_global_state(struct drm_atomic_state *s)
-+{
-+	struct msm_drm_private *priv = s->dev->dev_private;
-+	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
-+	struct drm_private_state *priv_state;
-+	int ret;
-+
-+	ret = drm_modeset_lock(&dpu_kms->global_state_lock, s->acquire_ctx);
-+	if (ret)
-+		return ERR_PTR(ret);
-+
-+	priv_state = drm_atomic_get_private_obj_state(s,
-+						&dpu_kms->global_state);
-+	if (IS_ERR(priv_state))
-+		return ERR_CAST(priv_state);
-+
-+	return to_dpu_global_state(priv_state);
-+}
-+
-+static struct drm_private_state *
-+dpu_kms_global_duplicate_state(struct drm_private_obj *obj)
-+{
-+	struct dpu_global_state *state;
-+
-+	state = kmemdup(obj->state, sizeof(*state), GFP_KERNEL);
-+	if (!state)
-+		return NULL;
-+
-+	__drm_atomic_helper_private_obj_duplicate_state(obj, &state->base);
-+
-+	return &state->base;
-+}
-+
-+static void dpu_kms_global_destroy_state(struct drm_private_obj *obj,
-+				      struct drm_private_state *state)
-+{
-+	struct dpu_global_state *dpu_state = to_dpu_global_state(state);
-+
-+	kfree(dpu_state);
-+}
-+
-+static const struct drm_private_state_funcs dpu_kms_global_state_funcs = {
-+	.atomic_duplicate_state = dpu_kms_global_duplicate_state,
-+	.atomic_destroy_state = dpu_kms_global_destroy_state,
-+};
-+
-+static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
-+{
-+	struct dpu_global_state *state;
-+
-+	drm_modeset_lock_init(&dpu_kms->global_state_lock);
-+
-+	state = kzalloc(sizeof(*state), GFP_KERNEL);
-+	if (!state)
-+		return -ENOMEM;
-+
-+	drm_atomic_private_obj_init(dpu_kms->dev, &dpu_kms->global_state,
-+				    &state->base,
-+				    &dpu_kms_global_state_funcs);
-+	return 0;
-+}
-+
- static int dpu_kms_enable_vblank(struct msm_kms *kms, struct drm_crtc *crtc)
- {
- 	return dpu_crtc_vblank(crtc, true);
-@@ -770,6 +849,11 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 
- 	dpu_kms = to_dpu_kms(kms);
- 	dev = dpu_kms->dev;
-+
-+	rc = dpu_kms_global_obj_init(dpu_kms);
-+	if (rc)
-+		return rc;
-+
- 	priv = dev->dev_private;
- 
- 	atomic_set(&dpu_kms->bandwidth_ref, 0);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-index c6169e7df19de..211f5de99a441 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-@@ -111,6 +111,13 @@ struct dpu_kms {
- 
- 	struct dpu_core_perf perf;
- 
-+	/*
-+	 * Global private object state, Do not access directly, use
-+	 * dpu_kms_global_get_state()
-+	 */
-+	struct drm_modeset_lock global_state_lock;
-+	struct drm_private_obj global_state;
-+
- 	struct dpu_rm rm;
- 	bool rm_init;
- 
-@@ -139,6 +146,25 @@ struct vsync_info {
- 
- #define to_dpu_kms(x) container_of(x, struct dpu_kms, base)
- 
-+#define to_dpu_global_state(x) container_of(x, struct dpu_global_state, base)
-+
-+/* Global private object state for tracking resources that are shared across
-+ * multiple kms objects (planes/crtcs/etc).
-+ */
-+struct dpu_global_state {
-+	struct drm_private_state base;
-+
-+	uint32_t pingpong_to_enc_id[PINGPONG_MAX - PINGPONG_0];
-+	uint32_t mixer_to_enc_id[LM_MAX - LM_0];
-+	uint32_t ctl_to_enc_id[CTL_MAX - CTL_0];
-+	uint32_t intf_to_enc_id[INTF_MAX - INTF_0];
-+};
-+
-+struct dpu_global_state
-+	*dpu_kms_get_existing_global_state(struct dpu_kms *dpu_kms);
-+struct dpu_global_state
-+	*__must_check dpu_kms_get_global_state(struct drm_atomic_state *s);
-+
- /**
-  * Debugfs functions - extra helper functions for debugfs support
-  *
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-index f1483b00b7423..bc940f9b12d7e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-@@ -66,8 +66,6 @@ int dpu_rm_destroy(struct dpu_rm *rm)
- 		}
- 	}
- 
--	mutex_destroy(&rm->rm_lock);
--
- 	return 0;
- }
- 
-@@ -85,8 +83,6 @@ int dpu_rm_init(struct dpu_rm *rm,
- 	/* Clear, setup lists */
- 	memset(rm, 0, sizeof(*rm));
- 
--	mutex_init(&rm->rm_lock);
--
- 	/* Interrogate HW catalog and create tracking items for hw blocks */
- 	for (i = 0; i < cat->mixer_count; i++) {
- 		struct dpu_hw_mixer *hw;
-@@ -230,13 +226,14 @@ static bool _dpu_rm_check_lm_peer(struct dpu_rm *rm, int primary_idx,
-  * @Return: true if lm matches all requirements, false otherwise
-  */
- static bool _dpu_rm_check_lm_and_get_connected_blks(struct dpu_rm *rm,
-+		struct dpu_global_state *global_state,
- 		uint32_t enc_id, int lm_idx, int *pp_idx)
- {
- 	const struct dpu_lm_cfg *lm_cfg;
- 	int idx;
- 
- 	/* Already reserved? */
--	if (reserved_by_other(rm->mixer_to_enc_id, lm_idx, enc_id)) {
-+	if (reserved_by_other(global_state->mixer_to_enc_id, lm_idx, enc_id)) {
- 		DPU_DEBUG("lm %d already reserved\n", lm_idx + LM_0);
- 		return false;
- 	}
-@@ -248,7 +245,7 @@ static bool _dpu_rm_check_lm_and_get_connected_blks(struct dpu_rm *rm,
- 		return false;
- 	}
- 
--	if (reserved_by_other(rm->pingpong_to_enc_id, idx, enc_id)) {
-+	if (reserved_by_other(global_state->pingpong_to_enc_id, idx, enc_id)) {
- 		DPU_DEBUG("lm %d pp %d already reserved\n", lm_cfg->id,
- 				lm_cfg->pingpong);
- 		return false;
-@@ -257,7 +254,9 @@ static bool _dpu_rm_check_lm_and_get_connected_blks(struct dpu_rm *rm,
- 	return true;
- }
- 
--static int _dpu_rm_reserve_lms(struct dpu_rm *rm, uint32_t enc_id,
-+static int _dpu_rm_reserve_lms(struct dpu_rm *rm,
-+			       struct dpu_global_state *global_state,
-+			       uint32_t enc_id,
- 			       struct dpu_rm_requirements *reqs)
- 
- {
-@@ -279,8 +278,8 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm, uint32_t enc_id,
- 		lm_count = 0;
- 		lm_idx[lm_count] = i;
- 
--		if (!_dpu_rm_check_lm_and_get_connected_blks(
--				rm, enc_id, i, &pp_idx[lm_count])) {
-+		if (!_dpu_rm_check_lm_and_get_connected_blks(rm, global_state,
-+				enc_id, i, &pp_idx[lm_count])) {
- 			continue;
- 		}
- 
-@@ -298,8 +297,9 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm, uint32_t enc_id,
- 				continue;
- 			}
- 
--			if (!_dpu_rm_check_lm_and_get_connected_blks(
--					rm, enc_id, j, &pp_idx[lm_count])) {
-+			if (!_dpu_rm_check_lm_and_get_connected_blks(rm,
-+					global_state, enc_id, j,
-+					&pp_idx[lm_count])) {
- 				continue;
- 			}
- 
-@@ -314,8 +314,8 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm, uint32_t enc_id,
- 	}
- 
- 	for (i = 0; i < lm_count; i++) {
--		rm->mixer_to_enc_id[lm_idx[i]] = enc_id;
--		rm->pingpong_to_enc_id[pp_idx[i]] = enc_id;
-+		global_state->mixer_to_enc_id[lm_idx[i]] = enc_id;
-+		global_state->pingpong_to_enc_id[pp_idx[i]] = enc_id;
- 
- 		trace_dpu_rm_reserve_lms(lm_idx[i] + LM_0, enc_id,
- 					 pp_idx[i] + PINGPONG_0);
-@@ -326,6 +326,7 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm, uint32_t enc_id,
- 
- static int _dpu_rm_reserve_ctls(
- 		struct dpu_rm *rm,
-+		struct dpu_global_state *global_state,
- 		uint32_t enc_id,
- 		const struct msm_display_topology *top)
- {
-@@ -345,7 +346,7 @@ static int _dpu_rm_reserve_ctls(
- 
- 		if (!rm->ctl_blks[j])
- 			continue;
--		if (reserved_by_other(rm->ctl_to_enc_id, j, enc_id))
-+		if (reserved_by_other(global_state->ctl_to_enc_id, j, enc_id))
- 			continue;
- 
- 		ctl = to_dpu_hw_ctl(rm->ctl_blks[j]);
-@@ -369,7 +370,7 @@ static int _dpu_rm_reserve_ctls(
- 		return -ENAVAIL;
- 
- 	for (i = 0; i < ARRAY_SIZE(ctl_idx) && i < num_ctls; i++) {
--		rm->ctl_to_enc_id[ctl_idx[i]] = enc_id;
-+		global_state->ctl_to_enc_id[ctl_idx[i]] = enc_id;
- 		trace_dpu_rm_reserve_ctls(i + CTL_0, enc_id);
- 	}
- 
-@@ -378,27 +379,34 @@ static int _dpu_rm_reserve_ctls(
- 
- static int _dpu_rm_reserve_intf(
- 		struct dpu_rm *rm,
-+		struct dpu_global_state *global_state,
- 		uint32_t enc_id,
- 		uint32_t id)
- {
- 	int idx = id - INTF_0;
- 
-+	if (idx < 0 || idx >= ARRAY_SIZE(rm->intf_blks)) {
-+		DPU_ERROR("invalid intf id: %d", id);
-+		return -EINVAL;
-+	}
-+
- 	if (!rm->intf_blks[idx]) {
- 		DPU_ERROR("couldn't find intf id %d\n", id);
- 		return -EINVAL;
- 	}
- 
--	if (reserved_by_other(rm->intf_to_enc_id, idx, enc_id)) {
-+	if (reserved_by_other(global_state->intf_to_enc_id, idx, enc_id)) {
- 		DPU_ERROR("intf id %d already reserved\n", id);
- 		return -ENAVAIL;
- 	}
- 
--	rm->intf_to_enc_id[idx] = enc_id;
-+	global_state->intf_to_enc_id[idx] = enc_id;
- 	return 0;
- }
- 
- static int _dpu_rm_reserve_intf_related_hw(
- 		struct dpu_rm *rm,
-+		struct dpu_global_state *global_state,
- 		uint32_t enc_id,
- 		struct dpu_encoder_hw_resources *hw_res)
- {
-@@ -409,7 +417,7 @@ static int _dpu_rm_reserve_intf_related_hw(
- 		if (hw_res->intfs[i] == INTF_MODE_NONE)
- 			continue;
- 		id = i + INTF_0;
--		ret = _dpu_rm_reserve_intf(rm, enc_id, id);
-+		ret = _dpu_rm_reserve_intf(rm, global_state, enc_id, id);
- 		if (ret)
- 			return ret;
- 	}
-@@ -419,24 +427,27 @@ static int _dpu_rm_reserve_intf_related_hw(
- 
- static int _dpu_rm_make_reservation(
- 		struct dpu_rm *rm,
-+		struct dpu_global_state *global_state,
- 		struct drm_encoder *enc,
- 		struct dpu_rm_requirements *reqs)
- {
- 	int ret;
- 
--	ret = _dpu_rm_reserve_lms(rm, enc->base.id, reqs);
-+	ret = _dpu_rm_reserve_lms(rm, global_state, enc->base.id, reqs);
- 	if (ret) {
- 		DPU_ERROR("unable to find appropriate mixers\n");
- 		return ret;
- 	}
- 
--	ret = _dpu_rm_reserve_ctls(rm, enc->base.id, &reqs->topology);
-+	ret = _dpu_rm_reserve_ctls(rm, global_state, enc->base.id,
-+				&reqs->topology);
- 	if (ret) {
- 		DPU_ERROR("unable to find appropriate CTL\n");
- 		return ret;
- 	}
- 
--	ret = _dpu_rm_reserve_intf_related_hw(rm, enc->base.id, &reqs->hw_res);
-+	ret = _dpu_rm_reserve_intf_related_hw(rm, global_state, enc->base.id,
-+				&reqs->hw_res);
- 	if (ret)
- 		return ret;
- 
-@@ -470,33 +481,25 @@ static void _dpu_rm_clear_mapping(uint32_t *res_mapping, int cnt,
- 	}
- }
- 
--static void _dpu_rm_release_reservation(struct dpu_rm *rm, uint32_t enc_id)
--{
--	_dpu_rm_clear_mapping(rm->pingpong_to_enc_id,
--		ARRAY_SIZE(rm->pingpong_to_enc_id), enc_id);
--	_dpu_rm_clear_mapping(rm->mixer_to_enc_id,
--		ARRAY_SIZE(rm->mixer_to_enc_id), enc_id);
--	_dpu_rm_clear_mapping(rm->ctl_to_enc_id,
--		ARRAY_SIZE(rm->ctl_to_enc_id), enc_id);
--	_dpu_rm_clear_mapping(rm->intf_to_enc_id,
--		ARRAY_SIZE(rm->intf_to_enc_id), enc_id);
--}
--
--void dpu_rm_release(struct dpu_rm *rm, struct drm_encoder *enc)
-+void dpu_rm_release(struct dpu_global_state *global_state,
-+		    struct drm_encoder *enc)
- {
--	mutex_lock(&rm->rm_lock);
--
--	_dpu_rm_release_reservation(rm, enc->base.id);
--
--	mutex_unlock(&rm->rm_lock);
-+	_dpu_rm_clear_mapping(global_state->pingpong_to_enc_id,
-+		ARRAY_SIZE(global_state->pingpong_to_enc_id), enc->base.id);
-+	_dpu_rm_clear_mapping(global_state->mixer_to_enc_id,
-+		ARRAY_SIZE(global_state->mixer_to_enc_id), enc->base.id);
-+	_dpu_rm_clear_mapping(global_state->ctl_to_enc_id,
-+		ARRAY_SIZE(global_state->ctl_to_enc_id), enc->base.id);
-+	_dpu_rm_clear_mapping(global_state->intf_to_enc_id,
-+		ARRAY_SIZE(global_state->intf_to_enc_id), enc->base.id);
- }
- 
- int dpu_rm_reserve(
- 		struct dpu_rm *rm,
-+		struct dpu_global_state *global_state,
- 		struct drm_encoder *enc,
- 		struct drm_crtc_state *crtc_state,
--		struct msm_display_topology topology,
--		bool test_only)
-+		struct msm_display_topology topology)
- {
- 	struct dpu_rm_requirements reqs;
- 	int ret;
-@@ -505,35 +508,31 @@ int dpu_rm_reserve(
- 	if (!drm_atomic_crtc_needs_modeset(crtc_state))
- 		return 0;
- 
--	DRM_DEBUG_KMS("reserving hw for enc %d crtc %d test_only %d\n",
--		      enc->base.id, crtc_state->crtc->base.id, test_only);
-+	if (IS_ERR(global_state)) {
-+		DPU_ERROR("failed to global state\n");
-+		return PTR_ERR(global_state);
-+	}
- 
--	mutex_lock(&rm->rm_lock);
-+	DRM_DEBUG_KMS("reserving hw for enc %d crtc %d\n",
-+		      enc->base.id, crtc_state->crtc->base.id);
- 
- 	ret = _dpu_rm_populate_requirements(enc, &reqs, topology);
- 	if (ret) {
- 		DPU_ERROR("failed to populate hw requirements\n");
--		goto end;
-+		return ret;
- 	}
- 
--	ret = _dpu_rm_make_reservation(rm, enc, &reqs);
--	if (ret) {
-+	ret = _dpu_rm_make_reservation(rm, global_state, enc, &reqs);
-+	if (ret)
- 		DPU_ERROR("failed to reserve hw resources: %d\n", ret);
--		_dpu_rm_release_reservation(rm, enc->base.id);
--	} else if (test_only) {
--		 /* test_only: test the reservation and then undo */
--		DPU_DEBUG("test_only: discard test [enc: %d]\n",
--				enc->base.id);
--		_dpu_rm_release_reservation(rm, enc->base.id);
--	}
- 
--end:
--	mutex_unlock(&rm->rm_lock);
-+
- 
- 	return ret;
- }
- 
--int dpu_rm_get_assigned_resources(struct dpu_rm *rm, uint32_t enc_id,
-+int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
-+	struct dpu_global_state *global_state, uint32_t enc_id,
- 	enum dpu_hw_blk_type type, struct dpu_hw_blk **blks, int blks_size)
- {
- 	struct dpu_hw_blk **hw_blks;
-@@ -543,22 +542,22 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm, uint32_t enc_id,
- 	switch (type) {
- 	case DPU_HW_BLK_PINGPONG:
- 		hw_blks = rm->pingpong_blks;
--		hw_to_enc_id = rm->pingpong_to_enc_id;
-+		hw_to_enc_id = global_state->pingpong_to_enc_id;
- 		max_blks = ARRAY_SIZE(rm->pingpong_blks);
- 		break;
- 	case DPU_HW_BLK_LM:
- 		hw_blks = rm->mixer_blks;
--		hw_to_enc_id = rm->mixer_to_enc_id;
-+		hw_to_enc_id = global_state->mixer_to_enc_id;
- 		max_blks = ARRAY_SIZE(rm->mixer_blks);
- 		break;
- 	case DPU_HW_BLK_CTL:
- 		hw_blks = rm->ctl_blks;
--		hw_to_enc_id = rm->ctl_to_enc_id;
-+		hw_to_enc_id = global_state->ctl_to_enc_id;
- 		max_blks = ARRAY_SIZE(rm->ctl_blks);
- 		break;
- 	case DPU_HW_BLK_INTF:
- 		hw_blks = rm->intf_blks;
--		hw_to_enc_id = rm->intf_to_enc_id;
-+		hw_to_enc_id = global_state->intf_to_enc_id;
- 		max_blks = ARRAY_SIZE(rm->intf_blks);
- 		break;
- 	default:
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-index 9c8a436ba6cc1..6d2b04f306f09 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-@@ -11,6 +11,7 @@
- #include "msm_kms.h"
- #include "dpu_hw_top.h"
- 
-+struct dpu_global_state;
- 
- /**
-  * struct dpu_rm - DPU dynamic hardware resource manager
-@@ -18,10 +19,6 @@
-  * @mixer_blks: array of layer mixer hardware resources
-  * @ctl_blks: array of ctl hardware resources
-  * @intf_blks: array of intf hardware resources
-- * @pingpong_to_enc_id: mapping of pingpong hardware resources to an encoder ID
-- * @mixer_to_enc_id: mapping of mixer hardware resources to an encoder ID
-- * @ctl_to_enc_id: mapping of ctl hardware resources to an encoder ID
-- * @intf_to_enc_id: mapping of intf hardware resources to an encoder ID
-  * @lm_max_width: cached layer mixer maximum width
-  * @rm_lock: resource manager mutex
-  */
-@@ -31,13 +28,7 @@ struct dpu_rm {
- 	struct dpu_hw_blk *ctl_blks[CTL_MAX - CTL_0];
- 	struct dpu_hw_blk *intf_blks[INTF_MAX - INTF_0];
- 
--	uint32_t pingpong_to_enc_id[PINGPONG_MAX - PINGPONG_0];
--	uint32_t mixer_to_enc_id[LM_MAX - LM_0];
--	uint32_t ctl_to_enc_id[CTL_MAX - CTL_0];
--	uint32_t intf_to_enc_id[INTF_MAX - INTF_0];
--
- 	uint32_t lm_max_width;
--	struct mutex rm_lock;
- };
- 
- /**
-@@ -70,14 +61,13 @@ int dpu_rm_destroy(struct dpu_rm *rm);
-  * @drm_enc: DRM Encoder handle
-  * @crtc_state: Proposed Atomic DRM CRTC State handle
-  * @topology: Pointer to topology info for the display
-- * @test_only: Atomic-Test phase, discard results (unless property overrides)
-  * @Return: 0 on Success otherwise -ERROR
-  */
- int dpu_rm_reserve(struct dpu_rm *rm,
-+		struct dpu_global_state *global_state,
- 		struct drm_encoder *drm_enc,
- 		struct drm_crtc_state *crtc_state,
--		struct msm_display_topology topology,
--		bool test_only);
-+		struct msm_display_topology topology);
- 
- /**
-  * dpu_rm_reserve - Given the encoder for the display chain, release any
-@@ -86,12 +76,14 @@ int dpu_rm_reserve(struct dpu_rm *rm,
-  * @enc: DRM Encoder handle
-  * @Return: 0 on Success otherwise -ERROR
-  */
--void dpu_rm_release(struct dpu_rm *rm, struct drm_encoder *enc);
-+void dpu_rm_release(struct dpu_global_state *global_state,
-+		struct drm_encoder *enc);
- 
- /**
-  * Get hw resources of the given type that are assigned to this encoder.
-  */
--int dpu_rm_get_assigned_resources(struct dpu_rm *rm, uint32_t enc_id,
-+int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
-+	struct dpu_global_state *global_state, uint32_t enc_id,
- 	enum dpu_hw_blk_type type, struct dpu_hw_blk **blks, int blks_size);
- #endif /* __DPU_RM_H__ */
- 
--- 
-2.24.1
+> >=20
+> >=20
+> > This seems to be the problematic line. We didn't call handle_rx() from
+> > the stop_rx() path before. And this qcom_geni_serial_stop_rx() function
+> > is called from qcom_geni_serial_startup(), but most importantly, we=20
+> > call
+> > into this function from startup before we allocate memory for the
+> > port->rx_fifo member (see the devm_kcalloc() later in
+> > qcom_geni_serial_port_setup() and see how it's after we stop rx).
+> >=20
+> > Why do we need to flush the rx buffer by reading it into the software
+> > buffer? Can't we simply ack any outstanding RX interrupts in the
+> > hardware when we're stopping receive?
+> We can't simply ack RX_LAST interrupt, there is a sticky bit that get=20
+> set on HW level(not exposed to SW) with RX last interrupt. The only way=20
+> to clear it is flush out RX FIFO HW buffer. The sticky bit can create=20
+> problem for future transfers if remained uncleared.
+> How about we allocate buffer to port->rx_fifo in probe itself?
 
+Ok. If we have to read the rx fifo to flush the buffer then perhaps
+write another function that qcom_geni_serial_stop_rx() can use to
+indicate that it wants to throw away whatever is in the rx fifo? Or
+adjust handle_rx() to check for a NULL fifo pointer and throw it away in
+that case? When we're setting up this device I don't understand why we
+would want to read anything out of the rx fifo that was there before the
+driver started.
