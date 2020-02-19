@@ -2,377 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A95A7163D0D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 07:27:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FC81163E4E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 08:57:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726163AbgBSG1x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Feb 2020 01:27:53 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:7671 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726121AbgBSG1x (ORCPT
+        id S1726636AbgBSH4c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Feb 2020 02:56:32 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:39732 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726569AbgBSH4c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Feb 2020 01:27:53 -0500
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 18 Feb 2020 22:27:51 -0800
-Received: from sivaprak-linux.qualcomm.com ([10.201.3.202])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP; 18 Feb 2020 22:27:48 -0800
-Received: by sivaprak-linux.qualcomm.com (Postfix, from userid 459349)
-        id 7FC7221495; Wed, 19 Feb 2020 11:57:46 +0530 (IST)
-From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sivaprak@codeaurora.org
-Subject: [PATCH] arm64: dts: ipq6018: Add a few device nodes
-Date:   Wed, 19 Feb 2020 11:57:35 +0530
-Message-Id: <1582093655-9673-1-git-send-email-sivaprak@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Wed, 19 Feb 2020 02:56:32 -0500
+Received: by mail-ed1-f67.google.com with SMTP id m13so28039872edb.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Feb 2020 23:56:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Q3+DgOutnfX7SsA3bKGScs4wmPyXe9VReVvuWS0M6eg=;
+        b=B9VOqdReReZ1UeU791Rw1WlZRkQMxOMH6TE0rvZjCfwjN+5+ngZKvK/2vWeKPsgu1H
+         WresiCidvXZl/lPZ3JAHrOVFjVeEVJgAg0DRYc5zt6o8PsAzA5tFX6WkErNRD2yX4SLB
+         4uAaPOMgTexnB1rhFyLRX014eJi1auuXLhhMfMou7yd2UwKjZ6Uf1JVJiQJkm3HJD0HY
+         A+v3aoFgp6011VlLTNW47C0ebBYxxZ90iLj86hn+EAGee2LEfaUMGIUlUnGeqnOAHEqs
+         3nANbPVRpgxZokwGanYa2uaA8BX0zdb96rGRENEnAd0NpFcRNg9hRQbtLxCXcbjWvbnw
+         EK9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Q3+DgOutnfX7SsA3bKGScs4wmPyXe9VReVvuWS0M6eg=;
+        b=LJHpiKFXG4e6y84MH2h0m5ht8jqBcrcI7zfV70F2kRuDrNlGr1n1m5VPDWjfRYRMJ2
+         RAQwrldqiiePsA6gWCFSGCLal9RBdhhYV7JLEGNWiaPE/g16f4WmTYRHGm3g1oAzl6dN
+         0pXzL3VI+Llamt0uJstv9DEUcQA8u+p6EWOLNcUldrzwYH8vgyLEQcOpgjTGPh6RAq+L
+         eTsApLj9OQRkzucJ8nOPf294ksAB1biS9qeQcj/rDNR2GFMBVlsbqsqCHSyr5dBo6ILg
+         GWWBz+XFOrvi60FjylPxtkNwLpgy4y2T+wLUm8PaL+Fswf45oa56YECVizjbJaeeDdUI
+         I/3Q==
+X-Gm-Message-State: APjAAAW3dR+qZ/ameQT5R3o5SX9uRf+2pA0rPhUNWlA2eXzzGMQqKX07
+        VoG+vNXLO99w7WeS4GTzOPLVaA==
+X-Google-Smtp-Source: APXvYqzY1Ka4YmzayW0U4GzuX30KYCpJuQ7CVEnrnpvxHGnfC9YVDEwp3qO0A8Qn44H3AwHFDmYMjQ==
+X-Received: by 2002:a17:906:e296:: with SMTP id gg22mr23367427ejb.7.1582098989740;
+        Tue, 18 Feb 2020 23:56:29 -0800 (PST)
+Received: from [192.168.27.209] ([94.155.124.210])
+        by smtp.googlemail.com with ESMTPSA id qh18sm35942ejb.23.2020.02.18.23.56.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Feb 2020 23:56:28 -0800 (PST)
+Subject: Re: [PATCH] media: venus: support frame rate control
+To:     Jeffrey Kardatzke <jkardatzke@google.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        "Mauro Carvalho Chehab )" <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200213213007.17023-1-jkardatzke@google.com>
+ <b471217a-1877-eaed-55c2-084f4b126bb4@linaro.org>
+ <CA+ddPcPjtv_9s4+t_1jkoGSZihVu2cVLyW102WuoLMy-RGkKPw@mail.gmail.com>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <b0c8653a-314e-bab9-9dc8-8c33b8d1efc9@linaro.org>
+Date:   Wed, 19 Feb 2020 09:56:27 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <CA+ddPcPjtv_9s4+t_1jkoGSZihVu2cVLyW102WuoLMy-RGkKPw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-add i2c, spi, crypto, rng, watchdog, peripheral nodes, also add
-support for wcss Q6 remoteproc driver and enable hw mutex, smem,
-mailbox, smp2p and rpmsg drivers
+Hi Jeff,
 
-Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
----
-This patch depends on Sricharan's ipq60xx dts patch
-https://patchwork.kernel.org/patch/11340681/
- arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts |  34 ++++
- arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 228 +++++++++++++++++++++++++++
- 2 files changed, 262 insertions(+)
+On 2/18/20 9:09 PM, Jeffrey Kardatzke wrote:
+> Sorry for the duplicate, accidentally used HTML format and it got
+> bounced from the mailing lists so resending.
+> 
+> On Mon, Feb 17, 2020 at 2:15 AM Stanimir Varbanov
+> <stanimir.varbanov@linaro.org> wrote:
+>>
+>> Hi Jeff,
+>>
+>> Thanks for the patch!
+>>
+>> On 2/13/20 11:30 PM, Jeffrey Kardatzke wrote:
+>>> Frame rate control is always enabled in this driver, so make it silently
+>>> support the V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE.
+>>>
+>>> Signed-off-by: Jeffrey Kardatzke <jkardatzke@google.com>
+>>> ---
+>>>  drivers/media/platform/qcom/venus/venc_ctrls.c | 6 ++++++
+>>>  1 file changed, 6 insertions(+)
+>>>
+>>> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+>>> index 877c0b3299e9..9ede692f77c5 100644
+>>> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
+>>> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+>>> @@ -199,6 +199,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+>>>               }
+>>>               mutex_unlock(&inst->lock);
+>>>               break;
+>>> +     case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
+>>> +             // Silently ignore, it's always enabled.
+>>
+>> Please, use C comments and follow the kernel coding style.
+> 
+> OK, hopefully I've got that now. I didn't see any issues aside from
+> the comment style though.
+> I'll upload a new patch shortly.
+>>
+>>
+>> I wonder shouldn't it be better to add rc_enable field in struct
+>> venc_controls and give the user choice to disable the rate control? We
+>> can keep the default to be "enabled".
+>>
+> That'd be fine. Is there a way to actually disable the rate control though?
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-index 897b4b2..b31117a 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-@@ -28,3 +28,37 @@
- 	pinctrl-names = "default";
- 	status = "ok";
- };
-+
-+&i2c_1 {
-+	pinctrl-0 = <&i2c_1_pins>;
-+	pinctrl-names = "default";
-+	status = "ok";
-+};
-+
-+&spi_0 {
-+	cs-select = <0>;
-+	status = "ok";
-+
-+	m25p80@0 {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		reg = <0>;
-+		compatible = "n25q128a11";
-+		spi-max-frequency = <50000000>;
-+	};
-+};
-+
-+&tlmm {
-+	i2c_1_pins: i2c-1-pins {
-+		pins = "gpio42", "gpio43";
-+		function = "blsp2_i2c";
-+		drive-strength = <8>;
-+	};
-+
-+	spi_0_pins: spi-0-pins {
-+		pins = "gpio38", "gpio39", "gpio40", "gpio41";
-+		function = "blsp0_spi";
-+		drive-strength = <8>;
-+		bias-pull-down;
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 0fb44e5..5d4dfb8 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -7,6 +7,7 @@
- 
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
-+#include <dt-bindings/reset/qcom,gcc-ipq6018.h>
- 
- / {
- 	#address-cells = <2>;
-@@ -69,6 +70,12 @@
- 		};
- 	};
- 
-+	firmware {
-+		scm {
-+			compatible = "qcom,scm";
-+		};
-+	};
-+
- 	pmuv8: pmu {
- 		compatible = "arm,cortex-a53-pmu";
- 		interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(4) |
-@@ -89,6 +96,22 @@
- 			reg = <0x0 0x48500000 0x0 0x00200000>;
- 			no-map;
- 		};
-+
-+		smem_region: memory@4aa00000 {
-+			reg = <0x0 0x4aa00000 0x0 0x00100000>;
-+			no-map;
-+		};
-+
-+		q6_region: memory@4ab00000 {
-+			reg = <0x0 0x4ab00000 0x0 0x02800000>;
-+			no-map;
-+		};
-+	};
-+
-+	smem {
-+		compatible = "qcom,smem";
-+		memory-region = <&smem_region>;
-+		hwlocks = <&tcsr_mutex 0>;
- 	};
- 
- 	soc: soc {
-@@ -98,6 +121,36 @@
- 		dma-ranges;
- 		compatible = "simple-bus";
- 
-+		rng: qrng@e1000 {
-+			compatible = "qcom,prng-ee";
-+			reg = <0xe3000 0x1000>;
-+			clocks = <&gcc GCC_PRNG_AHB_CLK>;
-+			clock-names = "core";
-+		};
-+
-+		cryptobam: dma@704000 {
-+			compatible = "qcom,bam-v1.7.0";
-+			reg = <0x00704000 0x20000>;
-+			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_CRYPTO_AHB_CLK>;
-+			clock-names = "bam_clk";
-+			#dma-cells = <1>;
-+			qcom,ee = <1>;
-+			qcom,controlled-remotely = <1>;
-+			qcom,config-pipe-trust-reg = <0>;
-+		};
-+
-+		crypto: crypto@73a000 {
-+			compatible = "qcom,crypto-v5.1";
-+			reg = <0x0073a000 0x6000>;
-+			clocks = <&gcc GCC_CRYPTO_AHB_CLK>,
-+				<&gcc GCC_CRYPTO_AXI_CLK>,
-+				<&gcc GCC_CRYPTO_CLK>;
-+			clock-names = "iface", "bus", "core";
-+			dmas = <&cryptobam 2>, <&cryptobam 3>;
-+			dma-names = "rx", "tx";
-+		};
-+
- 		tlmm: pinctrl@1000000 {
- 			compatible = "qcom,ipq6018-pinctrl";
- 			reg = <0x01000000 0x300000>;
-@@ -125,6 +178,26 @@
- 			#reset-cells = <1>;
- 		};
- 
-+		tcsr_mutex_regs: syscon@1905000 {
-+			compatible = "syscon";
-+			reg = <0x01905000 0x8000>;
-+		};
-+
-+		tcsr_q6: syscon@1945000 {
-+			compatible = "syscon";
-+			reg = <0x01945000 0xe000>;
-+		};
-+
-+		blsp_dma: dma@7884000 {
-+			compatible = "qcom,bam-v1.7.0";
-+			reg = <0x07884000 0x2b000>;
-+			interrupts = <GIC_SPI 238 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_BLSP1_AHB_CLK>;
-+			clock-names = "bam_clk";
-+			#dma-cells = <1>;
-+			qcom,ee = <0>;
-+		};
-+
- 		blsp1_uart3: serial@78b1000 {
- 			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
- 			reg = <0x078b1000 0x200>;
-@@ -135,6 +208,66 @@
- 			status = "disabled";
- 		};
- 
-+		spi_0: spi@78b5000 {
-+			compatible = "qcom,spi-qup-v2.2.1";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0x078b5000 0x600>;
-+			interrupts = <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>;
-+			spi-max-frequency = <50000000>;
-+			clocks = <&gcc GCC_BLSP1_QUP1_SPI_APPS_CLK>,
-+				<&gcc GCC_BLSP1_AHB_CLK>;
-+			clock-names = "core", "iface";
-+			dmas = <&blsp_dma 12>, <&blsp_dma 13>;
-+			dma-names = "tx", "rx";
-+			status = "disabled";
-+		};
-+
-+		spi_1: spi@78b6000 {
-+			compatible = "qcom,spi-qup-v2.2.1";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0x078b6000 0x600>;
-+			interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
-+			spi-max-frequency = <50000000>;
-+			clocks = <&gcc GCC_BLSP1_QUP2_SPI_APPS_CLK>,
-+				<&gcc GCC_BLSP1_AHB_CLK>;
-+			clock-names = "core", "iface";
-+			dmas = <&blsp_dma 14>, <&blsp_dma 15>;
-+			dma-names = "tx", "rx";
-+			status = "disabled";
-+		};
-+
-+		i2c_0: i2c@78b6000 {
-+			compatible = "qcom,i2c-qup-v2.2.1";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0x078b6000 0x600>;
-+			interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_BLSP1_AHB_CLK>,
-+				<&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>;
-+			clock-names = "iface", "core";
-+			clock-frequency  = <400000>;
-+			dmas = <&blsp_dma 15>, <&blsp_dma 14>;
-+			dma-names = "rx", "tx";
-+			status = "disabled";
-+		};
-+
-+		i2c_1: i2c@78b7000 { /* BLSP1 QUP2 */
-+			compatible = "qcom,i2c-qup-v2.2.1";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0x078b7000 0x600>;
-+			interrupts = <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_BLSP1_AHB_CLK>,
-+				<&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>;
-+			clock-names = "iface", "core";
-+			clock-frequency  = <400000>;
-+			dmas = <&blsp_dma 17>, <&blsp_dma 16>;
-+			dma-names = "rx", "tx";
-+			status = "disabled";
-+		};
-+
- 		intc: interrupt-controller@b000000 {
- 			compatible = "qcom,msm-qgic2";
- 			interrupt-controller;
-@@ -146,6 +279,21 @@
- 			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		watchdog@b017000 {
-+			compatible = "qcom,kpss-wdt";
-+			interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>;
-+			reg = <0x0b017000 0x40>;
-+			clocks = <&sleep_clk>;
-+			timeout-sec = <10>;
-+		};
-+
-+		apcs_glb: mailbox@b111000 {
-+			compatible = "qcom,ipq8074-apcs-apps-global";
-+			reg = <0x0b111000 0xc>;
-+
-+			#mbox-cells = <1>;
-+		};
-+
- 		timer {
- 			compatible = "arm,armv8-timer";
- 			interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
-@@ -213,5 +361,85 @@
- 			};
- 		};
- 
-+		q6v5_wcss: q6v5_wcss@cd00000 {
-+			compatible = "qcom,ipq8074-wcss-pil";
-+			reg = <0x0cd00000 0x4040>,
-+				<0x004ab000 0x20>;
-+			reg-names = "qdsp6",
-+				    "rmb";
-+			qca,auto-restart;
-+			qca,extended-intc;
-+			interrupts-extended = <&intc GIC_SPI 325 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcss_smp2p_in 0 0>,
-+					      <&wcss_smp2p_in 1 0>,
-+					      <&wcss_smp2p_in 2 0>,
-+					      <&wcss_smp2p_in 3 0>;
-+			interrupt-names = "wdog",
-+					  "fatal",
-+					  "ready",
-+					  "handover",
-+					  "stop-ack";
-+
-+			resets = <&gcc GCC_WCSSAON_RESET>,
-+				 <&gcc GCC_WCSS_BCR>,
-+				 <&gcc GCC_WCSS_Q6_BCR>;
-+
-+			reset-names = "wcss_aon_reset",
-+				      "wcss_reset",
-+				      "wcss_q6_reset";
-+
-+			clocks = <&gcc GCC_PRNG_AHB_CLK>;
-+			clock-names = "prng";
-+
-+			qcom,halt-regs = <&tcsr_q6 0xa000 0xd000 0x0>;
-+
-+			qcom,smem-states = <&wcss_smp2p_out 0>,
-+					   <&wcss_smp2p_out 1>;
-+			qcom,smem-state-names = "shutdown",
-+						"stop";
-+
-+			memory-region = <&q6_region>;
-+
-+			glink-edge {
-+				interrupts = <GIC_SPI 321 IRQ_TYPE_EDGE_RISING>;
-+				qcom,remote-pid = <1>;
-+				mboxes = <&apcs_glb 8>;
-+
-+				rpm_requests {
-+					qcom,glink-channels = "IPCRTR";
-+				};
-+			};
-+		};
-+
-+	};
-+
-+	tcsr_mutex: tcsr-mutex {
-+		compatible = "qcom,tcsr-mutex";
-+		syscon = <&tcsr_mutex_regs 0 0x80>;
-+		#hwlock-cells = <1>;
-+	};
-+
-+	wcss: wcss-smp2p {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <435>, <428>;
-+
-+		interrupt-parent = <&intc>;
-+		interrupts = <GIC_SPI 322 IRQ_TYPE_EDGE_RISING>;
-+
-+		mboxes = <&apcs_glb 9>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <1>;
-+
-+		wcss_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		wcss_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
- 	};
- };
+The rate control property values are here [1], and [2] is where we set
+the control.
+
 -- 
-2.7.4
+regards,
+Stan
 
+[1]
+https://elixir.bootlin.com/linux/v5.6-rc2/source/drivers/media/platform/qcom/venus/hfi_helper.h#L229
+[2]
+https://elixir.bootlin.com/linux/v5.6-rc2/source/drivers/media/platform/qcom/venus/venc.c#L734
