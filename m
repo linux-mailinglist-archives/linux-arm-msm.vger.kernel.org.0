@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DF78D1652B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 23:51:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D46FD1652BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Feb 2020 23:52:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727902AbgBSWvP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Feb 2020 17:51:15 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:41875 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727794AbgBSWvP (ORCPT
+        id S1727851AbgBSWw3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Feb 2020 17:52:29 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:39177 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727803AbgBSWw2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Feb 2020 17:51:15 -0500
-Received: by mail-pl1-f195.google.com with SMTP id t14so694813plr.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2020 14:51:13 -0800 (PST)
+        Wed, 19 Feb 2020 17:52:28 -0500
+Received: by mail-pl1-f193.google.com with SMTP id g6so701394plp.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2020 14:52:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:content-transfer-encoding:in-reply-to:references
          :subject:from:cc:to:date:message-id:user-agent;
-        bh=/C/96K5oLYn6X+y/FSyD1yv4KOr+6D8nD+8tPOB3y0Q=;
-        b=L9RxT6F05R55DW31tM4Z5gEB7dV+9AOuoO5r5z9ceAqqDfiSEL/104dEWIO1iraFNT
-         089InYs24GWN+iGki+xKDf1BTG0dSNtUruxPvMiJrcIwPvDHxtP43v9EyTIvZdcrcuUu
-         HRRYVWm7Ddkt5nek6SrdQonpS/rCmeNVXpdUY=
+        bh=ZFoLB6pXpWwVB/0/nffKZvl9x/yuFK41bQrQqAdnUDU=;
+        b=ELKjPCAsP9wn4m64lhqgq4GsDkSec4foH+Z4EnFjf6Law40CGWBtMXKTU1TahNqTao
+         JrMKYq+VwFQ8yCdkMa9xx+hxKabDXCc4EQx8z0/GoIH9f7xcv7EhMqIuc0kvh+gkzv2t
+         ytn6ROGRkgTmIzG2qPqCQb/R3Jf5eN5n+q+s0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:content-transfer-encoding
          :in-reply-to:references:subject:from:cc:to:date:message-id
          :user-agent;
-        bh=/C/96K5oLYn6X+y/FSyD1yv4KOr+6D8nD+8tPOB3y0Q=;
-        b=WBpx36VSSr5903E2ziEoDcM5KRrPUMMYTCH90on35GR2GdBBO3gX1FbVKi/g+n5BXG
-         TjUfAnuXAa7BDE/8AK0Yqi3RO9pUQLdkkXqW6Z2YyjutCz4d2KONDGHJlPU5TPdD39Ea
-         wNgXuqMWepOziWDisWIqzNJef8bGTMZqidrwlkR1vN1jtMWRb92EatGLhQkPkbFTg9dY
-         2rKDWJ1j73tIabceidT7ZxWtMnNwGm2ChEHAi59UXYFhIdZ8bm0jfYM2g13a0nzS2eeS
-         eOV8H8B+dQZEve47u2CpSd/oBKde7awgDknFkBkiQzKNy3drb4kmkLcrYMQQCN2YQVcP
-         Ih2A==
-X-Gm-Message-State: APjAAAXk5sg3q9t2bPQkaM6TAOOf+cXqBkHpnX8n+E+R0y6QFCBTymKc
-        iufhGuK7gvT1Yh+F221SAfYziw==
-X-Google-Smtp-Source: APXvYqya2k/fNH0PCv1YhT7xUIMf025rMaROJHmjvNV8yKGJHvlsVKCJayU+6UxVpnujNIsc/SR0KA==
-X-Received: by 2002:a17:90a:e2ce:: with SMTP id fr14mr10935860pjb.99.1582152673231;
-        Wed, 19 Feb 2020 14:51:13 -0800 (PST)
+        bh=ZFoLB6pXpWwVB/0/nffKZvl9x/yuFK41bQrQqAdnUDU=;
+        b=WsvWB3sn+cStuB1qdy8ydIBg4jy2Ij+JKmoTB0E+75m2sDKOoVaynCm0MMekH5QAkV
+         V3mSXzgnEebFejBSA/urouKwecnMEu12u+FUtuBOpUQAPBeXTyJXRdUtLEENhm71+6XG
+         +4i9aH1mwCHMR2YCKcKYGjypuvzpdXqH6pRLQ31h86/cnksYRZbcOvn9EhjnGJh6OpsO
+         r4Bg3rnHJq1BlvNVcXcrm7inRH8mSdPt1gNa2kf3WoYnVn/Y5uqXAkZUHCQdaDOD0Krp
+         +13lN23GcSqw0m5LsG/MKm4PN0DqdN22iEthevoNcorKfeDUIHh0C7G59DtJm1neVgJU
+         +jqg==
+X-Gm-Message-State: APjAAAU5txWq11TEFahiE5WGJL5YoMagS/oU8ojOIOIxckwcFZNG2kol
+        5TdvNva8OiHJpqSdUktSesrWLA==
+X-Google-Smtp-Source: APXvYqzyMU1+wblbZiSb70HWL3nCcboMCE3sFJ00Oxk4gmWezLb8kmCwTc1+/jgiWjZuoIZb3VlUkA==
+X-Received: by 2002:a17:902:265:: with SMTP id 92mr26471493plc.292.1582152748063;
+        Wed, 19 Feb 2020 14:52:28 -0800 (PST)
 Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id k9sm808496pjo.19.2020.02.19.14.51.12
+        by smtp.gmail.com with ESMTPSA id x10sm662447pfi.180.2020.02.19.14.52.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2020 14:51:12 -0800 (PST)
+        Wed, 19 Feb 2020 14:52:27 -0800 (PST)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <8990f5cd5ec2bc2aa0f13c0ad5cd41b8d1a5632e.1582048155.git.amit.kucheria@linaro.org>
-References: <cover.1582048155.git.amit.kucheria@linaro.org> <8990f5cd5ec2bc2aa0f13c0ad5cd41b8d1a5632e.1582048155.git.amit.kucheria@linaro.org>
-Subject: Re: [PATCH v5 7/8] drivers: thermal: tsens: kernel-doc fixup
+In-Reply-To: <eb967cd5a374fa32d93e486b1c9fd7e56796629a.1582048155.git.amit.kucheria@linaro.org>
+References: <cover.1582048155.git.amit.kucheria@linaro.org> <eb967cd5a374fa32d93e486b1c9fd7e56796629a.1582048155.git.amit.kucheria@linaro.org>
+Subject: Re: [PATCH v5 6/8] drivers: thermal: tsens: Add watchdog support
 From:   Stephen Boyd <swboyd@chromium.org>
 Cc:     Amit Kucheria <amit.kucheria@verdurent.com>,
         linux-pm@vger.kernel.org
@@ -56,45 +56,19 @@ To:     Amit Kucheria <amit.kucheria@linaro.org>,
         Andy Gross <agross@kernel.org>, bjorn.andersson@linaro.org,
         daniel.lezcano@linaro.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, sivaa@codeaurora.org
-Date:   Wed, 19 Feb 2020 14:51:12 -0800
-Message-ID: <158215267200.184098.11619305318344159345@swboyd.mtv.corp.google.com>
+Date:   Wed, 19 Feb 2020 14:52:26 -0800
+Message-ID: <158215274684.184098.4618542372318170687@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Amit Kucheria (2020-02-18 10:12:11)
-> Document ul_lock, threshold and control structure members and make
-> the following kernel-doc invocation happy:
->=20
-> $ scripts/kernel-doc -v -none drivers/thermal/qcom/*
->=20
-> drivers/thermal/qcom/qcom-spmi-temp-alarm.c:105: info: Scanning doc for q=
-pnp_tm_get_temp_stage
-> drivers/thermal/qcom/tsens-common.c:18: info: Scanning doc for struct tse=
-ns_irq_data
-> drivers/thermal/qcom/tsens-common.c:130: info: Scanning doc for tsens_hw_=
-to_mC
-> drivers/thermal/qcom/tsens-common.c:163: info: Scanning doc for tsens_mC_=
-to_hw
-> drivers/thermal/qcom/tsens-common.c:245: info: Scanning doc for tsens_set=
-_interrupt
-> drivers/thermal/qcom/tsens-common.c:268: info: Scanning doc for tsens_thr=
-eshold_violated
-> drivers/thermal/qcom/tsens-common.c:362: info: Scanning doc for tsens_cri=
-tical_irq_thread
-> drivers/thermal/qcom/tsens-common.c:438: info: Scanning doc for tsens_irq=
-_thread
-> drivers/thermal/qcom/tsens.h:41: info: Scanning doc for struct tsens_sens=
-or
-> drivers/thermal/qcom/tsens.h:59: info: Scanning doc for struct tsens_ops
-> drivers/thermal/qcom/tsens.h:494: info: Scanning doc for struct tsens_fea=
-tures
-> drivers/thermal/qcom/tsens.h:513: info: Scanning doc for struct tsens_pla=
-t_data
-> drivers/thermal/qcom/tsens.h:529: info: Scanning doc for struct tsens_con=
-text
+Quoting Amit Kucheria (2020-02-18 10:12:10)
+> TSENS IP v2.3 onwards adds support for a watchdog to detect if the TSENS
+> HW FSM is stuck. Add support to detect and restart the FSM in the
+> driver. The watchdog is configured by the bootloader, we just enable the
+> watchdog bark as a debug feature in the kernel.
 >=20
 > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
 > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
