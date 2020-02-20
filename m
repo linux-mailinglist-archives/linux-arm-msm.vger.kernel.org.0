@@ -2,281 +2,315 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B954A16663C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 19:27:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B8BF61666C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 20:01:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728748AbgBTS1R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Feb 2020 13:27:17 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:49910 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728368AbgBTS1P (ORCPT
+        id S1728336AbgBTTBi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Feb 2020 14:01:38 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:34256 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727535AbgBTTBi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Feb 2020 13:27:15 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582223235; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=JanOoyr8yZ3ypN3Fxp0fN7UJYbFILPmjFSA7Tl5tIjU=; b=asIPF9ZH54d3nEWK+/gTXB0ZS5vQPXqtssEX1NNRS6e8VweLAmxpuGPHDWM+eKun55Qk9ZQ9
- Da+d3BPZ3Yy8Bx/31eLLKuICZspP3euIHhis6QYQLqRkHyXgG8YkDLqSe4InKirau4gpcC3C
- c1UrLUuQmqw5QmEzxm1mJvB6yjw=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e4ecf7c.7fb7bc129928-smtp-out-n02;
- Thu, 20 Feb 2020 18:27:08 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EEC41C447A2; Thu, 20 Feb 2020 18:27:07 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EF3D5C4479F;
-        Thu, 20 Feb 2020 18:27:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EF3D5C4479F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     smasetty@codeaurora.org, John Stultz <john.stultz@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>
-Subject: [PATCH v2 4/4] drm/msm/a6xx: Use the DMA API for GMU memory objects
-Date:   Thu, 20 Feb 2020 11:26:56 -0700
-Message-Id: <1582223216-23459-5-git-send-email-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1582223216-23459-1-git-send-email-jcrouse@codeaurora.org>
-References: <1582223216-23459-1-git-send-email-jcrouse@codeaurora.org>
+        Thu, 20 Feb 2020 14:01:38 -0500
+Received: by mail-pf1-f195.google.com with SMTP id i6so2376568pfc.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2020 11:01:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8fVLwwPydfLuZNvYlHuH3T0ZHb/N6Ix0LIzIYC7dn20=;
+        b=T7e3KiNH986vMnDCiy0wyC/ghFGg2en/LWJYiahcTKMszCaf755LxaqdPFZjGxeWYU
+         BkfeMHu3J8vKosFTT/ORpiXxIGyuDeJhjXD+excqbQBwgye4AipYoGhPKLu9hhQaO1e0
+         +d0qEgRbdPtnJZ7gkqCAOPoOxLgs4+BoFJG1LzkRP4BQ7gRVvkfPHnqIDXR30PoLUagh
+         tLqjm133olDpXREX+3hmhlYuNdgqS7PTykMP+K6zliNZGq5Wno06bT6H15zQq2uMc/vr
+         aRQzZZ+1qYur1IFpQrKpBPs3Vma8tR510W7WZHEaZQQvVOqYtIwyonvL6KOsXRz/iNZK
+         xeLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8fVLwwPydfLuZNvYlHuH3T0ZHb/N6Ix0LIzIYC7dn20=;
+        b=IQV+h04tGFiZDB2tnLor4Daa3unlXllJpTsyvknx18OYBjndknWEeoFq/tKeZF2aen
+         JLRVVLUTD7dOuzBQeBMEZhvcb/H5tAbp0kOMtPRZ0oSBmRsOyOYcTLK5VL1iy32TSVMl
+         EBTpvQUB7ZyOTRms9M2nJDbcwLGndMz1pTroRCqbvxmT2AkIoq2o9Ec58jhmn8wZEEtq
+         1DCdRLHTdFpE1tHRuNO+JrSKHN/+KsF58z2qyZrp182K/g3DN000g65t/zz8OzlEB1ns
+         uBF5n5Yvln09i0+EcfK0IrHAQTcbvZAx0gERLEgDfyvRDv0zIuT7tnvT69RUhnEfFt46
+         9pMA==
+X-Gm-Message-State: APjAAAUsjOs5xO50YkBPFNrqqJ3DqFiyLyINQJa9Pi6Kpd0bMhXGjyHQ
+        In2ogHWkhCa8jRf6+NmxC/CESg==
+X-Google-Smtp-Source: APXvYqyLk4G4jwAFo2dw2ASIhOPGlFR06o9tgoOZEnRVjy3/weBLCZ2myICde4Qr6edvAP4itsFb8A==
+X-Received: by 2002:a63:9257:: with SMTP id s23mr35631559pgn.0.1582225296766;
+        Thu, 20 Feb 2020 11:01:36 -0800 (PST)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id 23sm349623pfh.28.2020.02.20.11.01.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Feb 2020 11:01:36 -0800 (PST)
+Date:   Thu, 20 Feb 2020 12:01:34 -0700
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Ohad Ben-Cohen <ohad@wizery.com>, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>
+Subject: Re: [PATCH v3 2/8] remoteproc: qcom: Introduce driver to store pil
+ info in IMEM
+Message-ID: <20200220190134.GB19352@xps15>
+References: <20200211005059.1377279-1-bjorn.andersson@linaro.org>
+ <20200211005059.1377279-3-bjorn.andersson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200211005059.1377279-3-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The GMU has very few memory allocations and uses a flat memory space so
-there is no good reason to go out of our way to bypass the DMA APIs which
-were basically designed for this exact scenario.
+On Mon, Feb 10, 2020 at 04:50:53PM -0800, Bjorn Andersson wrote:
+> A region in IMEM is used to communicate load addresses of remoteproc to
+> post mortem debug tools. Implement a driver that can be used to store
+> this information in order to enable these tools to process collected
+> ramdumps.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Changes since v2:
+> - Sorted includes
+> - Replace use of stracpy (still not landed upstream)
+> - Fixed error handling in probe
+> - Return error from store, to allow clients to decide action
+> - Replace hard coded size with value read from reg property
+> 
+>  drivers/remoteproc/Kconfig         |   3 +
+>  drivers/remoteproc/Makefile        |   1 +
+>  drivers/remoteproc/qcom_pil_info.c | 168 +++++++++++++++++++++++++++++
+>  drivers/remoteproc/qcom_pil_info.h |   8 ++
+>  4 files changed, 180 insertions(+)
+>  create mode 100644 drivers/remoteproc/qcom_pil_info.c
+>  create mode 100644 drivers/remoteproc/qcom_pil_info.h
+> 
+> diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
+> index de3862c15fcc..20c8194e610e 100644
+> --- a/drivers/remoteproc/Kconfig
+> +++ b/drivers/remoteproc/Kconfig
+> @@ -95,6 +95,9 @@ config KEYSTONE_REMOTEPROC
+>  	  It's safe to say N here if you're not interested in the Keystone
+>  	  DSPs or just want to use a bare minimum kernel.
+>  
+> +config QCOM_PIL_INFO
+> +	tristate
+> +
+>  config QCOM_RPROC_COMMON
+>  	tristate
+>  
+> diff --git a/drivers/remoteproc/Makefile b/drivers/remoteproc/Makefile
+> index e30a1b15fbac..2ab32bd41b44 100644
+> --- a/drivers/remoteproc/Makefile
+> +++ b/drivers/remoteproc/Makefile
+> @@ -15,6 +15,7 @@ obj-$(CONFIG_OMAP_REMOTEPROC)		+= omap_remoteproc.o
+>  obj-$(CONFIG_WKUP_M3_RPROC)		+= wkup_m3_rproc.o
+>  obj-$(CONFIG_DA8XX_REMOTEPROC)		+= da8xx_remoteproc.o
+>  obj-$(CONFIG_KEYSTONE_REMOTEPROC)	+= keystone_remoteproc.o
+> +obj-$(CONFIG_QCOM_PIL_INFO)		+= qcom_pil_info.o
+>  obj-$(CONFIG_QCOM_RPROC_COMMON)		+= qcom_common.o
+>  obj-$(CONFIG_QCOM_Q6V5_COMMON)		+= qcom_q6v5.o
+>  obj-$(CONFIG_QCOM_Q6V5_ADSP)		+= qcom_q6v5_adsp.o
+> diff --git a/drivers/remoteproc/qcom_pil_info.c b/drivers/remoteproc/qcom_pil_info.c
+> new file mode 100644
+> index 000000000000..398aeb957f3c
+> --- /dev/null
+> +++ b/drivers/remoteproc/qcom_pil_info.c
+> @@ -0,0 +1,168 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2019-2020 Linaro Ltd.
+> + */
+> +#include <linux/kernel.h>
+> +#include <linux/mfd/syscon.h>
+> +#include <linux/module.h>
+> +#include <linux/mutex.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/regmap.h>
+> +#include <linux/slab.h>
+> +
+> +#define PIL_RELOC_NAME_LEN	8
+> +
+> +struct pil_reloc_entry {
+> +	char name[PIL_RELOC_NAME_LEN];
+> +	__le64 base;
+> +	__le32 size;
+> +} __packed;
+> +
+> +struct pil_reloc {
+> +	struct device *dev;
+> +	struct regmap *map;
+> +	size_t offset;
+> +	size_t num_entries;
+> +	int val_bytes;
+> +
+> +	struct pil_reloc_entry entries[];
+> +};
+> +
+> +static struct pil_reloc *_reloc;
+> +static DEFINE_MUTEX(reloc_mutex);
+> +
+> +/**
+> + * qcom_pil_info_store() - store PIL information of image in IMEM
+> + * @image:	name of the image
+> + * @base:	base address of the loaded image
+> + * @size:	size of the loaded image
+> + *
+> + * Return: 0 on success, negative errno on failure
+> + */
+> +int qcom_pil_info_store(const char *image, phys_addr_t base, size_t size)
+> +{
+> +	struct pil_reloc_entry *entry;
+> +	int idx = -1;
+> +	int ret;
+> +	int i;
+> +
+> +	mutex_lock(&reloc_mutex);
+> +	for (i = 0; i < _reloc->num_entries; i++) {
+> +		if (!_reloc->entries[i].name[0]) {
+> +			if (idx == -1)
+> +				idx = i;
+> +			continue;
+> +		}
+> +
+> +		if (!strncmp(_reloc->entries[i].name, image, 8)) {
 
-v2: Pass force_dma false to of_dma_configure to require that the DMA
-region be set up and return error from of_dma_configure to fail probe.
+s/8/PIL_RELOC_NAME_LEN
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 112 +++-------------------------------
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h |   5 +-
- 2 files changed, 11 insertions(+), 106 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 983afea..c36b38b 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -2,6 +2,7 @@
- /* Copyright (c) 2017-2019 The Linux Foundation. All rights reserved. */
- 
- #include <linux/clk.h>
-+#include <linux/dma-mapping.h>
- #include <linux/interconnect.h>
- #include <linux/pm_domain.h>
- #include <linux/pm_opp.h>
-@@ -895,21 +896,10 @@ int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
- 
- static void a6xx_gmu_memory_free(struct a6xx_gmu *gmu, struct a6xx_gmu_bo *bo)
- {
--	int count, i;
--	u64 iova;
--
- 	if (IS_ERR_OR_NULL(bo))
- 		return;
- 
--	count = bo->size >> PAGE_SHIFT;
--	iova = bo->iova;
--
--	for (i = 0; i < count; i++, iova += PAGE_SIZE) {
--		iommu_unmap(gmu->domain, iova, PAGE_SIZE);
--		__free_pages(bo->pages[i], 0);
--	}
--
--	kfree(bo->pages);
-+	dma_free_attrs(gmu->dev, bo->size, bo->virt, bo->iova, bo->attrs);
- 	kfree(bo);
- }
- 
-@@ -917,94 +907,23 @@ static struct a6xx_gmu_bo *a6xx_gmu_memory_alloc(struct a6xx_gmu *gmu,
- 		size_t size)
- {
- 	struct a6xx_gmu_bo *bo;
--	int ret, count, i;
- 
- 	bo = kzalloc(sizeof(*bo), GFP_KERNEL);
- 	if (!bo)
- 		return ERR_PTR(-ENOMEM);
- 
- 	bo->size = PAGE_ALIGN(size);
-+	bo->attrs = DMA_ATTR_WRITE_COMBINE;
- 
--	count = bo->size >> PAGE_SHIFT;
-+	bo->virt = dma_alloc_attrs(gmu->dev, bo->size, &bo->iova, GFP_KERNEL,
-+		bo->attrs);
- 
--	bo->pages = kcalloc(count, sizeof(struct page *), GFP_KERNEL);
--	if (!bo->pages) {
-+	if (!bo->virt) {
- 		kfree(bo);
- 		return ERR_PTR(-ENOMEM);
- 	}
- 
--	for (i = 0; i < count; i++) {
--		bo->pages[i] = alloc_page(GFP_KERNEL);
--		if (!bo->pages[i])
--			goto err;
--	}
--
--	bo->iova = gmu->uncached_iova_base;
--
--	for (i = 0; i < count; i++) {
--		ret = iommu_map(gmu->domain,
--			bo->iova + (PAGE_SIZE * i),
--			page_to_phys(bo->pages[i]), PAGE_SIZE,
--			IOMMU_READ | IOMMU_WRITE);
--
--		if (ret) {
--			DRM_DEV_ERROR(gmu->dev, "Unable to map GMU buffer object\n");
--
--			for (i = i - 1 ; i >= 0; i--)
--				iommu_unmap(gmu->domain,
--					bo->iova + (PAGE_SIZE * i),
--					PAGE_SIZE);
--
--			goto err;
--		}
--	}
--
--	bo->virt = vmap(bo->pages, count, VM_IOREMAP,
--		pgprot_writecombine(PAGE_KERNEL));
--	if (!bo->virt)
--		goto err;
--
--	/* Align future IOVA addresses on 1MB boundaries */
--	gmu->uncached_iova_base += ALIGN(size, SZ_1M);
--
- 	return bo;
--
--err:
--	for (i = 0; i < count; i++) {
--		if (bo->pages[i])
--			__free_pages(bo->pages[i], 0);
--	}
--
--	kfree(bo->pages);
--	kfree(bo);
--
--	return ERR_PTR(-ENOMEM);
--}
--
--static int a6xx_gmu_memory_probe(struct a6xx_gmu *gmu)
--{
--	int ret;
--
--	/*
--	 * The GMU address space is hardcoded to treat the range
--	 * 0x60000000 - 0x80000000 as un-cached memory. All buffers shared
--	 * between the GMU and the CPU will live in this space
--	 */
--	gmu->uncached_iova_base = 0x60000000;
--
--
--	gmu->domain = iommu_domain_alloc(&platform_bus_type);
--	if (!gmu->domain)
--		return -ENODEV;
--
--	ret = iommu_attach_device(gmu->domain, gmu->dev);
--
--	if (ret) {
--		iommu_domain_free(gmu->domain);
--		gmu->domain = NULL;
--	}
--
--	return ret;
- }
- 
- /* Return the 'arc-level' for the given frequency */
-@@ -1264,10 +1183,6 @@ void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu)
- 
- 	a6xx_gmu_memory_free(gmu, gmu->hfi);
- 
--	iommu_detach_device(gmu->domain, gmu->dev);
--
--	iommu_domain_free(gmu->domain);
--
- 	free_irq(gmu->gmu_irq, gmu);
- 	free_irq(gmu->hfi_irq, gmu);
- 
-@@ -1288,7 +1203,10 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- 
- 	gmu->dev = &pdev->dev;
- 
--	of_dma_configure(gmu->dev, node, true);
-+	/* Pass force_dma false to require the DT to set the dma region */
-+	ret = of_dma_configure(gmu->dev, node, false);
-+	if (ret)
-+		return ret;
- 
- 	/* Fow now, don't do anything fancy until we get our feet under us */
- 	gmu->idle_level = GMU_IDLE_STATE_ACTIVE;
-@@ -1300,11 +1218,6 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- 	if (ret)
- 		goto err_put_device;
- 
--	/* Set up the IOMMU context bank */
--	ret = a6xx_gmu_memory_probe(gmu);
--	if (ret)
--		goto err_put_device;
--
- 	/* Allocate memory for for the HFI queues */
- 	gmu->hfi = a6xx_gmu_memory_alloc(gmu, SZ_16K);
- 	if (IS_ERR(gmu->hfi))
-@@ -1350,11 +1263,6 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- err_memory:
- 	a6xx_gmu_memory_free(gmu, gmu->hfi);
- 
--	if (gmu->domain) {
--		iommu_detach_device(gmu->domain, gmu->dev);
--
--		iommu_domain_free(gmu->domain);
--	}
- 	ret = -ENODEV;
- 
- err_put_device:
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-index 2af91ed..31bd1987 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-@@ -13,7 +13,7 @@ struct a6xx_gmu_bo {
- 	void *virt;
- 	size_t size;
- 	u64 iova;
--	struct page **pages;
-+	unsigned long attrs;
- };
- 
- /*
-@@ -49,9 +49,6 @@ struct a6xx_gmu {
- 	int hfi_irq;
- 	int gmu_irq;
- 
--	struct iommu_domain *domain;
--	u64 uncached_iova_base;
--
- 	struct device *gxpd;
- 
- 	int idle_level;
--- 
-2.7.4
+> +			idx = i;
+> +			goto found;
+> +		}
+> +	}
+> +
+> +	if (idx == -1) {
+> +		dev_warn(_reloc->dev, "insufficient PIL info slots\n");
+> +		ret = -ENOMEM;
+> +		goto unlock;
+> +	}
+> +
+> +found:
+> +	entry = &_reloc->entries[idx];
+> +	strscpy(entry->name, image, ARRAY_SIZE(entry->name));
+> +	entry->base = base;
+> +	entry->size = size;
+> +
+> +	ret = regmap_bulk_write(_reloc->map,
+> +				_reloc->offset + idx * sizeof(*entry),
+> +				entry, sizeof(*entry) / _reloc->val_bytes);
+> +unlock:
+> +	mutex_unlock(&reloc_mutex);
+> +
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_pil_info_store);
+> +
+> +/**
+> + * qcom_pil_info_available() - query if the pil info is probed
+> + *
+> + * Return: boolean indicating if the pil info device is probed
+> + */
+> +bool qcom_pil_info_available(void)
+> +{
+> +	return !!_reloc;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_pil_info_available);
+> +
+> +static int pil_reloc_probe(struct platform_device *pdev)
+> +{
+> +	unsigned int num_entries;
+> +	struct pil_reloc *reloc;
+> +	struct resource *res;
+> +	int ret;
+> +
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +	if (!res)
+> +		return -EINVAL;
+> +
+> +	num_entries = resource_size(res) / sizeof(struct pil_reloc_entry);
+> +
+> +	reloc = devm_kzalloc(&pdev->dev,
+> +			     struct_size(reloc, entries, num_entries),
+> +			     GFP_KERNEL);
+> +	if (!reloc)
+> +		return -ENOMEM;
+> +
+> +	reloc->dev = &pdev->dev;
+> +	reloc->map = syscon_node_to_regmap(pdev->dev.parent->of_node);
+> +	if (IS_ERR(reloc->map))
+> +		return PTR_ERR(reloc->map);
+> +
+> +	reloc->offset = res->start;
+> +	reloc->num_entries = num_entries;
+> +
+> +	reloc->val_bytes = regmap_get_val_bytes(reloc->map);
+> +	if (reloc->val_bytes < 0)
+> +		return -EINVAL;
+> +
+> +	ret = regmap_bulk_write(reloc->map, reloc->offset, reloc->entries,
+> +				reloc->num_entries *
+> +				sizeof(struct pil_reloc_entry) /
+> +				reloc->val_bytes);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	mutex_lock(&reloc_mutex);
+> +	_reloc = reloc;
+> +	mutex_unlock(&reloc_mutex);
+> +
+> +	return 0;
+> +}
+> +
+> +static int pil_reloc_remove(struct platform_device *pdev)
+> +{
+> +	mutex_lock(&reloc_mutex);
+> +	_reloc = NULL;
+> +	mutex_unlock(&reloc_mutex);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id pil_reloc_of_match[] = {
+> +	{ .compatible = "qcom,pil-reloc-info" },
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(of, pil_reloc_of_match);
+> +
+> +static struct platform_driver pil_reloc_driver = {
+> +	.probe = pil_reloc_probe,
+> +	.remove = pil_reloc_remove,
+> +	.driver = {
+> +		.name = "qcom-pil-reloc-info",
+> +		.of_match_table = pil_reloc_of_match,
+> +	},
+> +};
+> +module_platform_driver(pil_reloc_driver);
+> +
+> +MODULE_DESCRIPTION("Qualcomm PIL relocation info");
+> +MODULE_LICENSE("GPL v2");
+> diff --git a/drivers/remoteproc/qcom_pil_info.h b/drivers/remoteproc/qcom_pil_info.h
+> new file mode 100644
+> index 000000000000..93aaaca8aed2
+> --- /dev/null
+> +++ b/drivers/remoteproc/qcom_pil_info.h
+> @@ -0,0 +1,8 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +#ifndef __QCOM_PIL_INFO_H__
+> +#define __QCOM_PIL_INFO_H__
+> +
+> +int qcom_pil_info_store(const char *image, phys_addr_t base, size_t size);
+> +bool qcom_pil_info_available(void);
+> +
+> +#endif
+> -- 
+> 2.24.0
+> 
