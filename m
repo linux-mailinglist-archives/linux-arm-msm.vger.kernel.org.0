@@ -2,205 +2,287 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id F1E76166228
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 17:19:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2665E1663EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 18:07:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728123AbgBTQTf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Feb 2020 11:19:35 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:45136 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727915AbgBTQTe (ORCPT
+        id S1728354AbgBTRHo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Feb 2020 12:07:44 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:44588 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728173AbgBTRHn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Feb 2020 11:19:34 -0500
-Received: by mail-ed1-f68.google.com with SMTP id v28so34375277edw.12;
-        Thu, 20 Feb 2020 08:19:32 -0800 (PST)
+        Thu, 20 Feb 2020 12:07:43 -0500
+Received: by mail-wr1-f65.google.com with SMTP id m16so5445964wrx.11;
+        Thu, 20 Feb 2020 09:07:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=h15SKSbIsbjB9/+rbkPhsWvg29qqUxsuiy1c0M5WxNg=;
-        b=Nic5/cyKp1b1XxJNEvBgkFqaN7LM0wddKUE77hjob4fU8WKIz8tPUFwQ4u7UOwS9Re
-         tVN0roIgDQekB9ofDVreQvDb20+SywQhCow6FyIhzwIbqmau9An/HU2XLgw+bBPx7LDl
-         rM9N/b17oySYinhSW+9b/l84CZsazTncb7bW/h/3Kl4KGmxL+Br93UEfVdLq23v4G8RZ
-         DbYInA2uY7d9dtRyvyarikR8Rl/IzhYqwvjuNErKH8hMS/I3xznl3X5PwBflv1nflmMF
-         BhK3JXvVws38El52R147rwLZ2/G73XCeek8ipCDJ4HC5LYSvk3UdNbnXYPXm+822/tO/
-         pX4A==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Di1qslRPbTpLpq+RzibDLTYgsINPkOU2t7v0O3JomH8=;
+        b=Mjm+BuSiQBS2VswHPp0u1QKG8m12DE0h5dALWHDoWm3i6hxbi7FK+5dEyOHjsBvq8m
+         NFraNVDul4Vj2KO9oauH95aVg3YjeLEYffKUgVmNB1cgLQdD4aWMa8aV+p0M2FK95qZV
+         ZfVQuyGQkNyrdhcJTfjf7gmANVbOB8BrQvEeZmP56vsqePorLEG2L4fIuRTGJodS7jKv
+         TUy/KLdQ014cYXprEnG9F7/v/7XqcowT4JHev/9psrRed57VcbnxyZIIjntmNAI1HY6q
+         l18JsmpnISHP4ylzzNdZ7yEuyeCT/+01TvXrvYUnphmxxFXTQXJEWHFbXvK6paxWiVuh
+         0zeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=h15SKSbIsbjB9/+rbkPhsWvg29qqUxsuiy1c0M5WxNg=;
-        b=Xl/A3PmNeyDllsmjsB09ItUqufYk0sobmxY5xVBenr5oWiYWK9Sqmg9MyYRY8QE3j9
-         XBQ3LtwDhTQinZsfFhFQdUz2VfwBKaulfAiVbp4ujuTfankZDsN/4F9mONPlgar9j2yS
-         ltBNo5kGR6DS3dATYh7/TM+yrFnG1DwKi38CN0H4G3AABB95zEXULfIpp/EE+0bzDhkN
-         xW0dgXalD1EtoM6kEyfbL+CDEMEfh3gW3fcKYMtK3CVu8ZjON3Yo5b/BEsNsc1NWMlRJ
-         w9Q1BfkCLvlwze9mLW5XpYhXhfl92v0P1iJugS6XO73loBM72ivRO/bvI00lMqNQ2Nxb
-         7iRw==
-X-Gm-Message-State: APjAAAUnZa2We2ZEN62a7pPOsMCwRNeapDAt92ozqHKDwTZ3kt9YSE2S
-        t406AYPy8+G/AWLJtoChXWbcJcw7jJTUb+7KWyw=
-X-Google-Smtp-Source: APXvYqxBAaxRpzlIKrAK5EdDxMJ1r8wwi7LbaTLd+YpFxqS25/jNQQiIOgWDcPzaaKhVVzk937JXQff1zHby0XwpTM4=
-X-Received: by 2002:aa7:c349:: with SMTP id j9mr25435820edr.151.1582215571944;
- Thu, 20 Feb 2020 08:19:31 -0800 (PST)
-MIME-Version: 1.0
-References: <1581320465-15854-1-git-send-email-smasetty@codeaurora.org> <1581320465-15854-2-git-send-email-smasetty@codeaurora.org>
-In-Reply-To: <1581320465-15854-2-git-send-email-smasetty@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 20 Feb 2020 08:19:20 -0800
-Message-ID: <CAF6AEGuFfaYuYoXkGJHit4X0Hp2-i0yMkWCfoKtLwPyGkjpkVA@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH v6] arm64: dts: qcom: sc7180: Add A618 gpu dt blob
-To:     Sharat Masetty <smasetty@codeaurora.org>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Di1qslRPbTpLpq+RzibDLTYgsINPkOU2t7v0O3JomH8=;
+        b=TbrMZ4/PDhYOrsMUQHjmDgM0cC0jIyP0gHZ/RhV6reVyfvjmBc+S3Fe3pnEMZET8nm
+         nW9XEwjpPtT8DeNgRIRlbgn2Cm23BdR8oA0Acr59cVR1k9ajazIkNGLSWZxtPOOHgDhI
+         3KVZKxUt4DH1gksQfoRryU82BNjWG/H0twXArv0PIZ6KQ3ZrNW+Q16giifnImyR6AKSo
+         BMal0sZYSHMU/KcvJ1o9J7Z5f/susDqqg8afqIlCnPDeFvJJMnjq1YbmZabbGt8UQDw9
+         UWZxlM1/CZGeUgji5wDFuSI2V66b+AlL8ZuJeqJHzPeemHcHvSUNuFJFoxoYW18693HY
+         +Hbw==
+X-Gm-Message-State: APjAAAXtBwk8SQ0e1kzWIuSRLjaIvUuNclIaJ7SAIfbcVSq5oDKSvPgY
+        YxGuE7q2Ax/Ou4jUm9bsznz6iAOGu+8=
+X-Google-Smtp-Source: APXvYqxAOSbO3AykzBqmnNNS/TXxyh2rND4jYMPHgD3rmbzyWSIjdEhy0dh5d3iIqUYb2m+x5g5NTQ==
+X-Received: by 2002:a5d:4651:: with SMTP id j17mr44011351wrs.237.1582218461138;
+        Thu, 20 Feb 2020 09:07:41 -0800 (PST)
+Received: from Ansuel-XPS.localdomain (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
+        by smtp.googlemail.com with ESMTPSA id o77sm5817883wme.34.2020.02.20.09.07.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Feb 2020 09:07:40 -0800 (PST)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>, dri-devel@freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+        "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/2] net: mdio: add ipq8064 mdio driver
+Date:   Thu, 20 Feb 2020 18:07:28 +0100
+Message-Id: <20200220170732.12741-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.25.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Feb 9, 2020 at 11:41 PM Sharat Masetty <smasetty@codeaurora.org> wrote:
->
-> This patch adds the required dt nodes and properties
-> to enabled A618 GPU.
->
-> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 102 +++++++++++++++++++++++++++++++++++
->  1 file changed, 102 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index f3fcc5c..63fff15 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -1043,6 +1043,108 @@
->                         };
->                 };
->
-> +               gpu: gpu@5000000 {
-> +                       compatible = "qcom,adreno-618.0", "qcom,adreno";
-> +                       #stream-id-cells = <16>;
-> +                       reg = <0 0x05000000 0 0x40000>, <0 0x0509e000 0 0x1000>,
-> +                               <0 0x05061000 0 0x800>;
-> +                       reg-names = "kgsl_3d0_reg_memory", "cx_mem", "cx_dbgc";
-> +                       interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
-> +                       iommus = <&adreno_smmu 0>;
-> +                       operating-points-v2 = <&gpu_opp_table>;
-> +                       qcom,gmu = <&gmu>;
-> +
-> +                       gpu_opp_table: opp-table {
-> +                               compatible = "operating-points-v2";
-> +
-> +                               opp-800000000 {
-> +                                       opp-hz = /bits/ 64 <800000000>;
-> +                                       opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
-> +                               };
-> +
-> +                               opp-650000000 {
-> +                                       opp-hz = /bits/ 64 <650000000>;
-> +                                       opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-> +                               };
-> +
-> +                               opp-565000000 {
-> +                                       opp-hz = /bits/ 64 <565000000>;
-> +                                       opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-> +                               };
-> +
-> +                               opp-430000000 {
-> +                                       opp-hz = /bits/ 64 <430000000>;
-> +                                       opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-> +                               };
-> +
-> +                               opp-355000000 {
-> +                                       opp-hz = /bits/ 64 <355000000>;
-> +                                       opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-> +                               };
-> +
-> +                               opp-267000000 {
-> +                                       opp-hz = /bits/ 64 <267000000>;
-> +                                       opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-> +                               };
-> +
-> +                               opp-180000000 {
-> +                                       opp-hz = /bits/ 64 <180000000>;
-> +                                       opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-> +                               };
-> +                       };
-> +               };
-> +
-> +               adreno_smmu: iommu@5040000 {
-> +                       compatible = "qcom,sc7180-smmu-v2", "qcom,smmu-v2";
-> +                       reg = <0 0x05040000 0 0x10000>;
-> +                       #iommu-cells = <1>;
-> +                       #global-interrupts = <2>;
-> +                       interrupts = <GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>,
-> +                                       <GIC_SPI 231 IRQ_TYPE_LEVEL_HIGH>,
-> +                                       <GIC_SPI 364 IRQ_TYPE_EDGE_RISING>,
-> +                                       <GIC_SPI 365 IRQ_TYPE_EDGE_RISING>,
-> +                                       <GIC_SPI 366 IRQ_TYPE_EDGE_RISING>,
-> +                                       <GIC_SPI 367 IRQ_TYPE_EDGE_RISING>,
-> +                                       <GIC_SPI 368 IRQ_TYPE_EDGE_RISING>,
-> +                                       <GIC_SPI 369 IRQ_TYPE_EDGE_RISING>,
-> +                                       <GIC_SPI 370 IRQ_TYPE_EDGE_RISING>,
-> +                                       <GIC_SPI 371 IRQ_TYPE_EDGE_RISING>;
-> +                       clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-> +                               <&gcc GCC_GPU_CFG_AHB_CLK>,
-> +                               <&gcc GCC_DDRSS_GPU_AXI_CLK>;
-> +
-> +                       clock-names = "bus", "iface", "mem_iface_clk";
-> +                       power-domains = <&gpucc CX_GDSC>;
-> +               };
-> +
-> +               gmu: gmu@506a000 {
-> +                       compatible="qcom,adreno-gmu-618.0", "qcom,adreno-gmu";
-> +                       reg = <0 0x0506a000 0 0x31000>, <0 0x0b290000 0 0x10000>,
-> +                               <0 0x0b490000 0 0x10000>;
-> +                       reg-names = "gmu", "gmu_pdc", "gmu_pdc_seq";
-> +                       interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
-> +                                  <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
-> +                       interrupt-names = "hfi", "gmu";
-> +                       clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
-> +                              <&gpucc GPU_CC_CXO_CLK>,
-> +                              <&gcc GCC_DDRSS_GPU_AXI_CLK>,
-> +                              <&gcc GCC_GPU_MEMNOC_GFX_CLK>;
-> +                       clock-names = "gmu", "cxo", "axi", "memnoc";
-> +                       power-domains = <&gpucc CX_GDSC>, <&gpucc GX_GDSC>;
-> +                       power-domain-names = "cx", "gx";
-> +                       iommus = <&adreno_smmu 5>;
-> +                       operating-points-v2 = <&gmu_opp_table>;
+Currently ipq806x soc use generi bitbang driver to
+comunicate with the gmac ethernet interface.
+Add a dedicated driver created by chunkeey to fix this.
 
-jfyi, this will shortly require a dma-ranges property[1].. it might
-simplify things, wrt. to which order patches land (this vs dma-ranges)
-to go ahead and add the dma-ranges property now
+Christian Lamparter <chunkeey@gmail.com>
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+---
+ drivers/net/phy/Kconfig        |   8 ++
+ drivers/net/phy/Makefile       |   1 +
+ drivers/net/phy/mdio-ipq8064.c | 163 +++++++++++++++++++++++++++++++++
+ 3 files changed, 172 insertions(+)
+ create mode 100644 drivers/net/phy/mdio-ipq8064.c
 
-BR,
--R
+diff --git a/drivers/net/phy/Kconfig b/drivers/net/phy/Kconfig
+index 9dabe03a668c..ec2a5493a7e8 100644
+--- a/drivers/net/phy/Kconfig
++++ b/drivers/net/phy/Kconfig
+@@ -157,6 +157,14 @@ config MDIO_I2C
+ 
+ 	  This is library mode.
+ 
++config MDIO_IPQ8064
++	tristate "Qualcomm IPQ8064 MDIO interface support"
++	depends on HAS_IOMEM && OF_MDIO
++	depends on MFD_SYSCON
++	help
++	  This driver supports the MDIO interface found in the network
++	  interface units of the IPQ8064 SoC
++
+ config MDIO_MOXART
+ 	tristate "MOXA ART MDIO interface support"
+ 	depends on ARCH_MOXART || COMPILE_TEST
+diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
+index fe5badf13b65..8f02bd2089f3 100644
+--- a/drivers/net/phy/Makefile
++++ b/drivers/net/phy/Makefile
+@@ -36,6 +36,7 @@ obj-$(CONFIG_MDIO_CAVIUM)	+= mdio-cavium.o
+ obj-$(CONFIG_MDIO_GPIO)		+= mdio-gpio.o
+ obj-$(CONFIG_MDIO_HISI_FEMAC)	+= mdio-hisi-femac.o
+ obj-$(CONFIG_MDIO_I2C)		+= mdio-i2c.o
++obj-$(CONFIG_MDIO_IPQ8064)	+= mdio-ipq8064.o
+ obj-$(CONFIG_MDIO_MOXART)	+= mdio-moxart.o
+ obj-$(CONFIG_MDIO_MSCC_MIIM)	+= mdio-mscc-miim.o
+ obj-$(CONFIG_MDIO_OCTEON)	+= mdio-octeon.o
+diff --git a/drivers/net/phy/mdio-ipq8064.c b/drivers/net/phy/mdio-ipq8064.c
+new file mode 100644
+index 000000000000..e974a6f5d5ef
+--- /dev/null
++++ b/drivers/net/phy/mdio-ipq8064.c
+@@ -0,0 +1,163 @@
++// SPDX-License-Identifier: GPL-2.0
++//
++// Qualcomm IPQ8064 MDIO interface driver
++//
++// Copyright (C) 2019 Christian Lamparter <chunkeey@gmail.com>
++
++#include <linux/delay.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/regmap.h>
++#include <linux/of_mdio.h>
++#include <linux/phy.h>
++#include <linux/platform_device.h>
++#include <linux/mfd/syscon.h>
++
++/* MII address register definitions */
++#define MII_ADDR_REG_ADDR                       0x10
++#define MII_BUSY                                BIT(0)
++#define MII_WRITE                               BIT(1)
++#define MII_CLKRANGE_60_100M                    (0 << 2)
++#define MII_CLKRANGE_100_150M                   (1 << 2)
++#define MII_CLKRANGE_20_35M                     (2 << 2)
++#define MII_CLKRANGE_35_60M                     (3 << 2)
++#define MII_CLKRANGE_150_250M                   (4 << 2)
++#define MII_CLKRANGE_250_300M                   (5 << 2)
++#define MII_CLKRANGE_MASK			GENMASK(4, 2)
++#define MII_REG_SHIFT				6
++#define MII_REG_MASK				GENMASK(10, 6)
++#define MII_ADDR_SHIFT				11
++#define MII_ADDR_MASK				GENMASK(15, 11)
++
++#define MII_DATA_REG_ADDR                       0x14
++
++#define MII_MDIO_DELAY                          (1000)
++#define MII_MDIO_RETRY                          (10)
++
++struct ipq8064_mdio {
++	struct regmap *base; /* NSS_GMAC0_BASE */
++};
++
++static int
++ipq8064_mdio_wait_busy(struct ipq8064_mdio *priv)
++{
++	u32 busy;
++
++	return regmap_read_poll_timeout(priv->base, MII_ADDR_REG_ADDR, busy,
++				   !(busy & MII_BUSY), MII_MDIO_DELAY,
++				   MII_MDIO_RETRY * USEC_PER_MSEC);
++}
++
++static int
++ipq8064_mdio_read(struct mii_bus *bus, int phy_addr, int reg_offset)
++{
++	struct ipq8064_mdio *priv = bus->priv;
++	u32 miiaddr = MII_BUSY | MII_CLKRANGE_250_300M;
++	u32 ret_val;
++	int err;
++
++	/* Reject clause 45 */
++	if (reg_offset & MII_ADDR_C45)
++		return -EOPNOTSUPP;
++
++	miiaddr |= ((phy_addr << MII_ADDR_SHIFT) & MII_ADDR_MASK) |
++		   ((reg_offset << MII_REG_SHIFT) & MII_REG_MASK);
++
++	regmap_write(priv->base, MII_ADDR_REG_ADDR, miiaddr);
++	usleep_range(10, 20);
++
++	err = ipq8064_mdio_wait_busy(priv);
++	if (err)
++		return err;
++
++	regmap_read(priv->base, MII_DATA_REG_ADDR, &ret_val);
++	return (int)ret_val;
++}
++
++static int
++ipq8064_mdio_write(struct mii_bus *bus, int phy_addr, int reg_offset, u16 data)
++{
++	struct ipq8064_mdio *priv = bus->priv;
++	u32 miiaddr = MII_WRITE | MII_BUSY | MII_CLKRANGE_250_300M;
++
++	/* Reject clause 45 */
++	if (reg_offset & MII_ADDR_C45)
++		return -EOPNOTSUPP;
++
++	regmap_write(priv->base, MII_DATA_REG_ADDR, data);
++
++	miiaddr |= ((phy_addr << MII_ADDR_SHIFT) & MII_ADDR_MASK) |
++		   ((reg_offset << MII_REG_SHIFT) & MII_REG_MASK);
++
++	regmap_write(priv->base, MII_ADDR_REG_ADDR, miiaddr);
++	usleep_range(10, 20);
++
++	return ipq8064_mdio_wait_busy(priv);
++}
++
++static int
++ipq8064_mdio_probe(struct platform_device *pdev)
++{
++	struct device_node *np = pdev->dev.of_node;
++	struct ipq8064_mdio *priv;
++	struct mii_bus *bus;
++	int ret;
++
++	bus = devm_mdiobus_alloc_size(&pdev->dev, sizeof(*priv));
++	if (!bus)
++		return -ENOMEM;
++
++	bus->name = "ipq8064_mdio_bus";
++	bus->read = ipq8064_mdio_read;
++	bus->write = ipq8064_mdio_write;
++	snprintf(bus->id, MII_BUS_ID_SIZE, "%s-mii", dev_name(&pdev->dev));
++	bus->parent = &pdev->dev;
++
++	priv = bus->priv;
++	priv->base = syscon_node_to_regmap(np);
++	if (IS_ERR_OR_NULL(priv->base)) {
++		priv->base = syscon_regmap_lookup_by_phandle(np, "master");
++		if (IS_ERR_OR_NULL(priv->base)) {
++			dev_err(&pdev->dev, "master phandle not found\n");
++			return -EINVAL;
++		}
++	}
++
++	ret = of_mdiobus_register(bus, np);
++	if (ret)
++		return ret;
++
++	platform_set_drvdata(pdev, bus);
++	return 0;
++}
++
++static int
++ipq8064_mdio_remove(struct platform_device *pdev)
++{
++	struct mii_bus *bus = platform_get_drvdata(pdev);
++
++	mdiobus_unregister(bus);
++
++	return 0;
++}
++
++static const struct of_device_id ipq8064_mdio_dt_ids[] = {
++	{ .compatible = "qcom,ipq8064-mdio" },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, ipq8064_mdio_dt_ids);
++
++static struct platform_driver ipq8064_mdio_driver = {
++	.probe = ipq8064_mdio_probe,
++	.remove = ipq8064_mdio_remove,
++	.driver = {
++		.name = "ipq8064-mdio",
++		.of_match_table = ipq8064_mdio_dt_ids,
++	},
++};
++
++module_platform_driver(ipq8064_mdio_driver);
++
++MODULE_DESCRIPTION("Qualcomm IPQ8064 MDIO interface driver");
++MODULE_AUTHOR("Christian Lamparter <chunkeey@gmail.com>");
++MODULE_LICENSE("GPL");
+-- 
+2.25.0
 
-
-[1] https://lists.freedesktop.org/archives/freedreno/2020-February/006903.html
-
-> +
-> +                       gmu_opp_table: opp-table {
-> +                               compatible = "operating-points-v2";
-> +
-> +                               opp-200000000 {
-> +                                       opp-hz = /bits/ 64 <200000000>;
-> +                                       opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-> +                               };
-> +                       };
-> +               };
-> +
->                 gpucc: clock-controller@5090000 {
->                         compatible = "qcom,sc7180-gpucc";
->                         reg = <0 0x05090000 0 0x9000>;
-> --
-> 1.9.1
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
