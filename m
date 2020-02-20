@@ -2,47 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E3731653DA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 01:49:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BD4D165403
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 02:04:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727797AbgBTAtH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Feb 2020 19:49:07 -0500
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:33315 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727802AbgBTAs7 (ORCPT
+        id S1727125AbgBTBEp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Feb 2020 20:04:45 -0500
+Received: from bombadil.infradead.org ([198.137.202.133]:37714 "EHLO
+        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726841AbgBTBEo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Feb 2020 19:48:59 -0500
-Received: by mail-pj1-f68.google.com with SMTP id m7so603767pjs.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2020 16:48:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3w9edU0bQTA/j4i1GZ5kCMLx5L0gk76mGZ2Jl2DPJv8=;
-        b=ZeNCpCRGcYvQriOrG7nnRAwG2HLKcfUbnNuky4kQOtRD0bn59Hvqtia7UjS5EL1wtm
-         JrkWjvzl+mC614o7v8XfG8+JPEmBrAnWb79QYFg2id7JqxhegfEV05kzAUZv+YfGH2TG
-         oohrRRL84DOMAWaN+EK4SCqh6Sx4owhTbcqhw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=3w9edU0bQTA/j4i1GZ5kCMLx5L0gk76mGZ2Jl2DPJv8=;
-        b=Ctxa9lwgQksmziuHnTjOvVG3Ep3ffVcqWxkn0cv+rX9rCJjwRA+xv5hlrnzkq4O9gZ
-         4m62+CE79skvcphEj+mo+ALJxlq7Wjg0fFflymASoB9o/Lsdmo59NNPYHLycZtQkhB7H
-         vhf7O2WzDOg/4wSqWwB7VViSb5HbWy6/zkRRg7gTUCJuKPTZIUCq4UAvL+geD2G2ujBr
-         8rD7D00J25/Xcj+ZJkA0YxVXl1YnGICuH86zNaq1YQUU6jgrgPZ3nrXtoiwf+zbDz+GT
-         Ttoj/PBa+xfC7RrPZbK3obFuwKIVL3ZxvUD3RFebzUqNgptWM786kUMHVd6DE7fdP4JP
-         2n3w==
-X-Gm-Message-State: APjAAAU6D3Kr/oCf0b3RKDD/bb8zOKorVD9iAMhHNPd/C1mk/Vs4eCO4
-        8hAFpHV+xYs6cajskA0IgQITEQ==
-X-Google-Smtp-Source: APXvYqxvwfYCexceHmLY8+2NVNDKj2k6UoiRx/YzDmwMEI2NjRSexRZ7sLY6QpdZDmP32eZBMJa/tw==
-X-Received: by 2002:a17:90a:8d81:: with SMTP id d1mr462100pjo.63.1582159738999;
-        Wed, 19 Feb 2020 16:48:58 -0800 (PST)
-Received: from lbrmn-lnxub113.broadcom.net ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id 64sm816323pfd.48.2020.02.19.16.48.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2020 16:48:58 -0800 (PST)
-From:   Scott Branden <scott.branden@broadcom.com>
-To:     Luis Chamberlain <mcgrof@kernel.org>,
+        Wed, 19 Feb 2020 20:04:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=Content-Transfer-Encoding:
+        Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:
+        Subject:Sender:Reply-To:Content-ID:Content-Description;
+        bh=3BHL21ZqYvf4cXWBd1/ab6+pZgwMbOograui/t2in4Q=; b=Y2F8BNU9IGvys2N2MQOenMYNwp
+        +IrnfcmBH0shv9ZUFezaJBrOrMWeJ56kYqWE/S2Co2mp3i1dhZ7D41EsTGAV/yzAHp6kmpl8pMx4y
+        Vz+b2TRxJIDtn63xKBdI/AxAsIUmmRSsdA0yrfu2DcbWpKDkCNyl11/OByWqIF3rNO4EpuEqokqvl
+        A+cSkuI1maBCBJMyQexlSpmMIWzduXQ5i5x6IDABAtR/jrqMXVlFPWizsED2mb2ICNUcnpIu4sfhS
+        DlNmlg3WSV+qRWWX67zw3p/LatenkuXdRZMB4pl0HHOBu8MAy/7r98fbw0e+OLYch2F8b73oqiTyz
+        XcLFyvyA==;
+Received: from [2603:3004:32:9a00::4074]
+        by bombadil.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1j4aGe-0002wj-9E; Thu, 20 Feb 2020 01:04:40 +0000
+Subject: Re: [PATCH v2 6/7] misc: bcm-vk: add Broadcom VK driver
+To:     Scott Branden <scott.branden@broadcom.com>,
+        Luis Chamberlain <mcgrof@kernel.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         David Brown <david.brown@linaro.org>,
         Alexander Viro <viro@zeniv.linux.org.uk>,
@@ -60,43 +45,87 @@ Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
         Kees Cook <keescook@chromium.org>,
         Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
-        Scott Branden <scott.branden@broadcom.com>
-Subject: [PATCH v2 7/7] MAINTAINERS: bcm-vk: add maintainer for Broadcom VK Driver
-Date:   Wed, 19 Feb 2020 16:48:25 -0800
-Message-Id: <20200220004825.23372-8-scott.branden@broadcom.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200220004825.23372-1-scott.branden@broadcom.com>
+        Desmond Yan <desmond.yan@broadcom.com>,
+        James Hu <james.hu@broadcom.com>
 References: <20200220004825.23372-1-scott.branden@broadcom.com>
+ <20200220004825.23372-7-scott.branden@broadcom.com>
+From:   Randy Dunlap <rdunlap@infradead.org>
+Message-ID: <827a4520-95ce-5264-90d9-ed730e5918e6@infradead.org>
+Date:   Wed, 19 Feb 2020 17:04:38 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
+MIME-Version: 1.0
+In-Reply-To: <20200220004825.23372-7-scott.branden@broadcom.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add maintainer entry for new Broadcom VK Driver
+Hi,
 
-Signed-off-by: Scott Branden <scott.branden@broadcom.com>
----
- MAINTAINERS | 7 +++++++
- 1 file changed, 7 insertions(+)
+On 2/19/20 4:48 PM, Scott Branden wrote:
+> diff --git a/drivers/misc/bcm-vk/Kconfig b/drivers/misc/bcm-vk/Kconfig
+> new file mode 100644
+> index 000000000000..c75dfb89a38d
+> --- /dev/null
+> +++ b/drivers/misc/bcm-vk/Kconfig
+> @@ -0,0 +1,42 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +#
+> +# Broadcom VK device
+> +#
+> +config BCM_VK
+> +	tristate "Support for Broadcom VK Accelerators"
+> +	depends on PCI_MSI
+> +	default m
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 4beb8dc4c7eb..c55f34f00b85 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3564,6 +3564,13 @@ L:	netdev@vger.kernel.org
- S:	Supported
- F:	drivers/net/ethernet/broadcom/tg3.*
- 
-+BROADCOM VK DRIVER
-+M:	Scott Branden <scott.branden@broadcom.com>
-+L:	bcm-kernel-feedback-list@broadcom.com
-+S:	Supported
-+F:	drivers/misc/bcm-vk/
-+F:	include/uapi/linux/misc/bcm_vk.h
-+
- BROCADE BFA FC SCSI DRIVER
- M:	Anil Gurumurthy <anil.gurumurthy@qlogic.com>
- M:	Sudarsana Kalluru <sudarsana.kalluru@qlogic.com>
+Need to justify default m. Normally we don't add drivers as enabled unless
+they are required for basic (boot) operation.
+
+> +	help
+> +	  Select this option to enable support for Broadcom
+> +	  VK Accelerators.  VK is used for performing
+> +	  specific video offload processing.  This driver enables
+> +	  userspace programs to access these accelerators via /dev/bcm-vk.N
+> +	  devices.
+> +
+> +	  If unsure, say N.
+> +
+> +if BCM_VK
+> +
+> +config BCM_VK_H2VK_VERIFY_AND_RETRY
+> +	bool "Host To VK Verifiy Data and Retry"
+
+	                 Verify
+
+> +	help
+> +	  Turn on to verify the data passed down to VK is good,
+> +	  and if not, do a retry until it succeeds.
+
+No timeout on that retry?
+
+> +	  This is a debug/workaround on FPGA PCIe timing issues
+> +	  but may be found useful for debugging other PCIe hardware issues.
+> +	  Small performance loss by enabling this debug config.
+> +	  For properly operating PCIe hardware no need to enable this.
+> +
+> +	  If unsure, say N.
+> +
+> +config BCM_VK_QSTATS
+> +	bool "VK Queue Statistics"
+> +	help
+> +	  Turn on to enable Queue Statistics.
+> +	  These are useful for debugging purposes.
+> +	  Some performance loss by enabling this debug config.
+> +	  For properly operating PCIe hardware no need to enable this.
+> +
+> +	  If unsure, say N.
+> +
+> +endif
+
+cheers.
 -- 
-2.17.1
-
+~Randy
