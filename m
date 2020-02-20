@@ -2,144 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B4D1916659C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 18:59:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D4A01665BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 19:02:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728173AbgBTR7O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Feb 2020 12:59:14 -0500
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:36604 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728072AbgBTR7O (ORCPT
+        id S1727553AbgBTSCb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Feb 2020 13:02:31 -0500
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:37892 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727298AbgBTSCb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Feb 2020 12:59:14 -0500
-Received: by mail-pj1-f65.google.com with SMTP id gv17so1212185pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2020 09:59:14 -0800 (PST)
+        Thu, 20 Feb 2020 13:02:31 -0500
+Received: by mail-pj1-f66.google.com with SMTP id j17so1211627pjz.3;
+        Thu, 20 Feb 2020 10:02:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=b39p1eGP3nlw0aRiq/EeenwuRZud+ndWD/CEPqlUtnE=;
-        b=qwmkCUcoVIMXBx/AwEt9MPwRTrkz2uyhf0NcAxdivTQjwX1XtVFIVwvizt7PTnm2A4
-         +/uy0TnaN37yTB6RrkMkpdIbONbwniMinlv2RHduA2AOzqu5/QmYAR1BtJ9tf7xh07L3
-         f6pFWAHnngs5stFC70RIfUeyOOiWQ8YNY5qxr6NT9f5gqVxktjseLYAeD7rSXFVEOlfW
-         mtpwnIwTcI8XLpaD76ZhgOYOoumzeO3sUAZM8OyeoRSqeLi6YnCD0RGuMnIcTuQAcgrS
-         TdIzRXquWA8RjNDjLf8WwV8bug0AkUrm1r9xKRAlK9lVkIDp/yFSKRcmfE59ga8oXMbH
-         yZUQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ftBWuGNfX8JZVFhSKwA+KUVSKGZwfK/v4xpQCMt5JjU=;
+        b=Z7GTb5OmY58dJNwVcxhr2Zj89JXbSLjrDt4/98xY5f4eLOjssVN04Amn+cXaYaGh5l
+         DqGzKkLXy6FQdjPU5cvEewJ6TExOsg4coQmE8aLyUVNiZJeKgREQ+EioOVrzQafZWyNX
+         wNvlAJ5Fb9NdNKVQ2I3U1JQne5b6IWABjyuRdWxbKtJQ4G74F9KFxf5vOCsvr/b0qplb
+         +hwhkPo4ggypZi/5u5PXoEK2bsl6sK5/+2swDHR2TOMLOfl4pp+W/C1jTXyYfH5WCyBb
+         NIlAzn4HpQm5ASJ6q5OHtRY32pO3LRQSAlUXhWyTEECClcAPOwqaIqQ4Ktfhudf/VTO2
+         S/dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=b39p1eGP3nlw0aRiq/EeenwuRZud+ndWD/CEPqlUtnE=;
-        b=QEgXUmsCj7o3lxq6zG8vhYjSi0AlKRxcmc1Rf1vNEVoY4WPjKKMGPq3SMZAU/KK3Pb
-         SL8Vu6LeZjSE7YTqVZeCRQG7Xj9KyVlM/EQA0XP4z6gxtMDy/uTiK/eILnCsP2BkbX+p
-         oA4MeTMmApoEpj5J0+e6TYPCmNQcYh8GaphpoHg9uyT2cvuSnDD1H65B6tLCX3Nky7xB
-         Zl7nyLADoahmemecrVlwgstitUAMMDje7U59fKrH+mEaEsdmsHnCbhrZfbTjyPoF+X56
-         wQPhto3APlc7Lh+aFZi7rVfAeIIm5SpEF9B58/EJBvDiZo1Zun7M9/ljLB81aRE69/Fd
-         yQdA==
-X-Gm-Message-State: APjAAAUEv8RdDDFHiwzzMHx0l/NPcVCh9WhQI84oXaww1eKpg8dna/3a
-        745YitiHBPK9AH9EI8WLS4zb5Q==
-X-Google-Smtp-Source: APXvYqwD3zUPaAslcARdnI7JTUN/osi+pnuqbRLDxOFcEbVa3s64IJ6zWD8Jvh/qwLsyt7L2ySuVQQ==
-X-Received: by 2002:a17:90b:14a:: with SMTP id em10mr5009154pjb.4.1582221554028;
-        Thu, 20 Feb 2020 09:59:14 -0800 (PST)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id ev5sm112928pjb.4.2020.02.20.09.59.12
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ftBWuGNfX8JZVFhSKwA+KUVSKGZwfK/v4xpQCMt5JjU=;
+        b=lbZt/Ur2OtRchwzBV2hR6OLCI6hiOX3HleaJHcx/0nGzi0adNP+tH2WRhdr6IRmNPO
+         rrv/+l7B11lz3eQTD8tAJaO+AH/KfGLldcUKqNCALxfQRPEXTX4s7/3uhRkFKGUC/Q+C
+         V1AFRVNx/5EEZMv47hdIOHHO9niMW0EZ5DaU/vBrfgzM0/wI4Kqp3fsp1EKK1eUE83GW
+         CHPN5XD5wC1rFdcFS9PlB6R6wTUoHcUnIbR4aV8UmjZkOH2+jwfRTpi83Zes2A7K8xs7
+         oKSjRwvNSdRGNH3BchThJnGGF/MpekGhjxqRGGE3ZIh1coXH2EzUs1ufIE3MtIYy7HDG
+         pfIQ==
+X-Gm-Message-State: APjAAAWXErVVNMOMoc5ppaVLJ0/kWdWjimTCcDqbwuWUPMRi+Qf6ZlSA
+        kMKV8frESunk+2Iq9R7LXI8=
+X-Google-Smtp-Source: APXvYqyP5wnC/UIA6uYZG1iIuCpdhd4BbS2S2UPeJf7Xo5CCRsLnOqSay/+AmWkBoDqxi6cI3omECg==
+X-Received: by 2002:a17:90a:8001:: with SMTP id b1mr4948972pjn.39.1582221749423;
+        Thu, 20 Feb 2020 10:02:29 -0800 (PST)
+Received: from localhost ([100.118.89.211])
+        by smtp.gmail.com with ESMTPSA id l69sm2019pgd.1.2020.02.20.10.02.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Feb 2020 09:59:13 -0800 (PST)
-Date:   Thu, 20 Feb 2020 10:59:11 -0700
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Ohad Ben-Cohen <ohad@wizery.com>, Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Sibi Sankar <sibis@codeaurora.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Subject: Re: [PATCH v3 1/8] dt-bindings: remoteproc: Add Qualcomm PIL info
- binding
-Message-ID: <20200220175911.GA19352@xps15>
-References: <20200211005059.1377279-1-bjorn.andersson@linaro.org>
- <20200211005059.1377279-2-bjorn.andersson@linaro.org>
+        Thu, 20 Feb 2020 10:02:28 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/a6xx: Fix CP_MEMPOOL state name
+Date:   Thu, 20 Feb 2020 10:00:09 -0800
+Message-Id: <20200220180013.1120750-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200211005059.1377279-2-bjorn.andersson@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 10, 2020 at 04:50:52PM -0800, Bjorn Andersson wrote:
-> Add a devicetree binding for the Qualcomm periperal image loader
+From: Rob Clark <robdclark@chromium.org>
 
-s/periperal/peripheral
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> relocation info region found in the IMEM.
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+index 68cccfa2870a..bbbec8d26870 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+@@ -370,7 +370,7 @@ static const struct a6xx_indexed_registers {
+ };
+ 
+ static const struct a6xx_indexed_registers a6xx_cp_mempool_indexed = {
+-	"CP_MEMPOOOL", REG_A6XX_CP_MEM_POOL_DBG_ADDR,
++	"CP_MEMPOOL", REG_A6XX_CP_MEM_POOL_DBG_ADDR,
+ 		REG_A6XX_CP_MEM_POOL_DBG_DATA, 0x2060,
+ };
+ 
+-- 
+2.24.1
 
-s/info/information
-
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> Changes since v2:
-> - Replaced offset with reg to describe the region of IMEM used for the entries
-> 
->  .../bindings/remoteproc/qcom,pil-info.yaml    | 42 +++++++++++++++++++
->  1 file changed, 42 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
-> new file mode 100644
-> index 000000000000..8386a4da6030
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
-> @@ -0,0 +1,42 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/remoteproc/qcom,pil-info.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm peripheral image loader relocation info binding
-> +
-> +maintainers:
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +
-> +description:
-> +  This document defines the binding for describing the Qualcomm peripheral
-> +  image loader relocation memory region, in IMEM, which is used for post mortem
-> +  debugging of remoteprocs.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,pil-reloc-info
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +examples:
-> +  - |
-> +    imem@146bf000 {
-> +      compatible = "syscon", "simple-mfd";
-> +      reg = <0 0x146bf000 0 0x1000>;
-> +
-> +      #address-cells = <1>;
-> +      #size-cells = <1>;
-> +
-> +      pil-reloc {
-> +        compatible ="qcom,pil-reloc-info";
-
-s/="/= "
-
-> +        reg = <0x94c 200>;
-> +      };
-> +    };
-> +...
-> -- 
-> 2.24.0
-> 
