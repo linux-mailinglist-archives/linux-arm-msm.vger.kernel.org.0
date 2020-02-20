@@ -2,143 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2033F1660A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 16:13:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C7E31660E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 16:24:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728442AbgBTPNc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Feb 2020 10:13:32 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42412 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727761AbgBTPNc (ORCPT
+        id S1728406AbgBTPYy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Feb 2020 10:24:54 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:40733 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728388AbgBTPYy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Feb 2020 10:13:32 -0500
-Received: by mail-wr1-f67.google.com with SMTP id k11so5004518wrd.9;
-        Thu, 20 Feb 2020 07:13:30 -0800 (PST)
+        Thu, 20 Feb 2020 10:24:54 -0500
+Received: by mail-pj1-f68.google.com with SMTP id 12so1018903pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2020 07:24:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=37niT//lDaILKiAgLmVPycHnKOoR/1yOuQ3A2inzDzc=;
-        b=eH/leP5NlYA5Itg6BI0WErCodKroiFgEuGBBLA2wHlD4l7UaHQ6dKg4XgBRkN77CCD
-         n3Csjk8ofEc79L3wtX6H5AF7WUZB5z7b5HT7EKlIqElxEz8F5IRf+GIYjuCionyT5TDa
-         TtdYpW5fvQm6Z606gfuGZGyMlBDEWlfuOcXhdkmaUZ8o0UdNp5Z3LM+U9+UcAOnTulGa
-         NVQxIvTUEgZ7p+ID1GFprx4Y0guB3LZ608HUTNUz/5AwYUTY38Cpqf16KNMr+anVKyS8
-         7L+LSf1RCm6f/Yen7ME4kkvN5V7HBU5IRJzf/R3xnfNXoXGqNYGW5cIQu6aUIVEJK3OZ
-         sh6Q==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=x64IzpxQxgoD+epizuWhLq6VmBY0vv/CGFxkWQZpQEs=;
+        b=xzHA3evsbmbuNoQNBVN3xL96+3fHb4eHM6XCsq5SNnWSm9ZFv1oj4hjvgBmjYl0uFd
+         iWpzSc7739TGJepNYRkCO5DW+ju1PFJL9Qie7xNeQRJXRrVYoeqIYwqxecKVURKary9/
+         yRV1pZy3aN1EquYn1i/gNQmFvt2aT7WUNRS+pWc0g9qD2YZDkxZHROaP1ETKQ85hPnmv
+         5YjghAqzQSazmdx1ERFslgn1aMEvyiSz6JU1/4YJSSw715sVBw7/3ZlB1fjXcQa2mcw9
+         2+ILztPxlfdEJlYoybnkg+5p5mo45wYt7/DMjmDlVPSiVUJzhZBnqf7hpEpkFFQzv5Dh
+         vVzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=37niT//lDaILKiAgLmVPycHnKOoR/1yOuQ3A2inzDzc=;
-        b=Q/p2LunmHUojN8MemZwh7H0ANcsRBNrS5MI8cNFWFUfdfnIfvd+chp4/Ao5k8zkBQa
-         GJJkVCfhlJc1qaoOmGxWZy5Jalkk7Uybz92rN00/WcV88Fz9SN7HGLOD4adhQBdCrEtC
-         W+uP7lBsOQveuyZd95PkeWQE+6TpWg8gn258z6PwAY5Yep5QpiGxlp0IhAO8lrw/bfk4
-         s/Z1LjZ70J4jAPywLjVcoJGAZqvWyTnrGfVRNKeSvf1CdPvibKPPzo7wtKxzgUHSoXxL
-         cq1OyzIwMRJnuWAPTgYQGlukUXpOve8CPPbAcsHb6vqujEhDJiiwVBmqE0LM2OODhsuZ
-         luuA==
-X-Gm-Message-State: APjAAAUIic8yTmcdVgGrNllsqmPcYPORpFPUDLDDQkdZhzE+tzLzG2dj
-        PSDNUd8glAl/YUveFGm+ELeXB1aG/98=
-X-Google-Smtp-Source: APXvYqwmwbRvuHx4af/oZnjAvr4YUKjXjsXo6mMq9ZViF7JNcfBWZUJACFKbtWe/mSnfEeXybGaRMw==
-X-Received: by 2002:a5d:640d:: with SMTP id z13mr41339339wru.181.1582211609872;
-        Thu, 20 Feb 2020 07:13:29 -0800 (PST)
-Received: from Ansuel-XPS.localdomain (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
-        by smtp.googlemail.com with ESMTPSA id d4sm4983642wra.14.2020.02.20.07.13.28
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=x64IzpxQxgoD+epizuWhLq6VmBY0vv/CGFxkWQZpQEs=;
+        b=U1sXsjRg7AWvdQdJODfqLtZZOXhaYMJTXYrwuGh1w/rdsPpEP/kdSBJy3XaboZVUm/
+         BxCgPVPtERGCSSw91kYOtCdFo5/KnRqarGKVm51WTFby5THBFWVO/lns4xto60hpiFSF
+         cDusawbtfUGEC3wnNWicihIP0xU0JarQotmAI02KBqyS+DD4L3BmAcTGZmKksO1oReFA
+         kK3TiF1OIO6PGS01i6dlae9B3Hlof4SeWB2AGocsH5Ie6gi9m7dmybs7gAMiLBwNsl3y
+         HwPOrTUMTrZGniUi70CgcNC05aQV7UqI2PHweJMXYhlTPQnYfPTffhXmyXOcES32MB/O
+         Pxww==
+X-Gm-Message-State: APjAAAWBq7yVm5horNxMaQGgKlFzC7iFb+pxkvtl0+498HjOFYWdFcMe
+        EGdg7AZGZa9oIPnd2/cLig0LZQ==
+X-Google-Smtp-Source: APXvYqx7FoRaaZ+BLfysstttTcWpdHJjdDonV5aa3Tld/CpF08uYFDpMPfbSWWYTQyUy9AHDsKP9lQ==
+X-Received: by 2002:a17:90a:c388:: with SMTP id h8mr4088982pjt.83.1582212293781;
+        Thu, 20 Feb 2020 07:24:53 -0800 (PST)
+Received: from ripper (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id b3sm3820107pjo.30.2020.02.20.07.24.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Feb 2020 07:13:29 -0800 (PST)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] Documentation: devictree: Add ipq806x mdio bindings
-Date:   Thu, 20 Feb 2020 16:12:56 +0100
-Message-Id: <20200220151301.10564-2-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200220151301.10564-1-ansuelsmth@gmail.com>
-References: <20200220151301.10564-1-ansuelsmth@gmail.com>
+        Thu, 20 Feb 2020 07:24:53 -0800 (PST)
+Date:   Thu, 20 Feb 2020 07:23:56 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     gregkh@linuxfoundation.org, arnd@arndb.de, smohanad@codeaurora.org,
+        jhugo@codeaurora.org, kvalo@codeaurora.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org
+Subject: Re: [PATCH v3 15/16] net: qrtr: Do not depend on ARCH_QCOM
+Message-ID: <20200220152356.GA955802@ripper>
+References: <20200220095854.4804-1-manivannan.sadhasivam@linaro.org>
+ <20200220095854.4804-16-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200220095854.4804-16-manivannan.sadhasivam@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add documentations for ipq806x mdio driver.
+On Thu 20 Feb 01:58 PST 2020, Manivannan Sadhasivam wrote:
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- .../bindings/net/qcom,ipq8064-mdio.yaml       | 52 +++++++++++++++++++
- 1 file changed, 52 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
+> IPC Router protocol is also used by external modems for exchanging the QMI
+> messages. Hence, it doesn't always depend on Qualcomm platforms. As a side
+> effect of removing the ARCH_QCOM dependency, it is going to miss the
+> COMPILE_TEST build coverage.
 
-diff --git a/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
-new file mode 100644
-index 000000000000..c5a21c0b5325
---- /dev/null
-+++ b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
-@@ -0,0 +1,52 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/net/qcom,ipq8064-mdio.txt
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm ipq806x MDIO bus controller
-+
-+description: |+
-+  The ipq806x soc have a MDIO dedicated controller that is
-+  used to comunicate with the gmac phy conntected.
-+  Child nodes of this MDIO bus controller node are standard
-+  Ethernet PHY device nodes as described in
-+  Documentation/devicetree/bindings/net/phy.txt
-+
-+allOf:
-+  - $ref: "mdio.yaml#"
-+
-+properties:
-+  compatible:
-+    const: qcom,ipq8064-mdio
-+  reg:
-+    maxItems: 1
-+    description: address and length of the register set for the device
-+  clocks:
-+    maxItems: 1
-+    description: A reference to the clock supplying the MDIO bus controller
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - "#address-cells"
-+  - "#size-cells"
-+
-+examples:
-+  - |
-+    mdio@37000000 {
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+
-+        compatible = "qcom,ipq8064-mdio", "syscon";
-+        reg = <0x37000000 0x200000>;
-+        resets = <&gcc GMAC_CORE1_RESET>;
-+        reset-names = "stmmaceth";
-+        clocks = <&gcc GMAC_CORE1_CLK>;
-+
-+        switch@10 {
-+            compatible = "qca,qca8337";
-+            ...
-+        }
-+    };
-\ No newline at end of file
--- 
-2.25.0
+The COMPILE_TEST was there so that the code could be compile tested on
+other platforms, but without the ARCH_QCOM dependency this will always
+be the case. So I would suggest that you drop the last sentence. (Or
+write "With this we no longer need to depend on COMPILE_TEST, so remove
+that too.")
 
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> 
+> Cc: "David S. Miller" <davem@davemloft.net>
+> Cc: netdev@vger.kernel.org
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  net/qrtr/Kconfig | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/net/qrtr/Kconfig b/net/qrtr/Kconfig
+> index 8eb876471564..f362ca316015 100644
+> --- a/net/qrtr/Kconfig
+> +++ b/net/qrtr/Kconfig
+> @@ -4,7 +4,6 @@
+>  
+>  config QRTR
+>  	tristate "Qualcomm IPC Router support"
+> -	depends on ARCH_QCOM || COMPILE_TEST
+>  	---help---
+>  	  Say Y if you intend to use Qualcomm IPC router protocol.  The
+>  	  protocol is used to communicate with services provided by other
+> -- 
+> 2.17.1
+> 
