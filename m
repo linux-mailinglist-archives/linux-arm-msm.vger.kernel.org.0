@@ -2,123 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B2E64165C9A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 12:19:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DBA6165CB3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 12:24:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727495AbgBTLTD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Feb 2020 06:19:03 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:28907 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727393AbgBTLTD (ORCPT
+        id S1726882AbgBTLYe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Feb 2020 06:24:34 -0500
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:34409 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726837AbgBTLYe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Feb 2020 06:19:03 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582197542; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=6KJhbm7JPq1+wBTiL3Bw1Lt65SssqbW9iQ7FMNPxTLc=;
- b=cmrvhiDZjPFzfsAzBShVKU/OAUUQG6jMyEwTpjMXhHDIZs064zYuT+pBJhonL/PSsUF5CyoE
- UCYcFLUmbYpLDqNeMOvpYZaqWZkJFdJa/PLVPBjmHXvsT62uEzY+0x6aWLSA/t02j/hg2HpM
- UEVGkQHSNPFkwB+ieCkOfvsoYS4=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e4e6b22.7fc9a682f8b8-smtp-out-n02;
- Thu, 20 Feb 2020 11:18:58 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F0729C447A0; Thu, 20 Feb 2020 11:18:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 43580C43383;
-        Thu, 20 Feb 2020 11:18:56 +0000 (UTC)
+        Thu, 20 Feb 2020 06:24:34 -0500
+Received: by mail-vs1-f68.google.com with SMTP id g15so2433656vsf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2020 03:24:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=hazjaD2YUbJGiqWwoXV+JokYu0HUKkUko31jANlJplk=;
+        b=B5GzCQW/zlr8puDwPi0fy0nIhsM0bVlk2rPvQg75NJL7JTWJtE2W0DmhKepCcD9hOy
+         P6gzPhV66fDRSvy49GHQ/eO7JhmvEZ98x9GYJqD4vwRd8pvFYpcz0idz0e98SyhXg9Lb
+         iT0thb0Hq8t+pZvpfKWhfG4Z/W+w2pEmD7yplbkMmTcciincv93hFuPM3rs/0SYJgQ4G
+         q1krnaE6G2GnMgd5qoziYG4jjVG9QJXehy2YbAVVo4kHfDp2MEqBeCHqhitNfomRkD1w
+         AcAp7hyof0nZWU9JgU881XYLYnc3l6Q/DRyzxhRSvm2qNHPWyAt9l1EiFJ30GHA8AEPq
+         VQaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=hazjaD2YUbJGiqWwoXV+JokYu0HUKkUko31jANlJplk=;
+        b=m+DZsVH/QkOsYbcH5D5mlt60Mw8cisZjwBLb89U1TpdUdJWkyEcd1S/TZrqMiHVyHp
+         EVSFKhq2tvh1v+u7HRtEfWSkZvwszw4jCDbVDUWNpJFD7IbqTmjs6XxuatVVeyoq9EDt
+         03HJm5gmRAibACSCMyYufNp9JjQjNZ4z+BAkWKIqZmNQipnLHKL8MdF1+SfwlAvjMthl
+         OOpE0NBzYlmGxctv54u0tutvDM1CzJNGctjH0mBlgVJ+KDLX9sd0BeZa2R9dIVEx6e/0
+         pjUiebDJUkqoD2gGYezi+Qf92M0bbA4onlgVXCtweYIk3nQqTRDbxmVO7lwhR9tt3seM
+         dntg==
+X-Gm-Message-State: APjAAAVrNaDGpaw9LaCaJKLt39FxrVY8OftrwBgo9OXSklITvZ8RG68+
+        QxmfIuQtZsYsASdVXauvAA4bWEk1wO/tXDl0Yh9WMGod
+X-Google-Smtp-Source: APXvYqw2Vi/gK8Y4s/OvdpgxSeePyP+00Ez91phnSXxKSI+4QTscidoLFaPYKAlgM/aym6gCwQw2Dbmx+YfjLnYuGuk=
+X-Received: by 2002:a05:6102:7a4:: with SMTP id x4mr16028226vsg.85.1582197872123;
+ Thu, 20 Feb 2020 03:24:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 20 Feb 2020 16:48:56 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Rob Herring <robh@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, linux-soc-owner@vger.kernel.org
-Subject: Re: [PATCH v4 3/5] dt-bindings: clock: Add YAML schemas for the QCOM
- MSS clock bindings
-In-Reply-To: <6298769e-09bc-eb69-bf72-5aedd0e87f16@codeaurora.org>
-References: <1582049733-17050-1-git-send-email-tdas@codeaurora.org>
- <1582049733-17050-4-git-send-email-tdas@codeaurora.org>
- <20200218230026.GA3778@bogus>
- <6298769e-09bc-eb69-bf72-5aedd0e87f16@codeaurora.org>
-Message-ID: <7cf3950b53a7b5881c840ed371e64158@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20200219203544.31013-1-ville.syrjala@linux.intel.com> <20200219203544.31013-6-ville.syrjala@linux.intel.com>
+In-Reply-To: <20200219203544.31013-6-ville.syrjala@linux.intel.com>
+From:   Emil Velikov <emil.l.velikov@gmail.com>
+Date:   Thu, 20 Feb 2020 11:24:20 +0000
+Message-ID: <CACvgo50oWkF8vjpGmOYSwaK+khZuAE0yW_npf2UEMQoRTokLBA@mail.gmail.com>
+Subject: Re: [PATCH 05/12] drm/msm/dpu: Stop copying around mode->private_flags
+To:     Ville Syrjala <ville.syrjala@linux.intel.com>
+Cc:     ML dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        freedreno@lists.freedesktop.org, Sean Paul <sean@poorly.run>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Taniya,
+On Wed, 19 Feb 2020 at 20:36, Ville Syrjala
+<ville.syrjala@linux.intel.com> wrote:
+>
+> From: Ville Syrj=C3=A4l=C3=A4 <ville.syrjala@linux.intel.com>
+>
+> The driver never sets mode->private_flags so copying
+> it back and forth is entirely pointless. Stop doing it.
+>
+> Also drop private_flags from the tracepoint.
+>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: freedreno@lists.freedesktop.org
+> Signed-off-by: Ville Syrj=C3=A4l=C3=A4 <ville.syrjala@linux.intel.com>
 
-+    <&gcc GCC_MSS_NAV_AXIS_CLK>,
+Perhaps the msm team has a WIP which makes use of it ?
 
-error is because of ^^ typo
-it should be GCC_MSS_NAV_AXI_CLK
-instead, with that dt_bindings
-check will go though.
+Otherwise:
+Reviewed-by: Emil Velikov <emil.velikov@collabora.com>
 
-On 2020-02-19 09:35, Taniya Das wrote:
-> Hi Rob,
-> 
-> On 2/19/2020 4:30 AM, Rob Herring wrote:
->> On Tue, 18 Feb 2020 23:45:31 +0530, Taniya Das wrote:
->>> The Modem Subsystem clock provider have a bunch of generic properties
->>> that are needed in a device tree. Add a YAML schemas for those.
->>> 
->>> Signed-off-by: Taniya Das <tdas@codeaurora.org>
->>> ---
->>>   .../devicetree/bindings/clock/qcom,sc7180-mss.yaml | 62 
->>> ++++++++++++++++++++++
->>>   1 file changed, 62 insertions(+)
->>>   create mode 100644 
->>> Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml
->>> 
->> 
->> My bot found errors running 'make dt_binding_check' on your patch:
->> 
->> Error: 
->> Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dts:21.26-27 
->> syntax error
->> FATAL ERROR: Unable to parse input tree
->> scripts/Makefile.lib:300: recipe for target 
->> 'Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dt.yaml' 
->> failed
->> make[1]: *** 
->> [Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dt.yaml] 
->> Error 1
->> Makefile:1263: recipe for target 'dt_binding_check' failed
->> make: *** [dt_binding_check] Error 2
->> 
->> See https://patchwork.ozlabs.org/patch/1240251
->> Please check and re-submit.
->> 
-> 
-> I did see the same issue and then when I re-ordered by patches
-> dt-bindings: clock: Add support for Modem clocks in GCC (dependent) on
-> this binding patch, I no longer encountered the issue.
-> https://patchwork.kernel.org/patch/11389243/
-> 
-> Please let me know.
-
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+-Emil
