@@ -2,143 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AC0D81663F7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 18:08:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4D1916659C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 18:59:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728618AbgBTRHs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Feb 2020 12:07:48 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37987 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728173AbgBTRHr (ORCPT
+        id S1728173AbgBTR7O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Feb 2020 12:59:14 -0500
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:36604 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728072AbgBTR7O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Feb 2020 12:07:47 -0500
-Received: by mail-wm1-f67.google.com with SMTP id a9so2881449wmj.3;
-        Thu, 20 Feb 2020 09:07:46 -0800 (PST)
+        Thu, 20 Feb 2020 12:59:14 -0500
+Received: by mail-pj1-f65.google.com with SMTP id gv17so1212185pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2020 09:59:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=37niT//lDaILKiAgLmVPycHnKOoR/1yOuQ3A2inzDzc=;
-        b=QEux0/eakJEJPRRBSy1DQ6l5a06ZagxVBvGVuOCMSFWIsHeD2cwNQoGNgd9VlMx6op
-         zcAqKt4+NATcE1Hv2LynemAgW2pR/xcddfiX1iktQDIfEPXfXnp1NA0M597F0YSqwvx1
-         MYcBz/H7zS1i6a142ioxHZXZHHbTteEe5Rn3j2NCCML7NjCpr5MOZ6/ZeJo4/m2CzDzR
-         GS+qD7c8szn3Cd/+vDole5anHZrN5DFkK+fZtI4m/08LkJP4NQv7aUT1BxFFSBZbq1TO
-         /WaI4O1m2w98WleIHpxsPKarvZhlR1b0exnc1NTzmOo7wHy5spZMS49Vc8sj+VeprJwy
-         vfZQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=b39p1eGP3nlw0aRiq/EeenwuRZud+ndWD/CEPqlUtnE=;
+        b=qwmkCUcoVIMXBx/AwEt9MPwRTrkz2uyhf0NcAxdivTQjwX1XtVFIVwvizt7PTnm2A4
+         +/uy0TnaN37yTB6RrkMkpdIbONbwniMinlv2RHduA2AOzqu5/QmYAR1BtJ9tf7xh07L3
+         f6pFWAHnngs5stFC70RIfUeyOOiWQ8YNY5qxr6NT9f5gqVxktjseLYAeD7rSXFVEOlfW
+         mtpwnIwTcI8XLpaD76ZhgOYOoumzeO3sUAZM8OyeoRSqeLi6YnCD0RGuMnIcTuQAcgrS
+         TdIzRXquWA8RjNDjLf8WwV8bug0AkUrm1r9xKRAlK9lVkIDp/yFSKRcmfE59ga8oXMbH
+         yZUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=37niT//lDaILKiAgLmVPycHnKOoR/1yOuQ3A2inzDzc=;
-        b=Hkqf20WOC2lfV4sdhDtlL6jT2jvlSmydpNCCY/5NQNcik6m5qtkpn8cvZHyiHAZaEr
-         /i/20eEiTZroGrVq6wHPGsjoAiJsbc3kKHPl/JY9BoGWULpwijkZhuvOgo9m7XRXXnMc
-         QOgHoyHV04UEydqrUpzrZOKDHPPlaG8crTVJSKqGIu39BbuFKbU4IlyAqS2Dt71pp7J8
-         LBVsfAjTdQk3NZ8/QAZhIUN0hUVLxtdUJhl5APq8dFIfcqY4P3HUssrjMe+duySORADa
-         WGQcqON+OP7oCF5CsUfWv2DVsMyozOMeiga84xhl9Zcf/MLIg0ZxZqGBlF27WTcBPXn9
-         3viQ==
-X-Gm-Message-State: APjAAAVW1ixWG8SvGHawDwYu9tdEfFlmCNNhqiXEp72FXaNoQLudPaFV
-        bSZ76f38/TvnZ2dPJSKXeek=
-X-Google-Smtp-Source: APXvYqwR7P069VhMerWiRTx40KIARgMf/C2Ty0f48VwkRBQcE79u5/YkJkbiR2A7GlGkhkjAqT+wAQ==
-X-Received: by 2002:a1c:cc11:: with SMTP id h17mr5446322wmb.19.1582218465545;
-        Thu, 20 Feb 2020 09:07:45 -0800 (PST)
-Received: from Ansuel-XPS.localdomain (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
-        by smtp.googlemail.com with ESMTPSA id o77sm5817883wme.34.2020.02.20.09.07.44
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=b39p1eGP3nlw0aRiq/EeenwuRZud+ndWD/CEPqlUtnE=;
+        b=QEgXUmsCj7o3lxq6zG8vhYjSi0AlKRxcmc1Rf1vNEVoY4WPjKKMGPq3SMZAU/KK3Pb
+         SL8Vu6LeZjSE7YTqVZeCRQG7Xj9KyVlM/EQA0XP4z6gxtMDy/uTiK/eILnCsP2BkbX+p
+         oA4MeTMmApoEpj5J0+e6TYPCmNQcYh8GaphpoHg9uyT2cvuSnDD1H65B6tLCX3Nky7xB
+         Zl7nyLADoahmemecrVlwgstitUAMMDje7U59fKrH+mEaEsdmsHnCbhrZfbTjyPoF+X56
+         wQPhto3APlc7Lh+aFZi7rVfAeIIm5SpEF9B58/EJBvDiZo1Zun7M9/ljLB81aRE69/Fd
+         yQdA==
+X-Gm-Message-State: APjAAAUEv8RdDDFHiwzzMHx0l/NPcVCh9WhQI84oXaww1eKpg8dna/3a
+        745YitiHBPK9AH9EI8WLS4zb5Q==
+X-Google-Smtp-Source: APXvYqwD3zUPaAslcARdnI7JTUN/osi+pnuqbRLDxOFcEbVa3s64IJ6zWD8Jvh/qwLsyt7L2ySuVQQ==
+X-Received: by 2002:a17:90b:14a:: with SMTP id em10mr5009154pjb.4.1582221554028;
+        Thu, 20 Feb 2020 09:59:14 -0800 (PST)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id ev5sm112928pjb.4.2020.02.20.09.59.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Feb 2020 09:07:45 -0800 (PST)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>,
+        Thu, 20 Feb 2020 09:59:13 -0800 (PST)
+Date:   Thu, 20 Feb 2020 10:59:11 -0700
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Ohad Ben-Cohen <ohad@wizery.com>, Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] Documentation: devictree: Add ipq806x mdio bindings
-Date:   Thu, 20 Feb 2020 18:07:29 +0100
-Message-Id: <20200220170732.12741-2-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200220170732.12741-1-ansuelsmth@gmail.com>
-References: <20200220170732.12741-1-ansuelsmth@gmail.com>
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Sibi Sankar <sibis@codeaurora.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>
+Subject: Re: [PATCH v3 1/8] dt-bindings: remoteproc: Add Qualcomm PIL info
+ binding
+Message-ID: <20200220175911.GA19352@xps15>
+References: <20200211005059.1377279-1-bjorn.andersson@linaro.org>
+ <20200211005059.1377279-2-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200211005059.1377279-2-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add documentations for ipq806x mdio driver.
+On Mon, Feb 10, 2020 at 04:50:52PM -0800, Bjorn Andersson wrote:
+> Add a devicetree binding for the Qualcomm periperal image loader
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- .../bindings/net/qcom,ipq8064-mdio.yaml       | 52 +++++++++++++++++++
- 1 file changed, 52 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
+s/periperal/peripheral
 
-diff --git a/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
-new file mode 100644
-index 000000000000..c5a21c0b5325
---- /dev/null
-+++ b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
-@@ -0,0 +1,52 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/net/qcom,ipq8064-mdio.txt
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm ipq806x MDIO bus controller
-+
-+description: |+
-+  The ipq806x soc have a MDIO dedicated controller that is
-+  used to comunicate with the gmac phy conntected.
-+  Child nodes of this MDIO bus controller node are standard
-+  Ethernet PHY device nodes as described in
-+  Documentation/devicetree/bindings/net/phy.txt
-+
-+allOf:
-+  - $ref: "mdio.yaml#"
-+
-+properties:
-+  compatible:
-+    const: qcom,ipq8064-mdio
-+  reg:
-+    maxItems: 1
-+    description: address and length of the register set for the device
-+  clocks:
-+    maxItems: 1
-+    description: A reference to the clock supplying the MDIO bus controller
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - "#address-cells"
-+  - "#size-cells"
-+
-+examples:
-+  - |
-+    mdio@37000000 {
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+
-+        compatible = "qcom,ipq8064-mdio", "syscon";
-+        reg = <0x37000000 0x200000>;
-+        resets = <&gcc GMAC_CORE1_RESET>;
-+        reset-names = "stmmaceth";
-+        clocks = <&gcc GMAC_CORE1_CLK>;
-+
-+        switch@10 {
-+            compatible = "qca,qca8337";
-+            ...
-+        }
-+    };
-\ No newline at end of file
--- 
-2.25.0
+> relocation info region found in the IMEM.
 
+s/info/information
+
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Changes since v2:
+> - Replaced offset with reg to describe the region of IMEM used for the entries
+> 
+>  .../bindings/remoteproc/qcom,pil-info.yaml    | 42 +++++++++++++++++++
+>  1 file changed, 42 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
+> new file mode 100644
+> index 000000000000..8386a4da6030
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
+> @@ -0,0 +1,42 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/remoteproc/qcom,pil-info.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm peripheral image loader relocation info binding
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description:
+> +  This document defines the binding for describing the Qualcomm peripheral
+> +  image loader relocation memory region, in IMEM, which is used for post mortem
+> +  debugging of remoteprocs.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,pil-reloc-info
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +examples:
+> +  - |
+> +    imem@146bf000 {
+> +      compatible = "syscon", "simple-mfd";
+> +      reg = <0 0x146bf000 0 0x1000>;
+> +
+> +      #address-cells = <1>;
+> +      #size-cells = <1>;
+> +
+> +      pil-reloc {
+> +        compatible ="qcom,pil-reloc-info";
+
+s/="/= "
+
+> +        reg = <0x94c 200>;
+> +      };
+> +    };
+> +...
+> -- 
+> 2.24.0
+> 
