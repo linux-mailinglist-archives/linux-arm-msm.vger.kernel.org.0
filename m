@@ -2,104 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D6F416539C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 01:31:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 311D81653C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 01:48:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727099AbgBTAb4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Feb 2020 19:31:56 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:39944 "EHLO
+        id S1727370AbgBTAsk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Feb 2020 19:48:40 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:35636 "EHLO
         mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726731AbgBTAb4 (ORCPT
+        with ESMTP id S1726841AbgBTAsk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Feb 2020 19:31:56 -0500
-Received: by mail-pg1-f195.google.com with SMTP id z7so974898pgk.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2020 16:31:55 -0800 (PST)
+        Wed, 19 Feb 2020 19:48:40 -0500
+Received: by mail-pg1-f195.google.com with SMTP id v23so1006816pgk.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Feb 2020 16:48:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=nh/PXJt5LIK6knlDEBV+szof//jRNZ6d+fFEe23/31U=;
-        b=x6gNshASw2xBuVQruMd2+i0AlOaA3fYhjwWuGLZwAM7FObTbKD0cIU7WwozKq5LG9N
-         QKe9K0IhRl08tPACnnQqAKOjsAP0EKLwMIAAeFNX2Hqyfvw7ZwVtdqkytJgJfm05KkkU
-         vr+c3vvs34c/xw+v9D5qMrCQTjnyAFfRmsWviBm5E/xCjJm0Jvl8XsAwc1dricxMw+Lh
-         upktjdIBtqcUH1E7t80m8dTkzVHqMqBoiQ3tgZ8lvNovnpIuzSMNmUo1maXZzESmZFxB
-         5npZjsYrYatMHb+gEJLgHK9gx5nHlf9LGlzzGapKcmhf8UMyBdHYl7cBOl1diX66k54k
-         K6gA==
+        d=broadcom.com; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=MCnc7lIWYjCyOM/3eUwsK77pJjRdrQHPG+GhI2DPtOU=;
+        b=iRWHPF4ZxnvlZs+BPBJTKw5+kW68aECGGTAzv+JtpeB/RwX8M734IfDoYVGoNPk9F4
+         VmtB9RXFMaXFNiYpqLN8V3xETnXZBktVcU7NO+/YUMNsmOPqCOXxw9UHsWVgXYgsziFx
+         UKfQ//Feovjz4wGRg9goWtbJLBqZfrJ3YZQ6I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nh/PXJt5LIK6knlDEBV+szof//jRNZ6d+fFEe23/31U=;
-        b=YXbJX8IaHdBL2Zx3uTy5l1XTjVhKXedNGzRYT7sugkeUO20loIertSr9GenN6Cukh+
-         JABguFZrot6pqlWubJsvZrSo9mrJNJKS5p3R7gemxdO2L/WXpL2fzGhKPFnmgxcGidAT
-         ctzdXHnJNsd8GmgR6iIi94QMHvv+yBrAH10tFAkhsrYIRnctRYMKRjbR2N6Al0r+sdeK
-         lAX08MQ722FBiaVUIi5L4D9QmpKBLSVyIRqVUYJJ0OZCSFtpTOlexjaVs0PjoEsOxg6Y
-         CFNUYqcu7lIxFZhD7naiMvo2rdnY1VmOMi1nMf6viHd3rOoyIeju1Rma3sJlySgzx3VC
-         HyDA==
-X-Gm-Message-State: APjAAAUKPMG+yHLH6R+PR9Ulor8AZqjyOEHN9kxpxnY6+iwbHRlAjU+w
-        nbDb3AX1SqtnGtRASmEZuQGOiA==
-X-Google-Smtp-Source: APXvYqxoGLXHiH+nbn5V/5/GaH/0ND+3nZ09GJR+kv3Z8JEcxf2VsZSpJjwFzPRRtnBZkQZ+r9FL6w==
-X-Received: by 2002:a63:7417:: with SMTP id p23mr29631359pgc.277.1582158715148;
-        Wed, 19 Feb 2020 16:31:55 -0800 (PST)
-Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id t186sm866470pgd.26.2020.02.19.16.31.53
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=MCnc7lIWYjCyOM/3eUwsK77pJjRdrQHPG+GhI2DPtOU=;
+        b=S+y++qTRZanZpg2Smtka/dDlq1HRmnLDyR42vGVvCE+CihhF11oPLbIupIU4GhA6qD
+         khL9KjffwUTj2TwaNnm7IF22OoAXb/Dn+2JmAiCTOVPeAs/fkjXqeeOhH9wX0mWmmrfr
+         QNEBIthnAqG1IzMeOaM5A006KnWEf6mWXi+JF1t5en0lt5Xgm2DUeGKKsBhf6wpC+MQ+
+         LQEts6dPslrI019ox7NrvXBSdU38vG9MBrlNTMvKb5Izl5pSagrfqG6T/WIpGPN6Ojvx
+         6Kl5J8JuFm6v4Xb5D/iqyox1zkuzCxIvT26aDRyuO3Svzpr6RKeh5P/XJLARdIXDYORX
+         DpXw==
+X-Gm-Message-State: APjAAAVhnU9AXnGLsDFT58RwasSehr+E9pYm0l5aYpNBCLObaG0S7sc1
+        H23GhJt7ey7ZnQJp7ZUgR1Yixg==
+X-Google-Smtp-Source: APXvYqyPmPeQJdr9Oa52QoVxIdceLP7MLylnFV/IINfia5v++zGBusoLcQHbou1xSZoghCPOQ3Iu3w==
+X-Received: by 2002:a63:ae0a:: with SMTP id q10mr30424929pgf.178.1582159719593;
+        Wed, 19 Feb 2020 16:48:39 -0800 (PST)
+Received: from lbrmn-lnxub113.broadcom.net ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id 64sm816323pfd.48.2020.02.19.16.48.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2020 16:31:54 -0800 (PST)
-Date:   Wed, 19 Feb 2020 16:31:52 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck <linux@roeck-us.net>,
+        Wed, 19 Feb 2020 16:48:38 -0800 (PST)
+From:   Scott Branden <scott.branden@broadcom.com>
+To:     Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>
+Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-watchdog@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: Re: [PATCH] watchdog: qcom: Use irq flags from firmware
-Message-ID: <20200220003152.GC99370@yoga>
-References: <20200220002047.115000-1-swboyd@chromium.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200220002047.115000-1-swboyd@chromium.org>
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Scott Branden <scott.branden@broadcom.com>
+Subject: [PATCH v2 0/7] firmware: add partial read support in request_firmware_into_buf
+Date:   Wed, 19 Feb 2020 16:48:18 -0800
+Message-Id: <20200220004825.23372-1-scott.branden@broadcom.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 19 Feb 16:20 PST 2020, Stephen Boyd wrote:
+This patch series adds partial read support in request_firmware_into_buf.
+In order to accept the enhanced API it has been requested that kernel
+selftests and upstreamed driver utilize the API enhancement and so
+are included in this patch series.
 
-> The DT or ACPI tables should tell the driver what the irq flags are.
-> Given that this driver probes only on DT based platforms and those DT
-> platforms specify the irq flags we can safely drop the forced irq flag
-> setting here.
-> 
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Also in this patch series is the addition of a new Broadcom VK driver
+utilizing the new request_firmware_into_buf enhanced API.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Scott Branden (7):
+  fs: introduce kernel_pread_file* support
+  firmware: add offset to request_firmware_into_buf
+  test_firmware: add partial read support for request_firmware_into_buf
+  firmware: test partial file reads of request_firmware_into_buf
+  bcm-vk: add bcm_vk UAPI
+  misc: bcm-vk: add Broadcom VK driver
+  MAINTAINERS: bcm-vk: add maintainer for Broadcom VK Driver
 
-Regards,
-Bjorn
+ MAINTAINERS                                   |    7 +
+ drivers/base/firmware_loader/firmware.h       |    5 +
+ drivers/base/firmware_loader/main.c           |   49 +-
+ drivers/misc/Kconfig                          |    1 +
+ drivers/misc/Makefile                         |    1 +
+ drivers/misc/bcm-vk/Kconfig                   |   42 +
+ drivers/misc/bcm-vk/Makefile                  |   11 +
+ drivers/misc/bcm-vk/bcm_vk.h                  |  357 +++++
+ drivers/misc/bcm-vk/bcm_vk_dev.c              | 1197 +++++++++++++++
+ drivers/misc/bcm-vk/bcm_vk_msg.c              | 1359 +++++++++++++++++
+ drivers/misc/bcm-vk/bcm_vk_msg.h              |  210 +++
+ drivers/misc/bcm-vk/bcm_vk_sg.c               |  273 ++++
+ drivers/misc/bcm-vk/bcm_vk_sg.h               |   60 +
+ drivers/misc/bcm-vk/bcm_vk_tty.c              |  327 ++++
+ drivers/soc/qcom/mdt_loader.c                 |    7 +-
+ fs/exec.c                                     |   77 +-
+ include/linux/firmware.h                      |    8 +-
+ include/linux/fs.h                            |   15 +
+ include/uapi/linux/misc/bcm_vk.h              |  117 ++
+ lib/test_firmware.c                           |  139 +-
+ .../selftests/firmware/fw_filesystem.sh       |   80 +
+ 21 files changed, 4305 insertions(+), 37 deletions(-)
+ create mode 100644 drivers/misc/bcm-vk/Kconfig
+ create mode 100644 drivers/misc/bcm-vk/Makefile
+ create mode 100644 drivers/misc/bcm-vk/bcm_vk.h
+ create mode 100644 drivers/misc/bcm-vk/bcm_vk_dev.c
+ create mode 100644 drivers/misc/bcm-vk/bcm_vk_msg.c
+ create mode 100644 drivers/misc/bcm-vk/bcm_vk_msg.h
+ create mode 100644 drivers/misc/bcm-vk/bcm_vk_sg.c
+ create mode 100644 drivers/misc/bcm-vk/bcm_vk_sg.h
+ create mode 100644 drivers/misc/bcm-vk/bcm_vk_tty.c
+ create mode 100644 include/uapi/linux/misc/bcm_vk.h
 
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/watchdog/qcom-wdt.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
-> index eb47fe5ed280..c70e89013101 100644
-> --- a/drivers/watchdog/qcom-wdt.c
-> +++ b/drivers/watchdog/qcom-wdt.c
-> @@ -248,8 +248,7 @@ static int qcom_wdt_probe(struct platform_device *pdev)
->  	/* check if there is pretimeout support */
->  	irq = platform_get_irq_optional(pdev, 0);
->  	if (irq > 0) {
-> -		ret = devm_request_irq(dev, irq, qcom_wdt_isr,
-> -				       IRQF_TRIGGER_RISING,
-> +		ret = devm_request_irq(dev, irq, qcom_wdt_isr, 0,
->  				       "wdt_bark", &wdt->wdd);
->  		if (ret)
->  			return ret;
-> -- 
-> Sent by a computer, using git, on the internet
-> 
+-- 
+2.17.1
+
