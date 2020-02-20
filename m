@@ -2,104 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CCAF81665C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 19:03:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DD461665FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 19:14:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728706AbgBTSCx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Feb 2020 13:02:53 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44532 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727298AbgBTSCw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Feb 2020 13:02:52 -0500
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9CE1624673;
-        Thu, 20 Feb 2020 18:02:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1582221771;
-        bh=37+6kRfe020nr3eTo55dbdOiwQoX7FUjUISiaAj1H6w=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=m9xMxs8WLpZ1tJSTx12u4kJ78qow2BN0C/TsjYyITx052s7EDMb/8bu27UZaEaKQC
-         H7QOJcDNsK/KnboXjYJA7tTRsrQRUXUYO9KooPvCYVrO6GtCB9OR6Ad8q7QChfs8qv
-         gReuLai284/7HyoFHLCd3CtiEsSTtgxNdxqidEew=
-Content-Type: text/plain; charset="utf-8"
+        id S1728315AbgBTSOr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Feb 2020 13:14:47 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:34533 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727553AbgBTSOr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Feb 2020 13:14:47 -0500
+Received: by mail-wm1-f66.google.com with SMTP id s144so3379470wme.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2020 10:14:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=gznl4640Pmjty68zKptsYkWkjNeUmDBlZFmAL3gSFPE=;
+        b=YbsgFHprAZngpJ64emSEHbG/VsiZpyqbsgRuOHCXapQk3shJhhfNfjXpx0xrWdI1qt
+         TInKZ6bAFGf/E6AENPaHYpSbVNWGhcsIFaUvfjpGJcABfkb49W5N+AxmkDR6BWI21DFn
+         avUc4a4TTWJunNOed0cmyQwM+/q6KqPcoNFwI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=gznl4640Pmjty68zKptsYkWkjNeUmDBlZFmAL3gSFPE=;
+        b=TSsH95M6Dp+4JzDSVtZ7YFyX2slZjE2wRtqwD8FbABybO2TtbDLS4IVg4yutjVAej6
+         V2MQ7tCzsoAysiE8wC9c53YIuqeFOZDF9CzlAQJMxHhWVJqiuoZLqYOPh0OPWuLWHgje
+         I51T4X57Hu3FA/euNxGC0hAcqrlDbVhFDylaI0vrV+QFv+Dbek5MosVe3F2FjicK5o/m
+         KupFgD+akgWmexbCumXdKWesED7CMw0xQjYKzDBtMhOLkKIMHB5aqB7JdkEwlC2LlLUE
+         blhg8zKpRdpe/RzbeaR1pcyCmt5QAkEXyuZd1/h7qyucdMSSO6n7TbF5pPItOMXUhRoF
+         wm4g==
+X-Gm-Message-State: APjAAAUgYpy2X+1eEG9SJcKwn2i4krNc88DcwdzT9MUtsC65+JSeW6ZM
+        yPZ+MT0sewlnDtmNOXGQhEO3g0IV9ME=
+X-Google-Smtp-Source: APXvYqzTWpnmL8Z8rp8OENnYGEbj5HolTszXBtFYgJQK5//Eu/POgaU/ZY2vHhLmewsS8dUgPRJZkA==
+X-Received: by 2002:a1c:990b:: with SMTP id b11mr5769459wme.15.1582222484712;
+        Thu, 20 Feb 2020 10:14:44 -0800 (PST)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id c141sm98136wme.41.2020.02.20.10.14.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Feb 2020 10:14:44 -0800 (PST)
+Date:   Thu, 20 Feb 2020 19:14:42 +0100
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+Cc:     Emil Velikov <emil.l.velikov@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        freedreno@lists.freedesktop.org,
+        ML dri-devel <dri-devel@lists.freedesktop.org>
+Subject: Re: [PATCH 05/12] drm/msm/dpu: Stop copying around
+ mode->private_flags
+Message-ID: <20200220181442.GV2363188@phenom.ffwll.local>
+References: <20200219203544.31013-1-ville.syrjala@linux.intel.com>
+ <20200219203544.31013-6-ville.syrjala@linux.intel.com>
+ <CACvgo50oWkF8vjpGmOYSwaK+khZuAE0yW_npf2UEMQoRTokLBA@mail.gmail.com>
+ <20200220153309.GB13686@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1582190446-4778-2-git-send-email-sayalil@codeaurora.org>
-References: <1582190446-4778-1-git-send-email-sayalil@codeaurora.org> <1582190446-4778-2-git-send-email-sayalil@codeaurora.org>
-Subject: Re: [PATCH RFC] mmc: sdhci-msm: Toggle fifo write clk after ungating sdcc clk
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, linux-mmc-owner@vger.kernel.org,
-        Sayali Lokhande <sayalil@codeaurora.org>
-To:     Sayali Lokhande <sayalil@codeaurora.org>, adrian.hunter@intel.com,
-        asutoshd@codeaurora.org, bjorn.andersson@linaro.org,
-        georgi.djakov@linaro.org, mka@chromium.org, ppvk@codeaurora.org,
-        rampraka@codeaurora.org, robh+dt@kernel.org,
-        stummala@codeaurora.org, ulf.hansson@linaro.org,
-        vbadigan@codeaurora.org
-Date:   Thu, 20 Feb 2020 10:02:50 -0800
-Message-ID: <158222177078.184098.4974715009961694108@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200220153309.GB13686@intel.com>
+X-Operating-System: Linux phenom 5.3.0-3-amd64 
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sayali Lokhande (2020-02-20 01:20:46)
-> From: Ram Prakash Gupta <rampraka@codeaurora.org>
->=20
-> During GCC level clock gating of MCLK, the async FIFO
+On Thu, Feb 20, 2020 at 05:33:09PM +0200, Ville Syrjälä wrote:
+> On Thu, Feb 20, 2020 at 11:24:20AM +0000, Emil Velikov wrote:
+> > On Wed, 19 Feb 2020 at 20:36, Ville Syrjala
+> > <ville.syrjala@linux.intel.com> wrote:
+> > >
+> > > From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+> > >
+> > > The driver never sets mode->private_flags so copying
+> > > it back and forth is entirely pointless. Stop doing it.
+> > >
+> > > Also drop private_flags from the tracepoint.
+> > >
+> > > Cc: Rob Clark <robdclark@gmail.com>
+> > > Cc: Sean Paul <sean@poorly.run>
+> > > Cc: linux-arm-msm@vger.kernel.org
+> > > Cc: freedreno@lists.freedesktop.org
+> > > Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+> > 
+> > Perhaps the msm team has a WIP which makes use of it ?
+> 
+> Maybe if it's one of them five year projects. But anyways, 
+> with an atomic driver there are certainly better ways to
+> handle this.
 
-Is this automatic hardware clock gating?
+Yeah with atomic you have your display mode in drm_crtc_state, which
+you're subposed to subclass so that you can have terabytes of private
+state. At least in theory :-)
 
-> gets into some hang condition, such that for the next
-> transfer after MCLK ungating, first bit of CMD response
-> doesn't get written in to the FIFO. This cause the CPSM
-> to hang eventually leading to SW timeout.
->=20
-> To fix the issue, toggle the FIFO write clock after
-> MCLK ungated to get the FIFO pointers and flags to
-> valid states.
->=20
-> Change-Id: Ibef2d1d283ac0b6983c609a4abc98bc574d31fa6
-> Signed-off-by: Ram Prakash Gupta <rampraka@codeaurora.org>
-> Signed-off-by: Sayali Lokhande <sayalil@codeaurora.org>
-> ---
->  drivers/mmc/host/sdhci-msm.c | 43 ++++++++++++++++++++++++++++++++++++++=
-+++++
->  1 file changed, 43 insertions(+)
->=20
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index c3a160c..eaa3e95 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -1554,6 +1556,43 @@ static void __sdhci_msm_set_clock(struct sdhci_hos=
-t *host, unsigned int clock)
->         sdhci_enable_clk(host, clk);
->  }
-> =20
-> +/*
-> + * After MCLK ugating, toggle the FIFO write clock to get
-
-What is ugating?
-
-> + * the FIFO pointers and flags to valid state.
-> + */
-> +static void sdhci_msm_toggle_fifo_write_clk(struct sdhci_host *host)
-> +{
-> +       struct sdhci_pltfm_host *pltfm_host =3D sdhci_priv(host);
-> +       struct sdhci_msm_host *msm_host =3D sdhci_pltfm_priv(pltfm_host);
-> +       const struct sdhci_msm_offset *msm_offset =3D
-> +                                       msm_host->offset;
-> +       struct mmc_card *card =3D host->mmc->card;
-> +
-> +       if (msm_host->tuning_done ||
-> +                       (card && card->ext_csd.strobe_support &&
-> +                       card->host->ios.enhanced_strobe)) {
-> +               /*
-> +                * set HC_REG_DLL_CONFIG_3[1] to select MCLK as
-> +                * DLL input clock
-> +                */
+->private_flags was really only useful in pre-atomic drivers.
+-Daniel
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
