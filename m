@@ -2,85 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B84A165430
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 02:22:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DD0A16543C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 02:28:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726962AbgBTBWi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Feb 2020 20:22:38 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:43379 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726784AbgBTBWi (ORCPT
+        id S1727291AbgBTB2d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Feb 2020 20:28:33 -0500
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:52137 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727224AbgBTB2d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Feb 2020 20:22:38 -0500
-Received: by mail-pf1-f193.google.com with SMTP id s1so1023704pfh.10;
-        Wed, 19 Feb 2020 17:22:38 -0800 (PST)
+        Wed, 19 Feb 2020 20:28:33 -0500
+Received: by mail-pj1-f65.google.com with SMTP id fa20so169928pjb.1;
+        Wed, 19 Feb 2020 17:28:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=KQJr9FsdBlQhWcMpCvEb58Famu41gPCGLlDefm3Amvg=;
+        b=Z3yTuDo98QkJ5PT27E90wftyVJkraCPzOzHZ+IpTAIsv9MLZ7wBb5r31AvvfLMCBD6
+         ODLquRyu62e6Bk2NACxnxSfqrfLHiWqrmp+vQih0ovt1gfMRcbPcTXux3UU3xx/1g9W2
+         pVGVUvgU7vMEAJZeZpt/jWi0ZjcGzcgmdf4f60FvyWLxeD/VOBog8sSc2psASg3FYEWi
+         1ALF04+WEJwYxIpO3SAw//vIOjw5dtThEts7SmRF8Ja8K8p8tINOvSxOwTho4no0ZAze
+         /gU8avnv7EkIqGWRXlRRaE4DUzHaNnlh3F4/waNb4O3Y49xWQK+lwbY3oTeJtiU+KiqO
+         1BXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=e66XU0nEoA5qfNXWLeMAQwu6IxKmeV1IChHBVZH9fZk=;
-        b=c1yKwx8m+HVIJQboFbLSAZ+3HAg48GUgwXTmg/LWG7ELX0lDLLCvGkwn6LVGlifdXN
-         TWK8Ula3By43vN3PPJdr3vFJqRzEDSlUjryKFNy7jr3yGnRdvTg8heh7TF/4Rq02UxDo
-         Livy3q0dLF2du9O+K0vXzdHeEdmhw2uxjxf/wZoopgBG6+Fp2GdZTBGi4hOq6UqN6byp
-         RLv2oCW4CGz0LXGauQfyttEbRFQl0ft4dHL4FWGOybIiAT7uU6PZXim3lzT1ifMbfW8I
-         DDZZ12kPPJOowb2xCMPmWbkzHz+toSWk0b72wpzhpJIsJ4GQziz3b6PukyBXx3JNEf+/
-         fCMQ==
-X-Gm-Message-State: APjAAAViAscJn8RdCbuJHLwHF4UxXDh1oRbotyM43/EKGoZQ1AzLZWhC
-        IQQijCkm9vCXgry33JQ0Srw=
-X-Google-Smtp-Source: APXvYqw3dWDdJVdt4sc0Bvx5FVv68mBP8ks6VkDsDXnz/suX59U3WQKFkGJYnaRq222Z5IyP3TMQ2A==
-X-Received: by 2002:aa7:8101:: with SMTP id b1mr29983093pfi.105.1582161757397;
-        Wed, 19 Feb 2020 17:22:37 -0800 (PST)
-Received: from 42.do-not-panic.com (42.do-not-panic.com. [157.230.128.187])
-        by smtp.gmail.com with ESMTPSA id t8sm944926pjy.20.2020.02.19.17.22.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2020 17:22:36 -0800 (PST)
-Received: by 42.do-not-panic.com (Postfix, from userid 1000)
-        id A678F402D7; Thu, 20 Feb 2020 01:22:35 +0000 (UTC)
-Date:   Thu, 20 Feb 2020 01:22:35 +0000
-From:   Luis Chamberlain <mcgrof@kernel.org>
-To:     Scott Branden <scott.branden@broadcom.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v2 2/7] firmware: add offset to request_firmware_into_buf
-Message-ID: <20200220012235.GU11244@42.do-not-panic.com>
-References: <20200220004825.23372-1-scott.branden@broadcom.com>
- <20200220004825.23372-3-scott.branden@broadcom.com>
+        h=x-gm-message-state:sender:subject:to:cc:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=KQJr9FsdBlQhWcMpCvEb58Famu41gPCGLlDefm3Amvg=;
+        b=dMMfqBh5u32CBKyzpnuQgal26NzUldlVikqiBY6+u/F9wEolzYCB8NS0bUZ/Ci0Mu6
+         5C0d8twenRqEBFOmbApXrcyRjNQTubeTExf8VHeDV+u7+JczStiCDi1d+ND+x2ARgt/o
+         gXOKURojROr8rkCIKVEfeIGWsvKKIIMrnWwhGd+/uCacUhIrmyoSYKMQQy92Toikqc59
+         5kjL5kxI7OGgMqosgHq6h2KtY8Q9g5euNBsVw+CfwKM8u9Ttcuyen1KoFVX+Rxpy1YbG
+         LXYWUlBlhfLqjJV6neD8fNtP6xTI/oFanyzASMAltPsaf/Gs5EfU+6EkuEkF4KsxM+D4
+         HidQ==
+X-Gm-Message-State: APjAAAXckdD5ifK2ZQf8eUFT70ETTMnUeKP1acuco3cjseRg3MUQt/60
+        3d3wwTn/7IBYkzrEQD8o5n4=
+X-Google-Smtp-Source: APXvYqzzuo+e09JvR8rGinhnuQoinMX49bI1tdyUvp9y9WFfHp1ffXwDGph3vRBMhj6f7Ale6vngmg==
+X-Received: by 2002:a17:902:a608:: with SMTP id u8mr27583841plq.76.1582162112840;
+        Wed, 19 Feb 2020 17:28:32 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id c3sm847251pfj.159.2020.02.19.17.28.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Feb 2020 17:28:32 -0800 (PST)
+Subject: Re: [PATCH] watchdog: qcom: Use irq flags from firmware
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-watchdog@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+References: <20200220002047.115000-1-swboyd@chromium.org>
+From:   Guenter Roeck <linux@roeck-us.net>
+Message-ID: <a0756043-04b4-800d-52cc-0b53381f66e6@roeck-us.net>
+Date:   Wed, 19 Feb 2020 17:28:30 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200220004825.23372-3-scott.branden@broadcom.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200220002047.115000-1-swboyd@chromium.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 19, 2020 at 04:48:20PM -0800, Scott Branden wrote:
-> Add offset to request_firmware_into_buf to allow for portions
-> of firmware file to be read into a buffer.  Necessary where firmware
-> needs to be loaded in portions from file in memory constrained systems.
+On 2/19/20 4:20 PM, Stephen Boyd wrote:
+> The DT or ACPI tables should tell the driver what the irq flags are.
+> Given that this driver probes only on DT based platforms and those DT
+> platforms specify the irq flags we can safely drop the forced irq flag
+> setting here.
 > 
-> Signed-off-by: Scott Branden <scott.branden@broadcom.com>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-Thanks for following up Scott! However you failed to address the
-feedback last time by Takashi, so until then, this remains a blocker for
-this.
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 
-http://lkml.kernel.org/r/s5hwoeyj3i5.wl-tiwai@suse.de
+> ---
+>   drivers/watchdog/qcom-wdt.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
+> index eb47fe5ed280..c70e89013101 100644
+> --- a/drivers/watchdog/qcom-wdt.c
+> +++ b/drivers/watchdog/qcom-wdt.c
+> @@ -248,8 +248,7 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+>   	/* check if there is pretimeout support */
+>   	irq = platform_get_irq_optional(pdev, 0);
+>   	if (irq > 0) {
+> -		ret = devm_request_irq(dev, irq, qcom_wdt_isr,
+> -				       IRQF_TRIGGER_RISING,
+> +		ret = devm_request_irq(dev, irq, qcom_wdt_isr, 0,
+>   				       "wdt_bark", &wdt->wdd);
+>   		if (ret)
+>   			return ret;
+> 
 
-  Luis
