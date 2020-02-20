@@ -2,138 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B043165978
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 09:43:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FE66165A06
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Feb 2020 10:21:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726821AbgBTIn3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Feb 2020 03:43:29 -0500
-Received: from userp2130.oracle.com ([156.151.31.86]:36242 "EHLO
-        userp2130.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726764AbgBTIn3 (ORCPT
+        id S1726927AbgBTJVg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Feb 2020 04:21:36 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:54024 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726799AbgBTJVd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Feb 2020 03:43:29 -0500
-Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
-        by userp2130.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 01K8cv00119896;
-        Thu, 20 Feb 2020 08:43:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=corp-2020-01-29;
- bh=3DBcmRHN7uJqFWQQFJU2jUM8me9GZcXg5MtIEEBW19g=;
- b=j4caedeSclA+wC5JW86i2YTtdgvD6z7Q21bpuXdgyugzbfmGJ6PlhDKHkjWMPTezuUyA
- 4lUF0IJ01FpBja8+blyiBMv0tip0G6/yebcmWvfF8/qlY9sP4wQT5Op/tDr7ZnNR3BRH
- aKDOHjlNRAqOpdu+XN+PRUTZ3wrMr6M/aBqWq9dRfpbyLkeGRCwOeMDd7p1aH6eaIpbJ
- ytoIF6njfY/t9ju3kSgineXtxaJ0GoniyjbWzBPLiwPlx0gs7LGE0OgL5Hdem3uBeZwr
- 4i+VeWEmWcVvdn8/X3/NnD0/JhjFZuaZhRCq9yqv2IcQFt4B2MhDAgWCKpTaQ+zghH1p MA== 
-Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
-        by userp2130.oracle.com with ESMTP id 2y8udd881t-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 20 Feb 2020 08:43:13 +0000
-Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
-        by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 01K8bnNp079829;
-        Thu, 20 Feb 2020 08:43:12 GMT
-Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
-        by aserp3020.oracle.com with ESMTP id 2y8udbd8vm-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 20 Feb 2020 08:43:12 +0000
-Received: from abhmp0002.oracle.com (abhmp0002.oracle.com [141.146.116.8])
-        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 01K8h8m4010277;
-        Thu, 20 Feb 2020 08:43:08 GMT
-Received: from kadam (/129.205.23.165)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Thu, 20 Feb 2020 00:43:07 -0800
-Date:   Thu, 20 Feb 2020 11:42:55 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     Scott Branden <scott.branden@broadcom.com>
-Cc:     Luis Chamberlain <mcgrof@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v2 3/7] test_firmware: add partial read support for
- request_firmware_into_buf
-Message-ID: <20200220084255.GW7838@kadam>
-References: <20200220004825.23372-1-scott.branden@broadcom.com>
- <20200220004825.23372-4-scott.branden@broadcom.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200220004825.23372-4-scott.branden@broadcom.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9536 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 mlxlogscore=999
- phishscore=0 suspectscore=0 mlxscore=0 malwarescore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2001150001 definitions=main-2002200064
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9536 signatures=668685
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 impostorscore=0
- mlxlogscore=999 malwarescore=0 mlxscore=0 suspectscore=0
- priorityscore=1501 bulkscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2001150001 definitions=main-2002200064
+        Thu, 20 Feb 2020 04:21:33 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1582190493; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=dhe4B0dkTt3o0wEmiBXq3W/0qsFNC1MylHSP57FFsW0=; b=CNL7p2Q8eSw72Sud90V6OWbDnu3IYuXJUFt+Vb/U7fG/Biq5kdEQuzCgS6gl7pT2BYDBEByt
+ NHeDQ6BC44Vz2ARlNexPxqza9WDZYQ3hIBedO1bcedI9rCVGeaYakT1lDWcNF8lPWQ50feQX
+ xhZ4EziyHWMvW4dAzL8o9NVsekc=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e4e4f9c.7f138f12c148-smtp-out-n03;
+ Thu, 20 Feb 2020 09:21:32 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F113BC447A0; Thu, 20 Feb 2020 09:21:30 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from sayalil-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sayalil)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CF827C43383;
+        Thu, 20 Feb 2020 09:21:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CF827C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sayalil@codeaurora.org
+From:   Sayali Lokhande <sayalil@codeaurora.org>
+To:     bjorn.andersson@linaro.org, adrian.hunter@intel.com,
+        robh+dt@kernel.org, ulf.hansson@linaro.org,
+        asutoshd@codeaurora.org, stummala@codeaurora.org,
+        ppvk@codeaurora.org, rampraka@codeaurora.org,
+        vbadigan@codeaurora.org, sboyd@kernel.org,
+        georgi.djakov@linaro.org, mka@chromium.org
+Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, linux-mmc-owner@vger.kernel.org,
+        Sayali Lokhande <sayalil@codeaurora.org>
+Subject: [PATCH RFC] Toggle fifo write clk after ungating sdcc clk
+Date:   Thu, 20 Feb 2020 14:50:45 +0530
+Message-Id: <1582190446-4778-1-git-send-email-sayalil@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 19, 2020 at 04:48:21PM -0800, Scott Branden wrote:
-> +static int test_dev_config_update_size_t(const char *buf,
-> +					 size_t size,
-> +					 size_t *cfg)
-> +{
-> +	int ret;
-> +	long new;
-> +
-> +	ret = kstrtol(buf, 10, &new);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (new > SIZE_MAX)
+During GCC level clock gating of MCLK, the async FIFO
+gets into some hang condition, such that for the next
+transfer after MCLK ungating, first bit of CMD response
+doesn't get written in to the FIFO. This cause the CPSM
+to hang eventually leading to SW timeout.
 
-This "new" variable is long and SIZE_MAX is ULONG_MAX so the condition
-can't be true.
+To fix the issue, toggle the FIFO write clock after
+MCLK ungated to get the FIFO pointers and flags to
+valid states.
 
-> +		return -EINVAL;
-> +
-> +	mutex_lock(&test_fw_mutex);
-> +	*(size_t *)cfg = new;
-> +	mutex_unlock(&test_fw_mutex);
-> +
-> +	/* Always return full write size even if we didn't consume all */
-> +	return size;
-> +}
-> +
-> +static ssize_t test_dev_config_show_size_t(char *buf, int cfg)
-> +{
-> +	size_t val;
-> +
-> +	mutex_lock(&test_fw_mutex);
-> +	val = cfg;
-> +	mutex_unlock(&test_fw_mutex);
+Ram Prakash Gupta (1):
+  mmc: sdhci-msm: Toggle fifo write clk after ungating sdcc clk
 
-Both val and cfg are stack variables so there is no need for locking.
-Probably you meant to pass a pointer to cfg?
+ drivers/mmc/host/sdhci-msm.c | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-> +
-> +	return snprintf(buf, PAGE_SIZE, "%zu\n", val);
-> +}
-> +
->  static ssize_t test_dev_config_show_int(char *buf, int cfg)
->  {
->  	int val;
-
-regards,
-dan carpenter
-
-
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
