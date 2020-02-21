@@ -2,81 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E0B5B1678C5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2020 09:51:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D50D167945
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2020 10:22:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388881AbgBUIux (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Feb 2020 03:50:53 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:14719 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388902AbgBUIuu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Feb 2020 03:50:50 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582275049; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=mtFFCabUREGLYB41btneKfhLYC1nvRmrhWrz/tudsqg=; b=vA0pGGNSS0jVLxAlcCsEoj3RDi7LCMi1KfxD98dRyNYiCdf/yd7Jcw6AHs2fb0IJqqGF07Dn
- kIwBTlq4ZW5ZA95Ttlxqy8FPupoc4SRb2ItKIGf+yfIBP6fe0V1cfkAqpwrNCQt+4yWkqIsi
- lOnBOqYrdBCOtf+zA+clYUBz74M=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e4f99e1.7fd110a1f068-smtp-out-n03;
- Fri, 21 Feb 2020 08:50:41 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 83FA8C447A4; Fri, 21 Feb 2020 08:50:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1726395AbgBUJWW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Feb 2020 04:22:22 -0500
+Received: from mail.kernel.org ([198.145.29.99]:38452 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726244AbgBUJWW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Feb 2020 04:22:22 -0500
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D80C3C4479D;
-        Fri, 21 Feb 2020 08:50:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D80C3C4479D
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH v2 4/4] arm64: defconfig: Enable SoC sleep stats driver for Qualcomm
-Date:   Fri, 21 Feb 2020 14:19:46 +0530
-Message-Id: <1582274986-17490-5-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1582274986-17490-1-git-send-email-mkshah@codeaurora.org>
-References: <1582274986-17490-1-git-send-email-mkshah@codeaurora.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id 08DDD20722;
+        Fri, 21 Feb 2020 09:22:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1582276940;
+        bh=pjHNbG2oq138uQYds5DJIbJkvhz2l6NkNog/+t1q8Ec=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=HxDT8BRhztP2WTX3bgEvllGQp8+PDLoASLjfZ8HWWU07IYw0PXLTO0xQz0QbEbHNn
+         gUUoX8hmkk9yqi41YBvLcS3cD4XH7wCLjhrzYRIescdRlq6C5KJdluJrjiZjDX8hxG
+         0qjFvw7nx1jGT9Wlj74NJcrGyy0msCUCjjlnunGo=
+Date:   Fri, 21 Feb 2020 10:22:17 +0100
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Scott Branden <scott.branden@broadcom.com>
+Cc:     Luis Chamberlain <mcgrof@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH v2 5/7] bcm-vk: add bcm_vk UAPI
+Message-ID: <20200221092217.GA60193@kroah.com>
+References: <20200220004825.23372-1-scott.branden@broadcom.com>
+ <20200220004825.23372-6-scott.branden@broadcom.com>
+ <20200220075045.GB3261162@kroah.com>
+ <030219dc-539a-a2db-5ab2-1de7336a811c@broadcom.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <030219dc-539a-a2db-5ab2-1de7336a811c@broadcom.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable SoC sleep stats driver. The driver gives statistics for
-various SoC level low power modes.
+On Thu, Feb 20, 2020 at 05:15:58PM -0800, Scott Branden wrote:
+> Hi Greg,
+> 
+> Thanks for the review.  Comments inline.
+> 
+> On 2020-02-19 11:50 p.m., Greg Kroah-Hartman wrote:
+> > On Wed, Feb 19, 2020 at 04:48:23PM -0800, Scott Branden wrote:
+> > > Add user space api for bcm-vk driver.
+> > > 
+> > > Signed-off-by: Scott Branden <scott.branden@broadcom.com>
+> > > ---
+> > >   include/uapi/linux/misc/bcm_vk.h | 117 +++++++++++++++++++++++++++++++
+> > >   1 file changed, 117 insertions(+)
+> > >   create mode 100644 include/uapi/linux/misc/bcm_vk.h
+> > > 
+> > > diff --git a/include/uapi/linux/misc/bcm_vk.h b/include/uapi/linux/misc/bcm_vk.h
+> > > new file mode 100644
+> > > index 000000000000..56a2178e06f5
+> > > --- /dev/null
+> > > +++ b/include/uapi/linux/misc/bcm_vk.h
+> > > @@ -0,0 +1,117 @@
+> > > +/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-2-Clause) */
+> > > +/*
+> > > + * Copyright 2018-2020 Broadcom.
+> > > + */
+> > > +
+> > > +#ifndef __UAPI_LINUX_MISC_BCM_VK_H
+> > > +#define __UAPI_LINUX_MISC_BCM_VK_H
+> > > +
+> > > +#include <linux/ioctl.h>
+> > > +#include <linux/types.h>
+> > > +
+> > > +struct vk_image {
+> > > +	__u32 type;     /* Type of image */
+> > > +#define VK_IMAGE_TYPE_BOOT1 1 /* 1st stage (load to SRAM) */
+> > > +#define VK_IMAGE_TYPE_BOOT2 2 /* 2nd stage (load to DDR) */
+> > > +	char filename[64]; /* Filename of image */
+> > __u8?
+> I don't understand why char is not appropriate for a filename.
+> Would like to understand why __u8 is correct to use here vs. char.
 
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+Why is __u8 not correct?  It's the data type we use for ioctls.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 0f21288..c63399d 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -767,6 +767,7 @@ CONFIG_QCOM_SMD_RPM=y
- CONFIG_QCOM_SMP2P=y
- CONFIG_QCOM_SMSM=y
- CONFIG_QCOM_SOCINFO=m
-+CONFIG_QCOM_SOC_SLEEP_STATS=y
- CONFIG_ARCH_R8A774A1=y
- CONFIG_ARCH_R8A774B1=y
- CONFIG_ARCH_R8A774C0=y
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+> > > +};
+> > > +
+> > > +/* default firmware images names */
+> > > +#define VK_BOOT1_DEF_VALKYRIE_FILENAME	"vk-boot1.bin"
+> > > +#define VK_BOOT2_DEF_VALKYRIE_FILENAME	"vk-boot2.bin"
+> > > +
+> > > +#define VK_BOOT1_DEF_VIPER_FILENAME	"vp-boot1.bin"
+> > > +#define VK_BOOT2_DEF_VIPER_FILENAME	"vp-boot2.bin"
+> > Why do these need to be in a uapi .h file?  Shouldn't they just be part
+> > of the normal MODULE_FIRMWARE() macro in the driver itself?
+> ioctl VK_IOCTL_LOAD_IMAGE passes in type of image to load and filename.
+> These are the default names used if the images are autoloaded by the driver.
+
+Then put them in the driver, not in the user api file.
+
+> But if userspace app wishes to load (or reload) the default images then it
+> needs to know the name of the file to pass in ioctl.
+
+That's up to userspace.
+
+> I guess I could change the API at this point to lookup the default filename
+> if NULL filename passed into ioctl.
+
+Yes please.
+
+> > > +struct vk_access {
+> > > +	__u8 barno;     /* BAR number to use */
+> > > +	__u8 type;      /* Type of access */
+> > > +#define VK_ACCESS_READ 0
+> > > +#define VK_ACCESS_WRITE 1
+> > > +	__u32 len;      /* length of data */
+> > Horrible padding issues, are you sure this all works properly?
+> Haven't had any issues.
+
+Use pahole to see the holes you have in here and please fix that up.
+
+> > > +	__u64 offset;   /* offset in BAR */
+> > > +	__u32 *data;    /* where to read/write data to */
+> > Are you _SURE_ you want a pointer here?  How do you handle the compat
+> > issues with 32/64 user/kernel space?
+> Don't care about 32-bit user space for this driver.
+
+We all do, see the link that Arnd sent you.
+
+> I don't think there isn't even enough memory in such systems for the number
+> of streams of video buffers needed for transcoding.
+
+32bit systems have lots of memory.
+
+> This driver is only used in high end 64-bit x86 servers.
+
+For today, what about in 2 years?
+
+> But, VK_IOCTL_ACCESS_BAR can go away entirely if standard user space
+> approach already exists as you imply.
+
+Yes, please use that interface, as you should never duplicate existing
+functionality.
+
+> > > +};
+> > And isn't this just a normal PCI write thing?  Can't you do it from
+> > userspace using the existing userspace PCI accesses?  Why do you need a
+> > special ioctl for it?
+> This follows how pci_endpoint_test reads and writes BARS via ioctl.
+> It also abstracts the accesses all into the device node being opened.
+> 
+> I am not familiar with userspace PCI accesses.  Would this be through some
+> sys entries?
+
+Yes, it can read PCI config space that way, and if you use the uio
+interface, you can read PCI memory.
+
+thanks,
+
+greg k-h
