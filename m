@@ -2,99 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 67AFE166B71
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2020 01:20:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 282B2166B65
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2020 01:15:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729456AbgBUAT7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Feb 2020 19:19:59 -0500
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:37213 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729416AbgBUAT7 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Feb 2020 19:19:59 -0500
-Received: by mail-oi1-f193.google.com with SMTP id q84so297570oic.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2020 16:19:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IHr5qo3B7v5uxs0wZA0fZW6J9zqGy3IdsKd+NBLqxdQ=;
-        b=Hz3Wvel0TrnLWu2KOGBLM37xIzOel8u9Z3LL3LKWhQ5uDvm2hmCI+8lAaq9dDcnzK0
-         mmF29yC6bk6kCEp7Rp8Xphv7SaNuWSCpytm5t0gbTsUTgWYqT1kGf0Uk4snguMx7ktEB
-         CUaU4UXvlG8DiQPZ0fLoxZ7q8pzZGa6twCkjkNgfUTBep5MTIzKNPNNZmjXvVmIuajDT
-         x1oGn/KBMPVd010kg/4IBE9Z7pYnop4ImXcsjGIsjF1rqOEZh0XzY3XCKZGRIyEUPwgM
-         dnOCLimGwLQYnIXwqYXRG3zAdpZoXpkT5LDSWOlqz/mbvst5M1heaxiNSpmi3QJ6N3pL
-         qeqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IHr5qo3B7v5uxs0wZA0fZW6J9zqGy3IdsKd+NBLqxdQ=;
-        b=YqdNJCcsX0rKBLk51L0xB5eEKJ1F9evdxNGYAzIZxcA0h9mQaC64x+X74i2k2xSobk
-         qqZlPfu5tsRIYNmizwCBBTCivRJkNBEZiWQaTpCWf7OXWzTloeykIf6yywvE8L5tLOvE
-         IDO2yJ9gFeB+QBCdtKvBOxDg6GNPn0gj/yLxhibvMj3+seHVacauOv+27Z4cJWcS5YRl
-         CtA7yMDsqoxxQ/F6yT+Uqn2DOcTr9EvFjPKVDMmGDD14Gm4WIKYVqx9GFBzXU67UnSbW
-         cWSbbKIXsoStWh1bRpsdGtENFfUk6RwOn6Icd1ZGUtkTnK9O3TfnjKsmItn9O6bTVtD9
-         Sp5w==
-X-Gm-Message-State: APjAAAXFYWXcseICbBSI02SEkz0oEScv+E276ul5YHAt2nI3oyiObGFa
-        1gCCAPxR8OVx4UkC/m7cheIfrMKnmjXPO/jiBAew1g==
-X-Google-Smtp-Source: APXvYqxyLS/9yBWFyxJu7nngbozjCnxStnGWdAIgQ8O7CZoqSKHHSFq255QaoTFU0a3hJMPv5SrYAZQF8EZ/aFXEwgA=
-X-Received: by 2002:aca:c0c5:: with SMTP id q188mr3935454oif.169.1582244398771;
- Thu, 20 Feb 2020 16:19:58 -0800 (PST)
+        id S1729420AbgBUAPy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Feb 2020 19:15:54 -0500
+Received: from foss.arm.com ([217.140.110.172]:54118 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729410AbgBUAPx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Feb 2020 19:15:53 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AC99531B;
+        Thu, 20 Feb 2020 16:15:52 -0800 (PST)
+Received: from [10.37.12.72] (unknown [10.37.12.72])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 27B4B3F6CF;
+        Thu, 20 Feb 2020 16:15:49 -0800 (PST)
+Subject: Re: [PATCH v9 08/15] coresight: cti: Enable CTI associated with
+ devices.
+To:     mike.leach@linaro.org, linux-arm-kernel@lists.infradead.org,
+        devicetree@vger.kernel.org, coresight@lists.linaro.org,
+        linux-doc@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, mathieu.poirier@linaro.org,
+        robh+dt@kernel.org, maxime@cerno.tech, liviu.dudau@arm.com,
+        sudeep.holla@arm.com, lorenzo.pieralisi@arm.com, agross@kernel.org,
+        corbet@lwn.net
+References: <20200210213924.20037-1-mike.leach@linaro.org>
+ <20200210213924.20037-9-mike.leach@linaro.org>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+Message-ID: <04b739fd-7bb3-bd28-8013-918e7d4dfcb7@arm.com>
+Date:   Fri, 21 Feb 2020 00:20:17 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-References: <1582223216-23459-1-git-send-email-jcrouse@codeaurora.org>
-In-Reply-To: <1582223216-23459-1-git-send-email-jcrouse@codeaurora.org>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Thu, 20 Feb 2020 16:19:46 -0800
-Message-ID: <CALAqxLW3PHtdFY20AStETme7sp-YLMLXBhqRyjOeLkQDSFOeVQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] msm/gpu/a6xx: use the DMA-API for GMU memory allocations
-To:     Jordan Crouse <jcrouse@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Andy Gross <agross@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200210213924.20037-9-mike.leach@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 20, 2020 at 10:27 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
-> When CONFIG_INIT_ON_ALLOC_DEFAULT_ON the GMU memory allocator runs afoul of
-> cache coherency issues because it is mapped as write-combine without clearing
-> the cache after it was zeroed.
->
-> Rather than duplicate the hacky workaround we use in the GEM allocator for the
-> same reason it turns out that we don't need to have a bespoke memory allocator
-> for the GMU anyway. It uses a flat, global address space and there are only
-> two relatively minor allocations anyway. In short, this is essentially what the
-> DMA API was created for so replace a bunch of memory management code with two
-> calls to allocate and free DMA memory and we're fine.
->
-> The only wrinkle is that the memory allocations need to be in a very specific
-> location in the GMU virtual address space so in order to get the iova allocator
-> to do the right thing we need to specify the dma-ranges property in the device
-> tree for the GMU node. Since we've not yet converted the GMU bindings over to
-> YAML two patches quickly turn into four but at the end of it we have at least
-> one bindings file converted to YAML and 99 less lines of code to worry about.
->
-> v2: Fix the example bindings for dma-ranges - the third item is the size
-> Pass false to of_dma_configure so that it fails probe if the DMA region is not
-> set up.
+Hi Mike
 
-This set still works for me as well. Thanks so much!
-Tested-by: John Stultz <john.stultz@linaro.org>
+Sorry for the delay. one minor comment below.
 
-thanks
--john
+On 02/10/2020 09:39 PM, Mike Leach wrote:
+> The CoreSight subsystem enables a path of devices from source to sink.
+> Any CTI devices associated with the path devices must be enabled at the
+> same time.
+> 
+> This patch adds an associated coresight_device element to the main
+> coresight device structure, and uses this to create associations between
+> the CTI and other devices based on the device tree data. The associated
+> device element is used to enable CTI in conjunction with the path elements.
+> 
+> CTI devices are reference counted so where a single CTI is associated with
+> multiple elements on the path, it will be enabled on the first associated
+> device enable, and disabled with the last associated device disable.
+> 
+> Signed-off-by: Mike Leach <mike.leach@linaro.org>
+> Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> ---
+>   drivers/hwtracing/coresight/coresight-cti.c  | 129 +++++++++++++++++++
+>   drivers/hwtracing/coresight/coresight-cti.h  |   1 +
+>   drivers/hwtracing/coresight/coresight-priv.h |  12 ++
+>   drivers/hwtracing/coresight/coresight.c      |  71 +++++++++-
+>   include/linux/coresight.h                    |   4 +
+>   5 files changed, 212 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-cti.c b/drivers/hwtracing/coresight/coresight-cti.c
+> index 77c2af247917..c4494923d030 100644
+> --- a/drivers/hwtracing/coresight/coresight-cti.c
+> +++ b/drivers/hwtracing/coresight/coresight-cti.c
+> @@ -4,6 +4,7 @@
+>    * Author: Mike Leach <mike.leach@linaro.org>
+>    */
+>   
+> +#include <linux/property.h>
+>   #include "coresight-cti.h"
+>   
+>   /**
+> @@ -440,6 +441,131 @@ int cti_channel_setop(struct device *dev, enum cti_chan_set_op op,
+>   	return err;
+>   }
+>   
+> +/*
+> + * Look for a matching connection device name in the list of connections.
+> + * If found then swap in the csdev name, set trig con association pointer
+> + * and return found.
+> + */
+> +static bool
+> +cti_match_fixup_csdev(struct cti_device *ctidev, const char *node_name,
+> +		      struct coresight_device *csdev)
+> +{
+> +	struct cti_trig_con *tc;
+> +	const char *csdev_name;
+> +
+> +	list_for_each_entry(tc, &ctidev->trig_cons, node) {
+> +		if (tc->con_dev_name) {
+> +			if (!strcmp(node_name, tc->con_dev_name)) {
+> +				/* match: so swap in csdev name & dev */
+> +				csdev_name = dev_name(&csdev->dev);
+> +				tc->con_dev_name =
+> +					devm_kstrdup(&csdev->dev, csdev_name,
+> +						     GFP_KERNEL);
+
+In the extreme rare case of an allocation failure, we may want to
+check if the allocation was successful or not, rather than silently
+ignoring it. With that fixed,
+
+Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
