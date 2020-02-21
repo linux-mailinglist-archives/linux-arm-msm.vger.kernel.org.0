@@ -2,90 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C4C40168A62
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2020 00:28:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4238F168A77
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2020 00:38:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729187AbgBUX2V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Feb 2020 18:28:21 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:36837 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726826AbgBUX2V (ORCPT
+        id S1729414AbgBUXhx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Feb 2020 18:37:53 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:36213 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729173AbgBUXhx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Feb 2020 18:28:21 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582327700; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=qTXV8CL2DFBuSGQ2DYrUjFlxyMbEdqv6bY+3ktuK+pA=; b=X+glJbJliF4oiUp4+vKiqN/qsCUZuhyUwyKliFgW/szBLBGBb54/sqdRj4SaEBPczSFfRRox
- oFVqT4Bc4BwrIjsPboQ2iYswxaB7cWuX6e7UhA0nXe664UJ0UWfSfjYa567nN9P5E+fXYB4c
- 4CVI8JmYl2VnVPpeiF2C9GbAc2E=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e50678f.7fd75cde37d8-smtp-out-n01;
- Fri, 21 Feb 2020 23:28:15 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4AD7AC447A3; Fri, 21 Feb 2020 23:28:14 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from eberman-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: eberman)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 678DAC447A5;
-        Fri, 21 Feb 2020 23:28:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 678DAC447A5
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=eberman@codeaurora.org
-From:   Elliot Berman <eberman@codeaurora.org>
-To:     Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Elliot Berman <eberman@codeaurora.org>,
+        Fri, 21 Feb 2020 18:37:53 -0500
+Received: by mail-pg1-f196.google.com with SMTP id d9so1786452pgu.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2020 15:37:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=U8GTXDQYqxVMWeiE3CeM22iOXjrDkwUgtcNqh51keqY=;
+        b=BTbJ9DV5UnhS6c59epTpH7XTEnU2oooXg+g6bAhjUyVbujp1zj/9TaRU8cj0TPZwd3
+         CG8U0vdI5gFnoJTHTJLwe669yrJzuJv13qa3AVL8dmiMh5v19I5goaubVFzUpLjj3wTs
+         7lQz+6WG62x4T5Z+CFsJPY2Ds6kbuZLZW2JXM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=U8GTXDQYqxVMWeiE3CeM22iOXjrDkwUgtcNqh51keqY=;
+        b=lgo2c6gTaq6U8G35zlHmfkgIwETDVUVU8OAc4XrQKLWsBb8Dr4ZFTou0+pHX8/PKsc
+         PasvD4RARIT/7uhumLfTZReqqf99Cmjp3m8jqnOobUDZwEpNnPqQWkQzyTT4svqYzLvI
+         0dtz9KI7pBSQAlzrucm98qDAMKQxsMNlnZ5N2mZUIgRAC5tNTWoDS8LjTVkMwzkQSYUp
+         uUE0trF6TAPStfATvQjg/WEODykorUYId6O1kx6DusNznNVfTydOjAHawOrMDj7z3BKt
+         0P7SFSERSDkzqVLAiANg2OwE6UFkgleh6nFa3DagotqJU4DjKcuCAtcNXO+1zW4oM6nM
+         l34w==
+X-Gm-Message-State: APjAAAWkYXCDFenqvsfBI+U86+u398VOPqTuA40bSuDERe12E0iBJuu0
+        MiBDSbsQfPmu7G07ZnrCYiP2dQ==
+X-Google-Smtp-Source: APXvYqzSKwENjp8Zc5/+UeGf1chfHFs+nHCsMZqHL9BYW/wJmsDWoBM6WNV9QMdjdezOfrljgme5xQ==
+X-Received: by 2002:a63:3c08:: with SMTP id j8mr40832260pga.223.1582328272147;
+        Fri, 21 Feb 2020 15:37:52 -0800 (PST)
+Received: from [10.136.13.65] ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id u23sm3891110pfm.29.2020.02.21.15.37.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Feb 2020 15:37:51 -0800 (PST)
+Subject: Re: [PATCH 2/7] firmware: add offset to request_firmware_into_buf
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Luis Chamberlain <mcgrof@kernel.org>, Takashi Iwai <tiwai@suse.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Trilok Soni <tsoni@codeaurora.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        linux-arm-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: qcom: sm8250: Add vendor-specific PSCI system reset2 type
-Date:   Fri, 21 Feb 2020 15:28:05 -0800
-Message-Id: <1582327685-6316-4-git-send-email-eberman@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1582327685-6316-1-git-send-email-eberman@codeaurora.org>
-References: <1582327685-6316-1-git-send-email-eberman@codeaurora.org>
+        Shuah Khan <skhan@linuxfoundation.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux FS-devel Mailing List <linux-fsdevel@vger.kernel.org>,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        "open list:KERNEL SELFTEST FRAMEWORK" 
+        <linux-kselftest@vger.kernel.org>
+References: <20190822192451.5983-1-scott.branden@broadcom.com>
+ <20190822192451.5983-3-scott.branden@broadcom.com>
+ <s5hef1crybq.wl-tiwai@suse.de>
+ <10461fcf-9eca-32b6-0f9d-23c63b3f3442@broadcom.com>
+ <s5hr258j6ln.wl-tiwai@suse.de>
+ <93b8285a-e5eb-d4a4-545d-426bbbeb8008@broadcom.com>
+ <s5ho90byhnv.wl-tiwai@suse.de>
+ <b440f372-45be-c06c-94a1-44ae6b1e7eb8@broadcom.com>
+ <s5hwoeyj3i5.wl-tiwai@suse.de> <20191011133120.GP16384@42.do-not-panic.com>
+ <e65a3ba1-d064-96fe-077e-59bf8ffff377@broadcom.com>
+ <CAK8P3a2NJurg_hxVbWYZwJVhYM5-xjWt12Kh0DdyfTGqQPrPAQ@mail.gmail.com>
+From:   Scott Branden <scott.branden@broadcom.com>
+Message-ID: <3731a882-8784-b957-7628-49edfa9683e7@broadcom.com>
+Date:   Fri, 21 Feb 2020 15:37:47 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <CAK8P3a2NJurg_hxVbWYZwJVhYM5-xjWt12Kh0DdyfTGqQPrPAQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm Technologies, Inc. SoCs do not guarantee that an architectural
-warm reset boots back into Linux kernel. For instance, if download mode
-or reboot reason cookies are set, the SoC would do a warm reset into an
-alternate exception level (e.g. a mode to collect RAM dumps) or
-application at EL1 (e.g. fastboot mode). Thus, Qualcomm Technologies,
-Inc. SoCs support a vendor-specific warm reset type that can be used in
-all instances of warm/soft reboots.
+Hi Arnd,
 
-Signed-off-by: Elliot Berman <eberman@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+On 2020-02-21 12:44 a.m., Arnd Bergmann wrote:
+> On Fri, Feb 21, 2020 at 1:11 AM Scott Branden
+> <scott.branden@broadcom.com> wrote:
+>> On 2019-10-11 6:31 a.m., Luis Chamberlain wrote:
+>>> On Tue, Aug 27, 2019 at 12:40:02PM +0200, Takashi Iwai wrote:
+>>>> On Mon, 26 Aug 2019 19:24:22 +0200,
+>>>> Scott Branden wrote:
+>>>>> I will admit I am not familiar with every subtlety of PCI
+>>>>> accesses. Any comments to the Valkyrie driver in this patch series are
+>>>>> appreciated.
+>>>>> But not all drivers need to work on all architectures. I can add a
+>>>>> depends on x86 64bit architectures to the driver to limit it to such.
+>>>> But it's an individual board on PCIe, and should work no matter which
+>>>> architecture is?  Or is this really exclusive to x86?
+>>> Poke Scott.
+>> Yes, this is exclusive to x86.
+>> In particular, 64-bit x86 server class machines with PCIe gen3 support.
+>> There is no reason for these PCIe boards to run in other lower end
+>> machines or architectures.
+> It doesn't really matter that much what you expect your customers to
+> do with your product, or what works a particular machine today, drivers
+> should generally be written in a portable manner anyway and use
+> the documented APIs. memcpy() into an __iomem pointer is not
+> portable and while it probably works on any x86 machine today, please
+> just don't do it. If you use 'sparse' to check your code, that would normally
+> result in an address space warning, unless you add __force and a
+> long comment explaining why you cannot just use memcpy_to_io()
+> instead. At that point, you are already better off usingn memcpy_to_io() ;-)
+>
+>          Arnd
+I am a not performing a memcpy at all right now.
+I am calling a request_firmware_into_buf call and do not need to make a 
+copy.
+This function eventually calls kernel_read_file, which then makes at 
+indirect call in __vfs_read to perform the read to memory.
+ From there I am lost as to what operation happens to achieve this.
+The read function would need to detect the buf is in io space and 
+perform the necessary operation.
+Anyone with any knowledge on how to make this read to io space would be 
+appreciated?
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index f63df12..b85d234 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -162,6 +162,7 @@
- 	psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
-+		arm,psci-sys-reset2-type = <0x80000000>;
- 	};
- 
- 	reserved_memory: reserved-memory {
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+ssize_t __vfs_read(struct file *file, char __user *buf, size_t count,
+            loff_t *pos)
+{
+     if (file->f_op->read)
+         return file->f_op->read(file, buf, count, pos);
+     else if (file->f_op->read_iter)
+         return new_sync_read(file, buf, count, pos);
+     else
+         return -EINVAL;
+}
+
+ssize_t kernel_read(struct file *file, void *buf, size_t count, loff_t *pos)
+{
+     mm_segment_t old_fs;
+     ssize_t result;
+
+     old_fs = get_fs();
+     set_fs(KERNEL_DS);
+     /* The cast to a user pointer is valid due to the set_fs() */
+     result = vfs_read(file, (void __user *)buf, count, pos);
+     set_fs(old_fs);
+     return result;
+}
+
