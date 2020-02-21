@@ -2,94 +2,286 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D661167666
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2020 09:37:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC01B1677B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2020 09:44:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733011AbgBUIdY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Feb 2020 03:33:24 -0500
-Received: from lelv0142.ext.ti.com ([198.47.23.249]:58058 "EHLO
-        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732609AbgBUIdX (ORCPT
+        id S1730356AbgBUInV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Feb 2020 03:43:21 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:27194 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730300AbgBUInU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Feb 2020 03:33:23 -0500
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 01L8XJsc015920;
-        Fri, 21 Feb 2020 02:33:19 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1582273999;
-        bh=HS1Md6M0KSfcAvB5AaAuTKyUy/n3WhhTB/+q8IGl1yc=;
-        h=Subject:To:CC:References:From:Date:In-Reply-To;
-        b=hI/LwG2KS7nyGndqeFXCyRBVuIBvFnzyPcYsynXqpEpEBLfYP470xHU+CssX/b9S4
-         IXB4EXF5EMHAfKgC7b1aPySMu1193wD5DoTydMdcE4bO38Q03kFFwBVHs22v8zx9/D
-         HaAru45OYb/JFKjjXUibT0CpAxiEgHnWbwuScXCg=
-Received: from DFLE100.ent.ti.com (dfle100.ent.ti.com [10.64.6.21])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 01L8XJNN072114
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Fri, 21 Feb 2020 02:33:19 -0600
-Received: from DFLE102.ent.ti.com (10.64.6.23) by DFLE100.ent.ti.com
- (10.64.6.21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Fri, 21
- Feb 2020 02:33:18 -0600
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE102.ent.ti.com
- (10.64.6.23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
- Frontend Transport; Fri, 21 Feb 2020 02:33:18 -0600
-Received: from [10.24.69.159] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 01L8XGLE004067;
-        Fri, 21 Feb 2020 02:33:17 -0600
-Subject: Re: [PATCH v4 0/3] phy: qcom-qmp: Add SDM845 QMP and QHP PHYs
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20200106081821.3192922-1-bjorn.andersson@linaro.org>
- <20200220063837.GX1908628@ripper>
-From:   Kishon Vijay Abraham I <kishon@ti.com>
-Message-ID: <ec401b79-b0af-78b3-ba8a-03aee5ba3584@ti.com>
-Date:   Fri, 21 Feb 2020 14:06:58 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.2
+        Fri, 21 Feb 2020 03:43:20 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1582274599; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=2uuwEllZOFN2t55iFCOv+EfXhVOJ4HA08UuWs0sOrD8=;
+ b=msBpmOrL8eK+eq/dkNatIwfSCEC3ZCTRBrTweb8Q91BDNSZX15GDsBrhfQACegivsJKDll/Z
+ GtEKkxGwoH3MBvqEY0gqsCzbuF1BbDIlmQAIIgNCRBkRNoXydji7bfVV3vGrM0T76S4acQyp
+ aAPhOVZ2vRuLRQbDT07ZrdJ09Ps=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e4f9826.7f6e24517998-smtp-out-n01;
+ Fri, 21 Feb 2020 08:43:18 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 62DBFC4479F; Fri, 21 Feb 2020 08:43:17 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: okukatla)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0C53DC43383;
+        Fri, 21 Feb 2020 08:43:16 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20200220063837.GX1908628@ripper>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Date:   Fri, 21 Feb 2020 14:13:15 +0530
+From:   okukatla@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>, bjorn.andersson@linaro.org,
+        daidavid1@codeaurora.org, evgreen@google.com,
+        georgi.djakov@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        ilina@codeaurora.org, seansw@qti.qualcomm.com, elder@linaro.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [V2, 2/3] interconnect: qcom: Add SC7180 interconnect provider
+ driver
+In-Reply-To: <5e118869.1c69fb81.c28bf.4564@mx.google.com>
+References: <1577782737-32068-1-git-send-email-okukatla@codeaurora.org>
+ <1577782737-32068-3-git-send-email-okukatla@codeaurora.org>
+ <5e118869.1c69fb81.c28bf.4564@mx.google.com>
+Message-ID: <1829865b2179f7aae3fce5e2a93902bf@codeaurora.org>
+X-Sender: okukatla@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 20/02/20 12:08 pm, Bjorn Andersson wrote:
-> On Mon 06 Jan 00:18 PST 2020, Bjorn Andersson wrote:
+On 2020-01-05 12:25, Stephen Boyd wrote:
+> Quoting Odelu Kukatla (2019-12-31 00:58:56)
+>> diff --git a/drivers/interconnect/qcom/sc7180.c 
+>> b/drivers/interconnect/qcom/sc7180.c
+>> new file mode 100644
+>> index 0000000..4a398e0
+>> --- /dev/null
+>> +++ b/drivers/interconnect/qcom/sc7180.c
+>> @@ -0,0 +1,788 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+>> + *
+>> + */
+>> +
+>> +#include <dt-bindings/interconnect/qcom,sc7180.h>
 > 
->> Add support for the two PCIe PHYs found in Qualcomm SDM845
->>
+> Can you include this after linux/ headers? That is the "preferred" way
+> to include headers.
 > 
-> Kishon, these patches still applies cleanly, could you please pick them
-> up?
-
-merged now, thanks!
-
--Kishon
-
+done.
+>> +#include <linux/device.h>
+>> +#include <linux/interconnect.h>
+>> +#include <linux/interconnect-provider.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of_device.h>
 > 
-> Regards,
-> Bjorn
+> Hopefully this include isn't used and can be removed.
 > 
->> Bjorn Andersson (3):
->>   dt-bindings: phy-qcom-qmp: Add SDM845 PCIe to binding
->>   phy: qcom: qmp: Add SDM845 PCIe QMP PHY support
->>   phy: qcom: qmp: Add SDM845 QHP PCIe PHY
->>
->>  .../devicetree/bindings/phy/qcom-qmp-phy.txt  |  10 +
->>  drivers/phy/qualcomm/phy-qcom-qmp.c           | 313 ++++++++++++++++++
->>  drivers/phy/qualcomm/phy-qcom-qmp.h           | 114 +++++++
->>  3 files changed, 437 insertions(+)
->>
->> -- 
->> 2.24.0
->>
+I will remove it.
+>> +#include <linux/of_platform.h>
+> 
+> Is this include used?
+> 
+I will remove it.
+>> +#include <linux/platform_device.h>
+>> +
+>> +#include "icc-rpmh.h"
+>> +#include "bcm-voter.h"
+>> +
+> [...]
+>> +
+>> +static struct qcom_icc_node *system_noc_nodes[] = {
+>> +       [MASTER_SNOC_CFG] = &qhm_snoc_cfg,
+>> +       [MASTER_A1NOC_SNOC] = &qnm_aggre1_noc,
+>> +       [MASTER_A2NOC_SNOC] = &qnm_aggre2_noc,
+>> +       [MASTER_GEM_NOC_SNOC] = &qnm_gemnoc,
+>> +       [MASTER_PIMEM] = &qxm_pimem,
+>> +       [SLAVE_APPSS] = &qhs_apss,
+>> +       [SLAVE_SNOC_CNOC] = &qns_cnoc,
+>> +       [SLAVE_SNOC_GEM_NOC_GC] = &qns_gemnoc_gc,
+>> +       [SLAVE_SNOC_GEM_NOC_SF] = &qns_gemnoc_sf,
+>> +       [SLAVE_IMEM] = &qxs_imem,
+>> +       [SLAVE_PIMEM] = &qxs_pimem,
+>> +       [SLAVE_SERVICE_SNOC] = &srvc_snoc,
+>> +       [SLAVE_QDSS_STM] = &xs_qdss_stm,
+>> +       [SLAVE_TCU] = &xs_sys_tcu_cfg,
+>> +};
+>> +
+>> +static struct qcom_icc_desc sc7180_system_noc = {
+> 
+> Can this be const? And the other ones?
+> yes, will change it.
+>> +       .nodes = system_noc_nodes,
+>> +       .num_nodes = ARRAY_SIZE(system_noc_nodes),
+>> +       .bcms = system_noc_bcms,
+>> +       .num_bcms = ARRAY_SIZE(system_noc_bcms),
+>> +};
+>> +
+>> +static int qnoc_probe(struct platform_device *pdev)
+>> +{
+>> +       const struct qcom_icc_desc *desc;
+>> +       struct icc_onecell_data *data;
+>> +       struct icc_provider *provider;
+>> +       struct qcom_icc_node **qnodes;
+>> +       struct qcom_icc_provider *qp;
+>> +       struct icc_node *node;
+>> +       size_t num_nodes, i;
+>> +       int ret;
+>> +
+>> +       desc = of_device_get_match_data(&pdev->dev);
+> 
+> Use device_get_match_data() instead?
+> 
+will update it.
+>> +       if (!desc)
+>> +               return -EINVAL;
+>> +
+>> +       qnodes = desc->nodes;
+>> +       num_nodes = desc->num_nodes;
+>> +
+>> +       qp = devm_kzalloc(&pdev->dev, sizeof(*qp), GFP_KERNEL);
+>> +       if (!qp)
+>> +               return -ENOMEM;
+>> +
+>> +       data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), 
+>> GFP_KERNEL);
+>> +       if (!data)
+>> +               return -ENOMEM;
+>> +
+>> +       provider = &qp->provider;
+>> +       provider->dev = &pdev->dev;
+>> +       provider->set = qcom_icc_set;
+>> +       provider->pre_aggregate = qcom_icc_pre_aggregate;
+>> +       provider->aggregate = qcom_icc_aggregate;
+>> +       provider->xlate = of_icc_xlate_onecell;
+>> +       INIT_LIST_HEAD(&provider->nodes);
+>> +       provider->data = data;
+>> +
+>> +       qp->dev = &pdev->dev;
+>> +       qp->bcms = desc->bcms;
+>> +       qp->num_bcms = desc->num_bcms;
+>> +
+>> +       qp->voter = of_bcm_voter_get(qp->dev, NULL);
+>> +       if (IS_ERR(qp->voter))
+>> +               return PTR_ERR(qp->voter);
+>> +
+>> +       ret = icc_provider_add(provider);
+>> +       if (ret) {
+>> +               dev_err(&pdev->dev, "error adding interconnect 
+>> provider\n");
+>> +               return ret;
+>> +       }
+>> +
+>> +       for (i = 0; i < num_nodes; i++) {
+>> +               size_t j;
+>> +
+>> +               if (!qnodes[i])
+>> +                       continue;
+>> +
+>> +               node = icc_node_create(qnodes[i]->id);
+>> +               if (IS_ERR(node)) {
+>> +                       ret = PTR_ERR(node);
+>> +                       goto err;
+>> +               }
+>> +
+>> +               node->name = qnodes[i]->name;
+>> +               node->data = qnodes[i];
+>> +               icc_node_add(node, provider);
+>> +
+>> +               dev_dbg(&pdev->dev, "registered node %pK %s %d\n", 
+>> node,
+>> +                       qnodes[i]->name, node->id);
+> 
+> Is this more debug junk? Maybe if it is useful it can be part of the
+> core framework instead of in this driver?
+> 
+>> +
+>> +               /* populate links */
+> 
+> Useless comment.
+> i will clean up this.
+>> +               for (j = 0; j < qnodes[i]->num_links; j++)
+>> +                       icc_link_create(node, qnodes[i]->links[j]);
+>> +
+>> +               data->nodes[i] = node;
+>> +       }
+>> +       data->num_nodes = num_nodes;
+>> +
+>> +       for (i = 0; i < qp->num_bcms; i++)
+>> +               qcom_icc_bcm_init(qp->bcms[i], &pdev->dev);
+>> +
+>> +       platform_set_drvdata(pdev, qp);
+>> +
+>> +       dev_dbg(&pdev->dev, "Registered SC7180 ICC\n");
+> 
+> This driver debug message is pretty useless. Please remove it.
+> i will removr it.
+>> +
+>> +       return ret;
+> 
+> return 0?
+> 
+>> +err:
+>> +       icc_nodes_remove(provider);
+>> +       icc_provider_del(provider);
+>> +       return ret;
+>> +}
+>> +
+>> +static int qnoc_remove(struct platform_device *pdev)
+>> +{
+>> +       struct qcom_icc_provider *qp = platform_get_drvdata(pdev);
+>> +
+>> +       icc_nodes_remove(&qp->provider);
+>> +       return icc_provider_del(&qp->provider);
+>> +}
+>> +
+>> +static const struct of_device_id qnoc_of_match[] = {
+>> +       { .compatible = "qcom,sc7180-aggre1-noc",
+>> +         .data = &sc7180_aggre1_noc},
+>> +       { .compatible = "qcom,sc7180-aggre2-noc",
+>> +         .data = &sc7180_aggre2_noc},
+>> +       { .compatible = "qcom,sc7180-camnoc-virt",
+>> +         .data = &sc7180_camnoc_virt},
+>> +       { .compatible = "qcom,sc7180-compute-noc",
+>> +         .data = &sc7180_compute_noc},
+>> +       { .compatible = "qcom,sc7180-config-noc",
+>> +         .data = &sc7180_config_noc},
+>> +       { .compatible = "qcom,sc7180-dc-noc",
+>> +         .data = &sc7180_dc_noc},
+>> +       { .compatible = "qcom,sc7180-gem-noc",
+>> +         .data = &sc7180_gem_noc},
+>> +       { .compatible = "qcom,sc7180-ipa-virt",
+>> +         .data = &sc7180_ipa_virt},
+>> +       { .compatible = "qcom,sc7180-mc-virt",
+>> +         .data = &sc7180_mc_virt},
+>> +       { .compatible = "qcom,sc7180-mmss-noc",
+>> +         .data = &sc7180_mmss_noc},
+>> +       { .compatible = "qcom,sc7180-npu-noc",
+>> +         .data = &sc7180_npu_noc},
+>> +       { .compatible = "qcom,sc7180-qup-virt",
+>> +         .data = &sc7180_qup_virt},
+>> +       { .compatible = "qcom,sc7180-system-noc",
+>> +         .data = &sc7180_system_noc},
+>> +       { },
+> 
+> Nitpick: Drop the comma as it's the sentinel and nothing can come 
+> after.
+> will remove it.
+>> +};
+>> +MODULE_DEVICE_TABLE(of, qnoc_of_match);
