@@ -2,114 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 282B2166B65
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2020 01:15:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AD7C166B85
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2020 01:21:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729420AbgBUAPy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Feb 2020 19:15:54 -0500
-Received: from foss.arm.com ([217.140.110.172]:54118 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729410AbgBUAPx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Feb 2020 19:15:53 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AC99531B;
-        Thu, 20 Feb 2020 16:15:52 -0800 (PST)
-Received: from [10.37.12.72] (unknown [10.37.12.72])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 27B4B3F6CF;
-        Thu, 20 Feb 2020 16:15:49 -0800 (PST)
-Subject: Re: [PATCH v9 08/15] coresight: cti: Enable CTI associated with
- devices.
-To:     mike.leach@linaro.org, linux-arm-kernel@lists.infradead.org,
-        devicetree@vger.kernel.org, coresight@lists.linaro.org,
-        linux-doc@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, mathieu.poirier@linaro.org,
-        robh+dt@kernel.org, maxime@cerno.tech, liviu.dudau@arm.com,
-        sudeep.holla@arm.com, lorenzo.pieralisi@arm.com, agross@kernel.org,
-        corbet@lwn.net
-References: <20200210213924.20037-1-mike.leach@linaro.org>
- <20200210213924.20037-9-mike.leach@linaro.org>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-Message-ID: <04b739fd-7bb3-bd28-8013-918e7d4dfcb7@arm.com>
-Date:   Fri, 21 Feb 2020 00:20:17 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
+        id S1729525AbgBUAVX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Feb 2020 19:21:23 -0500
+Received: from bombadil.infradead.org ([198.137.202.133]:33250 "EHLO
+        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729392AbgBUAVX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Feb 2020 19:21:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=Content-Transfer-Encoding:
+        Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:
+        Subject:Sender:Reply-To:Content-ID:Content-Description;
+        bh=tMJ8YKxTeBtxTcT9+8gwag/FsvtT3wSn7stN9kvfG0Q=; b=I6fAixvGMEOmvfzzpJEepAfJtm
+        PXVdq7yCLQEEvy3t4ujzGyV7hIW+tgNWOV8C5gsgeQYhP6ptOwGo++BOf6tv10ZObHBITktO81YPa
+        4jTb5lEt5DXYFa/oiYiSp7rLSDtYv9RCg2hyZx+zX+bQ/SrQKlYio37lgRDJw1YECZxMGJfkoLMwR
+        CN/nFFlNnR7HtjwlPFeDw5VT4YPCJkAPkoD9d4K90iqtIkPIfypmhBbxTdEdhNu3K0GaPha8Nmgqp
+        yuh3hYYGgfpmN2VKO1HvdUWu2GBjyqBPghv3XIiekadWeA8GpLbHW3OafvDVigtMmp/mfiK4hAPQO
+        vAbEVGdQ==;
+Received: from [2601:1c0:6280:3f0::19c2]
+        by bombadil.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1j4w4H-0003FS-Sz; Fri, 21 Feb 2020 00:21:21 +0000
+Subject: Re: [PATCH v2 6/7] misc: bcm-vk: add Broadcom VK driver
+To:     Scott Branden <scott.branden@broadcom.com>,
+        Luis Chamberlain <mcgrof@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>
+Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Desmond Yan <desmond.yan@broadcom.com>,
+        James Hu <james.hu@broadcom.com>
+References: <20200220004825.23372-1-scott.branden@broadcom.com>
+ <20200220004825.23372-7-scott.branden@broadcom.com>
+ <827a4520-95ce-5264-90d9-ed730e5918e6@infradead.org>
+ <22c48aaf-21e2-56ab-3f40-e497a69cd936@broadcom.com>
+From:   Randy Dunlap <rdunlap@infradead.org>
+Message-ID: <bfbb883b-f222-922e-bdf0-3491af14e446@infradead.org>
+Date:   Thu, 20 Feb 2020 16:21:20 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-In-Reply-To: <20200210213924.20037-9-mike.leach@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <22c48aaf-21e2-56ab-3f40-e497a69cd936@broadcom.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mike
-
-Sorry for the delay. one minor comment below.
-
-On 02/10/2020 09:39 PM, Mike Leach wrote:
-> The CoreSight subsystem enables a path of devices from source to sink.
-> Any CTI devices associated with the path devices must be enabled at the
-> same time.
+On 2/20/20 4:06 PM, Scott Branden wrote:
+> Hi Randy,
 > 
-> This patch adds an associated coresight_device element to the main
-> coresight device structure, and uses this to create associations between
-> the CTI and other devices based on the device tree data. The associated
-> device element is used to enable CTI in conjunction with the path elements.
-> 
-> CTI devices are reference counted so where a single CTI is associated with
-> multiple elements on the path, it will be enabled on the first associated
-> device enable, and disabled with the last associated device disable.
-> 
-> Signed-off-by: Mike Leach <mike.leach@linaro.org>
-> Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> ---
->   drivers/hwtracing/coresight/coresight-cti.c  | 129 +++++++++++++++++++
->   drivers/hwtracing/coresight/coresight-cti.h  |   1 +
->   drivers/hwtracing/coresight/coresight-priv.h |  12 ++
->   drivers/hwtracing/coresight/coresight.c      |  71 +++++++++-
->   include/linux/coresight.h                    |   4 +
->   5 files changed, 212 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-cti.c b/drivers/hwtracing/coresight/coresight-cti.c
-> index 77c2af247917..c4494923d030 100644
-> --- a/drivers/hwtracing/coresight/coresight-cti.c
-> +++ b/drivers/hwtracing/coresight/coresight-cti.c
-> @@ -4,6 +4,7 @@
->    * Author: Mike Leach <mike.leach@linaro.org>
->    */
->   
-> +#include <linux/property.h>
->   #include "coresight-cti.h"
->   
->   /**
-> @@ -440,6 +441,131 @@ int cti_channel_setop(struct device *dev, enum cti_chan_set_op op,
->   	return err;
->   }
->   
-> +/*
-> + * Look for a matching connection device name in the list of connections.
-> + * If found then swap in the csdev name, set trig con association pointer
-> + * and return found.
-> + */
-> +static bool
-> +cti_match_fixup_csdev(struct cti_device *ctidev, const char *node_name,
-> +		      struct coresight_device *csdev)
-> +{
-> +	struct cti_trig_con *tc;
-> +	const char *csdev_name;
-> +
-> +	list_for_each_entry(tc, &ctidev->trig_cons, node) {
-> +		if (tc->con_dev_name) {
-> +			if (!strcmp(node_name, tc->con_dev_name)) {
-> +				/* match: so swap in csdev name & dev */
-> +				csdev_name = dev_name(&csdev->dev);
-> +				tc->con_dev_name =
-> +					devm_kstrdup(&csdev->dev, csdev_name,
-> +						     GFP_KERNEL);
+> On 2020-02-19 5:04 p.m., Randy Dunlap wrote:
+>> Hi,
+>>
+>> On 2/19/20 4:48 PM, Scott Branden wrote:
+>>> diff --git a/drivers/misc/bcm-vk/Kconfig b/drivers/misc/bcm-vk/Kconfig
+>>> new file mode 100644
+>>> index 000000000000..c75dfb89a38d
+>>> --- /dev/null
+>>> +++ b/drivers/misc/bcm-vk/Kconfig
+>>> @@ -0,0 +1,42 @@
+>>> +# SPDX-License-Identifier: GPL-2.0-only
+>>> +#
+>>> +# Broadcom VK device
+>>> +#
+>>> +config BCM_VK
+>>> +    tristate "Support for Broadcom VK Accelerators"
+>>> +    depends on PCI_MSI
+>>> +    default m
+>> Need to justify default m. Normally we don't add drivers as enabled unless
+>> they are required for basic (boot) operation.
+> Will remove default m as not needed to boot.  Interesting other offload engines misc/ocxl/Kconfig and misc/cxl/Kconfig have default m.
 
-In the extreme rare case of an allocation failure, we may want to
-check if the allocation was successful or not, rather than silently
-ignoring it. With that fixed,
+Thanks.
 
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Uh, yes, that is interesting.  They both depend on PPC_POWERNV,
+which I know nothing about.
+
+>>> +    help
+>>> +      Select this option to enable support for Broadcom
+>>> +      VK Accelerators.  VK is used for performing
+>>> +      specific video offload processing.  This driver enables
+>>> +      userspace programs to access these accelerators via /dev/bcm-vk.N
+>>> +      devices.
+>>> +
+>>> +      If unsure, say N.
+
+-- 
+~Randy
+
