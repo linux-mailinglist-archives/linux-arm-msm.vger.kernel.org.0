@@ -2,209 +2,273 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 95662166C2A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2020 02:06:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E90DE166C32
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2020 02:16:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729456AbgBUBF7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Feb 2020 20:05:59 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:45628 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729419AbgBUBF7 (ORCPT
+        id S1729473AbgBUBQJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Feb 2020 20:16:09 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43415 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729419AbgBUBQI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Feb 2020 20:05:59 -0500
-Received: by mail-lj1-f195.google.com with SMTP id e18so395519ljn.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2020 17:05:57 -0800 (PST)
+        Thu, 20 Feb 2020 20:16:08 -0500
+Received: by mail-wr1-f67.google.com with SMTP id r11so143445wrq.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2020 17:16:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FMbaRhE8Xlg+e8gfJFL0zQMEcgClDiX27cTjJlb40Bc=;
-        b=YSkqVb73r5DSVqQkay/Ui5BWA0DyeR/AuYz0xcCx9V88M+7gS80kZ1UCA2rTjEylfE
-         iBFCpuLDoiJCoqCTbAbVyRibf9vYvC/5h1aifNOiOq2CA/wu+sHybJA5FDBgJjsNQ2jA
-         g0IcuArCwGqX+OTG4kKIV/CazBMvVN9wGuVl4=
+        d=broadcom.com; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=o+pp6WjkijFi/cFymD5udOX8QbE4tnzlUQVoizd2/v8=;
+        b=JCdw/jYCzwsajXk+2CRmpVEuCLHdL5I2WS7TTRwQgDkpfHH2vClT/cONJ+PaB6MenR
+         +EOi/x2mr7KGl30PbOwwgQ6BfQoVCbFG4FVzXEbqGOFKRqQ65kjbM2+WnDz1OL3nN8G5
+         uMwCnkiVZ89PeOTZOyg1EPOp6/t84WvjVZlnw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FMbaRhE8Xlg+e8gfJFL0zQMEcgClDiX27cTjJlb40Bc=;
-        b=KPuFUqUevQGrPmV+sQzlCMgv+UgHAdgakTknck0THINJmCuCmuVIXjquL+qFDXn4l1
-         bMJAX97Hg17+y4RGMyPWn8jGxbhkUUQPkNOVn9hi+lggxhknMUvMAS+/5FvcUDIm8zhK
-         vlas9DogQ1R5rDIHYO1bP43PaoWF+sC1yqtBldJI/cHyqlLgJpV3t51uRn63d3xkdCgK
-         8e3Dwd5y3AJMDyVJkWc5FNFJgpv9duJdKTC7d6bCwI2c54XyvJfk6q36ETgni1trC3CW
-         IHNS+LtdR83xF2n4A4HtAcpS46QUQvjNp7Hy9up+3UWL+NfewzGpfInpcQ+nvnIREy6U
-         PE8Q==
-X-Gm-Message-State: APjAAAWK9eLGTkKT78DZ4hIHD+x2tAxrxioDNTGi0kT400ws/TC0Gx4o
-        lM+rgr6l1LyDi6wQ27mN1dRpoCuvf2A=
-X-Google-Smtp-Source: APXvYqye7VWhFHSTpiTRtVrdWQDyTfaJWx1JnE0/01qKka3ojUur+unEZRRk+QdJwT40BxLwbLdiUw==
-X-Received: by 2002:a2e:761a:: with SMTP id r26mr20864133ljc.135.1582247156349;
-        Thu, 20 Feb 2020 17:05:56 -0800 (PST)
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com. [209.85.167.50])
-        by smtp.gmail.com with ESMTPSA id l22sm571391ljb.2.2020.02.20.17.05.54
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=o+pp6WjkijFi/cFymD5udOX8QbE4tnzlUQVoizd2/v8=;
+        b=gu1Kta34Xn+Kb+fQ9aMBJ/NUKLu+IRPPRMeWlNT9aYfTZAT6GZA27H74xFgqi7OO6f
+         S1jiFIlpYF5imYeQkkYi4DZvRsKauAmCMKdHc60zq6WaUW8fg8PuXeoCFOgKrNgcPXRx
+         Xc2EnGehUEzK+HYGzKmI2DYLmdGUdlQZ70+1B0bi9ebgoLzU3dKyjEwPk1tHhcZxrxGP
+         TlKNPNi6ssAYXNsBjbYHYd0Nd5++nTZnl3ioy75E9yLJHK9WIE0T9Ew8qDPXSXXlrmcw
+         kEwCMxR3unyRNQ6ZFQgdLrzf5TpS7A6Z7ti2jMgO1tW+7g95W9IuwVIq2Y6lfTaAyA/C
+         1Bwg==
+X-Gm-Message-State: APjAAAV/0I/T6hypq1MhiO4quvEGfLhKQpDPjjpBDESiYiIZAqKpN4a9
+        VFHN8MNcYNicrTGaI3iueulUfA==
+X-Google-Smtp-Source: APXvYqxxcQJGSUxxc/xkaF1XgEwdO9U0vVvBJoSNVQvkEfShM9JCtvPvpgn1NaRGE7wFd3Ii4IpK9w==
+X-Received: by 2002:adf:df03:: with SMTP id y3mr45314758wrl.260.1582247765872;
+        Thu, 20 Feb 2020 17:16:05 -0800 (PST)
+Received: from [10.136.13.65] ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id h205sm1517742wmf.25.2020.02.20.17.16.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Feb 2020 17:05:54 -0800 (PST)
-Received: by mail-lf1-f50.google.com with SMTP id b15so228236lfc.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Feb 2020 17:05:54 -0800 (PST)
-X-Received: by 2002:ac2:523c:: with SMTP id i28mr18016930lfl.104.1582247153877;
- Thu, 20 Feb 2020 17:05:53 -0800 (PST)
+        Thu, 20 Feb 2020 17:16:04 -0800 (PST)
+Subject: Re: [PATCH v2 5/7] bcm-vk: add bcm_vk UAPI
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Luis Chamberlain <mcgrof@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Olof Johansson <olof@lixom.net>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
+        Andy Gross <agross@kernel.org>
+References: <20200220004825.23372-1-scott.branden@broadcom.com>
+ <20200220004825.23372-6-scott.branden@broadcom.com>
+ <20200220075045.GB3261162@kroah.com>
+From:   Scott Branden <scott.branden@broadcom.com>
+Message-ID: <030219dc-539a-a2db-5ab2-1de7336a811c@broadcom.com>
+Date:   Thu, 20 Feb 2020 17:15:58 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-References: <1580796831-18996-1-git-send-email-mkshah@codeaurora.org>
- <1580796831-18996-3-git-send-email-mkshah@codeaurora.org> <CAE=gft7gPS+hhnDP+uTn3is6s9=Nspbb4PL0bZ025Tq1Zpth8Q@mail.gmail.com>
- <7db81eed-d46d-8131-f471-6f57c0335ace@codeaurora.org> <CAE=gft6zEKYoMabmRbO55BSAt-4oOuwRRZZD6BcSbe7Xp15Vnw@mail.gmail.com>
- <8914a4c0-db3c-371c-d875-afd4b3b6870c@codeaurora.org>
-In-Reply-To: <8914a4c0-db3c-371c-d875-afd4b3b6870c@codeaurora.org>
-From:   Evan Green <evgreen@chromium.org>
-Date:   Thu, 20 Feb 2020 17:05:15 -0800
-X-Gmail-Original-Message-ID: <CAE=gft6GMQa=fbTF=zrPyy48RdgbNgwZYM36O6iFdzrATG+LYA@mail.gmail.com>
-Message-ID: <CAE=gft6GMQa=fbTF=zrPyy48RdgbNgwZYM36O6iFdzrATG+LYA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] soc: qcom: rpmh: Update rpm_msgs offset address and
- add list_del
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200220075045.GB3261162@kroah.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 12, 2020 at 4:15 AM Maulik Shah <mkshah@codeaurora.org> wrote:
->
-> On 2/5/2020 11:51 PM, Evan Green wrote:
-> > On Tue, Feb 4, 2020 at 9:12 PM Maulik Shah <mkshah@codeaurora.org> wrote:
-> >>
-> >> On 2/5/2020 6:01 AM, Evan Green wrote:
-> >>> On Mon, Feb 3, 2020 at 10:14 PM Maulik Shah <mkshah@codeaurora.org> wrote:
-> >>>> rpm_msgs are copied in continuously allocated memory during write_batch.
-> >>>> Update request pointer to correctly point to designated area for rpm_msgs.
-> >>>>
-> >>>> While at this also add missing list_del before freeing rpm_msgs.
-> >>>>
-> >>>> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> >>>> ---
-> >>>>    drivers/soc/qcom/rpmh.c | 9 ++++++---
-> >>>>    1 file changed, 6 insertions(+), 3 deletions(-)
-> >>>>
-> >>>> diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-> >>>> index c3d6f00..04c7805 100644
-> >>>> --- a/drivers/soc/qcom/rpmh.c
-> >>>> +++ b/drivers/soc/qcom/rpmh.c
-> >>>> @@ -65,7 +65,7 @@ struct cache_req {
-> >>>>    struct batch_cache_req {
-> >>>>           struct list_head list;
-> >>>>           int count;
-> >>>> -       struct rpmh_request rpm_msgs[];
-> >>>> +       struct rpmh_request *rpm_msgs;
-> >>>>    };
-> >>>>
-> >>>>    static struct rpmh_ctrlr *get_rpmh_ctrlr(const struct device *dev)
-> >>>> @@ -327,8 +327,10 @@ static void invalidate_batch(struct rpmh_ctrlr *ctrlr)
-> >>>>           unsigned long flags;
-> >>>>
-> >>>>           spin_lock_irqsave(&ctrlr->cache_lock, flags);
-> >>>> -       list_for_each_entry_safe(req, tmp, &ctrlr->batch_cache, list)
-> >>>> +       list_for_each_entry_safe(req, tmp, &ctrlr->batch_cache, list) {
-> >>>> +               list_del(&req->list);
-> >>>>                   kfree(req);
-> >>>> +       }
-> >>>>           INIT_LIST_HEAD(&ctrlr->batch_cache);
-> >>> Hm, I don't get it. list_for_each_entry_safe ensures you can traverse
-> >>> the list while freeing it behind you. ctrlr->batch_cache is now a
-> >>> bogus list, but is re-inited with the lock held. From my reading,
-> >>> there doesn't seem to be anything wrong with the current code. Can you
-> >>> elaborate on the bug you found?
-> >> Hi Evan,
-> >>
-> >> when we don't do list_del, there might be access to already freed memory.
-> >> Even after current item free via kfree(req), without list_del, the next
-> >> and prev item's pointer are still pointing to this freed region.
-> >> it seem best to call list_del to ensure that before freeing this area,
-> >> no other item in list refer to this.
-> > I don't think that's true. the "_safe" part of
-> > list_for_each_entry_safe ensures that we don't touch the ->next member
-> > of any node after freeing it. So I don't think there's any case where
-> > we could touch freed memory. The list_del still seems like needless
-> > code to me.
->
-> Hmm, ok. i can drop list_del.
->
-> see the reason below to include list_del.
->
-> >>>>           spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
-> >>>>    }
-> >>>> @@ -377,10 +379,11 @@ int rpmh_write_batch(const struct device *dev, enum rpmh_state state,
-> >>>>                   return -ENOMEM;
-> >>>>
-> >>>>           req = ptr;
-> >>>> +       rpm_msgs = ptr + sizeof(*req);
-> >>>>           compls = ptr + sizeof(*req) + count * sizeof(*rpm_msgs);
-> >>>>
-> >>>>           req->count = count;
-> >>>> -       rpm_msgs = req->rpm_msgs;
-> >>>> +       req->rpm_msgs = rpm_msgs;
-> >>> I don't really understand what this is fixing either, can you explain?
-> >> the continous memory allocated via below is for 3 items,
-> >>
-> >> ptr = kzalloc(sizeof(*req) + count * (sizeof(req->rpm_msgs[0]) +
-> >> sizeof(*compls)), GFP_ATOMIC);
-> >>
-> >> 1. batch_cache_req,  followed by
-> >> 2. total count of rpmh_request,  followed by
-> >> 3. total count of compls
-> >>
-> >> current code starts using (3) compls from proper offset in memory
-> >>           compls = ptr + sizeof(*req) + count * sizeof(*rpm_msgs);
-> >>
-> >> however for (2) rpmh_request it does
-> >>
-> >>           rpm_msgs = req->rpm_msgs;
-> >>
-> >> because of this it starts 8 byte before its designated area and overlaps
-> >> with (1) batch_cache_req struct's last entry.
-> >> this patch corrects it via below to ensure rpmh_request uses correct
-> >> start address in memory.
-> >>
-> >>           rpm_msgs = ptr + sizeof(*req);
-> > I don't follow that either. The empty array declaration (or the
-> > GCC-specific version of it would be  "struct rpmh_request
-> > rpm_msgs[0];") is a flexible array member, meaning the member itself
-> > doesn't take up any space in the struct. So, for instance, it holds
-> > true that &(req->rpm_msgs[0]) == (req + 1). By my reading the existing
-> > code is correct, and your patch just adds a needless pointer
-> > indirection. Check out this wikipedia entry:
-> >
-> > https://en.wikipedia.org/wiki/Flexible_array_member
-> Thanks Evan,
->
-> Agree that code works even without this.
->
-> However from the same wiki,
->
->  >>It is common to allocate sizeof(struct) + array_len*sizeof(array
-> element) bytes.
->
->  >>This is not wrong, however it may allocate a few more bytes than
-> necessary:
->
-> this is what i wanted to convery above, currently it allocated 8 more
-> bytes than necessary.
->
-> The reason for the change was one use after free reported in rpmh driver.
->
-> After including this change, we have not seen this reported again.
+Hi Greg,
 
-Hm, I would not expect that an allocaton of too many bytes would
-result in a use-after-free warning. If you still have the warning and
-are able to share it, I'm happy to take a look.
+Thanks for the review.  Comments inline.
 
+On 2020-02-19 11:50 p.m., Greg Kroah-Hartman wrote:
+> On Wed, Feb 19, 2020 at 04:48:23PM -0800, Scott Branden wrote:
+>> Add user space api for bcm-vk driver.
+>>
+>> Signed-off-by: Scott Branden <scott.branden@broadcom.com>
+>> ---
+>>   include/uapi/linux/misc/bcm_vk.h | 117 +++++++++++++++++++++++++++++++
+>>   1 file changed, 117 insertions(+)
+>>   create mode 100644 include/uapi/linux/misc/bcm_vk.h
+>>
+>> diff --git a/include/uapi/linux/misc/bcm_vk.h b/include/uapi/linux/misc/bcm_vk.h
+>> new file mode 100644
+>> index 000000000000..56a2178e06f5
+>> --- /dev/null
+>> +++ b/include/uapi/linux/misc/bcm_vk.h
+>> @@ -0,0 +1,117 @@
+>> +/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-2-Clause) */
+>> +/*
+>> + * Copyright 2018-2020 Broadcom.
+>> + */
+>> +
+>> +#ifndef __UAPI_LINUX_MISC_BCM_VK_H
+>> +#define __UAPI_LINUX_MISC_BCM_VK_H
+>> +
+>> +#include <linux/ioctl.h>
+>> +#include <linux/types.h>
+>> +
+>> +struct vk_image {
+>> +	__u32 type;     /* Type of image */
+>> +#define VK_IMAGE_TYPE_BOOT1 1 /* 1st stage (load to SRAM) */
+>> +#define VK_IMAGE_TYPE_BOOT2 2 /* 2nd stage (load to DDR) */
+>> +	char filename[64]; /* Filename of image */
+> __u8?
+I don't understand why char is not appropriate for a filename.
+Would like to understand why __u8 is correct to use here vs. char.
 >
-> I can drop this change in new revision if we don't want it.
+>> +};
+>> +
+>> +/* default firmware images names */
+>> +#define VK_BOOT1_DEF_VALKYRIE_FILENAME	"vk-boot1.bin"
+>> +#define VK_BOOT2_DEF_VALKYRIE_FILENAME	"vk-boot2.bin"
+>> +
+>> +#define VK_BOOT1_DEF_VIPER_FILENAME	"vp-boot1.bin"
+>> +#define VK_BOOT2_DEF_VIPER_FILENAME	"vp-boot2.bin"
+> Why do these need to be in a uapi .h file?  Shouldn't they just be part
+> of the normal MODULE_FIRMWARE() macro in the driver itself?
+ioctl VK_IOCTL_LOAD_IMAGE passes in type of image to load and filename.
+These are the default names used if the images are autoloaded by the driver.
+But if userspace app wishes to load (or reload) the default images then 
+it needs to know the name of the file to pass in ioctl.
+I guess I could change the API at this point to lookup the default 
+filename if NULL filename passed into ioctl.
+>> +struct vk_access {
+>> +	__u8 barno;     /* BAR number to use */
+>> +	__u8 type;      /* Type of access */
+>> +#define VK_ACCESS_READ 0
+>> +#define VK_ACCESS_WRITE 1
+>> +	__u32 len;      /* length of data */
+> Horrible padding issues, are you sure this all works properly?
+Haven't had any issues.
+>
+>> +	__u64 offset;   /* offset in BAR */
+>> +	__u32 *data;    /* where to read/write data to */
+> Are you _SURE_ you want a pointer here?  How do you handle the compat
+> issues with 32/64 user/kernel space?
+Don't care about 32-bit user space for this driver.
+I don't think there isn't even enough memory in such systems for the 
+number of streams of video buffers needed for transcoding.
+This driver is only used in high end 64-bit x86 servers.
+But, VK_IOCTL_ACCESS_BAR can go away entirely if standard user space 
+approach already exists as you imply.
+>> +};
+> And isn't this just a normal PCI write thing?  Can't you do it from
+> userspace using the existing userspace PCI accesses?  Why do you need a
+> special ioctl for it?
+This follows how pci_endpoint_test reads and writes BARS via ioctl.
+It also abstracts the accesses all into the device node being opened.
 
-Yes, let's drop it for now.
--Evan
+I am not familiar with userspace PCI accesses.  Would this be through 
+some sys entries?
+>
+>> +
+>> +struct vk_reset {
+>> +	__u32 arg1;
+>> +	__u32 arg2;
+>> +};
+>> +
+>> +#define VK_MAGIC              0x5E
+>> +
+>> +/* Load image to Valkyrie */
+>> +#define VK_IOCTL_LOAD_IMAGE   _IOW(VK_MAGIC, 0x2, struct vk_image)
+>> +
+>> +/* Read data from Valkyrie */
+>> +#define VK_IOCTL_ACCESS_BAR   _IOWR(VK_MAGIC, 0x3, struct vk_access)
+>> +
+>> +/* Send Reset to Valkyrie */
+>> +#define VK_IOCTL_RESET        _IOW(VK_MAGIC, 0x4, struct vk_reset)
+>> +
+>> +/*
+>> + * message block - basic unit in the message where a message's size is always
+>> + *		   N x sizeof(basic_block)
+>> + */
+>> +struct vk_msg_blk {
+>> +	__u8 function_id;
+>> +#define VK_FID_TRANS_BUF 5
+>> +#define VK_FID_SHUTDOWN  8
+>> +	__u8 size;
+>> +	__u16 queue_id:4;
+>> +	__u16 msg_id:12;
+> Do not use bitfields in ioctls, they will not work properly on all
+> systems.  Use masks and shifts instead.
+I don't like the bitfields either - structure inherited from firmware code.
+Will work on getting these removed.
+>
+>> +	__u32 context_id;
+>> +	__u32 args[2];
+>> +#define VK_CMD_PLANES_MASK 0x000F /* number of planes to up/download */
+>> +#define VK_CMD_UPLOAD      0x0400 /* memory transfer to vk */
+>> +#define VK_CMD_DOWNLOAD    0x0500 /* memory transfer from vk */
+>> +#define VK_CMD_MASK        0x0F00 /* command mask */
+>> +};
+>> +
+>> +#define VK_BAR_FWSTS			0x41C
+>> +/* VK_FWSTS definitions */
+>> +#define VK_FWSTS_RELOCATION_ENTRY	BIT(0)
+>> +#define VK_FWSTS_RELOCATION_EXIT	BIT(1)
+>> +#define VK_FWSTS_INIT_START		BIT(2)
+>> +#define VK_FWSTS_ARCH_INIT_DONE		BIT(3)
+>> +#define VK_FWSTS_PRE_KNL1_INIT_DONE	BIT(4)
+>> +#define VK_FWSTS_PRE_KNL2_INIT_DONE	BIT(5)
+>> +#define VK_FWSTS_POST_KNL_INIT_DONE	BIT(6)
+>> +#define VK_FWSTS_INIT_DONE		BIT(7)
+>> +#define VK_FWSTS_APP_INIT_START		BIT(8)
+>> +#define VK_FWSTS_APP_INIT_DONE		BIT(9)
+> I do not think that BIT() is exported to userspace properly, is it
+> really ok here?
+Works fine.  Also in uapi/linux/rtc.h.
+>
+>> +#define VK_FWSTS_MASK			0xFFFFFFFF
+>> +#define VK_FWSTS_READY			(VK_FWSTS_INIT_START | \
+>> +					 VK_FWSTS_ARCH_INIT_DONE | \
+>> +					 VK_FWSTS_PRE_KNL1_INIT_DONE | \
+>> +					 VK_FWSTS_PRE_KNL2_INIT_DONE | \
+>> +					 VK_FWSTS_POST_KNL_INIT_DONE | \
+>> +					 VK_FWSTS_INIT_DONE | \
+>> +					 VK_FWSTS_APP_INIT_START | \
+>> +					 VK_FWSTS_APP_INIT_DONE)
+>> +/* Deinit */
+>> +#define VK_FWSTS_APP_DEINIT_START	BIT(23)
+>> +#define VK_FWSTS_APP_DEINIT_DONE	BIT(24)
+>> +#define VK_FWSTS_DRV_DEINIT_START	BIT(25)
+>> +#define VK_FWSTS_DRV_DEINIT_DONE	BIT(26)
+>> +#define VK_FWSTS_RESET_DONE		BIT(27)
+>> +#define VK_FWSTS_DEINIT_TRIGGERED	(VK_FWSTS_APP_DEINIT_START | \
+>> +					 VK_FWSTS_APP_DEINIT_DONE  | \
+>> +					 VK_FWSTS_DRV_DEINIT_START | \
+>> +					 VK_FWSTS_DRV_DEINIT_DONE)
+>> +/* Last nibble for reboot reason */
+>> +#define VK_FWSTS_RESET_REASON_SHIFT	28
+>> +#define VK_FWSTS_RESET_REASON_MASK	(0xF << VK_FWSTS_RESET_REASON_SHIFT)
+>> +#define VK_FWSTS_RESET_SYS_PWRUP	(0x0 << VK_FWSTS_RESET_REASON_SHIFT)
+>> +#define VK_FWSTS_RESET_MBOX_DB		(0x1 << VK_FWSTS_RESET_REASON_SHIFT)
+>> +#define VK_FWSTS_RESET_M7_WDOG		(0x2 << VK_FWSTS_RESET_REASON_SHIFT)
+>> +#define VK_FWSTS_RESET_TEMP		(0x3 << VK_FWSTS_RESET_REASON_SHIFT)
+>> +#define VK_FWSTS_RESET_PCI_FLR		(0x4 << VK_FWSTS_RESET_REASON_SHIFT)
+>> +#define VK_FWSTS_RESET_PCI_HOT		(0x5 << VK_FWSTS_RESET_REASON_SHIFT)
+>> +#define VK_FWSTS_RESET_PCI_WARM		(0x6 << VK_FWSTS_RESET_REASON_SHIFT)
+>> +#define VK_FWSTS_RESET_PCI_COLD		(0x7 << VK_FWSTS_RESET_REASON_SHIFT)
+>> +#define VK_FWSTS_RESET_L1		(0x8 << VK_FWSTS_RESET_REASON_SHIFT)
+>> +#define VK_FWSTS_RESET_L0		(0x9 << VK_FWSTS_RESET_REASON_SHIFT)
+>> +#define VK_FWSTS_RESET_UNKNOWN		(0xF << VK_FWSTS_RESET_REASON_SHIFT)
+> What are all of these #defines doing in an uapi file?  How is userspace
+> going to use them?
+There are actually 2 linux user spaces that use this header.
+One is the x86 host with the bcm-vk PCI driver.
+The x86 host user space could use them to check the firmware status and 
+find out what state VK is in.
+
+The other user space is a coprocessor inside the VK SOC.
+The app running in user space needs to know the state of the FWSTS in 
+order to proceed.
+It includes this header in its user space app (even though it doesn't 
+user the linux driver, it needs access to the same FWSTS register 
+directly).
+> thanks,
+>
+> greg k-h
+
