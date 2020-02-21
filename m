@@ -2,145 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 26C7D168047
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2020 15:32:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 85D12168061
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2020 15:35:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728974AbgBUOcK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Feb 2020 09:32:10 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38963 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727851AbgBUOcK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Feb 2020 09:32:10 -0500
-Received: by mail-wm1-f66.google.com with SMTP id c84so2123590wme.4;
-        Fri, 21 Feb 2020 06:32:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kGlgDo9M9XGHB0o0rwRFWRiv//bvSK3bYB5+0sd515M=;
-        b=RSS8G86A2iOHXIt+m5SYMDSTduj+VJhaaT16v/AYbp3oc0PYHHR7O/KhHKrh/yyD2l
-         IMxPtwG09XK/ateKXoQpKTjzLjgUeRYv2uugUkO2njJC2PZvzvTrj2XRXhS+JfA4yRmT
-         D8TjJjSel09swB47hxOgbk7f7cyLPKPEcgYP5lppkhYRQQms71JrWfLUyiqxHpMYNedL
-         ECwH7pYc14kQ6r7Zd2REhZ6eLcmMQ3W7JacPE1zJ/yVRyHJ083mhA6gqhwk6fj2m/itR
-         ZsX7hTdRWwhIzU8U/phcSHdilQsqmrroddIaLwdJij4vAPvWUuOpH6g0sVPjWfELq4UV
-         raww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kGlgDo9M9XGHB0o0rwRFWRiv//bvSK3bYB5+0sd515M=;
-        b=rQWhMBW6SqSDYhwq96YOnjr5TOsqwNYnOkxLgNtG4jhTaWd6NV6aWpVWU6QRuiaCeA
-         Klomzk95JqSMPyf8rhY/GZorhn+I/L/O3JbBUmrtADDYp3+geGY/TYo7hzK5BMGog3EI
-         8FFaoHCi04l+U57w02EWmw3BMv+YGx8Uh1X2bqtxMARzVGUoawUYTQ2BffuPgvxGorS6
-         WsShezaPcfzuODJPxvAzfgGqlZTnh1r42ndProotL890oOSSO3Nd6AQLKskwwhaj3QRI
-         vlUjCRD2858ZPJgb0SOqgdSENmxSdnVBbpgwxE+X6/twO+YpzZX3tUv43eDlkprhfOY5
-         VX6Q==
-X-Gm-Message-State: APjAAAWNz3/huEirgK8n2mQCLQEX2ZjnW+NVg7FPAanShALJEPed8uOH
-        OeboqClw+VsPL2tFDpeQOnJ1OqWQKiY=
-X-Google-Smtp-Source: APXvYqz8aEgYoUhbOHE6PpkLL/zuy243O+yjkamkO4hz8v9eZB0TUbtgcfvuxOlmM0MojBai/11wfQ==
-X-Received: by 2002:a05:600c:21c5:: with SMTP id x5mr4381037wmj.72.1582295527411;
-        Fri, 21 Feb 2020 06:32:07 -0800 (PST)
-Received: from Ansuel-XPS.localdomain (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
-        by smtp.googlemail.com with ESMTPSA id y185sm4291290wmg.2.2020.02.21.06.32.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Feb 2020 06:32:06 -0800 (PST)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v5 2/2] Documentation: devictree: Add ipq806x mdio bindings
-Date:   Fri, 21 Feb 2020 15:31:51 +0100
-Message-Id: <20200221143153.21186-2-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200221143153.21186-1-ansuelsmth@gmail.com>
-References: <20200221143153.21186-1-ansuelsmth@gmail.com>
+        id S1728364AbgBUOf3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Feb 2020 09:35:29 -0500
+Received: from foss.arm.com ([217.140.110.172]:40708 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727096AbgBUOf3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Feb 2020 09:35:29 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8DFE81FB;
+        Fri, 21 Feb 2020 06:35:28 -0800 (PST)
+Received: from e121166-lin.cambridge.arm.com (e121166-lin.cambridge.arm.com [10.1.196.255])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 553413F703;
+        Fri, 21 Feb 2020 06:35:27 -0800 (PST)
+Date:   Fri, 21 Feb 2020 14:35:25 +0000
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Andrew Murray <andrew.murray@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v2] PCI: qcom: Fix the fixup of PCI_VENDOR_ID_QCOM
+Message-ID: <20200221143525.GC15440@e121166-lin.cambridge.arm.com>
+References: <20191227012717.78965-1-bjorn.andersson@linaro.org>
+ <9e5ee7e8-aa63-e82c-8135-acc77b476c87@mm-sol.com>
+ <38acf5fc-85aa-7090-e666-97a1281e9905@free.fr>
+ <20191229024547.GH3755841@builder>
+ <9c7d69cc-29e7-07c5-1e93-e9fdadf370a6@free.fr>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9c7d69cc-29e7-07c5-1e93-e9fdadf370a6@free.fr>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add documentations for ipq806x mdio driver.
+On Mon, Dec 30, 2019 at 09:25:28PM +0100, Marc Gonzalez wrote:
+> On 29/12/2019 03:45, Bjorn Andersson wrote:
+> 
+> > On Sat 28 Dec 07:41 PST 2019, Marc Gonzalez wrote:
+> > 
+> >> On 27/12/2019 09:51, Stanimir Varbanov wrote:
+> >>
+> >>> On 12/27/19 3:27 AM, Bjorn Andersson wrote:
+> >>>
+> >>>> There exists non-bridge PCIe devices with PCI_VENDOR_ID_QCOM, so limit
+> >>>> the fixup to only affect the relevant PCIe bridges.
+> >>>>
+> >>>> Cc: stable@vger.kernel.org
+> >>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> >>>> ---
+> >>>>
+> >>>> Stan, I picked up all the suggested device id's from the previous thread and
+> >>>> added 0x1000 for QCS404. I looked at creating platform specific defines in
+> >>>> pci_ids.h, but SDM845 has both 106 and 107... Please let me know if you would
+> >>>> prefer that I do this anyway.
+> >>>
+> >>> Looks good,
+> >>>
+> >>> Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
+> >>>
+> >>>>  drivers/pci/controller/dwc/pcie-qcom.c | 8 +++++++-
+> >>>>  1 file changed, 7 insertions(+), 1 deletion(-)
+> >>>>
+> >>>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> >>>> index 5ea527a6bd9f..138e1a2d21cc 100644
+> >>>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> >>>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> >>>> @@ -1439,7 +1439,13 @@ static void qcom_fixup_class(struct pci_dev *dev)
+> >>>>  {
+> >>>>  	dev->class = PCI_CLASS_BRIDGE_PCI << 8;
+> >>>>  }
+> >>>> -DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, PCI_ANY_ID, qcom_fixup_class);
+> >>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0101, qcom_fixup_class);
+> >>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0104, qcom_fixup_class);
+> >>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0106, qcom_fixup_class);
+> >>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0107, qcom_fixup_class);
+> >>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
+> >>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
+> >>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
+> >>
+> >> Hrmmm... still not CCed on the patch,
+> > 
+> > You are Cc'ed on the patch, but as usual your mail server responds "451
+> > too many errors from your ip" and throw my emails away.
+> > 
+> >> and still don't think the fixup is required(?) for 0x106 and 0x107.
+> >>
+> > 
+> > I re-read your reply in my v1 thread. So we know that 0x104 doesn't need
+> > the fixup, so presumably only 0x101 needs the fixup?
+> 
+> I apologize for the tone of my reply. I did not mean to sound
+> so snarky.
+> 
+> All I can say is that, if I remember correctly, the fixup was
+> not necessary on apq8098 (0x0105) and it was probably not
+> required on msm8996 and sdm845. For older platforms, all bets
+> are off.
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- .../bindings/net/qcom,ipq8064-mdio.yaml       | 55 +++++++++++++++++++
- 1 file changed, 55 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
+How are we proceeding with this patch then ?
 
-diff --git a/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
-new file mode 100644
-index 000000000000..d2254a5ff2ad
---- /dev/null
-+++ b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
-@@ -0,0 +1,55 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/net/qcom,ipq8064-mdio.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm ipq806x MDIO bus controller
-+
-+maintainers:
-+  - Ansuel Smith <ansuelsmth@gmail.com>
-+
-+description: |+
-+  The ipq806x soc have a MDIO dedicated controller that is
-+  used to comunicate with the gmac phy conntected.
-+  Child nodes of this MDIO bus controller node are standard
-+  Ethernet PHY device nodes as described in
-+  Documentation/devicetree/bindings/net/phy.txt
-+
-+allOf:
-+  - $ref: "mdio.yaml#"
-+
-+properties:
-+  compatible:
-+    const: qcom,ipq8064-mdio
-+  reg:
-+    maxItems: 1
-+    description: address and length of the register set for the device
-+  clocks:
-+    maxItems: 1
-+    description: A reference to the clock supplying the MDIO bus controller
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - "#address-cells"
-+  - "#size-cells"
-+
-+examples:
-+  - |
-+    mdio0: mdio@37000000 {
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+
-+        compatible = "qcom,ipq8064-mdio", "syscon";
-+        reg = <0x37000000 0x200000>;
-+        resets = <&gcc GMAC_CORE1_RESET>;
-+        reset-names = "stmmaceth";
-+        clocks = <&gcc GMAC_CORE1_CLK>;
-+
-+        switch@10 {
-+            compatible = "qca,qca8337";
-+            ...
-+        }
-+    };
--- 
-2.25.0
-
+Thanks,
+Lorenzo
