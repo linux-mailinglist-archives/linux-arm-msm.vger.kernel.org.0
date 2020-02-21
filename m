@@ -2,86 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 228CE1687BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Feb 2020 20:48:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C7507168A64
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2020 00:28:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726681AbgBUTsj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Feb 2020 14:48:39 -0500
-Received: from foss.arm.com ([217.140.110.172]:47106 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726443AbgBUTsi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Feb 2020 14:48:38 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0ED8931B;
-        Fri, 21 Feb 2020 11:48:38 -0800 (PST)
-Received: from e123648.arm.com (unknown [10.37.12.243])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 234983F703;
-        Fri, 21 Feb 2020 11:48:26 -0800 (PST)
-From:   Lukasz Luba <lukasz.luba@arm.com>
-To:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-imx@nxp.com
-Cc:     Morten.Rasmussen@arm.com, Dietmar.Eggemann@arm.com,
-        javi.merino@arm.com, cw00.choi@samsung.com,
-        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
-        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
-        rui.zhang@intel.com, amit.kucheria@verdurent.com,
-        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        rostedt@goodmis.org, qperret@google.com, bsegall@google.com,
-        mgorman@suse.de, shawnguo@kernel.org, s.hauer@pengutronix.de,
-        festevam@gmail.com, kernel@pengutronix.de, khilman@kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org, robh@kernel.org,
-        matthias.bgg@gmail.com, steven.price@arm.com,
-        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
-        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
-        lorenzo.pieralisi@arm.com, lukasz.luba@arm.com,
-        patrick.bellasi@matbug.net, orjan.eide@arm.com
-Subject: [PATCH v3 4/4] drm/panfrost: Register to the Energy Model with devfreq device
-Date:   Fri, 21 Feb 2020 19:47:31 +0000
-Message-Id: <20200221194731.13814-5-lukasz.luba@arm.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200221194731.13814-1-lukasz.luba@arm.com>
-References: <20200221194731.13814-1-lukasz.luba@arm.com>
+        id S1729637AbgBUX20 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Feb 2020 18:28:26 -0500
+Received: from mail27.static.mailgun.info ([104.130.122.27]:36837 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729636AbgBUX20 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Feb 2020 18:28:26 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1582327706; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=7EB6Ii0LLM/PkrAod3FKxHudIpXfGPc54qU4cLDF2j4=; b=s6YxEb4jAFGBRr2aIRvwqSr0ntcNrplVwhlreCoH/byU2QUhJK2RmqRY6o0cHTZ6Stc43n8q
+ e8kTDpAg6iQj5eXDeDTVt8ag2y6F2HdIpqP+OqxpkYTisAFI+yojV8Mr6X6AS0BvIuHfdLFo
+ +81c3w2sBGMMBOMfGnl39A1gyjY=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e50678d.7fde1af903b0-smtp-out-n02;
+ Fri, 21 Feb 2020 23:28:13 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 618F8C4479C; Fri, 21 Feb 2020 23:28:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from eberman-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: eberman)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 84377C43383;
+        Fri, 21 Feb 2020 23:28:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 84377C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=eberman@codeaurora.org
+From:   Elliot Berman <eberman@codeaurora.org>
+To:     Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Elliot Berman <eberman@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Trilok Soni <tsoni@codeaurora.org>,
+        Prasad Sodagudi <psodagud@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        linux-arm-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/3] ARM PSCI: Add support for vendor-specific SYSTEM_RESET2
+Date:   Fri, 21 Feb 2020 15:28:02 -0800
+Message-Id: <1582327685-6316-1-git-send-email-eberman@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device to the Energy Model framework. It will create a dedicated
-and unified data structures used i.e. in the thermal framework.
-The power model used in dev_pm_opp subsystem is simplified and created
-based on DT 'dynamic-power-coefficient', volatage and frequency. It is
-similar to the CPU model used in Energy Aware Scheduler.
+This patch adds support for vendor-specific SYSTEM_RESET2 to support
+Qualcomm target use cases of rebooting into a RAM dump download mode.
 
-Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
----
- drivers/gpu/drm/panfrost/panfrost_devfreq.c | 3 +++
- 1 file changed, 3 insertions(+)
+This patch series applies on top of [1].
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-index 413987038fbf..d527a5113950 100644
---- a/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-@@ -105,6 +105,8 @@ int panfrost_devfreq_init(struct panfrost_device *pfdev)
- 	}
- 	pfdev->devfreq.devfreq = devfreq;
- 
-+	dev_pm_opp_of_register_em(dev, NULL);
-+
- 	cooling = of_devfreq_cooling_register(dev->of_node, devfreq);
- 	if (IS_ERR(cooling))
- 		DRM_DEV_INFO(dev, "Failed to register cooling device\n");
-@@ -118,6 +120,7 @@ void panfrost_devfreq_fini(struct panfrost_device *pfdev)
- {
- 	if (pfdev->devfreq.cooling)
- 		devfreq_cooling_unregister(pfdev->devfreq.cooling);
-+	dev_pm_opp_of_unregister_em(&pfdev->pdev->dev);
- 	dev_pm_opp_of_remove_table(&pfdev->pdev->dev);
- }
- 
+[1]: https://lore.kernel.org/patchwork/cover/1185759/
+
+Changes since RFC v2:
+ - None, tested on SM8250 MTP
+
+Elliot Berman (3):
+  dt: psci: Add arm,psci-sys-reset2-type property
+  firmware: psci: Add support for dt-supplied SYSTEM_RESET2 type
+  arm64: dts: qcom: sm8250: Add vendor-specific PSCI system reset2 type
+
+ Documentation/devicetree/bindings/arm/psci.yaml |  5 +++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi            |  1 +
+ drivers/firmware/psci/psci.c                    | 21 +++++++++++++++++----
+ include/linux/psci.h                            |  1 +
+ include/uapi/linux/psci.h                       |  2 ++
+ 5 files changed, 26 insertions(+), 4 deletions(-)
+
 -- 
-2.17.1
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
