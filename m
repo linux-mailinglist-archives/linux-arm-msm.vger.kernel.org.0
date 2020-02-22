@@ -2,158 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4238F168A77
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2020 00:38:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 07C6C168B02
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2020 01:33:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729414AbgBUXhx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Feb 2020 18:37:53 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:36213 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729173AbgBUXhx (ORCPT
+        id S1726697AbgBVAdX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Feb 2020 19:33:23 -0500
+Received: from mail-vk1-f202.google.com ([209.85.221.202]:35495 "EHLO
+        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726672AbgBVAdW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Feb 2020 18:37:53 -0500
-Received: by mail-pg1-f196.google.com with SMTP id d9so1786452pgu.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2020 15:37:52 -0800 (PST)
+        Fri, 21 Feb 2020 19:33:22 -0500
+Received: by mail-vk1-f202.google.com with SMTP id e25so1633052vkm.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2020 16:33:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=U8GTXDQYqxVMWeiE3CeM22iOXjrDkwUgtcNqh51keqY=;
-        b=BTbJ9DV5UnhS6c59epTpH7XTEnU2oooXg+g6bAhjUyVbujp1zj/9TaRU8cj0TPZwd3
-         CG8U0vdI5gFnoJTHTJLwe669yrJzuJv13qa3AVL8dmiMh5v19I5goaubVFzUpLjj3wTs
-         7lQz+6WG62x4T5Z+CFsJPY2Ds6kbuZLZW2JXM=
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=OqxJ7uFM6QirldzKomGS86nipI+w+uqyhp1pa4CeHPE=;
+        b=l11FZQE6V8RxsI2VoZDUgCeS8uBjfKYdayCEjmfzGtSLpL+FmxZ12lPTOzKCEfFbgy
+         i9RNdPM+q2UeJsmzcwJQa8Tdae6rMQ1bWasVph50yejryH/Z4YlYOamP8H36JjznclMB
+         rRxgBQsRfVrRFTr53kaiZNL9waTw0Z1B+N/1i/LhIf8913anKqsBkbYbVsCS+3juliBc
+         +A1vV4p69SfiPwOt7gTBQTVB0/SFzNAiGhCy+77xg3zuq71zedQcuVoe6O+/bxMHZxdt
+         cwPi9zKra5Usswsy5LnwTkbBsVUXVbHNSA9r+MS78gOA6xfnZTh5svOReq/s5ixaRwva
+         RITA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=U8GTXDQYqxVMWeiE3CeM22iOXjrDkwUgtcNqh51keqY=;
-        b=lgo2c6gTaq6U8G35zlHmfkgIwETDVUVU8OAc4XrQKLWsBb8Dr4ZFTou0+pHX8/PKsc
-         PasvD4RARIT/7uhumLfTZReqqf99Cmjp3m8jqnOobUDZwEpNnPqQWkQzyTT4svqYzLvI
-         0dtz9KI7pBSQAlzrucm98qDAMKQxsMNlnZ5N2mZUIgRAC5tNTWoDS8LjTVkMwzkQSYUp
-         uUE0trF6TAPStfATvQjg/WEODykorUYId6O1kx6DusNznNVfTydOjAHawOrMDj7z3BKt
-         0P7SFSERSDkzqVLAiANg2OwE6UFkgleh6nFa3DagotqJU4DjKcuCAtcNXO+1zW4oM6nM
-         l34w==
-X-Gm-Message-State: APjAAAWkYXCDFenqvsfBI+U86+u398VOPqTuA40bSuDERe12E0iBJuu0
-        MiBDSbsQfPmu7G07ZnrCYiP2dQ==
-X-Google-Smtp-Source: APXvYqzSKwENjp8Zc5/+UeGf1chfHFs+nHCsMZqHL9BYW/wJmsDWoBM6WNV9QMdjdezOfrljgme5xQ==
-X-Received: by 2002:a63:3c08:: with SMTP id j8mr40832260pga.223.1582328272147;
-        Fri, 21 Feb 2020 15:37:52 -0800 (PST)
-Received: from [10.136.13.65] ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id u23sm3891110pfm.29.2020.02.21.15.37.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Feb 2020 15:37:51 -0800 (PST)
-Subject: Re: [PATCH 2/7] firmware: add offset to request_firmware_into_buf
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Luis Chamberlain <mcgrof@kernel.org>, Takashi Iwai <tiwai@suse.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux FS-devel Mailing List <linux-fsdevel@vger.kernel.org>,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        "open list:KERNEL SELFTEST FRAMEWORK" 
-        <linux-kselftest@vger.kernel.org>
-References: <20190822192451.5983-1-scott.branden@broadcom.com>
- <20190822192451.5983-3-scott.branden@broadcom.com>
- <s5hef1crybq.wl-tiwai@suse.de>
- <10461fcf-9eca-32b6-0f9d-23c63b3f3442@broadcom.com>
- <s5hr258j6ln.wl-tiwai@suse.de>
- <93b8285a-e5eb-d4a4-545d-426bbbeb8008@broadcom.com>
- <s5ho90byhnv.wl-tiwai@suse.de>
- <b440f372-45be-c06c-94a1-44ae6b1e7eb8@broadcom.com>
- <s5hwoeyj3i5.wl-tiwai@suse.de> <20191011133120.GP16384@42.do-not-panic.com>
- <e65a3ba1-d064-96fe-077e-59bf8ffff377@broadcom.com>
- <CAK8P3a2NJurg_hxVbWYZwJVhYM5-xjWt12Kh0DdyfTGqQPrPAQ@mail.gmail.com>
-From:   Scott Branden <scott.branden@broadcom.com>
-Message-ID: <3731a882-8784-b957-7628-49edfa9683e7@broadcom.com>
-Date:   Fri, 21 Feb 2020 15:37:47 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
-MIME-Version: 1.0
-In-Reply-To: <CAK8P3a2NJurg_hxVbWYZwJVhYM5-xjWt12Kh0DdyfTGqQPrPAQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=OqxJ7uFM6QirldzKomGS86nipI+w+uqyhp1pa4CeHPE=;
+        b=RUgHLzqAX4F3QzVlp0ge963l5QmOSwxbeQ8Ge7errbNn/U/2GFhkUR3liBi/rLE7NL
+         Zj1VmSv6yEECS9zUiACFkLIsQsIsai9lbs4cAAGaoI/nzxcHfFrOFh+bE4C/fTtQdyrD
+         z2eUBWyNYvoFsjXzLnBWvg5HN/O4qg2ELz4dkUx33AFS6nGTZDvniD34bW+S0DEonFFt
+         CT7FhhMxrGdn979eXKAaWPjN2C3fPNywkxb8VF38HsdbrHYPTCRSZZIXakkve26GiEQQ
+         PymIqyNrwcMs6kvSQi8qmAVywhrpZgvZorExp1HSkQxuwX5CmMSVs5yGE8JQYpUei1Vy
+         ai6Q==
+X-Gm-Message-State: APjAAAWyDiACPtWZvIqBcJe0UxYpSlYhtHHl7E4G2k+HvfNKZ7v82djX
+        lxHVZ4uLJl10jUEfc3UBDA/3gINQrO3yx4M=
+X-Google-Smtp-Source: APXvYqzJyj0dXwKd98P0iXGqbwlTWwwl2aamL/zqvJJ4fLf8Lv9XUkRWOo26SYLGT5N3TT5VWhNkJbfmt7hgqfyB
+X-Received: by 2002:a1f:6344:: with SMTP id x65mr18208843vkb.26.1582331601314;
+ Fri, 21 Feb 2020 16:33:21 -0800 (PST)
+Date:   Fri, 21 Feb 2020 16:33:11 -0800
+Message-Id: <20200222003311.106837-1-jkardatzke@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.25.0.265.gbab2e86ba0-goog
+Subject: [PATCH v2] media: venus: support frame rate control
+From:   Jeffrey Kardatzke <jkardatzke@google.com>
+To:     linux-media@vger.kernel.org
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeffrey Kardatzke <jkardatzke@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Arnd,
+Add encoder control for enabling/disabling frame rate control via
+V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE. It is enabled by default.
 
-On 2020-02-21 12:44 a.m., Arnd Bergmann wrote:
-> On Fri, Feb 21, 2020 at 1:11 AM Scott Branden
-> <scott.branden@broadcom.com> wrote:
->> On 2019-10-11 6:31 a.m., Luis Chamberlain wrote:
->>> On Tue, Aug 27, 2019 at 12:40:02PM +0200, Takashi Iwai wrote:
->>>> On Mon, 26 Aug 2019 19:24:22 +0200,
->>>> Scott Branden wrote:
->>>>> I will admit I am not familiar with every subtlety of PCI
->>>>> accesses. Any comments to the Valkyrie driver in this patch series are
->>>>> appreciated.
->>>>> But not all drivers need to work on all architectures. I can add a
->>>>> depends on x86 64bit architectures to the driver to limit it to such.
->>>> But it's an individual board on PCIe, and should work no matter which
->>>> architecture is?  Or is this really exclusive to x86?
->>> Poke Scott.
->> Yes, this is exclusive to x86.
->> In particular, 64-bit x86 server class machines with PCIe gen3 support.
->> There is no reason for these PCIe boards to run in other lower end
->> machines or architectures.
-> It doesn't really matter that much what you expect your customers to
-> do with your product, or what works a particular machine today, drivers
-> should generally be written in a portable manner anyway and use
-> the documented APIs. memcpy() into an __iomem pointer is not
-> portable and while it probably works on any x86 machine today, please
-> just don't do it. If you use 'sparse' to check your code, that would normally
-> result in an address space warning, unless you add __force and a
-> long comment explaining why you cannot just use memcpy_to_io()
-> instead. At that point, you are already better off usingn memcpy_to_io() ;-)
->
->          Arnd
-I am a not performing a memcpy at all right now.
-I am calling a request_firmware_into_buf call and do not need to make a 
-copy.
-This function eventually calls kernel_read_file, which then makes at 
-indirect call in __vfs_read to perform the read to memory.
- From there I am lost as to what operation happens to achieve this.
-The read function would need to detect the buf is in io space and 
-perform the necessary operation.
-Anyone with any knowledge on how to make this read to io space would be 
-appreciated?
+Signed-off-by: Jeffrey Kardatzke <jkardatzke@google.com>
+---
+ drivers/media/platform/qcom/venus/core.h       | 1 +
+ drivers/media/platform/qcom/venus/venc.c       | 4 +++-
+ drivers/media/platform/qcom/venus/venc_ctrls.c | 8 +++++++-
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
-ssize_t __vfs_read(struct file *file, char __user *buf, size_t count,
-            loff_t *pos)
-{
-     if (file->f_op->read)
-         return file->f_op->read(file, buf, count, pos);
-     else if (file->f_op->read_iter)
-         return new_sync_read(file, buf, count, pos);
-     else
-         return -EINVAL;
-}
-
-ssize_t kernel_read(struct file *file, void *buf, size_t count, loff_t *pos)
-{
-     mm_segment_t old_fs;
-     ssize_t result;
-
-     old_fs = get_fs();
-     set_fs(KERNEL_DS);
-     /* The cast to a user pointer is valid due to the set_fs() */
-     result = vfs_read(file, (void __user *)buf, count, pos);
-     set_fs(old_fs);
-     return result;
-}
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 11585fb3cae3..2b0649ffbd92 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -187,6 +187,7 @@ struct venc_controls {
+ 	u32 bitrate_mode;
+ 	u32 bitrate;
+ 	u32 bitrate_peak;
++	u32 rc_enable;
+ 
+ 	u32 h264_i_period;
+ 	u32 h264_entropy_mode;
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index 453edf966d4f..56079c9d9900 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -731,7 +731,9 @@ static int venc_set_properties(struct venus_inst *inst)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (ctr->bitrate_mode == V4L2_MPEG_VIDEO_BITRATE_MODE_VBR)
++	if (!ctr->rc_enable)
++		rate_control = HFI_RATE_CONTROL_OFF;
++	else if (ctr->bitrate_mode == V4L2_MPEG_VIDEO_BITRATE_MODE_VBR)
+ 		rate_control = HFI_RATE_CONTROL_VBR_CFR;
+ 	else
+ 		rate_control = HFI_RATE_CONTROL_CBR_CFR;
+diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+index 877c0b3299e9..0572a00b8380 100644
+--- a/drivers/media/platform/qcom/venus/venc_ctrls.c
++++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+@@ -199,6 +199,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+ 		}
+ 		mutex_unlock(&inst->lock);
+ 		break;
++	case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
++		ctr->rc_enable = ctrl->val;
++		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+@@ -214,7 +217,7 @@ int venc_ctrl_init(struct venus_inst *inst)
+ {
+ 	int ret;
+ 
+-	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 30);
++	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 31);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -351,6 +354,9 @@ int venc_ctrl_init(struct venus_inst *inst)
+ 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+ 			  V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME, 0, 0, 0, 0);
+ 
++	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
++		V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE, 0, 1, 1, 1);
++
+ 	ret = inst->ctrl_handler.error;
+ 	if (ret)
+ 		goto err;
+-- 
+2.25.0.265.gbab2e86ba0-goog
 
