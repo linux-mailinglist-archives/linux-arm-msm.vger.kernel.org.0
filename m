@@ -2,131 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 07C6C168B02
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2020 01:33:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AA1DF168B20
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Feb 2020 01:42:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726697AbgBVAdX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Feb 2020 19:33:23 -0500
-Received: from mail-vk1-f202.google.com ([209.85.221.202]:35495 "EHLO
-        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726672AbgBVAdW (ORCPT
+        id S1726842AbgBVAmz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Feb 2020 19:42:55 -0500
+Received: from bombadil.infradead.org ([198.137.202.133]:60810 "EHLO
+        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726697AbgBVAmz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Feb 2020 19:33:22 -0500
-Received: by mail-vk1-f202.google.com with SMTP id e25so1633052vkm.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Feb 2020 16:33:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=OqxJ7uFM6QirldzKomGS86nipI+w+uqyhp1pa4CeHPE=;
-        b=l11FZQE6V8RxsI2VoZDUgCeS8uBjfKYdayCEjmfzGtSLpL+FmxZ12lPTOzKCEfFbgy
-         i9RNdPM+q2UeJsmzcwJQa8Tdae6rMQ1bWasVph50yejryH/Z4YlYOamP8H36JjznclMB
-         rRxgBQsRfVrRFTr53kaiZNL9waTw0Z1B+N/1i/LhIf8913anKqsBkbYbVsCS+3juliBc
-         +A1vV4p69SfiPwOt7gTBQTVB0/SFzNAiGhCy+77xg3zuq71zedQcuVoe6O+/bxMHZxdt
-         cwPi9zKra5Usswsy5LnwTkbBsVUXVbHNSA9r+MS78gOA6xfnZTh5svOReq/s5ixaRwva
-         RITA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=OqxJ7uFM6QirldzKomGS86nipI+w+uqyhp1pa4CeHPE=;
-        b=RUgHLzqAX4F3QzVlp0ge963l5QmOSwxbeQ8Ge7errbNn/U/2GFhkUR3liBi/rLE7NL
-         Zj1VmSv6yEECS9zUiACFkLIsQsIsai9lbs4cAAGaoI/nzxcHfFrOFh+bE4C/fTtQdyrD
-         z2eUBWyNYvoFsjXzLnBWvg5HN/O4qg2ELz4dkUx33AFS6nGTZDvniD34bW+S0DEonFFt
-         CT7FhhMxrGdn979eXKAaWPjN2C3fPNywkxb8VF38HsdbrHYPTCRSZZIXakkve26GiEQQ
-         PymIqyNrwcMs6kvSQi8qmAVywhrpZgvZorExp1HSkQxuwX5CmMSVs5yGE8JQYpUei1Vy
-         ai6Q==
-X-Gm-Message-State: APjAAAWyDiACPtWZvIqBcJe0UxYpSlYhtHHl7E4G2k+HvfNKZ7v82djX
-        lxHVZ4uLJl10jUEfc3UBDA/3gINQrO3yx4M=
-X-Google-Smtp-Source: APXvYqzJyj0dXwKd98P0iXGqbwlTWwwl2aamL/zqvJJ4fLf8Lv9XUkRWOo26SYLGT5N3TT5VWhNkJbfmt7hgqfyB
-X-Received: by 2002:a1f:6344:: with SMTP id x65mr18208843vkb.26.1582331601314;
- Fri, 21 Feb 2020 16:33:21 -0800 (PST)
-Date:   Fri, 21 Feb 2020 16:33:11 -0800
-Message-Id: <20200222003311.106837-1-jkardatzke@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.25.0.265.gbab2e86ba0-goog
-Subject: [PATCH v2] media: venus: support frame rate control
-From:   Jeffrey Kardatzke <jkardatzke@google.com>
-To:     linux-media@vger.kernel.org
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeffrey Kardatzke <jkardatzke@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        Fri, 21 Feb 2020 19:42:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=Content-Transfer-Encoding:
+        Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:
+        Subject:Sender:Reply-To:Content-ID:Content-Description;
+        bh=IoauFu+SPVxJ/QgMkD5H70t6W74upwBHouoPWlRKDBs=; b=mlZk+5DHPSke/pQ6XCytBfGkjH
+        hkIgPJ+WZD70eJKDNBWwAy9MSR8hIq6WZ2I3LBjGVsjOVdMZlPU3nFzTPi6C8vFZYM4masCDI5A/M
+        MCydby8lJ2dnhxOTkf2kTNzbTmVlYfO+kfMRMj1NN5HqKnpwjnzGPWiJHgh7S0nc1Jncl4iSVtEUx
+        xtXS5ven+MNBNrhjRAY5CrOWTYTggZ61qDjrdfkmrqGcqbl9rSJEei60nQDhM+lOnXvVvGHwVnUhr
+        qW5PgludRb3NWWqKCTfcQVul57sEuSJ3O6PdAyYm5UVBblNcN2yKCTH+WCpme3XZvdwnjrUtIoILk
+        At1JJZMw==;
+Received: from [2601:1c0:6280:3f0::19c2]
+        by bombadil.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1j5Is1-0000Tu-Eh; Sat, 22 Feb 2020 00:42:19 +0000
+Subject: Re: [PATCH v3 1/4] PM / EM: add devices to Energy Model
+To:     Lukasz Luba <lukasz.luba@arm.com>, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-omap@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-imx@nxp.com
+Cc:     Morten.Rasmussen@arm.com, Dietmar.Eggemann@arm.com,
+        javi.merino@arm.com, cw00.choi@samsung.com,
+        b.zolnierkie@samsung.com, rjw@rjwysocki.net, sudeep.holla@arm.com,
+        viresh.kumar@linaro.org, nm@ti.com, sboyd@kernel.org,
+        rui.zhang@intel.com, amit.kucheria@verdurent.com,
+        daniel.lezcano@linaro.org, mingo@redhat.com, peterz@infradead.org,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        rostedt@goodmis.org, qperret@google.com, bsegall@google.com,
+        mgorman@suse.de, shawnguo@kernel.org, s.hauer@pengutronix.de,
+        festevam@gmail.com, kernel@pengutronix.de, khilman@kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org, robh@kernel.org,
+        matthias.bgg@gmail.com, steven.price@arm.com,
+        tomeu.vizoso@collabora.com, alyssa.rosenzweig@collabora.com,
+        airlied@linux.ie, daniel@ffwll.ch, liviu.dudau@arm.com,
+        lorenzo.pieralisi@arm.com, patrick.bellasi@matbug.net,
+        orjan.eide@arm.com
+References: <20200221194731.13814-1-lukasz.luba@arm.com>
+ <20200221194731.13814-2-lukasz.luba@arm.com>
+From:   Randy Dunlap <rdunlap@infradead.org>
+Message-ID: <4ac6a187-1a09-335d-5c05-bf810ff81aaa@infradead.org>
+Date:   Fri, 21 Feb 2020 16:42:10 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <20200221194731.13814-2-lukasz.luba@arm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add encoder control for enabling/disabling frame rate control via
-V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE. It is enabled by default.
+Hi,
+One minor nit. Please see inline:
 
-Signed-off-by: Jeffrey Kardatzke <jkardatzke@google.com>
----
- drivers/media/platform/qcom/venus/core.h       | 1 +
- drivers/media/platform/qcom/venus/venc.c       | 4 +++-
- drivers/media/platform/qcom/venus/venc_ctrls.c | 8 +++++++-
- 3 files changed, 11 insertions(+), 2 deletions(-)
+On 2/21/20 11:47 AM, Lukasz Luba wrote:
+> Add support of other devices into the Energy Model framework not only the
+> CPUs. Change the interface to be more unified which can handle other
+> devices as well.
+> 
+> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+> ---
+>  Documentation/power/energy-model.rst     | 133 ++++----
+> 
+> diff --git a/Documentation/power/energy-model.rst b/Documentation/power/energy-model.rst
+> index 90a345d57ae9..7576820664e5 100644
+> --- a/Documentation/power/energy-model.rst
+> +++ b/Documentation/power/energy-model.rst
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 11585fb3cae3..2b0649ffbd92 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -187,6 +187,7 @@ struct venc_controls {
- 	u32 bitrate_mode;
- 	u32 bitrate;
- 	u32 bitrate_peak;
-+	u32 rc_enable;
- 
- 	u32 h264_i_period;
- 	u32 h264_entropy_mode;
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 453edf966d4f..56079c9d9900 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -731,7 +731,9 @@ static int venc_set_properties(struct venus_inst *inst)
- 	if (ret)
- 		return ret;
- 
--	if (ctr->bitrate_mode == V4L2_MPEG_VIDEO_BITRATE_MODE_VBR)
-+	if (!ctr->rc_enable)
-+		rate_control = HFI_RATE_CONTROL_OFF;
-+	else if (ctr->bitrate_mode == V4L2_MPEG_VIDEO_BITRATE_MODE_VBR)
- 		rate_control = HFI_RATE_CONTROL_VBR_CFR;
- 	else
- 		rate_control = HFI_RATE_CONTROL_CBR_CFR;
-diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-index 877c0b3299e9..0572a00b8380 100644
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -199,6 +199,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 		}
- 		mutex_unlock(&inst->lock);
- 		break;
-+	case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
-+		ctr->rc_enable = ctrl->val;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -214,7 +217,7 @@ int venc_ctrl_init(struct venus_inst *inst)
- {
- 	int ret;
- 
--	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 30);
-+	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 31);
- 	if (ret)
- 		return ret;
- 
-@@ -351,6 +354,9 @@ int venc_ctrl_init(struct venus_inst *inst)
- 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
- 			  V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME, 0, 0, 0, 0);
- 
-+	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-+		V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE, 0, 1, 1, 1);
-+
- 	ret = inst->ctrl_handler.error;
- 	if (ret)
- 		goto err;
+> @@ -85,13 +89,20 @@ API.
+>  2.3 Accessing performance domains
+>  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  
+> +There is two API functions which provide the access to the energy model:
+
+   There are two
+
+> +em_cpu_get() which takes CPU id as an argument and em_pd_get() with device
+> +pointer as an argument. It depends on the subsystem which interface it is
+> +going to use, but in case of CPU devices both functions return the same
+> +performance domain.
+> +
+
+
+cheers.
 -- 
-2.25.0.265.gbab2e86ba0-goog
+~Randy
 
