@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 924AA16939C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Feb 2020 03:24:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C7AFB1693F8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Feb 2020 03:27:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729112AbgBWCYQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Feb 2020 21:24:16 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54098 "EHLO mail.kernel.org"
+        id S1728357AbgBWC1L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Feb 2020 21:27:11 -0500
+Received: from mail.kernel.org ([198.145.29.99]:54896 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729106AbgBWCYP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Feb 2020 21:24:15 -0500
+        id S1729393AbgBWCYm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 22 Feb 2020 21:24:42 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B9CCE21741;
-        Sun, 23 Feb 2020 02:24:13 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id DFEB820707;
+        Sun, 23 Feb 2020 02:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1582424654;
-        bh=sQGY4kSrX0cPAf2T7dj+zWFO/aCKuHm4icQiAjsujVk=;
+        s=default; t=1582424682;
+        bh=pg/0HzzJS0Cna1JaXLS+c/LWOimynM1RTxHu/iZt4EI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=SKPxcVHJBcWRRCAslqT5pNC18FlMVf5GZ2VIOc+6cNl4IvRdfW5PHg4ZX4CCPrnGj
-         MxxReEHH8b6zpu/dwEMiipu3oQ5jtuFgwzMy193IXSLQTktD5lIn3E/kJmw6TgtEQR
-         IDFFVkIuIk1gE2zw71nD0xx6xkkjY65nO4ew38vw=
+        b=CAdEfPC6q4uPu2pB139kpFsmuLCo5Oe6yoWXYf9soiJf1EdxkhtHf15F1Fg5Rfqnc
+         g4By6u9zdtQYm10tSTeLXqqG/dUSHNvNgVM4W+tgdrc2eB1rcbGlz7SgWPM+6xk3sr
+         3QEffwLYptl5ZAqiDnVHti0rnL81cfKcI9adlXLY=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Sean Paul <seanpaul@chromium.org>,
@@ -32,12 +32,12 @@ Cc:     Sean Paul <seanpaul@chromium.org>,
         Douglas Anderson <dianders@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.14 02/21] drm/msm: Set dma maximum segment size for mdss
-Date:   Sat, 22 Feb 2020 21:23:52 -0500
-Message-Id: <20200223022411.2159-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 02/16] drm/msm: Set dma maximum segment size for mdss
+Date:   Sat, 22 Feb 2020 21:24:24 -0500
+Message-Id: <20200223022438.2398-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200223022411.2159-1-sashal@kernel.org>
-References: <20200223022411.2159-1-sashal@kernel.org>
+In-Reply-To: <20200223022438.2398-1-sashal@kernel.org>
+References: <20200223022438.2398-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -116,10 +116,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 8 insertions(+)
 
 diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 77c45a2ebd833..d9c0687435a05 100644
+index 6abf315fd6da1..ce32f41fc28aa 100644
 --- a/drivers/gpu/drm/msm/msm_drv.c
 +++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -420,6 +420,14 @@ static int msm_drm_init(struct device *dev, struct drm_driver *drv)
+@@ -396,6 +396,14 @@ static int msm_drm_init(struct device *dev, struct drm_driver *drv)
  	if (ret)
  		goto fail;
  
