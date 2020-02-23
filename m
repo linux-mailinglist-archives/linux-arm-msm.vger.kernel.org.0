@@ -2,138 +2,277 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FB421694EA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Feb 2020 03:34:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D65861695CC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Feb 2020 05:20:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728236AbgBWCWk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Feb 2020 21:22:40 -0500
-Received: from mail.kernel.org ([198.145.29.99]:51700 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728229AbgBWCWj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Feb 2020 21:22:39 -0500
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id EB51822525;
-        Sun, 23 Feb 2020 02:22:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1582424559;
-        bh=jgup64UFrKiSacTUai/nnQoGjwFMsP91KXVuOUvxR9Y=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=OmGkbQ2y9TWq03qLjmP4zrBPPwY3BTjCuEb3ZxargYLs3tVhoSIv4KWXW0xQr+nW2
-         DWcnz7yMww+i8G/JtqS3F2KRSCnjyxa9PRR/JN3qA5sTDVIZ2Lgr+u0IrAD7nx07BC
-         DwVyPaBdR4dSwbcCw5lztUj5FLDs657VSxCDQYDk=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.4 02/50] drm/msm: Set dma maximum segment size for mdss
-Date:   Sat, 22 Feb 2020 21:21:47 -0500
-Message-Id: <20200223022235.1404-2-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200223022235.1404-1-sashal@kernel.org>
-References: <20200223022235.1404-1-sashal@kernel.org>
+        id S1727166AbgBWETw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Feb 2020 23:19:52 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:33427 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726983AbgBWETw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 22 Feb 2020 23:19:52 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id 589E721B03;
+        Sat, 22 Feb 2020 23:19:50 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Sat, 22 Feb 2020 23:19:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sholland.org; h=
+        from:to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=fm2; bh=29jUBwoXvuarTIYCv2K9/Ed7RP
+        zIOgoOw2xOPHEd28A=; b=XJ2snZnj7a6mcv05PkQ04IqGL1WPX0jE1k35GsuDnz
+        a9/i+DS+fjwR3zHY83HTaHSMuL0Af3zkoS8uId802BhCe5n9BR2zOz/Nd6H1g6NG
+        TTNvxfyvDTXn3c1gmkwi/SBf66R2uVrUdlvoGR0GEfwm1G9q21ZU4kqXcE/4rbJa
+        OWWOxzqXb0qsPndCs7cYXhfwsC9C1lYwEnL7318RD+x/Mj/mIix6FQuVjxie0dOc
+        Xbz/V2ZFrt5ps4l2+Kj7TKIxGMWNu3X03EwS0NI+/NCPh5/0GQw/hHnpEOTc8bvv
+        vrTYciL4YR6cg0H0/qX5OfrcVMcLb3bgcgK3BckPHAeA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=29jUBwoXvuarTIYCv
+        2K9/Ed7RPzIOgoOw2xOPHEd28A=; b=faVC0fIXMmvtXXZl/KlJS2hCmrK5IpCBx
+        fGOUndeFr0+bdNkAgGWKsNgDmpqXEvvz8Nd+ooSl9ZgtjShM5GH5G+rrdvPTrAm9
+        GU0lib2mNA6Q1gGI055etM/t5YqjZYsYvFZUjQqSAxn6TfzCmQvGk6rFtfqrSLtT
+        CXLYvqRWfmXFf8Lp0Zg/wQx0zh39SWMCjQiKWY007OAVwx9Lyq1i2r9661p2V63n
+        WDgiowjswROxKDIEyrKGpFQj68vdis3Y3PIuJxrD4vNiUwXhIlTErhKRfUXTdecb
+        QPc/dsS/bpGQm++SinIFO185Q45T9YG8UEBLmbjTJvnyLku3wUBQA==
+X-ME-Sender: <xms:Zf1RXhx1tPRT0N4ffetoFIYSnbF6At4qplbON0WZyxHstcRHuixowg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrkeejgdeiiecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefhvffufffkofgggfestdekredtredttdenucfhrhhomhepufgrmhhuvghlucfj
+    ohhllhgrnhguuceoshgrmhhuvghlsehshhholhhlrghnugdrohhrgheqnecukfhppeejtd
+    drudefhedrudegkedrudehudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehsrghmuhgvlhesshhhohhllhgrnhgurdhorhhg
+X-ME-Proxy: <xmx:Zf1RXvFhSZQJtqjmU8UyYKjL_6VYjVQy6wjui7IEhEd10pTb6-tTfA>
+    <xmx:Zf1RXsO4S3qkjKwFgR33W9t_G9s1K5elT9mhpk-SDS9P3zJ5wNC1Xg>
+    <xmx:Zf1RXufj2N5HbPheOar6ZRhgBX87cVQU9iWGYDS6C8Mv-hh_PDf0eA>
+    <xmx:Zv1RXm2lpTjvLOcqkWpLzi9ieURaM2VRibhMGiaWOX01qZSUwmsQ2g>
+Received: from titanium.stl.sholland.net (70-135-148-151.lightspeed.stlsmo.sbcglobal.net [70.135.148.151])
+        by mail.messagingengine.com (Postfix) with ESMTPA id CE9C7328005E;
+        Sat, 22 Feb 2020 23:19:48 -0500 (EST)
+From:   Samuel Holland <samuel@sholland.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Samuel Holland <samuel@sholland.org>
+Subject: [PATCH 1/2] clk: Implement protected-clocks for all OF clock providers
+Date:   Sat, 22 Feb 2020 22:19:47 -0600
+Message-Id: <20200223041948.3218-1-samuel@sholland.org>
+X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sean Paul <seanpaul@chromium.org>
+This is a generic implementation of the "protected-clocks" property from
+the common clock binding. It allows firmware to inform the OS about
+clocks that must not be disabled while the OS is running.
 
-[ Upstream commit db735fc4036bbe1fbe606819b5f0ff26cc76cdff ]
+This implementation comes with some caveats:
 
-Turning on CONFIG_DMA_API_DEBUG_SG results in the following error:
+1) Clocks that have CLK_IS_CRITICAL in their init data are prepared/
+enabled before they are attached to the clock tree. protected-clocks are
+only protected once the clock provider is added, which is generally
+after all of the clocks it provides have been registered. This leaves a
+window of opportunity where something could disable or modify the clock,
+such as a driver running on another CPU, or the clock core itself. There
+is a comment to this effect in __clk_core_init():
 
-[   12.078665] msm ae00000.mdss: DMA-API: mapping sg segment longer than device claims to support [len=3526656] [max=65536]
-[   12.089870] WARNING: CPU: 6 PID: 334 at /mnt/host/source/src/third_party/kernel/v4.19/kernel/dma/debug.c:1301 debug_dma_map_sg+0x1dc/0x318
-[   12.102655] Modules linked in: joydev
-[   12.106442] CPU: 6 PID: 334 Comm: frecon Not tainted 4.19.0 #2
-[   12.112450] Hardware name: Google Cheza (rev3+) (DT)
-[   12.117566] pstate: 60400009 (nZCv daif +PAN -UAO)
-[   12.122506] pc : debug_dma_map_sg+0x1dc/0x318
-[   12.126995] lr : debug_dma_map_sg+0x1dc/0x318
-[   12.131487] sp : ffffff800cc3ba80
-[   12.134913] x29: ffffff800cc3ba80 x28: 0000000000000000
-[   12.140395] x27: 0000000000000004 x26: 0000000000000004
-[   12.145868] x25: ffffff8008e55b18 x24: 0000000000000000
-[   12.151337] x23: 00000000ffffffff x22: ffffff800921c000
-[   12.156809] x21: ffffffc0fa75b080 x20: ffffffc0f7195090
-[   12.162280] x19: ffffffc0f1c53280 x18: 0000000000000000
-[   12.167749] x17: 0000000000000000 x16: 0000000000000000
-[   12.173218] x15: 0000000000000000 x14: 0720072007200720
-[   12.178689] x13: 0720072007200720 x12: 0720072007200720
-[   12.184161] x11: 0720072007200720 x10: 0720072007200720
-[   12.189641] x9 : ffffffc0f1fc6b60 x8 : 0000000000000000
-[   12.195110] x7 : ffffff8008132ce0 x6 : 0000000000000000
-[   12.200585] x5 : 0000000000000000 x4 : ffffff8008134734
-[   12.206058] x3 : ffffff800cc3b830 x2 : ffffffc0f1fc6240
-[   12.211532] x1 : 25045a74f48a7400 x0 : 25045a74f48a7400
-[   12.217006] Call trace:
-[   12.219535]  debug_dma_map_sg+0x1dc/0x318
-[   12.223671]  get_pages+0x19c/0x20c
-[   12.227177]  msm_gem_fault+0x64/0xfc
-[   12.230874]  __do_fault+0x3c/0x140
-[   12.234383]  __handle_mm_fault+0x70c/0xdb8
-[   12.238603]  handle_mm_fault+0xac/0xc4
-[   12.242473]  do_page_fault+0x1bc/0x3d4
-[   12.246342]  do_translation_fault+0x54/0x88
-[   12.250652]  do_mem_abort+0x60/0xf0
-[   12.254250]  el0_da+0x20/0x24
-[   12.257317] irq event stamp: 67260
-[   12.260828] hardirqs last  enabled at (67259): [<ffffff8008132d0c>] console_unlock+0x214/0x608
-[   12.269693] hardirqs last disabled at (67260): [<ffffff8008080e0c>] do_debug_exception+0x5c/0x178
-[   12.278820] softirqs last  enabled at (67256): [<ffffff8008081664>] __do_softirq+0x4d4/0x520
-[   12.287510] softirqs last disabled at (67249): [<ffffff80080be574>] irq_exit+0xa8/0x100
-[   12.295742] ---[ end trace e63cfc40c313ffab ]---
+  /*
+   * Enable CLK_IS_CRITICAL clocks so newly added critical clocks
+   * don't get accidentally disabled when walking the orphan tree and
+   * reparenting clocks
+   */
 
-The root of the problem is that the default segment size for sgt is
-(UINT_MAX & PAGE_MASK), and the default segment size for device dma is
-64K. As such, if you compare the 2, you would deduce that the sg segment
-will overflow the device's capacity. In reality, the hardware can
-accommodate the larger sg segments, it's just not initializing its max
-segment properly. This patch initializes the max segment size for the
-mdss device, which gets rid of that pesky warning.
+Similarly, these clocks will be enabled after they are first reparented,
+unlike other CLK_IS_CRITICAL clocks. See the comment in
+clk_core_reparent_orphans_nolock():
 
-Reported-by: Stephen Boyd <swboyd@chromium.org>
-Tested-by: Stephen Boyd <swboyd@chromium.org>
-Tested-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Reviewed-by: Rob Clark <robdclark@gmail.com>
-Signed-off-by: Sean Paul <seanpaul@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20200121111813.REPOST.1.I92c66a35fb13f368095b05287bdabdbe88ca6922@changeid
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  /*
+   * We need to use __clk_set_parent_before() and _after() to
+   * to properly migrate any prepare/enable count of the orphan
+   * clock. This is important for CLK_IS_CRITICAL clocks, which
+   * are enabled during init but might not have a parent yet.
+   */
+
+Ideally we could detect protected clocks before they are reparented, but
+there are two problems with that:
+
+  a) From the clock core's perspective, hw->init is const.
+
+  b) The clock core doesn't see the device_node until __clk_register is
+     called on the first clock.
+
+So the only "race-free" way to detect protected-clocks is to do it in
+the middle of __clk_register, between when core->flags is initialized
+and calling __clk_core_init(). That requires scanning the device tree
+again for each clock, which is part of why I didn't do it that way.
+
+2) __clk_protect needs to be idempotent, for two reasons:
+
+  a) Clocks with CLK_IS_CRITICAL in their init data are already
+     prepared/enabled, and we don't want to prepare/enable them again.
+
+  b) of_clk_set_defaults() is called twice for (at least some) clock
+     controllers registered with CLK_OF_DECLARE. It is called first in
+     of_clk_add_provider()/of_clk_add_hw_provider() inside clk_init_cb,
+     and again afterward in of_clk_init(). The second call in
+     of_clk_init() may be unnecessary, but verifying that would require
+     auditing all users of CLK_OF_DECLARE to ensure they called one of
+     the of_clk_add{,_hw}_provider functions.
+
+Signed-off-by: Samuel Holland <samuel@sholland.org>
 ---
- drivers/gpu/drm/msm/msm_drv.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index c84f0a8b3f2ce..b73fbb65e14b2 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -441,6 +441,14 @@ static int msm_drm_init(struct device *dev, struct drm_driver *drv)
- 	if (ret)
- 		goto err_msm_uninit;
+Changes RFC->v1:
+  - Only set CLK_IS_CRITICAL, not other flags
+
+---
+ drivers/clk/clk-conf.c | 54 ++++++++++++++++++++++++++++++++++++++++++
+ drivers/clk/clk.c      | 31 ++++++++++++++++++++++++
+ drivers/clk/clk.h      |  2 ++
+ 3 files changed, 87 insertions(+)
+
+diff --git a/drivers/clk/clk-conf.c b/drivers/clk/clk-conf.c
+index 2ef819606c41..a57d28b0f397 100644
+--- a/drivers/clk/clk-conf.c
++++ b/drivers/clk/clk-conf.c
+@@ -11,6 +11,54 @@
+ #include <linux/of.h>
+ #include <linux/printk.h>
  
-+	if (!dev->dma_parms) {
-+		dev->dma_parms = devm_kzalloc(dev, sizeof(*dev->dma_parms),
-+					      GFP_KERNEL);
-+		if (!dev->dma_parms)
-+			return -ENOMEM;
-+	}
-+	dma_set_max_seg_size(dev, DMA_BIT_MASK(32));
++#include "clk.h"
 +
- 	msm_gem_shrinker_init(ddev);
++static int __set_clk_flags(struct device_node *node)
++{
++	struct of_phandle_args clkspec;
++	struct property *prop;
++	int i, index = 0, rc;
++	const __be32 *cur;
++	struct clk *clk;
++	u32 nr_cells;
++
++	rc = of_property_read_u32(node, "#clock-cells", &nr_cells);
++	if (rc < 0) {
++		pr_err("clk: missing #clock-cells property on %pOF\n", node);
++		return rc;
++	}
++
++	clkspec.np         = node;
++	clkspec.args_count = nr_cells;
++
++	of_property_for_each_u32(node, "protected-clocks", prop, cur, clkspec.args[0]) {
++		/* read the remainder of the clock specifier */
++		for (i = 1; i < nr_cells; ++i) {
++			cur = of_prop_next_u32(prop, cur, &clkspec.args[i]);
++			if (!cur) {
++				pr_err("clk: invalid value of protected-clocks"
++				       " property at %pOF\n", node);
++				return -EINVAL;
++			}
++		}
++		clk = of_clk_get_from_provider(&clkspec);
++		if (IS_ERR(clk)) {
++			if (PTR_ERR(clk) != -EPROBE_DEFER)
++				pr_err("clk: couldn't get protected clock"
++				       " %u for %pOF\n", index, node);
++			return PTR_ERR(clk);
++		}
++
++		rc = __clk_protect(clk);
++		if (rc < 0)
++			pr_warn("clk: failed to protect %s: %d\n",
++				__clk_get_name(clk), rc);
++		clk_put(clk);
++		index++;
++	}
++	return 0;
++}
++
+ static int __set_clk_parents(struct device_node *node, bool clk_supplier)
+ {
+ 	struct of_phandle_args clkspec;
+@@ -135,6 +183,12 @@ int of_clk_set_defaults(struct device_node *node, bool clk_supplier)
+ 	if (!node)
+ 		return 0;
  
- 	switch (get_mdp_ver(pdev)) {
++	if (clk_supplier) {
++		rc = __set_clk_flags(node);
++		if (rc < 0)
++			return rc;
++	}
++
+ 	rc = __set_clk_parents(node, clk_supplier);
+ 	if (rc < 0)
+ 		return rc;
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index f0f2b599fd7e..1dc1e115197b 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -4122,6 +4122,37 @@ void devm_clk_hw_unregister(struct device *dev, struct clk_hw *hw)
+ }
+ EXPORT_SYMBOL_GPL(devm_clk_hw_unregister);
+ 
++/*
++ * clk-conf helpers
++ */
++
++int __clk_protect(struct clk *clk)
++{
++	struct clk_core *core = clk->core;
++	int ret = 0;
++
++	clk_prepare_lock();
++
++	/*
++	 * If CLK_IS_CRITICAL was set in the clock's init data, then
++	 * the clock was already prepared/enabled when it was added.
++	 */
++	if (core->flags & CLK_IS_CRITICAL)
++		goto out;
++
++	core->flags |= CLK_IS_CRITICAL;
++	ret = clk_core_prepare(core);
++	if (ret)
++		goto out;
++
++	ret = clk_core_enable_lock(core);
++
++out:
++	clk_prepare_unlock();
++
++	return ret;
++}
++
+ /*
+  * clkdev helpers
+  */
+diff --git a/drivers/clk/clk.h b/drivers/clk/clk.h
+index 2d801900cad5..367a0f036b13 100644
+--- a/drivers/clk/clk.h
++++ b/drivers/clk/clk.h
+@@ -24,6 +24,7 @@ struct clk_hw *clk_find_hw(const char *dev_id, const char *con_id);
+ #ifdef CONFIG_COMMON_CLK
+ struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
+ 			      const char *dev_id, const char *con_id);
++int __clk_protect(struct clk *clk);
+ void __clk_put(struct clk *clk);
+ #else
+ /* All these casts to avoid ifdefs in clkdev... */
+@@ -33,6 +34,7 @@ clk_hw_create_clk(struct device *dev, struct clk_hw *hw, const char *dev_id,
+ {
+ 	return (struct clk *)hw;
+ }
++static inline int __clk_protect(struct clk *clk) { return 0; }
+ static inline void __clk_put(struct clk *clk) { }
+ 
+ #endif
 -- 
-2.20.1
+2.24.1
 
