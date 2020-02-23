@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C7AFB1693F8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Feb 2020 03:27:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FB421694EA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Feb 2020 03:34:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728357AbgBWC1L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Feb 2020 21:27:11 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54896 "EHLO mail.kernel.org"
+        id S1728236AbgBWCWk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Feb 2020 21:22:40 -0500
+Received: from mail.kernel.org ([198.145.29.99]:51700 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729393AbgBWCYm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Feb 2020 21:24:42 -0500
+        id S1728229AbgBWCWj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 22 Feb 2020 21:22:39 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DFEB820707;
-        Sun, 23 Feb 2020 02:24:40 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EB51822525;
+        Sun, 23 Feb 2020 02:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1582424682;
-        bh=pg/0HzzJS0Cna1JaXLS+c/LWOimynM1RTxHu/iZt4EI=;
+        s=default; t=1582424559;
+        bh=jgup64UFrKiSacTUai/nnQoGjwFMsP91KXVuOUvxR9Y=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=CAdEfPC6q4uPu2pB139kpFsmuLCo5Oe6yoWXYf9soiJf1EdxkhtHf15F1Fg5Rfqnc
-         g4By6u9zdtQYm10tSTeLXqqG/dUSHNvNgVM4W+tgdrc2eB1rcbGlz7SgWPM+6xk3sr
-         3QEffwLYptl5ZAqiDnVHti0rnL81cfKcI9adlXLY=
+        b=OmGkbQ2y9TWq03qLjmP4zrBPPwY3BTjCuEb3ZxargYLs3tVhoSIv4KWXW0xQr+nW2
+         DWcnz7yMww+i8G/JtqS3F2KRSCnjyxa9PRR/JN3qA5sTDVIZ2Lgr+u0IrAD7nx07BC
+         DwVyPaBdR4dSwbcCw5lztUj5FLDs657VSxCDQYDk=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Sean Paul <seanpaul@chromium.org>,
@@ -32,12 +32,12 @@ Cc:     Sean Paul <seanpaul@chromium.org>,
         Douglas Anderson <dianders@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.9 02/16] drm/msm: Set dma maximum segment size for mdss
-Date:   Sat, 22 Feb 2020 21:24:24 -0500
-Message-Id: <20200223022438.2398-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 02/50] drm/msm: Set dma maximum segment size for mdss
+Date:   Sat, 22 Feb 2020 21:21:47 -0500
+Message-Id: <20200223022235.1404-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200223022438.2398-1-sashal@kernel.org>
-References: <20200223022438.2398-1-sashal@kernel.org>
+In-Reply-To: <20200223022235.1404-1-sashal@kernel.org>
+References: <20200223022235.1404-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -116,12 +116,12 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 8 insertions(+)
 
 diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 6abf315fd6da1..ce32f41fc28aa 100644
+index c84f0a8b3f2ce..b73fbb65e14b2 100644
 --- a/drivers/gpu/drm/msm/msm_drv.c
 +++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -396,6 +396,14 @@ static int msm_drm_init(struct device *dev, struct drm_driver *drv)
+@@ -441,6 +441,14 @@ static int msm_drm_init(struct device *dev, struct drm_driver *drv)
  	if (ret)
- 		goto fail;
+ 		goto err_msm_uninit;
  
 +	if (!dev->dma_parms) {
 +		dev->dma_parms = devm_kzalloc(dev, sizeof(*dev->dma_parms),
