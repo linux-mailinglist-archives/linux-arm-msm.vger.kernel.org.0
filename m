@@ -2,136 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 55B3E16A8C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 15:47:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE9D816A8E0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 15:55:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727486AbgBXOrh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Feb 2020 09:47:37 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:18625 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727181AbgBXOrh (ORCPT
+        id S1727486AbgBXOzT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Feb 2020 09:55:19 -0500
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:39124 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727521AbgBXOzT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Feb 2020 09:47:37 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582555656; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=/uUgbLeJp/+Bkvmc2w1qGweaYram/0ZSk0nPcq6znjg=;
- b=LmZEzAraexxjKaqK3mL9bYTR+JvahEBw0+0JjIxL13qHIRKNTC1yhbb4CFW39kSXN2MjiR9n
- JuV6lpAo2pD0o/KCH6QRdKlZbX30nopOC2tU2r91VtlxitND/jLuP5g9hw4mmbwjY1mDQk4K
- ErCnKo749a8F3r3ye2YfRjJtlMU=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e53e1fc.7fb0a5e84688-smtp-out-n03;
- Mon, 24 Feb 2020 14:47:24 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C86B1C4479D; Mon, 24 Feb 2020 14:47:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1D293C43383;
-        Mon, 24 Feb 2020 14:47:23 +0000 (UTC)
+        Mon, 24 Feb 2020 09:55:19 -0500
+Received: by mail-vs1-f67.google.com with SMTP id p14so5820667vsq.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2020 06:55:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nf8Hhdqzm/gWtkB0ZWHb2rHYmerMHbHruZ0Ukrv/hp8=;
+        b=tTyvRsQ3w0ChPxDQdkv7glQk3wtPZb10J3tAyqqzoRHQ8KPQTGzEw7zNYCRWKnZ4q/
+         Sp8M/ZgkeF0DtmsdSoX/jaS9Cj+6QBjmmTRJVhrc7HoP/5FhbIeVVDjpdF5PLkBe58vj
+         ts7HWtfrr72NlXIevmGqHAfZoSQtS3kdP0RkKaH9LgNtDi+gsiTvRDUVyaaRZ9aMGbcK
+         nWLTioIrgs3f4ikzwkQv7LsyiNYZ06XlkRhH7duzXqdMOUtinyzy3B9nZHXoHNW2BDly
+         Q6PiovLQ+WSUH/5StMinuKTlSvTQU7SMVrsaqT4aYLh+Nu8jmjojFJaax3RoAahqLwvZ
+         0NHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nf8Hhdqzm/gWtkB0ZWHb2rHYmerMHbHruZ0Ukrv/hp8=;
+        b=aEQ7WmGdylhd0r0qTaZF1xaGrUZwD1ZFluVyMp6kLv5objEhqvWY7/PgJVnVsUyEMF
+         8V7N8zY67WenPeLwp9nGboOCu9QTVupXoRZAhN4rbsJLSKJhDJwsnmg0AATUxSSOSNVR
+         VThtVItL462cTs94kmlQ5N/+L+UeCs9mHIa7l9eTfG54j3YSmbwu945yI/T+BSvFU1fS
+         kZIPRU1d5QhDSjHnabU2XB7fOIbtA2jG+4wHk0KLERtWFpwnUGpEHMgvWtahgS880Pew
+         tuvPAk/TWrVxRznhQJo/HjDR+MyIUhhAwzpTx95CQkb3s0NdPe3lTa5MybyeBzbDtOgW
+         y9dg==
+X-Gm-Message-State: APjAAAWItMOVb4yxCm2ZoIOzZZbZXOW2Pq2+lq0xOv95Xd6B3WjHDK1h
+        GhqOlKlUKpK4ZNxFYWb11fLh7fmApENXVeITP/OmqQ==
+X-Google-Smtp-Source: APXvYqwle+5L5EqgMdMX2NFSAUa3m6tBXE9trHhUlWTILDVFPKISTVy7qlGqCRTcc9lNxiPA7RF35oJihsqFh//dkI4=
+X-Received: by 2002:a05:6102:535:: with SMTP id m21mr25212006vsa.95.1582556116187;
+ Mon, 24 Feb 2020 06:55:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 24 Feb 2020 20:17:23 +0530
-From:   skakit@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     gregkh@linuxfoundation.org, mgautam@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        akashast@codeaurora.org, rojay@codeaurora.org,
-        msavaliy@qti.qualcomm.com
-Subject: Re: [PATCH] tty: serial: qcom_geni_serial: Fix RX cancel command
- failure
-In-Reply-To: <158213461988.184098.7165493520823815160@swboyd.mtv.corp.google.com>
-References: <1581415982-8793-1-git-send-email-skakit@codeaurora.org>
- <158154775640.184098.13898240474253130921@swboyd.mtv.corp.google.com>
- <254d7b003fdcd6f5fc0c45ab75b4b5f2@codeaurora.org>
- <158213461988.184098.7165493520823815160@swboyd.mtv.corp.google.com>
-Message-ID: <52dda56a636e96014b0705a2dcdbbf50@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <cover.1582361737.git.mchehab+huawei@kernel.org> <83c5df4acbbe0fa55a1d58d4c4a435b51cd2a7ad.1582361737.git.mchehab+huawei@kernel.org>
+In-Reply-To: <83c5df4acbbe0fa55a1d58d4c4a435b51cd2a7ad.1582361737.git.mchehab+huawei@kernel.org>
+From:   Amit Kucheria <amit.kucheria@verdurent.com>
+Date:   Mon, 24 Feb 2020 20:25:05 +0530
+Message-ID: <CAHLCerP_UW-6CdaOziHTY01cD_6Ou4h0Jj6mOJKj60P4GL9H=w@mail.gmail.com>
+Subject: Re: [PATCH 2/7] docs: dt: fix several broken references due to renames
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Jyri Sarha <jsarha@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+        Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
+        Stuart Yoder <stuyoder@gmail.com>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Joel Stanley <joel@jms.id.au>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        lakml <linux-arm-kernel@lists.infradead.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        DRI mailing list <dri-devel@lists.freedesktop.org>,
+        linux-leds@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+        openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org,
+        linux-amlogic@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Linux PM list <linux-pm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-02-19 23:20, Stephen Boyd wrote:
-> Quoting skakit@codeaurora.org (2020-02-14 05:17:01)
->> On 2020-02-13 04:19, Stephen Boyd wrote:
->> >     driver_probe_device+0x70/0x140
->> >     __driver_attach_async_helper+0x7c/0xa8
->> >     async_run_entry_fn+0x60/0x178
->> >     process_one_work+0x33c/0x640
->> >     worker_thread+0x2a0/0x470
->> >     kthread+0x128/0x138
->> >     ret_from_fork+0x10/0x18
->> >    Code: 1aca096a 911e0129 b940012b 7100054a (b800450b)
->> I think the most probable explanation of the crash is, set_termios 
->> call
->> is starting RX engine and RX engine is sampling some garbage data from
->> line, and by the time startup is called, we have few data to read.
->> How frequently you are able to see this crash? because internally we 
->> are
->> unable to reproduce it.
-> 
-> How is set_termios involved? Is that starting the RX side before
-> uart_startup() is called? Sorry I haven't looked into the code flow 
-> very
-> deeply here.
-> 
-> It seems to happen when the bluetooth driver probes so maybe constantly
-> adding and removing the hci_uart module will cause this to happen for
-> you? I also run the kernel with many debug options enabled, so maybe 
-> try
-> enabling all the debug stuff? I see it randomly right now so I'm not
-> sure.
-> 
+On Sat, Feb 22, 2020 at 2:30 PM Mauro Carvalho Chehab
+<mchehab+huawei@kernel.org> wrote:
+>
+> Several DT references got broken due to txt->yaml conversion.
+>
+> Those are auto-fixed by running:
+>
+>         scripts/documentation-file-ref-check --fix
+>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/arm/arm,scmi.txt        | 2 +-
+>  Documentation/devicetree/bindings/arm/arm,scpi.txt        | 2 +-
+>  .../devicetree/bindings/arm/bcm/brcm,bcm63138.txt         | 2 +-
+>  .../devicetree/bindings/arm/hisilicon/hi3519-sysctrl.txt  | 2 +-
+>  .../devicetree/bindings/arm/msm/qcom,idle-state.txt       | 2 +-
 
-In general uart_startup() is called before set_termios() ,but as per the 
-crash logs shared, it seems RX engine is active(which can only happen 
-from set_termios) before startup() is called.
+For qcom idle state and ..
 
->> >
->> >
->> > This seems to be the problematic line. We didn't call handle_rx() from
->> > the stop_rx() path before. And this qcom_geni_serial_stop_rx() function
->> > is called from qcom_geni_serial_startup(), but most importantly, we
->> > call
->> > into this function from startup before we allocate memory for the
->> > port->rx_fifo member (see the devm_kcalloc() later in
->> > qcom_geni_serial_port_setup() and see how it's after we stop rx).
->> >
->> > Why do we need to flush the rx buffer by reading it into the software
->> > buffer? Can't we simply ack any outstanding RX interrupts in the
->> > hardware when we're stopping receive?
->> We can't simply ack RX_LAST interrupt, there is a sticky bit that get
->> set on HW level(not exposed to SW) with RX last interrupt. The only 
->> way
->> to clear it is flush out RX FIFO HW buffer. The sticky bit can create
->> problem for future transfers if remained uncleared.
->> How about we allocate buffer to port->rx_fifo in probe itself?
-> 
-> Ok. If we have to read the rx fifo to flush the buffer then perhaps
-> write another function that qcom_geni_serial_stop_rx() can use to
-> indicate that it wants to throw away whatever is in the rx fifo? Or
-> adjust handle_rx() to check for a NULL fifo pointer and throw it away 
-> in
-> that case? When we're setting up this device I don't understand why we
-> would want to read anything out of the rx fifo that was there before 
-> the
-> driver started.
+>  Documentation/devicetree/bindings/arm/omap/mpu.txt        | 2 +-
+>  Documentation/devicetree/bindings/arm/psci.yaml           | 2 +-
+>  .../devicetree/bindings/clock/qcom,gcc-apq8064.yaml       | 2 +-
 
-We cannot adjust handle_rx() to check for a NULL fifo pointer as reading 
-from RX FIFO is mandatory to clear the sticky bit set.  We are passing 
-"true" to handle_rx function so it will read and discard whatever data 
-present in RX FIFO, it won't send to upper layers. We are planning to 
-post a patch which has rx_fifo buffer allocated in probe itself, in 
-order to avoid the NULL dereference.
+For qcom tsens,
+
+Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
+
+>  .../devicetree/bindings/display/tilcdc/tilcdc.txt         | 2 +-
+>  Documentation/devicetree/bindings/leds/common.yaml        | 2 +-
+>  .../devicetree/bindings/leds/register-bit-led.txt         | 2 +-
+>  .../devicetree/bindings/memory-controllers/ti/emif.txt    | 2 +-
+>  Documentation/devicetree/bindings/misc/fsl,qoriq-mc.txt   | 2 +-
+>  .../bindings/pinctrl/aspeed,ast2400-pinctrl.yaml          | 2 +-
+>  .../bindings/pinctrl/aspeed,ast2500-pinctrl.yaml          | 2 +-
+>  .../bindings/pinctrl/aspeed,ast2600-pinctrl.yaml          | 2 +-
+>  .../devicetree/bindings/power/amlogic,meson-ee-pwrc.yaml  | 2 +-
+>  .../devicetree/bindings/reset/st,stm32mp1-rcc.txt         | 2 +-
+>  .../devicetree/bindings/thermal/brcm,avs-ro-thermal.yaml  | 2 +-
+>  MAINTAINERS                                               | 8 ++++----
+>  20 files changed, 23 insertions(+), 23 deletions(-)
+>
+> diff --git a/Documentation/devicetree/bindings/arm/arm,scmi.txt b/Documentation/devicetree/bindings/arm/arm,scmi.txt
+> index f493d69e6194..dc102c4e4a78 100644
+> --- a/Documentation/devicetree/bindings/arm/arm,scmi.txt
+> +++ b/Documentation/devicetree/bindings/arm/arm,scmi.txt
+> @@ -102,7 +102,7 @@ Required sub-node properties:
+>  [1] Documentation/devicetree/bindings/clock/clock-bindings.txt
+>  [2] Documentation/devicetree/bindings/power/power-domain.yaml
+>  [3] Documentation/devicetree/bindings/thermal/thermal.txt
+> -[4] Documentation/devicetree/bindings/sram/sram.txt
+> +[4] Documentation/devicetree/bindings/sram/sram.yaml
+>  [5] Documentation/devicetree/bindings/reset/reset.txt
+>
+>  Example:
+> diff --git a/Documentation/devicetree/bindings/arm/arm,scpi.txt b/Documentation/devicetree/bindings/arm/arm,scpi.txt
+> index 7b83ef43b418..dd04d9d9a1b8 100644
+> --- a/Documentation/devicetree/bindings/arm/arm,scpi.txt
+> +++ b/Documentation/devicetree/bindings/arm/arm,scpi.txt
+> @@ -109,7 +109,7 @@ Required properties:
+>  [0] http://infocenter.arm.com/help/topic/com.arm.doc.dui0922b/index.html
+>  [1] Documentation/devicetree/bindings/clock/clock-bindings.txt
+>  [2] Documentation/devicetree/bindings/thermal/thermal.txt
+> -[3] Documentation/devicetree/bindings/sram/sram.txt
+> +[3] Documentation/devicetree/bindings/sram/sram.yaml
+>  [4] Documentation/devicetree/bindings/power/power-domain.yaml
+>
+>  Example:
+> diff --git a/Documentation/devicetree/bindings/arm/bcm/brcm,bcm63138.txt b/Documentation/devicetree/bindings/arm/bcm/brcm,bcm63138.txt
+> index b82b6a0ae6f7..8c7a4908a849 100644
+> --- a/Documentation/devicetree/bindings/arm/bcm/brcm,bcm63138.txt
+> +++ b/Documentation/devicetree/bindings/arm/bcm/brcm,bcm63138.txt
+> @@ -62,7 +62,7 @@ Timer node:
+>
+>  Syscon reboot node:
+>
+> -See Documentation/devicetree/bindings/power/reset/syscon-reboot.txt for the
+> +See Documentation/devicetree/bindings/power/reset/syscon-reboot.yaml for the
+>  detailed list of properties, the two values defined below are specific to the
+>  BCM6328-style timer:
+>
+> diff --git a/Documentation/devicetree/bindings/arm/hisilicon/hi3519-sysctrl.txt b/Documentation/devicetree/bindings/arm/hisilicon/hi3519-sysctrl.txt
+> index 115c5be0bd0b..8defacc44dd5 100644
+> --- a/Documentation/devicetree/bindings/arm/hisilicon/hi3519-sysctrl.txt
+> +++ b/Documentation/devicetree/bindings/arm/hisilicon/hi3519-sysctrl.txt
+> @@ -1,7 +1,7 @@
+>  * Hisilicon Hi3519 System Controller Block
+>
+>  This bindings use the following binding:
+> -Documentation/devicetree/bindings/mfd/syscon.txt
+> +Documentation/devicetree/bindings/mfd/syscon.yaml
+>
+>  Required properties:
+>  - compatible: "hisilicon,hi3519-sysctrl".
+> diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.txt b/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.txt
+> index 06df04cc827a..6ce0b212ec6d 100644
+> --- a/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.txt
+> +++ b/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.txt
+> @@ -81,4 +81,4 @@ Example:
+>                 };
+>         };
+>
+> -[1]. Documentation/devicetree/bindings/arm/idle-states.txt
+> +[1]. Documentation/devicetree/bindings/arm/idle-states.yaml
+> diff --git a/Documentation/devicetree/bindings/arm/omap/mpu.txt b/Documentation/devicetree/bindings/arm/omap/mpu.txt
+> index f301e636fd52..e41490e6979c 100644
+> --- a/Documentation/devicetree/bindings/arm/omap/mpu.txt
+> +++ b/Documentation/devicetree/bindings/arm/omap/mpu.txt
+> @@ -17,7 +17,7 @@ am335x and am437x only:
+>  - pm-sram: Phandles to ocmcram nodes to be used for power management.
+>            First should be type 'protect-exec' for the driver to use to copy
+>            and run PM functions, second should be regular pool to be used for
+> -          data region for code. See Documentation/devicetree/bindings/sram/sram.txt
+> +          data region for code. See Documentation/devicetree/bindings/sram/sram.yaml
+>            for more details.
+>
+>  Examples:
+> diff --git a/Documentation/devicetree/bindings/arm/psci.yaml b/Documentation/devicetree/bindings/arm/psci.yaml
+> index 8ef85420b2ab..f8218e60e3e2 100644
+> --- a/Documentation/devicetree/bindings/arm/psci.yaml
+> +++ b/Documentation/devicetree/bindings/arm/psci.yaml
+> @@ -100,7 +100,7 @@ properties:
+>        bindings in [1]) must specify this property.
+>
+>        [1] Kernel documentation - ARM idle states bindings
+> -        Documentation/devicetree/bindings/arm/idle-states.txt
+> +        Documentation/devicetree/bindings/arm/idle-states.yaml
+>
+>    "#power-domain-cells":
+>      description:
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+> index 17f87178f6b8..3647007f82ca 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml
+> @@ -42,7 +42,7 @@ properties:
+>        be part of GCC and hence the TSENS properties can also be part
+>        of the GCC/clock-controller node.
+>        For more details on the TSENS properties please refer
+> -      Documentation/devicetree/bindings/thermal/qcom-tsens.txt
+> +      Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>
+>    nvmem-cell-names:
+>      minItems: 1
