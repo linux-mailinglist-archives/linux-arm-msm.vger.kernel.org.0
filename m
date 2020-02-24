@@ -2,131 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C271016A654
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 13:44:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C646916A690
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 13:59:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727329AbgBXMoP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Feb 2020 07:44:15 -0500
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:44736 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726778AbgBXMoP (ORCPT
+        id S1727497AbgBXM7C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Feb 2020 07:59:02 -0500
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:55161 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726778AbgBXM7C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Feb 2020 07:44:15 -0500
-Received: by mail-lf1-f65.google.com with SMTP id 7so6690638lfz.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2020 04:44:14 -0800 (PST)
+        Mon, 24 Feb 2020 07:59:02 -0500
+Received: by mail-pj1-f65.google.com with SMTP id dw13so4177527pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2020 04:59:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RqVbf+yX/EbyvbniGxwMX8pWWpjIuygOZP3gXQQJI6A=;
-        b=Z+j2VuAgzOlGqCmnW0/EjPQxScny4nAUkCwxEWWYOzl7DpD41nUrZt7FioRvJuLp02
-         V0GhSfEHSso6sGY6K1Fq5QsljoxjTyoGX0/X1rzWZJREXO6SXttbIcpbLSJEZyxQtizz
-         UW4UVfMNZNXUf1P5u/lL+WxC5ZJ1A28h/jSbuIGGnVafqIbg0+6K7Lky1CzxZWbHkZ+H
-         rddz54pHjaWmcLEw0Nutdg1+gMPnzXhRrDa3CNjajUpTyxtJy0kHiB/nFjHLF8RSmqbn
-         frvnAnHYSYICNZgkY6gugFWm7/DgE2aLabr7OZHtbrjH/es3i5W/8KsOtQ01V5jwZNY0
-         +2Lg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ryxn5b4EDbiCAyyRC3XMyBM6fCDfyjHdPnAp7mp/HOM=;
+        b=UBicdBzxAmDEmFFrgqESYIuGQnP15PLI4MqcJmVARO0UC1pUw+8P4S1LUhNcxbQmRh
+         E1gSvIb9pF4L+dSNR++nsk4rEhxEYhb/j9Zk1y5qRFFSLAqOzhFWKBkx/04/fJdtrh0Z
+         xDXsrFYvKuh5R2RgyCx/fNCWZ+ijKPH+j0wn3zzOjjXOK4b4azSwQ5H91yR/wiPcvjz2
+         QL3/h7h388biKYkSf28DIcmCCDTPrQy+8Fr8gEBM8+rg17UZZkQO3065xprKRbQ61c+9
+         3ebxdqJ5CR9q0o6TfIQoEzEesAxjUc5rvjfNzZwwCsmB9BlOvZ19UwfOsj/FTs+4eOuH
+         sopA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RqVbf+yX/EbyvbniGxwMX8pWWpjIuygOZP3gXQQJI6A=;
-        b=KjAo5Is9u8BlJSENnXj5okc8o0KxPp59O3SjU0P2mFJdCYzi5/G5KEMzxkyREgzaQV
-         JQKb/zcBEqkXWRsKxgQZYGNln7C7JILU/1wnoXTqEbydHi36aMqeGiRf6f1NsteCHkYM
-         7n2lYnMNkTNh0mupJzJaYEsuBrQ02MiXyTN0Pil/oJN33LnUtNTHp+3Tev4CTfRrxQrR
-         +7tifu1OwEbtf7cfyjJJ8TrWbfuE3aoZIPUt7BW00Ne5lldrles2w7W915o0Q+ZL7SGX
-         KpLsg2E5kGPsCUqexHJ0UHJ4soX440FwQ6u0VQ55Q4vc4wieP57/QXZpeusapt64yYBi
-         lvBQ==
-X-Gm-Message-State: APjAAAU5Fd3UThwj369l/VjlP3oGcv50KlZUHIifz8odXnnrkRMnxBVf
-        A8mLgdb7vGNmra2+cS5HqCVtSTzX8+5L/xsNsKdKcA==
-X-Google-Smtp-Source: APXvYqylJfq3rATezEsUBf+r45PPCY8dAE3Qwt2tVxkwhDcOEpXKiANmplEGxOt1S0zIvDXyrq0LQ3O3r02nf3eD0Rk=
-X-Received: by 2002:a19:6d13:: with SMTP id i19mr26465541lfc.6.1582548253189;
- Mon, 24 Feb 2020 04:44:13 -0800 (PST)
-MIME-Version: 1.0
-References: <cover.1582048155.git.amit.kucheria@linaro.org>
- <4f5a4175371ac7973061cd4f9d19674ac308672c.1582048155.git.amit.kucheria@linaro.org>
- <158215713699.184098.4863049384855658604@swboyd.mtv.corp.google.com>
-In-Reply-To: <158215713699.184098.4863049384855658604@swboyd.mtv.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ryxn5b4EDbiCAyyRC3XMyBM6fCDfyjHdPnAp7mp/HOM=;
+        b=UlmRrF19I2BonDFhnvKwbQ7iuJ38XBQciqh4Lp8J7u7m5Xw40xhElHmWu9Tn1hoQ2E
+         uCiHElQ20SLyRwt68saIHdvmb0dczvaOb9KYtrFy2bUf5USQgG1PRGyIq+X6zQRZ4Xmk
+         9CFVHAXTGrwGYG2ZC5NwK9xqMQ4mhu7P5yYOt2aljHbqNRJz779VsjhqK6DBL/PlPETe
+         ZN3GA3qe9t/NKD3ymNzVUFNjy2xH/3hofBucNohppPK/OYux36UwSIDvUOGvyqR4XgPW
+         14a4obQt+7IQDCT0Y2CkkBXi+p8Hbn9Bpgpm4PMuqsyzibJI0xglwI+hJ9lhdTX+2lz1
+         yJmA==
+X-Gm-Message-State: APjAAAWxle+Smnw6NyKfREJ89p5QsFNikUeCCGWJBwMULzSkMoHMggCT
+        jjocZzAUf8UvnJSrz7q8slxQIA==
+X-Google-Smtp-Source: APXvYqwg5tufZIaT33jpb7I1MkLg/A4X9TBK59G5zjTgr8suH6/5MbxjyJgtJJRVveHb3SFHmMTm5g==
+X-Received: by 2002:a17:902:724a:: with SMTP id c10mr49301343pll.307.1582549141768;
+        Mon, 24 Feb 2020 04:59:01 -0800 (PST)
+Received: from localhost ([103.195.202.114])
+        by smtp.gmail.com with ESMTPSA id ep2sm12609179pjb.31.2020.02.24.04.58.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Feb 2020 04:59:00 -0800 (PST)
 From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Mon, 24 Feb 2020 18:14:02 +0530
-Message-ID: <CAP245DUfcfcjMKixpJ9jkvN76nnAKdfBiDcNhSH6rSy0cUY=Bw@mail.gmail.com>
-Subject: Re: [PATCH v5 5/8] drivers: thermal: tsens: Add critical interrupt support
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        sivaa@codeaurora.org, Amit Kucheria <amit.kucheria@verdurent.com>,
-        Linux PM list <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
+        swboyd@chromium.org, sivaa@codeaurora.org,
+        Andy Gross <agross@kernel.org>
+Cc:     Amit Kucheria <amit.kucheria@verdurent.com>,
+        linux-pm@vger.kernel.org
+Subject: [PATCH v6 0/8] thermal: tsens: Handle critical interrupts
+Date:   Mon, 24 Feb 2020 18:28:47 +0530
+Message-Id: <cover.1582548319.git.amit.kucheria@linaro.org>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 20, 2020 at 5:35 AM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Amit Kucheria (2020-02-18 10:12:09)
-> > diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> > index 0e7cf5236932..5b003d598234 100644
-> > --- a/drivers/thermal/qcom/tsens.c
-> > +++ b/drivers/thermal/qcom/tsens.c
-> > @@ -125,6 +125,28 @@ static int tsens_register(struct tsens_priv *priv)
-> >                 goto err_put_device;
-> >         }
-> >
-> > +       if (priv->feat->crit_int) {
-> > +               irq_crit = platform_get_irq_byname(pdev, "critical");
-> > +               if (irq_crit < 0) {
-> > +                       ret = irq_crit;
-> > +                       /* For old DTs with no IRQ defined */
-> > +                       if (irq_crit == -ENXIO)
-> > +                               ret = 0;
-> > +                       goto err_crit_int;
-> > +               }
-> > +               ret = devm_request_threaded_irq(&pdev->dev, irq_crit,
-> > +                                               NULL, tsens_critical_irq_thread,
-> > +                                               IRQF_ONESHOT,
-> > +                                               dev_name(&pdev->dev), priv);
-> > +               if (ret) {
-> > +                       dev_err(&pdev->dev, "%s: failed to get critical irq\n", __func__);
-> > +                       goto err_crit_int;
-> > +               }
-> > +
-> > +               enable_irq_wake(irq_crit);
-> > +       }
-> > +
-> > +err_crit_int:
->
-> Why use a goto? Can't this be done with if-else statements?
->
->        if (priv->feat->crit_int) {
->                irq_crit = platform_get_irq_byname(pdev, "critical");
->                if (irq_crit < 0) {
->                        ...
->                } else {
->                        ret = devm_request_threaded_irq(&pdev->dev, irq_crit,
->                                                        NULL, tsens_critical_irq_thread,
->                                                        IRQF_ONESHOT,
->                                                        dev_name(&pdev->dev), priv);
->                        if (ret)
->                                dev_err(&pdev->dev, "%s: failed to get critical irq\n", __func__);
->                        else
->                                enable_irq_wake(irq_crit);
->                }
->        }
->
-> Or if the nesting is so deep that we need goto labels then perhaps it
-> needs to be another function.
+TSENS IP v2.x supports critical interrupts and v2.3+ adds watchdog support
+in case the FSM is stuck. Enable support in the driver.
 
-So the if-else form only slightly improved the readability. But moving
-it to a function made it much better, IMO. So I went with that.
+This series was generated on top of v5.6-rc2.
 
-Thanks for the review.
+Changes since v5:¬
+ - Introduce a function tsens_register_irq to handle uplow and critical
+   interrupt registration and reduce code duplication
+ - Clarify reason for patch 04
 
-Regards,
-Amit
+Changes from v4:
+- Add back patch 1 from v3[*], I mistakenly didn't post it for v4.
+- Remove spinlock from critical interrupt handling
+- Change critical interrupt handler to fall thru watchdog bark handling to
+  handle critical interrupts too
 
-> >         enable_irq_wake(irq);
-> >
-> >  err_put_device:
+[*] https://lore.kernel.org/linux-arm-msm/77dd80eb58f0db29a03097cb442d606f810a849a.1577976221.git.amit.kucheria@linaro.org/
+
+Changes from v3:
+- Remove the DTS changes that are already queued
+- Fix review comments by Bjorn
+- Fixup patch description to clarify that we don't use TSENS critical
+  interrupts in Linux, but need it for the watchdog support that uses the
+  same HW irq line.
+- Separate kernel-doc fixes into a separate patch.
+
+Changes from v2:
+- Handle old DTBs w/o critical irq in the same way as fix sent for 5.5
+
+Changes from v1:
+- Make tsens_features non-const to allow run time detection of features
+- Pass tsens_sensor around as a const
+- Fix a bug to release dev pointer in success path
+- Address review comments from Bjorn and Stephen (thanks for the review)
+- Add msm8998 and msm8996 DTSI changes for critical interrupts
+
+
+Amit Kucheria (8):
+  drivers: thermal: tsens: De-constify struct tsens_features
+  drivers: thermal: tsens: Pass around struct tsens_sensor as a constant
+  drivers: thermal: tsens: use simpler variables
+  drivers: thermal: tsens: Release device in success path
+  drivers: thermal: tsens: Add critical interrupt support
+  drivers: thermal: tsens: Add watchdog support
+  drivers: thermal: tsens: kernel-doc fixup
+  drivers: thermal: tsens: Remove unnecessary irq flag
+
+ drivers/thermal/qcom/tsens-8960.c   |   4 +-
+ drivers/thermal/qcom/tsens-common.c | 185 ++++++++++++++++++++++++----
+ drivers/thermal/qcom/tsens-v0_1.c   |   6 +-
+ drivers/thermal/qcom/tsens-v1.c     |   6 +-
+ drivers/thermal/qcom/tsens-v2.c     |  24 +++-
+ drivers/thermal/qcom/tsens.c        |  63 ++++++----
+ drivers/thermal/qcom/tsens.h        | 103 ++++++++++++++--
+ 7 files changed, 320 insertions(+), 71 deletions(-)
+
+-- 
+2.20.1
+
