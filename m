@@ -2,93 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FDAC16A6AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 13:59:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C14A16A6E6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 14:08:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727827AbgBXM7f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Feb 2020 07:59:35 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:42956 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727763AbgBXM7e (ORCPT
+        id S1727677AbgBXNIM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Feb 2020 08:08:12 -0500
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:37492 "EHLO
+        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727329AbgBXNIK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Feb 2020 07:59:34 -0500
-Received: by mail-pf1-f195.google.com with SMTP id 4so5330150pfz.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2020 04:59:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yppLt986zP7O7xLvSSLQLlvFJY28BCNk54JkxNyWnDk=;
-        b=bTz6qbor82mtycDyKzf3JPd0NDWF6X3c5Cv+6+4VBzxLKEn6fnu6l1Vu/Pn/Q+1qMr
-         5AtCcdNhCCqVg8naCc3YBOzH0/lLYFfl36qNQ8EOQoowl/tJsG3rNePjDxek0WGNokDl
-         k/X8pZh9KRE8bNki0mUIk7BpSsplRD+dujNz1j37i8Q1ZVpJC/jMEIwIiFp59SDP1ymg
-         dAhQeJ4NJMWM0wSreAATTF7b15/3gutSd8am8Oqxg86dcgimoTzuxD7CmtPpExhNwUYh
-         GRY3nLpudE8tFXWqloM106vHRyeGPdNAS4NKFbMEH5FmeCmSQLgtzOMKZWliU1RGeTh5
-         CHsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yppLt986zP7O7xLvSSLQLlvFJY28BCNk54JkxNyWnDk=;
-        b=INaWTLvgN1wYZD7iaqmfdmQmgATnrH6oLeKmfZk5uOl/f+EStQ8J7pZIUxliLRGrRG
-         bjKY9U4hScdAhbYCXC2yMoQMjI7ag3/EjTphD4hMMnK5IRd2Y27vnwLL5geBT6vYPl+A
-         EBg1X9c1MFVjlXcgIvPDXRf1YHmD/aoC6gv8RGpMTVeLdk8OoxBWRelf94eJTfh/jGjn
-         N5RCkzsJjlHYJjVw2sLpLcZbfBTNf8glYZmdvHyWRqg1RoLBS983/TnhwBqw0qaIHmAF
-         l+EZOjcj2PkSMndD4LPfnZB7QvfPMfejpmdOmM0//AtGWb26UgkI/nFSLfG8BDZiHXct
-         m3Xg==
-X-Gm-Message-State: APjAAAWRCNWY5JgeDmoRpCXf7bco9kG8DpyMI/wDCiJVXWvmYDyVQIOv
-        fOYi6kwlYzPGSGUe2qIJVg+zYQ==
-X-Google-Smtp-Source: APXvYqw+aTKw8nd0jX7s+EBsNkLN1X3i8SmLEGHqzK6eOTQrLZ9p/GoRByaGeYZvox38yV66v9kiLQ==
-X-Received: by 2002:a63:e54c:: with SMTP id z12mr51521536pgj.415.1582549173602;
-        Mon, 24 Feb 2020 04:59:33 -0800 (PST)
-Received: from localhost ([103.195.202.114])
-        by smtp.gmail.com with ESMTPSA id j125sm12926717pfg.160.2020.02.24.04.59.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2020 04:59:32 -0800 (PST)
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
-        swboyd@chromium.org, sivaa@codeaurora.org,
-        Andy Gross <agross@kernel.org>
-Cc:     Amit Kucheria <amit.kucheria@verdurent.com>,
-        linux-pm@vger.kernel.org
-Subject: [PATCH v6 8/8] drivers: thermal: tsens: Remove unnecessary irq flag
-Date:   Mon, 24 Feb 2020 18:28:55 +0530
-Message-Id: <03f36313db88f31177d1875bcdfb0be50efcd2ca.1582548319.git.amit.kucheria@linaro.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <cover.1582548319.git.amit.kucheria@linaro.org>
-References: <cover.1582548319.git.amit.kucheria@linaro.org>
+        Mon, 24 Feb 2020 08:08:10 -0500
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 01OD7CsK028839;
+        Mon, 24 Feb 2020 07:07:12 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1582549632;
+        bh=Tx9NLTynxh7HMA5VHJWXsAof1AdXnE/KAs53Nqq7E70=;
+        h=Subject:To:CC:References:From:Date:In-Reply-To;
+        b=J8OaXTwY6rJidCznLf2G/vSUju+4HU3kRW0QV+CMkL2fpPxI5mFwt5l1u7GY1i0cK
+         fhdwF15G4WtYxb0NBQQmKRDL/VCrdAXaZORkAKh4uNPMzhrjf4desB5yiRBKSQYI5e
+         lr23otClWqEaN2djtLEvvM3O3oRjPmZTJi+w6edQ=
+Received: from DLEE115.ent.ti.com (dlee115.ent.ti.com [157.170.170.26])
+        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 01OD7CFB102821
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Mon, 24 Feb 2020 07:07:12 -0600
+Received: from DLEE101.ent.ti.com (157.170.170.31) by DLEE115.ent.ti.com
+ (157.170.170.26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3; Mon, 24
+ Feb 2020 07:07:11 -0600
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE101.ent.ti.com
+ (157.170.170.31) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1847.3 via
+ Frontend Transport; Mon, 24 Feb 2020 07:07:12 -0600
+Received: from [10.250.65.13] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 01OD7B3m002482;
+        Mon, 24 Feb 2020 07:07:11 -0600
+Subject: Re: [PATCH 2/7] docs: dt: fix several broken references due to
+ renames
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Linux Doc Mailing List <linux-doc@vger.kernel.org>
+CC:     Jonathan Corbet <corbet@lwn.net>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Jyri Sarha <jsarha@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+        Pavel Machek <pavel@ucw.cz>, Stuart Yoder <stuyoder@gmail.com>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Joel Stanley <joel@jms.id.au>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linux-leds@vger.kernel.org>, <linux-aspeed@lists.ozlabs.org>,
+        <openbmc@lists.ozlabs.org>, <linux-gpio@vger.kernel.org>,
+        <linux-amlogic@lists.infradead.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-pm@vger.kernel.org>
+References: <cover.1582361737.git.mchehab+huawei@kernel.org>
+ <83c5df4acbbe0fa55a1d58d4c4a435b51cd2a7ad.1582361737.git.mchehab+huawei@kernel.org>
+From:   Dan Murphy <dmurphy@ti.com>
+Message-ID: <e9ae8125-3f8f-5f8c-c19c-34ac1bb5c982@ti.com>
+Date:   Mon, 24 Feb 2020 07:02:01 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <83c5df4acbbe0fa55a1d58d4c4a435b51cd2a7ad.1582361737.git.mchehab+huawei@kernel.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IRQF_TRIGGER_HIGH is already specified through devicetree interrupts
-property. Remove it from code.
+Mauro
 
-Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/d3e1c0f148d46e395a0886d9028df0faf8e9f9bb.1582048155.git.amit.kucheria@linaro.org
----
- drivers/thermal/qcom/tsens.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 2/22/20 3:00 AM, Mauro Carvalho Chehab wrote:
+> Several DT references got broken due to txt->yaml conversion.
+>
+> Those are auto-fixed by running:
+>
+> 	scripts/documentation-file-ref-check --fix
+>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> ---
+>   Documentation/devicetree/bindings/arm/arm,scmi.txt        | 2 +-
+>   Documentation/devicetree/bindings/arm/arm,scpi.txt        | 2 +-
+>   .../devicetree/bindings/arm/bcm/brcm,bcm63138.txt         | 2 +-
+>   .../devicetree/bindings/arm/hisilicon/hi3519-sysctrl.txt  | 2 +-
+>   .../devicetree/bindings/arm/msm/qcom,idle-state.txt       | 2 +-
+>   Documentation/devicetree/bindings/arm/omap/mpu.txt        | 2 +-
+>   Documentation/devicetree/bindings/arm/psci.yaml           | 2 +-
+>   .../devicetree/bindings/clock/qcom,gcc-apq8064.yaml       | 2 +-
+>   .../devicetree/bindings/display/tilcdc/tilcdc.txt         | 2 +-
+>   Documentation/devicetree/bindings/leds/common.yaml        | 2 +-
 
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 6c6a75528b90..031a656fd2a8 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -104,7 +104,7 @@ static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
- 	} else {
- 		ret = devm_request_threaded_irq(&pdev->dev, irq,
- 						NULL, thread_fn,
--						IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+						IRQF_ONESHOT,
- 						dev_name(&pdev->dev), priv);
- 		if (ret)
- 			dev_err(&pdev->dev, "%s: failed to get irq\n", __func__);
--- 
-2.20.1
+For LEDs
+
+Reviewed-by: Dan Murphy <dmurphy@ti.com>
+
 
