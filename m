@@ -2,86 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 26A4816AF60
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 19:40:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F30D116AF78
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 19:42:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728078AbgBXSkG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Feb 2020 13:40:06 -0500
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:34622 "EHLO
+        id S1727745AbgBXSmE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Feb 2020 13:42:04 -0500
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:36476 "EHLO
         mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727426AbgBXSkG (ORCPT
+        with ESMTP id S1727709AbgBXSmD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Feb 2020 13:40:06 -0500
-Received: by mail-ot1-f66.google.com with SMTP id j16so9680542otl.1;
-        Mon, 24 Feb 2020 10:40:05 -0800 (PST)
+        Mon, 24 Feb 2020 13:42:03 -0500
+Received: by mail-ot1-f66.google.com with SMTP id j20so9694372otq.3;
+        Mon, 24 Feb 2020 10:42:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=bmMsO8zlhfDBXeD1Ui5z4nfH2lAIx0D2PEMJ+/JnHXU=;
-        b=ih0HDgQ7SByC9FkVNsyAS/Zpkj8okRneRRAARWBM0x0nbWuRWieOrYs2uUVbRuiTV7
-         sAdXE/4cAvg6iKYiHvv/9t/GnUdwP3GfECBgJCw6fpaLTkLaSUp2ihQKam2nTZNi7GxN
-         Bv2UzxENuIm/ejbsIZ+oKjl/X3AbdCpyFTAkh9B5OzXtaxuLH5H2yVYiE2K6/6MWts69
-         4kUfXRwbreZunazIAKRXeYh5T2/1FyI3MPlQ7XM/wxvG/6POffoNdVksx2LgmREPhnXD
-         GZ9WEgQ8WCpfZyjXZMNMukAcWgzYDrzfOzc3ip3RHOfL2Ts5ywyk3Idnt7YaPIXqEhrV
-         JOqQ==
-X-Gm-Message-State: APjAAAXAJYARRfDBUSKFV0+DB49f27xCyM5mvTBmRSri7KiT8i1DmArh
-        ytIccxiiRS2lwO834laQDQ==
-X-Google-Smtp-Source: APXvYqyG6ueUZmR3C1vGNtlbivBqFpkBHQuuCOLIGlv1vRi+ocXBU3uxirn1DsXLCV/bF2L7rqDPag==
-X-Received: by 2002:a05:6830:139a:: with SMTP id d26mr42724177otq.75.1582569604945;
-        Mon, 24 Feb 2020 10:40:04 -0800 (PST)
+        bh=0oNSfC/VueKVt/Nz7VSIdO4jhQ0NPkVJt3k9o2m6tZQ=;
+        b=DgdLN4yg9NCsMZ2a929hhQj8yt8Zum4KsPlwM8OU1zNUjT+9JmzfHSYnRxz9a+X7Vc
+         O+YJVJ++0gB0KhbLKteLDG3CnH3BPjk4Hc+QKd71c6IwwbwsgxJpvc6ywHSb69i41jWt
+         +6OS1RiwywKGEUax9KBf01rfSxaTG/HRxVAAi5YQjVzbU9r/3MFvpcTV615wJDl/tct2
+         OP2hJ4k1X97XoWjlARZtIwbKlS4iNRfy5LCgo9kCgMYMxVjuTkogE1LnC1Ksg/eEqnBh
+         W7BYRucx+BN3/zbS6b8fWmKKfuM9IScNiEtACKrM1BCT48WAaWxO2aa2ZcgMSxWDsSlN
+         6Hkw==
+X-Gm-Message-State: APjAAAVbUfLkz78muMSmrqxNUP3duS/iVFP9CHtWVTZOIi5tREbqZeKR
+        hHQONE9r9suaHH8vXmyMvFZubrQ=
+X-Google-Smtp-Source: APXvYqz00HiO0Z2/dfXCRqcQOlXMa9/Bu6VsS+b3HJP8XuF8m3LmzbOURtJ9vXw8MuKXObQfvQXlmA==
+X-Received: by 2002:a9d:64b:: with SMTP id 69mr39683937otn.237.1582569722788;
+        Mon, 24 Feb 2020 10:42:02 -0800 (PST)
 Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id m19sm4737721otn.47.2020.02.24.10.40.03
+        by smtp.gmail.com with ESMTPSA id v134sm2287844oia.38.2020.02.24.10.42.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2020 10:40:04 -0800 (PST)
-Received: (nullmailer pid 4013 invoked by uid 1000);
-        Mon, 24 Feb 2020 18:40:03 -0000
-Date:   Mon, 24 Feb 2020 12:40:03 -0600
+        Mon, 24 Feb 2020 10:42:02 -0800 (PST)
+Received: (nullmailer pid 7356 invoked by uid 1000);
+        Mon, 24 Feb 2020 18:42:01 -0000
+Date:   Mon, 24 Feb 2020 12:42:01 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        swboyd@chromium.org, mka@chromium.org, daniel.lezcano@linaro.org,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [RFC PATCH v1 3/3] dt-bindings: thermal: Add yaml bindings for
- thermal zones
-Message-ID: <20200224184003.GA3607@bogus>
-References: <cover.1582528977.git.amit.kucheria@linaro.org>
- <59d24f8ec98e29d119c5cbdb2abe6d4644cc51cf.1582528977.git.amit.kucheria@linaro.org>
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette =?iso-8859-1?Q?=A0?= 
+        <mturquette@baylibre.com>, David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: Re: [PATCH v5 3/5] dt-bindings: clock: Add YAML schemas for the QCOM
+ MSS clock bindings
+Message-ID: <20200224184201.GA6030@bogus>
+References: <1582540703-6328-1-git-send-email-tdas@codeaurora.org>
+ <1582540703-6328-4-git-send-email-tdas@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <59d24f8ec98e29d119c5cbdb2abe6d4644cc51cf.1582528977.git.amit.kucheria@linaro.org>
+In-Reply-To: <1582540703-6328-4-git-send-email-tdas@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 24 Feb 2020 12:55:37 +0530, Amit Kucheria wrote:
-> As part of moving the thermal bindings to YAML, split it up into 3
-> bindings: thermal sensors, cooling devices and thermal zones.
+On Mon, 24 Feb 2020 16:08:21 +0530, Taniya Das wrote:
+> The Modem Subsystem clock provider have a bunch of generic properties
+> that are needed in a device tree. Add a YAML schemas for those.
 > 
-> The thermal-zone binding is a software abstraction to capture the
-> properties of each zone - how often they should be checked, the
-> temperature thresholds (trips) at which mitigation actions need to be
-> taken and the level of mitigation needed at those thresholds.
-> 
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
 > ---
->  .../bindings/thermal/thermal-zones.yaml       | 302 ++++++++++++++++++
->  1 file changed, 302 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/thermal/thermal-zones.yaml
+>  .../devicetree/bindings/clock/qcom,sc7180-mss.yaml | 62 ++++++++++++++++++++++
+>  1 file changed, 62 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-mss.yaml
 > 
 
 My bot found errors running 'make dt_binding_check' on your patch:
 
 Documentation/devicetree/bindings/display/simple-framebuffer.example.dts:21.16-37.11: Warning (chosen_node_is_root): /example-0/chosen: chosen node must be at root node
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/thermal-zones.example.dt.yaml: thermal-sensor@c263000: interrupt-names: ['uplow'] is too short
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/thermal-zones.example.dt.yaml: thermal-sensor@c263000: interrupts: [[0, 506, 4]] is too short
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/thermal-zones.example.dt.yaml: thermal-sensor@c265000: interrupt-names: ['uplow'] is too short
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/thermal-zones.example.dt.yaml: thermal-sensor@c265000: interrupts: [[0, 507, 4]] is too short
+Error: Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dts:21.26-27 syntax error
+FATAL ERROR: Unable to parse input tree
+scripts/Makefile.lib:300: recipe for target 'Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dt.yaml' failed
+make[1]: *** [Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dt.yaml] Error 1
+Makefile:1263: recipe for target 'dt_binding_check' failed
+make: *** [dt_binding_check] Error 2
 
-See https://patchwork.ozlabs.org/patch/1242847
+See https://patchwork.ozlabs.org/patch/1242999
 Please check and re-submit.
