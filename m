@@ -2,88 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E7E1216AF57
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 19:39:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D9F9616AF5C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 19:39:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727479AbgBXSjG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Feb 2020 13:39:06 -0500
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:34539 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727426AbgBXSjF (ORCPT
+        id S1727950AbgBXSjr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Feb 2020 13:39:47 -0500
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:39045 "EHLO
+        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727426AbgBXSjr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Feb 2020 13:39:05 -0500
-Received: by mail-ot1-f67.google.com with SMTP id j16so9677530otl.1;
-        Mon, 24 Feb 2020 10:39:04 -0800 (PST)
+        Mon, 24 Feb 2020 13:39:47 -0500
+Received: by mail-oi1-f195.google.com with SMTP id 18so6959773oij.6;
+        Mon, 24 Feb 2020 10:39:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0sVqCGBrCoIT/RQRzW+a44Y2fkx7Y80/0sbQlmjQqQE=;
-        b=TPUBQjR9sLlt8sAyvSEwrVNR1NsARotF3/WFjVbwZMdMLMT7kj+dHzCWHm4v7NgUDe
-         /D0JhxiiGx+Wk3U4JUCYVGB79zqXjGWO6yZBY47whKmmX7scteQqRhzEiMstCxbkt68T
-         GZUWpIa6Xcun7scX9IJAWaTsT9pkOtIKXJ6LnoiAh5U6jvOp3IgEiOsGQEsxfA7e2nsC
-         xfca6ojlOJVHb++vaykvJhwyw1NX5Ec4U0AdDpQ1X+CzCeWt8Z2k67hiAjdaFuLcNoHT
-         16U1GhnVGGUZdw4lDD/8BmSaAxDFt+V9+wc02gO7BCxrp61+daGojQBpva6ffSmF29tX
-         KPqA==
-X-Gm-Message-State: APjAAAUQ0gZs//Tc66+HgNQyamwMUrw+xhQJDHHKQ+m64ObT8H3EfYiR
-        GZB+GNH1FiOw1nkQ32IGHA==
-X-Google-Smtp-Source: APXvYqzo3boxjKAHif5705port4MZXNIX6PQpgO8wbr7VzV/NCax4EHVkwb3NqqPpOiIqNTnJAQ9aQ==
-X-Received: by 2002:a9d:6196:: with SMTP id g22mr42337766otk.204.1582569543834;
-        Mon, 24 Feb 2020 10:39:03 -0800 (PST)
+        bh=mJFZ+9Y1S3Z4K4VY5LKYC3aMRkdeTsjXfkgcvM8Uwqc=;
+        b=QW+Nfskcw+tUK9RR6/XVvFiU30x5/22pC/Ze7PrrIVv3KWjHXCtsrPgeHUfuy/BPjp
+         pWwsFpoNFo7e3hZIBCdm1qaX2vSE8gEmZjiXc+faGnet0NdCgQZ8NW44ATyS5btLzSSH
+         VGUYWfG9yX7h/ZJVOkya33djL1wTHMYdEw3z9NS0NdhLbE5/hAYDPgmhp/j6lU8x1IWQ
+         ySt2mC7KPsx+Pob6ZK+kdFypA8ZHkilsMc+wAAX9oMAaB9sk+jlJdEC9hpl3hwCzbnSm
+         aviG4r58O8z/hMylJEBdm+QhdRzgAUpdZF/B8YBZmTgz8MiK8Mdg0aPpVh/8PGqRLoIj
+         xfBQ==
+X-Gm-Message-State: APjAAAWhHPC6xOwbdXIqkPStf7qvRR9+emKH6PVdf50A8eKX4ajrJ+cT
+        hqMtH0I23NeZeOflE9hsyg==
+X-Google-Smtp-Source: APXvYqz/hPnka3x3uNnqj0ZN65CwvYlszHLNQqni4E+Ly0QlI++rlZAIObzFHIExjC+HN53ZmD00wg==
+X-Received: by 2002:a05:6808:b13:: with SMTP id s19mr318669oij.119.1582569585986;
+        Mon, 24 Feb 2020 10:39:45 -0800 (PST)
 Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id q5sm4326203oia.21.2020.02.24.10.39.02
+        by smtp.gmail.com with ESMTPSA id s83sm4265727oif.33.2020.02.24.10.39.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2020 10:39:03 -0800 (PST)
-Received: (nullmailer pid 1908 invoked by uid 1000);
-        Mon, 24 Feb 2020 18:39:02 -0000
-Date:   Mon, 24 Feb 2020 12:39:02 -0600
+        Mon, 24 Feb 2020 10:39:45 -0800 (PST)
+Received: (nullmailer pid 3349 invoked by uid 1000);
+        Mon, 24 Feb 2020 18:39:44 -0000
+Date:   Mon, 24 Feb 2020 12:39:44 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 2/2] Documentation: devictree: Add ipq806x mdio
- bindings
-Message-ID: <20200224183902.GA1379@bogus>
-References: <20200222161629.1862-1-ansuelsmth@gmail.com>
- <20200222161629.1862-2-ansuelsmth@gmail.com>
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        swboyd@chromium.org, mka@chromium.org, daniel.lezcano@linaro.org,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [RFC PATCH v1 1/3] dt-bindings: thermal: Add yaml bindings for
+ thermal sensors
+Message-ID: <20200224183944.GA2201@bogus>
+References: <cover.1582528977.git.amit.kucheria@linaro.org>
+ <11f9128efef92b427d93a563d5b53b62c4c01888.1582528977.git.amit.kucheria@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200222161629.1862-2-ansuelsmth@gmail.com>
+In-Reply-To: <11f9128efef92b427d93a563d5b53b62c4c01888.1582528977.git.amit.kucheria@linaro.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 22 Feb 2020 17:16:27 +0100, Ansuel Smith wrote:
-> Add documentations for ipq806x mdio driver.
+On Mon, 24 Feb 2020 12:55:35 +0530, Amit Kucheria wrote:
+> As part of moving the thermal bindings to YAML, split it up into 3
+> bindings: thermal sensors, cooling devices and thermal zones.
 > 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> The property #thermal-sensor-cells is required in each device that acts
+> as a thermal sensor. It is used to uniquely identify the instance of the
+> thermal sensor inside the system.
+> 
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
 > ---
->  .../bindings/net/qcom,ipq8064-mdio.yaml       | 55 +++++++++++++++++++
->  1 file changed, 55 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
+>  .../bindings/thermal/thermal-sensor.yaml      | 70 +++++++++++++++++++
+>  1 file changed, 70 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
 > 
 
 My bot found errors running 'make dt_binding_check' on your patch:
 
 Documentation/devicetree/bindings/display/simple-framebuffer.example.dts:21.16-37.11: Warning (chosen_node_is_root): /example-0/chosen: chosen node must be at root node
-Error: Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.example.dts:23.28-29 syntax error
-FATAL ERROR: Unable to parse input tree
-scripts/Makefile.lib:300: recipe for target 'Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.example.dt.yaml' failed
-make[1]: *** [Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.example.dt.yaml] Error 1
-Makefile:1263: recipe for target 'dt_binding_check' failed
-make: *** [dt_binding_check] Error 2
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/thermal-sensor.example.dt.yaml: thermal-sensor@c263000: interrupt-names: ['uplow'] is too short
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/thermal-sensor.example.dt.yaml: thermal-sensor@c263000: interrupts: [[0, 506, 4]] is too short
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/thermal-sensor.example.dt.yaml: thermal-sensor@c265000: interrupt-names: ['uplow'] is too short
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/thermal-sensor.example.dt.yaml: thermal-sensor@c265000: interrupts: [[0, 507, 4]] is too short
 
-See https://patchwork.ozlabs.org/patch/1242533
+See https://patchwork.ozlabs.org/patch/1242845
 Please check and re-submit.
