@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id EE491169D2F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 05:50:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EED7A169D32
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 05:50:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727276AbgBXEu2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Feb 2020 23:50:28 -0500
-Received: from mail.kernel.org ([198.145.29.99]:38174 "EHLO mail.kernel.org"
+        id S1727308AbgBXEud (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Feb 2020 23:50:33 -0500
+Received: from mail.kernel.org ([198.145.29.99]:38262 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727186AbgBXEu2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Feb 2020 23:50:28 -0500
+        id S1727186AbgBXEud (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 23 Feb 2020 23:50:33 -0500
 Received: from localhost.localdomain (unknown [122.182.199.233])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 42C77206CC;
-        Mon, 24 Feb 2020 04:50:22 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id A4CDC20675;
+        Mon, 24 Feb 2020 04:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1582519827;
-        bh=gnBUbAVvQ/znBp5r6XVo7TvmU96qO2uqPCr26cpQG7k=;
+        s=default; t=1582519832;
+        bh=I45mpKN9HaTxsj/paq804ElnxebxHGDKm3u/O96MCI8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=hJlcH3gURXBSPGqX7Lp4mgDM3tg1Za2k3UVApvx2ne93B9Nc33wSG7LXWdV4RE9uA
-         iXrzX2+GWiMHlwgC6Kxvrx7QmXd5r6nM3fS/LESaDmLW4RN/p84rUZawukQMYhwETU
-         riJMemsMva2f+p2QVMDDSkQxOJwPQ4v79K72eCFk=
+        b=vTzcjVrSpaAJ59FHhV7ccL5z9sAnLoWYz1JOyZJ7lwpUKXw1qqDatEdC3MvmYJUkJ
+         DUeJuxf+t2BSDp4v6yrI9v642YDzoD39LikAP50lGvg/UnCqKCw+wj4s9QPa6LaaXR
+         fDiB3e6MY6D7s/2ssAvyaYS8ZS7HD9B5JvFsDOF8=
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Stephen Boyd <sboyd@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -36,9 +36,9 @@ Cc:     linux-arm-msm@vger.kernel.org,
         psodagud@codeaurora.org, tsoni@codeaurora.org,
         jshriram@codeaurora.org, vnkgutta@codeaurora.org,
         Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v4 1/5] clk: qcom: clk-alpha-pll: Use common names for defines
-Date:   Mon, 24 Feb 2020 10:19:59 +0530
-Message-Id: <20200224045003.3783838-2-vkoul@kernel.org>
+Subject: [PATCH v4 2/5] clk: qcom: clk-alpha-pll: Refactor trion PLL
+Date:   Mon, 24 Feb 2020 10:20:00 +0530
+Message-Id: <20200224045003.3783838-3-vkoul@kernel.org>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <20200224045003.3783838-1-vkoul@kernel.org>
 References: <20200224045003.3783838-1-vkoul@kernel.org>
@@ -51,151 +51,76 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Taniya Das <tdas@codeaurora.org>
 
-The PLL run and standby modes are similar across the PLLs, thus rename
-them to common names and update the use of these.
+Remove duplicate function for calculating the round rate of PLL and also
+update the trion pll ops to use the common function.
 
 Signed-off-by: Taniya Das <tdas@codeaurora.org>
 Signed-off-by: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c | 40 ++++++++++++++------------------
- 1 file changed, 17 insertions(+), 23 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c | 33 ++++++--------------------------
+ 1 file changed, 6 insertions(+), 27 deletions(-)
 
 diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 6d946770a80f..0bdf6e45fac9 100644
+index 0bdf6e45fac9..0adec585eb4f 100644
 --- a/drivers/clk/qcom/clk-alpha-pll.c
 +++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -134,15 +134,10 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
- #define PLL_HUAYRA_N_MASK		0xff
- #define PLL_HUAYRA_ALPHA_WIDTH		16
- 
--#define FABIA_OPMODE_STANDBY	0x0
--#define FABIA_OPMODE_RUN	0x1
--
--#define FABIA_PLL_OUT_MASK	0x7
--#define FABIA_PLL_RATE_MARGIN	500
--
--#define TRION_PLL_STANDBY	0x0
--#define TRION_PLL_RUN		0x1
--#define TRION_PLL_OUT_MASK	0x7
-+#define PLL_STANDBY		0x0
-+#define PLL_RUN			0x1
-+#define PLL_OUT_MASK		0x7
-+#define PLL_RATE_MARGIN		500
- 
- #define pll_alpha_width(p)					\
- 		((PLL_ALPHA_VAL_U(p) - PLL_ALPHA_VAL(p) == 4) ?	\
-@@ -766,7 +761,7 @@ static int trion_pll_is_enabled(struct clk_alpha_pll *pll,
- 	if (ret)
- 		return 0;
- 
--	return ((opmode_regval & TRION_PLL_RUN) && (mode_regval & PLL_OUTCTRL));
-+	return ((opmode_regval & PLL_RUN) && (mode_regval & PLL_OUTCTRL));
- }
- 
- static int clk_trion_pll_is_enabled(struct clk_hw *hw)
-@@ -796,7 +791,7 @@ static int clk_trion_pll_enable(struct clk_hw *hw)
- 	}
- 
- 	/* Set operation mode to RUN */
--	regmap_write(regmap, PLL_OPMODE(pll), TRION_PLL_RUN);
-+	regmap_write(regmap, PLL_OPMODE(pll), PLL_RUN);
- 
- 	ret = wait_for_pll_enable_lock(pll);
- 	if (ret)
-@@ -804,7 +799,7 @@ static int clk_trion_pll_enable(struct clk_hw *hw)
- 
- 	/* Enable the PLL outputs */
- 	ret = regmap_update_bits(regmap, PLL_USER_CTL(pll),
--				 TRION_PLL_OUT_MASK, TRION_PLL_OUT_MASK);
-+				 PLL_OUT_MASK, PLL_OUT_MASK);
- 	if (ret)
- 		return ret;
- 
-@@ -837,12 +832,12 @@ static void clk_trion_pll_disable(struct clk_hw *hw)
- 
- 	/* Disable the PLL outputs */
- 	ret = regmap_update_bits(regmap, PLL_USER_CTL(pll),
--				 TRION_PLL_OUT_MASK, 0);
-+				 PLL_OUT_MASK, 0);
- 	if (ret)
- 		return;
- 
- 	/* Place the PLL mode in STANDBY */
--	regmap_write(regmap, PLL_OPMODE(pll), TRION_PLL_STANDBY);
-+	regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
- 	regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
- }
- 
-@@ -1089,14 +1084,14 @@ static int alpha_pll_fabia_enable(struct clk_hw *hw)
- 		return ret;
- 
- 	/* Skip If PLL is already running */
--	if ((opmode_val & FABIA_OPMODE_RUN) && (val & PLL_OUTCTRL))
-+	if ((opmode_val & PLL_RUN) && (val & PLL_OUTCTRL))
- 		return 0;
- 
- 	ret = regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
- 	if (ret)
- 		return ret;
- 
--	ret = regmap_write(regmap, PLL_OPMODE(pll), FABIA_OPMODE_STANDBY);
-+	ret = regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
- 	if (ret)
- 		return ret;
- 
-@@ -1105,7 +1100,7 @@ static int alpha_pll_fabia_enable(struct clk_hw *hw)
- 	if (ret)
- 		return ret;
- 
--	ret = regmap_write(regmap, PLL_OPMODE(pll), FABIA_OPMODE_RUN);
-+	ret = regmap_write(regmap, PLL_OPMODE(pll), PLL_RUN);
- 	if (ret)
- 		return ret;
- 
-@@ -1114,7 +1109,7 @@ static int alpha_pll_fabia_enable(struct clk_hw *hw)
- 		return ret;
- 
- 	ret = regmap_update_bits(regmap, PLL_USER_CTL(pll),
--				 FABIA_PLL_OUT_MASK, FABIA_PLL_OUT_MASK);
-+				 PLL_OUT_MASK, PLL_OUT_MASK);
- 	if (ret)
- 		return ret;
- 
-@@ -1144,13 +1139,12 @@ static void alpha_pll_fabia_disable(struct clk_hw *hw)
- 		return;
- 
- 	/* Disable main outputs */
--	ret = regmap_update_bits(regmap, PLL_USER_CTL(pll), FABIA_PLL_OUT_MASK,
--				 0);
-+	ret = regmap_update_bits(regmap, PLL_USER_CTL(pll), PLL_OUT_MASK, 0);
- 	if (ret)
- 		return;
- 
- 	/* Place the PLL in STANDBY */
--	regmap_write(regmap, PLL_OPMODE(pll), FABIA_OPMODE_STANDBY);
-+	regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
- }
- 
- static unsigned long alpha_pll_fabia_recalc_rate(struct clk_hw *hw,
-@@ -1171,7 +1165,7 @@ static int alpha_pll_fabia_set_rate(struct clk_hw *hw, unsigned long rate,
+@@ -845,33 +845,12 @@ static unsigned long
+ clk_trion_pll_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ {
  	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
- 	u32 l, alpha_width = pll_alpha_width(pll);
- 	u64 a;
--	unsigned long rrate, max = rate + FABIA_PLL_RATE_MARGIN;
-+	unsigned long rrate, max = rate + PLL_RATE_MARGIN;
+-	struct regmap *regmap = pll->clkr.regmap;
+-	u32 l, frac;
+-	u64 prate = parent_rate;
+-
+-	regmap_read(regmap, PLL_L_VAL(pll), &l);
+-	regmap_read(regmap, PLL_ALPHA_VAL(pll), &frac);
+-
+-	return alpha_pll_calc_rate(prate, l, frac, ALPHA_REG_16BIT_WIDTH);
+-}
+-
+-static long clk_trion_pll_round_rate(struct clk_hw *hw, unsigned long rate,
+-				     unsigned long *prate)
+-{
+-	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+-	unsigned long min_freq, max_freq;
+-	u32 l;
+-	u64 a;
+-
+-	rate = alpha_pll_round_rate(rate, *prate,
+-				    &l, &a, ALPHA_REG_16BIT_WIDTH);
+-	if (!pll->vco_table || alpha_pll_find_vco(pll, rate))
+-		return rate;
++	u32 l, frac, alpha_width = pll_alpha_width(pll);
  
- 	rrate = alpha_pll_round_rate(rate, prate, &l, &a, alpha_width);
+-	min_freq = pll->vco_table[0].min_freq;
+-	max_freq = pll->vco_table[pll->num_vco - 1].max_freq;
++	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
++	regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &frac);
  
-@@ -1230,7 +1224,7 @@ static int alpha_pll_fabia_prepare(struct clk_hw *hw)
- 	 * Due to a limited number of bits for fractional rate programming, the
+-	return clamp(rate, min_freq, max_freq);
++	return alpha_pll_calc_rate(parent_rate, l, frac, alpha_width);
+ }
+ 
+ const struct clk_ops clk_alpha_pll_fixed_ops = {
+@@ -917,7 +896,7 @@ const struct clk_ops clk_trion_fixed_pll_ops = {
+ 	.disable = clk_trion_pll_disable,
+ 	.is_enabled = clk_trion_pll_is_enabled,
+ 	.recalc_rate = clk_trion_pll_recalc_rate,
+-	.round_rate = clk_trion_pll_round_rate,
++	.round_rate = clk_alpha_pll_round_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_trion_fixed_pll_ops);
+ 
+@@ -1173,7 +1152,7 @@ static int alpha_pll_fabia_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	 * Due to limited number of bits for fractional rate programming, the
  	 * rounded up rate could be marginally higher than the requested rate.
  	 */
--	if (rrate > (cal_freq + FABIA_PLL_RATE_MARGIN) || rrate < cal_freq)
-+	if (rrate > (cal_freq + PLL_RATE_MARGIN) || rrate < cal_freq)
+-	if (rrate > max || rrate < rate) {
++	if (rrate > (rate + PLL_RATE_MARGIN) || rrate < rate) {
+ 		pr_err("%s: Rounded rate %lu not within range [%lu, %lu)\n",
+ 		       clk_hw_get_name(hw), rrate, rate, max);
  		return -EINVAL;
- 
- 	/* Setup PLL for calibration frequency */
 -- 
 2.24.1
 
