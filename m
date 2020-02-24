@@ -2,107 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 94DBF169CE5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 05:09:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D21FB169D0A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 05:37:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727210AbgBXEJ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Feb 2020 23:09:58 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:14196 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727207AbgBXEJ6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Feb 2020 23:09:58 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582517397; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=nrgehuA5vlcZy6vJf6jRjU/2UWV2v8BoCSYVRst3lyM=; b=ABPccQdIk/G9/zs9wEO0dYKJ5ayAwC6nuD3ORri2SM6EemXpv10Y4T1YPgK97/T1R7PGSMD1
- hB1Xdqn/ZUYCm7iJgUscr44FltBWFyrYaytccpseHfMoY4jdSZWCR3RRs2hon0XKTLEFBBDd
- /SV+FUazcJnqBT9xjuZ2ICkLue0=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e534c90.7f0c04ac2ae8-smtp-out-n01;
- Mon, 24 Feb 2020 04:09:52 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A82F8C447A9; Mon, 24 Feb 2020 04:09:50 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1727202AbgBXEhE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Feb 2020 23:37:04 -0500
+Received: from mail.kernel.org ([198.145.29.99]:33936 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727186AbgBXEhE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 23 Feb 2020 23:37:04 -0500
+Received: from localhost (unknown [122.182.199.233])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: cang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E58A0C43383;
-        Mon, 24 Feb 2020 04:09:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E58A0C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=cang@codeaurora.org
-From:   Can Guo <cang@codeaurora.org>
-To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
-        hongwus@codeaurora.org, rnayak@codeaurora.org,
-        linux-scsi@vger.kernel.org, kernel-team@android.com,
-        saravanak@google.com, salyzyn@google.com, cang@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>,
+        by mail.kernel.org (Postfix) with ESMTPSA id E67E820661;
+        Mon, 24 Feb 2020 04:37:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1582519023;
+        bh=P5Qao53KIB3kKLtEhL3ENA/1Qg4vJttiLKMmauTZHwM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ewBQR6pVIKPrBiJR5jIKavdNiN5bHXovPDNL5epeduTDKGuszb0KwcL6I3Z8EJzdO
+         UaZafLdb473sPnq2h3vQ1sAPAS3Q7QwbTYnO1yynhfDT20e7bZFURSlIBeKadgx5m5
+         0iwvisMb55keuSIChleojblBwAbrykM223OLLR2M=
+Date:   Mon, 24 Feb 2020 10:06:59 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Evan Green <evgreen@chromium.org>,
-        Bean Huo <beanhuo@micron.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 2/2] scsi: ufs-qcom: Apply QUIRK_HOST_TACTIVATE for WDC UFS devices
-Date:   Sun, 23 Feb 2020 20:09:22 -0800
-Message-Id: <1582517363-11536-3-git-send-email-cang@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1582517363-11536-1-git-send-email-cang@codeaurora.org>
-References: <1582517363-11536-1-git-send-email-cang@codeaurora.org>
+        Taniya Das <tdas@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        psodagud@codeaurora.org, tsoni@codeaurora.org,
+        jshriram@codeaurora.org, vnkgutta@codeaurora.org
+Subject: Re: [PATCH v3 4/5] dt-bindings: clock: Add SM8250 GCC clock bindings
+Message-ID: <20200224043659.GS2618@vkoul-mobl>
+References: <20200216102725.2629155-1-vkoul@kernel.org>
+ <20200216102725.2629155-5-vkoul@kernel.org>
+ <20200218203345.GA19813@bogus>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200218203345.GA19813@bogus>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Western Digital UFS devices require host's PA_TACTIVATE to be lower than
-device's PA_TACTIVATE, otherwise it may get stuck during hibern8 sequence.
+On 18-02-20, 14:33, Rob Herring wrote:
+> On Sun, Feb 16, 2020 at 03:57:24PM +0530, Vinod Koul wrote:
+> > From: Taniya Das <tdas@codeaurora.org>
+> > 
+> > Add device tree bindings for global clock controller on SM8250 SoCs.
+> > 
+> > Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> > Signed-off-by: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > ---
+> >  .../bindings/clock/qcom,gcc-sm8250.yaml       |  72 +++++
+> >  include/dt-bindings/clock/qcom,gcc-sm8250.h   | 271 ++++++++++++++++++
+> >  2 files changed, 343 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml
+> >  create mode 100644 include/dt-bindings/clock/qcom,gcc-sm8250.h
+> > 
+> > diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml
+> > new file mode 100644
+> > index 000000000000..d48fb25b0d44
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml
+> > @@ -0,0 +1,72 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only
+> 
+> Dual license new bindings please:
+> 
+> (GPL-2.0-only OR BSD-2-Clause)
 
-Signed-off-by: Can Guo <cang@codeaurora.org>
----
- drivers/scsi/ufs/ufs-qcom.c   | 3 +++
- drivers/scsi/ufs/ufs_quirks.h | 1 +
- 2 files changed, 4 insertions(+)
+Sure will update, thanks for pointing
 
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index c69c29a1c..4caa57f 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -956,6 +956,9 @@ static int ufs_qcom_apply_dev_quirks(struct ufs_hba *hba)
- 	if (hba->dev_quirks & UFS_DEVICE_QUIRK_HOST_PA_SAVECONFIGTIME)
- 		err = ufs_qcom_quirk_host_pa_saveconfigtime(hba);
- 
-+	if (hba->dev_info.wmanufacturerid == UFS_VENDOR_WDC)
-+		hba->dev_quirks |= UFS_DEVICE_QUIRK_HOST_PA_TACTIVATE;
-+
- 	return err;
- }
- 
-diff --git a/drivers/scsi/ufs/ufs_quirks.h b/drivers/scsi/ufs/ufs_quirks.h
-index d0ab147..df7a1e6 100644
---- a/drivers/scsi/ufs/ufs_quirks.h
-+++ b/drivers/scsi/ufs/ufs_quirks.h
-@@ -15,6 +15,7 @@
- #define UFS_VENDOR_TOSHIBA     0x198
- #define UFS_VENDOR_SAMSUNG     0x1CE
- #define UFS_VENDOR_SKHYNIX     0x1AD
-+#define UFS_VENDOR_WDC         0x145
- 
- /**
-  * ufs_dev_fix - ufs device quirk info
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+~Vinod
