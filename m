@@ -2,120 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DCE9316AE6B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 19:14:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CDAEB16AF29
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 19:30:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727727AbgBXSOp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Feb 2020 13:14:45 -0500
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:34835 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726208AbgBXSOp (ORCPT
+        id S1727993AbgBXSar (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Feb 2020 13:30:47 -0500
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:37638 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726663AbgBXSar (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Feb 2020 13:14:45 -0500
-Received: by mail-ot1-f67.google.com with SMTP id r16so9602668otd.2;
-        Mon, 24 Feb 2020 10:14:44 -0800 (PST)
+        Mon, 24 Feb 2020 13:30:47 -0500
+Received: by mail-pj1-f66.google.com with SMTP id m13so126696pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2020 10:30:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=eB+RF5Mh4FenHE6w3IEcxS14k96bS8yZIKZCBidnPPI=;
+        b=J38ofieDuZwieGmCqkTF7yAGdU9ZfG6J4h1Oex9EJi2MJ7UiXHedPEZIWhorABF9w1
+         4LjBAflwCt5SlXeCaH6i5WilMtAyA6OV/uYRzixRdSSUTOzx6mnQgRWR4HMbDigZPqzn
+         TFC07Pp933b4ftOkv9QPDT7GtUKAVRlKgyHDA4mw/6HVEeKspQjfkn5RzIqTCcdYIKPw
+         diVTC03tNk5VYl0qckRql0EFXLRnSwMQ/ecb+6mEDjIWOsELPf61faJslWaJBAEE6ZO1
+         e2MzZ/CTAAZ8wNUNAsYLwhXhxMZhXhkPw9ZC+f2YHLq/tRNNOyT8lwq3Ec3miG2/kYqJ
+         CffA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4nmmGful+MegUr8aRgRCB1gCieEuCvrSiIBlqsABDmE=;
-        b=T58RVwbr4NQjeRTG7UBG+4HnEZ3Sm+n3CTBfK2ekFInD+UDcONAKcxlZZqX3cJCAKG
-         yQDx22hOOKsFO3bpC2vg12DTP2Cc70iIz8ge/GmMAzIFycnL48aqpdhSIu6SjIY6Jb/w
-         3CQLtymmGzu31yeSC1BxXM41upNqLNO7KQ3B6NY5hXwu0bLHZlKgJ9t13wfdGUymQSC7
-         gDxCrtZy1C6tPwuOQUncs7QGl1e7GG5jVQyCEeecIrl44DwDngTNWsEq3fA5YoZcRLqD
-         YoyAI+NerGPADjMn6sW/1o8Dat3u5XpUHkWmBhRu9PCviV1PbFSB4U/9m+xZeckDL6v3
-         AM9g==
-X-Gm-Message-State: APjAAAUgLTqsnYnob21W3Gc+mbH6Q9aO/Gm+TVoPxiuhq6T0fFVjlKQy
-        y1zplhlC2qKQJs+7Vcb+V1aYFIA=
-X-Google-Smtp-Source: APXvYqzSAV62BhNi363gv0daEbhuDKzBdde3JmEZAlbjVYZ9GcAmP/tY+ZpDRe7P2Ti1DpLoIK6ciQ==
-X-Received: by 2002:a9d:68d9:: with SMTP id i25mr29162204oto.135.1582568083899;
-        Mon, 24 Feb 2020 10:14:43 -0800 (PST)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id 60sm4761700otu.45.2020.02.24.10.14.41
+        bh=eB+RF5Mh4FenHE6w3IEcxS14k96bS8yZIKZCBidnPPI=;
+        b=rDK/CUz2dEor6wJ2iuELLwCg54pz/PQbwq/KOI0Ikm8H6GMEU46MzcazKpj+a7KWHH
+         7lcUVORjiKx7IzlY/uUPpf5sUgKwMpaBZkxvwJaoIwhl4v7B6wFn4pHkbLedmhZhdybL
+         Qa/dk98utlxN9MinlVnTb5wZYP4toI4KMHQWNPAVXCkuYVoUJNYp3xJAa9j13MNW9hGf
+         +8oeFFlfvXzkqh574Gr23zqd3f51aRpdCsMP5qGayjI5TSbKVKFp/N608vZGob30+7Wq
+         B0gmHA6RYcur9MIbdYx/MwmM0TptOM7Rzuq8qVGKbU7yEXe1a8p/Y6+5BzdNzJPLS3sn
+         9DZQ==
+X-Gm-Message-State: APjAAAXG/Atctp1CLg08c1G2oaohUBodEj66lEH5aZbjbZtkO4+wcgBZ
+        ECVpErm+UZs/yVhdtnqiUdWU1A==
+X-Google-Smtp-Source: APXvYqzGmaiP+bNpfJzHNfdIjk0x3NvdHLNFE+Z3xk6uvxo4EuiAxTQRcX9CZ1rdWNGXWJprqyebRQ==
+X-Received: by 2002:a17:902:401:: with SMTP id 1mr50094099ple.177.1582569046452;
+        Mon, 24 Feb 2020 10:30:46 -0800 (PST)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id q7sm13363109pgk.62.2020.02.24.10.30.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2020 10:14:43 -0800 (PST)
-Received: (nullmailer pid 24218 invoked by uid 1000);
-        Mon, 24 Feb 2020 18:14:41 -0000
-Date:   Mon, 24 Feb 2020 12:14:41 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc:     Linux Doc Mailing List <linux-doc@vger.kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Jyri Sarha <jsarha@ti.com>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-        Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
-        Stuart Yoder <stuyoder@gmail.com>,
-        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Joel Stanley <joel@jms.id.au>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
-        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
-        linux-gpio@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com, linux-pm@vger.kernel.org
-Subject: Re: [PATCH 2/7] docs: dt: fix several broken references due to
- renames
-Message-ID: <20200224181441.GA23262@bogus>
-References: <cover.1582361737.git.mchehab+huawei@kernel.org>
- <83c5df4acbbe0fa55a1d58d4c4a435b51cd2a7ad.1582361737.git.mchehab+huawei@kernel.org>
+        Mon, 24 Feb 2020 10:30:45 -0800 (PST)
+Date:   Mon, 24 Feb 2020 11:30:43 -0700
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Siddharth Gupta <sidgup@codeaurora.org>
+Cc:     ohad@wizery.com, bjorn.andersson@linaro.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
+        psodagud@codeaurora.org, rishabhb@codeaurora.org
+Subject: Re: [PATCH 1/2] remoteproc: core: Add an API for booting with
+ firmware name
+Message-ID: <20200224183043.GA9477@xps15>
+References: <1582164713-6413-1-git-send-email-sidgup@codeaurora.org>
+ <1582164713-6413-2-git-send-email-sidgup@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <83c5df4acbbe0fa55a1d58d4c4a435b51cd2a7ad.1582361737.git.mchehab+huawei@kernel.org>
+In-Reply-To: <1582164713-6413-2-git-send-email-sidgup@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Feb 22, 2020 at 10:00:02AM +0100, Mauro Carvalho Chehab wrote:
-> Several DT references got broken due to txt->yaml conversion.
+Hi Siddharth,
+
+On Wed, Feb 19, 2020 at 06:11:52PM -0800, Siddharth Gupta wrote:
+> Add an API which allows to change the name of the firmware to be booted on
+> the specified rproc. This change gives us the flixibility to change the
+> firmware at run-time depending on the usecase. Some remoteprocs might use
+> a different firmware for testing, production and development purposes,
+> which may be selected based on the fuse settings during bootup.
 > 
-> Those are auto-fixed by running:
-> 
-> 	scripts/documentation-file-ref-check --fix
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Reviewed-by: Dan Murphy <dmurphy@ti.com>
+> Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
 > ---
->  Documentation/devicetree/bindings/arm/arm,scmi.txt        | 2 +-
->  Documentation/devicetree/bindings/arm/arm,scpi.txt        | 2 +-
->  .../devicetree/bindings/arm/bcm/brcm,bcm63138.txt         | 2 +-
->  .../devicetree/bindings/arm/hisilicon/hi3519-sysctrl.txt  | 2 +-
->  .../devicetree/bindings/arm/msm/qcom,idle-state.txt       | 2 +-
->  Documentation/devicetree/bindings/arm/omap/mpu.txt        | 2 +-
->  Documentation/devicetree/bindings/arm/psci.yaml           | 2 +-
->  .../devicetree/bindings/clock/qcom,gcc-apq8064.yaml       | 2 +-
->  .../devicetree/bindings/display/tilcdc/tilcdc.txt         | 2 +-
->  Documentation/devicetree/bindings/leds/common.yaml        | 2 +-
->  .../devicetree/bindings/leds/register-bit-led.txt         | 2 +-
->  .../devicetree/bindings/memory-controllers/ti/emif.txt    | 2 +-
->  Documentation/devicetree/bindings/misc/fsl,qoriq-mc.txt   | 2 +-
->  .../bindings/pinctrl/aspeed,ast2400-pinctrl.yaml          | 2 +-
->  .../bindings/pinctrl/aspeed,ast2500-pinctrl.yaml          | 2 +-
->  .../bindings/pinctrl/aspeed,ast2600-pinctrl.yaml          | 2 +-
->  .../devicetree/bindings/power/amlogic,meson-ee-pwrc.yaml  | 2 +-
->  .../devicetree/bindings/reset/st,stm32mp1-rcc.txt         | 2 +-
->  .../devicetree/bindings/thermal/brcm,avs-ro-thermal.yaml  | 2 +-
->  MAINTAINERS                                               | 8 ++++----
->  20 files changed, 23 insertions(+), 23 deletions(-)
+>  drivers/remoteproc/remoteproc_core.c | 34 ++++++++++++++++++++++++++++++++++
+>  include/linux/remoteproc.h           |  1 +
+>  2 files changed, 35 insertions(+)
+> 
+> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+> index 097f33e..5ab65a4 100644
+> --- a/drivers/remoteproc/remoteproc_core.c
+> +++ b/drivers/remoteproc/remoteproc_core.c
+> @@ -1779,6 +1779,40 @@ int rproc_boot(struct rproc *rproc)
+>  EXPORT_SYMBOL(rproc_boot);
+>  
+>  /**
+> + * rproc_boot_with_fw() - boot a remote processor with the specified firmware
+> + * @rproc: handle of a remote processor
+> + * @firmware: name of the firmware to boot with
+> + *
+> + * Change the name of the firmware to be loaded to @firmware in the rproc
+> + * structure, and call rproc_boot().
+> + *
+> + * Returns 0 on success, and an appropriate error value otherwise.
+> + */
+> +int rproc_boot_with_fw(struct rproc *rproc, const char *firmware)
+> +{
+> +	char *p;
+> +
+> +	if (!rproc) {
+> +		pr_err("invalid rproc handle\n");
+> +		return -EINVAL;
+> +	}
 
-Applied.
+        if (!rproc || !firmware)
+                return -EINVAL;
 
-Rob
+There is no user involved here so no point in printing anything.  If @rproc or
+@firmware is NULL than callers should be smart enough to figure it out from the
+error code.
+
+> +
+> +	if (firmware) {
+> +		p = kstrdup(firmware, GFP_KERNEL);
+> +		if (!p)
+> +			return -ENOMEM;
+
+As in firmware_store() I think it is a good idea to mandate the MCU be offline
+before changing the firmware name.  That way we avoid situations where what is
+running on the MCU is not what gets reported in sysfs.
+
+> +
+> +		mutex_lock(&rproc->lock);
+> +		kfree(rproc->firmware);
+> +		rproc->firmware = p;
+
+> +		mutex_unlock(&rproc->lock);
+> +	}
+> +
+> +	return rproc_boot(rproc);
+
+Function rproc_boot() is also an exported symbol and belongs in the caller -
+please move it out of here.  When that is done rproc_boot_with_fw() can become
+rproc_set_firmware_name() and concentrate on doing just that.
+
+> +}
+> +EXPORT_SYMBOL(rproc_boot_with_fw);
+
+Although choosing the firmware image to boot without user involvement seems like
+a valid scenario to me, this can't be added until there is an actual user of
+this API.
+
+> +
+> +/**
+>   * rproc_shutdown() - power off the remote processor
+>   * @rproc: the remote processor
+>   *
+> diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+> index 16ad666..e2eaba9 100644
+> --- a/include/linux/remoteproc.h
+> +++ b/include/linux/remoteproc.h
+> @@ -609,6 +609,7 @@ rproc_of_resm_mem_entry_init(struct device *dev, u32 of_resm_idx, int len,
+>  			     u32 da, const char *name, ...);
+>  
+>  int rproc_boot(struct rproc *rproc);
+> +int rproc_boot_with_fw(struct rproc *rproc, const char *firmware);
+>  void rproc_shutdown(struct rproc *rproc);
+>  void rproc_report_crash(struct rproc *rproc, enum rproc_crash_type type);
+>  int rproc_coredump_add_segment(struct rproc *rproc, dma_addr_t da, size_t size);
+> -- 
+> Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
