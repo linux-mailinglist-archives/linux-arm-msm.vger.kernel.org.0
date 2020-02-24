@@ -2,185 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7318B16A488
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 12:02:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FCC116A578
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Feb 2020 12:46:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727425AbgBXLCg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Feb 2020 06:02:36 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:46775 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726778AbgBXLCg (ORCPT
+        id S1727736AbgBXLqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Feb 2020 06:46:49 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:30435 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727627AbgBXLqs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Feb 2020 06:02:36 -0500
-Received: by mail-ed1-f67.google.com with SMTP id p14so11351406edy.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2020 03:02:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=v6+UZmxrnWoPymq2fZLY8ej/xm1w9VrGB1cGqVaTeH8=;
-        b=ox/6EVcmg03kjjKzslKAXHfUhpY7yew010kFA6FoNWR4JGhI9XWdxPaX2hb76ceYjr
-         u/2+C/7bB1zOyWQcvtr2ygN/2iQqJmaGWlsdDUAwVOem7hXDSoOfFMXC5P33zaMCqTBq
-         ehLIjKlkk6+aWCdwsY+YKZeHffJ0Ba479v55TeeeCS/HHGwx2qFVzyzTIWjRzreYnJu7
-         WZVIpZPInHEm0OoLSgm1sYAN9OLDLO6zMt/dtQlNO2Jo4LKeN7xJkpF5oiP8SAA4ksjl
-         ZV6+tQDbXINz3dI5HNqiucDo8fOvDGj4Fgt6aJoOYEGoCb8WyOCC71ruusByNRzHVmnj
-         dz7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=v6+UZmxrnWoPymq2fZLY8ej/xm1w9VrGB1cGqVaTeH8=;
-        b=A75PSxS6937oycs7bj770USvLCPqni5UQdqD7fPa9klBRhQfVGfJeMH39c5YLWOjOL
-         5+KsQNzQHyyZERjQOP6LBD+dB1NWCuff9PpAA3NLCBu4Pq/uVxGXSZWJ4FW7+qxrCuX/
-         UuBwxla6X8rPxbp37EpeHAHqAMCDdZqNgA9UIYz2EITVtX1KuDLTJUJEne3pkFiNsVaW
-         +SLU9M046iC7WdLbu3xldU5HIVuVwaMVypzKGvMyoyqUqpRMpcouP4AVlwlZIL6KtRk2
-         sKIoiAFR1d44cOcND7pzMkktzbWdAryQWXN/oAqlj5XU/E+cHoBNFO8ILgxtX1ekVNs9
-         MZiA==
-X-Gm-Message-State: APjAAAWN4O3jlqKN+IUIlvTyQ3Rj7BvgTZhbr/1OBtwqU0uIOPbQN8S1
-        xARRNbP1lSBskuEQ07Gm1p2/2A==
-X-Google-Smtp-Source: APXvYqy9UIXeu7Ri4xxhUXbuG2/BOnDE6KCkJHZuAdpIHb3c0zKsYYh7mQybwKEMwN7el2uDEtwpSg==
-X-Received: by 2002:aa7:c718:: with SMTP id i24mr45541300edq.195.1582542153017;
-        Mon, 24 Feb 2020 03:02:33 -0800 (PST)
-Received: from [192.168.27.209] ([94.155.124.210])
-        by smtp.googlemail.com with ESMTPSA id cw15sm961788edb.44.2020.02.24.03.02.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Feb 2020 03:02:32 -0800 (PST)
-Subject: Re: [PATCH v3] media: venus: add support for selection rectangles
-To:     Jeffrey Kardatzke <jkardatzke@google.com>,
-        linux-media@vger.kernel.org
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Malathi Gottam <mgottam@codeaurora.org>
-References: <20200218184220.139656-1-jkardatzke@google.com>
- <CA+ddPcOMpiHU=2bumCe93NzLe-uO04TnhCS+5CDDU4GyLXYCNA@mail.gmail.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <4e9cad3b-3e01-3b02-1050-b0428a632744@linaro.org>
-Date:   Mon, 24 Feb 2020 13:02:30 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
-MIME-Version: 1.0
-In-Reply-To: <CA+ddPcOMpiHU=2bumCe93NzLe-uO04TnhCS+5CDDU4GyLXYCNA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Mon, 24 Feb 2020 06:46:48 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1582544808; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=RQyNQ3DFWtlsQXD4V++chr0ZTqGNZET5yxGQsVzgceo=; b=iI9783ZdPg2jMFdpFWMJHHuQtgNN2KgcAEyh8zuBL40evfxrCezu9JjWJRFpyntq7jNO9n7h
+ xEq1aQGwZ2pa/GhHJvVwZnFYl/Rejm+VlwnCPHGPxVaj2zEUpu7QVQ36dBfTjJt53hHE8IDG
+ aDV0HPvNtCVstmv4qL7eNbHzsRo=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e53b7a1.7f963daa67a0-smtp-out-n01;
+ Mon, 24 Feb 2020 11:46:41 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 475DDC4479D; Mon, 24 Feb 2020 11:46:41 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from vbadigan-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vbadigan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3C3B6C43383;
+        Mon, 24 Feb 2020 11:46:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3C3B6C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
+From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+To:     ulf.hansson@linaro.org, robh+dt@kernel.org
+Cc:     devicetree@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Subject: [PATCH V2] dt-bindings: mmc: sdhci-msm: Add CQE reg map
+Date:   Mon, 24 Feb 2020 17:14:43 +0530
+Message-Id: <1582544683-9505-1-git-send-email-vbadigan@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1581434955-11087-1-git-send-email-vbadigan@codeaurora.org>
+References: <1581434955-11087-1-git-send-email-vbadigan@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeff,
+CQE feature has been enabled on sdhci-msm. Add CQE reg map
+and reg names that need to be supplied for supporting CQE feature.
 
-On 2/18/20 9:14 PM, Jeffrey Kardatzke wrote:
-> (again, sorry for duplicate to some people, didn't know the plain text
-> email rule before)
-> There were a few comments made when this patch was originally posted
-> that were not addressed.  I left the patch as it last stood, except
-> for removing the unused variables.
-> 
-> The outstanding comments were:
-> 1. In venc_init_session, it is only using the inst->width/height
-> rectangles and not the inst->out_width/out_height rectangles. So there
-> was a question about whether the OUTUPT rectangle should be set to
-> out_width/out_height. I'm looking for feedback here as I'm not
-> familiar enough with this driver code yet.
+Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+---
 
-Yes, the observant reader will see that out_width/height (the encoder
-input resolution) is not changed in set_selection method, and that is
-simply because currently the implementation for crop is missing. And it
-is missing because the so-called extradata is not implemented and not
-used in the driver, yet.
+Changes since V1:
+	- Dropped _mem suffix to reg names.
+---
+ Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-In fact the proposed patch will just fake the userspace application to
-think that it sets the crop rectangle but the cropping will not happen
-at all.
-
-> 2. We should return EBUSY if the selection rectangles are changed
-> after we are initialized (I will update it to do this)
-
-Not sure we need that.
-
-> 3. Support for non-zero top/left parameters. I'm suspicious that the
-> HFI_INDEX_EXTRADATA_INPUT_CROP property is what should be used for
-> that, but it's not currently used anywhere. Does anybody have details
-> on if that's what it's for?
-
-This is the right property to be used to set encoder crop on the input,
-but unfortunately it is not that simple.
-
-Actually this property is used to enable the crop extradata handling in
-the firmware side, but we need to take care of that extradata population
-in the v4l2 driver. For that purpose we need an extradata buffer which
-should be filled with extradata header plus the extradata itself.
-
-I'm not sure how to implement that, still. There is a bunch of extradata
-types where some of them could be filled by the driver but the others
-could be filled by userspace.
-
-For reference you can see how the crop is set on Android [1].
-
-[1]
-https://android.googlesource.com/platform/hardware/qcom/sdm845/media/+/refs/heads/master/mm-video-v4l2/vidc/venc/src/video_encoder_device_v4l2.cpp#669
-
-> 
-> 
-> On Tue, Feb 18, 2020 at 10:42 AM Jeffrey Kardatzke
-> <jkardatzke@google.com> wrote:
->>
->> From: Malathi Gottam <>
->>
->> Handles target type crop by setting the new active rectangle
->> to hardware. The new rectangle should be within YUV size.
->>
->> This was taken from: https://lkml.org/lkml/2018/11/9/899
->>
->> Signed-off-by: Malathi Gottam <mgottam@codeaurora.org>
->> Signed-off-by: Jeffrey Kardatzke <jkardatzke@google.com>
->> ---
->>  drivers/media/platform/qcom/venus/venc.c | 24 ++++++++++++++++++++----
->>  1 file changed, 20 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
->> index 453edf966d4f..73b3181eed9a 100644
->> --- a/drivers/media/platform/qcom/venus/venc.c
->> +++ b/drivers/media/platform/qcom/venus/venc.c
->> @@ -479,10 +479,26 @@ venc_s_selection(struct file *file, void *fh, struct v4l2_selection *s)
->>
->>         switch (s->target) {
->>         case V4L2_SEL_TGT_CROP:
->> -               if (s->r.width != inst->out_width ||
->> -                   s->r.height != inst->out_height ||
->> -                   s->r.top != 0 || s->r.left != 0)
->> -                       return -EINVAL;
->> +               if (s->r.left != 0) {
->> +                       s->r.width += s->r.left;
->> +                       s->r.left = 0;
->> +               }
->> +
->> +               if (s->r.top != 0) {
->> +                       s->r.height += s->r.top;
->> +                       s->r.top = 0;
->> +               }
->> +
->> +               if (s->r.width > inst->width)
->> +                       s->r.width = inst->width;
->> +               else
->> +                       inst->width = s->r.width;
->> +
->> +               if (s->r.height > inst->height)
->> +                       s->r.height = inst->height;
->> +               else
->> +                       inst->height = s->r.height;
->> +
->>                 break;
->>         default:
->>                 return -EINVAL;
->> --
->> 2.25.0.265.gbab2e86ba0-goog
->>
-
+diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+index 7ee639b..5445931 100644
+--- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
++++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+@@ -26,7 +26,13 @@ Required properties:
+ 
+ - reg: Base address and length of the register in the following order:
+ 	- Host controller register map (required)
+-	- SD Core register map (required for msm-v4 and below)
++	- SD Core register map (required for controllers earlier than msm-v5)
++	- CQE register map (Optional, CQE support is present on SDHC instance meant
++	                    for eMMC and version v4.2 and above)
++- reg-names: When CQE register map is supplied, below reg-names are required
++	- "hc" for Host controller register map
++	- "core" for SD core register map
++	- "cqhci" for CQE register map
+ - interrupts: Should contain an interrupt-specifiers for the interrupts:
+ 	- Host controller interrupt (required)
+ - pinctrl-names: Should contain only one value - "default".
 -- 
-regards,
-Stan
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
