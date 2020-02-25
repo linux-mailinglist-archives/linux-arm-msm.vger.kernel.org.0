@@ -2,79 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5706A16EC12
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 18:05:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 31F0116EC4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 18:16:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731269AbgBYRFo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Feb 2020 12:05:44 -0500
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:33636 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730784AbgBYRFo (ORCPT
+        id S1730932AbgBYRQF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Feb 2020 12:16:05 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:35464 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730460AbgBYRQE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Feb 2020 12:05:44 -0500
-Received: by mail-oi1-f194.google.com with SMTP id q81so49607oig.0;
-        Tue, 25 Feb 2020 09:05:43 -0800 (PST)
+        Tue, 25 Feb 2020 12:16:04 -0500
+Received: by mail-pg1-f193.google.com with SMTP id 7so5109400pgr.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2020 09:16:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=nA6XtHfCbnQ+UrxP5iH37BANlB2snp9+FgCCs6LFMHc=;
+        b=MASHOfjqGNYT1tp6DvmruXzocvsetadvExcpfODmmFENiPMhWeeGCkLkwK5CrSPHYu
+         xS0lIIYIC9oJ2y3y7AB5I4+/sYx9Jar/0wKwBcM1V1KB88ETjoj2O0jYgcw6SiX6afr8
+         KdyVnvRqEpAhmxEj6V6AY6f3w0FecY9EkYR68=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=MIUvkNpZ4/9BpxRsrF2+jh3yva+cnan5AW3vpCSNlt0=;
-        b=Koad/aNnW3tuI02oldKDf8Ixbjh7Ffe1wfTSTjdriOzqemDwwFnUEK5GTLlNkDhpHG
-         p10OVrMdYP7FwXYfU8uFV5qPcK6hq7N5wM6SaZLRynI6ZHAniqpdocINAPLDfcemJjds
-         GUD0sNWHBIWJeQjmAs+5sEIl8JpIEK06amzwQ91XGvAql0RC4Ok0HlkivCmf7oIoULdX
-         rlytDv26oT9IugnpAeZD8Jjg/NIBbxZIsYBgzydjUZApZblPwwYfy145vw2siB3fgg9z
-         ih+K5lHtCvOlu4vf3QUJ875jMgRSz5UoSWT3+Klxjhu/5vVebJ7Sg7+85vT+A+7SVh5w
-         yUag==
-X-Gm-Message-State: APjAAAWg0/S6siV71glktoVMs7gY+xKaSNpEvuY8CYKq63zOuxAzqA3p
-        2QbRx5on94gZVhufObT7+g==
-X-Google-Smtp-Source: APXvYqxUftqdCZmNNSVgMwJqXatm40QiTX+fuppmG+ulElKyDpEyKa1buI+YUnzc03U4OvwCz379Zw==
-X-Received: by 2002:aca:dd05:: with SMTP id u5mr4334323oig.91.1582650343127;
-        Tue, 25 Feb 2020 09:05:43 -0800 (PST)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id e21sm5465089oib.16.2020.02.25.09.05.41
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=nA6XtHfCbnQ+UrxP5iH37BANlB2snp9+FgCCs6LFMHc=;
+        b=dPXblkrbtBvmqRsduw6jcsVG7V3jSM/3y2sNAIXCF4mO+QP3O3Aaq4d37iPFqp3o80
+         AvMdGSH9u9kF4mI2MKFoWqrn+sjntOb2c0rEaFRuwQJ0h0xTa5eGwFfI2NVsGKqV6Ov3
+         dPpk55CN/31gd4dKhW20Gp7qTiT/+o0f/B2PXiP4+BdrwoPxFK9X/rJVV+BPNOo94FH5
+         F0Ttd9veT0PFkBtMY+xAyebuSXqdGy+w55/31ANYeHkYKg7K8z3ZfhRbfmomshpivm+i
+         99++zfu2TNsxC8NL2mhijj5gBSoOkS9LRQexrDmIuC8LD5JukFdlDWGTOLPErnoSEl9w
+         IZFQ==
+X-Gm-Message-State: APjAAAVzyFx3iRIm4myZ0wb6Fe4uW6GmwXs/JNwvLuxIo8TJjP/ziZvJ
+        alraVkV82kJlo7emy9FiGXcEcQ==
+X-Google-Smtp-Source: APXvYqz+jv0qTKXQ6FaD+VS8Rw4zthTocRAiqn9uBFJunwpJ3inVjQ7HkA/RT9pN2Kq7aXC8OPj0uA==
+X-Received: by 2002:a63:18d:: with SMTP id 135mr33641250pgb.32.1582650962218;
+        Tue, 25 Feb 2020 09:16:02 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id y5sm18329689pfr.169.2020.02.25.09.16.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2020 09:05:42 -0800 (PST)
-Received: (nullmailer pid 30199 invoked by uid 1000);
-        Tue, 25 Feb 2020 17:05:41 -0000
-Date:   Tue, 25 Feb 2020 11:05:41 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        psodagud@codeaurora.org, tsoni@codeaurora.org,
-        jshriram@codeaurora.org, vnkgutta@codeaurora.org
-Subject: Re: [PATCH v4 4/5] dt-bindings: clock: Add SM8250 GCC clock bindings
-Message-ID: <20200225170541.GA28897@bogus>
-References: <20200224045003.3783838-1-vkoul@kernel.org>
- <20200224045003.3783838-5-vkoul@kernel.org>
+        Tue, 25 Feb 2020 09:16:01 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200224045003.3783838-5-vkoul@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <4c80783d-8ad0-9bd8-c42e-01659fa81afe@codeaurora.org>
+References: <1581944408-7656-1-git-send-email-mkshah@codeaurora.org> <1581944408-7656-2-git-send-email-mkshah@codeaurora.org> <158216527227.184098.17500969657143611632@swboyd.mtv.corp.google.com> <4c80783d-8ad0-9bd8-c42e-01659fa81afe@codeaurora.org>
+Subject: Re: [RFC 1/2] irqchip: qcom: pdc: Introduce irq_set_wake call
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, linus.walleij@linaro.org, tglx@linutronix.de,
+        dianders@chromium.org, rnayak@codeaurora.org, ilina@codeaurora.org,
+        lsrao@codeaurora.org
+To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, mka@chromium.org
+Date:   Tue, 25 Feb 2020 09:16:00 -0800
+Message-ID: <158265096050.177367.409185999509868538@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 24, 2020 at 10:20:02AM +0530, Vinod Koul wrote:
-> From: Taniya Das <tdas@codeaurora.org>
-> 
-> Add device tree bindings for global clock controller on SM8250 SoCs.
-> 
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> Signed-off-by: Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  .../bindings/clock/qcom,gcc-sm8250.yaml       |  72 +++++
->  include/dt-bindings/clock/qcom,gcc-sm8250.h   | 271 ++++++++++++++++++
->  2 files changed, 343 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,gcc-sm8250.h
+Quoting Maulik Shah (2020-02-21 03:20:59)
+>=20
+> On 2/20/2020 7:51 AM, Stephen Boyd wrote:
+>=20
+>     How are wakeups supposed to work when the CPU cluster power is disabl=
+ed
+>     in low power CPU idle modes? Presumably the parent irq controller is
+>     powered off (in this case it's an ARM GIC) and we would need to have =
+the
+>     interrupt be "enabled" or "unmasked" at the PDC for the irq to wakeup
+>     the cluster.
+>=20
+> Correct. Interrupt needs to be "enabled" or "unmasked" at wakeup capable =
+PDC
+> for irqchip to wakeup from "deep" low power modes where parent GIC may no=
+t be
+> monitoring interrupt and only PDC is monitoring.
+> these "deep" low power modes can either be triggered by kernel "suspend" =
+or
+> "cpuidle" path for which drivers may or may not have registered for suspe=
+nd or
+> cpu/cluster pm notifications to make a decision of enabling wakeup capabi=
+lity.
+>=20
+>=20
+>     We shouldn't need to enable irq wake on any irq for the CPU
+>     to get that interrupt in deep CPU idle states.
+>=20
+> + *
+> + *     Note: irq enable/disable state is completely orthogonal
+> + *     to the enable/disable state of irq wake.
+>=20
+> i think that's what above documentation said to have wakeup capability is
+> orthogonal to enable/disable state of irq, no?
+>=20
+> A deep cpuidle entry is also orthogonal to drivers unless they register f=
+or cpu
+> pm notifications.
+>=20
+> so with this change,
+> if the drivers want their interrupt to be wakeup capable during both "sus=
+pend"
+> and "cpuidle" they can call "enable_irq_wake" and leave it there to be wa=
+ke up
+> capable.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Where is there a mention about drivers registering for cpu PM
+notifications? I'm not aware of this being mentioned as a requirement.
+Instead, my understanding is that deep idle states shouldn't affect irqs
+from being raised to the CPU. If such an irq is enabled and can't wake
+the system from deep idle and it's expected to interrupt during this
+idle time then perhaps the PDC driver needs to block deep idle states
+until that irq is disabled.
+
+Does this scenario exist? It sounds like broken system design to have an
+irq that can't wake from deep idle, but I see that PDC has a selective
+set of pins so maybe some irqs just aren't expected to wake the system
+up during idle.
+
+>=20
+> This way they don't need to worry about cpu entering to deep low power mo=
+de and
+> enabling wakeup capability "only when" deep low power mode get triggered.
+>
