@@ -2,102 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B502216EEB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 20:11:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D2F516EEF3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 20:28:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730992AbgBYTLS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Feb 2020 14:11:18 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:38501 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729489AbgBYTLS (ORCPT
+        id S1731436AbgBYT2B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Feb 2020 14:28:01 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:42450 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731270AbgBYT2B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Feb 2020 14:11:18 -0500
-Received: by mail-pg1-f195.google.com with SMTP id d6so13154pgn.5;
-        Tue, 25 Feb 2020 11:11:16 -0800 (PST)
+        Tue, 25 Feb 2020 14:28:01 -0500
+Received: by mail-pf1-f196.google.com with SMTP id 4so55177pfz.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2020 11:28:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=4tK5dhNanRBX4RJaY81MXL5uMw9VPzyZ3UaipGWjTeA=;
+        b=ER4Hn5y39DsTdFq4OIFR/dyYBA/md+YMiH6Vlftw5sX/8I8svVtJwDWrl+hIbHDMI+
+         9DIcp5qY/z7utP3Wlsfmi7SD9FiFgaz3JqHR/5d8KjPWEgJS68eSS/70DaFi0VVUDqjx
+         qsRNASKUBSfoa6zYDICVI1jWv5RUSbtgDxLeA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=6fj2i98wrBqHNFBClWRPI0aXIGQwNsnnkHZjmeFx4vo=;
-        b=lEmnenjDQ2KVRDWbKgSezI5Y9S8HulB2boliEz/CIatSs7pal+yLKXus2dAQKcc8LX
-         TnTu6evVNMB5AFZAiBL5L/0Y+tEsExAwiZbkh8KkBVmyXV37DRwgjo4kIGhTYMRzN640
-         9kwkEwnsRs/C/nzTUBppNb8rsAJm+9ICP7ygdS10CVfnHO4yQ1U3waNFCPpRLBV7B2s9
-         L4XjYATIPTELXyBUKL5DkT9D9HAuZsh8KRUU1oGNJIgF9yzCaPJ+wkOZMyG/q3lnMDh/
-         eqDoCIOFAZHgIETVWFbOK7UCY6/h+W+Q6EQDdD2++5clWLHdGKXE0lB/IE6thDr5VGcV
-         QgUw==
-X-Gm-Message-State: APjAAAXj2550UR9JP2QfjExfG0C3JND9uApKkZ/I/u1DfSuf7dJdRWmD
-        uyhV7VyyYhG/d71rFCGiXHQ=
-X-Google-Smtp-Source: APXvYqwPLMBR9bomYY3aI/v3GcwJxrQRcety3+JoHAeMIv2R3wYeF8p6mSSAyFUeGQtBIirNlQUkag==
-X-Received: by 2002:a63:48f:: with SMTP id 137mr2886pge.245.1582657875635;
-        Tue, 25 Feb 2020 11:11:15 -0800 (PST)
-Received: from 42.do-not-panic.com (42.do-not-panic.com. [157.230.128.187])
-        by smtp.gmail.com with ESMTPSA id s125sm17944724pgc.53.2020.02.25.11.11.12
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=4tK5dhNanRBX4RJaY81MXL5uMw9VPzyZ3UaipGWjTeA=;
+        b=hTl+Z27X8SnIfH/2jNKmg2D1oOXH2jhrC/JDHuMdPkGM6uQ7OLj5sl9arzIA8cW37k
+         HibUUMOue/0E0tPnRoYGkeSiYUnm2jJC2dslSrgdD6JvpzUFJf6B1fSzpwletbMNaBAd
+         e9br7oTWGpzVCTnLo2VP0/FKX84MThdA8iXMvZqsKV8NGTsolUc9gElvOIkx4bcMs4ZM
+         l9mFDcLJOuTRCx3XnLsJ9Mh+oBqxWjqZ3RyMZ55VV0Ajhl+raEimoCBBw08ZvLn4e7Jp
+         S1f+Q7UvOAv4821Ay1POa4NIRIc8vBvMz529bu9Ul+c7ZLZq9biD41YYEOZpU6EW5ayI
+         t9dw==
+X-Gm-Message-State: APjAAAV1IqhCp4zoPhG9mOjEdXySTa0n3dCA+QQm+6Rf5FS+lS3u/Ae3
+        pHG8gN2iY3n32HuuHUiqV2HrEw==
+X-Google-Smtp-Source: APXvYqx/CuR9tWXGTo9ivBHMqDj/j7Gy5ChN3CDCAyQZMV9kpz8TazoKp8muVVv6CLf1YgtUt+g7UA==
+X-Received: by 2002:aa7:9808:: with SMTP id e8mr299103pfl.32.1582658880299;
+        Tue, 25 Feb 2020 11:28:00 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id c26sm18406262pfj.8.2020.02.25.11.27.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2020 11:11:13 -0800 (PST)
-Received: by 42.do-not-panic.com (Postfix, from userid 1000)
-        id 59BFA40297; Tue, 25 Feb 2020 19:11:12 +0000 (UTC)
-Date:   Tue, 25 Feb 2020 19:11:12 +0000
-From:   Luis Chamberlain <mcgrof@kernel.org>
-To:     Scott Branden <scott.branden@broadcom.com>
-Cc:     Dan Carpenter <dan.carpenter@oracle.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v2 3/7] test_firmware: add partial read support for
- request_firmware_into_buf
-Message-ID: <20200225191112.GX11244@42.do-not-panic.com>
-References: <20200220004825.23372-1-scott.branden@broadcom.com>
- <20200220004825.23372-4-scott.branden@broadcom.com>
- <20200220084255.GW7838@kadam>
- <9afab7f8-1b5f-a7bb-6b76-f7b19efb2979@broadcom.com>
- <4a666590-461d-17f9-5580-31a41869383f@broadcom.com>
+        Tue, 25 Feb 2020 11:27:59 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4a666590-461d-17f9-5580-31a41869383f@broadcom.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200219104148.1.I0183a464f2788d41e6902f3535941f69c594b4c1@changeid>
+References: <20200219104148.1.I0183a464f2788d41e6902f3535941f69c594b4c1@changeid>
+Subject: Re: [PATCH 1/4] drm/msm/dpu: Remove unused function arguments
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Drew Davenport <ddavenport@chromium.org>,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+To:     Drew Davenport <ddavenport@chromium.org>,
+        dri-devel@lists.freedesktop.org
+Date:   Tue, 25 Feb 2020 11:27:58 -0800
+Message-ID: <158265887882.177367.3011043098001339741@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 21, 2020 at 05:13:08PM -0800, Scott Branden wrote:
-> > > > +static ssize_t test_dev_config_show_size_t(char *buf, int cfg)
-> > > > +{
-> > > > +    size_t val;
-> > > > +
-> > > > +    mutex_lock(&test_fw_mutex);
-> > > > +    val = cfg;
-> > > > +    mutex_unlock(&test_fw_mutex);
-> > > Both val and cfg are stack variables so there is no need for locking.
-> > > Probably you meant to pass a pointer to cfg?
-> I am following the existing code as was done for
-> test_dev_config_show_bool(),
-> test_dev_config_show_int(),
-> test_dev_config_show_u8()
-> 
-> Mutex probably not needed but I don't think I need to deviate from the rest
-> of the test code.
-> 
-> Luis, could you please explain what the rest of your code is doing?
+Quoting Drew Davenport (2020-02-19 09:42:24)
+> Several functions arguments in the resource manager are unused, so
+> remove them.
+>=20
+> Signed-off-by: Drew Davenport <ddavenport@chromium.org>
+> ---
 
-The lock is indeed not needed in the functions you mentioned, so you can
-also remove the other locks as a precursor patch. It would be a seperate
-patch.
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-  Luis
+>=20
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 37 ++++++++++----------------
+>  1 file changed, 14 insertions(+), 23 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm=
+/disp/dpu1/dpu_rm.c
+> index 23f5b1433b357..dea1dba441fe7 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> @@ -144,8 +144,7 @@ static int _dpu_rm_hw_blk_create(
+>                 const struct dpu_mdss_cfg *cat,
+>                 void __iomem *mmio,
+>                 enum dpu_hw_blk_type type,
+> -               uint32_t id,
+> -               const void *hw_catalog_info)
+> +               uint32_t id)
+
+It would be good to use u32 instead of uint32_t in this code too. The
+kernel style is to use the shorter name for that type.
