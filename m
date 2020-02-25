@@ -2,167 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E2F2A16EBD4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 17:57:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DD2016EBE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 17:58:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731120AbgBYQ5O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Feb 2020 11:57:14 -0500
-Received: from mail.kernel.org ([198.145.29.99]:55846 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727983AbgBYQ5N (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Feb 2020 11:57:13 -0500
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+        id S1730708AbgBYQ60 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Feb 2020 11:58:26 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:34019 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1731254AbgBYQ6Z (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 Feb 2020 11:58:25 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1582649905; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=gW7KKTafC5UnPh4r9NHeJkvVzV8LOu3rxJ2WBv0Sl28=; b=l312kMfBrv9xwMAqZBfHCPqsLgxlVWRknMk8ARRGE0PDAQBeJ7I/7MPUp5AYyvqAnTp7WYQQ
+ vC5QP9EGzp0i+XP/3aJcMg2KTHJZSlDuxQAm7BFivOkMtMl6rQ0bIWbWES2IhckTB+NbANDM
+ 9Q8t67JuxHSPbhghXYV2eug/OfA=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e55522f.7fb60110b7d8-smtp-out-n01;
+ Tue, 25 Feb 2020 16:58:23 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 655EFC447A3; Tue, 25 Feb 2020 16:58:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.71.154.194] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B664C21927;
-        Tue, 25 Feb 2020 16:57:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1582649832;
-        bh=90JBCZvuUwjkSs1Hnc3LpN1N/kPAIDcqYTB1iAObgdY=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=2OT1bZXD227lBlfGSt2jsJ3rPt6z/gNKbLuKbylKTau3IUc7jhdLumNvYIIHHYJDq
-         i6YDuBL/cysZRA31xcnYBbQO4vvATKpFxNsLrndeYJtf5zqLIlEwxoNSpU5EeTNjtA
-         TNoO1adeYDCBYlu7+PdEgXhJOI/a6sF/0axR8Tf4=
-Received: by mail-qt1-f172.google.com with SMTP id d9so96461qte.12;
-        Tue, 25 Feb 2020 08:57:12 -0800 (PST)
-X-Gm-Message-State: APjAAAU3RjHl+H/RQcjTIL09oKRc0kQxC+GUlD7glqe7N8TjZpoy6Ecc
-        V5nk/AomzA6E5j5Y+7CN0y+oYRu1/NsbsXVnFw==
-X-Google-Smtp-Source: APXvYqynQGVCaS6vsUSmY1psEfHgy4a65Fy7HlLUFGmtipR1MpihYRNwkGCOJdMOtj5iyqJoT2+ascR04bYI1hr352c=
-X-Received: by 2002:ac8:5513:: with SMTP id j19mr54927970qtq.143.1582649831805;
- Tue, 25 Feb 2020 08:57:11 -0800 (PST)
-MIME-Version: 1.0
-References: <20200224211035.16897-1-ansuelsmth@gmail.com> <20200224211035.16897-2-ansuelsmth@gmail.com>
-In-Reply-To: <20200224211035.16897-2-ansuelsmth@gmail.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Tue, 25 Feb 2020 10:57:00 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqL7hAX81hDg8L24n-xpJGzZLEu+kAvJfw=g2pzEo_LPOw@mail.gmail.com>
-Message-ID: <CAL_JsqL7hAX81hDg8L24n-xpJGzZLEu+kAvJfw=g2pzEo_LPOw@mail.gmail.com>
-Subject: Re: [PATCH v7 2/2] Documentation: devictree: Add ipq806x mdio bindings
-To:     Ansuel Smith <ansuelsmth@gmail.com>
+        (Authenticated sender: asutoshd)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8146EC43383;
+        Tue, 25 Feb 2020 16:58:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8146EC43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=asutoshd@codeaurora.org
+Subject: Re: [PATCH v2 2/2] scsi: ufs-qcom: Apply QUIRK_HOST_TACTIVATE for WDC
+ UFS devices
+To:     Can Guo <cang@codeaurora.org>, nguyenb@codeaurora.org,
+        hongwus@codeaurora.org, rnayak@codeaurora.org,
+        linux-scsi@vger.kernel.org, kernel-team@android.com,
+        saravanak@google.com, salyzyn@google.com
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        netdev <netdev@vger.kernel.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Alexios Zavras <alexios.zavras@intel.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Evan Green <evgreen@chromium.org>,
+        Bean Huo <beanhuo@micron.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <1582517363-11536-1-git-send-email-cang@codeaurora.org>
+ <1582517363-11536-3-git-send-email-cang@codeaurora.org>
+From:   "Asutosh Das (asd)" <asutoshd@codeaurora.org>
+Message-ID: <3fd54f3f-c580-71b4-1e05-ba9802dff995@codeaurora.org>
+Date:   Tue, 25 Feb 2020 08:58:22 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
+MIME-Version: 1.0
+In-Reply-To: <1582517363-11536-3-git-send-email-cang@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 24, 2020 at 3:10 PM Ansuel Smith <ansuelsmth@gmail.com> wrote:
->
-
-typo in the subject. Use 'dt-bindings: net: ...' for the subject prefix.
-
-> Add documentations for ipq806x mdio driver.
->
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+On 2/23/2020 8:09 PM, Can Guo wrote:
+> Western Digital UFS devices require host's PA_TACTIVATE to be lower than
+> device's PA_TACTIVATE, otherwise it may get stuck during hibern8 sequence.
+> 
+> Signed-off-by: Can Guo <cang@codeaurora.org>
 > ---
-> Changes in v7:
-> - Fix dt_binding_check problem
 
-Um, no you didn't...
+Reviewed-by: Asutosh Das <asutoshd@codeaurora.org>
 
->
->  .../bindings/net/qcom,ipq8064-mdio.yaml       | 55 +++++++++++++++++++
->  1 file changed, 55 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
->
-> diff --git a/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
-> new file mode 100644
-> index 000000000000..3178cbfdc661
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
-> @@ -0,0 +1,55 @@
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-
-Dual license new bindings please:
-
-(GPL-2.0-only OR BSD-2-Clause)
-
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/qcom,ipq8064-mdio.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>   drivers/scsi/ufs/ufs-qcom.c   | 3 +++
+>   drivers/scsi/ufs/ufs_quirks.h | 1 +
+>   2 files changed, 4 insertions(+)
+> 
+> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+> index c69c29a1c..4caa57f 100644
+> --- a/drivers/scsi/ufs/ufs-qcom.c
+> +++ b/drivers/scsi/ufs/ufs-qcom.c
+> @@ -956,6 +956,9 @@ static int ufs_qcom_apply_dev_quirks(struct ufs_hba *hba)
+>   	if (hba->dev_quirks & UFS_DEVICE_QUIRK_HOST_PA_SAVECONFIGTIME)
+>   		err = ufs_qcom_quirk_host_pa_saveconfigtime(hba);
+>   
+> +	if (hba->dev_info.wmanufacturerid == UFS_VENDOR_WDC)
+> +		hba->dev_quirks |= UFS_DEVICE_QUIRK_HOST_PA_TACTIVATE;
 > +
-> +title: Qualcomm ipq806x MDIO bus controller
-> +
-> +maintainers:
-> +  - Ansuel Smith <ansuelsmth@gmail.com>
-> +
-> +description: |+
+>   	return err;
+>   }
+>   
+> diff --git a/drivers/scsi/ufs/ufs_quirks.h b/drivers/scsi/ufs/ufs_quirks.h
+> index d0ab147..df7a1e6 100644
+> --- a/drivers/scsi/ufs/ufs_quirks.h
+> +++ b/drivers/scsi/ufs/ufs_quirks.h
+> @@ -15,6 +15,7 @@
+>   #define UFS_VENDOR_TOSHIBA     0x198
+>   #define UFS_VENDOR_SAMSUNG     0x1CE
+>   #define UFS_VENDOR_SKHYNIX     0x1AD
+> +#define UFS_VENDOR_WDC         0x145
+>   
+>   /**
+>    * ufs_dev_fix - ufs device quirk info
+> 
 
-Don't need '|+' unless you need specific formatting.
 
-> +  The ipq806x soc have a MDIO dedicated controller that is
-> +  used to comunicate with the gmac phy conntected.
-> +  Child nodes of this MDIO bus controller node are standard
-> +  Ethernet PHY device nodes as described in
-> +  Documentation/devicetree/bindings/net/phy.txt
-> +
-> +allOf:
-> +  - $ref: "mdio.yaml#"
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,ipq8064-mdio
-
-blank line between properties please.
-
-> +  reg:
-> +    maxItems: 1
-> +    description: address and length of the register set for the device
-
-That's every 'reg', you can drop this.
-
-> +  clocks:
-> +    maxItems: 1
-> +    description: A reference to the clock supplying the MDIO bus controller
-
-That's every 'clocks', you can drop this.
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - "#address-cells"
-> +  - "#size-cells"
-> +
-> +examples:
-> +  - |
-> +    mdio0: mdio@37000000 {
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        compatible = "qcom,ipq8064-mdio", "syscon";
-
-'syscon' doesn't match the schema and is wrong.
-
-> +        reg = <0x37000000 0x200000>;
-
-> +        resets = <&gcc GMAC_CORE1_RESET>;
-> +        reset-names = "stmmaceth";
-
-Not documented.
-
-> +        clocks = <&gcc GMAC_CORE1_CLK>;
-
-You need to include the header for these defines.
-
-> +
-> +        switch@10 {
-> +            compatible = "qca,qca8337";
-> +            /* ... */
-> +        };
-> +    };
-> --
-> 2.25.0
->
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+Linux Foundation Collaborative Project
