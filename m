@@ -2,118 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 44C7516C3A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 15:17:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 69AE016E944
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 16:03:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730588AbgBYORu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Feb 2020 09:17:50 -0500
-Received: from mga03.intel.com ([134.134.136.65]:39891 "EHLO mga03.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730389AbgBYORu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Feb 2020 09:17:50 -0500
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 25 Feb 2020 06:17:49 -0800
-X-IronPort-AV: E=Sophos;i="5.70,484,1574150400"; 
-   d="scan'208";a="231032368"
-Received: from jnikula-mobl3.fi.intel.com (HELO localhost) ([10.237.66.161])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 25 Feb 2020 06:17:38 -0800
-From:   Jani Nikula <jani.nikula@linux.intel.com>
-To:     "Gustavo A. R. Silva" <gustavo@embeddedor.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Russell King <linux+etnaviv@armlinux.org.uk>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Dave Airlie <airlied@redhat.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Eric Anholt <eric@anholt.net>,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>,
-        Thomas Hellstrom <thellstrom@vmware.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        spice-devel@lists.freedesktop.org,
-        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Subject: Re: [PATCH][next] drm: Replace zero-length array with flexible-array member
-In-Reply-To: <20200225140347.GA22864@embeddedor>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <20200225140347.GA22864@embeddedor>
-Date:   Tue, 25 Feb 2020 16:17:35 +0200
-Message-ID: <87a756sqdc.fsf@intel.com>
+        id S1730934AbgBYPDd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Feb 2020 10:03:33 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:41724 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730345AbgBYPDc (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 Feb 2020 10:03:32 -0500
+Received: by mail-qk1-f195.google.com with SMTP id b5so5019766qkh.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2020 07:03:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=wAHb7rK639CcDCtnM7iJQZElyiD2uywLhpHa6tq57/0=;
+        b=j3YeRKujuPj9zGjGOLEkt6wdH3hlRbWvAzwSpsAFnd+E0Vl11Qkczyj0JZGkg6Rd/d
+         OyORz2UcsIwsakv9MMRaOoz/C/BbwKMHNX+pXr3AtBb/VtQ53CsVk5jd5v340Qua6VDw
+         Bedv2EeiN5pdEZFaYMTd0GQB1lnUxvpYO8pOg5bT7QO/OU9WQ8naLOVo/67Z56BjwymC
+         kDH5k9Hxz+ZkY7KLoxOgPswpMct6k9BAX2ni0w86KyYaNEohu20Ed8BOJuZ8U2M5MFKj
+         nacWEMMAjE6jXiWafw8SOxqrluPoCzTYzDOgvLqI2nsE5BlNorCr2l81nYX9/nayT6iB
+         PMyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wAHb7rK639CcDCtnM7iJQZElyiD2uywLhpHa6tq57/0=;
+        b=C4b00ts5uCaZryto0V46Ube0xDGhZkbSC+qUvFZCNE91/q67AznQl3D/gGecUwBWvY
+         OwjefJQMIS5HTEKKHSPtleBXeMICrOMX/hO7YHZ9vUXszDtkg8lfF7B5YKVg/fox/USt
+         iF34veOSy+nuPwP0c0yssKUk5hgou2U1Z4JVEh7jIiTbfXOUesVEF32Z/ErBkcCKE26w
+         aaZpngaC4gY9RXDqxMyZObCy42SxAb7D9UTvwGCnOudPQ3TqWYAvSx5PPcsUIMv9Mt2B
+         8MfPMzimKW1rlm3WXuydV0NQlV5E4jP+XnD16zPNJmbIX9rOejzogRfiPn6uCol5ePKw
+         LJzg==
+X-Gm-Message-State: APjAAAWnXtsWrcLK1yrJK02haybomcnB5ypzWTgPF8E7XHWLT4daFGQc
+        80MocByNfHbj1Prtk3nT+UshiEWe5/ezqoPe4Htkow==
+X-Google-Smtp-Source: APXvYqzigvoxgWcb3ZmCCwvHRtpN3dxkcq9+kpu7VpR9hQ20upkiH0Yza2Z8PIe6Eb+Flk9FSwpWt8uJ4z71H80aDnk=
+X-Received: by 2002:a37:a9c3:: with SMTP id s186mr4972168qke.118.1582643009968;
+ Tue, 25 Feb 2020 07:03:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20200210213924.20037-1-mike.leach@linaro.org> <20200210213924.20037-9-mike.leach@linaro.org>
+ <04b739fd-7bb3-bd28-8013-918e7d4dfcb7@arm.com> <20200221165134.GA25043@xps15>
+In-Reply-To: <20200221165134.GA25043@xps15>
+From:   Mike Leach <mike.leach@linaro.org>
+Date:   Tue, 25 Feb 2020 15:03:18 +0000
+Message-ID: <CAJ9a7VjJMtftam3t_e25ckOW_dufncbqdLkHeV3G8e7W9K5bCw@mail.gmail.com>
+Subject: Re: [PATCH v9 08/15] coresight: cti: Enable CTI associated with devices.
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        devicetree@vger.kernel.org,
+        Coresight ML <coresight@lists.linaro.org>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Maxime Ripard <maxime@cerno.tech>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andy Gross <agross@kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 25 Feb 2020, "Gustavo A. R. Silva" <gustavo@embeddedor.com> wrote:
-> The current codebase makes use of the zero-length array language
-> extension to the C90 standard, but the preferred mechanism to declare
-> variable-length types such as these ones is a flexible array member[1][2],
-> introduced in C99:
->
-> struct foo {
->         int stuff;
->         struct boo array[];
-> };
->
-> By making use of the mechanism above, we will get a compiler warning
-> in case the flexible array does not occur last in the structure, which
-> will help us prevent some kind of undefined behavior bugs from being
-> inadvertently introduced[3] to the codebase from now on.
->
-> Also, notice that, dynamic memory allocations won't be affected by
-> this change:
->
-> "Flexible array members have incomplete type, and so the sizeof operator
-> may not be applied. As a quirk of the original implementation of
-> zero-length arrays, sizeof evaluates to zero."[1]
->
-> This issue was found with the help of Coccinelle.
->
-> [1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
-> [2] https://github.com/KSPP/linux/issues/21
-> [3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
->
-> Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
-> ---
->  drivers/gpu/drm/etnaviv/etnaviv_gem.h         | 2 +-
->  drivers/gpu/drm/gma500/intel_bios.h           | 2 +-
->  drivers/gpu/drm/i915/display/intel_vbt_defs.h | 4 ++--
->  drivers/gpu/drm/i915/gt/intel_lrc.c           | 2 +-
->  drivers/gpu/drm/i915/i915_gpu_error.h         | 2 +-
+As using devm_... for allocation, there is no need to explicitly free
+up tc->con_dev_name, also the lifetime of the connection is linked to
+the lifetime of csdev, so we can drop the devm_kstrdup in the csdev
+case so this becomes
 
-Please split out the i915 changes to a separate patch.
+/* match: so swap in csdev name & dev */
+               tc->con_dev_name = dev_name(&csdev->dev);
+                tc->con_dev = csdev;
+                return true;
 
->  drivers/gpu/drm/msm/msm_gem.h                 | 2 +-
->  drivers/gpu/drm/qxl/qxl_cmd.c                 | 2 +-
->  drivers/gpu/drm/vboxvideo/vboxvideo.h         | 2 +-
->  drivers/gpu/drm/vc4/vc4_drv.h                 | 2 +-
->  drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c    | 2 +-
->  drivers/gpu/drm/vmwgfx/vmwgfx_surface.c       | 2 +-
->  include/drm/bridge/mhl.h                      | 4 ++--
->  include/drm/drm_displayid.h                   | 2 +-
->  include/uapi/drm/i915_drm.h                   | 4 ++--
+Same true for similar link in patch 1, removing 2 un-needed
+allocations, leaving 1 to be fixed up with error checking
 
-Not sure it's worth touching uapi headers. They're full of both [0] and
-[]. Again, please at least split it to a separate patch to be decided
-separately.
-
-BR,
-Jani.
+Mike
 
 
--- 
-Jani Nikula, Intel Open Source Graphics Center
+On Fri, 21 Feb 2020 at 16:51, Mathieu Poirier
+<mathieu.poirier@linaro.org> wrote:
+>
+> On Fri, Feb 21, 2020 at 12:20:17AM +0000, Suzuki K Poulose wrote:
+> > Hi Mike
+> >
+> > Sorry for the delay. one minor comment below.
+> >
+> > On 02/10/2020 09:39 PM, Mike Leach wrote:
+> > > The CoreSight subsystem enables a path of devices from source to sink.
+> > > Any CTI devices associated with the path devices must be enabled at the
+> > > same time.
+> > >
+> > > This patch adds an associated coresight_device element to the main
+> > > coresight device structure, and uses this to create associations between
+> > > the CTI and other devices based on the device tree data. The associated
+> > > device element is used to enable CTI in conjunction with the path elements.
+> > >
+> > > CTI devices are reference counted so where a single CTI is associated with
+> > > multiple elements on the path, it will be enabled on the first associated
+> > > device enable, and disabled with the last associated device disable.
+> > >
+> > > Signed-off-by: Mike Leach <mike.leach@linaro.org>
+> > > Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> > > ---
+> > >   drivers/hwtracing/coresight/coresight-cti.c  | 129 +++++++++++++++++++
+> > >   drivers/hwtracing/coresight/coresight-cti.h  |   1 +
+> > >   drivers/hwtracing/coresight/coresight-priv.h |  12 ++
+> > >   drivers/hwtracing/coresight/coresight.c      |  71 +++++++++-
+> > >   include/linux/coresight.h                    |   4 +
+> > >   5 files changed, 212 insertions(+), 5 deletions(-)
+> > >
+> > > diff --git a/drivers/hwtracing/coresight/coresight-cti.c b/drivers/hwtracing/coresight/coresight-cti.c
+> > > index 77c2af247917..c4494923d030 100644
+> > > --- a/drivers/hwtracing/coresight/coresight-cti.c
+> > > +++ b/drivers/hwtracing/coresight/coresight-cti.c
+> > > @@ -4,6 +4,7 @@
+> > >    * Author: Mike Leach <mike.leach@linaro.org>
+> > >    */
+> > > +#include <linux/property.h>
+> > >   #include "coresight-cti.h"
+> > >   /**
+> > > @@ -440,6 +441,131 @@ int cti_channel_setop(struct device *dev, enum cti_chan_set_op op,
+> > >     return err;
+> > >   }
+> > > +/*
+> > > + * Look for a matching connection device name in the list of connections.
+> > > + * If found then swap in the csdev name, set trig con association pointer
+> > > + * and return found.
+> > > + */
+> > > +static bool
+> > > +cti_match_fixup_csdev(struct cti_device *ctidev, const char *node_name,
+> > > +                 struct coresight_device *csdev)
+> > > +{
+> > > +   struct cti_trig_con *tc;
+> > > +   const char *csdev_name;
+> > > +
+> > > +   list_for_each_entry(tc, &ctidev->trig_cons, node) {
+> > > +           if (tc->con_dev_name) {
+> > > +                   if (!strcmp(node_name, tc->con_dev_name)) {
+> > > +                           /* match: so swap in csdev name & dev */
+> > > +                           csdev_name = dev_name(&csdev->dev);
+> > > +                           tc->con_dev_name =
+> > > +                                   devm_kstrdup(&csdev->dev, csdev_name,
+> > > +                                                GFP_KERNEL);
+> >
+> > In the extreme rare case of an allocation failure, we may want to
+> > check if the allocation was successful or not, rather than silently
+> > ignoring it. With that fixed,
+>
+> Line 419 and 423 in patch 1 need the same attention.
+>
+> >
+> > Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+
+
+
+--
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
