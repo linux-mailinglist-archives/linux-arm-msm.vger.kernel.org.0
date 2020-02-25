@@ -2,118 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CF1616BE65
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 11:16:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA72216BF1A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 11:50:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730041AbgBYKQV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Feb 2020 05:16:21 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60058 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729702AbgBYKQV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Feb 2020 05:16:21 -0500
-Received: from localhost (unknown [122.167.120.28])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1730353AbgBYKuk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Feb 2020 05:50:40 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:29840 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729417AbgBYKuk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 Feb 2020 05:50:40 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1582627840; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=AFKpvKI08/4aEKhec5+V+oShaiX1jdixcVe3ggUV3Fc=; b=BlUb1pEjJO4kffX8AMa0N0GFOwQmnVOQVitiwtDMuRzC3TgBhEIkNekMke6pcLT5h7HGqmxf
+ dwqIPNzAZXllT61FiaRmgn6UiM72bjHppx6RJstbyDC7zSDkNuj09CPFADMHH/uqZ2zuhgWa
+ tild1PyZ5Ce1LT8aFI68WQJmVDs=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e54fbee.7fa68208fae8-smtp-out-n02;
+ Tue, 25 Feb 2020 10:50:22 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A4011C433A2; Tue, 25 Feb 2020 10:50:21 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+Received: from [10.204.78.247] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9062121556;
-        Tue, 25 Feb 2020 10:16:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1582625780;
-        bh=xhugCcXsdvxmy9hj5XGYrT1xM/LDjkFC5Qq8nX+dKIs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KwZAkaiSP/Br/sdl4/u9ZJClNk6MnLu9FyxNTiCesQcjS+dpDBmMt3I6zuxlr1gKJ
-         GB95oUUG/U90zRpBYQbeDmcvN78yrD752Xux8kUDorEjy0Y6GzkYgyhokB1MwIa1j1
-         BGcTW1j2iPmDjPic8M5mNpyfFCKIXhBvQ2Gj+nvw=
-Date:   Tue, 25 Feb 2020 15:46:14 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
-        sivaa@codeaurora.org, Andy Gross <agross@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v1 1/3] dt-bindings: thermal: tsens: Make dtbs_check pass
- for sc7180 tsens
-Message-ID: <20200225101614.GN2618@vkoul-mobl>
-References: <cover.1582615616.git.amit.kucheria@linaro.org>
- <0f506cfdd8eb9d50b5eb43c9dca510284ac8ded1.1582615616.git.amit.kucheria@linaro.org>
+        (Authenticated sender: snaseem)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AA106C43383;
+        Tue, 25 Feb 2020 10:50:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AA106C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=snaseem@codeaurora.org
+Subject: Re: [PATCH] nvmem: core: Fix msb clearing bits
+To:     Mukesh Ojha <mojha@codeaurora.org>, srinivas.kandagatla@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        neeraju@codeaurora.org
+References: <1580474635-11965-1-git-send-email-snaseem@codeaurora.org>
+ <06a518e3-cff4-e2e0-2a4b-f4bfa2c6dcdc@codeaurora.org>
+From:   Shadab Naseem <snaseem@codeaurora.org>
+Message-ID: <658fde02-c57e-2a1e-b262-634b56ce4cde@codeaurora.org>
+Date:   Tue, 25 Feb 2020 16:20:17 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0f506cfdd8eb9d50b5eb43c9dca510284ac8ded1.1582615616.git.amit.kucheria@linaro.org>
+In-Reply-To: <06a518e3-cff4-e2e0-2a4b-f4bfa2c6dcdc@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25-02-20, 13:01, Amit Kucheria wrote:
-> Fixes the following warnings:
-> builds/arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml:
-> thermal-sensor@c263000: compatible: ['qcom,sc7180-tsens',
-> 'qcom,tsens-v2'] is not valid under any of the given schemas (Possible
-> causes of the failure):
-> builds/arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml:
-> thermal-sensor@c263000: compatible:0: 'qcom,sc7180-tsens' is not one of
-> ['qcom,msm8916-tsens', 'qcom,msm8974-tsens']
-> builds/arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml:
-> thermal-sensor@c263000: compatible:0: 'qcom,sc7180-tsens' is not one of
-> ['qcom,msm8976-tsens', 'qcom,qcs404-tsens']
-> builds/arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml:
-> thermal-sensor@c263000: compatible:0: 'qcom,sc7180-tsens' is not one of
-> ['qcom,msm8996-tsens', 'qcom,msm8998-tsens', 'qcom,sdm845-tsens']
-> builds/arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml:
-> thermal-sensor@c263000: compatible:1: 'qcom,tsens-v0_1' was expected
-> builds/arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml:
-> thermal-sensor@c263000: compatible:1: 'qcom,tsens-v1' was expected
+Gentle reminder as it is easily reproducible in 32 bit targets.
 
-I think the patch title should be "add qcom,sc7180-tsens to  qcom-tsens.yaml"
+Regards
 
-and it would be great to see explanation on how adding it fixes these
-warns.
+-Shadab
 
-Relooking at series I think this applies to rest of the series too :)
-
-Thanks
-
-
-> 
-> builds/arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml:
-> thermal-sensor@c265000: compatible: ['qcom,sc7180-tsens',
-> 'qcom,tsens-v2'] is not valid under any of the given schemas (Possible
-> causes of the failure):
-> builds/arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml:
-> thermal-sensor@c265000: compatible:0: 'qcom,sc7180-tsens' is not one of
-> ['qcom,msm8916-tsens', 'qcom,msm8974-tsens']
-> builds/arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml:
-> thermal-sensor@c265000: compatible:0: 'qcom,sc7180-tsens' is not one of
-> ['qcom,msm8976-tsens', 'qcom,qcs404-tsens']
-> builds/arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml:
-> thermal-sensor@c265000: compatible:0: 'qcom,sc7180-tsens' is not one of
-> ['qcom,msm8996-tsens', 'qcom,msm8998-tsens', 'qcom,sdm845-tsens']
-> builds/arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml:
-> thermal-sensor@c265000: compatible:1: 'qcom,tsens-v0_1' was expected
-> builds/arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml:
-> thermal-sensor@c265000: compatible:1: 'qcom,tsens-v1' was expected
-> 
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> ---
->  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> index eef13b9446a8..13e294328932 100644
-> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-> @@ -39,6 +39,7 @@ properties:
->                - qcom,msm8996-tsens
->                - qcom,msm8998-tsens
->                - qcom,sdm845-tsens
-> +              - qcom,sc7180-tsens
->            - const: qcom,tsens-v2
->  
->    reg:
-> -- 
-> 2.20.1
-
--- 
-~Vinod
+On 2/14/2020 12:46 PM, Mukesh Ojha wrote:
+>
+> On 1/31/2020 6:13 PM, Shadab Naseem wrote:
+>> When clearing the msb bits of the resultant buffer, it is
+>> masked with the modulo of the number of bits needed with
+>> respect to the BITS_PER_BYTE. To mask out the buffer,
+>> it is passed though GENMASK of the remainder of the bits
+>> starting from zeroth bit. This case is valid if nbits is not
+>> a multiple of BITS_PER_BYTE and you are actually creating
+>> a GENMASK. If the nbits coming is a multiple of BITS_PER_BYTE,
+>> it would pass a negative value to the high bit number of
+>> GENMASK with zero as the lower bit number.
+>>
+>> As per the definition of the GENMASK, the higher bit number (h)
+>> is right operand for bitwise right shift. If the value of the
+>> right operand is negative or is greater or equal to the number
+>> of bits in the promoted left operand, the behavior is undefined.
+>> So passing a negative value to GENMASK could behave differently
+>> across architecture, specifically between 64 and 32 bit.
+>> Also, on passing the hard-coded negative value as GENMASK(-1, 0)
+>> is giving compiler warning for shift-count-overflow.
+>> Hence making a check for clearing the MSB if the nbits are not
+>> a multiple of BITS_PER_BYTE.
+>>
+>> Signed-off-by: Shadab Naseem <snaseem@codeaurora.org>
+>> ---
+>>   drivers/nvmem/core.c | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+>> index 1e4a798..23c1547 100644
+>> --- a/drivers/nvmem/core.c
+>> +++ b/drivers/nvmem/core.c
+>> @@ -926,7 +926,8 @@ static void 
+>> nvmem_shift_read_buffer_in_place(struct nvmem_cell *cell, void *buf)
+>>           *p-- = 0;
+>>         /* clear msb bits if any leftover in the last byte */
+>> -    *p &= GENMASK((cell->nbits%BITS_PER_BYTE) - 1, 0);
+>> +    if (cell->nbits%BITS_PER_BYTE)
+>> +        *p &= GENMASK((cell->nbits%BITS_PER_BYTE) - 1, 0);
+>
+>
+> LGTM..
+>
+> Reviewed-by: mojha@codeaurora.org
+>
+>
+> Thanks
+> Mukesh
+>
+>>   }
+>>     static int __nvmem_cell_read(struct nvmem_device *nvmem,
