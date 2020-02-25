@@ -2,155 +2,579 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C7F716B8EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 06:17:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8F8516B92B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 06:38:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728846AbgBYFQv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Feb 2020 00:16:51 -0500
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:33839 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726400AbgBYFQv (ORCPT
+        id S1725783AbgBYFic (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Feb 2020 00:38:32 -0500
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:38042 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726019AbgBYFic (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Feb 2020 00:16:51 -0500
-Received: by mail-pj1-f67.google.com with SMTP id f2so640159pjq.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2020 21:16:49 -0800 (PST)
+        Tue, 25 Feb 2020 00:38:32 -0500
+Received: by mail-pj1-f66.google.com with SMTP id j17so780142pjz.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2020 21:38:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ka0sLhQPFaXTwv3tDELStRrEtg68nriJ9HVXgH82wMY=;
-        b=MfzMx3OoAyEtSqpOZ0WtdfDaIjNPNeuyzCbpqjIHCgRZgMdnb82+zNuqvO6REVU3Iz
-         o+3zenb5smKGh3pixYR+Th7xOVONXMP31NIJZl757/wtxGpCjkDfZ4NUgK1hIosRnjwv
-         MHyju43+Ea0LICvpxU2VsKsh0K5P+E5xBE/ehqeDUd06hWz3g+VuMRdGemx5p9pnMFhD
-         /1599Z4dFSIqEqyA5RkpiSdFKbiDLUMeavkbuhE6aWYllSUgVgsqCHV5ML0pToE/OKAI
-         UNtCr8UEjxEPce8u3sf5Lk0XrmZy6+7fHf4CLiFctxKfHk+/zeXH/1VF6oRpWHxlgtzc
-         oU/w==
+         :content-disposition:in-reply-to;
+        bh=mfqZGXgqcPFcLTJKiGeAyv3Q4QoPEUtHeOmm57Pq0Bg=;
+        b=LcO6iKTpqfabTXwgfFeBl/Y6LYETyCNilbjx+m8rEe0L0O9Bog/7KxqhnOR8C5ALRz
+         qX5DJ44C+w8rGQWutRXsklT/1VEsh5jwZvRLfDwrprD4vEpyISLLRTUHvwX8Kurhg9u2
+         p0v++ust9yWPvqiELyLkPpIrze3mUFXsXraAGM8a7vc02DEWt5jHZFakl1gyfl2Umj8t
+         EHxUwK/iIZQd7JYp+d6fGs8P5xOOJhzXMVgFxsnEjsqenMR989IbAaGhgroLxj9HyAir
+         aRooPcuFDs8/EIA/aPhxkBVGLKUNwWJYe/jMtCzgKovfh0fEM7CNx6YCuzWbEDD7+tSH
+         889w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ka0sLhQPFaXTwv3tDELStRrEtg68nriJ9HVXgH82wMY=;
-        b=CDGigvPFC10DkkfF5yVs6ZyaInjuIBBq9PBXUr6/W7x8KgW4013aQH7Icw0xBM85Pa
-         VMy7ZlP/6u8/H6P7vhK6dim2OXR3aAqzK9rICWOlfm2vbsYMmR2EFDcPhC54Y3bMl3kn
-         YSoukfSUcMAQa8loiuiJmSDADJUVR4ZHQCvf8wuHuDN0QoHjfY94NdemSK0wzrOtfiSI
-         rBl4GN7kzjOcNLW9C2h0BvX13T89Ft/tOt+GLgHLmePbZqNpVqtWJBInuJ0yOhHqQkrI
-         VvFOa+9lWVykNEjfOnWp/9v9enOovoQKzDwP+lJBRJg2iy3VXNV+94X6ESSoBcvLHbUT
-         iefg==
-X-Gm-Message-State: APjAAAVnuM9aw1/ZCFlHdIU/ZSXqxFwi/dV6RoetjrNV9PUp3MI0+o9V
-        U5xb+labun21g7BYPtjaLeYFeA==
-X-Google-Smtp-Source: APXvYqwE3DS3Lo/dEPP82F1RYKX99PIFmYhZi/GdGxhG2n/gVblaUuZg64+xGY3KaryvIrqLQbTarw==
-X-Received: by 2002:a17:902:7048:: with SMTP id h8mr54903891plt.64.1582607808882;
-        Mon, 24 Feb 2020 21:16:48 -0800 (PST)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id c184sm15092223pfa.39.2020.02.24.21.16.47
+         :mime-version:content-disposition:in-reply-to;
+        bh=mfqZGXgqcPFcLTJKiGeAyv3Q4QoPEUtHeOmm57Pq0Bg=;
+        b=bet4ofIgszF/IDvzYP4rNmG0BADa5AFsnyuvxdYnIIVDn5bvDKeFkg4TvjaMciXU98
+         q3ubyOnpJt7lhdnc4b1F24cJxycK8yTKZSDcXC4RvmPuEliUY59IeGEilWfMrcABsn0+
+         XrxWsNibjy6RBCWmLwZ7irOEmjclXCcF+b8Vip5yGzb/XlrPvTR5W9miZXut28bKvrju
+         nYJ4wSzoMguTIxvksOb6uFRtrcLmaGDUhmpXnAH9DY4TIaPS+IknSbJo3j7Yw993w6Zy
+         P4r3pdk4ILVOVjo+uqKi9JB9jmOAS4bNAQZKcmzb1VYwO+PFQgqk2PMPMb3wLmaJqo9g
+         ruRA==
+X-Gm-Message-State: APjAAAUuYraNTMZz7rHMkFEISaMkEn+zUMSltSmLaksX+g+V1n1XmWnG
+        50t9s0HG14t0g7gGMw2NwOKqgBKLUIA=
+X-Google-Smtp-Source: APXvYqwkscLdmw1pP0ddtOkJWsdMUNpLzaX/fR+sjE3SUT1Fbfb+/os/yj982Eu8VpCm/AlKEWhQbw==
+X-Received: by 2002:a17:90a:de05:: with SMTP id m5mr3252574pjv.10.1582609109254;
+        Mon, 24 Feb 2020 21:38:29 -0800 (PST)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id w18sm15374736pfq.167.2020.02.24.21.38.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2020 21:16:47 -0800 (PST)
-Date:   Mon, 24 Feb 2020 21:16:45 -0800
+        Mon, 24 Feb 2020 21:38:28 -0800 (PST)
+Date:   Mon, 24 Feb 2020 21:38:25 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     georgi.djakov@linaro.org
-Cc:     Sibi Sankar <sibis@codeaurora.org>, robh+dt@kernel.org,
-        evgreen@chromium.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, mark.rutland@arm.com,
-        daidavid1@codeaurora.org, saravanak@google.com, mka@chromium.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH v3 0/6]     Split SDM845 interconnect nodes and
- consolidate RPMh support
-Message-ID: <20200225051645.GX3948@builder>
-References: <20200209183411.17195-1-sibis@codeaurora.org>
+To:     Harigovindan P <harigovi@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        robdclark@gmail.com, seanpaul@chromium.org, sean@poorly.run
+Subject: Re: [PATCHv3 2/2] drm/panel: add support for rm69299 visionox panel
+ driver
+Message-ID: <20200225053825.GI99370@yoga>
+References: <1580907990-32108-1-git-send-email-harigovi@codeaurora.org>
+ <1580907990-32108-3-git-send-email-harigovi@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200209183411.17195-1-sibis@codeaurora.org>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <1580907990-32108-3-git-send-email-harigovi@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 09 Feb 10:34 PST 2020, Sibi Sankar wrote:
+On Wed 05 Feb 05:06 PST 2020, Harigovindan P wrote:
 
-Hi Georgi,
+> Add support for Visionox panel driver.
+> 
+> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+> ---
+> 
+> Changes in v1:
+> 	- Split out panel driver patch from dsi config changes(Rob Clark).
+> 	- Remove unrelated code(Stephen Boyd).
+> 	- Remove static arrays to make regulator setup open coded
+> 	in probe(Stephen Boyd).
+> 	- Remove pre-assigning variables(Stephen Boyd).
+> 	- Inline panel_add function into probe(Stephen Boyd).
+> 	- Use mipi_dsi_dcs_write directly(Rob Clark).
+> 	- Remove qcom_rm69299_1080p_panel_magic_cmds array(Rob Clark).
+> Changes in v2:
+> 	- Dropping redundant space in Kconfig(Sam Ravnborg).
+> 	- Changing structure for include files(Sam Ravnborg).
+> 	- Removing backlight related code and functions(Sam Ravnborg).
+> 	- Removing repeated printing of error message(Sam Ravnborg).
+> 	- Adding drm_connector as an argument for get_modes function.
+> Changes in v3:
+> 	- Adding arguments for drm_panel_init to support against mainline.
+> 
+>  drivers/gpu/drm/panel/Kconfig                  |   8 +
+>  drivers/gpu/drm/panel/Makefile                 |   1 +
+>  drivers/gpu/drm/panel/panel-visionox-rm69299.c | 371 +++++++++++++++++++++++++
+>  3 files changed, 380 insertions(+)
+>  create mode 100644 drivers/gpu/drm/panel/panel-visionox-rm69299.c
+> 
+> diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+> index 04225a8..354a3a5 100644
+> --- a/drivers/gpu/drm/panel/Kconfig
+> +++ b/drivers/gpu/drm/panel/Kconfig
+> @@ -407,6 +407,14 @@ config DRM_PANEL_TRULY_NT35597_WQXGA
+>  	  Say Y here if you want to enable support for Truly NT35597 WQXGA Dual DSI
+>  	  Video Mode panel
+>  
+> +config DRM_PANEL_VISIONOX_RM69299
+> +	tristate "Visionox RM69299"
+> +	depends on OF
+> +	depends on DRM_MIPI_DSI
+> +	help
+> +	  Say Y here if you want to enable support for Visionox
+> +	  RM69299  DSI Video Mode panel.
+> +
+>  config DRM_PANEL_XINPENG_XPP055C272
+>  	tristate "Xinpeng XPP055C272 panel driver"
+>  	depends on OF
+> diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
+> index 801f9f6..eeeeb7ae 100644
+> --- a/drivers/gpu/drm/panel/Makefile
+> +++ b/drivers/gpu/drm/panel/Makefile
+> @@ -43,4 +43,5 @@ obj-$(CONFIG_DRM_PANEL_TPO_TD028TTEC1) += panel-tpo-td028ttec1.o
+>  obj-$(CONFIG_DRM_PANEL_TPO_TD043MTEA1) += panel-tpo-td043mtea1.o
+>  obj-$(CONFIG_DRM_PANEL_TPO_TPG110) += panel-tpo-tpg110.o
+>  obj-$(CONFIG_DRM_PANEL_TRULY_NT35597_WQXGA) += panel-truly-nt35597.o
+> +obj-$(CONFIG_DRM_PANEL_VISIONOX_RM69299) += panel-visionox-rm69299.o
+>  obj-$(CONFIG_DRM_PANEL_XINPENG_XPP055C272) += panel-xinpeng-xpp055c272.o
+> diff --git a/drivers/gpu/drm/panel/panel-visionox-rm69299.c b/drivers/gpu/drm/panel/panel-visionox-rm69299.c
+> new file mode 100644
+> index 0000000..7195ab0
+> --- /dev/null
+> +++ b/drivers/gpu/drm/panel/panel-visionox-rm69299.c
+> @@ -0,0 +1,371 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#include <linux/delay.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/gpio/consumer.h>
+> +#include <linux/regulator/consumer.h>
+> +
+> +#include <video/mipi_display.h>
+> +
+> +#include <drm/drm_mipi_dsi.h>
+> +#include <drm/drm_modes.h>
+> +#include <drm/drm_panel.h>
+> +#include <drm/drm_print.h>
+> +
+> +struct rm69299_config {
+> +	unsigned long width_mm;
+> +	unsigned long height_mm;
+> +	const char *panel_name;
+> +	u32 num_on_cmds;
+> +	const struct drm_display_mode *dm;
+> +};
+> +
+> +struct visionox_rm69299 {
+> +	struct device *dev;
 
-Will you pick up the bindings and driver patches for v5.7? So that I can
-apply the dts patches.
+You also store dev in panel.dev, why not just use that?
+
+> +	struct drm_panel panel;
+> +
+> +	struct regulator_bulk_data supplies[2];
+> +
+> +	struct gpio_desc *reset_gpio;
+> +
+> +	struct mipi_dsi_device *dsi;
+> +	const struct rm69299_config *config;
+> +	bool prepared;
+> +	bool enabled;
+> +};
+> +
+> +static inline struct visionox_rm69299 *panel_to_ctx(struct drm_panel *panel)
+> +{
+> +	return container_of(panel, struct visionox_rm69299, panel);
+> +}
+> +
+> +static int visionox_35597_power_on(struct visionox_rm69299 *ctx)
+> +{
+> +	int ret;
+> +
+> +	ret = regulator_set_load(ctx->supplies[0].consumer, 32000);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regulator_set_load(ctx->supplies[1].consumer, 13200);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regulator_bulk_enable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	/*
+> +	 * Reset sequence of visionox panel requires the panel to be
+> +	 * out of reset for 10ms, followed by being held in reset
+> +	 * for 10ms and then out again
+> +	 */
+> +	gpiod_set_value(ctx->reset_gpio, 1);
+> +	usleep_range(10000, 20000);
+> +	gpiod_set_value(ctx->reset_gpio, 0);
+> +	usleep_range(10000, 20000);
+> +	gpiod_set_value(ctx->reset_gpio, 1);
+> +	usleep_range(10000, 20000);
+> +
+> +	return 0;
+> +}
+> +
+> +static int visionox_rm69299_power_off(struct visionox_rm69299 *ctx)
+> +{
+> +	int ret;
+> +
+> +	gpiod_set_value(ctx->reset_gpio, 0);
+> +
+> +	ret = regulator_set_load(ctx->supplies[0].consumer, 80);
+> +
+
+So the panel will leak 80uA when disabled? Does this actually matter, or
+can you approximate it with 0uA and by that rely on the fact that
+regulator_enable/disable will control if this regulator consumers' load
+is considered (i.e. you can set it to 32mA and 13.2mA in probe and then
+just call enable/disable after that).
+
+> +	if (ret) {
+> +		DRM_DEV_ERROR(ctx->dev,
+> +			"regulator_set_load failed %d\n", ret);
+
+regulator_set_load() will provide more a more detailed error message in
+the log when failing, so you don't have to.
+
+> +		return ret;
+> +	}
+> +
+> +	ret = regulator_set_load(ctx->supplies[1].consumer, 80);
+> +
+
+Please omit the empty line between assignment and checking reg,
+throughout the patch.
+
+> +	if (ret) {
+> +		DRM_DEV_ERROR(ctx->dev,
+> +			"regulator_set_load failed %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	ret = regulator_bulk_disable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
+> +	if (ret) {
+> +		DRM_DEV_ERROR(ctx->dev,
+> +			"regulator_bulk_disable failed %d\n", ret);
+
+There's no need to print here, the regulator framework will already have
+printed an error specifying which of the regulators in the bulk that
+failed.
+
+And hence, you can simply end the function with a:
+
+	return regulator_bulk_disable(...);
+
+> +	}
+> +	return ret;
+> +}
+> +
+> +static int visionox_rm69299_unprepare(struct drm_panel *panel)
+> +{
+> +	struct visionox_rm69299 *ctx = panel_to_ctx(panel);
+> +	int ret;
+> +
+> +	if (!ctx->prepared)
+
+Is it really necessary for the panel drivers to keep track of it already
+being prepared or not? Will the framework invoke prepare (on unprepare)
+for an already prepared panel?
+
+> +		return 0;
+> +
+> +	ctx->dsi->mode_flags = 0;
+> +
+> +	ret = mipi_dsi_dcs_write(ctx->dsi, MIPI_DCS_SET_DISPLAY_OFF, NULL, 0);
+> +	if (ret < 0) {
+> +		DRM_DEV_ERROR(ctx->dev,
+> +			"set_display_off cmd failed ret = %d\n",
+> +			ret);
+
+Please align broken lines to the char after (
+
+> +	}
+> +
+> +	/* 120ms delay required here as per DCS spec */
+> +	msleep(120);
+> +
+> +	ret = mipi_dsi_dcs_write(ctx->dsi, MIPI_DCS_ENTER_SLEEP_MODE, NULL, 0);
+> +	if (ret < 0) {
+> +		DRM_DEV_ERROR(ctx->dev,
+> +			"enter_sleep cmd failed ret = %d\n", ret);
+> +	}
+> +
+> +	ret = visionox_rm69299_power_off(ctx);
+> +
+> +	ctx->prepared = false;
+
+Given that you clear prepared regardless of "ret", just set it before
+and do:
+	return visionox_rm69299_power_off(ctx);
+
+> +	return ret;
+> +}
+> +
+> +static int visionox_rm69299_prepare(struct drm_panel *panel)
+> +{
+> +	struct visionox_rm69299 *ctx = panel_to_ctx(panel);
+> +	int ret;
+> +	const struct rm69299_config *config;
+> +
+> +	if (ctx->prepared)
+> +		return 0;
+> +
+> +	ret = visionox_35597_power_on(ctx);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ctx->dsi->mode_flags |= MIPI_DSI_MODE_LPM;
+> +
+> +	config = ctx->config;
+> +
+> +	ret = mipi_dsi_dcs_write_buffer(ctx->dsi, (u8[]){ 0xfe, 0x00 }, 2);
+> +	if (ret < 0) {
+> +		DRM_DEV_ERROR(ctx->dev,
+> +		"cmd set tx 0 failed, ret = %d\n",
+> +		ret);
+> +		goto power_off;
+> +	}
+> +
+> +	ret = mipi_dsi_dcs_write_buffer(ctx->dsi, (u8[]){ 0xc2, 0x08 }, 2);
+> +	if (ret < 0) {
+> +		DRM_DEV_ERROR(ctx->dev,
+> +		"cmd set tx 1 failed, ret = %d\n",
+> +		ret);
+> +		goto power_off;
+> +	}
+> +
+> +	ret = mipi_dsi_dcs_write_buffer(ctx->dsi, (u8[]){ 0x35, 0x00 }, 2);
+> +	if (ret < 0) {
+> +		DRM_DEV_ERROR(ctx->dev,
+> +		"cmd set tx 2 failed, ret = %d\n",
+> +		ret);
+> +		goto power_off;
+> +	}
+> +
+> +	ret = mipi_dsi_dcs_write_buffer(ctx->dsi, (u8[]){ 0x51, 0xff }, 2);
+> +	if (ret < 0) {
+> +		DRM_DEV_ERROR(ctx->dev,
+> +		"cmd set tx 3 failed, ret = %d\n",
+> +		ret);
+> +		goto power_off;
+> +	}
+> +
+> +	ret = mipi_dsi_dcs_write(ctx->dsi, MIPI_DCS_EXIT_SLEEP_MODE, NULL, 0);
+> +	if (ret < 0) {
+> +		DRM_DEV_ERROR(ctx->dev,
+> +			"exit_sleep_mode cmd failed ret = %d\n",
+> +			ret);
+> +		goto power_off;
+> +	}
+> +
+> +	/* Per DSI spec wait 120ms after sending exit sleep DCS command */
+> +	msleep(120);
+> +
+> +	ret = mipi_dsi_dcs_write(ctx->dsi, MIPI_DCS_SET_DISPLAY_ON, NULL, 0);
+> +	if (ret < 0) {
+> +		DRM_DEV_ERROR(ctx->dev,
+> +			"set_display_on cmd failed ret = %d\n", ret);
+> +		goto power_off;
+> +	}
+> +
+> +	/* Per DSI spec wait 120ms after sending set_display_on DCS command */
+> +	msleep(120);
+> +
+> +	ctx->prepared = true;
+> +
+> +	return 0;
+> +
+> +power_off:
+> +	ret = visionox_rm69299_power_off(ctx);
+> +	return ret;
+
+	return visionox_rm69299_power_off();
+
+> +}
+> +
+> +static int visionox_rm69299_get_modes(struct drm_panel *panel,
+> +				       struct drm_connector *connector)
+> +{
+> +	struct visionox_rm69299 *ctx = panel_to_ctx(panel);
+> +	struct drm_display_mode *mode;
+> +	const struct rm69299_config *config;
+> +
+> +	config = ctx->config;
+> +	mode = drm_mode_create(connector->dev);
+> +	if (!mode) {
+> +		DRM_DEV_ERROR(ctx->dev,
+> +			"failed to create a new display mode\n");
+> +		return 0;
+> +	}
+> +
+> +	connector->display_info.width_mm = config->width_mm;
+> +	connector->display_info.height_mm = config->height_mm;
+> +	drm_mode_copy(mode, config->dm);
+> +	mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
+> +	drm_mode_probed_add(connector, mode);
+> +
+> +	return 1;
+> +}
+> +
+> +static const struct drm_panel_funcs visionox_rm69299_drm_funcs = {
+> +	.unprepare = visionox_rm69299_unprepare,
+> +	.prepare = visionox_rm69299_prepare,
+> +	.get_modes = visionox_rm69299_get_modes,
+> +};
+> +
+> +static const struct drm_display_mode qcom_sc7180_mtp_1080p_mode = {
+> +	.name = "1080x2248",
+> +	.clock = 158695,
+> +	.hdisplay = 1080,
+> +	.hsync_start = 1080 + 26,
+> +	.hsync_end = 1080 + 26 + 2,
+> +	.htotal = 1080 + 26 + 2 + 36,
+> +	.vdisplay = 2248,
+> +	.vsync_start = 2248 + 56,
+> +	.vsync_end = 2248 + 56 + 4,
+> +	.vtotal = 2248 + 56 + 4 + 4,
+> +	.vrefresh = 60,
+> +	.flags = 0,
+> +};
+> +
+> +static const struct rm69299_config rm69299_dir = {
+> +	.width_mm = 74,
+> +	.height_mm = 131,
+> +	.panel_name = "qcom_sc7180_mtp_1080p_panel",
+> +	.dm = &qcom_sc7180_mtp_1080p_mode,
+> +};
+> +
+> +static int visionox_rm69299_probe(struct mipi_dsi_device *dsi)
+> +{
+> +	struct device *dev = &dsi->dev;
+> +	struct device *device;
+
+Below I see:
+
+ctx->dev = dev;
+device = ctx->dev;
+
+A few uses of device and some of dev.
+
+ctx->panel.dev = device;
+
+Presumably you can drop the "device"?
+
+
+> +	struct visionox_rm69299 *ctx;
+> +	const struct rm69299_config *config;
+
+"config" is assigned below, but never used.
+
+> +	int ret;
+> +
+> +	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
+> +
+> +	if (!ctx)
+> +		return -ENOMEM;
+> +
+> +	ctx->config = device_get_match_data(dev);
+> +
+> +	if (!ctx->config) {
+
+This won't happen.
+
+> +		dev_err(dev, "missing device configuration\n");
+> +		return -ENODEV;
+> +	}
+> +
+> +	mipi_dsi_set_drvdata(dsi, ctx);
+> +
+> +	ctx->dev = dev;
+> +	ctx->dsi = dsi;
+> +
+> +	device = ctx->dev;
+> +
+> +	config = ctx->config;
+> +	ctx->supplies[0].supply = "vdda";
+> +	ctx->supplies[1].supply = "vdd3p3";
+> +
+> +	ret = devm_regulator_bulk_get(device, ARRAY_SIZE(ctx->supplies),
+> +								ctx->supplies);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ctx->reset_gpio = devm_gpiod_get(device, "reset", GPIOD_OUT_LOW);
+> +	if (IS_ERR(ctx->reset_gpio)) {
+> +		DRM_DEV_ERROR(dev, "cannot get reset gpio %ld\n",
+> +					PTR_ERR(ctx->reset_gpio));
+> +		return PTR_ERR(ctx->reset_gpio);
+> +	}
+> +
+> +	drm_panel_init(&ctx->panel, dev, &visionox_rm69299_drm_funcs, 
+> +		       DRM_MODE_CONNECTOR_DSI);
+> +	ctx->panel.dev = device;
+> +	ctx->panel.funcs = &visionox_rm69299_drm_funcs;
+> +	drm_panel_add(&ctx->panel);
+> +
+> +	dsi->lanes = 4;
+> +	dsi->format = MIPI_DSI_FMT_RGB888;
+> +	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_LPM |
+> +		MIPI_DSI_CLOCK_NON_CONTINUOUS;
+> +	ret = mipi_dsi_attach(dsi);
+> +	if (ret < 0) {
+> +		DRM_DEV_ERROR(dev,
+> +			"dsi attach failed ret = %d\n", ret);
+> +		goto err_dsi_attach;
+> +	}
+> +
+> +	return 0;
+> +
+> +err_dsi_attach:
+> +	drm_panel_remove(&ctx->panel);
+> +	return ret;
+> +}
+> +
+> +static int visionox_rm69299_remove(struct mipi_dsi_device *dsi)
+> +{
+> +	struct visionox_rm69299 *ctx = mipi_dsi_get_drvdata(dsi);
+> +
+> +	if (ctx->dsi) {
+
+If visionox_rm69299_probe() doesn't reach the point where it assigns
+ctx->dsi the remove function will not be called. So I don't see how this
+could be NULL, please remove the check.
+
+> +		mipi_dsi_detach(ctx->dsi);
+> +		mipi_dsi_device_unregister(ctx->dsi);
+> +	}
+> +
+> +	drm_panel_remove(&ctx->panel);
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id visionox_rm69299_of_match[] = {
+> +	{
+> +		.compatible = "visionox,rm69299-1080p-display",
+> +		.data = &rm69299_dir,
+> +	},
+> +	{ /* */ }
+
+Please drop the empty comment thing.
 
 Regards,
 Bjorn
 
-> While there are no current consumers of the SDM845 interconnect device in
-> devicetree, take this opportunity to redefine the interconnect device nodes
-> as the previous definitions of using a single child node under the apps_rsc
-> device did not accurately capture the description of the hardware.
-> The Network-On-Chip (NoC) interconnect devices should be represented in a
-> manner akin to QCS404 platforms[1] where there is a separation of NoC devices
-> and its RPM/RPMh counterparts.
-> 
-> The bcm-voter devices are representing the RPMh devices that the interconnect
-> providers need to communicate with and there can be more than one instance of
-> the Bus Clock Manager (BCM) which can live under different instances of Resource
-> State Coordinators (RSC). There are display use cases where consumers may need
-> to target a different bcm-voter (Some display specific RSC) than the default,
-> and there needs to be a way to represent this connection in devicetree.
-> 
-> This patches series extends the discussions[2][3] involving the SDM845
-> interconnect bindings by adding accompanying driver implementations
-> using the split NoC devices. Some of the code used to support the SDM845
-> provider driver are refactored into common modules that can used by other
-> RPMh based interconnect providers such as SC7180[4]. This patch series also
-> updates existing sdm845 binding documentation to DT schema format using
-> json-schema.
-> 
-> v3:
-> - Picked up Robs R-b for patch 1 
-> - Fixup qcom,bcm-voter.yaml. comments (Rob)
-> - Use qcom,bcm-voter instead of SoC specific compatible for
->   SDM845 and SC7180 (Odelu/Sibi)
-> - Fixup bindings check failures for qcom,sdm845.yaml
-> - Fixup the misc bugs. comments (Evan/Sibi)
-> - Fixup reg size for aggre1/2_noc
-> 
-> v2: 
-> - Reorganized dt-binding patches
-> - Fixed a bug that adds duplicate BCM node to voter (Georgi)
-> - Addressed misc. comments (Georgi)
-> 
-> v1: https://lkml.org/lkml/2019/12/16/15
-> 
-> [1]: https://lkml.org/lkml/2019/6/13/143
-> [2]: https://lkml.org/lkml/2019/7/19/1063
-> [3]: https://lkml.org/lkml/2019/10/16/1793
-> [4]: https://lkml.org/lkml/2019/11/26/389
-> 
-> David Dai (6):
->   dt-bindings: interconnect: Convert qcom,sdm845 to DT schema
->   dt-bindings: interconnect: Add YAML schemas for QCOM bcm-voter
->   dt-bindings: interconnect: Update Qualcomm SDM845 DT bindings
->   interconnect: qcom: Consolidate interconnect RPMh support
->   interconnect: qcom: sdm845: Split qnodes into their respective NoCs
->   arm64: dts: sdm845: Redefine interconnect provider DT nodes
-> 
->  .../bindings/interconnect/qcom,bcm-voter.yaml |   45 +
->  .../bindings/interconnect/qcom,sdm845.txt     |   24 -
->  .../bindings/interconnect/qcom,sdm845.yaml    |   74 +
->  arch/arm64/boot/dts/qcom/sdm845.dtsi          |   65 +-
->  drivers/interconnect/qcom/Kconfig             |   13 +-
->  drivers/interconnect/qcom/Makefile            |    4 +
->  drivers/interconnect/qcom/bcm-voter.c         |  366 +++++
->  drivers/interconnect/qcom/bcm-voter.h         |   27 +
->  drivers/interconnect/qcom/icc-rpmh.c          |  147 ++
->  drivers/interconnect/qcom/icc-rpmh.h          |  149 +++
->  drivers/interconnect/qcom/sdm845.c            | 1185 +++++++----------
->  .../dt-bindings/interconnect/qcom,sdm845.h    |  263 ++--
->  12 files changed, 1516 insertions(+), 846 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
->  delete mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sdm845.txt
->  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sdm845.yaml
->  create mode 100644 drivers/interconnect/qcom/bcm-voter.c
->  create mode 100644 drivers/interconnect/qcom/bcm-voter.h
->  create mode 100644 drivers/interconnect/qcom/icc-rpmh.c
->  create mode 100644 drivers/interconnect/qcom/icc-rpmh.h
-> 
+> +};
+> +MODULE_DEVICE_TABLE(of, visionox_rm69299_of_match);
+> +
+> +static struct mipi_dsi_driver visionox_rm69299_driver = {
+> +	.driver = {
+> +		.name = "panel-visionox-rm69299",
+> +		.of_match_table = visionox_rm69299_of_match,
+> +	},
+> +	.probe = visionox_rm69299_probe,
+> +	.remove = visionox_rm69299_remove,
+> +};
+> +module_mipi_dsi_driver(visionox_rm69299_driver);
+> +
+> +MODULE_DESCRIPTION("VISIONOX RM69299 DSI Panel Driver");
+> +MODULE_LICENSE("GPL v2");
+> +
 > -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> 2.7.4
+> 
