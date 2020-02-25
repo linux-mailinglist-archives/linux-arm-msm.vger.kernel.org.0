@@ -2,290 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BC8A016EF30
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 20:41:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B30916F2A5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 23:37:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729894AbgBYTlQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Feb 2020 14:41:16 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:37049 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728051AbgBYTlQ (ORCPT
+        id S1728770AbgBYWhl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Feb 2020 17:37:41 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:32909 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727778AbgBYWhl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Feb 2020 14:41:16 -0500
-Received: by mail-ed1-f66.google.com with SMTP id t7so789945edr.4;
-        Tue, 25 Feb 2020 11:41:14 -0800 (PST)
+        Tue, 25 Feb 2020 17:37:41 -0500
+Received: by mail-pl1-f196.google.com with SMTP id ay11so438020plb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Feb 2020 14:37:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ag9UfCbOttlLWSx+g2xd6gLmO4m6wnF3cbni4nCtO7Y=;
-        b=V8TrvqBbaJHYBRfkST5wos2DdVNXVbzpHvUlruLy78zRsXEOLIchDDhCTiFkeTlipa
-         UnbsoiETIP2R9mNBKUk2MHJgGwBWrBjvXvs3Oeu3SclB/Kgz2W4Rf1aJXitnIeFLjdGk
-         Wr7JyIqIfoQ6s9Z7gsVEjvkhKvz0N7aO5KHyHcFnJbjk9NQP9b/PLkIosYu0h/FG+sMv
-         smOBeGaolT3N+BzP3SYTKCkF5w0iBAfUGO8kK0nzkuqi+Ri+/rkB8e0p02toyLxsgmVO
-         wrHshvXwyq6TnpYIGcUlyCL5x7HvDiOHIEz6rSbKsu88m2olWhnyXEaOrUSLJsep53mw
-         KETA==
+        d=broadcom.com; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=ujUSpbSlCH5ZCbsE0Im09CK5jyllUEPbsT32AKCmZZ8=;
+        b=DyLkCv60xAdLCmRKcDclI0CdjpCht6vI0Kff3FlLtJ7IJj+r1jKD0DZHiRDVNX9oU2
+         4ILDtH0EHnHCBkWm9pY11x/hcehrKdRPZLnZ0B+wuKFb3zlDp6C5dn106hviyEbF5k2w
+         /2q2TLjsB4pOYE7UmuaRr59Z8/Ete9pGvTXVU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ag9UfCbOttlLWSx+g2xd6gLmO4m6wnF3cbni4nCtO7Y=;
-        b=AZp7Bu+0z4GLaQ/HI62uLQQZa+tpHAsr9RVdZeNHkkVW97VZQRpG8MdV2bjaYC05fn
-         ZqalFhSdaMIQ1P61wtxhBvEJ8FReV26W5IRAXF/AojGyoT4uBEJRhSAiYLWlIJbKgDGu
-         3CqteSO4AxbM7WLIVFUAkp9PlHQ3WE34lDrArK4zmREHnHyqGh5tKv7+j+u/QKHshLBV
-         6Q7ktXGNg6dwxBM2azVGnzznX0rCvRvX+jnaA1hPvGoCIIbGzUHaO1kMUDTxG9LKx2KH
-         TfG3kKyde1uffr5k/9Ay/V/10FRviaViypJOw6nJx77Z4rh5GuRuqhpX78PLk4aLo7yI
-         WAbA==
-X-Gm-Message-State: APjAAAU5GLPcbVtgWAk7mrjQ6we1RFC/ipRc0q6Y3cAJu55VmR4X3Vmb
-        2PVUbe+O5H0lokEABe6TYi8tsnhgHNXXjHBeMwQ=
-X-Google-Smtp-Source: APXvYqzq12vZfTdfYHSsHJzicdcHsX7ksLKD0D4k9tbOBcL5ZakgsvyPPnbhVC7JEh5rajsfyPGJRZXVBqHGOurrABs=
-X-Received: by 2002:a50:e3c5:: with SMTP id c5mr576813edm.7.1582659673599;
- Tue, 25 Feb 2020 11:41:13 -0800 (PST)
-MIME-Version: 1.0
-References: <20200219104148.1.I0183a464f2788d41e6902f3535941f69c594b4c1@changeid>
- <20200219104148.2.I2c848e8f8ab1bcd4042d8ebcf35de737cceec5fe@changeid> <158265922943.177367.14293328114795800228@swboyd.mtv.corp.google.com>
-In-Reply-To: <158265922943.177367.14293328114795800228@swboyd.mtv.corp.google.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 25 Feb 2020 11:41:06 -0800
-Message-ID: <CAF6AEGu6Ys_t38uXNw3-Po1jaQmW3pOvAiZ73axpiAgCjvtC=g@mail.gmail.com>
-Subject: Re: [PATCH 2/4] drm/msm/dpu: Refactor rm iterator
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Drew Davenport <ddavenport@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Allison Randal <allison@lohutok.net>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Fritz Koenig <frkoenig@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Sean Paul <sean@poorly.run>,
-        Shubhashree Dhar <dhar@codeaurora.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        freedreno <freedreno@lists.freedesktop.org>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=ujUSpbSlCH5ZCbsE0Im09CK5jyllUEPbsT32AKCmZZ8=;
+        b=DNV3mCEFUbo9KWSwq6ECB7Qpbgd/rd+j1s20srA5kIX4/js0QkxRKnMUtDF2A58sCZ
+         LHd7WITp45qIJAJIjmw6FcbDgZEhtP8YqfTn/6jvvFRiVaXeL+dvWV+kxpQbrNN9IlZL
+         dx7jFzoWHvS0O/ybNhvwcY9lTdhy+z5FvaBly9z//WB7MZXaVXfCYOzOH1hgK66NV9ta
+         sBzvTi6AY/tc83YOcyU6hHQL7zgGY6QeDo8N20HPHJNtFWPv1lyNaCQcyDFM6WxZTKLi
+         R42OE6mCrBrGsMy3DWzs0jWvTYJh/Z2TLpLp53mum2ttbBHUr/SQFM6PhGNkRG+kg1ij
+         Ofmw==
+X-Gm-Message-State: APjAAAWN8+zF82gE/PeVxnDc9bQuu1iEX5LqLp7O6TJc95CMZmQlF0ie
+        EefsVW25ZbOB16NFDIAPre+5ow==
+X-Google-Smtp-Source: APXvYqyClLjlKFFh151KqjRXFbjTgwsEjNcVLzqq++3PiVnTCzW7kl9YidPkNzPtFOSSHwlCCAAalw==
+X-Received: by 2002:a17:902:bf41:: with SMTP id u1mr738034pls.207.1582670259870;
+        Tue, 25 Feb 2020 14:37:39 -0800 (PST)
+Received: from [10.136.13.65] ([192.19.228.250])
+        by smtp.gmail.com with ESMTPSA id x12sm111778pfr.47.2020.02.25.14.37.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Feb 2020 14:37:39 -0800 (PST)
+Subject: Re: [PATCH v2 6/7] misc: bcm-vk: add Broadcom VK driver
+To:     Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Luis Chamberlain <mcgrof@kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Alexander Viro <viro@zeniv.linux.org.uk>,
+        Shuah Khan <shuah@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        zhengbin <zhengbin13@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
+        Linux FS-devel Mailing List <linux-fsdevel@vger.kernel.org>,
+        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Kees Cook <keescook@chromium.org>,
+        Takashi Iwai <tiwai@suse.de>,
+        "open list:KERNEL SELFTEST FRAMEWORK" 
+        <linux-kselftest@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        Desmond Yan <desmond.yan@broadcom.com>,
+        James Hu <james.hu@broadcom.com>
+References: <20200220004825.23372-1-scott.branden@broadcom.com>
+ <20200220004825.23372-7-scott.branden@broadcom.com>
+ <20200220074711.GA3261162@kroah.com>
+ <ee53fe6f-53de-87c0-db16-989cc15abbce@broadcom.com>
+ <CAK8P3a0y8RfjEng4AsMr4MAPGMTXduiFOyfUzazgw9c+KVWmYA@mail.gmail.com>
+ <CAOesGMj423YXNhk_vFE0ueNjzbYoD0wQ68jJApewZS8qtVX3=g@mail.gmail.com>
+From:   Scott Branden <scott.branden@broadcom.com>
+Message-ID: <d35204c1-054e-ec5b-069b-42a053a3863f@broadcom.com>
+Date:   Tue, 25 Feb 2020 14:37:36 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <CAOesGMj423YXNhk_vFE0ueNjzbYoD0wQ68jJApewZS8qtVX3=g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 25, 2020 at 11:33 AM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Drew Davenport (2020-02-19 09:42:25)
-> > Make iterator implementation private, and add function to
-> > query resources assigned to an encoder.
-> >
-> > Signed-off-by: Drew Davenport <ddavenport@chromium.org>
->
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > index f8ac3bf60fd60..6cadeff456f09 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > @@ -957,11 +957,11 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
-> >         struct drm_connector *conn = NULL, *conn_iter;
-> >         struct drm_crtc *drm_crtc;
-> >         struct dpu_crtc_state *cstate;
-> > -       struct dpu_rm_hw_iter hw_iter;
-> >         struct msm_display_topology topology;
-> > -       struct dpu_hw_ctl *hw_ctl[MAX_CHANNELS_PER_ENC] = { NULL };
-> > -       struct dpu_hw_mixer *hw_lm[MAX_CHANNELS_PER_ENC] = { NULL };
-> > -       int num_lm = 0, num_ctl = 0;
-> > +       struct dpu_hw_blk *hw_pp[MAX_CHANNELS_PER_ENC];
-> > +       struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
-> > +       struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
-> > +       int num_lm, num_ctl, num_pp;
->
-> All these should be unsigned too?
->
-> >         int i, j, ret;
-> >
-> >         if (!drm_enc) {
-> > @@ -1005,42 +1005,31 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
-> >                 return;
-> >         }
-> >
-> > -       dpu_rm_init_hw_iter(&hw_iter, drm_enc->base.id, DPU_HW_BLK_PINGPONG);
-> > -       for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
-> > -               dpu_enc->hw_pp[i] = NULL;
-> > -               if (!dpu_rm_get_hw(&dpu_kms->rm, &hw_iter))
-> > -                       break;
-> > -               dpu_enc->hw_pp[i] = (struct dpu_hw_pingpong *) hw_iter.hw;
-> > -       }
-> > -
-> > -       dpu_rm_init_hw_iter(&hw_iter, drm_enc->base.id, DPU_HW_BLK_CTL);
-> > -       for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
-> > -               if (!dpu_rm_get_hw(&dpu_kms->rm, &hw_iter))
-> > -                       break;
-> > -               hw_ctl[i] = (struct dpu_hw_ctl *)hw_iter.hw;
->
-> Why cast? Isn't it void pointer?
+Hi Olof/All,
 
-Comments on code that the patch removes is a new thing :-P
+I'm trying to digest all the feedback of what needs to be done.
+I will be fixing up all the valuable comments about general issues but 
+would like to know
+what needs to be done about the tty interface.
 
-BR,
--R
+The VK devices are configured to write serial data to circular buffers 
+in memory or out a UART.
+When we configure a system using the UART we connect a cable to the host 
+and open a tty device.
+When we don't connect a UART cable to the host we open the tty device in 
+our driver instead.
+In this case the memory is exposed to the host via PCI BAR memory space.
+The bcm-vk host driver then accesses PCI space and presents a tty 
+interface to the host.
+We implemented a tty device to present the tty interface.
+Host doesn't change anything other than opening a different devnode in 
+UART vs. PCI case.
 
+Based on all the comments: what interface should we be providing in 
+driver instead?
+
+On 2020-02-23 3:55 p.m., Olof Johansson wrote:
+> On Sat, Feb 22, 2020 at 12:03 AM Arnd Bergmann <arnd@arndb.de> wrote:
+>> On Fri, Feb 21, 2020 at 7:19 PM Scott Branden
+>> <scott.branden@broadcom.com> wrote:
+>>> On 2020-02-19 11:47 p.m., Greg Kroah-Hartman wrote:
+>>>> Have you worked with the V4L developers to tie this into the proper
+>>>> in-kernel apis for this type of functionality?
+>>> We looked at the V4L model doesn't have any support for anything we are
+>>> doing in this driver.
+>>> We also want a driver that doesn't care about video.  It could be
+>>> offloading crypto or other operations.
+>>> We talked with Olof about all of this previously and he said leave it as
+>>> a misc driver for now.
+>>> He was going to discuss at linux plumbers conference that we need some
+>>> sort of offload engine model that such devices could fit into.
+>> I see. Have you looked at the "uacce" driver submission? It seems
+>> theirs is similar enough that there might be some way to share interfaces.
+> Uacce isn't a driver (or wasn't last time I looked at it, when it had
+> a different name). It's more of a framework for standardized direct HW
+> access from userspace, and relies on I/O virtualization to keep DMA
+> secure/partitioned, etc. VK is more of a classic PCIe device, it'll
+> handle DMA to/from the host, etc.
 >
-> > -               num_ctl++;
-> > -       }
-> > +       num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, drm_enc->base.id,
-> > +               DPU_HW_BLK_PINGPONG, hw_pp, ARRAY_SIZE(hw_pp));
-> > +       num_ctl = dpu_rm_get_assigned_resources(&dpu_kms->rm, drm_enc->base.id,
-> > +               DPU_HW_BLK_CTL, hw_ctl, ARRAY_SIZE(hw_ctl));
-> > +       num_lm = dpu_rm_get_assigned_resources(&dpu_kms->rm, drm_enc->base.id,
-> > +               DPU_HW_BLK_LM, hw_lm, ARRAY_SIZE(hw_lm));
-> >
-> > -       dpu_rm_init_hw_iter(&hw_iter, drm_enc->base.id, DPU_HW_BLK_LM);
-> > -       for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
-> > -               if (!dpu_rm_get_hw(&dpu_kms->rm, &hw_iter))
-> > -                       break;
-> > -               hw_lm[i] = (struct dpu_hw_mixer *)hw_iter.hw;
+>>>> Using a tty driver seems like the totally incorrect way to do this, what
+>>>> am I missing?
+>>> tty driver is used to provide console access to the processors running
+>>> on vk.
+>>> Data is sent using the bcm_vk_msg interface by read/write operations
+>>> from user space.
+>>> VK then gets the messages and DMA's the data to/from host memory when
+>>> needed to process.
+>> In turn here, it sounds like you'd want to look at what drivers/misc/mic/
+>> and the mellanox bluefield drivers are doing. As I understand, they have the
+>> same requirements for console, but have a nicer approach of providing
+>> abstract 'virtio' channels between the PCIe endpoint and the host, and
+>> then run regular virtio based drivers (console, tty, block, filesystem,
+>> network, ...) along with application specific ones to provide the custom
+>> high-level protocols.
+> This has more value on the device than on the host, as far as I've
+> seen it used (if you want to boot Linux on it and have things
+> exposed).
 >
-> Why cast?
+> virtio isn't necessarily a match if all you really want is a character
+> stream for a console and don't need (or have performance requirements
+> beyond what virtio offers) other types of communication.
 >
-> > -               num_lm++;
-> > -       }
-> > +       for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
-> > +               dpu_enc->hw_pp[i] = i < num_pp ? to_dpu_hw_pingpong(hw_pp[i])
-> > +                                               : NULL;
+>> This is also similar to what the drivers/pci/endpoint
+>> (from the other end) as the drivers/ntb (pci host on both ends) frameworks
+>> and of course the rpmsg/remoteproc framework do.
+> remoteproc is more about booting a tightly integrated device on an
+> embedded system. Also not a match here IMHO.
 >
-> This line is pretty hard to read. Maybe use an if/else?
+>> In the long run, I would want much more consolidation between the
+>> low-level parts of all these frameworks, but moving your high-level
+>> protocols to the same virtio method would sound like a step in the
+>> direction towards a generialized framework and easier sharing of
+>> the abstractions.
+> For a simple naive console/character stream, doing something on top of
+> hvc might be easier -- it already does polling for you, etc.
 >
-> >
-> >         cstate = to_dpu_crtc_state(drm_crtc->state);
-> >
-> >         for (i = 0; i < num_lm; i++) {
-> >                 int ctl_idx = (i < num_ctl) ? i : (num_ctl-1);
-> >
-> > -               cstate->mixers[i].hw_lm = hw_lm[i];
-> > -               cstate->mixers[i].lm_ctl = hw_ctl[ctl_idx];
-> > +               cstate->mixers[i].hw_lm = to_dpu_hw_mixer(hw_lm[i]);
-> > +               cstate->mixers[i].lm_ctl = to_dpu_hw_ctl(hw_ctl[ctl_idx]);
-> >         }
-> >
-> >         cstate->num_mixers = num_lm;
-> >
-> >         for (i = 0; i < dpu_enc->num_phys_encs; i++) {
-> > +               int num_blk;
+> Of course, the intent is not to ever use it as a console for the host
+> here, so that aspect of hvc isn't useful. But it gives you a bunch of
+> other stuff for free with just getchar/putchar interfaces to
+> implement.
 >
-> unsigned int?
 >
-> > +               struct dpu_hw_blk *hw_blk[MAX_CHANNELS_PER_ENC];
-> >                 struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
-> >
-> >                 if (!dpu_enc->hw_pp[i]) {
-> > @@ -1056,17 +1045,15 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
-> >                 }
-> >
-> >                 phys->hw_pp = dpu_enc->hw_pp[i];
-> > -               phys->hw_ctl = hw_ctl[i];
-> > +               phys->hw_ctl = to_dpu_hw_ctl(hw_ctl[i]);
-> >
-> > -               dpu_rm_init_hw_iter(&hw_iter, drm_enc->base.id,
-> > -                                   DPU_HW_BLK_INTF);
-> > -               for (j = 0; j < MAX_CHANNELS_PER_ENC; j++) {
-> > +               num_blk = dpu_rm_get_assigned_resources(&dpu_kms->rm,
-> > +                       drm_enc->base.id, DPU_HW_BLK_INTF, hw_blk,
-> > +                       ARRAY_SIZE(hw_blk));
-> > +               for (j = 0; j < num_blk; j++) {
-> >                         struct dpu_hw_intf *hw_intf;
-> >
-> > -                       if (!dpu_rm_get_hw(&dpu_kms->rm, &hw_iter))
-> > -                               break;
-> > -
-> > -                       hw_intf = (struct dpu_hw_intf *)hw_iter.hw;
-> > +                       hw_intf = to_dpu_hw_intf(hw_blk[i]);
-> >                         if (hw_intf->idx == phys->intf_idx)
-> >                                 phys->hw_intf = hw_intf;
-> >                 }
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > index dea1dba441fe7..779df26dc81ae 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > @@ -83,7 +97,7 @@ static bool _dpu_rm_get_hw_locked(struct dpu_rm *rm, struct dpu_rm_hw_iter *i)
-> >         return false;
-> >  }
-> >
-> > -bool dpu_rm_get_hw(struct dpu_rm *rm, struct dpu_rm_hw_iter *i)
-> > +static bool dpu_rm_get_hw(struct dpu_rm *rm, struct dpu_rm_hw_iter *i)
-> >  {
-> >         bool ret;
-> >
-> > @@ -635,3 +649,16 @@ int dpu_rm_reserve(
-> >
-> >         return ret;
-> >  }
-> > +
-> > +int dpu_rm_get_assigned_resources(struct dpu_rm *rm, uint32_t enc_id,
->
-> Return unsigned int?
->
-> > +       enum dpu_hw_blk_type type, struct dpu_hw_blk **blks, int blks_size)
->
-> unsigned int blks_size?
->
-> > +{
-> > +       struct dpu_rm_hw_iter hw_iter;
-> > +       int num_blks = 0;
->
-> unsigned int?
->
-> > +
-> > +       dpu_rm_init_hw_iter(&hw_iter, enc_id, type);
-> > +       while (num_blks < blks_size && dpu_rm_get_hw(rm, &hw_iter))
-> > +               blks[num_blks++] = hw_iter.blk->hw;
-> > +
-> > +       return num_blks;
->
-> It's not possible for it to be negative number right?
->
-> > +}
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> > index 9c580a0170946..982b91e272275 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> > @@ -24,26 +24,6 @@ struct dpu_rm {
-> >         struct mutex rm_lock;
-> >  };
-> >
-> > -/**
-> > - *  struct dpu_rm_hw_blk - resource manager internal structure
-> > - *     forward declaration for single iterator definition without void pointer
-> > - */
-> > -struct dpu_rm_hw_blk;
-> > -
-> > -/**
-> > - * struct dpu_rm_hw_iter - iterator for use with dpu_rm
-> > - * @hw: dpu_hw object requested, or NULL on failure
-> > - * @blk: dpu_rm internal block representation. Clients ignore. Used as iterator.
-> > - * @enc_id: DRM ID of Encoder client wishes to search for, or 0 for Any Encoder
->
-> Why is Encoder and Any capitalized?
->
-> > - * @type: Hardware Block Type client wishes to search for.
-> > - */
-> > -struct dpu_rm_hw_iter {
-> > -       void *hw;
-> > -       struct dpu_rm_hw_blk *blk;
-> > -       uint32_t enc_id;
-> > -       enum dpu_hw_blk_type type;
-> > -};
-> > -
-> >  /**
-> >   * dpu_rm_init - Read hardware catalog and create reservation tracking objects
-> >   *     for all HW blocks.
-> > @@ -93,28 +73,9 @@ int dpu_rm_reserve(struct dpu_rm *rm,
-> >  void dpu_rm_release(struct dpu_rm *rm, struct drm_encoder *enc);
-> >
-> >  /**
-> > - * dpu_rm_init_hw_iter - setup given iterator for new iteration over hw list
-> > - *     using dpu_rm_get_hw
-> > - * @iter: iter object to initialize
-> > - * @enc_id: DRM ID of Encoder client wishes to search for, or 0 for Any Encoder
-> > - * @type: Hardware Block Type client wishes to search for.
->
-> Ah I guess it's copied from here.
+> -Olof
+
