@@ -2,70 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E56A16E950
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 16:04:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 56E6B16EA79
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 16:49:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730573AbgBYPEm convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Feb 2020 10:04:42 -0500
-Received: from mail.fireflyinternet.com ([109.228.58.192]:60151 "EHLO
-        fireflyinternet.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1729870AbgBYPEm (ORCPT
+        id S1730340AbgBYPtF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Feb 2020 10:49:05 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:44374 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1731072AbgBYPtF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Feb 2020 10:04:42 -0500
-X-Default-Received-SPF: pass (skip=forwardok (res=PASS)) x-ip-name=78.156.65.138;
-Received: from localhost (unverified [78.156.65.138]) 
-        by fireflyinternet.com (Firefly Internet (M1)) with ESMTP (TLS) id 20346492-1500050 
-        for multiple; Tue, 25 Feb 2020 15:04:28 +0000
-Content-Type: text/plain; charset="utf-8"
+        Tue, 25 Feb 2020 10:49:05 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1582645744; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=K8JRAAUqIiBv8eRLCyrJkO1Q8E5vnb4MRUaWxR0NqEE=;
+ b=GSHezwUoFQorBOgeqTx+9MFmfkMe8t5YNyhz2e75V+j63OOMdwie8NNaImr0O+KRNbcSJ0Zg
+ 41+IwpJKXeD0nKiGdQzkTn5lRm7m3S+RbmiPekYtzDHdoCdaNlKVFAEzyj0qPYdJNC9aKL1R
+ +JREIVG0ByNNwctXQN9p1PnOEso=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e5541ea.7fb06ae4d810-smtp-out-n01;
+ Tue, 25 Feb 2020 15:48:58 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E4F34C447A2; Tue, 25 Feb 2020 15:48:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: okukatla)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 52814C447A0;
+        Tue, 25 Feb 2020 15:48:57 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-To:     "Gustavo A. R. Silva" <gustavo@embeddedor.com>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dave Airlie <airlied@redhat.com>,
-        David Airlie <airlied@linux.ie>, Eric Anholt <eric@anholt.net>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Russell King <linux+etnaviv@armlinux.org.uk>,
-        Sean Paul <sean@poorly.run>,
-        Thomas Hellstrom <thellstrom@vmware.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        VMware Graphics <linux-graphics-maintainer@vmware.com>
-From:   Chris Wilson <chris@chris-wilson.co.uk>
-In-Reply-To: <20200225140347.GA22864@embeddedor>
-Cc:     "Gustavo A. R. Silva" <gustavo@embeddedor.com>,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, spice-devel@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        freedreno@lists.freedesktop.org
-References: <20200225140347.GA22864@embeddedor>
-Message-ID: <158264306645.3062.14566490586309398145@skylake-alporthouse-com>
-User-Agent: alot/0.6
-Subject: Re: [PATCH][next] drm: Replace zero-length array with flexible-array member
-Date:   Tue, 25 Feb 2020 15:04:26 +0000
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 25 Feb 2020 21:18:57 +0530
+From:   okukatla@codeaurora.org
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     georgi.djakov@linaro.org, daidavid1@codeaurora.org,
+        bjorn.andersson@linaro.org, evgreen@google.com,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sboyd@kernel.org,
+        ilina@codeaurora.org, seansw@qti.qualcomm.com, elder@linaro.org,
+        linux-pm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [V3, 3/3] dt-bindings: interconnect: Add Qualcomm SC7180 DT
+ bindings
+In-Reply-To: <20200221194012.GF24720@google.com>
+References: <1582277450-27382-1-git-send-email-okukatla@codeaurora.org>
+ <1582277450-27382-4-git-send-email-okukatla@codeaurora.org>
+ <20200221194012.GF24720@google.com>
+Message-ID: <3baf11a2cbdb649d6e850aa15665d28f@codeaurora.org>
+X-Sender: okukatla@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Gustavo A. R. Silva (2020-02-25 14:03:47)
-> The current codebase makes use of the zero-length array language
-> extension to the C90 standard, but the preferred mechanism to declare
-> variable-length types such as these ones is a flexible array member[1][2],
-> introduced in C99:
+On 2020-02-22 01:10, Matthias Kaehlcke wrote:
+> Hi Odelu,
+> 
+>> Subject: dt-bindings: interconnect: Add Qualcomm SC7180 DT bindings
+> 
+> This patch doesn't add a binding, but DT entries for SC7180.
+> 
+> The subject of v2 was "arm64: dts: sc7180: Add interconnect provider
+> DT nodes", please go back to that or something similar.
 
-I remember when gcc didn't support []. For the record, it appears
-support for flexible arrays landed in gcc-3.0. So passes the minimum
-compiler spec. That would be useful to mention for old farts with
-forgetful memories.
--Chris
+Thanks for the review!
+Noticed this later, i will address this in next patch.
