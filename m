@@ -2,109 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9728516B951
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 06:49:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EDDB516BAA1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Feb 2020 08:31:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726130AbgBYFtV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Feb 2020 00:49:21 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:21263 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726400AbgBYFtU (ORCPT
+        id S1729189AbgBYHba (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Feb 2020 02:31:30 -0500
+Received: from mail-pj1-f54.google.com ([209.85.216.54]:35668 "EHLO
+        mail-pj1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728999AbgBYHb3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Feb 2020 00:49:20 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582609760; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=TJy12gozjFJPHYs+99/ImfG0WnY9iUGm1r5o3HJf61M=; b=tp9GC9E2v04yzO27x8Z2u3/AVome4qaeL6sLzhIUSgIJ5TBZenntrqN6Obl07YWX65W+RfJ4
- BTUYRtvljZkbGVYO/SwS7hug0memloIp4+gDo0HQtQQ9ha4CeAsr6MQw1IUDVLHIjHUPTK93
- 6wz9LaY1POc7GSsoUbRMx1ghipA=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e54b55a.7f0e0e956650-smtp-out-n03;
- Tue, 25 Feb 2020 05:49:14 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3A08FC447A2; Tue, 25 Feb 2020 05:49:14 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.206.28.9] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id ED895C43383;
-        Tue, 25 Feb 2020 05:49:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org ED895C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v5 3/5] dt-bindings: clock: Add YAML schemas for the QCOM
- MSS clock bindings
-To:     Rob Herring <robh@kernel.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh+dt@kernel.org
-References: <1582540703-6328-1-git-send-email-tdas@codeaurora.org>
- <1582540703-6328-4-git-send-email-tdas@codeaurora.org>
- <20200224184201.GA6030@bogus>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <eec22330-2bf4-f4f5-3d28-6b69aa71f992@codeaurora.org>
-Date:   Tue, 25 Feb 2020 11:19:03 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        Tue, 25 Feb 2020 02:31:29 -0500
+Received: by mail-pj1-f54.google.com with SMTP id q39so903399pjc.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Feb 2020 23:31:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=anRqB6ZtL5ycMSdajgec54nGj236WP/DD78Va57iy7E=;
+        b=bxt4Go+kFXLoTGSLuVk7Qh43XAwFUpCugL/zR7Uq+NXiGfPA551Q9fJPKnKvVV+Jdn
+         AKKdRX3y/FJl6613sHqwMD+tTsKEV2hti4sy3qHnVR66Q4D408T7K9cdx/8WdFfe6DFR
+         Payjy6ihMlXDG6bjo1BarL6zYCvn9qqeeWfrFhpSb6ariCnYnMWxsUuZAsFZ/gagE0ss
+         sfxSutPt+RGyzmMWC0Mzy6jT7a4l7f1ldZF8GsXmkr6z351C4qGl4WYpVJEwyFfImAJD
+         H28d/q2ExOWTtNia4PG7h7nWIu3CIP+tnbaOQW3bjVxrlNv9qcPNLCx5EKV3/O2Cem1i
+         ywhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=anRqB6ZtL5ycMSdajgec54nGj236WP/DD78Va57iy7E=;
+        b=f8uNyxClFR31+B22WbSUD1/Ytfi0HeRIjqFpwfYRoyt+K0/XrlOnRmkKlvpCDkIC81
+         3FU290I7o+3BG4gLDTK4kYvTrjNPhBpJlj4AWNwDQMu+Vpb0cM1IDoQL5do7m1kU5Uvp
+         chubRCszQGtfohIxvmG4mOPwlyPKHJwfF1HkvoXKqiPFou8jp8QSyAFEM+YOQuSxgRFP
+         yGvY5fuziGzCf7GrtSRqF7dypderxkoml59JBNKwkIVRSf30zxuqlxwNcQHiKFXADo55
+         ecIo9ErnNs4bVVOw4dVhEnU90cnPUzBnBFwxhw64ApElG27xoFndDP32yxIxZ55Pw3Ak
+         UoUQ==
+X-Gm-Message-State: APjAAAUaDLduxuA4KDl8BP0Vmt3cERCLX7v9Y9Ag4fkYJtz/YcorHaPY
+        oKwpUUJoDbab3J+9AqwBY/VmW9VcYSs=
+X-Google-Smtp-Source: APXvYqzIhBgnnHmdXw789bIxcX/nWiy2QzrnJRrPhCxP/ISxohPFT45JIgqw5WHSHhqOshHIoNCGCw==
+X-Received: by 2002:a17:90a:26e1:: with SMTP id m88mr3613337pje.101.1582615887991;
+        Mon, 24 Feb 2020 23:31:27 -0800 (PST)
+Received: from localhost ([103.195.202.114])
+        by smtp.gmail.com with ESMTPSA id r3sm15946733pfg.145.2020.02.24.23.31.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Feb 2020 23:31:26 -0800 (PST)
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
+        sivaa@codeaurora.org, Andy Gross <agross@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     Amit Kucheria <amit.kucheria@verdurent.com>,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: [PATCH v1 0/3] Cleanup dtbs_check warnings for tsens
+Date:   Tue, 25 Feb 2020 13:01:19 +0530
+Message-Id: <cover.1582615616.git.amit.kucheria@linaro.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <20200224184201.GA6030@bogus>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+Make dtbs_check pass for tsens bits. I'm working on another series to
+cleanup other DT warnings for QC platforms.
 
-On 2/25/2020 12:12 AM, Rob Herring wrote:
+Amit Kucheria (3):
+  dt-bindings: thermal: tsens: Make dtbs_check pass for sc7180 tsens
+  dt-bindings: thermal: tsens: Make dtbs_check pass for msm8916 tsens
+  dt-bindings: thermal: tsens: Make dtbs_check pass for msm8996 tsens
 
-> 
-> My bot found errors running 'make dt_binding_check' on your patch:
-> 
-> Documentation/devicetree/bindings/display/simple-framebuffer.example.dts:21.16-37.11: Warning (chosen_node_is_root): /example-0/chosen: chosen node must be at root node
-> Error: Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dts:21.26-27 syntax error
-> FATAL ERROR: Unable to parse input tree
-> scripts/Makefile.lib:300: recipe for target 'Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dt.yaml' failed
-> make[1]: *** [Documentation/devicetree/bindings/clock/qcom,sc7180-mss.example.dt.yaml] Error 1
-> Makefile:1263: recipe for target 'dt_binding_check' failed
-> make: *** [dt_binding_check] Error 2
-> 
-> See https://patchwork.ozlabs.org/patch/1242999
-> Please check and re-submit.
-> 
-
-The error shows syntax error at line 21, below is the example.dts from 
-my tree and would compile for me as I have the dependency of the include 
-file when I compile.
-
-Please guide how to go about.
-
-+#define GCC_MSS_MFAB_AXIS_CLK					126
-
-  17 #include <dt-bindings/clock/qcom,gcc-sc7180.h>
-  18         clock-controller@41a8000 {
-  19           compatible = "qcom,sc7180-mss";
-  20           reg = <0 0x041a8000 0 0x8000>;
-  21           clocks = <&gcc GCC_MSS_MFAB_AXIS_CLK>,
-
-
+ Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+ arch/arm64/boot/dts/qcom/msm8916.dtsi                     | 2 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi                     | 4 ++--
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
+2.20.1
 
---
