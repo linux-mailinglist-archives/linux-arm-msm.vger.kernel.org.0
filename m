@@ -2,28 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 43334170381
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 16:58:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E3A8E170387
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 16:58:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728681AbgBZP6R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Feb 2020 10:58:17 -0500
-Received: from mail.kernel.org ([198.145.29.99]:45754 "EHLO mail.kernel.org"
+        id S1728593AbgBZP6r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Feb 2020 10:58:47 -0500
+Received: from mail.kernel.org ([198.145.29.99]:46062 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728551AbgBZP6R (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Feb 2020 10:58:17 -0500
+        id S1728585AbgBZP6r (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 Feb 2020 10:58:47 -0500
 Received: from localhost (unknown [171.76.87.135])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D7D30222C2;
-        Wed, 26 Feb 2020 15:58:15 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 536E1222C2;
+        Wed, 26 Feb 2020 15:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1582732696;
+        s=default; t=1582732726;
         bh=S72rfz4e7ofEv8qXcE2vMF6gMBDU4uQEXEeYcNVqqV4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kWq5EKgKjQr9M7KGd8TjaGP1qxy1nmbn8wwUsuIcWNPmUQ80mNhYluJz74ZUz98+M
-         2m0SdrGy86ZG/S1gI6wZc02UzMotgkBtTN8bUtEfTf9JDmxI8OlwWGX/kNxDGGnN3y
-         vLC9nysbnEcQDEr9iRHYDUs/acr0H0X11p60dexk=
-Date:   Wed, 26 Feb 2020 21:28:08 +0530
+        b=GXa85jUuTeXn8+wSgMznpwjKhsGAftbp22oNFfjrcmJFWwnYpMqkGKUtSlKlsKRNJ
+         Js5INxqPdKHdmVIw/eY+UBDrU8ynyaVLIiwkFiHoYP9qIjZSKCyp1DbWZ/DAJdJoDA
+         OGXXnBWCWUISrPvWvJ3M3w4NHQsDilUXZAGjv74k=
+Date:   Wed, 26 Feb 2020 21:28:42 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Amit Kucheria <amit.kucheria@linaro.org>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
@@ -32,7 +32,7 @@ Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Zhang Rui <rui.zhang@intel.com>, devicetree@vger.kernel.org
 Subject: Re: [PATCH v3 3/3] dt-bindings: thermal: tsens: Add qcom,tsens-v2 to
  msm8996.dtsi compatible
-Message-ID: <20200226155808.GY2618@vkoul-mobl>
+Message-ID: <20200226155842.GZ2618@vkoul-mobl>
 References: <cover.1582705101.git.amit.kucheria@linaro.org>
  <4e337c4a4194bb15f9efec67821f38504de1704c.1582705101.git.amit.kucheria@linaro.org>
 MIME-Version: 1.0
