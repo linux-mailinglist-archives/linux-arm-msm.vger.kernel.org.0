@@ -2,136 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 423551707FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 19:48:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 822CE170906
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 20:40:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727362AbgBZSsY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Feb 2020 13:48:24 -0500
-Received: from foss.arm.com ([217.140.110.172]:41414 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727308AbgBZSsX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Feb 2020 13:48:23 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C752430E;
-        Wed, 26 Feb 2020 10:48:22 -0800 (PST)
-Received: from localhost (unknown [10.37.6.21])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3E3BF3F881;
-        Wed, 26 Feb 2020 10:48:22 -0800 (PST)
-Date:   Wed, 26 Feb 2020 18:48:20 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Adrian Panella <ianchi74@outlook.com>,
-        Andy Gross <agross@kernel.org>,
+        id S1727277AbgBZTkv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Feb 2020 14:40:51 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:40564 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727289AbgBZTkt (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 Feb 2020 14:40:49 -0500
+Received: by mail-pg1-f194.google.com with SMTP id t24so158792pgj.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2020 11:40:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Xdxonaxq5cgaVyVSFlydOnK4js6i72Frs9eWxUe3hoU=;
+        b=ZWGco+24DWzp6T6iC7pzeOcrNs9WZCxdRz9U1mCJEoYzw/xp1ApHIVX6+9bZKK3JB9
+         671E148y7WlIei8+gAy1tEMGCOfqvBPkghIWrNeAMcWC2846jEkPXoAgLIXOkZVu+PaO
+         +k3bhEwopjUBDxa7HrmGbOSj1j+xzDM88VVbY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Xdxonaxq5cgaVyVSFlydOnK4js6i72Frs9eWxUe3hoU=;
+        b=a70sKDttiEivv9UCCaYRxLqgC4Mc9E9dFuJIdKwhi1bBcaWlL7OIeygVwZK7J6vG7l
+         Y/2OQybvoW33Ofua5pVz/dd2U90rKZyPCDri7hUompCJTV16xP6F4aFd/TeYxhXpXcwE
+         An0B0MZJaHtTY49DCon3Ttp97147xIf/Z+CoP0yP/5tkdCujnfS46qVyi78SQQrg9XPn
+         yscViKda2SxpZJ68TZT76NXqIWy5gyCE7KRDOwhqCpG29KGMMMlBC5NrRNGb+pB1BAaA
+         Y7nBn/nJiPErln1dtaUSErYXbkkSukocfkQ6wRnFWuNjV3Fazi/VIkRgjDsAG1AJFVnz
+         g0uA==
+X-Gm-Message-State: APjAAAUCfh/K7tNiVLm++6WBy4i/p3GlP6o8aHce1YpEnDIIbiABKaDt
+        cDsMhKEvrzV5mFuQCU1heeqLCg==
+X-Google-Smtp-Source: APXvYqwhuC/pBQ8Wx2biij6V4vIbf21YokQ6iLCTfd7U6tWb2u8Ba+5PcksmfTfj//Loo+TgGcbWdA==
+X-Received: by 2002:a63:5b54:: with SMTP id l20mr414428pgm.324.1582746048314;
+        Wed, 26 Feb 2020 11:40:48 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id x190sm4039283pfb.96.2020.02.26.11.40.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Feb 2020 11:40:47 -0800 (PST)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Applied "regulator: add smb208 support" to the regulator tree
-In-Reply-To:  <20200219163711.479-1-ansuelsmth@gmail.com>
-Message-Id:  <applied-20200219163711.479-1-ansuelsmth@gmail.com>
-X-Patchwork-Hint: ignore
+        Dikshita Agarwal <dikshita@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH] arm64: dts: sc7180: Move venus node to the correct position
+Date:   Wed, 26 Feb 2020 11:40:44 -0800
+Message-Id: <20200226114017.1.I15e0f7eff0c67a2b49d4992f9d80fc1d2fdadf63@changeid>
+X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The patch
+Per convention device nodes for SC7180 should be ordered by address.
+This is currently not the case for the venus node, move it to the
+correct position.
 
-   regulator: add smb208 support
-
-has been applied to the regulator tree at
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git 
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.  
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
-From b5f25304aece9f2e7eaab275bbb5461c666bf38c Mon Sep 17 00:00:00 2001
-From: Ansuel Smith <ansuelsmth@gmail.com>
-Date: Wed, 19 Feb 2020 17:37:11 +0100
-Subject: [PATCH] regulator: add smb208 support
-
-Smb208 regulators are used on some ipq806x soc.
-Add support for it to make it avaiable on some routers
-that use it.
-
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-Signed-off-by: Adrian Panella <ianchi74@outlook.com>
-Acked-by: Lee Jones <lee.jones@linaro.org>
-Link: https://lore.kernel.org/r/20200219163711.479-1-ansuelsmth@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
 ---
- Documentation/devicetree/bindings/mfd/qcom-rpm.txt | 4 ++++
- drivers/regulator/qcom_rpm-regulator.c             | 9 +++++++++
- 2 files changed, 13 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom-rpm.txt b/Documentation/devicetree/bindings/mfd/qcom-rpm.txt
-index 3c91ad430eea..b823b8625243 100644
---- a/Documentation/devicetree/bindings/mfd/qcom-rpm.txt
-+++ b/Documentation/devicetree/bindings/mfd/qcom-rpm.txt
-@@ -61,6 +61,7 @@ Regulator nodes are identified by their compatible:
- 		    "qcom,rpm-pm8901-regulators"
- 		    "qcom,rpm-pm8921-regulators"
- 		    "qcom,rpm-pm8018-regulators"
-+		    "qcom,rpm-smb208-regulators"
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 52 ++++++++++++++--------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 253274d5f04c..5f97945e16a4 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -1332,6 +1332,32 @@ system-cache-controller@9200000 {
+ 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
  
- - vdd_l0_l1_lvs-supply:
- - vdd_l2_l11_l12-supply:
-@@ -171,6 +172,9 @@ pm8018:
- 	s1, s2, s3, s4, s5, , l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11,
- 	l12, l14, lvs1
- 
-+smb208:
-+	s1a, s1b, s2a, s2b
++		venus: video-codec@aa00000 {
++			compatible = "qcom,sc7180-venus";
++			reg = <0 0x0aa00000 0 0xff000>;
++			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
++			power-domains = <&videocc VENUS_GDSC>,
++					<&videocc VCODEC0_GDSC>;
++			power-domain-names = "venus", "vcodec0";
++			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
++				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
++				 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
++				 <&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
++				 <&videocc VIDEO_CC_VCODEC0_AXI_CLK>;
++			clock-names = "core", "iface", "bus",
++				      "vcodec0_core", "vcodec0_bus";
++			iommus = <&apps_smmu 0x0c00 0x60>;
++			memory-region = <&venus_mem>;
 +
- The content of each sub-node is defined by the standard binding for regulators -
- see regulator.txt - with additional custom properties described below:
- 
-diff --git a/drivers/regulator/qcom_rpm-regulator.c b/drivers/regulator/qcom_rpm-regulator.c
-index 7407cd5a1b74..7fc97f23fcf4 100644
---- a/drivers/regulator/qcom_rpm-regulator.c
-+++ b/drivers/regulator/qcom_rpm-regulator.c
-@@ -925,12 +925,21 @@ static const struct rpm_regulator_data rpm_pm8921_regulators[] = {
- 	{ }
- };
- 
-+static const struct rpm_regulator_data rpm_smb208_regulators[] = {
-+	{ "s1a",  QCOM_RPM_SMB208_S1a, &smb208_smps, "vin_s1a" },
-+	{ "s1b",  QCOM_RPM_SMB208_S1b, &smb208_smps, "vin_s1b" },
-+	{ "s2a",  QCOM_RPM_SMB208_S2a, &smb208_smps, "vin_s2a" },
-+	{ "s2b",  QCOM_RPM_SMB208_S2b, &smb208_smps, "vin_s2b" },
-+	{ }
-+};
++			video-decoder {
++				compatible = "venus-decoder";
++			};
 +
- static const struct of_device_id rpm_of_match[] = {
- 	{ .compatible = "qcom,rpm-pm8018-regulators",
- 		.data = &rpm_pm8018_regulators },
- 	{ .compatible = "qcom,rpm-pm8058-regulators", .data = &rpm_pm8058_regulators },
- 	{ .compatible = "qcom,rpm-pm8901-regulators", .data = &rpm_pm8901_regulators },
- 	{ .compatible = "qcom,rpm-pm8921-regulators", .data = &rpm_pm8921_regulators },
-+	{ .compatible = "qcom,rpm-smb208-regulators", .data = &rpm_smb208_regulators },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, rpm_of_match);
++			video-encoder {
++				compatible = "venus-encoder";
++			};
++		};
++
+ 		usb_1: usb@a6f8800 {
+ 			compatible = "qcom,sc7180-dwc3", "qcom,dwc3";
+ 			reg = <0 0x0a6f8800 0 0x400>;
+@@ -1538,32 +1564,6 @@ dispcc: clock-controller@af00000 {
+ 			#power-domain-cells = <1>;
+ 		};
+ 
+-		venus: video-codec@aa00000 {
+-			compatible = "qcom,sc7180-venus";
+-			reg = <0 0x0aa00000 0 0xff000>;
+-			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+-			power-domains = <&videocc VENUS_GDSC>,
+-					<&videocc VCODEC0_GDSC>;
+-			power-domain-names = "venus", "vcodec0";
+-			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
+-				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
+-				 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
+-				 <&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
+-				 <&videocc VIDEO_CC_VCODEC0_AXI_CLK>;
+-			clock-names = "core", "iface", "bus",
+-				      "vcodec0_core", "vcodec0_bus";
+-			iommus = <&apps_smmu 0x0c00 0x60>;
+-			memory-region = <&venus_mem>;
+-
+-			video-decoder {
+-				compatible = "venus-decoder";
+-			};
+-
+-			video-encoder {
+-				compatible = "venus-encoder";
+-			};
+-		};
+-
+ 		pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,sc7180-pdc", "qcom,pdc";
+ 			reg = <0 0x0b220000 0 0x30000>;
 -- 
-2.20.1
+2.25.1.481.gfbce0eb801-goog
 
