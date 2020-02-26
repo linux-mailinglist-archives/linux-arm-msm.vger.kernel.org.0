@@ -2,122 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 30C9416F51E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 02:37:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F079616F738
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 06:27:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729501AbgBZBh6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Feb 2020 20:37:58 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:37093 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729498AbgBZBh6 (ORCPT
+        id S1726974AbgBZF1Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Feb 2020 00:27:25 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:13704 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726926AbgBZF1Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Feb 2020 20:37:58 -0500
+        Wed, 26 Feb 2020 00:27:24 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582681077; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To:
- Subject: From: Sender; bh=BBWKcq7dFUCB/c3IP8dQkRGrntjmGuegJTnAZqmvUMU=;
- b=t6mYdHFYeIwS4HiUu3SgEd7Ex8NyUDkkaox1Sv8v1VGGRsW6+nE9PxZ1El1BvNwzlRqZ+igS
- +GQ+bNWU1Du6V8uPKicMUdinxXUe3rmfKgmtPDoNs12862116ndvnzU4u9G/51Qp7gO+xNUg
- TN8tWhFthwDgydhevpR5vUgmIvE=
-X-Mailgun-Sending-Ip: 104.130.122.27
+ s=smtp; t=1582694844; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=H07jLwgHvSvgBwJjkUrEezakk76jMyLk0dlCuk82aAs=; b=mwMzY7n4fFBXslpbigvevjes62a0JjUtU/B5RZ7dU5xedGoOPoPw0L9clNDLB4Q0Rm7GNXL+
+ /ZdNME68JDA65xdxLF8xCMhYidh6oVh1jiIJFyp3fKwvOMp66JwismGUiUBNoxV27/xq1xPf
+ 106sKYPkqjXZAjncqHIS8ud/fYw=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e55cbf3.7f08f193c0a0-smtp-out-n01;
- Wed, 26 Feb 2020 01:37:55 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e5601ba.7f0c201bece0-smtp-out-n01;
+ Wed, 26 Feb 2020 05:27:22 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6310BC4479F; Wed, 26 Feb 2020 01:37:55 +0000 (UTC)
+        id 29D88C433A2; Wed, 26 Feb 2020 05:27:21 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.134.65.5] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: eberman)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5A64DC4479D;
-        Wed, 26 Feb 2020 01:37:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5A64DC4479D
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 01C9DC43383;
+        Wed, 26 Feb 2020 05:27:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 01C9DC43383
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=eberman@codeaurora.org
-From:   Elliot Berman <eberman@codeaurora.org>
-Subject: Re: [PATCH v2 2/3] firmware: psci: Add support for dt-supplied
- SYSTEM_RESET2 type
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Trilok Soni <tsoni@codeaurora.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1582577858-12410-1-git-send-email-eberman@codeaurora.org>
- <1582577858-12410-3-git-send-email-eberman@codeaurora.org>
- <20200225110346.GF32784@bogus>
-Message-ID: <1d7fecf8-3a7f-57e5-5c13-73de89d52aa2@codeaurora.org>
-Date:   Tue, 25 Feb 2020 17:37:53 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
-MIME-Version: 1.0
-In-Reply-To: <20200225110346.GF32784@bogus>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH v6 0/3] Invoke rpmh_flush for non OSI targets
+Date:   Wed, 26 Feb 2020 10:57:10 +0530
+Message-Id: <1582694833-9407-1-git-send-email-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/25/2020 3:03 AM, Sudeep Holla wrote:
-> On Mon, Feb 24, 2020 at 12:57:37PM -0800, Elliot Berman wrote:
->> @@ -493,6 +494,7 @@ typedef int (*psci_initcall_t)(const struct device_node *);
->>  static int __init psci_0_2_init(struct device_node *np)
->>  {
->>  	int err;
->> +	u32 param;
->>
->>  	err = get_set_conduit_method(np);
->>  	if (err)
->> @@ -505,7 +507,19 @@ static int __init psci_0_2_init(struct device_node *np)
->>  	 * can be carried out according to the specific version reported
->>  	 * by firmware
->>  	 */
->> -	return psci_probe();
->> +	err = psci_probe();
->> +	if (err)
->> +		return err;
->> +
->> +	if (psci_system_reset2_supported &&
->> +	    !of_property_read_u32(np, "arm,psci-sys-reset2-param", &param)) {
->> +		if ((s32)param > 0)
-> 
-> What is the point on signed comparison here ? You are assuming all vendor
-> reset also as architecture by doing so which is wrong.
-> 
->> +			pr_warn("%08x is an invalid architectural reset type.\n",
->> +				param);
-> 
-> I thought the point was to have vendor reset here. Based on the 3/3 you
-> see to have vendor reset bit set, you ignore that by doing signed comparison
-> which is wrong and even the message is wrong. Specification defines only
-> one architectural reset(WARM RESET) and all others need to be vendor specific.
-> 
-> --
-> Regards,
-> Sudeep
-> 
-I might've gone crazy, but all vendor-specific reset types would be
-negative when cast as s32. Thus the check returns true only for an invalid
-architectural reset type. I can switch to checking bits instead of using 
-cast in v3 to avoid the confusion.
+Changes in v7:
+- Address Srinivas's comments to update commit text
+- Add Reviewed by from Srinivas
 
-Alternatively, I could rename the DT property to
-"arm,psci-sys-reset2-vendor-param" and then always set the 31st bit so that
-it is impossible to provide an invalid architectural reset type in DT.
+Changes in v6:
+- Drop 1 & 2 changes from v5 as they already landed in maintainer tree
+- Drop 3 & 4 changes from v5 as no user at present for power domain in rsc
+- Rename subject to appropriate since power domain changes are dropped
+- Rebase other changes on top of next-20200221
 
-Let me know what is preferred.
+Changes in v5:
+- Add Rob's Acked by on dt-bindings change
+- Drop firmware psci change
+- Update cpuidle stats in dtsi to follow PC mode
+- Include change to update dirty flag when data is updated from [4]
+- Add change to invoke rpmh_flush when caches are dirty
+
+Changes in v4:
+- Add change to allow hierarchical topology in PC mode
+- Drop hierarchical domain idle states converter from v3
+- Address Merge sc7180 dtsi change to add low power modes
+
+Changes in v3:
+- Address Rob's comment on dt property value
+- Address Stephen's comments on rpmh-rsc driver change
+- Include sc7180 cpuidle low power mode changes from [1]
+- Include hierarchical domain idle states converter change from [2]
+
+Changes in v2:
+- Add Stephen's Reviewed-By to the first three patches
+- Addressed Stephen's comments on fourth patch
+- Include changes to connect rpmh domain to cpuidle and genpds
+
+Resource State Coordinator (RSC) is responsible for powering off/lowering
+the requirements from CPU subsystem for the associated hardware like buses,
+clocks, and regulators when all CPUs and cluster is powered down.
+
+RSC power domain uses last-man activities provided by genpd framework based
+on Ulf Hansoon's patch series[3], when the cluster of CPUs enter deepest
+idle states. As a part of domain poweroff, RSC can lower resource state
+requirements by flushing the cached sleep and wake state votes for various
+resources.
+
+[1] https://patchwork.kernel.org/patch/11218965
+[2] https://patchwork.kernel.org/patch/10941671
+[3] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=222355
+[4] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=236503
+
+Maulik Shah (3):
+  arm64: dts: qcom: sc7180: Add cpuidle low power states
+  soc: qcom: rpmh: Update dirty flag only when data changes
+  soc: qcom: rpmh: Invoke rpmh_flush for dirty caches
+
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 78 ++++++++++++++++++++++++++++++++++++
+ drivers/soc/qcom/rpmh.c              | 27 ++++++++++---
+ 2 files changed, 100 insertions(+), 5 deletions(-)
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
