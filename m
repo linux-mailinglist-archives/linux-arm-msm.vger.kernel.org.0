@@ -2,85 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D47416FD46
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 12:17:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A53716FE6E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 12:58:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728434AbgBZLR1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Feb 2020 06:17:27 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:16831 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728133AbgBZLR0 (ORCPT
+        id S1726744AbgBZL6U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Feb 2020 06:58:20 -0500
+Received: from mail-pj1-f46.google.com ([209.85.216.46]:37031 "EHLO
+        mail-pj1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726334AbgBZL6T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Feb 2020 06:17:26 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582715846; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=JeLBIZJhvP42B2sTx6JhqGirHZU0I0l6TtJa1fPw4Ic=; b=BC9afpeSdEfzfHR5GIeu0WYfP25RDUaPur6RMLpTldFAzewxDNE6RO5PCSNnmIt4c6Kx7ZRB
- 4/VY74dI5+uOL4Xb7axwYW9wSTGZbU/zzlIbwV+VvI8Ikc4VfkX4j6ok5qdCOmZx1U3oIjA1
- p1shlMgSsA2Sr9S7ihl8HWbEa6I=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e5653bb.7f8d2db86ca8-smtp-out-n02;
- Wed, 26 Feb 2020 11:17:15 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1618EC447A2; Wed, 26 Feb 2020 11:17:14 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.204.67.17] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: smasetty)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4C585C43383;
-        Wed, 26 Feb 2020 11:17:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4C585C43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
-Subject: Re: [PATCH] dt-bindings: arm-smmu: update the list of clocks
-To:     Rob Herring <robh@kernel.org>
-Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        dianders@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        mka@chromium.org, dri-devel@freedesktop.org
-References: <1582186342-3484-1-git-send-email-smasetty@codeaurora.org>
- <1582186342-3484-2-git-send-email-smasetty@codeaurora.org>
- <20200220203509.GA14697@bogus>
-From:   Sharat Masetty <smasetty@codeaurora.org>
-Message-ID: <6a7c1f39-a85f-4a99-fed3-71001bdb6128@codeaurora.org>
-Date:   Wed, 26 Feb 2020 16:47:07 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        Wed, 26 Feb 2020 06:58:19 -0500
+Received: by mail-pj1-f46.google.com with SMTP id m13so1185631pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2020 03:58:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5YMRvV+08eDz1zTAqAh41qKWUj9Ta+YFrJ/4O+JaQ+E=;
+        b=XlmcE8LWadGLnbLkM6boQYBuEwDqamO2pB8rpBi9J0f4ffdx6t/8w/w0ns/yX3ZUOZ
+         v3sGKC51IA7PqAV5dJ7VY/Ni/mWLfrQTyU/O2qYXtfPSskVOJJdEDXffvi4PJL15pIHr
+         bdaK+Y/NacnkuQcgNvLWjQG97HLFnD0hnjOzoZT+TQw6rNoVmzbx9iRVos00rh7iG3iI
+         siWMsJWAzl5YlPXH1GAlM+YxKb/u2406l8BL8pBO2FqqN8Yt2WtslbJNpmGHh9RmSDxf
+         xZKUAWedusMDKR4J9+bNoj2woELORkGPJoMD/I+3xYTQYphSSo+6JZlhxroYKnueD1T4
+         8kqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5YMRvV+08eDz1zTAqAh41qKWUj9Ta+YFrJ/4O+JaQ+E=;
+        b=VG49mrJR3aC0eU/xLlAFbMnul7zrNB+kdp7jhj1OFFvB+rPzKIjyf+dycZvLUsf+8j
+         o8qZlz7tL7UxpS6DkJIISUOqBrxhsm2ZLJ/X2OV8HDOQDGgNm2gUFVZDQbaoJyu15pbN
+         9G5fSQKAETktGZSntAEtWyR3pqFx4kxCMi7etd/vmQ0Np4UZnKJNluS7ZG94bJwUDXzP
+         HY8SnzrsuikqEOX4Sqy0CKyeKj23LTsTJ/JciWxnOdkuaYaqC+BQkQB2PZ/JxK3i+byt
+         l3FAzrcUvcI6HhJbeDVasYytrDycAyzUdmUi0KcZOBXETbXCoc3jDtoFYkjBB4HlrRa3
+         Xq3g==
+X-Gm-Message-State: APjAAAWJMfdbBF72hwNC3sJ+EDTg069ZfnOHA6xjwKi/bPU2JysEbKc6
+        npkENi9zr0CLmMBi5ogqpJ15cAQR3QI=
+X-Google-Smtp-Source: APXvYqy6SK3++pCleI5HCCFb8UN6ntnevHnMXBkL9kYIs0aj2I8qBTp78k6t6H0wMoJRCryfMW8vgA==
+X-Received: by 2002:a17:902:426:: with SMTP id 35mr3709323ple.302.1582718298449;
+        Wed, 26 Feb 2020 03:58:18 -0800 (PST)
+Received: from localhost ([2401:4900:1b38:7f42:3530:df3:7e53:a029])
+        by smtp.gmail.com with ESMTPSA id c188sm2893183pfb.151.2020.02.26.03.58.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Feb 2020 03:58:17 -0800 (PST)
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vkoul@kernel.org, daniel.lezcano@linaro.org,
+        bjorn.andersson@linaro.org, sivaa@codeaurora.org,
+        Andy Gross <agross@kernel.org>, Zhang Rui <rui.zhang@intel.com>
+Cc:     Amit Kucheria <amit.kucheria@verdurent.com>,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: [PATCH v3 0/3] Cleanup dtbs_check warnings for tsens
+Date:   Wed, 26 Feb 2020 15:01:10 +0530
+Message-Id: <cover.1582705101.git.amit.kucheria@linaro.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <20200220203509.GA14697@bogus>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Make dtbs_check pass for tsens bits. I'm working on another series to
+cleanup other DT warnings for QC platforms.
 
-On 2/21/2020 2:05 AM, Rob Herring wrote:
-> On Thu, 20 Feb 2020 13:42:22 +0530, Sharat Masetty wrote:
->> This patch adds a clock definition needed for powering on the GPU TBUs
->> and the GPU TCU.
->>
->> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
->> ---
->>   Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 +++
->>   1 file changed, 3 insertions(+)
->>
-> My bot found errors running 'make dt_binding_check' on your patch:
->
-> Documentation/devicetree/bindings/display/simple-framebuffer.example.dts:21.16-37.11: Warning (chosen_node_is_root): /example-0/chosen: chosen node must be at root node
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iommu/arm,smmu.example.dt.yaml: iommu@d00000: clock-names: ['bus', 'iface'] is too short
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iommu/arm,smmu.example.dt.yaml: iommu@d00000: clocks: [[4294967295, 123], [4294967295, 124]] is too short
->
-> See https://patchwork.ozlabs.org/patch/1241297
-> Please check and re-submit.
-Hi Rob, These issues seem to be from the original code and not related 
-to my patch. Are these going to be blocking errors?
+Amit Kucheria (3):
+  dt-bindings: thermal: tsens: Add entry for sc7180 tsens to binding
+  dt-bindings: thermal: tsens: Add qcom,tsens-v0_1 to msm8916.dtsi
+    compatible
+  dt-bindings: thermal: tsens: Add qcom,tsens-v2 to msm8996.dtsi
+    compatible
+
+ Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+ arch/arm64/boot/dts/qcom/msm8916.dtsi                     | 2 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi                     | 4 ++--
+ 3 files changed, 4 insertions(+), 3 deletions(-)
+
+-- 
+2.20.1
+
