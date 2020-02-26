@@ -2,104 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C8F516F73D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 06:27:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A1D8916FACD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 10:35:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727066AbgBZF1p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Feb 2020 00:27:45 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:52533 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727005AbgBZF1o (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Feb 2020 00:27:44 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582694864; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=Y68tsXGzPZ8q14LHS1TLD6kADG3Oa9mJKTf+M/UdsM4=; b=VyWik9GNOrfJSyXXCc0I6WMd2S6IosPM3E2C5H521NCuNSHYbSRdOpAsjULnTv+4LYvSONWd
- DySfnfG8oVY6u5KVaXnP+lUnw/+tDhnua8ZkZCb3xumb7Lvws9i5X6+EmtU+pPD0oE2CvUJx
- 1BadowqdB6IUQp3yST622AjLbUI=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e5601c8.7f45e52cba40-smtp-out-n02;
- Wed, 26 Feb 2020 05:27:36 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2794CC43383; Wed, 26 Feb 2020 05:27:35 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BABE6C4479D;
-        Wed, 26 Feb 2020 05:27:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BABE6C4479D
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH v7 3/3] soc: qcom: rpmh: Invoke rpmh_flush for dirty caches
-Date:   Wed, 26 Feb 2020 10:57:13 +0530
-Message-Id: <1582694833-9407-4-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1582694833-9407-1-git-send-email-mkshah@codeaurora.org>
-References: <1582694833-9407-1-git-send-email-mkshah@codeaurora.org>
+        id S1726936AbgBZJf0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Feb 2020 04:35:26 -0500
+Received: from ns.mm-sol.com ([37.157.136.199]:34387 "EHLO extserv.mm-sol.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726764AbgBZJfZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 Feb 2020 04:35:25 -0500
+X-Greylist: delayed 477 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Feb 2020 04:35:24 EST
+Received: from [192.168.27.209] (unknown [37.157.136.193])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        by extserv.mm-sol.com (Postfix) with ESMTPSA id 296ADCF89;
+        Wed, 26 Feb 2020 11:27:26 +0200 (EET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
+        t=1582709246; bh=9MPQJJaQlLFtjkVxyv5S5xHtxbzX1vQNXtMjE8xkyQo=;
+        h=From:Subject:To:Cc:Date:From;
+        b=mUk101MkKZlI/CTWli1Fy0qEor3s6M5jdtemHsXgKXmQKvEPEkzpIYklH+p3Mlahb
+         oRv7eAMsfDxKA9dU3cZfmVLTRCZwC4fwOArA0KRJHivsKpDNMK9wP6yQqAdF8Uii6g
+         OrXk8GwPryJOgOdFg1zUIq0aZc6SnLXQ94JUUxqOuwXm6vbHHN8KtPN01fqCX1OXXt
+         pFj6peWM5gmFEMCLcrycAR0V43gbuhpbLPsc1Ss87LJNp9nLUXHhkpbzV4/xtuXyYn
+         6OSAopjYtL/Z/VSfNN6igAhDt0PVrRNNOpO8zz33rWhyT4OO6fZEVtPEHA3xiqq2YJ
+         VwJWj09wIvItQ==
+From:   Stanimir Varbanov <svarbanov@mm-sol.com>
+Subject: Re: [PATCH v2] PCI: qcom: Fix the fixup of PCI_VENDOR_ID_QCOM
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andrew Murray <andrew.murray@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20191227012717.78965-1-bjorn.andersson@linaro.org>
+ <9e5ee7e8-aa63-e82c-8135-acc77b476c87@mm-sol.com>
+ <38acf5fc-85aa-7090-e666-97a1281e9905@free.fr>
+ <20191229024547.GH3755841@builder>
+ <9c7d69cc-29e7-07c5-1e93-e9fdadf370a6@free.fr>
+ <20200221143525.GC15440@e121166-lin.cambridge.arm.com>
+Message-ID: <d9282b27-63ea-b1d6-1e43-9c7359f5f8d4@mm-sol.com>
+Date:   Wed, 26 Feb 2020 11:27:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <20200221143525.GC15440@e121166-lin.cambridge.arm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add changes to invoke rpmh flush when the data in cache is dirty.
+Hi Lorenzo,
 
-This is done only if OSI is not supported in PSCI. If OSI is supported
-rpmh_flush can get invoked when the last cpu going to power collapse
-deepest low power mode.
+On 2/21/20 4:35 PM, Lorenzo Pieralisi wrote:
+> On Mon, Dec 30, 2019 at 09:25:28PM +0100, Marc Gonzalez wrote:
+>> On 29/12/2019 03:45, Bjorn Andersson wrote:
+>>
+>>> On Sat 28 Dec 07:41 PST 2019, Marc Gonzalez wrote:
+>>>
+>>>> On 27/12/2019 09:51, Stanimir Varbanov wrote:
+>>>>
+>>>>> On 12/27/19 3:27 AM, Bjorn Andersson wrote:
+>>>>>
+>>>>>> There exists non-bridge PCIe devices with PCI_VENDOR_ID_QCOM, so limit
+>>>>>> the fixup to only affect the relevant PCIe bridges.
+>>>>>>
+>>>>>> Cc: stable@vger.kernel.org
+>>>>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>>>>> ---
+>>>>>>
+>>>>>> Stan, I picked up all the suggested device id's from the previous thread and
+>>>>>> added 0x1000 for QCS404. I looked at creating platform specific defines in
+>>>>>> pci_ids.h, but SDM845 has both 106 and 107... Please let me know if you would
+>>>>>> prefer that I do this anyway.
+>>>>>
+>>>>> Looks good,
+>>>>>
+>>>>> Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
+>>>>>
+>>>>>>  drivers/pci/controller/dwc/pcie-qcom.c | 8 +++++++-
+>>>>>>  1 file changed, 7 insertions(+), 1 deletion(-)
+>>>>>>
+>>>>>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>>>>>> index 5ea527a6bd9f..138e1a2d21cc 100644
+>>>>>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>>>>>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>>>>>> @@ -1439,7 +1439,13 @@ static void qcom_fixup_class(struct pci_dev *dev)
+>>>>>>  {
+>>>>>>  	dev->class = PCI_CLASS_BRIDGE_PCI << 8;
+>>>>>>  }
+>>>>>> -DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, PCI_ANY_ID, qcom_fixup_class);
+>>>>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0101, qcom_fixup_class);
+>>>>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0104, qcom_fixup_class);
+>>>>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0106, qcom_fixup_class);
+>>>>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0107, qcom_fixup_class);
+>>>>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
+>>>>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
+>>>>>> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
+>>>>
+>>>> Hrmmm... still not CCed on the patch,
+>>>
+>>> You are Cc'ed on the patch, but as usual your mail server responds "451
+>>> too many errors from your ip" and throw my emails away.
+>>>
+>>>> and still don't think the fixup is required(?) for 0x106 and 0x107.
+>>>>
+>>>
+>>> I re-read your reply in my v1 thread. So we know that 0x104 doesn't need
+>>> the fixup, so presumably only 0x101 needs the fixup?
+>>
+>> I apologize for the tone of my reply. I did not mean to sound
+>> so snarky.
+>>
+>> All I can say is that, if I remember correctly, the fixup was
+>> not necessary on apq8098 (0x0105) and it was probably not
+>> required on msm8996 and sdm845. For older platforms, all bets
+>> are off.
+> 
+> How are we proceeding with this patch then ?
 
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-Reviewed-by: Srinivas Rao L <lsrao@codeaurora.org>
----
- drivers/soc/qcom/rpmh.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+It took too much time, please take it as-is in v2 with my Ack.
 
-diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-index 83ba4e0..839af8d 100644
---- a/drivers/soc/qcom/rpmh.c
-+++ b/drivers/soc/qcom/rpmh.c
-@@ -12,6 +12,7 @@
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
-+#include <linux/psci.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
- #include <linux/types.h>
-@@ -163,6 +164,9 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
- unlock:
- 	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
- 
-+	if (ctrlr->dirty && !psci_has_osi_support())
-+		return rpmh_flush(ctrlr) ? ERR_PTR(-EINVAL) : req;
-+
- 	return req;
- }
- 
-@@ -391,6 +395,8 @@ int rpmh_write_batch(const struct device *dev, enum rpmh_state state,
- 
- 	if (state != RPMH_ACTIVE_ONLY_STATE) {
- 		cache_batch(ctrlr, req);
-+		if (!psci_has_osi_support())
-+			return rpmh_flush(ctrlr);
- 		return 0;
- 	}
- 
+We can drop the not-affected SoCs with follow-up patches once we are
+sure that we do not break the supported SoCs.
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+regards,
+Stan
