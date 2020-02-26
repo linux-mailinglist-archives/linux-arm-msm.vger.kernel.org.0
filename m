@@ -2,162 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A671170ACB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 22:48:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F13D6170B2B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 23:06:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727672AbgBZVs2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Feb 2020 16:48:28 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:44047 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727503AbgBZVs1 (ORCPT
+        id S1727787AbgBZWGY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Feb 2020 17:06:24 -0500
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:36881 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727670AbgBZWGX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Feb 2020 16:48:27 -0500
-Received: by mail-wr1-f65.google.com with SMTP id m16so641265wrx.11;
-        Wed, 26 Feb 2020 13:48:25 -0800 (PST)
+        Wed, 26 Feb 2020 17:06:23 -0500
+Received: by mail-pj1-f65.google.com with SMTP id m13so237903pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2020 14:06:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=TjTCBST6cpMsAppV8JBTTv+T9QV8G6JLefGJ8DTMePs=;
-        b=Gh+8mxxPRmBz5ItD/2Qpd2lmEFDJ6+UlANHisqcl1s46QRxFpBDscYtDqguT1fQo9f
-         bA3GBmdW+rgBSETWdnjzdCP10x3AkIeyT6Ks99zd+RQ1yqo5KrLNC8xMbHrgiBSR1l8g
-         e67fXMSsOsCRHiuMho9fcOYFJ0eUMDZ7A/CY7UkH3zZBjuKfsVUAMhuW2fp22FR0iHSY
-         9wUzotZczhrrPKW0rWhLpx9OPg7QTFQhdomvo5GYWO31AZViCiIaIMO14bNL1XhUV5FG
-         8qdLIigVf06b1l75aRmulDCPA8Mzn5KKvGsP+Z3vo/L/uCG1aUO4ojtmkmfCQxXP8d3K
-         EIFA==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=3TNg9o0AgO40tR/XDxm1MjdggfQKR3ry5wBqaugCysw=;
+        b=HW7Kp17/GPFyTe4vflls40kHpqQXLpA18D3oNovP8FMTiAPBSkd8JQWPDfRXw3Gve5
+         //7rGmktf4LwpKYg2tfELCpQ4CkjKlKjMA5zH3aUKCTFMm3R3jY/INNhaMUkLz0qCAy9
+         ZFLXpEMjnEkwbRi64qRZS2ryjOV+lQk8kWQTg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=TjTCBST6cpMsAppV8JBTTv+T9QV8G6JLefGJ8DTMePs=;
-        b=tqqhFZt9Ip6KutsmKh/RNMVJstlM29PtuWDHNwQoifvkEQBXW4OoLOmKjQLmnnKWwx
-         QeeTYQHA/gXqg68jijtqXIm6MxnvBwj+oIBVTC6LKQbxPT5cWEBodwsLTs4QHTHYfIaL
-         qyUoCAYrx2lXtP4YDTwsSIga7Ht0WEIG16TfqasZq9Ds9/h9kz2tDVjI4R6FwVIa/PNV
-         moHv03um2wD0Fub7AkWeABv2cG4XL36gOE5Bb6DIW1bg6L+2CR180JcGV0KHGF43vPvl
-         TP5AFI4WtGjr742Aaqk0ySDFsRshXfSqdI7Ez/klgyGF74AS5D/+oE3ot/INV/vH/gsL
-         MUMw==
-X-Gm-Message-State: APjAAAU4NhExX4Pe5vRTo1fV9uf11dDb9Z1m5oHwojtQ8wjjTOYmZamG
-        vOCu+TgbAlKUtWkLVGAeMr0=
-X-Google-Smtp-Source: APXvYqxsvbKla5iG6TBDnuXgehZINgcnbX8qokIuJnhf3kEFjluM7zyxhNtIpVVPpKQcT4yMIBK9+w==
-X-Received: by 2002:adf:90ee:: with SMTP id i101mr643052wri.417.1582753704877;
-        Wed, 26 Feb 2020 13:48:24 -0800 (PST)
-Received: from Ansuel-XPS.localdomain (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
-        by smtp.googlemail.com with ESMTPSA id b10sm4878846wrw.61.2020.02.26.13.48.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2020 13:48:24 -0800 (PST)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        John Crispin <john@phrozen.org>,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3TNg9o0AgO40tR/XDxm1MjdggfQKR3ry5wBqaugCysw=;
+        b=AS6F4/qPgGBD1ZQbHXBy8BbI9izgQluhdF/IXCT2OfYt9cHOrONu701Klsb6E6Ugl5
+         y0VVneXAPpZBxm54/s7PfHuLLE4sEolQymuvRHhSQ9K1JT2dd/CYPeEwI8qVqHRgiSHr
+         CIeCzFtDYvDSwt/BUf5ShBhCh6kGFPC93f1EkbA4FfqlTD+Jlr30j1sCfCdPPAPVobyi
+         6mSVd/ZniiMvWen5csXymZ7MqOXoqKZ1zAefJMhwBWIhuuwWVr+IGwuytPJNANoC6fVi
+         xpCS14v15ZX1v9GL3rcI+TZ4A8srsuIYb2AucuXwW3bRJdtgAc+bJbyr+C0aI++QnecA
+         mYKQ==
+X-Gm-Message-State: APjAAAX2s0cGhKCusHN8mK2McgECmTGhFVDhlfnko2o5ShdtuHanGwUm
+        VbKhWIC3ZOIxLT1NFLXMqEsRgg==
+X-Google-Smtp-Source: APXvYqz1u/3C2eGWbNpQI9x0ZNxo1oAZ6TsJZf6r4k5t/IQsGAhNWUcdLhelHrgHR1RjLUwpaeMLFA==
+X-Received: by 2002:a17:90a:d783:: with SMTP id z3mr1231245pju.3.1582754780551;
+        Wed, 26 Feb 2020 14:06:20 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id b24sm3901071pfo.84.2020.02.26.14.06.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Feb 2020 14:06:20 -0800 (PST)
+Date:   Wed, 26 Feb 2020 14:06:19 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] clk: qcom: clk-rpm: add missing rpm clk for ipq806x
-Date:   Wed, 26 Feb 2020 22:48:12 +0100
-Message-Id: <20200226214812.390-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <robh@kernel.org>
-References: <robh@kernel.org>
+        Dikshita Agarwal <dikshita@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2] arm64: dts: sc7180: Move venus node to the correct
+ position
+Message-ID: <20200226220619.GH24720@google.com>
+References: <20200226130438.v2.1.I15e0f7eff0c67a2b49d4992f9d80fc1d2fdadf63@changeid>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200226130438.v2.1.I15e0f7eff0c67a2b49d4992f9d80fc1d2fdadf63@changeid>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add missing definition of rpm clk for ipq806x soc
+On Wed, Feb 26, 2020 at 01:04:55PM -0800, Matthias Kaehlcke wrote:
+> Per convention device nodes for SC7180 should be ordered by address.
+> This is currently not the case for the venus node, move it to the
+> correct position.
+> 
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+> Excuses for sending v2 so shortly after v1, it seems ok in this case
+> since v1 is obviously wrong and the patch is not likely to be
+> controversial otherwise.
+> 
+> Changes in v2:
+> - insert the venus node *after* the usb@a6f8800 node, not before
+> 
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 52 ++++++++++++++--------------
+>  1 file changed, 26 insertions(+), 26 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 253274d5f04c..5f97945e16a4 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1332,6 +1332,32 @@ system-cache-controller@9200000 {
+>  			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+>  		};
+>  
+> +		venus: video-codec@aa00000 {
+> +			compatible = "qcom,sc7180-venus";
+> +			reg = <0 0x0aa00000 0 0xff000>;
+> +			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+> +			power-domains = <&videocc VENUS_GDSC>,
+> +					<&videocc VCODEC0_GDSC>;
+> +			power-domain-names = "venus", "vcodec0";
+> +			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
+> +				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
+> +				 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
+> +				 <&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
+> +				 <&videocc VIDEO_CC_VCODEC0_AXI_CLK>;
+> +			clock-names = "core", "iface", "bus",
+> +				      "vcodec0_core", "vcodec0_bus";
+> +			iommus = <&apps_smmu 0x0c00 0x60>;
+> +			memory-region = <&venus_mem>;
+> +
+> +			video-decoder {
+> +				compatible = "venus-decoder";
+> +			};
+> +
+> +			video-encoder {
+> +				compatible = "venus-encoder";
+> +			};
+> +		};
+> +
+>  		usb_1: usb@a6f8800 {
+>  			compatible = "qcom,sc7180-dwc3", "qcom,dwc3";
+>  			reg = <0 0x0a6f8800 0 0x400>;
+> @@ -1538,32 +1564,6 @@ dispcc: clock-controller@af00000 {
+>  			#power-domain-cells = <1>;
+>  		};
+>  
+> -		venus: video-codec@aa00000 {
+> -			compatible = "qcom,sc7180-venus";
+> -			reg = <0 0x0aa00000 0 0xff000>;
+> -			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+> -			power-domains = <&videocc VENUS_GDSC>,
+> -					<&videocc VCODEC0_GDSC>;
+> -			power-domain-names = "venus", "vcodec0";
+> -			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
+> -				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
+> -				 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
+> -				 <&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
+> -				 <&videocc VIDEO_CC_VCODEC0_AXI_CLK>;
+> -			clock-names = "core", "iface", "bus",
+> -				      "vcodec0_core", "vcodec0_bus";
+> -			iommus = <&apps_smmu 0x0c00 0x60>;
+> -			memory-region = <&venus_mem>;
+> -
+> -			video-decoder {
+> -				compatible = "venus-decoder";
+> -			};
+> -
+> -			video-encoder {
+> -				compatible = "venus-encoder";
+> -			};
+> -		};
+> -
+>  		pdc: interrupt-controller@b220000 {
+>  			compatible = "qcom,sc7180-pdc", "qcom,pdc";
+>  			reg = <0 0x0b220000 0 0x30000>;
 
-Signed-off-by: John Crispin <john@phrozen.org>
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-Acked-by: John Crispin <john@phrozen.org>
----
- .../devicetree/bindings/clock/qcom,rpmcc.txt  |  1 +
- drivers/clk/qcom/clk-rpm.c                    | 35 +++++++++++++++++++
- include/dt-bindings/clock/qcom,rpmcc.h        |  4 +++
- 3 files changed, 40 insertions(+)
-
-diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt b/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
-index 944719bd586f..4bb2cbeff2b4 100644
---- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
-+++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
-@@ -15,6 +15,7 @@ Required properties :
- 			"qcom,rpmcc-msm8916", "qcom,rpmcc"
- 			"qcom,rpmcc-msm8974", "qcom,rpmcc"
- 			"qcom,rpmcc-apq8064", "qcom,rpmcc"
-+			"qcom,rpmcc-ipq806x", "qcom,rpmcc"
- 			"qcom,rpmcc-msm8996", "qcom,rpmcc"
- 			"qcom,rpmcc-msm8998", "qcom,rpmcc"
- 			"qcom,rpmcc-qcs404", "qcom,rpmcc"
-diff --git a/drivers/clk/qcom/clk-rpm.c b/drivers/clk/qcom/clk-rpm.c
-index 9e3110a71f12..f71d228fd6bd 100644
---- a/drivers/clk/qcom/clk-rpm.c
-+++ b/drivers/clk/qcom/clk-rpm.c
-@@ -543,10 +543,45 @@ static const struct rpm_clk_desc rpm_clk_apq8064 = {
- 	.num_clks = ARRAY_SIZE(apq8064_clks),
- };
- 
-+/* ipq806x */
-+DEFINE_CLK_RPM(ipq806x, afab_clk, afab_a_clk, QCOM_RPM_APPS_FABRIC_CLK);
-+DEFINE_CLK_RPM(ipq806x, cfpb_clk, cfpb_a_clk, QCOM_RPM_CFPB_CLK);
-+DEFINE_CLK_RPM(ipq806x, daytona_clk, daytona_a_clk, QCOM_RPM_DAYTONA_FABRIC_CLK);
-+DEFINE_CLK_RPM(ipq806x, ebi1_clk, ebi1_a_clk, QCOM_RPM_EBI1_CLK);
-+DEFINE_CLK_RPM(ipq806x, sfab_clk, sfab_a_clk, QCOM_RPM_SYS_FABRIC_CLK);
-+DEFINE_CLK_RPM(ipq806x, sfpb_clk, sfpb_a_clk, QCOM_RPM_SFPB_CLK);
-+DEFINE_CLK_RPM(ipq806x, nss_fabric_0_clk, nss_fabric_0_a_clk, QCOM_RPM_NSS_FABRIC_0_CLK);
-+DEFINE_CLK_RPM(ipq806x, nss_fabric_1_clk, nss_fabric_1_a_clk, QCOM_RPM_NSS_FABRIC_1_CLK);
-+
-+static struct clk_rpm *ipq806x_clks[] = {
-+	[RPM_APPS_FABRIC_CLK] = &ipq806x_afab_clk,
-+	[RPM_APPS_FABRIC_A_CLK] = &ipq806x_afab_a_clk,
-+	[RPM_CFPB_CLK] = &ipq806x_cfpb_clk,
-+	[RPM_CFPB_A_CLK] = &ipq806x_cfpb_a_clk,
-+	[RPM_DAYTONA_FABRIC_CLK] = &ipq806x_daytona_clk,
-+	[RPM_DAYTONA_FABRIC_A_CLK] = &ipq806x_daytona_a_clk,
-+	[RPM_EBI1_CLK] = &ipq806x_ebi1_clk,
-+	[RPM_EBI1_A_CLK] = &ipq806x_ebi1_a_clk,
-+	[RPM_SYS_FABRIC_CLK] = &ipq806x_sfab_clk,
-+	[RPM_SYS_FABRIC_A_CLK] = &ipq806x_sfab_a_clk,
-+	[RPM_SFPB_CLK] = &ipq806x_sfpb_clk,
-+	[RPM_SFPB_A_CLK] = &ipq806x_sfpb_a_clk,
-+	[RPM_NSS_FABRIC_0_CLK] = &ipq806x_nss_fabric_0_clk,
-+	[RPM_NSS_FABRIC_0_A_CLK] = &ipq806x_nss_fabric_0_a_clk,
-+	[RPM_NSS_FABRIC_1_CLK] = &ipq806x_nss_fabric_1_clk,
-+	[RPM_NSS_FABRIC_1_A_CLK] = &ipq806x_nss_fabric_1_a_clk,
-+};
-+
-+static const struct rpm_clk_desc rpm_clk_ipq806x = {
-+	.clks = ipq806x_clks,
-+	.num_clks = ARRAY_SIZE(ipq806x_clks),
-+};
-+
- static const struct of_device_id rpm_clk_match_table[] = {
- 	{ .compatible = "qcom,rpmcc-msm8660", .data = &rpm_clk_msm8660 },
- 	{ .compatible = "qcom,rpmcc-apq8060", .data = &rpm_clk_msm8660 },
- 	{ .compatible = "qcom,rpmcc-apq8064", .data = &rpm_clk_apq8064 },
-+	{ .compatible = "qcom,rpmcc-ipq806x", .data = &rpm_clk_ipq806x },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, rpm_clk_match_table);
-diff --git a/include/dt-bindings/clock/qcom,rpmcc.h b/include/dt-bindings/clock/qcom,rpmcc.h
-index 8e3095720552..ae74c43c485d 100644
---- a/include/dt-bindings/clock/qcom,rpmcc.h
-+++ b/include/dt-bindings/clock/qcom,rpmcc.h
-@@ -37,6 +37,10 @@
- #define RPM_XO_A0				27
- #define RPM_XO_A1				28
- #define RPM_XO_A2				29
-+#define RPM_NSS_FABRIC_0_CLK			30
-+#define RPM_NSS_FABRIC_0_A_CLK			31
-+#define RPM_NSS_FABRIC_1_CLK			32
-+#define RPM_NSS_FABRIC_1_A_CLK			33
- 
- /* SMD RPM clocks */
- #define RPM_SMD_XO_CLK_SRC				0
--- 
-2.25.0
-
+The patch has still the same problem, it would have helped to run
+'git commit -a --amend', instead of 'git commit --amend' :(
