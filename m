@@ -2,110 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 98DC216FCED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 12:06:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D47416FD46
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 12:17:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727362AbgBZLF5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Feb 2020 06:05:57 -0500
-Received: from foss.arm.com ([217.140.110.172]:33972 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726425AbgBZLF5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Feb 2020 06:05:57 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 40A841FB;
-        Wed, 26 Feb 2020 03:05:56 -0800 (PST)
-Received: from e121166-lin.cambridge.arm.com (e121166-lin.cambridge.arm.com [10.1.196.255])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0B7463FA00;
-        Wed, 26 Feb 2020 03:05:54 -0800 (PST)
-Date:   Wed, 26 Feb 2020 11:05:49 +0000
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andrew Murray <andrew.murray@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>, stable@vger.kernel.org
-Subject: Re: [PATCH v2] PCI: qcom: Fix the fixup of PCI_VENDOR_ID_QCOM
-Message-ID: <20200226110549.GA16284@e121166-lin.cambridge.arm.com>
-References: <20191227012717.78965-1-bjorn.andersson@linaro.org>
- <20200226102255.GA13830@e121166-lin.cambridge.arm.com>
- <4e1587e9-352c-a2de-d136-18506500641d@mm-sol.com>
+        id S1728434AbgBZLR1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Feb 2020 06:17:27 -0500
+Received: from mail27.static.mailgun.info ([104.130.122.27]:16831 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728133AbgBZLR0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 Feb 2020 06:17:26 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1582715846; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=JeLBIZJhvP42B2sTx6JhqGirHZU0I0l6TtJa1fPw4Ic=; b=BC9afpeSdEfzfHR5GIeu0WYfP25RDUaPur6RMLpTldFAzewxDNE6RO5PCSNnmIt4c6Kx7ZRB
+ 4/VY74dI5+uOL4Xb7axwYW9wSTGZbU/zzlIbwV+VvI8Ikc4VfkX4j6ok5qdCOmZx1U3oIjA1
+ p1shlMgSsA2Sr9S7ihl8HWbEa6I=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e5653bb.7f8d2db86ca8-smtp-out-n02;
+ Wed, 26 Feb 2020 11:17:15 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1618EC447A2; Wed, 26 Feb 2020 11:17:14 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.204.67.17] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: smasetty)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4C585C43383;
+        Wed, 26 Feb 2020 11:17:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4C585C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
+Subject: Re: [PATCH] dt-bindings: arm-smmu: update the list of clocks
+To:     Rob Herring <robh@kernel.org>
+Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        dianders@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        mka@chromium.org, dri-devel@freedesktop.org
+References: <1582186342-3484-1-git-send-email-smasetty@codeaurora.org>
+ <1582186342-3484-2-git-send-email-smasetty@codeaurora.org>
+ <20200220203509.GA14697@bogus>
+From:   Sharat Masetty <smasetty@codeaurora.org>
+Message-ID: <6a7c1f39-a85f-4a99-fed3-71001bdb6128@codeaurora.org>
+Date:   Wed, 26 Feb 2020 16:47:07 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4e1587e9-352c-a2de-d136-18506500641d@mm-sol.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20200220203509.GA14697@bogus>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 26, 2020 at 12:56:23PM +0200, Stanimir Varbanov wrote:
-> Hi Lorenzo,
-> 
-> On 2/26/20 12:22 PM, Lorenzo Pieralisi wrote:
-> > On Thu, Dec 26, 2019 at 05:27:17PM -0800, Bjorn Andersson wrote:
-> >> There exists non-bridge PCIe devices with PCI_VENDOR_ID_QCOM, so limit
-> >> the fixup to only affect the relevant PCIe bridges.
-> >>
-> >> Cc: stable@vger.kernel.org
-> > 
-> > Hi Bjorn,
-> > 
-> > to simplify stable's merging, would you mind helping me with
-> > the stable releases you want this patch to apply to please ?
-> > 
-> 
-> We've to have this in the patch:
-> 
-> Cc: stable@vger.kernel.org # v5.2+
-> Fixes: 322f03436692 ("PCI: qcom: Use default config space read function")
 
-Done, applied to pci/qcom for v5.7.
-
-Thanks,
-Lorenzo
-
-> > I will apply it then.
-> > 
-> > Thanks,
-> > Lorenzo
-> > 
-> >> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> >> ---
-> >>
-> >> Stan, I picked up all the suggested device id's from the previous thread and
-> >> added 0x1000 for QCS404. I looked at creating platform specific defines in
-> >> pci_ids.h, but SDM845 has both 106 and 107... Please let me know if you would
-> >> prefer that I do this anyway.
-> >>
-> >>  drivers/pci/controller/dwc/pcie-qcom.c | 8 +++++++-
-> >>  1 file changed, 7 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> >> index 5ea527a6bd9f..138e1a2d21cc 100644
-> >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> >> @@ -1439,7 +1439,13 @@ static void qcom_fixup_class(struct pci_dev *dev)
-> >>  {
-> >>  	dev->class = PCI_CLASS_BRIDGE_PCI << 8;
-> >>  }
-> >> -DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, PCI_ANY_ID, qcom_fixup_class);
-> >> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0101, qcom_fixup_class);
-> >> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0104, qcom_fixup_class);
-> >> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0106, qcom_fixup_class);
-> >> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0107, qcom_fixup_class);
-> >> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
-> >> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
-> >> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
-> >>  
-> >>  static struct platform_driver qcom_pcie_driver = {
-> >>  	.probe = qcom_pcie_probe,
-> >> -- 
-> >> 2.24.0
-> >>
-> 
-> -- 
-> regards,
-> Stan
+On 2/21/2020 2:05 AM, Rob Herring wrote:
+> On Thu, 20 Feb 2020 13:42:22 +0530, Sharat Masetty wrote:
+>> This patch adds a clock definition needed for powering on the GPU TBUs
+>> and the GPU TCU.
+>>
+>> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+>> ---
+>>   Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+> My bot found errors running 'make dt_binding_check' on your patch:
+>
+> Documentation/devicetree/bindings/display/simple-framebuffer.example.dts:21.16-37.11: Warning (chosen_node_is_root): /example-0/chosen: chosen node must be at root node
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iommu/arm,smmu.example.dt.yaml: iommu@d00000: clock-names: ['bus', 'iface'] is too short
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iommu/arm,smmu.example.dt.yaml: iommu@d00000: clocks: [[4294967295, 123], [4294967295, 124]] is too short
+>
+> See https://patchwork.ozlabs.org/patch/1241297
+> Please check and re-submit.
+Hi Rob, These issues seem to be from the original code and not related 
+to my patch. Are these going to be blocking errors?
