@@ -2,86 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DAC9C170094
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 14:58:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B8671700C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 15:09:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727309AbgBZN6J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Feb 2020 08:58:09 -0500
-Received: from mail.kernel.org ([198.145.29.99]:55666 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726388AbgBZN6I (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Feb 2020 08:58:08 -0500
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D96ED24683;
-        Wed, 26 Feb 2020 13:58:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1582725488;
-        bh=1BoQ1ecJ5wWFRscOk4MkaHRIh59ebxQ/fwLgAw2SktQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=kiInuYh09C2QC5cNT3mdJz8GNahm52aQa7QJYkvL75ZFDriYxWqKvuJmMUFawShf4
-         yrCRAeioABGvO5xNh4csbP8tWzx9hbZi9/CgSGPiblG9gkU3tyKQTLSxawYaiaNTVQ
-         GjHcSnzOio2utOm5dIOtdJHeglqyc40tMutmEn6g=
-Received: by mail-qt1-f172.google.com with SMTP id g21so2249618qtq.10;
-        Wed, 26 Feb 2020 05:58:07 -0800 (PST)
-X-Gm-Message-State: APjAAAWt8PsLBYZW0hCRXagurUcokouvw+SCkhywP+zzcsaZHdNnaNhk
-        0M2UiGj6zWVKS6icu+ePgA5v0+QKN9kJC3oLFA==
-X-Google-Smtp-Source: APXvYqxao0W/HExVXKLi5ITPoZ8h7I5256qJQ9b+gunDaYgcb4hhUH7vaGwpD+ncnnoclnVnlyafJRsT8mcCwERi+84=
-X-Received: by 2002:aed:2344:: with SMTP id i4mr5644462qtc.136.1582725487044;
- Wed, 26 Feb 2020 05:58:07 -0800 (PST)
-MIME-Version: 1.0
-References: <20200224211035.16897-1-ansuelsmth@gmail.com> <20200224211035.16897-2-ansuelsmth@gmail.com>
- <CAL_JsqL7hAX81hDg8L24n-xpJGzZLEu+kAvJfw=g2pzEo_LPOw@mail.gmail.com> <007601d5ec0a$fc80df70$f5829e50$@gmail.com>
-In-Reply-To: <007601d5ec0a$fc80df70$f5829e50$@gmail.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Wed, 26 Feb 2020 07:57:55 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+qSoy9ouYFg8pxRMT+fLwUqYCU85u=mYHnBioqhFpZGQ@mail.gmail.com>
-Message-ID: <CAL_Jsq+qSoy9ouYFg8pxRMT+fLwUqYCU85u=mYHnBioqhFpZGQ@mail.gmail.com>
-Subject: Re: [PATCH v7 2/2] Documentation: devictree: Add ipq806x mdio bindings
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        id S1726778AbgBZOJx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Feb 2020 09:09:53 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:41859 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726278AbgBZOJu (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 Feb 2020 09:09:50 -0500
+Received: by mail-ed1-f67.google.com with SMTP id c26so3893874eds.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2020 06:09:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nexus-software-ie.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=fXFKoR7odDqKyjm1wlalyPUtaV5JgRAtJWLDNUWDC8E=;
+        b=uBz3+g+j8keWl8UqI79zfp5ubt5QR7/jXbEkrRg/FCZsiZGJC3aScHfLMQZxnVbof3
+         /QZebawsO2zze1XxLqeBsXC2dsMaenQfIFyIOtbY2d5jk5G7uwQkFUZrYjeLa+zy3DE7
+         lzADPtw5KQoK/Pm/ROUTLWxaKS8vLmq7PtHLzzwWCoYi/uqf06dA+oXXNc1vUs/imun1
+         GOWPx1wK29lGZ/IcYPHFQbIU6q34VUM+92OI4u3yF1LEl7bMTJirNuZm/atrMNTPRdg5
+         ZG/tqQrfoKU+uMNPz9Ru9PJe0pyNk6lFQEORi/37O03LN46FGtKkMXMCRNDMc5vDil1W
+         RjJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=fXFKoR7odDqKyjm1wlalyPUtaV5JgRAtJWLDNUWDC8E=;
+        b=bmG3dQD0Jy68PlLs0RLC+T7dRs/JT2KBgRKpm8YKFh0/M/f2f6TAuHq4takkPw6qsx
+         TJNjU3jIwnmo3SKeabeeXi0wcp2GRcqIM+AhDJn9PCgFGWFA1DvipiqO3F4Lp48IIltj
+         ApjpRvF3ikyD9diXd3cxz2FoCOoI3CwQzP6FrOQ3wr2stIIEWSeIzEJ8Jc0t1IxjUIgA
+         B40FB5wMpItSCiuAEhMRHn6U3g3RN8NcYesFXtoZO0mn/KHrzpD2cBPpCwHSd83HVNS/
+         YOVvBNta5fIH6+P+3zExVE/zOHTb7K4xByLMAwrG5crKgkqdQD217Czpa9AGGAVhiJHg
+         sjMw==
+X-Gm-Message-State: APjAAAXg4EhEfZ0IBJwFaDBzyDzQz55Vbs4Q3amn9MVqpg+PmKjQcwug
+        0YRarrVDusRmil4ALYX8CSrByA==
+X-Google-Smtp-Source: APXvYqw0u4w7Awwn/Oq86trc1VxG309aOYxrpuzvaTjpcOA5sSGDTXcJUngxdDIFv1GDoA39EXuUlA==
+X-Received: by 2002:a05:6402:22d4:: with SMTP id dm20mr5099174edb.353.1582726187668;
+        Wed, 26 Feb 2020 06:09:47 -0800 (PST)
+Received: from [192.168.0.38] ([176.61.57.127])
+        by smtp.gmail.com with ESMTPSA id c19sm91152ejm.47.2020.02.26.06.09.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Feb 2020 06:09:46 -0800 (PST)
+Subject: Re: [PATCH v4 0/5] Add clock drivers for SM8250 SoC
+To:     Vinod Koul <vkoul@kernel.org>, Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        netdev <netdev@vger.kernel.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        psodagud@codeaurora.org, tsoni@codeaurora.org,
+        jshriram@codeaurora.org, tdas@codeaurora.org,
+        vnkgutta@codeaurora.org
+References: <20200224045003.3783838-1-vkoul@kernel.org>
+From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
+Message-ID: <ada86697-374c-653d-156e-36af61b53c52@nexus-software.ie>
+Date:   Wed, 26 Feb 2020 14:09:58 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
+MIME-Version: 1.0
+In-Reply-To: <20200224045003.3783838-1-vkoul@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 25, 2020 at 12:40 PM <ansuelsmth@gmail.com> wrote:
->
-> > On Mon, Feb 24, 2020 at 3:10 PM Ansuel Smith <ansuelsmth@gmail.com>
-> > wrote:
-> > >
-> >
-> > typo in the subject. Use 'dt-bindings: net: ...' for the subject prefix.
-> >
-> > > Add documentations for ipq806x mdio driver.
-> > >
-> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > > ---
-> > > Changes in v7:
-> > > - Fix dt_binding_check problem
-> >
-> > Um, no you didn't...
-> >
->
-> Does make dt_check_binding still gives errors?
-> If yes can you give me some advice on how to test only this since it gives me
-> errors on checking other upstream Documentation ?
+On 24/02/2020 04:49, Vinod Koul wrote:
+> This series adds clock drivers support for SM8250 SoC.  As part of the
+> device tree, the sm8250 dts file has basic nodes like CPU, PSCI, intc, timer
+> and clock controller.
+> 
+> Required clock controller driver and RPMH cloks are added to
+> support peripherals like USB.
+> 
+> All this configuration is added to support SM8250 to boot up to the
+> serial console.
+> 
+> Changes in v4:
+>   - Make qcom,gcc-sm8250.yaml license as dual GPL + BSD
+> 
+> Changes in v3:
+> - Dropped accepted patches by Steve
+> - Split the common rename patch to rename and refactor patches
+> - Rebase on clk/clk-qcom and move yaml binding to .../bindings/clock/qcom,gcc-sm8250.yaml
+> - Fix comments form Steve on gcc-sm8250 clk driver
+> 
+> Taniya Das (5):
+>    clk: qcom: clk-alpha-pll: Use common names for defines
+>    clk: qcom: clk-alpha-pll: Refactor trion PLL
+>    clk: qcom: clk-alpha-pll: Add support for controlling Lucid PLLs
+>    dt-bindings: clock: Add SM8250 GCC clock bindings
+>    clk: qcom: gcc: Add global clock controller driver for SM8250
+> 
+>   .../bindings/clock/qcom,gcc-sm8250.yaml       |   72 +
+>   drivers/clk/qcom/Kconfig                      |    7 +
+>   drivers/clk/qcom/Makefile                     |    1 +
+>   drivers/clk/qcom/clk-alpha-pll.c              |  264 +-
+>   drivers/clk/qcom/clk-alpha-pll.h              |   12 +
+>   drivers/clk/qcom/gcc-sm8250.c                 | 3690 +++++++++++++++++
+>   include/dt-bindings/clock/qcom,gcc-sm8250.h   |  271 ++
+>   7 files changed, 4268 insertions(+), 49 deletions(-)
+>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml
+>   create mode 100644 drivers/clk/qcom/gcc-sm8250.c
+>   create mode 100644 include/dt-bindings/clock/qcom,gcc-sm8250.h
+> 
 
-Don't use linux-next. Linus' master is only warnings. If you have
-errors on that, then you may need to update dtschema.
-
-Also, using 'make -k' helps if there are make errors.
-
-Rob
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
