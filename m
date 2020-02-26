@@ -2,94 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D4DAE16FDF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 12:38:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AFE6916FE7D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 12:59:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728133AbgBZLiR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Feb 2020 06:38:17 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35736 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728048AbgBZLiR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Feb 2020 06:38:17 -0500
-Received: by mail-wm1-f67.google.com with SMTP id m3so2696803wmi.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Feb 2020 03:38:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=mQFv2ptApTIAiUn/IDnNgZylYWpvb4JaReKMP2qGRB8=;
-        b=TSDY4K1jK4zC8azCDNMC5WXyxnatPyfc/pal1j+EIbnQKW2zaRx9qYncNZj9heQkOO
-         JPA+Ec8cjsQg6KPJTGTR298QW22hIk2vO2pSGBmthLDnIMXTxfy4D5uUGGeH/dYYm0ud
-         eMcAg3Bu9XFBTe55fTumqTQ3Wa7el+GPollNpMOMT2TW/Qvto6SaX5A8pyz9WNbivBlr
-         vFofurtnEsP0LMC65L6LOWe/25tOhrBG5tmt7XQ1Q7ePkCKHLhS3dVhxEPoemgBU+6FQ
-         hgqDhOq0ydIzX+XqKIKeRoM+qkoUsa9SbbsP/GG/pObX16rdcmO2HtjTUv2aTs5/gHkc
-         +VXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=mQFv2ptApTIAiUn/IDnNgZylYWpvb4JaReKMP2qGRB8=;
-        b=DdOuah/3QpL6mrDVqFg9QxWEB1xyukW5ZSV6ixme8/zDjwCgalX5DFQGINhGFGFe8F
-         AEETfFnzAMrZ77RQxFTrrLFdUvxisaeaBA81/+1KfJbLYAuMprq2CkzWbCRsqUQLiiJB
-         A9/tq0WfjnA159Ca8yiC7fQp1o9F88T3bW9FBQrsL4baE5PqLMQE7ylPf4bF/GHonUm4
-         JfHNZ7Fu+NY5FGH677cWIJtLVvHzQLt4BewrxxUOIM6YHTLGbh5D6U40feX60t06bHhq
-         KQII7I/AGN6Dy1mQcxJGRHms7A22h0wPUu+uqwVXNFhX4mAeodLdqjW64FzoqAj1BV83
-         hG9A==
-X-Gm-Message-State: APjAAAUuBQqQyu40I5Se+sf5f8+Ze5Pu+HFYGFVFv86H4r+lN8TF4L30
-        j9To993IxbJYhph3c0T+5YEUrg==
-X-Google-Smtp-Source: APXvYqyak90IvO19aKLILtWxBiJdRlI2XwGyaViPcGIDLyWqQbmhah1/I7K4BB75W9pOuWCAz2jGYQ==
-X-Received: by 2002:a7b:c416:: with SMTP id k22mr5369132wmi.25.1582717095791;
-        Wed, 26 Feb 2020 03:38:15 -0800 (PST)
-Received: from dell ([2.31.163.122])
-        by smtp.gmail.com with ESMTPSA id h13sm3391406wrw.54.2020.02.26.03.38.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2020 03:38:14 -0800 (PST)
-Date:   Wed, 26 Feb 2020 11:38:46 +0000
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Adrian Panella <ianchi74@outlook.com>,
-        Andy Gross <agross@kernel.org>,
+        id S1726538AbgBZL7Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Feb 2020 06:59:16 -0500
+Received: from foss.arm.com ([217.140.110.172]:34882 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726272AbgBZL7Q (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 Feb 2020 06:59:16 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EEB6C1FB;
+        Wed, 26 Feb 2020 03:59:15 -0800 (PST)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 84E403FA00;
+        Wed, 26 Feb 2020 03:59:14 -0800 (PST)
+Date:   Wed, 26 Feb 2020 11:59:12 +0000
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Elliot Berman <eberman@codeaurora.org>
+Cc:     Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] regulator: add smb208 support
-Message-ID: <20200226113846.GM3494@dell>
-References: <20200219163711.479-1-ansuelsmth@gmail.com>
+        Trilok Soni <tsoni@codeaurora.org>,
+        Prasad Sodagudi <psodagud@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Sudeep Holla <sudeep.holla@arm.com>
+Subject: Re: [PATCH v2 2/3] firmware: psci: Add support for dt-supplied
+ SYSTEM_RESET2 type
+Message-ID: <20200226115912.GC8613@bogus>
+References: <1582577858-12410-1-git-send-email-eberman@codeaurora.org>
+ <1582577858-12410-3-git-send-email-eberman@codeaurora.org>
+ <20200225110346.GF32784@bogus>
+ <1d7fecf8-3a7f-57e5-5c13-73de89d52aa2@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200219163711.479-1-ansuelsmth@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <1d7fecf8-3a7f-57e5-5c13-73de89d52aa2@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 19 Feb 2020, Ansuel Smith wrote:
+On Tue, Feb 25, 2020 at 05:37:53PM -0800, Elliot Berman wrote:
 
-> Smb208 regulators are used on some ipq806x soc.
-> Add support for it to make it avaiable on some routers
-> that use it.
-> 
-> Signed-off-by: Adrian Panella <ianchi74@outlook.com>
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  Documentation/devicetree/bindings/mfd/qcom-rpm.txt | 4 ++++
+[...]
 
-Acked-by: Lee Jones <lee.jones@linaro.org>
+> Alternatively, I could rename the DT property to
+> "arm,psci-sys-reset2-vendor-param"
 
->  drivers/regulator/qcom_rpm-regulator.c             | 9 +++++++++
->  2 files changed, 13 insertions(+)
+Yes much better.
 
--- 
-Lee Jones [李琼斯]
-Linaro Services Technical Lead
-Linaro.org │ Open source software for ARM SoCs
-Follow Linaro: Facebook | Twitter | Blog
+> and then always set the 31st bit so that it is impossible to provide an
+> invalid architectural reset type in DT.
+>
+
+Indeed this is what I was expecting and hence raised issue here. So that
+one can't make use of architectural ID space just by adding param in DT.
+
+--
+Regards,
+Sudeep
