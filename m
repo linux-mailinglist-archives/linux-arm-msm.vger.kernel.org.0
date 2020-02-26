@@ -2,120 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A80D16F499
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 01:59:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30C9416F51E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Feb 2020 02:37:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729376AbgBZA7Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Feb 2020 19:59:16 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:34000 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729277AbgBZA7Q (ORCPT
+        id S1729501AbgBZBh6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Feb 2020 20:37:58 -0500
+Received: from mail27.static.mailgun.info ([104.130.122.27]:37093 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729498AbgBZBh6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Feb 2020 19:59:16 -0500
-Received: by mail-ed1-f66.google.com with SMTP id dm3so820616edb.1;
-        Tue, 25 Feb 2020 16:59:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=41dIRKzCHut5g8ULikn2zx6erU7p8Xh0VLc4jTiVCc4=;
-        b=O+TIDjLetEnT2gz+kRGSEfKzJ3gZm54fhVuuw2o9NH/TCdmpc530coe/gSUyy6JkVV
-         hp4I4Tt0D4oO6Jq7z3rPlT5qjP0pC2eAqX3fHvscjkk/rSoLXphauA4TQi5N8rUG2RJn
-         H9cMp9gTpeGK3EGLpkW15/eCBTfdTp+f7sNiP/2mCMQLmxywtMHas0sD8mQYeCOVCpLg
-         MykJsWuqmKNLL23XnKMoLa7+H92C1e7lF0KmHN9ZRr+9Seofo3+cczjalXrRV5jUQLc0
-         JQtvE6GOsgSni/HKHXgosx1LXU72/dYi2ptrteciLbu787zgnCQVsatna7aUZhM5ZPcA
-         njZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=41dIRKzCHut5g8ULikn2zx6erU7p8Xh0VLc4jTiVCc4=;
-        b=BuY4zHWvon4vi0UNgpiJr0cZxdXfPauXkVEgoMa9qiGOTvVJzHIHuRqtMIIfp7HEED
-         Eq6EvdbkHoOyvDzjiEcYDOhzkbwiGTQDLpKtDYuPYi96v5aYc7vwtp5aAvLkC9evBJkp
-         cktWY5gBnWGzoGGHBiue21IBUI9LHuBGm9OLdD8UY/W4wdBDXqnPN/0Qon3EcYaJfej8
-         zfB/phWEhTE06+1oQEOBLqWZ/N2ZHPXmEHSC50dtUxazdnXUXmebKlO7JYQfIZ6jWi00
-         9KKUYocZ3Tigj3oJV1j9Zn8EDH9VUE/XiyXMQbBZzVCFyp/bPM80LbeURCoB3Wq+CFOD
-         o6xQ==
-X-Gm-Message-State: APjAAAUDZwi0W3VZx55S54wWfuHTceBXyc5/swefT/rFUT0l4XpRyn2g
-        dlwvprQ5+d8QCLtEGnat6f9CKe9hoe6/PdpNeto=
-X-Google-Smtp-Source: APXvYqy+o+spYlkpd4xZ2v0xZdO4bB5nJGwJneHFcbDWmY6rMi3XrscjFYSA8O3XYDcxOfzTeyUYrAaPUgr+F/SUKz4=
-X-Received: by 2002:a17:906:5f89:: with SMTP id a9mr1635153eju.267.1582678754601;
- Tue, 25 Feb 2020 16:59:14 -0800 (PST)
+        Tue, 25 Feb 2020 20:37:58 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1582681077; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To:
+ Subject: From: Sender; bh=BBWKcq7dFUCB/c3IP8dQkRGrntjmGuegJTnAZqmvUMU=;
+ b=t6mYdHFYeIwS4HiUu3SgEd7Ex8NyUDkkaox1Sv8v1VGGRsW6+nE9PxZ1El1BvNwzlRqZ+igS
+ +GQ+bNWU1Du6V8uPKicMUdinxXUe3rmfKgmtPDoNs12862116ndvnzU4u9G/51Qp7gO+xNUg
+ TN8tWhFthwDgydhevpR5vUgmIvE=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e55cbf3.7f08f193c0a0-smtp-out-n01;
+ Wed, 26 Feb 2020 01:37:55 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6310BC4479F; Wed, 26 Feb 2020 01:37:55 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.134.65.5] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: eberman)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5A64DC4479D;
+        Wed, 26 Feb 2020 01:37:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5A64DC4479D
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=eberman@codeaurora.org
+From:   Elliot Berman <eberman@codeaurora.org>
+Subject: Re: [PATCH v2 2/3] firmware: psci: Add support for dt-supplied
+ SYSTEM_RESET2 type
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Trilok Soni <tsoni@codeaurora.org>,
+        Prasad Sodagudi <psodagud@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1582577858-12410-1-git-send-email-eberman@codeaurora.org>
+ <1582577858-12410-3-git-send-email-eberman@codeaurora.org>
+ <20200225110346.GF32784@bogus>
+Message-ID: <1d7fecf8-3a7f-57e5-5c13-73de89d52aa2@codeaurora.org>
+Date:   Tue, 25 Feb 2020 17:37:53 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-References: <1582223216-23459-1-git-send-email-jcrouse@codeaurora.org>
- <1582223216-23459-5-git-send-email-jcrouse@codeaurora.org> <CALAqxLWc4QQPyh=R6=0uFnLLicTYJ3NMO6QSc_yF31bJ2Z_rkQ@mail.gmail.com>
-In-Reply-To: <CALAqxLWc4QQPyh=R6=0uFnLLicTYJ3NMO6QSc_yF31bJ2Z_rkQ@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 25 Feb 2020 16:59:02 -0800
-Message-ID: <CAF6AEGtYvjgoYxsxyu2-juuTsp9mBJUdRRUWAT3doLtpju4UmQ@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] drm/msm/a6xx: Use the DMA API for GMU memory objects
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Daniel Vetter <daniel@ffwll.ch>, Todd Kjos <tkjos@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200225110346.GF32784@bogus>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 25, 2020 at 3:54 PM John Stultz <john.stultz@linaro.org> wrote:
->
-> On Thu, Feb 20, 2020 at 10:27 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
-> >
-> > The GMU has very few memory allocations and uses a flat memory space so
-> > there is no good reason to go out of our way to bypass the DMA APIs which
-> > were basically designed for this exact scenario.
-> >
-> > v2: Pass force_dma false to of_dma_configure to require that the DMA
-> > region be set up and return error from of_dma_configure to fail probe.
-> >
-> > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> > ---
-> >
-> >  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 112 +++-------------------------------
-> >  drivers/gpu/drm/msm/adreno/a6xx_gmu.h |   5 +-
-> >  2 files changed, 11 insertions(+), 106 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > index 983afea..c36b38b 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> ...
-> > -       count = bo->size >> PAGE_SHIFT;
-> > +       bo->virt = dma_alloc_attrs(gmu->dev, bo->size, &bo->iova, GFP_KERNEL,
-> > +               bo->attrs);
-> >
-> ...
-> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-> > index 2af91ed..31bd1987 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-> > @@ -13,7 +13,7 @@ struct a6xx_gmu_bo {
-> >         void *virt;
-> >         size_t size;
-> >         u64 iova;
-> > -       struct page **pages;
-> > +       unsigned long attrs;
-> >  };
->
-> As a head up, Todd reported that this patch is causing build trouble
-> w/ arm32, as the iova needs to be a dma_attr_t.
->
-> I've got a patch for the android-mainline tree to fix this, but you
-> might want to spin a v3 to address this.
->   https://android-review.googlesource.com/c/kernel/common/+/1243928
->
+On 2/25/2020 3:03 AM, Sudeep Holla wrote:
+> On Mon, Feb 24, 2020 at 12:57:37PM -0800, Elliot Berman wrote:
+>> @@ -493,6 +494,7 @@ typedef int (*psci_initcall_t)(const struct device_node *);
+>>  static int __init psci_0_2_init(struct device_node *np)
+>>  {
+>>  	int err;
+>> +	u32 param;
+>>
+>>  	err = get_set_conduit_method(np);
+>>  	if (err)
+>> @@ -505,7 +507,19 @@ static int __init psci_0_2_init(struct device_node *np)
+>>  	 * can be carried out according to the specific version reported
+>>  	 * by firmware
+>>  	 */
+>> -	return psci_probe();
+>> +	err = psci_probe();
+>> +	if (err)
+>> +		return err;
+>> +
+>> +	if (psci_system_reset2_supported &&
+>> +	    !of_property_read_u32(np, "arm,psci-sys-reset2-param", &param)) {
+>> +		if ((s32)param > 0)
+> 
+> What is the point on signed comparison here ? You are assuming all vendor
+> reset also as architecture by doing so which is wrong.
+> 
+>> +			pr_warn("%08x is an invalid architectural reset type.\n",
+>> +				param);
+> 
+> I thought the point was to have vendor reset here. Based on the 3/3 you
+> see to have vendor reset bit set, you ignore that by doing signed comparison
+> which is wrong and even the message is wrong. Specification defines only
+> one architectural reset(WARM RESET) and all others need to be vendor specific.
+> 
+> --
+> Regards,
+> Sudeep
+> 
+I might've gone crazy, but all vendor-specific reset types would be
+negative when cast as s32. Thus the check returns true only for an invalid
+architectural reset type. I can switch to checking bits instead of using 
+cast in v3 to avoid the confusion.
 
-I guess based on robher's comments on the bindings, there will be a v3..
+Alternatively, I could rename the DT property to
+"arm,psci-sys-reset2-vendor-param" and then always set the 31st bit so that
+it is impossible to provide an invalid architectural reset type in DT.
 
-BR,
--R
+Let me know what is preferred.
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
