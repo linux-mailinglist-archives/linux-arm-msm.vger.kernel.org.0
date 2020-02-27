@@ -2,111 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F9E9172AD0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 23:06:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AEDF172B89
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 23:38:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729776AbgB0WGy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Feb 2020 17:06:54 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:25259 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730187AbgB0WGx (ORCPT
+        id S1730126AbgB0WiR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Feb 2020 17:38:17 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:42688 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729808AbgB0WiR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Feb 2020 17:06:53 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582841213; h=References: In-Reply-To: References:
- In-Reply-To: Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=KA5SegCo5AW0cExJCz9BWH9qh1K5CDu6sI3vMXYPwJc=; b=S3jj8Bn127oG/+b1JpXKOds8/FS8ZwYdRIasUENwuZL5nbgWk1sIn1W8+PVo44bOAXnhYemr
- ZEp3uaGkh1Jht5KZU5HbnL0Z4jJ8aSJSgfNVdOawrzOHnLMIpKHm0MdPHfx7bL1KBg1Fq6f8
- NlU38gBoBQF+LvuAHpP8HuXCy2c=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e583d71.7fb467084030-smtp-out-n03;
- Thu, 27 Feb 2020 22:06:41 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 16488C447A0; Thu, 27 Feb 2020 22:06:40 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: nguyenb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2ED8FC43383;
-        Thu, 27 Feb 2020 22:06:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2ED8FC43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=nguyenb@codeaurora.org
-From:   "Bao D. Nguyen" <nguyenb@codeaurora.org>
-To:     ulf.hansson@linaro.org, robh+dt@kernel.org,
-        linux-scsi@vger.kernel.org
-Cc:     linux-mmc@vger.kernel.org, asutoshd@codeaurora.org,
-        cang@codeaurora.org, Sahitya Tummala <stummala@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org,
-        "Bao D. Nguyen" <nguyenb@codeaurora.org>
-Subject: [<PATCH v1> 4/4] mmc: core: update host->card after getting RCA for SD card
-Date:   Thu, 27 Feb 2020 14:05:42 -0800
-Message-Id: <630eb41f01456cd862495166b9cef2b36ae2861e.1582839544.git.nguyenb@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <cover.1582839544.git.nguyenb@codeaurora.org>
-References: <cover.1582839544.git.nguyenb@codeaurora.org>
-In-Reply-To: <cover.1582839544.git.nguyenb@codeaurora.org>
-References: <cover.1582839544.git.nguyenb@codeaurora.org>
+        Thu, 27 Feb 2020 17:38:17 -0500
+Received: by mail-ed1-f66.google.com with SMTP id n18so978361edw.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 14:38:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=5ldqtdzQg0IDkeY1Xbv0KzAGe+suBcmk9fLvcp/p3NQ=;
+        b=vCBMHMF2V3rD3aEGpqLE6IGPiunwvNx4n++lWFnfdUbfrdni6eNWVPcqzZri2/Raeg
+         wTj06zoRmfzelvt6glWNRK9rWNdSS8S2XuoWzJ9nui7EkRcVZiFItixEhlmUXRH/O/c3
+         mszevfyxXbq4Pm+lq4vZ+EIddisuYNQTHeI6SrjsaZS+zg5gHtsJVW3PiNdM6nxYmW7S
+         LW99kUP00dpHDtXWXqa4i9FG5dAK4yc/RiYJY/ZK+F3G9U7+VCIh1COun9kK6QJr0J79
+         t02y1ebCORNCNWM11ZBOl5ufZF7+Tzyd3pYA05WJv88cbAfUPYuLTXX0DA9uVLSD/Hgm
+         +Dpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=5ldqtdzQg0IDkeY1Xbv0KzAGe+suBcmk9fLvcp/p3NQ=;
+        b=Uqk4oWZdLskY++Bejofdlj/MPdm0Pq+XTGfrAmBi6gDFcDZNZ6h9llY2tPWPAae/9K
+         G4KDKxPBqk4KqMWyMJPXSN2VVI4ftlMaLGQGtyvVkJar2iAZJhnLXBDYKVkUhZ4HpM9v
+         DLas9nn0vkXdU02Bq+CRGOKClrK/VhATeIfJqv31tjuIHV4IXqxGUo6Dn2OYcoxQTbUp
+         D4y9JhiUuLTrYFpfJhuVxJTNGQ6y6Yz8ttJfXccZlDR/mzbMGw4H9wpmUzg+fR8rcxlo
+         wUXjffrEpPNm3lKy8RsXq2jxUEIbB1xjz39Zq2VKg3jwgpzkjJFna1yVu1iUezxRfXhn
+         En9w==
+X-Gm-Message-State: APjAAAVlWcU93n5IBbTTGS6Mqltp0VMfgPr1fkDENEjalvk3Y+NYrJGT
+        MVfUSPPNagfc0Nz9dhfTldMPzA==
+X-Google-Smtp-Source: APXvYqxxloI5041lk1b15OcyCz5cCF9wex2YQPothjIN2SiN+YwNMxhIRod4razDzQIdZ4bi3X7m4Q==
+X-Received: by 2002:a17:906:4bc8:: with SMTP id x8mr1060538ejv.339.1582843095559;
+        Thu, 27 Feb 2020 14:38:15 -0800 (PST)
+Received: from [192.168.1.9] (hst-221-24.medicom.bg. [84.238.221.24])
+        by smtp.googlemail.com with ESMTPSA id j24sm441940edr.57.2020.02.27.14.38.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Feb 2020 14:38:14 -0800 (PST)
+Subject: Re: [PATCH v4 11/12] arm64: dts: sdm845: follow venus-sdm845v2 DT
+ binding
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Vikash Garodia <vgarodia@codeaurora.org>, dikshita@codeaurora.org
+References: <20200106154929.4331-1-stanimir.varbanov@linaro.org>
+ <20200106154929.4331-12-stanimir.varbanov@linaro.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <13ea7221-5253-37fc-595d-e650b2d474c6@linaro.org>
+Date:   Fri, 28 Feb 2020 00:38:14 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <20200106154929.4331-12-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sahitya Tummala <stummala@codeaurora.org>
+Hi Bjorn,
 
-Make the host->card available before tuning is invoked for SD card.
-In the sdhci_msm_execute_tuning(), we will send CMD13 only if
-host->card is present because it needs the card->rca as its
-argument to be sent. For emmc, host->card is already updated
-immediately after the mmc_alloc_card(). In the similar way,
-this change is for SD card. Without this change, tuning functionality
-will not be able to send CMD13 to make sure the card is ready
-for next data command. If the last tuning command failed
-and we did not send CMD13 to ensure card is in transfer state,
-the next read/write command will fail.
+Could you take this for v5.7.
 
-Signed-off-by: Sahitya Tummala <stummala@codeaurora.org>
-Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
-Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
----
- drivers/mmc/core/sd.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+On 1/6/20 5:49 PM, Stanimir Varbanov wrote:
+> Move all pmdomain and clock resources to Venus DT node. And make
+> possible to support dynamic core assignment on v4.
+> 
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 25 +++++++++++++------------
+>  1 file changed, 13 insertions(+), 12 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index ddb1f23c936f..c5784951d408 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -2568,32 +2568,33 @@
+>  		};
+>  
+>  		video-codec@aa00000 {
+> -			compatible = "qcom,sdm845-venus";
+> +			compatible = "qcom,sdm845-venus-v2";
+>  			reg = <0 0x0aa00000 0 0xff000>;
+>  			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+> -			power-domains = <&videocc VENUS_GDSC>;
+> +			power-domains = <&videocc VENUS_GDSC>,
+> +					<&videocc VCODEC0_GDSC>,
+> +					<&videocc VCODEC1_GDSC>;
+> +			power-domain-names = "venus", "vcodec0", "vcodec1";
+>  			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
+>  				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
+> -				 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>;
+> -			clock-names = "core", "iface", "bus";
+> +				 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
+> +				 <&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
+> +				 <&videocc VIDEO_CC_VCODEC0_AXI_CLK>,
+> +				 <&videocc VIDEO_CC_VCODEC1_CORE_CLK>,
+> +				 <&videocc VIDEO_CC_VCODEC1_AXI_CLK>;
+> +			clock-names = "core", "iface", "bus",
+> +				      "vcodec0_core", "vcodec0_bus",
+> +				      "vcodec1_core", "vcodec1_bus";
+>  			iommus = <&apps_smmu 0x10a0 0x8>,
+>  				 <&apps_smmu 0x10b0 0x0>;
+>  			memory-region = <&venus_mem>;
+>  
+>  			video-core0 {
+>  				compatible = "venus-decoder";
+> -				clocks = <&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
+> -					 <&videocc VIDEO_CC_VCODEC0_AXI_CLK>;
+> -				clock-names = "core", "bus";
+> -				power-domains = <&videocc VCODEC0_GDSC>;
+>  			};
+>  
+>  			video-core1 {
+>  				compatible = "venus-encoder";
+> -				clocks = <&videocc VIDEO_CC_VCODEC1_CORE_CLK>,
+> -					 <&videocc VIDEO_CC_VCODEC1_AXI_CLK>;
+> -				clock-names = "core", "bus";
+> -				power-domains = <&videocc VCODEC1_GDSC>;
+>  			};
+>  		};
+>  
+> 
 
-diff --git a/drivers/mmc/core/sd.c b/drivers/mmc/core/sd.c
-index 76c7add..f0872e3 100644
---- a/drivers/mmc/core/sd.c
-+++ b/drivers/mmc/core/sd.c
-@@ -989,6 +989,7 @@ static int mmc_sd_init_card(struct mmc_host *host, u32 ocr,
- 		err = mmc_send_relative_addr(host, &card->rca);
- 		if (err)
- 			goto free_card;
-+		host->card = card;
- 	}
- 
- 	if (!oldcard) {
-@@ -1100,12 +1101,13 @@ static int mmc_sd_init_card(struct mmc_host *host, u32 ocr,
- 		goto free_card;
- 	}
- done:
--	host->card = card;
- 	return 0;
- 
- free_card:
--	if (!oldcard)
-+	if (!oldcard) {
-+		host->card = NULL;
- 		mmc_remove_card(card);
-+	}
- 
- 	return err;
- }
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+regards,
+Stan
