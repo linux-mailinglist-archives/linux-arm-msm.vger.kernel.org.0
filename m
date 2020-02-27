@@ -2,56 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A02C0171580
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 11:58:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A8161716B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 13:03:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728762AbgB0K5g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Feb 2020 05:57:36 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:56060 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728874AbgB0K5g (ORCPT
+        id S1728928AbgB0MDd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Feb 2020 07:03:33 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43809 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728882AbgB0MDd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Feb 2020 05:57:36 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582801055; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=sM+W2Nc7DPEL6NoqIWgydj9LZlnUkC9GPD/SJlw3K2k=; b=v3/xtEfpypudOdC+9boxbhKfp4E6EsWxIWQkTHpHmlARyZqtsgsUXfN1hiTc0t+9BMMdVvLL
- gn0CiPC/lzJi+VPIgxQkQ85bv4PSWwHq/ZdpXLEDvaAPVo98zlePBCSsU08KmUOHo57QkE1g
- V4aBqaljdS1/aAPTbTjJ2Z1K1vs=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e57a091.7f8e7c2eea40-smtp-out-n02;
- Thu, 27 Feb 2020 10:57:21 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F1259C447AB; Thu, 27 Feb 2020 10:57:19 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4D0B5C447A6;
-        Thu, 27 Feb 2020 10:57:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4D0B5C447A6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     robh+dt@kernel.org, georgi.djakov@linaro.org, evgreen@chromium.org
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, mark.rutland@arm.com,
-        saravanak@google.com, viresh.kumar@linaro.org,
-        okukatla@codeaurora.org, Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH v5 7/7] arm64: dts: qcom: sc7180: Add OSM L3 interconnect provider
-Date:   Thu, 27 Feb 2020 16:26:31 +0530
-Message-Id: <20200227105632.15041-8-sibis@codeaurora.org>
+        Thu, 27 Feb 2020 07:03:33 -0500
+Received: by mail-wr1-f67.google.com with SMTP id c13so2969211wrq.10;
+        Thu, 27 Feb 2020 04:03:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0cvkhpWMFxiLIeolS0V7/Qo+W3ZK761sN/9Z7LM3iPc=;
+        b=Kfug0CJRpde9XowA2nK2NNaW5lx1rUpjSYu8G4JseK84jXXjX6+qOHMxwTsPAlpXXd
+         1Z4SYEhLlLyqt+Nn6ZaWsF8Kb+ZX5KnEUIbWJzQF9FAQdruIwhXjli6XAnBUcdvu3hK9
+         9EMW5/fZUMYYsUrh8VHokFrfHPL0QDk+t9MNpfp4yBwu2nRwjIT5vdrcXIHhLi898GF3
+         u91OBgKR5jGTktue2OzE7RKHow6L0Y4iv6waxFzz1iDCkWLchsuRsVqHzC9hPmg0u3ay
+         nHyKdEPcSSCB7CbUgIQHIfQo1SJH5RLwr2SKi7FuTqNwGa5ao7H+MstVcCiJk/GtKmVw
+         4Bkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0cvkhpWMFxiLIeolS0V7/Qo+W3ZK761sN/9Z7LM3iPc=;
+        b=Fzhf8YwlpEweGjUnPA6NEF13Lz9YPIzoArBFa42uheFXhizxX9TMBxrr4q+5djZwfn
+         usIiYn3VIazQqIZZKC/YADrooX+GyrE0mCze+uZ3L2wAiE+xiKwTCE/TCu3z6ykNPNb9
+         mQydXa4rbbyFA7c9J11+hJwc54cQwgtjofh93ljGWKuALAH7Up8zAFk8tBOWWgQjVym8
+         2zydtTp1alp2DhTcWtnCiGtTVVe5qz16+0776UUf4g8olVZxeYPUZnTTwmMzuGD4UMZV
+         f4RLDRm10r+7esrsPNespIH/IIi35PQn9zCBMPWEX/4KWDqIa7biFUA7mTA1uWHWDnHe
+         3QGw==
+X-Gm-Message-State: APjAAAVsXtn8D/dFG/qpSsVQ1huN+msYtWBJuacBmTra9SDywvLqwtLm
+        /f5heYo8qy8cHzT55Q9hD9U=
+X-Google-Smtp-Source: APXvYqzcuxChGggWOSGvgfmoFNlVgp9QCuNqVaQ/y8Pchnv7mZ3b6MlfEcjxIgveqSKd5RdWwh0h1Q==
+X-Received: by 2002:a05:6000:12d1:: with SMTP id l17mr4335111wrx.327.1582805011298;
+        Thu, 27 Feb 2020 04:03:31 -0800 (PST)
+Received: from wambui.zuku.co.ke ([197.237.61.225])
+        by smtp.googlemail.com with ESMTPSA id t10sm7655017wru.59.2020.02.27.04.03.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Feb 2020 04:03:30 -0800 (PST)
+From:   Wambui Karuga <wambui.karugax@gmail.com>
+To:     daniel@ffwll.ch, airlied@linux.ie, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>
+Cc:     linux-kernel@vger.kernel.org, gregkh@linuxfoundation.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 12/21] drm/msm: remove checks for return value of drm_debugfs functions.
+Date:   Thu, 27 Feb 2020 15:02:23 +0300
+Message-Id: <20200227120232.19413-13-wambui.karugax@gmail.com>
 X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200227105632.15041-1-sibis@codeaurora.org>
-References: <20200227105632.15041-1-sibis@codeaurora.org>
+In-Reply-To: <20200227120232.19413-1-wambui.karugax@gmail.com>
+References: <20200227120232.19413-1-wambui.karugax@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -59,42 +64,153 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add Operation State Manager (OSM) L3 interconnect provider on SC7180 SoCs.
+Since commit 987d65d01356 (drm: debugfs: make
+drm_debugfs_create_files() never fail), drm_debugfs_create_files() does
+not fail, and should return void. This change therefore removes the
+checks of its return value in drm/msm and subsequent error handling.
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+These changes also enable the changing of various debugfs_init()
+functions to return void.
+
+Signed-off-by: Wambui Karuga <wambui.karugax@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/msm/adreno/a5xx_debugfs.c | 18 +++++-------------
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c  | 14 +++-----------
+ drivers/gpu/drm/msm/msm_debugfs.c         | 21 ++++++---------------
+ drivers/gpu/drm/msm/msm_debugfs.h         |  2 +-
+ drivers/gpu/drm/msm/msm_gpu.h             |  2 +-
+ 5 files changed, 16 insertions(+), 41 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 3e28f340fa3e6..6997467608107 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -7,6 +7,7 @@
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c b/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
+index 075ecce4b5e0..8cae2ca4af6b 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
+@@ -148,27 +148,19 @@ reset_set(void *data, u64 val)
+ DEFINE_SIMPLE_ATTRIBUTE(reset_fops, NULL, reset_set, "%llx\n");
  
- #include <dt-bindings/clock/qcom,gcc-sc7180.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/interconnect/qcom,osm-l3.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/phy/phy-qcom-qusb2.h>
- #include <dt-bindings/power/qcom-aoss-qmp.h>
-@@ -1578,6 +1579,16 @@ apps_bcm_voter: bcm_voter {
- 			};
- 		};
  
-+		osm_l3: interconnect@18321000 {
-+			compatible = "qcom,sc7180-osm-l3";
-+			reg = <0 0x18321000 0 0x1400>;
-+
-+			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
-+			clock-names = "xo", "alternate";
-+
-+			#interconnect-cells = <1>;
-+		};
-+
- 		cpufreq_hw: cpufreq@18323000 {
- 			compatible = "qcom,cpufreq-hw";
- 			reg = <0 0x18323000 0 0x1400>, <0 0x18325800 0 0x1400>;
+-int a5xx_debugfs_init(struct msm_gpu *gpu, struct drm_minor *minor)
++void a5xx_debugfs_init(struct msm_gpu *gpu, struct drm_minor *minor)
+ {
+ 	struct drm_device *dev;
+-	int ret;
+ 
+ 	if (!minor)
+-		return 0;
++		return;
+ 
+ 	dev = minor->dev;
+ 
+-	ret = drm_debugfs_create_files(a5xx_debugfs_list,
+-			ARRAY_SIZE(a5xx_debugfs_list),
+-			minor->debugfs_root, minor);
+-
+-	if (ret) {
+-		DRM_DEV_ERROR(dev->dev, "could not install a5xx_debugfs_list\n");
+-		return ret;
+-	}
++	drm_debugfs_create_files(a5xx_debugfs_list,
++				 ARRAY_SIZE(a5xx_debugfs_list),
++				 minor->debugfs_root, minor);
+ 
+ 	debugfs_create_file("reset", S_IWUGO, minor->debugfs_root, dev,
+ 			    &reset_fops);
+-
+-	return 0;
+ }
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index 6650f478b226..41b461128bbc 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -259,17 +259,9 @@ static struct drm_info_list mdp5_debugfs_list[] = {
+ 
+ static int mdp5_kms_debugfs_init(struct msm_kms *kms, struct drm_minor *minor)
+ {
+-	struct drm_device *dev = minor->dev;
+-	int ret;
+-
+-	ret = drm_debugfs_create_files(mdp5_debugfs_list,
+-			ARRAY_SIZE(mdp5_debugfs_list),
+-			minor->debugfs_root, minor);
+-
+-	if (ret) {
+-		DRM_DEV_ERROR(dev->dev, "could not install mdp5_debugfs_list\n");
+-		return ret;
+-	}
++	drm_debugfs_create_files(mdp5_debugfs_list,
++				 ARRAY_SIZE(mdp5_debugfs_list),
++				 minor->debugfs_root, minor);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
+index 1c74381a4fc9..3c958f311bbc 100644
+--- a/drivers/gpu/drm/msm/msm_debugfs.c
++++ b/drivers/gpu/drm/msm/msm_debugfs.c
+@@ -214,31 +214,22 @@ int msm_debugfs_late_init(struct drm_device *dev)
+ 	return ret;
+ }
+ 
+-int msm_debugfs_init(struct drm_minor *minor)
++void msm_debugfs_init(struct drm_minor *minor)
+ {
+ 	struct drm_device *dev = minor->dev;
+ 	struct msm_drm_private *priv = dev->dev_private;
+-	int ret;
++	int ret = 0;
+ 
+-	ret = drm_debugfs_create_files(msm_debugfs_list,
+-			ARRAY_SIZE(msm_debugfs_list),
+-			minor->debugfs_root, minor);
+-
+-	if (ret) {
+-		DRM_DEV_ERROR(dev->dev, "could not install msm_debugfs_list\n");
+-		return ret;
+-	}
++	drm_debugfs_create_files(msm_debugfs_list,
++				 ARRAY_SIZE(msm_debugfs_list),
++				 minor->debugfs_root, minor);
+ 
+ 	debugfs_create_file("gpu", S_IRUSR, minor->debugfs_root,
+ 		dev, &msm_gpu_fops);
+ 
+ 	if (priv->kms && priv->kms->funcs->debugfs_init) {
+-		ret = priv->kms->funcs->debugfs_init(priv->kms, minor);
+-		if (ret)
+-			return ret;
++		priv->kms->funcs->debugfs_init(priv->kms, minor);
+ 	}
+-
+-	return ret;
+ }
+ #endif
+ 
+diff --git a/drivers/gpu/drm/msm/msm_debugfs.h b/drivers/gpu/drm/msm/msm_debugfs.h
+index 2b91f8c178ad..ef58f66abbb3 100644
+--- a/drivers/gpu/drm/msm/msm_debugfs.h
++++ b/drivers/gpu/drm/msm/msm_debugfs.h
+@@ -8,7 +8,7 @@
+ #define __MSM_DEBUGFS_H__
+ 
+ #ifdef CONFIG_DEBUG_FS
+-int msm_debugfs_init(struct drm_minor *minor);
++void msm_debugfs_init(struct drm_minor *minor);
+ #endif
+ 
+ #endif /* __MSM_DEBUGFS_H__ */
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index be5bc2e8425c..6ccae4ba905c 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -57,7 +57,7 @@ struct msm_gpu_funcs {
+ 	void (*show)(struct msm_gpu *gpu, struct msm_gpu_state *state,
+ 			struct drm_printer *p);
+ 	/* for generation specific debugfs: */
+-	int (*debugfs_init)(struct msm_gpu *gpu, struct drm_minor *minor);
++	void (*debugfs_init)(struct msm_gpu *gpu, struct drm_minor *minor);
+ #endif
+ 	unsigned long (*gpu_busy)(struct msm_gpu *gpu);
+ 	struct msm_gpu_state *(*gpu_state_get)(struct msm_gpu *gpu);
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.25.0
+
