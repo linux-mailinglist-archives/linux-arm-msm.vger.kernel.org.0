@@ -2,564 +2,500 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CE20C172474
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 18:04:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF0CF17247C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 18:05:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729791AbgB0RDg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Feb 2020 12:03:36 -0500
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:36066 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729481AbgB0RDg (ORCPT
+        id S1729174AbgB0RFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Feb 2020 12:05:47 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:40538 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729161AbgB0RFq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Feb 2020 12:03:36 -0500
-Received: by mail-pj1-f67.google.com with SMTP id gv17so47405pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 09:03:35 -0800 (PST)
+        Thu, 27 Feb 2020 12:05:46 -0500
+Received: by mail-io1-f68.google.com with SMTP id x1so227455iop.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 09:05:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=yBJPiQ0lbOVfSLOfY+tNxn+dKqPwPLLFFEsiwvstDG8=;
-        b=VIkHqSxtex3FQfqYTBYAEyUYzs4GfsPK7twrZmzNnW2uF4wz1iqcviGBGKwwHz0LAd
-         wGBKikXRXJZnQEvd8NZUDZmgqFTtDQwCx1Yni4y6v9uvK8eIZveVsxTVsfKpgOc8vVFI
-         2KiI/ort/NLB+sXBdP6Whe4VXi8nI3AhfuiYI=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Pfg0bi+sFcPndADzUkLpjWKHkAlDvMR2dE5gD9tiHQM=;
+        b=i2eDaNp+Eszd+9W1ID672YkO3fMeyDiOws+pb7XKxfMz5/yaw2FJlsK8ei3fzatqtm
+         4L4L7cX2nCCqrouDM937z8zRqFPgESFhKdDeV6fhKQP9r7zk3tvNVPASH7pru1WgOIdN
+         IpJHyporpGJkLSz8AiughI2xAz39cGKiwta1enlQuvMg3Ng+bXTrtfJyDBWfa4q6HcJ4
+         DCwXnwY+6D+O1HBkAXYakyCs1xZcWV8Qde4g0fAx+EJlRG90lTvtVlbsOcJWsGxVJfdC
+         ZNiecRyC4kXEVjvyFOZc7zkOGg5RxGkXljkHNPhkH82u7BcLJAK3OY3ITZiW4k70Qolu
+         GSCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=yBJPiQ0lbOVfSLOfY+tNxn+dKqPwPLLFFEsiwvstDG8=;
-        b=CN+aV2yun+cw+1Gh9bFbVhTsFXo9xa7k/ttlGHbtkxk3+fvntaDX9aB2pFaxYgrkMi
-         huPHiPdzJoAp/6t4fNAgvLiyFoWvF0bxTcOIoN8OibI58ZpxelqXlftaH5rehGbvsEl8
-         iI3UkhktcQaWEzQETzaK+aVCi5wu7vS1w74KBJDIEu9Qa9EZXTuY/0Qlsm9Gv4zKsKWn
-         ATHhK77EO7ETJ0Foh6xG7Xe3oozIAob8XD1yT7Fb005I5UCTFfqbrg79HtZ7czZgIYKQ
-         iTwZFb01NlzOpp3VHuPNIaGoAxjm5s9cTBjLRijpGOAbOzY2xB5SN+BY14fBi6eNpi5d
-         ArZQ==
-X-Gm-Message-State: APjAAAULtTUC6IBWWY3XzkV518wt2tsjI9lvAH3S7tIYJ5NcMDAfmmG+
-        wm74Wrsb9++u5bsI056rtB7NaA==
-X-Google-Smtp-Source: APXvYqygcAgUdRICx2ZrdIZaI2UzMLhgNb1ZAocwo8lrdXQ8MRvWXJbsnxOlMRUCZrE0zxwR9sWLJw==
-X-Received: by 2002:a17:90a:266f:: with SMTP id l102mr667858pje.67.1582823012069;
-        Thu, 27 Feb 2020 09:03:32 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id y190sm8061108pfb.82.2020.02.27.09.03.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Feb 2020 09:03:31 -0800 (PST)
-Date:   Thu, 27 Feb 2020 09:03:29 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Amit Kucheria <amit.kucheria@verdurent.com>
-Cc:     Akash Asthana <akashast@codeaurora.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        wsa@the-dreams.de, broonie@kernel.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
-        linux-spi@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>,
-        mgautam@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-serial@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>
-Subject: Re: [PATCH 6/6] arm64: dts: sc7180: Add interconnect for QUP and QSPI
-Message-ID: <20200227170329.GI24720@google.com>
-References: <1581946205-27189-1-git-send-email-akashast@codeaurora.org>
- <1581946205-27189-7-git-send-email-akashast@codeaurora.org>
- <CAHLCerM8Av_x8smUfOS_-TMEMzi1xRjgs0ta7=tqdYL2CgjNrw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Pfg0bi+sFcPndADzUkLpjWKHkAlDvMR2dE5gD9tiHQM=;
+        b=hyt9LcFCOaR8e0SLmFrWXeRnqxkcJgfHeAtYgOfR6DGUfu5+CPVoliyeVvdCbm81cT
+         yJwSEvNzfpZeiXbEwN/M/CTR+vUn0w+kzGknQHNRzdo8j3pn90zSdaYm2GQ+Yr2IF1FW
+         jPogyeoAkJb4diKrHDFaKx6y2jmmqf+Q3EXgHchBDpl+Fq8QpxLnmMD4YsUpEIsCQG+9
+         Bxwdtwv7hDhNP/H7Yht6PDyGtFFSNnqQPUD4nJGTkVqgO9bkfiuYzdjyIQvpIlgqvmLx
+         5+ykdOkgGGGbY3RCCdhU8+DPVRKn+Y7Un/AgXHXJrZxPgxQ3VsvMldBegI5RzE4WNYoU
+         5SHw==
+X-Gm-Message-State: APjAAAUC19S6rhDE3LQSBeIIKoA5pS6tl5Tu3tZ35bzGDIiMAZNUdJ8T
+        H16sDN1pd0asrXTRQ35jht7IObogZPxRXn788wjeAg==
+X-Google-Smtp-Source: APXvYqzShgva7+6pxk0ORMXPxyHT6xrvSZzjtnV0ZVz1cO3EyYEvWyhXwYyjFkEdjhqv39UnsG98JlbbBdnLillQiHw=
+X-Received: by 2002:a5e:d616:: with SMTP id w22mr213500iom.57.1582823145050;
+ Thu, 27 Feb 2020 09:05:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAHLCerM8Av_x8smUfOS_-TMEMzi1xRjgs0ta7=tqdYL2CgjNrw@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20200225234611.11067-1-mike.leach@linaro.org> <20200225234611.11067-12-mike.leach@linaro.org>
+In-Reply-To: <20200225234611.11067-12-mike.leach@linaro.org>
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+Date:   Thu, 27 Feb 2020 10:05:34 -0700
+Message-ID: <CANLsYkw81si3_cAA1QQWCTGLYS22AMnZGUh9uNgfuK6GXSTKtg@mail.gmail.com>
+Subject: Re: [PATCH v10 11/15] dt-bindings: arm: Juno platform - add CTI
+ entries to device tree
+To:     Mike Leach <mike.leach@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>
+Cc:     linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        devicetree@vger.kernel.org,
+        Coresight ML <coresight@lists.linaro.org>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "Suzuki K. Poulose" <suzuki.poulose@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, maxime@cerno.tech,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andy Gross <agross@kernel.org>, Jon Corbet <corbet@lwn.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Amit,
+On Tue, 25 Feb 2020 at 16:46, Mike Leach <mike.leach@linaro.org> wrote:
+>
+> Add in CTI entries for Juno r0, r1 and r2 to device tree entries.
+>
+> Signed-off-by: Mike Leach <mike.leach@linaro.org>
+> Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 
-the following include is missing:
+Sudeep, please consider adding to your next tree.
 
-#include <dt-bindings/interconnect/qcom,sc7180.h>
+Thanks,
+Mathieu
 
-It was added in v2 of "arm64: dts: sc7180: Add interconnect provider DT.
-nodes", but removed in later versions. v2 had a comment requesting to move
-the include one line up, my guess is it got lost while doing that.
-
-On Thu, Feb 27, 2020 at 05:41:03PM +0530, Amit Kucheria wrote:
-> Hi Akash,
-> 
-> 
-> On Mon, Feb 17, 2020 at 7:01 PM Akash Asthana <akashast@codeaurora.org> wrote:
-> >
-> > Add interconnect ports for GENI QUPs and QSPI to set bus capabilities.
-> >
-> > Signed-off-by: Akash Asthana <akashast@codeaurora.org>
-> > ---
-> > Note:
-> >  - This patch depends on series https://patchwork.kernel.org/cover/11313817/
-> >    [Add SC7180 interconnect provider driver]. It won't compile without that.
-> 
-> I've tried picking up v4 of Odelu's series to add the SC7180 but I'm
-> still unable to compile this. I see the following error:
-> 
-> Error: /home/amit/work/sources/worktree-review-pipeline/arch/arm64/boot/dts/qcom/sc7180.dtsi:353.32-33
-> syntax error
-> FATAL ERROR: Unable to parse input tree
-> make[3]: *** [scripts/Makefile.lib:296:
-> arch/arm64/boot/dts/qcom/sc7180-idp.dtb] Error 1
-> 
-> As part of picking up the dependencies, I've pulled the following
-> series on top of v5.6-rc2:
-> 
-> - https://lore.kernel.org/r/1581932974-21654-2-git-send-email-akashast@codeaurora.org
-> - https://lore.kernel.org/r/1581932212-19469-2-git-send-email-akashast@codeaurora.org
-> - https://lore.kernel.org/r/1581946205-27189-2-git-send-email-akashast@codeaurora.org
-> - https://lore.kernel.org/r/1582646384-1458-2-git-send-email-okukatla@codeaurora.org
-> - https://lore.kernel.org/r/20200209183411.17195-2-sibis@codeaurora.org
-> 
-> What am I missing?
-> 
-> I've pushed the aggregate branch here for convenience:
-> https://git.linaro.org/people/amit.kucheria/kernel.git/log/
-> 
-> Regards,
-> Amit
-> 
-> >  arch/arm64/boot/dts/qcom/sc7180.dtsi | 199 +++++++++++++++++++++++++++++++++++
-> >  1 file changed, 199 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > index cc5a94f..04569c9 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > @@ -352,6 +352,14 @@
-> >                                 interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>,
-> > +                                               <&aggre1_noc MASTER_QUP_0
-> > +                                               &mc_virt SLAVE_EBI1>;
-> > +                               interconnect-names = "qup-core", "qup-config",
-> > +                                                       "qup-memory";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -365,6 +373,11 @@
-> >                                 interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -376,6 +389,11 @@
-> >                                 pinctrl-names = "default";
-> >                                 pinctrl-0 = <&qup_uart0_default>;
-> >                                 interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -389,6 +407,14 @@
-> >                                 interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>,
-> > +                                               <&aggre1_noc MASTER_QUP_0
-> > +                                               &mc_virt SLAVE_EBI1>;
-> > +                               interconnect-names = "qup-core", "qup-config",
-> > +                                                       "qup-memory";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -402,6 +428,11 @@
-> >                                 interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -413,6 +444,11 @@
-> >                                 pinctrl-names = "default";
-> >                                 pinctrl-0 = <&qup_uart1_default>;
-> >                                 interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -426,6 +462,14 @@
-> >                                 interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>,
-> > +                                               <&aggre1_noc MASTER_QUP_0
-> > +                                               &mc_virt SLAVE_EBI1>;
-> > +                               interconnect-names = "qup-core", "qup-config",
-> > +                                                       "qup-memory";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -437,6 +481,11 @@
-> >                                 pinctrl-names = "default";
-> >                                 pinctrl-0 = <&qup_uart2_default>;
-> >                                 interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -450,6 +499,14 @@
-> >                                 interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>,
-> > +                                               <&aggre1_noc MASTER_QUP_0
-> > +                                               &mc_virt SLAVE_EBI1>;
-> > +                               interconnect-names = "qup-core", "qup-config",
-> > +                                                       "qup-memory";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -463,6 +520,11 @@
-> >                                 interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -474,6 +536,11 @@
-> >                                 pinctrl-names = "default";
-> >                                 pinctrl-0 = <&qup_uart3_default>;
-> >                                 interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -487,6 +554,14 @@
-> >                                 interrupts = <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>,
-> > +                                               <&aggre1_noc MASTER_QUP_0
-> > +                                               &mc_virt SLAVE_EBI1>;
-> > +                               interconnect-names = "qup-core", "qup-config",
-> > +                                                       "qup-memory";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -498,6 +573,11 @@
-> >                                 pinctrl-names = "default";
-> >                                 pinctrl-0 = <&qup_uart4_default>;
-> >                                 interrupts = <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -511,6 +591,14 @@
-> >                                 interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>,
-> > +                                               <&aggre1_noc MASTER_QUP_0
-> > +                                               &mc_virt SLAVE_EBI1>;
-> > +                               interconnect-names = "qup-core", "qup-config",
-> > +                                                       "qup-memory";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -524,6 +612,11 @@
-> >                                 interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -535,6 +628,11 @@
-> >                                 pinctrl-names = "default";
-> >                                 pinctrl-0 = <&qup_uart5_default>;
-> >                                 interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_0
-> > +                                               &qup_virt SLAVE_QUP_CORE_0>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_0>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >                 };
-> > @@ -561,6 +659,14 @@
-> >                                 interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>,
-> > +                                               <&aggre2_noc MASTER_QUP_1
-> > +                                               &mc_virt SLAVE_EBI1>;
-> > +                               interconnect-names = "qup-core", "qup-config",
-> > +                                                       "qup-memory";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -574,6 +680,11 @@
-> >                                 interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -585,6 +696,11 @@
-> >                                 pinctrl-names = "default";
-> >                                 pinctrl-0 = <&qup_uart6_default>;
-> >                                 interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -598,6 +714,14 @@
-> >                                 interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>,
-> > +                                               <&aggre2_noc MASTER_QUP_1
-> > +                                               &mc_virt SLAVE_EBI1>;
-> > +                               interconnect-names = "qup-core", "qup-config",
-> > +                                                       "qup-memory";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -609,6 +733,11 @@
-> >                                 pinctrl-names = "default";
-> >                                 pinctrl-0 = <&qup_uart7_default>;
-> >                                 interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -622,6 +751,14 @@
-> >                                 interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>,
-> > +                                               <&aggre2_noc MASTER_QUP_1
-> > +                                               &mc_virt SLAVE_EBI1>;
-> > +                               interconnect-names = "qup-core", "qup-config",
-> > +                                                       "qup-memory";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -635,6 +772,11 @@
-> >                                 interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -646,6 +788,11 @@
-> >                                 pinctrl-names = "default";
-> >                                 pinctrl-0 = <&qup_uart8_default>;
-> >                                 interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -659,6 +806,14 @@
-> >                                 interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>,
-> > +                                               <&aggre2_noc MASTER_QUP_1
-> > +                                               &mc_virt SLAVE_EBI1>;
-> > +                               interconnect-names = "qup-core", "qup-config",
-> > +                                                       "qup-memory";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -670,6 +825,11 @@
-> >                                 pinctrl-names = "default";
-> >                                 pinctrl-0 = <&qup_uart9_default>;
-> >                                 interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -683,6 +843,14 @@
-> >                                 interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>,
-> > +                                               <&aggre2_noc MASTER_QUP_1
-> > +                                               &mc_virt SLAVE_EBI1>;
-> > +                               interconnect-names = "qup-core", "qup-config",
-> > +                                                       "qup-memory";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -696,6 +864,11 @@
-> >                                 interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -707,6 +880,11 @@
-> >                                 pinctrl-names = "default";
-> >                                 pinctrl-0 = <&qup_uart10_default>;
-> >                                 interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -720,6 +898,14 @@
-> >                                 interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>,
-> > +                                               <&aggre2_noc MASTER_QUP_1
-> > +                                               &mc_virt SLAVE_EBI1>;
-> > +                               interconnect-names = "qup-core", "qup-config",
-> > +                                                       "qup-memory";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -733,6 +919,11 @@
-> >                                 interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
-> >                                 #address-cells = <1>;
-> >                                 #size-cells = <0>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >
-> > @@ -744,6 +935,11 @@
-> >                                 pinctrl-names = "default";
-> >                                 pinctrl-0 = <&qup_uart11_default>;
-> >                                 interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
-> > +                               interconnects = <&qup_virt MASTER_QUP_CORE_1
-> > +                                               &qup_virt SLAVE_QUP_CORE_1>,
-> > +                                               <&gem_noc MASTER_APPSS_PROC
-> > +                                               &config_noc SLAVE_QUP_1>;
-> > +                               interconnect-names = "qup-core", "qup-config";
-> >                                 status = "disabled";
-> >                         };
-> >                 };
-> > @@ -1051,6 +1247,9 @@
-> >                         clocks = <&gcc GCC_QSPI_CNOC_PERIPH_AHB_CLK>,
-> >                                  <&gcc GCC_QSPI_CORE_CLK>;
-> >                         clock-names = "iface", "core";
-> > +                       interconnects = <&gem_noc MASTER_APPSS_PROC
-> > +                                       &config_noc SLAVE_QSPI_0>;
-> > +                       interconnect-names = "qspi-config";
-> >                         status = "disabled";
-> >                 };
-> >
-> > --
-> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+> ---
+>  arch/arm64/boot/dts/arm/juno-base.dtsi    | 162 +++++++++++++++++++++-
+>  arch/arm64/boot/dts/arm/juno-cs-r1r2.dtsi |  37 ++++-
+>  arch/arm64/boot/dts/arm/juno-r1.dts       |  25 ++++
+>  arch/arm64/boot/dts/arm/juno-r2.dts       |  25 ++++
+>  arch/arm64/boot/dts/arm/juno.dts          |  25 ++++
+>  5 files changed, 269 insertions(+), 5 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/arm/juno-base.dtsi b/arch/arm64/boot/dts/arm/juno-base.dtsi
+> index 1f3c80aafbd7..fffd75cd2fd9 100644
+> --- a/arch/arm64/boot/dts/arm/juno-base.dtsi
+> +++ b/arch/arm64/boot/dts/arm/juno-base.dtsi
+> @@ -119,7 +119,7 @@
+>          * The actual size is just 4K though 64K is reserved. Access to the
+>          * unmapped reserved region results in a DECERR response.
+>          */
+> -       etf@20010000 { /* etf0 */
+> +       etf_sys0: etf@20010000 { /* etf0 */
+>                 compatible = "arm,coresight-tmc", "arm,primecell";
+>                 reg = <0 0x20010000 0 0x1000>;
+>
+> @@ -143,7 +143,7 @@
+>                 };
+>         };
+>
+> -       tpiu@20030000 {
+> +       tpiu_sys: tpiu@20030000 {
+>                 compatible = "arm,coresight-tpiu", "arm,primecell";
+>                 reg = <0 0x20030000 0 0x1000>;
+>
+> @@ -196,7 +196,7 @@
+>                 };
+>         };
+>
+> -       etr@20070000 {
+> +       etr_sys: etr@20070000 {
+>                 compatible = "arm,coresight-tmc", "arm,primecell";
+>                 reg = <0 0x20070000 0 0x1000>;
+>                 iommus = <&smmu_etr 0>;
+> @@ -214,7 +214,7 @@
+>                 };
+>         };
+>
+> -       stm@20100000 {
+> +       stm_sys: stm@20100000 {
+>                 compatible = "arm,coresight-stm", "arm,primecell";
+>                 reg = <0 0x20100000 0 0x1000>,
+>                       <0 0x28000000 0 0x1000000>;
+> @@ -291,6 +291,18 @@
+>                 };
+>         };
+>
+> +       cti0: cti@22020000 {
+> +               compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
+> +                            "arm,primecell";
+> +               reg = <0 0x22020000 0 0x1000>;
+> +
+> +               clocks = <&soc_smc50mhz>;
+> +               clock-names = "apb_pclk";
+> +               power-domains = <&scpi_devpd 0>;
+> +
+> +               arm,cs-dev-assoc = <&etm0>;
+> +       };
+> +
+>         funnel@220c0000 { /* cluster0 funnel */
+>                 compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+>                 reg = <0 0x220c0000 0 0x1000>;
+> @@ -351,6 +363,18 @@
+>                 };
+>         };
+>
+> +       cti1: cti@22120000 {
+> +               compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
+> +                            "arm,primecell";
+> +               reg = <0 0x22120000 0 0x1000>;
+> +
+> +               clocks = <&soc_smc50mhz>;
+> +               clock-names = "apb_pclk";
+> +               power-domains = <&scpi_devpd 0>;
+> +
+> +               arm,cs-dev-assoc = <&etm1>;
+> +       };
+> +
+>         cpu_debug2: cpu-debug@23010000 {
+>                 compatible = "arm,coresight-cpu-debug", "arm,primecell";
+>                 reg = <0x0 0x23010000 0x0 0x1000>;
+> @@ -376,6 +400,18 @@
+>                 };
+>         };
+>
+> +       cti2: cti@23020000 {
+> +               compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
+> +                            "arm,primecell";
+> +               reg = <0 0x23020000 0 0x1000>;
+> +
+> +               clocks = <&soc_smc50mhz>;
+> +               clock-names = "apb_pclk";
+> +               power-domains = <&scpi_devpd 0>;
+> +
+> +               arm,cs-dev-assoc = <&etm2>;
+> +       };
+> +
+>         funnel@230c0000 { /* cluster1 funnel */
+>                 compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+>                 reg = <0 0x230c0000 0 0x1000>;
+> @@ -448,6 +484,18 @@
+>                 };
+>         };
+>
+> +       cti3: cti@23120000 {
+> +               compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
+> +                            "arm,primecell";
+> +               reg = <0 0x23120000 0 0x1000>;
+> +
+> +               clocks = <&soc_smc50mhz>;
+> +               clock-names = "apb_pclk";
+> +               power-domains = <&scpi_devpd 0>;
+> +
+> +               arm,cs-dev-assoc = <&etm3>;
+> +       };
+> +
+>         cpu_debug4: cpu-debug@23210000 {
+>                 compatible = "arm,coresight-cpu-debug", "arm,primecell";
+>                 reg = <0x0 0x23210000 0x0 0x1000>;
+> @@ -473,6 +521,18 @@
+>                 };
+>         };
+>
+> +       cti4: cti@23220000 {
+> +               compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
+> +                            "arm,primecell";
+> +               reg = <0 0x23220000 0 0x1000>;
+> +
+> +               clocks = <&soc_smc50mhz>;
+> +               clock-names = "apb_pclk";
+> +               power-domains = <&scpi_devpd 0>;
+> +
+> +               arm,cs-dev-assoc = <&etm4>;
+> +       };
+> +
+>         cpu_debug5: cpu-debug@23310000 {
+>                 compatible = "arm,coresight-cpu-debug", "arm,primecell";
+>                 reg = <0x0 0x23310000 0x0 0x1000>;
+> @@ -498,6 +558,100 @@
+>                 };
+>         };
+>
+> +       cti5: cti@23320000 {
+> +               compatible = "arm,coresight-cti-v8-arch", "arm,coresight-cti",
+> +                            "arm,primecell";
+> +               reg = <0 0x23320000 0 0x1000>;
+> +
+> +               clocks = <&soc_smc50mhz>;
+> +               clock-names = "apb_pclk";
+> +               power-domains = <&scpi_devpd 0>;
+> +
+> +               arm,cs-dev-assoc = <&etm5>;
+> +       };
+> +
+> +       cti@20020000 { /* sys_cti_0 */
+> +               compatible = "arm,coresight-cti", "arm,primecell";
+> +               reg = <0 0x20020000 0 0x1000>;
+> +
+> +               clocks = <&soc_smc50mhz>;
+> +               clock-names = "apb_pclk";
+> +               power-domains = <&scpi_devpd 0>;
+> +
+> +               #address-cells = <1>;
+> +               #size-cells = <0>;
+> +
+> +               trig-conns@0 {
+> +                       reg = <0>;
+> +                       arm,trig-in-sigs=<2 3>;
+> +                       arm,trig-in-types=<SNK_FULL SNK_ACQCOMP>;
+> +                       arm,trig-out-sigs=<0 1>;
+> +                       arm,trig-out-types=<SNK_FLUSHIN SNK_TRIGIN>;
+> +                       arm,cs-dev-assoc = <&etr_sys>;
+> +               };
+> +
+> +               trig-conns@1 {
+> +                       reg = <1>;
+> +                       arm,trig-in-sigs=<0 1>;
+> +                       arm,trig-in-types=<SNK_FULL SNK_ACQCOMP>;
+> +                       arm,trig-out-sigs=<7 6>;
+> +                       arm,trig-out-types=<SNK_FLUSHIN SNK_TRIGIN>;
+> +                       arm,cs-dev-assoc = <&etf_sys0>;
+> +               };
+> +
+> +               trig-conns@2 {
+> +                       reg = <2>;
+> +                       arm,trig-in-sigs=<4 5 6 7>;
+> +                       arm,trig-in-types=<STM_TOUT_SPTE STM_TOUT_SW
+> +                                          STM_TOUT_HETE STM_ASYNCOUT>;
+> +                       arm,trig-out-sigs=<4 5>;
+> +                       arm,trig-out-types=<STM_HWEVENT STM_HWEVENT>;
+> +                       arm,cs-dev-assoc = <&stm_sys>;
+> +               };
+> +
+> +               trig-conns@3 {
+> +                       reg = <3>;
+> +                       arm,trig-out-sigs=<2 3>;
+> +                       arm,trig-out-types=<SNK_FLUSHIN SNK_TRIGIN>;
+> +                       arm,cs-dev-assoc = <&tpiu_sys>;
+> +               };
+> +       };
+> +
+> +       cti@20110000 { /* sys_cti_1 */
+> +               compatible = "arm,coresight-cti", "arm,primecell";
+> +               reg = <0 0x20110000 0 0x1000>;
+> +
+> +               clocks = <&soc_smc50mhz>;
+> +               clock-names = "apb_pclk";
+> +               power-domains = <&scpi_devpd 0>;
+> +
+> +               #address-cells = <1>;
+> +               #size-cells = <0>;
+> +
+> +               trig-conns@0 {
+> +                       reg = <0>;
+> +                       arm,trig-in-sigs=<0>;
+> +                       arm,trig-in-types=<GEN_INTREQ>;
+> +                       arm,trig-out-sigs=<0>;
+> +                       arm,trig-out-types=<GEN_HALTREQ>;
+> +                       arm,trig-conn-name = "sys_profiler";
+> +               };
+> +
+> +               trig-conns@1 {
+> +                       reg = <1>;
+> +                       arm,trig-out-sigs=<2 3>;
+> +                       arm,trig-out-types=<GEN_HALTREQ GEN_RESTARTREQ>;
+> +                       arm,trig-conn-name = "watchdog";
+> +               };
+> +
+> +               trig-conns@2 {
+> +                       reg = <2>;
+> +                       arm,trig-out-sigs=<1 6>;
+> +                       arm,trig-out-types=<GEN_HALTREQ GEN_RESTARTREQ>;
+> +                       arm,trig-conn-name = "g_counter";
+> +               };
+> +       };
+> +
+>         gpu: gpu@2d000000 {
+>                 compatible = "arm,juno-mali", "arm,mali-t624";
+>                 reg = <0 0x2d000000 0 0x10000>;
+> diff --git a/arch/arm64/boot/dts/arm/juno-cs-r1r2.dtsi b/arch/arm64/boot/dts/arm/juno-cs-r1r2.dtsi
+> index eda3d9e18af6..752b05f8bf31 100644
+> --- a/arch/arm64/boot/dts/arm/juno-cs-r1r2.dtsi
+> +++ b/arch/arm64/boot/dts/arm/juno-cs-r1r2.dtsi
+> @@ -23,7 +23,7 @@
+>                 };
+>         };
+>
+> -       etf@20140000 { /* etf1 */
+> +       etf_sys1: etf@20140000 { /* etf1 */
+>                 compatible = "arm,coresight-tmc", "arm,primecell";
+>                 reg = <0 0x20140000 0 0x1000>;
+>
+> @@ -82,4 +82,39 @@
+>
+>                 };
+>         };
+> +
+> +       cti@20160000 { /* sys_cti_2 */
+> +               compatible = "arm,coresight-cti", "arm,primecell";
+> +               reg = <0 0x20160000 0 0x1000>;
+> +
+> +               clocks = <&soc_smc50mhz>;
+> +               clock-names = "apb_pclk";
+> +               power-domains = <&scpi_devpd 0>;
+> +
+> +               #address-cells = <1>;
+> +               #size-cells = <0>;
+> +
+> +               trig-conns@0 {
+> +                       reg = <0>;
+> +                       arm,trig-in-sigs=<0 1>;
+> +                       arm,trig-in-types=<SNK_FULL SNK_ACQCOMP>;
+> +                       arm,trig-out-sigs=<0 1>;
+> +                       arm,trig-out-types=<SNK_FLUSHIN SNK_TRIGIN>;
+> +                       arm,cs-dev-assoc = <&etf_sys1>;
+> +               };
+> +
+> +               trig-conns@1 {
+> +                       reg = <1>;
+> +                       arm,trig-in-sigs=<2 3 4>;
+> +                       arm,trig-in-types=<ELA_DBGREQ ELA_TSTART ELA_TSTOP>;
+> +                       arm,trig-conn-name = "ela_clus_0";
+> +               };
+> +
+> +               trig-conns@2 {
+> +                       reg = <2>;
+> +                       arm,trig-in-sigs=<5 6 7>;
+> +                       arm,trig-in-types=<ELA_DBGREQ ELA_TSTART ELA_TSTOP>;
+> +                       arm,trig-conn-name = "ela_clus_1";
+> +               };
+> +       };
+>  };
+> diff --git a/arch/arm64/boot/dts/arm/juno-r1.dts b/arch/arm64/boot/dts/arm/juno-r1.dts
+> index 5f290090b0cf..02aa51eb311d 100644
+> --- a/arch/arm64/boot/dts/arm/juno-r1.dts
+> +++ b/arch/arm64/boot/dts/arm/juno-r1.dts
+> @@ -9,6 +9,7 @@
+>  /dts-v1/;
+>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/arm/coresight-cti-dt.h>
+>  #include "juno-base.dtsi"
+>  #include "juno-cs-r1r2.dtsi"
+>
+> @@ -309,3 +310,27 @@
+>  &cpu_debug5 {
+>         cpu = <&A53_3>;
+>  };
+> +
+> +&cti0 {
+> +       cpu = <&A57_0>;
+> +};
+> +
+> +&cti1 {
+> +       cpu = <&A57_1>;
+> +};
+> +
+> +&cti2 {
+> +       cpu = <&A53_0>;
+> +};
+> +
+> +&cti3 {
+> +       cpu = <&A53_1>;
+> +};
+> +
+> +&cti4 {
+> +       cpu = <&A53_2>;
+> +};
+> +
+> +&cti5 {
+> +       cpu = <&A53_3>;
+> +};
+> diff --git a/arch/arm64/boot/dts/arm/juno-r2.dts b/arch/arm64/boot/dts/arm/juno-r2.dts
+> index 305300dd521c..75bb27c2d4dc 100644
+> --- a/arch/arm64/boot/dts/arm/juno-r2.dts
+> +++ b/arch/arm64/boot/dts/arm/juno-r2.dts
+> @@ -9,6 +9,7 @@
+>  /dts-v1/;
+>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/arm/coresight-cti-dt.h>
+>  #include "juno-base.dtsi"
+>  #include "juno-cs-r1r2.dtsi"
+>
+> @@ -315,3 +316,27 @@
+>  &cpu_debug5 {
+>         cpu = <&A53_3>;
+>  };
+> +
+> +&cti0 {
+> +       cpu = <&A72_0>;
+> +};
+> +
+> +&cti1 {
+> +       cpu = <&A72_1>;
+> +};
+> +
+> +&cti2 {
+> +       cpu = <&A53_0>;
+> +};
+> +
+> +&cti3 {
+> +       cpu = <&A53_1>;
+> +};
+> +
+> +&cti4 {
+> +       cpu = <&A53_2>;
+> +};
+> +
+> +&cti5 {
+> +       cpu = <&A53_3>;
+> +};
+> diff --git a/arch/arm64/boot/dts/arm/juno.dts b/arch/arm64/boot/dts/arm/juno.dts
+> index f00cffbd032c..dbc22e70b62c 100644
+> --- a/arch/arm64/boot/dts/arm/juno.dts
+> +++ b/arch/arm64/boot/dts/arm/juno.dts
+> @@ -9,6 +9,7 @@
+>  /dts-v1/;
+>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/arm/coresight-cti-dt.h>
+>  #include "juno-base.dtsi"
+>
+>  / {
+> @@ -295,3 +296,27 @@
+>  &cpu_debug5 {
+>         cpu = <&A53_3>;
+>  };
+> +
+> +&cti0 {
+> +       cpu = <&A57_0>;
+> +};
+> +
+> +&cti1 {
+> +       cpu = <&A57_1>;
+> +};
+> +
+> +&cti2 {
+> +       cpu = <&A53_0>;
+> +};
+> +
+> +&cti3 {
+> +       cpu = <&A53_1>;
+> +};
+> +
+> +&cti4 {
+> +       cpu = <&A53_2>;
+> +};
+> +
+> +&cti5 {
+> +       cpu = <&A53_3>;
+> +};
+> --
+> 2.17.1
+>
