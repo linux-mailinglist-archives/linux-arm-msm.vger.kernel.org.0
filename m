@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BF6AB171974
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 14:45:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D1B11720F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 15:47:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729725AbgB0NpG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Feb 2020 08:45:06 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:50886 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730323AbgB0NpG (ORCPT
+        id S1730292AbgB0No4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Feb 2020 08:44:56 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38743 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730280AbgB0Noz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Feb 2020 08:45:06 -0500
-Received: by mail-wm1-f65.google.com with SMTP id a5so3645804wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 05:45:04 -0800 (PST)
+        Thu, 27 Feb 2020 08:44:55 -0500
+Received: by mail-wr1-f67.google.com with SMTP id e8so3414535wrm.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 05:44:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=PRpjg7VfxAWAXWCyVK3TF778q7i9qgrUQjd7ke8MZGM=;
-        b=DtblLM/HbuiDe6npECTn3ll10Od90J455eJP7dLeDSNxFNbJ5yW3943M5CWNGBGCca
-         3ENV/gwcavsjWQMKfAYy7zoj1Km8KGj4ULjZkpaKfwNFmkCLyc70QJHDLKw3V4etqwGn
-         aa/6HN3YZyIiRCgvoKIGN9egLIIAA5YQWrfSOBmlw3uxPm2+FxEI9spvtBwDYeLVgJnR
-         0iYg5Rtrce/IuzWJA2QArG+fSNwYxnD85Y3keU55NPvTPmDG47k9izsaHWVJcNJNAAgB
-         FcseVC3Y4T+U8L9JPYQpYurbrHHJDhrMtyCcFFmK6h3lBPOjCwDEocwGgBRkPCFTxLLa
-         2w2w==
+        bh=bRBVzm7LmsESKTnCqWwBanH8FICpCOc4WhuYig3TGrY=;
+        b=oxD1yVksx5FhGgGokg268at9nOg2OPkGr/R7GsuVaEgPOdQOBg5Etzvs9PSLYtqM2l
+         CZGF67SEWhZEDL7J8ahBDe6xf0Zz0fToAxU3DijpB69N6Io50emD9vKcB+fCigK8okDs
+         5qskwoAVQc+fiFX2LjtN7K71G4d/XoMCgviAF0NPTP5xZHlQVgmtuoacXZaMNkfWEXru
+         P3UOaMNT16J1yp6A3qPMXK5a3oWuRxLqSOsROTD62C3YKhQXHcUOv8BHZ2mDpWfrtFVX
+         HOzA3R7dcvNaaj+30Odd5gc4Xm+lPqMDwh9TXMJADs76USaKS5N8gcDh/KySSwfsynVU
+         EeYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=PRpjg7VfxAWAXWCyVK3TF778q7i9qgrUQjd7ke8MZGM=;
-        b=XVwxuTdi8XpU6zRJeUC1Eu3fg7ICfaKD0A5FCAjIZXyXcvhJ265kYHL542vtDs4LjH
-         8x+4rwGfnQuW+HbguPhP6mYkrItGvcZwdLqffHDa2qIxfrTidv1ThvYZ9okWPBg8wxYb
-         YZFBJAPx6P1TEWc6oRs2rRTruyDmHk4zqeuR+XJDdJQ7rv4BH/8HH1GNr0ZUzkMGzES7
-         sdbAZGbdEwvNJy0gZkRRPFhTCihK36Olu5j5kktZbalc696NDUlNMSx0OKQVhS7FHodK
-         UO96BQDwsjj35vOOtgts0MA0vfJFr4UkZyrTO9ANEg2PXHTYVrDfNhuE7rH4FirzVTMg
-         zkuA==
-X-Gm-Message-State: APjAAAVZtT8xqDSZwgYuYhc2FeMUI7zlwr60Hs9fg7siGO3BMVJbims1
-        AfRh821EU08z3rAp0CCFdk4cTw==
-X-Google-Smtp-Source: APXvYqxbH2LzNiuz8OUFlrSiYa48j4DRaQWKby7I1has1etckZRz2eo+zWt7xkZGhT2Zx67Nss+abA==
-X-Received: by 2002:a1c:f712:: with SMTP id v18mr5639230wmh.155.1582811102353;
-        Thu, 27 Feb 2020 05:45:02 -0800 (PST)
+        bh=bRBVzm7LmsESKTnCqWwBanH8FICpCOc4WhuYig3TGrY=;
+        b=LTacA+jeIU6fPP/oAaX4atQHk5mExM5jX1TvIjumx6V42Dbf8w+tZSiHtAzwK+LM74
+         MJia2sD3+OMJSdNFheI/R6uozUDnjrLTtzEQBajH0AgyNsovedmeiq6cr0NvJjpP3G5+
+         MYKsb8t3vWMC8iKBQBiAxCx7LlWDlOcyUuLDfZORDiY4f5vleX4idgV/rvW2iJubKpFI
+         GuTJxvWsk4hU4+i6uvFY8cEs6rY+WUkbfB9bCLwTpLAvcYdcZoi5DJp+QCkMq3OEMCuN
+         wfeyo1nIKOBrv0C41vrPoDxWD6zasyyfaRdsOMjKiy5UakFOFl+PQjG/HzOS6AV3gPUf
+         uMsw==
+X-Gm-Message-State: APjAAAW33KuDrxru1EdxF72xhGAs0e/bvKTgTN18g6/nZSXFhar9/Gmd
+        YYXC5c5HsxDw8v60WGWGPqTdvg==
+X-Google-Smtp-Source: APXvYqxr0HRJGL3LzxWA8tAPZNioP7XMTNL6XoAFSAUC/2LCPDBe4z5XcS2wQOU0GLia2herDKWI8w==
+X-Received: by 2002:adf:e38d:: with SMTP id e13mr4787598wrm.133.1582811091737;
+        Thu, 27 Feb 2020 05:44:51 -0800 (PST)
 Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id a198sm8024152wme.12.2020.02.27.05.45.01
+        by smtp.googlemail.com with ESMTPSA id c74sm8187080wmd.26.2020.02.27.05.44.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Feb 2020 05:45:01 -0800 (PST)
-Subject: Re: [PATCH v3 6/6] arm64: dts: sdm845: Redefine interconnect provider
- DT nodes
-To:     bjorn.andersson@linaro.org
-Cc:     Sibi Sankar <sibis@codeaurora.org>, robh+dt@kernel.org,
-        evgreen@chromium.org, agross@kernel.org,
+        Thu, 27 Feb 2020 05:44:50 -0800 (PST)
+Subject: Re: [PATCH v3 4/6] interconnect: qcom: Consolidate interconnect RPMh
+ support
+To:     Sibi Sankar <sibis@codeaurora.org>, robh+dt@kernel.org,
+        evgreen@chromium.org
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, mark.rutland@arm.com,
         daidavid1@codeaurora.org, saravanak@google.com, mka@chromium.org,
         linux-pm@vger.kernel.org, Odelu Kukatla <okukatla@codeaurora.org>
 References: <20200209183411.17195-1-sibis@codeaurora.org>
- <20200209183411.17195-7-sibis@codeaurora.org>
+ <20200209183411.17195-5-sibis@codeaurora.org>
 From:   Georgi Djakov <georgi.djakov@linaro.org>
 Openpgp: preference=signencrypt
 Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
@@ -102,10 +102,10 @@ Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
  7ayYJIXFqjl/X0KBcCbiAl4vbdBw1bqFnO4zd1lMXKVoa29UHqby4MPbQhjWNVv9kqp8A39+
  E9xw890l1xdERkjVKX6IEJu2hf7X3MMl9tOjBK6MvdOUxvh1bNNmXh7OlBL1MpJYY/ydIm3B
  KEmKjLDvB0pePJkdTw==
-Message-ID: <261391af-18c2-5da1-a094-326be58b313f@linaro.org>
-Date:   Thu, 27 Feb 2020 15:45:00 +0200
+Message-ID: <921917e6-45d3-f9c5-6519-5f3b8116d9ec@linaro.org>
+Date:   Thu, 27 Feb 2020 15:44:48 +0200
 MIME-Version: 1.0
-In-Reply-To: <20200209183411.17195-7-sibis@codeaurora.org>
+In-Reply-To: <20200209183411.17195-5-sibis@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -114,18 +114,264 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Sibi,
+
+Thank you for refreshing this patchset!
+
 On 2/9/20 20:34, Sibi Sankar wrote:
 > From: David Dai <daidavid1@codeaurora.org>
 > 
-> Add the DT nodes for each of the Network-On-Chip interconnect
-> buses found on SDM845 based platform and redefine the rsc_hlos
-> child node as a bcm-voter device to better represent the hardware.
+> Add bcm voter driver and add support for RPMh specific interconnect
+> providers which implements the set and aggregate functionalities that
+> translates bandwidth requests into RPMh messages. These modules provide
+> a common set of functionalities for all Qualcomm RPMh based interconnect
+> providers and should help reduce code duplication when adding new
+> providers.
 > 
 > Signed-off-by: David Dai <daidavid1@codeaurora.org>
 > Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
 > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+>  drivers/interconnect/qcom/Kconfig     |  13 +-
+>  drivers/interconnect/qcom/Makefile    |   4 +
+>  drivers/interconnect/qcom/bcm-voter.c | 366 ++++++++++++++++++++++++++
+>  drivers/interconnect/qcom/bcm-voter.h |  27 ++
+>  drivers/interconnect/qcom/icc-rpmh.c  | 147 +++++++++++
+>  drivers/interconnect/qcom/icc-rpmh.h  | 149 +++++++++++
+>  6 files changed, 705 insertions(+), 1 deletion(-)
+>  create mode 100644 drivers/interconnect/qcom/bcm-voter.c
+>  create mode 100644 drivers/interconnect/qcom/bcm-voter.h
+>  create mode 100644 drivers/interconnect/qcom/icc-rpmh.c
+>  create mode 100644 drivers/interconnect/qcom/icc-rpmh.h
+> 
+> diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
+> index 76938ece1658e..08cfd676b4299 100644
+> --- a/drivers/interconnect/qcom/Kconfig
+> +++ b/drivers/interconnect/qcom/Kconfig
+> @@ -5,6 +5,11 @@ config INTERCONNECT_QCOM
+>  	help
+>  	  Support for Qualcomm's Network-on-Chip interconnect hardware.
+>  
+> +config INTERCONNECT_QCOM_BCM_VOTER
+> +	tristate
+> +	depends on INTERCONNECT_QCOM || COMPILE_TEST
+> +	depends on QCOM_RPMH && OF
 
-Acked-by: Georgi Djakov <georgi.djakov@linaro.org>
+This is not user-selectable, but has a "depends on" lines...
+
+> +
+>  config INTERCONNECT_QCOM_MSM8916
+>  	tristate "Qualcomm MSM8916 interconnect driver"
+>  	depends on INTERCONNECT_QCOM
+> @@ -32,10 +37,16 @@ config INTERCONNECT_QCOM_QCS404
+>  	  This is a driver for the Qualcomm Network-on-Chip on qcs404-based
+>  	  platforms.
+>  
+> +config INTERCONNECT_QCOM_RPMH
+> +	tristate
+> +	depends on INTERCONNECT_QCOM || COMPILE_TEST
+> +	depends on QCOM_COMMAND_DB
+> +
+>  config INTERCONNECT_QCOM_SDM845
+>  	tristate "Qualcomm SDM845 interconnect driver"
+>  	depends on INTERCONNECT_QCOM
+> -	depends on (QCOM_RPMH && QCOM_COMMAND_DB && OF) || COMPILE_TEST
+> +	select INTERCONNECT_QCOM_RPMH
+> +	select INTERCONNECT_QCOM_BCM_VOTER
+
+...and these selects will force a symbol to a value without checking its
+dependencies. So i was wondering whether this will cause any problems.
+
+>  	help
+>  	  This is a driver for the Qualcomm Network-on-Chip on sdm845-based
+>  	  platforms.
+> diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
+> index e8271575e3d8a..d591bb56273b1 100644
+[..]
+> +static const struct of_device_id bcm_voter_of_match[] = {
+> +	{ .compatible = "qcom,bcm-voter" },
+> +	{ }
+> +};
+> +
+> +static struct platform_driver qcom_icc_bcm_voter_driver = {
+> +	.probe = qcom_icc_bcm_voter_probe,
+> +	.driver = {
+> +		.name		= "sdm845_bcm_voter",
+
+Nit: This is not just about sdm845 anymore, so maybe qcom_bcm_voter.
+
+> +		.of_match_table = bcm_voter_of_match,
+> +	},
+> +};
+> +module_platform_driver(qcom_icc_bcm_voter_driver);
+> +
+> +MODULE_AUTHOR("David Dai <daidavid1@codeaurora.org>");
+> +MODULE_DESCRIPTION("Qualcomm BCM Voter interconnect driver");
+> +MODULE_LICENSE("GPL v2");
+> diff --git a/drivers/interconnect/qcom/bcm-voter.h b/drivers/interconnect/qcom/bcm-voter.h
+> new file mode 100644
+> index 0000000000000..3436673e9f104
+> --- /dev/null
+[.]
+> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+> new file mode 100644
+> index 0000000000000..e9443b50e0b48
+> --- /dev/null
+> +++ b/drivers/interconnect/qcom/icc-rpmh.c
+> @@ -0,0 +1,147 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#include <linux/interconnect.h>
+> +#include <linux/interconnect-provider.h>
+> +
+> +#include "bcm-voter.h"
+> +#include "icc-rpmh.h"
+> +
+> +/**
+> + * qcom_icc_pre_aggregate - cleans up stale values from prior icc_set
+> + * @node: icc node to operate on
+> + */
+> +void qcom_icc_pre_aggregate(struct icc_node *node)
+> +{
+> +	size_t i;
+> +	struct qcom_icc_node *qn;
+> +
+> +	qn = node->data;
+> +
+> +	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
+> +		qn->sum_avg[i] = 0;
+> +		qn->max_peak[i] = 0;
+> +	}
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_icc_pre_aggregate);
+> +
+> +/**
+> + * qcom_icc_aggregate - aggregate bw for buckets indicated by tag
+> + * @node: node to aggregate
+> + * @tag: tag to indicate which buckets to aggregate
+> + * @avg_bw: new bw to sum aggregate
+> + * @peak_bw: new bw to max aggregate
+> + * @agg_avg: existing aggregate avg bw val
+> + * @agg_peak: existing aggregate peak bw val
+> + */
+> +int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+> +		       u32 peak_bw, u32 *agg_avg, u32 *agg_peak)
+> +{
+> +	size_t i;
+> +	struct qcom_icc_node *qn;
+> +	struct qcom_icc_provider *qp;
+> +
+> +	qn = node->data;
+> +	qp = to_qcom_provider(node->provider);
+> +
+> +	if (!tag)
+> +		tag = QCOM_ICC_TAG_ALWAYS;
+> +
+> +	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
+> +		if (tag & BIT(i)) {
+> +			qn->sum_avg[i] += avg_bw;
+> +			qn->max_peak[i] = max_t(u32, qn->max_peak[i], peak_bw);
+> +		}
+> +	}
+> +
+> +	*agg_avg += avg_bw;
+> +	*agg_peak = max_t(u32, *agg_peak, peak_bw);
+> +
+> +	for (i = 0; i < qn->num_bcms; i++)
+> +		qcom_icc_bcm_voter_add(qp->voter, qn->bcms[i]);
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_icc_aggregate);
+> +
+> +/**
+> + * qcom_icc_set - set the constraints based on path
+> + * @src: source node for the path to set constraints on
+> + * @dst: destination node for the path to set constraints on
+> + *
+> + * Return: 0 on success, or an error code otherwise
+> + */
+> +int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
+> +{
+> +	struct qcom_icc_provider *qp;
+> +	struct icc_node *node;
+> +
+> +	if (!src)
+> +		node = dst;
+> +	else
+> +		node = src;
+> +
+> +	qp = to_qcom_provider(node->provider);
+> +
+> +	qcom_icc_bcm_voter_commit(qp->voter);
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_icc_set);
+> +
+> +/**
+> + * qcom_icc_bcm_init - populates bcm aux data and connect qnodes
+> + * @bcm: bcm to be initialized
+> + * @dev: associated provider device
+> + *
+> + * Return: 0 on success, or an error code otherwise
+> + */
+> +int qcom_icc_bcm_init(struct qcom_icc_bcm *bcm, struct device *dev)
+> +{
+> +	struct qcom_icc_node *qn;
+> +	const struct bcm_db *data;
+> +	size_t data_count;
+> +	int i;
+> +
+> +	/* BCM is already initialised*/
+> +	if (bcm->addr)
+> +		return 0;
+> +
+> +	bcm->addr = cmd_db_read_addr(bcm->name);
+> +	if (!bcm->addr) {
+> +		dev_err(dev, "%s could not find RPMh address\n",
+> +			bcm->name);
+> +		return -EINVAL;
+> +	}
+> +
+> +	data = cmd_db_read_aux_data(bcm->name, &data_count);
+> +	if (IS_ERR(data)) {
+> +		dev_err(dev, "%s command db read error (%ld)\n",
+> +			bcm->name, PTR_ERR(data));
+> +		return PTR_ERR(data);
+> +	}
+> +	if (!data_count) {
+> +		dev_err(dev, "%s command db missing or partial aux data\n",
+> +			bcm->name);
+> +		return -EINVAL;
+> +	}
+> +
+> +	bcm->aux_data.unit = le32_to_cpu(data->unit);
+> +	bcm->aux_data.width = le16_to_cpu(data->width);
+> +	bcm->aux_data.vcd = data->vcd;
+> +	bcm->aux_data.reserved = data->reserved;
+> +	INIT_LIST_HEAD(&bcm->list);
+> +	INIT_LIST_HEAD(&bcm->ws_list);
+> +
+> +	/* Link Qnodes to their respective BCMs */
+> +	for (i = 0; i < bcm->num_nodes; i++) {
+> +		qn = bcm->nodes[i];
+> +		qn->bcms[qn->num_bcms] = bcm;
+> +		qn->num_bcms++;
+> +	}
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_icc_bcm_init);
+
+When i tried building this as a module i see the following warning:
+WARNING: modpost: missing MODULE_LICENSE() in drivers/interconnect/qcom/icc-rpmh.o
+
+So we may want to include module.h and add MODULE_LICENSE("GPL v2") as specified
+in the SPDX tag.
 
 Thanks,
 Georgi
