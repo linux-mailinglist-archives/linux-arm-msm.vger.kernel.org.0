@@ -2,188 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F3571727E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 19:46:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 710E51727EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 19:47:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730184AbgB0Spp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Feb 2020 13:45:45 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:60038 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729735AbgB0Spp (ORCPT
+        id S1729631AbgB0SrK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Feb 2020 13:47:10 -0500
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:33569 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729545AbgB0SrK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Feb 2020 13:45:45 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582829144; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=U/EDQ0pr75hfPnWX/OCbb8FxwwnZ09FdliYUIRis9EI=; b=JT4YLk/S1fdLfsclMxzTkNr1cNa7A44XidYUQCQxQLImtMfc6Najx3Po/z9fRFD7wM9bYoM4
- IKyyaAq81OPDXfiB+2GQBL6eQCH9N37p02euHo8o+QUmN58iIgcG6tRJQPQ+N08ycQ7WWdlI
- 3/y1lfxTQSYBn3dQgtxBb7CPX8s=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e580e55.7f4acfb21308-smtp-out-n01;
- Thu, 27 Feb 2020 18:45:41 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7E811C447AB; Thu, 27 Feb 2020 18:45:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 83C15C433A2;
-        Thu, 27 Feb 2020 18:45:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 83C15C433A2
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Thu, 27 Feb 2020 11:45:34 -0700
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     iommu@lists.linux-foundation.org
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Wen Yang <wen.yang99@zte.com.cn>, will@kernel.org,
-        Joerg Roedel <joro@8bytes.org>,
-        Ben Dooks <ben.dooks@codethink.co.uk>,
-        linux-arm-kernel@lists.infradead.org,
-        Wambui Karuga <wambui.karugax@gmail.com>,
-        freedreno@lists.freedesktop.org,
-        Fritz Koenig <frkoenig@google.com>,
+        Thu, 27 Feb 2020 13:47:10 -0500
+Received: by mail-pj1-f66.google.com with SMTP id m7so3521311pjs.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 10:47:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=lcrpnq/b6/hpdUjJ7BPbI1dg5z0iJwDYFP4cImRT74Q=;
+        b=EBgRVvpATZd+QdllWh7NgaqS+BEpB4r+tKv0NcGj8T6IejQ3JSGblsVlM3JqSpvkUp
+         KFswIxe3vj9uVxeHURFe7KHbkZfbgW5bpPj2+sz2YA5/jW2xsej+si7DyS+cHQnuFKpo
+         Grytv0YQSoYqUtgbsgqWNtco4yYJYJU/3/kItHoEyRlzenpJIgYyjHD9vjzxocZOgYPn
+         TGXazEmGe9xX8g35FKQZAe9OTufWqwCCCUsQdMEqjbOJR993VDCAfV4BipMoCXNtpAEn
+         8ob3I4Isj6uIVUuuo1HrvNHQT8xlcmUKu/UapSmtGiuvC/+nGD4eGDbki6Jg2Lrk4yAQ
+         xqEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=lcrpnq/b6/hpdUjJ7BPbI1dg5z0iJwDYFP4cImRT74Q=;
+        b=pS2o3KyR9YFOnWTddsoxh0khIPCk22NgERSdkcarFFK4ZaxpzIYrTnfHNsqQ/AUntu
+         QXbDBop8uobQXmFUJ6LyVdjWLKoDu+qoTA59qjwLBLc4L9eZhUS1BgVfekzBhP8E5BLI
+         fdMp6F1OgCSYpwngk/rDMQWYDjeprTeSxkLl+f6ELYYyVfV7gtGvp0F7zBHK5RvfuWcq
+         5m1jznLYoGZ3OiCO0gG+RTwhGYDrqdBLPLnDv9awag92Kda7GwQaLTpGF/5nU2DNQ6sw
+         aKsNaL9na59G/gRpuPOaYzfwsSY3iUZo2UfuW1ore+qRu1A6lW+VJxBVeRiBwP3JVXCV
+         5wBQ==
+X-Gm-Message-State: APjAAAUE1qc5+7GarBzj79bUZfkQttJwhVrYEKSXKZh6gBYhS65/qkQ1
+        53E5P14C6OPW8ZVqPPwpxV/oBw==
+X-Google-Smtp-Source: APXvYqyyvmpMV6UxoiAw6oNqpaKxbRnOQVGywr7htIuimBaTBFfOvraztV8a2ntnrTPplYWpShvBMw==
+X-Received: by 2002:a17:90a:b386:: with SMTP id e6mr354511pjr.106.1582829229170;
+        Thu, 27 Feb 2020 10:47:09 -0800 (PST)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id e2sm3343567pfh.151.2020.02.27.10.47.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Feb 2020 10:47:08 -0800 (PST)
+Date:   Thu, 27 Feb 2020 11:47:06 -0700
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Siddharth Gupta <sidgup@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Sean Paul <sean@poorly.run>,
-        Allison Randal <allison@lohutok.net>,
-        Enrico Weigelt <info@metux.net>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, zhengbin <zhengbin13@huawei.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Drew Davenport <ddavenport@chromium.org>,
-        Brian Masney <masneyb@onstation.org>, robin.murphy@arm.com,
-        Georgi Djakov <georgi.djakov@linaro.org>
-Subject: Re: [Freedreno] [PATCH v5 0/5] iommu/arm-smmu: Split pagetable
- support for arm-smmu-v2
-Message-ID: <20200227184534.GA25772@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: iommu@lists.linux-foundation.org,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        David Airlie <airlied@linux.ie>, dri-devel@lists.freedesktop.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>, Wen Yang <wen.yang99@zte.com.cn>,
-        will@kernel.org, Joerg Roedel <joro@8bytes.org>,
-        Ben Dooks <ben.dooks@codethink.co.uk>,
-        linux-arm-kernel@lists.infradead.org,
-        Wambui Karuga <wambui.karugax@gmail.com>,
-        freedreno@lists.freedesktop.org, Fritz Koenig <frkoenig@google.com>,
-        linux-arm-msm@vger.kernel.org,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Thomas Gleixner <tglx@linutronix.de>, Sean Paul <sean@poorly.run>,
-        Allison Randal <allison@lohutok.net>,
-        Enrico Weigelt <info@metux.net>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, zhengbin <zhengbin13@huawei.com>,
-        Rob Clark <robdclark@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Drew Davenport <ddavenport@chromium.org>,
-        Brian Masney <masneyb@onstation.org>, robin.murphy@arm.com,
-        Georgi Djakov <georgi.djakov@linaro.org>
-References: <1580248819-12644-1-git-send-email-jcrouse@codeaurora.org>
+        linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
+        psodagud@codeaurora.org, rishabhb@codeaurora.org
+Subject: Re: [PATCH 3/6] remoteproc: sysmon: Inform current rproc about all
+ active rprocs
+Message-ID: <20200227184706.GA20116@xps15>
+References: <1582167465-2549-1-git-send-email-sidgup@codeaurora.org>
+ <1582167465-2549-4-git-send-email-sidgup@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1580248819-12644-1-git-send-email-jcrouse@codeaurora.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <1582167465-2549-4-git-send-email-sidgup@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 28, 2020 at 03:00:14PM -0700, Jordan Crouse wrote:
-> This is another iteration for the split pagetable support based on the
-> suggestions from Robin and Will [1].
+On Wed, Feb 19, 2020 at 06:57:42PM -0800, Siddharth Gupta wrote:
+> A remoteproc that has just recovered from a crash will not be aware of the
+> state of other remoteprocs. Send sysmon notifications on behalf of all the
+> active/online remoteprocs to the one that just booted up.
 > 
-> Background: In order to support per-context pagetables the GPU needs to enable
-> split tables so that we can store global buffers in the TTBR1 space leaving the
-> GPU free to program the TTBR0 register with the address of a context specific
-> pagetable.
+> Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
+> ---
+>  drivers/remoteproc/qcom_sysmon.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 > 
-> If the DOMAIN_ATTR_SPLIT_TABLES attribute is set on the domain before attaching,
-> the context bank assigned to the domain will be programmed to allow translations
-> in the TTBR1 space. Translations in the TTBR0 region will be disallowed because,
-> as Robin pointe out, having a un-programmed TTBR0 register is dangerous.
-> 
-> The driver can determine if TTBR1 was successfully programmed by querying
-> DOMAIN_ATTR_SPLIT_TABLES after attaching. The domain geometry will also be
-> updated to reflect the virtual address space for the TTBR1 range.
-> 
-> Upcoming changes will allow auxiliary domains to be attached to the device which
-> will enable and program TTBR0.
-> 
-> This patchset is based on top of linux-next-20200127.
+> diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
+> index 851664e..d0d59d5 100644
+> --- a/drivers/remoteproc/qcom_sysmon.c
+> +++ b/drivers/remoteproc/qcom_sysmon.c
+> @@ -457,6 +457,7 @@ static int sysmon_start(struct rproc_subdev *subdev)
+>  {
+>  	struct qcom_sysmon *sysmon = container_of(subdev, struct qcom_sysmon,
+>  						  subdev);
+> +	struct qcom_sysmon *target;
+>  	struct sysmon_event event = {
+>  		.subsys_name = sysmon->name,
+>  		.ssr_event = SSCTL_SSR_EVENT_AFTER_POWERUP
+> @@ -464,6 +465,17 @@ static int sysmon_start(struct rproc_subdev *subdev)
+>  
+>  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
+>  
+> +	mutex_lock(&sysmon_lock);
+> +	list_for_each_entry(target, &sysmon_list, node) {
+> +		if (target == sysmon ||
+> +		    target->rproc->state != RPROC_RUNNING)
+> +			continue;
+> +
+> +		event.subsys_name = target->name;
+> +		ssctl_send_event(sysmon, &event);
+> +	}
+> +	mutex_unlock(&sysmon_lock);
+> +
 
-Quick ping for feedback so I can respin for (maybe?) 5.6.
+The changelog is specific about crash recovery but to me this code will run
+every time an MCU is switched on.  If I understand correctly, in a crash
+recovery situation or simply an MCU coming on line, you want to make sure the
+subdevices associated to the booting (or recovering) MCU knows about subdevices
+that were registered with the sysmon_notifiers before it.
+
+If that is the case, the changelog needs to be modified and a good chunk of
+comments need to be added to this patch.
+
+Lastly, shouldn't there be a provision for sysmon->ssctl_version == 2?
 
 Thanks,
-Jordan
+Mathieu 
 
-> Change log:
-> 
-> v4: Only program TTBR1 when split pagetables are requested. TTBR0 will be
-> enabled later when an auxiliary domain is attached
-> v3: Remove the implementation specific and make split pagetable support
-> part of the generic configuration
-> 
-> [1] https://lists.linuxfoundation.org/pipermail/iommu/2020-January/041373.html
-> 
-> Jordan Crouse (5):
->   iommu: Add DOMAIN_ATTR_SPLIT_TABLES
->   iommu/arm-smmu: Add support for TTBR1
->   drm/msm: Attach the IOMMU device during initialization
->   drm/msm: Refactor address space initialization
->   drm/msm/a6xx: Support split pagetables
-> 
->  drivers/gpu/drm/msm/adreno/a2xx_gpu.c    | 16 ++++++++++
->  drivers/gpu/drm/msm/adreno/a3xx_gpu.c    |  1 +
->  drivers/gpu/drm/msm/adreno/a4xx_gpu.c    |  1 +
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.c    |  1 +
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c    | 51 ++++++++++++++++++++++++++++++++
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c  | 23 ++++++++++----
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h  |  8 +++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 18 ++++-------
->  drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 18 +++++------
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c |  4 ---
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 18 +++++------
->  drivers/gpu/drm/msm/msm_drv.h            |  8 ++---
->  drivers/gpu/drm/msm/msm_gem_vma.c        | 36 ++++------------------
->  drivers/gpu/drm/msm/msm_gpu.c            | 49 ++----------------------------
->  drivers/gpu/drm/msm/msm_gpu.h            |  4 +--
->  drivers/gpu/drm/msm/msm_gpummu.c         |  6 ----
->  drivers/gpu/drm/msm/msm_iommu.c          | 18 ++++++-----
->  drivers/gpu/drm/msm/msm_mmu.h            |  1 -
->  drivers/iommu/arm-smmu.c                 | 48 +++++++++++++++++++++++++-----
->  drivers/iommu/arm-smmu.h                 | 22 ++++++++++----
->  include/linux/iommu.h                    |  2 ++
->  21 files changed, 198 insertions(+), 155 deletions(-)
-> 
+>  	return 0;
+>  }
+>  
 > -- 
-> 2.7.4
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
