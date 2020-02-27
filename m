@@ -2,45 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D34E1717F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 13:57:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF6AB171974
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 14:45:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729088AbgB0M5o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Feb 2020 07:57:44 -0500
-Received: from mga06.intel.com ([134.134.136.31]:63124 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729033AbgB0M5o (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Feb 2020 07:57:44 -0500
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 27 Feb 2020 04:57:43 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,492,1574150400"; 
-   d="scan'208";a="231830321"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.167]) ([10.237.72.167])
-  by orsmga008.jf.intel.com with ESMTP; 27 Feb 2020 04:57:40 -0800
-Subject: Re: [PATCH V3] mmc: mmc_test: Pass different sg lists for
- non-blocking requests
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        ulf.hansson@linaro.org
-Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Allison Randal <allison@lohutok.net>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Thomas Gleixner <tglx@linutronix.de>
-References: <1582105474-27866-1-git-send-email-vbadigan@codeaurora.org>
- <1582714668-17247-1-git-send-email-vbadigan@codeaurora.org>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <1a228a57-f15b-beb6-0991-d2ea0232faaa@intel.com>
-Date:   Thu, 27 Feb 2020 14:57:00 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        id S1729725AbgB0NpG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Feb 2020 08:45:06 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:50886 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730323AbgB0NpG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 27 Feb 2020 08:45:06 -0500
+Received: by mail-wm1-f65.google.com with SMTP id a5so3645804wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 05:45:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=PRpjg7VfxAWAXWCyVK3TF778q7i9qgrUQjd7ke8MZGM=;
+        b=DtblLM/HbuiDe6npECTn3ll10Od90J455eJP7dLeDSNxFNbJ5yW3943M5CWNGBGCca
+         3ENV/gwcavsjWQMKfAYy7zoj1Km8KGj4ULjZkpaKfwNFmkCLyc70QJHDLKw3V4etqwGn
+         aa/6HN3YZyIiRCgvoKIGN9egLIIAA5YQWrfSOBmlw3uxPm2+FxEI9spvtBwDYeLVgJnR
+         0iYg5Rtrce/IuzWJA2QArG+fSNwYxnD85Y3keU55NPvTPmDG47k9izsaHWVJcNJNAAgB
+         FcseVC3Y4T+U8L9JPYQpYurbrHHJDhrMtyCcFFmK6h3lBPOjCwDEocwGgBRkPCFTxLLa
+         2w2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=PRpjg7VfxAWAXWCyVK3TF778q7i9qgrUQjd7ke8MZGM=;
+        b=XVwxuTdi8XpU6zRJeUC1Eu3fg7ICfaKD0A5FCAjIZXyXcvhJ265kYHL542vtDs4LjH
+         8x+4rwGfnQuW+HbguPhP6mYkrItGvcZwdLqffHDa2qIxfrTidv1ThvYZ9okWPBg8wxYb
+         YZFBJAPx6P1TEWc6oRs2rRTruyDmHk4zqeuR+XJDdJQ7rv4BH/8HH1GNr0ZUzkMGzES7
+         sdbAZGbdEwvNJy0gZkRRPFhTCihK36Olu5j5kktZbalc696NDUlNMSx0OKQVhS7FHodK
+         UO96BQDwsjj35vOOtgts0MA0vfJFr4UkZyrTO9ANEg2PXHTYVrDfNhuE7rH4FirzVTMg
+         zkuA==
+X-Gm-Message-State: APjAAAVZtT8xqDSZwgYuYhc2FeMUI7zlwr60Hs9fg7siGO3BMVJbims1
+        AfRh821EU08z3rAp0CCFdk4cTw==
+X-Google-Smtp-Source: APXvYqxbH2LzNiuz8OUFlrSiYa48j4DRaQWKby7I1has1etckZRz2eo+zWt7xkZGhT2Zx67Nss+abA==
+X-Received: by 2002:a1c:f712:: with SMTP id v18mr5639230wmh.155.1582811102353;
+        Thu, 27 Feb 2020 05:45:02 -0800 (PST)
+Received: from [10.44.66.8] ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id a198sm8024152wme.12.2020.02.27.05.45.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 27 Feb 2020 05:45:01 -0800 (PST)
+Subject: Re: [PATCH v3 6/6] arm64: dts: sdm845: Redefine interconnect provider
+ DT nodes
+To:     bjorn.andersson@linaro.org
+Cc:     Sibi Sankar <sibis@codeaurora.org>, robh+dt@kernel.org,
+        evgreen@chromium.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, mark.rutland@arm.com,
+        daidavid1@codeaurora.org, saravanak@google.com, mka@chromium.org,
+        linux-pm@vger.kernel.org, Odelu Kukatla <okukatla@codeaurora.org>
+References: <20200209183411.17195-1-sibis@codeaurora.org>
+ <20200209183411.17195-7-sibis@codeaurora.org>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+ KEmKjLDvB0pePJkdTw==
+Message-ID: <261391af-18c2-5da1-a094-326be58b313f@linaro.org>
+Date:   Thu, 27 Feb 2020 15:45:00 +0200
 MIME-Version: 1.0
-In-Reply-To: <1582714668-17247-1-git-send-email-vbadigan@codeaurora.org>
+In-Reply-To: <20200209183411.17195-7-sibis@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -49,200 +114,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/02/20 12:57 pm, Veerabhadrarao Badiganti wrote:
-> Supply a separate sg list for each of the request in non-blocking
-> IO test cases where two requests will be issued at same time.
+On 2/9/20 20:34, Sibi Sankar wrote:
+> From: David Dai <daidavid1@codeaurora.org>
 > 
-> Otherwise, sg memory may get unmapped when a request is done while
-> same memory is being accessed by controller from the other request,
-> and it leads to iommu errors with below call stack:
+> Add the DT nodes for each of the Network-On-Chip interconnect
+> buses found on SDM845 based platform and redefine the rsc_hlos
+> child node as a bcm-voter device to better represent the hardware.
 > 
-> 	__arm_lpae_unmap+0x2e0/0x478
-> 	arm_lpae_unmap+0x54/0x70
-> 	arm_smmu_unmap+0x64/0xa4
-> 	__iommu_unmap+0xb8/0x1f0
-> 	iommu_unmap_fast+0x38/0x48
-> 	__iommu_dma_unmap+0x88/0x108
-> 	iommu_dma_unmap_sg+0x90/0xa4
-> 	sdhci_post_req+0x5c/0x78
-> 	mmc_test_start_areq+0x10c/0x120 [mmc_test]
-> 	mmc_test_area_io_seq+0x150/0x264 [mmc_test]
-> 	mmc_test_rw_multiple+0x174/0x1c0 [mmc_test]
-> 	mmc_test_rw_multiple_sg_len+0x44/0x6c [mmc_test]
-> 	mmc_test_profile_sglen_wr_nonblock_perf+0x6c/0x94 [mmc_test]
-> 	mtf_test_write+0x238/0x3cc [mmc_test]
-> 
-> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> Tested-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Signed-off-by: David Dai <daidavid1@codeaurora.org>
+> Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Acked-by: Georgi Djakov <georgi.djakov@linaro.org>
 
-> ---
-> Changes since V2:
-> 	- Simplfied mmc_test_nonblock_transter() function aruguments.
-> 
-> Changes since V1:
-> 	- Freeing-up sg_areq memory.                                        
-> 	- Added check to ensure sg length is equal for both the sg-lists    
-> 	  supplied in case of non-blocking requests.
-> ---
->  drivers/mmc/core/mmc_test.c | 52 ++++++++++++++++++++++++++++++++++-----------
->  1 file changed, 40 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/mmc/core/mmc_test.c b/drivers/mmc/core/mmc_test.c
-> index 492dd45..c21b3cb 100644
-> --- a/drivers/mmc/core/mmc_test.c
-> +++ b/drivers/mmc/core/mmc_test.c
-> @@ -71,6 +71,7 @@ struct mmc_test_mem {
->   * @sg_len: length of currently mapped scatterlist @sg
->   * @mem: allocated memory
->   * @sg: scatterlist
-> + * @sg_areq: scatterlist for non-blocking request
->   */
->  struct mmc_test_area {
->  	unsigned long max_sz;
-> @@ -82,6 +83,7 @@ struct mmc_test_area {
->  	unsigned int sg_len;
->  	struct mmc_test_mem *mem;
->  	struct scatterlist *sg;
-> +	struct scatterlist *sg_areq;
->  };
->  
->  /**
-> @@ -836,14 +838,16 @@ static int mmc_test_start_areq(struct mmc_test_card *test,
->  }
->  
->  static int mmc_test_nonblock_transfer(struct mmc_test_card *test,
-> -				      struct scatterlist *sg, unsigned sg_len,
-> -				      unsigned dev_addr, unsigned blocks,
-> -				      unsigned blksz, int write, int count)
-> +				      unsigned int dev_addr, int write,
-> +				      int count)
->  {
->  	struct mmc_test_req *rq1, *rq2;
->  	struct mmc_request *mrq, *prev_mrq;
->  	int i;
->  	int ret = RESULT_OK;
-> +	struct mmc_test_area *t = &test->area;
-> +	struct scatterlist *sg = t->sg;
-> +	struct scatterlist *sg_areq = t->sg_areq;
->  
->  	rq1 = mmc_test_req_alloc();
->  	rq2 = mmc_test_req_alloc();
-> @@ -857,8 +861,8 @@ static int mmc_test_nonblock_transfer(struct mmc_test_card *test,
->  
->  	for (i = 0; i < count; i++) {
->  		mmc_test_req_reset(container_of(mrq, struct mmc_test_req, mrq));
-> -		mmc_test_prepare_mrq(test, mrq, sg, sg_len, dev_addr, blocks,
-> -				     blksz, write);
-> +		mmc_test_prepare_mrq(test, mrq, sg, t->sg_len, dev_addr,
-> +				     t->blocks, 512, write);
->  		ret = mmc_test_start_areq(test, mrq, prev_mrq);
->  		if (ret)
->  			goto err;
-> @@ -867,7 +871,8 @@ static int mmc_test_nonblock_transfer(struct mmc_test_card *test,
->  			prev_mrq = &rq2->mrq;
->  
->  		swap(mrq, prev_mrq);
-> -		dev_addr += blocks;
-> +		swap(sg, sg_areq);
-> +		dev_addr += t->blocks;
->  	}
->  
->  	ret = mmc_test_start_areq(test, NULL, prev_mrq);
-> @@ -1396,10 +1401,11 @@ static int mmc_test_no_highmem(struct mmc_test_card *test)
->   * Map sz bytes so that it can be transferred.
->   */
->  static int mmc_test_area_map(struct mmc_test_card *test, unsigned long sz,
-> -			     int max_scatter, int min_sg_len)
-> +			     int max_scatter, int min_sg_len, bool nonblock)
->  {
->  	struct mmc_test_area *t = &test->area;
->  	int err;
-> +	unsigned int sg_len = 0;
->  
->  	t->blocks = sz >> 9;
->  
-> @@ -1411,6 +1417,22 @@ static int mmc_test_area_map(struct mmc_test_card *test, unsigned long sz,
->  		err = mmc_test_map_sg(t->mem, sz, t->sg, 1, t->max_segs,
->  				      t->max_seg_sz, &t->sg_len, min_sg_len);
->  	}
-> +
-> +	if (err || !nonblock)
-> +		goto err;
-> +
-> +	if (max_scatter) {
-> +		err = mmc_test_map_sg_max_scatter(t->mem, sz, t->sg_areq,
-> +						  t->max_segs, t->max_seg_sz,
-> +						  &sg_len);
-> +	} else {
-> +		err = mmc_test_map_sg(t->mem, sz, t->sg_areq, 1, t->max_segs,
-> +				      t->max_seg_sz, &sg_len, min_sg_len);
-> +	}
-> +	if (!err && sg_len != t->sg_len)
-> +		err = -EINVAL;
-> +
-> +err:
->  	if (err)
->  		pr_info("%s: Failed to map sg list\n",
->  		       mmc_hostname(test->card->host));
-> @@ -1440,7 +1462,6 @@ static int mmc_test_area_io_seq(struct mmc_test_card *test, unsigned long sz,
->  	struct timespec64 ts1, ts2;
->  	int ret = 0;
->  	int i;
-> -	struct mmc_test_area *t = &test->area;
->  
->  	/*
->  	 * In the case of a maximally scattered transfer, the maximum transfer
-> @@ -1458,15 +1479,14 @@ static int mmc_test_area_io_seq(struct mmc_test_card *test, unsigned long sz,
->  			sz = max_tfr;
->  	}
->  
-> -	ret = mmc_test_area_map(test, sz, max_scatter, min_sg_len);
-> +	ret = mmc_test_area_map(test, sz, max_scatter, min_sg_len, nonblock);
->  	if (ret)
->  		return ret;
->  
->  	if (timed)
->  		ktime_get_ts64(&ts1);
->  	if (nonblock)
-> -		ret = mmc_test_nonblock_transfer(test, t->sg, t->sg_len,
-> -				 dev_addr, t->blocks, 512, write, count);
-> +		ret = mmc_test_nonblock_transfer(test, dev_addr, write, count);
->  	else
->  		for (i = 0; i < count && ret == 0; i++) {
->  			ret = mmc_test_area_transfer(test, dev_addr, write);
-> @@ -1525,6 +1545,7 @@ static int mmc_test_area_cleanup(struct mmc_test_card *test)
->  	struct mmc_test_area *t = &test->area;
->  
->  	kfree(t->sg);
-> +	kfree(t->sg_areq);
->  	mmc_test_free_mem(t->mem);
->  
->  	return 0;
-> @@ -1584,6 +1605,13 @@ static int mmc_test_area_init(struct mmc_test_card *test, int erase, int fill)
->  		goto out_free;
->  	}
->  
-> +	t->sg_areq = kmalloc_array(t->max_segs, sizeof(*t->sg_areq),
-> +				   GFP_KERNEL);
-> +	if (!t->sg_areq) {
-> +		ret = -ENOMEM;
-> +		goto out_free;
-> +	}
-> +
->  	t->dev_addr = mmc_test_capacity(test->card) / 2;
->  	t->dev_addr -= t->dev_addr % (t->max_sz >> 9);
->  
-> @@ -2468,7 +2496,7 @@ static int __mmc_test_cmds_during_tfr(struct mmc_test_card *test,
->  	if (!(test->card->host->caps & MMC_CAP_CMD_DURING_TFR))
->  		return RESULT_UNSUP_HOST;
->  
-> -	ret = mmc_test_area_map(test, sz, 0, 0);
-> +	ret = mmc_test_area_map(test, sz, 0, 0, use_areq);
->  	if (ret)
->  		return ret;
->  
-> 
-
+Thanks,
+Georgi
