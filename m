@@ -2,106 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 58E641729BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 21:54:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 66049172A7D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 22:53:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729510AbgB0Uyz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Feb 2020 15:54:55 -0500
-Received: from mail-ua1-f68.google.com ([209.85.222.68]:34287 "EHLO
-        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729463AbgB0Uyz (ORCPT
+        id S1729843AbgB0VxO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Feb 2020 16:53:14 -0500
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:37449 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729959AbgB0VxO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Feb 2020 15:54:55 -0500
-Received: by mail-ua1-f68.google.com with SMTP id 1so188273uao.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 12:54:54 -0800 (PST)
+        Thu, 27 Feb 2020 16:53:14 -0500
+Received: by mail-lf1-f67.google.com with SMTP id b15so565706lfc.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 13:53:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ktzdl5eoKPEHfEuFryFzhZR7Y8sf35Stxv0I9TC3om8=;
-        b=S7ZikkXjTCFqfTODdrBIRR4bjKV6vzJmi95TuJOiGc6qU7zDytV2WPccOPkdOwJZ/j
-         xli5qKpWBUJ5DazclKwIIfQ8qQMD4fHsNAqdGsEEL4fe3MO0gOR/KmwhvFgRCgvvNvHb
-         vijRWYbIUdJ6HmZd/RojRMwFkBppkvmsy5rbTLnwbctZAx6wUY1nJDyxeEApFNEB55Xb
-         U/d0YaxRhAe8wd8cADEZdNzur4hfxn5jgLkmh8HD1TUN6quVjk+WYUszsrJcPsODuhpU
-         y/6+8DOFTaL7D7XPV1o3rvMBHvAFVRiFIRT2SaijXF4iUNgMsMRkGs0kHJjdl+cTFTSs
-         f0ng==
+        bh=OBxG5p3NtRm8vJZ9SrWGbyvBMMrZfbcd6sEkh872Wpk=;
+        b=J2HlgJvotRvArCBanF+nmCfWdRF8pDW66BdmQms7zfNgyS7lRauYT3bDS5OboDi2DM
+         ifdOo7gJ8d+ZZyQcHW2Fg38xWkUDpHzNNzVJKJHCx5P3h/fPWvAmbJsxP/jGHk9JHs8h
+         efR20upDTYOd5dbP0XxRZK/5y/3u0AYyvc+eQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ktzdl5eoKPEHfEuFryFzhZR7Y8sf35Stxv0I9TC3om8=;
-        b=G8NCvfR5h2j9hWrjQOh+jSKz5Ia5Q/Zv0+hM8U3eFBT4yTfUmtE5aOKHIA/WwfWxic
-         89mQ72E5KXFZt8gV5XqCTcLMO6MUqtUQhqHaaHT/z/ZYE1AjeMBTRUW7FkbTl9Ydj6/p
-         WVOrgueOn2bEsIRPeYKDsX2KLh2NhWvBQnoEw140TcX9MQOPI59geLtHz+5exy/XDa/9
-         mVtDbf+w2/lZv9msLyuZ4VDZbaOE1ddAEagMKxwwI7WSOXtQceZnv08NHNEhlKrmqv5M
-         FDFdY/GTdA7aXDVKJOZSmEvDtB/Rl6H+aqbeUrR+UrcyzV5h8OU7X6Yq/yTc6mqIVlSz
-         ohZw==
-X-Gm-Message-State: ANhLgQ0MDpCTWlxtMyI9TpHMVXTb7kAjzCCpI6l6YW44ESEcswQSq/Gj
-        W28tZ84pYSS5x4Es81hrfDz6/6T+ahgTZgpqgYl8YA==
-X-Google-Smtp-Source: ADFU+vt5Eu/0Gf/mJjQWTqW8ukh7kOFSPWFoB1kOcBU0Lbg1MDkcSsM3OxPy3w+OIQUMQkvfoeEVgnNZxUT2k13A3Vg=
-X-Received: by 2002:ab0:6605:: with SMTP id r5mr363174uam.0.1582836893873;
- Thu, 27 Feb 2020 12:54:53 -0800 (PST)
+        bh=OBxG5p3NtRm8vJZ9SrWGbyvBMMrZfbcd6sEkh872Wpk=;
+        b=IfYI554fmbA/u90unXcs8zXyxlEM63fwbl5BkJL6/1+ohNgR1T9b2Ugd5WXts3371t
+         Yh1sMBR+5v9fswl9ejuHDKbQlILzIxopgxG9cUC7RMF+4ibINhnpCIdDxgDL6IvwV110
+         td0oWxyGtj6RAmn5veTO8JFQg8u+FDjgCrnZIh7H5mVDkGogRfwiQwmqs423hYrBqj9P
+         /HL/R3K7eTuZuGCnievvxeewK6nbZtvhlsSqAuSmbyiuweXTGRLdBCqBclTvWLyEqVeU
+         pgoBgVEctvIJ+EJi81tVlKFvvv3q+Bxgcv0iA9KFjvoBhJSSW8dctwBFls6CM1eN1Nwl
+         ad+A==
+X-Gm-Message-State: ANhLgQ3kHMsOEAvCLsrODyl9ZzAo0q4WQWuqipGtq7oUJU5no2sjTRqc
+        j4YiPek9BMm3+o/4/nJEWWDRwc+6zuU=
+X-Google-Smtp-Source: ADFU+vvkJABL7Lu/rfv+z8UvJaitkcduuM0uz0alKIfIHW8QRTc5yKLb90VVspks1DgBpXujj9aG2A==
+X-Received: by 2002:ac2:42ca:: with SMTP id n10mr764829lfl.215.1582840391804;
+        Thu, 27 Feb 2020 13:53:11 -0800 (PST)
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com. [209.85.167.50])
+        by smtp.gmail.com with ESMTPSA id x21sm4256722lff.0.2020.02.27.13.53.10
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Feb 2020 13:53:10 -0800 (PST)
+Received: by mail-lf1-f50.google.com with SMTP id 83so535564lfh.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 13:53:10 -0800 (PST)
+X-Received: by 2002:ac2:5226:: with SMTP id i6mr725638lfl.99.1582840389628;
+ Thu, 27 Feb 2020 13:53:09 -0800 (PST)
 MIME-Version: 1.0
-References: <1581434955-11087-1-git-send-email-vbadigan@codeaurora.org> <1582545470-11530-1-git-send-email-vbadigan@codeaurora.org>
-In-Reply-To: <1582545470-11530-1-git-send-email-vbadigan@codeaurora.org>
-From:   Doug Anderson <dianders@google.com>
-Date:   Thu, 27 Feb 2020 12:54:41 -0800
-Message-ID: <CAD=FV=WjSC7h0Q1aQpF74KDpgjOPSKrUR5gBo1ZsFn_o4m5TyQ@mail.gmail.com>
-Subject: Re: [PATCH V3] dt-bindings: mmc: sdhci-msm: Add CQE reg map
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Sahitya Tummala <stummala@codeaurora.org>,
-        Sayali Lokhande <sayalil@codeaurora.org>, cang@codeaurora.org,
-        Ram Prakash Gupta <rampraka@codeaurora.org>,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
+References: <20200209183411.17195-1-sibis@codeaurora.org> <20200209183411.17195-5-sibis@codeaurora.org>
+In-Reply-To: <20200209183411.17195-5-sibis@codeaurora.org>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Thu, 27 Feb 2020 13:52:33 -0800
+X-Gmail-Original-Message-ID: <CAE=gft5OOQVKe9ow2ApbEAjmgqRc05hHVxUi4os+4-gvpMh4Yg@mail.gmail.com>
+Message-ID: <CAE=gft5OOQVKe9ow2ApbEAjmgqRc05hHVxUi4os+4-gvpMh4Yg@mail.gmail.com>
+Subject: Re: [PATCH v3 4/6] interconnect: qcom: Consolidate interconnect RPMh support
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
+        David Dai <daidavid1@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Matthias Kaehlcke <mka@chromium.org>, linux-pm@vger.kernel.org,
+        Odelu Kukatla <okukatla@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Mon, Feb 24, 2020 at 3:58 AM Veerabhadrarao Badiganti
-<vbadigan@codeaurora.org> wrote:
+On Sun, Feb 9, 2020 at 10:34 AM Sibi Sankar <sibis@codeaurora.org> wrote:
 >
-> CQE feature has been enabled on sdhci-msm. Add CQE reg map
-> and reg names that need to be supplied for supporting CQE feature.
+> From: David Dai <daidavid1@codeaurora.org>
 >
-> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-> ---
-> Changes since V2:
->         - Dropped _mem suffix to reg names.
+> Add bcm voter driver and add support for RPMh specific interconnect
+> providers which implements the set and aggregate functionalities that
+> translates bandwidth requests into RPMh messages. These modules provide
+> a common set of functionalities for all Qualcomm RPMh based interconnect
+> providers and should help reduce code duplication when adding new
+> providers.
 >
-> Changes since V1:
->         - Updated description for more clarity & Fixed typos.
-> ---
->  Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
+> Signed-off-by: David Dai <daidavid1@codeaurora.org>
+> Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Assuming Georgi's comments get addressed:
 
-I assume you'll have a follow-up fixing the driver since commit
-a4080225f51d ("mmc: cqhci: support for command queue enabled host")
-refers to "cqhci_mem".
-
-
-Also something to keep in mind for future patches (no action needed
-for this patch): most maintainers frown on making v2 of a patch
-"In-Reply-To" v1 of a patch.  I notice that your v3 was in-reply-to v2
-and v2 was in-reply-to v1.  You probably don't want to do this.  One
-such reference to people not liking it [1] specifically said "they
-should not be replies to old versions of that patch; otherwise the
-threading looks really weird and confusing."
-
-[1] https://lore.kernel.org/r/CAJWu+oocs3T8orMNt6AmdVgWONzZg0vD=E8EdvzE9rOi_XatUw@mail.gmail.com
-
-
--Doug
+Reviewed-by: Evan Green <evgreen@chromium.org>
