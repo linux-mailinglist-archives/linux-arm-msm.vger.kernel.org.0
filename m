@@ -2,154 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B54217250D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 18:26:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 19EE21726DA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 19:18:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729603AbgB0R05 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Feb 2020 12:26:57 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:52954 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728413AbgB0R05 (ORCPT
+        id S1726805AbgB0SSt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Feb 2020 13:18:49 -0500
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:41991 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729306AbgB0SSs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Feb 2020 12:26:57 -0500
-Received: by mail-pj1-f66.google.com with SMTP id ep11so72812pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 09:26:56 -0800 (PST)
+        Thu, 27 Feb 2020 13:18:48 -0500
+Received: by mail-lj1-f194.google.com with SMTP id d10so264986ljl.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 10:18:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fQPEnxEYqQKv2J8jDt8sM4BsZoYJJo7zFPvtZvyCIgk=;
-        b=M8MQI9kESW8PfwE5agJLV5bI3OzTvFh8DKCAPWjqwaZe0CN9rvaLIsXYDbc/GeS7mu
-         reHjzXYGp7vZDEB3M7QDSfdQBssljyNj0UfiVTBa/4LEtT7sOs7xXF4kcEMzsXvNQtNg
-         NYoFURLEnX0v+AvxD9MV+kzBQMPbnkvbuuzK0=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TIrZq7zfi9d8Q+fOa28AhByDzOWhjJxxZS3b+/HMQXg=;
+        b=U4P8uy/s4Ds1EkDDNGaWi1K9er6AUfeAf4VVGIvriAPWIb8H7ZO9oXIIyRLW+mfi8n
+         mQb4nT0l6ksb6++c3tZjqKnQzqlPkj/Z0cbluKLEh2/M+IFiKQXtdTTDnavsmBv6PATU
+         ZHd+VHFOeA9D8ICg70R5qVFgQEJnlAq7kzz0g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fQPEnxEYqQKv2J8jDt8sM4BsZoYJJo7zFPvtZvyCIgk=;
-        b=Mjv/EibsMxr2Kax+dKmKkuU3ymxo9uS/IedY3oLT8ifGcFZXsEKldaD1oKiLB7E1h9
-         hYowYZZLyoLzVF/qLDKZXubUy5/hhzXRbgslHd6+rt5b7CGtOTb1SgqaEcBRcOWuGifd
-         y8939G0IZj7+nYV1ajH5adpB/A0+LqHkGf+BBYOXoly/nctpLNZbncsPe/kkvFJjvaBt
-         kLgXzHSNX5P7moOKHc1WP5PKu4FwndcgXlSHNRU6hfhU8b4Ux6OPHGcQn/QRF79g/ntg
-         CWRxfKBq3OXfQPfiI8fW8/D/Jw69muMiLNQwyvoShPn5TpkqIPcJiqKdcwqvhWbPfdjY
-         IDzA==
-X-Gm-Message-State: APjAAAXHxmgyvXd6X4V/kft4Vhwn9iAuNIWedzIXYFVNAGMD9J6GBKks
-        a9Xx5X0iKoJtft+6WmGfrXzDLQ==
-X-Google-Smtp-Source: APXvYqxd8JJX/yJEscJ9jPCi0Hv0aT+HkJGkpNetjAHaTZgfz4jNcf9P6XVCoMR6bZ8KjTNnxvy9xg==
-X-Received: by 2002:a17:902:8604:: with SMTP id f4mr768399plo.278.1582824416320;
-        Thu, 27 Feb 2020 09:26:56 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id p18sm11436922pjo.3.2020.02.27.09.26.55
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TIrZq7zfi9d8Q+fOa28AhByDzOWhjJxxZS3b+/HMQXg=;
+        b=RKgcH3Fx0AZmk39dv0KiFPZREMErNUUz+SIgsg7Js/+7oGNnIu9pq55MmAdZBo2iLY
+         d3/eiYqFoKHU3JTAyXyN7FcHJD8lz+/ktsv/4qSfSwT/+yn4i/LXp+JU5q9lEwF2LCHh
+         4k1lWxmmGrL1ZfVClGJmZI73wZKKCqGSpc+rP1suFLT59Mvhb9L3o3qIPMlnl+5A2vRZ
+         blcp4fD8VGBbEdqLR85LHEgKg1oyW1aiARsKwtOTHndV8KBs+Ihiqlxqvfn55olM2U3b
+         BLysflJ7A43Py9NDcTESuA3UE9PGA5v8SRjXJ5NdO4U8xpuIVY0Zrtbq4pkuWC7DWib6
+         spiQ==
+X-Gm-Message-State: ANhLgQ0WC+izSz28zUXIarPRawUYLLhZF8MKQn82RtPyMDnkzmIPuC0M
+        GTGhSDXZmmrrbfa9VnHRnTpkOU5LRk8=
+X-Google-Smtp-Source: ADFU+vv+PBuhsb7Si/WjxTzSIkj3vXSIvK9e9MIrSSp71Y9Qw06usLUgzIDCEy32HJwxDTzkjEZQBA==
+X-Received: by 2002:a2e:5454:: with SMTP id y20mr202495ljd.23.1582827525731;
+        Thu, 27 Feb 2020 10:18:45 -0800 (PST)
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com. [209.85.208.179])
+        by smtp.gmail.com with ESMTPSA id r12sm3797442ljh.105.2020.02.27.10.18.43
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Feb 2020 09:26:55 -0800 (PST)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH v3] arm64: dts: sc7180: Move venus node to the correct position
-Date:   Thu, 27 Feb 2020 09:26:52 -0800
-Message-Id: <20200227092649.v3.1.I15e0f7eff0c67a2b49d4992f9d80fc1d2fdadf63@changeid>
-X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
+        Thu, 27 Feb 2020 10:18:43 -0800 (PST)
+Received: by mail-lj1-f179.google.com with SMTP id r19so309190ljg.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 10:18:43 -0800 (PST)
+X-Received: by 2002:a2e:81c7:: with SMTP id s7mr201688ljg.3.1582827523002;
+ Thu, 27 Feb 2020 10:18:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1582793785-22423-1-git-send-email-mkshah@codeaurora.org> <1582793785-22423-3-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1582793785-22423-3-git-send-email-mkshah@codeaurora.org>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Thu, 27 Feb 2020 10:18:06 -0800
+X-Gmail-Original-Message-ID: <CAE=gft6VDMoTZ4mW7d7scUCtDowfJiCbOzx_1FaFkoz8tm99DQ@mail.gmail.com>
+Message-ID: <CAE=gft6VDMoTZ4mW7d7scUCtDowfJiCbOzx_1FaFkoz8tm99DQ@mail.gmail.com>
+Subject: Re: [PATCH v8 2/3] soc: qcom: rpmh: Update dirty flag only when data changes
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Per convention device nodes for SC7180 should be ordered by address.
-This is currently not the case for the venus node, move it to the
-correct position.
+On Thu, Feb 27, 2020 at 12:57 AM Maulik Shah <mkshah@codeaurora.org> wrote:
+>
+> Currently rpmh ctrlr dirty flag is set for all cases regardless of data
+> is really changed or not. Add changes to update dirty flag when data is
+> changed to newer values.
+>
+> Also move dirty flag updates to happen from within cache_lock and remove
+> unnecessary INIT_LIST_HEAD() call and a default case from switch.
+>
+> Fixes: 600513dfeef3 ("drivers: qcom: rpmh: cache sleep/wake state requests")
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> Reviewed-by: Srinivas Rao L <lsrao@codeaurora.org>
+> ---
+>  drivers/soc/qcom/rpmh.c | 29 ++++++++++++++++-------------
+>  1 file changed, 16 insertions(+), 13 deletions(-)
+>
+> diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+> index eb0ded0..3f5d9eb 100644
+> --- a/drivers/soc/qcom/rpmh.c
+> +++ b/drivers/soc/qcom/rpmh.c
+> @@ -133,26 +133,30 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
+>
+>         req->addr = cmd->addr;
+>         req->sleep_val = req->wake_val = UINT_MAX;
+> -       INIT_LIST_HEAD(&req->list);
 
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
----
+Thanks!
 
-Changes in v3:
-- actually insert the venus node after usb@a6f8800 and not just
-  pretend to do it
+>         list_add_tail(&req->list, &ctrlr->cache);
+>
+>  existing:
+>         switch (state) {
+>         case RPMH_ACTIVE_ONLY_STATE:
+> -               if (req->sleep_val != UINT_MAX)
+> +               if (req->sleep_val != UINT_MAX) {
+>                         req->wake_val = cmd->data;
+> +                       ctrlr->dirty = true;
+> +               }
+>                 break;
+>         case RPMH_WAKE_ONLY_STATE:
+> -               req->wake_val = cmd->data;
+> +               if (req->wake_val != cmd->data) {
+> +                       req->wake_val = cmd->data;
+> +                       ctrlr->dirty = true;
+> +               }
+>                 break;
+>         case RPMH_SLEEP_STATE:
+> -               req->sleep_val = cmd->data;
+> -               break;
+> -       default:
+> +               if (req->sleep_val != cmd->data) {
+> +                       req->sleep_val = cmd->data;
+> +                       ctrlr->dirty = true;
+> +               }
+>                 break;
+>         }
+>
+> -       ctrlr->dirty = true;
+>  unlock:
+>         spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+>
+> @@ -287,6 +291,7 @@ static void cache_batch(struct rpmh_ctrlr *ctrlr, struct batch_cache_req *req)
+>
+>         spin_lock_irqsave(&ctrlr->cache_lock, flags);
+>         list_add_tail(&req->list, &ctrlr->batch_cache);
+> +       ctrlr->dirty = true;
+>         spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+>  }
+>
+> @@ -323,6 +328,7 @@ static void invalidate_batch(struct rpmh_ctrlr *ctrlr)
+>         list_for_each_entry_safe(req, tmp, &ctrlr->batch_cache, list)
+>                 kfree(req);
+>         INIT_LIST_HEAD(&ctrlr->batch_cache);
+> +       ctrlr->dirty = true;
+>         spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+>  }
+>
+> @@ -456,13 +462,9 @@ static int send_single(struct rpmh_ctrlr *ctrlr, enum rpmh_state state,
+>  int rpmh_flush(struct rpmh_ctrlr *ctrlr)
+>  {
+>         struct cache_req *p;
+> +       unsigned long flags;
+>         int ret;
+>
+> -       if (!ctrlr->dirty) {
+> -               pr_debug("Skipping flush, TCS has latest data.\n");
+> -               return 0;
+> -       }
+> -
+>         /* First flush the cached batch requests */
+>         ret = flush_batch(ctrlr);
+>         if (ret)
+> @@ -488,7 +490,9 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
+>                         return ret;
+>         }
+>
+> +       spin_lock_irqsave(&ctrlr->cache_lock, flags);
+>         ctrlr->dirty = false;
+> +       spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
 
-Changes in v2:
-- insert the venus node *after* the usb@a6f8800 node, not before
+You're acquiring a lock around an operation that's already inherently
+atomic, which is not right. If the comment earlier in this function is
+still correct that "Nobody else should be calling this function other
+than system PM, hence we can run without locks", then you can simply
+remove this hunk and the part moving ->dirty = true into
+invalidate_batch.
 
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 52 ++++++++++++++--------------
- 1 file changed, 26 insertions(+), 26 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 253274d5f04cb..31bf210f2e0b1 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1376,6 +1376,32 @@ usb_1_dwc3: dwc3@a600000 {
- 			};
- 		};
- 
-+		venus: video-codec@aa00000 {
-+			compatible = "qcom,sc7180-venus";
-+			reg = <0 0x0aa00000 0 0xff000>;
-+			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
-+			power-domains = <&videocc VENUS_GDSC>,
-+					<&videocc VCODEC0_GDSC>;
-+			power-domain-names = "venus", "vcodec0";
-+			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
-+				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
-+				 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
-+				 <&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
-+				 <&videocc VIDEO_CC_VCODEC0_AXI_CLK>;
-+			clock-names = "core", "iface", "bus",
-+				      "vcodec0_core", "vcodec0_bus";
-+			iommus = <&apps_smmu 0x0c00 0x60>;
-+			memory-region = <&venus_mem>;
-+
-+			video-decoder {
-+				compatible = "venus-decoder";
-+			};
-+
-+			video-encoder {
-+				compatible = "venus-encoder";
-+			};
-+		};
-+
- 		videocc: clock-controller@ab00000 {
- 			compatible = "qcom,sc7180-videocc";
- 			reg = <0 0x0ab00000 0 0x10000>;
-@@ -1538,32 +1564,6 @@ dispcc: clock-controller@af00000 {
- 			#power-domain-cells = <1>;
- 		};
- 
--		venus: video-codec@aa00000 {
--			compatible = "qcom,sc7180-venus";
--			reg = <0 0x0aa00000 0 0xff000>;
--			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
--			power-domains = <&videocc VENUS_GDSC>,
--					<&videocc VCODEC0_GDSC>;
--			power-domain-names = "venus", "vcodec0";
--			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
--				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
--				 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
--				 <&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
--				 <&videocc VIDEO_CC_VCODEC0_AXI_CLK>;
--			clock-names = "core", "iface", "bus",
--				      "vcodec0_core", "vcodec0_bus";
--			iommus = <&apps_smmu 0x0c00 0x60>;
--			memory-region = <&venus_mem>;
--
--			video-decoder {
--				compatible = "venus-decoder";
--			};
--
--			video-encoder {
--				compatible = "venus-encoder";
--			};
--		};
--
- 		pdc: interrupt-controller@b220000 {
- 			compatible = "qcom,sc7180-pdc", "qcom,pdc";
- 			reg = <0 0x0b220000 0 0x30000>;
--- 
-2.25.1.481.gfbce0eb801-goog
-
+However, if rpmh_flush() can now be called in a scenario where
+pre-emption is enabled or multiple cores are alive, then ctrlr->cache
+is no longer adequately protected. You'd need to add a lock
+acquire/release around the list iteration above, and fix up the
+comment.
+-Evan
