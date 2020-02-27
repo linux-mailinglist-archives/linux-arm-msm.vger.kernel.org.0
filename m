@@ -2,139 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AEDF172B89
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 23:38:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F789172C68
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 00:41:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730126AbgB0WiR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Feb 2020 17:38:17 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:42688 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729808AbgB0WiR (ORCPT
+        id S1729812AbgB0Xlj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Feb 2020 18:41:39 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:35521 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729750AbgB0Xlj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Feb 2020 17:38:17 -0500
-Received: by mail-ed1-f66.google.com with SMTP id n18so978361edw.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 14:38:16 -0800 (PST)
+        Thu, 27 Feb 2020 18:41:39 -0500
+Received: by mail-pj1-f68.google.com with SMTP id q39so472451pjc.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 15:41:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5ldqtdzQg0IDkeY1Xbv0KzAGe+suBcmk9fLvcp/p3NQ=;
-        b=vCBMHMF2V3rD3aEGpqLE6IGPiunwvNx4n++lWFnfdUbfrdni6eNWVPcqzZri2/Raeg
-         wTj06zoRmfzelvt6glWNRK9rWNdSS8S2XuoWzJ9nui7EkRcVZiFItixEhlmUXRH/O/c3
-         mszevfyxXbq4Pm+lq4vZ+EIddisuYNQTHeI6SrjsaZS+zg5gHtsJVW3PiNdM6nxYmW7S
-         LW99kUP00dpHDtXWXqa4i9FG5dAK4yc/RiYJY/ZK+F3G9U7+VCIh1COun9kK6QJr0J79
-         t02y1ebCORNCNWM11ZBOl5ufZF7+Tzyd3pYA05WJv88cbAfUPYuLTXX0DA9uVLSD/Hgm
-         +Dpg==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=RPDn3VN9g8p/m7AP7o3uN1UNa8ewvoBqlcsK2XU14p4=;
+        b=NgD9KMhGVNVhQUdRxhMPpfYcyj4KNSCvL5unnyCbaQTOPhFfKGRPgZ+HQFMfzKULX2
+         aPNS2TYrdM+f3jXnVBZMXwXR3BpGH+Qs4QzCMeTaGA1XeJAChmSALB3gsedpMWHKl5I5
+         7vSS6POjQckU5dQYHVECKTG9TVgtWw56n8PkE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=5ldqtdzQg0IDkeY1Xbv0KzAGe+suBcmk9fLvcp/p3NQ=;
-        b=Uqk4oWZdLskY++Bejofdlj/MPdm0Pq+XTGfrAmBi6gDFcDZNZ6h9llY2tPWPAae/9K
-         G4KDKxPBqk4KqMWyMJPXSN2VVI4ftlMaLGQGtyvVkJar2iAZJhnLXBDYKVkUhZ4HpM9v
-         DLas9nn0vkXdU02Bq+CRGOKClrK/VhATeIfJqv31tjuIHV4IXqxGUo6Dn2OYcoxQTbUp
-         D4y9JhiUuLTrYFpfJhuVxJTNGQ6y6Yz8ttJfXccZlDR/mzbMGw4H9wpmUzg+fR8rcxlo
-         wUXjffrEpPNm3lKy8RsXq2jxUEIbB1xjz39Zq2VKg3jwgpzkjJFna1yVu1iUezxRfXhn
-         En9w==
-X-Gm-Message-State: APjAAAVlWcU93n5IBbTTGS6Mqltp0VMfgPr1fkDENEjalvk3Y+NYrJGT
-        MVfUSPPNagfc0Nz9dhfTldMPzA==
-X-Google-Smtp-Source: APXvYqxxloI5041lk1b15OcyCz5cCF9wex2YQPothjIN2SiN+YwNMxhIRod4razDzQIdZ4bi3X7m4Q==
-X-Received: by 2002:a17:906:4bc8:: with SMTP id x8mr1060538ejv.339.1582843095559;
-        Thu, 27 Feb 2020 14:38:15 -0800 (PST)
-Received: from [192.168.1.9] (hst-221-24.medicom.bg. [84.238.221.24])
-        by smtp.googlemail.com with ESMTPSA id j24sm441940edr.57.2020.02.27.14.38.14
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=RPDn3VN9g8p/m7AP7o3uN1UNa8ewvoBqlcsK2XU14p4=;
+        b=CO+frYzrTBLjfap2/14x0tEY4lIv6husWpQdY60FwjHs/rZ5wmDlpfcYYtu9DMIvSU
+         BWZrhOOReSBo0uClNKbcD0GC1gTYJ4jaDSH6sQTUspXMo7jazkizk+l+70hipDo4EOBP
+         E0ubAPsT2AzkZ9FLtNIxErXSDFueFiyMtnE7rLOBF0+hCcJaEl1ldDYTgkxxDTZEA5Tc
+         NJOlMlDn4gUoB8uOLNgJ5pOwHsT7031+VPlaJcm3dP2enKzhYh++v1RuSPsBXL8o2om4
+         a1sv0hfTQscjnRMI8sJJMSkkgxXu/HiU7BPa+4m3P6ZgMHaQOaQNEOxSx4AZll5LreYP
+         TWng==
+X-Gm-Message-State: APjAAAV3hATz9kwjFUf3IWnJDgia83N+jN5Cg1q3MiHdSWZdSRELOGFA
+        VkWrDMAeUC799e7QRTGjk7pwIQ==
+X-Google-Smtp-Source: APXvYqwF7mXopVy4e3b74ONItwDUAaWOB6zck1YGUfvRN/uUanLfN7+dU7YIvhfbunorfy/XmpJlhw==
+X-Received: by 2002:a17:902:aa49:: with SMTP id c9mr1254841plr.145.1582846896504;
+        Thu, 27 Feb 2020 15:41:36 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id u24sm7665466pgo.83.2020.02.27.15.41.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Feb 2020 14:38:14 -0800 (PST)
-Subject: Re: [PATCH v4 11/12] arm64: dts: sdm845: follow venus-sdm845v2 DT
- binding
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Vikash Garodia <vgarodia@codeaurora.org>, dikshita@codeaurora.org
-References: <20200106154929.4331-1-stanimir.varbanov@linaro.org>
- <20200106154929.4331-12-stanimir.varbanov@linaro.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <13ea7221-5253-37fc-595d-e650b2d474c6@linaro.org>
-Date:   Fri, 28 Feb 2020 00:38:14 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        Thu, 27 Feb 2020 15:41:35 -0800 (PST)
+Date:   Thu, 27 Feb 2020 15:41:34 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Chandan Uddaraju <chandanu@codeaurora.org>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, seanpaul@chromium.org,
+        abhinavk@codeaurora.org, hoegsberg@google.com,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [DPU PATCH v3 4/5] drm/msm/dp: add support for DP PLL driver
+Message-ID: <20200227234134.GL24720@google.com>
+References: <1575294437-6129-1-git-send-email-chandanu@codeaurora.org>
+ <0101016ec6de9b5b-cd61a0a2-9ae4-4ca1-a3a4-0ad2e8783e20-000000@us-west-2.amazonses.com>
 MIME-Version: 1.0
-In-Reply-To: <20200106154929.4331-12-stanimir.varbanov@linaro.org>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <0101016ec6de9b5b-cd61a0a2-9ae4-4ca1-a3a4-0ad2e8783e20-000000@us-west-2.amazonses.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
-
-Could you take this for v5.7.
-
-On 1/6/20 5:49 PM, Stanimir Varbanov wrote:
-> Move all pmdomain and clock resources to Venus DT node. And make
-> possible to support dynamic core assignment on v4.
+On Mon, Dec 02, 2019 at 01:48:27PM +0000, Chandan Uddaraju wrote:
+> Add the needed DP PLL specific files to support
+> display port interface on msm targets.
 > 
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> The DP driver calls the DP PLL driver registration.
+> The DP driver sets the link and pixel clock sources.
+> 
+> Changes in v2:
+> -- Update copyright markings on all relevant files.
+> -- Use DRM_DEBUG_DP for debug msgs.
+> 
+> Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
 > ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 25 +++++++++++++------------
->  1 file changed, 13 insertions(+), 12 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index ddb1f23c936f..c5784951d408 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -2568,32 +2568,33 @@
->  		};
->  
->  		video-codec@aa00000 {
-> -			compatible = "qcom,sdm845-venus";
-> +			compatible = "qcom,sdm845-venus-v2";
->  			reg = <0 0x0aa00000 0 0xff000>;
->  			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
-> -			power-domains = <&videocc VENUS_GDSC>;
-> +			power-domains = <&videocc VENUS_GDSC>,
-> +					<&videocc VCODEC0_GDSC>,
-> +					<&videocc VCODEC1_GDSC>;
-> +			power-domain-names = "venus", "vcodec0", "vcodec1";
->  			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
->  				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
-> -				 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>;
-> -			clock-names = "core", "iface", "bus";
-> +				 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
-> +				 <&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
-> +				 <&videocc VIDEO_CC_VCODEC0_AXI_CLK>,
-> +				 <&videocc VIDEO_CC_VCODEC1_CORE_CLK>,
-> +				 <&videocc VIDEO_CC_VCODEC1_AXI_CLK>;
-> +			clock-names = "core", "iface", "bus",
-> +				      "vcodec0_core", "vcodec0_bus",
-> +				      "vcodec1_core", "vcodec1_bus";
->  			iommus = <&apps_smmu 0x10a0 0x8>,
->  				 <&apps_smmu 0x10b0 0x0>;
->  			memory-region = <&venus_mem>;
->  
->  			video-core0 {
->  				compatible = "venus-decoder";
-> -				clocks = <&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
-> -					 <&videocc VIDEO_CC_VCODEC0_AXI_CLK>;
-> -				clock-names = "core", "bus";
-> -				power-domains = <&videocc VCODEC0_GDSC>;
->  			};
->  
->  			video-core1 {
->  				compatible = "venus-encoder";
-> -				clocks = <&videocc VIDEO_CC_VCODEC1_CORE_CLK>,
-> -					 <&videocc VIDEO_CC_VCODEC1_AXI_CLK>;
-> -				clock-names = "core", "bus";
-> -				power-domains = <&videocc VCODEC1_GDSC>;
->  			};
->  		};
->  
-> 
+> diff --git a/drivers/gpu/drm/msm/dp/pll/dp_pll_10nm.c b/drivers/gpu/drm/msm/dp/pll/dp_pll_10nm.c
+> new file mode 100644
+> index 0000000..6ef2492
+> --- /dev/null
+> +++ b/drivers/gpu/drm/msm/dp/pll/dp_pll_10nm.c
+>
+> ...
+>
+> +static u8 dp_mux_get_parent_10nm(struct clk_hw *hw)
+> +{
+> +	u32 auxclk_div = 0;
+> +	struct dp_pll_10nm_pclksel *pclksel = to_pll_10nm_pclksel(hw);
+> +	struct dp_pll_10nm *dp_res = pclksel->pll;
+> +	u8 val = 0;
+> +
+> +	DRM_ERROR("clk_hw->init->name = %s\n", hw->init->name);
 
--- 
-regards,
-Stan
+drive-by comment: DRM_ERROR doesn't seem the right level, DRM_DEBUG_DP
+would probably be more adequate.
+
+Also I found this line triggers a NULL pointer dereference on a SC7180
+system, where clk_hw->init is NULL.
