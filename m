@@ -2,198 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A9905172A9B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 22:59:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6ED7A172AAF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 23:01:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729776AbgB0V7p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Feb 2020 16:59:45 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:41178 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729773AbgB0V7o (ORCPT
+        id S1726460AbgB0WB6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Feb 2020 17:01:58 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:39115 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729162AbgB0WB6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Feb 2020 16:59:44 -0500
-Received: by mail-pl1-f195.google.com with SMTP id t14so350906plr.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 13:59:43 -0800 (PST)
+        Thu, 27 Feb 2020 17:01:58 -0500
+Received: by mail-wm1-f67.google.com with SMTP id c84so1092188wme.4;
+        Thu, 27 Feb 2020 14:01:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fTXwSB4VEwuhKImP00VDYWj8Af4ja5hCUGthoXkzd7w=;
-        b=da4qGju1+eZ2u8i58+SFACyeBx7k8na1SwRT59gr6pARxKA7OBl7JlfyCR7xI1I3Kf
-         /V/VJ1QOH11rKWuOKFg6KOIQSn+Jf7ZnhVidCNFdPdLe5622MrW8OtaZUl+w8nDRJzjC
-         iU0mCfwyleneSgcMGPjzjbS919tBWgh52msMkbxy2L20TrjcgDaEEE4U+t6Xx4ARA6EY
-         Pd7KbZc4mLkKkKvANfjruzXD6s8EcFm28mA+EXMt6QkUik1OE0lYSQ+hOAKbF+NE85Tg
-         D0yvxM69y5mK8RJgJVo1EUow5kIadB0W6kCJP3apUHPOEgrj7i7YFk3BPvb13ic6uso0
-         TA/w==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:references:in-reply-to:subject:date:message-id
+         :mime-version:content-transfer-encoding:content-language
+         :thread-index;
+        bh=DZXI7uvvOw0fNdSg04a7D3gbzl4O/eHHrwdgk0aaqJE=;
+        b=qcTMvEgnxEKV4piO6AHz5L7oRN0JLeSuOXxP106XCYDKH09gIrroqn7rSfi287p0Wi
+         D4FnP5B3QV+mcghGyJNUbZXS1rbfCkppw2DtmlnQTCC2eAufS+i8q/1hFKOKlqGzKGOW
+         1IVKGWdjTZfSHTDMGqqTaIPqcpwa2bTTy0zU3gQoTPZuffAmZEToLTVFl8ivGLL7B+Jh
+         3MSUc/c6EAC8wJXc2B8Z/AB/aVwj36MrkGh7J0FrjMAh277nOhpy5ZupXbCTBq1/NhRf
+         WN6mKmsR5Tsl335zKCvdVL4llYeh7rdgyI4bhhjG+XE6eBv1Klc6GEw4F+l5aqRsRwXB
+         NSDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fTXwSB4VEwuhKImP00VDYWj8Af4ja5hCUGthoXkzd7w=;
-        b=ES3vZ7FiMkqns4B80dd5zLafpwNXDYQM5GE2yrFBQ3Y9J9w56srVBTtKvT7dQyHCwo
-         ddw8cviTdiH1EKlnNST6K6hjS1b7KVA/N9C1BayLrkPM0fQ4kAp2PPbondmUT4tscR9O
-         nexGFYNAiit4n2n7La7G/6qVHsVGA2Y8vf0hez9YVTuv0pW5w3w0+xqwjY9U2f6zJHmH
-         mqGufsZvyoZY7r+9513iOa6HGpEfGZc2dFoFbPAP0YhJ/WyMxegWdnodzZur6Da3qju8
-         F64E4ysoC1RePFm6HV6Wdd7QlZg3YTJ8TxX1DJU3ji3OAMMROw/rrOivYvJsrYt9+K8G
-         BdnQ==
-X-Gm-Message-State: APjAAAWm9N51rGnTRb1dBWKhTtuDig+0/xzFFbKiinaBpVhAIkC5tJYY
-        oAH32dRDTRNxGSbykwwyB/Oo3Q==
-X-Google-Smtp-Source: APXvYqyJbAO6h6eSnb87jvQLhMjQwDPCpkhG8rjKyddMg705cLOaRbLZ4Ipmh0A78bB2EbWpjwj77A==
-X-Received: by 2002:a17:902:c113:: with SMTP id 19mr899784pli.138.1582840783021;
-        Thu, 27 Feb 2020 13:59:43 -0800 (PST)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id p21sm8081275pfn.103.2020.02.27.13.59.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2020 13:59:42 -0800 (PST)
-Date:   Thu, 27 Feb 2020 14:59:40 -0700
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Siddharth Gupta <sidgup@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com,
-        tsoni@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        rishabhb@codeaurora.org, psodagud@codeaurora.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 6/6] remoteproc: qcom: Add notification types to SSR
-Message-ID: <20200227215940.GC20116@xps15>
-References: <1582167465-2549-1-git-send-email-sidgup@codeaurora.org>
- <1582167465-2549-7-git-send-email-sidgup@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
+         :message-id:mime-version:content-transfer-encoding:content-language
+         :thread-index;
+        bh=DZXI7uvvOw0fNdSg04a7D3gbzl4O/eHHrwdgk0aaqJE=;
+        b=Hr7mZ035tS76RLMQ0TXU9xtSB8Mnj1TgpmSQ6WWeCPCMBqJLu0HFVoigB49WAZuHUv
+         q+pNIV3yn4gMW01Vs+SALCKwOO22bDq/2yNTvfJh3eCwqgAngRe+P/Wy893Pw21As+dG
+         dVb8rGoDFArGzJRMi2L3/1rsIg/LkQR6MqdkV6vFSV736atk52Dxltud+f25Rz534Yws
+         TP8rilKhQejv4BYW/QN1HGNt3LxnX8tSZ8ZgTIzFnqU5JSj9ochC7sC28gKq/jpt38Et
+         h1EV+fUayKcJikqx/rdsnb0mXBohYUWqr9y9eC9J+VvFMagckp3bFxdueAnKWTccIwbA
+         2Hxw==
+X-Gm-Message-State: APjAAAUV4obIQ6XRidc0GVGJK4t4IklcfukkxbdZDsy+utMXGmgeF08h
+        b37KYJHLJWiF3wBi00nWDwY=
+X-Google-Smtp-Source: APXvYqxOIbpdZLQdoCOz/7kFY829F0PDjAgwYtPnuzYix4T1+T8HFSPqEhciJa4khjnAvg8dEheDFg==
+X-Received: by 2002:a1c:4805:: with SMTP id v5mr884862wma.80.1582840915478;
+        Thu, 27 Feb 2020 14:01:55 -0800 (PST)
+Received: from AnsuelXPS (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
+        by smtp.gmail.com with ESMTPSA id z2sm3443814wrq.95.2020.02.27.14.01.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 27 Feb 2020 14:01:54 -0800 (PST)
+From:   <ansuelsmth@gmail.com>
+To:     "'Rob Herring'" <robh@kernel.org>
+Cc:     "'Andy Gross'" <agross@kernel.org>,
+        "'Bjorn Andersson'" <bjorn.andersson@linaro.org>,
+        "'David S. Miller'" <davem@davemloft.net>,
+        "'Mark Rutland'" <mark.rutland@arm.com>,
+        "'Andrew Lunn'" <andrew@lunn.ch>,
+        "'Florian Fainelli'" <f.fainelli@gmail.com>,
+        "'Heiner Kallweit'" <hkallweit1@gmail.com>,
+        "'Russell King'" <linux@armlinux.org.uk>,
+        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <andrew@lunn.ch> <20200227011050.11106-1-ansuelsmth@gmail.com> <20200227011050.11106-2-ansuelsmth@gmail.com> <20200227172340.GA19136@bogus>
+In-Reply-To: <20200227172340.GA19136@bogus>
+Subject: R: [PATCH v8 2/2] dt-bindings: net: Add ipq806x mdio bindings
+Date:   Thu, 27 Feb 2020 23:01:51 +0100
+Message-ID: <005401d5edb9$84fd8ec0$8ef8ac40$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1582167465-2549-7-git-send-email-sidgup@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: it
+Thread-Index: AQK3MMxYfxrxN4e01t227dGot2VmuAEzaQ9BAnacW3QBIS/lwaZGtj5w
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 19, 2020 at 06:57:45PM -0800, Siddharth Gupta wrote:
-> The SSR subdevice only adds callback for the unprepare event. Add callbacks
-> for unprepare, start and prepare events. The client driver for a particular
-> remoteproc might be interested in knowing the status of the remoteproc
-> while undergoing SSR, not just when the remoteproc has finished shutting
-> down.
+> On Thu, Feb 27, 2020 at 02:10:46AM +0100, Ansuel Smith wrote:
+> > Add documentations for ipq806x mdio driver.
+> >
+> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > ---
+> > Changes in v8:
+> > - Fix error in dtb check
+> > - Remove not needed reset definition from example
+> > - Add include header for ipq806x clocks
+> > - Fix wrong License type
+> >
+> > Changes in v7:
+> > - Fix dt_binding_check problem
+> >
+> >  .../bindings/net/qcom,ipq8064-mdio.yaml       | 61
+> +++++++++++++++++++
+> >  1 file changed, 61 insertions(+)
+> >  create mode 100644
+> Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
+> >
+> > diff --git a/Documentation/devicetree/bindings/net/qcom,ipq8064-
+> mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq8064-
+> mdio.yaml
+> > new file mode 100644
+> > index 000000000000..4334a415f23c
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/net/qcom,ipq8064-
+> mdio.yaml
+> > @@ -0,0 +1,61 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only
 > 
-> Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
-> ---
->  drivers/remoteproc/qcom_common.c | 39 +++++++++++++++++++++++++++++++++++----
->  include/linux/remoteproc.h       | 15 +++++++++++++++
->  2 files changed, 50 insertions(+), 4 deletions(-)
+> Dual license new bindings please:
 > 
-> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-> index 6714f27..6f04a5b 100644
-> --- a/drivers/remoteproc/qcom_common.c
-> +++ b/drivers/remoteproc/qcom_common.c
-> @@ -183,9 +183,9 @@ EXPORT_SYMBOL_GPL(qcom_remove_smd_subdev);
->   *
->   * Returns pointer to srcu notifier head on success, ERR_PTR on failure.
->   *
-> - * This registers the @notify function as handler for restart notifications. As
-> - * remote processors are stopped this function will be called, with the rproc
-> - * pointer passed as a parameter.
-> + * This registers the @notify function as handler for powerup/shutdown
-> + * notifications. This function will be invoked inside the callbacks registered
-> + * for the ssr subdevice, with the rproc pointer passed as a parameter.
->   */
->  void *qcom_register_ssr_notifier(struct rproc *rproc, struct notifier_block *nb)
->  {
-> @@ -227,11 +227,39 @@ int qcom_unregister_ssr_notifier(void *notify, struct notifier_block *nb)
->  }
->  EXPORT_SYMBOL_GPL(qcom_unregister_ssr_notifier);
->  
-> +static int ssr_notify_prepare(struct rproc_subdev *subdev)
-> +{
-> +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
-> +
-> +	srcu_notifier_call_chain(ssr->rproc_notif_list,
-> +				 RPROC_BEFORE_POWERUP, (void *)ssr->name);
-> +	return 0;
-> +}
-> +
-> +static int ssr_notify_start(struct rproc_subdev *subdev)
-> +{
-> +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
-> +
-> +	srcu_notifier_call_chain(ssr->rproc_notif_list,
-> +				 RPROC_AFTER_POWERUP, (void *)ssr->name);
-> +	return 0;
-> +}
-> +
-> +static void ssr_notify_stop(struct rproc_subdev *subdev, bool crashed)
-> +{
-> +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
-> +
-> +	srcu_notifier_call_chain(ssr->rproc_notif_list,
-> +				 RPROC_BEFORE_SHUTDOWN, (void *)ssr->name);
-> +}
-> +
-> +
->  static void ssr_notify_unprepare(struct rproc_subdev *subdev)
->  {
->  	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
->  
-> -	srcu_notifier_call_chain(ssr->rproc_notif_list, 0, (void *)ssr->name);
-> +	srcu_notifier_call_chain(ssr->rproc_notif_list,
-> +				 RPROC_AFTER_SHUTDOWN, (void *)ssr->name);
->  }
->  
->  /**
-> @@ -248,6 +276,9 @@ void qcom_add_ssr_subdev(struct rproc *rproc, struct qcom_rproc_ssr *ssr,
->  {
->  	ssr->name = ssr_name;
->  	ssr->subdev.name = kstrdup("ssr_notifs", GFP_KERNEL);
-> +	ssr->subdev.prepare = ssr_notify_prepare;
-> +	ssr->subdev.start = ssr_notify_start;
-> +	ssr->subdev.stop = ssr_notify_stop;
-
-Now that I have a better understanding of what this patchset is doing, I realise
-my comments in patch 04 won't work.  To differentiate the subdevs of an rproc I
-suggest to wrap them in a generic structure with a type and an enum.  That way
-you can differenciate between subdevices without having to add to the core.
-
-That being said, I don't understand what patches 5 and 6 are doing...
-Registering with the global ssr_notifiers allowed to gracefully shutdown all the
-MCUs in the system when one of them would go down.  But now that we are using
-the notifier on a per MCU, I really don't see why each subdev couldn't implement
-the right prepare/start/stop functions.
-
-Am I missing something here?
+> (GPL-2.0-only OR BSD-2-Clause)
+> 
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/net/qcom,ipq8064-mdio.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm ipq806x MDIO bus controller
+> > +
+> > +maintainers:
+> > +  - Ansuel Smith <ansuelsmth@gmail.com>
+> > +
+> > +description:
+> > +  The ipq806x soc have a MDIO dedicated controller that is
+> > +  used to comunicate with the gmac phy conntected.
+> 
+> 2 typos
+> 
+> > +  Child nodes of this MDIO bus controller node are standard
+> > +  Ethernet PHY device nodes as described in
+> > +  Documentation/devicetree/bindings/net/phy.txt
+> 
+> You might want to read what that file says now.
+> 
+> > +
+> > +allOf:
+> > +  - $ref: "mdio.yaml#"
+> > +
+> > +properties:
+> > +  compatible:
+> > +    items:
+> > +        - const: qcom,ipq8064-mdio
+> > +        - const: syscon
+> 
+> Why is this a 'syscon'? Does it have more than 1 function?
+>
  
+Since the code use syscon_node_to_regmap, the syscon compatible
+is need or the driver fails to load. (since the reg is used also for the 
+gmac node) 
 
->  	ssr->subdev.unprepare = ssr_notify_unprepare;
->  	ssr->rproc_notif_list = kzalloc(sizeof(struct srcu_notifier_head),
->  								GFP_KERNEL);
-> diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-> index e2f60cc..4be4478 100644
-> --- a/include/linux/remoteproc.h
-> +++ b/include/linux/remoteproc.h
-> @@ -449,6 +449,21 @@ struct rproc_dump_segment {
->  };
->  
->  /**
-> + * enum rproc_notif_type - Different stages of remoteproc notifications
-> + * @RPROC_BEFORE_SHUTDOWN:	unprepare stage of  remoteproc
-> + * @RPROC_AFTER_SHUTDOWN:	stop stage of  remoteproc
-> + * @RPROC_BEFORE_POWERUP:	prepare stage of  remoteproc
-> + * @RPROC_AFTER_POWERUP:	start stage of  remoteproc
-> + */
-> +enum rproc_notif_type {
-> +	RPROC_BEFORE_SHUTDOWN,
-> +	RPROC_AFTER_SHUTDOWN,
-> +	RPROC_BEFORE_POWERUP,
-> +	RPROC_AFTER_POWERUP,
-> +	RPROC_MAX
-> +};
-> +
-> +/**
->   * struct rproc - represents a physical remote processor device
->   * @node: list node of this rproc object
->   * @domain: iommu domain
-> -- 
-> Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+Again sorry for the mess as I misread the email... Will fix all in v9 
+
+> > +
+> > +  reg:
+> > +    description: address and length of the register set for the device
 > 
-> _______________________________________________
-> linux-arm-kernel mailing list
-> linux-arm-kernel@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
+> Drop this and you need to state how many (maxItems).
+> 
+> > +
+> > +  clocks:
+> > +    description: A reference to the clock supplying the MDIO bus
+> controller
+> 
+> Same here.
+> 
+> > +
+> > +  clock-names:
+> > +    const: master
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - clocks
+> > +  - "#address-cells"
+> > +  - "#size-cells"
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
+> > +
+> > +    mdio0: mdio@37000000 {
+> > +        #address-cells = <1>;
+> > +        #size-cells = <0>;
+> > +
+> > +        compatible = "qcom,ipq8064-mdio", "syscon";
+> > +        reg = <0x37000000 0x200000>;
+> > +
+> > +        clocks = <&gcc GMAC_CORE1_CLK>;
+> > +
+> > +        switch@10 {
+> > +            compatible = "qca,qca8337";
+> > +            /* ... */
+> > +        };
+> > +    };
+> > --
+> > 2.25.0
+> >
+
