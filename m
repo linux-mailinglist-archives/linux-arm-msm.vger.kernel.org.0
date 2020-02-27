@@ -2,173 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 194A71724F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 18:23:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B54217250D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 18:26:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730225AbgB0RXn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Feb 2020 12:23:43 -0500
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:35344 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730208AbgB0RXn (ORCPT
+        id S1729603AbgB0R05 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Feb 2020 12:26:57 -0500
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:52954 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728413AbgB0R05 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Feb 2020 12:23:43 -0500
-Received: by mail-ot1-f68.google.com with SMTP id r16so3693773otd.2;
-        Thu, 27 Feb 2020 09:23:43 -0800 (PST)
+        Thu, 27 Feb 2020 12:26:57 -0500
+Received: by mail-pj1-f66.google.com with SMTP id ep11so72812pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 09:26:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fQPEnxEYqQKv2J8jDt8sM4BsZoYJJo7zFPvtZvyCIgk=;
+        b=M8MQI9kESW8PfwE5agJLV5bI3OzTvFh8DKCAPWjqwaZe0CN9rvaLIsXYDbc/GeS7mu
+         reHjzXYGp7vZDEB3M7QDSfdQBssljyNj0UfiVTBa/4LEtT7sOs7xXF4kcEMzsXvNQtNg
+         NYoFURLEnX0v+AvxD9MV+kzBQMPbnkvbuuzK0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3SQrHH3RldHlDSPXSXXFbHJRaEJs4Lzh1Ap0ZS/UfRI=;
-        b=aRjxPVhp94sh8Wceqco7uWbuHpFWvMGd+OKcY/bJXk1Ap3Sto1SduoJQSBIKx1yd71
-         sn9asVH+JylFCDolbKJxOcK4hM0uNpNNxUxCyD4+6jx2h83LquL1Z6SmvERaWD7I6s66
-         F1i2cKQtnzWoMQwJeSKHMPF+olfE+h+AfNZ5jOnlyUh0AlPdggRrND1UXqb2ZrOEPGAr
-         g+LAcAEAOCSjo6lRe9Z1vEjv04aWRtJSjTRhTXIadv1LmhTTe3h8jS2OBVY/V0RJB+kS
-         x3kO5DsyoyZCxqiELCiyRbI4qgfm3v3JJU8xtIlYGpEKnjSxmwo6Fb08gQxTKixmTyUm
-         NT6w==
-X-Gm-Message-State: APjAAAUGCICABXruWAfXxcrO9vn7Ul/Cb95uT30KrIeUc3lE2/Fx0nKG
-        2OST3umDIi8pVit8gFQ9gA==
-X-Google-Smtp-Source: APXvYqzW64cJcps6+Kk6SHemjadYsuL6hjnqtoSPNHPfFBrAfn+8QW46IsbbWEnrIhKEW1l666/RPw==
-X-Received: by 2002:a9d:6212:: with SMTP id g18mr659180otj.187.1582824222587;
-        Thu, 27 Feb 2020 09:23:42 -0800 (PST)
-Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id y13sm2122714otk.40.2020.02.27.09.23.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2020 09:23:41 -0800 (PST)
-Received: (nullmailer pid 24337 invoked by uid 1000);
-        Thu, 27 Feb 2020 17:23:40 -0000
-Date:   Thu, 27 Feb 2020 11:23:40 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fQPEnxEYqQKv2J8jDt8sM4BsZoYJJo7zFPvtZvyCIgk=;
+        b=Mjv/EibsMxr2Kax+dKmKkuU3ymxo9uS/IedY3oLT8ifGcFZXsEKldaD1oKiLB7E1h9
+         hYowYZZLyoLzVF/qLDKZXubUy5/hhzXRbgslHd6+rt5b7CGtOTb1SgqaEcBRcOWuGifd
+         y8939G0IZj7+nYV1ajH5adpB/A0+LqHkGf+BBYOXoly/nctpLNZbncsPe/kkvFJjvaBt
+         kLgXzHSNX5P7moOKHc1WP5PKu4FwndcgXlSHNRU6hfhU8b4Ux6OPHGcQn/QRF79g/ntg
+         CWRxfKBq3OXfQPfiI8fW8/D/Jw69muMiLNQwyvoShPn5TpkqIPcJiqKdcwqvhWbPfdjY
+         IDzA==
+X-Gm-Message-State: APjAAAXHxmgyvXd6X4V/kft4Vhwn9iAuNIWedzIXYFVNAGMD9J6GBKks
+        a9Xx5X0iKoJtft+6WmGfrXzDLQ==
+X-Google-Smtp-Source: APXvYqxd8JJX/yJEscJ9jPCi0Hv0aT+HkJGkpNetjAHaTZgfz4jNcf9P6XVCoMR6bZ8KjTNnxvy9xg==
+X-Received: by 2002:a17:902:8604:: with SMTP id f4mr768399plo.278.1582824416320;
+        Thu, 27 Feb 2020 09:26:56 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id p18sm11436922pjo.3.2020.02.27.09.26.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Feb 2020 09:26:55 -0800 (PST)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>,
         Mark Rutland <mark.rutland@arm.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 2/2] dt-bindings: net: Add ipq806x mdio bindings
-Message-ID: <20200227172340.GA19136@bogus>
-References: <andrew@lunn.ch>
- <20200227011050.11106-1-ansuelsmth@gmail.com>
- <20200227011050.11106-2-ansuelsmth@gmail.com>
+        Dikshita Agarwal <dikshita@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH v3] arm64: dts: sc7180: Move venus node to the correct position
+Date:   Thu, 27 Feb 2020 09:26:52 -0800
+Message-Id: <20200227092649.v3.1.I15e0f7eff0c67a2b49d4992f9d80fc1d2fdadf63@changeid>
+X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200227011050.11106-2-ansuelsmth@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 27, 2020 at 02:10:46AM +0100, Ansuel Smith wrote:
-> Add documentations for ipq806x mdio driver.
-> 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
-> Changes in v8:
-> - Fix error in dtb check
-> - Remove not needed reset definition from example
-> - Add include header for ipq806x clocks
-> - Fix wrong License type
-> 
-> Changes in v7:
-> - Fix dt_binding_check problem
-> 
->  .../bindings/net/qcom,ipq8064-mdio.yaml       | 61 +++++++++++++++++++
->  1 file changed, 61 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
-> new file mode 100644
-> index 000000000000..4334a415f23c
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
-> @@ -0,0 +1,61 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
+Per convention device nodes for SC7180 should be ordered by address.
+This is currently not the case for the venus node, move it to the
+correct position.
 
-Dual license new bindings please:
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+---
 
-(GPL-2.0-only OR BSD-2-Clause)
+Changes in v3:
+- actually insert the venus node after usb@a6f8800 and not just
+  pretend to do it
 
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/qcom,ipq8064-mdio.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm ipq806x MDIO bus controller
-> +
-> +maintainers:
-> +  - Ansuel Smith <ansuelsmth@gmail.com>
-> +
-> +description:
-> +  The ipq806x soc have a MDIO dedicated controller that is
-> +  used to comunicate with the gmac phy conntected.
+Changes in v2:
+- insert the venus node *after* the usb@a6f8800 node, not before
 
-2 typos
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 52 ++++++++++++++--------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
-> +  Child nodes of this MDIO bus controller node are standard
-> +  Ethernet PHY device nodes as described in
-> +  Documentation/devicetree/bindings/net/phy.txt
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 253274d5f04cb..31bf210f2e0b1 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -1376,6 +1376,32 @@ usb_1_dwc3: dwc3@a600000 {
+ 			};
+ 		};
+ 
++		venus: video-codec@aa00000 {
++			compatible = "qcom,sc7180-venus";
++			reg = <0 0x0aa00000 0 0xff000>;
++			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
++			power-domains = <&videocc VENUS_GDSC>,
++					<&videocc VCODEC0_GDSC>;
++			power-domain-names = "venus", "vcodec0";
++			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
++				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
++				 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
++				 <&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
++				 <&videocc VIDEO_CC_VCODEC0_AXI_CLK>;
++			clock-names = "core", "iface", "bus",
++				      "vcodec0_core", "vcodec0_bus";
++			iommus = <&apps_smmu 0x0c00 0x60>;
++			memory-region = <&venus_mem>;
++
++			video-decoder {
++				compatible = "venus-decoder";
++			};
++
++			video-encoder {
++				compatible = "venus-encoder";
++			};
++		};
++
+ 		videocc: clock-controller@ab00000 {
+ 			compatible = "qcom,sc7180-videocc";
+ 			reg = <0 0x0ab00000 0 0x10000>;
+@@ -1538,32 +1564,6 @@ dispcc: clock-controller@af00000 {
+ 			#power-domain-cells = <1>;
+ 		};
+ 
+-		venus: video-codec@aa00000 {
+-			compatible = "qcom,sc7180-venus";
+-			reg = <0 0x0aa00000 0 0xff000>;
+-			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+-			power-domains = <&videocc VENUS_GDSC>,
+-					<&videocc VCODEC0_GDSC>;
+-			power-domain-names = "venus", "vcodec0";
+-			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
+-				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
+-				 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
+-				 <&videocc VIDEO_CC_VCODEC0_CORE_CLK>,
+-				 <&videocc VIDEO_CC_VCODEC0_AXI_CLK>;
+-			clock-names = "core", "iface", "bus",
+-				      "vcodec0_core", "vcodec0_bus";
+-			iommus = <&apps_smmu 0x0c00 0x60>;
+-			memory-region = <&venus_mem>;
+-
+-			video-decoder {
+-				compatible = "venus-decoder";
+-			};
+-
+-			video-encoder {
+-				compatible = "venus-encoder";
+-			};
+-		};
+-
+ 		pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,sc7180-pdc", "qcom,pdc";
+ 			reg = <0 0x0b220000 0 0x30000>;
+-- 
+2.25.1.481.gfbce0eb801-goog
 
-You might want to read what that file says now.
-
-> +
-> +allOf:
-> +  - $ref: "mdio.yaml#"
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +        - const: qcom,ipq8064-mdio
-> +        - const: syscon
-
-Why is this a 'syscon'? Does it have more than 1 function?
-
-> +
-> +  reg:
-> +    description: address and length of the register set for the device
-
-Drop this and you need to state how many (maxItems).
-
-> +
-> +  clocks:
-> +    description: A reference to the clock supplying the MDIO bus controller
-
-Same here.
-
-> +
-> +  clock-names:
-> +    const: master
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - "#address-cells"
-> +  - "#size-cells"
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
-> +
-> +    mdio0: mdio@37000000 {
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        compatible = "qcom,ipq8064-mdio", "syscon";
-> +        reg = <0x37000000 0x200000>;
-> +
-> +        clocks = <&gcc GMAC_CORE1_CLK>;
-> +
-> +        switch@10 {
-> +            compatible = "qca,qca8337";
-> +            /* ... */
-> +        };
-> +    };
-> -- 
-> 2.25.0
-> 
