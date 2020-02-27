@@ -2,161 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E41BD170DA9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 02:11:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 88D2D170E05
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 02:51:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728177AbgB0BL0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Feb 2020 20:11:26 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45619 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727964AbgB0BLZ (ORCPT
+        id S1728238AbgB0BvC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Feb 2020 20:51:02 -0500
+Received: from disco-boy.misterjones.org ([51.254.78.96]:44356 "EHLO
+        disco-boy.misterjones.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728091AbgB0BvC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Feb 2020 20:11:25 -0500
-Received: by mail-wr1-f67.google.com with SMTP id v2so1192001wrp.12;
-        Wed, 26 Feb 2020 17:11:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=FzgdFgLuQOadevD6Aw1QpIMN0fIJzcJjXFyaCoLmJcc=;
-        b=OwB6BiAV2GdBT/WXCl4520WnbcAdznT14AVzOwbft5bVXiD7WWetXJUAEWEpSzse6y
-         X6ns9VsNgSnZQuuA1ac1GzDERwbHs9FN2us/wWS1OJimCPj3uASNczRzvgdsvCBZXy0l
-         1M3BNyNP4SHe877nC17i8RY2sIiaAzvZvTN8jS92hGkAf55y6Z5DXxnnmLbdwhM0ABj3
-         AJyWJEcc3i9rZ/0Zpj3FnfDQuEHZ/wtJUK8ob1/kv9Tad2FCkYsuf87q3AGvns8FnMmO
-         G+ZUTYpFAtRX+EKdQkj7LpzvIZtxnh1k52Q+XCkwDXqMcr7CfVmDdFV5Lw/g0PPd2hIL
-         hGAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=FzgdFgLuQOadevD6Aw1QpIMN0fIJzcJjXFyaCoLmJcc=;
-        b=toUAuxvQ+9WUSPqkgjDd0uVaFLQN2ogi6+brfzHKnLkHlaHgC0soy94tB4lMZwJvVO
-         +eJVid182++4QJEXXDd+16F4BLf6yXyo5fBJB3R2ywZpru1ViVPC03YbS6SZBje7gzgJ
-         5pILmvZRxsKZcO+Y0DPCmu9X/3fF+D4/dE+4vK0FySe/sLgJLWRSax8x/jbB4zuBBPm1
-         TuOmwX3HttS1HYeqR60XCLIoRU1EKlrioLedGevGsUy8hWs7r0+faduKjSNTKJT2RbIF
-         61Vzhlf9lfl+1y17JS0izquKBD9tNDRBfmBAbD/mnHkLbyNiiRZP8aQZyUKoVqPdmnMx
-         gyCg==
-X-Gm-Message-State: APjAAAWo+rhubucLpWvBgOlOcCmxvmx9//+PktFmcIEljw0d4DaKCEVv
-        yWS5hGN6nRm85DxS4EvD+WQ=
-X-Google-Smtp-Source: APXvYqyeQIE+iTbx5WBdhTGlmrBrs5dtfiRn1XLOI3uo8Lm7ZyvsDRugxbZelBkngIvvIuA16qQS8w==
-X-Received: by 2002:a5d:504e:: with SMTP id h14mr1459288wrt.82.1582765883170;
-        Wed, 26 Feb 2020 17:11:23 -0800 (PST)
-Received: from Ansuel-XPS.localdomain (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
-        by smtp.googlemail.com with ESMTPSA id s5sm3509507wru.39.2020.02.26.17.11.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2020 17:11:22 -0800 (PST)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v8 2/2] dt-bindings: net: Add ipq806x mdio bindings
-Date:   Thu, 27 Feb 2020 02:10:46 +0100
-Message-Id: <20200227011050.11106-2-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200227011050.11106-1-ansuelsmth@gmail.com>
-References: <andrew@lunn.ch>
- <20200227011050.11106-1-ansuelsmth@gmail.com>
+        Wed, 26 Feb 2020 20:51:02 -0500
+X-Greylist: delayed 2500 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Feb 2020 20:51:01 EST
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+        by disco-boy.misterjones.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.92)
+        (envelope-from <maz@misterjones.org>)
+        id 1j77fv-008I1Q-2D; Thu, 27 Feb 2020 01:09:15 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 27 Feb 2020 01:09:14 +0000
+From:   Marc Zyngier <maz@misterjones.org>
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Maulik Shah <mkshah@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, evgreen@chromium.org, mka@chromium.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, linus.walleij@linaro.org, tglx@linutronix.de,
+        dianders@chromium.org, rnayak@codeaurora.org, ilina@codeaurora.org,
+        lsrao@codeaurora.org, linux-kernel-owner@vger.kernel.org
+Subject: Re: [RFC 1/2] irqchip: qcom: pdc: Introduce irq_set_wake call
+In-Reply-To: <158265096050.177367.409185999509868538@swboyd.mtv.corp.google.com>
+References: <1581944408-7656-1-git-send-email-mkshah@codeaurora.org>
+ <1581944408-7656-2-git-send-email-mkshah@codeaurora.org>
+ <158216527227.184098.17500969657143611632@swboyd.mtv.corp.google.com>
+ <4c80783d-8ad0-9bd8-c42e-01659fa81afe@codeaurora.org>
+ <158265096050.177367.409185999509868538@swboyd.mtv.corp.google.com>
+Message-ID: <55bfc524f6c45419227c228c86fb20dc@misterjones.org>
+X-Sender: maz@misterjones.org
+User-Agent: Roundcube Webmail/1.3.10
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: swboyd@chromium.org, mkshah@codeaurora.org, bjorn.andersson@linaro.org, evgreen@chromium.org, mka@chromium.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, agross@kernel.org, linus.walleij@linaro.org, tglx@linutronix.de, dianders@chromium.org, rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org, linux-kernel-owner@vger.kernel.org
+X-SA-Exim-Mail-From: maz@misterjones.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add documentations for ipq806x mdio driver.
+Maulik,
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
-Changes in v8:
-- Fix error in dtb check
-- Remove not needed reset definition from example
-- Add include header for ipq806x clocks
-- Fix wrong License type
+I'd appreciate if you could Cc me on all irqchip patches.
 
-Changes in v7:
-- Fix dt_binding_check problem
+On 2020-02-25 17:16, Stephen Boyd wrote:
+> Quoting Maulik Shah (2020-02-21 03:20:59)
+>> 
+>> On 2/20/2020 7:51 AM, Stephen Boyd wrote:
+>> 
+>>     How are wakeups supposed to work when the CPU cluster power is 
+>> disabled
+>>     in low power CPU idle modes? Presumably the parent irq controller 
+>> is
+>>     powered off (in this case it's an ARM GIC) and we would need to 
+>> have the
+>>     interrupt be "enabled" or "unmasked" at the PDC for the irq to 
+>> wakeup
+>>     the cluster.
+>> 
+>> Correct. Interrupt needs to be "enabled" or "unmasked" at wakeup 
+>> capable PDC
+>> for irqchip to wakeup from "deep" low power modes where parent GIC may 
+>> not be
+>> monitoring interrupt and only PDC is monitoring.
+>> these "deep" low power modes can either be triggered by kernel 
+>> "suspend" or
+>> "cpuidle" path for which drivers may or may not have registered for 
+>> suspend or
+>> cpu/cluster pm notifications to make a decision of enabling wakeup 
+>> capability.
 
- .../bindings/net/qcom,ipq8064-mdio.yaml       | 61 +++++++++++++++++++
- 1 file changed, 61 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
+Loosing interrupt delivery in idle is not an acceptable behaviour. Idle 
+!= suspend.
 
-diff --git a/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
-new file mode 100644
-index 000000000000..4334a415f23c
---- /dev/null
-+++ b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
-@@ -0,0 +1,61 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/net/qcom,ipq8064-mdio.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm ipq806x MDIO bus controller
-+
-+maintainers:
-+  - Ansuel Smith <ansuelsmth@gmail.com>
-+
-+description:
-+  The ipq806x soc have a MDIO dedicated controller that is
-+  used to comunicate with the gmac phy conntected.
-+  Child nodes of this MDIO bus controller node are standard
-+  Ethernet PHY device nodes as described in
-+  Documentation/devicetree/bindings/net/phy.txt
-+
-+allOf:
-+  - $ref: "mdio.yaml#"
-+
-+properties:
-+  compatible:
-+    items:
-+        - const: qcom,ipq8064-mdio
-+        - const: syscon
-+
-+  reg:
-+    description: address and length of the register set for the device
-+
-+  clocks:
-+    description: A reference to the clock supplying the MDIO bus controller
-+
-+  clock-names:
-+    const: master
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - "#address-cells"
-+  - "#size-cells"
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
-+
-+    mdio0: mdio@37000000 {
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+
-+        compatible = "qcom,ipq8064-mdio", "syscon";
-+        reg = <0x37000000 0x200000>;
-+
-+        clocks = <&gcc GMAC_CORE1_CLK>;
-+
-+        switch@10 {
-+            compatible = "qca,qca8337";
-+            /* ... */
-+        };
-+    };
+>> 
+>> 
+>>     We shouldn't need to enable irq wake on any irq for the CPU
+>>     to get that interrupt in deep CPU idle states.
+>> 
+>> + *
+>> + *     Note: irq enable/disable state is completely orthogonal
+>> + *     to the enable/disable state of irq wake.
+>> 
+>> i think that's what above documentation said to have wakeup capability 
+>> is
+>> orthogonal to enable/disable state of irq, no?
+>> 
+>> A deep cpuidle entry is also orthogonal to drivers unless they 
+>> register for cpu
+>> pm notifications.
+>> 
+>> so with this change,
+>> if the drivers want their interrupt to be wakeup capable during both 
+>> "suspend"
+>> and "cpuidle" they can call "enable_irq_wake" and leave it there to be 
+>> wake up
+>> capable.
+> 
+> Where is there a mention about drivers registering for cpu PM
+> notifications? I'm not aware of this being mentioned as a requirement.
+> Instead, my understanding is that deep idle states shouldn't affect 
+> irqs
+> from being raised to the CPU. If such an irq is enabled and can't wake
+> the system from deep idle and it's expected to interrupt during this
+> idle time then perhaps the PDC driver needs to block deep idle states
+> until that irq is disabled.
+
+Indeed. Idle states shouldn't affect irq delivery. The irq_set_wake() 
+call
+deals with suspend, and idle is rather different from suspend.
+
+Conflating the two seems pretty broken, and definitely goes against the
+expected behaviour of device drivers. Is the expectation now that we are
+going to see a flurry of patches adding irq_set_wake() calls all over 
+the map?
+
+> Does this scenario exist? It sounds like broken system design to have 
+> an
+> irq that can't wake from deep idle, but I see that PDC has a selective
+> set of pins so maybe some irqs just aren't expected to wake the system
+> up during idle.
+
+That'd be terribly broken. We've had a similar discussion about a NXP
+platform where only some interrupts could wake take the CPU out of idle.
+The end result is that we don't idle on this system.
+
+If the PDC can't take the CPU out of idle, then idle shouldn't be 
+entered
+when these broken interrupts are enabled.
+
+Thanks,
+
+         M.
 -- 
-2.25.0
-
+Who you jivin' with that Cosmik Debris?
