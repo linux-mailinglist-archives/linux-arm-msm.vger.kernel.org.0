@@ -2,143 +2,319 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id D1D2E170D66
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 01:44:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CF015170DA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Feb 2020 02:11:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728093AbgB0AoL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Feb 2020 19:44:11 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:28750 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727987AbgB0AoK (ORCPT
+        id S1728094AbgB0BLJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Feb 2020 20:11:09 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:35929 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727973AbgB0BLJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Feb 2020 19:44:10 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582764250; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=JcRs9mZiMthRLxtoA2Yryvm9oBuTfwKq6aDUtbfP5vU=; b=NvO7YTyQganRJbADGEdmoFX5c6ub+sGr0s+9C3Shu3jqlxasISIW4C6Cgx+08mOf7mOfusk3
- c7KEBKEUkp9t6ms01hEz+W6dlikfUWPgrMVl7EpHZF5FFyZxC/NG2h31xj/k2L5Y4JoIaIUf
- WzkwM2hRa+dg3ELxUQeoC6X8tOQ=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e5710d2.7f2ecfabded8-smtp-out-n02;
- Thu, 27 Feb 2020 00:44:02 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 950B4C4479D; Thu, 27 Feb 2020 00:44:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.134.65.5] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: eberman)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5982CC43383;
-        Thu, 27 Feb 2020 00:44:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5982CC43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=eberman@codeaurora.org
-Subject: Re: [PATCH v2 1/3] dt: psci: Add arm,psci-sys-reset2-type property
-To:     Mark Rutland <mark.rutland@arm.com>
-Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
+        Wed, 26 Feb 2020 20:11:09 -0500
+Received: by mail-wm1-f65.google.com with SMTP id p17so1517341wma.1;
+        Wed, 26 Feb 2020 17:11:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=4bInzMmSe0SQFhuJPffFbwCkWE3FgBh8teIvX/3Nphg=;
+        b=MwH59bbGsZwowI5YrIA9G0QAR8miEE7Gf9TqE0ugY1HPV2TuNK16bIbrl7Ft00En4F
+         lPy+30gX4uWSIEeAJxoccMt1Tf7w9iVVYfBXDNAEaIhqsGYNilu//ScyyzomqD/oBHEY
+         K3bywwzp5CB7BwgIJ0Fb3bEHnnHRoY+VH2I+xyfI5ZGGF3CmerWjG8iH/3WkZ23AYqr8
+         AbyDgdS9I4ewtu4Z9fuL9nmAJ4Q4yvb2QcK2p5rrf1hgsvLFzHuD3RjHSxjDOWxkh5xi
+         295J6D4fnkmK3O22jJCMXLc7ceGJBFaK5U/P5+wUXSyipVXB5QvJi6MOz+sM6lca+ERj
+         jvxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=4bInzMmSe0SQFhuJPffFbwCkWE3FgBh8teIvX/3Nphg=;
+        b=QBOcEuvkRyjLkbifaND1Z6BdOuU6aB6RdbNA97elLr/b7fujIX2YzdgP8UX01w6665
+         hWWWFdBTzo8N6Zf9c1JlfkarxToAILOhdaPNpOWT8V4ZZhUoNq92+YdArfEe9aqEcIhF
+         s9H/FOG6jiFxZ/jmp/aWsNm563s4ruQEUzlveD62IrdcXZKM4J7zeNWXwkkG9E1dWMfl
+         G2DR1vCXFqeKTRkvaXDej/VrXABKagDqpr6J9c1VGvGBNsmWotg5RlnlOlmeeCyJE2mv
+         ngG3Fsz4nBhquftYMuqI0U480s0Rx/iYDbPZOYlQfQUJCCil5zap55D1kVgbpxCxu+7X
+         lZJQ==
+X-Gm-Message-State: APjAAAU6YvjzVem03U9nb5wYopPXegAxuxCNG7Rgv6/yQDsaAxqaMSzI
+        5OSidn9H0MrWm36+3EkYCLI=
+X-Google-Smtp-Source: APXvYqxwpS2Z+OI2QhcZ+ksAMqTah3unWBCz1xawb8SBMc3mMLpPXtHL2AwYawfFpJyP9asXntBAOw==
+X-Received: by 2002:a05:600c:24b:: with SMTP id 11mr1713398wmj.1.1582765865992;
+        Wed, 26 Feb 2020 17:11:05 -0800 (PST)
+Received: from Ansuel-XPS.localdomain (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
+        by smtp.googlemail.com with ESMTPSA id s5sm3509507wru.39.2020.02.26.17.11.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Feb 2020 17:11:05 -0800 (PST)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Christian Lamparter <chunkeey@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Trilok Soni <tsoni@codeaurora.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1582577858-12410-1-git-send-email-eberman@codeaurora.org>
- <1582577858-12410-2-git-send-email-eberman@codeaurora.org>
- <20200226120918.GA21897@lakrids.cambridge.arm.com>
-From:   Elliot Berman <eberman@codeaurora.org>
-Message-ID: <edcf310c-8808-f210-1044-cfd2191e9e3d@codeaurora.org>
-Date:   Wed, 26 Feb 2020 16:44:00 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v8 1/2] net: mdio: add ipq8064 mdio driver
+Date:   Thu, 27 Feb 2020 02:10:45 +0100
+Message-Id: <20200227011050.11106-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.25.0
+In-Reply-To: <andrew@lunn.ch>
+References: <andrew@lunn.ch>
 MIME-Version: 1.0
-In-Reply-To: <20200226120918.GA21897@lakrids.cambridge.arm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/26/2020 4:09 AM, Mark Rutland wrote:
-> On Mon, Feb 24, 2020 at 12:57:36PM -0800, Elliot Berman wrote:
->> Some implementors of PSCI may relax the requirements of the PSCI
->> architectural warm reset. In order to comply with PSCI specification, a
->> different reset_type value must be used.
-> 
-> This reads as-if you're saying the firmware isn't spec compliant, and
-> this is a workaround in order to get the expected behaviour.
-> 
-> Can you please elaborate on what you mean by "relax the requirements"
-> here? What's your firmware doing or not doing that you want to avoid?
-> 
->> The alternate PSCI SYSTEM_RESET2 may be used in all warm/soft reboot
->> scenarios, replacing the architectural warm reset.
-> 
-> I assume you mean SYSTEM_REET2's SYSTEM_WARM_RESET reset? Please call
-> that out explicitly by name -- it makes this easier to look up, and
-> if/when more architectural resets are added the commit message won't
-> become ambiguous.
+Currently ipq806x soc use generic bitbang driver to
+comunicate with the gmac ethernet interface.
+Add a dedicated driver created by chunkeey to fix this.
 
-I can reword to:
+Co-developed-by: Christian Lamparter <chunkeey@gmail.com>
+Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+---
+Changes in v8:
+- Drop syscon_regmap_lookup_by_phandle and make
+  clock definition in dts mandatory
 
-Some implementors of PSCI may wish to generally use a different reset type
-than SYSTEM_WARM_RESET. For instance, Qualcomm SoCs support an alternate
-reset_type which may be used in more warm reboot scenarios than
-SYSTEM_WARM_RESET permits (e.g. to reboot into recovery mode).
+Changes in v7:
+- Add myself as module author and copyright
+- Reduced usleep_range to 8-10 as suggested by chunkeey
 
-> 
->>
->> Signed-off-by: Elliot Berman <eberman@codeaurora.org>
->> ---
->>  Documentation/devicetree/bindings/arm/psci.yaml | 5 +++++
->>  1 file changed, 5 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/arm/psci.yaml b/Documentation/devicetree/bindings/arm/psci.yaml
->> index 8ef8542..469256a2 100644
->> --- a/Documentation/devicetree/bindings/arm/psci.yaml
->> +++ b/Documentation/devicetree/bindings/arm/psci.yaml
->> @@ -102,6 +102,11 @@ properties:
->>        [1] Kernel documentation - ARM idle states bindings
->>          Documentation/devicetree/bindings/arm/idle-states.txt
->>  
->> +  arm,psci-sys-reset2-param:
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +    description: |
->> +        reset_param value to use during a warm or soft reboot.
-> 
-> A "soft" reboot isn't a PSCI concept, so I'm worried this is just
-> hooking up magic values for Linux internals.> 
-> I'd like to better understand what you're trying to achieve here.
+Changes in v6:
+- Fix error in commit description
+- Add co-developed tag
 
-In Qualcomm use cases, we do not always want to preserve memory to caller's
-(i.e. Linux) exception level. For instance, crash recovery mode runs in
-higher exception level and would not continue booting into Linux except
-through a hard reset. Also, this early firmware doesn't have the ability to
-understand device tree or ACPI tables to know what memory to preserve.
+Changes in v5:
+- Rename define to more rappresentative name
 
-Per discussion with Sudeep and Charles, this use case violates PSCI
-specification for SYSTEM_WARM_RESET reset type, but would be appropriate
-for a vendor-specific reset type. Thus, Qualcomm firmware supports a
-vendor-specific reset type which does not have the requirement to preserve
-memory to caller's EL or to describe what memory is to be preserved in DT
-or ACPI. If this vendor-specific reset type is used, then firmware checks
-various registers (e.g. download mode [1]) to alter the restart flow (e.g.
-to enter recovery mode). If no alternate flow is requested, then firmware
-would boot back into Linux, preserving memory.
+Changes in v4:
+- Fix wrong print value in dev_err
 
-[1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/firmware/qcom_scm.c?h=v5.6-rc3#n1120
+Changes in v3:
+- Fix wrong return logic on error
 
-Thanks,
-Elliot
+Changes in v2:
+- Use regmap_read_poll_timeout
+- Reject clause 45
 
+ drivers/net/phy/Kconfig        |   8 ++
+ drivers/net/phy/Makefile       |   1 +
+ drivers/net/phy/mdio-ipq8064.c | 166 +++++++++++++++++++++++++++++++++
+ 3 files changed, 175 insertions(+)
+ create mode 100644 drivers/net/phy/mdio-ipq8064.c
+
+diff --git a/drivers/net/phy/Kconfig b/drivers/net/phy/Kconfig
+index 9dabe03a668c..ec2a5493a7e8 100644
+--- a/drivers/net/phy/Kconfig
++++ b/drivers/net/phy/Kconfig
+@@ -157,6 +157,14 @@ config MDIO_I2C
+ 
+ 	  This is library mode.
+ 
++config MDIO_IPQ8064
++	tristate "Qualcomm IPQ8064 MDIO interface support"
++	depends on HAS_IOMEM && OF_MDIO
++	depends on MFD_SYSCON
++	help
++	  This driver supports the MDIO interface found in the network
++	  interface units of the IPQ8064 SoC
++
+ config MDIO_MOXART
+ 	tristate "MOXA ART MDIO interface support"
+ 	depends on ARCH_MOXART || COMPILE_TEST
+diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
+index fe5badf13b65..8f02bd2089f3 100644
+--- a/drivers/net/phy/Makefile
++++ b/drivers/net/phy/Makefile
+@@ -36,6 +36,7 @@ obj-$(CONFIG_MDIO_CAVIUM)	+= mdio-cavium.o
+ obj-$(CONFIG_MDIO_GPIO)		+= mdio-gpio.o
+ obj-$(CONFIG_MDIO_HISI_FEMAC)	+= mdio-hisi-femac.o
+ obj-$(CONFIG_MDIO_I2C)		+= mdio-i2c.o
++obj-$(CONFIG_MDIO_IPQ8064)	+= mdio-ipq8064.o
+ obj-$(CONFIG_MDIO_MOXART)	+= mdio-moxart.o
+ obj-$(CONFIG_MDIO_MSCC_MIIM)	+= mdio-mscc-miim.o
+ obj-$(CONFIG_MDIO_OCTEON)	+= mdio-octeon.o
+diff --git a/drivers/net/phy/mdio-ipq8064.c b/drivers/net/phy/mdio-ipq8064.c
+new file mode 100644
+index 000000000000..575db9068283
+--- /dev/null
++++ b/drivers/net/phy/mdio-ipq8064.c
+@@ -0,0 +1,166 @@
++// SPDX-License-Identifier: GPL-2.0
++/* Qualcomm IPQ8064 MDIO interface driver
++ *
++ * Copyright (C) 2019 Christian Lamparter <chunkeey@gmail.com>
++ * Copyright (C) 2020 Ansuel Smith <ansuelsmth@gmail.com>
++ */
++
++#include <linux/delay.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/regmap.h>
++#include <linux/of_mdio.h>
++#include <linux/phy.h>
++#include <linux/platform_device.h>
++#include <linux/mfd/syscon.h>
++
++/* MII address register definitions */
++#define MII_ADDR_REG_ADDR                       0x10
++#define MII_BUSY                                BIT(0)
++#define MII_WRITE                               BIT(1)
++#define MII_CLKRANGE_60_100M                    (0 << 2)
++#define MII_CLKRANGE_100_150M                   (1 << 2)
++#define MII_CLKRANGE_20_35M                     (2 << 2)
++#define MII_CLKRANGE_35_60M                     (3 << 2)
++#define MII_CLKRANGE_150_250M                   (4 << 2)
++#define MII_CLKRANGE_250_300M                   (5 << 2)
++#define MII_CLKRANGE_MASK			GENMASK(4, 2)
++#define MII_REG_SHIFT				6
++#define MII_REG_MASK				GENMASK(10, 6)
++#define MII_ADDR_SHIFT				11
++#define MII_ADDR_MASK				GENMASK(15, 11)
++
++#define MII_DATA_REG_ADDR                       0x14
++
++#define MII_MDIO_DELAY_USEC                     (1000)
++#define MII_MDIO_RETRY_MSEC                     (10)
++
++struct ipq8064_mdio {
++	struct regmap *base; /* NSS_GMAC0_BASE */
++};
++
++static int
++ipq8064_mdio_wait_busy(struct ipq8064_mdio *priv)
++{
++	u32 busy;
++
++	return regmap_read_poll_timeout(priv->base, MII_ADDR_REG_ADDR, busy,
++					!(busy & MII_BUSY), MII_MDIO_DELAY_USEC,
++					MII_MDIO_RETRY_MSEC * USEC_PER_MSEC);
++}
++
++static int
++ipq8064_mdio_read(struct mii_bus *bus, int phy_addr, int reg_offset)
++{
++	u32 miiaddr = MII_BUSY | MII_CLKRANGE_250_300M;
++	struct ipq8064_mdio *priv = bus->priv;
++	u32 ret_val;
++	int err;
++
++	/* Reject clause 45 */
++	if (reg_offset & MII_ADDR_C45)
++		return -EOPNOTSUPP;
++
++	miiaddr |= ((phy_addr << MII_ADDR_SHIFT) & MII_ADDR_MASK) |
++		   ((reg_offset << MII_REG_SHIFT) & MII_REG_MASK);
++
++	regmap_write(priv->base, MII_ADDR_REG_ADDR, miiaddr);
++	usleep_range(8, 10);
++
++	err = ipq8064_mdio_wait_busy(priv);
++	if (err)
++		return err;
++
++	regmap_read(priv->base, MII_DATA_REG_ADDR, &ret_val);
++	return (int)ret_val;
++}
++
++static int
++ipq8064_mdio_write(struct mii_bus *bus, int phy_addr, int reg_offset, u16 data)
++{
++	u32 miiaddr = MII_WRITE | MII_BUSY | MII_CLKRANGE_250_300M;
++	struct ipq8064_mdio *priv = bus->priv;
++
++	/* Reject clause 45 */
++	if (reg_offset & MII_ADDR_C45)
++		return -EOPNOTSUPP;
++
++	regmap_write(priv->base, MII_DATA_REG_ADDR, data);
++
++	miiaddr |= ((phy_addr << MII_ADDR_SHIFT) & MII_ADDR_MASK) |
++		   ((reg_offset << MII_REG_SHIFT) & MII_REG_MASK);
++
++	regmap_write(priv->base, MII_ADDR_REG_ADDR, miiaddr);
++	usleep_range(8, 10);
++
++	return ipq8064_mdio_wait_busy(priv);
++}
++
++static int
++ipq8064_mdio_probe(struct platform_device *pdev)
++{
++	struct device_node *np = pdev->dev.of_node;
++	struct ipq8064_mdio *priv;
++	struct mii_bus *bus;
++	int ret;
++
++	bus = devm_mdiobus_alloc_size(&pdev->dev, sizeof(*priv));
++	if (!bus)
++		return -ENOMEM;
++
++	bus->name = "ipq8064_mdio_bus";
++	bus->read = ipq8064_mdio_read;
++	bus->write = ipq8064_mdio_write;
++	snprintf(bus->id, MII_BUS_ID_SIZE, "%s-mii", dev_name(&pdev->dev));
++	bus->parent = &pdev->dev;
++
++	priv = bus->priv;
++	priv->base = syscon_node_to_regmap(np);
++	if (IS_ERR(priv->base)) {
++		if (priv->base == ERR_PTR(-EPROBE_DEFER))
++			return -EPROBE_DEFER;
++
++		dev_err(&pdev->dev, "error getting syscon regmap, error=%pe\n",
++			priv->base);
++		return PTR_ERR(priv->base);
++	}
++
++	ret = of_mdiobus_register(bus, np);
++	if (ret)
++		return ret;
++
++	platform_set_drvdata(pdev, bus);
++	return 0;
++}
++
++static int
++ipq8064_mdio_remove(struct platform_device *pdev)
++{
++	struct mii_bus *bus = platform_get_drvdata(pdev);
++
++	mdiobus_unregister(bus);
++
++	return 0;
++}
++
++static const struct of_device_id ipq8064_mdio_dt_ids[] = {
++	{ .compatible = "qcom,ipq8064-mdio" },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, ipq8064_mdio_dt_ids);
++
++static struct platform_driver ipq8064_mdio_driver = {
++	.probe = ipq8064_mdio_probe,
++	.remove = ipq8064_mdio_remove,
++	.driver = {
++		.name = "ipq8064-mdio",
++		.of_match_table = ipq8064_mdio_dt_ids,
++	},
++};
++
++module_platform_driver(ipq8064_mdio_driver);
++
++MODULE_DESCRIPTION("Qualcomm IPQ8064 MDIO interface driver");
++MODULE_AUTHOR("Christian Lamparter <chunkeey@gmail.com>");
++MODULE_AUTHOR("Ansuel Smith <ansuelsmth@gmail.com>");
++MODULE_LICENSE("GPL");
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.25.0
+
