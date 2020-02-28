@@ -2,201 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C1C741735DD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 12:12:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BA6DB173624
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 12:38:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726700AbgB1LMp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Feb 2020 06:12:45 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:64077 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726740AbgB1LMp (ORCPT
+        id S1726359AbgB1Liw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Feb 2020 06:38:52 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:26112 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725536AbgB1Liv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Feb 2020 06:12:45 -0500
+        Fri, 28 Feb 2020 06:38:51 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582888365; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=IVZ6CtP5L6xsu8bf6zRg6TkuiYbPIlAzMCNphwbcOsE=; b=qYlSRXJVqozUJyelKHg3Xl87HACDR6E7wQxcCVT+wlHCBJCfyAA2AFlm7YeWF98EnOg4UZEE
- hATptx4JAba23sYXNDIZPj6h+pRN/1GCMpxJM50nOMAHstn/L0oxHpWiPNyZuUAbN4JhOgVG
- tPxpYm74O3WxPjihljlm0DEycuQ=
-X-Mailgun-Sending-Ip: 104.130.122.27
+ s=smtp; t=1582889931; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=8n03flDGtSxDL9BmFGE9aGHpD3GYTYqPVbpU0XNgzP4=; b=T0cAq1PqPXAJmUr8SEnVOoYinJe9h7ACcSaEBlghkOGqffIkPe9PkNCTy5V5IH2OF/SAWy9Y
+ X83FUoqhYp9FRoYJqdtwESWzusklb99yLqHtd1shvUHnyjwOrWhdlbxAljT1YGkkGQDDI/4R
+ T+VzAXqAmzSWlggvSKKsTMMobl4=
+X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e58f5a8.7fabedcc6b58-smtp-out-n01;
- Fri, 28 Feb 2020 11:12:40 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e58fbbb.7fa6715c29d0-smtp-out-n02;
+ Fri, 28 Feb 2020 11:38:35 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1CDDAC4479D; Fri, 28 Feb 2020 11:12:39 +0000 (UTC)
+        id 8B42FC4479C; Fri, 28 Feb 2020 11:38:34 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.206.13.37] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 38AE7C43383;
-        Fri, 28 Feb 2020 11:12:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 38AE7C43383
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7A803C43383;
+        Fri, 28 Feb 2020 11:38:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7A803C43383
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH v8 2/3] soc: qcom: rpmh: Update dirty flag only when data
- changes
-To:     Evan Green <evgreen@chromium.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
-References: <1582793785-22423-1-git-send-email-mkshah@codeaurora.org>
- <1582793785-22423-3-git-send-email-mkshah@codeaurora.org>
- <CAE=gft6VDMoTZ4mW7d7scUCtDowfJiCbOzx_1FaFkoz8tm99DQ@mail.gmail.com>
 From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <9120b876-d7bb-7e74-f1e4-0ff6f2c6c939@codeaurora.org>
-Date:   Fri, 28 Feb 2020 16:42:32 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
-MIME-Version: 1.0
-In-Reply-To: <CAE=gft6VDMoTZ4mW7d7scUCtDowfJiCbOzx_1FaFkoz8tm99DQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+To:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH v9 0/3] Invoke rpmh_flush for non OSI targets
+Date:   Fri, 28 Feb 2020 17:08:20 +0530
+Message-Id: <1582889903-12890-1-git-send-email-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Changes in v9:
+- Keep rpmh_flush() to invoke from within cache_lock
+- Remove comments related to only last cpu invoking rpmh_flush()
 
-On 2/27/2020 11:48 PM, Evan Green wrote:
-> On Thu, Feb 27, 2020 at 12:57 AM Maulik Shah <mkshah@codeaurora.org> wrote:
->> Currently rpmh ctrlr dirty flag is set for all cases regardless of data
->> is really changed or not. Add changes to update dirty flag when data is
->> changed to newer values.
->>
->> Also move dirty flag updates to happen from within cache_lock and remove
->> unnecessary INIT_LIST_HEAD() call and a default case from switch.
->>
->> Fixes: 600513dfeef3 ("drivers: qcom: rpmh: cache sleep/wake state requests")
->> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> Reviewed-by: Srinivas Rao L <lsrao@codeaurora.org>
->> ---
->>   drivers/soc/qcom/rpmh.c | 29 ++++++++++++++++-------------
->>   1 file changed, 16 insertions(+), 13 deletions(-)
->>
->> diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
->> index eb0ded0..3f5d9eb 100644
->> --- a/drivers/soc/qcom/rpmh.c
->> +++ b/drivers/soc/qcom/rpmh.c
->> @@ -133,26 +133,30 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
->>
->>          req->addr = cmd->addr;
->>          req->sleep_val = req->wake_val = UINT_MAX;
->> -       INIT_LIST_HEAD(&req->list);
-> Thanks!
->
->>          list_add_tail(&req->list, &ctrlr->cache);
->>
->>   existing:
->>          switch (state) {
->>          case RPMH_ACTIVE_ONLY_STATE:
->> -               if (req->sleep_val != UINT_MAX)
->> +               if (req->sleep_val != UINT_MAX) {
->>                          req->wake_val = cmd->data;
->> +                       ctrlr->dirty = true;
->> +               }
->>                  break;
->>          case RPMH_WAKE_ONLY_STATE:
->> -               req->wake_val = cmd->data;
->> +               if (req->wake_val != cmd->data) {
->> +                       req->wake_val = cmd->data;
->> +                       ctrlr->dirty = true;
->> +               }
->>                  break;
->>          case RPMH_SLEEP_STATE:
->> -               req->sleep_val = cmd->data;
->> -               break;
->> -       default:
->> +               if (req->sleep_val != cmd->data) {
->> +                       req->sleep_val = cmd->data;
->> +                       ctrlr->dirty = true;
->> +               }
->>                  break;
->>          }
->>
->> -       ctrlr->dirty = true;
->>   unlock:
->>          spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
->>
->> @@ -287,6 +291,7 @@ static void cache_batch(struct rpmh_ctrlr *ctrlr, struct batch_cache_req *req)
->>
->>          spin_lock_irqsave(&ctrlr->cache_lock, flags);
->>          list_add_tail(&req->list, &ctrlr->batch_cache);
->> +       ctrlr->dirty = true;
->>          spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
->>   }
->>
->> @@ -323,6 +328,7 @@ static void invalidate_batch(struct rpmh_ctrlr *ctrlr)
->>          list_for_each_entry_safe(req, tmp, &ctrlr->batch_cache, list)
->>                  kfree(req);
->>          INIT_LIST_HEAD(&ctrlr->batch_cache);
->> +       ctrlr->dirty = true;
->>          spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
->>   }
->>
->> @@ -456,13 +462,9 @@ static int send_single(struct rpmh_ctrlr *ctrlr, enum rpmh_state state,
->>   int rpmh_flush(struct rpmh_ctrlr *ctrlr)
->>   {
->>          struct cache_req *p;
->> +       unsigned long flags;
->>          int ret;
->>
->> -       if (!ctrlr->dirty) {
->> -               pr_debug("Skipping flush, TCS has latest data.\n");
->> -               return 0;
->> -       }
->> -
->>          /* First flush the cached batch requests */
->>          ret = flush_batch(ctrlr);
->>          if (ret)
->> @@ -488,7 +490,9 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
->>                          return ret;
->>          }
->>
->> +       spin_lock_irqsave(&ctrlr->cache_lock, flags);
->>          ctrlr->dirty = false;
->> +       spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
-> You're acquiring a lock around an operation that's already inherently
-> atomic, which is not right. If the comment earlier in this function is
-> still correct that "Nobody else should be calling this function other
-> than system PM, hence we can run without locks", then you can simply
-> remove this hunk and the part moving ->dirty = true into
-> invalidate_batch.
->
-> However, if rpmh_flush() can now be called in a scenario where
-> pre-emption is enabled or multiple cores are alive, then ctrlr->cache
-> is no longer adequately protected. You'd need to add a lock
-> acquire/release around the list iteration above, and fix up the
-> comment.
-> -Evan
+Changes in v8:
+- Address Stephen's comments on changes 2 and 3
+- Add Reviewed by from Stephen on change 1
 
-Hi Evan,
+Changes in v7:
+- Address Srinivas's comments to update commit text
+- Add Reviewed by from Srinivas
 
-Right, rpmh_flush() now can be called from any cpu. i will remove 
-comments from above.
+Changes in v6:
+- Drop 1 & 2 changes from v5 as they already landed in maintainer tree
+- Drop 3 & 4 changes from v5 as no user at present for power domain in rsc
+- Rename subject to appropriate since power domain changes are dropped
+- Rebase other changes on top of next-20200221
 
-part for rpmh_flush(),  flush_batch()  and ctrlr->dirty update was 
-already covered within cache lock, however its needed to protect
+Changes in v5:
+- Add Rob's Acked by on dt-bindings change
+- Drop firmware psci change
+- Update cpuidle stats in dtsi to follow PC mode
+- Include change to update dirty flag when data is updated from [4]
+- Add change to invoke rpmh_flush when caches are dirty
 
-entire rpmh_flush() in cache_lock now.
+Changes in v4:
+- Add change to allow hierarchical topology in PC mode
+- Drop hierarchical domain idle states converter from v3
+- Address Merge sc7180 dtsi change to add low power modes
 
-updates in v9.
+Changes in v3:
+- Address Rob's comment on dt property value
+- Address Stephen's comments on rpmh-rsc driver change
+- Include sc7180 cpuidle low power mode changes from [1]
+- Include hierarchical domain idle states converter change from [2]
 
-Thanks,
+Changes in v2:
+- Add Stephen's Reviewed-By to the first three patches
+- Addressed Stephen's comments on fourth patch
+- Include changes to connect rpmh domain to cpuidle and genpds
 
-Maulik
+Resource State Coordinator (RSC) is responsible for powering off/lowering
+the requirements from CPU subsystem for the associated hardware like buses,
+clocks, and regulators when all CPUs and cluster is powered down.
+
+RSC power domain uses last-man activities provided by genpd framework based
+on Ulf Hansoon's patch series[3], when the cluster of CPUs enter deepest
+idle states. As a part of domain poweroff, RSC can lower resource state
+requirements by flushing the cached sleep and wake state votes for various
+resources.
+
+[1] https://patchwork.kernel.org/patch/11218965
+[2] https://patchwork.kernel.org/patch/10941671
+[3] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=222355
+[4] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=236503
+
+Maulik Shah (3):
+  arm64: dts: qcom: sc7180: Add cpuidle low power states
+  soc: qcom: rpmh: Update dirty flag only when data changes
+  soc: qcom: rpmh: Invoke rpmh_flush for dirty caches
+
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 78 ++++++++++++++++++++++++++++++++++++
+ drivers/soc/qcom/rpmh.c              | 27 ++++++++++---
+ 2 files changed, 100 insertions(+), 5 deletions(-)
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
