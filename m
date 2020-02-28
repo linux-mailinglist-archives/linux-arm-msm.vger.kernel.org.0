@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E8D2173621
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 12:38:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 173B0173627
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 12:39:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725827AbgB1Lir (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Feb 2020 06:38:47 -0500
+        id S1726563AbgB1Li6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Feb 2020 06:38:58 -0500
 Received: from mail26.static.mailgun.info ([104.130.122.26]:26112 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725536AbgB1Lir (ORCPT
+        by vger.kernel.org with ESMTP id S1726490AbgB1Li6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Feb 2020 06:38:47 -0500
+        Fri, 28 Feb 2020 06:38:58 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582889926; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1582889937; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=/qDziAvwxrvevTfMjOLedkBpY9mIiwDSbWhlXYUU/Uc=; b=sovJESd6N9nOJRoNsixGWcVzpNKanKAvGZfAGSz1TfOPu9KxrIq/RBUZpcHGRwhRFnxC41H8
- uBG2z2bTGzDdEvsSswdTCd2MLsWU97lcCwboQziPlxc1sjtDGMwgRKM40+kicVhdr/n6p/7e
- Uc9r7cjlK+mCIyZXdprnQRxkriM=
+ bh=ZW3+R3WZn+Fe4z409CjSDFwivm2DxMFy6ZjsdFoYfMY=; b=A4PNHORmIwc8oieVFwdyVVb8cNttONefH3orvxb6z0ozbHNycbquMdptXOFmRiKfCKBQDj07
+ RAWSLcuNJIFtuSc2TCWlcFHVAu45FtjI7nAw5UTELBgyERRuMuAZ7T2rpsc8zBjHrIEhslc1
+ hGtEaPoKeRPH1T8EAIzrN3hH3hE=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e58fbc4.7f29e4767c38-smtp-out-n03;
- Fri, 28 Feb 2020 11:38:44 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e58fbc8.7fde1c1b0688-smtp-out-n02;
+ Fri, 28 Feb 2020 11:38:48 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1129BC4479D; Fri, 28 Feb 2020 11:38:43 +0000 (UTC)
+        id 47484C4479D; Fri, 28 Feb 2020 11:38:47 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,9 +34,9 @@ Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EA291C433A2;
-        Fri, 28 Feb 2020 11:38:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EA291C433A2
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 18FE8C4479C;
+        Fri, 28 Feb 2020 11:38:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 18FE8C4479C
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
 From:   Maulik Shah <mkshah@codeaurora.org>
@@ -46,9 +46,9 @@ Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
         ilina@codeaurora.org, lsrao@codeaurora.org,
         Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH v9 2/3] soc: qcom: rpmh: Update dirty flag only when data changes
-Date:   Fri, 28 Feb 2020 17:08:22 +0530
-Message-Id: <1582889903-12890-3-git-send-email-mkshah@codeaurora.org>
+Subject: [PATCH v9 3/3] soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches
+Date:   Fri, 28 Feb 2020 17:08:23 +0530
+Message-Id: <1582889903-12890-4-git-send-email-mkshah@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1582889903-12890-1-git-send-email-mkshah@codeaurora.org>
 References: <1582889903-12890-1-git-send-email-mkshah@codeaurora.org>
@@ -57,86 +57,133 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently rpmh ctrlr dirty flag is set for all cases regardless of data
-is really changed or not. Add changes to update dirty flag when data is
-changed to newer values.
+Add changes to invoke rpmh flush() from within cache_lock when the data
+in cache is dirty.
 
-Also move dirty flag updates to happen from within cache_lock and remove
-unnecessary INIT_LIST_HEAD() call and a default case from switch.
+This is done only if OSI is not supported in PSCI. If OSI is supported
+rpmh_flush can get invoked when the last cpu going to power collapse
+deepest low power mode.
 
-Fixes: 600513dfeef3 ("drivers: qcom: rpmh: cache sleep/wake state requests")
+Also remove "depends on COMPILE_TEST" for Kconfig option QCOM_RPMH so the
+driver is only compiled for arm64 which supports psci_has_osi_support()
+API.
+
 Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 Reviewed-by: Srinivas Rao L <lsrao@codeaurora.org>
 ---
- drivers/soc/qcom/rpmh.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ drivers/soc/qcom/Kconfig |  2 +-
+ drivers/soc/qcom/rpmh.c  | 33 ++++++++++++++++++++++-----------
+ 2 files changed, 23 insertions(+), 12 deletions(-)
 
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index d0a73e7..2e581bc 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -105,7 +105,7 @@ config QCOM_RMTFS_MEM
+ 
+ config QCOM_RPMH
+ 	bool "Qualcomm RPM-Hardened (RPMH) Communication"
+-	depends on ARCH_QCOM && ARM64 || COMPILE_TEST
++	depends on ARCH_QCOM && ARM64
+ 	help
+ 	  Support for communication with the hardened-RPM blocks in
+ 	  Qualcomm Technologies Inc (QTI) SoCs. RPMH communication uses an
 diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-index eb0ded0..f28afe4 100644
+index f28afe4..6a5a60c 100644
 --- a/drivers/soc/qcom/rpmh.c
 +++ b/drivers/soc/qcom/rpmh.c
-@@ -133,26 +133,30 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
- 
- 	req->addr = cmd->addr;
- 	req->sleep_val = req->wake_val = UINT_MAX;
--	INIT_LIST_HEAD(&req->list);
- 	list_add_tail(&req->list, &ctrlr->cache);
- 
- existing:
- 	switch (state) {
- 	case RPMH_ACTIVE_ONLY_STATE:
--		if (req->sleep_val != UINT_MAX)
-+		if (req->sleep_val != UINT_MAX) {
- 			req->wake_val = cmd->data;
-+			ctrlr->dirty = true;
-+		}
- 		break;
- 	case RPMH_WAKE_ONLY_STATE:
--		req->wake_val = cmd->data;
-+		if (req->wake_val != cmd->data) {
-+			req->wake_val = cmd->data;
-+			ctrlr->dirty = true;
-+		}
- 		break;
- 	case RPMH_SLEEP_STATE:
--		req->sleep_val = cmd->data;
--		break;
--	default:
-+		if (req->sleep_val != cmd->data) {
-+			req->sleep_val = cmd->data;
-+			ctrlr->dirty = true;
-+		}
- 		break;
+@@ -12,6 +12,7 @@
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
++#include <linux/psci.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
+ #include <linux/types.h>
+@@ -158,6 +159,13 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
  	}
  
--	ctrlr->dirty = true;
  unlock:
++	if (ctrlr->dirty && !psci_has_osi_support()) {
++		if (rpmh_flush(ctrlr)) {
++			spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
++			return ERR_PTR(-EINVAL);
++		}
++	}
++
  	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
  
-@@ -287,6 +291,7 @@ static void cache_batch(struct rpmh_ctrlr *ctrlr, struct batch_cache_req *req)
+ 	return req;
+@@ -285,26 +293,35 @@ int rpmh_write(const struct device *dev, enum rpmh_state state,
+ }
+ EXPORT_SYMBOL(rpmh_write);
+ 
+-static void cache_batch(struct rpmh_ctrlr *ctrlr, struct batch_cache_req *req)
++static int cache_batch(struct rpmh_ctrlr *ctrlr, struct batch_cache_req *req)
+ {
+ 	unsigned long flags;
  
  	spin_lock_irqsave(&ctrlr->cache_lock, flags);
++
  	list_add_tail(&req->list, &ctrlr->batch_cache);
-+	ctrlr->dirty = true;
+ 	ctrlr->dirty = true;
++
++	if (!psci_has_osi_support()) {
++		if (rpmh_flush(ctrlr)) {
++			spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
++			return -EINVAL;
++		}
++	}
++
  	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
++
++	return 0;
  }
  
-@@ -323,6 +328,7 @@ static void invalidate_batch(struct rpmh_ctrlr *ctrlr)
- 	list_for_each_entry_safe(req, tmp, &ctrlr->batch_cache, list)
- 		kfree(req);
- 	INIT_LIST_HEAD(&ctrlr->batch_cache);
-+	ctrlr->dirty = true;
- 	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+ static int flush_batch(struct rpmh_ctrlr *ctrlr)
+ {
+ 	struct batch_cache_req *req;
+ 	const struct rpmh_request *rpm_msg;
+-	unsigned long flags;
+ 	int ret = 0;
+ 	int i;
+ 
+ 	/* Send Sleep/Wake requests to the controller, expect no response */
+-	spin_lock_irqsave(&ctrlr->cache_lock, flags);
+ 	list_for_each_entry(req, &ctrlr->batch_cache, list) {
+ 		for (i = 0; i < req->count; i++) {
+ 			rpm_msg = req->rpm_msgs + i;
+@@ -314,7 +331,6 @@ static int flush_batch(struct rpmh_ctrlr *ctrlr)
+ 				break;
+ 		}
+ 	}
+-	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+ 
+ 	return ret;
  }
+@@ -386,10 +402,8 @@ int rpmh_write_batch(const struct device *dev, enum rpmh_state state,
+ 		cmd += n[i];
+ 	}
  
-@@ -507,7 +513,6 @@ int rpmh_invalidate(const struct device *dev)
- 	int ret;
+-	if (state != RPMH_ACTIVE_ONLY_STATE) {
+-		cache_batch(ctrlr, req);
+-		return 0;
+-	}
++	if (state != RPMH_ACTIVE_ONLY_STATE)
++		return cache_batch(ctrlr, req);
  
- 	invalidate_batch(ctrlr);
--	ctrlr->dirty = true;
- 
- 	do {
- 		ret = rpmh_rsc_invalidate(ctrlr_to_drv(ctrlr));
+ 	for (i = 0; i < count; i++) {
+ 		struct completion *compl = &compls[i];
+@@ -455,9 +469,6 @@ static int send_single(struct rpmh_ctrlr *ctrlr, enum rpmh_state state,
+  * Return: -EBUSY if the controller is busy, probably waiting on a response
+  * to a RPMH request sent earlier.
+  *
+- * This function is always called from the sleep code from the last CPU
+- * that is powering down the entire system. Since no other RPMH API would be
+- * executing at this time, it is safe to run lockless.
+  */
+ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
+ {
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
