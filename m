@@ -2,63 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 73D8017332D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 09:45:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D71C173356
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 09:53:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726400AbgB1IpS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Feb 2020 03:45:18 -0500
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:36356 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726207AbgB1IpP (ORCPT
+        id S1726748AbgB1Ixn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Feb 2020 03:53:43 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:52243 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726207AbgB1Ixn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Feb 2020 03:45:15 -0500
-Received: by mail-wr1-f41.google.com with SMTP id j16so2013705wrt.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2020 00:45:12 -0800 (PST)
+        Fri, 28 Feb 2020 03:53:43 -0500
+Received: by mail-wm1-f65.google.com with SMTP id p9so2331581wmc.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2020 00:53:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=7c0V49nxq31QWpSDD2qj+bopPB57VY53jiKZIRAdTJU=;
-        b=ghHHuqnnMkyG9mGaWqKyEmmHT4LTKahAQRqtuBa4JZqyxoq2beJcIePW+RR8YgNEg0
-         XGUW/50bIbs2htL3pIJ/fH9eWCPI5p7FQnKCFbGOfZsObRjawtzkiuh3P1X+colLE4yn
-         3fUvMz61Cuhtle97k45qDticKJfd3kMn7QkOY3G2Ii9+a8RptUdFJCh0UZSTmRuUBcU5
-         ZigTFMt7n3RRXURgNWasQV7LUgK8ADdhxWFBv7OKFlJkNdRMyeF/6nNppHIfm4KvFLhw
-         +JmhoWpDsEPPe+y1+MfSSFyxrzEXGtmrpc5mM/zQ8om+3XUqOxh7FcptNOEAdo2v4Iq1
-         xi8Q==
+        bh=oPmfbH/VN//hr6zphyggj3FNTyzdqrj0mhzn9wcbAF4=;
+        b=djvlR8dT39wIMOJ6JqJ5f/7x+HI3BSgTr5GIREnT4ZAsceT0FpRA7a0ywZ0dSzmPxF
+         AS0ffDvPoCWPaCdNG8sFMjD4hfkiCw2Fl8ocyCL4va85dM/Ce0h9AdgEmxs5AiwYKEoq
+         M0Ll/WLHfic5L/g50RLD7+7VIRDVG13oa5Fhr7485svPmMNFc+w5Qh732Vl47ti4rLfH
+         canbtaCOcw5YNJV98nKqXRcCFZYHAGcs5PE/5zhWxV/r8+ng0Nh5L7quKEexDmN5sklH
+         FJaWsNz18H7n0XNklrrbzvHs6efNr0yBejGF9aPx2zKTMvkleaS6rC1oPLY37Uy/Lg3Y
+         yHDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=7c0V49nxq31QWpSDD2qj+bopPB57VY53jiKZIRAdTJU=;
-        b=PcCn8A8IM3QPWRwGI6Q+R0xW/oKGAx+UfvICgA1xtz4e00R/WZ3wpix3rUa9qDX1k5
-         TXXXi61BNmpMauErQbGJFDn2gpobpdN66hoWyuntlYQ+ywamVVWA800G/hPsAXyGZvip
-         9EcucEYNLFwrg6DnWZFG54Q6dg/VpHnUoBoYvkWTVXCL//EcvtOV7sfX6h77u0Yw+tDE
-         t+0rOq9vf9v46pq9NCO5JdcGgrapMUElGkxtpD/Gb5MsrziqROC7eQbChqKXZ9g/jE3h
-         4fWG5UHzMuanu5IvxS1vhk8V73hKN7HV+W06K6p5Qxr+1CHeCjZ8wlPamsNNmcA6hadn
-         QOhA==
-X-Gm-Message-State: APjAAAXbPDMfAlGMhnwsKI7uUO4snIlcHTkt3mGaXbntX+DTd/RnTms2
-        9vGeUeVjMTrCLBHeNvb+EkQtXw==
-X-Google-Smtp-Source: APXvYqwGU4+WVO39fvJHE+QydH0jCFM8adott15SJfcWfhhqAWLWjRsKKtyx03W0hXsZxjkMzfu5+A==
-X-Received: by 2002:a5d:6b88:: with SMTP id n8mr3877726wrx.288.1582879511985;
-        Fri, 28 Feb 2020 00:45:11 -0800 (PST)
+        bh=oPmfbH/VN//hr6zphyggj3FNTyzdqrj0mhzn9wcbAF4=;
+        b=NwW2nRM/dD/RKyy/b0AZAvF/ZrHOxVckHFidBLdqBQclu5/tCnh3iy1ydkG5d0q4AC
+         5IKS5RdxvQOudR0fpcKRJPA+uKu0SS04WRICw+EZl/7ovAitU9wWT7XOyaRu2oNGSP+1
+         z1KzxV6QU32h3Fz880o//eQFcj63kMowMVCk+kvV2TOfqWVBlksNyG1KfLJnFezyhz98
+         +b93wXEDJy+UINQQu4z2lhn9r9xlKK2rx5F5okn5fIXaQFjBt7WxByaBoj/glTx4NUc3
+         VvFx6eYD+9ebO9xRFeFrTJk5TnacPA3yu17QS2kIEMQkL+BXJNxeEl0AxPBINuQDiVce
+         YNGg==
+X-Gm-Message-State: APjAAAWg0NXZBaHHeHWq8JZgWOx605JIJE+MwvfLSH41N7zLZPRuLDa+
+        6H5n1MW7J2CHvyTuNefzhz+NCw==
+X-Google-Smtp-Source: APXvYqwqw0w8kj5U00AbZ2wrM0nyvr1emJKZpByzmypAeakrNOtZosPACGcBI/KOs6ypyFS1kIuv3Q==
+X-Received: by 2002:a7b:c4cc:: with SMTP id g12mr4068558wmk.68.1582880019426;
+        Fri, 28 Feb 2020 00:53:39 -0800 (PST)
 Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id z19sm1138078wmi.35.2020.02.28.00.45.10
+        by smtp.googlemail.com with ESMTPSA id z8sm11050459wrv.74.2020.02.28.00.53.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Feb 2020 00:45:11 -0800 (PST)
-Subject: Re: [V4, 1/3] dt-bindings: interconnect: Add Qualcomm SC7180 DT
- bindings
-To:     Odelu Kukatla <okukatla@codeaurora.org>, daidavid1@codeaurora.org,
-        bjorn.andersson@linaro.org, evgreen@google.com,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     sboyd@kernel.org, ilina@codeaurora.org, seansw@qti.qualcomm.com,
+        Fri, 28 Feb 2020 00:53:38 -0800 (PST)
+Subject: Re: [V4, 2/3] interconnect: qcom: Add SC7180 interconnect provider
+ driver
+To:     Odelu Kukatla <okukatla@codeaurora.org>, linux-pm@vger.kernel.org
+Cc:     daidavid1@codeaurora.org, bjorn.andersson@linaro.org,
+        evgreen@google.com, Andy Gross <agross@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        sboyd@kernel.org, ilina@codeaurora.org, seansw@qti.qualcomm.com,
         elder@linaro.org, linux-arm-msm-owner@vger.kernel.org
 References: <1582646384-1458-1-git-send-email-okukatla@codeaurora.org>
- <1582646384-1458-2-git-send-email-okukatla@codeaurora.org>
+ <1582646384-1458-3-git-send-email-okukatla@codeaurora.org>
 From:   Georgi Djakov <georgi.djakov@linaro.org>
 Openpgp: preference=signencrypt
 Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
@@ -104,10 +101,10 @@ Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
  7ayYJIXFqjl/X0KBcCbiAl4vbdBw1bqFnO4zd1lMXKVoa29UHqby4MPbQhjWNVv9kqp8A39+
  E9xw890l1xdERkjVKX6IEJu2hf7X3MMl9tOjBK6MvdOUxvh1bNNmXh7OlBL1MpJYY/ydIm3B
  KEmKjLDvB0pePJkdTw==
-Message-ID: <4eb48a57-508c-02fd-fca7-d2fd8d959eef@linaro.org>
-Date:   Fri, 28 Feb 2020 10:45:09 +0200
+Message-ID: <568574bd-c036-988e-bf95-9c06704d143a@linaro.org>
+Date:   Fri, 28 Feb 2020 10:53:37 +0200
 MIME-Version: 1.0
-In-Reply-To: <1582646384-1458-2-git-send-email-okukatla@codeaurora.org>
+In-Reply-To: <1582646384-1458-3-git-send-email-okukatla@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -118,37 +115,92 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi Odelu,
 
+Thank you for this patchset!
+
 On 2/25/20 17:59, Odelu Kukatla wrote:
-> The Qualcomm SC7180 platform has several bus fabrics that could be
-> controlled and tuned dynamically according to the bandwidth demand.
+> Add driver for the Qualcomm interconnect buses found in SC7180 based
+> platforms. The topology consists of several NoCs that are controlled by
+> a remote processor that collects the aggregated bandwidth for each
+> master-slave pairs.
 > 
 > Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
 > ---
->  .../bindings/interconnect/qcom,sc7180.yaml         |  85 +++++++++++
->  include/dt-bindings/interconnect/qcom,sc7180.h     | 161 +++++++++++++++++++++
->  2 files changed, 246 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sc7180.yaml
->  create mode 100644 include/dt-bindings/interconnect/qcom,sc7180.h
+>  drivers/interconnect/qcom/Kconfig  |   9 +
+>  drivers/interconnect/qcom/Makefile |   2 +
+>  drivers/interconnect/qcom/sc7180.c | 641 +++++++++++++++++++++++++++++++++++++
+>  drivers/interconnect/qcom/sc7180.h | 149 +++++++++
+>  4 files changed, 801 insertions(+)
+>  create mode 100644 drivers/interconnect/qcom/sc7180.c
+>  create mode 100644 drivers/interconnect/qcom/sc7180.h
 > 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sc7180.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sc7180.yaml
-> new file mode 100644
-> index 0000000..2cb7d4e
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sc7180.yaml
-> @@ -0,0 +1,85 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/interconnect/qcom,sc7180.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title:  Qualcomm SC7180 Network-On-Chip Interconnect
-> +
-> +maintainers:
-> +  - Georgi Djakov <georgi.djakov@linaro.org>
+> diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
+> index 08cfd67..c8e74b0 100644
+> --- a/drivers/interconnect/qcom/Kconfig
+> +++ b/drivers/interconnect/qcom/Kconfig
+> @@ -42,6 +42,15 @@ config INTERCONNECT_QCOM_RPMH
+>  	depends on INTERCONNECT_QCOM || COMPILE_TEST
+>  	depends on QCOM_COMMAND_DB
+>  
+> +config INTERCONNECT_QCOM_SC7180
+> +	tristate "Qualcomm SC7180 interconnect driver"
+> +	depends on INTERCONNECT_QCOM
+> +	select INTERCONNECT_QCOM_RPMH
+> +	select INTERCONNECT_QCOM_BCM_VOTER
 
-Hey, this should be you, not me.
+IMHO, we should still list here the dependencies here, or for some randconfig
+builds we may get warnings for unmet direct dependencies. So i think you got
+it right in your v3.
+
+btw. It is also a good practice to list the changes in your cover letter, so
+people who have looked at previous versions of that patches would know what
+changed.
+
+> +	help
+> +	  This is a driver for the Qualcomm Network-on-Chip on sc7180-based
+> +	  platforms.
+> +
+>  config INTERCONNECT_QCOM_SDM845
+>  	tristate "Qualcomm SDM845 interconnect driver"
+>  	depends on INTERCONNECT_QCOM
+> diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
+> index d591bb5..5325558 100644
+> --- a/drivers/interconnect/qcom/Makefile
+> +++ b/drivers/interconnect/qcom/Makefile
+> @@ -5,6 +5,7 @@ qnoc-msm8916-objs			:= msm8916.o
+>  qnoc-msm8974-objs			:= msm8974.o
+>  qnoc-qcs404-objs			:= qcs404.o
+>  icc-rpmh-obj				:= icc-rpmh.o
+> +qnoc-sc7180-objs			:= sc7180.o
+>  qnoc-sdm845-objs			:= sdm845.o
+>  icc-smd-rpm-objs			:= smd-rpm.o
+>  
+> @@ -13,5 +14,6 @@ obj-$(CONFIG_INTERCONNECT_QCOM_MSM8916) += qnoc-msm8916.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8974) += qnoc-msm8974.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_QCS404) += qnoc-qcs404.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_RPMH) += icc-rpmh.o
+> +obj-$(CONFIG_INTERCONNECT_QCOM_SC7180) += qnoc-sc7180.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_SDM845) += qnoc-sdm845.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_SMD_RPM) += icc-smd-rpm.o
+> diff --git a/drivers/interconnect/qcom/sc7180.c b/drivers/interconnect/qcom/sc7180.c
+> new file mode 100644
+> index 0000000..dcf493d
+> --- /dev/null
+> +++ b/drivers/interconnect/qcom/sc7180.c
+> @@ -0,0 +1,641 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> + *
+> + */
+> +
+> +#include <linux/device.h>
+> +#include <linux/interconnect.h>
+> +#include <linux/interconnect-provider.h>
+> +#include <linux/module.h>
+> +#include <linux/of_platform.h>
+
+I thought you will remove this? Maybe you missed some of the comments on v2.
+Please check.
 
 Thanks,
 Georgi
