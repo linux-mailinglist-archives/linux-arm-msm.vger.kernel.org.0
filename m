@@ -2,188 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 173B0173627
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 12:39:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8610217366D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 12:51:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726563AbgB1Li6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Feb 2020 06:38:58 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:26112 "EHLO
+        id S1725856AbgB1LvY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Feb 2020 06:51:24 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:46745 "EHLO
         mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726490AbgB1Li6 (ORCPT
+        by vger.kernel.org with ESMTP id S1725805AbgB1LvY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Feb 2020 06:38:58 -0500
+        Fri, 28 Feb 2020 06:51:24 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582889937; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=ZW3+R3WZn+Fe4z409CjSDFwivm2DxMFy6ZjsdFoYfMY=; b=A4PNHORmIwc8oieVFwdyVVb8cNttONefH3orvxb6z0ozbHNycbquMdptXOFmRiKfCKBQDj07
- RAWSLcuNJIFtuSc2TCWlcFHVAu45FtjI7nAw5UTELBgyERRuMuAZ7T2rpsc8zBjHrIEhslc1
- hGtEaPoKeRPH1T8EAIzrN3hH3hE=
+ s=smtp; t=1582890683; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=QtBKCgEQ0CxITEJwVveTi/5MS0rgKf7c6wwhfsLlxqo=; b=DHYqUN592ky08RRKBg1Rb/1u/g4ZJXW8u8Ql4sDZyp25ESfL58Ro8l53wRf2f6+n55OExDeL
+ KdqDikQmN9btjKrz7YxJoL3EzfbeYnI7wOEL4S8NyCJq3KSFPn/JxClh1MfNMRlorLnueFdY
+ vhIiVywrXEfspFwCCjRrHYr90YE=
 X-Mailgun-Sending-Ip: 104.130.122.26
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e58fbc8.7fde1c1b0688-smtp-out-n02;
- Fri, 28 Feb 2020 11:38:48 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e58feab.7fdbe0aac570-smtp-out-n01;
+ Fri, 28 Feb 2020 11:51:07 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 47484C4479D; Fri, 28 Feb 2020 11:38:47 +0000 (UTC)
+        id CC5D3C433A2; Fri, 28 Feb 2020 11:51:07 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from vbadigan-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 18FE8C4479C;
-        Fri, 28 Feb 2020 11:38:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 18FE8C4479C
+        (Authenticated sender: vbadigan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1759CC43383;
+        Fri, 28 Feb 2020 11:51:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1759CC43383
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH v9 3/3] soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches
-Date:   Fri, 28 Feb 2020 17:08:23 +0530
-Message-Id: <1582889903-12890-4-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1582889903-12890-1-git-send-email-mkshah@codeaurora.org>
-References: <1582889903-12890-1-git-send-email-mkshah@codeaurora.org>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
+From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
+Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: [PATCH] mmc: sdhci-msm: Disable CQE during SDHC reset
+Date:   Fri, 28 Feb 2020 17:20:32 +0530
+Message-Id: <1582890639-32072-1-git-send-email-vbadigan@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add changes to invoke rpmh flush() from within cache_lock when the data
-in cache is dirty.
+When SDHC gets reset (E.g. in suspend/resume path), CQE also gets
+reset and goes to disable state. But s/w state still points it as
+CQE is in enabled state. Since s/w and h/w states goes out of sync,
+it results in s/w request timeout for subsequent CQE requests.
 
-This is done only if OSI is not supported in PSCI. If OSI is supported
-rpmh_flush can get invoked when the last cpu going to power collapse
-deepest low power mode.
+To synchronize CQE s/w and h/w state during SDHC reset,
+explicitly disable CQE after reset.
 
-Also remove "depends on COMPILE_TEST" for Kconfig option QCOM_RPMH so the
-driver is only compiled for arm64 which supports psci_has_osi_support()
-API.
-
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-Reviewed-by: Srinivas Rao L <lsrao@codeaurora.org>
+Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
 ---
- drivers/soc/qcom/Kconfig |  2 +-
- drivers/soc/qcom/rpmh.c  | 33 ++++++++++++++++++++++-----------
- 2 files changed, 23 insertions(+), 12 deletions(-)
+ drivers/mmc/host/sdhci-msm.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index d0a73e7..2e581bc 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -105,7 +105,7 @@ config QCOM_RMTFS_MEM
- 
- config QCOM_RPMH
- 	bool "Qualcomm RPM-Hardened (RPMH) Communication"
--	depends on ARCH_QCOM && ARM64 || COMPILE_TEST
-+	depends on ARCH_QCOM && ARM64
- 	help
- 	  Support for communication with the hardened-RPM blocks in
- 	  Qualcomm Technologies Inc (QTI) SoCs. RPMH communication uses an
-diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-index f28afe4..6a5a60c 100644
---- a/drivers/soc/qcom/rpmh.c
-+++ b/drivers/soc/qcom/rpmh.c
-@@ -12,6 +12,7 @@
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
-+#include <linux/psci.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
- #include <linux/types.h>
-@@ -158,6 +159,13 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
- 	}
- 
- unlock:
-+	if (ctrlr->dirty && !psci_has_osi_support()) {
-+		if (rpmh_flush(ctrlr)) {
-+			spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
-+			return ERR_PTR(-EINVAL);
-+		}
-+	}
-+
- 	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
- 
- 	return req;
-@@ -285,26 +293,35 @@ int rpmh_write(const struct device *dev, enum rpmh_state state,
- }
- EXPORT_SYMBOL(rpmh_write);
- 
--static void cache_batch(struct rpmh_ctrlr *ctrlr, struct batch_cache_req *req)
-+static int cache_batch(struct rpmh_ctrlr *ctrlr, struct batch_cache_req *req)
- {
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&ctrlr->cache_lock, flags);
-+
- 	list_add_tail(&req->list, &ctrlr->batch_cache);
- 	ctrlr->dirty = true;
-+
-+	if (!psci_has_osi_support()) {
-+		if (rpmh_flush(ctrlr)) {
-+			spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
-+			return -EINVAL;
-+		}
-+	}
-+
- 	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
-+
-+	return 0;
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 53b79ee..d7ba3b2 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -1823,6 +1823,13 @@ static void sdhci_msm_set_regulator_caps(struct sdhci_msm_host *msm_host)
+ 	pr_debug("%s: supported caps: 0x%08x\n", mmc_hostname(mmc), caps);
  }
  
- static int flush_batch(struct rpmh_ctrlr *ctrlr)
- {
- 	struct batch_cache_req *req;
- 	const struct rpmh_request *rpm_msg;
--	unsigned long flags;
- 	int ret = 0;
- 	int i;
++static void sdhci_msm_reset(struct sdhci_host *host, u8 mask)
++{
++	sdhci_reset(host, mask);
++	if (host->mmc->caps2 & MMC_CAP2_CQE)
++		cqhci_suspend(host->mmc);
++}
++
+ static const struct sdhci_msm_variant_ops mci_var_ops = {
+ 	.msm_readl_relaxed = sdhci_msm_mci_variant_readl_relaxed,
+ 	.msm_writel_relaxed = sdhci_msm_mci_variant_writel_relaxed,
+@@ -1861,7 +1868,7 @@ static void sdhci_msm_set_regulator_caps(struct sdhci_msm_host *msm_host)
+ MODULE_DEVICE_TABLE(of, sdhci_msm_dt_match);
  
- 	/* Send Sleep/Wake requests to the controller, expect no response */
--	spin_lock_irqsave(&ctrlr->cache_lock, flags);
- 	list_for_each_entry(req, &ctrlr->batch_cache, list) {
- 		for (i = 0; i < req->count; i++) {
- 			rpm_msg = req->rpm_msgs + i;
-@@ -314,7 +331,6 @@ static int flush_batch(struct rpmh_ctrlr *ctrlr)
- 				break;
- 		}
- 	}
--	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
- 
- 	return ret;
- }
-@@ -386,10 +402,8 @@ int rpmh_write_batch(const struct device *dev, enum rpmh_state state,
- 		cmd += n[i];
- 	}
- 
--	if (state != RPMH_ACTIVE_ONLY_STATE) {
--		cache_batch(ctrlr, req);
--		return 0;
--	}
-+	if (state != RPMH_ACTIVE_ONLY_STATE)
-+		return cache_batch(ctrlr, req);
- 
- 	for (i = 0; i < count; i++) {
- 		struct completion *compl = &compls[i];
-@@ -455,9 +469,6 @@ static int send_single(struct rpmh_ctrlr *ctrlr, enum rpmh_state state,
-  * Return: -EBUSY if the controller is busy, probably waiting on a response
-  * to a RPMH request sent earlier.
-  *
-- * This function is always called from the sleep code from the last CPU
-- * that is powering down the entire system. Since no other RPMH API would be
-- * executing at this time, it is safe to run lockless.
-  */
- int rpmh_flush(struct rpmh_ctrlr *ctrlr)
- {
+ static const struct sdhci_ops sdhci_msm_ops = {
+-	.reset = sdhci_reset,
++	.reset = sdhci_msm_reset,
+ 	.set_clock = sdhci_msm_set_clock,
+ 	.get_min_clock = sdhci_msm_get_min_clock,
+ 	.get_max_clock = sdhci_msm_get_max_clock,
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
