@@ -2,247 +2,479 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A53F2173FC1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 19:38:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AE0F17414D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 22:10:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725805AbgB1Sii (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Feb 2020 13:38:38 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:45705 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726720AbgB1Sii (ORCPT
+        id S1725900AbgB1VKj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Feb 2020 16:10:39 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:51803 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725805AbgB1VKj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Feb 2020 13:38:38 -0500
-Received: by mail-pf1-f194.google.com with SMTP id 2so2128292pfg.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2020 10:38:36 -0800 (PST)
+        Fri, 28 Feb 2020 16:10:39 -0500
+Received: by mail-pj1-f68.google.com with SMTP id fa20so1789879pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2020 13:10:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7Mj1CM/WyswvfaSTAEBfuMjiDk0djmCwfBfsrA3O5uc=;
-        b=BlVt49tTxtV5Bde7kV6ngAmWl7rEt0i8rqnv7INClnaweok4PqrcznuNCW7HcNzaMz
-         ljc/q6AvcKzmdVCiDy4mi/v6PxO5RTRYkjOyXw5URocA2fEmZot5OKlRsYrfCz1vr0Tr
-         RsNIX1ns65INwth6gEZOzYmbcEj/+XiOKypop7ME4vEVgDxTX3ollzeTpmVQxpRxJv0X
-         /f9kAtJPxHFCCepDzwCCSd5UGFFO6tSkCboCfPFaMPlHAray9Z33GJ47Z3UhzQO0TsU5
-         /D6aHhSxntnh8253NMf8uOkRBZ8QW46dl6etIkJ5EVG25OheZVCPdehinVQiV/l1UVPZ
-         LChw==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=9/DXG/Oi4JW2k6CGwME7FoSd15JdePoZbmRNBBM0ZR0=;
+        b=kToKqaqeUAg+od/bA99qhTzEiV8vdlIaXeFAXzsPHr7UYSxa85r8GqlhhyAp1J5rm8
+         v79xIzpLJGaJ75nbYVVg87LvXLKus5+ECLPURVuGfnBzMvPJ2zgyiNK5nywI6KV0I1Kx
+         2zuZ9yxkp/m81N0V+Vy6gEEXXOxMbWpwmGrWg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7Mj1CM/WyswvfaSTAEBfuMjiDk0djmCwfBfsrA3O5uc=;
-        b=Dn3Hv9dVXuVBt2Xua+Nr+SAN7jOpxcX2rwM82n/KZxbZu+XX79B53TKh5WjWgUSX08
-         z+gy1e5qf+S0RF7HXb8TfP1mw1XtWh2JUPcadjAhl1ZMBnwGqzjYolo0Slkc5NlDAq0y
-         cZcWmmzz4TcXkJQcEUaFie6hYFkbYVbM8ByEAKgtIuU3tkzZsn6TSNo0YqjRofBGyGWx
-         wd+p/KStHtBgc54xnZQY7ie8q9XN9Ptiw5KUBPMSwVzEMuMmYePcA8erw7GISYdZVqFQ
-         nVIQQlL8HOyVE6MyabVwRzQwYoz3Dm3YC4gcl1tvorFR+4Stepz9xvDnRxl3iSG6LghF
-         qjWg==
-X-Gm-Message-State: APjAAAU/q4n4Il8p5nc4saluXRg7OJiLNtagQaAxOaMInOfZpQDo4UcI
-        UiaSWLNarXtejQQnEAl54G0qsw==
-X-Google-Smtp-Source: APXvYqwU0KE04kKPdLTj115noM9yxYuTjDpZIVSW/jvVwAsLLZopU3CtFzW4tbOFtdfVVt7ikP16Ow==
-X-Received: by 2002:a62:ce8b:: with SMTP id y133mr5773442pfg.172.1582915115515;
-        Fri, 28 Feb 2020 10:38:35 -0800 (PST)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id b5sm12301691pfb.179.2020.02.28.10.38.33
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=9/DXG/Oi4JW2k6CGwME7FoSd15JdePoZbmRNBBM0ZR0=;
+        b=P0YHmckZyU2rsdQizThLhNaQLnggrGTJWF1zamlcmHTSGOWw5rhZvoW/r1yxa/HaFC
+         6Ul0gRm+ca/Wn5rMcRKnZqw4vd6gzkETkvPm1FSk/OMGVPYETgwM1auFXXT1thg12VUu
+         BzoWBoP9O/yY5341cxoVZ6bjJTTLrUt38NjTrdQoLcYW7QywX+1NGG1XKTkZlD2Tpxuf
+         GLWrHq8gujOOq9g1JrAwqkmsCb8Cyl1luSZRlthy02/PgI/aNZvnuQICW7G5ybFMLmBL
+         3tNFpDVPs94xB/qsvDIA+13zwTk9dSiyjuA6texVt32t/Hqzlarsm+QZ6e/OhicubSpi
+         vAdw==
+X-Gm-Message-State: APjAAAXJlqMhZ+VZ59HzvTcuBYXOFrEDJic3JwChsRVpWwvjx+R8xQG9
+        ALwWquMNv97jY7Bf2MqXdeIFAg==
+X-Google-Smtp-Source: APXvYqzbNMZlBCKvNkU5M3AUouIqAZWj+fVwMSbNmEk+evC6yaVEF7xeAzgXvC0hg/zWe/oCT9rzlA==
+X-Received: by 2002:a17:902:8f8e:: with SMTP id z14mr5931716plo.195.1582924237276;
+        Fri, 28 Feb 2020 13:10:37 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id x4sm12512198pff.143.2020.02.28.13.10.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Feb 2020 10:38:34 -0800 (PST)
-Date:   Fri, 28 Feb 2020 11:38:32 -0700
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     rishabhb@codeaurora.org
-Cc:     Siddharth Gupta <sidgup@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, ohad@wizery.com, tsoni@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, psodagud@codeaurora.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 6/6] remoteproc: qcom: Add notification types to SSR
-Message-ID: <20200228183832.GA23026@xps15>
-References: <1582167465-2549-1-git-send-email-sidgup@codeaurora.org>
- <1582167465-2549-7-git-send-email-sidgup@codeaurora.org>
- <20200227215940.GC20116@xps15>
- <1a615fcd5a5c435d1d8babe8d5c3f8c3@codeaurora.org>
+        Fri, 28 Feb 2020 13:10:35 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1a615fcd5a5c435d1d8babe8d5c3f8c3@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1582274986-17490-3-git-send-email-mkshah@codeaurora.org>
+References: <1582274986-17490-1-git-send-email-mkshah@codeaurora.org> <1582274986-17490-3-git-send-email-mkshah@codeaurora.org>
+Subject: Re: [PATCH v2 2/4] soc: qcom: Add SoC sleep stats driver
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>
+To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, mka@chromium.org
+Date:   Fri, 28 Feb 2020 13:10:34 -0800
+Message-ID: <158292423432.4688.6964200779843496200@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 27, 2020 at 04:00:21PM -0800, rishabhb@codeaurora.org wrote:
-> On 2020-02-27 13:59, Mathieu Poirier wrote:
-> > On Wed, Feb 19, 2020 at 06:57:45PM -0800, Siddharth Gupta wrote:
-> > > The SSR subdevice only adds callback for the unprepare event. Add
-> > > callbacks
-> > > for unprepare, start and prepare events. The client driver for a
-> > > particular
-> > > remoteproc might be interested in knowing the status of the remoteproc
-> > > while undergoing SSR, not just when the remoteproc has finished
-> > > shutting
-> > > down.
-> > > 
-> > > Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
-> > > ---
-> > >  drivers/remoteproc/qcom_common.c | 39
-> > > +++++++++++++++++++++++++++++++++++----
-> > >  include/linux/remoteproc.h       | 15 +++++++++++++++
-> > >  2 files changed, 50 insertions(+), 4 deletions(-)
-> > > 
-> > > diff --git a/drivers/remoteproc/qcom_common.c
-> > > b/drivers/remoteproc/qcom_common.c
-> > > index 6714f27..6f04a5b 100644
-> > > --- a/drivers/remoteproc/qcom_common.c
-> > > +++ b/drivers/remoteproc/qcom_common.c
-> > > @@ -183,9 +183,9 @@ EXPORT_SYMBOL_GPL(qcom_remove_smd_subdev);
-> > >   *
-> > >   * Returns pointer to srcu notifier head on success, ERR_PTR on
-> > > failure.
-> > >   *
-> > > - * This registers the @notify function as handler for restart
-> > > notifications. As
-> > > - * remote processors are stopped this function will be called, with
-> > > the rproc
-> > > - * pointer passed as a parameter.
-> > > + * This registers the @notify function as handler for
-> > > powerup/shutdown
-> > > + * notifications. This function will be invoked inside the
-> > > callbacks registered
-> > > + * for the ssr subdevice, with the rproc pointer passed as a
-> > > parameter.
-> > >   */
-> > >  void *qcom_register_ssr_notifier(struct rproc *rproc, struct
-> > > notifier_block *nb)
-> > >  {
-> > > @@ -227,11 +227,39 @@ int qcom_unregister_ssr_notifier(void *notify,
-> > > struct notifier_block *nb)
-> > >  }
-> > >  EXPORT_SYMBOL_GPL(qcom_unregister_ssr_notifier);
-> > > 
-> > > +static int ssr_notify_prepare(struct rproc_subdev *subdev)
-> > > +{
-> > > +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
-> > > +
-> > > +	srcu_notifier_call_chain(ssr->rproc_notif_list,
-> > > +				 RPROC_BEFORE_POWERUP, (void *)ssr->name);
-> > > +	return 0;
-> > > +}
-> > > +
-> > > +static int ssr_notify_start(struct rproc_subdev *subdev)
-> > > +{
-> > > +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
-> > > +
-> > > +	srcu_notifier_call_chain(ssr->rproc_notif_list,
-> > > +				 RPROC_AFTER_POWERUP, (void *)ssr->name);
-> > > +	return 0;
-> > > +}
-> > > +
-> > > +static void ssr_notify_stop(struct rproc_subdev *subdev, bool
-> > > crashed)
-> > > +{
-> > > +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
-> > > +
-> > > +	srcu_notifier_call_chain(ssr->rproc_notif_list,
-> > > +				 RPROC_BEFORE_SHUTDOWN, (void *)ssr->name);
-> > > +}
-> > > +
-> > > +
-> > >  static void ssr_notify_unprepare(struct rproc_subdev *subdev)
-> > >  {
-> > >  	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
-> > > 
-> > > -	srcu_notifier_call_chain(ssr->rproc_notif_list, 0, (void
-> > > *)ssr->name);
-> > > +	srcu_notifier_call_chain(ssr->rproc_notif_list,
-> > > +				 RPROC_AFTER_SHUTDOWN, (void *)ssr->name);
-> > >  }
-> > > 
-> > >  /**
-> > > @@ -248,6 +276,9 @@ void qcom_add_ssr_subdev(struct rproc *rproc,
-> > > struct qcom_rproc_ssr *ssr,
-> > >  {
-> > >  	ssr->name = ssr_name;
-> > >  	ssr->subdev.name = kstrdup("ssr_notifs", GFP_KERNEL);
-> > > +	ssr->subdev.prepare = ssr_notify_prepare;
-> > > +	ssr->subdev.start = ssr_notify_start;
-> > > +	ssr->subdev.stop = ssr_notify_stop;
-> > 
-> > Now that I have a better understanding of what this patchset is doing, I
-> > realise
-> > my comments in patch 04 won't work.  To differentiate the subdevs of an
-> > rproc I
-> > suggest to wrap them in a generic structure with a type and an enum.
-> > That way
-> > you can differenciate between subdevices without having to add to the
-> > core.
-> Ok. I can try that.
-> > 
-> > That being said, I don't understand what patches 5 and 6 are doing...
-> > Registering with the global ssr_notifiers allowed to gracefully shutdown
-> > all the
-> > MCUs in the system when one of them would go down.  But now that we are
-> > using
-> > the notifier on a per MCU, I really don't see why each subdev couldn't
-> > implement
-> > the right prepare/start/stop functions.
-> > 
-> > Am I missing something here?
-> We only want kernel clients to be notified when the Remoteproc they are
-> interested
-> in changes state. For e.g. audio kernel driver should be notified when audio
-> processor goes down but it does not care about any other remoteproc.
-> If you are suggesting that these kernel clients be added as subdevices then
-> we will end up having many subdevices registered to each remoteproc. So we
-> implemented a notifier chain per Remoteproc. This keeps the SSR
-> notifications as
-> the subdevice per remoteproc, and all interested clients can register to it.
+Quoting Maulik Shah (2020-02-21 00:49:44)
+> From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
+>=20
+> Lets's add a driver to read the the stats from remote processor
 
-It seems like I am missing information...  Your are referring to "kernel
-clients" and as such I must assume some drivers that are not part of the 
-remoteproc/rpmsg subsystems are calling qcom_register_ssr_notifier().  I must
-also assume these drivers (or that functionality) are not yet upsream because
-all I can see calling qcom_register_ssr_notifier() is qcom_glink_ssr_probe(). 
+Let's
 
-Speaking of which, what is the role of the qcom_glink_ssr_driver?  Is the glink
-device that driver is handling the same as the glink device registed in
-adsp_probe() and q6v5_probe()? 
+> and export to debugfs.
+>=20
+> The driver creates "soc_sleep_stats" directory in debugfs and adds
+> files for various low power mode available. Below is sample output
+> with command
+>=20
+> cat /sys/kernel/debug/soc_sleep_stats/ddr
+> count =3D 0
+> Last Entered At =3D 0
+> Last Exited At =3D 0
+> Accumulated Duration =3D 0
+>=20
+> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> ---
+>  drivers/soc/qcom/Kconfig           |  10 ++
+>  drivers/soc/qcom/Makefile          |   1 +
+>  drivers/soc/qcom/soc_sleep_stats.c | 279 +++++++++++++++++++++++++++++++=
+++++++
+>  3 files changed, 290 insertions(+)
+>  create mode 100644 drivers/soc/qcom/soc_sleep_stats.c
+>=20
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index d0a73e7..4d36654 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -185,6 +185,16 @@ config QCOM_SOCINFO
+>          Say yes here to support the Qualcomm socinfo driver, providing
+>          information about the SoC to user space.
+> =20
+> +config QCOM_SOC_SLEEP_STATS
+> +       tristate "Qualcomm Technologies, Inc. (QTI) SoC sleep stats drive=
+r"
+> +       depends on ARCH_QCOM
 
-> > 
-> > 
-> > >  	ssr->subdev.unprepare = ssr_notify_unprepare;
-> > >  	ssr->rproc_notif_list = kzalloc(sizeof(struct srcu_notifier_head),
-> > >  								GFP_KERNEL);
-> > > diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-> > > index e2f60cc..4be4478 100644
-> > > --- a/include/linux/remoteproc.h
-> > > +++ b/include/linux/remoteproc.h
-> > > @@ -449,6 +449,21 @@ struct rproc_dump_segment {
-> > >  };
-> > > 
-> > >  /**
-> > > + * enum rproc_notif_type - Different stages of remoteproc
-> > > notifications
-> > > + * @RPROC_BEFORE_SHUTDOWN:	unprepare stage of  remoteproc
-> > > + * @RPROC_AFTER_SHUTDOWN:	stop stage of  remoteproc
-> > > + * @RPROC_BEFORE_POWERUP:	prepare stage of  remoteproc
-> > > + * @RPROC_AFTER_POWERUP:	start stage of  remoteproc
-> > > + */
-> > > +enum rproc_notif_type {
-> > > +	RPROC_BEFORE_SHUTDOWN,
-> > > +	RPROC_AFTER_SHUTDOWN,
-> > > +	RPROC_BEFORE_POWERUP,
-> > > +	RPROC_AFTER_POWERUP,
-> > > +	RPROC_MAX
-> > > +};
-> > > +
-> > > +/**
-> > >   * struct rproc - represents a physical remote processor device
-> > >   * @node: list node of this rproc object
-> > >   * @domain: iommu domain
-> > > --
-> > > Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> > > a Linux Foundation Collaborative Project
-> > > 
-> > > _______________________________________________
-> > > linux-arm-kernel mailing list
-> > > linux-arm-kernel@lists.infradead.org
-> > > http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
+Can you add || COMPILE_TEST?
+
+> +       depends on DEBUG_FS
+> +       help
+> +         Qualcomm Technologies, Inc. (QTI) SoC sleep stats driver to read
+> +         the shared memory exported by the remote processor related to
+> +         various SoC level low power modes statistics and export to debu=
+gfs
+> +         interface.
+> +
+>  config QCOM_WCNSS_CTRL
+>         tristate "Qualcomm WCNSS control driver"
+>         depends on ARCH_QCOM || COMPILE_TEST
+> diff --git a/drivers/soc/qcom/soc_sleep_stats.c b/drivers/soc/qcom/soc_sl=
+eep_stats.c
+> new file mode 100644
+> index 00000000..bf38bb5
+> --- /dev/null
+> +++ b/drivers/soc/qcom/soc_sleep_stats.c
+> @@ -0,0 +1,279 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2011-2020, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#include <linux/device.h>
+> +#include <linux/io.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/of_device.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/slab.h>
+> +#include <linux/uaccess.h>
+
+Why?
+
+> +#include <linux/debugfs.h>
+> +#include <linux/seq_file.h>
+> +#include <linux/stddef.h>
+
+Why?
+
+> +
+> +#include <linux/soc/qcom/smem.h>
+> +#include <clocksource/arm_arch_timer.h>
+> +
+> +#define NAME_LENGTH    5
+> +
+> +enum subsystem_item_id {
+> +       MODEM =3D 605,
+> +       ADSP,
+> +       CDSP,
+> +       SLPI,
+> +       GPU,
+> +       DISPLAY,
+> +};
+> +
+> +enum subsystem_pid {
+> +       PID_APSS =3D 0,
+> +       PID_MODEM =3D 1,
+> +       PID_ADSP =3D 2,
+> +       PID_SLPI =3D 3,
+> +       PID_CDSP =3D 5,
+> +       PID_GPU =3D PID_APSS,
+> +       PID_DISPLAY =3D PID_APSS,
+
+I still don't understand this enums. Why not make them a #define set
+with known values?
+
+> +};
+> +
+> +struct subsystem_data {
+> +       char *name;
+
+Can it be const char *?
+
+> +       enum subsystem_item_id item_id;
+> +       enum subsystem_pid pid;
+> +};
+> +
+> +static struct subsystem_data subsystems[] =3D {
+> +       { "modem", MODEM, PID_MODEM },
+> +       { "adsp", ADSP, PID_ADSP },
+> +       { "cdsp", CDSP, PID_CDSP },
+> +       { "slpi", SLPI, PID_SLPI },
+> +       { "gpu", GPU, PID_GPU },
+> +       { "display", DISPLAY, PID_DISPLAY },
+> +};
+> +
+> +struct stats_config {
+> +       u32 offset_addr;
+
+Looks ok but probably can just be unsigned int?
+
+> +       u32 num_records;
+
+Why not size_t? Is 32-bit width important?
+
+> +       bool appended_stats_avail;
+> +};
+> +
+> +static const struct stats_config *config;
+
+This shouldn't be necessary. Can the config be passed into the debugfs
+file ops private data?
+
+> +
+> +struct soc_sleep_stats_data {
+
+This struct is only used in probe. Why not just make probe have more
+local variables?
+
+> +       phys_addr_t stats_base;
+> +       resource_size_t stats_size;
+> +       void __iomem *reg;
+> +       struct dentry *root;
+> +};
+> +
+> +struct entry {
+> +       __le32 stat_type;
+> +       __le32 count;
+> +       __le64 last_entered_at;
+> +       __le64 last_exited_at;
+> +       __le64 accumulated;
+
+These should just be u32 and u64.
+
+> +};
+> +
+> +struct appended_entry {
+> +       __le32 client_votes;
+> +       __le32 reserved[3];
+> +};
+
+Same, just u32.
+
+> +
+> +static u64 get_time_in_sec(u64 counter)
+> +{
+> +       do_div(counter, arch_timer_get_rate());
+
+I don't think arch_timer_get_rate() is exported as a symbol. Why we need
+to convert this to time? Is the counter not sufficient to understand
+that so many ticks have passed since it entered and exited?
+
+> +
+> +       return counter;
+> +}
+> +
+> +static void print_sleep_stats(struct seq_file *s, struct entry *e)
+> +{
+> +       e->last_entered_at =3D get_time_in_sec(e->last_entered_at);
+> +       e->last_exited_at =3D get_time_in_sec(e->last_exited_at);
+> +       e->accumulated =3D get_time_in_sec(e->accumulated);
+> +
+> +       seq_printf(s, "count =3D %u\n", e->count);
+> +       seq_printf(s, "Last Entered At =3D %llu\n", e->last_entered_at);
+> +       seq_printf(s, "Last Exited At =3D %llu\n", e->last_exited_at);
+> +       seq_printf(s, "Accumulated Duration =3D %llu\n", e->accumulated);
+
+Why is count not capitalized but everything else is?
+
+> +}
+> +
+> +static int subsystem_sleep_stats_show(struct seq_file *s, void *d)
+> +{
+> +       struct subsystem_data *subsystem =3D s->private;
+> +       struct entry *e;
+> +
+> +       e =3D qcom_smem_get(subsystem->pid, subsystem->item_id, NULL);
+
+Do we need to look this up each time we read the stats? Why can't we get
+this once in probe or when we create the debugfs file?
+
+> +       if (IS_ERR(e))
+> +               return PTR_ERR(e);
+> +
+> +       /*
+> +        * If a subsystem is in sleep when reading the sleep stats adjust
+> +        * the accumulated sleep duration to show actual sleep time.
+> +        */
+> +       if (e->last_entered_at > e->last_exited_at)
+> +               e->accumulated +=3D (arch_timer_read_counter()
+> +                                  - e->last_entered_at);
+> +
+> +       print_sleep_stats(s, e);
+> +
+> +       return 0;
+> +}
+> +
+> +static int soc_sleep_stats_show(struct seq_file *s, void *d)
+> +{
+> +       void __iomem *reg =3D s->private;
+> +       uint32_t offset;
+> +       struct entry e;
+> +
+> +       offset =3D offsetof(struct entry, count);
+> +       e.count =3D le32_to_cpu(readl_relaxed(reg + offset));
+
+readl APIs already do endian conversions.
+
+> +
+> +       offset =3D offsetof(struct entry, last_entered_at);
+> +       e.last_entered_at =3D le64_to_cpu(readq_relaxed(reg + offset));
+> +
+> +       offset =3D offsetof(struct entry, last_exited_at);
+> +       e.last_exited_at =3D le64_to_cpu(readq_relaxed(reg + offset));
+> +
+> +       offset =3D offsetof(struct entry, accumulated);
+> +       e.accumulated =3D le64_to_cpu(readq_relaxed(reg + offset));
+> +
+> +       print_sleep_stats(s, &e);
+> +
+> +       if (config->appended_stats_avail) {
+> +               struct appended_entry ae;
+> +
+> +               offset =3D offsetof(struct appended_entry, client_votes) +
+> +                        sizeof(struct entry);
+> +               ae.client_votes =3D le32_to_cpu(readl_relaxed(reg + offse=
+t));
+> +               seq_printf(s, "Client_votes =3D 0x%x\n", ae.client_votes);
+
+Use %#x to avoid having to add 0x prefix. Also, can we replace '=3D' with
+':' so that readability is a bit nicer?
+
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +DEFINE_SHOW_ATTRIBUTE(soc_sleep_stats);
+> +DEFINE_SHOW_ATTRIBUTE(subsystem_sleep_stats);
+> +
+> +static const struct stats_config rpm_data =3D {
+> +       .offset_addr =3D 0x14,
+> +       .num_records =3D 2,
+> +       .appended_stats_avail =3D true,
+> +};
+> +
+> +static const struct stats_config rpmh_data =3D {
+> +       .offset_addr =3D 0x4,
+> +       .num_records =3D 3,
+> +       .appended_stats_avail =3D false,
+> +};
+> +
+> +static const struct of_device_id soc_sleep_stats_table[] =3D {
+> +       { .compatible =3D "qcom,rpm-sleep-stats", .data =3D &rpm_data},
+> +       { .compatible =3D "qcom,rpmh-sleep-stats", .data =3D &rpmh_data},
+> +       { },
+
+Please drop comma after sentinel. It makes a compiler error appear if
+anything comes after.
+
+> +};
+
+Move this table next to the driver structure please.
+
+> +
+> +static int create_debugfs_entries(struct soc_sleep_stats_data *drv)
+> +{
+> +       struct entry *e;
+> +       char stat_type[NAME_LENGTH] =3D {0};
+
+Is it a string? Otherwise, seems pretty useless to initialize this to 0
+on the stack.
+
+> +       uint32_t offset, type;
+
+Just use u32 instead of uint32_t in any kernel code.
+
+> +       int i;
+> +
+> +       drv->root =3D debugfs_create_dir("soc_sleep_stats", NULL);
+> +       if (IS_ERR_OR_NULL(drv->root))
+> +               return PTR_ERR(drv->root);
+
+This is wrong. Debugfs checks have generally been removed because it's
+not a problem if debugfs fails. When it fails, drv->root will be NULL
+and any debugfs_create() function will ignore it. Since this driver
+depends on DEBUGFS being enabled, -ENODEV won't be returned as an error
+pointer.
+
+> +
+> +       for (i =3D 0; i < config->num_records; i++) {
+> +               offset =3D offsetof(struct entry, stat_type) +
+> +                        (i * sizeof(struct entry));
+
+This offset of stuff is sort of complicated. I'd prefer to treat it like
+how we treat most registers with #defines and base + #define sort of
+logic. That is easier to read. It also let's us decide to completely
+reorder struct members and not have to worry that the struct doesn't
+match how memory is laid out. Instead we have macros that define the
+offset from some base __iomem pointer.
+
+> +
+> +               if (config->appended_stats_avail)
+> +                       offset +=3D i * sizeof(struct appended_entry);
+> +
+> +               type =3D le32_to_cpu(readl_relaxed(drv->reg + offset));
+> +               memcpy(stat_type, &type, sizeof(uint32_t));
+> +               debugfs_create_file(stat_type, 0444, drv->root,
+> +                                   drv->reg + offset,
+> +                                   &soc_sleep_stats_fops);
+> +       }
+> +
+> +       for (i =3D 0; i < ARRAY_SIZE(subsystems); i++) {
+> +               e =3D qcom_smem_get(subsystems[i].pid, subsystems[i].item=
+_id,
+> +                                 NULL);
+> +
+> +               if (IS_ERR(e))
+> +                       continue;
+> +
+> +               debugfs_create_file(subsystems[i].name, 0444, drv->root,
+> +                                   &subsystems[i],
+> +                                   &subsystem_sleep_stats_fops);
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +static int soc_sleep_stats_probe(struct platform_device *pdev)
+> +{
+> +       struct soc_sleep_stats_data *drv;
+> +       struct resource *res;
+> +       void __iomem *offset_addr;
+> +
+> +       drv =3D devm_kzalloc(&pdev->dev, sizeof(*drv), GFP_KERNEL);
+> +       if (!drv)
+> +               return -ENOMEM;
+> +
+> +       config =3D of_device_get_match_data(&pdev->dev);
+
+Use device_get_match_data() to make this be less DT specific.
+
+> +       if (!config)
+> +               return -ENODEV;
+> +
+> +       res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +       if (!res)
+> +               return PTR_ERR(res);
+> +
+> +       offset_addr =3D ioremap_nocache(res->start + config->offset_addr,
+
+Why do we need ioremap_nocache()? Can ioremap() work?
+
+> +                                     sizeof(u32));
+> +       if (IS_ERR(offset_addr))
+> +               return PTR_ERR(offset_addr);
+> +
+> +       drv->stats_base =3D res->start | readl_relaxed(offset_addr);
+
+Why | vs. +?
+
+> +       drv->stats_size =3D resource_size(res);
+> +       iounmap(offset_addr);
+> +
+> +       drv->reg =3D devm_ioremap(&pdev->dev, drv->stats_base, drv->stats=
+_size);
+> +       if (!drv->reg)
+> +               return -ENOMEM;
+> +
+> +       if (create_debugfs_entries(drv))
+> +               return -ENODEV;
+> +
+> +       platform_set_drvdata(pdev, drv);
+> +
+> +       return 0;
+> +}
