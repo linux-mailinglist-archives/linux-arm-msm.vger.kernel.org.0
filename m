@@ -2,252 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F9FD172EF1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 03:57:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D5B2172F43
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 04:21:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730520AbgB1C5F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Feb 2020 21:57:05 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:40183 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730445AbgB1C5F (ORCPT
+        id S1730794AbgB1DVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Feb 2020 22:21:18 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:33367 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730756AbgB1DVQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Feb 2020 21:57:05 -0500
-Received: by mail-pg1-f194.google.com with SMTP id t24so717683pgj.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 18:57:04 -0800 (PST)
+        Thu, 27 Feb 2020 22:21:16 -0500
+Received: by mail-pl1-f194.google.com with SMTP id ay11so670775plb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 19:21:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=rASt1j8T2my4BXnw+qq/JhwHqrPUkRKUBt8AYSRQGCE=;
-        b=t+3gX3Clw8dFgzjzUq/Y8U+6dX2WfPjGQP4hkO0VPCaNXyT2IxS2+Lilxyf914uWWP
-         dVni36ypbnkx2qnO2PNrn9TK1c74b/UHtp1o+qEmG4nrjvpuRNrfobs3sCXEAxffWk08
-         DaSYJGEh16Pf9LlgnrdwAGaPdYDSVv7s2whH9KNKBEnpusXQL327ewmZIYNMVDGN80uT
-         15Poy+KqPkgyOS5VhtiCL9aS5jYlwy/uoV4tbIIkVwD/ckO99WbpD1fjTlfi+03CaLfQ
-         HxtAfNBAGxrRIKqkt2TBtp0nusoeHdLUJf6iX2wPlcj2ZaXNaNosMKHIyT3hq6+px9g3
-         dLfg==
+         :content-disposition:in-reply-to;
+        bh=CbyhEEBykmw3ddLjjJrI9AM5Mr4hawbbfYF6WKWQqeQ=;
+        b=eaF3sVJdk+D/CnRbyfi1cEt+jLNGgv14OlM9uSIxKRbXQeHAUSaINSCt/R0HWLtYbO
+         g54dyBqxfM9SxnM7ub7WgPHoBLmR1w8E7FWO43vDqX22aG8/9c3ldoFM7dGRaScYmmaS
+         PpdFsqif/jj0zdCCeORObPwwIgUfMW+JelQ8c2gPZeAw/PYfqkJm5T9qzxNlXnZ7lfOJ
+         j7SslBVWiThddTLts4jK/LwmDgGMOagdSalhgqmUjessz6JNCshBfwWO4D/7UTtw9akS
+         RN7nEnqLQhd1ciMJ7fpkgogVCpcc4v6tLJuegQOEnL3vhkZtV7SB+p3ay/kGvoNBT6/7
+         En1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=rASt1j8T2my4BXnw+qq/JhwHqrPUkRKUBt8AYSRQGCE=;
-        b=dwrc20pCtsjvQ3opvfIPXTuIAuSSzUy6GYxK3CRe3D9V82jddDVpNJ+e7fogHoUEWM
-         sk4QNt67CBgE11qZy4+SygPQRH5qVZ1VnzPTFNsMGUDSGyA54nXKFp99dQHQP2EseU8b
-         /eYwuGjk4e/k2XNxzReiS8Bw0SqGJUautIoDwYHkaAn0uV3RY7YCwbEhD4MwwhiHK0Dz
-         Vvp+kuiC0jOoBhwcaKRdiOtP3ttdmNc9XWRgZytW2m4xjcpbiYS2KBoxOPK46mPeVeJz
-         HeIse55MUEhTm5oxo38TgL8ypJpOJ8wzjIiL9FHqjxEFBt8fp6EsYoLSSWZ7O/WqiGGu
-         2Ayg==
-X-Gm-Message-State: APjAAAUZ86wR1NnZDSYZpTalwzHUD+EOBqUJReecfNQocE0mROID8XCv
-        V3F+JYoPXs1ifIZJLDJDkRhyfg==
-X-Google-Smtp-Source: APXvYqzcXXbb5r8K/K59vpg2+eEZtv4LjyQ9MnFfJCsT56TwF8dv8U50T5PUyzEDLnGKZpJkUs9TUg==
-X-Received: by 2002:a63:3d0a:: with SMTP id k10mr2307261pga.233.1582858623570;
-        Thu, 27 Feb 2020 18:57:03 -0800 (PST)
-Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id u4sm7884236pgu.75.2020.02.27.18.57.02
+         :mime-version:content-disposition:in-reply-to;
+        bh=CbyhEEBykmw3ddLjjJrI9AM5Mr4hawbbfYF6WKWQqeQ=;
+        b=Zs6nqLWJEyQ2SMBKAq1LZh8PlyaQRQzMtLwpnA7RJHMG7d7uEt7t4NpOVthHqECkRK
+         up8GcOZTj1y5TjMbVP6CLzhaJF2+nSx9l4May3YCA4CSc7QwPRDP5BYJPUtzHV2ypIkV
+         DPcSjkobh0pbFPdcq8OwXsXVtxjT6/A4nx8dE56SjhKRinckajO0YaZFCj6DQ9AaCf/I
+         CnbI2KDhlk4HxV/DL9Thm66sbHxeBDXCVO4tm4R/kJKY/VSwq6lOZNxZp6DT82EC/zhk
+         UGbOZ4dZmaAJdVdDQnhn6mXsFtDxdn9UGRu0e2dBop+4T+YO7THcd2WK8qx/CoUECN8T
+         /ZAw==
+X-Gm-Message-State: APjAAAUvHgaQgAPGaGuUR46CYd5HfRUEDKzP+eAq/sd7fsYBVSUHjsWv
+        BfCpu9Im2g1n5OfQ8eZpWGqBA7b6Dso=
+X-Google-Smtp-Source: APXvYqxnXJjE6XpBiYWXE9n4CqpA5PKI58DdjfVc/8hHp/0MIWMFGqP01x9wpnW3o5Yt5UWsh2lP1g==
+X-Received: by 2002:a17:902:7009:: with SMTP id y9mr2032503plk.254.1582860073796;
+        Thu, 27 Feb 2020 19:21:13 -0800 (PST)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id q21sm9132715pff.105.2020.02.27.19.21.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2020 18:57:02 -0800 (PST)
-Date:   Thu, 27 Feb 2020 18:57:00 -0800
+        Thu, 27 Feb 2020 19:21:13 -0800 (PST)
+Date:   Thu, 27 Feb 2020 19:21:10 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Thierry Reding <thierry.reding@gmail.com>
-Cc:     Joerg Roedel <joro@8bytes.org>, linux-tegra@vger.kernel.org,
-        Robin Murphy <robin.murphy@arm.com>,
-        iommu@lists.linux-foundation.org, Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [RFC 0/2] iommu: arm-smmu: Add support for early direct mappings
-Message-ID: <20200228025700.GA856087@builder>
-References: <20191209150748.2471814-1-thierry.reding@gmail.com>
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vkoul@kernel.org, daniel.lezcano@linaro.org, sivaa@codeaurora.org,
+        Andy Gross <agross@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>, devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] dt-bindings: thermal: tsens: Add qcom,tsens-v0_1
+ to msm8916.dtsi compatible
+Message-ID: <20200228032110.GA210720@yoga>
+References: <cover.1582705101.git.amit.kucheria@linaro.org>
+ <ab6a982bd9bcbc76262cd9ca5dd6ea10cf45b8a1.1582705101.git.amit.kucheria@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191209150748.2471814-1-thierry.reding@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <ab6a982bd9bcbc76262cd9ca5dd6ea10cf45b8a1.1582705101.git.amit.kucheria@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 09 Dec 07:07 PST 2019, Thierry Reding wrote:
+On Wed 26 Feb 01:31 PST 2020, Amit Kucheria wrote:
 
-> From: Thierry Reding <treding@nvidia.com>
-> 
+$subject should be "arm64: dts: qcom: msm8916: ..."
 
-Sorry for the slow response on this, finally got the time to go through
-this in detail and try it out on some Qualcomm boards.
-
-> On some platforms, the firmware will setup hardware to read from a given
-> region of memory. One such example is a display controller that is
-> scanning out a splash screen from physical memory.
-> 
-
-This particular use case is the one that we need to figure out for
-Qualcomm devices as well; on some devices it's a simple splash screen
-(that on many devices can be disabled), but for others we have EFIFB
-on the display and no (sane) means to disable this.
-
-> During Linux' boot process, the ARM SMMU will configure all contexts to
-> fault by default. This means that memory accesses that happen by an SMMU
-> master before its driver has had a chance to properly set up the IOMMU
-> will cause a fault. This is especially annoying for something like the
-> display controller scanning out a splash screen because the faults will
-> result in the display controller getting bogus data (all-ones on Tegra)
-> and since it repeatedly scans that framebuffer, it will keep triggering
-> such faults and spam the boot log with them.
-> 
-
-As my proposed patches indicated, the Qualcomm platform boots with
-stream mapping setup for the hardware used by the bootloader, but
-relying on the associated context banks not being enabled.
-
-USFCFG in SCR0 is set and any faults resulting of this will trap into
-secure world and the device will be reset.
-
-> In order to work around such problems, scan the device tree for IOMMU
-> masters and set up a special identity domain that will map 1:1 all of
-> the reserved regions associated with them. This happens before the SMMU
-> is enabled, so that the mappings are already set up before translations
-> begin.
-> 
-> One thing that was pointed out earlier, and which I don't have a good
-> idea on how to solve it, is that the early identity domain is not
-> discarded. The assumption is that the standard direct mappings code of
-> the IOMMU framework will replace the early identity domain once devices
-> are properly attached to domains, but we don't have a good point in time
-> when it would be safe to remove the early identity domain.
-> 
-> One option that I can think of would be to create an early identity
-> domain for each master and inherit it when that master is attached to
-> the domain later on, but that seems rather complicated from an book-
-> keeping point of view and tricky because we need to be careful not to
-> map regions twice, etc.
-> 
-
-The one concern I ran into with this approach (after resolving below
-issues) is that when the display driver probes a new domain will be
-created automatically and I get a stream of "Unhandled context fault" in
-the log until the driver has mapped the framebuffer in the newly
-allocated context.
-
-This is normally not a problem, as we seem to be able to do this
-initialization in a few frames, but for the cases where the display
-driver probe defer this is a problem.
-
-But at least these devices doesn't reboot, so this is way better than the
-current state.
-
-> Any good ideas on how to solve this? It'd also be interesting to see if
-> there's a more generic way of doing this. I know that something like
-> this isn't necessary on earlier Tegra SoCs with the custom Tegra SMMU
-> because translations are only enabled when the devices are attached to a
-> domain. I'm not sure about other IOMMUs, but in the absence of a struct
-> device, I suspect that we can't really do anything really generic that
-> would work across drivers.
-> 
-
-As I indicated above I managed to get this working on the boards we have
-that uses the arm-smmu driver.
-
-## SDM845
-Booting the SDM845 shows the following register stream mapping register
-content:
-  SMR(0): 0x80080880 S2CR(0): 0x0
-  SMR(1): 0x80080c80 S2CR(1): 0x0
-  SMR(2): 0x800f00a0 S2CR(2): 0x1
-  SMR(3): 0x800f00c0 S2CR(3): 0x1
-  SMR(4): 0x800f00e0 S2CR(4): 0x2
-  SMR(5): 0x800f0100 S2CR(5): 0x2
-  SMR(6): 0x0 S2CR(6): 0x0
-  SMR(7): 0x0 S2CR(7): 0x0
-  SMR(8): 0x0 S2CR(8): 0x200ff
-  SMR(9): 0x0 S2CR(9): 0x200ff
-  ...
-
-Here stream 0 and 1 (SID 0x880 and 0xc80) are the display streams, the
-remainder are related to storage and USB - which afaict doesn't need to be
-maintained.
-
-As the display uses context bank 0, using this as the identity bank results in
-a couple of occurrences of:
-  Unhandled context fault: fsr=0x402, iova=0x9da00000, fsynr=0x370020, cbfrsynra=0x880, cb=0
-
-Which we survive, but as we reach arm_smmu_device_reset() to flush out the new
-stream mapping we start by writing S2CR(0) = 0, then SMR(0) = 0x800810a0. So
-until SMR(4) is written we're lacking a valid stream mapping for the display,
-and hence if the screen does refresh in during time period the device reboots.
-
-
-In addition to this, the iommu_iova_to_phys() you perform in the mapping loop
-results in a large number of "translation fault!" printouts from
-arm_smmu_iova_to_phys_hard().
-
-## SM8150
-Boots with the following stream mapping:
-  SMR(0): 0x800006a0 S2CR(0): 0x0
-  SMR(1): 0x800006c0 S2CR(1): 0x0
-  SMR(2): 0x80000300 S2CR(2): 0x1
-  SMR(3): 0x84200800 S2CR(3): 0x2
-  SMR(4): 0x0 S2CR(4): 0x0
-  SMR(5): 0x0 S2CR(5): 0x0
-  SMR(6): 0x0 S2CR(6): 0x200ff
-  SMR(7): 0x0 S2CR(7): 0x200ff
-  ...
-
-Here stream 3 (sid 0x800) is the display stream.
-
-Mapping the various memory regions into the first context works fine, but
-unless the display stream happens to be allocated to stream 3 (e.g. it always
-ends up in slot 1 with my current DT) the board reboots shortly after we start
-writing out the SMRs. I've not yet figured out why the board faults because of
-the move to an earlier SMR index. (Perhaps because we clear the previously used
-display SMR valid bit?)
-
-
-## Conclusions
-Both of these platforms indicates that moving the stream mapping around is
-going to cause issues, so inspired by my proposal I added below snippet right
-before the call to arm_smmu_setup_identity(), in order to populate the stream
-mapping selection.
-
-	for (i = 0; i < smmu->num_mapping_groups; i++) {
-		smr = arm_smmu_gr0_read(smmu, ARM_SMMU_GR0_SMR(i));
-		smmu->smrs[i].mask = FIELD_GET(ARM_SMMU_SMR_MASK, smr);
-		smmu->smrs[i].id = FIELD_GET(ARM_SMMU_SMR_ID, smr);
-		smmu->smrs[i].valid = !!(smr & ARM_SMMU_SMR_VALID);
-	}
-
-With this both boards boots fine, but I know Will had reservations wrt trusting
-these values. Perhaps we could use the read back values (with some sanity
-checking) only for setting up identity mapping?
-
-
-With this I also tested booting MSM8996 (the db820c board) and except for
-spending about 75 seconds printing below error in the kernel log during boot
-things seems to be functional.
-
-[   96.670723] arm-smmu b40000.iommu: translation fault!
-[   96.675038] arm-smmu b40000.iommu: PAR = 0x300000203
-
-
-Removing the call to iommu_iova_to_phys() in the mapping loop (as I know
-that I don't have any memory regions with multiple clients) solves the
-log spamming and all three boards seems to be functional.
+Apart from that this looks good.
 
 Regards,
 Bjorn
 
-> Thierry
+> The qcom-tsens binding requires a SoC-specific and a TSENS
+> family-specific binding to be specified in the compatible string.
 > 
-> Thierry Reding (2):
->   iommu: arm-smmu: Extract arm_smmu_of_parse()
->   iommu: arm-smmu: Add support for early direct mappings
+> Since them family-specific binding is not listed in the .dtsi file, we
+> see the following warnings in 'make dtbs_check'. Fix them.
 > 
->  drivers/iommu/arm-smmu.c | 195 +++++++++++++++++++++++++++++++++++++--
->  drivers/iommu/arm-smmu.h |   2 +
->  2 files changed, 189 insertions(+), 8 deletions(-)
+> /home/amit/work/builds/build-aarch64/arch/arm64/boot/dts/qcom/msm8916-mtp.dt.yaml:
+> thermal-sensor@4a9000: compatible: ['qcom,msm8916-tsens'] is not valid
+> under any of the given schemas (Possible causes of the failure):
+> /home/amit/work/builds/build-aarch64/arch/arm64/boot/dts/qcom/msm8916-mtp.dt.yaml:
+> thermal-sensor@4a9000: compatible: ['qcom,msm8916-tsens'] is too short
+> /home/amit/work/builds/build-aarch64/arch/arm64/boot/dts/qcom/msm8916-mtp.dt.yaml:
+> thermal-sensor@4a9000: compatible:0: 'qcom,msm8916-tsens' is not one of
+> ['qcom,msm8976-tsens', 'qcom,qcs404-tsens']
+> /home/amit/work/builds/build-aarch64/arch/arm64/boot/dts/qcom/msm8916-mtp.dt.yaml:
+> thermal-sensor@4a9000: compatible:0: 'qcom,msm8916-tsens' is not one of
+> ['qcom,msm8996-tsens', 'qcom,msm8998-tsens', 'qcom,sdm845-tsens']
 > 
+> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> index 9f31064f2374..1748ea3f4b4f 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> @@ -860,7 +860,7 @@
+>  		};
+>  
+>  		tsens: thermal-sensor@4a9000 {
+> -			compatible = "qcom,msm8916-tsens";
+> +			compatible = "qcom,msm8916-tsens", "qcom,tsens-v0_1";
+>  			reg = <0x4a9000 0x1000>, /* TM */
+>  			      <0x4a8000 0x1000>; /* SROT */
+>  			nvmem-cells = <&tsens_caldata>, <&tsens_calsel>;
 > -- 
-> 2.23.0
+> 2.20.1
 > 
-> 
-> _______________________________________________
-> linux-arm-kernel mailing list
-> linux-arm-kernel@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
