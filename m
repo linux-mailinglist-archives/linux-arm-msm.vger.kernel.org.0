@@ -2,214 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A0C261742A3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Feb 2020 00:01:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C6C8017432B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Feb 2020 00:33:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726359AbgB1XBe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Feb 2020 18:01:34 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:39374 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726151AbgB1XBe (ORCPT
+        id S1726359AbgB1XdF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Feb 2020 18:33:05 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:39393 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726046AbgB1XdF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Feb 2020 18:01:34 -0500
-Received: by mail-pf1-f194.google.com with SMTP id l7so2453730pff.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2020 15:01:31 -0800 (PST)
+        Fri, 28 Feb 2020 18:33:05 -0500
+Received: by mail-pl1-f193.google.com with SMTP id g6so1828345plp.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2020 15:33:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=dZaVgKnipnPl2uHYrizFjHisTcXxwvovLwjp+MQT1Jc=;
-        b=FS0eEq//+B2bAcN1ys9FeTBGx8KrK13+/GUy6uM8wAJ9jXqH+ni2kJSZyr0VFNTMJV
-         dRAo3asYgZKUPhnrecLy+ovofLUxFdLBpNriTnFdpR3rlA3kgUVWJZ7DULHJhHo2IGHW
-         ZICAdbAHT7Tzs3edt0nyVjeVk1RaSSN34mIAw=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=sn5GXMIGwl26J0A2bH2+Hj/TmmTI1dt3PT8+BN12Qxo=;
+        b=U2w15Sqi1qH+a7S8nZw4/e2p+gCc4zjYUDd4jOc/HPLwMtw84S907xCHmri8NFC5xu
+         QiIZ9MHbeNvAKizc8u1i/WjHnSjjHi1KkGuKaYwNr5neRxuNtFiNG6j9tuP5s7HwT1+N
+         nA+oDth3pH3yszaxls9HKLLlAQ2MXmapyP0vc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=dZaVgKnipnPl2uHYrizFjHisTcXxwvovLwjp+MQT1Jc=;
-        b=j60MKMM1HS12WSAbs8OamU7eiJuu/hRMyp7OWc6aBtetXmhjrtXfMVRlzcgaXO9LBm
-         xHM5fLB9f9k2RBA+VjPDriTttQl2Dw0ko3btXgOnqr+aNy8y03zx36EvUmipYubEItuS
-         c6xknROxIUc++jxDoxiHSwtCjoGmGoQ0JwluAbwylaEUgP1C91X/3T7ko46TXEkbThOe
-         hA1+wVQT3thFs6Y/Zt2sdy2RBy3QdILbwlSaekpamw2ugm8tThiAA5boMln8N5BmZ9jX
-         W1aybsLQExX2P89GNT8R0Rnh7GyoNiXUV8OcIoflt9Vq/x5sk5CBUoAOsOyBJoP9T0AR
-         yDwg==
-X-Gm-Message-State: APjAAAWRlW4YwNAOadjMsBpGR9BUv6AsTO4PJsIhihLE59CwkzmnZsQ/
-        DXQSX9LJotokyA2bTEdFsVgzpJQaHGM=
-X-Google-Smtp-Source: APXvYqwY4NjtVC70+7DJSvyYBQrQ2fqD3HjwbZd1bG+cCDPeeOCTVVRExMGiinPAhoiL0l3OaHSVaA==
-X-Received: by 2002:a63:be09:: with SMTP id l9mr6731956pgf.439.1582930891378;
-        Fri, 28 Feb 2020 15:01:31 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id 1sm8399252pff.11.2020.02.28.15.01.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Feb 2020 15:01:30 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1582638862-9344-2-git-send-email-skakit@codeaurora.org>
-References: <1582638862-9344-1-git-send-email-skakit@codeaurora.org> <1582638862-9344-2-git-send-email-skakit@codeaurora.org>
-Subject: Re: [PATCH V2 1/2] tty: serial: qcom_geni_serial: Allocate port->rx_fifo buffer in probe
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=sn5GXMIGwl26J0A2bH2+Hj/TmmTI1dt3PT8+BN12Qxo=;
+        b=mKpcjtnjMXFBZajw3JeEzt4jyXBANQa/Js4n4T5WUuI8Ndmz6m3aqgF0PY0dVMUodw
+         ZQfoEOKDmEdS8ea67RccYN7fAHnNUShTVnA1r5VTKO9uausYOKgQl7kr18rS/CL3ImTC
+         7VMOk56c01u7ARCq27jzhQ9MlQMyIUFu3LkkHOQYJs2l3rBku52ZLvtRc4NyFR57y75h
+         yoZeHc6Fy8GplkRhgG5DxxUZAIjFHD/id9bS7z0JCVWuYYNJ+rt0JciiKHJl9QYydzO4
+         +aEjP2kWmL7y3K1jUYN1BXv313xFEiAkIq8k5E8wf43KqWQ9abcNGsXA44lXTgGWEcQn
+         ezJQ==
+X-Gm-Message-State: APjAAAXHuBxL4j30Eje/BpKbc2ikniWBQfkqtcHbWKJiq3LzM6oyoHLl
+        BaYEtsYW3DyYmQvuywbvUTOExw==
+X-Google-Smtp-Source: APXvYqzD0VVHoZHU8BvAHy/7+a/mWne3NJuZdgZCDcRMHEXt6xKMiMfEFDXHCuKZl3oTBviA6+Zg7A==
+X-Received: by 2002:a17:90b:3c9:: with SMTP id go9mr7170956pjb.7.1582932782453;
+        Fri, 28 Feb 2020 15:33:02 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id t189sm12356006pfd.168.2020.02.28.15.33.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Feb 2020 15:33:01 -0800 (PST)
+Date:   Fri, 28 Feb 2020 15:33:00 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Roja Rani Yarubandi <rojay@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
         linux-serial@vger.kernel.org, akashast@codeaurora.org,
-        rojay@codeaurora.org, msavaliy@qti.qualcomm.com,
-        satya priya <skakit@codeaurora.org>
-To:     gregkh@linuxfoundation.org, satya priya <skakit@codeaurora.org>
-Date:   Fri, 28 Feb 2020 15:01:29 -0800
-Message-ID: <158293088963.112031.11417422453396901116@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        skakit@codeaurora.org, msavaliy@qti.qualcomm.com
+Subject: Re: [PATCH V3] tty: serial: qcom_geni_serial: Support pin swapping
+Message-ID: <20200228233300.GO24720@google.com>
+References: <20200228124810.31543-1-rojay@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200228124810.31543-1-rojay@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting satya priya (2020-02-25 05:54:21)
-> To fix the RX cancel command failure, rx_fifo buffer needs to be
-> flushed in stop_rx() by calling handle_rx().
->=20
-> If set_termios is called before startup, by this time memory is not
-> allocated to port->rx_fifo buffer, which leads to a NULL pointer
-> dereference.
+On Fri, Feb 28, 2020 at 06:18:10PM +0530, Roja Rani Yarubandi wrote:
+> Add capability to supoort RX-TX, CTS-RTS pins swap in HW.
+> 
+> Configure UART_IO_MACRO_CTRL register accordingly if RX-TX pair
+> or CTS-RTS pair or both pairs swapped.
+> 
+> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+> ---
+> Changes in V2:
+> - As per Greg's comment removed the change id.
+> 
+> Changes in V3:
+> - As per Bjorn's comment using of_property_read_bool() to read dtsi entries.
+> - As per Matthias's comment add capability to support individual pairs swap,
+>   that is, only RX-TX swap and only CTS-RTS swap cases.
+> 
+> Dt-bindings support for this is posted at
+> https://patchwork.kernel.org/patch/11385969/
+> 
+>  drivers/tty/serial/qcom_geni_serial.c | 30 +++++++++++++++++++++++++++
+>  1 file changed, 30 insertions(+)
+> 
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index 191abb18fc2a..2ad041cde4d7 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -21,6 +21,7 @@
+>  
+>  /* UART specific GENI registers */
+>  #define SE_UART_LOOPBACK_CFG		0x22c
+> +#define SE_UART_IO_MACRO_CTRL		0x240
+>  #define SE_UART_TX_TRANS_CFG		0x25c
+>  #define SE_UART_TX_WORD_LEN		0x268
+>  #define SE_UART_TX_STOP_BIT_LEN		0x26c
+> @@ -95,6 +96,12 @@
+>  #define CTS_RTS_SORTED	BIT(1)
+>  #define RX_TX_CTS_RTS_SORTED	(RX_TX_SORTED | CTS_RTS_SORTED)
+>  
+> +/* UART pin swap value */
+> +#define DEFAULT_IO_MACRO_IO0_IO1_MASK		GENMASK(3, 0)
+> +#define IO_MACRO_IO0_SEL		GENMASK(1, 0)
 
-Also, clearly set_termios() isn't being called in the warning stack that
-I sent last round:
+not sure the use of GENMASK adds value here since it's not a mask, I
+rather find it obfuscating, IMO just 0x03 / 0x3 would be clearer.
 
-     pc : handle_rx_uart+0x64/0x278                                        =
-                                                                           =
-                             =20
-     lr : qcom_geni_serial_handle_rx+0x84/0x90                             =
-                                                                           =
-                             =20
-     sp : ffffff814348f960                                                 =
-                                                                           =
-                             =20
-     x29: ffffff814348f960 x28: ffffffd01ac24288                           =
-                                                                           =
-                             =20
-     x27: 0000000000000018 x26: 0000000000000002                           =
-                                                                           =
-                             =20
-     x25: 0000000000000001 x24: ffffff8146341348                           =
-                                                                           =
-                             =20
-     x23: ffffff8146341000 x22: ffffffd01accc978                           =
-                                                                           =
-                             =20
-     x21: ffffff8146341000 x20: 0000000000000001                           =
-                                                                           =
-                             =20
-     x19: 0000000000000001 x18: ffffffd01b22d000                           =
-                                                                           =
-                             =20
-     x17: 0000000000008000 x16: 00000000000000b0                           =
-                                                                           =
-                             =20
-     x15: ffffffd01afdbdd0 x14: ffffffd01b3edde0                           =
-                                                                           =
-                             =20
-     x13: ffffffd01b7fb000 x12: 0000000000000001                           =
-                                                                           =
-                             =20
-     x11: 0000000000000000 x10: 0000000000000000                           =
-                                                                           =
-                             =20
-     x9 : ffffffd010344780 x8 : 0000000000000000                           =
-                                                                           =
-                             =20
-     x7 : ffffffd019d8e768 x6 : 0000000000000000                           =
-                                                                           =
-                             =20
-     x5 : ffffffd01adbb000 x4 : 0000000000008004                           =
-                                                                           =
-                             =20
-     x3 : 0000000000000001 x2 : 0000000000000001                           =
-                                                                           =
-                             =20
-     x1 : 0000000000000001 x0 : ffffffd01accc978                           =
-                                                                           =
-                             =20
-     Call trace:                                                           =
-                                                                           =
-                             =20
-      handle_rx_uart+0x64/0x278                                            =
-                                                                           =
-                             =20
-      qcom_geni_serial_handle_rx+0x84/0x90                                 =
-                                                                           =
-                             =20
-      qcom_geni_serial_stop_rx+0x110/0x180                                 =
-                                                                           =
-                             =20
-      qcom_geni_serial_port_setup+0x68/0x1b0                               =
-                                                                           =
-                             =20
-      qcom_geni_serial_startup+0x24/0x70                                   =
-                                                                           =
-                             =20
-      uart_startup+0x164/0x28c                                             =
-                                                                           =
-                             =20
-      uart_port_activate+0x6c/0xbc                                         =
-                                                                           =
-                             =20
-      tty_port_open+0xa8/0x114                                             =
-                                                                           =
-                             =20
-      uart_open+0x28/0x38                                                  =
-                                                                           =
-                             =20
-      ttyport_open+0x7c/0x164                                              =
-                                                                           =
-                             =20
-      serdev_device_open+0x38/0xe4                                         =
-                                                                           =
-                             =20
-      hci_uart_register_device+0x54/0x2e8 [hci_uart]                       =
-                                                                           =
-                             =20
-      qca_serdev_probe+0x1c4/0x374 [hci_uart]                              =
-                                                                           =
-                             =20
-      serdev_drv_probe+0x3c/0x64                                           =
-                                                                           =
-                             =20
-      really_probe+0x144/0x3f8                                             =
-                                                                           =
-                             =20
-      driver_probe_device+0x70/0x140                                       =
-                                                                           =
-                             =20
-      __driver_attach_async_helper+0x7c/0xa8                               =
-                                                                           =
-                             =20
-      async_run_entry_fn+0x60/0x178                                        =
-                                                                           =
-                             =20
-      process_one_work+0x33c/0x640                                         =
-                                                                           =
-                             =20
-      worker_thread+0x2a0/0x470                                            =
-                                                                           =
-                             =20
-      kthread+0x128/0x138                                                  =
-                                                                           =
-                             =20
-      ret_from_fork+0x10/0x18                                              =
-                                                                           =
-                             =20
-     Code: 1aca096a 911e0129 b940012b 7100054a (b800450b)                  =
-      =20
+> +#define DEFAULT_IO_MACRO_IO2_IO3_MASK		GENMASK(15, 4)
+> +#define IO_MACRO_IO2_IO3_SWAP		0x4640
+> +
+>  #ifdef CONFIG_CONSOLE_POLL
+>  #define CONSOLE_RX_BYTES_PW 1
+>  #else
+> @@ -119,6 +126,8 @@ struct qcom_geni_serial_port {
+>  
+>  	unsigned int tx_remaining;
+>  	int wakeup_irq;
+> +	bool rx_tx_swap;
+> +	bool cts_rts_swap;
+>  };
+>  
+>  static const struct uart_ops qcom_geni_console_pops;
+> @@ -826,6 +835,7 @@ static int qcom_geni_serial_port_setup(struct uart_port *uport)
+>  	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
+>  	u32 rxstale = DEFAULT_BITS_PER_CHAR * STALE_TIMEOUT;
+>  	u32 proto;
+> +	u32 pin_swap;
+>  
+>  	if (uart_console(uport)) {
+>  		port->tx_bytes_pw = 1;
+> @@ -846,6 +856,20 @@ static int qcom_geni_serial_port_setup(struct uart_port *uport)
+>  	get_tx_fifo_size(port);
+>  
+>  	writel(rxstale, uport->membase + SE_UART_RX_STALE_CNT);
+> +
+> +	pin_swap = readl(uport->membase + SE_UART_IO_MACRO_CTRL);
+> +	if (port->rx_tx_swap) {
+> +		pin_swap &= ~DEFAULT_IO_MACRO_IO2_IO3_MASK;
+> +		pin_swap |= IO_MACRO_IO2_IO3_SWAP;
+> +	}
+> +	if (port->cts_rts_swap) {
+> +		pin_swap &= ~DEFAULT_IO_MACRO_IO0_IO1_MASK;
+> +		pin_swap |= IO_MACRO_IO0_SEL;
+> +	}
+> +	/* Configure this register if RX-TX, CTS-RTS pins are swapped */
+> +	if (port->rx_tx_swap || port->cts_rts_swap)
+> +		writel(pin_swap, uport->membase + SE_UART_IO_MACRO_CTRL);
+> +
+>  	/*
+>  	 * Make an unconditional cancel on the main sequencer to reset
+>  	 * it else we could end up in data loss scenarios.
+> @@ -1289,6 +1313,12 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
+>  	if (!console)
+>  		port->wakeup_irq = platform_get_irq_optional(pdev, 1);
+>  
+> +	if (of_property_read_bool(pdev->dev.of_node, "rx-tx-swap"))
+> +		port->rx_tx_swap = true;
+> +
+> +	if (of_property_read_bool(pdev->dev.of_node, "cts-rts-swap"))
+> +		port->cts_rts_swap = true;
+> +
+>  	uport->private_data = drv;
+>  	platform_set_drvdata(pdev, port);
+>  	port->handle_rx = console ? handle_rx_console : handle_rx_uart;
 
-This shows that uart_startup() is the one that is calling
-qcom_geni_serial_startup() and that's running the newly added cancel
-path. So even if we allocate the buffer in probe vs. in startup we're
-going to flip a buffer full of junk that we're trying to cancel out of
-the fifo into the tty layer. That seems wrong. We should have a
-different qcom_geni_serial_stop_rx() function that knows we're starting
-up vs. handling a normal rx event and call something besides handle_rx()
-because that pushes bytes up into the tty layer.
-
->=20
-> To avoid this NULL pointer dereference allocate memory to port->rx_fifo
-> in probe itself.
->
+Tested-by: Matthias Kaehlcke <mka@chromium.org>
+(TX/RX swap)
