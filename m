@@ -2,232 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BB343172CA0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 01:01:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 25EA4172D8A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 01:43:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728993AbgB1ABD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Feb 2020 19:01:03 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:36105 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729978AbgB1ABD (ORCPT
+        id S1729984AbgB1Anc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Feb 2020 19:43:32 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:54827 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730120AbgB1Anc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Feb 2020 19:01:03 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1582848061; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=sxdjaXAFvzStZVWpkXqd8Oa4CInabS6KmEzidWgB4u4=;
- b=nEBLEIaUGIoXwVUSxhLiA13KognC3iRO73YHueNwU4YImqgxnCrS08u2i5zhGIkg+TaIAmYD
- pX5GLZdI8waP32BYp5k+YMryQtDn3CKUIVlPHNq21FtRxZg5JmqahnhBUiwjP/serAkPvaQx
- F+R8jEUZsNY1t9PjVyOb6+JL1K4=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e585816.7fa3af2da5e0-smtp-out-n02;
- Fri, 28 Feb 2020 00:00:22 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8EFB3C447A2; Fri, 28 Feb 2020 00:00:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rishabhb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6B74AC43383;
-        Fri, 28 Feb 2020 00:00:21 +0000 (UTC)
+        Thu, 27 Feb 2020 19:43:32 -0500
+Received: by mail-pj1-f68.google.com with SMTP id dw13so514807pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Feb 2020 16:43:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8t+QF1jUrbFLO8yI08wmjsR+GeHNrEjF1Md3xiMC8NA=;
+        b=lhRclAojaWh7DXh2Fy7nrZd8SyMa2JcnmOKVrBR+FQiN1Mp028BI+MGpcddDUXGFCo
+         JVM/kWmCyIpvTdqmy3Mp4rlnHT6E8MxWgHEdVS/cOIvQC91hdqRkEyRVVWVfhwxJ6h4X
+         Gnc/1uU0weocAgDStM+BvrwkpxoNH/IGzP4P4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8t+QF1jUrbFLO8yI08wmjsR+GeHNrEjF1Md3xiMC8NA=;
+        b=SPag794lY93dSkJKHyml5p5QnLj5eU20N5e8vQboAHlAzdVP4o0VFLipohz1GWq9Bo
+         XuqlLprxA/Cv3PyuFdLluUk3Jkd33wx2qYcP+ahg5u6l9fdbP9Yv5eYzvYIEFyMKAMnu
+         8wB4PhLS48NgLPy7BXm7OqK7vp/3RZsw2dxhL7yBLvuwPm2/9yl0jjFhRByIfFzniyB1
+         YCHKHy0j6toB9eXiiP7f/HbLn343qs8r+N+50NafdXJtlazjozcabt4ysdbDLgRt99/7
+         c70L863MOUI2owYqhQArhmU53kLEYV3JvYgEWAEHwYefTpreqezKxRGdJXNgOOhI9DPF
+         qI5Q==
+X-Gm-Message-State: APjAAAWMNmsGMFqKlpLhz9XHhmrq6jdIFS9iVPq2QXP4vb/hNZuy4duk
+        7LrFuh+EsE0RI/IluKkwXgy9klb6YB8=
+X-Google-Smtp-Source: APXvYqwWMiiJ4fXkvydaOnQd5+1b2ygxswq4zp1nvGJdIdnG9xiMkdkUMdjzVxim7xA7gB0Eus81Qg==
+X-Received: by 2002:a17:90a:8586:: with SMTP id m6mr1724274pjn.121.1582850610811;
+        Thu, 27 Feb 2020 16:43:30 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id 13sm7713961pgo.13.2020.02.27.16.43.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Feb 2020 16:43:29 -0800 (PST)
+Date:   Thu, 27 Feb 2020 16:43:28 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Chandan Uddaraju <chandanu@codeaurora.org>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, seanpaul@chromium.org,
+        abhinavk@codeaurora.org, hoegsberg@google.com,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [DPU PATCH v3 3/5] drm/msm/dp: add displayPort driver support
+Message-ID: <20200228004328.GM24720@google.com>
+References: <1575294437-6129-1-git-send-email-chandanu@codeaurora.org>
+ <0101016ec6df0e54-2af1f4a6-8f72-4799-89e0-0ff87b514eb2-000000@us-west-2.amazonses.com>
+ <20200227215433.GK24720@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 27 Feb 2020 16:00:21 -0800
-From:   rishabhb@codeaurora.org
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     Siddharth Gupta <sidgup@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, ohad@wizery.com, tsoni@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, psodagud@codeaurora.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 6/6] remoteproc: qcom: Add notification types to SSR
-In-Reply-To: <20200227215940.GC20116@xps15>
-References: <1582167465-2549-1-git-send-email-sidgup@codeaurora.org>
- <1582167465-2549-7-git-send-email-sidgup@codeaurora.org>
- <20200227215940.GC20116@xps15>
-Message-ID: <1a615fcd5a5c435d1d8babe8d5c3f8c3@codeaurora.org>
-X-Sender: rishabhb@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200227215433.GK24720@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-02-27 13:59, Mathieu Poirier wrote:
-> On Wed, Feb 19, 2020 at 06:57:45PM -0800, Siddharth Gupta wrote:
->> The SSR subdevice only adds callback for the unprepare event. Add 
->> callbacks
->> for unprepare, start and prepare events. The client driver for a 
->> particular
->> remoteproc might be interested in knowing the status of the remoteproc
->> while undergoing SSR, not just when the remoteproc has finished 
->> shutting
->> down.
->> 
->> Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
->> ---
->>  drivers/remoteproc/qcom_common.c | 39 
->> +++++++++++++++++++++++++++++++++++----
->>  include/linux/remoteproc.h       | 15 +++++++++++++++
->>  2 files changed, 50 insertions(+), 4 deletions(-)
->> 
->> diff --git a/drivers/remoteproc/qcom_common.c 
->> b/drivers/remoteproc/qcom_common.c
->> index 6714f27..6f04a5b 100644
->> --- a/drivers/remoteproc/qcom_common.c
->> +++ b/drivers/remoteproc/qcom_common.c
->> @@ -183,9 +183,9 @@ EXPORT_SYMBOL_GPL(qcom_remove_smd_subdev);
->>   *
->>   * Returns pointer to srcu notifier head on success, ERR_PTR on 
->> failure.
->>   *
->> - * This registers the @notify function as handler for restart 
->> notifications. As
->> - * remote processors are stopped this function will be called, with 
->> the rproc
->> - * pointer passed as a parameter.
->> + * This registers the @notify function as handler for 
->> powerup/shutdown
->> + * notifications. This function will be invoked inside the callbacks 
->> registered
->> + * for the ssr subdevice, with the rproc pointer passed as a 
->> parameter.
->>   */
->>  void *qcom_register_ssr_notifier(struct rproc *rproc, struct 
->> notifier_block *nb)
->>  {
->> @@ -227,11 +227,39 @@ int qcom_unregister_ssr_notifier(void *notify, 
->> struct notifier_block *nb)
->>  }
->>  EXPORT_SYMBOL_GPL(qcom_unregister_ssr_notifier);
->> 
->> +static int ssr_notify_prepare(struct rproc_subdev *subdev)
->> +{
->> +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
->> +
->> +	srcu_notifier_call_chain(ssr->rproc_notif_list,
->> +				 RPROC_BEFORE_POWERUP, (void *)ssr->name);
->> +	return 0;
->> +}
->> +
->> +static int ssr_notify_start(struct rproc_subdev *subdev)
->> +{
->> +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
->> +
->> +	srcu_notifier_call_chain(ssr->rproc_notif_list,
->> +				 RPROC_AFTER_POWERUP, (void *)ssr->name);
->> +	return 0;
->> +}
->> +
->> +static void ssr_notify_stop(struct rproc_subdev *subdev, bool 
->> crashed)
->> +{
->> +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
->> +
->> +	srcu_notifier_call_chain(ssr->rproc_notif_list,
->> +				 RPROC_BEFORE_SHUTDOWN, (void *)ssr->name);
->> +}
->> +
->> +
->>  static void ssr_notify_unprepare(struct rproc_subdev *subdev)
->>  {
->>  	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
->> 
->> -	srcu_notifier_call_chain(ssr->rproc_notif_list, 0, (void 
->> *)ssr->name);
->> +	srcu_notifier_call_chain(ssr->rproc_notif_list,
->> +				 RPROC_AFTER_SHUTDOWN, (void *)ssr->name);
->>  }
->> 
->>  /**
->> @@ -248,6 +276,9 @@ void qcom_add_ssr_subdev(struct rproc *rproc, 
->> struct qcom_rproc_ssr *ssr,
->>  {
->>  	ssr->name = ssr_name;
->>  	ssr->subdev.name = kstrdup("ssr_notifs", GFP_KERNEL);
->> +	ssr->subdev.prepare = ssr_notify_prepare;
->> +	ssr->subdev.start = ssr_notify_start;
->> +	ssr->subdev.stop = ssr_notify_stop;
+On Thu, Feb 27, 2020 at 01:54:33PM -0800, Matthias Kaehlcke wrote:
+> On Mon, Dec 02, 2019 at 01:48:57PM +0000, Chandan Uddaraju wrote:
+> > Add the needed displayPort files to enable DP driver
+> > on msm target.
+> > 
+> > "dp_display" module is the main module that calls into
+> > other sub-modules. "dp_drm" file represents the interface
+> > between DRM framework and DP driver.
+> > 
+> > changes in v2:
+> > -- Update copyright markings on all relevant files.
+> > -- Change pr_err() to DRM_ERROR()
+> > -- Use APIs directly instead of function pointers.
+> > -- Use drm_display_mode structure to store link parameters in the driver.
+> > -- Use macros for register definitions instead of hardcoded values.
+> > -- Replace writel_relaxed/readl_relaxed with writel/readl
+> >    and remove memory barriers.
+> > -- Remove unnecessary NULL checks.
+> > -- Use drm helper functions for dpcd read/write.
+> > -- Use DRM_DEBUG_DP for debug msgs.
+> > 
+> > changes in V3:
+> > -- Removed changes in dpu_io_util.[ch]
+> > -- Added locking around "is_connected" flag and removed atomic_set()
+> > -- Removed the argument validation checks in all the static functions
+> >    except initialization functions and few API calls across msm/dp files
+> > -- Removed hardcoded values for register reads/writes
+> > -- Removed vreg related generic structures.
+> > -- Added return values where ever necessary.
+> > -- Updated dp_ctrl_on function.
+> > -- Calling the ctrl specific catalog functions directly instead of
+> >    function pointers.
+> > -- Added seperate change that adds standard value in drm_dp_helper file.
+> > -- Added separate change in this list that is used to initialize
+> >    displayport in DPU driver.
+> > -- Added change to use drm_dp_get_adjust_request_voltage() function.
+> > 
+> > Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
+> > ---
+> > +++ b/drivers/gpu/drm/msm/dp/dp_power.c
+> >
+> > ...
+> >
+> > +int dp_power_init(struct dp_power *dp_power, bool flip)
+> > +{
+> > +	int rc = 0;
+> > +	struct dp_power_private *power;
+> > +
+> > +	if (!dp_power) {
+> > +		DRM_ERROR("invalid power data\n");
+> > +		rc = -EINVAL;
+> > +		goto exit;
+> > +	}
 > 
-> Now that I have a better understanding of what this patchset is doing, 
-> I realise
-> my comments in patch 04 won't work.  To differentiate the subdevs of an 
-> rproc I
-> suggest to wrap them in a generic structure with a type and an enum.  
-> That way
-> you can differenciate between subdevices without having to add to the 
-> core.
-Ok. I can try that.
+> drive-by comment:
 > 
-> That being said, I don't understand what patches 5 and 6 are doing...
-> Registering with the global ssr_notifiers allowed to gracefully 
-> shutdown all the
-> MCUs in the system when one of them would go down.  But now that we are 
-> using
-> the notifier on a per MCU, I really don't see why each subdev couldn't 
-> implement
-> the right prepare/start/stop functions.
+> this would lead to calling 'pm_runtime_put_sync(&power->pdev->dev)'
+> below with 'power' being NULL, which doesn't seem a good idea.
+
+correction: with 'power' being uninitialized, which isn't a good idea
+either.
+
+> It is probably sane to expect that 'dp_power' is not NULL, if that's
+> the case the check can be removed. Otherwise the function should just
+> return -EINVAL instead of jumping to 'exit'.
 > 
-> Am I missing something here?
-We only want kernel clients to be notified when the Remoteproc they are 
-interested
-in changes state. For e.g. audio kernel driver should be notified when 
-audio
-processor goes down but it does not care about any other remoteproc.
-If you are suggesting that these kernel clients be added as subdevices 
-then
-we will end up having many subdevices registered to each remoteproc. So 
-we
-implemented a notifier chain per Remoteproc. This keeps the SSR 
-notifications as
-the subdevice per remoteproc, and all interested clients can register to 
-it.
-> 
-> 
->>  	ssr->subdev.unprepare = ssr_notify_unprepare;
->>  	ssr->rproc_notif_list = kzalloc(sizeof(struct srcu_notifier_head),
->>  								GFP_KERNEL);
->> diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
->> index e2f60cc..4be4478 100644
->> --- a/include/linux/remoteproc.h
->> +++ b/include/linux/remoteproc.h
->> @@ -449,6 +449,21 @@ struct rproc_dump_segment {
->>  };
->> 
->>  /**
->> + * enum rproc_notif_type - Different stages of remoteproc 
->> notifications
->> + * @RPROC_BEFORE_SHUTDOWN:	unprepare stage of  remoteproc
->> + * @RPROC_AFTER_SHUTDOWN:	stop stage of  remoteproc
->> + * @RPROC_BEFORE_POWERUP:	prepare stage of  remoteproc
->> + * @RPROC_AFTER_POWERUP:	start stage of  remoteproc
->> + */
->> +enum rproc_notif_type {
->> +	RPROC_BEFORE_SHUTDOWN,
->> +	RPROC_AFTER_SHUTDOWN,
->> +	RPROC_BEFORE_POWERUP,
->> +	RPROC_AFTER_POWERUP,
->> +	RPROC_MAX
->> +};
->> +
->> +/**
->>   * struct rproc - represents a physical remote processor device
->>   * @node: list node of this rproc object
->>   * @domain: iommu domain
->> --
->> Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->> 
->> _______________________________________________
->> linux-arm-kernel mailing list
->> linux-arm-kernel@lists.infradead.org
->> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
+> > +
+> > +	power = container_of(dp_power, struct dp_power_private, dp_power);
+> > +
+> > +	pm_runtime_get_sync(&power->pdev->dev);
+> > +	rc = dp_power_regulator_enable(power);
+> > +	if (rc) {
+> > +		DRM_ERROR("failed to enable regulators, %d\n", rc);
+> > +		goto exit;
+> > +	}
+> > +
+> > +	rc = dp_power_pinctrl_set(power, true);
+> > +	if (rc) {
+> > +		DRM_ERROR("failed to set pinctrl state, %d\n", rc);
+> > +		goto err_pinctrl;
+> > +	}
+> > +
+> > +	rc = dp_power_config_gpios(power, flip);
+> > +	if (rc) {
+> > +		DRM_ERROR("failed to enable gpios, %d\n", rc);
+> > +		goto err_gpio;
+> > +	}
+> > +
+> > +	rc = dp_power_clk_enable(dp_power, DP_CORE_PM, true);
+> > +	if (rc) {
+> > +		DRM_ERROR("failed to enable DP core clocks, %d\n", rc);
+> > +		goto err_clk;
+> > +	}
+> > +
+> > +	return 0;
+> > +
+> > +err_clk:
+> > +	dp_power_disable_gpios(power);
+> > +err_gpio:
+> > +	dp_power_pinctrl_set(power, false);
+> > +err_pinctrl:
+> > +	dp_power_regulator_disable(power);
+> > +exit:
+> > +	pm_runtime_put_sync(&power->pdev->dev);
+> > +	return rc;
+> > +}
