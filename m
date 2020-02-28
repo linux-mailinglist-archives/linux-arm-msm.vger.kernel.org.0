@@ -2,479 +2,221 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AE0F17414D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 22:10:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D3C1C1741A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Feb 2020 22:49:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725900AbgB1VKj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Feb 2020 16:10:39 -0500
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:51803 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725805AbgB1VKj (ORCPT
+        id S1726046AbgB1Vtb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Feb 2020 16:49:31 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:38419 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726167AbgB1Vta (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Feb 2020 16:10:39 -0500
-Received: by mail-pj1-f68.google.com with SMTP id fa20so1789879pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2020 13:10:38 -0800 (PST)
+        Fri, 28 Feb 2020 16:49:30 -0500
+Received: by mail-lf1-f66.google.com with SMTP id w22so2178388lfk.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2020 13:49:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=9/DXG/Oi4JW2k6CGwME7FoSd15JdePoZbmRNBBM0ZR0=;
-        b=kToKqaqeUAg+od/bA99qhTzEiV8vdlIaXeFAXzsPHr7UYSxa85r8GqlhhyAp1J5rm8
-         v79xIzpLJGaJ75nbYVVg87LvXLKus5+ECLPURVuGfnBzMvPJ2zgyiNK5nywI6KV0I1Kx
-         2zuZ9yxkp/m81N0V+Vy6gEEXXOxMbWpwmGrWg=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OWRcLlaA6/EqTP6Xmqhmkn6LDkI+Uf7SWw6gemPWjgk=;
+        b=C22hZa3v1UrMeBELHr6Mnoehrvcy7NRg1yltGMcP5BYW7wOr1VXiTtWgRRzvIy4tQw
+         yrR6XREKofL4j3BG1SyRu4gl/BWgInQbVm5FTC7ok6GwJ4IPN45Fek6mRJdAPdQxqCRW
+         /JF/uUfcJvGU0URkwoAiGwfznyOOYRyZGdgWY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=9/DXG/Oi4JW2k6CGwME7FoSd15JdePoZbmRNBBM0ZR0=;
-        b=P0YHmckZyU2rsdQizThLhNaQLnggrGTJWF1zamlcmHTSGOWw5rhZvoW/r1yxa/HaFC
-         6Ul0gRm+ca/Wn5rMcRKnZqw4vd6gzkETkvPm1FSk/OMGVPYETgwM1auFXXT1thg12VUu
-         BzoWBoP9O/yY5341cxoVZ6bjJTTLrUt38NjTrdQoLcYW7QywX+1NGG1XKTkZlD2Tpxuf
-         GLWrHq8gujOOq9g1JrAwqkmsCb8Cyl1luSZRlthy02/PgI/aNZvnuQICW7G5ybFMLmBL
-         3tNFpDVPs94xB/qsvDIA+13zwTk9dSiyjuA6texVt32t/Hqzlarsm+QZ6e/OhicubSpi
-         vAdw==
-X-Gm-Message-State: APjAAAXJlqMhZ+VZ59HzvTcuBYXOFrEDJic3JwChsRVpWwvjx+R8xQG9
-        ALwWquMNv97jY7Bf2MqXdeIFAg==
-X-Google-Smtp-Source: APXvYqzbNMZlBCKvNkU5M3AUouIqAZWj+fVwMSbNmEk+evC6yaVEF7xeAzgXvC0hg/zWe/oCT9rzlA==
-X-Received: by 2002:a17:902:8f8e:: with SMTP id z14mr5931716plo.195.1582924237276;
-        Fri, 28 Feb 2020 13:10:37 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id x4sm12512198pff.143.2020.02.28.13.10.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Feb 2020 13:10:35 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OWRcLlaA6/EqTP6Xmqhmkn6LDkI+Uf7SWw6gemPWjgk=;
+        b=XjEBxMwW9fB5I6ap0sGYBI17ZpkpCydWatJZc1DpU2+gxYrFv/adZk43K52oSODp2X
+         bttb992/tdEywRjAiQ8ib34uycxv/ZlC2xlac1gbUMJewJ6Ra6FPcqOwpcuHvFXzfK4Y
+         dPlgRN2w5yVmP22nYOdoiyqEeduEyuJrdCtNY1oG9YiIO3pTutDALZ/9lCXrZ17mHgkw
+         TbXl0PJLLs976I0ZKUsX71RsSZ0uGxbW94/TqcywWgawq3r/0rxKklCNrXWw1DUy1TTW
+         FvGFfeD7dP1TcxQkP1Xk0WKQYsL9Yg7+yiBASZaTEFT5By7LN0WjW5eVUaRlQoCatp8D
+         Ec1w==
+X-Gm-Message-State: ANhLgQ0l+wz6vDVKWqTtTL5pkx8td86kEeCrrebHeWwEDvUA6uZ/xIG/
+        5afYd2Y4Jf8C3nhEqnXbLj3+DHYO+UQ=
+X-Google-Smtp-Source: ADFU+vuiTgiDGvBjnMTauW41rvK5Thh5NXEZBDVFGZQ3bkJkMgtCn9D2/YJz0KteyKu+XEGiRUkKQQ==
+X-Received: by 2002:a05:6512:31a:: with SMTP id t26mr3588004lfp.146.1582926565729;
+        Fri, 28 Feb 2020 13:49:25 -0800 (PST)
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com. [209.85.167.52])
+        by smtp.gmail.com with ESMTPSA id 5sm6445018lju.69.2020.02.28.13.49.24
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Feb 2020 13:49:24 -0800 (PST)
+Received: by mail-lf1-f52.google.com with SMTP id 83so3166002lfh.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2020 13:49:24 -0800 (PST)
+X-Received: by 2002:a05:6512:6c5:: with SMTP id u5mr3700695lff.130.1582926564050;
+ Fri, 28 Feb 2020 13:49:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1582274986-17490-3-git-send-email-mkshah@codeaurora.org>
-References: <1582274986-17490-1-git-send-email-mkshah@codeaurora.org> <1582274986-17490-3-git-send-email-mkshah@codeaurora.org>
-Subject: Re: [PATCH v2 2/4] soc: qcom: Add SoC sleep stats driver
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, mka@chromium.org
-Date:   Fri, 28 Feb 2020 13:10:34 -0800
-Message-ID: <158292423432.4688.6964200779843496200@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+References: <1582889903-12890-1-git-send-email-mkshah@codeaurora.org> <1582889903-12890-4-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1582889903-12890-4-git-send-email-mkshah@codeaurora.org>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Fri, 28 Feb 2020 13:48:47 -0800
+X-Gmail-Original-Message-ID: <CAE=gft7mT18V1QOi0LSk+kcNoOOKEdVNywj4wcO22J_d=kA+3w@mail.gmail.com>
+Message-ID: <CAE=gft7mT18V1QOi0LSk+kcNoOOKEdVNywj4wcO22J_d=kA+3w@mail.gmail.com>
+Subject: Re: [PATCH v9 3/3] soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Maulik Shah (2020-02-21 00:49:44)
-> From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
->=20
-> Lets's add a driver to read the the stats from remote processor
+Hi Maulik,
+Thanks for spinning this so promptly.
 
-Let's
-
-> and export to debugfs.
->=20
-> The driver creates "soc_sleep_stats" directory in debugfs and adds
-> files for various low power mode available. Below is sample output
-> with command
->=20
-> cat /sys/kernel/debug/soc_sleep_stats/ddr
-> count =3D 0
-> Last Entered At =3D 0
-> Last Exited At =3D 0
-> Accumulated Duration =3D 0
->=20
-> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+On Fri, Feb 28, 2020 at 3:38 AM Maulik Shah <mkshah@codeaurora.org> wrote:
+>
+> Add changes to invoke rpmh flush() from within cache_lock when the data
+> in cache is dirty.
+>
+> This is done only if OSI is not supported in PSCI. If OSI is supported
+> rpmh_flush can get invoked when the last cpu going to power collapse
+> deepest low power mode.
+>
+> Also remove "depends on COMPILE_TEST" for Kconfig option QCOM_RPMH so the
+> driver is only compiled for arm64 which supports psci_has_osi_support()
+> API.
+>
 > Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> Reviewed-by: Srinivas Rao L <lsrao@codeaurora.org>
 > ---
->  drivers/soc/qcom/Kconfig           |  10 ++
->  drivers/soc/qcom/Makefile          |   1 +
->  drivers/soc/qcom/soc_sleep_stats.c | 279 +++++++++++++++++++++++++++++++=
-++++++
->  3 files changed, 290 insertions(+)
->  create mode 100644 drivers/soc/qcom/soc_sleep_stats.c
->=20
+>  drivers/soc/qcom/Kconfig |  2 +-
+>  drivers/soc/qcom/rpmh.c  | 33 ++++++++++++++++++++++-----------
+>  2 files changed, 23 insertions(+), 12 deletions(-)
+>
 > diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index d0a73e7..4d36654 100644
+> index d0a73e7..2e581bc 100644
 > --- a/drivers/soc/qcom/Kconfig
 > +++ b/drivers/soc/qcom/Kconfig
-> @@ -185,6 +185,16 @@ config QCOM_SOCINFO
->          Say yes here to support the Qualcomm socinfo driver, providing
->          information about the SoC to user space.
-> =20
-> +config QCOM_SOC_SLEEP_STATS
-> +       tristate "Qualcomm Technologies, Inc. (QTI) SoC sleep stats drive=
-r"
-> +       depends on ARCH_QCOM
-
-Can you add || COMPILE_TEST?
-
-> +       depends on DEBUG_FS
-> +       help
-> +         Qualcomm Technologies, Inc. (QTI) SoC sleep stats driver to read
-> +         the shared memory exported by the remote processor related to
-> +         various SoC level low power modes statistics and export to debu=
-gfs
-> +         interface.
-> +
->  config QCOM_WCNSS_CTRL
->         tristate "Qualcomm WCNSS control driver"
->         depends on ARCH_QCOM || COMPILE_TEST
-> diff --git a/drivers/soc/qcom/soc_sleep_stats.c b/drivers/soc/qcom/soc_sl=
-eep_stats.c
-> new file mode 100644
-> index 00000000..bf38bb5
-> --- /dev/null
-> +++ b/drivers/soc/qcom/soc_sleep_stats.c
-> @@ -0,0 +1,279 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2011-2020, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include <linux/device.h>
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_device.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/slab.h>
-> +#include <linux/uaccess.h>
-
-Why?
-
-> +#include <linux/debugfs.h>
-> +#include <linux/seq_file.h>
-> +#include <linux/stddef.h>
-
-Why?
-
-> +
-> +#include <linux/soc/qcom/smem.h>
-> +#include <clocksource/arm_arch_timer.h>
-> +
-> +#define NAME_LENGTH    5
-> +
-> +enum subsystem_item_id {
-> +       MODEM =3D 605,
-> +       ADSP,
-> +       CDSP,
-> +       SLPI,
-> +       GPU,
-> +       DISPLAY,
-> +};
-> +
-> +enum subsystem_pid {
-> +       PID_APSS =3D 0,
-> +       PID_MODEM =3D 1,
-> +       PID_ADSP =3D 2,
-> +       PID_SLPI =3D 3,
-> +       PID_CDSP =3D 5,
-> +       PID_GPU =3D PID_APSS,
-> +       PID_DISPLAY =3D PID_APSS,
-
-I still don't understand this enums. Why not make them a #define set
-with known values?
-
-> +};
-> +
-> +struct subsystem_data {
-> +       char *name;
-
-Can it be const char *?
-
-> +       enum subsystem_item_id item_id;
-> +       enum subsystem_pid pid;
-> +};
-> +
-> +static struct subsystem_data subsystems[] =3D {
-> +       { "modem", MODEM, PID_MODEM },
-> +       { "adsp", ADSP, PID_ADSP },
-> +       { "cdsp", CDSP, PID_CDSP },
-> +       { "slpi", SLPI, PID_SLPI },
-> +       { "gpu", GPU, PID_GPU },
-> +       { "display", DISPLAY, PID_DISPLAY },
-> +};
-> +
-> +struct stats_config {
-> +       u32 offset_addr;
-
-Looks ok but probably can just be unsigned int?
-
-> +       u32 num_records;
-
-Why not size_t? Is 32-bit width important?
-
-> +       bool appended_stats_avail;
-> +};
-> +
-> +static const struct stats_config *config;
-
-This shouldn't be necessary. Can the config be passed into the debugfs
-file ops private data?
-
-> +
-> +struct soc_sleep_stats_data {
-
-This struct is only used in probe. Why not just make probe have more
-local variables?
-
-> +       phys_addr_t stats_base;
-> +       resource_size_t stats_size;
-> +       void __iomem *reg;
-> +       struct dentry *root;
-> +};
-> +
-> +struct entry {
-> +       __le32 stat_type;
-> +       __le32 count;
-> +       __le64 last_entered_at;
-> +       __le64 last_exited_at;
-> +       __le64 accumulated;
-
-These should just be u32 and u64.
-
-> +};
-> +
-> +struct appended_entry {
-> +       __le32 client_votes;
-> +       __le32 reserved[3];
-> +};
-
-Same, just u32.
-
-> +
-> +static u64 get_time_in_sec(u64 counter)
-> +{
-> +       do_div(counter, arch_timer_get_rate());
-
-I don't think arch_timer_get_rate() is exported as a symbol. Why we need
-to convert this to time? Is the counter not sufficient to understand
-that so many ticks have passed since it entered and exited?
-
-> +
-> +       return counter;
-> +}
-> +
-> +static void print_sleep_stats(struct seq_file *s, struct entry *e)
-> +{
-> +       e->last_entered_at =3D get_time_in_sec(e->last_entered_at);
-> +       e->last_exited_at =3D get_time_in_sec(e->last_exited_at);
-> +       e->accumulated =3D get_time_in_sec(e->accumulated);
-> +
-> +       seq_printf(s, "count =3D %u\n", e->count);
-> +       seq_printf(s, "Last Entered At =3D %llu\n", e->last_entered_at);
-> +       seq_printf(s, "Last Exited At =3D %llu\n", e->last_exited_at);
-> +       seq_printf(s, "Accumulated Duration =3D %llu\n", e->accumulated);
-
-Why is count not capitalized but everything else is?
-
-> +}
-> +
-> +static int subsystem_sleep_stats_show(struct seq_file *s, void *d)
-> +{
-> +       struct subsystem_data *subsystem =3D s->private;
-> +       struct entry *e;
-> +
-> +       e =3D qcom_smem_get(subsystem->pid, subsystem->item_id, NULL);
-
-Do we need to look this up each time we read the stats? Why can't we get
-this once in probe or when we create the debugfs file?
-
-> +       if (IS_ERR(e))
-> +               return PTR_ERR(e);
-> +
-> +       /*
-> +        * If a subsystem is in sleep when reading the sleep stats adjust
-> +        * the accumulated sleep duration to show actual sleep time.
-> +        */
-> +       if (e->last_entered_at > e->last_exited_at)
-> +               e->accumulated +=3D (arch_timer_read_counter()
-> +                                  - e->last_entered_at);
-> +
-> +       print_sleep_stats(s, e);
-> +
-> +       return 0;
-> +}
-> +
-> +static int soc_sleep_stats_show(struct seq_file *s, void *d)
-> +{
-> +       void __iomem *reg =3D s->private;
-> +       uint32_t offset;
-> +       struct entry e;
-> +
-> +       offset =3D offsetof(struct entry, count);
-> +       e.count =3D le32_to_cpu(readl_relaxed(reg + offset));
-
-readl APIs already do endian conversions.
-
-> +
-> +       offset =3D offsetof(struct entry, last_entered_at);
-> +       e.last_entered_at =3D le64_to_cpu(readq_relaxed(reg + offset));
-> +
-> +       offset =3D offsetof(struct entry, last_exited_at);
-> +       e.last_exited_at =3D le64_to_cpu(readq_relaxed(reg + offset));
-> +
-> +       offset =3D offsetof(struct entry, accumulated);
-> +       e.accumulated =3D le64_to_cpu(readq_relaxed(reg + offset));
-> +
-> +       print_sleep_stats(s, &e);
-> +
-> +       if (config->appended_stats_avail) {
-> +               struct appended_entry ae;
-> +
-> +               offset =3D offsetof(struct appended_entry, client_votes) +
-> +                        sizeof(struct entry);
-> +               ae.client_votes =3D le32_to_cpu(readl_relaxed(reg + offse=
-t));
-> +               seq_printf(s, "Client_votes =3D 0x%x\n", ae.client_votes);
-
-Use %#x to avoid having to add 0x prefix. Also, can we replace '=3D' with
-':' so that readability is a bit nicer?
-
+> @@ -105,7 +105,7 @@ config QCOM_RMTFS_MEM
+>
+>  config QCOM_RPMH
+>         bool "Qualcomm RPM-Hardened (RPMH) Communication"
+> -       depends on ARCH_QCOM && ARM64 || COMPILE_TEST
+> +       depends on ARCH_QCOM && ARM64
+>         help
+>           Support for communication with the hardened-RPM blocks in
+>           Qualcomm Technologies Inc (QTI) SoCs. RPMH communication uses an
+> diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+> index f28afe4..6a5a60c 100644
+> --- a/drivers/soc/qcom/rpmh.c
+> +++ b/drivers/soc/qcom/rpmh.c
+> @@ -12,6 +12,7 @@
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/psci.h>
+>  #include <linux/slab.h>
+>  #include <linux/spinlock.h>
+>  #include <linux/types.h>
+> @@ -158,6 +159,13 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
+>         }
+>
+>  unlock:
+> +       if (ctrlr->dirty && !psci_has_osi_support()) {
+> +               if (rpmh_flush(ctrlr)) {
+> +                       spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+> +                       return ERR_PTR(-EINVAL);
+> +               }
 > +       }
 > +
-> +       return 0;
-> +}
+>         spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+>
+>         return req;
+> @@ -285,26 +293,35 @@ int rpmh_write(const struct device *dev, enum rpmh_state state,
+>  }
+>  EXPORT_SYMBOL(rpmh_write);
+>
+> -static void cache_batch(struct rpmh_ctrlr *ctrlr, struct batch_cache_req *req)
+> +static int cache_batch(struct rpmh_ctrlr *ctrlr, struct batch_cache_req *req)
+>  {
+>         unsigned long flags;
+>
+>         spin_lock_irqsave(&ctrlr->cache_lock, flags);
 > +
-> +DEFINE_SHOW_ATTRIBUTE(soc_sleep_stats);
-> +DEFINE_SHOW_ATTRIBUTE(subsystem_sleep_stats);
+>         list_add_tail(&req->list, &ctrlr->batch_cache);
+>         ctrlr->dirty = true;
 > +
-> +static const struct stats_config rpm_data =3D {
-> +       .offset_addr =3D 0x14,
-> +       .num_records =3D 2,
-> +       .appended_stats_avail =3D true,
-> +};
-> +
-> +static const struct stats_config rpmh_data =3D {
-> +       .offset_addr =3D 0x4,
-> +       .num_records =3D 3,
-> +       .appended_stats_avail =3D false,
-> +};
-> +
-> +static const struct of_device_id soc_sleep_stats_table[] =3D {
-> +       { .compatible =3D "qcom,rpm-sleep-stats", .data =3D &rpm_data},
-> +       { .compatible =3D "qcom,rpmh-sleep-stats", .data =3D &rpmh_data},
-> +       { },
-
-Please drop comma after sentinel. It makes a compiler error appear if
-anything comes after.
-
-> +};
-
-Move this table next to the driver structure please.
-
-> +
-> +static int create_debugfs_entries(struct soc_sleep_stats_data *drv)
-> +{
-> +       struct entry *e;
-> +       char stat_type[NAME_LENGTH] =3D {0};
-
-Is it a string? Otherwise, seems pretty useless to initialize this to 0
-on the stack.
-
-> +       uint32_t offset, type;
-
-Just use u32 instead of uint32_t in any kernel code.
-
-> +       int i;
-> +
-> +       drv->root =3D debugfs_create_dir("soc_sleep_stats", NULL);
-> +       if (IS_ERR_OR_NULL(drv->root))
-> +               return PTR_ERR(drv->root);
-
-This is wrong. Debugfs checks have generally been removed because it's
-not a problem if debugfs fails. When it fails, drv->root will be NULL
-and any debugfs_create() function will ignore it. Since this driver
-depends on DEBUGFS being enabled, -ENODEV won't be returned as an error
-pointer.
-
-> +
-> +       for (i =3D 0; i < config->num_records; i++) {
-> +               offset =3D offsetof(struct entry, stat_type) +
-> +                        (i * sizeof(struct entry));
-
-This offset of stuff is sort of complicated. I'd prefer to treat it like
-how we treat most registers with #defines and base + #define sort of
-logic. That is easier to read. It also let's us decide to completely
-reorder struct members and not have to worry that the struct doesn't
-match how memory is laid out. Instead we have macros that define the
-offset from some base __iomem pointer.
-
-> +
-> +               if (config->appended_stats_avail)
-> +                       offset +=3D i * sizeof(struct appended_entry);
-> +
-> +               type =3D le32_to_cpu(readl_relaxed(drv->reg + offset));
-> +               memcpy(stat_type, &type, sizeof(uint32_t));
-> +               debugfs_create_file(stat_type, 0444, drv->root,
-> +                                   drv->reg + offset,
-> +                                   &soc_sleep_stats_fops);
+> +       if (!psci_has_osi_support()) {
+> +               if (rpmh_flush(ctrlr)) {
+> +                       spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+> +                       return -EINVAL;
+> +               }
 > +       }
 > +
-> +       for (i =3D 0; i < ARRAY_SIZE(subsystems); i++) {
-> +               e =3D qcom_smem_get(subsystems[i].pid, subsystems[i].item=
-_id,
-> +                                 NULL);
-> +
-> +               if (IS_ERR(e))
-> +                       continue;
-> +
-> +               debugfs_create_file(subsystems[i].name, 0444, drv->root,
-> +                                   &subsystems[i],
-> +                                   &subsystem_sleep_stats_fops);
-> +       }
+>         spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
 > +
 > +       return 0;
-> +}
-> +
-> +static int soc_sleep_stats_probe(struct platform_device *pdev)
-> +{
-> +       struct soc_sleep_stats_data *drv;
-> +       struct resource *res;
-> +       void __iomem *offset_addr;
-> +
-> +       drv =3D devm_kzalloc(&pdev->dev, sizeof(*drv), GFP_KERNEL);
-> +       if (!drv)
-> +               return -ENOMEM;
-> +
-> +       config =3D of_device_get_match_data(&pdev->dev);
+>  }
+>
+>  static int flush_batch(struct rpmh_ctrlr *ctrlr)
+>  {
+>         struct batch_cache_req *req;
+>         const struct rpmh_request *rpm_msg;
+> -       unsigned long flags;
+>         int ret = 0;
+>         int i;
+>
+>         /* Send Sleep/Wake requests to the controller, expect no response */
+> -       spin_lock_irqsave(&ctrlr->cache_lock, flags);
+>         list_for_each_entry(req, &ctrlr->batch_cache, list) {
+>                 for (i = 0; i < req->count; i++) {
+>                         rpm_msg = req->rpm_msgs + i;
+> @@ -314,7 +331,6 @@ static int flush_batch(struct rpmh_ctrlr *ctrlr)
+>                                 break;
+>                 }
+>         }
+> -       spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+>
+>         return ret;
+>  }
+> @@ -386,10 +402,8 @@ int rpmh_write_batch(const struct device *dev, enum rpmh_state state,
+>                 cmd += n[i];
+>         }
+>
+> -       if (state != RPMH_ACTIVE_ONLY_STATE) {
+> -               cache_batch(ctrlr, req);
+> -               return 0;
+> -       }
+> +       if (state != RPMH_ACTIVE_ONLY_STATE)
+> +               return cache_batch(ctrlr, req);
+>
+>         for (i = 0; i < count; i++) {
+>                 struct completion *compl = &compls[i];
+> @@ -455,9 +469,6 @@ static int send_single(struct rpmh_ctrlr *ctrlr, enum rpmh_state state,
+>   * Return: -EBUSY if the controller is busy, probably waiting on a response
+>   * to a RPMH request sent earlier.
+>   *
+> - * This function is always called from the sleep code from the last CPU
+> - * that is powering down the entire system. Since no other RPMH API would be
+> - * executing at this time, it is safe to run lockless.
 
-Use device_get_match_data() to make this be less DT specific.
+Oh nice, I didn't even see that comment. We should probably replace
+that with a comment indicating that we assume ctrlr->cache_lock is
+already held.
 
-> +       if (!config)
-> +               return -ENODEV;
-> +
-> +       res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +       if (!res)
-> +               return PTR_ERR(res);
-> +
-> +       offset_addr =3D ioremap_nocache(res->start + config->offset_addr,
+Please also remove this comment in rpmh_flush():
+        /*
+         * Nobody else should be calling this function other than system PM,
+         * hence we can run without locks.
+         */
+        list_for_each_entry(p, &ctrlr->cache, list) {
 
-Why do we need ioremap_nocache()? Can ioremap() work?
+-Evan
 
-> +                                     sizeof(u32));
-> +       if (IS_ERR(offset_addr))
-> +               return PTR_ERR(offset_addr);
-> +
-> +       drv->stats_base =3D res->start | readl_relaxed(offset_addr);
-
-Why | vs. +?
-
-> +       drv->stats_size =3D resource_size(res);
-> +       iounmap(offset_addr);
-> +
-> +       drv->reg =3D devm_ioremap(&pdev->dev, drv->stats_base, drv->stats=
-_size);
-> +       if (!drv->reg)
-> +               return -ENOMEM;
-> +
-> +       if (create_debugfs_entries(drv))
-> +               return -ENODEV;
-> +
-> +       platform_set_drvdata(pdev, drv);
-> +
-> +       return 0;
-> +}
+>   */
+>  int rpmh_flush(struct rpmh_ctrlr *ctrlr)
+>  {
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
