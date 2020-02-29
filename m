@@ -2,85 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 773541743C5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Feb 2020 01:22:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 206F6174439
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Feb 2020 02:35:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726527AbgB2AWL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Feb 2020 19:22:11 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:45064 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726418AbgB2AWL (ORCPT
+        id S1726589AbgB2Bfy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Feb 2020 20:35:54 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:14241 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726046AbgB2Bfy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Feb 2020 19:22:11 -0500
-Received: by mail-lj1-f195.google.com with SMTP id e18so5261885ljn.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2020 16:22:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+u0gv0tl7AmgLhCL7vM7Tz8IImT4ldCCBT4qkE7ULKY=;
-        b=fGaQ5JCVhGTePvUAx++hyza0BfqY9JdB2F2GhfTLy9rPR5cQk5nYiP4YxWG8OFvXIw
-         eaxCQprO0+OU8yIrfsI3GJjzKRqnBwA0Up1pGquOWCbSGik5YvXxE4JhmtLjR2sNGlOd
-         k3ZQA8sT66ACy9nosyGTOwS19r/nZ2etYGTq0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+u0gv0tl7AmgLhCL7vM7Tz8IImT4ldCCBT4qkE7ULKY=;
-        b=khMmoUmcf1u7yaS/GdzZ3tKhhD9pgXQEas4/pvuen1PQS0fx8hj4JFSPoaIaAWPbsB
-         2DX7uUDiHbZzx/CpIggt3IxltQVqusN2yRZyE0/eZgc6EG8y+eIXw58em0JvUnTAfsa+
-         bNo7uTCP7vPvRFc4J0aQCpvYtccauv43vBIHE6TuebuPnBmvDb+2JlfIn2a0bgjIuwFM
-         9o50ug5ySdJ+Frf2VdVbPZV/XLqQ0OWkaUhnY08H3nCwaM+q2o9azv0NjZq2SeUKwzyZ
-         xl7rVMnY3CSp67bABapS3VRNqOE4oXja+hWIF6fReBNQzAwhBGo6U9OQ6dcOcXjc9Nfw
-         R72w==
-X-Gm-Message-State: ANhLgQ02+iV8aLL/sicKJPnLXSNpwPPjGQ5ZHuYfPBVA+a4byPKPS3HD
-        A7BowxNtzUWhOdHSE7Yejdf8Mnl0Jwg=
-X-Google-Smtp-Source: ADFU+vuEpaYfCSsjDAWJnxFeVzAh8iXB0E94x0me7KXN/G4am1XKu0WLaE6oIdLuHwwLceKTOuwm3A==
-X-Received: by 2002:a2e:6a09:: with SMTP id f9mr1215562ljc.107.1582935729059;
-        Fri, 28 Feb 2020 16:22:09 -0800 (PST)
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com. [209.85.167.46])
-        by smtp.gmail.com with ESMTPSA id u14sm3131384ljd.67.2020.02.28.16.22.07
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Feb 2020 16:22:07 -0800 (PST)
-Received: by mail-lf1-f46.google.com with SMTP id v6so3360328lfo.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Feb 2020 16:22:07 -0800 (PST)
-X-Received: by 2002:a19:c611:: with SMTP id w17mr4041445lff.59.1582935726653;
- Fri, 28 Feb 2020 16:22:06 -0800 (PST)
+        Fri, 28 Feb 2020 20:35:54 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1582940153; h=Message-ID: Subject: Cc: To: From: Date:
+ Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
+ bh=ySl75E8LPEXT19bMlNXG70itx4h/1U4kd9G3+SOPYT0=; b=YuKnsYmSHBih4IV6c7qILLJe85n2jCrIQ0MZugANOe4Z/v+0zBSiSf6SMYeC/4T8wPC0kNxw
+ koGHbo0qtU7xWx5B4Xhq9ZjZ+IxATKZJae/F5pvkPvZJdykMZv0cj3O/Sh1VEJXkWHOlRejg
+ oqRlGYMDIoTbK2jr8UGWLzQfbtQ=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e59bff8.7fec3c32b3b0-smtp-out-n01;
+ Sat, 29 Feb 2020 01:35:52 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D6EADC447A0; Sat, 29 Feb 2020 01:35:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2B242C43383;
+        Sat, 29 Feb 2020 01:35:51 +0000 (UTC)
 MIME-Version: 1.0
-References: <20200227105632.15041-1-sibis@codeaurora.org> <20200227105632.15041-2-sibis@codeaurora.org>
-In-Reply-To: <20200227105632.15041-2-sibis@codeaurora.org>
-From:   Evan Green <evgreen@chromium.org>
-Date:   Fri, 28 Feb 2020 16:21:30 -0800
-X-Gmail-Original-Message-ID: <CAE=gft5=r3MaoAYTn1X416-QGjSBKj5526VDbFoXUbiEvUKO4Q@mail.gmail.com>
-Message-ID: <CAE=gft5=r3MaoAYTn1X416-QGjSBKj5526VDbFoXUbiEvUKO4Q@mail.gmail.com>
-Subject: Re: [PATCH v5 1/7] interconnect: qcom: Allow icc node to be used
- across icc providers
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Saravana Kannan <saravanak@google.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Odelu Kukatla <okukatla@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 28 Feb 2020 17:35:51 -0800
+From:   abhinavk@codeaurora.org
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Cc:     robdclark@gmail.com, seanpaul@chromium.org, nganji@codeaurora.org,
+        aravindh@codeaurora.org, chandanu@codeaurora.org,
+        varar@quicinc.com, treding@nvidia.com, daniel.vetter@ffwll.ch
+Subject: Reverting https://patchwork.freedesktop.org/patch/336850/
+Message-ID: <8bec962794df6fd8f1384d457060234e@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 27, 2020 at 2:57 AM Sibi Sankar <sibis@codeaurora.org> wrote:
->
-> Move the icc node ids to a common header, this will allow for
-> referencing/linking of icc nodes to multiple icc providers on
-> SDM845 SoCs.
->
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+Hi Thierry
 
-Reviewed-by: Evan Green <evgreen@chromium.org>
+For DP drivers using MSM chipsets, we are using drm_dp_link_configure, 
+drm_dp_link_power_up and drm_dp_link_power_down functions. Here is the 
+patch for reference:
+
+https://patchwork.freedesktop.org/patch/343346/
+
+We will be posting a newer version of the driver soon.
+
+For that, we plan to revert 
+https://patchwork.freedesktop.org/patch/336850/ as now there are more 
+users of the functions and not just tegra.
+
+Let us know if this is the right approach or shall we make the required 
+functions local to our drivers.
+
+Thanks
+
+Abhinav
