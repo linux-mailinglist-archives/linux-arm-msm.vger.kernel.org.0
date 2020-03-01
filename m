@@ -2,100 +2,369 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 543E1174E9D
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2020 17:55:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E807E1750B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 00:00:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726579AbgCAQzL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 Mar 2020 11:55:11 -0500
-Received: from mout.gmx.net ([212.227.17.21]:42669 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726204AbgCAQzL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 Mar 2020 11:55:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1583081710;
-        bh=HZMgLpTpxl1e1ENInbOssj+6tKEqhJIzOYowFr9xRTw=;
-        h=X-UI-Sender-Class:To:From:Subject:Date;
-        b=SsaA0oNf6s3U3CwnszISJ9KvnXLb4dlVmGHcMJyR8HYdvEvVLGQ6z9mAXO/8A1reA
-         t+dSXqAteiegocvldhmxuTbpLUu56CQhvQpAHVAx9fITo6HSoRwoL1IgCEb4/2rXVg
-         in3UNHifhKhMbADqeRAzSC1mqVUchx8DcGNXQIEE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.202] ([95.91.236.254]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MpUYu-1jkmos01ym-00psxQ for
- <linux-arm-msm@vger.kernel.org>; Sun, 01 Mar 2020 17:55:10 +0100
-To:     linux-arm-msm@vger.kernel.org
-From:   Andreas Schaufler <andreas.schaufler@gmx.de>
-Subject: HugeTLB on ARM64
-Message-ID: <f994797a-96ad-ba51-9e93-e4c4e34d24d5@gmx.de>
-Date:   Sun, 1 Mar 2020 16:55:10 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        id S1726602AbgCAXAF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 Mar 2020 18:00:05 -0500
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:44747 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726448AbgCAXAF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 1 Mar 2020 18:00:05 -0500
+Received: by mail-qk1-f193.google.com with SMTP id f198so699289qke.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Mar 2020 15:00:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=4XRXBMLfswElGthzyg0E7Y81nyO8pgBgTsiCR8yuSgc=;
+        b=zMc6JRlgzRoL15hbFE0UuWcUNn5t+cMEZsMGJbfZfkyGC3Ge2SXwiA2mgXDETX+qKb
+         lSO/khYjroRrITgYGfZpURi2NXhKdPqqJtW8YaiJAJUMHL6ApUFC9DHKM0wh9nH2XnIq
+         rmSup6BcYRbwZE8LTou+6pEKpjwYArWHx38qzF8aCXdBtLVNNF87BMuIiKOE7FmSKKqu
+         yIm6QUh024sqwDzdeOxVWCKDkRLIDqdSDbfgKNHjlVq5GPg1CdIYs2Lhj35tV8NDOA0v
+         PhWr5dVGN/n2Zu3051108/htS58boP9oqreh7BzdcajsVixQIEUKxlaXSP/eehPxDN6n
+         yMTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=4XRXBMLfswElGthzyg0E7Y81nyO8pgBgTsiCR8yuSgc=;
+        b=A/SAdILZCCl80wkByg9B5IgOX5IATkpl9u2hFFBX4FkiIVgOcYVHOexTlwemUji1Ui
+         TGhg5jlhWZg7KNjh43BtJqMow46tv57+I/GrGszep5Ms5n/CZDkyif8Jlm7teIfBCLze
+         QzMaPeBT0s7EnUd85L1u+S1wwerksoYOvl+tFcI0YiBxI9A7nUr00RiMCAPygKxumu4s
+         bEc+3ctV4LaKdiUJC2195V3BKKiIxNvpVOAMFmPhx8Vy9R+N4Id0MFX9sQFudRzwyErg
+         CcmO5etkNBo6+8n2PutAnCZjiREL5HMd2ramxDzyqkgCiVG76iltalPJ3RgwTK69//mS
+         OOOQ==
+X-Gm-Message-State: APjAAAX7RNyk1jRcCMRQ4qAosh/XbX8uu0euO2ctOoPXWlNxcgNVTQOR
+        dwWrJd8qznDxz9DrhLaQHyAEAg==
+X-Google-Smtp-Source: APXvYqxRSt63yPuuv0mIlA6u7e9vwd1xjy3UqXV8n7ZSULKVSBb5W1bqB9wAsiYTXtWndOxnkPV83Q==
+X-Received: by 2002:a37:68c6:: with SMTP id d189mr14155448qkc.307.1583103603911;
+        Sun, 01 Mar 2020 15:00:03 -0800 (PST)
+Received: from [192.168.1.92] (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
+        by smtp.gmail.com with ESMTPSA id q1sm1562355qtp.81.2020.03.01.15.00.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 01 Mar 2020 15:00:03 -0800 (PST)
+Subject: Re: [Patch v4 4/7] thermal: Add generic power domain warming device
+ driver.
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Eduardo Valentin <edubezval@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <1574254593-16078-1-git-send-email-thara.gopinath@linaro.org>
+ <1574254593-16078-5-git-send-email-thara.gopinath@linaro.org>
+ <CAPDyKFqBusMHWNHBCMXx6TxFO=8B6ytoyvvSfi14Z=-ahBDV5A@mail.gmail.com>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <ac341c33-003a-587a-7078-84a7f0c01a3a@linaro.org>
+Date:   Sun, 1 Mar 2020 18:00:01 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <CAPDyKFqBusMHWNHBCMXx6TxFO=8B6ytoyvvSfi14Z=-ahBDV5A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:kFM9dMNE0GdjyjXllFB1Owt2zO4U9R+Yh5VMbDNkeQvi4SR/w5w
- 4U6YUg1kYv8ACGikvzkVhplareZ5MRIhWvVneXy0on4/NQ5DUBGF+tv8FZ5Ug/aY8wd3Kd4
- rd9Pg1d/xKuqwvSrVhToALzgPBR3KcfLRQ80Hy3V9SKguN3JmHRjull1zz+RtAvDUaqELQ5
- G+yTk1y6T2mCq6wIw5Tsw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8ZZcRbG7n/s=:iowyq1ieYtB4ZJvp5NXEz1
- 4yUny4RP5SMdvBds86YPYWjWF9iDhYthXwJAF+iy/mlcabZonj/aFLeKP6RwE+iue/MDdWFPw
- L5FK+HZy6mp0U1gzCkNrZYYELEQ8R1YEEOWTsm3rt+lxGwy3Cr1QtdVNkMhm562X1JRHRj5dP
- V+swruQJ4B8GtzIqLAQtFHZqk1u+kbkOFXD6k9yMi3NdeCilTjhN4N4stV6C8qihlbNPVecSr
- AjIS10zfg6QbEqznS4mnN354B7KQ5IbWZBYzb7I6dg5XJb16mBFsYuid5x6hkmuPJb2EJA10T
- 9jGIrOzudSb0a1pOb3ZX40KlI7CJK0OtjYnpBliHE+ArnAK+9Em69+ze7kGezDac9YYNZoo4X
- gD24yj3JmA3hsTRR1W6CtO62YLheY1wsALO5tOE6ensAd/Mz6NSB19Nt6laMATd2T95pdf5xv
- XjqqgvJpnA2KDlv+qsGCiJMlNeQ3hRumn13h05TOiVuULZg60eDfIzyqQBAIni3zh3LQtNwjn
- iXH1n9KpjWj9eD6YaHpY0uBAV0g5StLLswo4heFjJ/P88i20nQJo8ah5h5bYU5MDElvF4bV7O
- Y23dlEoCnnld99kX6Q2GBJ4ACbwjo9+hbG8ha/Ivn263vEstxiZDpNSJUprEvdtJ0EjSO3sGU
- BMeWDguHgci946THqBDVPj5CU43YNOykJRYTzRYQIf4tGNkrOsrPSw+woXRF3d6uf8kkw5svY
- g9H+Ohjb5J535fBO4XICgB+puWUX/q9tM9q34FBLXj6dUW/j0GL5ooz+YEvnNR/r0eSh5ON66
- 7dZSbTlq2V22y/Yj5Wo07oCTZDxOJ8WvE5cNxKFiSc/Bj5ORzoTli2BrmXI0r4MnwTK4YujoJ
- HhEO4zFPWouprlsT5j9Bhs+VzxajSLTX0gg4APWFhhe7vU/iqQFBQ83Uw6+Qd0Wv+uicRRMj3
- 1x4lqPV4uhGgfTs3BqB4QhTxNsPpbDhu4f/nlXqhExq/h84Ij3STvf0GBoAkbqBAmBAPdAq7P
- QTxhovumvb3TtMgefQryE5kWgWPvb6GQwOG6f5kji8vCg9X2vicWzewYrdrT9f4068vEWskeh
- CM8/6RDs5JXq2KG3xbB4JUumKZDZ5t0F6CxYwm9ye/unJiayGV7v+Hicq0wU60kbfLmM7RG2y
- w9Blet1E6BrLJYBlWO22YUAoBwnoJJQ4+3hVX2Qky3d7F6Lnt7Rf8BbBHvfNlSndj8xk0QAVP
- tdM3L6kLQ6RiAPIHb
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dear all,
+Hi Ulf,
 
-I am working on a project based on a A53 SoC. The goal is for the CPU to
-receive and process data. I am running vanilla 5.4.9.
+Thanks for the reviews. Sorry for the delay in response.
+I have started working on this again. So this should pick
+up pace now.
 
-Benchmarking memory performance shows improvements when using HugeTLBs.
-I managed to run with 4K base pages and 2MB Huge
-Pages specifying on the kernel command line how many pages to allocate,
-i.e. hugepages=3D512 default_hugepagesz=3D2m hugepagesz=3D2m.
+On 2/4/20 11:54 AM, Ulf Hansson wrote:
+> On Wed, 20 Nov 2019 at 13:56, Thara Gopinath <thara.gopinath@linaro.org> wrote:
+>>
+>> Resources modeled as power domains in linux kenrel can  be used to warm the
+>> SoC(eg. mx power domain on sdm845).  To support this feature, introduce a
+>> generic power domain warming device driver that can be plugged into the
+>> thermal framework (The thermal framework itself requires further
+>> modifiction to support a warming device in place of a cooling device.
+>> Those extensions are not introduced in this patch series).
+>>
+>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+>> ---
+>> v3->v4:
+>>          - Removed late_init hook pd_warming_device_ops.
+>>          - Use of_genpd_add_device instead of pm_genpd_add_device to attach
+>>            device to the generic power domain.
+>>          - Use thermal_of_cooling_device_parent_register to register the
+>>            cooling device so that the device with genpd attached can be
+>>            made parent of the cooling device.
+>>          - With above changes, remove reference to generic_pm_domain in
+>>            pd_warming_device.
+>>
+>>   drivers/thermal/Kconfig              |  10 +++
+>>   drivers/thermal/Makefile             |   2 +
+>>   drivers/thermal/pwr_domain_warming.c | 138 +++++++++++++++++++++++++++++++++++
+>>   include/linux/pwr_domain_warming.h   |  29 ++++++++
+> 
+> Not sure about what the thermal maintainers think about the naming
+> here. In the end, it's their call.
+> 
+> However, normally we use "pm_domain_*", rather than "pwr_domain_*",
+> but maybe just "pd_*" is sufficient here.
 
-The ARM64 when using 4K pages should also support 1G Huge Pages.
-However, when specifying this:
+I will rename this to pd_ for now.
 
-hugepages=3D1 default_hugepagesz=3D1G hugepagesz=3D1G
+> 
+>>   4 files changed, 179 insertions(+)
+>>   create mode 100644 drivers/thermal/pwr_domain_warming.c
+>>   create mode 100644 include/linux/pwr_domain_warming.h
+>>
+>> diff --git a/drivers/thermal/Kconfig b/drivers/thermal/Kconfig
+>> index 001a21a..0c5c93e 100644
+>> --- a/drivers/thermal/Kconfig
+>> +++ b/drivers/thermal/Kconfig
+>> @@ -187,6 +187,16 @@ config DEVFREQ_THERMAL
+>>
+>>            If you want this support, you should say Y here.
+>>
+>> +config PWR_DOMAIN_WARMING_THERMAL
+>> +       bool "Power Domain based warming device"
+>> +       depends on PM_GENERIC_DOMAINS_OF
+>> +       help
+>> +         This implements the generic power domain based warming
+>> +         mechanism through increasing the performance state of
+>> +         a power domain.
+>> +
+>> +         If you want this support, you should say Y here.
+>> +
+>>   config THERMAL_EMULATION
+>>          bool "Thermal emulation mode support"
+>>          help
+>> diff --git a/drivers/thermal/Makefile b/drivers/thermal/Makefile
+>> index 74a37c7..382c64a 100644
+>> --- a/drivers/thermal/Makefile
+>> +++ b/drivers/thermal/Makefile
+>> @@ -27,6 +27,8 @@ thermal_sys-$(CONFIG_CLOCK_THERMAL)   += clock_cooling.o
+>>   # devfreq cooling
+>>   thermal_sys-$(CONFIG_DEVFREQ_THERMAL) += devfreq_cooling.o
+>>
+>> +thermal_sys-$(CONFIG_PWR_DOMAIN_WARMING_THERMAL)       += pwr_domain_warming.o
+>> +
+>>   # platform thermal drivers
+>>   obj-y                          += broadcom/
+>>   obj-$(CONFIG_THERMAL_MMIO)             += thermal_mmio.o
+>> diff --git a/drivers/thermal/pwr_domain_warming.c b/drivers/thermal/pwr_domain_warming.c
+>> new file mode 100644
+>> index 0000000..40162b9
+>> --- /dev/null
+>> +++ b/drivers/thermal/pwr_domain_warming.c
+>> @@ -0,0 +1,138 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * Copyright (c) 2019, Linaro Ltd
+>> + */
+>> +#include <linux/err.h>
+>> +#include <linux/kernel.h>
+>> +#include <linux/init.h>
+>> +#include <linux/of_device.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/module.h>
+>> +#include <linux/pm_runtime.h>
+>> +#include <linux/slab.h>
+>> +#include <linux/pwr_domain_warming.h>
+>> +
+>> +struct pd_warming_device {
+>> +       struct thermal_cooling_device *cdev;
+>> +       struct device dev;
+>> +       int max_state;
+>> +       int cur_state;
+>> +       bool runtime_resumed;
+>> +};
+>> +
+>> +static int pd_wdev_get_max_state(struct thermal_cooling_device *cdev,
+>> +                                unsigned long *state)
+>> +{
+>> +       struct pd_warming_device *pd_wdev = cdev->devdata;
+>> +
+>> +       *state = pd_wdev->max_state;
+>> +       return 0;
+>> +}
+>> +
+>> +static int pd_wdev_get_cur_state(struct thermal_cooling_device *cdev,
+>> +                                unsigned long *state)
+>> +{
+>> +       struct pd_warming_device *pd_wdev = cdev->devdata;
+>> +
+>> +       *state = dev_pm_genpd_get_performance_state(&pd_wdev->dev);
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +static int pd_wdev_set_cur_state(struct thermal_cooling_device *cdev,
+>> +                                unsigned long state)
+>> +{
+>> +       struct pd_warming_device *pd_wdev = cdev->devdata;
+>> +       struct device *dev = &pd_wdev->dev;
+>> +       int ret;
+>> +
+>> +       ret = dev_pm_genpd_set_performance_state(dev, state);
+>> +
+>> +       if (ret)
+>> +               return ret;
+>> +
+>> +       if (state && !pd_wdev->runtime_resumed) {
+>> +               ret = pm_runtime_get_sync(dev);
+>> +               pd_wdev->runtime_resumed = true;
+>> +       } else if (!state && pd_wdev->runtime_resumed) {
+>> +               ret = pm_runtime_put(dev);
+>> +               pd_wdev->runtime_resumed = false;
+>> +       }
+>> +
+>> +       return ret;
+>> +}
+>> +
+>> +static struct thermal_cooling_device_ops pd_warming_device_ops = {
+>> +       .get_max_state  = ::pd_wdev_get_max_state,
+>> +       .get_cur_state  = pd_wdev_get_cur_state,
+>> +       .set_cur_state  = pd_wdev_set_cur_state,
+>> +};
+>> +
+>> +struct thermal_cooling_device *
+>> +pwr_domain_warming_register(struct device *parent, char *pd_name, int pd_id)
+> 
+> Maybe rename this to: thermal_of_pd_warming_register()
 
-I see the size properly taken into account in /proc/meminfo, but it does
-not manage to allocate them:
+How about pd_of_warming_register? It is consistent with other cooling 
+device register like cpuidle_of_cooling_register and 
+cpufreq_of_cooling_register.
 
-# cat /proc/meminfo
-=E2=80=A6..
-HugePages_Total:       0
-HugePages_Free:        0
-HugePages_Rsvd:        0
-HugePages_Surp:        0
-Hugepagesize:    1048576 kB
-Hugetlb:               0 kB
+> Moreover, I think you could replace the "struct device *parent", with
+> a "struct device_node *node" as in-parameter. That's all you need,
+> right?
 
-There is enough memory on the board. For instance if I declare a CMA
-area of 1G in the device tree it manges to reserve it properly at
-0x40000000. Of course I remove CMA reservation when defining 1G Huge Pages=
-.
+You mean pd_wdev->dev.parent need not be populated ? The device
+in this case will be created under /sys/devices which I do not think
+is the correct.
+With a parent device specified, the power controller that resides the 
+power domain that can act as the warming dev, becomes the parent of the 
+warming dev. In case of this patch series, for the mx warming dev, 
+179c0000.rsc/179c0000.rsc\:power-controller/ becomes the parent.(The 
+device will be created under 
+/sys/devices/platform/soc\@0/179c0000.rsc/179c0000.rsc\:power-controller/)
 
-I am looking for the reason why this would fail, but I am not
-successful. Any hints will be highly appreciated.
+Other way might be to register the warming device under virtual devices 
+as a new category of devices.
 
-Thanks a lot and best regards
-Andreas
+I prefer to keep it as a child of the power controller device, but I am 
+open to explore other options and to re-do this bit. What do you think?
+
+> 
+>> +{
+>> +       struct pd_warming_device *pd_wdev;
+>> +       struct of_phandle_args pd_args;
+>> +       int ret;
+>> +
+>> +       pd_wdev = kzalloc(sizeof(*pd_wdev), GFP_KERNEL);
+>> +       if (!pd_wdev)
+>> +               return ERR_PTR(-ENOMEM);
+>> +
+>> +       dev_set_name(&pd_wdev->dev, "%s_warming_dev", pd_name);
+> 
+> Perhaps skip the in-param *pd_name and make use of the suggested
+> "struct device_node *node", the index and something with "warming...",
+> when setting the name.
+
+Won't the index have to be in-param in this case ?
+
+> 
+> Just an idea, as to simplify for the caller.
+> 
+>> +       pd_wdev->dev.parent = parent;
+> 
+> This isn't needed, I think.
+> 
+>> +
+>> +       ret = device_register(&pd_wdev->dev);
+>> +       if (ret)
+>> +               goto error;
+>> +
+>> +       pd_args.np = parent->of_node;
+>> +       pd_args.args[0] = pd_id;
+>> +       pd_args.args_count = 1;
+>> +
+>> +       ret = of_genpd_add_device(&pd_args, &pd_wdev->dev);
+>> +
+> 
+> White space.
+
+Will fix it.
+
+> 
+>> +       if (ret)
+>> +               goto error;
+>> +
+>> +       ret = dev_pm_genpd_performance_state_count(&pd_wdev->dev);
+>> +       if (ret < 0)
+>> +               goto error;
+>> +
+>> +       pd_wdev->max_state = ret - 1;
+>> +       pm_runtime_enable(&pd_wdev->dev);
+>> +       pd_wdev->runtime_resumed = false;
+>> +
+>> +       pd_wdev->cdev = thermal_of_cooling_device_parent_register
+>> +                                       (NULL, parent, pd_name, pd_wdev,
+>> +                                        &pd_warming_device_ops);
+> 
+> As stated in patch3, I don't get it why you need to use this new API
+> for "parents".
+
+I agree with you. I cannot re-collect my thought process for this API.
+I compiled and tested using the regular API and everything works fine.
+I will drop patch 3 and use the thermal_of_cooling_device_register here.
+
+> 
+>> +       if (IS_ERR(pd_wdev->cdev)) {
+>> +               pr_err("unable to register %s cooling device\n", pd_name);
+>> +               pm_runtime_disable(&pd_wdev->dev);
+>> +               ret = PTR_ERR(pd_wdev->cdev);
+>> +               goto error;
+>> +       }
+>> +
+>> +       return pd_wdev->cdev;
+>> +error:
+>> +       put_device(&pd_wdev->dev);
+> 
+> If device_register() succeeds you need to call device_unregister(),
+> rather than put_device() as a part of the error handling.
+
+Will fix this.
+
+> 
+>> +       kfree(pd_wdev);
+> 
+> You need a ->release() callback to manage kfree(), after you called
+> device_register().
+
+mm?? I did not get this. What release callback? You mean for power 
+controller driver to call ?
+
+> 
+>> +       return ERR_PTR(ret);
+> 
+> Another thing is missing in the error path, which is to remove the
+> device for the genpd. I think calling pm_genpd_remove_device() should
+> work fine here.
+
+I will fix this. I am thinking this will be be needed in 
+pwr_domain_warming_unregister as well.
+
+
+-- 
+Warm Regards
+Thara
