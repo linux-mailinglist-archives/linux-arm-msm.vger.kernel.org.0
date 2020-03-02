@@ -2,263 +2,323 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A8F7176563
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 21:54:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A51517657A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 21:58:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726368AbgCBUy2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Mar 2020 15:54:28 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:53175 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726536AbgCBUy1 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Mar 2020 15:54:27 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1583182467; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Knl8RVMk3wTYhT3uRza+hAi92pQCSxF06lNY8i4CvdI=;
- b=KLtF52TS1Q7P4oSsCLlr7kJhg3BY6EA7L/f3mdTPIRxecH7zO4su1JLgBNbDj1A29ryd/0io
- G2auMYujBkys74lqvWgShmQUq9wO0SmgwFZrEzHlVoRtOrFS6TWxhRmgRnxS3lOJtXS6URrn
- rDxyxOid1QrZkZwUO9SBB8dLJs8=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e5d7279.7f109c5711f0-smtp-out-n02;
- Mon, 02 Mar 2020 20:54:17 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2D02CC4479D; Mon,  2 Mar 2020 20:54:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rishabhb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 14F58C43383;
-        Mon,  2 Mar 2020 20:54:16 +0000 (UTC)
+        id S1726536AbgCBU6u convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Mon, 2 Mar 2020 15:58:50 -0500
+Received: from mga07.intel.com ([134.134.136.100]:14134 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725911AbgCBU6u (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Mar 2020 15:58:50 -0500
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 02 Mar 2020 12:58:49 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,508,1574150400"; 
+   d="scan'208";a="262915303"
+Received: from fmsmsx103.amr.corp.intel.com ([10.18.124.201])
+  by fmsmga004.fm.intel.com with ESMTP; 02 Mar 2020 12:58:49 -0800
+Received: from fmsmsx115.amr.corp.intel.com (10.18.116.19) by
+ FMSMSX103.amr.corp.intel.com (10.18.124.201) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Mon, 2 Mar 2020 12:58:49 -0800
+Received: from fmsmsx108.amr.corp.intel.com ([169.254.9.2]) by
+ fmsmsx115.amr.corp.intel.com ([169.254.4.81]) with mapi id 14.03.0439.000;
+ Mon, 2 Mar 2020 12:58:49 -0800
+From:   "Ruhl, Michael J" <michael.j.ruhl@intel.com>
+To:     Jordan Crouse <jcrouse@codeaurora.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+CC:     Douglas Anderson <dianders@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
+        "smasetty@codeaurora.org" <smasetty@codeaurora.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>, Sean Paul <sean@poorly.run>
+Subject: RE: [PATCH v4 2/2] drm/msm/a6xx: Use the DMA API for GMU memory
+ objects
+Thread-Topic: [PATCH v4 2/2] drm/msm/a6xx: Use the DMA API for GMU memory
+ objects
+Thread-Index: AQHV8NPlMBHxtuqcFk6x//p6aZDLUag1x50A
+Date:   Mon, 2 Mar 2020 20:58:48 +0000
+Message-ID: <14063C7AD467DE4B82DEDB5C278E8663F4FDE244@FMSMSX108.amr.corp.intel.com>
+References: <1583182067-16530-1-git-send-email-jcrouse@codeaurora.org>
+ <1583182067-16530-3-git-send-email-jcrouse@codeaurora.org>
+In-Reply-To: <1583182067-16530-3-git-send-email-jcrouse@codeaurora.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: no-action
+x-originating-ip: [10.1.200.106]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 02 Mar 2020 12:54:16 -0800
-From:   rishabhb@codeaurora.org
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     Siddharth Gupta <sidgup@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, ohad@wizery.com, tsoni@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, psodagud@codeaurora.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 6/6] remoteproc: qcom: Add notification types to SSR
-In-Reply-To: <20200228183832.GA23026@xps15>
-References: <1582167465-2549-1-git-send-email-sidgup@codeaurora.org>
- <1582167465-2549-7-git-send-email-sidgup@codeaurora.org>
- <20200227215940.GC20116@xps15>
- <1a615fcd5a5c435d1d8babe8d5c3f8c3@codeaurora.org>
- <20200228183832.GA23026@xps15>
-Message-ID: <cac45f2726a272ccd0ce82e12e46756f@codeaurora.org>
-X-Sender: rishabhb@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-02-28 10:38, Mathieu Poirier wrote:
-> On Thu, Feb 27, 2020 at 04:00:21PM -0800, rishabhb@codeaurora.org 
-> wrote:
->> On 2020-02-27 13:59, Mathieu Poirier wrote:
->> > On Wed, Feb 19, 2020 at 06:57:45PM -0800, Siddharth Gupta wrote:
->> > > The SSR subdevice only adds callback for the unprepare event. Add
->> > > callbacks
->> > > for unprepare, start and prepare events. The client driver for a
->> > > particular
->> > > remoteproc might be interested in knowing the status of the remoteproc
->> > > while undergoing SSR, not just when the remoteproc has finished
->> > > shutting
->> > > down.
->> > >
->> > > Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
->> > > ---
->> > >  drivers/remoteproc/qcom_common.c | 39
->> > > +++++++++++++++++++++++++++++++++++----
->> > >  include/linux/remoteproc.h       | 15 +++++++++++++++
->> > >  2 files changed, 50 insertions(+), 4 deletions(-)
->> > >
->> > > diff --git a/drivers/remoteproc/qcom_common.c
->> > > b/drivers/remoteproc/qcom_common.c
->> > > index 6714f27..6f04a5b 100644
->> > > --- a/drivers/remoteproc/qcom_common.c
->> > > +++ b/drivers/remoteproc/qcom_common.c
->> > > @@ -183,9 +183,9 @@ EXPORT_SYMBOL_GPL(qcom_remove_smd_subdev);
->> > >   *
->> > >   * Returns pointer to srcu notifier head on success, ERR_PTR on
->> > > failure.
->> > >   *
->> > > - * This registers the @notify function as handler for restart
->> > > notifications. As
->> > > - * remote processors are stopped this function will be called, with
->> > > the rproc
->> > > - * pointer passed as a parameter.
->> > > + * This registers the @notify function as handler for
->> > > powerup/shutdown
->> > > + * notifications. This function will be invoked inside the
->> > > callbacks registered
->> > > + * for the ssr subdevice, with the rproc pointer passed as a
->> > > parameter.
->> > >   */
->> > >  void *qcom_register_ssr_notifier(struct rproc *rproc, struct
->> > > notifier_block *nb)
->> > >  {
->> > > @@ -227,11 +227,39 @@ int qcom_unregister_ssr_notifier(void *notify,
->> > > struct notifier_block *nb)
->> > >  }
->> > >  EXPORT_SYMBOL_GPL(qcom_unregister_ssr_notifier);
->> > >
->> > > +static int ssr_notify_prepare(struct rproc_subdev *subdev)
->> > > +{
->> > > +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
->> > > +
->> > > +	srcu_notifier_call_chain(ssr->rproc_notif_list,
->> > > +				 RPROC_BEFORE_POWERUP, (void *)ssr->name);
->> > > +	return 0;
->> > > +}
->> > > +
->> > > +static int ssr_notify_start(struct rproc_subdev *subdev)
->> > > +{
->> > > +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
->> > > +
->> > > +	srcu_notifier_call_chain(ssr->rproc_notif_list,
->> > > +				 RPROC_AFTER_POWERUP, (void *)ssr->name);
->> > > +	return 0;
->> > > +}
->> > > +
->> > > +static void ssr_notify_stop(struct rproc_subdev *subdev, bool
->> > > crashed)
->> > > +{
->> > > +	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
->> > > +
->> > > +	srcu_notifier_call_chain(ssr->rproc_notif_list,
->> > > +				 RPROC_BEFORE_SHUTDOWN, (void *)ssr->name);
->> > > +}
->> > > +
->> > > +
->> > >  static void ssr_notify_unprepare(struct rproc_subdev *subdev)
->> > >  {
->> > >  	struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
->> > >
->> > > -	srcu_notifier_call_chain(ssr->rproc_notif_list, 0, (void
->> > > *)ssr->name);
->> > > +	srcu_notifier_call_chain(ssr->rproc_notif_list,
->> > > +				 RPROC_AFTER_SHUTDOWN, (void *)ssr->name);
->> > >  }
->> > >
->> > >  /**
->> > > @@ -248,6 +276,9 @@ void qcom_add_ssr_subdev(struct rproc *rproc,
->> > > struct qcom_rproc_ssr *ssr,
->> > >  {
->> > >  	ssr->name = ssr_name;
->> > >  	ssr->subdev.name = kstrdup("ssr_notifs", GFP_KERNEL);
->> > > +	ssr->subdev.prepare = ssr_notify_prepare;
->> > > +	ssr->subdev.start = ssr_notify_start;
->> > > +	ssr->subdev.stop = ssr_notify_stop;
->> >
->> > Now that I have a better understanding of what this patchset is doing, I
->> > realise
->> > my comments in patch 04 won't work.  To differentiate the subdevs of an
->> > rproc I
->> > suggest to wrap them in a generic structure with a type and an enum.
->> > That way
->> > you can differenciate between subdevices without having to add to the
->> > core.
->> Ok. I can try that.
->> >
->> > That being said, I don't understand what patches 5 and 6 are doing...
->> > Registering with the global ssr_notifiers allowed to gracefully shutdown
->> > all the
->> > MCUs in the system when one of them would go down.  But now that we are
->> > using
->> > the notifier on a per MCU, I really don't see why each subdev couldn't
->> > implement
->> > the right prepare/start/stop functions.
->> >
->> > Am I missing something here?
->> We only want kernel clients to be notified when the Remoteproc they 
->> are
->> interested
->> in changes state. For e.g. audio kernel driver should be notified when 
->> audio
->> processor goes down but it does not care about any other remoteproc.
->> If you are suggesting that these kernel clients be added as subdevices 
->> then
->> we will end up having many subdevices registered to each remoteproc. 
->> So we
->> implemented a notifier chain per Remoteproc. This keeps the SSR
->> notifications as
->> the subdevice per remoteproc, and all interested clients can register 
->> to it.
-> 
-> It seems like I am missing information...  Your are referring to 
-> "kernel
-> clients" and as such I must assume some drivers that are not part of 
-> the
-> remoteproc/rpmsg subsystems are calling qcom_register_ssr_notifier().  
-> I must
-Yes these are not part of remoteproc framework and they will register 
-for notifications.
-> also assume these drivers (or that functionality) are not yet upsream 
-> because
-> all I can see calling qcom_register_ssr_notifier() is 
-> qcom_glink_ssr_probe().
-Correct.These are not upstreamed.
-> 
-> Speaking of which, what is the role of the qcom_glink_ssr_driver?  Is 
-> the glink
-> device that driver is handling the same as the glink device registed in
-> adsp_probe() and q6v5_probe()?
-glink ssr driver will send out notifications to remoteprocs that have 
-opened the
-"glink_ssr" channel that some subsystem has gone down or booted up. This 
-helps notify
-neighboring subsystems about change in state of any other subsystem.
-> 
->> >
->> >
->> > >  	ssr->subdev.unprepare = ssr_notify_unprepare;
->> > >  	ssr->rproc_notif_list = kzalloc(sizeof(struct srcu_notifier_head),
->> > >  								GFP_KERNEL);
->> > > diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
->> > > index e2f60cc..4be4478 100644
->> > > --- a/include/linux/remoteproc.h
->> > > +++ b/include/linux/remoteproc.h
->> > > @@ -449,6 +449,21 @@ struct rproc_dump_segment {
->> > >  };
->> > >
->> > >  /**
->> > > + * enum rproc_notif_type - Different stages of remoteproc
->> > > notifications
->> > > + * @RPROC_BEFORE_SHUTDOWN:	unprepare stage of  remoteproc
->> > > + * @RPROC_AFTER_SHUTDOWN:	stop stage of  remoteproc
->> > > + * @RPROC_BEFORE_POWERUP:	prepare stage of  remoteproc
->> > > + * @RPROC_AFTER_POWERUP:	start stage of  remoteproc
->> > > + */
->> > > +enum rproc_notif_type {
->> > > +	RPROC_BEFORE_SHUTDOWN,
->> > > +	RPROC_AFTER_SHUTDOWN,
->> > > +	RPROC_BEFORE_POWERUP,
->> > > +	RPROC_AFTER_POWERUP,
->> > > +	RPROC_MAX
->> > > +};
->> > > +
->> > > +/**
->> > >   * struct rproc - represents a physical remote processor device
->> > >   * @node: list node of this rproc object
->> > >   * @domain: iommu domain
->> > > --
->> > > Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> > > a Linux Foundation Collaborative Project
->> > >
->> > > _______________________________________________
->> > > linux-arm-kernel mailing list
->> > > linux-arm-kernel@lists.infradead.org
->> > > http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
+>-----Original Message-----
+>From: dri-devel <dri-devel-bounces@lists.freedesktop.org> On Behalf Of
+>Jordan Crouse
+>Sent: Monday, March 2, 2020 3:48 PM
+>To: linux-arm-msm@vger.kernel.org
+>Cc: Douglas Anderson <dianders@chromium.org>; David Airlie
+><airlied@linux.ie>; freedreno@lists.freedesktop.org;
+>smasetty@codeaurora.org; linux-kernel@vger.kernel.org; dri-
+>devel@lists.freedesktop.org; Stephen Boyd <swboyd@chromium.org>; Ruhl,
+>Michael J <michael.j.ruhl@intel.com>; Sean Paul <sean@poorly.run>
+>Subject: [PATCH v4 2/2] drm/msm/a6xx: Use the DMA API for GMU memory
+>objects
+>
+>The GMU has very few memory allocations and uses a flat memory space so
+>there is no good reason to go out of our way to bypass the DMA APIs which
+>were basically designed for this exact scenario.
+>
+>v4: Use dma_alloc_wc()
+
+The patch and the update look good to me.
+
+Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
+
+Mike
+
+>v3: Set the dma mask correctly and use dma_addr_t for the iova type
+>v2: Pass force_dma false to of_dma_configure to require that the DMA
+>region be set up and return error from of_dma_configure to fail probe.
+>
+>Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+>---
+>
+> drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 113 ++++---------------------------
+>---
+> drivers/gpu/drm/msm/adreno/a6xx_gmu.h |   6 +-
+> 2 files changed, 12 insertions(+), 107 deletions(-)
+>
+>diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>index 748cd37..dd51dd0 100644
+>--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>@@ -2,6 +2,7 @@
+> /* Copyright (c) 2017-2019 The Linux Foundation. All rights reserved. */
+>
+> #include <linux/clk.h>
+>+#include <linux/dma-mapping.h>
+> #include <linux/interconnect.h>
+> #include <linux/pm_domain.h>
+> #include <linux/pm_opp.h>
+>@@ -920,21 +921,10 @@ int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
+>
+> static void a6xx_gmu_memory_free(struct a6xx_gmu *gmu, struct
+>a6xx_gmu_bo *bo)
+> {
+>-	int count, i;
+>-	u64 iova;
+>-
+> 	if (IS_ERR_OR_NULL(bo))
+> 		return;
+>
+>-	count = bo->size >> PAGE_SHIFT;
+>-	iova = bo->iova;
+>-
+>-	for (i = 0; i < count; i++, iova += PAGE_SIZE) {
+>-		iommu_unmap(gmu->domain, iova, PAGE_SIZE);
+>-		__free_pages(bo->pages[i], 0);
+>-	}
+>-
+>-	kfree(bo->pages);
+>+	dma_free_wc(gmu->dev, bo->size, bo->virt, bo->iova);
+> 	kfree(bo);
+> }
+>
+>@@ -942,7 +932,6 @@ static struct a6xx_gmu_bo
+>*a6xx_gmu_memory_alloc(struct a6xx_gmu *gmu,
+> 		size_t size)
+> {
+> 	struct a6xx_gmu_bo *bo;
+>-	int ret, count, i;
+>
+> 	bo = kzalloc(sizeof(*bo), GFP_KERNEL);
+> 	if (!bo)
+>@@ -950,86 +939,14 @@ static struct a6xx_gmu_bo
+>*a6xx_gmu_memory_alloc(struct a6xx_gmu *gmu,
+>
+> 	bo->size = PAGE_ALIGN(size);
+>
+>-	count = bo->size >> PAGE_SHIFT;
+>+	bo->virt = dma_alloc_wc(gmu->dev, bo->size, &bo->iova,
+>GFP_KERNEL);
+>
+>-	bo->pages = kcalloc(count, sizeof(struct page *), GFP_KERNEL);
+>-	if (!bo->pages) {
+>+	if (!bo->virt) {
+> 		kfree(bo);
+> 		return ERR_PTR(-ENOMEM);
+> 	}
+>
+>-	for (i = 0; i < count; i++) {
+>-		bo->pages[i] = alloc_page(GFP_KERNEL);
+>-		if (!bo->pages[i])
+>-			goto err;
+>-	}
+>-
+>-	bo->iova = gmu->uncached_iova_base;
+>-
+>-	for (i = 0; i < count; i++) {
+>-		ret = iommu_map(gmu->domain,
+>-			bo->iova + (PAGE_SIZE * i),
+>-			page_to_phys(bo->pages[i]), PAGE_SIZE,
+>-			IOMMU_READ | IOMMU_WRITE);
+>-
+>-		if (ret) {
+>-			DRM_DEV_ERROR(gmu->dev, "Unable to map GMU
+>buffer object\n");
+>-
+>-			for (i = i - 1 ; i >= 0; i--)
+>-				iommu_unmap(gmu->domain,
+>-					bo->iova + (PAGE_SIZE * i),
+>-					PAGE_SIZE);
+>-
+>-			goto err;
+>-		}
+>-	}
+>-
+>-	bo->virt = vmap(bo->pages, count, VM_IOREMAP,
+>-		pgprot_writecombine(PAGE_KERNEL));
+>-	if (!bo->virt)
+>-		goto err;
+>-
+>-	/* Align future IOVA addresses on 1MB boundaries */
+>-	gmu->uncached_iova_base += ALIGN(size, SZ_1M);
+>-
+> 	return bo;
+>-
+>-err:
+>-	for (i = 0; i < count; i++) {
+>-		if (bo->pages[i])
+>-			__free_pages(bo->pages[i], 0);
+>-	}
+>-
+>-	kfree(bo->pages);
+>-	kfree(bo);
+>-
+>-	return ERR_PTR(-ENOMEM);
+>-}
+>-
+>-static int a6xx_gmu_memory_probe(struct a6xx_gmu *gmu)
+>-{
+>-	int ret;
+>-
+>-	/*
+>-	 * The GMU address space is hardcoded to treat the range
+>-	 * 0x60000000 - 0x80000000 as un-cached memory. All buffers shared
+>-	 * between the GMU and the CPU will live in this space
+>-	 */
+>-	gmu->uncached_iova_base = 0x60000000;
+>-
+>-
+>-	gmu->domain = iommu_domain_alloc(&platform_bus_type);
+>-	if (!gmu->domain)
+>-		return -ENODEV;
+>-
+>-	ret = iommu_attach_device(gmu->domain, gmu->dev);
+>-
+>-	if (ret) {
+>-		iommu_domain_free(gmu->domain);
+>-		gmu->domain = NULL;
+>-	}
+>-
+>-	return ret;
+> }
+>
+> /* Return the 'arc-level' for the given frequency */
+>@@ -1289,10 +1206,6 @@ void a6xx_gmu_remove(struct a6xx_gpu
+>*a6xx_gpu)
+>
+> 	a6xx_gmu_memory_free(gmu, gmu->hfi);
+>
+>-	iommu_detach_device(gmu->domain, gmu->dev);
+>-
+>-	iommu_domain_free(gmu->domain);
+>-
+> 	free_irq(gmu->gmu_irq, gmu);
+> 	free_irq(gmu->hfi_irq, gmu);
+>
+>@@ -1313,7 +1226,13 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu,
+>struct device_node *node)
+>
+> 	gmu->dev = &pdev->dev;
+>
+>-	of_dma_configure(gmu->dev, node, true);
+>+	/* Pass force_dma false to require the DT to set the dma region */
+>+	ret = of_dma_configure(gmu->dev, node, false);
+>+	if (ret)
+>+		return ret;
+>+
+>+	/* Set the mask after the of_dma_configure() */
+>+	dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(31));
+>
+> 	/* Fow now, don't do anything fancy until we get our feet under us */
+> 	gmu->idle_level = GMU_IDLE_STATE_ACTIVE;
+>@@ -1325,11 +1244,6 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu,
+>struct device_node *node)
+> 	if (ret)
+> 		goto err_put_device;
+>
+>-	/* Set up the IOMMU context bank */
+>-	ret = a6xx_gmu_memory_probe(gmu);
+>-	if (ret)
+>-		goto err_put_device;
+>-
+> 	/* Allocate memory for for the HFI queues */
+> 	gmu->hfi = a6xx_gmu_memory_alloc(gmu, SZ_16K);
+> 	if (IS_ERR(gmu->hfi))
+>@@ -1375,11 +1289,6 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu,
+>struct device_node *node)
+> err_memory:
+> 	a6xx_gmu_memory_free(gmu, gmu->hfi);
+>
+>-	if (gmu->domain) {
+>-		iommu_detach_device(gmu->domain, gmu->dev);
+>-
+>-		iommu_domain_free(gmu->domain);
+>-	}
+> 	ret = -ENODEV;
+>
+> err_put_device:
+>diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+>b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+>index 2af91ed..4af65a3 100644
+>--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+>+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+>@@ -12,8 +12,7 @@
+> struct a6xx_gmu_bo {
+> 	void *virt;
+> 	size_t size;
+>-	u64 iova;
+>-	struct page **pages;
+>+	dma_addr_t iova;
+> };
+>
+> /*
+>@@ -49,9 +48,6 @@ struct a6xx_gmu {
+> 	int hfi_irq;
+> 	int gmu_irq;
+>
+>-	struct iommu_domain *domain;
+>-	u64 uncached_iova_base;
+>-
+> 	struct device *gxpd;
+>
+> 	int idle_level;
+>--
+>2.7.4
+>_______________________________________________
+>dri-devel mailing list
+>dri-devel@lists.freedesktop.org
+>https://lists.freedesktop.org/mailman/listinfo/dri-devel
