@@ -2,155 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C71A3175438
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 08:04:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 479F1175463
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 08:22:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726894AbgCBHEf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Mar 2020 02:04:35 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:42075 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726263AbgCBHEe (ORCPT
+        id S1726654AbgCBHWc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Mar 2020 02:22:32 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:38927 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726313AbgCBHWc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Mar 2020 02:04:34 -0500
-Received: by mail-pl1-f196.google.com with SMTP id u3so3818359plr.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Mar 2020 23:04:34 -0800 (PST)
+        Mon, 2 Mar 2020 02:22:32 -0500
+Received: by mail-pf1-f193.google.com with SMTP id l7so5132838pff.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Mar 2020 23:22:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9M9jM0oFamI1cSDzHh+fj7Bd6QrDeIt5TA9kTaFKmIk=;
-        b=Oc9ZJ1DCGMymWi40UBVMVgLIKFegujZrTwU1vekyLOVgvi9ufi9lgicsHrFncgz57c
-         WJBNuaWQDRRM2I74chmgH39ujFkAh0uD5TLr/WBdU7ToNJM6RJ8dBAYUOVS2/LH/RXeh
-         f+DvS+lU1InV13FdPPvIo4qvuPQcHnDgdzQZk9NfeTtzIXsizMwHEDxRmA64pc9imvHw
-         b9mBEIfRUC/6ju9c3oelDNVewofLzzo8pt7NKiPwrgkkIodLsN8qdtiFlOhaECnBnCXz
-         uAxu4bJ1q4FfRx25Mabc51/W8Zi8Ej2Gl127396HT+IlweiY5AsWxdYCzWuOaGuPrSQJ
-         ckMw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=SkdVCR8OiXs5diTTG/Q7TJWCRWx/fIVDFp919zgH5+M=;
+        b=Y+EqUsy+LkjIUDiUnyhNNMy9ar4EI2a3fdhvJoazp2B3nQGBk+koNmNdBTUw46KbfZ
+         O6RTvHYBrM1lGTi5sQB4ia2VkJCyZdCmGk4DhYewS0yJjv8i2Eh1Q/hTts59+/mYqigA
+         DfPMePTJIBwdrddWk07M6CkAP4tDakBDax+frBdzQC3B8K5MG6d3N46jO03gBuJe2nvi
+         ff17otHto7qmDs2flWrroieBqcH6Z4TBl5yuLFSFlPMYG1RTdp5zuCvovFrdSnExll78
+         8aDmroMx3UDuWgi9OpviCg5rP5WPD1mTviA1sHKvnSaNg4pmuZ33lOx8z3LGlyJG39CB
+         KLVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9M9jM0oFamI1cSDzHh+fj7Bd6QrDeIt5TA9kTaFKmIk=;
-        b=dmrED0rZk+LHM6zXFt2cayDlHGwyfw7cm2sbczFR9Zg92XbJoJnn4c3fk29k+kfcx6
-         FcLQjK3d/IKtzxT2Xa43j+46RsmjxzeACGEGfBKJ/ZtBqDmf4slXr20XvTyBoWVpOI6F
-         wzEs40ajfvl9HI8Xa9bwm0UIPNg118v/+TclZGKRKZEfYfc5KOxPQE2OmxaRVESBhLl5
-         IcG+2f4nO/gh5e/FlkM2Cz+8zcaYQfCgnDSj1+kwqcuNbmZ1VffbCs7E8alAH9loXGAV
-         zmeYY79VT//qwlYkVy5B3G3mz8v9yd97dblzvVfIG/cLDZrkQiFmHEqGG3HG7WPXUEsk
-         bFHg==
-X-Gm-Message-State: APjAAAUH8m4vkUYIX1ybX9T/z3tKI/e4QJyq2f6n+3gTTUjGdM4iTCeN
-        9ernjrsnexhRTZUgSPuHNvnecQ==
-X-Google-Smtp-Source: APXvYqyFZxrijhdE9RQs8BTA+6h7lNVQj7NlFFGdvJkgFm5Lj0WwNMhRAFLgXdw+jQk7zjcRynSakg==
-X-Received: by 2002:a17:902:864c:: with SMTP id y12mr16539924plt.8.1583132673691;
-        Sun, 01 Mar 2020 23:04:33 -0800 (PST)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id b3sm19969551pft.73.2020.03.01.23.04.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Mar 2020 23:04:33 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 2/2] net: qrtr: Fix FIXME related to qrtr_ns_init()
-Date:   Sun,  1 Mar 2020 23:03:05 -0800
-Message-Id: <20200302070305.612067-3-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200302070305.612067-1-bjorn.andersson@linaro.org>
-References: <20200302070305.612067-1-bjorn.andersson@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=SkdVCR8OiXs5diTTG/Q7TJWCRWx/fIVDFp919zgH5+M=;
+        b=OabvghZq4DRCMsVpuAG0ggxmxVnyOggYgdEt556x2cQE4nxdU7QSf5hOCJ2LRO/t6M
+         PDUMKdGxWZjDRN6Pl0DFMj6/dHaDZRPkFLhO0JQENa/P378HbLdqmD0hjeMC1zmYkYMB
+         moZoEo5CkxIOUA/PuxYx7SxN2IJ59QbxAkYtevg1f8MX/PKa+e9HGC2coMVWXrbp5UzX
+         auFsGq/RdN9KiB1NqGtkWvRso7Ba/uw+Wga8maOFuwGHW0ZvuL960zWp3oaIsBQf2/Um
+         hXPbN+bs4aOUnwx50k9GDBKTUjGSF/slD0IS1L4CoH+5fKxQfn8jH7ekxcGxB15i3l41
+         wfPg==
+X-Gm-Message-State: ANhLgQ27IJXMlFFGWhAICNo1h2yTo/0fEKTx/m7FWvQemvVGcJk0Q1Zl
+        L+GRfIxv12M8fI+PhC7/OHAR
+X-Google-Smtp-Source: ADFU+vubOlMSnHZJjju8vH6TP0cbiCd0JSbXY6EVeJWzF3TEaoPKBdFtBapF8cYeFDiMvrCOOkys1A==
+X-Received: by 2002:aa7:97ac:: with SMTP id d12mr10653029pfq.209.1583133750946;
+        Sun, 01 Mar 2020 23:22:30 -0800 (PST)
+Received: from Mani-XPS-13-9360 ([2409:4072:683:b69c:15d:29bf:12ee:d853])
+        by smtp.gmail.com with ESMTPSA id 129sm15490943pgf.10.2020.03.01.23.22.26
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 01 Mar 2020 23:22:30 -0800 (PST)
+Date:   Mon, 2 Mar 2020 12:52:23 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] net: qrtr: Respond to HELLO message
+Message-ID: <20200302072223.GC23607@Mani-XPS-13-9360>
+References: <20200302032527.552916-1-bjorn.andersson@linaro.org>
+ <20200302032527.552916-2-bjorn.andersson@linaro.org>
+ <20200302055025.GA23607@Mani-XPS-13-9360>
+ <20200302065502.GG210720@yoga>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200302065502.GG210720@yoga>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The 2 second delay before calling qrtr_ns_init() meant that the remote
-processors would register as endpoints in qrtr and the say_hello() call
-would therefor broadcast the outgoing HELLO to them. With the HELLO
-handshake corrected this delay is no longer needed.
+On Sun, Mar 01, 2020 at 10:55:02PM -0800, Bjorn Andersson wrote:
+> On Sun 01 Mar 21:50 PST 2020, Manivannan Sadhasivam wrote:
+> 
+> > Hi Bjorn,
+> > 
+> > Thanks for the fix. I have tested this and it works perfectly!
+> > 
+> > On Sun, Mar 01, 2020 at 07:25:26PM -0800, Bjorn Andersson wrote:
+> > > Lost in the translation from the user space implementation was the
+> > > detail that HELLO mesages must be exchanged between each node pair.  As
+> > > such the incoming HELLO must be replied to.
+> > > 
+> > 
+> > Err. I thought the say_hello() part in ctrl_cmd_hello() was redundant, so
+> > removed it :P
+> > 
+> > Sorry for that.
+> > 
+> 
+> No worries.
+> 
+> > > Similar to the previous implementation no effort is made to prevent two
+> > > Linux boxes from continuously sending HELLO messages back and forth,
+> > > this is left to a follow up patch.
+> > > 
+> > > say_hello() is moved, to facilitate the new call site.
+> > > 
+> > > Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
+> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > ---
+> > >  net/qrtr/ns.c | 54 ++++++++++++++++++++++++++++-----------------------
+> > >  1 file changed, 30 insertions(+), 24 deletions(-)
+> > > 
+> > > diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+> > > index 7bfde01f4e8a..e3f11052b5f6 100644
+> > > --- a/net/qrtr/ns.c
+> > > +++ b/net/qrtr/ns.c
+> > > @@ -286,9 +286,38 @@ static int server_del(struct qrtr_node *node, unsigned int port)
+> > >  	return 0;
+> > >  }
+> > >  
+> > > +static int say_hello(struct sockaddr_qrtr *dest)
+> > > +{
+> > > +	struct qrtr_ctrl_pkt pkt;
+> > > +	struct msghdr msg = { };
+> > > +	struct kvec iv;
+> > > +	int ret;
+> > > +
+> > > +	iv.iov_base = &pkt;
+> > > +	iv.iov_len = sizeof(pkt);
+> > > +
+> > > +	memset(&pkt, 0, sizeof(pkt));
+> > > +	pkt.cmd = cpu_to_le32(QRTR_TYPE_HELLO);
+> > > +
+> > > +	msg.msg_name = (struct sockaddr *)dest;
+> > > +	msg.msg_namelen = sizeof(*dest);
+> > > +
+> > > +	ret = kernel_sendmsg(qrtr_ns.sock, &msg, &iv, 1, sizeof(pkt));
+> > > +	if (ret < 0)
+> > > +		pr_err("failed to send hello msg\n");
+> > > +
+> > > +	return ret;
+> > > +}
+> > > +
+> > >  /* Announce the list of servers registered on the local node */
+> > >  static int ctrl_cmd_hello(struct sockaddr_qrtr *sq)
+> > >  {
+> > > +	int ret;
+> > > +
+> > > +	ret = say_hello(sq); > > +	if (ret < 0)
+> > > +		return ret;
+> > > +
+> > >  	return announce_servers(sq);
+> > >  }
+> > >  
+> > > @@ -566,29 +595,6 @@ static void ctrl_cmd_del_lookup(struct sockaddr_qrtr *from,
+> > >  	}
+> > >  }
+> > >  
+> > > -static int say_hello(void)
+> > > -{
+> > > -	struct qrtr_ctrl_pkt pkt;
+> > > -	struct msghdr msg = { };
+> > > -	struct kvec iv;
+> > > -	int ret;
+> > > -
+> > > -	iv.iov_base = &pkt;
+> > > -	iv.iov_len = sizeof(pkt);
+> > > -
+> > > -	memset(&pkt, 0, sizeof(pkt));
+> > > -	pkt.cmd = cpu_to_le32(QRTR_TYPE_HELLO);
+> > > -
+> > > -	msg.msg_name = (struct sockaddr *)&qrtr_ns.bcast_sq;
+> > > -	msg.msg_namelen = sizeof(qrtr_ns.bcast_sq);
+> > > -
+> > > -	ret = kernel_sendmsg(qrtr_ns.sock, &msg, &iv, 1, sizeof(pkt));
+> > > -	if (ret < 0)
+> > > -		pr_err("failed to send hello msg\n");
+> > > -
+> > > -	return ret;
+> > > -}
+> > > -
+> > >  static void qrtr_ns_worker(struct work_struct *work)
+> > >  {
+> > >  	const struct qrtr_ctrl_pkt *pkt;
+> > > @@ -725,7 +731,7 @@ void qrtr_ns_init(struct work_struct *work)
+> > >  	if (!qrtr_ns.workqueue)
+> > >  		goto err_sock;
+> > >  
+> > > -	ret = say_hello();
+> > > +	ret = say_hello(&qrtr_ns.bcast_sq);
+> > 
+> > Why do you want to pass a global variable here? Why can't it be used directly
+> > in say_hello() as done before?
+> > 
+> 
+> Because I changed the prototype of say_hello() so that we pass the
+> destination address; here that's the broadcast address, in
+> ctrl_cmd_hello() it's the specific sender of the incoming hello that we
+> want to respond to.
+> 
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+Ah, yes. I missed that. Sounds good to me.
 
-Changes since v1:
-- Cleaned up remaining work queue pieces
-- Picked up Mani's r-b and t-b
+Thanks,
+Mani
 
- net/qrtr/ns.c   |  2 +-
- net/qrtr/qrtr.c | 10 +---------
- net/qrtr/qrtr.h |  2 +-
- 3 files changed, 3 insertions(+), 11 deletions(-)
-
-diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-index e3f11052b5f6..cfd4bd07a62b 100644
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -693,7 +693,7 @@ static void qrtr_ns_data_ready(struct sock *sk)
- 	queue_work(qrtr_ns.workqueue, &qrtr_ns.work);
- }
- 
--void qrtr_ns_init(struct work_struct *work)
-+void qrtr_ns_init(void)
- {
- 	struct sockaddr_qrtr sq;
- 	int ret;
-diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
-index 423310896285..e22092e4a783 100644
---- a/net/qrtr/qrtr.c
-+++ b/net/qrtr/qrtr.c
-@@ -9,7 +9,6 @@
- #include <linux/termios.h>	/* For TIOCINQ/OUTQ */
- #include <linux/spinlock.h>
- #include <linux/wait.h>
--#include <linux/workqueue.h>
- 
- #include <net/sock.h>
- 
-@@ -110,8 +109,6 @@ static DEFINE_MUTEX(qrtr_node_lock);
- static DEFINE_IDR(qrtr_ports);
- static DEFINE_MUTEX(qrtr_port_lock);
- 
--static struct delayed_work qrtr_ns_work;
--
- /**
-  * struct qrtr_node - endpoint node
-  * @ep_lock: lock for endpoint management and callbacks
-@@ -1263,11 +1260,7 @@ static int __init qrtr_proto_init(void)
- 		return rc;
- 	}
- 
--	/* FIXME: Currently, this 2s delay is required to catch the NEW_SERVER
--	 * messages from routers. But the fix could be somewhere else.
--	 */
--	INIT_DELAYED_WORK(&qrtr_ns_work, qrtr_ns_init);
--	schedule_delayed_work(&qrtr_ns_work, msecs_to_jiffies(2000));
-+	qrtr_ns_init();
- 
- 	return rc;
- }
-@@ -1275,7 +1268,6 @@ postcore_initcall(qrtr_proto_init);
- 
- static void __exit qrtr_proto_fini(void)
- {
--	cancel_delayed_work_sync(&qrtr_ns_work);
- 	qrtr_ns_remove();
- 	sock_unregister(qrtr_family.family);
- 	proto_unregister(&qrtr_proto);
-diff --git a/net/qrtr/qrtr.h b/net/qrtr/qrtr.h
-index 53a237a28971..dc2b67f17927 100644
---- a/net/qrtr/qrtr.h
-+++ b/net/qrtr/qrtr.h
-@@ -29,7 +29,7 @@ void qrtr_endpoint_unregister(struct qrtr_endpoint *ep);
- 
- int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len);
- 
--void qrtr_ns_init(struct work_struct *work);
-+void qrtr_ns_init(void);
- 
- void qrtr_ns_remove(void);
- 
--- 
-2.24.0
-
+> Regards,
+> Bjorn
+> 
+> > Other than that,
+> > 
+> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > 
+> > Thanks,
+> > Mani
+> > 
+> > >  	if (ret < 0)
+> > >  		goto err_wq;
+> > >  
+> > > -- 
+> > > 2.24.0
+> > > 
