@@ -2,323 +2,490 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A51517657A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 21:58:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F21F176676
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 22:55:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726536AbgCBU6u convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Mon, 2 Mar 2020 15:58:50 -0500
-Received: from mga07.intel.com ([134.134.136.100]:14134 "EHLO mga07.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725911AbgCBU6u (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Mar 2020 15:58:50 -0500
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 02 Mar 2020 12:58:49 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,508,1574150400"; 
-   d="scan'208";a="262915303"
-Received: from fmsmsx103.amr.corp.intel.com ([10.18.124.201])
-  by fmsmga004.fm.intel.com with ESMTP; 02 Mar 2020 12:58:49 -0800
-Received: from fmsmsx115.amr.corp.intel.com (10.18.116.19) by
- FMSMSX103.amr.corp.intel.com (10.18.124.201) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Mon, 2 Mar 2020 12:58:49 -0800
-Received: from fmsmsx108.amr.corp.intel.com ([169.254.9.2]) by
- fmsmsx115.amr.corp.intel.com ([169.254.4.81]) with mapi id 14.03.0439.000;
- Mon, 2 Mar 2020 12:58:49 -0800
-From:   "Ruhl, Michael J" <michael.j.ruhl@intel.com>
-To:     Jordan Crouse <jcrouse@codeaurora.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-CC:     Douglas Anderson <dianders@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "smasetty@codeaurora.org" <smasetty@codeaurora.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>, Sean Paul <sean@poorly.run>
-Subject: RE: [PATCH v4 2/2] drm/msm/a6xx: Use the DMA API for GMU memory
- objects
-Thread-Topic: [PATCH v4 2/2] drm/msm/a6xx: Use the DMA API for GMU memory
- objects
-Thread-Index: AQHV8NPlMBHxtuqcFk6x//p6aZDLUag1x50A
-Date:   Mon, 2 Mar 2020 20:58:48 +0000
-Message-ID: <14063C7AD467DE4B82DEDB5C278E8663F4FDE244@FMSMSX108.amr.corp.intel.com>
-References: <1583182067-16530-1-git-send-email-jcrouse@codeaurora.org>
- <1583182067-16530-3-git-send-email-jcrouse@codeaurora.org>
-In-Reply-To: <1583182067-16530-3-git-send-email-jcrouse@codeaurora.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: no-action
-x-originating-ip: [10.1.200.106]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1726232AbgCBVz5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Mar 2020 16:55:57 -0500
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:40801 "EHLO
+        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725781AbgCBVz5 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Mar 2020 16:55:57 -0500
+Received: by mail-oi1-f195.google.com with SMTP id j80so843554oih.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2020 13:55:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=vKfKsUOY1kmNs27cha01453OljZpLRYSs6gwpxgwFFo=;
+        b=Spl6sPSdPBzVDjDYytSGz6Z/Ea2JtLHv/rCdUSNMqUn3L62n53wdJetj3HJWmHSumX
+         nFR1WQ821AWD9M5NHulL7lrYZd+xQsrcAVPUY3zih8OXvy9M0zF87tCpQlUky/q6YjRz
+         HNEg1geI7Y4k/uEAT9DGpcjPnYppBzFnaDlbY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=vKfKsUOY1kmNs27cha01453OljZpLRYSs6gwpxgwFFo=;
+        b=o4AqZf7eZ/qpLwmN6qq9fdYDTkMU7pYf9963B90eYf2RARbGAIwGWxm2o5r0I0VM4S
+         HEWz077mqBw89gKXREYIYg+Fu13mwt2WdiovcTMKZcHk4Q6/fjhEyvHQx0PDdU0/bmsY
+         hB2bNgDZHzSV77uRAh9sVmaht2fbqz0wyvydtAQjWZ9UTefWR4LY1QgiI/CTKUNzGe5B
+         4Xt1Kn940yRZL4pA7BqgT9eKlxSNVDjbNe5YnI5HykC2/Sz7ZrrT0VGHcbRSofnf0WaH
+         4/qFE9uP4+jw7z8VHOPwRk/6aQ+G0j8kd6lN/xhfV6AaYnI9upnhRF/yHFySsbJRTNh6
+         xp2A==
+X-Gm-Message-State: ANhLgQ2AgBETMx8d7ju5iQkYzKHWGU7iH9bfMNkuv4FM/ZZQEfC0UYw0
+        SKQ+4saQsJQ/d3pQ/GXlz/khgJqpd4VzRlTOs8iuUA==
+X-Google-Smtp-Source: ADFU+vsZzwFQVJH74wNZpm5WT3Ha2iJFV0M3Fv/+PfAj5jEt/BXU2FHV+JqZ06o+ok+Fr9+JQFI90ghWER9268Ghbr4=
+X-Received: by 2002:a05:6808:298:: with SMTP id z24mr332440oic.101.1583186154242;
+ Mon, 02 Mar 2020 13:55:54 -0800 (PST)
 MIME-Version: 1.0
+References: <20200123135943.24140-1-tzimmermann@suse.de> <20200123135943.24140-3-tzimmermann@suse.de>
+In-Reply-To: <20200123135943.24140-3-tzimmermann@suse.de>
+From:   Daniel Vetter <daniel@ffwll.ch>
+Date:   Mon, 2 Mar 2020 22:55:43 +0100
+Message-ID: <CAKMK7uFKHoPrpEDpQzFS2fnr9XeuhEjA-2MxynknCindFHYEvg@mail.gmail.com>
+Subject: Re: [PATCH v4 02/22] drm: Add get_scanout_position() to struct drm_crtc_helper_funcs
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     Dave Airlie <airlied@linux.ie>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        Chunming Zhou <David1.Zhou@amd.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        "Clark, Rob" <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Vincent Abriou <vincent.abriou@st.com>,
+        Yannick Fertre <yannick.fertre@st.com>,
+        Philippe Cornu <philippe.cornu@st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre TORGUE <alexandre.torgue@st.com>,
+        "Anholt, Eric" <eric@anholt.net>,
+        Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>,
+        Haneen Mohammed <hamohammed.sa@gmail.com>,
+        VMware Graphics <linux-graphics-maintainer@vmware.com>,
+        Thomas Hellstrom <thellstrom@vmware.com>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        "Wentland, Harry" <harry.wentland@amd.com>,
+        "Leo (Sunpeng) Li" <sunpeng.li@amd.com>,
+        "Nikula, Jani" <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        amd-gfx list <amd-gfx@lists.freedesktop.org>,
+        intel-gfx <intel-gfx@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Nouveau Dev <nouveau@lists.freedesktop.org>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
->-----Original Message-----
->From: dri-devel <dri-devel-bounces@lists.freedesktop.org> On Behalf Of
->Jordan Crouse
->Sent: Monday, March 2, 2020 3:48 PM
->To: linux-arm-msm@vger.kernel.org
->Cc: Douglas Anderson <dianders@chromium.org>; David Airlie
-><airlied@linux.ie>; freedreno@lists.freedesktop.org;
->smasetty@codeaurora.org; linux-kernel@vger.kernel.org; dri-
->devel@lists.freedesktop.org; Stephen Boyd <swboyd@chromium.org>; Ruhl,
->Michael J <michael.j.ruhl@intel.com>; Sean Paul <sean@poorly.run>
->Subject: [PATCH v4 2/2] drm/msm/a6xx: Use the DMA API for GMU memory
->objects
+On Thu, Jan 23, 2020 at 2:59 PM Thomas Zimmermann <tzimmermann@suse.de> wro=
+te:
 >
->The GMU has very few memory allocations and uses a flat memory space so
->there is no good reason to go out of our way to bypass the DMA APIs which
->were basically designed for this exact scenario.
+> The new callback get_scanout_position() reads the current location
+> of the scanout process. The operation is currently located in struct
+> drm_driver, but really belongs to the CRTC. Drivers will be converted
+> in separate patches.
 >
->v4: Use dma_alloc_wc()
+> To help with the conversion, the timestamp calculation has been
+> moved from drm_calc_vbltimestamp_from_scanoutpos() to
+> drm_crtc_vblank_helper_get_vblank_timestamp_internal(). The helper
+> function supports the new and old interface of get_scanout_position().
+> drm_calc_vbltimestamp_from_scanoutpos() remains as a wrapper around
+> the new function.
+>
+> Callback functions return the scanout position from the CRTC. The
+> legacy version of the interface receives the device and pipe index,
+> the modern version receives a pointer to the CRTC. We keep the
+> legacy version until all drivers have been converted.
+>
+> v4:
+>         * 80-character line fixes
+> v3:
+>         * refactor drm_calc_vbltimestamp_from_scanoutpos() to minimize
+>           code duplication
+>         * define types for get_scanout_position() callbacks
+> v2:
+>         * fix logical op in drm_calc_vbltimestamp_from_scanoutpos()
+>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Tested-by: Yannick Fertr=C3=A9 <yannick.fertre@st.com>
+> Reviewed-by: Ville Syrj=C3=A4l=C3=A4 <ville.syrjala@linux.intel.com>
 
-The patch and the update look good to me.
+This patch causes new kerneldoc build warnings:
 
-Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
+./drivers/gpu/drm/drm_vblank.c:623: warning: Excess function parameter
+'dev' description in
+'drm_crtc_vblank_helper_get_vblank_timestamp_internal'
+./drivers/gpu/drm/drm_vblank.c:623: warning: Excess function parameter
+'pipe' description in
+'drm_crtc_vblank_helper_get_vblank_timestamp_internal'
+./drivers/gpu/drm/drm_vblank.c:624: warning: Function parameter or
+member 'crtc' not described in
+'drm_crtc_vblank_helper_get_vblank_timestamp_internal'
+./drivers/gpu/drm/drm_vblank.c:624: warning: Excess function parameter
+'dev' description in
+'drm_crtc_vblank_helper_get_vblank_timestamp_internal'
+./drivers/gpu/drm/drm_vblank.c:624: warning: Excess function parameter
+'pipe' description in
+'drm_crtc_vblank_helper_get_vblank_timestamp_internal'
 
-Mike
 
->v3: Set the dma mask correctly and use dma_addr_t for the iova type
->v2: Pass force_dma false to of_dma_configure to require that the DMA
->region be set up and return error from of_dma_configure to fail probe.
+Please fix.
+-Daniel
+
+> ---
+>  drivers/gpu/drm/drm_vblank.c             | 101 +++++++++++++++++++----
+>  include/drm/drm_drv.h                    |   7 +-
+>  include/drm/drm_modeset_helper_vtables.h |  47 +++++++++++
+>  include/drm/drm_vblank.h                 |  25 ++++++
+>  4 files changed, 157 insertions(+), 23 deletions(-)
 >
->Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
->---
+> diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
+> index 326db52f2ad8..7e962c29780c 100644
+> --- a/drivers/gpu/drm/drm_vblank.c
+> +++ b/drivers/gpu/drm/drm_vblank.c
+> @@ -30,6 +30,7 @@
+>  #include <drm/drm_crtc.h>
+>  #include <drm/drm_drv.h>
+>  #include <drm/drm_framebuffer.h>
+> +#include <drm/drm_modeset_helper_vtables.h>
+>  #include <drm/drm_print.h>
+>  #include <drm/drm_vblank.h>
 >
-> drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 113 ++++---------------------------
->---
-> drivers/gpu/drm/msm/adreno/a6xx_gmu.h |   6 +-
-> 2 files changed, 12 insertions(+), 107 deletions(-)
+> @@ -577,7 +578,7 @@ EXPORT_SYMBOL(drm_calc_timestamping_constants);
+>   * Implements calculation of exact vblank timestamps from given drm_disp=
+lay_mode
+>   * timings and current video scanout position of a CRTC. This can be dir=
+ectly
+>   * used as the &drm_driver.get_vblank_timestamp implementation of a kms =
+driver
+> - * if &drm_driver.get_scanout_position is implemented.
+> + * if &drm_crtc_helper_funcs.get_scanout_position is implemented.
+>   *
+>   * The current implementation only handles standard video modes. For dou=
+ble scan
+>   * and interlaced modes the driver is supposed to adjust the hardware mo=
+de
+> @@ -599,28 +600,85 @@ bool drm_calc_vbltimestamp_from_scanoutpos(struct d=
+rm_device *dev,
+>                                            ktime_t *vblank_time,
+>                                            bool in_vblank_irq)
+>  {
+> -       struct timespec64 ts_etime, ts_vblank_time;
+> -       ktime_t stime, etime;
+> -       bool vbl_status;
+>         struct drm_crtc *crtc;
+> -       const struct drm_display_mode *mode;
+> -       struct drm_vblank_crtc *vblank =3D &dev->vblank[pipe];
+> -       int vpos, hpos, i;
+> -       int delta_ns, duration_ns;
 >
->diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->index 748cd37..dd51dd0 100644
->--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->@@ -2,6 +2,7 @@
-> /* Copyright (c) 2017-2019 The Linux Foundation. All rights reserved. */
+>         if (!drm_core_check_feature(dev, DRIVER_MODESET))
+>                 return false;
 >
-> #include <linux/clk.h>
->+#include <linux/dma-mapping.h>
-> #include <linux/interconnect.h>
-> #include <linux/pm_domain.h>
-> #include <linux/pm_opp.h>
->@@ -920,21 +921,10 @@ int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
+>         crtc =3D drm_crtc_from_index(dev, pipe);
+> +       if (!crtc)
+> +               return false;
 >
-> static void a6xx_gmu_memory_free(struct a6xx_gmu *gmu, struct
->a6xx_gmu_bo *bo)
-> {
->-	int count, i;
->-	u64 iova;
->-
-> 	if (IS_ERR_OR_NULL(bo))
-> 		return;
+> -       if (pipe >=3D dev->num_crtcs || !crtc) {
+> +       return drm_crtc_vblank_helper_get_vblank_timestamp_internal(crtc,
+> +                                                                   max_e=
+rror,
+> +                                                                   vblan=
+k_time,
+> +                                                                   in_vb=
+lank_irq,
+> +                                                                   crtc-=
+>helper_private->get_scanout_position,
+> +                                                                   dev->=
+driver->get_scanout_position);
+> +}
+> +EXPORT_SYMBOL(drm_calc_vbltimestamp_from_scanoutpos);
+> +
+> +/**
+> + * drm_crtc_vblank_helper_get_vblank_timestamp_internal - precise vblank
+> + *                                                        timestamp help=
+er
+> + * @dev: DRM device
+> + * @pipe: index of CRTC whose vblank timestamp to retrieve
+> + * @max_error: Desired maximum allowable error in timestamps (nanosecs)
+> + *             On return contains true maximum error of timestamp
+> + * @vblank_time: Pointer to time which should receive the timestamp
+> + * @in_vblank_irq:
+> + *     True when called from drm_crtc_handle_vblank().  Some drivers
+> + *     need to apply some workarounds for gpu-specific vblank irq quirks
+> + *     if flag is set.
+> + * @get_scanout_position:
+> + *     Callback function to retrieve the scanout position. See
+> + *     @struct drm_crtc_helper_funcs.get_scanout_position.
+> + * @get_scanout_position_legacy:
+> + *     Callback function to retrieve the scanout position. See
+> + *     @struct drm_driver.get_scanout_position.
+> + *
+> + * Implements calculation of exact vblank timestamps from given drm_disp=
+lay_mode
+> + * timings and current video scanout position of a CRTC.
+> + *
+> + * The current implementation only handles standard video modes. For dou=
+ble scan
+> + * and interlaced modes the driver is supposed to adjust the hardware mo=
+de
+> + * (taken from &drm_crtc_state.adjusted mode for atomic modeset drivers)=
+ to
+> + * match the scanout position reported.
+> + *
+> + * Note that atomic drivers must call drm_calc_timestamping_constants() =
+before
+> + * enabling a CRTC. The atomic helpers already take care of that in
+> + * drm_atomic_helper_update_legacy_modeset_state().
+> + *
+> + * Returns:
+> + *
+> + * Returns true on success, and false on failure, i.e. when no accurate
+> + * timestamp could be acquired.
+> + */
+> +bool
+> +drm_crtc_vblank_helper_get_vblank_timestamp_internal(
+> +       struct drm_crtc *crtc, int *max_error, ktime_t *vblank_time,
+> +       bool in_vblank_irq,
+> +       drm_vblank_get_scanout_position_func get_scanout_position,
+> +       drm_vblank_get_scanout_position_legacy_func get_scanout_position_=
+legacy)
+> +{
+> +       struct drm_device *dev =3D crtc->dev;
+> +       unsigned int pipe =3D crtc->index;
+> +       struct drm_vblank_crtc *vblank =3D &dev->vblank[pipe];
+> +       struct timespec64 ts_etime, ts_vblank_time;
+> +       ktime_t stime, etime;
+> +       bool vbl_status;
+> +       const struct drm_display_mode *mode;
+> +       int vpos, hpos, i;
+> +       int delta_ns, duration_ns;
+> +
+> +       if (pipe >=3D dev->num_crtcs) {
+>                 DRM_ERROR("Invalid crtc %u\n", pipe);
+>                 return false;
+>         }
 >
->-	count = bo->size >> PAGE_SHIFT;
->-	iova = bo->iova;
->-
->-	for (i = 0; i < count; i++, iova += PAGE_SIZE) {
->-		iommu_unmap(gmu->domain, iova, PAGE_SIZE);
->-		__free_pages(bo->pages[i], 0);
->-	}
->-
->-	kfree(bo->pages);
->+	dma_free_wc(gmu->dev, bo->size, bo->virt, bo->iova);
-> 	kfree(bo);
-> }
+>         /* Scanout position query not supported? Should not happen. */
+> -       if (!dev->driver->get_scanout_position) {
+> -               DRM_ERROR("Called from driver w/o get_scanout_position()!=
+?\n");
+> +       if (!get_scanout_position && !get_scanout_position_legacy) {
+> +               DRM_ERROR("Called from CRTC w/o get_scanout_position()!?\=
+n");
+>                 return false;
+>         }
 >
->@@ -942,7 +932,6 @@ static struct a6xx_gmu_bo
->*a6xx_gmu_memory_alloc(struct a6xx_gmu *gmu,
-> 		size_t size)
-> {
-> 	struct a6xx_gmu_bo *bo;
->-	int ret, count, i;
+> @@ -635,7 +693,6 @@ bool drm_calc_vbltimestamp_from_scanoutpos(struct drm=
+_device *dev,
+>         if (mode->crtc_clock =3D=3D 0) {
+>                 DRM_DEBUG("crtc %u: Noop due to uninitialized mode.\n", p=
+ipe);
+>                 WARN_ON_ONCE(drm_drv_uses_atomic_modeset(dev));
+> -
+>                 return false;
+>         }
 >
-> 	bo = kzalloc(sizeof(*bo), GFP_KERNEL);
-> 	if (!bo)
->@@ -950,86 +939,14 @@ static struct a6xx_gmu_bo
->*a6xx_gmu_memory_alloc(struct a6xx_gmu *gmu,
+> @@ -651,11 +708,19 @@ bool drm_calc_vbltimestamp_from_scanoutpos(struct d=
+rm_device *dev,
+>                  * Get vertical and horizontal scanout position vpos, hpo=
+s,
+>                  * and bounding timestamps stime, etime, pre/post query.
+>                  */
+> -               vbl_status =3D dev->driver->get_scanout_position(dev, pip=
+e,
+> -                                                              in_vblank_=
+irq,
+> -                                                              &vpos, &hp=
+os,
+> -                                                              &stime, &e=
+time,
+> -                                                              mode);
+> +               if (get_scanout_position) {
+> +                       vbl_status =3D get_scanout_position(crtc,
+> +                                                         in_vblank_irq,
+> +                                                         &vpos, &hpos,
+> +                                                         &stime, &etime,
+> +                                                         mode);
+> +               } else {
+> +                       vbl_status =3D get_scanout_position_legacy(dev, p=
+ipe,
+> +                                                                in_vblan=
+k_irq,
+> +                                                                &vpos, &=
+hpos,
+> +                                                                &stime, =
+&etime,
+> +                                                                mode);
+> +               }
 >
-> 	bo->size = PAGE_ALIGN(size);
+>                 /* Return as no-op if scanout query unsupported or failed=
+. */
+>                 if (!vbl_status) {
+> @@ -707,7 +772,7 @@ bool drm_calc_vbltimestamp_from_scanoutpos(struct drm=
+_device *dev,
 >
->-	count = bo->size >> PAGE_SHIFT;
->+	bo->virt = dma_alloc_wc(gmu->dev, bo->size, &bo->iova,
->GFP_KERNEL);
+>         return true;
+>  }
+> -EXPORT_SYMBOL(drm_calc_vbltimestamp_from_scanoutpos);
+> +EXPORT_SYMBOL(drm_crtc_vblank_helper_get_vblank_timestamp_internal);
 >
->-	bo->pages = kcalloc(count, sizeof(struct page *), GFP_KERNEL);
->-	if (!bo->pages) {
->+	if (!bo->virt) {
-> 		kfree(bo);
-> 		return ERR_PTR(-ENOMEM);
-> 	}
+>  /**
+>   * drm_get_last_vbltimestamp - retrieve raw timestamp for the most recen=
+t
+> diff --git a/include/drm/drm_drv.h b/include/drm/drm_drv.h
+> index cf13470810a5..d0049e5786fc 100644
+> --- a/include/drm/drm_drv.h
+> +++ b/include/drm/drm_drv.h
+> @@ -362,11 +362,8 @@ struct drm_driver {
+>          * True on success, false if a reliable scanout position counter =
+could
+>          * not be read out.
+>          *
+> -        * FIXME:
+> -        *
+> -        * Since this is a helper to implement @get_vblank_timestamp, we =
+should
+> -        * move it to &struct drm_crtc_helper_funcs, like all the other
+> -        * helper-internal hooks.
+> +        * This is deprecated and should not be used by new drivers.
+> +        * Use &drm_crtc_helper_funcs.get_scanout_position instead.
+>          */
+>         bool (*get_scanout_position) (struct drm_device *dev, unsigned in=
+t pipe,
+>                                       bool in_vblank_irq, int *vpos, int =
+*hpos,
+> diff --git a/include/drm/drm_modeset_helper_vtables.h b/include/drm/drm_m=
+odeset_helper_vtables.h
+> index 5a87f1bd7a3f..e398512bfd5f 100644
+> --- a/include/drm/drm_modeset_helper_vtables.h
+> +++ b/include/drm/drm_modeset_helper_vtables.h
+> @@ -450,6 +450,53 @@ struct drm_crtc_helper_funcs {
+>          */
+>         void (*atomic_disable)(struct drm_crtc *crtc,
+>                                struct drm_crtc_state *old_crtc_state);
+> +
+> +       /**
+> +        * @get_scanout_position:
+> +        *
+> +        * Called by vblank timestamping code.
+> +        *
+> +        * Returns the current display scanout position from a CRTC and a=
+n
+> +        * optional accurate ktime_get() timestamp of when the position w=
+as
+> +        * measured. Note that this is a helper callback which is only us=
+ed
+> +        * if a driver uses drm_calc_vbltimestamp_from_scanoutpos() for t=
+he
+> +        * @drm_driver.get_vblank_timestamp callback.
+> +        *
+> +        * Parameters:
+> +        *
+> +        * crtc:
+> +        *     The CRTC.
+> +        * in_vblank_irq:
+> +        *     True when called from drm_crtc_handle_vblank(). Some drive=
+rs
+> +        *     need to apply some workarounds for gpu-specific vblank irq
+> +        *     quirks if the flag is set.
+> +        * vpos:
+> +        *     Target location for current vertical scanout position.
+> +        * hpos:
+> +        *     Target location for current horizontal scanout position.
+> +        * stime:
+> +        *     Target location for timestamp taken immediately before
+> +        *     scanout position query. Can be NULL to skip timestamp.
+> +        * etime:
+> +        *     Target location for timestamp taken immediately after
+> +        *     scanout position query. Can be NULL to skip timestamp.
+> +        * mode:
+> +        *     Current display timings.
+> +        *
+> +        * Returns vpos as a positive number while in active scanout area=
+.
+> +        * Returns vpos as a negative number inside vblank, counting the =
+number
+> +        * of scanlines to go until end of vblank, e.g., -1 means "one sc=
+anline
+> +        * until start of active scanout / end of vblank."
+> +        *
+> +        * Returns:
+> +        *
+> +        * True on success, false if a reliable scanout position counter =
+could
+> +        * not be read out.
+> +        */
+> +       bool (*get_scanout_position)(struct drm_crtc *crtc,
+> +                                    bool in_vblank_irq, int *vpos, int *=
+hpos,
+> +                                    ktime_t *stime, ktime_t *etime,
+> +                                    const struct drm_display_mode *mode)=
+;
+>  };
 >
->-	for (i = 0; i < count; i++) {
->-		bo->pages[i] = alloc_page(GFP_KERNEL);
->-		if (!bo->pages[i])
->-			goto err;
->-	}
->-
->-	bo->iova = gmu->uncached_iova_base;
->-
->-	for (i = 0; i < count; i++) {
->-		ret = iommu_map(gmu->domain,
->-			bo->iova + (PAGE_SIZE * i),
->-			page_to_phys(bo->pages[i]), PAGE_SIZE,
->-			IOMMU_READ | IOMMU_WRITE);
->-
->-		if (ret) {
->-			DRM_DEV_ERROR(gmu->dev, "Unable to map GMU
->buffer object\n");
->-
->-			for (i = i - 1 ; i >= 0; i--)
->-				iommu_unmap(gmu->domain,
->-					bo->iova + (PAGE_SIZE * i),
->-					PAGE_SIZE);
->-
->-			goto err;
->-		}
->-	}
->-
->-	bo->virt = vmap(bo->pages, count, VM_IOREMAP,
->-		pgprot_writecombine(PAGE_KERNEL));
->-	if (!bo->virt)
->-		goto err;
->-
->-	/* Align future IOVA addresses on 1MB boundaries */
->-	gmu->uncached_iova_base += ALIGN(size, SZ_1M);
->-
-> 	return bo;
->-
->-err:
->-	for (i = 0; i < count; i++) {
->-		if (bo->pages[i])
->-			__free_pages(bo->pages[i], 0);
->-	}
->-
->-	kfree(bo->pages);
->-	kfree(bo);
->-
->-	return ERR_PTR(-ENOMEM);
->-}
->-
->-static int a6xx_gmu_memory_probe(struct a6xx_gmu *gmu)
->-{
->-	int ret;
->-
->-	/*
->-	 * The GMU address space is hardcoded to treat the range
->-	 * 0x60000000 - 0x80000000 as un-cached memory. All buffers shared
->-	 * between the GMU and the CPU will live in this space
->-	 */
->-	gmu->uncached_iova_base = 0x60000000;
->-
->-
->-	gmu->domain = iommu_domain_alloc(&platform_bus_type);
->-	if (!gmu->domain)
->-		return -ENODEV;
->-
->-	ret = iommu_attach_device(gmu->domain, gmu->dev);
->-
->-	if (ret) {
->-		iommu_domain_free(gmu->domain);
->-		gmu->domain = NULL;
->-	}
->-
->-	return ret;
-> }
+>  /**
+> diff --git a/include/drm/drm_vblank.h b/include/drm/drm_vblank.h
+> index c16c44052b3d..66d1fb376600 100644
+> --- a/include/drm/drm_vblank.h
+> +++ b/include/drm/drm_vblank.h
+> @@ -238,4 +238,29 @@ void drm_calc_timestamping_constants(struct drm_crtc=
+ *crtc,
+>  wait_queue_head_t *drm_crtc_vblank_waitqueue(struct drm_crtc *crtc);
+>  void drm_crtc_set_max_vblank_count(struct drm_crtc *crtc,
+>                                    u32 max_vblank_count);
+> +
+> +typedef bool (*drm_vblank_get_scanout_position_func)(struct drm_crtc *cr=
+tc,
+> +                                                    bool in_vblank_irq,
+> +                                                    int *vpos, int *hpos=
+,
+> +                                                    ktime_t *stime,
+> +                                                    ktime_t *etime,
+> +                                                    const struct drm_dis=
+play_mode *mode);
+> +
+> +typedef bool (*drm_vblank_get_scanout_position_legacy_func)(struct drm_d=
+evice *dev,
+> +                                                           unsigned int =
+pipe,
+> +                                                           bool in_vblan=
+k_irq,
+> +                                                           int *vpos,
+> +                                                           int *hpos,
+> +                                                           ktime_t *stim=
+e,
+> +                                                           ktime_t *etim=
+e,
+> +                                                           const struct =
+drm_display_mode *mode);
+> +
+> +bool
+> +drm_crtc_vblank_helper_get_vblank_timestamp_internal(struct drm_crtc *cr=
+tc,
+> +                                                    int *max_error,
+> +                                                    ktime_t *vblank_time=
+,
+> +                                                    bool in_vblank_irq,
+> +                                                    drm_vblank_get_scano=
+ut_position_func get_scanout_position,
+> +                                                    drm_vblank_get_scano=
+ut_position_legacy_func get_scanout_position_legacy);
+> +
+>  #endif
+> --
+> 2.24.1
 >
-> /* Return the 'arc-level' for the given frequency */
->@@ -1289,10 +1206,6 @@ void a6xx_gmu_remove(struct a6xx_gpu
->*a6xx_gpu)
->
-> 	a6xx_gmu_memory_free(gmu, gmu->hfi);
->
->-	iommu_detach_device(gmu->domain, gmu->dev);
->-
->-	iommu_domain_free(gmu->domain);
->-
-> 	free_irq(gmu->gmu_irq, gmu);
-> 	free_irq(gmu->hfi_irq, gmu);
->
->@@ -1313,7 +1226,13 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu,
->struct device_node *node)
->
-> 	gmu->dev = &pdev->dev;
->
->-	of_dma_configure(gmu->dev, node, true);
->+	/* Pass force_dma false to require the DT to set the dma region */
->+	ret = of_dma_configure(gmu->dev, node, false);
->+	if (ret)
->+		return ret;
->+
->+	/* Set the mask after the of_dma_configure() */
->+	dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(31));
->
-> 	/* Fow now, don't do anything fancy until we get our feet under us */
-> 	gmu->idle_level = GMU_IDLE_STATE_ACTIVE;
->@@ -1325,11 +1244,6 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu,
->struct device_node *node)
-> 	if (ret)
-> 		goto err_put_device;
->
->-	/* Set up the IOMMU context bank */
->-	ret = a6xx_gmu_memory_probe(gmu);
->-	if (ret)
->-		goto err_put_device;
->-
-> 	/* Allocate memory for for the HFI queues */
-> 	gmu->hfi = a6xx_gmu_memory_alloc(gmu, SZ_16K);
-> 	if (IS_ERR(gmu->hfi))
->@@ -1375,11 +1289,6 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu,
->struct device_node *node)
-> err_memory:
-> 	a6xx_gmu_memory_free(gmu, gmu->hfi);
->
->-	if (gmu->domain) {
->-		iommu_detach_device(gmu->domain, gmu->dev);
->-
->-		iommu_domain_free(gmu->domain);
->-	}
-> 	ret = -ENODEV;
->
-> err_put_device:
->diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->index 2af91ed..4af65a3 100644
->--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->@@ -12,8 +12,7 @@
-> struct a6xx_gmu_bo {
-> 	void *virt;
-> 	size_t size;
->-	u64 iova;
->-	struct page **pages;
->+	dma_addr_t iova;
-> };
->
-> /*
->@@ -49,9 +48,6 @@ struct a6xx_gmu {
-> 	int hfi_irq;
-> 	int gmu_irq;
->
->-	struct iommu_domain *domain;
->-	u64 uncached_iova_base;
->-
-> 	struct device *gxpd;
->
-> 	int idle_level;
->--
->2.7.4
->_______________________________________________
->dri-devel mailing list
->dri-devel@lists.freedesktop.org
->https://lists.freedesktop.org/mailman/listinfo/dri-devel
+
+
+--=20
+Daniel Vetter
+Software Engineer, Intel Corporation
++41 (0) 79 365 57 48 - http://blog.ffwll.ch
