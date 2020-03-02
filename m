@@ -2,140 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9406B175379
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 06:55:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C3A141753D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 07:36:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726313AbgCBFzT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Mar 2020 00:55:19 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:36074 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726030AbgCBFzT (ORCPT
+        id S1726263AbgCBGgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Mar 2020 01:36:18 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:37611 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725911AbgCBGgS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Mar 2020 00:55:19 -0500
-Received: by mail-pf1-f195.google.com with SMTP id i13so5028097pfe.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Mar 2020 21:55:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/rugZxpdMgFuggpknIjg9upbTqeu96rVvKelMnBJ9UA=;
-        b=AUKoQ2qIej++uMhL6Cg9bs9r0hCEdWT28c5rZpygXGbAUxGgH6pqibzWYMpM6cc7/T
-         Hhu3Jn7w73pVCQZWpU0wBqzMfTezwvpaOvnbE/5bVsZoEml3Wo2JbYgkn3NaZB30zSqy
-         fzoLCy4Beb8LUmmrcpVkPayAEYqs8zNb3ZMrimukA9XfsiZ9yiZU08Ww7Vl3w3yVuLse
-         doj2aTd77l8pXdi6IXiROq+tghT/WVtVfz+M4+hqy9Ivwt8T8ry/cbrHfgSUOLkhA3i8
-         lN/Wxw0A41YK7IkLkgnGBFmuH20k2rF+D0p5Ej/4MS5phnLcZKDYo/Nc1e8CzZhHe78w
-         ifhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/rugZxpdMgFuggpknIjg9upbTqeu96rVvKelMnBJ9UA=;
-        b=kgzOcyaE27paqjL7ms9aueukH5ZgbshXWvBWsxOD+bhy4OLnC7wj2mSjOYfScUIi5I
-         35yhTzS/YPX/eg0rtwNls9o3Nl+CyuRf9gh2UhqCFdrmVJ9RaR3X4xtkcqVP9D14FPYl
-         bLEBJw8bDVUPGFse8cDJ+abx96WQExgPsqjz/sNg7Z02bv16SXIG5i1Xu5yNMKXRb+HS
-         Hl+gV2dyYMAz39zunlhifQ/BXofoH8IbHtw9ZTdJ044YbXxGeb3o+1xZNntnyq17IKBQ
-         y2wOeQsmM3VOyhYiVQ50DrWvkjXxxcuv93guRDImtTC3ix5yZqY/BiPoRtbZptjzlxcx
-         aw4w==
-X-Gm-Message-State: APjAAAV875QFkqaz7DWhL+OxwIYuvN5eh9AEBc9H/bHgHj6a/LIOaxwu
-        sUVobHLMHnlXGp9azO2Xlqln
-X-Google-Smtp-Source: APXvYqxY0x55nq3fyRV03uQtfT196Q9JIOy5IBWGxH31mgiNHSafdj+D6Pob7Gp23ZUNY1EY8VbmHw==
-X-Received: by 2002:a65:668c:: with SMTP id b12mr17983339pgw.14.1583128518463;
-        Sun, 01 Mar 2020 21:55:18 -0800 (PST)
-Received: from Mani-XPS-13-9360 ([2409:4072:683:b69c:15d:29bf:12ee:d853])
-        by smtp.gmail.com with ESMTPSA id i15sm278975pfk.115.2020.03.01.21.55.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 01 Mar 2020 21:55:17 -0800 (PST)
-Date:   Mon, 2 Mar 2020 11:25:10 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] net: qrtr: Fix FIXME related to qrtr_ns_init()
-Message-ID: <20200302055510.GB23607@Mani-XPS-13-9360>
-References: <20200302032527.552916-1-bjorn.andersson@linaro.org>
- <20200302032527.552916-3-bjorn.andersson@linaro.org>
+        Mon, 2 Mar 2020 01:36:18 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1583130977; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=YYalt6l/N7I/mSLT1TfY3UB/16G6fmRPNEGmAhNeO4I=; b=GWagZs9/i5oL22p45SV36WpGpHhl6ztsR5Hvd5z7HFgfaW+hlF7RMOJXPWgezGNXsRntSGAv
+ MPQCAQPoVuqa+dDntbC3NHxr/LDt9RtQ+VDOBXhdKFLzv61Y1Sv4+MPEgAwAgcKMi+dA9xv2
+ xzAlUqGcIZi7AF2p3APVLstnwSM=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e5ca950.7ff8cb975340-smtp-out-n02;
+ Mon, 02 Mar 2020 06:36:00 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6CC71C4479F; Mon,  2 Mar 2020 06:35:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.204.67.17] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: smasetty)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C6A9CC43383;
+        Mon,  2 Mar 2020 06:35:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C6A9CC43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
+Subject: Re: [PATCH] dt-bindings: arm-smmu: update the list of clocks
+To:     Rob Herring <robh@kernel.org>
+Cc:     devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        dri-devel@freedesktop.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        saiprakash.ranjan@codeaurora.org
+References: <1582186342-3484-1-git-send-email-smasetty@codeaurora.org>
+ <1582186342-3484-2-git-send-email-smasetty@codeaurora.org>
+ <20200220203509.GA14697@bogus>
+ <6a7c1f39-a85f-4a99-fed3-71001bdb6128@codeaurora.org>
+ <CAL_JsqKVNENPZKbCy4FrGRO=D79hBL3keuE-U2tTwDVViCrdPQ@mail.gmail.com>
+From:   Sharat Masetty <smasetty@codeaurora.org>
+Message-ID: <3f9ae835-5146-d5db-1caf-01ede5bc9a1f@codeaurora.org>
+Date:   Mon, 2 Mar 2020 12:05:53 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200302032527.552916-3-bjorn.andersson@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <CAL_JsqKVNENPZKbCy4FrGRO=D79hBL3keuE-U2tTwDVViCrdPQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Mar 01, 2020 at 07:25:27PM -0800, Bjorn Andersson wrote:
-> The 2 second delay before calling qrtr_ns_init() meant that the remote
-> processors would register as endpoints in qrtr and the say_hello() call
-> would therefor broadcast the outgoing HELLO to them. With the HELLO
-> handshake corrected this delay is no longer needed.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  net/qrtr/ns.c   | 2 +-
->  net/qrtr/qrtr.c | 6 +-----
->  net/qrtr/qrtr.h | 2 +-
->  3 files changed, 3 insertions(+), 7 deletions(-)
-> 
-> diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-> index e3f11052b5f6..cfd4bd07a62b 100644
-> --- a/net/qrtr/ns.c
-> +++ b/net/qrtr/ns.c
-> @@ -693,7 +693,7 @@ static void qrtr_ns_data_ready(struct sock *sk)
->  	queue_work(qrtr_ns.workqueue, &qrtr_ns.work);
->  }
->  
-> -void qrtr_ns_init(struct work_struct *work)
-> +void qrtr_ns_init(void)
->  {
->  	struct sockaddr_qrtr sq;
->  	int ret;
-> diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
-> index 423310896285..313d3194018a 100644
-> --- a/net/qrtr/qrtr.c
-> +++ b/net/qrtr/qrtr.c
-> @@ -1263,11 +1263,7 @@ static int __init qrtr_proto_init(void)
->  		return rc;
->  	}
->  
-> -	/* FIXME: Currently, this 2s delay is required to catch the NEW_SERVER
-> -	 * messages from routers. But the fix could be somewhere else.
-> -	 */
-> -	INIT_DELAYED_WORK(&qrtr_ns_work, qrtr_ns_init);
-> -	schedule_delayed_work(&qrtr_ns_work, msecs_to_jiffies(2000));
-> +	qrtr_ns_init();
->  
 
-You forgot to remove the below instances of delayed_work:
+On 2/26/2020 8:03 PM, Rob Herring wrote:
+> On Wed, Feb 26, 2020 at 5:17 AM Sharat Masetty <smasetty@codeaurora.org> wrote:
+>>
+>> On 2/21/2020 2:05 AM, Rob Herring wrote:
+>>> On Thu, 20 Feb 2020 13:42:22 +0530, Sharat Masetty wrote:
+>>>> This patch adds a clock definition needed for powering on the GPU TBUs
+>>>> and the GPU TCU.
+>>>>
+>>>> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+>>>> ---
+>>>>    Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 +++
+>>>>    1 file changed, 3 insertions(+)
+>>>>
+>>> My bot found errors running 'make dt_binding_check' on your patch:
+>>>
+>>> Documentation/devicetree/bindings/display/simple-framebuffer.example.dts:21.16-37.11: Warning (chosen_node_is_root): /example-0/chosen: chosen node must be at root node
+>>> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iommu/arm,smmu.example.dt.yaml: iommu@d00000: clock-names: ['bus', 'iface'] is too short
+>>> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iommu/arm,smmu.example.dt.yaml: iommu@d00000: clocks: [[4294967295, 123], [4294967295, 124]] is too short
+>>>
+>>> See https://patchwork.ozlabs.org/patch/1241297
+>>> Please check and re-submit.
+>> Hi Rob, These issues seem to be from the original code and not related
+>> to my patch. Are these going to be blocking errors?
+> There are no errors in this binding in mainline. You've added a 3rd
+> clock when all the existing users have exactly 2 clocks.
 
-#include <linux/workqueue.h>
-struct delayed_work qrtr_ns_work;
-cancel_delayed_work_sync(&qrtr_ns_work);
+Rob,
 
-Other than that,
+Adding something like the following seems to be solving the bot errors, 
+but I am not certain if this is the right way to address this issue. Can 
+you please comment?
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+    clock-names:
++    minItems: 2
++    maxItems: 3
+      items:
+        - const: bus
+        - const: iface
++      - const: mem_iface_clk
 
-Thanks,
-Mani
+    clocks:
++    minItems: 2
++    maxItems: 3
+      items:
+        - description: bus clock required for downstream bus access and 
+for the
+            smmu ptw
+        - description: interface clock required to access smmu's registers
+            through the TCU's programming interface.
++      - description: core clock required for the GPU SMMU TBUs and the 
+GPU TCU.
 
->  	return rc;
->  }
-> diff --git a/net/qrtr/qrtr.h b/net/qrtr/qrtr.h
-> index 53a237a28971..dc2b67f17927 100644
-> --- a/net/qrtr/qrtr.h
-> +++ b/net/qrtr/qrtr.h
-> @@ -29,7 +29,7 @@ void qrtr_endpoint_unregister(struct qrtr_endpoint *ep);
->  
->  int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len);
->  
-> -void qrtr_ns_init(struct work_struct *work);
-> +void qrtr_ns_init(void);
->  
->  void qrtr_ns_remove(void);
->  
-> -- 
-> 2.24.0
-> 
+>
+> Rob
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
