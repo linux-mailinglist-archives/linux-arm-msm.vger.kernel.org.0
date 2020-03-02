@@ -2,122 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EB0C17553A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 09:09:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 477DD175644
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 09:47:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727059AbgCBIJQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Mar 2020 03:09:16 -0500
-Received: from mail-wm1-f51.google.com ([209.85.128.51]:56305 "EHLO
-        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726960AbgCBIJQ (ORCPT
+        id S1726887AbgCBIrf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Mar 2020 03:47:35 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:21353 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727060AbgCBIre (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Mar 2020 03:09:16 -0500
-Received: by mail-wm1-f51.google.com with SMTP id 6so1485869wmi.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2020 00:09:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=QIEDA5vG8ySnah38r3nnooZWjoF1SxANwiGeAOn5aus=;
-        b=Hxc1+/2qLFumg1E3nHvgrhfGbDd0W6GUzhRrb85hVtcNCDE0oKietbH1+Kpx7nM9Dd
-         ReJrof+d+xW/Ur3HvZ1jhZg1LPUbC98yCisPAfmvIaJR0aroL28uFIz/CCr/w8vnYYHT
-         KYw6Ys4O0sxoGwto2oOMQ1j5lq4iNRi96mkGi67eyQIGK0tsEHpGlEdGNQblHPOWFtLI
-         UyBAWOvfHIWPrNdbfKJkTcNHPVi76G0jxl8tKxeD8hbIZE8K74m335iwBgXi9faXHrEH
-         eu9XqW5IWfEuS6JKo1UddrtLT8MH3DILVPqyTNDN2VQI50JWy+LZHQh09TWLzO/xK+Rn
-         xb8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=QIEDA5vG8ySnah38r3nnooZWjoF1SxANwiGeAOn5aus=;
-        b=ALKl7cWgfo1ZODUT4i68iMpvQXM4EyMpQbyh5Mz0xAY1sPOd7dX019xCD1UncAmi4y
-         Yq/ZXI+FMHh77i/MAlfN7p1H4jbsoc9E+EunYqG1pUsjBgXOIdPVqX9Q+YtTS+IZMX+B
-         b+YaeUBpz7p10y1hmhjBzkdNc/YaX0eflp/oOKy+q5CZoyJekF3HeMuUIY1xcRWUjoJL
-         rsewu1IxZwZxqBzuN5ioO62PBg5sIQBSwPNhb/9Me0POBqIjM3ovDqswSCxNcxDmbVAy
-         GWm5NoS3ScoRmmNl2MrTlH5s1b4zc+lMqUF445F1Tu9R+oOX03RMw0GEOq3U9KrPa7KX
-         BhoA==
-X-Gm-Message-State: APjAAAV0zMZLoccajBA4VvTTM8nllAic3laUyOKEXFmBt2hGiyz8iRXm
-        F5XSRu9+fSZvdmSMZMJZVTtaE47g
-X-Google-Smtp-Source: APXvYqwmBD1RYu1hJm1Lol7EWN8ITOWVoo4HPBmYpeRt7oZoBTO86LIDV8S9H3cf6XaYxk4rcOf1ew==
-X-Received: by 2002:a7b:c305:: with SMTP id k5mr19264575wmj.189.1583136554745;
-        Mon, 02 Mar 2020 00:09:14 -0800 (PST)
-Received: from localhost (pD9E516A9.dip0.t-ipconnect.de. [217.229.22.169])
-        by smtp.gmail.com with ESMTPSA id g25sm28977284wmh.3.2020.03.02.00.09.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2020 00:09:13 -0800 (PST)
-Date:   Mon, 2 Mar 2020 09:09:12 +0100
-From:   Thierry Reding <thierry.reding@gmail.com>
-To:     abhinavk@codeaurora.org
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        treding@nvidia.com, daniel.vetter@ffwll.ch, varar@quicinc.com,
-        seanpaul@chromium.org, aravindh@codeaurora.org,
-        chandanu@codeaurora.org
-Subject: Re: Reverting https://patchwork.freedesktop.org/patch/336850/
-Message-ID: <20200302080912.GA1690850@ulmo>
-References: <8bec962794df6fd8f1384d457060234e@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="xHFwDpU9dbj6ez1V"
-Content-Disposition: inline
-In-Reply-To: <8bec962794df6fd8f1384d457060234e@codeaurora.org>
-User-Agent: Mutt/1.13.1 (2019-12-14)
+        Mon, 2 Mar 2020 03:47:34 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1583138854; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=wmVI700tbQq6+iaWrtHBd6KzHd/LvL94inrgBbMCajQ=; b=V+HW/+ddJNkinYRMv2vhAjxR7lerg1/EiEwNT3ypV2gYhFEyQewVDawOMZXvtwwHn9eem7QM
+ OeJ/2LkXLYxpjFul+Q79h4eE8kIPJGEx92zK7HeE/5GG54Szn5LMxqbmCzTlKoWXC+PYri33
+ 0rRMcPQG7m6w6qex9eJxEWRb1mM=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e5cc824.7f6d358dbb20-smtp-out-n03;
+ Mon, 02 Mar 2020 08:47:32 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CD535C433A2; Mon,  2 Mar 2020 08:47:31 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from smasetty-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: smasetty)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F1A02C43383;
+        Mon,  2 Mar 2020 08:47:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F1A02C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
+From:   Sharat Masetty <smasetty@codeaurora.org>
+To:     freedreno@lists.freedesktop.org
+Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jcrouse@codeaurora.org,
+        Sharat Masetty <smasetty@codeaurora.org>
+Subject: [PATCH] drm: msm: a6x: Disable interrupts before recovery
+Date:   Mon,  2 Mar 2020 14:17:16 +0530
+Message-Id: <1583138836-20807-1-git-send-email-smasetty@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This patch disables interrupts in the GPU RBBM hang detect fault handler
+before going to recovery.
 
---xHFwDpU9dbj6ez1V
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-On Fri, Feb 28, 2020 at 05:35:51PM -0800, abhinavk@codeaurora.org wrote:
-> Hi Thierry
->=20
-> For DP drivers using MSM chipsets, we are using drm_dp_link_configure,
-> drm_dp_link_power_up and drm_dp_link_power_down functions. Here is the pa=
-tch
-> for reference:
->=20
-> https://patchwork.freedesktop.org/patch/343346/
->=20
-> We will be posting a newer version of the driver soon.
->=20
-> For that, we plan to revert https://patchwork.freedesktop.org/patch/33685=
-0/
-> as now there are more users of the functions and not just tegra.
->=20
-> Let us know if this is the right approach or shall we make the required
-> functions local to our drivers.
-
-I think reimplementing these locally in you drivers is the preferred
-way. It's not so much a lack of users (there were 5 or so in total when
-I made the change to remove these helpers), but rather the general
-approach that was being criticized by other driver maintainers. I'm not
-aware of any of their opinions having changed on this subject, so I'd
-recommend going down the path of least resistance.
-
-Thierry
-
---xHFwDpU9dbj6ez1V
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAl5cvyQACgkQ3SOs138+
-s6FuWRAAic4BmNGPInfnz8tpJ3zMdR881tl4xLHBVnd0cIlAsN0wR5BgQdyoJ6CJ
-5VrRknoD7ksKAF5NSbpfhcfL+MXM8co0nLGdBsQbbOyIh15q2/13csHlgaGq+V1E
-6HvPbdXrHHOwy0fLs24P2Qgr/K6lJ7z+Dd6ZOMfJVd8XvKiytliEPNi/hj7UrkBV
-fdgrMxV4I5n1j3+xjMIGTUnUURj9GHvHCxNChUtxoCpcK/dEaR6ycX6yo2HuNYBL
-/BYHow1Qls0b+Q4iKjpd4wMBtRE8TDRNe32bV/JnbNL3QIFMq0pkGMvzTJyFbQD3
-psmZmy4o4KzzDYifvtvhOF45+7SbYbcEwikBuDLv8FnuKXkj4ven51apoAexzZie
-DXrG9lojGc4BuHwWYJMrp5EjGHBNGwtUFmBblLMap/A4iVSAgxlxQSnT1tS9RXE0
-4g8u9G1iOKwMvOFkCTAvUjzuR52/esEHqWRbeyWdggehESQFhOrz8nGcN3fLYbD0
-EKUoyOs1oKsnFmA2LdJdJyMfq6VesIjLizs9tWdMGSpG7XDXIzJOvzcnJp8DRzRB
-TQRoa/Lg3Kopf3UeMHMWm1UY0ULF/YWc/DDkD2RxPPSpbof1T/RDnsVy5JX2Hltf
-s3M/dH3m/pQjGmeO6hP5j0cxtRPaURdy1Z8e4TbZDp/nI9qPsIw=
-=Ac70
------END PGP SIGNATURE-----
-
---xHFwDpU9dbj6ez1V--
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index dc8ec2c..4dd0f62 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -676,6 +676,9 @@ static void a6xx_fault_detect_irq(struct msm_gpu *gpu)
+ 		gpu_read64(gpu, REG_A6XX_CP_IB2_BASE, REG_A6XX_CP_IB2_BASE_HI),
+ 		gpu_read(gpu, REG_A6XX_CP_IB2_REM_SIZE));
+ 
++	/* Disable interrupts before going for a recovery*/
++	gpu_write(gpu, REG_A6XX_RBBM_INT_0_MASK, 0);
++
+ 	/* Turn off the hangcheck timer to keep it from bothering us */
+ 	del_timer(&gpu->hangcheck_timer);
+ 
+-- 
+1.9.1
