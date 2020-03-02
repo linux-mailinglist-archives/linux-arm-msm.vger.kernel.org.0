@@ -2,212 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 479F1175463
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 08:22:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EB0C17553A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 09:09:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726654AbgCBHWc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Mar 2020 02:22:32 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:38927 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726313AbgCBHWc (ORCPT
+        id S1727059AbgCBIJQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Mar 2020 03:09:16 -0500
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:56305 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726960AbgCBIJQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Mar 2020 02:22:32 -0500
-Received: by mail-pf1-f193.google.com with SMTP id l7so5132838pff.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Mar 2020 23:22:31 -0800 (PST)
+        Mon, 2 Mar 2020 03:09:16 -0500
+Received: by mail-wm1-f51.google.com with SMTP id 6so1485869wmi.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2020 00:09:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=SkdVCR8OiXs5diTTG/Q7TJWCRWx/fIVDFp919zgH5+M=;
-        b=Y+EqUsy+LkjIUDiUnyhNNMy9ar4EI2a3fdhvJoazp2B3nQGBk+koNmNdBTUw46KbfZ
-         O6RTvHYBrM1lGTi5sQB4ia2VkJCyZdCmGk4DhYewS0yJjv8i2Eh1Q/hTts59+/mYqigA
-         DfPMePTJIBwdrddWk07M6CkAP4tDakBDax+frBdzQC3B8K5MG6d3N46jO03gBuJe2nvi
-         ff17otHto7qmDs2flWrroieBqcH6Z4TBl5yuLFSFlPMYG1RTdp5zuCvovFrdSnExll78
-         8aDmroMx3UDuWgi9OpviCg5rP5WPD1mTviA1sHKvnSaNg4pmuZ33lOx8z3LGlyJG39CB
-         KLVQ==
+        bh=QIEDA5vG8ySnah38r3nnooZWjoF1SxANwiGeAOn5aus=;
+        b=Hxc1+/2qLFumg1E3nHvgrhfGbDd0W6GUzhRrb85hVtcNCDE0oKietbH1+Kpx7nM9Dd
+         ReJrof+d+xW/Ur3HvZ1jhZg1LPUbC98yCisPAfmvIaJR0aroL28uFIz/CCr/w8vnYYHT
+         KYw6Ys4O0sxoGwto2oOMQ1j5lq4iNRi96mkGi67eyQIGK0tsEHpGlEdGNQblHPOWFtLI
+         UyBAWOvfHIWPrNdbfKJkTcNHPVi76G0jxl8tKxeD8hbIZE8K74m335iwBgXi9faXHrEH
+         eu9XqW5IWfEuS6JKo1UddrtLT8MH3DILVPqyTNDN2VQI50JWy+LZHQh09TWLzO/xK+Rn
+         xb8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SkdVCR8OiXs5diTTG/Q7TJWCRWx/fIVDFp919zgH5+M=;
-        b=OabvghZq4DRCMsVpuAG0ggxmxVnyOggYgdEt556x2cQE4nxdU7QSf5hOCJ2LRO/t6M
-         PDUMKdGxWZjDRN6Pl0DFMj6/dHaDZRPkFLhO0JQENa/P378HbLdqmD0hjeMC1zmYkYMB
-         moZoEo5CkxIOUA/PuxYx7SxN2IJ59QbxAkYtevg1f8MX/PKa+e9HGC2coMVWXrbp5UzX
-         auFsGq/RdN9KiB1NqGtkWvRso7Ba/uw+Wga8maOFuwGHW0ZvuL960zWp3oaIsBQf2/Um
-         hXPbN+bs4aOUnwx50k9GDBKTUjGSF/slD0IS1L4CoH+5fKxQfn8jH7ekxcGxB15i3l41
-         wfPg==
-X-Gm-Message-State: ANhLgQ27IJXMlFFGWhAICNo1h2yTo/0fEKTx/m7FWvQemvVGcJk0Q1Zl
-        L+GRfIxv12M8fI+PhC7/OHAR
-X-Google-Smtp-Source: ADFU+vubOlMSnHZJjju8vH6TP0cbiCd0JSbXY6EVeJWzF3TEaoPKBdFtBapF8cYeFDiMvrCOOkys1A==
-X-Received: by 2002:aa7:97ac:: with SMTP id d12mr10653029pfq.209.1583133750946;
-        Sun, 01 Mar 2020 23:22:30 -0800 (PST)
-Received: from Mani-XPS-13-9360 ([2409:4072:683:b69c:15d:29bf:12ee:d853])
-        by smtp.gmail.com with ESMTPSA id 129sm15490943pgf.10.2020.03.01.23.22.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 01 Mar 2020 23:22:30 -0800 (PST)
-Date:   Mon, 2 Mar 2020 12:52:23 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/2] net: qrtr: Respond to HELLO message
-Message-ID: <20200302072223.GC23607@Mani-XPS-13-9360>
-References: <20200302032527.552916-1-bjorn.andersson@linaro.org>
- <20200302032527.552916-2-bjorn.andersson@linaro.org>
- <20200302055025.GA23607@Mani-XPS-13-9360>
- <20200302065502.GG210720@yoga>
+        bh=QIEDA5vG8ySnah38r3nnooZWjoF1SxANwiGeAOn5aus=;
+        b=ALKl7cWgfo1ZODUT4i68iMpvQXM4EyMpQbyh5Mz0xAY1sPOd7dX019xCD1UncAmi4y
+         Yq/ZXI+FMHh77i/MAlfN7p1H4jbsoc9E+EunYqG1pUsjBgXOIdPVqX9Q+YtTS+IZMX+B
+         b+YaeUBpz7p10y1hmhjBzkdNc/YaX0eflp/oOKy+q5CZoyJekF3HeMuUIY1xcRWUjoJL
+         rsewu1IxZwZxqBzuN5ioO62PBg5sIQBSwPNhb/9Me0POBqIjM3ovDqswSCxNcxDmbVAy
+         GWm5NoS3ScoRmmNl2MrTlH5s1b4zc+lMqUF445F1Tu9R+oOX03RMw0GEOq3U9KrPa7KX
+         BhoA==
+X-Gm-Message-State: APjAAAV0zMZLoccajBA4VvTTM8nllAic3laUyOKEXFmBt2hGiyz8iRXm
+        F5XSRu9+fSZvdmSMZMJZVTtaE47g
+X-Google-Smtp-Source: APXvYqwmBD1RYu1hJm1Lol7EWN8ITOWVoo4HPBmYpeRt7oZoBTO86LIDV8S9H3cf6XaYxk4rcOf1ew==
+X-Received: by 2002:a7b:c305:: with SMTP id k5mr19264575wmj.189.1583136554745;
+        Mon, 02 Mar 2020 00:09:14 -0800 (PST)
+Received: from localhost (pD9E516A9.dip0.t-ipconnect.de. [217.229.22.169])
+        by smtp.gmail.com with ESMTPSA id g25sm28977284wmh.3.2020.03.02.00.09.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Mar 2020 00:09:13 -0800 (PST)
+Date:   Mon, 2 Mar 2020 09:09:12 +0100
+From:   Thierry Reding <thierry.reding@gmail.com>
+To:     abhinavk@codeaurora.org
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        treding@nvidia.com, daniel.vetter@ffwll.ch, varar@quicinc.com,
+        seanpaul@chromium.org, aravindh@codeaurora.org,
+        chandanu@codeaurora.org
+Subject: Re: Reverting https://patchwork.freedesktop.org/patch/336850/
+Message-ID: <20200302080912.GA1690850@ulmo>
+References: <8bec962794df6fd8f1384d457060234e@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="xHFwDpU9dbj6ez1V"
 Content-Disposition: inline
-In-Reply-To: <20200302065502.GG210720@yoga>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <8bec962794df6fd8f1384d457060234e@codeaurora.org>
+User-Agent: Mutt/1.13.1 (2019-12-14)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Mar 01, 2020 at 10:55:02PM -0800, Bjorn Andersson wrote:
-> On Sun 01 Mar 21:50 PST 2020, Manivannan Sadhasivam wrote:
-> 
-> > Hi Bjorn,
-> > 
-> > Thanks for the fix. I have tested this and it works perfectly!
-> > 
-> > On Sun, Mar 01, 2020 at 07:25:26PM -0800, Bjorn Andersson wrote:
-> > > Lost in the translation from the user space implementation was the
-> > > detail that HELLO mesages must be exchanged between each node pair.  As
-> > > such the incoming HELLO must be replied to.
-> > > 
-> > 
-> > Err. I thought the say_hello() part in ctrl_cmd_hello() was redundant, so
-> > removed it :P
-> > 
-> > Sorry for that.
-> > 
-> 
-> No worries.
-> 
-> > > Similar to the previous implementation no effort is made to prevent two
-> > > Linux boxes from continuously sending HELLO messages back and forth,
-> > > this is left to a follow up patch.
-> > > 
-> > > say_hello() is moved, to facilitate the new call site.
-> > > 
-> > > Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > ---
-> > >  net/qrtr/ns.c | 54 ++++++++++++++++++++++++++++-----------------------
-> > >  1 file changed, 30 insertions(+), 24 deletions(-)
-> > > 
-> > > diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-> > > index 7bfde01f4e8a..e3f11052b5f6 100644
-> > > --- a/net/qrtr/ns.c
-> > > +++ b/net/qrtr/ns.c
-> > > @@ -286,9 +286,38 @@ static int server_del(struct qrtr_node *node, unsigned int port)
-> > >  	return 0;
-> > >  }
-> > >  
-> > > +static int say_hello(struct sockaddr_qrtr *dest)
-> > > +{
-> > > +	struct qrtr_ctrl_pkt pkt;
-> > > +	struct msghdr msg = { };
-> > > +	struct kvec iv;
-> > > +	int ret;
-> > > +
-> > > +	iv.iov_base = &pkt;
-> > > +	iv.iov_len = sizeof(pkt);
-> > > +
-> > > +	memset(&pkt, 0, sizeof(pkt));
-> > > +	pkt.cmd = cpu_to_le32(QRTR_TYPE_HELLO);
-> > > +
-> > > +	msg.msg_name = (struct sockaddr *)dest;
-> > > +	msg.msg_namelen = sizeof(*dest);
-> > > +
-> > > +	ret = kernel_sendmsg(qrtr_ns.sock, &msg, &iv, 1, sizeof(pkt));
-> > > +	if (ret < 0)
-> > > +		pr_err("failed to send hello msg\n");
-> > > +
-> > > +	return ret;
-> > > +}
-> > > +
-> > >  /* Announce the list of servers registered on the local node */
-> > >  static int ctrl_cmd_hello(struct sockaddr_qrtr *sq)
-> > >  {
-> > > +	int ret;
-> > > +
-> > > +	ret = say_hello(sq); > > +	if (ret < 0)
-> > > +		return ret;
-> > > +
-> > >  	return announce_servers(sq);
-> > >  }
-> > >  
-> > > @@ -566,29 +595,6 @@ static void ctrl_cmd_del_lookup(struct sockaddr_qrtr *from,
-> > >  	}
-> > >  }
-> > >  
-> > > -static int say_hello(void)
-> > > -{
-> > > -	struct qrtr_ctrl_pkt pkt;
-> > > -	struct msghdr msg = { };
-> > > -	struct kvec iv;
-> > > -	int ret;
-> > > -
-> > > -	iv.iov_base = &pkt;
-> > > -	iv.iov_len = sizeof(pkt);
-> > > -
-> > > -	memset(&pkt, 0, sizeof(pkt));
-> > > -	pkt.cmd = cpu_to_le32(QRTR_TYPE_HELLO);
-> > > -
-> > > -	msg.msg_name = (struct sockaddr *)&qrtr_ns.bcast_sq;
-> > > -	msg.msg_namelen = sizeof(qrtr_ns.bcast_sq);
-> > > -
-> > > -	ret = kernel_sendmsg(qrtr_ns.sock, &msg, &iv, 1, sizeof(pkt));
-> > > -	if (ret < 0)
-> > > -		pr_err("failed to send hello msg\n");
-> > > -
-> > > -	return ret;
-> > > -}
-> > > -
-> > >  static void qrtr_ns_worker(struct work_struct *work)
-> > >  {
-> > >  	const struct qrtr_ctrl_pkt *pkt;
-> > > @@ -725,7 +731,7 @@ void qrtr_ns_init(struct work_struct *work)
-> > >  	if (!qrtr_ns.workqueue)
-> > >  		goto err_sock;
-> > >  
-> > > -	ret = say_hello();
-> > > +	ret = say_hello(&qrtr_ns.bcast_sq);
-> > 
-> > Why do you want to pass a global variable here? Why can't it be used directly
-> > in say_hello() as done before?
-> > 
-> 
-> Because I changed the prototype of say_hello() so that we pass the
-> destination address; here that's the broadcast address, in
-> ctrl_cmd_hello() it's the specific sender of the incoming hello that we
-> want to respond to.
-> 
 
-Ah, yes. I missed that. Sounds good to me.
+--xHFwDpU9dbj6ez1V
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
-Mani
+On Fri, Feb 28, 2020 at 05:35:51PM -0800, abhinavk@codeaurora.org wrote:
+> Hi Thierry
+>=20
+> For DP drivers using MSM chipsets, we are using drm_dp_link_configure,
+> drm_dp_link_power_up and drm_dp_link_power_down functions. Here is the pa=
+tch
+> for reference:
+>=20
+> https://patchwork.freedesktop.org/patch/343346/
+>=20
+> We will be posting a newer version of the driver soon.
+>=20
+> For that, we plan to revert https://patchwork.freedesktop.org/patch/33685=
+0/
+> as now there are more users of the functions and not just tegra.
+>=20
+> Let us know if this is the right approach or shall we make the required
+> functions local to our drivers.
 
-> Regards,
-> Bjorn
-> 
-> > Other than that,
-> > 
-> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > 
-> > Thanks,
-> > Mani
-> > 
-> > >  	if (ret < 0)
-> > >  		goto err_wq;
-> > >  
-> > > -- 
-> > > 2.24.0
-> > > 
+I think reimplementing these locally in you drivers is the preferred
+way. It's not so much a lack of users (there were 5 or so in total when
+I made the change to remove these helpers), but rather the general
+approach that was being criticized by other driver maintainers. I'm not
+aware of any of their opinions having changed on this subject, so I'd
+recommend going down the path of least resistance.
+
+Thierry
+
+--xHFwDpU9dbj6ez1V
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAl5cvyQACgkQ3SOs138+
+s6FuWRAAic4BmNGPInfnz8tpJ3zMdR881tl4xLHBVnd0cIlAsN0wR5BgQdyoJ6CJ
+5VrRknoD7ksKAF5NSbpfhcfL+MXM8co0nLGdBsQbbOyIh15q2/13csHlgaGq+V1E
+6HvPbdXrHHOwy0fLs24P2Qgr/K6lJ7z+Dd6ZOMfJVd8XvKiytliEPNi/hj7UrkBV
+fdgrMxV4I5n1j3+xjMIGTUnUURj9GHvHCxNChUtxoCpcK/dEaR6ycX6yo2HuNYBL
+/BYHow1Qls0b+Q4iKjpd4wMBtRE8TDRNe32bV/JnbNL3QIFMq0pkGMvzTJyFbQD3
+psmZmy4o4KzzDYifvtvhOF45+7SbYbcEwikBuDLv8FnuKXkj4ven51apoAexzZie
+DXrG9lojGc4BuHwWYJMrp5EjGHBNGwtUFmBblLMap/A4iVSAgxlxQSnT1tS9RXE0
+4g8u9G1iOKwMvOFkCTAvUjzuR52/esEHqWRbeyWdggehESQFhOrz8nGcN3fLYbD0
+EKUoyOs1oKsnFmA2LdJdJyMfq6VesIjLizs9tWdMGSpG7XDXIzJOvzcnJp8DRzRB
+TQRoa/Lg3Kopf3UeMHMWm1UY0ULF/YWc/DDkD2RxPPSpbof1T/RDnsVy5JX2Hltf
+s3M/dH3m/pQjGmeO6hP5j0cxtRPaURdy1Z8e4TbZDp/nI9qPsIw=
+=Ac70
+-----END PGP SIGNATURE-----
+
+--xHFwDpU9dbj6ez1V--
