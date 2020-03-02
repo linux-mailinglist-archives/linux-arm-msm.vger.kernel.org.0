@@ -2,130 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C3A141753D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 07:36:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C401175424
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2020 07:55:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726263AbgCBGgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Mar 2020 01:36:18 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:37611 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725911AbgCBGgS (ORCPT
+        id S1726845AbgCBGzJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Mar 2020 01:55:09 -0500
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:36435 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725911AbgCBGzI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Mar 2020 01:36:18 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1583130977; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=YYalt6l/N7I/mSLT1TfY3UB/16G6fmRPNEGmAhNeO4I=; b=GWagZs9/i5oL22p45SV36WpGpHhl6ztsR5Hvd5z7HFgfaW+hlF7RMOJXPWgezGNXsRntSGAv
- MPQCAQPoVuqa+dDntbC3NHxr/LDt9RtQ+VDOBXhdKFLzv61Y1Sv4+MPEgAwAgcKMi+dA9xv2
- xzAlUqGcIZi7AF2p3APVLstnwSM=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e5ca950.7ff8cb975340-smtp-out-n02;
- Mon, 02 Mar 2020 06:36:00 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6CC71C4479F; Mon,  2 Mar 2020 06:35:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.204.67.17] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: smasetty)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C6A9CC43383;
-        Mon,  2 Mar 2020 06:35:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C6A9CC43383
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=smasetty@codeaurora.org
-Subject: Re: [PATCH] dt-bindings: arm-smmu: update the list of clocks
-To:     Rob Herring <robh@kernel.org>
-Cc:     devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        dri-devel@freedesktop.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        saiprakash.ranjan@codeaurora.org
-References: <1582186342-3484-1-git-send-email-smasetty@codeaurora.org>
- <1582186342-3484-2-git-send-email-smasetty@codeaurora.org>
- <20200220203509.GA14697@bogus>
- <6a7c1f39-a85f-4a99-fed3-71001bdb6128@codeaurora.org>
- <CAL_JsqKVNENPZKbCy4FrGRO=D79hBL3keuE-U2tTwDVViCrdPQ@mail.gmail.com>
-From:   Sharat Masetty <smasetty@codeaurora.org>
-Message-ID: <3f9ae835-5146-d5db-1caf-01ede5bc9a1f@codeaurora.org>
-Date:   Mon, 2 Mar 2020 12:05:53 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        Mon, 2 Mar 2020 01:55:08 -0500
+Received: by mail-pj1-f66.google.com with SMTP id d7so1057520pjw.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Mar 2020 22:55:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=pWcYKlhLAnKGB3383nGwa1XGwMwc5bp9m4MPxMifptM=;
+        b=nNDD/rubXmYKGH9BJT0e27lqeQsmccF/U5km0Dx0rn8qwQ3HpB6UDN8hyJWQr7Qi56
+         GTi2hkxYOrvhaqLFEoHFPt+0Qr23+FJfaBiCc+zQll5nEkmnnTgvhHTUVZ8kmogW1ypd
+         H/1bATv1m/pje1sWAlfQLACBnkOkSJEPgg/UCoSjQk8HncVFVF5zlZPWDqab0Vs10KB2
+         chQ2tiO375iXhc9thpXCn2UQxY+PIOCaRlIpvI0cC5J2XmaCjAnFLZta7uAjMIQm/UH3
+         pVNYtib47VbQcSam2au+f9Z1sF1TnQ+EZFvelzznopj3lUi716/ozqCbez6CKqx5S8O8
+         vlPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=pWcYKlhLAnKGB3383nGwa1XGwMwc5bp9m4MPxMifptM=;
+        b=ROJqv1l3HKjCj0Auz5Q1XNpEgxsnnewNlZxJu5JAOnPz8YW7tipKA3XGQqZjIy9UYC
+         6FHiOQOJSkXWG4bLlhSZLXvg2NrBSgkx9/EQubddRz2RB+QCRE8HkwykPaaMsuFGfdex
+         7JxNOUn27ygIzd2PZmv+R+pycq3CmLn6SsDTLZIFFsK2q/5OhHvjSZHFV9KSUTZaB1WL
+         jgjG/jVd6V+R1/thdvLqWZSgfqV5+W5qEd6Tqt7BHGoMwW3EI3nzGC9cPBjpyO4dGod9
+         llfN1h7j3RaU80TAlBhuBEt4XOYEsPnR6T+TKNMplazI+IcSIpY0CruOSARaz7hlUnPt
+         frqg==
+X-Gm-Message-State: APjAAAWz7CAvJCTu1FkT6fTYEIdjlQQVdgyC6T2h+B3tNvHxEry/TEau
+        ooLSsm+l9QmI0rO9JoXrQA1lvg==
+X-Google-Smtp-Source: APXvYqxAQJBrCZKpR7ZbY7wdYkROyZ6BhKS54PIo+Ig28iQj7F3OvFmQe2/r9GuyIz2jw/M+aKP79A==
+X-Received: by 2002:a17:902:8545:: with SMTP id d5mr15883403plo.116.1583132105386;
+        Sun, 01 Mar 2020 22:55:05 -0800 (PST)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id w26sm20301383pfj.119.2020.03.01.22.55.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Mar 2020 22:55:04 -0800 (PST)
+Date:   Sun, 1 Mar 2020 22:55:02 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] net: qrtr: Respond to HELLO message
+Message-ID: <20200302065502.GG210720@yoga>
+References: <20200302032527.552916-1-bjorn.andersson@linaro.org>
+ <20200302032527.552916-2-bjorn.andersson@linaro.org>
+ <20200302055025.GA23607@Mani-XPS-13-9360>
 MIME-Version: 1.0
-In-Reply-To: <CAL_JsqKVNENPZKbCy4FrGRO=D79hBL3keuE-U2tTwDVViCrdPQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200302055025.GA23607@Mani-XPS-13-9360>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sun 01 Mar 21:50 PST 2020, Manivannan Sadhasivam wrote:
 
-On 2/26/2020 8:03 PM, Rob Herring wrote:
-> On Wed, Feb 26, 2020 at 5:17 AM Sharat Masetty <smasetty@codeaurora.org> wrote:
->>
->> On 2/21/2020 2:05 AM, Rob Herring wrote:
->>> On Thu, 20 Feb 2020 13:42:22 +0530, Sharat Masetty wrote:
->>>> This patch adds a clock definition needed for powering on the GPU TBUs
->>>> and the GPU TCU.
->>>>
->>>> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
->>>> ---
->>>>    Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 +++
->>>>    1 file changed, 3 insertions(+)
->>>>
->>> My bot found errors running 'make dt_binding_check' on your patch:
->>>
->>> Documentation/devicetree/bindings/display/simple-framebuffer.example.dts:21.16-37.11: Warning (chosen_node_is_root): /example-0/chosen: chosen node must be at root node
->>> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iommu/arm,smmu.example.dt.yaml: iommu@d00000: clock-names: ['bus', 'iface'] is too short
->>> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iommu/arm,smmu.example.dt.yaml: iommu@d00000: clocks: [[4294967295, 123], [4294967295, 124]] is too short
->>>
->>> See https://patchwork.ozlabs.org/patch/1241297
->>> Please check and re-submit.
->> Hi Rob, These issues seem to be from the original code and not related
->> to my patch. Are these going to be blocking errors?
-> There are no errors in this binding in mainline. You've added a 3rd
-> clock when all the existing users have exactly 2 clocks.
+> Hi Bjorn,
+> 
+> Thanks for the fix. I have tested this and it works perfectly!
+> 
+> On Sun, Mar 01, 2020 at 07:25:26PM -0800, Bjorn Andersson wrote:
+> > Lost in the translation from the user space implementation was the
+> > detail that HELLO mesages must be exchanged between each node pair.  As
+> > such the incoming HELLO must be replied to.
+> > 
+> 
+> Err. I thought the say_hello() part in ctrl_cmd_hello() was redundant, so
+> removed it :P
+> 
+> Sorry for that.
+> 
 
-Rob,
+No worries.
 
-Adding something like the following seems to be solving the bot errors, 
-but I am not certain if this is the right way to address this issue. Can 
-you please comment?
+> > Similar to the previous implementation no effort is made to prevent two
+> > Linux boxes from continuously sending HELLO messages back and forth,
+> > this is left to a follow up patch.
+> > 
+> > say_hello() is moved, to facilitate the new call site.
+> > 
+> > Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  net/qrtr/ns.c | 54 ++++++++++++++++++++++++++++-----------------------
+> >  1 file changed, 30 insertions(+), 24 deletions(-)
+> > 
+> > diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+> > index 7bfde01f4e8a..e3f11052b5f6 100644
+> > --- a/net/qrtr/ns.c
+> > +++ b/net/qrtr/ns.c
+> > @@ -286,9 +286,38 @@ static int server_del(struct qrtr_node *node, unsigned int port)
+> >  	return 0;
+> >  }
+> >  
+> > +static int say_hello(struct sockaddr_qrtr *dest)
+> > +{
+> > +	struct qrtr_ctrl_pkt pkt;
+> > +	struct msghdr msg = { };
+> > +	struct kvec iv;
+> > +	int ret;
+> > +
+> > +	iv.iov_base = &pkt;
+> > +	iv.iov_len = sizeof(pkt);
+> > +
+> > +	memset(&pkt, 0, sizeof(pkt));
+> > +	pkt.cmd = cpu_to_le32(QRTR_TYPE_HELLO);
+> > +
+> > +	msg.msg_name = (struct sockaddr *)dest;
+> > +	msg.msg_namelen = sizeof(*dest);
+> > +
+> > +	ret = kernel_sendmsg(qrtr_ns.sock, &msg, &iv, 1, sizeof(pkt));
+> > +	if (ret < 0)
+> > +		pr_err("failed to send hello msg\n");
+> > +
+> > +	return ret;
+> > +}
+> > +
+> >  /* Announce the list of servers registered on the local node */
+> >  static int ctrl_cmd_hello(struct sockaddr_qrtr *sq)
+> >  {
+> > +	int ret;
+> > +
+> > +	ret = say_hello(sq); > > +	if (ret < 0)
+> > +		return ret;
+> > +
+> >  	return announce_servers(sq);
+> >  }
+> >  
+> > @@ -566,29 +595,6 @@ static void ctrl_cmd_del_lookup(struct sockaddr_qrtr *from,
+> >  	}
+> >  }
+> >  
+> > -static int say_hello(void)
+> > -{
+> > -	struct qrtr_ctrl_pkt pkt;
+> > -	struct msghdr msg = { };
+> > -	struct kvec iv;
+> > -	int ret;
+> > -
+> > -	iv.iov_base = &pkt;
+> > -	iv.iov_len = sizeof(pkt);
+> > -
+> > -	memset(&pkt, 0, sizeof(pkt));
+> > -	pkt.cmd = cpu_to_le32(QRTR_TYPE_HELLO);
+> > -
+> > -	msg.msg_name = (struct sockaddr *)&qrtr_ns.bcast_sq;
+> > -	msg.msg_namelen = sizeof(qrtr_ns.bcast_sq);
+> > -
+> > -	ret = kernel_sendmsg(qrtr_ns.sock, &msg, &iv, 1, sizeof(pkt));
+> > -	if (ret < 0)
+> > -		pr_err("failed to send hello msg\n");
+> > -
+> > -	return ret;
+> > -}
+> > -
+> >  static void qrtr_ns_worker(struct work_struct *work)
+> >  {
+> >  	const struct qrtr_ctrl_pkt *pkt;
+> > @@ -725,7 +731,7 @@ void qrtr_ns_init(struct work_struct *work)
+> >  	if (!qrtr_ns.workqueue)
+> >  		goto err_sock;
+> >  
+> > -	ret = say_hello();
+> > +	ret = say_hello(&qrtr_ns.bcast_sq);
+> 
+> Why do you want to pass a global variable here? Why can't it be used directly
+> in say_hello() as done before?
+> 
 
-    clock-names:
-+    minItems: 2
-+    maxItems: 3
-      items:
-        - const: bus
-        - const: iface
-+      - const: mem_iface_clk
+Because I changed the prototype of say_hello() so that we pass the
+destination address; here that's the broadcast address, in
+ctrl_cmd_hello() it's the specific sender of the incoming hello that we
+want to respond to.
 
-    clocks:
-+    minItems: 2
-+    maxItems: 3
-      items:
-        - description: bus clock required for downstream bus access and 
-for the
-            smmu ptw
-        - description: interface clock required to access smmu's registers
-            through the TCU's programming interface.
-+      - description: core clock required for the GPU SMMU TBUs and the 
-GPU TCU.
+Regards,
+Bjorn
 
->
-> Rob
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+> Other than that,
+> 
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> Thanks,
+> Mani
+> 
+> >  	if (ret < 0)
+> >  		goto err_wq;
+> >  
+> > -- 
+> > 2.24.0
+> > 
