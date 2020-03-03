@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C991D176B9B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2020 03:51:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 546A6176D65
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2020 04:03:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729179AbgCCCu3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Mar 2020 21:50:29 -0500
-Received: from mail.kernel.org ([198.145.29.99]:47366 "EHLO mail.kernel.org"
+        id S1727491AbgCCCqa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Mar 2020 21:46:30 -0500
+Received: from mail.kernel.org ([198.145.29.99]:40866 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729173AbgCCCu3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Mar 2020 21:50:29 -0500
+        id S1727481AbgCCCqa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Mar 2020 21:46:30 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D12D5246EB;
-        Tue,  3 Mar 2020 02:50:27 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0F3E724677;
+        Tue,  3 Mar 2020 02:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1583203828;
-        bh=8dCuR1dZj5sYFg9M7hSWyym7Z6pdPopjdgIRORNr4Uo=;
+        s=default; t=1583203589;
+        bh=xbprZq1vSIfI+nurrzi56EZK4Gvb28onAXYXGcf0sAM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=X4kiy53xqYJ3p8dUS1iEgtmvIgn2G6ztC63KCH1AX17HRMT/qkAubtlSf8evE4gg+
-         IzYG2Pm9wCgtPGdJw6wc2LyBjf46Z4eiPUbmxYLEu33p7WR3VNUWdU0i6DnKWqKT69
-         /bFqbFz4+e9UzT+yB/B0UgkkIuPN/bV3ameG1dBY=
+        b=QXr9elIKqnbhsgVOS6Drpt0XOkjEwAOKG+RoN1ignxxYY9RnWrRfII6AJBTTsF+wb
+         iErm0v7ifuC97lnx8+tVi9Vc39z6YjLDLbB7EijkDLahPquDxP9y9vqfEB10PsSwQh
+         TS/HKeoPx0SkI91l9nw8Q6VEweaaNybQG3HyUQy8=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Harigovindan P <harigovi@codeaurora.org>,
+Cc:     Brian Masney <masneyb@onstation.org>,
         Rob Clark <robdclark@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.4 05/11] drm/msm/dsi: save pll state before dsi host is powered off
-Date:   Mon,  2 Mar 2020 21:50:15 -0500
-Message-Id: <20200303025021.10754-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.5 12/66] drm/msm/mdp5: rate limit pp done timeout warnings
+Date:   Mon,  2 Mar 2020 21:45:21 -0500
+Message-Id: <20200303024615.8889-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200303025021.10754-1-sashal@kernel.org>
-References: <20200303025021.10754-1-sashal@kernel.org>
+In-Reply-To: <20200303024615.8889-1-sashal@kernel.org>
+References: <20200303024615.8889-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -44,43 +44,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Harigovindan P <harigovi@codeaurora.org>
+From: Brian Masney <masneyb@onstation.org>
 
-[ Upstream commit a1028dcfd0dd97884072288d0c8ed7f30399b528 ]
+[ Upstream commit ef8c9809acb0805c991bba8bdd4749fc46d44a98 ]
 
-Save pll state before dsi host is powered off. Without this change
-some register values gets resetted.
+Add rate limiting of the 'pp done time out' warnings since these
+warnings can quickly fill the dmesg buffer.
 
-Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+Signed-off-by: Brian Masney <masneyb@onstation.org>
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_manager.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-index 439dfb69e2ef8..34220df1265f5 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-@@ -434,6 +434,7 @@ static void dsi_mgr_bridge_post_disable(struct drm_bridge *bridge)
- 	struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
- 	struct mipi_dsi_host *host = msm_dsi->host;
- 	struct drm_panel *panel = msm_dsi->panel;
-+	struct msm_dsi_pll *src_pll;
- 	bool is_dual_dsi = IS_DUAL_DSI();
- 	int ret;
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+index 05cc04f729d63..e1cc541e0ef2e 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
+@@ -1109,8 +1109,8 @@ static void mdp5_crtc_wait_for_pp_done(struct drm_crtc *crtc)
+ 	ret = wait_for_completion_timeout(&mdp5_crtc->pp_completion,
+ 						msecs_to_jiffies(50));
+ 	if (ret == 0)
+-		dev_warn(dev->dev, "pp done time out, lm=%d\n",
+-			 mdp5_cstate->pipeline.mixer->lm);
++		dev_warn_ratelimited(dev->dev, "pp done time out, lm=%d\n",
++				     mdp5_cstate->pipeline.mixer->lm);
+ }
  
-@@ -467,6 +468,10 @@ static void dsi_mgr_bridge_post_disable(struct drm_bridge *bridge)
- 								id, ret);
- 	}
- 
-+	/* Save PLL status if it is a clock source */
-+	src_pll = msm_dsi_phy_get_pll(msm_dsi->phy);
-+	msm_dsi_pll_save_state(src_pll);
-+
- 	ret = msm_dsi_host_power_off(host);
- 	if (ret)
- 		pr_err("%s: host %d power off failed,%d\n", __func__, id, ret);
+ static void mdp5_crtc_wait_for_flush_done(struct drm_crtc *crtc)
 -- 
 2.20.1
 
