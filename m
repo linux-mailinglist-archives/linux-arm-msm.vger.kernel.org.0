@@ -2,40 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 34506176C35
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2020 03:55:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36240176BEA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2020 03:53:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727841AbgCCCzT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Mar 2020 21:55:19 -0500
-Received: from mail.kernel.org ([198.145.29.99]:45202 "EHLO mail.kernel.org"
+        id S1728942AbgCCCtn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Mar 2020 21:49:43 -0500
+Received: from mail.kernel.org ([198.145.29.99]:46022 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728661AbgCCCtI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Mar 2020 21:49:08 -0500
+        id S1728937AbgCCCtn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Mar 2020 21:49:43 -0500
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E6F6824686;
-        Tue,  3 Mar 2020 02:49:06 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id CBF97246DE;
+        Tue,  3 Mar 2020 02:49:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1583203747;
-        bh=779UrS+LZsp9ln83dBobbCiQunNu96RYkBFUGMEeamE=;
+        s=default; t=1583203782;
+        bh=0f47R/IOMTYex/I5vBuWikGmqF4Nke+6/xBNSWEcrsQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=a7erchrmM3KUTiBQ7znctioXx88at6CejBO6mPdYx/Kgjq9HhgAcK5TKeM8p2xGyh
-         cBnxgptFOD62CZvFb5VKGTmrlNHr5JUDprZUYSzHOhc9cpl0GtUL9iDUCmYjZNLd8p
-         bbNgUOFUVUIUm3qCmZiot5Gi115FVN7R1Utxv4i8=
+        b=ONrY6pxvAGvVJicKP5qijGahU+njVZKpW/yQxRRY6SIgP36BEGmFzSpjskyV9lFUI
+         EJdTYmxzi9xJc/RSWi/JQM2k2+Z59QfxyvW4ByceKzCiTTRkyo/951NwX8m4Ml7Tbc
+         XulTGOXDvNWsbwPhImpVlPmMNXgkdBMJEeMU+Leg=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Harigovindan P <harigovi@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+Cc:     Brian Masney <masneyb@onstation.org>,
         Rob Clark <robdclark@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.19 12/32] drm/msm/dsi/pll: call vco set rate explicitly
-Date:   Mon,  2 Mar 2020 21:48:31 -0500
-Message-Id: <20200303024851.10054-12-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 07/22] drm/msm/mdp5: rate limit pp done timeout warnings
+Date:   Mon,  2 Mar 2020 21:49:18 -0500
+Message-Id: <20200303024933.10371-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200303024851.10054-1-sashal@kernel.org>
-References: <20200303024851.10054-1-sashal@kernel.org>
+In-Reply-To: <20200303024933.10371-1-sashal@kernel.org>
+References: <20200303024933.10371-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -45,41 +44,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Harigovindan P <harigovi@codeaurora.org>
+From: Brian Masney <masneyb@onstation.org>
 
-[ Upstream commit c6659785dfb3f8d75f1fe637e4222ff8178f5280 ]
+[ Upstream commit ef8c9809acb0805c991bba8bdd4749fc46d44a98 ]
 
-For a given byte clock, if VCO recalc value is exactly same as
-vco set rate value, vco_set_rate does not get called assuming
-VCO is already set to required value. But Due to GDSC toggle,
-VCO values are erased in the HW. To make sure VCO is programmed
-correctly, we forcefully call set_rate from vco_prepare.
+Add rate limiting of the 'pp done time out' warnings since these
+warnings can quickly fill the dmesg buffer.
 
-Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
-Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Signed-off-by: Brian Masney <masneyb@onstation.org>
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/msm/mdp/mdp5/mdp5_crtc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
-index 31205625c7346..21a69b046625a 100644
---- a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
-+++ b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_10nm.c
-@@ -406,6 +406,12 @@ static int dsi_pll_10nm_vco_prepare(struct clk_hw *hw)
- 	if (pll_10nm->slave)
- 		dsi_pll_enable_pll_bias(pll_10nm->slave);
+diff --git a/drivers/gpu/drm/msm/mdp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/mdp/mdp5/mdp5_crtc.c
+index 4409776770012..99d356b6e9151 100644
+--- a/drivers/gpu/drm/msm/mdp/mdp5/mdp5_crtc.c
++++ b/drivers/gpu/drm/msm/mdp/mdp5/mdp5_crtc.c
+@@ -1004,8 +1004,8 @@ static void mdp5_crtc_wait_for_pp_done(struct drm_crtc *crtc)
+ 	ret = wait_for_completion_timeout(&mdp5_crtc->pp_completion,
+ 						msecs_to_jiffies(50));
+ 	if (ret == 0)
+-		dev_warn(dev->dev, "pp done time out, lm=%d\n",
+-			 mdp5_cstate->pipeline.mixer->lm);
++		dev_warn_ratelimited(dev->dev, "pp done time out, lm=%d\n",
++				     mdp5_cstate->pipeline.mixer->lm);
+ }
  
-+	rc = dsi_pll_10nm_vco_set_rate(hw,pll_10nm->vco_current_rate, 0);
-+	if (rc) {
-+		pr_err("vco_set_rate failed, rc=%d\n", rc);
-+		return rc;
-+	}
-+
- 	/* Start PLL */
- 	pll_write(pll_10nm->phy_cmn_mmio + REG_DSI_10nm_PHY_CMN_PLL_CNTRL,
- 		  0x01);
+ static void mdp5_crtc_wait_for_flush_done(struct drm_crtc *crtc)
 -- 
 2.20.1
 
