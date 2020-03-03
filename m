@@ -2,245 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A94B717754A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2020 12:33:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55F3F1775DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2020 13:27:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728461AbgCCLdB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Mar 2020 06:33:01 -0500
-Received: from mail-ua1-f68.google.com ([209.85.222.68]:40347 "EHLO
-        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728311AbgCCLdB (ORCPT
+        id S1729262AbgCCM1W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Mar 2020 07:27:22 -0500
+Received: from mail26.static.mailgun.info ([104.130.122.26]:46388 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729247AbgCCM1W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Mar 2020 06:33:01 -0500
-Received: by mail-ua1-f68.google.com with SMTP id t20so969595uao.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2020 03:33:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jJ/XV2usCbxItuxEMH0XzvQohk58MuRc/TCdKnge5Ms=;
-        b=jrZNGq8mHiKGxago1Y0w61XHNZ69z5yL/vRklU2RUrUlT1l04s3o1HTS/pJS3iKfLy
-         U2XMJxcr+VDosSHrFasFV6MNshoOFxJmjy2XKEvrMBjQoWXpu9S1P0qWN0fBqogVkvjN
-         Zt5EfAIOAe8LJBY4GaTzY+PuiDS83rpOuxyAAvfEGpmAs2kv9yagnFCToj9HfXemCWl0
-         ghBIxt1/cZYywR641ndZA4YXziBtL/ODq5JHK+lxKk9CBIIsGgBn7XZVewTjHJzQSQQQ
-         LXFXo1k7M4/tYmE0phGJdcqF2ha10XioTTct5NRQTyq3cnFuNxscpBc7vbFy/aAH7Yoo
-         8AVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jJ/XV2usCbxItuxEMH0XzvQohk58MuRc/TCdKnge5Ms=;
-        b=UOBFE4cH3kJNqEU9jgKtplq2AGvirk7X61rYPKYcFvbA1iZ9kgVkTLZdxDB/YIBX3Y
-         nWBq63BrU9PatvKAGEWI+S6npnYN2wOy08djpP95iTMBLMAN3nKrmKdTqvpLxdwEehB1
-         MlSXFiKOXsLpXrVgZwRkhb+f1iXnCMUzvJNBIXHBUECSIML+XLtRJzXL621IiJKVQ26o
-         vsqCD5krbKfvYy0yC9bpcx6P7TgwCvA8vXlwguMa/+wdgVDTlQEauYIMSCJyArEeI488
-         X/0YxKpCCwJPGJXzHrA7hJKBuseRaz3Bton5fMke2MYTdHs/+bpYkn6iANIIxvYomShQ
-         ygDw==
-X-Gm-Message-State: ANhLgQ1LeQhpKh0xMURZcBQrVOX+cyTY+hg9LiCgGGnsH8E7jc6hOLr1
-        rD3fheg3Qr18B8tlX8iUNra4GgzLbA/Yo6I/UmJBj72s
-X-Google-Smtp-Source: ADFU+vvCOZEB1IBzeQKCkx6+4afvyQ0UKXW5F91HHzefz5Aood5oq3IPnTEmdiCHkodr93n+ajeziwa36SEJk1q3kzA=
-X-Received: by 2002:ab0:634c:: with SMTP id f12mr2464856uap.48.1583235179522;
- Tue, 03 Mar 2020 03:32:59 -0800 (PST)
-MIME-Version: 1.0
-References: <1583226996-24747-1-git-send-email-rkambl@codeaurora.org> <1583226996-24747-2-git-send-email-rkambl@codeaurora.org>
-In-Reply-To: <1583226996-24747-2-git-send-email-rkambl@codeaurora.org>
-From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Tue, 3 Mar 2020 17:02:48 +0530
-Message-ID: <CAHLCerMsFBye12zgadZRq-69m=NkuuHfNZCrsr+grZzWOSxuWw@mail.gmail.com>
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: sc7180: Changed all sensor values
- Thermal-zones node
-To:     Rajeshwari <rkambl@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        sanm@codeaurora.org, sivaa@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+        Tue, 3 Mar 2020 07:27:22 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1583238442; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=fMGrN+cS8ft7tKm2HjU0miYyhFBqi/xr/2QnXSvGqVY=; b=wN7bs+Nb/47Y60clpmv6oUPVLYHyX3bO534Es7W8V2nfIie5XAgCaq3lXls2iwja688U8sAD
+ 66fpiafk6Vo61yM0xslk2y9mb6qFG4aI+x8DMkE7+pwY4EzwiWHQt1WPesJq3y4sKlyTibXK
+ 9v+AJJbqB7GHQWt1Xj8VvEyxJP4=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e5e4d17.7f109c28fa40-smtp-out-n02;
+ Tue, 03 Mar 2020 12:27:03 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E44F4C4479D; Tue,  3 Mar 2020 12:27:02 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A4D29C43383;
+        Tue,  3 Mar 2020 12:26:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A4D29C43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH v10 0/3] Invoke rpmh_flush for non OSI targets
+Date:   Tue,  3 Mar 2020 17:56:52 +0530
+Message-Id: <1583238415-18686-1-git-send-email-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 3, 2020 at 2:47 PM Rajeshwari <rkambl@codeaurora.org> wrote:
->
-> To enable kernel critical shutdown feature all sensors threshold values
-> should be 110C to perform shutdown in orderly manner and changed trip
-> point from hot to critical.
+Changes in v10:
+- Address Evan's comments to update commit message on change 2
+- Add Evan's Reviewed by on change 2
+- Remove comment from rpmh_flush() related to last CPU invoking it
+- Rebase all changes on top of next-20200302
 
-IMO, we should keep the hot trip at 90 so we can potentially use it
-for notifications via the ops->notify callback in the future.
+Changes in v9:
+- Keep rpmh_flush() to invoke from within cache_lock
+- Remove comments related to only last cpu invoking rpmh_flush()
 
-Just add a new critical trip section to all these non-CPU thermal
-zones if you want to trigger the orderly shutdown when one of them
-reaches the threshold.
+Changes in v8:
+- Address Stephen's comments on changes 2 and 3
+- Add Reviewed by from Stephen on change 1
 
-> Signed-off-by: Rajeshwari <rkambl@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 52 ++++++++++++++++++------------------
->  1 file changed, 26 insertions(+), 26 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index d068584..55fd156 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -1952,9 +1952,9 @@
->
->                         trips {
->                                 aoss0_alert0: trip-point0 {
-> -                                       temperature = <90000>;
-> +                                       temperature = <110000>;
->                                         hysteresis = <2000>;
-> -                                       type = "hot";
-> +                                       type = "critical";
->                                 };
->                         };
->                 };
-> @@ -2007,9 +2007,9 @@
->
->                         trips {
->                                 gpuss0_alert0: trip-point0 {
-> -                                       temperature = <90000>;
-> +                                       temperature = <110000>;
->                                         hysteresis = <2000>;
-> -                                       type = "hot";
-> +                                       type = "critical";
->                                 };
->                         };
->                 };
-> @@ -2022,9 +2022,9 @@
->
->                         trips {
->                                 gpuss1_alert0: trip-point0 {
-> -                                       temperature = <90000>;
-> +                                       temperature = <110000>;
->                                         hysteresis = <2000>;
-> -                                       type = "hot";
-> +                                       type = "critical";
->                                 };
->                         };
->                 };
-> @@ -2037,9 +2037,9 @@
->
->                         trips {
->                                 aoss1_alert0: trip-point0 {
-> -                                       temperature = <90000>;
-> +                                       temperature = <110000>;
->                                         hysteresis = <2000>;
-> -                                       type = "hot";
-> +                                       type = "critical";
->                                 };
->                         };
->                 };
-> @@ -2052,9 +2052,9 @@
->
->                         trips {
->                                 cwlan_alert0: trip-point0 {
-> -                                       temperature = <90000>;
-> +                                       temperature = <110000>;
->                                         hysteresis = <2000>;
-> -                                       type = "hot";
-> +                                       type = "critical";
->                                 };
->                         };
->                 };
-> @@ -2067,9 +2067,9 @@
->
->                         trips {
->                                 audio_alert0: trip-point0 {
-> -                                       temperature = <90000>;
-> +                                       temperature = <110000>;
->                                         hysteresis = <2000>;
-> -                                       type = "hot";
-> +                                       type = "critical";
->                                 };
->                         };
->                 };
-> @@ -2082,9 +2082,9 @@
->
->                         trips {
->                                 ddr_alert0: trip-point0 {
-> -                                       temperature = <90000>;
-> +                                       temperature = <110000>;
->                                         hysteresis = <2000>;
-> -                                       type = "hot";
-> +                                       type = "critical";
->                                 };
->                         };
->                 };
-> @@ -2097,9 +2097,9 @@
->
->                         trips {
->                                 q6_hvx_alert0: trip-point0 {
-> -                                       temperature = <90000>;
-> +                                       temperature = <110000>;
->                                         hysteresis = <2000>;
-> -                                       type = "hot";
-> +                                       type = "critical";
->                                 };
->                         };
->                 };
-> @@ -2112,9 +2112,9 @@
->
->                         trips {
->                                 camera_alert0: trip-point0 {
-> -                                       temperature = <90000>;
-> +                                       temperature = <110000>;
->                                         hysteresis = <2000>;
-> -                                       type = "hot";
-> +                                       type = "critical";
->                                 };
->                         };
->                 };
-> @@ -2127,9 +2127,9 @@
->
->                         trips {
->                                 mdm_alert0: trip-point0 {
-> -                                       temperature = <90000>;
-> +                                       temperature = <110000>;
->                                         hysteresis = <2000>;
-> -                                       type = "hot";
-> +                                       type = "critical";
->                                 };
->                         };
->                 };
-> @@ -2142,9 +2142,9 @@
->
->                         trips {
->                                 mdm_dsp_alert0: trip-point0 {
-> -                                       temperature = <90000>;
-> +                                       temperature = <110000>;
->                                         hysteresis = <2000>;
-> -                                       type = "hot";
-> +                                       type = "critical";
->                                 };
->                         };
->                 };
-> @@ -2157,9 +2157,9 @@
->
->                         trips {
->                                 npu_alert0: trip-point0 {
-> -                                       temperature = <90000>;
-> +                                       temperature = <110000>;
->                                         hysteresis = <2000>;
-> -                                       type = "hot";
-> +                                       type = "critical";
->                                 };
->                         };
->                 };
-> @@ -2172,9 +2172,9 @@
->
->                         trips {
->                                 video_alert0: trip-point0 {
-> -                                       temperature = <90000>;
-> +                                       temperature = <110000>;
->                                         hysteresis = <2000>;
-> -                                       type = "hot";
-> +                                       type = "critical";
->                                 };
->                         };
->                 };
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
->
+Changes in v7:
+- Address Srinivas's comments to update commit text
+- Add Reviewed by from Srinivas
+
+Changes in v6:
+- Drop 1 & 2 changes from v5 as they already landed in maintainer tree
+- Drop 3 & 4 changes from v5 as no user at present for power domain in rsc
+- Rename subject to appropriate since power domain changes are dropped
+- Rebase other changes on top of next-20200221
+
+Changes in v5:
+- Add Rob's Acked by on dt-bindings change
+- Drop firmware psci change
+- Update cpuidle stats in dtsi to follow PC mode
+- Include change to update dirty flag when data is updated from [4]
+- Add change to invoke rpmh_flush when caches are dirty
+
+Changes in v4:
+- Add change to allow hierarchical topology in PC mode
+- Drop hierarchical domain idle states converter from v3
+- Address Merge sc7180 dtsi change to add low power modes
+
+Changes in v3:
+- Address Rob's comment on dt property value
+- Address Stephen's comments on rpmh-rsc driver change
+- Include sc7180 cpuidle low power mode changes from [1]
+- Include hierarchical domain idle states converter change from [2]
+
+Changes in v2:
+- Add Stephen's Reviewed-By to the first three patches
+- Addressed Stephen's comments on fourth patch
+- Include changes to connect rpmh domain to cpuidle and genpds
+
+Resource State Coordinator (RSC) is responsible for powering off/lowering
+the requirements from CPU subsystem for the associated hardware like buses,
+clocks, and regulators when all CPUs and cluster is powered down.
+
+RSC power domain uses last-man activities provided by genpd framework based
+on Ulf Hansoon's patch series[3], when the cluster of CPUs enter deepest
+idle states. As a part of domain poweroff, RSC can lower resource state
+requirements by flushing the cached sleep and wake state votes for various
+resources.
+
+[1] https://patchwork.kernel.org/patch/11218965
+[2] https://patchwork.kernel.org/patch/10941671
+[3] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=222355
+[4] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=236503
+
+Maulik Shah (3):
+  arm64: dts: qcom: sc7180: Add cpuidle low power states
+  soc: qcom: rpmh: Update dirty flag only when data changes
+  soc: qcom: rpmh: Invoke rpmh_flush for dirty caches
+
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 78 ++++++++++++++++++++++++++++++++++++
+ drivers/soc/qcom/rpmh.c              | 27 ++++++++++---
+ 2 files changed, 100 insertions(+), 5 deletions(-)
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
