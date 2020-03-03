@@ -2,279 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 43E311781B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2020 20:02:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EB2E178289
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2020 20:03:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388161AbgCCSFj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Mar 2020 13:05:39 -0500
-Received: from mail-io1-f65.google.com ([209.85.166.65]:38899 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388233AbgCCSFe (ORCPT
+        id S1729814AbgCCSih (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Mar 2020 13:38:37 -0500
+Received: from gateway24.websitewelcome.com ([192.185.50.252]:24445 "EHLO
+        gateway24.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728787AbgCCSig (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Mar 2020 13:05:34 -0500
-Received: by mail-io1-f65.google.com with SMTP id s24so4629139iog.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2020 10:05:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BeqmVRD23R+Ys+6oL1OQi3U6ndkvAqV94YJI5k3rbnY=;
-        b=Wdf74tmgxXLRrohPgWHNosIVdnICT1cA9Lt1UzNTqQGYkQUT310eKC+YQDU7DsVX5+
-         ZeBcD0lemBhKYaKyY6GtE+pLSn36sCnKEpBUpVgxf1Aq77Srl3Zh9ZwEchpnwJzkC8/G
-         Mos2wMkoq8sFHfLJp9TGRTc4SvxEH52jY1pk4R3yXtS7678Fc+jFzT4/IOC0HxCXM33q
-         +ktyaxHu9H8/IX5SiuHDdN5H5BUNg1PbsdLKZgsx7L0IaKZo22dIfz201EEJW1gwSDQc
-         i5mQ/MERUwlzgAIIW0fghZlw8c7mYMvUmQuuKmKjKN+5ehqJH7rylxCnPNA+rjNxr1q3
-         Dpdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BeqmVRD23R+Ys+6oL1OQi3U6ndkvAqV94YJI5k3rbnY=;
-        b=tYt6IbvftUC2+yx83gBQ1Yd1Vl4m4gMmApGDMuP8OCjxiChtnoUPdxND+GyaJZU5to
-         TUrerAqzzCPgBT3XS2BJJ7IRMvg/U10XXXLLhl/45wISm71SJHXs3rrT81QUo6tTEfty
-         FM5M6HoikGzJ4scpiLIGnvupc+uTo2OcdKM1kLLN2s61S9w0THOhRFGqkDwGC2k/TP1I
-         tWst1fAQnBE8qXNeL0XSz8p1XMeaXL3KdQhHwjrFHizHQ4dDhxLOAiyeKv5Wmjg6I3S5
-         zMStW69PVBA96BFGdJQZl6S6EeQ42+lU1+BOHc28cisKuyHo4fseJ66uEbp8E3/NvE0T
-         hiRQ==
-X-Gm-Message-State: ANhLgQ3t9PkMoMAkCgYn2lm5Y1ETU3OuZfoV6veMP1g/ReWZfqsbEGNn
-        /6RTZkWdGfLGYM/pxvFCYBIRdXrq1FPO8WPGqsELb2jB
-X-Google-Smtp-Source: ADFU+vu2a70oC8lR2iWbpY+kDjkXD0RbbPQlayFHSII+Chks5lqrwSbjjN5zO7UmxFOCozGue+NWzeJoxcwT1djquHY=
-X-Received: by 2002:a02:c9cf:: with SMTP id c15mr2566556jap.71.1583258733428;
- Tue, 03 Mar 2020 10:05:33 -0800 (PST)
+        Tue, 3 Mar 2020 13:38:36 -0500
+X-Greylist: delayed 1273 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Mar 2020 13:38:35 EST
+Received: from cm16.websitewelcome.com (cm16.websitewelcome.com [100.42.49.19])
+        by gateway24.websitewelcome.com (Postfix) with ESMTP id 78FAD78C98
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Mar 2020 12:17:20 -0600 (CST)
+Received: from gator4166.hostgator.com ([108.167.133.22])
+        by cmsmtp with SMTP
+        id 9C6ajyepP8vkB9C6ajsgBQ; Tue, 03 Mar 2020 12:17:20 -0600
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
+        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender
+        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=Ey4WjzYgUg1JN9sD4FRXGAPjCfky/AZd9UOFQ0HJlG0=; b=gXQ7WZT5wyzzwtk51w//ezXOQ8
+        gC7Xv5gLPMT52rB6ZShyv2XBfyXvkKC22rA4sefKUXYJtEPtjQanAdIW5ApewUNP3CX/mhPBprm45
+        BeWO/ZHdHnorUuYp+eccBBbasG7pPPd/v1lwgL0MM2AXtR63jMYZGO1zMe+vpwbqejcYVgXE2yaMb
+        dxPdjy/x4fTSVDKTE5kYps/Sv76UiHOG7U+R4E4guIisKNXW5Jm9nqRepRbxb+xWxqzVKKePuThfq
+        p7h1t2bLdOIdMX1Kb0C/lTE+96qhgc8pKd6f6bPyE6qrtPIyEU1g+RUeuktwmT9FjFtdoa7BZujT6
+        ohN4jStg==;
+Received: from [201.162.240.41] (port=17449 helo=[192.168.43.132])
+        by gator4166.hostgator.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.92)
+        (envelope-from <gustavo@embeddedor.com>)
+        id 1j9C6Y-003H1B-IC; Tue, 03 Mar 2020 12:17:19 -0600
+Subject: Re: [PATCH][next] drm: Replace zero-length array with flexible-array
+ member
+To:     Jani Nikula <jani.nikula@linux.intel.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Dave Airlie <airlied@redhat.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Eric Anholt <eric@anholt.net>,
+        VMware Graphics <linux-graphics-maintainer@vmware.com>,
+        Thomas Hellstrom <thellstrom@vmware.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        spice-devel@lists.freedesktop.org
+References: <20200225140347.GA22864@embeddedor> <87a756sqdc.fsf@intel.com>
+From:   "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+Autocrypt: addr=gustavo@embeddedor.com; keydata=
+ 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
+ VtSixD1uOgytAP7RWS474w==
+Message-ID: <138ff691-94b3-1ce5-e7fa-e6d7c436bf8e@embeddedor.com>
+Date:   Tue, 3 Mar 2020 12:20:16 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-References: <1582167465-2549-1-git-send-email-sidgup@codeaurora.org>
- <1582167465-2549-7-git-send-email-sidgup@codeaurora.org> <20200227215940.GC20116@xps15>
- <1a615fcd5a5c435d1d8babe8d5c3f8c3@codeaurora.org> <20200228183832.GA23026@xps15>
- <cac45f2726a272ccd0ce82e12e46756f@codeaurora.org>
-In-Reply-To: <cac45f2726a272ccd0ce82e12e46756f@codeaurora.org>
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-Date:   Tue, 3 Mar 2020 11:05:22 -0700
-Message-ID: <CANLsYkzUh_BRjapX_jDZZ00Lj8MMgMPM12+otYHDKqad1s-qHQ@mail.gmail.com>
-Subject: Re: [PATCH 6/6] remoteproc: qcom: Add notification types to SSR
-To:     Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Cc:     Ohad Ben-Cohen <ohad@wizery.com>, tsoni@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-remoteproc <linux-remoteproc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        psodagud@codeaurora.org,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <87a756sqdc.fsf@intel.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - embeddedor.com
+X-BWhitelist: no
+X-Source-IP: 201.162.240.41
+X-Source-L: No
+X-Exim-ID: 1j9C6Y-003H1B-IC
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: ([192.168.43.132]) [201.162.240.41]:17449
+X-Source-Auth: gustavo@embeddedor.com
+X-Email-Count: 25
+X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
+X-Local-Domain: yes
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 2 Mar 2020 at 13:54, <rishabhb@codeaurora.org> wrote:
->
-> On 2020-02-28 10:38, Mathieu Poirier wrote:
-> > On Thu, Feb 27, 2020 at 04:00:21PM -0800, rishabhb@codeaurora.org
-> > wrote:
-> >> On 2020-02-27 13:59, Mathieu Poirier wrote:
-> >> > On Wed, Feb 19, 2020 at 06:57:45PM -0800, Siddharth Gupta wrote:
-> >> > > The SSR subdevice only adds callback for the unprepare event. Add
-> >> > > callbacks
-> >> > > for unprepare, start and prepare events. The client driver for a
-> >> > > particular
-> >> > > remoteproc might be interested in knowing the status of the remoteproc
-> >> > > while undergoing SSR, not just when the remoteproc has finished
-> >> > > shutting
-> >> > > down.
-> >> > >
-> >> > > Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
-> >> > > ---
-> >> > >  drivers/remoteproc/qcom_common.c | 39
-> >> > > +++++++++++++++++++++++++++++++++++----
-> >> > >  include/linux/remoteproc.h       | 15 +++++++++++++++
-> >> > >  2 files changed, 50 insertions(+), 4 deletions(-)
-> >> > >
-> >> > > diff --git a/drivers/remoteproc/qcom_common.c
-> >> > > b/drivers/remoteproc/qcom_common.c
-> >> > > index 6714f27..6f04a5b 100644
-> >> > > --- a/drivers/remoteproc/qcom_common.c
-> >> > > +++ b/drivers/remoteproc/qcom_common.c
-> >> > > @@ -183,9 +183,9 @@ EXPORT_SYMBOL_GPL(qcom_remove_smd_subdev);
-> >> > >   *
-> >> > >   * Returns pointer to srcu notifier head on success, ERR_PTR on
-> >> > > failure.
-> >> > >   *
-> >> > > - * This registers the @notify function as handler for restart
-> >> > > notifications. As
-> >> > > - * remote processors are stopped this function will be called, with
-> >> > > the rproc
-> >> > > - * pointer passed as a parameter.
-> >> > > + * This registers the @notify function as handler for
-> >> > > powerup/shutdown
-> >> > > + * notifications. This function will be invoked inside the
-> >> > > callbacks registered
-> >> > > + * for the ssr subdevice, with the rproc pointer passed as a
-> >> > > parameter.
-> >> > >   */
-> >> > >  void *qcom_register_ssr_notifier(struct rproc *rproc, struct
-> >> > > notifier_block *nb)
-> >> > >  {
-> >> > > @@ -227,11 +227,39 @@ int qcom_unregister_ssr_notifier(void *notify,
-> >> > > struct notifier_block *nb)
-> >> > >  }
-> >> > >  EXPORT_SYMBOL_GPL(qcom_unregister_ssr_notifier);
-> >> > >
-> >> > > +static int ssr_notify_prepare(struct rproc_subdev *subdev)
-> >> > > +{
-> >> > > +        struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
-> >> > > +
-> >> > > +        srcu_notifier_call_chain(ssr->rproc_notif_list,
-> >> > > +                                 RPROC_BEFORE_POWERUP, (void *)ssr->name);
-> >> > > +        return 0;
-> >> > > +}
-> >> > > +
-> >> > > +static int ssr_notify_start(struct rproc_subdev *subdev)
-> >> > > +{
-> >> > > +        struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
-> >> > > +
-> >> > > +        srcu_notifier_call_chain(ssr->rproc_notif_list,
-> >> > > +                                 RPROC_AFTER_POWERUP, (void *)ssr->name);
-> >> > > +        return 0;
-> >> > > +}
-> >> > > +
-> >> > > +static void ssr_notify_stop(struct rproc_subdev *subdev, bool
-> >> > > crashed)
-> >> > > +{
-> >> > > +        struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
-> >> > > +
-> >> > > +        srcu_notifier_call_chain(ssr->rproc_notif_list,
-> >> > > +                                 RPROC_BEFORE_SHUTDOWN, (void *)ssr->name);
-> >> > > +}
-> >> > > +
-> >> > > +
-> >> > >  static void ssr_notify_unprepare(struct rproc_subdev *subdev)
-> >> > >  {
-> >> > >          struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
-> >> > >
-> >> > > -        srcu_notifier_call_chain(ssr->rproc_notif_list, 0, (void
-> >> > > *)ssr->name);
-> >> > > +        srcu_notifier_call_chain(ssr->rproc_notif_list,
-> >> > > +                                 RPROC_AFTER_SHUTDOWN, (void *)ssr->name);
-> >> > >  }
-> >> > >
-> >> > >  /**
-> >> > > @@ -248,6 +276,9 @@ void qcom_add_ssr_subdev(struct rproc *rproc,
-> >> > > struct qcom_rproc_ssr *ssr,
-> >> > >  {
-> >> > >          ssr->name = ssr_name;
-> >> > >          ssr->subdev.name = kstrdup("ssr_notifs", GFP_KERNEL);
-> >> > > +        ssr->subdev.prepare = ssr_notify_prepare;
-> >> > > +        ssr->subdev.start = ssr_notify_start;
-> >> > > +        ssr->subdev.stop = ssr_notify_stop;
-> >> >
-> >> > Now that I have a better understanding of what this patchset is doing, I
-> >> > realise
-> >> > my comments in patch 04 won't work.  To differentiate the subdevs of an
-> >> > rproc I
-> >> > suggest to wrap them in a generic structure with a type and an enum.
-> >> > That way
-> >> > you can differenciate between subdevices without having to add to the
-> >> > core.
-> >> Ok. I can try that.
-> >> >
-> >> > That being said, I don't understand what patches 5 and 6 are doing...
-> >> > Registering with the global ssr_notifiers allowed to gracefully shutdown
-> >> > all the
-> >> > MCUs in the system when one of them would go down.  But now that we are
-> >> > using
-> >> > the notifier on a per MCU, I really don't see why each subdev couldn't
-> >> > implement
-> >> > the right prepare/start/stop functions.
-> >> >
-> >> > Am I missing something here?
-> >> We only want kernel clients to be notified when the Remoteproc they
-> >> are
-> >> interested
-> >> in changes state. For e.g. audio kernel driver should be notified when
-> >> audio
-> >> processor goes down but it does not care about any other remoteproc.
-> >> If you are suggesting that these kernel clients be added as subdevices
-> >> then
-> >> we will end up having many subdevices registered to each remoteproc.
-> >> So we
-> >> implemented a notifier chain per Remoteproc. This keeps the SSR
-> >> notifications as
-> >> the subdevice per remoteproc, and all interested clients can register
-> >> to it.
-> >
-> > It seems like I am missing information...  Your are referring to
-> > "kernel
-> > clients" and as such I must assume some drivers that are not part of
-> > the
-> > remoteproc/rpmsg subsystems are calling qcom_register_ssr_notifier().
-> > I must
-> Yes these are not part of remoteproc framework and they will register
-> for notifications.
-> > also assume these drivers (or that functionality) are not yet upsream
-> > because
-> > all I can see calling qcom_register_ssr_notifier() is
-> > qcom_glink_ssr_probe().
-> Correct.These are not upstreamed.
 
-Ok, things are starting to make sense.
 
-> >
-> > Speaking of which, what is the role of the qcom_glink_ssr_driver?  Is
-> > the glink
-> > device that driver is handling the same as the glink device registed in
-> > adsp_probe() and q6v5_probe()?
-> glink ssr driver will send out notifications to remoteprocs that have
-> opened the
-> "glink_ssr" channel that some subsystem has gone down or booted up. This
-> helps notify
-> neighboring subsystems about change in state of any other subsystem.
+On 2/25/20 08:17, Jani Nikula wrote:
+> On Tue, 25 Feb 2020, "Gustavo A. R. Silva" <gustavo@embeddedor.com> wrote:
+>> The current codebase makes use of the zero-length array language
+>> extension to the C90 standard, but the preferred mechanism to declare
+>> variable-length types such as these ones is a flexible array member[1][2],
+>> introduced in C99:
+>>
+>> struct foo {
+>>         int stuff;
+>>         struct boo array[];
+>> };
+>>
+>> By making use of the mechanism above, we will get a compiler warning
+>> in case the flexible array does not occur last in the structure, which
+>> will help us prevent some kind of undefined behavior bugs from being
+>> inadvertently introduced[3] to the codebase from now on.
+>>
+>> Also, notice that, dynamic memory allocations won't be affected by
+>> this change:
+>>
+>> "Flexible array members have incomplete type, and so the sizeof operator
+>> may not be applied. As a quirk of the original implementation of
+>> zero-length arrays, sizeof evaluates to zero."[1]
+>>
+>> This issue was found with the help of Coccinelle.
+>>
+>> [1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
+>> [2] https://github.com/KSPP/linux/issues/21
+>> [3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
+>>
+>> Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
+>> ---
+>>  drivers/gpu/drm/etnaviv/etnaviv_gem.h         | 2 +-
+>>  drivers/gpu/drm/gma500/intel_bios.h           | 2 +-
+>>  drivers/gpu/drm/i915/display/intel_vbt_defs.h | 4 ++--
+>>  drivers/gpu/drm/i915/gt/intel_lrc.c           | 2 +-
+>>  drivers/gpu/drm/i915/i915_gpu_error.h         | 2 +-
+> 
+> Please split out the i915 changes to a separate patch.
+> 
 
-I am still looking for an answer to my second question.
+Sure thing. I can do that.
 
-> >
-> >> >
-> >> >
-> >> > >          ssr->subdev.unprepare = ssr_notify_unprepare;
-> >> > >          ssr->rproc_notif_list = kzalloc(sizeof(struct srcu_notifier_head),
-> >> > >                                                                  GFP_KERNEL);
-> >> > > diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-> >> > > index e2f60cc..4be4478 100644
-> >> > > --- a/include/linux/remoteproc.h
-> >> > > +++ b/include/linux/remoteproc.h
-> >> > > @@ -449,6 +449,21 @@ struct rproc_dump_segment {
-> >> > >  };
-> >> > >
-> >> > >  /**
-> >> > > + * enum rproc_notif_type - Different stages of remoteproc
-> >> > > notifications
-> >> > > + * @RPROC_BEFORE_SHUTDOWN:      unprepare stage of  remoteproc
-> >> > > + * @RPROC_AFTER_SHUTDOWN:       stop stage of  remoteproc
-> >> > > + * @RPROC_BEFORE_POWERUP:       prepare stage of  remoteproc
-> >> > > + * @RPROC_AFTER_POWERUP:        start stage of  remoteproc
-> >> > > + */
-> >> > > +enum rproc_notif_type {
-> >> > > +        RPROC_BEFORE_SHUTDOWN,
-> >> > > +        RPROC_AFTER_SHUTDOWN,
-> >> > > +        RPROC_BEFORE_POWERUP,
-> >> > > +        RPROC_AFTER_POWERUP,
-> >> > > +        RPROC_MAX
-> >> > > +};
-> >> > > +
-> >> > > +/**
-> >> > >   * struct rproc - represents a physical remote processor device
-> >> > >   * @node: list node of this rproc object
-> >> > >   * @domain: iommu domain
-> >> > > --
-> >> > > Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> >> > > a Linux Foundation Collaborative Project
-> >> > >
-> >> > > _______________________________________________
-> >> > > linux-arm-kernel mailing list
-> >> > > linux-arm-kernel@lists.infradead.org
-> >> > > http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
->
-> _______________________________________________
-> linux-arm-kernel mailing list
-> linux-arm-kernel@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
+>>  drivers/gpu/drm/msm/msm_gem.h                 | 2 +-
+>>  drivers/gpu/drm/qxl/qxl_cmd.c                 | 2 +-
+>>  drivers/gpu/drm/vboxvideo/vboxvideo.h         | 2 +-
+>>  drivers/gpu/drm/vc4/vc4_drv.h                 | 2 +-
+>>  drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c    | 2 +-
+>>  drivers/gpu/drm/vmwgfx/vmwgfx_surface.c       | 2 +-
+>>  include/drm/bridge/mhl.h                      | 4 ++--
+>>  include/drm/drm_displayid.h                   | 2 +-
+>>  include/uapi/drm/i915_drm.h                   | 4 ++--
+> 
+> Not sure it's worth touching uapi headers. They're full of both [0] and
+> []. Again, please at least split it to a separate patch to be decided
+> separately.
+> 
+
+Yeah, it's worth it; the purpose of these patches is to replace [0] with [] across
+the whole tree.
+
+Thanks
+--
+Gustavo
+
