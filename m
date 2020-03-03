@@ -2,245 +2,288 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DCADA178529
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2020 23:01:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 977F617865C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 00:30:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727026AbgCCWBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Mar 2020 17:01:47 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:33219 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726809AbgCCWBr (ORCPT
+        id S1728224AbgCCXat (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Mar 2020 18:30:49 -0500
+Received: from mail27.static.mailgun.info ([104.130.122.27]:26163 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728081AbgCCXat (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Mar 2020 17:01:47 -0500
-Received: by mail-pf1-f196.google.com with SMTP id n7so2195253pfn.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2020 14:01:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=rWUW/hFw9l9361bhE4imeaEyL7jHn9L6GXzM5ESAseU=;
-        b=BhVxK+/LHYafxOQAfuMTX9d/TRms7HTjQhUgidQSpDOh3ucN0yhwgG0GsR08VaGqe0
-         p1rUfVpFAaPgmoZck/OAGk2CoNPI1Y3b+68nSVd5nPpHFc/O55nkwEB9c9/gEjh7S5qs
-         nBGJ/2dqPhhvdC3KJfeWbrkVaGXje+y9JxV/bVIoy6u9P88L181uPzNtb45O2Al29D/W
-         ukEjGV9OazJXP9shM9rlBFZZ7Hz8U7deISs7AzcO/Pp0mst4G0D88hbAuWUmSU94hP/t
-         puyyPjM6DLwJMJW9HG1C6KF5RditipoQDM1oz6sPzZKFzEo5w23TwVwIdGbecoujEfua
-         Y8DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=rWUW/hFw9l9361bhE4imeaEyL7jHn9L6GXzM5ESAseU=;
-        b=mwZT5JhTkeiLRyDpdfFS9VwgIDstCtzjjtUO4ZMd0/iWBLOIsWM9qkJzA9+DYn8g5H
-         ragX/90hMfwpO5Lx9gB+rZSTT+tstL+4jHi0KyghrQMQwFvLzxR9HGwavNS4RHeLROPf
-         p69cejND57HBsemGyleP9Qe2K8XuwExIHppNPZusW1iKXQoAs+clLckXpEo/mWhX+BdM
-         magEcM+4zuEzJgS+kFHwjWrxpIJhVrt9aGNm9cXJzptnRkO96vr4NGVBjdkoVmUM94mJ
-         J65LwejHtPj+y8Nt3kBz5dPtrhvGTO9TXuCITwP0UiDnjUXYuTVZeCaLcSnvX1Zo43nk
-         MvCA==
-X-Gm-Message-State: ANhLgQ2TD5X8IWLuBnnzAS7gb/JS77t1flMvpZSB2v6aO0zx/2cjawXH
-        O6kOINJhmsKgflBzZmbh3w2a2Q==
-X-Google-Smtp-Source: ADFU+vtbmNdboXaJVKJCCWsPJHhUQwS37qhm8rMETgAhfI6yoRx8bCGHJ6YZpsQW8cVKZNiK3wY79Q==
-X-Received: by 2002:a63:e803:: with SMTP id s3mr5803839pgh.237.1583272906003;
-        Tue, 03 Mar 2020 14:01:46 -0800 (PST)
-Received: from minitux (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id x12sm16305062pfi.122.2020.03.03.14.01.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Mar 2020 14:01:45 -0800 (PST)
-Date:   Tue, 3 Mar 2020 14:01:42 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Clement Leger <cleger@kalray.eu>
-Cc:     Ohad Ben-Cohen <ohad@wizery.com>, Jonathan Corbet <corbet@lwn.net>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        linux-remoteproc@vger.kernel.org,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Patrice Chotard <patrice.chotard@st.com>,
-        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Arnaud Pouliquen <arnaud.pouliquen@st.com>,
-        Loic PALLARDY <loic.pallardy@st.com>, s-anna <s-anna@ti.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: Re: [PATCH v5 8/8] remoteproc: Adapt coredump to generate correct
- elf type
-Message-ID: <20200303220142.GU1214176@minitux>
-References: <20200210162209.23149-1-cleger@kalray.eu>
- <20200302093902.27849-1-cleger@kalray.eu>
- <20200302093902.27849-9-cleger@kalray.eu>
+        Tue, 3 Mar 2020 18:30:49 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1583278248; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=J7FQkIMZ5j8fIoYnJpIQnIykDivoVUW88IiijYyPyhQ=;
+ b=pLB6BYsbyv32R+dqEwIiB2ZgLx+y2h777w5FUt6yBEuiJOVnSwoOdWZt2uH/LLPUB4YMUP5u
+ 2bJpEUWT/YW3vFCNhOBx8IJkH0jFaLuFSe6zLH+LpcDKrYlGLNW2lbrY0NU8pwZSTvTeXBPu
+ HScE31K8fF1q/tCr5Tx/XPLCA08=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e5ee89f.7fde1cc6fd18-smtp-out-n02;
+ Tue, 03 Mar 2020 23:30:39 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 92682C4479F; Tue,  3 Mar 2020 23:30:38 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rishabhb)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2AE2FC433A2;
+        Tue,  3 Mar 2020 23:30:37 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200302093902.27849-9-cleger@kalray.eu>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 03 Mar 2020 15:30:37 -0800
+From:   rishabhb@codeaurora.org
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Ohad Ben-Cohen <ohad@wizery.com>, tsoni@codeaurora.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-remoteproc <linux-remoteproc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Siddharth Gupta <sidgup@codeaurora.org>,
+        psodagud@codeaurora.org,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-remoteproc-owner@vger.kernel.org
+Subject: Re: [PATCH 6/6] remoteproc: qcom: Add notification types to SSR
+In-Reply-To: <CANLsYkzUh_BRjapX_jDZZ00Lj8MMgMPM12+otYHDKqad1s-qHQ@mail.gmail.com>
+References: <1582167465-2549-1-git-send-email-sidgup@codeaurora.org>
+ <1582167465-2549-7-git-send-email-sidgup@codeaurora.org>
+ <20200227215940.GC20116@xps15>
+ <1a615fcd5a5c435d1d8babe8d5c3f8c3@codeaurora.org>
+ <20200228183832.GA23026@xps15>
+ <cac45f2726a272ccd0ce82e12e46756f@codeaurora.org>
+ <CANLsYkzUh_BRjapX_jDZZ00Lj8MMgMPM12+otYHDKqad1s-qHQ@mail.gmail.com>
+Message-ID: <050a8613cd00a84678b4478ef3387465@codeaurora.org>
+X-Sender: rishabhb@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 02 Mar 01:39 PST 2020, Clement Leger wrote:
-
-> Now that remoteproc can load an elf64, coredump elf class should be
-> the same as the loaded elf class. In order to do that, add a
-> elf_class field to rproc with default values. If an elf is loaded
-> successfully, this field will be updated with the loaded elf class.
-> Then, the coredump core code has been modified to use the generic elf
-> macro in order to create an elf file with correct class.
+On 2020-03-03 10:05, Mathieu Poirier wrote:
+> On Mon, 2 Mar 2020 at 13:54, <rishabhb@codeaurora.org> wrote:
+>> 
+>> On 2020-02-28 10:38, Mathieu Poirier wrote:
+>> > On Thu, Feb 27, 2020 at 04:00:21PM -0800, rishabhb@codeaurora.org
+>> > wrote:
+>> >> On 2020-02-27 13:59, Mathieu Poirier wrote:
+>> >> > On Wed, Feb 19, 2020 at 06:57:45PM -0800, Siddharth Gupta wrote:
+>> >> > > The SSR subdevice only adds callback for the unprepare event. Add
+>> >> > > callbacks
+>> >> > > for unprepare, start and prepare events. The client driver for a
+>> >> > > particular
+>> >> > > remoteproc might be interested in knowing the status of the remoteproc
+>> >> > > while undergoing SSR, not just when the remoteproc has finished
+>> >> > > shutting
+>> >> > > down.
+>> >> > >
+>> >> > > Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
+>> >> > > ---
+>> >> > >  drivers/remoteproc/qcom_common.c | 39
+>> >> > > +++++++++++++++++++++++++++++++++++----
+>> >> > >  include/linux/remoteproc.h       | 15 +++++++++++++++
+>> >> > >  2 files changed, 50 insertions(+), 4 deletions(-)
+>> >> > >
+>> >> > > diff --git a/drivers/remoteproc/qcom_common.c
+>> >> > > b/drivers/remoteproc/qcom_common.c
+>> >> > > index 6714f27..6f04a5b 100644
+>> >> > > --- a/drivers/remoteproc/qcom_common.c
+>> >> > > +++ b/drivers/remoteproc/qcom_common.c
+>> >> > > @@ -183,9 +183,9 @@ EXPORT_SYMBOL_GPL(qcom_remove_smd_subdev);
+>> >> > >   *
+>> >> > >   * Returns pointer to srcu notifier head on success, ERR_PTR on
+>> >> > > failure.
+>> >> > >   *
+>> >> > > - * This registers the @notify function as handler for restart
+>> >> > > notifications. As
+>> >> > > - * remote processors are stopped this function will be called, with
+>> >> > > the rproc
+>> >> > > - * pointer passed as a parameter.
+>> >> > > + * This registers the @notify function as handler for
+>> >> > > powerup/shutdown
+>> >> > > + * notifications. This function will be invoked inside the
+>> >> > > callbacks registered
+>> >> > > + * for the ssr subdevice, with the rproc pointer passed as a
+>> >> > > parameter.
+>> >> > >   */
+>> >> > >  void *qcom_register_ssr_notifier(struct rproc *rproc, struct
+>> >> > > notifier_block *nb)
+>> >> > >  {
+>> >> > > @@ -227,11 +227,39 @@ int qcom_unregister_ssr_notifier(void *notify,
+>> >> > > struct notifier_block *nb)
+>> >> > >  }
+>> >> > >  EXPORT_SYMBOL_GPL(qcom_unregister_ssr_notifier);
+>> >> > >
+>> >> > > +static int ssr_notify_prepare(struct rproc_subdev *subdev)
+>> >> > > +{
+>> >> > > +        struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
+>> >> > > +
+>> >> > > +        srcu_notifier_call_chain(ssr->rproc_notif_list,
+>> >> > > +                                 RPROC_BEFORE_POWERUP, (void *)ssr->name);
+>> >> > > +        return 0;
+>> >> > > +}
+>> >> > > +
+>> >> > > +static int ssr_notify_start(struct rproc_subdev *subdev)
+>> >> > > +{
+>> >> > > +        struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
+>> >> > > +
+>> >> > > +        srcu_notifier_call_chain(ssr->rproc_notif_list,
+>> >> > > +                                 RPROC_AFTER_POWERUP, (void *)ssr->name);
+>> >> > > +        return 0;
+>> >> > > +}
+>> >> > > +
+>> >> > > +static void ssr_notify_stop(struct rproc_subdev *subdev, bool
+>> >> > > crashed)
+>> >> > > +{
+>> >> > > +        struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
+>> >> > > +
+>> >> > > +        srcu_notifier_call_chain(ssr->rproc_notif_list,
+>> >> > > +                                 RPROC_BEFORE_SHUTDOWN, (void *)ssr->name);
+>> >> > > +}
+>> >> > > +
+>> >> > > +
+>> >> > >  static void ssr_notify_unprepare(struct rproc_subdev *subdev)
+>> >> > >  {
+>> >> > >          struct qcom_rproc_ssr *ssr = to_ssr_subdev(subdev);
+>> >> > >
+>> >> > > -        srcu_notifier_call_chain(ssr->rproc_notif_list, 0, (void
+>> >> > > *)ssr->name);
+>> >> > > +        srcu_notifier_call_chain(ssr->rproc_notif_list,
+>> >> > > +                                 RPROC_AFTER_SHUTDOWN, (void *)ssr->name);
+>> >> > >  }
+>> >> > >
+>> >> > >  /**
+>> >> > > @@ -248,6 +276,9 @@ void qcom_add_ssr_subdev(struct rproc *rproc,
+>> >> > > struct qcom_rproc_ssr *ssr,
+>> >> > >  {
+>> >> > >          ssr->name = ssr_name;
+>> >> > >          ssr->subdev.name = kstrdup("ssr_notifs", GFP_KERNEL);
+>> >> > > +        ssr->subdev.prepare = ssr_notify_prepare;
+>> >> > > +        ssr->subdev.start = ssr_notify_start;
+>> >> > > +        ssr->subdev.stop = ssr_notify_stop;
+>> >> >
+>> >> > Now that I have a better understanding of what this patchset is doing, I
+>> >> > realise
+>> >> > my comments in patch 04 won't work.  To differentiate the subdevs of an
+>> >> > rproc I
+>> >> > suggest to wrap them in a generic structure with a type and an enum.
+>> >> > That way
+>> >> > you can differenciate between subdevices without having to add to the
+>> >> > core.
+>> >> Ok. I can try that.
+>> >> >
+>> >> > That being said, I don't understand what patches 5 and 6 are doing...
+>> >> > Registering with the global ssr_notifiers allowed to gracefully shutdown
+>> >> > all the
+>> >> > MCUs in the system when one of them would go down.  But now that we are
+>> >> > using
+>> >> > the notifier on a per MCU, I really don't see why each subdev couldn't
+>> >> > implement
+>> >> > the right prepare/start/stop functions.
+>> >> >
+>> >> > Am I missing something here?
+>> >> We only want kernel clients to be notified when the Remoteproc they
+>> >> are
+>> >> interested
+>> >> in changes state. For e.g. audio kernel driver should be notified when
+>> >> audio
+>> >> processor goes down but it does not care about any other remoteproc.
+>> >> If you are suggesting that these kernel clients be added as subdevices
+>> >> then
+>> >> we will end up having many subdevices registered to each remoteproc.
+>> >> So we
+>> >> implemented a notifier chain per Remoteproc. This keeps the SSR
+>> >> notifications as
+>> >> the subdevice per remoteproc, and all interested clients can register
+>> >> to it.
+>> >
+>> > It seems like I am missing information...  Your are referring to
+>> > "kernel
+>> > clients" and as such I must assume some drivers that are not part of
+>> > the
+>> > remoteproc/rpmsg subsystems are calling qcom_register_ssr_notifier().
+>> > I must
+>> Yes these are not part of remoteproc framework and they will register
+>> for notifications.
+>> > also assume these drivers (or that functionality) are not yet upsream
+>> > because
+>> > all I can see calling qcom_register_ssr_notifier() is
+>> > qcom_glink_ssr_probe().
+>> Correct.These are not upstreamed.
 > 
-> Signed-off-by: Clement Leger <cleger@kalray.eu>
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-> ---
->  drivers/remoteproc/remoteproc_core.c       | 67 ++++++++++++++++--------------
->  drivers/remoteproc/remoteproc_elf_loader.c |  3 ++
->  include/linux/remoteproc.h                 |  1 +
->  3 files changed, 39 insertions(+), 32 deletions(-)
+> Ok, things are starting to make sense.
 > 
-> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-> index b932a64a2be2..f923355aa3f9 100644
-> --- a/drivers/remoteproc/remoteproc_core.c
-> +++ b/drivers/remoteproc/remoteproc_core.c
-> @@ -38,6 +38,7 @@
->  #include <linux/platform_device.h>
->  
->  #include "remoteproc_internal.h"
-> +#include "remoteproc_elf_helpers.h"
->  
->  #define HIGH_BITS_MASK 0xFFFFFFFF00000000ULL
->  
-> @@ -1566,20 +1567,21 @@ EXPORT_SYMBOL(rproc_coredump_add_custom_segment);
->  static void rproc_coredump(struct rproc *rproc)
->  {
->  	struct rproc_dump_segment *segment;
-> -	struct elf32_phdr *phdr;
-> -	struct elf32_hdr *ehdr;
-> +	void *phdr;
-> +	void *ehdr;
->  	size_t data_size;
->  	size_t offset;
->  	void *data;
->  	void *ptr;
-> +	u8 class = rproc->elf_class;
->  	int phnum = 0;
->  
->  	if (list_empty(&rproc->dump_segments))
->  		return;
->  
-> -	data_size = sizeof(*ehdr);
-> +	data_size = elf_size_of_hdr(class);
->  	list_for_each_entry(segment, &rproc->dump_segments, node) {
-> -		data_size += sizeof(*phdr) + segment->size;
-> +		data_size += elf_size_of_phdr(class) + segment->size;
->  
->  		phnum++;
->  	}
-> @@ -1590,33 +1592,33 @@ static void rproc_coredump(struct rproc *rproc)
->  
->  	ehdr = data;
->  
-> -	memset(ehdr, 0, sizeof(*ehdr));
-> -	memcpy(ehdr->e_ident, ELFMAG, SELFMAG);
-> -	ehdr->e_ident[EI_CLASS] = ELFCLASS32;
-> -	ehdr->e_ident[EI_DATA] = ELFDATA2LSB;
-> -	ehdr->e_ident[EI_VERSION] = EV_CURRENT;
-> -	ehdr->e_ident[EI_OSABI] = ELFOSABI_NONE;
-> -	ehdr->e_type = ET_CORE;
-> -	ehdr->e_machine = EM_NONE;
-> -	ehdr->e_version = EV_CURRENT;
-> -	ehdr->e_entry = rproc->bootaddr;
-> -	ehdr->e_phoff = sizeof(*ehdr);
-> -	ehdr->e_ehsize = sizeof(*ehdr);
-> -	ehdr->e_phentsize = sizeof(*phdr);
-> -	ehdr->e_phnum = phnum;
-> -
-> -	phdr = data + ehdr->e_phoff;
-> -	offset = ehdr->e_phoff + sizeof(*phdr) * ehdr->e_phnum;
-> +	memset(ehdr, 0, elf_size_of_hdr(class));
-> +	/* e_ident field is common for both elf32 and elf64 */
-> +	elf_hdr_init_ident(ehdr, class);
-> +
-> +	elf_hdr_set_e_type(class, ehdr, ET_CORE);
-> +	elf_hdr_set_e_machine(class, ehdr, EM_NONE);
-> +	elf_hdr_set_e_version(class, ehdr, EV_CURRENT);
-> +	elf_hdr_set_e_entry(class, ehdr, rproc->bootaddr);
-> +	elf_hdr_set_e_phoff(class, ehdr, elf_size_of_hdr(class));
-> +	elf_hdr_set_e_ehsize(class, ehdr, elf_size_of_hdr(class));
-> +	elf_hdr_set_e_phentsize(class, ehdr, elf_size_of_phdr(class));
-> +	elf_hdr_set_e_phnum(class, ehdr, phnum);
-> +
-> +	phdr = data + elf_hdr_get_e_phoff(class, ehdr);
-> +	offset = elf_hdr_get_e_phoff(class, ehdr);
-> +	offset += elf_size_of_phdr(class) * elf_hdr_get_e_phnum(class, ehdr);
-> +
->  	list_for_each_entry(segment, &rproc->dump_segments, node) {
-> -		memset(phdr, 0, sizeof(*phdr));
-> -		phdr->p_type = PT_LOAD;
-> -		phdr->p_offset = offset;
-> -		phdr->p_vaddr = segment->da;
-> -		phdr->p_paddr = segment->da;
-> -		phdr->p_filesz = segment->size;
-> -		phdr->p_memsz = segment->size;
-> -		phdr->p_flags = PF_R | PF_W | PF_X;
-> -		phdr->p_align = 0;
-> +		memset(phdr, 0, elf_size_of_phdr(class));
-> +		elf_phdr_set_p_type(class, phdr, PT_LOAD);
-> +		elf_phdr_set_p_offset(class, phdr, offset);
-> +		elf_phdr_set_p_vaddr(class, phdr, segment->da);
-> +		elf_phdr_set_p_paddr(class, phdr, segment->da);
-> +		elf_phdr_set_p_filesz(class, phdr, segment->size);
-> +		elf_phdr_set_p_memsz(class, phdr, segment->size);
-> +		elf_phdr_set_p_flags(class, phdr, PF_R | PF_W | PF_X);
-> +		elf_phdr_set_p_align(class, phdr, 0);
->  
->  		if (segment->dump) {
->  			segment->dump(rproc, segment, data + offset);
-> @@ -1632,8 +1634,8 @@ static void rproc_coredump(struct rproc *rproc)
->  			}
->  		}
->  
-> -		offset += phdr->p_filesz;
-> -		phdr++;
-> +		offset += elf_phdr_get_p_filesz(class, phdr);
-> +		phdr += elf_size_of_phdr(class);
->  	}
->  
->  	dev_coredumpv(&rproc->dev, data, data_size, GFP_KERNEL);
-> @@ -2031,6 +2033,7 @@ struct rproc *rproc_alloc(struct device *dev, const char *name,
->  	rproc->name = name;
->  	rproc->priv = &rproc[1];
->  	rproc->auto_boot = true;
-> +	rproc->elf_class = ELFCLASS32;
->  
->  	device_initialize(&rproc->dev);
->  	rproc->dev.parent = dev;
-> diff --git a/drivers/remoteproc/remoteproc_elf_loader.c b/drivers/remoteproc/remoteproc_elf_loader.c
-> index 4869fb7d8fe4..16e2c496fd45 100644
-> --- a/drivers/remoteproc/remoteproc_elf_loader.c
-> +++ b/drivers/remoteproc/remoteproc_elf_loader.c
-> @@ -248,6 +248,9 @@ int rproc_elf_load_segments(struct rproc *rproc, const struct firmware *fw)
->  			memset(ptr + filesz, 0, memsz - filesz);
->  	}
->  
-> +	if (ret == 0)
-> +		rproc->elf_class = class;
-> +
->  	return ret;
->  }
->  EXPORT_SYMBOL(rproc_elf_load_segments);
-> diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-> index 1683d6c386a6..ed127b2d35ca 100644
-> --- a/include/linux/remoteproc.h
-> +++ b/include/linux/remoteproc.h
-> @@ -514,6 +514,7 @@ struct rproc {
->  	bool auto_boot;
->  	struct list_head dump_segments;
->  	int nb_vdev;
-> +	u8 elf_class;
->  };
->  
->  /**
-> -- 
-> 2.15.0.276.g89ea799
+>> >
+>> > Speaking of which, what is the role of the qcom_glink_ssr_driver?  Is
+>> > the glink
+>> > device that driver is handling the same as the glink device registed in
+>> > adsp_probe() and q6v5_probe()?
+>> glink ssr driver will send out notifications to remoteprocs that have
+>> opened the
+>> "glink_ssr" channel that some subsystem has gone down or booted up. 
+>> This
+>> helps notify
+>> neighboring subsystems about change in state of any other subsystem.
 > 
+> I am still looking for an answer to my second question.
+Yes its the subdevice of the glink device that is registered in 
+adsp_probe.
+It uses the "glink_ssr" glink channel.
+> 
+>> >
+>> >> >
+>> >> >
+>> >> > >          ssr->subdev.unprepare = ssr_notify_unprepare;
+>> >> > >          ssr->rproc_notif_list = kzalloc(sizeof(struct srcu_notifier_head),
+>> >> > >                                                                  GFP_KERNEL);
+>> >> > > diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+>> >> > > index e2f60cc..4be4478 100644
+>> >> > > --- a/include/linux/remoteproc.h
+>> >> > > +++ b/include/linux/remoteproc.h
+>> >> > > @@ -449,6 +449,21 @@ struct rproc_dump_segment {
+>> >> > >  };
+>> >> > >
+>> >> > >  /**
+>> >> > > + * enum rproc_notif_type - Different stages of remoteproc
+>> >> > > notifications
+>> >> > > + * @RPROC_BEFORE_SHUTDOWN:      unprepare stage of  remoteproc
+>> >> > > + * @RPROC_AFTER_SHUTDOWN:       stop stage of  remoteproc
+>> >> > > + * @RPROC_BEFORE_POWERUP:       prepare stage of  remoteproc
+>> >> > > + * @RPROC_AFTER_POWERUP:        start stage of  remoteproc
+>> >> > > + */
+>> >> > > +enum rproc_notif_type {
+>> >> > > +        RPROC_BEFORE_SHUTDOWN,
+>> >> > > +        RPROC_AFTER_SHUTDOWN,
+>> >> > > +        RPROC_BEFORE_POWERUP,
+>> >> > > +        RPROC_AFTER_POWERUP,
+>> >> > > +        RPROC_MAX
+>> >> > > +};
+>> >> > > +
+>> >> > > +/**
+>> >> > >   * struct rproc - represents a physical remote processor device
+>> >> > >   * @node: list node of this rproc object
+>> >> > >   * @domain: iommu domain
+>> >> > > --
+>> >> > > Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> >> > > a Linux Foundation Collaborative Project
+>> >> > >
+>> >> > > _______________________________________________
+>> >> > > linux-arm-kernel mailing list
+>> >> > > linux-arm-kernel@lists.infradead.org
+>> >> > > http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
+>> 
+>> _______________________________________________
+>> linux-arm-kernel mailing list
+>> linux-arm-kernel@lists.infradead.org
+>> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
