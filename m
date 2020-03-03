@@ -2,147 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9112C177D0C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2020 18:14:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE7E8177D2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2020 18:18:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729821AbgCCRMT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Mar 2020 12:12:19 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:51233 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730734AbgCCRMQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Mar 2020 12:12:16 -0500
-Received: by mail-wm1-f66.google.com with SMTP id a132so4159739wme.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2020 09:12:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=LBQ2v3hA6tUuTQv1F+Yyise6oBp+Wr4OulTkBt8Vu4I=;
-        b=MuZ/MiO2WECej5cula13eoTtSplGql2nE4/SV0KTwBnbu1ULqTOwYdxwhA9dTioSVG
-         MDF6Y7w6EF/Etsd0sds4bS4DiXQTLMO+O8Zruq5mrFfU75ahUKCpn87rQgv8Ugz5orSd
-         pehyOiaNqPHFgkt1lCDbVz5qGvx3cKrxm2G8HzeLddue7+pdhcwZTIPRO6EI863Vcm8o
-         NmLGUNMw3OnmCblBtEnOzighvjaiLNgv8LDvFApMorKHn0R59sJafAMM73Q2PAkzMZLf
-         oPuC1UGwO2skPUuXI0XyyOZB5a0THy2BFygUAHJAoARhWovvYDNtv/S9y6Xk9MM0t88A
-         41qQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=LBQ2v3hA6tUuTQv1F+Yyise6oBp+Wr4OulTkBt8Vu4I=;
-        b=NADjWt2kdJF13FdhOAn3D91p5hWABrhhFOLTRExOhooyu24j0HRmYzBvgHTN7Cv6Ij
-         otROfAoDkBOUV5ZZNv2fKYHvo5xmVJl+qpzRUVWdCCaDRo6ifBwBDUmxR+LmBvTtahc+
-         VUn38H7u0t3KYAghjvxGT95yvUZZ3Ol6vuHRy2dY4l+qZxvGLONVil9LCJm7v0VF1J9k
-         BjxlU7eGsyIGuXqINqdJBlVc5mQxaU44XMp8XNBBDXvUPzfke8g5TblO7hCXmIooZQXy
-         QEKbGE+xp4i1LNv20fAZv8hsbNPEQLrQ01fnNZ80DKT3yVyWJRp9rrsoc12Fo64rrkzL
-         +Kzw==
-X-Gm-Message-State: ANhLgQ2lhiHYcusthliVKDta5S6jiBeAtklpcmIMkTvTPd08MXKHBVc/
-        9cORFfbhVWLpTKZgdJnbJm3CDhweT6o=
-X-Google-Smtp-Source: ADFU+vtjKGrY2UQkokTzHe0CV7rbHBSu/5iKmuaPRTnpGoKYIJ2QcJzM9XpasbAPE/3CsG61MXPzIw==
-X-Received: by 2002:a1c:4b0f:: with SMTP id y15mr5143834wma.87.1583255534987;
-        Tue, 03 Mar 2020 09:12:14 -0800 (PST)
-Received: from localhost.localdomain ([176.61.57.127])
-        by smtp.gmail.com with ESMTPSA id z13sm5425319wrw.88.2020.03.03.09.12.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Mar 2020 09:12:14 -0800 (PST)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        gregkh@linuxfoundation.org, jackp@codeaurora.org, balbi@kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org
-Cc:     linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        id S1729198AbgCCRQV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Mar 2020 12:16:21 -0500
+Received: from onstation.org ([52.200.56.107]:54054 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728783AbgCCRQV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 3 Mar 2020 12:16:21 -0500
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id DA9123E8F4;
+        Tue,  3 Mar 2020 17:16:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1583255780;
+        bh=29MHpfV8HM+m/8mEKfdKSt2XIMIPWgMiQS70SJOaT7c=;
+        h=Date:From:To:Subject:References:In-Reply-To:From;
+        b=eTrzME+buJDC+JQ2iOWHK8a21j41LZUAzuAoD6PU+ExzLiLW0D02gLFI+rEugFT5d
+         qLtSTAP3J8bZ05tZbtTjIix7XtqpPn8DcnG7WEpi9HA0bgAIilMhxpW/g18txdK9Pg
+         oSk6hHunH/xQXWS3OpHcF+4kXqceEaQ3dhsS2yPo=
+Date:   Tue, 3 Mar 2020 12:16:19 -0500
+From:   Brian Masney <masneyb@onstation.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>,
+        DTML <devicetree@vger.kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org
-Subject: [PATCH v7 18/18] arm64: dts: qcom: qcs404-evb: Enable USB controllers
-Date:   Tue,  3 Mar 2020 17:11:59 +0000
-Message-Id: <20200303171159.246992-19-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200303171159.246992-1-bryan.odonoghue@linaro.org>
-References: <20200303171159.246992-1-bryan.odonoghue@linaro.org>
+        freedreno <freedreno@lists.freedesktop.org>
+Subject: Re: [Freedreno] [PATCH v3 1/2] dt-bindings: display: msm: Convert
+ GMU bindings to YAML
+Message-ID: <20200303171619.GB11841@onstation.org>
+References: <1583173424-21832-1-git-send-email-jcrouse@codeaurora.org>
+ <1583173424-21832-2-git-send-email-jcrouse@codeaurora.org>
+ <20200302204906.GA32123@ravnborg.org>
+ <20200303154321.GA24212@jcrouse1-lnx.qualcomm.com>
+ <CAOCk7NpP8chviZ0eM_4Fm3b2Jn+ngtVq=EYB=7yMK0H7rnfWMg@mail.gmail.com>
+ <20200303155405.GA11841@onstation.org>
+ <20200303170159.GA13109@jcrouse1-lnx.qualcomm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200303170159.GA13109@jcrouse1-lnx.qualcomm.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch enables the primary and secondary USB controllers on the
-qcs404-evb.
+On Tue, Mar 03, 2020 at 10:01:59AM -0700, Jordan Crouse wrote:
+> On Tue, Mar 03, 2020 at 10:54:05AM -0500, Brian Masney wrote:
+> > On Tue, Mar 03, 2020 at 08:50:28AM -0700, Jeffrey Hugo wrote:
+> > > On Tue, Mar 3, 2020 at 8:43 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
+> > > >
+> > > > On Mon, Mar 02, 2020 at 09:49:06PM +0100, Sam Ravnborg wrote:
+> > > > > Hi Jordan.
+> > > > >
+> > > > > On Mon, Mar 02, 2020 at 11:23:43AM -0700, Jordan Crouse wrote:
+> > > > > > Convert display/msm/gmu.txt to display/msm/gmu.yaml and remove the old
+> > > > > > text bindings.
+> > > > > >
+> > > > > > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> > > > > > ---
+> > > > > >
+> > > > > >  .../devicetree/bindings/display/msm/gmu.txt        | 116 -------------------
+> > > > > > -
+> > > > > > -Required properties:
+> > > > > > -- compatible: "qcom,adreno-gmu-XYZ.W", "qcom,adreno-gmu"
+> > > > > > -    for example: "qcom,adreno-gmu-630.2", "qcom,adreno-gmu"
+> > > > > > -  Note that you need to list the less specific "qcom,adreno-gmu"
+> > > > > > -  for generic matches and the more specific identifier to identify
+> > > > > > -  the specific device.
+> > > > > > -- reg: Physical base address and length of the GMU registers.
+> > > > > > -- reg-names: Matching names for the register regions
+> > > > > > -  * "gmu"
+> > > > > > -  * "gmu_pdc"
+> > > > > > -  * "gmu_pdc_seg"
+> > > > > > -- interrupts: The interrupt signals from the GMU.
+> > > > > > -- interrupt-names: Matching names for the interrupts
+> > > > > > -  * "hfi"
+> > > > > > -  * "gmu"
+> > > > > > -- clocks: phandles to the device clocks
+> > > > > > -- clock-names: Matching names for the clocks
+> > > > > > -   * "gmu"
+> > > > > > -   * "cxo"
+> > > > > > -   * "axi"
+> > > > > > -   * "mnoc"
+> > > > > The new binding - and arch/arm64/boot/dts/qcom/sdm845.dtsi agrees that
+> > > > > "mnoc" is wrong.
+> > > > >
+> > > > > > -- power-domains: should be:
+> > > > > > -   <&clock_gpucc GPU_CX_GDSC>
+> > > > > > -   <&clock_gpucc GPU_GX_GDSC>
+> > > > > > -- power-domain-names: Matching names for the power domains
+> > > > > > -- iommus: phandle to the adreno iommu
+> > > > > > -- operating-points-v2: phandle to the OPP operating points
+> > > > > > -
+> > > > > > -Optional properties:
+> > > > > > -- sram: phandle to the On Chip Memory (OCMEM) that's present on some Snapdragon
+> > > > > > -        SoCs. See Documentation/devicetree/bindings/sram/qcom,ocmem.yaml.
+> > > > > This property is not included in the new binding.
+> > > >
+> > > > Yeah, that guy shouldn't be here. I'm not sure how it got there in the first
+> > > > place but I'll update the commit log. Thanks for the poke.
+> > > 
+> > > I thought this was something Brian M added for older targets (A4XX?).
+> > > Perhaps he should chime in?
+> > 
+> > Yes, this is needed for older systems with a3xx and a4xx GPUs.
+> 
+> Okay, this got added to the wrong place.  The GMU is a specific entity only
+> valid for a6xx targets. From the looks of the example the sram should be in the
+> GPU definition. Do you want to submit a patch to move it or should I (and lets
+> hope Rob doesn't insist on converting GPU to YAML).
 
-Primary:
-The primary USB controller has
+I can take care of cleaning this up. I'll do that in a few days.
 
-- One USB3 SS PHY using gpio-usb-conn
-- One USB2 HS PHY in device mode only and no connector driver
-  associated.
-
-Secondary:
-The second DWC3 controller which has one USB Hi-Speed PHY attached to it.
-
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 40 ++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-index 44c7dda1e1fc..4dc3f45282fe 100644
---- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-@@ -319,6 +319,46 @@ pinconf {
- 	};
- };
- 
-+&usb2 {
-+	status = "okay";
-+};
-+
-+&usb2_phy_sec {
-+	vdd-supply = <&vreg_l4_1p2>;
-+	vdda1p8-supply = <&vreg_l5_1p8>;
-+	vdda3p3-supply = <&vreg_l12_3p3>;
-+	status = "okay";
-+};
-+
-+&usb3 {
-+	status = "okay";
-+	dwc3@7580000 {
-+		usb-role-switch;
-+		usb_con: connector {
-+			compatible = "gpio-usb-b-connector";
-+			label = "USB-C";
-+			id-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
-+			vbus-supply = <&usb3_vbus_reg>;
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&usb3_id_pin>, <&usb3_vbus_pin>;
-+			status = "okay";
-+		};
-+	};
-+};
-+
-+&usb2_phy_prim {
-+	vdd-supply = <&vreg_l4_1p2>;
-+	vdda1p8-supply = <&vreg_l5_1p8>;
-+	vdda3p3-supply = <&vreg_l12_3p3>;
-+	status = "okay";
-+};
-+
-+&usb3_phy {
-+	vdd-supply = <&vreg_l3_1p05>;
-+	vdda1p8-supply = <&vreg_l5_1p8>;
-+	status = "okay";
-+};
-+
- &wifi {
- 	status = "okay";
- 	vdd-0.8-cx-mx-supply = <&vreg_l2_1p275>;
--- 
-2.25.1
-
+Brian
