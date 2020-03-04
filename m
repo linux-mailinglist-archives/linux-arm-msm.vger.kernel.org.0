@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 52F85179C4F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2020 00:22:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B1C09179C56
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2020 00:22:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388560AbgCDXV7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Mar 2020 18:21:59 -0500
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:40138 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388626AbgCDXV5 (ORCPT
+        id S2388407AbgCDXW2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Mar 2020 18:22:28 -0500
+Received: from mail-vk1-f194.google.com ([209.85.221.194]:36761 "EHLO
+        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388511AbgCDXW1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Mar 2020 18:21:57 -0500
-Received: by mail-vs1-f68.google.com with SMTP id c18so2378803vsq.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 15:21:57 -0800 (PST)
+        Wed, 4 Mar 2020 18:22:27 -0500
+Received: by mail-vk1-f194.google.com with SMTP id y125so1100983vkc.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 15:22:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Y5xoFX1FrvW/gV/OR//iEMUc1pw5F5Dc49NbBNslky8=;
-        b=kCr5Lw9OiD1ad3gZ8vxx2beaE5NU5NkGGFVM2EBu6aeYCOOejQJV9ZMUvTeDH4/fGQ
-         5I03Q/TAEXu0WspP90Fv4ctWhm2tjcRgbHFSPAAP2BpujowrjLXDNEmfV3Hg23T5JpzK
-         rK3u9tAoM63qfDXL5smphvkT0dN/03+wED6Q8=
+        bh=qzbOBxoGlvw5OWNW1Ah6l3VKMPsLHTnZb9jh0xdhap8=;
+        b=Xr+duYjsrVDjQpHtpWtSC1yYT91JeMgIM1acnVzC2D4m4WcgTMM+UHuRMU8jF6RJ59
+         RaYhze0GcrEMvt8LPmaR6Av3j139t1PD1ShBMBbpNYzfsc0Pw32MzaHTVL0bSxj+oHd2
+         euArYs4SRYFMJZ6vMnk8s2litzY57UNAn3BNM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Y5xoFX1FrvW/gV/OR//iEMUc1pw5F5Dc49NbBNslky8=;
-        b=OXmtXwOVQa8U1ODfdEZ3kuhoBwUcW66Ze1GopHCbU030hMjpijBK3EIwYbL2UBpYdx
-         nk4T1NkIKexO/B9KO9594vDgezB6FTfMaSKJF8aa3jSltQXcI53w85hhYUwtyrmAqGRk
-         ZGvkPK39TPvX1xnjHf+VTFuYKpA8Ll3VObpQxt+PjZbH+v0ug5TUABmB/8gpH/uSmni5
-         LjvpygtHjiW/AJi0Q2sd0g+FRC0uPNcrmB1is1VHqZPlOn8M8DMNj1g5YrNOW+2CTUGj
-         +sU85gbfch5xv8h3/BA5IVhq1LnUDTwdyEpxZf07NdF57VeOMOAI92PWuUTaKQK5aGRM
-         fjzA==
-X-Gm-Message-State: ANhLgQ03x6Kr/5ywRDyEPDpLHdin1hhimRhiLc+v0t0I7wJUGAdWiYyZ
-        N4hIBqxbK9I+8l2kNw5bymvQ/VeQpOQ=
-X-Google-Smtp-Source: ADFU+vs7+GiNo8vJHz/pq8IaCMnDem6K34I4YmSUq0iWw5biVOMpLDXDCTZMEzu7qkoesWNR2aluuA==
-X-Received: by 2002:a67:800b:: with SMTP id b11mr3310818vsd.175.1583364115546;
-        Wed, 04 Mar 2020 15:21:55 -0800 (PST)
-Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com. [209.85.221.176])
-        by smtp.gmail.com with ESMTPSA id s22sm4172101vsl.12.2020.03.04.15.21.53
+        bh=qzbOBxoGlvw5OWNW1Ah6l3VKMPsLHTnZb9jh0xdhap8=;
+        b=h2pMNpEl9waFslrJQF4iBhIwCxlFSMMurEHn7DR7TNMUzuFlkPyJYsEeO/BqnmKZbe
+         8LJQyPUmeEP06o2R7a8nQgyZI0PGyEpmvCgbozL8vZhtNKcjRsxkjBsCVKL46gl4ggBU
+         PJ3gKGDsDshGpS/JWRsMizHEJ9zdk8nbaea7Krv+z6du9/uNZrX17z0UP0UFEW9ZaO99
+         qg6MyPfsaMsZJEScOpXPIvMJobfb3e0yYClY9rXNB0Etbxh8XMJsjVIS5D8KgjMq6Se4
+         hFmINrPmzxzokmmBj59/brnwSLE/UD7EYbtbvYCi81OXs9G6Nj3srd3jAYgx90bfrHAz
+         RSRw==
+X-Gm-Message-State: ANhLgQ2rOgcAzTT1eYBPRf71UXH3Nt5F7sfM0ptl69SOjSAMBDALmOjp
+        beUebjunZ02D12EXm61MQbP0nhGYOE8=
+X-Google-Smtp-Source: ADFU+vsfd1QWDpI9q1wmk9TldosAnqegkkH10EInChRh3Qpe2HbIrCqj8OAoVmRm+nN2WY1DDgxFoA==
+X-Received: by 2002:a1f:9e86:: with SMTP id h128mr2962634vke.44.1583364144250;
+        Wed, 04 Mar 2020 15:22:24 -0800 (PST)
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com. [209.85.222.54])
+        by smtp.gmail.com with ESMTPSA id n196sm6243951vkn.27.2020.03.04.15.22.22
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Mar 2020 15:21:54 -0800 (PST)
-Received: by mail-vk1-f176.google.com with SMTP id c129so1096956vkh.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 15:21:53 -0800 (PST)
-X-Received: by 2002:a1f:a04f:: with SMTP id j76mr2876781vke.75.1583364113116;
- Wed, 04 Mar 2020 15:21:53 -0800 (PST)
+        Wed, 04 Mar 2020 15:22:23 -0800 (PST)
+Received: by mail-ua1-f54.google.com with SMTP id d19so1382479uak.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 15:22:22 -0800 (PST)
+X-Received: by 2002:ab0:1653:: with SMTP id l19mr3087910uae.8.1583364142386;
+ Wed, 04 Mar 2020 15:22:22 -0800 (PST)
 MIME-Version: 1.0
-References: <1583238415-18686-1-git-send-email-mkshah@codeaurora.org> <1583238415-18686-3-git-send-email-mkshah@codeaurora.org>
-In-Reply-To: <1583238415-18686-3-git-send-email-mkshah@codeaurora.org>
+References: <1583238415-18686-1-git-send-email-mkshah@codeaurora.org> <1583238415-18686-4-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1583238415-18686-4-git-send-email-mkshah@codeaurora.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 4 Mar 2020 15:21:41 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=VOARbQzY_p-SyDFu0mzFROp8nV9E=sraNrykWiySwEpw@mail.gmail.com>
-Message-ID: <CAD=FV=VOARbQzY_p-SyDFu0mzFROp8nV9E=sraNrykWiySwEpw@mail.gmail.com>
-Subject: Re: [PATCH v10 2/3] soc: qcom: rpmh: Update dirty flag only when data changes
+Date:   Wed, 4 Mar 2020 15:22:11 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=VG2dirykoGB93s3xCW8CKJjrGDS76koTyww_gy-jv7RQ@mail.gmail.com>
+Message-ID: <CAD=FV=VG2dirykoGB93s3xCW8CKJjrGDS76koTyww_gy-jv7RQ@mail.gmail.com>
+Subject: Re: [PATCH v10 3/3] soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches
 To:     Maulik Shah <mkshah@codeaurora.org>
 Cc:     Stephen Boyd <swboyd@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
@@ -75,146 +75,182 @@ Hi,
 
 On Tue, Mar 3, 2020 at 4:27 AM Maulik Shah <mkshah@codeaurora.org> wrote:
 >
-> Currently rpmh ctrlr dirty flag is set for all cases regardless of data
-> is really changed or not. Add changes to update dirty flag when data is
-> changed to newer values. Update dirty flag everytime when data in batch
-> cache is updated since rpmh_flush() may get invoked from any CPU instead
-> of only last CPU going to low power mode.
+> Add changes to invoke rpmh flush() from within cache_lock when the data
+> in cache is dirty.
 >
-> Also move dirty flag updates to happen from within cache_lock and remove
-> unnecessary INIT_LIST_HEAD() call and a default case from switch.
+> This is done only if OSI is not supported in PSCI. If OSI is supported
+> rpmh_flush can get invoked when the last cpu going to power collapse
+> deepest low power mode.
 >
-> Fixes: 600513dfeef3 ("drivers: qcom: rpmh: cache sleep/wake state requests")
+> Also remove "depends on COMPILE_TEST" for Kconfig option QCOM_RPMH so the
+> driver is only compiled for arm64 which supports psci_has_osi_support()
+> API.
+>
 > Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 > Reviewed-by: Srinivas Rao L <lsrao@codeaurora.org>
-> Reviewed-by: Evan Green <evgreen@chromium.org>
 > ---
->  drivers/soc/qcom/rpmh.c | 21 +++++++++++++--------
->  1 file changed, 13 insertions(+), 8 deletions(-)
+>  drivers/soc/qcom/Kconfig |  2 +-
+>  drivers/soc/qcom/rpmh.c  | 37 ++++++++++++++++++++++---------------
+>  2 files changed, 23 insertions(+), 16 deletions(-)
 >
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index d0a73e7..2e581bc 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -105,7 +105,7 @@ config QCOM_RMTFS_MEM
+>
+>  config QCOM_RPMH
+>         bool "Qualcomm RPM-Hardened (RPMH) Communication"
+> -       depends on ARCH_QCOM && ARM64 || COMPILE_TEST
+> +       depends on ARCH_QCOM && ARM64
+>         help
+>           Support for communication with the hardened-RPM blocks in
+>           Qualcomm Technologies Inc (QTI) SoCs. RPMH communication uses an
 > diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-> index eb0ded0..f28afe4 100644
+> index f28afe4..dafb0da 100644
 > --- a/drivers/soc/qcom/rpmh.c
 > +++ b/drivers/soc/qcom/rpmh.c
-> @@ -133,26 +133,30 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
->
->         req->addr = cmd->addr;
->         req->sleep_val = req->wake_val = UINT_MAX;
-> -       INIT_LIST_HEAD(&req->list);
->         list_add_tail(&req->list, &ctrlr->cache);
->
->  existing:
->         switch (state) {
->         case RPMH_ACTIVE_ONLY_STATE:
-> -               if (req->sleep_val != UINT_MAX)
-> +               if (req->sleep_val != UINT_MAX) {
->                         req->wake_val = cmd->data;
-> +                       ctrlr->dirty = true;
-> +               }
-
-You could maybe avoid a few additional "dirty" cases by changing the
-above "if" to:
-
-if (req->sleep_val != UINT_MAX &&
-   (req->wake_val != cmd->data)
-
-...since otherwise writing an "ACTIVE_ONLY" thing over and over again
-with the same value would keep saying "dirty".
-
-
-Looking at this code makes me wonder a bit about how it's supposed to
-work, though.  Let's look at a sequence of 3 commands called in two
-different orders:
-
-rpmh_write(RPMH_WAKE_ONLY_STATE, addr=0x10, data=0xaa);
-rpmh_write(RPMH_ACTIVE_ONLY_STATE, addr=0x10, data=0x99);
-rpmh_write(RPMH_SLEEP_STATE, addr=0x10, data=0xbb);
-
-==> End result will be a cache entry (addr=0x10, wake=0xaa, sleep=0xbb)
-
-
-rpmh_write(RPMH_SLEEP_STATE, addr=0x10, data=0xbb);
-rpmh_write(RPMH_WAKE_ONLY_STATE, addr=0x10, data=0xaa);
-rpmh_write(RPMH_ACTIVE_ONLY_STATE, addr=0x10, data=0x99);
-
-==> End result will be a cache entry (addr=0x10, wake=0x99, sleep=0xbb)
-
-
-Said another way, it seems weird that a vote for "active" counts as a
-vote for "wake", but only if a sleep vote was made beforehand?
-Howzat?
-
-
-Maybe at one point in time it was assumed that wake's point was just
-to undo sleep?  That is, if:
-
-state_orig = /* the state before sleep happens */
-state_sleep = apply(state_orig, sleep_actions)
-state_wake = apply(state_sleep, wake_actions)
-
-The code is assuming "state_orig == state_wake".
-
-...it sorta makes sense that "state_orig == state_wake" would be true,
-but if we were really making that requirement we really should have
-structured RPMH's APIs differently.  We shouldn't have even allowed
-the callers to specify "WAKE_ONLY" state and we should have just
-constructed it from the "ACTIVE_ONLY" state.
-
-
-To summarize:
-
-a) If the only allowable use of "WAKE_ONLY" is to undo "SLEEP_ONLY"
-then we should re-think the API and stop letting callers to
-rpmh_write(), rpmh_write_async(), or rpmh_write_batch() ever specify
-"WAKE_ONLY".  The code should just assume that "wake_only =
-active_only if (active_only != sleep_only)".  In other words, RPMH
-should programmatically figure out the "wake" state based on the
-sleep/active state and not force callers to do this.
-
-b) If "WAKE_ONLY" is allowed to do other things (or if it's not RPMH's
-job to enforce/assume this) then we should fully skip calling
-cache_rpm_request() for RPMH_ACTIVE_ONLY_STATE.
-
-
-NOTE: this discussion also makes me wonder about the is_req_valid()
-function.  That will skip sending a sleep/wake entry if the sleep and
-wake entries are equal to each other.  ...but if sleep and wake are
-both different than "active" it'll be a problem.
-
-
->                 break;
->         case RPMH_WAKE_ONLY_STATE:
-> -               req->wake_val = cmd->data;
-> +               if (req->wake_val != cmd->data) {
-> +                       req->wake_val = cmd->data;
-> +                       ctrlr->dirty = true;
-
-As far as I can tell from the code, you can also avoid dirty if
-req->sleep_val == UINT_MAX since nothing will be sent if either
-sleep_val or wake_val are UINT_MAX.  Same in the sleep case where we
-can avoid dirty if wake_val == UINT_MAX.
-
-
-> +               }
->                 break;
->         case RPMH_SLEEP_STATE:
-> -               req->sleep_val = cmd->data;
-> -               break;
-> -       default:
-> +               if (req->sleep_val != cmd->data) {
-> +                       req->sleep_val = cmd->data;
-> +                       ctrlr->dirty = true;
-> +               }
->                 break;
+> @@ -12,6 +12,7 @@
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/psci.h>
+>  #include <linux/slab.h>
+>  #include <linux/spinlock.h>
+>  #include <linux/types.h>
+> @@ -158,6 +159,13 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
 >         }
+>
+>  unlock:
+> +       if (ctrlr->dirty && !psci_has_osi_support()) {
+> +               if (rpmh_flush(ctrlr)) {
+> +                       spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+> +                       return ERR_PTR(-EINVAL);
+> +               }
+> +       }
+> +
+>         spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+>
+>         return req;
+> @@ -285,26 +293,35 @@ int rpmh_write(const struct device *dev, enum rpmh_state state,
+>  }
+>  EXPORT_SYMBOL(rpmh_write);
+>
+> -static void cache_batch(struct rpmh_ctrlr *ctrlr, struct batch_cache_req *req)
+> +static int cache_batch(struct rpmh_ctrlr *ctrlr, struct batch_cache_req *req)
+>  {
+>         unsigned long flags;
+>
+>         spin_lock_irqsave(&ctrlr->cache_lock, flags);
+> +
+>         list_add_tail(&req->list, &ctrlr->batch_cache);
+>         ctrlr->dirty = true;
+> +
+> +       if (!psci_has_osi_support()) {
+> +               if (rpmh_flush(ctrlr)) {
 
-I wonder if instead of putting the dirty everywhere above it's better
-to cache the old value before the switch, then do:
+The whole API here is a bit unfortunate.  From what I can tell,
+callers of this code almost always call rpmh_write_batch() in
+triplicate, AKA:
 
-ctrl->dirty = (req->sleep_val != old_sleep_val ||
-  req->wake_val != old_wake_val) &&
-  req->sleep_val != UINT_MAX &&
-  req->wake_val != UINT_MAX;
+rpmh_write_batch(active, ...)
+rpmh_write_batch(wake, ...)
+rpmh_write_batch(sleep, ...)
+
+...that's going to end up writing the whole sleep/wake sets twice
+every single time, right?  I know you talked about trying to keep
+separate dirty bits for sleep/wake and maybe that would help, but it
+might not be so easy due to the comparison of "sleep_val" and
+"wake_val" in is_req_valid().
+
+I guess we can keep the inefficiency for now and see how much it hits
+us, but it feels ugly.
+
+
+> +                       spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+> +                       return -EINVAL;
+
+nit: why not add "int ret = 0" to the top of the function, then here:
+
+if (rpmh_flush(ctrl))
+  ret = -EINVAL;
+
+...then at the end "return ret".  It avoids the 2nd copy of the unlock?
+
+Also: Why throw away the return value of rpmh_flush and replace it
+with -EINVAL?  Trying to avoid -EBUSY?  ...oh, should you handle
+-EBUSY?  AKA:
+
+if (!psci_has_osi_support()) {
+  do {
+    ret = rpmh_flush(ctrl);
+  } while (ret == -EBUSY);
+}
+
+
+> +               }
+> +       }
+> +
+>         spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+> +
+> +       return 0;
+>  }
+>
+>  static int flush_batch(struct rpmh_ctrlr *ctrlr)
+>  {
+>         struct batch_cache_req *req;
+>         const struct rpmh_request *rpm_msg;
+> -       unsigned long flags;
+>         int ret = 0;
+>         int i;
+>
+>         /* Send Sleep/Wake requests to the controller, expect no response */
+> -       spin_lock_irqsave(&ctrlr->cache_lock, flags);
+>         list_for_each_entry(req, &ctrlr->batch_cache, list) {
+>                 for (i = 0; i < req->count; i++) {
+>                         rpm_msg = req->rpm_msgs + i;
+> @@ -314,7 +331,6 @@ static int flush_batch(struct rpmh_ctrlr *ctrlr)
+>                                 break;
+>                 }
+>         }
+> -       spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+>
+>         return ret;
+>  }
+> @@ -386,10 +402,8 @@ int rpmh_write_batch(const struct device *dev, enum rpmh_state state,
+>                 cmd += n[i];
+>         }
+>
+> -       if (state != RPMH_ACTIVE_ONLY_STATE) {
+> -               cache_batch(ctrlr, req);
+> -               return 0;
+> -       }
+> +       if (state != RPMH_ACTIVE_ONLY_STATE)
+> +               return cache_batch(ctrlr, req);
+>
+>         for (i = 0; i < count; i++) {
+>                 struct completion *compl = &compls[i];
+> @@ -455,9 +469,6 @@ static int send_single(struct rpmh_ctrlr *ctrlr, enum rpmh_state state,
+>   * Return: -EBUSY if the controller is busy, probably waiting on a response
+>   * to a RPMH request sent earlier.
+>   *
+> - * This function is always called from the sleep code from the last CPU
+> - * that is powering down the entire system. Since no other RPMH API would be
+> - * executing at this time, it is safe to run lockless.
+
+nit: you've now got an extra "blank" (just has a "*" on it) line at
+the end of your comment block.
+
+nit: in v9, Evan suggested "We should probably replace that with a
+comment indicating that we assume ctrlr->cache_lock is already held".
+Maybe you could do that?
+
+Also: presumably you _will_ still be called by the sleep code from the
+last CPU on systems with OSI.  Is that true?  If that's not true then
+you should change your function to static.  If that is true, then your
+comment should be something like "this function will either be called
+from sleep code on the last CPU (thus no spinlock needed) or with the
+spinlock already held".
 
 
 -Doug
