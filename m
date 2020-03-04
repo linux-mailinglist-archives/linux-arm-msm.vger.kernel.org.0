@@ -2,144 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BF8FB179AAF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 22:10:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FDC1179ACD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 22:22:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387931AbgCDVKX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Mar 2020 16:10:23 -0500
-Received: from mail.kernel.org ([198.145.29.99]:47348 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728614AbgCDVKW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Mar 2020 16:10:22 -0500
-Received: from sol.localdomain (c-107-3-166-239.hsd1.ca.comcast.net [107.3.166.239])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DDEF020842;
-        Wed,  4 Mar 2020 21:10:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1583356221;
-        bh=kepRXjqWr6V9/zasQpimjVtmfbbtcRsr8G6rLRP+xds=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PmMyFhx05N23SO1Sn3z652YyV0bzBl8rEXnmpOb0CFUMZthAsRYlfO4VJgM2PTUEG
-         MTsHvnpA+toAi8y7ca7tY6Kxq+QNLCZ98xqZxB+aNWp6nCTP293jFFTg8en60/BTdd
-         hL8Y4h81osifJ6SPrHCR0gCbiQOXCoW4Xo1D4vGE=
-Date:   Wed, 4 Mar 2020 13:10:19 -0800
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Can Guo <cang@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: Re: [RFC PATCH v2 1/4] firmware: qcom_scm: Add support for
- programming inline crypto keys
-Message-ID: <20200304211019.GC1005@sol.localdomain>
-References: <20200304064942.371978-1-ebiggers@kernel.org>
- <20200304064942.371978-2-ebiggers@kernel.org>
- <158334148941.7173.15031605009318265979@swboyd.mtv.corp.google.com>
+        id S2387905AbgCDVV7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Mar 2020 16:21:59 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:45746 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726440AbgCDVV7 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Mar 2020 16:21:59 -0500
+Received: by mail-pf1-f195.google.com with SMTP id 2so1594856pfg.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 13:21:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=8NHt2u1Odi1sTAbIxzHtP/yeJUTD5DFnU/KItPM3ljg=;
+        b=XLNUFzp7y3HaOKVjXaLfh5lEnmPG/smFCciNkihcc1WIvT68eoHMtMgHPa2QtybPFN
+         UScU8BW/PGirxc+d/af21Ay1wLbOuCIVSxOF3hx3NuRJI9nXzmaLPEKhFOjBAdW1c1nK
+         5V6/b2JkGOXfocvg3SVUxWyuFFZ7PLkq1exYs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=8NHt2u1Odi1sTAbIxzHtP/yeJUTD5DFnU/KItPM3ljg=;
+        b=DIZG6ZpG1uMW2ubIEHcK2sIosFn5OkOQUg18tWvop/COEfxPKsDQ3CZ42kCBwzfGtV
+         dNzfqk5qQv5TGzdlrtXxwN9ly+ojMHXWk0A9QrqgANlQv+uzg0moKjDMU6wKe/ugi6b9
+         AWTpbv5eeIGgl1scE7ErofSLzTA6SEglcJMbaQLbMGvyGyncfQkVC9+aFiR659QvQ63U
+         1WnbuExDFR7tLBIjHuJJ91y/cpf+XpEGgR1ttd3dZR4vQp2RZ00zB2Cq9G5uRD99iv5H
+         gVlysDK9/ZzrH49BaXEWTveh0S+9n5rtoI9Atk3ser/Jiso1Mi3+3+BwS1ezKM9O4mDU
+         wdZw==
+X-Gm-Message-State: ANhLgQ0Sjn12tQ3QLYM/dXbaiDC7WlDzIp2RSUNtvPh5PNxVRn+/mkIn
+        ARHyQn2YoccrFsAu8r9SdkSyQA==
+X-Google-Smtp-Source: ADFU+vvVksMIvscwJ60U1wNHvcXkdywaFwvp9amWgt7M25BGgkzXqzfMpjX+sg+A+d00rVzlySrLDw==
+X-Received: by 2002:aa7:914b:: with SMTP id 11mr5065657pfi.69.1583356918146;
+        Wed, 04 Mar 2020 13:21:58 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id 129sm24711920pgf.10.2020.03.04.13.21.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Mar 2020 13:21:57 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <158334148941.7173.15031605009318265979@swboyd.mtv.corp.google.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200304105638.1.I9ea0d337fcb927f52a28b20613b2377b6249c222@changeid>
+References: <20200304105638.1.I9ea0d337fcb927f52a28b20613b2377b6249c222@changeid>
+Subject: Re: [PATCH] arm64: dts: sc7180: Add unit name to soc node
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>
+Date:   Wed, 04 Mar 2020 13:21:56 -0800
+Message-ID: <158335691640.7173.2382800196583275089@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 04, 2020 at 09:04:49AM -0800, Stephen Boyd wrote:
-> Quoting Eric Biggers (2020-03-03 22:49:39)
-> > diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> > index 059bb0fbae9e..7fb9f606250f 100644
-> > --- a/drivers/firmware/qcom_scm.c
-> > +++ b/drivers/firmware/qcom_scm.c
-> > @@ -926,6 +927,101 @@ int qcom_scm_ocmem_unlock(enum qcom_scm_ocmem_client id, u32 offset, u32 size)
-> [...]
-> > +
-> > +/**
-> > + * qcom_scm_ice_set_key() - Set an inline encryption key
-> > + * @index: the keyslot into which to set the key
-> > + * @key: the key to program
-> > + * @key_size: the size of the key in bytes
-> > + * @cipher: the encryption algorithm the key is for
-> > + * @data_unit_size: the encryption data unit size, i.e. the size of each
-> > + *                 individual plaintext and ciphertext.  Given in 512-byte
-> > + *                 units, e.g. 1 = 512 bytes, 8 = 4096 bytes, etc.
-> > + *
-> > + * Program a key into a keyslot of Qualcomm ICE (Inline Crypto Engine), where it
-> > + * can then be used to encrypt/decrypt UFS I/O requests inline.
-> > + *
-> > + * The UFSHCI standard defines a standard way to do this, but it doesn't work on
-> > + * these SoCs; only this SCM call does.
-> > + *
-> > + * Return: 0 on success; -errno on failure.
-> > + */
-> > +int qcom_scm_ice_set_key(u32 index, const u8 *key, int key_size,
-> > +                        enum qcom_scm_ice_cipher cipher, int data_unit_size)
-> 
-> Why not make key_size and data_unit_size unsigned?
+Quoting Douglas Anderson (2020-03-04 10:56:56)
+> This is just like commit a1875bf98290 ("arm64: dts: qcom: sdm845: Add
+> unit name to soc node") but for sc7180.
+>=20
+> For reference, the warning being fixed was:
+>   Warning (unit_address_vs_reg): /soc:
+>   node has a reg or ranges property, but no unit name
+>=20
+> Fixes: 90db71e48070 ("arm64: dts: sc7180: Add minimal dts/dtsi files for =
+SC7180 soc")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-No reason other than that 'int' is fewer characters and is a good default when
-no other particular type is warranted.  But I can change them to 'unsigned int'
-if people prefer to make it clearer that they can't be negative.
-
-> 
-> > +{
-> > +       struct qcom_scm_desc desc = {
-> > +               .svc = QCOM_SCM_SVC_ES,
-> > +               .cmd = QCOM_SCM_ES_CONFIG_SET_ICE_KEY,
-> > +               .arginfo = QCOM_SCM_ARGS(5, QCOM_SCM_VAL, QCOM_SCM_RW,
-> > +                                        QCOM_SCM_VAL, QCOM_SCM_VAL,
-> > +                                        QCOM_SCM_VAL),
-> > +               .args[0] = index,
-> > +               .args[2] = key_size,
-> > +               .args[3] = cipher,
-> > +               .args[4] = data_unit_size,
-> > +               .owner = ARM_SMCCC_OWNER_SIP,
-> > +       };
-> > +       u8 *keybuf;
-> > +       dma_addr_t key_phys;
-> > +       int ret;
-> > +
-> > +       keybuf = kmemdup(key, key_size, GFP_KERNEL);
-> 
-> Is this to make the key physically contiguous? Probably worth a comment
-> to help others understand why this is here.
-
-Yes, dma_map_single() requires physically contiguous memory.  I'll add a
-comment.
-
-> 
-> > +       if (!keybuf)
-> > +               return -ENOMEM;
-> > +
-> > +       key_phys = dma_map_single(__scm->dev, keybuf, key_size, DMA_TO_DEVICE);
-> > +       if (dma_mapping_error(__scm->dev, key_phys)) {
-> > +               ret = -ENOMEM;
-> > +               goto out;
-> > +       }
-> > +       desc.args[1] = key_phys;
-> > +
-> > +       ret = qcom_scm_call(__scm->dev, &desc, NULL);
-> > +
-> > +       dma_unmap_single(__scm->dev, key_phys, key_size, DMA_TO_DEVICE);
-> > +out:
-> > +       kzfree(keybuf);
-> 
-> And this is because we want to clear key contents out of the slab? What
-> about if the dma_map_single() bounces to a bounce buffer? I think that
-> isn't going to happen because __scm->dev is just some firmware device
-> that doesn't require bounce buffers but it's worth another comment to
-> clarify this.
-
-Yes, in crypto-related code we always try to wipe keys after use.  I don't think
-a bounce buffer would actually be used here, though it would be preferable to
-wipe the DMA memory too so that we don't rely on that.  But I didn't see how to
-do that; I'm not a DMA API expert.  Maybe dma_alloc_coherent()?  This isn't
-really performance-critical.
-
-- Eric
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
