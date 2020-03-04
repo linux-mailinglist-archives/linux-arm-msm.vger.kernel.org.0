@@ -2,296 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3740A179985
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 21:10:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3D3117997F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 21:09:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729198AbgCDUJ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Mar 2020 15:09:56 -0500
-Received: from mail27.static.mailgun.info ([104.130.122.27]:26687 "EHLO
-        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728512AbgCDUJz (ORCPT
+        id S1728482AbgCDUJT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Mar 2020 15:09:19 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:51102 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726561AbgCDUJT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Mar 2020 15:09:55 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1583352595; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=/RCgoyhHvf5S+/RouyAbpWlCuHMv+v5tq6A3J7daPyw=; b=hDcarwCHYcEJ2iJniMDrcu9KOgqL+xgCL0AeE7ZXobiEUE5+mwNhJrR4KkOggtZjNx0mPv76
- 2wXoimZrzG2GSB3QpmCcloejPXgFyS4mt0Be2caeFBUj0xKy3Uusefmihu4MIJDqGXpyuvvP
- Lbs6i/63BYNy8pfz88jT63zoOcM=
-X-Mailgun-Sending-Ip: 104.130.122.27
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e600b07.7ffa0b0d23e8-smtp-out-n02;
- Wed, 04 Mar 2020 20:09:43 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 59104C447A0; Wed,  4 Mar 2020 20:09:42 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 07CE1C4479D;
-        Wed,  4 Mar 2020 20:09:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 07CE1C4479D
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org, srinivas.kandagatla@linaro.org
-Cc:     agross@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        tsoni@codeaurora.org, vnkgutta@codeaurora.org,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH v6 3/3] soc: qcom: apr: Add avs/audio tracking functionality
-Date:   Thu,  5 Mar 2020 01:39:11 +0530
-Message-Id: <20200304200911.15415-4-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200304200911.15415-1-sibis@codeaurora.org>
-References: <20200304200911.15415-1-sibis@codeaurora.org>
+        Wed, 4 Mar 2020 15:09:19 -0500
+Received: by mail-pj1-f68.google.com with SMTP id nm6so1386069pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 12:09:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fVWrQMKbqoplD/Oaam0FvwkWhjl3efFR5VHZCGG6srw=;
+        b=iebuqWBLS90Q0BVU+DK0De6ptXlRQjnPB0svrq3P4UJTfK4QZfGKt/A9ZBZUrGY1lb
+         YQuMO0IXaZp+RAfhXCcP/GWxAifDASDigA+F3izTmsah9uD0rgMiweHlxIpST3v2CqUg
+         nB78HVlmRV+sPQT3v3fcu/Li3EOUh8jYKO0b0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fVWrQMKbqoplD/Oaam0FvwkWhjl3efFR5VHZCGG6srw=;
+        b=i6+B/Fz4Hg5t8AQ51XywgqzFlDY42YlZd8oa2lwfMu8zehuxxQE0lbQSIi3YQLLBsg
+         inDLaCfv/SUGXc1qGWTOeJ5t/+66x+82TTuxsm7Ak7C91BBjhlO0D9W08+2TIV4G5CR7
+         kd0Ve/w9/WkUYBqNHEvI32gVPs0iU7+dgMuQJ5eeeN3+10NrgAV8vG6QvH3TlVO+TKeP
+         iy68PR8K3AWhhwOUicdMvHnX06L41dZt463fAyZwxmMhsi9ObFpADUfQd+HCrXv2zjhu
+         9H+6SHVT8ykBqAsUlL6Ah5gvVVQzyT6VzP7XMWpC9Uu5T6iezLG/TEVvWZvV+EXL5pBO
+         3Ibg==
+X-Gm-Message-State: ANhLgQ224ULcAmnxDwKoVt+2MGeh5I4TmfxgXcgCWAJ9ZZaHFyKQHGGv
+        JTZ7ge2akK3LG/qcWpsX9ktgRQ==
+X-Google-Smtp-Source: ADFU+vtd3GdGpgyioHfDLBVA7YkNLG9EwP9nP8h+HafEWaxUAHmypsiAgcV7a3VG78CgJbbV0nFZIQ==
+X-Received: by 2002:a17:90a:b381:: with SMTP id e1mr4675544pjr.38.1583352558596;
+        Wed, 04 Mar 2020 12:09:18 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id w7sm12798393pfj.167.2020.03.04.12.09.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Mar 2020 12:09:17 -0800 (PST)
+Date:   Wed, 4 Mar 2020 12:09:16 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Roja Rani Yarubandi <rojay@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, akashast@codeaurora.org,
+        msavaliy@qti.qualcomm.com
+Subject: Re: [PATCH V4] tty: serial: qcom_geni_serial: Fix GPIO swapping with
+ workaround
+Message-ID: <20200304200916.GS24720@google.com>
+References: <20200304112203.408-1-rojay@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200304112203.408-1-rojay@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use PDR helper functions to track the protection domains that the apr
-services are dependent upon on SDM845 SoC, specifically the "avs/audio"
-service running on ADSP Q6.
+On Wed, Mar 04, 2020 at 04:52:03PM +0530, Roja Rani Yarubandi wrote:
+> Add capability to support RX-TX, CTS-RTS pins swap in HW.
+> 
+> Configure UART_IO_MACRO_CTRL register accordingly if RX-TX pair
+> or CTS-RTS pair or both pairs swapped.
+> 
+> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
+Please make sure to collect tags from previous versions (unless there are
+major changes), like Stephens 'Reviewed-by' or my 'Tested-by'.
 
-V6:
- * No change
-
-V5:
- * Picked up Bjorn's R-b
-
- drivers/soc/qcom/Kconfig     |   1 +
- drivers/soc/qcom/apr.c       | 123 ++++++++++++++++++++++++++++++++---
- include/linux/soc/qcom/apr.h |   1 +
- 3 files changed, 116 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 945609005cedd..e2c364d86a838 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -201,6 +201,7 @@ config QCOM_APR
- 	tristate "Qualcomm APR Bus (Asynchronous Packet Router)"
- 	depends on ARCH_QCOM || COMPILE_TEST
- 	depends on RPMSG
-+	select QCOM_PDR_HELPERS
- 	help
- 	  Enable APR IPC protocol support between
- 	  application processor and QDSP6. APR is
-diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-index 4fcc32420c474..1f35b097c6356 100644
---- a/drivers/soc/qcom/apr.c
-+++ b/drivers/soc/qcom/apr.c
-@@ -11,6 +11,7 @@
- #include <linux/workqueue.h>
- #include <linux/of_device.h>
- #include <linux/soc/qcom/apr.h>
-+#include <linux/soc/qcom/pdr.h>
- #include <linux/rpmsg.h>
- #include <linux/of.h>
- 
-@@ -21,6 +22,7 @@ struct apr {
- 	spinlock_t rx_lock;
- 	struct idr svcs_idr;
- 	int dest_domain_id;
-+	struct pdr_handle *pdr;
- 	struct workqueue_struct *rxwq;
- 	struct work_struct rx_work;
- 	struct list_head rx_list;
-@@ -289,6 +291,9 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 		  id->svc_id + 1, GFP_ATOMIC);
- 	spin_unlock(&apr->svcs_lock);
- 
-+	of_property_read_string_index(np, "qcom,protection-domain",
-+				      1, &adev->service_path);
-+
- 	dev_info(dev, "Adding APR dev: %s\n", dev_name(&adev->dev));
- 
- 	ret = device_register(&adev->dev);
-@@ -300,14 +305,75 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 	return ret;
- }
- 
--static void of_register_apr_devices(struct device *dev)
-+static int of_apr_add_pd_lookups(struct device *dev)
-+{
-+	const char *service_name, *service_path;
-+	struct apr *apr = dev_get_drvdata(dev);
-+	struct device_node *node;
-+	struct pdr_service *pds;
-+	int ret;
-+
-+	for_each_child_of_node(dev->of_node, node) {
-+		ret = of_property_read_string_index(node, "qcom,protection-domain",
-+						    0, &service_name);
-+		if (ret < 0)
-+			continue;
-+
-+		ret = of_property_read_string_index(node, "qcom,protection-domain",
-+						    1, &service_path);
-+		if (ret < 0) {
-+			dev_err(dev, "pdr service path missing: %d\n", ret);
-+			return ret;
-+		}
-+
-+		pds = pdr_add_lookup(apr->pdr, service_name, service_path);
-+		if (IS_ERR(pds) && PTR_ERR(pds) != -EALREADY) {
-+			dev_err(dev, "pdr add lookup failed: %d\n", ret);
-+			return PTR_ERR(pds);
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+static void of_register_apr_devices(struct device *dev, const char *svc_path)
- {
- 	struct apr *apr = dev_get_drvdata(dev);
- 	struct device_node *node;
-+	const char *service_path;
-+	int ret;
- 
- 	for_each_child_of_node(dev->of_node, node) {
- 		struct apr_device_id id = { {0} };
- 
-+		/*
-+		 * This function is called with svc_path NULL during
-+		 * apr_probe(), in which case we register any apr devices
-+		 * without a qcom,protection-domain specified.
-+		 *
-+		 * Then as the protection domains becomes available
-+		 * (if applicable) this function is again called, but with
-+		 * svc_path representing the service becoming available. In
-+		 * this case we register any apr devices with a matching
-+		 * qcom,protection-domain.
-+		 */
-+
-+		ret = of_property_read_string_index(node, "qcom,protection-domain",
-+						    1, &service_path);
-+		if (svc_path) {
-+			/* skip APR services that are PD independent */
-+			if (ret)
-+				continue;
-+
-+			/* skip APR services whose PD paths don't match */
-+			if (strcmp(service_path, svc_path))
-+				continue;
-+		} else {
-+			/* skip APR services whose PD lookups are registered */
-+			if (ret == 0)
-+				continue;
-+		}
-+
- 		if (of_property_read_u32(node, "reg", &id.svc_id))
- 			continue;
- 
-@@ -318,6 +384,34 @@ static void of_register_apr_devices(struct device *dev)
- 	}
- }
- 
-+static int apr_remove_device(struct device *dev, void *svc_path)
-+{
-+	struct apr_device *adev = to_apr_device(dev);
-+
-+	if (svc_path && adev->service_path) {
-+		if (!strcmp(adev->service_path, (char *)svc_path))
-+			device_unregister(&adev->dev);
-+	} else {
-+		device_unregister(&adev->dev);
-+	}
-+
-+	return 0;
-+}
-+
-+static void apr_pd_status(int state, char *svc_path, void *priv)
-+{
-+	struct apr *apr = (struct apr *)priv;
-+
-+	switch (state) {
-+	case SERVREG_SERVICE_STATE_UP:
-+		of_register_apr_devices(apr->dev, svc_path);
-+		break;
-+	case SERVREG_SERVICE_STATE_DOWN:
-+		device_for_each_child(apr->dev, svc_path, apr_remove_device);
-+		break;
-+	}
-+}
-+
- static int apr_probe(struct rpmsg_device *rpdev)
- {
- 	struct device *dev = &rpdev->dev;
-@@ -343,28 +437,39 @@ static int apr_probe(struct rpmsg_device *rpdev)
- 		return -ENOMEM;
- 	}
- 	INIT_WORK(&apr->rx_work, apr_rxwq);
-+
-+	apr->pdr = pdr_handle_alloc(apr_pd_status, apr);
-+	if (IS_ERR(apr->pdr)) {
-+		dev_err(dev, "Failed to init PDR handle\n");
-+		ret = PTR_ERR(apr->pdr);
-+		goto destroy_wq;
-+	}
-+
- 	INIT_LIST_HEAD(&apr->rx_list);
- 	spin_lock_init(&apr->rx_lock);
- 	spin_lock_init(&apr->svcs_lock);
- 	idr_init(&apr->svcs_idr);
--	of_register_apr_devices(dev);
--
--	return 0;
--}
- 
--static int apr_remove_device(struct device *dev, void *null)
--{
--	struct apr_device *adev = to_apr_device(dev);
-+	ret = of_apr_add_pd_lookups(dev);
-+	if (ret)
-+		goto handle_release;
- 
--	device_unregister(&adev->dev);
-+	of_register_apr_devices(dev, NULL);
- 
- 	return 0;
-+
-+handle_release:
-+	pdr_handle_release(apr->pdr);
-+destroy_wq:
-+	destroy_workqueue(apr->rxwq);
-+	return ret;
- }
- 
- static void apr_remove(struct rpmsg_device *rpdev)
- {
- 	struct apr *apr = dev_get_drvdata(&rpdev->dev);
- 
-+	pdr_handle_release(apr->pdr);
- 	device_for_each_child(&rpdev->dev, NULL, apr_remove_device);
- 	flush_workqueue(apr->rxwq);
- 	destroy_workqueue(apr->rxwq);
-diff --git a/include/linux/soc/qcom/apr.h b/include/linux/soc/qcom/apr.h
-index c5d52e2cb275f..7f0bc3cf4d610 100644
---- a/include/linux/soc/qcom/apr.h
-+++ b/include/linux/soc/qcom/apr.h
-@@ -85,6 +85,7 @@ struct apr_device {
- 	uint16_t	domain_id;
- 	uint32_t	version;
- 	char name[APR_NAME_SIZE];
-+	const char *service_path;
- 	spinlock_t	lock;
- 	struct list_head node;
- };
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Tested-by: Matthias Kaehlcke <mka@chromium.org>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
