@@ -2,131 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F19117964F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 18:08:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 072A717965B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 18:09:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727023AbgCDRIh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Mar 2020 12:08:37 -0500
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:52756 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726748AbgCDRIh (ORCPT
+        id S1729389AbgCDRJo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Mar 2020 12:09:44 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:43156 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726915AbgCDRJo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Mar 2020 12:08:37 -0500
-Received: by mail-pj1-f65.google.com with SMTP id lt1so1164778pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 09:08:37 -0800 (PST)
+        Wed, 4 Mar 2020 12:09:44 -0500
+Received: by mail-pl1-f193.google.com with SMTP id x17so1266166plm.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 09:09:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=8GdpXC83WnCwjUZvBp/s6/1q0gpiaE1ET3LFQ1vYx80=;
-        b=GUJPwqExB2W8m+wmfFej1Wu0jR+PqqrCLePScvd+ZRdg7ISZyrv04lA8ojqKla2HR4
-         OXxi9a/E+2lNMDcu4q1y4jtP/+Yg6bNBjIqn8+1mXHmeBiq4ROu6dcgGVofhgA9zC5Bd
-         RkduMTmCkRF8RZeOmAm5CVUtKSEbIH5S20aV4=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dItOkhPJDUpYFTNol2a7MlqjygGGU4rVaI43p4O8xZ0=;
+        b=Lk2kj+Wg+uxMhy6Op8iAbbhlA8OkY+U+/Kd6XDKA/s3lLf1+RAk7ViRlew9D/jd2wU
+         3B+RGi42mLqFZKGzVy+YwUH3Ygz1l3OMhTGYPak5tBdTS/sAnjuu7i85Uh+KinCTQ/iy
+         mHWta6g92+tBAWR2INwAWXhrv5NBCbGkWsrsA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=8GdpXC83WnCwjUZvBp/s6/1q0gpiaE1ET3LFQ1vYx80=;
-        b=Z4JZukxy+0nhWt3bB8/8aCWOxv8vpLRp17fBMFUTdOoX2gQelVKJpt0aQOXRiQS5BC
-         OdQmGwccMwh0gMpLZXbM1LPolcDCHPZbr5M6pzD55JAY9Eu/0UdTown/7Gpl9jGOCcg0
-         LJ9j1bEy27SCMkcc6MraNuRy36Y+VQ8Fib09u9I/chfADVEmAoAlf90UwZj+DtfHPJn+
-         RxCuBx8la/m/MUwbnbohL9vOSuVfye2xvyZqxcNtCZbhXVRfxTJ1+o0LDCuPkI5mRopH
-         VyTKtsJBGQyHcyKZDWk9sz1vkxHxQ9WH/nXYeaK2kKhLwIUdfVD1vxCAKvDUpklVv7JO
-         EVEw==
-X-Gm-Message-State: ANhLgQ1ATZqPb7q3rvrkb/yhAIYOjrCCG8kXrrt9uphSYt0lBgPGsalC
-        fj3vsjTJvQLgb6ytWTXQY3NiWw==
-X-Google-Smtp-Source: ADFU+vtszHZ6sornx7c90TueL5qrMGJwPll/DLOlPUNlKhSDATQ9GE1wQfzBIuK1624Xb/HV/K7YCw==
-X-Received: by 2002:a17:902:a511:: with SMTP id s17mr3702792plq.317.1583341716406;
-        Wed, 04 Mar 2020 09:08:36 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id q66sm30352538pfq.27.2020.03.04.09.08.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2020 09:08:35 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=dItOkhPJDUpYFTNol2a7MlqjygGGU4rVaI43p4O8xZ0=;
+        b=jFUxVENXCxdSnz7VTsKl0943gKjmFQRbx+Pg7PXz1CdQVzEw/NSpYDATanLS2CrdKC
+         LhfZzpv66AJq3oxDiGG8zivlgjitgcrQNNEEi2VMZ95hzeyfawyA1u70E7clvqTzeWIZ
+         BGE2z8UJyJJuh/1HWccl/FWm6xUPXs90lNVQmt96RdrKBBH5JfE+tYr/4/ZFSA7Vn6/O
+         lTH/UtJySCj3px7AK3BZm4BwlM+PGbF/IEs44dfqPzP/4pAtfmFo1JCfbAO4R69Oz3uT
+         7bVGTGXmlbDaQzbV3L3fcikfCSO0MR20Y0ocsbw208iQv8J/f9HA3kpWz9NIO2otRnPl
+         QZoA==
+X-Gm-Message-State: ANhLgQ0cuIs8+deGwJuPCuDuszBUTYPZrCmkjeiijlG+BKzAcdZ3q+BR
+        GKJMvV9lrJaziZaO2PskklGY9g==
+X-Google-Smtp-Source: ADFU+vuwSSZRhhuCIdCdTpxc70BFCzAww+Ka2DRFQelVw8/RNXMZWG1fdqh/hpdtP+zmh3NaYQ4kqQ==
+X-Received: by 2002:a17:90a:eb0b:: with SMTP id j11mr3946783pjz.145.1583341781976;
+        Wed, 04 Mar 2020 09:09:41 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id e189sm24245654pfa.139.2020.03.04.09.09.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Mar 2020 09:09:40 -0800 (PST)
+Date:   Wed, 4 Mar 2020 09:09:39 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>, robh@kernel.org,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, Doug Anderson <dianders@chromium.org>
+Subject: Re: [PATCH v1 2/2] clk: qcom: dispcc: Remove support of
+ disp_cc_mdss_rscc_ahb_clk
+Message-ID: <20200304170939.GR24720@google.com>
+References: <1581423236-21341-1-git-send-email-tdas@codeaurora.org>
+ <1581423236-21341-2-git-send-email-tdas@codeaurora.org>
+ <20200303201629.GP24720@google.com>
+ <f0529793-c51d-4baf-5217-173c552f4cbe@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200304064942.371978-3-ebiggers@kernel.org>
-References: <20200304064942.371978-1-ebiggers@kernel.org> <20200304064942.371978-3-ebiggers@kernel.org>
-Subject: Re: [RFC PATCH v2 2/4] arm64: dts: sdm845: add Inline Crypto Engine registers and clock
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Can Guo <cang@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        Jaegeuk Kim <jaegeuk@kernel.org>
-To:     Eric Biggers <ebiggers@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-Date:   Wed, 04 Mar 2020 09:08:34 -0800
-Message-ID: <158334171487.7173.5606223900174949177@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f0529793-c51d-4baf-5217-173c552f4cbe@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Eric Biggers (2020-03-03 22:49:40)
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/q=
-com/sdm845.dtsi
-> index d42302b8889b..dd6b4e596fcf 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -1367,7 +1367,9 @@ system-cache-controller@1100000 {
->                 ufs_mem_hc: ufshc@1d84000 {
->                         compatible =3D "qcom,sdm845-ufshc", "qcom,ufshc",
->                                      "jedec,ufs-2.0";
-> -                       reg =3D <0 0x01d84000 0 0x2500>;
-> +                       reg =3D <0 0x01d84000 0 0x2500>,
-> +                             <0 0 0 0>,
-> +                             <0 0x01d90000 0 0x8000>;
+Hi Taniya,
 
-Nothing against this patch but the binding for ufs is really awful. It
-doesn't indicate what the order of registers are, doesn't list what clks
-are supposed to be there, has weird microamp properties that make no
-sense, and has a freq-table-hz property that is almost always full of
-zeroes because the driver is written in some weird qcom specific way.
+On Wed, Mar 04, 2020 at 09:05:20AM +0530, Taniya Das wrote:
+> 
+> On 3/4/2020 1:46 AM, Matthias Kaehlcke wrote:
+> > On Tue, Feb 11, 2020 at 05:43:56PM +0530, Taniya Das wrote:
+> > > The disp_cc_mdss_rscc_ahb_clk is default enabled from hardware and thus
+> > > does not require to be marked CRITICAL. This which would allow the RCG to
+> > > be turned OFF when the display turns OFF and not blocking XO.
+> > > 
+> > > Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> > > ---
+> > >   drivers/clk/qcom/dispcc-sc7180.c | 19 -------------------
+> > >   1 file changed, 19 deletions(-)
+> > > 
+> > > diff --git a/drivers/clk/qcom/dispcc-sc7180.c b/drivers/clk/qcom/dispcc-sc7180.c
+> > > index dd7af41..0a5d395 100644
+> > > --- a/drivers/clk/qcom/dispcc-sc7180.c
+> > > +++ b/drivers/clk/qcom/dispcc-sc7180.c
+> > > @@ -592,24 +592,6 @@ static struct clk_branch disp_cc_mdss_rot_clk = {
+> > >   	},
+> > >   };
+> > > 
+> > > -static struct clk_branch disp_cc_mdss_rscc_ahb_clk = {
+> > > -	.halt_reg = 0x400c,
+> > > -	.halt_check = BRANCH_HALT,
+> > > -	.clkr = {
+> > > -		.enable_reg = 0x400c,
+> > > -		.enable_mask = BIT(0),
+> > > -		.hw.init = &(struct clk_init_data){
+> > > -			.name = "disp_cc_mdss_rscc_ahb_clk",
+> > > -			.parent_data = &(const struct clk_parent_data){
+> > > -				.hw = &disp_cc_mdss_ahb_clk_src.clkr.hw,
+> > > -			},
+> > > -			.num_parents = 1,
+> > > -			.flags = CLK_IS_CRITICAL | CLK_SET_RATE_PARENT,
+> > > -			.ops = &clk_branch2_ops,
+> > > -		},
+> > > -	},
+> > > -};
+> > > -
+> > >   static struct clk_branch disp_cc_mdss_rscc_vsync_clk = {
+> > >   	.halt_reg = 0x4008,
+> > >   	.halt_check = BRANCH_HALT,
+> > > @@ -687,7 +669,6 @@ static struct clk_regmap *disp_cc_sc7180_clocks[] = {
+> > >   	[DISP_CC_MDSS_PCLK0_CLK_SRC] = &disp_cc_mdss_pclk0_clk_src.clkr,
+> > >   	[DISP_CC_MDSS_ROT_CLK] = &disp_cc_mdss_rot_clk.clkr,
+> > >   	[DISP_CC_MDSS_ROT_CLK_SRC] = &disp_cc_mdss_rot_clk_src.clkr,
+> > > -	[DISP_CC_MDSS_RSCC_AHB_CLK] = &disp_cc_mdss_rscc_ahb_clk.clkr,
+> > >   	[DISP_CC_MDSS_RSCC_VSYNC_CLK] = &disp_cc_mdss_rscc_vsync_clk.clkr,
+> > >   	[DISP_CC_MDSS_VSYNC_CLK] = &disp_cc_mdss_vsync_clk.clkr,
+> > >   	[DISP_CC_MDSS_VSYNC_CLK_SRC] = &disp_cc_mdss_vsync_clk_src.clkr,
+> > 
+> > We found that this change leads to a panic at boot time on SC7180 devices
+> > without display configuration (e.g. the SC7180 IDP with the current DT):
+> > 
+> > [    2.412820] SError Interrupt on CPU6, code 0xbe000411 -- SError
+> > [    2.412822] CPU: 6 PID: 1 Comm: swapper/0 Tainted: G S                5.4.22 #103
+> > [    2.412822] Hardware name: Qualcomm Technologies, Inc. SC7180 IDP (DT)
+> > [    2.412823] pstate: 20c00089 (nzCv daIf +PAN +UAO)
+> > [    2.412823] pc : regmap_mmio_read32le+0x28/0x40
+> > [    2.412823] lr : regmap_mmio_read+0x44/0x6c
+> > [    2.412824] sp : ffffffc01005ba90
+> > [    2.412824] x29: ffffffc01005ba90 x28: 0000000000000000
+> > [    2.412825] x27: 0000000000000000 x26: 0000000000000000
+> > [    2.412826] x25: 0000000000000000 x24: ffffffd1f4aed018
+> > [    2.412827] x23: ffffffd1f4c12148 x22: ffffff8177a6c800
+> > [    2.412827] x21: 0000000000002048 x20: ffffff8177489e00
+> > [    2.412828] x19: 0000000000002048 x18: 000000004a746f4b
+> > [    2.412829] x17: 00000000d0e09034 x16: 000000005079b450
+> > [    2.412830] x15: 000000003e3bf7ed x14: 0000000000007fff
+> > [    2.412830] x13: ffffff8177309b40 x12: 0000000000000000
+> > [    2.412831] x11: 0000000000000000 x10: 0000000000000000
+> > [    2.412831] x9 : 0000000000000001 x8 : ffffffc011c02048
+> > [    2.412832] x7 : aaaaaaaaaaaaaaaa x6 : 0000000000000000
+> > [    2.412833] x5 : 0000000000000000 x4 : 0000000000000000
+> > [    2.412834] x3 : 0000000000000000 x2 : ffffffc01005bb84
+> > [    2.412834] x1 : 0000000000002048 x0 : 0000000080000000
+> > [    2.412835] Kernel panic - not syncing: Asynchronous SError Interrupt
+> > [    2.412836] CPU: 6 PID: 1 Comm: swapper/0 Tainted: G S                5.4.22 #103
+> > [    2.412836] Hardware name: Qualcomm Technologies, Inc. SC7180 IDP (DT)
+> > [    2.412836] Call trace:
+> > [    2.412837]  dump_backtrace+0x0/0x150
+> > [    2.412837]  show_stack+0x20/0x2c
+> > [    2.412837]  dump_stack+0xa0/0xd8
+> > [    2.412838]  panic+0x158/0x360
+> > [    2.412838]  panic+0x0/0x360
+> > [    2.412838]  arm64_serror_panic+0x78/0x84
+> > [    2.412839]  do_serror+0x110/0x118
+> > [    2.412839]  el1_error+0x84/0xf8
+> > [    2.412839]  regmap_mmio_read32le+0x28/0x40
+> > [    2.412840]  regmap_mmio_read+0x44/0x6c
+> > [    2.412840]  _regmap_bus_reg_read+0x34/0x44
+> > [    2.412841]  _regmap_read+0x88/0x164
+> > [    2.412841]  regmap_read+0x54/0x78
+> > [    2.412841]  clk_is_enabled_regmap+0x3c/0x8c
+> > [    2.412842]  clk_core_is_enabled+0x68/0xac
+> > [    2.412842]  clk_disable_unused_subtree+0x90/0x22c
+> > [    2.412843]  clk_disable_unused_subtree+0x34/0x22c
+> > [    2.412843]  clk_disable_unused+0x74/0x108
+> > [    2.412843]  do_one_initcall+0x13c/0x2c8
+> > [    2.412844]  do_initcall_level+0x144/0x16c
+> > [    2.412844]  do_basic_setup+0x30/0x48
+> > [    2.412844]  kernel_init_freeable+0xc4/0x140
+> > [    2.412845]  kernel_init+0x14/0x100
+> > [    2.412845]  ret_from_fork+0x10/0x18
+> > [    2.412858] SMP: stopping secondary CPUs
+> > [    2.412859] Kernel Offset: 0x11e3a00000 from 0xffffffc010000000
+> > [    2.412859] PHYS_OFFSET: 0xffffffe780000000
+> > [    2.412860] CPU features: 0x0006,2a80aa18
+> > [    2.412860] Memory Limit: none
+> > 
+> 
+> Hi Matthias,
+> 
+> The display device node is not present and we encounter this crash, would it
+> be possible to add ALWAYS_ON for the MDSS GDSC and give it a try.
 
-It would be great to fix this binding and convert it to YAML so that we
-can drop the cruft and clearly describe why this patch needs to
-introduce a reg property that is all zeroes.
-
->                         interrupts =3D <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
->                         phys =3D <&ufs_mem_phy_lanes>;
->                         phy-names =3D "ufsphy";
-> @@ -1387,7 +1389,8 @@ ufs_mem_hc: ufshc@1d84000 {
->                                 "ref_clk",
->                                 "tx_lane0_sync_clk",
->                                 "rx_lane0_sync_clk",
-> -                               "rx_lane1_sync_clk";
-> +                               "rx_lane1_sync_clk",
-> +                               "ice_core_clk";
-
-Would be great to drop _clk postfix on all of these.
-
->                         clocks =3D
->                                 <&gcc GCC_UFS_PHY_AXI_CLK>,
->                                 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-> @@ -1396,7 +1399,8 @@ ufs_mem_hc: ufshc@1d84000 {
->                                 <&rpmhcc RPMH_CXO_CLK>,
->                                 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->                                 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
-> -                               <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
-> +                               <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>,
-> +                               <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
->                         freq-table-hz =3D
->                                 <50000000 200000000>,
->                                 <0 0>,
-> @@ -1405,7 +1409,8 @@ ufs_mem_hc: ufshc@1d84000 {
->                                 <0 0>,
->                                 <0 0>,
->                                 <0 0>,
-> -                               <0 0>;
-> +                               <0 0>,
-> +                               <0 300000000>;
-
-This can probably be done with assigned-clock-rates, but the driver is
-bad.
+It still crashes when ALWAYS_ON is set for the MDSS GDSC.
