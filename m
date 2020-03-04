@@ -2,68 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B182179502
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 17:24:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E339D17954C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 17:30:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388185AbgCDQYI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Mar 2020 11:24:08 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:43916 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729915AbgCDQYH (ORCPT
+        id S1726694AbgCDQah (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Mar 2020 11:30:37 -0500
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:37186 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728278AbgCDQah (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Mar 2020 11:24:07 -0500
-Received: by mail-ed1-f67.google.com with SMTP id dc19so2983251edb.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 08:24:05 -0800 (PST)
+        Wed, 4 Mar 2020 11:30:37 -0500
+Received: by mail-wr1-f47.google.com with SMTP id q8so3175640wrm.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 08:30:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=cRSqqyVQcgkFGQEI4WVpqxDQwCK2dLecE852C4OPnck=;
-        b=ltaenl3Tu/Uh7cHCpFacONDPzzzqQrkNujMvp58M14/XfVcwRWa9kwro+hgX741c1H
-         cHnCwykPCAHfAWZmq+NsVrSJt60Ar5l8PBnPxMnYF4ldkMKjpzHC/rCTzyZ2/Y5h88kv
-         bqoO8m4mB+MtaoMBxxJ11DliaahtilK++IfG/BJkK+EQc+WHQeVm17p/OveeUZkNSqe0
-         fnvHDULD6vm31OuojQziBWWptXNAKl2Gm5Mmg7LKGLg1WqqMaCjgpG9u/AHjjImliWi0
-         gRKjn5q0WJI87Pj4LSzwHtJiNzyN3Axe7z4laTFODANHwTiIBlLYDY4JA7bRQl9r+IBc
-         f4PQ==
+        bh=YhB88TIgmNlGh4QV3oKo77OJ9RLyveUHZ47zGdAxc9U=;
+        b=MRJAXSTneB6L1oif6lUKqMEw4K0Q3pFQ0uKmoBsFQ0GYWu6u+FgxyGhueH5tJhCYBh
+         Cvb4+RCpc3Yh/cNUSyvaytm/yROBp/WaoweknPrWGWMxRk8bE6Hb1zUHzAkQtckOq7p5
+         e6f1HULqcir5WbPAigHnf0lTr1yC+7RcrrdvVWsz4gPPMTrVl8ZfNguLThq5tVFkUmR8
+         VJc6z9jpwZydt3aCpgb/QYw02j7gA4ObuS35pyT+G997n4vsjhoCCCVT12WO98hbQYW/
+         wyx6CB521uP/7CCk/WK8h4Kftmi2oDGw/grGeg0fkhvjgfwuAdI7saqmBoOF5F0FcFmX
+         Xm5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=cRSqqyVQcgkFGQEI4WVpqxDQwCK2dLecE852C4OPnck=;
-        b=M71pzpWKeVfxKrGlAfZT/x6dVygc3xw+UeQhC4/FMpDvpCGgw+YPZB/5xO3dxFB4bI
-         2vFgH7WsgjQqDro2rdynZynhZr3DVv27s3l0C/+FeJEi87xylSVcX+VYQ4ewLJfO9wez
-         AdLZA0Lb9Om53QP6vfamiERJLvWrw1G1RSUqeCRa453tzTUAQpi24453h1g5RcXt10pt
-         IbFRYHr9JEDmIjt7N1SLY8FIpwMGF2o2alq75xlGNwRluuNwuGbQL4WRMJJGTnwcs0ua
-         MnQE08d2Y1ja8Gl7l54ZWnRV56EBe8i7+LqPiPHgaKCN0cEKFMj1DukfEm1TRirXrk6B
-         ju0Q==
-X-Gm-Message-State: ANhLgQ0e53slNpWQ1SSUHZUcFKC2CzR5/yBvnuwS+CtojOHhQJBpM6JH
-        em0nRfu9kB0emlSxorM8TAChqQ==
-X-Google-Smtp-Source: ADFU+vuKkH6eC/TyjKp82VgLkReuX6Vu6bromPkvOyS874kNDx2MU23u3kTtssmvRyNsQaYULSffiA==
-X-Received: by 2002:a17:906:604c:: with SMTP id p12mr3231175ejj.202.1583339044755;
-        Wed, 04 Mar 2020 08:24:04 -0800 (PST)
-Received: from [192.168.0.38] ([176.61.57.127])
-        by smtp.gmail.com with ESMTPSA id a40sm1535657edf.90.2020.03.04.08.24.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Mar 2020 08:24:03 -0800 (PST)
-Subject: Re: [PATCH v7 07/18] dt-bindings: usb: dwc3: Add a gpio-usb-connector
- example
-To:     Rob Herring <robh@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        gregkh@linuxfoundation.org, jackp@codeaurora.org, balbi@kernel.org,
-        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
-        Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org
-References: <20200303171159.246992-1-bryan.odonoghue@linaro.org>
- <20200303171159.246992-8-bryan.odonoghue@linaro.org>
- <20200304145756.GA17484@bogus>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Message-ID: <1072c2cb-5b09-1725-4246-f19ef3899e4e@linaro.org>
-Date:   Wed, 4 Mar 2020 16:24:17 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        bh=YhB88TIgmNlGh4QV3oKo77OJ9RLyveUHZ47zGdAxc9U=;
+        b=R4EdE7338Z1vEQ8dH4BkflL9JouqahqPpQYx3ekWO5Gt4LwSf8TPYqEz6uaD50angB
+         ClpwUNqs9T1CEYVem3Sj8mH24J0MqtuKW1qYG+k7ox1GIu3n3DrZVbOb3+VjHcrPh4c+
+         j7NzNhOAxt63LpQ5iUA7T51Fp/Ea8ZHiSbbLy0SwOiLi2EFLQYrZwCYJZeHNwwJrTPD+
+         23qylx5grN7CeSsl0ILnKM8lzyTQBYcPtqJeREe5ezBtsNuqNL+/7TkkYgWCMJyjldJd
+         8fdtJJw+r6ZuFhgMpUvArRWZrwG6BYJfW4iQpoOTM0qGrs5bpCvBSUXisnJ1xNTiS2J8
+         YlvQ==
+X-Gm-Message-State: ANhLgQ28u+SItsCPmaTLy+bQ52cflKGiv6YkzllAqVFfwS1eU+uoi5XB
+        oAtPKKRiBz8Lgao2WffrUD9QcYPOHpw=
+X-Google-Smtp-Source: ADFU+vsZIb09OZJmrrBgfgh7XZoULYAmsF3FqidGTz9tBE79VJ5ZUG4vk429Jf3B8yAH4aqv9jxinQ==
+X-Received: by 2002:adf:b641:: with SMTP id i1mr1584455wre.18.1583339433801;
+        Wed, 04 Mar 2020 08:30:33 -0800 (PST)
+Received: from [10.44.66.8] ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id k2sm8685864wrn.57.2020.03.04.08.30.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 04 Mar 2020 08:30:33 -0800 (PST)
+Subject: Re: [v5, 3/3] arm64: dts: sc7180: Add interconnect provider DT nodes
+To:     Odelu Kukatla <okukatla@codeaurora.org>, bjorn.andersson@linaro.org
+Cc:     daidavid1@codeaurora.org, evgreen@google.com,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sboyd@kernel.org,
+        ilina@codeaurora.org, seansw@qti.qualcomm.com, elder@linaro.org,
+        linux-pm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
+References: <1583241493-21212-1-git-send-email-okukatla@codeaurora.org>
+ <1583241493-21212-4-git-send-email-okukatla@codeaurora.org>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+ KEmKjLDvB0pePJkdTw==
+Message-ID: <87da985b-19b4-e7f9-50ab-f8178e055041@linaro.org>
+Date:   Wed, 4 Mar 2020 18:30:31 +0200
 MIME-Version: 1.0
-In-Reply-To: <20200304145756.GA17484@bogus>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <1583241493-21212-4-git-send-email-okukatla@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -71,38 +115,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/03/2020 14:57, Rob Herring wrote:
-> On Tue,  3 Mar 2020 17:11:48 +0000, Bryan O'Donoghue wrote:
->> A USB connector should be a child node of the USB controller
->> connector/usb-connector.txt. This patch adds an example of how to do this
->> to the dwc3 binding descriptions.
->>
->> It is necessary to declare a connector as a child-node of a USB controller
->> for role-switching to work, so this example should be helpful to others
->> implementing that.
->>
->> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->> Cc: Rob Herring <robh+dt@kernel.org>
->> Cc: Mark Rutland <mark.rutland@arm.com>
->> Cc: linux-usb@vger.kernel.org
->> Cc: devicetree@vger.kernel.org
->> Cc: linux-kernel@vger.kernel.org
->> Acked-by: Felipe Balbi <balbi@kernel.org>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
->>   Documentation/devicetree/bindings/usb/dwc3.txt | 8 ++++++++
->>   1 file changed, 8 insertions(+)
->>
+On 3/3/20 15:18, Odelu Kukatla wrote:
+> Add the DT nodes for the network-on-chip interconnect buses found
+> on sc7180-based platforms.
 > 
-> Please add Acked-by/Reviewed-by tags when posting new versions. However,
-> there's no need to repost patches *only* to add the tags. The upstream
-> maintainer will do that for acks received on the version they apply.
-> 
-> If a tag was not added on purpose, please state why and what changed.
-> 
+> Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
 
-Yep apologies I forgot to add your
+Acked-by: Georgi Djakov <georgi.djakov@linaro.org>
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+The ack is also valid for v4 of the same patch, just in case it's preferred.
 
-when posting this one
+Thanks,
+Georgi
