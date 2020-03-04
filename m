@@ -2,166 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 767EE179186
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 14:38:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 23AE11791AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 14:49:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729386AbgCDNi4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Mar 2020 08:38:56 -0500
-Received: from mail26.static.mailgun.info ([104.130.122.26]:13139 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729118AbgCDNi4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Mar 2020 08:38:56 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1583329135; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Hr/VA6ezPuA2jJjtVJqg1r1s/E5G0dTBBd2WX54vlnQ=;
- b=g04UklFkF24pJKk0R//XGG+UazaRBQtNw4meJiFg//zfV7gVRc1h1xMPeG7/N316B28OFHop
- tYuH5iJLCfyHP3vP+HQkNIh7iCD5r4h1xy1nYo3NYSjNttmIMxCIXyHBGK89QGdmKx9WoFYa
- zwkDrr/5xiVvtj3ZggVX/6ssPsM=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e5faf6e.7fe30c1fdea0-smtp-out-n01;
- Wed, 04 Mar 2020 13:38:54 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0001FC4479F; Wed,  4 Mar 2020 13:38:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 495B2C43383;
-        Wed,  4 Mar 2020 13:38:53 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+        id S1729450AbgCDNs7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Mar 2020 08:48:59 -0500
+Received: from mail-am6eur05on2050.outbound.protection.outlook.com ([40.107.22.50]:6132
+        "EHLO EUR05-AM6-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1729138AbgCDNs7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Mar 2020 08:48:59 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=C0HdQrFD2kQes4f2G+AwCAl041xym184+mIl+oKQ45KdT+bmGKXFO9XMzfSd/SNLm6UQIkSbHqauYrylOa9pjWNdrlXdLzR5yCSWOrzWLiuOlbvVJJZ/kyeHTx3gdJvaKfF0qdjo6XPPUQK7pQGaJo8xzMJSx84vFZro7au1ESVOSNcfb0RFEtSV8xgT5diL9pJ7osrCl68nQpLwwGYKqtn/PE/RLB/jF3txixy+th+afgZWnt7WcXl5izSEy8/IfDCrT0OzhCMFa8ddfwdeDkMeIOfjg6fJqgpW1FWN0+k6R+w7IfYwPd2IUuSWkOG6tkjTsPk5ie9z240LHgDpEw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GkGDt2KYEWJsYwssRf20u/bu1+9jzLR9C/u3Rj2FFxc=;
+ b=D+8bWpSCrDuCrHbOo3E+3fQDaghY5x2JhsUE0GSRO3cgpZ1mkJ82Sv1ToZVuqXt+0kKGWcoDDj6VNZXaZ7e0xBoOrMal0x/uL3Zwco4n57X/Wjp5tFVt6v62hdzsewtnDke8QIx5K/Fo/BX6nz0JdgkN+HQwnqDHQaxoytWErpYdX6Wo1Uti/JxT+CzyHChIQjWAg8BIDG+NYWnS0rc9f0kXOOrbHl5tJQ/T96l5rup3L5hmU3DnWj2rs5dAXV5rIlMLEC6lueWrh0gbja0fHH7r55QDxT808XJRFbSI/ldpe/kB1BIjyQXCDy9iAYv9Z1xRYBu/Q8yPnQND7k7GEQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GkGDt2KYEWJsYwssRf20u/bu1+9jzLR9C/u3Rj2FFxc=;
+ b=Whd0Acjsof9fnFYRRfFfi7UnZvVMLouomSxynfsHWQbsjP0gOBNL546XDGtMWc/zQG+TBOOxHSZrY6HFVO3C4FQX+7Ugn2E/Xfp4o5+tbEGYO1brYO3+q+J2+7y49iXsFXvXxnItJA+3+7fmsGwdCmOHNJ9c6DAYOuvHSI6Og0A=
+Authentication-Results: spf=none (sender IP is )
+ smtp.mailfrom=laurentiu.tudor@nxp.com; 
+Received: from AM0PR04MB6897.eurprd04.prod.outlook.com (52.132.213.205) by
+ AM0PR04MB5715.eurprd04.prod.outlook.com (20.178.117.90) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2772.18; Wed, 4 Mar 2020 13:48:55 +0000
+Received: from AM0PR04MB6897.eurprd04.prod.outlook.com
+ ([fe80::86e:9e66:998f:9528]) by AM0PR04MB6897.eurprd04.prod.outlook.com
+ ([fe80::86e:9e66:998f:9528%7]) with mapi id 15.20.2772.019; Wed, 4 Mar 2020
+ 13:48:55 +0000
+Subject: Re: [RFC 0/2] iommu: arm-smmu: Add support for early direct mappings
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
+        linux-tegra@vger.kernel.org, Will Deacon <will@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Russell King - ARM Linux admin <linux@armlinux.org.uk>,
+        Diana Craciun <diana.craciun@oss.nxp.com>,
+        Ioana Ciornei <ioana.ciornei@nxp.com>
+References: <20191209150748.2471814-1-thierry.reding@gmail.com>
+ <20200228025700.GA856087@builder>
+From:   Laurentiu Tudor <laurentiu.tudor@nxp.com>
+Message-ID: <fb4d4ab5-0b9f-5912-a4c1-2f18bf273e11@nxp.com>
+Date:   Wed, 4 Mar 2020 15:48:53 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+In-Reply-To: <20200228025700.GA856087@builder>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 04 Mar 2020 19:08:53 +0530
-From:   skakit@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     gregkh@linuxfoundation.org, mgautam@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        akashast@codeaurora.org, rojay@codeaurora.org,
-        msavaliy@qti.qualcomm.com
-Subject: Re: [PATCH V2 1/2] tty: serial: qcom_geni_serial: Allocate
- port->rx_fifo buffer in probe
-In-Reply-To: <158293049615.112031.13967218907878863371@swboyd.mtv.corp.google.com>
-References: <1582638862-9344-1-git-send-email-skakit@codeaurora.org>
- <1582638862-9344-2-git-send-email-skakit@codeaurora.org>
- <158293049615.112031.13967218907878863371@swboyd.mtv.corp.google.com>
-Message-ID: <10271d550b48a61e1fc7a61b69b64d31@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+X-ClientProxiedBy: AM0PR01CA0063.eurprd01.prod.exchangelabs.com
+ (2603:10a6:208:e6::40) To AM0PR04MB6897.eurprd04.prod.outlook.com
+ (2603:10a6:208:184::13)
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [10.171.82.13] (89.37.124.34) by AM0PR01CA0063.eurprd01.prod.exchangelabs.com (2603:10a6:208:e6::40) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2772.15 via Frontend Transport; Wed, 4 Mar 2020 13:48:54 +0000
+X-Originating-IP: [89.37.124.34]
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-HT: Tenant
+X-MS-Office365-Filtering-Correlation-Id: f696aef0-0226-4d24-ed3d-08d7c042c7f6
+X-MS-TrafficTypeDiagnostic: AM0PR04MB5715:|AM0PR04MB5715:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <AM0PR04MB57155C774D213E95B7641380ECE50@AM0PR04MB5715.eurprd04.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
+X-Forefront-PRVS: 0332AACBC3
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10009020)(4636009)(136003)(396003)(346002)(376002)(39860400002)(366004)(189003)(199004)(66476007)(66556008)(86362001)(4326008)(66946007)(2906002)(36756003)(478600001)(6486002)(16576012)(53546011)(186003)(5660300002)(81166006)(8936002)(44832011)(81156014)(52116002)(26005)(110136005)(31696002)(2616005)(316002)(8676002)(16526019)(956004)(31686004)(54906003);DIR:OUT;SFP:1101;SCL:1;SRVR:AM0PR04MB5715;H:AM0PR04MB6897.eurprd04.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+Received-SPF: None (protection.outlook.com: nxp.com does not designate
+ permitted sender hosts)
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: agHQlVp4Q+A+VMeMZQKYPToCK4elPBChTNWJDd7/lxEI8I9Jr8Z93wcCeYVPz+6bq2RXFFpYRX41kDVgRfyv6OebYN+vLGydjKsOcDcHDe+aF+BSkMHFtI+kHQM/XJrZb6dUn2Ybtgj0x0WbiMUjbPyGpCNYIpv0BUtXehrLSiPX7BCroioBWHpF2n77VGvu4NRZ2WcgsIsE063Wh+ANUco9kp3Y5FcxukS1CVHe1Wt2Cslj0MXgvefDmneRL3oAxnGp/nPH9/Cw2Bd5oA8lsO6hSMSVLg2cYhZyBXVeIB3ThbZSPxwJwJePLNyXH+aORwCLyS8yerQBRwoVv6bk4S5ysBXL8JgtECkEuijY7swVbLEs1kggeEdlKtmTeuMAiI1clNS32+B8KBQ0KjnfxPy7Z5r9hI04rPQhPJKIxQmTdWSklPprBdFsIqYiVPFB
+X-MS-Exchange-AntiSpam-MessageData: STnzftKrn1Qjo6IzYSmqymcbNd5v5I8bXjvrFvuDnsWl+KU2sG8pjPVpkIJiWXpXAVKgq8edxpBrweBXs7FDvX7vWf+0TUwC8lPfwXRlyCh7UIJwqqHbjuz+au9ThH5EHYLp5R8T/mtCfWkfKpN1ng==
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f696aef0-0226-4d24-ed3d-08d7c042c7f6
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Mar 2020 13:48:55.3140
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8l+41/BDU3I1f5BS1ln2sIb1Z2YMfF/+qb1HdJjVQ6OBiYX07nUYPSIz2xP/1JBk/wMIs68BNdMMblUFx7LU4w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR04MB5715
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-02-29 04:24, Stephen Boyd wrote:
-> Quoting satya priya (2020-02-25 05:54:21)
->> To fix the RX cancel command failure, rx_fifo buffer needs to be
->> flushed in stop_rx() by calling handle_rx().
->> 
->> If set_termios is called before startup, by this time memory is not
->> allocated to port->rx_fifo buffer, which leads to a NULL pointer
->> dereference.
->> 
->> To avoid this NULL pointer dereference allocate memory to 
->> port->rx_fifo
->> in probe itself.
->> 
->> Signed-off-by: satya priya <skakit@codeaurora.org>
-> 
-> Please give me reported-by credit.
-> 
-> Reported-by: Stephen Boyd <swboyd@chromium.org>
+Hello,
 
-Ok.
+On 28.02.2020 04:57, Bjorn Andersson wrote:
+> On Mon 09 Dec 07:07 PST 2019, Thierry Reding wrote:
+> 
+>> From: Thierry Reding <treding@nvidia.com>
+>>
+> 
+> Sorry for the slow response on this, finally got the time to go through
+> this in detail and try it out on some Qualcomm boards.
+> 
+>> On some platforms, the firmware will setup hardware to read from a given
+>> region of memory. One such example is a display controller that is
+>> scanning out a splash screen from physical memory.
+>>
+> 
+> This particular use case is the one that we need to figure out for
+> Qualcomm devices as well; on some devices it's a simple splash screen
+> (that on many devices can be disabled), but for others we have EFIFB
+> on the display and no (sane) means to disable this.
+> 
+>> During Linux' boot process, the ARM SMMU will configure all contexts to
+>> fault by default. This means that memory accesses that happen by an SMMU
+>> master before its driver has had a chance to properly set up the IOMMU
+>> will cause a fault. This is especially annoying for something like the
+>> display controller scanning out a splash screen because the faults will
+>> result in the display controller getting bogus data (all-ones on Tegra)
+>> and since it repeatedly scans that framebuffer, it will keep triggering
+>> such faults and spam the boot log with them.
+>>
+> 
+> As my proposed patches indicated, the Qualcomm platform boots with
+> stream mapping setup for the hardware used by the bootloader, but
+> relying on the associated context banks not being enabled.
+> 
+> USFCFG in SCR0 is set and any faults resulting of this will trap into
+> secure world and the device will be reset.
+> 
+>> In order to work around such problems, scan the device tree for IOMMU
+>> masters and set up a special identity domain that will map 1:1 all of
+>> the reserved regions associated with them. This happens before the SMMU
+>> is enabled, so that the mappings are already set up before translations
+>> begin.
+>>
+>> One thing that was pointed out earlier, and which I don't have a good
+>> idea on how to solve it, is that the early identity domain is not
+>> discarded. The assumption is that the standard direct mappings code of
+>> the IOMMU framework will replace the early identity domain once devices
+>> are properly attached to domains, but we don't have a good point in time
+>> when it would be safe to remove the early identity domain.
+>>
+>> One option that I can think of would be to create an early identity
+>> domain for each master and inherit it when that master is attached to
+>> the domain later on, but that seems rather complicated from an book-
+>> keeping point of view and tricky because we need to be careful not to
+>> map regions twice, etc.
+>>
+> 
+> The one concern I ran into with this approach (after resolving below
+> issues) is that when the display driver probes a new domain will be
+> created automatically and I get a stream of "Unhandled context fault" in
+> the log until the driver has mapped the framebuffer in the newly
+> allocated context.
+> 
+> This is normally not a problem, as we seem to be able to do this
+> initialization in a few frames, but for the cases where the display
+> driver probe defer this is a problem.
 
-> 
->> ---
->>  drivers/tty/serial/qcom_geni_serial.c | 13 +++++++------
->>  1 file changed, 7 insertions(+), 6 deletions(-)
->> 
->> diff --git a/drivers/tty/serial/qcom_geni_serial.c 
->> b/drivers/tty/serial/qcom_geni_serial.c
->> index 191abb1..d2a909c 100644
->> --- a/drivers/tty/serial/qcom_geni_serial.c
->> +++ b/drivers/tty/serial/qcom_geni_serial.c
->> @@ -858,12 +858,6 @@ static int qcom_geni_serial_port_setup(struct 
->> uart_port *uport)
->>                                                 false, false, true);
->>         geni_se_init(&port->se, UART_RX_WM, port->rx_fifo_depth - 2);
->>         geni_se_select_mode(&port->se, GENI_SE_FIFO);
->> -       if (!uart_console(uport)) {
->> -               port->rx_fifo = devm_kcalloc(uport->dev,
->> -                       port->rx_fifo_depth, sizeof(u32), GFP_KERNEL);
->> -               if (!port->rx_fifo)
->> -                       return -ENOMEM;
->> -       }
->>         port->setup = true;
->> 
->>         return 0;
->> @@ -1274,6 +1268,13 @@ static int qcom_geni_serial_probe(struct 
->> platform_device *pdev)
->>         port->rx_fifo_depth = DEF_FIFO_DEPTH_WORDS;
->>         port->tx_fifo_width = DEF_FIFO_WIDTH_BITS;
->> 
->> +       if (!console) {
->> +               port->rx_fifo = devm_kcalloc(uport->dev,
->> +                       port->rx_fifo_depth, sizeof(u32), GFP_KERNEL);
->> +               if (!port->rx_fifo)
->> +                       return -ENOMEM;
->> +       }
-> 
-> Is there any reason the rx_fifo pointer is a u32 instead of a u8 or 
-> void
-> pointer? ioread32_rep() doesn't care what the pointer is and then we
-> have to cast it, so it seems like we should do something like below 
-> too.
-> 
+Also gave this a go on one of NXP's layerscape platforms, and 
+encountered the same issue. However, given that in our case it's not 
+about a framebuffer device but a firmware, it cause it to crash. :-(
 
-Yes, we can use void instead of u32, will add this change in next patch.
+Another apparent problem is that in the current implementation only one 
+memory-region per device is supported. Actually it appears that this is 
+a limitation of the DT reservation binding - it doesn't seem to allow 
+specifying multiple regions per device. In our firmware case we would 
+need support for multiple reserved regions (FW memory, FW i/o registers 
+a.s.o).
 
-> -----8<-----
-> 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c
-> b/drivers/tty/serial/qcom_geni_serial.c
-> index 191abb18fc2a..b4875dfef6aa 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -113,7 +113,7 @@ struct qcom_geni_serial_port {
->  	unsigned int baud;
->  	unsigned int tx_bytes_pw;
->  	unsigned int rx_bytes_pw;
-> -	u32 *rx_fifo;
-> +	u8 *rx_fifo;
->  	u32 loopback;
->  	bool brk;
-> 
-> @@ -504,7 +504,6 @@ static int handle_rx_console(struct uart_port
-> *uport, u32 bytes, bool drop)
-> 
->  static int handle_rx_uart(struct uart_port *uport, u32 bytes, bool 
-> drop)
->  {
-> -	unsigned char *buf;
->  	struct tty_port *tport;
->  	struct qcom_geni_serial_port *port = to_dev_port(uport, uport);
->  	u32 num_bytes_pw = port->tx_fifo_width / BITS_PER_BYTE;
-> @@ -516,8 +515,7 @@ static int handle_rx_uart(struct uart_port *uport,
-> u32 bytes, bool drop)
->  	if (drop)
->  		return 0;
-> 
-> -	buf = (unsigned char *)port->rx_fifo;
-> -	ret = tty_insert_flip_string(tport, buf, bytes);
-> +	ret = tty_insert_flip_string(tport, port->rx_fifo, bytes);
->  	if (ret != bytes) {
->  		dev_err(uport->dev, "%s:Unable to push data ret %d_bytes %d\n",
->  				__func__, ret, bytes);
+---
+Best Regards, Laurentiu
