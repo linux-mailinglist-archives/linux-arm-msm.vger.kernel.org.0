@@ -2,112 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 12F861795AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 17:49:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 415AF17963F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 18:04:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388219AbgCDQtT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Mar 2020 11:49:19 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:38058 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388024AbgCDQtT (ORCPT
+        id S1729501AbgCDREw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Mar 2020 12:04:52 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:40311 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728278AbgCDREv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Mar 2020 11:49:19 -0500
-Received: by mail-wm1-f65.google.com with SMTP id u9so2589038wml.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 08:49:17 -0800 (PST)
+        Wed, 4 Mar 2020 12:04:51 -0500
+Received: by mail-pf1-f193.google.com with SMTP id l184so1256845pfl.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 09:04:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rD4Tta4Ky2Kw2i1Eu0PqbZJvYvJ9BvhGYQ86KEAuKFQ=;
-        b=e0x9VRmEh4+SOYPrLNbTuhz1MG2bga7HXMsnNjfVFqiZJY4bzLEKBw5tHlBHh+CD83
-         9l5OzS24yLoDtj+UjuiFBxxTCU6gNsiVgR2P1hkKHPB4uSY9/2wuQkcqCwpjokblzDA/
-         2QWwz5xS8wL/N7PvpbLbSp1B3fw9oKuxXJEVmqkrHuMqsJ+Q/fka94AgmcPEE0wmsxJD
-         h0RdnbaYpEqmSnoJOPq+YU29fVxTSFFIeVIAM7IVYwdDeVm2xnRx3STahvOQ46IULTBK
-         5D0s/poGRPdiqSUn3/XjjgNCqXpvHLoRv42wxkm9Ar06vCewyJ4pdHUZklfUyzFo/hL5
-         lmoQ==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=+ou/OdAfTiHYp4j2KMmUahM1JBJV325ndgSFeza38do=;
+        b=SLHEESA+7k3EclcR1c45IiMJT4Fv3sBySnsgP7jdnPR9aF8PtoMUSZ54awwT2KgbLF
+         vyjd5lzwQ2FjtXJ6/bOztSJIxL2FQ6NE+mSwaK2e/q0Dvi9b5yeIKYcM2vZdODv+5fD9
+         9s+E5guANFSaHOZjuHleUMTwkW2pozVzi7v+g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=rD4Tta4Ky2Kw2i1Eu0PqbZJvYvJ9BvhGYQ86KEAuKFQ=;
-        b=A+rU2I/6dhznKJ0fm+xZ73g6PXzLjlXPYgiHlBRMJGkxKvhKSYzS9VioizxniE0317
-         FgJhM35EfpHfgq04L84lyhW7L9uxaxkUWLCsvBoIaf/rX11gm5JqOBhLW1haTJb1TK6k
-         J5ZKcIfS/zrhGEookH0V4uYB1xh+ucqUEm68CE5G8TjotxptosFGwb4N3/cM1mrDMZtd
-         Fh42b80p6Cl3NZUnD7yuPy8D9Ci7m4bY115uL124tyaAiQ63KQrcij66P0w1KHICNOON
-         PNEAEyF7Ry5tjCppHqQLdFakEkUDk8DAKVduWqJk+EgnSpPsdb0WHoKlow/1+tIMtmIs
-         qdYA==
-X-Gm-Message-State: ANhLgQ33HUIcmQCofPQ0aoErg55PcJ0slHaIUi7tXJ3CSiRW46ArX5fW
-        0+T2pXLDbjnT3l+YfoQUfZnrbA==
-X-Google-Smtp-Source: ADFU+vteAHmkMq+Gs1WexHwWt7Wto47wSEU8tcIx7f0ctaJaV5kC7TSMdbfOeVNwpiS0q7Lv13Csow==
-X-Received: by 2002:a1c:81c5:: with SMTP id c188mr4457833wmd.98.1583340557147;
-        Wed, 04 Mar 2020 08:49:17 -0800 (PST)
-Received: from localhost.localdomain ([37.171.70.150])
-        by smtp.gmail.com with ESMTPSA id y3sm909226wrm.46.2020.03.04.08.49.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 04 Mar 2020 08:49:16 -0800 (PST)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     wsa@the-dreams.de
-Cc:     vkoul@kernel.org, bjorn.andersson@linaro.org,
-        robert.foss@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v3 3/3] arm64: dts: msm8916: Add CCI node
-Date:   Wed,  4 Mar 2020 17:52:56 +0100
-Message-Id: <1583340776-27865-3-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1583340776-27865-1-git-send-email-loic.poulain@linaro.org>
-References: <1583340776-27865-1-git-send-email-loic.poulain@linaro.org>
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=+ou/OdAfTiHYp4j2KMmUahM1JBJV325ndgSFeza38do=;
+        b=SJtfyMRktip5BMQZ5K1AnshM7YoWrqC9+NDdsJk2VHEQV8XEg/6oR5RBi3cbaXzNs1
+         JxiobjX1b3q++W1y0oufT3OOYd7DAjcj3LYo0VlyvOyyFbCJVGvX1z9bJ1w06ADX56Fy
+         yRHEpN+bBkTYV7f9A3YwsQkzgLb6f56hwTHcttfB474P7ZUrkrhuRaUsqEJ4QROxnzuS
+         l0kTlzdbJABZhyn05TiLqtbJZemlPoCk2KQe5o2urKAjzy3YEZekXRojURSsNpIQGBss
+         efa17X1gHYPs1+dTsrezrErSPnj3q+stLi6ZMkArhfgyTQLyEvz86FciQIWr5WFmcC+g
+         eusg==
+X-Gm-Message-State: ANhLgQ2VhxZaS2lfkpV+oVyCTgPVCYb8BxjPc4H4QBJXITGwlStNbCh4
+        HKqKz6AEfjQNQyairxNPAhvIbw==
+X-Google-Smtp-Source: ADFU+vsqNg1+yh+/sD1uGquKOupANCVFksOVini3LC+fUYE3d/JepP8yCmd7cxFAe18RcCRpmNdiTA==
+X-Received: by 2002:a63:f752:: with SMTP id f18mr3426343pgk.196.1583341490800;
+        Wed, 04 Mar 2020 09:04:50 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id b15sm29092475pft.58.2020.03.04.09.04.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Mar 2020 09:04:50 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200304064942.371978-2-ebiggers@kernel.org>
+References: <20200304064942.371978-1-ebiggers@kernel.org> <20200304064942.371978-2-ebiggers@kernel.org>
+Subject: Re: [RFC PATCH v2 1/4] firmware: qcom_scm: Add support for programming inline crypto keys
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Can Guo <cang@codeaurora.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        Jaegeuk Kim <jaegeuk@kernel.org>
+To:     Eric Biggers <ebiggers@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Date:   Wed, 04 Mar 2020 09:04:49 -0800
+Message-ID: <158334148941.7173.15031605009318265979@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The msm8916 CCI controller provides one CCI/I2C bus.
+Quoting Eric Biggers (2020-03-03 22:49:39)
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 059bb0fbae9e..7fb9f606250f 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -926,6 +927,101 @@ int qcom_scm_ocmem_unlock(enum qcom_scm_ocmem_clien=
+t id, u32 offset, u32 size)
+[...]
+> +
+> +/**
+> + * qcom_scm_ice_set_key() - Set an inline encryption key
+> + * @index: the keyslot into which to set the key
+> + * @key: the key to program
+> + * @key_size: the size of the key in bytes
+> + * @cipher: the encryption algorithm the key is for
+> + * @data_unit_size: the encryption data unit size, i.e. the size of each
+> + *                 individual plaintext and ciphertext.  Given in 512-by=
+te
+> + *                 units, e.g. 1 =3D 512 bytes, 8 =3D 4096 bytes, etc.
+> + *
+> + * Program a key into a keyslot of Qualcomm ICE (Inline Crypto Engine), =
+where it
+> + * can then be used to encrypt/decrypt UFS I/O requests inline.
+> + *
+> + * The UFSHCI standard defines a standard way to do this, but it doesn't=
+ work on
+> + * these SoCs; only this SCM call does.
+> + *
+> + * Return: 0 on success; -errno on failure.
+> + */
+> +int qcom_scm_ice_set_key(u32 index, const u8 *key, int key_size,
+> +                        enum qcom_scm_ice_cipher cipher, int data_unit_s=
+ize)
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- v2: add this patch in the series
- v3: add only cci node for now
+Why not make key_size and data_unit_size unsigned?
 
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+> +{
+> +       struct qcom_scm_desc desc =3D {
+> +               .svc =3D QCOM_SCM_SVC_ES,
+> +               .cmd =3D QCOM_SCM_ES_CONFIG_SET_ICE_KEY,
+> +               .arginfo =3D QCOM_SCM_ARGS(5, QCOM_SCM_VAL, QCOM_SCM_RW,
+> +                                        QCOM_SCM_VAL, QCOM_SCM_VAL,
+> +                                        QCOM_SCM_VAL),
+> +               .args[0] =3D index,
+> +               .args[2] =3D key_size,
+> +               .args[3] =3D cipher,
+> +               .args[4] =3D data_unit_size,
+> +               .owner =3D ARM_SMCCC_OWNER_SIP,
+> +       };
+> +       u8 *keybuf;
+> +       dma_addr_t key_phys;
+> +       int ret;
+> +
+> +       keybuf =3D kmemdup(key, key_size, GFP_KERNEL);
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 8686e10..985cb5f 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1451,6 +1451,33 @@
- 			};
- 		};
- 
-+		cci@1b0c000 {
-+			compatible = "qcom,msm8916-cci";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0x1b0c000 0x1000>;
-+			interrupts = <GIC_SPI 50 IRQ_TYPE_EDGE_RISING>;
-+			clocks = <&gcc GCC_CAMSS_TOP_AHB_CLK>,
-+				<&gcc GCC_CAMSS_CCI_AHB_CLK>,
-+				<&gcc GCC_CAMSS_CCI_CLK>,
-+				<&gcc GCC_CAMSS_AHB_CLK>;
-+			clock-names = "camss_top_ahb", "cci_ahb",
-+				      "cci", "camss_ahb";
-+			assigned-clocks = <&gcc GCC_CAMSS_CCI_AHB_CLK>,
-+					  <&gcc GCC_CAMSS_CCI_CLK>;
-+			assigned-clock-rates = <80000000>, <19200000>;
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&cci0_default>;
-+			status = "disabled";
-+
-+			cci0: i2c-bus@0 {
-+				reg = <0>;
-+				clock-frequency = <400000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
- 		camss: camss@1b00000 {
- 			compatible = "qcom,msm8916-camss";
- 			reg = <0x1b0ac00 0x200>,
--- 
-2.7.4
+Is this to make the key physically contiguous? Probably worth a comment
+to help others understand why this is here.
 
+> +       if (!keybuf)
+> +               return -ENOMEM;
+> +
+> +       key_phys =3D dma_map_single(__scm->dev, keybuf, key_size, DMA_TO_=
+DEVICE);
+> +       if (dma_mapping_error(__scm->dev, key_phys)) {
+> +               ret =3D -ENOMEM;
+> +               goto out;
+> +       }
+> +       desc.args[1] =3D key_phys;
+> +
+> +       ret =3D qcom_scm_call(__scm->dev, &desc, NULL);
+> +
+> +       dma_unmap_single(__scm->dev, key_phys, key_size, DMA_TO_DEVICE);
+> +out:
+> +       kzfree(keybuf);
+
+And this is because we want to clear key contents out of the slab? What
+about if the dma_map_single() bounces to a bounce buffer? I think that
+isn't going to happen because __scm->dev is just some firmware device
+that doesn't require bounce buffers but it's worth another comment to
+clarify this.
+
+> +       return ret;
+> +}
+> +EXPORT_SYMBOL(qcom_scm_ice_set_key);
+> +
+>  /**
+>   * qcom_scm_hdcp_available() - Check if secure environment supports HDCP.
+>   *
