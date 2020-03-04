@@ -2,62 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E339D17954C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 17:30:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 11569179558
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 17:32:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726694AbgCDQah (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Mar 2020 11:30:37 -0500
-Received: from mail-wr1-f47.google.com ([209.85.221.47]:37186 "EHLO
-        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728278AbgCDQah (ORCPT
+        id S2388174AbgCDQci (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Mar 2020 11:32:38 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33373 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729554AbgCDQci (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Mar 2020 11:30:37 -0500
-Received: by mail-wr1-f47.google.com with SMTP id q8so3175640wrm.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 08:30:35 -0800 (PST)
+        Wed, 4 Mar 2020 11:32:38 -0500
+Received: by mail-wr1-f65.google.com with SMTP id x7so3211294wrr.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 08:32:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=YhB88TIgmNlGh4QV3oKo77OJ9RLyveUHZ47zGdAxc9U=;
-        b=MRJAXSTneB6L1oif6lUKqMEw4K0Q3pFQ0uKmoBsFQ0GYWu6u+FgxyGhueH5tJhCYBh
-         Cvb4+RCpc3Yh/cNUSyvaytm/yROBp/WaoweknPrWGWMxRk8bE6Hb1zUHzAkQtckOq7p5
-         e6f1HULqcir5WbPAigHnf0lTr1yC+7RcrrdvVWsz4gPPMTrVl8ZfNguLThq5tVFkUmR8
-         VJc6z9jpwZydt3aCpgb/QYw02j7gA4ObuS35pyT+G997n4vsjhoCCCVT12WO98hbQYW/
-         wyx6CB521uP/7CCk/WK8h4Kftmi2oDGw/grGeg0fkhvjgfwuAdI7saqmBoOF5F0FcFmX
-         Xm5g==
+        bh=1DVg2HzyXuqzY2Em3wmmjlF68hoUbzW1qoYVED9qTvs=;
+        b=xOIMba6dZzLxDUq2Ti7G9BIdqlxBIYnyNObN+wzU8Izy+vUuVdskL81UybsNqkXakC
+         fTSDHnfs/+M/m13jfjlPR1u/NbmFJlzGEbGUU1vG3d6jneWFgFJVEl3UsWyweaD+uKet
+         NFcJmzet+R8j/z+pJxQ4qC21qC65oY4CCuyyAq1iUP5s0Q293oDP3WyZilUxUhL50BKt
+         T6qU1yNGVzKsoUJwgEvUnvqW/sOEPf2Vlz0TGqDNMEQcuDqqrS91WqJKeIJSnQJ5SK1w
+         6HzL+SlT0CztuC7JQEXHqrGqSHd6QszTf+8IkCcx5Ik1lmm74hjAJXWIv4QbXl2Ieiko
+         wgbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=YhB88TIgmNlGh4QV3oKo77OJ9RLyveUHZ47zGdAxc9U=;
-        b=R4EdE7338Z1vEQ8dH4BkflL9JouqahqPpQYx3ekWO5Gt4LwSf8TPYqEz6uaD50angB
-         ClpwUNqs9T1CEYVem3Sj8mH24J0MqtuKW1qYG+k7ox1GIu3n3DrZVbOb3+VjHcrPh4c+
-         j7NzNhOAxt63LpQ5iUA7T51Fp/Ea8ZHiSbbLy0SwOiLi2EFLQYrZwCYJZeHNwwJrTPD+
-         23qylx5grN7CeSsl0ILnKM8lzyTQBYcPtqJeREe5ezBtsNuqNL+/7TkkYgWCMJyjldJd
-         8fdtJJw+r6ZuFhgMpUvArRWZrwG6BYJfW4iQpoOTM0qGrs5bpCvBSUXisnJ1xNTiS2J8
-         YlvQ==
-X-Gm-Message-State: ANhLgQ28u+SItsCPmaTLy+bQ52cflKGiv6YkzllAqVFfwS1eU+uoi5XB
-        oAtPKKRiBz8Lgao2WffrUD9QcYPOHpw=
-X-Google-Smtp-Source: ADFU+vsZIb09OZJmrrBgfgh7XZoULYAmsF3FqidGTz9tBE79VJ5ZUG4vk429Jf3B8yAH4aqv9jxinQ==
-X-Received: by 2002:adf:b641:: with SMTP id i1mr1584455wre.18.1583339433801;
-        Wed, 04 Mar 2020 08:30:33 -0800 (PST)
+        bh=1DVg2HzyXuqzY2Em3wmmjlF68hoUbzW1qoYVED9qTvs=;
+        b=el4M5e3PbV4EwdC6ElIw/KuHgs0k6U4DPVHRxayFeYL5D/P7dWKuwVyGS/UaXgd2Ba
+         +pOShkxKrajwh5CKTflp21eEfZr6svmSl8rTIZstomZh3AyFqCPES3tjO5lApICcNFtW
+         bVcOFeYhJuLJNY1WHhddwMdeTt9A2P4u2xHhjxqSNMaUHT4Wnf+3/dNnXQ/+1Ey28NkG
+         WvlDZVgme8ybOe87q/ZDlzIVGhos34MZr0Kv6/Gvn09ze+r6Ot1wNFRKaj4MoYLUkqTL
+         f6Go1KauNFupA2ox2HRo9hKteTm2aBPwTHD5+NOxr3LEQ0EvI9YYnRyFjqbOS9jAPO+H
+         hHJQ==
+X-Gm-Message-State: ANhLgQ1mQscJaigUAop2OoeJKR0DexMzOb33q7QDdM6B8qJHkUdFaVY+
+        93xg2zEviszTy5vEJ0pl7IF8byk86tI=
+X-Google-Smtp-Source: ADFU+vuM+uFn3fWtrfYF7UJL33W3v/xka4eodtF6xDXUEg4Yei3yZ3y7gMJV/70rarbewgSMmPbK+w==
+X-Received: by 2002:adf:cc85:: with SMTP id p5mr4792695wrj.196.1583339556481;
+        Wed, 04 Mar 2020 08:32:36 -0800 (PST)
 Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id k2sm8685864wrn.57.2020.03.04.08.30.32
+        by smtp.googlemail.com with ESMTPSA id o26sm4731257wmc.33.2020.03.04.08.32.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Mar 2020 08:30:33 -0800 (PST)
-Subject: Re: [v5, 3/3] arm64: dts: sc7180: Add interconnect provider DT nodes
-To:     Odelu Kukatla <okukatla@codeaurora.org>, bjorn.andersson@linaro.org
-Cc:     daidavid1@codeaurora.org, evgreen@google.com,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sboyd@kernel.org,
-        ilina@codeaurora.org, seansw@qti.qualcomm.com, elder@linaro.org,
-        linux-pm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
-References: <1583241493-21212-1-git-send-email-okukatla@codeaurora.org>
- <1583241493-21212-4-git-send-email-okukatla@codeaurora.org>
+        Wed, 04 Mar 2020 08:32:35 -0800 (PST)
+Subject: Re: [PATCH v5 6/7] arm64: dts: qcom: sdm845: Add OSM L3 interconnect
+ provider
+To:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org
+Cc:     robh+dt@kernel.org, evgreen@chromium.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, mark.rutland@arm.com,
+        saravanak@google.com, viresh.kumar@linaro.org,
+        okukatla@codeaurora.org
+References: <20200227105632.15041-1-sibis@codeaurora.org>
+ <20200227105632.15041-7-sibis@codeaurora.org>
 From:   Georgi Djakov <georgi.djakov@linaro.org>
 Openpgp: preference=signencrypt
 Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
@@ -103,10 +101,10 @@ Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
  7ayYJIXFqjl/X0KBcCbiAl4vbdBw1bqFnO4zd1lMXKVoa29UHqby4MPbQhjWNVv9kqp8A39+
  E9xw890l1xdERkjVKX6IEJu2hf7X3MMl9tOjBK6MvdOUxvh1bNNmXh7OlBL1MpJYY/ydIm3B
  KEmKjLDvB0pePJkdTw==
-Message-ID: <87da985b-19b4-e7f9-50ab-f8178e055041@linaro.org>
-Date:   Wed, 4 Mar 2020 18:30:31 +0200
+Message-ID: <1136260d-d24d-a021-ba21-9fc1361f2c0d@linaro.org>
+Date:   Wed, 4 Mar 2020 18:32:34 +0200
 MIME-Version: 1.0
-In-Reply-To: <1583241493-21212-4-git-send-email-okukatla@codeaurora.org>
+In-Reply-To: <20200227105632.15041-7-sibis@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -115,15 +113,12 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/3/20 15:18, Odelu Kukatla wrote:
-> Add the DT nodes for the network-on-chip interconnect buses found
-> on sc7180-based platforms.
+On 2/27/20 12:56, Sibi Sankar wrote:
+> Add Operation State Manager (OSM) L3 interconnect provider on SDM845 SoCs.
 > 
-> Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 
 Acked-by: Georgi Djakov <georgi.djakov@linaro.org>
-
-The ack is also valid for v4 of the same patch, just in case it's preferred.
 
 Thanks,
 Georgi
