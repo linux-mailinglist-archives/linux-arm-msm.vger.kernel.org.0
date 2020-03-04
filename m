@@ -2,95 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CDFC17942C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 16:58:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 07A11179434
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2020 17:00:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388119AbgCDP6X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Mar 2020 10:58:23 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:36374 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729696AbgCDP6X (ORCPT
+        id S2388024AbgCDQAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Mar 2020 11:00:32 -0500
+Received: from mail-vk1-f196.google.com ([209.85.221.196]:45463 "EHLO
+        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388019AbgCDQAb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Mar 2020 10:58:23 -0500
-Received: by mail-lj1-f196.google.com with SMTP id 195so2601320ljf.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 07:58:22 -0800 (PST)
+        Wed, 4 Mar 2020 11:00:31 -0500
+Received: by mail-vk1-f196.google.com with SMTP id f17so688079vkk.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2020 08:00:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=U2afUUo7gcqKGsZXm1132Z2DinxFoznPEB9ahOfUs5k=;
-        b=qzK0hDhWmDi+wb9g1tsq8Vo5sOBJTKo4poMC642is7FDaHHY4CS4jN9R0281x/wl09
-         +fj8oA2vifprD7EudIOKS9bTNeGAUeZp4pIN1hkCunkV7mCBMdlg/TNgSWY6pqCzY39D
-         CJJ+ocA4d6uPBooiF1JT6sz/DrFIUXLdp3WheLBY5l1eS5BMyxKyjJgn+Di9PyQ+Hwku
-         6w4h7gei5ClbyOut1K4C1Ngo9l2UL//7RE3FUveNqXPM6UnOS/PdWjGQXp+30ToOWM2a
-         Po2HUBnz+l9fDhn9/KvP+KwUTwZj/o/Lhw4Sq6DWcsCteEVceLZh4fIZuILnhaPyRZ+g
-         j1IQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SqEs55y4dEw5uRAexZmSkf/N7GxDvacFCfzXLumfPhk=;
+        b=T+Yk5UsXq7hnVU0JjnMyTsBDjOuUJFVmT8YM7D0B51N0UZCTVLldZ0uTHWY2NX0wmP
+         K8/nKQdhdrrW173wgG+t8GgRNOcM1LrjK22agARS/gkJaRhmZAE4xUtS3xP37JDWTITE
+         OUGGD5uVCJJXMUhB+NUPrmsyBnhPeGPpopfTODebAUmbnkR2XWQAdTnTuSDQ7K9WMS8v
+         I7BqvtLfMPtFfg+qcZ2gHB2RRjNmV6zG6HVqlDxQMTO61Z6oPyBJLtC08tLSUgBhzrs3
+         l4iJUufZ8exJmMweJO6TKMhvJhpSvQKu/eX32eU9iXl3TDfax6nMDGSHOTdTsi3yPCMp
+         Xd8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=U2afUUo7gcqKGsZXm1132Z2DinxFoznPEB9ahOfUs5k=;
-        b=s+vPKKXtQ6stdTfqFNdqoXaywqYp16Qw9VIl9PawThPduqJykqTcREbfwXOcQElQSd
-         ESIFQRIRovUIYtld22WJQUuxDghAENt5kxA6bhItVXkBzQoz9V8tv/3pp4dFPqsUnzaL
-         AqFil761yqKudIP9/1V8+Hqmhk76trdow1Njy14CxlBeZJvdHn5VwA2lKkcrYMMqlWyN
-         BPKXx1HGJ8f2XlUCOfoUSjvqmEuUeq8apxRT1NoLk+C9om+jGWgEJl/zL0x+N7qWOjoA
-         AxDG3MGX0Mcv3icmjCNT4u0/xyC02IQYhzCjYS5ChZnagQYF0R+GECxBSWqw73zA60D3
-         yp9A==
-X-Gm-Message-State: ANhLgQ2anl2/EhUtfeaaXeVFv7ki6hOvYdG/yfPyA9ZxDn/BNFSw5g9L
-        MVM3fOq+x2Qwn+F7LVDZ+Y+PTg==
-X-Google-Smtp-Source: ADFU+vsVg5RJIaMPwnWAYk62YemrpgFiO40xq3WzGuOXCGINg04alWqT3DGb5/ui1ePPvjmIW5XPjg==
-X-Received: by 2002:a2e:a486:: with SMTP id h6mr2300591lji.202.1583337501273;
-        Wed, 04 Mar 2020 07:58:21 -0800 (PST)
-Received: from localhost.localdomain ([94.155.124.210])
-        by smtp.gmail.com with ESMTPSA id 67sm10531217ljj.31.2020.03.04.07.58.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2020 07:58:20 -0800 (PST)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-media@vger.kernel.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH] venus: firmware: Ignore secure call error on first resume
-Date:   Wed,  4 Mar 2020 17:58:09 +0200
-Message-Id: <20200304155809.19637-1-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SqEs55y4dEw5uRAexZmSkf/N7GxDvacFCfzXLumfPhk=;
+        b=RS76NuEz/b7vLHKEw+rZXPISmeNa3p0tpl/J/7QEBP3oCy619o4dA6pX0v8W9SRulR
+         thk6x8231RZoz97saJIoUJXOBA93lADtw1/agcDIYL72G/Tku9XQ/59jfnM7GaeGiX2t
+         Sio57NBVQARe4pWz20ATBbQIhWBuHTGGbiiPQxVH58eAVg4+MlRqyNs5w2awipRz6p4M
+         XBf4JtxY98d/E9En+t5r8Vec9bSF+UioKmO8tLzkrzG56qghevcEo3/iVmV9w7pir1kc
+         C2IrkPxLC2ZEks/ShvVc6E3NjlGVm0YGxxnrr43o8dujOY66lap6VNIY2VK8zWl+nO8X
+         Hrqg==
+X-Gm-Message-State: ANhLgQ3Uc0mV7VFJWl91EQLF8cFzZtiUTinMOb3/vlHspCnRTABPpjar
+        +Gpc8ez7pG+zBuhErIRFTARl887JhuY1RDBcZJy/8g==
+X-Google-Smtp-Source: ADFU+vvDe6AUVq7FvlD0Zl/y/Oj3Ne1SZTjBontrgT4tGULO92r4fXatr48O/ebUZw7D/ayIYX1ZG9T/mmjQx4yXLIY=
+X-Received: by 2002:ac5:cdcd:: with SMTP id u13mr1841139vkn.0.1583337629345;
+ Wed, 04 Mar 2020 08:00:29 -0800 (PST)
+MIME-Version: 1.0
+References: <1583323250-23596-1-git-send-email-vbadigan@codeaurora.org> <1583328320-9981-1-git-send-email-vbadigan@codeaurora.org>
+In-Reply-To: <1583328320-9981-1-git-send-email-vbadigan@codeaurora.org>
+From:   Doug Anderson <dianders@google.com>
+Date:   Wed, 4 Mar 2020 08:00:19 -0800
+Message-ID: <CAD=FV=XKFa3vs5Fv0DUwYLF8o4s8cCAsSudYGMn3XZ73wVoOdw@mail.gmail.com>
+Subject: Re: [PATCH V2] mmc: cqhci: Update cqhci memory ioresource name
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Ritesh Harjani <riteshh@codeaurora.org>,
+        Asutosh Das <asutoshd@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-With the latest cleanup in qcom scm driver the secure monitor
-call for setting the remote processor state returns EINVAL when
-it is called for the first time and after another scm call
-auth_and_reset. The error returned from scm call could be ignored
-because the state transition is already done in auth_and_reset.
+Hi,
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/firmware.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+On Wed, Mar 4, 2020 at 5:25 AM Veerabhadrarao Badiganti
+<vbadigan@codeaurora.org> wrote:
+>
+> Update cqhci memory ioresource name from cqhci_mem to cqhci since
+> suffix _mem is redundant.
+>
+> Only sdhci-msm driver is making use of this resource as of now.
+> No other vendor's driver is using it. So this update shouldn't affect
+> any other vendor's cqhci functionality.
+>
+> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+> ---
+> Corresponding binding change:
+> https://lore.kernel.org/linux-arm-msm/1582545470-11530-1-git-send-email-vbadigan@codeaurora.org/
+>
+> Changes sicne V1:
+>         - Updated commit text expalining this change affects *only*
+>           qcom cqhci functionality.
+>
+> ---
+>  drivers/mmc/host/cqhci.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-index de6812fb55f4..8801a6a7543d 100644
---- a/drivers/media/platform/qcom/venus/firmware.c
-+++ b/drivers/media/platform/qcom/venus/firmware.c
-@@ -44,8 +44,14 @@ static void venus_reset_cpu(struct venus_core *core)
- 
- int venus_set_hw_state(struct venus_core *core, bool resume)
- {
--	if (core->use_tz)
--		return qcom_scm_set_remote_state(resume, 0);
-+	int ret;
-+
-+	if (core->use_tz) {
-+		ret = qcom_scm_set_remote_state(resume, 0);
-+		if (resume && ret == -EINVAL)
-+			ret = 0;
-+		return ret;
-+	}
- 
- 	if (resume)
- 		venus_reset_cpu(core);
--- 
-2.17.1
+...now I guess the last thing is the dts change...
 
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
