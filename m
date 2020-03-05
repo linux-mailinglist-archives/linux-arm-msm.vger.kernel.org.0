@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 812E517B14F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2020 23:20:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C61817B151
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2020 23:20:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726177AbgCEWUS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Mar 2020 17:20:18 -0500
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:38374 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726179AbgCEWUS (ORCPT
+        id S1726358AbgCEWUw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Mar 2020 17:20:52 -0500
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:35036 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726181AbgCEWUw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Mar 2020 17:20:18 -0500
-Received: by mail-vs1-f65.google.com with SMTP id k26so278086vso.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2020 14:20:17 -0800 (PST)
+        Thu, 5 Mar 2020 17:20:52 -0500
+Received: by mail-vs1-f68.google.com with SMTP id u26so289892vsg.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2020 14:20:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=h2AxTBoBmJUCg/vc71mp7BK/aApbrb7OsDakNbxg7J0=;
-        b=TbLhWGSZmSAIAobknaUu7mIX+dWWL4Ms/xJLOdVvP8WkDDOt8BXNWLxlsDoFJQwNcX
-         AP+hKWljaB6OUMDEgbTpZOauzuBKrpGPDLTemFYL162rQmh0bRh3cTIYS1y9ymU5MC/c
-         3zfG1gK2xl0FfLEHW5RF7D4NU+JtfZIfNppNM=
+        bh=LrmCjw7xyG8fg4C1dKjDiV0Q8S1LhYkzPOfDEOi+i6c=;
+        b=JhxBDlNuZ+wqBBfKTq7jRiznrdUS2hRiPAoff37XUBYnwD4QbFPjdEWWg8BXQeu3HA
+         sP5144hQmSd5qudCwUvdsz2OpsStzWufw3hsrRFRRi55g6skgNorWbKv7cJP1B6ltpMy
+         Bze/Tte7ajsI4RYzI2m66PsE3nztR+E+istJ4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=h2AxTBoBmJUCg/vc71mp7BK/aApbrb7OsDakNbxg7J0=;
-        b=PfjKsATHTQACY9tOp5Vg/09qDybepK7dN0MdgEPE7azX+e8zSsdbRuG44gBEddjQcW
-         rOh5SzlBzpMhNd0944/In+AZXq93dgmczExQUVgoN9AEP88tPu19mt00WYFrZIKxxUb7
-         TUHcG62ZnjywDAMlEwspnDWJhH16WzFRqmywNvncK5gFVIPHv/keRL96dRf0ZfBb3U6E
-         ylYBXTC1F1o91uQIcV9IvUbIdFykTL27G2YADWcdlPrGKcNq8XFDA9GmckyPXyZzuF1n
-         0vmh8OUkPgXYRMy8yxwBs3Kpti48j0UBzCTsSdrE5MiiJprQmlEfsnxF+E0U1cwBcjoR
-         Qluw==
-X-Gm-Message-State: ANhLgQ2oeM5OctMXM6Lh4o/tq5CFd8lc/6gVnWeCouYOypyeb9iyVjx+
-        zo/FQjMDEdQYGtUkgn5KQ4az2TTGj/s=
-X-Google-Smtp-Source: ADFU+vusGfWrY2LBXdugsbCSEARojTIaz+w+Jy63YBFy6lxQPaOE4BKPZnyVIHd9zgMeQN5M74CqcQ==
-X-Received: by 2002:a67:4c5:: with SMTP id 188mr355959vse.43.1583446816589;
-        Thu, 05 Mar 2020 14:20:16 -0800 (PST)
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com. [209.85.222.41])
-        by smtp.gmail.com with ESMTPSA id i66sm8725779vkh.28.2020.03.05.14.20.14
+        bh=LrmCjw7xyG8fg4C1dKjDiV0Q8S1LhYkzPOfDEOi+i6c=;
+        b=d8dHMcpHETMoOv6dQcBtGC5jWArOYYlDPxTFAbmjsrPh5iuihZOu58pxgp6+55f+4a
+         p3zd0EnWga4y20UAZIom+eOQeKtuqQRbevj8Oh146O1DNW+IDiKww871EOEtjD4cgW1s
+         5HltfQQsowBfh+LTI7p7u3N5rFLIKqcOtVNpkUER7DXOWp1EDqRGi61Pe2DE/ctGaDZ+
+         h4u1CWBGQQi18SJRv1LtbzcLk4b77QpNeNN3sMDRDtY7zURCJSDQBMXcOaoow6Pf+DMF
+         nZVXluQW++6g9BliBqAB3bUmTCRy4Hh+t9bB1r+9ZhtnVDk6LF8c+5oz1hs2IuQoRBat
+         edyg==
+X-Gm-Message-State: ANhLgQ29g+Rij8FvdeA2t58iZek05hv0IFLfSDOrau+7dn+gTOTih0mh
+        BTl+5+aDWTMErN4lrfENqiAvYp5zHRc=
+X-Google-Smtp-Source: ADFU+vuzTh2dAsp/RS1ITY0eLMAZ5F4nWhzpHgHYEBmgnQbV98Jboq3+jotlEeGvdv8sDJNmHYWUtw==
+X-Received: by 2002:a67:e99a:: with SMTP id b26mr352527vso.27.1583446850737;
+        Thu, 05 Mar 2020 14:20:50 -0800 (PST)
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com. [209.85.217.46])
+        by smtp.gmail.com with ESMTPSA id f10sm3959203vkf.37.2020.03.05.14.20.50
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Mar 2020 14:20:15 -0800 (PST)
-Received: by mail-ua1-f41.google.com with SMTP id a33so2706638uad.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2020 14:20:14 -0800 (PST)
-X-Received: by 2002:a9f:300a:: with SMTP id h10mr11953uab.91.1583446814390;
- Thu, 05 Mar 2020 14:20:14 -0800 (PST)
+        Thu, 05 Mar 2020 14:20:50 -0800 (PST)
+Received: by mail-vs1-f46.google.com with SMTP id k188so266136vsc.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2020 14:20:49 -0800 (PST)
+X-Received: by 2002:a05:6102:101d:: with SMTP id q29mr385638vsp.73.1583446849518;
+ Thu, 05 Mar 2020 14:20:49 -0800 (PST)
 MIME-Version: 1.0
-References: <1583238415-18686-1-git-send-email-mkshah@codeaurora.org>
- <1583238415-18686-4-git-send-email-mkshah@codeaurora.org> <CAD=FV=VG2dirykoGB93s3xCW8CKJjrGDS76koTyww_gy-jv7RQ@mail.gmail.com>
- <92bf14b7-b7ae-3060-312e-74f57c1f9a63@codeaurora.org>
-In-Reply-To: <92bf14b7-b7ae-3060-312e-74f57c1f9a63@codeaurora.org>
+References: <1583428023-19559-1-git-send-email-mkshah@codeaurora.org> <1583428023-19559-5-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1583428023-19559-5-git-send-email-mkshah@codeaurora.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 5 Mar 2020 14:20:03 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=UYpO2rSOoF-OdZd3jKfSZGKnpQJPoiE5fzH+u1uafS6g@mail.gmail.com>
-Message-ID: <CAD=FV=UYpO2rSOoF-OdZd3jKfSZGKnpQJPoiE5fzH+u1uafS6g@mail.gmail.com>
-Subject: Re: [PATCH v10 3/3] soc: qcom: rpmh: Invoke rpmh_flush() for dirty caches
+Date:   Thu, 5 Mar 2020 14:20:38 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=U8zaZCTrZvtipSmaQL8NGg+4aNpyP=KhQ5EYioKovnYA@mail.gmail.com>
+Message-ID: <CAD=FV=U8zaZCTrZvtipSmaQL8NGg+4aNpyP=KhQ5EYioKovnYA@mail.gmail.com>
+Subject: Re: [PATCH v12 4/4] soc: qcom: rpmh: Invalidate SLEEP and WAKE TCSes
+ before flushing new data
 To:     Maulik Shah <mkshah@codeaurora.org>
 Cc:     Stephen Boyd <swboyd@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
@@ -75,57 +74,50 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Thu, Mar 5, 2020 at 3:30 AM Maulik Shah <mkshah@codeaurora.org> wrote:
+On Thu, Mar 5, 2020 at 9:07 AM Maulik Shah <mkshah@codeaurora.org> wrote:
 >
-> >> +                       spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
-> >> +                       return -EINVAL;
-> > nit: why not add "int ret = 0" to the top of the function, then here:
-> >
-> > if (rpmh_flush(ctrl))
-> >   ret = -EINVAL;
-> >
-> > ...then at the end "return ret".  It avoids the 2nd copy of the unlock?
-> Done.
-> >
-> > Also: Why throw away the return value of rpmh_flush and replace it
-> > with -EINVAL?  Trying to avoid -EBUSY?  ...oh, should you handle
-> > -EBUSY?  AKA:
-> >
-> > if (!psci_has_osi_support()) {
-> >   do {
-> >     ret = rpmh_flush(ctrl);
-> >   } while (ret == -EBUSY);
-> > }
+> TCSes have previously programmed data when rpmh_flush is called.
+> This can cause old data to trigger along with newly flushed.
 >
-> Done, the return value from rpmh_flush() can be -EAGAIN, not -EBUSY.
+> Fix this by cleaning SLEEP and WAKE TCSes before new data is flushed.
 >
-> i will update the comment accordingly and will include below change as well in next series.
+> Fixes: 600513dfeef3 ("drivers: qcom: rpmh: cache sleep/wake state requests")
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> ---
+>  drivers/soc/qcom/rpmh.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
-> https://patchwork.kernel.org/patch/11364067/
+> diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+> index 1951f6a..63364ce 100644
+> --- a/drivers/soc/qcom/rpmh.c
+> +++ b/drivers/soc/qcom/rpmh.c
+> @@ -472,6 +472,11 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
+>                 return 0;
+>         }
 >
-> this should address for caller to not handle -EAGAIN.
+> +       /* Invalidate the TCSes first to avoid stale data */
+> +       do {
+> +               ret = rpmh_rsc_invalidate(ctrlr_to_drv(ctrlr));
+> +       } while (ret == -EAGAIN);
+> +
+>         /* First flush the cached batch requests */
+>         ret = flush_batch(ctrlr);
+>         if (ret)
 
-A few issues, I guess.
+I think you should make this patch 3/4 instead of 4/4, and then:
 
-1. I _think_ it's important that you enable interrupts between
-retries.  If you're on the same CPU that the interrupt is routed to
-and you were waiting for 'tcs_in_use' to be cleared you'll be in
-trouble otherwise.  ...I think we need to audit all of the places that
-are looping based on -EAGAIN and confirm that interrupts are enabled
-between retries.  Before your patch series the only looping I see was
-in rpmh_invalidate() and the lock wasn't held.  After your series it's
-also in rpmh_flush() which is called under spin_lock_irqsave() which
-will be a problem.
+1. In this patch remove the call to rpmh_rsc_invalidate() in
+rpmh_invalidate().  You've already marked things "dirty" in
+invalidate_batch() so no need to actually program the hardware--it'll
+happen in the flush.
 
-2. The RPMH code uses both -EBUSY and -EAGAIN so I looked carefully at
-this again.  You're right that -EBUSY seems to be exclusively returned
-by things only called by rpmh_rsc_send_data() and that function
-handles the retries.  ...but looking at this made me find a broken
-corner case with the "zero active tcs" case (assuming you care about
-this case as per your other thread).  Specifically if you have "zero
-active tcs" then get_tcs_for_msg() can call rpmh_rsc_invalidate()
-which can return -EAGAIN.  That will return the -EAGAIN out of
-tcs_write() into rpmh_rsc_send_data().  rpmh_rsc_send_data() only
-handles -EBUSY, not -EAGAIN.
+2. In patch 4/4 (the flushing patch) add a call to rpmh_flush() to
+rpmh_invalidate() if you're in non-OSI mode.  Presumably you'll need a
+spinlock around the rpmh_flush() call?
+
+
+The end result of that will be that rpmh_invalidate() will properly
+leave the non-batch sleep/wake sets programmed.
+
 
 -Doug
