@@ -2,141 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 080D717A83A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2020 15:54:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF04E17A859
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2020 15:58:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727141AbgCEOyC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Mar 2020 09:54:02 -0500
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:54976 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727076AbgCEOx7 (ORCPT
+        id S1726317AbgCEO6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Mar 2020 09:58:55 -0500
+Received: from mail-il1-f196.google.com ([209.85.166.196]:42545 "EHLO
+        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725963AbgCEO6z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Mar 2020 09:53:59 -0500
-Received: by mail-wm1-f45.google.com with SMTP id i9so6650834wml.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2020 06:53:57 -0800 (PST)
+        Thu, 5 Mar 2020 09:58:55 -0500
+Received: by mail-il1-f196.google.com with SMTP id x2so5251434ila.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2020 06:58:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=T64BhDY4P7BH6N7mZRt4GHgX2fhw+FmEfAXfzxtpWvY=;
-        b=Z9wWJeabu7EJefkYOIj+P/cmEeY6RWiE6YqVxMZi4GNu94+Mbb9b2IkoPnTfUwsoat
-         quh3gQkHQOZdIjhgNEd9yM6khogubrKHLuhC7t6TMOY7PtIYhqfXw4Sahg28TStP/qMY
-         mx67UfasNptCEM0BEC/m2D58vRYmvMhy1rKzZSUrki8g4fPIarXoGgjnwa9LaI/ANJgf
-         yoqmwRLtqZ4Rzt5zrrKlMu8KCUFCDdVqPI6lXvPw33+oUQ5t58pwZVqTdgtKHzaIJq8O
-         Y80w55laQFy5YKsO8rIWZBb8eF/D16vbIWL/ySmJwMshGj8HQZ3YEPfD7X/VN99U/+QP
-         lcrQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=4bV4e2J0Fj77NrhTqn4U15G8AA1APxJOoLr6qnKhOMc=;
+        b=esoOeJ8vk39jzQbYXfJq1SFqiVch6RalQvjHVWANNM+olC7WkFv8UUMuQ4k+3AeujU
+         ldsf+SXtvo2g8fplfXNBTqV+HxFYw6ytavS9Yi7rvCgn997XMPTs3uiEzZjmgelDYMCA
+         xNyZd/mKHxBuLL6JVZzGh0lwA3OO4C0t8vi2Pt+RiDN9vgxbT+NiW1IRO5iE9ITrZ2w3
+         UP+RFRkwFWKqt51wrEKEBUiHwdgDyL+BIAkI+DrfdBZ+kU6HSCM1xHd8nnrR+rguCUE5
+         lW+cVrCGK3+K8UgQ9iuIpsdovS8ZDK3sNetDv3lVs7x9KFBjvTXoLDXZhTOxKkb3wbQR
+         PWwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=T64BhDY4P7BH6N7mZRt4GHgX2fhw+FmEfAXfzxtpWvY=;
-        b=Wqx/ztfuDKNWghn34AZ1RHHtKw22zGT7elyIXAWw6oAfqaruARZ3MULruOal7tTdoN
-         3MLcDh/j4N5at6DmwtdjOtreka3G7rfJlzxPaD5P8zaotS2fOsio46ZJUUQ8Tu+TzzX/
-         DdrfHaTJJT3t+IXLRABdh8edUDj4lvH0elo7S9bqyJOdysRZacCK8brAQhmQAeG/x2gQ
-         IfTybtnxVWi611aR3S5xoF9Ea+qT8D/bsuBefGX3Xgtq8ENDFqbiiaflcztQq0NR1hoz
-         tc6jUUAYCW2YaMKfz/oBN+0mjN3b/8fjGWRZUl56TAgiJXBtbNnR30zRLEyg2ivQ4F+X
-         V8WQ==
-X-Gm-Message-State: ANhLgQ1Qaw2Uf5Wdz2r3SCDA7tbhp6BAAN10A9G+SjIf6zb7TRogDUQI
-        2qT/UZqt/uAMavCIrjV3u3DfUw==
-X-Google-Smtp-Source: ADFU+vvXZ5YJeHGJlIdkbo9OsuH2BSu5AF9PVb9/sLJ1fMQHgVzp5lUXGtexk8eiFBfudPbWoHdilQ==
-X-Received: by 2002:a7b:c257:: with SMTP id b23mr9833114wmj.70.1583420036777;
-        Thu, 05 Mar 2020 06:53:56 -0800 (PST)
-Received: from srini-hackbox.lan (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.gmail.com with ESMTPSA id f16sm35785985wrx.25.2020.03.05.06.53.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Mar 2020 06:53:56 -0800 (PST)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 4/4] arm64: dts: qcom: db845c: add Low speed expansion i2c and spi nodes
-Date:   Thu,  5 Mar 2020 14:53:44 +0000
-Message-Id: <20200305145344.14670-5-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20200305145344.14670-1-srinivas.kandagatla@linaro.org>
-References: <20200305145344.14670-1-srinivas.kandagatla@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=4bV4e2J0Fj77NrhTqn4U15G8AA1APxJOoLr6qnKhOMc=;
+        b=qOkEoxnnGa8R/fzKvnYPpqKrJDuzh1tbGjP9mabvjtJqv3s+iWzTDDwxeLNjaM7mqh
+         +ylCVjKwGXK8NhhGxOgnsK4ZFAlqOCA9CN62jUnVj9VPhNETQWX/roytLDF5oE//hynJ
+         ndMxVVGy0IFrWXwqZS/COkfmWRRCuwynT3u8GutW5VZsRnl8aGP1NezO00RzsvN0S6il
+         e/PDiDCtFrXcqctljup9oDMCZUvHIlzYUQ3wS9k7fxSCT+Ez0VyOR7LeADBZ0qMKcy6v
+         5dST/GVVjVMvO/mmgHJSGa0fEJEELHccRoOul/lDwRS/EwML13ufW4pWiRixkm7KLV9V
+         HNTg==
+X-Gm-Message-State: ANhLgQ2NQQcbekoT48b2n4kIajMQhknReJMAB0gpP86dCYe6XyMosS2f
+        jIHkG2YrMr2GOiQCwwubwrxlvQ==
+X-Google-Smtp-Source: ADFU+vtpeY9CxlaepFzd4eHxFzmg0UDavlbEE426APDD8aZtC+Rwtl+OAoe0AHeKrotvehazhLMiPw==
+X-Received: by 2002:a92:981b:: with SMTP id l27mr8649435ili.118.1583420334176;
+        Thu, 05 Mar 2020 06:58:54 -0800 (PST)
+Received: from [172.22.22.26] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id p78sm6860932ilk.76.2020.03.05.06.58.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Mar 2020 06:58:53 -0800 (PST)
+Subject: Re: [PATCH 00/17] net: introduce Qualcomm IPA driver (UPDATED)
+To:     David Miller <davem@davemloft.net>
+Cc:     arnd@arndb.de, bjorn.andersson@linaro.org, agross@kernel.org,
+        johannes@sipsolutions.net, dcbw@redhat.com, evgreen@google.com,
+        ejcaruso@google.com, syadagir@codeaurora.org,
+        cpratapa@codeaurora.org, subashab@codeaurora.org,
+        robh+dt@kernel.org, mark.rutland@arm.com, ohad@wizery.com,
+        sidgup@codeaurora.org, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200228224204.17746-1-elder@linaro.org>
+ <20200304.141547.1905642444413562833.davem@davemloft.net>
+From:   Alex Elder <elder@linaro.org>
+Message-ID: <d422e872-ed97-76a0-e8d8-457e8932f4ff@linaro.org>
+Date:   Thu, 5 Mar 2020 08:58:04 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200304.141547.1905642444413562833.davem@davemloft.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds support UART0, I2C0, I2C1 and SPI0 available
-on Low Speed expansion connector.
+On 3/4/20 4:15 PM, David Miller wrote:
+> From: Alex Elder <elder@linaro.org>
+> Date: Fri, 28 Feb 2020 16:41:47 -0600
+> 
+>> This series presents the driver for the Qualcomm IP Accelerator (IPA).
+> 
+> This doesn't apply cleanly to the net-next tree if that's where you want
+> this applied, can you respin?
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 34 ++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+Yes I will do that today.  Thanks.	-Alex
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index 350d3ea60235..fd2bdf10a4d9 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -434,6 +434,24 @@
- 	vdda-pll-supply = <&vreg_l26a_1p2>;
- };
- 
-+&i2c11 {
-+	/* On Low speed expansion */
-+	label = "LS-I2C1";
-+	status = "okay";
-+};
-+
-+&i2c14 {
-+	/* On Low speed expansion */
-+	label = "LS-I2C0";
-+	status = "okay";
-+};
-+
-+&spi2 {
-+	/* On Low speed expansion */
-+	label = "LS-SPI0";
-+	status = "okay";
-+};
-+
- &pm8998_gpio {
- 	vol_up_pin_a: vol-up-active {
- 		pins = "gpio6";
-@@ -574,6 +592,11 @@
- 	};
- };
- 
-+&uart3 {
-+	label = "LS-UART0";
-+	status = "disabled";
-+};
-+
- &uart6 {
- 	status = "okay";
- 
-@@ -589,6 +612,7 @@
- };
- 
- &uart9 {
-+	label = "LS-UART1";
- 	status = "okay";
- };
- 
-@@ -674,6 +698,16 @@
- };
- 
- /* PINCTRL - additions to nodes defined in sdm845.dtsi */
-+&qup_spi2_default {
-+	drive-strength = <16>;
-+};
-+
-+&qup_uart3_default{
-+	pinmux {
-+		pins = "gpio41", "gpio42", "gpio43", "gpio44";
-+		function = "qup3";
-+	};
-+};
- 
- &qup_uart6_default {
- 	pinmux {
--- 
-2.21.0
+> 
+> Thanks.
+> 
 
