@@ -2,158 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FB7717A91D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2020 16:43:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2285C17AB28
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2020 18:07:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726007AbgCEPn2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Mar 2020 10:43:28 -0500
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:33569 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726822AbgCEPn2 (ORCPT
+        id S1726141AbgCERHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Mar 2020 12:07:16 -0500
+Received: from mail27.static.mailgun.info ([104.130.122.27]:10965 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725963AbgCERHP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Mar 2020 10:43:28 -0500
-Received: by mail-ua1-f65.google.com with SMTP id 94so2232394uat.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2020 07:43:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BtkP4rjLPJJ3tMCB0I86aLFGaPPlP5RT1g3Fl+k0ezY=;
-        b=lKqr2+6Y70nMAQIyJl5JRc7tIiLa+hzIz7tEvf/tovFCfmf+e7RuHwdMVi4tryYNTD
-         +pymGTN4XbCQi1CQ2PWP9jPf1sDURpvJEBqC59VhPJF1ZTtb8ifBnbcHDu7/o3b8UX+/
-         BupJMhndJtlKuYaGJ/ZOifRB1mOciw3bd+8KEN2jkk5w0PbDET9x7GDPdVZcHA4HMCSU
-         DIrYETeAQerh3c1CrVA3ipFhiuj7XLqCfmLKdZLc/gC2IxdYCTgy6CmtM3Qa7kLf6ltZ
-         yiKe1i/cC5h5GYiBTHxi3IJSLiLC9sGHsOuncMXK3UHEnqsauLAX3vSUQXR1vMznxLBR
-         Q4YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BtkP4rjLPJJ3tMCB0I86aLFGaPPlP5RT1g3Fl+k0ezY=;
-        b=phVhc3eojdTiDHWWePx7v1P/VbAWjPaAhl0Itplnx/HCKlB9vzaalOgKX+Jwz0mOS7
-         MfCeBFp+jjSEr2oWlBMUmLWPvYClFzs6xvd88vbmhslSlnokLoNCrVqhFRPaZG0fGm8C
-         MWIX4nJQwpm0pdVZJS1Xm2vQF2/kbAmW81K9nyKcIALu03aKgk8JBqeGKEDYo4WtI5Qh
-         DIR4ec8/fogIumuKAO8YsXWp9u4euh17PfLn0+nvP1nCsoIJ7Bpt5yp3TQ/MdkX3P84l
-         o3UJGQrsxTVrnGoxc58PJTeCbxSI1ZyGBeWjbuSbK57vWAG/L0hJmradmsZh6+Z7EEAG
-         7Qqg==
-X-Gm-Message-State: ANhLgQ0HI17aWzr7vEVp/bJyMDMy1cZGTAWJXfhKIlpmAWs/Jh2m3Bxt
-        zTNa95NZEKgji42oa8QQXYa9c2f9aGpspvO/uDm+kg==
-X-Google-Smtp-Source: ADFU+vtnAS2M6fsz0X4CPT/qujFk6wJUPdYM8Pmr5JuuT0heSqdLkpUK6njwODFUJ11mFbZK5GofJhtZiCjNvuUC940=
-X-Received: by 2002:ab0:7518:: with SMTP id m24mr4824318uap.60.1583423006775;
- Thu, 05 Mar 2020 07:43:26 -0800 (PST)
-MIME-Version: 1.0
-References: <cover.1582528977.git.amit.kucheria@linaro.org>
- <59d24f8ec98e29d119c5cbdb2abe6d4644cc51cf.1582528977.git.amit.kucheria@linaro.org>
- <20200224184003.GA3607@bogus> <CAHLCerP1_xESMbLuSBsVz1XkrA0j_okbX+SxbefVSo4ttvX_fg@mail.gmail.com>
- <CAL_JsqK_8MbxwKb9D4U0Cfv1m61zHWku4hJwiLaeOO6wkS8WCQ@mail.gmail.com>
-In-Reply-To: <CAL_JsqK_8MbxwKb9D4U0Cfv1m61zHWku4hJwiLaeOO6wkS8WCQ@mail.gmail.com>
-From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Thu, 5 Mar 2020 21:13:15 +0530
-Message-ID: <CAHLCerOeSx2hkB5QUhj_iK1sU=X9EWFLVgof2XsLhhy3CmbpNg@mail.gmail.com>
-Subject: Re: [RFC PATCH v1 3/3] dt-bindings: thermal: Add yaml bindings for
- thermal zones
-To:     Rob Herring <robh@kernel.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Thu, 5 Mar 2020 12:07:15 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1583428035; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=4BQCqiSyVLAnY7G9z7oQROVsitnkw15NXXmoIHztfNA=; b=DR4RFz/AiLDTGW/e2ZlpqL+ma0MObjroqU0LiSK7v4+5JxIh/KQxO1igCovmLFAR5peOMUn7
+ 3dCVVDYpvTOzZTq+RarYCUcea3NSLvGyyKflqG8PtX84wYDaOqcf56pTvWm6fy+kHF3M7qQA
+ fGsdbi8sASosJL+b/V6+OAAntRk=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e6131c1.7fb0826e8ca8-smtp-out-n01;
+ Thu, 05 Mar 2020 17:07:13 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 39390C4479C; Thu,  5 Mar 2020 17:07:13 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 01BE7C433A2;
+        Thu,  5 Mar 2020 17:07:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 01BE7C433A2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH v12 0/4] Invoke rpmh_flush for non OSI targets
+Date:   Thu,  5 Mar 2020 22:36:59 +0530
+Message-Id: <1583428023-19559-1-git-send-email-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 5, 2020 at 9:08 PM Rob Herring <robh@kernel.org> wrote:
->
-> On Thu, Mar 5, 2020 at 6:50 AM Amit Kucheria <amit.kucheria@linaro.org> wrote:
-> >
-> > On Tue, Feb 25, 2020 at 12:10 AM Rob Herring <robh@kernel.org> wrote:
-> > >
-> > > On Mon, 24 Feb 2020 12:55:37 +0530, Amit Kucheria wrote:
-> > > > As part of moving the thermal bindings to YAML, split it up into 3
-> > > > bindings: thermal sensors, cooling devices and thermal zones.
-> > > >
-> > > > The thermal-zone binding is a software abstraction to capture the
-> > > > properties of each zone - how often they should be checked, the
-> > > > temperature thresholds (trips) at which mitigation actions need to be
-> > > > taken and the level of mitigation needed at those thresholds.
-> > > >
-> > > > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > > > ---
-> > > >  .../bindings/thermal/thermal-zones.yaml       | 302 ++++++++++++++++++
-> > > >  1 file changed, 302 insertions(+)
-> > > >  create mode 100644 Documentation/devicetree/bindings/thermal/thermal-zones.yaml
-> > > >
-> > >
-> > > My bot found errors running 'make dt_binding_check' on your patch:
-> > >
-> > > Documentation/devicetree/bindings/display/simple-framebuffer.example.dts:21.16-37.11: Warning (chosen_node_is_root): /example-0/chosen: chosen node must be at root node
-> >
-> > This one isn't due to my patch, I believe.
->
-> Right, that's the one known warning...
->
-> > > /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/thermal-zones.example.dt.yaml: thermal-sensor@c263000: interrupt-names: ['uplow'] is too short
-> > > /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/thermal-zones.example.dt.yaml: thermal-sensor@c263000: interrupts: [[0, 506, 4]] is too short
-> > > /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/thermal-zones.example.dt.yaml: thermal-sensor@c265000: interrupt-names: ['uplow'] is too short
-> > > /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/thermal-zones.example.dt.yaml: thermal-sensor@c265000: interrupts: [[0, 507, 4]] is too short
-> >
-> > Fixed. Just for my information, did the check somehow figure out that
-> > this (incomplete) example needed the qcom-tsens.yaml binding (based on
-> > compatible string?) and then apply those rules to throw this error?
->
-> Yes. And setting DT_SCHEMA_FILES did change that to only check with
-> the specified schema file. However, that's now changed in linux-next
-> such that examples are always checked by all schemas and
-> DT_SCHEMA_FILES just limits which bindings to build and check.
+Changes in v12:
+- Kconfig change to remove COMPILE_TEST was dropped in v11, reinclude it.
 
-DT_SCHEMA_FILES doesn't seem to take wildcards. Individual yaml files
-worked fine.
+Changes in v11:
+- Address Doug's comments on change 2 and 3
+- Include change to invalidate TCSes before flush from [4]
 
-$ make -k -j`nproc` ARCH=arm64 CROSS_COMPILE="ccache
-aarch64-linux-gnu-" O=~/work/builds/build-aarch64/ dt_binding_check
-DT_SCHEMA_FILES=Documentation/devicetree/bindings/thermal/thermal*.yaml
-make[1]: Entering directory '/home/amit/work/builds/build-aarch64'
-make[2]: Circular
-Documentation/devicetree/bindings/processed-schema.yaml <-
-Documentation/devicetree/bindings/thermal/thermal-sensor.example.dt.yaml
-dependency dropped.
-make[2]: Circular
-Documentation/devicetree/bindings/thermal/thermal-zones.example.dt.yaml
-<- Documentation/devicetree/bindings/processed-schema.yaml dependency
-dropped.
-make[2]: Circular
-Documentation/devicetree/bindings/thermal/thermal-cooling-devices.example.dt.yaml
-<- Documentation/devicetree/bindings/processed-schema.yaml dependency
-dropped.
-  SCHEMA  Documentation/devicetree/bindings/processed-schema.yaml
-Traceback (most recent call last):
-  File "/home/amit/.local/bin/dt-mk-schema", line 7, in <module>
-    exec(compile(f.read(), __file__, 'exec'))
-  File "/home/amit/work/sources/tools-dt-schema.git/tools/dt-mk-schema",
-line 32, in <module>
-    schemas = dtschema.process_schemas(args.schemas, core_schema=(not
-args.useronly))
-  File "/home/amit/work/sources/tools-dt-schema.git/dtschema/lib.py",
-line 475, in process_schemas
-    sch = process_schema(os.path.abspath(filename))
-  File "/home/amit/work/sources/tools-dt-schema.git/dtschema/lib.py",
-line 435, in process_schema
-    DTValidator.check_schema(schema)
-  File "/home/amit/work/sources/tools-dt-schema.git/dtschema/lib.py",
-line 582, in check_schema
-    meta_schema = cls.resolver.resolve_from_url(schema['$schema'])
-TypeError: list indices must be integers or slices, not str
-make[2]: *** [/home/amit/work/sources/linux-amit.git/Documentation/devicetree/bindings/Makefile:34:
-Documentation/devicetree/bindings/processed-schema.yaml] Error 1
-make[2]: Target '__build' not remade because of errors.
-make[1]: *** [/home/amit/work/sources/linux-amit.git/Makefile:1262:
-dt_binding_check] Error 2
-make[1]: Leaving directory '/home/amit/work/builds/build-aarch64'
-make: *** [Makefile:179: sub-make] Error 2
-make: Target 'dt_binding_check' not remade because of errors.
+Changes in v10:
+- Address Evan's comments to update commit message on change 2
+- Add Evan's Reviewed by on change 2
+- Remove comment from rpmh_flush() related to last CPU invoking it
+- Rebase all changes on top of next-20200302
+
+Changes in v9:
+- Keep rpmh_flush() to invoke from within cache_lock
+- Remove comments related to only last cpu invoking rpmh_flush()
+
+Changes in v8:
+- Address Stephen's comments on changes 2 and 3
+- Add Reviewed by from Stephen on change 1
+
+Changes in v7:
+- Address Srinivas's comments to update commit text
+- Add Reviewed by from Srinivas
+
+Changes in v6:
+- Drop 1 & 2 changes from v5 as they already landed in maintainer tree
+- Drop 3 & 4 changes from v5 as no user at present for power domain in rsc
+- Rename subject to appropriate since power domain changes are dropped
+- Rebase other changes on top of next-20200221
+
+Changes in v5:
+- Add Rob's Acked by on dt-bindings change
+- Drop firmware psci change
+- Update cpuidle stats in dtsi to follow PC mode
+- Include change to update dirty flag when data is updated from [4]
+- Add change to invoke rpmh_flush when caches are dirty
+
+Changes in v4:
+- Add change to allow hierarchical topology in PC mode
+- Drop hierarchical domain idle states converter from v3
+- Address Merge sc7180 dtsi change to add low power modes
+
+Changes in v3:
+- Address Rob's comment on dt property value
+- Address Stephen's comments on rpmh-rsc driver change
+- Include sc7180 cpuidle low power mode changes from [1]
+- Include hierarchical domain idle states converter change from [2]
+
+Changes in v2:
+- Add Stephen's Reviewed-By to the first three patches
+- Addressed Stephen's comments on fourth patch
+- Include changes to connect rpmh domain to cpuidle and genpds
+
+Resource State Coordinator (RSC) is responsible for powering off/lowering
+the requirements from CPU subsystem for the associated hardware like buses,
+clocks, and regulators when all CPUs and cluster is powered down.
+
+RSC power domain uses last-man activities provided by genpd framework based
+on Ulf Hansoon's patch series[3], when the cluster of CPUs enter deepest
+idle states. As a part of domain poweroff, RSC can lower resource state
+requirements by flushing the cached sleep and wake state votes for various
+resources.
+
+[1] https://patchwork.kernel.org/patch/11218965
+[2] https://patchwork.kernel.org/patch/10941671
+[3] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=222355
+[4] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=236503
+
+Maulik Shah (3):
+  arm64: dts: qcom: sc7180: Add cpuidle low power states
+  soc: qcom: rpmh: Update dirty flag only when data changes
+  soc: qcom: rpmh: Invoke rpmh_flush for dirty caches
+
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 78 ++++++++++++++++++++++++++++++++++++
+ drivers/soc/qcom/rpmh.c              | 27 ++++++++++---
+ 2 files changed, 100 insertions(+), 5 deletions(-)
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
