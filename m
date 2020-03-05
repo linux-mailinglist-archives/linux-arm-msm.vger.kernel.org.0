@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CB91417A5CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2020 13:58:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C19B817A5CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2020 13:58:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726251AbgCEM4y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Mar 2020 07:56:54 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:37961 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726173AbgCEM4y (ORCPT
+        id S1726524AbgCEM5A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Mar 2020 07:57:00 -0500
+Received: from mail-pj1-f65.google.com ([209.85.216.65]:38511 "EHLO
+        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726498AbgCEM47 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Mar 2020 07:56:54 -0500
-Received: by mail-pf1-f194.google.com with SMTP id g21so82668pfb.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2020 04:56:53 -0800 (PST)
+        Thu, 5 Mar 2020 07:56:59 -0500
+Received: by mail-pj1-f65.google.com with SMTP id a16so2493187pju.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2020 04:56:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dP34NIY3vUcrPIJjDeu/Blhnqm3Xgj1V/x7fdPviNVM=;
-        b=x/GCpm+r1h1NoS7Eud+OL0RUercw7svJlacWGmfEqgaDRzhtpKleikRLx7oJb0+4NX
-         63XT1bn1EE1MPiLj1eAkPqpPSWjsKw1VjNep3qZToeZvkig3l5dcbPrc6LPyMyVIaswj
-         OuhiETItkz1V2Jz50M/7N5ROtoerhySQ8tuU0MygcECub83bxBWOgSE58OXGA1DlLgec
-         p0v3tRQUnoQ9gsZ/VjNwr4JuRdD8Yo8w5fmIM/y+QlcZw4O7He4iIHXu1tY6bWoBmIBc
-         eBKlThF/7rGYpksUFIdxHwd/Cq8G5Yq/qzZkCjp6GKFgrY7VJ2nf6FxMA4mfZbOUuF5z
-         FJvg==
+        bh=YPje9xcPYfIamEpUGoSH/TcUKQBJFPYwji3i7uk9SdI=;
+        b=EHt4DAgGtc8ZWbbUms/Azd5KsSQkQH56Vwm8e9HTZaNCV+GsiFiy3wkfP5ymusF9FR
+         q0c9pXbn2AcjIXTcxk2jNH4DAbYGqdRx2oQNY5Amh84vt9TRg/0GNanxvEUn4tb2YIKM
+         +dvpOYTDs70oZiZ7dRe6W63hbHfh1nue/w/p0hUj8vX+qNLcFnQu6Ad5iGdPp4/IPGAf
+         pjxLSUBkWc761aiD10tMXEOSFPCW5SE7O4WB5Qyc8eqtWIrLpK+K1TxFV4gk4qgKlZHU
+         JAoj7XtOgIATfwwruZ8DQD4qWdT8URKd+LIsSbLG+59717l7WjnfhsnyEGzj1WK0DgIT
+         5sXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dP34NIY3vUcrPIJjDeu/Blhnqm3Xgj1V/x7fdPviNVM=;
-        b=WKmK0umDtHHYK/HGPrtnugkCL2JnnsFLK7MNTnPRNpNssk3cma7eAqUXbuqJPIY7Qj
-         MCO3X9fR93DKdurCE46MSF+Ha/32fwwlToVGHAl89kcVbuvYFQcUmM6ue51lBOeau16V
-         TGdYJ6tPCVl+QHpsHUKnBXX4+Z/5SlTZ+zlcCmbzYP7QEy7BkICUGAqo/LOkEtxKhJ1s
-         CC2wqu++pzktHPo4DKO/N0KpmBZ1ZxcEKv5ialQMg9IpEELGiSfmoeKAJCXgA2Y5XAYx
-         3jmZQK4eob37eia95khGHynabb0kzTtXhqkYnYBgyVonXp3DrgJTVsQf8H1W07P7CN2J
-         15cw==
-X-Gm-Message-State: ANhLgQ0K/RyCgfaUzwPenvaDIPoCrHxbJ+M5dJNW4binH8ST7GYQ5EMS
-        8o9HMAtDv0Ixem5DHWs8HWm5mQ==
-X-Google-Smtp-Source: ADFU+vuoCqdaiaMQfZ9881Jq92A8L39XbWt2O3FasIp11VKMI8ZgvI/QGHj3wFpE7kQHPwy2HudSOw==
-X-Received: by 2002:a62:7890:: with SMTP id t138mr8314473pfc.8.1583413012677;
-        Thu, 05 Mar 2020 04:56:52 -0800 (PST)
+        bh=YPje9xcPYfIamEpUGoSH/TcUKQBJFPYwji3i7uk9SdI=;
+        b=UXk8nDAcPb20DQHmbecHmjGCEuR2WnWSsOpjcXnMjeDHZEbCYaRfEoXaByQcbBmJLN
+         9dkO+kSqPVOeY2lbZv88suMQ6pgXklqtgvYhoWM0ShODCuZvxC380EqLnAdCxpX7gzKP
+         c4HYTlBltVFiA7LIMZgI/oZrZa+Npap5iai9WsftDChn4u22v0bZPjMzLUFrzlJi5Xdt
+         lIHaTCOu1L+2znj500t+H8WYxKQBXHc3v+jKQApx5NDz4YH5NfZBYB4SZGMTi1mnVmmL
+         Na4/k1fmVBh+Ne+/3QQLDH1UD/H+IXsiS/qX/oxMgHedbx7obPcSrDOTNCcz0M+06FWt
+         WZuQ==
+X-Gm-Message-State: ANhLgQ32xx0s3hULBBOsJELCwp+5hZT9xOLkCgAueo/Kgws9gYEbvqqM
+        8CTs4/mxShtRIMWQMbnqTjA2Sg==
+X-Google-Smtp-Source: ADFU+vvPYdi7ZwmB0U0Sj6BPoR9D3pE/yA0/hXZrIVssSPjgpFaycsmnvIxiOf3TYBYNpoG36JlFLg==
+X-Received: by 2002:a17:90a:bf09:: with SMTP id c9mr7953201pjs.96.1583413016741;
+        Thu, 05 Mar 2020 04:56:56 -0800 (PST)
 Received: from localhost ([103.195.202.216])
-        by smtp.gmail.com with ESMTPSA id j12sm16697389pga.78.2020.03.05.04.56.51
+        by smtp.gmail.com with ESMTPSA id r12sm32030259pgu.93.2020.03.05.04.56.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Mar 2020 04:56:51 -0800 (PST)
+        Thu, 05 Mar 2020 04:56:55 -0800 (PST)
 From:   Amit Kucheria <amit.kucheria@linaro.org>
 To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         swboyd@chromium.org, mka@chromium.org, daniel.lezcano@linaro.org,
         Amit Kucheria <amit.kucheria@verdurent.com>,
         Zhang Rui <rui.zhang@intel.com>
 Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v2 1/3] dt-bindings: thermal: Add yaml bindings for thermal sensors
-Date:   Thu,  5 Mar 2020 18:26:41 +0530
-Message-Id: <93466e6c031c0084de09bd6b448556a6c5080880.1583412540.git.amit.kucheria@linaro.org>
+Subject: [PATCH v2 2/3] dt-bindings: thermal: Add yaml bindings for thermal cooling-devices
+Date:   Thu,  5 Mar 2020 18:26:42 +0530
+Message-Id: <9a2052ee2afa43048bd4e2594d015fca6bbf5116.1583412540.git.amit.kucheria@linaro.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <cover.1583412540.git.amit.kucheria@linaro.org>
 References: <cover.1583412540.git.amit.kucheria@linaro.org>
@@ -67,38 +67,40 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 As part of moving the thermal bindings to YAML, split it up into 3
 bindings: thermal sensors, cooling devices and thermal zones.
 
-The property #thermal-sensor-cells is required in each device that acts
-as a thermal sensor. It is used to uniquely identify the instance of the
-thermal sensor inside the system.
+The property #cooling-cells is required in each device that acts as a
+cooling device - whether active or passive. So any device that can
+throttle its performance to passively reduce heat dissipation (e.g.
+cpus, gpus) and any device that can actively dissipate heat at different
+levels (e.g. fans) will contain this property.
 
 Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
 ---
- .../bindings/thermal/thermal-sensor.yaml      | 72 +++++++++++++++++++
- 1 file changed, 72 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
+ .../thermal/thermal-cooling-devices.yaml      | 114 ++++++++++++++++++
+ 1 file changed, 114 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/thermal/thermal-cooling-devices.yaml
 
-diff --git a/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml b/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
+diff --git a/Documentation/devicetree/bindings/thermal/thermal-cooling-devices.yaml b/Documentation/devicetree/bindings/thermal/thermal-cooling-devices.yaml
 new file mode 100644
-index 0000000000000..920ee7667591d
+index 0000000000000..4745ea4b41ae7
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/thermal/thermal-sensor.yaml
-@@ -0,0 +1,72 @@
++++ b/Documentation/devicetree/bindings/thermal/thermal-cooling-devices.yaml
+@@ -0,0 +1,114 @@
 +# SPDX-License-Identifier: (GPL-2.0)
 +# Copyright 2020 Linaro Ltd.
 +%YAML 1.2
 +---
-+$id: http://devicetree.org/schemas/thermal/thermal-sensor.yaml#
++$id: http://devicetree.org/schemas/thermal/thermal-cooling-devices.yaml#
 +$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+title: Thermal sensor binding
++title: Thermal cooling device binding
 +
 +maintainers:
 +  - Amit Kucheria <amitk@kernel.org>
 +
 +description: |
 +  Thermal management is achieved in devicetree by describing the sensor hardware
-+  and the software abstraction of thermal zones required to take appropriate
-+  action to mitigate thermal overloads.
++  and the software abstraction of cooling devices and thermal zones required to
++  take appropriate action to mitigate thermal overload.
 +
 +  The following node types are used to completely describe a thermal management
 +  system in devicetree:
@@ -107,52 +109,94 @@ index 0000000000000..920ee7667591d
 +   - thermal-zones: a container of the following node types used to describe all
 +     thermal data for the platform
 +
-+  This binding describes the thermal-sensor.
++  This binding describes the cooling devices.
 +
-+  Thermal sensor devices provide temperature sensing capabilities on thermal
-+  zones. Typical devices are I2C ADC converters and bandgaps. Thermal sensor
-+  devices may control one or more internal sensors.
++  There are essentially two ways to provide control on power dissipation:
++    - Passive cooling: by means of regulating device performance. A typical
++      passive cooling mechanism is a CPU that has dynamic voltage and frequency
++      scaling (DVFS), and uses lower frequencies as cooling states.
++    - Active cooling: by means of activating devices in order to remove the
++      dissipated heat, e.g. regulating fan speeds.
++
++  Any cooling device has a range of cooling states (i.e. different levels of
++  heat dissipation). They also have a way to determine the state of cooling in
++  which the device is. For example, a fan's cooling states correspond to the
++  different fan speeds possible. Cooling states are referred to by single
++  unsigned integers, where larger numbers mean greater heat dissipation. The
++  precise set of cooling states associated with a device should be defined in
++  a particular device's binding.
 +
 +properties:
-+  "#thermal-sensor-cells":
++  "#cooling-cells":
 +    description:
-+      Used to uniquely identify a thermal sensor instance within an IC. Will be
-+      0 on sensor nodes with only a single sensor and at least 1 on nodes
-+      containing several internal sensors.
-+    enum: [0, 1]
++        Must be 2, in order to specify minimum and maximum cooling state used in
++        the cooling-maps reference. The first cell is the minimum cooling state
++        and the second cell is the maximum cooling state requested.
++    const: 2
 +
 +examples:
 +  - |
 +    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/thermal/thermal.h>
 +
-+    // Example 1: SDM845 TSENS
-+    soc: soc@0 {
++    // Example 1: Cpufreq cooling device on CPU0
++    cpus {
 +            #address-cells = <2>;
-+            #size-cells = <2>;
++            #size-cells = <0>;
++
++            CPU0: cpu@0 {
++                    device_type = "cpu";
++                    compatible = "qcom,kryo385";
++                    reg = <0x0 0x0>;
++                    enable-method = "psci";
++                    cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++                                       &LITTLE_CPU_SLEEP_1
++                                       &CLUSTER_SLEEP_0>;
++                    capacity-dmips-mhz = <607>;
++                    dynamic-power-coefficient = <100>;
++                    qcom,freq-domain = <&cpufreq_hw 0>;
++                    #cooling-cells = <2>;
++                    next-level-cache = <&L2_0>;
++                    L2_0: l2-cache {
++                            compatible = "cache";
++                            next-level-cache = <&L3_0>;
++                            L3_0: l3-cache {
++                                    compatible = "cache";
++                            };
++                    };
++          };
++
++          /* ... */
++
++    };
++
++    /* ... */
++
++    thermal-zones {
++            cpu0-thermal {
++                    polling-delay-passive = <250>;
++                    polling-delay = <1000>;
++
++                    thermal-sensors = <&tsens0 1>;
++
++                    trips {
++                            cpu0_alert0: trip-point0 {
++                                    temperature = <90000>;
++                                    hysteresis = <2000>;
++                                    type = "passive";
++                            };
++                    };
++
++                    cooling-maps {
++                            map0 {
++                                    trip = <&cpu0_alert0>;
++                                    cooling-device = <&CPU0 THERMAL_NO_LIMIT
++                                                            THERMAL_NO_LIMIT>;
++                            };
++                    };
++            };
 +
 +            /* ... */
-+
-+            tsens0: thermal-sensor@c263000 {
-+                    compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
-+                    reg = <0 0x0c263000 0 0x1ff>, /* TM */
-+                          <0 0x0c222000 0 0x1ff>; /* SROT */
-+                    #qcom,sensors = <13>;
-+                    interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
-+                                 <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
-+                    interrupt-names = "uplow", "critical";
-+                    #thermal-sensor-cells = <1>;
-+            };
-+
-+            tsens1: thermal-sensor@c265000 {
-+                    compatible = "qcom,sdm845-tsens", "qcom,tsens-v2";
-+                    reg = <0 0x0c265000 0 0x1ff>, /* TM */
-+                          <0 0x0c223000 0 0x1ff>; /* SROT */
-+                    #qcom,sensors = <8>;
-+                    interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
-+                                 <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
-+                    interrupt-names = "uplow", "critical";
-+                    #thermal-sensor-cells = <1>;
-+            };
 +    };
 +...
 -- 
