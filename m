@@ -2,131 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 381D817BE7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2020 14:30:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EF5517BFE0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2020 15:09:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727141AbgCFNaS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Mar 2020 08:30:18 -0500
-Received: from mail-il1-f196.google.com ([209.85.166.196]:44721 "EHLO
-        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727065AbgCFNaR (ORCPT
+        id S1726300AbgCFOJa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Mar 2020 09:09:30 -0500
+Received: from mail27.static.mailgun.info ([104.130.122.27]:21560 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726251AbgCFOJ3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Mar 2020 08:30:17 -0500
-Received: by mail-il1-f196.google.com with SMTP id j69so1993653ila.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2020 05:30:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Pg0E53f1mAa6g/1NYUXksaRgV81W69zTft5+Yoc7gDE=;
-        b=Kg8VgctwJ9sl2bTG3rzATydWCYvJWQCE+ermdWX2W6/tL1d4ooTTXJuxucMeR5HrSO
-         1VngudrsPSy6SvXBIf+Y/JC/ayTGHJ6fpURzkse7qM0P31kiOutuJ53gCTgm/4fdXO2/
-         ZK+7UJ0oJ/wyIe0y/TWHPMUsTI7K+WDqulCZDNtCBHys0966gt2n/kZXpPgrDhE1Gfvo
-         87Sp3W/lmVrl6Us1lh/ZORqWtpxOgMOSPZkKnPn6LSXxHmrLaIOR6aGQRitSaxpWzlV7
-         H9ejUcou5Kg7KhqSbUzlR6JhKfG+b3GJnyRWoC6D1Z6JI/nPhmrbV+jmjMERQGj372X0
-         Pt8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Pg0E53f1mAa6g/1NYUXksaRgV81W69zTft5+Yoc7gDE=;
-        b=OZzm5lg6wcrpg8KAnCPsQ4mNYeiTnvGgTM7vCrWWi6XYs62aum3taiHlRUMmuH7/4W
-         5o0FyhEhiSvmegQThmeaxWHoOd2Dah2k49WgtbJOdCmmASSw3PITTbAsTy/qHxZz+Nl3
-         uVzXy2/r1hEkXug35Riehhe+jB6Yf3Ajut/fsoO1FbmncN9fP35JvAaDFHesHvtCFa5s
-         FRQTSupNmfnmDN65l+s2F2OtNVt/xFY7tFE1G+ZhC7GgHUuvswyT891qSiOAccvQyZaP
-         kEmQvtCEQYYdSi8AuZjWvBLtHPfJ7vKDyaKlo/BPpFgtQxvhJd1Pa2BYZkg3BA3Dj6Ws
-         dn4w==
-X-Gm-Message-State: ANhLgQ1D6Cv1pi2OFF3Ynu0KPYpYmVZr1IPEune6bQVhmF4UMl872n4q
-        ulmcQyyxhsUVm6JGUvqjLE6uRw==
-X-Google-Smtp-Source: ADFU+vtF7Sgabzn4gBNF+Q1WL6hlfCT9H3OiBs3TKH16d/VuIJCgyEsSlOKmaSfuT4a7s2taCKtlBw==
-X-Received: by 2002:a92:d9c4:: with SMTP id n4mr3077709ilq.124.1583501415806;
-        Fri, 06 Mar 2020 05:30:15 -0800 (PST)
-Received: from [172.22.22.26] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id x6sm7019573ilg.42.2020.03.06.05.30.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Mar 2020 05:30:15 -0800 (PST)
-Subject: Re: [PATCH v2 01/17] remoteproc: add IPA notification to q6v5 driver
-To:     Leon Romanovsky <leon@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        David Miller <davem@davemloft.net>,
-        Arnd Bergmann <arnd@arndb.de>, Andy Gross <agross@kernel.org>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Dan Williams <dcbw@redhat.com>,
-        Evan Green <evgreen@google.com>,
-        Eric Caruso <ejcaruso@google.com>,
-        Susheel Yadav Yadagiri <syadagir@codeaurora.org>,
-        Chaitanya Pratapa <cpratapa@codeaurora.org>,
-        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20200306042831.17827-1-elder@linaro.org>
- <20200306042831.17827-2-elder@linaro.org> <20200306114941.GO184088@unreal>
-From:   Alex Elder <elder@linaro.org>
-Message-ID: <5548579d-179d-b099-afa9-6b76e9fa5a89@linaro.org>
-Date:   Fri, 6 Mar 2020 07:29:23 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
-MIME-Version: 1.0
-In-Reply-To: <20200306114941.GO184088@unreal>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Fri, 6 Mar 2020 09:09:29 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1583503769; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=l8NStaZa70eykua8tiYXL4ZUFmoEHjzIU8oKlS6RXKs=; b=eMt5c/PBV50fPjj+SnBWQK+kZyEO4lo0dtpfgUCzypNvnJMK4pjqg0iFsCPXCzx6i8UsX7Oy
+ XX6ZcXokikvtffcmc6B5JSnSt4LwJl0j3M7hsaImH1zgRunZOwoJWfgm02GKcbkqhXFu5GlU
+ fTKsWIM4geIm1sG7t4AAE2KRtJE=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e625984.7f82f1727458-smtp-out-n04;
+ Fri, 06 Mar 2020 14:09:08 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 62B78C432C2; Fri,  6 Mar 2020 14:09:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from vbadigan-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vbadigan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C81ACC433F2;
+        Fri,  6 Mar 2020 14:09:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C81ACC433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=vbadigan@codeaurora.org
+From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
+Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Subject: [PATCH V3 0/2] Deactivate CQE during SDHC reset
+Date:   Fri,  6 Mar 2020 19:38:41 +0530
+Message-Id: <1583503724-13943-1-git-send-email-vbadigan@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1582890639-32072-1-git-send-email-vbadigan@codeaurora.org>
+References: <1582890639-32072-1-git-send-email-vbadigan@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/6/20 5:49 AM, Leon Romanovsky wrote:
-> On Thu, Mar 05, 2020 at 10:28:15PM -0600, Alex Elder wrote:
->> Set up a subdev in the q6v5 modem remoteproc driver that generates
->> event notifications for the IPA driver to use for initialization and
->> recovery following a modem shutdown or crash.
+Host controllers can reset CQHCI either directly or as a consequence
+of host controller reset. In the later case, driver should deactivate
+CQHCI just before reset to puts the CQHCI driver into a state that is
+consistent with that h/w state.
 
-. . .
+Changes sicne V2:
+	- Added support cqhci_deactivate()
+	- Use cqhci_deactivate() instead of cqhci_disable().
+	- Deactivate CQCHI just before SDHC reset.
 
->> diff --git a/include/linux/remoteproc/qcom_q6v5_ipa_notify.h b/include/linux/remoteproc/qcom_q6v5_ipa_notify.h
->> new file mode 100644
->> index 000000000000..0820edc0ab7d
->> --- /dev/null
->> +++ b/include/linux/remoteproc/qcom_q6v5_ipa_notify.h
->> @@ -0,0 +1,82 @@
->> +/* SPDX-License-Identifier: GPL-2.0 */
->> +
->> +/* Copyright (C) 2019 Linaro Ltd. */
->> +
->> +#ifndef __QCOM_Q6V5_IPA_NOTIFY_H__
->> +#define __QCOM_Q6V5_IPA_NOTIFY_H__
->> +
->> +#if IS_ENABLED(CONFIG_QCOM_Q6V5_IPA_NOTIFY)
-> 
-> Why don't you put this guard in the places where such include is called?
-> Or the best variant is to ensure that this include is compiled in only
-> in CONFIG_QCOM_Q6V5_IPA_NOTIFY flows.
+Changes since V1:
+	- Disable CQE only when SDHC undergoes s/w reset for all.
 
-I did it this way so the no-op definitions resided in the same header
-file if the config option is not enabled.  And the no-ops were there
-so the calling code didn't have to use #ifdef.
+Adrian Hunter (1):
+  mmc: cqhci: Add cqhci_deactivate()
 
-I have no objection to what you suggest.  I did a quick scan for other
-examples like this for guidance and found lots of examples of doing it
-the way I did.
+Veerabhadrarao Badiganti (1):
+  mmc: sdhci-msm: Deactivate CQE during SDHC reset
 
-So I'm happy to change it, but would like an additional request to do
-so before I do that work.
+ drivers/mmc/host/cqhci.c     | 6 +++---
+ drivers/mmc/host/cqhci.h     | 6 +++++-
+ drivers/mmc/host/sdhci-msm.c | 9 ++++++++-
+ 3 files changed, 16 insertions(+), 5 deletions(-)
 
-Thanks.
-
-					-Alex
-
-> That is more common way to guard internal header files.
-> 
-> Thanks
-> 
-
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
