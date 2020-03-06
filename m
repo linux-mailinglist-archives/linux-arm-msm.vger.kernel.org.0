@@ -2,146 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AB5917B9DA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2020 11:08:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6082D17B9DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2020 11:10:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726162AbgCFKIU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Mar 2020 05:08:20 -0500
-Received: from mail-ua1-f66.google.com ([209.85.222.66]:38077 "EHLO
-        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726090AbgCFKIU (ORCPT
+        id S1726090AbgCFKKH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Mar 2020 05:10:07 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:52521 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726054AbgCFKKE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Mar 2020 05:08:20 -0500
-Received: by mail-ua1-f66.google.com with SMTP id y3so491487uaq.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2020 02:08:19 -0800 (PST)
+        Fri, 6 Mar 2020 05:10:04 -0500
+Received: by mail-wm1-f65.google.com with SMTP id p9so1712695wmc.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2020 02:10:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uNKCod9HWXu3nxzrNq2A6yL231Mu94A886+59BwdSMs=;
-        b=nEcPiVzXVIU3Kib52ncsdTxiBqwhamhygdS+O38NTLUeFv61aJ1sn68iVJc6k7JB7r
-         o/j/pLXeg7SUehGbmsn/QpATLwr7LQLZHvZApBZRExxELPQt213sRW113dkv9Il0TbzN
-         ymGZ/uZahmlGI2HkF99JYMa5ZWivoDErDZL+qUPAeu9fb6lEsWWejI5H2DoH1SvahW8D
-         KVsWYpzheANfyigtJZ8q6TipmSY1e30WUruYvr3nRpgkGAKSYDPF4JeR3QLQ1UjITByX
-         QTyh6GXV7tFacA2/ugy49rkZl8Ute2lZfcgMiqmbpl1lmSPwNRJXlr3Jk+Zce1xc/4Fa
-         jzOQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=og3sMPJN+Nb579KWuJJ61AJ7TUDj6TNf09RkDt7hsI8=;
+        b=W3e46LJj5LqwGN7bmYVtalGehYEZNj3nHr/KAjP31KhaaXN+m0uWmMkf3acHKomptm
+         89d0LyK/fwtGemR8XoQyJ0Ys/LcWeWGdlwW4CeVEEcaicTe2FKFajLwdJ5fOYlueg0Sl
+         TK9CYNYdO7MxSrz07jDyQcWVpS506xMCbX+/TC3r/e8J6B1ZMT5UKVvra0iQbFiIzTGv
+         115moqqHKTtOhYVG2HvcfiNX1TYPoAk1uZbA5LrtS1I/ItmZcZ3+3JYMcA9v6viTj0Yz
+         eEAPwp4x5R0wWQQAwxCEk2yzvnV5bNaOC/JH7GsT7wADh0zmXAuNdX6IGcE4tUIHjkXg
+         jtrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uNKCod9HWXu3nxzrNq2A6yL231Mu94A886+59BwdSMs=;
-        b=eDJV7r+TF+mmHAIpZtA6EFTsQYqFJLGOPLBPUNw5st2773Bx3ugvHFxH+5jo7tV2em
-         WNC4aU/APa4wIChonbvYMIdWQ9mJmOeeZC8/w1+w/TjYF0jFZXnC3xv4O3RLnv+XYcLG
-         nDm1wGxg+cM6MyMqX/QEJkS2rBDeCh7uoNbiIH+2uDwJFudgB1lpODZEmYcuCuprSuHd
-         HVyXRVLhRTv0lX+eqAqR6l9QA9Z53CeD4XWkD60m4e4gmHgPeCGGCUHGjILOOL/G+w01
-         N5hmHQgeuH2CdjbYsHEvOd73n8ZWZxw25m+/rvXYCCZuODrhUpaiSYLgjiV7QKTT1igv
-         YAtA==
-X-Gm-Message-State: ANhLgQ2k7fCzEN1ditbuFBaVzflO3tvfUA7WETCSJZx97R0rmngtHDod
-        w7+sm6YjXJYg0gNrKGEBQjeMOSkV024UpTTPsMNiEw==
-X-Google-Smtp-Source: ADFU+vsPFcu0IamYO7zcUHclxL6+QOvOPAC3udRj76VGvSDRr2MgjVWcGiwDFu6MaHE/Uqw+4BybbwlP2HJccNuaWOc=
-X-Received: by 2002:ab0:7802:: with SMTP id x2mr1248889uaq.100.1583489298936;
- Fri, 06 Mar 2020 02:08:18 -0800 (PST)
-MIME-Version: 1.0
-References: <1582181100-29914-1-git-send-email-sbhanu@codeaurora.org>
- <CAPDyKFqSJ4h7UvQfQzWmSq9gg97A0MXvdcuXXaY7b-YUHs=V2g@mail.gmail.com> <158334039680.7173.16159724456027777605@swboyd.mtv.corp.google.com>
-In-Reply-To: <158334039680.7173.16159724456027777605@swboyd.mtv.corp.google.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 6 Mar 2020 11:07:41 +0100
-Message-ID: <CAPDyKFqecH=AsvtN+JMxdk6pY2dntWUrhUWF6LEq_DLCcPe6pw@mail.gmail.com>
-Subject: Re: [PATCH V4] mmc: sdhci-msm: Update system suspend/resume callbacks
- of sdhci-msm platform driver
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Sahitya Tummala <stummala@codeaurora.org>,
-        Sayali Lokhande <sayalil@codeaurora.org>, cang@codeaurora.org,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Ram Prakash Gupta <rampraka@codeaurora.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=og3sMPJN+Nb579KWuJJ61AJ7TUDj6TNf09RkDt7hsI8=;
+        b=sdBf1PxVaEAZD788KKaneJSq09RNzk5lJfVI8R97NbYkfZNCPj9MZlQITKCqicwEf7
+         UfFV7NoauXIDsqfCOWWzcTbczR6ev9gkOQBKUBO6UH/SN0sMI9kgpWjNWmACLKgzsY3q
+         EzHgpD0n6ghIXAA3Tkogf3LkF3Erso/1TKdJa0kgLfcu/uwGQT+wZ5RDyCwF4VZJjveK
+         Sh0UPvuOaVbN9GtF0Q4q4dlvSO/tWDfsfxxxwwg1M0Btgx5S1EYMtzokymO0+VBwLANz
+         ShdHRXz36QFMxKUpOS2PyZDDV41JRacCYY1VqcviwAIDvpQ/ph4QQSzG0zC2VPTfxCcT
+         S5OQ==
+X-Gm-Message-State: ANhLgQ3rz3staTSCz26qox3Mr17mroZetDF1zFZTukOAFHatjtIVMrsS
+        VwcJRIs7e7PbUcJqmyBWbReqIw==
+X-Google-Smtp-Source: ADFU+vuYWMHCslvUNwXUcaXSJwmBGmrU+STTteHzbOUtCKoxHdMrNV0++OcL5lLFlieALAAa/Z3NFg==
+X-Received: by 2002:a1c:48c1:: with SMTP id v184mr3204485wma.5.1583489402366;
+        Fri, 06 Mar 2020 02:10:02 -0800 (PST)
+Received: from myrica ([2001:171b:c9a8:fbc0:116c:c27a:3e7f:5eaf])
+        by smtp.gmail.com with ESMTPSA id f6sm12992707wmc.9.2020.03.06.02.10.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Mar 2020 02:10:01 -0800 (PST)
+Date:   Fri, 6 Mar 2020 11:09:55 +0100
+From:   Jean-Philippe Brucker <jean-philippe@linaro.org>
+To:     Hanjun Guo <guohanjun@huawei.com>
+Cc:     Joerg Roedel <joro@8bytes.org>, iommu@lists.linux-foundation.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        virtualization@lists.linux-foundation.org,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linuxarm <linuxarm@huawei.com>
+Subject: Re: [PATCH 00/14] iommu: Move iommu_fwspec out of 'struct device'
+Message-ID: <20200306100955.GB50020@myrica>
+References: <20200228150820.15340-1-joro@8bytes.org>
+ <ea839f32-194a-29ea-57fc-22caea40b981@huawei.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ea839f32-194a-29ea-57fc-22caea40b981@huawei.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 4 Mar 2020 at 17:46, Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Ulf Hansson (2020-03-04 07:34:29)
-> > On Thu, 20 Feb 2020 at 07:45, Shaik Sajida Bhanu <sbhanu@codeaurora.org> wrote:
-> > >
-> > > The existing suspend/resume callbacks of sdhci-msm driver are just
-> > > gating/un-gating the clocks. During suspend cycle more can be done
-> > > like disabling controller, disabling card detection, enabling wake-up events.
-> > >
-> > > So updating the system pm callbacks for performing these extra
-> > > actions besides controlling the clocks.
-> > >
-> > > Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-> > > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> > > ---
-> > > Changes since V3:
-> > >     Invoking sdhci & cqhci resume if sdhci_host_suspend fails.
-> > >     Removed condition check before invoking cqhci_resume since its a dummy function.
-> > >
-> > > Changes since V2:
-> > >     Removed disabling/enabling pwr-irq from system pm ops.
-> > >
-> > > Changes since V1:
-> > >     Invoking pm_runtime_force_suspend/resume instead of
-> > >     sdhci_msm_runtime_suepend/resume.
-> > > diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> > > index 3955fa5d..3559b50 100644
-> > > --- a/drivers/mmc/host/sdhci-msm.c
-> > > +++ b/drivers/mmc/host/sdhci-msm.c
-> > > @@ -2159,9 +2159,52 @@ static __maybe_unused int sdhci_msm_runtime_resume(struct device *dev)
-> [...]
-> > > +
-> > > +       ret = sdhci_suspend_host(host);
-> > > +       if (ret)
-> > > +               goto resume_cqhci;
-> >
-> > sdhci_suspend_host() can't be called on a device that has been runtime
-> > suspended, as that would lead to accessing device registers when
-> > clocks/PM domains are gated.
-> >
-> > Depending on how the corresponding cqhci device is managed from a
-> > runtime PM point of view, it could also be problematic to call
-> > cqhci_suspend().
->
-> There seems to be another patch floating around here[1] that is an
-> attempt at a fix to this patch. They should probably be combined so that
-> it's not confusing what's going on.
+On Fri, Mar 06, 2020 at 04:39:37PM +0800, Hanjun Guo wrote:
+> Hi Joerg,
+> 
+> On 2020/2/28 23:08, Joerg Roedel wrote:
+> > Hi,
+> > 
+> > here is a patch-set to rename iommu_param to dev_iommu and
+> > establish it as a struct for generic per-device iommu-data.
+> > Also move the iommu_fwspec pointer from struct device into
+> > dev_iommu to have less iommu-related pointers in struct
+> > device.
+> > 
+> > The bigger part of this patch-set moves the iommu_priv
+> > pointer from struct iommu_fwspec to dev_iommu, making is
+> > usable for iommu-drivers which do not use fwspecs.
+> > 
+> > The changes for that were mostly straightforward, except for
+> > the arm-smmu (_not_ arm-smmu-v3) and the qcom iommu driver.
+> > Unfortunatly I don't have the hardware for those, so any
+> > testing of these drivers is greatly appreciated.
+> 
+> I tested this patch set on Kunpeng 920 ARM64 server which
+> using smmu-v3 with ACPI booting, but triggered a NULL
+> pointer dereference and panic at boot:
 
-Yeah, it would be easier if these are discussed together.
+I think that's because patch 01/14 move the fwspec access too early. In 
 
->
-> >
-> > > +
-> > > +       ret = pm_runtime_force_suspend(dev);
-> >
-> > It looks to me that perhaps you could make use of solely
-> > pm_runtime_force_suspend(), then just skip calling
-> > sdhci_suspend|resume_host() altogether. Do you think that could work?
->
-> Does that do all the things the commit text mentions is desired for
-> system suspend?
+                err = pci_for_each_dma_alias(to_pci_dev(dev),
+                                             iort_pci_iommu_init, &info);
 
-No. :-)
+                if (!err && iort_pci_rc_supports_ats(node))
+                        dev->iommu_fwspec->flags |= IOMMU_FWSPEC_PCI_RC_ATS;
 
-But why is system wakeup needed for an eMMC card?
+the iommu_fwspec is only valid if iort_pci_iommu_init() initialized it
+successfully, if err == 0. The following might fix it:
 
->
-> > > like disabling controller, disabling card detection, enabling wake-up events.
->
-> [1] https://lore.kernel.org/linux-arm-msm/1583322863-21790-1-git-send-email-vbadigan@codeaurora.org/
+diff --git a/drivers/acpi/arm64/iort.c b/drivers/acpi/arm64/iort.c
+index 0e981d7f3c7d..7d04424189df 100644
+--- a/drivers/acpi/arm64/iort.c
++++ b/drivers/acpi/arm64/iort.c
+@@ -1015,7 +1015,7 @@ const struct iommu_ops *iort_iommu_configure(struct device *dev)
+ 		return ops;
 
-Kind regards
-Uffe
+ 	if (dev_is_pci(dev)) {
+-		struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
++		struct iommu_fwspec *fwspec;
+ 		struct pci_bus *bus = to_pci_dev(dev)->bus;
+ 		struct iort_pci_alias_info info = { .dev = dev };
+
+@@ -1028,7 +1028,8 @@ const struct iommu_ops *iort_iommu_configure(struct device *dev)
+ 		err = pci_for_each_dma_alias(to_pci_dev(dev),
+ 					     iort_pci_iommu_init, &info);
+
+-		if (!err && iort_pci_rc_supports_ats(node))
++		fwspec = dev_iommu_fwspec_get(dev);
++		if (fwspec && iort_pci_rc_supports_ats(node))
+ 			fwspec->flags |= IOMMU_FWSPEC_PCI_RC_ATS;
+ 	} else {
+ 		int i = 0;
+
+
+Note that this use of iommu_fwspec will be removed by the ATS cleanup
+series [1], but this change should work as a temporary fix.
+
+Thanks,
+Jean
+
+[1] https://lore.kernel.org/linux-iommu/20200213165049.508908-10-jean-philippe@linaro.org/
