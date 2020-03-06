@@ -2,115 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B48C17B8E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2020 10:03:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AB5917B9DA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2020 11:08:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726026AbgCFJDW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Mar 2020 04:03:22 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:33283 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725923AbgCFJDW (ORCPT
+        id S1726162AbgCFKIU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Mar 2020 05:08:20 -0500
+Received: from mail-ua1-f66.google.com ([209.85.222.66]:38077 "EHLO
+        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726090AbgCFKIU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Mar 2020 04:03:22 -0500
-Received: by mail-ed1-f66.google.com with SMTP id c62so1639708edf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2020 01:03:19 -0800 (PST)
+        Fri, 6 Mar 2020 05:08:20 -0500
+Received: by mail-ua1-f66.google.com with SMTP id y3so491487uaq.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2020 02:08:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=EVfExVbvc4MvxivvhE8Zwkes3mQk8IuR0W5sHBoUt4M=;
-        b=s6yA/sFVQfnkWOhzov76JC4v4Q6UutyZ2L2Ug8rveGNIABq+bmHeuErO/xR9kP+ZVq
-         ABqMmyGsSidJfn9cZZy9F4syEURpDOjA53So+NYB0qFB97h6pM7kmZEqyBOE4czQsPfc
-         qd6GHhD1w9RQSXdmT2bh5zN2TRQTXdFVY5j9roa1grZia95KM82NTrW1lnUZB2STrZqK
-         liAupLupNj+py9BYsqUoCR3Obedn1WXJPcp5DVYdUOKo0Vi3Vtscc+jUMUcTclpjNhGH
-         W456CdZ7bAQ33fJHtT4gZNcEhQoVWOqjhhCx6M4va25gzkqcbZtDVd2VzL4FBhObFQrV
-         lefQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uNKCod9HWXu3nxzrNq2A6yL231Mu94A886+59BwdSMs=;
+        b=nEcPiVzXVIU3Kib52ncsdTxiBqwhamhygdS+O38NTLUeFv61aJ1sn68iVJc6k7JB7r
+         o/j/pLXeg7SUehGbmsn/QpATLwr7LQLZHvZApBZRExxELPQt213sRW113dkv9Il0TbzN
+         ymGZ/uZahmlGI2HkF99JYMa5ZWivoDErDZL+qUPAeu9fb6lEsWWejI5H2DoH1SvahW8D
+         KVsWYpzheANfyigtJZ8q6TipmSY1e30WUruYvr3nRpgkGAKSYDPF4JeR3QLQ1UjITByX
+         QTyh6GXV7tFacA2/ugy49rkZl8Ute2lZfcgMiqmbpl1lmSPwNRJXlr3Jk+Zce1xc/4Fa
+         jzOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=EVfExVbvc4MvxivvhE8Zwkes3mQk8IuR0W5sHBoUt4M=;
-        b=nL0ZnWw3bNh6s2QRV8lLIYopu9a78NIgesoLBcztsgBGvT/HHNcEqXq/6w1T/gsqDr
-         oAOe8UE6sZ1xkQ2JaD+p377F/XGglxHoNPVjzp1cDs5Na3z+8kHBKyFdlgZo7nLoh2oS
-         NSGXtC5fX1qMo/xMgXSV1GhWAtfs78eozy5NkDsad7N78vCZ9Ga/jUtpg3BnKxZSB3F/
-         j5CPOWwG35fuXTu0+pnhx0LbUmStsJ9iw1AVridnvAEqpTBgd0uajA/dxCR7hMoKN5Rb
-         ZNB4StdimWojEwWv5awcYRiiim4BgMGgnhHm4003NB6uCxxMLSdnzk0G+igQReuob/0A
-         7HmQ==
-X-Gm-Message-State: ANhLgQ1bRHUxhk90VTRtXckt2NxOlFm6Ma78eKP3wfuVAyyyZOV8rIgh
-        vKHPhnGz7PLPcZKr5Qp5ELWPkA==
-X-Google-Smtp-Source: ADFU+vtCgRacFQClx889CnjgxaGXzrkgaoyqx59KC3gGmUbS+9oMGQ7CB5b7VUWkaDXtpfGM1f47kQ==
-X-Received: by 2002:a05:6402:b81:: with SMTP id cf1mr2021814edb.131.1583485399147;
-        Fri, 06 Mar 2020 01:03:19 -0800 (PST)
-Received: from [192.168.27.209] ([94.155.124.210])
-        by smtp.googlemail.com with ESMTPSA id x6sm1505497edr.86.2020.03.06.01.03.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Mar 2020 01:03:18 -0800 (PST)
-Subject: Re: [PATCH] media: venus: fix use after free for registeredbufs
-To:     Jeffrey Kardatzke <jkardatzke@google.com>,
-        linux-media@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200306002321.3344-1-jkardatzke@google.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <892a0548-df6d-a4db-921f-7f4cfd69dc06@linaro.org>
-Date:   Fri, 6 Mar 2020 11:03:17 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uNKCod9HWXu3nxzrNq2A6yL231Mu94A886+59BwdSMs=;
+        b=eDJV7r+TF+mmHAIpZtA6EFTsQYqFJLGOPLBPUNw5st2773Bx3ugvHFxH+5jo7tV2em
+         WNC4aU/APa4wIChonbvYMIdWQ9mJmOeeZC8/w1+w/TjYF0jFZXnC3xv4O3RLnv+XYcLG
+         nDm1wGxg+cM6MyMqX/QEJkS2rBDeCh7uoNbiIH+2uDwJFudgB1lpODZEmYcuCuprSuHd
+         HVyXRVLhRTv0lX+eqAqR6l9QA9Z53CeD4XWkD60m4e4gmHgPeCGGCUHGjILOOL/G+w01
+         N5hmHQgeuH2CdjbYsHEvOd73n8ZWZxw25m+/rvXYCCZuODrhUpaiSYLgjiV7QKTT1igv
+         YAtA==
+X-Gm-Message-State: ANhLgQ2k7fCzEN1ditbuFBaVzflO3tvfUA7WETCSJZx97R0rmngtHDod
+        w7+sm6YjXJYg0gNrKGEBQjeMOSkV024UpTTPsMNiEw==
+X-Google-Smtp-Source: ADFU+vsPFcu0IamYO7zcUHclxL6+QOvOPAC3udRj76VGvSDRr2MgjVWcGiwDFu6MaHE/Uqw+4BybbwlP2HJccNuaWOc=
+X-Received: by 2002:ab0:7802:: with SMTP id x2mr1248889uaq.100.1583489298936;
+ Fri, 06 Mar 2020 02:08:18 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20200306002321.3344-1-jkardatzke@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1582181100-29914-1-git-send-email-sbhanu@codeaurora.org>
+ <CAPDyKFqSJ4h7UvQfQzWmSq9gg97A0MXvdcuXXaY7b-YUHs=V2g@mail.gmail.com> <158334039680.7173.16159724456027777605@swboyd.mtv.corp.google.com>
+In-Reply-To: <158334039680.7173.16159724456027777605@swboyd.mtv.corp.google.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 6 Mar 2020 11:07:41 +0100
+Message-ID: <CAPDyKFqecH=AsvtN+JMxdk6pY2dntWUrhUWF6LEq_DLCcPe6pw@mail.gmail.com>
+Subject: Re: [PATCH V4] mmc: sdhci-msm: Update system suspend/resume callbacks
+ of sdhci-msm platform driver
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Sahitya Tummala <stummala@codeaurora.org>,
+        Sayali Lokhande <sayalil@codeaurora.org>, cang@codeaurora.org,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Ram Prakash Gupta <rampraka@codeaurora.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeff,
+On Wed, 4 Mar 2020 at 17:46, Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Ulf Hansson (2020-03-04 07:34:29)
+> > On Thu, 20 Feb 2020 at 07:45, Shaik Sajida Bhanu <sbhanu@codeaurora.org> wrote:
+> > >
+> > > The existing suspend/resume callbacks of sdhci-msm driver are just
+> > > gating/un-gating the clocks. During suspend cycle more can be done
+> > > like disabling controller, disabling card detection, enabling wake-up events.
+> > >
+> > > So updating the system pm callbacks for performing these extra
+> > > actions besides controlling the clocks.
+> > >
+> > > Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+> > > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> > > ---
+> > > Changes since V3:
+> > >     Invoking sdhci & cqhci resume if sdhci_host_suspend fails.
+> > >     Removed condition check before invoking cqhci_resume since its a dummy function.
+> > >
+> > > Changes since V2:
+> > >     Removed disabling/enabling pwr-irq from system pm ops.
+> > >
+> > > Changes since V1:
+> > >     Invoking pm_runtime_force_suspend/resume instead of
+> > >     sdhci_msm_runtime_suepend/resume.
+> > > diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> > > index 3955fa5d..3559b50 100644
+> > > --- a/drivers/mmc/host/sdhci-msm.c
+> > > +++ b/drivers/mmc/host/sdhci-msm.c
+> > > @@ -2159,9 +2159,52 @@ static __maybe_unused int sdhci_msm_runtime_resume(struct device *dev)
+> [...]
+> > > +
+> > > +       ret = sdhci_suspend_host(host);
+> > > +       if (ret)
+> > > +               goto resume_cqhci;
+> >
+> > sdhci_suspend_host() can't be called on a device that has been runtime
+> > suspended, as that would lead to accessing device registers when
+> > clocks/PM domains are gated.
+> >
+> > Depending on how the corresponding cqhci device is managed from a
+> > runtime PM point of view, it could also be problematic to call
+> > cqhci_suspend().
+>
+> There seems to be another patch floating around here[1] that is an
+> attempt at a fix to this patch. They should probably be combined so that
+> it's not confusing what's going on.
 
-Thanks for the patch!
+Yeah, it would be easier if these are discussed together.
 
-On 3/6/20 2:23 AM, Jeffrey Kardatzke wrote:
-> In dynamic bufmode we do not manage the buffers in the registeredbufs
-> list, so do not add them there when they are initialized. Adding them
-> there was causing a use after free of the list_head struct in the buffer
-> when new buffers were allocated after existing buffers were freed.
+>
+> >
+> > > +
+> > > +       ret = pm_runtime_force_suspend(dev);
+> >
+> > It looks to me that perhaps you could make use of solely
+> > pm_runtime_force_suspend(), then just skip calling
+> > sdhci_suspend|resume_host() altogether. Do you think that could work?
+>
+> Does that do all the things the commit text mentions is desired for
+> system suspend?
 
-Is this fixing a real issue? How you come to it?
+No. :-)
 
-> 
-> Signed-off-by: Jeffrey Kardatzke <jkardatzke@google.com>
-> ---
->  drivers/media/platform/qcom/venus/helpers.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-> index bcc603804041..688a3593b49b 100644
-> --- a/drivers/media/platform/qcom/venus/helpers.c
-> +++ b/drivers/media/platform/qcom/venus/helpers.c
-> @@ -1054,8 +1054,10 @@ int venus_helper_vb2_buf_init(struct vb2_buffer *vb)
->  	buf->size = vb2_plane_size(vb, 0);
->  	buf->dma_addr = sg_dma_address(sgt->sgl);
->  
-> -	if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
-> +	if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE &&
-> +	    !is_dynamic_bufmode(inst)) {
+But why is system wakeup needed for an eMMC card?
 
-If you add !is_dynamic_bufmode here, we will loose the reference frames
-mechanism (see venus_helper_release_buf_ref()) which is not good.
+>
+> > > like disabling controller, disabling card detection, enabling wake-up events.
+>
+> [1] https://lore.kernel.org/linux-arm-msm/1583322863-21790-1-git-send-email-vbadigan@codeaurora.org/
 
-Thus, I wonder (depending on when you observe the use-after-free issue)
-does this is the correct resolution of the problem.
-
->  		list_add_tail(&buf->reg_list, &inst->registeredbufs);
-> +	}
->  
->  	return 0;
->  }
-> 
-
--- 
-regards,
-Stan
+Kind regards
+Uffe
