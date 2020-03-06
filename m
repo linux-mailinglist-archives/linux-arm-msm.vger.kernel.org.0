@@ -2,193 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AF79D17B7BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2020 08:50:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A64517B871
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2020 09:40:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725951AbgCFHum (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Mar 2020 02:50:42 -0500
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:46705 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725905AbgCFHul (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Mar 2020 02:50:41 -0500
-Received: by mail-ot1-f67.google.com with SMTP id g96so1516106otb.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2020 23:50:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CfizMw1gHVA8a7jX1bd/CXPHIWKldysCQst/gnWycr8=;
-        b=Itx8zTMHDoK8AjiybikbLdiHz8Vvg1UQLtLAGL2M6I+odVJdygPQZAjTo/t4/2bcwq
-         8B+3+RRuU4ENd8vccI+es9b2I/w5xdt+MJKCC3GhT36uutXgK6V1NnO/megAFZU5kSkQ
-         fF2Vs97DcP/btA3YpMZbMyMgdtbhLFa0WyfjY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CfizMw1gHVA8a7jX1bd/CXPHIWKldysCQst/gnWycr8=;
-        b=Fl5uxI8vOEtuP3RJG/5Ha8b+2YN5B5C/ata5JuUO/DfQmeJdXJHk3xVj6D47F8F77A
-         zQ06dsyBdgOJ9INTwsBECTmqLCM05PHk/phD90LDVOjDTBdoyz8L/94EDPsdBDTfbRuf
-         ZR6i/TYVafRTnUHasHVXgh/e8XfqV14gWKSmPAC4IrFUksaEEhzzNvGu8C92CMtaoRfl
-         xs+a3owDoDY2VDyOiNYHp9U+fZeG6o1JnutmyUWrDPIFMfWRT53//+g11sSDk93KSkLG
-         aU0Ly4MqLn9lwdHgEAU1TQUgbUswVJ8WgDTQu6h7uuzwtiuHFJv5Kw9LS2d6nBpZ4g5G
-         qXvw==
-X-Gm-Message-State: ANhLgQ2Yx5LG6LtjmoqZzkYkHcLtOCUEeUAi/gfki3x4UMa9+++J+rp3
-        0HAuChaReXua7ih6T+tWYnIF9ajlQ8E=
-X-Google-Smtp-Source: ADFU+vuBpU6x2pcdNn7ZJEC7OGlPsXdBbBvKVxLFrfKEU746NytH1lyf9SCMtZ9d3sdG5s1F7n2wNQ==
-X-Received: by 2002:a9d:6058:: with SMTP id v24mr1412438otj.115.1583481039675;
-        Thu, 05 Mar 2020 23:50:39 -0800 (PST)
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com. [209.85.210.49])
-        by smtp.gmail.com with ESMTPSA id s22sm884242otr.57.2020.03.05.23.50.38
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Mar 2020 23:50:39 -0800 (PST)
-Received: by mail-ot1-f49.google.com with SMTP id v19so1550233ote.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2020 23:50:38 -0800 (PST)
-X-Received: by 2002:a05:6830:2105:: with SMTP id i5mr1419255otc.141.1583481037437;
- Thu, 05 Mar 2020 23:50:37 -0800 (PST)
+        id S1725923AbgCFIkS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Mar 2020 03:40:18 -0500
+Received: from szxga06-in.huawei.com ([45.249.212.32]:57958 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725855AbgCFIkS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Mar 2020 03:40:18 -0500
+Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.59])
+        by Forcepoint Email with ESMTP id C12553D46A0248898ACC;
+        Fri,  6 Mar 2020 16:40:12 +0800 (CST)
+Received: from [127.0.0.1] (10.177.223.23) by DGGEMS407-HUB.china.huawei.com
+ (10.3.19.207) with Microsoft SMTP Server id 14.3.439.0; Fri, 6 Mar 2020
+ 16:40:05 +0800
+Subject: Re: [PATCH 00/14] iommu: Move iommu_fwspec out of 'struct device'
+To:     Joerg Roedel <joro@8bytes.org>, <iommu@lists.linux-foundation.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <virtualization@lists.linux-foundation.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linuxarm <linuxarm@huawei.com>
+References: <20200228150820.15340-1-joro@8bytes.org>
+From:   Hanjun Guo <guohanjun@huawei.com>
+Message-ID: <ea839f32-194a-29ea-57fc-22caea40b981@huawei.com>
+Date:   Fri, 6 Mar 2020 16:39:37 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-References: <1583472756-7611-1-git-send-email-mansur@codeaurora.org>
-In-Reply-To: <1583472756-7611-1-git-send-email-mansur@codeaurora.org>
-From:   Alexandre Courbot <acourbot@chromium.org>
-Date:   Fri, 6 Mar 2020 16:50:25 +0900
-X-Gmail-Original-Message-ID: <CAPBb6MW-zxK+=HHUP5=+pO4Mswkhm=hDX7V56ABDm+BCzDaGHg@mail.gmail.com>
-Message-ID: <CAPBb6MW-zxK+=HHUP5=+pO4Mswkhm=hDX7V56ABDm+BCzDaGHg@mail.gmail.com>
-Subject: Re: [PATCH] venus: avoid extra locking in driver
-To:     Mansur Alisha Shaik <mansur@codeaurora.org>
-Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Vikash Garodia <vgarodia@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200228150820.15340-1-joro@8bytes.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.177.223.23]
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 6, 2020 at 2:34 PM Mansur Alisha Shaik
-<mansur@codeaurora.org> wrote:
->
-> This change will avoid extra locking in driver.
+Hi Joerg,
 
-Could you elaborate a bit more on the problem that this patch solves?
+On 2020/2/28 23:08, Joerg Roedel wrote:
+> Hi,
+> 
+> here is a patch-set to rename iommu_param to dev_iommu and
+> establish it as a struct for generic per-device iommu-data.
+> Also move the iommu_fwspec pointer from struct device into
+> dev_iommu to have less iommu-related pointers in struct
+> device.
+> 
+> The bigger part of this patch-set moves the iommu_priv
+> pointer from struct iommu_fwspec to dev_iommu, making is
+> usable for iommu-drivers which do not use fwspecs.
+> 
+> The changes for that were mostly straightforward, except for
+> the arm-smmu (_not_ arm-smmu-v3) and the qcom iommu driver.
+> Unfortunatly I don't have the hardware for those, so any
+> testing of these drivers is greatly appreciated.
 
->
-> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-> ---
->  drivers/media/platform/qcom/venus/core.c       |  2 +-
->  drivers/media/platform/qcom/venus/core.h       |  2 +-
->  drivers/media/platform/qcom/venus/helpers.c    | 11 +++++++++--
->  drivers/media/platform/qcom/venus/pm_helpers.c |  8 ++++----
->  4 files changed, 15 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> index 194b10b9..75d38b8 100644
-> --- a/drivers/media/platform/qcom/venus/core.c
-> +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -447,7 +447,7 @@ static const struct freq_tbl sdm845_freq_table[] = {
->         {  244800, 100000000 }, /* 1920x1080@30 */
->  };
->
-> -static struct codec_freq_data sdm845_codec_freq_data[] =  {
-> +static const struct codec_freq_data sdm845_codec_freq_data[] =  {
->         { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10 },
->         { V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 10 },
->         { V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 10 },
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index ab7c360..8c8d0e9 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -245,7 +245,7 @@ struct venus_buffer {
->  struct clock_data {
->         u32 core_id;
->         unsigned long freq;
-> -       const struct codec_freq_data *codec_freq_data;
-> +       struct codec_freq_data codec_freq_data;
->  };
->
->  #define to_venus_buffer(ptr)   container_of(ptr, struct venus_buffer, vb)
-> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-> index bcc6038..550c4ff 100644
-> --- a/drivers/media/platform/qcom/venus/helpers.c
-> +++ b/drivers/media/platform/qcom/venus/helpers.c
-> @@ -807,6 +807,7 @@ int venus_helper_init_codec_freq_data(struct venus_inst *inst)
->         unsigned int i, data_size;
->         u32 pixfmt;
->         int ret = 0;
-> +       bool found = false;
->
->         if (!IS_V4(inst->core))
->                 return 0;
-> @@ -816,16 +817,22 @@ int venus_helper_init_codec_freq_data(struct venus_inst *inst)
->         pixfmt = inst->session_type == VIDC_SESSION_TYPE_DEC ?
->                         inst->fmt_out->pixfmt : inst->fmt_cap->pixfmt;
->
-> +       memset(&inst->clk_data.codec_freq_data, 0,
-> +               sizeof(inst->clk_data.codec_freq_data));
-> +
->         for (i = 0; i < data_size; i++) {
->                 if (data[i].pixfmt == pixfmt &&
->                     data[i].session_type == inst->session_type) {
-> -                       inst->clk_data.codec_freq_data = &data[i];
-> +                       inst->clk_data.codec_freq_data = data[i];
+I tested this patch set on Kunpeng 920 ARM64 server which
+using smmu-v3 with ACPI booting, but triggered a NULL
+pointer dereference and panic at boot:
 
-From the patch I'd infer that inst->clk_data.codec_freq_data needs to
-change at runtime. Is this what happens? Why? I'd expect that
-frequency tables remain constant, and thus that the global
-sdm845_codec_freq_data can remain constant while
-clock_data::codec_freq_data is a const reference to it. What prevents
-this from happening?
+[   14.832752] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
+[   14.851425] Mem abort info:
+[   14.858940]   ESR = 0x96000004
+[   14.866519]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   14.876580]   SET = 0, FnV = 0
+[   14.884412]   EA = 0, S1PTW = 0
+[   14.892275] Data abort info:
+[   14.899802]   ISV = 0, ISS = 0x00000004
+[   14.908141]   CM = 0, WnR = 0
+[   14.915401] [0000000000000010] user address but active_mm is swapper
+[   14.926367] Internal error: Oops: 96000004 [#1] SMP
+[   14.935992] Modules linked in:
+[   14.943724] CPU: 36 PID: 1 Comm: swapper/0 Not tainted 5.6.0-rc2+ #4
+[   14.955020] Hardware name: Huawei TaiShan 2280 V2/BC82AMDC, BIOS 0.81 07/10/2019
+[   14.972008] pstate: 80c00009 (Nzcv daif +PAN +UAO)
+[   14.981774] pc : iort_iommu_configure+0xdc/0x230
+[   14.991481] lr : iort_iommu_configure+0xcc/0x230
+[   15.001075] sp : ffff800011b3bad0
+[   15.009338] x29: ffff800011b3bad0 x28: ffff8000110a8968
+[   15.019483] x27: ffff800011540000 x26: ffff8000110004c8
+[   15.029390] x25: 0000000000000006 x24: 0000000000000000
+[   15.039336] x23: 0000000000000000 x22: 0000000000000000
+[   15.049270] x21: ffff8000113f9000 x20: ffff00002f5b0414
+[   15.059038] x19: ffff002fdc8f90b0 x18: ffffffffffffffff
+[   15.068590] x17: 0000000000000008 x16: 0000000000000005
+[   15.078182] x15: ffff8000113f9948 x14: ffff2027d993e91c
+[   15.087824] x13: ffff2027d993e16d x12: 0000000000000000
+[   15.097440] x11: 0101010101010101 x10: 00000000ffffff76
+[   15.106995] x9 : 0000000000000000 x8 : ffff2027d9a79b80
+[   15.116629] x7 : 0000000000000000 x6 : 000000000000003f
+[   15.126252] x5 : 0000000000000001 x4 : 0000000000000000
+[   15.135781] x3 : 0000000000000600 x2 : 0000000000000040
+[   15.145221] x1 : 0000000000000004 x0 : 0000000000000001
+[   15.154472] Call trace:
+[   15.160674]  iort_iommu_configure+0xdc/0x230
+[   15.168752]  acpi_dma_configure+0x88/0xb8
+[   15.176461]  pci_dma_configure+0xc0/0xe0
+[   15.183935]  really_probe+0xbc/0x498
+[   15.190853]  driver_probe_device+0x12c/0x148
+[   15.198426]  device_driver_attach+0x74/0x98
+[   15.205860]  __driver_attach+0xc4/0x178
+[   15.213045]  bus_for_each_dev+0x84/0xd8
+[   15.220185]  driver_attach+0x30/0x40
+[   15.227051]  bus_add_driver+0x170/0x258
+[   15.234241]  driver_register+0x64/0x118
+[   15.241432]  __pci_register_driver+0x58/0x68
+[   15.249202]  hibmc_pci_driver_init+0x28/0x30
+[   15.256966]  do_one_initcall+0x54/0x250
+[   15.264301]  kernel_init_freeable+0x24c/0x2e0
+[   15.272164]  kernel_init+0x18/0x110
+[   15.279068]  ret_from_fork+0x10/0x18
+[   15.286033] Code: 2a0003f6 35000840 b9401a80 360005a0 (b94012e0)
+[   15.295791] ---[ end trace 881fe61747538fd0 ]---
+[   15.304039] Kernel panic - not syncing: Fatal exception
 
-> +                       found = true;
->                         break;
->                 }
->         }
->
-> -       if (!inst->clk_data.codec_freq_data)
-> +       if (!found) {
-> +               dev_err(inst->core->dev, "cannot find codec freq data\n");
->                 ret = -EINVAL;
-> +       }
->
->         return ret;
->  }
-> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-> index abf9315..240845e 100644
-> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
-> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-> @@ -496,7 +496,7 @@ min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load)
->         list_for_each_entry(inst_pos, &core->instances, list) {
->                 if (inst_pos == inst)
->                         continue;
-> -               vpp_freq = inst_pos->clk_data.codec_freq_data->vpp_freq;
-> +               vpp_freq = inst_pos->clk_data.codec_freq_data.vpp_freq;
->                 coreid = inst_pos->clk_data.core_id;
->
->                 mbs_per_sec = load_per_instance(inst_pos);
-> @@ -545,7 +545,7 @@ static int decide_core(struct venus_inst *inst)
->                 return 0;
->
->         inst_load = load_per_instance(inst);
-> -       inst_load *= inst->clk_data.codec_freq_data->vpp_freq;
-> +       inst_load *= inst->clk_data.codec_freq_data.vpp_freq;
->         max_freq = core->res->freq_tbl[0].freq;
->
->         min_loaded_core(inst, &min_coreid, &min_load);
-> @@ -848,10 +848,10 @@ static unsigned long calculate_inst_freq(struct venus_inst *inst,
->
->         mbs_per_sec = load_per_instance(inst) / fps;
->
-> -       vpp_freq = mbs_per_sec * inst->clk_data.codec_freq_data->vpp_freq;
-> +       vpp_freq = mbs_per_sec * inst->clk_data.codec_freq_data.vpp_freq;
->         /* 21 / 20 is overhead factor */
->         vpp_freq += vpp_freq / 20;
-> -       vsp_freq = mbs_per_sec * inst->clk_data.codec_freq_data->vsp_freq;
-> +       vsp_freq = mbs_per_sec * inst->clk_data.codec_freq_data.vsp_freq;
->
->         /* 10 / 7 is overhead factor */
->         if (inst->session_type == VIDC_SESSION_TYPE_ENC)
-> --
-> 2.7.4
->
+I don't have a time slot to do the detail investigation, but seems
+that we don't have the iommu_fwspec properly initialized with ACPI
+booting after applying this patch set.
+
+Thanks
+Hanjun
+
