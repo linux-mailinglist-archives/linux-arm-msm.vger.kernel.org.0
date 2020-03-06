@@ -2,132 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8724C17BB1A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2020 12:04:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C8AA17BB81
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2020 12:21:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726240AbgCFLEb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Mar 2020 06:04:31 -0500
-Received: from szxga05-in.huawei.com ([45.249.212.191]:11192 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726025AbgCFLEb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Mar 2020 06:04:31 -0500
-Received: from DGGEMS409-HUB.china.huawei.com (unknown [172.30.72.58])
-        by Forcepoint Email with ESMTP id 6BC413F04F0A13261840;
-        Fri,  6 Mar 2020 19:04:28 +0800 (CST)
-Received: from [127.0.0.1] (10.177.223.23) by DGGEMS409-HUB.china.huawei.com
- (10.3.19.209) with Microsoft SMTP Server id 14.3.439.0; Fri, 6 Mar 2020
- 19:04:17 +0800
-Subject: Re: [PATCH 00/14] iommu: Move iommu_fwspec out of 'struct device'
-To:     Jean-Philippe Brucker <jean-philippe@linaro.org>
-CC:     Joerg Roedel <joro@8bytes.org>, <iommu@lists.linux-foundation.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <virtualization@lists.linux-foundation.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        "Andy Gross" <agross@kernel.org>,
+        id S1726182AbgCFLV1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Mar 2020 06:21:27 -0500
+Received: from mail27.static.mailgun.info ([104.130.122.27]:12427 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726171AbgCFLV1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Mar 2020 06:21:27 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1583493687; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=S9rgB4GK2W6w7XkjsGqmdclDv4AgRWYQvpM/FTcfwc4=; b=cXCWauMX2zGtvUGGw8CqkZCGvGJw+I+mUo2/Ea+5ya+gaHClokX6Jq2tX3usF0PuZQSJrQG5
+ 2meKZMzwABmRYFzk0x8wYW/jEnC/FfVi7Oyr3WpPhBKWJk81jmufCT48vvf7QEyYS+RpJVWR
+ zv46jir5dyM6T68T2pSLOAiA55c=
+X-Mailgun-Sending-Ip: 104.130.122.27
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e623228.7f0c189e66c0-smtp-out-n05;
+ Fri, 06 Mar 2020 11:21:12 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0151AC43637; Fri,  6 Mar 2020 11:21:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.206.24.160] (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sanm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E12C7C433F2;
+        Fri,  6 Mar 2020 11:21:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E12C7C433F2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sanm@codeaurora.org
+Subject: Re: [PATCH v3 0/4] Add QMP V3 USB3 PHY support for SC7180
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linuxarm <linuxarm@huawei.com>
-References: <20200228150820.15340-1-joro@8bytes.org>
- <ea839f32-194a-29ea-57fc-22caea40b981@huawei.com>
- <20200306100955.GB50020@myrica>
-From:   Hanjun Guo <guohanjun@huawei.com>
-Message-ID: <c1a0d107-39a2-a25d-ec41-1e5aec68c5ec@huawei.com>
-Date:   Fri, 6 Mar 2020 19:04:07 +0800
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
+References: <1581506488-26881-1-git-send-email-sanm@codeaurora.org>
+ <20200305185708.GU24720@google.com>
+From:   "Sandeep Maheswaram (Temp)" <sanm@codeaurora.org>
+Message-ID: <38a1d5e6-98ed-c887-6bb5-d32138fc465c@codeaurora.org>
+Date:   Fri, 6 Mar 2020 16:51:04 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
 MIME-Version: 1.0
-In-Reply-To: <20200306100955.GB50020@myrica>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
+In-Reply-To: <20200305185708.GU24720@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.177.223.23]
-X-CFilter-Loop: Reflected
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020/3/6 18:09, Jean-Philippe Brucker wrote:
-> On Fri, Mar 06, 2020 at 04:39:37PM +0800, Hanjun Guo wrote:
->> Hi Joerg,
+Hi Matthias,
+
+Will do it by 3/9.
+
+Regards
+
+Sandeep
+
+On 3/6/2020 12:27 AM, Matthias Kaehlcke wrote:
+> Hi Sandeep,
+>
+> this series has a few minor outstanding comments that prevent it from
+> landing. Do you plan to respin it soon?
+>
+> Thanks
+>
+> Matthias
+>
+> On Wed, Feb 12, 2020 at 04:51:24PM +0530, Sandeep Maheswaram wrote:
+>> Add QMP V3 USB3 PHY entries for SC7180 in phy driver and
+>> device tree bindings.
 >>
->> On 2020/2/28 23:08, Joerg Roedel wrote:
->>> Hi,
->>>
->>> here is a patch-set to rename iommu_param to dev_iommu and
->>> establish it as a struct for generic per-device iommu-data.
->>> Also move the iommu_fwspec pointer from struct device into
->>> dev_iommu to have less iommu-related pointers in struct
->>> device.
->>>
->>> The bigger part of this patch-set moves the iommu_priv
->>> pointer from struct iommu_fwspec to dev_iommu, making is
->>> usable for iommu-drivers which do not use fwspecs.
->>>
->>> The changes for that were mostly straightforward, except for
->>> the arm-smmu (_not_ arm-smmu-v3) and the qcom iommu driver.
->>> Unfortunatly I don't have the hardware for those, so any
->>> testing of these drivers is greatly appreciated.
+>> changes in v3:
+>> *Addressed Rob's comments in yaml file.
+>> *Sepearated the SC7180 support in yaml patch.
+>> *corrected the phy reset entries in device tree.
 >>
->> I tested this patch set on Kunpeng 920 ARM64 server which
->> using smmu-v3 with ACPI booting, but triggered a NULL
->> pointer dereference and panic at boot:
-> 
-> I think that's because patch 01/14 move the fwspec access too early. In 
-> 
->                 err = pci_for_each_dma_alias(to_pci_dev(dev),
->                                              iort_pci_iommu_init, &info);
-> 
->                 if (!err && iort_pci_rc_supports_ats(node))
->                         dev->iommu_fwspec->flags |= IOMMU_FWSPEC_PCI_RC_ATS;
-> 
-> the iommu_fwspec is only valid if iort_pci_iommu_init() initialized it
-> successfully, if err == 0. The following might fix it:
-
-Good catch :)
-
-> 
-> diff --git a/drivers/acpi/arm64/iort.c b/drivers/acpi/arm64/iort.c
-> index 0e981d7f3c7d..7d04424189df 100644
-> --- a/drivers/acpi/arm64/iort.c
-> +++ b/drivers/acpi/arm64/iort.c
-> @@ -1015,7 +1015,7 @@ const struct iommu_ops *iort_iommu_configure(struct device *dev)
->  		return ops;
-> 
->  	if (dev_is_pci(dev)) {
-> -		struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
-> +		struct iommu_fwspec *fwspec;
->  		struct pci_bus *bus = to_pci_dev(dev)->bus;
->  		struct iort_pci_alias_info info = { .dev = dev };
-> 
-> @@ -1028,7 +1028,8 @@ const struct iommu_ops *iort_iommu_configure(struct device *dev)
->  		err = pci_for_each_dma_alias(to_pci_dev(dev),
->  					     iort_pci_iommu_init, &info);
-> 
-> -		if (!err && iort_pci_rc_supports_ats(node))
-> +		fwspec = dev_iommu_fwspec_get(dev);
-> +		if (fwspec && iort_pci_rc_supports_ats(node))
->  			fwspec->flags |= IOMMU_FWSPEC_PCI_RC_ATS;
->  	} else {
->  		int i = 0;
-
-And the panic disappeared. Joerg, please feel free to add my Tested-by
-for smmu-v3 and IORT ACPI patches with above changes.
-
-> 
-> 
-> Note that this use of iommu_fwspec will be removed by the ATS cleanup
-> series [1], but this change should work as a temporary fix.
-
-Yes, as your patch set will set the ats_supported flag in the
-host bridge level, not per device, nice cleanup.
-
-Thanks
-Hanjun
-
+>> changes in v2:
+>> *Remove global phy reset in QMP phy.
+>> *Convert QMP phy bindings to yaml.
+>>
+>> Sandeep Maheswaram (4):
+>>    dt-bindings: phy: qcom,qmp: Convert QMP phy bindings to yaml
+>>    dt-bindings: phy: qcom,qmp: Add support for SC7180
+>>    phy: qcom-qmp: Add QMP V3 USB3 PHY support for SC7180
+>>    arm64: dts: qcom: sc7180: Correct qmp phy reset entries
+>>
+>>   .../devicetree/bindings/phy/qcom,qmp-phy.yaml      | 287 +++++++++++++++++++++
+>>   .../devicetree/bindings/phy/qcom-qmp-phy.txt       | 227 ----------------
+>>   arch/arm64/boot/dts/qcom/sc7180.dtsi               |   4 +-
+>>   drivers/phy/qualcomm/phy-qcom-qmp.c                |  38 +++
+>>   4 files changed, 327 insertions(+), 229 deletions(-)
+>>   create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+>>   delete mode 100644 Documentation/devicetree/bindings/phy/qcom-qmp-phy.txt
+>>
+>> -- 
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+>> of Code Aurora Forum, hosted by The Linux Foundation
+>>
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
