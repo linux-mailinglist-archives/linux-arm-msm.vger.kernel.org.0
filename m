@@ -2,46 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A7CD17C954
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2020 01:01:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F51E17C94C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2020 01:01:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726891AbgCGAAv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Mar 2020 19:00:51 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:45310 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726733AbgCGAAY (ORCPT
+        id S1726751AbgCGAAY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Mar 2020 19:00:24 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:44088 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726635AbgCGAAY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 6 Mar 2020 19:00:24 -0500
-Received: by mail-pg1-f196.google.com with SMTP id m15so1789920pgv.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2020 16:00:22 -0800 (PST)
+Received: by mail-pl1-f196.google.com with SMTP id d9so1502167plo.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2020 16:00:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Fa535hrpTpxZVWC2jXEsXv4d9XUZa691SL9SgolYs4Y=;
-        b=YRsSIbpMAkMDVgwzUvqYgt5Pw2FWe38K7hVWxuT56wcYfjeSCrGFticDa/8sZo8SrP
-         muEqQOjyKmXZDNM5RUGBdpKKU4Dx8lFk9b59ItnlKq08BTRHOfFL/OKdsXhnD/O7Phtr
-         nZUnQAxr/+hYCGdRZl8k2U7iNsQroUXrOX19w=
+        bh=okkWoStPCoREc6CT6fTxqPB3zLUhxqIH9Q5oYUBHFGw=;
+        b=Wpk4Y5jos+hfNa1ZezOCHQWHKQMkEuwiyxIbVQDWYQs1C2S9cRQ/PtDt6KFudcLb+s
+         nu6PJ09r/vNErDb1wlGo0q3Uf816feS7qUqHRkWdpo+WilGGstJ0j33TPs42to5gGiFv
+         AZdrA3t3PJq1/MAhXvYZIf81vdcpve5zO5H4Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Fa535hrpTpxZVWC2jXEsXv4d9XUZa691SL9SgolYs4Y=;
-        b=db3D6r79T+Z51VBoGFIY31nkRt2bulavnwf8WeUSPd0gtoYp/Tg0HmWZJM6aAKuiFD
-         wmlCH+wwG+CwdDVjJhdZifoR+74XBDVShqjFy+1ApgROq6E2uezNLhL0wQFOLKKU1klq
-         4Lab65Dwht6GHesaiD0PCYq54hOqiTjrwfkdFCHnv5Pt4BFqZqmAgZDkeKq2w7c7BM9o
-         MqysMHO/vrq/+QvAVb4UQy91qqz7I+Hpbi7g4JRbANTyfvfQjuhP5mnmow+fDPmxTrZs
-         crzz3+CzGMYQpREgK3rv5T6AFwAl3FQfDbfQOXzgQl3abmSLKacwjNtbrIG2OZhjAius
-         +YyA==
-X-Gm-Message-State: ANhLgQ3WQu7FlIl/KtZQfQ3na3pKpzvj3p9MOWkCQ06iBjjfmUXa9SiU
-        BL+03kB2si5/7aQ+j1y0fz0ejw==
-X-Google-Smtp-Source: ADFU+vuLg3Bqwh0pMdmhbZ2lf/7W/K+nOSsEUZ6rUJLzRWGPCGc0yXBD0jE1vPdLfE2P1yx40LUpLA==
-X-Received: by 2002:a63:c643:: with SMTP id x3mr5167987pgg.299.1583539221779;
-        Fri, 06 Mar 2020 16:00:21 -0800 (PST)
+        bh=okkWoStPCoREc6CT6fTxqPB3zLUhxqIH9Q5oYUBHFGw=;
+        b=qQ38jV98aAJNMvetIqe5yUCr8aepn6Db71rBFyDCkJrTgmnOyLB3/K/L566LeaGjDw
+         OZ3/qWLBBSburjgEJ7dH4eXmNkCefFnrV8XZ5oPZUG69uWsN5HUBEwBHMy3hAK4sJmru
+         u3Kqo+hDPoxcejW0fd7hMJ24UvMC4/ziEPto3bYevaKao24lz1HRThs9OVmumrSR8X2p
+         URsJuAb6vLb+x4jAqrHI/Glr6KctgcovLN4YvXyibwWg7rKQBiBOMSlY2+q60Hbpz7Hh
+         QarviMFL9zlZ8MRTGfuLNXGILNIIZ0vSGqOtKMgbchrNjIKzdQb4mBpvv3DFAt7l2/Ui
+         /A7w==
+X-Gm-Message-State: ANhLgQ1KEgNQYQLdExfiY48o/bUmEiGCg6DchF+k9X2bxnwUs1YPqMV3
+        ZpmXUcZCyfvddpeZXOMWEJoa7g==
+X-Google-Smtp-Source: ADFU+vvT45NByWO86LURS5yuNiOZ5ziBBfRIi27YMwz90b021rOJOUZmZO+yIG1aNVbNmUnicWMhRQ==
+X-Received: by 2002:a17:90a:a616:: with SMTP id c22mr6374449pjq.47.1583539223151;
+        Fri, 06 Mar 2020 16:00:23 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id 9sm32302246pge.65.2020.03.06.16.00.20
+        by smtp.gmail.com with ESMTPSA id 9sm32302246pge.65.2020.03.06.16.00.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2020 16:00:21 -0800 (PST)
+        Fri, 06 Mar 2020 16:00:22 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -51,9 +51,9 @@ Cc:     Rajendra Nayak <rnayak@codeaurora.org>, mka@chromium.org,
         Lina Iyer <ilina@codeaurora.org>,
         Douglas Anderson <dianders@chromium.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [RFT PATCH 1/9] drivers: qcom: rpmh-rsc: Clean code reading/writing regs/cmds
-Date:   Fri,  6 Mar 2020 15:59:43 -0800
-Message-Id: <20200306155707.RFT.1.I1b754137e8089e46cf33fc2ea270734ec3847ec4@changeid>
+Subject: [RFT PATCH 2/9] drivers: qcom: rpmh-rsc: Document the register layout better
+Date:   Fri,  6 Mar 2020 15:59:44 -0800
+Message-Id: <20200306155707.RFT.2.Iaddc29b72772e6ea381238a0ee85b82d3903e5f2@changeid>
 X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
 In-Reply-To: <20200306235951.214678-1-dianders@chromium.org>
 References: <20200306235951.214678-1-dianders@chromium.org>
@@ -64,132 +64,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch makes two changes, both of which should be no-ops:
+Perhaps it's just me, it took a really long time to understand what
+the register layout of rpmh-rsc was just from the #defines.  It's much
+easier to understand this if we define some structures.  At the moment
+these structures aren't used at all (so think of them as
+documentation), but to me they really help in understanding.
 
-1. Make read_tcs_reg() / read_tcs_cmd() symmetric to write_tcs_reg() /
-   write_tcs_cmd().
-
-2. Change the order of operations in the above functions to make it
-   more obvious to me what the math is doing.  Specifically first you
-   want to find the right TCS, then the right register, and then
-   multiply by the command ID if necessary.
+These structures were all figured out from the #defines and
+reading/writing functions.  Anything that wasn't used in the driver is
+marked as "opaque".
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
 
- drivers/soc/qcom/rpmh-rsc.c | 31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ drivers/soc/qcom/rpmh-rsc.c | 67 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 67 insertions(+)
 
 diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index e278fc11fe5c..5c88b8cd5bf8 100644
+index 5c88b8cd5bf8..0a409988d103 100644
 --- a/drivers/soc/qcom/rpmh-rsc.c
 +++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -61,28 +61,33 @@
+@@ -61,6 +61,73 @@
  #define CMD_STATUS_ISSUED		BIT(8)
  #define CMD_STATUS_COMPL		BIT(16)
  
--static u32 read_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
-+static u32 read_tcs_cmd(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
- {
--	return readl_relaxed(drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id +
-+	return readl_relaxed(drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg +
- 			     RSC_DRV_CMD_OFFSET * cmd_id);
- }
- 
-+static u32 read_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id)
-+{
-+	return readl_relaxed(drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
-+}
++/*
++ * The following structures aren't used in the code anywhere (right now), but
++ * help to document how the register space is laid out.  In other words it's
++ * another way to visualize the "Register offsets".
++ *
++ * Couch this in a bogus #ifdef instead of comments to allow the embedded
++ * comments to work.
++ */
++#ifdef STRUCTS_TO_DOCUMENT_HW_REGISTER_MAP
 +
- static void write_tcs_cmd(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id,
- 			  u32 data)
++/* 0x14 = 20 bytes big (see RSC_DRV_CMD_OFFSET) */
++struct tcs_cmd_hw {
++	u32 msgid;
++	u32 addr;
++	u32 data;
++	u32 status;
++	u32 resp_data;
++};
++
++/* 0x2a0 = 672 bytes big (see RSC_DRV_TCS_OFFSET) */
++struct tcs_hw {
++	/*
++	 * These are only valid on TCS 0 but are present everywhere.
++	 * Contains 1 bit per TCS.
++	 */
++	u32 irq_enable;
++	u32 irq_status;
++	u32 irq_clear;			/* Write only; write 1 to clear */
++
++	char opaque_00c[0x4];
++
++	u32 cmd_wait_for_cmpl;		/* Bit field, 1 bit per command */
++	u32 control;
++	u32 status;			/* status is 0 if tcs is busy */
++	u32 cmd_enable;			/* Bit field, 1 bit per command */
++
++	char opaque_01c[0x10];
++
++	struct tcs_cmd_hw tcs_cmd_hw[MAX_CMDS_PER_TCS];
++
++	char opaque_170[0x130];
++};
++
++/* Example for sc7180 based on current dts */
++struct rpmh_rsc_hw_sc7180 {
++	char opaque_000[0xc];
++
++	u32 prnt_chld_config;
++
++	char opaque_010[0xcf0];
++
++	/*
++	 * Offset 0xd00 aka qcom,tcs-offset from device tree.  Presumably
++	 * could be different for different SoCs?  Currently driver stores
++	 * a pointer to the first tcs in tcs_base.
++	 *
++	 * Count of various TCS entries also comes from dts.
++	 */
++	struct tcs_hw active[2];
++	struct tcs_hw sleep[3];
++	struct tcs_hw wake[3];
++	struct tcs_hw control[1];
++};
++
++#endif /* STRUCTS_TO_DOCUMENT_HW_REGISTER_MAP */
++
++
+ static u32 read_tcs_cmd(struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
  {
--	writel_relaxed(data, drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id +
-+	writel_relaxed(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg +
- 		       RSC_DRV_CMD_OFFSET * cmd_id);
- }
- 
- static void write_tcs_reg(struct rsc_drv *drv, int reg, int tcs_id, u32 data)
- {
--	writel_relaxed(data, drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id);
-+	writel_relaxed(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
- }
- 
- static void write_tcs_reg_sync(struct rsc_drv *drv, int reg, int tcs_id,
- 			       u32 data)
- {
--	writel(data, drv->tcs_base + reg + RSC_DRV_TCS_OFFSET * tcs_id);
-+	writel(data, drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg);
- 	for (;;) {
- 		if (data == readl(drv->tcs_base + reg +
- 				  RSC_DRV_TCS_OFFSET * tcs_id))
-@@ -94,7 +99,7 @@ static void write_tcs_reg_sync(struct rsc_drv *drv, int reg, int tcs_id,
- static bool tcs_is_free(struct rsc_drv *drv, int tcs_id)
- {
- 	return !test_bit(tcs_id, drv->tcs_in_use) &&
--	       read_tcs_reg(drv, RSC_DRV_STATUS, tcs_id, 0);
-+	       read_tcs_reg(drv, RSC_DRV_STATUS, tcs_id);
- }
- 
- static struct tcs_group *get_tcs_of_type(struct rsc_drv *drv, int type)
-@@ -212,7 +217,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
- 	const struct tcs_request *req;
- 	struct tcs_cmd *cmd;
- 
--	irq_status = read_tcs_reg(drv, RSC_DRV_IRQ_STATUS, 0, 0);
-+	irq_status = read_tcs_reg(drv, RSC_DRV_IRQ_STATUS, 0);
- 
- 	for_each_set_bit(i, &irq_status, BITS_PER_LONG) {
- 		req = get_req_from_tcs(drv, i);
-@@ -226,7 +231,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
- 			u32 sts;
- 
- 			cmd = &req->cmds[j];
--			sts = read_tcs_reg(drv, RSC_DRV_CMD_STATUS, i, j);
-+			sts = read_tcs_cmd(drv, RSC_DRV_CMD_STATUS, i, j);
- 			if (!(sts & CMD_STATUS_ISSUED) ||
- 			   ((req->wait_for_compl || cmd->wait) &&
- 			   !(sts & CMD_STATUS_COMPL))) {
-@@ -265,7 +270,7 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
- 	cmd_msgid |= msg->wait_for_compl ? CMD_MSGID_RESP_REQ : 0;
- 	cmd_msgid |= CMD_MSGID_WRITE;
- 
--	cmd_complete = read_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, 0);
-+	cmd_complete = read_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id);
- 
- 	for (i = 0, j = cmd_id; i < msg->num_cmds; i++, j++) {
- 		cmd = &msg->cmds[i];
-@@ -281,7 +286,7 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
- 	}
- 
- 	write_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, cmd_complete);
--	cmd_enable |= read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id, 0);
-+	cmd_enable |= read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id);
- 	write_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id, cmd_enable);
- }
- 
-@@ -294,7 +299,7 @@ static void __tcs_trigger(struct rsc_drv *drv, int tcs_id)
- 	 * While clearing ensure that the AMC mode trigger is cleared
- 	 * and then the mode enable is cleared.
- 	 */
--	enable = read_tcs_reg(drv, RSC_DRV_CONTROL, tcs_id, 0);
-+	enable = read_tcs_reg(drv, RSC_DRV_CONTROL, tcs_id);
- 	enable &= ~TCS_AMC_MODE_TRIGGER;
- 	write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
- 	enable &= ~TCS_AMC_MODE_ENABLE;
-@@ -319,10 +324,10 @@ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
- 		if (tcs_is_free(drv, tcs_id))
- 			continue;
- 
--		curr_enabled = read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id, 0);
-+		curr_enabled = read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id);
- 
- 		for_each_set_bit(j, &curr_enabled, MAX_CMDS_PER_TCS) {
--			addr = read_tcs_reg(drv, RSC_DRV_CMD_ADDR, tcs_id, j);
-+			addr = read_tcs_cmd(drv, RSC_DRV_CMD_ADDR, tcs_id, j);
- 			for (k = 0; k < msg->num_cmds; k++) {
- 				if (addr == msg->cmds[k].addr)
- 					return -EBUSY;
+ 	return readl_relaxed(drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg +
 -- 
 2.25.1.481.gfbce0eb801-goog
 
