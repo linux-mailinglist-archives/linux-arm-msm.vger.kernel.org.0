@@ -2,46 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 90B2517C946
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2020 01:00:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9138C17C951
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2020 01:01:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727071AbgCGAAd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Mar 2020 19:00:33 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:43159 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726982AbgCGAAc (ORCPT
+        id S1727075AbgCGAAk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Mar 2020 19:00:40 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:38904 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727077AbgCGAAe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Mar 2020 19:00:32 -0500
-Received: by mail-pf1-f196.google.com with SMTP id c144so1858776pfb.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2020 16:00:30 -0800 (PST)
+        Fri, 6 Mar 2020 19:00:34 -0500
+Received: by mail-pl1-f196.google.com with SMTP id w3so1512065plz.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2020 16:00:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mRf7ifgX7zbaVmn4NjSkySRjH8oQPa4m1mLq8CgIprc=;
-        b=ZAp5Fm6dpDpVjUdraWnOpQsptURIcZwYpytZSVu+fMPEKSrjimoeHYaUHkH7jZTVKR
-         vffXeuouP4jlQWxxYQRpZFjkQJfl3sPXKW4s52ci0BKa1Y+1JS19nEat043+XbAiUMer
-         Hl6H8k0VMX3V1CJmew66wRlji6TFJlOML9TT0=
+        bh=98Uju0+azKiOlYwuSiSydGCSog84zzMy3jPWb9kLFic=;
+        b=ck8aykfwZYXVBAIBrH7ILOupCp7Or9TAPtVEClv1oM7RzhyReJPiM0wdqsZb0pxG3m
+         uMh3zJ8YIEpyzWHXNbFzu0uWsq91Gp5/cXXio8SoGssZwIgypbRggz7To/x0XuFFplQA
+         +uyaYo/Ue9oN0XBExUFOjlaZ+GNkzCcGeyrKo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mRf7ifgX7zbaVmn4NjSkySRjH8oQPa4m1mLq8CgIprc=;
-        b=pgrbb9cK2TL8CxnrMqUwsLcOmB2Z4DmbVeyOwfX7yPv5dF/ltCOGxpJzqh4yYklVu+
-         TRVM9tIExZYMJMJBKm5OARZ51MX6IspooUKNAQoY0vQO1l5CvvwQ1/u7O6d7cG70aNCd
-         penHubM9CiNECBHfudRfX4zY7x8REwRv0uj+EzDNPpLkQsX3pev/29W11dwX1fpcWqNm
-         RFCQafDh88qbaZu/jAUts6L6rOsntBQMIkO2bML3YmJE5yGqnlte+sb/SeW2T5vcOgI3
-         jZivZcQfGkBEKm4o7tjygZTaHU3A2iY2OHu3ZNz7gM25e8gVnLQ/gQIC2g8N6gjAjCZB
-         csIw==
-X-Gm-Message-State: ANhLgQ0NzdYIpxma0pRGLTi+Ee3Ao3OaMHz2A+FhvUZhx4QyMZpL9gH3
-        WeoqfhvoGoSFW8VyqyzG91vvdg==
-X-Google-Smtp-Source: ADFU+vtkomkxgMKcVnN3kivqhu2On7dz8E96mTuuCr4xI+v38xMJHA54SjCqeH6gBm3Te2cwQnq+Yg==
-X-Received: by 2002:a63:f757:: with SMTP id f23mr5568459pgk.223.1583539230403;
-        Fri, 06 Mar 2020 16:00:30 -0800 (PST)
+        bh=98Uju0+azKiOlYwuSiSydGCSog84zzMy3jPWb9kLFic=;
+        b=Xstjr2PlcPgzW/AcdtMLF7mfAxjDD+QakswUmxwGWwK5HdL1DJl+SsJ7VEUoKF07JW
+         1yO1eOFAFYMC0iMJjdTXtx8kpB4c/XUzDKY82klSmFXl1rWB4Bzb9AGa/cK2HP8y37nU
+         2qej5js4dq3dC39dNvtUJHwGO8hYetYCyoE+DegRvmYl8rSTWLXZ/6R3Yi3bhc4fLE+i
+         Sh2JwhFxtImR9IpEyNDZF6CGTtOjrw1zPEGIrA5Cy7tZD0gC2RYh4ePXWOJktswCmaHl
+         6LjJHW+LqpYK7IQp0YemUfW1witIsdhtVM6j+/FXxEXg1znAkdCvJfE+RjlWjll8n2ro
+         XIrg==
+X-Gm-Message-State: ANhLgQ1mmXkkPowVSlrV+H5vbQpGpVG9hK5eRokLGidIFIAwmtk6zbuD
+        BNSrJXO9X991a+1MAEyEQhwgLg==
+X-Google-Smtp-Source: ADFU+vvqOO6v+GHXzUjtZZHOPUSlKLGkg1DMFS2JYCLI+x9bxP/KLpw6prWAWUWnAfdKmHee4qHKaw==
+X-Received: by 2002:a17:902:ac8b:: with SMTP id h11mr5321924plr.131.1583539231638;
+        Fri, 06 Mar 2020 16:00:31 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id 9sm32302246pge.65.2020.03.06.16.00.29
+        by smtp.gmail.com with ESMTPSA id 9sm32302246pge.65.2020.03.06.16.00.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2020 16:00:29 -0800 (PST)
+        Fri, 06 Mar 2020 16:00:31 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -51,9 +51,9 @@ Cc:     Rajendra Nayak <rnayak@codeaurora.org>, mka@chromium.org,
         Lina Iyer <ilina@codeaurora.org>,
         Douglas Anderson <dianders@chromium.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [RFT PATCH 8/9] drivers: qcom: rpmh-rsc: spin_lock_irqsave() for tcs_invalidate()
-Date:   Fri,  6 Mar 2020 15:59:50 -0800
-Message-Id: <20200306155707.RFT.8.I07c1f70e0e8f2dc0004bd38970b4e258acdc773e@changeid>
+Subject: [RFT PATCH 9/9] drivers: qcom: rpmh-rsc: Kill cmd_cache and find_match() with fire
+Date:   Fri,  6 Mar 2020 15:59:51 -0800
+Message-Id: <20200306155707.RFT.9.I6d3d0a3ec810dc72ff1df3cbf97deefdcdeb8eef@changeid>
 X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
 In-Reply-To: <20200306235951.214678-1-dianders@chromium.org>
 References: <20200306235951.214678-1-dianders@chromium.org>
@@ -64,62 +64,201 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Auditing tcs_invalidate() made me worried.  Specifically I saw that it
-used spin_lock(), not spin_lock_irqsave().  That always worries me.
+As talked about in the comments introduced by the patch ("drivers:
+qcom: rpmh-rsc: A lot of comments"), the find_match() function()
+didn't seem very sensible.  Remove it and the cmd_cache array that it
+needed.
 
-As I understand it, using spin_lock() is only valid in these
-situations:
+Nothing should stop us from exploring some fancy ways to avoid fully
+invalidating the whole sleep/wake TCSs all the time in the future, but
+find_match() doesn't seem well enough thought out to keep while we
+wait for something better to arrive.
 
-a) You know you are running in the interrupt handler (and all other
-   users of the lock use the "irqsave" variant).
-b) You know that nobody using the lock is ever running in the
-   interrupt handler.
-c) You know that someone else has always disabled interrupts before
-   your code runs and thus the "irqsave" variant is pointless.
+This patch isn't quite a no-op.  Specifically:
 
-From auditing the driver we look OK.  ...except that there is one
-further corner case.  If sometimes your code is called with IRQs
-disabled and sometimes it's not you will get in trouble if someone
-ever boots your board with "nosmp" (AKA in uniprocessor mode).  In
-such a case if someone else has the lock (without disabling
-interrupts) and they get swapped out then your code (with interrupts
-disabled) might loop forever waiting for the spinlock.
+* It should be a slight performance boost of not searching through so
+  many arrays.
+* There is slightly less self-checking of commands written to the
+  sleep/wake sets.  If it truly is an error to write to the same
+  address more than once in a tcs_group then some cases (but not all)
+  would have been caught before.
 
-It's just safer to use the irqsave version, so let's do that.  In
-future patches I believe tcs_invalidate() will always be called with
-interrupts off anyway.
+[1] https://lore.kernel.org/r/1583428023-19559-1-git-send-email-mkshah@codeaurora.org
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
+It's possible that this might need the latest version of Maulik's
+rpmh.c patches to work properly so we can really be sure that we
+always invalidate before we flush.
 
- drivers/soc/qcom/rpmh-rsc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/soc/qcom/rpmh-internal.h |   2 -
+ drivers/soc/qcom/rpmh-rsc.c      | 104 +------------------------------
+ 2 files changed, 1 insertion(+), 105 deletions(-)
 
+diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-internal.h
+index 49df01af7701..7206a1ac97e8 100644
+--- a/drivers/soc/qcom/rpmh-internal.h
++++ b/drivers/soc/qcom/rpmh-internal.h
+@@ -34,7 +34,6 @@ struct rsc_drv;
+  *                    trigger
+  *             End: get irq, access req,
+  *                  grab drv->lock, clear tcs_in_use, drop drv->lock
+- * @cmd_cache: Flattened cache of cmds in sleep/wake TCS; num_tcs * ncpt big.
+  * @slots:     Indicates which of @cmd_addr are occupied; only used for
+  *             SLEEP / WAKE TCSs.  Things are tightly packed in the
+  *             case that (ncpt < MAX_CMDS_PER_TCS).  That is if ncpt = 2 and
+@@ -49,7 +48,6 @@ struct tcs_group {
+ 	int ncpt;
+ 	spinlock_t lock;
+ 	const struct tcs_request *req[MAX_TCS_PER_TYPE];
+-	u32 *cmd_cache;
+ 	DECLARE_BITMAP(slots, MAX_TCS_SLOTS);
+ };
+ 
 diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index 693873fce895..0297da5ceeaa 100644
+index 0297da5ceeaa..733373ed56bd 100644
 --- a/drivers/soc/qcom/rpmh-rsc.c
 +++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -210,9 +210,10 @@ static bool tcs_is_free(struct rsc_drv *drv, int tcs_id)
- static int tcs_invalidate(struct rsc_drv *drv, int type)
- {
- 	int m;
-+	unsigned long flags;
- 	struct tcs_group *tcs = &drv->tcs[type];
- 
--	spin_lock(&tcs->lock);
-+	spin_lock_irqsave(&tcs->lock, flags);
- 	if (bitmap_empty(tcs->slots, MAX_TCS_SLOTS)) {
- 		spin_unlock(&tcs->lock);
- 		return 0;
-@@ -227,7 +228,7 @@ static int tcs_invalidate(struct rsc_drv *drv, int type)
- 		write_tcs_reg_sync(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, m, 0);
- 	}
- 	bitmap_zero(tcs->slots, MAX_TCS_SLOTS);
--	spin_unlock(&tcs->lock);
-+	spin_unlock_irqrestore(&tcs->lock, flags);
- 
- 	return 0;
+@@ -630,93 +630,6 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
+ 	return ret;
  }
+ 
+-/**
+- * find_match() - Find if the cmd sequence is in the tcs_group
+- * @tcs: The tcs_group to search.  Either sleep or wake.
+- * @cmd: The command sequence to search for; only addr is looked at.
+- * @len: The number of commands in the sequence.
+- *
+- * Searches through the given tcs_group to see if a given command sequence
+- * is in there.
+- *
+- * Two sequences are matches if they modify the same set of addresses in
+- * the same order.  The value of the data is not considered when deciding if
+- * two things are matches.
+- *
+- * How this function works is best understood by example.  For our example,
+- * we'll imagine our tcs group contains these (cmd, data) tuples:
+- *   [(a, A), (b, B), (c, C), (d, D), (e, E), (f, F), (g, G), (h, H)]
+- * ...in other words it has an element where (addr=a, data=A), etc.
+- * ...we'll assume that there is one TCS in the group that can store 8 commands.
+- *
+- * - find_match([(a, X)]) => 0
+- * - find_match([(c, X), (d, X)]) => 2
+- * - find_match([(c, X), (d, X), (e, X)]) => 2
+- * - find_match([(z, X)]) => -ENODATA
+- * - find_match([(a, X), (y, X)]) => -EINVAL (and warning printed)
+- * - find_match([(g, X), (h, X), (i, X)]) => -EINVAL (and warning printed)
+- * - find_match([(y, X), (a, X)]) => -ENODATA
+- *
+- * NOTE: This function overall seems like it has questionable value.
+- * - It can be used to update a message in the TCS with new data, but I
+- *   don't believe we actually do that--we always fully invalidate and
+- *   re-write everything.  Specifically it would be too limiting to force
+- *   someone not to change the set of addresses written to each time.
+- * - This function could be attempting to avoid writing different data to
+- *   the same address twice in a tcs_group.  If that's the goal, it doesn't
+- *   do a great job since find_match([(y, X), (a, X)]) return -ENODATA in my
+- *   above example.
+- * - If you originally wrote [(a, A), (b, B), (c, C)] and later tried to
+- *   write [(a, A), (b, B)] it'd look like a match and we wouldn't consider
+- *   it an error that the size got shorter.
+- * - If two clients wrote sequences that happened to be placed in slots next
+- *   to each other then a later check could match a sequence that was the
+- *   size of both together.
+- *
+- * TODO: in light of the above, prehaps we can just remove this function?
+- * If we later come up with fancy algorithms for updating everything without
+- * full invalidations we can come up with something then.
+- *
+- * Only for use on sleep/wake TCSs since those are the only ones we maintain
+- * tcs->slots and tcs->cmd_cache for.
+- *
+- * Must be called with the tcs_lock for the group held.
+- *
+- * Return: If the given command sequence wasn't in the tcs_group: -ENODATA.
+- *         If the given command sequence was in the tcs_group: the index of
+- *         the slot in the tcs_group where the first command is.
+- *         In some error cases (see above), -EINVAL.
+- */
+-static int find_match(const struct tcs_group *tcs, const struct tcs_cmd *cmd,
+-		      int len)
+-{
+-	int i, j;
+-
+-	/* Check for already cached commands */
+-	for_each_set_bit(i, tcs->slots, MAX_TCS_SLOTS) {
+-		if (tcs->cmd_cache[i] != cmd[0].addr)
+-			continue;
+-		if (i + len >= tcs->num_tcs * tcs->ncpt)
+-			goto seq_err;
+-		for (j = 0; j < len; j++) {
+-			/*
+-			 * TODO: it's actually not valid to look at
+-			 * "cmd_cache[x]" if "slots[x]" doesn't have a bit
+-			 * set.  Should add a check.
+-			 */
+-			if (tcs->cmd_cache[i + j] != cmd[j].addr)
+-				goto seq_err;
+-		}
+-		return i;
+-	}
+-
+-	return -ENODATA;
+-
+-seq_err:
+-	WARN(1, "Message does not match previous sequence.\n");
+-	return -EINVAL;
+-}
+-
+ /**
+  * find_slots() - Find a place to write the given message.
+  * @tcs:    The controller.
+@@ -728,7 +641,7 @@ static int find_match(const struct tcs_group *tcs, const struct tcs_cmd *cmd,
+  *          start writing the message.
+  *
+  * Only for use on sleep/wake TCSs since those are the only ones we maintain
+- * tcs->slots and tcs->cmd_cache for.
++ * tcs->slots for.
+  *
+  * Must be called with the tcs_lock for the group held.
+  *
+@@ -740,11 +653,6 @@ static int find_slots(struct tcs_group *tcs, const struct tcs_request *msg,
+ 	int slot, offset;
+ 	int i = 0;
+ 
+-	/* Find if we already have the msg in our TCS */
+-	slot = find_match(tcs, msg->cmds, msg->num_cmds);
+-	if (slot >= 0)
+-		goto copy_data;
+-
+ 	/* Do over, until we can fit the full payload in a single TCS */
+ 	do {
+ 		slot = bitmap_find_next_zero_area(tcs->slots, MAX_TCS_SLOTS,
+@@ -754,11 +662,7 @@ static int find_slots(struct tcs_group *tcs, const struct tcs_request *msg,
+ 		i += tcs->ncpt;
+ 	} while (slot + msg->num_cmds - 1 >= i);
+ 
+-copy_data:
+ 	bitmap_set(tcs->slots, slot, msg->num_cmds);
+-	/* Copy the addresses of the resources over to the slots */
+-	for (i = 0; i < msg->num_cmds; i++)
+-		tcs->cmd_cache[slot + i] = msg->cmds[i].addr;
+ 
+ 	offset = slot / tcs->ncpt;
+ 	*tcs_id = offset + tcs->offset;
+@@ -889,12 +793,6 @@ static int rpmh_probe_tcs_config(struct platform_device *pdev,
+ 		 */
+ 		if (tcs->type == ACTIVE_TCS)
+ 			continue;
+-
+-		tcs->cmd_cache = devm_kcalloc(&pdev->dev,
+-					      tcs->num_tcs * ncpt, sizeof(u32),
+-					      GFP_KERNEL);
+-		if (!tcs->cmd_cache)
+-			return -ENOMEM;
+ 	}
+ 
+ 	drv->num_tcs = st;
 -- 
 2.25.1.481.gfbce0eb801-goog
 
