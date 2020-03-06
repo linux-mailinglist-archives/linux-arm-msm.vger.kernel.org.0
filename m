@@ -2,138 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A64517B871
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2020 09:40:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D63E917B8CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2020 09:57:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725923AbgCFIkS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Mar 2020 03:40:18 -0500
-Received: from szxga06-in.huawei.com ([45.249.212.32]:57958 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725855AbgCFIkS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Mar 2020 03:40:18 -0500
-Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.59])
-        by Forcepoint Email with ESMTP id C12553D46A0248898ACC;
-        Fri,  6 Mar 2020 16:40:12 +0800 (CST)
-Received: from [127.0.0.1] (10.177.223.23) by DGGEMS407-HUB.china.huawei.com
- (10.3.19.207) with Microsoft SMTP Server id 14.3.439.0; Fri, 6 Mar 2020
- 16:40:05 +0800
-Subject: Re: [PATCH 00/14] iommu: Move iommu_fwspec out of 'struct device'
-To:     Joerg Roedel <joro@8bytes.org>, <iommu@lists.linux-foundation.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <virtualization@lists.linux-foundation.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linuxarm <linuxarm@huawei.com>
-References: <20200228150820.15340-1-joro@8bytes.org>
-From:   Hanjun Guo <guohanjun@huawei.com>
-Message-ID: <ea839f32-194a-29ea-57fc-22caea40b981@huawei.com>
-Date:   Fri, 6 Mar 2020 16:39:37 +0800
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1726108AbgCFI5Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Mar 2020 03:57:25 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46965 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725951AbgCFI5Y (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Mar 2020 03:57:24 -0500
+Received: by mail-ed1-f68.google.com with SMTP id y3so1543268edj.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2020 00:57:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=HIKZujjihh1s+IvJgZIBXxxG3VuVixHJ2zZMGP7f5ds=;
+        b=ApbCYCm4C3dDhGo8AB22p7YfzlZjsxj6XAp/L7HrsFpZchnbNucy76iro9tFMWSNAm
+         +8DH05IPpfPAIS38G4xHkprVFjH32Zd+8/UYqQtdymtcUpeWsmz/9tQBcKN3mVjI/7nw
+         FVrHMowqB8JEURcRCm1YjPZox0PBhINWJZmQywrOJdRVu6T3rsL9eD1R6OP6/mpMtC80
+         vsAoXCpsv9XPVlEEgJXodgL5kuS1TJDP9eK70SfdWjKPMjmL1F8Dwi9jm0m8NZ1f5mcc
+         R22V/gxn/NeWDDpFvnAnCn8FhJHTPXEvGDdZixWH4seZJvRYIIcWSOuZpgmIor6ql42T
+         1Ggg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=HIKZujjihh1s+IvJgZIBXxxG3VuVixHJ2zZMGP7f5ds=;
+        b=Zc8m8xtiC0TYaA2dZi5FpcQt4nh83X9ZhoHTotow7ybnFT+nMdycuEZapgvzHQM64U
+         JYNCA9hQmxgvhgNY3CCBxzfse5DhSdp9agkCcJRemqTmYDf4bLksgujtM1IU/ZvJvArM
+         u9o06n0oUkfTDFConusyeXE3FckSQ4SltERekaaKlftMAfRUbL7idnUc/s+NoE8uvKP4
+         a11vdQMQV9WbyW4uOwZOVNLFssFAUkm0zgyYutHzuEAEewhY0ozsx9OS+qrw4PvQpfD3
+         0HI0yj3eoKMk3CHM3JaHrk9LwxqY2NWx2zjDz/+ou+BzZXEmogaW2rRRQFc18HLsfskt
+         5NuQ==
+X-Gm-Message-State: ANhLgQ0O5UOejXMECTJvsPRtENsYtvemPyBFaQPMVLsKZU15cdntoL2D
+        AS+rmlK4XFl7j6A/Gw2fC2mfyw==
+X-Google-Smtp-Source: ADFU+vtKmlWnoiuxBrdVpANGDvxFR85NnJGhtovu5ZhTJ0svqRt0GXFeOhqgOrETEd/BGytVN3mk2w==
+X-Received: by 2002:a50:ed18:: with SMTP id j24mr2081280eds.124.1583485042506;
+        Fri, 06 Mar 2020 00:57:22 -0800 (PST)
+Received: from [192.168.27.209] ([94.155.124.210])
+        by smtp.googlemail.com with ESMTPSA id q5sm1294432edw.34.2020.03.06.00.57.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Mar 2020 00:57:21 -0800 (PST)
+Subject: Re: [PATCH v2] media: venus: support frame rate control
+To:     Jeffrey Kardatzke <jkardatzke@google.com>,
+        linux-media@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200222003311.106837-1-jkardatzke@google.com>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <da345a46-599d-2a00-0e96-112e702781c9@linaro.org>
+Date:   Fri, 6 Mar 2020 10:57:20 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-In-Reply-To: <20200228150820.15340-1-joro@8bytes.org>
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20200222003311.106837-1-jkardatzke@google.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.177.223.23]
-X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Joerg,
+Hi Jeff,
 
-On 2020/2/28 23:08, Joerg Roedel wrote:
-> Hi,
+Thanks for the patch!
+
+It looks good to me, except one indentation issue but I will fix it when
+applying no need to resend it.
+
+On 2/22/20 2:33 AM, Jeffrey Kardatzke wrote:
+> Add encoder control for enabling/disabling frame rate control via
+> V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE. It is enabled by default.
 > 
-> here is a patch-set to rename iommu_param to dev_iommu and
-> establish it as a struct for generic per-device iommu-data.
-> Also move the iommu_fwspec pointer from struct device into
-> dev_iommu to have less iommu-related pointers in struct
-> device.
+> Signed-off-by: Jeffrey Kardatzke <jkardatzke@google.com>
+> ---
+>  drivers/media/platform/qcom/venus/core.h       | 1 +
+>  drivers/media/platform/qcom/venus/venc.c       | 4 +++-
+>  drivers/media/platform/qcom/venus/venc_ctrls.c | 8 +++++++-
+>  3 files changed, 11 insertions(+), 2 deletions(-)
+
+Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+
 > 
-> The bigger part of this patch-set moves the iommu_priv
-> pointer from struct iommu_fwspec to dev_iommu, making is
-> usable for iommu-drivers which do not use fwspecs.
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> index 11585fb3cae3..2b0649ffbd92 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -187,6 +187,7 @@ struct venc_controls {
+>  	u32 bitrate_mode;
+>  	u32 bitrate;
+>  	u32 bitrate_peak;
+> +	u32 rc_enable;
+>  
+>  	u32 h264_i_period;
+>  	u32 h264_entropy_mode;
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index 453edf966d4f..56079c9d9900 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -731,7 +731,9 @@ static int venc_set_properties(struct venus_inst *inst)
+>  	if (ret)
+>  		return ret;
+>  
+> -	if (ctr->bitrate_mode == V4L2_MPEG_VIDEO_BITRATE_MODE_VBR)
+> +	if (!ctr->rc_enable)
+> +		rate_control = HFI_RATE_CONTROL_OFF;
+> +	else if (ctr->bitrate_mode == V4L2_MPEG_VIDEO_BITRATE_MODE_VBR)
+>  		rate_control = HFI_RATE_CONTROL_VBR_CFR;
+>  	else
+>  		rate_control = HFI_RATE_CONTROL_CBR_CFR;
+> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> index 877c0b3299e9..0572a00b8380 100644
+> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
+> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> @@ -199,6 +199,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+>  		}
+>  		mutex_unlock(&inst->lock);
+>  		break;
+> +	case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
+> +		ctr->rc_enable = ctrl->val;
+> +		break;
+>  	default:
+>  		return -EINVAL;
+>  	}
+> @@ -214,7 +217,7 @@ int venc_ctrl_init(struct venus_inst *inst)
+>  {
+>  	int ret;
+>  
+> -	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 30);
+> +	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 31);
+>  	if (ret)
+>  		return ret;
+>  
+> @@ -351,6 +354,9 @@ int venc_ctrl_init(struct venus_inst *inst)
+>  	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+>  			  V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME, 0, 0, 0, 0);
+>  
+> +	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+> +		V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE, 0, 1, 1, 1);
+> +
+>  	ret = inst->ctrl_handler.error;
+>  	if (ret)
+>  		goto err;
 > 
-> The changes for that were mostly straightforward, except for
-> the arm-smmu (_not_ arm-smmu-v3) and the qcom iommu driver.
-> Unfortunatly I don't have the hardware for those, so any
-> testing of these drivers is greatly appreciated.
 
-I tested this patch set on Kunpeng 920 ARM64 server which
-using smmu-v3 with ACPI booting, but triggered a NULL
-pointer dereference and panic at boot:
-
-[   14.832752] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
-[   14.851425] Mem abort info:
-[   14.858940]   ESR = 0x96000004
-[   14.866519]   EC = 0x25: DABT (current EL), IL = 32 bits
-[   14.876580]   SET = 0, FnV = 0
-[   14.884412]   EA = 0, S1PTW = 0
-[   14.892275] Data abort info:
-[   14.899802]   ISV = 0, ISS = 0x00000004
-[   14.908141]   CM = 0, WnR = 0
-[   14.915401] [0000000000000010] user address but active_mm is swapper
-[   14.926367] Internal error: Oops: 96000004 [#1] SMP
-[   14.935992] Modules linked in:
-[   14.943724] CPU: 36 PID: 1 Comm: swapper/0 Not tainted 5.6.0-rc2+ #4
-[   14.955020] Hardware name: Huawei TaiShan 2280 V2/BC82AMDC, BIOS 0.81 07/10/2019
-[   14.972008] pstate: 80c00009 (Nzcv daif +PAN +UAO)
-[   14.981774] pc : iort_iommu_configure+0xdc/0x230
-[   14.991481] lr : iort_iommu_configure+0xcc/0x230
-[   15.001075] sp : ffff800011b3bad0
-[   15.009338] x29: ffff800011b3bad0 x28: ffff8000110a8968
-[   15.019483] x27: ffff800011540000 x26: ffff8000110004c8
-[   15.029390] x25: 0000000000000006 x24: 0000000000000000
-[   15.039336] x23: 0000000000000000 x22: 0000000000000000
-[   15.049270] x21: ffff8000113f9000 x20: ffff00002f5b0414
-[   15.059038] x19: ffff002fdc8f90b0 x18: ffffffffffffffff
-[   15.068590] x17: 0000000000000008 x16: 0000000000000005
-[   15.078182] x15: ffff8000113f9948 x14: ffff2027d993e91c
-[   15.087824] x13: ffff2027d993e16d x12: 0000000000000000
-[   15.097440] x11: 0101010101010101 x10: 00000000ffffff76
-[   15.106995] x9 : 0000000000000000 x8 : ffff2027d9a79b80
-[   15.116629] x7 : 0000000000000000 x6 : 000000000000003f
-[   15.126252] x5 : 0000000000000001 x4 : 0000000000000000
-[   15.135781] x3 : 0000000000000600 x2 : 0000000000000040
-[   15.145221] x1 : 0000000000000004 x0 : 0000000000000001
-[   15.154472] Call trace:
-[   15.160674]  iort_iommu_configure+0xdc/0x230
-[   15.168752]  acpi_dma_configure+0x88/0xb8
-[   15.176461]  pci_dma_configure+0xc0/0xe0
-[   15.183935]  really_probe+0xbc/0x498
-[   15.190853]  driver_probe_device+0x12c/0x148
-[   15.198426]  device_driver_attach+0x74/0x98
-[   15.205860]  __driver_attach+0xc4/0x178
-[   15.213045]  bus_for_each_dev+0x84/0xd8
-[   15.220185]  driver_attach+0x30/0x40
-[   15.227051]  bus_add_driver+0x170/0x258
-[   15.234241]  driver_register+0x64/0x118
-[   15.241432]  __pci_register_driver+0x58/0x68
-[   15.249202]  hibmc_pci_driver_init+0x28/0x30
-[   15.256966]  do_one_initcall+0x54/0x250
-[   15.264301]  kernel_init_freeable+0x24c/0x2e0
-[   15.272164]  kernel_init+0x18/0x110
-[   15.279068]  ret_from_fork+0x10/0x18
-[   15.286033] Code: 2a0003f6 35000840 b9401a80 360005a0 (b94012e0)
-[   15.295791] ---[ end trace 881fe61747538fd0 ]---
-[   15.304039] Kernel panic - not syncing: Fatal exception
-
-I don't have a time slot to do the detail investigation, but seems
-that we don't have the iommu_fwspec properly initialized with ACPI
-booting after applying this patch set.
-
-Thanks
-Hanjun
-
+-- 
+regards,
+Stan
