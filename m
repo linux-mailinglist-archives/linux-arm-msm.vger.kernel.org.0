@@ -2,263 +2,525 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9138C17C951
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2020 01:01:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE9DB17CA9D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2020 03:05:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727075AbgCGAAk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Mar 2020 19:00:40 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:38904 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727077AbgCGAAe (ORCPT
+        id S1726237AbgCGCFS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Mar 2020 21:05:18 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:46215 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726231AbgCGCFS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Mar 2020 19:00:34 -0500
-Received: by mail-pl1-f196.google.com with SMTP id w3so1512065plz.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2020 16:00:32 -0800 (PST)
+        Fri, 6 Mar 2020 21:05:18 -0500
+Received: by mail-pl1-f194.google.com with SMTP id w12so1587895pll.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2020 18:05:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=98Uju0+azKiOlYwuSiSydGCSog84zzMy3jPWb9kLFic=;
-        b=ck8aykfwZYXVBAIBrH7ILOupCp7Or9TAPtVEClv1oM7RzhyReJPiM0wdqsZb0pxG3m
-         uMh3zJ8YIEpyzWHXNbFzu0uWsq91Gp5/cXXio8SoGssZwIgypbRggz7To/x0XuFFplQA
-         +uyaYo/Ue9oN0XBExUFOjlaZ+GNkzCcGeyrKo=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=DtK1YkJDc49nInAybBNBo4CDmLc1poF/FuYxGjrIqb0=;
+        b=ZEu/9Wqno9o5PrFYrCDBvItJ57SUMBoDhOzfADRdIyH4p3LYDWibw60Hdh121kAS1p
+         Zf+SKjyre1pBM0AtGVF8sgzeq1tFTqi37YeoF9kizaHuO+uJBe47eLXJ0AgEuASmFDXn
+         Y5jUs9iOM8gP1Xgr9+bGrqIO8vWvk29zxhsw6vTM3qvo9bkg9bp6WMcFDT7nHAC8Itcn
+         WQ8Svxv1oFwQhXyLoZY2KdisaBYaRNQj1fapuMOZe+Xc2TduACDui9RIMvM0I/yPzVZg
+         tyPd8KN6HFyC/PDv+LCNAYTKAeO0Jvqqva/cytBef0DMvGXHVhVBRBrCBEamEmRwSnO9
+         vopg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=98Uju0+azKiOlYwuSiSydGCSog84zzMy3jPWb9kLFic=;
-        b=Xstjr2PlcPgzW/AcdtMLF7mfAxjDD+QakswUmxwGWwK5HdL1DJl+SsJ7VEUoKF07JW
-         1yO1eOFAFYMC0iMJjdTXtx8kpB4c/XUzDKY82klSmFXl1rWB4Bzb9AGa/cK2HP8y37nU
-         2qej5js4dq3dC39dNvtUJHwGO8hYetYCyoE+DegRvmYl8rSTWLXZ/6R3Yi3bhc4fLE+i
-         Sh2JwhFxtImR9IpEyNDZF6CGTtOjrw1zPEGIrA5Cy7tZD0gC2RYh4ePXWOJktswCmaHl
-         6LjJHW+LqpYK7IQp0YemUfW1witIsdhtVM6j+/FXxEXg1znAkdCvJfE+RjlWjll8n2ro
-         XIrg==
-X-Gm-Message-State: ANhLgQ1mmXkkPowVSlrV+H5vbQpGpVG9hK5eRokLGidIFIAwmtk6zbuD
-        BNSrJXO9X991a+1MAEyEQhwgLg==
-X-Google-Smtp-Source: ADFU+vvqOO6v+GHXzUjtZZHOPUSlKLGkg1DMFS2JYCLI+x9bxP/KLpw6prWAWUWnAfdKmHee4qHKaw==
-X-Received: by 2002:a17:902:ac8b:: with SMTP id h11mr5321924plr.131.1583539231638;
-        Fri, 06 Mar 2020 16:00:31 -0800 (PST)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id 9sm32302246pge.65.2020.03.06.16.00.30
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=DtK1YkJDc49nInAybBNBo4CDmLc1poF/FuYxGjrIqb0=;
+        b=QXvcdWa0IWlubrJ5AgW8SpO0Do6dNock2cNlU/2vY+jUNVuGfqFOBfNepgYrwncmlX
+         h5l+uJqV6cQENWoNka/Sa4jC3gmfJP3IX3/bwYkB/Olmjcv1uyHgq6kc1K8jnpOATFUx
+         Zhmg6/hMSG92Pok00cwPjeYszdRrTLvvMTh5vftrW28mwnFszlLsCESXzkUlkEJtKV35
+         OOAt60BaiCYgoBYqUjyCSIKBfkiZVBT4aPI3+mtUYtEi+9FCmIXZhOYB7AT3oIY/yvrJ
+         Has/NK9umAx5t8/wzTx7X7r2tl1v5RM3p/Gbw3CBj797PgpXgtLKf9q4duXlH8uvsTqb
+         vLaw==
+X-Gm-Message-State: ANhLgQ2bnoL8sxU0QbCdFSOlHMy1je7TiDXDUGLEAr7WVy1iSCB1U27B
+        evHXbePl9qDgeChOr13cQzegRA==
+X-Google-Smtp-Source: ADFU+vuvLARZp6qOkph/ok2zqALRG/9jlxGEerDkPamSdlIQi8/U3YmZ6NeiYSilnSmhZCjKhLpOHg==
+X-Received: by 2002:a17:902:7b87:: with SMTP id w7mr5952640pll.214.1583546716433;
+        Fri, 06 Mar 2020 18:05:16 -0800 (PST)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id b3sm10601244pjo.30.2020.03.06.18.05.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2020 16:00:31 -0800 (PST)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>, mka@chromium.org,
-        evgreen@chromium.org, swboyd@chromium.org,
-        Lina Iyer <ilina@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [RFT PATCH 9/9] drivers: qcom: rpmh-rsc: Kill cmd_cache and find_match() with fire
-Date:   Fri,  6 Mar 2020 15:59:51 -0800
-Message-Id: <20200306155707.RFT.9.I6d3d0a3ec810dc72ff1df3cbf97deefdcdeb8eef@changeid>
-X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
-In-Reply-To: <20200306235951.214678-1-dianders@chromium.org>
-References: <20200306235951.214678-1-dianders@chromium.org>
+        Fri, 06 Mar 2020 18:05:15 -0800 (PST)
+Date:   Fri, 6 Mar 2020 18:05:13 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     wsa@the-dreams.de, vkoul@kernel.org, robert.foss@linaro.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Todor Tomov <todor.tomov@linaro.org>
+Subject: Re: [PATCH v4 1/3] i2c: Add Qualcomm CCI I2C driver
+Message-ID: <20200307020513.GA1094083@builder>
+References: <1583515184-9636-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1583515184-9636-1-git-send-email-loic.poulain@linaro.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As talked about in the comments introduced by the patch ("drivers:
-qcom: rpmh-rsc: A lot of comments"), the find_match() function()
-didn't seem very sensible.  Remove it and the cmd_cache array that it
-needed.
+On Fri 06 Mar 09:19 PST 2020, Loic Poulain wrote:
 
-Nothing should stop us from exploring some fancy ways to avoid fully
-invalidating the whole sleep/wake TCSs all the time in the future, but
-find_match() doesn't seem well enough thought out to keep while we
-wait for something better to arrive.
+> This commit adds I2C bus support for the Camera Control Interface
+> (CCI) I2C controller found on the Qualcomm SoC processors. This I2C
+> controller supports two masters and they are registered to the core.
+> 
+> CCI versions supported in the driver are MSM8916 and MSM8996.
 
-This patch isn't quite a no-op.  Specifically:
++SDM845
 
-* It should be a slight performance boost of not searching through so
-  many arrays.
-* There is slightly less self-checking of commands written to the
-  sleep/wake sets.  If it truly is an error to write to the same
-  address more than once in a tcs_group then some cases (but not all)
-  would have been caught before.
+> 
+> This is a rework of the patch posted by Vinod:
+> https://patchwork.kernel.org/patch/10569961/
+> 
+> With additional fixes + most of the comments addressed.
+> 
+> Signed-off-by: Todor Tomov <todor.tomov@linaro.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> Tested-by: Robert Foss <robert.foss@linaro.org>
+> ---
+>   v2: Remove clock rates config from driver (done via assigned clock)
+>      Added CCI timeout recovery from Ricardo's patch:
+>         https://www.spinics.net/lists/linux-i2c/msg36973.html
+>  v3: add sdm845 support
+>      rework cci_init function
+>  v4: fix checkpatch issue (double semi-colon)
+> 
+>  drivers/i2c/busses/Kconfig        |  10 +
+>  drivers/i2c/busses/Makefile       |   1 +
+>  drivers/i2c/busses/i2c-qcom-cci.c | 787 ++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 798 insertions(+)
+>  create mode 100644 drivers/i2c/busses/i2c-qcom-cci.c
+> 
+> diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
+> index 6a0aa76..807a052 100644
+> --- a/drivers/i2c/busses/Kconfig
+> +++ b/drivers/i2c/busses/Kconfig
+> @@ -894,6 +894,16 @@ config I2C_QCOM_GENI
+>  	  This driver can also be built as a module.  If so, the module
+>  	  will be called i2c-qcom-geni.
+>  
+> +config I2C_QCOM_CCI
 
-[1] https://lore.kernel.org/r/1583428023-19559-1-git-send-email-mkshah@codeaurora.org
+Please move this above GENI, to keep sort order.
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-It's possible that this might need the latest version of Maulik's
-rpmh.c patches to work properly so we can really be sure that we
-always invalidate before we flush.
+> +	tristate "Qualcomm Camera Control Interface"
+> +	depends on ARCH_QCOM || COMPILE_TEST
+> +	help
+> +	  If you say yes to this option, support will be included for the
+> +	  built-in camera control interface on the Qualcomm SoCs.
+> +
+> +	  This driver can also be built as a module.  If so, the module
+> +	  will be called i2c-qcom-cci.
+> +
+>  config I2C_QUP
+>  	tristate "Qualcomm QUP based I2C controller"
+>  	depends on ARCH_QCOM
+> diff --git a/drivers/i2c/busses/Makefile b/drivers/i2c/busses/Makefile
+> index 3ab8aeb..9028b77 100644
+> --- a/drivers/i2c/busses/Makefile
+> +++ b/drivers/i2c/busses/Makefile
+> @@ -92,6 +92,7 @@ obj-$(CONFIG_I2C_PUV3)		+= i2c-puv3.o
+>  obj-$(CONFIG_I2C_PXA)		+= i2c-pxa.o
+>  obj-$(CONFIG_I2C_PXA_PCI)	+= i2c-pxa-pci.o
+>  obj-$(CONFIG_I2C_QCOM_GENI)	+= i2c-qcom-geni.o
+> +obj-$(CONFIG_I2C_QCOM_CCI)	+= i2c-qcom-cci.o
 
- drivers/soc/qcom/rpmh-internal.h |   2 -
- drivers/soc/qcom/rpmh-rsc.c      | 104 +------------------------------
- 2 files changed, 1 insertion(+), 105 deletions(-)
+Sort order.
 
-diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-internal.h
-index 49df01af7701..7206a1ac97e8 100644
---- a/drivers/soc/qcom/rpmh-internal.h
-+++ b/drivers/soc/qcom/rpmh-internal.h
-@@ -34,7 +34,6 @@ struct rsc_drv;
-  *                    trigger
-  *             End: get irq, access req,
-  *                  grab drv->lock, clear tcs_in_use, drop drv->lock
-- * @cmd_cache: Flattened cache of cmds in sleep/wake TCS; num_tcs * ncpt big.
-  * @slots:     Indicates which of @cmd_addr are occupied; only used for
-  *             SLEEP / WAKE TCSs.  Things are tightly packed in the
-  *             case that (ncpt < MAX_CMDS_PER_TCS).  That is if ncpt = 2 and
-@@ -49,7 +48,6 @@ struct tcs_group {
- 	int ncpt;
- 	spinlock_t lock;
- 	const struct tcs_request *req[MAX_TCS_PER_TYPE];
--	u32 *cmd_cache;
- 	DECLARE_BITMAP(slots, MAX_TCS_SLOTS);
- };
- 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index 0297da5ceeaa..733373ed56bd 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -630,93 +630,6 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
- 	return ret;
- }
- 
--/**
-- * find_match() - Find if the cmd sequence is in the tcs_group
-- * @tcs: The tcs_group to search.  Either sleep or wake.
-- * @cmd: The command sequence to search for; only addr is looked at.
-- * @len: The number of commands in the sequence.
-- *
-- * Searches through the given tcs_group to see if a given command sequence
-- * is in there.
-- *
-- * Two sequences are matches if they modify the same set of addresses in
-- * the same order.  The value of the data is not considered when deciding if
-- * two things are matches.
-- *
-- * How this function works is best understood by example.  For our example,
-- * we'll imagine our tcs group contains these (cmd, data) tuples:
-- *   [(a, A), (b, B), (c, C), (d, D), (e, E), (f, F), (g, G), (h, H)]
-- * ...in other words it has an element where (addr=a, data=A), etc.
-- * ...we'll assume that there is one TCS in the group that can store 8 commands.
-- *
-- * - find_match([(a, X)]) => 0
-- * - find_match([(c, X), (d, X)]) => 2
-- * - find_match([(c, X), (d, X), (e, X)]) => 2
-- * - find_match([(z, X)]) => -ENODATA
-- * - find_match([(a, X), (y, X)]) => -EINVAL (and warning printed)
-- * - find_match([(g, X), (h, X), (i, X)]) => -EINVAL (and warning printed)
-- * - find_match([(y, X), (a, X)]) => -ENODATA
-- *
-- * NOTE: This function overall seems like it has questionable value.
-- * - It can be used to update a message in the TCS with new data, but I
-- *   don't believe we actually do that--we always fully invalidate and
-- *   re-write everything.  Specifically it would be too limiting to force
-- *   someone not to change the set of addresses written to each time.
-- * - This function could be attempting to avoid writing different data to
-- *   the same address twice in a tcs_group.  If that's the goal, it doesn't
-- *   do a great job since find_match([(y, X), (a, X)]) return -ENODATA in my
-- *   above example.
-- * - If you originally wrote [(a, A), (b, B), (c, C)] and later tried to
-- *   write [(a, A), (b, B)] it'd look like a match and we wouldn't consider
-- *   it an error that the size got shorter.
-- * - If two clients wrote sequences that happened to be placed in slots next
-- *   to each other then a later check could match a sequence that was the
-- *   size of both together.
-- *
-- * TODO: in light of the above, prehaps we can just remove this function?
-- * If we later come up with fancy algorithms for updating everything without
-- * full invalidations we can come up with something then.
-- *
-- * Only for use on sleep/wake TCSs since those are the only ones we maintain
-- * tcs->slots and tcs->cmd_cache for.
-- *
-- * Must be called with the tcs_lock for the group held.
-- *
-- * Return: If the given command sequence wasn't in the tcs_group: -ENODATA.
-- *         If the given command sequence was in the tcs_group: the index of
-- *         the slot in the tcs_group where the first command is.
-- *         In some error cases (see above), -EINVAL.
-- */
--static int find_match(const struct tcs_group *tcs, const struct tcs_cmd *cmd,
--		      int len)
--{
--	int i, j;
--
--	/* Check for already cached commands */
--	for_each_set_bit(i, tcs->slots, MAX_TCS_SLOTS) {
--		if (tcs->cmd_cache[i] != cmd[0].addr)
--			continue;
--		if (i + len >= tcs->num_tcs * tcs->ncpt)
--			goto seq_err;
--		for (j = 0; j < len; j++) {
--			/*
--			 * TODO: it's actually not valid to look at
--			 * "cmd_cache[x]" if "slots[x]" doesn't have a bit
--			 * set.  Should add a check.
--			 */
--			if (tcs->cmd_cache[i + j] != cmd[j].addr)
--				goto seq_err;
--		}
--		return i;
--	}
--
--	return -ENODATA;
--
--seq_err:
--	WARN(1, "Message does not match previous sequence.\n");
--	return -EINVAL;
--}
--
- /**
-  * find_slots() - Find a place to write the given message.
-  * @tcs:    The controller.
-@@ -728,7 +641,7 @@ static int find_match(const struct tcs_group *tcs, const struct tcs_cmd *cmd,
-  *          start writing the message.
-  *
-  * Only for use on sleep/wake TCSs since those are the only ones we maintain
-- * tcs->slots and tcs->cmd_cache for.
-+ * tcs->slots for.
-  *
-  * Must be called with the tcs_lock for the group held.
-  *
-@@ -740,11 +653,6 @@ static int find_slots(struct tcs_group *tcs, const struct tcs_request *msg,
- 	int slot, offset;
- 	int i = 0;
- 
--	/* Find if we already have the msg in our TCS */
--	slot = find_match(tcs, msg->cmds, msg->num_cmds);
--	if (slot >= 0)
--		goto copy_data;
--
- 	/* Do over, until we can fit the full payload in a single TCS */
- 	do {
- 		slot = bitmap_find_next_zero_area(tcs->slots, MAX_TCS_SLOTS,
-@@ -754,11 +662,7 @@ static int find_slots(struct tcs_group *tcs, const struct tcs_request *msg,
- 		i += tcs->ncpt;
- 	} while (slot + msg->num_cmds - 1 >= i);
- 
--copy_data:
- 	bitmap_set(tcs->slots, slot, msg->num_cmds);
--	/* Copy the addresses of the resources over to the slots */
--	for (i = 0; i < msg->num_cmds; i++)
--		tcs->cmd_cache[slot + i] = msg->cmds[i].addr;
- 
- 	offset = slot / tcs->ncpt;
- 	*tcs_id = offset + tcs->offset;
-@@ -889,12 +793,6 @@ static int rpmh_probe_tcs_config(struct platform_device *pdev,
- 		 */
- 		if (tcs->type == ACTIVE_TCS)
- 			continue;
--
--		tcs->cmd_cache = devm_kcalloc(&pdev->dev,
--					      tcs->num_tcs * ncpt, sizeof(u32),
--					      GFP_KERNEL);
--		if (!tcs->cmd_cache)
--			return -ENOMEM;
- 	}
- 
- 	drv->num_tcs = st;
--- 
-2.25.1.481.gfbce0eb801-goog
+>  obj-$(CONFIG_I2C_QUP)		+= i2c-qup.o
+>  obj-$(CONFIG_I2C_RIIC)		+= i2c-riic.o
+>  obj-$(CONFIG_I2C_RK3X)		+= i2c-rk3x.o
+> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+[..]
+> +/* Max number of resources + 1 for a NULL terminator */
+> +#define CCI_RES_MAX	6
+> +
+> +
 
+Extra newline?
+
+> +#define CCI_I2C_SET_PARAM	1
+> +#define CCI_I2C_REPORT		8
+> +#define CCI_I2C_WRITE		9
+> +#define CCI_I2C_READ		10
+[..]
+> +static int cci_i2c_read(struct cci *cci, u16 master,
+> +			u16 addr, u8 *buf, u16 len)
+> +{
+> +	u32 val, words_read, words_exp;
+> +	u8 queue = QUEUE_1;
+> +	int i, index = 0, ret;
+> +	bool first = true;
+> +
+> +	/*
+> +	 * Call validate queue to make sure queue is empty before starting.
+> +	 * This is to avoid overflow / underflow of queue.
+> +	 */
+> +	ret = cci_validate_queue(cci, master, queue);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	val = CCI_I2C_SET_PARAM | (addr & 0x7f) << 4;
+> +	writel(val, cci->base + CCI_I2C_Mm_Qn_LOAD_DATA(master, queue));
+> +
+> +	val = CCI_I2C_READ | len << 4;
+> +	writel(val, cci->base + CCI_I2C_Mm_Qn_LOAD_DATA(master, queue));
+> +
+> +	ret = cci_run_queue(cci, master, queue);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	words_read = readl(cci->base + CCI_I2C_Mm_READ_BUF_LEVEL(master));
+> +	words_exp = len / 4 + 1;
+> +	if (words_read != words_exp) {
+> +		dev_err(cci->dev, "words read = %d, words expected = %d\n",
+> +			words_read, words_exp);
+> +		return -EIO;
+> +	}
+> +
+> +	do {
+> +		val = readl(cci->base + CCI_I2C_Mm_READ_DATA(master));
+> +
+> +		for (i = 0; i < 4 && index < len; i++) {
+> +			if (first) {
+
+So lower 8 bits of the first word read should always be discarded? Do we
+know why? Can we have a comment describing this behavior?
+
+> +				first = false;
+> +				continue;
+> +			}
+> +			buf[index++] = (val >> (i * 8)) & 0xff;
+> +		}
+> +	} while (--words_read);
+> +
+> +	return 0;
+> +}
+[..]
+> +static int cci_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[], int num)
+> +{
+> +	struct cci_master *cci_master = i2c_get_adapdata(adap);
+> +	struct cci *cci = cci_master->cci;
+> +	int i, ret;
+> +
+> +	ret = pm_runtime_get_sync(cci->dev);
+> +	if (ret < 0)
+> +		goto err;
+> +
+> +	for (i = 0; i < num; i++) {
+> +		if (msgs[i].flags & I2C_M_RD)
+> +			ret = cci_i2c_read(cci, cci_master->master,
+> +					   msgs[i].addr, msgs[i].buf,
+> +					   msgs[i].len);
+> +		else
+> +			ret = cci_i2c_write(cci, cci_master->master,
+> +					    msgs[i].addr, msgs[i].buf,
+> +					    msgs[i].len);
+> +
+> +		if (ret < 0) {
+
+Most cases this can happen has already printed a more specific error
+message, so perhaps better to ensure that all paths has specific error
+messages (if that's not already the case) and simply break here if ret <
+0?
+
+> +			dev_err(cci->dev, "cci i2c xfer error %d", ret);
+> +			break;
+> +		}
+> +	}
+> +
+> +	if (!ret)
+> +		ret = num;
+> +
+> +err:
+> +	pm_runtime_mark_last_busy(cci->dev);
+> +	pm_runtime_put_autosuspend(cci->dev);
+> +
+> +	return ret;
+> +}
+> +
+> +static u32 cci_func(struct i2c_adapter *adap)
+> +{
+> +	return I2C_FUNC_I2C;
+> +}
+> +
+> +static const struct i2c_algorithm cci_algo = {
+> +	.master_xfer	= cci_xfer,
+> +	.functionality	= cci_func,
+> +};
+> +
+> +static int cci_enable_clocks(struct cci *cci)
+> +{
+> +	int ret;
+> +
+> +	ret = clk_bulk_prepare_enable(cci->nclocks, cci->clocks);
+> +	if (ret < 0)
+> +		dev_err(cci->dev, "Bulk clock prepare failed: %d\n", ret);
+
+If clk_bulk_prepare_enable() return an error it already printed an
+error, which includes the name of the clock that failed to enable. So
+you can do:
+
+	return clk_bulk_prepare_enable(...);
+
+instead.
+
+> +
+> +	return ret;
+> +}
+> +
+> +static void cci_disable_clocks(struct cci *cci)
+> +{
+> +	clk_bulk_disable_unprepare(cci->nclocks, cci->clocks);
+> +}
+> +
+> +#ifdef CONFIG_PM
+
+Instead of the #ifdef, use __maybe_unused on these functions.
+
+> +static int cci_suspend_runtime(struct device *dev)
+
+I.e:
+
+static int __maybe_unused cci_suspend_runtime(...)
+
+> +{
+> +	struct cci *cci = dev_get_drvdata(dev);
+> +
+> +	dev_dbg(dev, "Supend invoked\n");
+> +	cci_disable_clocks(cci);
+> +	return 0;
+> +}
+> +
+> +static int cci_resume_runtime(struct device *dev)
+> +{
+> +	struct cci *cci = dev_get_drvdata(dev);
+> +	int ret;
+> +
+> +	dev_dbg(dev, "Resume invoked\n");
+> +	ret = cci_enable_clocks(cci);
+> +	if (ret)
+> +		return ret;
+> +
+> +	cci_init(cci);
+> +	return 0;
+> +}
+> +#endif
+> +
+> +#ifdef CONFIG_PM_SLEEP
+
+As above.
+
+> +static int cci_suspend(struct device *dev)
+> +{
+> +	if (!pm_runtime_suspended(dev))
+> +		return cci_suspend_runtime(dev);
+> +
+> +	return 0;
+> +}
+> +
+> +static int cci_resume(struct device *dev)
+> +{
+> +	cci_resume_runtime(dev);
+> +	pm_runtime_mark_last_busy(dev);
+> +	pm_request_autosuspend(dev);
+> +
+> +	return 0;
+> +}
+> +#endif
+> +
+> +static const struct dev_pm_ops qcom_cci_pm = {
+> +	SET_SYSTEM_SLEEP_PM_OPS(cci_suspend, cci_resume)
+> +	SET_RUNTIME_PM_OPS(cci_suspend_runtime, cci_resume_runtime, NULL)
+> +};
+> +
+> +static int cci_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct device_node *of_node = NULL;
+
+No need to initialize of_node.
+
+> +	unsigned long cci_clk_rate = 0;
+> +	struct resource *r;
+> +	struct cci *cci;
+> +	int ret = 0, i;
+
+No need to zero-initialize ret.
+
+> +	u32 val;
+> +
+> +	cci = devm_kzalloc(dev, sizeof(*cci), GFP_KERNEL);
+> +	if (!cci)
+> +		return -ENOMEM;
+> +
+> +	cci->dev = dev;
+> +	platform_set_drvdata(pdev, cci);
+> +	cci->data = device_get_match_data(&pdev->dev);
+
+s/&pdev->dev/dev/ for consistency.
+
+> +	if (!cci->data) {
+> +		dev_err(&pdev->dev, "Driver data is null, abort\n");
+> +		return -EIO;
+> +	}
+> +
+> +	for (i = 0; i < cci->data->num_masters; i++) {
+> +		cci->master[i].adap.quirks = &cci->data->quirks;
+> +		cci->master[i].adap.algo = &cci_algo;
+> +		cci->master[i].adap.dev.parent = cci->dev;
+
+s/cci->dev/dev/ for consistency.
+
+> +		cci->master[i].master = i;
+> +		cci->master[i].cci = cci;
+> +
+> +		i2c_set_adapdata(&cci->master[i].adap, &cci->master[i]);
+> +		snprintf(cci->master[i].adap.name,
+> +			 sizeof(cci->master[i].adap.name),
+> +			 "Qualcomm Camera Control Interface: %d", i);
+> +
+> +		/* find the child node for i2c-bus as we are on cci node */
+> +		of_node = of_get_next_available_child(dev->of_node, of_node);
+> +		if (!of_node) {
+> +			dev_err(dev, "Missing i2c-bus@%d child node\n", i);
+> +			return -EINVAL;
+> +		}
+> +		cci->master[i].adap.dev.of_node = of_node;
+
+Won't this break if the two masters are provided in reverse order in the
+DT?
+
+> +
+> +		cci->master[i].mode = I2C_MODE_STANDARD;
+> +		ret = of_property_read_u32(of_node, "clock-frequency", &val);
+> +		if (!ret) {
+> +			if (val == 400000)
+> +				cci->master[i].mode = I2C_MODE_FAST;
+> +			else if (val == 1000000)
+> +				cci->master[i].mode = I2C_MODE_FAST_PLUS;
+> +		}
+> +
+> +		init_completion(&cci->master[i].irq_complete);
+> +	}
+> +
+> +	/* Memory */
+> +
+> +	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +	cci->base = devm_ioremap_resource(dev, r);
+> +	if (IS_ERR(cci->base))
+> +		return PTR_ERR(cci->base);
+> +
+> +	/* Interrupt */
+> +
+> +	ret = platform_get_irq(pdev, 0);
+> +	if (ret < 0) {
+> +		dev_err(dev, "missing IRQ: %d\n", ret);
+> +		return ret;
+> +	}
+> +	cci->irq = ret;
+> +
+> +	ret = devm_request_irq(dev, cci->irq, cci_isr,
+> +			       IRQF_TRIGGER_RISING, dev_name(dev), cci);
+
+Wouldn't it be better to request the irq after the clocks are enabled?
+Presumably it won't fire here, but if it does then the isr might access
+unclocked registers?
+
+At least you shouldn't have to temporarily disable the irqs until later
+in the probe?
+
+
+Also, please rely on irq flags from DT and leave the flags as 0.
+
+> +	if (ret < 0) {
+> +		dev_err(dev, "request_irq failed, ret: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	disable_irq(cci->irq);
+> +
+> +	/* Clocks */
+> +
+> +	ret = devm_clk_bulk_get_all(dev, &cci->clocks);
+> +	if (ret < 1) {
+> +		dev_err(dev, "failed to get clocks %d\n", ret);
+> +		return ret;
+> +	}
+> +	cci->nclocks = ret;
+> +
+> +	/* Retrieve CCI clock rate */
+> +	for (i = 0; i < cci->nclocks; i++) {
+> +		if (!strncmp(cci->clocks[i].id, "cci", 4)) {
+
+Isn't this just a strcmp()?
+
+> +			cci_clk_rate = clk_get_rate(cci->clocks[i].clk);
+> +			break;
+> +		}
+> +	}
+> +
+> +	if (cci_clk_rate != cci->data->cci_clk_rate) {
+> +		/* cci clock set by the bootloader or via assigned clock rate
+> +		 * in DT.
+> +		 */
+> +		dev_warn(dev, "Found %lu cci clk rate while %lu was expected\n",
+> +			 cci_clk_rate, cci->data->cci_clk_rate);
+> +	}
+> +
+> +	ret = cci_enable_clocks(cci);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	val = readl_relaxed(cci->base + CCI_HW_VERSION);
+
+Skip the "_relaxed" part.
+
+> +	dev_info(dev, "%s: CCI HW version = 0x%08x", __func__, val);
+
+I think the __func__ here is unnecessary, and perhaps make this a
+dev_dbg() instead?
+
+Regards,
+Bjorn
+> +
+> +	enable_irq(cci->irq);
+> +
+> +	ret = cci_reset(cci);
+> +	if (ret < 0)
+> +		goto error;
+> +
+> +	ret = cci_init(cci);
+> +	if (ret < 0)
+> +		goto error;
+> +
+> +	for (i = 0; i < cci->data->num_masters; i++) {
+> +		ret = i2c_add_adapter(&cci->master[i].adap);
+> +		if (ret < 0)
+> +			goto error_i2c;
+> +	}
+> +
+> +	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
+> +	pm_runtime_use_autosuspend(dev);
+> +	pm_runtime_set_active(dev);
+> +	pm_runtime_enable(dev);
+> +
+> +	return 0;
+> +
+> +error_i2c:
+> +	for (; i >= 0; i--)
+> +		i2c_del_adapter(&cci->master[i].adap);
+> +error:
+> +	disable_irq(cci->irq);
+> +	cci_disable_clocks(cci);
+> +
+> +	return ret;
+> +}
+> +
