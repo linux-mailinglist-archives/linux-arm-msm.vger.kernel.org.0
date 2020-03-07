@@ -2,141 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 18D1117CDDF
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2020 12:41:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F9E617CF6D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2020 18:25:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726359AbgCGLlA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Mar 2020 06:41:00 -0500
-Received: from asavdk3.altibox.net ([109.247.116.14]:35686 "EHLO
-        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726283AbgCGLk7 (ORCPT
+        id S1726114AbgCGRY7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Mar 2020 12:24:59 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35771 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726292AbgCGRY7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Mar 2020 06:40:59 -0500
-Received: from ravnborg.org (unknown [158.248.194.18])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by asavdk3.altibox.net (Postfix) with ESMTPS id CFB902002D;
-        Sat,  7 Mar 2020 12:40:55 +0100 (CET)
-Date:   Sat, 7 Mar 2020 12:40:54 +0100
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Krishna Manikandan <mkrishn@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, seanpaul@chromium.org,
-        kalyan_t@codeaurora.org, hoegsberg@chromium.org
-Subject: Re: [v1] dt-bindings: msm: disp: add yaml schemas for DPU and DSI
- bindings
-Message-ID: <20200307114054.GA564@ravnborg.org>
-References: <1583494560-25336-1-git-send-email-mkrishn@codeaurora.org>
+        Sat, 7 Mar 2020 12:24:59 -0500
+Received: by mail-ed1-f65.google.com with SMTP id a20so672720edj.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Mar 2020 09:24:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=35b//uthq/zLiKMDYcVOUg++BQZbA547JN8UvWQnB7Q=;
+        b=RIiOxTWD3fmaldI2GIHJHikP9g5FfDnQHjn1GUkW3UY2BFI30ou/0PI1XtkzfNvtS4
+         RsXBl3gx2/JesBLDNsGWNgiKz3O+0GYk05RmOAG4MhVvSmJRkCHIslfg42mlaMto0Rf3
+         CK4pGDax2dGgBla1w6zGPIDALO4i8xRDbPkb+Jic0KCZJdHk1IVXG0N3XjdQV3Jf3aOF
+         wkfwHY2lyT/NrPlBq3t13EJ+lXZYpGOskp8hZf7TBYT3EQcIHlLBO9YXjA2VjA/PNSZm
+         EfGAnVpGumIEapurF87cOtM0dijkrR4Pl3ISHQyJnJty/r3VRoZoCBpE6G+tfBCKlpFw
+         i2pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=35b//uthq/zLiKMDYcVOUg++BQZbA547JN8UvWQnB7Q=;
+        b=Zg0kPeEus7hZ/fnVNlKjxT1jLkeATXI7ROHxSqOK2Ljp9L4yoeDfCDBH7g5Z/drFOt
+         fwl+wRGvFM0JQ5FhC3KD+7BJfmcnmgL8uA4h4gtXc9n3XiZH3+a4fSn2OTo2229fbXQZ
+         VXkTM6lZSVIjhGm5gMZ7S5/RwgbXZtethv5b1F/3PSzRgXPbZJmeLMsS/BijWfCi+h3Z
+         6QJYui/i2C0fv+jBR0nXF7QwxFlNCEYiIXWr1gM0ZxEZCjhzFOr6OmEVgMedcbrcJUKN
+         fNasQdiL9GU951O8nLVYtnGAI6ZR5V/T4OV7UrUCNaEJxFqvg1Sz+TufqMDiwkEYeO/R
+         Mebg==
+X-Gm-Message-State: ANhLgQ0lCTHQXVYNTPeoutxcbhle539oL+lxittO469eSGjlII80rNdp
+        x6s0pGmLd7pjUi3mmm4b6rLF6g==
+X-Google-Smtp-Source: ADFU+vuTiqAv7FmS1sXxchDpf0BNGPpKPrU3SgTAbcxvwomWnpAFjwgnnU31OZ37Nkr4/JgZAYRvnw==
+X-Received: by 2002:a05:6402:128a:: with SMTP id w10mr8523455edv.330.1583601895937;
+        Sat, 07 Mar 2020 09:24:55 -0800 (PST)
+Received: from [192.168.1.9] (hst-208-219.medicom.bg. [84.238.208.219])
+        by smtp.googlemail.com with ESMTPSA id f4sm2026998edr.39.2020.03.07.09.24.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 07 Mar 2020 09:24:55 -0800 (PST)
+Subject: Re: [PATCH] media: venus: fix use after free for registeredbufs
+To:     Jeffrey Kardatzke <jkardatzke@google.com>
+Cc:     linux-media@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200306002321.3344-1-jkardatzke@google.com>
+ <892a0548-df6d-a4db-921f-7f4cfd69dc06@linaro.org>
+ <CA+ddPcPg_LrxdgxhOjrzkkBBawWoP0+6ijBx6CSy+CpQtP6vbQ@mail.gmail.com>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <7edd7feb-80d2-de8b-44cd-84ee63201ab5@linaro.org>
+Date:   Sat, 7 Mar 2020 19:24:53 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1583494560-25336-1-git-send-email-mkrishn@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=eMA9ckh1 c=1 sm=1 tr=0
-        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
-        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=LpQP-O61AAAA:8
-        a=gEfo2CItAAAA:8 a=nY4iuGU7CXqHoBgY49wA:9 a=UqWAcN0MMYTXwVMZ:21
-        a=A81lDmqo7XWCXIhH:21 a=CjuIK1q_8ugA:10 a=pioyyrs4ZptJ924tMmac:22
-        a=sptkURWiP4Gy88Gu7hUp:22
+In-Reply-To: <CA+ddPcPg_LrxdgxhOjrzkkBBawWoP0+6ijBx6CSy+CpQtP6vbQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna.
+Hi Jeff,
 
-Thanks for these bindings files.
+On 3/6/20 10:10 PM, Jeffrey Kardatzke wrote:
+> On Fri, Mar 6, 2020 at 1:03 AM Stanimir Varbanov
+> <stanimir.varbanov@linaro.org> wrote:
+>>
+>> Hi Jeff,
+>>
+>> Thanks for the patch!
+>>
+>> On 3/6/20 2:23 AM, Jeffrey Kardatzke wrote:
+>>> In dynamic bufmode we do not manage the buffers in the registeredbufs
+>>> list, so do not add them there when they are initialized. Adding them
+>>> there was causing a use after free of the list_head struct in the buffer
+>>> when new buffers were allocated after existing buffers were freed.
+>>
+>> Is this fixing a real issue? How you come to it?
+>>
+> In our code we were allocating 64x64 capture queue buffers initially,
+> then got a resolution change event for the actual video resolution of
+> 320x256 so we freed all the existing capture buffers and allocated new
+> ones. I had noticed memory poisoning warnings in dmesg and tracked it
+> down to the patch I created here. This is only a problem when the
+> capture queue has its buffers freed and reallocated (which would
+> happen during any resolution change).
 
-On Fri, Mar 06, 2020 at 05:06:00PM +0530, Krishna Manikandan wrote:
-> MSM Mobile Display Subsytem(MDSS) encapsulates sub-blocks
-> like DPU display controller, DSI etc. Add YAML schema
-> for the device tree bindings for the same.
+Do you call STREAMOFF(CAPTURE) ?
+
+Better, could you share v4l2 debug logs:
+
+echo 0x3f > /sys/class/video4linux/videoX/dev_debug
+
 > 
-> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
-> ---
->  .../bindings/display/msm/dpu-sc7180.yaml           | 269 +++++++++++++++
->  .../bindings/display/msm/dpu-sdm845.yaml           | 265 +++++++++++++++
->  .../bindings/display/msm/dsi-sc7180.yaml           | 369 +++++++++++++++++++++
->  .../bindings/display/msm/dsi-sdm845.yaml           | 369 +++++++++++++++++++++
->  4 files changed, 1272 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-sc7180.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-sdm845.yaml
+>>>
+>>> Signed-off-by: Jeffrey Kardatzke <jkardatzke@google.com>
+>>> ---
+>>>  drivers/media/platform/qcom/venus/helpers.c | 4 +++-
+>>>  1 file changed, 3 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+>>> index bcc603804041..688a3593b49b 100644
+>>> --- a/drivers/media/platform/qcom/venus/helpers.c
+>>> +++ b/drivers/media/platform/qcom/venus/helpers.c
+>>> @@ -1054,8 +1054,10 @@ int venus_helper_vb2_buf_init(struct vb2_buffer *vb)
+>>>       buf->size = vb2_plane_size(vb, 0);
+>>>       buf->dma_addr = sg_dma_address(sgt->sgl);
+>>>
+>>> -     if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
+>>> +     if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE &&
+>>> +         !is_dynamic_bufmode(inst)) {
+>>
+>> If you add !is_dynamic_bufmode here, we will loose the reference frames
+>> mechanism (see venus_helper_release_buf_ref()) which is not good.
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
-> new file mode 100644
-> index 0000000..3d1d9b8
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
-> @@ -0,0 +1,269 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dpu-sc7180.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Description of Qualcomm Display Dpu dt properties.
+> In my testing, I never see venus_helper_release_buf_ref called.  I
+> think something is wrong with reference frame management. I'm also
 
-Try to be cossistent in capitilization of Dpu versus DPU
+The mechanism is valid for Venus v1 and v3, might be you tried on v4
+where we have a set of DPB buffers and use them for reference frames.
 
-> +
-> +maintainers:
-> + - Krishna Manikandan <mkrishn@codeaurora.org>
-> +
-> +description: |
-> + Device tree bindings for MSM Mobile Display Subsytem(MDSS) that encapsulates
-> + sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
-> + bindings of MDSS and DPU are mentioned for SC7180 target.
+> seeing failure in my tests that very much look like reference frames
+> that were dropped in the decoder (with or without my patch); but they
+> are not consistent.
+> 
+>>
+>> Thus, I wonder (depending on when you observe the use-after-free issue)
+>> does this is the correct resolution of the problem.
+> 
+> I agree this is likely not the right solution to the problem, there's
+> something deeper that's wrong I think because I never see events
+> coming back from hfi with the release buffer reference event.
+>>
+>>>               list_add_tail(&buf->reg_list, &inst->registeredbufs);
+>>> +     }
+>>>
+>>>       return 0;
+>>>  }
+>>>
+>>
+>> --
+>> regards,
+>> Stan
 
-Bindings should use an indent of two spaces.
-This is what is used in the example schema and the de-facto standard.
-One space indent makes it very hard to follow the indent.
-
-For examples the indent varies. From 2 spaces to 8 spaces.
-I often use 4 spaces as 2 spaces is not enough when it spans several
-lines. But there is nothing fixed there.
-
-> +
-> +properties:
-> + "mdss":
-> +  type: object
-> +  description: |
-> +   Node containing MDSS that encapsulated sub-blocks like DPU, DSI and DP
-> +   interfaces.
-> +
-> +  properties:
-> +   compatible:
-> +    items:
-> +     - const: qcom,sc7180-mdss
-> +   reg:
-> +    description: |
-> +     Physical base address and length of controller's registers.
-Add empty line between properties (empty line before reg:).
-
-> +
-> +   reg-names:
-> +    description: |
-> +     Names for different register regions defined above. The required region
-> +     is mentioned below.
-> +    items:
-> +     - const: mdss
-> +
-> +   power-domains:
-> +    description: |
-> +     A power domain consumer specifier according to
-> +     Documentation/devicetree/bindings/power/power_domain.txt.
-Should this be power-domain.yaml?
-
-
-> +
-> +   clocks:
-> +    description: |
-> +     List of clock specifiers for clocks needed by the device.
-Do not use "|" unless required. Fine to have text on same line as
-description: .
-
-
-	Sam
+-- 
+regards,
+Stan
