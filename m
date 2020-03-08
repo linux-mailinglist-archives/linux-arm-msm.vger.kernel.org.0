@@ -2,128 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 322F117D687
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2020 22:51:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DF7617D69A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2020 23:01:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726439AbgCHVvE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Mar 2020 17:51:04 -0400
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:51098 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726352AbgCHVvE (ORCPT
+        id S1726428AbgCHWBD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Mar 2020 18:01:03 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:37504 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726332AbgCHWBC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Mar 2020 17:51:04 -0400
-Received: by mail-pj1-f68.google.com with SMTP id u10so1847866pjy.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Mar 2020 14:51:04 -0700 (PDT)
+        Sun, 8 Mar 2020 18:01:02 -0400
+Received: by mail-pg1-f194.google.com with SMTP id z12so3806813pgl.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Mar 2020 15:01:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=/0umr1qG/qgpEFz5deDRXgTYtCKL5W9w5+Ev+GQb+Dg=;
-        b=o8i/L3RzqvaBlnfdNPvNBkov0CbZ1ev3aXO9OELC4EF6fIuiIT+5wosdkaM2+PZ3Fh
-         JT/oDPO4SPzaTCp5mhzvVtDl1d8XsQtAdmQP9d3030ErzHH/rZ9O8g6nE7H0X2eQpvQh
-         DR5nt4NL35U1p5PBkQE4vOYjrHpltQ4+WUNrEhY0j0TXN/du5AD4OONWZjpUyiY7xuMF
-         04wxOJct1+9W6EzedROi0pHgbTKzlMxWbxr/Xg+mXoVhxux29YGxEKS0x8t69kP1EVVx
-         nVry261wR5FtZyy+ASdSoLqjgZMM/FJVLo0ACyyGE0q7BeneVF6nygiqUC7sVLZin2hp
-         ZLbQ==
+        bh=Jj+pYaKWaJaTeG0F5AyQyT4b1oSwBJ8WFgHn5sIktlU=;
+        b=Fqi5ioWbAO0pDPjAJowbvb9fyLmk+BKKgPKGbUyVLzD71qg+GAKB8pU/1IMbnmNw4J
+         tMvoXzOmgdmctc0ywORmdbDHCmOjatbb82qBfG6etyh94dqkUicciky5OnmaLh044W/N
+         sbBimcwsgUIMDZxIhsHY4MuFBxfHFzNX8ZilIjG3ayAprv+TcsACtfLavo2hw4HAPWDm
+         oBND6cBg3EY8ssfsP6ZIFqszXHNKDfKQcKVfSL2H36GsK+eiYFd/R/DJL/fIqlVv/0u6
+         FfnqiNaiIaUybXoOgswiWe+0UvRZfhVp+buBVzhYg4wOF1CaBCU1sLDYjQSHAyrqyHSB
+         jPeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/0umr1qG/qgpEFz5deDRXgTYtCKL5W9w5+Ev+GQb+Dg=;
-        b=ScRoYRC/w2hYHwl57BDQPErM58KGfh4pFKhX8RFx++VqzG0Jp+echMqMDBukYJYYNQ
-         DAzwPKn9OlHZfOSwsLjhlAJYnX2WWHQOnu3VIRHtMI+dNOlzAli3Hbj45CI4ogiCHLfC
-         0f3qJDdAszFWOw6iFnChUdGD9v353dmDmJm6wNAuDlhyRbIAzqksnuleD8J7eBYzJdRh
-         +BmCO9sfafcG7FQzezvZumuMl+rYfVrVYfjcdIwL0hXdq+BK+xqUVPytr/gsuDoqUZfI
-         sPEQyUj9aTBNfznOim35w6Aak+yWYZzShdtsia7qeDpXus46Yr3993TtCBvrVurk7KdM
-         9UuA==
-X-Gm-Message-State: ANhLgQ1QvQfUaeW4CZlXE2hM555p834r2BIzhPOqNKcAPb/2K9W9nN4y
-        quOwM9Xp/mM8Wk735+0n0kntrw==
-X-Google-Smtp-Source: ADFU+vso95SaWak3tER3wqc75VRhPc5TbTb2THpk8dh/f8oHGiH8kxhVJ28evS719oogUmCiIiHFLg==
-X-Received: by 2002:a17:90a:c78b:: with SMTP id gn11mr13899610pjb.97.1583704263403;
-        Sun, 08 Mar 2020 14:51:03 -0700 (PDT)
+        bh=Jj+pYaKWaJaTeG0F5AyQyT4b1oSwBJ8WFgHn5sIktlU=;
+        b=p55/xx2lFPaekKUIKabO3LgbmRi5IneFT4DG00DH8Y4l4Hdi7fChzeXHZpzDOoL0Ur
+         907m6f5CJI90kSdiNKNmqn2MSU+UEYTIe94KUT74xAt7lawcB3K6QZ1/oxaVL8UlPqLO
+         dKeQ1VQXpVQzFxwZ1e0uFULk9skc9Sz+5I7MoKCWcDqU/6p3tnxZF0xRe44sUbemCF2J
+         haM+VnHZA+74Zsw0J0hHwpIXHZfTHyRCmwtupKFLdonIO9KCUNzrKpI/Gkx+S6sy3Q8X
+         6GZZOrTm+x3XPXnoTP5XHTpaPa8FROYpLTFuMGzbk5oxFrDcLOYEHevBjf9k/f050PHO
+         J/dQ==
+X-Gm-Message-State: ANhLgQ1VPmn2DXa9GN6JOmaiZDYNgUffY7WAr2z4GXhngO3UCLDzxxTh
+        elO/Q298bPNvnlrEoGZ9Hhrl5w==
+X-Google-Smtp-Source: ADFU+vte8T+v2ZSoXd563AmJO+qtYjLzhk2OSgoaY6ZOhWMEqZV1BwiVLtqBYkvBcIQi+T9cpRvv6Q==
+X-Received: by 2002:a63:f752:: with SMTP id f18mr13436739pgk.196.1583704859771;
+        Sun, 08 Mar 2020 15:00:59 -0700 (PDT)
 Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g18sm43038368pfi.80.2020.03.08.14.51.01
+        by smtp.gmail.com with ESMTPSA id d12sm20434900pfq.87.2020.03.08.15.00.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Mar 2020 14:51:02 -0700 (PDT)
-Date:   Sun, 8 Mar 2020 14:51:00 -0700
+        Sun, 08 Mar 2020 15:00:59 -0700 (PDT)
+Date:   Sun, 8 Mar 2020 15:00:57 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Pradeep P V K <ppvk@codeaurora.org>
-Cc:     adrian.hunter@intel.com, robh+dt@kernel.org,
-        ulf.hansson@linaro.org, asutoshd@codeaurora.org,
-        stummala@codeaurora.org, sayalil@codeaurora.org,
-        rampraka@codeaurora.org, vbadigan@codeaurora.org, sboyd@kernel.org,
-        georgi.djakov@linaro.org, mka@chromium.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, linux-mmc-owner@vger.kernel.org
-Subject: Re: [RFC v4 2/2] dt-bindings: mmc: sdhci-msm: Add interconnect BW
- scaling strings
-Message-ID: <20200308215100.GM1094083@builder>
-References: <1582030833-12964-1-git-send-email-ppvk@codeaurora.org>
- <1582030833-12964-3-git-send-email-ppvk@codeaurora.org>
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Elliot Berman <eberman@codeaurora.org>
+Subject: Re: [PATCH] venus: firmware: Ignore secure call error on first resume
+Message-ID: <20200308220057.GA1098305@builder>
+References: <20200304155809.19637-1-stanimir.varbanov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1582030833-12964-3-git-send-email-ppvk@codeaurora.org>
+In-Reply-To: <20200304155809.19637-1-stanimir.varbanov@linaro.org>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 18 Feb 05:00 PST 2020, Pradeep P V K wrote:
+On Wed 04 Mar 07:58 PST 2020, Stanimir Varbanov wrote:
 
-> Add interconnect bandwidth scaling supported strings for qcom-sdhci
-> controller.
+> With the latest cleanup in qcom scm driver
+
+I've seen similar issues in other drivers, but I think the culprit is
+the following bug fix 'ff34f3cce278 ("firmware: qcom: scm: Ensure 'a0'
+status code is treated as signed")', rather than the recent refactoring.
+
+As this is a bug fix it's quite likely to show up in linux-stable as
+well and regress older versions, so you should probably Cc stable as
+well.
+
+> the secure monitor
+> call for setting the remote processor state returns EINVAL when
+> it is called for the first time and after another scm call
+> auth_and_reset. The error returned from scm call could be ignored
+> because the state transition is already done in auth_and_reset.
 > 
-> Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+I'm not sure what the appropriate mechanism is here, but your workaround
+seems reasonable.
 
+Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 > ---
+>  drivers/media/platform/qcom/venus/firmware.c | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 > 
-> changes from RFC v3 -> v4:
-> - No changes.
-> 
->  Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> index 7ee639b..cbe97b8 100644
-> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> @@ -40,6 +40,21 @@ Required properties:
->  	"cal"	- reference clock for RCLK delay calibration (optional)
->  	"sleep"	- sleep clock for RCLK delay calibration (optional)
+> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+> index de6812fb55f4..8801a6a7543d 100644
+> --- a/drivers/media/platform/qcom/venus/firmware.c
+> +++ b/drivers/media/platform/qcom/venus/firmware.c
+> @@ -44,8 +44,14 @@ static void venus_reset_cpu(struct venus_core *core)
 >  
-> +Optional Properties:
-> +* Following bus parameters are required for interconnect bandwidth scaling:
-> +- interconnects: Pairs of phandles and interconnect provider specifier
-> +		 to denote the edge source and destination ports of
-> +		 the interconnect path.
+>  int venus_set_hw_state(struct venus_core *core, bool resume)
+>  {
+> -	if (core->use_tz)
+> -		return qcom_scm_set_remote_state(resume, 0);
+> +	int ret;
 > +
-> +- interconnect-names: For sdhc, we have two main paths.
-> +		1. Data path : sdhc to ddr
-> +		2. Config path : cpu to sdhc
-> +		For Data interconnect path the name supposed to be
-> +		is "sdhc-ddr" and for config interconnect path it is
-> +		"cpu-sdhc".
-> +		Please refer to Documentation/devicetree/bindings/
-> +		interconnect/ for more details.
-> +
->  Example:
+> +	if (core->use_tz) {
+> +		ret = qcom_scm_set_remote_state(resume, 0);
+> +		if (resume && ret == -EINVAL)
+> +			ret = 0;
+> +		return ret;
+> +	}
 >  
->  	sdhc_1: sdhci@f9824900 {
-> @@ -57,6 +72,9 @@ Example:
->  
->  		clocks = <&gcc GCC_SDCC1_APPS_CLK>, <&gcc GCC_SDCC1_AHB_CLK>;
->  		clock-names = "core", "iface";
-> +		interconnects = <&qnoc MASTER_SDCC_ID &qnoc SLAVE_DDR_ID>,
-> +				<&qnoc MASTER_CPU_ID &qnoc SLAVE_SDCC_ID>;
-> +		interconnect-names = "sdhc-ddr","cpu-sdhc";
->  	};
->  
->  	sdhc_2: sdhci@f98a4900 {
+>  	if (resume)
+>  		venus_reset_cpu(core);
 > -- 
-> 1.9.1
+> 2.17.1
 > 
