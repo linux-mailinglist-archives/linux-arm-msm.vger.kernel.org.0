@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7969017DC79
+	by mail.lfdr.de (Postfix) with ESMTP id EF2D217DC7A
 	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 10:31:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726467AbgCIJbb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Mar 2020 05:31:31 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:16559 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726411AbgCIJb3 (ORCPT
+        id S1726622AbgCIJbe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Mar 2020 05:31:34 -0400
+Received: from mail27.static.mailgun.info ([104.130.122.27]:29325 "EHLO
+        mail27.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726411AbgCIJbd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Mar 2020 05:31:29 -0400
+        Mon, 9 Mar 2020 05:31:33 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1583746288; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1583746293; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=4jKVb0RH11oa+FT4XfeYYMCV12ybOqDO5l6dlM8M5qA=; b=oil8emRZm9Wed9em7pk3fNK3AvecCAwWhvc8FA4p8kPdECEsgVDjq0rS6bATlRecdIKPnEC3
- 8YtX2MpVVuIF+NLG8BJcRJPbaN1pmTUclK7ET8cY/cfiWZ2zmD0HSbmoSOniomsetTt/HTYT
- 1Dg69+GaC8uJzwTOT3h8xV9Iwn4=
-X-Mailgun-Sending-Ip: 104.130.122.26
+ bh=GWrEORlfn6gZkjUF60IMjo4kKFjeyGs6BAkvgFw3ywg=; b=AQGR1GYlMLwBm1B+LHxOPBVi/bAnrPO7RM8miNcv5XGm4L0JTe3WCBXAM51q66CQ1gMx9t9V
+ Dg0qGXHhtgzbTjyRaCJzcnpqszkfOKT3UiaxlwA3308qIrf62Dc4BKtA3v2vwO2pNw3sL4AV
+ Ij81BMNrpS7VqWQoN8vTMKyg51k=
+X-Mailgun-Sending-Ip: 104.130.122.27
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e660cef.7f24afe68848-smtp-out-n02;
- Mon, 09 Mar 2020 09:31:27 -0000 (UTC)
+ by mxa.mailgun.org with ESMTP id 5e660cf4.7fabc862e650-smtp-out-n01;
+ Mon, 09 Mar 2020 09:31:32 -0000 (UTC)
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 84907C44788; Mon,  9 Mar 2020 09:31:27 +0000 (UTC)
+        id C1EF1C43636; Mon,  9 Mar 2020 09:31:32 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -34,9 +34,9 @@ Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F0AA5C432C2;
-        Mon,  9 Mar 2020 09:31:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F0AA5C432C2
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 675DDC433D2;
+        Mon,  9 Mar 2020 09:31:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 675DDC433D2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
 From:   Maulik Shah <mkshah@codeaurora.org>
@@ -46,9 +46,9 @@ Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
         ilina@codeaurora.org, lsrao@codeaurora.org,
         Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH v13 2/5] soc: qcom: rpmh: Update dirty flag only when data changes
-Date:   Mon,  9 Mar 2020 15:00:33 +0530
-Message-Id: <1583746236-13325-3-git-send-email-mkshah@codeaurora.org>
+Subject: [PATCH v13 3/5] soc: qcom: rpmh: Invalidate SLEEP and WAKE TCSes before flushing new data
+Date:   Mon,  9 Mar 2020 15:00:34 +0530
+Message-Id: <1583746236-13325-4-git-send-email-mkshah@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1583746236-13325-1-git-send-email-mkshah@codeaurora.org>
 References: <1583746236-13325-1-git-send-email-mkshah@codeaurora.org>
@@ -57,94 +57,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently rpmh ctrlr dirty flag is set for all cases regardless of data
-is really changed or not. Add changes to update dirty flag when data is
-changed to newer values. Update dirty flag everytime when data in batch
-cache is updated since rpmh_flush() may get invoked from any CPU instead
-of only last CPU going to low power mode.
+TCSes have previously programmed data when rpmh_flush is called.
+This can cause old data to trigger along with newly flushed.
 
-Also move dirty flag updates to happen from within cache_lock and remove
-unnecessary INIT_LIST_HEAD() call and a default case from switch.
+Fix this by cleaning SLEEP and WAKE TCSes before new data is flushed.
+
+With this there is no need to invoke rpmh_rsc_invalidate() call from
+rpmh_invalidate().
+
+Simplify rpmh_invalidate() by moving invalidate_batch() inside.
 
 Fixes: 600513dfeef3 ("drivers: qcom: rpmh: cache sleep/wake state requests")
 Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-Reviewed-by: Srinivas Rao L <lsrao@codeaurora.org>
-Reviewed-by: Evan Green <evgreen@chromium.org>
 ---
- drivers/soc/qcom/rpmh.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/soc/qcom/rpmh.c | 36 +++++++++++++++---------------------
+ 1 file changed, 15 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-index eb0ded0..03630ae 100644
+index 03630ae..5bed8f4 100644
 --- a/drivers/soc/qcom/rpmh.c
 +++ b/drivers/soc/qcom/rpmh.c
-@@ -119,6 +119,7 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
- {
- 	struct cache_req *req;
- 	unsigned long flags;
-+	u32 old_sleep_val, old_wake_val;
+@@ -317,19 +317,6 @@ static int flush_batch(struct rpmh_ctrlr *ctrlr)
+ 	return ret;
+ }
  
- 	spin_lock_irqsave(&ctrlr->cache_lock, flags);
- 	req = __find_req(ctrlr, cmd->addr);
-@@ -133,26 +134,27 @@ static struct cache_req *cache_rpm_request(struct rpmh_ctrlr *ctrlr,
- 
- 	req->addr = cmd->addr;
- 	req->sleep_val = req->wake_val = UINT_MAX;
--	INIT_LIST_HEAD(&req->list);
- 	list_add_tail(&req->list, &ctrlr->cache);
- 
- existing:
-+	old_sleep_val = req->sleep_val;
-+	old_wake_val = req->wake_val;
-+
- 	switch (state) {
- 	case RPMH_ACTIVE_ONLY_STATE:
--		if (req->sleep_val != UINT_MAX)
--			req->wake_val = cmd->data;
--		break;
- 	case RPMH_WAKE_ONLY_STATE:
- 		req->wake_val = cmd->data;
- 		break;
- 	case RPMH_SLEEP_STATE:
- 		req->sleep_val = cmd->data;
- 		break;
--	default:
--		break;
+-static void invalidate_batch(struct rpmh_ctrlr *ctrlr)
+-{
+-	struct batch_cache_req *req, *tmp;
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&ctrlr->cache_lock, flags);
+-	list_for_each_entry_safe(req, tmp, &ctrlr->batch_cache, list)
+-		kfree(req);
+-	INIT_LIST_HEAD(&ctrlr->batch_cache);
+-	ctrlr->dirty = true;
+-	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+-}
+-
+ /**
+  * rpmh_write_batch: Write multiple sets of RPMH commands and wait for the
+  * batch to finish.
+@@ -467,6 +454,11 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
+ 		return 0;
  	}
  
--	ctrlr->dirty = true;
-+	ctrlr->dirty = (req->sleep_val != old_sleep_val ||
-+			req->wake_val != old_wake_val) &&
-+			req->sleep_val != UINT_MAX &&
-+			req->wake_val != UINT_MAX;
++	/* Invalidate the TCSes first to avoid stale data */
++	do {
++		ret = rpmh_rsc_invalidate(ctrlr_to_drv(ctrlr));
++	} while (ret == -EAGAIN);
 +
- unlock:
- 	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+ 	/* First flush the cached batch requests */
+ 	ret = flush_batch(ctrlr);
+ 	if (ret)
+@@ -503,19 +495,21 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
+  *
+  * @dev: The device making the request
+  *
+- * Invalidate the sleep and active values in the TCS blocks.
++ * Invalidate the sleep and wake values in batch_cache.
+  */
+ int rpmh_invalidate(const struct device *dev)
+ {
+ 	struct rpmh_ctrlr *ctrlr = get_rpmh_ctrlr(dev);
+-	int ret;
+-
+-	invalidate_batch(ctrlr);
++	struct batch_cache_req *req, *tmp;
++	unsigned long flags;
  
-@@ -287,6 +289,7 @@ static void cache_batch(struct rpmh_ctrlr *ctrlr, struct batch_cache_req *req)
- 
- 	spin_lock_irqsave(&ctrlr->cache_lock, flags);
- 	list_add_tail(&req->list, &ctrlr->batch_cache);
+-	do {
+-		ret = rpmh_rsc_invalidate(ctrlr_to_drv(ctrlr));
+-	} while (ret == -EAGAIN);
++	spin_lock_irqsave(&ctrlr->cache_lock, flags);
++	list_for_each_entry_safe(req, tmp, &ctrlr->batch_cache, list)
++		kfree(req);
++	INIT_LIST_HEAD(&ctrlr->batch_cache);
 +	ctrlr->dirty = true;
- 	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
++	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+ 
+-	return ret;
++	return 0;
  }
- 
-@@ -323,6 +326,7 @@ static void invalidate_batch(struct rpmh_ctrlr *ctrlr)
- 	list_for_each_entry_safe(req, tmp, &ctrlr->batch_cache, list)
- 		kfree(req);
- 	INIT_LIST_HEAD(&ctrlr->batch_cache);
-+	ctrlr->dirty = true;
- 	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
- }
- 
-@@ -507,7 +511,6 @@ int rpmh_invalidate(const struct device *dev)
- 	int ret;
- 
- 	invalidate_batch(ctrlr);
--	ctrlr->dirty = true;
- 
- 	do {
- 		ret = rpmh_rsc_invalidate(ctrlr_to_drv(ctrlr));
+ EXPORT_SYMBOL(rpmh_invalidate);
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
