@@ -2,168 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 66D1D17D941
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 07:28:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A04E817D960
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 07:41:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726071AbgCIG2F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Mar 2020 02:28:05 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:54111 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726248AbgCIG2F (ORCPT
+        id S1726217AbgCIGlu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Mar 2020 02:41:50 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:40588 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725796AbgCIGlu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Mar 2020 02:28:05 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1583735284; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=qy2xY/dZyMiOpfQufKuG+wtf2moSQrlU/AD39JqMigc=;
- b=tcvkwFkfnLNgGWAL7+JjvbUqGZoNbBSaRs8wNhQaND710vNnpGe9GBfsdHoTlA6kij3Optjq
- yFiTbtIONQb9doQAfab8LB+QxVAXBxNdzkZj9tEuQ1CuEiaqB4ljWv4clzaZeFbgCnIaZUIv
- 6K+RfYY9OR9S0Xvt9+8yElYQES4=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e65e1e6.7efdb514f340-smtp-out-n03;
- Mon, 09 Mar 2020 06:27:50 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 930BDC433BA; Mon,  9 Mar 2020 06:27:49 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: kgunda)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E94B8C433D2;
-        Mon,  9 Mar 2020 06:27:48 +0000 (UTC)
+        Mon, 9 Mar 2020 02:41:50 -0400
+Received: by mail-pg1-f196.google.com with SMTP id t24so4258432pgj.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Mar 2020 23:41:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=RrX9EtA3zn4u15vVccJeX3aDhJuOUHVdQao27RU5nys=;
+        b=ZlPvOTfYg8ORIBsXty84bD0rRJ/90K8uIO/uB/zt/ADLmUgqnZSsvJa7qD5c12Wnmi
+         twF97bZmvCFfxUcO6sEehkFpu0ixFanK2imweMwyQbM+gjb3XtggIwWiX35PVRGvz/nA
+         a5/oOPSK9KvI4Bkc5tDFy9cfr1VFsoh2VFnyY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=RrX9EtA3zn4u15vVccJeX3aDhJuOUHVdQao27RU5nys=;
+        b=FHQvd1jlfYa9Of0Eb3qrG7vLeS1VIW3X8wZob7lAiT3TLGAt7PescY3CbXKdDHYPNP
+         fkIlA6asDvRUI7OozqH5se2WowW7zwCOgRnPXSe4HtiswBV+Fho8khyJf3E0sMLfEPT+
+         el+AiQindGL6IVMixLPc34QcCg5FBRVAZ7N6gU9ghJ5Sgwfy2tLm1SZT1YRnt1uYvFVX
+         J7cX3zPubaWdPis+cT8nXb6pMPtqmrV8tRFA1nznK+Z0ZdN9UFsgZaVysWEye/GtLWkp
+         k5v2Q+01SRGbHFpWWXhcMbbp/VmevNYf0CaaSdrIjMV3GiB5xeVkDr6m+nGsbBgg4L2C
+         laeg==
+X-Gm-Message-State: ANhLgQ3T3fPJI78XF4WABtDnINfEsLGgmefannJHHaZaWObzaYF5K5yH
+        b9k5YUe5gB9DnTB514ja/DWNU1hfPQI=
+X-Google-Smtp-Source: ADFU+vuFj92YnT2uVcGJAjBivqhd2E2e1bNOkvmP+cAyeV4G04fBNTjyHqM1P5aYSHvLJ2i/lJqlkA==
+X-Received: by 2002:a63:f311:: with SMTP id l17mr15183521pgh.142.1583736107615;
+        Sun, 08 Mar 2020 23:41:47 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id nh4sm3207636pjb.39.2020.03.08.23.41.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Mar 2020 23:41:46 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 09 Mar 2020 11:57:48 +0530
-From:   kgunda@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     jingoohan1@gmail.com, lee.jones@linaro.org,
-        b.zolnierkie@samsung.com, dri-devel@lists.freedesktop.org,
-        daniel.thompson@linaro.org, jacek.anaszewski@gmail.com,
-        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Dan Murphy <dmurphy@ti.com>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-fbdev@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH V1 2/2] backlight: qcom-wled: Add support for WLED5
- peripheral in PM8150L
-In-Reply-To: <20200308214748.GL1094083@builder>
-References: <1583153739-19170-1-git-send-email-kgunda@codeaurora.org>
- <1583153739-19170-3-git-send-email-kgunda@codeaurora.org>
- <20200308214748.GL1094083@builder>
-Message-ID: <d0e681ae203bb14f4061d248b935578b@codeaurora.org>
-X-Sender: kgunda@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1583477228-32231-3-git-send-email-skakit@codeaurora.org>
+References: <1583477228-32231-1-git-send-email-skakit@codeaurora.org> <1583477228-32231-3-git-send-email-skakit@codeaurora.org>
+Subject: Re: [PATCH V3 2/2] tty: serial: qcom_geni_serial: Fix RX cancel command failure
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, akashast@codeaurora.org,
+        rojay@codeaurora.org, msavaliy@qti.qualcomm.com,
+        satya priya <skakit@codeaurora.org>
+To:     gregkh@linuxfoundation.org, satya priya <skakit@codeaurora.org>
+Date:   Sun, 08 Mar 2020 23:41:45 -0700
+Message-ID: <158373610593.66766.7767101522459278381@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-03-09 03:17, Bjorn Andersson wrote:
-> On Mon 02 Mar 04:55 PST 2020, Kiran Gunda wrote:
->> diff --git a/drivers/video/backlight/qcom-wled.c 
->> b/drivers/video/backlight/qcom-wled.c
-> [..]
->> @@ -147,14 +187,39 @@ struct wled {
->>  	u32 max_brightness;
->>  	u32 short_count;
->>  	u32 auto_detect_count;
->> +	u32 version;
->>  	bool disabled_by_short;
->>  	bool has_short_detect;
->> +	bool cabc_disabled;
->>  	int short_irq;
->>  	int ovp_irq;
->> 
->>  	struct wled_config cfg;
->>  	struct delayed_work ovp_work;
->>  	int (*wled_set_brightness)(struct wled *wled, u16 brightness);
->> +	int (*cabc_config)(struct wled *wled, bool enable);
->> +	int (*wled_sync_toggle)(struct wled *wled);
-> 
-> Please split this patch in one that adds these and breaks out the wled3
-> support, and then a second patch that adds wled5.
-> 
-Sure. Will make this change in the next post.
->> +};
->> +
-> [..]
->> +static int wled5_set_brightness(struct wled *wled, u16 brightness)
->> +{
->> +	int rc, offset;
->> +	u16 low_limit = wled->max_brightness * 1 / 1000;
->> +	u8 v[2], brightness_msb_mask;
->> +
->> +	/* WLED5's lower limit is 0.1% */
->> +	if (brightness > 0 && brightness < low_limit)
->> +		brightness = low_limit;
->> +
->> +	brightness_msb_mask = 0xf;
->> +	if (wled->max_brightness == WLED5_SINK_REG_BRIGHT_MAX_15B)
->> +		brightness_msb_mask = 0x7f;
-> 
-> Why not just brightness &= wled->max_brightness? But given that it 
-> seems
-> like the framework ensures that brightness <= max_brightness, why not
-> skip this altogether?
-> 
-Okay. I will modify the code to remove the min/max, low_limit checks in 
-next post.
->> +
->> +	v[0] = brightness & 0xff;
->> +	v[1] = (brightness >> 8) & brightness_msb_mask;
->> +
->> +	offset = wled5_brightness_reg[wled->cfg.mod_sel];
->> +	rc = regmap_bulk_write(wled->regmap, wled->sink_addr + offset,
->> +			v, 2);
->> +	return rc;
->> +}
->> +
->>  static int wled4_set_brightness(struct wled *wled, u16 brightness)
->>  {
->>  	int rc, i;
->> @@ -237,7 +325,28 @@ static int wled_module_enable(struct wled *wled, 
->> int val)
->>  	return 0;
->>  }
->> 
->> -static int wled_sync_toggle(struct wled *wled)
->> +static int wled5_sync_toggle(struct wled *wled)
->> +{
->> +	int rc;
->> +	u8 val;
->> +
->> +	val = (wled->cfg.mod_sel == MOD_A) ? WLED5_SINK_REG_SYNC_MOD_A_BIT :
->> +					     WLED5_SINK_REG_SYNC_MOD_B_BIT;
->> +	rc = regmap_update_bits(wled->regmap,
->> +				wled->sink_addr + WLED5_SINK_REG_MOD_SYNC_BIT,
->> +				WLED5_SINK_REG_SYNC_MASK, val);
->> +	if (rc < 0)
->> +		return rc;
->> +
->> +	val = 0;
-> 
-> Just plug 0 in the function call.
-> 
-Sure. Will do it in next post.
->> +	rc = regmap_update_bits(wled->regmap,
->> +				wled->sink_addr + WLED5_SINK_REG_MOD_SYNC_BIT,
->> +				WLED5_SINK_REG_SYNC_MASK, val);
->> +
->> +	return rc;
-> 
-> And return regmap_update_bits(...);
-> 
-Sure. Will do it in next post.
->> +}
->> +
-> 
-> Regards,
-> Bjorn
+Quoting satya priya (2020-03-05 22:47:08)
+> RX cancel command fails when BT is switched on and off multiple times.
+>=20
+> To handle this, poll for the cancel bit in SE_GENI_S_IRQ_STATUS register
+> instead of SE_GENI_S_CMD_CTRL_REG.
+>=20
+> As per the HPG update, handle the RX last bit after cancel command
+> and flush out the RX FIFO buffer.
+>=20
+> Signed-off-by: satya priya <skakit@codeaurora.org>
+> ---
+
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
