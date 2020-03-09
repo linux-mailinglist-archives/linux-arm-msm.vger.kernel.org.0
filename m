@@ -2,88 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CCE8017E4CD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 17:32:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C638E17E50F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 17:54:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727101AbgCIQcF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Mar 2020 12:32:05 -0400
-Received: from 8bytes.org ([81.169.241.247]:50386 "EHLO theia.8bytes.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727061AbgCIQcF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Mar 2020 12:32:05 -0400
-Received: by theia.8bytes.org (Postfix, from userid 1000)
-        id 29E2E39B; Mon,  9 Mar 2020 17:32:04 +0100 (CET)
-Date:   Mon, 9 Mar 2020 17:32:02 +0100
-From:   Joerg Roedel <joro@8bytes.org>
-To:     Jean-Philippe Brucker <jean-philippe@linaro.org>
-Cc:     Hanjun Guo <guohanjun@huawei.com>,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        virtualization@lists.linux-foundation.org,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linuxarm <linuxarm@huawei.com>
-Subject: Re: [PATCH 00/14] iommu: Move iommu_fwspec out of 'struct device'
-Message-ID: <20200309163202.nk7yotb7awzido7b@8bytes.org>
-References: <20200228150820.15340-1-joro@8bytes.org>
- <ea839f32-194a-29ea-57fc-22caea40b981@huawei.com>
- <20200306100955.GB50020@myrica>
+        id S1727195AbgCIQyz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Mar 2020 12:54:55 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:38248 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726922AbgCIQyy (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 9 Mar 2020 12:54:54 -0400
+Received: by mail-io1-f65.google.com with SMTP id s24so9824220iog.5;
+        Mon, 09 Mar 2020 09:54:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tBM/EJVByJ1fvt0IaB7s42kBMtrMOfscdKxthc1f01o=;
+        b=j7+hIRJ+WeLBqH9JZ71vlz/LU6RkYQnan8oxdrQmew18BkJPxDpnlDDs8qwjyf4S//
+         6g/elDvgR2jQK9bQjetKagI64eXB91sAaSx3dWdbExpOSby3rqIq068TjSOY49q3LRJX
+         B+gxeLX+9+e+V9rxkzHIy6bDZKe1isOWqYS6CeIzxl9PLIVG62uM6FLB21XuHHwNQsw5
+         4MIhCTr8lo091TmPK/2vLwXAUNzV5BcPsOA/hBHHx/oplK6aQeultzspfXxzCom7Sy79
+         V+MrWkL2/CTv96Ofq3PF0TuBWLJBDCR9ZKpcwqTcqtjnVRHOXWmWMvt0Sa4ev8N7Klo3
+         PpSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tBM/EJVByJ1fvt0IaB7s42kBMtrMOfscdKxthc1f01o=;
+        b=iMNL1TCG3Pl5wBMQdOo4xEKMSGyXK0Yns1b+yQzGlvAqZ/s0D5KkH/+hD6Kr6e76WP
+         qCwhnS+Rt5XDlWZ+KV0O+rfwrlsa0jOE6bKj2ser+H4QyR+GC6y+X9Virb3AASMbU82U
+         3rPJDskFLI2eJ4TTxM625myTESiUeKYtu0yeXYU49btZIhTSpqOVRiITtCH9JAKv2Z4Y
+         UFrEMgceE0wKBvPUKp+cjnHhyMuPJqsXlWjiqOL5q6HjhyLn6vSPG8wJpwI2m8Q18aKf
+         mJFFFuIKv59/cVMUVMTX5uxrOfnMGF03GtGSoJXDhUttVEafY6PVsrhPRyFbcq4gZod6
+         0GWQ==
+X-Gm-Message-State: ANhLgQ129IWz2RpjbwD+tfGG7vqXDyAUsuF/8twSPaFvsgnbCDiGJEdP
+        1zvdspc5En07am+QRQE+nOFdqyrEdnz6tLP01sU=
+X-Google-Smtp-Source: ADFU+vuolrK6LFWTF1i2AMSm9DahDorblsLbuuPqp++RHjvfHEfl6hLe/NsSx+TCiOg3yJcdPU9Z/vcKwZqJhKtkEUE=
+X-Received: by 2002:a6b:3c13:: with SMTP id k19mr14304131iob.25.1583772893973;
+ Mon, 09 Mar 2020 09:54:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200306100955.GB50020@myrica>
+References: <20200306042831.17827-1-elder@linaro.org>
+In-Reply-To: <20200306042831.17827-1-elder@linaro.org>
+From:   Dave Taht <dave.taht@gmail.com>
+Date:   Mon, 9 Mar 2020 09:54:42 -0700
+Message-ID: <CAA93jw5enz6-h1m=7tGFToK+E+8z3aD80pBef4AYkFrS2u3hHQ@mail.gmail.com>
+Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver (UPDATED)
+To:     Alex Elder <elder@linaro.org>
+Cc:     David Miller <davem@davemloft.net>, Arnd Bergmann <arnd@arndb.de>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Dan Williams <dcbw@redhat.com>,
+        Evan Green <evgreen@google.com>,
+        Eric Caruso <ejcaruso@google.com>,
+        Susheel Yadav Yadagiri <syadagir@codeaurora.org>,
+        Chaitanya Pratapa <cpratapa@codeaurora.org>,
+        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Siddharth Gupta <sidgup@codeaurora.org>,
+        Linux Kernel Network Developers <netdev@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jean-Philippe,
+I am happy to see this driver upstream.
 
-On Fri, Mar 06, 2020 at 11:09:55AM +0100, Jean-Philippe Brucker wrote:
-> I think that's because patch 01/14 move the fwspec access too early. In 
-> 
->                 err = pci_for_each_dma_alias(to_pci_dev(dev),
->                                              iort_pci_iommu_init, &info);
-> 
->                 if (!err && iort_pci_rc_supports_ats(node))
->                         dev->iommu_fwspec->flags |= IOMMU_FWSPEC_PCI_RC_ATS;
-> 
-> the iommu_fwspec is only valid if iort_pci_iommu_init() initialized it
-> successfully, if err == 0. The following might fix it:
-> 
-> diff --git a/drivers/acpi/arm64/iort.c b/drivers/acpi/arm64/iort.c
-> index 0e981d7f3c7d..7d04424189df 100644
-> --- a/drivers/acpi/arm64/iort.c
-> +++ b/drivers/acpi/arm64/iort.c
-> @@ -1015,7 +1015,7 @@ const struct iommu_ops *iort_iommu_configure(struct device *dev)
->  		return ops;
-> 
->  	if (dev_is_pci(dev)) {
-> -		struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
-> +		struct iommu_fwspec *fwspec;
->  		struct pci_bus *bus = to_pci_dev(dev)->bus;
->  		struct iort_pci_alias_info info = { .dev = dev };
-> 
-> @@ -1028,7 +1028,8 @@ const struct iommu_ops *iort_iommu_configure(struct device *dev)
->  		err = pci_for_each_dma_alias(to_pci_dev(dev),
->  					     iort_pci_iommu_init, &info);
-> 
-> -		if (!err && iort_pci_rc_supports_ats(node))
-> +		fwspec = dev_iommu_fwspec_get(dev);
-> +		if (fwspec && iort_pci_rc_supports_ats(node))
->  			fwspec->flags |= IOMMU_FWSPEC_PCI_RC_ATS;
->  	} else {
->  		int i = 0;
+>Arnd's concern was that the rmnet_data0 network device does not
+>have the benefit of information about the state of the underlying
+>IPA hardware in order to be effective in controlling TX flow.
+>The feared result is over-buffering of TX packets (bufferbloat).
+>I began working on some simple experiments to see whether (or how
+>much) his concern was warranted.  But it turned out that completing
+>these experiments was much more work than had been hoped.
 
-Thanks a lot for the fix! I added it to patch 1/14.
+Members of the bufferbloat project *care*, and have tools and testbeds for
+exploring these issues. It would be good to establish a relationship with
+the vendor, obtain hardware, and other (technical and financial) support, if
+possible.
 
-Regards,
-
-	Joerg
+Is there any specific hardware now available (generally or in beta) that
+can be obtained by us to take a harder look? A contact at linaro or QCA
+willing discuss options?
