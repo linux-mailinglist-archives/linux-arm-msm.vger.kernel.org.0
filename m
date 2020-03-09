@@ -2,181 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CD32817E700
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 19:24:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A41B117E6F5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 19:24:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727492AbgCISXf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Mar 2020 14:23:35 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:43393 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727473AbgCISXe (ORCPT
+        id S1726661AbgCISXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Mar 2020 14:23:09 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:43856 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727412AbgCISXI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Mar 2020 14:23:34 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1583778214; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=oXtyD64Mkp4ykU5HU0PK0xoug9dx6XnlZHC0tqZFXR8=; b=hh+5JS6kJOjUneOL+wmOuJWsuf+H16IaoitIO7aIfto9Y0+Ueh4ZOjndg2ipQd3GlQNVpybc
- s9fETMBDECDcPyvnyk2aQRcRHVNOAJn8BwLW6GSSMI6tr3kDCj2x2d8kV9tHlhm6BIR3eTuO
- uR5Q5a69KwqMiNSy8xQUlUsDsWc=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e6689a6.7f2cf01a2180-smtp-out-n02;
- Mon, 09 Mar 2020 18:23:34 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B6A80C433D2; Mon,  9 Mar 2020 18:23:33 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4282BC43636;
-        Mon,  9 Mar 2020 18:23:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4282BC43636
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org, robh+dt@kernel.org, joro@8bytes.org
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-remoteproc@vger.kernel.org, ohad@wizery.com,
-        agross@kernel.org, Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH 3/3] remoteproc: qcom_q6v5_mss: Request direct mapping for firmware subdevice
-Date:   Mon,  9 Mar 2020 23:52:55 +0530
-Message-Id: <20200309182255.20142-4-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200309182255.20142-1-sibis@codeaurora.org>
-References: <20200309182255.20142-1-sibis@codeaurora.org>
+        Mon, 9 Mar 2020 14:23:08 -0400
+Received: by mail-pf1-f196.google.com with SMTP id c144so5191036pfb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2020 11:23:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=82dH+sJ15Ldshryiq0HsH5AclffhvcMdjvdymma/EAM=;
+        b=oLl6S0gM4gLxCh+cd88ogRCnh4JBCz5iq0tCYjiarP4lY6rV8yz1pfTfPhF0WfK/qJ
+         gFz0VA+eLUw2SNrcIed9mr2QCj06ekq9xCZPVRUYrxt3lh+6R1CSLWJJ59YRdwiaapIN
+         PWwtibFjepZgVXEjR138LljiCrB1T18zef8XA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=82dH+sJ15Ldshryiq0HsH5AclffhvcMdjvdymma/EAM=;
+        b=n8oqBTXh5kaOXfIuGOHNkS+/VEKeSpTrV+evQk3CF1mWo7R7Hu1VrC1d4LW9EAjDV8
+         /ZuZ+Gon6xhUSB81cENsU+QWVqk3TBxJ3gCZUEhKtyM8Q+ayuLRXt2t5fK505FqPyEtF
+         PSYNeYtJZa+AT9Lp1HfJQo5cAFtTlLsO0mOSe+DMjXb46ZcykvYH2xPZ4be5MxthxoPU
+         CKSqs+pNbcJpYbk0qhQsc8zPzQPOAtf0PrLKUGw0Vp8cKbhZxECmb1+SvAUPYbmJpmCV
+         vlZHyyaZZ2ws0t19mKqzPsG8HJoBgBhkqxxFI/5E+u+EClzykbRNaDqx/U040kG/VS9/
+         3rPA==
+X-Gm-Message-State: ANhLgQ3AcVJsCrCYluL/dcXgPKL9HEXh/D/6N6R5LSNi4UYJbmcMevRA
+        zne7XZ/0TNM0JHqIWB/Zver2MA==
+X-Google-Smtp-Source: ADFU+vt76X0Uszasj2fbq6k4WAAfFHzB09o/cHllk3EBigMBTQ2q7C01Ws3zAVvmNKzgaOqyMhCq/g==
+X-Received: by 2002:a63:7f1d:: with SMTP id a29mr17893011pgd.123.1583778186633;
+        Mon, 09 Mar 2020 11:23:06 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id q30sm244145pjh.5.2020.03.09.11.23.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Mar 2020 11:23:06 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1583752457-21159-2-git-send-email-mkshah@codeaurora.org>
+References: <1583752457-21159-1-git-send-email-mkshah@codeaurora.org> <1583752457-21159-2-git-send-email-mkshah@codeaurora.org>
+Subject: Re: [PATCH v4 1/4] dt-bindings: Introduce SoC sleep stats bindings
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
+        devicetree@vger.kernel.org, Maulik Shah <mkshah@codeaurora.org>
+To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, mka@chromium.org
+Date:   Mon, 09 Mar 2020 11:23:05 -0700
+Message-ID: <158377818530.66766.4481786840843320343@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Q6 modem sub-system has direct access to DDR through memnoc and
-an indirect access routed through a SMMU which MSS CE (crypto engine
-sub-component of MSS) uses during out of reset sequence. Request direct
-mapping for the modem-firmware subdevice since smmu is not expected
-to provide access control/translation for these SIDs (sandboxing of the
-modem is achieved through XPUs engaged using SMC calls).
+Quoting Maulik Shah (2020-03-09 04:14:14)
+> From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
+>=20
+> Add device binding documentation for Qualcomm Technologies, Inc. (QTI)
+> SoC sleep stats driver. The driver is used for displaying SoC sleep
+> statistic maintained by Always On Processor or Resource Power Manager.
+>=20
+> Cc: devicetree@vger.kernel.org
+> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  .../bindings/soc/qcom/soc-sleep-stats.yaml         | 46 ++++++++++++++++=
+++++++
+>  1 file changed, 46 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/soc-sleep-=
+stats.yaml
+>=20
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.y=
+aml b/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml
+> new file mode 100644
+> index 00000000..7c29c61
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml
+> @@ -0,0 +1,46 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/soc/qcom/soc-sleep-stats.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. (QTI) SoC sleep stats bindings
+> +
+> +maintainers:
+> +  - Maulik Shah <mkshah@codeaurora.org>
+> +  - Lina Iyer <ilina@codeaurora.org>
+> +
+> +description:
+> +  Always On Processor/Resource Power Manager maintains statistics of the=
+ SoC
+> +  sleep modes involving powering down of the rails and oscillator clock.
+> +
+> +  Statistics includes SoC sleep mode type, number of times low power mod=
+e were
+> +  entered, time of last entry, time of last exit and accumulated sleep d=
+uration.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,rpmh-sleep-stats
+> +      - qcom,rpm-sleep-stats
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +examples:
+> +  # Example of rpmh sleep stats
+> +  - |
+> +    rpmh_sleep_stats@c3f0000 {
+> +      compatible =3D "qcom,rpmh-sleep-stats";
+> +      reg =3D <0 0xc3f0000 0 0x400>;
+> +    };
+> +  # Example of rpm sleep stats
+> +  - |
+> +    rpm_sleep_stats@4690000 {
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
- drivers/remoteproc/qcom_q6v5_mss.c | 68 ++++++++++++++++++++++++++++++
- 1 file changed, 68 insertions(+)
+Node names don't have underscores. It really feels like we should be able
+to get away with not having this device node at all. Why can't we have
+the rpm message ram be a node that covers the entire range and then have
+that either create a platform device for debugfs stats or just have it
+register the stat information from whatever driver attaches to that
+node?
 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index d7667418a62f4..ceb7f71dd17df 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -10,6 +10,7 @@
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/dma-mapping.h>
-+#include <linux/iommu.h>
- #include <linux/interrupt.h>
- #include <linux/kernel.h>
- #include <linux/mfd/syscon.h>
-@@ -202,6 +203,7 @@ struct q6v5 {
- 	struct qcom_rproc_subdev smd_subdev;
- 	struct qcom_rproc_ssr ssr_subdev;
- 	struct qcom_sysmon *sysmon;
-+	struct device *fw_subdev;
- 	bool need_mem_protection;
- 	bool has_alt_reset;
- 	bool has_halt_nav;
-@@ -378,6 +380,67 @@ static void q6v5_pds_disable(struct q6v5 *qproc, struct device **pds,
- 	}
- }
- 
-+static int qcom_init_firmware(struct q6v5 *qproc)
-+{
-+	struct platform_device_info info;
-+	struct platform_device *pdev;
-+	struct device_node *np;
-+	int ret;
-+
-+	np = of_get_child_by_name(qproc->dev->of_node, "modem-firmware");
-+	if (!np)
-+		return 0;
-+
-+	memset(&info, 0, sizeof(info));
-+	info.fwnode = &np->fwnode;
-+	info.parent = qproc->dev;
-+	info.name = np->name;
-+
-+	pdev = platform_device_register_full(&info);
-+	if (IS_ERR(pdev)) {
-+		of_node_put(np);
-+		return PTR_ERR(pdev);
-+	}
-+
-+	pdev->dev.of_node = np;
-+	ret = of_dma_configure(&pdev->dev, np, true);
-+	if (ret) {
-+		dev_err(&pdev->dev, "Failed to configure DMA\n");
-+		goto err_unregister;
-+	}
-+
-+	ret = iommu_request_dm_for_dev(&pdev->dev);
-+	if (ret) {
-+		dev_err(&pdev->dev, "Failed to request direct mapping\n");
-+		goto err_unregister;
-+	}
-+
-+	qproc->fw_subdev = &pdev->dev;
-+	of_node_put(np);
-+	return 0;
-+
-+err_unregister:
-+	platform_device_unregister(pdev);
-+	of_node_put(np);
-+	return ret;
-+}
-+
-+static void qcom_remove_firmware(struct q6v5 *qproc)
-+{
-+	struct iommu_domain *iommu;
-+
-+	if (!qproc->fw_subdev)
-+		return;
-+
-+	iommu = iommu_get_domain_for_dev(qproc->fw_subdev);
-+	if (!iommu)
-+		return;
-+
-+	iommu_detach_device(iommu, qproc->fw_subdev);
-+	iommu_domain_free(iommu);
-+	platform_device_unregister(to_platform_device(qproc->fw_subdev));
-+}
-+
- static int q6v5_xfer_mem_ownership(struct q6v5 *qproc, int *current_perm,
- 				   bool local, bool remote, phys_addr_t addr,
- 				   size_t size)
-@@ -1722,6 +1785,10 @@ static int q6v5_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto detach_proxy_pds;
- 
-+	ret = qcom_init_firmware(qproc);
-+	if (ret)
-+		goto detach_proxy_pds;
-+
- 	qproc->mpss_perm = BIT(QCOM_SCM_VMID_HLOS);
- 	qproc->mba_perm = BIT(QCOM_SCM_VMID_HLOS);
- 	qcom_add_glink_subdev(rproc, &qproc->glink_subdev);
-@@ -1759,6 +1826,7 @@ static int q6v5_remove(struct platform_device *pdev)
- 	qcom_remove_glink_subdev(qproc->rproc, &qproc->glink_subdev);
- 	qcom_remove_smd_subdev(qproc->rproc, &qproc->smd_subdev);
- 	qcom_remove_ssr_subdev(qproc->rproc, &qproc->ssr_subdev);
-+	qcom_remove_firmware(qproc);
- 
- 	q6v5_pds_detach(qproc, qproc->active_pds, qproc->active_pd_count);
- 	q6v5_pds_detach(qproc, qproc->proxy_pds, qproc->proxy_pd_count);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Carving this up into multiple nodes and making compatible strings
+doesn't seem very useful here because we're essentially making device
+nodes in DT for logical software components that exist in the rpm
+message ram.
