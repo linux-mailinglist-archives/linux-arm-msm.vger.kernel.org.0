@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 1242F17ECC1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 00:42:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FCEA17ECC2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 00:42:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727143AbgCIXmb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Mar 2020 19:42:31 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:47011 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727463AbgCIXmb (ORCPT
+        id S1727463AbgCIXmo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Mar 2020 19:42:44 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:40163 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727414AbgCIXmo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Mar 2020 19:42:31 -0400
-Received: by mail-vs1-f66.google.com with SMTP id z125so3358334vsb.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2020 16:42:30 -0700 (PDT)
+        Mon, 9 Mar 2020 19:42:44 -0400
+Received: by mail-vs1-f67.google.com with SMTP id c18so7254886vsq.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2020 16:42:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=HbFlXIeA0nZ82kqTFusW9Y5ddM630bUBZPbaTnSWK9Q=;
-        b=EMrra8TaXWr/XpsjFWwAXJ9M92aRqXDRr5qcC8JIRzVmcEK13C29b79SejteQwZFSv
-         KyRd3SxhqJinTM29vmxs9cL6TpTO+mZPsKy7TfCdcle2Ekttc3FrSeII9T2wZ6/knwXv
-         3y6ciY0SDUjk+wP55PranRh+l1WBiTPSuAscc=
+        bh=x/VkJDKvRwJ+qDbezBGZ4EAcxAnQeHrUS0YtzNe55OQ=;
+        b=DffnC1G0RiMJ83ClulTUgVa6/8ydY2lac0+x2+f7iNT8mtQGQ26SMlH26sGK94FmXR
+         gqwKGF9y3HjEiDOLL7OZBAyOUtd4XHl5ySXNIHlIWYKn6JQHkZs8vOZkhDa0Rxm2Lpm9
+         vLUWdtcGnx9Z+I2TCIPbzBDhDg1m8rgKMgQZQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=HbFlXIeA0nZ82kqTFusW9Y5ddM630bUBZPbaTnSWK9Q=;
-        b=SZuLiep7rJYI8joOsjQaqbK8XNDawQLxjDOb5W1Ls/9udzxPeA9TpXhWflyVP/UhU4
-         MgUr7/mAr5FBvLw3m6M/pUpMQ6ZI8S7p9YeGMVxG2gdVql76ly5YfBp0HkNxbHQBvEkk
-         CZRrf0UNoy5rY+OjYOF41BimHKUbwwPozbjcptN3HgDz1ewyGyr5Z44NsHKB7uB1n4cq
-         xu70dOXoBkL84581n0UTXHP1m2XLQvCA0977B8X5VL8YKDoJivY8noX1zBc9TPA3Cm87
-         mPxnsDkysVunG6Wv8sby1KElrLJ2KGNzaV7vkm29ZrVfwD93z25SlKT4eUWkDJtH+dYc
-         AQmg==
-X-Gm-Message-State: ANhLgQ0NxPOsy/S+7CNJtCfbYUsxuElA1q+vZvc3mFknQwuXA8eYfYLo
-        +JF7S0ZdE9aT2w26WAkfQUUtJWa3pvI=
-X-Google-Smtp-Source: ADFU+vurv862kekSnEWkK2RY+CzFjZE+N40n/hoD4qInbo6NuVHtULwIgvks+6jx5wICllumNKsppw==
-X-Received: by 2002:a67:ebd7:: with SMTP id y23mr5683197vso.131.1583797349429;
-        Mon, 09 Mar 2020 16:42:29 -0700 (PDT)
-Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com. [209.85.222.46])
-        by smtp.gmail.com with ESMTPSA id y21sm2249341vsk.30.2020.03.09.16.42.27
+        bh=x/VkJDKvRwJ+qDbezBGZ4EAcxAnQeHrUS0YtzNe55OQ=;
+        b=Vr1lGdxrq5ZfRV7QXJ5DlSffcyy58plk4rbZSNF6w1xAK6YST22YxtLzjxPnqRcWRS
+         N1H8U4pOgNqQfVODOysQdlWfXFR65mb939+ztMeOCMyB+sUcHbKWAFMhr4b3YZeQcSMN
+         LYY0yjnujfBM6qepa5NeXksVgzOT8Mg2nv6LbximXtdwzODns7jEgdgE0mlYU+ijFHbH
+         Obg5HZ2PYhUwsuL9GPbd+Zu+b/69QyXh/2Tx8MXCARhvwEmpbGM2HnStIsP44o20UnHL
+         3WD0ih96ihgdu2Fk2PE9tzUkMFV9BctfGQZEkHkXh4K5nu5OyfdL+NH54WdQcONWM1fg
+         3HCg==
+X-Gm-Message-State: ANhLgQ2byHsjKvDCGAzDrpJW0Uu0LlO9PKQrXAotuNHfj+al27eDKumU
+        ruIYFrw0dE6O3LWQdAh/NmrtnoljEXw=
+X-Google-Smtp-Source: ADFU+vu8hldfM2EKt5+cda9oGvxVxiii8AyiKBiF5l/nk1EtMXn5mKeE+ssGg+sLo52laxV8KGalFA==
+X-Received: by 2002:a05:6102:85:: with SMTP id t5mr11528827vsp.134.1583797363040;
+        Mon, 09 Mar 2020 16:42:43 -0700 (PDT)
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com. [209.85.221.180])
+        by smtp.gmail.com with ESMTPSA id o36sm9798504uao.15.2020.03.09.16.42.41
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Mar 2020 16:42:27 -0700 (PDT)
-Received: by mail-ua1-f46.google.com with SMTP id h32so4021518uah.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2020 16:42:27 -0700 (PDT)
-X-Received: by 2002:a9f:2478:: with SMTP id 111mr3162014uaq.0.1583797346690;
- Mon, 09 Mar 2020 16:42:26 -0700 (PDT)
+        Mon, 09 Mar 2020 16:42:42 -0700 (PDT)
+Received: by mail-vk1-f180.google.com with SMTP id a1so1745650vko.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2020 16:42:41 -0700 (PDT)
+X-Received: by 2002:a1f:97c8:: with SMTP id z191mr10591470vkd.0.1583797361399;
+ Mon, 09 Mar 2020 16:42:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <1583746236-13325-1-git-send-email-mkshah@codeaurora.org> <1583746236-13325-3-git-send-email-mkshah@codeaurora.org>
-In-Reply-To: <1583746236-13325-3-git-send-email-mkshah@codeaurora.org>
+References: <1583746236-13325-1-git-send-email-mkshah@codeaurora.org> <1583746236-13325-4-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1583746236-13325-4-git-send-email-mkshah@codeaurora.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 9 Mar 2020 16:42:15 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X9BFJZtgmVeDpr1mCP1C5kg9+3gQo2i5RMfBuQOVMkDg@mail.gmail.com>
-Message-ID: <CAD=FV=X9BFJZtgmVeDpr1mCP1C5kg9+3gQo2i5RMfBuQOVMkDg@mail.gmail.com>
-Subject: Re: [PATCH v13 2/5] soc: qcom: rpmh: Update dirty flag only when data changes
+Date:   Mon, 9 Mar 2020 16:42:30 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Xkqquyk907zAE-v7_QK_dOSmn1ooTzuXxP5Fckmhaw+Q@mail.gmail.com>
+Message-ID: <CAD=FV=Xkqquyk907zAE-v7_QK_dOSmn1ooTzuXxP5Fckmhaw+Q@mail.gmail.com>
+Subject: Re: [PATCH v13 3/5] soc: qcom: rpmh: Invalidate SLEEP and WAKE TCSes
+ before flushing new data
 To:     Maulik Shah <mkshah@codeaurora.org>
 Cc:     Stephen Boyd <swboyd@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
@@ -75,21 +76,73 @@ Hi,
 
 On Mon, Mar 9, 2020 at 2:31 AM Maulik Shah <mkshah@codeaurora.org> wrote:
 >
-> Currently rpmh ctrlr dirty flag is set for all cases regardless of data
-> is really changed or not. Add changes to update dirty flag when data is
-> changed to newer values. Update dirty flag everytime when data in batch
-> cache is updated since rpmh_flush() may get invoked from any CPU instead
-> of only last CPU going to low power mode.
+> TCSes have previously programmed data when rpmh_flush is called.
+> This can cause old data to trigger along with newly flushed.
 >
-> Also move dirty flag updates to happen from within cache_lock and remove
-> unnecessary INIT_LIST_HEAD() call and a default case from switch.
+> Fix this by cleaning SLEEP and WAKE TCSes before new data is flushed.
+>
+> With this there is no need to invoke rpmh_rsc_invalidate() call from
+> rpmh_invalidate().
+>
+> Simplify rpmh_invalidate() by moving invalidate_batch() inside.
 >
 > Fixes: 600513dfeef3 ("drivers: qcom: rpmh: cache sleep/wake state requests")
 > Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> Reviewed-by: Srinivas Rao L <lsrao@codeaurora.org>
-> Reviewed-by: Evan Green <evgreen@chromium.org>
 > ---
->  drivers/soc/qcom/rpmh.c | 19 +++++++++++--------
->  1 file changed, 11 insertions(+), 8 deletions(-)
+>  drivers/soc/qcom/rpmh.c | 36 +++++++++++++++---------------------
+>  1 file changed, 15 insertions(+), 21 deletions(-)
+>
+> diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+> index 03630ae..5bed8f4 100644
+> --- a/drivers/soc/qcom/rpmh.c
+> +++ b/drivers/soc/qcom/rpmh.c
+> @@ -317,19 +317,6 @@ static int flush_batch(struct rpmh_ctrlr *ctrlr)
+>         return ret;
+>  }
+>
+> -static void invalidate_batch(struct rpmh_ctrlr *ctrlr)
+> -{
+> -       struct batch_cache_req *req, *tmp;
+> -       unsigned long flags;
+> -
+> -       spin_lock_irqsave(&ctrlr->cache_lock, flags);
+> -       list_for_each_entry_safe(req, tmp, &ctrlr->batch_cache, list)
+> -               kfree(req);
+> -       INIT_LIST_HEAD(&ctrlr->batch_cache);
+> -       ctrlr->dirty = true;
+> -       spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+> -}
+> -
+>  /**
+>   * rpmh_write_batch: Write multiple sets of RPMH commands and wait for the
+>   * batch to finish.
+> @@ -467,6 +454,11 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
+>                 return 0;
+>         }
+>
+> +       /* Invalidate the TCSes first to avoid stale data */
+> +       do {
+> +               ret = rpmh_rsc_invalidate(ctrlr_to_drv(ctrlr));
+> +       } while (ret == -EAGAIN);
+> +
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+You forgot to actually check the return value.
+
+if (ret)
+  return ret;
+
+
+>         /* First flush the cached batch requests */
+>         ret = flush_batch(ctrlr);
+>         if (ret)
+> @@ -503,19 +495,21 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
+>   *
+>   * @dev: The device making the request
+>   *
+> - * Invalidate the sleep and active values in the TCS blocks.
+> + * Invalidate the sleep and wake values in batch_cache.
+
+Thanks for updating this.  It was on my todo list.  Can you also
+update the function description, which still says "Invalidate all
+sleep and active sets sets."  While you're at it, remove the double
+"sets".
