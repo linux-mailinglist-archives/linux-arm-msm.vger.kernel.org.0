@@ -2,77 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A04E817D960
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 07:41:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D0E8A17DA06
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 08:49:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726217AbgCIGlu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Mar 2020 02:41:50 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:40588 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725796AbgCIGlu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Mar 2020 02:41:50 -0400
-Received: by mail-pg1-f196.google.com with SMTP id t24so4258432pgj.7
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Mar 2020 23:41:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=RrX9EtA3zn4u15vVccJeX3aDhJuOUHVdQao27RU5nys=;
-        b=ZlPvOTfYg8ORIBsXty84bD0rRJ/90K8uIO/uB/zt/ADLmUgqnZSsvJa7qD5c12Wnmi
-         twF97bZmvCFfxUcO6sEehkFpu0ixFanK2imweMwyQbM+gjb3XtggIwWiX35PVRGvz/nA
-         a5/oOPSK9KvI4Bkc5tDFy9cfr1VFsoh2VFnyY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=RrX9EtA3zn4u15vVccJeX3aDhJuOUHVdQao27RU5nys=;
-        b=FHQvd1jlfYa9Of0Eb3qrG7vLeS1VIW3X8wZob7lAiT3TLGAt7PescY3CbXKdDHYPNP
-         fkIlA6asDvRUI7OozqH5se2WowW7zwCOgRnPXSe4HtiswBV+Fho8khyJf3E0sMLfEPT+
-         el+AiQindGL6IVMixLPc34QcCg5FBRVAZ7N6gU9ghJ5Sgwfy2tLm1SZT1YRnt1uYvFVX
-         J7cX3zPubaWdPis+cT8nXb6pMPtqmrV8tRFA1nznK+Z0ZdN9UFsgZaVysWEye/GtLWkp
-         k5v2Q+01SRGbHFpWWXhcMbbp/VmevNYf0CaaSdrIjMV3GiB5xeVkDr6m+nGsbBgg4L2C
-         laeg==
-X-Gm-Message-State: ANhLgQ3T3fPJI78XF4WABtDnINfEsLGgmefannJHHaZaWObzaYF5K5yH
-        b9k5YUe5gB9DnTB514ja/DWNU1hfPQI=
-X-Google-Smtp-Source: ADFU+vuFj92YnT2uVcGJAjBivqhd2E2e1bNOkvmP+cAyeV4G04fBNTjyHqM1P5aYSHvLJ2i/lJqlkA==
-X-Received: by 2002:a63:f311:: with SMTP id l17mr15183521pgh.142.1583736107615;
-        Sun, 08 Mar 2020 23:41:47 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id nh4sm3207636pjb.39.2020.03.08.23.41.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Mar 2020 23:41:46 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        id S1725796AbgCIHty (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Mar 2020 03:49:54 -0400
+Received: from mx2.suse.de ([195.135.220.15]:53410 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726403AbgCIHty (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 9 Mar 2020 03:49:54 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id 8A072AD48;
+        Mon,  9 Mar 2020 07:49:50 +0000 (UTC)
+Subject: Re: [PATCH][next] drm: Replace zero-length array with flexible-array
+ member
+To:     "Gustavo A. R. Silva" <gustavo@embeddedor.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Dave Airlie <airlied@redhat.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Eric Anholt <eric@anholt.net>,
+        VMware Graphics <linux-graphics-maintainer@vmware.com>,
+        Thomas Hellstrom <thellstrom@vmware.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>
+Cc:     etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        spice-devel@lists.freedesktop.org
+References: <20200225140347.GA22864@embeddedor> <87a756sqdc.fsf@intel.com>
+ <138ff691-94b3-1ce5-e7fa-e6d7c436bf8e@embeddedor.com>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ mQENBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAG0J1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPokBVAQTAQgAPhYh
+ BHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJbOdLgAhsDBQkDwmcABQsJCAcCBhUKCQgLAgQWAgMB
+ Ah4BAheAAAoJEGgNwR1TC3ojR80H/jH+vYavwQ+TvO8ksXL9JQWc3IFSiGpuSVXLCdg62AmR
+ irxW+qCwNncNQyb9rd30gzdectSkPWL3KSqEResBe24IbA5/jSkPweJasgXtfhuyoeCJ6PXo
+ clQQGKIoFIAEv1s8l0ggPZswvCinegl1diyJXUXmdEJRTWYAtxn/atut1o6Giv6D2qmYbXN7
+ mneMC5MzlLaJKUtoH7U/IjVw1sx2qtxAZGKVm4RZxPnMCp9E1MAr5t4dP5gJCIiqsdrVqI6i
+ KupZstMxstPU//azmz7ZWWxT0JzgJqZSvPYx/SATeexTYBP47YFyri4jnsty2ErS91E6H8os
+ Bv6pnSn7eAq5AQ0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRH
+ UE9eosYbT6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgT
+ RjP+qbU63Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+R
+ dhgATnWWGKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zb
+ ehDda8lvhFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r
+ 12+lqdsAEQEAAYkBPAQYAQgAJhYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJbOdLgAhsMBQkD
+ wmcAAAoJEGgNwR1TC3ojpfcIAInwP5OlcEKokTnHCiDTz4Ony4GnHRP2fXATQZCKxmu4AJY2
+ h9ifw9Nf2TjCZ6AMvC3thAN0rFDj55N9l4s1CpaDo4J+0fkrHuyNacnT206CeJV1E7NYntxU
+ n+LSiRrOdywn6erjxRi9EYTVLCHcDhBEjKmFZfg4AM4GZMWX1lg0+eHbd5oL1as28WvvI/uI
+ aMyV8RbyXot1r/8QLlWldU3NrTF5p7TMU2y3ZH2mf5suSKHAMtbE4jKJ8ZHFOo3GhLgjVrBW
+ HE9JXO08xKkgD+w6v83+nomsEuf6C6LYrqY/tsZvyEX6zN8CtirPdPWu/VXNRYAl/lat7lSI
+ 3H26qrE=
+Message-ID: <67c46a2b-8127-a4b7-c825-8cba6f28db8c@suse.de>
+Date:   Mon, 9 Mar 2020 08:49:45 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1583477228-32231-3-git-send-email-skakit@codeaurora.org>
-References: <1583477228-32231-1-git-send-email-skakit@codeaurora.org> <1583477228-32231-3-git-send-email-skakit@codeaurora.org>
-Subject: Re: [PATCH V3 2/2] tty: serial: qcom_geni_serial: Fix RX cancel command failure
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, akashast@codeaurora.org,
-        rojay@codeaurora.org, msavaliy@qti.qualcomm.com,
-        satya priya <skakit@codeaurora.org>
-To:     gregkh@linuxfoundation.org, satya priya <skakit@codeaurora.org>
-Date:   Sun, 08 Mar 2020 23:41:45 -0700
-Message-ID: <158373610593.66766.7767101522459278381@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+In-Reply-To: <138ff691-94b3-1ce5-e7fa-e6d7c436bf8e@embeddedor.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="Ul1CrpBm5H0rrZlYhdIfEA75XDUYdEO4y"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting satya priya (2020-03-05 22:47:08)
-> RX cancel command fails when BT is switched on and off multiple times.
->=20
-> To handle this, poll for the cancel bit in SE_GENI_S_IRQ_STATUS register
-> instead of SE_GENI_S_CMD_CTRL_REG.
->=20
-> As per the HPG update, handle the RX last bit after cancel command
-> and flush out the RX FIFO buffer.
->=20
-> Signed-off-by: satya priya <skakit@codeaurora.org>
-> ---
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--Ul1CrpBm5H0rrZlYhdIfEA75XDUYdEO4y
+Content-Type: multipart/mixed; boundary="0DgKy29qpwpTjPxx9ZHosYzYcoKck294a";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: "Gustavo A. R. Silva" <gustavo@embeddedor.com>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ Lucas Stach <l.stach@pengutronix.de>,
+ Russell King <linux+etnaviv@armlinux.org.uk>,
+ Christian Gmeiner <christian.gmeiner@gmail.com>,
+ David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+ Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, Rob Clark <robdclark@gmail.com>,
+ Sean Paul <sean@poorly.run>, Dave Airlie <airlied@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Hans de Goede <hdegoede@redhat.com>,
+ Eric Anholt <eric@anholt.net>,
+ VMware Graphics <linux-graphics-maintainer@vmware.com>,
+ Thomas Hellstrom <thellstrom@vmware.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>
+Cc: etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+ virtualization@lists.linux-foundation.org, spice-devel@lists.freedesktop.org
+Message-ID: <67c46a2b-8127-a4b7-c825-8cba6f28db8c@suse.de>
+Subject: Re: [PATCH][next] drm: Replace zero-length array with flexible-array
+ member
+References: <20200225140347.GA22864@embeddedor> <87a756sqdc.fsf@intel.com>
+ <138ff691-94b3-1ce5-e7fa-e6d7c436bf8e@embeddedor.com>
+In-Reply-To: <138ff691-94b3-1ce5-e7fa-e6d7c436bf8e@embeddedor.com>
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+--0DgKy29qpwpTjPxx9ZHosYzYcoKck294a
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+
+Hi Gustavo
+
+Am 03.03.20 um 19:20 schrieb Gustavo A. R. Silva:
+>=20
+>=20
+> On 2/25/20 08:17, Jani Nikula wrote:
+>> On Tue, 25 Feb 2020, "Gustavo A. R. Silva" <gustavo@embeddedor.com> wr=
+ote:
+>>> The current codebase makes use of the zero-length array language
+>>> extension to the C90 standard, but the preferred mechanism to declare=
+
+>>> variable-length types such as these ones is a flexible array member[1=
+][2],
+>>> introduced in C99:
+>>>
+>>> struct foo {
+>>>         int stuff;
+>>>         struct boo array[];
+>>> };
+>>>
+>>> By making use of the mechanism above, we will get a compiler warning
+>>> in case the flexible array does not occur last in the structure, whic=
+h
+>>> will help us prevent some kind of undefined behavior bugs from being
+>>> inadvertently introduced[3] to the codebase from now on.
+>>>
+>>> Also, notice that, dynamic memory allocations won't be affected by
+>>> this change:
+>>>
+>>> "Flexible array members have incomplete type, and so the sizeof opera=
+tor
+>>> may not be applied. As a quirk of the original implementation of
+>>> zero-length arrays, sizeof evaluates to zero."[1]
+>>>
+>>> This issue was found with the help of Coccinelle.
+>>>
+>>> [1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
+>>> [2] https://github.com/KSPP/linux/issues/21
+>>> [3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
+>>>
+>>> Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
+>>> ---
+>>>  drivers/gpu/drm/etnaviv/etnaviv_gem.h         | 2 +-
+>>>  drivers/gpu/drm/gma500/intel_bios.h           | 2 +-
+>>>  drivers/gpu/drm/i915/display/intel_vbt_defs.h | 4 ++--
+>>>  drivers/gpu/drm/i915/gt/intel_lrc.c           | 2 +-
+>>>  drivers/gpu/drm/i915/i915_gpu_error.h         | 2 +-
+>>
+>> Please split out the i915 changes to a separate patch.
+>>
+>=20
+> Sure thing. I can do that.
+
+I think each driver deserves it's own patch. Makes backporting easier.
+
+Best regards
+Thomas
+
+>=20
+>>>  drivers/gpu/drm/msm/msm_gem.h                 | 2 +-
+>>>  drivers/gpu/drm/qxl/qxl_cmd.c                 | 2 +-
+>>>  drivers/gpu/drm/vboxvideo/vboxvideo.h         | 2 +-
+>>>  drivers/gpu/drm/vc4/vc4_drv.h                 | 2 +-
+>>>  drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c    | 2 +-
+>>>  drivers/gpu/drm/vmwgfx/vmwgfx_surface.c       | 2 +-
+>>>  include/drm/bridge/mhl.h                      | 4 ++--
+>>>  include/drm/drm_displayid.h                   | 2 +-
+>>>  include/uapi/drm/i915_drm.h                   | 4 ++--
+>>
+>> Not sure it's worth touching uapi headers. They're full of both [0] an=
+d
+>> []. Again, please at least split it to a separate patch to be decided
+>> separately.
+>>
+>=20
+> Yeah, it's worth it; the purpose of these patches is to replace [0] wit=
+h [] across
+> the whole tree.
+>=20
+> Thanks
+> --
+> Gustavo
+>=20
+
+--=20
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+(HRB 36809, AG N=C3=BCrnberg)
+Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
+
+
+--0DgKy29qpwpTjPxx9ZHosYzYcoKck294a--
+
+--Ul1CrpBm5H0rrZlYhdIfEA75XDUYdEO4y
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEchf7rIzpz2NEoWjlaA3BHVMLeiMFAl5l9RkACgkQaA3BHVML
+eiNGUQgAgjKSCBND55SWYJrmDfa3irwlGfO6EKxH9F6r/W+oYNLwfa7Re8zDiRjN
+oMHZLY2a2iKckXvawizS65l/0mqLfNQ11BfXFGBr6RAgxWt7Ac2pw1wP9FaVQ3HN
+PSksqH6ASJUhgDm9hfZSRu9fZDLV1AGIWdTE/pHRcJ8inzEV543+SffD2ddPFjwV
+m+hBDC678jVfSux+/aBkp40Mv9VryJTVN4TyQNRuUtmciIWSoVvoiJxk5d+0Ykcn
+McM6bm+GmCvvUmjlLa7LNv8Fv9zr17XF3Q2Nv2v8Gn+sYDXY2S8RU8BXlV05XZVE
+xLoQ88iIqzrGQjmARyUf0W4vvek8XQ==
+=9S1h
+-----END PGP SIGNATURE-----
+
+--Ul1CrpBm5H0rrZlYhdIfEA75XDUYdEO4y--
