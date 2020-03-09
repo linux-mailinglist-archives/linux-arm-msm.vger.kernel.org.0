@@ -2,420 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id E7DAE17D8D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 06:23:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 66D1D17D941
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 07:28:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725942AbgCIFXZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Mar 2020 01:23:25 -0400
-Received: from alexa-out-blr-02.qualcomm.com ([103.229.18.198]:14083 "EHLO
-        alexa-out-blr-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725796AbgCIFXZ (ORCPT
+        id S1726071AbgCIG2F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Mar 2020 02:28:05 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:54111 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726248AbgCIG2F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Mar 2020 01:23:25 -0400
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by alexa-out-blr-02.qualcomm.com with ESMTP/TLS/AES256-SHA; 09 Mar 2020 10:53:20 +0530
-Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 09 Mar 2020 10:53:08 +0530
-Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
-        id 680FD26D1; Mon,  9 Mar 2020 10:53:07 +0530 (IST)
-From:   Harigovindan P <harigovi@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Harigovindan P <harigovi@codeaurora.org>, robdclark@gmail.com,
-        seanpaul@chromium.org, sean@poorly.run
-Subject: [PATCH v5 2/2] drm/panel: add support for rm69299 visionox panel driver
-Date:   Mon,  9 Mar 2020 10:53:04 +0530
-Message-Id: <20200309052304.23427-3-harigovi@codeaurora.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200309052304.23427-1-harigovi@codeaurora.org>
-References: <20200309052304.23427-1-harigovi@codeaurora.org>
+        Mon, 9 Mar 2020 02:28:05 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1583735284; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=qy2xY/dZyMiOpfQufKuG+wtf2moSQrlU/AD39JqMigc=;
+ b=tcvkwFkfnLNgGWAL7+JjvbUqGZoNbBSaRs8wNhQaND710vNnpGe9GBfsdHoTlA6kij3Optjq
+ yFiTbtIONQb9doQAfab8LB+QxVAXBxNdzkZj9tEuQ1CuEiaqB4ljWv4clzaZeFbgCnIaZUIv
+ 6K+RfYY9OR9S0Xvt9+8yElYQES4=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e65e1e6.7efdb514f340-smtp-out-n03;
+ Mon, 09 Mar 2020 06:27:50 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 930BDC433BA; Mon,  9 Mar 2020 06:27:49 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E94B8C433D2;
+        Mon,  9 Mar 2020 06:27:48 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 09 Mar 2020 11:57:48 +0530
+From:   kgunda@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     jingoohan1@gmail.com, lee.jones@linaro.org,
+        b.zolnierkie@samsung.com, dri-devel@lists.freedesktop.org,
+        daniel.thompson@linaro.org, jacek.anaszewski@gmail.com,
+        pavel@ucw.cz, robh+dt@kernel.org, mark.rutland@arm.com,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Dan Murphy <dmurphy@ti.com>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-fbdev@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH V1 2/2] backlight: qcom-wled: Add support for WLED5
+ peripheral in PM8150L
+In-Reply-To: <20200308214748.GL1094083@builder>
+References: <1583153739-19170-1-git-send-email-kgunda@codeaurora.org>
+ <1583153739-19170-3-git-send-email-kgunda@codeaurora.org>
+ <20200308214748.GL1094083@builder>
+Message-ID: <d0e681ae203bb14f4061d248b935578b@codeaurora.org>
+X-Sender: kgunda@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for Visionox panel driver.
-
-Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
----
-
-Changes in v2:
-	- Dropping redundant space in Kconfig(Sam Ravnborg).
-	- Changing structure for include files(Sam Ravnborg).
-	- Removing backlight related code and functions(Sam Ravnborg).
-	- Removing repeated printing of error message(Sam Ravnborg).
-	- Adding drm_connector as an argument for get_modes function.
-Changes in v3:
-	- Adding arguments for drm_panel_init to support against mainline.
-Changes in v4:
-	- Removing error messages from regulator_set_load.
-	- Removing dev struct entry.
-	- Removing checks.
-	- Dropping empty comment lines.
-Changes in v5:
-	- Removing unused struct member variables.
-	- Removing blank lines.
-	- Fixed indentation.
-	- Invoking dsi_detach and panel_remove while early exiting from probe.
-
- drivers/gpu/drm/panel/Kconfig                 |   8 +
- drivers/gpu/drm/panel/Makefile                |   1 +
- .../gpu/drm/panel/panel-visionox-rm69299.c    | 315 ++++++++++++++++++
- 3 files changed, 324 insertions(+)
- create mode 100644 drivers/gpu/drm/panel/panel-visionox-rm69299.c
-
-diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index ae44ac2ec106..7b696f304a99 100644
---- a/drivers/gpu/drm/panel/Kconfig
-+++ b/drivers/gpu/drm/panel/Kconfig
-@@ -389,6 +389,14 @@ config DRM_PANEL_TRULY_NT35597_WQXGA
- 	  Say Y here if you want to enable support for Truly NT35597 WQXGA Dual DSI
- 	  Video Mode panel
- 
-+config DRM_PANEL_VISIONOX_RM69299
-+	tristate "Visionox RM69299"
-+	depends on OF
-+	depends on DRM_MIPI_DSI
-+	help
-+	  Say Y here if you want to enable support for Visionox
-+	  RM69299  DSI Video Mode panel.
-+
- config DRM_PANEL_XINPENG_XPP055C272
- 	tristate "Xinpeng XPP055C272 panel driver"
- 	depends on OF
-diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
-index 7c4d3c581fd4..9f11d067a6b2 100644
---- a/drivers/gpu/drm/panel/Makefile
-+++ b/drivers/gpu/drm/panel/Makefile
-@@ -41,4 +41,5 @@ obj-$(CONFIG_DRM_PANEL_TPO_TD028TTEC1) += panel-tpo-td028ttec1.o
- obj-$(CONFIG_DRM_PANEL_TPO_TD043MTEA1) += panel-tpo-td043mtea1.o
- obj-$(CONFIG_DRM_PANEL_TPO_TPG110) += panel-tpo-tpg110.o
- obj-$(CONFIG_DRM_PANEL_TRULY_NT35597_WQXGA) += panel-truly-nt35597.o
-+obj-$(CONFIG_DRM_PANEL_VISIONOX_RM69299) += panel-visionox-rm69299.o
- obj-$(CONFIG_DRM_PANEL_XINPENG_XPP055C272) += panel-xinpeng-xpp055c272.o
-diff --git a/drivers/gpu/drm/panel/panel-visionox-rm69299.c b/drivers/gpu/drm/panel/panel-visionox-rm69299.c
-new file mode 100644
-index 000000000000..2bd3af46d933
---- /dev/null
-+++ b/drivers/gpu/drm/panel/panel-visionox-rm69299.c
-@@ -0,0 +1,315 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-+ */
-+
-+#include <linux/delay.h>
-+#include <linux/module.h>
-+#include <linux/of_device.h>
-+#include <linux/gpio/consumer.h>
-+#include <linux/regulator/consumer.h>
-+
-+#include <video/mipi_display.h>
-+
-+#include <drm/drm_mipi_dsi.h>
-+#include <drm/drm_modes.h>
-+#include <drm/drm_panel.h>
-+#include <drm/drm_print.h>
-+
-+struct rm69299_config {
-+	unsigned long width_mm;
-+	unsigned long height_mm;
-+	const struct drm_display_mode *dm;
-+};
-+
-+struct visionox_rm69299 {
-+	struct drm_panel panel;
-+	struct regulator_bulk_data supplies[2];
-+	struct gpio_desc *reset_gpio;
-+	struct mipi_dsi_device *dsi;
-+	const struct rm69299_config *config;
-+	bool prepared;
-+	bool enabled;
-+};
-+
-+static inline struct visionox_rm69299 *panel_to_ctx(struct drm_panel *panel)
-+{
-+	return container_of(panel, struct visionox_rm69299, panel);
-+}
-+
-+static int visionox_35597_power_on(struct visionox_rm69299 *ctx)
-+{
-+	int ret;
-+
-+	ret = regulator_bulk_enable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
-+	if (ret < 0)
-+		return ret;
-+
-+	/*
-+	 * Reset sequence of visionox panel requires the panel to be
-+	 * out of reset for 10ms, followed by being held in reset
-+	 * for 10ms and then out again
-+	 */
-+	gpiod_set_value(ctx->reset_gpio, 1);
-+	usleep_range(10000, 20000);
-+	gpiod_set_value(ctx->reset_gpio, 0);
-+	usleep_range(10000, 20000);
-+	gpiod_set_value(ctx->reset_gpio, 1);
-+	usleep_range(10000, 20000);
-+
-+	return 0;
-+}
-+
-+static int visionox_rm69299_power_off(struct visionox_rm69299 *ctx)
-+{
-+	gpiod_set_value(ctx->reset_gpio, 0);
-+
-+	return regulator_bulk_disable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
-+}
-+
-+static int visionox_rm69299_unprepare(struct drm_panel *panel)
-+{
-+	struct visionox_rm69299 *ctx = panel_to_ctx(panel);
-+	int ret;
-+
-+	ctx->dsi->mode_flags = 0;
-+
-+	ret = mipi_dsi_dcs_write(ctx->dsi, MIPI_DCS_SET_DISPLAY_OFF, NULL, 0);
-+	if (ret < 0)
-+		DRM_DEV_ERROR(ctx->panel.dev,
-+			"set_display_off cmd failed ret = %d\n", ret);
-+
-+	/* 120ms delay required here as per DCS spec */
-+	msleep(120);
-+
-+	ret = mipi_dsi_dcs_write(ctx->dsi, MIPI_DCS_ENTER_SLEEP_MODE, NULL, 0);
-+	if (ret < 0) {
-+		DRM_DEV_ERROR(ctx->panel.dev,
-+			"enter_sleep cmd failed ret = %d\n", ret);
-+	}
-+
-+	ret = visionox_rm69299_power_off(ctx);
-+
-+	ctx->prepared = false;
-+	return ret;
-+}
-+
-+static int visionox_rm69299_prepare(struct drm_panel *panel)
-+{
-+	struct visionox_rm69299 *ctx = panel_to_ctx(panel);
-+	int ret;
-+	const struct rm69299_config *config;
-+
-+	if (ctx->prepared)
-+		return 0;
-+
-+	ret = visionox_35597_power_on(ctx);
-+	if (ret < 0)
-+		return ret;
-+
-+	ctx->dsi->mode_flags |= MIPI_DSI_MODE_LPM;
-+
-+	config = ctx->config;
-+
-+	ret = mipi_dsi_dcs_write_buffer(ctx->dsi, (u8[]){ 0xfe, 0x00 }, 2);
-+	if (ret < 0) {
-+		DRM_DEV_ERROR(ctx->panel.dev,
-+			"cmd set tx 0 failed, ret = %d\n", ret);
-+		goto power_off;
-+	}
-+
-+	ret = mipi_dsi_dcs_write_buffer(ctx->dsi, (u8[]){ 0xc2, 0x08 }, 2);
-+	if (ret < 0) {
-+		DRM_DEV_ERROR(ctx->panel.dev,
-+			"cmd set tx 1 failed, ret = %d\n", ret);
-+		goto power_off;
-+	}
-+
-+	ret = mipi_dsi_dcs_write_buffer(ctx->dsi, (u8[]){ 0x35, 0x00 }, 2);
-+	if (ret < 0) {
-+		DRM_DEV_ERROR(ctx->panel.dev,
-+			"cmd set tx 2 failed, ret = %d\n", ret);
-+		goto power_off;
-+	}
-+
-+	ret = mipi_dsi_dcs_write_buffer(ctx->dsi, (u8[]){ 0x51, 0xff }, 2);
-+	if (ret < 0) {
-+		DRM_DEV_ERROR(ctx->panel.dev,
-+			"cmd set tx 3 failed, ret = %d\n", ret);
-+		goto power_off;
-+	}
-+
-+	ret = mipi_dsi_dcs_write(ctx->dsi, MIPI_DCS_EXIT_SLEEP_MODE, NULL, 0);
-+	if (ret < 0) {
-+		DRM_DEV_ERROR(ctx->panel.dev,
-+			"exit_sleep_mode cmd failed ret = %d\n", ret);
-+		goto power_off;
-+	}
-+
-+	/* Per DSI spec wait 120ms after sending exit sleep DCS command */
-+	msleep(120);
-+
-+	ret = mipi_dsi_dcs_write(ctx->dsi, MIPI_DCS_SET_DISPLAY_ON, NULL, 0);
-+	if (ret < 0) {
-+		DRM_DEV_ERROR(ctx->panel.dev,
-+			"set_display_on cmd failed ret = %d\n", ret);
-+		goto power_off;
-+	}
-+
-+	/* Per DSI spec wait 120ms after sending set_display_on DCS command */
-+	msleep(120);
-+
-+	ctx->prepared = true;
-+
-+	return 0;
-+
-+power_off:
-+	return ret;
-+}
-+
-+static int visionox_rm69299_get_modes(struct drm_panel *panel,
-+				       struct drm_connector *connector)
-+{
-+	struct visionox_rm69299 *ctx = panel_to_ctx(panel);
-+	struct drm_display_mode *mode;
-+	const struct rm69299_config *config = ctx->config;
-+
-+	mode = drm_mode_create(connector->dev);
-+	if (!mode) {
-+		DRM_DEV_ERROR(ctx->dev,
-+			"failed to create a new display mode\n");
-+		return 0;
-+	}
-+
-+	connector->display_info.width_mm = config->width_mm;
-+	connector->display_info.height_mm = config->height_mm;
-+	drm_mode_copy(mode, config->dm);
-+	mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
-+	drm_mode_probed_add(connector, mode);
-+
-+	return 1;
-+}
-+
-+static const struct drm_panel_funcs visionox_rm69299_drm_funcs = {
-+	.unprepare = visionox_rm69299_unprepare,
-+	.prepare = visionox_rm69299_prepare,
-+	.get_modes = visionox_rm69299_get_modes,
-+};
-+
-+static const struct drm_display_mode visionox_rm69299_1080x2248_60hz = {
-+	.name = "1080x2248",
-+	.clock = 158695,
-+	.hdisplay = 1080,
-+	.hsync_start = 1080 + 26,
-+	.hsync_end = 1080 + 26 + 2,
-+	.htotal = 1080 + 26 + 2 + 36,
-+	.vdisplay = 2248,
-+	.vsync_start = 2248 + 56,
-+	.vsync_end = 2248 + 56 + 4,
-+	.vtotal = 2248 + 56 + 4 + 4,
-+	.vrefresh = 60,
-+	.flags = 0,
-+};
-+
-+static const struct rm69299_config rm69299_dir = {
-+	.width_mm = 74,
-+	.height_mm = 131,
-+	.dm = &visionox_rm69299_1080x2248_60hz,
-+};
-+
-+static int visionox_rm69299_probe(struct mipi_dsi_device *dsi)
-+{
-+	struct device *dev = &dsi->dev;
-+	struct visionox_rm69299 *ctx;
-+	int ret;
-+
-+	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-+	if (!ctx)
-+		return -ENOMEM;
-+
-+	mipi_dsi_set_drvdata(dsi, ctx);
-+
-+	ctx->supplies[0].supply = "vdda";
-+	ctx->supplies[1].supply = "vdd3p3";
-+
-+	ret = devm_regulator_bulk_get(ctx->panel.dev, ARRAY_SIZE(ctx->supplies),
-+								ctx->supplies);
-+	if (ret < 0)
-+		return ret;
-+
-+	ctx->reset_gpio = devm_gpiod_get(ctx->panel.dev, "reset", GPIOD_OUT_LOW);
-+	if (IS_ERR(ctx->reset_gpio)) {
-+		DRM_DEV_ERROR(dev, "cannot get reset gpio %ld\n",
-+			PTR_ERR(ctx->reset_gpio));
-+		return PTR_ERR(ctx->reset_gpio);
-+	}
-+
-+	drm_panel_init(&ctx->panel, dev, &visionox_rm69299_drm_funcs,
-+		       DRM_MODE_CONNECTOR_DSI);
-+	ctx->panel.dev = dev;
-+	ctx->panel.funcs = &visionox_rm69299_drm_funcs;
-+	drm_panel_add(&ctx->panel);
-+
-+	dsi->lanes = 4;
-+	dsi->format = MIPI_DSI_FMT_RGB888;
-+	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_LPM |
-+		MIPI_DSI_CLOCK_NON_CONTINUOUS;
-+	ret = mipi_dsi_attach(dsi);
-+	if (ret < 0) {
-+		DRM_DEV_ERROR(dev, "dsi attach failed ret = %d\n", ret);
-+		goto err_dsi_attach;
-+	}
-+
-+	ret = regulator_set_load(ctx->supplies[0].consumer, 32000);
-+	if (ret) {
-+		mipi_dsi_detach(dsi);
-+		drm_panel_remove(&ctx->panel);
-+		return ret;
-+	}
-+
-+	ret = regulator_set_load(ctx->supplies[1].consumer, 13200);
-+	if (ret) {
-+		mipi_dsi_detach(dsi);
-+		drm_panel_remove(&ctx->panel);
-+		return ret;
-+	}
-+
-+	return 0;
-+
-+err_dsi_attach:
-+	drm_panel_remove(&ctx->panel);
-+	return ret;
-+}
-+
-+static int visionox_rm69299_remove(struct mipi_dsi_device *dsi)
-+{
-+	struct visionox_rm69299 *ctx = mipi_dsi_get_drvdata(dsi);
-+
-+	mipi_dsi_detach(ctx->dsi);
-+	mipi_dsi_device_unregister(ctx->dsi);
-+
-+	drm_panel_remove(&ctx->panel);
-+	return 0;
-+}
-+
-+static const struct of_device_id visionox_rm69299_of_match[] = {
-+	{
-+		.compatible = "visionox,rm69299-1080p-display",
-+		.data = &rm69299_dir,
-+	},
-+};
-+MODULE_DEVICE_TABLE(of, visionox_rm69299_of_match);
-+
-+static struct mipi_dsi_driver visionox_rm69299_driver = {
-+	.driver = {
-+		.name = "panel-visionox-rm69299",
-+		.of_match_table = visionox_rm69299_of_match,
-+	},
-+	.probe = visionox_rm69299_probe,
-+	.remove = visionox_rm69299_remove,
-+};
-+module_mipi_dsi_driver(visionox_rm69299_driver);
-+
-+MODULE_DESCRIPTION("VISIONOX RM69299 DSI Panel Driver");
-+MODULE_LICENSE("GPL v2");
-+
--- 
-2.25.1
-
+On 2020-03-09 03:17, Bjorn Andersson wrote:
+> On Mon 02 Mar 04:55 PST 2020, Kiran Gunda wrote:
+>> diff --git a/drivers/video/backlight/qcom-wled.c 
+>> b/drivers/video/backlight/qcom-wled.c
+> [..]
+>> @@ -147,14 +187,39 @@ struct wled {
+>>  	u32 max_brightness;
+>>  	u32 short_count;
+>>  	u32 auto_detect_count;
+>> +	u32 version;
+>>  	bool disabled_by_short;
+>>  	bool has_short_detect;
+>> +	bool cabc_disabled;
+>>  	int short_irq;
+>>  	int ovp_irq;
+>> 
+>>  	struct wled_config cfg;
+>>  	struct delayed_work ovp_work;
+>>  	int (*wled_set_brightness)(struct wled *wled, u16 brightness);
+>> +	int (*cabc_config)(struct wled *wled, bool enable);
+>> +	int (*wled_sync_toggle)(struct wled *wled);
+> 
+> Please split this patch in one that adds these and breaks out the wled3
+> support, and then a second patch that adds wled5.
+> 
+Sure. Will make this change in the next post.
+>> +};
+>> +
+> [..]
+>> +static int wled5_set_brightness(struct wled *wled, u16 brightness)
+>> +{
+>> +	int rc, offset;
+>> +	u16 low_limit = wled->max_brightness * 1 / 1000;
+>> +	u8 v[2], brightness_msb_mask;
+>> +
+>> +	/* WLED5's lower limit is 0.1% */
+>> +	if (brightness > 0 && brightness < low_limit)
+>> +		brightness = low_limit;
+>> +
+>> +	brightness_msb_mask = 0xf;
+>> +	if (wled->max_brightness == WLED5_SINK_REG_BRIGHT_MAX_15B)
+>> +		brightness_msb_mask = 0x7f;
+> 
+> Why not just brightness &= wled->max_brightness? But given that it 
+> seems
+> like the framework ensures that brightness <= max_brightness, why not
+> skip this altogether?
+> 
+Okay. I will modify the code to remove the min/max, low_limit checks in 
+next post.
+>> +
+>> +	v[0] = brightness & 0xff;
+>> +	v[1] = (brightness >> 8) & brightness_msb_mask;
+>> +
+>> +	offset = wled5_brightness_reg[wled->cfg.mod_sel];
+>> +	rc = regmap_bulk_write(wled->regmap, wled->sink_addr + offset,
+>> +			v, 2);
+>> +	return rc;
+>> +}
+>> +
+>>  static int wled4_set_brightness(struct wled *wled, u16 brightness)
+>>  {
+>>  	int rc, i;
+>> @@ -237,7 +325,28 @@ static int wled_module_enable(struct wled *wled, 
+>> int val)
+>>  	return 0;
+>>  }
+>> 
+>> -static int wled_sync_toggle(struct wled *wled)
+>> +static int wled5_sync_toggle(struct wled *wled)
+>> +{
+>> +	int rc;
+>> +	u8 val;
+>> +
+>> +	val = (wled->cfg.mod_sel == MOD_A) ? WLED5_SINK_REG_SYNC_MOD_A_BIT :
+>> +					     WLED5_SINK_REG_SYNC_MOD_B_BIT;
+>> +	rc = regmap_update_bits(wled->regmap,
+>> +				wled->sink_addr + WLED5_SINK_REG_MOD_SYNC_BIT,
+>> +				WLED5_SINK_REG_SYNC_MASK, val);
+>> +	if (rc < 0)
+>> +		return rc;
+>> +
+>> +	val = 0;
+> 
+> Just plug 0 in the function call.
+> 
+Sure. Will do it in next post.
+>> +	rc = regmap_update_bits(wled->regmap,
+>> +				wled->sink_addr + WLED5_SINK_REG_MOD_SYNC_BIT,
+>> +				WLED5_SINK_REG_SYNC_MASK, val);
+>> +
+>> +	return rc;
+> 
+> And return regmap_update_bits(...);
+> 
+Sure. Will do it in next post.
+>> +}
+>> +
+> 
+> Regards,
+> Bjorn
