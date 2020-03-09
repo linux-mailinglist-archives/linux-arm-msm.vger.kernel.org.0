@@ -2,150 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id A41B117E6F5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 19:24:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D24617E724
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 19:31:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726661AbgCISXJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Mar 2020 14:23:09 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:43856 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727412AbgCISXI (ORCPT
+        id S1727434AbgCISaz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Mar 2020 14:30:55 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:36610 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726661AbgCISay (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Mar 2020 14:23:08 -0400
-Received: by mail-pf1-f196.google.com with SMTP id c144so5191036pfb.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2020 11:23:07 -0700 (PDT)
+        Mon, 9 Mar 2020 14:30:54 -0400
+Received: by mail-pg1-f196.google.com with SMTP id d9so5104594pgu.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2020 11:30:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=82dH+sJ15Ldshryiq0HsH5AclffhvcMdjvdymma/EAM=;
-        b=oLl6S0gM4gLxCh+cd88ogRCnh4JBCz5iq0tCYjiarP4lY6rV8yz1pfTfPhF0WfK/qJ
-         gFz0VA+eLUw2SNrcIed9mr2QCj06ekq9xCZPVRUYrxt3lh+6R1CSLWJJ59YRdwiaapIN
-         PWwtibFjepZgVXEjR138LljiCrB1T18zef8XA=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=CgKKPr0xwtPbP32XtsKM4Pg2CezZujX8rIh5aLwqY9k=;
+        b=EQLSmaWU2q/bTK6Rz1P45GyBkBUFS3bk+2CbcMCpLyAq43eVc2WPreKL5a+i6z50IO
+         BR/zXDncKdn8muBymm9WU8GSDEM56XkkyORl7tIgBvKivwmAbhAmAHHB3ovqIRKKOshO
+         EtoXWfLN/L5BEe5k5H+RUPFvglpuGtZ1vk6/J0cJEcAdXRO6vZaJ+QrMbU10kyjDdDW+
+         ZuflQ1anPI1URnPeiwClBJyJKSLi8SWY4D4iX00Qp+5PLH7NZfgZtE7NdrBgxzhmmPr6
+         OLpFA3LMf/Q66PZmU+NuBJAXMbCJ40awnoImK4en1CTK0jPuUL/XqKcm0TVxut5RraVS
+         G69Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=82dH+sJ15Ldshryiq0HsH5AclffhvcMdjvdymma/EAM=;
-        b=n8oqBTXh5kaOXfIuGOHNkS+/VEKeSpTrV+evQk3CF1mWo7R7Hu1VrC1d4LW9EAjDV8
-         /ZuZ+Gon6xhUSB81cENsU+QWVqk3TBxJ3gCZUEhKtyM8Q+ayuLRXt2t5fK505FqPyEtF
-         PSYNeYtJZa+AT9Lp1HfJQo5cAFtTlLsO0mOSe+DMjXb46ZcykvYH2xPZ4be5MxthxoPU
-         CKSqs+pNbcJpYbk0qhQsc8zPzQPOAtf0PrLKUGw0Vp8cKbhZxECmb1+SvAUPYbmJpmCV
-         vlZHyyaZZ2ws0t19mKqzPsG8HJoBgBhkqxxFI/5E+u+EClzykbRNaDqx/U040kG/VS9/
-         3rPA==
-X-Gm-Message-State: ANhLgQ3AcVJsCrCYluL/dcXgPKL9HEXh/D/6N6R5LSNi4UYJbmcMevRA
-        zne7XZ/0TNM0JHqIWB/Zver2MA==
-X-Google-Smtp-Source: ADFU+vt76X0Uszasj2fbq6k4WAAfFHzB09o/cHllk3EBigMBTQ2q7C01Ws3zAVvmNKzgaOqyMhCq/g==
-X-Received: by 2002:a63:7f1d:: with SMTP id a29mr17893011pgd.123.1583778186633;
-        Mon, 09 Mar 2020 11:23:06 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id q30sm244145pjh.5.2020.03.09.11.23.05
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=CgKKPr0xwtPbP32XtsKM4Pg2CezZujX8rIh5aLwqY9k=;
+        b=rdWGpvwi9bLVA9dyvkOFLaePNCpgro3WCOpuAg2vIa5Skv75FlJGdMYJakfhNleMnn
+         B1QpxyCEyUYrqQ2BIqVOw2aRyUqEkjB6K348WTxo/AxXypbYjAB/dq7Kwq5nINLCgha8
+         i3VBuayULEw4xoMfPEAx7RKELBatY8+sV3fHbVS/Q2QG8qcfSNHxTxq3VNu4t5tY6pFg
+         K0lluTI6PI/UcZStWiArKpALpLG92RdxIcdhMBKhJJtPxAngP8Tr55Dn/lv1rimGl9UT
+         DTeSLYujibvnn01HSlzY9Jc2QaCTJCorDJXqz0tqjYFpG9H/yBRr/zcg7OMpBOMKrHAV
+         LL4w==
+X-Gm-Message-State: ANhLgQ0R6U5L/6QWyw520A67sJgaLZiQcYkhhXCKcJxusppc2+g1Ewdt
+        MKoF4F0G6+D8Djy465sIpdgiGA==
+X-Google-Smtp-Source: ADFU+vtOyOd1fQy9lpTnW6EA7iLOMrbyb2Fi2EGCNHqKSXzU/O1QZSHNMGuRlAmRob7bmFMt7xi8cg==
+X-Received: by 2002:a63:7783:: with SMTP id s125mr17195558pgc.214.1583778651239;
+        Mon, 09 Mar 2020 11:30:51 -0700 (PDT)
+Received: from builder (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id d22sm249134pja.14.2020.03.09.11.30.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2020 11:23:06 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        Mon, 09 Mar 2020 11:30:50 -0700 (PDT)
+Date:   Mon, 9 Mar 2020 11:30:48 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dianders@google.com,
+        mka@chromium.org, Ritesh Harjani <riteshh@codeaurora.org>,
+        Asutosh Das <asutoshd@codeaurora.org>
+Subject: Re: [PATCH V2] mmc: cqhci: Update cqhci memory ioresource name
+Message-ID: <20200309183048.GB1098305@builder>
+References: <1583323250-23596-1-git-send-email-vbadigan@codeaurora.org>
+ <1583328320-9981-1-git-send-email-vbadigan@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1583752457-21159-2-git-send-email-mkshah@codeaurora.org>
-References: <1583752457-21159-1-git-send-email-mkshah@codeaurora.org> <1583752457-21159-2-git-send-email-mkshah@codeaurora.org>
-Subject: Re: [PATCH v4 1/4] dt-bindings: Introduce SoC sleep stats bindings
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
-        devicetree@vger.kernel.org, Maulik Shah <mkshah@codeaurora.org>
-To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, mka@chromium.org
-Date:   Mon, 09 Mar 2020 11:23:05 -0700
-Message-ID: <158377818530.66766.4481786840843320343@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1583328320-9981-1-git-send-email-vbadigan@codeaurora.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Maulik Shah (2020-03-09 04:14:14)
-> From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
->=20
-> Add device binding documentation for Qualcomm Technologies, Inc. (QTI)
-> SoC sleep stats driver. The driver is used for displaying SoC sleep
-> statistic maintained by Always On Processor or Resource Power Manager.
->=20
-> Cc: devicetree@vger.kernel.org
-> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Wed 04 Mar 05:25 PST 2020, Veerabhadrarao Badiganti wrote:
+
+> Update cqhci memory ioresource name from cqhci_mem to cqhci since
+> suffix _mem is redundant.
+> 
+> Only sdhci-msm driver is making use of this resource as of now.
+> No other vendor's driver is using it. So this update shouldn't affect
+> any other vendor's cqhci functionality.
+> 
+> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+
+I do favor using names without the "_mem" suffix and it seems like the
+existing code only acquire the first two regions by index. So this
+should be fine.
+
+Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+
+But I do expect to see some patches fixing up the 8 dts files that now
+has invalid reg-names.
+
+Regards,
+Bjorn
+
 > ---
->  .../bindings/soc/qcom/soc-sleep-stats.yaml         | 46 ++++++++++++++++=
-++++++
->  1 file changed, 46 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/soc-sleep-=
-stats.yaml
->=20
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.y=
-aml b/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml
-> new file mode 100644
-> index 00000000..7c29c61
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml
-> @@ -0,0 +1,46 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/soc/qcom/soc-sleep-stats.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. (QTI) SoC sleep stats bindings
-> +
-> +maintainers:
-> +  - Maulik Shah <mkshah@codeaurora.org>
-> +  - Lina Iyer <ilina@codeaurora.org>
-> +
-> +description:
-> +  Always On Processor/Resource Power Manager maintains statistics of the=
- SoC
-> +  sleep modes involving powering down of the rails and oscillator clock.
-> +
-> +  Statistics includes SoC sleep mode type, number of times low power mod=
-e were
-> +  entered, time of last entry, time of last exit and accumulated sleep d=
-uration.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,rpmh-sleep-stats
-> +      - qcom,rpm-sleep-stats
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +examples:
-> +  # Example of rpmh sleep stats
-> +  - |
-> +    rpmh_sleep_stats@c3f0000 {
-> +      compatible =3D "qcom,rpmh-sleep-stats";
-> +      reg =3D <0 0xc3f0000 0 0x400>;
-> +    };
-> +  # Example of rpm sleep stats
-> +  - |
-> +    rpm_sleep_stats@4690000 {
-
-Node names don't have underscores. It really feels like we should be able
-to get away with not having this device node at all. Why can't we have
-the rpm message ram be a node that covers the entire range and then have
-that either create a platform device for debugfs stats or just have it
-register the stat information from whatever driver attaches to that
-node?
-
-Carving this up into multiple nodes and making compatible strings
-doesn't seem very useful here because we're essentially making device
-nodes in DT for logical software components that exist in the rpm
-message ram.
+> Corresponding binding change:
+> https://lore.kernel.org/linux-arm-msm/1582545470-11530-1-git-send-email-vbadigan@codeaurora.org/
+> 
+> Changes sicne V1:
+> 	- Updated commit text expalining this change affects *only*
+> 	  qcom cqhci functionality.
+> 
+> ---
+>  drivers/mmc/host/cqhci.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/mmc/host/cqhci.c b/drivers/mmc/host/cqhci.c
+> index e2ea2c4..e24b8ff 100644
+> --- a/drivers/mmc/host/cqhci.c
+> +++ b/drivers/mmc/host/cqhci.c
+> @@ -1077,7 +1077,7 @@ struct cqhci_host *cqhci_pltfm_init(struct platform_device *pdev)
+>  
+>  	/* check and setup CMDQ interface */
+>  	cqhci_memres = platform_get_resource_byname(pdev, IORESOURCE_MEM,
+> -						   "cqhci_mem");
+> +						   "cqhci");
+>  	if (!cqhci_memres) {
+>  		dev_dbg(&pdev->dev, "CMDQ not supported\n");
+>  		return ERR_PTR(-EINVAL);
+> -- 
+> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
