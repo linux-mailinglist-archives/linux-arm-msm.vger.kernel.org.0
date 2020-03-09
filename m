@@ -2,93 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C638E17E50F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 17:54:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8202617E54E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 18:05:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727195AbgCIQyz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Mar 2020 12:54:55 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:38248 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726922AbgCIQyy (ORCPT
+        id S1727101AbgCIRFh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Mar 2020 13:05:37 -0400
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:38100 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726804AbgCIRFh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Mar 2020 12:54:54 -0400
-Received: by mail-io1-f65.google.com with SMTP id s24so9824220iog.5;
-        Mon, 09 Mar 2020 09:54:54 -0700 (PDT)
+        Mon, 9 Mar 2020 13:05:37 -0400
+Received: by mail-pj1-f68.google.com with SMTP id a16so127245pju.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2020 10:05:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tBM/EJVByJ1fvt0IaB7s42kBMtrMOfscdKxthc1f01o=;
-        b=j7+hIRJ+WeLBqH9JZ71vlz/LU6RkYQnan8oxdrQmew18BkJPxDpnlDDs8qwjyf4S//
-         6g/elDvgR2jQK9bQjetKagI64eXB91sAaSx3dWdbExpOSby3rqIq068TjSOY49q3LRJX
-         B+gxeLX+9+e+V9rxkzHIy6bDZKe1isOWqYS6CeIzxl9PLIVG62uM6FLB21XuHHwNQsw5
-         4MIhCTr8lo091TmPK/2vLwXAUNzV5BcPsOA/hBHHx/oplK6aQeultzspfXxzCom7Sy79
-         V+MrWkL2/CTv96Ofq3PF0TuBWLJBDCR9ZKpcwqTcqtjnVRHOXWmWMvt0Sa4ev8N7Klo3
-         PpSg==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=TBjaSzT2srnKrAudJf1OGvf6fJmlAuZnL+/SoFFDeQs=;
+        b=kuoQUG9aYByCTvr8FqB2wYmH5ZWs0lLVdIavrZWbjHpil2umTLSDyRhoq5YaiSW7EJ
+         YReXk56wyZmDIKCyFHGRFTLcey2OMhS+VLVsXxcZu9Jjf1oD4KAd2F2mpM0YZfbgascA
+         TxkMxyE7t1M64pji+W/EOSRHinX2dNWBOt7Gk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tBM/EJVByJ1fvt0IaB7s42kBMtrMOfscdKxthc1f01o=;
-        b=iMNL1TCG3Pl5wBMQdOo4xEKMSGyXK0Yns1b+yQzGlvAqZ/s0D5KkH/+hD6Kr6e76WP
-         qCwhnS+Rt5XDlWZ+KV0O+rfwrlsa0jOE6bKj2ser+H4QyR+GC6y+X9Virb3AASMbU82U
-         3rPJDskFLI2eJ4TTxM625myTESiUeKYtu0yeXYU49btZIhTSpqOVRiITtCH9JAKv2Z4Y
-         UFrEMgceE0wKBvPUKp+cjnHhyMuPJqsXlWjiqOL5q6HjhyLn6vSPG8wJpwI2m8Q18aKf
-         mJFFFuIKv59/cVMUVMTX5uxrOfnMGF03GtGSoJXDhUttVEafY6PVsrhPRyFbcq4gZod6
-         0GWQ==
-X-Gm-Message-State: ANhLgQ129IWz2RpjbwD+tfGG7vqXDyAUsuF/8twSPaFvsgnbCDiGJEdP
-        1zvdspc5En07am+QRQE+nOFdqyrEdnz6tLP01sU=
-X-Google-Smtp-Source: ADFU+vuolrK6LFWTF1i2AMSm9DahDorblsLbuuPqp++RHjvfHEfl6hLe/NsSx+TCiOg3yJcdPU9Z/vcKwZqJhKtkEUE=
-X-Received: by 2002:a6b:3c13:: with SMTP id k19mr14304131iob.25.1583772893973;
- Mon, 09 Mar 2020 09:54:53 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=TBjaSzT2srnKrAudJf1OGvf6fJmlAuZnL+/SoFFDeQs=;
+        b=dlhKEJfeZSEt9eRug2kTse8zLbAT52j/+I2SKzSD1chDZbZS3tEv8uKG/93i32LDBm
+         AJjBYPDL4c6LA5bnfjv6DYDTb1Ay9L/4eIxs3iwbakrYFteJVyy24/mmKdQw1ij7Pf3n
+         YF09uQ8mzJENDDrXYhoxBuK+T/iKXPtcmCYfxn2gFf5sLvtuF2iY3mLwzM/BQgQt/ukG
+         RewSzHATczK1gkdnJ4Xd1gRitvkMhBKJepY4LubrnWFUWJWMQjuv21uK6X6JVR4rn7zP
+         Tzj4wm6ZJ/Jnprw6dLxr8UxCWsiLjAnzg7fXdX0nq3/MjGr+YTPMJ4p4BBTE59TwWK4z
+         sNzg==
+X-Gm-Message-State: ANhLgQ1erOso11mkVFwLWQbZD9E2rhd/Z0zhenu6kU/CRlzHNg9ynYuG
+        8d17FVCXaogXqqWZ9HOhR0k6zQ==
+X-Google-Smtp-Source: ADFU+vs3ZXRlDpRJrpqXVwgbR3EMTeT2/174EW+zDgms5nXB95GCrTzl98LeDLcAvE3Fy/GQtfkY5g==
+X-Received: by 2002:a17:902:401:: with SMTP id 1mr16507578ple.177.1583773535780;
+        Mon, 09 Mar 2020 10:05:35 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id i187sm5032740pfg.33.2020.03.09.10.05.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Mar 2020 10:05:34 -0700 (PDT)
+Date:   Mon, 9 Mar 2020 10:05:32 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Harigovindan P <harigovi@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        robdclark@gmail.com, seanpaul@chromium.org, sean@poorly.run
+Subject: Re: [PATCH v5 2/2] drm/panel: add support for rm69299 visionox panel
+ driver
+Message-ID: <20200309170532.GW24720@google.com>
+References: <20200309052304.23427-1-harigovi@codeaurora.org>
+ <20200309052304.23427-3-harigovi@codeaurora.org>
 MIME-Version: 1.0
-References: <20200306042831.17827-1-elder@linaro.org>
-In-Reply-To: <20200306042831.17827-1-elder@linaro.org>
-From:   Dave Taht <dave.taht@gmail.com>
-Date:   Mon, 9 Mar 2020 09:54:42 -0700
-Message-ID: <CAA93jw5enz6-h1m=7tGFToK+E+8z3aD80pBef4AYkFrS2u3hHQ@mail.gmail.com>
-Subject: Re: [PATCH v2 00/17] net: introduce Qualcomm IPA driver (UPDATED)
-To:     Alex Elder <elder@linaro.org>
-Cc:     David Miller <davem@davemloft.net>, Arnd Bergmann <arnd@arndb.de>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Dan Williams <dcbw@redhat.com>,
-        Evan Green <evgreen@google.com>,
-        Eric Caruso <ejcaruso@google.com>,
-        Susheel Yadav Yadagiri <syadagir@codeaurora.org>,
-        Chaitanya Pratapa <cpratapa@codeaurora.org>,
-        Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        Linux Kernel Network Developers <netdev@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200309052304.23427-3-harigovi@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I am happy to see this driver upstream.
+Hi,
 
->Arnd's concern was that the rmnet_data0 network device does not
->have the benefit of information about the state of the underlying
->IPA hardware in order to be effective in controlling TX flow.
->The feared result is over-buffering of TX packets (bufferbloat).
->I began working on some simple experiments to see whether (or how
->much) his concern was warranted.  But it turned out that completing
->these experiments was much more work than had been hoped.
+On Mon, Mar 09, 2020 at 10:53:04AM +0530, Harigovindan P wrote:
+> Add support for Visionox panel driver.
+> 
+> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+> ---
+> 
+> Changes in v2:
+> 	- Dropping redundant space in Kconfig(Sam Ravnborg).
+> 	- Changing structure for include files(Sam Ravnborg).
+> 	- Removing backlight related code and functions(Sam Ravnborg).
+> 	- Removing repeated printing of error message(Sam Ravnborg).
+> 	- Adding drm_connector as an argument for get_modes function.
+> Changes in v3:
+> 	- Adding arguments for drm_panel_init to support against mainline.
+> Changes in v4:
+> 	- Removing error messages from regulator_set_load.
+> 	- Removing dev struct entry.
+> 	- Removing checks.
+> 	- Dropping empty comment lines.
+> Changes in v5:
+> 	- Removing unused struct member variables.
+> 	- Removing blank lines.
+> 	- Fixed indentation.
+> 	- Invoking dsi_detach and panel_remove while early exiting from probe.
+> 
+>  drivers/gpu/drm/panel/Kconfig                 |   8 +
+>  drivers/gpu/drm/panel/Makefile                |   1 +
+>  .../gpu/drm/panel/panel-visionox-rm69299.c    | 315 ++++++++++++++++++
+>  3 files changed, 324 insertions(+)
+>  create mode 100644 drivers/gpu/drm/panel/panel-visionox-rm69299.c
+>
+> ...
+>
+> diff --git a/drivers/gpu/drm/panel/panel-visionox-rm69299.c b/drivers/gpu/drm/panel/panel-visionox-rm69299.c
+> new file mode 100644
+> index 000000000000..2bd3af46d933
+> --- /dev/null
+> +++ b/drivers/gpu/drm/panel/panel-visionox-rm69299.c
+>
+> ...
+>
+> +static int visionox_35597_power_on(struct visionox_rm69299 *ctx)
+> +{
 
-Members of the bufferbloat project *care*, and have tools and testbeds for
-exploring these issues. It would be good to establish a relationship with
-the vendor, obtain hardware, and other (technical and financial) support, if
-possible.
+s/35597/rm69299/ ?
 
-Is there any specific hardware now available (generally or in beta) that
-can be obtained by us to take a harder look? A contact at linaro or QCA
-willing discuss options?
+> +static const struct rm69299_config rm69299_dir = {
+> +	.width_mm = 74,
+> +	.height_mm = 131,
+> +	.dm = &visionox_rm69299_1080x2248_60hz,
+> +};
+
+Are there actually variants of the panel with different sizes? So far the
+driver supports a single type of panel, so I would say struct rm69299_config
+is not needed. It can be added later if the driver ever gets support for
+other panel variants. For now just assign the values directly in
+'visionox_rm69299_get_modes'.
+
+> +static int visionox_rm69299_probe(struct mipi_dsi_device *dsi)
+> +{
+> +	struct device *dev = &dsi->dev;
+> +	struct visionox_rm69299 *ctx;
+> +	int ret;
+> +
+> +	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
+> +	if (!ctx)
+> +		return -ENOMEM;
+> +
+> +	mipi_dsi_set_drvdata(dsi, ctx);
+> +
+> +	ctx->supplies[0].supply = "vdda";
+> +	ctx->supplies[1].supply = "vdd3p3";
+> +
+> +	ret = devm_regulator_bulk_get(ctx->panel.dev, ARRAY_SIZE(ctx->supplies),
+> +								ctx->supplies);
+
+nit: alignment is odd, either align with a tab after 'devm_regulator_bulk_get'
+or with 'ctx->panel.dev'.
+
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ctx->reset_gpio = devm_gpiod_get(ctx->panel.dev, "reset", GPIOD_OUT_LOW);
+> +	if (IS_ERR(ctx->reset_gpio)) {
+> +		DRM_DEV_ERROR(dev, "cannot get reset gpio %ld\n",
+> +			PTR_ERR(ctx->reset_gpio));
+> +		return PTR_ERR(ctx->reset_gpio);
+> +	}
+> +
+> +	drm_panel_init(&ctx->panel, dev, &visionox_rm69299_drm_funcs,
+> +		       DRM_MODE_CONNECTOR_DSI);
+> +	ctx->panel.dev = dev;
+> +	ctx->panel.funcs = &visionox_rm69299_drm_funcs;
+> +	drm_panel_add(&ctx->panel);
+> +
+> +	dsi->lanes = 4;
+> +	dsi->format = MIPI_DSI_FMT_RGB888;
+> +	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_LPM |
+> +		MIPI_DSI_CLOCK_NON_CONTINUOUS;
+> +	ret = mipi_dsi_attach(dsi);
+> +	if (ret < 0) {
+> +		DRM_DEV_ERROR(dev, "dsi attach failed ret = %d\n", ret);
+> +		goto err_dsi_attach;
+> +	}
+> +
+> +	ret = regulator_set_load(ctx->supplies[0].consumer, 32000);
+> +	if (ret) {
+> +		mipi_dsi_detach(dsi);
+> +		drm_panel_remove(&ctx->panel);
+
+that's technically correct, but since you have the 'goto' above and do the
+same unwinding for the other 'regulator_set_load' call below it would be
+better to use a 'goto' here (and below) too. Actually the 'goto' above only
+makes sense if 'goto' is also used for the other cases.
+
+> +		return ret;
+> +	}
+> +
+> +	ret = regulator_set_load(ctx->supplies[1].consumer, 13200);
+> +	if (ret) {
+> +		mipi_dsi_detach(dsi);
+> +		drm_panel_remove(&ctx->panel);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +
+> +err_dsi_attach:
+> +	drm_panel_remove(&ctx->panel);
+> +	return ret;
+> +}
+> +
+> +static int visionox_rm69299_remove(struct mipi_dsi_device *dsi)
+> +{
+> +	struct visionox_rm69299 *ctx = mipi_dsi_get_drvdata(dsi);
+> +
+> +	mipi_dsi_detach(ctx->dsi);
+> +	mipi_dsi_device_unregister(ctx->dsi);
+> +
+> +	drm_panel_remove(&ctx->panel);
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id visionox_rm69299_of_match[] = {
+> +	{
+> +		.compatible = "visionox,rm69299-1080p-display",
+> +		.data = &rm69299_dir,
+> +	},
+> +};
+> +MODULE_DEVICE_TABLE(of, visionox_rm69299_of_match);
+> +
+> +static struct mipi_dsi_driver visionox_rm69299_driver = {
+> +	.driver = {
+> +		.name = "panel-visionox-rm69299",
+> +		.of_match_table = visionox_rm69299_of_match,
+> +	},
+> +	.probe = visionox_rm69299_probe,
+> +	.remove = visionox_rm69299_remove,
+> +};
+> +module_mipi_dsi_driver(visionox_rm69299_driver);
+> +
+> +MODULE_DESCRIPTION("VISIONOX RM69299 DSI Panel Driver");
+
+As commented on v4, this should be 'Visionox'.
