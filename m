@@ -2,255 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 2285717EA0B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 21:32:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 189E617EA92
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 21:56:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726169AbgCIUc2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Mar 2020 16:32:28 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:43446 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726193AbgCIUc2 (ORCPT
+        id S1726736AbgCIU4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Mar 2020 16:56:37 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:43835 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726096AbgCIU4h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Mar 2020 16:32:28 -0400
-Received: by mail-pf1-f193.google.com with SMTP id c144so5351185pfb.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2020 13:32:26 -0700 (PDT)
+        Mon, 9 Mar 2020 16:56:37 -0400
+Received: by mail-pg1-f194.google.com with SMTP id u12so5258690pgb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2020 13:56:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Z5axf0WVAg5WFt1W2Qni2sPQgOj88funCB2kDh5Xe4w=;
-        b=W34MHRUY40O0VIg6TWhZSRQLWrUix4GLuDQS2V/IShz2+W7HbS+eCGMe2rSI7Mif89
-         DlNB/1xBH9VqHjCjAaZ8Vc6fLuOfIW1PH6zXqRTelTWuIsbhbHi8rdTsXtXHMtud57te
-         rrozpSG46wQEFouLsn1K3xcqg2JfUP+fiZ+XpyJlaJVcNg138tI5XLyHjAoc2DWwabuG
-         bqD5Ce+9kNBAYrFwTIuHx4ExyDJVpUDQnn5zr1uQvEl+AjCve7UBiGErh08NSn9cnrF4
-         umDxTcbQAkgiY8y+hrr6zXGNnD3Di+TZQ5iX6hp525nb3QGvYSCJ04HStioz41Ds5WkL
-         /JOA==
+        bh=U5ll+F45+gp5tDit4vjDwxtlVejpB5f+KEOORoRWtRY=;
+        b=YUf1pYvgkc3NWHezfnVPtbOZcluXoyPBiV9ZvG53sPI98VPN/NliABEMtV4hCj1O0y
+         wlM27CDuwQO4feW9FS4WEgo99lE4sn5mOcwjZ7XqURDwGCjzOaAZ31yiiobhvEDYXQ6R
+         AQz+R0xHDnvsEEcbACDAEx2S6UhPt0DQflpjkE6iKwrqH9j1LM7fVkkJZ7FwnIS7zxBm
+         PTMORckzKMVDkkI08QrXzVn01t1HSSCRBnPawzD2KXlvopIhTmcvGvGJ/4UWRg+CxbfR
+         8vYwpAEKHxwL6AMIUUsBrHFdVNINbNBVv0p1wETfRCLerTLEKootDPNoWcEhwqQJYYMn
+         AFUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Z5axf0WVAg5WFt1W2Qni2sPQgOj88funCB2kDh5Xe4w=;
-        b=qITsvfuY2Hhr6zs9Hb0jaBVsPJ2AAILX70Gdryf5bzntI1hnhn2nFM2lIkDzqe3iPF
-         lRP/iedklLHgnVbbml9xN0CmgI027jUvEsTC5tGGybJIFh42ORzFZEiwkBaHImxonBes
-         WVPSw9H+T9Y4kKQyNow7FBjlm8RP6Mf+lkENcld+lczlH2uoTe25oHwtCC9i3+o9ctnE
-         Cy5FuNiTFMLKJO+3FJHXGpZ4ZbhuPSDQeCHnTQmpY1l2ovnwUo7dl1XtVqat3H1S5mGp
-         VOpnzekqA0jgyxIh7n7R68NeKoxAP3cKkTgHnzMXOnNR4loYyC9IaCsFRkYeJvdLeF06
-         NXiw==
-X-Gm-Message-State: ANhLgQ3O1aKZO7f1EBox1AWHDXdcPJ2vrrzaljWm+N8kUODr8vHetHXL
-        gZEKa6Wnz0rFtcSu0HnduKrRTQ==
-X-Google-Smtp-Source: ADFU+vtVIlxuoEcPGFGpwI4D8zyeiHQ92KF1g4qjTI35lZyYfSeX5hldsxX9ZUemubH5cAScCNw6QQ==
-X-Received: by 2002:a65:624c:: with SMTP id q12mr17882462pgv.380.1583785946251;
-        Mon, 09 Mar 2020 13:32:26 -0700 (PDT)
+        bh=U5ll+F45+gp5tDit4vjDwxtlVejpB5f+KEOORoRWtRY=;
+        b=rSPYIjdB+hiBt6Ju6MkJ+ymQDAI0t7/YLfWioVKPUR+U9zkOfeFeIB022ZRBTNpqaN
+         oPzeQdfamP7fm5wnGCwWG4XpqoYyDhDlxZU+sZ221Y9nRkwJSLDBzBh1qoiEipv0i/DL
+         nXnO9w7Tlvkm4gNJtcA4jr9y8AGGTGSrg/BDESAwCed0rglK/ceRl7LRjP6GyL1oJAKM
+         6vSDUSKyNgzGsuTXoHLGJsS7ijiwGV5visfxx3n/M2wNjtA0PXiM1Yrju0SNhgmQxPDi
+         C7ZLMpIawRL8Em8hc7SmRZtlwAJLisGQZw003umIVYtYZiy89lCEKPmJFXGVMUihTRcV
+         pemA==
+X-Gm-Message-State: ANhLgQ2JfWJrIhGeUcnmWTWNoUBdQOJscuSAH51qLOq8P21uunXjQAzR
+        hs30RxFaBEdBhgrDY7i+jUn0zQ==
+X-Google-Smtp-Source: ADFU+vukIGxG4H2/2KRwkjbRv/cc8CLgKoIL2IICKTc5ELJFOXIuLqIEwvntOepL7MfuxYuGq1TS3g==
+X-Received: by 2002:a63:d658:: with SMTP id d24mr18336312pgj.340.1583787395782;
+        Mon, 09 Mar 2020 13:56:35 -0700 (PDT)
 Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id d3sm44805327pfn.113.2020.03.09.13.32.24
+        by smtp.gmail.com with ESMTPSA id f3sm37932570pgg.46.2020.03.09.13.56.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2020 13:32:25 -0700 (PDT)
-Date:   Mon, 9 Mar 2020 14:32:23 -0600
+        Mon, 09 Mar 2020 13:56:35 -0700 (PDT)
+Date:   Mon, 9 Mar 2020 14:56:33 -0600
 From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Clement Leger <cleger@kalray.eu>
+To:     Alex Elder <elder@linaro.org>
 Cc:     Ohad Ben-Cohen <ohad@wizery.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        linux-remoteproc@vger.kernel.org,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
         Andy Gross <agross@kernel.org>,
-        Patrice Chotard <patrice.chotard@st.com>,
-        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Arnaud Pouliquen <arnaud.pouliquen@st.com>,
-        Loic PALLARDY <loic.pallardy@st.com>, s-anna <s-anna@ti.com>
-Subject: Re: [PATCH v5 8/8] remoteproc: Adapt coredump to generate correct
- elf type
-Message-ID: <20200309203223.GE1399@xps15>
-References: <20200210162209.23149-1-cleger@kalray.eu>
- <20200302093902.27849-1-cleger@kalray.eu>
- <20200302093902.27849-9-cleger@kalray.eu>
+        linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] remoteproc: re-check state in
+ rproc_trigger_recovery()
+Message-ID: <20200309205633.GF1399@xps15>
+References: <20200228183359.16229-1-elder@linaro.org>
+ <20200228183359.16229-2-elder@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200302093902.27849-9-cleger@kalray.eu>
+In-Reply-To: <20200228183359.16229-2-elder@linaro.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 02, 2020 at 10:39:02AM +0100, Clement Leger wrote:
-> Now that remoteproc can load an elf64, coredump elf class should be
-> the same as the loaded elf class. In order to do that, add a
-> elf_class field to rproc with default values. If an elf is loaded
-> successfully, this field will be updated with the loaded elf class.
-> Then, the coredump core code has been modified to use the generic elf
-> macro in order to create an elf file with correct class.
+On Fri, Feb 28, 2020 at 12:33:56PM -0600, Alex Elder wrote:
+> Two places call rproc_trigger_recovery():
+>   - rproc_crash_handler_work() sets rproc->state to CRASHED under
+>     protection of the mutex, then calls it if recovery is not
+>     disabled.  This function is called in workqueue context when
+>     scheduled in rproc_report_crash().
+>   - rproc_recovery_write() calls it in two spots, both of which
+>     the only call it if the rproc->state is CRASHED.
 > 
-> Signed-off-by: Clement Leger <cleger@kalray.eu>
-> ---
->  drivers/remoteproc/remoteproc_core.c       | 67 ++++++++++++++++--------------
->  drivers/remoteproc/remoteproc_elf_loader.c |  3 ++
->  include/linux/remoteproc.h                 |  1 +
->  3 files changed, 39 insertions(+), 32 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-> index b932a64a2be2..f923355aa3f9 100644
-> --- a/drivers/remoteproc/remoteproc_core.c
-> +++ b/drivers/remoteproc/remoteproc_core.c
-> @@ -38,6 +38,7 @@
->  #include <linux/platform_device.h>
->  
->  #include "remoteproc_internal.h"
-> +#include "remoteproc_elf_helpers.h"
->  
->  #define HIGH_BITS_MASK 0xFFFFFFFF00000000ULL
->  
-> @@ -1566,20 +1567,21 @@ EXPORT_SYMBOL(rproc_coredump_add_custom_segment);
->  static void rproc_coredump(struct rproc *rproc)
->  {
->  	struct rproc_dump_segment *segment;
-> -	struct elf32_phdr *phdr;
-> -	struct elf32_hdr *ehdr;
-> +	void *phdr;
-> +	void *ehdr;
->  	size_t data_size;
->  	size_t offset;
->  	void *data;
->  	void *ptr;
-> +	u8 class = rproc->elf_class;
->  	int phnum = 0;
->  
->  	if (list_empty(&rproc->dump_segments))
->  		return;
->  
-> -	data_size = sizeof(*ehdr);
-> +	data_size = elf_size_of_hdr(class);
->  	list_for_each_entry(segment, &rproc->dump_segments, node) {
-> -		data_size += sizeof(*phdr) + segment->size;
-> +		data_size += elf_size_of_phdr(class) + segment->size;
->  
->  		phnum++;
->  	}
-> @@ -1590,33 +1592,33 @@ static void rproc_coredump(struct rproc *rproc)
->  
->  	ehdr = data;
->  
-> -	memset(ehdr, 0, sizeof(*ehdr));
-> -	memcpy(ehdr->e_ident, ELFMAG, SELFMAG);
-> -	ehdr->e_ident[EI_CLASS] = ELFCLASS32;
-> -	ehdr->e_ident[EI_DATA] = ELFDATA2LSB;
-> -	ehdr->e_ident[EI_VERSION] = EV_CURRENT;
-> -	ehdr->e_ident[EI_OSABI] = ELFOSABI_NONE;
-> -	ehdr->e_type = ET_CORE;
-> -	ehdr->e_machine = EM_NONE;
-> -	ehdr->e_version = EV_CURRENT;
-> -	ehdr->e_entry = rproc->bootaddr;
-> -	ehdr->e_phoff = sizeof(*ehdr);
-> -	ehdr->e_ehsize = sizeof(*ehdr);
-> -	ehdr->e_phentsize = sizeof(*phdr);
-> -	ehdr->e_phnum = phnum;
-> -
-> -	phdr = data + ehdr->e_phoff;
-> -	offset = ehdr->e_phoff + sizeof(*phdr) * ehdr->e_phnum;
-> +	memset(ehdr, 0, elf_size_of_hdr(class));
-> +	/* e_ident field is common for both elf32 and elf64 */
-> +	elf_hdr_init_ident(ehdr, class);
-> +
-> +	elf_hdr_set_e_type(class, ehdr, ET_CORE);
-> +	elf_hdr_set_e_machine(class, ehdr, EM_NONE);
-> +	elf_hdr_set_e_version(class, ehdr, EV_CURRENT);
-> +	elf_hdr_set_e_entry(class, ehdr, rproc->bootaddr);
-> +	elf_hdr_set_e_phoff(class, ehdr, elf_size_of_hdr(class));
-> +	elf_hdr_set_e_ehsize(class, ehdr, elf_size_of_hdr(class));
-> +	elf_hdr_set_e_phentsize(class, ehdr, elf_size_of_phdr(class));
-> +	elf_hdr_set_e_phnum(class, ehdr, phnum);
-> +
-> +	phdr = data + elf_hdr_get_e_phoff(class, ehdr);
-> +	offset = elf_hdr_get_e_phoff(class, ehdr);
-> +	offset += elf_size_of_phdr(class) * elf_hdr_get_e_phnum(class, ehdr);
-> +
->  	list_for_each_entry(segment, &rproc->dump_segments, node) {
-> -		memset(phdr, 0, sizeof(*phdr));
-> -		phdr->p_type = PT_LOAD;
-> -		phdr->p_offset = offset;
-> -		phdr->p_vaddr = segment->da;
-> -		phdr->p_paddr = segment->da;
-> -		phdr->p_filesz = segment->size;
-> -		phdr->p_memsz = segment->size;
-> -		phdr->p_flags = PF_R | PF_W | PF_X;
-> -		phdr->p_align = 0;
-> +		memset(phdr, 0, elf_size_of_phdr(class));
-> +		elf_phdr_set_p_type(class, phdr, PT_LOAD);
-> +		elf_phdr_set_p_offset(class, phdr, offset);
-> +		elf_phdr_set_p_vaddr(class, phdr, segment->da);
-> +		elf_phdr_set_p_paddr(class, phdr, segment->da);
-> +		elf_phdr_set_p_filesz(class, phdr, segment->size);
-> +		elf_phdr_set_p_memsz(class, phdr, segment->size);
-> +		elf_phdr_set_p_flags(class, phdr, PF_R | PF_W | PF_X);
-> +		elf_phdr_set_p_align(class, phdr, 0);
->  
->  		if (segment->dump) {
->  			segment->dump(rproc, segment, data + offset);
-> @@ -1632,8 +1634,8 @@ static void rproc_coredump(struct rproc *rproc)
->  			}
->  		}
->  
-> -		offset += phdr->p_filesz;
-> -		phdr++;
-> +		offset += elf_phdr_get_p_filesz(class, phdr);
-> +		phdr += elf_size_of_phdr(class);
->  	}
->  
->  	dev_coredumpv(&rproc->dev, data, data_size, GFP_KERNEL);
-> @@ -2031,6 +2033,7 @@ struct rproc *rproc_alloc(struct device *dev, const char *name,
->  	rproc->name = name;
->  	rproc->priv = &rproc[1];
->  	rproc->auto_boot = true;
-> +	rproc->elf_class = ELFCLASS32;
+> The mutex is taken right away in rproc_trigger_recovery().  However,
+> by the time the mutex is acquired, something else might have changed
+> rproc->state to something other than CRASHED.
 
-I would initialise this to ELFCLASSNONE to make sure that if a platform driver
-overwrites rproc_elf_load_segments or doesn't provide one, we don't falsely
-deduce the elf type.  It goes without saying that if elf_class == ELFCLASSNONE,
-a coredump is not generated. 
-
-Unless you think this is a seriously bad idea or Bjorn over rules me,
-
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+I'm interested in the "something might have changed" part.  The only thing I can
+see is if rproc_trigger_recovery() has been called from debugfs between the time
+the mutex is released but just before rproc_trigger_recovery() is called in
+rproc_crash_handler_work().  In this case we would be done twice, something your
+patch prevents.  Have you found other scenarios?
 
 Thanks,
 Mathieu
 
+> 
+> The work that follows that is only appropriate for a remoteproc in
+> CRASHED state.  So check the state after acquiring the mutex, and
+> only proceed with the recovery work if the remoteproc is still in
+> CRASHED state.
+> 
+> Delay reporting that recovering has begun until after we hold the
+> mutex and we know the remote processor is in CRASHED state.
+> 
+> Signed-off-by: Alex Elder <elder@linaro.org>
+> ---
+>  drivers/remoteproc/remoteproc_core.c | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+> index 097f33e4f1f3..d327cb31d5c8 100644
+> --- a/drivers/remoteproc/remoteproc_core.c
+> +++ b/drivers/remoteproc/remoteproc_core.c
+> @@ -1653,12 +1653,16 @@ int rproc_trigger_recovery(struct rproc *rproc)
+>  	struct device *dev = &rproc->dev;
+>  	int ret;
 >  
->  	device_initialize(&rproc->dev);
->  	rproc->dev.parent = dev;
-> diff --git a/drivers/remoteproc/remoteproc_elf_loader.c b/drivers/remoteproc/remoteproc_elf_loader.c
-> index 4869fb7d8fe4..16e2c496fd45 100644
-> --- a/drivers/remoteproc/remoteproc_elf_loader.c
-> +++ b/drivers/remoteproc/remoteproc_elf_loader.c
-> @@ -248,6 +248,9 @@ int rproc_elf_load_segments(struct rproc *rproc, const struct firmware *fw)
->  			memset(ptr + filesz, 0, memsz - filesz);
->  	}
->  
-> +	if (ret == 0)
-> +		rproc->elf_class = class;
+> +	ret = mutex_lock_interruptible(&rproc->lock);
+> +	if (ret)
+> +		return ret;
 > +
->  	return ret;
->  }
->  EXPORT_SYMBOL(rproc_elf_load_segments);
-> diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-> index 1683d6c386a6..ed127b2d35ca 100644
-> --- a/include/linux/remoteproc.h
-> +++ b/include/linux/remoteproc.h
-> @@ -514,6 +514,7 @@ struct rproc {
->  	bool auto_boot;
->  	struct list_head dump_segments;
->  	int nb_vdev;
-> +	u8 elf_class;
->  };
+> +	/* State could have changed before we got the mutex */
+> +	if (rproc->state != RPROC_CRASHED)
+> +		goto unlock_mutex;
+> +
+>  	dev_err(dev, "recovering %s\n", rproc->name);
 >  
->  /**
+> -	ret = mutex_lock_interruptible(&rproc->lock);
+> -	if (ret)
+> -		return ret;
+> -
+>  	ret = rproc_stop(rproc, true);
+>  	if (ret)
+>  		goto unlock_mutex;
 > -- 
-> 2.15.0.276.g89ea799
+> 2.20.1
 > 
