@@ -2,230 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 8202617E54E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 18:05:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7366417E5CE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 18:34:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727101AbgCIRFh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Mar 2020 13:05:37 -0400
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:38100 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726804AbgCIRFh (ORCPT
+        id S1727409AbgCIReZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Mar 2020 13:34:25 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:43426 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727270AbgCIReY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Mar 2020 13:05:37 -0400
-Received: by mail-pj1-f68.google.com with SMTP id a16so127245pju.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2020 10:05:36 -0700 (PDT)
+        Mon, 9 Mar 2020 13:34:24 -0400
+Received: by mail-lf1-f65.google.com with SMTP id q9so1761859lfc.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2020 10:34:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=TBjaSzT2srnKrAudJf1OGvf6fJmlAuZnL+/SoFFDeQs=;
-        b=kuoQUG9aYByCTvr8FqB2wYmH5ZWs0lLVdIavrZWbjHpil2umTLSDyRhoq5YaiSW7EJ
-         YReXk56wyZmDIKCyFHGRFTLcey2OMhS+VLVsXxcZu9Jjf1oD4KAd2F2mpM0YZfbgascA
-         TxkMxyE7t1M64pji+W/EOSRHinX2dNWBOt7Gk=
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OKwweRnte1MOD7p9TA/S2S3zf2g/0Z5sCRLZSuMOcIs=;
+        b=gRt7ekmOg8rl5K+/4iBSCKcg6XtIM8giPFm9yVKDZMspyiOsDz19mv7YtW0EjPRmh+
+         p1RLG4nYMhBc0w3RcvGOU1aYRVjPKHgqcD26DAfRgks0ixDF/rPNrNduwPv8pX0XwjXa
+         U0ZIgtMaqHvJ6AhJ3iG5FSSA1anL8uvx569WyECwfgYmr6nUNg2v2W5Bm7pdNJHLZTWn
+         KQjYMRvSXsO8CslfFBsouUi7OOPyTVO2pa/hTgJOzs5tuGtCPRq2Jvt737L3IxXxzGEH
+         XH6HfGZZbNWgs0bzI+d/Bld6xU1ebtB0AFslJkd+SxjLYgRI3cWjdDnb9Xqb8te3jZj8
+         JyJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=TBjaSzT2srnKrAudJf1OGvf6fJmlAuZnL+/SoFFDeQs=;
-        b=dlhKEJfeZSEt9eRug2kTse8zLbAT52j/+I2SKzSD1chDZbZS3tEv8uKG/93i32LDBm
-         AJjBYPDL4c6LA5bnfjv6DYDTb1Ay9L/4eIxs3iwbakrYFteJVyy24/mmKdQw1ij7Pf3n
-         YF09uQ8mzJENDDrXYhoxBuK+T/iKXPtcmCYfxn2gFf5sLvtuF2iY3mLwzM/BQgQt/ukG
-         RewSzHATczK1gkdnJ4Xd1gRitvkMhBKJepY4LubrnWFUWJWMQjuv21uK6X6JVR4rn7zP
-         Tzj4wm6ZJ/Jnprw6dLxr8UxCWsiLjAnzg7fXdX0nq3/MjGr+YTPMJ4p4BBTE59TwWK4z
-         sNzg==
-X-Gm-Message-State: ANhLgQ1erOso11mkVFwLWQbZD9E2rhd/Z0zhenu6kU/CRlzHNg9ynYuG
-        8d17FVCXaogXqqWZ9HOhR0k6zQ==
-X-Google-Smtp-Source: ADFU+vs3ZXRlDpRJrpqXVwgbR3EMTeT2/174EW+zDgms5nXB95GCrTzl98LeDLcAvE3Fy/GQtfkY5g==
-X-Received: by 2002:a17:902:401:: with SMTP id 1mr16507578ple.177.1583773535780;
-        Mon, 09 Mar 2020 10:05:35 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id i187sm5032740pfg.33.2020.03.09.10.05.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Mar 2020 10:05:34 -0700 (PDT)
-Date:   Mon, 9 Mar 2020 10:05:32 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Harigovindan P <harigovi@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        robdclark@gmail.com, seanpaul@chromium.org, sean@poorly.run
-Subject: Re: [PATCH v5 2/2] drm/panel: add support for rm69299 visionox panel
- driver
-Message-ID: <20200309170532.GW24720@google.com>
-References: <20200309052304.23427-1-harigovi@codeaurora.org>
- <20200309052304.23427-3-harigovi@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OKwweRnte1MOD7p9TA/S2S3zf2g/0Z5sCRLZSuMOcIs=;
+        b=m1jncvxYMRDdyCr+E/OIZe/QIiNv14DNaA3jlFHpjVRsN5x+dlZbzXj09WOQ/ODnSG
+         xa/bHJlmZqcm/pwREKqIrKJO1YC7k+rvPVoe8dHsDuJDh5MWCvvaW19QiSq20Lotf9Ad
+         GTkXsEDKQJxlLEOoO0QbAip98ojLmkCEQo0uU1M0svj52omncnzEnUu6h6zAvR0KsXJG
+         mL7IciSOW51i1LDr8S6CARFJoQB9wq2KjuvXuZfGvgyt8iUERqSNU3DwJ0zwA1/rA2cB
+         hbhQgkv9mTegBA9B864zmyKd0GxXBYAYdjzK+U3i/Igmhgej8bbjPBzRl6DEuBQAMWto
+         GGdQ==
+X-Gm-Message-State: ANhLgQ3doZQSzPGN0h48uLeZtsPmRh+bNYWw1+llHEdTzqkiIEE1iKgR
+        BMtI7Z/v/YN867QiDzlxnt68KYuyvb7XmshYkUv6/A==
+X-Google-Smtp-Source: ADFU+vuICxdS5HcWd7C+Tu3VndUCAPMP28WDkPVH8R+sJ4h8bsJf+5vcfGqb2LvTsz7pvpD2B2HIZdzAE0cuPTRXa8k=
+X-Received: by 2002:a05:6512:304c:: with SMTP id b12mr10177018lfb.196.1583775261668;
+ Mon, 09 Mar 2020 10:34:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200309052304.23427-3-harigovi@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <1583241493-21212-1-git-send-email-okukatla@codeaurora.org> <1583241493-21212-3-git-send-email-okukatla@codeaurora.org>
+In-Reply-To: <1583241493-21212-3-git-send-email-okukatla@codeaurora.org>
+From:   Evan Green <evgreen@google.com>
+Date:   Mon, 9 Mar 2020 10:33:45 -0700
+Message-ID: <CAE=gft5LE=_hBLbkWHDAQ6O9vrbfF=LtS7B=1tWWDE3euZov_g@mail.gmail.com>
+Subject: Re: [v5, 2/3] interconnect: qcom: Add SC7180 interconnect provider driver
+To:     Odelu Kukatla <okukatla@codeaurora.org>
+Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
+        David Dai <daidavid1@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-pm@vger.kernel.org, sboyd@kernel.org,
+        Lina Iyer <ilina@codeaurora.org>,
+        Sean Sweeney <seansw@qti.qualcomm.com>,
+        Alex Elder <elder@linaro.org>,
+        linux-arm-msm-owner@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Mon, Mar 09, 2020 at 10:53:04AM +0530, Harigovindan P wrote:
-> Add support for Visionox panel driver.
-> 
-> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+On Tue, Mar 3, 2020 at 5:18 AM Odelu Kukatla <okukatla@codeaurora.org> wrote:
+>
+> Add driver for the Qualcomm interconnect buses found in SC7180 based
+> platforms. The topology consists of several NoCs that are controlled by
+> a remote processor that collects the aggregated bandwidth for each
+> master-slave pairs.
+>
+> Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
 > ---
-> 
-> Changes in v2:
-> 	- Dropping redundant space in Kconfig(Sam Ravnborg).
-> 	- Changing structure for include files(Sam Ravnborg).
-> 	- Removing backlight related code and functions(Sam Ravnborg).
-> 	- Removing repeated printing of error message(Sam Ravnborg).
-> 	- Adding drm_connector as an argument for get_modes function.
-> Changes in v3:
-> 	- Adding arguments for drm_panel_init to support against mainline.
-> Changes in v4:
-> 	- Removing error messages from regulator_set_load.
-> 	- Removing dev struct entry.
-> 	- Removing checks.
-> 	- Dropping empty comment lines.
-> Changes in v5:
-> 	- Removing unused struct member variables.
-> 	- Removing blank lines.
-> 	- Fixed indentation.
-> 	- Invoking dsi_detach and panel_remove while early exiting from probe.
-> 
->  drivers/gpu/drm/panel/Kconfig                 |   8 +
->  drivers/gpu/drm/panel/Makefile                |   1 +
->  .../gpu/drm/panel/panel-visionox-rm69299.c    | 315 ++++++++++++++++++
->  3 files changed, 324 insertions(+)
->  create mode 100644 drivers/gpu/drm/panel/panel-visionox-rm69299.c
+>  drivers/interconnect/qcom/Kconfig  |  10 +
+>  drivers/interconnect/qcom/Makefile |   2 +
+>  drivers/interconnect/qcom/sc7180.c | 641 +++++++++++++++++++++++++++++++++++++
+>  drivers/interconnect/qcom/sc7180.h | 149 +++++++++
+>  4 files changed, 802 insertions(+)
+>  create mode 100644 drivers/interconnect/qcom/sc7180.c
+>  create mode 100644 drivers/interconnect/qcom/sc7180.h
 >
-> ...
+> diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
+> index f6418a6..482c5be 100644
+> --- a/drivers/interconnect/qcom/Kconfig
+> +++ b/drivers/interconnect/qcom/Kconfig
+> @@ -42,6 +42,16 @@ config INTERCONNECT_QCOM_RPMH
+>         depends on INTERCONNECT_QCOM || COMPILE_TEST
+>         depends on QCOM_COMMAND_DB
 >
-> diff --git a/drivers/gpu/drm/panel/panel-visionox-rm69299.c b/drivers/gpu/drm/panel/panel-visionox-rm69299.c
+> +config INTERCONNECT_QCOM_SC7180
+> +       tristate "Qualcomm SC7180 interconnect driver"
+> +       depends on INTERCONNECT_QCOM
+> +       depends on (QCOM_RPMH && QCOM_COMMAND_DB && OF) || COMPILE_TEST
+> +       select INTERCONNECT_QCOM_RPMH
+> +       select INTERCONNECT_QCOM_BCM_VOTER
+> +       help
+> +         This is a driver for the Qualcomm Network-on-Chip on sc7180-based
+> +         platforms.
+> +
+>  config INTERCONNECT_QCOM_SDM845
+>         tristate "Qualcomm SDM845 interconnect driver"
+>         depends on INTERCONNECT_QCOM
+> diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
+> index d591bb5..5325558 100644
+> --- a/drivers/interconnect/qcom/Makefile
+> +++ b/drivers/interconnect/qcom/Makefile
+> @@ -5,6 +5,7 @@ qnoc-msm8916-objs                       := msm8916.o
+>  qnoc-msm8974-objs                      := msm8974.o
+>  qnoc-qcs404-objs                       := qcs404.o
+>  icc-rpmh-obj                           := icc-rpmh.o
+> +qnoc-sc7180-objs                       := sc7180.o
+>  qnoc-sdm845-objs                       := sdm845.o
+>  icc-smd-rpm-objs                       := smd-rpm.o
+>
+> @@ -13,5 +14,6 @@ obj-$(CONFIG_INTERCONNECT_QCOM_MSM8916) += qnoc-msm8916.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8974) += qnoc-msm8974.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_QCS404) += qnoc-qcs404.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_RPMH) += icc-rpmh.o
+> +obj-$(CONFIG_INTERCONNECT_QCOM_SC7180) += qnoc-sc7180.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_SDM845) += qnoc-sdm845.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_SMD_RPM) += icc-smd-rpm.o
+> diff --git a/drivers/interconnect/qcom/sc7180.c b/drivers/interconnect/qcom/sc7180.c
 > new file mode 100644
-> index 000000000000..2bd3af46d933
+> index 0000000..dcf493d
 > --- /dev/null
-> +++ b/drivers/gpu/drm/panel/panel-visionox-rm69299.c
->
-> ...
->
-> +static int visionox_35597_power_on(struct visionox_rm69299 *ctx)
-> +{
+> +++ b/drivers/interconnect/qcom/sc7180.c
+> @@ -0,0 +1,641 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> + *
+> + */
+> +
+> +#include <linux/device.h>
+> +#include <linux/interconnect.h>
+> +#include <linux/interconnect-provider.h>
+> +#include <linux/module.h>
+> +#include <linux/of_platform.h>
 
-s/35597/rm69299/ ?
+Nit: As Georgi mentioned in the previous review, you can remove this
+an replace it with of_device.h. No need to spin for just that, though.
 
-> +static const struct rm69299_config rm69299_dir = {
-> +	.width_mm = 74,
-> +	.height_mm = 131,
-> +	.dm = &visionox_rm69299_1080x2248_60hz,
-> +};
-
-Are there actually variants of the panel with different sizes? So far the
-driver supports a single type of panel, so I would say struct rm69299_config
-is not needed. It can be added later if the driver ever gets support for
-other panel variants. For now just assign the values directly in
-'visionox_rm69299_get_modes'.
-
-> +static int visionox_rm69299_probe(struct mipi_dsi_device *dsi)
-> +{
-> +	struct device *dev = &dsi->dev;
-> +	struct visionox_rm69299 *ctx;
-> +	int ret;
-> +
-> +	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-> +	if (!ctx)
-> +		return -ENOMEM;
-> +
-> +	mipi_dsi_set_drvdata(dsi, ctx);
-> +
-> +	ctx->supplies[0].supply = "vdda";
-> +	ctx->supplies[1].supply = "vdd3p3";
-> +
-> +	ret = devm_regulator_bulk_get(ctx->panel.dev, ARRAY_SIZE(ctx->supplies),
-> +								ctx->supplies);
-
-nit: alignment is odd, either align with a tab after 'devm_regulator_bulk_get'
-or with 'ctx->panel.dev'.
-
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	ctx->reset_gpio = devm_gpiod_get(ctx->panel.dev, "reset", GPIOD_OUT_LOW);
-> +	if (IS_ERR(ctx->reset_gpio)) {
-> +		DRM_DEV_ERROR(dev, "cannot get reset gpio %ld\n",
-> +			PTR_ERR(ctx->reset_gpio));
-> +		return PTR_ERR(ctx->reset_gpio);
-> +	}
-> +
-> +	drm_panel_init(&ctx->panel, dev, &visionox_rm69299_drm_funcs,
-> +		       DRM_MODE_CONNECTOR_DSI);
-> +	ctx->panel.dev = dev;
-> +	ctx->panel.funcs = &visionox_rm69299_drm_funcs;
-> +	drm_panel_add(&ctx->panel);
-> +
-> +	dsi->lanes = 4;
-> +	dsi->format = MIPI_DSI_FMT_RGB888;
-> +	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_LPM |
-> +		MIPI_DSI_CLOCK_NON_CONTINUOUS;
-> +	ret = mipi_dsi_attach(dsi);
-> +	if (ret < 0) {
-> +		DRM_DEV_ERROR(dev, "dsi attach failed ret = %d\n", ret);
-> +		goto err_dsi_attach;
-> +	}
-> +
-> +	ret = regulator_set_load(ctx->supplies[0].consumer, 32000);
-> +	if (ret) {
-> +		mipi_dsi_detach(dsi);
-> +		drm_panel_remove(&ctx->panel);
-
-that's technically correct, but since you have the 'goto' above and do the
-same unwinding for the other 'regulator_set_load' call below it would be
-better to use a 'goto' here (and below) too. Actually the 'goto' above only
-makes sense if 'goto' is also used for the other cases.
-
-> +		return ret;
-> +	}
-> +
-> +	ret = regulator_set_load(ctx->supplies[1].consumer, 13200);
-> +	if (ret) {
-> +		mipi_dsi_detach(dsi);
-> +		drm_panel_remove(&ctx->panel);
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +
-> +err_dsi_attach:
-> +	drm_panel_remove(&ctx->panel);
-> +	return ret;
-> +}
-> +
-> +static int visionox_rm69299_remove(struct mipi_dsi_device *dsi)
-> +{
-> +	struct visionox_rm69299 *ctx = mipi_dsi_get_drvdata(dsi);
-> +
-> +	mipi_dsi_detach(ctx->dsi);
-> +	mipi_dsi_device_unregister(ctx->dsi);
-> +
-> +	drm_panel_remove(&ctx->panel);
-> +	return 0;
-> +}
-> +
-> +static const struct of_device_id visionox_rm69299_of_match[] = {
-> +	{
-> +		.compatible = "visionox,rm69299-1080p-display",
-> +		.data = &rm69299_dir,
-> +	},
-> +};
-> +MODULE_DEVICE_TABLE(of, visionox_rm69299_of_match);
-> +
-> +static struct mipi_dsi_driver visionox_rm69299_driver = {
-> +	.driver = {
-> +		.name = "panel-visionox-rm69299",
-> +		.of_match_table = visionox_rm69299_of_match,
-> +	},
-> +	.probe = visionox_rm69299_probe,
-> +	.remove = visionox_rm69299_remove,
-> +};
-> +module_mipi_dsi_driver(visionox_rm69299_driver);
-> +
-> +MODULE_DESCRIPTION("VISIONOX RM69299 DSI Panel Driver");
-
-As commented on v4, this should be 'Visionox'.
+Reviewed-by: Evan Green <evgreen@chromium.org>
