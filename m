@@ -2,114 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B84217E6C5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 19:20:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D88817E6FD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2020 19:24:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727680AbgCIST4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Mar 2020 14:19:56 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:35667 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727539AbgCIST4 (ORCPT
+        id S1727452AbgCISXa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Mar 2020 14:23:30 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:38696 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727434AbgCISXa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Mar 2020 14:19:56 -0400
-Received: by mail-pl1-f193.google.com with SMTP id g6so4329851plt.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2020 11:19:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=P0TPxg5BSkLkFp0OlEKDiNJneMcG58MKCj4X0aj+r18=;
-        b=LUFJKaI21+lFFDVRrC+d/G2PcPrZYvgqh+0oWuSPROHxW7Ea7z8UadjeAOplciaBz8
-         X5EJXkfpuwXox4OXgu9iL+IJhvgbCazq00mu609wxGNv4KxblVbtut496ggXNd2yvNCs
-         F5sZmlcQ5SgH1QEXcBsMeRlZZBgZjm+g9tqb8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=P0TPxg5BSkLkFp0OlEKDiNJneMcG58MKCj4X0aj+r18=;
-        b=ZuUWjGGNuBh7DidlOSKCC0d9pJaSLVlw061fri0ntFzTrEciHYd8JEwGK3wTbek3L/
-         DEYq1NPm95IlJqCPB8BLCqqVN6lllUDgVy5Asr9EleleUZAN/jXXgkX8VmDF9/Evz6Yi
-         WvqCjaT9+oAGm11uUDsSpxZGSGwpTpB281qoNKKRqg1ZaTHnweQQoRQ49fNaGg5RK/sn
-         iql6hEmIpNByojvuML0rjUtM+hhyEc9jWn9UtF75mPFMuUWEUKY25H7Jq5iR1HjwhkGv
-         ahhUYYBSJJqELkKL7n6E8gVQZZxGv86W3CkU30yOBMkh0lknu0xnbpvzlIK/2nUxfpkP
-         qdeg==
-X-Gm-Message-State: ANhLgQ3dAa+I2NDvLSyo7L81ogkM0qOrORszFtlggl0g1hGImpyTr9Lt
-        QfsGGhYUh7b3tsmAC3TvgMgTiQ==
-X-Google-Smtp-Source: ADFU+vteH3EUGOgnDI/8G2cbcdr7iPU8YaxSDDMpRLpCXHo30kxiDLe9pP9m3jr4gYNbbsfAKqWLUA==
-X-Received: by 2002:a17:902:904c:: with SMTP id w12mr17536870plz.35.1583777994619;
-        Mon, 09 Mar 2020 11:19:54 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id p21sm16194246pff.91.2020.03.09.11.19.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2020 11:19:54 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        Mon, 9 Mar 2020 14:23:30 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1583778210; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=GX+dz/is320lqcSRtGzhyX1xm5hzo2sSwZB3Hj6u3VU=; b=B7oTd5vBxOGoKsO1Gr3OATmCQcMl/RMEEFVXfZMSJBmQiAWQlwMYdVwMmWqMqDY+ZY1CC/4I
+ zqxXR3LboinYewSTMMiC4OzghI0LgPxPyPooRGXbaGKjJGqEtyC2FxZaSw1BQRZUJoXLYXO2
+ dh452JV8e/ndVbOdZEJuXOv8yRs=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e66899a.7f0011d1f880-smtp-out-n02;
+ Mon, 09 Mar 2020 18:23:22 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B4937C44799; Mon,  9 Mar 2020 18:23:21 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A1FBEC433D2;
+        Mon,  9 Mar 2020 18:23:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A1FBEC433D2
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org, robh+dt@kernel.org, joro@8bytes.org
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-remoteproc@vger.kernel.org, ohad@wizery.com,
+        agross@kernel.org, Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH 0/3] Request direct mapping for modem firmware subdevice
+Date:   Mon,  9 Mar 2020 23:52:52 +0530
+Message-Id: <20200309182255.20142-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <e1133bcd-b1fe-98b3-3a28-c12d07ff8ebc@codeaurora.org>
-References: <1583479412-18320-1-git-send-email-mkshah@codeaurora.org> <1583479412-18320-3-git-send-email-mkshah@codeaurora.org> <20200307064231.GF1094083@builder> <e1133bcd-b1fe-98b3-3a28-c12d07ff8ebc@codeaurora.org>
-Subject: Re: [PATCH v3 2/4] soc: qcom: Add SoC sleep stats driver
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     mka@chromium.org, evgreen@chromium.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Mahesh Sivasubramanian <msivasub@codeaurora.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Date:   Mon, 09 Mar 2020 11:19:53 -0700
-Message-ID: <158377799320.66766.16447517220100414599@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Maulik Shah (2020-03-09 03:58:27)
->=20
-> On 3/7/2020 12:12 PM, Bjorn Andersson wrote:
-> > On Thu 05 Mar 23:23 PST 2020, Maulik Shah wrote:
-> >> diff --git a/drivers/soc/qcom/soc_sleep_stats.c b/drivers/soc/qcom/soc=
-_sleep_stats.c
-> >> new file mode 100644
-> >> index 00000000..79a14d2
-> >> --- /dev/null
-> >> +++ b/drivers/soc/qcom/soc_sleep_stats.c
-> >> @@ -0,0 +1,248 @@
-[...]
-> >> +    u32 pid;
-> >> +};
-> >> +
-> >> +static struct subsystem_data subsystems[] =3D {
-> >> +    { "modem", MODEM_ITEM_ID, PID_MODEM },
-> >> +    { "adsp", ADSP_ITEM_ID, PID_ADSP },
-> >> +    { "cdsp", CDSP_ITEM_ID, PID_CDSP },
-> >> +    { "slpi", SLPI_ITEM_ID, PID_SLPI },
-> >> +    { "gpu", GPU_ITEM_ID, PID_APSS },
-> >> +    { "display", DISPLAY_ITEM_ID, PID_APSS },
-> >> +};
-> >> +
-> >> +struct stats_config {
-> >> +    unsigned int offset_addr;
-> >> +    unsigned int num_records;
-> >> +    bool appended_stats_avail;
-> >> +};
-> >> +
-> >> +static const struct stats_config *config;
-> > Add this to soc_sleep_stats_data and pass that as s->private instead of
-> > just the reg, to avoid the global variable.
->=20
-> No, this is required to keep global. we are not passing just reg as s->pr=
-ivate,
-> we are passing "reg + offset" which differs for each stat.
+The Q6 modem sub-system has direct access to DDR through memnoc and
+an indirect access routed through a SMMU which MSS CE (crypto engine
+sub-component of MSS) uses during out of reset sequence. Request direct
+mapping for the modem-firmware subdevice since smmu is not expected
+to provide access control/translation for these SIDs (sandboxing of the
+modem is achieved through XPUs engaged using SMC calls).
 
-Can you please stop sending these review comment replies and then
-immediately turning around and sending the next revision of the patch
-series. I doubt that the changes take less than an hour to write and it
-would be helpful for everyone involved to have constructive discussions
-about the code if there's ever a response besides "done" or "ok".
+Sibi Sankar (3):
+  iommu: Export "iommu_request_dm_for_dev"
+  dt-bindings: remoteproc: qcom: Add modem-firmware bindings
+  remoteproc: qcom_q6v5_mss: Request direct mapping for firmware
+    subdevice
 
-In this case it should be possible to get rid of the global 'config'.
-Make a new container struct to hold the config and offset or figure out
-what actually needs to be passed into the functions instead and do that
-when the files are created.
+ .../bindings/remoteproc/qcom,q6v5.txt         |  4 ++
+ drivers/iommu/iommu.c                         |  1 +
+ drivers/remoteproc/qcom_q6v5_mss.c            | 68 +++++++++++++++++++
+ 3 files changed, 73 insertions(+)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
