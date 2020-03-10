@@ -2,101 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FCE817FFB0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 15:01:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3382B18005F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 15:38:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726533AbgCJOB6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Mar 2020 10:01:58 -0400
-Received: from mail26.static.mailgun.info ([104.130.122.26]:35544 "EHLO
-        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726725AbgCJOB6 (ORCPT
+        id S1726466AbgCJOiK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Mar 2020 10:38:10 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55800 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726437AbgCJOiK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Mar 2020 10:01:58 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1583848917; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=czufNzXPZ6lBC2QNJ+K0CqApWW5+g5vWavRGt2Bpfjc=;
- b=hOf9JwWryGP6FjjKcs01/hsZ/Qkk5+VNAOi25SlaOmVL/vDJWkpIS7YRLXfryr7tBZRGoTCG
- leR+vRy5UfLfHoxKXf6ALr+NnAlNOnFEcB5TF/lPMwxqtZGJFfV8fH/maRCXrOfLmsjcvDOI
- 2is2k9sZamTmOD7M8HBreSBs0MY=
-X-Mailgun-Sending-Ip: 104.130.122.26
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
- by mxa.mailgun.org with ESMTP id 5e679d94.7fd90d2dea78-smtp-out-n03;
- Tue, 10 Mar 2020 14:00:52 -0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E2CC5C4478C; Tue, 10 Mar 2020 14:00:50 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6F530C432C2;
-        Tue, 10 Mar 2020 14:00:50 +0000 (UTC)
+        Tue, 10 Mar 2020 10:38:10 -0400
+Received: by mail-wm1-f67.google.com with SMTP id 6so1669853wmi.5;
+        Tue, 10 Mar 2020 07:38:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=TjTCBST6cpMsAppV8JBTTv+T9QV8G6JLefGJ8DTMePs=;
+        b=TmPjz/lhjnZcVRNn4y7bnt8Dk07ZJMZgLzzwpZhO0PigzBsVHOzApOPqb8iS68o/0k
+         68Pfb1OWY6pUMqTmla/Xpx059WGaOz7mrx3lZaN0Jc/Cww2Weu/4QuCe5D7IKW9wyapS
+         9bMaFcqPftQSMlzmOoApEsG8MtVqdbJPC8wuvEfiNcpXcJw4AJMnruYO4sHW6HiZy+W5
+         YP9bCAMQUnJQLxUnb57Xb/lZHz18dPYCVVBwQdPS/UOSTshMrArQpZYkI5UCmu3ubPwh
+         gdpLBWrqe6AU88bYyLlXipVH8XOjZKei/9XNKnWOY94jeRRHYHhFMUCFMs2qGWKFKtzc
+         L3WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=TjTCBST6cpMsAppV8JBTTv+T9QV8G6JLefGJ8DTMePs=;
+        b=YssoY7dhfl3vop8VPmwE/ozv1QW1CuJJuKfJIZSbGTHJCle7VZyJ2yZG0VOyKN8tZK
+         zZZocc/3VUmPcbVGT2meDBxw99NgNDws9jkSZVtgH9A9zBtsEyNzfoQMcFr2XdcUAX7E
+         NSZDiymUuL493XwVd60Ic4E0jt6aDXJ7bS8gBKGlOVMflAscuYrV3cBBjWqYJVvUim0B
+         GXsE922HKDmXmwtO4AQW1dwIYaPzkWM0TSHKWLmwZhyKQTo4V8vY1nF5gHK9/Vx+CzjI
+         +eFGUfT7VJZPtwRgRUuRmkf/yuYaOMyilws7br5vYmNOKuTf64wJmfRLohLNhEFzdety
+         vS3A==
+X-Gm-Message-State: ANhLgQ0rz23wpK8gOaM3iUB2gt2UPOh2hYG+6MBEutvuBAhlhv+GHp2m
+        kze4u/CBn7ZHBSgUMJJUvq4=
+X-Google-Smtp-Source: ADFU+vtljeoEU+yem2iyDmCFuSh/4804c3cfqoE81CpBPKgnGi1igq3KI2mh2HhVQsq/asf+qr2lkw==
+X-Received: by 2002:a7b:cb97:: with SMTP id m23mr1992564wmi.140.1583851087374;
+        Tue, 10 Mar 2020 07:38:07 -0700 (PDT)
+Received: from Ansuel-XPS.localdomain (host218-254-dynamic.53-79-r.retail.telecomitalia.it. [79.53.254.218])
+        by smtp.googlemail.com with ESMTPSA id c23sm4516611wme.39.2020.03.10.07.38.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Mar 2020 07:38:06 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     sboyd@kernel.org
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        John Crispin <john@phrozen.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2] clk: qcom: clk-rpm: add missing rpm clk for ipq806x
+Date:   Tue, 10 Mar 2020 15:37:56 +0100
+Message-Id: <20200310143756.244-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.25.0
+In-Reply-To: <sboyd@kernel.org>
+References: <sboyd@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 10 Mar 2020 19:30:50 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Joerg Roedel <joro@8bytes.org>
-Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-remoteproc@vger.kernel.org, ohad@wizery.com,
-        agross@kernel.org, linux-kernel-owner@vger.kernel.org
-Subject: Re: [PATCH 0/3] Request direct mapping for modem firmware subdevice
-In-Reply-To: <20200310112332.GG3794@8bytes.org>
-References: <20200309182255.20142-1-sibis@codeaurora.org>
- <20200310112332.GG3794@8bytes.org>
-Message-ID: <4ed6ddd667a3e6f670084a443d141474@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Joerg,
-Thanks for taking time to review
-the series!
+Add missing definition of rpm clk for ipq806x soc
 
-On 2020-03-10 16:53, Joerg Roedel wrote:
-> On Mon, Mar 09, 2020 at 11:52:52PM +0530, Sibi Sankar wrote:
->> The Q6 modem sub-system has direct access to DDR through memnoc and
->> an indirect access routed through a SMMU which MSS CE (crypto engine
->> sub-component of MSS) uses during out of reset sequence. Request 
->> direct
->> mapping for the modem-firmware subdevice since smmu is not expected
->> to provide access control/translation for these SIDs (sandboxing of 
->> the
->> modem is achieved through XPUs engaged using SMC calls).
-> 
-> So the DMA accesses are initiated by the firmware and need to be direct
-> mapped? Which memory region do they access?
+Signed-off-by: John Crispin <john@phrozen.org>
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+Acked-by: John Crispin <john@phrozen.org>
+---
+ .../devicetree/bindings/clock/qcom,rpmcc.txt  |  1 +
+ drivers/clk/qcom/clk-rpm.c                    | 35 +++++++++++++++++++
+ include/dt-bindings/clock/qcom,rpmcc.h        |  4 +++
+ 3 files changed, 40 insertions(+)
 
-The accesses are initiated by the firmware
-and they access modem reserved regions.
-However as explained in ^^ any accesses
-outside the region will result in a violation
-and is controlled through XPUs (protection units).
-
-With ARM_SMMU_DISABLE_BYPASS_BY_DEFAULT y
-the firmware SIDs will explicitly need to
-be directly mapped to avoid observing
-global faults in the absence of secure
-firmware (TrustZone) programming the modem
-SIDs as S2CR-Bypass.
-
-> 
-> Regards,
-> 
-> 	Joerg
-
+diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt b/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
+index 944719bd586f..4bb2cbeff2b4 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
++++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
+@@ -15,6 +15,7 @@ Required properties :
+ 			"qcom,rpmcc-msm8916", "qcom,rpmcc"
+ 			"qcom,rpmcc-msm8974", "qcom,rpmcc"
+ 			"qcom,rpmcc-apq8064", "qcom,rpmcc"
++			"qcom,rpmcc-ipq806x", "qcom,rpmcc"
+ 			"qcom,rpmcc-msm8996", "qcom,rpmcc"
+ 			"qcom,rpmcc-msm8998", "qcom,rpmcc"
+ 			"qcom,rpmcc-qcs404", "qcom,rpmcc"
+diff --git a/drivers/clk/qcom/clk-rpm.c b/drivers/clk/qcom/clk-rpm.c
+index 9e3110a71f12..f71d228fd6bd 100644
+--- a/drivers/clk/qcom/clk-rpm.c
++++ b/drivers/clk/qcom/clk-rpm.c
+@@ -543,10 +543,45 @@ static const struct rpm_clk_desc rpm_clk_apq8064 = {
+ 	.num_clks = ARRAY_SIZE(apq8064_clks),
+ };
+ 
++/* ipq806x */
++DEFINE_CLK_RPM(ipq806x, afab_clk, afab_a_clk, QCOM_RPM_APPS_FABRIC_CLK);
++DEFINE_CLK_RPM(ipq806x, cfpb_clk, cfpb_a_clk, QCOM_RPM_CFPB_CLK);
++DEFINE_CLK_RPM(ipq806x, daytona_clk, daytona_a_clk, QCOM_RPM_DAYTONA_FABRIC_CLK);
++DEFINE_CLK_RPM(ipq806x, ebi1_clk, ebi1_a_clk, QCOM_RPM_EBI1_CLK);
++DEFINE_CLK_RPM(ipq806x, sfab_clk, sfab_a_clk, QCOM_RPM_SYS_FABRIC_CLK);
++DEFINE_CLK_RPM(ipq806x, sfpb_clk, sfpb_a_clk, QCOM_RPM_SFPB_CLK);
++DEFINE_CLK_RPM(ipq806x, nss_fabric_0_clk, nss_fabric_0_a_clk, QCOM_RPM_NSS_FABRIC_0_CLK);
++DEFINE_CLK_RPM(ipq806x, nss_fabric_1_clk, nss_fabric_1_a_clk, QCOM_RPM_NSS_FABRIC_1_CLK);
++
++static struct clk_rpm *ipq806x_clks[] = {
++	[RPM_APPS_FABRIC_CLK] = &ipq806x_afab_clk,
++	[RPM_APPS_FABRIC_A_CLK] = &ipq806x_afab_a_clk,
++	[RPM_CFPB_CLK] = &ipq806x_cfpb_clk,
++	[RPM_CFPB_A_CLK] = &ipq806x_cfpb_a_clk,
++	[RPM_DAYTONA_FABRIC_CLK] = &ipq806x_daytona_clk,
++	[RPM_DAYTONA_FABRIC_A_CLK] = &ipq806x_daytona_a_clk,
++	[RPM_EBI1_CLK] = &ipq806x_ebi1_clk,
++	[RPM_EBI1_A_CLK] = &ipq806x_ebi1_a_clk,
++	[RPM_SYS_FABRIC_CLK] = &ipq806x_sfab_clk,
++	[RPM_SYS_FABRIC_A_CLK] = &ipq806x_sfab_a_clk,
++	[RPM_SFPB_CLK] = &ipq806x_sfpb_clk,
++	[RPM_SFPB_A_CLK] = &ipq806x_sfpb_a_clk,
++	[RPM_NSS_FABRIC_0_CLK] = &ipq806x_nss_fabric_0_clk,
++	[RPM_NSS_FABRIC_0_A_CLK] = &ipq806x_nss_fabric_0_a_clk,
++	[RPM_NSS_FABRIC_1_CLK] = &ipq806x_nss_fabric_1_clk,
++	[RPM_NSS_FABRIC_1_A_CLK] = &ipq806x_nss_fabric_1_a_clk,
++};
++
++static const struct rpm_clk_desc rpm_clk_ipq806x = {
++	.clks = ipq806x_clks,
++	.num_clks = ARRAY_SIZE(ipq806x_clks),
++};
++
+ static const struct of_device_id rpm_clk_match_table[] = {
+ 	{ .compatible = "qcom,rpmcc-msm8660", .data = &rpm_clk_msm8660 },
+ 	{ .compatible = "qcom,rpmcc-apq8060", .data = &rpm_clk_msm8660 },
+ 	{ .compatible = "qcom,rpmcc-apq8064", .data = &rpm_clk_apq8064 },
++	{ .compatible = "qcom,rpmcc-ipq806x", .data = &rpm_clk_ipq806x },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, rpm_clk_match_table);
+diff --git a/include/dt-bindings/clock/qcom,rpmcc.h b/include/dt-bindings/clock/qcom,rpmcc.h
+index 8e3095720552..ae74c43c485d 100644
+--- a/include/dt-bindings/clock/qcom,rpmcc.h
++++ b/include/dt-bindings/clock/qcom,rpmcc.h
+@@ -37,6 +37,10 @@
+ #define RPM_XO_A0				27
+ #define RPM_XO_A1				28
+ #define RPM_XO_A2				29
++#define RPM_NSS_FABRIC_0_CLK			30
++#define RPM_NSS_FABRIC_0_A_CLK			31
++#define RPM_NSS_FABRIC_1_CLK			32
++#define RPM_NSS_FABRIC_1_A_CLK			33
+ 
+ /* SMD RPM clocks */
+ #define RPM_SMD_XO_CLK_SRC				0
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+2.25.0
+
