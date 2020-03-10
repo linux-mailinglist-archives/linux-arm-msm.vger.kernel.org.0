@@ -2,117 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 003A917F223
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 09:43:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 69EF117F2D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 10:12:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726546AbgCJInK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Mar 2020 04:43:10 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35258 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726523AbgCJInJ (ORCPT
+        id S1726378AbgCJJL7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Mar 2020 05:11:59 -0400
+Received: from mail26.static.mailgun.info ([104.130.122.26]:37444 "EHLO
+        mail26.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726195AbgCJJL7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Mar 2020 04:43:09 -0400
-Received: by mail-wr1-f67.google.com with SMTP id r7so14690422wro.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2020 01:43:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5WnGmh/vRlpN1V58qrypiX81UrHCL64TgTV/PYkJ9GU=;
-        b=REPFmFYi+4/FSy+lVApfdIh8SK+7SyKvjSqspHws0RswZUM0vgUzBWYvwjoGYUMMGF
-         HtWyzxkMws1HYa7yJ4K/B8V8FRP9/P8RHbaUKtjitx5W/VIhnFPwcAjTPTTMBK5POATs
-         PaRRbW6EUBSyIkZGODLAFDqrNQsx7x4ufp7UxyUK0X9bro+AGogq5D0qiYtnK7JfoQNO
-         4xdXoxIz7unKtRfnCLHlJ9mR1amb6XkQFc71s87YIcIrDEWrWvvsmUkBEIrpv39jA+E8
-         3q2urw+z9la3VTPAn0VmpxC330Bcldqk38aWcXlUWL1o5v46Ga9l1s/Nk71VjKIAOOiD
-         +4nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=5WnGmh/vRlpN1V58qrypiX81UrHCL64TgTV/PYkJ9GU=;
-        b=YWeXkRtVDwj2yor9Zt/ZElQrQnkpMiehIDzX5Uj6gI++SJYA3Ga2p29ZdKkub6yHDd
-         cnt0F1YliVN8uB1jVDG8WlIqsGAEbojuzWXi5Yf3ngUBYdK2R7VJla0pmHIi2ppkgO+8
-         HEE8+tgn/OrUIsiza2v6IKP+dl2aqE2RsnvlLwBaE2pCdBasyWMH4drsXjQkm4WHbmO6
-         OBMyLayoOcxkrh7P6BJYGUvFx21MAsZG31MsrdZVXjgUMgSl65pRfOUCzERHhxUrzq6G
-         PT8i2d265SMsNq+oRjwnWuoHvdLLFOfV6nubf7FRHkZFNgJfOZM0BtvVjyCPfPWFPsbU
-         6DYg==
-X-Gm-Message-State: ANhLgQ2b/g6J90JbD59rwKHMvOXHb3cQcJufsdAIV5yoTQAo3vI9zmaD
-        KlB3ck5yxdmAvsniO8TnydlthA==
-X-Google-Smtp-Source: ADFU+vv8h2JwdDA9opScJGRCxHCjGR4nhrxz/7PNTWWJZo5SY/W0D2Kb6NQB7jLFYtq6wrWIBlxHDg==
-X-Received: by 2002:adf:fc06:: with SMTP id i6mr12598931wrr.285.1583829787933;
-        Tue, 10 Mar 2020 01:43:07 -0700 (PDT)
-Received: from localhost.localdomain ([172.94.87.38])
-        by smtp.gmail.com with ESMTPSA id i6sm33130748wra.42.2020.03.10.01.43.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 10 Mar 2020 01:43:07 -0700 (PDT)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     wsa@the-dreams.de
-Cc:     vkoul@kernel.org, robert.foss@linaro.org,
-        bjorn.andersson@linaro.org, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v6 3/3] arm64: dts: msm8916: Add CCI node
-Date:   Tue, 10 Mar 2020 09:47:01 +0100
-Message-Id: <1583830021-30141-3-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1583830021-30141-1-git-send-email-loic.poulain@linaro.org>
-References: <1583830021-30141-1-git-send-email-loic.poulain@linaro.org>
+        Tue, 10 Mar 2020 05:11:59 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1583831518; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=f+FiBYtKZwNeerwm6XB/ry8mbUFti3dsX1e/rZgQbTI=; b=K92/XlP1mBegFEtpsZU2nSN5C4coaZ4fE7c4K5OMQ2yA+3kfBjCPYBOSQ3O0aZmnYf1DlYHb
+ T/+3BYYnwCZgTs898O1ZwRJXKfesH87TxCFKQaJlBvtvFjKk6AXfx3Qmw2iitaoho7LiB4gU
+ IAJ+CVbyJQlrAUI3KCp48rvPhvQ=
+X-Mailgun-Sending-Ip: 104.130.122.26
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e6759dd.7f060ada33e8-smtp-out-n01;
+ Tue, 10 Mar 2020 09:11:57 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AB6A4C43637; Tue, 10 Mar 2020 09:11:56 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.103] (unknown [183.83.137.145])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3EEF1C433BA;
+        Tue, 10 Mar 2020 09:11:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3EEF1C433BA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [PATCH v9 3/3] soc: qcom: rpmh: Invoke rpmh_flush() for dirty
+ caches
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org
+References: <1582889903-12890-1-git-send-email-mkshah@codeaurora.org>
+ <1582889903-12890-4-git-send-email-mkshah@codeaurora.org>
+ <CAD=FV=V92fFH8q+yvMk2sWdgi_xjFyvt3rMu14O+sO5zLp2kGg@mail.gmail.com>
+ <7704638e-b473-d0cf-73ab-2bdb67b636ba@codeaurora.org>
+ <CAD=FV=XL631dpEY8iB=gzjnh1cZVk6AKRafkQ7ke++AfXtuHNA@mail.gmail.com>
+ <c65ec56b-6cd2-8593-7d25-23eb2f3672d0@codeaurora.org>
+ <CAD=FV=VNaqwiti+UB8fLgjF5r2CD2xeF_p7qHS-_yXqf+ZDrBg@mail.gmail.com>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <fb50ee6c-b8f9-6685-c4bd-43bcca5a1553@codeaurora.org>
+Date:   Tue, 10 Mar 2020 14:41:49 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
+MIME-Version: 1.0
+In-Reply-To: <CAD=FV=VNaqwiti+UB8fLgjF5r2CD2xeF_p7qHS-_yXqf+ZDrBg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The msm8916 CCI controller provides one CCI/I2C bus.
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- v2: add this patch in the series
- v3: add only cci node for now
- v4: no change
- v5: add cci label
+On 3/6/2020 3:48 AM, Doug Anderson wrote:
+> Hi,
+>
+> On Thu, Mar 5, 2020 at 1:41 AM Maulik Shah <mkshah@codeaurora.org> wrote:
+>  >> There are other cases like below which also gets impacted if driver
+>>>> don't cache anything...
+>>>>
+>>>> for example, when we don’t have dedicated ACTIVE TCS ( if we have below
+>>>> config with ACTIVE TCS count 0)
+>>>>      qcom,tcs-config = <ACTIVE_TCS  0>,
+>>>>                            <SLEEP_TCS   3>,
+>>>>                            <WAKE_TCS    3>,
+>>>>
+>>>> Now to send active data, driver may re-use/ re-purpose few of the sleep
+>>>> or wake TCS, to be used as ACTIVE TCS and once work is done,
+>>>> it will be re-allocated in SLEEP/ WAKE TCS pool accordingly. If driver
+>>>> don’t cache, all the SLEEP and WAKE data is lost when one
+>>>> of TCS is repurposed to use as ACTIVE TCS.
+>>> Ah, interesting.  I'll read the code more, but are you expecting this
+>>> type of situation to work today, or is it theoretical for the future?
+>> yes, we have targets which needs to work with this type of situation.
+> My brain is still slowly absorbing all the code, but something tells
+> me that targets with no ACTIVE TCS will not work properly with non-OSI
+> mode unless you change your patches more.  Specifically to make the
+> zero ACTIVE TCS case work I think you need a rpmh_flush() call after
+> _ALL_ calls to rpmh_write() and rpmh_write_batch() (even those
+> modifying ACTIVE state).  rpmh_write_async() will be yet more
+> interesting because you'd have to flush in rpmh_tx_done() I guess?
+> ...and also somehow you need to inhibit entering sleep mode if an
+> async write was in progress?  Maybe easier to just detect the
+> "non-OSI-mode + 0 ACTIVE TCS" case at probe time and fail to probe?
+>
+>
+> -Doug
+No, it shouldn’t break with "non-OSI-mode + 0 ACTIVE TCS"
 
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+After taking your suggestion to do rpmh start/end transaction in v13, rpmh_end_transaction()
+invokes rpmh_flush() only for the last client and by this time expecting all of rpmh_write()
+and rpmh_write_batch() will be already “finished” as client first waits for them to finish
+and then only invokes end.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 8686e10..3c6f746 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1451,6 +1451,33 @@
- 			};
- 		};
- 
-+		cci: cci@1b0c000 {
-+			compatible = "qcom,msm8916-cci";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0x1b0c000 0x1000>;
-+			interrupts = <GIC_SPI 50 IRQ_TYPE_EDGE_RISING>;
-+			clocks = <&gcc GCC_CAMSS_TOP_AHB_CLK>,
-+				<&gcc GCC_CAMSS_CCI_AHB_CLK>,
-+				<&gcc GCC_CAMSS_CCI_CLK>,
-+				<&gcc GCC_CAMSS_AHB_CLK>;
-+			clock-names = "camss_top_ahb", "cci_ahb",
-+				      "cci", "camss_ahb";
-+			assigned-clocks = <&gcc GCC_CAMSS_CCI_AHB_CLK>,
-+					  <&gcc GCC_CAMSS_CCI_CLK>;
-+			assigned-clock-rates = <80000000>, <19200000>;
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&cci0_default>;
-+			status = "disabled";
-+
-+			i2c-bus@0 {
-+				reg = <0>;
-+				clock-frequency = <400000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
- 		camss: camss@1b00000 {
- 			compatible = "qcom,msm8916-camss";
- 			reg = <0x1b0ac00 0x200>,
+So driver is good to handle rpmh_write() and rpmh_write_batch() calls.
+
+Regarding rpmh_write_async() call, which is a fire-n-forget request from SW and client driver
+may immediately invoke rpmh_end_transaction() after this.
+
+this case is also handled…
+Lets again take an example for understanding this..
+
+1.    Client invokes rpmh_write_async() to send ACTIVE cmds for targets which has zero ACTIVE TCS
+
+    Rpmh driver Re-purposes one of SLEEP/WAKE TCS to use as ACTIVE, internally this also sets
+    drv->tcs_in_use to true for respective SLEEP/WAKE TCS.
+
+2.    Client now without waiting for above to finish, goes ahead and invokes rpmh_end_transaction()
+    which calls rpmh_flush() (in case cache become dirty)
+
+    Now if re-purposed TCS is still in use in HW (transaction in progress), we still have
+    drv->tcs_in_use set. So the rpmh_rsc_invalidate() (invoked from rpmh_flush()) will keep on
+    returning -EAGAIN until that TCS becomes free to use and then goes ahead to finish its job.
+   
+Thanks,
+Maulik
+
 -- 
-2.7.4
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
