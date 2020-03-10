@@ -2,46 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 47657180228
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 16:44:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 85B0A18021D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 16:44:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726390AbgCJPoQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Mar 2020 11:44:16 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:34711 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726467AbgCJPoC (ORCPT
+        id S1726539AbgCJPoE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Mar 2020 11:44:04 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:34075 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726608AbgCJPoE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Mar 2020 11:44:02 -0400
-Received: by mail-pl1-f194.google.com with SMTP id a23so2875904plm.1
+        Tue, 10 Mar 2020 11:44:04 -0400
+Received: by mail-pf1-f194.google.com with SMTP id 23so4861134pfj.1
         for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2020 08:44:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=s2p+EcI7L/A1DVC/29xLNkKoAlt6wKb9qgS0/TTntts=;
-        b=BdwMJy5ModIWnTns/Hmo1norAhn7toeZcwzhh1mWGCyafM1GB1p/TSRDLh5lDA5AC4
-         N9RZvDG2r3PGnocKoaWGq5iva3cEoYDsb4ZkhbFBLQ7r0p4A2ua/jWhd9T4jLVvsExqB
-         3ByWj2yt7V0RzcxEp/312/y+DaucUA2vIzpWg=
+        bh=YQMgw4onS7FYvZF2VW45lULLnLK0rhd5KenGX8WSLvA=;
+        b=Sb1E2FOijH4BfyCkzZ0RZwS9hRXkjddNhse0zTcVjxOaCtN32kstTVDR2jHw6lqbDC
+         f8dNQ+pRyE6HzzjnXWqHZzQV+Gx4NpAYxzeFD1K+nHJCcZwMIML7ErZeZED6UTFkiqPK
+         xH+Zx6c5n7KOR9BMVl1j85HBOPzEy3ukp68do=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=s2p+EcI7L/A1DVC/29xLNkKoAlt6wKb9qgS0/TTntts=;
-        b=JIvYEEGt2L7DzmzyimUsd4Di0q3xchgMcUn9gq4jeww9PfbSutCCqNtaD3NMi03kaE
-         s28sIgrsvmRIajQ8ktrZnayKL2VGC7Jr75j4r/CHprEuNZdN8mZSmDW3KpUJqz6UVAQw
-         dIwnNyNw2nY0WXom+K9WDzPEysZ9XItD9hUTIuFcwQMvh8cZvXguZkSNV7VhVmq5kwKO
-         rVcq9C2g+JVSVvqPUmfmvJkZVpFfEpVMG2KAqv75JNqTZn5V13vE3DaE21kAFtm6iLCa
-         7kmJzNLVJtO1RoTYLqcLei3/jT0xPAXxfz3/0r4+JeaFeCCqJRELWHloxdJigaMAyUR0
-         EvNQ==
-X-Gm-Message-State: ANhLgQ1fmHN3o6RbdxUn3z10YnkOXSErd3/YaXNQcQg779KRVopQv1K9
-        BWuouhCVx5j4YXflS/fjuaGpXw==
-X-Google-Smtp-Source: ADFU+vspG8Hr+OXyqIuMQSfkHHhLCVU2hiot8wjx0g6f9q8vljrpx0xyBhDfkfu5EpF55umf6MGrTQ==
-X-Received: by 2002:a17:90b:4903:: with SMTP id kr3mr2329828pjb.3.1583855041356;
-        Tue, 10 Mar 2020 08:44:01 -0700 (PDT)
+        bh=YQMgw4onS7FYvZF2VW45lULLnLK0rhd5KenGX8WSLvA=;
+        b=bquMDnhEsNE1WXHL/dfDwR2kFzka+Mw9ldVYNehxMGfhhEsdUpt2VfRCkfRUUINXdf
+         uGSRwGeMy01O+3bWbwHppXP2/NIQrP6GQuYPEqamgL5gvhNcdRjxyQ5SKmcY6s7NnP8A
+         vOo1C73ckjofLQILgjTDfsZqyHzVOz0R4RE1Ol9kyTeHizHm0mAcgE/5IrZavyNtF+Fk
+         A9p4t7JDhgUPBoAc9SISbGJxnRRN1HwhmVEC8lOmfZoAh1tkbUW3SxXwbEZSwuBBxZSa
+         ni5PRQQiUN6HxZlU0Uh147rHVJSK+Vu9MM+RGSj5Sl5meJ93LBaMhuI8fhbpz+ZRO6+E
+         kvvQ==
+X-Gm-Message-State: ANhLgQ1goLC98YMXftl6je0Dd4Hy1Ubh6hRoFla1kyjTnAiEpAsGHDYD
+        9bSMDKv+dgOP4LW7beU9nVydog==
+X-Google-Smtp-Source: ADFU+vs3d2zziy6CeMLfcQUBmesbL7I7gSQFrOsUzbom/pkMx3RujdMdaYjkE7i+o2qlykL8vNGK3w==
+X-Received: by 2002:a62:3854:: with SMTP id f81mr12979360pfa.81.1583855042280;
+        Tue, 10 Mar 2020 08:44:02 -0700 (PDT)
 Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id m12sm2731090pjk.20.2020.03.10.08.44.00
+        by smtp.gmail.com with ESMTPSA id m12sm2731090pjk.20.2020.03.10.08.44.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Mar 2020 08:44:00 -0700 (PDT)
+        Tue, 10 Mar 2020 08:44:01 -0700 (PDT)
 From:   Stephen Boyd <swboyd@chromium.org>
 To:     Wolfram Sang <wsa@the-dreams.de>
 Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
@@ -50,9 +50,9 @@ Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Alok Chauhan <alokc@codeaurora.org>,
         Douglas Anderson <dianders@chromium.org>,
         Brendan Higgins <brendanhiggins@google.com>
-Subject: [PATCH v2 1/3] i2c: qcom-geni: Let firmware specify irq trigger flags
-Date:   Tue, 10 Mar 2020 08:43:56 -0700
-Message-Id: <20200310154358.39367-2-swboyd@chromium.org>
+Subject: [PATCH v2 2/3] i2c: qcom-geni: Grow a dev pointer to simplify code
+Date:   Tue, 10 Mar 2020 08:43:57 -0700
+Message-Id: <20200310154358.39367-3-swboyd@chromium.org>
 X-Mailer: git-send-email 2.25.1.481.gfbce0eb801-goog
 In-Reply-To: <20200310154358.39367-1-swboyd@chromium.org>
 References: <20200310154358.39367-1-swboyd@chromium.org>
@@ -63,35 +63,151 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We don't need to force IRQF_TRIGGER_HIGH here as the DT or ACPI tables
-should take care of this for us. Just use 0 instead so that we use the
-flags from the firmware. Also, remove specify dev_name() for the irq
-name so that we can get better information in /proc/interrupts about
-which device is generating interrupts.
+Some lines are long here. Use a struct dev pointer to shorten lines and
+simplify code. The clk_get() call can fail because of EPROBE_DEFER
+problems too, so just remove the error print message because it isn't
+useful. Finally, platform_get_irq() already prints an error so just
+remove that error message.
 
 Cc: Alok Chauhan <alokc@codeaurora.org>
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Brendan Higgins <brendanhiggins@google.com>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-qcom-geni.c | 57 ++++++++++++++----------------
+ 1 file changed, 26 insertions(+), 31 deletions(-)
 
 diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 17abf60c94ae..4efca130035a 100644
+index 4efca130035a..2f5fb2e83f95 100644
 --- a/drivers/i2c/busses/i2c-qcom-geni.c
 +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -549,8 +549,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
+@@ -502,45 +502,40 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 	struct resource *res;
+ 	u32 proto, tx_depth;
+ 	int ret;
++	struct device *dev = &pdev->dev;
+ 
+-	gi2c = devm_kzalloc(&pdev->dev, sizeof(*gi2c), GFP_KERNEL);
++	gi2c = devm_kzalloc(dev, sizeof(*gi2c), GFP_KERNEL);
+ 	if (!gi2c)
+ 		return -ENOMEM;
+ 
+-	gi2c->se.dev = &pdev->dev;
+-	gi2c->se.wrapper = dev_get_drvdata(pdev->dev.parent);
++	gi2c->se.dev = dev;
++	gi2c->se.wrapper = dev_get_drvdata(dev->parent);
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	gi2c->se.base = devm_ioremap_resource(&pdev->dev, res);
++	gi2c->se.base = devm_ioremap_resource(dev, res);
+ 	if (IS_ERR(gi2c->se.base))
+ 		return PTR_ERR(gi2c->se.base);
+ 
+-	gi2c->se.clk = devm_clk_get(&pdev->dev, "se");
+-	if (IS_ERR(gi2c->se.clk) && !has_acpi_companion(&pdev->dev)) {
+-		ret = PTR_ERR(gi2c->se.clk);
+-		dev_err(&pdev->dev, "Err getting SE Core clk %d\n", ret);
+-		return ret;
+-	}
++	gi2c->se.clk = devm_clk_get(dev, "se");
++	if (IS_ERR(gi2c->se.clk) && !has_acpi_companion(dev))
++		return PTR_ERR(gi2c->se.clk);
+ 
+-	ret = device_property_read_u32(&pdev->dev, "clock-frequency",
+-							&gi2c->clk_freq_out);
++	ret = device_property_read_u32(dev, "clock-frequency",
++				       &gi2c->clk_freq_out);
+ 	if (ret) {
+-		dev_info(&pdev->dev,
+-			"Bus frequency not specified, default to 100kHz.\n");
++		dev_info(dev, "Bus frequency not specified, default to 100kHz.\n");
+ 		gi2c->clk_freq_out = KHZ(100);
+ 	}
+ 
+-	if (has_acpi_companion(&pdev->dev))
+-		ACPI_COMPANION_SET(&gi2c->adap.dev, ACPI_COMPANION(&pdev->dev));
++	if (has_acpi_companion(dev))
++		ACPI_COMPANION_SET(&gi2c->adap.dev, ACPI_COMPANION(dev));
+ 
+ 	gi2c->irq = platform_get_irq(pdev, 0);
+-	if (gi2c->irq < 0) {
+-		dev_err(&pdev->dev, "IRQ error for i2c-geni\n");
++	if (gi2c->irq < 0)
+ 		return gi2c->irq;
+-	}
+ 
+ 	ret = geni_i2c_clk_map_idx(gi2c);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "Invalid clk frequency %d Hz: %d\n",
++		dev_err(dev, "Invalid clk frequency %d Hz: %d\n",
+ 			gi2c->clk_freq_out, ret);
+ 		return ret;
+ 	}
+@@ -549,29 +544,29 @@ static int geni_i2c_probe(struct platform_device *pdev)
  	init_completion(&gi2c->done);
  	spin_lock_init(&gi2c->lock);
  	platform_set_drvdata(pdev, gi2c);
--	ret = devm_request_irq(&pdev->dev, gi2c->irq, geni_i2c_irq,
--			       IRQF_TRIGGER_HIGH, "i2c_geni", gi2c);
-+	ret = devm_request_irq(&pdev->dev, gi2c->irq, geni_i2c_irq, 0,
-+			       dev_name(&pdev->dev), gi2c);
+-	ret = devm_request_irq(&pdev->dev, gi2c->irq, geni_i2c_irq, 0,
+-			       dev_name(&pdev->dev), gi2c);
++	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, 0,
++			       dev_name(dev), gi2c);
  	if (ret) {
- 		dev_err(&pdev->dev, "Request_irq failed:%d: err:%d\n",
+-		dev_err(&pdev->dev, "Request_irq failed:%d: err:%d\n",
++		dev_err(dev, "Request_irq failed:%d: err:%d\n",
  			gi2c->irq, ret);
+ 		return ret;
+ 	}
+ 	/* Disable the interrupt so that the system can enter low-power mode */
+ 	disable_irq(gi2c->irq);
+ 	i2c_set_adapdata(&gi2c->adap, gi2c);
+-	gi2c->adap.dev.parent = &pdev->dev;
+-	gi2c->adap.dev.of_node = pdev->dev.of_node;
++	gi2c->adap.dev.parent = dev;
++	gi2c->adap.dev.of_node = dev->of_node;
+ 	strlcpy(gi2c->adap.name, "Geni-I2C", sizeof(gi2c->adap.name));
+ 
+ 	ret = geni_se_resources_on(&gi2c->se);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "Error turning on resources %d\n", ret);
++		dev_err(dev, "Error turning on resources %d\n", ret);
+ 		return ret;
+ 	}
+ 	proto = geni_se_read_proto(&gi2c->se);
+ 	tx_depth = geni_se_get_tx_fifo_depth(&gi2c->se);
+ 	if (proto != GENI_SE_I2C) {
+-		dev_err(&pdev->dev, "Invalid proto %d\n", proto);
++		dev_err(dev, "Invalid proto %d\n", proto);
+ 		geni_se_resources_off(&gi2c->se);
+ 		return -ENXIO;
+ 	}
+@@ -581,11 +576,11 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 							true, true, true);
+ 	ret = geni_se_resources_off(&gi2c->se);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "Error turning off resources %d\n", ret);
++		dev_err(dev, "Error turning off resources %d\n", ret);
+ 		return ret;
+ 	}
+ 
+-	dev_dbg(&pdev->dev, "i2c fifo/se-dma mode. fifo depth:%d\n", tx_depth);
++	dev_dbg(dev, "i2c fifo/se-dma mode. fifo depth:%d\n", tx_depth);
+ 
+ 	gi2c->suspended = 1;
+ 	pm_runtime_set_suspended(gi2c->se.dev);
+@@ -595,12 +590,12 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 
+ 	ret = i2c_add_adapter(&gi2c->adap);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "Error adding i2c adapter %d\n", ret);
++		dev_err(dev, "Error adding i2c adapter %d\n", ret);
+ 		pm_runtime_disable(gi2c->se.dev);
+ 		return ret;
+ 	}
+ 
+-	dev_dbg(&pdev->dev, "Geni-I2C adaptor successfully added\n");
++	dev_dbg(dev, "Geni-I2C adaptor successfully added\n");
+ 
+ 	return 0;
+ }
 -- 
 Sent by a computer, using git, on the internet
 
