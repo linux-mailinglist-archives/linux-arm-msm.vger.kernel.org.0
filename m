@@ -2,76 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id B1BCD1803CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 17:44:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AFA318058C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2020 18:54:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726415AbgCJQoY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Mar 2020 12:44:24 -0400
-Received: from foss.arm.com ([217.140.110.172]:39442 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726307AbgCJQoY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Mar 2020 12:44:24 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0E0AB1FB;
-        Tue, 10 Mar 2020 09:44:24 -0700 (PDT)
-Received: from [10.1.196.37] (e121345-lin.cambridge.arm.com [10.1.196.37])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 09A613F67D;
-        Tue, 10 Mar 2020 09:44:19 -0700 (PDT)
-Subject: Re: [PATCH 0/3] Request direct mapping for modem firmware subdevice
-To:     Joerg Roedel <joro@8bytes.org>, Sibi Sankar <sibis@codeaurora.org>
-Cc:     ohad@wizery.com, devicetree@vger.kernel.org,
-        linux-kernel-owner@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bjorn.andersson@linaro.org, iommu@lists.linux-foundation.org,
-        robh+dt@kernel.org, agross@kernel.org
-References: <20200309182255.20142-1-sibis@codeaurora.org>
- <20200310112332.GG3794@8bytes.org>
- <4ed6ddd667a3e6f670084a443d141474@codeaurora.org>
- <20200310162320.GL3794@8bytes.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <a50040a9-54fe-f682-dd7e-b2991b48d633@arm.com>
-Date:   Tue, 10 Mar 2020 16:44:12 +0000
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1726464AbgCJRyG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Mar 2020 13:54:06 -0400
+Received: from asavdk4.altibox.net ([109.247.116.15]:38022 "EHLO
+        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726283AbgCJRyG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Mar 2020 13:54:06 -0400
+Received: from ravnborg.org (unknown [158.248.194.18])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk4.altibox.net (Postfix) with ESMTPS id 4ACE0804CE;
+        Tue, 10 Mar 2020 18:54:01 +0100 (CET)
+Date:   Tue, 10 Mar 2020 18:53:59 +0100
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Harigovindan P <harigovi@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        sean@poorly.run, seanpaul@chromium.org
+Subject: Re: [PATCH v4 1/2] dt-bindings: display: add visionox rm69299 panel
+ variant
+Message-ID: <20200310175359.GD3785@ravnborg.org>
+References: <20200306103628.8998-1-harigovi@codeaurora.org>
+ <20200306103628.8998-2-harigovi@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20200310162320.GL3794@8bytes.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200306103628.8998-2-harigovi@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=XpTUx2N9 c=1 sm=1 tr=0
+        a=UWs3HLbX/2nnQ3s7vZ42gw==:117 a=UWs3HLbX/2nnQ3s7vZ42gw==:17
+        a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=LpQP-O61AAAA:8
+        a=gEfo2CItAAAA:8 a=e5mUnYsNAAAA:8 a=qHcGuR0XRKw0n3oAY_QA:9
+        a=CjuIK1q_8ugA:10 a=pioyyrs4ZptJ924tMmac:22 a=sptkURWiP4Gy88Gu7hUp:22
+        a=Vxmtnl_E_bksehYqCbjh:22
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/03/2020 4:23 pm, Joerg Roedel wrote:
-> On Tue, Mar 10, 2020 at 07:30:50PM +0530, Sibi Sankar wrote:
->> The accesses are initiated by the firmware
->> and they access modem reserved regions.
->> However as explained in ^^ any accesses
->> outside the region will result in a violation
->> and is controlled through XPUs (protection units).
+Hi Harigovindan
+
+Thanks for the follow-up. There are still a few things to improve.
+See below.
+
+	Sam
+
+On Fri, Mar 06, 2020 at 04:06:27PM +0530, Harigovindan P wrote:
+> Add bindings for visionox rm69299 panel.
 > 
-> Okay, this sounds like a case for arm_smmu_get_resv_region(). It should
-> return an entry for the reserved memory region the firmware needs to
-> access, so that generic iommu can setup this mapping.
+> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+> ---
 > 
-> Note that it should return that entry only for your device, not for all
-> devices. Maybe there is a property in DT or IORT you can set to
-> transport this information into the arm-smmu driver.
+> Changes in v2:
+> 	- Removed unwanted properties from description.
+> 	- Creating source files without execute permissions(Rob Herring).
+> Changes in v3:
+> 	- Changing txt file into yaml
+> Changes in v4:
+> 	- Updating license identifier.
+> 	- Moving yaml file inside panel directory.
+> 	- Removing pinctrl entries.
+> 	- Adding documentation for reset-gpios.
 > 
-> This is pretty similar to RMRR mapping on the Intel VT-d IOMMU or
-> Unity-mapped ranges in the AMD-Vi IOMMU.
+>  .../display/panel/visionox,rm69299.yaml       | 85 +++++++++++++++++++
+>  1 file changed, 85 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml b/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
+> new file mode 100644
+> index 000000000000..93cae431207c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml
+> @@ -0,0 +1,85 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/panel/visionox,rm69299.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Visionox model RM69299 Panels Device Tree Bindings.
+> +
+> +maintainers:
+> + - Harigovindan P <harigovi@codeaurora.org>
+> +
+> +description: |
+> + This binding is for display panels using a Visionox RM692999 panel.
+> +
+> +allOf:
+> + - $ref: panel-common.yaml#
+> +
+> +patternProperties:
+> +  "^(panel|panel-dsi)@[0-9]$":
+> +    type: object
 
-Yup, a way to describe boot-time memory regions in IORT is in the 
-process of being specced out; the first attempt at an equivalent for DT 
-is here:
+This looks wrong. None of the other panels needs to specify
+a patternProperties, and neither do we need to do so for this panel.
 
-https://lore.kernel.org/linux-iommu/20191209150748.2471814-1-thierry.reding@gmail.com/
 
-If that's not enough and the SMMU still needs to treat certain Stream 
-IDs specially because they may be untranslatable (due to having direct 
-access to memory as a side-channel), then that should be handled in the 
-SoC-specific corner of the SMMU driver, not delegated to individual 
-endpoint drivers.
+> +    properties:
+> +      compatible:
+> +        const: visionox,rm69299-1080p-display
+The compatible is what we use to match this binding.
 
-Robin.
+
+> +
+> +      reg:
+> +        maxItems: 1
+> +
+> +      vdda-supply:
+> +        description:
+> +          Phandle of the regulator that provides the vdda supply voltage.
+> +
+> +      vdd3p3-supply:
+> +        description:
+> +          Phandle of the regulator that provides the vdd3p3 supply voltage.
+> +
+> +      ports:
+> +        type: object
+> +        description:
+> +          A node containing DSI input & output port nodes with endpoint
+> +          definitions as documented in
+> +          Documentation/devicetree/bindings/media/video-interfaces.txt
+> +          Documentation/devicetree/bindings/graph.txt
+
+I think you miss as " |" after "description:"
+Again, see other panel bindings.
+
+
+> +        properties:
+> +          port@0:
+
+Please just use
+            port: true
+
+port is already documented in panel-common.yaml.
+
+> +            type: object
+> +            description:
+> +              DSI input port node.
+> +
+> +      reset-gpios:
+reset-gpios is part of panel-common.
+So specify only:
+         reset-gpios: true
+
+No description, as it is in panel-common.
+
+
+> +        description:
+> +          a GPIO spec for the reset pin.
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - vdda-supply
+> +  - vdd3p3-supply
+> +  - reset-gpios
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +- |
+> +    dsi@ae94000 {
+No @ae94000 - this will warn with upcoming dt_binding_check
+improvements.
+
+> +        panel@0 {
+> +            compatible = "visionox,rm69299-1080p-display";
+> +
+> +            vdda-supply = <&src_pp1800_l8c>;
+> +            vdd3p3-supply = <&src_pp2800_l18a>;
+> +
+> +            reset-gpios = <&pm6150l_gpio 3 0>;
+reg property is required, but missing in the example.
+
+
+> +            ports {
+> +                    #address-cells = <1>;
+> +                    #size-cells = <0>;
+> +                    port@0 {
+> +                            reg = <0>;
+> +                            panel0_in: endpoint {
+> +                                remote-endpoint = <&dsi0_out>;
+> +                            };
+> +                    };
+> +            };
+> +        };
+> +    };
+> +...
+> +
+> -- 
+> 2.25.1
+> 
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
